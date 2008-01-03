@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 69;
+plan 86;
 
 # L<S02/Literals>
 
@@ -101,6 +101,12 @@ is(:16<0d37>,   0x0D37,  ':16<0d37> uses d as hex digit'     );
 }
 
 
+# L<S02/Literals/"Any radix may include a fractional part">
+
+is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / ( 16 ** 4 ),
+    'Fractional base 16 works' );
+
+
 # L<S02/Literals/":8<177777>">
 # L<S29/Conversions/"prefix:<:8>">
 
@@ -138,3 +144,49 @@ is(:8<177777>, 65535, 'got the correct int value from oct 177777');
     is(:8(0o377),  0d255, ':8(0o255) stays octal');
     is(:8(0d37),    0d37, ':8(0d37) converts from decimal');
 }
+
+
+# L<S29/Conversions/"prefix:<:2>">
+
+is(:2(0),     0, 'got the correct int value from bin 0');
+is(:2(1),     1, 'got the correct int value from bin 1');
+is(:2(10),    2, 'got the correct int value from bin 10');
+is(:2(1010), 10, 'got the correct int value from bin 1010');
+
+is(
+    :2(11111111111111111111111111111111),
+    0xFFFFFFFF,
+    'got the correct int value from bin 11111111111111111111111111111111');
+
+
+# L<S02/Literals/"Think of these as setting the default radix">
+# setting the default radix
+
+#?pugs: todo('feature', 4);
+{
+    is(:2<0b1110>,  0d14, ':2<0b1110> stays binary');
+    is(:2<0x20>,    0d32, ':2<0x20> converts from hexadecimal');
+    is(:2<0o377>,  0d255, ':2<0o255> converts from octal');
+    is(:2<0d37>,    0d37, ':2<0d37> converts from decimal');
+}
+
+# L<S02/Literals/"not clear whether the exponentiator should be 10 or the radix">
+
+isnt( eval("0b1.1e10"), 1536, 'Ambiguous, illegal syntax doesn\'t work' ); # Ambiguous, not allowed
+
+# L<S02/Literals/"and this makes it explicit">
+# probably don't need a test, but I'll write tests for any example :)
+is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
+is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
+is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
+
+# L<S02/Literals/"So we write those as">
+# these should be the same values as the previous tests
+#?pugs: todo('feature', 3);
+{
+    is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
+    is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
+    is( eval('2«1.1*:2<10>**:2<10>»'),    6, 'Powers of two in <<>> works');
+}
+
+
