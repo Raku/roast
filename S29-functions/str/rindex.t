@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item rindex">
 
-plan 30;
+plan 31;
 
 # Simple - with just a single char
 
