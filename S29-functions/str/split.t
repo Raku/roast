@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 30;
+plan 27;
 
 # split on an empty string
 
@@ -37,22 +37,10 @@ is_deeply split("", "forty-two"),
            qw/f o r t y - t w o/,
            q{split "", Str};
 
-is_deeply "forty-two".comb(/./),
-           qw/f o r t y - t w o/,
-           q{Str.comb(/./)};
-
-is_deeply "forty two".comb(/./),
-           (qw/f o r t y/, ' ', qw/t w o/),
-           q{Str.comb(/./)};
-
 # split on a space
 is_deeply split(' ', 'split this string'),
            qw/split this string/,
            q{split ' ', Str};
-
-is_deeply @('split this string'.comb).map:{ "$_" },
-           <split this string>,
-           q{Str.comb};
 
 # split on a single character delimiter
 is_deeply split('$', 'try$this$string'),
