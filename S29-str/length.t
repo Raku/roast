@@ -59,11 +59,10 @@ my @data = (
 );
 #:map { my %hash; %hash<string bytes codes graphs> = $_; \%hash };
 
-# Should we split the loop into 4 different ones,
-# just to properly cross-reference them with
-# smartlinks?
-
-# L<S29/Str/=item length>
+# L<S29/Str/=item bytes>
+# L<S29/Str/=item chars>
+# L<S29/Str/=item codes>
+# L<S29/Str/=item graphs>
 
 for @data -> $string, $bytes, $codes, $graphs, $chars {
     is($string.bytes, $bytes, "'{$string}'.bytes");
