@@ -58,15 +58,18 @@ plan 40;
     ok(~WHAT($r), '$r is a reference');
     is($$r, "gloop", '$r referent is eq to the substring');
 
+    #?pugs: todo('scalarrefs are not handled correctly', 1);
     $$r = "boing";
-    is($str, "boing ding", "assignment to reference modifies original", :todo);
+    is($str, "boing ding", "assignment to reference modifies original");
     is($$r, "boing", '$r is consistent');
 
+    #?pugs: todo('scalarrefs are not handled correctly', 3);
     my $o = \substr($str, 3, 2);
-    is($$o, "ng", "other ref to other lvalue", :todo);
+    is($$o, "ng", "other ref to other lvalue");
     $$r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works", :todo);
-    is($$o, " d", "other lvalue wiggled around", :todo);
+    is($str, "foo ding", "lvalue ref size varies but still works");
+    is($$o, " d", "other lvalue wiggled around");
+
 };
 
 { # as lvalue, should work
@@ -87,13 +90,15 @@ plan 40;
 
     $r = "boing";
     is($str, "boing ding", "assignment to bound var modifies original");
-    is($r, "boing", 'bound $r is consistent', :todo<bug>);
+    #?pugs: todo('bug', 1);
+    is($r, "boing", 'bound $r is consistent');
 
     my $o := substr($str, 3, 2);
     is($o, "ng", "other bound var to other lvalue");
     $r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works");
-    is($o, " d", "other lvalue wiggled around", :todo<bug>);
+    #?pugs: todo('bug', 1);
+    is($o, " d", "other lvalue wiggled around");
 };
 
 { # misc
