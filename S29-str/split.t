@@ -24,13 +24,13 @@ my %ords = (
   9 => 'ninth',
 );
 
-sub split_test(@splitted, @expected, Str $desc, $todo = 0) {
+sub split_test(@splitted, @expected, Str $desc) {
   is +@splitted, +@expected,
-     "split created the correct value amount for: $desc", :todo($todo);
+     "split created the correct value amount for: $desc";
   is @splitted[$_], @expected[$_],
-     "the %ords{$_ + 1} value matched for: $desc", :todo($todo)
-    for 0 .. @splitted.end;
-  is_deeply [~<< @splitted], [~<< @expected], "values match", :todo($todo); 
+     "the %ords{$_ + 1} value matched for: $desc"
+     for 0 .. @splitted.end;
+  is_deeply [~<< @splitted], [~<< @expected], "values match"; 
 }
 
 is_deeply split("", "forty-two"),
