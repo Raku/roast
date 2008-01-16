@@ -29,7 +29,7 @@ plan 11;
 # Sorry for ebcdic users!
 my %Config; # Empty means there's no 'ebcdic' key defined...
 
-#?pugs: todo('Test Config.pm availability', 1);
+#?pugs: todo 'Test Config.pm availability'
 is('Config.pm', 'available', 'Config.pm availability');
 
 # L<S29/Str/quotemeta>

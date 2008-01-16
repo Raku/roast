@@ -10,7 +10,7 @@ plan 10;
 is "".comb, (), 'comb on empty string';
 is "a bc d".comb, <a bc d>, 'default matcher and limit';
 
-#?pugs: todo('feature', 1);
+#?pugs: todo 'feature'
 is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
 
 is_deeply @('split this string'.comb).map:{ "$_" },
@@ -22,7 +22,7 @@ is "a ab bc ad ba".comb(m:Perl5/\ba\S*/), <a ab ad>,
 is "a ab bc ad ba".comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     'match for any *a* words';
 
-#?pugs: todo('feature', 1);
+#?pugs: todo 'feature'
 is eval('"a ab bc ad ba".comb(m:Perl5/\S*a\S*/, 2)'), <a ab>,
     'matcher and limit';
 
@@ -36,7 +36,7 @@ is_deeply "forty two".comb(/./),
 
 # comb a list
 
-#?pugs: todo('feature', 1);
+#?pugs: todo 'feature'
 is eval('(<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/)'), <a ab ad ba>,
      'comb a list';
 

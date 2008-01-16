@@ -38,7 +38,7 @@ plan 10;
   is($k, 0, 'while $var {...} works');
 }
 
-#?perl6 todo('No pointy blocks on while loops yet', 2);
+#?rakudo: eval 'No pointy blocks on while loops yet'
 # L<S04/The C<for> statement/It is also possible to write>
 # while ... -> $x {...}
 {
@@ -51,12 +51,13 @@ plan 10;
   is $str, '54321', 'while ... -> $x {...} worked (1)';
 }
 
+#?rakudo: eval 'No pointy blocks on while loops yet'
 {
   my @array = 0..5;
   my $str;
   while pop @array -> $x {
       $str ~= $x;
   }
-  is $!, undef, 'eval worked', :todo('pointy blocks not implemented yet');
+  is $!, undef, 'eval worked';
   is $str, '54321', 'while ... -> $x {...} worked (2)';
 }

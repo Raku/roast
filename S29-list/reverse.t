@@ -87,7 +87,7 @@ is(@a[1], "foo", 'the list was reversed properly');
 		Foo.new.bar;
 	};
 
-    #?pugs: todo('bug', 1);
+    #?pugs: todo 'bug'
 	is(~@cxt_log, ~("List (Any)" xx 4), "contexts were passed correctly around masak's bug");
 	is(+@n, 3, "list context reverse in masak's bug");
 	is(~@n, "3 2 1", "elements seem reversed");

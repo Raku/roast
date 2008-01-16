@@ -25,7 +25,7 @@ plan 40;
     is($str, "foobar", "original string still not changed");
 };
 
-#?pugs: skip('more discussion needed', 4);
+#?pugs: skip 'more discussion needed'
 { # replacement
     my $str = "foobar";
 
@@ -58,12 +58,12 @@ plan 40;
     ok(~WHAT($r), '$r is a reference');
     is($$r, "gloop", '$r referent is eq to the substring');
 
-    #?pugs: todo('scalarrefs are not handled correctly', 1);
+    #?pugs: todo 'scalarrefs are not handled correctly'
     $$r = "boing";
     is($str, "boing ding", "assignment to reference modifies original");
     is($$r, "boing", '$r is consistent');
 
-    #?pugs: todo('scalarrefs are not handled correctly', 3);
+    #?pugs: 3 todo 'scalarrefs are not handled correctly'
     my $o = \substr($str, 3, 2);
     is($$o, "ng", "other ref to other lvalue");
     $$r = "foo";
@@ -90,14 +90,14 @@ plan 40;
 
     $r = "boing";
     is($str, "boing ding", "assignment to bound var modifies original");
-    #?pugs: todo('bug', 1);
+    #?pugs: todo 'bug'
     is($r, "boing", 'bound $r is consistent');
 
     my $o := substr($str, 3, 2);
     is($o, "ng", "other bound var to other lvalue");
     $r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works");
-    #?pugs: todo('bug', 1);
+    #?pugs: todo 'bug'
     is($o, " d", "other lvalue wiggled around");
 };
 

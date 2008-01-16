@@ -25,7 +25,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 
 { # chop serveral things
     my ($a, $b) = ("bar", "gorch");
-    #?pugs: todo('', 3);
+#?pugs: 2 todo ''
     # FIXME: is(eval 'chop($a, $b)', "h", "two chars removed, second returned");
     is($a, "ba", "first string");
     is($b, "gorc", "second string");
@@ -34,7 +34,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 { # chop elements of array
     my @array = ("fizz", "buzz");
     is(chop(@array), "z", "two chars removed second returned");
-    #?pugs: todo('unspecified', 2);
+#?pugs: 2 todo 'unspecified'
     is(@array[0], "fiz", "first elem");
     is(@array[1], "buz", "second elem");
 };
@@ -42,7 +42,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 { # chop a hash
     my %hash = ( "key", "value", "other", "blah");
 
-    #?pugs: todo('', 3);
+#?pugs: 2 todo ''
     # FIXME: is(chop(%hash), "h"|"e", "chopping hash returns last char of either value");
     is(%hash<key>, "valu", "first value chopped");
     is(%hash<other>, "bla", "second value chopped");
