@@ -85,7 +85,7 @@ is(:16<0b1110>, 0xB1110, ':16<0b1110> uses b as hex digit'  );
 is(:16<0d37>,   0x0D37,  ':16<0d37> uses d as hex digit'     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
-#?perl6: todo('feature', 2);
+#?rakudo: todo('feature', 2);
 #?pugs: todo('feature', 1);
 {
     is(:16<0x20>,      0d32, ':16<0x20> stays hexadecimal');
@@ -138,7 +138,7 @@ is(:8<177777>, 65535, 'got the correct int value from oct 177777');
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?perl6: todo('feature', 4);
+#?rakudo: todo('feature', 4);
 #?pugs: todo('feature', 4);
 {
     is(:8(0b1110),  0d14, ':8(0b1110) converts from binary');
