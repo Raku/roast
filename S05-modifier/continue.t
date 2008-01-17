@@ -1,0 +1,18 @@
+use v6-alpha;
+use Test;
+
+plan 4;
+
+#L<S05/Modifiers/"The :c">
+
+regex simple { . a };
+my $string = "1a2a3a";
+
+$string ~~ m:c/<simple>/;
+is(~$/, '1a', "match first 'a'");
+$string ~~ m:c/<simple>/;
+is(~$/, '2a', "match second 'a'");
+$string ~~ m:c/<simple>/;
+is(~$/, '3a', "match third 'a'");
+$string ~~ m:c/<simple>/;
+is(~$/, '', "no more 'a's to match");
