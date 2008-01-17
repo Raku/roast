@@ -86,7 +86,7 @@ is(:16<0d37>,   0x0D37,  ':16<0d37> uses d as hex digit'     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
 #?rakudo: todo 'feature'
-#?pugs: todo 'feature'
+#?pugs: todo :by<6.28>
 {
     is(:16<0x20>,      0d32, ':16<0x20> stays hexadecimal');
     is(:16<0o377>,    0d255, ':16<0o255> converts from octal');
