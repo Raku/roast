@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 11;
+plan 19;
 
 =head1 DESCRIPTION
 
@@ -10,6 +10,34 @@ Basic C<exists> tests on hashes, see S29.
 =cut
 
 # L<S29/"Hash"/=item exists>
+
+sub gen_hash {
+    my %h{'a'..'z'} = (1..26);
+    return %h;
+};
+
+{
+    my %h1 = gen_hash;
+    my %h2 = gen_hash;
+
+    my $b = %h1<b>;
+    is (exists %h1, 'a'), 1, "Test existance for single key. (Indirect notation)";
+    is (%h1.exists('a')), 1, "Test existance for single key. (method call)";
+};
+
+{
+    my %h;
+    %h<none> = 0;
+    %h<one> = 1;
+    %h<nothing> = undef;
+    is %h.exists('none'),     1,  "Existance of single key with 0 as value: none";
+    is %h.exists('one'),      1,  "Existance of single key: one";
+    is %h.exists('nothing'),  1,  "Existance of single key with undef as value: nothing";
+    is defined(%h<none>),     1,  "Defined 0 value for key: none";
+    is defined(%h<one>),      1,  "Defined 1 value for key: one";
+    is defined(%h<nothing>),  '', "NOT Defined value for key: nothing";
+}
+
 my %hash = (a => 1, b => 2, c => 3, d => 4);
 ok %hash.exists("a"),   "exists on hashes (1)";
 ok !%hash.exists("42"), "exists on hashes (2)";
@@ -47,3 +75,4 @@ ok !%hash.exists("42"), "exists on hashes (2)";
   #?pugs: todo 'bug'
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (4)" );
 }
+
