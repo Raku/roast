@@ -8,19 +8,24 @@ force_todo 10;
 # L<S29/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
-is(uc(""), "", "empty string"); 
-#?rakudo: 3 skip "unicode"
-is(uc("åäö"), "ÅÄÖ", "some finnish non-ascii chars");
-is(uc("äöü"), "ÄÖÜ", "uc of German Umlauts");
-is(uc("óòúù"), "ÓÒÚÙ", "accented chars");
+is(uc(""), "", "empty string");
+#?rakudo: skip "unicode"
+{
+    is(uc("åäö"), "ÅÄÖ", "some finnish non-ascii chars");
+    is(uc("äöü"), "ÄÖÜ", "uc of German Umlauts");
+    is(uc("óòúù"), "ÓÒÚÙ", "accented chars");
+}
 is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
 # given does not return proper value yet
-$_ = "Hello World";
-my $x = .uc;
-is $x, "HELLO WORLD", 'uc uses the default $_';
+#?rakudo: 1 skip "unicode"
+{
+    $_ = "Hello World";
+    my $x = .uc;
+    is $x, "HELLO WORLD", 'uc uses the default $_';
+}
 
-{ 
+{
     my $x = "Hello World";
     is $x.uc, "HELLO WORLD", '$x.uc works';
     is "Hello World".uc, "HELLO WORLD", '"Hello World".uc works';

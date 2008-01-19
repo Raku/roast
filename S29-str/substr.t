@@ -15,6 +15,7 @@ plan 40;
     is(substr($str, 1, 2), "oo", "arbitrary middle");
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
+#?rakudo: 2 skip 'exception'
     is(substr($str, 20, 5), undef, "substr outside of string");
     is(substr($str, -100, 10), undef, "... on the negative side");
 
@@ -26,6 +27,7 @@ plan 40;
 };
 
 #?pugs: skip 'more discussion needed'
+#?rakudo: skip 'too many args'
 { # replacement
     my $str = "foobar";
 
@@ -54,24 +56,28 @@ plan 40;
     substr($str, 0, 5) = "gloop";
     is($str, "gloop ding", "lvalue assignment modified original string");
 
+#?rakudo: skip "can't parse"
+{
     my $r = \substr($str, 0, 5);
     ok(~WHAT($r), '$r is a reference');
     is($$r, "gloop", '$r referent is eq to the substring');
 
-    #?pugs: todo 'scalarrefs are not handled correctly'
+#?pugs: todo 'scalarrefs are not handled correctly'
     $$r = "boing";
     is($str, "boing ding", "assignment to reference modifies original");
     is($$r, "boing", '$r is consistent');
 
-    #?pugs: 3 todo 'scalarrefs are not handled correctly'
+#?pugs: todo 'scalarrefs are not handled correctly'
     my $o = \substr($str, 3, 2);
     is($$o, "ng", "other ref to other lvalue");
     $$r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works");
     is($$o, " d", "other lvalue wiggled around");
+}
 
 };
 
+#?rakudo: skip 'exception'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -79,6 +85,7 @@ plan 40;
     is($str, "gloop ding", "lvalue assignment modified original string");
 };
 
+#?rakudo: skip 'exception'
 { # as lvalue, using :=, should work
     my $str = "gorch ding";
 
@@ -104,8 +111,10 @@ plan 40;
 { # misc
     my $str = "hello foo and bar";
     is(substr($str, 6, 3), "foo", "substr");
+#?rakudo: skip 'method not found'
     is($str.substr(6, 3), "foo", ".substr");
     is(substr("hello foo bar", 6, 3), "foo", "substr on literal string");
+#?rakudo: 5 skip 'method not found'
     is("hello foo bar".substr(6, 3), "foo", ".substr on literal string");
     is("hello foo bar".substr(6, 3).uc, "FOO", ".substr.uc on literal string");
     is("hello foo bar and baz".substr(6, 10).capitalize, "Foo Bar An", ".substr.capitalize on literal string");

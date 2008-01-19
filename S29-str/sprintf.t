@@ -6,6 +6,7 @@ plan 12;
 
 # L<S29/Str/"identical to" "C library sprintf">
 
+#?rakudo: 12 skip 'not yet implemented'
 is sprintf("Hi"),                 "Hi",     "sprintf() works with zero args";
 is sprintf("%03d",      3),       "003",    "sprintf() works with one arg";
 is sprintf("%03d %02d", 3, 1),    "003 01", "sprintf() works with two args";
