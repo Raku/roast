@@ -155,10 +155,13 @@ is(:2(1),     1, 'got the correct int value from bin 1');
 is(:2(10),    2, 'got the correct int value from bin 10');
 is(:2(1010), 10, 'got the correct int value from bin 1010');
 
-is(
-    :2(11111111111111111111111111111111),
-    0xFFFFFFFF,
-    'got the correct int value from bin 11111111111111111111111111111111');
+#?rakudo: 1 skip "can't parse"
+{
+    is(
+        :2(11111111111111111111111111111111),
+        0xFFFFFFFF,
+        'got the correct int value from bin 11111111111111111111111111111111');
+}
 
 
 # L<S02/Literals/"Think of these as setting the default radix">
@@ -173,18 +176,24 @@ is(
 }
 
 # L<S02/Literals/"not clear whether the exponentiator should be 10 or the radix">
-
-isnt( eval("0b1.1e10"), 1536, 'Ambiguous, illegal syntax doesn\'t work' ); # Ambiguous, not allowed
+#?rakudo: 1 skip "can't parse"
+{
+    isnt( eval("0b1.1e10"), 1536, 'Ambiguous, illegal syntax doesn\'t work' );
+}
 
 # L<S02/Literals/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
-is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
-is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
-is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
+#?rakudo: 3 skip "can't parse"
+{
+    is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
+    is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
+    is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
+}
 
 # L<S02/Literals/"So we write those as">
 # these should be the same values as the previous tests
 #?pugs: todo 'feature'
+#?rakudo: 3 skip "can't parse"
 {
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
