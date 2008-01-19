@@ -8,5 +8,9 @@ plan 4;
 
 is ucfirst("hello world"), "Hello world", "simple";
 is ucfirst(""),            "",            "empty string";
-is ucfirst("üüüü"),        "Üüüü",        "umlaut";
-is ucfirst("óóóó"),        "Óóóó",        "accented chars";
+#?rakudo: 2 skip "unicode"
+{
+    is ucfirst("üüüü"),        "Üüüü",        "umlaut";
+    is ucfirst("óóóó"),        "Óóóó",        "accented chars";
+}
+
