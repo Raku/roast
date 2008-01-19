@@ -3,6 +3,7 @@ use v6-alpha;
 use Test;
 
 plan 10;
+#?rakudo: 10 skip "can't parse"
 
 # L<S29/Str/=item comb>
 

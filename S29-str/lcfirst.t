@@ -8,6 +8,7 @@ plan 8;
 
 is lcfirst("HELLO WORLD"), "hELLO WORLD", "simple";
 is lcfirst(""),            "",            "empty string";
+#?rakudo: 2 skip 'unicode'
 is lcfirst("ÜÜÜÜ"),        "üÜÜÜ",        "umlaut";
 is lcfirst("ÓÓÓÓŃ"),       "óÓÓÓŃ",       "accented chars";
 
@@ -17,8 +18,11 @@ my $str = "Some String";
 is $str.lcfirst,    "some String",          "simple.lcfirst on scalar variable";
 is "Other String".lcfirst,  "other String", ".lcfirst on  literal string";
 
-$_ = "HELLO WORLD";
-my $x = .lcfirst;
-is $x, "hELLO WORLD", 'lcfirst uses $_ as default'
+#?rakudo: skip "can't parse"
+{
+    $_ = "HELLO WORLD";
+    my $x = .lcfirst;
+    is $x, "hELLO WORLD", 'lcfirst uses $_ as default'
+}
 
 

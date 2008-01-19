@@ -23,6 +23,8 @@ is($str, "foo", "original string unchanged");
 XXX: chop(@array) should return an array of chopped strings?
 XXX: chop(%has)   should return a  hash  of chopped strings?
 
+=end more-discussion-needed
+
 { # chop serveral things
     my ($a, $b) = ("bar", "gorch");
 #?pugs: 2 todo ''
@@ -43,6 +45,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
     my %hash = ( "key", "value", "other", "blah");
 
 #?pugs: 2 todo ''
+#?rakudo: 2 skip "can't parse"
     # FIXME: is(chop(%hash), "h"|"e", "chopping hash returns last char of either value");
     is(%hash<key>, "valu", "first value chopped");
     is(%hash<other>, "bla", "second value chopped");

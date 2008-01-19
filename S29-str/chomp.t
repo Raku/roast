@@ -4,11 +4,11 @@ use Test;
 
 plan 35;
 
-=pod
+=begin pod
 
 Basic tests for the chomp() builtin
 
-=cut
+=end pod
 
 # L<S29/"Str"/=item chomp>
 
@@ -73,7 +73,7 @@ Basic tests for the chomp() builtin
     my $chomped = $foo.chomp;
     is($foo, "foo\n\n", ".chomp has no effect on the original string");
     is($chomped, "foo\n", ".chomp returns correctly chomped value");
-    
+
     # $chomped.chomp.newline
 
     $chomped = $chomped.chomp;
@@ -116,11 +116,14 @@ Basic tests for the chomp() builtin
     is_deeply(@szundi, @foo, "chomp array with 2 elements with duplicate newlines");
 }
 
-=pod
+#?rakudo: skip "trouble with pod"
+{
+=begin pod
 
 Basic tests for the chomp() builtin working on an array of strings
 
-=cut
+=end pod
+}
 
 # L<S29/Str/=item chomp>
 
@@ -132,6 +135,7 @@ Basic tests for the chomp() builtin working on an array of strings
 # assuming the correct behaviour is an extension of the behaviour for
 # a single string.
 
+#?rakudo: skip "can't parse"
 {
     my @foo = ("foo\n","bar\n","baz\n");
     chomp(@foo);
