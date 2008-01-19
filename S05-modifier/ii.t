@@ -3,9 +3,9 @@ use Test;
 
 plan 9;
 
-#?pugs skip_rest "todo"
-#?rakudo skip_rest "todo"
-#?kp6 skip_rest "todo"
+#?pugs: 999 skip
+#?rakudo: 999 skip
+#?kp6: 999 skip
 
 #L<S05/Modifiers/"The :ii">
 
