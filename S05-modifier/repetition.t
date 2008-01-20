@@ -10,3 +10,4 @@ plan 2;
 ok('abab' ~~ m:2x/ab/,  ':2x (repetition) modifier (1)');
 ok('ab' !~~ m:2x/ab/, ':2x (repetition) modifier (1)');
 
+# vim: syn=perl6 sw=4 ts=4 expandtab

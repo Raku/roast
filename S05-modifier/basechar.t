@@ -3,13 +3,13 @@ use Test;
 
 plan 8;
 
-=pod
+=begin description
 
 Testing the C<:basechar> regex modifier - more tests are always welcome
 
 TODO: need some tests for chars with multiple markings.
 
-=cut
+=end description
 
 #L<S05/Modifiers/"The :b">
 
@@ -22,3 +22,5 @@ ok('á' ~~ m:b/a/, 'Basechar: a matches á');
 ok('â' ~~ m:b/a/, 'Basechar: a matches â');
 ok('å' ~~ m:b/a/, 'Basechar: a matches å');
 ok('ƌ' ~~ m:b/d/, 'Basechar: d matches ƌ');
+
+# vim: syn=perl6 sw=4 ts=4 expandtab

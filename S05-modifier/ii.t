@@ -11,7 +11,7 @@ plan 9;
 
 #    target,      substution,   result
 my @tests = (
-	['Hello',    'foo',         'Foo'],
+    ['Hello',    'foo',         'Foo'],
     ['hEllo',    'foo',         'fOo'],
     ['A',        'foo',         'FOO'],
     ['AA',       'foo',         'FOO'],
@@ -34,13 +34,13 @@ for @tests -> $t {
 
 #    target,        substution,   result,         name
 my @smart_tests = (
-	['HELLO',       'foo',         'FOO',         'uc()'],
-	['HE LO',       'foo',         'FOO',         'uc()'],
-	['hello',       'fOo',         'foo',         'lc()'],
-	['he lo',       'FOOOoO',      'fooooo',      'lc()'],
-	['He lo',       'FOOO',        'Fooo',        'ucfrst(lc())'],
-	['hE LO',       'fooo',        'fOOO',        'lcfrst(uc())'],
-	['hE LO',       'foobar'       'fOOBAR',      'lcfrst(uc())'],
+    ['HELLO',       'foo',         'FOO',         'uc()'],
+    ['HE LO',       'foo',         'FOO',         'uc()'],
+    ['hello',       'fOo',         'foo',         'lc()'],
+    ['he lo',       'FOOOoO',      'fooooo',      'lc()'],
+    ['He lo',       'FOOO',        'Fooo',        'ucfrst(lc())'],
+    ['hE LO',       'fooo',        'fOOO',        'lcfrst(uc())'],
+    ['hE LO',       'foobar'       'fOOBAR',      'lcfrst(uc())'],
     ['Ab Cd E',     'abc de gh i', 'Abc De Gh I', 'capitalize()'],
 );
 
@@ -49,3 +49,5 @@ for @smart_tests -> $t {
     $test_str ~~ s:ii:sigspace/.*/$t[1]/;
     is $test_str, $t[2], ":ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
 }
+
+# vim: syn=perl6 sw=4 ts=4 expandtab

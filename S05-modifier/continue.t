@@ -16,3 +16,5 @@ $string ~~ m:c/<simple>/;
 is(~$/, '3a', "match third 'a'");
 $string ~~ m:c/<simple>/;
 is(~$/, '', "no more 'a's to match");
+
+# vim: syn=perl6 sw=4 ts=4 expandtab

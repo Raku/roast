@@ -3,14 +3,14 @@ use Test;
 
 plan 7;
 
-=pod
+=begin description
 
 Testing the C<:ignorecase> regex modifier - more tests are always welcome
 
 There are still a few things missing, like lower case <-> title case <-> upper
 case tests
 
-=cut
+=end description
 
 #L<S05/Modifiers/"The :i">
 
@@ -34,3 +34,5 @@ ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 # The German ß (&szlig;) maps to uppercase SS:
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
+
+# vim: syn=perl6 sw=4 ts=4 expandtab
