@@ -3,11 +3,11 @@ use Test;
 
 plan 18;
 
-=head1 DESCRIPTION
+=begin description
 
 Basic C<delete> tests, see S29.
 
-=cut
+=end description
 
 # L<S29/"Array"/=item delete>
 

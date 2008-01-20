@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"Array"/"=item pop">
 
-=kwid 
+=begin description 
 
 Pop tests
 
-=cut
+=end description 
 
 plan 27;
 

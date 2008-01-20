@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/"Array"/"=item splice">
 
-=head1 DESCRIPTION
+=begin description
 
 This test tests the C<splice> builtin, see S29 and Perl 5's perlfunc.
 
@@ -21,7 +21,7 @@ is equivalent to:
   my @a = (1..10);
   @a = ();
 
-=cut
+=end description
 
 plan 33;
 

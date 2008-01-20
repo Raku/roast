@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"Array"/"=item shift">
 
-=kwid 
+=begin description 
 
 Shift tests
 
-=cut
+=end description
 
 plan 27;
 

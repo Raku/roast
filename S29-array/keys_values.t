@@ -4,11 +4,11 @@ use Test;
 
 plan 6;
 
-=pod
+=begin description
 
 Basic C<keys> and C<values> tests for arrays, see S29.
 
-=cut
+=end description
 
 my @array = <a b c d>;
 

@@ -3,11 +3,11 @@ use Test;
 
 plan 12;
 
-=head1 DESCRIPTION
+=begin description
 
 Basic C<exists> tests on arrays, see S29.
 
-=cut
+=end description
 
 # L<S29/"Array"/=item exists>
 

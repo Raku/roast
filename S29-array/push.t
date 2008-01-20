@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"Array"/"=item push">
 
-=kwid
+=begin description 
 
 Push tests
 
-=cut
+=end description 
 
 plan 42;
 

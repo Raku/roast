@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"Array"/"=item unshift">
 
-=kwid
+=begin description
 
 Unshift tests
 
-=cut
+=end description
 
 plan 53;
 

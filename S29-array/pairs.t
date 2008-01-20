@@ -4,11 +4,11 @@ use Test;
 
 plan 10;
 
-=head1 DESCRIPTION
+=begin description
 
 Basic C<pairs> tests, see S29.
 
-=cut
+=end description
 
 # L<S29/"Array"/=item pairs>
 
