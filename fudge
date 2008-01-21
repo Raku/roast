@@ -15,7 +15,7 @@ unless ($ME and $IN and -e $IN and $OUT) {
 }
 
 if (-e $OUT) {
-    if (-M $IN > -M $OUT) {
+    if (-M $IN >= -M $OUT) {
 	print "$OUT\n";		# unchanged, so no need to refudge
 	exit(0);
     }
@@ -54,6 +54,10 @@ sub fudgeblock {
 	if (/^\s*\#\? (\w+) \: \s* (.*)/x and $1 eq $ME) {
 	    $REALLY_FUDGED = 1;
 	    $ARGS = $2;
+	    if ($ARGS =~ s/^emit\s*//) {
+		$_ = $ARGS;
+		next;
+	    }
 	    if ($ARGS =~ s/^(\d+)\s*//) {
 		$PENDING = $1;
 	    }
