@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $platform = shift;
+
+use Cwd;
+my $top = getcwd;
+my $fudge;
+
+TOP:
+while ($top) {
+    for ("$top/fudge",
+	"$top/spec/fudge",
+	"$top/t/spec/fudge",
+	"$top/perl6/t/spec/fudge",
+	"$top/languages/perl6/t/spec/fudge",
+    ) {
+	if (-f $_) {
+	    $fudge = $_;
+	    last TOP;
+	}
+    }
+    $top =~ s!(.*)/(.*)!!;
+}
+if (not $fudge) {
+    for (split(/[:;]/, $ENV{PATH})) {
+	if (-f "$_/fudge") {
+	    $fudge = "$_/fudge";
+	    last;
+	}
+    }
+}
+
+print join(' ',
+    map {
+        my $pick;
+        if ( $_ !~ m/\.$platform$/ ) {
+            chomp( $pick = `$^X $fudge $platform $_` );
+        }
+        defined $pick ? $pick : ();
+    } @ARGV
+), "\n";
+
+
