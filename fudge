@@ -7,11 +7,21 @@ my $ME = shift;
 my $IN = shift;
 my $OUT = shift;
 
-if (!$OUT) {
+if (!$OUT and $IN) {
     ($OUT = $IN) =~ s/\.t$/.$ME/ or $OUT .= ".$ME";
 }
 unless ($ME and $IN and -e $IN and $OUT) {
-    die "Usage: $0 implname testfilename [fudgedtestfilename]\n";
+
+    die <<"USAGE";
+Usage: $0 implname testfilename [fudgedtestfilename]
+
+    Verbs:
+	#?implname: [num] skip 'reason'
+	#?implname: [num] eval 'reason'
+	#?implname: [num] try 'reason'
+	#?implname: [num] todo 'reason', :by<1.2.3>
+	#?implname: emit your_ad_here();
+USAGE
 }
 
 if (-e $OUT) {
