@@ -16,11 +16,33 @@ unless ($ME and $IN and -e $IN and $OUT) {
 Usage: $0 implname testfilename [fudgedtestfilename]
 
     Verbs:
-	#?implname: [num] skip 'reason'
-	#?implname: [num] eval 'reason'
-	#?implname: [num] try 'reason'
-	#?implname: [num] todo 'reason', :by<1.2.3>
-	#?implname: emit your_ad_here();
+	#?implname [num] skip 'reason'
+	    comment out num tests or blocks and call skip(num)
+
+	#?implname [num] eval 'reason'
+	    eval num tests or blocks and skip(num) on parsefail
+
+	#?implname [num] try 'reason'
+	    try num tests or blocks and fail on exception
+
+	#?implname [num] todo 'reason', :by<1.2.3>
+	    run num tests or blocks with todo() preset
+
+	#?implname emit your_ad_here();
+	    just pass through your_ad_here();
+
+	#?DOES count
+	    for all implementations, the following thing does count tests
+		(disables any attempt to autocount tests within the construct)
+		when construct is a sub, registers the sub name as tester
+		(and multiplies calls to tester sub by count tests)
+
+    where
+	implname is the lc name of your implementation, e.g. pugs or rakudo
+	num is the number of statements or blocks to preprocess, defaults to 1
+	count is how many tests the following construct counts as
+
+
 USAGE
 }
 
@@ -40,6 +62,8 @@ my $FUDGE = "";
 our $PENDING = 0;
 my $ARGS = '';
 my $IS = '\\b(?:is|ok|is_deeply|isnt|like|unlike|eval_dies_ok|cmp_ok|isa_ok|use_ok|throws_ok|dies_ok|pass|flunk)(?:\\b|_)';
+my %DOES;
+my $DOES = 0;
 
 @ARGV = ($IN);
 fudgeblock();
@@ -61,7 +85,11 @@ else {
 
 sub fudgeblock {
     while (<>) {
-	if (/^\s*\#\? (\w+) \: \s* (.*)/x and $1 eq $ME) {
+	if (/^\s*\#\?DOES[:\s] \s* (.*)/x) {
+	    $DOES = $1;
+	    next;
+	}
+	if (/^\s*\#\? (\w+)[:\s] \s* (.*)/x and $1 eq $ME) {
 	    $REALLY_FUDGED = 1;
 	    $ARGS = $2;
 	    if ($ARGS =~ s/^emit\s*//) {
@@ -78,16 +106,26 @@ sub fudgeblock {
 	    $FUDGE = $1;
 	}
 
-	next unless $PENDING > 0;
-
 	next if /^\s*#/;
 	next if /^\s*$/;
+
+	if ($DOES) {
+	    my ($keyword) = /^\s*(\w+|\{)/;
+	    if ($keyword eq 'sub') {
+		$DOES{$keyword} = $DOES;
+		$DOES = 0;
+		next;
+	    }
+	}
+
+	next unless $PENDING > 0;
 
 	if (/^\{/) {
 	    $PENDING--;
 	    if ($FUDGE eq 'todo') {
 		local $PENDING = 999999;	# do all in block as one action
 		$OUTPUT .= $_;
+		$DOES = 0;	# XXX ignore?
 		fudgeblock();
 		$_ = '';
 	    }
@@ -97,7 +135,13 @@ sub fudgeblock {
 		    $_ .= $more;
 		    last if $more =~ /^\}/;
 		}
-		my $numtests = () = m/^(\s*$IS)/mgx;
+		my $numtests = $DOES || do {
+		    my $tmp = $_;
+		    my $nt = 0;
+		    $nt += $1 while $tmp =~ s/^#\?DOES[:\s]\s*(\d+).*\n.*\n//m;
+		    $nt += () = $tmp =~ m/^(\s*$IS)/mgx;
+		    $nt;
+		};
 		if ($FUDGE eq 'skip') {
 		    s/^/# /mg;
 		    $_ = "skip($numtests, $ARGS);" . $_;
@@ -118,6 +162,7 @@ sub fudgeblock {
 	}
 	else {
 	    if ($FUDGE eq 'todo') {
+		$DOES = 0; 	# XXX ignore?
 		$PENDING -= s/^(\s*)/${1}todo($ARGS); / if /^\s*$IS/;
 	    }
 	    else {
@@ -126,19 +171,30 @@ sub fudgeblock {
 		    last unless $more;
 		    $_ .= $more;
 		}
-		next unless /^\s*$IS/;
+		my ($keyword) = /^\s*(\w+)/;
+		my $numtests;
+		if ($DOES{$keyword}) {
+		    $numtests = $DOES{$keyword};
+		}
+		elsif ($DOES) {
+		    $numtests = $DOES;
+		}
+		else {
+		    next unless /^\s*$IS/;
+		    $numtests = 1;
+		}
 		$PENDING--;
 		$_ = "{ " . $_ . " }";
 		if ($FUDGE eq 'skip') {
 		    s/^/# /mg;
-		    $_ = "skip(1,$ARGS); $_\n";
+		    $_ = "skip($numtests,$ARGS); $_\n";
 		}
 		elsif ($FUDGE eq 'try') {
 		    $_ = "try($_) // fail($ARGS)\n";
 		}
 		elsif ($FUDGE eq 'eval') {
 		    s/(['\\])/\\$1/g;
-		    $_ = "eval('$_') // skip(1,$ARGS);\n";
+		    $_ = "eval('$_') // skip($numtests,$ARGS);\n";
 		}
 		else {
 		    warn "Don't know how to mark statement for $FUDGE!\n";
