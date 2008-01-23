@@ -110,9 +110,9 @@ sub fudgeblock {
 	next if /^\s*$/;
 
 	if ($DOES) {
-	    my ($keyword) = /^\s*(\w+|\{)/;
-	    if ($keyword eq 'sub' or $keyword eq 'multi') {
+	    if (/^\s*(sub|multi|proto)\b/) {
 		my $tmp = $_;
+		$tmp =~ s/^\s*proto\s+//;
 		$tmp =~ s/^\s*multi\s+//;
 		$tmp =~ s/^\s*sub\s+//;
 		$tmp =~ /^(\w+)/;

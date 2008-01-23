@@ -58,7 +58,7 @@ ok !%hash.exists("42"), "exists on hashes (2)";
   my $ref = \( $empty_hash{'z'} );
   is( $empty_hash.pairs.sort.join( ',' ), '', "taking a reference to a hash element does not auto-vivify the element");
   foo( $empty_hash{'x'} );
-  #?pugs: todo 'bug'
+  #?pugs todo 'bug'
   is( $empty_hash.pairs.sort.join( ',' ), '', "empty hash stays same when read from (4)" );
 
   my $popul_hash = hash(('a'=>'b'),('c'=>'d'));
@@ -72,7 +72,7 @@ ok !%hash.exists("42"), "exists on hashes (2)";
   bar( $popul_hash{'y'} );
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (3)" );
   foo( $popul_hash{'x'} );
-  #?pugs: todo 'bug'
+  #?pugs todo 'bug'
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (4)" );
 }
 

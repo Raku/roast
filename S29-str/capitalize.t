@@ -20,12 +20,12 @@ is $a,                         "puGS Is cOOl!",  "original string not touched";
 is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 
 
-#?rakudo: skip "can't parse"
+#?rakudo eval "can't parse"
 {
     $_ = "puGS Is cOOl!";
     is .capitalize, "Pugs Is Cool!", 'capitalize() uses \$_ as default';
 }
 
 # Non-ASCII chars:
-#?rakudo: skip "unicode"
+#?rakudo skip "unicode"
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";

@@ -13,7 +13,7 @@ TODO: need some tests for chars with multiple markings.
 
 #L<S05/Modifiers/"The :b">
 
-#?pugs: 999 skip feature
+#?pugs 999 skip feature
 ok(!'ä' ~~ m/a/,  'No basechar: a doesnt match ä');
 ok('ä' ~~ m:b/a/, 'Basechar: a matches ä');
 ok('a' ~~ m:b/ä/, 'Basechar: ä matches a');

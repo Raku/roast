@@ -53,7 +53,7 @@ Basic tests for the chomp() builtin
 
 {
     my $foo = "foo\n";
-    #?pugs: todo 'chomp(...).newline marked as todo'
+    #?pugs todo 'chomp(...).newline marked as todo'
     my $chomped_foo = try { chomp($foo).newline };
     is($chomped_foo, "\n", 'chomp(...).newline returns the chomped value');
     is($foo, "foo\n", 'and our variable was not chomped');
@@ -62,7 +62,7 @@ Basic tests for the chomp() builtin
 {
     my $foo = "foo\n";
     $foo .= chomp;
-    #?pugs: todo '$foo .= chomp; $foo.newline marked as todo'
+    #?pugs todo '$foo .= chomp; $foo.newline marked as todo'
     my $chomped_foo = try { $foo.newline };
     is($chomped_foo, "\n", 'chomp(...).newline returns the chomped value');
     is($foo, "foo", 'and our variable was chomped');
@@ -116,7 +116,7 @@ Basic tests for the chomp() builtin
     is_deeply(@szundi, @foo, "chomp array with 2 elements with duplicate newlines");
 }
 
-#?rakudo: skip "trouble with pod"
+#?rakudo skip "trouble with pod"
 {
 =begin pod
 

@@ -39,7 +39,7 @@ is(index("Hello", "", 999), 5, "Substr is empty, pos > length of str");
 
 is(index("ababcabcd", "abcd"), 5, "Start-of-substr matches several times");  
 
-#?rakudo: 2 skip 'unicode'
+#?rakudo 2 skip 'unicode'
 is(index("uuúuúuùù", "úuù"), 4, "Accented chars");
 is(index("Ümlaut", "Ü"), 0, "Umlaut");
 

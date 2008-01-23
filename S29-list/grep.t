@@ -70,7 +70,7 @@ my @list = (1 .. 10);
 # "[S29] Mutating map and grep" on p6l started by Ingo Blechschmidt
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22553">) and S29 patch.
 
-#?rakudo: todo 'unspecced'
+#?rakudo todo 'unspecced'
 {
   my @array = <a b c d>;
   is ~(try { @array.grep:{ $_ ~= "c"; 1 } }), "ac bc cc dc",

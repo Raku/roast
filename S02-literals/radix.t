@@ -21,7 +21,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?pugs: todo 'feature'
+#?pugs todo 'feature'
 {
     is(:10(0b1110),  0d14, ':10(0b1110) converts from binary');
     is(:10(0x20),    0d32, ':10(0x20) converts from hexadecimal');
@@ -85,8 +85,8 @@ is(:16<0b1110>, 0xB1110, ':16<0b1110> uses b as hex digit'  );
 is(:16<0d37>,   0x0D37,  ':16<0d37> uses d as hex digit'     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
-#?rakudo: todo 'feature'
-#?pugs: todo :by<6.28>
+#?rakudo todo 'feature'
+#?pugs todo :by<6.28>
 {
     is(:16<0x20>,      0d32, ':16<0x20> stays hexadecimal');
     is(:16<0o377>,    0d255, ':16<0o255> converts from octal');
@@ -95,7 +95,7 @@ is(:16<0d37>,   0x0D37,  ':16<0d37> uses d as hex digit'     );
 # L<S02/Literals/"which will be interpreted as they would outside the string">
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
-#?pugs: todo 'feature'
+#?pugs todo 'feature'
 {
     is(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
@@ -138,8 +138,8 @@ is(:8<177777>, 65535, 'got the correct int value from oct 177777');
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo: todo 'feature'
-#?pugs: todo 'feature'
+#?rakudo todo 'feature'
+#?pugs todo 'feature'
 {
     is(:8(0b1110),  0d14, ':8(0b1110) converts from binary');
     is(:8(0x20),    0d32, ':8(0x20) converts from hexadecimal');
@@ -155,7 +155,7 @@ is(:2(1),     1, 'got the correct int value from bin 1');
 is(:2(10),    2, 'got the correct int value from bin 10');
 is(:2(1010), 10, 'got the correct int value from bin 1010');
 
-#?rakudo: 1 skip "can't parse"
+#?rakudo 1 skip "can't parse"
 is(
     :2(11111111111111111111111111111111),
     0xFFFFFFFF,
@@ -165,7 +165,7 @@ is(
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?pugs: todo 'feature'
+#?pugs todo 'feature'
 {
     is(:2<0b1110>,  0d14, ':2<0b1110> stays binary');
     is(:2<0x20>,    0d32, ':2<0x20> converts from hexadecimal');
@@ -174,20 +174,20 @@ is(
 }
 
 # L<S02/Literals/"not clear whether the exponentiator should be 10 or the radix">
-#?rakudo: 1 skip "can't parse"
+#?rakudo 1 skip "can't parse"
 isnt( eval("0b1.1e10"), 1536, 'Ambiguous, illegal syntax doesn\'t work' );
 
 # L<S02/Literals/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
-#?rakudo: 3 skip "can't parse"
+#?rakudo 3 skip "can't parse"
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
 is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
 
 # L<S02/Literals/"So we write those as">
 # these should be the same values as the previous tests
-#?pugs: todo 'feature'
-#?rakudo: 3 skip "can't parse"
+#?pugs todo 'feature'
+#?rakudo 3 skip "can't parse"
 is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
 is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
 is( eval('2«1.1*:2<10>**:2<10>»'),    6, 'Powers of two in <<>> works');

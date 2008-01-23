@@ -30,10 +30,10 @@ my @arr = <z z z>;
 
 is eval('@arr.pick(2)'), <z z>,  'method pick with $num < +@values';
 is eval('@arr.pick(4)'), <z z z>, 'method pick with $num > +@values';
-#?pugs: todo 'feature'
+#?pugs todo 'feature'
 is eval('@arr.pick(4, :repl)'), <z z z z>, 'method pick(:repl) with $num > +@values';
 
-#?pugs: 3 todo 'feature'
+#?pugs 3 todo 'feature'
 is eval('pick(2, @arr)'), <z z>, 'sub pick with $num < +@values';
 is eval('pick(4, @arr)'), <z z z>, 'sub pick with $num > +@values';
 is eval('pick(4, :repl, @arr)'), <z z z z>, 'sub pick(:repl) with $num > +@values';
@@ -45,5 +45,5 @@ my @value = gather {
     ';
 }
 
-#?pugs: todo 'feature'
+#?pugs todo 'feature'
 ok +@value == $c && $c, 'pick(*, :repl) is lazy';

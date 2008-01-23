@@ -16,7 +16,7 @@ Basic C<kv> tests, see S29.
 {
     my @a = ();
     @a = try { (1,).kv };
-    #?pugs: 2 todo 'bug'
+    #?pugs 2 todo 'bug'
     is(@a[0],0, "first element is 0");
     is(@a[1],1, "second element is 1");
 }
@@ -24,7 +24,7 @@ Basic C<kv> tests, see S29.
 # ('a',).kv works correctly
 {
     @a = try { ('a',).kv };
-    #?pugs: 2 todo 'bug'
+    #?pugs 2 todo 'bug'
     is(@a[0],0, "first element is 0");
     is(@a[1],'a', "second element is 'a'");
 }

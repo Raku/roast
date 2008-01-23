@@ -3,9 +3,9 @@ use Test;
 
 plan 9;
 
-#?pugs: 999 skip
-#?rakudo: 999 skip
-#?kp6: 999 skip
+#?pugs emit skip_rest("unimpl");
+#?rakudo emit skip_rest("unimpl");
+#?kp6 emit skip_rest("unimpl");
 
 #L<S05/Modifiers/"The :ii">
 

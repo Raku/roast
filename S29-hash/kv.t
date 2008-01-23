@@ -51,6 +51,7 @@ Basic C<kv> tests, see S29.
 
 # test3 and test4 illustrate a bug 
 
+#?DOES 2
 sub test1{
     my $pair = boo=>'baz'; 
     my $type = $pair.WHAT;
@@ -61,6 +62,7 @@ sub test1{
 }
 test1;
 
+#?DOES 2
 sub test2{
     my %pair = boo=>'baz'; 
     my $type = %pair.WHAT;
@@ -73,6 +75,7 @@ sub test2{
 test2;
 
 my %hash  = ('foo' => 'baz');
+#?DOES 2
 sub test3 (Hash %h){
   for %h.kv -> $key,$value {
         is($key, 'foo', "test3:  from {+%h}-elem {%h.WHAT} \%h got the right \$key");
@@ -86,6 +89,7 @@ sub test4 (Hash %h){
         is(%h.kv[$idx], %hash.kv[$idx], "test4: elem $idx of {%h.kv.elems}-elem {%h.kv.WHAT} \%hash.kv correctly accessed");
     }
 }
+#?DOES 2   # ???
 test4 %hash;
 
 # sanity
@@ -98,36 +102,36 @@ for %hash.kv -> $key,$value {
 {
     my %hash = (:a(1), :b(2), :c(3));
 
-    #?pugs: todo 'feature'
+    #?pugs todo 'feature'
     lives_ok { for %hash.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by %hash.kv should be rw (1)';
 
-    #?pugs: todo 'feature'
+    #?pugs todo 'feature'
     is %hash<b>, 102, 'aliases returned by %hash.kv should be rw (2)';
 }
 
 {
     my @array = (17, 23, 42);
 
-    #?pugs: todo 'feature'
+    #?pugs todo 'feature'
     lives_ok { for @array.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by @array.kv should be rw (1)';
 
-    #?pugs: todo 'feature'
+    #?pugs todo 'feature'
     is @array[1], 123, 'aliases returned by @array.kv should be rw (2)';
 }
 
 {
     my $pair = (a => 42);
 
-    #?pugs: todo 'feature'
+    #?pugs todo 'feature'
     lives_ok { for $pair.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by $pair.kv should be rw (1)';
 
-    #?pugs: todo 'feature'
+    #?pugs todo 'feature'
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
 }
 

@@ -31,6 +31,7 @@ my (@a,@b,@res);
 # to splice(). The intermediate array in the calls
 # should be removed later
 
+#?DOES 2
 sub splice_ok (Array @got, Array @ref, Array @exp, Array @exp_ref, Str $comment) {
   is "[@got[]]", "[@exp[]]", "$comment - results match";
   is @ref, @exp_ref, "$comment - array got modified in-place";
@@ -136,5 +137,5 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 # But this should generate a warning, but unfortunately we can't test for
 # warnings yet.
 
-#?pugs: todo 'bug'
+#?pugs todo 'bug'
 dies_ok({ 42.splice }, '.splice should not work on scalars');

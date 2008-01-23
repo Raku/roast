@@ -29,7 +29,7 @@ Basic C<pairs> tests, see S29.
   }
 }
 
-#?pugs: todo 'bug'
+#?pugs todo 'bug'
 {
     my @array = (17, 23, 42);
 

@@ -38,7 +38,7 @@ try {
     is( $foo.WHAT, Pair, 'arg to be given as die() arg contains a Pair value' );
     die $foo;
 };
-#?pugs: todo 'bug'
+#?pugs todo 'bug'
 is( $!.WHAT, Pair, 'following try { die() } with Pair arg, $! contains a Pair value');
 
 try {

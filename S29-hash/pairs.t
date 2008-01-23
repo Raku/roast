@@ -47,7 +47,7 @@ Basic C<pairs> tests, see S29.
 {
   my $hash_of_2_pairs = {'a'=>'b','c'=>'d'};
   my $hash_of_1_pair = {'a'=>'b'};
-  #?:pugs 2 todo 'feature'
+  #?pugs 2 todo 'feature'
   is( $hash_of_2_pairs.pairs.sort.join( ',' ), "a\tb,c\td",
     "pairs() on 2-elem hash, 1-depth joined");
   is( $hash_of_1_pair.pairs.sort.join( ',' ), "a\tb",
@@ -68,7 +68,7 @@ Basic C<pairs> tests, see S29.
     is %hash<b>, 102, 'aliases returned by %hash.pairs should be rw (2)';
 }
 
-#?pugs: todo 'bug'
+#?pugs todo 'bug'
 {
     my $pair = (a => 42);
 
