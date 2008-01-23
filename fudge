@@ -111,8 +111,12 @@ sub fudgeblock {
 
 	if ($DOES) {
 	    my ($keyword) = /^\s*(\w+|\{)/;
-	    if ($keyword eq 'sub') {
-		$DOES{$keyword} = $DOES;
+	    if ($keyword eq 'sub' or $keyword eq 'multi') {
+		my $tmp = $_;
+		$tmp =~ s/^\s*multi\s+//;
+		$tmp =~ s/^\s*sub\s+//;
+		$tmp =~ /^(\w+)/;
+		$DOES{$1} = $DOES;
 		$DOES = 0;
 		next;
 	    }
@@ -139,6 +143,10 @@ sub fudgeblock {
 		    my $tmp = $_;
 		    my $nt = 0;
 		    $nt += $1 while $tmp =~ s/^#\?DOES[:\s]\s*(\d+).*\n.*\n//m;
+		    if (%DOES) {
+			my $does = join('|',keys(%DOES));
+			$nt += $DOES{$1} while $tmp =~ s/^\s*($does)\b//mx;
+		    }
 		    $nt += () = $tmp =~ m/^(\s*$IS)/mgx;
 		    $nt;
 		};

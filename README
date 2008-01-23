@@ -37,6 +37,8 @@ platform is named "humpty" then your special comment lines look like:
 
     #?humpty: [NUM] VERB ARGS
 
+(The colon is optional.)
+
 The optional NUM says how many statements or blocks to apply the
 verb to.  (If not supplied, a value of 1 is assumed).  VERBs include:
 
@@ -48,6 +50,14 @@ verb to.  (If not supplied, a value of 1 is assumed).  VERBs include:
 
 All fudged tests return an exit code of 1 by default, so the test harness
 will mark it as "dubious" even if all the tests supposedly pass.
+
+There is also the following directive which modifies the test count of
+the next construct:
+
+    #?DOES count
+
+When applied to a subsequent sub definition, registers the sub name as
+doing that many tests when called.
 
 When you run the fudge preprocessor, if it decides the test needs
 fudging, it returns the new fudged filename; otherwise it returns
