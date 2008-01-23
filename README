@@ -40,7 +40,11 @@ platform is named "humpty" then your special comment lines look like:
 (The colon is optional.)
 
 The optional NUM says how many statements or blocks to apply the
-verb to.  (If not supplied, a value of 1 is assumed).  VERBs include:
+verb to.  (If not supplied, a value of 1 is assumed).  A statement
+is arbitrarily defined as one or more lines starting with a test call
+and ending in semicolon (with an optional comment).
+
+VERBs include:
 
     skip "reason"	# skip test entirely
     eval "reason"	# eval the test because it doesn't parse yet
