@@ -60,8 +60,14 @@ the next construct:
 
     #?DOES count
 
+The count may be an expression as long as any variables referenced in
+the expression are in scope at the location fudge eventually inserts a
+"skip()" call.
+
 When applied to a subsequent sub definition, registers the sub name as
-doing that many tests when called.
+doing that many tests when called.  Note, however, that any skipping
+is done at the point of the call, not within the subroutine, so the count
+may not refer to any parameter of the sub.
 
 When you run the fudge preprocessor, if it decides the test needs
 fudging, it returns the new fudged filename; otherwise it returns
