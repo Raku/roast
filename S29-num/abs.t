@@ -4,11 +4,14 @@ plan 40;
 
 # L<S29/Num/"=item abs">
 
+#?rakudo skip 'Cannot parse pod'
+{
 =pod
 
 Basic tests for the abs() builtin
 
 =cut
+}
 
 for(0, 0.0, 1, 50, 60.0, 99.99) {
     is(abs($_), $_, "got the right absolute value for $_");
