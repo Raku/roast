@@ -2,7 +2,7 @@ use v6-alpha;
 
 use Test;
 
-plan 2732;
+plan 27;
 
 =pod
 
