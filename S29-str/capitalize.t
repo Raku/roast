@@ -20,7 +20,8 @@ is $a,                         "puGS Is cOOl!",  "original string not touched";
 is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 
 
-#?rakudo eval "can't parse"
+# should be eval but rakudo doesn't do eval yet...
+#?rakudo skip "can't parse"
 {
     $_ = "puGS Is cOOl!";
     is .capitalize, "Pugs Is Cool!", 'capitalize() uses \$_ as default';
