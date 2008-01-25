@@ -85,7 +85,7 @@ is(:16<0b1110>, 0xB1110, ':16<0b1110> uses b as hex digit'  );
 is(:16<0d37>,   0x0D37,  ':16<0d37> uses d as hex digit'     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
-#?rakudo todo 'feature'
+#?rakudo try 'feature'
 #?pugs todo :by<6.28>
 {
     is(:16<0x20>,      0d32, ':16<0x20> stays hexadecimal');
@@ -138,13 +138,13 @@ is(:8<177777>, 65535, 'got the correct int value from oct 177777');
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo todo 'feature'
+#?rakudo try 'feature'
 #?pugs todo 'feature'
 {
-    is(:8(0b1110),  0d14, ':8(0b1110) converts from binary');
-    is(:8(0x20),    0d32, ':8(0x20) converts from hexadecimal');
-    is(:8(0o377),  0d255, ':8(0o255) stays octal');
-    is(:8(0d37),    0d37, ':8(0d37) converts from decimal');
+    is(:8(0b1110),  0o14, ':8(0b1110) converts from decimal');
+    is(:8(0x20),    0o32, ':8(0x20) converts from decimal');
+    is(:8(0o377),  0o255, ':8(0o255) stays decimal');
+    is(:8(0d37),    0o37, ':8(0d37) converts from decimal');
 }
 
 
