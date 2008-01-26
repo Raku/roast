@@ -1,7 +1,7 @@
 use v6-alpha;
-use Test
+use Test;
 
-plan tests => 3;
+plan 3;
 
 # L<S29/Any/"=item cmp">
 
