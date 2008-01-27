@@ -13,6 +13,7 @@ Basic C<kv> tests, see S29.
 # L<S29/"Array"/=item kv>
 
 # (1,).kv works correctly
+#?rakudo skip 'parsefail'
 {
     my @a = ();
     @a = try { (1,).kv };
@@ -22,6 +23,7 @@ Basic C<kv> tests, see S29.
 }
 
 # ('a',).kv works correctly
+#?rakudo skip 'parsefail'
 {
     @a = try { ('a',).kv };
     #?pugs 2 todo 'bug'
@@ -43,5 +45,6 @@ Basic C<kv> tests, see S29.
     is(~@kv, "0 a 1 b 2 c 3 d", 'kv(@array) has no inner list');
 }
 
+#?rakudo skip 'dies_ok not implemented'
 # Check that (42).kv does *not* work, as this it the same as $some_int.kv:
 dies_ok { (42).kv }, "(42).kv should not and does not work";
