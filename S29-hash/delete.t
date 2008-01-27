@@ -5,7 +5,7 @@ plan 11;
 
 # L<S29/Hash/=item delete>
 
-=pod
+=begin pod
 
 Test delete method of Spec Functions.
 
@@ -15,10 +15,12 @@ Test delete method of Spec Functions.
   Deletes the elements specified by C<$key> or C<$keys> from the invocant.
   returns the value(s) that were associated to those keys.
 
-=cut
+=end pod
 
 sub gen_hash {
-    my %h{'a'..'z'} = (1..26);
+    my %h;
+    my $i;
+    for 'a'..'z' { %h{$_} = ++$i; }
     return %h;
 }
 
