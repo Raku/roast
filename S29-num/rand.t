@@ -4,14 +4,11 @@ use Test;
 
 plan 2 + 2*10 + 4;
 
-#?rakudo skip 'Cannot parse pod'
-{
-=pod 
+=begin pod
 
 Basic tests for the rand() builtin
 
-=cut
-}
+=end pod
 
 # L<S29/Num/"=item rand">
 
@@ -25,19 +22,23 @@ for 1 .. 10 {
 
 # L<S29/Num/"=item srand">
 
+#?rakudo skip 'parsefail'
 ok(srand(1), 'srand(1) parses');
 
-sub repeat_rand ($seed) {
-	srand($seed);
-	for 1..99 { rand(); }
-	return rand();
+#?rakudo skip 'parsefail'
+{
+    sub repeat_rand ($seed) {
+	    srand($seed);
+    	for 1..99 { rand(); }
+	    return rand();
+    }
+
+    ok(repeat_rand(314159) == repeat_rand(314159),
+        'srand() provides repeatability for rand()');
+
+    ok(repeat_rand(0) == repeat_rand(0),
+        'edge case: srand(0) provides repeatability');
+
+    ok(repeat_rand(0) != repeat_rand(1),
+        'edge case: srand(0) not the same as srand(1)');
 }
-
-ok(repeat_rand(314159) == repeat_rand(314159),
-    'srand() provides repeatability for rand()');
-
-ok(repeat_rand(0) == repeat_rand(0),
-    'edge case: srand(0) provides repeatability');
-
-ok(repeat_rand(0) != repeat_rand(1),
-    'edge case: srand(0) not the same as srand(1)');

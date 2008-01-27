@@ -4,16 +4,20 @@ plan 10;
 
 # L<S29/Num/"=item roots">
 
-sub has_approx($n, @list) {
-    for @list -> my $i {
-        if approx($i, $n) {
-            return 1;
+#?rakudo skip 'parsefail'
+{
+    sub has_approx($n, @list) {
+        for @list -> my $i {
+            if approx($i, $n) {
+                return 1;
+            }
         }
+        return undef;
     }
-    return undef;
 }
 
 #?pugs todo 'feature'
+#?rakudo skip 'parsefail'
 {
     my @l = eval('roots(-1, 2)');
     ok(!$!, 'roots($x, $n) compiles');
@@ -23,6 +27,7 @@ sub has_approx($n, @list) {
 }
 
 #?pugs todo 'feature'
+#?rakudo skip 'parsefail'
 {
     my @l = eval('16.roots(4)');
     ok(!$!, '$x.roots($n) compiles');

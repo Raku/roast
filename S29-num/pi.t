@@ -4,18 +4,19 @@ plan 6;
 
 # L<S29/Num/"Num provides a number of constants">
 
-#?rakudo skip 'Cannot parse pod'
-{
+=begin pod
+
 =head1 DESCRIPTION
 
 Basic tests for builtin Num::pi
 
-=cut
-}
+=end pod
+
 
 # See also: L<"http://theory.cs.iitm.ernet.in/~arvindn/pi/"> :)
 my $PI = 3.14159265358979323846264338327950288419716939937510;
 
+#?rakudo 6 skip 'eval not implemented'
 is_approx((eval("Num::pi "), $PI), 
                         "Num::pi");
 

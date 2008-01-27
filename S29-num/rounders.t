@@ -7,14 +7,11 @@ plan 36;
 # L<S29/Num/"=item truncate">
 # L<S29/Num/"=item ceiling">
 
-#?rakudo skip 'Cannot parse pod'
-{
-=pod
+=begin pod
 
 Basic tests for the round(), floor(), truncate() and ceil() built-ins
 
-=cut
-}
+=end pod
 
 my %tests =
     ( ceiling => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 2 ],
@@ -31,10 +28,10 @@ my %tests =
          [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ]  ],
     );
 
-if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-    skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
-    exit;
-}
+#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
+#?pugs emit     skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit     exit;
+#?pugs emit }
 
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});	# XXX .[] doesn't work yet!
