@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"List"/"=item grep">
 
-=kwid
+=begin pod
 
 built-in grep tests
 
-=cut
+=end pod
 
 plan 29;
 

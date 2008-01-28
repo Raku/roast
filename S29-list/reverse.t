@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/List/"=item reverse">
 
-=pod
+=begin pod
 
 Basic test for the reverse() builtin with a string (Str).
 
-=cut
+=end pod
 
 plan 44;
 
@@ -34,13 +34,13 @@ is( 'ä€»«'.reverse,   '«»€ä', "some unicode characters" );
 
 # L<S29/"List"/"=item reverse">
 
-=kwid
+=begin pod
 
 Tests for "reverse" builtin with lists.
 
 NOTE: "reverse" is no longer context-sensitive.  See S29.
 
-=cut
+=end pod
 
 
 my @a = reverse(1, 2, 3, 4);

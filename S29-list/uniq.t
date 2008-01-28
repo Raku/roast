@@ -4,7 +4,7 @@ use Test;
 
 plan 9;
 
-=head1 DESCRIPTION
+=begin description
 
 This test tests the C<uniq> builtin.
 
@@ -13,7 +13,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 See the thread "[S29] uniq" on p6l, too.
 
-=cut
+=end description
 
 {
   my @array = <a b b c d e b b b b f b>;

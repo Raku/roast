@@ -2,14 +2,14 @@ use v6-alpha;
 
 use Test;
 
-=head1 DESCRIPTION
+=begin description
 
 This test tests the C<reduce> builtin.
 
 Reference:
 L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
-=cut
+=end description
 
 plan 11;
 

@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"List"/"=item first">
 
-=kwid
+=begin pod
 
 built-in "first" tests
 
-=cut
+=end pod
 
 plan 9;
 

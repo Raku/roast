@@ -4,11 +4,11 @@ plan 60;
 
 # L<S29/"List"/"=item map">
 
-=kwid
+=begin pod
 
  built-in map tests
 
-=cut
+=end pod
 
 
 my @list = (1 .. 5);
@@ -112,7 +112,7 @@ my @list = (1 .. 5);
   is ~(42,).map:{ $_ }, "42",   "method form of map should work on arrays";
 }
 
-=pod
+=begin pod
 
 Test that a constant list can have C<map> applied to it.
 
@@ -123,7 +123,7 @@ should be equivalent to
   my @val = ("foo","bar");
   @val = map { substr($_,1,1) }, @val;
 
-=cut
+=end pod
 
 {
   my @expected = ("foo","bar");
