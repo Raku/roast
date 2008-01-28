@@ -4,12 +4,12 @@ plan 10;
 
 # L<S29/Context/"=item die">
 
-=pod
+=begin pod
 
 Tests that die() preserves the data type of its argument, 
 and does not cast its argument as a Str.
 
-=cut
+=end pod
 
 
 try {

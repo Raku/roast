@@ -4,11 +4,11 @@ plan 8;
 
 # L<S29/Context/"=item eval">
 
-=pod
+=begin pod
 
 Tests for the eval() builtin
 
-=cut
+=end pod
 
 
 # eval should evaluate the code in the lexical scope of eval's caller

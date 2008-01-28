@@ -4,11 +4,11 @@ plan 14;
 
 # L<S29/Context/=item die>
 
-=pod
+=begin pod
 
 Tests for the die() builtin
 
-=cut
+=end pod
 
 ok(!try { die "foo"; 1 });
 my $error = $!;

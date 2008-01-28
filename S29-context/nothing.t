@@ -2,11 +2,11 @@ use v6-alpha;
 
 use Test;
 
-=head1 DESCRIPTION
+=begin description
 
 Test for the C<nothing> builtin.
 
-=cut
+=end description
 
 # L<S29/Context/=item nothing>
 
@@ -17,5 +17,7 @@ lives_ok { nothing }, "nothing() works";
 # Probably the most commonly used form:
 my $var;
 nothing while $var++ < 3;
+
 # We're still here, so pass().
 pass "nothing() works in while";
+
