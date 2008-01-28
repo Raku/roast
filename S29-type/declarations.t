@@ -3,14 +3,11 @@ use Test;
 
 # L<S29/"Type Declarations">
 
-#?rakudo skip 'Cannot parse pod'
-{
-=kwid
+=begin pod
 
 Test for some type declarations for built-in functions. 
 
-=cut
-}
+=end pod
 
 plan 9;
 
