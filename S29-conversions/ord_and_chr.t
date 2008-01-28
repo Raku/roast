@@ -2,11 +2,11 @@ use v6-alpha;
 
 use Test;
 
-=pod
+=begin pod
 
 Basic tests for the ord() and chr() built-in.
 
-=cut
+=end pod
 
 # L<S29/Conversions/ord>
 # L<S29/Conversions/chr>
