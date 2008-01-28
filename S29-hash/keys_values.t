@@ -4,11 +4,11 @@ use Test;
 
 plan 12;
 
-=pod
+=begin pod
 
 Basic C<keys> and C<values> tests for hashes and pairs, see S29.
 
-=cut
+=end pod
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
 

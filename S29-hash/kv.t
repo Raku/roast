@@ -4,11 +4,11 @@ use Test;
 
 plan 27;
 
-=pod
+=begin pod
 
 Basic C<kv> tests, see S29.
 
-=cut
+=end pod
 
 # L<S29/"Hash"/=item kv>
 { # check the invocant form

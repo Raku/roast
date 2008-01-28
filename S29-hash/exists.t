@@ -3,11 +3,11 @@ use Test;
 
 plan 19;
 
-=head1 DESCRIPTION
+=begin description
 
 Basic C<exists> tests on hashes, see S29.
 
-=cut
+=end description
 
 # L<S29/"Hash"/=item exists>
 

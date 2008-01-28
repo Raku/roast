@@ -5,14 +5,14 @@ plan 2;
 # L<S29/"Hash">
 # there's probably a better smart link
 
-=kwid 
+=begin pod
 
 Isa tests
 
-=cut
+=end pod
 
-
-{   my %hash = <1 2 3 4>;
+{
+    my %hash = <1 2 3 4>;
     isa_ok(%hash, 'Hash');
     isa_ok(%hash, 'List');
 }
