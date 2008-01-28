@@ -2,14 +2,14 @@ use v6-alpha;
 
 use Test;
 
-=pod
+=begin pod
 
 The zip() builtin and operator tests
 
 L<S03/"Traversing arrays in parallel">
 L<S29/Container/"=item zip">
 
-=cut
+=end pod
 
 plan 9;
 

@@ -6,14 +6,14 @@ plan 8;
 
 # L<S29/Container/"=item roundrobin">
 
-=pod
+=begin pod
 
 Tests of
 
   our Lazy multi Container::roundrobin( Bool :$shortest,
       Bool :$finite, *@@list );
 
-=cut
+=end pod
 
 ok(roundrobin() eqv (), 'roundrobin null identity');
 

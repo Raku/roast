@@ -6,13 +6,13 @@ plan 6;
 
 # L<S29/Container/"=item cat">
 
-=pod
+=begin pod
 
 Tests of
 
   our Lazy multi Container::cat( *@@list );
 
-=cut
+=end pod
 
 ok(cat() eqv (), 'cat null identity');
 
