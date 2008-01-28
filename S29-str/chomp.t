@@ -116,14 +116,11 @@ Basic tests for the chomp() builtin
     is_deeply(@szundi, @foo, "chomp array with 2 elements with duplicate newlines");
 }
 
-#?rakudo skip "trouble with pod"
-{
 =begin pod
 
 Basic tests for the chomp() builtin working on an array of strings
 
 =end pod
-}
 
 # L<S29/Str/=item chomp>
 

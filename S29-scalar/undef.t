@@ -2,14 +2,14 @@ use v6-alpha;
 
 use Test;
 
-=kwid
+=begin pod
 
 `undef` and `undefine` tests
 
 This test file contains two sections: a port of the perl5 `undef.t` tests, and
 perl6-specific tests.
 
-=cut
+=end pod
 
 # Note: See thread "Undef issues" by Adrian Taylor on p6l
 # L<http://groups.google.com/groups?threadm=20050601002444.GB32060@wall.org>
@@ -25,7 +25,9 @@ perl6-specific tests.
 plan 74;
 
 our $GLOBAL;
+
 # L<S29/Scalar/"=item undef">
+
 is(undef, undef, "undef is equal to undef");
 ok(!defined(undef), "undef is not defined");
 
@@ -51,6 +53,7 @@ ok(!defined(undef), "undef is not defined");
     $a = $GLOBAL;
     ok(!defined($a), "assigning another undef global");
 }
+
 # L<S29/Scalar/"=item undefine">
 {
     my @ary = "arg1";
@@ -134,11 +137,11 @@ is($interesting, 2, "Undef on LHS of function assignment");
 ($interesting, undef) = two_elements();
 is($interesting, 1, "Undef on LHS of function assignment");
 
-=kwid
+=begin pod
 
 Perl6-specific tests
 
-=cut
+=end pod
 
 {
     # aggregate references

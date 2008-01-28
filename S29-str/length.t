@@ -4,7 +4,7 @@ use Test;
 
 # L<S29/Str/=item length>
 
-=kwid
+=begin pod
 
 Various length tests (though "length" should not be used)
 
@@ -13,7 +13,7 @@ and needs more careful tests.
 
 L<"http://www.unicode.org/unicode/reports/tr11/">
 
-=cut
+=end pod
 
 plan 54;
 

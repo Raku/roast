@@ -4,14 +4,11 @@ plan 6;
 
 # L<S29/"The :Trig tag">
 
-#?rakudo skip 'Cannot parse pod'
-{
-=head1 DESCRIPTION
+=begin description
 
 Basic tests for trigonometric functions.
 
-=cut
-}
+=end description
 
 # See also: L<"http://en.wikipedia.org/wiki/E_%28mathematical_constant%29"> :)
 my $e = 2.71828182845904523536;

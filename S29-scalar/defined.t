@@ -4,11 +4,11 @@ plan 21;
 
 # L<S29/Scalar/"=item defined">
 
-=pod
+=begin pod
 
 Tests for the defined() builtin
 
-=cut
+=end pod
 
 
 

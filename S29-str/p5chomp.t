@@ -1,11 +1,11 @@
 use v6-alpha;
 use Test;
 
-=kwid 
+=begin pod
 
 L<S29/Str/"=item p5chomp">
 
-=cut
+=end pod
 
 plan 6;
 

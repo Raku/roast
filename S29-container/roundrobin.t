@@ -43,4 +43,4 @@ flunk('roundrobin :finite');
 ok(roundrobin(:finite, 1; 1..2; 1..3) eqv (1), 'roundrobin :shortest',
     :todo<feature>);
 
-=cut
+=end lazy_roundrobin

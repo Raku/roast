@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/Str/"=item samecase">
 
-=pod
+=begin pod
 
 Basic test for the samecase() builtin with a string (Str).
 
-=cut
+=end pod
 
 plan 8;
 

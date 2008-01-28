@@ -14,7 +14,7 @@ if $?OS ne 'MSWin32' {
    exit;
 }
 
-=kwid
+=begin pod
 
 Test the interaction of system(LIST) and whitespace characters. In
 an ideal world, system() does Just Enough quoting of the parameters
@@ -31,7 +31,7 @@ programs, especially if double-quotes as parameters are involved.
 
 Haskell's automagic quoting seems to be amazingly good though.
 
-=cut
+=end pod
 
 # Win32 specific tests for system() being sane enough
 

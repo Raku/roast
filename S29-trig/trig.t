@@ -4,14 +4,11 @@ plan 51;
 
 # L<S29/"The :Trig tag">
 
-#?rakudo skip 'Cannot parse pod'
-{
-=head1 DESCRIPTION
+=begin description
 
 Basic tests for trigonometric functions.
 
-=cut
-}
+=end description
 
 # See also: L<"http://theory.cs.iitm.ernet.in/~arvindn/pi/"> :)
 my $PI = 3.14159265358979323846264338327950288419716939937510;
