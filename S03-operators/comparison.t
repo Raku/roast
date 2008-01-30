@@ -18,7 +18,6 @@ is('a' leg 'b', -1, 'a leg b is increase');
 is('b' leg 'a', 1,  'b leg a is decrease');
 
 #L<S03/Comparison semantics>
-#L<S29/Any/"=item cmp">
 
 # cmp comparison
 is('a' cmp 'a', 0,  'a cmp a is same');
