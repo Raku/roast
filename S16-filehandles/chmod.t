@@ -42,7 +42,8 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
     my $file = create_temporary_file;
     my @result = chmod 0o000, $file;
     is +@result, 1, "One file successfully changed";
-    is @result[0], $file, "name of the file returned", :todo;
+    #?pugs todo ''
+    is @result[0], $file, "name of the file returned";
     if ($*EUID) {
         ok $file ~~ :!r, "not readable after 0";
         ok $file ~~ :!w, "not writeable after 0";
@@ -59,7 +60,8 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
     my $file = create_temporary_file;
     my @result = chmod 0o700, $file;
     is +@result, 1, "One file successfully changed";
-    is @result[0], $file, "name of the file returned", :todo;
+    #?pugs todo ''
+    is @result[0], $file, "name of the file returned";
 
     ok $file ~~ :r, "readable after 700";
     ok $file ~~ :w, "writabel after 700";
@@ -72,7 +74,8 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
     my $file = create_temporary_file;
     my @result = chmod 0o777, $file;
     is +@result, 1, "One file successfully changed";
-    is @result[0], $file, "name of the file returned", :todo;
+    #?pugs todo ''
+    is @result[0], $file, "name of the file returned";
 
     ok $file ~~ :r, "readable after 777";
     ok $file ~~ :w, "writable after 777";
