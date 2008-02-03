@@ -41,7 +41,8 @@ if $*OS eq "browser" {
   for 0..@slurped_lines-1 -> $i {
     $diff += @slurped_lines[$i] eq @expected_lines[$i] ?? 1 !! 0;
   }
-  is $diff, 0, "all the lines are the same", :todo;
+  #?pugs todo ''
+  is $diff, 0, "all the lines are the same";
 
   # chomp does not work on arrays yet
   my @chomped_lines;

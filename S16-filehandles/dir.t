@@ -16,11 +16,11 @@ if ($*OS eq any <browser>) {
     exit;
 }
 
-=pod
+=begin pod
 
 opendir/readdir support
 
-=cut
+=end pod
 
 my $dir = opendir($FindBin::Bin);
 isa_ok($dir, IO::Dir, "opendir worked on $FindBin::Bin");
