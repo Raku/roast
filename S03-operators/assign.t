@@ -4,7 +4,7 @@ use Test;
 #                      +---- UTF8 non-breaking space here!
 #                      |
 #                      V
-# L<S03/Changes to Perl 5 operators/list (array) assignment operator now parses on the right>
+# L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
 plan 304;
 
