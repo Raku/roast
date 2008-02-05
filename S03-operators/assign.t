@@ -262,48 +262,48 @@ my @p;
     my $x = 42;
     @p = $x -= 6, 7;
     is($x, 36, '-= operator');
-    is(@p[0],36, "YY= operator parses as item assignment 1");
-    is(@p[1],7, "YY= operator parses as item assignment 2");
+    is(@p[0],36, "-= operator parses as item assignment 1");
+    is(@p[1],7, "-= operator parses as item assignment 2");
 }
 
 {
     my $x = 4;
     @p = $x *= 3, 2;
     is($x, 12, '*= operator');
-    is(@p[0],12, "YY= operator parses as item assignment 1");
-    is(@p[1],12, "YY= operator parses as item assignment 2");
+    is(@p[0],12, "*= operator parses as item assignment 1");
+    is(@p[1],12, "*= operator parses as item assignment 2");
 }
 
 {
     my $x = 6;
     @p = $x /= 3, 4;
     is($x, 2, '/= operator');
-    is(@p[0],2, "YY= operator parses as item assignment 1");
-    is(@p[1],4, "YY= operator parses as item assignment 2");
+    is(@p[0],2, "/= operator parses as item assignment 1");
+    is(@p[1],4, "/= operator parses as item assignment 2");
 }
 
 {
     my $x = 2;
     @p = $x **= 3, 4;
     is($x, 8, '**= operator');
-    is(@p[0],8, "YY= operator parses as item assignment 1");
-    is(@p[1],4, "YY= operator parses as item assignment 2");
+    is(@p[0],8, "**= operator parses as item assignment 1");
+    is(@p[1],4, "**= operator parses as item assignment 2");
 }
 
 {
     my $x = "abc";
     @p = $x ~= "yz", "plugh";
     is($x, 'abcyz', '~= operator');
-    is(@p[0],'abcyz', "YY= operator parses as item assignment 1");
-    is(@p[1],'plugh', "YY= operator parses as item assignment 2");
+    is(@p[0],'abcyz', "~= operator parses as item assignment 1");
+    is(@p[1],'plugh', "~= operator parses as item assignment 2");
 }
 
 {
     my $x = "abc";
     @p = $x x= 3, 4;
     is($x, 'abcabcabc', 'x= operator');
-    is(@p[0],'abcabcabc', "YY= operator parses as item assignment 1");
-    is(@p[1],4, "YY= operator parses as item assignment 2");
+    is(@p[0],'abcabcabc', "x= operator parses as item assignment 1");
+    is(@p[1],4, "x= operator parses as item assignment 2");
 }
 
 {
@@ -317,79 +317,79 @@ my @p;
     is(@x[4], 'a', 'xx= operator 4');
     is(@x[5], 'z', 'xx= operator 5');
     is(@x[6], undef, 'xx= operator 6');
-    is(~@p,~(@x,4), "YY= operator parses as item assignment 1");
+    is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
 {
     my $x = 1;
     @p = $x +&= 2, 3;
     is($x, 0, '+&= operator');
-    is(@p[0],0, "YY= operator parses as item assignment 1");
-    is(@p[1],3, "YY= operator parses as item assignment 2");
+    is(@p[0],0, "+&= operator parses as item assignment 1");
+    is(@p[1],3, "+&= operator parses as item assignment 2");
 }
 
 {
     my $x = 1;
     @p = $x +|= 2, 123;
     is($x, 3, '+|= operator');
-    is(@p[0],3, "YY= operator parses as item assignment 1");
-    is(@p[1],123, "YY= operator parses as item assignment 2");
+    is(@p[0],3, "+|= operator parses as item assignment 1");
+    is(@p[1],123, "+|= operator parses as item assignment 2");
 }
 
 {
     my $x = "z";
     @p = $x ~&= "I", "J";
     is($x, 'H', '~&= operator');
-    is(@p[0],'H', "YY= operator parses as item assignment 1");
-    is(@p[1],'J', "YY= operator parses as item assignment 2");
+    is(@p[0],'H', "~&= operator parses as item assignment 1");
+    is(@p[1],'J', "~&= operator parses as item assignment 2");
 }
 
 {
     my $x = "z";
     @p = $x ~|= "I", "J";
     is($x, '{', '~|= operator');
-    is(@p[0],'{', "YY= operator parses as item assignment 1");
-    is(@p[1],'J', "YY= operator parses as item assignment 2");
+    is(@p[0],'{', "~|= operator parses as item assignment 1");
+    is(@p[1],'J', "~|= operator parses as item assignment 2");
 }
 
 {
     my $x = 4;
     @p = $x %= 3, 4;
     is($x, 1, '%= operator');
-    is(@p[0],1, "YY= operator parses as item assignment 1");
-    is(@p[1],4, "YY= operator parses as item assignment 2");
+    is(@p[0],1, "%= operator parses as item assignment 1");
+    is(@p[1],4, "%= operator parses as item assignment 2");
 }
 
 {
     my $x = 1;
     @p = $x +^= 3, 4;
     is($x, 2, '+^= operator');
-    is(@p[0],2, "YY= operator parses as item assignment 1");
-    is(@p[1],4, "YY= operator parses as item assignment 2");
+    is(@p[0],2, "+^= operator parses as item assignment 1");
+    is(@p[1],4, "+^= operator parses as item assignment 2");
 }
 
 {
     my $x = "z";
     @p = $x ~^= "C", "D";
     is($x, 9, '~^= operator');
-    is(@p[0],9, "YY= operator parses as item assignment 1");
-    is(@p[1],'D', "YY= operator parses as item assignment 2");
+    is(@p[0],9, "~^= operator parses as item assignment 1");
+    is(@p[1],'D', "~^= operator parses as item assignment 2");
 }
 
 {
     my $x = 0;
     @p = $x ^^= 42, 43;
     is($x, 42, '^^= operator');
-    is(@p[0],42, "YY= operator parses as item assignment 1");
-    is(@p[1],43, "YY= operator parses as item assignment 2");
+    is(@p[0],42, "^^= operator parses as item assignment 1");
+    is(@p[1],43, "^^= operator parses as item assignment 2");
 }
 
 {
     my $x = 42;
     @p = $x ?|= 24, 25;
     is($x, 1, '?|= operator');
-    is(@p[0],1, "YY= operator parses as item assignment 1");
-    is(@p[1],25, "YY= operator parses as item assignment 2");
+    is(@p[0],1, "?|= operator parses as item assignment 1");
+    is(@p[1],25, "?|= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
@@ -397,8 +397,8 @@ my @p;
     my $x = 42;
     @p = $x ?&= 24, 25;
     is($x, 1, '?&= operator');
-    is(@p[0],1, "YY= operator parses as item assignment 1");
-    is(@p[1],25, "YY= operator parses as item assignment 2");
+    is(@p[0],1, "?&= operator parses as item assignment 1");
+    is(@p[1],25, "?&= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
@@ -406,8 +406,8 @@ my @p;
     my $x = 0;
     @p = $x ?^= 42, 43;
     is($x, 1, '?^= operator');
-    is(@p[0],1, "YY= operator parses as item assignment 1");
-    is(@p[1],43, "YY= operator parses as item assignment 2");
+    is(@p[0],1, "?^= operator parses as item assignment 1");
+    is(@p[1],43, "?^= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
@@ -415,8 +415,8 @@ my @p;
     my $x = 1;
     @p = $x +<= 8, 9;
     is($x, 256, '+<= operator');
-    is(@p[0],256, "YY= operator parses as item assignment 1");
-    is(@p[1],9, "YY= operator parses as item assignment 2");
+    is(@p[0],256, "+<= operator parses as item assignment 1");
+    is(@p[1],9, "+<= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
@@ -424,8 +424,8 @@ my @p;
     my $x = 511;
     @p = $x +>= 8, 9;
     is($x, 1, '+>= operator');
-    is(@p[0],1, "YY= operator parses as item assignment 1");
-    is(@p[1],9, "YY= operator parses as item assignment 2");
+    is(@p[0],1, "+>= operator parses as item assignment 1");
+    is(@p[1],9, "+>= operator parses as item assignment 2");
 }
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
@@ -434,8 +434,8 @@ my @p;
     my $x = "a";
     @p = $x ~<= 8, 9;
     is($x, "a\0", '~<= operator');
-    is(@p[0],"a\0", "YY= operator parses as item assignment 1");
-    is(@p[1],9, "YY= operator parses as item assignment 2");
+    is(@p[0],"a\0", "~<= operator parses as item assignment 1");
+    is(@p[1],9, "~<= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
@@ -443,8 +443,8 @@ my @p;
     my $x = "aa";
     @p = $x ~>= 8, 9;
     is($x, "a", '~>= operator');
-    is(@p[0],"a", "YY= operator parses as item assignment 1");
-    is(@p[1],9, "YY= operator parses as item assignment 2");
+    is(@p[0],"a", "~>= operator parses as item assignment 1");
+    is(@p[1],9, "~>= operator parses as item assignment 2");
 }
 
 # Tests of dwimming scalar/listiness of lhs
