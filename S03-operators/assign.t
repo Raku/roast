@@ -105,17 +105,17 @@ plan 304;
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
      ($one, *, $three) = 1..3;
-     is("$one $three", "1 3", "list assignment my ($a, *, $b) = @ works");
+     is("$one $three", "1 3", "list assignment ($a, *, $b) = @ works");
 
      (*, $two, *) = 1..3;
-     is($two, 2, "list assignment my (*, $a, *) = @ works");
+     is($two, 2, "list assignment (*, $a, *) = @ works");
      (*, *, *, $four) = 1..4;
-     is($four, 4, "list assignment my (*, *, *, $a) = @ works");
+     is($four, 4, "list assignment (*, *, *, $a) = @ works");
 
      my (@b, $c);
      (*, @b, $c) = 1..4;
-     is(~@b, "2 3 4", "list assignment my (*, @) = @ works");
-     ok(!defined($c), "list assignment my (*, @, $c) = @ works");
+     is(~@b, "2 3 4", "list assignment (*, @) = @ works");
+     ok(!defined($c), "list assignment (*, @, $c) = @ works");
 }
 
 {
@@ -508,8 +508,8 @@ my sub W () { substr(want, 0, 1) }
 {
     my $a;
     my @z = ($a[] = W, W, W);
-    is($a, 'L L L', 'lhs treats @$a as list');
-    is(@z, undef, 'lhs treats @$a as list');
+    is($a, 'L L L', 'lhs treats $a[] as list');
+    is(@z, undef, 'lhs treats $a[] as list');
 }
 
 {
@@ -578,9 +578,9 @@ my sub W () { substr(want, 0, 1) }
     is(%a<x>, 'L',    q/lhs treats %a{'x'..'z'} as list/);
     is(%a<y>, 'L',    q/lhs treats %a{'x'..'z'} as list/);
     is(%a<z>, 'L',    q/lhs treats %a{'x'..'z'} as list/);
-    is(@z[0], 'L',    q/lhs treats %a{'x','y','z'} as list/);
-    is(@z[1], 'L',    q/lhs treats %a{'x','y','z'} as list/);
-    is(@z[2], 'L',    q/lhs treats %a{'x','y','z'} as list/);
+    is(@z[0], 'L',    q/lhs treats %a{'x'..'z'} as list/);
+    is(@z[1], 'L',    q/lhs treats %a{'x'..'z'} as list/);
+    is(@z[2], 'L',    q/lhs treats %a{'x'..'z'} as list/);
 }
 
 {
