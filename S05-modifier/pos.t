@@ -17,9 +17,9 @@ plan 6;
 
 for ("abcdef") {
     ok(m:pos/abc/, "Matched 1: '$/'" );
-    ok(eval(q{.pos == 3}), 'Interim position correct');
+    is($/.to, 3, 'Interim position correct');
     ok(m:pos/ghi|def/, "Matched 2: '$/'" );
-    ok(eval(q{.pos == 6}), 'Final position correct');
+    is($/.to, 6, 'Final position correct');
 }
 
 my $_ = "foofoofoo foofoofoo";
