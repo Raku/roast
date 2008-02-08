@@ -25,11 +25,10 @@ my $thr = async {
 
 ok time - $timestamp  < $async_duration + .5, "yes, 'Im out of sync!";
 
-#?pugs todo bug
 todo :pugs<6.2.14>; # hopefully :-)
 ok $thr, 'stringify a thread';
 
-todo :pugs<6.2.14>; # hopefully :-)
+todo :pugs<6.2.14>; 
 ok int $thr, 'numerify a thread should be the thread id';
 
 isnt int $thr, $*PID, 'childs id is not parents thread id';
