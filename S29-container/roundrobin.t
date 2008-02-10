@@ -40,7 +40,7 @@ flunk('roundrobin :finite');
 
 =begin lazy_roundrobin
 
-ok(roundrobin(:finite, 1; 1..2; 1..3) eqv (1), 'roundrobin :shortest',
-    :todo<feature>);
+#?pugs todo 'feature'
+ok(roundrobin(:finite, 1; 1..2; 1..3) eqv (1), 'roundrobin :shortest');
 
 =end lazy_roundrobin

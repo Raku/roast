@@ -34,8 +34,9 @@ plan 11;
 
 # .reduce shouldn't work on non-arrays
 {
-  dies_ok { 42.reduce:{ $^a + $^b } },    "method form of reduce should not work on numbers", :todo<bug>;
-  dies_ok { "str".reduce:{ $^a + $^b } }, "method form of reduce should not work on strings", :todo<bug>;
+#?pugs 2 todo 'bug'
+  dies_ok { 42.reduce:{ $^a + $^b } },    "method form of reduce should not work on numbers";
+  dies_ok { "str".reduce:{ $^a + $^b } }, "method form of reduce should not work on strings";
   is (42,).reduce:{ $^a + $^b }, 42,      "method form of reduce should work on arrays";
 }
 

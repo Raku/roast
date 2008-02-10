@@ -107,8 +107,9 @@ my @list = (1 .. 5);
 
 # .map shouldn't work on non-arrays
 {
-  dies_ok { 42.map:{ $_ } },    "method form of map should not work on numbers", :todo<bug>;
-  dies_ok { "str".map:{ $_ } }, "method form of map should not work on strings", :todo<bug>;
+  #?pugs 2 todo 'bug'
+  dies_ok { 42.map:{ $_ } },    "method form of map should not work on numbers";
+  dies_ok { "str".map:{ $_ } }, "method form of map should not work on strings";
   is ~(42,).map:{ $_ }, "42",   "method form of map should work on arrays";
 }
 
@@ -138,7 +139,8 @@ should be equivalent to
   is(+@b,3, "should be 3 elemens");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
-  is(+@c,3, "should be 3 elemens without the hash keyword as well", :todo);
+#?pugs todo 'unimpl'
+  is(+@c,3, "should be 3 elemens without the hash keyword as well");
 }
 
 #

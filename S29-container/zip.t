@@ -52,9 +52,9 @@ plan 9;
     my @z; @z = zip(zip(@a; @b); @c);
     my @x; @x = ((@a Z @b) Z @c);
 
-    is(~@z, ~@e, "zip of zipped arrays with other array", :todo<feature>,
-        :depends<Seq>);
-    is(~@x, ~@e, "also as Z", :todo<feature>, :depends<Seq>);
+#?pugs 2 todo 'needs Seq'
+    is(~@z, ~@e, "zip of zipped arrays with other array");
+    is(~@x, ~@e, "also as Z");
 };
 
 {
@@ -72,6 +72,8 @@ plan 9;
 
     (@a Z @b) = (1, 2, 3, 4);
     # XXX - The arrays below are most likely Seq's
-    is(@a, [1, 3], "first half of two zipped arrays as lvalues", :todo);
-    is(@b, [2, 4], "second half of the lvalue zip", :todo);
+#?pugs todo 'unimpl'
+    is(@a, [1, 3], "first half of two zipped arrays as lvalues");
+#?pugs todo 'unimpl'
+    is(@b, [2, 4], "second half of the lvalue zip");
 }

@@ -30,18 +30,13 @@ plan 25;
     is(%hash{@slice[0,1]}, (4,6), "slice from array slice, part 2");
 }
 
-=begin pod
-# unspecced
-
-# Behaviour assumed to be the same as Perl 5
-{   my %hash   = (:a(1), :b(2), :c(3), :d(4));
+#?pugs todo 'feature'
+{
+    my %hash = :a(1), :b(2), :c(3), :d(4);
     my @slice := %hash<b c>;
-    is ~(@slice = <A B C D>), "A B",
-        "assigning a slice too many items yields a correct return value",
-        :todo<bug>;
+    is ~((@slice,*) = <A B C D>), "A B",
+	"assigning a slice too many items yields a correct return value";
 }
-=end pod
-
 
 # Slices on hash literals
 {   is ~({:a(1), :b(2), :c(3), :d(4)}<b c>), "2 3", "slice on hashref literal";

@@ -32,12 +32,12 @@ See the thread "[S29] uniq" on p6l, too.
   is ~uniq({ lc $^a eq lc $^b }, @array), "a b c d", "subroutine form of uniq with own comparator works";
 
   # Semantics w/ junctions
-  # is eval('~@array.uniq:{ lc $^a eq lc $^b }.values.sort'),
-  #   "A b c d a b c d", :todo;
+  # is eval('~@array.uniq:{ lc $^a eq lc $^b }.values.sort'), "A b c d a b c d";
 }
 
 # Error cases
 {
-  dies_ok { 42.uniq }, ".uniq should not work on scalars", :todo<bug>;
+  #?pugs todo 'bug'
+  dies_ok { 42.uniq }, ".uniq should not work on scalars";
   is (42,).uniq, 42,   ".uniq should work on one-elem arrays";
 }

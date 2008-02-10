@@ -56,8 +56,9 @@ is max({ abs $^a <=> abs $^b }, @array), -9,
   "subroutine form of max taking a comparision block works";
 
 # Error cases:
-dies_ok { 42.max }, ".max should not work on scalars", :todo<bug>;
-dies_ok { 42.min }, ".min should not work on scalars", :todo<bug>;
+#?pugs 2 todo 'bug'
+dies_ok { 42.max }, ".max should not work on scalars";
+dies_ok { 42.min }, ".min should not work on scalars";
 is (42,).max, 42, ".max should work on one-elem arrays";
 is (42,).max, 42, ".max should work on one-elem arrays";
 

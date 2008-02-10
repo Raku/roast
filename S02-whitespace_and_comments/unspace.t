@@ -37,7 +37,8 @@ eval "
     @array»\     .++;
     @array\ .»\  .++;
 ";
-is( ~@array, "7 8 9", 'unspace with postfix hyperops', :todo);
+#?pugs todo 'unimpl'
+is( ~@array, "7 8 9", 'unspace with postfix hyperops');
 
 
 #Test the "unspace" and unspace syntax

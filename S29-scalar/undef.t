@@ -83,10 +83,12 @@ ok(!defined(undef), "undef is not defined");
     ok(defined(%hash), "aggregate hash defined");
 
     undefine(@ary);
-        ok(!defined(@ary), "undefine array",:todo<bug>);
+#?pugs todo 'bug'
+    ok(!defined(@ary), "undefine array");
 
     undefine(%hash);
-        ok(!defined(%hash), "undefine hash",:todo<bug>);
+#?pugs todo 'bug'
+    ok(!defined(%hash), "undefine hash");
 
     @ary = (1);
     ok(defined(@ary), "define array again");
@@ -98,10 +100,13 @@ ok(!defined(undef), "undef is not defined");
     sub a_sub { "møøse" }
 
     ok(defined(&a_sub), "defined sub");
-    ok(eval('defined(%«$?PACKAGE\::»<&a_sub>)'), "defined sub (symbol table)", :todo<parsefail>);
+#?pugs todo 'parsefail'
+    ok(eval('defined(%«$?PACKAGE\::»<&a_sub>)'), "defined sub (symbol table)");
 
-    ok(eval('!defined(&a_subwoofer)'), "undefined sub",:todo<feature>);
-    ok(eval('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)", :todo<feature>);
+#?pugs todo 'feature'
+    ok(eval('!defined(&a_subwoofer)'), "undefined sub");
+#?pugs todo 'feature'
+    ok(eval('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
 }
 
 # TODO: find a read-only value to try and assign to, since we don't
@@ -222,12 +227,14 @@ else {
         # I want symbolic lookups because I need the rx names for test results.
 
         eval '"1" ~~ %MY::{$_}';
-        ok(defined($num), '{$_}: successful hypothetical', :todo);
+#?pugs todo 'unimpl'
+        ok(defined($num), '{$_}: successful hypothetical');
         ok(!defined($alpha), '{$_}: failed hypothetical');
 
         eval '"A" ~~ %MY::{$_}';
         ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
-        ok(defined($alpha), '{$_}: successful hypothetical (2nd go)', :todo);
+#?pugs todo 'unimpl'
+        ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
     }
 }
 
@@ -238,12 +245,12 @@ if ! eval '"a" ~~ /a/' {
 else {
     # - binding to hash keys only would leave values undef
     eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
-    ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist", :todo);
+#?pugs todo 'unimpl'
+    ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
 
-    #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't", :todo);
-    ok(0 , "match values don't", :todo);
-}
-
+    #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
+#?pugs todo 'unimpl'
+    ok(0 , "match values don't")
 {
     # - $0, $1 etc. should all be undef after a failed match
     #   (except for special circumstances)
@@ -321,6 +328,6 @@ is((undef) * (undef), 0, 'undef * undef');
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
 # See log above.  From IRC, TimToady says that both of these
 # should be false.  (At time of writing, @(undef,) is true.)
-is ?(@(undef,)), Bool::False, '?(@(undef,)) is false', :todo<feature>,
-    :depends<@() imposing context and not [] constructor>;
+#?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
+is ?(@(undef,)), Bool::False, '?(@(undef,)) is false';
 is ?(list(undef,)), Bool::False, '?(@(undef,)) is false';
