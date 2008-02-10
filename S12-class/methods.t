@@ -21,4 +21,4 @@ is($x.foo, 42, 'called a method without parens');
 is($x.foo(), 42, 'called a method without parens');
 is($x.bar, 101, 'called a method with parens');
 is($x.bar(), 101, 'called a method with parens');
-is($x.identify("w00t"), "w00t", 'called a method with a parameter');
+is($x.identity("w00t"), "w00t", 'called a method with a parameter');
