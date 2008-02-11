@@ -1,14 +1,12 @@
 use v6-alpha;
 use Test;
 
+plan 10;
 
-
-plan 8;
-
+# L<S17/Threads>
 # try to stop duration of a simple async call
 my $timestamp = time;
 
-# L<S17/Threads>
 async {
     ok 1, 'async call started';
 };
@@ -20,10 +18,10 @@ my $async_duration = time - $timestamp;
 
 $timestamp = time;
 my $thr = async {
-    sleep 1;
+    sleep .1;
 };
 
-ok time - $timestamp  < $async_duration + .5, "yes, 'Im out of sync!";
+ok time - $timestamp  < $async_duration + .05, "yes, 'Im out of sync!";
 
 ok $thr, 'stringify a thread';
 
@@ -31,30 +29,18 @@ ok int $thr, 'numerify a thread should be the thread id';
 
 isnt int $thr, $*PID, 'childs id is not parents thread id';
 
-$thr.join;
+ok $thr.join, 'thread now joined and back home';
 
-# try two async calls to something
+# two async calls should do something important
 sub do_something_very_important {
     return 1;
 }
 
-async { ok do_something_very_important(),'very important: first try' };
-async { ok do_something_very_important(),'very important: second try' };
+my @threads;
+@threads[0] = async { ok do_something_very_important(),'very important things from first thread' };
+@threads[1] = async { ok do_something_very_important(),'very important things from second thread' };
 
-# try to construct race condition
-# see Stevens 'UNIX network programming' 23.17
-my $counter = 0;
-sub doit {
-    my $val = $counter; sleep .0001; $counter = $val + 1;
-}
 
-loop (my $i = 0; $i < 500; $i++) {
-
-    async { doit(); };
-    async { doit(); };
-
-}
-
-ok $counter < 1000, 'the race condition strikes back';
-
-#diag( $counter );
+ok  @threads[0].join,'first thread joined';
+ok  @threads[1].join,'second thread joined';
+# race condition test moved to L<content.t>
