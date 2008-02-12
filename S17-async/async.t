@@ -23,11 +23,11 @@ my $thr = async {
 
 ok time - $timestamp  < $async_duration + .05, "yes, 'Im out of sync!";
 
-ok $thr, 'stringify a thread';
+ok ~$thr, 'stringify a thread';
 
-ok int $thr, 'numerify a thread should be the thread id';
+ok +$thr, 'numerify a thread should be the thread id';
 
-isnt int $thr, $*PID, 'childs id is not parents thread id';
+isnt +$thr, $*PID, 'childs id is not parents thread id';
 
 ok $thr.join, 'thread now joined and back home';
 
