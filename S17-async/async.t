@@ -19,6 +19,7 @@ my $async_duration = time - $timestamp;
 $timestamp = time;
 my $thr = async {
     sleep .1;
+    say +self;
 };
 
 ok time - $timestamp  < $async_duration + .05, "yes, 'Im out of sync!";
