@@ -20,6 +20,7 @@ plan 304;
     is($bar, "FOO", "... and second");
 }
 
+#?rakudo 2 skip "not implemented"
 {
     my $x = 1;
     &infix:<=>.($x, 0);
