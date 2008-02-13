@@ -20,7 +20,7 @@ plan 304;
     is($bar, "FOO", "... and second");
 }
 
-#?rakudo 2 skip "not implemented"
+#?rakudo emit skip_rest("not implemented, test looping");
 {
     my $x = 1;
     &infix:<=>.($x, 0);
