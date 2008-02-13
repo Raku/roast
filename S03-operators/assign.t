@@ -33,7 +33,7 @@ plan 304;
     is($x, 0, 'assignment operator called as function');
 }
 
-#?rakudo emit skip_rest("not implemented, test looping")
+#?rakudo emit skip_rest("not implemented, test looping");#
 {
     # swap two elements in the same array 
     # (moved this from array.t)
