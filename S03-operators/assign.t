@@ -20,7 +20,7 @@ plan 304;
     is($bar, "FOO", "... and second");
 }
 
-#?rakudo emit skip_rest("not implemented, test looping");
+#?rakudo 2 skip "not implemented";
 {
     my $x = 1;
     &infix:<=>.($x, 0);
@@ -33,6 +33,7 @@ plan 304;
     is($x, 0, 'assignment operator called as function');
 }
 
+#?rakudo emit skip_rest("not implemented, test looping");
 {
     # swap two elements in the same array 
     # (moved this from array.t)
