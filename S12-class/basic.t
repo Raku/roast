@@ -4,11 +4,11 @@ use Test;
 
 plan 21;
 
-=pod
+=begin pod
 
 Very basic class tests from L<S12/Classes>
 
-=cut
+=end
 
 # L<S12/Classes>
 class Foo {}
