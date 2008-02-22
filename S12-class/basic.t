@@ -8,7 +8,7 @@ plan 21;
 
 Very basic class tests from L<S12/Classes>
 
-=end
+=end pod
 
 # L<S12/Classes>
 class Foo {}
