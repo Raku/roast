@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 2;
+plan 7;
 
 #L<S17/Co-Routines>
 # play ping pong
@@ -42,3 +42,16 @@ coro consume {
 }
 is( +produce(),6,'producer/consumer');
 
+#L<S17/Co-Routines>
+# more than one yield test
+coro do_it_again {
+    yield 3;
+    yield 2;
+    yield 1;
+    yield 'meins';
+}
+is( do_it_again(),3,'first yield reched');
+is( do_it_again(),2,'second yield reched');
+is( do_it_again(),1,'count down reched');
+is( do_it_again(),'meins','... now you\'ve got it');
+is( do_it_again(),3,'first yield reched');
