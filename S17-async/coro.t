@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 7;
+plan 8;
 
 #L<S17/Co-Routines>
 # play ping pong
@@ -50,8 +50,15 @@ coro do_it_again {
     yield 1;
     yield 'meins';
 }
-is( do_it_again(),3,'first yield reched');
-is( do_it_again(),2,'second yield reched');
-is( do_it_again(),1,'count down reched');
+is( do_it_again(),3,'first yield reached');
+is( do_it_again(),2,'second yield reached');
+is( do_it_again(),1,'count down reached');
 is( do_it_again(),'meins','... now you\'ve got it');
-is( do_it_again(),3,'first yield reched');
+is( do_it_again(),3,'first yield reached');
+
+# test from spec
+#L<S17/Co-Routines>
+coro dbl { yield $_ * 2; yield $_;  };
+#?pugs todo :by<6.2.14>
+is( ~((1..4).map:{ dbl() }),'2 2 6 4','core as function');
+
