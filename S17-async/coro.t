@@ -59,6 +59,9 @@ is( do_it_again(),3,'first yield reached');
 # test from spec
 #L<S17/Co-Routines>
 coro dbl { yield $_ * 2; yield $_;  };
+# coro should be callable inside a builtin function
+# see also t/spec/S29-list/map_function.t
 #?pugs todo :by<6.2.14>
-is( ~((1..4).map:{ dbl() }),'2 2 6 4','core as function');
+is( ~((1..4).map:{ dbl($_) }),'2 2 6 4','core as function');
+
 
