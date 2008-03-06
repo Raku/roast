@@ -13,23 +13,23 @@ sub d {
     $x += 3; $y -= 3;
     $y < 10 or defer;
 }
-#?pugs todo :by<6.2.14>
-ok( eval( q{
+#?pugs todo 'unimpl'
+ok eval( q{
 contend {
     # ...
     maybe { c() } maybe { d() };
     # ...
 } } )
-        ,'contend/maybe/defer construct');
+    ,'contend/maybe/defer construct';
 # L<S17/Atomic Code blocks/maybe>
-#?pugs todo :by<6.2.14>
-ok( eval( q{
+#?pugs todo 'unimpl'
+ok eval( q{
     maybe { c() };
-} ),'method <maybe> known');
+} ),'method <maybe> known';
 # L<S17/Atomic Code blocks/defer>
-ok( c(),'method <defer> known');
+ok c(),'method <defer> known';
 # L<S17/Atomic Code blocks/contend>
 sub e {
     my $x; return ++$x;
 }
-ok( contend { e(); },'method <contend> known');
+ok contend { e(); },'method <contend> known';
