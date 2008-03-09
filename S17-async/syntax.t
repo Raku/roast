@@ -26,8 +26,10 @@ contend {
 ok eval( q{
     maybe { c() };
 } ),'method <maybe> known';
+
 # L<S17/Atomic Code blocks/defer>
 ok c(),'method <defer> known';
+
 # L<S17/Atomic Code blocks/contend>
 sub e {
     my $x; return ++$x;

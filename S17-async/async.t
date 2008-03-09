@@ -21,8 +21,6 @@ my $thr = async {
     sleep .1;
 };
 
-sleep .5; # avoid Parse errors: Tests out of sequence.  Found (2) but expected (1)
-
 ok time - $timestamp  < $async_duration + .5, "yes, 'Im out of sync!";
 
 ok ~$thr, 'stringify a thread';
@@ -40,7 +38,6 @@ sub do_something_very_important {
 
 my @threads;
 @threads[0] = async { ok do_something_very_important(),'very important things from first thread' };
-sleep .5; # avoid   Parse errors: Tests out of sequence.  Found (9) but expected (8)
 @threads[1] = async { ok do_something_very_important(),'very important things from second thread' };
 
 

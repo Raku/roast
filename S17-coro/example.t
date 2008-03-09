@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 11;
+plan 16;
 
 # test from spec
 #L<S17/"Coroutine examples"/"=item Coro as function used in a builtin">
@@ -10,12 +10,14 @@ coro dbl { yield $_ * 2; yield $_;  };
 # see also t/spec/S29-list/map_function.t
 #?pugs todo 'unimpl' 
 is ~((1..4).map:{ dbl($_) }),'2 2 6 4','coro as function';
+is ~((1..4).map:{ $_*2 }),'2 4 6 8','this is how function works';
+
+
 
 #L<S17/"Coroutine examples"/"=item Coro as function used in a builtin">
-coro perm ( @x ) {
-    my @y = @x; # @x is read only
+coro perm ( @x is copy ) {
     while @x {
-        @y.splice($_,1).yield;
+        @x.splice($_,1).yield;
     }
 }
 # I'm not sure that this behaviour is right...
@@ -29,6 +31,25 @@ is $p2,2, "second instance first call";
 
 is perm(1..10), 3, 'third call with parameter';
 
+
+#L<S17/"Coroutine examples"/"=item Coro as function used in a builtin">
+
+# If you don't want your variables to get rebound, use "is copy":
+coro sugar ($x is copy) {
+    yield ++$x;
+}
+# which is sugar for
+coro without_sugar ($x) {
+    my $y = $x;
+    yield ++$y;
+    # Further calls of &without_sugar rebound $OUTER::x, not $x.
+}
+
+my $outer = 1;
+is sugar($outer),2,'I<sugar> does his work...';
+is $outer,1,'... and outer variable stays tough';
+is without_sugar($outer),2,'I<_without_sugar> does the same';
+is $outer,1,'again outer variable stays tough';
 
 
 #L<S17/"Coroutine examples"/"=item Constant coro">
@@ -50,4 +71,5 @@ is return_coro(3),3,"first yield";
 is return_coro(3),4,"next...";
 is return_coro(3),5,"return";
 is return_coro(3),3,"first yield back again";
+
 
