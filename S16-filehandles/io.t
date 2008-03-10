@@ -4,7 +4,7 @@ use Test;
 
 # L<S16/"Filehandles, files, and directories"/"open">
 # L<S16/"Filehandles, files, and directories"/"close">
-# L<S16/"Filehandles, files, and directories"/"readline">
+# L<S16/Unfiled/IO.readline>
 
 =begin pod
 
