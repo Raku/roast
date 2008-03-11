@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 10;
+plan 17;
 
 # L<S17/Threads>
 # try to stop duration of a simple async call
@@ -31,6 +31,7 @@ isnt +$thr, $*PID, 'childs id is not parents thread id';
 
 ok $thr.join, 'thread now joined and back home';
 
+# L<S17/"Thread methods"/"=item join">
 # two async calls should do something important
 sub do_something_very_important {
     return 1;
@@ -43,4 +44,23 @@ my @threads;
 
 ok  @threads[0].join,'first thread joined';
 ok  @threads[1].join,'second thread joined';
-# race condition test moved to L<content.t>
+# currently a second join on a joined thread waits forever; not good
+#?pugs todo 'unimpl'
+ok  eval q{#!@threads[1].join},'second thread not joinable again';
+
+# L<S17/"Thread methods"/"=item detach">
+#?pugs todo 'unimpl'
+@threads[2] = async { ok do_something_very_important(),'again start a thread' };
+ok eval q{threads[2].detach},'detach a thread';
+#?pugs todo 'unimpl'
+ok !@threads[2].join,'could not join a detached thread';
+
+# L<S17/"Thread methods"/"=item suspend">
+#?pugs todo 'unimpl'
+@threads[3] = async { ok do_something_very_important(),'another thread' };
+ok eval q{@threads[3].suspend},' send him back to a waiting room..';
+
+# L<S17/"Thread methods"/"=item resume">
+#?pugs todo 'unimpl'
+ok eval q{@threads[3].resume},'... now he is back';
+
