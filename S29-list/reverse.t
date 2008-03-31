@@ -9,7 +9,7 @@ Basic test for the reverse() builtin with a string (Str).
 
 =end pod
 
-plan 44;
+plan 45;
 
 # As a function :
 is( reverse('Pugs'), 'sguP', "as a function");
@@ -146,4 +146,7 @@ is(@a[1], "foo", 'the list was reversed properly');
     isa_ok(@b, 'Array');
     is($a, "oof", 'string literal reversal works in scalar context');
     is(@b[0], "oof", 'string literal reversal works in list context');
+
+    @b = 'foo';
+    is(@b[0], (@b.reverse)[0], 'one item list is left alone');
 }
