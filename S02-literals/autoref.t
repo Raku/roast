@@ -3,8 +3,7 @@ use Test;
 
 # L<S02/"Literals"/"In scalar context, though, the implied parentheses are not removed">
 
-
-=kwid 
+=begin description
 
  Tests testing that automatical referentiation (e.g. $arrayref = @array)
  works. To be more detalled, things tested are:
@@ -15,7 +14,7 @@ use Test;
    literals&hashref literals in pair creation with key => ... and :key(...)
    and ... => key.
 
-=cut
+=end description
 
 plan 57;
 
