@@ -38,15 +38,17 @@ plan 25;
     is ~%hash.keys, "a", '%hash = try {...} worked (6)';
 }
 
+#?pugs todo 'bug'
 {
     my %hash;
     # Extra try necessary because current Pugs dies without it.
     try { %hash = try { a => 3 } };
-    is +%hash,        1, '%hash = try {...} worked (7)', :todo<bug>;
-    is ~%hash.keys, "a", '%hash = try {...} worked (8)', :todo<bug>;
-    is ~%hash<a>,     3, '%hash = try {...} worked (9)', :todo<bug>;
+    is +%hash,        1, '%hash = try {...} worked (7)';
+    is ~%hash.keys, "a", '%hash = try {...} worked (8)';
+    is ~%hash<a>,     3, '%hash = try {...} worked (9)';
 }
 
+#?pugs todo
 {
     # try with a catch
     my $caught;
@@ -56,7 +58,7 @@ plan 25;
         CATCH { $caught = 1 }
     }';
 
-    ok($caught, "exception caught", :todo);
+    ok($caught, "exception caught");
 };
 
 # return inside try{}-blocks
@@ -114,7 +116,8 @@ unless (eval 'Exception.new') {
     }';
 
     ok(!$not_died, "did not live after death");
-    ok($caught, "caught exception of class Naughty", :todo);
+    #?pugs 1 todo
+    ok($caught, "caught exception of class Naughty");
 };
 
 {
@@ -137,7 +140,8 @@ unless (eval 'Exception.new') {
     }';
 
     ok(!$other, "did not catch sibling error class");
-    ok($naughty, "caught superclass", :todo);
+    #?pugs 1 todo
+    ok($naughty, "caught superclass");
 };
 
 {
@@ -161,6 +165,7 @@ unless (eval 'Exception.new') {
     ok(!$lived, "did not live past uncaught throw in try");
     ok(~WHAT($!), '$! is an object');
     ok(!$naughty, "did not get caught by wrong handler");
-    is(eval('WHAT($!)'), Dandy, ".. of the right class", :todo<bug>);
+    #?pugs todo 'bug'
+    is(eval('WHAT($!)'), Dandy, ".. of the right class");
 };
 
