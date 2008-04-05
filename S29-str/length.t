@@ -15,7 +15,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 54;
+plan 55;
 
 eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
@@ -45,6 +45,7 @@ my @data = (
     # string            octets codepoints grapheme chars
     "",                      0,        0,         0,  0,
     "moose",                 5,        5,         5,  5,
+    "møøse",                 7,        5,         5,  5,
     "C:\\Program Files",    16,       16,        16, 16,
     ~@stringy,               8,        8,         8,  8,
     "\x020ac \\x020ac",     11,        9,         9,  9,
