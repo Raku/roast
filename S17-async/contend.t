@@ -1,7 +1,7 @@
 use v6-alpha;
 use Test;
 
-plan 5;
+plan 7;
 
 # simple contend/maybe/defer
 sub atomic_sub {
@@ -54,6 +54,20 @@ my @atomic_thr = gather {
 for @atomic_thr { .join(); }; # bring them home
 
 is $counter, 1000, 'now we reach the end';
+
+my @cache = ();
+#  STM tests on arrays
+#?pugs todo 'unimpl'
+ok eval( q{
+    contend { @cache.push( 42 ) };
+} ),'method <contend> for arrays; <push> should be safe';
+
+my %cache = ();
+#  STM tests on hahses
+#?pugs todo 'unimpl'
+ok eval( q{
+    contend { %cache{ 42 } == 1 };
+} ),'method <contend> for hashes; insert should be safe';
 
 =begin comment
 
