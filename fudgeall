@@ -3,6 +3,13 @@
 use strict;
 use warnings;
 
+my @opts;
+while( $_ = $ARGV[0], /^-/ ) {
+    shift;
+    last if /^--$/;
+    push @opts, $_;
+}
+
 my $platform = shift;
 
 use Cwd;
@@ -37,7 +44,8 @@ print join(' ',
     map {
         my $pick;
         if ( $_ !~ m/\.$platform$/ ) {
-            chomp( $pick = `$^X $fudge $platform $_` );
+            my $cmd = "$^X $fudge @opts $platform $_";
+            chomp( $pick = `$cmd` );
         }
         defined $pick ? $pick : ();
     } @ARGV

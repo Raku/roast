@@ -3,6 +3,13 @@
 use strict;
 use warnings;
 
+my %OPTS;
+while( $_ = $ARGV[0], /^-/ ) {
+    shift;
+    last if /^--$/;
+    $OPTS{$_} = $_;
+}
+
 my $ME = shift;
 my $IN = shift;
 my $OUT = shift;
@@ -13,7 +20,12 @@ if (!$OUT and $IN) {
 unless ($ME and $IN and -e $IN and $OUT) {
 
     die <<"USAGE";
-Usage: $0 implname testfilename [fudgedtestfilename]
+Usage: $0 [options] implname testfilename [fudgedtestfilename]
+
+    Options:
+    --keep-exit-code
+        by default, fudge modifies the exit code for fudged test files to 1.
+        supplying this option will suppress that behavior.
 
     Verbs:
     #?implname [num] skip 'reason'
@@ -47,7 +59,7 @@ USAGE
 }
 
 if (-e $OUT) {
-    if (-M $IN >= -M $OUT) {
+    if (-M $IN >= -M $OUT and -M $0 >= -M $OUT) {
         print "$OUT\n";     # unchanged, so no need to refudge
         exit(0);
     }
@@ -64,6 +76,7 @@ my $ARGS = '';
 my $IS = '\\b(?:is|ok|is_deeply|is_approx|isnt|like|unlike|eval_dies_ok|cmp_ok|isa_ok|use_ok|throws_ok|dies_ok|pass|flunk)(?:\\b|_)';
 my %DOES;
 my $DOES = 0;
+my $EXIT = $OPTS{'--keep-exit-code'} ? '' : 'exit(1);';
 
 @ARGV = ($IN);
 fudgeblock();
@@ -71,10 +84,10 @@ fudgeblock();
 if ($REALLY_FUDGED) {
     open OUT, ">", $OUT or die "Can't create $OUT: $!";
     print OUT $OUTPUT;
-    print OUT <<'END';
+    print OUT <<"END";
 
 say "# FUDGED!";
-exit(1);    # hopefully reported as "dubious"
+$EXIT
 END
     close OUT;
     print "$OUT\n"; # pick the output file to run
@@ -179,7 +192,7 @@ sub fudgeblock {
                     last unless $more;
                     $_ .= $more;
                 }
-                my ($keyword) = /^\s*(\w+)/;
+                my ($keyword) = /^\s*(\w+)/ || '';
                 my $numtests;
                 if ($DOES{$keyword}) {
                     $numtests = $DOES{$keyword};
