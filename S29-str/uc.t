@@ -10,6 +10,7 @@ force_todo 10;
 is(uc("Hello World"), "HELLO WORLD", "simple");
 is(uc(""), "", "empty string");
 #?rakudo skip "unicode"
+#?DOES 3
 {
     is(uc("åäö"), "ÅÄÖ", "some finnish non-ascii chars");
     is(uc("äöü"), "ÄÖÜ", "uc of German Umlauts");

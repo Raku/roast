@@ -2,12 +2,8 @@ use v6-alpha;
 
 use Test;
 
-=begin description
-
-String appending with ~ operator
-L<S03/Changes to Perl 5 operators/string concatenation becomes stitching>
-
-=end description
+# String appending with ~ operator
+# L<S03/Changes to Perl 5 operators/string concatenation becomes stitching>
 
 plan 4;
 

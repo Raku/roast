@@ -20,6 +20,8 @@ plan 25;
     is ~@array, "42", '@array = try {...} worked (2)';
 }
 
+#?rakudo skip "parse error"
+#?DOES 2
 {
     my @array = try { (42,) };
     is +@array,    1, '@array = try {...} worked (3)';
