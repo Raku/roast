@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 43;
+plan 45;
 
 #L<S03/Autoincrement precedence>
 
@@ -98,3 +98,14 @@ is(--$foo, 'A99');
 
 $foo = 'A00';
 is(--$foo, 'A00');
+
+
+
+my$file = "/tmp/pix000.jpg";
+$file++;            # /tmp/pix001.jpg, not /tmp/pix000.jph
+is($file,'/tmp/pix001.jpg');
+
+my $num = "123.456";
+$num++;             # 124.456, not 123.457
+
+is($num,'124.456');
