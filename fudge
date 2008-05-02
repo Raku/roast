@@ -211,7 +211,7 @@ sub fudgeblock {
                     $_ = "skip($numtests,$ARGS); $_\n";
                 }
                 elsif ($FUDGE eq 'try') {
-                    $_ = "(try $_) // fail($ARGS)\n";
+                    $_ = "(try $_) // fail($ARGS);\n";
                 }
                 elsif ($FUDGE eq 'eval') {
                     s/(['\\])/\\$1/g;
