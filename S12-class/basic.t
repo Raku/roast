@@ -20,6 +20,7 @@ ok($foo ~~ Foo, '... smartmatch our $foo to the Foo class');
 # However, making it an object .isa() means that classes are free to
 # override the behaviour without playing with the metamodel via traits
 ok($foo.isa(Foo), '.isa(Foo)');
+#?rakudo 1 skip 'parse error'
 ok($foo.isa(::Foo), '.isa(::Foo)');
 ok($foo.isa("Foo"), '.isa("Foo")');
 ok(!$foo.isa("Bar"), '!.isa("Bar")');
@@ -33,6 +34,7 @@ my $foo_bar = Foo::Bar.new();
 ok($foo_bar ~~ Foo::Bar, '... smartmatch our $foo_bar to the Foo::Bar class');
 
 ok($foo_bar.isa(Foo::Bar), '.isa(Foo::Bar)');
+#?rakudo 1 skip 'parse error'
 ok(!$foo_bar.isa(::Foo), '!Foo::Bar.new.isa(::Foo)');
 
 
@@ -55,8 +57,9 @@ ok($bar_clone.isa(Foo), "... .isa(Foo)");
 
 
 # Same, but with the "is Foo" declaration inlined
+#?rakudo 5 skip 'not parsing is inside class yet'
+#?DOES 3
 class Baz { is Foo }
-
 ok(Baz ~~ Foo, '... smartmatch our Baz to the Foo class');
 my $baz = Baz.new();
 ok($baz ~~ Baz, '... smartmatch our $baz to the Baz class');
