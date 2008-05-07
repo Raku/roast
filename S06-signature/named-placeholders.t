@@ -9,6 +9,6 @@ sub one_placeholder {
     is $:bla,  2, "A single named placeholder works";
 }
 
-one_placeholder(2);
+one_placeholder(:bla(2));
 
 # vim: syn=perl6
