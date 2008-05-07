@@ -63,7 +63,7 @@ ok !%hash.exists("42"), "exists on hashes (2)";
 
   my $popul_hash = hash(('a'=>'b'),('c'=>'d'));
   my sub popul_hash_contents () {
-    $popul_hash.pairs.sort.map:{ $_.key ~ ":" ~ $_.value }.join( ',' );
+    $popul_hash.pairs.sort.map: { $_.key ~ ":" ~ $_.value }.join( ',' );
   }
 
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (1)" );
