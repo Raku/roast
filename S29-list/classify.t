@@ -27,8 +27,8 @@ plan 11;
 
 # .classify shouldn't work on non-arrays
 {
-  dies_ok { 42.classify:{ $_ } },      "method form of classify should not work on numbers";
-  dies_ok { "str".classify:{ $_ } },   "method form of classify should not work on strings";
+  dies_ok { 42.classify: { $_ } },      "method form of classify should not work on numbers";
+  dies_ok { "str".classify: { $_ } },   "method form of classify should not work on strings";
 #?pugs todo 'feature'
-  is eval(q<<< ~(42,).classify:{ 1 } >>>), "42", "method form of classify should work on arrays";
+  is eval(q<<< ~(42,).classify: { 1 } >>>), "42", "method form of classify should work on arrays";
 }
