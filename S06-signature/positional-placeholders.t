@@ -3,7 +3,7 @@ use Test;
 
 plan 3;
 
-# TODO: smartlinks
+#L<S06/Placeholder variables/>
 
 sub one_placeholder {
     is $^bla,  2, "A single placeholder works";
