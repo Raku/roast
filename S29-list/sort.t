@@ -56,7 +56,7 @@ plan 21;
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
 
-    my @s = @a.sort:{ $^a <=> $^b };
+    my @s = @a.sort: { $^a <=> $^b };
     is(@s, @e, '... with explicit spaceship (using invocant form)'); 
 }
 
@@ -72,7 +72,7 @@ plan 21;
     my @a = (2, 45, 6, 1, 3);
     my @e = (45, 6, 3, 2, 1);
 
-    my @s = @a.sort:{ $^b <=> $^a };
+    my @s = @a.sort: { $^b <=> $^a };
     is(@s, @e, '... reverse sort with explicit spaceship (using invocant form)'); 
 }
 
@@ -112,7 +112,7 @@ plan 21;
     my @a = <daa boo gaa aaa>;
     my @e = <aaa boo daa gaa>;
 
-    my @s = @a.sort:{ $^a cmp $^b };
+    my @s = @a.sort: { $^a cmp $^b };
     is(@s, @e, '... with explicit cmp (using invocant form)'); 
 }
 
@@ -128,7 +128,7 @@ plan 21;
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
 
-    my @s = %a.keys.sort:{ %a{$^a} cmp %a{$^b} };
+    my @s = %a.keys.sort: { %a{$^a} cmp %a{$^b} };
     is(@s, @e, '... sort keys by string value (using invocant form)');
 }
 
@@ -144,14 +144,14 @@ plan 21;
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
 
-    my @s = %a.keys.sort:{ %a{$^a} <=> %a{$^b} };
+    my @s = %a.keys.sort: { %a{$^a} <=> %a{$^b} };
     is(@s, @e, '... sort keys by numeric value (using invocant form)');
 }
 
 # .sort shouldn't work on non-arrays
 {
 #?pugs 2 todo 'bug'
-    dies_ok { 42.sort:{ 0 } },    "method form of sort should not work on numbers";
-    dies_ok { "str".sort:{ 0 } }, "method form of sort should not work on strings";
-    is ~(42,).sort:{ 0 }, "42",   "method form of sort should work on arrays";
+    dies_ok { 42.sort: { 0 } },   "method form of sort should not work on numbers";
+    dies_ok { "str".sort :{ 0 } },"method form of sort should not work on strings";
+    is ~(42,).sort: { 0 }, "42",  "method form of sort should work on arrays";
 }
