@@ -14,7 +14,7 @@ is "a bc d".comb, <a bc d>, 'default matcher and limit';
 #?pugs todo 'feature'
 is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
 
-is_deeply @('split this string'.comb).map:{ "$_" },
+is_deeply @('split this string'.comb).map: { "$_" },
            <split this string>,
            q{Str.comb};
 
