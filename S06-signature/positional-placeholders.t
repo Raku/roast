@@ -13,7 +13,7 @@ one_placeholder(2);
 
 sub two_placeholders {
     is $^b, 2, "Second lexicographic placeholder gets second parameter";
-    is $^a, 1, "Frist lexicographic placeholder gets first parameter";
+    is $^a, 1, "First lexicographic placeholder gets first parameter";
 }
 
 two_placeholders(1, 2);
