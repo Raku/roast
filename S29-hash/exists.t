@@ -12,7 +12,8 @@ Basic C<exists> tests on hashes, see S29.
 # L<S29/"Hash"/=item exists>
 
 sub gen_hash {
-    my %h{'a'..'z'} = (1..26);
+    my %h;
+    %h{'a'..'z'} = (1..26);
     return %h;
 };
 
@@ -76,3 +77,4 @@ ok !%hash.exists("42"), "exists on hashes (2)";
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (4)" );
 }
 
+# vim: syn=perl6
