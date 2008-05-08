@@ -61,7 +61,7 @@ is( @b, [], "push-via-splice result works" );
 is( @a, ([1..12]), "push-via-splice modification works");
 
 @a  = ('red', 'green', 'blue');
-is( splice(@a, 1, 2), [qw<green blue>],
+is( splice(@a, 1, 2), [<green blue>],
   "splice() in scalar context returns an array references");
 
 # Test the single arg form of splice (which should die IMO)
