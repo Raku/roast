@@ -52,6 +52,8 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 {
     my $a = 1;
     try { delete $a; };
+    # XXX do we really want to test against a specific error message?
+    #?rakudo 1 skip "no rx:P5"
     like($!, rx:P5/Argument is not a Hash or Array element or slice/, "expected message for mis-use of delete");
 }
 
