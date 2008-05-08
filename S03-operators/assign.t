@@ -1,4 +1,4 @@
-use v6-alpha;
+use v6;
 use Test;
 
 #                      +---- UTF8 non-breaking space here!

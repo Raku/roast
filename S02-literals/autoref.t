@@ -1,4 +1,4 @@
-use v6-alpha;
+use v6;
 use Test;
 
 # L<S02/"Literals"/"In scalar context, though, the implied parentheses are not removed">

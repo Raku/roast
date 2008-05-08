@@ -1,4 +1,4 @@
-use v6-alpha;
+use v6;
 # vim: filetype=perl6 :
 
 # NOTES ON PORTING quotemeta.t FROM Perl 5.9.3

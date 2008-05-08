@@ -1,4 +1,4 @@
-use v6-alpha;
+use v6;
 use Test;
 
 # L<S09/Subscript and slice notation>
