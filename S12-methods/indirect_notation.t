@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-=kwid
+=begin description
 
 =head1 indirect object notation call tests
 
@@ -10,7 +10,7 @@ These tests are the testing for "Method" section of Synopsis 12
 
 L<S12/Methods/Indirect object notation now requires a colon after the invocant if there are no arguments>
 
-=cut
+=end description
 
 plan 6;
 
