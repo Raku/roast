@@ -28,8 +28,7 @@ plan 57;
 }
 
 # Explicit referentiation of arrays in assignment
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my @array = <a b c>;
     my $ref   = \@array;
@@ -38,6 +37,7 @@ plan 57;
     is +$ref,       3, '$arrayref = \@array works (2)';
 }
 
+#?rakudo skip "sort not implemented"
 # Implicit referentiation of hashes in assignment
 {
     my %hash = (a => 1, b => 2, c => 3);
@@ -48,8 +48,7 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in assignment
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = \%hash;
@@ -70,8 +69,7 @@ plan 57;
 }
 
 # Explicit referentiation of arrays in assignment to an array element
-#?rakudo 1 skip "parse error"
-#?DOES 3
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my @array = <a b c>;
     my @other;
@@ -93,8 +91,7 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in assignment to an array element
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\> not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my @other;
@@ -115,8 +112,7 @@ plan 57;
 }
 
 # Explicit referentiation of arrays in assignment to a hash element
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my @array = <a b c>;
     my %other;
@@ -137,8 +133,7 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in assignment to a hash element
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my %other;
@@ -158,8 +153,7 @@ plan 57;
 }
 
 # Explicit referentiation of arrays in pair creation with key => ...
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my @array = <a b c>;
     my $pair  = (key => \@array);
@@ -169,6 +163,7 @@ plan 57;
 }
 
 # Implicit referentiation of hashes in pair creation with key => ...
+#?rakudo skip "hash from list not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => %hash);
@@ -178,8 +173,7 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in pair creation with key => ...
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => \%hash);
@@ -198,8 +192,7 @@ plan 57;
 }
 
 # Explicit referentiation of arrays in pair creation with :key(...)
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my @array = <a b c>;
     my $pair  = (:key(\@array));
@@ -209,6 +202,7 @@ plan 57;
 }
 
 # Implicit referentiation of hashes in pair creation with :key(...)
+#?rakudo skip "hash from list not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(%hash));
@@ -217,9 +211,8 @@ plan 57;
     is +$pair.value.values,            3, '(:key(%hash)) works (2)';
 }
 
-#?rakudo 1 skip "parse error"
-#?DOES 2
 # Explicit referentiation of hashes in pair creation with :key(...)
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(\%hash));
@@ -245,6 +238,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with key => ...
+#?rakudo skip "{} hash composer not implemented"
 {
     my $pair  = (key => { a => 1, b => 2 });
 
@@ -260,6 +254,7 @@ plan 57;
 }
 
 # Arrayref literals in pair creation with :key(...)
+#?rakudo skip "[] list composer not implemented"
 {
     my $pair  = (:key([<a b c>]));
 
@@ -268,6 +263,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with :key(...)
+#?rakudo skip "{} hash composer not implemented"
 {
     my $pair  = (:key({ a => 1, b => 2 }));
 
@@ -275,8 +271,7 @@ plan 57;
 }
 
 # Implicit referentiation of array literals in pair creation with ... => "value"
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "non-string hash key"
 {
     my $pair  = (<a b c> => "value");
 
@@ -285,8 +280,7 @@ plan 57;
 }
 
 # Arrayref literals in pair creation with ... => "value"
-#?rakudo 1 skip "parse error"
-#?DOES 2
+#?rakudo skip "non-string hash key"
 {
     my $pair  = ([<a b c>] => "value");
 
@@ -295,8 +289,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with ... => "value"
-#?rakudo 1 skip "parse error"
-#?DOES 1
+#?rakudo skip "non-string hash key"
 {
     my $pair  = ({ a => 1, b => 2 } => "value");
 
