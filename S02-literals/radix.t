@@ -23,6 +23,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
+#?rakudo 4 todo "unimpl"
 #?pugs 4 todo "unimpl"
     is(:10('0b1110'), 0b1110, ":10('0b1110') overrides default decimal");
     is(:10('0x20'),   0x20, ":10('0x20') overrides default decimal");
@@ -87,9 +88,9 @@ is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
-#?rakudo todo 'feature'
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
+#?rakudo 2 todo 'feature'
 #?pugs 2 todo 'feature'
     is(:16('0x20'),      0x20, ":16('0x20') stays hexadecimal");
     is(:16('0o377'),    0o377, ":16('0o255') converts from octal");
@@ -107,6 +108,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Literals/"Any radix may include a fractional part">
 
+#?rakudo todo 'feature'
 is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / ( 16 ** 4 ),
     'Fractional base 16 works' );
 
@@ -173,6 +175,7 @@ is(
 # setting the default radix
 
 #?pugs todo 'feature'
+#?rakudo todo 'feature'
 {
     is(:2('0b1110'),  0d14, ':2<0b1110> stays binary');
     is(:2('0x20'),    0d32, ':2<0x20> converts from hexadecimal');
