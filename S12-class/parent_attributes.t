@@ -16,7 +16,7 @@ L<S12/Methods/Indirect object notation now requires a colon after the invocant i
 
 class Foo {
     has $.x;
-    method boo { say $.x }
+    method boo { $.x }
 }
 
 class Bar is Foo {
