@@ -27,6 +27,6 @@ my Foo $u .= new(x => 5);
 is($u.boo, 5, 'set attribute');
 
 $u= Bar.new(Foo{ x => 12 });
-is($u.boo, 'set parent attribute');
+is($u.boo, 12, 'set parent attribute');
 $u.set(9);
-is($u.boo, 'reset parent attribute');
+is($u.boo, 9,  'reset parent attribute');
