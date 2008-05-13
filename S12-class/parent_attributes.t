@@ -8,9 +8,9 @@ plan 3;
 
 =head1 Initialization of parent attributes
 
-These tests are the testing for "Method" section of Synopsis 12
-
-L<S12/Methods/Indirect object notation now requires a colon after the invocant if there are no arguments>
+These are some tests for "Construction and Initialization" section of Synopsis
+12, based on example code from Jonathan Worthington's Rakudo tests for
+parent attribute initialization
 
 =end description
 
