@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 11;
 
 # L<S03/Loose unary precedence>
 
@@ -16,4 +16,5 @@ my $b = 0; ok(!(true $b), 'true $false_var is not true');
 ok( true(true 42), "true(true 42) is true");
 ok(!true(true  0), "true(true  0) is false");
 
-ok(true True, "bare 'True' is true");
+ok(true Bool::True, "'Bool::True' is true");
+ok(true True, "'True' is true");
