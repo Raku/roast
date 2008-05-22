@@ -21,5 +21,5 @@ eval '
 ';
 
 #?pugs todo 'feature, depends on "is chomped"'
-is($line, "use v6-alpha;", "first line was chomped");
+is($line, "use v6;", "first line was chomped");
 
