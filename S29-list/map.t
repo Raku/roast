@@ -23,6 +23,7 @@ my @list = (1 .. 5);
     is(@result[4], 10, 'got the value we expected');
 }
 
+#?rakudo skip "adverbial closure"
 {
     my @result = @list.map():{ $_ * 2 };
     is(+@result, 5, 'we got a list back');
@@ -43,6 +44,7 @@ my @list = (1 .. 5);
     is(@result[4], 10, 'got the value we expected');
 }
 
+#?rakudo skip "colon invocant syntax"
 {
     my @result = map { $_ * 2 }: @list;
     is(+@result, 5, 'we got a list back');
@@ -83,6 +85,7 @@ my @list = (1 .. 5);
     is(@result[4], "fish/5", 'got the value we expected');
 }
 
+#?rakudo skip "empty statement in closure"
 {
     my @list = 1 .. 5;
     is +(map {;$_ => 1 }, @list), 5,
@@ -111,7 +114,7 @@ my @list = (1 .. 5);
   dies_ok { 42.map: { $_ } },    "method form of map should not work on numbers";
   dies_ok { "str".map: { $_ } }, "method form of map should not work on strings";
   is ~(42,).map: { $_ }, "42",   "method form of map should work on arrays";
-}
+};
 
 =begin pod
 
@@ -126,6 +129,7 @@ should be equivalent to
 
 =end pod
 
+#?rakudo skip "colon invocant syntax"
 {
   my @expected = ("foo","bar");
   @expected = map { substr($_,1,1) }: @expected;
