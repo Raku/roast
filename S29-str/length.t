@@ -8,7 +8,7 @@ use Test;
 
 Various length tests (though "length" should not be used)
 
-This does not adequately test .chars, which is language dependent 
+This does not adequately test .chars, which is language dependent
 and needs more careful tests.
 
 L<"http://www.unicode.org/unicode/reports/tr11/">
@@ -17,15 +17,17 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 plan 55;
 
+#?rakudo skip 'no sub eval_dies_ok'
 eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
 # string literals, for sanity
 
 # L<S29/Str/=item bytes>
 
+#?rakudo 3 skip '.bytes not implemented'
 is("".bytes,         0, "empty string");
 is("moose".bytes,    5, "moose");
-my $x = undef; 
+my $x = undef;
 ok(!(try { $x.bytes }), "undef.bytes fail()s");
 # See thread "undef.chars" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22595">
