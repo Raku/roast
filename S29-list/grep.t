@@ -23,6 +23,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
+#?rakudo skip "adverbial closure"
 {
     my @result = @list.grep():{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -33,6 +34,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
+#?rakudo skip "adverbial closure"
 {
     my @result = @list.grep: { ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -43,6 +45,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
+#?rakudo skip "adverbial closure"
 {
     my @result = grep { ($_ % 2) }: @list;
     is(+@result, 5, 'we got a list back'); 
@@ -58,6 +61,7 @@ my @list = (1 .. 10);
   #?pugs 2 todo 'bug'
   dies_ok { 42.grep: { $_ } },    "method form of grep should not work on numbers";
   dies_ok { "str".grep: { $_ } }, "method form of grep should not work on strings";
+  #?rakudo skip "Arity problem"
   is ~(42,).grep: { 1 }, "42",    "method form of grep should work on arrays";
 }
 
