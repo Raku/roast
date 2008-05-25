@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S11/"MODULES"/"There are two basic declaration syntaxes:">
+# L<S11/"Modules"/"There are two basic declaration syntaxes:">
 
 plan 7;
 
