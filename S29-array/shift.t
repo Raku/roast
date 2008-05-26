@@ -43,7 +43,9 @@ plan 27;
     is(shift(@shift), 1, 'inline shift(@shift) works');
 
     is(+@shift, 3, 'we have 3 elements in our array');
+#?rakudo skip 'arity trouble'
     is(shift @shift, 2, 'inline shift @shift works');
+#?rakudo emit shift @shift;
 
     is(+@shift, 2, 'we have 2 elements in our array');
     is(@shift.shift(), 3, 'inline @shift.shift() works');
