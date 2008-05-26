@@ -43,6 +43,7 @@ plan 27;
     is(+@pop, 3, 'we have 3 elements in the array');
 #?rakudo skip 'arity trouble'
     is(pop @pop, 3, 'inline pop @pop works');
+#?rakudo emit pop @pop;
 
     is(+@pop, 2, 'we have 2 elements in the array');
     is(@pop.pop(), 2, 'inline @pop.pop() works');
