@@ -30,7 +30,6 @@ Basic C<pairs> tests, see S29.
 }
 
 #?pugs todo 'bug'
-#?rakudo skip 'not implemented'
 {
     my @array = (17, 23, 42);
 
@@ -40,4 +39,3 @@ Basic C<pairs> tests, see S29.
 
     is @array[1], 123, 'aliases returned by @array.pairs should be rw (2)';
 }
-#?rakudo emit skip_rest 'not implemented';

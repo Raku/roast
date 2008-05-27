@@ -104,7 +104,6 @@ plan 42;
 
 # testing some error cases
 {
-    #?rakudo 4 skip 'dies_ok not implemented'
     dies_ok({ push()     }, 'push() requires arguments (1)');
     # This one is okay, as push will push 0 elems to a rw arrayref.
     lives_ok({ push([])  }, 'push() requires arguments (2)');
