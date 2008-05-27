@@ -101,11 +101,12 @@ my @list = (1 .. 5);
 }
 
 # map with n-ary functions
+#?rakudo skip "colon invocant syntax"
 {
-  is ~(1,2,3,4).map: { $^a + $^b             }, "3 7", "map() works with 2-ary functions";
-  is ~(1,2,3,4).map: { $^a + $^b + $^c       }, "6 4", "map() works with 3-ary functions";
-  is ~(1,2,3,4).map: { $^a + $^b + $^c + $^d }, "10",  "map() works with 4-ary functions";
-  is ~(1,2,3,4).map: { $^a+$^b+$^c+$^d+$^e   }, "10",  "map() works with 5-ary functions";
+  is ~(1,2,3,4).map:{ $^a + $^b             }, "3 7", "map() works with 2-ary functions";
+  is ~(1,2,3,4).map:{ $^a + $^b + $^c       }, "6 4", "map() works with 3-ary functions";
+  is ~(1,2,3,4).map:{ $^a + $^b + $^c + $^d }, "10",  "map() works with 4-ary functions";
+  is ~(1,2,3,4).map:{ $^a+$^b+$^c+$^d+$^e   }, "10",  "map() works with 5-ary functions";
 }
 
 # .map shouldn't work on non-arrays
@@ -113,7 +114,8 @@ my @list = (1 .. 5);
   #?pugs 2 todo 'bug'
   dies_ok { 42.map: { $_ } },    "method form of map should not work on numbers";
   dies_ok { "str".map: { $_ } }, "method form of map should not work on strings";
-  is ~(42,).map: { $_ }, "42",   "method form of map should work on arrays";
+  #?rakudo skip "colon invocant syntax"
+  is ~(42,).map:{ $_ }, "42",   "method form of map should work on arrays";
 };
 
 =begin pod
@@ -137,6 +139,7 @@ should be equivalent to
   is(("foo","bar").map: { $_.substr(1,1) }, @expected, "map of constant list works");
 }
 
+#?rakudo skip "no hashes at the moment"
 {
   my @a = (1, 2, 3); 
   my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a; 
