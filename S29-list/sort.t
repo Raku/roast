@@ -156,7 +156,7 @@ plan 21;
 }
 
 # .sort shouldn't work on non-arrays
-#?rakudo skip "dies_ok not implemented"
+#?rakudo skip "colon invocation syntax"
 {
 #?pugs 2 todo 'bug'
     dies_ok { 42.sort: { 0 } },   "method form of sort should not work on numbers";
