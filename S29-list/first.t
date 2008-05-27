@@ -25,6 +25,7 @@ my @list = (1 .. 10);
     is($result, 4, "method form of first returns the expected item");
 }
 
+#?rakudo skip "colon invocant syntax"
 {
     my $result = @list.first():{ ($_ == 4) };
     ok($result ~~ Item, "first():<block> returns an Item");
