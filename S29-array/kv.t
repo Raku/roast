@@ -13,7 +13,6 @@ Basic C<kv> tests, see S29.
 # L<S29/"Array"/=item kv>
 
 # (1,).kv works correctly
-#?rakudo skip 'parsefail'
 {
     my @a = ();
     @a = try { (1,).kv };
@@ -23,9 +22,8 @@ Basic C<kv> tests, see S29.
 }
 
 # ('a',).kv works correctly
-#?rakudo skip 'parsefail'
 {
-    @a = try { ('a',).kv };
+    my @a = try { ('a',).kv };
     #?pugs 2 todo 'bug'
     is(@a[0],0, "first element is 0");
     is(@a[1],'a', "second element is 'a'");
