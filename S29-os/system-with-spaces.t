@@ -177,7 +177,7 @@ for @command -> $cmd {
 
     my $prog = "perl6-temprun-test-" ~ ($counter++) ~ ".tmp";    
 
-    my $cmd = @cmd[-1];
+    my $cmd = @cmd[*-1];
     my $expected = "[" ~ $cmd ~ "][" ~ @args.join("][") ~ "]";
     my $name = "|" ~ @cmd.join("*") ~ "| with [" ~ @args.join("][") ~ "]";
 
