@@ -3,12 +3,12 @@ use Test;
 
 plan 14;
 
-# L<S13/"Type Casting"/"method postcircumfix:<{ }> (*@@slice) {...}">
+# L<S13/"Type Casting"/"method %.{ *@@slice } {...}">
 # basic tests to see if the methods overload correctly.
 
 {
     class TypeCastSub {
-        method postcircumfix:<( )> (|$capture) {return 'pretending to be a sub'}
+        method &.( |$capture ) {return 'pretending to be a sub'}
     }
 
     my $thing = TypeCastSub.new;
@@ -18,7 +18,7 @@ plan 14;
 
 {
     class TypeCastArray {
-        method postcircumfix:<[ ]> (*@@slice) {return 'pretending to be an array'}
+        method @.[ *@@slice ] {return 'pretending to be an array'}
     }
 
     my $thing = TypeCastArray.new;
@@ -30,7 +30,7 @@ plan 14;
 
 {
     class TypeCastHash {
-        method postcircumfix:<{ }> (*@@slice) {return 'pretending to be a hash'}
+        method %.{ *@@slice } {return 'pretending to be a hash'}
     }
 
     my $thing = TypeCastHash.new;
