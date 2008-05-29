@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 19;
 
 =begin description
 
@@ -22,8 +22,8 @@ Basic C<delete> tests, see S29.
 
   is ~@array.delete(0, 3), "a d",
     "deletion of array elements returned the right things";
-  is ~@array, " b ", "deletion of array elements (1)";
-  is +@array, 3,     "deletion of array elements (2)";
+  is ~@array, " b", "deletion of array elements (1)";
+  is +@array, 2,     "deletion of array elements (2)";
 }
 
 # W/ negative indices:
@@ -38,8 +38,8 @@ Basic C<delete> tests, see S29.
   is ~@array.delete(-1), "d",
     "deletion of last array element returned the right thing";
   # @array is now ("a", "b", undef)
-  is ~@array, "a b ", "deletion of last array element (1)";
-  is +@array,       3, "deletion of last array element (2)";
+  is ~@array, "a b", "deletion of last array element (1)";
+  is +@array,     2, "deletion of last array element (2)";
 }
 
 # W/ multiple positive and negative indices:
@@ -65,3 +65,11 @@ Basic C<delete> tests, see S29.
     "deletion of the same array element accessed by different indices (2)";
 }
 
+# L<S29/Array/"Deleted elements at the end of an Array">
+{
+    my @array;
+    @array[8] = 'eight';
+    @array.delete(8);
+    is +@array, 0, 'deletion of trailing items purge empty positions'; 
+
+}
