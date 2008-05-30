@@ -267,7 +267,6 @@ plan 57;
 }
 
 # Implicit referentiation of array literals in pair creation with ... => "value"
-#?rakudo skip "non-string hash key"
 {
     my $pair  = (<a b c> => "value");
 
