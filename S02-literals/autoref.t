@@ -37,7 +37,6 @@ plan 57;
     is +$ref,       3, '$arrayref = \@array works (2)';
 }
 
-#?rakudo skip "sort not implemented"
 # Implicit referentiation of hashes in assignment
 {
     my %hash = (a => 1, b => 2, c => 3);
@@ -163,7 +162,6 @@ plan 57;
 }
 
 # Implicit referentiation of hashes in pair creation with key => ...
-#?rakudo skip "hash from list not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => %hash);
@@ -202,7 +200,6 @@ plan 57;
 }
 
 # Implicit referentiation of hashes in pair creation with :key(...)
-#?rakudo skip "hash from list not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(%hash));
@@ -254,7 +251,6 @@ plan 57;
 }
 
 # Arrayref literals in pair creation with :key(...)
-#?rakudo skip "[] list composer not implemented"
 {
     my $pair  = (:key([<a b c>]));
 
@@ -280,7 +276,6 @@ plan 57;
 }
 
 # Arrayref literals in pair creation with ... => "value"
-#?rakudo skip "non-string hash key"
 {
     my $pair  = ([<a b c>] => "value");
 
@@ -289,7 +284,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with ... => "value"
-#?rakudo skip "non-string hash key"
+#?rakudo skip "{} hash composer not implemented"
 {
     my $pair  = ({ a => 1, b => 2 } => "value");
 
