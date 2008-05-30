@@ -77,9 +77,9 @@ plan 19;
 
 # Some failure modes
 {
-    eval_dies_ok '(1).fmt()', 'scalar .fmt fails without $fmt';
-    eval_dies_ok '(1=>"a").fmt()', 'pair .fmt fails without $fmt';
-    eval_dies_ok '(1,2).fmt()', 'list .fmt fails without $fmt';
-    eval_dies_ok '[1,2].fmt()', 'array .fmt fails without $fmt';
-    eval_dies_ok '{1=>"a"}.fmt()', 'hash .fmt fails without $fmt';
+    dies_ok { (1).fmt()         }, 'scalar .fmt fails without $fmt';
+    dies_ok { (1=>"a").fmt()    }, 'pair .fmt fails without $fmt';
+    dies_ok { (1,2).fmt()       }, 'list .fmt fails without $fmt';
+    dies_ok { [1,2].fmt()       }, 'array .fmt fails without $fmt';
+    dies_ok { {1=>"a"}.fmt()    }, 'hash .fmt fails without $fmt';
 }
