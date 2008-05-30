@@ -119,7 +119,6 @@ plan 21;
 }
 
 
-#?rakudo skip "No hashes at the moment"
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
@@ -128,7 +127,6 @@ plan 21;
     is(@s, @e, '... sort keys by string value'); 
 }
 
-#?rakudo skip "No hashes at the moment"
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
@@ -137,7 +135,6 @@ plan 21;
     is(@s, @e, '... sort keys by string value (using invocant form)');
 }
 
-#?rakudo skip "No hashes at the moment"
 {
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
@@ -146,7 +143,6 @@ plan 21;
     is(@s, @e, '... sort keys by numeric value');
 }
 
-#?rakudo skip "No hashes at the moment"
 {
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
@@ -156,7 +152,7 @@ plan 21;
 }
 
 # .sort shouldn't work on non-arrays
-#?rakudo skip "colon invocation syntax"
+#?rakudo skip 'adverbial closure'
 {
 #?pugs 2 todo 'bug'
     dies_ok { 42.sort: { 0 } },   "method form of sort should not work on numbers";
