@@ -78,6 +78,5 @@ ok eval('<a b> X,X <c d>'), 'cross metaoperator parses', :todo<feature>;
 is (1,2 X*X 3,4), (3,4,6,8), 'cross-product works', :todo<feature>;
 
 # L<S03/Cross operators/underlying operator non-associating>
-#?rakudo skip 'dies_ok() not implemented'
 dies_ok '@result XcmpX @expected XcmpX <1 2>',
     'non-associating ops cannot be cross-ops';
