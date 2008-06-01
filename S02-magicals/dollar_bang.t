@@ -4,15 +4,15 @@ use Test;
 
 plan 8;
 
-=head1 DESCRIPTION
+=begin desc
 
 This test tests the C<$!> builtin.
 
-=cut
+=end desc
 
 # L<S04/"Exceptions"/"A bare die/fail takes $! as the default argument.">
 
-try { &nonexisting_subroutine() };
+eval '&nonexisting_subroutine()'; 
 ok $!, 'Calling a nonexisting subroutine sets $!';
 
 undefine $!;

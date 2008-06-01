@@ -51,6 +51,7 @@ plan 25;
 }
 
 #?pugs todo
+#?rakudo skip "parse error"
 {
     # try with a catch
     my $caught;
@@ -69,8 +70,10 @@ plan 25;
 # return value 42. But when the end of the test is reached, &try will
 # **resume after the return**, effectively running the tests twice.
 # (Therefore I moved the tests to the end, so not all tests are rerun).
+
+#?rakudo skip "return() not implemented"
 {
-    my $was_in_foo;
+    my $was_in_foo = 0;
     sub foo {
         $was_in_foo++;
         try { return 42 };
@@ -82,12 +85,12 @@ plan 25;
 }
 
 {
-    my sub test1 {
+    sub test1 {
         try { return 42 };
         return 23;
     }
 
-    my sub test2 {
+    sub test2 {
         test1();
         die 42;
     }
@@ -96,10 +99,12 @@ plan 25;
         "return() inside a try{}-block should cause following exceptions to really die";
 }
 
-unless (eval 'Exception.new') {
-    skip_rest "No Exception objects"; exit
-}
+#unless eval 'Exception.new' {
+#    skip_rest "No Exception objects"; exit;
+#}
 
+#?rakudo skip "parse error"
+#?rakduo DOES 2
 {
     # exception classes
     class Naughty is Exception {};
@@ -122,6 +127,8 @@ unless (eval 'Exception.new') {
     ok($caught, "caught exception of class Naughty");
 };
 
+#?rakudo skip "parse error"
+#?rakduo DOES 2
 {
     # exception superclass
     class Naughty::Specific is Naughty {};
@@ -146,6 +153,8 @@ unless (eval 'Exception.new') {
     ok($naughty, "caught superclass");
 };
 
+#?rakudo skip "parse error"
+#?rakduo DOES 3
 {
     # uncaught class
     eval 'class Dandy is Exception {}';

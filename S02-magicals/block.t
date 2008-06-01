@@ -2,13 +2,13 @@ use v6;
 
 use Test;
 
-=pod
+=begin description
 
 This tests the &?BLOCK magical from Synoposis 6
 
 L<S06/The C<&?BLOCK> object>
 
-=cut
+=end description
 
 plan 1;
 

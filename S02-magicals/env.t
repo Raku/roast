@@ -11,7 +11,7 @@ if $*OS eq "browser" {
   exit;
 }
 
-=kwid
+=begin desc
 
 = DESCRIPTION
 
@@ -20,7 +20,7 @@ Tests for %*ENV
 Tests that C<%*ENV> can be read and written to and that
 child processes see the modified C<%*ENV>.
 
-=cut
+=end desc
 
 # It must not be empty at startup.
 ok +%*ENV.keys, '%*ENV has keys';
