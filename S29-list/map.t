@@ -150,17 +150,9 @@ should be equivalent to
   is(+@c,3, "should be 3 elemens without the hash keyword as well");
 }
 
-#
 # Map with mutating block
-#
+# L<S02/Names/"$_, $!, and $/ are context<rw> by default">
 
-# Dubious: According to S29's definition, neither map nor grep allows for
-# mutation.  On the other hand, it seems useful to preserve the bugward
-# behaviour.  Marking :todo<unspecced>, pending p6l discussion (see thread
-# "[S29] Mutating map and grep" on p6l started by Ingo Blechschmidt
-# L<"http://www.nntp.perl.org/group/perl.perl6.language/22553">) and S29 patch.
-
-#?rakudo todo 'unspecced'
 {
   my @array = <a b c d>;
   is ~(try { @array.map: { $_ ~= "c"; $_ ~ "d" } }), "acd bcd ccd dcd",
@@ -169,3 +161,4 @@ should be equivalent to
     'mutating $_ in map works (2)';
 }
 
+# vim: ft=perl6
