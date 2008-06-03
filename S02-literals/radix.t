@@ -108,7 +108,6 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Literals/"Any radix may include a fractional part">
 
-#?rakudo todo 'feature'
 is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / ( 16 ** 4 ),
     'Fractional base 16 works' );
 
