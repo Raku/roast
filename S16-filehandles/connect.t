@@ -17,8 +17,9 @@ if $*OS eq "browser" {
   exit;
 }
 
-unless %*ENV<PUGS_TESTS_ALLOW_NETWORK> {
-  skip_rest "Won't test &connect as environment variable \"PUGS_TESTS_ALLOW_NETWORK\" is not true.";
+my $skip_var = 'PERL_TESTS_ALLOW_NETWORK';
+unless %*ENV{$skip_var} {
+  skip_rest "Won't test &connect as environment variable \"$skip_var\" is not true.";
   exit;
 }
 
