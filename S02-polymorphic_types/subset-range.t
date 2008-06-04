@@ -21,9 +21,11 @@ subset Digit of Int where ^10;
     is  $x,     9,  "other end of range";
 }
 
-eval_dies_ok '$x = 10',
+eval_dies_ok 'my Digit $x = 10',
              'type constraints prevents assignment 1';
-eval_dies_ok '$x = -1',
+eval_dies_ok 'my Digit $x = -1',
              'type constraints prevents assignment 2';
-eval_dies_ok '$x = 3.1',
+eval_dies_ok 'my Digit $x = 3.1',
              'original type prevents assignment';
+
+# vim: ft=perl6
