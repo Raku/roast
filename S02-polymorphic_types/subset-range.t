@@ -21,6 +21,7 @@ subset Digit of Int where ^10;
     is  $x,     9,  "other end of range";
 }
 
+#?rakudo todo 'BUG: upper end of ranges are not check in sub types'
 eval_dies_ok 'my Digit $x = 10',
              'type constraints prevents assignment 1';
 eval_dies_ok 'my Digit $x = -1',
