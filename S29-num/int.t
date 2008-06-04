@@ -71,6 +71,7 @@ is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
 # Special values
 is(int(1.9e3), 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
+#?rakudo 3 skip 'Inf and NaN not yet implemented'
 is(int(Inf),    Inf, "int Inf is Inf");
 is(int(-Inf),  -Inf, "int -Inf is -Inf");
 is(int(NaN),    NaN, "int NaN is NaN");
