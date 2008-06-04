@@ -70,8 +70,6 @@ is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
 }
 
 # Special values
-
-#?rakudo 4 skip 'parsefail'
 is(int(1.9e3), 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
 is(int(Inf),    Inf, "int Inf is Inf");
