@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 33;
 
 # L<S29/"List"/"=item join">
 
@@ -20,6 +20,9 @@ is($joined3, "a|b|c", 'join("|", 1, 2, 3) works');
 
 my $joined4 = join("|", [ "a", "b", "c" ]);
 is($joined4, "a b c", 'join("|", []) should not join anything');
+
+# join() without a separator (defaults to ' ', per S29)
+is(<a b c>.join, 'a b c', 'join() separator defaults to " ".');
 
 # join() with $sep as a variable
 
@@ -108,4 +111,5 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 dies_ok({ join() }, 'join() must have arguments');
 # Similar as with .kv: (42).kv should die, but (42,).kv should work.
 #?pugs todo 'bug'
-dies_ok({ "hi".join("!") }, "join() should not work on strings");
+is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
+is(('hi').join(':'), 'hi', '("foo").join(":") should be the same as join(":", "foo")');
