@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 58;
+plan 61;
 
 # L<S29/Num/"=item truncate">
 # truncate and int() are synonynms. 
@@ -11,6 +11,9 @@ plan 58;
 Basic tests for the int() builtin
 
 =end pod
+
+# basic sanity:
+is(-0, 0, '-0 is the same as 0 - hey, they are integers ;-)');
 
 is(int(-1), -1, "int(-1) is -1");
 is(int(0), 0, "int(0) is 0");
@@ -23,12 +26,14 @@ is(int(0.51), 0, "int(0.51) is 0");
 is(int(0.5), 0, "int(0.5) is 0");
 is(int(0.49), 0, "int(0.49) is 0");
 is(int(0.1), 0, "int(0.1) is 0");
+is(int(0.1).WHAT, 'Int', 'int(0.1) returns an Int');
 
-is(int(-0.999), -0, "int(-0.999) is -0");
-is(int(-0.51), -0, "int(-0.51) is -0");
-is(int(-0.5), -0, "int(-0.5) is -0");
-is(int(-0.49), -0, "int(-0.49) is -0");
-is(int(-0.1), -0, "int(-0.1) is -0");
+is(int(-0.999), 0, "int(-0.999) is 0");
+is(int(-0.51),  0, "int(-0.51) is 0");
+is(int(-0.5),   0, "int(-0.5) is 0");
+is(int(-0.49),  0, "int(-0.49) is 0");
+is(int(-0.1),   0, "int(-0.1) is 0");
+is(int(-0.1).WHAT, 'Int', 'int(-0.1) returns an Int');
 
 is(int(1.999), 1, "int(1.999) is 1");
 is(int(1.51), 1, "int(1.51) is 1");
@@ -77,3 +82,5 @@ is(int(-Inf),  -Inf, "int -Inf is -Inf");
 is(int(NaN),    NaN, "int NaN is NaN");
 
 #?rakudo emit skip_rest 'parsefail';
+
+# vim: ft=perl6
