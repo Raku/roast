@@ -10,9 +10,9 @@ Basic tests for the exp() builtin
 
 =end pod
 
-#?rakudo 2 skip "is_approx failing"
-is_approx((exp(5), 148.4131591025766), 'got the exponent of 5');
-is_approx((exp(0), 1), 'exp(0) == 1');
+#?rakudo todo 'too low precision
+is_approx(exp(5), 148.4131591025766, 'got the exponent of 5');
+is_approx(exp(0), 1, 'exp(0) == 1');
 
 #?rakudo 2 skip "can't parse complex numbers"
 # exp with complex arguments
@@ -28,3 +28,4 @@ is_approx((exp(-1i*pi), -1), 'exp(-i pi) == -1');
     }
 }
 #?rakudo emit skip_rest "can't parse complex numbers";
+# vim: ft=perl6
