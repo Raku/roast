@@ -10,7 +10,6 @@ Basic tests for the exp() builtin
 
 =end pod
 
-#?rakudo todo 'too low precision'
 is_approx(exp(5), 148.4131591025766, 'got the exponent of 5');
 is_approx(exp(0), 1, 'exp(0) == 1');
 
