@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 51;
+plan 53;
 
 # L<S29/"The :Trig tag">
 
@@ -29,27 +29,30 @@ is_approx((atan(-1)           / $PI * 180, -45));
 is_approx((atan(-1/3*sqrt(3)) / $PI * 180, -30));
 is_approx((atan(-sqrt(3))     / $PI * 180, -60));
 
-# S29: This second form of C<atan> computes the arctangent of $y/$x, and
-# **takes the quadrant into account**.
+# S29: C<atan2> computes the arctangent of $y/$x, and
+# **takes the quadrant into account**. The second argument is
+# assumed to be 1 if it is not present.
 # Quadrant I
-is_approx((atan(1, 1)           / $PI * 180, 45));
-is_approx((atan(1, sqrt(3))     / $PI * 180, 30));
-is_approx((atan(1, 1/3*sqrt(3)) / $PI * 180, 60));
+is_approx((atan2(1, 1)           / $PI * 180, 45));
+is_approx((atan2(1)              / $PI * 180, 45));
+is_approx((atan2(1, sqrt(3))     / $PI * 180, 30));
+is_approx((atan2(1, 1/3*sqrt(3)) / $PI * 180, 60));
 
 # Quadrant II
-is_approx((atan(1, -1)           / $PI * 180, 135));
-is_approx((atan(1, -1/3*sqrt(3)) / $PI * 180, 120));
-is_approx((atan(1, -sqrt(3))     / $PI * 180, 150));
+is_approx((atan2(1, -1)           / $PI * 180, 135));
+is_approx((atan2(1, -1/3*sqrt(3)) / $PI * 180, 120));
+is_approx((atan2(1, -sqrt(3))     / $PI * 180, 150));
 
 # Quadrant III
-is_approx((atan(-1, -1)           / $PI * 180 + 360, 225));
-is_approx((atan(-1, -sqrt(3))     / $PI * 180 + 360, 210));
-is_approx((atan(-1, -1/3*sqrt(3)) / $PI * 180 + 360, 240));
+is_approx((atan2(-1, -1)           / $PI * 180 + 360, 225));
+is_approx((atan2(-1, -sqrt(3))     / $PI * 180 + 360, 210));
+is_approx((atan2(-1, -1/3*sqrt(3)) / $PI * 180 + 360, 240));
 
 # Quadrant IV
-is_approx((atan(-1, 1)           / $PI * 180 + 360, 315));
-is_approx((atan(-1, sqrt(3))     / $PI * 180 + 360, 330));
-is_approx((atan(-1, 1/3*sqrt(3)) / $PI * 180 + 360, 300));
+is_approx((atan2(-1, 1)           / $PI * 180 + 360, 315));
+is_approx((atan2(-1)              / $PI * 180 + 360, 315));
+is_approx((atan2(-1, sqrt(3))     / $PI * 180 + 360, 330));
+is_approx((atan2(-1, 1/3*sqrt(3)) / $PI * 180 + 360, 300));
 
 # -- sin, cos, tan
 # sin
