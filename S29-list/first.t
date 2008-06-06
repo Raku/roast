@@ -15,20 +15,20 @@ my @list = (1 .. 10);
 
 {
     my $result = first { ($_ % 2) }, @list;
-    ok($result ~~ Item, "first() returns an Item");
+    ok($result ~~ Int, "first() returns an Int");
     is($result, 1, "returned value by first() is correct");
 }
 
 {
     my $result = @list.first( { ($_ == 4)});
-    ok($result ~~ Item, "method form of first returns an item");
+    ok($result ~~ Int, "method form of first returns an Int");
     is($result, 4, "method form of first returns the expected item");
 }
 
 #?rakudo skip "colon invocant syntax"
 {
     my $result = @list.first():{ ($_ == 4) };
-    ok($result ~~ Item, "first():<block> returns an Item");
+    ok($result ~~ Int, "first():<block> returns an Int");
     is($result, 4, "first() returned the expected value");
 }
 
@@ -38,7 +38,7 @@ my @list = (1 .. 10);
 
 {
 	my $count = 0;
-	my $matcher = sub (Num $x) { $count++; return $x % 2 };
+	my $matcher = sub (Int $x) { $count++; $x % 2 };
 	is(@list.first($matcher), 1, 'first() search for odd elements successfull');
 	is($count, 1, 'Matching closure in first() is only executed once');
 
