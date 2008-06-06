@@ -11,7 +11,7 @@ plan 11;
     my (@even,@odd);
     ok(eval(q"(:@even, :@odd) := classify { $_ % 2 ?? 'odd' !! 'even' } 1,2,3,4; ") );
     is_deeply(@even, [2,4], "got expected evens");
-    is_deeply(@even, [1,3], "got expected odds");
+    is_deeply(@odd,  [1,3], "got expected odds");
 }
 
 #?pugs todo 'feature'
