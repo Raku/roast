@@ -3,11 +3,11 @@ use Test;
 
 # L<S29/"Array"/"=item pop">
 
-=begin description 
+=begin description
 
 Pop tests
 
-=end description 
+=end description
 
 plan 27;
 
@@ -41,9 +41,7 @@ plan 27;
     is(pop(@pop), 4, 'inline pop(@pop) works');
 
     is(+@pop, 3, 'we have 3 elements in the array');
-#?rakudo skip 'arity trouble'
     is(pop @pop, 3, 'inline pop @pop works');
-#?rakudo emit pop @pop;
 
     is(+@pop, 2, 'we have 2 elements in the array');
     is(@pop.pop(), 2, 'inline @pop.pop() works');
@@ -58,7 +56,7 @@ plan 27;
 # invocant syntax with inline arrays
 {
     is([1, 2, 3].pop, 3, 'this will return 3');
-    ok(!defined([].pop), 'this will return undef');    
+    ok(!defined([].pop), 'this will return undef');
 }
 
 # some edge cases
@@ -71,9 +69,9 @@ plan 27;
 # testing some error cases
 {
     my @pop = 1 .. 5;
-    dies_ok({ pop()         }, 'pop() requires arguments');    
-    dies_ok({ pop(@pop, 10) }, 'pop() should not allow extra arguments');            
-    dies_ok({ @pop.pop(10)  }, 'pop() should not allow extra arguments');    
+    dies_ok({ pop()         }, 'pop() requires arguments');
+    dies_ok({ pop(@pop, 10) }, 'pop() should not allow extra arguments');
+    dies_ok({ @pop.pop(10)  }, 'pop() should not allow extra arguments');
     dies_ok({ 42.pop        }, '.pop should not work on scalars');
 }
 
