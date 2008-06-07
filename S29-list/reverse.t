@@ -65,32 +65,32 @@ is(@a[0], "bar", 'the list was reversed properly');
 is(@a[1], "foo", 'the list was reversed properly');
 
 {
-	my @cxt_log;
+    my @cxt_log;
 
-	class Foo {
-		my @.n;
-		method foo () {
-			push @cxt_log, want();
-			(1, 2, 3)
-		}
-		method bar () {
-			push @cxt_log, want();
-			return @!n = do {
-				push @cxt_log, want();
-				reverse self.foo;
-			}
-		}
-	}
+    class Foo {
+        my @.n;
+        method foo () {
+            push @cxt_log, want();
+            (1, 2, 3)
+        }
+        method bar () {
+            push @cxt_log, want();
+            return @!n = do {
+                push @cxt_log, want();
+                reverse self.foo;
+            }
+        }
+    }
 
-	my @n = do {
-		push @cxt_log, want();
-		Foo.new.bar;
-	};
+    my @n = do {
+        push @cxt_log, want();
+        Foo.new.bar;
+    };
 
     #?pugs todo 'bug'
-	is(~@cxt_log, ~("List (Any)" xx 4), "contexts were passed correctly around masak's bug");
-	is(+@n, 3, "list context reverse in masak's bug");
-	is(~@n, "3 2 1", "elements seem reversed");
+    is(~@cxt_log, ~("List (Any)" xx 4), "contexts were passed correctly around masak's bug");
+    is(+@n, 3, "list context reverse in masak's bug");
+    is(~@n, "3 2 1", "elements seem reversed");
 }
 
 {    
