@@ -7,7 +7,7 @@ plan 10;
 #?rakudo skip 'parsefail'
 {
     sub has_approx($n, @list) {
-        for @list -> my $i {
+        for @list -> $i {
             if approx($i, $n) {
                 return 1;
             }
