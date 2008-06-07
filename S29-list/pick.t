@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 =begin description
 
@@ -37,6 +37,20 @@ is eval('@arr.pick(4, :repl)'), <z z z z>, 'method pick(:repl) with $num > +@val
 is eval('pick(2, @arr)'), <z z>, 'sub pick with $num < +@values';
 is eval('pick(4, @arr)'), <z z z>, 'sub pick with $num > +@values';
 is eval('pick(4, :repl, @arr)'), <z z z z>, 'sub pick(:repl) with $num > +@values';
+
+ok(<a b c d>.pick(*).sort === <a b c d>, 'pick(*) returns all the items in the array (but maybe not in order)');
+
+# There should be a better way to write this
+{
+    my $passed = 0;
+    my @items = <s o m e i t e m s>;
+    for (1 .. 10) {
+        if(@items.pick(*) !=== @items) {
+            $passed = 1; last;
+        }
+    }
+    ok($passed, 'pick(*) returned the items of the array in a random order');
+}
 
 my $c = 0;
 my @value = gather {
