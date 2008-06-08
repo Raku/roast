@@ -4,8 +4,10 @@ use Test;
 
 # L<S29/Str/=item pos>
 
-plan 1;
+plan 2;
 
 my $str = 'moose';
 $str ~~ m/oo/;
-dies_ok($str.pos, 'Str.pos not implemented');
+eval_dies_ok('$str.pos', 'Str.pos superseeded by $/.to');
+
+is($/.to, 2, '$/.to works');
