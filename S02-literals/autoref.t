@@ -235,7 +235,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with key => ...
-#?rakudo skip "{} hash composer not implemented"
+#?rakudo skip '{} hash composer not implemented'
 {
     my $pair  = (key => { a => 1, b => 2 });
 
@@ -259,7 +259,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with :key(...)
-#?rakudo skip "{} hash composer not implemented"
+#?rakudo skip '{} hash composer not implemented'
 {
     my $pair  = (:key({ a => 1, b => 2 }));
 
@@ -283,7 +283,7 @@ plan 57;
 }
 
 # Hashref literals in pair creation with ... => "value"
-#?rakudo skip "{} hash composer not implemented"
+#?rakudo skip '{} hash composer not implemented'
 {
     my $pair  = ({ a => 1, b => 2 } => "value");
 
