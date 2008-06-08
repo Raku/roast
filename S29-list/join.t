@@ -109,7 +109,24 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 # some error cases
 
 dies_ok({ join() }, 'join() must have arguments');
+
+
 # Similar as with .kv: (42).kv should die, but (42,).kv should work.
+
+   ## <pmichaud>:  I think the following two tests are likely incorrect.
+   ##   Prior to r20722 S29 gave the following definitions for C<join>:
+   ##     our Str multi method join ( $separator: @values )
+   ##     our Str multi join ( Str $separator = ' ', *@values )
+   ##   Neither of these allows C< @list.join('sep') > to work.
+   ##   In r20722 I changed S29 to read
+   ##     our Str multi method join ( @values: $separator = ' ' )
+   ##     our Str multi join ( Str $separator = ' ', *@values )
+   ##   This enables C< @list.join('sep') > to work, but now
+   ##   C< 'foo'.join(':') > through method fallback is equivalent
+   ##   to C< join('foo', ':') >, which results in ':' and not 'foo'.
+   ##   Same is true for C< ('foo').join(':') >.
+
 #?pugs todo 'bug'
+#?rakudo 2 skip "method fallback unimplemented"
 is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
 is(('hi').join(':'), 'hi', '("foo").join(":") should be the same as join(":", "foo")');
