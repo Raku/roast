@@ -17,7 +17,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 plan 55;
 
-dies_ok("moose".length, 'Str.length properly not implemented');
+eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
 # string literals, for sanity
 
