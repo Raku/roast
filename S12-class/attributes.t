@@ -4,6 +4,8 @@ use Test;
 
 plan 4;
 
+# L<S12/Methods/"For a call on your own private method">
+
 class Counter {
     has $!x;
     method init { $!x = 41 }
