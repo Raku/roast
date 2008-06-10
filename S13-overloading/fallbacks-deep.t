@@ -8,7 +8,7 @@ plan 2;
 class Base {has $.value is rw;}
 class Exponent {has $.value is rw;}
 
-multi sub infix:<+> (Base $b, Exponent $e} is deep {$b.value ** $e.value}
+multi sub infix:<+> (Base $b, Exponent $e) is deep {$b.value ** $e.value}
 
 my $base = Base.new();
 my $exp  = Exponent.new();
