@@ -12,7 +12,7 @@ L<S12/Methods/Indirect object notation now requires a colon after the invocant i
 
 =end description
 
-plan 6;
+plan 7;
 
 
 ##### Without arguments
@@ -25,11 +25,11 @@ class T1
 }
 
 {
-my T1 $o .= new;
-ok( "Still alive after new" );
+    my T1 $o .= new;
+    ok( "Still alive after new" );
 
-is( $o.a(), 'test', "The indirect object notation call without argument 1" );
-is( (a $o:), 'test', "The indirect object notation call without arguments 2" );
+    is( $o.a(), 'test', "The indirect object notation call without argument 1" );
+    is( (a $o:), 'test', "The indirect object notation call without arguments 2" );
 }
 
 ##### With arguments
@@ -42,9 +42,11 @@ class T2
 }
 
 {
-my T2 $o .= new;
-ok( "Still alive after new" );
-my $seed = rand(1000);
-is( $o.a( $seed ), $seed, "The indirect object notation call with argument 1" );
-is( (a $o: $seed), $seed, "The indirect object notation call with arguments 2" );
+    my T2 $o .= new;
+    ok( "Still alive after new" );
+    my $seed = rand(1000);
+    is( $o.a( $seed ), $seed, "The indirect object notation call with argument 1" );
+    is( (a $o: $seed), $seed, "The indirect object notation call with arguments 2" );
+    my $name = 'a';
+    eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
 }
