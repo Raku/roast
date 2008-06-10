@@ -49,34 +49,37 @@ is("ABCDE".trans( (['A' .. 'E'] => "a .. e") ), "abcde",
 	   "Using array reference on one side and string range on the other");
 
 is(" <>&".trans( (['<',    '>',    '&',    ] => 
-                  ['&lt;', '&gt;', '&amp;' ]))," &lt;&gt;&amp;",
+                  ["&lt;", "&gt;", "&amp;" ]))," &lt;&gt;&amp;",
          "The array version can map one characters to one-or-more characters except spaces");
 
 is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] => 
                   ['&nbsp;', '&lt;', '&gt;', '&amp;' ])),"&nbsp;&lt;&gt;&amp;",
          "The array version can map one-or-more characters to one-or-more characters");
 
-#?pugs todo 'feature'
-is(eval('"abc".trans(<== "a" => "A")'), "Abc",
-    "you're allowed to leave off the (...) named arg parens when you use <==");
-
-# Make sure the tr/// version works, too.  
-
-$_ = "ABC";
-tr/ABC/abc/;
-is($_, 'abc', 'tr/// on $_ with explicit character lists');
-
-$_ = "abc";
-tr|a..c|A..C|;
-is($_, 'ABC', 'tr||| on $_ with character range');
-
-{
-my $japh = "Whfg nabgure Crey unpxre";
-$japh ~~ tr[a..z A..Z][n..z a..m  N..Z A..M];
-is($japh, "Just another Perl hacker", 'tr[][] on lexical var via ~~');
-}
-
-$_ = '$123';
-tr/$123/X\x20\o40\t/;
-is($_, "X  \t", 'tr/// on $_ with explicit character lists');
-
+#?rakudo skip 'unimpl: tr///, Ranges '
+skip(5, 'unimpl: tr///, Ranges');
+#{
+#is(eval('"abc".trans(<== "a" => "A")'), "Abc",
+#    "you're allowed to leave off the (...) named arg parens when you use <==");
+#
+## Make sure the tr/// version works, too.  
+#
+#$_ = "ABC";
+#tr/ABC/abc/;
+#is($_, 'abc', 'tr/// on $_ with explicit character lists');
+#
+#$_ = "abc";
+#tr|a..c|A..C|;
+#is($_, 'ABC', 'tr||| on $_ with character range');
+#
+#{
+#my $japh = "Whfg nabgure Crey unpxre";
+#$japh ~~ tr[a..z A..Z][n..z a..m  N..Z A..M];
+#is($japh, "Just another Perl hacker", 'tr[][] on lexical var via ~~');
+#}
+#
+#$_ = '$123';
+#tr/$123/X\x20\o40\t/;
+#is($_, "X  \t", 'tr/// on $_ with explicit character lists');
+#
+#}
