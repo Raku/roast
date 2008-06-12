@@ -20,7 +20,7 @@ class Foo {
 }
 
 class Bar is Foo {
-    method set($v) { $.x = $v }
+    method set($v) { $!x = $v }
 }
 
 my Foo $u .= new(x => 5);

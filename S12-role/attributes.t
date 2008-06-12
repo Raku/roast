@@ -4,7 +4,7 @@ plan 2;
 
 role R1 {
     has $!a1;
-    has $.a2;
+    has $.a2 is rw;
 };
 
 class C1 does R1 {
