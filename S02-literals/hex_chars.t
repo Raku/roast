@@ -4,8 +4,6 @@ use Test;
 plan 4;
 
 #L<S02/Literals/"Characters indexed by hex numbers">
-#?rakudo skip "parse error"
-#?DOES 4
 {
     my %unicode = (
 	    'a'  => "\x61",
