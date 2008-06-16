@@ -21,9 +21,9 @@ my @array = <5 -3 7 0 1 -9>;
 is @array.min,  -9, "basic method form of min works";
 is min(@array), -9, "basic subroutine form of min works";
 
-is @array.min: { $^a <=> $^b }, -9,
+is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
-isnt @array.min: { $^a <=> $^b }, 7,
+isnt (@array.min: { $^a <=> $^b }), 7,
   "bug -- method form of min with identity comparison block returning max";
 
 is min({ $^a <=> $^b }, @array), -9,
@@ -31,18 +31,18 @@ is min({ $^a <=> $^b }, @array), -9,
 isnt min({ $^a <=> $^b }, @array), 7,
   "bug -- subroutine form of min with identity comparison block returning max";
 
-is @array.min: { abs $^a <=> abs $^b }, 0,
+is (@array.min: { abs $^a <=> abs $^b }), 0,
   "method form of min taking a comparision block works";
 is min({ abs $^a <=> abs $^b }, @array), 0,
   "subroutine form of min taking a comparision block works";
 
 # Tests for C<max>:
-is @array.max,  7, "basic method form of max works";
+is (@array.max),  7, "basic method form of max works";
 is max(@array), 7, "basic subroutine form of max works";
 
-is @array.max: { $^a <=> $^b }, 7,
+is (@array.max: { $^a <=> $^b }), 7,
   "method form of max with identity comparison block works";
-isnt @array.max: { $^a <=> $^b }, -9,
+isnt (@array.max: { $^a <=> $^b }), -9,
   "bug -- method form of max with identity comparison block returning min";
 
 is max({ $^a <=> $^b }, @array), 7,
@@ -50,7 +50,7 @@ is max({ $^a <=> $^b }, @array), 7,
 isnt max({ $^a <=> $^b }, @array), -9,
   "bug -- subroutine form of max with identity comparison block returning min";
 
-is @array.max: { abs $^a <=> abs $^b }, -9,
+is (@array.max: { abs $^a <=> abs $^b }), -9,
   "method form of max taking a comparision block works";
 is max({ abs $^a <=> abs $^b }, @array), -9,
   "subroutine form of max taking a comparision block works";
