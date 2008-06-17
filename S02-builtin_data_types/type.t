@@ -9,9 +9,8 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 8;
+plan 12;
 
-#?rakudo skip 'unimpl: try block does not return its value yet'
 {
     ok(try{my Int $foo; 1}, 'compile my Int $foo');
     ok(try{my Str $bar; 1}, 'compile my Str $bar');
@@ -34,3 +33,10 @@ my Str $bar;
     is(try{$bar = 'xyz'}, 'xyz', 'Str is a strings');
 }
 
+# L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
+{
+    eval_dies_ok({my int $alpha = undef}, 'native int type cannot be undef');
+    lives_ok({my Int $beta = undef},      'object Int type can be undef');
+    eval_dies_ok({my num $alpha = undef}, 'native num type cannot be undef');
+    lives_ok({my Num $beta = undef},      'object Num type can be undef');
+}
