@@ -13,7 +13,7 @@ Basic tests for the sqrt() builtin
 is_approx(sqrt(2), 1.4142135623730951, 'got the square root of 2');
 is_approx(sqrt(5), 2.23606797749979,   'got the square root of 5');
 #?rakudo 2 skip 'NaN not implemented'
-ok(sqrt(-1), NaN, 'sqrt(-1) is NaN');
+is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
 
 #WARNING: there is currently no spec which of the complex roots should be
 #returned. We should change that.
