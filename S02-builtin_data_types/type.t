@@ -34,6 +34,7 @@ my Str $bar;
 }
 
 # L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
+#?rakudo skip 'int, num, undef assign not implemented'
 {
     eval_dies_ok({my int $alpha = undef}, 'native int type cannot be undef');
     lives_ok({my Int $beta = undef},      'object Int type can be undef');
