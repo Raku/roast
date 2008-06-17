@@ -2,6 +2,8 @@ use v6;
 
 # L<S16/"Input and Output"/=item print>
 
+print "1..12\n";
+
 # Tests for print
 {
     print "ok 1 - basic form of print\n";
