@@ -6,6 +6,7 @@ plan 10;
 
 # L<S29/Str/=item comb>
 
+#?rakudo 10 skip ".comb not implemented"
 # comb Str
 is "".comb, (), 'comb on empty string';
 is "a bc d".comb, <a bc d>, 'default matcher and limit';
@@ -17,7 +18,6 @@ is_deeply @('split this string'.comb).map: { "$_" },
            <split this string>,
            'Str.comb';
 
-#?rakudo 2 skip "m:Perl5 not implemented"
 is "a ab bc ad ba".comb(m:Perl5/\ba\S*/), <a ab ad>,
     'match for any a* words';
 is "a ab bc ad ba".comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
