@@ -2,14 +2,13 @@ use v6;
 
 use Test;
 
-=kwid
-
-= DESCRIPTION
+=begin description
 
 Test that C< $*PID > in this process is different from
 C< $*PID > in the child process.
 L<A05/"RFC 332: Regex: Make /\$/ equivalent to /\z/ under the '/s' modifier" /The current process id is now C<\$\*PID>/>
-=cut
+
+=end description
 
 plan 1;
 
