@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item chop">
 
-plan 2;
+plan 12;
 
 #
 # Tests already covered by the specs
@@ -11,6 +11,9 @@ plan 2;
 
 my $str = "foo";
 is(chop($str), "fo", "o removed");
+is($str, "foo", "original string unchanged");
+
+is($str.chop, "fo", "o removed");
 is($str, "foo", "original string unchanged");
 
 # See L<"http://use.perl.org/~autrijus/journal/25351">:
@@ -25,18 +28,21 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 
 =end more-discussion-needed
 
-{ # chop serveral things
+#?rakudo skip "don't parse"
+{ # chop several things
     my ($a, $b) = ("bar", "gorch");
-#?pugs 2 todo ''
-    # FIXME: is(eval 'chop($a, $b)', "h", "two chars removed, second returned");
+#?pugs 3 todo ''
+#?rakudo 3 skip "unspecced"
+    is(chop($a, $b), "h", "two chars removed, second returned");
     is($a, "ba", "first string");
     is($b, "gorc", "second string");
 };
 
 { # chop elements of array
     my @array = ("fizz", "buzz");
+#?rakudo 3 skip "unspecced"
     is(chop(@array), "z", "two chars removed second returned");
-#?pugs 2 todo 'unspecified'
+#?pugs 2 todo 'unspecced'
     is(@array[0], "fiz", "first elem");
     is(@array[1], "buz", "second elem");
 };
@@ -44,8 +50,8 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 { # chop a hash
     my %hash = ( "key", "value", "other", "blah");
 
+#?rakudo 2 skip "unspecced"
 #?pugs 2 todo ''
-#?rakudo 2 skip "can't parse"
     # FIXME: is(chop(%hash), "h"|"e", "chopping hash returns last char of either value");
     is(%hash<key>, "valu", "first value chopped");
     is(%hash<other>, "bla", "second value chopped");
