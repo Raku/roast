@@ -44,7 +44,7 @@ print join(' ',
     map {
         my $pick;
         if ( $_ !~ m/\.$platform$/ ) {
-            my $cmd = "$^X $fudge @opts $platform $_";
+            my $cmd = "$^X \"$fudge\" @opts $platform $_";
             chomp( $pick = `$cmd` );
         }
         defined $pick ? $pick : ();
