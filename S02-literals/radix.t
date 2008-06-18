@@ -3,9 +3,6 @@ use Test;
 
 plan 93;
 
-# L<S02/Literals>
-
-
 # L<S02/Literals/":10<42>">
 
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
