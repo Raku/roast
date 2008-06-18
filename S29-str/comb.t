@@ -3,7 +3,6 @@ use v6;
 use Test;
 
 plan 10;
-#?rakudo 10 skip "can't parse"
 
 # L<S29/Str/=item comb>
 
@@ -16,8 +15,9 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
 
 is_deeply @('split this string'.comb).map: { "$_" },
            <split this string>,
-           q{Str.comb};
+           'Str.comb';
 
+#?rakudo skip 2 "m:Perl5 not implemented"
 is "a ab bc ad ba".comb(m:Perl5/\ba\S*/), <a ab ad>,
     'match for any a* words';
 is "a ab bc ad ba".comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
