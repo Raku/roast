@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 14;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -15,5 +15,21 @@ is ~$/, 'aa',   'Longest alternative wins 2';
 
 ok $str ~~ m:g/a|aa|aaaa/, 'Third match still works';
 is ~$/, 'a',    'Only one alternative left';
+
+ok $str !~~ m:g/a|aa|aaaa/, 'No fourth match';
+
+# now test with different order in the regex - it shouldn't matter at all
+
+ok $str ~~ m:g/aa|a|aaaa/, 'basic sanity with |, different order';
+is ~$/, 'aaaa', 'Longest alternative wins 1, different order';
+
+ok $str ~~ m:g/aa|a|aaaa/, 'Second match still works, different order';
+is ~$/, 'aa',   'Longest alternative wins 2, different order';
+
+ok $str ~~ m:g/aa|a|aaaa/, 'Third match still works, different order';
+is ~$/, 'a',    'Only one alternative left, different order';
+
+ok $str !~~ m:g/aa|a|aaaa/, 'No fourth match, different order';
+
 
 # vim: ft=perl6
