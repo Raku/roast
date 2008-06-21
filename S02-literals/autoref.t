@@ -90,7 +90,7 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in assignment to an array element
-#?rakudo skip "prefix:<\> not implemented"
+#?rakudo skip "prefix:<\\> not implemented"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my @other;
