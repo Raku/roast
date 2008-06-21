@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 25;
+plan 24;
 
 {
     # simple try
@@ -20,8 +20,6 @@ plan 25;
     is ~@array, "42", '@array = try {...} worked (2)';
 }
 
-#?rakudo skip "parse error"
-#?DOES 2
 {
     my @array = try { (42,) };
     is +@array,    1, '@array = try {...} worked (3)';
@@ -51,7 +49,7 @@ plan 25;
 }
 
 #?pugs todo
-#?rakudo skip "parse error"
+#?rakudo skip "CATCH blocks not implemented"
 {
     # try with a catch
     my $caught;
@@ -71,7 +69,7 @@ plan 25;
 # **resume after the return**, effectively running the tests twice.
 # (Therefore I moved the tests to the end, so not all tests are rerun).
 
-#?rakudo skip "return() not implemented"
+#?rakudo skip "lexicals bug"
 {
     my $was_in_foo = 0;
     sub foo {
@@ -103,8 +101,7 @@ plan 25;
 #    skip_rest "No Exception objects"; exit;
 #}
 
-#?rakudo skip "parse error"
-#?rakduo DOES 2
+#?rakudo skip "CATCH blocks not implemented"
 {
     # exception classes
     class Naughty is Exception {};
@@ -127,8 +124,7 @@ plan 25;
     ok($caught, "caught exception of class Naughty");
 };
 
-#?rakudo skip "parse error"
-#?rakduo DOES 2
+#?rakudo skip "CATCH blocks not implemented"
 {
     # exception superclass
     class Naughty::Specific is Naughty {};
@@ -153,8 +149,7 @@ plan 25;
     ok($naughty, "caught superclass");
 };
 
-#?rakudo skip "parse error"
-#?rakduo DOES 3
+#?rakudo skip "CATCH blocks not implemented"
 {
     # uncaught class
     eval 'class Dandy is Exception {}';
@@ -162,7 +157,7 @@ plan 25;
     my ($naughty, $lived);
     eval 'try {
         die Dandy: "error";
-        
+
         CATCH {
             when Naughty {
                 $naughty = 1;
