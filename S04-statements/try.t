@@ -69,7 +69,7 @@ plan 24;
 # **resume after the return**, effectively running the tests twice.
 # (Therefore I moved the tests to the end, so not all tests are rerun).
 
-#?rakudo skip "lexicals bug"
+#?rakudo skip "lexicals bug RT#56184"
 {
     my $was_in_foo = 0;
     sub foo {
