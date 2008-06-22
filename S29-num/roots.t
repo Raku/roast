@@ -17,7 +17,6 @@ sub has_approx($n, @list) {
     return undef;
 }
 
-#?rakudo skip 'roots not implemented (RT#56226)'
 {
     my @l = roots(-1, 2);
     ok(@l.elems == 2, 'roots(-1, 2) returns 2 elements');
@@ -26,7 +25,6 @@ sub has_approx($n, @list) {
 }
 
 #?pugs todo 'feature'
-#?rakudo skip 'roots not implemented (RT#56226)'
 {
     my @l = 16.roots(4);
     ok(@l.elems == 4, 'roots(16, 4) returns 4 elements');
