@@ -48,7 +48,7 @@ is sprintf('%x', 22.01),          '16',     'decimal %x';
 is sprintf('%03x', 32),           '020',    '0-padded %x';
 is sprintf('%03x', 42.6),         '02a',    '0-padded decimal %x';
 # tests for %X
-is sprintf('%x', 12),             'C',      'simple %X';
+is sprintf('%X', 12),             'C',      'simple %X';
 is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 
 # L<S29/"Str"/"Perl 5 compatibility:">
