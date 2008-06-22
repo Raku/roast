@@ -27,4 +27,5 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 }
 
 # Non-ASCII chars:
+#?rakudo skip "unicode"
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";

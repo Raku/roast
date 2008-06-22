@@ -8,6 +8,7 @@ plan 8;
 
 is lcfirst("HELLO WORLD"), "hELLO WORLD", "simple";
 is lcfirst(""),            "",            "empty string";
+#?rakudo 2 skip 'unicode'
 is lcfirst("ÜÜÜÜ"),        "üÜÜÜ",        "umlaut";
 is lcfirst("ÓÓÓÓŃ"),       "óÓÓÓŃ",       "accented chars";
 

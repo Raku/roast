@@ -12,6 +12,7 @@ sub has_approx($n, @list) {
     for @list -> $i {
         if approx($i, $n) {
             return 1;
+        }
     }
     return undef;
 }
