@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 plan 11;
-force_todo 10;
+#force_todo 10;
 
 # L<S29/"Str"/=item uc>
 
