@@ -6,23 +6,8 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 308;
+plan 304;
 
-# very simple assignment
-
-{
-    my $foo = 'FOO';
-    is  $foo, 'FOO', 'Can assign string to scalar 1';
-    my $bar = 'BAR';
-    is  $foo, 'FOO', 'Can assign string to scalar 2';
-
-    $foo = $bar;
-    is $foo, 'BAR', 'Can assign scalar to scalar';
-
-    $foo = 'FOO';
-    is $bar, 'BAR', "Assignment didn't create a binding";
-
-}
 
 # tests various assignment styles
 #?rakudo skip "no declaration of lists of variables"
@@ -142,6 +127,7 @@ plan 308;
 }
 
 #?rakudo skip "no declaration of lists of variables"
+#?DOES 6
 {
    # testing list assignment syntax
 
@@ -159,6 +145,7 @@ plan 308;
 }
 
 #?rakudo skip "unknown reasons"
+#?DOES 13
 {
     my @a;
     @a[1, 2, 3] = 100, 200, 300;
