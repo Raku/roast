@@ -6,7 +6,6 @@ plan 10;
 
 # L<S29/Str/=item comb>
 
-#?rakudo 10 skip ".comb not implemented"
 # comb Str
 is "".comb, (), 'comb on empty string';
 is "a bc d".comb, <a bc d>, 'default matcher and limit';
