@@ -1,10 +1,6 @@
 use v6;
 use Test;
-<<<<<<< .mine
-plan 9;
-=======
 plan 8;
->>>>>>> .r20951
 
 # L<S29/Num/"=item roots">
 
