@@ -85,7 +85,6 @@ my @list = (1 .. 5);
     is(@result[4], "fish/5", 'got the value we expected');
 }
 
-#?rakudo skip "empty statement in closure"
 {
     my @list = 1 .. 5;
     is +(map {;$_ => 1 }, @list), 5,

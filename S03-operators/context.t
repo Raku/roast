@@ -82,12 +82,10 @@ plan 32;
     # also, we assign to a hash since rakudo does not recognize
     # {} as a hash constructor and () does not make a hash
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
-    #?rakudo 1 skip '"% a,1" parsefail'
     ok((% 'a', 1, 'b', 2)    eqv {a => 1, b => 2}, '% values builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
     eval_dies_ok('hash("a")', 'building a hash of one item fails');
 
-    #?rakudo 1 skip 'zip is broken'
     ok((% 1,2 Z 3,4) eqv {1 => 2, 3 => 4}, '% has correct precedence to change context of zip infix');
 }
