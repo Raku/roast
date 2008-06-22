@@ -6,7 +6,6 @@ plan 37;
 
 # L<S29/Str/"identical to" "C library sprintf">
 
-#?rakudo: 37 skip 'not yet implemented'
 is sprintf("Hi"),                 "Hi",     "sprintf() works with zero args";
 is sprintf("%%"),                 "%",      "sprintf() escapes % correctly";
 is sprintf("%03d",      3),       "003",    "sprintf() works with one arg";
@@ -53,4 +52,5 @@ is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 
 # L<S29/"Str"/"Perl 5 compatibility:">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');
+#?rakudo skip "%p doesn't yet throw exception"
 dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');
