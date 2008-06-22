@@ -6,10 +6,26 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 304;
+plan 308;
+
+# very simple assignment
+
+{
+    my $foo = 'FOO';
+    is  $foo, 'FOO', 'Can assign string to scalar 1';
+    my $bar = 'BAR';
+    is  $foo, 'FOO', 'Can assign string to scalar 2';
+
+    $foo = $bar;
+    is $foo, 'BAR', 'Can assign scalar to scalar';
+
+    $foo = 'FOO';
+    is $bar, 'BAR', "Assignment didn't create a binding";
+
+}
 
 # tests various assignment styles
-
+#?rakudo skip "no declaration of lists of variables"
 {
     my ($foo, $bar) = ("FOO", "BAR");
     is($foo, "FOO", "assigned correct value to first of two scalars");
@@ -20,30 +36,31 @@ plan 304;
     is($bar, "FOO", "... and second");
 }
 
-#?rakudo 2 skip "not implemented"
+#?rakudo skip "sub form of operators missing"
 {
     my $x = 1;
     &infix:<=>.($x, 0);
     is($x, 0, 'assignment operator called as function');
 }
 
+#?rakudo skip "sub form of operators missing"
 {
     my $x = 1;
     infix:<=>($x, 0);
     is($x, 0, 'assignment operator called as function');
 }
 
-#?rakudo emit skip_rest("not implemented, test looping");#
+#?rakudo skip "tests looping"
 {
     # swap two elements in the same array 
     # (moved this from array.t)
-    
     my @a = 1 .. 5;
     @a[0,1] = @a[1,0];
     is(@a[0], 2, "slice assignment swapping two element in the same array");
     is(@a[1], 1, "slice assignment swapping two element in the same array");
 }
 
+#?rakudo skip "tests looping"
 {
     # swap two elements as slice, dwim slice from @b subscript
     
@@ -55,6 +72,7 @@ plan 304;
     is(@a[2], 3, "slice assignment swapping with array dwim makes listop");
 }
 
+#?rakudo skip "no declaration of lists of variables"
 {
     # list assignments
 
@@ -68,6 +86,7 @@ plan 304;
 
 
 #?pugs skip "skipping assignment with skipped values via $"
+#?rakudo skip "no declaration of lists of variables"
 #?DOES 5
 {
     # testing list assignments with skipped values
@@ -85,6 +104,7 @@ plan 304;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in signature"
+#?rakudo skip "no declaration of lists of variables"
 #?DOES 5
 {
     # testing list assignments with skipped values
@@ -102,6 +122,7 @@ plan 304;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
+#?rakudo skip "no declaration of lists of variables"
 #?DOES 5
 {
     # testing list assignments with skipped values
@@ -120,6 +141,7 @@ plan 304;
      ok(!defined($c), "list assignment (*, @, $c) = @ works");
 }
 
+#?rakudo skip "no declaration of lists of variables"
 {
    # testing list assignment syntax
 
@@ -136,6 +158,7 @@ plan 304;
     is(@b,'2 3',"'{@b}' is '2 3'?: my ($s,@a) = 1 .. 3"); 
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     @a[1, 2, 3] = 100, 200, 300;
@@ -163,6 +186,7 @@ plan 304;
 
 }
 
+#?rakudo skip "unknown reasons"
 {
     # chained @array = %hash = list assignment 
     my (@a, @b, %h);
@@ -172,6 +196,7 @@ plan 304;
     is(@a[1], @b[1], "chained @ = % = list assignment");
 }
 
+#?rakudo skip "unknown reasons"
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
@@ -180,6 +205,7 @@ plan 304;
     is($s, $t, "chained $ = % = list assignment");
 }
 
+#?rakudo skip "unknown reasons"
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
@@ -191,6 +217,7 @@ plan 304;
     is(@b[1], 2,     "(@b, @a) = (@a, @b) assignment \@b[1]");
 }
 
+#?rakudo skip "unknown reasons"
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);
@@ -204,6 +231,7 @@ plan 304;
 
 my @p;
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     @p = $a ||= 3, 4;
@@ -216,6 +244,7 @@ my @p;
     is(@p[1],11, "||= operator parses as item assignment 4");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     @p = $a //= 3, 4;
@@ -233,6 +262,7 @@ my @p;
     is(WHAT %hash<foo>, 'Array', "Verify //= autovivifies correctly");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $a = 3;
     @p = $a &&= 42, 43;
@@ -246,12 +276,14 @@ my @p;
     is(@p[1],11, "&&= operator parses as item assignment 4");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $c; 
     (($c = 3) = 4); 
     is($c, 4, '(($c = 3) = 4) return val should be good as an lval');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 42;
     @p = $x += 6, 7;
@@ -260,6 +292,7 @@ my @p;
     is(@p[1],47, "+= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 42;
     @p = $x -= 6, 7;
@@ -268,6 +301,7 @@ my @p;
     is(@p[1],7, "-= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 4;
     @p = $x *= 3, 2;
@@ -276,6 +310,7 @@ my @p;
     is(@p[1],12, "*= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 6;
     @p = $x /= 3, 4;
@@ -284,6 +319,7 @@ my @p;
     is(@p[1],4, "/= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 2;
     @p = $x **= 3, 4;
@@ -292,6 +328,7 @@ my @p;
     is(@p[1],4, "**= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = "abc";
     @p = $x ~= "yz", "plugh";
@@ -300,6 +337,7 @@ my @p;
     is(@p[1],'plugh', "~= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = "abc";
     @p = $x x= 3, 4;
@@ -308,6 +346,7 @@ my @p;
     is(@p[1],4, "x= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @x = ( 'a', 'z' );
     @p = @x xx= 3, 4;
@@ -322,6 +361,7 @@ my @p;
     is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 1;
     @p = $x +&= 2, 3;
@@ -330,6 +370,7 @@ my @p;
     is(@p[1],3, "+&= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 1;
     @p = $x +|= 2, 123;
@@ -338,6 +379,7 @@ my @p;
     is(@p[1],123, "+|= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = "z";
     @p = $x ~&= "I", "J";
@@ -346,6 +388,7 @@ my @p;
     is(@p[1],'J', "~&= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = "z";
     @p = $x ~|= "I", "J";
@@ -354,6 +397,7 @@ my @p;
     is(@p[1],'J', "~|= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 4;
     @p = $x %= 3, 4;
@@ -362,6 +406,7 @@ my @p;
     is(@p[1],4, "%= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 1;
     @p = $x +^= 3, 4;
@@ -370,6 +415,7 @@ my @p;
     is(@p[1],4, "+^= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = "z";
     @p = $x ~^= "C", "D";
@@ -378,6 +424,7 @@ my @p;
     is(@p[1],'D', "~^= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 0;
     @p = $x ^^= 42, 43;
@@ -386,6 +433,7 @@ my @p;
     is(@p[1],43, "^^= operator parses as item assignment 2");
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $x = 42;
     @p = $x ?|= 24, 25;
@@ -395,6 +443,7 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
+#?rakudo skip "unknown reasons"
 {
     my $x = 42;
     @p = $x ?&= 24, 25;
@@ -404,6 +453,7 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
+#?rakudo skip "unknown reasons"
 {
     my $x = 0;
     @p = $x ?^= 42, 43;
@@ -413,6 +463,7 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
+#?rakudo skip "unknown reasons"
 {
     my $x = 1;
     @p = $x +<= 8, 9;
@@ -422,6 +473,7 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
+#?rakudo skip "unknown reasons"
 {
     my $x = 511;
     @p = $x +>= 8, 9;
@@ -432,6 +484,7 @@ my @p;
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
 #?pugs eval 'parsefail'
+#?rakudo skip "unknown reasons"
 {
     my $x = "a";
     @p = $x ~<= 8, 9;
@@ -441,6 +494,7 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
+#?rakudo skip "unknown reasons"
 {
     my $x = "aa";
     @p = $x ~>= 8, 9;
@@ -451,8 +505,9 @@ my @p;
 
 # Tests of dwimming scalar/listiness of lhs
 
-my sub W () { substr(want, 0, 1) }
+sub W () { substr(eval('want'), 0, 1) }
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     my @z = ($a = W, W);
@@ -461,6 +516,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats $a as scalar');
 }
 
+#?rakudo skip "unknown reasons"
 {
     package Foo;
     our $b;
@@ -470,6 +526,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', q/lhs treats $::('Foo::b') as scalar/);
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @z = ($Foo::c = W, W);
     is($Foo::c, 'S',    'lhs treats $Foo::c as scalar');
@@ -477,6 +534,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats $Foo::c as scalar');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = ($(@a[0]) = W, W);
@@ -485,6 +543,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats $(@a[0]) as scalar');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     my @z = (($a) = W, W, W);
@@ -493,6 +552,7 @@ my sub W () { substr(want, 0, 1) }
 }
 
 #?pugs eval 'notimpl'
+#?rakudo skip "unknown reasons"
 {
     my $a;
     my @z = (($a, *) = W, W, W);
@@ -500,6 +560,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z, "L L L", 'lhs treats ($a, *) as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     my @z = (@$a = W, W, W);
@@ -507,6 +568,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z, undef, 'lhs treats @$a as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     my @z = ($a[] = W, W, W);
@@ -514,6 +576,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z, undef, 'lhs treats $a[] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my $a;
     my $b;
@@ -523,6 +586,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z, "L L", 'lhs treats ($a,$b) as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0] = W, W);
@@ -531,6 +595,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0,] = W, W);
@@ -539,6 +604,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0,] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a<x> = W, W);
@@ -547,6 +613,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef,   'lhs treats %a<x> as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a<x y z> = W, W, W);
@@ -555,6 +622,7 @@ my sub W () { substr(want, 0, 1) }
     is(%a<z>, 'L',    'lhs treats %a<x y z> as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a{'x'} = W, W);
@@ -563,6 +631,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef,   q/lhs treats %a{'x'} as list/);
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a{'x','y','z'} = W, W, W);
@@ -574,6 +643,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x','y','z'} as list/);
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a{'x'..'z'} = W, W, W);
@@ -585,6 +655,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x'..'z'} as list/);
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a{'x' x 1} = W, W);
@@ -593,6 +664,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef,   q/lhs treats %a{'x' x 1} as list/);
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my @z = (%a{'x' xx 1} = W, W, W);
@@ -601,6 +673,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef,  q/lhs treats %a{'x' xx 1} as list/);
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -610,6 +683,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[$b] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -619,6 +693,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[$b,] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @b = (0,1);
@@ -629,6 +704,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[2], undef, 'lhs treats @a[@b] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @b = (0,0);
@@ -639,6 +715,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[@b[$c]] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @b = (0,0);
@@ -649,6 +726,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[@b[$c,]] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -659,6 +737,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats foo()[$b] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -669,6 +748,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats foo()[$b,] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -679,6 +759,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats @a[foo()[$b]] as item');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -689,6 +770,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[foo()[$b,]] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my sub foo { 0 }
@@ -698,6 +780,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats @a[+foo()] as item');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my sub foo { '0' }
@@ -707,6 +790,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[~foo()] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my sub foo { 0 }
@@ -716,6 +800,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[?foo()] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my sub foo { 1 }
@@ -725,6 +810,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[!foo()] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -735,6 +821,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[foo()] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -745,6 +832,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats @a[foo()] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my sub foo { 0 }
@@ -755,6 +843,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats %a{+foo()} as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my sub foo { '0' }
@@ -765,6 +854,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats %a{~foo()} as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my sub foo { 0 }
@@ -775,6 +865,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats %a{?foo()} as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my sub foo { 1 }
@@ -785,6 +876,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats %a{!foo()} as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my $b = 0;
@@ -795,6 +887,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats %a{foo()} as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my %a;
     my $b = 0;
@@ -806,6 +899,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], 'L', 'lhs treats %a{foo()} as run-time list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0+0] = W, W);
@@ -814,6 +908,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0+0] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0*0] = W, W);
@@ -822,6 +917,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0*0] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0/1] = W, W);
@@ -830,6 +926,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0/1] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0*1**1] = W, W);
@@ -838,6 +935,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0*1**1] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
@@ -847,6 +945,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[$b++] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 1;
@@ -856,6 +955,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[--$b] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0==1] = W, W);
@@ -864,6 +964,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[0==1] as list (but coerce rhs list to one thing)');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[rand 1] = W, W);
@@ -872,6 +973,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[rand 1] as run-time list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[rand 1,] = W, W);
@@ -880,6 +982,7 @@ my sub W () { substr(want, 0, 1) }
     is(@z[1], undef, 'lhs treats @a[rand 1,] as list');
 }
 
+#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[(0|0).pick] = W, W);

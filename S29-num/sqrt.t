@@ -17,7 +17,6 @@ is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
 
 #WARNING: there is currently no spec which of the complex roots should be
 #returned. We should change that.
-#?rakudo skip 'parsefail'
 is_approx(sqrt(-1 +0i), 1i, 'got the square root of -1+0i');
 
 #?rakudo skip 'eval not implemented'

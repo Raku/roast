@@ -1,22 +1,25 @@
 use v6;
 use Test;
+<<<<<<< .mine
+plan 9;
+=======
 plan 8;
+>>>>>>> .r20951
 
 # L<S29/Num/"=item roots">
 
-#?rakudo skip 'roots not implemented'
-{
-    sub has_approx($n, @list) {
-        for @list -> $i {
-            if approx($i, $n) {
-                return 1;
-            }
-        }
-        return undef;
-    }
+sub approx($a, $b){
+    ($a-$b).abs < 0.001;
 }
 
-#?pugs todo 'feature'
+sub has_approx($n, @list) {
+    for @list -> $i {
+        if approx($i, $n) {
+            return 1;
+    }
+    return undef;
+}
+
 #?rakudo skip 'roots not implemented'
 {
     my @l = roots(-1, 2);
@@ -35,4 +38,3 @@ plan 8;
     ok(has_approx(-2, @l), 'roots(16, 4) contains -2');
     ok(has_approx(-2i, @l), 'roots(16, 4) contains -2i');
 }
- 

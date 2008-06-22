@@ -139,9 +139,11 @@ should be equivalent to
   is(("foo","bar").map: { $_.substr(1,1) }, @expected, "map of constant list works");
 }
 
+
 #?rakudo skip "no hashes at the moment"
 {
   my @a = (1, 2, 3); 
+  # XXX is hash { ... } legal?
   my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a; 
   is(+@b,3, "should be 3 elemens");
 

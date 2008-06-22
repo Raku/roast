@@ -160,7 +160,6 @@ is(:2<1>,     1, 'got the correct int value from bin 1');
 is(:2<10>,    2, 'got the correct int value from bin 10');
 is(:2<1010>, 10, 'got the correct int value from bin 1010');
 
-#?rakudo 1 skip "can't parse"
 is(
     :2<11111111111111111111111111111111>,
     0xFFFFFFFF,
@@ -180,12 +179,11 @@ is(
 }
 
 # L<S02/Literals/"not clear whether the exponentiator should be 10 or the radix">
-#?rakudo 1 skip "can't parse"
-isnt( eval("0b1.1e10"), 1536, 'Ambiguous, illegal syntax doesn\'t work' );
+eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
 
 # L<S02/Literals/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
-#?rakudo 3 skip "can't parse"
+#?rakudo 3 todo "base 2 literals with fractional numbers"
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
 is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
@@ -193,10 +191,11 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # L<S02/Literals/"So we write those as">
 # these should be the same values as the previous tests
 #?pugs todo 'feature'
-#?rakudo skip "can't parse"
 {
+    #?rakudo 2 todo "base 2 literals with fractional numbers"
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
+    #?rakudo skip "can't parse"
     is( eval('2«1.1*:2<10>**:2<10>»'),    6, 'Powers of two in <<>> works');
 }
 

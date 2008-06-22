@@ -22,10 +22,10 @@ for 1 .. 10 {
 
 # L<S29/Num/"=item srand">
 
-#?rakudo skip 'parsefail'
+#?rakudo skip 'no sub srand()'
 ok(srand(1), 'srand(1) parses');
 
-#?rakudo skip 'parsefail'
+#?rakudo skip 'no sub srand()'
 {
     sub repeat_rand ($seed) {
 	    srand($seed);

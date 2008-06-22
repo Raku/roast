@@ -7,32 +7,31 @@ plan 9;
 # L<E07/"And every one shall share..." /returns them as a single string/>
 # L<S16/"Unfiled"/"=item IO.slurp">
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
+# read self, so that we can know for sure what's
+# in the file
+my $self = 't/spec/S16-unfiled/slurp.t';
 
+#?rakudo 1 skip "no index() function"
 {
-  my $contents = slurp "README";
-  ok index($contents, "Pugs") != -1, "slurp() worked";
+  my $contents = slurp $self;
+ #ok index($contents, "StringThatsNowhereElse") != -1, "slurp() worked";
+  ok $contents ~~ m/'StringThatsNowhereElse'/, "slurp() worked";
 }
 
-#?rakudo skip 'dies_ok() not implemented'
 {
   dies_ok { slurp "does-not-exist" }, "slurp() on not-existant files fails";
 }
 
-#?rakudo skip 'dies_ok() not implemented'
 {
   dies_ok { slurp "t/" }, "slurp() on directories fails";
 }
 
 # slurp in list context
 {
-  my @slurped_lines = slurp "README";
-  ok +@slurped_lines > 50, "more than 50 lines in README file ?";
+  my @slurped_lines = slurp $self;
+  ok +@slurped_lines > 30, "more than 30 lines in this file ?";
 
-  my $fh = open "README" orelse die;
+  my $fh = open $self orelse die;
   my @expected_lines = =$fh;
   $fh.close;
   

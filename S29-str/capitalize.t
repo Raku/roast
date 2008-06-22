@@ -20,7 +20,6 @@ is $a,                         "puGS Is cOOl!",  "original string not touched";
 is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 
 
-# should be eval but rakudo doesn't do eval yet...
 #?rakudo skip "can't parse"
 {
     $_ = "puGS Is cOOl!";
@@ -28,5 +27,4 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 }
 
 # Non-ASCII chars:
-#?rakudo skip "unicode"
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";
