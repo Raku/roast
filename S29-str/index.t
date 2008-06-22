@@ -59,6 +59,7 @@ is(@a[0].index("l"), 2, ".index on array element");
 
 # index on junctions, maybe this should be moved to t/junctions/ ?
 
+#?rakudo 4 skip "get_string for Junction not implemented"
 my $j = ("Hello"|"World");
 ok(index($j, "l") == 2, "index on junction");
 ok(index($j, "l") == 3, "index on junction");
