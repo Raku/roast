@@ -18,8 +18,8 @@ my $pi = 3.141592653589793238;
     is_approx(cis(0),        1 + 0i,       "cis(0)     == 1");
     is_approx(cis($pi),      -1 + 0i,      "cis(pi)    == -1");
     is_approx(cis($pi / 2),  1i,           "cis(pi/2)  == i");
-    #?rakudo todo "complex approx"
-    is_approx(cis(3*$pi / 2),1i,           "cis(3pi/2) == i");
+    #?rakudo todo "prefix:<-> not implemented for Complex"
+    is_approx(cis(3*$pi / 2),-1i,          "cis(3pi/2) == i");
 }
 
 # L<S29/Num/"=item cis">
