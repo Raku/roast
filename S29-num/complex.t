@@ -27,19 +27,23 @@ my $pi = 3.141592653589793238;
 #
 # Test that 1.unpor == cis
 
-#?rakudo skip "pointy sub parsing"
-#?DOES 120
+#?rakudo skip "No method unpolar"
+#?DOES 20
 {
     for 1..20 -> $i {
         my $angle = 2 * $pi * $i / 20;
         is_approx(cis($i), 1.unpolar($i), "cis(x) == 1.unpolar(x) No $i");
     }
+}
 
-    # L<S29/Num/"=item unpolar">
-    # L<S29/Num/"=item abs">
-    #
-    # Test that unpolar() doesn't change the absolute value
+# L<S29/Num/"=item unpolar">
+# L<S29/Num/"=item abs">
+#
+# Test that unpolar() doesn't change the absolute value
 
+#?rakudo skip "No method unpolar yet"
+#?DOES 100
+{
     my $counter = 1;
     for 1..10 -> $abs {
         for 1..10 -> $a {
