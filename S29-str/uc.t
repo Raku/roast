@@ -19,6 +19,7 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
 # given does not return proper value yet
 #?rakudo skip '$_ as default invocant'
+#?DOES 1
 {
     $_ = "Hello World";
     my $x = .uc;
@@ -40,4 +41,7 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 #is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 #?rakudo skip "unicode"
-is("áéíöüóűőú".uc, "ÁÉÍÖÜÓŰŐÚ", ".uc on Hungarian vowels");
+#?DOES 1
+{
+    is("áéíöüóűőú".uc, "ÁÉÍÖÜÓŰŐÚ", ".uc on Hungarian vowels");
+}
