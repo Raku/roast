@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/Built-In Data Types/Perl intrinsically supports big integers>
 
-plan 48;
+plan 47;
 {
     my $a = 1; "$a";
     isa_ok($a, 'Int');
@@ -160,6 +160,3 @@ is(4_2.0_1, 42.01,  'single underscores are ok');
 
 is 0_1, 1, "0_1 is parsed as 0d1";
 is +^1, -2, '+^1 == -2 as promised';
-
-# XXX is this correct?
-ok(1i ~~ Num,    	'Complex Numbers are Nums');
