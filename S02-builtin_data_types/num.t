@@ -20,42 +20,49 @@ plan 48;
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
 {
     my $a = 1.0; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "1", '1.0 stringification works');
 }
 
 {
     my $a = -1.0; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "-1", '-1 stringification works');
 }
 
 {
     my $a = 0.1; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "0.1", '0.1 stringification works');
 }
 
 {
     my $a = -0.1; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "-0.1", '-0.1 stringification works');
 }
 
 {
     my $a = 10.01; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "10.01", '10.01 stringification works');
 }
 
 {
     my $a = 1e3; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "1000", '1e3 stringification works');
 }
 
 {
     my $a = 10.01e3; "$a";
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     is($a, "10010", '10.01e3 stringification works');
 }
@@ -93,12 +100,14 @@ plan 48;
 
 {
     my $a = 80000.0000000000000000000000000;
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     ok($a == 80000.0, 'trailing zeros compare correctly');
 }
 
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
+    #?rakudo todo "no Rat yet"
     isa_ok($a, 'Rat');
     ok($a == 10.0, 'trailing zeros compare correctly');
 }
@@ -114,7 +123,8 @@ plan 48;
 {
     my $a = "0d01.01";
     isa_ok(+$a, "Num");
-    is(+$a, 1.01, "0d01.01 numifies to 1.01", :todo<bug>);
+    #?rakudo todo "correct numification"
+    is(+$a, 1.01, "0d01.01 numifies to 1.01");
 }
 
 #L<S02/Built-In Data Types/Perl intrinsically supports big integers>
@@ -140,13 +150,16 @@ plan 48;
 
 is(42_000,     42000,    'underscores allowed (and ignored) in numeric literals');
 is(42_127_000, 42127000, 'multiple underscores ok');
+#?rakudo 2 skip "underscores cause weird IMCC errors"
 is(42.0_1,     42.01,    'underscores in fraction ok');
 is(4_2.01,     42.01,    'underscores in whole part ok');
 
-ok(!eval('4_2._0_1') && $!, 'single underscores are not ok directly after the dot');
-is(eval('4_2.0_1'), 42.01,  'single underscores are ok');
+#?rakudo 999 skip "weird errors"
+eval_dies_ok('4_2._0_1', 'single underscores are not ok directly after the dot');
+is(4_2.0_1, 42.01,  'single underscores are ok');
 
 is 0_1, 1, "0_1 is parsed as 0d1";
 is +^1, -2, '+^1 == -2 as promised';
 
+# XXX is this correct?
 ok(1i ~~ Num,    	'Complex Numbers are Nums');
