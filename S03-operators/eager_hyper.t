@@ -2,26 +2,31 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 6;
 
 # L<S02/Lists/To force non-lazy list flattening, use the eager list operator>
 
-# Ranges should be the easiest way to get an Iterator for testing eager
+# Laziness test
 {
-    my $range = 1 .. 5;
-    is(=$range, 1, 'non-eager range iteration');
-    ok($range eqv 2 .. 5, 'rest of range is intact');
-    my @rest = eager =$range;
-    is(@rest, <2 3 4 5>, 'all of range was returned in the correct order');
-    ok(!$range, 'range is empty');
+    my $counter = 0;
+    my @test = gather { for 1 .. 5 { take $_; $couter++ } };
+    is(@test[0], 1, 'iterator works as expected');
+    is($counter, 1, 'iterator was lazy and only ran the block once');
+}
+
+# Eager
+{
+    my $counter = 0;
+    my @test = eager gather { for 1 .. 5 { take $_; $couter++ } };
+    is(@test[0], 1, 'iterator works as expected');
+    is($counter, 5, 'iterator was eager and calculated all the values');
 }
 
 # L<S02/Lists/A variant of eager is the hyper list operator>
+# Hyper
 {
-    my $range = 1 .. 5;
-    is(=$range, 1, 'non-hyper range iteration');
-    ok($range eqv 2 .. 5, 'rest of range is intact');
-    my @rest = hyper =$range;
-    is(sort @rest, <2 3 4 5>, 'all of range was returned in some order');
-    ok(!$range, 'range is empty');
+    my $counter = 0;
+    my @test = hyper gather { for 1 .. 5 { take $_; $couter++ } };
+    is(sort @test, <1 2 3 4 5>, 'hyper returned all the values in some order');
+    is($counter, 5, 'iterator was hyper and calculated all the values');
 }
