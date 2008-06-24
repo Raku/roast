@@ -2,12 +2,6 @@ use v6;
 
 use Test;
 
-=kwid
-
-Array refs
-
-=cut
-
 plan 45;
 
 # array_ref of strings

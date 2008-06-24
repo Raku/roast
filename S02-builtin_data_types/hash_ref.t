@@ -2,12 +2,6 @@ use v6;
 
 use Test;
 
-=kwid
-
-Hash tests
-
-=cut
-
 plan 32;
 
 # basic lvalue assignment

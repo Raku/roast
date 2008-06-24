@@ -2,11 +2,6 @@ use v6;
 
 use Test;
 
-=kwid
-
-basic Boolean tests
-
-=cut
 
 # XXX unspecced but implicit - needs validation
 

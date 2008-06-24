@@ -2,13 +2,13 @@ use v6;
 
 use Test;
 
-=kwid
+=begin description
 
 Test that conversion errors when accessing
 anonymous structures C<die> in a way that can
 be trapped by Pugs.
 
-=cut
+=end description
 
 plan 4;
 

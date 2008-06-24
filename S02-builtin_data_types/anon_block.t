@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-=kwid
+=begin description
 
 Block tests
 
@@ -12,7 +12,7 @@ This covers anonymous blocks and subs, as well as pointy blocks
 L<S06/"Blocks">
 L<S04/"The Relationship of Blocks and Declarations">
 
-=cut
+=end description
 
 plan 32;
 

@@ -2,11 +2,6 @@ use v6;
 
 use Test;
 
-=kwid 
-
- Pair test
-
-=cut
 
 plan 97;
 

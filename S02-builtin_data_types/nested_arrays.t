@@ -2,11 +2,11 @@ use v6;
 
 use Test;
 
-=kwid 
+=begin description 
 
 Nested array tests; various interactions of arrayrefs, arrays, flattening and nesting.
 
-=cut
+=end description
 
 plan 8;
 
