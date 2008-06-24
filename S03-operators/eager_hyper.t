@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 8;
 
 # L<S02/Lists/To force non-lazy list flattening, use the eager list operator>
 
@@ -12,6 +12,14 @@ plan 6;
     my @test = gather { for 1 .. 5 { $counter++; take $_ } };
     is(@test[0], 1, 'iterator works as expected');
     is($counter, 1, 'iterator was lazy and only ran the block once');
+}
+
+# "Counting the elements in the array will also force eager completion."
+{
+    my $counter = 0;
+    my @test = gather { for 1 .. 5 { $counter++; take $_ } };
+    is(@test.elems, 5, 'iterator has expected length');
+    is($counter, 5, 'iterator was lazy and only ran the block once');
 }
 
 # Eager
