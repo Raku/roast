@@ -38,7 +38,12 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 # XXX newest Unicode release has an upper-case ß codepoint - please
 # clarify if this should be used instead. Commenting the test so far.
 #
-#is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
+# Unicode 5.1.0 SpecialCasing.txt has 00DF -> 0053 0053
+# nothing maps to 1E9E, the new "capital sharp s" 
+# so I think this is right -rhr
+#?rakudo skip "unicode"
+#?DOES 1
+is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 #?rakudo skip "unicode"
 #?DOES 1
