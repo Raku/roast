@@ -13,6 +13,7 @@ is($pair.perl, '("foo" => "bar")', 'canonical representation');
 
 # get key and value from the pair as many ways as possible
 
+#?rakudo 2 skip 'method($invocant:) syntax missing'
 is(key($pair:), 'foo', 'got the right key($pair:)');
 is(value($pair:), 'bar', 'got the right value($pair:)');
 
@@ -81,10 +82,13 @@ is($quux.key, 'quux', "lhs quotes" );
 {
     # L<S02/Immutable types/A single key-to-value association>
     my $pair = :when<now>;
+    #?rakudo 2 skip "parse failure"
     is ~(%$pair), "when\tnow";
     # hold back this one according to audreyt
     #ok $pair.does(Hash), 'Pair does Hash';
-    ok (%$pair).does(Hash), '%() makes Pair to does Hash', :todo<bug>;
+    # XXX is this test right? Doesn't %$stuff just imply role Associative?
+    #?pugs TODO "bug"
+    ok (%$pair).does(Hash), '%() makes Pair to does Hash';
 }
 
 # lvalue Pair assignments from S06 and thread starting with
@@ -96,18 +100,21 @@ is($val, "baz", "lvalue pairs");
 
 # illustrate a bug
 
-my $var   = 'foo' => 'bar';
-sub test1 (Any|Pair $pair) {
-    isa_ok($pair,'Pair');
-    my $testpair = $pair;
-    isa_ok($testpair,'Pair'); # new lvalue variable is also a Pair
-    my $boundpair := $pair;
-    isa_ok($boundpair,'Pair'); # bound variable is also a Pair
-    is($pair.key, 'foo', 'in sub test1 got the right $pair.key');
-    is($pair.value, 'bar', 'in sub test1 got the right $pair.value');
+#?rakudo skip "parse failure"
+{
+    my $var   = 'foo' => 'bar';
+    sub test1 (Any|Pair $pair) {
+        isa_ok($pair,'Pair');
+        my $testpair = $pair;
+        isa_ok($testpair,'Pair'); # new lvalue variable is also a Pair
+        my $boundpair := $pair;
+        isa_ok($boundpair,'Pair'); # bound variable is also a Pair
+        is($pair.key, 'foo', 'in sub test1 got the right $pair.key');
+        is($pair.value, 'bar', 'in sub test1 got the right $pair.value');
 
+    }
+    test1 $var;
 }
-test1 $var;
 
 my %hash  = ('foo' => 'bar');
 for  %hash.pairs -> $pair {
@@ -155,12 +162,12 @@ sub test4 (Hash %h){
 }
 test4 %hash;
 
-=cut
+=end p6l
 
 my $should_be_a_pair = (a => 25/1);
 isa_ok $should_be_a_pair, "Pair", "=> has correct precedence";
 
-=pod
+=begin discussion
 
 Stated by Larry on p6l in:
 L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
@@ -175,7 +182,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
 
 (iblech) XXX: this contradicts current S03 so I could be wrong.
 
-=cut
+=end discussion
 
 {
   # This should always work.
