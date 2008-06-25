@@ -52,11 +52,12 @@ my Str $bar;
 {
     # test contributed by Ovid++
     sub fact (Int $n) {
-    if 0 == $n {
-        1;
-    }
-    else {
-        $n * fact($n - 1);
+        if 0 == $n {
+            1;
+        }
+        else {
+            $n * fact($n - 1);
+        }
     }
     #?rakudo skip "type checking bug"
     is fact(5), 120, 'recursive factorial with type contstraints work';
