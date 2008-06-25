@@ -113,6 +113,7 @@ plan 16;
     "using lists as lvalues in a binding operation to swap three variables works";
 }
 
+#?rakudo skip 'No prefix:<\\> yet'
 {
   my @array    = (1,2,3);
   my $arrayref = \@array;
