@@ -9,6 +9,7 @@ use Test;
 plan 16;
 
 # Indexing lists
+#?rakudo skip "list assignment"
 {
   my $foo = 42;
 
@@ -16,6 +17,7 @@ plan 16;
   is $foo, 23, "assigning a list element changed the original variable", :todo<bug>;
 }
 
+#?rakudo skip "Whatever star"
 {
   my $foo = 42;
 
