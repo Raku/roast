@@ -7,21 +7,22 @@ plan 4;
 
 my $here;
 
+#?rakudo skip 'defining operators'
 {
-my @a;
-$here = 0;
-multi infix:<..> ( Int $a, Int $b ) { $here++ }
-@a = 1..2;
+    my @a;
+    $here = 0;
+    multi infix:<..> ( Int $a, Int $b ) { $here++ }
+    @a = 1..2;
+    is $here, 1, "range operator was redefined";
 }
-is $here, 1, "range operator was redefined";
 
 {
-my @a;
-$here = 0;
-multi push ( Array @a, *@data ) { $here++ }
-push @a, 2;
+    my @a;
+    $here = 0;
+    multi push ( Array @a, *@data ) { $here++ }
+    push @a, 2;
+    is $here, 1, "push operator was redefined";
 }
-is $here, 1, "push operator was redefined";
 
 {
 my @a;

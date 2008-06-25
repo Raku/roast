@@ -4,25 +4,27 @@ use Test;
 
 plan 7;
 
+#?rakudo skip 'Undef to integer'
 {
     # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
     my %a;
     my $b = %a<b><c>;
-    is %a.keys.elems, 0, 'fetching doesn't autovivify.';
+    is %a.keys.elems, 0, "fetching doesn't autovivify.";
 }
 
+#?rakudo skip 'Undef to integer'
 {
     # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
     my %a;
     my $b = exists %a<b><c>;
-    is %a.keys.elems, 0, 'exists doesn't autovivify.';
+    is %a.keys.elems, 0, "exists doesn't autovivify.";
 }
 
 {
     # L<S09/Autovivification/But these bindings do autovivify:>
     my %a;
     bar(%a<b><c>);
-    is %a.keys.elems, 0, 'in ro arguments doesn't autovivify.';
+    is %a.keys.elems, 0, "in ro arguments doesn't autovivify.";
 }
 
 {
@@ -32,6 +34,7 @@ plan 7;
     is %a.keys.elems, 1, 'binding autovivifies.';
 }
 
+#?rakudo skip 'prefix:<\\>'
 {
     # L<S09/Autovivification/But these bindings do autovivify:>
     my %a;

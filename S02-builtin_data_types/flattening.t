@@ -9,6 +9,7 @@ plan 34;
 
     is(@array.elems,     5, 'array has 5 elements');
     is(@array[0],       11, 'first value is 11');
+    #?rakudo skip "whatever star"
     is(@array[*-1],     15, 'last value is 15');
     # 3[0] etc. should *not* work, but (3,)[0] should.
     # That's similar as with the .kv issue we've had: 3.kv should fail, but
@@ -21,6 +22,8 @@ plan 34;
 
     is(@array[0].elems,  5, 'arrayref has 5 elements');
     is(@array[0][0],    11, 'first element in arrayref is 11');
+
+    #?rakudo skip "whatever star"
     is(@array[0][*-1],  15, 'last element in arrayref is 15');
 }
 
@@ -30,8 +33,10 @@ plan 34;
     is(@array[0].elems,  5, 'first arrayref has 5 elements');
     is(@array[1].elems,  5, 'second arrayref has 5 elements');
     is(@array[0][0],    11, 'first element in first arrayref is 11');
+    #?rakudo skip "whatever star"
     is(@array[0][*-1],  15, 'last element in first arrayref is 15');
     is(@array[1][0],    21, 'first element in second arrayref is 21');
+    #?rakudo 3 skip "whatever star"
     is(@array[1][*-1],  25, 'last element in second arrayref is 25');
     is(@array[*-1][0],  31, 'first element in last arrayref is 31');
     is(@array[*-1][*-1], 35, 'last element in last arrayref is 35');
@@ -42,7 +47,9 @@ plan 34;
 
     is(%hash<k1>.elems,  5, 'k1 has 5 elements');
     is(%hash<k1>[0],    11, 'first element in k1 is 11');
+    #?rakudo skip "whatever star"
     is(%hash<k1>[*-1],  15, 'last element in k1 is 15');
+    #?rakudo skip "Can't compare to undef (?)"
     is(%hash<12>,    undef, 'nothing at key "12"');
 }
 
@@ -52,13 +59,16 @@ plan 34;
     is(%hash<k1>.elems,  5, 'k1 has 5 elements');
     is(%hash<k2>.elems,  5, 'k2 has 5 elements');
     is(%hash<k1>[0],    11, 'first element in k1 is 11');
+    #?rakudo skip "whatever star"
     is(%hash<k1>[*-1],  15, 'last element in k1 is 15');
     is(%hash<k2>[0],    21, 'first element in k1 is 21');
+    #?rakudo skip "whatever star"
     is(%hash<k2>[*-1],  25, 'last element in k1 is 25');
     is(%hash<12>,    undef, 'nothing at key "12"');
     is(%hash<22>,    undef, 'nothing at key "22"');
 }
 
+#?rakudo skip "prefix:<\\>"
 {
     my @a;
     push @a, 1;
