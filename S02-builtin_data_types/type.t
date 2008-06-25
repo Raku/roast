@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 24;
+plan 25;
 
 {
     ok(try{my Int $foo; 1}, 'compile my Int $foo');
@@ -47,6 +47,19 @@ my Str $bar;
     sub paramtype (Int $i) {return $i+1}
     is(paramtype(5), 6, 'sub parameters with matching type');
     eval_dies_ok('paramtype("foo")', 'sub parameters with non-matching type dies');
+}
+
+{
+    # test contributed by Ovid++
+    sub fact (Int $n) {
+    if 0 == $n {
+        1;
+    }
+    else {
+        $n * fact($n - 1);
+    }
+    #?rakudo skip "type checking bug"
+    is fact(5), 120, 'recursive factorial with type contstraints work';
 }
 
 # L<S02/Return types/a return type can be specified before or after the name>
