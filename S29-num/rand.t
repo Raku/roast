@@ -17,10 +17,9 @@ ok(rand() < 1, 'rand() returns numbers less than 1');
 
 # L<S29/Num/"=item srand">
 
-#?rakudo skip 'no sub srand()'
-ok(srand(1), 'srand(1) parses');
+lives_ok { srand(1) }, 'srand(1) lives and parses';
 
-#?rakudo skip 'no sub srand()'
+#?rakudo skip 'dubious errors'
 {
     sub repeat_rand ($seed) {
 	    srand($seed);
