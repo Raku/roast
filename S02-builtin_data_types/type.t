@@ -25,11 +25,11 @@ my Str $bar;
 #?rakudo skip 'try{} does not keep test from failing'
 {
     #?pugs 1 todo 
-    is(try{$foo = 'xyz'}, undef, 'Int restricts to integers');
+    dies_ok({$foo = 'xyz'},      'Int restricts to integers');
     is(try{$foo = 42},    42,    'Int is an integer');
 
     #?pugs 1 todo 
-    is(try{$bar = 42},    undef, 'Str restricts to strings');
+    dies_ok({$bar = 42},         'Str restricts to strings');
     is(try{$bar = 'xyz'}, 'xyz', 'Str is a strings');
 }
 
@@ -43,6 +43,7 @@ my Str $bar;
 }
 
 # L<S02/Parameter types/Parameters may be given types, just like any other variable>
+#?rakudo skip "type checking bug"
 {
     sub paramtype (Int $i) {return $i+1}
     is(paramtype(5), 6, 'sub parameters with matching type');
@@ -89,3 +90,4 @@ my Str $bar;
     eval_dies_ok('returntype5(False)', 'bad return value dies (--> Type as OtherType)');
     
 }
+
