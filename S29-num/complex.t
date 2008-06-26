@@ -27,8 +27,6 @@ my $pi = 3.141592653589793238;
 #
 # Test that 1.unpor == cis
 
-#?rakudo skip "No method unpolar"
-#?DOES 20
 {
     for 1..20 -> $i {
         my $angle = 2 * $pi * $i / 20;
@@ -41,30 +39,28 @@ my $pi = 3.141592653589793238;
 #
 # Test that unpolar() doesn't change the absolute value
 
-#?rakudo skip "No method unpolar yet"
-#?DOES 100
 {
     my $counter = 1;
     for 1..10 -> $abs {
         for 1..10 -> $a {
-            my $angle = 2 * $pi * $i / 10;
-            is_approx(abs($abs.unpolar($angle)), $abs 
+            my $angle = 2 * $pi * $a / 10;
+            is_approx(abs($abs.unpolar($angle)), $abs,
                     "unpolar doesn't change the absolute value (No $counter)");
             $counter++;
         }
     }
 }
 
-#?rakudo skip "promote Int to Num"
-#?DOES 5
 {
     # L<S29/Num/"=item unpolar">
     #
     # Basic tests for unpolar()
 
     is_approx(4.unpolar(0),         4,     "4.unpolar(0)    == 4");
+    #?rakudo todo "test incorrect"
     is_approx(4.unpolar($pi/4),     2 + 2i,"4.unpolar(pi/4) == 2+2i");
     is_approx(4.unpolar($pi/2),     4i,    "4.unpolar(pi/2) == 4i");
+    #?rakudo todo "test incorrect"
     is_approx(4.unpolar(3*$pi/4),   -2 +2i,"4.unpolar(pi/4) == -2+2i");
     is_approx(4.unpolar($pi),       -4,    "4.unpolar(pi)   == -4");
 }
