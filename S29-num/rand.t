@@ -19,12 +19,12 @@ ok(rand() < 1, 'rand() returns numbers less than 1');
 
 lives_ok { srand(1) }, 'srand(1) lives and parses';
 
-#?rakudo skip 'dubious errors'
+#?rakudo skip 'lexical bug - RT#56274'
 {
     sub repeat_rand ($seed) {
-	    srand($seed);
-    	for 1..99 { rand(); }
-	    return rand();
+        srand($seed);
+        for 1..99 { rand(); }
+        return rand();
     }
 
     ok(repeat_rand(314159) == repeat_rand(314159),
