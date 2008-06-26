@@ -18,7 +18,7 @@ my $str = "Some String";
 is $str.lcfirst,    "some String",          "simple.lcfirst on scalar variable";
 is "Other String".lcfirst,  "other String", ".lcfirst on  literal string";
 
-#?rakudo skip "$_ and .method handling (RT#56004)"
+#?rakudo skip '$_ and .method handling (RT#56004)'
 {
     $_ = "HELLO WORLD";
     my $x = .lcfirst;
