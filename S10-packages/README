@@ -1,0 +1,4 @@
+t/spec/S10-packages/README
+
+The packages these tests use are stored in t/spec/packages to avoid the use of
+a hyphen in the package name, which is not allowed without quoting.
