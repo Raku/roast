@@ -62,7 +62,7 @@ is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&nbsp;&lt;', '&lt;', '&gt;', '&amp;
 
 is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&lt;', '&amp;'] =>
                                  [' ',      '<',    '&'    ])),
-                                "_<&gt;&",
+                                " <&gt;&",
     "The array version can map one characters to one-or-more characters, uses leftmost longest match");
 
 is("Whfg nabgure Crey unpxre".trans('a'..'z' => ['n'..'z','a'..'m'], 'A'..'Z' => ['N'..'Z','A'..'M']),
