@@ -54,6 +54,7 @@ is(int('0o678'), 0o67, "int('0o678') is 0o67");
 is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
 
 #?rakudo skip 'lexical scoping bug - RT#56274'
+#?DOES 24
 {
     sub __int( Str $s ) {
         if ($s ~~ rx:Perl5/^(-?\d+)$/) { return $0 };
@@ -73,6 +74,7 @@ is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
     }
 }
 
+#?DOES 1
 # Special values
 is(int(1.9e3), 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
