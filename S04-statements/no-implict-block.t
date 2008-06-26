@@ -24,6 +24,7 @@ plan 12;
     is $y, 5, '$y assigned in while\'s body';
 }
 
+#?rakudo skip 'block scope'
 {
     my $y;
     given my $x = 2 {
@@ -33,6 +34,7 @@ plan 12;
     is $y, 5, '$y assigned in while\'s body';
 }
 
+#?rakudo skip "no last() to escape from loops"
 {
     my $y;
     while my $x = 2 {
@@ -43,6 +45,7 @@ plan 12;
     is $y, 5, '$y assigned in while\'s body';
 }
 
+#?rakudo skip "no last() to escape from loops"
 {
     my $y;
     for my @a = 1..3 {
@@ -53,6 +56,7 @@ plan 12;
     is $y, 5, '$y assigned in while\'s body';
 }
 
+#?rakudo skip "no last() to escape from loops"
 {
     my $y;
     loop (my $x = 2; $x < 10; $x++) {
