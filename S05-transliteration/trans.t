@@ -10,7 +10,7 @@ L<S05/Transliteration>
 
 =end pod
 
-plan 20;
+plan 22;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),"abc",
         "Each side can be individual characters");
@@ -47,13 +47,23 @@ is("abcde".trans( ('a..e' => 'A'..'E') ), "ABCDE",
 is("ABCDE".trans( (['A' .. 'E'] => "a..e") ), "abcde",
 	   "Using array reference on one side and string range on the other");
 
-is(" <>&".trans( (['<',    '>',    '&',    ] => 
-                  ["&lt;", "&gt;", "&amp;" ]))," &lt;&gt;&amp;",
-         "The array version can map one characters to one-or-more characters except spaces");
+is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&lt;', '&gt;', '&amp;'] => [' ',      '<',    '>',    '&'     ])),
+    " <>&","The array version can map one characters to one-or-more characters except spaces");
 
 is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] => 
-                  ['&nbsp;', '&lt;', '&gt;', '&amp;' ])),"&nbsp;&lt;&gt;&amp;",
-         "The array version can map one-or-more characters to one-or-more characters");
+                  ['&nbsp;', '&lt;', '&gt;', '&amp;' ])),
+                  "&nbsp;&lt;&gt;&amp;",
+    "The array version can map one-or-more characters to one-or-more characters");
+    
+is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&nbsp;&lt;', '&lt;', '&gt;', '&amp;'] =>
+                                 [' ',      'AB',         '<',    '>',    '&'    ])),
+                                "AB>&",
+    "The array version can map one characters to one-or-more characters, uses leftmost longest match");
+
+is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&lt;', '&amp;'] =>
+                                 [' ',      '<',    '&'    ])),
+                                "_<&gt;&",
+    "The array version can map one characters to one-or-more characters, uses leftmost longest match");
 
 is("Whfg nabgure Crey unpxre".trans('a'..'z' => ['n'..'z','a'..'m'], 'A'..'Z' => ['N'..'Z','A'..'M']),
     "Just another Perl hacker",
@@ -64,10 +74,10 @@ is("Whfg nabgure Crey unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
     "Multiple ranges interpreted in string");
 
 is("Whfg nabgure Crey unpxre".trans(' a .. z' => '_n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
-    "Just another Perl hacker",
+    "Just_another_Perl_hacker",
     "Spaces in interpreted ranges are skipped, all others important");
 
-#?rakudo skip 'unimpl: tr///'
+#?rakudo skip 'tr///, feed operator not implemented'
 {
 is(eval('"abc".trans(<== "a" => "A")'), "Abc",
     "you're allowed to leave off the (...) named arg parens when you use <==");
