@@ -20,7 +20,7 @@ is $a,                         "puGS Is cOOl!",  "original string not touched";
 is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 
 
-#?rakudo skip "can't parse"
+#?rakudo skip "$_ and .method handling (RT#56004)"
 {
     $_ = "puGS Is cOOl!";
     is .capitalize, "Pugs Is Cool!", 'capitalize() uses \$_ as default';
