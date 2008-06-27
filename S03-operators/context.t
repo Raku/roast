@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 35;
 
 # L<S02/Lists/There is a "list" operator>
 # L<S03/List prefix precedence/The list contextualizer>
@@ -83,4 +83,18 @@ plan 32;
     eval_dies_ok('hash("a")', 'building a hash of one item fails');
 
     ok((% 1,2 Z 3,4) eqv {1 => 2, 3 => 4}, '% has correct precedence to change context of zip infix');
+}
+
+# L<S03/Changes to Perl 5 operators/Perl 5's ${...}, @{...}, %{...}, etc>
+# Deprecated P5 dereferencing operators:
+#?rakudo skip 'Perl5 dereferencing syntax warnings not implemented yet'
+{
+    my $scalar = 'abcd';
+    eval_dies_ok('${$scalar}', 'Perl 5 form of ${$scalar} dies');
+
+    my $array  = [1, 2, 3];
+    eval_dies_ok('@{$array}', 'Perl 5 form of @{$array} dies');
+
+    my $hash  = {a => 1, b => 2, c => 3};
+    eval_dies_ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
 }
