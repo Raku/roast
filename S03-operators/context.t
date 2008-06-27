@@ -19,14 +19,12 @@ plan 32;
     is(list($a).WHAT,  'List', 'list(values) returns nothing more than a List');
     is(@($a).WHAT,     'List', '@(values) returns nothing more than a List');
     is((list $a).WHAT, 'List', '(list values) returns nothing more than a List');
-    #?rakudo 1 skip '"(@ $a)" parsefail'
     is((@ $a).WHAT,    'List', '(@ values) returns nothing more than a List');
-    
+
     # These are all no-ops but still need to work correctly
     is(list($a, $b, $c).WHAT,   'List', 'list(values) returns nothing more than a List');
     is(@($a, $b, $c).WHAT,      'List', '@(values) returns nothing more than a List');
     is((list $a, $b, $c).WHAT,  'List', '(list values) returns nothing more than a List');
-    #?rakudo 1 skip "'(@ $a)' parsefail"
     is((@ $a, $b, $c).WHAT,     'List', '(@ values) returns nothing more than a List');
     is((list $a, $b, $c), ($a, $b, $c), 'list($a, $b, $c) is ($a, $b, $c)');
     is(@($a, $b, $c),     ($a, $b, $c), '@($a, $b, $c) is ($a, $b, $c)');
@@ -49,17 +47,14 @@ plan 32;
     my $b = 2;
 
     is((item $a).WHAT, $a.WHAT, '(item $a).WHAT matches $a.WHAT');
-    #?rakudo 1 skip '$ $a parsefail'
     is(($ $a).WHAT,    $a.WHAT, '($ $a).WHAT matches $a.WHAT');
     is((item $a), $a, 'item $a is just $a');
-    #?rakudo 1 skip '$ $a parsefail'
     is(($ $a),    $a, '$ $a is just $a');
     is(item($a),  $a, 'item($a) is just $a');
     is($($a),     $a, '$($a) is just $a');
 
     is((item $a, $b).WHAT, 'Array', '(item $a, $b) makes an array');
     is(item($a, $b).WHAT,  'Array', 'item $a, $b makes an array');
-    #?rakudo 1 skip '$ $a parsefail'
     is(($ $a, $b).WHAT,    'Array', '($ $a, $b) makes an array');
     is($($a, $b).WHAT,     'Array', '$ $a, $b makes an array');
     my @array = ($a, $b);
