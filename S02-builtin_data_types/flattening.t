@@ -49,7 +49,6 @@ plan 34;
     is(%hash<k1>[0],    11, 'first element in k1 is 11');
     #?rakudo skip "whatever star"
     is(%hash<k1>[*-1],  15, 'last element in k1 is 15');
-    #?rakudo skip "Can't compare to undef (?)"
     is(%hash<12>,    undef, 'nothing at key "12"');
 }
 
