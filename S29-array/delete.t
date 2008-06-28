@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 22;
 
 =begin description
 
@@ -73,3 +73,33 @@ Basic C<delete> tests, see S29.
     is +@array, 0, 'deletion of trailing items purge empty positions'; 
 
 }
+
+# W/ one range of positive indices
+#?rakudo 3 skip 'Rakudo: delete does not flatten Range'
+{
+  my @array = <a b c d e f>;
+  is ~@array.delete(2..4), "c d e",
+    "deletion of array elements accessed by a range of positives indices returned right things";
+  # @array is now ("a", "b", undef, undef, undef, "f") ==> 4 spaces
+  is ~@array, "a b    f",
+    "deletion of array elements accessed by a range of positive indices (1)";
+  is +@array, 6,
+    "deletion of array elements accessed by a range of positive indices (2)";
+}
+
+#?rakudo 3 skip 'Rakudo: delete does not flatten Range'
+{
+  my @array = <a b c d e f>;
+  is ~@array.delete(^2..4), "d e",
+    "deletion of array elements accessed by a range of positives indices returned right things (2)";
+  # @array is now ("a", "b", "c", undef, undef, "f") ==> 4 spaces
+  is ~@array, "a b   e f",
+    "deletion of array elements accessed by a range of positive indices (3)";
+  is +@array, 6,
+    "deletion of array elements accessed by a range of positive indices (4)";
+}
+
+# TODO More exclusive bounds checks
+
+# TODO W/ multiple ranges
+
