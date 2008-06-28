@@ -75,7 +75,6 @@ Basic C<delete> tests, see S29.
 }
 
 # W/ one range of positive indices
-#?rakudo skip 'Rakudo: delete does not flatten Range'
 {
   my @array = <a b c d e f>;
   is ~@array.delete(2..4), "c d e",
@@ -87,13 +86,12 @@ Basic C<delete> tests, see S29.
     "deletion of array elements accessed by a range of positive indices (2)";
 }
 
-#?rakudo skip 'Rakudo: delete does not flatten Range'
 {
   my @array = <a b c d e f>;
   is ~@array.delete(2^..4), "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
   # @array is now ("a", "b", "c", undef, undef, "f") ==> 4 spaces
-  is ~@array, "a b   e f",
+  is ~@array, "a b c   f",
     "deletion of array elements accessed by a range of positive indices (3)";
   is +@array, 6,
     "deletion of array elements accessed by a range of positive indices (4)";
