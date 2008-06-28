@@ -90,7 +90,7 @@ Basic C<delete> tests, see S29.
 #?rakudo skip 'Rakudo: delete does not flatten Range'
 {
   my @array = <a b c d e f>;
-  is ~@array.delete(^2..4), "d e",
+  is ~@array.delete(2^..4), "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
   # @array is now ("a", "b", "c", undef, undef, "f") ==> 4 spaces
   is ~@array, "a b   e f",
