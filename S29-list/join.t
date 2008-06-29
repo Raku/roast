@@ -125,6 +125,19 @@ dies_ok({ join() }, 'join() must have arguments');
    ##   C< 'foo'.join(':') > through method fallback is equivalent
    ##   to C< join('foo', ':') >, which results in ':' and not 'foo'.
    ##   Same is true for C< ('foo').join(':') >.
+#
+## from http://www.nntp.perl.org/group/perl.perl6.language/2008/06/msg29283.html
+#
+# Larry Wall writes:
+#
+## On Sat, Jun 14, 2008 at 01:46:10PM +0200, Moritz Lenz wrote:
+## : Fallback semantics in S12 suggest that since no matching multi method is
+## : found, subs are tried - that is, the expression is interpreted as
+## :    join('str', 'other_str')
+## : yielding 'other_str'. t/spec/S29-list/join.t disagrees, and wants the
+## : result to be 'str'.
+## 
+## I want the result to be 'str'.
 
 #?pugs todo 'bug'
 is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
