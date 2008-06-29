@@ -127,6 +127,5 @@ dies_ok({ join() }, 'join() must have arguments');
    ##   Same is true for C< ('foo').join(':') >.
 
 #?pugs todo 'bug'
-#?rakudo 2 skip "method fallback unimplemented"
 is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
 is(('hi').join(':'), 'hi', '("foo").join(":") should be the same as join(":", "foo")');
