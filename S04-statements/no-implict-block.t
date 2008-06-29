@@ -24,7 +24,7 @@ plan 12;
     is $y, 5, '$y assigned in while\'s body';
 }
 
-#?rakudo skip 'block scope'
+#?rakudo skip 'given places expression in wrong scope'
 {
     my $y;
     given my $x = 2 {
