@@ -26,8 +26,8 @@ for (0, 0.0, 1, 50, 60.0, 99.99) {
     is(WHAT .abs, WHAT $_, 'got the right data type('~WHAT($_)~') of absolute value for $_='~$_);
 }
 for (-1, -50, -60.0, -99.99) {
-#?rakudo skip 'method fallback to sub unimpl'
+#?rakudo skip '.abs on $_ unimplemented'
     is(.abs, -$_, 'got the right absolute value for $_='~$_);
-#?rakudo skip 'method fallback to sub unimpl'
+#?rakudo skip '.abs on $_ unimplemented'
     is(WHAT .abs, WHAT $_, 'got the right data type('~WHAT($_)~') of absolute value for $_='~$_);
 }
