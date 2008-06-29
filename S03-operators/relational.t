@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 64; 
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -26,7 +26,23 @@ ok(2 >= 1, '2 is greater than or equal to 1');
 ok(2 >= 2, '2 is greater than or equal to 2');
 ok(!(2 >= 3), '2 is ~not~ greater than or equal to 3');
 
-## XXX:  need tests for numeric coercion
+# +'a' is 0. This means 1 is less than 'a' in numeric context but not string
+ok('a' < '1',  '< uses numeric context');
+ok('a' <= '1', '<= uses numeric context (1)');
+ok('a' <= '0', '<= uses numeric context (2)');
+ok(!('a' > '1'),  '> uses numeric context');
+ok(!('a' >= '1'), '>= uses numeric context (1)');
+ok(('a' >= '0'),  '>= uses numeric context (2)');
+
+# Ensure that these operators actually return Bool::True or Bool::False
+is(1 < 2,  Bool::True,  '< true');
+is(1 > 0,  Bool::True,  '> true');
+is(1 <= 2, Bool::True,  '<= true');
+is(1 >= 0, Bool::True,  '>= true');
+is(1 < 0,  Bool::False, '< false');
+is(1 > 2,  Bool::False, '> false');
+is(1 <= 0, Bool::False, '<= false');
+is(1 >= 2, Bool::False, '>= false');
 
 ## string relationals ( lt, gt, le, ge )
 
@@ -44,7 +60,23 @@ ok('b' ge 'a', 'b is greater than or equal to a');
 ok('b' ge 'b', 'b is greater than or equal to b');
 ok(!('b' ge 'c'), 'b is ~not~ greater than or equal to c');
 
-## XXX: need tests for string coercion
+# +'a' is 0. This means 1 is less than 'a' in numeric context but not string
+ok(!('a' lt '1'), 'lt uses string context');
+ok(!('a' le '1'), 'le uses string context (1)');
+ok(!('a' le '0'), 'le uses string context (2)');
+ok('a' gt '1',    'gt uses string context');
+ok('a' ge '1',    'ge uses string context (1)');
+ok('a' ge '0',    'ge uses string context (2)');
+
+# Ensure that these operators actually return Bool::True or Bool::False
+is('b' lt 'c', Bool::True,  'lt true');
+is('b' gt 'a', Bool::True,  'gt true');
+is('b' le 'c', Bool::True,  'le true');
+is('b' ge 'a', Bool::True,  'ge true');
+is('b' lt 'a', Bool::False, 'lt false');
+is('b' gt 'c', Bool::False, 'gt false');
+is('b' le 'a', Bool::False, 'le false');
+is('b' ge 'c', Bool::False, 'ge false');
 
 ## Multiway comparisons (RFC 025)
 # L<S03/"Chained comparisons">
