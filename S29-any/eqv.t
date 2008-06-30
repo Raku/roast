@@ -1,8 +1,9 @@
 use v6;
 use Test;
 
-plan 38;
+plan 40;
 
+# L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S29/Any/"=item eqv">
 
 # eqv on values
@@ -117,3 +118,7 @@ plan 38;
   ok !$test($bar), "subparam binding doesn't affect eqv (4)";
 }
 
+{
+    is(1 eqv 1, Bool::True,  'eqv returns Bool::True when true');
+    is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
+}
