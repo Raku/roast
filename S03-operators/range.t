@@ -19,8 +19,7 @@ is ~("Y".."AB"), "Y Z AA AB", "(..) works on carried chars (3)";
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter';
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter';
 
-#?rakudo skip "Can't parse '0.. ^10'"
-isnt ~(0..^10), ~(0.. ^10), '(0..^10) is not the same as (0.. ^10)');
+isnt ~(0..^10), ~(0.. ^10), '(0..^10) is not the same as (0.. ^10)';
 
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
 is ~(2+1..6), "3 4 5 6", "(..) has correct precedence (2)";
@@ -43,7 +42,6 @@ is ["a"^..^"z"], ["b".."y"], "double-exclusive string range (^..^) works";
 is ['a'^..^'b'], [], "double-exclusive string range (^..^) can produce null range";
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 
-#?rakudo todo 'ranges with Num'
 is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator", :todo<bug>;
 
 # Test the unary ^ operator
@@ -51,7 +49,6 @@ is ~(^5), "0 1 2 3 4", "unary ^num produces the range 0..^num";
 is [^1], [0], "unary ^ on the boundary ^1 works";
 is [^0], [], "unary ^0 produces null range";
 
-#?rakudo skip 'ranges with floats'
 {
     # Test with floats
     # 2006-12-05:
