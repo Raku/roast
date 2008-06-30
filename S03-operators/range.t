@@ -19,6 +19,7 @@ is ~("Y".."AB"), "Y Z AA AB", "(..) works on carried chars (3)";
 is ~('Y'..'z', 'Y Z', '(..) works on uppercase letter .. lowercase letter');
 is ~('Y'..'_', 'Y Z', '(..) works on letter .. non-letter');
 
+#?rakudo skip "Can't parse '0.. ^10'"
 isnt ~(0..^10), ~(0.. ^10), '(0..^10) is not the same as (0.. ^10)');
 
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
