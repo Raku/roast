@@ -78,6 +78,12 @@ is [^0], [], "unary ^0 produces null range";
 }
 
 # Test that the operands are forced to scalar context
+##   From pmichaud 2006-06-30:  These tests may be incorrect.
+##     C<@one> in ##   item context returns an Array, not a number
+##     -- use C< +@one > to get the number of elements.  So, we
+##     need to either declare that there's a version of infix:<..>
+##     that coerces its arguments to numeric context, or we can
+##     remove these tests from the suite.
 #?rakudo skip 'MMD function __cmp not found for types (101, 95)'
 {
     my @one   = (1,);
