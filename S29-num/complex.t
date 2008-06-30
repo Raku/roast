@@ -19,7 +19,7 @@ my $pi = 3.141592653589793238;
     is_approx(cis($pi),      -1 + 0i,      "cis(pi)    == -1");
     is_approx(cis($pi / 2),  1i,           "cis(pi/2)  == i");
     #?rakudo todo "prefix:<-> not implemented for Complex"
-    is_approx(cis(3*$pi / 2),-1i,          "cis(3pi/2) == i");
+    is_approx(cis(3*$pi / 2),-1i,          "cis(3pi/2) == -i");
 }
 
 # L<S29/Num/"=item cis">
@@ -55,12 +55,11 @@ my $pi = 3.141592653589793238;
     # L<S29/Num/"=item unpolar">
     #
     # Basic tests for unpolar()
+    my $s = 2 * sqrt(2);
 
     is_approx(4.unpolar(0),         4,     "4.unpolar(0)    == 4");
-    #?rakudo todo "test incorrect"
-    is_approx(4.unpolar($pi/4),     2 + 2i,"4.unpolar(pi/4) == 2+2i");
+    is_approx(4.unpolar($pi/4),     $s + ($s)i ,"4.unpolar(pi/4) == 2+2i");
     is_approx(4.unpolar($pi/2),     4i,    "4.unpolar(pi/2) == 4i");
-    #?rakudo todo "test incorrect"
-    is_approx(4.unpolar(3*$pi/4),   -2 +2i,"4.unpolar(pi/4) == -2+2i");
+    is_approx(4.unpolar(3*$pi/4),   -$s + ($s)i,"4.unpolar(pi/4) == -2+2i");
     is_approx(4.unpolar($pi),       -4,    "4.unpolar(pi)   == -4");
 }
