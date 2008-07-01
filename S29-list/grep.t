@@ -36,7 +36,7 @@ my @list = (1 .. 10);
 
 #?rakudo skip "adverbial closure"
 {
-    my @result = @list.grep: { ($_ % 2) };
+    my @result = @list.grep :{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
     is(@result[0], 1, 'got the value we expected');
     is(@result[1], 3, 'got the value we expected');
