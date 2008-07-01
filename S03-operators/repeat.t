@@ -31,7 +31,6 @@ lives_ok { my @foo2 = undef xx 2; }, 'can repeat undefs';
 my @foo3 = (1, 2) xx 2;
 is(@foo3[0], 1, 'can repeat lists');
 is(@foo3[1], 2, 'can repeat lists');
-#?rakudo 2 todo 'Autoflatten of lists in infix:<xx>, RT #56516'
 is(@foo3[2], 1, 'can repeat lists');
 is(@foo3[3], 2, 'can repeat lists');
 
