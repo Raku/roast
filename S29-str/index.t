@@ -3,10 +3,13 @@ use Test;
 
 # L<S29/Str/"=item index">
 
-plan 31;
+plan 33;
+
+# Type of return value
+isa_ok('abc'.index('b'), StrPos);
+isa_ok('abc'.index('d'), StrPos);
 
 # Simple - with just a single char
-
 
 is(index("Hello World", "H"), 0, "One char, at beginning");
 is(index("Hello World", "l"), 2, "One char, in the middle");
