@@ -23,6 +23,7 @@ my $str3 = "bbb";
 is(($str2 eq $str1 ?? 8 * 8 !! 9 * 9), 64, "?? !! in parenthesis");
 is(($str2 eq $str3 ?? 8 + 8 !! 9 / 9), 1, "?? !! in parenthesis");
 
+#?rakudo 2 todo 'nested ?? !!'
 is(1 ?? 2 ?? 3 !! 4 !! 5 ?? 6 !! 7, 3, "nested ?? !!");
 is(1 ?? 0 ?? 3 !! 4 !! 5 ?? 6 !! 7, 4, "nested ?? !!");
 is(0 ?? 2 ?? 3 !! 4 !! 5 ?? 6 !! 7, 6, "nested ?? !!");
@@ -47,10 +48,12 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, 13, "operator priority");
 }
 
+#?pugs skip "parse failure"
 {
-    # This parses incorrectly because it's parsed as Bool::True(!! Bool::False).
-    my $foo = eval q[ 1 ?? Bool::True !! Bool::False ];
-    is($foo, Bool::True, "a statement with both ??!! and :: in it did compile"), :todo<bug>;
+    # This parses incorrectly in pugs because it's 
+    # parsed as Bool::True(!! Bool::False).
+    my $foo = 1 ?? Bool::True !! Bool::False;
+    is($foo, Bool::True, "a statement with both ??!! and :: in it did compile") ;
 }
 
 #?rakudo skip "no custom ops yet"
