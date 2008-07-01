@@ -17,7 +17,7 @@ is('ab' x 4, 'abababab', 'string repeat operator works on multiple character');
 is(1 x 5, '11111', 'number repeat operator works on number and creates string');
 is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
-#?rakudo skip "TODO: infix:<x>($str, -1)"
+#?rakudo skip 'TODO: infix:<x>($str, -1)'
 is('a' x -1, '', 'repeating negative times produces an empty string');
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
@@ -31,6 +31,7 @@ lives_ok { my @foo2 = undef xx 2; }, 'can repeat undefs';
 my @foo3 = (1, 2) xx 2;
 is(@foo3[0], 1, 'can repeat lists');
 is(@foo3[1], 2, 'can repeat lists');
+#?rakudo 2 todo 'Autoflatten of lists in infix:<xx>'
 is(@foo3[2], 1, 'can repeat lists');
 is(@foo3[3], 2, 'can repeat lists');
 
@@ -52,8 +53,11 @@ my $twin = 'Lintilla';
 ok($twin x= 2, 'operator x= for string works');
 is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
-my @array = (4, 2);
-ok(@array xx= 2, 'operator xx= for list works');
-is(@array[0], 4, 'operator xx= for list repeats correct');
-is(@array[3], 2, 'operator xx= for list repeats correct');
-is(+@array, 4, 'operator xx= for list created the right size');
+#?rakudo skip 'no infix:<xx=>'
+{
+    my @array = (4, 2);
+    ok(@array xx= 2, 'operator xx= for list works');
+    is(@array[0], 4, 'operator xx= for list repeats correct');
+    is(@array[3], 2, 'operator xx= for list repeats correct');
+    is(+@array, 4, 'operator xx= for list created the right size');
+}
