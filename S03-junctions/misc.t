@@ -55,12 +55,14 @@ Misc. Junction tests
     ok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
     ok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
 
+    #?rakudo 3 skip 'infix:<===>'
     ok(not(('a' eq ($b | $c | $a)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('b' eq ($a | $b | $c)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('c' eq ($c | $a | $b)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false'); 
     
     # test junction to junction
     
+    #?rakudo todo 'Compare junctions with junctions'
     ok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
     ok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
     
@@ -122,8 +124,11 @@ Misc. Junction tests
     is($j, 5, 'reassignment of junction variable');
 }
 
+#?rakudo skip 'prefix:<\\>'
 {
-    my ($j,$k,$l);
+    my $j;
+    my $k;
+    my $l;
 
     $j = 1|2;
     is(WHAT($j),'Junction', 'basic junction type reference test');
@@ -151,9 +156,11 @@ L<S03/Junctive operators>
 # Canonical stringification of a junction
 sub j (Junction $j) { return $j.perl }
 
+#?rakudo skip 'Junction Authreading'
 {
     # L<S03/Junctive operators/They thread through operations>
-    my ($got, $want);
+    my $got;
+    my $want;
     $got = ((1|2|3)+4);
     $want = (5|6|7);
     is( j($got), j($want), 'thread + returning junctive result');
@@ -164,7 +171,8 @@ sub j (Junction $j) { return $j.perl }
 
     # L<S03/Junctive operators/This opens doors for constructions like>
     # unless $roll == any(1..6) { print "Invalid roll" }
-    my ($roll, $note);
+    my $roll;
+    my $note;
     $roll = 3; $note = '';
     unless $roll == any(1..6) { $note = "Invalid roll"; };
     is($note, "", 'any() junction threading ==');
@@ -184,7 +192,8 @@ sub j (Junction $j) { return $j.perl }
 
 
     # L<S03/Junctive operators/Junctions work through subscripting>
-    my ($got, @foo);
+    my $got;
+    my @foo;
     $got = ''; @foo = ();
     $got ~= 'y' if try { @foo[any(1,2,3)] };
     is($got, '', "junctions work through subscripting, 0 matches");
@@ -225,10 +234,12 @@ L<S03/Junctive operators/They thread through operations>
 
 =end description
 
+#?rakudo skip 'Junctions of Code Objects'
 {
     my @subs = (sub {3}, sub {2});
 
-    my ($got, $want);
+    my $got;
+    my $want;
 
     is(j(any(@subs)()), j(3|2), '.() on any() junction of subs');
 
@@ -266,20 +277,25 @@ L<S03/Junctive operators/They thread through operations>
         '((1|2)|(3&4)) equiv to any(any(1,2),all(3,4))');
 }
 
-is(none(1).pick, undef, 'none(1).pick should be undef');
-is(none(1,1).pick, undef, 'none(1,1).pick should be undef');
+#?rakudo skip 'Junction.pick'
+{
+    is(none(1).pick, undef, 'none(1).pick should be undef');
+    is(none(1,1).pick, undef, 'none(1,1).pick should be undef');
 
-is(one(1).pick, 1, 'one(1).pick should be 1');
-is(one(1,1).pick, undef, 'one(1,1).pick should be undef');
+    is(one(1).pick, 1, 'one(1).pick should be 1');
+    is(one(1,1).pick, undef, 'one(1,1).pick should be undef');
 
-is(all(1).pick, 1, 'all(1).pick should be 1');
-is(all(1,1).pick, 1, 'all(1,1).pick should be 1');
-is(all(1,2).pick, undef, 'all(1,2).pick should be undef');
+    is(all(1).pick, 1, 'all(1).pick should be 1');
+    is(all(1,1).pick, 1, 'all(1,1).pick should be 1');
+    is(all(1,2).pick, undef, 'all(1,2).pick should be undef');
+}
 
 # junction in boolean context
 ok(?(0&0) == ?(0&&0), 'boolean context');
+#?rakudo todo 'boolen context of junctions'
 ok(?(0&1) == ?(0&&1), 'boolean context');
 ok(?(1&1) == ?(1&&1), 'boolean context');
+#?rakudo todo 'boolen context of junctions'
 ok(?(1&0) == ?(1&&0), 'boolean context');
 ok(!(?(0&0) != ?(0&&0)), 'boolean context');
 ok(!(?(0&1) != ?(0&&1)), 'boolean context');
