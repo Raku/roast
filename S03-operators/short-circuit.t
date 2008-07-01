@@ -56,6 +56,7 @@ plan 34;
     is($y, 2, "// operator short circuiting");
 }
 
+#?rakudo skip 'no inifx:<orelse> yet'
 {
     my $x = 1;
     my $y = 2;
@@ -72,6 +73,7 @@ plan 34;
     is($y, 42, "// operator working");
 }
 
+#?rakudo skip 'no inifx:<orelse> yet'
 {
     my $x;      # should be undef
     my $y = 2;
@@ -103,6 +105,7 @@ plan 34;
     is(0 || 42,        42, "||   operator working");
     is((0 or 42),      42, "or   operator working");
 
+    #?rakudo 2 skip 'no inifx:<orelse> yet'
     is((undef // 42),  42, "//   operator working"); #"
     is((undef orelse 42), 42, "orelse  operator working");
 
@@ -133,6 +136,7 @@ plan 34;
 }
 
 # L<S03/Chained comparisons/Each argument chain will evaluate at most once>
+#?rakudo todo 'chained comparison order of evaluations'
 {
     my $x = 0;
     my $y = 0;
