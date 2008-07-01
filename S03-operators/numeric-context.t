@@ -47,6 +47,7 @@ is(+'aInfo', 0, "+'aInfo' is 0");
 is(+'aNaN',  0, "+'aNaN'  is 0");
 is(+'aNaNa', 0, "+'aNaNa' is 0");
 
+#?rakudo 3 todo 'Inf and NaN'
 is( Inf,  'Inf', "'Inf' is Inf");
 is(-Inf, '-Inf', "'-Inf' is -Inf");
 

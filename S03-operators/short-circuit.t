@@ -136,10 +136,10 @@ plan 34;
 }
 
 # L<S03/Chained comparisons/Each argument chain will evaluate at most once>
-#?rakudo todo 'chained comparison order of evaluations'
 {
     my $x = 0;
     my $y = 0;
+    #?rakudo todo 'chained comparison order of evaluations'
     ok(($x++ < ++$y < ++$y), "chained comparison (truth - 1)");
     # expect x=1, y=2
     is($y, 2, "chained comparison short-circuit: not re-evaluating middle");
