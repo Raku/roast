@@ -2,11 +2,7 @@ use v6;
 
 use Test;
 
-=pod
-
-Ternary operator ?? !!
-
-=cut
+#Ternary operator ?? !!
 
 plan 15;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
