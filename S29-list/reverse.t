@@ -12,6 +12,7 @@ Basic test for the reverse() builtin with a string (Str).
 plan 49;
 
 # As a function :
+#?rakudo skip 'reverse as a function does not work'
 is( reverse('Pugs'), 'sguP', "as a function");
 
 # As a method :
@@ -25,6 +26,7 @@ is( $a, 'Hello World !', "reverse should not be in-place" );
 is( $a .= reverse, '! dlroW olleH', "after a .=reverse" );
 
 # Multiple iterations (don't work in 6.2.12) :
+#?rakudo skip 'parsefail'
 is( 'Hello World !'.reverse.reverse, 'Hello World !', 
         "two reverse in a row." );
         
@@ -46,22 +48,26 @@ my @e = (4, 3, 2, 1);
 
 is(@a, @e, "list was reversed");
 
-my $a = reverse("foo");
-is($a, "oof", "string was reversed");
+#?rakudo skip 'reverse as a function'
+{
+    my $a = reverse("foo");
+    is($a, "oof", "string was reversed");
 
-@a = item(reverse("foo"));
-is(@a[0], "oof", 'the string was reversed');
-@a = list(reverse("foo"));
-is(@a[0], "oof", 'the string was reversed even under list context');
+    @a = item(reverse("foo"));
+    is(@a[0], "oof", 'the string was reversed');
+    @a = list(reverse("foo"));
+    is(@a[0], "oof", 'the string was reversed even under list context');
 
-@a = reverse(~("foo", "bar"));
-is(@a[0], "rab oof", 'the stringified array was reversed (stringwise)');
-@a = list reverse "foo", "bar";
-is(+@a, 2, 'the reversed list has two elements');
-is(@a[0], "bar", 'the list was reversed properly');
+    @a = reverse(~("foo", "bar"));
+    is(@a[0], "rab oof", 'the stringified array was reversed (stringwise)');
+    @a = list reverse "foo", "bar";
+    is(+@a, 2, 'the reversed list has two elements');
+    is(@a[0], "bar", 'the list was reversed properly');
 
-is(@a[1], "foo", 'the list was reversed properly');
+    is(@a[1], "foo", 'the list was reversed properly');
+}
 
+#?rakudo skip 'reverse as a function, parsefails'
 {
     my @cxt_log;
 
@@ -126,6 +132,7 @@ is(@a[1], "foo", 'the list was reversed properly');
 {
     my $a = "foo";
     my @b = $a.reverse;
+    #?rakudo skip '.isa does not work correctly'
     isa_ok(@b, 'Array');    
     my $b = $a.reverse;
     isa_ok($b, 'Str');    
@@ -141,6 +148,7 @@ is(@a[1], "foo", 'the list was reversed properly');
     my $a = "foo".reverse;
     my @b = "foo".reverse;
     isa_ok($a, 'Str');
+    #?rakudo skip '.isa does not work correctly'
     isa_ok(@b, 'Array');
     is($a, "oof", 'string literal reversal works in scalar context');
     is(@b[0], "oof", 'string literal reversal works in list context');
@@ -155,12 +163,14 @@ Tests for %hash.reverse, which inverts the keys and values of a hash.
 
 =end pod
 
+#?rakudo skip 'reverse for hash not implemented'
 {
     my %hash = <a b c d>;
     is(%hash.reverse, {'b' => 'a', 'd' => 'c'}, 'simple hash reversal');
     is(%hash, {'a' => 'b', 'c' => 'd'}, 'original hash is intact');
 }
 
+#?rakudo skip 'reverse for hash not implemented (unspecced behavior here)'
 {
     my %hash = reverse {0 => 'a', 1 => 'a'};
 
