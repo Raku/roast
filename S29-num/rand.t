@@ -19,7 +19,6 @@ ok(rand() < 1, 'rand() returns numbers less than 1');
 
 lives_ok { srand(1) }, 'srand(1) lives and parses';
 
-#?rakudo skip 'lexical bug - RT#56274'
 {
     sub repeat_rand ($seed) {
         srand($seed);
