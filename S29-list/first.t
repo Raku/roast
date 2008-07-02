@@ -25,7 +25,7 @@ my @list = (1 .. 10);
     is($result, 4, "method form of first returns the expected item");
 }
 
-#?rakudo skip "colon invocant syntax"
+#?rakudo skip "adverbial closure"
 {
     my $result = @list.first():{ ($_ == 4) };
     ok($result ~~ Int, "first():<block> returns an Int");
@@ -33,13 +33,12 @@ my @list = (1 .. 10);
 }
 
 {
-	is(@list.first( { ($_ == 11) }), undef, 'first returns undef unsuccessfull match');
+    is(@list.first( { ($_ == 11) }), undef, 'first returns undef unsuccessfull match');
 }
 
 {
-	my $count = 0;
-	my $matcher = sub (Int $x) { $count++; $x % 2 };
-	is(@list.first($matcher), 1, 'first() search for odd elements successfull');
-	is($count, 1, 'Matching closure in first() is only executed once');
-
+    my $count = 0;
+    my $matcher = sub (Int $x) { $count++; $x % 2 };
+    is(@list.first($matcher), 1, 'first() search for odd elements successfull');
+    is($count, 1, 'Matching closure in first() is only executed once');
 }
