@@ -35,7 +35,6 @@ plan 35;
     #?rakudo 1 skip '@() should be the same as @($/)'
     is(@(),  @($/), '@() should be the same as @($/)');
 
-    #?rakudo 1 skip 'zip does not work'
     is((@ 1,2 Z 3,4), <1 3 2 4>, '@ operator has proper precedence to change context of zip infix');
 }
 
@@ -60,7 +59,6 @@ plan 35;
     my @array = ($a, $b);
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 
-    #?rakudo 1 skip 'zip is broken'
     is(($ 1,2 Z 3,4), [[1,3], [2,4]], '$ operator has proper precendence to change context of zip infix');
 }
 
@@ -87,7 +85,6 @@ plan 35;
 
 # L<S03/Changes to Perl 5 operators/Perl 5's ${...}, @{...}, %{...}, etc>
 # Deprecated P5 dereferencing operators:
-#?rakudo skip 'Perl5 dereferencing syntax warnings not implemented yet'
 {
     my $scalar = 'abcd';
     eval_dies_ok('${$scalar}', 'Perl 5 form of ${$scalar} dies');

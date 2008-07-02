@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S29/Str/lc>
 
@@ -25,6 +25,7 @@ is(lc('A'..'C'), "a b c", "lowercasing char-range");
 { # test invocant syntax for lc
     my $x = "Hello World";
     is($x.lc, "hello world", '$x.lc works');
+    is($x, 'Hello World', 'Invocant unchanged');
     is("Hello World".lc, "hello world", '"Hello World".lc works');
 }
 
