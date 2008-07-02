@@ -132,10 +132,9 @@ is(@a, @e, "list was reversed");
 {
     my $a = "foo";
     my @b = $a.reverse;
-    #?rakudo skip '.isa does not work correctly'
-    isa_ok(@b, 'Array');    
+    isa_ok(@b, Array);    
     my $b = $a.reverse;
-    isa_ok($b, 'Str');    
+    isa_ok($b, Str);    
     
     is(@b[0], "oof", 'string in the array has been reversed');
     is($b, "oof", 'string has been reversed');
@@ -147,9 +146,8 @@ is(@a, @e, "list was reversed");
 {
     my $a = "foo".reverse;
     my @b = "foo".reverse;
-    isa_ok($a, 'Str');
-    #?rakudo skip '.isa does not work correctly'
-    isa_ok(@b, 'Array');
+    isa_ok($a, Str);
+    isa_ok(@b, Array);
     is($a, "oof", 'string literal reversal works in scalar context');
     is(@b[0], "oof", 'string literal reversal works in list context');
 
