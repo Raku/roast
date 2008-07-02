@@ -9,7 +9,7 @@ Basic test for the reverse() builtin with a string (Str).
 
 =end pod
 
-plan 45;
+plan 49;
 
 # As a function :
 is( reverse('Pugs'), 'sguP', "as a function");
@@ -31,8 +31,6 @@ is( 'Hello World !'.reverse.reverse, 'Hello World !',
 # Reverse with unicode :
 is( 'ä€»«'.reverse,   '«»€ä', "some unicode characters" );
 
-
-# L<S29/"List"/"=item reverse">
 
 =begin pod
 
@@ -149,4 +147,23 @@ is(@a[1], "foo", 'the list was reversed properly');
 
     @b = 'foo';
     is(@b[0], (@b.reverse)[0], 'one item list is left alone');
+}
+
+=begin pod
+
+Tests for %hash.reverse, which inverts the keys and values of a hash.
+
+=end pod
+
+{
+    my %hash = <a b c d>;
+    is(%hash.reverse, {'b' => 'a', 'd' => 'c'}, 'simple hash reversal');
+    is(%hash, {'a' => 'b', 'c' => 'd'}, 'original hash is intact');
+}
+
+{
+    my %hash = reverse {0 => 'a', 1 => 'a'};
+
+    is(%hash.keys, <a>, 'hash reversal with collision (unspecced, keys)');
+    is(%hash.values.sort, <0 1>, 'hash reversal with collision (unspecced, values)');
 }
