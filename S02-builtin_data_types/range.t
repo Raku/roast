@@ -2,10 +2,10 @@ use v6;
 
 use Test;
 
-plan 31;
-
+plan 39;
 
 # basic Range
+# L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
 
 my $r = 1..5;
 isa_ok $r, Range, 'Type';
@@ -75,4 +75,21 @@ ok(6..8 !~~ 3, 'numification');
   #is $r, $s, "range modified after shift";
 }
 
-# vim:set ft=perl:
+# infinite range
+#?rakudo skip '*..* not implemented'
+{
+    my @inf = *..*;
+
+    is(@inf.shift, -Inf, 'bottom end of *..* is -Inf (1)');
+    is(@inf.shift, -Inf, 'bottom end of *..* is still -Inf (2)');
+
+    is(@inf.pop, Inf, 'top end of *..* is Inf (1)');
+    is(@inf.pop, Inf, 'top end of *..* is still Inf (2)');
+
+    ok(42  ~~ @inf, 'positive integer matches *..*');
+    ok(.2  ~~ @inf, 'positive non-int matches *..*');
+    ok(-2  ~~ @inf, 'negative integer matches *..*');
+    ok(-.2 ~~ @inf, 'negative non-int matches *..*');
+}
+
+# vim:set ft=perl6
