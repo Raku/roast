@@ -25,7 +25,7 @@ my @list = (1 .. 10);
     is($result, 4, "method form of first returns the expected item");
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "adverbial block"
 {
     my $result = @list.first():{ ($_ == 4) };
     ok($result ~~ Int, "first():<block> returns an Int");
