@@ -23,7 +23,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "adverbial block"
 {
     my @result = @list.grep():{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -34,7 +34,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "adverbial block"
 {
     my @result = @list.grep :{ ($_ % 2) };
     is(+@result, 5, 'we got a list back');
@@ -45,18 +45,20 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "closure as non-final argument"
 {
     my @result = grep { ($_ % 2) }: @list;
-    is(+@result, 5, 'we got a list back'); 
-    is(@result[0], 1, 'got the value we expected'); 
-    is(@result[1], 3, 'got the value we expected'); 
-    is(@result[2], 5, 'got the value we expected'); 
-    is(@result[3], 7, 'got the value we expected'); 
-    is(@result[4], 9, 'got the value we expected'); 
+    is(+@result, 5, 'we got a list back');
+    is(@result[0], 1, 'got the value we expected');
+    is(@result[1], 3, 'got the value we expected');
+    is(@result[2], 5, 'got the value we expected');
+    is(@result[3], 7, 'got the value we expected');
+    is(@result[4], 9, 'got the value we expected');
 }
 
 # .grep shouldn't work on non-arrays
+##  XXX pmichaud, 2008-07-01:
+##    p6l says that .grep should work on non-list values.
 {
   #?pugs 2 todo 'bug'
   dies_ok { 42.grep: { $_ } },    "method form of grep should not work on numbers";

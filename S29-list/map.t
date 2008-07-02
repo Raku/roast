@@ -23,7 +23,7 @@ my @list = (1 .. 5);
     is(@result[4], 10, 'got the value we expected');
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "adverbial block"
 {
     my @result = @list.map():{ $_ * 2 };
     is(+@result, 5, 'we got a list back');
@@ -44,7 +44,7 @@ my @list = (1 .. 5);
     is(@result[4], 10, 'got the value we expected');
 }
 
-#?rakudo skip "colon invocant syntax"
+#?rakudo skip "closure as non-final argument"
 {
     my @result = map { $_ * 2 }: @list;
     is(+@result, 5, 'we got a list back');
@@ -100,7 +100,7 @@ my @list = (1 .. 5);
 }
 
 # map with n-ary functions
-#?rakudo skip "colon invocant syntax"
+#?rakudo skip "adverbial block"
 {
   is ~(1,2,3,4).map:{ $^a + $^b             }, "3 7", "map() works with 2-ary functions";
   is ~(1,2,3,4).map:{ $^a + $^b + $^c       }, "6 4", "map() works with 3-ary functions";
@@ -109,11 +109,12 @@ my @list = (1 .. 5);
 }
 
 # .map shouldn't work on non-arrays
+## XXX pmichaud, 2008-07-01:  .map should work on non-list values
 {
   #?pugs 2 todo 'bug'
   dies_ok { 42.map: { $_ } },    "method form of map should not work on numbers";
   dies_ok { "str".map: { $_ } }, "method form of map should not work on strings";
-  #?rakudo skip "colon invocant syntax"
+  #?rakudo skip "adverbial block"
   is ~(42,).map:{ $_ }, "42",   "method form of map should work on arrays";
 };
 
@@ -130,7 +131,10 @@ should be equivalent to
 
 =end pod
 
-#?rakudo skip "colon invocant syntax"
+##  XXX pmichaud, 2008-07-01:   As the test is written below, the
+##    @expected and "map of ..." arguments are arguments of .map(...)
+##    and not of is(...).  See S12:406.
+#?rakudo skip "syntax error in test"
 {
   my @expected = ("foo","bar");
   @expected = map { substr($_,1,1) }: @expected;
@@ -139,7 +143,7 @@ should be equivalent to
 }
 
 
-#?rakudo skip "no hashes at the moment"
+#?rakudo skip '{} hash composer not implemented'
 {
   my @a = (1, 2, 3); 
   # XXX is hash { ... } legal?

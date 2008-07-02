@@ -36,16 +36,16 @@ plan 21;
     is(@s, @e, '... with explicit spaceship'); 
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "closure as non-final argument"
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
 
     my @s = sort { $^a <=> $^b }: @a;
-    is(@s, @e, '... with closure as indirect invocant'); 
+    is(@s, @e, '... with closure as indirect invocant');
 }
 
-#?rakudo skip "adverbial closure"
+#?rakudo skip "method fallback to sub unimpl"
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -152,7 +152,8 @@ plan 21;
 }
 
 # .sort shouldn't work on non-arrays
-#?rakudo skip 'adverbial closure'
+##  XXX pmichaud, 2008-07-01:  .sort should work on non-list values
+#?rakudo skip 'test errors, adverbial block'
 {
 #?pugs 2 todo 'bug'
     dies_ok { 42.sort: { 0 } },   "method form of sort should not work on numbers";

@@ -20,8 +20,9 @@ plan 11;
   my $sum   = 5 + -3 + 7 + 0 + 1 + -9; # laziness :)
 
   is((reduce { $^a + $^b }, 0, @array), $sum, "basic reduce works (1)");
-#?rakudo 2 skip 'adverbial closure'
+#?rakudo skip 'closure as non-final argument'
   is((reduce { $^a + $^b }: 100, @array), 100 + $sum, "basic reduce works (2)");
+#?rakudo skip 'method fallback to sub unimpl'
   is(({ $^a * $^b }.reduce: 1,2,3,4,5), 120, "basic reduce works (3)");
 }
 
@@ -34,6 +35,7 @@ plan 11;
 }
 
 # .reduce shouldn't work on non-arrays
+##  XXX pmichaud, 2008-07-01:  .reduce should work on non-list values
 {
 #?pugs 2 todo 'bug'
   dies_ok { 42.reduce: { $^a + $^b } },    "method form of reduce should not work on numbers";
@@ -41,7 +43,7 @@ plan 11;
   is ((42,).reduce: { $^a + $^b }), 42,      "method form of reduce should work on arrays";
 }
 
-#?rakudo 4 skip 'parsefail'
+#?rakudo 4 skip '{} hash composer not implemented'
 {
   my $hash = {a => {b => {c => 42}}};
   my @reftypes;
