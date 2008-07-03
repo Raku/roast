@@ -43,7 +43,6 @@ my Str $bar;
 }
 
 # L<S02/Parameter types/Parameters may be given types, just like any other variable>
-#?rakudo skip "type checking bug"
 {
     sub paramtype (Int $i) {return $i+1}
     is(paramtype(5), 6, 'sub parameters with matching type');
