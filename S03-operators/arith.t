@@ -16,26 +16,11 @@ unless ($five == 5) {
 # Probably degrades error messages, so restore once rakudo does .nextwith.
 
 #?DOES 1
-sub tryok ($ok, $todo = '') {
-    if ($todo) {
-        #&ok.nextwith($ok,$todo, :todo);
-        ok($ok,$todo, :todo);
-    } else {
-        #&ok.nextwith($ok);
-        ok($ok);
-    }
+sub tryeq ($lhs, $rhs) {
+    ok($lhs == $rhs);
 }
 
 #?DOES 1
-sub tryeq ($lhs, $rhs, $todo = '') {
-    if ($todo) {
-        #&ok.nextwith($lhs == $rhs,$todo ~ " " ~ $lhs ~ " != " ~ $rhs, :todo);
-        ok($lhs == $rhs,$todo ~ " " ~ $lhs ~ " != " ~ $rhs, :todo);
-    } else {
-        #&ok.nextwith($lhs == $rhs);
-        ok($lhs == $rhs);
-    }
-}
 sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     my $todo = $todo1;  # TODO is rw
     $todo = ' # TODO ' ~ $todo if $todo;
@@ -74,10 +59,10 @@ tryeq -13 % -4, -1;
 
 my $limit = 1e6;
 
-tryok abs( 13e21 %  4e21 -  1e21) < $limit;
-tryok abs(-13e21 %  4e21 -  3e21) < $limit;
-tryok abs( 13e21 % -4e21 - -3e21) < $limit;
-tryok abs(-13e21 % -4e21 - -1e21) < $limit;
+ok abs( 13e21 %  4e21 -  1e21) < $limit;
+ok abs(-13e21 %  4e21 -  3e21) < $limit;
+ok abs( 13e21 % -4e21 - -3e21) < $limit;
+ok abs(-13e21 % -4e21 - -1e21) < $limit;
 
 # UVs, IVs, etc make no sense but the tests are useful anyhow.
 
@@ -211,10 +196,13 @@ tryeq 3 * -3, -9;
 tryeq -4 * -3, 12;
 
 # check with 0xFFFF and 0xFFFF
-tryeq 65535 * 65535, 4294836225;
-tryeq 65535 * -65535, -4294836225;
-tryeq -65535 * 65535, -4294836225;
-tryeq -65535 * -65535, 4294836225;
+#?rakudo skip 'arithmetics'
+{
+    tryeq 65535 * 65535, 4294836225;
+    tryeq 65535 * -65535, -4294836225;
+    tryeq -65535 * 65535, -4294836225;
+    tryeq -65535 * -65535, 4294836225;
+}
 
 # check with 0xFFFF and 0x10001
 tryeq 65535 * 65537, 4294967295;
@@ -407,6 +395,7 @@ All uses of a zero modulus or divisor should 'die', and the
 
 my $x;
 
+#?rakudo 3 todo 'modulo by zero'
 dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
