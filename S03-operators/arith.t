@@ -281,7 +281,7 @@ tryeq -0x80000000/1, -0x80000000;
 tryeq -0x80000000/-1, 0x80000000;
 
 # The example for sloppy divide, rigged to avoid the peephole optimiser.
-tryeq_sloppy "20." / "5.", 4;
+is_approx "20." / "5.", 4;
 
 tryeq 2.5 / 2, 1.25;
 tryeq 3.5 / -2, -1.75;
@@ -290,7 +290,7 @@ tryeq -5.5 / -2, 2.75;
 
 # Bluuurg if your floating point can't accurately cope with powers of 2
 # [I suspect this is parsing string-to-float problems, not actual arith]
-tryeq_sloppy 18446744073709551616/1, 18446744073709551616; # Bluuurg
+is 18446744073709551616/1, 18446744073709551616; # Bluuurg
 
 #?rakudo skip 'division accuracy issues'
 {
