@@ -35,6 +35,7 @@ plan 16;
   is($x, 2, 'ensure repeat {} until runs at least once');
 }
 
+#?rakudo skip 'redo'
 {
   my $x = 0; try { repeat { $x++; redo if $x < 10 } until 1 };
   is($x, 10, 'redo works in repeat {} until');
@@ -74,6 +75,7 @@ plan 16;
   is($x, 2, 'ensure repeat {} while runs at least once');
 }
 
+#?rakudo skip 'redo'
 {
   my $x = 0; try { repeat while 0 { $x++; redo if $x < 10 } };
   is($x, 10, 'redo works in repeat');
@@ -85,6 +87,7 @@ plan 16;
 }
 
 # L<S04/The C<repeat> statement/"bind the result">
+#?rakudo skip 'point block on loop'
 {
   my $x = 0; repeat until $x >= 10 -> $another_x {
       pass('repeat until with binding starts undefined') unless $another_x.defined;
@@ -98,6 +101,7 @@ plan 16;
   is($x, 2, 'ensure repeat until {} runs at least once');
 }
 
+#?rakudo todo 'redo'
 {
   my $x = 0; try { repeat until 1 { $x++; redo if $x < 10 } };
   is($x, 10, 'redo works in repeat until {}');
