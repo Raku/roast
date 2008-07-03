@@ -15,6 +15,7 @@ unless ($five == 5) {
 # 2008-May-01 .nextwith tailcalls removed to help rakudo.
 # Probably degrades error messages, so restore once rakudo does .nextwith.
 
+#?DOES 1
 sub tryok ($ok, $todo = '') {
     if ($todo) {
         #&ok.nextwith($ok,$todo, :todo);
@@ -24,6 +25,8 @@ sub tryok ($ok, $todo = '') {
         ok($ok);
     }
 }
+
+#?DOES 1
 sub tryeq ($lhs, $rhs, $todo = '') {
     if ($todo) {
         #&ok.nextwith($lhs == $rhs,$todo ~ " " ~ $lhs ~ " != " ~ $rhs, :todo);
@@ -62,10 +65,11 @@ tryeq -13 %  4, 3;
 tryeq  13 % -4, -3;
 tryeq -13 % -4, -1;
 
-# % now does floats {
+#?rakudo skip 'modulo with floats'
+{
     tryeq 5 % 2.5, 0;
     tryeq 2.5 % 1, .5;
-# }
+}
 
 
 my $limit = 1e6;
@@ -155,43 +159,49 @@ tryeq 2147483648 - 2147483650, -2;
 tryeq 2000000000 - 4000000000, -2000000000;
 
 # No warnings should appear;
-my $a;
-$a += 1;
-tryeq $a, 1;
-undefine $a;
-$a += -1;
-tryeq $a, -1;
-undefine $a;
-$a += 4294967290;
-tryeq $a, 4294967290;
-undefine $a;
-$a += -4294967290;
-tryeq $a, -4294967290;
-undefine $a;
-$a += 4294967297;
-tryeq $a, 4294967297;
-undefine $a;
-$a += -4294967297;
-tryeq $a, -4294967297;
+#?rakudo skip '+= MMD bug'
+{
+    my $a;
+    $a += 1;
+    tryeq $a, 1;
+    undefine $a;
+    $a += -1;
+    tryeq $a, -1;
+    undefine $a;
+    $a += 4294967290;
+    tryeq $a, 4294967290;
+    undefine $a;
+    $a += -4294967290;
+    tryeq $a, -4294967290;
+    undefine $a;
+    $a += 4294967297;
+    tryeq $a, 4294967297;
+    undefine $a;
+    $a += -4294967297;
+    tryeq $a, -4294967297;
+}
 
-my $s;
-$s -= 1;
-tryeq $s, -1;
-undefine $s;
-$s -= -1;
-tryeq $s, +1;
-undefine $s;
-$s -= -4294967290;
-tryeq $s, +4294967290;
-undefine $s;
-$s -= 4294967290;
-tryeq $s, -4294967290;
-undefine $s;
-$s -= 4294967297;
-tryeq $s, -4294967297;
-undefine $s;
-$s -= -4294967297;
-tryeq $s, +4294967297;
+#?rakudo skip '-= MMD bug'
+{
+    my $s;
+    $s -= 1;
+    tryeq $s, -1;
+    undefine $s;
+    $s -= -1;
+    tryeq $s, +1;
+    undefine $s;
+    $s -= -4294967290;
+    tryeq $s, +4294967290;
+    undefine $s;
+    $s -= 4294967290;
+    tryeq $s, -4294967290;
+    undefine $s;
+    $s -= 4294967297;
+    tryeq $s, -4294967297;
+    undefine $s;
+    $s -= -4294967297;
+    tryeq $s, +4294967297;
+}
 
 # Multiplication
 
@@ -315,63 +325,73 @@ is 1**1, 1;
 is Inf, Inf;
 is -Inf, -Inf;
 isnt Inf, -Inf;
+#?rakudo skip 'undef.abs'
 is -Inf.abs, Inf;
+#?rakudo 4 todo 'Inf'
 is Inf+100, Inf;
 is Inf-100, Inf;
 is Inf*100, Inf;
 is Inf/100, Inf;
 is Inf*-100, -Inf;
 is Inf/-100, -Inf;
-is 100/Inf, 0;
-is Inf**100, Inf;
-is Inf*0, NaN;
-is Inf-Inf, NaN;
-is Inf*Inf, Inf;
-is Inf/Inf, NaN;
-is Inf*Inf/Inf, NaN;
-is Inf**0, 1;
-is 0**0, 1;
-is 0**Inf, 0;
+#?rakudo skip 'Inf, NaN'
+{
+    is 100/Inf, 0;
+    is Inf**100, Inf;
+    is Inf*0, NaN;
+    is Inf-Inf, NaN;
+    is Inf*Inf, Inf;
+    is Inf/Inf, NaN;
+    is Inf*Inf/Inf, NaN;
+    is Inf**0, 1;
+    is 0**0, 1;
+    is 0**Inf, 0;
 
-my $inf1 = 100**Inf;
-is $inf1, Inf, "100**Inf";
-my $inf2 = Inf**Inf;
-is $inf2, Inf, "Inf**Inf";
+    my $inf1 = 100**Inf;
+    is $inf1, Inf, "100**Inf";
+    my $inf2 = Inf**Inf;
+    is $inf2, Inf, "Inf**Inf";
 
-
+}
 # See L<"http://mathworld.wolfram.com/Indeterminate.html">
 # for why these three values are defined like they are.
-is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
-is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
-is 1**Inf, 1;
+#?rakudo skip 'Inf, NaN'
+{
+    is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
+    is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
+    is 1**Inf, 1;
+}
 
 #flunk("1**Inf is platform-specific -- it's 1 on OSX and NaN elsewhere", :todo);
 
-# NaN
-is NaN, NaN;
-is -NaN, NaN;
-is NaN+100, NaN;
-is NaN-100, NaN;
-is NaN*100, NaN;
-is NaN/100, NaN;
-is NaN**100, NaN;
-is NaN+NaN, NaN;
-is NaN-NaN, NaN;
-is NaN*NaN, NaN;
-is NaN/NaN, NaN;
+#?rakudo skip 'Inf, NaN'
+{
+    # NaN
+    is NaN, NaN;
+    is -NaN, NaN;
+    is NaN+100, NaN;
+    is NaN-100, NaN;
+    is NaN*100, NaN;
+    is NaN/100, NaN;
+    is NaN**100, NaN;
+    is NaN+NaN, NaN;
+    is NaN-NaN, NaN;
+    is NaN*NaN, NaN;
+    is NaN/NaN, NaN;
 
-is NaN+Inf, NaN;
-is NaN-Inf, NaN;
-is NaN*Inf, NaN;
-is NaN/Inf, NaN;
-is Inf/NaN, NaN;
+    is NaN+Inf, NaN;
+    is NaN-Inf, NaN;
+    is NaN*Inf, NaN;
+    is NaN/Inf, NaN;
+    is Inf/NaN, NaN;
 
-my $nan1 = NaN**NaN;
-is $nan1, NaN, "NaN**NaN";
-my $nan2 = NaN**Inf;
-is $nan2, NaN, "NaN**Inf";
-my $nan3 = Inf**NaN;
-is $nan3, NaN, "Inf**NaN";
+    my $nan1 = NaN**NaN;
+    is $nan1, NaN, "NaN**NaN";
+    my $nan2 = NaN**Inf;
+    is $nan2, NaN, "NaN**Inf";
+    my $nan3 = Inf**NaN;
+    is $nan3, NaN, "Inf**NaN";
+}
 
 =begin pod
 
