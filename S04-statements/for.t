@@ -25,6 +25,7 @@ plan 40;
     is $times_run, 0, "foreach doesn't work";
 }
 
+
 ## for with plain old range operator w/out parens
 # L<S04/The C<for> statement/always takes a list as an argument>
 
@@ -44,6 +45,7 @@ plan 40;
 }
 
 #?pugs eval 'todo: slice context'
+#?rakudo skip 'slice context'
 {
     my $str;
     my @a = 1..3;
@@ -51,7 +53,6 @@ plan 40;
     for zip(@a; @b) -> $x, $y {
         $str ~= "($x $y)";
     }
-    };
     is $str, "(1 5)(2 4)(3 6)", 'for zip(@a; @b) -> $x, $y works';
 }
 
@@ -134,12 +135,14 @@ for @array_l -> $_ { $l = $l ~ $_; };
 is($l, '012345', 'for @array -> {} works');
 
 # ... with referential sub
-
-my @array_n = (0 .. 5);
-my $n;
-sub some_sub_3 ($arg) { $n = $n ~ $arg; }
-for (@array_n) { .some_sub_3 };
-is($n, '012345', 'for @array { .some_sub } works');
+#?rakudo skip 'implicit invocant'
+{
+    my @array_n = (0 .. 5);
+    my $n;
+    sub some_sub_3 ($arg) { $n = $n ~ $arg; }
+    for (@array_n) { .some_sub_3 };
+    is($n, '012345', 'for @array { .some_sub } works');
+}
 
 ## and now with parens around the @array
 
@@ -158,6 +161,7 @@ is($o, '012345', 'for (@array) {} works');
 
 
 # ... with referential sub
+#?rakudo skip 'implicit invocant'
 {
     my @array_r = (0 .. 5);
     my $r;
@@ -208,6 +212,7 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo skip 'parse error'
 {
     my @array_v = (0..2);
     my @v = (1..3);
@@ -241,6 +246,7 @@ my @elems = <a b c d e>;
 
 
 # .key //= ++$i for @array1;
+#?rakudo skip 'implicit invocant'
 {
    class TestClass is rw { has $.key; };
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
@@ -255,6 +261,7 @@ my @elems = <a b c d e>;
 }
 
 # .key = 1 for @array1;
+#?rakudo skip 'implicit invocant'
 {
    class TestClass is rw { has $.key; };
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
@@ -272,15 +279,16 @@ my @elems = <a b c d e>;
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
    my @array2 = (TestClass.new(:key<1>),TestClass.new(:key<1>));   
 
-   try { $_.key = 1 for @array1 };
-   my $sum1 = @array1.map:{ $_.key };
-   my $sum2 = @array2.map:{ $_.key };
+   $_.key = 1 for @array1;
+   my $sum1 = @array1.map: { $_.key };
+   my $sum2 = @array2.map: { $_.key };
    is( $sum1, $sum2, '$_.key = 1 for @array1;');
 
 }
 
 # rw scalars
 #L<S04/The C<for> statement/implicit parameter to block read/write "by default">
+#?rakudo skip 'list assignment'
 {
     my ($a, $b, $c) = 0..2;
     try { for ($a, $b, $c) { $_++ } };
@@ -294,7 +302,7 @@ my @elems = <a b c d e>;
 # list context
 
 {
-    $a = '';
+    my $a = '';
     for 1..3, 4..6 { $a =~ $_.WHAT };
     is($a, 'IntIntIntIntIntInt', 'List context');
 
