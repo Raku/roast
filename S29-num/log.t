@@ -27,13 +27,13 @@ is_approx(log10(0.1), -0.9999999999999998, 'got the log10 of 0.1');
 #?pugs 2 todo 'feature'
 #?rakudo 2 todo 'complex log()'
 is_approx(log(-1 + 0i,), 0 + 1i * pi, "got the log of -1");
-is_approx(log10(-1 + 0i), 0 + 1i * pi, "got the log10 of -1");
+is_approx(log10(-1 + 0i), 0 + 1i * pi / log(10), "got the log10 of -1");
 
 # log(exp(1+i pi)) = 1 + i pi
 #?pugs 2 todo 'feature'
 #?rakudo 2 todo 'complex log()'
 is_approx(log(-exp(1)) + 0i, 1 + 1i * pi, "got the log of -e");
-is_approx(log10(-10 + 0i), 1 + 1i * pi, "got the log10 of -10");
+is_approx(log10(-10 + 0i), 1 + 1i * pi / log(10), "got the log10 of -10");
 
 #?pugs todo 'feature'
 #?rakudo 3 todo 'complex log()'
