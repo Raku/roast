@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 8;
 
 {
     my $i = 0;
@@ -52,7 +52,6 @@ plan 10;
   while @array.pop -> $x {
       $str ~= $x;
   }
-  is $!, undef, 'eval worked';
   is $str, '54321', 'while ... -> $x {...} worked (1)';
 }
 
@@ -63,6 +62,5 @@ plan 10;
   while pop @array -> $x {
       $str ~= $x;
   }
-  is $!, undef, 'eval worked';
   is $str, '54321', 'while ... -> $x {...} worked (2)';
 }
