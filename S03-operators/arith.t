@@ -17,7 +17,7 @@ unless ($five == 5) {
 
 #?DOES 1
 sub tryeq ($lhs, $rhs) {
-    ok($lhs == $rhs);
+    ok($lhs == $rhs, "$lhs == $rhs");
 }
 
 #?DOES 1
@@ -33,7 +33,8 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
             ok($lhs==$rhs,$todo);
         }
     } else {
-        my $error = abs($lhs - $rhs) / $lhs;
+        my $error = abs($lhs - $rhs);
+        $error   /= $lhs; # Syntax highlighting fix
         if ($todo) {
             #&ok.nextwith($error <1e-9,$todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
             ok($error <1e-9,$todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
@@ -67,26 +68,30 @@ ok abs(-13e21 % -4e21 - -1e21) < $limit;
 # UVs, IVs, etc make no sense but the tests are useful anyhow.
 
 # UVs should behave properly
-
-tryeq 4063328477 % 65535, 27407;
-tryeq 4063328477 % 4063328476, 1;
-tryeq 4063328477 % 2031664238, 1;
+#?rakudo 3 skip 'modulo bugs'
+{
+    tryeq 4063328477 % 65535, 27407;
+    tryeq 4063328477 % 4063328476, 1;
+    tryeq 4063328477 % 2031664238, 1;
+}
 tryeq 2031664238 % 4063328477, 2031664238;
 
 # These should trigger wrapping on 32 bit IVs and UVs
 
 tryeq 2147483647 + 0, 2147483647;
 
-# IV + IV promote to UV
-tryeq 2147483647 + 1, 2147483648;
-tryeq 2147483640 + 10, 2147483650;
-tryeq 2147483647 + 2147483647, 4294967294;
-# IV + UV promote to NV
-tryeq 2147483647 + 2147483649, 4294967296;
-# UV + IV promote to NV
-tryeq 4294967294 + 2, 4294967296;
-# UV + UV promote to NV
-tryeq 4294967295 + 4294967295, 8589934590;
+#?rakudo skip 'addition bugs'
+{
+    # IV + IV promote to UV
+    tryeq 2147483647 + 1, 2147483648;
+    tryeq 2147483640 + 10, 2147483650;
+    tryeq 2147483647 + 2147483647, 4294967294;
+    # IV + UV promote to NV
+    tryeq 2147483647 + 2147483649, 4294967296;
+    # UV + IV promote to NV
+    tryeq 4294967294 + 2, 4294967296;
+    # UV + UV promote to NV
+    tryeq 4294967295 + 4294967295, 8589934590;
 
 # UV + IV to IV
 tryeq 2147483648 + -1, 2147483647;
@@ -97,6 +102,7 @@ tryeq -10 + 4294967294, 4294967284;
 # IV + IV to NV
 tryeq -2147483648 + -2147483648, -4294967296;
 tryeq -2147483640 + -10, -2147483650;
+}
 
 # Hmm. Don t forget the simple stuff
 tryeq 1 + 1, 2;
@@ -125,21 +131,25 @@ tryeq 2147483648 - 0, 2147483648;
 tryeq -2147483648 - 0, -2147483648;
 
 tryeq 0 - -2147483647, 2147483647;
-tryeq -1 - -2147483648, 2147483647;
-tryeq 2 - -2147483648, 2147483650;
 
-tryeq 4294967294 - 3, 4294967291;
-tryeq -2147483648 - -1, -2147483647;
+#?rakudo skip 'subtraction bugs'
+{
+    tryeq -1 - -2147483648, 2147483647;
+    tryeq 2 - -2147483648, 2147483650;
 
-# IV - IV promote to UV
-tryeq 2147483647 - -1, 2147483648;
-tryeq 2147483647 - -2147483648, 4294967295;
-# UV - IV promote to NV
-tryeq 4294967294 - -3, 4294967297;
-# IV - IV promote to NV
-tryeq -2147483648 - +1, -2147483649;
-# UV - UV promote to IV
-tryeq 2147483648 - 2147483650, -2;
+    tryeq 4294967294 - 3, 4294967291;
+    tryeq -2147483648 - -1, -2147483647;
+
+    # IV - IV promote to UV
+    tryeq 2147483647 - -1, 2147483648;
+    tryeq 2147483647 - -2147483648, 4294967295;
+    # UV - IV promote to NV
+    tryeq 4294967294 - -3, 4294967297;
+    # IV - IV promote to NV
+    tryeq -2147483648 - +1, -2147483649;
+    # UV - UV promote to IV
+    tryeq 2147483648 - 2147483650, -2;
+}
 # IV - UV promote to IV
 tryeq 2000000000 - 4000000000, -2000000000;
 
@@ -202,54 +212,54 @@ tryeq -4 * -3, 12;
     tryeq 65535 * -65535, -4294836225;
     tryeq -65535 * 65535, -4294836225;
     tryeq -65535 * -65535, 4294836225;
+
+    # check with 0xFFFF and 0x10001
+    tryeq 65535 * 65537, 4294967295;
+    tryeq 65535 * -65537, -4294967295;
+    tryeq -65535 * 65537, -4294967295;
+    tryeq -65535 * -65537, 4294967295;
+    
+    # check with 0x10001 and 0xFFFF
+    tryeq 65537 * 65535, 4294967295;
+    tryeq 65537 * -65535, -4294967295;
+    tryeq -65537 * 65535, -4294967295;
+    tryeq -65537 * -65535, 4294967295;
+    
+    # These should all be dones as NVs
+    tryeq 65537 * 65537, 4295098369;
+    tryeq 65537 * -65537, -4295098369;
+    tryeq -65537 * 65537, -4295098369;
+    tryeq -65537 * -65537, 4295098369;
+    
+    # will overflow an IV (in 32-bit)
+    tryeq 46340 * 46342, 0x80001218;
+    tryeq 46340 * -46342, -0x80001218;
+    tryeq -46340 * 46342, -0x80001218;
+    tryeq -46340 * -46342, 0x80001218;
+    
+    tryeq 46342 * 46340, 0x80001218;
+    tryeq 46342 * -46340, -0x80001218;
+    tryeq -46342 * 46340, -0x80001218;
+    tryeq -46342 * -46340, 0x80001218;
+    
+    # will overflow a positive IV (in 32-bit)
+    tryeq 65536 * 32768, 0x80000000;
+    tryeq 65536 * -32768, -0x80000000;
+    tryeq -65536 * 32768, -0x80000000;
+    tryeq -65536 * -32768, 0x80000000;
+    
+    tryeq 32768 * 65536, 0x80000000;
+    tryeq 32768 * -65536, -0x80000000;
+    tryeq -32768 * 65536, -0x80000000;
+    tryeq -32768 * -65536, 0x80000000;
+    
+    # 2147483647 is prime. bah.
+    
+    tryeq 46339 * 46341, 0x7ffea80f;
+    tryeq 46339 * -46341, -0x7ffea80f;
+    tryeq -46339 * 46341, -0x7ffea80f;
+    tryeq -46339 * -46341, 0x7ffea80f;
 }
-
-# check with 0xFFFF and 0x10001
-tryeq 65535 * 65537, 4294967295;
-tryeq 65535 * -65537, -4294967295;
-tryeq -65535 * 65537, -4294967295;
-tryeq -65535 * -65537, 4294967295;
-
-# check with 0x10001 and 0xFFFF
-tryeq 65537 * 65535, 4294967295;
-tryeq 65537 * -65535, -4294967295;
-tryeq -65537 * 65535, -4294967295;
-tryeq -65537 * -65535, 4294967295;
-
-# These should all be dones as NVs
-tryeq 65537 * 65537, 4295098369;
-tryeq 65537 * -65537, -4295098369;
-tryeq -65537 * 65537, -4295098369;
-tryeq -65537 * -65537, 4295098369;
-
-# will overflow an IV (in 32-bit)
-tryeq 46340 * 46342, 0x80001218;
-tryeq 46340 * -46342, -0x80001218;
-tryeq -46340 * 46342, -0x80001218;
-tryeq -46340 * -46342, 0x80001218;
-
-tryeq 46342 * 46340, 0x80001218;
-tryeq 46342 * -46340, -0x80001218;
-tryeq -46342 * 46340, -0x80001218;
-tryeq -46342 * -46340, 0x80001218;
-
-# will overflow a positive IV (in 32-bit)
-tryeq 65536 * 32768, 0x80000000;
-tryeq 65536 * -32768, -0x80000000;
-tryeq -65536 * 32768, -0x80000000;
-tryeq -65536 * -32768, 0x80000000;
-
-tryeq 32768 * 65536, 0x80000000;
-tryeq 32768 * -65536, -0x80000000;
-tryeq -32768 * 65536, -0x80000000;
-tryeq -32768 * -65536, 0x80000000;
-
-# 2147483647 is prime. bah.
-
-tryeq 46339 * 46341, 0x7ffea80f;
-tryeq 46339 * -46341, -0x7ffea80f;
-tryeq -46339 * 46341, -0x7ffea80f;
-tryeq -46339 * -46341, 0x7ffea80f;
 
 # leading space should be ignored
 
@@ -281,24 +291,30 @@ tryeq -5.5 / -2, 2.75;
 # Bluuurg if your floating point can't accurately cope with powers of 2
 # [I suspect this is parsing string-to-float problems, not actual arith]
 tryeq_sloppy 18446744073709551616/1, 18446744073709551616; # Bluuurg
-tryeq_sloppy 18446744073709551616/2, 9223372036854775808;
-tryeq_sloppy 18446744073709551616/4294967296, 4294967296;
-tryeq_sloppy 18446744073709551616/9223372036854775808, 2;
 
+#?rakudo skip 'division accuracy issues'
 {
-  # The peephole optimiser is wrong to think that it can substitute intops
-  # in place of regular ops, because i_multiply can overflow.
-  # (Perl 5) Bug reported by "Sisyphus" (kalinabears@hdc.com.au)
-  my $n = 1127;
-  my $float = ($n % 1000) * 167772160.0;
-  tryeq_sloppy $float, 21307064320;
+    tryeq_sloppy 18446744073709551616/2, 9223372036854775808;
+    tryeq_sloppy 18446744073709551616/4294967296, 4294967296;
+    tryeq_sloppy 18446744073709551616/9223372036854775808, 2;
+}
 
-  # On a 32 bit machine, if the i_multiply op is used, you will probably get
-  # -167772160. It's actually undefined behaviour, so anything may happen.
-  my $int = ($n % 1000) * 167772160;
-  tryeq $int, 21307064320;
+#?rakudo skip 'multiplication accuracy bugs'
+{
+    # The peephole optimiser is wrong to think that it can substitute intops
+    # in place of regular ops, because i_multiply can overflow.
+    # (Perl 5) Bug reported by "Sisyphus" (kalinabears@hdc.com.au)
+    my $n = 1127;
+    my $float = ($n % 1000) * 167772160.0;
+    tryeq_sloppy $float, 21307064320;
+  
+    # On a 32 bit machine, if the i_multiply op is used, you will probably get
+    # -167772160. It's actually undefined behaviour, so anything may happen.
+    my $int = ($n % 1000) * 167772160;
+    tryeq $int, 21307064320;
 
 }
+
 
 # exponentiation
 
@@ -315,7 +331,7 @@ is -Inf, -Inf;
 isnt Inf, -Inf;
 #?rakudo skip 'undef.abs'
 is -Inf.abs, Inf;
-#?rakudo 4 todo 'Inf'
+#?rakudo 4 skip 'Inf'
 is Inf+100, Inf;
 is Inf-100, Inf;
 is Inf*100, Inf;
@@ -395,7 +411,7 @@ All uses of a zero modulus or divisor should 'die', and the
 
 my $x;
 
-#?rakudo 3 todo 'modulo by zero'
+#?rakudo 3 skip 'modulo by zero'
 dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
