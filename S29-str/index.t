@@ -3,11 +3,13 @@ use Test;
 
 # L<S29/Str/"=item index">
 
-plan 33;
+plan 34;
 
 # Type of return value
+#?rakudo todo 'successful index() should return a StrPos'
 isa_ok('abc'.index('b'), StrPos);
 isa_ok('abc'.index('d'), StrPos);
+ok(!'abc'.index('d'), 'failure object from index() evaluates to false');
 
 # Simple - with just a single char
 
@@ -34,7 +36,7 @@ is(index("Hello World", "Hello World"), 0, "Substr eq Str");
 
 is(index("Hello World", ""), 0, "Substr is empty");
 is(index("", ""), 0, "Both strings are empty");
-ok(!index("", "Hello") "Only main-string is empty");
+ok(!defined(index("", "Hello")), "Only main-string is empty");
 is(index("Hello", "", 3), 3, "Substr is empty, pos within str");
 is(index("Hello", "", 5), 5, "Substr is empty, pos at end of str");
 is(index("Hello", "", 999), 5, "Substr is empty, pos > length of str");
@@ -69,5 +71,4 @@ ok(index($j, "l") == 2, "index on junction");
 ok(index($j, "l") == 3, "index on junction");
 ok($j.index("l")  == 2, ".index on junction");
 ok($j.index("l")  == 3, ".index on junction");
-
 
