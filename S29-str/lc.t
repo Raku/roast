@@ -15,7 +15,6 @@ is(lc("ÄÖÜ"), "äöü", "lc of German Umlauts");
 is(lc("ÓÒÚÙ"), "óòúù", "accented chars");
 is(lc('A'..'C'), "a b c", "lowercasing char-range");
 
-#?rakudo skip "can't parse"
 {
     $_ = "Hello World"; 
     my $x = .lc;

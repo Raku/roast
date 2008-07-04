@@ -17,9 +17,6 @@ is(uc(""), "", "empty string");
 }
 is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
-# given does not return proper value yet
-#?rakudo skip '$_ as default invocant'
-#?DOES 1
 {
     $_ = "Hello World";
     my $x = .uc;
