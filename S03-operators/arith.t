@@ -80,7 +80,6 @@ tryeq 2031664238 % 4063328477, 2031664238;
 
 tryeq 2147483647 + 0, 2147483647;
 
-#?rakudo skip 'addition bugs'
 {
     # IV + IV promote to UV
     tryeq 2147483647 + 1, 2147483648;
@@ -292,7 +291,6 @@ tryeq -5.5 / -2, 2.75;
 # [I suspect this is parsing string-to-float problems, not actual arith]
 is 18446744073709551616/1, 18446744073709551616; # Bluuurg
 
-#?rakudo skip 'division accuracy issues'
 {
     tryeq_sloppy 18446744073709551616/2, 9223372036854775808;
     tryeq_sloppy 18446744073709551616/4294967296, 4294967296;
