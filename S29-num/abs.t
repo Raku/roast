@@ -20,12 +20,10 @@ for(-1, -50, -60.0, -99.99) {
 }
 
 for (0, 0.0, 1, 50, 60.0, 99.99) {
-#?rakudo 2 skip '.abs on $_ unimplemented'
     is(.abs, $_, 'got the right absolute value for $_='~$_);
     is(WHAT .abs, WHAT $_, 'got the right data type('~WHAT($_)~') of absolute value for $_='~$_);
 }
 for (-1, -50, -60.0, -99.99) {
-#?rakudo 2 skip '.abs on $_ unimplemented'
     is(.abs, -$_, 'got the right absolute value for $_='~$_);
     is(WHAT .abs, WHAT $_, 'got the right data type('~WHAT($_)~') of absolute value for $_='~$_);
 }
