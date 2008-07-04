@@ -57,10 +57,15 @@ plan 40;
 }
 
 # ... with referential sub
-#?rakudo skip 'implicit invocant'
+#?rakudo skip 'parse error'
 {
+    # XXX this test is wrong. Since some_sub_1 isn't a method in class
+    # Int, the method call will never work.
+    # There are other wrong occurences of this below
+    # what to do? Maybe something like this:
+    # class Int is also { method some_meth_1 { $d = $d ~ self } }
     my $d;
-    sub some_sub_1 ($arg) { $d = $d ~ $arg; }
+    sub some_sub_1 ($arg) { $d = $d ~ $arg; };
     for 0 .. 5 { .some_sub_1 };
     is($d, '012345', 'for 0 .. 5 { .some_sub } works');
 }
@@ -83,7 +88,7 @@ plan 40;
 #?rakudo skip 'implicit invocant'
 {
     my $h;
-    sub some_sub_2 ($arg) { $h = $h ~ $arg; }
+    sub some_sub_2 ($arg) { $h = $h ~ $arg; };
     for (0 .. 5) { .some_sub_2 };
     is($h, '012345', 'for (0 .. 5) { .some_sub } works');
 }
