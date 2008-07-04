@@ -18,6 +18,7 @@ L<S29/"List"/"=item max">
 my @array = <5 -3 7 0 1 -9>;
 
 # Tests for C<min>:
+#?rakudo 2 skip 'XXX test error, uses cmp and not <=>'
 is @array.min,  -9, "basic method form of min works";
 is min(@array), -9, "basic subroutine form of min works";
 
