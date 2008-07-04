@@ -13,13 +13,9 @@ Basic tests for the exp() builtin
 is_approx(exp(5), 148.4131591025766, 'got the exponent of 5');
 is_approx(exp(0), 1, 'exp(0) == 1');
 
-#?rakudo 2 skip "can't parse pi"
-# exp with complex arguments
 is_approx(exp(1i*pi), -1, 'exp(i pi) == -1');
 is_approx(exp(-1i*pi), -1, 'exp(-i pi) == -1');
 
-#?rakudo skip "can't parse pi"
-#?DOES 40
 {
     for 1 .. 20 {
 	    my $arg = 2.0 * pi / $_;
