@@ -77,14 +77,15 @@ is(+(6..8), 3, 'numification');
     is($r.from, 1, 'range.from');
     is($r.to,   5, 'range.to');
 
-    #?rakudo 3 skip '.min, .max, .minmax on ranges'
     is($r.min, 1, 'range.min');
     is($r.max, 5, 'range.max');
     is($r.minmax, [1,5], 'range.minmax');
 
-    #?rakudo 5 skip '.reverse on ranges'
+    ### pmichaud, 2008-07-04:  XXX  no spec for .reverse
+    #?rakudo 5 skip '.reverse on ranges (test errors?)'
     is($r.reverse.from, 5, 'range.reverse.from');
     is($r.reverse.to,   1, 'range.reverse.to');
+    ### pmichaud, 2008-07-04:  XXX  doesn't test reversed min/max/minmax
     is($r.min, 1, 'range.reverse.min');
     is($r.max, 5, 'range.reverse.max');
     is($r.minmax, [1,5], 'range.reverse.minmax');
@@ -96,7 +97,6 @@ is(+(6..8), 3, 'numification');
     is($r.from, 1, 'uneven range.from');
     is($r.to, 4.5, 'uneven range.to');
 
-    #?rakudo 3 skip '.min, .max, .minmax on range'
     is($r.min, 1,   'range.min');
     is($r.max, 4.5, 'range.max');
     is($r.minmax, [1, 4.5], 'range.minmax');
@@ -105,7 +105,6 @@ is(+(6..8), 3, 'numification');
     is($r.reverse.from, 4.5, 'uneven range.reverse.from');
     is($r.reverse.to,   1,   'uneven range.reverse.to');
 
-    #?rakudo 10 skip '.pop on ranges'
     is($r.shift, 1, 'uneven range.shift (1)');
     is($r.pop, 4.5, 'uneven range.pop (1)');
 
@@ -115,6 +114,7 @@ is(+(6..8), 3, 'numification');
 
     is($r.shift, 2, 'uneven range.shift (2)');
     is($r.pop, 3.5, 'uneven range.pop (2)');
+    #?rakudo skip 'XXX test error -- result should be undef?'
     is($r.shift, 3, 'uneven range.shift (3)');
     ok(!$r.pop,     'uneven range.pop (empty)');
     ok(!$r.shift,   'uneven range.shift (empty)');
