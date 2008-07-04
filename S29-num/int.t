@@ -53,21 +53,16 @@ is(int('0d456'), 0d456, "int('0d456') is 0d456");
 is(int('0o678'), 0o67, "int('0o678') is 0o67");
 is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
 
-#?rakudo skip 'lexical scoping bug - RT#56274'
-#?DOES 24
 {
-    sub __int( Str $s ) {
-        if ($s ~~ rx:Perl5/^(-?\d+)$/) { return $0 };
-        if ($s ~~ rx:Perl5/^(-?\d+)\./) { return $0 };
-        if ($s ~~ rx:Perl5/^\./) { return 0 };
-        return undef;
+    sub __int( $s ) {
+        my $pos = $s.index('.');
+        if ($pos > 0) { return substr($s, 0, $pos); }
+        return $s;
     };
 
     # Check the defaulting to $_ 
 
-    for(0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6,
-        -1, -50, -60.0, -99.99
-        ) {
+    for(0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6, -1, -50, -60.0, -99.99) {
         my $int = __int($_);
         is(.int, $int, "integral value for $_ is $int");
         isa_ok(.int, "Int");
