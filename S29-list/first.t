@@ -36,6 +36,7 @@ my @list = (1 .. 10);
     is(@list.first( { ($_ == 11) }), undef, 'first returns undef unsuccessfull match');
 }
 
+#?rakudo skip "closures temporarily not working (RT #56612)"
 {
     my $count = 0;
     my $matcher = sub (Int $x) { $count++; $x % 2 };

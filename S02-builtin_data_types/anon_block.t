@@ -19,10 +19,12 @@ plan 32;
 # L<S06/"Anonymous subroutines">
 # anon blocks
 my $anon_sub = sub { 1 };
+#?rakudo todo "awaiting typed subs (RT #56618)"
 isa_ok($anon_sub, Sub);
 is($anon_sub(), 1, 'sub { } works');
 
 my $anon_sub_w_arg = sub ($arg) { 1 + $arg };
+#?rakudo todo "awaiting typed subs (RT #56618)"
 isa_ok($anon_sub_w_arg, Sub);
 is($anon_sub_w_arg(3), 4, 'sub ($arg) {} works');
 
