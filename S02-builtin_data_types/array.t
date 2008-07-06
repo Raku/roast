@@ -35,7 +35,7 @@ my @array2 = ("test", 1, undef);
 # combine 2 arrays
 {
     my @array3 = (@array1, @array2);
-    isa_ok(@array3, 'Array');
+    isa_ok(@array3, Array);
 
     is(+@array3, 6, 'the array3 has 6 elements'); 
     is(@array3[0], 'foo', 'got the right value at array3 index 0'); 
@@ -49,7 +49,7 @@ my @array2 = ("test", 1, undef);
 {
     # array slice
     my @array4 = @array2[2, 1, 0];
-    isa_ok(@array4, 'Array');
+    isa_ok(@array4, Array);
 
     is(+@array4, 3, 'the array4 has 3 elements');
     is(@array4[0], undef,  'got the right value at array4 index 0');
@@ -60,7 +60,7 @@ my @array2 = ("test", 1, undef);
 {
     # create new array with 2 array slices
     my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
-    isa_ok(@array5, 'Array');
+    isa_ok(@array5, Array);
 
     is(+@array5, 6, 'the array5 has 6 elements');
     is(@array5[0], undef,  'got the right value at array5 index 0');
@@ -76,7 +76,7 @@ my @array2 = ("test", 1, undef);
 
     my @slice = (2, 0, 1);
     my @array6 = @array1[@slice];
-    isa_ok(@array6, 'Array');
+    isa_ok(@array6, Array);
 
     is(+@array6, 3, 'the array6 has 3 elements'); 
     is(@array6[0], 'baz', 'got the right value at array6 index 0'); 
@@ -87,7 +87,7 @@ my @array2 = ("test", 1, undef);
 {
     # create an array slice with an array constructed with ()
     my @array7 = @array1[(2, 1, 0)];
-    isa_ok(@array7, 'Array');
+    isa_ok(@array7, Array);
 
     is(+@array7, 3, 'the array7 has 3 elements');
     is(@array7[0], 'baz', 'got the right value at array7 index 0');
@@ -109,7 +109,7 @@ my @array2 = ("test", 1, undef);
 # empty arrays
 {
     my @array9;
-    isa_ok(@array9, 'Array');
+    isa_ok(@array9, Array);
     is(+@array9, 0, "new arrays are empty");
 
     my @array10 = (1, 2, 3,);
