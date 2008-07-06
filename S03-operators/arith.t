@@ -51,7 +51,6 @@ tryeq -13 %  4, 3;
 tryeq  13 % -4, -3;
 tryeq -13 % -4, -1;
 
-#?rakudo skip 'modulo with floats'
 {
     tryeq 5 % 2.5, 0;
     tryeq 2.5 % 1, .5;
@@ -131,7 +130,6 @@ tryeq -2147483648 - 0, -2147483648;
 
 tryeq 0 - -2147483647, 2147483647;
 
-#?rakudo skip 'subtraction bugs'
 {
     tryeq -1 - -2147483648, 2147483647;
     tryeq 2 - -2147483648, 2147483650;
