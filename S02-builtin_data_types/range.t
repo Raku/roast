@@ -12,6 +12,7 @@ isa_ok $r, Range, 'Type';
 is $r.WHAT, Range, 'Type';
 is $r.perl, '1..5', 'canonical representation';
 
+#?rakudo 4 skip 'unspecced: exact value of Range.perl'
 is (1..5).perl, '1..5', ".perl ..";
 is (1^..5).perl, '1^..5', ".perl ^..";
 is (1..^5).perl, '1..^5', ".perl ..^";
@@ -24,6 +25,7 @@ is @r, [1, 2, 3, 4, 5], 'got the right array';
 
 my $r = 'a'..'c';
 isa_ok $r, 'Range';
+#?rakudo skip 'unspecced: exact value of Range.perl'
 is $r.perl, '"a".."c"', 'canonical representation';
 my @r = $r;
 is @r, [< a b c >], 'got the right array';
