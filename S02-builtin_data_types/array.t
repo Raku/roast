@@ -9,8 +9,7 @@ plan 71;
 # array of strings
 
 my @array1 = ("foo", "bar", "baz");
-#?rakudo skip "isa_ok dies"
-isa_ok(@array1, 'Array');
+isa_ok(@array1, Array);
 
 is(+@array1, 3, 'the array1 has 3 elements');
 is(@array1[0], 'foo', 'got the right value at array1 index 0');
@@ -21,93 +20,104 @@ is(@array1[2], 'baz', 'got the right value at array1 index 2');
 #?rakudo skip ".[] instead of [] as postcircumfix"
 is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notation');
 
-#?rakudo 999 skip "rest not properly fudged yet"
 
 # array with strings, numbers and undef
 my @array2 = ("test", 1, undef);
+{
+    isa_ok(@array2, Array);
 
-isa_ok(@array2, 'Array');
-
-is(+@array2, 3, 'the array2 has 3 elements');
-is(@array2[0], 'test', 'got the right value at array2 index 0');
-is(@array2[1], 1,      'got the right value at array2 index 1');
-is(@array2[2], undef,  'got the right value at array2 index 2');
+    is(+@array2, 3, 'the array2 has 3 elements');
+    is(@array2[0], 'test', 'got the right value at array2 index 0');
+    is(@array2[1], 1,      'got the right value at array2 index 1');
+    is(@array2[2], undef,  'got the right value at array2 index 2');
+}
 
 # combine 2 arrays
-my @array3 = (@array1, @array2);
-isa_ok(@array3, 'Array');
+{
+    my @array3 = (@array1, @array2);
+    isa_ok(@array3, 'Array');
 
-is(+@array3, 6, 'the array3 has 6 elements'); 
-is(@array3[0], 'foo', 'got the right value at array3 index 0'); 
-is(@array3[1], 'bar', 'got the right value at array3 index 1'); 
-is(@array3[2], 'baz', 'got the right value at array3 index 2'); 
-is(@array3[3], 'test', 'got the right value at array3 index 3'); 
-is(@array3[4], 1,      'got the right value at array3 index 4'); 
-is(@array3[5], undef,  'got the right value at array3 index 5');
+    is(+@array3, 6, 'the array3 has 6 elements'); 
+    is(@array3[0], 'foo', 'got the right value at array3 index 0'); 
+    is(@array3[1], 'bar', 'got the right value at array3 index 1'); 
+    is(@array3[2], 'baz', 'got the right value at array3 index 2'); 
+    is(@array3[3], 'test', 'got the right value at array3 index 3'); 
+    is(@array3[4], 1,      'got the right value at array3 index 4'); 
+    is(@array3[5], undef,  'got the right value at array3 index 5');
+}
 
+{
+    # array slice
+    my @array4 = @array2[2, 1, 0];
+    isa_ok(@array4, 'Array');
 
-# array slice
-my @array4 = @array2[2, 1, 0];
-isa_ok(@array4, 'Array');
+    is(+@array4, 3, 'the array4 has 3 elements');
+    is(@array4[0], undef,  'got the right value at array4 index 0');
+    is(@array4[1], 1,      'got the right value at array4 index 1');
+    is(@array4[2], 'test', 'got the right value at array4 index 2');
+}
 
-is(+@array4, 3, 'the array4 has 3 elements');
-is(@array4[0], undef,  'got the right value at array4 index 0');
-is(@array4[1], 1,      'got the right value at array4 index 1');
-is(@array4[2], 'test', 'got the right value at array4 index 2');
+{
+    # create new array with 2 array slices
+    my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
+    isa_ok(@array5, 'Array');
 
-# create new array with 2 array slices
-my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
-isa_ok(@array5, 'Array');
+    is(+@array5, 6, 'the array5 has 6 elements');
+    is(@array5[0], undef,  'got the right value at array5 index 0');
+    is(@array5[1], 1,      'got the right value at array5 index 1');
+    is(@array5[2], 'test', 'got the right value at array5 index 2');
+    is(@array5[3], 'baz',  'got the right value at array5 index 3');
+    is(@array5[4], 'bar',  'got the right value at array5 index 4');
+    is(@array5[5], 'foo',  'got the right value at array5 index 5');
+}
 
-is(+@array5, 6, 'the array5 has 6 elements');
-is(@array5[0], undef,  'got the right value at array5 index 0');
-is(@array5[1], 1,      'got the right value at array5 index 1');
-is(@array5[2], 'test', 'got the right value at array5 index 2');
-is(@array5[3], 'baz',  'got the right value at array5 index 3');
-is(@array5[4], 'bar',  'got the right value at array5 index 4');
-is(@array5[5], 'foo',  'got the right value at array5 index 5');
+{
+    # create an array slice with an array (in a variable)
 
-# create an array slice with an array (in a variable)
+    my @slice = (2, 0, 1);
+    my @array6 = @array1[@slice];
+    isa_ok(@array6, 'Array');
 
-my @slice = (2, 0, 1);
-my @array6 = @array1[@slice];
-isa_ok(@array6, 'Array');
+    is(+@array6, 3, 'the array6 has 3 elements'); 
+    is(@array6[0], 'baz', 'got the right value at array6 index 0'); 
+    is(@array6[1], 'foo', 'got the right value at array6 index 1'); 
+    is(@array6[2], 'bar', 'got the right value at array6 index 2'); 
+}
 
-is(+@array6, 3, 'the array6 has 3 elements'); 
-is(@array6[0], 'baz', 'got the right value at array6 index 0'); 
-is(@array6[1], 'foo', 'got the right value at array6 index 1'); 
-is(@array6[2], 'bar', 'got the right value at array6 index 2'); 
+{
+    # create an array slice with an array constructed with ()
+    my @array7 = @array1[(2, 1, 0)];
+    isa_ok(@array7, 'Array');
 
-# create an array slice with an array constructed with ()
+    is(+@array7, 3, 'the array7 has 3 elements');
+    is(@array7[0], 'baz', 'got the right value at array7 index 0');
+    is(@array7[1], 'bar', 'got the right value at array7 index 1');
+    is(@array7[2], 'foo', 'got the right value at array7 index 2');
+}
 
-my @array7 = @array1[(2, 1, 0)];
-isa_ok(@array7, 'Array');
+{
+    # odd slices
+    my $result1 = (1, 2, 3, 4)[1];
+    is($result1, 2, 'got the right value from the slice');
 
-is(+@array7, 3, 'the array7 has 3 elements');
-is(@array7[0], 'baz', 'got the right value at array7 index 0');
-is(@array7[1], 'bar', 'got the right value at array7 index 1');
-is(@array7[2], 'foo', 'got the right value at array7 index 2');
-
-# odd slices
-
-my $result1 = (1, 2, 3, 4)[1];
-is($result1, 2, 'got the right value from the slice');
-
-my $result2 = [1, 2, 3, 4][2];
-is($result2, 3, 'got the right value from the slice');
+    my $result2 = [1, 2, 3, 4][2];
+    is($result2, 3, 'got the right value from the slice');
+}
 
 # swap two elements test moved to t/op/assign.t
 
 # empty arrays
+{
+    my @array9;
+    isa_ok(@array9, 'Array');
+    is(+@array9, 0, "new arrays are empty");
 
-my @array9;
-isa_ok(@array9, 'Array');
-is(+@array9, 0, "new arrays are empty");
-
-my @array10 = (1, 2, 3,);
-is(+@array10, 3, "trailing commas make correct array"); 
+    my @array10 = (1, 2, 3,);
+    is(+@array10, 3, "trailing commas make correct array"); 
+}
 
 #?pugs skip "multi-dim arrays not implemented"
+#?rakudo skip "multi-dim arrays"
 {
 # declare a multidimension array
     eval_lives_ok('my @multidim[0..3; 0..1]', "multidimension array");
@@ -116,6 +126,7 @@ is(+@array10, 3, "trailing commas make correct array");
     # XXX what should that test actually do?
     ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array", :todo);
 }
+#?rakudo 999 skip "rest not properly fudged yet"
 {
     # declare the array with data type
     my Int @array;
@@ -123,38 +134,40 @@ is(+@array10, 3, "trailing commas make correct array");
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work", :todo<feature>;
 }
 
-my @array12 = ('a', 'b', 'c', 'e'); 
-
 #?rakudo 999 skip "no whatever star yet"
 #?pugs 999 skip "no whatever star yet"
 {
+    my @array12 = ('a', 'b', 'c', 'e'); 
+
     # indexing from the end
     is @array12[*-1],'e', "indexing from the end [*-1]";
+
+    # end index range
+    is ~@array12[*-4 .. *-2], 'a b c', "end indices [*-4 .. *-2]";
+
+    # end index as lvalue
+    @array12[*-1]   = 'd';
+    is @array12[*-1], 'd', "assigns to the correct end slice index"; 
+    is ~@array12,'a b c d', "assignment to end index correctly alters the array";
 }
 
-# end index range
-is ~@array12[*-4 .. *-2], 'a b c', "end indices [*-4 .. *-2]";
+{
+    my @array13 = ('a', 'b', 'c', 'd'); 
+    # end index range as lvalue
+    @array13[*-4 .. *-1]   = ('d', 'c', 'b', 'a'); # ('a'..'d').reverse
+    is ~@array13, 'd c b a', "end range as lvalue"; 
 
-# end index as lvalue
-@array12[*-1]   = 'd';
-is @array12[*-1], 'd', "assigns to the correct end slice index"; 
-is ~@array12,'a b c d', "assignment to end index correctly alters the array";
+    #hat trick
+    my @array14 = ('a', 'b', 'c', 'd');
+    my @b = 0..3;
+    ((@b[*-3,*-2,*-1,*-4] = @array14)= @array14[*-1,*-2,*-3,*-4]);
 
-my @array13 = ('a', 'b', 'c', 'd'); 
-# end index range as lvalue
-@array13[*-4 .. *-1]   = ('d', 'c', 'b', 'a'); # ('a'..'d').reverse
-is ~@array13, 'd c b a', "end range as lvalue"; 
-
-#hat trick
-my @array14 = ('a', 'b', 'c', 'd');
-my @b = 0..3;
-((@b[*-3,*-2,*-1,*-4] = @array14)= @array14[*-1,*-2,*-3,*-4]);
-
-is ~@b, 
-    'a d c b', 
-    "hat trick:
-    assign to a end-indexed slice array from array  
-    lvalue in assignment is then lvalue to end-indexed slice as rvalue"; 
+    is ~@b, 
+        'a d c b', 
+        "hat trick:
+        assign to a end-indexed slice array from array  
+        lvalue in assignment is then lvalue to end-indexed slice as rvalue"; 
+}
 
 # This test may seem overly simplistic, but it was actually a bug in PIL2JS, so
 # why not write a test for it so other backends can benefit of it, too? :)
