@@ -6,18 +6,29 @@ use Test;
 
 my @tests = (
     # Basic scalar values
-    42, 42/10, 4.2, sqrt(2), 3e5, Inf, -Inf, NaN,
-    "a string", "", "\0", "\t", "\n", "\r\n", "\o7", '{', '}', "\d123", '$a @string %with &sigils()',
+    42, 42/10, 4.2, sqrt(2),
+    #?rakudo emit # 3e5 is converted to a Str when re-evaled
+    3e5,
+    #?rakudo emit # Failure objects have no .perl method and +/-Inf/NaN fail
+    Inf, -Inf, NaN,
+
+    "a string", "", "\0", "\t", "\n", "\r\n", "\o7",
+    ##?rakudo emit # { is not escaped in '{'.perl
+    '{', "\d123",
+    '}',
+    ##?rakudo emit # sigils are not escaped in .perl
+    '$a @string %with &sigils()',
+
     ?1, ?0,
+    #?rakudo emit # 
     undef,
-    #?rakudo emit #
+    #?rakudo emit # parse error
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
     #?rakudo emit #
     \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \undef,
 
-    # Pairs - XXX - Very Broken - FIXME!
     (a => 1),
     :b(2),
 
@@ -25,21 +36,33 @@ my @tests = (
     [],      # empty array
     [ 42 ],  # only one elem
     [< a b c>],
+    #?rakudo emit # {...}.perl is invalid
     {},           # empty hash
+    #?rakudo emit # {...}.perl is invalid
     { a => 42 },  # only one elem
+    #?rakudo emit # {...}.perl is invalid
     { :a(1), :b(2), :c(3) },
 
-    # Infinite/lazy arrays, commented because they take infram and inftime in
+    [ 3..42 ],
+    # Infinite arrays, commented because they take infram and inftime in
     # current Pugs
-    # [ 3..42 ],
-    # [ 3..Inf ],
-    # [ -Inf..Inf ],
-    # [ 3..42, 17..Inf, -Inf..5 ],
+    #?pugs emit # 
+    #?rakudo emit #
+    [ 3..Inf ],
+    #?pugs emit # 
+    #?rakudo emit #
+    [ -Inf..Inf ],
+    #?pugs emit # 
+    #?rakudo emit #
+    [ 3..42, 17..Inf, -Inf..5 ],
 
     # Nested things
+    #?rakudo emit # {...}.perl is invalid
     { a => [1,2,3] },  # only one elem
     [      [1,2,3] ],  # only one elem
+    #?rakudo emit # {...}.perl is invalid
     { a => [1,2,3], b => [4,5,6] },
+    #?rakudo emit # {...}.perl is invalid
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
@@ -60,34 +83,36 @@ plan 10 + 2*@tests;
 #   the result**.
 {
     for @tests -> $obj {
-        is ~eval("item($obj.perl())"), ~$obj,
+        #?rakudo skip 'eqv not implemented'
+        ok eval($obj.perl) eqv $obj,
             "($obj.perl()).perl returned something whose eval()ed stringification is unchanged";
-        is ~eval("WHAT($obj.perl())"), ~$obj.WHAT,
+        is WHAT(eval($obj.perl)), $obj.WHAT,
             "($obj.perl()).perl returned something whose eval()ed .WHAT is unchanged";
     }
 }
 
 # Recursive data structures
+#?rakudo skip 'recursive data structure'
 {
     my $foo = [ 42 ]; $foo[1] = $foo;
     is $foo[1][1][1][0], 42, "basic recursive arrayref";
 
-    # XXX hangs
-    flunk "skipping hanging test", :todo<feature>;
-    #is ~$foo.perl.eval, ~$foo,
-    #    ".perl worked correctly on a recursive arrayref";
+    #?pugs skip 'hanging test'
+    is ~$foo.perl.eval, ~$foo,
+        ".perl worked correctly on a recursive arrayref";
 }
 
+#?rakudo skip 'recursive data structure'
 {
     my $foo = { a => 42 }; $foo<b> = $foo;
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
-    # XXX hangs
-    flunk "skipping hanging test", :todo<feature>;
-    #is ~$foo.perl.eval, ~$foo,
-    #    ".perl worked correctly on a recursive hashref";
+    #?pugs skip 'hanging test'
+    is ~$foo.perl.eval, ~$foo,
+        ".perl worked correctly on a recursive hashref";
 }
 
+#?rakudo skip '{...}.perl does not work'
 {
     my $foo = [ 42 ];
     my $bar = { a => 23 };
@@ -96,15 +121,14 @@ plan 10 + 2*@tests;
 
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
-    # XXX hangs
-    flunk "skipping hanging test", :todo<feature>;
-    #is ~$foo.perl.eval, ~$foo,
-    #    ".perl worked correctly on a mixed arrayref/hashref recursive structure";
+    #?pugs skip 'hanging test'
+    is ~$foo.perl.eval, ~$foo,
+        ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
 {
     # test a bug reported by Chewie[] - apparently this is from S03
-    is((("f","oo","bar").keys).perl, "(0, 1, 2)", ".perl on a .keys list");
+    is(eval((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");
 }
 
 {
@@ -113,7 +137,7 @@ plan 10 + 2*@tests;
     my @foo = ([-1, -2], -3);
     is @foo.perl, '[[-1, -2], -3]', ".perl on a nested list";
 
-    #?rakudo emit #
+    #?rakudo emit # parsefail on hyper operator
     my @hyp = -« ([1, 2], 3);
     # what it currently (r16460) gives
     #?rakudo 2 skip 'parsefail on hyper operator'
