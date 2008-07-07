@@ -100,7 +100,6 @@ my @array2 = ("test", 1, undef);
     is(@array7[2], 'foo', 'got the right value at array7 index 2');
 }
 
-#?rakudo todo 'array slices and list assignment'
 {
     # odd slices
     my $result1 = (1, 2, 3, 4)[1];
@@ -130,14 +129,14 @@ my @array2 = ("test", 1, undef);
     my @array11 is shape(2,4);
 
     # XXX what should that test actually do?
-    ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array", :todo);
+    ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array");
 }
 #?rakudo 999 skip "rest not properly fudged yet"
 {
     # declare the array with data type
     my Int @array;
     lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
-    dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work", :todo<feature>;
+    dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
 
 #?rakudo 999 skip "no whatever star yet"
