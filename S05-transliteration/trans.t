@@ -10,7 +10,7 @@ L<S05/Transliteration>
 
 =end pod
 
-plan 40;
+plan 42;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -135,6 +135,17 @@ is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',
 
 is('Good&Plenty'.trans(:s, 'len' => 't'), 'Good&Ptty',
     'squashing depends on replacement repeat, not searchlist repeat');
+
+# also checks that :c uses the first element in array (or first char in string)
+is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;', '&amp;'] =>
+    ['???',      'AB',     '>',    '&'    ])),
+    '&nbsp;????????????&gt;&amp;',
+    'array, many-to-many transliteration, complement');
+    
+is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
+    ['???'])),
+    '&nbsp;???&gt;&amp;',
+    '... and now complement and squash');    
 
 #?rakudo skip 'tr///, feed operator not implemented'
 {
