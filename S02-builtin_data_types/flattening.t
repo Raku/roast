@@ -67,7 +67,6 @@ plan 34;
     is(%hash<22>,    undef, 'nothing at key "22"');
 }
 
-#?rakudo skip "prefix:<\\>"
 {
     my @a;
     push @a, 1;
@@ -85,6 +84,7 @@ plan 34;
     push @a, @foo;
     is(@a.elems, 5, 'Array flattened');
     push @a, %foo;
+    #?rakudo skip "hash flattening bug?"
     is(@a.elems, 5, 'Hash flattened');
 }
     
