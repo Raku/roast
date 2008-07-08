@@ -59,14 +59,15 @@ my @array2 = ("test", 1, undef);
     is(@array4[2], 'test', 'got the right value at array4 index 2');
 }
 
-#?rakudo todo 'array slices and list assignment'
 {
     # create new array with 2 array slices
     my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
     isa_ok(@array5, Array);
 
+    #?rakudo todo 'array slices and list assignment'
     is(+@array5, 6, 'the array5 has 6 elements');
     is(@array5[0], undef,  'got the right value at array5 index 0');
+    #?rakudo 5 todo 'array slices and list assignment'
     is(@array5[1], 1,      'got the right value at array5 index 1');
     is(@array5[2], 'test', 'got the right value at array5 index 2');
     is(@array5[3], 'baz',  'got the right value at array5 index 3');
@@ -74,7 +75,6 @@ my @array2 = ("test", 1, undef);
     is(@array5[5], 'foo',  'got the right value at array5 index 5');
 }
 
-#?rakudo todo 'array slices and list assignment'
 {
     # create an array slice with an array (in a variable)
 
@@ -82,18 +82,19 @@ my @array2 = ("test", 1, undef);
     my @array6 = @array1[@slice];
     isa_ok(@array6, Array);
 
+    #?rakudo 4 todo 'array slices and list assignment'
     is(+@array6, 3, 'the array6 has 3 elements'); 
     is(@array6[0], 'baz', 'got the right value at array6 index 0'); 
     is(@array6[1], 'foo', 'got the right value at array6 index 1'); 
     is(@array6[2], 'bar', 'got the right value at array6 index 2'); 
 }
 
-#?rakudo todo 'array slices and list assignment'
 {
     # create an array slice with an array constructed with ()
     my @array7 = @array1[(2, 1, 0)];
     isa_ok(@array7, Array);
 
+    #?rakudo 4 todo 'array slices and list assignment'
     is(+@array7, 3, 'the array7 has 3 elements');
     is(@array7[0], 'baz', 'got the right value at array7 index 0');
     is(@array7[1], 'bar', 'got the right value at array7 index 1');
