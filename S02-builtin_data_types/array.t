@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 70;
+plan 97;
 
 #L<S02/Mutable types/Array>
 
@@ -132,7 +132,8 @@ my @array2 = ("test", 1, undef);
     # XXX what should that test actually do?
     ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array");
 }
-#?rakudo 999 skip "rest not properly fudged yet"
+
+#?rakudo skip "rest not properly fudged yet"
 {
     # declare the array with data type
     my Int @array;
@@ -140,8 +141,8 @@ my @array2 = ("test", 1, undef);
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
 
-#?rakudo 999 skip "no whatever star yet"
-#?pugs 999 skip "no whatever star yet"
+#?rakudo skip "no whatever star yet"
+#?pugs skip "no whatever star yet"
 {
     my @array12 = ('a', 'b', 'c', 'e'); 
 
@@ -157,6 +158,8 @@ my @array2 = ("test", 1, undef);
     is ~@array12,'a b c d', "assignment to end index correctly alters the array";
 }
 
+#?rakudo skip "no whatever star yet"
+#?pugs skip "no whatever star yet"
 {
     my @array13 = ('a', 'b', 'c', 'd'); 
     # end index range as lvalue
@@ -183,6 +186,8 @@ my @array2 = ("test", 1, undef);
   is @arr[0], "new value", "modifying of array contents (constants) works";
 }
 
+#?rakudo skip "no whatever star yet"
+#?pugs skip "no whatever star yet"
 {
   my @arr;
   lives_ok { @arr[*-1] },  "readonly accessing [*-1] of an empty array is ok (1)";
@@ -191,6 +196,8 @@ my @array2 = ("test", 1, undef);
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
+#?rakudo skip "no whatever star yet"
+#?pugs skip "no whatever star yet"
 {
   my @arr = (23);
   lives_ok { @arr[*-2] },  "readonly accessing [*-2] of an one-elem array is ok (1)";
@@ -204,9 +211,94 @@ my @array2 = ("test", 1, undef);
   my $minus_one = -1;
 
   # XXX should that even parse? 
+  #?rakudo todo '@arr[-1] should fail'
   dies_ok { @arr[-1] }, "readonly accessing [-1] of normal array is fatal";
   lives_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is ok";
+  #?rakudo 2 todo '@arr[-1] should fail'
   dies_ok { @arr[-1] = 42 }, "assigning to [-1] of a normal array is fatal";
   dies_ok { @arr[-1] := 42 }, "binding [-1] of a normal array is fatal";
+}
+
+# L<S09/Fixed-size arrays>
+
+#?rakudo skip 'my @arr[*] parsefail'
+{
+    my @arr[*];
+    @arr[42] = "foo";
+    ok(+@arr, 42, 'my @arr[*] autoextends like my @arr');
+}
+
+#?rakudo skip 'my @arr[num] parsefail'
+{
+    my @arr[7] = <a b c d e f g>;
+    is(@arr, <a b c d e f g>, 'my @arr[num] can hold num things');
+    dies_ok({push @arr, 'h'}, 'adding past num items in my @arr[num] dies');
+    dies_ok({@arr[7]}, 'accessing past num items in my @arr[num] dies');
+}
+
+#?rakudo skip 'my @arr[num] parsefail'
+{
+    lives_ok({ my @arr\    [7]}, 'array with fixed size with unspace');
+    eval_dies_ok('my @arr.[8]', 'array with dot form dies');
+    eval_dies_ok('my @arr\    .[8]', 'array with dot form and unspace dies');
+}
+
+# L<S09/Typed arrays>
+
+#?rakudo skip 'my @arr of Type parsefail'
+{
+    my @arr of Int = <1 2 3 4 5>;
+    is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
+    dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
+    dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
+}
+
+#?rakudo skip 'my @arr[num] of Type parsefail'
+{
+    my @arr[5] of Int = <1 2 3 4 5>;
+    is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
+
+    dies_ok({push @arr, 123}, 'boundary constraints on my @arr[num] of Type works');
+    pop @arr; # remove the last item to ensure the next ones are type constraints
+    dies_ok({push @arr, 's'}, 'type constraints on my @arr[num] of Type works (1)');
+    dies_ok({push @arr, 4.2}, 'type constraints on my @arr[num] of Type works (2)');
+}
+
+#?rakudo skip 'my @arr[-->Type] parsefail'
+{
+    my @arr[-->Num] = <1 2.1 3.2>;
+    is(@arr, <1 2.1 3.2>, 'my @arr[-->Type] works');
+
+    lives_ok({push @arr, 4.3}, 'adding the proper type works');
+    dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
+}
+
+#?rakudo skip 'my @arr[num-->Type] parsefail'
+{
+    my @arr[3-->Num] = <1 2.1 3.2>;
+    is(@arr, <1 2.1 3.2>, 'my @arr[num-->Type] works');
+
+    dies_ok({push @arr, 4.3}, 'boundary constraints work on my @arr[num-->Type]');
+    pop @arr; # remove the last item to ensure the next ones are type constraints
+    dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
+}
+
+#?rakudo skip 'my Type @arr parsefail'
+{
+    my int @arr = <1 2 3 4 5>;
+    is(@arr, <1 2 3 4 5>, 'my Type @arr works');
+    dies_ok({push @arr, 's'}, 'type constraints on my Type @arr works (1)');
+    dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr works (2)');
+}
+
+#?rakudo skip 'my Type @arr[num] parsefail'
+{
+    my int @arr[5] = <1 2 3 4 5>;
+    is(@arr, <1 2 3 4 5>, 'my Type @arr[num] works');
+
+    dies_ok({push @arr, 123}, 'boundary constraints on my Type @arr[num] works');
+    pop @arr; # remove the last item to ensure the next ones are type constraints
+    dies_ok({push @arr, 's'}, 'type constraints on my Type @arr[num] works (1)');
+    dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr[num]  works (2)');
 }
