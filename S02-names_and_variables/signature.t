@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 # The :() form constructs signatures similar to how \() constructs arguments.
 # A subroutine's .signature is a Siglist object.
@@ -13,16 +13,28 @@ plan 11;
 #   $x    := 42;  # is sugar for
 #   :($x) := 42;  # which in turn is sugar for
 #   :($x).infix:<:=>(42);
+
+#?rakudo skip '.infix:<:=>()'
 {
     my $x;
 
     my $siglist = eval ':($x)';
     try { $siglist.infix:<:=>(42) };
-
     is($x, 42, "basic siglist binding works", :todo<feature>);
     dies_ok { $x++ }, "binding was really a binding, not an assignment", :todo<feature>;
 }
 
+# same with direct := syntax
+{
+    my $x;
+
+    my $siglist = :($x);
+    $siglist := 42;
+    is($x, 42, "basic siglist binding works", :todo<feature>);
+    dies_ok { $x++ }, "binding was really a binding, not an assignment", :todo<feature>;
+}
+
+#?rakudo skip '.infix:<:=>()'
 {
     my ($x, $y, $z);
     my $siglist = eval ':($x,$y,$z)';
@@ -31,6 +43,7 @@ plan 11;
 }
 
 # Same, but more complex 
+#?rakudo skip '.infix:<:=>()'
 {
     my ($x, @y, @rest);
     my $siglist = eval ':($x,@y,*@rest)';
@@ -38,6 +51,7 @@ plan 11;
     is("$x!@y[]!@rest[]", "42!13 17!5 6 7", "complex siglist bindings works (1)", :todo<feature>);
 }
 
+#?rakudo skip '.infix:<:=>()'
 {
     my ($x);
     my $siglist = eval ':($x?)';
@@ -52,11 +66,13 @@ plan 11;
 
     ok $siglist,
         "a subroutine's siglist can be accessed via .signature (1-1)";
+    #?rakudo skip 'infix:<===>'
     cmp_ok $siglist, &infix:<===>, try {&foo.signature},
         "a subroutine's siglist can be accessed via .signature (1-2)", :todo<feature>;
 }
 
 # Same as above, but more complex
+#?rakudo skip 'infix:<===>'
 {
     my sub foo (Num $a, $b?, *@rest) {}
     my $siglist = :(Num $a, $b?, *@rest);
@@ -65,9 +81,10 @@ plan 11;
         "a subroutine's siglist can be accessed via .signature (2)", :todo<feature>;
 }
 
+#?rakudo 999 skip 'Rest not properly fudged'
 {
     my sub foo ($a, $b) {}
-    my $siglist = eval ':($a)';
+    my $siglist = :($a);
 
     ok !($siglist === try { &foo.signature }),
         "a subroutine's siglist can be accessed via .signature (3)";
