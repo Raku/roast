@@ -1,19 +1,39 @@
 use v6;
 use Test;
 
-plan 2;
+plan 9;
 
 #L<S12/Enums/"An enum is a low-level class that can function as a role 
 # or property">
 
-enum maybe <no yes>;
+enum Maybe <No Yes Dunno>;
+class Bar            { }
 
-class Foo does maybe { }
+{
+    class Foo does Maybe { }
 
-my $x = Foo.new();
+    my $x = Foo.new(Maybe => 0);
 
-is($x.no,  0, 'Can get .no  of enum maybe <no yes>');
-is($x.yes, 1, 'Can get .yes of enum maybe <no yes>');
+    ok($x.No,     'Can test for enum members set by .new()');
+    ok(!$x.Yes,   'Can test for enum members set by .new()');
+    ok(!$x.Dunno, 'Can test for enum members set by .new()');
+}
+
+{
+    my $y = Bar.new() does Maybe(1);
+
+    ok(!$y.No,    'Can test for enum members set by does Maybe(1)');
+    ok($y.Yes,    'Can test for enum members set by does Maybe(1)');
+    ok(!$y.Dunno, 'Can test for enum members set by does Maybe(1)');
+}
+
+{
+    my $z = Bar.new() does Maybe(Dunno);
+
+    ok(!$z.No,    'Can test for enum members set by does Maybe(dunno)');
+    ok(!$z.Yes,   'Can test for enum members set by does Maybe(dunno)');
+    ok($z.Dunno,  'Can test for enum members set by does Maybe(dunno)');
+}
 
 
 # vim: ft=perl6
