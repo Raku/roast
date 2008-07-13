@@ -10,6 +10,7 @@ Multi-Dimensional Arrays
 plan 31;
 
 # multi-dimensional array
+# L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
 
 my $multi1 = [1, ['foo', 'bar', 'baz'], 5];
 is(+$multi1, 3, 'the multi1 has 3 elements');
