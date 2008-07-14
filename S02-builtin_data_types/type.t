@@ -22,15 +22,14 @@ ok(do{my Str $bar; $bar ~~ Str}, 'Str $bar isa Str');
 my Int $foo;
 my Str $bar;
 
-#?rakudo skip 'try{} does not keep test from failing'
 {
     #?pugs 1 todo 
     dies_ok({$foo = 'xyz'},      'Int restricts to integers');
-    is(try{$foo = 42},    42,    'Int is an integer');
+    is(($foo = 42),       42,    'Int is an integer');
 
     #?pugs 1 todo 
     dies_ok({$bar = 42},         'Str restricts to strings');
-    is(try{$bar = 'xyz'}, 'xyz', 'Str is a strings');
+    is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
 # L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
