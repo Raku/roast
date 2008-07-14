@@ -7,10 +7,37 @@ Multi-Dimensional Arrays
 
 =end pod
 
-plan 31;
+plan 41;
 
 # multi-dimensional array
 # L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
+
+# real multi-dimensional arrays
+{
+    my @md[2;2];
+    @md[0;0] = 0;
+    @md[0;1] = 2;
+    @md[1;0] = 4;
+    @md[1;1] = 6;
+    is(@md[0;0], 0, 'accessing an array as [0;0] works (1)');
+    is(@md[0;1], 2, 'accessing an array as [0;0] works (2)');
+    is(@md[1;0], 4, 'accessing an array as [0;0] works (3)');
+    is(@md[1;1], 6, 'accessing an array as [0;0] works (4)');
+    dies_ok({@md[1;2] = 5}, 'setting a multi-d array beyond boundaries fails');
+
+    is(@md.elems, 4, '.elems works on multidimensional array');
+}
+
+{
+    my @md[*;*;2];
+    @md[0;0;0] = 'foo';
+    @md[9;9;1] = 'bar';
+    is(@md[0;0;0], 'foo', 'accessing a partially bounded array works (1)');
+    is(@md[9;9;1], 'bar', 'accessing a partially bounded array works (2)');
+    dies_ok({@md[0;0;2] = 9}, 'setting a partially bounded multi-d array beyond boundaries fails');
+
+    is(@md.elems, 2, '.elems works on partially bounded multi-d array');
+}
 
 my $multi1 = [1, ['foo', 'bar', 'baz'], 5];
 is(+$multi1, 3, 'the multi1 has 3 elements');
