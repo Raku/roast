@@ -87,13 +87,13 @@ is_approx(tan(7/4*$PI), -1);
 is_approx(tan(8/4*$PI),  0);
 
 # asin
-is_approx(try {asin(0)},            0);
+is_approx(asin(0),            0);
 #?pugs 2 todo 'feature'
-is_approx(try {asin(1/2*sqrt(2))},  1/4*$PI);
-is_approx(try {asin(1)},            2/4*$PI);
+is_approx(asin(1/2*sqrt(2)),  1/4*$PI);
+is_approx(asin(1),            2/4*$PI);
 
 # acos
 #?pugs 2 todo 'feature'
-is_approx(try {acos(0)},            2/4*$PI);
-is_approx(try {acos(1/2*sqrt(2))},  1/4*$PI);
-is_approx(try {acos(1)},            0/4*$PI);
+is_approx(acos(0),            2/4*$PI);
+is_approx(acos(1/2*sqrt(2)),  1/4*$PI);
+is_approx(acos(1),            0/4*$PI);
