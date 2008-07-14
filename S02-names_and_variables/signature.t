@@ -15,13 +15,13 @@ plan 13;
 #   :($x).infix:<:=>(42);
 
 #?rakudo skip '.infix:<:=>()'
+#?pugs skip "todo: signature objects"
 {
     my $x;
-
-    my $siglist = eval ':($x)';
-    try { $siglist.infix:<:=>(42) };
-    is($x, 42, "basic siglist binding works", :todo<feature>);
-    dies_ok { $x++ }, "binding was really a binding, not an assignment", :todo<feature>;
+    my $siglist = eval :($x);
+    $siglist.infix:<:=>(42);
+    is($x, 42, "basic siglist binding works");
+    dies_ok { $x++ }, "binding was really a binding, not an assignment";
 }
 
 # same with direct := syntax
@@ -38,7 +38,7 @@ plan 13;
 {
     my ($x, $y, $z);
     my $siglist = eval ':($x,$y,$z)';
-    try { $siglist.infix:<:=>(1,2,3) };
+    try { $siglist.infix:<:=>(1,2,3)};
     is("$x $y $z", "1 2 3", "siglist bindings works", :todo<feature>);
 }
 
@@ -56,7 +56,7 @@ plan 13;
     my ($x);
     my $siglist = eval ':($x?)';
     try { $siglist.infix:<:=>() };
-    ok(try { !exists $x }, "complex siglist bindings works (2)", :todo<feature>);
+    ok(!exists $x, "complex siglist bindings works (2)", :todo<feature>);
 }
 
 # &sub.signature should return a Siglist object
@@ -67,7 +67,7 @@ plan 13;
     ok $siglist,
         "a subroutine's siglist can be accessed via .signature (1-1)";
     #?rakudo skip 'infix:<===>'
-    cmp_ok $siglist, &infix:<===>, try {&foo.signature},
+    cmp_ok $siglist, &infix:<===>, &foo.signature,
         "a subroutine's siglist can be accessed via .signature (1-2)", :todo<feature>;
 }
 
@@ -77,7 +77,7 @@ plan 13;
     my sub foo (Num $a, $b?, *@rest) {}
     my $siglist = :(Num $a, $b?, *@rest);
 
-    cmp_ok $siglist, &infix:<===>, try { &foo.signature },
+    cmp_ok $siglist, &infix:<===>, &foo.signature ,
         "a subroutine's siglist can be accessed via .signature (2)", :todo<feature>;
 }
 
