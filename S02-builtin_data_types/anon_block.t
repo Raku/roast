@@ -9,13 +9,11 @@ Block tests
 This covers anonymous blocks and subs, as well as pointy blocks
 (with and without args) and bare blocks. 
 
-L<S06/"Blocks">
-L<S04/"The Relationship of Blocks and Declarations">
-
 =end description
 
 plan 32;
 
+# L<S04/"The Relationship of Blocks and Declarations">
 # L<S06/"Anonymous subroutines">
 # anon blocks
 my $anon_sub = sub { 1 };
