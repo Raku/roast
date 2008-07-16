@@ -9,8 +9,6 @@ Tests the "for" statement
 This attempts to test as many variations of the
 for statement as possible
 
-L<S04/The C<for> statement>
-
 =end description
 
 plan 40;
@@ -27,7 +25,6 @@ plan 40;
 
 
 ## for with plain old range operator w/out parens
-# L<S04/The C<for> statement/always takes a list as an argument>
 
 {
     my $a;
@@ -36,7 +33,6 @@ plan 40;
 }
 
 # ... with pointy blocks
-# L<S04/The C<for> statement/to the closure:>
 
 {
     my $b;
