@@ -62,7 +62,7 @@ plan 20;
     $a(); $a();     # $svar == 44
     $b = $gen()();  # $svar == 44
 
-    is $b, 44, 'state will first {...} works', :todo<feature>;
+    is $b, 44, 'state will first {...} works';
 }
 
 # Return of a reference to a state() var
