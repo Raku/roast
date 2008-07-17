@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 64;
+plan 67;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
@@ -12,7 +12,7 @@ isa_ok $r, Range, 'Type';
 is $r.WHAT, Range, 'Type';
 is $r.perl, '1..5', 'canonical representation';
 
-#?rakudo 4 skip 'unspecced: exact value of Range.perl'
+# XXX unspecced: exact value of Range.perl
 is (1..5).perl, '1..5', ".perl ..";
 is (1^..5).perl, '1^..5', ".perl ^..";
 is (1..^5).perl, '1..^5', ".perl ..^";
@@ -25,11 +25,10 @@ is @r, [1, 2, 3, 4, 5], 'got the right array';
 
 my $r = 'a'..'c';
 isa_ok $r, 'Range';
-#?rakudo skip 'unspecced: exact value of Range.perl'
+# XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 my @r = $r;
 is @r, [< a b c >], 'got the right array';
-
 
 {
     my $r = 1..5;
@@ -38,10 +37,10 @@ is @r, [< a b c >], 'got the right array';
     ok(($r).ACCEPTS(1..5), 'accepts same');
     ok($r ~~ $r, 'accepts self');
     ok($r ~~ 1..5, 'accepts same');
-    # TODO check how to avoid "eager is"
-    #is($r, $r, "equals to self");
+    # TODO check how to avoid "eager is", test passes but why?
+    is($r, $r, "equals to self");
     my $s = 1..5;
-    #is($r, $s, "equals");
+    is($r, $s, "equals");
 }
 
 
@@ -70,7 +69,7 @@ is(+(6..8), 3, 'numification');
     my @r = $r;
     is @r, [2, 3, 4, 5], 'got the right state change';
     my $s = 2..5;
-    #is $r, $s, "range modified after shift";
+    is $r, $s, "range modified after shift";
 }
 
 # simple .to, .from
@@ -84,7 +83,7 @@ is(+(6..8), 3, 'numification');
     is($r.minmax, [1,5], 'range.minmax');
 
     ### pmichaud, 2008-07-04:  XXX  no spec for .reverse
-    #?rakudo 5 skip '.reverse on ranges (test errors?)'
+    #?rakudo 2 skip '.reverse on ranges (missing List.from, List.to)'
     is($r.reverse.from, 5, 'range.reverse.from');
     is($r.reverse.to,   1, 'range.reverse.to');
     ### pmichaud, 2008-07-04:  XXX  doesn't test reversed min/max/minmax
