@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 40;
+plan 42;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -22,7 +22,6 @@ plan 40;
         "foreach is gone, even with parens";
     is $times_run, 0, "foreach doesn't work";
 }
-
 
 ## for with plain old range operator w/out parens
 
@@ -196,6 +195,18 @@ my @elems = <a b c d e>;
     is(@a, @e, 'for (@a) { ... $_ ... $_ ... } iterates all elems, not just odd');
 }
 
+# "for @a -> $var" is ro by default.
+{
+    my @a = <1 2 3 4>;
+
+    eval_dies_ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
+
+    for @a <-> $elem {$elem++;}
+    is(@a, <2 3 4 5>, '<-> $var is rw');
+
+    for @a <-> $first, $second {$first++; $second++}
+    is(@a, <3 4 5 6>, '<-> $var, $var2 works');
+}
 
 # for with "is rw"
 {
@@ -230,6 +241,7 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo skip 'rakudo thinks that the values are strings'
 {
     my %hash_v = ( a => 1, b => 2, c => 3 );
     my %v = ( a => 2, b => 3, c => 4 );
@@ -238,13 +250,13 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo todo 'changing a hash'
 {
     my %hash_kv = ( a => 1, b => 2, c => 3 );
     my %kv = ( a => 2, b => 3, c => 4 );
     try { for %hash_kv.kv -> $key, $val is rw { $val++ }; };
     is( %hash_kv.sort, %kv.sort, 'for %hash.kv -> $key, $val is rw { $val++ }');
 }
-
 
 # .key //= ++$i for @array1;
 #?rakudo skip 'implicit invocant'
@@ -275,6 +287,7 @@ my @elems = <a b c d e>;
 }
 
 # $_.key = 1 for @array1;
+#?rakudo skip 'parsefail'
 {
    class TestClass is rw { has $.key; };
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
@@ -305,6 +318,7 @@ my @elems = <a b c d e>;
 {
     my $a = '';
     for 1..3, 4..6 { $a =~ $_.WHAT };
+    #?rakudo todo 'type is incorrect'
     is($a, 'IntIntIntIntIntInt', 'List context');
 
     $a = '';
@@ -313,5 +327,6 @@ my @elems = <a b c d e>;
 
     $a = '';
     for [1..3], [4..6] { $a =~ $_.WHAT };
+    #?rakudo todo 'type is incorrect'
     is($a, 'ArrayArray', 'List context');
 }
