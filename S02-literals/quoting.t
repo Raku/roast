@@ -136,8 +136,8 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 # L<S02/Literals/:q>
 { # adverb variation
     my @q = ();
-    @q = (q:q/$foo $bar/);
-    is(+@q, 1, "q:q// is singular");
+    @q = (Q:q/$foo $bar/);
+    is(+@q, 1, "Q:q// is singular");
     is(@q[0], '$foo $bar', "and again, non interpolating");
 };
 
@@ -173,8 +173,8 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 # L<S02/Literals/:qq>
 { # adverb variation
     my @q = ();
-    @q = q:qq/$foo $bar/;
-    is(+@q, 1, "q:qq// is singular");
+    @q = Q:qq/$foo $bar/;
+    is(+@q, 1, "Q:qq// is singular");
     is(@q[0], "FOO BAR", "blah blah interp");
 };
 
