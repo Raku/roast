@@ -189,11 +189,11 @@ is(eval('xyzzy { @^x } : 1, 2, 3'), (1, 2, 3), 'colon not immediately following 
 is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following arg block');
 
 # L<S02/"Whitespace and Comments"/"natural conflict between postfix operators and infix operators">
-#This creates syntactic ambuguity between
-#($n) ++ ($m)
-#($n++) $m
-#($n) (++$m)
-#($n) + (+$m)
+#This creates syntactic ambiguity between
+# ($n) ++ ($m)
+# ($n++) $m
+# ($n) (++$m)
+# ($n) + (+$m)
 
 my $n = 1;
 my $m = 2;
