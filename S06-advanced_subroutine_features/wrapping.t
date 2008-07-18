@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 39;
 
 # FIXME: There is probably a better way, perhapse using try/CATCH, but I was
 # unable to figure out the try/CATCH syntax.
@@ -43,18 +43,51 @@ try{ is( &levelwrap.callwith( 1 ), 1, "Check that functions have a 'callwith' th
 nok_error( $!, "callwith does not seem to work." );
 
 for (1..10) -> $num {
-    try{ &levelwrap.wrap({  
-        callwith( $^t++ )
-    })};
+    try{
+        ok( 
+            &levelwrap.wrap({ 
+                callwith( $^t++ );
+            }),
+            " Wrapping #$num"
+        )
+    };
     nok_error( $!, "Wrapping $num failed." );
     is( levelwrap( 1 ), 1 + $num, "Checking $num level wrapping" );
 }
 
-#TODO:
 #Check removal of wrap in the middle by handle.
+sub functionA {
+    return 'z';
+}
+is( functionA, 'z', "Sanity." );
+my $middle;
+try{ ok( $middle = &functionA.wrap({ return 'y' ~ callsame }))};
+nok_error( $!, "Wrapping failed." );
+is( functionA, "yz", "Middle wrapper sanity." );
+try{ ok( &functionA.wrap({ return 'x' ~ callsame }))};
+nok_error( $!, "Wrapping failed." );
+is( functionA, "xyz", "three wrappers sanity." );
+try{ ok( &functionA.unwrap( $middle ))};
+nok_error( $!, "Failed to unwrap the middle wrapper." );
+is( functionA, "xz", "First wrapper and final function only, middle removed." );
+
+#temporization (end scope removal of wrapping)
+sub functionB {
+    return 'xxx';
+}
+is( functionB, "xxx", "Sanity" );
+{
+    try{
+        temp &functionB.wrap({ return 'yyy' });
+    };
+    is( functionB, 'yyy', 'Check that function is wrapped.' );
+}
+is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
+
+
+#TODO:
 #nextsame
 #nextwith
-#temporization (end scope removal of wrapping)
 #Redirecting
 
 
