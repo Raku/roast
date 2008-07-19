@@ -101,7 +101,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(@q[0], '$foo $bar', 'single quotes are non interpolating');
 };
 
-{ # and it's complement ;-)
+{ # and its complement ;-)
     my @q = ();
     @q = '$foo $bar';
     is(+@q, 1, "'' is singular");

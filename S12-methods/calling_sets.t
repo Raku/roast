@@ -83,7 +83,7 @@ role plugin_2 { multi method init_hook { $.cnt += 3 } }
     ok($!, q"$test: Case 0 dies");
 
     try { $result = $object.+child_only };
-    is($result, 'child_only', "$test: Case 1 fines one result"); 
+    is($result, 'child_only', "$test: Case 1 finds one result"); 
 
     try { $result = $object.+meth };
     is($object.cnt, 2, "$test: Case 2 visits both Child and Parent");

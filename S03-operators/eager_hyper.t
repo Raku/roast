@@ -34,7 +34,7 @@ plan 8;
 # Hyper
 {
     my $counter = 0;
-    my @test = hyper gather { for 1 .. 5 { $couter++; take $_; } };
+    my @test = hyper gather { for 1 .. 5 { $counter++; take $_; } };
     is(sort @test, <1 2 3 4 5>, 'hyper returned all the values in some order');
     is($counter, 5, 'iterator was hyper and calculated all the values');
 }
