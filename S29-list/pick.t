@@ -40,16 +40,12 @@ is eval('pick(4, :repl, @arr)'), <z z z z>, 'sub pick(:repl) with $num > +@value
 
 ok(<a b c d>.pick(*).sort === <a b c d>, 'pick(*) returns all the items in the array (but maybe not in order)');
 
-# There should be a better way to write this
 {
-    my $passed = 0;
-    my @items = <s o m e i t e m s>;
-    for (1 .. 10) {
-        if(@items.pick(*) !=== @items) {
-            $passed = 1; last;
-        }
-    }
-    ok($passed, 'pick(*) returned the items of the array in a random order');
+  my @items = <1 2 3 4>;
+  my @shuffled_items_10;
+  push @shuffled_items_10, @items.pick(*) for ^10;
+  isnt(@shuffled_items_10, @items xx 10,
+       'pick(*) returned the items of the array in a random order');
 }
 
 my $c = 0;
