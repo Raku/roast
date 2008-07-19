@@ -2,11 +2,11 @@ use v6;
 
 use Test;
 
-=pod
+=begin comment
 
 This tests the &?ROUTINE magical value
 
-=cut
+=end comment
 
 plan 4;
 

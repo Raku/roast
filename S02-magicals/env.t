@@ -51,7 +51,7 @@ my $expected = 'Hello from subprocess';
 # not a junction of Bools.
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
-my $tempfile = "temp-ex-output." ~ $*PID ~ "." ~ rand 1000;
+my $tempfile = "temp-ex-output." ~ $*PID ~ "." ~ 1000.rand;
 
 my $command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
 diag $command;
