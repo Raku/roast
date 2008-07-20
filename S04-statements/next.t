@@ -18,7 +18,7 @@ plan 12;
 # test for loops with next
 
 {
-    my $tracker=0;for (1..2) { next; $tracker++;}
+    my $tracker=0; for 1..2 { next; $tracker++;}
     is(
         $tracker,
         0,
@@ -27,7 +27,7 @@ plan 12;
 }
 
 {
-    my $tracker = 0; for (1..5) { next unless 2 < $_ < 4; $tracker = $_;}
+    my $tracker = 0; for 1..5 { next unless 2 < $_ < 4; $tracker = $_;}
     is(
         $tracker,
         3,
@@ -36,7 +36,7 @@ plan 12;
 }
 
 {
-    my $tracker = 0; for (1..5) { $_ > 3 && next; $tracker = $_;}
+    my $tracker = 0; for 1..5 { $_ > 3 && next; $tracker = $_;}
     is(
         $tracker,
         3,
@@ -45,7 +45,7 @@ plan 12;
 }
 
 {
-    my $tracker = 0; for (1..5) { $_ > 3 and next; $tracker = $_;}
+    my $tracker = 0; for 1..5 { $_ > 3 and next; $tracker = $_;}
     is(
         $tracker,
         3,
@@ -54,7 +54,7 @@ plan 12;
 }
 
 {
-    my $tracker="err"; eval '$tracker = 0; DONE: for (1..2) { next DONE; $tracker++;}';
+    my $tracker="err"; eval '$tracker = 0; DONE: for 1..2 { next DONE; $tracker++;}';
     is(
         $tracker,
         0,
@@ -63,7 +63,7 @@ plan 12;
 }
 
 {
-    my $tracker=0;for (1..5)->$out {for (10..11)->$in {next if $out > 2;$tracker = $in + $out;}}
+    my $tracker=0; for 1..5 -> $out {for 10..11 -> $in { next if $out > 2; $tracker = $in + $out;}}
     is($tracker,
         13,
         'inner loop skips once inner is run twice (next inside nested loops)',
@@ -71,7 +71,7 @@ plan 12;
 }
 
 {
-    my $tracker="err"; eval '$tracker = 0; OUT: for (1..2) { IN: for (1..2) { next OUT; $tracker++; } }';
+    my $tracker="err"; eval '$tracker = 0; OUT: for 1..2 { IN: for 1..2 { next OUT; $tracker++; } }';
     is(
         $tracker,
         0,
@@ -127,7 +127,7 @@ Check that C<next> works on the correct loop/block
 {
     my $i = 0;
     
-    for (1, 1, 0, 1, 0, 1) -> $x {
+    for 1, 1, 0, 1, 0, 1 -> $x {
         if ($x) { next }
         $i++;
     }
