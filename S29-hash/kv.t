@@ -55,7 +55,7 @@ Basic C<kv> tests, see S29.
 sub test1{
     my $pair = boo=>'baz'; 
     my $type = $pair.WHAT;
-    for $pair.kv->$key,$value{
+    for $pair.kv -> $key, $value {
         is($key, 'boo', "test1: $type \$pair got the right \$key");
         is($value, 'baz', "test1: $type \$pair got the right \$value");
     }
@@ -67,7 +67,7 @@ sub test2{
     my %pair = boo=>'baz'; 
     my $type = %pair.WHAT;
     my $elems= +%pair;
-    for %pair.kv->$key,$value{
+    for %pair.kv -> $key, $value {
         is($key, 'boo', "test2: $elems-elem $type \%pair got the right \$key");
         is($value, 'baz', "test2: $elems-elem $type \%pair got the right \$value");
     }
@@ -77,7 +77,7 @@ test2;
 my %hash  = ('foo' => 'baz');
 #?DOES 2
 sub test3 (Hash %h){
-  for %h.kv -> $key,$value {
+  for %h.kv -> $key, $value {
         is($key, 'foo', "test3:  from {+%h}-elem {%h.WHAT} \%h got the right \$key");
         is($value, 'baz', "test3: from {+%h}-elem {%h.WHAT} \%h got the right \$value");
   }
@@ -93,7 +93,7 @@ sub test4 (Hash %h){
 test4 %hash;
 
 # sanity
-for %hash.kv -> $key,$value {
+for %hash.kv -> $key, $value {
     is($key, 'foo', "for(): from {+%hash}-elem {%hash.WHAT} \%hash got the right \$key");
     is($value, 'baz', "for(): from {+%hash}-elem {%hash.WHAT} \%hash got the right \$value");
 }
