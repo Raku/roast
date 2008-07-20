@@ -13,7 +13,7 @@ for @inttypes -> $type {
 
     my $maxval; my $minval;
     my $len = +$type; # get the numeric value
-    if($type ~~ /^uint/) {
+    if $type ~~ /^uint/ {
         $maxval = 2**$len - 1;
         $minval = 0;
     } else { # /^int/
