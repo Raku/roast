@@ -81,7 +81,6 @@ is ('a'..'a'), [< a >], 'got the right array';
 # ACCEPTS and equals tests
 {
     my $r = 1..5;
-    #?rakudo 4 skip '.ACCEPTS not implemented between ranges'
     ok(($r).ACCEPTS($r), 'accepts self');
     ok(($r).ACCEPTS(1..5), 'accepts same');
     ok($r ~~ $r, 'accepts self');
@@ -132,7 +131,6 @@ is(+(6..8), 3, 'numification');
     is($r.minmax, [1,5], 'range.minmax');
 
     ### pmichaud, 2008-07-04:  XXX  no spec for .reverse
-    #?rakudo 2 skip '.reverse on ranges (missing List.from, List.to)'
     is($r.reverse.from, 5, 'range.reverse.from');
     is($r.reverse.to,   1, 'range.reverse.to');
     ### pmichaud, 2008-07-04:  XXX  doesn't test reversed min/max/minmax

@@ -42,7 +42,6 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
 	in list context.
 =end comment
 	$x = do if 0 { 1 } elsif 0 { 2 };
-        #?rakudo 1 todo 'rakudo does not return undef when do if does not return a value'
 	is $x, undef, 'when if does not execute any branch, return undef';
 }
 

@@ -34,7 +34,6 @@ plan 30;
   is $was_in_sub, 42, 'calling a lexically defined my()-code var worked';
 }
 
-#?rakudo skip 'test depency on fudge test'
 eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 
 #?rakudo todo 'do { } and lexicals'

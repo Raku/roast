@@ -29,7 +29,6 @@ is($anon_sub_w_arg(3), 4, 'sub ($arg) {} works');
 # L<S06/"Blocks">
 # anon blocks
 my $anon_block = { 1 };
-#?rakudo todo 'type Block for blocks'
 isa_ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
