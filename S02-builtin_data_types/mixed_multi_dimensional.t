@@ -4,7 +4,7 @@ use Test;
 
 plan 77;
 
-=pod
+=begin description
 
 This tests some mixed multi-dimensional structures.
 
@@ -16,7 +16,7 @@ this test should be added too more.
 
 Some deeper tests were already added.
 
-=cut
+=end description
 
 { # Array of Pairs
     my @array;
