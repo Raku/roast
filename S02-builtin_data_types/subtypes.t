@@ -8,13 +8,13 @@ use Test;
 # are planned.
 plan 13;
 
-=pod
+=begin description
 
 Tests subtypes, specifically in the context of multimethod dispatch.
 
 L<S12/"Types and Subtypes">
 
-=cut
+=end description
 
 my $abs = '
 multi sub my_abs (Num where { $^n >= 0 } $n){ $n }
