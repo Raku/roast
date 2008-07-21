@@ -5,9 +5,9 @@ plan 5;
 
 # L<S12/Class methods/>
 
-class A is B { method f {1; } };
-class B is C { method g { self.f } };
 class C {method h {42}}
+class B is C { method g { self.f } };
+class A is B { method f {1; } };
 
 class AA {method i {108}}
 class D is A is AA {method f {2} }
