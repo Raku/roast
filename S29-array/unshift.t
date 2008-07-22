@@ -130,8 +130,8 @@ plan 53;
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)
-#{
-#    my @unshift = 1 .. Inf;
-#    # best not to uncomment this it just go on forever
-#    todo_throws_ok { 'unshift @unshift, 10' }, '?? what should this error message be ??', 'cannot unshift onto a Inf array';
-#}
+# {
+#     my @unshift = 1 .. Inf;
+#     # best not to uncomment this it just go on forever
+#     todo_throws_ok { 'unshift @unshift, 10' }, '?? what should this error message be ??', 'cannot unshift onto a Inf array';
+# }

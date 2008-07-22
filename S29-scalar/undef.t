@@ -289,7 +289,7 @@ flunk("FIXME (autoload tests)", :todo<parsefail>);
 # - symtable hash
 # - autoloading itself
 
-#{
+# {
 #    package AutoMechanic {
 #        AUTOSCALAR    { \my $_scalar }
 #        AUTOARRAY     { \my @_array }
@@ -315,7 +315,7 @@ flunk("FIXME (autoload tests)", :todo<parsefail>);
 #    is(~%AutoMechanic::hash,  ~<autohashdef yes>,         "autoloaddef - hash");
 #    is(&AutoMechanic::sub.(), "autosubdef",               "autoloaddef - sub");
 #    is(AutoMechanic.meth(),   "automethdef",              "autoloaddef - method");
-#}
+# }
 
 # Extra tests added due to apparent bugs
 is((undef) + 1, 1, 'undef + 1');

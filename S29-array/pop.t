@@ -76,9 +76,9 @@ plan 27;
 }
 
 # Pop with Inf arrays (waiting on answers from perl6-compiler email)
-#{
-#    my @push = 1 .. Inf;
-#    # best not to uncomment this it just go on forever
-#    todo_throws_ok { 'pop @push' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
-#}
+# {
+#     my @push = 1 .. Inf;
+#     # best not to uncomment this it just go on forever
+#     todo_throws_ok { 'pop @push' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
+# }
 

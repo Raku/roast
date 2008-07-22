@@ -47,7 +47,7 @@ plan 11;
 {
   my $hash = {a => {b => {c => 42}}};
   my @reftypes;
-  sub foo (Hash $hash, String $key) {
+  sub foo (Hash $hash, Str $key) {
     push @reftypes, $hash.WHAT;
     $hash.{$key};
   }

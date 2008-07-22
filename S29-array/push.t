@@ -112,11 +112,11 @@ plan 42;
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)
-#{
-#    my @push = 1 .. Inf;
-#    # best not to uncomment this it just go on forever
-#    todo_throws_ok { 'push @push, 10' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
-#}
+# {
+#     my @push = 1 .. Inf;
+#     # best not to uncomment this it just go on forever
+#     todo_throws_ok { 'push @push, 10' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
+# }
 
 # nested arrayref
 {

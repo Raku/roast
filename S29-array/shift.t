@@ -77,9 +77,9 @@ plan 27;
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)
-#{
-#    my @shift = 1 .. Inf;
-#    # best not to uncomment this it just go on forever
-#    todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
-#}
+# {
+#     my @shift = 1 .. Inf;
+#     # best not to uncomment this it just go on forever
+#     todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
+# }
 
