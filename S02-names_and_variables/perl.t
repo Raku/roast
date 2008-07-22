@@ -66,7 +66,7 @@ my @tests = (
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
-plan 10 + 2*@tests;
+plan 11 + 2*@tests;
 #?pugs emit force_todo 8, 45..50, 94, 96;
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
@@ -145,4 +145,13 @@ plan 10 + 2*@tests;
 
     # what it should give
     is @hyp.perl, '[[-1, -2], -3]', ".perl on a nested list result of hyper operator", :todo<bug>;
+}
+
+{
+    # test for a rakudo (r29667) bug:
+
+    my @list = (1, 2);
+    push @list, eval @list.perl;
+    #?rakudo todo "List.perl bug"
+    is +@list, 4, 'eval(@list.perl) gives a list, not an array ref';
 }
