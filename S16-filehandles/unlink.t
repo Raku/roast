@@ -4,7 +4,7 @@ plan 6;
 
 # L<S16/"Filehandles, files, and directories"/"unlink">
 
-sub nonce() { ".$*PID." ~ int rand 1000 }
+sub nonce() { ".{$*PID}." ~ int 1000.rand }
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";

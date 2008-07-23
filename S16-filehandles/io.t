@@ -20,7 +20,7 @@ if $*OS eq "browser" {
 }
 
 
-sub nonce () { return (".$*PID." ~ int rand 1000) }
+sub nonce () { return (".{$*PID}." ~ int 1000.rand) }
 my $filename = 'tempfile' ~ nonce();
 
 # create and write a file
