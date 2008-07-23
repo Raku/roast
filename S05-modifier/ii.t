@@ -40,7 +40,7 @@ my @smart_tests = (
     ['he lo',       'FOOOoO',      'fooooo',      'lc()'],
     ['He lo',       'FOOO',        'Fooo',        'ucfrst(lc())'],
     ['hE LO',       'fooo',        'fOOO',        'lcfrst(uc())'],
-    ['hE LO',       'foobar'       'fOOBAR',      'lcfrst(uc())'],
+    ['hE LO',       'foobar',      'fOOBAR',      'lcfrst(uc())'],
     ['Ab Cd E',     'abc de gh i', 'Abc De Gh I', 'capitalize()'],
 );
 

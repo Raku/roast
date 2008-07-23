@@ -63,9 +63,9 @@ plan 304;
 
     my @a = 1 .. 3;
     my ($one, $two, $three) = @a;
-    is($one, 1, "list assignment my ($, $, $) = @ works");
-    is($two, 2, "list assignment my ($, $, $) = @ works");
-    is($three, 3, "list assignment my ($, $, $) = @ works");
+    is($one, 1, 'list assignment my ($, $, $) = @ works');
+    is($two, 2, 'list assignment my ($, $, $) = @ works');
+    is($three, 3, 'list assignment my ($, $, $) = @ works');
 
 }
 
@@ -76,16 +76,16 @@ plan 304;
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
-     is("$one $three", "1 3", "list assignment my ($a, $, $b) = @ works");
+     is("$one $three", "1 3", 'list assignment my ($a, $, $b) = @ works');
 
      my ($, $two) = 1..2;
-     is($two, 2, "list assignment my ($, $a) = @ works");
+     is($two, 2, 'list assignment my ($, $a) = @ works');
      my ($, $, $, $four) = 1..4;
-     is($four, 4, "list assignment my ($, $, $, $a) = @ works");
+     is($four, 4, 'list assignment my ($, $, $, $a) = @ works');
 
      my ($, @b, $c) = 1..4;
-     is(~@b, "2 3 4", "list assignment my ($, @) = @ works");
-     ok(!defined($c), "list assignment my ($, @, $c) = @ works");
+     is(~@b, "2 3 4", 'list assignment my ($, @) = @ works');
+     ok(!defined($c), 'list assignment my ($, @, $c) = @ works');
 }
 
 #?pugs skip "skipping assignment with skipped values via * in signature"
@@ -93,17 +93,17 @@ plan 304;
 #?DOES 5
 {
     # testing list assignments with skipped values
-     my ($one, *, $three) = 1..3;
-     is("$one $three", "1 3", "list assignment my ($a, $, $b) = @ works");
+     my ($one, $, $three) = 1..3;
+     is("$one $three", "1 3", 'list assignment my ($a, $, $b) = @ works');
 
-     my (*, $two) = 1..2;
-     is($two, 2, "list assignment my ($, $a) = @ works");
-     my (*, *, *, $four) = 1..4;
-     is($four, 4, "list assignment my ($, $, $, $a) = @ works");
+     my ($, $two) = 1..2;
+     is($two, 2, 'list assignment my ($, $a) = @ works');
+     my ($, $, $, $four) = 1..4;
+     is($four, 4, 'list assignment my ($, $, $, $a) = @ works');
 
-     my (*, @b, $c) = 1..4;
-     is(~@b, "2 3 4", "list assignment my ($, @) = @ works");
-     ok(!defined($c), "list assignment my ($, @, $c) = @ works");
+     my ($, @b, $c) = 1..4;
+     is(~@b, "2 3 4", 'list assignment my ($, @) = @ works');
+     ok(!defined($c), 'list assignment my ($, @, $c) = @ works');
 }
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
@@ -113,17 +113,17 @@ plan 304;
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
      ($one, *, $three) = 1..3;
-     is("$one $three", "1 3", "list assignment ($a, *, $b) = @ works");
+     is("$one $three", "1 3", 'list assignment ($a, *, $b) = @ works');
 
      (*, $two, *) = 1..3;
-     is($two, 2, "list assignment (*, $a, *) = @ works");
+     is($two, 2, 'list assignment (*, $a, *) = @ works');
      (*, *, *, $four) = 1..4;
-     is($four, 4, "list assignment (*, *, *, $a) = @ works");
+     is($four, 4, 'list assignment (*, *, *, $a) = @ works');
 
      my (@b, $c);
      (*, @b, $c) = 1..4;
-     is(~@b, "2 3 4", "list assignment (*, @) = @ works");
-     ok(!defined($c), "list assignment (*, @, $c) = @ works");
+     is(~@b, "2 3 4", 'list assignment (*, @) = @ works');
+     ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
 
 #?rakudo skip "no declaration of lists of variables"
@@ -136,12 +136,12 @@ plan 304;
     @a = 1 .. 3;
     my ($s,@b) = 1 .. 3;
 
-    is($a,1,"'$a' is '1'?: ($,$,$) = 1 .. 3");
-    is($b,2,"'$b' is '2'?: ($,$,$) = 1 .. 3");
-    is($c,3,"'$c' is '3'?: ($,$,$) = 1 .. 3"); 
-    is(@a,'1 2 3',"'{@a}' is '1 2 3'?:       @a = 1 .. 3");
-    is($s,'1',  "$s is '1'?:       my ($s,@a) = 1 .. 3");
-    is(@b,'2 3',"'{@b}' is '2 3'?: my ($s,@a) = 1 .. 3"); 
+    is($a,1,"'\$a' is '1'?: (\$,\$,\$) = 1 .. 3");
+    is($b,2,"'\$b' is '2'?: (\$,\$,\$) = 1 .. 3");
+    is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3"); 
+    is(@a,'1 2 3',"'{\@a}' is '1 2 3'?:       \@a = 1 .. 3");
+    is($s,'1',  "\$s is '1'?:       my (\$s,\@a) = 1 .. 3");
+    is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
 }
 
 #?rakudo skip "unknown reasons"
@@ -179,8 +179,8 @@ plan 304;
     my (@a, @b, %h);
     @a = %h = 1,2;
     @b = %h;
-    is(@a[0], @b[0], "chained @ = % = list assignment");
-    is(@a[1], @b[1], "chained @ = % = list assignment");
+    is(@a[0], @b[0], 'chained @ = % = list assignment');
+    is(@a[1], @b[1], 'chained @ = % = list assignment');
 }
 
 #?rakudo skip "unknown reasons"
@@ -189,7 +189,7 @@ plan 304;
     my ($s, $t, %h);
     $s = %h = 1,2;
     $t = %h;
-    is($s, $t, "chained $ = % = list assignment");
+    is($s, $t, 'chained $ = % = list assignment');
 }
 
 #?rakudo skip "unknown reasons"
@@ -199,9 +199,9 @@ plan 304;
     @a = 1;
     @b = 2;
     (@b, @a) = (@a, @b);
-    is(@a[0], undef, "(@b, @a) = (@a, @b) assignment \@a[0] == undef");
-    is(@b[0], 1,     "(@b, @a) = (@a, @b) assignment \@b[0]");
-    is(@b[1], 2,     "(@b, @a) = (@a, @b) assignment \@b[1]");
+    is(@a[0], undef, '(@b, @a) = (@a, @b) assignment \@a[0] == undef');
+    is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
+    is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
 #?rakudo skip "unknown reasons"
@@ -211,9 +211,9 @@ plan 304;
     @a = (1);
     @b = (2);
     (@b, @a) = @a, @b;
-    is(@a[0], undef, "(@b, @a) = @a, @b assignment \@a[0] == undef");
-    is(@b[0], 1,     "(@b, @a) = @a, @b assignment \@b[0]");
-    is(@b[1], 2,     "(@b, @a) = @a, @b assignment \@b[1]");
+    is(@a[0], undef, '(@b, @a) = @a, @b assignment \@a[0] == undef');
+    is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
+    is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
 }
 
 my @p;
@@ -954,19 +954,19 @@ sub W () { substr(eval('want'), 0, 1) }
 #?rakudo skip "unknown reasons"
 {
     my @a;
-    my @z = (@a[rand 1] = W, W);
-    is(@a, 'L L',    'lhs treats @a[rand 1] as run-time list');
-    is(@z[0], 'L L', 'lhs treats @a[rand 1] as run-time list');
-    is(@z[1], undef, 'lhs treats @a[rand 1] as run-time list');
+    my @z = (@a[rand] = W, W);
+    is(@a, 'L L',    'lhs treats @a[rand] as run-time list');
+    is(@z[0], 'L L', 'lhs treats @a[rand] as run-time list');
+    is(@z[1], undef, 'lhs treats @a[rand] as run-time list');
 }
 
 #?rakudo skip "unknown reasons"
 {
     my @a;
-    my @z = (@a[rand 1,] = W, W);
-    is(@a, 'L',      'lhs treats @a[rand 1,] as list');
-    is(@z[0], 'L',   'lhs treats @a[rand 1,] as list');
-    is(@z[1], undef, 'lhs treats @a[rand 1,] as list');
+    my @z = (@a[rand,] = W, W);
+    is(@a, 'L',      'lhs treats @a[rand,] as list');
+    is(@z[0], 'L',   'lhs treats @a[rand,] as list');
+    is(@z[1], undef, 'lhs treats @a[rand,] as list');
 }
 
 #?rakudo skip "unknown reasons"
