@@ -27,7 +27,7 @@ ok(roundrobin([1..3]) eqv 1..3, 'roundrobin array identity');
 #
 #?pugs 2 todo 'These tests depend on eqv'
 ok(roundrobin({'a'=>1,'b'=>2,'c'=>3}) eqv ('a'=>1,'b'=>2,'c'=>3),
-    'roundrobin hash identity';
+    'roundrobin hash identity');
 
 ok(roundrobin((); 1; 2..4; [5..7]; {'a'=>1,'b'=>2})
     eqv (1, 2, 5, 'a'=>1, 3, 6, 'b'=>2, 4, 7), 'basic roundrobin');
