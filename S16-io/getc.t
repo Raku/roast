@@ -4,7 +4,7 @@ plan 1;
 
 # L<S16/"Input and Output"/"getc">
 
-sub nonce () { return (".$*PID." ~ int rand 1000) }
+sub nonce () { return (".{$*PID}." ~ int 1000.rand) }
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
