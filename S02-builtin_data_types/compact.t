@@ -7,7 +7,7 @@ plan 10;
 
 # compact array acting as a buffer
 {
-    my uint8 @buffer = ('A' .. 'Z').map({ord});
+    my uint8 @buffer = ('A' .. 'Z').map({ .ord });
     is(@buffer[0],  ord('A'), 'basic sanity test (1)');
     is(@buffer[25], ord('Z'), 'basic sanity test (2)');
     is(substr(@buffer,   0, 8), ord('A'), 'substr on compact array (1)');
@@ -21,7 +21,7 @@ plan 10;
 
 # buffer acting as a compact array
 {
-    my buf8 $buffer = ('A' .. 'Z').map({sprintf('%08d', ord)}).cat;
+    my buf8 $buffer = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;
     is($buffer[0],  ord('A'), 'array indexing on buffer (1)');
     is($buffer[25], ord('Z'), 'array indexing on buffer (2)');
     is(
@@ -33,8 +33,8 @@ plan 10;
 
 # L<S09/Compact arrays/The size of any buffer type in bytes may be found with the .bytes method>
 {
-    my buf8  $buf8  = ('A' .. 'Z').map({sprintf('%08d', ord)}).cat;
-    my buf16 $buf16 = ('A' .. 'Z').map({sprintf('%08d', ord)}).cat;
+    my buf8  $buf8  = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;
+    my buf16 $buf16 = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;
     is($buf8.bytes,  26, '.bytes works on a buf8');
     is($buf16.bytes, 26, '.bytes works on a buf16 (and returns the size in bytes)');
 }
