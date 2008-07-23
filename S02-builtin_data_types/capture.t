@@ -10,7 +10,7 @@ plan 18;
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     my sub foo ($a, $b, $c) { "$a!$b!$c" }
     is try { &foo.callwith(|$capture) }, "1!2!3",
-        "simply capture creation with \\( works (1)";
+        'simply capture creation with \\( works (1)';
 }
 
 {
@@ -19,7 +19,7 @@ plan 18;
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     my sub foo ($a, $b, $c) { "$a!$b!$c" }
     dies_ok { &foo.callwith(|$capture) },
-        "simply capture creation with \\( works (2)";
+        'simply capture creation with \\( works (2)';
 }
 
 {
@@ -28,7 +28,7 @@ plan 18;
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     my sub foo ($a, :$named) { "$a!$named" }
     is try { &foo.callwith(|$capture) }, "1!arg",
-        "simply capture creation with \\( works (3)";
+        'simply capture creation with \\( works (3)';
 }
 
 {
@@ -37,7 +37,7 @@ plan 18;
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     my sub foo ($a, $pair) { "$a!$pair" }
     is try { &foo.callwith(|$capture) }, "1!positional\tpair",
-        "simply capture creation with \\( works (4)";
+        'simply capture creation with \\( works (4)';
 }
 
 {
@@ -47,7 +47,7 @@ plan 18;
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     my sub foo (@arr) { ~@arr }
     is try { &foo.callwith(|$capture) }, "a b c",
-        "capture creation with \\( works";
+        'capture creation with \\( works';
 }
 
 # L<S06/Argument list binding/single scalar parameter marked>
@@ -55,16 +55,18 @@ plan 18;
     my sub bar ($a, $b, $c) { "$a!$b!$c" }
     my sub foo (|$capture)  { &bar.callwith(|$capture) }
 
+    #?pugs todo "feature"
     is try { foo(1,2,3) }, "1!2!3",
-        "capture creation with \\$ works (1)", :todo<feature>;
+        'capture creation with \\$ works (1)';
     dies_ok { foo(1,2,3,4) },  # too many args
-        "capture creation with \\$ works (2)";
+        'capture creation with \\$ works (2)';
     dies_ok { foo(1,2) },      # too few args
-        "capture creation with \\$ works (3)";
+        'capture creation with \\$ works (3)';
     is try { foo(a => 1, b => 2, c => 3) }, "1!2!3",
-        "capture creation with \\$ works (4)", :todo<feature>;
+    #?pugs 2 todo "feature"
+        'capture creation with \\$ works (4)';
     is try { foo(1, b => 2, c => 3) }, "1!2!3",
-        "capture creation with \\$ works (5)", :todo<feature>;
+        'capture creation with \\$ works (5)';
 }
 
 # Arglists are first-class objects
