@@ -75,12 +75,14 @@ plan 18;
     my sub foo (|$args) { $capture = $args }
 
     lives_ok { foo(1,2,3,4) }, "captures are first-class objects (1)";
-    ok $capture,               "captures are first-class objects (2)", :todo<feature>;
+    #?pugs todo "feature"
+    ok $capture,               "captures are first-class objects (2)";
 
     my $old_capture = $capture;
     lives_ok { foo(5,6,7,8) }, "captures are first-class objects (3)";
-    ok $capture,               "captures are first-class objects (4)", :todo<feature>;
-    ok !($capture === $old_capture), "captures are first-class objects (5)", :todo<feature>;
+    #?pugs 2 todo "feature"
+    ok $capture,               "captures are first-class objects (4)";
+    ok !($capture === $old_capture), "captures are first-class objects (5)";
 }
 
 {
