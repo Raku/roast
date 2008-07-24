@@ -72,20 +72,21 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
-{
-  my $hash = {a => {b => {c => {d => 42, e => 23}}}};
-  is try { [.{}] $hash, <a b c d> }, 42, '[.{}] works';
-}
-
-{
-  my $hash = {a => {b => 42}};
-  is ([.{}] $hash, <a b>), 42, '[.{}] works two levels deep';
-}
-
-{
-  my $arr = [[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]];
-  is ([.[]] $arr, 1, 0, 2), 9, '[.[]] works';
-}
+# not currently legal without an infix subscript operator
+# {
+#   my $hash = {a => {b => {c => {d => 42, e => 23}}}};
+#   is try { [.{}] $hash, <a b c d> }, 42, '[.{}] works';
+# }
+# 
+# {
+#   my $hash = {a => {b => 42}};
+#   is ([.{}] $hash, <a b>), 42, '[.{}] works two levels deep';
+# }
+# 
+# {
+#   my $arr = [[[1,2,3],[4,5,6]],[[7,8,9],[10,11,12]]];
+#   is ([.[]] $arr, 1, 0, 2), 9, '[.[]] works';
+# }
 
 {
   # 18:45 < autrijus> hm, I found a way to easily do linked list consing in Perl6
