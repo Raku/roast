@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 18;
 
 =begin description
 
@@ -15,23 +15,20 @@ Basic role tests from L<S12/Roles>
 role Foo {}
 class Bar does Foo;
 
-ok Foo.HOW, "definition of a role worked";
-ok Bar.HOW, "definition of a class which does a role worked";
-
 # Smartmatch and .HOW.does and .^does
 my $bar = Bar.new();
-ok ($bar ~~ Bar),         '... smartmatch our $bar to the Bar class';
-ok ($bar.HOW.does($bar, Foo)), '.HOW.does said our $bar does Foo';
-ok ($bar.^does(Foo)), '.^does said our $bar does Foo';
-ok ($bar ~~ Foo),         'smartmatch said our $bar does Foo';
+ok ($bar ~~ Bar),               '... smartmatch our $bar to the Bar class';
+ok ($bar.HOW.does($bar, Foo)),  '.HOW.does said our $bar does Foo';
+ok ($bar.^does(Foo)),           '.^does said our $bar does Foo';
+ok ($bar ~~ Foo),               'smartmatch said our $bar does Foo';
 
 # Mixing a Role into an Object using imperative C<does>
 my $baz = 3;
-ok $baz does Foo,       'mixing in our Foo role into $baz worked';
+ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 #?pugs skip 3 'feature'
-ok $baz.HOW.does($baz, Foo), '.HOW.does said our $baz now does Foo';
-ok $baz.^does(Foo), '.^does said our $baz now does Foo';
-ok $baz ~~ Baz,         'smartmatch said our $baz now does Foo';
+ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
+ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
+ok $baz ~~ Baz,                 'smartmatch said our $baz now does Foo';
 
 # L<S12/Roles/but with a role keyword:>
 # Roles may have methods
@@ -39,7 +36,7 @@ ok $baz ~~ Baz,         'smartmatch said our $baz now does Foo';
 {
     role A { method say_hello(Str $to) { "Hello, $to" } }
     my Foo $a .= new();
-    ok($a does A, 'mixing A into $a worked');
+    ok(defined($a does A), 'mixing A into $a worked');
     is $a.say_hello("Ingo"), "Hello, Ingo", 
         '$a "inherited" the .say_hello method of A';
 }
@@ -49,7 +46,7 @@ ok $baz ~~ Baz,         'smartmatch said our $baz now does Foo';
 {
     role B { has $.attr = 42 is rw }
     my Foo $b does B .= new();
-    ok $b,                 'mixing B into $b worked';
+    ok defined($b),        'mixing B into $b worked';
     is $b.attr, 42,        '$b "inherited" the $.attr attribute of B (1)';
     is ($b.attr = 23), 23, '$b "inherited" the $.attr attribute of B (2)';
 
@@ -62,3 +59,5 @@ ok $baz ~~ Baz,         'smartmatch said our $baz now does Foo';
     ok !($c ~~ B),              '$c still does not B...';
     ok $d ~~ B,                 '...but $d does B';
 }
+
+# vim: ft=perl6
