@@ -4,11 +4,11 @@ use Test;
 
 plan 20;
 
-=pod
+=begin description
 
 Basic role tests from L<S12/Roles>
 
-=cut
+=end description
 
 # L<S12/Roles>
 # Basic definition
@@ -45,6 +45,7 @@ ok $baz ~~ Baz,         'smartmatch said our $baz now does Foo';
 }
 
 # L<S12/Roles/Roles may have attributes:>
+#?rakudo skip 'role parse failure'
 {
     role B { has $.attr = 42 is rw }
     my Foo $b does B .= new();
