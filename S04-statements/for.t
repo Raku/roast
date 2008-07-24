@@ -317,16 +317,16 @@ my @elems = <a b c d e>;
 
 {
     my $a = '';
-    for 1..3, 4..6 { $a ~~ $_.WHAT };
+    for 1..3, 4..6 { $a ~= $_.WHAT };
     #?rakudo todo 'type is incorrect'
     is($a, 'IntIntIntIntIntInt', 'List context');
 
     $a = '';
-    for [1..3, 4..6] { $a ~~ $_.WHAT };
+    for [1..3, 4..6] { $a ~= $_.WHAT };
     is($a, 'Array', 'List context');
 
     $a = '';
-    for [1..3], [4..6] { $a ~~ $_.WHAT };
+    for [1..3], [4..6] { $a ~= $_.WHAT };
     #?rakudo todo 'type is incorrect'
     is($a, 'ArrayArray', 'List context');
 }
