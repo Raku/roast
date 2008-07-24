@@ -28,5 +28,5 @@ ok(cat([1..3]) eqv 1..3, 'cat array identity');
 ok(cat({'a'=>1,'b'=>2,'c'=>3}) eqv ('a'=>1, 'b'=>2, 'c'=>3),
     'cat hash identity');
 
-ok(cat((); 1; 2..4; [5..7], {'a'=>1,'b'=>2}) eqv (1..7, 'a'=>1, 'b'=>2)
+ok(cat((); 1; 2..4; [5..7], {'a'=>1,'b'=>2}) eqv (1..7, 'a'=>1, 'b'=>2),
     'basic cat');

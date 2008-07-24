@@ -250,7 +250,8 @@ else {
 
     #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
 #?pugs todo 'unimpl'
-    ok(0 , "match values don't")
+    ok(0 , "match values don't");
+
 {
     # - $0, $1 etc. should all be undef after a failed match
     #   (except for special circumstances)

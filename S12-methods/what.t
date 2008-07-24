@@ -2,11 +2,13 @@ use v6;
 
 use Test;
 
+=begin pod
+
 =head1 DESCRIPTION
 
 This test tests the C<WHAT> builtin.
 
-=cut
+=end pod
 
 # L<S12/Introspection/"WHAT">
 
