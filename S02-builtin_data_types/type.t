@@ -66,8 +66,8 @@ my Str $bar;
 #?rakudo skip 'only the return type "of" parses correctly'
 # TODO: I'm not 100% sure about the living/dieing for all the cases below
 {
-    my sub returntype1 as Str (Bool $pass) {$pass ?? 'ok' !! -1}
-    my sub returntype2 of Int (Bool $pass) {$pass ?? 42 !! 'no'}
+    my sub returntype1 (Bool $pass) as Str {$pass ?? 'ok' !! -1}
+    my sub returntype2 (Bool $pass) of Int {$pass ?? 42 !! 'no'}
     my Bool sub returntype3 (Bool $pass)   {$pass ?? True !! ':('}
 
     is(returntype1(True), 'ok good', 'good return value works (as)');
