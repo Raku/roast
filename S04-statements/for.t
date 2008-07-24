@@ -224,7 +224,6 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
-#?rakudo skip 'parse error'
 {
     my @array_v = (0..2);
     my @v = (1..3);
@@ -318,7 +317,6 @@ my @elems = <a b c d e>;
 {
     my $a = '';
     for 1..3, 4..6 { $a ~= $_.WHAT };
-    #?rakudo todo 'type is incorrect'
     is($a, 'IntIntIntIntIntInt', 'List context');
 
     $a = '';
@@ -327,6 +325,5 @@ my @elems = <a b c d e>;
 
     $a = '';
     for [1..3], [4..6] { $a ~= $_.WHAT };
-    #?rakudo todo 'type is incorrect'
     is($a, 'ArrayArray', 'List context');
 }
