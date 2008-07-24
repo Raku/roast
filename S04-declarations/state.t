@@ -105,10 +105,10 @@ plan 20;
         my $ret = { $svar++ };
     };
 
-    $a = $gen();        # $svar == 42
-    $a(); $a();         # $svar == 44
-    $b = $gen()();      # $svar == 42
-    is $b, 42, "state() and parens"; # svar == 43
+    $a = $gen();        # $svar == 42
+    $a(); $a();         # $svar == 44
+    $b = $gen()();      # $svar == 42
+    is $b, 42, "state() and parens"; # svar == 43
 }
 
 # state() inside regular expressions
