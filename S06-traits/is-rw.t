@@ -3,6 +3,8 @@ use v6;
 use Test;
 
 plan 6;
+# L<S06/"Parameter traits"/"=item is rw">
+
 
 {
   sub foo($a is rw) {
@@ -16,6 +18,7 @@ plan 6;
   is $bar,      42, "sub changed our variable";
 }
 
+#?rakudo skip 'Lambdas'
 {
   my $anon = -> $a is rw { $a++ };
   my $bar = 10;
@@ -25,6 +28,7 @@ plan 6;
 
 # See thread "is rw basically a null-op on objects/references?" on p6l
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/20671">
+#?rakudo skip 'Hash.pairs'
 {
   my %hash = (a => 23);
   # First check .value = ... works (as this is a dependency for the next test)
