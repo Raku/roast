@@ -229,7 +229,7 @@ my @elems = <a b c d e>;
     my @array_v = (0..2);
     my @v = (1..3);
     for @array_v.values -> $val is rw { $val++ };
-    is(@array_v, @v, 'for @array.values -> $val is rw { $val++ }';
+    is(@array_v, @v, 'for @array.values -> $val is rw { $val++ }');
 }
 
 #?pugs eval 'todo'
@@ -317,16 +317,16 @@ my @elems = <a b c d e>;
 
 {
     my $a = '';
-    for 1..3, 4..6 { $a =~ $_.WHAT };
+    for 1..3, 4..6 { $a ~~ $_.WHAT };
     #?rakudo todo 'type is incorrect'
     is($a, 'IntIntIntIntIntInt', 'List context');
 
     $a = '';
-    for [1..3, 4..6] { $a =~ $_.WHAT };
+    for [1..3, 4..6] { $a ~~ $_.WHAT };
     is($a, 'Array', 'List context');
 
     $a = '';
-    for [1..3], [4..6] { $a =~ $_.WHAT };
+    for [1..3], [4..6] { $a ~~ $_.WHAT };
     #?rakudo todo 'type is incorrect'
     is($a, 'ArrayArray', 'List context');
 }

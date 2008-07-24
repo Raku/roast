@@ -204,59 +204,49 @@ Perl6-specific tests
 # L<S05/Match objects/"they will all be undefined" closure
 #                                 "let keyword">
 
-if !eval('("a" ~~ /a/)') {
-  skip 8, "skipped tests - rules support appears to be missing";
-}
-else {
-    # - unmatched alternative should bind to undef
-    my($num, $alpha);
-    my($rx1, $rx2);
-    eval '
-        $rx1 = rx
-            / [ (\d+)      { let $<num>   := $0 }
-              | (<alpha>+) { let $<alpha> := $1 }
-              ]
-            /;
-        $rx2 = rx
-            / [ $<num>  := (\d+)
-              | $<alpha>:= (<alpha>+)
-              ]
-            /;
-    ';
-    for (<rx1 rx2>) {
-        # I want symbolic lookups because I need the rx names for test results.
+# - unmatched alternative should bind to undef
+my($num, $alpha);
+my($rx1, $rx2);
+eval '
+    $rx1 = rx
+	/ [ (\d+)      { let $<num>   := $0 }
+	  | (<alpha>+) { let $<alpha> := $1 }
+	  ]
+	/;
+    $rx2 = rx
+	/ [ $<num>  := (\d+)
+	  | $<alpha>:= (<alpha>+)
+	  ]
+	/;
+';
+for (<rx1 rx2>) {
+    # I want symbolic lookups because I need the rx names for test results.
 
-        eval '"1" ~~ %MY::{$_}';
+    eval '"1" ~~ %MY::{$_}';
 #?pugs todo 'unimpl'
-        ok(defined($num), '{$_}: successful hypothetical');
-        ok(!defined($alpha), '{$_}: failed hypothetical');
+    ok(defined($num), '{$_}: successful hypothetical');
+    ok(!defined($alpha), '{$_}: failed hypothetical');
 
-        eval '"A" ~~ %MY::{$_}';
-        ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
+    eval '"A" ~~ %MY::{$_}';
+    ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
 #?pugs todo 'unimpl'
-        ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
-    }
+    ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
 }
 
-
-if ! eval '"a" ~~ /a/' {
-  skip 2, "skipped tests - rules support appears to be missing";
-}
-else {
-    # - binding to hash keys only would leave values undef
-    eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
+# - binding to hash keys only would leave values undef
+eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
 #?pugs todo 'unimpl'
-    ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
+ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
 
-    #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
+#ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
 #?pugs todo 'unimpl'
-    ok(0 , "match values don't");
+ok(0 , "match values don't");
 
 {
     # - $0, $1 etc. should all be undef after a failed match
     #   (except for special circumstances)
-        "abcde" ~~ rx:perl5/(.)(.)(.)/;
-        "abcde" ~~ rx:perl5/(\d)/;
+        "abcde" ~~ rx:Perl5/(.)(.)(.)/;
+        "abcde" ~~ rx:Perl5/(\d)/;
     ok((!try { grep { defined($_) }, ($0, $1, $2, $3, $4, $5) }),
             "all submatches undefined after failed match") or
         diag("match state: " ~ eval '$/');

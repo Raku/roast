@@ -127,7 +127,7 @@ is($key, 1, '%hash.kv gave us our key');
 is($val, 2, '%hash.kv gave us our val');
 
 %hash9{2} = 3;
-like(~%hash9, rx:perl5/1\s+2\s+2\s+3/, "hash can stringify");
+like(~%hash9, rx:Perl5/1\s+2\s+2\s+3/, "hash can stringify");
 
 my %hash10 = <1 2>;
 is(%hash10<1>, 2, "assignment of pointy qw to hash");
@@ -139,7 +139,7 @@ sub test1{
     is(%sane.WHAT,'Hash','%sane is a Hash');
 }
 
-sub test2 (Hash %hash) returns Void{
+sub test2 (Hash %hash) returns Void {
     is(%hash.WHAT,'Hash','%hash is a Hash');
 }
 
@@ -169,5 +169,5 @@ $i = 0;
 $i++ for %hash; # segfaults
 is $i, 4, "for %hash works";
 
-try{ @%(a => <b>)<a> };
+eval ' @%(a => <b>)<a> ';
 ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
