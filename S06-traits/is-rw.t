@@ -35,9 +35,9 @@ plan 6;
   try { %hash.pairs[0].value = 42 };
   is %hash<a>, 42, "pairs are mutable";
 
-  for %hash.pairs -> $pair {     # Note: No "is rw"!
-    try { $pair.value += 100 };  # Modifies %hash
-  }
+  for %hash.pairs -> $pair {     # Note: No "is rw"!
+    try { $pair.value += 100 };  # Modifies %hash
+  }
   is %hash<a>, 142, "'is rw' not necessary on objects/references";
 }
 
