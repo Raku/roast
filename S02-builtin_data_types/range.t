@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 87;
+plan 79;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
@@ -36,46 +36,17 @@ is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
 is ('a'..'a'), [< a >], 'got the right array';
 
-# Decreasing Ranges
-#?rakudo 16 skip 'decreasing ranges are unspecced'
+# Decreasing Ranges - see S03-operators/range for boundry tests
 {
-    my $r = 5..1;
-    is $r.perl, '5..1', "decreasing num .perl ..";
-    is @r, [5, 4, 3, 2, 1], 'got the right array';
-    my $r = 5^..1;
     # XXX unspecced: exact value of Range.perl
-    is $r.perl, '5^..1', "decreasing num .perl ^..";
-    my @r = $r;
-    is @r, [4, 3, 2, 1], 'got the right array';
-    my $r = 5..^1;
-    # XXX unspecced: exact value of Range.perl
-    is $r.perl, '5..^1', "decreasing num .perl ..^";
-    my @r = $r;
-    is @r, [5, 4, 3, 2], 'got the right array';
-    my $r = 5^..^1;
-    # XXX unspecced: exact value of Range.perl
-    is $r.perl, '5^..^1', "decreasing num .perl ^..^";
-    my @r = $r;
-    is @r, [4, 3, 2], 'got the right array';
-
-    my $r = 'd'..'a';
-    is $r.perl, '"d".."a"', "decreasing str .perl ..";
-    is @r, [< d c b a >], 'got the right array';
-    my $r = 'd'^..'a';
-    # XXX unspecced: exact value of Range.perl
-    is $r.perl, '"d"^.."a"', "decreasing str .perl ^..";
-    my @r = $r;
-    is @r, [< d, c, b, a >], 'got the right array';
-    my $r = 'd'..^'a';
-    # XXX unspecced: exact value of Range.perl
-    is $r.perl, '"d"..^"a"', "decreasing str .perl ..^";
-    my @r = $r;
-    is @r, [< d, c, b >], 'got the right array';
-    my $r = 'd'^..^'a';
-    # XXX unspecced: exact value of Range.perl
-    is $r.perl, '"d"^..^"a"', "decreasing str .perl ^..^";
-    my @r = $r;
-    is @r, [< c b >], 'got the right array';
+    is (5..1).perl, '5..1', "decreasing num .perl ..";
+    is (5^..1).perl, '5^..1', "decreasing num .perl ^..";
+    is (5..^1).perl, '5..^1', "decreasing num .perl ..^";
+    is (5^..^1).perl, '5^..^1', "decreasing num .perl ^..^";
+    is ('d'..'a').perl, '"d".."a"', "decreasing str .perl ..";
+    is ('d'^..'a').perl, '"d"^.."a"', "decreasing str .perl ^..";
+    is ('d'..^'a').perl, '"d"..^"a"', "decreasing str .perl ..^";
+    is ('d'^..^'a').perl, '"d"^..^"a"', "decreasing str .perl ^..^";
 }
 
 # ACCEPTS and equals tests
