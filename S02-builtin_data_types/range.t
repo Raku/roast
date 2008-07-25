@@ -38,18 +38,19 @@ is ('a'..'a'), [< a >], 'got the right array';
 
 # Decreasing Ranges - see S03-operators/range for boundry tests
 {
-    # XXX unspecced: exact value of Range.perl
-    is (5..1).perl, '5..1', "decreasing num .perl ..";
-    is (5^..1).perl, '5^..1', "decreasing num .perl ^..";
-    is (5..^1).perl, '5..^1', "decreasing num .perl ..^";
-    is (5^..^1).perl, '5^..^1', "decreasing num .perl ^..^";
-    is ('d'..'a').perl, '"d".."a"', "decreasing str .perl ..";
-    is ('d'^..'a').perl, '"d"^.."a"', "decreasing str .perl ^..";
-    is ('d'..^'a').perl, '"d"..^"a"', "decreasing str .perl ..^";
-    is ('d'^..^'a').perl, '"d"^..^"a"', "decreasing str .perl ^..^";
+    # L<S03/Range Semantics/"Ranges are not autoreversing">
+    ok (5..1)   !~~ 3, '(5..1)   is the null range';
+    ok (5^..1)  !~~ 3, '(5^..1)  is the null range';
+    ok (5..^1)  !~~ 3, '(5..^1)  is the null range';
+    ok (5^..^1) !~~ 3, '(5^..^1) is the null range';
+    ok ('d'..'a')   !~~ 'c', "decreasing str range is empty";
+    ok ('d'^..'a')  !~~ 'c', "decreasing str range is empty";
+    ok ('d'..^'a')  !~~ 'c', "decreasing str range is empty";
+    ok ('d'^..^'a') !~~ 'c', "decreasing str range is empty";
 }
 
 # ACCEPTS and equals tests
+#?rakudo skip 'various'
 {
     my $r = 1..5;
     ok(($r).ACCEPTS($r), 'accepts self');
@@ -92,6 +93,7 @@ is(+(6..8), 3, 'numification');
 }
 
 # simple .to, .from
+#?rakudo skip 'Range.from, Range.to'
 {
     my $r = 1 .. 5;
     is($r.from, 1, 'range.from');
