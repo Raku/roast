@@ -13,7 +13,7 @@ Tests quoting constructs as defined in L<S02/Literals>
 
 =todo
 
-* q:n, q:b, and other interpolation levels (half-done)
+* Q, q:b, and other interpolation levels (half-done)
 * meaningful quotations (qx, rx, etc)
 * review shell quoting semantics of «»
 * arrays in «»
@@ -344,25 +344,14 @@ FOO
         is(@q[0], "yoink\\n\nsplort\\n\n", "backslashes");
 }
 
-{ # q:n L<S02/Literals/No escapes at all>
+{ # Q L<S02/Literals/No escapes at all>
     my @q = ();
     
     my $backslash = "\\";
 
-    @q = (q:n/foo\\bar$foo/);
+    @q = (Q/foo\\bar$foo/);
 
-    is(+@q, 1, "q:n// is singular");
-    is(@q[0], "foo\\\\bar\$foo", "special chars are meaningless"); # double quoting is to be more explicit
-};
-
-{ # q:n L<S02/Literals/No escapes at all>
-    my @q = ();
-    
-    my $backslash = "\\";
-
-    @q = (qn/foo\\bar$foo/);
-
-    is(+@q, 1, "qn// is singular");
+    is(+@q, 1, "Q// is singular");
     is(@q[0], "foo\\\\bar\$foo", "special chars are meaningless"); # double quoting is to be more explicit
 };
 
@@ -387,18 +376,19 @@ FOO
 };
 
 { # weird char escape sequences
-    is("\d97", "a", '\d97 is "a"');
-    is("\d102oo", "foo", '\d102 is "f", works next to other letters');
-    is("\d123", chr 123, '"\dXXX" and chr XXX are equivalent');
-    is("\d[12]3", chr(12) ~ "3", '\d[12]3 is the same as chr(12) concatenated with "3"');
-    is("\d[12] 3", chr(12) ~ " 3", 'respects spaces when interpolating a space character');
+    is("\c97", "a", '\c97 is "a"');
+    is("\c102oo", "foo", '\c102 is "f", works next to other letters');
+    is("\c123", chr 123, '"\cXXX" and chr XXX are equivalent');
+    is("\c[12]3", chr(12) ~ "3", '\c[12]3 is the same as chr(12) concatenated with "3"');
+    is("\c[12] 3", chr(12) ~ " 3", 'respects spaces when interpolating a space character');
+    is("\c[13,10]", chr(13) ~ chr(10), 'allows multiple chars');
 
     is("\x41", "A", 'hex interpolation - \x41 is "A"');
     is("\o101", "A", 'octal interpolation - \o101 is also "A"' );
 
     is("\c@", "\0", 'Unicode code point "@" converts correctly to "\0"');
     is("\cA", chr 1, 'Unicode "A" is #1!');
-    is("\cZ", chr 26, 'Unicode "Z" is chr 26 (or \d26)');
+    is("\cZ", chr 26, 'Unicode "Z" is chr 26 (or \c26)');
 }
 
 { # simple test for nested-bracket quoting, per S02
@@ -424,15 +414,15 @@ Hello, World
     is $t, "Hello, World\n", "Testing for q:to operator. (utf8)";
 }
 
-# q:n
+# Q
 {
     my $s1 = "hello";
-    my $t1 = q:n /$s1, world/;
-    is $t1, '$s1, world', "Testing for q:n operator.";
+    my $t1 = Q /$s1, world/;
+    is $t1, '$s1, world', "Testing for Q operator.";
 
     my $s2 = "你好";
-    my $t2 = q:n /$s2, 世界/;
-    is $t2, '$s2, 世界', "Testing for q:n operator. (utf8)";
+    my $t2 = Q /$s2, 世界/;
+    is $t2, '$s2, 世界', "Testing for Q operator. (utf8)";
 }
 
 # q:b
@@ -502,7 +492,7 @@ Hello, World
     my $s = 'string';
     my @a = <arr1 arr2>;
     my %h = (foo => 'bar');
-    is(q:sa'$s@a[]%h', $s ~ @a ~ '%h', 'multiple modifiers interpolate only what is expected');
+    is(q:s:a'$s@a[]%h', $s ~ @a ~ '%h', 'multiple modifiers interpolate only what is expected');
 }
 
 # shorthands:
@@ -523,3 +513,4 @@ Hello, World
     is(Qb($alpha\t$beta), '$alpha	$beta', 'Qb');
     is(Qc({1+1}), 2, 'Qc');
 }
+
