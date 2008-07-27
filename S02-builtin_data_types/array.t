@@ -265,9 +265,9 @@ my @array2 = ("test", 1, undef);
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr[num] of Type works (2)');
 }
 
-#?rakudo skip 'my @arr[-->Type] parsefail'
+#?rakudo skip 'my @arr(-->Type) parsefail'
 {
-    my @arr[-->Num] = <1 2.1 3.2>;
+    my @arr(-->Num) = <1 2.1 3.2>;
     is(@arr, <1 2.1 3.2>, 'my @arr[-->Type] works');
 
     lives_ok({push @arr, 4.3}, 'adding the proper type works');
@@ -276,7 +276,7 @@ my @array2 = ("test", 1, undef);
 
 #?rakudo skip 'my @arr[num-->Type] parsefail'
 {
-    my @arr[3-->Num] = <1 2.1 3.2>;
+    my @arr[3](-->Num) = <1 2.1 3.2>;
     is(@arr, <1 2.1 3.2>, 'my @arr[num-->Type] works');
 
     dies_ok({push @arr, 4.3}, 'boundary constraints work on my @arr[num-->Type]');
