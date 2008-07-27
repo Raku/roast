@@ -43,12 +43,13 @@ is($foo_bar.fud(), 'Foo::Bar::fud', '... sanity check on uninherited method');
 
 #?rakudo skip 'stringification of objects'
 is($foo_bar.getme, $foo_bar, 'can call inherited methods');
-#?rakudo 4 todo 'various oo bugs'
+#?rakudo todo 'various oo bugs'
 is($foo_bar.getme.baz, "Foo::Bar::baz", 'chained method dispatch on altered method');
 
 is($foo_bar.value, undef, 'value can be used for attribute name in derived classes');
 my $fud;
 
+#?rakudo 2 todo 'various oo bugs'
 lives_ok { $fud = $foo_bar.getme.fud }, 'chained method dispatch on altered method';
 is($fud, "Foo::Bar::fud", "returned value is correct");
 
