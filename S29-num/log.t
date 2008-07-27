@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 12;
 
 =begin pod
 
@@ -34,12 +34,13 @@ is_approx(log10(-1 + 0i), 0 + 1i * pi / log(10), "got the log10 of -1");
 is_approx(log(-exp(1) + 0i), 1 + 1i * pi, "got the log of -e");
 #?rakudo 1 todo 'complex log10()'
 is_approx(log10(-10 + 0i), 1 + 1i * pi / log(10), "got the log10 of -10");
+is_approx(log10(10), 1.0, 'log10(10)=1');
 
 #?pugs todo 'feature'
 is_approx(log((1+1i) / sqrt(2)), 0 + 1i * pi / 4, "got log of exp(i pi/4)");
 is_approx(log(1i), 1i * pi / 2, "got the log of i (complex unit)");
+
 #?pugs todo 'feature'
-#?rakudo todo '.oO( which complex plane do we need to take?)'
-is_approx(log(-1i), 1i * pi * 1.5, "got the log of -i (complex unit)");
+is_approx(log(-1i), -0.5i * pi , "got the log of -i (complex unit)");
 
 # TODO: please add more testcases for log10 of complex numbers
