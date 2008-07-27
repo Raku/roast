@@ -39,16 +39,20 @@ is(foo(%hash), 'Hash bar, baz, foo', 'dispatched to the Hash sub');
 
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
 
+#?pugs 4 todo "feature"
+#?rakudo 2 skip 'Null PMC access in type()'
 ok(eval('multi sub foo( (Int, Str) $tuple: ) '
     ~ '{ "Tuple(2) " ~ $tuple.join(",") }'),
-    "declare sub with tuple argument", :todo<feature>);
+    "declare sub with tuple argument");
 
 ok(eval('multi sub foo( (Int, Str, Str) $tuple: ) '
     ~ '{ "Tuple(3) " ~ $tuple.join(",") }'),
-    "declare multi sub with tuple argument", :todo<feature>);
+    "declare multi sub with tuple argument");
 
-is(foo([3, "Four"]), "Tuple(2) 3,Four", "call tuple multi sub", :todo<feature>);
-is(foo([3, "Four", "Five"]), "Tuple(3) 3,Four,Five", "call tuple multi sub", :todo<feature>);
+# XXX isn't that just an Array nowadays?
+#?rakudo 2 skip '"No applicable methods"'
+is(foo([3, "Four"]), "Tuple(2) 3,Four", "call tuple multi sub");
+is(foo([3, "Four", "Five"]), "Tuple(3) 3,Four,Five", "call tuple multi sub");
 
 # You're allowed to omit the "sub" when declaring a multi sub.
 # L<S06/"Routine modifiers">
@@ -56,6 +60,7 @@ is(foo([3, "Four", "Five"]), "Tuple(3) 3,Four,Five", "call tuple multi sub", :to
 multi declared_wo_sub (Int $x) { 1 }
 multi declared_wo_sub (Str $x) { 2 }
 is declared_wo_sub(42),   1, "omitting 'sub' when declaring 'multi sub's works (1)";
+#?rakudo skip 'based dispatch on Str'
 is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (2)";
 
 # Test for slurpy MMDs
@@ -64,6 +69,7 @@ proto mmd {}  # L<S06/"Routine modifiers">
 multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }
 
+#?rakudo 3 skip '"Null PMC access in type()'
 is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
