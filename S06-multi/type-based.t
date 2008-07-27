@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 18;
 
 # type based dispatching
 #
@@ -10,7 +10,6 @@ plan 19;
 multi foo (Int $bar)   { "Int "  ~ $bar  }
 multi foo (Str $bar)   { "Str "  ~ $bar  }
 multi foo (Num $bar)   { "Num "  ~ $bar  }
-multi foo (Rat $bar)   { "Rat "  ~ $bar  }
 multi foo (Bool $bar)  { "Bool " ~ $bar  }
 multi foo (Rule $bar)  { "Rule " ~ WHAT( $bar ) } # since Rule's don't stringify
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
@@ -18,19 +17,21 @@ multi foo (Array @bar) { "Array " ~ join(', ', @bar) }
 multi foo (Hash %bar)  { "Hash " ~ join(', ', %bar.keys.sort) }
 multi foo (IO $fh)     { "IO" }
 
+#?rakudo skip 'based dispatch on Str'
 is(foo('test'), 'Str test', 'dispatched to the Str sub');
 is(foo(2), 'Int 2', 'dispatched to the Int sub');
 
 my $num = '4';
-is(foo(+$num), 'Num 4', 'dispatched to the Num sub');
-#?rakudo skip 'unspecced: is 1.5 ~~ Rat ?'
-is(foo(1.5), 'Rat 1.5', 'dispatched to the Rat sub');
+#?rakudo skip 'based dispatch on Str'
+is(foo(1.4), 'Num 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool 1', 'dispatched to the Bool sub');
 #?rakudo skip 'rx:P5'
 is(foo(rx:P5/a/),'Rule Rule','dispatched to the Rule sub', :todo<bug>);
+#?rakudo skip '"parameter type check failed"'
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');
+#?rakudo skip 'based dispatch on Array'
 is(foo(@array), 'Array foo, bar, baz', 'dispatched to the Array sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);

@@ -76,7 +76,6 @@ ok !Foo::Bar.HOW.does(Foo::BAR, Class),   "subclass.HOW.does(Class) is false";
 #?rakudo 2 skip 'no ::CLASS class'
 ok !Foo::Bar.HOW.isa(Foo::BAR, ::CLASS),  "subclass.HOW.isa(CLASS) is false";
 #?pugs todo "feature"
-#?rakudo skip 'does'
 ok  Foo::Bar.HOW.does(Foo::BAR, ::CLASS),  "subclass.HOW.does(CLASS) is true";
 
 
