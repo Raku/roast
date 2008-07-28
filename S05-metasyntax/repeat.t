@@ -40,8 +40,8 @@ ok("abcabcabcabcd" ~~ m/[abc]**{2..*}/, 'Open range repetition using closure');
 ok(!( "abcd"       ~~ m/[abc]**{2..*}/), 'Fail open range repetition using closure');
 
 # It is illegal to return a list, so this easy mistake fails:
-dies_ok({'foo' ~~ m/o{1,3}/}), 'P5-style {1,3} range mistake is caught');
-dies_ok({'foo' ~~ m/o{1,}/}),  'P5-style {1,} range mistake is caught');
+eval_dies_ok('"foo" ~~ m/o{1,3}/', 'P5-style {1,3} range mistake is caught');
+eval_dies_ok('"foo" ~~ m/o{1,}/}',  'P5-style {1,} range mistake is caught');
 
 # XXX Is it specced that smartmatching m// returns the matched string?
 # A successful match of such a quantifier always ends "in the middle"
