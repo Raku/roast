@@ -11,7 +11,7 @@ multi foo (Int $bar)   { "Int "  ~ $bar  }
 multi foo (Str $bar)   { "Str "  ~ $bar  }
 multi foo (Num $bar)   { "Num "  ~ $bar  }
 multi foo (Bool $bar)  { "Bool " ~ $bar  }
-multi foo (Rule $bar)  { "Rule " ~ WHAT( $bar ) } # since Rule's don't stringify
+multi foo (Regex $bar) { "Regex " ~ WHAT( $bar ) } # since Rule's don't stringify
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (Array @bar) { "Array " ~ join(', ', @bar) }
 multi foo (Hash %bar)  { "Hash " ~ join(', ', %bar.keys.sort) }
