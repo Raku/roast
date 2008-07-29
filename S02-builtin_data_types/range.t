@@ -50,7 +50,6 @@ is ('a'..'a'), [< a >], 'got the right array';
 }
 
 # ACCEPTS and equals tests
-#?rakudo skip 'various'
 {
     my $r = 1..5;
     ok(($r).ACCEPTS($r), 'accepts self');
