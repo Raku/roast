@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 42;
+plan 39;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -79,25 +79,17 @@ plan 42;
     is($f, '012345', 'for () -> {} works');
 }
 
-# ... with referential sub
-#?rakudo skip 'implicit invocant'
-{
-    my $h;
-    sub some_sub_2 ($arg) { $h = $h ~ $arg; };
-    for (0 .. 5) { .some_sub_2 };
-    is($h, '012345', 'for (0 .. 5) { .some_sub } works');
-}
-
 # ... with implicit topic
 
-#?rakudo skip 'implicit invocant'
 {
     $_ = "GLOBAL VALUE";
     for "INNER VALUE" {
     is( .lc, "inner value", "Implicit default topic is seen by lc()");
     };
     is($_,"GLOBAL VALUE","After the loop the implicit topic gets restored");
-
+}
+#?rakudo skip 'implicit invocant'
+{
     # as statement modifier
     $_ = "GLOBAL VALUE";
     is( .lc, "inner value", "Implicit default topic is seen by lc()" )
@@ -134,16 +126,6 @@ my $l;
 for @array_l -> $_ { $l = $l ~ $_; };
 is($l, '012345', 'for @array -> {} works');
 
-# ... with referential sub
-#?rakudo skip 'implicit invocant'
-{
-    my @array_n = (0 .. 5);
-    my $n;
-    sub some_sub_3 ($arg) { $n = $n ~ $arg; }
-    for (@array_n) { .some_sub_3 };
-    is($n, '012345', 'for @array { .some_sub } works');
-}
-
 ## and now with parens around the @array
 
 my @array_o = (0 .. 5);
@@ -157,17 +139,6 @@ is($o, '012345', 'for (@array) {} works');
     my $p;
     for (@array_p) -> $_ { $p = $p ~ $_; };
     is($p, '012345', 'for (@array) -> {} works');
-}
-
-
-# ... with referential sub
-#?rakudo skip 'implicit invocant'
-{
-    my @array_r = (0 .. 5);
-    my $r;
-    sub some_sub_4 ($arg) { $r ~= $arg; }
-    for (@array_r) { .some_sub_4 };
-    is($r, '012345', 'for (@array) { .some_sub } works');
 }
 
 my @elems = <a b c d e>;
