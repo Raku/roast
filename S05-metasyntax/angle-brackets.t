@@ -116,17 +116,17 @@ character classes), and those are referenced at the correct spot.
 # A leading :: indicates a symbolic indirect subrule
 {
     my $name = 'alpha';
-    ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbollic indirect subrule');
+    ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');
 }
 
 # A leading @ matches like a bare array except that each element is
 # treated as a subrule (string or Regex object) rather than as a literal
 {
-    my @first = <a b c .**>;
+    my @first = <a b c .**4>;
     ok('dddd' ~~ /<@first>/, 'strings are treated as a subrule in <@foo>');
 
-    my @second = rx/\.**/, rx/'.**'/;
-    ok('abc.**def' ~~ /<@second>/, 'Regexes are left alone in <@foo> subrule');
+    my @second = rx/\.**2/, rx/'.**2'/;
+    ok('abc.**2def' ~~ /<@second>/, 'Regexes are left alone in <@foo> subrule');
 }
 
 # more to do yet.
