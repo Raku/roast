@@ -93,7 +93,6 @@ is(+(6..8), 3, 'numification');
 }
 
 # simple .to, .from
-#?rakudo skip 'Range.from, Range.to'
 {
     my $r = 1 .. 5;
     is($r.from, 1, 'range.from');
@@ -103,6 +102,7 @@ is(+(6..8), 3, 'numification');
     is($r.max, 5, 'range.max');
     is($r.minmax, [1,5], 'range.minmax');
 
+    #?rakudo 5 skip 'range reverse not in spec'
     ### pmichaud, 2008-07-04:  XXX  no spec for .reverse
     is($r.reverse.from, 5, 'range.reverse.from');
     is($r.reverse.to,   1, 'range.reverse.to');
