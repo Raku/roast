@@ -20,7 +20,6 @@ my @tests = (
     '$a @string %with &sigils()',
 
     ?1, ?0,
-    #?rakudo emit # 
     undef,
     #?rakudo emit # parse error
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
@@ -47,13 +46,10 @@ my @tests = (
     # Infinite arrays, commented because they take infram and inftime in
     # current Pugs
     #?pugs emit # 
-    #?rakudo emit #
     [ 3..Inf ],
     #?pugs emit # 
-    #?rakudo emit #
     [ -Inf..Inf ],
     #?pugs emit # 
-    #?rakudo emit #
     [ 3..42, 17..Inf, -Inf..5 ],
 
     # Nested things

@@ -22,7 +22,6 @@ is(foo('test'), 'Str test', 'dispatched to the Str sub');
 is(foo(2), 'Int 2', 'dispatched to the Int sub');
 
 my $num = '4';
-#?rakudo skip 'based dispatch on Str'
 is(foo(1.4), 'Num 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool 1', 'dispatched to the Bool sub');
 #?rakudo skip 'rx:P5'
