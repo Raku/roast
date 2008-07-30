@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 42;
 
 =begin pod
 
@@ -129,4 +129,76 @@ character classes), and those are referenced at the correct spot.
     ok('abc.**2def' ~~ /<@second>/, 'Regexes are left alone in <@foo> subrule');
 }
 
-# more to do yet.
+# A leading % matches like a bare hash except that
+# a string value is always treated as a subrule
+{
+    my %first = {'<alpha>' => '', 'b' => '', 'c' => ''};
+    ok('aeiou' ~~ /<%first>/, 'strings are treated as a subrule in <%foo>');
+
+    my %second = {rx/\.**2/ => '', rx/'.**2'/ => ''};
+    ok('abc.**2def' ~~ /<%second>/, 'Regexes are left alone in <%foo> subrule');
+}
+
+# A leading { indicates code that produces a regex to be
+# interpolated into the pattern at that point as a subrule:
+{
+    ok('abcdef' ~~ /<{'<al' ~ 'pha>'}>/, 'code interpolation');
+}
+
+# A leading & interpolates the return value of a subroutine call as a regex.
+{
+    my sub foo {return '<alpha>'}
+    ok('abcdef' ~~ /<&foo()>/, 'subroutine call interpolation');
+}
+
+# If it is a string, the compiled form is cached with the string so that
+# it is not recompiled next time you use it unless the string changes.
+{
+    my $counter = 0;
+    my $subrule = '{$counter++; \'<alpha>\'}';
+
+    'abc' ~~ /<$subrule>/;
+    is($counter, 1, 'code inside string was executed');
+
+    'def' ~~ /<$subrule>/;
+    is($counter, 1, 'string value was cached');
+}
+
+# A leading ?{ or !{ indicates a code assertion
+{
+    ok('192' ~~ /(\d**1..3) <?{$0 < 256}>/, '<?{...}> works');
+    ok(!('992' ~~ /(\d**1..3) <?{$0 < 256}>/), '<?{...}> works');
+    ok(!('192' ~~ /(\d**1..3) <!{$0 < 256}>/), '<!{...}> works');
+    ok('992' ~~ /(\d**1..3) <!{$0 < 256}>/, '<!{...}> works');
+}
+
+# A leading [ indicates an enumerated character class
+# A leading - indicates a complemented character class
+# A leading + may also be supplied
+# see charset.t
+
+# The special assertion <.>
+# see combchar.t
+
+# L<S05/Extensible metasyntax (<...>)/A leading ! indicates a negated meaning (always a zero-width assertion)>
+{
+    ok('1./:"{}=-_' ~~ /^<!alpha>+$/, '<!alpha> matches non-letter characters');
+    ok(!('abcdef'   ~~ /<!alpha>/), '<!alpha> does not match letter characters');
+    is('.2 1' ~~ /(<!before .> \d)/, 1, '<!foo> does not capture');
+}
+
+# A leading ? indicates a positive zero-width assertion
+{
+    is('123abc456def' ~~ /(.+ <?alpha>)/, '123', 'positive zero-width assertion');
+}
+
+# The <...>, <???>, and <!!!> special tokens have the same "not-defined-yet"
+# meanings within regexes that the bare elipses have in ordinary code
+{
+    eval_dies_ok('"foo" ~~ /<...>/', '<...> dies in regex match');
+    # XXX: Should be warns_ok, but we don't have that yet
+    lives_ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
+    eval_dies_ok('"foo" ~~ /<!!!>/', '<!!!> dies in regex match');
+}
+
+# and more to come...

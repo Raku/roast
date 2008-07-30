@@ -25,17 +25,19 @@ my $href = \%var;
 
 # SCALARS
 
-ok($var ~~ m/$var/, 'Simple scalar interpolation', :todo<bug>);
-ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation', :todo<bug>);
+#?pugs 2 todo 'bug'
+ok($var ~~ m/$var/, 'Simple scalar interpolation');
+ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
-ok('a' ~~ m/$aref[0]/, 'Array ref 0', :todo<feature>);
-ok('a' ~~ m/$aref.[0]/, 'Array ref dot 0', :todo<feature>);
-ok('a' ~~ m/@var[0]/, 'Array 0', :todo<feature>);
+#?pugs 6 todo 'feature'
+ok('a' ~~ m/$aref[0]/, 'Array ref 0');
+ok('a' ~~ m/$aref.[0]/, 'Array ref dot 0');
+ok('a' ~~ m/@var[0]/, 'Array 0');
 
-ok('1' ~~ m/$href.{a}/, 'Hash ref dot A', :todo<feature>);
-ok('1' ~~ m/$href{a}/, 'Hash ref A', :todo<feature>);
-ok('1' ~~ m/%var{a}/, 'Hash A', :todo<feature>);
+ok('1' ~~ m/$href.{a}/, 'Hash ref dot A');
+ok('1' ~~ m/$href{a}/, 'Hash ref A');
+ok('1' ~~ m/%var{a}/, 'Hash A');
 
 ok(!( 'a' ~~ m/$aref[1]/ ), 'Array ref 1');
 ok(!( 'a' ~~ m/$aref.[1]/ ), 'Array ref dot 1');
@@ -55,24 +57,26 @@ ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 # ARRAYS
 # L<S05/Variable (non-)interpolation/An interpolated array:>
 
-ok("a" ~~ m/@var/, 'Simple array interpolation (a)', :todo<feature>);
-ok("b" ~~ m/@var/, 'Simple array interpolation (b)', :todo<feature>);
-ok("c" ~~ m/@var/, 'Simple array interpolation (c)', :todo<feature>);
+#?pugs 3 todo 'feature'
+ok("a" ~~ m/@var/, 'Simple array interpolation (a)');
+ok("b" ~~ m/@var/, 'Simple array interpolation (b)');
+ok("c" ~~ m/@var/, 'Simple array interpolation (c)');
 ok(!( "d" ~~ m/@var/ ), 'Simple array interpolation (d)');
-ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)', :todo<feature>);
+#?pugs 2 todo 'feature'
+ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 
-ok("abca" ~~ m/^@var+$/, 'Multiple array matching', :todo<feature>);
+ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
 
 # HASHES
 # L<S05/Variable (non-)interpolation/An interpolated hash provides>
 
-ok("a" ~~ m/%var/, 'Simple hash interpolation (a)', :todo<feature>);
-ok("b" ~~ m/%var/, 'Simple hash interpolation (b)', :todo<feature>);
-ok("c" ~~ m/%var/, 'Simple hash interpolation (c)', :todo<feature>);
+ok("a" ~~ m/%var/, 'Simple hash interpolation (a)');
+ok("b" ~~ m/%var/, 'Simple hash interpolation (b)');
+ok("c" ~~ m/%var/, 'Simple hash interpolation (c)');
 ok(!( "d" ~~ m/%var/ ), 'Simple hash interpolation (d)');
-ok("====a=====" ~~ m/%var/, 'Nested hash interpolation (a)', :todo<feature>);
+ok("====a=====" ~~ m/%var/, 'Nested hash interpolation (a)');
 ok(!( "abca" ~~ m/^%var$/ ), 'Simple hash non-matching');
 
-ok("a b c a" ~~ m:s/^[ %var]+$/, 'Simple hash repeated matching', :todo<feature>);
+ok("a b c a" ~~ m:s/^[ %var]+$/, 'Simple hash repeated matching');
