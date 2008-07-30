@@ -2,15 +2,16 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S29/Str/=item substr>
 
 { # read only
     my $str = "foobar";
 
-    #?rakudo todo 'substr bug'
+    #?rakudo 2 todo 'substr bug [perl #57434]'
     is(substr($str, 0, 0), '', 'Empty string with 0 as thrid arg');
+    is(substr($str, 3, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 0, 1), "f", "first char");
     is(substr($str, -1), "r", "last char");
     is(substr($str, -4, 2), "ob", "counted from the end");
