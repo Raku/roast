@@ -18,4 +18,5 @@ is_approx(e()    , $e,    "e(), as a sub");
 is_approx(1 + e(), $e+1, "1+e(), as a sub");
 is_approx(e() + 1, $e+1, "e()+1, as a sub");
 is_approx(1 + e,   $e+1, "1+e, as a bareword");
+#?rakudo skip 'parse error, space after the e'
 is_approx(e + 1,   $e+1, "e+1, as a bareword");
