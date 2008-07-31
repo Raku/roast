@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 65;
+plan 67;
 
 =begin description
 
@@ -13,6 +13,9 @@ Enum tests from L<S12/Enums>
 #?pugs 999 skip
 # L<S12/Enums/values are specified as a list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
+
+ok day.WHAT, 'enum.WHAT returned a value';
+ok day.perl, 'enum.perl returned a value';
 
 #?DOES 14
 sub test_stuff($x) {
