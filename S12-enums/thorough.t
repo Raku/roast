@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 65;
 
 =begin description
 
@@ -14,7 +14,7 @@ Enum tests from L<S12/Enums>
 # L<S12/Enums/values are specified as a list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
-#?DOES 12
+#?DOES 14
 sub test_stuff($x) {
   ok not $x does Wed, "basic enum mixing worked ($x-2)";
   is $x.day, 3,       "automatically created accessor worked ($x)";
@@ -28,6 +28,8 @@ sub test_stuff($x) {
   is $x.day, 3,       ".day worked correctly ($x)";
   ok Tue $x,          "Tue() worked correctly ($x)";
   ok $x.Tue,          ".Tue() worked correctly ($x)";
+  ok $x.Tue.WHAT,     '$obj.Tue.WHAT returns a true valuee';
+  ok $x.Tue.perl,     '$obj.Tue.perl returns a true valuee';
 }
 
 {
