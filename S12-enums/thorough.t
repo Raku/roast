@@ -25,7 +25,7 @@ sub test_stuff($x) {
   ok $x ~~ day,       "smartmatch worked correctly ($x-1)";
   ok $x ~~ Tue,       "smartmatch worked correctly ($x-2)";
   ok $x ~~ day::Tue,  "smartmatch worked correctly ($x-3)";
-  ok $x |~~  Wed,     "smartmatch worked correctly ($x-4)";
+  ok $x !~~  Wed,     "smartmatch worked correctly ($x-4)";
   ok $x.does(Tue),    ".does worked correctly ($x-1)";
   ok $x.does(day),    ".does worked correctly ($x-2)";
   is $x.day, 3,       ".day worked correctly ($x)";
