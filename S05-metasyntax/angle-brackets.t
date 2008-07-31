@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 42;
+plan 63;
 
 =begin pod
 
@@ -201,4 +201,46 @@ character classes), and those are referenced at the correct spot.
     eval_dies_ok('"foo" ~~ /<!!!>/', '<!!!> dies in regex match');
 }
 
-# and more to come...
+# A leading * indicates that the following pattern allows a partial match.
+# It always succeeds after matching as many characters as possible.
+{
+    is(''    ~~ /<*xyz>/, '',    'partial match (0)');
+    is('x'   ~~ /<*xyz>/, 'x',   'partial match (1a)');
+    is('xz'  ~~ /<*xyz>/, 'x',   'partial match (1b)');
+    is('yzx' ~~ /<*xyz>/, 'x',   'partial match (1c)');
+    is('xy'  ~~ /<*xyz>/, 'xy',  'partial match (2a)');
+    is('xyx' ~~ /<*xyz>/, 'xy',  'partial match (2a)');
+    is('xyz' ~~ /<*xyz>/, 'xyz', 'partial match (3)');
+
+    is('abc'   ~~ /<*ab+c>/,   'abc',   'partial match with quantifier (1)');
+    is('abbbc' ~~ /<*ab+c>/,   'abbbc', 'partial match with quantifier (2)');
+    is('ababc' ~~ /<*'ab'+c>/, 'ababc', 'partial match with quantifier (3)');
+}
+
+# A leading ~~ indicates a recursive call back into some or all of the
+# current rule. An optional argument indicates which subpattern to re-use
+{
+    ok('1.2.' ~~ /\d+\. <~~>/, 'recursive regex using whole pattern');
+    ok('foodbard' ~~ /(foo|bar) d <~~0>/, 'recursive regex with partial pattern');
+}
+
+# The following tokens include angles but are not required to balance
+
+# A <( token indicates the start of a result capture,
+# while the corresponding )> token indicates its endpoint
+{
+    is('foo123bar' ~~ /foo <(\d+)> bar/, 123, '<(...)> pair');
+    is('foo456bar' ~~ /foo <(\d+ bar/, '456bar', '<( match');
+    is('foo789bar' ~~ /foo \d+)> bar/, 'foo789', ')> match');
+    ok(!('foo123')  ~~ /foo <(\d+)> bar/, 'non-matching <(...)>');
+}
+
+# A « or << token indicates a left word boundary.
+# A » or >> token indicates a right word boundary.
+{
+   is('abc'   ~~ /<<abc/,   'abc', 'left word boundary (string beginning)');
+   is('!abc'  ~~ /<<abc/,   'abc', 'left word boundary (\W character)');
+   is('abc'   ~~ /abc>>/,   'abc', 'right word boundary (string end)');
+   is('abc!'  ~~ /abc>>/,   'abc', 'right word boundary (\W character)');
+   is('!abc!' ~~ /<<abc>>/, 'abc', 'both word boundaries (\W character)');
+}
