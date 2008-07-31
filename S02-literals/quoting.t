@@ -503,14 +503,14 @@ Hello, World
     my %gamma = (abc => 123);
     sub zeta {42};
 
-    is(qw(a b), <a b>, 'qw');
-    is(qww($alpha $beta), <foo bar>, 'qww');
-    is(qq($alpha $beta), 'foo bar', 'qq');
-    is(Qs($alpha @delta[] %gamma<>), 'foo @delta %gamma', 'Qs');
-    is(Qa($alpha @delta[] %gamma<>), '$alpha ' ~ @delta ~ ' %gamma', 'Qa');
-    is(Qh($alpha @delta[] %gamma<>), '$alpha @delta ' ~ %gamma, 'Qh');
-    is(Qf($alpha &zeta()), '$alpha 42', 'Qf');
-    is(Qb($alpha\t$beta), '$alpha	$beta', 'Qb');
-    is(Qc({1+1}), 2, 'Qc');
+    is(qw[a b], <a b>, 'qw');
+    is(qww[$alpha $beta], <foo bar>, 'qww');
+    is(qq[$alpha $beta], 'foo bar', 'qq');
+    is(Qs[$alpha @delta[] %gamma<>], 'foo @delta %gamma', 'Qs');
+    is(Qa[$alpha @delta[] %gamma<>], '$alpha ' ~ @delta ~ ' %gamma', 'Qa');
+    is(Qh[$alpha @delta[] %gamma<>], '$alpha @delta ' ~ %gamma, 'Qh');
+    is(Qf[$alpha &zeta()], '$alpha 42', 'Qf');
+    is(Qb[$alpha\t$beta], '$alpha	$beta', 'Qb');
+    is(Qc[{1+1}], 2, 'Qc');
 }
 
