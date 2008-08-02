@@ -33,7 +33,6 @@ is_approx(atan(-sqrt(3))     / $PI * 180, -60);
 # **takes the quadrant into account**. The second argument is
 # assumed to be 1 if it is not present.
 # Quadrant I
-#?rakudo 14 skip 'atan2 is unimplemented'
 is_approx(atan2(1, 1)           / $PI * 180, 45);
 is_approx(atan2(1)              / $PI * 180, 45);
 is_approx(atan2(1, sqrt(3))     / $PI * 180, 30);
