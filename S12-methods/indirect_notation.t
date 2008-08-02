@@ -44,7 +44,7 @@ class T2
 {
     my T2 $o .= new;
     ok( "Still alive after new" );
-    my $seed = rand(1000);
+    my $seed = 1000.rand;
     is( $o.a( $seed ), $seed, "The indirect object notation call with argument 1" );
     is( (a $o: $seed), $seed, "The indirect object notation call with arguments 2" );
     my $name = 'a';
