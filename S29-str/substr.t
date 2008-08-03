@@ -9,7 +9,6 @@ plan 42;
 { # read only
     my $str = "foobar";
 
-    #?rakudo 2 todo 'substr bug [perl #57434]'
     is(substr($str, 0, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 3, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 0, 1), "f", "first char");
@@ -114,10 +113,8 @@ plan 42;
 { # misc
     my $str = "hello foo and bar";
     is(substr($str, 6, 3), "foo", "substr");
-#?rakudo skip 'method not found'
     is($str.substr(6, 3), "foo", ".substr");
     is(substr("hello foo bar", 6, 3), "foo", "substr on literal string");
-#?rakudo 5 skip 'method not found'
     is("hello foo bar".substr(6, 3), "foo", ".substr on literal string");
     is("hello foo bar".substr(6, 3).uc, "FOO", ".substr.uc on literal string");
     is("hello foo bar and baz".substr(6, 10).capitalize, "Foo Bar An", ".substr.capitalize on literal string");
