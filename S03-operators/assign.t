@@ -173,7 +173,6 @@ plan 304;
 
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 2
 {
     # chained @array = %hash = list assignment 
@@ -184,7 +183,6 @@ plan 304;
     is(@a[1], @b[1], 'chained @ = % = list assignment');
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 1
 {
     # chained $scalar = %hash = list assignment 
@@ -288,7 +286,6 @@ my @p;
     is(@p[1],47, "+= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 42;
@@ -308,7 +305,6 @@ my @p;
     is(@p[1],12, "*= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 6;
@@ -318,7 +314,6 @@ my @p;
     is(@p[1],4, "/= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 2;
@@ -328,7 +323,6 @@ my @p;
     is(@p[1],4, "**= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = "abc";
@@ -338,7 +332,6 @@ my @p;
     is(@p[1],'plugh', "~= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = "abc";
@@ -364,7 +357,6 @@ my @p;
     is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 1;
@@ -374,7 +366,6 @@ my @p;
     is(@p[1],3, "+&= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 1;
@@ -384,7 +375,6 @@ my @p;
     is(@p[1],123, "+|= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = "z";
@@ -394,7 +384,6 @@ my @p;
     is(@p[1],'J', "~&= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = "z";
@@ -404,7 +393,6 @@ my @p;
     is(@p[1],'J', "~|= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 4;
@@ -414,7 +402,6 @@ my @p;
     is(@p[1],4, "%= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 1;
@@ -424,7 +411,6 @@ my @p;
     is(@p[1],4, "+^= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = "z";
@@ -444,7 +430,6 @@ my @p;
     is(@p[1],43, "^^= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 42;
@@ -455,7 +440,6 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 42;
@@ -466,7 +450,6 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 0;
@@ -477,7 +460,6 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 1;
@@ -488,7 +470,6 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?rakudo skip "unknown reasons"
 #?DOES 3
 {
     my $x = 511;
