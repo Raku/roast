@@ -32,7 +32,7 @@ plan 35;
     # Test the only difference between @() and list()
     is(list(), (), 'list() should return an empty list');
     'foo' ~~ /oo/; # run a regex so we have $/ below
-    #?rakudo 1 skip '@() should be the same as @($/)'
+    #?rakudo 1 todo '@() should be the same as @($/)'
     is(@(),  @($/), '@() should be the same as @($/)');
 
     is((@ 1,2 Z 3,4), <1 3 2 4>, '@ operator has proper precedence to change context of zip infix');

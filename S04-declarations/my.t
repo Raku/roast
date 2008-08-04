@@ -19,7 +19,7 @@ plan 30;
     is $ret, 42,                       'my() variable not yet visible (2)';
 }
 
-#?rakudo skip 'scoping bug'
+#?rakudo todo 'scoping bug'
 {
     my $ret = 42;
     lives_ok { $ret = my($x) ~ $x }, 'my() variable is visible (1)';

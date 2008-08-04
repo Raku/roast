@@ -8,7 +8,7 @@ plan 3;
 eval_lives_ok 'my $x; my $x', 
               'it is legal to declare my $x twice in the same scope.';
 
-#?rakudo skip "state not implemented"
+#?rakudo todo "state not implemented"
 eval_lives_ok 'state $x; state $x', 
               'it is legal to declare state $x twice in the same scope.';
 

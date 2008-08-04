@@ -55,7 +55,6 @@ Misc. Junction tests
     ok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
     ok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
 
-    #?rakudo 3 skip 'infix:<===>'
     ok(not(('a' eq ($b | $c | $a)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('b' eq ($a | $b | $c)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('c' eq ($c | $a | $b)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false'); 
@@ -124,7 +123,6 @@ Misc. Junction tests
     is($j, 5, 'reassignment of junction variable');
 }
 
-#?rakudo skip 'prefix:<\\>'
 {
     my $j;
     my $k;
@@ -138,6 +136,7 @@ Misc. Junction tests
 
     # XXX does this next one make any sense?
     $l=\$j;
+    #?rakudo todo 'prefix:<\\>'
     is(WHAT($l),'Junction', 'hard reference to junction');
 }
 

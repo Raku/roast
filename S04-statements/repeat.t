@@ -35,7 +35,7 @@ plan 16;
   is($x, 2, 'ensure repeat {} until runs at least once');
 }
 
-#?rakudo skip 'redo'
+#?rakudo todo 'redo'
 {
   my $x = 0; try { repeat { $x++; redo if $x < 10 } until 1 };
   is($x, 10, 'redo works in repeat {} until');
@@ -75,7 +75,7 @@ plan 16;
   is($x, 2, 'ensure repeat {} while runs at least once');
 }
 
-#?rakudo skip 'redo'
+#?rakudo todo 'redo'
 {
   my $x = 0; try { repeat while 0 { $x++; redo if $x < 10 } };
   is($x, 10, 'redo works in repeat');

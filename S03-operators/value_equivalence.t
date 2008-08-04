@@ -47,17 +47,16 @@ plan 51;
 }
 
 # Reference types
-#?rakudo skip 'prefix:<\\>'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
 
+  #?rakudo 2 todo 'prefix:<\\>'
   ok  (\@a === \@a), "=== on array references (1)";
   ok  (\@b === \@b), "=== on array references (2)";
   ok !(\@a === \@b), "=== on array references (3)";
 }
 
-#?rakudo skip 'prefix:<\\>'
 {
   my $a = \3;
   my $b = \3;
@@ -82,7 +81,6 @@ plan 51;
   ok !(&say === &map), "=== on sub references (2-3)";
 }
 
-#?rakudo skip 'prefix:<\\>'
 {
   my $num = 3;
   my $a   = \$num;
@@ -90,6 +88,7 @@ plan 51;
 
   ok  ($a === $a), "=== on scalar references (2-1)";
   ok  ($b === $b), "=== on scalar references (2-2)";
+  #?rakudo todo 'prefix:<\\>'
   ok  ($a === $b), "=== on scalar references (2-3)";
 }
 
@@ -104,7 +103,6 @@ plan 51;
   ok !({a => 1} === {a => 1}), "=== on anonymous hash references (2)";
 }
 
-#?rakudo skip 'prefix:<\\>'
 {
   ok !(\3 === \4),         "=== on anonymous scalar references (1)";
   ok !(\3 === \3),         "=== on anonymous scalar references (2)", :todo<bug>;

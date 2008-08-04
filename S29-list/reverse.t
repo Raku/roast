@@ -12,7 +12,7 @@ Basic test for the reverse() builtin with a string (Str).
 plan 49;
 
 # As a function :
-#?rakudo skip 'reverse as a function does not work'
+#?rakudo todo 'reverse as a function does not work'
 is( reverse('Pugs'), 'sguP', "as a function");
 
 # As a method :
@@ -48,8 +48,8 @@ my @e = (4, 3, 2, 1);
 
 is(@a, @e, "list was reversed");
 
-#?rakudo skip 'reverse as a function'
 {
+    #?rakudo 4 todo 'reverse as a function'
     my $a = reverse("foo");
     is($a, "oof", "string was reversed");
 
@@ -161,7 +161,7 @@ Tests for %hash.reverse, which inverts the keys and values of a hash.
 
 =end pod
 
-#?rakudo skip 'reverse for hash not implemented'
+#?rakudo todo 'reverse for hash not implemented'
 {
     my %hash = <a b c d>;
     is(%hash.reverse, {'b' => 'a', 'd' => 'c'}, 'simple hash reversal');
