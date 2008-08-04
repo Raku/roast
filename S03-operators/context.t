@@ -83,7 +83,8 @@ plan 35;
     ok((% 1,2 Z 3,4) eqv {1 => 2, 3 => 4}, '% has correct precedence to change context of zip infix');
 }
 
-# L<S03/Changes to Perl 5 operators/Perl 5's ${...}, @{...}, %{...}, etc>
+# L<S03/"Changes to Perl 5 operators"/Perl 5's ${...}, @{...}, %{...}, etc>
+#                       ^ non-breaking space
 # Deprecated P5 dereferencing operators:
 {
     my $scalar = 'abcd';

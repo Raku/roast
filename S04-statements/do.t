@@ -119,7 +119,7 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
     '), 2, "'redo' works in 'do' block";
 }
 
-# L<S04/The do-once loop/"bare block" "no longer a do-once loop">
+# L<S04/The do-once loop/"bare block is not a do-once">
 {
     eval_dies_ok 'my $i; { $i++; next; $i--; }',
         "bare block can't take 'next'";

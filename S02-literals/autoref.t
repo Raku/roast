@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S02/"Literals"/"In scalar context, though, the implied parentheses are not removed">
+# L<S02/"Literals"/"In item context, though, the implied parentheses are not removed">
 
 =begin description
 
