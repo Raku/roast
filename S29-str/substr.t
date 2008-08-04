@@ -56,6 +56,7 @@ plan 42;
     my $str = "gorch ding";
 
     substr($str, 0, 5) = "gloop";
+#?rakudo skip "substr as lvalue"
     is($str, "gloop ding", "lvalue assignment modified original string");
 
 #?rakudo skip "can't parse"
