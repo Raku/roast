@@ -42,6 +42,7 @@ is(%hash4{"key"}, 'value', '(key => value) seperated key/value has creation work
 my %hash5 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash5, 'Hash');
 
+#?rakudo 10 skip "slicing not yet implemented"
 my @slice1 = %hash5{"one", "three"};
 is(+@slice1, 2, 'got the right amount of values from the %hash{} slice');
 is(@slice1[0], 1, '%hash{} slice successfull');
@@ -71,6 +72,7 @@ is(%hash5<foo>[1], 1, 'value assigned successfully with arrayref in list context
 my %hash6 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash6, 'Hash');
 
+#?rakudo 4 skip "sort keys %hash broken (method form works)"
 my @keys1 = sort keys %hash6;
 is(+@keys1, 3, 'got the right number of keys');
 is(@keys1[0], 'one', 'got the right key');
@@ -88,6 +90,7 @@ is(@keys2[2], 'two', 'got the right key');
 my %hash7 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash7, 'Hash');
 
+#?rakudo 4 skip "sort values %hash broken (method form works)"
 my @values1 = sort values %hash7;
 is(+@values1, 3, 'got the right number of values');
 is(@values1[0], 1, 'got the right values');
@@ -127,6 +130,7 @@ is($key, 1, '%hash.kv gave us our key');
 is($val, 2, '%hash.kv gave us our val');
 
 %hash9{2} = 3;
+#?rakudo 1 skip "rx:Perl5// not implemented"
 like(~%hash9, rx:Perl5/1\s+2\s+2\s+3/, "hash can stringify");
 
 my %hash10 = <1 2>;
@@ -156,6 +160,9 @@ test2 %h;
 # 20060604: Now that defaulting works the other way around, hashes resume
 # the bias-to-the-right behaviour, consistent with Perl 5.
 #
+#?DOES 4
+#?rakudo skip "hash contextualizer unimplemented"
+{
 my %dupl = (a => 1, b => 2, a => 3);
 is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
@@ -171,3 +178,4 @@ is $i, 4, "for %hash works";
 
 eval ' @%(a => <b>)<a> ';
 ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
+}
