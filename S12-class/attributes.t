@@ -17,6 +17,7 @@ my $c = Counter.new();
 try {
     $c.x
 }
+#?rakudo 1 skip 'get_bool not implemented in exceptions'
 ok($!, 'no public accessor for private attribute');
 $c.init();
 is($c.get(), 41, 'can assign and get from within the class');
