@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 52;
+plan 50;
 
 =begin pod
 
@@ -110,19 +110,19 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 sub infix:<more_than_plus>(Int $a, Int $b) { $a + $b + 1 }
 is(try { [more_than_plus] 1, 2, 3 }, 8, "[...] reduce metaop works on user defined ops", :todo<bug>);
 
-{
-  my $arr = [ 42, [ 23 ] ];
-  $arr[1][1] = $arr;
-
-  is try { [.[]] $arr, 1, 1, 1, 1, 1, 0 }, 23, '[.[]] works with infinite data structures';
-}
-
-{
-  my $hash = {a => {b => 42}};
-  $hash<a><c> = $hash;
-
-  is try { [.{}] $hash, <a c a c a b> }, 42, '[.{}] works with infinite data structures';
-}
+# {
+#   my $arr = [ 42, [ 23 ] ];
+#   $arr[1][1] = $arr;
+# 
+#   is try { [.[]] $arr, 1, 1, 1, 1, 1, 0 }, 23, '[.[]] works with infinite data structures';
+# }
+# 
+# {
+#   my $hash = {a => {b => 42}};
+#   $hash<a><c> = $hash;
+# 
+#   is try { [.{}] $hash, <a c a c a b> }, 42, '[.{}] works with infinite data structures';
+# }
 
 # L<S03/"Reduction operators"/"Among the builtin operators, [+]() returns 0 and [*]() returns 1">
 
