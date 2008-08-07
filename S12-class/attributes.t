@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 19;
 
 # L<S12/Methods/"For a call on your own private method">
 
@@ -57,3 +57,37 @@ is($m.d, 4, 'list attribute declaration of publics works');
 is($m.t1, 3, 'list attribute declaration of alias works');
 is($m.t2, 3, 'list attribute declaration of alias works');
 is($m.t3, 11, 'list attribute declaration of privates works');
+
+
+class Foo {
+    has %.bar is rw;
+    method set_bar {
+        %.bar<a> = 'baz';
+    }
+}
+my $foo = Foo.new;
+is($foo.bar.WHAT, 'Hash', 'hash attribute initialized');
+$foo.set_bar();
+is($foo.bar<a>, 'baz',    'hash attribute initialized/works');
+my %s = $foo.bar;
+is(%s<a>, 'baz',          'hash attribute initialized/works');
+$foo.bar<b> = 'wob';
+is($foo.bar<b>, 'wob',    'hash attribute initialized/works');
+
+class Bar {
+    has @.bar is rw;
+    method set_bar {
+        @.bar[0] = 100;
+        @.bar[1] = 200;
+    }
+}
+my $bar = Bar.new;
+is($bar.bar.WHAT, 'Array', 'array attribute initialized');
+$bar.set_bar();
+is($bar.bar[0], 100,       'array attribute initialized/works');
+is($bar.bar[1], 200,       'array attribute initialized/works');
+my @t = $bar.bar;
+is(@t[0], 100,             'array attribute initialized/works');
+is(@t[1], 200,             'array attribute initialized/works');
+$bar.bar[2] = 300;
+is($bar.bar[2], 300,       'array attribute initialized/works');
