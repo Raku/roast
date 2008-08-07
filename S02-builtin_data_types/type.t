@@ -58,7 +58,6 @@ my Str $bar;
             $n * fact($n - 1);
         }
     }
-    #?rakudo skip "type checking bug"
     is fact(5), 120, 'recursive factorial with type contstraints work';
 }
 
