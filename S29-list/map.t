@@ -143,7 +143,6 @@ should be equivalent to
 }
 
 
-#?rakudo skip '{} hash composer not implemented'
 {
   my @a = (1, 2, 3); 
   # XXX is hash { ... } legal?
