@@ -94,7 +94,7 @@ role plugin_2 { multi method init_hook { $.cnt += 3 } }
     # TODO: add test for $object.+$meth (dynamic method) with multiple methods called as well
 }
 
-ok(0,q'STUB: $object.*WALK[:breadth:omit($?CLASS)]::meth(@args);', :todo<feature> );
+ok(0, q 'STUB: $object.*WALK[:breadth:omit($?CLASS)]::meth(@args);', :todo<feature> );
 
 ok(0, "STUB: there is more Calling Sets functionality which needs tests", :todo<feature>);
 # vim: ft=perl6
