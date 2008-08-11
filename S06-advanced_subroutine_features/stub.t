@@ -1,11 +1,13 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # L<S06/Stub declarations>
 
 lives_ok({sub thunder {...}}, 'sub foo {...} works');
+
+eval_dies_ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
 
 {
     sub lightning {...}
