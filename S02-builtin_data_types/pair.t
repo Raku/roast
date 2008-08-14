@@ -301,3 +301,22 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
   is $val,                  "new",  "binding .value to a var works (3)", :todo<bug>;
   is $pair.value,           "new",  "binding .value to a var works (4)", :todo<bug>;
 }
+
+# L<S06/Named arguments/In other words :$when is shorthand for :when($when)>
+{
+    my $item = 'bar';
+    my $pair = (:$item);
+    ok($pair eqv (item => $item), ':$foo syntax works');
+
+    my @arr  = <a b c d e f>;
+    my $pair = (:@arr);
+    ok($pair eqv (arr => @arr), ':@foo syntax works');
+
+    my %hash = foo => 'bar', baz => 'qux';
+    my $pair = (:%hash);
+    ok($pair eqv (hash => %hash), ':%foo syntax works');
+
+    my sub code {return 42}
+    my $pair = (:&code);
+    ok($pair eqv (code => &code), ':&foo syntax works');
+}
