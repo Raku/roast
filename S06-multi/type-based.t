@@ -64,6 +64,7 @@ is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (
 
 # Test for slurpy MMDs
 
+#?rakudo emit # proto fails to :multi
 proto mmd {}  # L<S06/"Routine modifiers">
 multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }
