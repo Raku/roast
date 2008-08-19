@@ -25,6 +25,7 @@ plan 13;
 }
 
 # same with direct := syntax
+#?rakudo skip '.infix:='
 {
     my $x;
 
@@ -60,6 +61,7 @@ plan 13;
 }
 
 # &sub.signature should return a Siglist object
+#?rakudo skip 'lexically scoped subs not yet implemented'
 {
     my sub foo ($a, $b) {}
     my $siglist = :($a, $b);
