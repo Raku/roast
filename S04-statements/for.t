@@ -88,7 +88,6 @@ plan 39;
     };
     is($_,"GLOBAL VALUE","After the loop the implicit topic gets restored");
 }
-#?rakudo skip 'implicit invocant'
 {
     # as statement modifier
     $_ = "GLOBAL VALUE";

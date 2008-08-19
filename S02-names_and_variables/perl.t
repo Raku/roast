@@ -35,11 +35,8 @@ my @tests = (
     [],      # empty array
     [ 42 ],  # only one elem
     [< a b c>],
-    #?rakudo emit # {...}.perl is invalid
     {},           # empty hash
-    #?rakudo emit # {...}.perl is invalid
     { a => 42 },  # only one elem
-    #?rakudo emit # {...}.perl is invalid
     { :a(1), :b(2), :c(3) },
 
     [ 3..42 ],
@@ -53,12 +50,9 @@ my @tests = (
     [ 3..42, 17..Inf, -Inf..5 ],
 
     # Nested things
-    #?rakudo emit # {...}.perl is invalid
     { a => [1,2,3] },  # only one elem
     [      [1,2,3] ],  # only one elem
-    #?rakudo emit # {...}.perl is invalid
     { a => [1,2,3], b => [4,5,6] },
-    #?rakudo emit # {...}.perl is invalid
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 

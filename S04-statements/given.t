@@ -210,7 +210,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     my $passed = 0;
     ok( eval('given TestIt.new { $_.passit; };'), '$_. method calls' );
     ok( eval('given TestIt.new { .passit; };'), '. method calls' );
-    #?rakudo 2 skip 'Null PMC access in type'
     ok( eval('given TestIt.new { $_.testing<a> = 1; };'),'$_. attribute access' );
     ok( eval('given TestIt.new { .testing<a> = 1; };'),  '. attribute access' );
     my $t = TestIt.new;
