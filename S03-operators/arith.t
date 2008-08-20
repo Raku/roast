@@ -326,9 +326,9 @@ is 1**1, 1;
 is Inf, Inf;
 is -Inf, -Inf;
 isnt Inf, -Inf;
-#?rakudo skip 'undef.abs'
+#?rakudo todo 'undef.abs'
 is -Inf.abs, Inf;
-#?rakudo 4 skip 'Inf'
+#?rakudo 4 todo 'Inf'
 is Inf+100, Inf;
 is Inf-100, Inf;
 is Inf*100, Inf;
@@ -356,8 +356,8 @@ is Inf/-100, -Inf;
 }
 # See L<"http://mathworld.wolfram.com/Indeterminate.html">
 # for why these three values are defined like they are.
-#?rakudo skip 'Inf, NaN'
 {
+    #?rakudo 2 todo 'Inf, NaN'
     is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
     is 1**Inf, 1;
@@ -408,7 +408,7 @@ All uses of a zero modulus or divisor should 'die', and the
 
 my $x;
 
-#?rakudo 3 skip 'modulo by zero'
+#?rakudo 3 todo 'modulo by zero'
 dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
