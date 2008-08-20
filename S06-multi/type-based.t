@@ -69,8 +69,8 @@ proto mmd {}  # L<S06/"Routine modifiers">
 multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }
 
-#?rakudo 3 skip '"Null PMC access in type()'
 is(mmd(), 1, 'Slurpy MMD to nullary');
+#?rakudo 2 todo 'MMD'
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
