@@ -8,10 +8,10 @@ plan 32;
 #?rakudo skip 'not implemented in class Undef'
 {
     my $hash; 
-    isa_ok $hash, 'Any';
+    isa_ok $hash, Any;
 
     $hash{"1st"} = 5; 
-    isa_ok $hash, 'Hash';
+    isa_ok $hash, Hash;
 
     is $hash{"1st"}, 5, 'lvalue hash assignment works (w/ double quoted keys)';
 
@@ -40,12 +40,13 @@ plan 32;
 }
 
 # hash slicing
-#?rakudo skip 'hash slicing unimplemented/nonfunctional'
 {
     my $hash = {'1st' => 1, '2nd' => 2, '3rd' => 3};
-    isa_ok $hash, 'Hash';
+    #?rakudo todo 'hash slicing unimplemented/nonfunctional'
+    isa_ok $hash, Hash;
 
     my @slice1 = $hash{"1st", "3rd"};
+    #?rakudo 10 todo 'hash slicing unimplemented/nonfunctional'
     is +@slice1,   2, 'got the right amount of values from the %hash{} slice';
     is @slice1[0], 1, '%hash{} slice successfull (1)';
     is @slice1[1], 3, '%hash{} slice successfull (2)';
@@ -77,7 +78,7 @@ plan 32;
     isa_ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
     isa_ok $hash_d, "Hash";
-    #?rakudo skip 'pair diambiguation not a hash'
+    #?rakudo todo 'pair diambiguation not a hash'
     my $hash_e = { pair "a", 1, "b", 2 };
     isa_ok $hash_e, "Hash";
 }
