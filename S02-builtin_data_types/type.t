@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 25;
+plan 27;
 
 {
     ok(try{my Int $foo; 1}, 'compile my Int $foo');
@@ -33,10 +33,12 @@ my Str $bar;
 }
 
 # L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
-#?rakudo skip 'int, num, undef assign not implemented'
+#?rakudo skip 'native types'
 {
+    eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = undef', 'native int type cannot be undef');
     lives_ok({my Int $beta = undef},      'object Int type can be undef');
+    eval_lives_ok('my num $alpha = 1',    'Has native type num');
     eval_dies_ok('my num $alpha = undef', 'native num type cannot be undef');
     lives_ok({my Num $beta = undef},      'object Num type can be undef');
 }
