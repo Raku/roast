@@ -154,8 +154,8 @@ is(42_127_000, 42127000, 'multiple underscores ok');
 is(42.0_1,     42.01,    'underscores in fraction ok');
 is(4_2.01,     42.01,    'underscores in whole part ok');
 
-#?rakudo 999 skip "weird errors"
 eval_dies_ok('4_2._0_1', 'single underscores are not ok directly after the dot');
+#?rakudo todo 'Underscores in numbers'
 is(4_2.0_1, 42.01,  'single underscores are ok');
 
 is 0_1, 1, "0_1 is parsed as 0d1";
