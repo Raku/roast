@@ -42,7 +42,6 @@ plan 32;
 # hash slicing
 {
     my $hash = {'1st' => 1, '2nd' => 2, '3rd' => 3};
-    #?rakudo todo 'hash slicing unimplemented/nonfunctional'
     isa_ok $hash, Hash;
 
     my @slice1 = $hash{"1st", "3rd"};
