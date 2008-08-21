@@ -55,7 +55,7 @@ my $tempfile = "temp-ex-output." ~ $*PID ~ "." ~ 1000.rand;
 
 my $command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
 diag $command;
-system $command;
+run $command;
 
 my $child_env = slurp $tempfile;
 my %child_env = eval $child_env;
@@ -85,7 +85,7 @@ is(%*ENV<PUGS_ROCKS>,undef,'We can remove keys from %*ENV');
 
 my $command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
 diag $command;
-system $command;
+run $command;
 
 my $child_env = slurp $tempfile;
 my %child_env = eval $child_env;
