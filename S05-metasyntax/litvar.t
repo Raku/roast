@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 29;
+plan 35;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
@@ -35,16 +35,23 @@ ok('a' ~~ m/$aref[0]/, 'Array ref 0');
 ok('a' ~~ m/$aref.[0]/, 'Array ref dot 0');
 ok('a' ~~ m/@var[0]/, 'Array 0');
 
-ok('1' ~~ m/$href.{a}/, 'Hash ref dot A');
-ok('1' ~~ m/$href{a}/, 'Hash ref A');
-ok('1' ~~ m/%var{a}/, 'Hash A');
+ok('1' ~~ m/$href.{'a'}/, 'Hash ref dot A');
+ok('1' ~~ m/$href{'a'}/, 'Hash ref A');
+ok('1' ~~ m/%var{'a'}/, 'Hash A');
+
+ok('1' ~~ m/$href.<a>/, 'Hash ref dot A');
+ok('1' ~~ m/$href<a>/, 'Hash ref A');
+ok('1' ~~ m/%var<a>/, 'Hash A');
 
 ok(!( 'a' ~~ m/$aref[1]/ ), 'Array ref 1');
 ok(!( 'a' ~~ m/$aref.[1]/ ), 'Array ref dot 1');
 ok(!( 'a' ~~ m/@var[1]/ ), 'Array 1');
-ok(!( '1' ~~ m/$href.{b}/ ), 'Hash ref dot B');
-ok(!( '1' ~~ m/$href{b}/ ), 'Hash ref B');
-ok(!( '1' ~~ m/%var{b}/ ), 'Hash B');
+ok(!( '1' ~~ m/$href.{'b'}/ ), 'Hash ref dot B');
+ok(!( '1' ~~ m/$href{'b'}/ ), 'Hash ref B');
+ok(!( '1' ~~ m/%var{'b'}/ ), 'Hash B');
+ok(!( '1' ~~ m/$href.<b>/ ), 'Hash ref dot B');
+ok(!( '1' ~~ m/$href<b>/ ), 'Hash ref B');
+ok(!( '1' ~~ m/%var<b>/ ), 'Hash B');
 
 # REGEXES
 # However, if $var contains a Regex object, instead of attempting to convert it to a string, it is called as a subrule
