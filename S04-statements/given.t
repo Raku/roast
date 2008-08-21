@@ -142,13 +142,13 @@ Tests the given block, as defined in L<S04/"Switch statements">
 {
     my ($foo, $bar) = (1, 0);
     given (1) {
-        when (1) { $foo = 2; last; $foo = 3; }
+        when (1) { $foo = 2; break; $foo = 3; }
         when (2) { $foo = 4; }
         default { $bar = 1 }
         $foo = 5;
     };
-    is($foo, 2, 'last aborts when');
-    ok(!$bar, 'last prevents default');
+    is($foo, 2, 'break aborts when');
+    ok(!$bar, 'break prevents default');
 }
 
 #?rakudo skip 'my($a, $b, $c) = (1, 2, 3) parsefail'
@@ -157,7 +157,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     my $quux = 0;
     for 0, 1, 2 {
         when 0 { $foo++; continue }
-        when 1 { $bar++; last }
+        when 1 { $bar++; break }
         when 2 { $quux++; }
         default { $baz = $_ }
         $bad = 1;
@@ -165,7 +165,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     is($foo, 1, 'first iteration');
     is($bar, 1, 'second iteration');
     is($baz, 0, 'continue worked');
-    is($quux, 1, "last didn't abort loop");
+    is($quux, 1, "break didn't abort loop");
     ok(!$bad, "didn't fall through");
 }
 
