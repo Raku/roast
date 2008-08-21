@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 12;
 
 # L<S29/Context/=item die>
 
@@ -34,8 +34,6 @@ is ({ try { map    { die }, 1,2,3 }; 42 }()), 42, "die in map";
 is ({ try { grep   { die }, 1,2,3 }; 42 }()), 42, "die in grep";
 is ({ try { sort   { die }, 1,2,3 }; 42 }()), 42, "die in sort";
 is ({ try { reduce { die }, 1,2,3 }; 42 }()), 42, "die in reduce";
-is ({ try { min    { die }, 1,2,3 }; 42 }()), 42, "die in min";
-is ({ try { max    { die }, 1,2,3 }; 42 }()), 42, "die in max";
 
 is ({ try { for 1,2,3 { die } };         42 }()), 42, "die in for";
 is ({ try { if 1 { die } else { die } }; 42 }()), 42, "die in if";
