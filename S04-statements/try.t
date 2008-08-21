@@ -172,6 +172,6 @@ plan 24;
     ok(~WHAT($!), '$! is an object');
     ok(!$naughty, "did not get caught by wrong handler");
     #?pugs todo 'bug'
-    is(eval('WHAT($!)'), Dandy, ".. of the right class");
+    is(eval('WHAT($!)'), 'Dandy', ".. of the right class");
 };
 
