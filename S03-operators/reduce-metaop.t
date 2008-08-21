@@ -92,9 +92,9 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   # 18:45 < autrijus> hm, I found a way to easily do linked list consing in Perl6
   # 18:45 < autrijus> [=>] 1..10;
   my $list = [=>] 1,2,3;
-  is $list.key,                1, "[=>] works (1)";
-  is try({$list.value.key}),   2, "[=>] works (2)";
-  is try({$list.value.value}), 3, "[=>] works (3)";
+  is $list.key,                 1, "[=>] works (1)";
+  is (try {$list.value.key}),   2, "[=>] works (2)";
+  is (try {$list.value.value}), 3, "[=>] works (3)";
 }
 
 {
@@ -108,7 +108,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
 sub infix:<more_than_plus>(Int $a, Int $b) { $a + $b + 1 }
-is(try({ [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops", :todo<bug>);
+is( (try { [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops", :todo<bug>);
 
 # {
 #   my $arr = [ 42, [ 23 ] ];
@@ -137,7 +137,7 @@ is( [+](), 0, "[+]() returns 0");
   is($a, 3, '[=] assigns successfully (1)');
   is($b, 3, '[=] assigns successfully (2)');
 
-  ok try({ ([=] $a, $b, 4) = 5 }), '[=] lvalue context restored (1)';
+  lives_ok { ([=] $a, $b, 4) = 5 }, '[=] lvalue context restored (1)';
   is($a, 5, '[=] lvalue context restored (2)');
   is($b, 4, '[=] lvalue context restored (3)');
 
