@@ -54,7 +54,8 @@ is Backend2.new.hi, 23, "basic sanity (2)";
     ok (!try { $a.hi }), "calling a method on no object didn't succeed (3)";
     ok ($a.backend = Backend1.new()), "setting a handler object (3)";
     ok (!($a ~~ Backend1)),             "object wasn't isa()ed (3)";
-    is try{ $a.hi }, 42, "method was successfully handled by backend object (3)", :todo<feature>;
+    #?pugs todo 'feature'
+    is try({ $a.hi }), 42, "method was successfully handled by backend object (3)";
   }
 }
 
@@ -104,11 +105,12 @@ ok MultiFrontend.new, "class definition using multiple method names worked";
   {
     my $a;
     ok ($a = MyArray.new(elems => [1..5])), "basic instantiation worked";
-    is try{ $a.concat }, "12345", "attribute delegation worked", :todo<feature>;
-    is try{ $a.bytes  }, 5, "return delegation worked", :todo<feature>;
-    is try{ $a.chars  }, 5, "return delegation worked", :todo<feature>;
-    is try{ $a.codes  }, 5, "return delegation worked", :todo<feature>;
-    is try{ $a.graphs }, 5, "return delegation worked", :todo<feature>;
+    #?pugs 5 eval 'feature'
+    is $a.concat , "12345", "attribute delegation worked";
+    is $a.bytes  , 5, "return delegation worked";
+    is $a.chars  , 5, "return delegation worked";
+    is $a.codes  , 5, "return delegation worked";
+    is $a.graphs , 5, "return delegation worked";
   }
 }
 
