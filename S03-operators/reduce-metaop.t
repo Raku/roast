@@ -108,7 +108,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
 sub infix:<more_than_plus>(Int $a, Int $b) { $a + $b + 1 }
-is(try { [more_than_plus] 1, 2, 3 }, 8, "[...] reduce metaop works on user defined ops", :todo<bug>);
+is(try({ [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops", :todo<bug>);
 
 # {
 #   my $arr = [ 42, [ 23 ] ];
@@ -129,19 +129,20 @@ is(try { [more_than_plus] 1, 2, 3 }, 8, "[...] reduce metaop works on user defin
 is( [*](), 1, "[*]() returns 1");
 is( [+](), 0, "[+]() returns 0");
 
+#?pugs todo '[=] meta ops'
 {
   my ($a, $b);
 
-  ok ([=] $a, $b, 3), '[=] evaluates successfully', :todo<feature>;
-  is($a, 3, '[=] assigns successfully (1)', :todo<feature>);
-  is($b, 3, '[=] assigns successfully (2)', :todo<feature>);
+  ok ([=] $a, $b, 3), '[=] evaluates successfully';
+  is($a, 3, '[=] assigns successfully (1)');
+  is($b, 3, '[=] assigns successfully (2)');
 
-  ok try { ([=] $a, $b, 4) = 5 }, '[=] lvalue context restored (1)';
-  is($a, 5, '[=] lvalue context restored (2)', :todo<feature>);
-  is($b, 4, '[=] lvalue context restored (3)', :todo<feature>);
+  ok try({ ([=] $a, $b, 4) = 5 }), '[=] lvalue context restored (1)';
+  is($a, 5, '[=] lvalue context restored (2)');
+  is($b, 4, '[=] lvalue context restored (3)');
 
   dies_ok { [=] "this_is_a_constant", 42 },
-      "[=] can't assign to constants (1)", :todo<feature>;
+      "[=] can't assign to constants (1)";
   dies_ok { [=] $a, $b, "this_is_a_constant", 42 },
-      "[=] can't assign to constants (2)", :todo<feature>;
+      "[=] can't assign to constants (2)";
 }
