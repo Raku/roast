@@ -92,9 +92,9 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   # 18:45 < autrijus> hm, I found a way to easily do linked list consing in Perl6
   # 18:45 < autrijus> [=>] 1..10;
   my $list = [=>] 1,2,3;
-  is $list.key,              1, "[=>] works (1)";
-  is try{$list.value.key},   2, "[=>] works (2)";
-  is try{$list.value.value}, 3, "[=>] works (3)";
+  is $list.key,                1, "[=>] works (1)";
+  is try({$list.value.key}),   2, "[=>] works (2)";
+  is try({$list.value.value}), 3, "[=>] works (3)";
 }
 
 {

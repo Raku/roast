@@ -38,8 +38,8 @@ eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 
 #?rakudo todo 'do { } and lexicals'
 {
-  is(do{my $a = 3; $a}, 3, 'do{my $a = 3; $a} works');
-  is(do{1; my $a = 3; $a}, 3, 'do{1; my $a = 3; $a} works');
+  is(do {my $a = 3; $a}, 3, 'do{my $a = 3; $a} works');
+  is(do {1; my $a = 3; $a}, 3, 'do{1; my $a = 3; $a} works');
 }
 
 eval_lives_ok 'my $x = my $y = 0;', '"my $x = my $y = 0" parses';
