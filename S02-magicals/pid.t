@@ -32,7 +32,7 @@ my $tempfile = "temp-ex-output" ~ nonce;
 
 my $command = $pugs ~ q! -e 'say $PID'! ~ qq!$redir $tempfile!;
 diag $command;
-system $command;
+run $command;
 
 my $child_pid = slurp $tempfile;
 $child_pid .= chomp;
