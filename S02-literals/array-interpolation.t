@@ -16,7 +16,7 @@ plan 12;
 
   is ~@array, "a b c d",
     "arrays whose elements don't contain whitespace stringify correctly (1)";
-  #?rakudo 2 todo 'Array interpolation b0rked'
+  #?rakudo 2 todo 'Array interpolation b0rked, RT # 58246'
   is "@array[]", "a b c d", "arrays whose elements don't contain whitespace stringify correctly (2)";
   is "@array.[]", "a b c d", '@array.[] interpolates';
   is "@array", "@array", '@array (without brackets) doesnt interpolate';
