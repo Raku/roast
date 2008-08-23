@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 11;
+plan 9;
 
 # L<S29/Hash/=item delete>
 
@@ -26,15 +26,16 @@ sub gen_hash {
 
 {
     my %h1 = gen_hash;
-    my %h2 = gen_hash;
 
     my $b = %h1<b>;
-    is delete(%h1, <b>), $b, "Test for delete single key. (Indirect notation)";
-    is %h2.delete(<b>), $b, "Test for delete single key. (Method call)";
+    is %h1.delete(<b>), $b, "Test for delete single key. (Method call)";
+}
 
+#?rakudo skip 'Slices'
+{
+    my %h1 = gen_hash;
     my @cde = %h1<c d e>;
-    is delete(%h1, <c d e>), @cde, "test for delete multiple keys. (Indirect notation)";
-    is %h2.delete(<c d e>), @cde, "test for delete multiple keys. (method call)";
+    is %h1.delete(<c d e>), @cde, "test for delete multiple keys. (method call)";
 }
 
 
@@ -44,9 +45,12 @@ is +%hash, 4, "basic sanity (2)";
 is ~%hash.delete("a"), "1",
   "deletion of a hash element returned the right value";
 is +%hash, 3, "deletion of a hash element";
-is ~%hash.delete("c", "d"), "3 4",
-  "deletion of hash elements returned the right values";
-is +%hash, 1, "deletion of hash elements";
+#?rakudo skip 'slurpy Hash.delete'
+{
+    is ~%hash.delete("c", "d"), "3 4",
+    "deletion of hash elements returned the right values";
+    is +%hash, 1, "deletion of hash elements";
+}
 ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 
 {
