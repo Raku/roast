@@ -45,7 +45,6 @@ is +%hash, 4, "basic sanity (2)";
 is ~%hash.delete("a"), "1",
   "deletion of a hash element returned the right value";
 is +%hash, 3, "deletion of a hash element";
-#?rakudo skip 'slurpy Hash.delete'
 {
     is ~%hash.delete("c", "d"), "3 4",
     "deletion of hash elements returned the right values";
