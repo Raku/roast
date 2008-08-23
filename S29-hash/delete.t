@@ -19,7 +19,7 @@ Test delete method of Spec Functions.
 
 sub gen_hash {
     my %h;
-    my $i;
+    my $i = 0;
     for 'a'..'z' { %h{$_} = ++$i; }
     return %h;
 }
