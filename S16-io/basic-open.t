@@ -28,7 +28,6 @@ sub test_lines(@lines) {
 }
 
 # test that we can interate over =$fh
-#?rakudo skip 'prefix:= not working without lazy-lists'
 {
     my $fh =  open('t/spec/S16-io/test-data');
 
@@ -41,7 +40,6 @@ sub test_lines(@lines) {
 }
 
 # test that we can get all items in list context:
-#?rakudo skip 'prefix:= not working without lazy-lists'
 {
     my $fh =  open('t/spec/S16-io/test-data');
     ok defined($fh), 'Could open test file (again)';
