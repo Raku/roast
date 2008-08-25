@@ -327,7 +327,7 @@ is Inf, Inf;
 is -Inf, -Inf;
 isnt Inf, -Inf;
 #?rakudo todo 'undef.abs'
-is -Inf.abs, Inf;
+is (-Inf).abs, Inf;
 #?rakudo 4 todo 'Inf'
 is Inf+100, Inf;
 is Inf-100, Inf;
