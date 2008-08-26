@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 10;
 
 #?rakudo todo 'Hash interpolation with %hash<literal>'
 {
@@ -25,4 +25,17 @@ plan 7;
   is "%hash{}", "a\t1\nb\t2\n", 'interpolation with curly braces';
   is "%hash<>", "a\t1\nb\t2\n", 'interpolation with angle brackets';
   is "%hash", '%hash', 'no interpolation';
+}
+
+#?rakudo skip 'Hash interpolation'
+{
+    # "%hash{a}" actually calls a(). Test that.
+    my %hash = (a => 1, b => 2);
+    sub do_a {
+        'b';
+    }
+    is "%hash{do_a}", "2",  '%hash{do_a} calls do_a()';
+
+    is "%hash{'b'}",  "b",  'can quote hash indexes in interpolations 1';
+    is "%hash{"b"}",  "b",  'can quote hash indexes in interpolations 2';
 }
