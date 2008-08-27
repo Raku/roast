@@ -89,6 +89,7 @@ is $foo, 1, "die should stop execution immediately.";
     is $foo, 2, 'if with no parens, and closure as cond';
 }
 
+#?rakudo skip 'lexically scoped functions'
 {
     my $var = 9;
     my sub func( $a, $b, $c ) { $var };
@@ -106,7 +107,7 @@ is $foo, 1, "die should stop execution immediately.";
 }
 
 {
-    isnt(eval('if 1; 2'), 2, 'test "if 1"');
+    eval_dies_ok('if 1; 2', '"if" requires a block');
 }
 
 
