@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 17;
 
 =begin description
 
@@ -9,7 +9,8 @@ Rakudo had a bug which caused failures when a regex match happend inside the
 body of a C<while> loop.
 See L<See http://rt.perl.org/rt3/Ticket/Display.html?id=58306>.
 
-So now we test that you can use both a regex and its result object in any kind of block.
+So now we test that you can use both a regex and its result object in any
+kind of block, and in the condition, if any. 
 
 =end description
 
@@ -46,6 +47,31 @@ my $discarded = do {
 #?rakudo todo 'Proper contextual scoping for $/'
 is ~$/, 'd', '... even outside the block';
 
-# TODO: repeat ... until, gather/take, lambdas
+#?rakudo skip 'Using match object in a while loop, RT #58352'
+{
+    my $str = 'abc';
+    my $count = 0;
+    my $match = '';;
+    while $str ~~ /b/ {
+        $count++;
+        $str = '';
+        $match = "$/";
+    }
+    ok $count, 'Can match in the condition of a while loop';
+    is $match, 'b', '... and can use $/ in the block';
+    is "$/",   'b', '... and can use $/ outside the block';
+}
+
+#?rakudo skip 'Using match object in an if statement, RT #58352'
+{
+    my $match = '';
+    if 'xyc' ~~ /x/ {
+        $match = "$/";
+    }
+    is $match, 'x', 'Can match in the condition of an if statement';
+    is "$/", '  x', '... and can use $/ outside the block';
+}
+
+# TODO: repeat ... until, gather/take, lambdas, if/unless statement modifiers
 
 # vim: ft=perl6
