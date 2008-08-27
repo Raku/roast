@@ -31,13 +31,13 @@ ok !(undef & -1), 'undef&-1 in boolean context';
 ok ?(-1 ^ undef), '-1^undef in boolean context';
 ok ?(undef ^ -1), 'undef^-1 in boolean context';
 
-(1|undef && pass '1|undef in boolean context') || fail '1|undef in boolean context';
+(1|undef && pass '1|undef in boolean context') || flunk '1|undef in boolean context';
 #?rakudo skip 'Junctions and short-circituing operators'
 #?DOES 1
 {
-(1 & undef && fail '1&undef in boolean context') || pass '1&undef in boolean context';
+(1 & undef && flunk '1&undef in boolean context') || pass '1&undef in boolean context';
 }
-(1^undef && pass '1^undef in boolean context') || fail '1^undef in boolean context';
+(1^undef && pass '1^undef in boolean context') || flunk '1^undef in boolean context';
 
 ok !(0 | undef), '0|undef in boolean context';
 ok !(undef | 0), 'undef|0 in boolean context';
@@ -51,9 +51,9 @@ ok !(undef ^ 0), 'undef^0 in boolean context';
 #?rakudo skip 'Junctions and short-circuiting operators'
 #?DOES 3
 {
-    (0 | undef && fail '0|undef in boolean context') || pass '0|undef in boolean context';
-    (0 & undef && fail '0&undef in boolean context') || pass '0&undef in boolean context';
-    (0 ^ undef && fail '0^undef in boolean context') || pass '0^undef in boolean context';
+    (0 | undef && flunk '0|undef in boolean context') || pass '0|undef in boolean context';
+    (0 & undef && flunk '0&undef in boolean context') || pass '0&undef in boolean context';
+    (0 ^ undef && flunk '0^undef in boolean context') || pass '0^undef in boolean context';
 }
 
 ok 0|undef == 0, '0|undef == 0 in boolean context';
