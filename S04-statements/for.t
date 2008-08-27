@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 39;
+plan 40;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -297,3 +297,24 @@ my @elems = <a b c d e>;
     for [1..3], [4..6] { $a ~= $_.WHAT };
     is($a, 'ArrayArray', 'List context');
 }
+
+{
+    # this was a rakudo bug with mixed 'for' and recursion, which seems to 
+    # confuse some lexical pads or the like.
+    my $gather = '';
+    sub f($l) {
+        if $l <= 0 {
+            return $l;
+        }
+        $gather ~= $l;
+        for 1..3 {
+        f($l-1);
+            $gather ~= '.';
+        }
+    }
+    f(2);
+
+    #?rakudo todo 'bug in for/recursion interaction, RT #58392'
+    is $gather, '21....1....1....', 'Can mix recursion and for';
+}
+
