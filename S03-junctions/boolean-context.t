@@ -17,19 +17,19 @@ ok !(all(undef, undef)), 'all(undef, undef) in boolean context';
 ok ?all(1,1), 'all(1,1) in boolean context';
 ok !(all(1,undef)), 'all(1,undef) in boolean context';
 
-ok ?(1|undef), '1|undef in boolean context';
-ok ?(undef|1), 'undef|1 in boolean context';
-ok !(1&undef), '1&undef in boolean context';
-ok !(undef&1), 'undef&1 in boolean context';
-ok ?(1^undef), '1^undef in boolean context';
-ok ?(undef^1), 'undef^1 in boolean context';
+ok ?(1 | undef), '1|undef in boolean context';
+ok ?(undef | 1), 'undef|1 in boolean context';
+ok !(1 & undef), '1&undef in boolean context';
+ok !(undef & 1), 'undef&1 in boolean context';
+ok ?(1 ^ undef), '1^undef in boolean context';
+ok ?(undef ^ 1), 'undef^1 in boolean context';
 
-ok ?(-1|undef), '-1|undef in boolean context';
-ok ?(undef|-1), 'undef|-1 in boolean context';
-ok !(-1&undef), '-1&undef in boolean context';
-ok !(undef&-1), 'undef&-1 in boolean context';
-ok ?(-1^undef), '-1^undef in boolean context';
-ok ?(undef^-1), 'undef^-1 in boolean context';
+ok ?(-1 | undef), '-1|undef in boolean context';
+ok ?(undef | -1), 'undef|-1 in boolean context';
+ok !(-1 & undef), '-1&undef in boolean context';
+ok !(undef & -1), 'undef&-1 in boolean context';
+ok ?(-1 ^ undef), '-1^undef in boolean context';
+ok ?(undef ^ -1), 'undef^-1 in boolean context';
 
 (1|undef && pass '1|undef in boolean context') || fail '1|undef in boolean context';
 #?rakudo skip 'Junctions and short-circituing operators'
@@ -39,12 +39,12 @@ ok ?(undef^-1), 'undef^-1 in boolean context';
 }
 (1^undef && pass '1^undef in boolean context') || fail '1^undef in boolean context';
 
-ok !(0|undef), '0|undef in boolean context';
-ok !(undef|0), 'undef|0 in boolean context';
-ok !(0&undef), '0&undef in boolean context';
-ok !(undef&0), 'undef&0 in boolean context';
-ok !(0^undef), '0^undef in boolean context';
-ok !(undef^0), 'undef^0 in boolean context';
+ok !(0 | undef), '0|undef in boolean context';
+ok !(undef | 0), 'undef|0 in boolean context';
+ok !(0 & undef), '0&undef in boolean context';
+ok !(undef & 0), 'undef&0 in boolean context';
+ok !(0 ^ undef), '0^undef in boolean context';
+ok !(undef ^ 0), 'undef^0 in boolean context';
 
 # this can in principle be TODOed, but fudge doesn't understand the test
 # format
