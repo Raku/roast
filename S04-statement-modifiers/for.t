@@ -60,14 +60,14 @@ plan 10;
 {
     my $a = 0;
     { $a++ } for 1..3;
-    is $a, undef, 'the closure was never called';
+    is $a, 0, 'the closure was never called';
 }
 
 #?rakudo skip 'Parse a pointy block as a statement'
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;
-    is $a, undef, 'the closure was never called';
+    is $a, 0, 'the closure was never called';
 }
 
 # L<S04/The C<for> statement/"for" use a private instance of $_>
