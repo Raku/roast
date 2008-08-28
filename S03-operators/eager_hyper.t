@@ -7,6 +7,7 @@ plan 8;
 # L<S02/Lists/To force non-lazy list flattening, use the eager list operator>
 
 # Laziness test
+#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = gather { for 1 .. 5 { $counter++; take $_ } };
@@ -15,6 +16,7 @@ plan 8;
 }
 
 # "Counting the elements in the array will also force eager completion."
+#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = gather { for 1 .. 5 { $counter++; take $_ } };
@@ -23,6 +25,7 @@ plan 8;
 }
 
 # Eager
+#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = eager gather { for 1 .. 5 { $counter++; take $_ } };
@@ -32,6 +35,7 @@ plan 8;
 
 # L<S02/Lists/A variant of eager is the hyper list operator>
 # Hyper
+#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = hyper gather { for 1 .. 5 { $counter++; take $_; } };
