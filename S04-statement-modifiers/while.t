@@ -22,7 +22,7 @@ plan 5;
 }
 
 # test the ``while'' statement modifier
-#?rakudo skip '$x += $y += 1 while $y < NN does not end'
+#?rakudo skip '$x += $y += 1 while $y < NN enters info infinite loop'
 {
     my $a = 0;
     my $b = 0;

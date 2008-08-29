@@ -35,7 +35,7 @@ plan 6;
 	is $x, 43, "?? || sanity check";
 }
 
-#?rakudo skip "return if ... in sub does not work"
+#?rakudo skip "rakudo dies on 'return if <expr>' inside sub()"
 {
 	sub foo() {
 	 return if 1;
