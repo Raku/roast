@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2;
+plan 6;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -17,4 +17,34 @@ plan 2;
     my $a = 1;
     $a = 3 if 'a' eq 'b';
     is($a, 1, "post if");
+}
+
+{
+	my $answer = 1;
+	my @x = 41, [eval (42 if $answer)], 43;
+	my @y = 41, [($answer ?? 42 !! ())], 43;
+	my @z = 41, 42, 43;
+	is @y, @z, "sanity check";
+	is @x, @y, "if expr on true cond"; 
+}
+
+#testing else part of the operator 
+{
+	my $answer = 0;
+	my $x = $answer ?? 42 !! 43;
+	is $x, 43, "?? || sanity check";
+}
+
+#?rakudo skip "return if ... in sub does not work"
+{
+	sub foo() {
+	 return if 1;
+	 123;
+	}
+	
+	my $ok = 1;
+	for foo() -> @foo {
+	    $ok = 0;
+	}
+	ok $ok, "condition in statement level respects context" 
 }
