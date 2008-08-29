@@ -23,7 +23,6 @@ sub test_lines(@lines) {
         my $x = $fh.readline;
         $count++ if $x;
     }
-    #?rakudo todo 'IO bugs'
     is $count, 3, 'Read three lines with while !$hanlde.eof';
 }
 
