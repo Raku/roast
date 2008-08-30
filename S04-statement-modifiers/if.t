@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 8;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -27,6 +27,17 @@ plan 6;
 	is @y, @z, "sanity check";
 	is @x, @y, "if expr on true cond"; 
 }
+
+#?rakudo todo '(N if $expr) is not equiv. to ($expr ?? N !! ()).'
+{
+	my $answer = 0;
+	my @x = 41, [eval (42 if $answer)], 43;
+	my @y = 41, [($answer ?? 42 !! ())], 43;
+	my @z = 41, 42, 43;
+	is @y, @z, "sanity check";
+	is @x, @y, "if expr on true cond"; 
+}
+
 
 #testing else part of the operator 
 {
