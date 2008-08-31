@@ -17,7 +17,6 @@ is $str.subst('h','f'),       'fello', '.. or using Str as pattern';
 is $str.subst('.','f'),       'hello', '.. with literal string matching';
 
 my $i=0;
-#?rakudo eval "subst with a block parameter not implemented"
 is $str.subst(/l/,{$i++}),    'he0lo', 'We can have a closure as replacement';
 #?rakudo skip "multiple adverbs not implemented"
 is $str.subst(rx:g/l/,{$i++}),'he12o', '.. which act like closure and can be called more then once';
