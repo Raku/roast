@@ -345,7 +345,7 @@ my @elems = <a b c d e>;
 
 {
   my @array = <1 2 3 4>;
-  my $output;
+  my $output = '';
 
   for (grep { 1 }, sort @array) -> $elem {
     $output ~= "$elem,";
