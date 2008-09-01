@@ -55,7 +55,7 @@ is Backend2.new.hi, 23, "basic sanity (2)";
     ok ($a.backend = Backend1.new()), "setting a handler object (3)";
     ok (!($a ~~ Backend1)),             "object wasn't isa()ed (3)";
     #?pugs todo 'feature'
-    is try({ $a.hi }), 42, "method was successfully handled by backend object (3)";
+    is try { $a.hi }, 42, "method was successfully handled by backend object (3)";
   }
 }
 
@@ -72,7 +72,7 @@ is Backend2.new.hi, 23, "basic sanity (2)";
     ok ($a.backend = Backend1.new()), "setting a handler object (4)";
     ok (!($a ~~ Backend1)),             "object wasn't isa()ed (4-1)";
     ok (!($a ~~ Backend2)),             "object wasn't isa()ed (4-2)";
-    is (try{ $a.hi }), 42, "method was successfully handled by backend object (4)", :todo<feature>;
+    is try { $a.hi }, 42, "method was successfully handled by backend object (4)", :todo<feature>;
   }
 }
 

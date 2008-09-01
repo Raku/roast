@@ -32,6 +32,6 @@ plan 4;
 {
     my @a = 'a'..'e';
     my $a = 0;
-    $a ++ until shift(@a) eq 'c';
+    $a++ until shift(@a) eq 'c';
     is($a, 2, "post until");
 }

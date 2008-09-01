@@ -2,6 +2,8 @@ use v6;
 use Test;
 plan 13;
 
+sub nok { @_ == 2 and ok @_[0], @_[1] }
+
 # L<S03/Loose unary precedence>
 
 nok(not 1,     "not 1 is false");

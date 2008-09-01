@@ -4,7 +4,7 @@ use Test;
 
 plan 39;
 
-# FIXME: There is probably a better way, perhapse using try/CATCH, but I was
+# FIXME: There is probably a better way, perhaps using try/CATCH, but I was
 # unable to figure out the try/CATCH syntax.
 # All these tests should be re-written in terms of lives_ok();
 sub nok_error( $error, $message? ) {
@@ -39,11 +39,11 @@ sub levelwrap($n) {
 is( levelwrap( 1 ), 1, "Sanity test." );
 is( levelwrap( 2 ), 2, "Sanity test." );
 
-try{ is( &levelwrap.callwith( 1 ), 1, "Check that functions have a 'callwith' that works. " )};
+try { is( &levelwrap.callwith( 1 ), 1, "Check that functions have a 'callwith' that works. " )};
 nok_error( $!, "callwith does not seem to work." );
 
 for (1..10) -> $num {
-    try{
+    try {
         ok( 
             &levelwrap.wrap({ 
                 callwith( $^t++ );
