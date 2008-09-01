@@ -45,7 +45,7 @@ sub takeuchi {
 
 is(gcd(1147, 1271), 31, 'gcd 1');
 is(gcd(1908, 2016),  36, 'gcd 2');
-is(factorial(10), 3628800, 'simple factorial');
+ok(factorial(10) == 3628800, 'simple factorial');
 is(factorial(factorial(3)), 720, 'nested factorial');
 #?rakudo skip 'TODO: &?ROUTINE'
 is(fibonacci(10), 89, 'recursion via &?ROUTINE');
@@ -112,6 +112,7 @@ sub countdown_mod_named ($num) {
     return $num, countdown_mod_named($n);
 }
 
+#?rakudo 8 skip 'argument passing'
 is(  countup_nomod_named(5).join(""),   "012345", "recursive count up: named param, no modified value");
 is(countdown_nomod_named(5).join(""),   "543210", "recursive count down: named param, no modified value");
 is(  countup_nomod_unnamed(5).join(""), "012345", "recursive count up: unnamed param, no modified value");
