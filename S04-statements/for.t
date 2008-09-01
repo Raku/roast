@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 40;
+plan 43;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -316,5 +316,41 @@ my @elems = <a b c d e>;
 
     #?rakudo todo 'bug in for/recursion interaction, RT #58392'
     is $gather, '21....1....1....', 'Can mix recursion and for';
+}
+
+# grep and sort in for - these were pugs bugs once, so let's
+# keep them as regression tests
+
+{
+  my @array = <1 2 3 4>;
+  my $output = '';
+
+  for (grep { 1 }, @array) -> $elem {
+    $output ~= "$elem,";
+  }
+
+  is $output, "1,2,3,4,", "grep and sort work in for";
+}
+
+{
+  my @array = <1 2 3 4>;
+  my $output = '';
+
+  for sort @array -> $elem {
+    $output ~= "$elem,";
+  }
+
+  is $output, "1,2,3,4,", "grep and sort work in for";
+}
+
+{
+  my @array = <1 2 3 4>;
+  my $output;
+
+  for (grep { 1 }, sort @array) -> $elem {
+    $output ~= "$elem,";
+  }
+
+  is $output, "1,2,3,4,", "grep and sort work in for";
 }
 
