@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 45;
+plan 47;
 
 #L<S03/Autoincrement precedence>
 
@@ -109,3 +109,13 @@ my $num = "123.456";
 $num++;             # 124.456, not 123.457
 
 is($num,'124.456');
+
+#?rakudo skip 'autoincrement undef'
+{
+    my $x;
+    is ++$x, 1, 'Can autoincrement an undef variable (prefix)';
+
+    my $y;
+    $y++;
+    is $y, 1, 'Can autoincrement an undef variable (postfix)';
+}
