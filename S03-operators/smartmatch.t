@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 56;
+plan 50;
 
 =begin kwid
 
@@ -25,20 +25,26 @@ sub eval_elsewhere($code){ eval($code) }
     ok(!(undef ~~ &nuhuh), "negated scalar sub false");
 };
 
-
+#?rakudo emit #
 my %hash1 is context = ( "foo", "Bar", "blah", "ding");
+#?rakudo emit #
 my %hash2 is context = ( "foo", "zzz", "blah", "frbz");
+#?rakudo emit #
 my %hash3 is context = ( "oink", "da", "blah", "zork");
+#?rakudo emit #
 my %hash4 is context = ( "bink", "yum", "gorch", "zorba");
+#?rakudo emit #
 my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #L<<S03/Smart matching/"hash keys same set">>
+#?rakudo skip 'context variables'
 { 
     ok eval_elsewhere('(%+hash1 ~~ %+hash2)'), "hash keys identical", :todo;
     ok eval_elsewhere('!(%+hash1 ~~ %+hash4)'), "hash keys differ";
 };
 
 #L<<S03/Smart matching/hash value slice truth>>
+#?rakudo skip 'context variables'
 { 
     flunk('FIXME parsefail');
 #    ok(eval(%hash1 ~~ any(%hash3)), "intersecting keys", :todo);
@@ -47,6 +53,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<<S03/Smart matching/hash value slice truth>>
+#?rakudo skip 'context variables'
 { 
     my @true = (<foo bar>);
     my @sort_of = (<foo gorch>);
@@ -57,12 +64,14 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<<S03/Smart matching/hash value slice truth>>
+#?rakudo skip 'context variables'
 { 
     ok((%hash1 ~~ any(<foo bar>)), "any key exists (but where is it?)", :todo);
     ok(!(%hash1 ~~ any(<gorch ding>)), "no listed key exists");
 };
 
 #L<<S03/Smart matching/hash slice existence>>
+#?rakudo skip 'context variables'
 { 
     ok((%hash1 ~~ all(<foo blah>)), "all keys exist", :todo);
     ok(!(%hash1 ~~ all(<foo edward>)), "not all keys exist");
@@ -71,6 +80,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #Hash    Rule      hash key grep            match if any($_.keys) ~~ /$x/
 
 #L<<S03/Smart matching/hash slice existence>>
+#?rakudo skip 'context variables'
 { 
     ok((%hash5 ~~ "foo"), "foo exists", :todo);
     ok((%hash5 ~~ "gorch"),
@@ -79,6 +89,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<<S03/Smart matching/hash slice existence>>
+#?rakudo skip 'context variables'
 { 
     my $string is context = "foo";
     ok eval_elsewhere('(%+hash5 ~~ .{$+string})'), 'hash.{Any} truth';
@@ -87,12 +98,14 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<<S03/Smart matching/hash value slice truth>>
+#?rakudo skip 'context variables'
 { 
     ok eval_elsewhere('(%+hash5 ~~ .<foo>)'), "hash<string> truth";
     ok eval_elsewhere('!(%+hash5 ~~ .<gorch>)'), "hash<string> untruth";
 };
 
 #L<<S03/Smart matching/arrays are comparable>>
+#?rakudo skip 'smart matching lists'
 { 
     ok((("blah", "blah") ~~ ("blah", "blah")), "qw/blah blah/ .eq");
     ok(!((1, 2) ~~ (1, 1)), "1 2 !~~ 1 1");
@@ -106,22 +119,8 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
        "but none between (1, 2) and (3, 4)");
 };
 
-# Array   Rule      array grep               match if any(@$_) ~~ /$x/
-
-#L<<S03/Smart matching/array contains number>>
-{ 
-    ok(((1, 2) ~~ 1), "(1, 2) contains 1", :todo);
-    ok(!((3, 4, 5) ~~ 2), "(3, 4, 5) doesn't contain 2");
-};
-
-#L<<S03/Smart matching/array contains string>>
-{ 
-    ok((("foo", "bar", "gorch") ~~ "bar"),
-       "bar is in qw/foo bar gorch/", :todo);
-    ok(!(("x", "y", "z") ~~ "a"), "a is not in qw/x y z/");
-};
-
 #L<S03/Smart matching/array value slice truth>
+#?rakudo skip 'Null PMC access in type()'
 { 
     ok eval('((undef, 1, undef) ~~ .[1])'),
         "element 1 of (undef, 1, undef) is true";
@@ -179,6 +178,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #Any     boolean   simple expression truth* match if true given $_
 
 #L<S03/Smart matching/Any undef undefined not .defined>
+#?rakudo skip "Method 'ACCEPTS' not found for invocant of class 'Failure'"
 { 
     ok(!("foo" ~~ undef), "foo is not ~~ undef");
     ok((undef ~~ undef), "undef is");
@@ -196,16 +196,12 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok(!("foo" !~~ "foo"), "!(foo ne foo)");
     ok(("bar" !~~ "foo"), "bar ne foo)");
 
-    ok(!((1, 2) !~~ 1), "(1, 2) contains 1", :todo);
-    ok(((3, 4, 5) !~~ 2), "(3, 4, 5) doesn't contain 2");
-
-    flunk('FIXME parsefail');
-#    ok(!(%hash1 !~~ any(%hash3)), "intersecting keys", :todo);
-    flunk('FIXME parsefail');
-#    ok((%hash1 !~~ any(%hash4)), "no intersecting keys");
+    #?pugs 2 skip 'parsefail'
+    #?rakudo 2 skip 'context variables'
+    ok(!(%hash1 !~~ any(%hash3)), "intersecting keys", :todo);
+    ok((%hash1 !~~ any(%hash4)), "no intersecting keys");
 };
 
-{
 =begin begin Explanation
 
 You may be wondering what the heck is with all these try blocks.
@@ -215,6 +211,8 @@ caught that case.
 
 =end begin Explanation
 
+#?rakudo skip 'pointy blocks'
+{
     #L<S09/"Junctions">
     my @x = 1..20;
     my $code = -> $x { $x % 2 };
@@ -228,9 +226,12 @@ caught that case.
     my @expected_result = grep $code, @x;
     ok @result ~~ @expected_result,
         'C<any(@x) ~~ {...}> works like C<grep>', :todo<feature>;
+}
 
+{
     my $result = 0;
-    $parsed = 0;
+    my $parsed = 0;
+    my @x = 1..20;
     try {
         $result = all(@x) ~~ { $_ < 21 };
         $parsed = 1;
@@ -259,3 +260,5 @@ caught that case.
     ok $result,
         'C<all(@x) ~~ {...} when true for one';
 };
+
+# vim: ft=perl6
