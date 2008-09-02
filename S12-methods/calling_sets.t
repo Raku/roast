@@ -10,6 +10,10 @@ use Test; plan 17;
 # are also "dot" variants that call some number of methods with the same name:
 
 #      $object.?meth  # calls method if there is one, otherwise undef
+
+role plugin_1 { multi method init_hook { $.cnt += 2 } }
+role plugin_2 { multi method init_hook { $.cnt += 3 } }
+
 class Parent {
     has Int $.cnt is rw;
     does plugin_1;
@@ -20,10 +24,6 @@ class Child is Parent {
     method meth {++$.cnt}
     method child_only {'child_only'}
 }
-
-role plugin_1 { multi method init_hook { $.cnt += 2 } }
-role plugin_2 { multi method init_hook { $.cnt += 3 } }
-
 
 {
     my $test = q"$object.?meth calls method if there is one";

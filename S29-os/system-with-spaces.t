@@ -16,9 +16,9 @@ if $?OS ne 'MSWin32' {
 
 =begin pod
 
-Test the interaction of system(LIST) and whitespace characters. In
-an ideal world, system() does Just Enough quoting of the parameters
-that system(LIST) is sane. On *nix-like platforms, system(LIST)
+Test the interaction of run(LIST) and whitespace characters. In
+an ideal world, run() does Just Enough quoting of the parameters
+that run(LIST) is sane. On *nix-like platforms, run(LIST)
 is an actual system call, so there should be no additional logic needed.
 On Win32, system(LIST) does not exist and is mostly implemented as
 system("@LIST") , so additional quoting magic is needed.
@@ -33,7 +33,7 @@ Haskell's automagic quoting seems to be amazingly good though.
 
 =end pod
 
-# Win32 specific tests for system() being sane enough
+# Win32 specific tests for run() being sane enough
 
 my $cwdb = $*CWD;
 my $cwd = $cwdb;
@@ -147,7 +147,7 @@ for @command -> $cmd {
     my $prog = "perl6-temprun-test-" ~ ($counter++) ~ ".tmp";
 
     my $fh = open($prog, :w);
-    $fh.say("system(");
+    $fh.say("run(");
     #say @cmd;
     #say @args;
     for @cmd, @args -> $l {
@@ -181,7 +181,7 @@ for @command -> $cmd {
     my $expected = "[" ~ $cmd ~ "][" ~ @args.join("][") ~ "]";
     my $name = "|" ~ @cmd.join("*") ~ "| with [" ~ @args.join("][") ~ "]";
 
-    if (! system($pugs ~ " " ~ $prog ~ "> " ~ $outfile)) {
+    if (! run($pugs ~ " " ~ $prog ~ "> " ~ $outfile)) {
       fail($name);
       diag slurp $prog;
       next();
