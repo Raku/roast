@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 64; 
+plan 70; 
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -101,3 +101,9 @@ ok('a' lt 'e' ge 'e', "chained lt and ge");
 is('e' gt 'a' lt 'j', 'e' gt 'a' && 'a' lt 'j', 'e gt a lt j');
 is('e' lt 'a' lt 'j', 'e' lt 'a' && 'a' lt 'j', 'e lt a lt j');
 
+ok("5" gt "4" gt "3", "5 gt 4 gt 3 chained str comparison");
+ok("3" lt "4" lt "5", "3 lt 4 gt 5 chained str comparison");
+ok(!("3" gt "4" lt "5"), "!(3 gt 4 lt 5) chained str comparison");
+ok("5" eq "5" gt "0", '"5" eq "5" gt "0" chained str comparison with equality');
+ok("5" le "5" gt "0", "5 le 5 gt 0 chained str comparison with le");
+ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
