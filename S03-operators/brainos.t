@@ -15,7 +15,7 @@ the user instead.
 #L<S03/Chaining binary precedence/"To catch">
 
 my $str = 'foo';
-eval q{$str =~ m/bar/;};
+eval '$str =~ m/bar/;';
 if $!.defined {
     pass "caught =~ braino, saying $!";
 }
