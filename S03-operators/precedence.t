@@ -24,6 +24,7 @@ plan 47;
 
 my @a = 1,2,3;
 is(++@a[2], 4, "bare postfix binds tighter than ++");
+#?rakudo skip 'dotted postcircumfix'
 is(++@a.[2], 5, "dotted postfix binds tighter than ++");
 
 # autoincrement
@@ -66,9 +67,11 @@ ok((2 ~ 2 | 4 ~ 1) == 41, "and ~ binds tighter than |");
 
 # junctive and
 
-ok(       (1 & 2 | 3) !=3, '& binds tighter than |');
+ok(  ?(   (1 & 2 | 3) !=3), '& binds tighter than |');
+#?rakudo skip "Negate a junction (???)"
 ok((!(1 & 2 | 3) < 2), "ditto");
-ok(((1 & 2 ^ 3) < 3), "and also ^");
+ok(?((1 & 2 ^ 3) < 3), "and also ^");
+#?rakudo skip "Negate a junction (???)"
 ok(     !(1 & 2 ^ 4) != 3, "blah blah blah");
 
 # junctive or
@@ -86,6 +89,7 @@ ok(     !(1 & 2 ^ 4) != 3, "blah blah blah");
     ok(!($b != 3), "1 is ne 3, and (2 | 3) is both ne 3 and eq 3, so it's ne, so 1 ^ 2 | 3");
 };
 
+#?rakudo skip "Junction autothreading"
 {
     my $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
     ok(!($a == 1), 'junctive or binds more tightly then abs (1)');
@@ -129,10 +133,12 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 
 {
     my $c = 1, 2, 3;
+    #?rakudo todo 'item assignment'
     is($c, 1, '$ = binds tighter than ,');
     my $a = (1, 3) X (2, 4);
+    #?rakudo todo 'item assignment'
     is($a, [1, 3], "= binds tighter than X");
-};
+}
 
 # loose unary
 
@@ -145,6 +151,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 # list infix
 
+#?rakudo skip 'list infix and assignment'
 {
     my @d;
     ok eval('@d = 1,3 Z 2,4'), "list infix tighter than list assignment, looser t than comma";
