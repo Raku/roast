@@ -20,11 +20,13 @@ plan 28;
   my $y := $x;
   is($y, 'Just Another', 'y is now bound to x');
 
+  #?rakudo skip 'infix:<=:=>'
   ok($y =:= $x, 'y is bound to x (we checked with the =:= identity op)');
 
   my $z = $x;
   is($z, 'Just Another', 'z is not bound to x');
 
+  #?rakudo skip 'infix:<=:=>'
   ok(!($z =:= $x), 'z is not bound to x (we checked with the =:= identity op)');
 
   $y = 'Perl Hacker';
@@ -34,7 +36,9 @@ plan 28;
   is($z, 'Just Another', 'z is still "Just Another" because it was not bound to x');
 }
 
+
 # Binding and $CALLER::
+#?rakudo skip 'context variables'
 {
   sub bar {
     return $CALLER::a eq $CALLER::b;
@@ -50,6 +54,7 @@ plan 28;
 }
 
 # Binding to swap
+#?rakudo skip 'list binding'
 {
   my $a = "a";
   my $b = "b";
@@ -63,6 +68,7 @@ plan 28;
 }
 
 # More tests for binding a list
+#?rakudo skip 'list binding'
 {
   my $a = "a";
   my $b = "b";
@@ -76,6 +82,7 @@ plan 28;
   is($a, 'd', 'binding a list literal really worked (1)');
   is($b, 'd', 'binding a list literal really worked (2)');
 }
+
 
 # Binding subroutine parameters
 # XXX! When executed in interactive Pugs, the following test works!
@@ -113,6 +120,7 @@ plan 28;
 }
 
 # := actually takes subroutine parameter list
+#?rakudo skip 'List binding'
 {
   my $a;
   eval '(:$a) := (:a<foo>)';

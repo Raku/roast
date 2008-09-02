@@ -131,12 +131,13 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 
 # item assignment
 
+# XXX this should be a todo, not a skip, but that
+# messes up the rest of the file, somehow :(
+#?rakudo skip 'item assignment'
 {
     my $c = 1, 2, 3;
-    #?rakudo todo 'item assignment'
     is($c, 1, '$ = binds tighter than ,');
     my $a = (1, 3) X (2, 4);
-    #?rakudo todo 'item assignment'
     is($a, [1, 3], "= binds tighter than X");
 }
 
@@ -152,10 +153,11 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 # list infix
 
 #?rakudo skip 'list infix and assignment'
+#?pugs todo 'list infix and assignment'
 {
     my @d;
     ok eval('@d = 1,3 Z 2,4'), "list infix tighter than list assignment, looser t than comma";
-    is(@d, [1 .. 4], "to complicate things further, it dwims", :todo);
+    is(@d, [1 .. 4], "to complicate things further, it dwims");
 }
 
 {
