@@ -63,6 +63,7 @@ plan 46;
 
   $var      = "f";
   @array[1] = "g";
+  #?rakudo todo 'array binding'
   is $var,      "f", "binding of array elements works with resetting the array (4)";
   is @array[1], "g", "binding of array elements works with resetting the array (5)";
 }
@@ -88,6 +89,7 @@ plan 46;
   is @array[1], "g",   "binding of array elements works with rebinding the array (5)";
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (@arr) { @arr[1] = "new_value" }
 
@@ -100,6 +102,7 @@ plan 46;
   is ~@array, "a new_value c", "passing an array to a sub expecting an array behaves correctly (2)";
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (Array $arr) { $arr[1] = "new_value" }
 
@@ -112,6 +115,7 @@ plan 46;
   is ~@array, "a new_value c", "passing an array to a sub expecting an arrayref behaves correctly (2)";
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (@args) { @args[1] = "new_value" }
 
@@ -124,6 +128,7 @@ plan 46;
   is ~@array, "a new_value c", "passing an array to a slurpying sub behaves correctly (2)";
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (@args) { push @args, "new_value" }
 
@@ -151,6 +156,7 @@ plan 46;
 }
 
 # Binding with .splice
+#?rakudo skip 'splice'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -185,6 +191,7 @@ plan 46;
   # @array[$idx] and $var are now "f", but @new_array is unchanged.
   is $var,        "f",     "array assignment creates new containers (2)";
   is ~@array,     "a f c", "array assignment creates new containers (3)";
+  #?rakudo todo 'unknown'
   is ~@new_array, "a e c", "array assignment creates new containers (4)";
 }
 
