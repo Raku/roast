@@ -18,7 +18,7 @@ sub jv(Object $j) {
 {
 
     is('1 2 3', jv((1|2)|3), "Left-associative any, | operator");
-    is('1 2 3', jv(1|(2|3)) "Right-associative any, | operator");
+    is('1 2 3', jv(1|(2|3)), "Right-associative any, | operator");
 
     is('1 2 3', jv(any(any(1,2),3)), "Left-associative any()");
     is('1 2 3', jv(any(1,any(2,3))), "Right-associative any()");
