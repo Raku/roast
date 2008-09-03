@@ -13,7 +13,16 @@ Basic C<exists> tests on hashes, see S29.
 
 sub gen_hash {
     my %h;
-    %h{'a'..'z'} = (1..26);
+    %h = (
+        a => 1,
+        b => 2,
+        c => 3, 
+        d => 4,
+
+        x => 24,
+        y => 25,
+        Z => 26,
+    );
     return %h;
 };
 
@@ -22,8 +31,9 @@ sub gen_hash {
     my %h2 = gen_hash;
 
     my $b = %h1<b>;
-    is (exists %h1, 'a'), 1, "Test existance for single key. (Indirect notation)";
-    is (%h1.exists('a')), 1, "Test existance for single key. (method call)";
+    #?rakudo skip 'unspecced'
+    is (exists %h1, 'a'), 1, "Test existence for single key. (Indirect notation)";
+    is (%h1.exists('a')), 1, "Test existence for single key. (method call)";
 };
 
 {
