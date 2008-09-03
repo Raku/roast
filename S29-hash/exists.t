@@ -46,7 +46,7 @@ sub gen_hash {
     is %h.exists('nothing'),  1,  "Existance of single key with undef as value: nothing";
     is defined(%h<none>),     1,  "Defined 0 value for key: none";
     is defined(%h<one>),      1,  "Defined 1 value for key: one";
-    is defined(%h<nothing>),  '', "NOT Defined value for key: nothing";
+    ok !defined(%h<nothing>),     "NOT Defined value for key: nothing";
 }
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
@@ -56,6 +56,7 @@ ok !%hash.exists("42"), "exists on hashes (2)";
 # This next group added by Darren Duncan following discovery while debugging ext/Locale-KeyedText:
 # Not an exists() test per se, but asserts that elements shouldn't be added to 
 # (exist in) a hash just because there was an attempt to read nonexistent elements.
+#?rakudo skip 'parse errors'
 {
   sub foo( $any ) {}
   sub bar( $any is copy ) {}
@@ -74,7 +75,7 @@ ok !%hash.exists("42"), "exists on hashes (2)";
 
   my $popul_hash = hash(('a'=>'b'),('c'=>'d'));
   my sub popul_hash_contents () {
-    $popul_hash.pairs.sort.map: { $_.key ~ ":" ~ $_.value }.join( ',' );
+    $popul_hash.pairs.sort.map({ $_.key ~ ":" ~ $_.value }).join( ',' );
   }
 
   is( popul_hash_contents, "a:b,c:d", "populated hash stays same when read from (1)" );
