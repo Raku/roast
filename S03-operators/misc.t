@@ -82,9 +82,12 @@ ok(42 > 12 & 20 & 32, "test the all infix operator");
 
 
 # L<S03/Hyper operators/hyper operator distributes over them as lists>
-my @rv;
-@rv = (1,2,3,4) >>+<< (1,2,3,4);
-is("@rv[]", "2 4 6 8", 'hyper-add');
+#?rakudo skip 'hyper operators'
+{
+    my @rv;
+    @rv = (1,2,3,4) >>+<< (1,2,3,4);
+    is("@rv[]", "2 4 6 8", 'hyper-add');
+}
 
 { # L<S03/Changes to Perl 5 operators/ "?| is a logical OR">
   # work with pure Bool's
