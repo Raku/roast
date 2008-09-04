@@ -14,7 +14,6 @@ plan 5;
 }
 
 # test the ``given'' statement modifier
-#?rakudo skip 'rakudo dies on assignment to uninitialized variable when modifier given used'
 {
     my $a;
     $a = $_ given 2 * 3;

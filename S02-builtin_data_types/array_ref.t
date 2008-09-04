@@ -9,7 +9,6 @@ plan 45;
 my $array_ref1 = ("foo", "bar", "baz");
 isa_ok($array_ref1, Array);
 
-#?rakudo skip 'flatten and slices are not working'
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
 is($array_ref1[0], 'foo', 'got the right value at array_ref1 index 0');
 is($array_ref1[1], 'bar', 'got the right value at array_ref1 index 1');
@@ -23,7 +22,6 @@ is($array_ref1.[0], 'foo', 'got the right value at array_ref1 index 0 using the 
 my $array_ref2 = [ "test", 1, undef ];
 isa_ok($array_ref2, Array);
 
-#?rakudo skip 'flatten and slices are not working'
 is(+$array_ref2, 3, 'the array_ref2 has 3 elements');
 is($array_ref2[0], 'test', 'got the right value at array_ref2 index 0');
 is($array_ref2[1], 1,      'got the right value at array_ref2 index 1');
