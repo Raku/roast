@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 8;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -16,5 +16,11 @@ sub mixed($pos1, *@slurp) { "|$pos1|" ~ @slurp.join('!') }
 
 is mixed(1),           '|1|',    'Positional and slurp params';
 is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
+
+{
+    sub x_typed_join(Int *@args){ @args.join('|') }
+    is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
+    is x_typed_join(1, 2, 5),     '1|2|5',  'Basic slurpy params with types 2';
+}
 
 # vim: ft=perl6
