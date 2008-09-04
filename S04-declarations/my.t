@@ -46,11 +46,11 @@ eval_lives_ok 'my $x = my $y = 0;', '"my $x = my $y = 0" parses';
 
 {
     my $test = "value should still be set for arg, even if there's a later my";
-    sub foo (*%p) {
+    sub foo2 (*%p) {
         is(%p<a>, 'b', $test);
         my %p;
     }
-    foo(a => 'b');
+    foo2(a => 'b');
 }
 
 my $a = 1;
