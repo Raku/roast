@@ -16,6 +16,7 @@ my $here;
     is $here, 1, "range operator was redefined";
 }
 
+#?rakudo skip 'defining builtins'
 {
     my @a;
     $here = 0;
@@ -24,18 +25,20 @@ my $here;
     is $here, 1, "push operator was redefined";
 }
 
+#?rakudo skip 'parsefail with the :<[]>'
 {
-my @a;
-$here = 0;
-multi postcircumfix:<[]> ( *@a ) { $here++ }
-my $x = @a[1];
+    my @a;
+    $here = 0;
+    multi postcircumfix:<[]> ( *@a ) { $here++ }
+    my $x = @a[1];
+    is $here, 1, "slice fetch was redefined", :todo<bug>;
 }
-is $here, 1, "slice fetch was redefined", :todo<bug>;
 
+#?rakudo skip 'parsefail with the :<[]>'
 {
-my @a;
-$here = 0;
-multi postcircumfix:<[]> ( *@a ) { $here++ }
-@a[1] = 0;
+    my @a;
+    $here = 0;
+    multi postcircumfix:<[]> ( *@a ) { $here++ }
+    @a[1] = 0;
+    is $here, 1, "slice store was redefined", :todo<bug>;
 }
-is $here, 1, "slice store was redefined", :todo<bug>;
