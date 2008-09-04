@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 15;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
@@ -46,6 +46,13 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     eval_dies_ok('loop (my $i = 0; $i < 1; $i++) {return 5}', 'cannot return out of a bare loop');
     # XXX: Not 100% sure on this one
     eval_dies_ok('do {return 5}', 'cannot return out of a do block');
+}
+
+{
+    # In an ancient version of pugs the sub below didn't return anything
+    sub list_return { return (42, 1) }
+    my $bar = ~list_return();
+    is($bar, '42 1', 'Should not return empty string');
 }
 
 # vim: ft=perl6
