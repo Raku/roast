@@ -1,0 +1,2591 @@
+##   Backtracking control tests
+#### a* a			bazaar		y	control
+ok 'bazaar' ~~ /a* a/, 'control';
+
+# todo :pge<adverbs before backtrack(?)>
+#### a*:a			bazaar		/:a/	basic
+ok ('bazaar' ~~ /a*: a/).produces(q/:a/), 'basic';
+
+#### a*: a			bazaar		n	basic
+ok 'bazaar' !~~ /a*: a/, 'basic';
+
+#### ^[a|b]*  aba		abbabbababba	y	control
+ok 'abbabbababba' ~~ /^[a|b]*  aba/, 'control';
+
+#### ^[a|b]*: aba		abbabbababba	n	outside a group
+ok 'abbabbababba' !~~ /^[a|b]*: aba/, 'outside a group';
+
+#### \d+:			123abc		y	cut on character class shortcut
+ok '123abc' ~~ /\d+:/, 'cut on character class shortcut';
+
+#### \d+:			abc		n	cut on character class shortcut
+ok 'abc' !~~ /\d+:/, 'cut on character class shortcut';
+
+#### [ if    not | ify ]	verify		y	control
+ok 'verify' ~~ /[ if    not | ify ]/, 'control';
+
+#### [ if :: not | ify ]	verify		n	inside a group
+ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
+
+####   if :: not | ify	verify		n	the default all group
+ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
+
+# todo :pugs<feature>
+#### [ if :  not | ify ]	verify		y	simple backtrack still works
+ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
+
+# todo :pugs<feature>
+#### [ if :: not | ify ] | verify	verify	y	rule continues
+ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
+
+#### [ when     ever ] | whence	whence	y	full backtrack failure
+ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
+
+#### [ when ::: ever ] | whence	whence	n	full backtrack failure
+ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
+
+# todo :pugs<feature>
+#### ab::cd | gh::ij		xyabghij	y	group cut at top
+ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
+
+#### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
+ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
+
+# todo :pugs<feature>
+#### [ab::cd | gh::ij]	xyabghij	y	group cut in group
+ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
+
+#### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
+ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
+
+#### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
+ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
+
+#### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
+ok 'xyzabcde' !~~ /( ab | abc ): de/, 'no backtrack into subpattern';
+
+# todo :pugs<feature>
+#### [ when <commit> ever ] | whence	whence	n	full backtrack failure
+ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
+
+
+#### :ratchet a* a		bazaar		n	ratchet modifier
+ok 'bazaar' !~~ /:ratchet a* a/, 'ratchet modifier';
+
+#### :ratchet a*! a		bazaar		y	force backtracking !
+ok 'bazaar' ~~ /:ratchet a*! a/, 'force backtracking !';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+##   captures
+#### (a.)..(..)		zzzabcdefzzz	y			basic match
+ok 'zzzabcdefzzz' ~~ /(a.)..(..)/, 'basic match';
+
+#### (a.)..(..)		zzzabcdefzzz	/mob: <abcdef @ 3>/	basic $0
+#?rakudo todo 'unknown'
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/).produces(q/mob: <abcdef @ 3>/), 'basic $0';
+
+#### (a.)..(..)		zzzabcdefzzz	/mob 0: <ab @ 3>/	basic $1
+#?rakudo todo 'unknown'
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/).produces(q/mob 0: <ab @ 3>/), 'basic $1';
+
+#### (a.)..(..)		zzzabcdefzzz	/mob 1: <ef @ 7>/	basic $2
+#?rakudo todo 'unknown'
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/).produces(q/mob 1: <ef @ 7>/), 'basic $2';
+
+#### (a(b(c))(d))		abcd		y			nested match
+ok 'abcd' ~~ /(a(b(c))(d))/, 'nested match';
+
+#### (a(b(c))(d))		abcd		/mob: <abcd @ 0>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob: <abcd @ 0>/), 'nested match';
+
+#### (a(b(c))(d))		abcd		/mob 0: <abcd @ 0>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0: <abcd @ 0>/), 'nested match';
+
+#### (a(b(c))(d))		abcd		/mob 0 0: <bc @ 1>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0 0: <bc @ 1>/), 'nested match';
+
+#### (a(b(c))(d))		abcd		/mob 0 0 0: <c @ 2>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0 0 0: <c @ 2>/), 'nested match';
+
+#### (a(b(c))(d))		abcd		/mob 0 1: <d @ 3>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0 1: <d @ 3>/), 'nested match';
+
+#### ((\w+)+)		abcd		/mob: <abcd @ 0>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /((\w+)+)/).produces(q/mob: <abcd @ 0>/), 'nested match';
+
+#### ((\w+)+)		abcd		/mob 0: <abcd @ 0>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /((\w+)+)/).produces(q/mob 0: <abcd @ 0>/), 'nested match';
+
+#### ((\w+)+)		abcd		/mob 0 0 0: <abcd @ 0>/	nested match
+#?rakudo todo 'unknown'
+ok ('abcd' ~~ /((\w+)+)/).produces(q/mob 0 0 0: <abcd @ 0>/), 'nested match';
+
+#### ((\w+)+)	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz	/mob: <ABCD/	nested match
+#?rakudo todo 'unknown'
+ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/).produces(q/mob: <ABCD/), 'nested match';
+
+#### ((\w+)+)	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz	/mob 0: <ABCD/	nested match
+#?rakudo todo 'unknown'
+ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/).produces(q/mob 0: <ABCD/), 'nested match';
+
+#### ((\w+)+)	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz	/mob 0 0 0: <ABCD/	nested match
+#?rakudo todo 'unknown'
+ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/).produces(q/mob 0 0 0: <ABCD/), 'nested match';
+
+#### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 0: <a @ 0>/	alt subpattern before group
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 0: <a @ 0>/), 'alt subpattern before group';
+
+#### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 1: <bc @ 1>/	alt subpattern in group
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 1: <bc @ 1>/), 'alt subpattern in group';
+
+#### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 2: <d @ 3>/	alt subpattern in group
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 2: <d @ 3>/), 'alt subpattern in group';
+
+#### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 3: <g @ 6>/	alt subpattern after group
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 3: <g @ 6>/), 'alt subpattern after group';
+
+#### (a) [ (bc) (x) | .* (ef) ] .* (g)	abcdefg	/mob 1: <ef @ 4>/	2nd alt subpattern in group
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(a) [ (bc) (x) | .* (ef) ] .* (g)/).produces(q/mob 1: <ef @ 4>/), '2nd alt subpattern in group';
+
+#### (a) [ (bc) (x) | .* (ef) ] .* (g)	abcdefg	/mob 3: <g @ 6>/	2nd alt subpattern after group
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(a) [ (bc) (x) | .* (ef) ] .* (g)/).produces(q/mob 3: <g @ 6>/), '2nd alt subpattern after group';
+
+#### ( (.) )*				abc	/mob 0 1 0: <b @ 1>/	nested repeated captures
+#?rakudo todo 'unknown'
+ok ('abc' ~~ /( (.) )*/).produces(q/mob 0 1 0: <b @ 1>/), 'nested repeated captures';
+
+#### [ (.) ]*				abc	/mob 0 1: <b @ 1>/	nested repeated captures
+#?rakudo todo 'unknown'
+ok ('abc' ~~ /[ (.) ]*/).produces(q/mob 0 1: <b @ 1>/), 'nested repeated captures';
+
+#### ( [.] )*				abc	/mob 0 1: <b @ 1>/	nested repeated captures
+#?rakudo todo 'unknown'
+ok ('abc' ~~ /( [.] )*/).produces(q/mob 0 1: <b @ 1>/), 'nested repeated captures';
+
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 0: <a @ 0>/	numbered aliases $1
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 0: <a @ 0>/), 'numbered aliases $1';
+
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 1: <b @ 1>/	numbered aliases $2
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 1: <b @ 1>/), 'numbered aliases $2';
+
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 7: <c @ 2>/	numbered aliases $7
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 7: <c @ 2>/), 'numbered aliases $7';
+
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 8: <d @ 3>/	numbered aliases $8
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 8: <d @ 3>/), 'numbered aliases $8';
+
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 4: <e @ 4>/	numbered aliases $4
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 4: <e @ 4>/), 'numbered aliases $4';
+
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 1: <abc @ 0>/	perl5 numbered captures $1
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 1: <abc @ 0>/), 'perl5 numbered captures $1';
+
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 2: <a @ 0>/	perl5 numbered captures $1
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 2: <a @ 0>/), 'perl5 numbered captures $1';
+
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 3: <b @ 1>/	perl5 numbered captures $1
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 3: <b @ 1>/), 'perl5 numbered captures $1';
+
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 4: <c @ 2>/	perl5 numbered captures $1
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 4: <c @ 2>/), 'perl5 numbered captures $1';
+
+#### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 5: <d @ 3>/	perl5 numbered captures $1
+#?rakudo todo 'unknown'
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 5: <d @ 3>/), 'perl5 numbered captures $1';
+
+# todo :pugs<feature>
+#### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<key>: <abc @ 1>/	named capture
+#?rakudo todo 'unknown'
+ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/).produces(q/mob<key>: <abc @ 1>/), 'named capture';
+
+# todo :pugs<feature>
+#### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<val>: <123 @ 7>/	named capture
+#?rakudo todo 'unknown'
+ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/).produces(q/mob<val>: <123 @ 7>/), 'named capture';
+
+# todo :pugs<feature>
+#### :s (\w+) $<foo>=(\w+) (\w+)		abc def ghi	/mob<foo>: <def @ 4>/	mixing named and unnamed capture
+#?rakudo todo 'unknown'
+ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/).produces(q/mob<foo>: <def @ 4>/), 'mixing named and unnamed capture';
+
+# todo :pugs<feature>
+#### :s (\w+) $<foo>=(\w+) (\w+)		abc def ghi	/mob 1: <ghi @ 8>/	mixing named and unnamed capture
+#?rakudo todo 'unknown'
+ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/).produces(q/mob 1: <ghi @ 8>/), 'mixing named and unnamed capture';
+
+# todo :pugs<feature>
+#### <alpha> [ \- <alpha> ]?			abc def ghi	/mob<alpha> 0: <a @ 0>/	multiple subrule captures in same scope
+#?rakudo todo 'unknown'
+ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/).produces(q/mob<alpha> 0: <a @ 0>/), 'multiple subrule captures in same scope';
+
+# todo :pugs<feature>
+#### [(.)$0]+				bookkeeper	y			backreference
+ok 'bookkeeper' ~~ /[(.)$0]+/, 'backreference';
+
+# todo :pugs<feature>
+#### (\w+) <+ws> $0				hello hello	y			backreference at end of string
+ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
+
+# todo :pugs<feature>
+#### [(.)$0]+				bookkeeper	/mob 0 0: <o @ 1>/	backref $1
+#?rakudo todo 'unknown'
+ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 0: <o @ 1>/), 'backref $1';
+
+# todo :pugs<feature>
+#### [(.)$0]+				bookkeeper	/mob 0 1: <k @ 3>/	backref $1
+#?rakudo todo 'unknown'
+ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 1: <k @ 3>/), 'backref $1';
+
+# todo :pugs<feature>
+#### [(.)$0]+				bookkeeper	/mob 0 2: <e @ 5>/	backref $1
+#?rakudo todo 'unknown'
+ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 2: <e @ 5>/), 'backref $1';
+
+# todo :pugs<feature>
+#### (.)*x					123x		/mob: <123x @ 0>/	repeated dot capture
+#?rakudo todo 'unknown'
+ok ('123x' ~~ /(.)*x/).produces(q/mob: <123x @ 0>/), 'repeated dot capture';
+
+
+#### $<key>=<alpha>				12ab34		/mob<key>: <a @ 2>/	alias capture
+#?rakudo todo 'unknown'
+ok ('12ab34' ~~ /$<key>=<alpha>/).produces(q/mob<key>: <a @ 2>/), 'alias capture';
+
+#### <key=alpha>				12ab34		/mob<key>: <a @ 2>/	alias capture
+#?rakudo todo 'unknown'
+ok ('12ab34' ~~ /<key=alpha>/).produces(q/mob<key>: <a @ 2>/), 'alias capture';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+##   Enumerated character lists
+#### <[c]>			abcdef		y	character class
+ok 'abcdef' ~~ /<[c]>/, 'character class';
+
+# todo :pugs<feature>
+#### <[ z ]>			abc def		n	character class ignores ws
+ok 'abc def' !~~ /<[ z ]>/, 'character class ignores ws';
+
+# todo :pugs<feature>
+#### <[dcb]>**{3}		abcdef		y	repeated character class
+ok 'abcdef' ~~ /<[dcb]>**{3}/, 'repeated character class';
+
+#### ^<[a]>			abcdef		y	anchored character class
+ok 'abcdef' ~~ /^<[a]>/, 'anchored character class';
+
+#### <-[e]>			abcdef		y	negated character class
+ok 'abcdef' ~~ /<-[e]>/, 'negated character class';
+
+#### ^<[a]>?			abcdef		y	anchored optional character class
+ok 'abcdef' ~~ /^<[a]>?/, 'anchored optional character class';
+
+#### <-[e]>?			abcdef		y	negated optional character class
+ok 'abcdef' ~~ /<-[e]>?/, 'negated optional character class';
+
+#### <-[dcb]>**{3}		abcdef		n	repeated negated character class
+ok 'abcdef' !~~ /<-[dcb]>**{3}/, 'repeated negated character class';
+
+#### ^<-[e]>			abcdef		y	anchored negated character class
+ok 'abcdef' ~~ /^<-[e]>/, 'anchored negated character class';
+
+#### ^<-[a]>			abcdef		n	anchored negated character class
+ok 'abcdef' !~~ /^<-[a]>/, 'anchored negated character class';
+
+#### <[b..d]>		abcdef		y	character range
+ok 'abcdef' ~~ /<[b..d]>/, 'character range';
+
+# todo :pugs<feature>
+#### <[b .. d]>		c		y	character range ignores ws
+ok 'c' ~~ /<[b .. d]>/, 'character range ignores ws';
+
+#### <[b..d]>		abxxef		y	character range
+ok 'abxxef' ~~ /<[b..d]>/, 'character range';
+
+#### <[b..d]>		axcxef		y	character range
+ok 'axcxef' ~~ /<[b..d]>/, 'character range';
+
+#### <[b..d]>		axxdef		y	character range
+ok 'axxdef' ~~ /<[b..d]>/, 'character range';
+
+#### <[b..d]>		axxxef		n	character range
+ok 'axxxef' !~~ /<[b..d]>/, 'character range';
+
+#### <-[b..d]>		abcdef		y	negated character range
+ok 'abcdef' ~~ /<-[b..d]>/, 'negated character range';
+
+# todo :pugs<feature>
+#### <- [b..d]>		abcdef		y	negated allows ws
+ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
+
+#### <-[b..d]>		bbccdd		n	negated character range
+ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
+
+# todo :pge<reversed character range>
+#### <-[d..b]>		bbccdd		/parse error/	illegal character range
+#?rakudo todo 'unknown'
+ok ('bbccdd' ~~ /<-[d..b]>/).produces(q/parse error/), 'illegal character range';
+
+#### <[-]>			ab-def		/parse error/	unescaped hyphen
+ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}).produces(q/parse error/), 'unescaped hyphen';
+
+#### <[\-]>			ab-def		y	escaped hyphen
+ok 'ab-def' ~~ /<[\-]>/, 'escaped hyphen';
+
+#### <[\-]>			abcdef		n	escaped hyphen
+ok 'abcdef' !~~ /<[\-]>/, 'escaped hyphen';
+
+#### <-[\-]>			---x--		y	negated escaped hyphen
+ok '---x--' ~~ /<-[\-]>/, 'negated escaped hyphen';
+
+#### <-[\-]>			------		n	negated escaped hyphen
+ok '------' !~~ /<-[\-]>/, 'negated escaped hyphen';
+
+#### <[\-+]>			ab-def		y	escaped hyphen in range
+ok 'ab-def' ~~ /<[\-+]>/, 'escaped hyphen in range';
+
+#### <[\-+]>			ab+def		y	escaped hyphen in range
+ok 'ab+def' ~~ /<[\-+]>/, 'escaped hyphen in range';
+
+#### <[\-+]>			abcdef		n	escaped hyphen in range
+ok 'abcdef' !~~ /<[\-+]>/, 'escaped hyphen in range';
+
+#### <[+\-]>			ab-def		y	escaped hyphen in range
+ok 'ab-def' ~~ /<[+\-]>/, 'escaped hyphen in range';
+
+#### <[+\-]>			ab+def		y	escaped hyphen in range
+ok 'ab+def' ~~ /<[+\-]>/, 'escaped hyphen in range';
+
+#### <[+\-]>			abcdef		n	escaped hyphen in range
+ok 'abcdef' !~~ /<[+\-]>/, 'escaped hyphen in range';
+
+#### <-[\-+]>		---x--		y	negated escaped hyphen in range
+ok '---x--' ~~ /<-[\-+]>/, 'negated escaped hyphen in range';
+
+#### <-[\-+]>		------		n	negated escaped hyphen in range
+ok '------' !~~ /<-[\-+]>/, 'negated escaped hyphen in range';
+
+#### <-[+\-]>		---x--		y	negated escaped hyphen in range
+ok '---x--' ~~ /<-[+\-]>/, 'negated escaped hyphen in range';
+
+#### <-[+\-]>		------		n	negated escaped hyphen in range
+ok '------' !~~ /<-[+\-]>/, 'negated escaped hyphen in range';
+
+#### <["\\]>			\\			y	escaped backslash
+ok '\\' ~~ /<["\\]>/, 'escaped backslash';
+
+#### <[\]]>			]			y	escaped close bracket
+ok ']' ~~ /<[\]]>/, 'escaped close bracket';
+
+#### <[\]>			\\]]		/parse error/	unescaped backslash (or no closing brace)
+ok eval(q{{ '\\]]' ~~ /<[\]>/ }}).produces(q/parse error/), 'unescaped backslash (or no closing brace)';
+
+#### ^\><[<]>		><		y	lt character class
+ok '><' ~~ /^\><[<]>/, 'lt character class';
+
+#### ^<[>]>\<		><		y	gt character class
+ok '><' ~~ /^<[>]>\</, 'gt character class';
+
+# todo :pugs<feature>
+#### ^<[><]>**{2}		><		y	gt, lt character class
+ok '><' ~~ /^<[><]>**{2}/, 'gt, lt character class';
+
+# todo :pugs<feature>
+#### ^<[<>]>**{2}		><		y	lt, gt  character class
+ok '><' ~~ /^<[<>]>**{2}/, 'lt, gt  character class';
+
+#### ^<-[><]>		><		n	not gt, lt character class
+ok '><' !~~ /^<-[><]>/, 'not gt, lt character class';
+
+#### ^<-[<>]>		><		n	not lt, gt  character class
+ok '><' !~~ /^<-[<>]>/, 'not lt, gt  character class';
+
+#### '... --- ...'		... --- ...	y	literal match (\\\')
+ok '... --- ...' ~~ /'... --- ...'/, 'literal match (\\\')';
+
+#### '... --- ...'		...---...	n	literal match (\\\')
+ok '...---...' !~~ /'... --- ...'/, 'literal match (\\\')';
+
+# todo :pugs<feature>
+#### 'ab\'>cd'		ab\'>cd		y	literal match with quote
+ok 'ab\'>cd' ~~ /'ab\'>cd'/, 'literal match with quote';
+
+#### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
+#?rakudo todo 'unknown'
+ok 'ab\x5cyz' ~~ /'ab\\yz'/, 'literal match with backslash';
+
+#### 'ab"cd'			ab"cd		y	literal match with quote
+ok 'ab"cd' ~~ /'ab"cd'/, 'literal match with quote';
+
+# todo :pugs<feature>
+#### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
+#?rakudo todo 'unknown'
+ok 'ab\x5cyz' ~~ /'ab\\yz'/, 'literal match with backslash';
+
+# todo :pugs<feature> :pge<feature>
+#### "... --- ..."		... --- ...	y	literal match (\")
+ok '... --- ...' ~~ /"... --- ..."/, 'literal match (\")';
+
+# todo :pugs<feature> :pge<feature>
+#### "... --- ..."		...---...	n	literal match (\")
+ok '...---...' !~~ /"... --- ..."/, 'literal match (\")';
+
+# todo :pugs<feature> :pge<feature>
+#### "ab<\">cd"		ab<">cd		y	literal match with quote
+ok 'ab<">cd' ~~ /"ab<\">cd"/, 'literal match with quote';
+
+# todo :pugs<feature> :pge<feature>
+#### "ab<'>cd"		ab<\'>cd		y	literal match with quote
+ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
+
+# todo :pugs<feature> :pge<feature>
+#### "ab\\cd"		ab\x5ccd	y	literal match with backslash
+ok 'ab\x5ccd' ~~ /"ab\\cd"/, 'literal match with backslash';
+
+# todo :pugs<feature> :pge<feature>
+#### (ab)x"$0"		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
+
+# todo :pugs<feature> :pge<feature>
+#### (ab)"x$0"		abxab		y	literal match with interpolation
+ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
+
+#### '?'			ab<?		y	literal match with question mark
+ok 'ab<?' ~~ /'?'/, 'literal match with question mark';
+
+#### '<'			ab<?		y	literal match with lt 
+ok 'ab<?' ~~ /'<'/, 'literal match with lt ';
+
+#### '<?'			ab<?		y	literal match with lt and question mark
+ok 'ab<?' ~~ /'<?'/, 'literal match with lt and question mark';
+
+#### '<?'			ab<x?		n	non-matching literal match 
+ok 'ab<x?' !~~ /'<?'/, 'non-matching literal match ';
+
+#### <[A..Z0..9]>		abcdef		n	two enumerated ranges
+ok 'abcdef' !~~ /<[A..Z0..9]>/, 'two enumerated ranges';
+
+#### <[A..Z0..9]>		abcDef		y	two enumerated ranges
+ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+## lookarounds
+#### <before .d> a.		abacad		/mob: <ad @ 4>/			lookahead <before>
+#?rakudo todo 'unknown'
+ok ('abacad' ~~ /<before .d> a./).produces(q/mob: <ad @ 4>/), 'lookahead <before>';
+
+#### <before c> ....		abacad		n				lookahead <before>
+ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
+
+#### <before> .		abcd		n				null <before>
+ok 'abcd' !~~ /<before> ./, 'null <before>';
+
+#### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
+#?rakudo todo 'unknown'
+ok ('aabaaa' ~~ /<!before ..b> aa/).produces(q/mob: <aa @ 3>/), 'negated lookahead';
+
+# todo :pugs<feature>
+#### <after a>b		ab		y				lookbehind <after>
+ok 'ab' ~~ /<after a>b/, 'lookbehind <after>';
+
+#### <after a>b		cb		n				lookbehind <after>
+ok 'cb' !~~ /<after a>b/, 'lookbehind <after>';
+
+#### <after a>b		b		n				lookbehind <after>
+ok 'b' !~~ /<after a>b/, 'lookbehind <after>';
+
+# todo :pugs<feature>
+#### <!after c>b		ab		y				lookbehind <!after>
+ok 'ab' ~~ /<!after c>b/, 'lookbehind <!after>';
+
+#### <!after c>b		cb		n				lookbehind <!after>
+ok 'cb' !~~ /<!after c>b/, 'lookbehind <!after>';
+
+# todo :pugs<feature>
+#### <!after c>b		b		y				lookbehind <!after>
+ok 'b' ~~ /<!after c>b/, 'lookbehind <!after>';
+
+#### <!after <[cd]>>b	dbcb		n				lookbehind <!after>
+ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
+
+# todo :pugs<feature>
+#### <!after <[cd]>><[ab]>	dbaacb		y				lookbehind <!after>
+ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
+
+#### <!after c|d>b		dbcb		n				lookbehind <!after>
+ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
+
+# todo :pugs<feature>
+#### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
+ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
+
+# todo :pugs<feature>
+#### <!after cd><[ab]>	cbaccb		y				lookbehind <!after>
+ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
+
+# todo :pugs<feature>
+#### $ <after ^a>		a		y				lookbehind <after>
+#?rakudo todo 'unknown'
+ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
+
+# todo :pugs<feature>
+#### <after x+>y		axxbxxyc	y				lookbehind <after>
+ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
+
+#### <[a..z]>+		az		y				metasyntax with leading + (<+...>)
+ok 'az' ~~ /<[a..z]>+/, 'metasyntax with leading + (<+...>)';
+
+#### <+[a..z]>+		az		y				metasyntax with leading + (<+...>)
+ok 'az' ~~ /<+[a..z]>+/, 'metasyntax with leading + (<+...>)';
+
+#### <+alpha>+		az		y				metasyntax with leading + (<+...>)
+ok 'az' ~~ /<+alpha>+/, 'metasyntax with leading + (<+...>)';
+
+
+#### <null>			''		y		null pattern (<null>)
+#?rakudo todo 'unknown'
+ok '' ~~ /<null>/, 'null pattern (<null>)';
+
+#### ^ <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 0>/	null pattern (<null>)
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}).produces(q/mob<null>: < @ 0>/), 'null pattern (<null>)';
+
+#### <null> $	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 65>/	null pattern (<null>)
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<null> $/ }}).produces(q/mob<null>: < @ 65>/), 'null pattern (<null>)';
+
+#### abc <null> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
+ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /abc <null> def/, 'null pattern (<null>)';
+
+#### x | y | <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
+ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /x | y | <null>/, 'null pattern (<null>)';
+
+#### x | y | <?null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
+ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /x | y | <?null>/, 'null pattern (<null>)';
+
+
+#### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /a[b}/ }}).produces(q/rule error/), 'mismatched close';
+
+
+#### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
+#?rakudo todo 'unknown'
+ok ('abacad' ~~ /c <before .d>/).produces(q/mob: <c @ 3>/), 'one character and lookahead <before>';
+
+#### .* <before .d>		abacad		/mob: <abac @ 0>/			multiple characters and lookahead <before>
+#?rakudo todo 'unknown'
+ok ('abacad' ~~ /.* <before .d>/).produces(q/mob: <abac @ 0>/), 'multiple characters and lookahead <before>';
+
+#### .* <before .\<>		abaca<d		/mob: <abac @ 0>/			multiple characters and lookahead <before> with a \'<\'
+#?rakudo todo 'unknown'
+ok ('abaca<d' ~~ /.* <before .\<>/).produces(q/mob: <abac @ 0>/), 'multiple characters and lookahead <before> with a \'<\'';
+
+#### .* <before \<>		aba<ca<d		/mob: <aba<ca @ 0>/		greedy any character and lookahead <before> with a \'<\'
+#?rakudo todo 'unknown'
+ok ('aba<ca<d' ~~ /.* <before \<>/).produces(q/mob: <aba<ca @ 0>/), 'greedy any character and lookahead <before> with a \'<\'';
+
+#### .*? <before \<>		aba<ca<d		/mob: <aba @ 0>/		non-greedy any character and lookahead <before> with a \'<\'
+#?rakudo todo 'unknown'
+ok ('aba<ca<d' ~~ /.*? <before \<>/).produces(q/mob: <aba @ 0>/), 'non-greedy any character and lookahead <before> with a \'<\'';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+##   Metacharacter tests
+#### .			a		y	dot (.)
+ok 'a' ~~ /./, 'dot (.)';
+
+#### .			\n		y	dot (.)
+ok '\n' ~~ /./, 'dot (.)';
+
+#### .			''		n	dot (.)
+ok '' !~~ /./, 'dot (.)';
+
+#### a\s+f			abcdef		n	whitespace (\s)
+ok 'abcdef' !~~ /a\s+f/, 'whitespace (\s)';
+
+#### ab\s+cdef		ab  cdef	y	whitespace (\s)
+ok 'ab  cdef' ~~ /ab\s+cdef/, 'whitespace (\s)';
+
+#### a\S+f			abcdef		y	not whitespace (\S)
+ok 'abcdef' ~~ /a\S+f/, 'not whitespace (\S)';
+
+#### a\S+f			ab cdef		n	not whitespace (\S)
+ok 'ab cdef' !~~ /a\S+f/, 'not whitespace (\S)';
+
+#### ^ abc			abcdef		y	start and end of string (^)
+ok 'abcdef' ~~ /^ abc/, 'start and end of string (^)';
+
+#### ^ abc			abc\ndef	y	start and end of string (^)
+ok 'abc\ndef' ~~ /^ abc/, 'start and end of string (^)';
+
+#### ^ abc			def\nabc	n	start and end of string (^)
+ok 'def\nabc' !~~ /^ abc/, 'start and end of string (^)';
+
+#### def \n ^ abc		def\nabc	n	start and end of string (^)
+ok 'def\nabc' !~~ /def \n ^ abc/, 'start and end of string (^)';
+
+#### def $			abcdef		y	start and end of string ($)
+ok 'abcdef' ~~ /def $/, 'start and end of string ($)';
+
+#### def $			abc\ndef	y	start and end of string ($)
+ok 'abc\ndef' ~~ /def $/, 'start and end of string ($)';
+
+#### def $			def\nabc	n	start and end of string ($)
+ok 'def\nabc' !~~ /def $/, 'start and end of string ($)';
+
+#### def $ \n abc		def\nabc	n	start and end of string (^)
+ok 'def\nabc' !~~ /def $ \n abc/, 'start and end of string (^)';
+
+#### abc \n $		abc\n		y	end of string ($)
+#?rakudo todo 'unknown'
+ok 'abc\n' ~~ /abc \n $/, 'end of string ($)';
+
+#### abc $			abc\n		n	end of string ($)
+ok 'abc\n' !~~ /abc $/, 'end of string ($)';
+
+#### <<def			abc-def		y	left word boundary, beginning of word
+ok 'abc-def' ~~ /<<def/, 'left word boundary, beginning of word';
+
+#### <<bc			abc-def		n	left word boundary, mid-word
+ok 'abc-def' !~~ /<<bc/, 'left word boundary, mid-word';
+
+#### c<<			abc-def		n	left word boundary, end of word
+ok 'abc-def' !~~ /c<</, 'left word boundary, end of word';
+
+#### <<abc			abc-def		y	left word boundary, BOS
+ok 'abc-def' ~~ /<<abc/, 'left word boundary, BOS';
+
+#### def<<			abc-def		n	left word boundary, EOS
+ok 'abc-def' !~~ /def<</, 'left word boundary, EOS';
+
+#### <<			-------		n	left word boundary, no word chars
+ok '-------' !~~ /<</, 'left word boundary, no word chars';
+
+#### >>def			abc-def		n	right word boundary, beginning of word
+ok 'abc-def' !~~ />>def/, 'right word boundary, beginning of word';
+
+#### >>bc			abc-def		n	right word boundary, mid-word
+ok 'abc-def' !~~ />>bc/, 'right word boundary, mid-word';
+
+#### c>>			abc-def		y	right word boundary, end of word
+ok 'abc-def' ~~ /c>>/, 'right word boundary, end of word';
+
+#### >>abc			abc-def		n	right word boundary, BOS
+ok 'abc-def' !~~ />>abc/, 'right word boundary, BOS';
+
+#### def>>			abc-def		y	right word boundary, EOS
+ok 'abc-def' ~~ /def>>/, 'right word boundary, EOS';
+
+#### >>			-------		n	right word boundary, no word chars
+ok '-------' !~~ />>/, 'right word boundary, no word chars';
+
+
+#### c \n d			abc\ndef	y	logical newline (\n)
+#?rakudo todo 'unknown'
+ok 'abc\ndef' ~~ /c \n d/, 'logical newline (\n)';
+
+# todo :pugs<feature>
+#### c \n d			abc\rdef	y	logical newline matches \r
+#?rakudo todo 'unknown'
+ok 'abc\rdef' ~~ /c \n d/, 'logical newline matches \r';
+
+#### c \n+ d			abc\n\ndef	y	logical newline quantified
+#?rakudo todo 'unknown'
+ok 'abc\n\ndef' ~~ /c \n+ d/, 'logical newline quantified';
+
+#### a\n+f			abcdef		n	logical newline (\n)
+ok 'abcdef' !~~ /a\n+f/, 'logical newline (\n)';
+
+#### c \n d			abc\n\rdef	n	logical newline matches \n\r
+ok 'abc\n\rdef' !~~ /c \n d/, 'logical newline matches \n\r';
+
+# todo :pugs<feature>
+#### c \n d			abc\r\ndef	y	logical newline matches \r\n
+#?rakudo todo 'unknown'
+ok 'abc\r\ndef' ~~ /c \n d/, 'logical newline matches \r\n';
+
+#### b \n c			abc\ndef	n	logical newline (\n)
+ok 'abc\ndef' !~~ /b \n c/, 'logical newline (\n)';
+
+#### \N			a		y	not logical newline (\N)
+ok 'a' ~~ /\N/, 'not logical newline (\N)';
+
+#### a \N c			abc		y	not logical newline (\N)
+ok 'abc' ~~ /a \N c/, 'not logical newline (\N)';
+
+#### \N			''		n	not logical newline (\N)
+ok '' !~~ /\N/, 'not logical newline (\N)';
+
+#### c \N d			abc\ndef	n	not logical newline (\N)
+ok 'abc\ndef' !~~ /c \N d/, 'not logical newline (\N)';
+
+#### c \N d			abc\rdef	n	not logical newline (\N)
+ok 'abc\rdef' !~~ /c \N d/, 'not logical newline (\N)';
+
+#### c \N+ d			abc\n\ndef	n	not logical newline (\N)
+#?rakudo todo 'unknown'
+ok 'abc\n\ndef' !~~ /c \N+ d/, 'not logical newline (\N)';
+
+#### a\N+f			abcdef		y	not logical newline (\N)
+ok 'abcdef' ~~ /a\N+f/, 'not logical newline (\N)';
+
+#### c \N d			abc\n\rdef	n	not logical newline (\N)
+ok 'abc\n\rdef' !~~ /c \N d/, 'not logical newline (\N)';
+
+#### c \N d			abc\r\ndef	n	not logical newline (\N)
+ok 'abc\r\ndef' !~~ /c \N d/, 'not logical newline (\N)';
+
+#### b \N \n			abc\ndef	y	not logical newline (\N)
+#?rakudo todo 'unknown'
+ok 'abc\ndef' ~~ /b \N \n/, 'not logical newline (\N)';
+
+#### \Aabc			Aabc		/reserved/	retired metachars (\A)
+ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}).produces(q/reserved/), 'retired metachars (\A)';
+
+#### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
+ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}).produces(q/reserved/), 'retired metachars (\A)';
+
+#### abc\Z			abcZ		/reserved/	retired metachars (\Z)
+ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}).produces(q/reserved/), 'retired metachars (\Z)';
+
+#### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
+ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}).produces(q/reserved/), 'retired metachars (\Z)';
+
+#### abc\z			abcz		/reserved/	retired metachars (\z)
+ok eval(q{{ 'abcz' ~~ /abc\z/ }}).produces(q/reserved/), 'retired metachars (\z)';
+
+#### def\z			abc\ndef	/reserved/	retired metachars (\z)
+ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}).produces(q/reserved/), 'retired metachars (\z)';
+
+#### abc # def		abc#def		y	comments (#)
+ok 'abc#def' ~~ /abc # def
+/, 'comments (#)';
+
+#### abc # xyz		abc#def		y	comments (#)
+ok 'abc#def' ~~ /abc # xyz
+/, 'comments (#)';
+
+#### abc # def \n \$		abc#def		y	comments (#)
+ok 'abc#def' ~~ /abc # def \n \$
+/, 'comments (#)';
+
+#### abc \# def		abc#def		y	comments (#)
+ok 'abc#def' ~~ /abc \# def
+/, 'comments (#)';
+
+#### abc \# xyz		abc#def		n	comments (#)
+ok 'abc#def' !~~ /abc \# xyz
+/, 'comments (#)';
+
+#### ^ abc \# def $		abc#def		y	comments (#)
+ok 'abc#def' ~~ /^ abc \# def $
+/, 'comments (#)';
+
+#### ^^ abc \n ^^ def	abc\ndef	y	line beginnings and endings (^^)
+ok 'abc\ndef' ~~ /^^ abc \n ^^ def/, 'line beginnings and endings (^^)';
+
+# todo :pugs<feature>
+#### ^^ abc \n ^^ def \n ^^	abc\ndef\n	n	line beginnings and endings (^^)
+ok 'abc\ndef\n' !~~ /^^ abc \n ^^ def \n ^^/, 'line beginnings and endings (^^)';
+
+#### ^^ \n			\n		y	line beginnings and endings (^^)
+#?rakudo todo 'unknown'
+ok '\n' ~~ /^^ \n/, 'line beginnings and endings (^^)';
+
+# todo :pugs<feature>
+#### \n ^^			\n		n	line beginnings and endings (^^)
+ok '\n' !~~ /\n ^^/, 'line beginnings and endings (^^)';
+
+#### abc $$ \n def $$	abc\ndef	y	line beginnings and endings ($$)
+#?rakudo todo 'unknown'
+ok 'abc\ndef' ~~ /abc $$ \n def $$/, 'line beginnings and endings ($$)';
+
+# todo :pugs<feature>
+#### abc $$ \n def $$ \n $$	abc\ndef\n	n	line beginnings and endings ($$)
+ok 'abc\ndef\n' !~~ /abc $$ \n def $$ \n $$/, 'line beginnings and endings ($$)';
+
+#### $$ \n			\n		y	line beginnings and endings ($$)
+#?rakudo todo 'unknown'
+ok '\n' ~~ /$$ \n/, 'line beginnings and endings ($$)';
+
+# todo :pugs<feature>
+#### \n $$			\n		n	line beginnings and endings ($$)
+ok '\n' !~~ /\n $$/, 'line beginnings and endings ($$)';
+
+#### <[a..d]> | <[b..e]>	c		y	alternation (|)
+ok 'c' ~~ /<[a..d]> | <[b..e]>/, 'alternation (|)';
+
+#### <[a..d]> | <[d..e]>	c		y	alternation (|)
+ok 'c' ~~ /<[a..d]> | <[d..e]>/, 'alternation (|)';
+
+#### <[a..b]> | <[b..e]>	c		y	alternation (|)
+ok 'c' ~~ /<[a..b]> | <[b..e]>/, 'alternation (|)';
+
+#### <[a..b]> | <[d..e]>	c		n	alternation (|)
+ok 'c' !~~ /<[a..b]> | <[d..e]>/, 'alternation (|)';
+
+#### <[a..d]>+ | <[b..e]>+	bcd		y	alternation (|)
+ok 'bcd' ~~ /<[a..d]>+ | <[b..e]>+/, 'alternation (|)';
+
+#### ^ [ <[a..d]>+ | <[b..e]>+ ] $	bcd		y	alternation (|)
+ok 'bcd' ~~ /^ [ <[a..d]>+ | <[b..e]>+ ] $/, 'alternation (|)';
+
+#### ^ [ <[a..c]>+ | <[b..e]>+ ] $	bcd		y	alternation (|)
+ok 'bcd' ~~ /^ [ <[a..c]>+ | <[b..e]>+ ] $/, 'alternation (|)';
+
+#### ^ [ <[a..d]>+ | <[c..e]>+ ] $	bcd		y	alternation (|)
+ok 'bcd' ~~ /^ [ <[a..d]>+ | <[c..e]>+ ] $/, 'alternation (|)';
+
+#### b|			bcd		/rule error/	alternation (|) - null right arg illegal
+ok eval(q{{ 'bcd' ~~ /b|/ }}).produces(q/rule error/), 'alternation (|) - null right arg illegal';
+
+#### |b			bcd		y	alternation (|) - null left arg ignored
+ok 'bcd' ~~ /|b/, 'alternation (|) - null left arg ignored';
+
+#### |			bcd		/rule error/	alternation (|) - null both args illegal
+ok eval(q{{ 'bcd' ~~ /|/ }}).produces(q/rule error/), 'alternation (|) - null both args illegal';
+
+#### \|			|		y	alternation (|) - literal must be escaped
+ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
+
+#### |			|		/rule error/	alternation (|) - literal must be escaped
+ok eval(q{{ '|' ~~ /|/ }}).produces(q/rule error/), 'alternation (|) - literal must be escaped';
+
+# todo :pugs<feature>
+#### <[a..d]> & <[b..e]>	c		y	conjunction (&)
+ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
+
+#### <[a..d]> & <[d..e]>	c		n	conjunction (&)
+ok 'c' !~~ /<[a..d]> & <[d..e]>/, 'conjunction (&)';
+
+#### <[a..b]> & <[b..e]>	c		n	conjunction (&)
+ok 'c' !~~ /<[a..b]> & <[b..e]>/, 'conjunction (&)';
+
+#### <[a..b]> & <[d..e]>	c		n	conjunction (&)
+ok 'c' !~~ /<[a..b]> & <[d..e]>/, 'conjunction (&)';
+
+# todo :pugs<feature>
+#### <[a..d]>+ & <[b..e]>+	bcd		y	conjunction (&)
+ok 'bcd' ~~ /<[a..d]>+ & <[b..e]>+/, 'conjunction (&)';
+
+# todo :pugs<feature>
+#### ^ [ <[a..d]>+ & <[b..e]>+ ] $	bcd		y	conjunction (&)
+ok 'bcd' ~~ /^ [ <[a..d]>+ & <[b..e]>+ ] $/, 'conjunction (&)';
+
+# todo :pugs<feature>
+#### <[a..c]>+ & <[b..e]>+	bcd		y	conjunction (&)
+ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
+
+# todo :pugs<feature>
+#### <[a..d]>+ & <[c..e]>+	bcd		y	conjunction (&)
+ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
+
+#### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
+ok eval(q{{ 'bcd' ~~ /b&/ }}).produces(q/rule error/), 'conjunction (&) - null right arg illegal';
+
+#### &b			bcd		/rule error/	conjunction (&) - null left arg illegal
+ok eval(q{{ 'bcd' ~~ /&b/ }}).produces(q/rule error/), 'conjunction (&) - null left arg illegal';
+
+#### &			bcd		/rule error/	conjunction (&) - null both args illegal
+ok eval(q{{ 'bcd' ~~ /&/ }}).produces(q/rule error/), 'conjunction (&) - null both args illegal';
+
+#### \&			&		y	conjunction (&) - literal must be escaped
+ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
+
+#### &			&		/rule error/	conjunction (&) - literal must be escaped
+ok eval(q{{ '&' ~~ /&/ }}).produces(q/rule error/), 'conjunction (&) - literal must be escaped';
+
+# todo :pge<leading |>
+#### a&|b			a&|b		/rule error/	alternation and conjunction (&|) - parse error
+ok eval(q{{ 'a&|b' ~~ /a&|b/ }}).produces(q/rule error/), 'alternation and conjunction (&|) - parse error';
+
+#### a|&b			a|&b		/rule error/	alternation and conjunction (|&) - parse error
+ok eval(q{{ 'a|&b' ~~ /a|&b/ }}).produces(q/rule error/), 'alternation and conjunction (|&) - parse error';
+
+#### |d|b			abc		y	leading alternation ignored
+ok 'abc' ~~ /|d|b/, 'leading alternation ignored';
+
+####  |d|b			abc		y	leading alternation ignored
+ok 'abc' ~~ / |d|b/, 'leading alternation ignored';
+
+#### |d |b			abc		y	leading alternation ignored
+ok 'abc' ~~ /|d |b/, 'leading alternation ignored';
+
+####  | d | b		abc		y	leading alternation ignored
+ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
+
+# todo :pugs<feature> :pge<feature>
+####  b |  | d		abc		n	null pattern invalid
+ok eval(q{{ 'abc' !~~ / b |  | d/ }}).produces(q/reserved/), 'null pattern invalid';
+
+#### \pabc			pabc		/reserved/	retired metachars (\p)
+ok eval(q{{ 'pabc' ~~ /\pabc/ }}).produces(q/reserved/), 'retired metachars (\p)';
+
+#### \p{InConsonant}		a		/reserved/	retired metachars (\p)
+ok eval(q{{ 'a' ~~ /\p{InConsonant}/ }}).produces(q/reserved/), 'retired metachars (\p)';
+
+#### \Pabc			Pabc		/reserved/	retired metachars (\P)
+ok eval(q{{ 'Pabc' ~~ /\Pabc/ }}).produces(q/reserved/), 'retired metachars (\P)';
+
+#### \P{InConsonant}		a		/reserved/	retired metachars (\P)
+ok eval(q{{ 'a' ~~ /\P{InConsonant}/ }}).produces(q/reserved/), 'retired metachars (\P)';
+
+#### \Labc\E			LabcE		/reserved/	retired metachars (\L...\E)
+ok eval(q{{ 'LabcE' ~~ /\Labc\E/ }}).produces(q/reserved/), 'retired metachars (\L...\E)';
+
+#### \LABC\E			abc		/reserved/	retired metachars (\L...\E)
+ok eval(q{{ 'abc' ~~ /\LABC\E/ }}).produces(q/reserved/), 'retired metachars (\L...\E)';
+
+#### \Uabc\E			UabcE		/reserved/	retired metachars (\U...\E)
+ok eval(q{{ 'UabcE' ~~ /\Uabc\E/ }}).produces(q/reserved/), 'retired metachars (\U...\E)';
+
+#### \Uabc\E			ABC		/reserved/	retired metachars (\U...\E)
+ok eval(q{{ 'ABC' ~~ /\Uabc\E/ }}).produces(q/reserved/), 'retired metachars (\U...\E)';
+
+#### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
+ok eval(q{{ 'QabcE' ~~ /\Qabc\E/ }}).produces(q/reserved/), 'retired metachars (\Q...\E)';
+
+#### \Qabc d?\E		abc d		/reserved/	retired metachars (\Q...\E)
+ok eval(q{{ 'abc d' ~~ /\Qabc d?\E/ }}).produces(q/reserved/), 'retired metachars (\Q...\E)';
+
+#### \Gabc			Gabc		/reserved/	retired metachars (\G)
+ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}).produces(q/reserved/), 'retired metachars (\G)';
+
+#### \1abc			1abc		/reserved/	retired metachars (\1)
+ok eval(q{{ '1abc' ~~ /\1abc/ }}).produces(q/reserved/), 'retired metachars (\1)';
+
+# todo :pugs<feature>
+#### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
+ok '\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085' ~~ /^ \s+ $/, '0-255 whitespace (\s)';
+
+# todo :pugs<feature>
+#### ^ \h+ $			\x0009\x0020\x00a0	y	0-255 horizontal whitespace (\h)
+ok '\x0009\x0020\x00a0' ~~ /^ \h+ $/, '0-255 horizontal whitespace (\h)';
+
+#### ^ \V+ $			\x0009\x0020\x00a0	y	0-255 horizontal whitespace (\V)
+ok '\x0009\x0020\x00a0' ~~ /^ \V+ $/, '0-255 horizontal whitespace (\V)';
+
+# todo :pugs<feature>
+#### ^ \v+ $			\x000a\x000b\x000c\x000d\x0085	y	0-255 vertical whitespace (\v)
+#?rakudo todo 'unknown'
+ok '\x000a\x000b\x000c\x000d\x0085' ~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
+
+#### ^ \h+ $			\x000a\x000b\x000c\x000d\x0085	n	0-255 horizontal whitespace (\h)
+ok '\x000a\x000b\x000c\x000d\x0085' !~~ /^ \h+ $/, '0-255 horizontal whitespace (\h)';
+
+#### ^ \v+ $			\x0009\x0020\x00a0	n	0-255 vertical whitespace (\v)
+ok '\x0009\x0020\x00a0' !~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
+
+# todo :pugs<feature>
+#### ^ \s+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\s)
+#?rakudo todo 'unknown'
+ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \s+ $/, 'unicode whitespace (\s)';
+
+# todo :pugs<feature>
+#### ^ \h+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\h)
+#?rakudo todo 'unknown'
+ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \h+ $/, 'unicode whitespace (\h)';
+
+#### ^ \V+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\V)
+ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \V+ $/, 'unicode whitespace (\V)';
+
+#### ^ \v+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	n	unicode whitespace (\v)
+ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' !~~ /^ \v+ $/, 'unicode whitespace (\v)';
+
+#### c \t d			abc\tdef	y	horizontal tab (\t)
+#?rakudo todo 'unknown'
+ok 'abc\tdef' ~~ /c \t d/, 'horizontal tab (\t)';
+
+#### c \t+ d			abc\t\tdef	y	horizontal tab (\t)
+#?rakudo todo 'unknown'
+ok 'abc\t\tdef' ~~ /c \t+ d/, 'horizontal tab (\t)';
+
+#### a \t+ f			abcdef		n	horizontal tab (\t)
+ok 'abcdef' !~~ /a \t+ f/, 'horizontal tab (\t)';
+
+#### b \t c			abc\tdef	n	horizontal tab (\t)
+ok 'abc\tdef' !~~ /b \t c/, 'horizontal tab (\t)';
+
+#### \T			a		y	not horizontal tab (\T)
+ok 'a' ~~ /\T/, 'not horizontal tab (\T)';
+
+#### a \T c			abc		y	not horizontal tab (\T)
+ok 'abc' ~~ /a \T c/, 'not horizontal tab (\T)';
+
+#### \T			''		n	not horizontal tab (\T)
+ok '' !~~ /\T/, 'not horizontal tab (\T)';
+
+#### c \T d			abc\tdef	n	not horizontal tab (\T)
+ok 'abc\tdef' !~~ /c \T d/, 'not horizontal tab (\T)';
+
+#### c \T+ d			abc\t\tdef	n	not horizontal tab (\T)
+#?rakudo todo 'unknown'
+ok 'abc\t\tdef' !~~ /c \T+ d/, 'not horizontal tab (\T)';
+
+#### a \T+ f			abcdef		y	not horizontal tab (\T)
+ok 'abcdef' ~~ /a \T+ f/, 'not horizontal tab (\T)';
+
+#### c \r d			abc\rdef	y	return (\r)
+#?rakudo todo 'unknown'
+ok 'abc\rdef' ~~ /c \r d/, 'return (\r)';
+
+#### c \r+ d			abc\r\rdef	y	return (\r)
+#?rakudo todo 'unknown'
+ok 'abc\r\rdef' ~~ /c \r+ d/, 'return (\r)';
+
+#### a \r+ f			abcdef		n	return (\r)
+ok 'abcdef' !~~ /a \r+ f/, 'return (\r)';
+
+#### b \r c			abc\rdef	n	return (\r)
+ok 'abc\rdef' !~~ /b \r c/, 'return (\r)';
+
+#### \R			a		y	not return (\R)
+ok 'a' ~~ /\R/, 'not return (\R)';
+
+#### a \R c			abc		y	not return (\R)
+ok 'abc' ~~ /a \R c/, 'not return (\R)';
+
+#### \R			''		n	not return (\R)
+ok '' !~~ /\R/, 'not return (\R)';
+
+#### c \R d			abc\rdef	n	not return (\R)
+ok 'abc\rdef' !~~ /c \R d/, 'not return (\R)';
+
+#### c \R+ d			abc\r\rdef	n	not return (\R)
+#?rakudo todo 'unknown'
+ok 'abc\r\rdef' !~~ /c \R+ d/, 'not return (\R)';
+
+#### a \R+ f			abcdef		y	not return (\R)
+ok 'abcdef' ~~ /a \R+ f/, 'not return (\R)';
+
+#### c \f d			abc\fdef	y	formfeed (\f)
+#?rakudo todo 'unknown'
+ok 'abc\fdef' ~~ /c \f d/, 'formfeed (\f)';
+
+#### c \f+ d			abc\f\fdef	y	formfeed (\f)
+#?rakudo todo 'unknown'
+ok 'abc\f\fdef' ~~ /c \f+ d/, 'formfeed (\f)';
+
+#### a \f+ f			abcdef		n	formfeed (\f)
+ok 'abcdef' !~~ /a \f+ f/, 'formfeed (\f)';
+
+#### b \f c			abc\fdef	n	formfeed (\f)
+ok 'abc\fdef' !~~ /b \f c/, 'formfeed (\f)';
+
+#### \F			a		y	not formfeed (\F)
+ok 'a' ~~ /\F/, 'not formfeed (\F)';
+
+#### a \F c			abc		y	not formfeed (\F)
+ok 'abc' ~~ /a \F c/, 'not formfeed (\F)';
+
+#### \F			''		n	not formfeed (\F)
+ok '' !~~ /\F/, 'not formfeed (\F)';
+
+#### c \F d			abc\fdef	n	not formfeed (\F)
+ok 'abc\fdef' !~~ /c \F d/, 'not formfeed (\F)';
+
+#### c \F+ d			abc\f\fdef	n	not formfeed (\F)
+#?rakudo todo 'unknown'
+ok 'abc\f\fdef' !~~ /c \F+ d/, 'not formfeed (\F)';
+
+#### a \F+ f			abcdef		y	not formfeed (\F)
+ok 'abcdef' ~~ /a \F+ f/, 'not formfeed (\F)';
+
+# todo :pugs<feature>
+#### c \e d			abc\edef	y	escape (\e)
+#?rakudo todo 'unknown'
+ok 'abc\edef' ~~ /c \e d/, 'escape (\e)';
+
+# todo :pugs<feature>
+#### c \e+ d			abc\e\edef	y	escape (\e)
+#?rakudo todo 'unknown'
+ok 'abc\e\edef' ~~ /c \e+ d/, 'escape (\e)';
+
+#### a \e+ f			abcdef		n	escape (\e)
+ok 'abcdef' !~~ /a \e+ f/, 'escape (\e)';
+
+#### b \e c			abc\edef	n	escape (\e)
+ok 'abc\edef' !~~ /b \e c/, 'escape (\e)';
+
+#### \E			a		y	not escape (\E)
+ok 'a' ~~ /\E/, 'not escape (\E)';
+
+#### a \E c			abc		y	not escape (\E)
+ok 'abc' ~~ /a \E c/, 'not escape (\E)';
+
+#### \E			''		n	not escape (\E)
+ok '' !~~ /\E/, 'not escape (\E)';
+
+# todo :pugs<feature>
+#### c \E d			abc\edef	n	not escape (\E)
+ok 'abc\edef' !~~ /c \E d/, 'not escape (\E)';
+
+# todo :pugs<feature>
+#### c \E+ d			abc\e\edef	n	not escape (\E)
+#?rakudo todo 'unknown'
+ok 'abc\e\edef' !~~ /c \E+ d/, 'not escape (\E)';
+
+#### a \E+ f			abcdef		y	not escape (\E)
+ok 'abcdef' ~~ /a \E+ f/, 'not escape (\E)';
+
+#### c \x0021 d		abc!def	y	hex (\x)
+ok 'abc!def' ~~ /c \x0021 d/, 'hex (\x)';
+
+#### c \x0021+ d		abc!!def	y	hex (\x)
+ok 'abc!!def' ~~ /c \x0021+ d/, 'hex (\x)';
+
+#### a \x0021+ f		abcdef		n	hex (\x)
+ok 'abcdef' !~~ /a \x0021+ f/, 'hex (\x)';
+
+#### b \x0021 c		abc!def		n	hex (\x)
+ok 'abc!def' !~~ /b \x0021 c/, 'hex (\x)';
+
+#### c \x[0021] d		abc!def		y	hex (\x[])
+ok 'abc!def' ~~ /c \x[0021] d/, 'hex (\x[])';
+
+#### c \x[0021]+ d		abc!!def	y	hex (\x[])
+ok 'abc!!def' ~~ /c \x[0021]+ d/, 'hex (\x[])';
+
+#### c \x[21,21] d		abc!!def	y	hex (\x[])
+ok 'abc!!def' ~~ /c \x[21,21] d/, 'hex (\x[])';
+
+#### a \x[0021]+ f		abcdef		n	hex (\x[])
+ok 'abcdef' !~~ /a \x[0021]+ f/, 'hex (\x[])';
+
+#### b \x[0021] c		abc!def		n	hex (\x[])
+ok 'abc!def' !~~ /b \x[0021] c/, 'hex (\x[])';
+
+#### \X0021			a		y	not hex (\X)
+ok 'a' ~~ /\X0021/, 'not hex (\X)';
+
+#### a \X0021 c		abc		y	not hex (\X)
+ok 'abc' ~~ /a \X0021 c/, 'not hex (\X)';
+
+#### \X0021			''		n	not hex (\X)
+ok '' !~~ /\X0021/, 'not hex (\X)';
+
+#### c \X0021 d		abc!def		n	not hex (\X)
+ok 'abc!def' !~~ /c \X0021 d/, 'not hex (\X)';
+
+#### c \X0021+ d		abc!!def	n	not hex (\X)
+ok 'abc!!def' !~~ /c \X0021+ d/, 'not hex (\X)';
+
+#### a \X0021+ f		abcdef		y	not hex (\X)
+ok 'abcdef' ~~ /a \X0021+ f/, 'not hex (\X)';
+
+#### \X[0021]		a		y	not hex (\X[])
+ok 'a' ~~ /\X[0021]/, 'not hex (\X[])';
+
+#### a \X[0021] c		abc		y	not hex (\X[])
+ok 'abc' ~~ /a \X[0021] c/, 'not hex (\X[])';
+
+#### \X[0021]		''		n	not hex (\X[])
+ok '' !~~ /\X[0021]/, 'not hex (\X[])';
+
+#### c \X[0021] d		abc!def		n	not hex (\X[])
+ok 'abc!def' !~~ /c \X[0021] d/, 'not hex (\X[])';
+
+#### c \X[0021]+ d		abc!!def	n	not hex (\X[])
+ok 'abc!!def' !~~ /c \X[0021]+ d/, 'not hex (\X[])';
+
+#### a \X[0021]+ f		abcdef		y	not hex (\X[])
+ok 'abcdef' ~~ /a \X[0021]+ f/, 'not hex (\X[])';
+
+#### c \o041 d		abc!def		y	octal (\o)
+ok 'abc!def' ~~ /c \o041 d/, 'octal (\o)';
+
+#### c \o41+ d		abc!!def	y	octal (\o)
+ok 'abc!!def' ~~ /c \o41+ d/, 'octal (\o)';
+
+#### a \o41+ f		abcdef		n	octal (\o)
+ok 'abcdef' !~~ /a \o41+ f/, 'octal (\o)';
+
+#### b \o41 c		abc!def		n	octal (\o)
+ok 'abc!def' !~~ /b \o41 c/, 'octal (\o)';
+
+#### c \o[41] d		abc!def		y	octal (\o[])
+ok 'abc!def' ~~ /c \o[41] d/, 'octal (\o[])';
+
+#### c \o[41]+ d		abc!!def	y	octal (\o[])
+ok 'abc!!def' ~~ /c \o[41]+ d/, 'octal (\o[])';
+
+# todo :pugs<feature>
+#### c \o[41,41] d		abc!!def	y	octal (\o[])
+ok 'abc!!def' ~~ /c \o[41,41] d/, 'octal (\o[])';
+
+#### a \o[41]+ f		abcdef		n	octal (\o[])
+ok 'abcdef' !~~ /a \o[41]+ f/, 'octal (\o[])';
+
+#### b \o[41] c		abc!def		n	octal (\o[])
+ok 'abc!def' !~~ /b \o[41] c/, 'octal (\o[])';
+
+#### \O41			a		y	not octal (\O)
+ok 'a' ~~ /\O41/, 'not octal (\O)';
+
+#### a \O41 c		abc		y	not octal (\O)
+ok 'abc' ~~ /a \O41 c/, 'not octal (\O)';
+
+#### \O41			''		n	not octal (\O)
+ok '' !~~ /\O41/, 'not octal (\O)';
+
+#### c \O41 d		abc!def		n	not octal (\O)
+ok 'abc!def' !~~ /c \O41 d/, 'not octal (\O)';
+
+#### c \O41+ d		abc!!def	n	not octal (\O)
+ok 'abc!!def' !~~ /c \O41+ d/, 'not octal (\O)';
+
+#### a \O41+ f		abcdef		y	not octal (\O)
+ok 'abcdef' ~~ /a \O41+ f/, 'not octal (\O)';
+
+#### \O[41]			a		y	not octal (\O[])
+ok 'a' ~~ /\O[41]/, 'not octal (\O[])';
+
+#### a \O[41] c		abc		y	not octal (\O[])
+ok 'abc' ~~ /a \O[41] c/, 'not octal (\O[])';
+
+#### \O[41]			''		n	not octal (\O[])
+ok '' !~~ /\O[41]/, 'not octal (\O[])';
+
+#### c \O[41] d		abc!def		n	not octal (\O[])
+ok 'abc!def' !~~ /c \O[41] d/, 'not octal (\O[])';
+
+#### c \O[41]+ d		abc!!def	n	not octal (\O[])
+ok 'abc!!def' !~~ /c \O[41]+ d/, 'not octal (\O[])';
+
+#### a \O[41]+ f		abcdef		y	not octal (\O[])
+ok 'abcdef' ~~ /a \O[41]+ f/, 'not octal (\O[])';
+
+#### a\w+f			a=[ *f		n	word character
+ok 'a=[ *f' !~~ /a\w+f/, 'word character';
+
+#### a\w+f			abcdef		y	word character
+ok 'abcdef' ~~ /a\w+f/, 'word character';
+
+#### a\W+f			a&%- f		y	not word character
+ok 'a&%- f' ~~ /a\W+f/, 'not word character';
+
+#### a\W+f			abcdef		n	not word character
+ok 'abcdef' !~~ /a\W+f/, 'not word character';
+
+#### a\d+f			abcdef		n	digit
+ok 'abcdef' !~~ /a\d+f/, 'digit';
+
+#### ab\d+cdef		ab42cdef	y	digit
+ok 'ab42cdef' ~~ /ab\d+cdef/, 'digit';
+
+#### a\D+f			abcdef		y	not digit
+ok 'abcdef' ~~ /a\D+f/, 'not digit';
+
+#### a\D+f			ab0cdef		n	not digit
+ok 'ab0cdef' !~~ /a\D+f/, 'not digit';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+##  modifiers
+#### :i bcd			abcdef	y	ignorecase (:i)
+ok 'abcdef' ~~ /:i bcd/, 'ignorecase (:i)';
+
+#### :i bcd			aBcdef	y	ignorecase (:i)
+ok 'aBcdef' ~~ /:i bcd/, 'ignorecase (:i)';
+
+#### :i bcd			abCdef	y	ignorecase (:i)
+ok 'abCdef' ~~ /:i bcd/, 'ignorecase (:i)';
+
+#### :i bcd			abcDef	y	ignorecase (:i)
+ok 'abcDef' ~~ /:i bcd/, 'ignorecase (:i)';
+
+#### :i bcd			abc-ef	n	ignorecase (:i)
+ok 'abc-ef' !~~ /:i bcd/, 'ignorecase (:i)';
+
+#### :ignorecase bcd		abcdef	y	ignorecase (:ignorecase)
+ok 'abcdef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
+
+#### :ignorecase bcd		aBCDef	y	ignorecase (:ignorecase)
+ok 'aBCDef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
+
+#### :ignorecase bcd		abc-ef	n	ignorecase (:ignorecase)
+ok 'abc-ef' !~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
+
+# todo :pugs<feature>
+#### :i(0) bcd		abcdef	y	ignorecase, repetition (:i(0))
+ok 'abcdef' ~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
+
+#### :i(0) bcd		abCdef	n	ignorecase, repetition (:i(0))
+ok 'abCdef' !~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
+
+# todo :pugs<feature>
+#### :i(1) bcd		abcdef	y	ignorecase, repetition (:i(1))
+ok 'abcdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
+
+# todo :pugs<feature>
+#### :i(1) bcd		abCdef	y	ignorecase, repetition (:i(1))
+ok 'abCdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
+
+#### :i(1) bcd		aBxDef	n	ignorecase, repetition (:i(1))
+ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
+
+# todo :pugs<feature>
+#### :0i bcd			abcdef	y	ignorecase, repetition (:0i)
+ok 'abcdef' ~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
+
+#### :0i bcd			abCdef	n	ignorecase, repetition (:0i)
+ok 'abCdef' !~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
+
+# todo :pugs<feature>
+#### :1i bcd			abcdef	y	ignorecase, repetition (:1i)
+ok 'abcdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
+
+# todo :pugs<feature>
+#### :1i bcd			abCdef	y	ignorecase, repetition (:1i)
+ok 'abCdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
+
+# todo :pugs<feature>
+#### :1i bcd			aBCDef	y	ignorecase, repetition (:1i)
+ok 'aBCDef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
+
+#### :1i bcd			aBxDef	n	ignorecase, repetition (:1i)
+ok 'aBxDef' !~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
+
+#### ab [:i cd ] ef		abcdef	y	ignorecase, lexical (:i)
+ok 'abcdef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### ab [:i cd ] ef		abCdef	y	ignorecase, lexical (:i)
+ok 'abCdef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### ab [:i cd ] ef		abcDef	y	ignorecase, lexical (:i)
+ok 'abcDef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### ab [:i cd ] ef		abCDef	y	ignorecase, lexical (:i)
+ok 'abCDef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### ab [:i cd ] ef		aBCDef	n	ignorecase, lexical (:i)
+ok 'aBCDef' !~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### ab [:i cd ] ef		abCDEf	n	ignorecase, lexical (:i)
+ok 'abCDEf' !~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### :i ab [:i cd ] ef	abCDef	y	ignorecase, lexical (:i)
+ok 'abCDef' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### :i ab [:i cd ] ef	AbCDeF	y	ignorecase, lexical (:i)
+ok 'AbCDeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+#### :i ab [:i cd ] ef	AbcdeF	y	ignorecase, lexical (:i)
+ok 'AbcdeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
+
+# todo :pugs<feature>
+#### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEf		y	ignorecase, lexical (:i)
+ok 'AbCdEf' ~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
+
+# todo :pugs<feature>
+#### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeff	y	ignorecase, lexical (:i)
+ok 'AabbCcddEeff' ~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
+
+#### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEF		n	ignorecase, lexical (:i)
+ok 'AbCdEF' !~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
+
+#### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeFf	n	ignorecase, lexical (:i)
+ok 'AabbCcddEeFf' !~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
+
+# todo :pugs<feature>
+#### :i ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+ok 'AbcdeF' ~~ /:i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature> :pge<feature>
+#### :i ab [:!i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+ok 'AbcdeF' ~~ /:i ab [:!i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :i ab [:0i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+ok 'AbcdeF' ~~ /:i ab [:0i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :0i ab [:1i cd ] ef	abCDef	y	ignorecase, lexical repetition (:i)
+ok 'abCDef' ~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+#### :0i ab [:1i cd ] ef	AbCDeF	n	ignorecase, lexical repetition (:i)
+ok 'AbCDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+#### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
+ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :0i ab [:i(0) cd ] ef	abcdef	y	ignorecase, lexical repetition (:i)
+ok 'abcdef' ~~ /:0i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+#### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
+ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
+ok 'AbCdeF' ~~ /:i(1) ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :i(1) ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+ok 'AbcdeF' ~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+#### :i(1) ab [:i(0) cd ] ef	AbcDeF	n	ignorecase, lexical repetition (:i)
+ok 'AbcDeF' !~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :i(2) ab [:i(999) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:i)
+ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :1i ab [:i(1) cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
+ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+#### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
+ok 'abcDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+# todo :pugs<feature>
+#### :2i ab [:999i cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
+ok 'ABCDEF' ~~ /:2i ab [:999i cd ] ef/, 'ignorecase, lexical repetition (:i)';
+
+#### ab [:ignorecase cd ] ef		abCDef	y	ignorecase, lexical (:ignorecase)
+ok 'abCDef' ~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
+
+#### ab [:ignorecase cd ] ef		aBCDef	n	ignorecase, lexical (:ignorecase)
+ok 'aBCDef' !~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
+
+# todo :pugs<feature>
+#### :1ignorecase ab [:ignorecase(1) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:ignorecase)
+ok 'ABCDEF' ~~ /:1ignorecase ab [:ignorecase(1) cd ] ef/, 'ignorecase, lexical repetition (:ignorecase)';
+
+# todo :pugs<feature>
+#### :s bcd			a bcdef		y	sigspace (:s)
+ok 'a bcdef' ~~ /:s bcd/, 'sigspace (:s)';
+
+# todo :pugs<feature>
+#### :s bcd			a bcd ef	y	sigspace (:s)
+ok 'a bcd ef' ~~ /:s bcd/, 'sigspace (:s)';
+
+#### :s bcd			abcdef		n	sigspace (:s)
+ok 'abcdef' !~~ /:s bcd/, 'sigspace (:s)';
+
+#### :s bcd			abcd ef		n	sigspace (:s)
+ok 'abcd ef' !~~ /:s bcd/, 'sigspace (:s)';
+
+#### :s bcd			ab cdef		n	sigspace (:s)
+ok 'ab cdef' !~~ /:s bcd/, 'sigspace (:s)';
+
+# todo :pugs<feature>
+#### :s b c d		a b c d ef	y	sigspace (:s)
+ok 'a b c d ef' ~~ /:s b c d/, 'sigspace (:s)';
+
+# todo :pugs<feature>
+#### :s b c d		a b c def	y	sigspace (:s)
+ok 'a b c def' ~~ /:s b c d/, 'sigspace (:s)';
+
+#### :s b c d		ab c d ef	n	sigspace (:s)
+ok 'ab c d ef' !~~ /:s b c d/, 'sigspace (:s)';
+
+#### :s b c d		a bcdef		n	sigspace (:s)
+ok 'a bcdef' !~~ /:s b c d/, 'sigspace (:s)';
+
+#### :s b c d		abcdef		n	sigspace (:s)
+ok 'abcdef' !~~ /:s b c d/, 'sigspace (:s)';
+
+# todo :pugs<feature>
+#### :sigspace bcd		a bcdef		y	sigspace (:sigspace)
+ok 'a bcdef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
+
+# todo :pugs<feature>
+#### :sigspace bcd		a bcd ef	y	sigspace (:sigspace)
+ok 'a bcd ef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
+
+#### :sigspace bcd		abcdef		n	sigspace (:sigspace)
+ok 'abcdef' !~~ /:sigspace bcd/, 'sigspace (:sigspace)';
+
+# todo :pugs<feature>
+#### :sigspace b c d		a b c d ef	y	sigspace (:sigspace)
+ok 'a b c d ef' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
+
+# todo :pugs<feature>
+#### :sigspace b c d		a b c def	y	sigspace (:sigspace)
+ok 'a b c def' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
+
+#### :sigspace b c d		ab c d ef	n	sigspace (:sigspace)
+ok 'ab c d ef' !~~ /:sigspace b c d/, 'sigspace (:sigspace)';
+
+# todo :pugs<feature>
+#### :s(1) b c [:s(0) d e f ]	a b c def	y	sigspace, lexical repetition (:s)
+ok 'a b c def' ~~ /:s(1) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
+
+# todo :pugs<feature> :pge<feature>
+#### :s b c [:!s d e f ]	a b c def	y	sigspace, lexical repetition (:s)
+ok 'a b c def' ~~ /:s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
+
+#### :s(0) b c [:s(1) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
+ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s)';
+
+# todo :pge<feature>
+#### :!s b c [:s d e f ]	a b c def	n	sigspace, lexical repetition (:s)
+ok 'a b c def' !~~ /:!s b c [:s d e f ]/, 'sigspace, lexical repetition (:s)';
+
+#### :s(0) b c [:s(0) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
+ok 'a b c def' !~~ /:s(0) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
+
+# todo :pge<feature>
+#### :!s b c [:!s d e f ]	a b c def	n	sigspace, lexical repetition (:s)
+ok 'a b c def' !~~ /:!s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
+
+# todo :pugs<feature>
+#### :s ab 				ab		y	sigspace, trailing ws
+ok 'ab' ~~ /:s ab /, 'sigspace, trailing ws';
+
+#### foo\s*'-'?\s*bar		foo\t \n-\n\t bar	y	basic match
+#?rakudo todo 'unknown'
+ok 'foo\t \n-\n\t bar' ~~ /foo\s*'-'?\s*bar/, 'basic match';
+
+#### foo\s*'-'?\s*bar		foo - bar	y	basic match
+ok 'foo - bar' ~~ /foo\s*'-'?\s*bar/, 'basic match';
+
+#### foo\s+'-'?\s*bar		foo   bar	y	basic match \s+ \s*
+ok 'foo   bar' ~~ /foo\s+'-'?\s*bar/, 'basic match \s+ \s*';
+
+#### foo\s+'-'?\s*bar		foo  -bar	y	basic match \s+ \s*
+ok 'foo  -bar' ~~ /foo\s+'-'?\s*bar/, 'basic match \s+ \s*';
+
+#### foo\s*'-'?\s+bar		foo-  bar	y	basic match \s* \s+
+ok 'foo-  bar' ~~ /foo\s*'-'?\s+bar/, 'basic match \s* \s+';
+
+#### foo '-'? bar			foo-bar		y	basic match \s* \s*
+ok 'foo-bar' ~~ /foo '-'? bar/, 'basic match \s* \s*';
+
+#### foo '-'? bar			foobar		y	basic match
+ok 'foobar' ~~ /foo '-'? bar/, 'basic match';
+
+#### foo '-'? bar			foo - bar	n	basic non-match
+ok 'foo - bar' !~~ /foo '-'? bar/, 'basic non-match';
+
+# todo :pugs<feature>
+#### :s foo '-'? bar			foo\n \t- \t\t\nbar	y	basic ws match
+#?rakudo todo 'unknown'
+ok 'foo\n \t- \t\t\nbar' ~~ /:s foo '-'? bar/, 'basic ws match';
+
+# todo :pugs<feature>
+#### :s foo '-'? bar			foo - bar	y	basic ws match
+ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
+
+# todo :pugs<feature>
+#### :s foo '-'? bar			foo   bar	y	basic ws match \s+ \s*
+ok 'foo   bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
+
+# todo :pugs<feature>
+#### :s foo '-'? bar			foo  -bar	y	basic ws match \s+ \s*
+ok 'foo  -bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
+
+# todo :pugs<feature>
+#### :s foo '-'? bar			foo-  bar	y	basic ws match \s* \s+
+ok 'foo-  bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s+';
+
+# todo :pugs<feature>
+#### :s foo '-'? bar			foo-bar		y	basic ws match \s* \s*
+ok 'foo-bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s*';
+
+#### :s foo '-'? bar			foobar		n	basic ws non-match
+ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
+
+#### :s()foo '-'? bar		foo - bar	n	basic ws match
+ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
+
+# todo :pugs<feature> :pge<feature>
+#### :s[]foo '-'? bar		foo - bar	y	basic ws match
+ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
+
+# todo :pugs<feature>
+#### :s<?wb>foo '-'? bar		foo - bar	y	basic ws match with boundary modifier separation
+ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier separation';
+
+# todo :pugs<feature>
+#### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
+ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
+
+#### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
+#?rakudo todo 'unknown'
+ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/).produces(q/mob 0: <dog @ 0>/), 'sigspace and capture together';
+
+#### :s::(\w+) ':=' (\S+)		dog := spot	/mob 1: <spot @ 7>/	sigspace and capture together
+#?rakudo todo 'unknown'
+ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/).produces(q/mob 1: <spot @ 7>/), 'sigspace and capture together';
+
+# todo :pugs<feature> :pge<feature>
+#### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
+ok 'a bcd$ef' ~~ /:Perl5 \A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
+
+# todo :pugs<feature>
+#### :x(6) \d			123456		y	repetition (:x)
+ok '123456' ~~ /:x(6) \d/, 'repetition (:x)';
+
+# todo :pugs<feature>
+#### :x(3) \d			123456		y	repetition (:x)
+ok '123456' ~~ /:x(3) \d/, 'repetition (:x)';
+
+# todo :pugs<feature>
+#### :x(0) \d			123456		y	repetition (:x)
+ok '123456' ~~ /:x(0) \d/, 'repetition (:x)';
+
+# todo :pugs<feature>
+#### :nth(3) a \d			a1a2a3		y	nth occurance (:nth)
+ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurance (:nth)';
+
+# todo :pge<feature>
+#### :nth(4) a \d			a1a2a3		n	nth occurance (:nth)
+#?rakudo todo 'unknown'
+ok 'a1a2a3' !~~ /:nth(4) a \d/, 'nth occurance (:nth)';
+
+# todo :pge<feature>
+#### :nth(0) a \d			a1a2a3		n	nth occurance (:nth)
+#?rakudo todo 'unknown'
+ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurance (:nth)';
+
+#### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
+ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+##  Quantifiers
+
+#### xa*			xaaaay		/<xaaaa @ 0>/	star 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*/).produces(q/<xaaaa @ 0>/), 'star 2+';
+
+#### xa*			xay		/<xa @ 0>/	star 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*/).produces(q/<xa @ 0>/), 'star 1';
+
+#### xa*			xy		/<x @ 0>/	star 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*/).produces(q/<x @ 0>/), 'star 0';
+
+#### xa*y			xaaaay		/<xaaaay @ 0>/	star 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*y/).produces(q/<xaaaay @ 0>/), 'star 2+';
+
+#### xa*y			xay		/<xay @ 0>/	star 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*y/).produces(q/<xay @ 0>/), 'star 1';
+
+#### xa*y			xy		/<xy @ 0>/	star 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*y/).produces(q/<xy @ 0>/), 'star 0';
+
+
+#### xa+			xaaaay		/<xaaaa @ 0>/	plus 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+/).produces(q/<xaaaa @ 0>/), 'plus 2+';
+
+#### xa+			xay		/<xa @ 0>/	plus 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+/).produces(q/<xa @ 0>/), 'plus 1';
+
+#### xa+			xy		n		plus 0
+ok 'xy' !~~ /xa+/, 'plus 0';
+
+#### xa+y			xaaaay		/<xaaaay @ 0>/	plus 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+y/).produces(q/<xaaaay @ 0>/), 'plus 2+';
+
+#### xa+y			xay		/<xay @ 0>/	plus 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+y/).produces(q/<xay @ 0>/), 'plus 1';
+
+#### xa+y			xy		n		plus 0
+ok 'xy' !~~ /xa+y/, 'plus 0';
+
+
+#### xa?			xaaaay		/<xa @ 0>/	ques 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa?/).produces(q/<xa @ 0>/), 'ques 2+';
+
+#### xa?			xay		/<xa @ 0>/	ques 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?/).produces(q/<xa @ 0>/), 'ques 1';
+
+#### xa?			xy		/<x @ 0>/	ques 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?/).produces(q/<x @ 0>/), 'ques 0';
+
+#### xa?y			xaaaay		n		ques 2+
+ok 'xaaaay' !~~ /xa?y/, 'ques 2+';
+
+#### xa?y			xay		/<xay @ 0>/	ques 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?y/).produces(q/<xay @ 0>/), 'ques 1';
+
+#### xa?y			xy		/<xy @ 0>/	ques 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?y/).produces(q/<xy @ 0>/), 'ques 0';
+
+
+#### xa*!			xaaaay		/<xaaaa @ 0>/	star greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*!/).produces(q/<xaaaa @ 0>/), 'star greedy 2+';
+
+#### xa*!			xay		/<xa @ 0>/	star greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*!/).produces(q/<xa @ 0>/), 'star greedy 1';
+
+#### xa*!			xy		/<x @ 0>/	star greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*!/).produces(q/<x @ 0>/), 'star greedy 0';
+
+#### xa*!y			xaaaay		/<xaaaay @ 0>/	star greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*!y/).produces(q/<xaaaay @ 0>/), 'star greedy 2+';
+
+#### xa*!y			xay		/<xay @ 0>/	star greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*!y/).produces(q/<xay @ 0>/), 'star greedy 1';
+
+#### xa*!y			xy		/<xy @ 0>/	star greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*!y/).produces(q/<xy @ 0>/), 'star greedy 0';
+
+
+#### xa+!			xaaaay		/<xaaaa @ 0>/	plus greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+!/).produces(q/<xaaaa @ 0>/), 'plus greedy 2+';
+
+#### xa+!			xay		/<xa @ 0>/	plus greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+!/).produces(q/<xa @ 0>/), 'plus greedy 1';
+
+#### xa+!			xy		n		plus greedy 0
+ok 'xy' !~~ /xa+!/, 'plus greedy 0';
+
+#### xa+!y			xaaaay		/<xaaaay @ 0>/	plus greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+!y/).produces(q/<xaaaay @ 0>/), 'plus greedy 2+';
+
+#### xa+!y			xay		/<xay @ 0>/	plus greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+!y/).produces(q/<xay @ 0>/), 'plus greedy 1';
+
+#### xa+!y			xy		n		plus greedy 0
+ok 'xy' !~~ /xa+!y/, 'plus greedy 0';
+
+
+#### xa?!			xaaaay		/<xa @ 0>/	ques greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa?!/).produces(q/<xa @ 0>/), 'ques greedy 2+';
+
+#### xa?!			xay		/<xa @ 0>/	ques greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?!/).produces(q/<xa @ 0>/), 'ques greedy 1';
+
+#### xa?!			xy		/<x @ 0>/	ques greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?!/).produces(q/<x @ 0>/), 'ques greedy 0';
+
+#### xa?!y			xaaaay		n		ques greedy 2+
+ok 'xaaaay' !~~ /xa?!y/, 'ques greedy 2+';
+
+#### xa?!y			xay		/<xay @ 0>/	ques greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?!y/).produces(q/<xay @ 0>/), 'ques greedy 1';
+
+#### xa?!y			xy		/<xy @ 0>/	ques greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?!y/).produces(q/<xy @ 0>/), 'ques greedy 0';
+
+
+#### xa*:!			xaaaay		/<xaaaa @ 0>/	star :greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*:!/).produces(q/<xaaaa @ 0>/), 'star :greedy 2+';
+
+#### xa*:!			xay		/<xa @ 0>/	star :greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*:!/).produces(q/<xa @ 0>/), 'star :greedy 1';
+
+#### xa*:!			xy		/<x @ 0>/	star :greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*:!/).produces(q/<x @ 0>/), 'star :greedy 0';
+
+#### xa*:!y			xaaaay		/<xaaaay @ 0>/	star :greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*:!y/).produces(q/<xaaaay @ 0>/), 'star :greedy 2+';
+
+#### xa*:!y			xay		/<xay @ 0>/	star :greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*:!y/).produces(q/<xay @ 0>/), 'star :greedy 1';
+
+#### xa*:!y			xy		/<xy @ 0>/	star :greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*:!y/).produces(q/<xy @ 0>/), 'star :greedy 0';
+
+
+#### xa+:!			xaaaay		/<xaaaa @ 0>/	plus :greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+:!/).produces(q/<xaaaa @ 0>/), 'plus :greedy 2+';
+
+#### xa+:!			xay		/<xa @ 0>/	plus :greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+:!/).produces(q/<xa @ 0>/), 'plus :greedy 1';
+
+#### xa+:!			xy		n		plus :greedy 0
+ok 'xy' !~~ /xa+:!/, 'plus :greedy 0';
+
+#### xa+:!y			xaaaay		/<xaaaay @ 0>/	plus :greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+:!y/).produces(q/<xaaaay @ 0>/), 'plus :greedy 2+';
+
+#### xa+:!y			xay		/<xay @ 0>/	plus :greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+:!y/).produces(q/<xay @ 0>/), 'plus :greedy 1';
+
+#### xa+:!y			xy		n		plus :greedy 0
+ok 'xy' !~~ /xa+:!y/, 'plus :greedy 0';
+
+
+#### xa?:!			xaaaay		/<xa @ 0>/	ques :greedy 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa?:!/).produces(q/<xa @ 0>/), 'ques :greedy 2+';
+
+#### xa?:!			xay		/<xa @ 0>/	ques :greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?:!/).produces(q/<xa @ 0>/), 'ques :greedy 1';
+
+#### xa?:!			xy		/<x @ 0>/	ques :greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?:!/).produces(q/<x @ 0>/), 'ques :greedy 0';
+
+#### xa?:!y			xaaaay		n		ques :greedy 2+
+ok 'xaaaay' !~~ /xa?:!y/, 'ques :greedy 2+';
+
+#### xa?:!y			xay		/<xay @ 0>/	ques :greedy 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?:!y/).produces(q/<xay @ 0>/), 'ques :greedy 1';
+
+#### xa?:!y			xy		/<xy @ 0>/	ques :greedy 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?:!y/).produces(q/<xy @ 0>/), 'ques :greedy 0';
+
+
+#### xa*?			xaaaay		/<x @ 0>/	star eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*?/).produces(q/<x @ 0>/), 'star eager 2+';
+
+#### xa*?			xay		/<x @ 0>/	star eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*?/).produces(q/<x @ 0>/), 'star eager 1';
+
+#### xa*?			xy		/<x @ 0>/	star eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*?/).produces(q/<x @ 0>/), 'star eager 0';
+
+#### xa*?y			xaaaay		/<xaaaay @ 0>/	star eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*?y/).produces(q/<xaaaay @ 0>/), 'star eager 2+';
+
+#### xa*?y			xay		/<xay @ 0>/	star eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*?y/).produces(q/<xay @ 0>/), 'star eager 1';
+
+#### xa*?y			xy		/<xy @ 0>/	star eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*?y/).produces(q/<xy @ 0>/), 'star eager 0';
+
+
+#### xa+?			xaaaay		/<xa @ 0>/	plus eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+?/).produces(q/<xa @ 0>/), 'plus eager 2+';
+
+#### xa+?			xay		/<xa @ 0>/	plus eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+?/).produces(q/<xa @ 0>/), 'plus eager 1';
+
+#### xa+?			xy		n		plus eager 0
+ok 'xy' !~~ /xa+?/, 'plus eager 0';
+
+#### xa+?y			xaaaay		/<xaaaay @ 0>/	plus eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+?y/).produces(q/<xaaaay @ 0>/), 'plus eager 2+';
+
+#### xa+?y			xay		/<xay @ 0>/	plus eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+?y/).produces(q/<xay @ 0>/), 'plus eager 1';
+
+#### xa+?y			xy		n		plus eager 0
+ok 'xy' !~~ /xa+?y/, 'plus eager 0';
+
+
+#### xa??			xaaaay		/<x @ 0>/	ques eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 2+';
+
+#### xa??			xay		/<x @ 0>/	ques eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 1';
+
+#### xa??			xy		/<x @ 0>/	ques eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 0';
+
+#### xa??y			xaaaay		n		ques eager 2+
+ok 'xaaaay' !~~ /xa??y/, 'ques eager 2+';
+
+#### xa??y			xay		/<xay @ 0>/	ques eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa??y/).produces(q/<xay @ 0>/), 'ques eager 1';
+
+#### xa??y			xy		/<xy @ 0>/	ques eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa??y/).produces(q/<xy @ 0>/), 'ques eager 0';
+
+
+#### xa*:?			xaaaay		/<x @ 0>/	star :eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*:?/).produces(q/<x @ 0>/), 'star :eager 2+';
+
+#### xa*:?			xay		/<x @ 0>/	star :eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*:?/).produces(q/<x @ 0>/), 'star :eager 1';
+
+#### xa*:?			xy		/<x @ 0>/	star :eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*:?/).produces(q/<x @ 0>/), 'star :eager 0';
+
+#### xa*:?y			xaaaay		/<xaaaay @ 0>/	star :eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*:?y/).produces(q/<xaaaay @ 0>/), 'star :eager 2+';
+
+#### xa*:?y			xay		/<xay @ 0>/	star :eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*:?y/).produces(q/<xay @ 0>/), 'star :eager 1';
+
+#### xa*:?y			xy		/<xy @ 0>/	star :eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*:?y/).produces(q/<xy @ 0>/), 'star :eager 0';
+
+
+#### xa+:?			xaaaay		/<xa @ 0>/	plus :eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+:?/).produces(q/<xa @ 0>/), 'plus :eager 2+';
+
+#### xa+:?			xay		/<xa @ 0>/	plus :eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+:?/).produces(q/<xa @ 0>/), 'plus :eager 1';
+
+#### xa+:?			xy		n		plus :eager 0
+ok 'xy' !~~ /xa+:?/, 'plus :eager 0';
+
+#### xa+:?y			xaaaay		/<xaaaay @ 0>/	plus :eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+:?y/).produces(q/<xaaaay @ 0>/), 'plus :eager 2+';
+
+#### xa+:?y			xay		/<xay @ 0>/	plus :eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+:?y/).produces(q/<xay @ 0>/), 'plus :eager 1';
+
+#### xa+:?y			xy		n		plus :eager 0
+ok 'xy' !~~ /xa+:?y/, 'plus :eager 0';
+
+
+#### xa?:?			xaaaay		/<x @ 0>/	ques :eager 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 2+';
+
+#### xa?:?			xay		/<x @ 0>/	ques :eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 1';
+
+#### xa?:?			xy		/<x @ 0>/	ques :eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 0';
+
+#### xa?:?y			xaaaay		n		ques :eager 2+
+ok 'xaaaay' !~~ /xa?:?y/, 'ques :eager 2+';
+
+#### xa?:?y			xay		/<xay @ 0>/	ques :eager 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa?:?y/).produces(q/<xay @ 0>/), 'ques :eager 1';
+
+#### xa?:?y			xy		/<xy @ 0>/	ques :eager 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa?:?y/).produces(q/<xy @ 0>/), 'ques :eager 0';
+
+
+#### xa*:y			xaaaay		/<xaaaay @ 0>/	star cut 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa*: y/).produces(q/<xaaaay @ 0>/), 'star cut 2+';
+
+#### xa*:y			xay		/<xay @ 0>/	star cut 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa*: y/).produces(q/<xay @ 0>/), 'star cut 1';
+
+#### xa*:y			xy		/<xy @ 0>/	star cut 0
+#?rakudo todo 'unknown'
+ok ('xy' ~~ /xa*: y/).produces(q/<xy @ 0>/), 'star cut 0';
+
+#### xa*:a			xaaaay		n		star cut 2+
+ok 'xaaaay' !~~ /xa*: a/, 'star cut 2+';
+
+#### xa*:a			xay		n		star cut 1
+ok 'xay' !~~ /xa*: a/, 'star cut 1';
+
+
+#### xa+:y			xaaaay		/<xaaaay @ 0>/	plus cut 2+
+#?rakudo todo 'unknown'
+ok ('xaaaay' ~~ /xa+: y/).produces(q/<xaaaay @ 0>/), 'plus cut 2+';
+
+#### xa+:y			xay		/<xay @ 0>/	plus cut 1
+#?rakudo todo 'unknown'
+ok ('xay' ~~ /xa+: y/).produces(q/<xay @ 0>/), 'plus cut 1';
+
+#### xa+:y			xy		n		plus cut 0
+ok 'xy' !~~ /xa+: y/, 'plus cut 0';
+
+#### xa+:a			xaaaay		n		plus cut 2+
+ok 'xaaaay' !~~ /xa+: a/, 'plus cut 2+';
+
+#### xa+:a			xay		n		plus cut 1
+ok 'xay' !~~ /xa+: a/, 'plus cut 1';
+
+
+#### xa?:y			xaaaay		n		ques cut 2+
+ok 'xaaaay' !~~ /xa?: y/, 'ques cut 2+';
+
+#### xa?:y			xay		/<xay @ 0>/	ques cut 1
+ok ('xay' ~~ /xa?: y/).produces(q/<xay @ 0>/), 'ques cut 1';
+
+#### xa?:y			xy		/<xy @ 0>/	ques cut 0
+ok ('xy' ~~ /xa?: y/).produces(q/<xy @ 0>/), 'ques cut 0';
+
+#### xa?:a			xaaaay		/<xaa @ 0>	ques cut 2+
+ok ('xaaaay' ~~ /xa?: a/).produces(q/<xaa @ 0>/), 'ques cut 2+';
+
+#### xa?:a			xay		n		ques cut 1
+ok 'xay' !~~ /xa?: a/, 'ques cut 1';
+
+
+#### :ratchet xa*y			xaaaay		/<xaaaay @ 0>/	star ratchet 2+
+ok ('xaaaay' ~~ /:ratchet xa*y/).produces(q/<xaaaay @ 0>/), 'star ratchet 2+';
+
+#### :ratchet xa*y			xay		/<xay @ 0>/	star ratchet 1
+ok ('xay' ~~ /:ratchet xa*y/).produces(q/<xay @ 0>/), 'star ratchet 1';
+
+#### :ratchet xa*y			xy		/<xy @ 0>/	star ratchet 0
+ok ('xy' ~~ /:ratchet xa*y/).produces(q/<xy @ 0>/), 'star ratchet 0';
+
+#### :ratchet xa*a			xaaaay		n		star ratchet 2+
+ok 'xaaaay' !~~ /:ratchet xa*a/, 'star ratchet 2+';
+
+#### :ratchet xa*a			xay		n		star ratchet 1
+ok 'xay' !~~ /:ratchet xa*a/, 'star ratchet 1';
+
+
+#### :ratchet xa+y			xaaaay		/<xaaaay @ 0>/	plus ratchet 2+
+ok ('xaaaay' ~~ /:ratchet xa+y/).produces(q/<xaaaay @ 0>/), 'plus ratchet 2+';
+
+#### :ratchet xa+y			xay		/<xay @ 0>/	plus ratchet 1
+ok ('xay' ~~ /:ratchet xa+y/).produces(q/<xay @ 0>/), 'plus ratchet 1';
+
+#### :ratchet xa+y			xy		n		plus ratchet 0
+ok 'xy' !~~ /:ratchet xa+y/, 'plus ratchet 0';
+
+#### :ratchet xa+a			xaaaay		n		plus ratchet 2+
+ok 'xaaaay' !~~ /:ratchet xa+a/, 'plus ratchet 2+';
+
+#### :ratchet xa+a			xay		n		plus ratchet 1
+ok 'xay' !~~ /:ratchet xa+a/, 'plus ratchet 1';
+
+
+#### :ratchet xa?y			xaaaay		n		ques ratchet 2+
+ok 'xaaaay' !~~ /:ratchet xa?y/, 'ques ratchet 2+';
+
+#### :ratchet xa?y			xay		/<xay @ 0>/	ques ratchet 1
+ok ('xay' ~~ /:ratchet xa?y/).produces(q/<xay @ 0>/), 'ques ratchet 1';
+
+#### :ratchet xa?y			xy		/<xy @ 0>/	ques ratchet 0
+ok ('xy' ~~ /:ratchet xa?y/).produces(q/<xy @ 0>/), 'ques ratchet 0';
+
+#### :ratchet xa?a			xaaaay		/<xaa @ 0>	ques ratchet 2+
+ok ('xaaaay' ~~ /:ratchet xa?a/).produces(q/<xaa @ 0>/), 'ques ratchet 2+';
+
+#### :ratchet xa?a			xay		n		ques ratchet 1
+ok 'xay' !~~ /:ratchet xa?a/, 'ques ratchet 1';
+
+
+#### :ratchet xa*!y			xaaaay		/<xaaaay @ 0>/	star ratchet greedy 2+
+ok ('xaaaay' ~~ /:ratchet xa*!y/).produces(q/<xaaaay @ 0>/), 'star ratchet greedy 2+';
+
+#### :ratchet xa*!y			xay		/<xay @ 0>/	star ratchet greedy 1
+ok ('xay' ~~ /:ratchet xa*!y/).produces(q/<xay @ 0>/), 'star ratchet greedy 1';
+
+#### :ratchet xa*!y			xy		/<xy @ 0>/	star ratchet greedy 0
+ok ('xy' ~~ /:ratchet xa*!y/).produces(q/<xy @ 0>/), 'star ratchet greedy 0';
+
+#### :ratchet xa*!a			xaaaay		/<xaaaa @ 0>/	star ratchet greedy 2+
+ok ('xaaaay' ~~ /:ratchet xa*!a/).produces(q/<xaaaa @ 0>/), 'star ratchet greedy 2+';
+
+#### :ratchet xa*!a			xay		/<xa @ 0>/	star ratchet greedy 1
+ok ('xay' ~~ /:ratchet xa*!a/).produces(q/<xa @ 0>/), 'star ratchet greedy 1';
+
+
+#### :ratchet xa+!y			xaaaay		/<xaaaay @ 0>/	plus ratchet greedy 2+
+ok ('xaaaay' ~~ /:ratchet xa+!y/).produces(q/<xaaaay @ 0>/), 'plus ratchet greedy 2+';
+
+#### :ratchet xa+!y			xay		/<xay @ 0>/	plus ratchet greedy 1
+ok ('xay' ~~ /:ratchet xa+!y/).produces(q/<xay @ 0>/), 'plus ratchet greedy 1';
+
+#### :ratchet xa+!y			xy		n		plus ratchet greedy 0
+ok 'xy' !~~ /:ratchet xa+!y/, 'plus ratchet greedy 0';
+
+#### :ratchet xa+!a			xaaaay		/<xaaaa @ 0>/	plus ratchet greedy 2+
+ok ('xaaaay' ~~ /:ratchet xa+!a/).produces(q/<xaaaa @ 0>/), 'plus ratchet greedy 2+';
+
+#### :ratchet xa+!a			xay		n		plus ratchet greedy 1
+ok 'xay' !~~ /:ratchet xa+!a/, 'plus ratchet greedy 1';
+
+
+#### :ratchet xa?!y			xaaaay		n		ques ratchet greedy 2+
+ok 'xaaaay' !~~ /:ratchet xa?!y/, 'ques ratchet greedy 2+';
+
+#### :ratchet xa?!y			xay		/<xay @ 0>/	ques ratchet greedy 1
+ok ('xay' ~~ /:ratchet xa?!y/).produces(q/<xay @ 0>/), 'ques ratchet greedy 1';
+
+#### :ratchet xa?!y			xy		/<xy @ 0>/	ques ratchet greedy 0
+ok ('xy' ~~ /:ratchet xa?!y/).produces(q/<xy @ 0>/), 'ques ratchet greedy 0';
+
+#### :ratchet xa?!a			xaaaay		/<xaa @ 0>	ques ratchet greedy 2+
+ok ('xaaaay' ~~ /:ratchet xa?!a/).produces(q/<xaa @ 0>/), 'ques ratchet greedy 2+';
+
+#### :ratchet xa?!a			xay		/<xa @ 0>	ques ratchet greedy 1
+ok ('xay' ~~ /:ratchet xa?!a/).produces(q/<xa @ 0>/), 'ques ratchet greedy 1';
+
+
+
+## Quantifier closure
+#### .**{2}			a			n	only one character
+ok 'a' !~~ /.**{2}/, 'only one character';
+
+#### .**{2}			ab			y	two characters
+ok 'ab' ~~ /.**{2}/, 'two characters';
+
+#### a**{2}			foobar		n	only one "a" character
+ok 'foobar' !~~ /a**{2}/, 'only one "a" character';
+
+#### a**{2}			baabaa		y	two "a" characters
+ok 'baabaa' ~~ /a**{2}/, 'two "a" characters';
+
+#### a**{0..4}		bbbbbbb		y	no "a" characters
+ok 'bbbbbbb' ~~ /a**{0..4}/, 'no "a" characters';
+
+#### a**{2..4}		bababab		n	not two consecutive "a" characters
+ok 'bababab' !~~ /a**{2..4}/, 'not two consecutive "a" characters';
+
+#### a**{2..4}		baabbbb		y	two "a" characters
+ok 'baabbbb' ~~ /a**{2..4}/, 'two "a" characters';
+
+#### a**{2..4}		baaabbb		y	three "a" characters
+ok 'baaabbb' ~~ /a**{2..4}/, 'three "a" characters';
+
+#### a**{2..4}		baaaabb		y	four "a" characters
+ok 'baaaabb' ~~ /a**{2..4}/, 'four "a" characters';
+
+#### a**{2..4}		baaaaaa		y	four "a" characters
+ok 'baaaaaa' ~~ /a**{2..4}/, 'four "a" characters';
+
+#### a**{2..*}		baaaaaa		y	six "a" characters
+ok 'baaaaaa' ~~ /a**{2..*}/, 'six "a" characters';
+
+#### a**?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
+ok 'baaaaaa' ~~ /a**?{2..*}/, 'two "a" characters (non-greedy)';
+
+#### a**:?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
+ok 'baaaaaa' ~~ /a**:?{2..*}/, 'two "a" characters (non-greedy)';
+
+#### a**!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
+ok 'baaaaaa' ~~ /a**!{2..*}/, 'six "a" characters (explicit greed)';
+
+#### a**:!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
+ok 'baaaaaa' ~~ /a**:!{2..*}/, 'six "a" characters (explicit greed)';
+
+#### a**?{2..4}		baaabbb		y	two "a" characters (non-greedy)
+ok 'baaabbb' ~~ /a**?{2..4}/, 'two "a" characters (non-greedy)';
+
+#### a**:?{2..4}		baaabbb		y	two "a" characters (non-greedy)
+ok 'baaabbb' ~~ /a**:?{2..4}/, 'two "a" characters (non-greedy)';
+
+#### a**!{2..4}		baaabbb		y	three "a" characters (explicit greed)
+ok 'baaabbb' ~~ /a**!{2..4}/, 'three "a" characters (explicit greed)';
+
+#### a**:!{2..4}		baaabbb		y	three "a" characters (explicit greed)
+ok 'baaabbb' ~~ /a**:!{2..4}/, 'three "a" characters (explicit greed)';
+
+
+## Quantifier bare range
+#### .**2			a			n	only one character
+ok 'a' !~~ /.**2/, 'only one character';
+
+#### .**2			ab			y	two characters
+ok 'ab' ~~ /.**2/, 'two characters';
+
+#### a**2			foobar		n	only one "a" character
+ok 'foobar' !~~ /a**2/, 'only one "a" character';
+
+#### a**2			baabaa		y	two "a" characters
+ok 'baabaa' ~~ /a**2/, 'two "a" characters';
+
+#### a**0..4			bbbbbbb		y	no "a" characters
+ok 'bbbbbbb' ~~ /a**0..4/, 'no "a" characters';
+
+#### a**2..4			bababab		n	not two consecutive "a" characters
+ok 'bababab' !~~ /a**2..4/, 'not two consecutive "a" characters';
+
+#### a**2..4			baabbbb		y	two "a" characters
+ok 'baabbbb' ~~ /a**2..4/, 'two "a" characters';
+
+#### a**2..4			baaabbb		y	three "a" characters
+ok 'baaabbb' ~~ /a**2..4/, 'three "a" characters';
+
+#### a**2..4			baaaabb		y	four "a" characters
+ok 'baaaabb' ~~ /a**2..4/, 'four "a" characters';
+
+#### a**2..4			baaaaaa		y	four "a" characters
+ok 'baaaaaa' ~~ /a**2..4/, 'four "a" characters';
+
+#### a**2..*			baaaaaa		y	six "a" characters
+ok 'baaaaaa' ~~ /a**2..*/, 'six "a" characters';
+
+#### a**?2..*		baaaaaa		y	two "a" characters (non-greedy)
+ok 'baaaaaa' ~~ /a**?2..*/, 'two "a" characters (non-greedy)';
+
+#### a**:?2..*		baaaaaa		y	two "a" characters (non-greedy)
+ok 'baaaaaa' ~~ /a**:?2..*/, 'two "a" characters (non-greedy)';
+
+#### a**!2..*		baaaaaa		y	six "a" characters (explicit greed)
+ok 'baaaaaa' ~~ /a**!2..*/, 'six "a" characters (explicit greed)';
+
+#### a**:!2..*		baaaaaa		y	six "a" characters (explicit greed)
+ok 'baaaaaa' ~~ /a**:!2..*/, 'six "a" characters (explicit greed)';
+
+#### a**?2..4		baaabbb		y	two "a" characters (non-greedy)
+ok 'baaabbb' ~~ /a**?2..4/, 'two "a" characters (non-greedy)';
+
+#### a**:?2..4		baaabbb		y	two "a" characters (non-greedy)
+ok 'baaabbb' ~~ /a**:?2..4/, 'two "a" characters (non-greedy)';
+
+#### a**!2..4		baaabbb		y	three "a" characters (explicit greed)
+ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
+
+#### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
+ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
+
+
+
+##  builtin subrules
+#### abc <fail> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	n				<fail>
+ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' !~~ /abc <fail> def/, '<fail>';
+
+
+#### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
+ok ('2+3 ab2' ~~ /<ident>/).produces(q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
+
+#### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
+ok ('ab::cd::x3::42' ~~ /<name>/).produces(q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
+
+
+#### <.ident>			2+3 ab2		y		non-capturing builtin <.ident>
+ok '2+3 ab2' ~~ /<.ident>/, 'non-capturing builtin <.ident>';
+
+#### <.name>			ab::cd::x3::42	y	non-capturing builtin <.name>
+ok 'ab::cd::x3::42' ~~ /<.name>/, 'non-capturing builtin <.name>';
+
+
+#### <?wb>def		abc\ndef\n-==\nghi	y	word boundary \W\w
+ok 'abc\ndef\n-==\nghi' ~~ /<?wb>def/, 'word boundary \W\w';
+
+#### abc<?wb>		abc\ndef\n-==\nghi	y	word boundary \w\W
+ok 'abc\ndef\n-==\nghi' ~~ /abc<?wb>/, 'word boundary \w\W';
+
+#### <?wb>abc		abc\ndef\n-==\nghi	y	BOS word boundary
+ok 'abc\ndef\n-==\nghi' ~~ /<?wb>abc/, 'BOS word boundary';
+
+#### ghi<?wb>		abc\ndef\n-==\nghi	y	EOS word boundary
+ok 'abc\ndef\n-==\nghi' ~~ /ghi<?wb>/, 'EOS word boundary';
+
+#### a<?wb>			abc\ndef\n-==\nghi	n	\w\w word boundary
+ok 'abc\ndef\n-==\nghi' !~~ /a<?wb>/, '\w\w word boundary';
+
+#### \-<?wb>			abc\ndef\n-==\nghi	n	\W\W word boundary
+ok 'abc\ndef\n-==\nghi' !~~ /\-<?wb>/, '\W\W word boundary';
+
+#### <!wb>def		abc\ndef\n-==\nghi	n	nonword boundary \W\w
+ok 'abc\ndef\n-==\nghi' !~~ /<!wb>def/, 'nonword boundary \W\w';
+
+#### abc<!wb>		abc\ndef\n-==\nghi	n	nonword boundary \w\W
+ok 'abc\ndef\n-==\nghi' !~~ /abc<!wb>/, 'nonword boundary \w\W';
+
+#### <!wb>abc		abc\ndef\n-==\nghi	n	BOS nonword boundary
+ok 'abc\ndef\n-==\nghi' !~~ /<!wb>abc/, 'BOS nonword boundary';
+
+#### ghi<!wb>		abc\ndef\n-==\nghi	n	EOS nonword boundary
+ok 'abc\ndef\n-==\nghi' !~~ /ghi<!wb>/, 'EOS nonword boundary';
+
+#### a<!wb>			abc\ndef\n-==\nghi	y	\w\w nonword boundary
+ok 'abc\ndef\n-==\nghi' ~~ /a<!wb>/, '\w\w nonword boundary';
+
+#### \-<!wb>			abc\ndef\n-==\nghi	y	\W\W nonword boundary
+ok 'abc\ndef\n-==\nghi' ~~ /\-<!wb>/, '\W\W nonword boundary';
+
+
+#### <upper>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<upper>: <A @ 45>/		<upper>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<upper>/).produces(q/mob<upper>: <A @ 45>/), '<upper>';
+
+#### <+upper>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <A @ 45>/			<+upper>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>/).produces(q/mob: <A @ 45>/), '<+upper>';
+
+#### <+upper>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJ @ 45>/	<+upper>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>+/).produces(q/mob: <ABCDEFGHIJ @ 45>/), '<+upper>+';
+
+#### <lower>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lower>: <a @ 55>/		<lower>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lower>/).produces(q/mob<lower>: <a @ 55>/), '<lower>';
+
+#### <+lower>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <a @ 55>/			<+lower>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>/).produces(q/mob: <a @ 55>/), '<+lower>';
+
+#### <+lower>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <abcdefghij @ 55>/	<+lower>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>+/).produces(q/mob: <abcdefghij @ 55>/), '<+lower>+';
+
+#### <alpha>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alpha>: <A @ 45>/		<alpha>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alpha>/).produces(q/mob<alpha>: <A @ 45>/), '<alpha>';
+
+#### <+alpha>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <A @ 45>/			<+alpha>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>/).produces(q/mob: <A @ 45>/), '<+alpha>';
+
+#### <+alpha>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJabcdefghij @ 45>/	<+alpha>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>+/).produces(q/mob: <ABCDEFGHIJabcdefghij @ 45>/), '<+alpha>+';
+
+#### <digit>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<digit>: <0 @ 35>/		<digit>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<digit>/).produces(q/mob<digit>: <0 @ 35>/), '<digit>';
+
+#### <+digit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/			<+digit>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>/).produces(q/mob: <0 @ 35>/), '<+digit>';
+
+#### <+digit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789 @ 35>/	<+digit>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>+/).produces(q/mob: <0123456789 @ 35>/), '<+digit>+';
+
+#### <xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<xdigit>: <0 @ 35>/		<xdigit>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<xdigit>/).produces(q/mob<xdigit>: <0 @ 35>/), '<xdigit>';
+
+#### <+xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/			<+xdigit>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>/).produces(q/mob: <0 @ 35>/), '<+xdigit>';
+
+#### <+xdigit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEF @ 35>/	<+xdigit>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>+/).produces(q/mob: <0123456789ABCDEF @ 35>/), '<+xdigit>+';
+
+#### <space>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<space>: <\t @ 0>/		<space>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<space>/).produces(q/mob<space>: <\t @ 0>/), '<space>';
+
+#### <+space>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/		<+space>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>/).produces(q/mob: <\t @ 0>/), '<+space>';
+
+#### <+space>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r  @ 0>/		<+space>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>+/).produces(q/mob: <\t\n\r  @ 0>/), '<+space>+';
+
+#### <blank>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<blank>: <\t @ 0>/		<blank>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<blank>/).produces(q/mob<blank>: <\t @ 0>/), '<blank>';
+
+#### <+blank>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>/).produces(q/mob: <\t @ 0>/), '<+blank>';
+
+#### <+blank>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/).produces(q/mob: <\t @ 0>/), '<+blank>+';
+
+#### <cntrl>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<cntrl>: <\t @ 0>/		<cntrl>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<cntrl>/).produces(q/mob<cntrl>: <\t @ 0>/), '<cntrl>';
+
+#### <+cntrl>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+cntrl>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>/).produces(q/mob: <\t @ 0>/), '<+cntrl>';
+
+#### <+cntrl>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r @ 0>/		<+cntrl>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>+/).produces(q/mob: <\t\n\r @ 0>/), '<+cntrl>+';
+
+#### <punct>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<punct>: <! @ 4>/		<punct>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<punct>/).produces(q/mob<punct>: <! @ 4>/), '<punct>';
+
+#### <+punct>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <! @ 4>/			<+punct>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>/).produces(q/mob: <! @ 4>/), '<+punct>';
+
+#### <+punct>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <!"#$%&/		<+punct>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>+/).produces(q/mob: <!"#$%&/), '<+punct>+';
+
+#### <alnum>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alnum>: <0 @ 35>/		<alnum>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alnum>/).produces(q/mob<alnum>: <0 @ 35>/), '<alnum>';
+
+#### <+alnum>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/	<+alnum>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>/).produces(q/mob: <0 @ 35>/), '<+alnum>';
+
+#### <+alnum>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/	<+alnum>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>+/).produces(q/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/), '<+alnum>+';
+
+#### <sp>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<sp>: <  @ 3>/	<sp>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<sp>/).produces(q/mob<sp>: <  @ 3>/), '<sp>';
+
+#### <+sp>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <  @ 3>/	<+sp>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+sp>+/).produces(q/mob: <  @ 3>/), '<+sp>+';
+
+#### <lt>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lt>: << @ 21>/	<lt>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lt>/).produces(q/mob<lt>: << @ 21>/), '<lt>';
+
+#### <+lt>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: << @ 21>/	<+lt>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lt>+/).produces(q/mob: << @ 21>/), '<+lt>+';
+
+#### <gt>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<gt>: <> @ 23>/	<gt>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<gt>/).produces(q/mob<gt>: <> @ 23>/), '<gt>';
+
+#### <+gt>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <> @ 23>/	<+gt>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+gt>+/).produces(q/mob: <> @ 23>/), '<+gt>+';
+
+#### <dot>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<dot>: <. @ 17>/	<dot>
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<dot>/).produces(q/mob<dot>: <. @ 17>/), '<dot>';
+
+#### <+dot>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <. @ 17>/	<+dot>+
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+dot>+/).produces(q/mob: <. @ 17>/), '<+dot>+';
+
+#### <+alnum+[_]>	ident_1				y	union of character classes
+ok 'ident_1' ~~ /<+alnum+[_]>/, 'union of character classes';
+
+#### <+[ab]+[\-]>+	aaa-bbb				y	enumerated character classes
+ok 'aaa-bbb' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes';
+
+#### <+  [ a  b ]+[\-]>+		aaa-bbb		y	whitespace is ignored within square brackets and after the initial +
+ok 'aaa-bbb' ~~ /<+  [ a  b ]+[\-]>+/, 'whitespace is ignored within square brackets and after the initial +';
+
+#### <+[ab]+[\-]>+	-ab-				y	enumerated character classes variant
+ok '-ab-' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes variant';
+
+#### <+[ab]+[\-]>+	----				y	enumerated character classes variant
+ok '----' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes variant';
+
+#### <+[ab]+[\-]>+	-				y	enumerated character classes variant
+ok '-' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes variant';
+
+#### <-[ab]+[cd]>+	ccdd				y	enumerated character classes variant
+ok 'ccdd' ~~ /<-[ab]+[cd]>+/, 'enumerated character classes variant';
+
+#### ^<-[ab]+[cd]>+$	caad				n	enumerated character classes variant
+ok 'caad' !~~ /^<-[ab]+[cd]>+$/, 'enumerated character classes variant';
+
+#### <-  [ a  b ]+[cd]>+	ccdd			y	whitespace is ignored within square brackets and after the initial -
+ok 'ccdd' ~~ /<-  [ a  b ]+[cd]>+/, 'whitespace is ignored within square brackets and after the initial -';
+
+#### ^<-upper>dent	ident_1				y	inverted character class
+ok 'ident_1' ~~ /^<-upper>dent/, 'inverted character class';
+
+#### ^<-upper>dent	Ident_1				n	inverted character class
+ok 'Ident_1' !~~ /^<-upper>dent/, 'inverted character class';
+
+#### <+alpha-[Jj]>+	abc				y	character class with no j
+ok 'abc' ~~ /<+alpha-[Jj]>+/, 'character class with no j';
+
+#### <+ alpha - [ Jj ]>	abc			y	character class with no j with ws
+ok 'abc' ~~ /<+ alpha - [ Jj ]>/, 'character class with no j with ws';
+
+#### ^<+alpha-[Jj]>+$	aJc			n	character class with no j fail
+ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
+
+
+## vim: noexpandtab tabstop=4 shiftwidth=4
+##  syntax errors
+
+#### {{		abcdef		/Missing closing braces/	unterminated closure
+ok eval(q[ 'abcdef' ~~ /{{/ ]).produces(q/Missing closing braces/), 'unterminated closure';
+
+#### \1		abcdef		/reserved/			back references
+ok eval(q{{ 'abcdef' ~~ /\1/ }}).produces(q/reserved/), 'back references';
+
+#### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
+ok eval(q{{ 'abcdef' ~~ /\x[/ }}).produces(q/Missing close bracket/), 'unterminated \x[..]';
+
+#### \X[		abcdef		/Missing close bracket/		unterminated \X[..]
+ok eval(q{{ 'abcdef' ~~ /\X[/ }}).produces(q/Missing close bracket/), 'unterminated \X[..]';
+
+
+#### * abc		abcdef		/Quantifier follows nothing/	bare * at start
+ok eval(q{{ 'abcdef' ~~ /* abc/ }}).produces(q/Quantifier follows nothing/), 'bare * at start';
+
+####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
+ok eval(q{{ 'abcdef' ~~ /  * abc/ }}).produces(q/Quantifier follows nothing/), 'bare * after ws';
+
+#### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
+ok eval(q{{ 'abcdef' ~~ /[*|a]/ }}).produces(q/Quantifier follows nothing/), 'bare * after [';
+
+#### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
+ok eval(q{{ 'abcdef' ~~ /[ *|a]/ }}).produces(q/Quantifier follows nothing/), 'bare * after [+sp';
+
+#### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
+ok eval(q{{ 'abcdef' ~~ /[a|*]/ }}).produces(q/Quantifier follows nothing/), 'bare * after |';
+
+#### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
+ok eval(q{{ 'abcdef' ~~ /[a| *]/ }}).produces(q/Quantifier follows nothing/), 'bare * after |+sp';
+
+
+#### + abc		abcdef		/Quantifier follows nothing/	bare + at start
+ok eval(q{{ 'abcdef' ~~ /+ abc/ }}).produces(q/Quantifier follows nothing/), 'bare + at start';
+
+####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
+ok eval(q{{ 'abcdef' ~~ /  + abc/ }}).produces(q/Quantifier follows nothing/), 'bare + after ws';
+
+#### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
+ok eval(q{{ 'abcdef' ~~ /[+|a]/ }}).produces(q/Quantifier follows nothing/), 'bare + after [';
+
+#### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
+ok eval(q{{ 'abcdef' ~~ /[ +|a]/ }}).produces(q/Quantifier follows nothing/), 'bare + after [+sp';
+
+#### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
+ok eval(q{{ 'abcdef' ~~ /[a|+]/ }}).produces(q/Quantifier follows nothing/), 'bare + after |';
+
+#### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
+ok eval(q{{ 'abcdef' ~~ /[a| +]/ }}).produces(q/Quantifier follows nothing/), 'bare + after |+sp';
+
+
+#### ? abc		abcdef		/Quantifier follows nothing/	bare ? at start
+ok eval(q{{ 'abcdef' ~~ /? abc/ }}).produces(q/Quantifier follows nothing/), 'bare ? at start';
+
+####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
+ok eval(q{{ 'abcdef' ~~ /  ? abc/ }}).produces(q/Quantifier follows nothing/), 'bare ? after ws';
+
+#### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
+ok eval(q{{ 'abcdef' ~~ /[?|a]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after [';
+
+#### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
+ok eval(q{{ 'abcdef' ~~ /[ ?|a]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after [+sp';
+
+#### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
+ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after |';
+
+#### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
+ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after |+sp';
+
+
+#### 		abcdef		/Null pattern illegal/		null pattern
+ok eval(q{{ 'abcdef' ~~ // }}).produces(q/null pattern/), '';
+
+####   		abcdef		/Null pattern illegal/		ws null pattern
+ok eval(q{{ 'abcdef' ~~ /  / }}).produces(q/Null pattern illegal/), 'ws null pattern';
+
+
