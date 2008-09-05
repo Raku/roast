@@ -53,7 +53,6 @@ plan 11;
 }
 
 # Ensure condition is tested on the first iteration
-#?rakudo skip 'parse loop (;0;)'
 {
     my $never_did_body = 1;
     loop (;0;)

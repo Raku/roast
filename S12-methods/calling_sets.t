@@ -31,11 +31,11 @@ class Child is Parent {
     my $result = 1; # default to one to see if value changes to undef
     try { $result = $object.?nope };
     ok($object.?meth, $test);
-    is($result,undef, q"                                       ..undef otherwise ");
+    ok(!$result.defined, q" ..undef otherwise ");
 
     my $thing = 'child_only';
     is($object.?$thing, 'child_only', '$o.?$name works as expected');
-    is($object.'?child_only', undef, '$object.\'?name\' correctly does not call $object.name');
+    ok(!$object.'?child_only'.defined, '$object.\'?name\' correctly does not call $object.name');
 }
 
 {
@@ -43,7 +43,7 @@ class Child is Parent {
     my $object = Child.new;
     my $result = 1; # default to one to see if value changes to undef
     try { $result = $object.*nope };
-    is($result,undef, q"$test: Case 0 returns undef");
+    ok(!$result.defined, q"$test: Case 0 returns undef");
 
     try { $result = $object.*child_only };
     is($result, 'child_only', "$test: Case 1 finds one result"); 
@@ -56,7 +56,7 @@ class Child is Parent {
     try { $result = $object.*$meth };
     is($object.cnt, 2, "$test: Case 2 visits both Child and Parent (as dynamic method call)");
 
-    is($object.'*cnt', undef, '$object.\'*name\' correctly does not call $object.*name');
+    ok(!$object.'*cnt'.defined, '$object.\'*name\' correctly does not call $object.*name');
 
     my $meth = 'sqrt'; 
     my $ans = 0;

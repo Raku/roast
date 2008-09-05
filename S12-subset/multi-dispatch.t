@@ -4,7 +4,7 @@ use Test;
 plan 4;
 
 subset Even of Int where { $_ % 2 == 0 };
-subset Odd  of Int where { $_ % 2 == 1 };
+subset Odd  of Int where { $_ % 2 == 0 };
 
 multi sub test_subtypes(Even $y){ 'Even' }
 multi sub test_subtypes(Odd  $y){ 'Odd'  }

@@ -25,7 +25,7 @@ isa_ok($array_ref2, Array);
 is(+$array_ref2, 3, 'the array_ref2 has 3 elements');
 is($array_ref2[0], 'test', 'got the right value at array_ref2 index 0');
 is($array_ref2[1], 1,      'got the right value at array_ref2 index 1');
-is($array_ref2[2], undef,  'got the right value at array_ref2 index 2');
+ok(!$array_ref2[2].defined,'got the right value at array_ref2 index 2');
 
 # array_ref slice
 
@@ -39,7 +39,7 @@ isa_ok($array_ref4, Array);
 #?rakudo skip 'flatten and slices are not working'
 {
     is(+$array_ref4, 3, 'the array_ref4 has 3 elements');
-    is($array_ref4[0], undef,  'got the right value at array_ref4 index 0');
+    ok(!$array_ref4[0].defined, 'got the right value at array_ref4 index 0');
     is($array_ref4[1], 1,      'got the right value at array_ref4 index 1');
     is($array_ref4[2], 'test', 'got the right value at array_ref4 index 2');
 }
@@ -52,7 +52,7 @@ isa_ok($array_ref5, Array);
 #?rakudo skip 'flatten and slices are not working'
 {
     is(+$array_ref5, 6, 'the array_ref5 has 6 elements');
-    is($array_ref5[0], undef,  'got the right value at array_ref5 index 0');
+    is(!$array_ref5[0].defined, 'got the right value at array_ref5 index 0');
     is($array_ref5[1], 1,      'got the right value at array_ref5 index 1');
     is($array_ref5[2], 'test', 'got the right value at array_ref5 index 2');
     is($array_ref5[3], 'baz',  'got the right value at array_ref5 index 3');

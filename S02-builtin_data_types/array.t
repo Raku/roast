@@ -29,7 +29,7 @@ my @array2 = ("test", 1, undef);
     is(+@array2, 3, 'the array2 has 3 elements');
     is(@array2[0], 'test', 'got the right value at array2 index 0');
     is(@array2[1], 1,      'got the right value at array2 index 1');
-    is(@array2[2], undef,  'got the right value at array2 index 2');
+    ok(!@array2[2].defined,  'got the right value at array2 index 2');
 }
 
 # combine 2 arrays
@@ -43,7 +43,7 @@ my @array2 = ("test", 1, undef);
     is(@array3[2], 'baz', 'got the right value at array3 index 2'); 
     is(@array3[3], 'test', 'got the right value at array3 index 3'); 
     is(@array3[4], 1,      'got the right value at array3 index 4'); 
-    is(@array3[5], undef,  'got the right value at array3 index 5');
+    ok(!@array3[5].defined,'got the right value at array3 index 5');
 }
 
 {

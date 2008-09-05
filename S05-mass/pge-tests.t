@@ -34,7 +34,7 @@ my $segfault_limit = 500;
 do_tests($segfault_limit);
 my $remaining = @lines - $segfault_limit;
 
-skip($remaining, 'Tests would segfault :(');
+skip($remaining, 'Tests would segfault :(') if $remaining > 0;
 
 
 sub do_tests ($segfault_limit) {

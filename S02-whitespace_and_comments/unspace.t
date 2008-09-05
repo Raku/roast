@@ -64,10 +64,10 @@ is(eval('bar .id'), 'b', 'sanity - bar .id');
 is(eval('foo\.id'), 'a', 'short unspace');
 is(eval('foo\ .id'), 'a', 'unspace');
 is(eval('foo \ .id'), 'b', 'not a unspace');
-is(eval('fo\ o.id'), undef, 'unspace not allowed in identifier');
+eval_dies_ok('fo\ o.id', 'unspace not allowed in identifier');
 is(eval('foo\    .id'), 'a', 'longer dot');
 is(eval('foo\#( comment ).id'), 'a', 'unspace with embedded comment');
-is(eval('foo\#\ ( comment ).id'), undef, 'unspace can\'t hide space between # and opening bracket');
+eval_dies_ok('foo\#\ ( comment ).id', 'unspace can\'t hide space between # and opening bracket');
 is(eval('foo\ # comment
     .id'), 'a', 'unspace with end-of-line comment');
 is(eval(':foo\ <bar>'), (:foo<bar>), 'unspace in colonpair');
@@ -169,8 +169,8 @@ end comment		#5
 #XXX probably shouldn't be in this file...
 
 eval('sub f { 3 } sub g { 3 }');
-is(eval('f'), undef, 'semicolon or newline required between blocks');
-is(eval('g'), undef, 'semicolon or newline required between blocks');
+eval_dies_ok('f', 'semicolon or newline required between blocks');
+eval_dies_ok('g', 'semicolon or newline required between blocks');
 
 # L<S06/"Blocks"/"unless followed immediately by a comma">
 
@@ -200,7 +200,7 @@ my $m = 2;
 sub infix:<++>($x, $y) { 42 }
 
 #'$n++$m' should be a syntax error
-is(eval('$n++$m'), undef, 'infix requires space when ambiguous with postfix');
+eval_dies_ok('$n++$m', 'infix requires space when ambiguous with postfix');
 is($n, 1, 'check $n');
 is($m, 2, 'check $m');
 
@@ -219,9 +219,9 @@ is($m, 2, 'check $m');
 
 #These should all be postfix syntax errors
 $n = 1; $m = 2;
-is(eval('$n.++ $m'), undef, 'postfix dot w/ infix ambiguity');
-is(eval('$n\ ++ $m'), undef, 'postfix unspace w/ infix ambiguity');
-is(eval('$n\ .++ $m'), undef, 'postfix unspace w/ infix ambiguity');
+eval_dies_ok('$n.++ $m',   'postfix dot w/ infix ambiguity');
+eval_dies_ok('$n\ ++ $m',  'postfix unspace w/ infix ambiguity');
+eval_dies_ok('$n\ .++ $m', 'postfix unspace w/ infix ambiguity');
 is($n, 1, 'check $n');
 is($m, 2, 'check $m');
 
@@ -232,7 +232,7 @@ is($n, 1, 'check $n');
 is($m, 2, 'check $m');
 
 $n = 1;
-is(eval('$n ++'), undef, 'postfix requires no space');
+eval_dies_ok('$n ++', 'postfix requires no space');
 is($n, 1, 'check $n');
 
 $n = 1;
@@ -249,7 +249,7 @@ is($n, 2, 'check $n');
 
 # L<S02/"Lexical Conventions"/"U+301D codepoint has two closing alternatives">
 is(eval('foo\#〝 comment 〞.id'), 'a', 'unspace with U+301D/U+301E comment');
-is(eval('foo\#〝 comment 〟.id'), undef, 'unspace with U+301D/U+301F is invalid');
+eval_dies_ok('foo\#〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
 # L<S02/"Whitespace and Comments"/".123">
 # .123 is equal to 0.123

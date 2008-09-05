@@ -185,7 +185,7 @@ plan 45;
     my $a;
 #?rakudo skip 'runtime eval error'
     ok !eval '$a = #\  (comment) 32', "comments can't contain unspace";
-    is $a, undef, '$a remains undef';
+    ok !$a.defined, '$a remains undef';
 }
 
 # L<S02/Whitespace and Comments/"# may not be used as" 
@@ -198,8 +198,8 @@ plan 45;
 
     $a = undef;
 #?rakudo skip 'runtime eval error'
-    ok !eval '$a = q# 32 #;', 'misuse of # as quote delimiters';
-    is $a, undef, "``#'' can't be used as quote delimiters";
+    eval_dies_ok '$a = q# 32 #;', 'misuse of # as quote delimiters';
+    ok !$a.defined, "``#'' can't be used as quote delimiters";
 }
 
 # L<S02/"Whitespace and Comments"/POD sections may be>
