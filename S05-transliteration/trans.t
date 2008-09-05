@@ -10,7 +10,7 @@ L<S05/Transliteration>
 
 =end pod
 
-plan 42;
+plan 49;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -145,7 +145,48 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;', '&amp;'] =>
 is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???'])),
     '&nbsp;???&gt;&amp;',
-    '... and now complement and squash');    
+    '... and now complement and squash');
+
+# check for regex support
+
+# remove vowel and character after
+#?rakudo 2 skip 'regex in .trans not implemented'
+is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdfgh', 'basic regex works');
+is( # vowels become 'y' and whitespace becomes '_'
+    "ab\ncd\tef gh".trans(/<[aeiou]>/ => 'y', /\s/ => '_'),
+    'yb_cd_yf_gh',
+    'regexes pairs work',
+);
+
+# check for closure support
+#?rakudo skip 'regex and closures in .trans not implemented'
+{
+    my $i = 0;
+    is('ab_cd_ef_gh'.trans('_' => {$i++}), 'ab0cd1ef2gh', 'basic closure');
+
+    my($i, $j) = (0, 0);
+    is(
+        'a_b/c_d/e_f'.trans('_' => {$i++}, '/' => {$j++}),
+        'a0b0c1d1e2f',
+        'closure pairs work',
+    );
+
+    # closures and regexes!
+    is(
+        '[36][38][43]'.trans(/\[(\d+)\]/ => {chr($0)}),
+        '$&+',
+        'closure and regex'
+    );
+
+    is(
+        '"foo  &   bar"'.trans(
+            /(' '+)/ => {' ' ~ ('&nbsp' x ($0.chars - 1))},
+            /\W/ => sub {"&#{ord($0)};"}
+        ),
+        '&#34;foo &nbsp;&#38; &nbsp;&nbsp;bar&#34;',
+        'pairs of regexes and closures',
+    );
+}
 
 #?rakudo skip 'tr///, feed operator not implemented'
 {
@@ -171,3 +212,6 @@ tr/$123/X\x20\o40\t/;
 is($_, "X  \t", 'tr/// on $_ with explicit character lists');
 
 }
+
+# y/// is dead
+eval_dies_ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
