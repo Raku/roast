@@ -1,3 +1,7 @@
+use Test;
+
+plan 745;
+
 ##   Backtracking control tests
 #### a* a			bazaar		y	control
 ok 'bazaar' ~~ /a* a/, 'control';
