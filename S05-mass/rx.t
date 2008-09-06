@@ -652,32 +652,31 @@ ok 'ab cdef' !~~ /a\S+f/, 'not whitespace (\S)';
 ok 'abcdef' ~~ /^ abc/, 'start and end of string (^)';
 
 #### ^ abc			abc\ndef	y	start and end of string (^)
-ok 'abc\ndef' ~~ /^ abc/, 'start and end of string (^)';
+ok "abc\ndef" ~~ /^ abc/, 'start and end of string (^)';
 
 #### ^ abc			def\nabc	n	start and end of string (^)
-ok 'def\nabc' !~~ /^ abc/, 'start and end of string (^)';
+ok "def\nabc" !~~ /^ abc/, 'start and end of string (^)';
 
 #### def \n ^ abc		def\nabc	n	start and end of string (^)
-ok 'def\nabc' !~~ /def \n ^ abc/, 'start and end of string (^)';
+ok "def\nabc" !~~ /def \n ^ abc/, 'start and end of string (^)';
 
 #### def $			abcdef		y	start and end of string ($)
 ok 'abcdef' ~~ /def $/, 'start and end of string ($)';
 
 #### def $			abc\ndef	y	start and end of string ($)
-ok 'abc\ndef' ~~ /def $/, 'start and end of string ($)';
+ok "abc\ndef" ~~ /def $/, 'start and end of string ($)';
 
 #### def $			def\nabc	n	start and end of string ($)
-ok 'def\nabc' !~~ /def $/, 'start and end of string ($)';
+ok "def\nabc" !~~ /def $/, 'start and end of string ($)';
 
 #### def $ \n abc		def\nabc	n	start and end of string (^)
-ok 'def\nabc' !~~ /def $ \n abc/, 'start and end of string (^)';
+ok "def\nabc" !~~ /def $ \n abc/, 'start and end of string (^)';
 
 #### abc \n $		abc\n		y	end of string ($)
-#?rakudo todo 'unknown'
-ok 'abc\n' ~~ /abc \n $/, 'end of string ($)';
+ok "abc\n" ~~ /abc \n $/, 'end of string ($)';
 
 #### abc $			abc\n		n	end of string ($)
-ok 'abc\n' !~~ /abc $/, 'end of string ($)';
+ok "abc\n" !~~ /abc $/, 'end of string ($)';
 
 #### <<def			abc-def		y	left word boundary, beginning of word
 ok 'abc-def' ~~ /<<def/, 'left word boundary, beginning of word';
@@ -717,31 +716,28 @@ ok '-------' !~~ />>/, 'right word boundary, no word chars';
 
 
 #### c \n d			abc\ndef	y	logical newline (\n)
-#?rakudo todo 'unknown'
-ok 'abc\ndef' ~~ /c \n d/, 'logical newline (\n)';
+ok "abc\ndef" ~~ /c \n d/, 'logical newline (\n)';
 
 #### c \n d			abc\rdef	y	logical newline matches \r
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok 'abc\rdef' ~~ /c \n d/, 'logical newline matches \r';
+ok "abc\rdef" ~~ /c \n d/, 'logical newline matches \r';
 
 #### c \n+ d			abc\n\ndef	y	logical newline quantified
 #?rakudo todo 'unknown'
-ok 'abc\n\ndef' ~~ /c \n+ d/, 'logical newline quantified';
+ok "abc\n\ndef" ~~ /c \n+ d/, 'logical newline quantified';
 
 #### a\n+f			abcdef		n	logical newline (\n)
 ok 'abcdef' !~~ /a\n+f/, 'logical newline (\n)';
 
 #### c \n d			abc\n\rdef	n	logical newline matches \n\r
-ok 'abc\n\rdef' !~~ /c \n d/, 'logical newline matches \n\r';
+ok "abc\n\rdef" !~~ /c \n d/, 'logical newline matches \n\r';
 
 #### c \n d			abc\r\ndef	y	logical newline matches \r\n
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok 'abc\r\ndef' ~~ /c \n d/, 'logical newline matches \r\n';
+ok "abc\r\ndef" ~~ /c \n d/, 'logical newline matches \r\n';
 
 #### b \n c			abc\ndef	n	logical newline (\n)
-ok 'abc\ndef' !~~ /b \n c/, 'logical newline (\n)';
+ok "abc\ndef" !~~ /b \n c/, 'logical newline (\n)';
 
 #### \N			a		y	not logical newline (\N)
 ok 'a' ~~ /\N/, 'not logical newline (\N)';
@@ -1032,7 +1028,7 @@ ok "\x000a\x000b\x000c\x000d\x0085" ~~ /^ \v+ $/, '0-255 vertical whitespace (\v
 ok "\x000a\x000b\x000c\x000d\x0085" !~~ /^ \h+ $/, '0-255 horizontal whitespace (\h)';
 
 #### ^ \v+ $			\x0009\x0020\x00a0	n	0-255 vertical whitespace (\v)
-ok '\x0009\x0020\x00a0' !~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
+ok "\x0009\x0020\x00a0" !~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
 
 #### ^ \s+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\s)
 #?pugs todo 'feature'
@@ -1581,8 +1577,7 @@ ok 'a b c def' !~~ /:!s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 ok 'ab' ~~ /:s ab /, 'sigspace, trailing ws';
 
 #### foo\s*'-'?\s*bar		foo\t \n-\n\t bar	y	basic match
-#?rakudo todo 'unknown'
-ok 'foo\t \n-\n\t bar' ~~ /foo\s*'-'?\s*bar/, 'basic match';
+ok "foo\t \n-\n\t bar" ~~ /foo\s*'-'?\s*bar/, 'basic match';
 
 #### foo\s*'-'?\s*bar		foo - bar	y	basic match
 ok 'foo - bar' ~~ /foo\s*'-'?\s*bar/, 'basic match';
@@ -1607,8 +1602,7 @@ ok 'foo - bar' !~~ /foo '-'? bar/, 'basic non-match';
 
 #### :s foo '-'? bar			foo\n \t- \t\t\nbar	y	basic ws match
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok 'foo\n \t- \t\t\nbar' ~~ /:s foo '-'? bar/, 'basic ws match';
+ok "foo\n \t- \t\t\nbar" ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s foo '-'? bar			foo - bar	y	basic ws match
 #?pugs todo 'feature'
@@ -2381,10 +2375,10 @@ ok "abc\ndef\n-==\nghi" ~~ /<?wb>abc/, 'BOS word boundary';
 ok "abc\ndef\n-==\nghi" ~~ /ghi<?wb>/, 'EOS word boundary';
 
 #### a<?wb>			abc\ndef\n-==\nghi	n	\w\w word boundary
-ok 'abc\ndef\n-==\nghi' !~~ /a<?wb>/, '\w\w word boundary';
+ok "abc\ndef\n-==\nghi" !~~ /a<?wb>/, '\w\w word boundary';
 
 #### \-<?wb>			abc\ndef\n-==\nghi	n	\W\W word boundary
-ok 'abc\ndef\n-==\nghi' !~~ /\-<?wb>/, '\W\W word boundary';
+ok "abc\ndef\n-==\nghi" !~~ /\-<?wb>/, '\W\W word boundary';
 
 #### <!wb>def		abc\ndef\n-==\nghi	n	nonword boundary \W\w
 ok "abc\ndef\n-==\nghi" !~~ /<!wb>def/, 'nonword boundary \W\w';
