@@ -34,12 +34,12 @@ ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 ####   if :: not | ify	verify		n	the default all group
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
-# todo :pugs<feature>
 #### [ if :  not | ify ]	verify		y	simple backtrack still works
+#?pugs todo 'feature'
 ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 
-# todo :pugs<feature>
 #### [ if :: not | ify ] | verify	verify	y	rule continues
+#?pugs todo 'feature'
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
 #### [ when     ever ] | whence	whence	y	full backtrack failure
@@ -48,15 +48,15 @@ ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
-# todo :pugs<feature>
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
+#?pugs todo 'feature'
 ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
-# todo :pugs<feature>
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
+#?pugs todo 'feature'
 ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
@@ -68,8 +68,8 @@ ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 #### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
 ok 'xyzabcde' !~~ /( ab | abc ): de/, 'no backtrack into subpattern';
 
-# todo :pugs<feature>
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
+#?pugs todo 'feature'
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
 
@@ -220,56 +220,56 @@ ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 4: <c @ 2>/), 'perl5 n
 #?rakudo todo 'unknown'
 ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 5: <d @ 3>/), 'perl5 numbered captures $1';
 
-# todo :pugs<feature>
 #### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<key>: <abc @ 1>/	named capture
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/).produces(q/mob<key>: <abc @ 1>/), 'named capture';
 
-# todo :pugs<feature>
 #### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<val>: <123 @ 7>/	named capture
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/).produces(q/mob<val>: <123 @ 7>/), 'named capture';
 
-# todo :pugs<feature>
 #### :s (\w+) $<foo>=(\w+) (\w+)		abc def ghi	/mob<foo>: <def @ 4>/	mixing named and unnamed capture
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/).produces(q/mob<foo>: <def @ 4>/), 'mixing named and unnamed capture';
 
-# todo :pugs<feature>
 #### :s (\w+) $<foo>=(\w+) (\w+)		abc def ghi	/mob 1: <ghi @ 8>/	mixing named and unnamed capture
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/).produces(q/mob 1: <ghi @ 8>/), 'mixing named and unnamed capture';
 
-# todo :pugs<feature>
 #### <alpha> [ \- <alpha> ]?			abc def ghi	/mob<alpha> 0: <a @ 0>/	multiple subrule captures in same scope
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/).produces(q/mob<alpha> 0: <a @ 0>/), 'multiple subrule captures in same scope';
 
-# todo :pugs<feature>
 #### [(.)$0]+				bookkeeper	y			backreference
+#?pugs todo 'feature'
 ok 'bookkeeper' ~~ /[(.)$0]+/, 'backreference';
 
-# todo :pugs<feature>
 #### (\w+) <+ws> $0				hello hello	y			backreference at end of string
+#?pugs todo 'feature'
 ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
 
-# todo :pugs<feature>
 #### [(.)$0]+				bookkeeper	/mob 0 0: <o @ 1>/	backref $1
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 0: <o @ 1>/), 'backref $1';
 
-# todo :pugs<feature>
 #### [(.)$0]+				bookkeeper	/mob 0 1: <k @ 3>/	backref $1
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 1: <k @ 3>/), 'backref $1';
 
-# todo :pugs<feature>
 #### [(.)$0]+				bookkeeper	/mob 0 2: <e @ 5>/	backref $1
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 2: <e @ 5>/), 'backref $1';
 
-# todo :pugs<feature>
 #### (.)*x					123x		/mob: <123x @ 0>/	repeated dot capture
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok ('123x' ~~ /(.)*x/).produces(q/mob: <123x @ 0>/), 'repeated dot capture';
 
@@ -288,12 +288,12 @@ ok ('12ab34' ~~ /<key=alpha>/).produces(q/mob<key>: <a @ 2>/), 'alias capture';
 #### <[c]>			abcdef		y	character class
 ok 'abcdef' ~~ /<[c]>/, 'character class';
 
-# todo :pugs<feature>
 #### <[ z ]>			abc def		n	character class ignores ws
+#?pugs todo 'feature'
 ok 'abc def' !~~ /<[ z ]>/, 'character class ignores ws';
 
-# todo :pugs<feature>
 #### <[dcb]>**{3}		abcdef		y	repeated character class
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /<[dcb]>**{3}/, 'repeated character class';
 
 #### ^<[a]>			abcdef		y	anchored character class
@@ -320,8 +320,8 @@ ok 'abcdef' !~~ /^<-[a]>/, 'anchored negated character class';
 #### <[b..d]>		abcdef		y	character range
 ok 'abcdef' ~~ /<[b..d]>/, 'character range';
 
-# todo :pugs<feature>
 #### <[b .. d]>		c		y	character range ignores ws
+#?pugs todo 'feature'
 ok 'c' ~~ /<[b .. d]>/, 'character range ignores ws';
 
 #### <[b..d]>		abxxef		y	character range
@@ -339,8 +339,8 @@ ok 'axxxef' !~~ /<[b..d]>/, 'character range';
 #### <-[b..d]>		abcdef		y	negated character range
 ok 'abcdef' ~~ /<-[b..d]>/, 'negated character range';
 
-# todo :pugs<feature>
 #### <- [b..d]>		abcdef		y	negated allows ws
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
 
 #### <-[b..d]>		bbccdd		n	negated character range
@@ -411,12 +411,12 @@ ok '><' ~~ /^\><[<]>/, 'lt character class';
 #### ^<[>]>\<		><		y	gt character class
 ok '><' ~~ /^<[>]>\</, 'gt character class';
 
-# todo :pugs<feature>
 #### ^<[><]>**{2}		><		y	gt, lt character class
+#?pugs todo 'feature'
 ok '><' ~~ /^<[><]>**{2}/, 'gt, lt character class';
 
-# todo :pugs<feature>
 #### ^<[<>]>**{2}		><		y	lt, gt  character class
+#?pugs todo 'feature'
 ok '><' ~~ /^<[<>]>**{2}/, 'lt, gt  character class';
 
 #### ^<-[><]>		><		n	not gt, lt character class
@@ -431,8 +431,8 @@ ok '... --- ...' ~~ /'... --- ...'/, 'literal match (\\\')';
 #### '... --- ...'		...---...	n	literal match (\\\')
 ok '...---...' !~~ /'... --- ...'/, 'literal match (\\\')';
 
-# todo :pugs<feature>
 #### 'ab\'>cd'		ab\'>cd		y	literal match with quote
+#?pugs todo 'feature'
 ok 'ab\'>cd' ~~ /'ab\'>cd'/, 'literal match with quote';
 
 #### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
@@ -442,37 +442,37 @@ ok 'ab\x5cyz' ~~ /'ab\\yz'/, 'literal match with backslash';
 #### 'ab"cd'			ab"cd		y	literal match with quote
 ok 'ab"cd' ~~ /'ab"cd'/, 'literal match with quote';
 
-# todo :pugs<feature>
 #### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'ab\x5cyz' ~~ /'ab\\yz'/, 'literal match with backslash';
 
-# todo :pugs<feature> :pge<feature>
 #### "... --- ..."		... --- ...	y	literal match (\")
+#?pugs todo 'feature'
 ok '... --- ...' ~~ /"... --- ..."/, 'literal match (\")';
 
-# todo :pugs<feature> :pge<feature>
 #### "... --- ..."		...---...	n	literal match (\")
+#?pugs todo 'feature'
 ok '...---...' !~~ /"... --- ..."/, 'literal match (\")';
 
-# todo :pugs<feature> :pge<feature>
 #### "ab<\">cd"		ab<">cd		y	literal match with quote
+#?pugs todo 'feature'
 ok 'ab<">cd' ~~ /"ab<\">cd"/, 'literal match with quote';
 
-# todo :pugs<feature> :pge<feature>
 #### "ab<'>cd"		ab<\'>cd		y	literal match with quote
+#?pugs todo 'feature'
 ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 
-# todo :pugs<feature> :pge<feature>
+#?pugs todo 'feature'
 #### "ab\\cd"		ab\x5ccd	y	literal match with backslash
 ok 'ab\x5ccd' ~~ /"ab\\cd"/, 'literal match with backslash';
 
-# todo :pugs<feature> :pge<feature>
 #### (ab)x"$0"		abxab		y	literal match with interpolation
+#?pugs todo 'feature'
 ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
 
-# todo :pugs<feature> :pge<feature>
 #### (ab)"x$0"		abxab		y	literal match with interpolation
+#?pugs todo 'feature'
 ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 
 #### '?'			ab<?		y	literal match with question mark
@@ -510,8 +510,8 @@ ok 'abcd' !~~ /<before> ./, 'null <before>';
 #?rakudo todo 'unknown'
 ok ('aabaaa' ~~ /<!before ..b> aa/).produces(q/mob: <aa @ 3>/), 'negated lookahead';
 
-# todo :pugs<feature>
 #### <after a>b		ab		y				lookbehind <after>
+#?pugs todo 'feature'
 ok 'ab' ~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		cb		n				lookbehind <after>
@@ -520,42 +520,42 @@ ok 'cb' !~~ /<after a>b/, 'lookbehind <after>';
 #### <after a>b		b		n				lookbehind <after>
 ok 'b' !~~ /<after a>b/, 'lookbehind <after>';
 
-# todo :pugs<feature>
 #### <!after c>b		ab		y				lookbehind <!after>
+#?pugs todo 'feature'
 ok 'ab' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		cb		n				lookbehind <!after>
 ok 'cb' !~~ /<!after c>b/, 'lookbehind <!after>';
 
-# todo :pugs<feature>
 #### <!after c>b		b		y				lookbehind <!after>
+#?pugs todo 'feature'
 ok 'b' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>>b	dbcb		n				lookbehind <!after>
 ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 
-# todo :pugs<feature>
 #### <!after <[cd]>><[ab]>	dbaacb		y				lookbehind <!after>
+#?pugs todo 'feature'
 ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
 
 #### <!after c|d>b		dbcb		n				lookbehind <!after>
 ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
 
-# todo :pugs<feature>
 #### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
+#?pugs todo 'feature'
 ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 
-# todo :pugs<feature>
 #### <!after cd><[ab]>	cbaccb		y				lookbehind <!after>
+#?pugs todo 'feature'
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
-# todo :pugs<feature>
 #### $ <after ^a>		a		y				lookbehind <after>
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
-# todo :pugs<feature>
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
+#?pugs todo 'feature'
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
 
 #### <[a..z]>+		az		y				metasyntax with leading + (<+...>)
@@ -708,8 +708,8 @@ ok '-------' !~~ />>/, 'right word boundary, no word chars';
 #?rakudo todo 'unknown'
 ok 'abc\ndef' ~~ /c \n d/, 'logical newline (\n)';
 
-# todo :pugs<feature>
 #### c \n d			abc\rdef	y	logical newline matches \r
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'abc\rdef' ~~ /c \n d/, 'logical newline matches \r';
 
@@ -723,8 +723,8 @@ ok 'abcdef' !~~ /a\n+f/, 'logical newline (\n)';
 #### c \n d			abc\n\rdef	n	logical newline matches \n\r
 ok 'abc\n\rdef' !~~ /c \n d/, 'logical newline matches \n\r';
 
-# todo :pugs<feature>
 #### c \n d			abc\r\ndef	y	logical newline matches \r\n
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'abc\r\ndef' ~~ /c \n d/, 'logical newline matches \r\n';
 
@@ -808,32 +808,32 @@ ok 'abc#def' ~~ /^ abc \# def $
 #### ^^ abc \n ^^ def	abc\ndef	y	line beginnings and endings (^^)
 ok 'abc\ndef' ~~ /^^ abc \n ^^ def/, 'line beginnings and endings (^^)';
 
-# todo :pugs<feature>
 #### ^^ abc \n ^^ def \n ^^	abc\ndef\n	n	line beginnings and endings (^^)
+#?pugs todo 'feature'
 ok 'abc\ndef\n' !~~ /^^ abc \n ^^ def \n ^^/, 'line beginnings and endings (^^)';
 
 #### ^^ \n			\n		y	line beginnings and endings (^^)
 #?rakudo todo 'unknown'
 ok '\n' ~~ /^^ \n/, 'line beginnings and endings (^^)';
 
-# todo :pugs<feature>
 #### \n ^^			\n		n	line beginnings and endings (^^)
+#?pugs todo 'feature'
 ok '\n' !~~ /\n ^^/, 'line beginnings and endings (^^)';
 
 #### abc $$ \n def $$	abc\ndef	y	line beginnings and endings ($$)
 #?rakudo todo 'unknown'
 ok 'abc\ndef' ~~ /abc $$ \n def $$/, 'line beginnings and endings ($$)';
 
-# todo :pugs<feature>
 #### abc $$ \n def $$ \n $$	abc\ndef\n	n	line beginnings and endings ($$)
+#?pugs todo 'feature'
 ok 'abc\ndef\n' !~~ /abc $$ \n def $$ \n $$/, 'line beginnings and endings ($$)';
 
 #### $$ \n			\n		y	line beginnings and endings ($$)
 #?rakudo todo 'unknown'
 ok '\n' ~~ /$$ \n/, 'line beginnings and endings ($$)';
 
-# todo :pugs<feature>
 #### \n $$			\n		n	line beginnings and endings ($$)
+#?pugs todo 'feature'
 ok '\n' !~~ /\n $$/, 'line beginnings and endings ($$)';
 
 #### <[a..d]> | <[b..e]>	c		y	alternation (|)
@@ -875,8 +875,8 @@ ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
 #### |			|		/rule error/	alternation (|) - literal must be escaped
 ok eval(q{{ '|' ~~ /|/ }}).produces(q/rule error/), 'alternation (|) - literal must be escaped';
 
-# todo :pugs<feature>
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
+#?pugs todo 'feature'
 ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..d]> & <[d..e]>	c		n	conjunction (&)
@@ -888,20 +888,20 @@ ok 'c' !~~ /<[a..b]> & <[b..e]>/, 'conjunction (&)';
 #### <[a..b]> & <[d..e]>	c		n	conjunction (&)
 ok 'c' !~~ /<[a..b]> & <[d..e]>/, 'conjunction (&)';
 
-# todo :pugs<feature>
 #### <[a..d]>+ & <[b..e]>+	bcd		y	conjunction (&)
+#?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..d]>+ & <[b..e]>+/, 'conjunction (&)';
 
-# todo :pugs<feature>
 #### ^ [ <[a..d]>+ & <[b..e]>+ ] $	bcd		y	conjunction (&)
+#?pugs todo 'feature'
 ok 'bcd' ~~ /^ [ <[a..d]>+ & <[b..e]>+ ] $/, 'conjunction (&)';
 
-# todo :pugs<feature>
 #### <[a..c]>+ & <[b..e]>+	bcd		y	conjunction (&)
+#?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
 
-# todo :pugs<feature>
 #### <[a..d]>+ & <[c..e]>+	bcd		y	conjunction (&)
+#?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
 #### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
@@ -938,8 +938,8 @@ ok 'abc' ~~ /|d |b/, 'leading alternation ignored';
 ####  | d | b		abc		y	leading alternation ignored
 ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 
-# todo :pugs<feature> :pge<feature>
 ####  b |  | d		abc		n	null pattern invalid
+#?pugs todo 'feature'
 ok eval(q{{ 'abc' !~~ / b |  | d/ }}).produces(q/reserved/), 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
@@ -978,19 +978,19 @@ ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}).produces(q/reserved/), 'retired metachars (\G)
 #### \1abc			1abc		/reserved/	retired metachars (\1)
 ok eval(q{{ '1abc' ~~ /\1abc/ }}).produces(q/reserved/), 'retired metachars (\1)';
 
-# todo :pugs<feature>
 #### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
+#?pugs todo 'feature'
 ok '\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085' ~~ /^ \s+ $/, '0-255 whitespace (\s)';
 
-# todo :pugs<feature>
 #### ^ \h+ $			\x0009\x0020\x00a0	y	0-255 horizontal whitespace (\h)
+#?pugs todo 'feature'
 ok '\x0009\x0020\x00a0' ~~ /^ \h+ $/, '0-255 horizontal whitespace (\h)';
 
 #### ^ \V+ $			\x0009\x0020\x00a0	y	0-255 horizontal whitespace (\V)
 ok '\x0009\x0020\x00a0' ~~ /^ \V+ $/, '0-255 horizontal whitespace (\V)';
 
-# todo :pugs<feature>
 #### ^ \v+ $			\x000a\x000b\x000c\x000d\x0085	y	0-255 vertical whitespace (\v)
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok '\x000a\x000b\x000c\x000d\x0085' ~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
 
@@ -1000,13 +1000,13 @@ ok '\x000a\x000b\x000c\x000d\x0085' !~~ /^ \h+ $/, '0-255 horizontal whitespace 
 #### ^ \v+ $			\x0009\x0020\x00a0	n	0-255 vertical whitespace (\v)
 ok '\x0009\x0020\x00a0' !~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
 
-# todo :pugs<feature>
 #### ^ \s+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\s)
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \s+ $/, 'unicode whitespace (\s)';
 
-# todo :pugs<feature>
 #### ^ \h+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\h)
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \h+ $/, 'unicode whitespace (\h)';
 
@@ -1115,13 +1115,13 @@ ok 'abc\f\fdef' !~~ /c \F+ d/, 'not formfeed (\F)';
 #### a \F+ f			abcdef		y	not formfeed (\F)
 ok 'abcdef' ~~ /a \F+ f/, 'not formfeed (\F)';
 
-# todo :pugs<feature>
 #### c \e d			abc\edef	y	escape (\e)
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'abc\edef' ~~ /c \e d/, 'escape (\e)';
 
-# todo :pugs<feature>
 #### c \e+ d			abc\e\edef	y	escape (\e)
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'abc\e\edef' ~~ /c \e+ d/, 'escape (\e)';
 
@@ -1140,12 +1140,12 @@ ok 'abc' ~~ /a \E c/, 'not escape (\E)';
 #### \E			''		n	not escape (\E)
 ok '' !~~ /\E/, 'not escape (\E)';
 
-# todo :pugs<feature>
 #### c \E d			abc\edef	n	not escape (\E)
+#?pugs todo 'feature'
 ok 'abc\edef' !~~ /c \E d/, 'not escape (\E)';
 
-# todo :pugs<feature>
 #### c \E+ d			abc\e\edef	n	not escape (\E)
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'abc\e\edef' !~~ /c \E+ d/, 'not escape (\E)';
 
@@ -1233,8 +1233,8 @@ ok 'abc!def' ~~ /c \o[41] d/, 'octal (\o[])';
 #### c \o[41]+ d		abc!!def	y	octal (\o[])
 ok 'abc!!def' ~~ /c \o[41]+ d/, 'octal (\o[])';
 
-# todo :pugs<feature>
 #### c \o[41,41] d		abc!!def	y	octal (\o[])
+#?pugs todo 'feature'
 ok 'abc!!def' ~~ /c \o[41,41] d/, 'octal (\o[])';
 
 #### a \o[41]+ f		abcdef		n	octal (\o[])
@@ -1330,41 +1330,41 @@ ok 'aBCDef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 #### :ignorecase bcd		abc-ef	n	ignorecase (:ignorecase)
 ok 'abc-ef' !~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
-# todo :pugs<feature>
 #### :i(0) bcd		abcdef	y	ignorecase, repetition (:i(0))
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(0) bcd		abCdef	n	ignorecase, repetition (:i(0))
 ok 'abCdef' !~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
-# todo :pugs<feature>
 #### :i(1) bcd		abcdef	y	ignorecase, repetition (:i(1))
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
-# todo :pugs<feature>
 #### :i(1) bcd		abCdef	y	ignorecase, repetition (:i(1))
+#?pugs todo 'feature'
 ok 'abCdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		aBxDef	n	ignorecase, repetition (:i(1))
 ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
-# todo :pugs<feature>
 #### :0i bcd			abcdef	y	ignorecase, repetition (:0i)
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :0i bcd			abCdef	n	ignorecase, repetition (:0i)
 ok 'abCdef' !~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
-# todo :pugs<feature>
 #### :1i bcd			abcdef	y	ignorecase, repetition (:1i)
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
-# todo :pugs<feature>
 #### :1i bcd			abCdef	y	ignorecase, repetition (:1i)
+#?pugs todo 'feature'
 ok 'abCdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
-# todo :pugs<feature>
 #### :1i bcd			aBCDef	y	ignorecase, repetition (:1i)
+#?pugs todo 'feature'
 ok 'aBCDef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
 #### :1i bcd			aBxDef	n	ignorecase, repetition (:1i)
@@ -1397,12 +1397,12 @@ ok 'AbCDeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 #### :i ab [:i cd ] ef	AbcdeF	y	ignorecase, lexical (:i)
 ok 'AbcdeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
-# todo :pugs<feature>
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEf		y	ignorecase, lexical (:i)
+#?pugs todo 'feature'
 ok 'AbCdEf' ~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
-# todo :pugs<feature>
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeff	y	ignorecase, lexical (:i)
+#?pugs todo 'feature'
 ok 'AabbCcddEeff' ~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEF		n	ignorecase, lexical (:i)
@@ -1411,20 +1411,20 @@ ok 'AbCdEF' !~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'igno
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeFf	n	ignorecase, lexical (:i)
 ok 'AabbCcddEeFf' !~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
-# todo :pugs<feature>
 #### :i ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'AbcdeF' ~~ /:i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature> :pge<feature>
 #### :i ab [:!i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'AbcdeF' ~~ /:i ab [:!i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :i ab [:0i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'AbcdeF' ~~ /:i ab [:0i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :0i ab [:1i cd ] ef	abCDef	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'abCDef' ~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbCDeF	n	ignorecase, lexical repetition (:i)
@@ -1433,37 +1433,37 @@ ok 'AbCDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :0i ab [:i(0) cd ] ef	abcdef	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'abcdef' ~~ /:0i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'AbCdeF' ~~ /:i(1) ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :i(1) ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'AbcdeF' ~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcDeF	n	ignorecase, lexical repetition (:i)
 ok 'AbcDeF' !~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :i(2) ab [:i(999) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :1i ab [:i(1) cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
 ok 'abcDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
-# todo :pugs<feature>
 #### :2i ab [:999i cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
+#?pugs todo 'feature'
 ok 'ABCDEF' ~~ /:2i ab [:999i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### ab [:ignorecase cd ] ef		abCDef	y	ignorecase, lexical (:ignorecase)
@@ -1472,16 +1472,16 @@ ok 'abCDef' ~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 #### ab [:ignorecase cd ] ef		aBCDef	n	ignorecase, lexical (:ignorecase)
 ok 'aBCDef' !~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
-# todo :pugs<feature>
 #### :1ignorecase ab [:ignorecase(1) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:ignorecase)
+#?pugs todo 'feature'
 ok 'ABCDEF' ~~ /:1ignorecase ab [:ignorecase(1) cd ] ef/, 'ignorecase, lexical repetition (:ignorecase)';
 
-# todo :pugs<feature>
 #### :s bcd			a bcdef		y	sigspace (:s)
+#?pugs todo 'feature'
 ok 'a bcdef' ~~ /:s bcd/, 'sigspace (:s)';
 
-# todo :pugs<feature>
 #### :s bcd			a bcd ef	y	sigspace (:s)
+#?pugs todo 'feature'
 ok 'a bcd ef' ~~ /:s bcd/, 'sigspace (:s)';
 
 #### :s bcd			abcdef		n	sigspace (:s)
@@ -1493,12 +1493,12 @@ ok 'abcd ef' !~~ /:s bcd/, 'sigspace (:s)';
 #### :s bcd			ab cdef		n	sigspace (:s)
 ok 'ab cdef' !~~ /:s bcd/, 'sigspace (:s)';
 
-# todo :pugs<feature>
 #### :s b c d		a b c d ef	y	sigspace (:s)
+#?pugs todo 'feature'
 ok 'a b c d ef' ~~ /:s b c d/, 'sigspace (:s)';
 
-# todo :pugs<feature>
 #### :s b c d		a b c def	y	sigspace (:s)
+#?pugs todo 'feature'
 ok 'a b c def' ~~ /:s b c d/, 'sigspace (:s)';
 
 #### :s b c d		ab c d ef	n	sigspace (:s)
@@ -1510,34 +1510,34 @@ ok 'a bcdef' !~~ /:s b c d/, 'sigspace (:s)';
 #### :s b c d		abcdef		n	sigspace (:s)
 ok 'abcdef' !~~ /:s b c d/, 'sigspace (:s)';
 
-# todo :pugs<feature>
 #### :sigspace bcd		a bcdef		y	sigspace (:sigspace)
+#?pugs todo 'feature'
 ok 'a bcdef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
-# todo :pugs<feature>
 #### :sigspace bcd		a bcd ef	y	sigspace (:sigspace)
+#?pugs todo 'feature'
 ok 'a bcd ef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
 #### :sigspace bcd		abcdef		n	sigspace (:sigspace)
 ok 'abcdef' !~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
-# todo :pugs<feature>
 #### :sigspace b c d		a b c d ef	y	sigspace (:sigspace)
+#?pugs todo 'feature'
 ok 'a b c d ef' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
-# todo :pugs<feature>
 #### :sigspace b c d		a b c def	y	sigspace (:sigspace)
+#?pugs todo 'feature'
 ok 'a b c def' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
 #### :sigspace b c d		ab c d ef	n	sigspace (:sigspace)
 ok 'ab c d ef' !~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
-# todo :pugs<feature>
 #### :s(1) b c [:s(0) d e f ]	a b c def	y	sigspace, lexical repetition (:s)
+#?pugs todo 'feature'
 ok 'a b c def' ~~ /:s(1) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
-# todo :pugs<feature> :pge<feature>
 #### :s b c [:!s d e f ]	a b c def	y	sigspace, lexical repetition (:s)
+#?pugs todo 'feature'
 ok 'a b c def' ~~ /:s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(1) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
@@ -1554,8 +1554,8 @@ ok 'a b c def' !~~ /:s(0) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s
 #### :!s b c [:!s d e f ]	a b c def	n	sigspace, lexical repetition (:s)
 ok 'a b c def' !~~ /:!s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
-# todo :pugs<feature>
 #### :s ab 				ab		y	sigspace, trailing ws
+#?pugs todo 'feature'
 ok 'ab' ~~ /:s ab /, 'sigspace, trailing ws';
 
 #### foo\s*'-'?\s*bar		foo\t \n-\n\t bar	y	basic match
@@ -1583,29 +1583,29 @@ ok 'foobar' ~~ /foo '-'? bar/, 'basic match';
 #### foo '-'? bar			foo - bar	n	basic non-match
 ok 'foo - bar' !~~ /foo '-'? bar/, 'basic non-match';
 
-# todo :pugs<feature>
 #### :s foo '-'? bar			foo\n \t- \t\t\nbar	y	basic ws match
+#?pugs todo 'feature'
 #?rakudo todo 'unknown'
 ok 'foo\n \t- \t\t\nbar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
-# todo :pugs<feature>
 #### :s foo '-'? bar			foo - bar	y	basic ws match
+#?pugs todo 'feature'
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
-# todo :pugs<feature>
 #### :s foo '-'? bar			foo   bar	y	basic ws match \s+ \s*
+#?pugs todo 'feature'
 ok 'foo   bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
 
-# todo :pugs<feature>
 #### :s foo '-'? bar			foo  -bar	y	basic ws match \s+ \s*
+#?pugs todo 'feature'
 ok 'foo  -bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
 
-# todo :pugs<feature>
 #### :s foo '-'? bar			foo-  bar	y	basic ws match \s* \s+
+#?pugs todo 'feature'
 ok 'foo-  bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s+';
 
-# todo :pugs<feature>
 #### :s foo '-'? bar			foo-bar		y	basic ws match \s* \s*
+#?pugs todo 'feature'
 ok 'foo-bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s*';
 
 #### :s foo '-'? bar			foobar		n	basic ws non-match
@@ -1614,16 +1614,16 @@ ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
-# todo :pugs<feature> :pge<feature>
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
+#?pugs todo 'feature'
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
-# todo :pugs<feature>
 #### :s<?wb>foo '-'? bar		foo - bar	y	basic ws match with boundary modifier separation
+#?pugs todo 'feature'
 ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier separation';
 
-# todo :pugs<feature>
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
+#?pugs todo 'feature'
 ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
@@ -1634,24 +1634,24 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/).produces(q/mob 0: <dog @ 0>/), 'sig
 #?rakudo todo 'unknown'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/).produces(q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
-# todo :pugs<feature> :pge<feature>
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
+#?pugs todo 'feature'
 ok 'a bcd$ef' ~~ /:Perl5 \A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
-# todo :pugs<feature>
 #### :x(6) \d			123456		y	repetition (:x)
+#?pugs todo 'feature'
 ok '123456' ~~ /:x(6) \d/, 'repetition (:x)';
 
-# todo :pugs<feature>
 #### :x(3) \d			123456		y	repetition (:x)
+#?pugs todo 'feature'
 ok '123456' ~~ /:x(3) \d/, 'repetition (:x)';
 
-# todo :pugs<feature>
 #### :x(0) \d			123456		y	repetition (:x)
+#?pugs todo 'feature'
 ok '123456' ~~ /:x(0) \d/, 'repetition (:x)';
 
-# todo :pugs<feature>
 #### :nth(3) a \d			a1a2a3		y	nth occurance (:nth)
+#?pugs todo 'feature'
 ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurance (:nth)';
 
 # todo :pge<feature>
