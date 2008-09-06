@@ -9,7 +9,7 @@ ok 'bazaar' ~~ /a* a/, 'control';
 # todo :pge<adverbs before backtrack(?)>
 #### a*:a			bazaar		/:a/	basic
 #?rakudo skip 'quoting'
-ok ('bazaar' ~~ /a*: a/).produces(q/:a/), 'basic';
+ok ('bazaar' ~~ /a*: a/) ~~ Match where matchcheck($_, q/:a/), 'basic';
 
 #### a*: a			bazaar		n	basic
 ok !('bazaar' ~~ /a*: a/), 'basic';
@@ -88,163 +88,163 @@ ok 'zzzabcdefzzz' ~~ /(a.)..(..)/, 'basic match';
 
 #### (a.)..(..)		zzzabcdefzzz	/mob: <abcdef @ 3>/	basic $0
 #?rakudo skip 'quoting'
-ok ('zzzabcdefzzz' ~~ /(a.)..(..)/).produces(q/mob: <abcdef @ 3>/), 'basic $0';
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) ~~ Match where matchcheck($_, q/mob: <abcdef @ 3>/), 'basic $0';
 
 #### (a.)..(..)		zzzabcdefzzz	/mob 0: <ab @ 3>/	basic $1
 #?rakudo skip 'quoting'
-ok ('zzzabcdefzzz' ~~ /(a.)..(..)/).produces(q/mob 0: <ab @ 3>/), 'basic $1';
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) ~~ Match where matchcheck($_, q/mob 0: <ab @ 3>/), 'basic $1';
 
 #### (a.)..(..)		zzzabcdefzzz	/mob 1: <ef @ 7>/	basic $2
 #?rakudo skip 'quoting'
-ok ('zzzabcdefzzz' ~~ /(a.)..(..)/).produces(q/mob 1: <ef @ 7>/), 'basic $2';
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) ~~ Match where matchcheck($_, q/mob 1: <ef @ 7>/), 'basic $2';
 
 #### (a(b(c))(d))		abcd		y			nested match
 ok 'abcd' ~~ /(a(b(c))(d))/, 'nested match';
 
 #### (a(b(c))(d))		abcd		/mob: <abcd @ 0>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob: <abcd @ 0>/), 'nested match';
+ok ('abcd' ~~ /(a(b(c))(d))/) ~~ Match where matchcheck($_, q/mob: <abcd @ 0>/), 'nested match';
 
 #### (a(b(c))(d))		abcd		/mob 0: <abcd @ 0>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0: <abcd @ 0>/), 'nested match';
+ok ('abcd' ~~ /(a(b(c))(d))/) ~~ Match where matchcheck($_, q/mob 0: <abcd @ 0>/), 'nested match';
 
 #### (a(b(c))(d))		abcd		/mob 0 0: <bc @ 1>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0 0: <bc @ 1>/), 'nested match';
+ok ('abcd' ~~ /(a(b(c))(d))/) ~~ Match where matchcheck($_, q/mob 0 0: <bc @ 1>/), 'nested match';
 
 #### (a(b(c))(d))		abcd		/mob 0 0 0: <c @ 2>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0 0 0: <c @ 2>/), 'nested match';
+ok ('abcd' ~~ /(a(b(c))(d))/) ~~ Match where matchcheck($_, q/mob 0 0 0: <c @ 2>/), 'nested match';
 
 #### (a(b(c))(d))		abcd		/mob 0 1: <d @ 3>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /(a(b(c))(d))/).produces(q/mob 0 1: <d @ 3>/), 'nested match';
+ok ('abcd' ~~ /(a(b(c))(d))/) ~~ Match where matchcheck($_, q/mob 0 1: <d @ 3>/), 'nested match';
 
 #### ((\w+)+)		abcd		/mob: <abcd @ 0>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /((\w+)+)/).produces(q/mob: <abcd @ 0>/), 'nested match';
+ok ('abcd' ~~ /((\w+)+)/) ~~ Match where matchcheck($_, q/mob: <abcd @ 0>/), 'nested match';
 
 #### ((\w+)+)		abcd		/mob 0: <abcd @ 0>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /((\w+)+)/).produces(q/mob 0: <abcd @ 0>/), 'nested match';
+ok ('abcd' ~~ /((\w+)+)/) ~~ Match where matchcheck($_, q/mob 0: <abcd @ 0>/), 'nested match';
 
 #### ((\w+)+)		abcd		/mob 0 0 0: <abcd @ 0>/	nested match
 #?rakudo skip 'quoting'
-ok ('abcd' ~~ /((\w+)+)/).produces(q/mob 0 0 0: <abcd @ 0>/), 'nested match';
+ok ('abcd' ~~ /((\w+)+)/) ~~ Match where matchcheck($_, q/mob 0 0 0: <abcd @ 0>/), 'nested match';
 
 #### ((\w+)+)	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz	/mob: <ABCD/	nested match
 #?rakudo skip 'quoting'
-ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/).produces(q/mob: <ABCD/), 'nested match';
+ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/) ~~ Match where matchcheck($_, q/mob: <ABCD/), 'nested match';
 
 #### ((\w+)+)	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz	/mob 0: <ABCD/	nested match
 #?rakudo skip 'quoting'
-ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/).produces(q/mob 0: <ABCD/), 'nested match';
+ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/) ~~ Match where matchcheck($_, q/mob 0: <ABCD/), 'nested match';
 
 #### ((\w+)+)	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz	/mob 0 0 0: <ABCD/	nested match
 #?rakudo skip 'quoting'
-ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/).produces(q/mob 0 0 0: <ABCD/), 'nested match';
+ok ('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' ~~ /((\w+)+)/) ~~ Match where matchcheck($_, q/mob 0 0 0: <ABCD/), 'nested match';
 
 #### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 0: <a @ 0>/	alt subpattern before group
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 0: <a @ 0>/), 'alt subpattern before group';
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/) ~~ Match where matchcheck($_, q/mob 0: <a @ 0>/), 'alt subpattern before group';
 
 #### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 1: <bc @ 1>/	alt subpattern in group
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 1: <bc @ 1>/), 'alt subpattern in group';
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/) ~~ Match where matchcheck($_, q/mob 1: <bc @ 1>/), 'alt subpattern in group';
 
 #### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 2: <d @ 3>/	alt subpattern in group
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 2: <d @ 3>/), 'alt subpattern in group';
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/) ~~ Match where matchcheck($_, q/mob 2: <d @ 3>/), 'alt subpattern in group';
 
 #### (a) [ (bc) (d) | .* (ef) ] .* (g)	abcdefg	/mob 3: <g @ 6>/	alt subpattern after group
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/).produces(q/mob 3: <g @ 6>/), 'alt subpattern after group';
+ok ('abcdefg' ~~ /(a) [ (bc) (d) | .* (ef) ] .* (g)/) ~~ Match where matchcheck($_, q/mob 3: <g @ 6>/), 'alt subpattern after group';
 
 #### (a) [ (bc) (x) | .* (ef) ] .* (g)	abcdefg	/mob 1: <ef @ 4>/	2nd alt subpattern in group
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(a) [ (bc) (x) | .* (ef) ] .* (g)/).produces(q/mob 1: <ef @ 4>/), '2nd alt subpattern in group';
+ok ('abcdefg' ~~ /(a) [ (bc) (x) | .* (ef) ] .* (g)/) ~~ Match where matchcheck($_, q/mob 1: <ef @ 4>/), '2nd alt subpattern in group';
 
 #### (a) [ (bc) (x) | .* (ef) ] .* (g)	abcdefg	/mob 3: <g @ 6>/	2nd alt subpattern after group
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(a) [ (bc) (x) | .* (ef) ] .* (g)/).produces(q/mob 3: <g @ 6>/), '2nd alt subpattern after group';
+ok ('abcdefg' ~~ /(a) [ (bc) (x) | .* (ef) ] .* (g)/) ~~ Match where matchcheck($_, q/mob 3: <g @ 6>/), '2nd alt subpattern after group';
 
 #### ( (.) )*				abc	/mob 0 1 0: <b @ 1>/	nested repeated captures
 #?rakudo skip 'quoting'
-ok ('abc' ~~ /( (.) )*/).produces(q/mob 0 1 0: <b @ 1>/), 'nested repeated captures';
+ok ('abc' ~~ /( (.) )*/) ~~ Match where matchcheck($_, q/mob 0 1 0: <b @ 1>/), 'nested repeated captures';
 
 #### [ (.) ]*				abc	/mob 0 1: <b @ 1>/	nested repeated captures
 #?rakudo skip 'quoting'
-ok ('abc' ~~ /[ (.) ]*/).produces(q/mob 0 1: <b @ 1>/), 'nested repeated captures';
+ok ('abc' ~~ /[ (.) ]*/) ~~ Match where matchcheck($_, q/mob 0 1: <b @ 1>/), 'nested repeated captures';
 
 #### ( [.] )*				abc	/mob 0 1: <b @ 1>/	nested repeated captures
 #?rakudo skip 'quoting'
-ok ('abc' ~~ /( [.] )*/).produces(q/mob 0 1: <b @ 1>/), 'nested repeated captures';
+ok ('abc' ~~ /( [.] )*/) ~~ Match where matchcheck($_, q/mob 0 1: <b @ 1>/), 'nested repeated captures';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 0: <a @ 0>/	numbered aliases $1
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 0: <a @ 0>/), 'numbered aliases $1';
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) ~~ Match where matchcheck($_, q/mob 0: <a @ 0>/), 'numbered aliases $1';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 1: <b @ 1>/	numbered aliases $2
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 1: <b @ 1>/), 'numbered aliases $2';
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) ~~ Match where matchcheck($_, q/mob 1: <b @ 1>/), 'numbered aliases $2';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 7: <c @ 2>/	numbered aliases $7
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 7: <c @ 2>/), 'numbered aliases $7';
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) ~~ Match where matchcheck($_, q/mob 7: <c @ 2>/), 'numbered aliases $7';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 8: <d @ 3>/	numbered aliases $8
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 8: <d @ 3>/), 'numbered aliases $8';
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) ~~ Match where matchcheck($_, q/mob 8: <d @ 3>/), 'numbered aliases $8';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 4: <e @ 4>/	numbered aliases $4
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/).produces(q/mob 4: <e @ 4>/), 'numbered aliases $4';
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) ~~ Match where matchcheck($_, q/mob 4: <e @ 4>/), 'numbered aliases $4';
 
 #### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 1: <abc @ 0>/	perl5 numbered captures $1
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 1: <abc @ 0>/), 'perl5 numbered captures $1';
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) ~~ Match where matchcheck($_, q/mob 1: <abc @ 0>/), 'perl5 numbered captures $1';
 
 #### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 2: <a @ 0>/	perl5 numbered captures $1
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 2: <a @ 0>/), 'perl5 numbered captures $1';
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) ~~ Match where matchcheck($_, q/mob 2: <a @ 0>/), 'perl5 numbered captures $1';
 
 #### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 3: <b @ 1>/	perl5 numbered captures $1
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 3: <b @ 1>/), 'perl5 numbered captures $1';
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) ~~ Match where matchcheck($_, q/mob 3: <b @ 1>/), 'perl5 numbered captures $1';
 
 #### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 4: <c @ 2>/	perl5 numbered captures $1
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 4: <c @ 2>/), 'perl5 numbered captures $1';
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) ~~ Match where matchcheck($_, q/mob 4: <c @ 2>/), 'perl5 numbered captures $1';
 
 #### $1=[ (.) (.) (.) ] (.)			abcdefg	/mob 5: <d @ 3>/	perl5 numbered captures $1
 #?rakudo skip 'quoting'
-ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/).produces(q/mob 5: <d @ 3>/), 'perl5 numbered captures $1';
+ok ('abcdefg' ~~ /$1=[ (.) (.) (.) ] (.)/) ~~ Match where matchcheck($_, q/mob 5: <d @ 3>/), 'perl5 numbered captures $1';
 
 #### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<key>: <abc @ 1>/	named capture
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/).produces(q/mob<key>: <abc @ 1>/), 'named capture';
+ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/) ~~ Match where matchcheck($_, q/mob<key>: <abc @ 1>/), 'named capture';
 
 #### :s $<key>=[\w+] \= $<val>=[\S+]	 abc = 123	/mob<val>: <123 @ 7>/	named capture
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/).produces(q/mob<val>: <123 @ 7>/), 'named capture';
+ok (' abc = 123' ~~ /:s $<key>=[\w+] \= $<val>=[\S+]/) ~~ Match where matchcheck($_, q/mob<val>: <123 @ 7>/), 'named capture';
 
 #### :s (\w+) $<foo>=(\w+) (\w+)		abc def ghi	/mob<foo>: <def @ 4>/	mixing named and unnamed capture
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/).produces(q/mob<foo>: <def @ 4>/), 'mixing named and unnamed capture';
+ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/) ~~ Match where matchcheck($_, q/mob<foo>: <def @ 4>/), 'mixing named and unnamed capture';
 
 #### :s (\w+) $<foo>=(\w+) (\w+)		abc def ghi	/mob 1: <ghi @ 8>/	mixing named and unnamed capture
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/).produces(q/mob 1: <ghi @ 8>/), 'mixing named and unnamed capture';
+ok ('abc def ghi' ~~ /:s (\w+) $<foo>=(\w+) (\w+)/) ~~ Match where matchcheck($_, q/mob 1: <ghi @ 8>/), 'mixing named and unnamed capture';
 
 #### <alpha> [ \- <alpha> ]?			abc def ghi	/mob<alpha> 0: <a @ 0>/	multiple subrule captures in same scope
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/).produces(q/mob<alpha> 0: <a @ 0>/), 'multiple subrule captures in same scope';
+ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/) ~~ Match where matchcheck($_, q/mob<alpha> 0: <a @ 0>/), 'multiple subrule captures in same scope';
 
 #### [(.)$0]+				bookkeeper	y			backreference
 #?pugs todo 'feature'
@@ -257,31 +257,31 @@ ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
 #### [(.)$0]+				bookkeeper	/mob 0 0: <o @ 1>/	backref $1
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 0: <o @ 1>/), 'backref $1';
+ok ('bookkeeper' ~~ /[(.)$0]+/) ~~ Match where matchcheck($_, q/mob 0 0: <o @ 1>/), 'backref $1';
 
 #### [(.)$0]+				bookkeeper	/mob 0 1: <k @ 3>/	backref $1
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 1: <k @ 3>/), 'backref $1';
+ok ('bookkeeper' ~~ /[(.)$0]+/) ~~ Match where matchcheck($_, q/mob 0 1: <k @ 3>/), 'backref $1';
 
 #### [(.)$0]+				bookkeeper	/mob 0 2: <e @ 5>/	backref $1
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('bookkeeper' ~~ /[(.)$0]+/).produces(q/mob 0 2: <e @ 5>/), 'backref $1';
+ok ('bookkeeper' ~~ /[(.)$0]+/) ~~ Match where matchcheck($_, q/mob 0 2: <e @ 5>/), 'backref $1';
 
 #### (.)*x					123x		/mob: <123x @ 0>/	repeated dot capture
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok ('123x' ~~ /(.)*x/).produces(q/mob: <123x @ 0>/), 'repeated dot capture';
+ok ('123x' ~~ /(.)*x/) ~~ Match where matchcheck($_, q/mob: <123x @ 0>/), 'repeated dot capture';
 
 
 #### $<key>=<alpha>				12ab34		/mob<key>: <a @ 2>/	alias capture
 #?rakudo skip 'quoting'
-ok ('12ab34' ~~ /$<key>=<alpha>/).produces(q/mob<key>: <a @ 2>/), 'alias capture';
+ok ('12ab34' ~~ /$<key>=<alpha>/) ~~ Match where matchcheck($_, q/mob<key>: <a @ 2>/), 'alias capture';
 
 #### <key=alpha>				12ab34		/mob<key>: <a @ 2>/	alias capture
 #?rakudo skip 'quoting'
-ok ('12ab34' ~~ /<key=alpha>/).produces(q/mob<key>: <a @ 2>/), 'alias capture';
+ok ('12ab34' ~~ /<key=alpha>/) ~~ Match where matchcheck($_, q/mob<key>: <a @ 2>/), 'alias capture';
 
 
 ## vim: noexpandtab tabstop=4 shiftwidth=4
@@ -350,11 +350,11 @@ ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 # todo :pge<reversed character range>
 #### <-[d..b]>		bbccdd		/parse error/	illegal character range
 #?rakudo skip 'quoting'
-ok ('bbccdd' ~~ /<-[d..b]>/).produces(q/parse error/), 'illegal character range';
+ok ('bbccdd' ~~ /<-[d..b]>/) ~~ Match where matchcheck($_, q/parse error/), 'illegal character range';
 
 #### <[-]>			ab-def		/parse error/	unescaped hyphen
 #?rakudo skip 'quoting'
-ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}).produces(q/parse error/), 'unescaped hyphen';
+ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}) ~~ Failure where /parse error/), 'unescaped hyphen';
 
 #### <[\-]>			ab-def		y	escaped hyphen
 ok 'ab-def' ~~ /<[\-]>/, 'escaped hyphen';
@@ -406,7 +406,7 @@ ok ']' ~~ /<[\]]>/, 'escaped close bracket';
 
 #### <[\]>			\\]]		/parse error/	unescaped backslash (or no closing brace)
 #?rakudo skip 'quoting'
-ok eval(q{{ '\\]]' ~~ /<[\]>/ }}).produces(q/parse error/), 'unescaped backslash (or no closing brace)';
+ok eval(q{{ '\\]]' ~~ /<[\]>/ }}) ~~ Failure where /parse error/), 'unescaped backslash (or no closing brace)';
 
 #### ^\><[<]>		><		y	lt character class
 #?rakudo skip 'parse error'
@@ -509,7 +509,7 @@ ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 ## lookarounds
 #### <before .d> a.		abacad		/mob: <ad @ 4>/			lookahead <before>
 #?rakudo skip 'quoting'
-ok ('abacad' ~~ /<before .d> a./).produces(q/mob: <ad @ 4>/), 'lookahead <before>';
+ok ('abacad' ~~ /<before .d> a./) ~~ Match where matchcheck($_, q/mob: <ad @ 4>/), 'lookahead <before>';
 
 #### <before c> ....		abacad		n				lookahead <before>
 ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
@@ -519,7 +519,7 @@ ok 'abcd' !~~ /<before> ./, 'null <before>';
 
 #### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
 #?rakudo skip 'quoting'
-ok ('aabaaa' ~~ /<!before ..b> aa/).produces(q/mob: <aa @ 3>/), 'negated lookahead';
+ok ('aabaaa' ~~ /<!before ..b> aa/) ~~ Match where matchcheck($_, q/mob: <aa @ 3>/), 'negated lookahead';
 
 #### <after a>b		ab		y				lookbehind <after>
 #?pugs todo 'feature'
@@ -583,11 +583,11 @@ ok '' ~~ /<null>/, 'null pattern (<null>)';
 
 #### ^ <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 0>/	null pattern (<null>)
 #?rakudo skip 'quoting'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}).produces(q/mob<null>: < @ 0>/), 'null pattern (<null>)';
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}) ~~ Failure where /mob<null>: < @ 0>/), 'null pattern (<null>)';
 
 #### <null> $	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 65>/	null pattern (<null>)
 #?rakudo skip 'quoting'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<null> $/ }}).produces(q/mob<null>: < @ 65>/), 'null pattern (<null>)';
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<null> $/ }}) ~~ Failure where /mob<null>: < @ 65>/), 'null pattern (<null>)';
 
 #### abc <null> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
 ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /abc <null> def/, 'null pattern (<null>)';
@@ -601,28 +601,28 @@ ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /x
 
 #### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
 #?rakudo skip 'quoting'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /a[b}/ }}).produces(q/rule error/), 'mismatched close';
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /a[b}/ }}) ~~ Failure where /rule error/), 'mismatched close';
 
 
 #### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
 #?rakudo skip 'quoting'
-ok ('abacad' ~~ /c <before .d>/).produces(q/mob: <c @ 3>/), 'one character and lookahead <before>';
+ok ('abacad' ~~ /c <before .d>/) ~~ Match where matchcheck($_, q/mob: <c @ 3>/), 'one character and lookahead <before>';
 
 #### .* <before .d>		abacad		/mob: <abac @ 0>/			multiple characters and lookahead <before>
 #?rakudo skip 'quoting'
-ok ('abacad' ~~ /.* <before .d>/).produces(q/mob: <abac @ 0>/), 'multiple characters and lookahead <before>';
+ok ('abacad' ~~ /.* <before .d>/) ~~ Match where matchcheck($_, q/mob: <abac @ 0>/), 'multiple characters and lookahead <before>';
 
 #### .* <before .\<>		abaca<d		/mob: <abac @ 0>/			multiple characters and lookahead <before> with a \'<\'
 #?rakudo skip 'quoting'
-ok ('abaca<d' ~~ /.* <before .\<>/).produces(q/mob: <abac @ 0>/), 'multiple characters and lookahead <before> with a \'<\'';
+ok ('abaca<d' ~~ /.* <before .\<>/) ~~ Match where matchcheck($_, q/mob: <abac @ 0>/), 'multiple characters and lookahead <before> with a \'<\'';
 
 #### .* <before \<>		aba<ca<d		/mob: <aba<ca @ 0>/		greedy any character and lookahead <before> with a \'<\'
 #?rakudo skip 'quoting'
-ok ('aba<ca<d' ~~ /.* <before \<>/).produces(q/mob: <aba<ca @ 0>/), 'greedy any character and lookahead <before> with a \'<\'';
+ok ('aba<ca<d' ~~ /.* <before \<>/) ~~ Match where matchcheck($_, q/mob: <aba<ca @ 0>/), 'greedy any character and lookahead <before> with a \'<\'';
 
 #### .*? <before \<>		aba<ca<d		/mob: <aba @ 0>/		non-greedy any character and lookahead <before> with a \'<\'
 #?rakudo skip 'quoting'
-ok ('aba<ca<d' ~~ /.*? <before \<>/).produces(q/mob: <aba @ 0>/), 'non-greedy any character and lookahead <before> with a \'<\'';
+ok ('aba<ca<d' ~~ /.*? <before \<>/) ~~ Match where matchcheck($_, q/mob: <aba @ 0>/), 'non-greedy any character and lookahead <before> with a \'<\'';
 
 
 ## vim: noexpandtab tabstop=4 shiftwidth=4
@@ -771,27 +771,27 @@ ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}).produces(q/reserved/), 'retired metachars (\A)';
+ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\A)';
 
 #### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}).produces(q/reserved/), 'retired metachars (\A)';
+ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\A)';
 
 #### abc\Z			abcZ		/reserved/	retired metachars (\Z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}).produces(q/reserved/), 'retired metachars (\Z)';
+ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}) ~~ Failure where /reserved/), 'retired metachars (\Z)';
 
 #### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}).produces(q/reserved/), 'retired metachars (\Z)';
+ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}) ~~ Failure where /reserved/), 'retired metachars (\Z)';
 
 #### abc\z			abcz		/reserved/	retired metachars (\z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcz' ~~ /abc\z/ }}).produces(q/reserved/), 'retired metachars (\z)';
+ok eval(q{{ 'abcz' ~~ /abc\z/ }}) ~~ Failure where /reserved/), 'retired metachars (\z)';
 
 #### def\z			abc\ndef	/reserved/	retired metachars (\z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}).produces(q/reserved/), 'retired metachars (\z)';
+ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}) ~~ Failure where /reserved/), 'retired metachars (\z)';
 
 #### abc # def		abc#def		y	comments (#)
 ok 'abc#def' ~~ /abc # def
@@ -871,21 +871,21 @@ ok 'bcd' ~~ /^ [ <[a..d]>+ | <[c..e]>+ ] $/, 'alternation (|)';
 
 #### b|			bcd		/rule error/	alternation (|) - null right arg illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /b|/ }}).produces(q/rule error/), 'alternation (|) - null right arg illegal';
+ok eval(q{{ 'bcd' ~~ /b|/ }}) ~~ Failure where /rule error/), 'alternation (|) - null right arg illegal';
 
 #### |b			bcd		y	alternation (|) - null left arg ignored
 ok 'bcd' ~~ /|b/, 'alternation (|) - null left arg ignored';
 
 #### |			bcd		/rule error/	alternation (|) - null both args illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /|/ }}).produces(q/rule error/), 'alternation (|) - null both args illegal';
+ok eval(q{{ 'bcd' ~~ /|/ }}) ~~ Failure where /rule error/), 'alternation (|) - null both args illegal';
 
 #### \|			|		y	alternation (|) - literal must be escaped
 ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
 
 #### |			|		/rule error/	alternation (|) - literal must be escaped
 #?rakudo skip 'quoting'
-ok eval(q{{ '|' ~~ /|/ }}).produces(q/rule error/), 'alternation (|) - literal must be escaped';
+ok eval(q{{ '|' ~~ /|/ }}) ~~ Failure where /rule error/), 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?pugs todo 'feature'
@@ -918,31 +918,31 @@ ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
 #### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /b&/ }}).produces(q/rule error/), 'conjunction (&) - null right arg illegal';
+ok eval(q{{ 'bcd' ~~ /b&/ }}) ~~ Failure where /rule error/), 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /&b/ }}).produces(q/rule error/), 'conjunction (&) - null left arg illegal';
+ok eval(q{{ 'bcd' ~~ /&b/ }}) ~~ Failure where /rule error/), 'conjunction (&) - null left arg illegal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /&/ }}).produces(q/rule error/), 'conjunction (&) - null both args illegal';
+ok eval(q{{ 'bcd' ~~ /&/ }}) ~~ Failure where /rule error/), 'conjunction (&) - null both args illegal';
 
 #### \&			&		y	conjunction (&) - literal must be escaped
 ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
 
 #### &			&		/rule error/	conjunction (&) - literal must be escaped
 #?rakudo skip 'quoting'
-ok eval(q{{ '&' ~~ /&/ }}).produces(q/rule error/), 'conjunction (&) - literal must be escaped';
+ok eval(q{{ '&' ~~ /&/ }}) ~~ Failure where /rule error/), 'conjunction (&) - literal must be escaped';
 
 # todo :pge<leading |>
 #### a&|b			a&|b		/rule error/	alternation and conjunction (&|) - parse error
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a&|b' ~~ /a&|b/ }}).produces(q/rule error/), 'alternation and conjunction (&|) - parse error';
+ok eval(q{{ 'a&|b' ~~ /a&|b/ }}) ~~ Failure where /rule error/), 'alternation and conjunction (&|) - parse error';
 
 #### a|&b			a|&b		/rule error/	alternation and conjunction (|&) - parse error
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a|&b' ~~ /a|&b/ }}).produces(q/rule error/), 'alternation and conjunction (|&) - parse error';
+ok eval(q{{ 'a|&b' ~~ /a|&b/ }}) ~~ Failure where /rule error/), 'alternation and conjunction (|&) - parse error';
 
 #### |d|b			abc		y	leading alternation ignored
 ok 'abc' ~~ /|d|b/, 'leading alternation ignored';
@@ -959,55 +959,55 @@ ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 ####  b |  | d		abc		n	null pattern invalid
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc' !~~ / b |  | d/ }}).produces(q/reserved/), 'null pattern invalid';
+ok eval(q{{ 'abc' !~~ / b |  | d/ }}) ~~ Failure where /reserved/), 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'pabc' ~~ /\pabc/ }}).produces(q/reserved/), 'retired metachars (\p)';
+ok eval(q{{ 'pabc' ~~ /\pabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\p)';
 
 #### \p{InConsonant}		a		/reserved/	retired metachars (\p)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a' ~~ /\p{InConsonant}/ }}).produces(q/reserved/), 'retired metachars (\p)';
+ok eval(q{{ 'a' ~~ /\p{InConsonant}/ }}) ~~ Failure where /reserved/), 'retired metachars (\p)';
 
 #### \Pabc			Pabc		/reserved/	retired metachars (\P)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'Pabc' ~~ /\Pabc/ }}).produces(q/reserved/), 'retired metachars (\P)';
+ok eval(q{{ 'Pabc' ~~ /\Pabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\P)';
 
 #### \P{InConsonant}		a		/reserved/	retired metachars (\P)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a' ~~ /\P{InConsonant}/ }}).produces(q/reserved/), 'retired metachars (\P)';
+ok eval(q{{ 'a' ~~ /\P{InConsonant}/ }}) ~~ Failure where /reserved/), 'retired metachars (\P)';
 
 #### \Labc\E			LabcE		/reserved/	retired metachars (\L...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'LabcE' ~~ /\Labc\E/ }}).produces(q/reserved/), 'retired metachars (\L...\E)';
+ok eval(q{{ 'LabcE' ~~ /\Labc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\L...\E)';
 
 #### \LABC\E			abc		/reserved/	retired metachars (\L...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc' ~~ /\LABC\E/ }}).produces(q/reserved/), 'retired metachars (\L...\E)';
+ok eval(q{{ 'abc' ~~ /\LABC\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\L...\E)';
 
 #### \Uabc\E			UabcE		/reserved/	retired metachars (\U...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'UabcE' ~~ /\Uabc\E/ }}).produces(q/reserved/), 'retired metachars (\U...\E)';
+ok eval(q{{ 'UabcE' ~~ /\Uabc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\U...\E)';
 
 #### \Uabc\E			ABC		/reserved/	retired metachars (\U...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'ABC' ~~ /\Uabc\E/ }}).produces(q/reserved/), 'retired metachars (\U...\E)';
+ok eval(q{{ 'ABC' ~~ /\Uabc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\U...\E)';
 
 #### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'QabcE' ~~ /\Qabc\E/ }}).produces(q/reserved/), 'retired metachars (\Q...\E)';
+ok eval(q{{ 'QabcE' ~~ /\Qabc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\Q...\E)';
 
 #### \Qabc d?\E		abc d		/reserved/	retired metachars (\Q...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc d' ~~ /\Qabc d?\E/ }}).produces(q/reserved/), 'retired metachars (\Q...\E)';
+ok eval(q{{ 'abc d' ~~ /\Qabc d?\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\Q...\E)';
 
 #### \Gabc			Gabc		/reserved/	retired metachars (\G)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}).produces(q/reserved/), 'retired metachars (\G)';
+ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\G)';
 
 #### \1abc			1abc		/reserved/	retired metachars (\1)
 #?rakudo skip 'quoting'
-ok eval(q{{ '1abc' ~~ /\1abc/ }}).produces(q/reserved/), 'retired metachars (\1)';
+ok eval(q{{ '1abc' ~~ /\1abc/ }}) ~~ Failure where /reserved/), 'retired metachars (\1)';
 
 #### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
 #?pugs todo 'feature'
@@ -1644,11 +1644,11 @@ ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modif
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
 #?rakudo skip 'quoting'
-ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/).produces(q/mob 0: <dog @ 0>/), 'sigspace and capture together';
+ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) ~~ Match where matchcheck($_, q/mob 0: <dog @ 0>/), 'sigspace and capture together';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 1: <spot @ 7>/	sigspace and capture together
 #?rakudo skip 'quoting'
-ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/).produces(q/mob 1: <spot @ 7>/), 'sigspace and capture together';
+ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) ~~ Match where matchcheck($_, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
 #?pugs todo 'feature'
@@ -1690,47 +1690,47 @@ ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
 #### xa*			xaaaay		/<xaaaa @ 0>/	star 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*/).produces(q/<xaaaa @ 0>/), 'star 2+';
+ok ('xaaaay' ~~ /xa*/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'star 2+';
 
 #### xa*			xay		/<xa @ 0>/	star 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*/).produces(q/<xa @ 0>/), 'star 1';
+ok ('xay' ~~ /xa*/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'star 1';
 
 #### xa*			xy		/<x @ 0>/	star 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*/).produces(q/<x @ 0>/), 'star 0';
+ok ('xy' ~~ /xa*/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star 0';
 
 #### xa*y			xaaaay		/<xaaaay @ 0>/	star 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*y/).produces(q/<xaaaay @ 0>/), 'star 2+';
+ok ('xaaaay' ~~ /xa*y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star 2+';
 
 #### xa*y			xay		/<xay @ 0>/	star 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*y/).produces(q/<xay @ 0>/), 'star 1';
+ok ('xay' ~~ /xa*y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star 1';
 
 #### xa*y			xy		/<xy @ 0>/	star 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*y/).produces(q/<xy @ 0>/), 'star 0';
+ok ('xy' ~~ /xa*y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star 0';
 
 
 #### xa+			xaaaay		/<xaaaa @ 0>/	plus 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+/).produces(q/<xaaaa @ 0>/), 'plus 2+';
+ok ('xaaaay' ~~ /xa+/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'plus 2+';
 
 #### xa+			xay		/<xa @ 0>/	plus 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+/).produces(q/<xa @ 0>/), 'plus 1';
+ok ('xay' ~~ /xa+/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus 1';
 
 #### xa+			xy		n		plus 0
 ok 'xy' !~~ /xa+/, 'plus 0';
 
 #### xa+y			xaaaay		/<xaaaay @ 0>/	plus 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+y/).produces(q/<xaaaay @ 0>/), 'plus 2+';
+ok ('xaaaay' ~~ /xa+y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus 2+';
 
 #### xa+y			xay		/<xay @ 0>/	plus 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+y/).produces(q/<xay @ 0>/), 'plus 1';
+ok ('xay' ~~ /xa+y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus 1';
 
 #### xa+y			xy		n		plus 0
 ok 'xy' !~~ /xa+y/, 'plus 0';
@@ -1738,71 +1738,71 @@ ok 'xy' !~~ /xa+y/, 'plus 0';
 
 #### xa?			xaaaay		/<xa @ 0>/	ques 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa?/).produces(q/<xa @ 0>/), 'ques 2+';
+ok ('xaaaay' ~~ /xa?/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques 2+';
 
 #### xa?			xay		/<xa @ 0>/	ques 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?/).produces(q/<xa @ 0>/), 'ques 1';
+ok ('xay' ~~ /xa?/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques 1';
 
 #### xa?			xy		/<x @ 0>/	ques 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?/).produces(q/<x @ 0>/), 'ques 0';
+ok ('xy' ~~ /xa?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques 0';
 
 #### xa?y			xaaaay		n		ques 2+
 ok 'xaaaay' !~~ /xa?y/, 'ques 2+';
 
 #### xa?y			xay		/<xay @ 0>/	ques 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?y/).produces(q/<xay @ 0>/), 'ques 1';
+ok ('xay' ~~ /xa?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques 1';
 
 #### xa?y			xy		/<xy @ 0>/	ques 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?y/).produces(q/<xy @ 0>/), 'ques 0';
+ok ('xy' ~~ /xa?y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques 0';
 
 
 #### xa*!			xaaaay		/<xaaaa @ 0>/	star greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*!/).produces(q/<xaaaa @ 0>/), 'star greedy 2+';
+ok ('xaaaay' ~~ /xa*!/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'star greedy 2+';
 
 #### xa*!			xay		/<xa @ 0>/	star greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*!/).produces(q/<xa @ 0>/), 'star greedy 1';
+ok ('xay' ~~ /xa*!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'star greedy 1';
 
 #### xa*!			xy		/<x @ 0>/	star greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*!/).produces(q/<x @ 0>/), 'star greedy 0';
+ok ('xy' ~~ /xa*!/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star greedy 0';
 
 #### xa*!y			xaaaay		/<xaaaay @ 0>/	star greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*!y/).produces(q/<xaaaay @ 0>/), 'star greedy 2+';
+ok ('xaaaay' ~~ /xa*!y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star greedy 2+';
 
 #### xa*!y			xay		/<xay @ 0>/	star greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*!y/).produces(q/<xay @ 0>/), 'star greedy 1';
+ok ('xay' ~~ /xa*!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star greedy 1';
 
 #### xa*!y			xy		/<xy @ 0>/	star greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*!y/).produces(q/<xy @ 0>/), 'star greedy 0';
+ok ('xy' ~~ /xa*!y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star greedy 0';
 
 
 #### xa+!			xaaaay		/<xaaaa @ 0>/	plus greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+!/).produces(q/<xaaaa @ 0>/), 'plus greedy 2+';
+ok ('xaaaay' ~~ /xa+!/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'plus greedy 2+';
 
 #### xa+!			xay		/<xa @ 0>/	plus greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+!/).produces(q/<xa @ 0>/), 'plus greedy 1';
+ok ('xay' ~~ /xa+!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus greedy 1';
 
 #### xa+!			xy		n		plus greedy 0
 ok 'xy' !~~ /xa+!/, 'plus greedy 0';
 
 #### xa+!y			xaaaay		/<xaaaay @ 0>/	plus greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+!y/).produces(q/<xaaaay @ 0>/), 'plus greedy 2+';
+ok ('xaaaay' ~~ /xa+!y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus greedy 2+';
 
 #### xa+!y			xay		/<xay @ 0>/	plus greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+!y/).produces(q/<xay @ 0>/), 'plus greedy 1';
+ok ('xay' ~~ /xa+!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus greedy 1';
 
 #### xa+!y			xy		n		plus greedy 0
 ok 'xy' !~~ /xa+!y/, 'plus greedy 0';
@@ -1810,71 +1810,71 @@ ok 'xy' !~~ /xa+!y/, 'plus greedy 0';
 
 #### xa?!			xaaaay		/<xa @ 0>/	ques greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa?!/).produces(q/<xa @ 0>/), 'ques greedy 2+';
+ok ('xaaaay' ~~ /xa?!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques greedy 2+';
 
 #### xa?!			xay		/<xa @ 0>/	ques greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?!/).produces(q/<xa @ 0>/), 'ques greedy 1';
+ok ('xay' ~~ /xa?!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques greedy 1';
 
 #### xa?!			xy		/<x @ 0>/	ques greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?!/).produces(q/<x @ 0>/), 'ques greedy 0';
+ok ('xy' ~~ /xa?!/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques greedy 0';
 
 #### xa?!y			xaaaay		n		ques greedy 2+
 ok 'xaaaay' !~~ /xa?!y/, 'ques greedy 2+';
 
 #### xa?!y			xay		/<xay @ 0>/	ques greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?!y/).produces(q/<xay @ 0>/), 'ques greedy 1';
+ok ('xay' ~~ /xa?!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques greedy 1';
 
 #### xa?!y			xy		/<xy @ 0>/	ques greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?!y/).produces(q/<xy @ 0>/), 'ques greedy 0';
+ok ('xy' ~~ /xa?!y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques greedy 0';
 
 
 #### xa*:!			xaaaay		/<xaaaa @ 0>/	star :greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*:!/).produces(q/<xaaaa @ 0>/), 'star :greedy 2+';
+ok ('xaaaay' ~~ /xa*:!/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'star :greedy 2+';
 
 #### xa*:!			xay		/<xa @ 0>/	star :greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*:!/).produces(q/<xa @ 0>/), 'star :greedy 1';
+ok ('xay' ~~ /xa*:!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'star :greedy 1';
 
 #### xa*:!			xy		/<x @ 0>/	star :greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*:!/).produces(q/<x @ 0>/), 'star :greedy 0';
+ok ('xy' ~~ /xa*:!/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star :greedy 0';
 
 #### xa*:!y			xaaaay		/<xaaaay @ 0>/	star :greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*:!y/).produces(q/<xaaaay @ 0>/), 'star :greedy 2+';
+ok ('xaaaay' ~~ /xa*:!y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star :greedy 2+';
 
 #### xa*:!y			xay		/<xay @ 0>/	star :greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*:!y/).produces(q/<xay @ 0>/), 'star :greedy 1';
+ok ('xay' ~~ /xa*:!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star :greedy 1';
 
 #### xa*:!y			xy		/<xy @ 0>/	star :greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*:!y/).produces(q/<xy @ 0>/), 'star :greedy 0';
+ok ('xy' ~~ /xa*:!y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star :greedy 0';
 
 
 #### xa+:!			xaaaay		/<xaaaa @ 0>/	plus :greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+:!/).produces(q/<xaaaa @ 0>/), 'plus :greedy 2+';
+ok ('xaaaay' ~~ /xa+:!/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'plus :greedy 2+';
 
 #### xa+:!			xay		/<xa @ 0>/	plus :greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+:!/).produces(q/<xa @ 0>/), 'plus :greedy 1';
+ok ('xay' ~~ /xa+:!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus :greedy 1';
 
 #### xa+:!			xy		n		plus :greedy 0
 ok 'xy' !~~ /xa+:!/, 'plus :greedy 0';
 
 #### xa+:!y			xaaaay		/<xaaaay @ 0>/	plus :greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+:!y/).produces(q/<xaaaay @ 0>/), 'plus :greedy 2+';
+ok ('xaaaay' ~~ /xa+:!y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus :greedy 2+';
 
 #### xa+:!y			xay		/<xay @ 0>/	plus :greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+:!y/).produces(q/<xay @ 0>/), 'plus :greedy 1';
+ok ('xay' ~~ /xa+:!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus :greedy 1';
 
 #### xa+:!y			xy		n		plus :greedy 0
 ok 'xy' !~~ /xa+:!y/, 'plus :greedy 0';
@@ -1882,71 +1882,71 @@ ok 'xy' !~~ /xa+:!y/, 'plus :greedy 0';
 
 #### xa?:!			xaaaay		/<xa @ 0>/	ques :greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa?:!/).produces(q/<xa @ 0>/), 'ques :greedy 2+';
+ok ('xaaaay' ~~ /xa?:!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques :greedy 2+';
 
 #### xa?:!			xay		/<xa @ 0>/	ques :greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?:!/).produces(q/<xa @ 0>/), 'ques :greedy 1';
+ok ('xay' ~~ /xa?:!/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques :greedy 1';
 
 #### xa?:!			xy		/<x @ 0>/	ques :greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?:!/).produces(q/<x @ 0>/), 'ques :greedy 0';
+ok ('xy' ~~ /xa?:!/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques :greedy 0';
 
 #### xa?:!y			xaaaay		n		ques :greedy 2+
 ok 'xaaaay' !~~ /xa?:!y/, 'ques :greedy 2+';
 
 #### xa?:!y			xay		/<xay @ 0>/	ques :greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?:!y/).produces(q/<xay @ 0>/), 'ques :greedy 1';
+ok ('xay' ~~ /xa?:!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques :greedy 1';
 
 #### xa?:!y			xy		/<xy @ 0>/	ques :greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?:!y/).produces(q/<xy @ 0>/), 'ques :greedy 0';
+ok ('xy' ~~ /xa?:!y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques :greedy 0';
 
 
 #### xa*?			xaaaay		/<x @ 0>/	star eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*?/).produces(q/<x @ 0>/), 'star eager 2+';
+ok ('xaaaay' ~~ /xa*?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star eager 2+';
 
 #### xa*?			xay		/<x @ 0>/	star eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*?/).produces(q/<x @ 0>/), 'star eager 1';
+ok ('xay' ~~ /xa*?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star eager 1';
 
 #### xa*?			xy		/<x @ 0>/	star eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*?/).produces(q/<x @ 0>/), 'star eager 0';
+ok ('xy' ~~ /xa*?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star eager 0';
 
 #### xa*?y			xaaaay		/<xaaaay @ 0>/	star eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*?y/).produces(q/<xaaaay @ 0>/), 'star eager 2+';
+ok ('xaaaay' ~~ /xa*?y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star eager 2+';
 
 #### xa*?y			xay		/<xay @ 0>/	star eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*?y/).produces(q/<xay @ 0>/), 'star eager 1';
+ok ('xay' ~~ /xa*?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star eager 1';
 
 #### xa*?y			xy		/<xy @ 0>/	star eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*?y/).produces(q/<xy @ 0>/), 'star eager 0';
+ok ('xy' ~~ /xa*?y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star eager 0';
 
 
 #### xa+?			xaaaay		/<xa @ 0>/	plus eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+?/).produces(q/<xa @ 0>/), 'plus eager 2+';
+ok ('xaaaay' ~~ /xa+?/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus eager 2+';
 
 #### xa+?			xay		/<xa @ 0>/	plus eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+?/).produces(q/<xa @ 0>/), 'plus eager 1';
+ok ('xay' ~~ /xa+?/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus eager 1';
 
 #### xa+?			xy		n		plus eager 0
 ok 'xy' !~~ /xa+?/, 'plus eager 0';
 
 #### xa+?y			xaaaay		/<xaaaay @ 0>/	plus eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+?y/).produces(q/<xaaaay @ 0>/), 'plus eager 2+';
+ok ('xaaaay' ~~ /xa+?y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus eager 2+';
 
 #### xa+?y			xay		/<xay @ 0>/	plus eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+?y/).produces(q/<xay @ 0>/), 'plus eager 1';
+ok ('xay' ~~ /xa+?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus eager 1';
 
 #### xa+?y			xy		n		plus eager 0
 ok 'xy' !~~ /xa+?y/, 'plus eager 0';
@@ -1954,71 +1954,71 @@ ok 'xy' !~~ /xa+?y/, 'plus eager 0';
 
 #### xa??			xaaaay		/<x @ 0>/	ques eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 2+';
+ok ('xaaaay' ~~ /xa??/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques eager 2+';
 
 #### xa??			xay		/<x @ 0>/	ques eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 1';
+ok ('xay' ~~ /xa??/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques eager 1';
 
 #### xa??			xy		/<x @ 0>/	ques eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 0';
+ok ('xy' ~~ /xa??/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques eager 0';
 
 #### xa??y			xaaaay		n		ques eager 2+
 ok 'xaaaay' !~~ /xa??y/, 'ques eager 2+';
 
 #### xa??y			xay		/<xay @ 0>/	ques eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa??y/).produces(q/<xay @ 0>/), 'ques eager 1';
+ok ('xay' ~~ /xa??y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques eager 1';
 
 #### xa??y			xy		/<xy @ 0>/	ques eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa??y/).produces(q/<xy @ 0>/), 'ques eager 0';
+ok ('xy' ~~ /xa??y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques eager 0';
 
 
 #### xa*:?			xaaaay		/<x @ 0>/	star :eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*:?/).produces(q/<x @ 0>/), 'star :eager 2+';
+ok ('xaaaay' ~~ /xa*:?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star :eager 2+';
 
 #### xa*:?			xay		/<x @ 0>/	star :eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*:?/).produces(q/<x @ 0>/), 'star :eager 1';
+ok ('xay' ~~ /xa*:?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star :eager 1';
 
 #### xa*:?			xy		/<x @ 0>/	star :eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*:?/).produces(q/<x @ 0>/), 'star :eager 0';
+ok ('xy' ~~ /xa*:?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'star :eager 0';
 
 #### xa*:?y			xaaaay		/<xaaaay @ 0>/	star :eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*:?y/).produces(q/<xaaaay @ 0>/), 'star :eager 2+';
+ok ('xaaaay' ~~ /xa*:?y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star :eager 2+';
 
 #### xa*:?y			xay		/<xay @ 0>/	star :eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*:?y/).produces(q/<xay @ 0>/), 'star :eager 1';
+ok ('xay' ~~ /xa*:?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star :eager 1';
 
 #### xa*:?y			xy		/<xy @ 0>/	star :eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*:?y/).produces(q/<xy @ 0>/), 'star :eager 0';
+ok ('xy' ~~ /xa*:?y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star :eager 0';
 
 
 #### xa+:?			xaaaay		/<xa @ 0>/	plus :eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+:?/).produces(q/<xa @ 0>/), 'plus :eager 2+';
+ok ('xaaaay' ~~ /xa+:?/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus :eager 2+';
 
 #### xa+:?			xay		/<xa @ 0>/	plus :eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+:?/).produces(q/<xa @ 0>/), 'plus :eager 1';
+ok ('xay' ~~ /xa+:?/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'plus :eager 1';
 
 #### xa+:?			xy		n		plus :eager 0
 ok 'xy' !~~ /xa+:?/, 'plus :eager 0';
 
 #### xa+:?y			xaaaay		/<xaaaay @ 0>/	plus :eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+:?y/).produces(q/<xaaaay @ 0>/), 'plus :eager 2+';
+ok ('xaaaay' ~~ /xa+:?y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus :eager 2+';
 
 #### xa+:?y			xay		/<xay @ 0>/	plus :eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+:?y/).produces(q/<xay @ 0>/), 'plus :eager 1';
+ok ('xay' ~~ /xa+:?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus :eager 1';
 
 #### xa+:?y			xy		n		plus :eager 0
 ok 'xy' !~~ /xa+:?y/, 'plus :eager 0';
@@ -2026,39 +2026,39 @@ ok 'xy' !~~ /xa+:?y/, 'plus :eager 0';
 
 #### xa?:?			xaaaay		/<x @ 0>/	ques :eager 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 2+';
+ok ('xaaaay' ~~ /xa?:?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques :eager 2+';
 
 #### xa?:?			xay		/<x @ 0>/	ques :eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 1';
+ok ('xay' ~~ /xa?:?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques :eager 1';
 
 #### xa?:?			xy		/<x @ 0>/	ques :eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 0';
+ok ('xy' ~~ /xa?:?/) ~~ Match where matchcheck($_, q/<x @ 0>/), 'ques :eager 0';
 
 #### xa?:?y			xaaaay		n		ques :eager 2+
 ok 'xaaaay' !~~ /xa?:?y/, 'ques :eager 2+';
 
 #### xa?:?y			xay		/<xay @ 0>/	ques :eager 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?:?y/).produces(q/<xay @ 0>/), 'ques :eager 1';
+ok ('xay' ~~ /xa?:?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques :eager 1';
 
 #### xa?:?y			xy		/<xy @ 0>/	ques :eager 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?:?y/).produces(q/<xy @ 0>/), 'ques :eager 0';
+ok ('xy' ~~ /xa?:?y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques :eager 0';
 
 
 #### xa*:y			xaaaay		/<xaaaay @ 0>/	star cut 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa*: y/).produces(q/<xaaaay @ 0>/), 'star cut 2+';
+ok ('xaaaay' ~~ /xa*: y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star cut 2+';
 
 #### xa*:y			xay		/<xay @ 0>/	star cut 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa*: y/).produces(q/<xay @ 0>/), 'star cut 1';
+ok ('xay' ~~ /xa*: y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star cut 1';
 
 #### xa*:y			xy		/<xy @ 0>/	star cut 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa*: y/).produces(q/<xy @ 0>/), 'star cut 0';
+ok ('xy' ~~ /xa*: y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star cut 0';
 
 #### xa*:a			xaaaay		n		star cut 2+
 ok 'xaaaay' !~~ /xa*: a/, 'star cut 2+';
@@ -2069,11 +2069,11 @@ ok 'xay' !~~ /xa*: a/, 'star cut 1';
 
 #### xa+:y			xaaaay		/<xaaaay @ 0>/	plus cut 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa+: y/).produces(q/<xaaaay @ 0>/), 'plus cut 2+';
+ok ('xaaaay' ~~ /xa+: y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus cut 2+';
 
 #### xa+:y			xay		/<xay @ 0>/	plus cut 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa+: y/).produces(q/<xay @ 0>/), 'plus cut 1';
+ok ('xay' ~~ /xa+: y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus cut 1';
 
 #### xa+:y			xy		n		plus cut 0
 ok 'xy' !~~ /xa+: y/, 'plus cut 0';
@@ -2090,15 +2090,15 @@ ok 'xaaaay' !~~ /xa?: y/, 'ques cut 2+';
 
 #### xa?:y			xay		/<xay @ 0>/	ques cut 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /xa?: y/).produces(q/<xay @ 0>/), 'ques cut 1';
+ok ('xay' ~~ /xa?: y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques cut 1';
 
 #### xa?:y			xy		/<xy @ 0>/	ques cut 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /xa?: y/).produces(q/<xy @ 0>/), 'ques cut 0';
+ok ('xy' ~~ /xa?: y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques cut 0';
 
 #### xa?:a			xaaaay		/<xaa @ 0>	ques cut 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /xa?: a/).produces(q/<xaa @ 0>/), 'ques cut 2+';
+ok ('xaaaay' ~~ /xa?: a/) ~~ Match where matchcheck($_, q/<xaa @ 0>/), 'ques cut 2+';
 
 #### xa?:a			xay		n		ques cut 1
 ok 'xay' !~~ /xa?: a/, 'ques cut 1';
@@ -2106,15 +2106,15 @@ ok 'xay' !~~ /xa?: a/, 'ques cut 1';
 
 #### :ratchet xa*y			xaaaay		/<xaaaay @ 0>/	star ratchet 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa*y/).produces(q/<xaaaay @ 0>/), 'star ratchet 2+';
+ok ('xaaaay' ~~ /:ratchet xa*y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star ratchet 2+';
 
 #### :ratchet xa*y			xay		/<xay @ 0>/	star ratchet 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa*y/).produces(q/<xay @ 0>/), 'star ratchet 1';
+ok ('xay' ~~ /:ratchet xa*y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star ratchet 1';
 
 #### :ratchet xa*y			xy		/<xy @ 0>/	star ratchet 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /:ratchet xa*y/).produces(q/<xy @ 0>/), 'star ratchet 0';
+ok ('xy' ~~ /:ratchet xa*y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star ratchet 0';
 
 #### :ratchet xa*a			xaaaay		n		star ratchet 2+
 ok 'xaaaay' !~~ /:ratchet xa*a/, 'star ratchet 2+';
@@ -2125,11 +2125,11 @@ ok 'xay' !~~ /:ratchet xa*a/, 'star ratchet 1';
 
 #### :ratchet xa+y			xaaaay		/<xaaaay @ 0>/	plus ratchet 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa+y/).produces(q/<xaaaay @ 0>/), 'plus ratchet 2+';
+ok ('xaaaay' ~~ /:ratchet xa+y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus ratchet 2+';
 
 #### :ratchet xa+y			xay		/<xay @ 0>/	plus ratchet 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa+y/).produces(q/<xay @ 0>/), 'plus ratchet 1';
+ok ('xay' ~~ /:ratchet xa+y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus ratchet 1';
 
 #### :ratchet xa+y			xy		n		plus ratchet 0
 ok 'xy' !~~ /:ratchet xa+y/, 'plus ratchet 0';
@@ -2146,15 +2146,15 @@ ok 'xaaaay' !~~ /:ratchet xa?y/, 'ques ratchet 2+';
 
 #### :ratchet xa?y			xay		/<xay @ 0>/	ques ratchet 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa?y/).produces(q/<xay @ 0>/), 'ques ratchet 1';
+ok ('xay' ~~ /:ratchet xa?y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques ratchet 1';
 
 #### :ratchet xa?y			xy		/<xy @ 0>/	ques ratchet 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /:ratchet xa?y/).produces(q/<xy @ 0>/), 'ques ratchet 0';
+ok ('xy' ~~ /:ratchet xa?y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques ratchet 0';
 
 #### :ratchet xa?a			xaaaay		/<xaa @ 0>	ques ratchet 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa?a/).produces(q/<xaa @ 0>/), 'ques ratchet 2+';
+ok ('xaaaay' ~~ /:ratchet xa?a/) ~~ Match where matchcheck($_, q/<xaa @ 0>/), 'ques ratchet 2+';
 
 #### :ratchet xa?a			xay		n		ques ratchet 1
 ok 'xay' !~~ /:ratchet xa?a/, 'ques ratchet 1';
@@ -2162,39 +2162,39 @@ ok 'xay' !~~ /:ratchet xa?a/, 'ques ratchet 1';
 
 #### :ratchet xa*!y			xaaaay		/<xaaaay @ 0>/	star ratchet greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa*!y/).produces(q/<xaaaay @ 0>/), 'star ratchet greedy 2+';
+ok ('xaaaay' ~~ /:ratchet xa*!y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'star ratchet greedy 2+';
 
 #### :ratchet xa*!y			xay		/<xay @ 0>/	star ratchet greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa*!y/).produces(q/<xay @ 0>/), 'star ratchet greedy 1';
+ok ('xay' ~~ /:ratchet xa*!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'star ratchet greedy 1';
 
 #### :ratchet xa*!y			xy		/<xy @ 0>/	star ratchet greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /:ratchet xa*!y/).produces(q/<xy @ 0>/), 'star ratchet greedy 0';
+ok ('xy' ~~ /:ratchet xa*!y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'star ratchet greedy 0';
 
 #### :ratchet xa*!a			xaaaay		/<xaaaa @ 0>/	star ratchet greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa*!a/).produces(q/<xaaaa @ 0>/), 'star ratchet greedy 2+';
+ok ('xaaaay' ~~ /:ratchet xa*!a/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'star ratchet greedy 2+';
 
 #### :ratchet xa*!a			xay		/<xa @ 0>/	star ratchet greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa*!a/).produces(q/<xa @ 0>/), 'star ratchet greedy 1';
+ok ('xay' ~~ /:ratchet xa*!a/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'star ratchet greedy 1';
 
 
 #### :ratchet xa+!y			xaaaay		/<xaaaay @ 0>/	plus ratchet greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa+!y/).produces(q/<xaaaay @ 0>/), 'plus ratchet greedy 2+';
+ok ('xaaaay' ~~ /:ratchet xa+!y/) ~~ Match where matchcheck($_, q/<xaaaay @ 0>/), 'plus ratchet greedy 2+';
 
 #### :ratchet xa+!y			xay		/<xay @ 0>/	plus ratchet greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa+!y/).produces(q/<xay @ 0>/), 'plus ratchet greedy 1';
+ok ('xay' ~~ /:ratchet xa+!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'plus ratchet greedy 1';
 
 #### :ratchet xa+!y			xy		n		plus ratchet greedy 0
 ok 'xy' !~~ /:ratchet xa+!y/, 'plus ratchet greedy 0';
 
 #### :ratchet xa+!a			xaaaay		/<xaaaa @ 0>/	plus ratchet greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa+!a/).produces(q/<xaaaa @ 0>/), 'plus ratchet greedy 2+';
+ok ('xaaaay' ~~ /:ratchet xa+!a/) ~~ Match where matchcheck($_, q/<xaaaa @ 0>/), 'plus ratchet greedy 2+';
 
 #### :ratchet xa+!a			xay		n		plus ratchet greedy 1
 ok 'xay' !~~ /:ratchet xa+!a/, 'plus ratchet greedy 1';
@@ -2205,19 +2205,19 @@ ok 'xaaaay' !~~ /:ratchet xa?!y/, 'ques ratchet greedy 2+';
 
 #### :ratchet xa?!y			xay		/<xay @ 0>/	ques ratchet greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa?!y/).produces(q/<xay @ 0>/), 'ques ratchet greedy 1';
+ok ('xay' ~~ /:ratchet xa?!y/) ~~ Match where matchcheck($_, q/<xay @ 0>/), 'ques ratchet greedy 1';
 
 #### :ratchet xa?!y			xy		/<xy @ 0>/	ques ratchet greedy 0
 #?rakudo skip 'quoting'
-ok ('xy' ~~ /:ratchet xa?!y/).produces(q/<xy @ 0>/), 'ques ratchet greedy 0';
+ok ('xy' ~~ /:ratchet xa?!y/) ~~ Match where matchcheck($_, q/<xy @ 0>/), 'ques ratchet greedy 0';
 
 #### :ratchet xa?!a			xaaaay		/<xaa @ 0>	ques ratchet greedy 2+
 #?rakudo skip 'quoting'
-ok ('xaaaay' ~~ /:ratchet xa?!a/).produces(q/<xaa @ 0>/), 'ques ratchet greedy 2+';
+ok ('xaaaay' ~~ /:ratchet xa?!a/) ~~ Match where matchcheck($_, q/<xaa @ 0>/), 'ques ratchet greedy 2+';
 
 #### :ratchet xa?!a			xay		/<xa @ 0>	ques ratchet greedy 1
 #?rakudo skip 'quoting'
-ok ('xay' ~~ /:ratchet xa?!a/).produces(q/<xa @ 0>/), 'ques ratchet greedy 1';
+ok ('xay' ~~ /:ratchet xa?!a/) ~~ Match where matchcheck($_, q/<xa @ 0>/), 'ques ratchet greedy 1';
 
 
 
@@ -2347,11 +2347,11 @@ ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' !~~ /
 
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
 #?rakudo skip 'quoting'
-ok ('2+3 ab2' ~~ /<ident>/).produces(q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
+ok ('2+3 ab2' ~~ /<ident>/) ~~ Match where matchcheck($_, q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
 
 #### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
 #?rakudo skip 'quoting'
-ok ('ab::cd::x3::42' ~~ /<name>/).produces(q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
+ok ('ab::cd::x3::42' ~~ /<name>/) ~~ Match where matchcheck($_, q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
 
 
 #### <.ident>			2+3 ab2		y		non-capturing builtin <.ident>
@@ -2401,155 +2401,155 @@ ok "abc\ndef\n-==\nghi" ~~ /\-<!wb>/, '\W\W nonword boundary';
 
 #### <upper>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<upper>: <A @ 45>/		<upper>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<upper>/).produces(q/mob<upper>: <A @ 45>/), '<upper>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<upper>/) ~~ Match where matchcheck($_, q/mob<upper>: <A @ 45>/), '<upper>';
 
 #### <+upper>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <A @ 45>/			<+upper>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>/).produces(q/mob: <A @ 45>/), '<+upper>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>/) ~~ Match where matchcheck($_, q/mob: <A @ 45>/), '<+upper>';
 
 #### <+upper>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJ @ 45>/	<+upper>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>+/).produces(q/mob: <ABCDEFGHIJ @ 45>/), '<+upper>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>+/) ~~ Match where matchcheck($_, q/mob: <ABCDEFGHIJ @ 45>/), '<+upper>+';
 
 #### <lower>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lower>: <a @ 55>/		<lower>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lower>/).produces(q/mob<lower>: <a @ 55>/), '<lower>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lower>/) ~~ Match where matchcheck($_, q/mob<lower>: <a @ 55>/), '<lower>';
 
 #### <+lower>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <a @ 55>/			<+lower>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>/).produces(q/mob: <a @ 55>/), '<+lower>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>/) ~~ Match where matchcheck($_, q/mob: <a @ 55>/), '<+lower>';
 
 #### <+lower>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <abcdefghij @ 55>/	<+lower>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>+/).produces(q/mob: <abcdefghij @ 55>/), '<+lower>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>+/) ~~ Match where matchcheck($_, q/mob: <abcdefghij @ 55>/), '<+lower>+';
 
 #### <alpha>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alpha>: <A @ 45>/		<alpha>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alpha>/).produces(q/mob<alpha>: <A @ 45>/), '<alpha>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alpha>/) ~~ Match where matchcheck($_, q/mob<alpha>: <A @ 45>/), '<alpha>';
 
 #### <+alpha>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <A @ 45>/			<+alpha>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>/).produces(q/mob: <A @ 45>/), '<+alpha>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>/) ~~ Match where matchcheck($_, q/mob: <A @ 45>/), '<+alpha>';
 
 #### <+alpha>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJabcdefghij @ 45>/	<+alpha>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>+/).produces(q/mob: <ABCDEFGHIJabcdefghij @ 45>/), '<+alpha>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>+/) ~~ Match where matchcheck($_, q/mob: <ABCDEFGHIJabcdefghij @ 45>/), '<+alpha>+';
 
 #### <digit>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<digit>: <0 @ 35>/		<digit>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<digit>/).produces(q/mob<digit>: <0 @ 35>/), '<digit>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<digit>/) ~~ Match where matchcheck($_, q/mob<digit>: <0 @ 35>/), '<digit>';
 
 #### <+digit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/			<+digit>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>/).produces(q/mob: <0 @ 35>/), '<+digit>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>/) ~~ Match where matchcheck($_, q/mob: <0 @ 35>/), '<+digit>';
 
 #### <+digit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789 @ 35>/	<+digit>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>+/).produces(q/mob: <0123456789 @ 35>/), '<+digit>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>+/) ~~ Match where matchcheck($_, q/mob: <0123456789 @ 35>/), '<+digit>+';
 
 #### <xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<xdigit>: <0 @ 35>/		<xdigit>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<xdigit>/).produces(q/mob<xdigit>: <0 @ 35>/), '<xdigit>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<xdigit>/) ~~ Match where matchcheck($_, q/mob<xdigit>: <0 @ 35>/), '<xdigit>';
 
 #### <+xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/			<+xdigit>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>/).produces(q/mob: <0 @ 35>/), '<+xdigit>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>/) ~~ Match where matchcheck($_, q/mob: <0 @ 35>/), '<+xdigit>';
 
 #### <+xdigit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEF @ 35>/	<+xdigit>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>+/).produces(q/mob: <0123456789ABCDEF @ 35>/), '<+xdigit>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>+/) ~~ Match where matchcheck($_, q/mob: <0123456789ABCDEF @ 35>/), '<+xdigit>+';
 
 #### <space>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<space>: <\t @ 0>/		<space>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<space>/).produces(q/mob<space>: <\t @ 0>/), '<space>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<space>/) ~~ Match where matchcheck($_, q/mob<space>: <\t @ 0>/), '<space>';
 
 #### <+space>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/		<+space>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>/).produces(q/mob: <\t @ 0>/), '<+space>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>/) ~~ Match where matchcheck($_, q/mob: <\t @ 0>/), '<+space>';
 
 #### <+space>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r  @ 0>/		<+space>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>+/).produces(q/mob: <\t\n\r  @ 0>/), '<+space>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>+/) ~~ Match where matchcheck($_, q/mob: <\t\n\r  @ 0>/), '<+space>+';
 
 #### <blank>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<blank>: <\t @ 0>/		<blank>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<blank>/).produces(q/mob<blank>: <\t @ 0>/), '<blank>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<blank>/) ~~ Match where matchcheck($_, q/mob<blank>: <\t @ 0>/), '<blank>';
 
 #### <+blank>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>/).produces(q/mob: <\t @ 0>/), '<+blank>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>/) ~~ Match where matchcheck($_, q/mob: <\t @ 0>/), '<+blank>';
 
 #### <+blank>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/).produces(q/mob: <\t @ 0>/), '<+blank>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/) ~~ Match where matchcheck($_, q/mob: <\t @ 0>/), '<+blank>+';
 
 #### <cntrl>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<cntrl>: <\t @ 0>/		<cntrl>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<cntrl>/).produces(q/mob<cntrl>: <\t @ 0>/), '<cntrl>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<cntrl>/) ~~ Match where matchcheck($_, q/mob<cntrl>: <\t @ 0>/), '<cntrl>';
 
 #### <+cntrl>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+cntrl>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>/).produces(q/mob: <\t @ 0>/), '<+cntrl>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>/) ~~ Match where matchcheck($_, q/mob: <\t @ 0>/), '<+cntrl>';
 
 #### <+cntrl>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r @ 0>/		<+cntrl>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>+/).produces(q/mob: <\t\n\r @ 0>/), '<+cntrl>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>+/) ~~ Match where matchcheck($_, q/mob: <\t\n\r @ 0>/), '<+cntrl>+';
 
 #### <punct>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<punct>: <! @ 4>/		<punct>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<punct>/).produces(q/mob<punct>: <! @ 4>/), '<punct>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<punct>/) ~~ Match where matchcheck($_, q/mob<punct>: <! @ 4>/), '<punct>';
 
 #### <+punct>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <! @ 4>/			<+punct>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>/).produces(q/mob: <! @ 4>/), '<+punct>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>/) ~~ Match where matchcheck($_, q/mob: <! @ 4>/), '<+punct>';
 
 #### <+punct>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <!"#$%&/		<+punct>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>+/).produces(q/mob: <!"#$%&/), '<+punct>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>+/) ~~ Match where matchcheck($_, q/mob: <!"#$%&/), '<+punct>+';
 
 #### <alnum>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alnum>: <0 @ 35>/		<alnum>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alnum>/).produces(q/mob<alnum>: <0 @ 35>/), '<alnum>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alnum>/) ~~ Match where matchcheck($_, q/mob<alnum>: <0 @ 35>/), '<alnum>';
 
 #### <+alnum>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/	<+alnum>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>/).produces(q/mob: <0 @ 35>/), '<+alnum>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>/) ~~ Match where matchcheck($_, q/mob: <0 @ 35>/), '<+alnum>';
 
 #### <+alnum>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/	<+alnum>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>+/).produces(q/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/), '<+alnum>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>+/) ~~ Match where matchcheck($_, q/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/), '<+alnum>+';
 
 #### <sp>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<sp>: <  @ 3>/	<sp>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<sp>/).produces(q/mob<sp>: <  @ 3>/), '<sp>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<sp>/) ~~ Match where matchcheck($_, q/mob<sp>: <  @ 3>/), '<sp>';
 
 #### <+sp>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <  @ 3>/	<+sp>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+sp>+/).produces(q/mob: <  @ 3>/), '<+sp>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+sp>+/) ~~ Match where matchcheck($_, q/mob: <  @ 3>/), '<+sp>+';
 
 #### <lt>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lt>: << @ 21>/	<lt>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lt>/).produces(q/mob<lt>: << @ 21>/), '<lt>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lt>/) ~~ Match where matchcheck($_, q/mob<lt>: << @ 21>/), '<lt>';
 
 #### <+lt>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: << @ 21>/	<+lt>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lt>+/).produces(q/mob: << @ 21>/), '<+lt>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lt>+/) ~~ Match where matchcheck($_, q/mob: << @ 21>/), '<+lt>+';
 
 #### <gt>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<gt>: <> @ 23>/	<gt>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<gt>/).produces(q/mob<gt>: <> @ 23>/), '<gt>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<gt>/) ~~ Match where matchcheck($_, q/mob<gt>: <> @ 23>/), '<gt>';
 
 #### <+gt>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <> @ 23>/	<+gt>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+gt>+/).produces(q/mob: <> @ 23>/), '<+gt>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+gt>+/) ~~ Match where matchcheck($_, q/mob: <> @ 23>/), '<+gt>+';
 
 #### <dot>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<dot>: <. @ 17>/	<dot>
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<dot>/).produces(q/mob<dot>: <. @ 17>/), '<dot>';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<dot>/) ~~ Match where matchcheck($_, q/mob<dot>: <. @ 17>/), '<dot>';
 
 #### <+dot>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <. @ 17>/	<+dot>+
 #?rakudo skip 'quoting'
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+dot>+/).produces(q/mob: <. @ 17>/), '<+dot>+';
+ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+dot>+/) ~~ Match where matchcheck($_, q/mob: <. @ 17>/), '<+dot>+';
 
 #### <+alnum+[_]>	ident_1				y	union of character classes
 ok 'ident_1' ~~ /<+alnum+[_]>/, 'union of character classes';
@@ -2599,102 +2599,102 @@ ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 
 #### {{		abcdef		/Missing closing braces/	unterminated closure
 #?rakudo skip 'quoting'
-ok eval(q[ 'abcdef' ~~ /{{/ ]).produces(q/Missing closing braces/), 'unterminated closure';
+ok eval(q[ 'abcdef' ~~ /{{/ ]) ~~ Failure where /Missing closing braces/), 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /\1/ }}).produces(q/reserved/), 'back references';
+ok eval(q{{ 'abcdef' ~~ /\1/ }}) ~~ Failure where /reserved/), 'back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /\x[/ }}).produces(q/Missing close bracket/), 'unterminated \x[..]';
+ok eval(q{{ 'abcdef' ~~ /\x[/ }}) ~~ Failure where /Missing close bracket/), 'unterminated \x[..]';
 
 #### \X[		abcdef		/Missing close bracket/		unterminated \X[..]
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /\X[/ }}).produces(q/Missing close bracket/), 'unterminated \X[..]';
+ok eval(q{{ 'abcdef' ~~ /\X[/ }}) ~~ Failure where /Missing close bracket/), 'unterminated \X[..]';
 
 
 #### * abc		abcdef		/Quantifier follows nothing/	bare * at start
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /* abc/ }}).produces(q/Quantifier follows nothing/), 'bare * at start';
+ok eval(q{{ 'abcdef' ~~ /* abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  * abc/ }}).produces(q/Quantifier follows nothing/), 'bare * after ws';
+ok eval(q{{ 'abcdef' ~~ /  * abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after ws';
 
 #### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[*|a]/ }}).produces(q/Quantifier follows nothing/), 'bare * after [';
+ok eval(q{{ 'abcdef' ~~ /[*|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[ *|a]/ }}).produces(q/Quantifier follows nothing/), 'bare * after [+sp';
+ok eval(q{{ 'abcdef' ~~ /[ *|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after [+sp';
 
 #### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a|*]/ }}).produces(q/Quantifier follows nothing/), 'bare * after |';
+ok eval(q{{ 'abcdef' ~~ /[a|*]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a| *]/ }}).produces(q/Quantifier follows nothing/), 'bare * after |+sp';
+ok eval(q{{ 'abcdef' ~~ /[a| *]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after |+sp';
 
 
 #### + abc		abcdef		/Quantifier follows nothing/	bare + at start
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /+ abc/ }}).produces(q/Quantifier follows nothing/), 'bare + at start';
+ok eval(q{{ 'abcdef' ~~ /+ abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  + abc/ }}).produces(q/Quantifier follows nothing/), 'bare + after ws';
+ok eval(q{{ 'abcdef' ~~ /  + abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after ws';
 
 #### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[+|a]/ }}).produces(q/Quantifier follows nothing/), 'bare + after [';
+ok eval(q{{ 'abcdef' ~~ /[+|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[ +|a]/ }}).produces(q/Quantifier follows nothing/), 'bare + after [+sp';
+ok eval(q{{ 'abcdef' ~~ /[ +|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after [+sp';
 
 #### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a|+]/ }}).produces(q/Quantifier follows nothing/), 'bare + after |';
+ok eval(q{{ 'abcdef' ~~ /[a|+]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a| +]/ }}).produces(q/Quantifier follows nothing/), 'bare + after |+sp';
+ok eval(q{{ 'abcdef' ~~ /[a| +]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after |+sp';
 
 
 #### ? abc		abcdef		/Quantifier follows nothing/	bare ? at start
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /? abc/ }}).produces(q/Quantifier follows nothing/), 'bare ? at start';
+ok eval(q{{ 'abcdef' ~~ /? abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  ? abc/ }}).produces(q/Quantifier follows nothing/), 'bare ? after ws';
+ok eval(q{{ 'abcdef' ~~ /  ? abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after ws';
 
 #### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[?|a]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after [';
+ok eval(q{{ 'abcdef' ~~ /[?|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[ ?|a]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after [+sp';
+ok eval(q{{ 'abcdef' ~~ /[ ?|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after [+sp';
 
 #### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after |';
+ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}).produces(q/Quantifier follows nothing/), 'bare ? after |+sp';
+ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after |+sp';
 
 
 #### 		abcdef		/Null pattern illegal/		null pattern
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ // }}).produces(q/null pattern/), '';
+ok eval(q{{ 'abcdef' ~~ // }}) ~~ Failure where /null pattern/), '';
 
 ####   		abcdef		/Null pattern illegal/		ws null pattern
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  / }}).produces(q/Null pattern illegal/), 'ws null pattern';
+ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure where /Null pattern illegal/), 'ws null pattern';
 
 
