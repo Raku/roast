@@ -24,18 +24,15 @@ ok !('abbabbababba' ~~ /^[a|b]*: aba/), 'outside a group';
 ok '123abc' ~~ /\d+:/, 'cut on character class shortcut';
 
 #### \d+:			abc		n	cut on character class shortcut
-#?rakudo skip 'negated smartmatch'
 ok 'abc' !~~ /\d+:/, 'cut on character class shortcut';
 
 #### [ if    not | ify ]	verify		y	control
 ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 
 #### [ if :: not | ify ]	verify		n	inside a group
-#?rakudo skip 'negated smartmatch'
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
 ####   if :: not | ify	verify		n	the default all group
-#?rakudo skip 'negated smartmatch'
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
 #### [ if :  not | ify ]	verify		y	simple backtrack still works
@@ -50,7 +47,6 @@ ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
-#?rakudo skip 'negated smartmatch'
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
@@ -58,7 +54,6 @@ ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
-#?rakudo skip 'negated smartmatch'
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
@@ -66,25 +61,20 @@ ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
-#?rakudo skip 'negated smartmatch'
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
-#?rakudo skip 'negated smartmatch'
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
 #### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
-#?rakudo skip 'negated smartmatch'
 ok 'xyzabcde' !~~ /( ab | abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
 
 #### :ratchet a* a		bazaar		n	ratchet modifier
-#?rakudo skip 'negated smartmatch'
 ok 'bazaar' !~~ /:ratchet a* a/, 'ratchet modifier';
 
 #### :ratchet a*! a		bazaar		y	force backtracking !
@@ -301,7 +291,6 @@ ok 'abcdef' ~~ /<[c]>/, 'character class';
 
 #### <[ z ]>			abc def		n	character class ignores ws
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
 ok 'abc def' !~~ /<[ z ]>/, 'character class ignores ws';
 
 #### <[dcb]>**{3}		abcdef		y	repeated character class
@@ -321,14 +310,12 @@ ok 'abcdef' ~~ /^<[a]>?/, 'anchored optional character class';
 ok 'abcdef' ~~ /<-[e]>?/, 'negated optional character class';
 
 #### <-[dcb]>**{3}		abcdef		n	repeated negated character class
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /<-[dcb]>**{3}/, 'repeated negated character class';
 
 #### ^<-[e]>			abcdef		y	anchored negated character class
 ok 'abcdef' ~~ /^<-[e]>/, 'anchored negated character class';
 
 #### ^<-[a]>			abcdef		n	anchored negated character class
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /^<-[a]>/, 'anchored negated character class';
 
 #### <[b..d]>		abcdef		y	character range
@@ -348,7 +335,6 @@ ok 'axcxef' ~~ /<[b..d]>/, 'character range';
 ok 'axxdef' ~~ /<[b..d]>/, 'character range';
 
 #### <[b..d]>		axxxef		n	character range
-#?rakudo skip 'negated smartmatch'
 ok 'axxxef' !~~ /<[b..d]>/, 'character range';
 
 #### <-[b..d]>		abcdef		y	negated character range
@@ -359,7 +345,6 @@ ok 'abcdef' ~~ /<-[b..d]>/, 'negated character range';
 ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
 
 #### <-[b..d]>		bbccdd		n	negated character range
-#?rakudo skip 'negated smartmatch'
 ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 
 # todo :pge<reversed character range>
@@ -375,14 +360,12 @@ ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}).produces(q/parse error/), 'unescaped hyphen'
 ok 'ab-def' ~~ /<[\-]>/, 'escaped hyphen';
 
 #### <[\-]>			abcdef		n	escaped hyphen
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /<[\-]>/, 'escaped hyphen';
 
 #### <-[\-]>			---x--		y	negated escaped hyphen
 ok '---x--' ~~ /<-[\-]>/, 'negated escaped hyphen';
 
 #### <-[\-]>			------		n	negated escaped hyphen
-#?rakudo skip 'negated smartmatch'
 ok '------' !~~ /<-[\-]>/, 'negated escaped hyphen';
 
 #### <[\-+]>			ab-def		y	escaped hyphen in range
@@ -392,7 +375,6 @@ ok 'ab-def' ~~ /<[\-+]>/, 'escaped hyphen in range';
 ok 'ab+def' ~~ /<[\-+]>/, 'escaped hyphen in range';
 
 #### <[\-+]>			abcdef		n	escaped hyphen in range
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /<[\-+]>/, 'escaped hyphen in range';
 
 #### <[+\-]>			ab-def		y	escaped hyphen in range
@@ -402,21 +384,18 @@ ok 'ab-def' ~~ /<[+\-]>/, 'escaped hyphen in range';
 ok 'ab+def' ~~ /<[+\-]>/, 'escaped hyphen in range';
 
 #### <[+\-]>			abcdef		n	escaped hyphen in range
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /<[+\-]>/, 'escaped hyphen in range';
 
 #### <-[\-+]>		---x--		y	negated escaped hyphen in range
 ok '---x--' ~~ /<-[\-+]>/, 'negated escaped hyphen in range';
 
 #### <-[\-+]>		------		n	negated escaped hyphen in range
-#?rakudo skip 'negated smartmatch'
 ok '------' !~~ /<-[\-+]>/, 'negated escaped hyphen in range';
 
 #### <-[+\-]>		---x--		y	negated escaped hyphen in range
 ok '---x--' ~~ /<-[+\-]>/, 'negated escaped hyphen in range';
 
 #### <-[+\-]>		------		n	negated escaped hyphen in range
-#?rakudo skip 'negated smartmatch'
 ok '------' !~~ /<-[+\-]>/, 'negated escaped hyphen in range';
 
 #### <["\\]>			\\			y	escaped backslash
@@ -445,18 +424,15 @@ ok '><' ~~ /^<[><]>**{2}/, 'gt, lt character class';
 ok '><' ~~ /^<[<>]>**{2}/, 'lt, gt  character class';
 
 #### ^<-[><]>		><		n	not gt, lt character class
-#?rakudo skip 'negated smartmatch'
 ok '><' !~~ /^<-[><]>/, 'not gt, lt character class';
 
 #### ^<-[<>]>		><		n	not lt, gt  character class
-#?rakudo skip 'negated smartmatch'
 ok '><' !~~ /^<-[<>]>/, 'not lt, gt  character class';
 
 #### '... --- ...'		... --- ...	y	literal match (\\\')
 ok '... --- ...' ~~ /'... --- ...'/, 'literal match (\\\')';
 
 #### '... --- ...'		...---...	n	literal match (\\\')
-#?rakudo skip 'negated smartmatch'
 ok '...---...' !~~ /'... --- ...'/, 'literal match (\\\')';
 
 #### 'ab\'>cd'		ab\'>cd		y	literal match with quote
@@ -520,11 +496,9 @@ ok 'ab<?' ~~ /'<'/, 'literal match with lt ';
 ok 'ab<?' ~~ /'<?'/, 'literal match with lt and question mark';
 
 #### '<?'			ab<x?		n	non-matching literal match 
-#?rakudo skip 'negated smartmatch'
 ok 'ab<x?' !~~ /'<?'/, 'non-matching literal match ';
 
 #### <[A..Z0..9]>		abcdef		n	two enumerated ranges
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 
 #### <[A..Z0..9]>		abcDef		y	two enumerated ranges
@@ -538,11 +512,9 @@ ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 ok ('abacad' ~~ /<before .d> a./).produces(q/mob: <ad @ 4>/), 'lookahead <before>';
 
 #### <before c> ....		abacad		n				lookahead <before>
-#?rakudo skip 'negated smartmatch'
 ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
 
 #### <before> .		abcd		n				null <before>
-#?rakudo skip 'negated smartmatch'
 ok 'abcd' !~~ /<before> ./, 'null <before>';
 
 #### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
@@ -554,11 +526,9 @@ ok ('aabaaa' ~~ /<!before ..b> aa/).produces(q/mob: <aa @ 3>/), 'negated lookahe
 ok 'ab' ~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		cb		n				lookbehind <after>
-#?rakudo skip 'negated smartmatch'
 ok 'cb' !~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		b		n				lookbehind <after>
-#?rakudo skip 'negated smartmatch'
 ok 'b' !~~ /<after a>b/, 'lookbehind <after>';
 
 #### <!after c>b		ab		y				lookbehind <!after>
@@ -566,7 +536,6 @@ ok 'b' !~~ /<after a>b/, 'lookbehind <after>';
 ok 'ab' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		cb		n				lookbehind <!after>
-#?rakudo skip 'negated smartmatch'
 ok 'cb' !~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		b		y				lookbehind <!after>
@@ -574,7 +543,6 @@ ok 'cb' !~~ /<!after c>b/, 'lookbehind <!after>';
 ok 'b' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>>b	dbcb		n				lookbehind <!after>
-#?rakudo skip 'negated smartmatch'
 ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>><[ab]>	dbaacb		y				lookbehind <!after>
@@ -582,7 +550,6 @@ ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
 
 #### <!after c|d>b		dbcb		n				lookbehind <!after>
-#?rakudo skip 'negated smartmatch'
 ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
 
 #### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
@@ -667,11 +634,9 @@ ok 'a' ~~ /./, 'dot (.)';
 ok '\n' ~~ /./, 'dot (.)';
 
 #### .			''		n	dot (.)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /./, 'dot (.)';
 
 #### a\s+f			abcdef		n	whitespace (\s)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a\s+f/, 'whitespace (\s)';
 
 #### ab\s+cdef		ab  cdef	y	whitespace (\s)
@@ -681,7 +646,6 @@ ok 'ab  cdef' ~~ /ab\s+cdef/, 'whitespace (\s)';
 ok 'abcdef' ~~ /a\S+f/, 'not whitespace (\S)';
 
 #### a\S+f			ab cdef		n	not whitespace (\S)
-#?rakudo skip 'negated smartmatch'
 ok 'ab cdef' !~~ /a\S+f/, 'not whitespace (\S)';
 
 #### ^ abc			abcdef		y	start and end of string (^)
@@ -691,11 +655,9 @@ ok 'abcdef' ~~ /^ abc/, 'start and end of string (^)';
 ok 'abc\ndef' ~~ /^ abc/, 'start and end of string (^)';
 
 #### ^ abc			def\nabc	n	start and end of string (^)
-#?rakudo skip 'negated smartmatch'
 ok 'def\nabc' !~~ /^ abc/, 'start and end of string (^)';
 
 #### def \n ^ abc		def\nabc	n	start and end of string (^)
-#?rakudo skip 'negated smartmatch'
 ok 'def\nabc' !~~ /def \n ^ abc/, 'start and end of string (^)';
 
 #### def $			abcdef		y	start and end of string ($)
@@ -705,11 +667,9 @@ ok 'abcdef' ~~ /def $/, 'start and end of string ($)';
 ok 'abc\ndef' ~~ /def $/, 'start and end of string ($)';
 
 #### def $			def\nabc	n	start and end of string ($)
-#?rakudo skip 'negated smartmatch'
 ok 'def\nabc' !~~ /def $/, 'start and end of string ($)';
 
 #### def $ \n abc		def\nabc	n	start and end of string (^)
-#?rakudo skip 'negated smartmatch'
 ok 'def\nabc' !~~ /def $ \n abc/, 'start and end of string (^)';
 
 #### abc \n $		abc\n		y	end of string ($)
@@ -717,51 +677,42 @@ ok 'def\nabc' !~~ /def $ \n abc/, 'start and end of string (^)';
 ok 'abc\n' ~~ /abc \n $/, 'end of string ($)';
 
 #### abc $			abc\n		n	end of string ($)
-#?rakudo skip 'negated smartmatch'
 ok 'abc\n' !~~ /abc $/, 'end of string ($)';
 
 #### <<def			abc-def		y	left word boundary, beginning of word
 ok 'abc-def' ~~ /<<def/, 'left word boundary, beginning of word';
 
 #### <<bc			abc-def		n	left word boundary, mid-word
-#?rakudo skip 'negated smartmatch'
 ok 'abc-def' !~~ /<<bc/, 'left word boundary, mid-word';
 
 #### c<<			abc-def		n	left word boundary, end of word
-#?rakudo skip 'negated smartmatch'
 ok 'abc-def' !~~ /c<</, 'left word boundary, end of word';
 
 #### <<abc			abc-def		y	left word boundary, BOS
 ok 'abc-def' ~~ /<<abc/, 'left word boundary, BOS';
 
 #### def<<			abc-def		n	left word boundary, EOS
-#?rakudo skip 'negated smartmatch'
 ok 'abc-def' !~~ /def<</, 'left word boundary, EOS';
 
 #### <<			-------		n	left word boundary, no word chars
-#?rakudo skip 'negated smartmatch'
 ok '-------' !~~ /<</, 'left word boundary, no word chars';
 
 #### >>def			abc-def		n	right word boundary, beginning of word
-#?rakudo skip 'negated smartmatch'
 ok 'abc-def' !~~ />>def/, 'right word boundary, beginning of word';
 
 #### >>bc			abc-def		n	right word boundary, mid-word
-#?rakudo skip 'negated smartmatch'
 ok 'abc-def' !~~ />>bc/, 'right word boundary, mid-word';
 
 #### c>>			abc-def		y	right word boundary, end of word
 ok 'abc-def' ~~ /c>>/, 'right word boundary, end of word';
 
 #### >>abc			abc-def		n	right word boundary, BOS
-#?rakudo skip 'negated smartmatch'
 ok 'abc-def' !~~ />>abc/, 'right word boundary, BOS';
 
 #### def>>			abc-def		y	right word boundary, EOS
 ok 'abc-def' ~~ /def>>/, 'right word boundary, EOS';
 
 #### >>			-------		n	right word boundary, no word chars
-#?rakudo skip 'negated smartmatch'
 ok '-------' !~~ />>/, 'right word boundary, no word chars';
 
 
@@ -779,11 +730,9 @@ ok 'abc\rdef' ~~ /c \n d/, 'logical newline matches \r';
 ok 'abc\n\ndef' ~~ /c \n+ d/, 'logical newline quantified';
 
 #### a\n+f			abcdef		n	logical newline (\n)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a\n+f/, 'logical newline (\n)';
 
 #### c \n d			abc\n\rdef	n	logical newline matches \n\r
-#?rakudo skip 'negated smartmatch'
 ok 'abc\n\rdef' !~~ /c \n d/, 'logical newline matches \n\r';
 
 #### c \n d			abc\r\ndef	y	logical newline matches \r\n
@@ -792,7 +741,6 @@ ok 'abc\n\rdef' !~~ /c \n d/, 'logical newline matches \n\r';
 ok 'abc\r\ndef' ~~ /c \n d/, 'logical newline matches \r\n';
 
 #### b \n c			abc\ndef	n	logical newline (\n)
-#?rakudo skip 'negated smartmatch'
 ok 'abc\ndef' !~~ /b \n c/, 'logical newline (\n)';
 
 #### \N			a		y	not logical newline (\N)
@@ -802,35 +750,28 @@ ok 'a' ~~ /\N/, 'not logical newline (\N)';
 ok 'abc' ~~ /a \N c/, 'not logical newline (\N)';
 
 #### \N			''		n	not logical newline (\N)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\N/, 'not logical newline (\N)';
 
 #### c \N d			abc\ndef	n	not logical newline (\N)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef' !~~ /c \N d/, 'not logical newline (\N)';
+ok "abc\ndef" !~~ /c \N d/, 'not logical newline (\N)';
 
 #### c \N d			abc\rdef	n	not logical newline (\N)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\rdef' !~~ /c \N d/, 'not logical newline (\N)';
+ok "abc\rdef" !~~ /c \N d/, 'not logical newline (\N)';
 
 #### c \N+ d			abc\n\ndef	n	not logical newline (\N)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\n\ndef' !~~ /c \N+ d/, 'not logical newline (\N)';
+ok "abc\n\ndef" !~~ /c \N+ d/, 'not logical newline (\N)';
 
 #### a\N+f			abcdef		y	not logical newline (\N)
 ok 'abcdef' ~~ /a\N+f/, 'not logical newline (\N)';
 
 #### c \N d			abc\n\rdef	n	not logical newline (\N)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\n\rdef' !~~ /c \N d/, 'not logical newline (\N)';
+ok "abc\n\rdef" !~~ /c \N d/, 'not logical newline (\N)';
 
 #### c \N d			abc\r\ndef	n	not logical newline (\N)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\r\ndef' !~~ /c \N d/, 'not logical newline (\N)';
+ok "abc\r\ndef" !~~ /c \N d/, 'not logical newline (\N)';
 
 #### b \N \n			abc\ndef	y	not logical newline (\N)
-#?rakudo todo 'unknown'
-ok 'abc\ndef' ~~ /b \N \n/, 'not logical newline (\N)';
+ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
 #?rakudo skip 'quoting'
@@ -873,7 +814,6 @@ ok 'abc#def' ~~ /abc \# def
 /, 'comments (#)';
 
 #### abc \# xyz		abc#def		n	comments (#)
-#?rakudo skip 'negated smartmatch'
 ok 'abc#def' !~~ /abc \# xyz
 /, 'comments (#)';
 
@@ -882,40 +822,32 @@ ok 'abc#def' ~~ /^ abc \# def $
 /, 'comments (#)';
 
 #### ^^ abc \n ^^ def	abc\ndef	y	line beginnings and endings (^^)
-#?rakudo todo 'line beginnings'
-ok 'abc\ndef' ~~ /^^ abc \n ^^ def/, 'line beginnings and endings (^^)';
+ok "abc\ndef" ~~ /^^ abc \n ^^ def/, 'line beginnings and endings (^^)';
 
 #### ^^ abc \n ^^ def \n ^^	abc\ndef\n	n	line beginnings and endings (^^)
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef\n' !~~ /^^ abc \n ^^ def \n ^^/, 'line beginnings and endings (^^)';
+ok "abc\ndef\n" !~~ /^^ abc \n ^^ def \n ^^/, 'line beginnings and endings (^^)';
 
 #### ^^ \n			\n		y	line beginnings and endings (^^)
-#?rakudo todo 'unknown'
-ok '\n' ~~ /^^ \n/, 'line beginnings and endings (^^)';
+ok "\n" ~~ /^^ \n/, 'line beginnings and endings (^^)';
 
 #### \n ^^			\n		n	line beginnings and endings (^^)
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
-ok '\n' !~~ /\n ^^/, 'line beginnings and endings (^^)';
+ok "\n" !~~ /\n ^^/, 'line beginnings and endings (^^)';
 
 #### abc $$ \n def $$	abc\ndef	y	line beginnings and endings ($$)
-#?rakudo todo 'unknown'
-ok 'abc\ndef' ~~ /abc $$ \n def $$/, 'line beginnings and endings ($$)';
+ok "abc\ndef" ~~ /abc $$ \n def $$/, 'line beginnings and endings ($$)';
 
 #### abc $$ \n def $$ \n $$	abc\ndef\n	n	line beginnings and endings ($$)
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef\n' !~~ /abc $$ \n def $$ \n $$/, 'line beginnings and endings ($$)';
+ok "abc\ndef\n" !~~ /abc $$ \n def $$ \n $$/, 'line beginnings and endings ($$)';
 
 #### $$ \n			\n		y	line beginnings and endings ($$)
-#?rakudo todo 'unknown'
-ok '\n' ~~ /$$ \n/, 'line beginnings and endings ($$)';
+ok "\n" ~~ /$$ \n/, 'line beginnings and endings ($$)';
 
 #### \n $$			\n		n	line beginnings and endings ($$)
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
-ok '\n' !~~ /\n $$/, 'line beginnings and endings ($$)';
+ok "\n" !~~ /\n $$/, 'line beginnings and endings ($$)';
 
 #### <[a..d]> | <[b..e]>	c		y	alternation (|)
 ok 'c' ~~ /<[a..d]> | <[b..e]>/, 'alternation (|)';
@@ -927,7 +859,6 @@ ok 'c' ~~ /<[a..d]> | <[d..e]>/, 'alternation (|)';
 ok 'c' ~~ /<[a..b]> | <[b..e]>/, 'alternation (|)';
 
 #### <[a..b]> | <[d..e]>	c		n	alternation (|)
-#?rakudo skip 'negated smartmatch'
 ok 'c' !~~ /<[a..b]> | <[d..e]>/, 'alternation (|)';
 
 #### <[a..d]>+ | <[b..e]>+	bcd		y	alternation (|)
@@ -965,15 +896,12 @@ ok eval(q{{ '|' ~~ /|/ }}).produces(q/rule error/), 'alternation (|) - literal m
 ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..d]> & <[d..e]>	c		n	conjunction (&)
-#?rakudo skip 'negated smartmatch'
 ok 'c' !~~ /<[a..d]> & <[d..e]>/, 'conjunction (&)';
 
 #### <[a..b]> & <[b..e]>	c		n	conjunction (&)
-#?rakudo skip 'negated smartmatch'
 ok 'c' !~~ /<[a..b]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..b]> & <[d..e]>	c		n	conjunction (&)
-#?rakudo skip 'negated smartmatch'
 ok 'c' !~~ /<[a..b]> & <[d..e]>/, 'conjunction (&)';
 
 #### <[a..d]>+ & <[b..e]>+	bcd		y	conjunction (&)
@@ -1101,45 +1029,36 @@ ok "\x0009\x0020\x00a0" ~~ /^ \V+ $/, '0-255 horizontal whitespace (\V)';
 ok "\x000a\x000b\x000c\x000d\x0085" ~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
 
 #### ^ \h+ $			\x000a\x000b\x000c\x000d\x0085	n	0-255 horizontal whitespace (\h)
-#?rakudo skip 'negated smartmatch'
 ok "\x000a\x000b\x000c\x000d\x0085" !~~ /^ \h+ $/, '0-255 horizontal whitespace (\h)';
 
 #### ^ \v+ $			\x0009\x0020\x00a0	n	0-255 vertical whitespace (\v)
-#?rakudo skip 'negated smartmatch'
 ok '\x0009\x0020\x00a0' !~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
 
 #### ^ \s+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\s)
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \s+ $/, 'unicode whitespace (\s)';
+ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \s+ $/, 'unicode whitespace (\s)';
 
 #### ^ \h+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\h)
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \h+ $/, 'unicode whitespace (\h)';
+ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \h+ $/, 'unicode whitespace (\h)';
 
 #### ^ \V+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\V)
-ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' ~~ /^ \V+ $/, 'unicode whitespace (\V)';
+ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \V+ $/, 'unicode whitespace (\V)';
 
 #### ^ \v+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	n	unicode whitespace (\v)
-#?rakudo skip 'negated smartmatch'
-ok '\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000' !~~ /^ \v+ $/, 'unicode whitespace (\v)';
+ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" !~~ /^ \v+ $/, 'unicode whitespace (\v)';
 
 #### c \t d			abc\tdef	y	horizontal tab (\t)
-#?rakudo todo 'unknown'
-ok 'abc\tdef' ~~ /c \t d/, 'horizontal tab (\t)';
+ok "abc\tdef" ~~ /c \t d/, 'horizontal tab (\t)';
 
 #### c \t+ d			abc\t\tdef	y	horizontal tab (\t)
-#?rakudo todo 'unknown'
-ok 'abc\t\tdef' ~~ /c \t+ d/, 'horizontal tab (\t)';
+ok "abc\t\tdef" ~~ /c \t+ d/, 'horizontal tab (\t)';
 
 #### a \t+ f			abcdef		n	horizontal tab (\t)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \t+ f/, 'horizontal tab (\t)';
 
 #### b \t c			abc\tdef	n	horizontal tab (\t)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\tdef' !~~ /b \t c/, 'horizontal tab (\t)';
+ok "abc\tdef" !~~ /b \t c/, 'horizontal tab (\t)';
 
 #### \T			a		y	not horizontal tab (\T)
 ok 'a' ~~ /\T/, 'not horizontal tab (\T)';
@@ -1148,35 +1067,28 @@ ok 'a' ~~ /\T/, 'not horizontal tab (\T)';
 ok 'abc' ~~ /a \T c/, 'not horizontal tab (\T)';
 
 #### \T			''		n	not horizontal tab (\T)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\T/, 'not horizontal tab (\T)';
 
 #### c \T d			abc\tdef	n	not horizontal tab (\T)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\tdef' !~~ /c \T d/, 'not horizontal tab (\T)';
+ok "abc\tdef" !~~ /c \T d/, 'not horizontal tab (\T)';
 
 #### c \T+ d			abc\t\tdef	n	not horizontal tab (\T)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\t\tdef' !~~ /c \T+ d/, 'not horizontal tab (\T)';
+ok "abc\t\tdef" !~~ /c \T+ d/, 'not horizontal tab (\T)';
 
 #### a \T+ f			abcdef		y	not horizontal tab (\T)
-ok 'abcdef' ~~ /a \T+ f/, 'not horizontal tab (\T)';
+ok "abcdef" ~~ /a \T+ f/, 'not horizontal tab (\T)';
 
 #### c \r d			abc\rdef	y	return (\r)
-#?rakudo todo 'unknown'
-ok 'abc\rdef' ~~ /c \r d/, 'return (\r)';
+ok "abc\rdef" ~~ /c \r d/, 'return (\r)';
 
 #### c \r+ d			abc\r\rdef	y	return (\r)
-#?rakudo todo 'unknown'
-ok 'abc\r\rdef' ~~ /c \r+ d/, 'return (\r)';
+ok "abc\r\rdef" ~~ /c \r+ d/, 'return (\r)';
 
 #### a \r+ f			abcdef		n	return (\r)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \r+ f/, 'return (\r)';
 
 #### b \r c			abc\rdef	n	return (\r)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\rdef' !~~ /b \r c/, 'return (\r)';
+ok "abc\rdef" !~~ /b \r c/, 'return (\r)';
 
 #### \R			a		y	not return (\R)
 ok 'a' ~~ /\R/, 'not return (\R)';
@@ -1185,36 +1097,28 @@ ok 'a' ~~ /\R/, 'not return (\R)';
 ok 'abc' ~~ /a \R c/, 'not return (\R)';
 
 #### \R			''		n	not return (\R)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\R/, 'not return (\R)';
 
 #### c \R d			abc\rdef	n	not return (\R)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\rdef' !~~ /c \R d/, 'not return (\R)';
+ok "abc\rdef" !~~ /c \R d/, 'not return (\R)';
 
 #### c \R+ d			abc\r\rdef	n	not return (\R)
-#?rakudo todo 'unknown'
-#?rakudo skip 'negated smartmatch'
-ok 'abc\r\rdef' !~~ /c \R+ d/, 'not return (\R)';
+ok "abc\r\rdef" !~~ /c \R+ d/, 'not return (\R)';
 
 #### a \R+ f			abcdef		y	not return (\R)
 ok 'abcdef' ~~ /a \R+ f/, 'not return (\R)';
 
 #### c \f d			abc\fdef	y	formfeed (\f)
-#?rakudo todo 'unknown'
-ok 'abc\fdef' ~~ /c \f d/, 'formfeed (\f)';
+ok "abc\fdef" ~~ /c \f d/, 'formfeed (\f)';
 
 #### c \f+ d			abc\f\fdef	y	formfeed (\f)
-#?rakudo todo 'unknown'
-ok 'abc\f\fdef' ~~ /c \f+ d/, 'formfeed (\f)';
+ok "abc\f\fdef" ~~ /c \f+ d/, 'formfeed (\f)';
 
 #### a \f+ f			abcdef		n	formfeed (\f)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \f+ f/, 'formfeed (\f)';
 
 #### b \f c			abc\fdef	n	formfeed (\f)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\fdef' !~~ /b \f c/, 'formfeed (\f)';
+ok "abc\fdef" !~~ /b \f c/, 'formfeed (\f)';
 
 #### \F			a		y	not formfeed (\F)
 ok 'a' ~~ /\F/, 'not formfeed (\F)';
@@ -1223,37 +1127,30 @@ ok 'a' ~~ /\F/, 'not formfeed (\F)';
 ok 'abc' ~~ /a \F c/, 'not formfeed (\F)';
 
 #### \F			''		n	not formfeed (\F)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\F/, 'not formfeed (\F)';
 
 #### c \F d			abc\fdef	n	not formfeed (\F)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\fdef' !~~ /c \F d/, 'not formfeed (\F)';
+ok "abc\fdef" !~~ /c \F d/, 'not formfeed (\F)';
 
 #### c \F+ d			abc\f\fdef	n	not formfeed (\F)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\f\fdef' !~~ /c \F+ d/, 'not formfeed (\F)';
+ok "abc\f\fdef" !~~ /c \F+ d/, 'not formfeed (\F)';
 
 #### a \F+ f			abcdef		y	not formfeed (\F)
 ok 'abcdef' ~~ /a \F+ f/, 'not formfeed (\F)';
 
 #### c \e d			abc\edef	y	escape (\e)
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok 'abc\edef' ~~ /c \e d/, 'escape (\e)';
+ok "abc\edef" ~~ /c \e d/, 'escape (\e)';
 
 #### c \e+ d			abc\e\edef	y	escape (\e)
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
-ok 'abc\e\edef' ~~ /c \e+ d/, 'escape (\e)';
+ok "abc\e\edef" ~~ /c \e+ d/, 'escape (\e)';
 
 #### a \e+ f			abcdef		n	escape (\e)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \e+ f/, 'escape (\e)';
 
 #### b \e c			abc\edef	n	escape (\e)
-#?rakudo skip 'negated smartmatch'
-ok 'abc\edef' !~~ /b \e c/, 'escape (\e)';
+ok "abc\edef" !~~ /b \e c/, 'escape (\e)';
 
 #### \E			a		y	not escape (\E)
 ok 'a' ~~ /\E/, 'not escape (\E)';
@@ -1262,18 +1159,15 @@ ok 'a' ~~ /\E/, 'not escape (\E)';
 ok 'abc' ~~ /a \E c/, 'not escape (\E)';
 
 #### \E			''		n	not escape (\E)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\E/, 'not escape (\E)';
 
 #### c \E d			abc\edef	n	not escape (\E)
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
-ok 'abc\edef' !~~ /c \E d/, 'not escape (\E)';
+ok "abc\edef" !~~ /c \E d/, 'not escape (\E)';
 
 #### c \E+ d			abc\e\edef	n	not escape (\E)
 #?pugs todo 'feature'
-#?rakudo skip 'negated smartmatch'
-ok 'abc\e\edef' !~~ /c \E+ d/, 'not escape (\E)';
+ok "abc\e\edef" !~~ /c \E+ d/, 'not escape (\E)';
 
 #### a \E+ f			abcdef		y	not escape (\E)
 ok 'abcdef' ~~ /a \E+ f/, 'not escape (\E)';
@@ -1285,11 +1179,9 @@ ok 'abc!def' ~~ /c \x0021 d/, 'hex (\x)';
 ok 'abc!!def' ~~ /c \x0021+ d/, 'hex (\x)';
 
 #### a \x0021+ f		abcdef		n	hex (\x)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \x0021+ f/, 'hex (\x)';
 
 #### b \x0021 c		abc!def		n	hex (\x)
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /b \x0021 c/, 'hex (\x)';
 
 #### c \x[0021] d		abc!def		y	hex (\x[])
@@ -1302,11 +1194,9 @@ ok 'abc!!def' ~~ /c \x[0021]+ d/, 'hex (\x[])';
 ok 'abc!!def' ~~ /c \x[21,21] d/, 'hex (\x[])';
 
 #### a \x[0021]+ f		abcdef		n	hex (\x[])
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \x[0021]+ f/, 'hex (\x[])';
 
 #### b \x[0021] c		abc!def		n	hex (\x[])
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /b \x[0021] c/, 'hex (\x[])';
 
 #### \X0021			a		y	not hex (\X)
@@ -1316,15 +1206,12 @@ ok 'a' ~~ /\X0021/, 'not hex (\X)';
 ok 'abc' ~~ /a \X0021 c/, 'not hex (\X)';
 
 #### \X0021			''		n	not hex (\X)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\X0021/, 'not hex (\X)';
 
 #### c \X0021 d		abc!def		n	not hex (\X)
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /c \X0021 d/, 'not hex (\X)';
 
 #### c \X0021+ d		abc!!def	n	not hex (\X)
-#?rakudo skip 'negated smartmatch'
 ok 'abc!!def' !~~ /c \X0021+ d/, 'not hex (\X)';
 
 #### a \X0021+ f		abcdef		y	not hex (\X)
@@ -1337,15 +1224,12 @@ ok 'a' ~~ /\X[0021]/, 'not hex (\X[])';
 ok 'abc' ~~ /a \X[0021] c/, 'not hex (\X[])';
 
 #### \X[0021]		''		n	not hex (\X[])
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\X[0021]/, 'not hex (\X[])';
 
 #### c \X[0021] d		abc!def		n	not hex (\X[])
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /c \X[0021] d/, 'not hex (\X[])';
 
 #### c \X[0021]+ d		abc!!def	n	not hex (\X[])
-#?rakudo skip 'negated smartmatch'
 ok 'abc!!def' !~~ /c \X[0021]+ d/, 'not hex (\X[])';
 
 #### a \X[0021]+ f		abcdef		y	not hex (\X[])
@@ -1358,11 +1242,9 @@ ok 'abc!def' ~~ /c \o041 d/, 'octal (\o)';
 ok 'abc!!def' ~~ /c \o41+ d/, 'octal (\o)';
 
 #### a \o41+ f		abcdef		n	octal (\o)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \o41+ f/, 'octal (\o)';
 
 #### b \o41 c		abc!def		n	octal (\o)
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /b \o41 c/, 'octal (\o)';
 
 #### c \o[41] d		abc!def		y	octal (\o[])
@@ -1376,11 +1258,9 @@ ok 'abc!!def' ~~ /c \o[41]+ d/, 'octal (\o[])';
 ok 'abc!!def' ~~ /c \o[41,41] d/, 'octal (\o[])';
 
 #### a \o[41]+ f		abcdef		n	octal (\o[])
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a \o[41]+ f/, 'octal (\o[])';
 
 #### b \o[41] c		abc!def		n	octal (\o[])
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /b \o[41] c/, 'octal (\o[])';
 
 #### \O41			a		y	not octal (\O)
@@ -1390,15 +1270,12 @@ ok 'a' ~~ /\O41/, 'not octal (\O)';
 ok 'abc' ~~ /a \O41 c/, 'not octal (\O)';
 
 #### \O41			''		n	not octal (\O)
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\O41/, 'not octal (\O)';
 
 #### c \O41 d		abc!def		n	not octal (\O)
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /c \O41 d/, 'not octal (\O)';
 
 #### c \O41+ d		abc!!def	n	not octal (\O)
-#?rakudo skip 'negated smartmatch'
 ok 'abc!!def' !~~ /c \O41+ d/, 'not octal (\O)';
 
 #### a \O41+ f		abcdef		y	not octal (\O)
@@ -1411,22 +1288,18 @@ ok 'a' ~~ /\O[41]/, 'not octal (\O[])';
 ok 'abc' ~~ /a \O[41] c/, 'not octal (\O[])';
 
 #### \O[41]			''		n	not octal (\O[])
-#?rakudo skip 'negated smartmatch'
 ok '' !~~ /\O[41]/, 'not octal (\O[])';
 
 #### c \O[41] d		abc!def		n	not octal (\O[])
-#?rakudo skip 'negated smartmatch'
 ok 'abc!def' !~~ /c \O[41] d/, 'not octal (\O[])';
 
 #### c \O[41]+ d		abc!!def	n	not octal (\O[])
-#?rakudo skip 'negated smartmatch'
 ok 'abc!!def' !~~ /c \O[41]+ d/, 'not octal (\O[])';
 
 #### a \O[41]+ f		abcdef		y	not octal (\O[])
 ok 'abcdef' ~~ /a \O[41]+ f/, 'not octal (\O[])';
 
 #### a\w+f			a=[ *f		n	word character
-#?rakudo skip 'negated smartmatch'
 ok 'a=[ *f' !~~ /a\w+f/, 'word character';
 
 #### a\w+f			abcdef		y	word character
@@ -1436,11 +1309,9 @@ ok 'abcdef' ~~ /a\w+f/, 'word character';
 ok 'a&%- f' ~~ /a\W+f/, 'not word character';
 
 #### a\W+f			abcdef		n	not word character
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a\W+f/, 'not word character';
 
 #### a\d+f			abcdef		n	digit
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /a\d+f/, 'digit';
 
 #### ab\d+cdef		ab42cdef	y	digit
@@ -1450,7 +1321,6 @@ ok 'ab42cdef' ~~ /ab\d+cdef/, 'digit';
 ok 'abcdef' ~~ /a\D+f/, 'not digit';
 
 #### a\D+f			ab0cdef		n	not digit
-#?rakudo skip 'negated smartmatch'
 ok 'ab0cdef' !~~ /a\D+f/, 'not digit';
 
 
@@ -1469,7 +1339,6 @@ ok 'abCdef' ~~ /:i bcd/, 'ignorecase (:i)';
 ok 'abcDef' ~~ /:i bcd/, 'ignorecase (:i)';
 
 #### :i bcd			abc-ef	n	ignorecase (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'abc-ef' !~~ /:i bcd/, 'ignorecase (:i)';
 
 #### :ignorecase bcd		abcdef	y	ignorecase (:ignorecase)
@@ -1479,7 +1348,6 @@ ok 'abcdef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 ok 'aBCDef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
 #### :ignorecase bcd		abc-ef	n	ignorecase (:ignorecase)
-#?rakudo skip 'negated smartmatch'
 ok 'abc-ef' !~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
 #### :i(0) bcd		abcdef	y	ignorecase, repetition (:i(0))
@@ -1487,7 +1355,6 @@ ok 'abc-ef' !~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 ok 'abcdef' ~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(0) bcd		abCdef	n	ignorecase, repetition (:i(0))
-#?rakudo skip 'negated smartmatch'
 ok 'abCdef' !~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(1) bcd		abcdef	y	ignorecase, repetition (:i(1))
@@ -1499,7 +1366,6 @@ ok 'abcdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 ok 'abCdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		aBxDef	n	ignorecase, repetition (:i(1))
-#?rakudo skip 'negated smartmatch'
 ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :0i bcd			abcdef	y	ignorecase, repetition (:0i)
@@ -1507,7 +1373,6 @@ ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 ok 'abcdef' ~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :0i bcd			abCdef	n	ignorecase, repetition (:0i)
-#?rakudo skip 'negated smartmatch'
 ok 'abCdef' !~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :1i bcd			abcdef	y	ignorecase, repetition (:1i)
@@ -1523,7 +1388,6 @@ ok 'abCdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 ok 'aBCDef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
 #### :1i bcd			aBxDef	n	ignorecase, repetition (:1i)
-#?rakudo skip 'negated smartmatch'
 ok 'aBxDef' !~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
 #### ab [:i cd ] ef		abcdef	y	ignorecase, lexical (:i)
@@ -1539,11 +1403,9 @@ ok 'abcDef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 ok 'abCDef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### ab [:i cd ] ef		aBCDef	n	ignorecase, lexical (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'aBCDef' !~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### ab [:i cd ] ef		abCDEf	n	ignorecase, lexical (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'abCDEf' !~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i cd ] ef	abCDef	y	ignorecase, lexical (:i)
@@ -1564,11 +1426,9 @@ ok 'AbCdEf' ~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignor
 ok 'AabbCcddEeff' ~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEF		n	ignorecase, lexical (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'AbCdEF' !~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeFf	n	ignorecase, lexical (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'AabbCcddEeFf' !~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
@@ -1588,11 +1448,9 @@ ok 'AbcdeF' ~~ /:i ab [:0i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'abCDef' ~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbCDeF	n	ignorecase, lexical repetition (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'AbCDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:i(0) cd ] ef	abcdef	y	ignorecase, lexical repetition (:i)
@@ -1600,7 +1458,6 @@ ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'abcdef' ~~ /:0i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
@@ -1612,7 +1469,6 @@ ok 'AbCdeF' ~~ /:i(1) ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'AbcdeF' ~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcDeF	n	ignorecase, lexical repetition (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'AbcDeF' !~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(2) ab [:i(999) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:i)
@@ -1624,7 +1480,6 @@ ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)
 ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
-#?rakudo skip 'negated smartmatch'
 ok 'abcDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :2i ab [:999i cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
@@ -1635,7 +1490,6 @@ ok 'ABCDEF' ~~ /:2i ab [:999i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'abCDef' ~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
 #### ab [:ignorecase cd ] ef		aBCDef	n	ignorecase, lexical (:ignorecase)
-#?rakudo skip 'negated smartmatch'
 ok 'aBCDef' !~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
 #### :1ignorecase ab [:ignorecase(1) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:ignorecase)
@@ -1651,15 +1505,12 @@ ok 'a bcdef' ~~ /:s bcd/, 'sigspace (:s)';
 ok 'a bcd ef' ~~ /:s bcd/, 'sigspace (:s)';
 
 #### :s bcd			abcdef		n	sigspace (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /:s bcd/, 'sigspace (:s)';
 
 #### :s bcd			abcd ef		n	sigspace (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'abcd ef' !~~ /:s bcd/, 'sigspace (:s)';
 
 #### :s bcd			ab cdef		n	sigspace (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'ab cdef' !~~ /:s bcd/, 'sigspace (:s)';
 
 #### :s b c d		a b c d ef	y	sigspace (:s)
@@ -1671,15 +1522,12 @@ ok 'a b c d ef' ~~ /:s b c d/, 'sigspace (:s)';
 ok 'a b c def' ~~ /:s b c d/, 'sigspace (:s)';
 
 #### :s b c d		ab c d ef	n	sigspace (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'ab c d ef' !~~ /:s b c d/, 'sigspace (:s)';
 
 #### :s b c d		a bcdef		n	sigspace (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'a bcdef' !~~ /:s b c d/, 'sigspace (:s)';
 
 #### :s b c d		abcdef		n	sigspace (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /:s b c d/, 'sigspace (:s)';
 
 #### :sigspace bcd		a bcdef		y	sigspace (:sigspace)
@@ -1691,7 +1539,6 @@ ok 'a bcdef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 ok 'a bcd ef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
 #### :sigspace bcd		abcdef		n	sigspace (:sigspace)
-#?rakudo skip 'negated smartmatch'
 ok 'abcdef' !~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
 #### :sigspace b c d		a b c d ef	y	sigspace (:sigspace)
@@ -1703,7 +1550,6 @@ ok 'a b c d ef' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 ok 'a b c def' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
 #### :sigspace b c d		ab c d ef	n	sigspace (:sigspace)
-#?rakudo skip 'negated smartmatch'
 ok 'ab c d ef' !~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
 #### :s(1) b c [:s(0) d e f ]	a b c def	y	sigspace, lexical repetition (:s)
@@ -1715,7 +1561,6 @@ ok 'a b c def' ~~ /:s(1) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)
 ok 'a b c def' ~~ /:s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(1) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 # todo :pge<feature>
@@ -1724,7 +1569,6 @@ ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s
 ok 'a b c def' !~~ /:!s b c [:s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(0) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
-#?rakudo skip 'negated smartmatch'
 ok 'a b c def' !~~ /:s(0) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 # todo :pge<feature>
@@ -1759,7 +1603,6 @@ ok 'foo-bar' ~~ /foo '-'? bar/, 'basic match \s* \s*';
 ok 'foobar' ~~ /foo '-'? bar/, 'basic match';
 
 #### foo '-'? bar			foo - bar	n	basic non-match
-#?rakudo skip 'negated smartmatch'
 ok 'foo - bar' !~~ /foo '-'? bar/, 'basic non-match';
 
 #### :s foo '-'? bar			foo\n \t- \t\t\nbar	y	basic ws match
@@ -1788,11 +1631,9 @@ ok 'foo-  bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s+';
 ok 'foo-bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s*';
 
 #### :s foo '-'? bar			foobar		n	basic ws non-match
-#?rakudo skip 'negated smartmatch'
 ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
-#?rakudo skip 'negated smartmatch'
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
@@ -1838,12 +1679,12 @@ ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurance (:nth)';
 
 # todo :pge<feature>
 #### :nth(4) a \d			a1a2a3		n	nth occurance (:nth)
-#?rakudo skip 'negated smartmatch'
+#?rakudo todo 'unknown'
 ok 'a1a2a3' !~~ /:nth(4) a \d/, 'nth occurance (:nth)';
 
 # todo :pge<feature>
 #### :nth(0) a \d			a1a2a3		n	nth occurance (:nth)
-#?rakudo skip 'negated smartmatch'
+#?rakudo todo 'unknown'
 ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurance (:nth)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
@@ -1887,7 +1728,6 @@ ok ('xaaaay' ~~ /xa+/).produces(q/<xaaaa @ 0>/), 'plus 2+';
 ok ('xay' ~~ /xa+/).produces(q/<xa @ 0>/), 'plus 1';
 
 #### xa+			xy		n		plus 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+/, 'plus 0';
 
 #### xa+y			xaaaay		/<xaaaay @ 0>/	plus 2+
@@ -1899,7 +1739,6 @@ ok ('xaaaay' ~~ /xa+y/).produces(q/<xaaaay @ 0>/), 'plus 2+';
 ok ('xay' ~~ /xa+y/).produces(q/<xay @ 0>/), 'plus 1';
 
 #### xa+y			xy		n		plus 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+y/, 'plus 0';
 
 
@@ -1916,7 +1755,6 @@ ok ('xay' ~~ /xa?/).produces(q/<xa @ 0>/), 'ques 1';
 ok ('xy' ~~ /xa?/).produces(q/<x @ 0>/), 'ques 0';
 
 #### xa?y			xaaaay		n		ques 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa?y/, 'ques 2+';
 
 #### xa?y			xay		/<xay @ 0>/	ques 1
@@ -1962,7 +1800,6 @@ ok ('xaaaay' ~~ /xa+!/).produces(q/<xaaaa @ 0>/), 'plus greedy 2+';
 ok ('xay' ~~ /xa+!/).produces(q/<xa @ 0>/), 'plus greedy 1';
 
 #### xa+!			xy		n		plus greedy 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+!/, 'plus greedy 0';
 
 #### xa+!y			xaaaay		/<xaaaay @ 0>/	plus greedy 2+
@@ -1974,7 +1811,6 @@ ok ('xaaaay' ~~ /xa+!y/).produces(q/<xaaaay @ 0>/), 'plus greedy 2+';
 ok ('xay' ~~ /xa+!y/).produces(q/<xay @ 0>/), 'plus greedy 1';
 
 #### xa+!y			xy		n		plus greedy 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+!y/, 'plus greedy 0';
 
 
@@ -1991,7 +1827,6 @@ ok ('xay' ~~ /xa?!/).produces(q/<xa @ 0>/), 'ques greedy 1';
 ok ('xy' ~~ /xa?!/).produces(q/<x @ 0>/), 'ques greedy 0';
 
 #### xa?!y			xaaaay		n		ques greedy 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa?!y/, 'ques greedy 2+';
 
 #### xa?!y			xay		/<xay @ 0>/	ques greedy 1
@@ -2037,7 +1872,6 @@ ok ('xaaaay' ~~ /xa+:!/).produces(q/<xaaaa @ 0>/), 'plus :greedy 2+';
 ok ('xay' ~~ /xa+:!/).produces(q/<xa @ 0>/), 'plus :greedy 1';
 
 #### xa+:!			xy		n		plus :greedy 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+:!/, 'plus :greedy 0';
 
 #### xa+:!y			xaaaay		/<xaaaay @ 0>/	plus :greedy 2+
@@ -2049,7 +1883,6 @@ ok ('xaaaay' ~~ /xa+:!y/).produces(q/<xaaaay @ 0>/), 'plus :greedy 2+';
 ok ('xay' ~~ /xa+:!y/).produces(q/<xay @ 0>/), 'plus :greedy 1';
 
 #### xa+:!y			xy		n		plus :greedy 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+:!y/, 'plus :greedy 0';
 
 
@@ -2066,7 +1899,6 @@ ok ('xay' ~~ /xa?:!/).produces(q/<xa @ 0>/), 'ques :greedy 1';
 ok ('xy' ~~ /xa?:!/).produces(q/<x @ 0>/), 'ques :greedy 0';
 
 #### xa?:!y			xaaaay		n		ques :greedy 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa?:!y/, 'ques :greedy 2+';
 
 #### xa?:!y			xay		/<xay @ 0>/	ques :greedy 1
@@ -2112,7 +1944,6 @@ ok ('xaaaay' ~~ /xa+?/).produces(q/<xa @ 0>/), 'plus eager 2+';
 ok ('xay' ~~ /xa+?/).produces(q/<xa @ 0>/), 'plus eager 1';
 
 #### xa+?			xy		n		plus eager 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+?/, 'plus eager 0';
 
 #### xa+?y			xaaaay		/<xaaaay @ 0>/	plus eager 2+
@@ -2124,7 +1955,6 @@ ok ('xaaaay' ~~ /xa+?y/).produces(q/<xaaaay @ 0>/), 'plus eager 2+';
 ok ('xay' ~~ /xa+?y/).produces(q/<xay @ 0>/), 'plus eager 1';
 
 #### xa+?y			xy		n		plus eager 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+?y/, 'plus eager 0';
 
 
@@ -2141,7 +1971,6 @@ ok ('xay' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 1';
 ok ('xy' ~~ /xa??/).produces(q/<x @ 0>/), 'ques eager 0';
 
 #### xa??y			xaaaay		n		ques eager 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa??y/, 'ques eager 2+';
 
 #### xa??y			xay		/<xay @ 0>/	ques eager 1
@@ -2187,7 +2016,6 @@ ok ('xaaaay' ~~ /xa+:?/).produces(q/<xa @ 0>/), 'plus :eager 2+';
 ok ('xay' ~~ /xa+:?/).produces(q/<xa @ 0>/), 'plus :eager 1';
 
 #### xa+:?			xy		n		plus :eager 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+:?/, 'plus :eager 0';
 
 #### xa+:?y			xaaaay		/<xaaaay @ 0>/	plus :eager 2+
@@ -2199,7 +2027,6 @@ ok ('xaaaay' ~~ /xa+:?y/).produces(q/<xaaaay @ 0>/), 'plus :eager 2+';
 ok ('xay' ~~ /xa+:?y/).produces(q/<xay @ 0>/), 'plus :eager 1';
 
 #### xa+:?y			xy		n		plus :eager 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+:?y/, 'plus :eager 0';
 
 
@@ -2216,7 +2043,6 @@ ok ('xay' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 1';
 ok ('xy' ~~ /xa?:?/).produces(q/<x @ 0>/), 'ques :eager 0';
 
 #### xa?:?y			xaaaay		n		ques :eager 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa?:?y/, 'ques :eager 2+';
 
 #### xa?:?y			xay		/<xay @ 0>/	ques :eager 1
@@ -2241,11 +2067,9 @@ ok ('xay' ~~ /xa*: y/).produces(q/<xay @ 0>/), 'star cut 1';
 ok ('xy' ~~ /xa*: y/).produces(q/<xy @ 0>/), 'star cut 0';
 
 #### xa*:a			xaaaay		n		star cut 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa*: a/, 'star cut 2+';
 
 #### xa*:a			xay		n		star cut 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /xa*: a/, 'star cut 1';
 
 
@@ -2258,20 +2082,16 @@ ok ('xaaaay' ~~ /xa+: y/).produces(q/<xaaaay @ 0>/), 'plus cut 2+';
 ok ('xay' ~~ /xa+: y/).produces(q/<xay @ 0>/), 'plus cut 1';
 
 #### xa+:y			xy		n		plus cut 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /xa+: y/, 'plus cut 0';
 
 #### xa+:a			xaaaay		n		plus cut 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa+: a/, 'plus cut 2+';
 
 #### xa+:a			xay		n		plus cut 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /xa+: a/, 'plus cut 1';
 
 
 #### xa?:y			xaaaay		n		ques cut 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /xa?: y/, 'ques cut 2+';
 
 #### xa?:y			xay		/<xay @ 0>/	ques cut 1
@@ -2287,7 +2107,6 @@ ok ('xy' ~~ /xa?: y/).produces(q/<xy @ 0>/), 'ques cut 0';
 ok ('xaaaay' ~~ /xa?: a/).produces(q/<xaa @ 0>/), 'ques cut 2+';
 
 #### xa?:a			xay		n		ques cut 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /xa?: a/, 'ques cut 1';
 
 
@@ -2304,11 +2123,9 @@ ok ('xay' ~~ /:ratchet xa*y/).produces(q/<xay @ 0>/), 'star ratchet 1';
 ok ('xy' ~~ /:ratchet xa*y/).produces(q/<xy @ 0>/), 'star ratchet 0';
 
 #### :ratchet xa*a			xaaaay		n		star ratchet 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /:ratchet xa*a/, 'star ratchet 2+';
 
 #### :ratchet xa*a			xay		n		star ratchet 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /:ratchet xa*a/, 'star ratchet 1';
 
 
@@ -2321,20 +2138,16 @@ ok ('xaaaay' ~~ /:ratchet xa+y/).produces(q/<xaaaay @ 0>/), 'plus ratchet 2+';
 ok ('xay' ~~ /:ratchet xa+y/).produces(q/<xay @ 0>/), 'plus ratchet 1';
 
 #### :ratchet xa+y			xy		n		plus ratchet 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /:ratchet xa+y/, 'plus ratchet 0';
 
 #### :ratchet xa+a			xaaaay		n		plus ratchet 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /:ratchet xa+a/, 'plus ratchet 2+';
 
 #### :ratchet xa+a			xay		n		plus ratchet 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /:ratchet xa+a/, 'plus ratchet 1';
 
 
 #### :ratchet xa?y			xaaaay		n		ques ratchet 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /:ratchet xa?y/, 'ques ratchet 2+';
 
 #### :ratchet xa?y			xay		/<xay @ 0>/	ques ratchet 1
@@ -2350,7 +2163,6 @@ ok ('xy' ~~ /:ratchet xa?y/).produces(q/<xy @ 0>/), 'ques ratchet 0';
 ok ('xaaaay' ~~ /:ratchet xa?a/).produces(q/<xaa @ 0>/), 'ques ratchet 2+';
 
 #### :ratchet xa?a			xay		n		ques ratchet 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /:ratchet xa?a/, 'ques ratchet 1';
 
 
@@ -2384,7 +2196,6 @@ ok ('xaaaay' ~~ /:ratchet xa+!y/).produces(q/<xaaaay @ 0>/), 'plus ratchet greed
 ok ('xay' ~~ /:ratchet xa+!y/).produces(q/<xay @ 0>/), 'plus ratchet greedy 1';
 
 #### :ratchet xa+!y			xy		n		plus ratchet greedy 0
-#?rakudo skip 'negated smartmatch'
 ok 'xy' !~~ /:ratchet xa+!y/, 'plus ratchet greedy 0';
 
 #### :ratchet xa+!a			xaaaay		/<xaaaa @ 0>/	plus ratchet greedy 2+
@@ -2392,12 +2203,10 @@ ok 'xy' !~~ /:ratchet xa+!y/, 'plus ratchet greedy 0';
 ok ('xaaaay' ~~ /:ratchet xa+!a/).produces(q/<xaaaa @ 0>/), 'plus ratchet greedy 2+';
 
 #### :ratchet xa+!a			xay		n		plus ratchet greedy 1
-#?rakudo skip 'negated smartmatch'
 ok 'xay' !~~ /:ratchet xa+!a/, 'plus ratchet greedy 1';
 
 
 #### :ratchet xa?!y			xaaaay		n		ques ratchet greedy 2+
-#?rakudo skip 'negated smartmatch'
 ok 'xaaaay' !~~ /:ratchet xa?!y/, 'ques ratchet greedy 2+';
 
 #### :ratchet xa?!y			xay		/<xay @ 0>/	ques ratchet greedy 1
@@ -2420,14 +2229,12 @@ ok ('xay' ~~ /:ratchet xa?!a/).produces(q/<xa @ 0>/), 'ques ratchet greedy 1';
 
 ## Quantifier closure
 #### .**{2}			a			n	only one character
-#?rakudo skip 'negated smartmatch'
 ok 'a' !~~ /.**{2}/, 'only one character';
 
 #### .**{2}			ab			y	two characters
 ok 'ab' ~~ /.**{2}/, 'two characters';
 
 #### a**{2}			foobar		n	only one "a" character
-#?rakudo skip 'negated smartmatch'
 ok 'foobar' !~~ /a**{2}/, 'only one "a" character';
 
 #### a**{2}			baabaa		y	two "a" characters
@@ -2437,7 +2244,6 @@ ok 'baabaa' ~~ /a**{2}/, 'two "a" characters';
 ok 'bbbbbbb' ~~ /a**{0..4}/, 'no "a" characters';
 
 #### a**{2..4}		bababab		n	not two consecutive "a" characters
-#?rakudo skip 'negated smartmatch'
 ok 'bababab' !~~ /a**{2..4}/, 'not two consecutive "a" characters';
 
 #### a**{2..4}		baabbbb		y	two "a" characters
@@ -2482,14 +2288,12 @@ ok 'baaabbb' ~~ /a**:!{2..4}/, 'three "a" characters (explicit greed)';
 
 ## Quantifier bare range
 #### .**2			a			n	only one character
-#?rakudo skip 'negated smartmatch'
 ok 'a' !~~ /.**2/, 'only one character';
 
 #### .**2			ab			y	two characters
 ok 'ab' ~~ /.**2/, 'two characters';
 
 #### a**2			foobar		n	only one "a" character
-#?rakudo skip 'negated smartmatch'
 ok 'foobar' !~~ /a**2/, 'only one "a" character';
 
 #### a**2			baabaa		y	two "a" characters
@@ -2499,7 +2303,6 @@ ok 'baabaa' ~~ /a**2/, 'two "a" characters';
 ok 'bbbbbbb' ~~ /a**0..4/, 'no "a" characters';
 
 #### a**2..4			bababab		n	not two consecutive "a" characters
-#?rakudo skip 'negated smartmatch'
 ok 'bababab' !~~ /a**2..4/, 'not two consecutive "a" characters';
 
 #### a**2..4			baabbbb		y	two "a" characters
@@ -2545,7 +2348,6 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 
 ##  builtin subrules
 #### abc <fail> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	n				<fail>
-#?rakudo skip 'negated smartmatch'
 ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' !~~ /abc <fail> def/, '<fail>';
 
 
@@ -2579,34 +2381,28 @@ ok "abc\ndef\n-==\nghi" ~~ /<?wb>abc/, 'BOS word boundary';
 ok "abc\ndef\n-==\nghi" ~~ /ghi<?wb>/, 'EOS word boundary';
 
 #### a<?wb>			abc\ndef\n-==\nghi	n	\w\w word boundary
-#?rakudo skip 'negated smartmatch'
 ok 'abc\ndef\n-==\nghi' !~~ /a<?wb>/, '\w\w word boundary';
 
 #### \-<?wb>			abc\ndef\n-==\nghi	n	\W\W word boundary
-#?rakudo skip 'negated smartmatch'
 ok 'abc\ndef\n-==\nghi' !~~ /\-<?wb>/, '\W\W word boundary';
 
 #### <!wb>def		abc\ndef\n-==\nghi	n	nonword boundary \W\w
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef\n-==\nghi' !~~ /<!wb>def/, 'nonword boundary \W\w';
+ok "abc\ndef\n-==\nghi" !~~ /<!wb>def/, 'nonword boundary \W\w';
 
 #### abc<!wb>		abc\ndef\n-==\nghi	n	nonword boundary \w\W
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef\n-==\nghi' !~~ /abc<!wb>/, 'nonword boundary \w\W';
+ok "abc\ndef\n-==\nghi" !~~ /abc<!wb>/, 'nonword boundary \w\W';
 
 #### <!wb>abc		abc\ndef\n-==\nghi	n	BOS nonword boundary
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef\n-==\nghi' !~~ /<!wb>abc/, 'BOS nonword boundary';
+ok "abc\ndef\n-==\nghi" !~~ /<!wb>abc/, 'BOS nonword boundary';
 
 #### ghi<!wb>		abc\ndef\n-==\nghi	n	EOS nonword boundary
-#?rakudo skip 'negated smartmatch'
-ok 'abc\ndef\n-==\nghi' !~~ /ghi<!wb>/, 'EOS nonword boundary';
+ok "abc\ndef\n-==\nghi" !~~ /ghi<!wb>/, 'EOS nonword boundary';
 
 #### a<!wb>			abc\ndef\n-==\nghi	y	\w\w nonword boundary
-ok 'abc\ndef\n-==\nghi' ~~ /a<!wb>/, '\w\w nonword boundary';
+ok "abc\ndef\n-==\nghi" ~~ /a<!wb>/, '\w\w nonword boundary';
 
 #### \-<!wb>			abc\ndef\n-==\nghi	y	\W\W nonword boundary
-ok 'abc\ndef\n-==\nghi' ~~ /\-<!wb>/, '\W\W nonword boundary';
+ok "abc\ndef\n-==\nghi" ~~ /\-<!wb>/, '\W\W nonword boundary';
 
 
 #### <upper>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<upper>: <A @ 45>/		<upper>
@@ -2783,7 +2579,6 @@ ok '-' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes variant';
 ok 'ccdd' ~~ /<-[ab]+[cd]>+/, 'enumerated character classes variant';
 
 #### ^<-[ab]+[cd]>+$	caad				n	enumerated character classes variant
-#?rakudo skip 'negated smartmatch'
 ok 'caad' !~~ /^<-[ab]+[cd]>+$/, 'enumerated character classes variant';
 
 #### <-  [ a  b ]+[cd]>+	ccdd			y	whitespace is ignored within square brackets and after the initial -
@@ -2793,7 +2588,6 @@ ok 'ccdd' ~~ /<-  [ a  b ]+[cd]>+/, 'whitespace is ignored within square bracket
 ok 'ident_1' ~~ /^<-upper>dent/, 'inverted character class';
 
 #### ^<-upper>dent	Ident_1				n	inverted character class
-#?rakudo skip 'negated smartmatch'
 ok 'Ident_1' !~~ /^<-upper>dent/, 'inverted character class';
 
 #### <+alpha-[Jj]>+	abc				y	character class with no j
@@ -2803,7 +2597,6 @@ ok 'abc' ~~ /<+alpha-[Jj]>+/, 'character class with no j';
 ok 'abc' ~~ /<+ alpha - [ Jj ]>/, 'character class with no j with ws';
 
 #### ^<+alpha-[Jj]>+$	aJc			n	character class with no j fail
-#?rakudo skip 'negated smartmatch'
 ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 
 
