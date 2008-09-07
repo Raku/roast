@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item rindex">
 
-plan 31;
+plan 32;
 
 # Simple - with just a single char
 
@@ -60,3 +60,6 @@ is($s.uc.rindex("O"), 7, ".uc.rindex ");
 # ideas for deeper chained . calls ?
 is($s.lc.ucfirst.rindex("w"), 6, ".lc.ucfirst.rindex");
 
+# rindex on non-strings
+#?rakudo skip 'rindex on non-strings'
+ok 3459.rindex(5) == 2, 'rindex on integers';
