@@ -2,6 +2,9 @@ use Test;
 
 plan 745;
 
+### for now
+sub matchcheck { 1 }
+
 ##   Backtracking control tests
 #### a* a			bazaar		y	control
 ok 'bazaar' ~~ /a* a/, 'control';
@@ -354,7 +357,7 @@ ok ('bbccdd' ~~ /<-[d..b]>/) ~~ Match where matchcheck($_, q/parse error/), 'ill
 
 #### <[-]>			ab-def		/parse error/	unescaped hyphen
 #?rakudo skip 'quoting'
-ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}) ~~ Failure where /parse error/), 'unescaped hyphen';
+ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}) ~~ Failure where /parse error/, 'unescaped hyphen';
 
 #### <[\-]>			ab-def		y	escaped hyphen
 ok 'ab-def' ~~ /<[\-]>/, 'escaped hyphen';
@@ -406,7 +409,7 @@ ok ']' ~~ /<[\]]>/, 'escaped close bracket';
 
 #### <[\]>			\\]]		/parse error/	unescaped backslash (or no closing brace)
 #?rakudo skip 'quoting'
-ok eval(q{{ '\\]]' ~~ /<[\]>/ }}) ~~ Failure where /parse error/), 'unescaped backslash (or no closing brace)';
+ok eval(q{{ '\\]]' ~~ /<[\]>/ }}) ~~ Failure where /parse error/, 'unescaped backslash (or no closing brace)';
 
 #### ^\><[<]>		><		y	lt character class
 #?rakudo skip 'parse error'
@@ -583,11 +586,11 @@ ok '' ~~ /<null>/, 'null pattern (<null>)';
 
 #### ^ <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 0>/	null pattern (<null>)
 #?rakudo skip 'quoting'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}) ~~ Failure where /mob<null>: < @ 0>/), 'null pattern (<null>)';
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}) ~~ Failure where /mob<null>: < @ 0>/, 'null pattern (<null>)';
 
 #### <null> $	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 65>/	null pattern (<null>)
 #?rakudo skip 'quoting'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<null> $/ }}) ~~ Failure where /mob<null>: < @ 65>/), 'null pattern (<null>)';
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<null> $/ }}) ~~ Failure where /mob<null>: < @ 65>/, 'null pattern (<null>)';
 
 #### abc <null> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
 ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /abc <null> def/, 'null pattern (<null>)';
@@ -601,7 +604,7 @@ ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /x
 
 #### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
 #?rakudo skip 'quoting'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /a[b}/ }}) ~~ Failure where /rule error/), 'mismatched close';
+ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /a[b}/ }}) ~~ Failure where /rule error/, 'mismatched close';
 
 
 #### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
@@ -771,27 +774,27 @@ ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\A)';
+ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}) ~~ Failure where /reserved/, 'retired metachars (\A)';
 
 #### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\A)';
+ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}) ~~ Failure where /reserved/, 'retired metachars (\A)';
 
 #### abc\Z			abcZ		/reserved/	retired metachars (\Z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}) ~~ Failure where /reserved/), 'retired metachars (\Z)';
+ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}) ~~ Failure where /reserved/, 'retired metachars (\Z)';
 
 #### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}) ~~ Failure where /reserved/), 'retired metachars (\Z)';
+ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}) ~~ Failure where /reserved/, 'retired metachars (\Z)';
 
 #### abc\z			abcz		/reserved/	retired metachars (\z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcz' ~~ /abc\z/ }}) ~~ Failure where /reserved/), 'retired metachars (\z)';
+ok eval(q{{ 'abcz' ~~ /abc\z/ }}) ~~ Failure where /reserved/, 'retired metachars (\z)';
 
 #### def\z			abc\ndef	/reserved/	retired metachars (\z)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}) ~~ Failure where /reserved/), 'retired metachars (\z)';
+ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}) ~~ Failure where /reserved/, 'retired metachars (\z)';
 
 #### abc # def		abc#def		y	comments (#)
 ok 'abc#def' ~~ /abc # def
@@ -871,21 +874,21 @@ ok 'bcd' ~~ /^ [ <[a..d]>+ | <[c..e]>+ ] $/, 'alternation (|)';
 
 #### b|			bcd		/rule error/	alternation (|) - null right arg illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /b|/ }}) ~~ Failure where /rule error/), 'alternation (|) - null right arg illegal';
+ok eval(q{{ 'bcd' ~~ /b|/ }}) ~~ Failure where /rule error/, 'alternation (|) - null right arg illegal';
 
 #### |b			bcd		y	alternation (|) - null left arg ignored
 ok 'bcd' ~~ /|b/, 'alternation (|) - null left arg ignored';
 
 #### |			bcd		/rule error/	alternation (|) - null both args illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /|/ }}) ~~ Failure where /rule error/), 'alternation (|) - null both args illegal';
+ok eval(q{{ 'bcd' ~~ /|/ }}) ~~ Failure where /rule error/, 'alternation (|) - null both args illegal';
 
 #### \|			|		y	alternation (|) - literal must be escaped
 ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
 
 #### |			|		/rule error/	alternation (|) - literal must be escaped
 #?rakudo skip 'quoting'
-ok eval(q{{ '|' ~~ /|/ }}) ~~ Failure where /rule error/), 'alternation (|) - literal must be escaped';
+ok eval(q{{ '|' ~~ /|/ }}) ~~ Failure where /rule error/, 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?pugs todo 'feature'
@@ -918,31 +921,31 @@ ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
 #### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /b&/ }}) ~~ Failure where /rule error/), 'conjunction (&) - null right arg illegal';
+ok eval(q{{ 'bcd' ~~ /b&/ }}) ~~ Failure where /rule error/, 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /&b/ }}) ~~ Failure where /rule error/), 'conjunction (&) - null left arg illegal';
+ok eval(q{{ 'bcd' ~~ /&b/ }}) ~~ Failure where /rule error/, 'conjunction (&) - null left arg illegal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
 #?rakudo skip 'quoting'
-ok eval(q{{ 'bcd' ~~ /&/ }}) ~~ Failure where /rule error/), 'conjunction (&) - null both args illegal';
+ok eval(q{{ 'bcd' ~~ /&/ }}) ~~ Failure where /rule error/, 'conjunction (&) - null both args illegal';
 
 #### \&			&		y	conjunction (&) - literal must be escaped
 ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
 
 #### &			&		/rule error/	conjunction (&) - literal must be escaped
 #?rakudo skip 'quoting'
-ok eval(q{{ '&' ~~ /&/ }}) ~~ Failure where /rule error/), 'conjunction (&) - literal must be escaped';
+ok eval(q{{ '&' ~~ /&/ }}) ~~ Failure where /rule error/, 'conjunction (&) - literal must be escaped';
 
 # todo :pge<leading |>
 #### a&|b			a&|b		/rule error/	alternation and conjunction (&|) - parse error
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a&|b' ~~ /a&|b/ }}) ~~ Failure where /rule error/), 'alternation and conjunction (&|) - parse error';
+ok eval(q{{ 'a&|b' ~~ /a&|b/ }}) ~~ Failure where /rule error/, 'alternation and conjunction (&|) - parse error';
 
 #### a|&b			a|&b		/rule error/	alternation and conjunction (|&) - parse error
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a|&b' ~~ /a|&b/ }}) ~~ Failure where /rule error/), 'alternation and conjunction (|&) - parse error';
+ok eval(q{{ 'a|&b' ~~ /a|&b/ }}) ~~ Failure where /rule error/, 'alternation and conjunction (|&) - parse error';
 
 #### |d|b			abc		y	leading alternation ignored
 ok 'abc' ~~ /|d|b/, 'leading alternation ignored';
@@ -959,55 +962,55 @@ ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 ####  b |  | d		abc		n	null pattern invalid
 #?pugs todo 'feature'
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc' !~~ / b |  | d/ }}) ~~ Failure where /reserved/), 'null pattern invalid';
+ok eval(q{{ 'abc' !~~ / b |  | d/ }}) ~~ Failure where /reserved/, 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'pabc' ~~ /\pabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\p)';
+ok eval(q{{ 'pabc' ~~ /\pabc/ }}) ~~ Failure where /reserved/, 'retired metachars (\p)';
 
 #### \p{InConsonant}		a		/reserved/	retired metachars (\p)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a' ~~ /\p{InConsonant}/ }}) ~~ Failure where /reserved/), 'retired metachars (\p)';
+ok eval(q{{ 'a' ~~ /\p{InConsonant}/ }}) ~~ Failure where /reserved/, 'retired metachars (\p)';
 
 #### \Pabc			Pabc		/reserved/	retired metachars (\P)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'Pabc' ~~ /\Pabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\P)';
+ok eval(q{{ 'Pabc' ~~ /\Pabc/ }}) ~~ Failure where /reserved/, 'retired metachars (\P)';
 
 #### \P{InConsonant}		a		/reserved/	retired metachars (\P)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'a' ~~ /\P{InConsonant}/ }}) ~~ Failure where /reserved/), 'retired metachars (\P)';
+ok eval(q{{ 'a' ~~ /\P{InConsonant}/ }}) ~~ Failure where /reserved/, 'retired metachars (\P)';
 
 #### \Labc\E			LabcE		/reserved/	retired metachars (\L...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'LabcE' ~~ /\Labc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\L...\E)';
+ok eval(q{{ 'LabcE' ~~ /\Labc\E/ }}) ~~ Failure where /reserved/, 'retired metachars (\L...\E)';
 
 #### \LABC\E			abc		/reserved/	retired metachars (\L...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc' ~~ /\LABC\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\L...\E)';
+ok eval(q{{ 'abc' ~~ /\LABC\E/ }}) ~~ Failure where /reserved/, 'retired metachars (\L...\E)';
 
 #### \Uabc\E			UabcE		/reserved/	retired metachars (\U...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'UabcE' ~~ /\Uabc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\U...\E)';
+ok eval(q{{ 'UabcE' ~~ /\Uabc\E/ }}) ~~ Failure where /reserved/, 'retired metachars (\U...\E)';
 
 #### \Uabc\E			ABC		/reserved/	retired metachars (\U...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'ABC' ~~ /\Uabc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\U...\E)';
+ok eval(q{{ 'ABC' ~~ /\Uabc\E/ }}) ~~ Failure where /reserved/, 'retired metachars (\U...\E)';
 
 #### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'QabcE' ~~ /\Qabc\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\Q...\E)';
+ok eval(q{{ 'QabcE' ~~ /\Qabc\E/ }}) ~~ Failure where /reserved/, 'retired metachars (\Q...\E)';
 
 #### \Qabc d?\E		abc d		/reserved/	retired metachars (\Q...\E)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abc d' ~~ /\Qabc d?\E/ }}) ~~ Failure where /reserved/), 'retired metachars (\Q...\E)';
+ok eval(q{{ 'abc d' ~~ /\Qabc d?\E/ }}) ~~ Failure where /reserved/, 'retired metachars (\Q...\E)';
 
 #### \Gabc			Gabc		/reserved/	retired metachars (\G)
 #?rakudo skip 'quoting'
-ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}) ~~ Failure where /reserved/), 'retired metachars (\G)';
+ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}) ~~ Failure where /reserved/, 'retired metachars (\G)';
 
 #### \1abc			1abc		/reserved/	retired metachars (\1)
 #?rakudo skip 'quoting'
-ok eval(q{{ '1abc' ~~ /\1abc/ }}) ~~ Failure where /reserved/), 'retired metachars (\1)';
+ok eval(q{{ '1abc' ~~ /\1abc/ }}) ~~ Failure where /reserved/, 'retired metachars (\1)';
 
 #### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
 #?pugs todo 'feature'
@@ -2599,102 +2602,102 @@ ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 
 #### {{		abcdef		/Missing closing braces/	unterminated closure
 #?rakudo skip 'quoting'
-ok eval(q[ 'abcdef' ~~ /{{/ ]) ~~ Failure where /Missing closing braces/), 'unterminated closure';
+ok eval(q[ 'abcdef' ~~ /{{/ ]) ~~ Failure where /Missing closing braces/, 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /\1/ }}) ~~ Failure where /reserved/), 'back references';
+ok eval(q{{ 'abcdef' ~~ /\1/ }}) ~~ Failure where /reserved/, 'back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /\x[/ }}) ~~ Failure where /Missing close bracket/), 'unterminated \x[..]';
+ok eval(q{{ 'abcdef' ~~ /\x[/ }}) ~~ Failure where /Missing close bracket/, 'unterminated \x[..]';
 
 #### \X[		abcdef		/Missing close bracket/		unterminated \X[..]
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /\X[/ }}) ~~ Failure where /Missing close bracket/), 'unterminated \X[..]';
+ok eval(q{{ 'abcdef' ~~ /\X[/ }}) ~~ Failure where /Missing close bracket/, 'unterminated \X[..]';
 
 
 #### * abc		abcdef		/Quantifier follows nothing/	bare * at start
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /* abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * at start';
+ok eval(q{{ 'abcdef' ~~ /* abc/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  * abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after ws';
+ok eval(q{{ 'abcdef' ~~ /  * abc/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare * after ws';
 
 #### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[*|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after [';
+ok eval(q{{ 'abcdef' ~~ /[*|a]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[ *|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after [+sp';
+ok eval(q{{ 'abcdef' ~~ /[ *|a]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare * after [+sp';
 
 #### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a|*]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after |';
+ok eval(q{{ 'abcdef' ~~ /[a|*]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a| *]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare * after |+sp';
+ok eval(q{{ 'abcdef' ~~ /[a| *]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare * after |+sp';
 
 
 #### + abc		abcdef		/Quantifier follows nothing/	bare + at start
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /+ abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + at start';
+ok eval(q{{ 'abcdef' ~~ /+ abc/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  + abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after ws';
+ok eval(q{{ 'abcdef' ~~ /  + abc/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare + after ws';
 
 #### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[+|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after [';
+ok eval(q{{ 'abcdef' ~~ /[+|a]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[ +|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after [+sp';
+ok eval(q{{ 'abcdef' ~~ /[ +|a]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare + after [+sp';
 
 #### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a|+]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after |';
+ok eval(q{{ 'abcdef' ~~ /[a|+]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a| +]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare + after |+sp';
+ok eval(q{{ 'abcdef' ~~ /[a| +]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare + after |+sp';
 
 
 #### ? abc		abcdef		/Quantifier follows nothing/	bare ? at start
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /? abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? at start';
+ok eval(q{{ 'abcdef' ~~ /? abc/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  ? abc/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after ws';
+ok eval(q{{ 'abcdef' ~~ /  ? abc/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? after ws';
 
 #### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[?|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after [';
+ok eval(q{{ 'abcdef' ~~ /[?|a]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[ ?|a]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after [+sp';
+ok eval(q{{ 'abcdef' ~~ /[ ?|a]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? after [+sp';
 
 #### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after |';
+ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}) ~~ Failure where /Quantifier follows nothing/), 'bare ? after |+sp';
+ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? after |+sp';
 
 
 #### 		abcdef		/Null pattern illegal/		null pattern
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ // }}) ~~ Failure where /null pattern/), '';
+ok eval(q{{ 'abcdef' ~~ // }}) ~~ Failure where /null pattern/, '';
 
 ####   		abcdef		/Null pattern illegal/		ws null pattern
 #?rakudo skip 'quoting'
-ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure where /Null pattern illegal/), 'ws null pattern';
+ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure where /Null pattern illegal/, 'ws null pattern';
 
 
