@@ -726,7 +726,6 @@ ok "abc\ndef" ~~ /c \n d/, 'logical newline (\n)';
 ok "abc\rdef" ~~ /c \n d/, 'logical newline matches \r';
 
 #### c \n+ d			abc\n\ndef	y	logical newline quantified
-#?rakudo todo 'unknown'
 ok "abc\n\ndef" ~~ /c \n+ d/, 'logical newline quantified';
 
 #### a\n+f			abcdef		n	logical newline (\n)
