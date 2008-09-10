@@ -219,7 +219,6 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
-#?rakudo todo 'changing a hash'
 {
     my %hash_kv = ( a => 1, b => 2, c => 3 );
     my %kv = ( a => 2, b => 3, c => 4 );
