@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item index">
 
-plan 34;
+plan 35;
 
 # Type of return value
 #?rakudo todo 'successful index() should return a StrPos'
@@ -72,3 +72,4 @@ ok(index($j, "l") == 3, "index on junction");
 ok($j.index("l")  == 2, ".index on junction");
 ok($j.index("l")  == 3, ".index on junction");
 
+ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
