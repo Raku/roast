@@ -21,6 +21,7 @@ use Test;
 plan 40;
 
 sub f1 ($a, $b) { WHAT($a) ~ WHAT($b) }
+#?rakudo skip 'call positional parameters as named ones'
 {
     is f1(a     => 42, 23), "IntInt", "'a => 42' is a named";
     is f1(:a(42),  23),     "IntInt", "':a(42)' is a named";
@@ -42,23 +43,33 @@ sub f2 (:$a!) { ~WHAT($a) }
 
     is f2(a     => 42), "Int", "'a => 42' is a named";
     is f2(:a(42)),      "Int", "':a(42)' is a named";
+    #?rakudo todo 'Adverbial pairs without should produce a Bool (not Int)'
     is f2(:a),          "Bool", "':a' is a named";
     
+    #?rakudo skip '.() sub calls'
     is(f2.(:a),         "Bool",  "in 'f2.(:a)', ':a' is a named");
+    #?rakudo todo 'Adverbial pairs without should produce a Bool (not Int)'
     is $f2(:a),         "Bool",  "in '\$f2(:a)', ':a' is a named";
+    #?rakudo skip '.() sub calls'
     is $f2.(:a),        "Bool",  "in '\$f2.(:a)', ':a' is a named";
 
+    #?rakudo 6 todo 'unknown'
     dies_ok { f2("a"   => 42) }, "'\"a\" => 42' is a pair";
     dies_ok { f2(("a") => 42) }, "'(\"a\") => 42' is a pair";
     dies_ok { f2((a   => 42)) }, "'(a => 42)' is a pair";
     dies_ok { f2(("a" => 42)) }, "'(\"a\" => 42)' is a pair";
     dies_ok { f2((:a(42)))    }, "'(:a(42))' is a pair";
     dies_ok { f2((:a))        }, "'(:a)' is a pair";
+    #?rakudo skip '.() sub calls'
     dies_ok { f2.((:a))       }, "in 'f2.((:a))', '(:a)' is a pair";
     
+    #?rakudo todo 'unknown'
     dies_ok { $f2((:a))       }, "in '\$f2((:a))', '(:a)' is a pair";
+    #?rakudo skip '.() sub calls'
     dies_ok { $f2.((:a))      }, "in '\$f2.((:a))', '(:a)' is a pair";
+    #?rakudo todo 'unknown'
     dies_ok { $f2(((:a)))     }, "in '\$f2(((:a)))', '(:a)' is a pair";
+    #?rakudo skip '.() sub calls'
     dies_ok { $f2.(((:a)))    }, "in '\$f2.(((:a)))', '(:a)' is a pair";
 }
 
@@ -88,8 +99,8 @@ sub f5 ($a) { ~WHAT($a) }
 
     is f5(@array_of_pairs), "Array",
         'an array of pairs is not treated magically...';
-    is f5([,] @array_of_pairs), "Array",
-        '...and [,] @array isn\'t either';
+    #?rakudo skip 'reduce meta op'
+    is f5([,] @array_of_pairs), "Array", '...and [,] @array isn\'t either';
 }
 
 sub f6 ($a) { ~WHAT($a) }
@@ -101,10 +112,12 @@ sub f6 ($a) { ~WHAT($a) }
     #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
     is f6([,] %hash_of_pairs), "Str",  '...but [,] %hash is';
+    #?rakudo skip 'prefix:<|>'
     is f6(|%hash_of_pairs,     'Str',  '... and so is |%hash';
 }
 
 sub f7 (:$bar!) { ~WHAT($bar) }
+#?rakudo 3 todo 'variables as keys of pairs forbidden'
 {
     my $bar = "bar";
 
