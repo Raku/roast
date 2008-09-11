@@ -84,7 +84,7 @@ my $two;
 # Additionally, a smart compiler will detect thus errors at compile-time, so I
 # added an eval().  --iblech
 try { eval '0,{$one = 1}{$two = 2}' };
-is($one, undef, 'two blocks ({} {}) no semicolon after either,.. first block does not execute');
+ok(!defined($one), 'two blocks ({} {}) no semicolon after either,.. first block does not execute');
 #?rakudo todo 'blocks as subscripts (?)'
 is($two, 2, '... but second block does (parsed as hash subscript)');
 

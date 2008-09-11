@@ -53,7 +53,7 @@ my @array2 = ("test", 1, undef);
 
     #?rakudo todo 'list assignment'
     is(+@array4, 3, 'the array4 has 3 elements');
-    is(@array4[0], undef,  'got the right value at array4 index 0');
+    ok(!defined(@array4[0]), 'got the right value at array4 index 0');
     #?rakudo 2 todo 'list assignment'
     is(@array4[1], 1,      'got the right value at array4 index 1');
     is(@array4[2], 'test', 'got the right value at array4 index 2');
@@ -66,7 +66,7 @@ my @array2 = ("test", 1, undef);
 
     #?rakudo todo 'array slices and list assignment'
     is(+@array5, 6, 'the array5 has 6 elements');
-    is(@array5[0], undef,  'got the right value at array5 index 0');
+    ok(!defined(@array5[0]),  'got the right value at array5 index 0');
     #?rakudo 5 todo 'array slices and list assignment'
     is(@array5[1], 1,      'got the right value at array5 index 1');
     is(@array5[2], 'test', 'got the right value at array5 index 2');

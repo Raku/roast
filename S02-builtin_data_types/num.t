@@ -150,12 +150,12 @@ plan 47;
 
 is(42_000,     42000,    'underscores allowed (and ignored) in numeric literals');
 is(42_127_000, 42127000, 'multiple underscores ok');
-#?rakudo 2 skip "underscores cause weird IMCC errors"
+#?rakudo 2 todo "underscores cause weird IMCC errors"
 is(42.0_1,     42.01,    'underscores in fraction ok');
 is(4_2.01,     42.01,    'underscores in whole part ok');
 
 eval_dies_ok('4_2._0_1', 'single underscores are not ok directly after the dot');
-#?rakudo skip 'Underscores in numbers'
+#?rakudo todo 'Underscores in numbers'
 is(4_2.0_1, 42.01,  'single underscores are ok');
 
 is 0_1, 1, "0_1 is parsed as 0d1";

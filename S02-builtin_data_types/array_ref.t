@@ -49,7 +49,7 @@ isa_ok($array_ref4, Array);
 my $array_ref5 = [ $array_ref2[2, 1, 0], $array_ref1[2, 1, 0] ];
 isa_ok($array_ref5, Array);
 
-#?rakudo skip 'flatten and slices are not working'
+#?rakudo todo 'flatten and slices are not working'
 {
     is(+$array_ref5, 6, 'the array_ref5 has 6 elements');
     is(!$array_ref5[0].defined, 'got the right value at array_ref5 index 0');
@@ -79,7 +79,7 @@ isa_ok($array_ref5, Array);
 my $array_ref7 = [ $array_ref1[(2, 1, 0)] ];
 isa_ok($array_ref7, Array);
 
-#?rakudo skip 'flatten and slices are not working'
+#?rakudo todo 'flatten and slices are not working'
 {
     is(+$array_ref7, 3, 'the array_ref7 has 3 elements');
     is($array_ref7[0], 'baz', 'got the right value at array_ref7 index 0');

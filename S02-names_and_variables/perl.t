@@ -35,11 +35,8 @@ my @tests = (
     [],      # empty array
     [ 42 ],  # only one elem
     [< a b c>],
-    #?rakudo emit # {...}.perl is invalid
     {},           # empty hash
-    #?rakudo emit # {...}.perl is invalid
     { a => 42 },  # only one elem
-    #?rakudo emit # {...}.perl is invalid
     { :a(1), :b(2), :c(3) },
 
     [ 3..42 ],

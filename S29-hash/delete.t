@@ -31,7 +31,7 @@ sub gen_hash {
     is %h1.delete(<b>), $b, "Test for delete single key. (Method call)";
 }
 
-#?rakudo skip 'Slices'
+#?rakudo todo 'Slices'
 {
     my %h1 = gen_hash;
     my @cde = %h1<c d e>;

@@ -60,7 +60,7 @@ plan 23;
 
     #?pugs todo 'feed operators do not work'
     is($got_x, "x", "x was passed as explicit param");
-    is($got_y, undef, "optional param y was not bound to fed list");
+    ok(!defined($got_y), "optional param y was not bound to fed list");
     #?pugs todo 'feed operators do not work'
     is(~@got_z, ~@a, '...slurpy array *@z got it');
 }

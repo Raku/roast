@@ -120,7 +120,7 @@ plan 28;
 }
 
 # := actually takes subroutine parameter list
-#?rakudo skip 'List binding'
+#?rakudo todo 'List binding'
 {
   my $a;
   eval '(:$a) := (:a<foo>)';

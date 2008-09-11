@@ -27,7 +27,7 @@ plan 10;
   is "%hash", '%hash', 'no interpolation';
 }
 
-#?rakudo skip 'Hash interpolation'
+#?rakudo todo 'Hash interpolation'
 {
     # "%hash{a}" actually calls a(). Test that.
     my %hash = (a => 1, b => 2);

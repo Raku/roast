@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 198;
+plan 199;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -13,7 +13,7 @@ Tests quoting constructs as defined in L<S02/Literals>
 
 =todo
 
-* Q, q:b, and other interpolation levels (half-done)
+* q:b and other interpolation levels (half-done)
 * meaningful quotations (qx, rx, etc)
 * review shell quoting semantics of «»
 * arrays in «»
@@ -47,6 +47,7 @@ Tests quoting constructs as defined in L<S02/Literals>
     ok Q{\n}.chars == 2,            'Q{..} do not interpolate \n';
     is Q{$x},        '$x',          'Q{..} do not interpolate scalars';
     ok Q{$x}.chars == 2,            'Q{..} do not interpolate scalars';
+    is Q {\\},       '\\\\',        'Q {..} quoting';
 }
 
 #?rakudo skip 'Q quoting'

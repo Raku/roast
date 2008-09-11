@@ -22,14 +22,14 @@ eval_dies_ok('rx :foo:', 'colons are not allowed as rx delimiters');
     isa_ok($var, Regex, '$var = /foo/ returns a Regex object');
 }
 
-#?rakudo skip 'my $match = m{oo} does not match on $_'
+#?rakudo todo 'my $match = m{oo} does not match on $_'
 {
     $_ = 'foo';
     my $match = m{oo};
     is($match, 'oo', 'm{} always matches instead of making a Regex object');
 }
 
-#?rakudo skip 'my $match = m/oo/ parsefail'
+#?rakudo todo 'my $match = m/oo/ parsefail'
 {
 
     $_ = 'foo';
