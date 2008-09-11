@@ -17,4 +17,4 @@ if $*OS eq "browser" {
 }
 
 my $sock = connect('google.com', 80);
-is (eval('is $sock.getpeername')), not undef, "IO.getpeer works";
+ok $sock.getpeername.defined, "IO.getpeer works";

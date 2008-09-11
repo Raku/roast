@@ -13,20 +13,20 @@ Basic tests for "return"
 =end pod
 
 sub bar { return }
-is(bar(), undef, '... bare return statement returned undef');
+ok(!defined(bar()), '... bare return statement returned undef');
 
 sub bar2 { return() }
-is(bar2(), undef, '... bare return statement w/ parens returned undef');
+ok(!defined(bar2()), '... bare return statement w/ parens returned undef');
 
 sub baz { return 10 if 1; }
-is(baz(), 10, '... return worked with a statement modifier');
+ok(baz(), 10, '... return worked with a statement modifier');
 
 #?rakudo skip 'parsefail on "return if 1"'
 sub foobar { return if 1; };
-is(foobar(), undef, '... bare return worked with a statement modifier');
+ok(!defined(foobar()), '... bare return worked with a statement modifier');
 
 sub foobar2 { return() if 1; }
-is(foobar2(), undef, '... bare return worked with a statement modifier');
+ok(!defined(foobar2()), '... bare return worked with a statement modifier');
 
 my $should_ret_empty_list1 = sub { return; 1 };
 is @($should_ret_empty_list1(),).elems, 0, "our sub returned an empty list (1)";

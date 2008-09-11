@@ -81,7 +81,7 @@ if (! $err) {
 };
 
 %*ENV.delete('PUGS_ROCKS');
-is(%*ENV<PUGS_ROCKS>,undef,'We can remove keys from %*ENV');
+ok(!%*ENV.exists('PUGS_ROCKS'), 'We can remove keys from %*ENV');
 
 my $command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
 diag $command;
@@ -91,7 +91,7 @@ my $child_env = slurp $tempfile;
 my %child_env = eval $child_env;
 unlink $tempfile;
 
-is(%child_env<PUGS_ROCKS>,undef,'The child did not see %*ENV<PUGS_ROCKS>');
+ok(!%child_env.exists('PUGS_ROCKS'), 'The child did not see %*ENV<PUGS_ROCKS>');
 
 my $err = 0;
 for %*ENV.kv -> $k,$v {
