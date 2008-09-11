@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 186;
+plan 193;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -26,6 +26,19 @@ Tests quoting constructs as defined in L<S02/Literals>
 {
     my $s = q{ foo bar };
     is $s, ' foo bar ', 'string using q{}';
+}
+
+{
+    is q{ { foo } }, ' { foo } ',   'Can nest curlies in q{ .. }';
+    is q{{ fo} }},   ' fo} ',       'Unnested single curlies in q{{...}}';
+    is q{{ {{ } }} }}, ' {{ } }} ', 'Can nest double curlies in q{{...}}';
+}
+
+{
+    is q{\n},        '\n',          'q{..} don't interpolate \n';
+    ok q{\n}.chars == 2,            'q{..} don't interpolate \n';
+    is q{$x},        '$x',          'q{..} don't interpolate scalars';
+    ok q{$x}.chars == 2,            'q{..} don't interpolate scalars';
 }
 
 {
