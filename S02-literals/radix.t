@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 93;
+plan 97;
 
 # L<S02/Literals/":10<42>">
 
@@ -201,7 +201,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
 # Tests for the :x[ <list> ] notations
 # L<S02/Literals/"Alternately you can use a list of digits in decimal">
-
+#?rakudo 4 skip 'Cannot parse :60[LIST]'
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
