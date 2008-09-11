@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 50;
+plan 52;
 
 =begin kwid
 
@@ -133,7 +133,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok((5 ~~ 1 .. 10), "5 is in 1 .. 10", :todo);
     ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
     ok(!(1 ~~ 5 .. 10), "1 is not i n 5 .. 10");
-    #ok(!(5 ~~ 5 ^..^ 10), "5 is not in 5 .. 10, exclusive"); # phooey
+    ok(!(5 ~~ 5 ^..^ 10), "5 is not in 5 .. 10, exclusive");
 };
 
 #Str     StrRange  in string range          match if $min le $_ le $max
@@ -178,9 +178,9 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #Any     boolean   simple expression truth* match if true given $_
 
 #L<S03/Smart matching/Any undef undefined not .defined>
-#?rakudo skip "Method 'ACCEPTS' not found for invocant of class 'Failure'"
 { 
     ok(!("foo" ~~ undef), "foo is not ~~ undef");
+    ok "foo" !~~ undef,   'foo !~~ undef';
     ok((undef ~~ undef), "undef is");
 };
 
