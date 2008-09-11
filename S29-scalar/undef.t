@@ -31,6 +31,7 @@ our $GLOBAL;
 is(undef, undef, "undef is equal to undef");
 ok(!defined(undef), "undef is not defined");
 
+#?rakudo skip 'undef += 1'
 {
     my $a;
     is($a, undef, "uninitialized lexicals are undef");
@@ -96,6 +97,7 @@ ok(!defined(undef), "undef is not defined");
     ok(defined(%hash), "define hash again");
 }
 
+#?rakudo skip 'access to &your_sub'
 {
     sub a_sub { "møøse" }
 
@@ -125,22 +127,25 @@ ok(!defined(undef), "undef is not defined");
 
 # Test LHS assignment to undef:
 
-my $interesting;
-(undef, undef, $interesting) = (1,2,3);
-is($interesting, 3, "Undef on LHS of list assignment");
+#?rakudo skip 'list assignment'
+{
+    my $interesting;
+    (undef, undef, $interesting) = (1,2,3);
+    is($interesting, 3, "Undef on LHS of list assignment");
 
-(undef, $interesting, undef) = (1,2,3);
-is($interesting, 2, "Undef on LHS of list assignment");
+    (undef, $interesting, undef) = (1,2,3);
+    is($interesting, 2, "Undef on LHS of list assignment");
 
-($interesting, undef, undef) = (1,2,3);
-is($interesting, 1, "Undef on LHS of list assignment");
+    ($interesting, undef, undef) = (1,2,3);
+    is($interesting, 1, "Undef on LHS of list assignment");
 
-sub two_elements() { (1,2) };
-(undef,$interesting) = two_elements();
-is($interesting, 2, "Undef on LHS of function assignment");
+    sub two_elements() { (1,2) };
+    (undef,$interesting) = two_elements();
+    is($interesting, 2, "Undef on LHS of function assignment");
 
-($interesting, undef) = two_elements();
-is($interesting, 1, "Undef on LHS of function assignment");
+    ($interesting, undef) = two_elements();
+    is($interesting, 1, "Undef on LHS of function assignment");
+}
 
 =begin pod
 
@@ -153,7 +158,7 @@ Perl6-specific tests
 
     my @ary = (<a b c d e>);
     my $ary_r = @ary; # ref
-    isa_ok($ary_r, "Array");
+    isa_ok($ary_r, Array);
     ok(defined($ary_r), "array reference");
 
     undefine @ary;
@@ -166,26 +171,28 @@ Perl6-specific tests
     isa_ok($hash_r, "Hash");
     ok(defined($hash_r), "hash reference");
     undefine %hash;
+    #?rakudo 2 skip 'hash binding (?)'
     ok(defined($hash_r), "undefine hash referent:");
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 
+#?rakudo skip 'Autovivify arrays'
 {
     # types
     # TODO: waiting on my Dog $spot;
 
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
-    ok(try { !defined($an_ary[0]) }, "my Array subscript - undef");
+    ok((try { !defined($an_ary[0]) }), "my Array subscript - undef");
     try { $an_ary.push("blergh") };
-    ok(try { defined($an_ary.pop) }, "push");
-    ok(try { !defined($an_ary.pop) }, "comes to shove");
+    ok((try { defined($an_ary.pop) }), "push");
+    ok((try { !defined($an_ary.pop) }), "comes to shove");
 
     my Hash $a_hash;
 
     ok(!defined($a_hash), "my Hash");
-    ok(try { !defined($a_hash<blergh>) }, "my Hash subscript - undef");
-    ok(try { !defined($a_hash<blergh>) }, "my Hash subscript - undef, no autovivification happened");
+    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - undef");
+    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - undef, no autovivification happened");
 
     $a_hash<blergh> = 1;
     ok(defined($a_hash.delete('blergh')), "delete");
@@ -205,43 +212,47 @@ Perl6-specific tests
 #                                 "let keyword">
 
 # - unmatched alternative should bind to undef
-my($num, $alpha);
-my($rx1, $rx2);
-eval '
-    $rx1 = rx
-	/ [ (\d+)      { let $<num>   := $0 }
-	  | (<alpha>+) { let $<alpha> := $1 }
-	  ]
-	/;
-    $rx2 = rx
-	/ [ $<num>  := (\d+)
-	  | $<alpha>:= (<alpha>+)
-	  ]
-	/;
-';
-for (<rx1 rx2>) {
-    # I want symbolic lookups because I need the rx names for test results.
+#?rakudo skip 'null PMC access in type()'
+{
+    my($num, $alpha);
+    my($rx1, $rx2);
+    eval '
+        $rx1 = rx
+        / [ (\d+)      { let $<num>   := $0 }
+        | (<alpha>+) { let $<alpha> := $1 }
+        ]
+        /;
+        $rx2 = rx
+        / [ $<num>  := (\d+)
+        | $<alpha>:= (<alpha>+)
+        ]
+        /;
+    ';
+    for (<rx1 rx2>) {
+        # I want symbolic lookups because I need the rx names for test results.
 
-    eval '"1" ~~ %MY::{$_}';
-#?pugs todo 'unimpl'
-    ok(defined($num), '{$_}: successful hypothetical');
-    ok(!defined($alpha), '{$_}: failed hypothetical');
+        eval '"1" ~~ %MY::{$_}';
+    #?pugs todo 'unimpl'
+        ok(defined($num), '{$_}: successful hypothetical');
+        ok(!defined($alpha), '{$_}: failed hypothetical');
 
-    eval '"A" ~~ %MY::{$_}';
-    ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
-#?pugs todo 'unimpl'
-    ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
+        eval '"A" ~~ %MY::{$_}';
+        ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
+    #?pugs todo 'unimpl'
+        ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
+    }
+
+    # - binding to hash keys only would leave values undef
+    eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
+    #?pugs todo 'unimpl'
+    ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
+
+    #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
+    #?pugs todo 'unimpl'
+    ok(0 , "match values don't");
 }
 
-# - binding to hash keys only would leave values undef
-eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
-#?pugs todo 'unimpl'
-ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
-
-#ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
-#?pugs todo 'unimpl'
-ok(0 , "match values don't");
-
+#?rakudo skip 'rx:Perl6'
 {
     # - $0, $1 etc. should all be undef after a failed match
     #   (except for special circumstances)
@@ -274,12 +285,14 @@ ok(0 , "match values don't");
 # autoloading
 # L<S10/Autoloading>
 
-flunk("FIXME (autoload tests)", :todo<parsefail>);
 # Currently waiting on
 # - packages
 # - symtable hash
 # - autoloading itself
 
+#?pugs skip 'parsefail'
+#?rakudo skip 'parsefail'
+flunk('FIXME: parsefail');
 # {
 #    package AutoMechanic {
 #        AUTOSCALAR    { \my $_scalar }
@@ -287,20 +300,20 @@ flunk("FIXME (autoload tests)", :todo<parsefail>);
 #        AUTOHASH      { \my %_hash }
 #        AUTOSUB       { { "code" } }
 #        AUTOMETH      { { "code" } }
-#
+# 
 #        AUTOSCALARDEF { %::«{'$' ~ $_}» = "autoscalardef" }
 #        AUTOARRAYDEF  { %::«{'@' ~ $_}» = "autoarraydef".split("") }
 #        AUTOHASHDEF   { %::«{'%' ~ $_}» = <autohashdef yes> }
 #        AUTOSUBDEF    { %::«{'&' ~ $_}» = { "autosubdef" } }
 #        AUTOMETHDEF   { %::«{'&' ~ $_}» = { "automethdef" } }
 #    }
-#
+# 
 #    is(WHAT $AutoMechanic::scalar0,    "Scalar", "autoload - scalar");
 #    is(WHAT @AutoMechanic::array0,     "Array",  "autoload - array");
 #    is(WHAT %AutoMechanic::hash,       "Hash",   "autoload - hash");
 #    is(WHAT &AutoMechanic::sub0,       "Code",   "autoload - sub");
 #    is(WHAT AutoMechanic.can("meth0"), "Code",   "autoload - meth");
-#
+# 
 #    is($AutoMechanic::scalar, "autoscalardef",            "autoloaddef - scalar");
 #    is(~@AutoMechanic::ary,   ~("autoarraydef".split(""), "autoloaddef - array");
 #    is(~%AutoMechanic::hash,  ~<autohashdef yes>,         "autoloaddef - hash");
@@ -320,5 +333,8 @@ is((undef) * (undef), 0, 'undef * undef');
 # See log above.  From IRC, TimToady says that both of these
 # should be false.  (At time of writing, @(undef,) is true.)
 #?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
+#?rakudo 2 skip 'todo: lists, defined, truthness'
 is ?(@(undef,)), Bool::False, '?(@(undef,)) is false';
 is ?(list(undef,)), Bool::False, '?(@(undef,)) is false';
+
+# vim: ft=perl6
