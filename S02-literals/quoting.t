@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 193;
+plan 198;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -35,10 +35,23 @@ Tests quoting constructs as defined in L<S02/Literals>
 }
 
 {
-    is q{\n},        '\n',          'q{..} don't interpolate \n';
-    ok q{\n}.chars == 2,            'q{..} don't interpolate \n';
-    is q{$x},        '$x',          'q{..} don't interpolate scalars';
-    ok q{$x}.chars == 2,            'q{..} don't interpolate scalars';
+    is q{\n},        '\n',          'q{..} do not interpolate \n';
+    ok q{\n}.chars == 2,            'q{..} do not interpolate \n';
+    is q{$x},        '$x',          'q{..} do not interpolate scalars';
+    ok q{$x}.chars == 2,            'q{..} do not interpolate scalars';
+}
+
+#?rakudo skip 'Q quoting'
+{
+    is Q{\n},        '\n',          'Q{..} do not interpolate \n';
+    ok Q{\n}.chars == 2,            'Q{..} do not interpolate \n';
+    is Q{$x},        '$x',          'Q{..} do not interpolate scalars';
+    ok Q{$x}.chars == 2,            'Q{..} do not interpolate scalars';
+}
+
+#?rakudo skip 'Q quoting'
+{
+    ok Q{\\}.chars == 2,            'Q{..} do not interpolate backslashes';
 }
 
 {
