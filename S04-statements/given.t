@@ -252,12 +252,11 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 
 # given + 0-arg closure
 {
-    my $x;
+    my $x = 0;
     given 41 {
         when ({ $_ == 49 }) { diag "this really shouldn't happen"; $x = 49 }
         when ({ $_ == 41 }) { $x++ }
     }
-    #?rakudo todo 'testing closure does not work'
     ok $x, 'given tests 0-arg closures for truth';
 }
 
