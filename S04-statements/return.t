@@ -19,7 +19,7 @@ sub bar2 { return() }
 ok(!defined(bar2()), '... bare return statement w/ parens returned undef');
 
 sub baz { return 10 if 1; }
-ok(baz(), 10, '... return worked with a statement modifier');
+is(baz(), 10, '... return worked with a statement modifier');
 
 #?rakudo skip 'parsefail on "return if 1"'
 sub foobar { return if 1; };
