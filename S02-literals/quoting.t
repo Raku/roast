@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 199;
+plan 204;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -458,6 +458,11 @@ Hello, World
 {
     my $t = q:b /\n\n\n/;
     is $t, "\n\n\n", "Testing for q:b operator.";
+    is q:b'\n\n', "\n\n", "Testing q:b'\\n'";
+    ok qb"\n\t".chars == 2, 'qb';
+    is Qb{a\nb},  "a\nb", 'Qb';
+    is Q:b{a\nb}, "a\nb", 'Q:b';
+    is Qs:b{\n},  "\n",   'Qs:b';
 }
 
 # q:x
