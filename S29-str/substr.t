@@ -18,8 +18,8 @@ plan 42;
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
 #?rakudo 2 skip 'exception'
-    is(substr($str, 20, 5), undef, "substr outside of string");
-    is(substr($str, -100, 10), undef, "... on the negative side");
+    ok(!defined(substr($str, 20, 5)), "substr outside of string");
+    ok(!defined(substr($str, -100, 10)), "... on the negative side");
 
     is(substr($str, 0, -2), "foob", "from beginning, with negative length");
     is(substr($str, 2, -2), "ob", "in middle, with negative length");

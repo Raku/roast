@@ -47,8 +47,9 @@ my $s = -> {
     redo if $n < 10;
 };
 try { $s.() };
-is($!, undef, 'pointy with block control exceptions', :todo<feature>);
-is $n, 10, "pointy control exceptions ran", :todo<feature>;
+#?pugs todo 'feature'
+is(!defined($!), undef, 'pointy with block control exceptions');
+is $n, 10, "pointy control exceptions ran");
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
 my $str = '';
