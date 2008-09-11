@@ -19,8 +19,7 @@ if 1 {
     is ~$/, 'a', '... and can use the match var';
 }
 
-#?rakudo todo 'Proper contextual scoping for $/'
-is ~$/, 'a', '... even outside the block';
+ok !defined($/), '$/ still undef in the outer block';
 
 my $loop = 1;
 
@@ -29,23 +28,20 @@ while $loop {
     is ~$/, 'b', '... and can use the match var';
     $loop = 0;
 }
-#?rakudo todo 'Proper contextual scoping for $/'
-is ~$/, 'b', '... even outside the block';
+ok !defined($/), '$/ still undef in the outer block';
 
 {
     ok 'c' ~~ /./, 'Can match in a bare block';
     is ~$/, 'c', '... and can use the match var';
 }
-#?rakudo todo 'Proper contextual scoping for $/'
-is ~$/, 'c', '... even outside the block';
+ok !defined($/), '$/ still undef in the outer block';
 
 my $discarded = do {
     ok 'd' ~~ /./, 'Can match in a do block';
     is ~$/, 'd', '... and can use the match var';
 
 }
-#?rakudo todo 'Proper contextual scoping for $/'
-is ~$/, 'd', '... even outside the block';
+ok !defined($/), '$/ still undef in the outer block';
 
 #?rakudo skip 'Using match object in a while loop, RT #58352'
 {
