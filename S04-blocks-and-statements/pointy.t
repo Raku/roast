@@ -49,7 +49,7 @@ my $s = -> {
 try { $s.() };
 #?pugs todo 'feature'
 is(!defined($!), undef, 'pointy with block control exceptions');
-is $n, 10, "pointy control exceptions ran");
+is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
 my $str = '';
