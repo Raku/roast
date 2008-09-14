@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 204;
+plan 134;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -11,12 +11,12 @@ my $bar = "BAR";
 
 Tests quoting constructs as defined in L<S02/Literals>
 
+Note that non-ASCII tests are kept in quoting-unicode.t
+
 =todo
 
 * q:b and other interpolation levels (half-done)
 * meaningful quotations (qx, rx, etc)
-* review shell quoting semantics of «»
-* arrays in «»
 * interpolation of scalar, array, hash, function and closure syntaxes
 * q : a d verb s // parsing
 
@@ -28,8 +28,10 @@ Tests quoting constructs as defined in L<S02/Literals>
     is $s, ' foo bar ', 'string using q{}';
 }
 
+#?rakudo skip 'Quoting with q{{ ... }}'
 {
     is q{ { foo } }, ' { foo } ',   'Can nest curlies in q{ .. }';
+    is q{{ab}},      'ab',          'Unnested single curlies in q{{...}}';
     is q{{ fo} }},   ' fo} ',       'Unnested single curlies in q{{...}}';
     is q{{ {{ } }} }}, ' {{ } }} ', 'Can nest double curlies in q{{...}}';
 }
@@ -55,73 +57,6 @@ Tests quoting constructs as defined in L<S02/Literals>
     ok Q{\\}.chars == 2,            'Q{..} do not interpolate backslashes';
 }
 
-{
-    my $s = q「this is a string」;
-    is $s, 'this is a string',
-        'q-style string with LEFT/RIGHT CORNER BRACKET';
-}
-
-{
-    my $s = q『blah blah blah』;
-    is $s, 'blah blah blah',
-        'q-style string with LEFT/RIGHT WHITE CORNER BRACKET';
-}
-
-{
-    my $s = q⦍blah blah blah⦎;
-    is $s, 'blah blah blah',
-        'q-style string with LEFT SQUARE BRACKET WITH TICK IN TOP CORNER and
-RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
-}
-
-{
-    my $s = q〝blah blah blah〞;
-    is $s, 'blah blah blah',
-        'q-style string with REVERSED DOUBLE PRIME QUOTATION MARK and 
-DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
-}
-
-#?DOES 70
-#?rakudo skip 'unicode'
-{
-    my %ps_pe = (
-            '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
-            '᚛' => '᚜', '⁅' => '⁆', '⁽' => '⁾', '₍' => '₎', '〈' => '〉',
-            '❨' => '❩', '❪' => '❫', '❬' => '❭', '❮' => '❯', '❰' => '❱', 
-            '❲' => '❳', '❴' => '❵', '⟅' => '⟆', '⟦' => '⟧', '⟨' => '⟩', 
-            '⟪' => '⟫', '⦃' => '⦄', '⦅' => '⦆', '⦇' => '⦈', '⦉' => '⦊',
-            '⦋' => '⦌', '⦍' => '⦎', '⦏' => '⦐', '⦑' => '⦒', '⦓' => '⦔', 
-            '⦕' => '⦖', '⦗' => '⦘', '⧘' => '⧙', '⧚' => '⧛', '⧼' => '⧽', 
-            '〈' => '〉', '《' => '》', '「' => '」', '『' => '』', 
-            '【' => '】', '〔' => '〕', '〖' => '〗', '〘' => '〙', 
-            '〚' => '〛', '〝' => '〞', '﴾' => '﴿', '︗' => '︘', '︵' => '︶',
-            '︷' => '︸', '︹' => '︺', '︻' => '︼', '︽' => '︾',
-            '︿' => '﹀', '﹁' => '﹂', '﹃' => '﹄', '﹇' => '﹈',
-            '﹙' => '﹚', '﹛' => '﹜', '﹝' => '﹞', '（' => '）', 
-            '［' => '］', '｛' => '｝', '｟' => '｠', '｢' => '｣',
-            );
-    for keys %ps_pe {
-        next if $_ eq '('; # skip '(' => ')' because q() is a sub call 
-        my $string = 'q' ~ $_ ~ 'abc' ~ %ps_pe{$_};
-        is eval($string), 'abc', $string;
-    }
-}
-
-{
-    my @list = 'a'..'c';
-
-    my $var = @list[ q（2） ];
-    is $var, 'c',
-        'q-style string with FULLWIDTH LEFT/RIGHT PARENTHESIS';
-
-    $var = @list[ q《0》];
-    is $var, 'a',
-        'q-style string with LEFT/RIGHT DOUBLE ANGLE BRACKET';
-
-    $var = @list[q〈1〉];
-    is $var, 'b', 'q-style string with LEFT/RIGHT ANGLE BRACKET';
-}
-
 # L<S02/Literals/":q" ":single" "Interpolate \\, \q and \'">
 {
     my @q = ();
@@ -139,6 +74,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 
 # L<S02/Literals/That is () have no special significance>
 # non interpolating single quotes with nested parens
+#?rakudo skip 'quoting with double delimiters'
 {
     my @q = ();
     @q = (q (($foo $bar)));
@@ -147,6 +83,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 # L<S02/Literals/That is () have no special significance>
+#?rakudo skip 'quoting with q (..)'
 { # non interpolating single quotes with nested parens
     my @q = ();
     @q = (q ( ($foo $bar)));
@@ -155,6 +92,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 # L<S02/Literals/Which is mandatory for parens>
+#?rakudo todo 'q() is a sub call'
 { # q() is bad
     my @q;
     sub q { @_ }
@@ -163,6 +101,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 # L<S02/Literals/:q>
+#?rakudo skip 'quoting with adverbs'
 { # adverb variation
     my @q = ();
     @q = (Q:q/$foo $bar/);
@@ -170,6 +109,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(@q[0], '$foo $bar', "and again, non interpolating");
 };
 
+#?rakudo skip 'nested bracket quotes'
 { # nested brackets
     my @q = ();
     @q = (q[ [$foo $bar]]);
@@ -177,6 +117,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(@q[0], ' [$foo $bar]', 'and nests brackets appropriately');
 };
 
+#?rakudo skip 'nested bracket quotes'
 { # nested brackets
     my @q = ();
     @q = (q[[$foo $bar]]);
@@ -200,6 +141,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 # L<S02/Literals/:qq>
+#?rakudo skip 'quoting with adverbs'
 { # adverb variation
     my @q = ();
     @q = Q:qq/$foo $bar/;
@@ -208,6 +150,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 # L<S02/Literals/using the \qq>
+#?rakudo skip 'q[..] with variations'
 { # \qq[] constructs interpolate in q[]
     my( @q1, @q2, @q3, @q4 ) = ();
     @q1 = q[$foo \qq[$bar]];
@@ -227,6 +170,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
+#?rakudo skip '\0 as delimiters'
 { # quote with \0 as delimiters L<news:20050101220112.GF25432@plum.flirble.org>
     my @q = ();
     eval "\@q = (q\0foo bar\0)";
@@ -260,6 +204,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(@q[1], '$bar', '...');
 };
 
+#?rakudo skip 'quoting with adverbs'
 { # adverb variation
     my @q = ();
     @q = (q:w/$foo $bar/);
@@ -268,6 +213,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(@q[1], '$bar', "...");
 };
 
+#?rakudo skip 'quoting with adverbs'
 { # whitespace sep aration does not break quote constructor 
   # L<S02/Literals/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
     my @q = ();
@@ -278,6 +224,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 
+#?rakudo skip 'quoting with adverbs'
 { # qq:w,Interpolating quote constructor with words adverb 
   # L<S02/Literals/"Split result on words (no quote protection)">
     my (@q1, @q2) = ();
@@ -291,6 +238,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(~@q2, 'FOO "gorch BAR"', "long form output is the same as the short");
 };
 
+#?rakudo skip 'quoting with adverbs'
 { # qq:ww, interpolating L<S02/Literals/double angles do interpolate>
   # L<S02/Literals/"implicit split" "shell-like fashion">
     my (@q1, @q2, @q3, @q4) = ();
@@ -312,6 +260,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     is(~@q4, 'FOO gorch BAR', ", and long form");
 };
 
+#?rakudo skip '«...»'
 {
     #L<S02/Literals/"relationship" "single quotes" "double angles">
     # Pugs was having trouble with this.  Fixed in r12785.
@@ -319,7 +268,9 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
     ok(«$x $y» === <a b>, "«$x $y» interpolation works correctly");
 };
 
+
 # L<S02/Literals/respects quotes in a shell-like fashion>
+#?rakudo skip '«...»'
 { # qw, interpolating, shell quoting
     my (@q1, @q2) = ();
     my $gorch = "foo bar";
@@ -336,6 +287,7 @@ DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 };
 
 # L<S02/Literals/Heredocs are no longer written>
+#?rakudo skip 'quoting with adverbs'
 { # qq:to
     my @q = ();
 
@@ -351,6 +303,7 @@ FOO
 };
 
 # L<S02/Literals/Heredocs allow optional whitespace>
+#?rakudo skip 'quoting with adverbs'
 { # q:to indented
     my @q = ();
 
@@ -363,6 +316,7 @@ FOO
     is(@q[0], "blah blah\n\$foo\n", "indentation stripped");
 };
 
+#?rakudo skip 'heredocs'
 { # q:heredoc backslash bug
         my @q = q:heredoc/FOO/
 yoink\n
@@ -373,6 +327,7 @@ FOO
         is(@q[0], "yoink\\n\nsplort\\n\n", "backslashes");
 }
 
+#?rakudo skip 'Quoting with Q'
 { # Q L<S02/Literals/No escapes at all>
     my @q = ();
     
@@ -385,6 +340,7 @@ FOO
 };
 
 # L<S02/Literals/"Pair" notation is also recognized inside>
+#?rakudo skip '<< :pair(1) >>'
 {
   # <<:Pair>>
     diag "XXX: pair.perl is broken atm so these tests may be unreliable";
@@ -404,6 +360,7 @@ FOO
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>", :todo<bug>);
 };
 
+#?rakudo skip  'escape sequences'
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');
@@ -420,6 +377,7 @@ FOO
     is("\cZ", chr 26, 'Unicode "Z" is chr 26 (or \c26)');
 }
 
+#?rakudo skip 'nested quoting'
 { # simple test for nested-bracket quoting, per S02
     my $hi = q<<hi>>;
     is($hi, "hi", 'q<<hi>> is "hi"');
@@ -428,6 +386,7 @@ FOO
 
 # L<S02/Literals/"for user-defined quotes">
 # q:to
+#?rakudo skip 'quoting with adverbs'
 {
     my $t;
     $t = q:to /STREAM/;
@@ -444,6 +403,7 @@ Hello, World
 }
 
 # Q
+#?rakudo skip 'Q'
 {
     my $s1 = "hello";
     my $t1 = Q /$s1, world/;
@@ -455,6 +415,7 @@ Hello, World
 }
 
 # q:b
+#?rakudo skip 'quoting adverbs'
 {
     my $t = q:b /\n\n\n/;
     is $t, "\n\n\n", "Testing for q:b operator.";
@@ -466,10 +427,12 @@ Hello, World
 }
 
 # q:x
+#?rakudo skip 'quoting adverbs'
 {
     is q:x/echo hello/, "hello\n", "Testing for q:x operator.";
 }
 # utf8
+#?rakudo skip 'quoting adverbs'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
@@ -477,6 +440,7 @@ Hello, World
 
 # L<S02/Literals/"Interpolate % vars">
 # q:h
+#?rakudo skip 'quoting adverbs'
 {
     # Pugs can't parse q:h currently.
     my %t = (a => "perl", b => "rocks");
@@ -486,6 +450,7 @@ Hello, World
 }
 
 # q:f
+#?rakudo skip 'quoting adverbs'
 {
     sub f { "hello" };
     my $t = q:f /&f(), world/;
@@ -497,6 +462,7 @@ Hello, World
 }
 
 # q:c
+#?rakudo skip 'quoting adverbs'
 {
     sub f { "hello" };
     my $t = q:c /{f}, world/;
@@ -504,6 +470,7 @@ Hello, World
 }
 
 # q:a
+#?rakudo skip 'quoting adverbs'
 {
     my @t = qw/a b c/;
     my $s = q:a /@t[]/;
@@ -511,6 +478,7 @@ Hello, World
 }
 
 # q:s
+#?rakudo skip 'quoting adverbs'
 {
     my $s = "someone is laughing";
     my $t = q:s /$s/;
@@ -522,6 +490,7 @@ Hello, World
 }
 
 # multiple quoting modes
+#?rakudo skip 'quoting adverbs'
 {
     my $s = 'string';
     my @a = <arr1 arr2>;
@@ -530,6 +499,7 @@ Hello, World
 }
 
 # shorthands:
+#?rakudo skip 'quoting adverbs'
 {
     my $alpha = 'foo';
     my $beta  = 'bar';
