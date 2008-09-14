@@ -70,7 +70,6 @@ multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }
 
 is(mmd(), 1, 'Slurpy MMD to nullary');
-#?rakudo 2 todo 'MMD'
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
