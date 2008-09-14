@@ -33,15 +33,15 @@ plan 12;
   my @outer = gather {
     for 1..3 -> $i {
       my @inner = gather {
-         take "$i,$_" for 1..3;
+         take $_ for 1..3;
       };
 
-      take ~@inner;
+      take "$i:" ~ @inner.join(',');
     }
   };
 
   #?rakudo todo 'nested gather'
-  is ~@outer, "1,1 1,2 1,3 2,1 2,2 2,3 3,1 3,2 3,3", "nested gather works (two levels)";
+  is ~@outer, "1:1,2,3 2:1,2,3 3:1,2,3", "nested gather works (two levels)";
 }
 
 # Nested gathers, three levels
@@ -51,17 +51,17 @@ plan 12;
       my @inner = gather {
         for 1..2 -> $j {
           my @inner_inner = gather {
-            take "$i,$j,$_" for 1..2;
+              take $_ for 1..2;
           };
-          take ~@inner_inner;
+          take "$j:" ~ @inner_inner.join(',');
         }
       };
-      take ~@inner;
+      take "$i:" ~ @inner.join(';');
     }
   };
 
   #?rakudo todo 'nested gather'
-  is ~@outer, "1,1,1 1,1,2 1,2,1 1,2,2 2,1,1 2,1,2 2,2,1 2,2,2", "nested gather works (three levels)";
+  is ~@outer, "1:1:1,2;2:1,2 2:1:1,2;2:1,2", "nested gather works (three levels)";
 }
 
 # take on lists, multiple takes per loop
