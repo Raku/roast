@@ -8,7 +8,6 @@ plan 12;
 # L<S04/The gather statement/"A variant of do is gather">
 
 # Standard gather
-#?rakudo eval 'gather not implemented'
 {
     my @a;
     my $i;
@@ -20,6 +19,7 @@ plan 12;
         }
     };
 
+    #?rakudo todo 'lazy gather/takr'
     ok(!$i, "not yet gathered");
     is(+@a, 5, "5 elements gathered");
     ok($i, "gather code executed");
@@ -29,7 +29,6 @@ plan 12;
 };
 
 # Nested gathers, two levels
-#?rakudo eval 'gather not implemented'
 {
   my @outer = gather {
     for 1..3 -> $i {
@@ -41,11 +40,11 @@ plan 12;
     }
   };
 
+  #?rakudo todo 'nested gather'
   is ~@outer, "1,1 1,2 1,3 2,1 2,2 2,3 3,1 3,2 3,3", "nested gather works (two levels)";
 }
 
 # Nested gathers, three levels
-#?rakudo eval 'gather not implemented'
 {
   my @outer = gather {
     for 1..2 -> $i {
@@ -61,6 +60,7 @@ plan 12;
     }
   };
 
+  #?rakudo todo 'nested gather'
   is ~@outer, "1,1,1 1,1,2 1,2,1 1,2,2 2,1,1 2,1,2 2,2,1 2,2,2", "nested gather works (three levels)";
 }
 
@@ -108,7 +108,7 @@ plan 12;
 }
 
 # lazy gather
-#?rakudo eval 'gather not implemented'
+#?rakudo todo 'lazy gather/take'
 {
     my $count = 0;
     my @list = gather {
