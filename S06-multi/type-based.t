@@ -17,7 +17,6 @@ multi foo (Array @bar) { "Array " ~ join(', ', @bar) }
 multi foo (Hash %bar)  { "Hash " ~ join(', ', %bar.keys.sort) }
 multi foo (IO $fh)     { "IO" }
 
-#?rakudo skip 'based dispatch on Str'
 is(foo('test'), 'Str test', 'dispatched to the Str sub');
 is(foo(2), 'Int 2', 'dispatched to the Int sub');
 
@@ -59,7 +58,6 @@ is(foo([3, "Four", "Five"]), "Tuple(3) 3,Four,Five", "call tuple multi sub");
 multi declared_wo_sub (Int $x) { 1 }
 multi declared_wo_sub (Str $x) { 2 }
 is declared_wo_sub(42),   1, "omitting 'sub' when declaring 'multi sub's works (1)";
-#?rakudo skip 'based dispatch on Str'
 is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (2)";
 
 # Test for slurpy MMDs

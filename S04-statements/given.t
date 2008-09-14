@@ -40,7 +40,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$unreached, "but didn't do so normally");
 };
 
-#?rakudo skip 'parsefail on regex'
 {
     my $foo;
     given "foo" {

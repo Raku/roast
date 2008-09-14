@@ -65,7 +65,6 @@ plan 12;
 }
 
 # take on lists, multiple takes per loop
-#?rakudo eval 'gather not implemented'
 {
   my @outer = gather {
     my @l = (1, 2, 3);
@@ -78,7 +77,6 @@ plan 12;
 }
 
 # gather scopes dynamiclly, not lexically
-#?rakudo eval 'gather not implemented'
 {
     my $dynamic_take = sub { take 7 };
     my @outer = gather {
@@ -90,7 +88,6 @@ plan 12;
 }
 
 # take on array-ref
-#?rakudo eval 'gather not implemented'
 {
   my @list  = gather { take [1,2,3]; take [4,5,6];};
   my @list2 = ([1,2,3],[4,5,6]);
@@ -98,7 +95,6 @@ plan 12;
 }
 
 # gather statement prefix
-#?rakudo eval 'gather not implemented'
 {
     my @out = gather for 1..5 {
         take $_;
