@@ -40,7 +40,6 @@ plan 12;
     }
   };
 
-  #?rakudo todo 'nested gather'
   is ~@outer, "1:1,2,3 2:1,2,3 3:1,2,3", "nested gather works (two levels)";
 }
 
@@ -60,7 +59,6 @@ plan 12;
     }
   };
 
-  #?rakudo todo 'nested gather'
   is ~@outer, "1:1:1,2;2:1,2 2:1:1,2;2:1,2", "nested gather works (three levels)";
 }
 
