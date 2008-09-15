@@ -113,7 +113,7 @@ sub f6 ($a) { ~WHAT($a) }
     #?rakudo skip 'reduce meta op'
     is f6([,] %hash_of_pairs), "Str",  '...but [,] %hash is';
     #?rakudo skip 'prefix:<|>'
-    is f6(|%hash_of_pairs,     'Str',  '... and so is |%hash';
+    is f6(|%hash_of_pairs),     'Str',  '... and so is |%hash';
 }
 
 sub f7 (:$bar!) { ~WHAT($bar) }

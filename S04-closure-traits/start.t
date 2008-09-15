@@ -25,7 +25,7 @@ plan 21;
     my $var;
     my $sub = sub ($x) { START { $var += $x } };
  
-    ok $var ~~ undef 'START {...} has not run yet';
+    ok $var ~~ undef, 'START {...} has not run yet';
 
     $sub(2);
     is $var, 2, 'START {} has executed';
