@@ -210,7 +210,6 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
-#?rakudo skip 'rakudo thinks that the values are strings'
 {
     my %hash_v = ( a => 1, b => 2, c => 3 );
     my %v = ( a => 2, b => 3, c => 4 );
