@@ -79,7 +79,7 @@ $a = undef;
 is($a++, 0, 'undef++ == 0');
 
 $a = undef;
-is($a--, undef, 'undef-- is undefined');
+ok($a-- ~~ undef, 'undef-- is undefined');
 
 $a = 'x';
 is($a++, 'x', 'magical ++ should not be numified');

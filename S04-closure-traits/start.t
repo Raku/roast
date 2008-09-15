@@ -25,7 +25,7 @@ plan 21;
     my $var;
     my $sub = sub ($x) { START { $var += $x } };
  
-    is $var, undef, 'START {...} has not run yet';
+    ok $var ~~ undef 'START {...} has not run yet';
 
     $sub(2);
     is $var, 2, 'START {} has executed';
@@ -97,7 +97,7 @@ for <first second> {
     my $was_in_start;
     my $sub = { START { $was_in_start++; undef } };
 
-    is $sub(), undef, 'START {} returned undef';
+    ok $sub() ~~ undef, 'START {} returned undef';
     $sub();
     $sub();
     is $was_in_start, 1,
