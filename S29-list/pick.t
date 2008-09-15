@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 15;
 
 =begin description
 
@@ -20,25 +20,28 @@ my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
 
 my %hash = (a => 1);
+#?rakudo 2 skip 'pick on hashes (?)'
 is %hash.pick.key,   "a", "pick works on hashes (1)";
 is %hash.pick.value, "1", "pick works on hashes (2)";
 
 my $junc = (1|2|3);
+#?rakudo skip 'dubious: pick on Junctions (unspecced?)'
 ok ?(1|2|3 == $junc.pick), "pick works on junctions";
 
 my @arr = <z z z>;
 
-is eval('@arr.pick(2)'), <z z>,  'method pick with $num < +@values';
-is eval('@arr.pick(4)'), <z z z>, 'method pick with $num > +@values';
+ok ~(@arr.pick(2)) eq 'z z',   'method pick with $num < +@values';
+ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 #?pugs todo 'feature'
-is eval('@arr.pick(4, :repl)'), <z z z z>, 'method pick(:repl) with $num > +@values';
+#?rakudo skip 'List.pick($count, :repl)'
+ok ~(@arr.pick(4, :repl)), 'z z z z', 'method pick(:repl) with $num > +@values';
 
 #?pugs 3 todo 'feature'
-is eval('pick(2, @arr)'), <z z>, 'sub pick with $num < +@values';
-is eval('pick(4, @arr)'), <z z z>, 'sub pick with $num > +@values';
-is eval('pick(4, :repl, @arr)'), <z z z z>, 'sub pick(:repl) with $num > +@values';
+is pick(2, @arr), <z z>, 'sub pick with $num < +@values';
+is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
+is pick(4, :repl, @arr), <z z z z>, 'sub pick(:repl) with $num > +@values';
 
-ok(<a b c d>.pick(*).sort === <a b c d>, 'pick(*) returns all the items in the array (but maybe not in order)');
+ok(~(<a b c d>.pick(*).sort) eq 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)');
 
 {
   my @items = <1 2 3 4>;
@@ -56,4 +59,14 @@ my @value = gather {
 }
 
 #?pugs todo 'feature'
+#?rakudo todo 'lazy lists'
 ok +@value == $c && $c, 'pick(*, :repl) is lazy';
+
+{
+    # Test that List.pick doesn't flatten array refs
+    # http://rt.perl.org/rt3/Ticket/Display.html?id=58526
+    ok ?([[1, 2], [3, 4]].pick.join('|') eq any('1|2', '3|4')), '[[1,2],[3,4]].pick does not flatten';
+    #?rakudo todo 'List.pick(*) should not flatten, RT #58526'
+    ok ?(~([[1, 2], [3, 4]].pick(*)) eq '1 2 3 4' | '3 4 1 2'), '[[1,2],[3,4]].pick(*) does not flatten';
+
+}
