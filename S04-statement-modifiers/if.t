@@ -46,7 +46,6 @@ plan 8;
 	is $x, 43, "?? || sanity check";
 }
 
-#?rakudo skip "rakudo dies on 'return if <expr>' inside sub()"
 {
 	sub foo() {
 	 return if 1;

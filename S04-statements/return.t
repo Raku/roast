@@ -13,11 +13,11 @@ Basic tests for "return"
 =end pod
 
 sub bar { return }
-#?rakudo todo 'bare return is undef'
+#?rakudo todo 'bare return is undef, RT #58770'
 ok(!defined(bar()), '... bare return statement returned undef');
 
 sub bar2 { return() }
-#?rakudo todo 'bare return is undef'
+#?rakudo todo 'bare return is undef, RT #58770'
 ok(!defined(bar2()), '... bare return statement w/ parens returned undef');
 
 sub baz { return 10 if 1; }
@@ -28,7 +28,7 @@ sub foobar { return if 1; };
 ok(!defined(foobar()), '... bare return worked with a statement modifier');
 
 sub foobar2 { return() if 1; }
-#?rakudo todo 'bare return is undef'
+#?rakudo todo 'bare return is undef, RT #58770'
 ok(!defined(foobar2()), '... bare return worked with a statement modifier');
 
 my $should_ret_empty_list1 = sub { return; 1 };
