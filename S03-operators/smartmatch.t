@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 56;
 
 =begin kwid
 
@@ -17,12 +17,21 @@ emulation.
 sub eval_elsewhere($code){ eval($code) }
 
 #L<<S03/"Smart matching"/Any Code:($) item sub truth>>
+#L<<S03/"Smart matching"/Any Code:() item sub truth>>
 {
     sub uhuh { 1 }
     sub nuhuh { undef }
 
     ok((undef ~~ &uhuh), "scalar sub truth");
     ok(!(undef ~~ &nuhuh), "negated scalar sub false");
+
+    sub is_even($x) { $x % 2 == 0 }
+    sub is_odd ($x) { $x % 2 == 1 }
+    #?rakudo 4 skip 'Any ~~ &unary_sub'
+    ok 4 ~~ is_even,    'scalar sub truth (unary)';
+    ok 4 !~~ is_odd,    'scalar sub truth (unary, negated smart-match)';
+    ok !(3 ~~ is_even), 'scalar sub truth (unary)';
+    ok !(3 !~~ is_odd), 'scalar sub truth (unary, negated smart-match)';
 };
 
 #?rakudo emit #
