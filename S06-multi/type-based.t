@@ -38,7 +38,7 @@ is(foo(%hash), 'Hash bar, baz, foo', 'dispatched to the Hash sub');
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
 
 #?pugs 4 todo "feature"
-#?rakudo 2 skip 'Null PMC access in type()'
+#?rakudo 2 skip 'Null PMC access in find_method()'
 ok(eval('multi sub foo( (Int, Str) $tuple: ) '
     ~ '{ "Tuple(2) " ~ $tuple.join(",") }'),
     "declare sub with tuple argument");
