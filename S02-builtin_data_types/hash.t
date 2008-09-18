@@ -72,7 +72,6 @@ is(%hash5<foo>[1], 1, 'value assigned successfully with arrayref in list context
 my %hash6 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash6, 'Hash');
 
-#?rakudo 4 todo "sort keys %hash broken (method form works)"
 my @keys1 = sort keys %hash6;
 is(+@keys1, 3, 'got the right number of keys');
 is(@keys1[0], 'one', 'got the right key');
@@ -90,7 +89,6 @@ is(@keys2[2], 'two', 'got the right key');
 my %hash7 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash7, 'Hash');
 
-#?rakudo 4 todo "sort values %hash broken (method form works)"
 my @values1 = sort values %hash7;
 is(+@values1, 3, 'got the right number of values');
 is(@values1[0], 1, 'got the right values');
