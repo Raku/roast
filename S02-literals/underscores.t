@@ -32,7 +32,6 @@ eval_dies_ok '10_E1', "Underscore before E fails";
 
 eval_dies_ok '10E_1', "Underscore after E fails";
 
-#?rakudo 2 todo 'underscores in floating point numbers'
 ok 3.1_41 == 3.141, "Underscores work with floating point after decimal";
 
 ok 10_0.8 == 100.8, "Underscores work with floating point before decimal";
@@ -44,7 +43,6 @@ is 0b1101_1110_1010_1101_1011_1110_1110_1111, 0xdeadbeef, "Underscores work with
 #?rakudo skip 'parse 2e0_1'
 is 2e0_1, 20, "Underscores work in the argument for e";
 
-#?rakudo todo 'underscores in floating point numbers'
 ok 2.1_23 == 2.123, "2.1_23 parses as number";
 
 dies_ok { 2._foo },    "2._foo parses as method call";
