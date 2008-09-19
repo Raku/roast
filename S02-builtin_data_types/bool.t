@@ -15,7 +15,7 @@ isa_ok(Bool::False, Bool);
 my $a = Bool::True;
 isa_ok($a, Bool);
 
-my $a = Bool::False;
+$a = Bool::False;
 isa_ok($a, Bool);
 
 # tests they work with && and ||
