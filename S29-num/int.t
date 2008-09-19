@@ -26,14 +26,14 @@ is(int(0.51), 0, "int(0.51) is 0");
 is(int(0.5), 0, "int(0.5) is 0");
 is(int(0.49), 0, "int(0.49) is 0");
 is(int(0.1), 0, "int(0.1) is 0");
-is(int(0.1).WHAT, 'Int', 'int(0.1) returns an Int');
+is(~int(0.1).WHAT, 'Int', 'int(0.1) returns an Int');
 
 is(int(-0.999), 0, "int(-0.999) is 0");
 is(int(-0.51),  0, "int(-0.51) is 0");
 is(int(-0.5),   0, "int(-0.5) is 0");
 is(int(-0.49),  0, "int(-0.49) is 0");
 is(int(-0.1),   0, "int(-0.1) is 0");
-is(int(-0.1).WHAT, 'Int', 'int(-0.1) returns an Int');
+is(~int(-0.1).WHAT, 'Int', 'int(-0.1) returns an Int');
 
 is(int(1.999), 1, "int(1.999) is 1");
 is(int(1.51), 1, "int(1.51) is 1");

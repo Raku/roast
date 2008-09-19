@@ -10,7 +10,7 @@ my $c1 = class { };
 my $t1 = $c1.new();
 ok(defined($t1),     'instantiated the class');
 ok($t1 ~~ $c1,       'isa check works');
-is($c1.WHAT(), '',   '.WHAT stringifies to empty string');
+is(~$c1.WHAT(), '',  '.WHAT stringifies to empty string');
 
 # Anonymous classes with methods.
 my $c2 = class { method foo { 42 }; method bar { 28 } };

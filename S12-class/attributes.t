@@ -66,7 +66,7 @@ class Foo {
     }
 }
 my $foo = Foo.new;
-is($foo.bar.WHAT, 'Hash', 'hash attribute initialized');
+is(~$foo.bar.WHAT, 'Hash', 'hash attribute initialized');
 $foo.set_bar();
 is($foo.bar<a>, 'baz',    'hash attribute initialized/works');
 my %s = $foo.bar;
@@ -82,7 +82,7 @@ class Bar {
     }
 }
 my $bar = Bar.new;
-is($bar.bar.WHAT, 'Array', 'array attribute initialized');
+is(~$bar.bar.WHAT, 'Array', 'array attribute initialized');
 $bar.set_bar();
 is($bar.bar[0], 100,       'array attribute initialized/works');
 is($bar.bar[1], 200,       'array attribute initialized/works');

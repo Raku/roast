@@ -76,7 +76,7 @@ plan 11 + 2*@tests;
         #?rakudo skip 'eqv not implemented'
         ok eval($obj.perl) eqv $obj,
             "($obj.perl()).perl returned something whose eval()ed stringification is unchanged";
-        is WHAT(eval($obj.perl)), $obj.WHAT,
+        is ~WHAT(eval($obj.perl)), ~$obj.WHAT,
             "($obj.perl()).perl returned something whose eval()ed .WHAT is unchanged";
     }
 }

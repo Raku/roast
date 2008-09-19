@@ -129,15 +129,15 @@ Misc. Junction tests
     my $l;
 
     $j = 1|2;
-    is(WHAT($j),'Junction', 'basic junction type reference test');
+    is(~WHAT($j),'Junction', 'basic junction type reference test');
 
     $k=$j;
-    is(WHAT($k),'Junction', 'assignment preserves reference');
+    is(~WHAT($k),'Junction', 'assignment preserves reference');
 
     # XXX does this next one make any sense?
     $l=\$j;
     #?rakudo todo 'prefix:<\\>'
-    is(WHAT($l),'Junction', 'hard reference to junction');
+    is(~WHAT($l),'Junction', 'hard reference to junction');
 }
 
 
