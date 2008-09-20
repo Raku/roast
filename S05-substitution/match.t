@@ -11,7 +11,7 @@ my $str = 'hello';
 
 ok $str.match(/h/),         'We can use match';
 is $str,  'hello',          '.. it does not do side effect';
-#?rakudo skip 'return Match object, RT #57094'
+#?rakudo todo 'return Match object, RT #57094'
 ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 
 #?rakudo skip 'Null PMC access in can()'

@@ -46,7 +46,7 @@ sub f2 (:$a!) { ~WHAT($a) }
     #?rakudo todo 'Adverbial pairs without should produce a Bool (not Int)'
     is f2(:a),          "Bool", "':a' is a named";
     
-    #?rakudo skip '.() sub calls'
+    #?rakudo todo '.() sub calls'
     is(f2.(:a),         "Bool",  "in 'f2.(:a)', ':a' is a named");
     #?rakudo todo 'Adverbial pairs without should produce a Bool (not Int)'
     is $f2(:a),         "Bool",  "in '\$f2(:a)', ':a' is a named";
@@ -60,7 +60,7 @@ sub f2 (:$a!) { ~WHAT($a) }
     dies_ok { f2(("a" => 42)) }, "'(\"a\" => 42)' is a pair";
     dies_ok { f2((:a(42)))    }, "'(:a(42))' is a pair";
     dies_ok { f2((:a))        }, "'(:a)' is a pair";
-    #?rakudo skip '.() sub calls'
+    #?rakudo todo '.() sub calls'
     dies_ok { f2.((:a))       }, "in 'f2.((:a))', '(:a)' is a pair";
     
     #?rakudo todo 'unknown'

@@ -52,5 +52,5 @@ is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 
 # L<S29/"Str"/"Perl 5 compatibility:">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');
-#?rakudo skip "%p doesn't yet throw exception"
+#?rakudo todo "%p doesn't yet throw exception"
 dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');

@@ -134,7 +134,7 @@ is(+(6..8), 3, 'numification');
 
     is($r.shift, 2, 'uneven range.shift (2)');
     is($r.pop, 3.5, 'uneven range.pop (2)');
-    #?rakudo skip 'XXX test error -- result should be undef?'
+    #?rakudo todo 'XXX test error -- result should be undef?'
     is($r.shift, 3, 'uneven range.shift (3)');
     ok(!$r.pop,     'uneven range.pop (empty)');
     ok(!$r.shift,   'uneven range.shift (empty)');

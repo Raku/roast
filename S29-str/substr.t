@@ -56,7 +56,7 @@ plan 42;
     my $str = "gorch ding";
 
     substr($str, 0, 5) = "gloop";
-#?rakudo skip "substr as lvalue"
+#?rakudo todo "substr as lvalue"
     is($str, "gloop ding", "lvalue assignment modified original string");
 
 #?rakudo skip "can't parse"
@@ -80,7 +80,7 @@ plan 42;
 
 };
 
-#?rakudo skip 'exception'
+#?rakudo todo 'exception'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -88,7 +88,7 @@ plan 42;
     is($str, "gloop ding", "lvalue assignment modified original string");
 };
 
-#?rakudo skip 'exception'
+#?rakudo todo 'exception'
 { # as lvalue, using :=, should work
     my $str = "gorch ding";
 

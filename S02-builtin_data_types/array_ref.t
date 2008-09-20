@@ -36,7 +36,7 @@ ok(!$array_ref2[2].defined,'got the right value at array_ref2 index 2');
 my $array_ref4 = [ $array_ref2[2, 1, 0] ];
 isa_ok($array_ref4, Array);
 
-#?rakudo skip 'flatten and slices are not working'
+#?rakudo todo 'flatten and slices are not working'
 {
     is(+$array_ref4, 3, 'the array_ref4 has 3 elements');
     ok(!$array_ref4[0].defined, 'got the right value at array_ref4 index 0');

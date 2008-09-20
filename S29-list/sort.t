@@ -45,7 +45,7 @@ plan 21;
     is(@s, @e, '... with closure as indirect invocant');
 }
 
-#?rakudo skip "method fallback to sub unimpl"
+#?rakudo todo "method fallback to sub unimpl"
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);

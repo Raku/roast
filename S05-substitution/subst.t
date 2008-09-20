@@ -22,7 +22,7 @@ is $str.subst(/l/,{$i++}),    'he0lo', 'We can have a closure as replacement';
 is $str.subst(rx:g/l/,{$i++}),'he12o', '.. which act like closure and can be called more then once';
 #?rakudo skip "rakudo doesn't like dotty methods [perl #57740]"
 is $str.=subst(/l/,'i'),      'heilo', '.. and with the .= modifier';
-#?rakudo skip "(test dependency)"
+#?rakudo todo "(test dependency)"
 is $str,                      'heilo', '.. it changes the receiver';
 
 # not sure about this. Maybe '$1$0' should work.

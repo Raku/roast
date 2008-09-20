@@ -170,7 +170,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
-#?rakudo skip '\0 as delimiters'
+#?rakudo todo '\0 as delimiters'
 { # quote with \0 as delimiters L<news:20050101220112.GF25432@plum.flirble.org>
     my @q = ();
     eval "\@q = (q\0foo bar\0)";

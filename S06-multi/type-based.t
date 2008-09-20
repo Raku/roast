@@ -29,7 +29,7 @@ is(foo(rx:P5/a/),'Rule Rule','dispatched to the Rule sub', :todo<bug>);
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');
-#?rakudo skip 'based dispatch on Array'
+#?rakudo todo 'based dispatch on Array'
 is(foo(@array), 'Array foo, bar, baz', 'dispatched to the Array sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
@@ -48,7 +48,7 @@ ok(eval('multi sub foo( (Int, Str, Str) $tuple: ) '
     "declare multi sub with tuple argument");
 
 # XXX isn't that just an Array nowadays?
-#?rakudo 2 skip '"No applicable methods"'
+#?rakudo 2 todo '"No applicable methods"'
 is(foo([3, "Four"]), "Tuple(2) 3,Four", "call tuple multi sub");
 is(foo([3, "Four", "Five"]), "Tuple(3) 3,Four,Five", "call tuple multi sub");
 
