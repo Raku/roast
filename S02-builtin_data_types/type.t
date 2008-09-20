@@ -33,7 +33,7 @@ my Str $bar;
 }
 
 # L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
-#?rakudo todo 'native types'
+#?rakudo skip 'native types (causes false positives if marked with todo)'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = undef', 'native int type cannot be undef');
