@@ -27,7 +27,6 @@ sub eval_elsewhere($code){ eval($code) }
 
     sub is_even($x) { $x % 2 == 0 }
     sub is_odd ($x) { $x % 2 == 1 }
-    #?rakudo 4 skip 'Any ~~ &unary_sub'
     ok 4 ~~ &is_even,    'scalar sub truth (unary)';
     ok 4 !~~ &is_odd,    'scalar sub truth (unary, negated smart-match)';
     ok !(3 ~~ &is_even), 'scalar sub truth (unary)';

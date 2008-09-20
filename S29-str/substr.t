@@ -89,7 +89,7 @@ plan 42;
 };
 
 { # as lvalue, using :=, should work
-    #?rakudo 4 todo 'exception'
+    #?rakudo 3 todo 'exception'
     my $str = "gorch ding";
 
     substr($str, 0, 5) = "gloop";
