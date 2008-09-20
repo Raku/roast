@@ -88,8 +88,8 @@ plan 42;
     is($str, "gloop ding", "lvalue assignment modified original string");
 };
 
-#?rakudo todo 'exception'
 { # as lvalue, using :=, should work
+    #?rakudo 4 todo 'exception'
     my $str = "gorch ding";
 
     substr($str, 0, 5) = "gloop";
@@ -104,6 +104,7 @@ plan 42;
     is($r, "boing", 'bound $r is consistent');
 
     my $o := substr($str, 3, 2);
+    #?rakudo 3 todo ' substr lvalue binding'
     is($o, "ng", "other bound var to other lvalue");
     $r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works");
