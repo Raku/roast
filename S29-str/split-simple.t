@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 16;
 
 =begin description
 
@@ -27,6 +27,9 @@ split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) works (with Str sema
     split_test 123.split(2),           <1 3>,   'Int.split(Int) works';
     split_test split(2, 123),          <1 3>,   'split(Int, Int) works';
 }
+
+split_test '1234'.split(/X/),          <1234>,  'Non-matching regex returns whole string';
+split_test '1234'.split('X'),          <1234>,  'Non-matching string returns whole string';
 
 # As per Larry, ''.split('') is the empty list
 # http://www.nntp.perl.org/group/perl.perl6.language/2008/09/msg29730.html
