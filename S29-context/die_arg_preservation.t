@@ -14,10 +14,11 @@ and does not cast its argument as a Str.
 
 try {
     my Bool $foo = Bool::True;
-    is( $foo.WHAT, Bool, 'arg to be given as die() arg contains a Bool value' );
+    isa_ok( $foo, Bool, 'arg to be given as die() arg contains a Bool value' );
     die $foo;
 };
-is( $!.WHAT, Bool, 'following try { die() } with Bool arg, $! contains a Bool value' );
+#?rakudo skip 'Exception.isa'
+isa_ok( $!, Bool, 'following try { die() } with Bool arg, $! contains a Bool value' );
 
 try {
     my Int $foo = 42;
