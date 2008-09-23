@@ -121,7 +121,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 32+@maps;
+plan 34+@maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -134,4 +134,5 @@ for 0..31 -> $code {
   is ord($char), $code, "ord(chr($code)) is $code";
 }
 
-
+is 'A'.ord, 65, "there's a .ord method";
+is 65.chr, 'A', "there's a .chr method";
