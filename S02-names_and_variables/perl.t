@@ -13,10 +13,8 @@ my @tests = (
     Inf, -Inf, NaN,
 
     "a string", "", "\0", "\t", "\n", "\r\n", "\o7",
-    #?rakudo emit # { is not escaped in '{'.perl
     '{', # "\d123",	# XXX there is no \d escape!!!
     '}',
-    #?rakudo emit # sigils are not escaped in .perl
     '$a @string %with &sigils()',
 
     ?1, ?0,
