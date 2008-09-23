@@ -33,8 +33,8 @@ split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty
 # Limit tests
 split_test 'theXbigXbang'.split(/X/, -1), <>, 'Negative limit returns empty List';
 split_test 'theXbigXbang'.split(/X/, 0),  <>, 'Zero limit returns empty List';
-split_test 'ab1cd12ef'.split(/\d+/, 1), <ab>, 'Limit of 1 returns a 1 element List';
-split_test '102030405'.split(0, 3),  <1 2 3>, 'Split on an Integer with limit parameter works';
+split_test 'ab1cd12ef'.split(/\d+/, 1), <ab1cd12ef>, 'Limit of 1 returns a 1 element List (with identical string)';
+split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
 split_test(
     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),
     ('','soup',''),
