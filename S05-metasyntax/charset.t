@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 23;
+plan 22;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -40,8 +40,6 @@ ok(!( "y" ~~ m/(<[a..z]-[aeiou]-[y]>)/ ), 'Multi-difference set failure');
 ok("f" ~~ m/(<[a..z]-[aeiou]-[y]>)/, 'Multi-difference set match');
 is($0, 'f', 'Multi-difference set capture');
 
-#?pugs todo 'bug'
-is($0, ']', 'LSB capture');
 ok(']' ~~ m/(<[\]]>)/, 'quoted close LSB match');
 is($0, ']', 'quoted close LSB capture');
 ok('[' ~~ m/(<[\[]>)/, 'quoted open LSB match');
