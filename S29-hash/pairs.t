@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 =begin description
 
@@ -15,11 +15,14 @@ Basic C<pairs> tests, see S29.
 {
   my %hash = (a => 1, b => 2, c => 3);
   my @pairs;
-  ok((@pairs = %hash.pairs.sort), "sorted pairs on hashes");
+  ok((@pairs = %hash.pairs),    "pairs on hashes");
+  #?rakudo skip 'TODO: infix:<cmp> for pairs'
+  ok((@pairs = @pairs.sort),    'Can sort list of pairs');
   is +@pairs, 3,                "pairs on hashes returned the correct number of elems";
   if +@pairs != 3 {
     skip 6, "skipped tests which depend on a test which failed";
   } else {
+    #?rakudo 6 skip 'TODO: infix:<cmp> for pairs'
     is @pairs[0].key,   "a",      "value of pair returned by hash.pairs was correct (1)";
     is @pairs[1].key,   "b",      "value of pair returned by hash.pairs was correct (2)";
     is @pairs[2].key,   "c",      "value of pair returned by hash.pairs was correct (3)";
@@ -30,6 +33,7 @@ Basic C<pairs> tests, see S29.
 }
 
 # Following stated by Larry on p6l
+#?rakudo skip 'TODO: Pair.pairs'
 {
   my $pair  = (a => 1);
   my @pairs;
@@ -44,6 +48,7 @@ Basic C<pairs> tests, see S29.
 }
 
 # This next group added by Darren Duncan following discovery while debugging ext/Locale-KeyedText:
+#?rakudo skip 'TODO: infix:<cmp> for pairs'
 {
   my $hash_of_2_pairs = {'a'=>'b','c'=>'d'};
   my $hash_of_1_pair = {'a'=>'b'};
@@ -69,6 +74,7 @@ Basic C<pairs> tests, see S29.
 }
 
 #?pugs todo 'bug'
+#?rakudo todo 'aliases returned by $pair.{value,kv} should be rw'
 {
     my $pair = (a => 42);
 
