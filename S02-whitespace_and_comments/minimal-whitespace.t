@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 7;
 
 # L<S03/Minimal whitespace DWIMmery/Whitespace is no longer allowed before>
 
@@ -13,8 +13,10 @@ my %hash = {a => 1, b => 2};
 eval_dies_ok('%hash <a>', 'hash with space before opening brackets does not work (1)');
 eval_dies_ok('%hash {"a"}', 'hash with space before opening braces does not work (2)');
 
-sub code (Int $a) {2 * $a}
-eval_dies_ok('code (5)', 'sub call with space before opening parens does not work');
+# XXX this one is wrong, it's parsed as code( (5) )
+# STD.pm agrees on that.
+#sub code (Int $a) {2 * $a}
+#eval_dies_ok('code (5)', 'sub call with space before opening parens does not work');
 
 class Thing {method whatever (Int $a) {3 * $a}}
 eval_dies_ok('Thing .new', 'whitespace is not allowed before . after class name');
