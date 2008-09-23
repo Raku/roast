@@ -21,11 +21,13 @@ plan 12;
   is @a.elems, 3, ".elems works on initialized arrays";
 }
 
+#?rakudo skip 'unspecced'
 {
   my $a;
   dies_ok { $a.elems }, ".elems does not work on arbitrary scalars (1)";
 }
 
+#?rakudo skip 'unspecced'
 {
 # (ryporter 2007-09-22): This test fails because a VInt is
 # being converted into an array in the final defintion of doArray
@@ -56,6 +58,7 @@ plan 12;
   is $a.elems, 3, ".elems works on initialized arrayrefs (2)";
 }
 
+#?rakudo skip 'unspecced'
 {
   dies_ok { elems(1,2,3,4) }, "elems(1,2,3,4) should not work";
 }
@@ -64,6 +67,7 @@ plan 12;
   is (elems (1,2,3,4)), 4, "elems (1,2,3,4) should work";
 }
 
+#?rakudo todo 'elems on Array ref'
 {
   is (elems [1,2,3,4]), 4, "elems [1,2,3,4] should work";
 }
