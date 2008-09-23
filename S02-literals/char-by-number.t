@@ -19,6 +19,7 @@ is("\x[a0]", chr(0xa0), '\x[a0] non-breaking space');
 is("\x[263a]", '☺', '\x[263a] wide hex character (SMILEY)');
 is("\x[6211]", '我', '\x[597d] wide hex character (Chinese char)');
 eval_dies_ok('"\x[6211"', 'broken "\x[6211"');
+#?rakudo todo 'feature'
 eval_dies_ok('"\x [6211]"', 'broken "\x [6211]"');
 
 is("\x[41,42,43]", 'ABC', '\x[list]');
@@ -36,6 +37,7 @@ is("\o[240]", chr(160), '\o[240] non-breaking space');
 is("\o[23072]", '☺', '\o[23072] wide hex character (SMILEY)');
 is("\o[61021]", '我', '\o[61021] wide hex character (Chinese char)');
 eval_dies_ok('"\o[6211"', 'broken "\o[6211"');
+#?rakudo todo 'feature'
 eval_dies_ok('"\o [6211]"', 'broken "\o [6211]"');
 
 is("\o[101,102,103]", 'ABC', '\o[list]');
@@ -45,6 +47,7 @@ is("\o101,102,103", 'A,102,103', '\olist not valid');
 # <S02/Literals/"Characters indexed by" decimal numbers"
 #  with "\c">
 
+#?rakudo 11 todo '\c escapes'
 is("\c32", ' ', '\c32 normal space');
 is("\c160", ' ', '\c160 non-breaking space');
 
