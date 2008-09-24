@@ -46,7 +46,7 @@ my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>', :todo<bug>);
 }
 
-dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error');
+dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error';
 
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
 is(@y, [1,2,undef], '{...}<a b c> is hash subscript');
@@ -70,7 +70,7 @@ eval_dies_ok 'reverse<1 2 3>', 'reverse<1 2 3> parsefail';
 eval_dies_ok ':foo <1 2 3>', ':foo <1 2 3> parsefail';
 
 my $r = eval ':foo <3';
-0k($r, ':foo <3 is comparison');
+ok($r, ':foo <3 is comparison');
 
 my $p = eval ':foo<1 2 3>';
 is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
