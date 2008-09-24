@@ -48,7 +48,9 @@ is($s, "xayaz", 'listop |<< <list>', :todo<bug>);
 
 dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error';
 
+# XXX shouldn't compare List to Array, need better test
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
+#?rakudo todo 'hash slices'
 is(@y, [1,2,undef], '{...}<a b c> is hash subscript');
 
 eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
@@ -56,6 +58,7 @@ eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
 ok( ?((1 | 3) < 3), '(...) < 3 no parsefail');
 
 #?pugs todo 'parsing bug'
+#?rakudo todo 'parsing'
 eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 
 # WRONG: should be parsed as print() < 3 
@@ -67,10 +70,14 @@ eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 #?rakudo skip 'unspecced'
 eval_dies_ok 'reverse<1 2 3>', 'reverse<1 2 3> parsefail';
 
+#?rakudo skip 'Null PMC access in can()'
 eval_dies_ok ':foo <1 2 3>', ':foo <1 2 3> parsefail';
 
+#?rakudo skip 'Null PMC access in can()'
+{
 my $r = eval ':foo <3';
 ok($r, ':foo <3 is comparison');
+}
 
 my $p = eval ':foo<1 2 3>';
 is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
