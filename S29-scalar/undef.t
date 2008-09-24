@@ -213,6 +213,7 @@ Perl6-specific tests
 
 # - unmatched alternative should bind to undef
 #?rakudo skip 'null PMC access in type()'
+#?DOES 10
 {
     my($num, $alpha);
     my($rx1, $rx2);
@@ -252,7 +253,8 @@ Perl6-specific tests
     ok(0 , "match values don't");
 }
 
-#?rakudo skip 'rx:Perl6'
+#?rakudo skip 'rx:Perl5'
+#?DOES 1
 {
     # - $0, $1 etc. should all be undef after a failed match
     #   (except for special circumstances)
