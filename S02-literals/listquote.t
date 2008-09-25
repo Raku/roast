@@ -32,7 +32,7 @@ describe the conflicting cases.
 
 =end kwid
 
-plan 11;
+plan 14;
 
 # L<S02/"Literals">
 # L<S03/"Chained comparisons">
@@ -81,3 +81,18 @@ ok($r, ':foo <3 is comparison');
 
 my $p = eval ':foo<1 2 3>';
 is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
+
+# Lists may contain newline characters
+
+{
+    my %e = ("foo", "bar", "blah", "blah");
+
+my %foo = (
+        "foo", "bar",
+        "blah", "blah",
+);
+    is(+%foo,      +%e,      "Hashes with embedded newlines in the list (1)");
+    is(%foo<foo>,  %e<foo>,  "Hashes with embedded newlines in the list (2)");
+    is(%foo<blah>, %e<blah>, "Hashes with embedded newlines in the list (3)");
+}
+
