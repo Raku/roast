@@ -128,7 +128,10 @@ sub eval_elsewhere($code){ eval($code) }
     my $d = 1;
     isa_ok(?$d, Bool, 'it is forced into a Bool');
     ok(?$d, 'it is forced into boolean context');
+}
 
+#?rakudo skip 'is context'
+{
     my $arrayref is context = list(1,2,3);
     my $boo is context = 37;
     ok eval_elsewhere('?(@$+arrayref)'), '?(@$arrayref) syntax works';
@@ -154,6 +157,9 @@ sub eval_elsewhere($code){ eval($code) }
     isa_ok(!$d, Bool, 'it is forced into a Bool');
     ok(!(!$d), 'it is forced into boolean context');
 
+}
+#?rakudo skip 'is context'
+{
     my $arrayref is context = list(1,2,3);
 
     ok eval_elsewhere('!(!(@$+arrayref))'), '!(@$arrayref) syntax works';
