@@ -55,5 +55,8 @@ for @nonseparators -> $sep {
   my @res = eval $str;
 
   my $vis = sprintf "%02x", ord $sep;
+  #?rakudo emit if $sep eq "\xa0" { 
+  #?rakudo emit      todo('\xa0 should not be a separator for list quotes');
+  #?rakudo emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
