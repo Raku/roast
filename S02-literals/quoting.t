@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 134;
+plan 135;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -518,3 +518,8 @@ Hello, World
     is(Qc[{1+1}], 2, 'Qc');
 }
 
+# TODO: smartlink
+
+{
+    is('test\\', "test\\", "backslashes at end of single quoted string");
+}
