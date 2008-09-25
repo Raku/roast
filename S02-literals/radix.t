@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 97;
+plan 137;
 
 # L<S02/Literals/":10<42>">
 
@@ -208,6 +208,28 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
     is :100[10,10],      1010, "Adverbial form of base 100 integer works";
     is :100[10,'.',10], 10.10, "Adverbial form of base 100 fraction works";
+}
+
+# What follows are tests that were moved here from t/syntax/numbers/misc.t
+# feel free to merge them inline into the other tests
+
+# Ambiguity tests, see thread "Ambiguity of parsing numbers with
+# underscores/methods" on p6l started by Ingo Blechschmidt:
+# L<"http://www.nntp.perl.org/group/perl.perl6.language/22769">
+# Answer from Luke:
+#   I think we should go with the method call semantics in all of the ambiguous
+#   forms, mostly because "no such method: Int::e5" is clearer than silently
+#   succeeding and the error coming up somewhere else.
+dies_ok { 2.e123 },    "2.e123 parses as method call";
+dies_ok { 2.foo  },    "2.foo  parses as method call";
+
+is  +'00123', 123, "Leading zeroes stringify correctly";
+
+eval_dies_ok ':2<2>',   ':2<2> is illegal';
+eval_dies_ok ':10<3a>', ':10<3a> is illegal';
+
+for 2..36 {
+    is eval(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
 }
 
 # vim: ft=perl6
