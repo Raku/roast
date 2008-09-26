@@ -4,6 +4,7 @@ use Test;
 
 plan 18;
 
+#?rakudo skip 'lexically scoped subs'
 {
     my $capture = \(1,2,3);
     
@@ -13,6 +14,7 @@ plan 18;
         'simply capture creation with \\( works (1)';
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
     my $capture = \(1,2,3,'too','many','args');
     
@@ -22,6 +24,7 @@ plan 18;
         'simply capture creation with \\( works (2)';
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
     my $capture = \(1, named => "arg");
     
@@ -31,6 +34,7 @@ plan 18;
         'simply capture creation with \\( works (3)';
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
     my $capture = try { \(1, 'positional' => "pair") };
     
@@ -40,6 +44,7 @@ plan 18;
         'simply capture creation with \\( works (4)';
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
     my @array   = <a b c>;
     my $capture = try { \(@array) };
@@ -51,6 +56,7 @@ plan 18;
 }
 
 # L<S06/Argument list binding/single scalar parameter marked>
+#?rakudo skip 'lexically scoped subs'
 {
     my sub bar ($a, $b, $c) { "$a!$b!$c" }
     my sub foo (|$capture)  { &bar.callwith(|$capture) }
@@ -70,6 +76,7 @@ plan 18;
 }
 
 # Arglists are first-class objects
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $capture;
     my sub foo (|$args) { $capture = $args }
@@ -85,6 +92,7 @@ plan 18;
     ok !($capture === $old_capture), "captures are first-class objects (5)";
 }
 
+#?rakudo skip 'lexically scoped subs'
 {
     my $capture1;
     my sub foo ($args) { $capture1 = $args }
@@ -97,6 +105,7 @@ plan 18;
 }
 
 # Mixing ordinary args with captures
+#?rakudo skip 'lexically scoped subs'
 {
     my $capture = \(:foo<bar>, :baz<grtz>);
     my sub foo ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
