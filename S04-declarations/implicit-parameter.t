@@ -49,5 +49,5 @@ plan 16;
 
 {
     #?rakudo skip 'parse failure'
-    dies_ok(sub () { sub { $^foo }.(42) },  'Placeholders not allowed in sub()');
+    eval_dies_ok('sub { $^foo }.(42)',  'Placeholders not allowed in sub()');
 }
