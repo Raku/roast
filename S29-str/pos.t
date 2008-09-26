@@ -10,5 +10,4 @@ my $str = 'moose';
 $str ~~ m/oo/;
 eval_dies_ok('$str.pos', 'Str.pos superseeded by $/.to');
 
-#?rakudo todo '$/.to'
-is($/.to, 2, '$/.to works');
+is($/.to, 3, '$/.to works');
