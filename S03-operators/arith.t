@@ -289,14 +289,12 @@ tryeq -5.5 / -2, 2.75;
 # [I suspect this is parsing string-to-float problems, not actual arith]
 is 18446744073709551616/1, 18446744073709551616; # Bluuurg
 
-#?rakudo skip 'division accuracy bugs'
 {
     tryeq_sloppy 18446744073709551616/2, 9223372036854775808;
     tryeq_sloppy 18446744073709551616/4294967296, 4294967296;
     tryeq_sloppy 18446744073709551616/9223372036854775808, 2;
 }
 
-#?rakudo skip 'multiplication accuracy bugs'
 {
     # The peephole optimiser is wrong to think that it can substitute intops
     # in place of regular ops, because i_multiply can overflow.

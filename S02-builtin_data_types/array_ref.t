@@ -14,7 +14,6 @@ is($array_ref1[0], 'foo', 'got the right value at array_ref1 index 0');
 is($array_ref1[1], 'bar', 'got the right value at array_ref1 index 1');
 is($array_ref1[2], 'baz', 'got the right value at array_ref1 index 2');
 
-#?rakudo skip 'arrayref dot notation unimplemented'
 is($array_ref1.[0], 'foo', 'got the right value at array_ref1 index 0 using the . notation');
 
 # array_ref with strings, numbers and undef

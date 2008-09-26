@@ -70,7 +70,6 @@ eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 #?rakudo skip 'unspecced'
 eval_dies_ok 'reverse<1 2 3>', 'reverse<1 2 3> parsefail';
 
-#?rakudo skip 'Null PMC access in can()'
 eval_dies_ok ':foo <1 2 3>', ':foo <1 2 3> parsefail';
 
 #?rakudo skip 'Null PMC access in can()'

@@ -18,7 +18,9 @@ class Bar does Foo;
 # Smartmatch and .HOW.does and .^does
 my $bar = Bar.new();
 ok ($bar ~~ Bar),               '... smartmatch our $bar to the Bar class';
+#?rakudo skip '.HOW'
 ok ($bar.HOW.does($bar, Foo)),  '.HOW.does said our $bar does Foo';
+#?rakudo skip '.^does'
 ok ($bar.^does(Foo)),           '.^does said our $bar does Foo';
 ok ($bar ~~ Foo),               'smartmatch said our $bar does Foo';
 
@@ -26,6 +28,7 @@ ok ($bar ~~ Foo),               'smartmatch said our $bar does Foo';
 my $baz = 3;
 ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 #?pugs skip 3 'feature'
+#?rakudo 3 skip 'role testing'
 ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
 ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
 ok $baz ~~ Baz,                 'smartmatch said our $baz now does Foo';

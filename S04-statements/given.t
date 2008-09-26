@@ -240,7 +240,6 @@ for @input -> $x {
 is(@got.join(","), "false,true", 'given { when .true { } }');
 
 # given + hash deref
-#?rakudo skip 'parsefail on .{"key"} when $_ is a hash'
 {
     my %h;
     given %h { .{'key'} = 'value'; }

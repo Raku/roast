@@ -17,7 +17,6 @@ is(@array1[1], 'bar', 'got the right value at array1 index 1');
 is(@array1[2], 'baz', 'got the right value at array1 index 2');
 
 
-#?rakudo skip ".[] instead of [] as postcircumfix"
 is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notation');
 
 

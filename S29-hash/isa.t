@@ -13,6 +13,6 @@ Isa tests
 
 {
     my %hash = <1 2 3 4>;
-    isa_ok(%hash, 'Hash');
-    isa_ok(%hash, 'List');
+    isa_ok(%hash, Hash);
+    isa_ok(%hash, List);
 }
