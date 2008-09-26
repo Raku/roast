@@ -113,8 +113,8 @@ is($two_c, 2, '... and second block does too');
 
 sub f { { 3 } }
 is(f(), 3, 'bare blocks immediately runs even as the last statement');
-#?rakudo 4 skip 'calling postcircumfix:<()> with a dot'
 is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');
 dies_ok({(sub { { $^x } }).()}, 'implicit params become errors');
+#?rakudo skip "parse failure: pointy block as an expression"
 isnt((sub { -> { 3 } }).(), 3, 'as are pointies');

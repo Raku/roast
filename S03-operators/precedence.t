@@ -24,7 +24,6 @@ plan 47;
 
 my @a = 1,2,3;
 is(++@a[2], 4, "bare postfix binds tighter than ++");
-#?rakudo skip 'dotted postcircumfix'
 is(++@a.[2], 5, "dotted postfix binds tighter than ++");
 
 # autoincrement
