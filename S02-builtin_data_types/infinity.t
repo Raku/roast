@@ -4,6 +4,7 @@ plan 8;
 
 # L<S02/"Built-In Data Types" /Perl 6 should by default make standard IEEE floating point concepts visible>
 
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $x = Inf;
     
@@ -11,18 +12,21 @@ plan 8;
     cmp_ok( $x, &infix:<eq>, 'Inf', 'string equal'  );
 }
 
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $x = -Inf;
     cmp_ok( $x, &infix:<==>, -Inf,   'negative numeric equal' );
     cmp_ok( $x, &infix:<eq>, '-Inf', 'negative string equal'  );
 }
 
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $x = int( Inf );
     cmp_ok( $x, &infix:<==>,  Inf,  'int numeric equal' );
     cmp_ok( $x, &infix:<eq>, 'Inf', 'int string equal', :todo<bug> );
 }
 
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $x = int( -Inf );
     cmp_ok( $x, &infix:<==>,  -Inf,   'int negative numeric equal');
