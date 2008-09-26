@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 77;
+plan 80;
 
 =begin description
 
@@ -20,21 +20,21 @@ Some deeper tests were already added.
 
 { # Array of Pairs
     my @array;
-    isa_ok(@array, 'Array');
+    isa_ok(@array, Array);
     
     my $pair = ('key' => 'value');
-    isa_ok($pair, 'Pair');
+    isa_ok($pair, Pair);
     
     @array[0] = $pair; # assign a variable
     is(+@array, 1, 'the array has one value in it');
 	
-    isa_ok(@array[0], 'Pair');
+    isa_ok(@array[0], Pair);
     #?rakudo skip "get_pmc_keyed() not implemented in class 'Perl6Pair'"
     is(@array[0]<key>, 'value', 'got the right pair value');
 
     @array[1] = ('key1' => 'value1'); # assign it inline
     is(+@array, 2, 'the array has two values in it');
-    isa_ok(@array[1], 'Pair');
+    isa_ok(@array[1], Pair);
 
     #?rakudo skip "get_pmc_keyed() not implemented in class 'Perl6Pair'"
     is(@array[1]<key1>, 'value1', 'got the right pair value');
@@ -42,29 +42,30 @@ Some deeper tests were already added.
 
 { # Array of Hashes
     my @array;
-    isa_ok(@array, 'Array');
+    isa_ok(@array, Array);
     
     my %hash = ('key', 'value', 'key1', 'value1');
-    isa_ok(%hash, 'Hash');
+    isa_ok(%hash, Hash);
     is(+%hash.keys, 2, 'our hash has two keys');
     
     @array[0] = %hash;
     is(+@array, 1, 'the array has one value in it');
-    isa_ok(@array[0], 'Hash');
+    isa_ok(@array[0], Hash);
     is(@array[0]{"key"}, 'value', 'got the right value for key');
     is(@array[0]<key1>, 'value1', 'got the right value1 for key1');    
 }
 
 { # Array of Arrays
     my @array = (1, [2, 3], [4, 5], 6);
-    isa_ok(@array, 'Array');
+    isa_ok(@array, Array);
     
     is(+@array, 4, 'got 4 elements in the Array of Arrays');
     is(@array[0], 1, 'got the right first element');
+    #?rakudo todo 'too eager list flattening'
     isa_ok(@array[1], 'Array');
     is(@array[1][0], 2, 'got the right second/first element');    
     is(@array[1][1], 3, 'got the right second/second element');        
-    isa_ok(@array[2], 'Array');    
+    isa_ok(@array[2], Array);    
     is(@array[2][0], 4, 'got the right third/first element');    
     is(@array[2][1], 5, 'got the right third/second element');            
     is(@array[3], 6, 'got the right fourth element');
@@ -72,17 +73,20 @@ Some deeper tests were already added.
 
 { # Array of Subs
     my @array;
-    isa_ok(@array, 'Array');
+    isa_ok(@array, Array);
     
     @array[0] = sub { 1 };
     @array[1] = { 2 };
     #?rakudo emit #
     @array[2] = -> { 3 };
     
+    #?rakudo todo 'test dependency'
     is(+@array, 3, 'got three elements in the Array');
-    isa_ok(@array[0], 'Sub');
-    isa_ok(@array[1], 'Block');
-    isa_ok(@array[2], 'Block');        
+    #?rakudo todo 'type Sub'
+    isa_ok(@array[0], Sub);
+    isa_ok(@array[1], Block);
+    #?rakudo todo 'test dependency'
+    isa_ok(@array[2], Block);        
     
     is(@array[0](), 1, 'the first element (when executed) is 1');
     is(@array[1](), 2, 'the second element (when executed) is 2');    
@@ -95,7 +99,7 @@ Some deeper tests were already added.
     isa_ok(%hash, 'Hash');
     
     %hash<key> = [ 1, 2, 3 ];
-    isa_ok(%hash<key>, 'Array');
+    isa_ok(%hash<key>, Array);
     
     is(+%hash<key>, 3, 'it should have 3 values in it');    
     is(%hash<key>[0], 1, 'got the right value');
@@ -124,14 +128,13 @@ Some deeper tests were already added.
 
 { # Hash of Array-refs
     my %hash;
-    isa_ok(%hash, 'Hash');
+    isa_ok(%hash, Hash);
     
     my @array = ( 1, 2, 3 );
-    #?rakudo 2 todo 'arrays of hashes'
-    isa_ok(@array, 'Array');
+    isa_ok(@array, Array);
     
     %hash<key> = @array;
-    isa_ok(%hash<key>, 'Array');
+    isa_ok(%hash<key>, Array);
     
     is(+%hash<key>, 3, 'it should have 3 values in it');       
     is(%hash<key>[0], 1, 'got the right value');
@@ -180,31 +183,30 @@ Some deeper tests were already added.
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;
-    isa_ok(@array, 'Array');
-    isa_ok(@array[0], 'Array');
-    isa_ok(@array[0][0], 'Array');
-    isa_ok(@array[0][0][0], 'Array');
-    isa_ok(@array[0][0][0][0], 'Array');
+    isa_ok(@array, Array);
+    isa_ok(@array[0], Array);
+    isa_ok(@array[0][0], Array);
+    isa_ok(@array[0][0][0], Array);
+    isa_ok(@array[0][0][0][0], Array);
     is(@array[0][0][0][0][0], 5, "5 level deep arrays only structure");
 
     @array[1]<two>[0]<four>[0]<six> = 6;
-    isa_ok(@array, 'Array');
-    isa_ok(@array[1], 'Hash');
-    isa_ok(@array[1]<two>, 'Array');
-    isa_ok(@array[1]<two>[0], 'Hash');
+    isa_ok(@array, Array);
+    isa_ok(@array[1], Hash);
+    isa_ok(@array[1]<two>, Array);
+    isa_ok(@array[1]<two>[0], Hash);
     is(+@array[1]<two>[0], 1, "one key at level 4");
-    isa_ok(@array[1]<two>[0]<four>, 'Array');
-    isa_ok(@array[1]<two>[0]<four>[0], 'Hash');
+    isa_ok(@array[1]<two>[0]<four>, Array);
+    isa_ok(@array[1]<two>[0]<four>[0], Hash);
     is(@array[1]<two>[0]<four>[0]<six>, 6, "6 level deep mixed structure");
 
 
     @array[2]<two>[0]<f><other> = 5;
-    isa_ok(@array[1]<two>[0], 'Hash');
-    #isa_ok(@array[1]<two>[0]<f>, 'Hash');
-    #is(+@array[1]<two>[0], 2, "two keys at level 4");
-    #is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
+    isa_ok(@array[1]<two>[0], Hash);
+    #?pugs 3 todo 'bug'
+    isa_ok(@array[1]<two>[0]<f>, Hash);
+    is(+@array[1]<two>[0], 2, "two keys at level 4");
+    is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }   
-    # the 3 commented tests above fail
 
-
-
+# vim: ft=perl6
