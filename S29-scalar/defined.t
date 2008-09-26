@@ -38,11 +38,12 @@ $foo = 0;
 ok(defined($foo), 'variable $foo is now defined (as numeric literal 0)');
 
 undefine($foo);
-ok(!defined($foo), 'undef $foo works');
+ok(!defined($foo), 'undefine $foo works');
 
 # try the invocant syntax
 
 my $foo;
+#?rakudo skip 'my $foo; $foo.defined'
 ok(!$foo.defined, 'unassigned variable $foo is undefined');
 
 $foo = 1;
@@ -61,6 +62,7 @@ $foo = 0;
 ok($foo.defined, 'variable $foo is now defined (as numeric literal 0)');
 
 undefine($foo);
+#?rakudo skip 'undefine $foo; $foo.defined'
 ok(!$foo.defined, 'undef $foo works');
 
 
