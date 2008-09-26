@@ -203,7 +203,6 @@ tryeq 3 * -3, -9;
 tryeq -4 * -3, 12;
 
 # check with 0xFFFF and 0xFFFF
-#?rakudo skip 'arithmetics'
 {
     tryeq 65535 * 65535, 4294836225;
     tryeq 65535 * -65535, -4294836225;
