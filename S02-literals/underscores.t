@@ -40,7 +40,6 @@ is 0xdead_beef, 0xdeadbeef, "Underscores work with hex";
 
 is 0b1101_1110_1010_1101_1011_1110_1110_1111, 0xdeadbeef, "Underscores work with binary";
 
-#?rakudo skip 'parse 2e0_1'
 is 2e0_1, 20, "Underscores work in the argument for e";
 
 ok 2.1_23 == 2.123, "2.1_23 parses as number";
