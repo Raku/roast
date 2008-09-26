@@ -108,10 +108,14 @@ Some deeper tests were already added.
         is($array[1], 2, 'got the right value (when I pull the array out)');    
         is($array[2], 3, 'got the right value (when I pull the array out)');    
     }
-    
+
+#?rakudo skip "Method 'push' not found"
+{    
     %hash<key>.push(4);
     is(+%hash<key>, 4, 'it should now have 4 values in it');
     is(%hash<key>[3], 4, 'got the right value (which we just pushed onto the list)');    
+}
+
 }
 
 
@@ -137,10 +141,13 @@ Some deeper tests were already added.
         is(@array[1], 2, 'got the right value (when I pull the array out)');    
         is(@array[2], 3, 'got the right value (when I pull the array out)');    
     }
-    
+
+#?rakudo skip "Method 'push' not found"
+{    
     %hash<key>.push(4);
     is(+%hash<key>, 4, 'it should now have 4 values in it');
     is(%hash<key>[3], 4, 'got the right value (which we just pushed onto the array)');    
+}
 
 }
 
@@ -160,6 +167,7 @@ Some deeper tests were already added.
     is($h<a>.WHAT, 'Array', "array nested in hashref in one declaration");
 }
 
+#?rakudo skip "get_pmc_keyed() not implemented in class 'Undef'"
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;
