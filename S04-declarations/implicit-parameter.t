@@ -21,11 +21,14 @@ plan 16;
     # { } has implicit signature ($_ is rw = $OUTER::_)
     
     $_ = 'Hello';
-    is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer', :todo<feature>);
+    #?pugs todo 'feature'
+    #?rakudo skip 'dispatch error (non-catchable)'
+    is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer');
     is({ $_ }.('Goodbye'), 'Goodbye',   'but it is only a default');
     is({ 42 }.(), 42,                   'no implicit $_ usage checking');
     is({ 42 }.('Goodbye'), 42,          '$_ gets assigned but isn\'t used');
 
+    #?rakudo 2 todo 'arity of blocks with $_'
     is(({ $_ }.arity), 1,                 '{$_} is arity 1, of course');
     is(({ .say }.arity), 1,               'Blocks that uses $_ implicitly have arity 1');
 }
@@ -45,5 +48,6 @@ plan 16;
 }
 
 {
+    #?rakudo skip 'parse failure'
     dies_ok(sub () { sub { $^foo }.(42) },  'Placeholders not allowed in sub()');
 }
