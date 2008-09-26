@@ -20,12 +20,14 @@ plan 7;
 }
 
 # L<S09/Autovivification/But these bindings do autovivify:>
+#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     bar(%a<b><c>);
     is %a.keys.elems, 0, "in ro arguments doesn't autovivify.";
 }
 
+#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     my $b := %a<b><c>;
@@ -39,12 +41,14 @@ plan 7;
     is %a.keys.elems, 1, 'capturing autovivifies.';
 }
 
+#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     foo(%a<b><c>);
     is %a.keys.elems, 1, 'in rw arguments autovivifies.';
 }
 
+#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     %a<b><c> = 1;
