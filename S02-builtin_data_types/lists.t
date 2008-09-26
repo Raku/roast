@@ -26,6 +26,7 @@ plan 16;
 }
 
 # List construction does not create new containers
+#?rakudo skip "Could not find non-existent sub infix:=:="
 {
   my $foo = 42;
 
@@ -33,6 +34,7 @@ plan 16;
     "list construction should not create new containers", :todo<unspecced>;
 }
 
+#?rakudo skip "get_pmc_keyed() not implemented in class 'Integer'"
 {
   my $foo = 42;
   ok ($foo, "does_not_matter", 17)[0,1][0] =:= $foo,
@@ -40,6 +42,7 @@ plan 16;
 }
 
 # Lists as lvalues
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 43;
@@ -49,6 +52,7 @@ plan 16;
     "using lists as lvalues works";
 }
 
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
 
@@ -59,6 +63,7 @@ plan 16;
 }
 
 # List slices as lvalues
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 43;
@@ -72,6 +77,7 @@ plan 16;
 }
 
 # Lists as lvalues used to swap variables
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 23;
@@ -81,6 +87,7 @@ plan 16;
     "using lists as lvalues to swap two variables works";
 }
 
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 1;
   my $bar = 2;
@@ -92,6 +99,7 @@ plan 16;
 }
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 23;
@@ -105,6 +113,7 @@ plan 16;
     "the vars didn't lose the readwrite-ness";
 }
 
+#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 1;
   my $bar = 2;
