@@ -203,6 +203,7 @@ is( (1..Inf)[2..Inf].perl,
         "array slice delete()" );
 }
 
+#?rakudo skip 'Null PMC access in find_method()'
 {
     my @a = (1..Inf);
     @a[1..1000002] = @a[9..1000010];
