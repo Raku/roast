@@ -27,12 +27,16 @@ Some deeper tests were already added.
     
     @array[0] = $pair; # assign a variable
     is(+@array, 1, 'the array has one value in it');
+	
     isa_ok(@array[0], 'Pair');
+    #?rakudo skip "get_pmc_keyed() not implemented in class 'Perl6Pair'"
     is(@array[0]<key>, 'value', 'got the right pair value');
 
     @array[1] = ('key1' => 'value1'); # assign it inline
     is(+@array, 2, 'the array has two values in it');
     isa_ok(@array[1], 'Pair');
+
+    #?rakudo skip "get_pmc_keyed() not implemented in class 'Perl6Pair'"
     is(@array[1]<key1>, 'value1', 'got the right pair value');
 }
 
@@ -66,6 +70,7 @@ Some deeper tests were already added.
     is(@array[3], 6, 'got the right fourth element');
 }
 
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 { # Array of Subs
     my @array;
     isa_ok(@array, 'Array');
