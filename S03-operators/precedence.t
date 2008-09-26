@@ -182,7 +182,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
     my $run = 1;
     sub isfive (*@args) {
         is(@args[0], 5, "First arg is 5, run " ~ $run++);
-        0;
+        1;
     }
 
     # these are two tests per line, actually
