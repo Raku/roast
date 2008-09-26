@@ -123,8 +123,7 @@ plan 47;
 {
     my $a = "0d01.01";
     isa_ok(+$a, "Num");
-    #?rakudo todo "correct numification"
-    is(+$a, 1.01, "0d01.01 numifies to 1.01");
+    is(+$a, 1, "0d01.01 numifies to 1");
 }
 
 #L<S02/Built-In Data Types/Perl intrinsically supports big integers>
