@@ -20,5 +20,5 @@ my %matcher = (
 is $s.trans(%matcher.pairs),        'a1b1c2d2', 'Can use two closures in trans';
 is $s,                              'aXbYcYdX', 'Source string unchanged';
 
-is $s.trans([<X Y>] => [{++$x},{++$y}]), 'a1b1c2d2', 'can use closures in pairs of arrays';
+is $s.trans([<X Y>] => [{++$x},{++$y}]), 'a3b3c4d4', 'can use closures in pairs of arrays';
 is $s,                              'aXbYcYdX', 'Source string unchanged';
