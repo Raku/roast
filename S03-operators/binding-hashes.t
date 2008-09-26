@@ -145,7 +145,6 @@ plan 37;
   $var         = "f";
   # %hash<b> and $var are now "f", but %new_hash is unchanged.
   is $var,                   "f",     "hash assignment creates new containers (2)";
-  #?rakudo skip "unspace (or whatever it's called these days"
   is ~%hash\   .values.sort, "f x z", "hash assignment creates new containers (3)";
   is ~%new_hash.values.sort, "e x z", "hash assignment creates new containers (4)";
 }
@@ -163,7 +162,6 @@ plan 37;
   $var          = "f";
   # %hash<b> and $var are now "f", but %new_hash is unchanged.
   is $var,        "f",                "hash binding does not create new containers (2)";
-  #?rakudo skip "unspace (or whatever it's called these days"
   is ~%hash\   .values.sort, "f x z", "hash binding does not create new containers (3)";
   is ~%new_hash.values.sort, "f x z", "hash binding does not create new containers (4)";
 }
@@ -181,6 +179,5 @@ plan 37;
 
   %hash<b> = "c";
   is ~$hashref.values.sort, "a c", 'binding %hash := $hashref works (2)';
-  #?rakudo skip "unspace (or whatever it's called these days"
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
