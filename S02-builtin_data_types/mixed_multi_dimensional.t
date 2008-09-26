@@ -70,13 +70,13 @@ Some deeper tests were already added.
     is(@array[3], 6, 'got the right fourth element');
 }
 
-#?rakudo skip 'Parse Error: Statement not terminated properly'
 { # Array of Subs
     my @array;
     isa_ok(@array, 'Array');
     
     @array[0] = sub { 1 };
     @array[1] = { 2 };
+    #?rakudo emit #
     @array[2] = -> { 3 };
     
     is(+@array, 3, 'got three elements in the Array');
@@ -86,6 +86,7 @@ Some deeper tests were already added.
     
     is(@array[0](), 1, 'the first element (when executed) is 1');
     is(@array[1](), 2, 'the second element (when executed) is 2');    
+    #?rakudo skip 'test dependency (pointy blocks)'
     is(@array[2](), 3, 'the third element (when executed) is 3');
 }
 
@@ -111,7 +112,9 @@ Some deeper tests were already added.
 
 #?rakudo skip "Method 'push' not found"
 {    
+    #?rakudo emit #
     %hash<key>.push(4);
+    #?rakudo 2 skip 'test dependency'
     is(+%hash<key>, 4, 'it should now have 4 values in it');
     is(%hash<key>[3], 4, 'got the right value (which we just pushed onto the list)');    
 }
@@ -124,6 +127,7 @@ Some deeper tests were already added.
     isa_ok(%hash, 'Hash');
     
     my @array = ( 1, 2, 3 );
+    #?rakudo 2 todo 'arrays of hashes'
     isa_ok(@array, 'Array');
     
     %hash<key> = @array;
@@ -135,7 +139,9 @@ Some deeper tests were already added.
     is(%hash<key>[2], 3, 'got the right value');
     
     {
+        #?rakudo emit #
         my @array = @( %hash<key> );
+        #?rakudo 4 skip 'test dependency HoA'
         is(+@array, 3, 'it should have 3 values in it');    
         is(@array[0], 1, 'got the right value (when I pull the array out)');
         is(@array[1], 2, 'got the right value (when I pull the array out)');    
@@ -144,7 +150,10 @@ Some deeper tests were already added.
 
 #?rakudo skip "Method 'push' not found"
 {    
+    #?rakudo emit #
     %hash<key>.push(4);
+    
+    #?rakudo 2 skip 'test dependency HoA'
     is(+%hash<key>, 4, 'it should now have 4 values in it');
     is(%hash<key>[3], 4, 'got the right value (which we just pushed onto the array)');    
 }
@@ -167,7 +176,7 @@ Some deeper tests were already added.
     is($h<a>.WHAT, 'Array', "array nested in hashref in one declaration");
 }
 
-#?rakudo skip "get_pmc_keyed() not implemented in class 'Undef'"
+#?rakudo skip 'multi-level autovivification'
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;
