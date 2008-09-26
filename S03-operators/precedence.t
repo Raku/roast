@@ -13,7 +13,7 @@ L<S03/Operator precedence>
 
 =end pod
 
-plan 47;
+plan 51;
 
 
 # terms
@@ -177,6 +177,20 @@ my @c = 1, 2, 3;
 is(@c, [1,2,3], "@ = binds looser than ,");
 
 # loose and
+
+{
+    my $run = 1;
+    sub isfive (*@args) {
+        is(@args[0], 5, "First arg is 5, run " ~ $run++);
+        0;
+    }
+
+    # these are two tests per line, actually
+    # we should have a better way that doesn't just result in 
+    # a wrong plan if gone wrong.
+    isfive(5) and isfive(5);
+    isfive 5  and isfive 5;
+}
 
 # loose or
 
