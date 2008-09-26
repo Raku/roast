@@ -9,7 +9,10 @@ plan 30;
 # Unicode variables
 # english ;-)
 ok(try {my $foo; sub foo {}; 1}, "ascii declaration");
+#?rakudo skip "No applicable candidates found to dispatch to."
 is(try {my $bar = 2; sub id ($x) { $x }; id($bar)}, 2, "evaluation"); 
+
+#?rakudo 20 skip 'unexpected USTRINGC'
 
 # umlauts
 ok(try {my $übervar; sub fü {}; 1}, "umlauts declaration");
@@ -57,20 +60,24 @@ is(
     "evaluation"
 );
 
+#?rakudo 2 skip 'Parse Error: Statement not terminated properly'
 ok(try { my $पहला = 1; }, "hindi declaration");
 is(try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }, 4, "evaluation");
 
 # Unicode subs
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my sub äöü () { 42 }
     is äöü, 42, "Unicode subs with no parameters";
 }
+#?rakudo skip 'lexically scoped subs'
 {
     my sub äöü ($x) { 1000 + $x }
     is äöü 17, 1017, "Unicode subs with one parameter (parsed as prefix ops)";
 }
 
 # Unicode parameters
+#?rakudo skip 'lexically scoped subs'
 {
     my sub abc (:$äöü) { 1000 + $äöü }
 
@@ -79,6 +86,7 @@ is(try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode placeholder variables
+#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     is
         ~(< foostraße barstraße fakestraße >.map:{ ucfirst $^straßenname }),
@@ -87,6 +95,7 @@ is(try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode methods
+#?rakudo skip "unexpected USTRINGC"
 {
     class Str is also { method äöü { self.ucfirst } };
     is "pugs".äöü(), "Pugs", "Unicode methods";
