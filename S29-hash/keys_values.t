@@ -24,6 +24,7 @@ is(+%hash.values, +%hash, 'we have the same number of keys as elements in the ha
 
 # keys and values on Pairs
 my $pair = (a => 42);
+#?rakudo 6 skip '.keys and .values on pairs'
 is(~$pair.keys,   "a", '$pair.keys works');
 is(~keys($pair),  "a", 'keys($pair) works');
 is(+$pair.keys,     1, 'we have one key');
