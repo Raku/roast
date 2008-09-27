@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 182;
+plan 190;
 
 # L<S02/Literals/":10<42>">
 
@@ -230,6 +230,19 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     for 2..36 {
         is +":{$_}<11>", $_ + 1, "stringified form of base $_ works";
     }
+}
+
+# tests for _invalid_ string interpretations of radix notations
+#?rakudo todo "patch has not been applied, see RT# 59222"
+{
+    is +":2.4<01>", 0, "fractional radix parsefail works";
+    is +":10<12f>", 0, "invalid alphabet parsefail works";
+    is +":1b<10>", 0, "invalid radix alphabet parsefail works";
+    is +":10<>", 0, "missing radix conversion number parsefail works";
+    is +":_2<01>", 0, "underscore seperator misuse parsefail works (1)";
+    is +":2<_01>", 0, "underscore seperator misuse parsefail works (2)";
+    is +":2<01_>", 0, "underscore seperator misuse parsefail works (3)";
+    is +":2<1.3>", 0, "invalid radix conversion alphabet parsefail works";
 }
 
 # What follows are tests that were moved here from t/syntax/numbers/misc.t
