@@ -6,33 +6,26 @@ use Test;
 my @inttypes = map {"int$_", "uint$_"}, <1 2 4 8 16 32 64>;
 plan 7 * @inttypes;
 
-#?rakudo emit skip_rest('unimpl int1..64');
-
-#?rakudo emit =begin unimpl
-
 for @inttypes -> $type {
-   	unless eval("my $type \$var; 1") {
-       	skip 7, "low-level data type $type not supported on this platform";
-   	}
+    unless eval("my $type \$var; 1") {
+        skip 7, "low-level data type $type not supported on this platform";
+    }
 
-   	my $maxval; my $minval;
-   	my $len = +$type; # get the numeric value
-   	if $type ~~ /^uint/ {
-       	$maxval = 2**$len - 1;
-       	$minval = 0;
-   	} else { # /^int/
-       	$maxval = 2**($len - 1) - 1;
-       	$minval = -(2**($len - 1));
-   	}
+    my $maxval; my $minval;
+    my $len = +$type; # get the numeric value
+    if $type ~~ /^uint/ {
+        $maxval = 2**$len - 1;
+        $minval = 0;
+    } else { # /^int/
+        $maxval = 2**($len - 1) - 1;
+        $minval = -(2**($len - 1));
+    }
 
-   	is(eval("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
-   	is(eval("my $type \$var = $minval"), $minval, "$type can be $minval");
-   	eval_dies_ok("my $type \$var = {$maxval+1}", "$type cannot be {$maxval+1}");
-   	eval_dies_ok("my $type \$var = {$minval-1}", "$type cannot be {$minval-1}");
-   	eval_dies_ok("my $type \$var = 'foo'", "$type cannot be a string");
-   	eval_dies_ok("my $type \$var = 42.1", "$type cannot be non-integer");
-   	eval_dies_ok("my $type \$var = NaN", "$type cannot be NaN");
+    is(eval("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
+    is(eval("my $type \$var = $minval"), $minval, "$type can be $minval");
+    eval_dies_ok("my $type \$var = {$maxval+1}", "$type cannot be {$maxval+1}");
+    eval_dies_ok("my $type \$var = {$minval-1}", "$type cannot be {$minval-1}");
+    eval_dies_ok("my $type \$var = 'foo'", "$type cannot be a string");
+    eval_dies_ok("my $type \$var = 42.1", "$type cannot be non-integer");
+    eval_dies_ok("my $type \$var = NaN", "$type cannot be NaN");
 }
-
-#?rakudo emit =end unimpl
-
