@@ -16,11 +16,9 @@ plan 13;
     
     # ^ and $ now always match the start/end of a string, like the old \A and \z.
     ok($str ~~ /^abc/, '^ matches beginning of string');
-    #?rakudo todo '^ should not match \n'
-    ok(!$str ~~ /^de/, '^ does not match \n');
+    ok(!($str ~~ /^de/), '^ does not match \n');
     ok($str ~~ /def$/, '$ matches end of string');
-    #?rakudo todo '$ should not match \n'
-    ok(!$str ~~ /bc$/, '$ does not match \n');
+    ok(!($str ~~ /bc$/), '$ does not match \n');
     
     # (The /m modifier is gone.)
     eval_dies_ok('$str ~~ m:m/bc$/', '/m modifier (as :m) is gone');
@@ -30,8 +28,7 @@ plan 13;
 {
     my $str = "abc\ndef\n";
     ok($str ~~ /def\n$/, '\n$ matches as expected');
-    #?rakudo todo '$ should not match an optional \n at end of string'
-    ok(!$str ~~ /def$/,  '$ does not match \n at end of string');
+    ok(!($str ~~ /def$/),  '$ does not match \n at end of string');
 }
 
 # The \A, \Z, and \z metacharacters are gone.
