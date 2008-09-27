@@ -163,7 +163,6 @@ Tests for %hash.reverse, which inverts the keys and values of a hash.
 
 {
     my %hash = <a b c d>;
-    #?rakudo todo 'reverse for hash not implemented'
     is(%hash.reverse, {'b' => 'a', 'd' => 'c'}, 'simple hash reversal');
     is(%hash, {'a' => 'b', 'c' => 'd'}, 'original hash is intact');
 }
