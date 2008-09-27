@@ -12,7 +12,7 @@ ok(try {my $foo; sub foo {}; 1}, "ascii declaration");
 #?rakudo skip "No applicable candidates found to dispatch to."
 is(try {my $bar = 2; sub id ($x) { $x }; id($bar)}, 2, "evaluation"); 
 
-#?rakudo 20 skip 'unexpected USTRINGC'
+#?rakudo 20 skip 'unicode: expected USTRINGC'
 
 # umlauts
 ok(try {my $übervar; sub fü {}; 1}, "umlauts declaration");
@@ -95,7 +95,7 @@ is(try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode methods
-#?rakudo skip "unexpected USTRINGC"
+#?rakudo skip "unicode: unexpected USTRINGC"
 {
     class Str is also { method äöü { self.ucfirst } };
     is "pugs".äöü(), "Pugs", "Unicode methods";
