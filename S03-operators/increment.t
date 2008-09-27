@@ -75,9 +75,11 @@ $b = -$a;
 $b= $b - 1;
 is($b, -(++$a), 'est oder of predecrement in -(++$a)');
 
+#?rakudo skip 'unimpl undef++'
 $a = undef;
 is($a++, 0, 'undef++ == 0');
 
+#?rakudo skip 'unimpl undef--'
 $a = undef;
 ok($a-- ~~ undef, 'undef-- is undefined');
 
@@ -106,6 +108,7 @@ is(@b[$moo], 2, "array elem via var");
 is($moo, 0, "var was not touched");
 
 # Test that the expression to increment will only be evaluated once.
+#?rakudo skip "unimpl Lexically scoped subs"
 {
   my $was_in_foo;
   my sub foo () { $was_in_foo++; 0 };
@@ -117,7 +120,6 @@ is($moo, 0, "var was not touched");
 }
 
 # Test case courtesy of Limbic_Region
-
 {
     my $curr  = 4;
     my @array = 1..5;
