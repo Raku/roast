@@ -518,8 +518,7 @@ Hello, World
     is(Qc[{1+1}], 2, 'Qc');
 }
 
-# TODO: smartlink
-
+# L<S02/Literals/All other quoting forms (including standard single quotes)>
 {
     is('test\\', "test\\", "backslashes at end of single quoted string");
 }
