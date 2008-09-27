@@ -7,17 +7,21 @@ plan 19;
 # L<S02/"Names and Variables"/"formatted representation"
 #   of "any scalar value" ".fmt('%03d')">
 {
+#?rakudo skip 'unimpl Perl6Str.fmt'
     is "Hi".fmt("[%s]"), "[Hi]", 'fmt() works with %s';
+#?rakudo skip 'unimpl Perl6Str.fmt'
     is '3.141'.fmt("[%d]"), "[3]",  "fmt() works with %d";
+#?rakudo skip 'unimpl Num.fmt'
     is (5.6).fmt('%f'), '5.6', 'fmt() works with %f';
 }
 
 # L<S02/"Names and Variables"/"format an array value" 
 #   "supply a second argument">
 {
+#?rakudo skip 'unimpl List.fmt'
     is (1.3,2.4,3).fmt("%d", "_"), "1_2_3", "fmt() works with plain lists";
-    
     my @list = 'a'..'c';
+#?rakudo 3 skip 'unimpl Perl6Array.fmt'
     is @list.fmt('<%s>', ':'), '<a>:<b>:<c>', 'fmt() works with @ array';
 
     my $list = ['a', 'b', 'c'];
@@ -29,6 +33,7 @@ plan 19;
 }
 
 # L<S02/"Names and Variables"/"hash value" "formats for both key and value">
+#?rakudo skip 'unimpl Perl6Hash.fmt'
 {
     my $hash = {
         a => 1.3,
@@ -43,6 +48,7 @@ plan 19;
 }
 
 # L<S02/"Names and Variables"/"list of pairs" "formats for both key and value">
+#?rakudo skip "unimpl Perl6Pair.fmt"
 {
     # a single pair:
     my $pair = (100 => 'lovely');
@@ -60,6 +66,7 @@ plan 19;
 }
 
 # Test defaults on $comma
+#?rakudo skip "unimpl PerlArray.fmt"
 {
     is([1..3].fmt("%d"), "1 2 3", 'default $comma for array');
 
