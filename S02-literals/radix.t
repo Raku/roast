@@ -211,11 +211,13 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 }
 
 # tests for the _valid_ string interpretations of radix notations
-#?rakudo todo "patch has not been applied, see RT# 59222"
 {
     is +"1234.567", 1234.567, "standard decimal (radix 10) fractions";
     is +"1.234e3", 1234, "basic exponential form works (1)";
     is +"1.234E3", 1234, "basic exponential form works (2)";
+}
+#?rakudo todo "patch has not been applied, see RT# 59222"
+{
     #is +":2<0101>", 5, "radix 2 notation works";
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":32<2q>", 90, "radix 32 notation works";
