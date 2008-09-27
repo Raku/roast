@@ -12,7 +12,6 @@ Basic test for the reverse() builtin with a string (Str).
 plan 49;
 
 # As a function :
-#?rakudo todo 'reverse as a function does not work'
 is( reverse('Pugs'), 'sguP', "as a function");
 
 # As a method :
@@ -49,7 +48,6 @@ my @e = (4, 3, 2, 1);
 is(@a, @e, "list was reversed");
 
 {
-    #?rakudo 4 todo 'reverse as a function'
     my $a = reverse("foo");
     is($a, "oof", "string was reversed");
 
