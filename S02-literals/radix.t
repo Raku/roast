@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 190;
+plan 194;
 
 # L<S02/Literals/":10<42>">
 
@@ -242,7 +242,11 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +":_2<01>", 0, "underscore seperator misuse parsefail works (1)";
     is +":2<_01>", 0, "underscore seperator misuse parsefail works (2)";
     is +":2<01_>", 0, "underscore seperator misuse parsefail works (3)";
+    is +":_2_<_0_1_>_", 0, "underscore seperator misuse parsefail works (4)";
     is +":2<1.3>", 0, "invalid radix conversion alphabet parsefail works";
+    is +"0b1.1e10", 0, "ambiguious scientific notation parsefail works";
+    is +":2<10dlk", 0, "missing closing angle bracket";
+    is +":2lks01>", 0, "completely invalid radix notation";
 }
 
 # What follows are tests that were moved here from t/syntax/numbers/misc.t
