@@ -2,7 +2,9 @@ use v6;
 use Test;
 plan 2;
 
-# TODO: smartlink
+# TODO: move this test to closure-parameters.t if it works in the future
+
+# L<S06/Closure parameters>
 
 our $collector = 2;
 sub to_be_called($x) {
