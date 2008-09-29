@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 37;
 
-# L<S03/Junctive Operators/>
+# L<S03/Junctive operators/>
 
 ok ?any(1..2), 'any(1..2) in boolean context';
 ok !(any(0,0)), 'any(0,0) in boolean context';

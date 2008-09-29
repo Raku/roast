@@ -17,7 +17,6 @@ emulation.
 sub eval_elsewhere($code){ eval($code) }
 
 #L<<S03/"Smart matching"/Any Code:($) item sub truth>>
-#L<<S03/"Smart matching"/Any Code:() item sub truth>>
 {
     sub uhuh { 1 }
     sub nuhuh { undef }

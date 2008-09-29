@@ -78,8 +78,7 @@ sub eval_elsewhere($code){ eval($code) }
     is(+$b, 0, 'non numbers forced into numeric context are 0');
 }
 
-# L<S03/Changes to Perl 5 operators/"-TERM" "coerced to numeric">
-# numeric (-) context
+# L<S03/Symbolic unary precedence/"prefix:<->">
 {
     my $a = '2 is my favorite number';
     isa_ok(-$a, Num, 'it is forced into a Num');
@@ -138,8 +137,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok eval_elsewhere('?(@($+arrayref))'), '?(@($arrayref)) syntax works';
 }
 
-# L<S03/Changes to Perl 5 operators/"!TERM" "coerced to boolean">
-# ! boolean context
+# L<S03/Symbolic unary precedence/"prefix:<!>">
 {
     my $a = '';
     isa_ok(!$a, Bool, 'it is forced into a Bool');

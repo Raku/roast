@@ -51,7 +51,7 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 
 # Bit Stitching
 
-# L<S03/Tight or precedence/short-circuiting inclusive-or>
+# L<S03/Tight or precedence/short-circuit inclusive-or>
 is(2 || 3, 2, "|| returns first true value");
 ok(!(defined( 0 || undef)), "|| returns last false value of list?");
 
