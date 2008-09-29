@@ -5,7 +5,6 @@ use Test;
 plan 9;
 
 # L<S04/"Statement-ending blocks"/"will terminate a statement">
-# XXX is this smartlink the correct target? It was broken before -- moritz
 
 # the 'empty statement' case responsible for the creation of this test file
 eval_lives_ok(';', 'empty statement');
