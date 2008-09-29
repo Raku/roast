@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 207;
+plan 184;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -117,16 +117,17 @@ ok('{n' ~~ m/<+alnum>/, q{Match unanchored alnum as charset});
 
 # ascii
 
-ok("+" ~~ m/^<?ascii>$/, q{Match ascii as subrule});
-ok(!( "+" ~~ m/^<!ascii>.$/ ), q{Don't match negated ascii as subrule} );
-ok(!( "+" ~~ m/^<-ascii>$/ ), q{Don't match inverted ascii as subrule} );
-
-ok("+" ~~ m/^<+ascii>$/, q{Match ascii as charset});
-ok("+" ~~ m/^<+[A]+ascii>$/, q{Match compound ascii as charset});
-ok(!( "+" ~~ m/^<-ascii>$/ ), q{Don't match externally inverted ascii as charset} );
-ok(!( "+" ~~ m/^<+[A]-ascii>$/ ), q{Don't match compound inverted ascii as charset} );
-ok(!( "+" ~~ m/^<-ascii>$/ ), q{Don't match inverted ascii as charset} );
-ok("+" ~~ m/<+ascii>/, q{Match unanchored ascii as charset});
+# Unspecced
+# ok("+" ~~ m/^<?ascii>$/, q{Match ascii as subrule});
+# ok(!( "+" ~~ m/^<!ascii>.$/ ), q{Don't match negated ascii as subrule} );
+# ok(!( "+" ~~ m/^<-ascii>$/ ), q{Don't match inverted ascii as subrule} );
+#
+# ok("+" ~~ m/^<+ascii>$/, q{Match ascii as charset});
+# ok("+" ~~ m/^<+[A]+ascii>$/, q{Match compound ascii as charset});
+# ok(!( "+" ~~ m/^<-ascii>$/ ), q{Don't match externally inverted ascii as charset} );
+# ok(!( "+" ~~ m/^<+[A]-ascii>$/ ), q{Don't match compound inverted ascii as charset} );
+# ok(!( "+" ~~ m/^<-ascii>$/ ), q{Don't match inverted ascii as charset} );
+# ok("+" ~~ m/<+ascii>/, q{Match unanchored ascii as charset});
 
 # blank
 
@@ -256,22 +257,22 @@ ok("\x[5F]"  ~~ m/^<-upper>$/, q{Match inverted upper as charset});
 ok("\x[5F]A" ~~ m/<+upper>/, q{Match unanchored upper as charset} );
 
 # word
-
-ok("b" ~~ m/^<?word>$/, q{Match word as subrule});
-ok(!( "b" ~~ m/^<!word>.$/ ), q{Don't match negated word as subrule} );
-ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match inverted word as subrule} );
-ok(!( '{'  ~~ m/^<?word>$/ ), q{Don't match unrelated word as subrule} );
-ok('{'  ~~ m/^<!word>.$/, q{Match unrelated negated word as subrule} );
-ok('{'  ~~ m/^<-word>$/, q{Match unrelated inverted word as subrule});
-
-ok("b" ~~ m/^<+word>$/, q{Match word as charset} );
-ok("b" ~~ m/^<+[A]+word>$/, q{Match compound word as charset});
-ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match externally inverted word as charset} );
-ok(!( "b" ~~ m/^<+[A]-word>$/ ), q{Don't match compound inverted word as charset} );
-ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match internally inverted word as charset} );
-ok(!( '{'  ~~ m/^<+word>$/ ), q{Don't match unrelated word as charset} );
-ok('{'  ~~ m/^<-word>$/, q{Match inverted word as charset});
-ok('{b' ~~ m/<+word>/, q{Match unanchored word as charset} );
+# unspecced
+# ok("b" ~~ m/^<?word>$/, q{Match word as subrule});
+# ok(!( "b" ~~ m/^<!word>.$/ ), q{Don't match negated word as subrule} );
+# ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match inverted word as subrule} );
+# ok(!( '{'  ~~ m/^<?word>$/ ), q{Don't match unrelated word as subrule} );
+# ok('{'  ~~ m/^<!word>.$/, q{Match unrelated negated word as subrule} );
+# ok('{'  ~~ m/^<-word>$/, q{Match unrelated inverted word as subrule});
+# 
+# ok("b" ~~ m/^<+word>$/, q{Match word as charset} );
+# ok("b" ~~ m/^<+[A]+word>$/, q{Match compound word as charset});
+# ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match externally inverted word as charset} );
+# ok(!( "b" ~~ m/^<+[A]-word>$/ ), q{Don't match compound inverted word as charset} );
+# ok(!( "b" ~~ m/^<-word>$/ ), q{Don't match internally inverted word as charset} );
+# ok(!( '{'  ~~ m/^<+word>$/ ), q{Don't match unrelated word as charset} );
+# ok('{'  ~~ m/^<-word>$/, q{Match inverted word as charset});
+# ok('{b' ~~ m/<+word>/, q{Match unanchored word as charset} );
 
 # xdigit
 
