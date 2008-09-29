@@ -67,7 +67,6 @@ ok abs(-13e21 % -4e21 - -1e21) < $limit;
 # UVs, IVs, etc make no sense but the tests are useful anyhow.
 
 # UVs should behave properly
-#?rakudo 3 skip 'modulo bugs'
 {
     tryeq 4063328477 % 65535, 27407;
     tryeq 4063328477 % 4063328476, 1;
