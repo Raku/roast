@@ -24,6 +24,10 @@ is(~$/, "Hello", "match mixed case");
 "hello" ~~ m/<mixedcase>/;
 is(~$/, "", "do not match lowercase");
 
+#?rakudo emit skip_rest('unimplemented m:i parsing');
+
+#?rakudo emit =begin
+
 "hello" ~~ m:i/<mixedcase>/;
 is(~$/, "hello", "match with :i");
 
@@ -34,5 +38,7 @@ ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 # The German ß (&szlig;) maps to uppercase SS:
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
+
+#?rakudo emit =end
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
