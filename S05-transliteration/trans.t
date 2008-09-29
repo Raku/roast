@@ -10,7 +10,7 @@ L<S05/Transliteration>
 
 =end pod
 
-plan 49;
+plan 51;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -72,9 +72,17 @@ is("Whfg nabgure Crey unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
     "Just another Perl hacker",
     "Multiple ranges interpreted in string");
 
-is("Whfg nabgure Crey unpxre".trans(' a .. z' => '_n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
+# Per S05 changes
+#?rakudo todo 'RT #59446'
+{
+is("Whfg nabgure Crey unpxre".trans(' a..z' => '_n..za..m', 'A..Z' => 'N..ZA..M'),
     "Just_another_Perl_hacker",
-    "Spaces in interpreted ranges are skipped, all others are important");
+    "Spaces in interpreted ranges are not skipped (all spaces are important)");
+    
+is("Whfg nabgure Crey unpxre".trans(' a .. z' => '_n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
+    "Whfg nnbgure Crey unpxre",
+    "Spaces in interpreted ranges are not skipped (all spaces are important)");
+};
 
 my $a = "abcdefghijklmnopqrstuvwxyz";
 
@@ -128,7 +136,7 @@ is('ABC111DEF222GHI'.trans(:c, :d, 'A..Z' => ''),'ABCDEFGHI',
     '... with :d and :c');
 
 is('Good&Plenty'.trans('len' => 'x'), 'Good&Pxxxty',
-    'no flags'); 
+    'no flags');
 
 is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',
     'squashing depends on replacement repeat, not searchlist repeat');
@@ -141,36 +149,42 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???',      'AB',     '>',    '&'    ])),
     '&nbsp;????????????&gt;&amp;',
     'array, many-to-many transliteration, complement');
+
+# fence-post issue with complement
+is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;'] =>
+    ['???',      'AB'])),
+    '&nbsp;????????????&gt;???????????????',
+    'fence-post issue (make sure to replace end bits as well)');
     
 is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???'])),
     '&nbsp;???&gt;&amp;',
     '... and now complement and squash');
 
-# check for regex support
-
+#?rakudo skip 'RT #59446'
+{
 # remove vowel and character after
-#?rakudo 2 skip 'regex in .trans not implemented'
-is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdfgh', 'basic regex works');
+is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdgh', 'basic regex works');
 is( # vowels become 'y' and whitespace becomes '_'
     "ab\ncd\tef gh".trans(/<[aeiou]>/ => 'y', /\s/ => '_'),
     'yb_cd_yf_gh',
     'regexes pairs work',
 );
 
-# check for closure support
-#?rakudo skip 'regex and closures in .trans not implemented'
+my $i = 0;
+is('ab_cd_ef_gh'.trans('_' => {$i++}), 'ab0cd1ef2gh', 'basic closure');
+
+$i = 0;
+my $j = 0;
+is(
+    'a_b/c_d/e_f'.trans('_' => {$i++}, '/' => {$j++}),
+    'a0b0c1d1e2f',
+    'closure pairs work',
+);
+};
+
+#?rakudo skip 'passing regex to closures in .trans not working yet...'
 {
-    my $i = 0;
-    is('ab_cd_ef_gh'.trans('_' => {$i++}), 'ab0cd1ef2gh', 'basic closure');
-
-    my($i, $j) = (0, 0);
-    is(
-        'a_b/c_d/e_f'.trans('_' => {$i++}, '/' => {$j++}),
-        'a0b0c1d1e2f',
-        'closure pairs work',
-    );
-
     # closures and regexes!
     is(
         '[36][38][43]'.trans(/\[(\d+)\]/ => {chr($0)}),
