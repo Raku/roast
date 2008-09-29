@@ -12,6 +12,13 @@ case tests
 
 =end description
 
+# tests for inline modifiers
+# L<S05/Modifiers/and Unicode-level modifiers can be>
+
+ok("abcDEFghi" ~~ m/abc (:i def) ghi/, 'Match');
+ok(!( "abcDEFGHI" ~~ m/abc (:i def) ghi/ ), 'Mismatch');
+
+
 #L<S05/Modifiers/"The :i">
 
 regex mixedcase { Hello };
@@ -40,13 +47,5 @@ ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 #?rakudo emit =end
-
-
-# tests for inline modifiers
-# L<S05/Modifiers/and Unicode-level modifiers can be>
-
-ok("abcDEFghi" ~~ m/abc (:i def) ghi/, 'Match');
-ok(!( "abcDEFGHI" ~~ m/abc (:i def) ghi/ ), 'Mismatch');
-
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
