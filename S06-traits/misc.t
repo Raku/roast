@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 =begin description
 
@@ -44,6 +44,12 @@ lives_ok { mods_param_copy($foo) }, 'is copy';
 #?rakudo todo 'is copy'
 is($foo, 1, 'pass by value works');
 
+# same test with default value
+sub boom ($arg is copy = 0) { $arg++ }
+
+lives_ok { boom(42) }, "can modify a copy";
+
+
 # is ref
 #?rakudo skip 'is ref'
 {
@@ -59,6 +65,8 @@ is($foo, 1, 'pass by value works');
 # enough to write an actual test...
 #?rakudo skip 'is context'
 ok(eval('sub my_format (*@data is context(Item)) { }; 1'), "is context - compile check");
+
+
 
 # To do - check that is context actually works
 # vim: ft=perl6
