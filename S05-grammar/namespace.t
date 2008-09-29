@@ -12,7 +12,7 @@ plan 6;
 
 =begin description
 
-L<S05-Grammar namespace-related tests
+S05-Grammar namespace-related tests
 
 =end description
 
