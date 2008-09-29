@@ -35,22 +35,28 @@ plan 18;
   my $hashref = {:a(1), :b(2), :c(3)};
   my %hash;
   try { %hash = ($hashref,) };
-
-  is +%hash, 1, '%hash = ($hashref,) does not flatten the hashref', :todo<bug>;
+ 
+  #?rakudo todo 'non-flattening hash refs'
+  #?pugs todo 'non-flattening hash refs'
+  is +%hash, 1, '%hash = ($hashref,) does not flatten the hashref';
 }
 
 {
   my $hashref = {:a(1), :b(2), :c(3)};
   my %hash    = ($hashref);
 
-  is +%hash, 1, '%hash = ($hashref) does not flatten the hashref', :todo<bug>;
+  #?rakudo todo 'non-flattening hash refs'
+  #?pugs todo 'non-flattening hash refs'
+  is +%hash, 1, '%hash = ($hashref) does not flatten the hashref';
 }
 
 {
   my $hashref = {:a(1), :b(2), :c(3)};
   my %hash    = $hashref;
 
-  is +%hash, 1, '%hash = $hashref does not flatten the hashref', :todo<bug>;
+  #?rakudo todo 'non-flattening hash refs'
+  #?pugs todo 'non-flattening hash refs'
+  is +%hash, 1, '%hash = $hashref does not flatten the hashref';
 }
 
 # Same as above, but now we never use arrays, but only array*refs*.
