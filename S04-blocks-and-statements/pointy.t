@@ -12,8 +12,8 @@ L<S06/""Pointy blocks"">
 
 =end description
 
-# L<S06/""Pointy blocks""/the parameter list of a pointy block does not
-# allow parentheses>
+# L<S06/""Pointy blocks""/"parameter list of a pointy block does not require
+# parentheses">
 my ($sub, $got);
 
 $got = '';

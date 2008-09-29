@@ -5,7 +5,7 @@ use Test;
 
 This tests proper return of values from subroutines.
 
-L<S06/"The return function">
+# L<S06/"The C<return> function">
 
 See also t/blocks/return.t, which overlaps in scope.
 
