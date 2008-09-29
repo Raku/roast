@@ -41,4 +41,12 @@ ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 #?rakudo emit =end
 
+
+# tests for inline modifiers
+# L<S05/Modifiers/and Unicode-level modifiers can be>
+
+ok("abcDEFghi" ~~ m/abc (:i def) ghi/, 'Match');
+ok(!( "abcDEFGHI" ~~ m/abc (:i def) ghi/ ), 'Mismatch');
+
+
 # vim: syn=perl6 sw=4 ts=4 expandtab
