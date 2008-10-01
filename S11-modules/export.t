@@ -5,7 +5,7 @@ plan 1;
 
 # L<S11/"Exportation"/>
 
-use Foo;
+use t::spec::S11-modules::Foo;
 
-is( &Foo::foo, &Foo::EXPORT::ALL::foo, '&Foo::foo bound to ::EXPORT::ALL inner module' );
+ok( &Foo::foo =:= &Foo::EXPORT::ALL::foo, '&Foo::foo bound to ::EXPORT::ALL inner module' );
 
