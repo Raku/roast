@@ -5,7 +5,7 @@ plan 8;
 
 # L<S11/"Compile-time Importation"/"In the absence of a specific scoping specified by the caller">
 
-use Outer :ALL;
+use OuterModule :ALL;
 
 is(foo(), 'Inner::foo', 're-exporting works using is export(:DEFAULT)');
 is(bar(), 'Inner::bar', 're-exporting works using is export');
