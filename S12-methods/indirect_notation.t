@@ -29,6 +29,7 @@ class T1
     ok( "Still alive after new" );
 
     is( $o.a(), 'test', "The indirect object notation call without argument 1" );
+#?rakudo skip 'unimpl parse error near $o:'
     is( (a $o:), 'test', "The indirect object notation call without arguments 2" );
 }
 
@@ -46,6 +47,7 @@ class T2
     ok( "Still alive after new" );
     my $seed = 1000.rand;
     is( $o.a( $seed ), $seed, "The indirect object notation call with argument 1" );
+#?rakudo skip 'unimpl parse error near $o:'
     is( (a $o: $seed), $seed, "The indirect object notation call with arguments 2" );
     my $name = 'a';
     eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
