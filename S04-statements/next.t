@@ -53,6 +53,7 @@ plan 12;
     );
 }
 
+#?rakudo todo 'lexical vars in eval'
 {
     my $tracker="err"; eval '$tracker = 0; DONE: for 1..2 { next DONE; $tracker++;}';
     is(
@@ -70,6 +71,7 @@ plan 12;
     );
 }
 
+#?rakudo todo 'lexical vars in eval'
 {
     my $tracker="err"; eval '$tracker = 0; OUT: for 1..2 { IN: for 1..2 { next OUT; $tracker++; } }';
     is(
@@ -86,7 +88,7 @@ Check that C<next> works on the correct loop/block
 =end pod
 
 {
-  my $foo;
+  my $foo = '';
   for 1..2 -> $a {
     $foo ~= "A";
     for 1..2 -> $b {
@@ -98,7 +100,7 @@ Check that C<next> works on the correct loop/block
 }
 
 {
-    my $bar;
+    my $bar = '';
     for 1..2 -> $a {
         $bar ~= "A";
         for 1..2 -> $b {
@@ -112,9 +114,10 @@ Check that C<next> works on the correct loop/block
     is($bar, "ABCCBCCABCCBCC", "next works on inner loop of 3");
 }
 
+#?rakudo skip 'next on while-loops'
 {
     my @log;    
-    my $i;
+    my $i = 0;
     while ++$i < 2 {
         push @log, "before";
         next;
@@ -135,6 +138,7 @@ Check that C<next> works on the correct loop/block
     is($i, 2, '$i++ executed only twice, because next ')
 }
 
+#?rakudo skip 'next on loop-loops'
 {
     my $i = 0;
     my $j;
