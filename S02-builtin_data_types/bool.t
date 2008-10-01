@@ -3,9 +3,9 @@ use v6;
 use Test;
 
 
-# XXX unspecced but implicit - needs validation
+# L<S12/Enums/"Two built-in enums are">
 
-plan 18;
+plan 20;
 
 # tests True and False are Bool's
 isa_ok(Bool::True, Bool);
@@ -45,3 +45,6 @@ isa_ok(+Bool::True, Num);
 isa_ok(+Bool::False, Num);
 is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
+# stringification
+is(~Bool::True, '1', 'True stringifies to 1');
+is(~Bool::False, '0', 'False stringifies to 0'); 
