@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item chop">
 
-plan 12;
+plan 10;
 
 #
 # Tests already covered by the specs
@@ -45,14 +45,4 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 #?pugs 2 todo 'unspecced'
     is(@array[0], "fiz", "first elem");
     is(@array[1], "buz", "second elem");
-};
-
-{ # chop a hash
-    my %hash = ( "key", "value", "other", "blah");
-
-#?rakudo 2 skip "unspecced"
-#?pugs 2 todo ''
-    # FIXME: is(chop(%hash), "h"|"e", "chopping hash returns last char of either value");
-    is(%hash<key>, "valu", "first value chopped");
-    is(%hash<other>, "bla", "second value chopped");
 };
