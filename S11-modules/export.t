@@ -5,7 +5,8 @@ plan 1;
 
 # L<S11/"Exportation"/>
 
-use t::spec::S11-modules::Foo;
+sub foo is export(:DEFAULT) { 'foo' }
 
-ok( &Foo::foo =:= &Foo::EXPORT::ALL::foo, '&Foo::foo bound to ::EXPORT::ALL inner module' );
+
+ok( &foo === &EXPORT::ALL::foo, '&Foo::foo bound to ::EXPORT::ALL inner module' );
 
