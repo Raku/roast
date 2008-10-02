@@ -4,7 +4,6 @@ plan 10;
 
 # L<S05/Transliteration/"If the right side of the arrow is a closure">
 
-#?rakudo skip 'contigent on RT#59446'
 {
 
 my $x = 0;
