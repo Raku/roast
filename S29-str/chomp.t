@@ -57,8 +57,6 @@ Basic tests for the chomp() builtin
     is($foo, "foo\n\n", ".chomp has no effect on the original string");
     is($chomped, "foo\n", ".chomp returns correctly chomped value");
 
-    # $chomped.chomp.newline
-
     $chomped = $chomped.chomp;
     is($chomped, "foo", ".chomp returns correctly chomped value again");
 }
