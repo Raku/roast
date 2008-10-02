@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 31;
 
 =begin pod
 
@@ -52,23 +52,6 @@ Basic tests for the chomp() builtin
 }
 
 {
-    my $foo = "foo\n";
-    #?pugs todo 'chomp(...).newline marked as todo'
-    my $chomped_foo = try { chomp($foo).newline };
-    is($chomped_foo, "\n", 'chomp(...).newline returns the chomped value');
-    is($foo, "foo\n", 'and our variable was not chomped');
-}
-
-{
-    my $foo = "foo\n";
-    $foo .= chomp;
-    #?pugs todo '$foo .= chomp; $foo.newline marked as todo'
-    my $chomped_foo = try { $foo.newline };
-    is($chomped_foo, "\n", 'chomp(...).newline returns the chomped value');
-    is($foo, "foo", 'and our variable was chomped');
-}
-
-{
     my $foo = "foo\n\n";
     my $chomped = $foo.chomp;
     is($foo, "foo\n\n", ".chomp has no effect on the original string");
@@ -81,23 +64,27 @@ Basic tests for the chomp() builtin
 }
 
 # chomp in list context
+#?rakudo skip 'is_deeply'
 {
     is_deeply(chomp(()), [], "chomp on empty list");
     is_deeply(chomp(("abc\n")), ("abc"), "one element list");
     is_deeply(chomp(("abc\n", "bcd\n")), ("abc", "bcd"), "two element list");
     is_deeply(("abc\n", "bcd\n").chomp, ("abc", "bcd"), "two element list");
 }
+#?rakudo skip 'is_deeply'
 {
     my @foo = ();
     my @bar = chomp @foo;
     is_deeply(@bar, @foo, "chomp empty array");
 }
+#?rakudo skip 'is_deeply'
 {
     my @foo = ("abc\n");
     my @bar = chomp @foo;
     my @baz = ("abc");
     is_deeply(@bar, @baz, "chomp array with one element");
 }
+#?rakudo skip 'is_deeply'
 {
     my @foo = ("abc\n", "bcd\n");
     my @bar = chomp @foo;
@@ -132,7 +119,6 @@ Basic tests for the chomp() builtin working on an array of strings
 # assuming the correct behaviour is an extension of the behaviour for
 # a single string.
 
-#?rakudo: skip "can't parse"
 {
     my @foo = ("foo\n","bar\n","baz\n");
     chomp(@foo);
@@ -140,6 +126,7 @@ Basic tests for the chomp() builtin working on an array of strings
     is(@foo[1], "bar\n", '2nd element was not yet chomped');
     is(@foo[2], "baz\n", '3rd element was not yet chomped');
     @foo .= chomp;
+    #?rakudo 6 todo 'chomp on lists'
     is(@foo[0], 'foo', '1st element chomped correctly');
     is(@foo[1], 'bar', '2nd element chomped correctly');
     is(@foo[2], 'baz', '3rd element chomped correctly');
