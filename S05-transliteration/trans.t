@@ -73,7 +73,6 @@ is("Whfg nabgure Crey unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
     "Multiple ranges interpreted in string");
 
 # Per S05 changes
-#?rakudo todo 'RT #59446'
 {
 is("Whfg nabgure Crey unpxre".trans(' a..z' => '_n..za..m', 'A..Z' => 'N..ZA..M'),
     "Just_another_Perl_hacker",
@@ -161,7 +160,6 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     '&nbsp;???&gt;&amp;',
     '... and now complement and squash');
 
-#?rakudo skip 'RT #59446'
 {
 # remove vowel and character after
 is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdgh', 'basic regex works');
@@ -183,7 +181,7 @@ is(
 );
 };
 
-#?rakudo skip 'passing regex to closures in .trans not working yet...'
+#?rakudo skip 'closures and regexes'
 {
     # closures and regexes!
     is(
