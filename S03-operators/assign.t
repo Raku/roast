@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 304;
+plan 306;
 
 
 # tests various assignment styles
@@ -1030,3 +1030,11 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(@z[1] ~~ undef, 'lhs treats @a[(0|0).pick] as list');
 }
 
+#?rakudo skip ',='
+#?DOES 2
+{
+    my @a = 1, 2;
+    is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)'
+    is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)'
+
+}
