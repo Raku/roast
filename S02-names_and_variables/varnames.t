@@ -12,8 +12,6 @@ eval_lives_ok 'my $!', '$! parses ok';
 eval_lives_ok 'my $/', 'as does $/';
 
 # things that should be invalid
-#?rakudo skip 'Null PMC access in type()'
 eval_dies_ok 'my $f!ao = "beh";', "but normal varnames can't have ! in their name";
-#?rakudo skip 'Null PMC access in type()'
 eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their names either";
 

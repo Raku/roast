@@ -24,6 +24,7 @@ plan 10;
 # Now testing basic correct inheritance.
 {
   my $a = 3;
+  #?rakudo todo 'Int type should somehow conform to Num'
   ok($a.WHAT ~~ Num,    "an Int isa Num");
   ok($a.WHAT ~~ Object, "an Int isa Object");
 }
@@ -31,6 +32,7 @@ plan 10;
 # And a quick test for Code:
 {
   my $a = sub ($x) { 100 + $x };
+  #?rakudo 2 todo 'correct types for subs and blocks'
   ok($a.WHAT === Sub,    "a sub's type is Sub");
   ok($a.WHAT ~~ Routine, "a sub isa Routine");
   ok($a.WHAT ~~ Code,    "a sub isa Code");
@@ -44,7 +46,9 @@ plan 10;
     }
     my $o = Foo.new;
     is($o."WHAT", 'Bar', '."WHAT" calls the method instead of the macro');
+    #?rakudo todo '.WHAT not (easily overridable)'
     is($o.WHAT,   'Foo', '.WHAT still works as intended');
     my $meth = "WHAT";
+    #?rakudo skip 'indirect method calls'
     is($o.$meth,  'Bar', '.$meth calls the method instead of the macro');
 }

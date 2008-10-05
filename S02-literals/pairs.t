@@ -17,6 +17,9 @@ use Test;
 #   my $pair = (a => 42);
 #   foo($pair);      # pair passed positionally
 #   foo([,] $pair);     # named
+#
+#   S02 lists ':a' as being equivlaent to a => 1, so
+#   the type of the value of that pair is Int, not Bool
 
 plan 40;
 
@@ -25,8 +28,8 @@ sub f1 ($a, $b) { WHAT($a) ~ WHAT($b) }
 {
     is f1(a     => 42, 23), "IntInt", "'a => 42' is a named";
     is f1(:a(42),  23),     "IntInt", "':a(42)' is a named";
-    is f1(:a,      23),     "BoolInt",  "':a' is a named";
-    is f1(:!a,     23),     "BoolInt",  "':!a' is also named";
+    is f1(:a,      23),     "IntInt",  "':a' is a named";
+    is f1(:!a,     23),     "IntInt",  "':!a' is also named";
 
     is f1("a"   => 42, 23), "PairInt", "'\"a\" => 42' is a named";
     is f1(("a") => 42, 23), "PairInt", "'(\"a\") => 42' is a pair";
@@ -43,33 +46,25 @@ sub f2 (:$a!) { ~WHAT($a) }
 
     is f2(a     => 42), "Int", "'a => 42' is a named";
     is f2(:a(42)),      "Int", "':a(42)' is a named";
-    #?rakudo todo 'Adverbial pairs without should produce a Bool (not Int)'
-    is f2(:a),          "Bool", "':a' is a named";
+    is f2(:a),          "Int", "':a' is a named";
     
-    #?rakudo todo '.() sub calls'
-    is(f2.(:a),         "Bool",  "in 'f2.(:a)', ':a' is a named");
-    #?rakudo todo 'Adverbial pairs without should produce a Bool (not Int)'
-    is $f2(:a),         "Bool",  "in '\$f2(:a)', ':a' is a named";
-    #?rakudo skip '.() sub calls'
-    is $f2.(:a),        "Bool",  "in '\$f2.(:a)', ':a' is a named";
+    is(f2.(:a),         "Int",  "in 'f2.(:a)', ':a' is a named");
+    is $f2(:a),         "Int",  "in '\$f2(:a)', ':a' is a named";
+    is $f2.(:a),        "Int",  "in '\$f2.(:a)', ':a' is a named";
 
-    #?rakudo 6 todo 'unknown'
+    #?rakudo 7 todo 'not every pair acts as named parameters'
     dies_ok { f2("a"   => 42) }, "'\"a\" => 42' is a pair";
     dies_ok { f2(("a") => 42) }, "'(\"a\") => 42' is a pair";
     dies_ok { f2((a   => 42)) }, "'(a => 42)' is a pair";
     dies_ok { f2(("a" => 42)) }, "'(\"a\" => 42)' is a pair";
     dies_ok { f2((:a(42)))    }, "'(:a(42))' is a pair";
     dies_ok { f2((:a))        }, "'(:a)' is a pair";
-    #?rakudo todo '.() sub calls'
     dies_ok { f2.((:a))       }, "in 'f2.((:a))', '(:a)' is a pair";
     
-    #?rakudo todo 'unknown'
+    #?rakudo 4 todo 'not every pair acts as named parameters'
     dies_ok { $f2((:a))       }, "in '\$f2((:a))', '(:a)' is a pair";
-    #?rakudo skip '.() sub calls'
     dies_ok { $f2.((:a))      }, "in '\$f2.((:a))', '(:a)' is a pair";
-    #?rakudo todo 'unknown'
     dies_ok { $f2(((:a)))     }, "in '\$f2(((:a)))', '(:a)' is a pair";
-    #?rakudo skip '.() sub calls'
     dies_ok { $f2.(((:a)))    }, "in '\$f2.(((:a)))', '(:a)' is a pair";
 }
 
@@ -78,6 +73,7 @@ sub f3 ($a) { ~WHAT($a) }
     my $pair = (a => 42);
 
     is f3($pair),  "Pair", 'a $pair is not treated magically...';
+    # XXX investigate what [,] actually does, it has changed recently
     #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
     is f3([,] $pair), "Int",    '...but [,] $pair is';

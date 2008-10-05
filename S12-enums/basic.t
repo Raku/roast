@@ -12,6 +12,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Day::Sat, 6, 'Last item has the right value';
 }
 
+#?rakudo skip 'infix:<but>'
 {
     my $x = 'Today' but Day::Mon;
     ok $x.does(Day),      'Can test with .does() for enum type';

@@ -6,11 +6,16 @@ plan 76;
 
 # L<S02/"Whitespace and Comments"/This is known as the "unspace">
 
-is(4\       .sqrt, 2, 'unspace with numbers');
-is(4\#(quux).sqrt, 2, 'unspace with comments');
-is("x"\     .bytes, 1, 'unspace with strings');
-is("x"\     .bytes(), 1, 'unspace with strings + parens');
 
+#?rakudo skip "get_string() not implemented in class 'ResizableStringArray'"
+ok(4\       .sqrt == 2, 'unspace with numbers');
+#?rakudo skip 'unspace with comments'
+is(4\#(quux).sqrt, 2, 'unspace with comments');
+is("x"\     .codes, 1, 'unspace with strings');
+is("x"\     .codes(), 1, 'unspace with strings + parens');
+
+#?rakudo skip 'lexicals in eval'
+{
 my $foo = 4;
 is(eval('$foo.++'), 4, '(short) unspace with postfix inc');
 is($foo, 5, '(short) unspace with postfix inc really postfix');
@@ -18,6 +23,7 @@ is(eval('$foo\       .++'), 5, 'unspace with postfix inc');
 is($foo, 6, 'unspace with postfix inc really postfix');
 is(eval('$foo\       .--'), 6, 'unspace with postfix dec');
 is($foo, 5, 'unspace with postfix dec really postfix');
+}
 
 is("xxxxxx"\.bytes, 6, 'unspace without spaces');
 is("xxxxxx"\
@@ -57,6 +63,7 @@ sub bar($x? = 'a') { $x }
 $_ = 'b';
 
 #XXX why is eval required here?
+{
 is(eval('foo.id'), 'a', 'sanity - foo.id');
 is(eval('foo .id'), 'b', 'sanity - foo .id');
 is(eval('bar.id'), 'a', 'sanity - bar.id');
@@ -165,15 +172,19 @@ comment blah blah blah	#6
 end comment		#5
     .id'), 'a', 'hideous nested pod torture test');
 
+}
 # L<S04/"Statement-ending blocks"/"Because subroutine declarations are expressions">
 #XXX probably shouldn't be in this file...
 
+{
 eval('sub f { 3 } sub g { 3 }');
 eval_dies_ok('f', 'semicolon or newline required between blocks');
 eval_dies_ok('g', 'semicolon or newline required between blocks');
+}
 
 # L<S06/"Blocks"/"unless followed immediately by a comma">
-
+#
+{
 sub baz(Code $x, *@y) { $x.(@y) }
 
 is(eval('baz { @^x }, 1, 2, 3'), (1, 2, 3), 'comma immediately following arg block');
@@ -187,6 +198,7 @@ class Code is also {
 is(eval('xyzzy { @^x }: 1, 2, 3'), (1, 2, 3), 'colon immediately following arg block');
 is(eval('xyzzy { @^x } : 1, 2, 3'), (1, 2, 3), 'colon not immediately following arg block');
 is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following arg block');
+}
 
 # L<S02/"Whitespace and Comments"/"natural conflict between postfix operators and infix operators">
 #This creates syntactic ambiguity between
@@ -194,66 +206,69 @@ is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following ar
 # ($n++) $m
 # ($n) (++$m)
 # ($n) + (+$m)
+#?rakudo skip 'defining new operators'
+{
+    my $n = 1;
+    my $m = 2;
+    sub infix:<++>($x, $y) { 42 }
 
-my $n = 1;
-my $m = 2;
-sub infix:<++>($x, $y) { 42 }
+    #'$n++$m' should be a syntax error
+    #?rakudo 3 skip 'test dependency'
+    eval_dies_ok('$n++$m', 'infix requires space when ambiguous with postfix');
+    is($n, 1, 'check $n');
+    is($m, 2, 'check $m');
 
-#'$n++$m' should be a syntax error
-eval_dies_ok('$n++$m', 'infix requires space when ambiguous with postfix');
-is($n, 1, 'check $n');
-is($m, 2, 'check $m');
+    #'$n ++$m' should be infix:<++>
+    #no, really: http://irclog.perlgeek.de/perl6/2007-05-09#id_l328
+    $n = 1; $m = 2;
+    is(eval('$n ++$m'), 42, '$n ++$m with infix:<++> is $n ++ $m');
+    is($n, 1, 'check $n');
+    is($m, 2, 'check $m');
 
-#'$n ++$m' should be infix:<++>
-#no, really: http://moritz.faui2k3.org/irclog/out.pl?channel=perl6;date=2007-05-09#id_l328
-$n = 1; $m = 2;
-is(eval('$n ++$m'), 42, '$n ++$m with infix:<++> is $n ++ $m');
-is($n, 1, 'check $n');
-is($m, 2, 'check $m');
+    #'$n ++ $m' should be infix:<++>
+    $n = 1; $m = 2;
+    is(eval('$n ++ $m'), 42, 'postfix requires no space w/ infix ambiguity');
+    is($n, 1, 'check $n');
+    is($m, 2, 'check $m');
 
-#'$n ++ $m' should be infix:<++>
-$n = 1; $m = 2;
-is(eval('$n ++ $m'), 42, 'postfix requires no space w/ infix ambiguity');
-is($n, 1, 'check $n');
-is($m, 2, 'check $m');
+    #These should all be postfix syntax errors
+    $n = 1; $m = 2;
+    eval_dies_ok('$n.++ $m',   'postfix dot w/ infix ambiguity');
+    eval_dies_ok('$n\ ++ $m',  'postfix unspace w/ infix ambiguity');
+    eval_dies_ok('$n\ .++ $m', 'postfix unspace w/ infix ambiguity');
+    is($n, 1, 'check $n');
+    is($m, 2, 'check $m');
 
-#These should all be postfix syntax errors
-$n = 1; $m = 2;
-eval_dies_ok('$n.++ $m',   'postfix dot w/ infix ambiguity');
-eval_dies_ok('$n\ ++ $m',  'postfix unspace w/ infix ambiguity');
-eval_dies_ok('$n\ .++ $m', 'postfix unspace w/ infix ambiguity');
-is($n, 1, 'check $n');
-is($m, 2, 'check $m');
+    #Unspace inside operator splits it
+    $n = 1; $m = 2;
+    is(eval('$n+\ +$m'), 3, 'unspace inside operator splits it');
+    is($n, 1, 'check $n');
+    is($m, 2, 'check $m');
 
-#Unspace inside operator splits it
-$n = 1; $m = 2;
-is(eval('$n+\ +$m'), 3, 'unspace inside operator splits it');
-is($n, 1, 'check $n');
-is($m, 2, 'check $m');
+    $n = 1;
+    eval_dies_ok('$n ++', 'postfix requires no space');
+    is($n, 1, 'check $n');
 
-$n = 1;
-eval_dies_ok('$n ++', 'postfix requires no space');
-is($n, 1, 'check $n');
+    $n = 1;
+    is(eval('$n.++'), 1, 'postfix dot');
+    is($n, 2, 'check $n');
 
-$n = 1;
-is(eval('$n.++'), 1, 'postfix dot');
-is($n, 2, 'check $n');
+    $n = 1;
+    is(eval('$n\ ++'), 1, 'postfix unspace');
+    is($n, 2, 'check $n');
 
-$n = 1;
-is(eval('$n\ ++'), 1, 'postfix unspace');
-is($n, 2, 'check $n');
+    $n = 1;
+    is(eval('$n\ .++'), 1, 'postfix unspace');
+    is($n, 2, 'check $n');
 
-$n = 1;
-is(eval('$n\ .++'), 1, 'postfix unspace');
-is($n, 2, 'check $n');
+    # L<S02/"Lexical Conventions"/"U+301D codepoint has two closing alternatives">
+    is(eval('foo\#〝 comment 〞.id'), 'a', 'unspace with U+301D/U+301E comment');
+    eval_dies_ok('foo\#〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
-# L<S02/"Lexical Conventions"/"U+301D codepoint has two closing alternatives">
-is(eval('foo\#〝 comment 〞.id'), 'a', 'unspace with U+301D/U+301E comment');
-eval_dies_ok('foo\#〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
+    # L<S02/"Whitespace and Comments"/".123">
+    # .123 is equal to 0.123
 
-# L<S02/"Whitespace and Comments"/".123">
-# .123 is equal to 0.123
-
-is eval(' .123'), 0.123, ' .123 is equal to 0.123';
-is eval('.123'), 0.123, '.123 is equal to 0.123';
+    is eval(' .123'), 0.123, ' .123 is equal to 0.123';
+    is eval('.123'), 0.123, '.123 is equal to 0.123';
+}
 

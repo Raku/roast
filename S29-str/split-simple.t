@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 32;
 
 =begin description
 
@@ -49,6 +49,19 @@ split_test(
     <ab cd ef>,
     'Limit larger than number of split values doesn\'t return extranuous elements'
 );
+
+# zero-width assertions shouldn't loop
+# with additional spaces
+# a b 3 4 d 5 z    split on <before \d>
+#    ^ ^   ^   
+#  => result: 'ab', '3', '4d', '5z'
+#  (confirmed by perl 5)
+
+#?rakudo skip 'split with zero-width assertions'
+#?DOES 2
+{
+split_test 'ab34d5z'.split(/<before \d>/), <ab 3 4d 5z>, 'split with zero-width assertions';
+}
 
 # As per Larry, ''.split('') is the empty list
 # http://www.nntp.perl.org/group/perl.perl6.language/2008/09/msg29730.html
