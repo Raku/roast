@@ -45,7 +45,7 @@ sub baz (Num $i) {
 lives_ok { baz(2) }, 'sub with two PREs compiles and runs';
 
 dies_ok  { baz(-1)}, 'sub with two PREs fails when first is violated';
-dies_ok  { baz(42)}, 'sub with two PREs fails when second is violated');
+dies_ok  { baz(42)}, 'sub with two PREs fails when second is violated';
 
 
 sub qox (Num $i) {
