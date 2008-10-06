@@ -1,0 +1,70 @@
+use v6;
+use Test;
+
+# L<S03/List infix precedence/"the series operator">
+
+plan 24;
+
+{
+    my @fib = 1, 1 ... {$^x + $^y};
+    is @fib[0], 1, 'fibonacci generator with series op works (0)';
+    is @fib[1], 1, 'fibonacci generator with series op works (1)';
+    is @fib[2], 2, 'fibonacci generator with series op works (2)';
+    is @fib[3], 3, 'fibonacci generator with series op works (3)';
+    is @fib[4], 5, 'fibonacci generator with series op works (4)';
+    is @fib[5], 8, 'fibonacci generator with series op works (5)';
+}
+
+{
+    my @fib = 1, 1 ... &infix:<+>;
+    is @fib[0], 1, 'fibonacci generator with series op works (0)';
+    is @fib[1], 1, 'fibonacci generator with series op works (1)';
+    is @fib[2], 2, 'fibonacci generator with series op works (2)';
+    is @fib[3], 3, 'fibonacci generator with series op works (3)';
+    is @fib[4], 5, 'fibonacci generator with series op works (4)';
+    is @fib[5], 8, 'fibonacci generator with series op works (5)';
+}
+
+{
+    my @even = 0 ... { $_ + 2 };
+    is @even[0], 0, 'infix:<...> with arity one works (0)';
+    is @even[1], 2, 'infix:<...> with arity one works (1)';
+    is @even[2], 4, 'infix:<...> with arity one works (2)';
+    is @even[3], 6, 'infix:<...> with arity one works (3)';
+}
+
+{
+    my @letters = <a b> ... { .succ };
+    is @letters[0], 'a' 'infix:<...> works arith arity one (.succ) (0)';
+    is @letters[1], 'b' 'infix:<...> works arith arity one (.succ) (1)';
+    is @letters[2], 'c' 'infix:<...> works arith arity one (.succ) (2)';
+    is @letters[3], 'd' 'infix:<...> works arith arity one (.succ) (3)';
+}
+
+{
+    my @even = 0, 2, 4, ... *;
+    is @even[0], 0,  'infix:<...> with * magic (arithmetic, 0)';
+    is @even[1], 2 , 'infix:<...> with * magic (arithmetic, 1)';
+    is @even[2], 4,  'infix:<...> with * magic (arithmetic, 2)';
+    is @even[3], 6,  'infix:<...> with * magic (arithmetic, 3)';
+    is @even[4], 8,  'infix:<...> with * magic (arithmetic, 4)';
+    is @even[5], 10, 'infix:<...> with * magic (arithmetic, 5)';
+}
+
+{
+    my @powers_of_two = 1, 2, 4, 8 ... *;
+    is @powers_of_two[0..5].join('|'), 
+       '1|2|4|8|16|32',
+       'infix:<...> with * magic (geometric)';
+}
+
+{
+    my @multi = 1 ... { 2 * $_ if $_ < 10 },
+                  ... { 3 };
+    is @multi[0..9].join('|'),
+       '1|2|3|4|8|16|3|3|3|3',
+       'block transfer control to next block once empty list is returned';
+
+}
+
+# vim: ft=perl6
