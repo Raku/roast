@@ -182,11 +182,11 @@ plan 56;
         my @r;
         @r = -« ([1, 2], [3, [4, 5]]);
         my @e = ([-1, -2], [-3, [-4, -5]]);
-        is_deeply(~@r, ~@e, "distribution for unary prefix");
+        is(~@r, ~@e, "distribution for unary prefix");
 
         @r = -<< ([1, 2], [3, [4, 5]]);
         @e = ([-1, -2], [-3, [-4, -5]]);
-        is_deeply(~@r, ~@e, "distribution for unary prefix, ASCII");
+        is(~@r, ~@e, "distribution for unary prefix, ASCII");
 };
 
 { # distribution for unary postfix autoincrement
@@ -194,51 +194,40 @@ plan 56;
         @r = ([1, 2], [3, [4, 5]]);
         try { @r»++ };
         my @e = ([2, 3], [4, [5, 6]]);
-        is_deeply(~@r, ~@e, "distribution for unary postfix autoincr", :todo);
+        is(~@r, ~@e, "distribution for unary postfix autoincr", :todo);
 
         @r = ([1, 2], [3, [4, 5]]);
         try { @r>>++ };
         @e = ([2, 3], [4, [5, 6]]);
-        is_deeply(~@r, ~@e, "distribution for unary postfix autoincr, ASCII", :todo);
+        is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII", :todo);
 };
 
 { # distribution for binary infix
         my @r;
         @r = (1, 2, [3, 4]) »+« (4, 5, [6, 7]);
         my @e = (5, 7, [9, 11]);
-        is_deeply(~@r, ~@e,
-                  "distribution for binary infix, same shape");
+        is(~@r, ~@e, "distribution for binary infix, same shape");
 
 				
         @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
         @e = (5, 7, [9, 11]);
-        is_deeply(~@r, ~@e,
-                  "distribution for binary infix, same shape, ASCII",
-                 );
+        is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
 
         @r = (1, 2, [3, 4]) »+« (5, 6, 7);
         @e = (6, 8, [10, 11]);
-        is_deeply(~@r, ~@e,
-                  "distribution for binary infix, dimension upgrade",
-                 );
+        is(~@r, ~@e, "distribution for binary infix, dimension upgrade");
 
         @r = (1, 2, [3, 4]) >>+<< (5, 6, 7);
         @e = (6, 8, [10, 11]);
-        is_deeply(~@r, ~@e,
-                  "distribution for binary infix, dimension upgrade, ASCII",
-                 );
+        is(~@r, ~@e, "distribution for binary infix, dimension upgrade, ASCII");
 
         @r = ([1, 2], 3) »+« (4, [5, 6]);
         @e = ([5, 6], [8, 9]);
-        is_deeply(~@r, ~@e,
-                  "distribution for binary infix, S03 cross-upgrade",
-                 );
+        is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade");
 
         @r = ([1, 2], 3) >>+<< (4, [5, 6]);
         @e = ([5, 6], [8, 9]);
-        is_deeply(~@r, ~@e,
-                  "distribution for binary infix, S03 cross-upgrade, ASCII",
-                 );
+        is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade, ASCII");
 };
 
 { # regression test, ensure that hyper works on arrays
@@ -269,6 +258,7 @@ plan 56;
 
 =end todo unspecced
 
+#?pugs todo 'hyper ops'
 { # hyper dereferencing
     my @array = (
         { key => 'val' },
@@ -277,10 +267,10 @@ plan 56;
     );
 
     my $full = join '', eval '@array>>.<key>';
-    is($full, 'valvalval', 'hyper-dereference an array',:todo);
+    is($full, 'valvalval', 'hyper-dereference an array');
 
     my $part = join '', eval '@array[0,1]>>.<key>';
-    is($part, 'valval', 'hyper-dereference an array slice',:todo);
+    is($part, 'valval', 'hyper-dereference an array slice');
 }
 
 { # junction hyper -- regression?
