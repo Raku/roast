@@ -72,7 +72,6 @@ plan 306;
 
 #?pugs skip 'skipping assignment with skipped values via $'
 #?rakudo skip "list assignment"
-#?DOES 5
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
@@ -90,7 +89,6 @@ plan 306;
 
 #?pugs skip "skipping assignment with skipped values via * in signature"
 #?rakudo skip "list assignment"
-#?DOES 5
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
@@ -108,7 +106,6 @@ plan 306;
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
 #?rakudo skip "list assignment"
-#?DOES 5
 {
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
@@ -127,7 +124,6 @@ plan 306;
 }
 
 #?rakudo skip "list assignment"
-#?DOES 6
 {
    # testing list assignment syntax
 
@@ -145,7 +141,6 @@ plan 306;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 13
 {
     my @a;
     @a[1, 2, 3] = 100, 200, 300;
@@ -173,7 +168,6 @@ plan 306;
 
 }
 
-#?DOES 2
 {
     # chained @array = %hash = list assignment 
     my (@a, @b, %h);
@@ -183,7 +177,6 @@ plan 306;
     is(@a[1], @b[1], 'chained @ = % = list assignment');
 }
 
-#?DOES 1
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
@@ -193,7 +186,6 @@ plan 306;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
@@ -206,7 +198,6 @@ plan 306;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);
@@ -221,7 +212,6 @@ plan 306;
 my @p;
 
 #?rakudo skip "unknown reasons"
-#?DOES 6
 {
     my $a;
     @p = $a ||= 3, 4;
@@ -235,7 +225,6 @@ my @p;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 8
 {
     my $a;
     @p = $a //= 3, 4;
@@ -254,7 +243,6 @@ my @p;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 6
 {
     my $a = 3;
     @p = $a &&= 42, 43;
@@ -269,14 +257,12 @@ my @p;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 1
 {
     my $c; 
     (($c = 3) = 4); 
     is($c, 4, '(($c = 3) = 4) return val should be good as an lval');
 }
 
-#?DOES 3
 {
     my $x = 42;
     @p = $x += 6, 7;
@@ -286,7 +272,6 @@ my @p;
     is(@p[1],47, "+= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 42;
     @p = $x -= 6, 7;
@@ -304,7 +289,6 @@ my @p;
     is(@p[1],12, "*= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 6;
     @p = $x /= 3, 4;
@@ -313,16 +297,15 @@ my @p;
     is(@p[1],4, "/= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 2;
     @p = $x **= 3, 4;
+#?rakudo skip 'item assignment'
     is($x, 8, '**= operator');
     is(@p[0],8, "**= operator parses as item assignment 1");
     is(@p[1],4, "**= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = "abc";
     @p = $x ~= "yz", "plugh";
@@ -331,7 +314,6 @@ my @p;
     is(@p[1],'plugh', "~= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = "abc";
     @p = $x x= 3, 4;
@@ -341,7 +323,6 @@ my @p;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 9
 {
     my @x = ( 'a', 'z' );
     @p = @x xx= 3, 4;
@@ -356,7 +337,6 @@ my @p;
     is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
-#?DOES 3
 {
     my $x = 1;
     @p = $x +&= 2, 3;
@@ -365,7 +345,6 @@ my @p;
     is(@p[1],3, "+&= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 1;
     @p = $x +|= 2, 123;
@@ -374,7 +353,6 @@ my @p;
     is(@p[1],123, "+|= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = "z";
     @p = $x ~&= "I", "J";
@@ -383,7 +361,6 @@ my @p;
     is(@p[1],'J', "~&= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = "z";
     @p = $x ~|= "I", "J";
@@ -392,7 +369,6 @@ my @p;
     is(@p[1],'J', "~|= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 4;
     @p = $x %= 3, 4;
@@ -401,7 +377,6 @@ my @p;
     is(@p[1],4, "%= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 1;
     @p = $x +^= 3, 4;
@@ -410,7 +385,6 @@ my @p;
     is(@p[1],4, "+^= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = "z";
     @p = $x ~^= "C", "D";
@@ -420,7 +394,6 @@ my @p;
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my $x = 0;
     @p = $x ^^= 42, 43;
@@ -429,7 +402,6 @@ my @p;
     is(@p[1],43, "^^= operator parses as item assignment 2");
 }
 
-#?DOES 3
 {
     my $x = 42;
     @p = $x ?|= 24, 25;
@@ -439,7 +411,6 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?DOES 3
 {
     my $x = 42;
     @p = $x ?&= 24, 25;
@@ -449,7 +420,6 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?DOES 3
 {
     my $x = 0;
     @p = $x ?^= 42, 43;
@@ -459,20 +429,20 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?DOES 3
 {
     my $x = 1;
     @p = $x +<= 8, 9;
+#?rakudo 2 skip 'item infix assignment'
     is($x, 256, '+<= operator');
     is(@p[0],256, "+<= operator parses as item assignment 1");
     is(@p[1],9, "+<= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
-#?DOES 3
 {
     my $x = 511;
     @p = $x +>= 8, 9;
+#?rakudo 2 skip 'item infix assignment'
     is($x, 1, '+>= operator');
     is(@p[0],1, "+>= operator parses as item assignment 1");
     is(@p[1],9, "+>= operator parses as item assignment 2");
@@ -481,7 +451,6 @@ my @p;
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
 #?pugs eval 'parsefail'
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my $x = "a";
     @p = $x ~<= 8, 9;
@@ -492,7 +461,6 @@ my @p;
 
 #?pugs eval 'parsefail'
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my $x = "aa";
     @p = $x ~>= 8, 9;
@@ -506,7 +474,6 @@ my @p;
 sub W () { substr(eval('want'), 0, 1) }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my $a;
     my @z = ($a = W, W);
@@ -516,7 +483,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     package Foo;
     our $b;
@@ -527,7 +493,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @z = ($Foo::c = W, W);
     is($Foo::c, 'S',    'lhs treats $Foo::c as scalar');
@@ -536,7 +501,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = ($(@a[0]) = W, W);
@@ -546,7 +510,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 2
 {
     my $a;
     my @z = (($a) = W, W, W);
@@ -556,7 +519,6 @@ sub W () { substr(eval('want'), 0, 1) }
 
 #?pugs eval 'notimpl'
 #?rakudo skip "unknown reasons"
-#?DOES 2
 {
     my $a;
     my @z = (($a, *) = W, W, W);
@@ -565,7 +527,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 2
 {
     my $a;
     my @z = (@$a = W, W, W);
@@ -574,7 +535,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 2
 {
     my $a;
     my @z = ($a[] = W, W, W);
@@ -583,7 +543,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my $a;
     my $b;
@@ -594,7 +553,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0] = W, W);
@@ -604,7 +562,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0,] = W, W);
@@ -614,7 +571,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my %a;
     my @z = (%a<x> = W, W);
@@ -624,7 +580,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my %a;
     my @z = (%a<x y z> = W, W, W);
@@ -634,7 +589,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my %a;
     my @z = (%a{'x'} = W, W);
@@ -644,7 +598,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 6
 {
     my %a;
     my @z = (%a{'x','y','z'} = W, W, W);
@@ -657,7 +610,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 6
 {
     my %a;
     my @z = (%a{'x'..'z'} = W, W, W);
@@ -670,7 +622,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my %a;
     my @z = (%a{'x' x 1} = W, W);
@@ -680,7 +631,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my %a;
     my @z = (%a{'x' xx 1} = W, W, W);
@@ -690,7 +640,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -701,7 +650,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -712,7 +660,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 4
 {
     my @a;
     my @b = (0,1);
@@ -724,7 +671,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @b = (0,0);
@@ -736,7 +682,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo todo "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @b = (0,0);
@@ -748,7 +693,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -760,7 +704,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -772,7 +715,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -784,7 +726,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -796,7 +737,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my sub foo { 0 }
@@ -807,7 +747,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my sub foo { '0' }
@@ -818,7 +757,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my sub foo { 0 }
@@ -916,7 +854,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 4
 {
     my %a;
     my $b = 0;
@@ -929,7 +866,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0+0] = W, W);
@@ -939,7 +875,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0*0] = W, W);
@@ -949,7 +884,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0/1] = W, W);
@@ -959,7 +893,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0*1**1] = W, W);
@@ -969,7 +902,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 0;
@@ -980,7 +912,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my $b = 1;
@@ -991,7 +922,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[0==1] = W, W);
@@ -1001,7 +931,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[rand] = W, W);
@@ -1011,7 +940,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[rand,] = W, W);
@@ -1021,7 +949,6 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?rakudo skip "unknown reasons"
-#?DOES 3
 {
     my @a;
     my @z = (@a[(0|0).pick] = W, W);
@@ -1032,7 +959,6 @@ sub W () { substr(eval('want'), 0, 1) }
 
 # L<S03/Assignment metaoperators/",=">
 #?rakudo skip ',='
-#?DOES 2
 {
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)'
