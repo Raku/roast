@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 24;
+plan 31;
 
 {
     my @fib = 1, 1 ... {$^x + $^y};
@@ -35,10 +35,10 @@ plan 24;
 
 {
     my @letters = <a b> ... { .succ };
-    is @letters[0], 'a' 'infix:<...> works arith arity one (.succ) (0)';
-    is @letters[1], 'b' 'infix:<...> works arith arity one (.succ) (1)';
-    is @letters[2], 'c' 'infix:<...> works arith arity one (.succ) (2)';
-    is @letters[3], 'd' 'infix:<...> works arith arity one (.succ) (3)';
+    is @letters[0], 'a', 'infix:<...> works arith arity one (.succ) (0)';
+    is @letters[1], 'b', 'infix:<...> works arith arity one (.succ) (1)';
+    is @letters[2], 'c', 'infix:<...> works arith arity one (.succ) (2)';
+    is @letters[3], 'd', 'infix:<...> works arith arity one (.succ) (3)';
 }
 
 {
@@ -65,6 +65,17 @@ plan 24;
        '1|2|3|4|8|16|3|3|3|3',
        'block transfer control to next block once empty list is returned';
 
+}
+
+{ # 1 1, 2 2s, 3 3s, etc.
+    my @xxed = 1 ... { my $next = $^a + 1; $next xx $next };
+    is @xxed[0], 1,  'infix:<...> with list return (0)';
+    is @xxed[1], 2 , 'infix:<...> with list return (1)';
+    is @xxed[2], 2,  'infix:<...> with list return (2)';
+    is @xxed[3], 3,  'infix:<...> with list return (3)';
+    is @xxed[4], 3,  'infix:<...> with list return (4)';
+    is @xxed[5], 3, 'infix:<...> with list return (5)';
+    is @xxed[6], 4, 'infix:<...> with list return (6)';
 }
 
 # vim: ft=perl6
