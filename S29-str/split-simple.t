@@ -32,7 +32,6 @@ split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty
 
 # Limit tests
 #?DOES 4
-#?rakudo skip 'split with limit of 0 or 1 - pending p6l clarification'
 {
 split_test 'theXbigXbang'.split(/X/, -1), <>, 'Negative limit returns empty List';
 split_test 'theXbigXbang'.split(/X/, 0),  <>, 'Zero limit returns empty List';
