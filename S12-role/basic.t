@@ -47,7 +47,7 @@ ok $baz ~~ Baz,                 'smartmatch said our $baz now does Foo';
 # L<S12/Roles/Roles may have attributes:>
 #?rakudo skip 'role parse failure'
 {
-    role B { has $.attr = 42 is rw }
+    role B { has $.attr is rw = 42 }
     my Foo $b does B .= new();
     ok defined($b),        'mixing B into $b worked';
     is $b.attr, 42,        '$b "inherited" the $.attr attribute of B (1)';
