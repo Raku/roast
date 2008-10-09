@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 16;
 
 # L<S05/Transliteration/"If the right side of the arrow is a closure">
 
@@ -38,8 +38,12 @@ is $y, 2,                            'Closure invoked twice (once per replacemen
     my $count = 0;
     is 'hello'.trans(/l/ => { ++$count }), 'he12o', 'regex and closure mix';
     is 'hello'.trans(/l/ => { $_ x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic)';
-    is 'hello'.trans(/(l)/ => { $_[0] x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic and capture)';
+    my $x = 'hello';
+    is $x.trans(/(l)/ => { $_[0] x 2 }), 'hellllo', 'regex and closure mix (with $/ as topic and capture)';
+    is $x, 'hello', 'Original string not modified';
 }
 
+my $orig = 'hello'; 
 #?rakudo todo 'Str.trans with regex+closure, RT #59730'
-is 'hello'.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
+is $orig.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
+is $orig, 'hello', 'original string unchanged';
