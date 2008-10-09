@@ -44,6 +44,5 @@ is $y, 2,                            'Closure invoked twice (once per replacemen
 }
 
 my $orig = 'hello'; 
-#?rakudo todo 'Str.trans with regex+closure, RT #59730'
 is $orig.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
 is $orig, 'hello', 'original string unchanged';
