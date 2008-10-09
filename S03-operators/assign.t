@@ -961,7 +961,7 @@ sub W () { substr(eval('want'), 0, 1) }
 #?rakudo skip ',='
 {
     my @a = 1, 2;
-    is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)'
-    is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)'
+    is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
+    is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)';
 
 }
