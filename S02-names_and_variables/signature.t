@@ -57,7 +57,7 @@ plan 13;
     my ($x);
     my $siglist = eval ':($x?)';
     try { $siglist.infix:<:=>() };
-    ok(!exists $x, "complex siglist bindings works (2)", :todo<feature>);
+    ok(!VAR($x).defined, "complex siglist bindings works (2)", :todo<feature>);
 }
 
 # &sub.signature should return a Siglist object

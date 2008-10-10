@@ -25,14 +25,14 @@ plan 9;
 
 {
     my $a is readonly;
-    ok !(try { exists $a }), "exists() returns false on an uninitialized var declared with 'is readonly'";
+    ok !(try { VAR($a).defined }), ".VAR returns undefined on an uninitialized var declared with 'is readonly'";
 
     $a := 42;
-    ok (try { exists $a }), "exists() returns true now", :todo<feature>;
+    ok (try { VAR($a).defined }), ".VAR returns defined now", :todo<feature>;
 }
 
 {
     my $a = 3;
 
-    ok (try { exists $a }), "exists() on a plain normal initialized variable returns true", :todo<feature>;
+    ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true", :todo<feature>;
 }

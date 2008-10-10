@@ -15,7 +15,7 @@ plan 7;
 #?rakudo skip 'Undef to integer'
 {
     my %a;
-    my $b = exists %a<b><c>;
+    my $b = true %a<b><c>:exists;
     is %a.keys.elems, 0, "exists doesn't autovivify.";
 }
 
