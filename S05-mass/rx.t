@@ -5,6 +5,9 @@ plan 745;
 ### for now
 sub matchcheck { 1 }
 
+# L</S05/Backtracking control/"To force the preceding atom to do no
+# backtracking">
+
 ##   Backtracking control tests
 #### a* a			bazaar		y	control
 ok 'bazaar' ~~ /a* a/, 'control';
@@ -32,6 +35,8 @@ ok 'abc' !~~ /\d+:/, 'cut on character class shortcut';
 #### [ if    not | ify ]	verify		y	control
 ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 
+# L</S05/Backtracking control/"Backtracking over a double colon">
+
 #### [ if :: not | ify ]	verify		n	inside a group
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
@@ -46,6 +51,7 @@ ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 #?pugs todo 'feature'
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
+# L</S05/Backtracking control/"Backtracking over a triple colon">
 #### [ when     ever ] | whence	whence	y	full backtrack failure
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
@@ -76,6 +82,7 @@ ok 'xyzabcde' !~~ /( ab | abc ): de/, 'no backtrack into subpattern';
 #?pugs todo 'feature'
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
+#L<S05/Modifiers/"The new :ratchet modifier">
 
 #### :ratchet a* a		bazaar		n	ratchet modifier
 ok 'bazaar' !~~ /:ratchet a* a/, 'ratchet modifier';
@@ -83,8 +90,8 @@ ok 'bazaar' !~~ /:ratchet a* a/, 'ratchet modifier';
 #### :ratchet a*! a		bazaar		y	force backtracking !
 ok 'bazaar' ~~ /:ratchet a*! a/, 'force backtracking !';
 
+#L<S05/Unchanged syntactic features/"Capturing: (...)">
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
 ##   captures
 #### (a.)..(..)		zzzabcdefzzz	y			basic match
 ok 'zzzabcdefzzz' ~~ /(a.)..(..)/, 'basic match';
@@ -286,8 +293,8 @@ ok ('12ab34' ~~ /$<key>=<alpha>/) ~~ Match where matchcheck($_, q/mob<key>: <a @
 #?rakudo skip 'quoting'
 ok ('12ab34' ~~ /<key=alpha>/) ~~ Match where matchcheck($_, q/mob<key>: <a @ 2>/), 'alias capture';
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ indicates">
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
 ##   Enumerated character lists
 #### <[c]>			abcdef		y	character class
 ok 'abcdef' ~~ /<[c]>/, 'character class';
@@ -302,6 +309,8 @@ ok 'abcdef' ~~ /<[dcb]>**{3}/, 'repeated character class';
 
 #### ^<[a]>			abcdef		y	anchored character class
 ok 'abcdef' ~~ /^<[a]>/, 'anchored character class';
+
+# L<S05/Extensible metasyntax (C<< <...> >>)/"A leading - indicates">
 
 #### <-[e]>			abcdef		y	negated character class
 ok 'abcdef' ~~ /<-[e]>/, 'negated character class';
@@ -321,6 +330,7 @@ ok 'abcdef' ~~ /^<-[e]>/, 'anchored negated character class';
 #### ^<-[a]>			abcdef		n	anchored negated character class
 ok 'abcdef' !~~ /^<-[a]>/, 'anchored negated character class';
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/"Ranges in enumerated character classes">
 #### <[b..d]>		abcdef		y	character range
 ok 'abcdef' ~~ /<[b..d]>/, 'character range';
 
@@ -489,6 +499,8 @@ ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
 #?rakudo skip 'parse error'
 ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/"A leading ? indicates">
+#
 #### '?'			ab<?		y	literal match with question mark
 ok 'ab<?' ~~ /'?'/, 'literal match with question mark';
 
@@ -570,6 +582,8 @@ ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 #?pugs todo 'feature'
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
+
+# L<S05/Extensible metasyntax (C<< <...> >>)/"A leading + may also">
 
 #### <[a..z]>+		az		y				metasyntax with leading + (<+...>)
 ok 'az' ~~ /<[a..z]>+/, 'metasyntax with leading + (<+...>)';
@@ -2381,6 +2395,8 @@ ok "abc\ndef\n-==\nghi" !~~ /a<?wb>/, '\w\w word boundary';
 
 #### \-<?wb>			abc\ndef\n-==\nghi	n	\W\W word boundary
 ok "abc\ndef\n-==\nghi" !~~ /\-<?wb>/, '\W\W word boundary';
+
+# L<S05/Extensible metasyntax (C<< <...> >>)/"A leading ! indicates">
 
 #### <!wb>def		abc\ndef\n-==\nghi	n	nonword boundary \W\w
 ok "abc\ndef\n-==\nghi" !~~ /<!wb>def/, 'nonword boundary \W\w';
