@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 47;
+plan 51;
 
 #L<S03/Autoincrement precedence>
 
@@ -118,4 +118,36 @@ is($num,'124.456');
     my $y;
     $y++;
     is $y, 1, 'Can autoincrement an undef variable (postfix)';
+}
+
+{
+    class Incrementor {
+        has $.value;
+
+        method succ() {
+            $.value += 42;
+        }
+    }
+
+    my $o = Incrementor.new( value => 0 );
+    $o++;
+    is $o.value, 42, 'Overriding succ catches postfix increment';
+    ++$o;
+    is $o.value, 84, 'Overriding succ catches prefix increment';
+}
+
+{
+    class Decrementor {
+        has $.value;
+
+        method pred() {
+            $.value -= 42;
+        }
+    }
+
+    my $o = Decrementor.new( value => 100 );
+    $o--;
+    is $o.value, 58, 'Overriding pred catches postfix decrement';
+    --$o;
+    is $o.value, 16, 'Overriding pred catches prefix decrement';
 }
