@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 52;
 
 =begin pod
 
@@ -54,6 +54,8 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ([~] [\==]  4, 5, 4),   "1 0 0",   "[\\==] works (2)";
     is ([~] [\!=]  4, 5, 6),   "1 1 1",   "[\\!=] works (1)";
     is ([~] [\!=]  4, 5, 4),   "1 0 0",   "[\\!=] works (2)";
+    is ([~] [\**]  1, 2, 3),   "3 8 1",   "[\\**] (right assoc) works (1)";
+    is ([~] [\**]  3, 2, 0),   "0 1 3",   "[\\**] (right assoc) works (2)";
 }
 
 {
