@@ -520,7 +520,8 @@ ok 'abcdef' !~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
+# L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions">
+#
 ## lookarounds
 #### <before .d> a.		abacad		/mob: <ad @ 4>/			lookahead <before>
 #?rakudo skip 'quoting'
@@ -598,6 +599,7 @@ ok 'az' ~~ /<+alpha>+/, 'metasyntax with leading + (<+...>)';
 #### <null>			''		y		null pattern (<null>)
 ok '' ~~ /<null>/, 'null pattern (<null>)';
 
+# XXX <null> unspecced?
 #### ^ <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 0>/	null pattern (<null>)
 #?rakudo skip 'quoting'
 ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}) ~~ Failure where /mob<null>: < @ 0>/, 'null pattern (<null>)';
@@ -642,7 +644,6 @@ ok ('aba<ca<d' ~~ /.* <before \<>/) ~~ Match where matchcheck($_, q/mob: <aba<ca
 ok ('aba<ca<d' ~~ /.*? <before \<>/) ~~ Match where matchcheck($_, q/mob: <aba @ 0>/), 'non-greedy any character and lookahead <before> with a \'<\'';
 
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
 ##   Metacharacter tests
 #### .			a		y	dot (.)
 ok 'a' ~~ /./, 'dot (.)';
@@ -1336,7 +1337,6 @@ ok 'abcdef' ~~ /a\D+f/, 'not digit';
 ok 'ab0cdef' !~~ /a\D+f/, 'not digit';
 
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
 ##  modifiers
 #### :i bcd			abcdef	y	ignorecase (:i)
 ok 'abcdef' ~~ /:i bcd/, 'ignorecase (:i)';
@@ -1701,7 +1701,6 @@ ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurance (:nth)';
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
 ##  Quantifiers
 
 #### xa*			xaaaay		/<xaaaa @ 0>/	star 2+
@@ -2612,7 +2611,6 @@ ok 'abc' ~~ /<+ alpha - [ Jj ]>/, 'character class with no j with ws';
 ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 
 
-## vim: noexpandtab tabstop=4 shiftwidth=4
 ##  syntax errors
 
 #### {{		abcdef		/Missing closing braces/	unterminated closure
@@ -2715,4 +2713,4 @@ ok eval(q{{ 'abcdef' ~~ // }}) ~~ Failure where /null pattern/, '';
 #?rakudo skip 'quoting'
 ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure where /Null pattern illegal/, 'ws null pattern';
 
-
+# vim: ft=perl6 sw=4 expandtab
