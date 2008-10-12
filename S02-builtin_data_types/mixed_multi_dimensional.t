@@ -116,9 +116,7 @@ Some deeper tests were already added.
 
 #?rakudo skip "Method 'push' not found"
 {    
-    #?rakudo emit #
     %hash<key>.push(4);
-    #?rakudo 2 skip 'test dependency'
     is(+%hash<key>, 4, 'it should now have 4 values in it');
     is(%hash<key>[3], 4, 'got the right value (which we just pushed onto the list)');    
 }
@@ -153,10 +151,8 @@ Some deeper tests were already added.
 
 #?rakudo skip "Method 'push' not found"
 {    
-    #?rakudo emit #
     %hash<key>.push(4);
     
-    #?rakudo 2 skip 'test dependency HoA'
     is(+%hash<key>, 4, 'it should now have 4 values in it');
     is(%hash<key>[3], 4, 'got the right value (which we just pushed onto the array)');    
 }
