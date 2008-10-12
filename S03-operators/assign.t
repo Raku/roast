@@ -432,7 +432,6 @@ my @p;
 {
     my $x = 1;
     @p = $x +<= 8, 9;
-#?rakudo 2 skip 'item infix assignment'
     is($x, 256, '+<= operator');
     is(@p[0],256, "+<= operator parses as item assignment 1");
     is(@p[1],9, "+<= operator parses as item assignment 2");
@@ -442,7 +441,6 @@ my @p;
 {
     my $x = 511;
     @p = $x +>= 8, 9;
-#?rakudo 2 skip 'item infix assignment'
     is($x, 1, '+>= operator');
     is(@p[0],1, "+>= operator parses as item assignment 1");
     is(@p[1],9, "+>= operator parses as item assignment 2");
