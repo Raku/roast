@@ -2564,6 +2564,9 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 #?rakudo skip 'quoting'
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<dot>/) ~~ Match where matchcheck($_, q/mob<dot>: <. @ 17>/), '<dot>';
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/"Character classes can be
+# combined">
+
 #### <+dot>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <. @ 17>/	<+dot>+
 #?rakudo skip 'quoting'
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+dot>+/) ~~ Match where matchcheck($_, q/mob: <. @ 17>/), '<+dot>+';
@@ -2704,6 +2707,7 @@ ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}) ~~ Failure where /Quantifier follows nothing
 #?rakudo skip 'quoting'
 ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}) ~~ Failure where /Quantifier follows nothing/, 'bare ? after |+sp';
 
+# L<S05/Nothing is illegal/"The empty pattern is now illegal">
 
 #### 		abcdef		/Null pattern illegal/		null pattern
 #?rakudo skip 'quoting'
