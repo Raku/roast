@@ -26,7 +26,6 @@ plan 16;
 }
 
 # List construction does not create new containers
-#?rakudo skip "Could not find non-existent sub infix:=:="
 {
   my $foo = 42;
 

@@ -20,13 +20,11 @@ plan 28;
   my $y := $x;
   is($y, 'Just Another', 'y is now bound to x');
 
-  #?rakudo skip 'infix:<=:=>'
   ok($y =:= $x, 'y is bound to x (we checked with the =:= identity op)');
 
   my $z = $x;
   is($z, 'Just Another', 'z is not bound to x');
 
-  #?rakudo skip 'infix:<=:=>'
   ok(!($z =:= $x), 'z is not bound to x (we checked with the =:= identity op)');
 
   $y = 'Perl Hacker';
