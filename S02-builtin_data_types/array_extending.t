@@ -18,7 +18,6 @@ plan 12;
     # We've only *accessed* @array[20], but we haven't assigned anything to it, so
     # @array shouldn't change. But currently, @array *is* automatically extended,
     # i.e. @array is ("a", "b", "c", "d", undef, undef, ...). This is wrong.
-    #?rakudo todo "array bug"
     is +@array, 4,
       "accessing a not existing array element should not automatically extend the array";
 }
@@ -42,7 +41,6 @@ plan 12;
 
     ok !$defined,
         'defined @array[$index_out_of_bounds] should be false';
-    #?rakudo todo "array bug"
     is +@array, 4,
         'defined @array[$index_out_of_bounds] should not have altered @array';
 }

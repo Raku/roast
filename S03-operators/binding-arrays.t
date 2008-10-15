@@ -63,7 +63,6 @@ plan 46;
 
   $var      = "f";
   @array[1] = "g";
-  #?rakudo todo 'array binding'
   is $var,      "f", "binding of array elements works with resetting the array (4)";
   is @array[1], "g", "binding of array elements works with resetting the array (5)";
 }
