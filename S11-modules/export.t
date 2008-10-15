@@ -1,16 +1,17 @@
 use v6;
 use Test;
 
-plan 25;
+plan 30;
 
 # L<S11/"Exportation"/>
 
-sub exp_no_parens is export                      { 'exp_no_parens' }
+sub exp_no_parens    is export                   { 'exp_no_parens' }
 sub exp_empty_parens is export()                 { 'exp_empty_parens' }
-sub exp_ALL is export( :ALL )                    { 'exp_ALL' }
-sub exp_DEFAULT is export( :DEFAULT )            { 'exp_DEFAULT' }
-sub exp_ALL_DEFAULT is export( :ALL, :DEFAULT )  { 'exp_ALL_DEFAULT' }
-sub exp_my_tag is export( :my_tag )              { 'exp_my_tag' }
+sub exp_ALL          is export( :ALL )           { 'exp_ALL' }
+sub exp_DEFAULT      is export( :DEFAULT )       { 'exp_DEFAULT' }
+sub exp_ALL_DEFAULT  is export( :ALL, :DEFAULT ) { 'exp_ALL_DEFAULT' }
+sub exp_MANDATORY    is export( :MANDATORY )     { 'exp_MANDATORY' }
+sub exp_my_tag       is export( :my_tag )        { 'exp_my_tag' }
 
 
 ##  exp_no_parens
@@ -61,6 +62,21 @@ ok( &exp_ALL_DEFAULT === &EXPORT::DEFAULT::exp_ALL_DEFAULT,
     'exp_ALL_DEFAULT -- values agree' );
 ok( &exp_ALL_DEFAULT =:= &EXPORT::DEFAULT::exp_ALL_DEFAULT,
     'exp_ALL_DEFAULT -- containers agree' );
+
+
+##  exp_MANDATORY
+ok( &exp_MANDATORY === &EXPORT::ALL::exp_MANDATORY,
+    'exp_MANDATORY -- values agree' );
+ok( &exp_MANDATORY =:= &EXPORT::ALL::exp_MANDATORY,
+    'exp_MANDATORY -- containers agree' );
+
+ok( &exp_MANDATORY === &EXPORT::MANDATORY::exp_MANDATORY,
+    'exp_MANDATORY -- values agree' );
+ok( &exp_MANDATORY =:= &EXPORT::MANDATORY::exp_MANDATORY,
+    'exp_MANDATORY -- containers agree' );
+
+ok( ! &EXPORT::DEFAULT::exp_MANDATORY,
+    'exp_MANDATORY -- EXPORT::DEFAULT::exp_MANDATORY does not exist' );
 
 
 ##  exp_my_tag
