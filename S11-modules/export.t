@@ -45,7 +45,6 @@ ok( &exp_DEFAULT === &EXPORT::ALL::exp_DEFAULT,
 ok( &exp_DEFAULT =:= &EXPORT::ALL::exp_DEFAULT,
     'exp_DEFAULT -- containers agree' );
 
-#?rakudo 2 todo 'export taglists not implemented'
 ok( &exp_DEFAULT === &EXPORT::DEFAULT::exp_DEFAULT,
     'exp_DEFAULT -- values agree' );
 ok( &exp_DEFAULT =:= &EXPORT::DEFAULT::exp_DEFAULT,
