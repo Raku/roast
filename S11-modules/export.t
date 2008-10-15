@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 25;
 
 # L<S11/"Exportation"/>
 
@@ -51,6 +51,31 @@ ok( &exp_DEFAULT =:= &EXPORT::DEFAULT::exp_DEFAULT,
     'exp_DEFAULT -- containers agree' );
 
 
+##  exp_ALL_DEFAULT
+ok( &exp_ALL_DEFAULT === &EXPORT::ALL::exp_ALL_DEFAULT,
+    'exp_ALL_DEFAULT -- values agree' );
+ok( &exp_ALL_DEFAULT =:= &EXPORT::ALL::exp_ALL_DEFAULT,
+    'exp_ALL_DEFAULT -- containers agree' );
+
+ok( &exp_ALL_DEFAULT === &EXPORT::DEFAULT::exp_ALL_DEFAULT,
+    'exp_ALL_DEFAULT -- values agree' );
+ok( &exp_ALL_DEFAULT =:= &EXPORT::DEFAULT::exp_ALL_DEFAULT,
+    'exp_ALL_DEFAULT -- containers agree' );
+
+
+##  exp_my_tag
+ok( &exp_my_tag === &EXPORT::ALL::exp_my_tag,
+    'exp_my_tag -- values agree' );
+ok( &exp_my_tag =:= &EXPORT::ALL::exp_my_tag,
+    'exp_my_tag -- containers agree' );
+
+ok( &exp_my_tag === &EXPORT::my_tag::exp_my_tag,
+    'exp_my_tag -- values agree' );
+ok( &exp_my_tag =:= &EXPORT::my_tag::exp_my_tag,
+    'exp_my_tag -- containers agree' );
+
+ok( ! &EXPORT::DEFAULT::exp_my_tag,
+    'exp_my_tag -- EXPORT::DEFAULT::exp_my_tag does not exist' );
 
 
 {
