@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 13;
 
 =begin description
 
@@ -9,6 +9,8 @@ Testing the C<:ignorecase> regex modifier - more tests are always welcome
 
 There are still a few things missing, like lower case <-> title case <-> upper
 case tests
+
+Note that the meaning of C<:i> does B<not> descend into subrules.
 
 =end description
 
@@ -25,21 +27,21 @@ regex mixedcase { Hello };
 
 # without :i
 
-"Hello" ~~ m/<mixedcase>/;
-is(~$/, "Hello", "match mixed case");
+ok "Hello" ~~ m/<mixedcase>/, "match mixed case (subrule)";
+ok 'Hello' ~~ m/Hello/,       "match mixed case (direct)";
 
-"hello" ~~ m/<mixedcase>/;
-is(~$/, "", "do not match lowercase");
+ok "hello" !~~ m/<mixedcase>/, "do not match lowercase (subrule)";
+ok "hello" !~~ m/Hello/,       "do not match lowercase (direct)";
 
 #?rakudo emit skip_rest('unimplemented m:i parsing');
 
 #?rakudo emit =begin
 
-"hello" ~~ m:i/<mixedcase>/;
-is(~$/, "hello", "match with :i");
+ok "hello" !~~ m:i/<mixedcase>/, "no match with :i if matched by subrule";
+ok "hello"  ~~ m:i/Hello/,       "match with :i (direct)";
 
-"hello" ~~ m:ignorecase/<mixedcase>/;
-is(~$/, "hello", "match with :ignorecase");
+ok "hello" !~~ m:ignorecase/<mixedcase>/,  "no match with :ignorecase + subrule";
+ok "hello" !~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
