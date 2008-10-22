@@ -15,17 +15,17 @@ class Foo {
   method doit ($a, $b, $c) { $a + $b + $c }
   method noargs () { 42 }
   method nobrackets { 'mice' }
-  method callsmethod1() { .noargs(); }
-  method callsmethod2 { .noargs(); }
+  method callsmethod1() { self.noargs(); }
+  method callsmethod2 { self.noargs(); }
 }
 
 my $foo = Foo.new();
 is($foo.doit(1,2,3), 6, "dot method invocation");
 
 my $val;
-lives_ok {
-    $val = doit $foo: 1,2,3;
-}, '... indirect method invocation works';
+#?rakudo skip 'parse error'
+lives_ok { $val = doit $foo: 1,2,3; }, '... indirect method invocation works';
+#?rakudo skip 'test dependency'
 is($val, 6, '... got the right value for indirect method invocation');
 
 is($foo.noargs, 42, "... no parentheses after method");
@@ -33,10 +33,7 @@ is($foo.noargs(), 42, "... parentheses after method");
 
 {
     my $val;
-    lives_ok {
-        eval '$val = $foo.noargs()';
-        die $! if $!;
-    }, "... <space> + parentheses after method";
+    lives_ok { $val = $foo.noargs(); }, "... <space> + parentheses after method";
     is($val, 42, '... we got the value correctly');
 }
 
@@ -48,6 +45,7 @@ is($foo.noargs(), 42, "... parentheses after method");
     is($val, 42, '... we got the value correctly', :todo<feature>);
 }
 
+#?rakudo skip 'parse error (or test error?)'
 {
     my $val;
     lives_ok {
@@ -82,6 +80,7 @@ is($foo.noargs(), 42, "... parentheses after method");
         method b () { 1 }
     }
     dies_ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
+    #?rakudo todo 'method should not be usable as sub'
     dies_ok( { Zoo.new.c }, "meth(%h) is not a valid method call syntax");
 }
 
