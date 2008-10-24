@@ -33,7 +33,7 @@ is($foo.noargs(), 42, "... parentheses after method");
 
 {
     my $val;
-    lives_ok { $val = $foo.noargs(); }, "... <space> + parentheses after method";
+    lives_ok { $val = $foo.noargs\ (); }, "... <unspace> + parentheses after method";
     is($val, 42, '... we got the value correctly');
 }
 
@@ -49,8 +49,8 @@ is($foo.noargs(), 42, "... parentheses after method");
 {
     my $val;
     lives_ok {
-        $val = $foo.noargs .();
-    }, "... <space> + '.' + parentheses after method", :todo<bug>;
+        $val = $foo.noargs\ .();
+    }, "... <unspace> + '.' + parentheses after method", :todo<bug>;
     is($val, 42, '... we got the value correctly', :todo<feature>);
 }
 
