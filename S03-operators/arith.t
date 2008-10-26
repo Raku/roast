@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 190;
+plan 192;
 
 my $five = abs(-5);
 
@@ -412,3 +412,15 @@ dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef 
 dies_ok( { say 3 / 0 }, 'Division by zero dies and is catchable');
 dies_ok( { $x = 0; say 3 / $x; }, 'Division by zero dies and is catchable with VInt/VRat variables');
 dies_ok( { $x := 0; say 3 / $x; }, 'Division by zero dies and is catchable with VRef variables');
+
+# This is a rakudo regression wrt bignum:
+#?rakudo todo 'bigint'
+{
+    my $f = 1; $f *= $_ for 2..25; say $f;
+    ok $f == 15511210043330985984000000, 
+       'Can calcualte 25! without loss of precision';
+    ok 2**65 == 36893488147419103232,
+       'Can calcualte 2**65 without loss of precision';
+}
+
+# vim: ft=perl6
