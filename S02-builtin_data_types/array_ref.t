@@ -121,15 +121,15 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
 #is $array11[1][1], "e", "AoA created using ';' contains correct elem", :todo;
 
 # [] creates new containers (() does not)
-#?rakudo skip 'infix:<=:=> unimplemented'
+#?rakudo todo 'infix:<=:=> unimplemented'
 {
   my $foo;
   ok !([$foo][0] =:= $foo), "creating arrays using [] creates new containers (1)";
 }
 
-#?rakudo skip 'infix:<=:=> unimplemented'
+#?rakudo todo 'infix:<=:=> unimplemented'
 {
   my $foo;
   my $arrayref = [$foo];
-  ok !($arrayref[0] =:= $foo), "creating arrays using [] creates new containers (2)";
+  ok $arrayref[0] !=:= $foo, "creating arrays using [] creates new containers (2)";
 }

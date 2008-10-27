@@ -61,7 +61,6 @@ Misc. Junction tests
     
     # test junction to junction
     
-    #?rakudo todo 'Compare junctions with junctions'
     ok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
     ok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
     
@@ -291,10 +290,8 @@ L<S03/Junctive operators/They thread through operations>
 
 # junction in boolean context
 ok(?(0&0) == ?(0&&0), 'boolean context');
-#?rakudo todo 'boolen context of junctions'
 ok(?(0&1) == ?(0&&1), 'boolean context');
 ok(?(1&1) == ?(1&&1), 'boolean context');
-#?rakudo todo 'boolen context of junctions'
 ok(?(1&0) == ?(1&&0), 'boolean context');
 ok(!(?(0&0) != ?(0&&0)), 'boolean context');
 ok(!(?(0&1) != ?(0&&1)), 'boolean context');
