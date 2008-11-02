@@ -114,7 +114,6 @@ Some deeper tests were already added.
         is($array[2], 3, 'got the right value (when I pull the array out)');    
     }
 
-#?rakudo skip "Method 'push' not found"
 {    
     %hash<key>.push(4);
     is(+%hash<key>, 4, 'it should now have 4 values in it');

@@ -300,7 +300,6 @@ my @p;
 {
     my $x = 2;
     @p = $x **= 3, 4;
-#?rakudo skip 'item assignment'
     is($x, 8, '**= operator');
     is(@p[0],8, "**= operator parses as item assignment 1");
     is(@p[1],4, "**= operator parses as item assignment 2");

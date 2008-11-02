@@ -45,7 +45,6 @@ is($foo.noargs(), 42, "... parentheses after method");
     is($val, 42, '... we got the value correctly', :todo<feature>);
 }
 
-#?rakudo skip 'parse error (or test error?)'
 {
     my $val;
     lives_ok {
