@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 38;
 
 # L<S03/Junctive operators/>
 
@@ -57,3 +57,5 @@ ok !(undef ^ 0), 'undef^0 in boolean context';
 }
 
 ok 0|undef == 0, '0|undef == 0 in boolean context';
+
+ok ("A" eq "A"|"B").perl eq 'Bool::True', 'a junction of booleans collapses to a boolean';
