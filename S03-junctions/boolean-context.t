@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 45;
 
 # L<S03/Junctive operators/>
 
@@ -57,3 +57,14 @@ ok !(undef ^ 0), 'undef^0 in boolean context';
 }
 
 ok 0|undef == 0, '0|undef == 0 in boolean context';
+
+my $message1 = 'boolean context collapses junctions';
+my $message2 = '...so that they\'re not junctions anymore';
+ok ?(Bool::True & Bool::False)    ==  Bool::False, $message1;
+ok ?(Bool::True & Bool::False)    !~~ Junction,    $message2;
+ok !(Bool::True & Bool::False)    ==  Bool::True,  $message1;
+ok !(Bool::True & Bool::False)    !~~ Junction,    $message2;
+ok true(Bool::True & Bool::False) ==  Bool::False, $message1;
+ok true(Bool::True & Bool::False) !~~ Junction,    $message2;
+ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
+ok not(Bool::True & Bool::False)  !~~ Junction,    $message2;
