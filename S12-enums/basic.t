@@ -14,12 +14,13 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Sat,      6, 'Values exported into namespace too.';
 }
 
-#?rakudo skip 'infix:<but>'
 {
     my $x = 'Today' but Day::Mon;
+    #?rakudo 2 skip '.does missing'
     ok $x.does(Day),      'Can test with .does() for enum type';
     ok $x.does(Day::Mon), 'Can test with .does() for enum value';
     ok $x ~~ Day,         'Can smartmatch for enum type';
+    #?rakudo 1 skip 'ACCEPTS missing for enum values'
     ok $x ~~ Day::Mon,    'Can Smartmatch for enum value';
 }
 
