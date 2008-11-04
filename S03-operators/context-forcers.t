@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 81;
+plan 87;
 
 { # L<S03/"Changes to Perl 5 operators"/imposes boolean context/>
   is ?True,    True,  "? context forcer works (1)";
@@ -178,3 +178,21 @@ sub eval_elsewhere($code){ eval($code) }
     isa_ok(int($c), Int, 'it is forced into a Int');
     is(int($c), 1, 'float numbers forced into integer context are 0');
 }
+
+{
+    my $x = [0, 100, 280, 33, 400, 5665];
+
+    is (@($x)[1], 100, '@$x works');
+
+    is (@($x)[3]+50, 83, '@$x works inside a larger expression');
+
+    my $y = [601, 700, 888];
+
+    my @total = (@$x, @$y);
+
+    is (@total[0], 0, "total[0] is 0");
+    is (@total[1], 100, "total[1] is 100");
+    is (@total[6], 601, "total[1] is 100");
+    is (@total[8], 888, "total[1] is 100");
+}
+
