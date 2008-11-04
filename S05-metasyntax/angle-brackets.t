@@ -13,7 +13,7 @@ character classes), and those are referenced at the correct spot.
 
 =end pod
 
-# L<S05/Extensible metasyntax (<...>)>
+# L<S05/Extensible metasyntax (C<< <...> >>)/>
 
 # tests for the simpler parts of <...> syntax in regexes
 
@@ -85,7 +85,7 @@ character classes), and those are referenced at the correct spot.
     eval_dies_ok('"foo" ~~ /<test:>/', 'no other characters are allowed (:)');
 }
 
-# L<S05/"Extensible metasyntax (<...>)"/A leading . causes a named assertion not to capture what it matches>
+# L<S05/Extensible metasyntax (C<< <...> >>)/A leading . causes a named assertion not to capture what it matches>
 # XXX "section ``Extensible metasyntax (<...>)'' not found in S05." - how to
 # reference that section?
 {
@@ -182,7 +182,7 @@ character classes), and those are referenced at the correct spot.
 # The special assertion <.>
 # see combchar.t
 
-# L<S05/Extensible metasyntax (<...>)/A leading ! indicates a negated meaning (always a zero-width assertion)>
+# L<S05/Extensible metasyntax (C<< <...> >>)/A leading ! indicates a negated meaning (always a zero-width assertion)>
 {
     ok('1./:"{}=-_' ~~ /^<!alpha>+$/, '<!alpha> matches non-letter characters');
     ok(!('abcdef'   ~~ /<!alpha>/), '<!alpha> does not match letter characters');
