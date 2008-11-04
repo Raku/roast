@@ -18,6 +18,5 @@ class Foo::Bar {
 
 {
     my $foobar = Foo::Bar.new();
-    #?rakudo todo 'classes with namespaces with ::'
     is($foobar.baz, 42, 'methods can be called on classes with namespaces with ::');
 }
