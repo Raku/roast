@@ -179,6 +179,7 @@ sub eval_elsewhere($code){ eval($code) }
     is(int($c), 1, 'float numbers forced into integer context are 0');
 }
 
+#?rakudo skip 'TODO: @(), list assignment'
 {
     my $x = [0, 100, 280, 33, 400, 5665];
 
