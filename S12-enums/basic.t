@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 9;
 
 # Very basic enum tests
 
@@ -10,6 +10,8 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
     is Day::Sun, 0, 'First item of an enum is 0';
     is Day::Sat, 6, 'Last item has the right value';
+    is Sun,      0, 'Values exported into namespace too.';
+    is Sat,      6, 'Values exported into namespace too.';
 }
 
 #?rakudo skip 'infix:<but>'
@@ -21,3 +23,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok $x ~~ Day::Mon,    'Can Smartmatch for enum value';
 }
 
+enum JustOne <Thing>;
+{
+    is JustOne::Thing, 0, 'Enum of one element works.';
+}
