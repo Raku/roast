@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 35;
 
 class Foo {
     has $.bar is rw;
@@ -113,4 +113,22 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 
     is( B.new.z(1), 'b', 'initializer carries through' );
     is( B.new.w, 10, 'initializer can be overriden by derived classes' );
+}
+
+# test that you can inherit from a class with :: in the name.
+# A rakudo regression, http://rt.perl.org/rt3/Ticket/Display.html?id=60356
+#?rakudo skip 'inheritance from classes with :: in the name'
+{
+    class A::B {
+        method ab { 'a'; };
+    };
+
+    class A::B::C is A::B {
+        method abc { 'b'; };
+    }
+    my $o = A::B::C.new;
+
+    ok defined($o), 'can instantiate object from class A::B::C';
+    is $o.ab,  'a', 'can access inherited method';
+    is $o.abc, 'b', 'can access directly defined method';
 }
