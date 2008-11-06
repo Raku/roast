@@ -116,8 +116,6 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 }
 
 # test that you can inherit from a class with :: in the name.
-# A rakudo regression, http://rt.perl.org/rt3/Ticket/Display.html?id=60356
-#?rakudo skip 'inheritance from classes with :: in the name'
 {
     class A::B {
         method ab { 'a'; };
