@@ -16,9 +16,11 @@ my $foo=1;
 
 # note: many of these errors can be detected at compile time, so need
 # eval_dies_ok instead of dies_ok 
+#?rakudo todo 'TODO: catch modification of subroutine arg'
 eval_dies_ok '
+    my $tmp = 1;
     sub mods_param ($x) { $x++; }
-    mods_param($foo)
+    mods_param($tmp)
     ',
     'can\'t modify parameter, constant by default';
     
