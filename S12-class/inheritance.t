@@ -37,7 +37,7 @@ is($foo_bar.baz(), 'Foo::Bar::baz', '... our subclass overrides the superclass m
 is($foo_bar.super_baz(), 'Foo::baz', '... our subclass can still access the superclass method through Foo::');
 is($foo_bar.fud(), 'Foo::Bar::fud', '... sanity check on uninherited method');
 
-#?rakudo skip 'stringification of objects'
+
 is($foo_bar.getme, $foo_bar, 'can call inherited methods');
 is($foo_bar.getme.baz, "Foo::Bar::baz", 'chained method dispatch on altered method');
 
@@ -72,15 +72,13 @@ ok !Foo::Bar.HOW.isa(Foo::BAR, ::CLASS),  "subclass.HOW.isa(CLASS) is false";
 #?pugs todo "feature"
 ok  Foo::Bar.HOW.does(Foo::BAR, ::CLASS),  "subclass.HOW.does(CLASS) is true";
 
-
-#?rakudo skip 'indirect method call syntax'
 {
     my $test = '$obj.$meth is canonical (audreyt says)';
     class Abc {
         method foo () { "found" }
     }
     class Child is Abc { }
-    is( eval('my $meth = "foo"; my $obj= Child.new; $obj.$meth()'), 'found', $test);
+    is( eval('my $meth = "foo"; my $obj= Child.new; $obj."$meth"()'), 'found', $test);
 }
 
 # Erroneous dispatch found by TimToady++
