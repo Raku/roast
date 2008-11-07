@@ -18,6 +18,7 @@ plan 8;
     is "{;;;;;;\1;42}", "42", '{\\1 parses correctly (3)';
 }
 
+#?rakudo todo 'interpolation into strings should return strings'
 {
     # interpolating into double quotes results in a Str
     my $a = 3;
