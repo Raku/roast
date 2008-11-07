@@ -61,12 +61,12 @@ ok ?(0|undef == 0), '0|undef == 0 in boolean context';
 my $message1 = 'boolean context collapses junctions';
 my $message2 = '...so that they\'re not junctions anymore';
 #?DOES 1
-#?rakudo 4 skip 'junction collapses'
+#?rakudo 4 todo 'junction collapses'
 ok ?(Bool::True & Bool::False)    ==  Bool::False, $message1;
 ok ?(Bool::True & Bool::False)    !~~ Junction,    $message2;
 ok !(Bool::True & Bool::False)    ==  Bool::True,  $message1;
 ok !(Bool::True & Bool::False)    !~~ Junction,    $message2;
-#?rakudo 4 skip 'named unary as function call'
+#?rakudo 4 todo 'named unary as function call'
 ok true(Bool::True & Bool::False) ==  Bool::False, $message1;
 ok true(Bool::True & Bool::False) !~~ Junction,    $message2;
 ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
