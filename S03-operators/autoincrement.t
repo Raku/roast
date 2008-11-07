@@ -125,7 +125,7 @@ is($num,'124.456');
         has $.value;
 
         method succ() {
-            $.value += 42;
+            Incrementor.new( value => $.value + 42);
         }
     }
 
@@ -141,7 +141,7 @@ is($num,'124.456');
         has $.value;
 
         method pred() {
-            $.value -= 42;
+            Decrementor.new( value => $.value - 42);
         }
     }
 
