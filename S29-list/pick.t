@@ -65,7 +65,7 @@ ok +@value == $c && $c, 'pick(*, :repl) is lazy';
 {
     # Test that List.pick doesn't flatten array refs
     # http://rt.perl.org/rt3/Ticket/Display.html?id=58526
-    ok ?([[1, 2], [3, 4]].pick.join('|') eq any('1|2', '3|4')), '[[1,2],[3,4]].pick does not flatten';
+    ok ?([[1, 2], [3, 4]].pick.[0].join('|') eq any('1|2', '3|4')), '[[1,2],[3,4]].pick does not flatten';
     #?rakudo todo 'array reference flattening, RT #58526'
     ok ?(~([[1, 2], [3, 4]].pick(*)) eq '1 2 3 4' | '3 4 1 2'), '[[1,2],[3,4]].pick(*) does not flatten';
 
