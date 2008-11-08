@@ -67,7 +67,6 @@ ok((2 ~ 2 | 4 ~ 1) == 41, "and ~ binds tighter than |");
 # junctive and
 
 ok(  ?(   (1 & 2 | 3) !=3), '& binds tighter than |');
-#?rakudo skip "Negate a junction (???)"
 ok((!(1 & 2 | 3) < 2), "ditto");
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
 #?rakudo skip "Negate a junction (???)"

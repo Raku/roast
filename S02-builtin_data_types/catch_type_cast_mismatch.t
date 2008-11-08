@@ -40,7 +40,6 @@ lives_ok( { $ref[0] }, 'Accessing a hash as a list of pairs is fine');
     my $x = 2;
     lives_ok { $x = {a => 1} }, 'Can assign an hashref to a scalar';
     my $y = { b => 34 };
-    #?rakudo todo 'RT #59382'
     lives_ok { $y = 3   },   'Can assign a number to scalar with an hashref';
 }
 
@@ -49,7 +48,6 @@ lives_ok( { $ref[0] }, 'Accessing a hash as a list of pairs is fine');
     my $x = [0, 1];
     lives_ok { $x = { a => 3 } }, 'can assign hashref to scalar that held an array ref';
     my $y = { df => 'dfd', 'ui' => 3 };
-    #?rakudo todo 'RT #59382'
     lives_ok { $y = [0, 7] }, 'can assign arrayref to scalar that held an hashref';
 
 }

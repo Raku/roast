@@ -12,7 +12,6 @@ plan 6;
 # sanity: declarations and very simple use (scoping tests come later)
 # we take care to use different names to avoid other *kinds* of insanity.
 
-#?rakudo 2 todo 'chained my, our (and scalar autovivification)'
 is((try {  my $a1 = my    $b1 = 42; $b1++; "$a1, $b1" }), '42, 43', "chained my");
 is((try {  my $a2 = our   $b2 = 42; $b2++; "$a2, $b2" }), '42, 43', "chained my, our");
 #?rakudo skip 'constant'

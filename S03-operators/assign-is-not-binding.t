@@ -33,6 +33,5 @@ plan 8;
     my $temp = @array[0];
     is $temp, 23, 'Could retrieve first element to a scalar';
     @array[0] = @array[1];
-    #?rakudo todo "BUG: assignment from array element to scalar creates a binding"
     is $temp, 23, "Assignment to scalar didn't create a binding"
 }
