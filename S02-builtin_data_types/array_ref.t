@@ -96,17 +96,17 @@ isa_ok $array9,             Array;
 isa_ok $array9[1],          Array;
 is     $array9[0],          42, "recursive array access (0)";
 is     $array9[1][0],       42, "recursive array access (1)";
-#?rakudo 2 skip 'get_pmc_keyed not implemented in Perl6Str'
 is     $array9[1][1][0],    42, "recursive array access (2)";
 is     $array9[1][1][1][0], 42, "recursive array access (3)";
 
 # changing nested array
-#?rakudo skip 'no applicable methods'
 {
     my $array10 = [[2]];
-    is try { $array10[0][0] = 6; $array10[0][0] }, 6, "changing nested array (1)";
+    $array10[0][0] = 6;
+    is $array10[0][0], 6, "changing nested array (1)";
     my $array11 = [[2,3]];
-    is try { $array11[0][0] = 6; $array11[0][0] }, 6, "changing nested array (2)";
+    $array11[0][0] = 6;
+    is $array11[0][0], 6, "changing nested array (2)";
 }
 
 # creating a AoA using ";" doesn't work any longer
