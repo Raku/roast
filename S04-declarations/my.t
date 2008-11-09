@@ -23,6 +23,7 @@ plan 30;
 {
     my $ret = 42;
     lives_ok { $ret = my($x) ~ $x }, 'my() variable is visible (1)';
+    #?rakudo skip 'test dependency'
     is $ret, "",                     'my() variable is visible (2)';
 }
 
