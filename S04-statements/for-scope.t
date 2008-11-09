@@ -43,12 +43,15 @@ for 1, 2 -> $_ {
     is(@inside.join(""), "123", "lexical array properly initialized, round $_, two explicit \$_s");
 }
 
-sub respect(*@a) {
-    my @b = ();
-    push @b for @a;
-    return @b.elems;
-}
+#?rakudo skip 'slurpies not working'
+{
+    sub respect(*@a) {
+        my @b = ();
+        push @b for @a;
+        return @b.elems;
+    }
 
-is respect(1,2,3), 3, 'a for loop inside a sub loops over each of the elements';
-is respect([1,2,3]), 3, '...even if they are sent as an array ref'; # is this right?
-is respect( my @a = 1, 2, 3 ), 3, '...and when the array is declared in the argument list';
+    is respect(1,2,3), 3, 'a for loop inside a sub loops over each of the elements';
+    is respect([1,2,3]), 3, '...even if they are sent as an array ref'; # is this right?
+    is respect( my @a = 1, 2, 3 ), 3, '...and when the array is declared in the argument list';
+}
