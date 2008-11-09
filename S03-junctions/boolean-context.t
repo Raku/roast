@@ -66,7 +66,7 @@ ok ?(Bool::True & Bool::False)    ==  Bool::False, $message1;
 ok ?(Bool::True & Bool::False)    !~~ Junction,    $message2;
 ok !(Bool::True & Bool::False)    ==  Bool::True,  $message1;
 ok !(Bool::True & Bool::False)    !~~ Junction,    $message2;
-#?rakudo 4 todo 'named unary as function call'
+#?rakudo 2 todo 'named unary as function call'
 ok true(Bool::True & Bool::False) ==  Bool::False, $message1;
 ok true(Bool::True & Bool::False) !~~ Junction,    $message2;
 ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
