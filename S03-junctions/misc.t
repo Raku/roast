@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan 78;
 
 =begin pod
 
@@ -322,4 +322,13 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
     $c = 0;
     $c++ if 1 == any(1, 2, 3);
     is $c, 1, 'if modifier with junction should be called once';
+}
+
+{
+    my @array = <1 2 3 4 5 6 7 8>;
+    ok( all(@array) == one(@array), "all(@x) == one(@x) tests uniqueness(+ve)" );
+
+    push @array, 6;
+    ok( !( all(@array) == one(@array) ), "all(@x) == one(@x) tests uniqueness(-ve)" );
+
 }
