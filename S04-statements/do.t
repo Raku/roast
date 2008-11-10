@@ -5,7 +5,7 @@ use Test;
 plan 23;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
-#?rakudo 3 todo 'do {} while/until/if is valid but should not be'
+#?rakudo 6 todo 'do {} while/until/if is valid but should not be'
 eval_dies_ok 'my $i = 1; do { $i++ } while $i < 5;',
     "'do' can't take the 'while' modifier";
 
