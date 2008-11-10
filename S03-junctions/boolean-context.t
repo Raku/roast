@@ -44,8 +44,6 @@ ok !(undef & 0), 'undef&0 in boolean context';
 ok !(0 ^ undef), '0^undef in boolean context';
 ok !(undef ^ 0), 'undef^0 in boolean context';
 
-# this can in principle be TODOed, but fudge doesn't understand the test
-# format
 {
     (0 | undef && flunk '0|undef in boolean context') || pass '0|undef in boolean context';
     (0 & undef && flunk '0&undef in boolean context') || pass '0&undef in boolean context';
