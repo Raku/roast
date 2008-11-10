@@ -290,10 +290,8 @@ L<S03/Junctive operators/They thread through operations>
 
 # junction in boolean context
 ok(?(0&0) == ?(0&&0), 'boolean context');
-#?rakudo todo 'boolean context for junctions'
 ok(?(0&1) == ?(0&&1), 'boolean context');
 ok(?(1&1) == ?(1&&1), 'boolean context');
-#?rakudo todo 'boolean context for junctions'
 ok(?(1&0) == ?(1&&0), 'boolean context');
 ok(!(?(0&0) != ?(0&&0)), 'boolean context');
 ok(!(?(0&1) != ?(0&&1)), 'boolean context');
