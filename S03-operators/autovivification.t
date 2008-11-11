@@ -77,7 +77,6 @@ plan 16;
 
 # L<S03/Assignment metaoperators/"If you apply an assignment operator to a
 # protoobject">
-#?rakudo skip 'treat Int as conforming to Num'
 {
     # yes, this is serious. It's in the specs ;-)
     my Num $x;

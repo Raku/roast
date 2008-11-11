@@ -22,7 +22,6 @@ Basic C<pairs> tests, see S29.
   if +@pairs != 3 {
     skip 6, "skipped tests which depend on a test which failed";
   } else {
-    #?rakudo 6 skip 'TODO: infix:<cmp> for pairs'
     is @pairs[0].key,   "a",      "value of pair returned by hash.pairs was correct (1)";
     is @pairs[1].key,   "b",      "value of pair returned by hash.pairs was correct (2)";
     is @pairs[2].key,   "c",      "value of pair returned by hash.pairs was correct (3)";

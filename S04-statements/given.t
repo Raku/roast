@@ -199,7 +199,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     }
     is($any, 1, 'when any');
     is($all, 1, 'when all');
-    #?rakudo todo 'junctions with one'
     is($one, 1, 'when one');
 }
 

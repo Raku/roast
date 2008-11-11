@@ -24,7 +24,6 @@ plan 10;
 # Now testing basic correct inheritance.
 {
   my $a = 3;
-  #?rakudo todo 'Int type should somehow conform to Num'
   ok($a.WHAT ~~ Num,    "an Int isa Num");
   ok($a.WHAT ~~ Object, "an Int isa Object");
 }

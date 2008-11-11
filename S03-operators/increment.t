@@ -88,7 +88,6 @@ is($b, -(++$a), 'est oder of predecrement in -(++$a)');
 $a = undef;
 is($a++, 0, 'undef++ == 0');
 
-#?rakudo skip 'unimpl undef--'
 $a = undef;
 ok($a-- ~~ undef, 'undef-- is undefined');
 

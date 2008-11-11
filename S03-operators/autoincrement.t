@@ -110,7 +110,6 @@ $num++;             # 124.456, not 123.457
 
 is($num,'124.456');
 
-#?rakudo skip 'autoincrement undef'
 {
     my $x;
     is ++$x, 1, 'Can autoincrement an undef variable (prefix)';

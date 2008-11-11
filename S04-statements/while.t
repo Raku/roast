@@ -43,7 +43,6 @@ plan 8;
 }
 
 
-#?rakudo skip 'No pointy blocks on while loops yet'
 # L<S04/The C<for> statement/It is also possible to write>
 # while ... -> $x {...}
 {
@@ -55,7 +54,6 @@ plan 8;
   is $str, '54321', 'while ... -> $x {...} worked (1)';
 }
 
-#?rakudo skip 'No pointy blocks on while loops yet'
 {
   my @array = 0..5;
   my $str;

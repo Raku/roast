@@ -31,7 +31,6 @@ our $GLOBAL;
 is(undef, undef, "undef is equal to undef");
 ok(!defined(undef), "undef is not defined");
 
-#?rakudo skip 'undef += 1'
 {
     my $a;
     is($a, undef, "uninitialized lexicals are undef");
