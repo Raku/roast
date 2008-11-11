@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 41;
 
 #L<S03/Autoincrement precedence>
 
@@ -149,4 +149,16 @@ is($moo, 0, "var was not touched");
     eval_dies_ok ' ++"x" ', "can't preincrement a literal string";
     eval_dies_ok ' "x"-- ', "can't postdecrement a literal string";
     eval_dies_ok ' --"x" ', "can't predecrement a literal string";
+}
+
+# this used to be a rakudo regression
+#?rakudo skip 'Num += Int'
+{
+    my $x = 2.0;
+    $x += 1;
+    ok $x == 3.0, 'can add Int to Num with +=';
+
+    my Num $y = 2.0;
+    $y += 1;
+    ok $y == 3.0, 'can add Int to Num with += and type constraint';
 }
