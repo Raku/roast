@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 27;
+plan 28;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -61,6 +61,13 @@ my Str $bar;
         }
     }
     is fact(5), 120, 'recursive factorial with type contstraints work';
+}
+
+# Num accepts Int too.
+{
+    my Num $n;
+    $n = 42;
+    is $n, 42, 'Num accepts Int too';
 }
 
 # L<S02/Return types/a return type can be specified before or after the name>
