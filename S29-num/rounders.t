@@ -33,37 +33,18 @@ my %tests =
 #?pugs emit     exit;
 #?pugs emit }
 
-# XXX rakudo has a bug with list flattening that prevents us from
-# running the tests, and I haven't found a way to work around it without
-# breaking the test for pugs. So here is our cheating version rakudo.
-# Will stop working once list assignment is fixed
-
-#?rakudo emit for %tests.keys.sort -> $type {
-#?rakudo emit     my @subtests = %tests{$type};
-#?rakudo emit     for @subtests -> $t, $ref {
-#?rakudo emit         my $code = "{$type}($t)";
-#?rakudo emit         my $res = eval $code;
-#?rakudo emit         if ($!) {
-#?rakudo emit             flunk("failed to parse $code ($!)");
-#?rakudo emit         } else {
-#?rakudo emit             ok($res == $ref, "$code == $ref");
-#?rakudo emit         };
-#?rakudo emit     };
-#?rakudo emit };
-#?rakudo emit 
-#?rakudo emit exit 1;
-
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});	# XXX .[] doesn't work yet!
     for @subtests -> $test {
-        my $code = "{$type}($test[0])";
+        my $code = "{$type}({$test[0]})";
+#        say $code;
         my $res = eval($code);
 
         if ($!) {
             #?pugs todo 'feature'
             flunk("failed to parse $code ($!)");
         } else {
-            is($res, $test[1], "$code == $test[1]");
+            ok($res == $test[1], "$code == {$test[1]}");
         }
     }
 }
