@@ -153,7 +153,6 @@ L<S03/Junctive operators>
 # Canonical stringification of a junction
 sub j (Junction $j) { return $j.perl }
 
-#?rakudo skip 'Junction Authreading'
 {
     # L<S03/Junctive operators/They thread through operations>
     my $got;
@@ -186,8 +185,10 @@ sub j (Junction $j) { return $j.perl }
     $roll = 2; $note = '';
     if $roll == 1|2|3 { $note = "Low roll" }
     is($note, "Low roll", '| junction threading ==');
+}
 
-
+#?rakudo skip 'Junctions as subscripts'
+{
     # L<S03/Junctive operators/Junctions work through subscripting>
     my $got;
     my @foo;
