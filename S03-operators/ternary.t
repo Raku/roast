@@ -23,7 +23,6 @@ my $str3 = "bbb";
 is(($str2 eq $str1 ?? 8 * 8 !! 9 * 9), 64, "?? !! in parenthesis");
 is(($str2 eq $str3 ?? 8 + 8 !! 9 / 9), 1, "?? !! in parenthesis");
 
-#?rakudo 2 todo 'nested ?? !!'
 is(1 ?? 2 ?? 3 !! 4 !! 5 ?? 6 !! 7, 3, "nested ?? !!");
 is(1 ?? 0 ?? 3 !! 4 !! 5 ?? 6 !! 7, 4, "nested ?? !!");
 is(0 ?? 2 ?? 3 !! 4 !! 5 ?? 6 !! 7, 6, "nested ?? !!");
@@ -65,6 +64,7 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     }
 
     my $foo = eval q[ 1 ?? 'yay' !! 'nay' ];
-    is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op"), :todo<bug>;
+    #?pugs todo 'bug'
+    is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op");
 }
 
