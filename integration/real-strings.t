@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 4;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.
@@ -22,6 +22,7 @@ plan 3;
        'Still works with strings returned from split() (result)';
 }
 
+dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returned from split and passed to pointy block are still ro';
 
 
 
