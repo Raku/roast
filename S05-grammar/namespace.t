@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 # TODO: smart match against a grammar to get a Match object 
 # isn't specced and will likely change; see
@@ -40,3 +40,14 @@ is('1245' ~~ B, '1245', 'Match against regex');
 is(A::B.WHAT, 'Failure', 'regex defined in separate namespace from grammar');
 is(B::A.WHAT, 'Failure', 'regex defined in separate namespace from grammar');
 
+
+=begin description
+
+check that multi-jointed namespaces work with grammars
+
+=end description
+
+grammar Foo::Bar {
+    token foo { foo }
+}
+is("foo" ~~ Foo::Bar::foo, 'foo', 'regex in a namespace callable');
