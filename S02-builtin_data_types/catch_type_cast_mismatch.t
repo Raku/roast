@@ -17,10 +17,10 @@ isa_ok($ref, Hash);
 #?rakudo skip "unspecced (if specced please add smartlink)"
 lives_ok( { $ref[0] }, 'Accessing a hash as a list of pairs is fine');
 
-#?rakudo skip '$ref = [42] causes Odd number of elements found where hash expected'
 {
     $ref = [ 42 ];
     isa_ok($ref, Array);
+    #?rakudo todo 'A list should not be accessible with hash subscripts $a<0>'
     dies_ok( { $ref<0> }, 'Accessing an array as a hash dies');
 }
 
