@@ -17,5 +17,4 @@ multi sub mmd(Even $x) { 'Even' }
 multi sub mmd(Int  $x) { 'Odd'  }
 
 is mmd(3), 'Odd' , 'MMD with subset type multi works';
-#?rakudo todo 'bug - subset types do not convey the type they restrict to the dispatcher'
 is mmd(4), 'Even', 'subset multi is narrower than the general type';
