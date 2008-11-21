@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 5;
 
 #L<S06/Placeholder variables/>
 
@@ -18,5 +18,11 @@ sub two_placeholders {
 
 two_placeholders(1, 2);
 
+sub non_twigil {
+    is $^foo, 5, "A single placeholder (still) works";
+    is $foo, 5, "It also has a corresponding non-twigil variable";
+}
+
+non_twigil(5);
 
 # vim: syn=perl6
