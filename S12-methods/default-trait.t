@@ -3,6 +3,9 @@ use Test;
 
 plan 6;
 
+# L<S12/Multisubs and Multimethods/"only candidates marked with the default
+# trait">
+
 class Something {
     multi method doit(Int $x)            { 2 * $x };
     multi method doit(Int $x) is default { 3 * $x };
