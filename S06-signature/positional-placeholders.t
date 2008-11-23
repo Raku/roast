@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 #L<S06/Placeholder variables/>
 
@@ -25,5 +25,8 @@ sub non_twigil {
 }
 
 non_twigil(5);
+
+eval_dies_ok( { $foo; $^foo; },
+'A non-twigil variable should not precede a correcponding twigil variable' );
 
 # vim: syn=perl6
