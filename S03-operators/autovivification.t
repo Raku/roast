@@ -1,5 +1,5 @@
 use Test;
-plan 16;
+plan 19;
 
 # L<S03/Assignment metaoperators/>
 
@@ -73,6 +73,26 @@ plan 16;
     my Int $x;
     $x **= 2;
     ok $x == 1, 'my Int $x; $x **= 2 works'
+}
+
+# http://rt.perl.org/rt3/Ticket/Display.html?id=59982
+#?rakudo skip 'RT #59982 (scalar autoviv. with Complex numbers)'
+{
+    my $x;
+    $x = $x + 1i;
+    ok $x == 0 + 1i, 'my $x; $x = $x + 1i; works';
+}
+
+{
+    my $x;
+    $x += 1i;
+    ok $x == 0 + 1i, 'my $x; $x += 1i; works';
+}
+
+{
+    my $x;
+    $x *= 1i;
+    ok $x == 1i, 'my $x; $x *= 1i works';
 }
 
 # L<S03/Assignment metaoperators/"If you apply an assignment operator to a
