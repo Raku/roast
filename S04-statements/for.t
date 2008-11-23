@@ -60,7 +60,7 @@ plan 43;
             $d = $d ~ self
         } 
     };
-    for 0 .. 5 { .some_sub_1 };
+    for 0 .. 5 { .some_meth_1 };
     is($d, '012345', 'for 0 .. 5 { .some_sub } works');
 }
 
