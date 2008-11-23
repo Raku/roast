@@ -54,13 +54,12 @@ plan 43;
 # ... with referential sub
 #?rakudo skip 'parse error'
 {
-    # XXX this test is wrong. Since some_sub_1 isn't a method in class
-    # Int, the method call will never work.
-    # There are other wrong occurences of this below
-    # what to do? Maybe something like this:
-    # class Int is also { method some_meth_1 { $d = $d ~ self } }
     my $d;
-    sub some_sub_1 ($arg) { $d = $d ~ $arg; };
+    class Int is also {
+        method some_meth_1 { 
+            $d = $d ~ self
+        } 
+    };
     for 0 .. 5 { .some_sub_1 };
     is($d, '012345', 'for 0 .. 5 { .some_sub } works');
 }
