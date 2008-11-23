@@ -26,6 +26,7 @@ sub non_twigil {
 
 non_twigil(5);
 
+#?rakudo skip 'Not yet implemented'
 eval_dies_ok( { $foo; $^foo; },
 'A non-twigil variable should not precede a correcponding twigil variable' );
 
