@@ -91,7 +91,6 @@ my $d = 1;
 $d;
 '), 1, '$d is available, and the outer value has not changed' );
 
-#?rakudo skip 'Closures, undef++'
 {
     # check closures with functions
     my $func;

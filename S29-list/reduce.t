@@ -43,7 +43,6 @@ plan 11;
   is ((42,).reduce: { $^a + $^b }), 42,      "method form of reduce should work on arrays";
 }
 
-#?rakudo 4 skip '{} hash composer not implemented'
 {
   my $hash = {a => {b => {c => 42}}};
   my @reftypes;

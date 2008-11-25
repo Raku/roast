@@ -97,7 +97,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     is foo_macro(3), 1003, "anonymous macro worked";
 }
 
-#?rakudo skip 'scoping/closures'
 {
     my $mkinc = sub { my $x = 0; return sub { $x++ }; };
 
