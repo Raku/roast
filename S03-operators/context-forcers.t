@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 87;
+plan 97;
 
 { # L<S03/"Changes to Perl 5 operators"/imposes boolean context/>
   is ?True,    True,  "? context forcer works (1)";
@@ -197,3 +197,26 @@ sub eval_elsewhere($code){ eval($code) }
     is (@total[8], 888, "total[1] is 100");
 }
 
+# the "upto" operator
+# L<S03/Symbolic unary precedence/"prefix:<^>">
+
+# ^$x is the range 0 .. ($x -1)
+{
+    ok   0 ~~ ^10, '0 is in ^10';
+    ok   9 ~~ ^10, '9 is in ^10';
+    ok 9.9 ~~ ^10, '9.99 is in ^10';
+    ok 10 !~~ ^10, '10 is not in ^10';
+    is (^10).elems, 10, '^10 has 10 elems';
+
+    # now the same for ^@array, in which case prefix:<^>
+    # imposes numeric context
+
+    my @a = <one two three four five six seven eight nine ten>;
+    #?rakudo 4 skip 'RT #60828'
+    ok   0 ~~ ^@a, '0 is in ^10';
+    ok   9 ~~ ^@a, '9 is in ^10';
+    ok 9.9 ~~ ^@a, '9.99 is in ^10';
+    ok  10 ~~ ^@a, '10 is not in ^10';
+    #?rakudo todo 'RT #60828'
+    is (^@a).elems, 10, '^10 has 10 elems';
+}
