@@ -74,7 +74,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # L<S02/Literals/That is () have no special significance>
 # non interpolating single quotes with nested parens
-#?rakudo skip 'quoting with double delimiters'
 {
     my @q = ();
     @q = (q (($foo $bar)));
@@ -117,7 +116,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], ' [$foo $bar]', 'and nests brackets appropriately');
 };
 
-#?rakudo skip 'nested bracket quotes'
 { # nested brackets
     my @q = ();
     @q = (q[[$foo $bar]]);
@@ -377,7 +375,6 @@ FOO
     is("\cZ", chr 26, 'Unicode "Z" is chr 26 (or \c26)');
 }
 
-#?rakudo skip 'nested quoting'
 { # simple test for nested-bracket quoting, per S02
     my $hi = q<<hi>>;
     is($hi, "hi", 'q<<hi>> is "hi"');
