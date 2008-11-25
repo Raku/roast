@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 99;
 
 { # L<S03/"Changes to Perl 5 operators"/imposes boolean context/>
   is ?True,    True,  "? context forcer works (1)";
@@ -207,6 +207,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
+    isa_ok ^10, 'Range';
 
     # now the same for ^@array, in which case prefix:<^>
     # imposes numeric context
@@ -217,6 +218,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok   9 ~~ ^@a, '9 is in ^10';
     ok 9.9 ~~ ^@a, '9.99 is in ^10';
     ok  10 ~~ ^@a, '10 is not in ^10';
-    #?rakudo todo 'RT #60828'
+    #?rakudo 2 todo 'RT #60828'
     is (^@a).elems, 10, '^10 has 10 elems';
+    isa_ok ^@a, 'Range';
 }
