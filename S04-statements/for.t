@@ -297,7 +297,7 @@ my @elems = <a b c d e>;
 
 {
     # this was a rakudo bug with mixed 'for' and recursion, which seems to 
-    # confuse some lexical pads or the like.
+    # confuse some lexical pads or the like, see RT #58392
     my $gather = '';
     sub f($l) {
         if $l <= 0 {
@@ -311,7 +311,6 @@ my @elems = <a b c d e>;
     }
     f(2);
 
-    #?rakudo todo 'bug in for/recursion interaction, RT #58392'
     is $gather, '21....1....1....', 'Can mix recursion and for';
 }
 
