@@ -63,7 +63,7 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
 #?DOES 7
 {
   my Int $multiple_of;
-  subset Num::Multiple of Num where { $^num % $multiple_of == 0 }
+  subset Num::Multiple of Int where { $^num % $multiple_of == 0 }
 
   $multiple_of = 5;
   ok $multiple_of ~~ Int, "basic sanity (1)";
@@ -76,6 +76,6 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
 
   
   $multiple_of = 6;
-  ok !try { my Num::Multiple $e = 10 }, "changed subtype definition worked";
+  dies_ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
 }
 
