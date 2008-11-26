@@ -21,7 +21,7 @@ plan 8;
 
 {
 	my $answer = 1;
-	my @x = 41, [eval (42 if $answer)], 43;
+	my @x = 41, [42 if $answer], 43;
 	my @y = 41, [($answer ?? 42 !! ())], 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
@@ -31,7 +31,7 @@ plan 8;
 #?rakudo todo '(N if $expr) is not equiv. to ($expr ?? N !! ()).'
 {
 	my $answer = 0;
-	my @x = 41, [eval (42 if $answer)], 43;
+	my @x = 41, [42 if $answer], 43;
 	my @y = 41, [($answer ?? 42 !! ())], 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
