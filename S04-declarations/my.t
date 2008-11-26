@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 32;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -22,7 +22,14 @@ plan 30;
 {
     my $ret = 42;
     lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
-    is $ret, "",                     'my() variable is visible (2)';
+    is $ret, "",                      'my() variable is visible (2)';
+}
+
+{
+    sub answer { 42 }
+    my &fortytwo = &answer;
+    is &fortytwo(), 42,               'my variable with & sigil works (1)';
+    is fortytwo(),  42,               'my variable with & sigil works (2)';
 }
 
 #?rakudo skip 'pointy subs'
