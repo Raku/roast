@@ -6,6 +6,10 @@ use Test;
 
 my @results = 1, 0, -2, 0, 1, 0, 1, -1, -10, -30;
 
+# if we want to *really* stress-test, we can use a few more tests:
+# my @results = 1, 0, -2, 0, 1, 0, 1, -1, -10, -30, -67, -138
+# -291, -642, -1446, -3250, -7244, -16065, -35601, -78985;
+
 plan +@results;
 
 sub A($k is copy, &x1, &x2, &x3, &x4, &x5) {
