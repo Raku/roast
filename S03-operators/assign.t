@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 306;
+plan 309;
 
 
 # tests various assignment styles
@@ -960,5 +960,18 @@ sub W () { substr(eval('want'), 0, 1) }
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
     is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)';
+}
 
+{
+    my $s = 'abc';
+    $s .= subst('b','d');
+    is $s, 'adc', '.= on scalars works';
+
+    my @a = 'abc';
+    @a[0] .= subst('b','d');
+    is @a[0], 'adc', '.= on array indexed values';
+
+    my %h = x => 'abc';
+    %h<x> .= subst('b','d');
+    is %h<x>, 'adc', '.= on hash keyed values';
 }
