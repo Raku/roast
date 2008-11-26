@@ -75,8 +75,6 @@ plan 19;
     ok $x == 1, 'my Int $x; $x **= 2 works'
 }
 
-# http://rt.perl.org/rt3/Ticket/Display.html?id=59982
-#?rakudo skip 'RT #59982 (scalar autoviv. with Complex numbers)'
 {
     my $x;
     $x = $x + 1i;
