@@ -150,7 +150,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 # L<S02/Literals/using the \qq>
 #?rakudo skip 'q[..] with variations'
 { # \qq[] constructs interpolate in q[]
-    my( @q1, @q2, @q3, @q4 ) = ();
+    my ( @q1, @q2, @q3, @q4 ) = ();
     @q1 = q[$foo \qq[$bar]];
     is(+@q1, 1, "q[...\\qq[...]...] is singular");
     is(@q1[0], '$foo BAR', "and interpolates correctly");
