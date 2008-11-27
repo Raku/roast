@@ -24,12 +24,11 @@ my $num = '4';
 is(foo(1.4), 'Num 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool 1', 'dispatched to the Bool sub');
 #?rakudo skip 'rx:P5'
-is(foo(rx:P5/a/),'Rule Rule','dispatched to the Rule sub', :todo<bug>);
+is(foo(rx:P5/a/),'Rule Rule','dispatched to the Rule sub');
 #?rakudo skip '"parameter type check failed"'
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');
-#?rakudo todo 'based dispatch on Array'
 is(foo(@array), 'Array foo, bar, baz', 'dispatched to the Array sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
