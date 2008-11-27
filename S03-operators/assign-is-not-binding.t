@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 #                      +---- UTF8 non-breaking space here!
 #                      |
@@ -34,4 +34,12 @@ plan 8;
     is $temp, 23, 'Could retrieve first element to a scalar';
     @array[0] = @array[1];
     is $temp, 23, "Assignment to scalar didn't create a binding"
+}
+
+{
+    my $a = 42;
+    my @list = ($a);
+    $a = 24;
+    #?rakudo todo 'List assignment'
+    is @list[0], 42, "Assignment to scalar didn't create a binding";
 }
