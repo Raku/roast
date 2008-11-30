@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 72;
+plan 76;
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
 
@@ -66,6 +66,16 @@ is [^-1],  [],         "unary ^-1 produces null range";
 is [^0.1], [0],        "unary ^0.1 produces the range 0..^x where 0 < x < 1";
 is [^'a'], [],         "unary ^'a' produces null range";
 
+# test that the zip operator works with ranges
+
+is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
+is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
+is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
+
+# two ranges
+is (1..6 Z 'a' .. 'c').join(''), '1a2b3c',   'Ranges and infix:<Z>';
+
+
 {
     # Test with floats
     # 2006-12-05:
@@ -103,7 +113,6 @@ is [^'a'], [],         "unary ^'a' produces null range";
 ##     remove these tests from the suite.
 #?rakudo skip 'MMD function __cmp not found for types (101, 95)'
 {
-    my @one   = (1,);
     my @three = (1, 1, 1);
 
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
