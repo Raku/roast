@@ -170,14 +170,14 @@ plan 45;
     }} 'cat', 'embedded comments with nested/unmatched bracket chars';
 }
 
-# L<S02/"Literals"/"# at beginning of line is illegal">
+# L<S02/"Literals"/"# at beginning of line is always a line-end comment">
+#?rakudo skip 'single and multi-line comments'
 {
-#?rakudo skip 'runtime eval error'
-    ok !eval(" #<this is invalid"),
-        'embedded comment not on the left margin';
+    is eval("#<this is comment\n'abc'"), 'abc',
+        '# at start of line always a line-end comment';
 
-#?rakudo skip 'runtime eval error'
-    ok !eval("2 * 3\n#<\n comment>"), "multiline comment starting on newline is invalid";
+    eval_dies_ok "2 * 3\n#<\n comment>", "# at",
+        '# at start of line always a line-end comment';
 }
 
 # L<S02/Whitespace and Comments/"comment may not contain an unspace">
