@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 21;
 
 =begin description
 
@@ -79,3 +79,15 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
   dies_ok { my Num::Multiple $e = 10 }, "changed subtype definition worked";
 }
 
+# Rakudo had a bug where 'where /regex/' failed
+# http://rt.perl.org/rt3/Ticket/Display.html?id=60976
+#?rakudo skip 'RT #60976'
+#?DOES 2
+{
+    subset HasA of Str where /a/;
+    lives_ok { my HasA $x = 'bla' },   'where /regex/ works (positive)';
+    eval_dies_ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
+}
+
+
+# vim: ft=perl6
