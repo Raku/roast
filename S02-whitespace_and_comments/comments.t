@@ -153,6 +153,7 @@ plan 45;
 
 # L<S02/Whitespace and Comments/"# may not be used as" 
 #   delimiter quoting>
+{
     my $a;
     ok eval '$a = q{ 32 }', 'sanity check';
     is $a, ' 32 ', 'sanity check';
