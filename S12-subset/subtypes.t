@@ -81,7 +81,6 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
 
 # Rakudo had a bug where 'where /regex/' failed
 # http://rt.perl.org/rt3/Ticket/Display.html?id=60976
-#?rakudo skip 'RT #60976'
 #?DOES 2
 {
     subset HasA of Str where /a/;
