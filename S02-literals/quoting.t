@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 135;
+plan 136;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -518,4 +518,5 @@ Hello, World
 # L<S02/Literals/All other quoting forms (including standard single quotes)>
 {
     is('test\\', "test\\", "backslashes at end of single quoted string");
+    is 'a\\b\''.chars, 4, 'backslash and single quote';
 }
