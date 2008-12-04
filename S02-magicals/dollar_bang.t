@@ -17,7 +17,6 @@ This test tests the C<$!> builtin.
 eval 'nonexisting_subroutine()'; 
 ok defined($!), 'nonexisting sub in eval makes $! defined';
 eval 'nonexisting_subroutine()'; 
-#?rakudo skip 'Test $! for truthness'
 ok $!, 'Calling a nonexisting subroutine sets $!';
 
 undefine $!;
@@ -26,7 +25,6 @@ undefine $!;
 try { nonexisting_subroutine; };
 ok $! !~~ undef, 'Calling a nonexisting subroutine defines $!';
 try { nonexisting_subroutine; };
-#?rakudo skip 'Test $! for truthness'
 ok $!, 'Calling a nonexisting subroutine sets $!';
 
 undefine $!;
