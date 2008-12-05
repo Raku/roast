@@ -10,13 +10,14 @@ is(+'0000',  0, "+'0000' is  0");
 is(+'000a',  0, "+'000a' is  0 (illegal number)");
 
 is(+'1.9e3', 1900, "+'1.9e3' is 1900");
-#?rakudo todo "Inf"
+#?rakudo skip "Inf"
 is(+'Inf', Inf, "+'Inf' is Inf");
 is(+'Info', 0, "+'Info' is 0");
+#?rakudo skip "Inf"
 is(+'-Inf', -Inf, "+'-Inf' is -Inf");
 #?rakudo todo "Inf"
 is(+'-Info', 0, "+'-Info' is 0");
-#?rakudo todo "NaN"
+#?rakudo skip "NaN"
 is(+'NaN', NaN, "+'NaN' is NaN");
 is(+'NaNa', 0, "+'NaNa' is 0");
 
@@ -47,7 +48,7 @@ is(+'aInfo', 0, "+'aInfo' is 0");
 is(+'aNaN',  0, "+'aNaN'  is 0");
 is(+'aNaNa', 0, "+'aNaNa' is 0");
 
-#?rakudo 3 todo 'Inf and NaN'
+#?rakudo 4 skip 'Inf and NaN'
 is( Inf,  'Inf', "'Inf' is Inf");
 is(-Inf, '-Inf', "'-Inf' is -Inf");
 
