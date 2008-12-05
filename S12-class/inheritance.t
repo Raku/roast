@@ -60,17 +60,17 @@ ok  Foo::Bar.does(Class),   "subclass.does(Class) is true";
 #?rakudo 2 skip 'no ::CLASS class'
 ok !Foo::Bar.does(::CLASS),   "subclass.does(CLASS) is false";
 ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
-ok !Foo::Bar.HOW.isa(Foo::BAR, Foo),      "subclass.HOW.isa(superclass) is false";
-ok !Foo::Bar.HOW.isa(Foo::BAR, Foo::Bar), "subclass.HOW.isa(same_subclass) is false";
+#?rakudo 3 todo 'oo'
+ok !Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is false";
+ok !Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is false";
 #?pugs todo "bug"
-#?rakudo todo 'oo'
-ok !Foo::Bar.HOW.isa(Foo::BAR, Class),    "subclass.HOW.isa(Class) is false";
+ok !Foo::Bar.HOW.isa(Foo::Bar, Class),    "subclass.HOW.isa(Class) is false";
 #?rakudo skip 'does'
-ok !Foo::Bar.HOW.does(Foo::BAR, Class),   "subclass.HOW.does(Class) is false";
+ok !Foo::Bar.HOW.does(Foo::Bar, Class),   "subclass.HOW.does(Class) is false";
 #?rakudo 2 skip 'no ::CLASS class'
-ok !Foo::Bar.HOW.isa(Foo::BAR, ::CLASS),  "subclass.HOW.isa(CLASS) is false";
+ok !Foo::Bar.HOW.isa(Foo::Bar, ::CLASS),  "subclass.HOW.isa(CLASS) is false";
 #?pugs todo "feature"
-ok  Foo::Bar.HOW.does(Foo::BAR, ::CLASS),  "subclass.HOW.does(CLASS) is true";
+ok  Foo::Bar.HOW.does(Foo::Bar, ::CLASS),  "subclass.HOW.does(CLASS) is true";
 
 {
     my $test = '$obj.$meth is canonical (audreyt says)';
