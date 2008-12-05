@@ -32,11 +32,9 @@ my $called;
 sub foo(Str $s) { return $called++ };
 my @a;
 try { foo(@a,@a) };
-#?rakudo skip 'Test $! for truthness'
 ok $!, 'Calling a subroutine with a nonmatching signature sets $!';
 ok !$called, 'The subroutine also was not called';
 
-#?rakudo skip 'unimpl $!'
 undefine $!;
 try { 1 / 0 };
 ok $!, 'Dividing one by zero sets $!';

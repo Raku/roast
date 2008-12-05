@@ -43,5 +43,4 @@ eval 'sub v { 456 }';
 ok(v() == 456, "eval can overwrite a subroutine");
 
 # L<S04/Exception handlers/Perl 6's eval function only evaluates strings, not blocks.>
-#?rakudo skip 'eval { block } is gone '
 dies_ok({eval {42}}, 'block eval is gone');
