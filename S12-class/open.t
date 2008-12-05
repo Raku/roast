@@ -43,7 +43,6 @@ is $x.in_Something, 'ab', 'basic OO sanity';
         }
     }
 
-    #?rakudo eval '"is also" on class Str'
     is 'aBc'.mydouble, 'ABCabc', 'can extend Str';
 }
 
