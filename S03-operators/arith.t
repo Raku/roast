@@ -318,21 +318,19 @@ is_approx 2.2**2.2, 5.66669577875008;
 is 1**0, 1;
 is 1**1, 1;
 
-# Inf
-is Inf, Inf;
-is -Inf, -Inf;
-isnt Inf, -Inf;
-#?rakudo todo 'undef.abs'
-is (-Inf).abs, Inf;
-#?rakudo 4 todo 'Inf'
-is Inf+100, Inf;
-is Inf-100, Inf;
-is Inf*100, Inf;
-is Inf/100, Inf;
-is Inf*-100, -Inf;
-is Inf/-100, -Inf;
 #?rakudo skip 'Inf, NaN'
 {
+# Inf
+    is Inf, Inf;
+    is -Inf, -Inf;
+    isnt Inf, -Inf;
+    is (-Inf).abs, Inf;
+    is Inf+100, Inf;
+    is Inf-100, Inf;
+    is Inf*100, Inf;
+    is Inf/100, Inf;
+    is Inf*-100, -Inf;
+    is Inf/-100, -Inf;
     is 100/Inf, 0;
     is Inf**100, Inf;
     is Inf*0, NaN;
@@ -352,8 +350,8 @@ is Inf/-100, -Inf;
 }
 # See L<"http://mathworld.wolfram.com/Indeterminate.html">
 # for why these three values are defined like they are.
+#?rakudo skip 'Inf, NaN'
 {
-    #?rakudo 2 todo 'Inf, NaN'
     is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
     is 1**Inf, 1;

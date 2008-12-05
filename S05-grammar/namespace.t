@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 5;
 
 # TODO: smart match against a grammar to get a Match object 
 # isn't specced and will likely change; see
@@ -36,9 +36,6 @@ is('12345' ~~ A, '12345', 'Match against grammar');
 is(B.WHAT, 'Regex', 'regex defined in separate namespace from grammar');
 
 is('1245' ~~ B, '1245', 'Match against regex');
-
-is(A::B.WHAT, 'Failure', 'regex defined in separate namespace from grammar');
-is(B::A.WHAT, 'Failure', 'regex defined in separate namespace from grammar');
 
 
 =begin description
