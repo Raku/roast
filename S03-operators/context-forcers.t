@@ -41,10 +41,9 @@ plan 99;
   is +"0",         0, "+ context forcer works (4)";
   is +"",          0, "+ context forcer works (5)";
   is +undef,       0, "+ context forcer works (6)";
-  #?rakudo todo '"Inf" in numeric context'
+  #?rakudo 3 skip 'Inf/NaN in numeric context'
   is +"Inf",     Inf, "+ context forcer works (7)";
   is +"-Inf",   -Inf, "+ context forcer works (8)";
-  #?rakudo todo '"NaN" in numeric context'
   is +"NaN",     NaN, "+ context forcer works (9)";
   is +"3e5",  300000, "+ context forcer works (10)";
   is +(?0),        0, "+ context forcer works (11)";
