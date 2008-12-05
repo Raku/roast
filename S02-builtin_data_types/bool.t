@@ -41,8 +41,8 @@ ok(!(~Bool::False), 'stringified False works');
 # and ~False into '' as pugs does now. Maybe we should (?!)
 
 # numification - interaction with +
-isa_ok(+Bool::True, Num);
-isa_ok(+Bool::False, Num);
+ok(+Bool::True ~~ Num);
+ok(+Bool::False ~~ Num);
 is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
 # stringification
