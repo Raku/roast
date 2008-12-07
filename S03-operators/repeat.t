@@ -51,7 +51,6 @@ my $twin = 'Lintilla';
 ok($twin x= 2, 'operator x= for string works');
 is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
-#?rakudo skip 'no infix:<xx=>'
 {
     my @array = (4, 2);
     ok(@array xx= 2, 'operator xx= for list works');

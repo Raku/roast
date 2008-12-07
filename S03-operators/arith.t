@@ -150,7 +150,6 @@ tryeq 0 - -2147483647, 2147483647;
 tryeq 2000000000 - 4000000000, -2000000000;
 
 # No warnings should appear;
-#?rakudo skip '+= MMD bug'
 {
     my $a;
     $a += 1;
@@ -172,7 +171,6 @@ tryeq 2000000000 - 4000000000, -2000000000;
     tryeq $a, -4294967297;
 }
 
-#?rakudo skip '-= MMD bug'
 {
     my $s;
     $s -= 1;

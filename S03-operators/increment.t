@@ -81,7 +81,6 @@ is($moo, 0, "var was not touched");
 }
 
 # this used to be a rakudo regression
-#?rakudo skip 'Num += Int'
 {
     my $x = 2.0;
     $x += 1;
