@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 30;
 
 # L<S05/Substitution/>
 
@@ -30,4 +30,45 @@ is 'a'.subst(/(.)/,"$1$0"), '',       '.. and it can not access captures from st
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure';
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures'; 
 
+{
+    is 'a b c d'.subst(/\w/, 'x', :g),      'x x x x', '.subst and :g';
+    is 'a b c d'.subst(/\w/, 'x', :x(0)),   'a b c d', '.subst and :x(0)';
+    is 'a b c d'.subst(/\w/, 'x', :x(1)),   'x b c d', '.subst and :x(1)';
+    is 'a b c d'.subst(/\w/, 'x', :x(2)),   'x x c d', '.subst and :x(2)';
+    is 'a b c d'.subst(/\w/, 'x', :x(3)),   'x x x d', '.subst and :x(3)';
+    is 'a b c d'.subst(/\w/, 'x', :x(4)),   'x x x x', '.subst and :x(4)';
+    #?rakudo skip ':x(*) in .subst'
+    is 'a b c d'.subst(/\w/, 'x', :x(*)),   'x x x x', '.subst and :x(*)';
+}
 
+{
+    is 'a b c d'.subst(/\w/, 'x', :nth(1)), 'x b c d', '.subst and :nth(1)';
+    is 'a b c d'.subst(/\w/, 'x', :nth(2)), 'a x c d', '.subst and :nth(2)';
+    is 'a b c d'.subst(/\w/, 'x', :nth(3)), 'a b x d', '.subst and :nth(3)';
+    is 'a b c d'.subst(/\w/, 'x', :nth(4)), 'a b c x', '.subst and :nth(4)';
+    is 'a b c d'.subst(/\w/, 'x', :nth(5)), 'a b c d', '.subst and :nth(5)';
+}
+
+{
+    # combining :g and :nth:
+    #?rakudo 2 todo 'RT #61130'
+    is 'a b c d'.subst(/\w/, 'x', :nth(1), :g), 'x x x x', '.subst and :g, :nth(1)';
+    is 'a b c d'.subst(/\w/, 'x', :nth(2), :g), 'a x c x', '.subst and :g, :nth(2)';
+    is 'a b c d'.subst(/\w/, 'x', :nth(3), :g), 'a b x d', '.subst and :g, :nth(3)';
+}
+
+#?rakudo todo 'RT #61130'
+{
+    # combining :nth with :x
+    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(1), :x(3)), 
+       'x x x d e f g h',
+       '.subst with :nth(1) and :x(3)';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2), :x(2)), 
+       'a x c x e f g h',
+       '.subst with :nth(2) and :x(2)';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2), :x(3)), 
+       'a x c x e x g h',
+       '.subst with :nth(2) and :x(2)';
+}
