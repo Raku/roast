@@ -12,7 +12,7 @@ L<S12/Methods/Indirect object notation now requires a colon after the invocant i
 
 =end description
 
-plan 7;
+plan 12;
 
 
 ##### Without arguments
@@ -52,3 +52,29 @@ class T2
     my $name = 'a';
     eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
 }
+
+
+# L<S12/Methods/"There are several forms of indirection for the method name">
+
+{
+    class A {
+        method abc { 'abc' };
+        method bcd { 'bcd' };
+    }
+    my $o = A.new();
+
+    is $o."abc",    'abc',   'calling method with $object."methodname"';
+    my $bc = 'bc';
+    is $o."a$bc",   'abc',  'calling method with $object."method$name"';
+    is $o."{$bc}d", 'bcd',  'calling method with $object."method$name"';
+
+
+    my $meth = method { self.abc ~ self.bcd };
+    is $o.$meth, 'abcbcd',   'calling method with $object.$methodref';
+
+    my $m2 = method { .abc };
+    #?rakudo skip 'RT #61106'
+    is $o.$m2,   'abc',      '$object.$methodref where the invocant is passed as $_';
+}
+
+# vim: ft=perl6
