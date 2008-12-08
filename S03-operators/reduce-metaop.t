@@ -1,7 +1,7 @@
 use v6;
 use Test;
 # XXX not sure if plan is right :(
-plan 50;
+plan 51;
 
 =begin pod
 
@@ -26,6 +26,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
   is(([**] 2,2,3),  (2**2**3), "[**] works");
+  is(([%]  13,7,4), (13%7%4),  "[%] works");
 
   #?rakudo 2 skip '[\...] meta ops'
   is((~ [\+] @array), "5 2 9 9 10 1", "[\\+] works");
