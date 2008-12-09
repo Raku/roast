@@ -3,16 +3,13 @@ use Test;
 
 plan 9;
 
-#?DOES 3
 sub test_lines(@lines) {
-    #?rakudo todo 'IO bugs'
     is @lines.elems, 3, 'Three lines read';
-    is @lines[0], 
-       'Please do not remove this file, used by S16-io/basic-open.t',
+    is chomp(@lines[0]),
+       "Please do not remove this file, used by S16-io/basic-open.t",
        'Retrieved first line';
-    #?rakudo todo 'IO bugs'
-    is @lines[2], 
-       'This is a test line.',
+    is chomp(@lines[2]), 
+       "This is a test line.",
        'Retrieved last line';
 }
 
