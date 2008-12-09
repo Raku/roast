@@ -50,10 +50,8 @@ my @array2 = ("test", 1, undef);
     my @array4 = @array2[2, 1, 0];
     isa_ok(@array4, Array);
 
-    #?rakudo todo 'list assignment'
     is(+@array4, 3, 'the array4 has 3 elements');
     ok(!defined(@array4[0]), 'got the right value at array4 index 0');
-    #?rakudo 2 todo 'list assignment'
     is(@array4[1], 1,      'got the right value at array4 index 1');
     is(@array4[2], 'test', 'got the right value at array4 index 2');
 }
@@ -63,10 +61,8 @@ my @array2 = ("test", 1, undef);
     my @array5 = ( @array2[2, 1, 0], @array1[2, 1, 0] );
     isa_ok(@array5, Array);
 
-    #?rakudo todo 'array slices and list assignment'
     is(+@array5, 6, 'the array5 has 6 elements');
     ok(!defined(@array5[0]),  'got the right value at array5 index 0');
-    #?rakudo 5 todo 'array slices and list assignment'
     is(@array5[1], 1,      'got the right value at array5 index 1');
     is(@array5[2], 'test', 'got the right value at array5 index 2');
     is(@array5[3], 'baz',  'got the right value at array5 index 3');
@@ -81,7 +77,6 @@ my @array2 = ("test", 1, undef);
     my @array6 = @array1[@slice];
     isa_ok(@array6, Array);
 
-    #?rakudo 4 todo 'array slices and list assignment'
     is(+@array6, 3, 'the array6 has 3 elements'); 
     is(@array6[0], 'baz', 'got the right value at array6 index 0'); 
     is(@array6[1], 'foo', 'got the right value at array6 index 1'); 
@@ -93,7 +88,6 @@ my @array2 = ("test", 1, undef);
     my @array7 = @array1[(2, 1, 0)];
     isa_ok(@array7, Array);
 
-    #?rakudo 4 todo 'array slices and list assignment'
     is(+@array7, 3, 'the array7 has 3 elements');
     is(@array7[0], 'baz', 'got the right value at array7 index 0');
     is(@array7[1], 'bar', 'got the right value at array7 index 1');

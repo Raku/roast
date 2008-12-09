@@ -14,7 +14,6 @@ plan 8;
   # @sliced *should* be <a b>, but it is <c>.
   # This is because return_012() is called in numeric context, and so return_012
   # returns the *number* of elems in @sub_array instead of the array @sub_array.
-  #?rakudo todo 'return_012 returns the number of elems instead of the array'
   is ~@sliced, "a b", "context inside of array subscripts for slices";
 }
 
