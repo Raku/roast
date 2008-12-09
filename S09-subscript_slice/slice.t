@@ -38,6 +38,7 @@ plan 24;
 }
 
 # Binding on array slices
+#?rakudo skip 'Error Msg: "rtype not set" when binding to an array slices'
 {   my @array = <a b c d>;
 
     try { @array[1, 2] := <B C> };
@@ -45,6 +46,7 @@ plan 24;
     is ~@array, "a B C d", "binding array slices works (1)";
 }
 
+#?rakudo skip 'Error Msg: "rtype not set" when binding to an array slices'
 {   my @array = <a b c d>;
 
     try { @array[1, 2] := <B> };
@@ -53,6 +55,8 @@ plan 24;
     ok !defined(@array[2]), "binding array slices works (2-2)";
 }
 
+
+#?rakudo skip 'Error Msg: "rtype not set" when binding to an array slices'
 {   my @array = <a b c d>;
     my $foo   = "B";
     my $bar   = "C";
@@ -86,6 +90,7 @@ plan 24;
     my %slice = (0=>3, 1=>7, 2=>9);
     is((3,7,9), [@array[%slice.keys].sort],    "values from hash keys, part 1");
     is((3,7,9), [@array[%slice.keys.sort]],    "values from hash keys, part 2");
+    #?rakudo skip 'Hyperoperators not supported in Rakudo'
     is((3,7,9), [@array[(0,1,1)>>+<<(0,0,1)]], "calculated slice: hyperop");
 }
 
