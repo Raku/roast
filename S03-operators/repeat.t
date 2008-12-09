@@ -64,13 +64,11 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     my @a = 'a' xx 3;
     is @a.join('|'), 'a|a|a', 'basic infix:<xx>';
     @a[0] = 'b';
-    #?rakudo todo 'RT #61026'
     is @a.join('|'), 'b|a|a', 'change to one item left the others unchanged';
 
     my @b = <x y> xx 3;
     is @b.join('|'), 'x|y|x|y|x|y', 'basic sanity with <x y> xx 3';
     @b[0] = 'z';
     @b[3] = 'a';
-    #?rakudo todo 'RT #61026'
     is @b.join('|'), 'z|y|x|a|x|y', 'change to one item left the others unchanged';
 }

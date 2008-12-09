@@ -40,6 +40,5 @@ plan 9;
     my $a = 42;
     my @list = ($a);
     $a = 24;
-    #?rakudo todo 'List assignment'
     is @list[0], 42, "Assignment to scalar didn't create a binding";
 }

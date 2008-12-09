@@ -35,7 +35,6 @@ plan 309;
     is($x, 0, 'assignment operator called as function');
 }
 
-#?rakudo todo "tests looping"
 {
     # swap two elements in the same array 
     # (moved this from array.t)
@@ -45,7 +44,6 @@ plan 309;
     is(@a[1], 1, "slice assignment swapping two element in the same array");
 }
 
-#?rakudo todo "tests looping"
 {
     # swap two elements as slice, dwim slice from @b subscript
     
@@ -256,7 +254,6 @@ my @p;
     is(@p[1],11, "&&= operator parses as item assignment 4");
 }
 
-#?rakudo skip "unknown reasons"
 {
     my $c; 
     (($c = 3) = 4); 

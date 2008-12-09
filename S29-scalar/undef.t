@@ -126,7 +126,6 @@ ok(!defined(undef), "undef is not defined");
 
 # Test LHS assignment to undef:
 
-#?rakudo skip 'list assignment'
 {
     my $interesting;
     (undef, undef, $interesting) = (1,2,3);
