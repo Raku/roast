@@ -31,7 +31,6 @@ class Foo1 { has $.bar; };
 
 # L<S12/Attributes/Pseudo-assignment to an attribute declaration specifies the default>
 
-#?rakudo skip 'initialization of attributes'
 {
     class Foo2 { has $.bar = "baz"; };
     my $foo = Foo2.new();
@@ -77,7 +76,6 @@ class Foo1 { has $.bar; };
 }
 
 
-#?rakudo skip 'initialization of attributes'
 {
     class Foo4a { has $!bar = "baz"; };
     my $foo = Foo4a.new();
@@ -192,11 +190,11 @@ class Foo1 { has $.bar; };
 }
 
 # L<A12/Default Values>
-#?rakudo 6 skip 'attribute initialization'
 ok eval('class Foo7 { has $.attr = 42 }; 1'), "class definition worked";
 is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 
 # L<A12/Default Values/is equivalent to this:>
+#?rakudo 4 skip 'attribute initialization'
 ok eval('class Foo8 { has $.attr is build(42) }; 1'),
   "class definition using 'is build' worked";
 is eval('Foo8.new.attr'), 42, "default attribute value (2)";
@@ -206,7 +204,7 @@ ok eval('class Foo9 { has $.attr will build(42) }; 1'),
   "class definition using 'will build' worked";
 is eval('Foo9.new.attr'), 42, "default attribute value (3)";
 
-#?rakudo skip 'attribute initialization'
+#?rakudo skip 'lexicals visible outside eval'
 {
     my $was_in_supplier = 0;
     sub forty_two_supplier() { $was_in_supplier++; 42 }
