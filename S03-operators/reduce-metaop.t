@@ -1,7 +1,7 @@
 use v6;
 use Test;
 # XXX not sure if plan is right :(
-plan 61;
+plan 67;
 
 =begin pod
 
@@ -49,6 +49,13 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [==] 4, 5, 4),    "[==] works (2)";
     ok (    [!=] 4, 5, 6),    "[!=] works (1)";
     ok (not [!=] 4, 4, 4),    "[!=] works (2)";
+
+    ok (! [eq] <a a b a>),    '[eq] basic sanity (positive)';
+    ok (  [eq] <a a a a>),    '[eq] basic sanity (negative)';
+    ok (  [ne] <a b c a>),    '[ne] basic sanity (positive)';
+    ok (! [ne] <a a b c>),    '[ne] basic sanity (negative)';
+    ok (  [lt] <a b c e>),    '[lt] basic sanity (positive)';
+    ok (! [lt] <a a c e>),    '[lt] basic sanity (negative)';
 
     my ($x, $y);
     ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
