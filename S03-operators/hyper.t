@@ -19,86 +19,57 @@ my @e;
         @r = (1, 2, 3) »+« (2, 4, 6);
         @e = (3, 6, 9);
         is(~@r, ~@e, "hyper-sum two arrays");
-}
-#?rakudo skip 'unicode hyper ops'
-{
+
         @r = (1, 2, 3) »-« (2, 4, 6);
         @e = (-1, -2, -3);
         is(~@r, ~@e, "hyper-subtract two arrays");
-}
 
-{
-        @r = (1, 2, 3) >>+<< (2, 4, 6);
-        @e = (3, 6, 9);
-        is(~@r, ~@e, "hyper-sum two arrays ASCII notation");
-}
-
-{
-        @r = (1, 2, 3) >>-<< (2, 4, 6);
-        @e = (-1, -2, -3);
-        is(~@r, ~@e, "hyper-subtract two arrays ASCII notation");
-}
-
-#?rakudo skip 'unicode hyper ops'
-{
         @r = (1, 2, 3) »*« (2, 4, 6);
         @e = (2, 8, 18);
         is(~@r, ~@e, "hyper-multiply two arrays");
-}
 
-{
-        @r = (1, 2, 3) >>*<< (2, 4, 6);
-        @e = (2, 8, 18);
-        is(~@r, ~@e, "hyper-multiply two arrays ASCII notation");
-}
-
-#?rakudo skip 'unicode hyper ops'
-{
         @r = (1, 2, 3) »x« (3, 2, 1);
         @e = ('111', '22', '3');
         is(~@r, ~@e, "hyper-x two arrays");
-}
 
-{
-        @r = (1, 2, 3) >>x<< (3, 2, 1);
-        @e = ('111', '22', '3');
-        is(~@r, ~@e, "hyper-x two arrays ASCII notation");
-}
-
-#?rakudo skip 'unicode hyper ops'
-{
         @r = (1, 2, 3) »xx« (3, 2, 1);
         @e = ((1,1,1), (2,2), (3));
         is(~@r, ~@e, "hyper-xx two arrays");
-}
 
-{
-        @r = (1, 2, 3) >>xx<< (3, 2, 1);
-        @e = ((1,1,1), (2,2), (3));
-        is(~@r, ~@e, "hyper-xx two arrays ASCII notation");
-}
-
-#?rakudo skip 'unicode hyper ops'
-{
         @r = (20, 40, 60) »/« (2, 5, 10);
         @e = (10, 8, 6);
         is(~@r, ~@e, "hyper-divide two arrays");
-}
 
-{
-        @r = (20, 40, 60) >>/<< (2, 5, 10);
-        @e = (10, 8, 6);
-        is(~@r, ~@e, "hyper-divide two arrays ASCII notation");
-}
-
-#?rakudo skip 'unicode hyper ops'
-{
         @r = (1, 2, 3) »+« (10, 20, 30) »*« (2, 3, 4);
         @e = (21, 62, 123);
         is(~@r, ~@e, "precedence - »+« vs »*«");
 }
 
 {
+        @r = (1, 2, 3) >>+<< (2, 4, 6);
+        @e = (3, 6, 9);
+        is(~@r, ~@e, "hyper-sum two arrays ASCII notation");
+
+        @r = (1, 2, 3) >>-<< (2, 4, 6);
+        @e = (-1, -2, -3);
+        is(~@r, ~@e, "hyper-subtract two arrays ASCII notation");
+
+        @r = (1, 2, 3) >>*<< (2, 4, 6);
+        @e = (2, 8, 18);
+        is(~@r, ~@e, "hyper-multiply two arrays ASCII notation");
+
+        @r = (1, 2, 3) >>x<< (3, 2, 1);
+        @e = ('111', '22', '3');
+        is(~@r, ~@e, "hyper-x two arrays ASCII notation");
+
+        @r = (1, 2, 3) >>xx<< (3, 2, 1);
+        @e = ((1,1,1), (2,2), (3));
+        is(~@r, ~@e, "hyper-xx two arrays ASCII notation");
+
+        @r = (20, 40, 60) >>/<< (2, 5, 10);
+        @e = (10, 8, 6);
+        is(~@r, ~@e, "hyper-divide two arrays ASCII notation");
+
         @r = (1, 2, 3) >>+<< (10, 20, 30) >>*<< (2, 3, 4);
         @e = (21, 62, 123);
         is(~@r, ~@e, "precedence - >>+<< vs >>*<< ASCII notation");
