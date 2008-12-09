@@ -214,7 +214,7 @@ my @array2 = ("test", 1, undef);
   dies_ok { @arr[-1] }, "readonly accessing [-1] of normal array is fatal";
   lives_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is ok";
-  #?rakudo 2 todo '@arr[-1] should fail'
+  #?rakudo 2 skip '@arr[-1] should fail'
   dies_ok { @arr[-1] = 42 }, "assigning to [-1] of a normal array is fatal";
   dies_ok { @arr[-1] := 42 }, "binding [-1] of a normal array is fatal";
 }
