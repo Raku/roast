@@ -35,7 +35,6 @@ ok(!$array_ref2[2].defined,'got the right value at array_ref2 index 2');
 my $array_ref4 = [ $array_ref2[2, 1, 0] ];
 isa_ok($array_ref4, Array);
 
-#?rakudo skip 'flatten and slices are not working'
 {
     is(+$array_ref4, 3, 'the array_ref4 has 3 elements');
     ok(!$array_ref4[0].defined, 'got the right value at array_ref4 index 0');
@@ -48,9 +47,9 @@ isa_ok($array_ref4, Array);
 my $array_ref5 = [ $array_ref2[2, 1, 0], $array_ref1[2, 1, 0] ];
 isa_ok($array_ref5, Array);
 
-#?rakudo todo 'flatten and slices are not working'
 {
     is(+$array_ref5, 6, 'the array_ref5 has 6 elements');
+    #?rakudo todo 'flatten and slices (still)'
     is(!$array_ref5[0].defined, 'got the right value at array_ref5 index 0');
     is($array_ref5[1], 1,      'got the right value at array_ref5 index 1');
     is($array_ref5[2], 'test', 'got the right value at array_ref5 index 2');
@@ -78,7 +77,6 @@ isa_ok($array_ref5, Array);
 my $array_ref7 = [ $array_ref1[(2, 1, 0)] ];
 isa_ok($array_ref7, Array);
 
-#?rakudo todo 'flatten and slices are not working'
 {
     is(+$array_ref7, 3, 'the array_ref7 has 3 elements');
     is($array_ref7[0], 'baz', 'got the right value at array_ref7 index 0');
@@ -121,13 +119,11 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
 #is $array11[1][1], "e", "AoA created using ';' contains correct elem", :todo;
 
 # [] creates new containers (() does not)
-#?rakudo todo 'infix:<=:=> unimplemented'
 {
   my $foo;
   ok !([$foo][0] =:= $foo), "creating arrays using [] creates new containers (1)";
 }
 
-#?rakudo todo 'infix:<=:=> unimplemented'
 {
   my $foo;
   my $arrayref = [$foo];
