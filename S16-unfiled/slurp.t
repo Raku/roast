@@ -28,7 +28,7 @@ my $self = 't/spec/S16-unfiled/slurp.t';
 
 # slurp in list context
 {
-  my @slurped_lines = slurp $self;
+  my @slurped_lines = lines($self);
   ok +@slurped_lines > 30, "more than 30 lines in this file ?";
 
   my $fh = open $self orelse die;
