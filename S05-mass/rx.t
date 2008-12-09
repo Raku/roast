@@ -422,7 +422,6 @@ ok ']' ~~ /<[\]]>/, 'escaped close bracket';
 ok eval(q{{ '\\]]' ~~ /<[\]>/ }}) ~~ Failure also /parse error/, 'unescaped backslash (or no closing brace)';
 
 #### ^\><[<]>		><		y	lt character class
-#?rakudo skip 'parse error'
 ok '><' ~~ /^\><[<]>/, 'lt character class';
 
 #### ^<[>]>\<		><		y	gt character class

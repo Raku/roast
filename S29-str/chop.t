@@ -28,7 +28,6 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 
 =end more-discussion-needed
 
-#?rakudo skip "list assignment unimplemented"
 { # chop several things
     my ($a, $b) = ("bar", "gorch");
 #?pugs 3 todo ''

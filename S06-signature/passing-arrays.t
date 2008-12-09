@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 7;
 
 {
     sub count(@a) {
@@ -23,3 +23,15 @@ plan 4;
     is count2((1,2,3)),           1, 'count2((1,2,3))';
 }
 
+{
+    sub pa(@a) { @a.WHAT; }
+    my @b = 2, 3;
+    is pa(@b), 'Array', 'basic array type sanity';
+    #?rakudo todo 'RT #61172'
+    dies_ok { pa(3) }, 'non-slurpy array does not take a single Int';
+
+    sub ph(%h) { 1 }
+    #?rakudo todo 'RT #61172'
+    dies_ok { ph(3) }, 'an Int is not a Hash';
+
+}
