@@ -100,56 +100,62 @@ my @e;
         is(~@r, ~@e, "hyper op on assignment/pipeline ASCII notation");
 };
 
-#?rakudo skip 'various'
-{ # dimension upgrade
+{ # dimension upgrade - ASCII
+        my @r;
+        @r = (1, 2, 3) >>+>> 1;
+        my @e = (2, 3, 4);
+        is(~@r, ~@e, "auto dimension upgrade on rhs ASCII notation");
+
+        @r = 2 <<*<< (10, 20, 30);
+        @e = (20, 40, 60);
+        is(~@r, ~@e, "auto dimension upgrade on lhs ASCII notation");
+}
+
+#?rakudo skip 'list level extension'
+{ # list level extension
+        @r = (1,2,3,4) >>+>> (1,2);
+        @e = (2,4,3,4);
+        is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
+        
+        @r = (1,2) <<+<< (1,2,3,4);
+        @e = (2,4,3,4);
+        is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
+         
+        @r = (1,2,3,4) >>+>> (1,);
+        @e = (2,2,3,4);
+        is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
+        
+        @r = (1,) <<+<< (1,2,3,4);
+        @e = (2,2,3,4);
+        is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
+};
+
+#?rakudo skip 'unicode hypers'
+{ # dimension upgrade - unicode
         my @r;
         @r = (1, 2, 3) »+« 1;
         my @e = (2, 3, 4);
         is(~@r, ~@e, "auto dimension upgrade on rhs");
 
-        @r = (1, 2, 3) >>+<< 1;
-        @e = (2, 3, 4);
-        is(~@r, ~@e, "auto dimension upgrade on rhs ASCII notation");
-
         @r = 2 »*« (10, 20, 30);
         @e = (20, 40, 60);
         is(~@r, ~@e, "auto dimension upgrade on lhs");
-
-        @r = 2 >>*<< (10, 20, 30);
-        @e = (20, 40, 60);
-        is(~@r, ~@e, "auto dimension upgrade on lhs ASCII notation");
 
         @r = (1,2,3,4) »+« (1,2);
         @e = (2,4,3,4);
         is(~@r, ~@e, "list-level element extension on rhs");
         
-        @r = (1,2,3,4) >>+<< (1,2);
-        @e = (2,4,3,4);
-        is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
-        
         @r = (1,2) »+« (1,2,3,4);
         @e = (2,4,3,4);
         is(~@r, ~@e, "list-level element extension on lhs");
-        
-        @r = (1,2) >>+<< (1,2,3,4);
-        @e = (2,4,3,4);
-        is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
   
         @r = (1,2,3,4) »+« (1,);
         @e = (2,2,3,4);
         is(~@r, ~@e, "list-level element extension on rhs");
         
-        @r = (1,2,3,4) >>+<< (1,);
-        @e = (2,2,3,4);
-        is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
-        
         @r = (1,) »+« (1,2,3,4);
         @e = (2,2,3,4);
         is(~@r, ~@e, "list-level element extension on lhs");
-        
-        @r = (1,) >>+<< (1,2,3,4);
-        @e = (2,2,3,4);
-        is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
 };
 
 #?rakudo skip '>>.'
@@ -215,33 +221,36 @@ my @e;
         is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII", :todo);
 };
 
-#?rakudo skip 'unicode'
-{ # distribution for binary infix
+{ # distribution for binary infix - ASCII
+        my @r;
+        @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
+        my @e = (5, 7, [9, 11]);
+        is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
+
+        @r = (1, 2, [3, 4]) >>+>> (5, 6, 7);
+        @e = (6, 8, [10, 11]);
+        is(~@r, ~@e, "distribution for binary infix, dimension upgrade, ASCII");
+
+        @r = ([1, 2], 3) <<+>> (4, [5, 6]);
+        @e = ([5, 6], [8, 9]);
+        is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade, ASCII");
+};
+
+#?DOES 3
+#?rakudo skip 'unicode hypers'
+{ # distribution for binary infix - unicode
         my @r;
         @r = (1, 2, [3, 4]) »+« (4, 5, [6, 7]);
         my @e = (5, 7, [9, 11]);
         is(~@r, ~@e, "distribution for binary infix, same shape");
 
-				
-        @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
-        @e = (5, 7, [9, 11]);
-        is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
-
         @r = (1, 2, [3, 4]) »+« (5, 6, 7);
         @e = (6, 8, [10, 11]);
         is(~@r, ~@e, "distribution for binary infix, dimension upgrade");
 
-        @r = (1, 2, [3, 4]) >>+<< (5, 6, 7);
-        @e = (6, 8, [10, 11]);
-        is(~@r, ~@e, "distribution for binary infix, dimension upgrade, ASCII");
-
         @r = ([1, 2], 3) »+« (4, [5, 6]);
         @e = ([5, 6], [8, 9]);
         is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade");
-
-        @r = ([1, 2], 3) >>+<< (4, [5, 6]);
-        @e = ([5, 6], [8, 9]);
-        is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade, ASCII");
 };
 
 { # regression test, ensure that hyper works on arrays
@@ -252,11 +261,10 @@ my @e;
         @r1 = @a >>+<< @a;
         is(~@r1, ~@e1, "hyper op works on variables, too.");
 }
-#?rakudo skip 'unspecced? auto-dimension upgrade'
 {
         my @a = (1, 2, 3);
         my @e2 = (2, 3, 4);
-        @r2 = @a >>+<< 1;
+        my @r2 = @a >>+>> 1;
         is(~@r2, ~@e2, "hyper op and correctly promotes scalars");
 };
 
