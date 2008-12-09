@@ -13,7 +13,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/This becomes a flat list in>
-#?rakudo skip 'parsefail: gather/take unimplemented'
+#?rakudo skip 'infix:<X> on ranges'
 {
     my @result = gather {
         for @(1..3 X 'a'..'b') -> $n, $a {
@@ -24,7 +24,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
-#?rakudo skip 'parsefail: gather/take unimplemented'
+#?rakudo skip 'parsefail: @@( ... )'
 {
     my @result = gather for @@(1..3 X 'A'..'B') -> $na {
         take $na.join(':');
