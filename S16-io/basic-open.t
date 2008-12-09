@@ -5,10 +5,10 @@ plan 9;
 
 sub test_lines(@lines) {
     is @lines.elems, 3, 'Three lines read';
-    is chomp(@lines[0]),
+    is @lines[0],
        "Please do not remove this file, used by S16-io/basic-open.t",
        'Retrieved first line';
-    is chomp(@lines[2]), 
+    is @lines[2],
        "This is a test line.",
        'Retrieved last line';
 }
