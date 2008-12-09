@@ -1,7 +1,7 @@
 use v6;
 use Test;
 # XXX not sure if plan is right :(
-plan 51;
+plan 61;
 
 =begin pod
 
@@ -49,6 +49,24 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [==] 4, 5, 4),    "[==] works (2)";
     ok (    [!=] 4, 5, 6),    "[!=] works (1)";
     ok (not [!=] 4, 4, 4),    "[!=] works (2)";
+
+    my ($x, $y);
+    ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
+    ok (not [=:=]  $x, $y, $x), '[=:=] basic sanity 2';
+    ok (    [!=:=] $x, $y, $x), '[!=:=] basic sanity (positive)';
+    ok (not [!=:=] $y, $y, $x), '[!=:=] basic sanity (negative)';
+    $y := $x;
+    ok (    [=:=]  $y, $x, $y), '[=:=] after binding';
+
+    my $a = [1, 2];
+    my $b = [1, 2];
+
+    ok (    [===] 1, 1, 1, 1),      '[===] with literals';
+    ok (    [===] $a, $a, $a),      '[===] with vars (positive)';
+    ok (not [===] $a, $a, [1, 2]),  '[===] with vars (negative)';
+    ok (    [!===] $a, $b, $a),     '[!===] basic sanity (positive)';
+    ok (not [!===] $a, $b, $b),     '[!===] basic sanity (negative)';
+
 }
 
 #?rakudo skip '[\...] meta ops'
@@ -131,7 +149,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 #?rakudo skip 'custom operators'
 {
     sub infix:<more_than_plus>(Int $a, Int $b) { $a + $b + 1 }
-    is( (try { [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops";
+    is (try { [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops";
 }
 
 # {
