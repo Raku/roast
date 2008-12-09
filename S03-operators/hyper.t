@@ -8,68 +8,103 @@ use Test;
 
 =end pod
 
-plan 56;
+plan 54;
 
 # L<S03/Hyper operators>
-{ # binary infix
-        my @r;
+ # binary infix
+my @r;
+my @e;
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (1, 2, 3) »+« (2, 4, 6);
-        my @e = (3, 6, 9);
+        @e = (3, 6, 9);
         is(~@r, ~@e, "hyper-sum two arrays");
-
+}
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (1, 2, 3) »-« (2, 4, 6);
         @e = (-1, -2, -3);
         is(~@r, ~@e, "hyper-subtract two arrays");
+}
 
+{
         @r = (1, 2, 3) >>+<< (2, 4, 6);
         @e = (3, 6, 9);
         is(~@r, ~@e, "hyper-sum two arrays ASCII notation");
+}
 
+{
         @r = (1, 2, 3) >>-<< (2, 4, 6);
         @e = (-1, -2, -3);
         is(~@r, ~@e, "hyper-subtract two arrays ASCII notation");
+}
 
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (1, 2, 3) »*« (2, 4, 6);
         @e = (2, 8, 18);
         is(~@r, ~@e, "hyper-multiply two arrays");
+}
 
+{
         @r = (1, 2, 3) >>*<< (2, 4, 6);
         @e = (2, 8, 18);
         is(~@r, ~@e, "hyper-multiply two arrays ASCII notation");
+}
 
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (1, 2, 3) »x« (3, 2, 1);
         @e = ('111', '22', '3');
         is(~@r, ~@e, "hyper-x two arrays");
+}
 
+{
         @r = (1, 2, 3) >>x<< (3, 2, 1);
         @e = ('111', '22', '3');
         is(~@r, ~@e, "hyper-x two arrays ASCII notation");
+}
 
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (1, 2, 3) »xx« (3, 2, 1);
         @e = ((1,1,1), (2,2), (3));
         is(~@r, ~@e, "hyper-xx two arrays");
+}
 
+{
         @r = (1, 2, 3) >>xx<< (3, 2, 1);
         @e = ((1,1,1), (2,2), (3));
         is(~@r, ~@e, "hyper-xx two arrays ASCII notation");
+}
 
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (20, 40, 60) »/« (2, 5, 10);
         @e = (10, 8, 6);
         is(~@r, ~@e, "hyper-divide two arrays");
+}
 
+{
         @r = (20, 40, 60) >>/<< (2, 5, 10);
         @e = (10, 8, 6);
         is(~@r, ~@e, "hyper-divide two arrays ASCII notation");
+}
 
+#?rakudo skip 'unicode hyper ops'
+{
         @r = (1, 2, 3) »+« (10, 20, 30) »*« (2, 3, 4);
         @e = (21, 62, 123);
         is(~@r, ~@e, "precedence - »+« vs »*«");
+}
 
+{
         @r = (1, 2, 3) >>+<< (10, 20, 30) >>*<< (2, 3, 4);
         @e = (21, 62, 123);
         is(~@r, ~@e, "precedence - >>+<< vs >>*<< ASCII notation");
 };
 
+#?rakudo skip 'unary hyperops'
 { # unary postfix
         my @r = (1, 2, 3);
         try { @r»++ };
@@ -82,6 +117,7 @@ plan 56;
         is(~@r, ~@e, "hyper auto increment an array ASCII notation", :todo);
 };
 
+#?rakudo skip 'unary hyperops'
 { # unary prefix
         my @r;
         @r = -« (3, 2, 1);
@@ -93,6 +129,7 @@ plan 56;
         is(~@r, ~@e, "hyper op on assignment/pipeline ASCII notation");
 };
 
+#?rakudo skip 'various'
 { # dimension upgrade
         my @r;
         @r = (1, 2, 3) »+« 1;
@@ -144,6 +181,7 @@ plan 56;
         is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
 };
 
+#?rakudo skip '>>.'
 { # unary postfix with integers
         my @r;
         eval '@r = (1, 4, 9)».sqrt';
@@ -151,11 +189,12 @@ plan 56;
         is(~@r, ~@e, "method call on integer list elements");
 
         my @r;
-	eval '@r = (1, 4, 9)>>.sqrt';
+        eval '@r = (1, 4, 9)>>.sqrt';
         my @e = (1, 2, 3);
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
 };
 
+#?rakudo skip '>>.'
 { # unary postfix again, but with a twist
         my @r;
         eval '@r = ("f", "oo", "bar")».chars';
@@ -167,17 +206,19 @@ plan 56;
         is(~@r, ~@e, "method call on list elements (ASCII)");
 };
 
+#?rakudo skip '>>.'
 { # unary postfix on a user-defined object
 	my $t;
-	eval 'class FooTest { method bar { 42 } }; $t = FooTest.new.bar';
+	class FooTest { method bar { 42 } }; $t = FooTest.new.bar;
 	is($t, 42, 'plain method call works OK');
 
         my @r;
-	eval 'class FooTest { method bar { 42 } }; @r = (FooTest.new)>>.bar';
+	class FooTest { method bar { 42 } }; @r = (FooTest.new)>>.bar;
 	my @e = (42);
 	is(~@r, ~@e, "hyper-method-call on list of user-defined objects" :todo);
 };
 
+#?rakudo skip 'unicode'
 { # distribution for unary prefix
         my @r;
         @r = -« ([1, 2], [3, [4, 5]]);
@@ -189,6 +230,7 @@ plan 56;
         is(~@r, ~@e, "distribution for unary prefix, ASCII");
 };
 
+#?rakudo skip 'unicode'
 { # distribution for unary postfix autoincrement
         my @r;
         @r = ([1, 2], [3, [4, 5]]);
@@ -202,6 +244,7 @@ plan 56;
         is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII", :todo);
 };
 
+#?rakudo skip 'unicode'
 { # distribution for binary infix
         my @r;
         @r = (1, 2, [3, 4]) »+« (4, 5, [6, 7]);
@@ -234,11 +277,15 @@ plan 56;
         my @r1;
         my @r2;
         my @e1 = (2, 4, 6);
-        my @e2 = (2, 3, 4);
         my @a = (1, 2, 3);
         @r1 = @a >>+<< @a;
-        @r2 = @a >>+<< 1;
         is(~@r1, ~@e1, "hyper op works on variables, too.");
+}
+#?rakudo skip 'unspecced? auto-dimension upgrade'
+{
+        my @a = (1, 2, 3);
+        my @e2 = (2, 3, 4);
+        @r2 = @a >>+<< 1;
         is(~@r2, ~@e2, "hyper op and correctly promotes scalars");
 };
 
@@ -259,6 +306,7 @@ plan 56;
 =end todo unspecced
 
 #?pugs todo 'hyper ops'
+#?rakudo skip 'unimplemented hypers'
 { # hyper dereferencing
     my @array = (
         { key => 'val' },
@@ -273,17 +321,13 @@ plan 56;
     is($part, 'valval', 'hyper-dereference an array slice');
 }
 
+#?pugs todo 'feature'
+#?rakudo skip 'hyper ops and junctions'
 { # junction hyper -- regression?
     my @a = 1..3;
     my @b = 4..6;
-    ok eval('@a »|« @b; 1'), '»|« hyperjunction evals', :todo<feature>;
-    ok eval('@a >>|<< @b; 1'), '>>|<< hyperjunction evals, ASCII',
-        :todo<feature>;
-    ok eval('@a »&« @b; 1'), '»&« hyperjunction evals', :todo<feature>;
-    ok eval('@a >>&<< @b; 1'), '»&« hyperjunction evals, ASCII',
-        :todo<feature>;
-    is eval('(@a »|« @b).perl'), (1|4,2|5,3|6).perl,
-        '»|« returns correct values', :todo<feature>;
-    is eval('(@a »&« @b).perl'), (1&4,2&5,3&6).perl,
-        '»&« returns correct values', :todo<feature>;
+    ok ?(@a »|« @b), '»|« hyperjunction evals';
+    ok ?(@a >>|<< @b), '>>|<< hyperjunction evals, ASCII';
+    ok ?(@a »&« @b), '»&« hyperjunction evals';
+    ok ?(@a >>&<< @b), '»&« hyperjunction evals, ASCII';
 }
