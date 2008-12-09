@@ -40,7 +40,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\~] <a b c d>), "a ab abc abcd", "[\\~] works";
 }
 
-#?rakudo skip '[<comparisonop>]'
 {
     ok (    [<]  1, 2, 3, 4), "[<] works (1)";
     ok (not [<]  1, 3, 2, 4), "[<] works (2)";
@@ -50,7 +49,10 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [==] 4, 5, 4),    "[==] works (2)";
     ok (    [!=] 4, 5, 6),    "[!=] works (1)";
     ok (not [!=] 4, 4, 4),    "[!=] works (2)";
+}
 
+#?rakudo skip '[\...] meta ops'
+{
     is ([~] [\<]  1, 2, 3, 4), "1 1 1 1", "[\\<] works (1)";
     is ([~] [\<]  1, 3, 2, 4), "1 1 0 0", "[\\<] works (2)";
     is ([~] [\>]  4, 3, 2, 1), "1 1 1 1", "[\\>] works (1)";
