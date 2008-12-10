@@ -13,7 +13,6 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/This becomes a flat list in>
-#?rakudo skip 'infix:<X> on ranges'
 {
     my @result = gather {
         for @(1..3 X 'a'..'b') -> $n, $a {

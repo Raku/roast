@@ -10,7 +10,6 @@ plan 309;
 
 
 # tests various assignment styles
-#?rakudo skip "List assignment"
 {
     my ($foo, $bar) = ("FOO", "BAR");
     is($foo, "FOO", "assigned correct value to first of two scalars");
@@ -55,7 +54,6 @@ plan 309;
     is(@a[2], 3, "slice assignment swapping with array dwim makes listop");
 }
 
-#?rakudo skip "list assignment"
 {
     # list assignments
 

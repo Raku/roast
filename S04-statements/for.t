@@ -268,7 +268,6 @@ my @elems = <a b c d e>;
 
 # rw scalars
 #L<S04/The C<for> statement/implicit parameter to block read/write "by default">
-#?rakudo skip 'list assignment'
 {
     my ($a, $b, $c) = 0..2;
     try { for ($a, $b, $c) { $_++ } };
