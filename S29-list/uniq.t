@@ -28,11 +28,11 @@ See the thread "[S29] uniq" on p6l, too.
 {
   my @array = <a b A c b d>;
   # Semantics w/o junctions
-  is ~@array.uniq: { lc $^a eq lc $^b },  "a b c d", "method form of uniq with own comparator works";
-  is ~uniq({ lc $^a eq lc $^b }, @array), "a b c d", "subroutine form of uniq with own comparator works";
+  is ~@array.uniq({ lc($^a) eq lc($^b) }),  "a b c d", "method form of uniq with own comparator works";
+  is ~uniq({ lc($^a) eq lc($^b) }, @array), "a b c d", "subroutine form of uniq with own comparator works";
 
   # Semantics w/ junctions
-  # is eval('~@array.uniq: { lc $^a eq lc $^b }.values.sort'), "A b c d a b c d";
+  # is eval('~@array.uniq({ lc $^a eq lc $^b }).values.sort'), "A b c d a b c d";
 }
 
 # Error cases
