@@ -23,8 +23,8 @@ ok(!defined(bar2()), '... bare return statement w/ parens returned undef');
 sub baz { return 10 if 1; }
 is(baz(), 10, '... return worked with a statement modifier');
 
-#?rakudo skip 'parsefail on "return if 1"'
 sub foobar { return if 1; };
+#?rakudo todo 'bare return is undef, RT #58770'
 ok(!defined(foobar()), '... bare return worked with a statement modifier');
 
 sub foobar2 { return() if 1; }
