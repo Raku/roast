@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 18;
 
 # multi sub with signature
 multi sub foo() { "empty" }
@@ -35,3 +35,23 @@ my $lived = 0;
 try { foo(1,1); $lived = 1 }
 is($lived, 0, "dispatch tied as expected");
 is(bar(1,1), 1, "not tied as only first type in the dispatch");
+
+# not allowed to declare anonymous routines with only, multi or proto.
+eval('only sub {}');
+ok $!, 'anonymous only sub is an error';
+eval('multi sub {}');
+ok $!, 'anonymous multi sub is an error';
+eval('proto sub {}');
+ok $!, 'anonymous proto sub is an error';
+eval('only {}');
+ok $!, 'anonymous only is an error';
+eval('multi {}');
+ok $!, 'anonymous multi is an error';
+eval('proto {}');
+ok $!, 'anonymous proto is an error';
+eval('class A { only method {} }');
+ok $!, 'anonymous only method is an error';
+eval('class B { multi method {} }');
+ok $!, 'anonymous multi method is an error';
+eval('class C { proto method {} }');
+ok $!, 'anonymous proto method is an error';
