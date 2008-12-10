@@ -53,11 +53,11 @@ plan 24;
 {
     # try with a catch
     my $caught;
-    eval 'try {
-        die "blah"
+    try {
+        die "blah";
 
         CATCH { $caught = 1 }
-    }';
+    };
 
     ok($caught, "exception caught");
 };
