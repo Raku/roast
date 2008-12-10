@@ -53,7 +53,7 @@ ok eval('<a b> X,X <c d>'), 'cross metaoperator parses';
 # L<S03/Cross operators/list concatenating form when used like this>
 {
     my @result = <a b> X,X 1,2 X,X <x y>;
-    is @result.elems, 8, 'chained cross-comma produces correct number of elements';
+    is @result.elems, 24, 'chained cross-comma produces correct number of elements';
 
     my @expected = (
         ['a', 1, 'x'],
