@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 11;
+plan 14;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -73,3 +73,12 @@ is (1,2 X*X 3,4), (3,4,6,8), 'cross-product works';
 # L<S03/Cross operators/underlying operator non-associating>
 dies_ok '@result XcmpX @expected XcmpX <1 2>',
     'non-associating ops cannot be cross-ops';
+
+# let's have some fun with X...X, comparison ops and junctions:
+
+{
+    ok ( ? all 1, 2 X<=X 2, 3, 4 ), 'all @list1 X<=X> @list2';
+    ok ( ? [|] 1, 2 X<=X 0, 3),     '[|] @l1 X<=X @l2';
+    ok ( ! all 1, 2 X<X  2, 3),     'all @l1 X<X  @l2';
+
+}
