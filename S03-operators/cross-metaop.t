@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 14;
+plan 21;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -10,6 +10,8 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
     my @result = <a b> X <1 2>;
     is @result, <a 1 a 2 b 1 b 2>,
     'non-meta cross produces expected result';
+
+    ok ([+] 1, 2, 3 X**X 2, 4) == (1+1 + 4+16 + 9+81), '[+] and X**X work';
 }
 
 # L<S03/List infix precedence/This becomes a flat list in>
@@ -35,10 +37,11 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 ok eval('<a b> X,X <c d>'), 'cross metaoperator parses';
 
 # L<S03/Cross operators/"string concatenating form is">
+#?pugs todo 'feature'
 {
     my @result = <a b> X~X <1 2>;
     is @result, <a1 a2 b1 b2>,
-        'cross-concat produces expected result', :todo<feature>;
+        'cross-concat produces expected result';
 }
 
 # L<S03/Cross operators/desugars to something like>
@@ -80,5 +83,17 @@ dies_ok '@result XcmpX @expected XcmpX <1 2>',
     ok ( ? all 1, 2 X<=X 2, 3, 4 ), 'all @list1 X<=X> @list2';
     ok ( ? [|] 1, 2 X<=X 0, 3),     '[|] @l1 X<=X @l2';
     ok ( ! all 1, 2 X<X  2, 3),     'all @l1 X<X  @l2';
+    ok ( ? one 1, 2 X==X 2, 3, 4),  'one @l1 X==X @l2';
+    ok ( ! one 1, 2 X==X 2, 1, 4),  'one @l1 X==X @l2';
+}
 
+{
+    my ($a, $b, $c, $d);
+    # test that the containers on the LHS are mutually exclusive from
+    # those on the RHS
+    ok ( ? all $a, $b X!=:=X $c, $d ), 'X!=:=X (1)';
+    ok ( ? all $a, $a X!=:=X $c, $d ), 'X!=:=X (2)';
+    ok ( ! all $a, $b X!=:=X $c, $b ), 'X!=:=X (3)';
+    $c := $b;
+    ok ( ? one $a, $b X=:=X  $c, $d ), 'one X=:=X';
 }
