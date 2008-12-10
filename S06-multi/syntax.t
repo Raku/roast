@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 17;
 
 # multi sub with signature
 multi sub foo() { "empty" }
@@ -37,21 +37,12 @@ is($lived, 0, "dispatch tied as expected");
 is(bar(1,1), 1, "not tied as only first type in the dispatch");
 
 # not allowed to declare anonymous routines with only, multi or proto.
-eval('only sub {}');
-ok $!, 'anonymous only sub is an error';
-eval('multi sub {}');
-ok $!, 'anonymous multi sub is an error';
-eval('proto sub {}');
-ok $!, 'anonymous proto sub is an error';
-eval('only {}');
-ok $!, 'anonymous only is an error';
-eval('multi {}');
-ok $!, 'anonymous multi is an error';
-eval('proto {}');
-ok $!, 'anonymous proto is an error';
-eval('class A { only method {} }');
-ok $!, 'anonymous only method is an error';
-eval('class B { multi method {} }');
-ok $!, 'anonymous multi method is an error';
-eval('class C { proto method {} }');
-ok $!, 'anonymous proto method is an error';
+eval_dies_ok 'only sub {}', 'anonymous only sub is an error';
+eval_dies_ok 'multi sub {}', 'anonymous multi sub is an error';
+eval_dies_ok 'proto sub {}', 'anonymous proto sub is an error';
+eval_dies_ok 'only {}', 'anonymous only is an error';
+eval_dies_ok 'multi {}', 'anonymous multi is an error';
+eval_dies_ok 'proto {}', 'anonymous proto is an error';
+eval_dies_ok 'class A { only method {} }', 'anonymous only method is an error';
+eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error';
+eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
