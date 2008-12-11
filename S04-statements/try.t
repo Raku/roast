@@ -49,7 +49,6 @@ plan 24;
 }
 
 #?pugs todo
-#?rakudo todo "CATCH blocks not implemented"
 {
     # try with a catch
     my $caught;
