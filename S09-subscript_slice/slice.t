@@ -90,7 +90,6 @@ plan 24;
     my %slice = (0=>3, 1=>7, 2=>9);
     is((3,7,9), [@array[%slice.keys].sort],    "values from hash keys, part 1");
     is((3,7,9), [@array[%slice.keys.sort]],    "values from hash keys, part 2");
-    #?rakudo skip 'Hyperoperators not supported in Rakudo'
     is((3,7,9), [@array[(0,1,1)>>+<<(0,0,1)]], "calculated slice: hyperop");
 }
 
