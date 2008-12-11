@@ -67,7 +67,7 @@ plan 309;
 
 
 #?pugs skip 'skipping assignment with skipped values via $'
-#?rakudo skip "list assignment"
+#?rakudo skip 'skip items in list assignment with bare $ '
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
@@ -84,7 +84,7 @@ plan 309;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in signature"
-#?rakudo skip "list assignment"
+#?rakudo skip 'skip items in list assignment with bare $ '
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
@@ -101,7 +101,7 @@ plan 309;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
-#?rakudo skip "list assignment"
+#?rakudo skip 'skip items in list assignment with bare $ '
 {
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
@@ -119,7 +119,6 @@ plan 309;
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
 
-#?rakudo skip "list assignment"
 {
    # testing list assignment syntax
 
@@ -133,6 +132,7 @@ plan 309;
     is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3"); 
     is(@a,'1 2 3',"'{\@a}' is '1 2 3'?:       \@a = 1 .. 3");
     is($s,'1',  "\$s is '1'?:       my (\$s,\@a) = 1 .. 3");
+    #?rakudo todo 'arrays on LHS of list assignment'
     is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
 }
 
