@@ -58,15 +58,15 @@ plan 16;
 }
 
 # List slices as lvalues
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 43;
 
   try { ($foo, 42, $bar, 19)[0, 2] = (23, 24) };
   ok $foo == 23 && $bar == 24,
-    "using list slices as lvalues works (1)", :todo<bug>;
+    "using list slices as lvalues works (1)";
 
+  #?rakudo todo 'ro-ness in slices'
   dies_ok { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     "using list slices as lvalues works (2)";
 }
@@ -92,7 +92,7 @@ plan 16;
 }
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
+#?rakudo skip 'list binding'
 {
   my $foo = 42;
   my $bar = 23;
@@ -106,7 +106,7 @@ plan 16;
     "the vars didn't lose the readwrite-ness";
 }
 
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
+#?rakudo skip 'list binding'
 {
   my $foo = 1;
   my $bar = 2;
