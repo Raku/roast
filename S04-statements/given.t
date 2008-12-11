@@ -96,7 +96,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$panic, 'never ever execute something after a default {}');
 };
 
-#?rakudo skip 'my($a, $b, $c) = (1, 2, 3) parsefail'
 {
     # topic not given by 'given' L<S04/"Switch statements" /including a for loop/>
     my ($b_one, $b_two, $b_three,$panic) = (0,0,0,0);
@@ -124,7 +123,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     is($foo, 2, 'Rebind $_ to new lexical');
 }
 
-#?rakudo skip 'my($a, $b, $c) = (1, 2, 3) parsefail'
+#?rakudo skip 'continue is NYI'
 {
     my ($foo, $bar) = (1, 0);
     given (1) {
@@ -137,7 +136,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok($bar, 'continue does not prevent default');
 }
 
-#?rakudo skip 'my($a, $b, $c) = (1, 2, 3) parsefail'
+#?rakudo skip 'break is NYI'
 {
     my ($foo, $bar) = (1, 0);
     given (1) {
@@ -150,7 +149,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$bar, 'break prevents default');
 }
 
-#?rakudo skip 'my($a, $b, $c) = (1, 2, 3) parsefail'
+#?rakudo skip 'continue and break are NYI'
 {
     my ($foo, $bar, $baz, $bad) = (0, 0, -1, 0);
     my $quux = 0;
