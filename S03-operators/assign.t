@@ -101,7 +101,6 @@ plan 309;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
-#?rakudo skip 'skip items in list assignment with bare $ '
 {
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
@@ -115,6 +114,7 @@ plan 309;
 
      my (@b, $c);
      (*, @b, $c) = 1..4;
+     #?rakudo 2 todo 'skip items in list assignment with bare $ '
      is(~@b, "2 3 4", 'list assignment (*, @) = @ works');
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
@@ -318,7 +318,6 @@ my @p;
     is(@p[1],4, "x= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @x = ( 'a', 'z' );
     @p = @x xx= 3, 4;
@@ -330,6 +329,7 @@ my @p;
     is(@x[4], 'a', 'xx= operator 4');
     is(@x[5], 'z', 'xx= operator 5');
     ok(!defined(@x[6]), 'xx= operator 6');
+    #?rakudo todo 'LHS of @p = @x xx= 3, 4'
     is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
@@ -503,7 +503,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats $(@a[0]) as scalar');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my $a;
     my @z = (($a) = W, W, W);
@@ -512,7 +512,7 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?pugs eval 'notimpl'
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my $a;
     my @z = (($a, *) = W, W, W);
@@ -536,7 +536,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z), 'lhs treats $a[] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my $a;
     my $b;
@@ -546,19 +546,19 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z, "L L", 'lhs treats ($a,$b) as list');
 }
 
-#?rakudo todo "unknown reasons"
 {
     my @a;
     my @z = (@a[0] = W, W);
+    #?rakudo 2 todo 'want function'
     is(@a, 'L',    'lhs treats @a[0] as list');
     is(@z[0], 'L', 'lhs treats @a[0] as list');
     ok(!defined(@z[1]), 'lhs treats @a[0] as list');
 }
 
-#?rakudo todo "unknown reasons"
 {
     my @a;
     my @z = (@a[0,] = W, W);
+    #?rakudo 2 todo 'want function'
     is(@a, 'L',      'lhs treats @a[0,] as list');
     is(@z[0], 'L',   'lhs treats @a[0,] as list');
     ok(!defined(@z[1]), 'lhs treats @a[0,] as list');
@@ -582,7 +582,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(%a<z>, 'L',    'lhs treats %a<x y z> as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a{'x'} = W, W);
@@ -591,7 +591,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a{'x','y','z'} = W, W, W);
@@ -603,7 +603,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x','y','z'} as list/);
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a{'x'..'z'} = W, W, W);
@@ -615,7 +615,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x'..'z'} as list/);
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a{'x' x 1} = W, W);
@@ -624,7 +624,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]),   q/lhs treats %a{'x' x 1} as list/);
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a{'x' xx 1} = W, W, W);
@@ -664,23 +664,24 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[2]), 'lhs treats @a[@b] as list');
 }
 
-#?rakudo todo "unknown reasons"
 {
     my @a;
     my @b = (0,0);
     my $c = 1;
     my @z = (@a[@b[$c]] = W, W);
+    #?rakudo 2 todo 'want function'
     is(@a, 'L',    'lhs treats @a[@b[$c]] as list');
     is(@z[0], 'L', 'lhs treats @a[@b[$c]] as list');
+    #?rakudo todo 'unknown'
     is(!defined(@z[1]), 'lhs treats @a[@b[$c]] as list');
 }
 
-#?rakudo todo "unknown reasons"
 {
     my @a;
     my @b = (0,0);
     my $c = 1;
     my @z = (@a[@b[$c,]] = W, W);
+    #?rakudo 2 todo 'want function'
     is(@a, 'L',      'lhs treats @a[@b[$c,]] as list');
     is(@z[0], 'L',   'lhs treats @a[@b[$c,]] as list');
     ok(!defined(@z[1]), 'lhs treats @a[@b[$c,]] as list');
@@ -847,7 +848,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(@z[1] ~~ undef, 'lhs treats %a{foo()} as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "my sub"
 {
     my %a;
     my $b = 0;
@@ -859,84 +860,84 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats %a{foo()} as run-time list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0+0] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[0+0] as list');
     is(@z[0], 'L', 'lhs treats @a[0+0] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[0+0] as list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0*0] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[0*0] as list');
     is(@z[0], 'L', 'lhs treats @a[0*0] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[0*0] as list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0/1] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[0/1] as list');
     is(@z[0], 'L', 'lhs treats @a[0/1] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[0/1] as list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0*1**1] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[0*1**1] as list');
     is(@z[0], 'L', 'lhs treats @a[0*1**1] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[0*1**1] as list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 0;
     my @z = (@a[$b++] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[$b++] as list');
     is(@z[0], 'L', 'lhs treats @a[$b++] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[$b++] as list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my $b = 1;
     my @z = (@a[--$b] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[--$b] as list');
     is(@z[0], 'L', 'lhs treats @a[--$b] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[--$b] as list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[0==1] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L L',    'lhs treats @a[0==1] as list (but coerce rhs list to one thing)');
     is(@z[0], 'L L', 'lhs treats @a[0==1] as list (but coerce rhs list to one thing)');
     ok(@z[1] ~~ undef, 'lhs treats @a[0==1] as list (but coerce rhs list to one thing)');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[rand] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L L',    'lhs treats @a[rand] as run-time list');
     is(@z[0], 'L L', 'lhs treats @a[rand] as run-time list');
     ok(@z[1] ~~ undef, 'lhs treats @a[rand] as run-time list');
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     my @z = (@a[rand,] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',      'lhs treats @a[rand,] as list');
     is(@z[0], 'L',   'lhs treats @a[rand,] as list');
     ok(@z[1] ~~ undef, 'lhs treats @a[rand,] as list');
