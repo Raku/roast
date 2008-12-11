@@ -20,7 +20,7 @@ eval_lives_ok 'state $x; state $x',
 }
 
 # this is not exactly S04 material
-#?rakudo 2 todo 'onlyness of non-multi subs'
+#?rakudo 3 todo 'onlyness of non-multi subs'
 eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
