@@ -136,21 +136,23 @@ plan 309;
     is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
 }
 
-#?rakudo skip "unknown reasons"
 {
     my @a;
     @a[1, 2, 3] = 100, 200, 300;
     is(@a[1], 100, "assigned correct value from list to sliced array");
     is(@a[2], 200, "... and second");
     is(@a[3], 300, "... and third");
-    is(!defined(@a[0]), "won't modify unassigned one");
+    ok(!defined(@a[0]), "won't modify unassigned one");
 
     my @b;
     (@b[2, 1, 0]) = 401, 201, 1;
     is(@b[0], 1, "assigned correct value from list to unsorted sliced array");
     is(@b[1], 201, "... and second");
     is(@b[2], 401, "... and third");
-    
+}
+
+#?rakudo skip "ResizablePMCArray: Can't shift from an empty array!"
+{ 
     my @c;
     my @d;
     (@c[1, 2], @c[3], @d) = 100, 200, 300, 400, 500;
@@ -160,7 +162,7 @@ plan 309;
     is(@c[3], 300, "... and third");
     is(@d[0], 400, "... and fourth");
     is(@d[1], 500, "... and fifth");
-    is(!defined(@c[0]), "won't modify unassigned one");
+    ok(!defined(@c[0]), "won't modify unassigned one");
 
 }
 
