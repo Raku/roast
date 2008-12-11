@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 6;
 
 # L<S04/The Relationship of Blocks and Declarations/"If you declare a lexical 
 #  twice in the same scope">
@@ -18,3 +18,14 @@ eval_lives_ok 'state $x; state $x',
     my $x = 3;
     is $y, 3, 'Two lexicals with the name in same scope are the same variable';
 }
+
+# this is not exactly S04 material
+#?rakudo 2 todo 'onlyness of non-multi subs'
+eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
+             'multiple declarations need multi or proto';
+
+eval_dies_ok 'only sub foo {1; }; sub foo($x) {1; };',
+             'multiple declarations need multi or proto';
+
+eval_lives_ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
+             'multiple declarations need multi or proto';
