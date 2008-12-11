@@ -9,7 +9,6 @@ use Test;
 plan 16;
 
 # Indexing lists
-#?rakudo skip "list assignment"
 {
   my $foo = 42;
 
@@ -33,7 +32,6 @@ plan 16;
     "list construction should not create new containers", :todo<unspecced>;
 }
 
-#?rakudo skip "get_pmc_keyed() not implemented in class 'Integer'"
 {
   my $foo = 42;
   ok ($foo, "does_not_matter", 17)[0,1][0] =:= $foo,
@@ -41,7 +39,6 @@ plan 16;
 }
 
 # Lists as lvalues
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 43;
@@ -51,7 +48,6 @@ plan 16;
     "using lists as lvalues works";
 }
 
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
 
@@ -76,7 +72,6 @@ plan 16;
 }
 
 # Lists as lvalues used to swap variables
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 42;
   my $bar = 23;
@@ -86,7 +81,6 @@ plan 16;
     "using lists as lvalues to swap two variables works";
 }
 
-#?rakudo skip "Method 'lvalue' not found for 'PAST::Stmts'"
 {
   my $foo = 1;
   my $bar = 2;
