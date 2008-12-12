@@ -108,6 +108,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
         ok($b_one, "first iteration");
         ok($b_two, "second iteration");
         ok($b_three, "third iteration");
+        #?rakudo todo 'when() should skip the default clause'
         ok(!$panic,"should not fall into default in this case");
 }
 
