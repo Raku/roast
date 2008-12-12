@@ -221,7 +221,7 @@ my @elems = <a b c d e>;
     my %hash_kv = ( a => 1, b => 2, c => 3 );
     my %kv = ( a => 2, b => 3, c => 4 );
     try { for %hash_kv.kv -> $key, $val is rw { $val++ }; };
-    is( %hash_kv.sort, %kv.sort, 'for %hash.kv -> $key, $val is rw { $val++ }');
+    is( %hash_kv, %kv, 'for %hash.kv -> $key, $val is rw { $val++ }');
 }
 
 # .key //= ++$i for @array1;
