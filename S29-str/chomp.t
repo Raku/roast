@@ -75,7 +75,6 @@ Basic tests for the chomp() builtin
     my @bar = chomp @foo;
     is_deeply(@bar, @foo, "chomp empty array");
 }
-#?rakudo skip 'is_deeply'
 {
     my @foo = ("abc\n");
     my @bar = chomp @foo;
