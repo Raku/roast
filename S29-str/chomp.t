@@ -62,14 +62,16 @@ Basic tests for the chomp() builtin
 }
 
 # chomp in list context
-#?rakudo skip 'is_deeply'
 {
+    #?rakudo todo 'chomp on lists'
     is_deeply(chomp(()), [], "chomp on empty list");
     is_deeply(chomp(("abc\n")), ("abc"), "one element list");
+    #?rakudo 2 todo 'chomp on lists'
     is_deeply(chomp(("abc\n", "bcd\n")), ("abc", "bcd"), "two element list");
     is_deeply(("abc\n", "bcd\n").chomp, ("abc", "bcd"), "two element list");
 }
-#?rakudo skip 'is_deeply'
+
+#?rakudo todo 'chomp on lists'
 {
     my @foo = ();
     my @bar = chomp @foo;
@@ -81,7 +83,7 @@ Basic tests for the chomp() builtin
     my @baz = ("abc");
     is_deeply(@bar, @baz, "chomp array with one element");
 }
-#?rakudo skip 'is_deeply'
+#?rakudo todo 'is_deeply'
 {
     my @foo = ("abc\n", "bcd\n");
     my @bar = chomp @foo;
