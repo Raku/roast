@@ -467,7 +467,7 @@ my @p;
 
 sub W () { substr(eval('want'), 0, 1) }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my $a;
     my @z = ($a = W, W);
@@ -476,7 +476,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats $a as scalar');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     package Foo;
     our $b;
@@ -486,7 +486,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', q/lhs treats $::('Foo::b') as scalar/);
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my @z = ($Foo::c = W, W);
     is($Foo::c, 'S',    'lhs treats $Foo::c as scalar');
@@ -494,7 +494,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats $Foo::c as scalar');
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my @a;
     my @z = ($(@a[0]) = W, W);
@@ -503,7 +503,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats $(@a[0]) as scalar');
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my $a;
     my @z = (($a) = W, W, W);
@@ -512,7 +512,7 @@ sub W () { substr(eval('want'), 0, 1) }
 }
 
 #?pugs eval 'notimpl'
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my $a;
     my @z = (($a, *) = W, W, W);
@@ -520,7 +520,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z, "L L L", 'lhs treats ($a, *) as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my $a;
     my @z = (@$a = W, W, W);
@@ -528,7 +528,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z), 'lhs treats @$a as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my $a;
     my @z = ($a[] = W, W, W);
@@ -536,7 +536,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z), 'lhs treats $a[] as list');
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my $a;
     my $b;
@@ -591,7 +591,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my %a;
     my @z = (%a{'x','y','z'} = W, W, W);
@@ -603,7 +603,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x','y','z'} as list/);
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my %a;
     my @z = (%a{'x'..'z'} = W, W, W);
@@ -615,7 +615,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x'..'z'} as list/);
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my %a;
     my @z = (%a{'x' x 1} = W, W);
@@ -624,7 +624,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]),   q/lhs treats %a{'x' x 1} as list/);
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my %a;
     my @z = (%a{'x' xx 1} = W, W, W);
@@ -633,7 +633,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]),  q/lhs treats %a{'x' xx 1} as list/);
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my @a;
     my $b = 0;
@@ -643,7 +643,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[$b] as list');
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my @a;
     my $b = 0;
@@ -653,7 +653,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[$b,] as list');
 }
 
-#?rakudo todo "unknown reasons"
+#?rakudo todo "want function"
 {
     my @a;
     my @b = (0,1);
@@ -698,7 +698,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats foo()[$b] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my $b = 0;
@@ -709,7 +709,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my $b = 0;
@@ -720,7 +720,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats @a[foo()[$b]] as item');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my $b = 0;
@@ -731,7 +731,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[foo()[$b,]] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my sub foo { 0 }
@@ -741,7 +741,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats @a[+foo()] as item');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my sub foo { '0' }
@@ -751,7 +751,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[~foo()] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my sub foo { 0 }
@@ -761,7 +761,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[?foo()] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my sub foo { 1 }
@@ -771,7 +771,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[!foo()] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my $b = 0;
@@ -782,7 +782,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[foo()] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my @a;
     my $b = 0;
@@ -793,7 +793,7 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[1], 'L', 'lhs treats @a[foo()] as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my %a;
     my sub foo { 0 }
@@ -804,7 +804,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats %a{+foo()} as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my %a;
     my sub foo { '0' }
@@ -815,7 +815,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats %a{~foo()} as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my %a;
     my sub foo { 0 }
@@ -826,7 +826,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats %a{?foo()} as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my %a;
     my sub foo { 1 }
@@ -837,7 +837,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(@z[1] ~~ undef, 'lhs treats %a{!foo()} as list');
 }
 
-#?rakudo skip "unknown reasons"
+#?rakudo skip "want function"
 {
     my %a;
     my $b = 0;
