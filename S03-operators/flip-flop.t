@@ -86,9 +86,9 @@ sub always_true  { 1 }
 
 # RHS not evaluated when in "false" state (perldoc perlop, /flip-flop)
 {
-    { my $bug; ok 0 ff {$bug=2};$bug ||=1; ok ($bug == 1), "RHS not evaluated in \"false\" state (ff)">; }
-    { my $bug; ok 0 ^ff {$bug=2};$bug ||=1; ok ($bug == 1), "RHS not evaluated in \"false\" state (^ff)">; }
-    { my $bug; ok 0 ff^ {$bug=2};$bug ||=1; ok ($bug == 1), "RHS not evaluated in \"false\" state (ff^)">; }
+    { my $bug; ok 0 ff {$bug=2};$bug ||=1; ok ($bug == 1), "RHS not evaluated in \"false\" state (ff)"; }
+    { my $bug; ok 0 ^ff {$bug=2};$bug ||=1; ok ($bug == 1), "RHS not evaluated in \"false\" state (^ff)"; }
+    { my $bug; ok 0 ff^ {$bug=2};$bug ||=1; ok ($bug == 1), "RHS not evaluated in \"false\" state (ff^)"; }
 }
 
 # LHS not evaluated when in "true" state (perldoc perlop, /flip-flop)
@@ -105,7 +105,7 @@ sub always_true  { 1 }
         "LHS not evaluated in \"true\" state (ff)";
     ok true_then_die() ^ff  always_false();true_then_die() ^ff always_false(),
         "LHS not evaluated in \"true\" state (^ff)";
-    ok true_then_die()  ff^ always_false();true_the_die() ff^ always_false(),
+    ok true_then_die()  ff^ always_false();true_then_die() ff^ always_false(),
         "LHS not evaluated in \"true\" state (ff^)";
 }
 
@@ -113,6 +113,6 @@ sub always_true  { 1 }
 # Blechschmidt, especially Larry's reply:
 # http://www.nntp.perl.org/group/perl.perl6.language/24098
 {
-    ok my sub foo ($x) { try { $x ff 0 } }; if foo(0) || !foo(1) || !foo(0) { die },
+    ok do { my sub foo ($x) { try { $x ff 0 } }; if foo(0) || !foo(1) || !foo(0) { die }},
     	"all sub invocations share the same ff-state";
 }

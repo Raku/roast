@@ -94,7 +94,7 @@ Basic submethod tests. See L<S12/"Submethods">
   is $was_in_b1_build, 0, "roles' BUILD submethods were not yet called (1)";
   is $was_in_b2_build, 0, "roles' BUILD submethods were not yet called (2)";
 
-  $B does RoleB1 does RoleB2;
+  $B does (RoleB1, RoleB2);
   is $was_in_b1_build, 1, "roles' BUILD submethods were called now (1)", :todo<feature>;
   is $was_in_b2_build, 1, "roles' BUILD submethods were called now (2)", :todo<feature>;
 };
