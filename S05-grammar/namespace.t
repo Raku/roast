@@ -33,9 +33,9 @@ is(A.WHAT, 'A', 'regex defined in separate namespace from grammar');
 is('12345' ~~ A, '12345', 'Match against grammar');
 
 #?rakudo todo 'Regex not implemented as separate class yet'
-is(B.WHAT, 'Regex', 'regex defined in separate namespace from grammar');
+is(&B.WHAT, 'Regex', 'regex defined in separate namespace from grammar');
 
-is('1245' ~~ B, '1245', 'Match against regex');
+is('1245' ~~ &B, '1245', 'Match against regex');
 
 
 =begin description
@@ -47,4 +47,4 @@ check that multi-jointed namespaces work with grammars
 grammar Foo::Bar {
     token foo { foo }
 }
-is("foo" ~~ Foo::Bar::foo, 'foo', 'regex in a namespace callable');
+is("foo" ~~ &Foo::Bar::foo, 'foo', 'regex in a namespace callable');
