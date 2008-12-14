@@ -160,3 +160,5 @@ plan 21;
     dies_ok { "str".sort :{ 0 } },"method form of sort should not work on strings";
     is ~(42,).sort: { 0 }, "42",  "method form of sort should work on arrays";
 }
+
+# vim: ft=perl6

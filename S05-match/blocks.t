@@ -68,5 +68,6 @@ ok !defined($/), '$/ still undef in the outer block';
 }
 
 # TODO: repeat ... until, gather/take, lambdas, if/unless statement modifiers
+# TODO: move to t/spec/integration/
 
 # vim: ft=perl6

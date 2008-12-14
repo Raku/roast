@@ -2,6 +2,8 @@ use v6;
 use Test;
 plan 8;
 
+# L<S12/Roles/"Roles may be composed into a class at compile time">
+
 role rA {
     method mA1 {
         'mA1';

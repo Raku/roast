@@ -10,6 +10,8 @@ Basic tests for trigonometric functions.
 
 =end description
 
+use Num :Trig;
+
 # See also: L<"http://theory.cs.iitm.ernet.in/~arvindn/pi/"> :)
 my $PI = 3.14159265358979323846264338327950288419716939937510;
 

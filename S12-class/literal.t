@@ -4,6 +4,9 @@ use Test;
 
 plan 2;
 
+# L<S12/Classes/"class or type variable using the :: type sigil">
+
+# TODO: move that to t/spec/ as well
 BEGIN { @*INC.unshift('t/oo/class/TestFiles'); }
 
 # Testing class literals

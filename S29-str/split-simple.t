@@ -1,6 +1,7 @@
 use v6;
 use Test;
 
+# L<S29/Str/"=item split">
 plan 32;
 
 =begin description

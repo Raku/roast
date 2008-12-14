@@ -3,6 +3,9 @@ use Test;
 
 plan 7;
 
+# TODO: move to S02?
+# L<S02/Generic types/>
+
 # Check it captures built-in types.
 sub basic_capture(::T $x) { ~T }
 is(basic_capture(42),  'Int', 'captured built-in type');

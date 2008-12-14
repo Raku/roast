@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+# L<S02/Literals/"There is now a generalized adverbial form of Pair">
+
 # See thread "Demagicalizing pair" on p6l started by Luke Palmer,
 # L<"http://article.gmane.org/gmane.comp.lang.perl.perl6.language/4778/"> and
 # L<"http://colabti.de/irclogger/irclogger_log/perl6?date=2005-10-09,Sun&sel=528#l830">.
@@ -16,7 +18,7 @@ use Test;
 #
 #   my $pair = (a => 42);
 #   foo($pair);      # pair passed positionally
-#   foo([,] $pair);     # named
+#   foo(|$pair);     # named
 #
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool

@@ -4,6 +4,7 @@ use Test;
 
 plan 2;
 
+# L<S12/Construction and Initialization>
 # Basic instantiation.
 class Foo1 { };
 my $foo1 = Foo1.new();

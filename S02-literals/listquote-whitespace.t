@@ -60,3 +60,5 @@ for @nonseparators -> $sep {
   #?rakudo emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
+
+# vim: ft=perl6

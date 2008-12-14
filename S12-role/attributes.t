@@ -2,6 +2,8 @@ use v6;
 use Test;
 plan 4;
 
+# L<S12/Roles/"Roles may have attributes">
+
 role R1 {
     has $!a1;
     has $.a2 is rw;

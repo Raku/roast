@@ -4,6 +4,8 @@ use Test;
 
 plan 35;
 
+# L<S12/Classes/An "isa" is just a trait that happens to be another class>
+
 class Foo {
     has $.bar is rw;
     has $.value is rw;

@@ -4,6 +4,9 @@ use Test;
 
 plan 17;
 
+# L<S06/Routine modifiers/>
+# L<S06/Parameters and arguments/>
+
 # multi sub with signature
 multi sub foo() { "empty" }
 multi sub foo($a) { "one" }

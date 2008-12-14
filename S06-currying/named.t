@@ -1,6 +1,7 @@
 use v6;
 use Test;
 
+# L<S06/Currying/>
 plan 3;
 
 sub tester(:$a, :$b, :$c) {

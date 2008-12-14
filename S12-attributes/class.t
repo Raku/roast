@@ -2,6 +2,7 @@ use v6;
 
 use Test;
 
+#L<S12/Attributes/"Class attributes are declared">
 plan 2;
 
 class Foo {

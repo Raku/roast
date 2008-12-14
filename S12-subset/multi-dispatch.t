@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+# L<S12/Types and Subtypes/>
+
 plan 4;
 
 subset Even of Int where { $_ % 2 == 0 };
