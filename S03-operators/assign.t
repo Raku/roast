@@ -564,10 +564,10 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(!defined(@z[1]), 'lhs treats @a[0,] as list');
 }
 
-#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a<x> = W, W);
+    #?rakudo 2 todo 'want function'
     is(%a{"x"}, 'L', 'lhs treats %a<x> as list');
     is(@z[0], 'L',   'lhs treats %a<x> as list');
     ok(!defined(@z[1]),   'lhs treats %a<x> as list');
@@ -582,10 +582,10 @@ sub W () { substr(eval('want'), 0, 1) }
     is(%a<z>, 'L',    'lhs treats %a<x y z> as list');
 }
 
-#?rakudo todo "unknown reasons"
 {
     my %a;
     my @z = (%a{'x'} = W, W);
+    #?rakudo 2 todo "want function"
     is(%a{"x"}, 'L', q/lhs treats %a{'x'} as list/);
     is(@z[0], 'L',   q/lhs treats %a{'x'} as list/);
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
@@ -615,49 +615,49 @@ sub W () { substr(eval('want'), 0, 1) }
     is(@z[2], 'L',    q/lhs treats %a{'x'..'z'} as list/);
 }
 
-#?rakudo todo "want function"
 {
     my %a;
     my @z = (%a{'x' x 1} = W, W);
+    #?rakudo 2 todo "want function"
     is(%a{"x"}, 'L', q/lhs treats %a{'x' x 1} as list/);
     is(@z[0], 'L',   q/lhs treats %a{'x' x 1} as list/);
     ok(!defined(@z[1]),   q/lhs treats %a{'x' x 1} as list/);
 }
 
-#?rakudo todo "want function"
 {
     my %a;
     my @z = (%a{'x' xx 1} = W, W, W);
+    #?rakudo 2 todo "want function"
     is(%a<x>, 'L',    q/lhs treats %a{'x' xx 1} as list/);
     is(@z[0], 'L',    q/lhs treats %a{'x' xx 1} as list/);
     ok(!defined(@z[1]),  q/lhs treats %a{'x' xx 1} as list/);
 }
 
-#?rakudo todo "want function"
 {
     my @a;
     my $b = 0;
     my @z = (@a[$b] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',    'lhs treats @a[$b] as list');
     is(@z[0], 'L', 'lhs treats @a[$b] as list');
     ok(!defined(@z[1]), 'lhs treats @a[$b] as list');
 }
 
-#?rakudo todo "want function"
 {
     my @a;
     my $b = 0;
     my @z = (@a[$b,] = W, W);
+    #?rakudo 2 todo "want function"
     is(@a, 'L',      'lhs treats @a[$b,] as list');
     is(@z[0], 'L',   'lhs treats @a[$b,] as list');
     ok(!defined(@z[1]), 'lhs treats @a[$b,] as list');
 }
 
-#?rakudo todo "want function"
 {
     my @a;
     my @b = (0,1);
     my @z = (@a[@b] = W, W, W);
+    #?rakudo 3 todo "want function"
     is(@a, 'L L',  'lhs treats @a[@b] as list');
     is(@z[0], 'L', 'lhs treats @a[@b] as list');
     is(@z[1], 'L', 'lhs treats @a[@b] as list');
