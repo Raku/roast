@@ -53,6 +53,7 @@ plan 14;
 }
 
 # test some errors
+#?rakudo skip 'maybe out-of-date'
 {
     dies_ok { end() }, '... end() dies without an argument';
     dies_ok { 3.end }, '... .end does not work on scalars';
