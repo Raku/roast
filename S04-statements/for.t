@@ -349,3 +349,4 @@ my @elems = <a b c d e>;
   is $output, "1,2,3,4,", "grep and sort work in for";
 }
 
+# vim: ft=perl6

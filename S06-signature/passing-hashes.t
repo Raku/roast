@@ -19,6 +19,6 @@ is(%h.WHAT,'Hash','%h is a Hash');
 #sanity 1;
 sanity;
 
-#XXX Hash passed to a sub used to become a List in pugs
+# Hash passed to a sub used to become a List in pugs
 insanity %h;
 

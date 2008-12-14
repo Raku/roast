@@ -11,7 +11,6 @@ plan 9;
 # in the file
 my $self = 't/spec/S16-unfiled/slurp.t';
 
-#?rakudo 1 skip "no index() function"
 {
   my $contents = slurp $self;
  #ok index($contents, "StringThatsNowhereElse") != -1, "slurp() worked";
@@ -28,9 +27,12 @@ my $self = 't/spec/S16-unfiled/slurp.t';
 
 # slurp in list context
 {
-  my @slurped_lines = lines($self);
+  my @slurped_lines = lines(open($self));
   ok +@slurped_lines > 30, "more than 30 lines in this file ?";
+}
 
+#?rakudo skip 'infix:<orelse>'
+{
   my $fh = open $self orelse die;
   my @expected_lines = =$fh;
   $fh.close;
@@ -57,3 +59,5 @@ my $self = 't/spec/S16-unfiled/slurp.t';
   my @var_dot_lines = $filename.slurp;
   is +@var_dot_lines, +@expected_lines, "same number of lines read";
 }
+
+# vim: ft=perl6

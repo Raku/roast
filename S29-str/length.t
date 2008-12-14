@@ -27,7 +27,7 @@ eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 is("".bytes,         0, "empty string");
 is("moose".bytes,    5, "moose");
 my $x = undef;
-ok(!(try { $x.bytes }), "undef.bytes fail()s");
+dies_ok { $x.bytes }, "undef.bytes fail()s";
 # See thread "undef.chars" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22595">
 

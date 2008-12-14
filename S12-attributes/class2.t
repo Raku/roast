@@ -19,7 +19,7 @@ class Foo {
 } 
 
 my $test = 0;
-ok $test = Foo.bar, 'accessors for class attributes work';
+ok ($test = Foo.bar), 'accessors for class attributes work';
 is $test, 23, 'class attributes really work';
 
 class Baz is Foo {};
@@ -41,6 +41,7 @@ lives_ok { $test4 = Quux.new() },
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';
 my $test5 = 0;
 lives_ok {$test5 = Quux.bar}, 'class attribute still accessible via class name';
+#?rakudo 5 todo 'class attributes'
 is $test5, 23, 'class attribute really works, even when overridden';
 my $test6 = 0;
 lives_ok { $test6 = Quux.^bar}, 'class attribute accessible via ^name';
