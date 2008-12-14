@@ -54,7 +54,7 @@ is( @l, [], "A bare return is an empty list in array/list context");
 
 my $s = "hello";
 $s = bare_return();
-#?rakudo todo 'bare return is undef, RT #58770'
+
 ok($s ~~ undef, "A bare return is undef in scalar context");
 
 ## scalars
