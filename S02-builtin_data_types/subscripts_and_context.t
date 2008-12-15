@@ -25,7 +25,6 @@ plan 8;
   my @sliced = %hash{return_ab()};
   # @sliced *should* be ("1, "2").
   # The above for bug explanation.
-  #?rakudo todo 'return_012 returns the number of elems instead of the array'
   is ~@sliced, "1 2", "context inside of hash subscripts for slices";
 }
 
