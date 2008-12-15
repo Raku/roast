@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 64;
+plan 68;
 
 # L<S29/"The :Trig tag">
 
@@ -89,6 +89,11 @@ is_approx(tan(5/4*$PI),  1);
 is_approx(tan(7/4*$PI), -1);
 is_approx(tan(8/4*$PI),  0);
 
+# sec
+is_approx(sec(0),    1);
+is_approx(sec($PI), -1);
+
+
 # asin
 is_approx(asin(0),            0);
 #?pugs 2 todo 'feature'
@@ -125,6 +130,12 @@ is_approx( atanh(0), 0 );
 
 # sech
 is_approx( sech(0), 1 );
+
+# cosech
+is_approx( cosech(2), 1/sinh(2) );
+
+# cotanh
+is_approx( cotanh(1), 1/tanh(1) );
 
 # asech
 is_approx( asech(1), 0 );
