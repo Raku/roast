@@ -42,7 +42,6 @@ is(%hash4{"key"}, 'value', '(key => value) seperated key/value has creation work
 my %hash5 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash5, 'Hash');
 
-#?rakudo 10 todo "slicing not yet implemented"
 my @slice1 = %hash5{"one", "three"};
 is(+@slice1, 2, 'got the right amount of values from the %hash{} slice');
 is(@slice1[0], 1, '%hash{} slice successfull');
