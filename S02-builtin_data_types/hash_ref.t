@@ -45,7 +45,6 @@ plan 32;
     isa_ok $hash, Hash;
 
     my @slice1 = $hash{"1st", "3rd"};
-    #?rakudo 10 todo 'hash slicing unimplemented/nonfunctional'
     is +@slice1,   2, 'got the right amount of values from the %hash{} slice';
     is @slice1[0], 1, '%hash{} slice successfull (1)';
     is @slice1[1], 3, '%hash{} slice successfull (2)';
@@ -55,7 +54,7 @@ plan 32;
     is +@slice2,   2, 'got the right amount of values from the %hash<> slice';
     is @slice2[0], 3, '%hash<> slice was successful (1)';
     is @slice2[1], 1, '%hash<> slice was successful (2)';
-  
+
     # slice assignment
     $hash{"1st", "3rd"} = (5, 10);
     is $hash<1st>,  5, 'value was changed successfully with slice assignment';
