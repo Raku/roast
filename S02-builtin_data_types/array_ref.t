@@ -49,8 +49,7 @@ isa_ok($array_ref5, Array);
 
 {
     is(+$array_ref5, 6, 'the array_ref5 has 6 elements');
-    #?rakudo todo 'flatten and slices (still)'
-    is(!$array_ref5[0].defined, 'got the right value at array_ref5 index 0');
+    ok(!$array_ref5[0].defined, 'got the right value at array_ref5 index 0');
     is($array_ref5[1], 1,      'got the right value at array_ref5 index 1');
     is($array_ref5[2], 'test', 'got the right value at array_ref5 index 2');
     is($array_ref5[3], 'baz',  'got the right value at array_ref5 index 3');
