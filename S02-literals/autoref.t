@@ -33,7 +33,6 @@ plan 57;
 
     is ~$ref, "a b c", '$arrayref = \@array works (1)';
     # Explicit referentiation of arrays in assignment
-    #?rakudo todo "prefix:<\\> semantics"
     is +$ref,       3, '$arrayref = \@array works (2)';
 }
 
@@ -47,7 +46,6 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in assignment
-#?rakudo todo "prefix:<\\> semantics"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = \%hash;
@@ -75,7 +73,6 @@ plan 57;
 
     is ~@other, " a b c", '@other[$idx] = \@array works (1)';
     is +@other,        2, '@other[$idx] = \@array works (2)';
-    #?rakudo todo "prefix:<\\> semantics"
     is +@other[1],     3, '@other[$idx] = \@array works (3)';
 }
 
@@ -96,7 +93,6 @@ plan 57;
     @other[1] = \%hash;
 
     is +@other,    2, '@other[$idx] = \%hash works (1)';
-    #?rakudo todo "prefix:<\\> semantics"
     is +@other[1], 3, '@other[$idx] = \%hash works (2)';
 }
 
@@ -117,7 +113,6 @@ plan 57;
     %other<a> = \@array;
 
     is +%other,    1, '%other[$key] = \@array works (1)';
-    #?rakudo todo "prefix:<\\> semantics"
     is +%other<a>, 3, '%other[$key] = \@array works (2)';
 }
 
@@ -138,7 +133,6 @@ plan 57;
     %other<a> = \%hash;
 
     is +%other,    1, '%other[$key] = \%hash works (1)';
-    #?rakudo todo "prefix:<\\> semantics"
     is +%other<a>, 3, '%other[$key] = \%hash works (2)';
 }
 
@@ -157,7 +151,6 @@ plan 57;
     my $pair  = (key => \@array);
 
     is ~$pair.value, "a b c", '(key => \@array) works (1)';
-    #?rakudo todo "prefix:<\\> semantics"
     is +$pair.value,       3, '(key => \@array) works (2)';
 }
 
@@ -171,7 +164,6 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in pair creation with key => ...
-#?rakudo todo "prefix:<\\> semantics"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => \%hash);
@@ -195,7 +187,6 @@ plan 57;
     my $pair  = (:key(\@array));
 
     is ~$pair.value, "a b c", '(:key(\@array)) works (1)';
-    #?rakudo todo "prefix:<\\> semantics"
     is +$pair.value,       3, '(:key(\@array)) works (2)';
 }
 
@@ -209,7 +200,6 @@ plan 57;
 }
 
 # Explicit referentiation of hashes in pair creation with :key(...)
-#?rakudo todo "prefix:<\\> semantics"
 {
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(\%hash));
