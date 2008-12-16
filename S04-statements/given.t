@@ -21,7 +21,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$f, "given when false");
 };
 
-#?rakudo skip 'continue not implemented'
 {
     # simple case, with fall through
     # L<S04/Switch statements/If the smart match fails, control passes to the next statement>
@@ -91,7 +90,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
     ok($b_one, "interleaved 1");
     ok($b_two, "interleaved 2 is the last one");
-    #?rakudo 2 todo 'exiting given block happens at the wrong time'
     ok(!$b_three, "inteleraved 3 not executed");
     ok(!$panic, 'never ever execute something after a default {}');
 };
@@ -108,7 +106,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
         ok($b_one, "first iteration");
         ok($b_two, "second iteration");
         ok($b_three, "third iteration");
-        #?rakudo todo 'when() should skip the default clause'
         ok(!$panic,"should not fall into default in this case");
 }
 
@@ -120,11 +117,9 @@ Tests the given block, as defined in L<S04/"Switch statements">
         when (1) { $foo = 3; }
         default  { $foo = 4; }
     }
-    #?rakudo todo 'changing $_ does not work within given block'
     is($foo, 2, 'Rebind $_ to new lexical');
 }
 
-#?rakudo skip 'continue is NYI'
 {
     my ($foo, $bar) = (1, 0);
     given (1) {
@@ -137,7 +132,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok($bar, 'continue does not prevent default');
 }
 
-#?rakudo skip 'break is NYI'
 {
     my ($foo, $bar) = (1, 0);
     given (1) {
@@ -150,7 +144,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$bar, 'break prevents default');
 }
 
-#?rakudo skip 'continue and break are NYI'
 {
     my ($foo, $bar, $baz, $bad) = (0, 0, -1, 0);
     my $quux = 0;
@@ -165,7 +158,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     is($bar, 1, 'second iteration');
     is($baz, 0, 'continue worked');
     is($quux, 1, "break didn't abort loop");
-    ok(!$bad, "didn't fall through");
+    ok(!$bad, "default didn't fall through");
 }
 
 
@@ -178,7 +171,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
        }
      }
 
-    #?rakudo todo 'given does not return the correct value'
     is( ret_test("a"), "A", "given returns the correct value (1)" ); 
     is( ret_test("b"), "B", "given returns the correct value (2)" ); 
 }
