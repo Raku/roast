@@ -63,7 +63,8 @@ plan 51;
 
   ok  ($a === $a), "=== on scalar references (1-1)";
   ok  ($b === $b), "=== on scalar references (1-2)";
-  ok !($a === $b), "=== on scalar references (1-3)", :todo<bug>;
+  #?rakudo todo 'scalar reference equivalence'
+  ok !($a === $b), "=== on scalar references (1-3)";
 }
 
 {
@@ -105,8 +106,9 @@ plan 51;
 
 {
   ok !(\3 === \4),         "=== on anonymous scalar references (1)";
-  ok !(\3 === \3),         "=== on anonymous scalar references (2)", :todo<bug>;
-  ok !(\undef === \undef), "=== on anonymous scalar references (3)", :todo<bug>;
+  #?rakudo todo 'scalar reference equivalence'
+  ok !(\3 === \3),         "=== on anonymous scalar references (2)";
+  ok !(\undef === \undef), "=== on anonymous scalar references (3)";
 }
 
 # Chained === (not specced, but obvious)

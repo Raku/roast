@@ -147,11 +147,11 @@ should be equivalent to
   my @a = (1, 2, 3); 
   # XXX is hash { ... } legal?
   my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a; 
-  is(+@b,3, "should be 3 elemens");
+  is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
 #?pugs todo 'unimpl'
-  is(+@c,3, "should be 3 elemens without the hash keyword as well");
+  is(+@c, 3, "should be 3 elements (3 hashrefs)");
 }
 
 # Map with mutating block
