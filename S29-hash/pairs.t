@@ -16,7 +16,6 @@ Basic C<pairs> tests, see S29.
   my %hash = (a => 1, b => 2, c => 3);
   my @pairs;
   ok((@pairs = %hash.pairs),    "pairs on hashes");
-  #?rakudo skip 'TODO: infix:<cmp> for pairs'
   ok((@pairs = @pairs.sort),    'Can sort list of pairs');
   is +@pairs, 3,                "pairs on hashes returned the correct number of elems";
   if +@pairs != 3 {
@@ -32,7 +31,6 @@ Basic C<pairs> tests, see S29.
 }
 
 # Following stated by Larry on p6l
-#?rakudo skip 'TODO: Pair.pairs'
 {
   my $pair  = (a => 1);
   my @pairs;
@@ -73,7 +71,6 @@ Basic C<pairs> tests, see S29.
 }
 
 #?pugs todo 'bug'
-#?rakudo todo 'aliases returned by $pair.{value,kv} should be rw'
 {
     my $pair = (a => 42);
 
