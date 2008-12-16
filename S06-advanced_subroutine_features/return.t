@@ -216,7 +216,6 @@ sub foo_hash_ref {
 }
 
 my $foo_hash_ref_return = foo_hash_ref();
-#?rakudo 5 todo 'return a hash'
 isa_ok($foo_hash_ref_return, Hash);
 is(+$foo_hash_ref_return.keys, 3, 'got the right number of return value');
 is($foo_hash_ref_return<foo>, 1, 'got the right return value');
@@ -225,7 +224,6 @@ is($foo_hash_ref_return<baz>, 3, 'got the right return value');
 
 lives_ok({ $keys = +(foo_hash_ref().keys) },
     "can call method on return value (hashref)");
-#?rakudo todo 'deref hash refs returned from subs'
 is($keys, 3, "got right result");
 lives_ok({ foo_hash_ref()<foo> },
     "can hash de-ref return value (hashref)");
