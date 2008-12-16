@@ -164,7 +164,6 @@ plan 27;
 
 }
 
-#?rakudo todo 'sort should be stable'
 {
     is (<P e r l 6>.sort: { 0; }).join(''), 'Perl6', 
     'sort with arity 0 closure is stable';
