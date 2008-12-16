@@ -86,7 +86,6 @@ plan 32;
     my %hash = (val => 42);
     %hash<ref> = \%hash;
     isa_ok %hash,           "Hash";
-    #?rakudo 4 skip 'not implemented in class Undef'
     isa_ok %hash<ref>,      "Hash";
     isa_ok %hash<ref><ref>, "Hash";
     is %hash<ref><val>,      42, "access to infinite HoHoHoH... (1)";

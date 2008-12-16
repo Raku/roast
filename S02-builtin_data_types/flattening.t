@@ -84,7 +84,6 @@ plan 34;
     push @a, @foo;
     is(@a.elems, 5, 'Array flattened');
     push @a, %foo;
-    #?rakudo todo "hash flattening bug?"
     is(@a.elems, 5, 'Hash flattened');
 }
     

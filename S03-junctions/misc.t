@@ -134,7 +134,6 @@ Misc. Junction tests
 
     # XXX does this next one make any sense?
     $l=\$j;
-    #?rakudo todo 'prefix:<\\>'
     is(~WHAT($l),'Junction', 'hard reference to junction');
 }
 
