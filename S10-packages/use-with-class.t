@@ -1,12 +1,31 @@
 use v6;
 use Test;
 
-plan 1;
+plan 7;
 
 # test that 'use' imports class names defined in importet packages
 
 use t::spec::packages::UseTest;
 
 eval_lives_ok 'Stupid::Class.new()', 'can instantiate object of "imported" class';
+
+{
+    my $o = Stupid::Class.new(attrib => 'a');
+    is $o.attrib, 'a', 'can access attribute';
+    is $o.getter, 'a', 'can access method';
+    $o.setter('b');
+    is $o.attrib, 'b', 'can set through setter';
+    lives_ok { $o.attrib = 'c' }, 'can set trough assignment';
+    is $o.attrib, 'c', 'setting actually worked';
+}
+
+{
+    class Stupid::Class is also {
+        method double { $.attrib ~ $.attrib };
+    }
+    my $o = Stupid::Class.new( attrib => 'd' );
+    is $o.double, 'dd', 'can extend "imported" class';
+
+}
 
 # vim: ft=perl6
