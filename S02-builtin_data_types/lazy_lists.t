@@ -1,5 +1,7 @@
 use v6;
 
+# L<S09/Lazy lists>
+
 # Tests for lazy lists
 #
 # TODO - uncomment "countable lazy slice" test

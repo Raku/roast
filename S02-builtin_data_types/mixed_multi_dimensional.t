@@ -4,6 +4,7 @@ use Test;
 
 plan 80;
 
+
 =begin description
 
 This tests some mixed multi-dimensional structures.
@@ -18,6 +19,7 @@ Some deeper tests were already added.
 
 =end description
 
+# UNSPECCED
 { # Array of Pairs
     my @array;
     isa_ok(@array, Array);
@@ -40,6 +42,7 @@ Some deeper tests were already added.
     is(@array[1]<key1>, 'value1', 'got the right pair value');
 }
 
+# UNSPECCED
 { # Array of Hashes
     my @array;
     isa_ok(@array, Array);
@@ -56,6 +59,7 @@ Some deeper tests were already added.
 }
 
 { # Array of Arrays
+    # L<S09/Multidimensional arrays>
     my @array = (1, [2, 3], [4, 5], 6);
     isa_ok(@array, Array);
 
@@ -71,6 +75,7 @@ Some deeper tests were already added.
     is(@array[3], 6, 'got the right fourth element');
 }
 
+# UNSPECCED
 { # Array of Subs
     my @array;
     isa_ok(@array, Array);
@@ -94,6 +99,7 @@ Some deeper tests were already added.
     is(@array[2](), 3, 'the third element (when executed) is 3');
 }
 
+# UNSPECCED
 { # Hash of Arrays
     my %hash;
     isa_ok(%hash, 'Hash');
@@ -124,6 +130,7 @@ Some deeper tests were already added.
 
 
 { # Hash of Array-refs
+  # UNSPECCED
     my %hash;
     isa_ok(%hash, Hash);
 

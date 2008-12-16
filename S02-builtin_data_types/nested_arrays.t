@@ -10,7 +10,7 @@ Nested array tests; various interactions of arrayrefs, arrays, flattening and ne
 
 plan 8;
 
-{   
+{   # UNSPECCED
     my @a = (1,2,[3,4]);
     my $a = (1,2,[3,4]);
     my @b = [1,2,[3,4]];

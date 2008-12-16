@@ -5,6 +5,7 @@ use Test;
 plan 58;
 
 # basic lvalue assignment
+# L<S09/Hashes>
 
 my %hash1; 
 isa_ok(%hash1, 'Hash');
