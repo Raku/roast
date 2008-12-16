@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 51;
+plan 57;
 
 #L<S03/Autoincrement precedence>
 
@@ -149,4 +149,21 @@ is($num,'124.456');
     is $o.value, 58, 'Overriding pred catches postfix decrement';
     --$o;
     is $o.value, 16, 'Overriding pred catches prefix decrement';
+}
+
+#?rakudo skip "todo: .succ and .pred"
+{
+    # L<S03/Autoincrement precedence/Increment of a>
+   
+    my $x = "a";
+    is $x.succ, 'b', '.succ for Str';
+    is $x.pred, 'a', '.pred for Str';
+
+    my $y = 1;
+    is $y.succ, 2, '.succ for Int';
+    is $y.pred, 0, '.pred for Int';
+
+    my $z = Num.new();
+    is $z.succ, 1 , '.succ for Num';
+    is $z.pred, -1, '.pred for Num'
 }
