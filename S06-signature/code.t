@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 2;
+plan 3;
 
 # TODO: move this test to closure-parameters.t if it works in the future
 
@@ -20,5 +20,8 @@ ok $collector == 6, 'Can call my_sub() if &my_sub was a parameter';
 
 tester(sub ($x) { $collector = 3 * $x });
 ok $collector == 12, 'same with anonymous sub';
+
+sub tester2(&my_sub) { 1 }
+dies_ok 'tester2(42)', "can't pass thing that doesn't do Callable";
 
 # vim: ft=perl6
