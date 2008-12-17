@@ -37,7 +37,6 @@ my $o = Indir.new();
 
 is $o."a",    "aa", 'indirect call to public method (double quotes)';
 is $o.'a',    "aa", 'indirect call to public method (single quotes)';
-#?rakudo 2 skip 'RT #61102'
 is $o.b_acc1, 'bb', 'indirect call to private method (double quotes)';
 is $o.b_acc2, 'bb', 'indirect call to private method (single quotes)';
 dies_ok {$o."b" },  'can not call private method via quotes from outside';
