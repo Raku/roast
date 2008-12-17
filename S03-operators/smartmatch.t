@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 56;
+plan 67;
 
 =begin kwid
 
@@ -112,10 +112,20 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<<S03/Smart matching/arrays are comparable>>
-#?rakudo skip 'smart matching lists'
 { 
     ok((("blah", "blah") ~~ ("blah", "blah")), "qw/blah blah/ .eq");
     ok(!((1, 2) ~~ (1, 1)), "1 2 !~~ 1 1");
+    ok((1,2,3,4) ~~ (1,*), 'array smartmatch dwims * at end');
+    ok((1,2,3,4) ~~ (*,4), 'array smartmatch dwims * at start');
+    ok((1,2,3,4) ~~ (1,*,3,4), 'array smartmatch dwims * 1 elem');
+    ok((1,2,3,4) ~~ (1,*,4), 'array smartmatch dwims * many elems');
+    ok((1,2,3,4) ~~ (*,3,*), 'array smartmatch dwims * at start and end');
+    ok((1,2,3,4) ~~ (*,1,2,3,4), 'array smartmatch dwims * can match nothing at start');
+    ok((1,2,3,4) ~~ (1,2,*,3,4), 'array smartmatch dwims * can match nothing in middle');
+    ok((1,2,3,4) ~~ (1,2,3,4,*), 'array smartmatch dwims * can match nothing at end');
+    ok(!((1,2,3,4) ~~ (1,*,3)), '* dwimming does not cause craziness');
+    ok(!((1,2,3,4) ~~ (*,5)), '* dwimming does not cause craziness');
+    ok(!((1,2,3,4) ~~ (1,3,*)), '* dwimming does not cause craziness');
 };
 
 #L<<S03/Smart matching/numeric equality>>
