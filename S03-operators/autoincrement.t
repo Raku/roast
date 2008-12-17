@@ -151,7 +151,6 @@ is($num,'124.456');
     is $o.value, 16, 'Overriding pred catches prefix decrement';
 }
 
-#?rakudo skip "todo: .succ and .pred"
 {
     # L<S03/Autoincrement precedence/Increment of a>
    
