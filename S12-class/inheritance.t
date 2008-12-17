@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 34;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -56,8 +56,6 @@ is($fud, "Foo::Bar::fud", "returned value is correct");
 ok  Foo::Bar.isa(Foo),      "subclass.isa(superclass) is true";
 ok  Foo::Bar.isa(Foo::Bar), "subclass.isa(same_subclass) is true";
 #?pugs 2 todo "feature"
-#?rakudo skip 'does this even meet the spec anyway?'
-ok  Foo::Bar.isa(Class),    "subclass.isa(Class) is false";
 #?rakudo skip 'does'
 ok  Foo::Bar.does(Class),   "subclass.does(Class) is true";
 #?rakudo 2 skip 'no ::CLASS class'
