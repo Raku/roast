@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 67;
+plan 73;
 
 =begin kwid
 
@@ -115,6 +115,12 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 { 
     ok((("blah", "blah") ~~ ("blah", "blah")), "qw/blah blah/ .eq");
     ok(!((1, 2) ~~ (1, 1)), "1 2 !~~ 1 1");
+    ok(!((1, 2, 3) ~~ (1, 2)), "1 2 3 !~~ 1 2");
+    ok(!((1, 2) ~~ (1, 2, 3)), "1 2 !~~ 1 2 3");
+    ok(!(list() ~~ list(1)), "array smartmatch boundary conditions");
+    ok(!(list(1) ~~ list()), "array smartmatch boundary conditions");
+    ok((list() ~~ list()), "array smartmatch boundary conditions");
+    ok((list(1) ~~ list(1)), "array smartmatch boundary conditions");
     ok((1,2,3,4) ~~ (1,*), 'array smartmatch dwims * at end');
     ok((1,2,3,4) ~~ (*,4), 'array smartmatch dwims * at start');
     ok((1,2,3,4) ~~ (1,*,3,4), 'array smartmatch dwims * 1 elem');
