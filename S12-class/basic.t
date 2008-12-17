@@ -24,7 +24,6 @@ ok($foo.isa(::Foo), '.isa(::Foo)');
 ok($foo.isa("Foo"), '.isa("Foo")');
 ok(!$foo.isa("Bar"), '!.isa("Bar")');
 
-#?rakudo skip 'clone not yet implemetned'
 {
     my $foo_clone = $foo.clone();
     ok($foo_clone ~~ Foo, '... smartmatch our $foo_clone to the Foo class');
@@ -50,8 +49,6 @@ ok($bar.isa(Bar), "... .isa(Bar)");
 ok($bar ~~ Foo, '... smartmatch our $bar to the Foo class');
 ok($bar.isa(Foo), "new Bar .isa(Foo)");
 
-#?rakudo skip 'clone not yet implemetned'
-#?DOES 4
 {
     my $bar_clone = $bar.clone();
     ok($bar_clone ~~ Bar, '... smartmatch our $bar_clone to the Bar class');
