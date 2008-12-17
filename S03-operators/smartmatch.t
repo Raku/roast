@@ -53,10 +53,8 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #L<<S03/Smart matching/hash value slice truth>>
 #?rakudo skip 'context variables'
 { 
-    flunk('FIXME parsefail');
-#    ok(eval(%hash1 ~~ any(%hash3)), "intersecting keys", :todo);
-    flunk('FIXME parsefail');
-#    ok(!(%hash1 ~~ any(%hash4)), "no intersecting keys");
+    ok(%hash1 ~~ any(%hash3), "intersecting keys", :todo);
+    ok(%hash1 !~~ any(%hash4), "no intersecting keys");
 };
 
 #L<<S03/Smart matching/hash value slice truth>>
@@ -145,9 +143,9 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #L<S03/Smart matching/array value slice truth>
 #?rakudo skip 'Null PMC access in type()'
 { 
-    ok eval('((undef, 1, undef) ~~ .[1])'),
+    ok ((undef, 1, undef) ~~ .[1]),
         "element 1 of (undef, 1, undef) is true";
-    ok eval('!((undef, undef) ~~ .[0])'),
+    ok !((undef, undef) ~~ .[0])',
         "element 0 of (undef, undef) is false";
 };
 
@@ -173,8 +171,8 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     class Cat {}
     class Chihuahua is Dog {} # i'm afraid class Pugs will get in the way ;-)
 
-    ok eval('(Chihuahua ~~ Dog)'), "chihuahua isa dog";
-    ok eval('!(Chihuahua ~~ Cat)'), "chihuahua is not a cat";
+    ok (Chihuahua ~~ Dog), "chihuahua isa dog";
+    ok !(Chihuahua ~~ Cat), "chihuahua is not a cat";
 };
 
 #Any     Role      role playing             match if \$_.does(\$x)
