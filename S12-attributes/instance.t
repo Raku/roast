@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan 83;
 
 =begin pod
 
@@ -329,6 +329,22 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     lives_ok {$r.b = $r}, 'type check on recursive data structure';
     is $r.b.WHAT, 'WHAT_test', '.WHAT on recursive data structure';
 
+}
+
+# Tests for clone.
+{
+    class CloneTest { has $.x is rw; has $.y is rw; }
+    my $a = CloneTest.new(x => 1, y => 2);
+    my $b = $a.clone();
+    is $b.x, 1, 'attribute cloned';
+    is $b.y, 2, 'attribute cloned';
+    $b.x = 3;
+    is $b.x, 3, 'changed attribute on clone...';
+    is $a.x, 1, '...and original not affected';
+    my $c = $a.clone(x => 42);
+    is $c.x, 42, 'clone with parameters...';
+    is $a.x, 1, '...leaves original intact...';
+    is $c.y, 2, '...and copies what we did not change.';
 }
 
 # vim: ft=perl6
