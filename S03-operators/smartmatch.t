@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 73;
+plan 80;
 
 =begin kwid
 
@@ -130,6 +130,20 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok(!((1,2,3,4) ~~ (1,*,3)), '* dwimming does not cause craziness');
     ok(!((1,2,3,4) ~~ (*,5)), '* dwimming does not cause craziness');
     ok(!((1,2,3,4) ~~ (1,3,*)), '* dwimming does not cause craziness');
+
+    # now try it with arrays as well
+    my @a = 1, 2, 3;
+    my @b = 1, 2, 4;
+    my @m = (*, 2, *); # m as "magic" ;-)
+
+    ok (@a ~~  @a), 'Basic smartmatching on arrays (positive)';
+    ok (@a !~~ @b), 'Basic smartmatching on arrays (negative)';
+    ok (@b !~~ @a), 'Basic smartmatching on arrays (negative)';
+    ok (@a ~~  @m), 'Whatever dwimminess in arrays';
+    ok (@a ~~ (1, 2, 3)), 'smartmatch Array ~~ List';
+    ok ((1, 2, 3) ~~ @a), 'smartmatch List ~~ Array';
+    ok ((1, 2, 3) ~~ @m), 'smartmatch List ~~ Array with dwim';
+
 };
 
 #L<<S03/Smart matching/numeric equality>>
