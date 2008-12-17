@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 43;
 
 # L<S29/Str/=item substr>
 
@@ -23,6 +23,7 @@ plan 42;
     is(substr($str, 0, -2), "foob", "from beginning, with negative length");
     is(substr($str, 2, -2), "ob", "in middle, with negative length");
     is(substr($str, 3, -3), "", "negative length - gives empty string");
+    is(substr($str, -4, -1), "oba", "negative start and length ");
 
     is($str, "foobar", "original string still not changed");
 };
