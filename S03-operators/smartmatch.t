@@ -159,7 +159,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 { 
     ok ((undef, 1, undef) ~~ .[1]),
         "element 1 of (undef, 1, undef) is true";
-    ok !((undef, undef) ~~ .[0])',
+    ok !((undef, undef) ~~ .[0]),
         "element 0 of (undef, undef) is false";
 };
 
