@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan 77;
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
 
@@ -114,6 +114,7 @@ is (1..6 Z 'a' .. 'c').join(''), '1a2b3c',   'Ranges and infix:<Z>';
 #?rakudo skip 'MMD function __cmp not found for types (101, 95)'
 {
     my @three = (1, 1, 1);
+    my @one = 1;
 
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
     is ~(@one ^.. 3)    , "2 3"  , "lower exclusive limit is in scalar context";
@@ -126,6 +127,12 @@ is (1..6 Z 'a' .. 'c').join(''), '1a2b3c',   'Ranges and infix:<Z>';
     is ~(@three .. @one), ""     , "null range produced with lists forced to scalar context";
     is ~(@one ^..^ @three), "2"  , "both exclusive limits are in scalar context";
     is ~(@three ^..^ @one), ""   , "both exclusive limits are in scalar context";
+}
+
+# test that .map works on ranges
+#?rakudo skip 'map on range'
+{
+    is (0..3).map({$_ * 2}).join('|'), '0|2|4|6', '.map works on ranges';
 }
 
 # For tests involving :by, see t/operators/adverbial_modifiers.t
