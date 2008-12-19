@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 31;
+plan 32;
 
 {
     my @fib = 1, 1 ... {$^x + $^y};
@@ -49,6 +49,16 @@ plan 31;
     is @even[3], 6,  'infix:<...> with * magic (arithmetic, 3)';
     is @even[4], 8,  'infix:<...> with * magic (arithmetic, 4)';
     is @even[5], 10, 'infix:<...> with * magic (arithmetic, 5)';
+}
+
+{
+    my @dec = 8, 7, 6 ... *;
+    is @dev[0..5].join('|'), '8|7|6|5|4|3', 'magic series with decreasing values';
+}
+
+{
+    my @np = 16, 8, 4 ... *;
+    is @np[0..4].join('|'), '16|8|4|2|1', 'magic, decreasing power series';
 }
 
 {
