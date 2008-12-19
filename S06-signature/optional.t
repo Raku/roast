@@ -24,8 +24,8 @@ sub t_opt2(Str $p?, Str $q?) {
     ~ (defined($q) ?? $q !! 'undef');
 }
 
-#?rakudo 3 skip 'optional typed params, RT #61528'
 is t_opt2('a', 'b'), 'a|b',           'Can pass all two optional params';
+#?rakudo 2 skip 'optional typed params, RT #61528'
 is t_opt2('a'),      'a|undef',       'Can pass one of two optional params';
 is t_opt2(),         'undef|undef',   'Can leave out all two optional params';
 
