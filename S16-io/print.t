@@ -2,6 +2,8 @@ use v6;
 
 # L<S16/"Input and Output"/=item print>
 
+# doesn't use Test.pm and plan() intentionally
+
 print "1..12\n";
 
 # Tests for print

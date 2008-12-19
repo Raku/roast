@@ -2,6 +2,8 @@ use v6;
 
 # L<S16/"Input and Output"/=item say>
 
+# doesn't use Test.pm and plan() intentionally
+
 say "1..5";
 
 # Tests for say
