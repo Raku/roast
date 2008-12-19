@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 36;
+plan 40;
 
 # L<S29/Num/"=item round">
 # L<S29/Num/"=item floor">
@@ -49,3 +49,9 @@ for %tests.keys.sort -> $type {
     }
 }
 
+for %tests.keys.sort -> $t {
+    isa_ok eval("{$t}(1.1)"), Int, "rounder $t returns an int";
+
+}
+
+# vim: ft=perl6
