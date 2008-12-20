@@ -13,7 +13,7 @@ my	@x	=	<a	b	c>;	sub	y	(@z)	{	@z[1]	};	y(@x)
 is(eval('
 my
 @x
-=
+ =
 <a
 b
 c>;
@@ -31,11 +31,11 @@ my@x=<abc>;suby(@z){@z[1]};y(@x)
 '), "b", "LINE TABULATION");
 
 is(eval('
-my@x=<abc>;suby(@z){@z[1]};y(@x)
+my@x =<abc>;suby(@z){@z[1]};y(@x)
 '), "b", "FORM FEED (FF)");
 
 is(eval('
-my@x=<abc>;suby(@z){@z[1]};y(@x)
+my@x =<abc>;suby(@z){@z[1]};y(@x)
 '), "b", "CARRIAGE RETURN (CR)");
 
 is(eval('
@@ -43,7 +43,7 @@ my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "SPACE");
 
 is(eval('
-my@x=<abc>;suby(@z){@z[1]};y(@x)
+my@x =<abc>;suby(@z){@z[1]};y(@x)
 '), "b", "NEXT LINE (NEL)");
 
 is(eval('
@@ -102,6 +102,7 @@ is(eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "HAIR SPACE");
 
+#?rakudo 2 todo "LINE/PARAGRAPH SEPARATOR are ws?"
 is(eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "LINE SEPARATOR");
@@ -126,7 +127,7 @@ my　@x　=　<a　b　c>;　sub　y　(@z)　{　@z[1]　};　y(@x)
 #These currently get different results than the above
 
 class Str is also {
-    method id($x:) { $x }
+    method id() { self }
 }
 
 #This makes 'foo.id' and 'foo .id' mean different things
@@ -158,6 +159,7 @@ is(eval('foo\ .id'), 'a', 'long dot with FIGURE SPACE');
 is(eval('foo\ .id'), 'a', 'long dot with PUNCTUATION SPACE');
 is(eval('foo\ .id'), 'a', 'long dot with THIN SPACE');
 is(eval('foo\ .id'), 'a', 'long dot with HAIR SPACE');
+#?rakudo 2 skip "LINE/PARAGRAPH SEPARATOR are ws?"
 is(eval('foo\ .id'), 'a', 'long dot with LINE SEPARATOR');
 is(eval('foo\ .id'), 'a', 'long dot with PARAGRAPH SEPARATOR');
 is(eval('foo\ .id'), 'a', 'long dot with NARROW NO-BREAK SPACE');
