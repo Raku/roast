@@ -9,7 +9,7 @@ Testing hash slices.
 
 =end pod
 
-plan 25;
+plan 26;
 
 {   my %hash = (1=>2,3=>4,5=>6);
     my @s=(2,4,6);
@@ -31,6 +31,7 @@ plan 25;
 }
 
 #?pugs todo 'feature'
+#?rakudo skip 'binding on hash elements unimplemented'
 {
     my %hash = :a(1), :b(2), :c(3), :d(4);
     my @slice := %hash<b c>;
@@ -56,6 +57,7 @@ Quoting Larry:
 }
 
 # Binding on hash slices
+#?rakudo skip 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO BAR> };
@@ -64,6 +66,7 @@ Quoting Larry:
     is %hash<b>, "BAR", "binding hash slices works (1-2)";
 }
 
+#?rakudo skip 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO> };
@@ -72,6 +75,7 @@ Quoting Larry:
     ok !defined(%hash<b>), "binding hash slices works (2-2)";
 }
 
+#?rakudo skip 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
     my $foo  = "FOO";
     my $bar  = "BAR";
