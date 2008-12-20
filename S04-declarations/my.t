@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 36;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -123,6 +123,17 @@ is(eval('my $e1 = my $e2 = 42'), 42, 'can parse squinting my value');
 is(eval('my $e1 = my $e2 = 42; $e1'), 42, 'can capture squinting my value');
 is(eval('my $e1 = my $e2 = 42; $e2'), 42, 'can set squinting my variable');
 is(eval('my $x = 1, my $y = 2; $y'), 2, 'precedence of my wrt = and ,');
+
+# test that my (@array, @otherarray) correctly declares
+# and initializes both arrays
+#?rakudo todo 'RT #61544'
+{
+    my (@a, @b);
+    lives_ok { @a.push(2) }, 'Can use @a';
+    lives_ok { @b.push(3) }, 'Can use @b';
+    is ~@a, '2', 'push actually worked on @a';
+    is ~@b, '3', 'push actually worked on @b';
+}
 
 
 # vim: ft=perl6
