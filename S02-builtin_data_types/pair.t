@@ -2,13 +2,12 @@ use v6;
 
 use Test;
 
-
-plan 97;
+plan 100;
 
 # basic Pair
 
 my $pair = 'foo' => 'bar';
-isa_ok($pair, 'Pair');
+isa_ok($pair, Pair);
 is($pair.perl, '("foo" => "bar")', 'canonical representation');
 
 # get key and value from the pair as many ways as possible
@@ -27,11 +26,13 @@ is($pair.value, 'bar', 'got the right $pair.value');
 
 my @pair1a = kv($pair);
 is(+@pair1a, 2, 'got the right number of elements in the list');
+#?rakudo 2 skip 'kv() ambiguity'
 is(@pair1a[0], 'foo', 'got the right key');
 is(@pair1a[1], 'bar', 'got the right value');
 
 my @pair1b = kv $pair;
 is(+@pair1b, 2, 'got the right number of elements in the list');
+#?rakudo 2 skip 'kv() ambiguity'
 is(@pair1b[0], 'foo', 'got the right key');
 is(@pair1b[1], 'bar', 'got the right value');
 
@@ -48,17 +49,19 @@ is(@pair1d[1], 'bar', 'got the right value');
 # Pair with a numeric value
 
 my $pair2 = 'foo' => 2;
-isa_ok($pair2, 'Pair');
+isa_ok($pair2, Pair);
 
 is($pair2.value, 2, 'got the right value');
+
+=begin END
 
 # Pair with a Pair value
 
 my $pair3 = "foo" => ("bar" => "baz");
-isa_ok($pair3, 'Pair');
+isa_ok($pair3, Pair);
 
 my $pair3a = $pair3.value;
-isa_ok($pair3a, 'Pair');
+isa_ok($pair3a, Pair);
 is($pair3a.key, 'bar', 'got right nested pair key');
 is($pair3a.value, 'baz', 'got right nested pair key');
 
@@ -68,11 +71,11 @@ is($pair3.value.value, 'baz', 'got right nested pair key (method chaining)');
 # Pair with a Pair key
 
 my $pair4 = ("foo" => "bar") => "baz";
-isa_ok($pair4, 'Pair');
+isa_ok($pair4, Pair);
 
 is($pair4.value, 'baz', 'got the right value');
 
-isa_ok($pair4.key, 'Pair');
+isa_ok($pair4.key, Pair);
 is($pair4.key.key, 'foo', 'got right nested key');
 is($pair4.key.value, 'bar', 'got right nested value');
 
@@ -91,24 +94,17 @@ is($quux.key, 'quux', "lhs quotes" );
     ok (%$pair).does(Hash), '%() makes Pair to does Hash';
 }
 
-# lvalue Pair assignments from S06 and thread starting with
-# L<"http://www.nntp.perl.org/group/perl.perl6.language/19425">
-
-my $val;
-("foo" => $val) = "baz";
-is($val, "baz", "lvalue pairs");
-
 # illustrate a bug
 
 #?rakudo skip "parse failure"
 {
     my $var   = 'foo' => 'bar';
     sub test1 (Any|Pair $pair) {
-        isa_ok($pair,'Pair');
+        isa_ok($pair,Pair);
         my $testpair = $pair;
-        isa_ok($testpair,'Pair'); # new lvalue variable is also a Pair
+        isa_ok($testpair,Pair); # new lvalue variable is also a Pair
         my $boundpair := $pair;
-        isa_ok($boundpair,'Pair'); # bound variable is also a Pair
+        isa_ok($boundpair,Pair); # bound variable is also a Pair
         is($pair.key, 'foo', 'in sub test1 got the right $pair.key');
         is($pair.value, 'bar', 'in sub test1 got the right $pair.value');
 
@@ -118,18 +114,18 @@ is($val, "baz", "lvalue pairs");
 
 my %hash  = ('foo' => 'bar');
 for  %hash.pairs -> $pair {
-    isa_ok($pair,'Pair') ; 
+    isa_ok($pair,Pair) ; 
     my $testpair = $pair;
-    isa_ok($testpair, 'Pair'); # new lvalue variable is also a Pair
+    isa_ok($testpair, Pair); # new lvalue variable is also a Pair
     my $boundpair := $pair;
-    isa_ok($boundpair,'Pair'); # bound variable is also a Pair
+    isa_ok($boundpair,Pair); # bound variable is also a Pair
     is($pair.key, 'foo', 'in for loop got the right $pair.key');
     is($pair.value, 'bar', 'in for loop got the right $pair.value');
 }
 
 sub test2 (Hash %h){
     for %h.pairs -> $pair {
-        isa_ok($pair,'Pair') ; 
+        isa_ok($pair,Pair) ; 
         is($pair.key, 'foo', 'in sub test2 got the right $pair.key');
         is($pair.value, 'bar', 'in sub test2 got the right $pair.value');
     }
@@ -141,9 +137,9 @@ test2 %hash;
 
 sub test3 (Hash %h){
     for %h.pairs -> $pair {
-        isa_ok($pair,'Pair');
-        dies_ok({$pair[0]}, 'sub test3: access by $pair[0] should not work', :todo<bug>);
-        dies_ok({$pair[1]}, 'sub test3: access by $pair[1] should not work', :todo<bug>);
+        isa_ok($pair,Pair);
+        dies_ok({$pair[0]}, 'sub test3: access by $pair[0] should not work');
+        dies_ok({$pair[1]}, 'sub test3: access by $pair[1] should not work');
     }
 }
 test3 %hash;
@@ -154,7 +150,7 @@ Hm, Hash::pair? Never heard of that.  --iblech
 
 sub test4 (Hash %h){
     for %h.pair -> $pair {
-        isa_ok($pair,'Pair',:todo<bug>) ; 
+        isa_ok($pair,Pair,:todo<bug>) ; 
         is($pair.key, 'foo', 'sub test4: access by unspecced "pair" got the right $pair.key');
         is($pair.value, 'bar', 'sub test4: access by unspecced "pair" got the right $pair.value');
 
@@ -165,7 +161,7 @@ test4 %hash;
 =end p6l
 
 my $should_be_a_pair = (a => 25/1);
-isa_ok $should_be_a_pair, "Pair", "=> has correct precedence";
+isa_ok $should_be_a_pair, Pair, "=> has correct precedence";
 
 =begin discussion
 
@@ -203,14 +199,14 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
 # Also see L<"http://www.nntp.perl.org/group/perl.perl6.language/23224">
 {
   my $pair = (a => 1);
-  is try { ~$pair  }, "a\t1", "pairs stringify correctly (1)";
-  is try { "$pair" }, "a\t1", "pairs stringify correctly (2)";
+  is ~$pair, "a\t1", "pairs stringify correctly (1)";
+  is "$pair", "a\t1", "pairs stringify correctly (2)";
 }
 
 {
   my $pair = (a => [1,2,3]);
-  is try { ~$pair  }, "a\t1 2 3", "pairs with arrayrefs as values stringify correctly (1)";
-  is try { "$pair" }, "a\t1 2 3", "pairs with arrayrefs as values stringify correctly (2)";
+  is ~$pair, "a\t1 2 3", "pairs with arrayrefs as values stringify correctly (1)";
+  is "$pair", "a\t1 2 3", "pairs with arrayrefs as values stringify correctly (2)";
 }
 
 # Per Larry L<"http://www.nntp.perl.org/group/perl.perl6.language/23525">:
@@ -238,7 +234,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
   my $hashref  = { :d(1), :e(2) };
 
   my $pair = ($arrayref => $hashref);
-  my sub pair_key (Pair $pair) { $pair.key }
+  sub pair_key (Pair $pair) { $pair.key }
 
   is ~pair_key($pair), ~$arrayref,
     "the keys of pairs should not get auto-stringified when passed to a sub (1)";
@@ -264,6 +260,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
   is $val,                 "val",   "setting .value does not change the original var";
 }
 
+#?rakudo skip 'pair binding not implemented'
 {
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
@@ -279,6 +276,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
   dies_ok { $pair.value = 42 },      "the .value was really bound";  # (can't modify constant)
 }
 
+#?rakudo skip 'pair binding not implemented'
 {
   my ($key, $val) = <key val>;
   my $pair        = (abc => "def");
@@ -288,7 +286,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
   $key = "KEY";
   is $key,                "KEY",  "binding .key to a var works (1)";
   is $pair.key,           "KEY",  "binding .key to a var works (2)", :todo<bug>;
-  try { $pair.key = "new" };
+  $pair.key = "new";
   is $key,                "new",  "binding .key to a var works (3)", :todo<bug>;
   is $pair.key,           "new",  "binding .key to a var works (4)", :todo<bug>;
 
@@ -297,12 +295,16 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
   $val = "VAL";
   is $val,                  "VAL",  "binding .value to a var works (1)";
   is $pair.value,           "VAL",  "binding .value to a var works (2)", :todo<bug>;
-  try { $pair.value = "new" };
+  $pair.value = "new";
   is $val,                  "new",  "binding .value to a var works (3)", :todo<bug>;
   is $pair.value,           "new",  "binding .value to a var works (4)", :todo<bug>;
 }
 
+
+##  These tests really belong in a different test file -- probably
+##  something in S06.  --pmichaud
 # L<S06/Named arguments/In other words :$when is shorthand for :when($when)>
+#?rakudo skip ':$arg not implemented'
 {
     my $item = 'bar';
     my $pair = (:$item);
