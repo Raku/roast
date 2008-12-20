@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 77;
+plan 78;
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
 
@@ -129,10 +129,10 @@ is (1..6 Z 'a' .. 'c').join(''), '1a2b3c',   'Ranges and infix:<Z>';
     is ~(@three ^..^ @one), ""   , "both exclusive limits are in scalar context";
 }
 
-# test that .map works on ranges
-#?rakudo skip 'map on range'
+# test that .map and .grep work on ranges
 {
-    is (0..3).map({$_ * 2}).join('|'), '0|2|4|6', '.map works on ranges';
+    is (0..3).map({$_ * 2}).join('|'),      '0|2|4|6', '.map works on ranges';
+    is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
 }
 
 # For tests involving :by, see t/operators/adverbial_modifiers.t
