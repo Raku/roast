@@ -28,7 +28,7 @@ my $filename = 'tempfile' ~ nonce();
 my $out = open($filename, :w);
 isa_ok($out, 'IO');
 $out.say("Hello World");
-say($out: "Foo Bar Baz");
+$out.say("Foo Bar Baz");
 $out.say("The End");
 ok($out.close, 'file closed okay');
 
@@ -147,9 +147,12 @@ ok($fh9.close, 'file closed okay (9)');
 #is($line9_1, "Hello World", 'readline($in) worked');
 #is($line9_2, "Second line", 'readline($in) worked');
 
-my $fh10 = open($filename, :rw);  # was "<+" ? 
-isa_ok($fh10, 'IO');
-#ok($fh10.close, 'file closed okay (10)');
+#?rakudo skip ':rw on open() unimplemented'
+{
+    my $fh10 = open($filename, :rw);  # was "<+" ? 
+    isa_ok($fh10, 'IO');
+    #ok($fh10.close, 'file closed okay (10)');
+}
 
 # This test fails on win32; skip it for now.
 if $*OS eq any <MSWin32 mingw msys cygwin> {
