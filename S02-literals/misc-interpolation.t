@@ -37,6 +37,7 @@ is("$number {$number}", '1 1', 'number inside and outside closure works');
 is("$number {my $number=2}", '1 2', 'local version of number in closure works');
 is("$number {my $number=2} $number", '1 2 1', 'original number still available after local version in closure: works' );
 #?rakudo skip 'Null PMC access in get_bool()'
+#?DOES 3
 {
 eval( q[is("$number {my $number=2} {$number}", '1 2 1', 'original number
 still available in closure after local version in closure: works' );] ) or ok('');
@@ -47,7 +48,10 @@ eval( q[is("$(my $x = 2)" ~ $x, '22', 'Variable should interpolate and still be 
 # L<S02/Names and Variables/form of each subscript>
 is("&func. () is where I live", '&func. () is where I live', '"&func. ()" should not interpolate');
 #?rakudo skip 'parse failure'
+#?DOES 1
+{
 is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should interpolate');
+}
 # L<S02/Literals/"In order to interpolate the result of a method call">
 #?rakudo todo 'method interpolation'
 is("$world.chars()", '5', 'method calls with parens should interpolate');
