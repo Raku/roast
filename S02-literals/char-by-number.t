@@ -47,7 +47,6 @@ is("\o101,102,103", 'A,102,103', '\olist not valid');
 # <S02/Literals/"Characters indexed by" decimal numbers"
 #  with "\c">
 
-#?rakudo 11 todo '\c escapes'
 is("\c32", ' ', '\c32 normal space');
 is("\c160", ' ', '\c160 non-breaking space');
 
@@ -56,6 +55,7 @@ is("\c[160]", chr(160), '\c[240] non-breaking space');
 is("\c[9786]", '☺', '\c[9786] wide hex character (SMILEY)');
 is("\c[25105]", '我', '\c[25105] wide hex character (Chinese char)');
 eval_dies_ok('"\c[6211"', 'broken "\c[6211"');
+#?rakudo todo '\c broken escape'
 eval_dies_ok('"\c [6211]"', 'broken "\c [6211]"');
 
 is("\c[65,66,67]", 'ABC', '\c[list]');
