@@ -7,11 +7,13 @@ plan 2;
 my $text  = "abc";
 my %ret;
 
+# XXX depends on the Pair stringification which is likely going to change
+
 #?rakudo skip "Awaiting p6l clarification on Hash composer/block"
 {
 %ret = map { $_ => uc $_; }, split "", $text;
-is ~%ret.kv, "a A b B c C", "=> works in a map block";
+is ~%ret.sort, "a\tA b\tB c\tC", "=> works in a map block";
 }
 
 %ret = map { $_, uc $_ }, split "", $text;
-is ~%ret.kv, "a A b B c C", "map called with function return values works";
+is ~%ret.sort, "a\tA b\tB c\tC", "map called with function return values works";
