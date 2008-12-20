@@ -9,16 +9,16 @@ plan 49;
 
 is ([**] ()), 1, "[**] () eq 1 (arguably nonsensical)";
 is ([*] ()), 1, "[*] () eq 1";
-dies_ok( { [/] () }, "[/] () should fail"); #" # syntax highlight kludge
-dies_ok( { [%] () }, "[%] () should fail");
-dies_ok( { [x] () }, "[x] () should fail");
-dies_ok( { [xx] () }, "[xx] () should fail");
+ok( !([/] ()).defined, "[/] () should fail");
+ok( !([%] ()).defined, "[%] () should fail");
+ok( !([x] ()).defined, "[x] () should fail");
+ok( !([xx] ()).defined, "[xx] () should fail");
 is ([+&] ()), +^0, "[+&] () eq +^0";
-dies_ok( { [+<] () }, "[+<] () should fail");
-dies_ok( { [+>] () }, "[+>] () should fail");
-dies_ok( { [~&] () }, "[~&] () should fail");
-dies_ok( { [~<] () }, "[~<] () should fail");
-dies_ok( { [~>] () }, "[~>] () should fail");
+ok( !([+<] ()).defined, "[+<] () should fail");
+ok( !([+>] ()).defined, "[+>] () should fail");
+ok( !([~&] ()).defined, "[~&] () should fail");
+ok( !([~<] ()).defined, "[~<] () should fail");
+ok( !([~>] ()).defined, "[~>] () should fail");
 is ([+] ()), 0, "[+] () eq 0";
 is ([-] ()), 0, "[-] () eq 0";
 is ([~] ()), '', "[~] () eq ''";
@@ -38,6 +38,7 @@ is ([>=] ()), Bool::True, "[>=] () eq True";
 is ([~~] ()), Bool::True, "[~~] () eq True";
 is ([!~~] ()), Bool::False, "[!~~] () eq False";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
+#?rakudo skip "[!eq] not implemented"
 is ([!eq] ()), Bool::False, "[!eq] () eq False";
 is ([lt] ()), Bool::True, "[lt] () eq True";
 is ([le] ()), Bool::True, "[le] () eq True";
@@ -47,6 +48,7 @@ is ([=:=] ()), Bool::True, "[=:=] () eq True";
 is ([!=:=] ()), Bool::False, "[!=:=] () eq False";
 is ([===] ()), Bool::True, "[===] () eq True";
 is ([!===] ()), Bool::False, "[!===] () eq False";
+#?rakudo 9 skip "[...] not implemented"
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
 is ([!eqv] ()), Bool::False, "[!eqv] () eq False";
 is ([&&] ()), Bool::True, "[&&] () eq True";
