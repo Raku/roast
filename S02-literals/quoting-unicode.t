@@ -35,8 +35,6 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 }
 
-#?DOES 70
-#?rakudo skip 'unicode'
 {
     my %ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',
