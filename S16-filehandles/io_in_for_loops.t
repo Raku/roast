@@ -4,7 +4,7 @@ use Test;
 # L<S16/"Filehandles, files, and directories"/"open">
 # L<S16/"Filehandles, files, and directories"/"close">
 
-plan 37;
+plan 49;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -71,9 +71,11 @@ my $filename = 'tempfile';
     my $fh = open($filename);
     my $num = 1;
     for =$fh -> $line {
+        #?rakudo skip "io iterator laziness unspecced"
         is($line, "$num", '... got the right line ((=$fh) controlled loop)');
         $num++;
         my $line2 = =$fh;
+        #?rakudo skip "io iterator laziness unspecced"
         is($line2, "$num", '... got the right line2 ((=$fh) controlled loop)');
         $num++;
     }
@@ -85,9 +87,11 @@ my $filename = 'tempfile';
     my $fh = open($filename);
     my $num = 1;
     for =$fh -> $line {
+        #?rakudo skip "io iterator laziness unspecced"
         is($line, "$num", '... got the right line (=$fh controlled loop)');
         $num++;
         my $line2 = =$fh;
+        #?rakudo skip "io iterator laziness unspecced"
         is($line2, "$num", '... got the right line2 (=$fh controlled loop)');
         $num++;
     }
