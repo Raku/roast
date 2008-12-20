@@ -83,16 +83,13 @@ is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");
 is('$world \qq[@list[]] %hash{}', '$world 1 2 %hash{}', "interpolate quoting constructs in ''");
 
-#?rakudo todo '\c interpolation'
 is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
 
 # L<S02/Literals/separating the numbers with comma:>
 is("x  \x[41,42,43]  x",     "x  ABC  x",  "\\x[] allows multiple chars (1)");
 is("x  \x[41,42,00043]  x",  "x  ABC  x",  "\\x[] allows multiple chars (2)");
-#?rakudo 2 todo '\c interpolation'
 is("x  \c[65,66,67]  x",     "x  ABC  x",  "\\c[] allows multiple chars (1)");
 is("x  \c[65,66,000067]  x", "x  ABC  x",  "\\c[] allows multiple chars (2)");
 
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
-#?rakudo todo '\c interpolation'
 is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
