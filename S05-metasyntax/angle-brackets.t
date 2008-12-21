@@ -19,6 +19,7 @@ character classes), and those are referenced at the correct spot.
 
 # the first character is whitespace
 {
+    #?rakudo 2 skip '< list > not implemented in regex'
     is('aaaaa' ~~ /< a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (space)');
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
@@ -32,6 +33,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # so if the first character is a left parenthesis, it really is a call
+#?rakudo skip '<test()> not implemented'
 {
     my $pass = 0;
     my sub test (Int $a = 1) {$pass += $a}
@@ -39,6 +41,7 @@ character classes), and those are referenced at the correct spot.
     ok($pass, 'function call (no arguments)');
 }
 
+#?rakudo skip '<test()> not implemented'
 {
     my $pass = 0;
     my sub test (Int $a) {$pass += $a}
@@ -69,6 +72,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character is a colon followed by whitespace the
 # rest of the text is taken as a list of arguments to the method
+#?rakudo skip 'colon arguments not implemented'
 {
     my $called_ok = 0;
     my sub test ($a, $b) {$called_ok++ if $a && $b}
@@ -89,11 +93,12 @@ character classes), and those are referenced at the correct spot.
 # XXX "section ``Extensible metasyntax (<...>)'' not found in S05." - how to
 # reference that section?
 {
-    is('blorg' ~~ /<.alpha>/, '', 'leading . prevents capturing');
+    is('blorg' ~~ /<.alpha>/, 'b', 'leading . prevents capturing');
 }
 
 # If the dot is not followed by an identifier, it is parsed as
 # a "dotty" postfix of some type, such as an indirect method call
+#?rakudo skip 'indirect subrule call not implemented'
 {
     # placeholder test for <.$foo>
     lives_ok({
@@ -104,6 +109,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading $ indicates an indirect subrule. The variable must contain
 # either a Regex object, or a string to be compiled as the regex.
+#?rakudo skip 'indirect subrule call not implemented'
 {
     my $rule = rx/bar/;
     my $str  = 'qwe';
@@ -116,6 +122,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading :: indicates a symbolic indirect subrule
+#?rakudo skip 'indirect subrule call not implemented'
 {
     my $name = 'alpha';
     ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');
@@ -123,6 +130,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading @ matches like a bare array except that each element is
 # treated as a subrule (string or Regex object) rather than as a literal
+#?rakudo skip '<@array> not implemented'
 {
     my @first = <a b c .**4>;
     ok('dddd' ~~ /<@first>/, 'strings are treated as a subrule in <@foo>');
@@ -133,6 +141,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading % matches like a bare hash except that
 # a string value is always treated as a subrule
+#?rakudo skip '<%hash> not implemented'
 {
     my %first = {'<alpha>' => '', 'b' => '', 'c' => ''};
     ok('aeiou' ~~ /<%first>/, 'strings are treated as a subrule in <%foo>');
@@ -143,11 +152,13 @@ character classes), and those are referenced at the correct spot.
 
 # A leading { indicates code that produces a regex to be
 # interpolated into the pattern at that point as a subrule:
+#?rakudo skip '<{code}> not implemented'
 {
     ok('abcdef' ~~ /<{'<al' ~ 'pha>'}>/, 'code interpolation');
 }
 
 # A leading & interpolates the return value of a subroutine call as a regex.
+#?rakudo skip '<&foo()> not implemented'
 {
     my sub foo {return '<alpha>'}
     ok('abcdef' ~~ /<&foo()>/, 'subroutine call interpolation');
@@ -155,6 +166,7 @@ character classes), and those are referenced at the correct spot.
 
 # If it is a string, the compiled form is cached with the string so that
 # it is not recompiled next time you use it unless the string changes.
+#?rakudo skip '<$subrule> not implemented'
 {
     my $counter = 0;
     my $subrule = '{$counter++; \'<alpha>\'}';
@@ -167,6 +179,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading ?{ or !{ indicates a code assertion
+#?rakudo skip '<?{...}> and <!{...}> not implemented'
 {
     ok('192' ~~ /(\d**1..3) <?{$0 < 256}>/, '<?{...}> works');
     ok(!('992' ~~ /(\d**1..3) <?{$0 < 256}>/), '<?{...}> works');
