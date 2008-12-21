@@ -4,33 +4,33 @@ plan 8;
 
 # L<S02/"Built-In Data Types" /Perl 6 should by default make standard IEEE floating point concepts visible>
 
-#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $x = Inf;
-    
-    cmp_ok( $x, &infix:<==>, Inf,   'numeric equal' );
-    cmp_ok( $x, &infix:<eq>, 'Inf', 'string equal'  );
+
+    ok( $x == Inf  , 'numeric equal');
+    #?rakudo skip 'Inf stringification'
+    ok( $x eq 'Inf', 'string equal');
 }
 
-#?rakudo skip 'Parse Error: Statement not terminated properly'
 {
     my $x = -Inf;
-    cmp_ok( $x, &infix:<==>, -Inf,   'negative numeric equal' );
-    cmp_ok( $x, &infix:<eq>, '-Inf', 'negative string equal'  );
+    ok( $x == -Inf,   'negative numeric equal' );
+    #?rakudo skip 'Inf stringification'
+    ok( $x eq '-Inf', 'negative string equal' );
 }
 
-#?rakudo skip 'Parse Error: Statement not terminated properly'
+#?rakudo todo 'integer Inf'
 {
     my $x = int( Inf );
-    cmp_ok( $x, &infix:<==>,  Inf,  'int numeric equal' );
-    cmp_ok( $x, &infix:<eq>, 'Inf', 'int string equal', :todo<bug> );
+    ok( $x == Inf,   'int numeric equal' );
+    ok( $x eq 'Inf', 'int string equal' );
 }
 
-#?rakudo skip 'Parse Error: Statement not terminated properly'
+#?rakudo todo 'integer Inf'
 {
     my $x = int( -Inf );
-    cmp_ok( $x, &infix:<==>,  -Inf,   'int negative numeric equal');
-    cmp_ok( $x, &infix:<eq>, '-Inf',  'int negative string equal', :todo<bug> );
+    ok( $x == -Inf,   'int numeric equal' );
+    ok( $x eq '-Inf', 'int string equal' );
 }
 
 # Inf should == Inf. Additionally, Inf's stringification (~Inf), "Inf", should
