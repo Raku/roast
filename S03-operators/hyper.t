@@ -14,7 +14,6 @@ plan 54;
  # binary infix
 my @r;
 my @e;
-#?rakudo skip 'unicode hyper ops'
 {
         @r = (1, 2, 3) »+« (2, 4, 6);
         @e = (3, 6, 9);
