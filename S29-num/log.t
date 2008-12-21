@@ -24,7 +24,6 @@ is_approx(log10(0.1), -0.9999999999999998, 'got the log10 of 0.1');
 # I use 1i instead of i since I don't know if a bare i will be supported
  
 # log(exp(i pi)) = i pi log(exp(1)) = i pi
-#?rakudo 8 skip 'Complex PMC RT #59630'
 #?pugs 2 todo 'feature'
 is_approx(log(-1 + 0i,), 0 + 1i * pi, "got the log of -1");
 ##?rakudo todo 'complex log10()'
@@ -33,7 +32,7 @@ is_approx(log10(-1 + 0i), 0 + 1i * pi / log(10), "got the log10 of -1");
 # log(exp(1+i pi)) = 1 + i pi
 #?pugs 2 todo 'feature'
 is_approx(log(-exp(1) + 0i), 1 + 1i * pi, "got the log of -e");
-##?rakudo 1 todo 'complex log10()'
+#?rakudo 1 todo 'complex log10()'
 is_approx(log10(-10 + 0i), 1 + 1i * pi / log(10), "got the log10 of -10");
 is_approx(log10(10), 1.0, 'log10(10)=1');
 
