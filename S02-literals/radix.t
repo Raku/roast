@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 194;
+plan 161;
 
 # L<S02/Literals/":10<42>">
 
@@ -216,9 +216,9 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +"1.234e3", 1234, "basic exponential form works (1)";
     is +"1.234E3", 1234, "basic exponential form works (2)";
 }
-#?rakudo todo "patch has not been applied, see RT# 59222"
+
 {
-    #is +":2<0101>", 5, "radix 2 notation works";
+    is +":2<0101>", 5, "radix 2 notation works";
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":32<2q>", 90, "radix 32 notation works";
     is +":100<1e>", 114, "high order radix (limited alphabet) works";
@@ -243,8 +243,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +":2<01_>", 0, "underscore seperator misuse parsefail works (3)";
     is +":_2_<_0_1_>_", 0, "underscore seperator misuse parsefail works (4)";
     is +":2<1.3>", 0, "invalid radix conversion alphabet parsefail works";
-    #?rakudo todo 'Str -> Num conversion'
-    is +"0b1.1e10", 0, "ambiguious scientific notation parsefail works";
+    is +"0b1.1e10", 1, "0b1.1e10 parses as 0b1";
     is +":2<10dlk", 0, "missing closing angle bracket";
     is +":2lks01>", 0, "completely invalid radix notation";
 }
