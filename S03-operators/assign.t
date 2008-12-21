@@ -114,7 +114,6 @@ plan 309;
 
      my (@b, $c);
      (*, @b, $c) = 1..4;
-     #?rakudo 2 todo 'skip items in list assignment with bare $ '
      is(~@b, "2 3 4", 'list assignment (*, @) = @ works');
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
