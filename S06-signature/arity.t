@@ -22,7 +22,6 @@ is &a_three.arity,  3, '3 arity &sub';
 is &a_four.arity,   4, '4 arity &foo';
 
 is &o_zero.arity,   0, 'arity 0 sub with optional params';
-#?rakudo 2 todo '.arity should not count optional named params'
 is &o_one.arity,    1, 'arity 1 sub with optional params';
 is &o_two.arity,    2, 'arity with optional and required named params';
 
