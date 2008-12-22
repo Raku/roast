@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Attributes/"Class attributes are declared">
 #L<S12/Class methods/metaclass method always delegated>
 
-plan 14;
+plan 20;
 
 class Foo {
     our $.bar = 23;
@@ -50,5 +50,29 @@ my $test7 = 0;
 lives_ok {$test7 = $test4.^bar},
     'class attribute accessible via ^name called on instance', :todo<feature>;
 is $test7, 23, 'class attribute via $obj.^name really works', :todo<feature>;
+
+# L<S12/Class methods/"you can associate a class method with the current
+# metaclass instance">
+
+#?rakudo skip '"method ^classmethod" syntax'
+{
+    class T1 {
+        our $c = 0;
+        method ^count {
+            return $c;
+        }
+        method mi { ++$c };
+        method md { --$c };
+    }
+
+    my ($a, $b, $c) = map { T1.new() }, 1..3;
+    is $c.mi,       1, 'can increment class variable in instance method';
+    is $b.mi,       2, '.. and the class variable is really shared';
+    is $a.count,    2, 'can call the class method on an object';
+    is T1.count,    2, '... and on the proto object';
+    is T1.^count,   2, '... and on the proto object with Class.^method';
+    is $a.^count,   2, '... and $obj.^method'
+
+}
 
 # vim: ft=perl6

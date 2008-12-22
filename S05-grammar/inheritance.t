@@ -18,8 +18,8 @@ grammar Grammar::Bar is Grammar::Foo {
     token any { <foo> | <bar> };
 };
 
-is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match');
 is(~('bar' ~~ /^<Grammar::Bar::bar>$/), 'bar', 'got right match');
+is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match');
 is(~('foo' ~~ /^<Grammar::Bar::any>$/), 'foo', 'got right match');
 is(~('bar' ~~ /^<Grammar::Bar::any>$/), 'bar', 'got right match');
 
