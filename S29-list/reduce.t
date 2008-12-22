@@ -55,3 +55,6 @@ plan 11;
   is(@reftypes[1], "Hash", "second application of reduced hash subscript passed in a Hash");
   is(@reftypes[2], "Hash", "third application of reduced hash subscript passed in a Hash");
 }
+
+#?rakudo todo 'Reduce of one element list. See #61610'
+is( list(1).reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
