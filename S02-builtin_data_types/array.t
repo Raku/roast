@@ -134,7 +134,6 @@ my @array2 = ("test", 1, undef);
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
 
-#?rakudo skip "no whatever star yet"
 #?pugs skip "no whatever star yet"
 {
     my @array12 = ('a', 'b', 'c', 'e'); 
@@ -179,7 +178,7 @@ my @array2 = ("test", 1, undef);
   is @arr[0], "new value", "modifying of array contents (constants) works";
 }
 
-#?rakudo skip "no whatever star yet"
+#?rakudo skip "access out of array bounds"
 #?pugs skip "no whatever star yet"
 {
   my @arr;
@@ -189,7 +188,7 @@ my @array2 = ("test", 1, undef);
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
-#?rakudo skip "no whatever star yet"
+#?rakudo skip "access out of array bounds"
 #?pugs skip "no whatever star yet"
 {
   my @arr = (23);

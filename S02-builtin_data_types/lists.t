@@ -16,7 +16,6 @@ plan 16;
   is $foo, 23, "assigning a list element changed the original variable", :todo<bug>;
 }
 
-#?rakudo skip "Whatever star"
 {
   my $foo = 42;
 
