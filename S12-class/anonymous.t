@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<S12/Classes/"Perl 6 supports multiple inheritance, anonymous classes">
-plan 6;
+plan 10;
 
 # Create and instantiate empty class; check .WHAT works and stringifies to
 # empty string.
@@ -23,3 +23,20 @@ is($t2.bar, 28,      'can call methods on anonymous classes');
 my $c3 = class { has $.x };
 my $t3 = $c3.new(x => 42);
 is($t3.x, 42,        'anonymous classes can have attributes');
+
+{
+    my $class;
+    lives_ok { $class = class { method meth() { return 42 } }} ,
+    "anonymous class creation";
+
+    my $a;
+    ok ($a = $class.new), "instantiation of anonymous class";
+    #?rakudo skip '"No execption handler and no message"'
+    is $a.meth, 42, "calling a method on an instance of an anonymous class (1)";
+
+# And the same w/o using a $class variable:
+    #?rakudo skip 'anonymous classes without temp variable'
+    is (class { method meth() { return 42 } }).new.meth, 42,
+    "calling a method on an instance of an anonymous class (2)";
+
+}

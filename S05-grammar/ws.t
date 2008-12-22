@@ -2,6 +2,9 @@ use v6;
 use Test;
 plan 8;
 
+# L<S05/Modifiers/"causes whitespace sequences to be considered">
+# L<S05/Modifiers/"any grammar is free to override the rule">
+
 # test that implicit and explicit <.ws> rules are overridable
 grammar T1 {
     token   ws { 'x' };

@@ -8,6 +8,9 @@ version 0.3 (12 Apr 2004), file t/noncap.t.
 
 =end pod
 
+# L<S05/Bracket rationalization/"[...] is no longer a character class.
+# It now delimits a non-capturing group.">
+
 plan 8;
 
 if !eval('("a" ~~ /a/)') {

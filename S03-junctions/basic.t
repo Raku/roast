@@ -10,6 +10,8 @@ More Junction Tests
 
 These tests are derived from the Perl6 and Parrot Essentials Chapter 4, page 42
 
+L<S03/Junctive operators/>
+
 =end pod
 
 my $j = any(1, 2, 3);

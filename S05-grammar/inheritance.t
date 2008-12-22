@@ -3,6 +3,8 @@ use Test;
 
 plan 11;
 
+# L<S05/Grammars/"Like classes, grammars can inherit">
+
 # tests namespace, inheritance and override
 
 grammar Grammar::Foo {

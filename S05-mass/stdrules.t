@@ -10,6 +10,8 @@ version 0.3 (12 Apr 2004), file t/stdrules.t.
 It has (hopefully) been, and should continue to be, updated to
 be valid perl6.
 
+L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
+
 =end pod
 
 plan 184;

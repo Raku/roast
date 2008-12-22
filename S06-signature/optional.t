@@ -1,7 +1,9 @@
 use v6;
 use Test;
 
-plan 10;
+# L<S06/Optional parameters/>
+
+plan 11;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -34,5 +36,10 @@ sub opt_typed(Int $p?) { defined($p) ?? $p !! 'undef' };
 is opt_typed(2), 2,        'can pass optional typed param';
 #?rakudo skip 'optional typed params, RT #61528'
 is opt_typed() , 'undef',  'can leave out optional typed param';
+
+# L<S06/Parameters and arguments/"required positional parameters must come
+# before those bound to optional positional">
+
+eval_dies_ok 'sub wrong ($a?, $b)', 'options params before required ones are forbidden';
 
 # vim: ft=perl6
