@@ -25,7 +25,6 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
     "'do' can't take the 'given' modifier";
 
 # L<S04/The do-once loop/statement "prefixing with" do>
-#?rakudo skip 'my($a, $b, $c) = "a" .. "c" not implemented'
 {
     my $x;
     my ($a, $b, $c) = 'a' .. 'c';
@@ -35,14 +34,17 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
 
     $x = do if !$a { $b } else { $c };
     is $x, 'c', "prefixing 'if' statement with 'do' (else)";
+}
 	
 =begin comment
 	If the final statement is a conditional which does not execute 
 	any branch, the return value is undef in item context and () 
 	in list context.
 =end comment
+#?rakudo skip 'if returning undef'
+{
 	$x = do if 0 { 1 } elsif 0 { 2 };
-	is $x, undef, 'when if does not execute any branch, return undef';
+	ok !$x.defined, 'when if does not execute any branch, return undef';
 }
 
 {
