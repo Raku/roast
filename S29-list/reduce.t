@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 11;
+plan 12;
 
 # L<S29/List/=item reduce>
 
