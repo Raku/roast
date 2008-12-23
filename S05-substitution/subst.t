@@ -107,5 +107,5 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2), :x(3)), 
        'a x c x e x g h',
-       '.subst with :nth(2) and :x(2)';
+       '.subst with :nth(2) and :x(3)';
 }
