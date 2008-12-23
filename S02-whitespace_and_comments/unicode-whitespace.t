@@ -102,7 +102,6 @@ is(eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "HAIR SPACE");
 
-#?rakudo 2 todo "LINE/PARAGRAPH SEPARATOR are ws?"
 is(eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "LINE SEPARATOR");
@@ -159,7 +158,6 @@ is(eval('foo\ .id'), 'a', 'long dot with FIGURE SPACE');
 is(eval('foo\ .id'), 'a', 'long dot with PUNCTUATION SPACE');
 is(eval('foo\ .id'), 'a', 'long dot with THIN SPACE');
 is(eval('foo\ .id'), 'a', 'long dot with HAIR SPACE');
-#?rakudo 2 skip "LINE/PARAGRAPH SEPARATOR are ws?"
 is(eval('foo\ .id'), 'a', 'long dot with LINE SEPARATOR');
 is(eval('foo\ .id'), 'a', 'long dot with PARAGRAPH SEPARATOR');
 is(eval('foo\ .id'), 'a', 'long dot with NARROW NO-BREAK SPACE');
