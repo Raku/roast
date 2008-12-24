@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 60;
+plan 59;
 
 # L<S29/"List"/"=item map">
 
@@ -108,15 +108,11 @@ my @list = (1 .. 5);
   is ~(1,2,3,4).map:{ $^a+$^b+$^c+$^d+$^e   }, "10",  "map() works with 5-ary functions";
 }
 
-# .map shouldn't work on non-arrays
-## XXX pmichaud, 2008-07-01:  .map should work on non-list values
 {
   #?pugs 2 todo 'bug'
-  dies_ok { 42.map: { $_ } },    "method form of map should not work on numbers";
-  dies_ok { "str".map: { $_ } }, "method form of map should not work on strings";
-  #?rakudo skip "adverbial block"
-  is ~(42,).map:{ $_ }, "42",   "method form of map should work on arrays";
-};
+  is(42.map({$_}),    42,       "method form of map works on numbers");
+  is('str'.map({$_}), 'str',    "method form of map works on strings");
+}
 
 =begin pod
 
@@ -131,15 +127,11 @@ should be equivalent to
 
 =end pod
 
-##  XXX pmichaud, 2008-07-01:   As the test is written below, the
-##    @expected and "map of ..." arguments are arguments of .map(...)
-##    and not of is(...).  See S12:406.
-#?rakudo skip "syntax error in test"
 {
   my @expected = ("foo","bar");
-  @expected = map { substr($_,1,1) }: @expected;
+  @expected = map { substr($_,1,1) }, @expected;
 
-  is(("foo","bar").map: { $_.substr(1,1) }, @expected, "map of constant list works");
+  is((("foo","bar").map: { $_.substr(1,1) }), @expected, "map of constant list works");
 }
 
 

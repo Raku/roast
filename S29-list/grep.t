@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 29;
+plan 28;
 
 my @list = (1 .. 10);
 
@@ -56,15 +56,10 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
-# .grep shouldn't work on non-arrays
-##  XXX pmichaud, 2008-07-01:
-##    p6l says that .grep should work on non-list values.
 {
   #?pugs 2 todo 'bug'
-  dies_ok { 42.grep: { $_ } },    "method form of grep should not work on numbers";
-  dies_ok { "str".grep: { $_ } }, "method form of grep should not work on strings";
-  #?rakudo skip "Arity problem"
-  is ~(42,).grep: { 1 }, "42",    "method form of grep should work on arrays";
+  is(42.grep({ 1 }), "42",     "method form of grep works on numbers");
+  is('str'.grep({ 1 }), 'str', "method form of grep works on strings");
 }
 
 #

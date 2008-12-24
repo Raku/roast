@@ -34,12 +34,11 @@ plan 12;
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
-# .reduce shouldn't work on non-arrays
-##  XXX pmichaud, 2008-07-01:  .reduce should work on non-list values
+
 {
 #?pugs 2 todo 'bug'
-  dies_ok { 42.reduce: { $^a + $^b } },    "method form of reduce should not work on numbers";
-  dies_ok { "str".reduce: { $^a + $^b } }, "method form of reduce should not work on strings";
+  is( 42.reduce( {$^a+$^b} ), 42,  "method form of reduce works on numbers");
+  is( 'str'.reduce( {$^a+$^b} ), 'str', "method form of reduce works on strings");
   is ((42,).reduce: { $^a + $^b }), 42,      "method form of reduce should work on arrays";
 }
 
