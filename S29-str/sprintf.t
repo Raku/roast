@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 41;
 
 # L<S29/Str/"identical to" "C library sprintf">
 
@@ -54,3 +54,8 @@ is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');
 #?rakudo todo "%p doesn't yet throw exception"
 dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');
+
+is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
+is sprintf('%s', -NaN),             NaN,    'sprintf %s handles NaN';
+is sprintf('%s', Inf),              Inf,    'sprintf %s handles Inf';
+is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
