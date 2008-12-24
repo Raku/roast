@@ -11,7 +11,7 @@ L<S29/Container/"=item zip">
 
 =end pod
 
-plan 9;
+plan 10;
 
 {
     my @a = (0, 2, 4);
@@ -76,4 +76,11 @@ plan 9;
     is(@a, [1, 3], "first half of two zipped arrays as lvalues");
 #?pugs todo 'unimpl'
     is(@b, [2, 4], "second half of the lvalue zip");
+}
+
+
+#?rakudo todo 'infix:<Z> imposes list context on its arguments'
+{
+    my @a = (1..3, 5) Z (6..8, 10);
+    is(@a, [1, 6, 2, 7, 3, 8, 5, 10], 'infix:<Z> imposes list context');
 }
