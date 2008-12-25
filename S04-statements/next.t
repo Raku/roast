@@ -114,7 +114,6 @@ Check that C<next> works on the correct loop/block
     is($bar, "ABCCBCCABCCBCC", "next works on inner loop of 3");
 }
 
-#?rakudo todo 'next on while-loops'
 {
     my @log;    
     my $i = 0;
@@ -138,7 +137,6 @@ Check that C<next> works on the correct loop/block
     is($i, 2, '$i++ executed only twice, because next ')
 }
 
-#?rakudo todo 'next on loop-loops'
 {
     my $i = 0;
     my $j;
