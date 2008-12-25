@@ -8,7 +8,7 @@ plan 58;
 # L<S09/Hashes>
 
 my %hash1; 
-isa_ok(%hash1, 'Hash');
+isa_ok(%hash1, Hash);
 %hash1{"one"} = 5; 
 is(%hash1{"one"}, 5, 'lvalue hash assignment works (w/ double quoted keys)');
 
@@ -22,26 +22,26 @@ is(%hash1<three>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)');
 # basic hash creation w/ comma seperated key/values
 
 my %hash2 = ("one", 1);
-isa_ok(%hash2, 'Hash');
+isa_ok(%hash2, Hash);
 is(%hash2{"one"}, 1, 'comma seperated key/value hash creation works');
 is(%hash2<one>, 1, 'unquoted <key> fetching works');
 
 my %hash3 = ("one", 1, "two", 2);
-isa_ok(%hash3, 'Hash');
+isa_ok(%hash3, Hash);
 is(%hash3{"one"}, 1, 'comma seperated key/value hash creation works with more than one pair');
 is(%hash3{"two"}, 2, 'comma seperated key/value hash creation works with more than one pair');
 
 # basic hash creation w/ => seperated key/values (pairs?)
 
 my %hash4;
-isa_ok(%hash4, 'Hash');
+isa_ok(%hash4, Hash);
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) seperated key/value has creation works');
 
 # hash slicing
 
 my %hash5 = ("one", 1, "two", 2, "three", 3);
-isa_ok(%hash5, 'Hash');
+isa_ok(%hash5, Hash);
 
 my @slice1 = %hash5{"one", "three"};
 is(+@slice1, 2, 'got the right amount of values from the %hash{} slice');
@@ -70,7 +70,7 @@ is(%hash5<foo>[1], 1, 'value assigned successfully with arrayref in list context
 # keys 
 
 my %hash6 = ("one", 1, "two", 2, "three", 3);
-isa_ok(%hash6, 'Hash');
+isa_ok(%hash6, Hash);
 
 my @keys1 = sort keys %hash6;
 is(+@keys1, 3, 'got the right number of keys');
@@ -87,7 +87,7 @@ is(@keys2[2], 'two', 'got the right key');
 # values
 
 my %hash7 = ("one", 1, "two", 2, "three", 3);
-isa_ok(%hash7, 'Hash');
+isa_ok(%hash7, Hash);
 
 my @values1 = sort values %hash7;
 is(+@values1, 3, 'got the right number of values');
@@ -104,7 +104,7 @@ is(@values1[2], 3, 'got the right values');
 # misc stuff ...
 
 my %hash8;
-isa_ok(%hash8, 'Hash');
+isa_ok(%hash8, Hash);
 %hash8 = (:one, :key<value>, :three(3));
 is(%hash8{'one'}, 1, 'colonpair :one');
 is(%hash8{'key'}, 'value', 'colonpair :key<value>');
@@ -116,7 +116,7 @@ my $key;
 my $val;
 
 my %hash9; 
-isa_ok(%hash9, 'Hash');
+isa_ok(%hash9, Hash);
 %hash9{1} = 2;
 
 for (%hash9.kv) -> $k,$v { 
@@ -138,11 +138,11 @@ is(%hash10<1>, 2, "assignment of pointy qw to hash");
 
 sub test1{
     my %sane = hash ('a'=>'b');
-    is(~%sane.WHAT,'Hash','%sane is a Hash');
+    is(~%sane.WHAT,Hash,'%sane is a Hash');
 }
 
 sub test2 (Hash %hash) returns Void {
-    is(~%hash.WHAT,'Hash','%hash is a Hash');
+    is(~%hash.WHAT,Hash,'%hash is a Hash');
 }
 
 my %h = hash (a => 'b');

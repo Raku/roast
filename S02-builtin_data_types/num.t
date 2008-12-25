@@ -4,66 +4,60 @@ use Test;
 
 #L<S02/Built-In Data Types/Perl intrinsically supports big integers>
 
-plan 47;
+plan 48;
 {
     my $a = 1; "$a";
-    isa_ok($a, 'Int');
+    isa_ok($a, Int);
     is($a, "1", '1 stringification works');
 }
 
 {
     my $a = -1; "$a";
-    isa_ok($a, 'Int');
+    isa_ok($a, Int);
     is($a, "-1", '-1 stringification works');
 }
 
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
+#?rakudo skip "no Rat yet"
 {
-    my $a = 1.0; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    my $a = 1 div 1;
+    isa_ok($a, Rat);
     is($a, "1", '1.0 stringification works');
 }
 
 {
-    my $a = -1.0; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    my $a = -1.0;
+    isa_ok($a, Num);
     is($a, "-1", '-1 stringification works');
 }
 
 {
-    my $a = 0.1; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    my $a = 0.1;
+    isa_ok($a, Num);
     is($a, "0.1", '0.1 stringification works');
 }
 
 {
     my $a = -0.1; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    isa_ok($a, Num);
     is($a, "-0.1", '-0.1 stringification works');
 }
 
 {
     my $a = 10.01; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    isa_ok($a, Num);
     is($a, "10.01", '10.01 stringification works');
 }
 
 {
     my $a = 1e3; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    ok $a ~~ Num, '1e3 conforms to Num';
     is($a, "1000", '1e3 stringification works');
 }
 
 {
     my $a = 10.01e3; "$a";
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    isa_ok($a, Num);
     is($a, "10010", '10.01e3 stringification works');
 }
 
@@ -71,19 +65,19 @@ plan 47;
 
 {
     my $a = 0b100; "$a";
-    isa_ok($a, 'Int');
+    isa_ok($a, Int);
     is($a, "4", '0b100 (binary) stringification works');
 }
 
 {
     my $a = 0x100; "$a";
-    isa_ok($a, 'Int');
+    isa_ok($a, Int);
     is($a, "256", '0x100 (hex) stringification works');
 }
 
 {
     my $a = 0o100; "$a";
-    isa_ok($a, 'Int');
+    isa_ok($a, Int);
     is($a, "64", '0o100 (octal) stringification works');
 }
 
@@ -98,17 +92,19 @@ plan 47;
 }
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
 
+#?rakudo skip 'Rat, infix:<div>'
+isa_ok(1 div 1, Rat);
+
 {
     my $a = 80000.0000000000000000000000000;
-    #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    isa_ok($a, Num);
     ok($a == 80000.0, 'trailing zeros compare correctly');
 }
 
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
     #?rakudo todo "no Rat yet"
-    isa_ok($a, 'Rat');
+    isa_ok($a, Rat);
     ok($a == 10.0, 'trailing zeros compare correctly');
 }
 

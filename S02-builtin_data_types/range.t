@@ -24,7 +24,7 @@ is @r, [1, 2, 3, 4, 5], 'got the right array';
 # Range of Str
 
 my $r = 'a'..'c';
-isa_ok $r, 'Range';
+isa_ok $r, Range;
 # XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 my @r = $r;

@@ -110,7 +110,7 @@ my @e;
         is(~@r, ~@e, "auto dimension upgrade on lhs ASCII notation");
 }
 
-#?rakudo skip 'list level extension'
+#?rakudo todo 'list level extension'
 { # list level extension
         @r = (1,2,3,4) >>+>> (1,2);
         @e = (2,4,3,4);
@@ -157,7 +157,7 @@ my @e;
         is(~@r, ~@e, "list-level element extension on lhs");
 };
 
-#?rakudo skip '>>.'
+#?rakudo todo '>>.'
 { # unary postfix with integers
         my @r;
         eval '@r = (1, 4, 9)».sqrt';
@@ -170,7 +170,7 @@ my @e;
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
 };
 
-#?rakudo skip '>>.'
+#?rakudo todo '>>.'
 { # unary postfix again, but with a twist
         my @r;
         eval '@r = ("f", "oo", "bar")».chars';

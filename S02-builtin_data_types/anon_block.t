@@ -37,15 +37,15 @@ is($anon_block(), 1, '{} <anon block> works');
 { 
     # pointy subs
     my $pointy_block = -> { 1 };
-    isa_ok($pointy_block, 'Block');
+    isa_ok($pointy_block, Block);
     is($pointy_block(), 1, '-> {} <"pointy" block> works');
 
     my $pointy_block_w_arg = -> $arg { 1 + $arg };
-    isa_ok($pointy_block_w_arg, 'Block');
+    isa_ok($pointy_block_w_arg, Block);
     is($pointy_block_w_arg(3), 4, '-> $arg {} <"pointy" block w/args> works');
 
     my $pointy_block_w_multiple_args = -> $arg1, $arg2 { $arg1 + $arg2 };
-    isa_ok($pointy_block_w_multiple_args, 'Block');
+    isa_ok($pointy_block_w_multiple_args, Block);
     is($pointy_block_w_multiple_args(3, 4), 7, '-> $arg1, $arg2 {} <"pointy" block w/multiple args> works');
 
     my $pointy_block_nested = -> $a { -> $b { $a + $b }};

@@ -182,7 +182,6 @@ plan 309;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
-#?rakudo skip 'arrays on LHS of list assignment'
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
@@ -194,7 +193,6 @@ plan 309;
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
-#?rakudo skip "unknown reasons"
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);

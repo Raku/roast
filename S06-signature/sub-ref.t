@@ -46,8 +46,8 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
 {
     my $foo = { 100 + $^x };
-    isa_ok($foo, 'Code');
-    isa_ok($foo, 'Block');
+    isa_ok($foo, Code);
+    isa_ok($foo, Block);
     is $foo.(42), 142,              "basic invocation of a pointy block with a param";
     dies_ok { $foo.() }, "invocation of an parameterized block expecting a param without a param dies";
 }

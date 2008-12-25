@@ -12,7 +12,7 @@ plan 3;
 
 my $fh = open $*PROGRAM_NAME;
 ok($fh, "could open self");
-isa_ok($fh, 'IO');
+isa_ok($fh, IO);
 
 my $line;
 eval '

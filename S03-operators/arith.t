@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 192;
+plan 194;
 
 my $five = abs(-5);
 
@@ -37,10 +37,10 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
         $error   /= $lhs; # Syntax highlighting fix
         if ($todo) {
             #&ok.nextwith($error <1e-9,$todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
-            ok($error <1e-9,$todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
+            ok($error < 1e-9, $todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
         } else {
             #&ok.nextwith($error <1e-9);
-            ok($error <1e-9);
+            ok($error < 1e-9);
         }
     }
 }
@@ -315,6 +315,12 @@ is_approx 2**2.2, 4.59479341998814;
 is_approx 2.2**2.2, 5.66669577875008;
 is 1**0, 1;
 is 1**1, 1;
+
+#?rakudo todo 'infix:<**> with complex numbers'
+{
+    is_approx(-1, (0 + 1i)**2, "i^2 == -1");
+    is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
+}
 
 {
 # Inf

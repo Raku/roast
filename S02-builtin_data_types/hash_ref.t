@@ -25,14 +25,14 @@ plan 32;
 # basic hash creation w/ comma seperated key/values
 {
     my $hash = hash("1st", 1);
-    isa_ok $hash, 'Hash';
+    isa_ok $hash, Hash;
     is $hash{"1st"}, 1, 'comma seperated key/value hash creation works';
     is $hash<1st>,   1, 'unquoted <key> fetching works';
 }
 
 {
     my $hash = hash("1st", 1, "2nd", 2);
-    isa_ok $hash, 'Hash';
+    isa_ok $hash, Hash;
     is $hash{"1st"}, 1,
       'comma seperated key/value hash creation works with more than 1st pair';
     is $hash{"2nd"}, 2,

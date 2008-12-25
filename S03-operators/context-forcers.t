@@ -205,7 +205,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
-    isa_ok ^10, 'Range';
+    isa_ok ^10, Range;
 
     # now the same for ^@array, in which case prefix:<^>
     # imposes numeric context
@@ -216,5 +216,5 @@ sub eval_elsewhere($code){ eval($code) }
     ok 9.9 ~~ ^@a, '9.99 is in ^10';
     ok  10 !~~ ^@a, '10 is not in ^10';
     is (^@a).elems, 10, '^10 has 10 elems';
-    isa_ok ^@a, 'Range';
+    isa_ok ^@a, Range;
 }

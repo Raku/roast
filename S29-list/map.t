@@ -91,7 +91,7 @@ my @list = (1 .. 5);
             'heuristic for block - looks like a closure';
 
     my %result = map {; $_ => ($_*2) }, @list;
-    isa_ok(%result, 'Hash');
+    isa_ok(%result, Hash);
     is(%result<1>, 2,  'got the value we expected');
     is(%result<2>, 4,  'got the value we expected');
     is(%result<3>, 6,  'got the value we expected');

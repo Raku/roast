@@ -15,7 +15,7 @@ ok((1 p5=> 2) !~~ Pair, 'p5=> does not construct a Pair');
 
 {
     sub whatever {
-        is(@_, <a b c d>, 'arguments passed via p5=> are positional, not named');
+        is(@_.join('|'), 'a|b|c|d', 'arguments passed via p5=> are positional, not named');
         is(%_.keys.elems, 0, 'arguments passed via p5=> do not appear in %_');
     }
 
@@ -25,4 +25,5 @@ ok((1 p5=> 2) !~~ Pair, 'p5=> does not construct a Pair');
 # S03:1465 says that p5=> is the same as a comma
 # We'll test that it doesn't quote the LHS.
 
-isnt(eval 'my @arr = abc p5=> def;', <abc def>, 'p5=> does not quote the LHS');
+#?rakudo skip 'Null PMC access in type()'
+isnt(eval('my @arr = abc p5=> def;'), <abc def>, 'p5=> does not quote the LHS');

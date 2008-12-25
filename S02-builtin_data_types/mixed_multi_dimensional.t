@@ -66,7 +66,7 @@ Some deeper tests were already added.
     is(+@array, 4, 'got 4 elements in the Array of Arrays');
     is(@array[0], 1, 'got the right first element');
     #?rakudo todo 'too eager list flattening'
-    isa_ok(@array[1], 'Array');
+    isa_ok(@array[1], Array);
     is(@array[1][0], 2, 'got the right second/first element');
     is(@array[1][1], 3, 'got the right second/second element');
     isa_ok(@array[2], Array);
@@ -102,7 +102,7 @@ Some deeper tests were already added.
 # UNSPECCED
 { # Hash of Arrays
     my %hash;
-    isa_ok(%hash, 'Hash');
+    isa_ok(%hash, Hash);
 
     %hash<key> = [ 1, 2, 3 ];
     isa_ok(%hash<key>, Array);

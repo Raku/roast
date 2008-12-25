@@ -11,7 +11,7 @@ plan 10;
   is "<%hash<a>>", '<1>', '"<%hash<a>>" works';
 }
 
-#?rakudo skip '"MMD function __concatenate not found for types (100, 80)"'
+#?rakudo todo 'interpolation with subscripts'
 {
   my $hash = { a => 1, b => 2 };
   is "$hash<a>",   1, '"$hash<a>" works';

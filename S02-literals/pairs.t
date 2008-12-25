@@ -75,10 +75,9 @@ sub f3 ($a) { ~WHAT($a) }
     my $pair = (a => 42);
 
     is f3($pair),  "Pair", 'a $pair is not treated magically...';
-    # XXX investigate what [,] actually does, it has changed recently
     #?pugs todo '[,]'
-    #?rakudo skip 'reduce meta op'
-    is f3([,] $pair), "Int",    '...but [,] $pair is';
+    #?rakudo skip 'prefix:<|>'
+    is f3(|$pair), "Int",    '...but |$pair is';
 }
 
 sub f4 ($a)    { ~WHAT($a) }
@@ -86,9 +85,8 @@ sub get_pair () { (a => 42) }
 {
 
     is f4(get_pair()),  "Pair", 'get_pair() is not treated magically...';
-    #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
-    is f4([,] get_pair()), "Int",    '...but *get_pair() is';
+    is f4(|get_pair()), "Int",    '...but |get_pair() is';
 }
 
 sub f5 ($a) { ~WHAT($a) }
@@ -98,7 +96,7 @@ sub f5 ($a) { ~WHAT($a) }
     is f5(@array_of_pairs), "Array",
         'an array of pairs is not treated magically...';
     #?rakudo skip 'reduce meta op'
-    is f5([,] @array_of_pairs), "Array", '...and [,] @array isn\'t either';
+    is f5(|@array_of_pairs), "Array", '...and |@array isn\'t either';
 }
 
 sub f6 ($a) { ~WHAT($a) }

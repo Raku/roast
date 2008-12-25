@@ -100,14 +100,13 @@ plan 24;
 #    skip_rest "No Exception objects"; exit;
 #}
 
-#?rakudo skip "CATCH blocks not implemented"
 {
     # exception classes
     class Naughty is Exception {};
 
     my ($not_died, $caught);
-    eval 'try {
-        die Naughty: "error"
+    try {
+        die Naughty("error");
 
         $not_died = 1;
 
@@ -116,22 +115,22 @@ plan 24;
                 $caught = 1;
             }
         }
-    }';
+    };
 
     ok(!$not_died, "did not live after death");
     #?pugs 1 todo
+    #?rakudo todo 'smart matching against exception'
     ok($caught, "caught exception of class Naughty");
 };
 
-#?rakudo skip "CATCH blocks not implemented"
 {
     # exception superclass
     class Naughty::Specific is Naughty {};
     class Naughty::Other is Naughty {};
 
     my ($other, $naughty);
-    eval 'try {
-        die Naughty::Specific: "error";
+    try {
+        die Naughty::Specific("error");
 
         CATCH {
             when Naughty::Other {
@@ -141,21 +140,22 @@ plan 24;
                 $naughty = 1;
             }
         }
-    }';
+    };
 
     ok(!$other, "did not catch sibling error class");
     #?pugs 1 todo
+    #?rakudo todo 'smart matching against exception'
     ok($naughty, "caught superclass");
 };
 
-#?rakudo skip "CATCH blocks not implemented"
+#?rakudo skip 'lexicals in eval()'
 {
     # uncaught class
-    eval 'class Dandy is Exception {}';
+    class Dandy is Exception {};
 
     my ($naughty, $lived);
-    eval 'try {
-        die Dandy: "error";
+    'try {
+        die Dandy("error");
 
         CATCH {
             when Naughty {

@@ -150,7 +150,6 @@ my @array2 = ("test", 1, undef);
     is ~@array12,'a b c d', "assignment to end index correctly alters the array";
 }
 
-#?rakudo skip "no whatever star yet"
 #?pugs skip "no whatever star yet"
 {
     my @array13 = ('a', 'b', 'c', 'd'); 

@@ -52,15 +52,15 @@ plan 43;
 }
 
 # ... with referential sub
-#?rakudo skip 'parse error'
 {
-    my $d;
+    my $d = '';
     class Int is also {
         method some_meth_1 { 
             $d = $d ~ self
         } 
     };
     for 0 .. 5 { .some_meth_1 };
+    #?rakudo todo 'for loop and calss extension'
     is($d, '012345', 'for 0 .. 5 { .some_sub } works');
 }
 

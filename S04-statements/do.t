@@ -81,7 +81,7 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
 }
 
 # L<S04/The do-once loop/"can take" "loop control statements">
-#?rakudo skip 'next not implemented'
+#?rakudo todo 'next() should also work on do blocks (?)'
 {
     my $i;
     do {

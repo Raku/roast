@@ -35,7 +35,7 @@ my @a;
 ok eval('@a = ("one", -> $x { $x**2 }, "three")'), 
         'pointy sub without preceding comma';
 is @a[0], 'one', 'pointy sub in list previous argument';
-isa_ok @a[1], 'Code', 'pointy sub in list';
+isa_ok @a[1], Code, 'pointy sub in list';
 is @a[2], 'three', 'pointy sub in list following argument';
 
 
