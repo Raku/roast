@@ -22,7 +22,6 @@ plan 11;
 }
 
 # loop with last()
-#?rakudo skip 'last()'
 {
     my $i = 0;
     is($i, 0, 'verify our starting condition');
@@ -36,7 +35,6 @@ plan 11;
 
 # infinite loop
 
-#?rakudo skip 'last()'
 {
     my $i = 0;
     is($i, 0, 'verify our starting condition');
@@ -63,7 +61,6 @@ plan 11;
 }
 
 # Loop with next should still execute the continue expression
-#?rakudo skip 'last()'
 {
     my ($i,    $continued);
     loop ($i = 0;; $continued = 1)
@@ -75,7 +72,6 @@ plan 11;
     ok($continued, "next performs a loop's continue expression");
 }
 
-#?rakudo skip 'last'
 {
     my $loopvar = 0;
 

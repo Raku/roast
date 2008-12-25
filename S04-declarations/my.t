@@ -136,13 +136,11 @@ is(eval('my $x = 1, my $y = 2; $y'), 2, 'precedence of my wrt = and ,');
 
 my $result;
 my $x = 0;
-#?rakudo skip 'last'
 {
     while my $x = 1 { $result = $x; last };
     is $result, 1, 'my in while cond seen from body';
 }
 
-#?rakudo skip 'last'
 is(eval('while my $x = 1 { last }; $x'), 1, 'my in while cond seen after');
 
 is(eval('if my $x = 1 { $x } else { 0 }'), 1, 'my in if cond seen from then');
