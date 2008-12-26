@@ -143,6 +143,23 @@ is(+(6..8), 3, 'numification');
 # infinite ranges
 #?rakudo skip 'infinite ranges not implemented'
 {
+    my $inf = -Inf..Inf;
+
+    is($inf.shift, -Inf, 'bottom end of -Inf..Inf is -Inf (1)');
+    is($inf.shift, -Inf, 'bottom end of -Inf..Inf is still -Inf (2)');
+
+    is($inf.pop, Inf, 'top end of -Inf..Inf is Inf (1)');
+    is($inf.pop, Inf, 'top end of -Inf..Inf is still Inf (2)');
+
+    ok(42  ~~ $inf, 'positive integer matches -Inf..Inf');
+    ok(.2  ~~ $inf, 'positive non-int matches -Inf..Inf');
+    ok(-2  ~~ $inf, 'negative integer matches -Inf..Inf');
+    ok(-.2 ~~ $inf, 'negative non-int matches -Inf..Inf');
+}
+
+# infinite ranges using Whatever
+#?rakudo skip "infinite ranges not implemented"
+{
     my $inf = *..*;
 
     is($inf.shift, -Inf, 'bottom end of *..* is -Inf (1)');
@@ -150,6 +167,8 @@ is(+(6..8), 3, 'numification');
 
     is($inf.pop, Inf, 'top end of *..* is Inf (1)');
     is($inf.pop, Inf, 'top end of *..* is still Inf (2)');
+
+    is($inf.elems, Inf, 'testing number of elements');
 
     ok(42  ~~ $inf, 'positive integer matches *..*');
     ok(.2  ~~ $inf, 'positive non-int matches *..*');
