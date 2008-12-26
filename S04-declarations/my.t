@@ -32,7 +32,6 @@ plan 47;
     is fortytwo(),  42,               'my variable with & sigil works (2)';
 }
 
-#?rakudo skip 'pointy subs'
 {
   my $was_in_sub;
   my &foo := -> $arg { $was_in_sub = $arg };
