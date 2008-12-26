@@ -34,39 +34,32 @@ is &o_two.arity,    2, 'arity with optional and required named params';
 {
     is ({ $^a         }.arity), 1,
         "block with one placeholder var has .arity == 1";
-    #?rakudo skip 'pointy block as expression'
     is (-> $a { $a         }.arity), 1,
         "pointy block with one placeholder var has .arity == 1";
-    #?rakudo skip 'method calling syntax'
-    is arity({ $^a,$^b     }:), 2,
+    is { $^a,$^b     }.arity, 2,
         "block with two placeholder vars has .arity == 2";
-    #?rakudo skip 'pointy block as expression'
-    is arity(-> $a, $b { $a,$b     }:), 2,
+    is (-> $a, $b { $a,$b     }).arity, 2,
         "pointy block with two placeholder vars has .arity == 2";
-    #?rakudo skip 'method calling syntax'
-    is arity({ $^a,$^b,$^c }:), 3,
+    is { $^a,$^b,$^c }.arity, 3,
         "block with three placeholder vars has .arity == 3";
-    #?rakudo skip 'pointy block as expression'
-    is arity(-> $a, $b, $c { $a,$b,$c }:), 3,
+    is (-> $a, $b, $c { $a,$b,$c }).arity, 3,
         "pointy block with three placeholder vars has .arity == 3";
 }
 
-#?rakudo skip 'method calling syntax'
 {
-    is arity({ my $k; $^a         }:), 1,
+    is { my $k; $^a         }.arity, 1,
         "additional my() vars don't influence .arity calculation (1-1)";
-    is arity({ my $k; $^a,$^b     }:), 2,
+    is { my $k; $^a,$^b     }.arity, 2,
         "additional my() vars don't influence .arity calculation (1-2)";
-    is arity({ my $k; $^a,$^b,$^c }:), 3,
+    is { my $k; $^a,$^b,$^c }.arity, 3,
         "additional my() vars don't influence .arity calculation (1-3)";
 }
 
-#?rakudo skip 'method calling syntax'
 {
-    is arity({ $^a;         my $k }:), 1,
+    is { $^a;         my $k }.arity, 1,
         "additional my() vars don't influence .arity calculation (2-1)";
-    is arity({ $^a,$^b;     my $k }:), 2,
+    is { $^a,$^b;     my $k }.arity, 2,
         "additional my() vars don't influence .arity calculation (2-2)";
-    is arity({ $^a,$^b,$^c; my $k }:), 3,
+    is { $^a,$^b,$^c; my $k }.arity, 3,
         "additional my() vars don't influence .arity calculation (2-3)";
 }
