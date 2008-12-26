@@ -116,7 +116,6 @@ plan 51;
 }
 
 # Subparam binding doesn't affect === test
-#?rakudo skip 'pointy blocks as expressions'
 {
   my $foo;
   my $test = -> $arg { $foo === $arg };
