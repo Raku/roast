@@ -35,12 +35,12 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     dies_ok { $foo.(23) }, "invocation of an parameterless anonymous sub with a parameter dies";
 }
 
-#?rakudo skip 'pointy blocks'
 {
     my $foo = -> { 42 };
     isa_ok($foo, Code);
     isa_ok($foo, Block);
     is $foo.(), 42,                 "basic invocation of a pointy block";
+    #?rakudo todo 'signature error checking'
     dies_ok { $foo.(23) },  "invocation of an parameterless pointy block with a parameter dies";
 }
 
@@ -69,7 +69,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
-    #?rakudo skip 'calling positiona parameters by name'
+    #?rakudo skip 'calling positional parameters by name'
     is $foo.(x => 42), 142,    "calling an anonymous sub with a positional param addressed by name";
     dies_ok { $foo.() }, 
         "calling an anonymous sub expecting a param without a param dies";
