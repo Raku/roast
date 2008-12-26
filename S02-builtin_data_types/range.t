@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 79;
+plan 88;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
