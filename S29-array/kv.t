@@ -43,4 +43,4 @@ Basic C<kv> tests, see S29.
     is(~@kv, "0 a 1 b 2 c 3 d", 'kv(@array) has no inner list');
 }
 
-is( 42.kv, [1, 42], "(42).kv works");
+is( 42.kv, [0, 42], "(42).kv works");
