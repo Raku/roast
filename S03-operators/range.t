@@ -137,4 +137,5 @@ is (1..6 Z 'a' .. 'c').join(''), '1a2b3c',   'Ranges and infix:<Z>';
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
 }
 
-# For tests involving :by, see t/operators/adverbial_modifiers.t
+# For tests involving :by, see t/spec/S03-operators/range-by.t
+# and t/operators/adverbial_modifiers.t
