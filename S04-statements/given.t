@@ -250,7 +250,6 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 }
 
 # given + 1-arg closure
-#?rakudo skip 'parsefail (-> $var {block})'
 {
     my $x;
     given 41 {

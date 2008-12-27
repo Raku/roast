@@ -65,7 +65,6 @@ Some deeper tests were already added.
 
     is(+@array, 4, 'got 4 elements in the Array of Arrays');
     is(@array[0], 1, 'got the right first element');
-    #?rakudo todo 'too eager list flattening'
     isa_ok(@array[1], Array);
     is(@array[1][0], 2, 'got the right second/first element');
     is(@array[1][1], 3, 'got the right second/second element');
@@ -82,20 +81,16 @@ Some deeper tests were already added.
 
     @array[0] = sub { 1 };
     @array[1] = { 2 };
-    #?rakudo emit #
     @array[2] = -> { 3 };
 
-    #?rakudo todo 'test dependency'
     is(+@array, 3, 'got three elements in the Array');
     #?rakudo todo 'type Sub'
     isa_ok(@array[0], Sub);
     isa_ok(@array[1], Block);
-    #?rakudo todo 'test dependency'
     isa_ok(@array[2], Block);
 
     is(@array[0](), 1, 'the first element (when executed) is 1');
     is(@array[1](), 2, 'the second element (when executed) is 2');
-    #?rakudo skip 'test dependency (pointy blocks)'
     is(@array[2](), 3, 'the third element (when executed) is 3');
 }
 

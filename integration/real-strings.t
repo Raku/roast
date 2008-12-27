@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 5;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.
@@ -24,6 +24,13 @@ plan 4;
 
 dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returned from split and passed to pointy block are still ro';
 
+# used to be RT #55962
+
+{
+    my @foo = 'AB'.split('');
+    @foo[0]++;
+    is ~@foo, 'B B', 'Str.split(Str) works with postfix:<++>';
+}
 
 
 # vim: ft=perl6

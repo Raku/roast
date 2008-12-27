@@ -63,7 +63,6 @@ plan 10;
     is $a, 0, 'the closure was never called';
 }
 
-#?rakudo skip 'Parse a pointy block as a statement'
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;

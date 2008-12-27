@@ -18,7 +18,6 @@ plan 6;
   is $bar,      42, "sub changed our variable";
 }
 
-#?rakudo skip 'Lambdas'
 {
   my $anon = -> $a is rw { $a++ };
   my $bar = 10;
