@@ -8,7 +8,7 @@ use Test;
 
 These tests are the testing for "Method" section of Synopsis 12
 
-L<S12/Methods/Indirect object notation now requires a colon after the invocant if there are no arguments>
+L<S12/Methods/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
 
 =end description
 
@@ -108,7 +108,7 @@ class T2
     is $called,         3,     'no method called';
 }
 
-# L<S12/Methods/"other form of indirection relies on the fact">
+# L<S12/Methods/"Another form of indirection relies on the fact">
 #?rakudo skip '$obj.infix:<+>'
 {
     is 1.infix:<+>(2),      3,      'Can call $obj.infix:<+>';
