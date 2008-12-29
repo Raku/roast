@@ -65,7 +65,7 @@ is($joined4c, "a b c", 'join ":", [] should not join anything');
 
 is(["a", "b", "c"].join(''), "abc", '[].join("") works');
 
-my @list = ("a", "b", "c");
+@list = ("a", "b", "c");
 
 is(@list.join(''), "abc", '@list.join("") works');
 

@@ -22,7 +22,7 @@ plan 5;
 
 {
     my $a = '';
-    my $a = $_ given 'a';
+    $a = $_ given 'a';
     is($a, 'a', "post given");
 }
 

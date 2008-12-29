@@ -164,9 +164,8 @@ my @e;
         my @e = (1, 2, 3);
         is(~@r, ~@e, "method call on integer list elements");
 
-        my @r;
         eval '@r = (1, 4, 9)>>.sqrt';
-        my @e = (1, 2, 3);
+        @e = (1, 2, 3);
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
 };
 

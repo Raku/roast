@@ -19,15 +19,15 @@ plan 27;
     is($a, 4, 'pop(@pop) works');
 
     is(+@pop, 3, 'we have 3 elements in the array');
-    my $a = pop @pop;
+    $a = pop @pop;
     is($a, 3, 'pop @pop works');
 
     is(+@pop, 2, 'we have 2 elements in the array');
-    my $a = @pop.pop();
+    $a = @pop.pop();
     is($a, 2, '@pop.pop() works');
 
     is(+@pop, 1, 'we have 1 element in the array');
-    my $a = @pop.pop;
+    $a = @pop.pop;
     is($a, 1, '@pop.pop works');
 
     is(+@pop, 0, 'we have no more element in the array');

@@ -23,8 +23,8 @@ is $s,                              'aXbYcYdX', 'Source string unchanged';
 is $s.trans([<X Y>] => [{++$x},{++$y}]), 'a3b3c4d4', 'can use closures in pairs of arrays';
 is $s,                              'aXbYcYdX', 'Source string unchanged';
 
-my $x = 0;
-my $y = 0;
+$x = 0;
+$y = 0;
 
 my $s2 = 'ABC111DEF111GHI';
 

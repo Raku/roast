@@ -42,29 +42,30 @@ ok(!defined($foo), 'undefine $foo works');
 
 # try the invocant syntax
 
-my $foo;
-#?rakudo skip 'my $foo; $foo.defined'
-ok(!$foo.defined, 'unassigned variable $foo is undefined');
+{
+    my $foo;
+    #?rakudo skip 'my $foo; $foo.defined'
+    ok(!$foo.defined, 'unassigned variable $foo is undefined');
 
-$foo = 1;
-ok($foo.defined, 'variable $foo is now defined (as numeric literal 1)');
+    $foo = 1;
+    ok($foo.defined, 'variable $foo is now defined (as numeric literal 1)');
 
-$foo = "";
-ok($foo.defined, 'variable $foo is now defined (as a empty string)');
+    $foo = "";
+    ok($foo.defined, 'variable $foo is now defined (as a empty string)');
 
-$foo = undef;
-ok(!$foo.defined, 'variable $foo is now undefined again');
+    $foo = undef;
+    ok(!$foo.defined, 'variable $foo is now undefined again');
 
-$foo = "a";
-ok($foo.defined, 'variable $foo is now defined (as string "a")');
+    $foo = "a";
+    ok($foo.defined, 'variable $foo is now defined (as string "a")');
 
-$foo = 0;
-ok($foo.defined, 'variable $foo is now defined (as numeric literal 0)');
+    $foo = 0;
+    ok($foo.defined, 'variable $foo is now defined (as numeric literal 0)');
 
-undefine($foo);
-#?rakudo skip 'undefine $foo; $foo.defined'
-ok(!$foo.defined, 'undef $foo works');
-
+    undefine($foo);
+    #?rakudo skip 'undefine $foo; $foo.defined'
+    ok(!$foo.defined, 'undef $foo works');
+}
 
 # While porting a Perl 5 solution to QoTW regular #24, I noticed the following bug:
 #   my %a = (a => 1);
