@@ -15,7 +15,6 @@ is(%hash1{"one"}, 5, 'lvalue hash assignment works (w/ double quoted keys)');
 %hash1{'one'} = 4; 
 is(%hash1{'one'}, 4, 'lvalue hash re-assignment works (w/ single quoted keys)');
 
-my %hash1; 
 %hash1<three> = 3; 
 is(%hash1<three>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)');
 
@@ -95,7 +94,7 @@ is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
 is(@values1[2], 3, 'got the right values');
 
-my @values1 = %hash7.values.sort;
+@values1 = %hash7.values.sort;
 is(+@values1, 3, 'got the right number of values');
 is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
