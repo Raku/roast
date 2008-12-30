@@ -6,7 +6,7 @@ use Test;
 plan 35;
 
 # Type of return value
-#?rakudo todo 'successful index() should return a StrPos'
+#?rakudo 2 skip 'StrPos not implemented'
 isa_ok('abc'.index('b'), StrPos);
 isa_ok('abc'.index('d'), StrPos);
 ok(!'abc'.index('d'), 'failure object from index() evaluates to false');
