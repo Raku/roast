@@ -33,9 +33,9 @@ ok(!defined(undef), "undef is not defined");
 
 {
     my $a;
-    is($a, undef, "uninitialized lexicals are undef");
+    ok(!defined($a), "uninitialized lexicals are undef");
 
-    is($GLOBAL, undef, "uninitialized globals are undef");
+    ok(!defined($GLOBAL), "uninitialized package vars are undef");
 
     $a += 1; # should not emit a warning. how to test that?
     ok(defined($a), "initialized var is defined");
