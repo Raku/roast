@@ -8,9 +8,11 @@ plan 39;
 {
   my %hash;
   %hash<a>;
+  #?pugs todo 'BUG [perl #61882]'
   ok !%hash.exists('a'), 'just mentioning a hash value should not autovivify it';
 }
 
+#?rakudo skip 'Error Msg: elements() not implemented in class Undef'
 {
   my %hash;
 
@@ -18,6 +20,7 @@ plan 39;
   is %hash<key>[42], 17, "autovivification of a hash element to an arrayref worked";
 }
 
+#?rakudo skip "Error Msg: Method 'postcircumfix:{ }' not found for invocant of class 'Failure'"
 {
   my %hash;
 
@@ -26,6 +29,7 @@ plan 39;
 }
 
 # Autovification by push, unshift, etc.
+#?rakudo skip "Error Msg: No applicable methods."
 {
   my $arrayref;
 
@@ -33,6 +37,7 @@ plan 39;
   is ~$arrayref, "1 2 3", "autovivification to an array by &push";
 }
 
+#?rakudo skip "Error Msg: No applicable methods."
 {
   my $arrayref;
 
@@ -41,6 +46,7 @@ plan 39;
 }
 
 # Autovification by push, unshift, etc. of an array/hash element
+#?rakudo skip "Error Msg: No applicable methods."
 {
   my @array;
 
@@ -48,20 +54,22 @@ plan 39;
   is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
 }
 
+#?rakudo skip "Error Msg: No applicable methods."
 {
   my %hash;
 
   push %hash<key>, 1,2,3;
   is ~%hash, "key\t1 2 3\n", "autovivification of an hash element to an array by &push";
 }
+
 # Simple hash autovivification
 {
   my $hashref;
   ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (1)";
 
   $hashref<key> = 23;
-  ok $hashref.isa(Hash), "uninitialized variable was autovivified to a hash (1)";
   is $hashref<key>,  23, "hash element assignment worked";
+  ok $hashref.isa(Hash), "uninitialized variable was autovivified to a hash (1)";
 }
 
 {
