@@ -3,8 +3,57 @@ use Test;
 
 # L<S09/"Autovivification">
 
-plan 38;
+plan 39;
 
+{
+  my %hash;
+  %hash<a>;
+  ok !%hash.exists('a'), 'just mentioning a hash value should not autovivify it';
+}
+
+{
+  my %hash;
+
+  %hash<key>[42] = 17;
+  is %hash<key>[42], 17, "autovivification of a hash element to an arrayref worked";
+}
+
+{
+  my %hash;
+
+  %hash<key><innerkey> = 17;
+  is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
+}
+
+# Autovification by push, unshift, etc.
+{
+  my $arrayref;
+
+  push $arrayref, 1,2,3;
+  is ~$arrayref, "1 2 3", "autovivification to an array by &push";
+}
+
+{
+  my $arrayref;
+
+  unshift $arrayref, 1,2,3;
+  is ~$arrayref, "1 2 3", "autovivification to an array by &unshift";
+}
+
+# Autovification by push, unshift, etc. of an array/hash element
+{
+  my @array;
+
+  push @array[2], 1,2,3;
+  is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
+}
+
+{
+  my %hash;
+
+  push %hash<key>, 1,2,3;
+  is ~%hash, "key\t1 2 3\n", "autovivification of an hash element to an array by &push";
+}
 # Simple hash autovivification
 {
   my $hashref;
@@ -104,49 +153,6 @@ plan 38;
   is @array[42]<key>, 17, "autovivification of an array element to a hashref worked";
 }
 
-{
-  my %hash;
-
-  %hash<key>[42] = 17;
-  is %hash<key>[42], 17, "autovivification of a hash element to an arrayref worked";
-}
-
-{
-  my %hash;
-
-  %hash<key><innerkey> = 17;
-  is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
-}
-
-# Autovification by push, unshift, etc.
-{
-  my $arrayref;
-
-  push $arrayref, 1,2,3;
-  is ~$arrayref, "1 2 3", "autovivification to an array by &push";
-}
-
-{
-  my $arrayref;
-
-  unshift $arrayref, 1,2,3;
-  is ~$arrayref, "1 2 3", "autovivification to an array by &unshift";
-}
-
-# Autovification by push, unshift, etc. of an array/hash element
-{
-  my @array;
-
-  push @array[2], 1,2,3;
-  is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
-}
-
-{
-  my %hash;
-
-  push %hash<key>, 1,2,3;
-  is ~%hash, "key\t1 2 3\n", "autovivification of an hash element to an array by &push";
-}
 
 lives_ok {
   &New::Package::foo;
