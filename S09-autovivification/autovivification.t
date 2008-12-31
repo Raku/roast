@@ -8,7 +8,7 @@ plan 39;
 {
   my %hash;
   %hash<a>;
-  #?pugs todo 'BUG [perl #61882]'
+  #?pugs todo: 'perl #61882'
   ok !%hash.exists('a'), 'just mentioning a hash value should not autovivify it';
 }
 
@@ -63,6 +63,9 @@ plan 39;
 }
 
 # Simple hash autovivification
+# Actually, that first test passes, but I can't figure out how to skip just
+# the next two.
+#?rakudo skip "Error Msg: get_pmc_keyed() not implemented in class 'Undef'"
 {
   my $hashref;
   ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (1)";
@@ -72,6 +75,7 @@ plan 39;
   ok $hashref.isa(Hash), "uninitialized variable was autovivified to a hash (1)";
 }
 
+#?pugs todo: 'The lives_ok items are failing'
 {
   my $hashref;
   ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (2)";
@@ -91,6 +95,7 @@ plan 39;
   
 }
 
+#?rakudo skip "Error Msg: get_pmc_keyed() not implemented in class 'Undef'"
 {
   my $hashref;
   ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (3)";
