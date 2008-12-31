@@ -213,8 +213,8 @@ Perl6-specific tests
 #?rakudo skip 'null PMC access in type()'
 #?DOES 10
 {
-    my($num, $alpha);
-    my($rx1, $rx2);
+    my ($num, $alpha);
+    my ($rx1, $rx2);
     eval '
         $rx1 = rx
         / [ (\d+)      { let $<num>   := $0 }
