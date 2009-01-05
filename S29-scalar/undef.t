@@ -22,7 +22,7 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan 74;
+plan 75;
 
 our $GLOBAL;
 
@@ -339,4 +339,5 @@ is((undef) * (undef), 0, 'undef * undef');
 is ?(@(undef,)), Bool::False, '?(@(undef,)) is false';
 is ?(list(undef,)), Bool::False, '?(@(undef,)) is false';
 
+lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 # vim: ft=perl6
