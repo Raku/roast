@@ -17,12 +17,12 @@ parent attribute initialization
 # L<S12/Construction and Initialization/>
 
 class Foo {
-    has $.x;
+    has $.x is rw;
     method boo { $.x }
 }
 
 class Bar is Foo {
-    method set($v) { $!x = $v }
+    method set($v) { $.x = $v }
 }
 
 my Foo $u .= new(x => 5);
