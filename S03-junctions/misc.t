@@ -276,15 +276,15 @@ L<S03/Junctive operators/They thread through operations>
 
 #?rakudo skip 'Junction.pick'
 {
-    is(none(1).pick, undef, 'none(1).pick should be undef');
-    is(none(1,1).pick, undef, 'none(1,1).pick should be undef');
+    ok(none(1).pick ~~ undef, 'none(1).pick should be undef');
+    ok(none(1,1).pick ~~ undef, 'none(1,1).pick should be undef');
 
     is(one(1).pick, 1, 'one(1).pick should be 1');
-    is(one(1,1).pick, undef, 'one(1,1).pick should be undef');
+    ok(one(1,1).pick ~~ undef, 'one(1,1).pick should be undef');
 
     is(all(1).pick, 1, 'all(1).pick should be 1');
     is(all(1,1).pick, 1, 'all(1,1).pick should be 1');
-    is(all(1,2).pick, undef, 'all(1,2).pick should be undef');
+    ok(all(1,2).pick ~~ undef, 'all(1,2).pick should be undef');
 }
 
 # junction in boolean context

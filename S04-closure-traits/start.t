@@ -6,7 +6,7 @@ plan 21;
 
 # L<S04/"Closure traits"/START "runs separately for each clone">
 {
-    is(eval(q{
+    is(eval(q{{
         my $str;
         for 1..2 {
             my $sub = {
@@ -16,7 +16,7 @@ plan 21;
             $sub();
         }
         $str;
-    }), '12');
+    }}), '12');
 };
 
 # L<S04/"Closure traits"/START "puts off" initialization till
@@ -85,7 +85,7 @@ for <first second> {
       $var;
     };
 
-    is $was_in_start, undef, 'START {} has not run yet';
+    ok $was_in_start ~~ undef, 'START {} has not run yet';
     is $sub(), 23, 'START {} block set our variable (2)';
     is $sub(), 23, 'the returned value of START {} still there';
     is $was_in_start, 1, 'our START {} block was invoked exactly once';

@@ -81,7 +81,7 @@ my sub foo3(:$n, *%h, *@a) { return @a.sum };
 diag("Testing with named arguments (named param isn't required)");
 lives_ok { foo 1, x => 20, y => 300, 4000 },
   'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
-is (foo1 1, x => 20, y => 300, 4000), undef,
+ok (foo1 1, x => 20, y => 300, 4000) ~~ undef,
   'Testing value for named argument';
 is (foo2 1, x => 20, y => 300, 4000), 320,
   'Testing value for slurpy *%h';

@@ -125,6 +125,8 @@ ok(!defined(undef), "undef is not defined");
 
 
 # Test LHS assignment to undef:
+# XXX shouldn't that be * instead of undef?
+# if it's correct like this, we need a smartlink for it.
 
 {
     my $interesting;

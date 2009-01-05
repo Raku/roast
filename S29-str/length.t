@@ -15,7 +15,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 55;
+plan 57;
 
 eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
@@ -72,4 +72,10 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
     is($string.codes, $codes, "'{$string}'.codes");
     is($string.graphs, $graphs, "'{$string}'.graphs");
 }
+
+# test something with a codepoint above 0xFFFF to catch errors that an
+# UTF-16 based implementation might make
+
+is '丽'.codes,  1, '.codes on a >0xFFFF char';
+is '丽'.graphs, 1, '.graphs on a >0xFFFF char';
 

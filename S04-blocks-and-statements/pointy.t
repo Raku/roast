@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 =begin description
 
@@ -32,7 +32,7 @@ is $got, 'x 123', 'called pointy immediately: -> $x { ... }(...)';
 
 # L<S04/Statement-ending blocks/End-of-statement cannot occur within a bracketed expression>
 my @a;
-ok eval('@a = ("one", -> $x { $x**2 }, "three")'), 
+lives_ok { @a = ("one", -> $x { $x**2 }, "three")} , 
         'pointy sub without preceding comma';
 is @a[0], 'one', 'pointy sub in list previous argument';
 isa_ok @a[1], Code, 'pointy sub in list';
@@ -48,7 +48,8 @@ my $s = -> {
 };
 try { $s.() };
 #?pugs todo 'feature'
-is(!defined($!), undef, 'pointy with block control exceptions');
+#?rakudo 2 todo 'pointy blocks and last/redo'
+ok(!defined($!), 'pointy with block control exceptions');
 is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
@@ -56,6 +57,7 @@ my $str = '';
 
 sub outer {  
     my $s = -> { 
+        #?rakudo skip '&?ROUTINE'
         is(&?ROUTINE.name, '&Main::outer', 'pointy still sees outer\'s &?ROUTINE'); 
 
         $str ~= 'inner'; 
@@ -78,7 +80,7 @@ is $str, 'inner', 'return in pointy returns from enclosing sub';
 
 # -> { $^a, $^b } is illegal; you can't mix real sigs with placeholders,
 # and the -> introduces a sig of ().  TimToady #perl6 2008-May-24
-eval_dies_ok(q{ -> { $^a, $^b } }, '-> { $^a, $^b } is illegal');
+eval_dies_ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 
 
 # vim: ft=perl6

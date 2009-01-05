@@ -36,22 +36,18 @@ is($anon_block(), 1, '{} <anon block> works');
 { 
     # pointy subs
     my $pointy_block = -> { 1 };
-    #?rakudo skip "Block sub type"
     isa_ok($pointy_block, Block);
     is($pointy_block(), 1, '-> {} <"pointy" block> works');
 
     my $pointy_block_w_arg = -> $arg { 1 + $arg };
-    #?rakudo skip "Block sub type"
     isa_ok($pointy_block_w_arg, Block);
     is($pointy_block_w_arg(3), 4, '-> $arg {} <"pointy" block w/args> works');
 
     my $pointy_block_w_multiple_args = -> $arg1, $arg2 { $arg1 + $arg2 };
-    #?rakudo skip "Block sub type"
     isa_ok($pointy_block_w_multiple_args, Block);
     is($pointy_block_w_multiple_args(3, 4), 7, '-> $arg1, $arg2 {} <"pointy" block w/multiple args> works');
 
     my $pointy_block_nested = -> $a { -> $b { $a + $b }};
-    #?rakudo 2 skip "Block sub type"
     isa_ok($pointy_block_nested, Block);
     isa_ok($pointy_block_nested(5), Block);
     is $pointy_block_nested(5)(6), 11, '-> $a { -> $b { $a+$b }} nested <"pointy" block> works';

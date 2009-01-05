@@ -33,7 +33,7 @@ my @list = (1 .. 10);
 }
 
 {
-    is(@list.first( { ($_ == 11) }), undef, 'first returns undef unsuccessfull match');
+    ok(@list.first( { ($_ == 11) }) ~~ undef, 'first returns undef unsuccessfull match');
 }
 
 {

@@ -16,12 +16,12 @@ plan 5;
 	%*ENV.delete('THIS_NEVER_EXISTS');
         my $rv = eval('$+THIS_NEVER_EXISTS');
 	ok $!, "Testing for accessing contextual which is deleted.";
-	is $rv, undef, "Testing for value of contextual variables that was deleted.";
+	ok $rv ~~ undef, "Testing for value of contextual variables that was deleted.";
 }
 
 {
 	my $rv = eval('$+THIS_IS_NEVER_THERE_EITHER');
         ok $!, "Test for contextual which doesn't exists.";
-	is $rv, undef, "Testing for value of contextual variables that never existed.";
+	ok $rv ~~ undef, "Testing for value of contextual variables that never existed.";
 }
 
