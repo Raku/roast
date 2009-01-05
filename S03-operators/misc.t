@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 49;
+plan 51;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -120,4 +120,11 @@ ok(42 > 12 & 20 & 32, "test the all infix operator");
   ok( undef?^ 1    == True,  '?^ works');
   ok( -1   ?^undef == True,  '?^ works');
 
+}
+
+# L<S03/Tight or precedence/"min +Inf"/>
+#?rakudo todo 'RT #61836'
+{
+    lives_ok { (2 min undef) }, 'can do (2 min undef)'; 
+    lives_ok { (undef min 2) }, 'can do (undef min 2)'; 
 }
