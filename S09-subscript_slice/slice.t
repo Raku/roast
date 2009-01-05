@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 24;
+plan 25;
 
 {   my @array = (3,7,9,11);
 
@@ -93,3 +93,10 @@ plan 24;
     is((3,7,9), [@array[(0,1,1)>>+<<(0,0,1)]], "calculated slice: hyperop");
 }
 
+
+# slices with empty ranges
+{
+    my @array = 1, 2, 3;
+    my @other = @array[2..1];
+    is +@other, 0, '@array[2..1] is an empty slice';
+}
