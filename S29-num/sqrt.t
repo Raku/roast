@@ -17,7 +17,6 @@ is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
 # The spec specifies a branch cut in the complex plane of -pi <= theta <= pi
 is_approx(sqrt(-1 +0i), 1i, 'got the square root of -1+0i');
 
-#?rakudo skip 'eval not implemented'
 {
     my $i = -1;
     is_approx(eval("sqrt($i.i)"), 1i, 'got the square root of -1.i');

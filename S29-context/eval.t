@@ -28,12 +28,10 @@ my $foo = 1234;
 is(eval('$foo'), $foo, 'simple eval using variable defined outside');
 
 # traps die?
-#?rakudo skip 'Null PMC access in type()'
 ok(!eval('die; 1'), "eval can trap die");
 
 ok(eval('my @a = (1); @a!<0>') ~~ undef, "eval returns undef on syntax error");
 
-#?rakudo skip 'eval should trap fatal use statement'
 ok(!eval('use Poison; 1'), "eval can trap a fatal use statement");
 
 sub v { 123 }

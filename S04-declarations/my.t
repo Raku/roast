@@ -49,7 +49,6 @@ eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 
 eval_lives_ok 'my $x = my $y = 0;', '"my $x = my $y = 0" parses';
 
-#?rakudo skip "Redeclaration of variable"
 {
     my $test = "value should still be set for arg, even if there's a later my";
     sub foo2 (*%p) {

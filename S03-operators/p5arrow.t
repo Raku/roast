@@ -25,5 +25,4 @@ ok((1 p5=> 2) !~~ Pair, 'p5=> does not construct a Pair');
 # S03:1465 says that p5=> is the same as a comma
 # We'll test that it doesn't quote the LHS.
 
-#?rakudo skip 'Null PMC access in type()'
 isnt(eval('my @arr = abc p5=> def;'), <abc def>, 'p5=> does not quote the LHS');
