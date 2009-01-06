@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 83;
+plan 90;
 
 =begin pod
 
@@ -347,4 +347,43 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     is $c.y, 2, '...and copies what we did not change.';
 }
 
+# tests for *-1 indexing on classes, RT #61766
+{
+    class ArrayAttribTest {
+        has @.a is rw;
+        method init {
+            @.a = <a b c>;
+        }
+        method m0 { @.a[0] };
+        method m1 { @.a[*-2] };
+        method m2 { @.a[*-1] };
+    }
+    my $o = ArrayAttribTest.new;
+    $o.init;
+    is $o.m0, 'a', '@.a[0] works';
+    #?rakudo 2 skip 'RT #61766'
+    is $o.m1, 'b', '@.a[*-2] works';
+    is $o.m2, 'c', '@.a[*-2] works';
+}
+
+{
+    class AttribWriteTest {
+        has @.a;
+        has %.h; 
+        method set_array {
+            @.a = <c b a>;
+        }
+        method set_hash {
+            %.h = (a => 1, b => 2);
+        }
+    }
+
+    my $x = AttribWriteTest.new; 
+    #?rakudo 4 todo 'assignment to arrays/hashes as attributes'
+    lives_ok { $x.set_array }, 'can assign to array attribute';
+    is $x.a.join('|'), 'c|b|a', '... and the items are there';
+    lives_ok { $x.set_hash },  'can assign to hash attribute';
+    is $x.h.<a b>.join('|'), '1|2', '... and the items are there';
+
+}
 # vim: ft=perl6
