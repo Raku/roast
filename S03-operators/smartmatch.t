@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 80;
+plan 81;
 
 =begin kwid
 
@@ -296,4 +296,6 @@ caught that case.
         'C<all(@x) ~~ {...} when true for one';
 };
 
+#?rakudo todo 'RT #61942'
+ok NaN ~~ NaN, 'NaN ~~ Nan is True';
 # vim: ft=perl6
