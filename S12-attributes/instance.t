@@ -379,7 +379,7 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     }
 
     my $x = AttribWriteTest.new; 
-    #?rakudo 4 todo 'assignment to arrays/hashes as attributes'
+    #?rakudo 4 todo 'assignment to arrays/hashes as attributes, RT #62026'
     lives_ok { $x.set_array }, 'can assign to array attribute';
     is $x.a.join('|'), 'c|b|a', '... and the items are there';
     lives_ok { $x.set_hash },  'can assign to hash attribute';
