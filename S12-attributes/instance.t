@@ -370,20 +370,28 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     class AttribWriteTest {
         has @.a;
         has %.h; 
-        method set_array {
+        method set_array1 {
             @.a = <c b a>;
         }
-        method set_hash {
+        method set_array2 {
+            @!a = <c b a>;
+        }
+        method set_hash1 {
             %.h = (a => 1, b => 2);
+        }
+        method set_hash2 {
+            %!h = (a => 1, b => 2);
         }
     }
 
     my $x = AttribWriteTest.new; 
-    #?rakudo 4 todo 'assignment to arrays/hashes as attributes, RT #62026'
-    lives_ok { $x.set_array }, 'can assign to array attribute';
-    is $x.a.join('|'), 'c|b|a', '... and the items are there';
-    lives_ok { $x.set_hash },  'can assign to hash attribute';
-    is $x.h.<a b>.join('|'), '1|2', '... and the items are there';
+    # see Larry's reply to 
+    # http://groups.google.com/group/perl.perl6.language/browse_thread/thread/2bc6dfd8492b87a4/9189d19e30198ebe?pli=1
+    # on why these should fail.
+    dies_ok { $x.set_array1 }, 'can not assign to @.array attribute';
+    dies_ok { $x.set_hash1 },  'can not assign to %.hash attribute';
+    lives_ok { $x.set_array2 }, 'can assign to @!array attribute';
+    lives_ok { $x.set_hash2 },  'can assign to %!hash attribute';
 
 }
 # vim: ft=perl6
