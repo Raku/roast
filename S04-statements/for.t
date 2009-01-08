@@ -52,6 +52,7 @@ plan 43;
 }
 
 # ... with referential sub
+#?rakudo skip 'class accessing outer lexical'
 {
     my $d = '';
     class Int is also {
@@ -60,7 +61,6 @@ plan 43;
         } 
     };
     for 0 .. 5 { .some_meth_1 };
-    #?rakudo todo 'for loop and calss extension'
     is($d, '012345', 'for 0 .. 5 { .some_sub } works');
 }
 
