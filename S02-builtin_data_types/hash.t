@@ -135,12 +135,12 @@ is(%hash10<1>, 2, "assignment of pointy qw to hash");
 
 # after t/pugsbugs/unhashify.t
 
-sub test1{
+sub test1 {
     my %sane = hash ('a'=>'b');
     is(~%sane.WHAT,Hash,'%sane is a Hash');
 }
 
-sub test2 (Hash %hash) returns Void {
+sub test2 (Hash %hash) {
     is(~%hash.WHAT,Hash,'%hash is a Hash');
 }
 
