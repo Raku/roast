@@ -6,7 +6,7 @@ plan 6;
 
 # L<A12/"Object Deconstruction">
 # L<S12/"Construction and Initialization"/"DESTROY and DESTROYALL work the
-# same way, only in reverse"
+# same way, only in reverse">
 
 my $in_destructor = 0;
 my @destructor_order;

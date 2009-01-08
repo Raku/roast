@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 309;
+plan 313;
 
 
 # tests various assignment styles
@@ -969,4 +969,23 @@ sub W () { substr(eval('want'), 0, 1) }
     my %h = x => 'abc';
     %h<x> .= subst('b','d');
     is %h<x>, 'adc', '.= on hash keyed values';
+}
+
+#?rakudo skip 'RT #61840]'
+{
+    my $x = 3;
+    $x =min 2;
+    is $x, 2, '=min worked (positive)';
+
+    $x = 3;
+    $x =min 5;
+    is $x, 3, '=min worked (negative)';
+
+    $x = 1;
+    $x =max 2;
+    is $x, 2, '=max worked (positive)';
+
+    $x = 3;
+    $x =max 2;
+    is $x, 3, '=max worked (negative)';
 }

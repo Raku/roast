@@ -122,7 +122,8 @@ ok(42 > 12 & 20 & 32, "test the all infix operator");
 
 }
 
-# L<S03/Tight or precedence/"min +Inf"/>
+# L<S03/Tight or precedence/"any value of any type may be compared with +Inf
+# or -Inf values">
 #?rakudo todo 'RT #61836'
 {
     lives_ok { (2 min undef) }, 'can do (2 min undef)'; 

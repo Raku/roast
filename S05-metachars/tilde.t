@@ -3,6 +3,9 @@ use Test;
 
 plan 4;
 
+# L<S05/New metacharacters/"The ~ operator is a helper for matching
+# nested subrules with a specific terminator">
+
 regex t1 {
     '(' ~ ')' 'ab'
 }
