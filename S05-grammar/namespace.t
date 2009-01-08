@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 5;
 
 # TODO: smart match against a grammar to get a Match object 
 # isn't specced and will likely change; see
@@ -26,16 +26,14 @@ grammar A {
     rule TOP {\d+};
 };
 
-regex B {\d+};
+regex b {\d+};
 
-is(A.WHAT, 'A', 'regex defined in separate namespace from grammar');
-
-is('12345' ~~ A, '12345', 'Match against grammar');
+is(~A.WHAT, 'A', 'regex defined in separate namespace from grammar');
 
 #?rakudo todo 'Regex not implemented as separate class yet'
-is(&B.WHAT, 'Regex', 'regex defined in separate namespace from grammar');
+is(&b.WHAT, 'Regex', 'regex defined in separate namespace from grammar');
 
-is('1245' ~~ &B, '1245', 'Match against regex');
+is('1245' ~~ &b, '1245', 'Match against regex');
 
 
 =begin description
