@@ -18,6 +18,7 @@ is($a.get_attr(), 13, '... got the right attr value');
 my $c = $a.clone();
 isa_ok($c, Foo);
 is($c.get_attr(), 13, '... cloned object retained attr value');
+
 my $val;
 lives_ok {
     $val = $c === $a;
@@ -29,9 +30,8 @@ lives_ok {
     $d = $a.clone(attr => 42)
 }, '... cloning with supplying a new attribute value';
 
-my $val;
+my $val2;
 lives_ok {
-   $val = $d.get_attr()
+   $val2 = $d.get_attr()
 }, '... getting attr from cloned value';
-
-is($val, 42, '... cloned object has proper attr value');
+is($val2, 42, '... cloned object has proper attr value');
