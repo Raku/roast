@@ -325,7 +325,6 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     is $o.a.WHAT, 'WHAT_ref', '.WHAT on attributes';
     is $o.b.WHAT, 'WHAT_test', '.WHAT on attributes of same type as class';
     my $r = WHAT_test.new();
-    #?rakudo 2 todo 'RT #61100'
     lives_ok {$r.b = $r}, 'type check on recursive data structure';
     is $r.b.WHAT, 'WHAT_test', '.WHAT on recursive data structure';
 
