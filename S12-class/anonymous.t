@@ -11,6 +11,7 @@ my $c1 = class { };
 my $t1 = $c1.new();
 ok(defined($t1),     'instantiated the class');
 ok($t1 ~~ $c1,       'isa check works');
+#?rakudo skip 'are anonymous classes required to be nameless?'
 is(~$c1.WHAT(), '',  '.WHAT stringifies to empty string');
 
 # Anonymous classes with methods.
