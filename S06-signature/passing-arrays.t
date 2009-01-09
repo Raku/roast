@@ -31,7 +31,6 @@ plan 7;
     dies_ok { pa(3) }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }
-    #?rakudo todo 'RT #61172'
     dies_ok { ph(3) }, 'an Int is not a Hash';
 
 }
