@@ -131,7 +131,6 @@ plan 313;
     is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3"); 
     is(@a,'1 2 3',"'{\@a}' is '1 2 3'?:       \@a = 1 .. 3");
     is($s,'1',  "\$s is '1'?:       my (\$s,\@a) = 1 .. 3");
-    #?rakudo todo 'arrays on LHS of list assignment'
     is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
 }
 
