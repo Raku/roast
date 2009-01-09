@@ -77,7 +77,7 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
 
     # precedence decisions do not cross a do boundary
     $ret = 2 * do 2 + 5;
-    is($ret, 14, 'do affects precendence correctly');
+    is($ret, 14, 'do affects precedence correctly');
 }
 
 # L<S04/The do-once loop/"can take" "loop control statements">

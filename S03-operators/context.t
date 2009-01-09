@@ -58,7 +58,7 @@ plan 35;
     my @array = ($a, $b);
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 
-    is(($ 1,2 Z 3,4), [[1,3], [2,4]], '$ operator has proper precendence to change context of zip infix');
+    is(($ 1,2 Z 3,4), [[1,3], [2,4]], '$ operator has proper precedence to change context of zip infix');
 }
 
 #?rakudo 1 skip 'zip and @@ are broken'
