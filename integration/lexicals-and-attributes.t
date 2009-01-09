@@ -30,7 +30,6 @@ $second.b = 8;
 is $second.a, 4, 'assignment to attributes in clone worked (1)';
 is $second.b, 8, 'assignment to attributes in clone worked (2)';
 
-#?rakudo todo 'lexicals, container/values, object attributes'
 is $first.a, 1, 'assignment to clone left original copy unchanged (1)';
 is $first.b, 2, 'assignment to clone left original copy unchanged (2)';
 
