@@ -154,12 +154,5 @@ ok($fh9.close, 'file closed okay (9)');
     #ok($fh10.close, 'file closed okay (10)');
 }
 
-# This test fails on win32; skip it for now.
-if $*OS eq any <MSWin32 mingw msys cygwin> {
-    unlink($filename);
-    #?pugs todo 'bug'
-    flunk('skip unlink() test - erratic behaviour on win32');
-}
-else {
-    ok(unlink($filename), 'file has been removed');
-}
+#?pugs todo 'buggy on Win32'
+ok(unlink($filename), 'file has been removed');
