@@ -8,13 +8,13 @@ sub sanity {
     isa_ok(%sane, Hash, '%sane is a Hash');
 }
 
-sub insanity (Hash %baloney) returns Void{
+sub insanity (%baloney) {
     isa_ok(%baloney, Hash, '%baloney is a Hash');
 }
 
 # sanity 0
 my %h = 'a'..'d' Z 1..4;
-is(%h.WHAT,'Hash','%h is a Hash');
+is(%h.WHAT, 'Hash', '%h is a Hash');
 
 #sanity 1;
 sanity;
