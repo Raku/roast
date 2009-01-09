@@ -135,15 +135,16 @@ plan 37;
         @tree[2]
     }
 
-    is left(['a',1,2]), 1, "left()  works";
-    is right(['b',1,2]), 2, "right() works";
+    is left(('a',1,2)), 1, "left()  works";
+    is right(('b',1,2)), 2, "right() works";
 
     ok mirror(undef,undef),"mirror works with empty trees";
     ok !mirror(undef,[]),"mirror spots differences";
-    ok mirror([1,undef,undef],[2,undef,undef]),"mirror can recurse";
-    ok !mirror([1,undef,[]],[2,undef,undef]),"mirror spots differences recurring";
+    ok mirror((1,undef,undef),(2,undef,undef)),"mirror can recurse";
+    ok !mirror((1,undef,[]),(2,undef,undef)),"mirror spots differences recurring";
 
     ok symmetric([1,undef,undef]), "symmetric works with 1-level trees";
+    #?rakudo skip 'array parameter passing'
     ok !symmetric([1,undef,[2,undef,undef]]),"symmetric find asymettric trees";
     ok symmetric([1,
             [11,
