@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 {
     my $i = 0;
@@ -61,4 +61,11 @@ plan 8;
       $str ~= $x;
   }
   is $str, '54321', 'while ... -> $x {...} worked (2)';
+}
+
+#L<S04/"keywords require whitespace">
+{
+    my $i = 0;
+    eval_dies_ok('while($i < 5) { $i++; }',
+        'keyword needs at least one whitespace after it');
 }

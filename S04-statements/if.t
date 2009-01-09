@@ -10,7 +10,7 @@ L<S04/"Conditional statements">
 
 =end kwid
 
-plan 24;
+plan 25;
 
 my $x = 'test';
 if ($x eq $x) { pass("if ($x eq $x) {} works"); } else { flunk("if ($x eq $x) {} failed"); }
@@ -150,5 +150,8 @@ is $foo, 1, "die should stop execution immediately.";
     else          -> $c { $got = $c }
     is $got, '', 'else -> $c { } binding previous if';
 }
+
+#L<S04/"keywords require whitespace">
+eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
 # vim: ft=perl6

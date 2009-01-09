@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 43;
+plan 44;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -348,5 +348,8 @@ my @elems = <a b c d e>;
 
   is $output, "1,2,3,4,", "grep and sort work in for";
 }
+
+#L<S04/"keywords require whitespace">
+eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # vim: ft=perl6
