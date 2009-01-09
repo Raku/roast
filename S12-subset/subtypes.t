@@ -42,7 +42,7 @@ my $eval1 = '{
   try { $c = eval 7 }
   is $c, 6, "setting a Num::Even to an odd value dies";
 }';
-eval $eval1;
+eval($eval1) // skip 3, 'Cant parse';
 ok eval('!try { my Num::Even $d }'),
   "lexically declared subtype went out of scope";
 
