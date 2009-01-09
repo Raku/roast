@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 22;
 
 # L<S05/New metacharacters/"The ~ operator is a helper for matching
 # nested subrules with a specific terminator">
@@ -24,7 +24,29 @@ ok 'x(ab'  !~~ m/<t1>/,  '~ and constant atoms (missing closing bracket)';
         '(' ~ ')' [ 'a'* <recursive>* ]
     };
 
-    ok '()'     ~~ m/<recursive>/, 'Can match "()" with tilde generator';
-    ok '(a)'    ~~ m/<recursive>/, 'Can match "(a)" with tilde generator';
-    ok '(aa)'   ~~ m/<recursive>/, 'Can match "(aa)" with tilde generator';
+    ok '()'     ~~ m/^ <recursive> $/, 'recursive "()"';
+    ok '(a)'    ~~ m/^ <recursive> $/, 'recursive "(a)"';
+    ok '(aa)'   ~~ m/^ <recursive> $/, 'recursive "(aa)"';
+    ok '(a(a))' ~~ m/^ <recursive> $/, 'recursive "(a(a))"';
+    ok '(()())' ~~ m/^ <recursive> $/, 'recursive "(()())"';
+    ok '('     !~~ m/^ <recursive> $/, '"(" is not matched';
+    ok '(()'   !~~ m/^ <recursive> $/, '"(()" is not matched';
+    ok '())'   !~~ m/^ <recursive> $/, '"())" is not matched';
+    ok 'a()'   !~~ m/^ <recursive> $/, '"a()" is not matched';
+}
+
+{
+    regex m1 { '(' ~ ')' <m2> };
+    regex m2 { a* <m1>*       };
+
+    ok '()'     ~~ m/^ <m1> $/, 'mutually recursive "()"';
+    ok '(a)'    ~~ m/^ <m1> $/, 'mutually recursive "(a)"';
+    ok '(aa)'   ~~ m/^ <m1> $/, 'mutually recursive "(aa)"';
+    ok '(a(a))' ~~ m/^ <m1> $/, 'mutually recursive "(a(a))"';
+    ok '(()())' ~~ m/^ <m1> $/, 'mutually recursive "(()())"';
+    #?rakudo 3 skip 'exceptions from regexes'
+    ok '('     !~~ m/^ <m1> $/, '"(" is not matched';
+    ok '(()'   !~~ m/^ <m1> $/, '"(()" is not matched';
+    ok '())'   !~~ m/^ <m1> $/, '"())" is not matched';
+    ok 'a()'   !~~ m/^ <m1> $/, '"a()" is not matched';
 }
