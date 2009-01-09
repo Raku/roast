@@ -111,7 +111,6 @@ plan 22;
         return inner_flatten(@xs);
     }
     
-    #?rakudo todo 'test error'
     is my_flatten( ('a', ['b', ['c', 'd', 'e']]) ), <a b c d e>,
         'We should be able to flatten lists by func';
 }
