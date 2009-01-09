@@ -27,8 +27,8 @@ split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) works (with Str sema
     split_test split(2, 123),          <1 3>,   'split(Int, Int) works';
 }
 
-split_test '1234'.split(/X/),          <1234>,  'Non-matching regex returns whole string';
-split_test '1234'.split('X'),          <1234>,  'Non-matching string returns whole string';
+split_test '1234'.split(/X/),          @(<1234>),  'Non-matching regex returns whole string';
+split_test '1234'.split('X'),          @(<1234>),  'Non-matching string returns whole string';
 split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty string';
 
 # Limit tests
@@ -37,7 +37,7 @@ split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty
 split_test 'theXbigXbang'.split(/X/, -1), <>, 'Negative limit returns empty List';
 split_test 'theXbigXbang'.split(/X/, 0),  <>, 'Zero limit returns empty List';
 }
-split_test 'ab1cd12ef'.split(/\d+/, 1), <ab1cd12ef>, 'Limit of 1 returns a 1 element List (with identical string)';
+split_test 'ab1cd12ef'.split(/\d+/, 1), @(<ab1cd12ef>), 'Limit of 1 returns a 1 element List (with identical string)';
 split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
 split_test(
     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),
