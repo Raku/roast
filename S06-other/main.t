@@ -15,7 +15,6 @@ sub MAIN($a, $b, *@c) {
     ok(1, 'MAIN called correctly');
     is($a, 'a', 'first positional param set correctly');
     is($b, 'b', 'second positional param set correctly');
-    #?rakudo todo "bug in slurpy parameters"
     is(~@c, 'c d e', 'slurpy param set correctly');
 }
 
