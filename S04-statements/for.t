@@ -350,6 +350,7 @@ my @elems = <a b c d e>;
 }
 
 #L<S04/"keywords require whitespace">
+#?rakudo skip 'whitespace after keywords'
 eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # vim: ft=perl6
