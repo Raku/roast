@@ -50,15 +50,15 @@ is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
 
 #?rakudo skip 'RT #62200'
 {
-class D1 does rA {
-    method mA1 {
-        'D1.mA1';
+    class D1 does rA {
+        method mA1 {
+            'D1.mA1';
+        }
     }
-}
 
-my $z = D1.new();
+    my $z = D1.new();
 
-is $z.mA1,      'D1.mA1',   'Can override method in a role with method in a class';
+    is $z.mA1,      'D1.mA1',   'Can override method in a role with method in a class';
 }
 
 # vim: syn=perl6
