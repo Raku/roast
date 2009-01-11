@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 =begin pod
 
@@ -83,3 +83,12 @@ is($foo.noargs(), 42, "... parentheses after method");
     dies_ok( { Zoo.new.c }, "meth(%h) is not a valid method call syntax");
 }
 
+# this used to be a Rakudo bug, RT #62046
+{
+    class TestList {
+        method list {
+            'method list';
+        }
+    }
+    is TestList.new.list, 'method list', 'can call a method "list"';
+}
