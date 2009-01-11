@@ -9,8 +9,7 @@ plan 7;
         return $x;
     }
 
-    is count([1, 2, 3, 4]),       1, 'count([1, 2, 3, 4])';
-    #?rakudo skip 'temporary skip while adjusting ObjectRef'
+    is count([1, 2, 3, 4]),       4, 'count([1, 2, 3, 4])';
     is count(my @b = 1, 2, 3, 4), 4, 'count(my @b = 1, 2, 3)';
     is count((1, 2, 3)),          3, 'count((1, 2, 3))';
 
@@ -20,7 +19,6 @@ plan 7;
         return $x;
     }
 
-    #?rakudo skip "not handling scalars being passed lists correctly"
     is count2((1,2,3)),           1, 'count2((1,2,3))';
 }
 
@@ -28,7 +26,6 @@ plan 7;
     sub pa(@a) { @a.WHAT; }
     my @b = 2, 3;
     is pa(@b), 'Array', 'basic array type sanity';
-    #?rakudo todo 'RT #61172'
     dies_ok { pa(3) }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }
