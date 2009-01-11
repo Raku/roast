@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 16;
 
 {
     # Compare with Perl 5:
@@ -76,4 +76,13 @@ plan 12;
         '@array.exists($negative_index_out_of_bounds) should be false';
     is +@array, 4,
         '@array.exists($negative_index_out_of_bounds) should not have altered @array';
+}
+
+{
+    my @a;
+    @a[2] = 6;
+    is +@a, 3, '@a[2] = 6 ensures that @a has three items';
+    ok @a[0] ~~ undef, '... and the first is undef';
+    ok @a[1] ~~ undef, '... and the second is undef';
+    is @a[2], 6,       '... and  the third is 6';
 }
