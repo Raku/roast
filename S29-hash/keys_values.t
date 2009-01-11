@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 14;
 
 =begin pod
 
@@ -32,3 +32,12 @@ is(+$pair.keys,     1, 'we have one key');
 is(~$pair.values,  42, '$pair.values works');
 is(~values($pair), 42, 'values($pair) works');
 is(+$pair.values,   1, 'we have one value');
+
+# test that .keys and .values work on Any values as well;
+
+{
+    my $x;
+    lives_ok { $x.values }, 'Can call Any.values';
+    lives_ok { $x.keys },   'Can call Any.keys';
+
+}
