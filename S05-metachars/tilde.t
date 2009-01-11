@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 26;
 
 # L<S05/New metacharacters/"The ~ operator is a helper for matching
 # nested subrules with a specific terminator">
@@ -50,3 +50,17 @@ ok 'x(ab'  !~~ m/<t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '())'   !~~ m/^ <m1> $/, '"())" is not matched';
     ok 'a()'   !~~ m/^ <m1> $/, '"a()" is not matched';
 }
+
+#?rakudo skip 'backtracking into ~'
+{
+    regex even_a { ['a' ~ 'a' <even_a> ]? };
+    ok 'aaaa' ~~ m/^ <even_a> $ /, 'backtracking into tilde rule (1)';
+    ok 'aaa' !~~ m/^ <even_a> $ /, 'backtracking into tilde rule (2)';
+}
+
+#?rakudo skip 'backtracking to find ~ goal'
+{
+    regex even_b { 'a' ~ 'a' <even_b>? };
+    ok 'aaaa' ~~ m/^ <even_b> /, 'tilde regex backtracks to find its goal';
+    ok 'aaa' !~~ m/^ <even_b> /, '...and fails for odd numbers';
+}  
