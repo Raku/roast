@@ -19,15 +19,13 @@ sub two_placeholders {
 two_placeholders(1, 2);
 
 sub non_twigil {
-#?rakudo 2 skip 'Not yet implemented'
     is $^foo, 5, "A single placeholder (still) works";
     is $foo, 5, "It also has a corresponding non-twigil variable";
 }
 
 non_twigil(5);
 
-#?rakudo skip 'Not yet implemented'
-eval_dies_ok( { $foo; $^foo; },
+eval_dies_ok( ' $foo; $^foo; ',
 'A non-twigil variable should not precede a correcponding twigil variable' );
 
 # vim: syn=perl6
