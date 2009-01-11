@@ -118,7 +118,7 @@ plan 13;
 {
     my @list = gather {
         my $v = 1;
-        while($v <= 10) {
+        while $v <= 10 {
             take $v if $v % 2 == 0;
             $v++;
         }
