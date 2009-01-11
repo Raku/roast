@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 
 # L<S04/The gather statement/"A variant of do is gather">
@@ -112,4 +112,16 @@ plan 12;
     };
     my $result = @list[2];
     is($count, 2, "gather is lazy");	
+}
+
+#?rakudo todo 'broken gather/take with while'
+{
+    my @list = gather {
+        my $v = 1;
+        while($v <= 10) {
+            take $v if $v % 2 == 0;
+            $v++;
+        }
+    };
+    is ~@list, "2 4 6 8 10", "gather with nested while";
 }
