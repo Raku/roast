@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 90;
+plan 92;
 
 =begin pod
 
@@ -391,6 +391,18 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     dies_ok { $x.set_hash1 },  'can not assign to %.hash attribute';
     lives_ok { $x.set_array2 }, 'can assign to @!array attribute';
     lives_ok { $x.set_hash2 },  'can assign to %!hash attribute';
+}
 
+# test that whitespaces after 'has (' are allowed.
+# This used to be a Rakudo bug (RT #61914)
+{
+    class AttribWsTest {
+        has ( $.this,
+        $.that,
+        );
+    }
+    my AttribWsTest $o .= new( this => 3, that => 4);
+    is $o.this, 3, 'could use whitespace after "has ("';
+    is $o.that, 4, '.. and a newline within the has() declarator';
 }
 # vim: ft=perl6
