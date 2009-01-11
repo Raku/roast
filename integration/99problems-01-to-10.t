@@ -204,7 +204,6 @@ plan 22;
     
 }
 
-#?rakudo skip 'weird parse errors'
 {
     # P10 (*) Run-length encoding of a list.
     # 

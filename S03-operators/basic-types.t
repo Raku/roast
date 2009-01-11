@@ -51,7 +51,6 @@ isa_ok($s2, Hash, 'it is a Hash type (bare block)');
 my $s2a = { $^a };
 isa_ok($s2a, Block, 'it is a Parametric type (bare block with placeholder parameters)');
 
-#?rakudo skip 'Block type not enforced'
 {
     my $s3 = -> {};
     isa_ok($s3, Block, 'it is a Block type (pointy block)');

@@ -36,7 +36,6 @@ plan 28;
 
 
 # Binding and $CALLER::
-#?rakudo skip 'context variables'
 {
   sub bar {
     return $CALLER::a eq $CALLER::b;

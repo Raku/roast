@@ -89,7 +89,6 @@ is $foo, 1, "die should stop execution immediately.";
     is $foo, 2, 'if with no parens, and closure as cond';
 }
 
-#?rakudo skip 'lexically scoped functions'
 {
     my $var = 9;
     my sub func( $a, $b, $c ) { $var };
@@ -117,7 +116,6 @@ is $foo, 1, "die should stop execution immediately.";
 }
 
 # L<S04/"Conditional statements"/The value of the conditional expression may be optionally bound to a closure parameter>
-#?rakudo skip 'Closure parameters for if block'
 {
     my ($got, $a_val, $b_val);
     my sub testa { $a_val };

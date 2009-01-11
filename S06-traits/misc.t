@@ -74,7 +74,6 @@ lives_ok { boom(42) }, "can modify a copy";
 # is context
 # Doesn't even compile, which is lucky, because I don't understand it well
 # enough to write an actual test...
-#?rakudo skip 'is context'
 ok(eval('sub my_format (*@data is context(Item)) { }; 1'), "is context - compile check");
 
 

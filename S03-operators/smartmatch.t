@@ -32,15 +32,10 @@ sub eval_elsewhere($code){ eval($code) }
     ok !(3 !~~ &is_odd), 'scalar sub truth (unary, negated smart-match)';
 };
 
-#?rakudo emit #
 my %hash1 is context = ( "foo", "Bar", "blah", "ding");
-#?rakudo emit #
 my %hash2 is context = ( "foo", "zzz", "blah", "frbz");
-#?rakudo emit #
 my %hash3 is context = ( "oink", "da", "blah", "zork");
-#?rakudo emit #
 my %hash4 is context = ( "bink", "yum", "gorch", "zorba");
-#?rakudo emit #
 my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #L<<S03/Smart matching/"hash keys same set">>

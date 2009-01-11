@@ -32,11 +32,9 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 
     my $a;
     ok ($a = $class.new), "instantiation of anonymous class";
-    #?rakudo skip '"No execption handler and no message"'
     is $a.meth, 42, "calling a method on an instance of an anonymous class (1)";
 
 # And the same w/o using a $class variable:
-    #?rakudo skip 'anonymous classes without temp variable'
     is (class { method meth() { return 42 } }).new.meth, 42,
     "calling a method on an instance of an anonymous class (2)";
 

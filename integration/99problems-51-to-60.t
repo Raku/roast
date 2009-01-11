@@ -144,7 +144,6 @@ plan 37;
     ok !mirror((1,undef,[]),(2,undef,undef)),"mirror spots differences recurring";
 
     ok symmetric([1,undef,undef]), "symmetric works with 1-level trees";
-    #?rakudo skip 'array parameter passing'
     ok !symmetric([1,undef,[2,undef,undef]]),"symmetric find asymettric trees";
     ok symmetric([1,
             [11,
