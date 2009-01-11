@@ -50,7 +50,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called", :todo<feature>
 # Using ".=()" to create an object
 { 
   class Fooz { has $.x }
-  my Fooz $f .=(:x(1));
+  my Fooz $f .= new(:x(1));
   is $f.x, 1, "instantiating an object using .=() worked";
 }
 
