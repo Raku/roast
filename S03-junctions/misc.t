@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 78;
+plan 79;
 
 =begin pod
 
@@ -329,3 +329,6 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
     ok( !( all(@array) == one(@array) ), "all(@x) == one(@x) tests uniqueness(-ve)" );
 
 }
+
+# used to be a rakudo regression (RT #60886)
+ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
