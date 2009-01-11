@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 8;
 
 {
     sub count(@a) {
@@ -30,5 +30,12 @@ plan 7;
 
     sub ph(%h) { 1 }
     dies_ok { ph(3) }, 'an Int is not a Hash';
+}
 
+# this used to be a rakudobug, RT #62172
+{
+    my @a = 1..8;
+    sub t1(@a) { return +@a };
+    sub t2(@a) { return t1(@a) };
+    is t2(@a), 8, 'can pass arrays through multiple subs';
 }
