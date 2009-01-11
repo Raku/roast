@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 9;
 
 # L<S12/Roles/"Roles may be composed into a class at compile time">
 
@@ -48,6 +48,8 @@ is $y.mA2,      'mA2',      'Can call mixed in method (two roles) 2';
 is $y.mB1,      'mB1',      'Can call mixed in method (two roles) 3';
 is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
 
+#?rakudo skip 'RT #62200'
+{
 class D1 does rA {
     method mA1 {
         'D1.mA1';
@@ -57,5 +59,6 @@ class D1 does rA {
 my $z = D1.new();
 
 is $z.mA1,      'D1.mA1',   'Can override method in a role with method in a class';
+}
 
 # vim: syn=perl6
