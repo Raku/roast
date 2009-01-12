@@ -48,7 +48,6 @@ is $y.mA2,      'mA2',      'Can call mixed in method (two roles) 2';
 is $y.mB1,      'mB1',      'Can call mixed in method (two roles) 3';
 is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
 
-#?rakudo skip 'RT #62200'
 {
     class D1 does rA {
         method mA1 {
