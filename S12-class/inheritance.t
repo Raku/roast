@@ -61,10 +61,11 @@ ok  Foo::Bar.does(Class),   "subclass.does(Class) is true";
 #?rakudo 2 skip 'no ::CLASS class'
 ok !Foo::Bar.does(::CLASS),   "subclass.does(CLASS) is false";
 ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
-#?rakudo 3 todo 'oo'
+#?rakudo 2 todo 'oo'
 ok !Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is false";
 ok !Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is false";
 #?pugs todo "bug"
+#?rakudo skip 'Class type not declared'
 ok !Foo::Bar.HOW.isa(Foo::Bar, Class),    "subclass.HOW.isa(Class) is false";
 #?rakudo skip 'does'
 ok !Foo::Bar.HOW.does(Foo::Bar, Class),   "subclass.HOW.does(Class) is false";
