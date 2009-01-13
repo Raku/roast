@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 32;
 
 # L<S11/"Exportation"/>
 
@@ -101,9 +101,14 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     }
 
     ##  make sure each side isn't undef
-    #?rakudo 2 todo 'RT #62326'
+    #?rakudo todo 'RT #62326'
     is( Foo::Foo_exp_parens(), 'r_Foo_exp_parens',
         'Foo_exp_parens() is defined' );
+    is( Foo::Foo_exp_parens, 'r_Foo_exp_parens',
+        'Can call Foo_exp_parens (without parens)' );
+    #?rakudo 2 todo 'RT #62326'
+    is( Foo::Foo_exp_parens.(), 'r_Foo_exp_parens',
+        'Can call Foo_exp_parens.()' );
     is( Foo::EXPORT::ALL::Foo_exp_parens(), 'r_Foo_exp_parens',
         'Foo_exp_parens() is defined' );
 
