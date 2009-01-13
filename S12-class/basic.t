@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 23;
 
 =begin pod
 
@@ -67,3 +67,18 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
     ok($baz ~~ Baz, '... smartmatch our $baz to the Baz class');
     ok($baz.isa(Baz), "... .isa(Baz)");
 }
+
+# test that lcfirst class names and ucfirst method names are allowed
+
+{
+    class lowerCase {
+        method UPPERcase {
+            return 'works';
+        }
+    }
+    is lowerCase.new.UPPERcase, 'works',
+       'type distinguishing is not done by case of first letter';
+}
+
+eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
+             'die on non-existing class names';
