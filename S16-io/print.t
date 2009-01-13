@@ -39,24 +39,24 @@ print "1..12\n";
 #  same holds for say, even though it is not (yet?) explicitly mentioned
  
 {
-    print $*DEFOUT: 'ok 7 - print with $*DEFOUT: as filehandle' ~ "\n";
-    say $*DEFOUT: 'ok 8 - say with $*DEFOUT: as filehandle';
+    print $*OUT: 'ok 7 - print with $*OUT: as filehandle' ~ "\n";
+    say $*OUT: 'ok 8 - say with $*OUT: as filehandle';
 }
 
 {
-    $*DEFOUT.print: 'ok 9 - $*DEFOUT.print: list' ~ "\n";
-    $*DEFOUT.say: 'ok 10 - $DEFOUT.say: list';
+    $*OUT.print: 'ok 9 - $*OUT.print: list' ~ "\n";
+    $*OUT.say: 'ok 10 - $OUT.say: list';
 
 }
 
 {
-    my @array = 'ok', ' ',  '11 - $*DEFOUT.print(LIST)', "\n";
-    $*DEFOUT.print(@array);
+    my @array = 'ok', ' ',  '11 - $*OUT.print(LIST)', "\n";
+    $*OUT.print(@array);
 }
 
 {
-    my @array = 'ok', ' ',  '12 - $*DEFOUT.say(LIST)';
-    $*DEFOUT.say(@array);
+    my @array = 'ok', ' ',  '12 - $*OUT.say(LIST)';
+    $*OUT.say(@array);
 }
 
 
