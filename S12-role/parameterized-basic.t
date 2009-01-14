@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 18;
 
 =begin pod
 
@@ -80,6 +80,17 @@ is(MP_1.new.x,   1,       '...even over many invocations.');
 is(MP_2.new.y,   '42BBQ', 'params in nested scopes in methods');
 is(MP_1.new.y,   '421',   'params in nested scopes in methods');
 
+# Use of parameters with attribute initialization.
+role AttrParams[$a, $b] {
+    has $.x = $a;
+    has $.y = $b;
+}
+class AP_1 does AttrParams['a','b'] { }
+class AP_2 does AttrParams[1,2] { }
+is(AP_2.new.x,   1,    'use of type params in attr initialization works');
+is(AP_2.new.y,   2,    'use of type params in attr initialization works');
+is(AP_1.new.x,   'a',  'use of type params in attr initialization works after 2nd invocation');
+is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2nd invocation');
 
 #?pugs emit =end SKIP
 
