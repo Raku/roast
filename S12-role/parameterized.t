@@ -17,40 +17,38 @@ Might need some more review and love --moritz
 
 # L<S12/Roles/to be considered part of the long name:>
 # L<A12/Encapsulated Attributes/to be considered part of the long name:>
-  role InitialAttribVal[: $val] {
+  role InitialAttribVal[$val] {
     has $.attr = $val;
   }
 
 my $a;
 lives_ok {$a does InitialAttribVal[42]},
   "imperative does to apply a parametrized role (1)";
-is try { $a.attr }, 42,
+is $a.attr, 42,
   "attribute was initialized correctly (1)";
-# L<A12/Encapsulated Attributes/In which case all of these are true:>
-ok $a.HOW.does(InitialAttribVal),
+#?rakudo 4 skip 'no .does'
+ok $a.HOW.does($a, InitialAttribVal),
   ".HOW.does gives correct information (1-1)";
 ok $a.^does(InitialAttribVal),
   ".^does gives correct information (1-1)";
-# L<A12/Encapsulated Attributes/but this is false:>
-ok !$a.HOW.does(InitialAttribVal[42]),
+ok $a.HOW.does($a, InitialAttribVal[42]),
   ".HOW.does gives correct information (1-2)";
-ok !$a.^does(InitialAttribVal[42]),
+ok $a.^does(InitialAttribVal[42]),
   ".^does gives correct information (1-2)";
 
 my $b;
-ok $a does InitialAttribVal[23],
+lives_ok { $b does InitialAttribVal[23] },
   "imperative does to apply a parametrized role (2)";
-is try { $a.attr }, 23,
+is $b.attr, 23,
   "attribute was initialized correctly (2)";
-# L<A12/Encapsulated Attributes/In which case all of these are true:>
-ok $a.HOW.does(InitialAttribVal),
+#?rakudo 4 skip 'no .does'
+ok $b.HOW.does(InitialAttribVal),
   ".HOW.does gives correct information (2-1)";
-ok $a.^does(InitialAttribVal),
+ok $b.^does(InitialAttribVal),
   ".^does gives correct information (2-1)";
-# L<A12/Encapsulated Attributes/but this is false:>
-ok !$a.HOW.does(InitialAttribVal[23]),
+ok $b.HOW.does(InitialAttribVal[23]),
   ".HOW.does gives correct information (2-2)";
-ok !$a.^does(InitialAttribVal[23]),
+ok $b.^does(InitialAttribVal[23]),
   ".^does gives correct information (2-2)";
 
 
@@ -61,8 +59,9 @@ role InitialAttribType[::vartype] {
     method hi(vartype $foo) { 42 }
 }
 my $c;
-ok $c does InitialAttribType[Code],
+lives_ok { $c does InitialAttribType[Code] },
   "imperative does to apply a parametrized role (3)";
+#?rakudo 4 skip 'no .does'
 ok $c.HOW.does(InitialAttribType),
   ".HOW.does gives correct information (3-1)";
 ok $c.^does(InitialAttribType),
@@ -71,8 +70,9 @@ ok $c.HOW.does(InitialAttribType[Code]),
   ".HOW.does gives correct information (3-2)";
 ok $c.^does(InitialAttribType[Code]),
   ".^does gives correct information (3-2)";
-is try { $c.hi(sub {}) }, 42,
+is $c.hi(sub {}), 42,
   "type information was processed correctly (1)";
+#?rakudo 1 skip 'type variables bug'
 dies_ok { $c.hi("not a code object") },
   "type information was processed correctly (2)";
 
@@ -93,27 +93,28 @@ dies_ok { $c.hi("not a code object") },
 #   $a ~~ InitialAttribBoth["foo", "bar"]  ==> false
 #   $b ~~ InitialAttribBoth["foo", "grtz"] ==> false
 # Heavy stuff, eh?)
-  role InitialAttribBoth[Str $type: Str $name] {
+  role InitialAttribBoth[Str $type, Str $name] {
     has $.type = $type;
     has $.name = $name;
   }
 my $d;
-ok $d does InitialAttribBoth["type1", "name1"],
+lives_ok { $d does InitialAttribBoth["type1", "name1"] },
   "imperative does to apply a parametrized role (4)";
+#?rakudo 6 skip 'no .does'
 ok $c.HOW.does(InitialAttribType),
   ".HOW.does gives correct information (4-1)";
 ok $c.^does(InitialAttribType),
   ".^does gives correct information (4-1)";
-ok $d.HOW.does(InitialAttribType["type1"]),
+ok !$d.HOW.does(InitialAttribType["type1"]),
   ".HOW.does gives correct information (4-2)";
-ok $d.^does(InitialAttribType["type1"]),
+ok !$d.^does(InitialAttribType["type1"]),
   ".^does gives correct information (4-2)";
-ok !$d.HOW.does(InitialAttribType["type1", "name1"]),
+ok $d.HOW.does(InitialAttribType["type1", "name1"]),
   ".HOW.does gives correct information (4-3)";
-ok !$d.^does(InitialAttribType["type1", "name1"]),
+ok $d.^does(InitialAttribType["type1", "name1"]),
   ".^does gives correct information (4-3)";
-is try { $d.type }, "type1", ".type works correctly";
-is try { $d.name }, "name1", ".name works correctly";
+is $d.type, "type1", ".type works correctly";
+is $d.name, "name1", ".name works correctly";
 
 #?pugs emit =end SKIP
 
