@@ -27,7 +27,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 {
     my $foo = sub () { 42 };
     isa_ok($foo, Code);
-    #?rakudo 2 todo 'types Sub, Routine'
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(), 42,                 "basic invocation of an anonymous sub";
@@ -55,7 +54,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 {
     my $foo = sub { 100 + (@_[0] // -1) };
     isa_ok($foo, Code);
-    #?rakudo 2 todo 'types Sub, Routine'
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(42), 142,              "basic invocation of a perl5-like anonymous sub (1)";
@@ -65,7 +63,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 {
     my $foo = sub ($x) { 100 + $x };
     isa_ok($foo, Code);
-    #?rakudo 2 todo 'types Sub, Routine'
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
