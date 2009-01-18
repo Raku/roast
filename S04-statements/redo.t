@@ -83,12 +83,18 @@ plan 10;
     my $stopping = 100;
     my $sum = 0;
     for 1..10 -> $i is copy {
-    $sum += $i;
-    $i -= 1;
-    last if !$stopping--;
-    if $i > 0 { redo }
+        $sum += $i;
+        $i -= 1;
+        last if !$stopping--;
+        if $i > 0 {
+            redo
+        }
     }
-    is($sum, 220, "testRedoWithFor", :todo<bug>);
+    say $sum;
+    # pugs, rakudo and perl5 independently agree that this should be
+    # 201, not 220 as the ruby example says.
+    # that's because the ruby example doesn't have the 'is copy' trait.
+    is($sum, 201, "testRedoWithFor");
 
     $stopping = 100;
     $sum = 0;

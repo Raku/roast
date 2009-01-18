@@ -23,7 +23,7 @@ plan 26;
 my sub foo($n, *%h, *@a) { };
 my sub foo1($n, *%h, *@a) { $n }
 my sub foo2($n, *%h, *@a) { %h<x> + %h<y> + %h<n> }
-my sub foo3($n, *%h, *@a) { @a.sum }
+my sub foo3($n, *%h, *@a) { [+] @a }
 
 ## all pairs will be slurped into hash, except the key which has the same name
 ## as positional parameter
@@ -37,8 +37,10 @@ is (foo2 1, x => 20, y => 300, 4000), 320,
 is (foo3 1, x => 20, y => 300, 4000), 4000,
   'Testing the value for slurpy *@a';
 
+# XXX should this really die?
+#?rakudo todo 'positional params can be accessed as named ones'
 dies_ok { foo 1, n => 20, y => 300, 4000 },
-  'Testing: `sub foo($n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000`', :todo<bug>;
+  'Testing: `sub foo($n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000`';
 
 ## We *can* pass positional arguments as a 'named' pair with slurpy *%h.
 ## Only *remaining* pairs are slurped into the *%h
@@ -46,6 +48,7 @@ dies_ok { foo 1, n => 20, y => 300, 4000 },
 diag('Testing without positional arguments');
 lives_ok { foo n => 20, y => 300, 4000 },
   'Testing: `sub foo($n, *%h, *@a){ }; foo n => 20, y => 300, 4000`';
+#?rakudo 5 todo 'positional params can be passed as named ones'
 is (foo1 n => 20, y => 300, 4000), 20,
   'Testing the value for positional';
 is (foo2 n => 20, y => 300, 4000), 300,
@@ -76,7 +79,7 @@ dies_ok { foo 1, x => 20, y => 300, 4000 },
 my sub foo(:$n, *%h, *@a) { };
 my sub foo1(:$n, *%h, *@a) { $n };
 my sub foo2(:$n, *%h, *@a) { %h<x> + %h<y> + %h<n> };
-my sub foo3(:$n, *%h, *@a) { return @a.sum };
+my sub foo3(:$n, *%h, *@a) { [+] @a };
 
 diag("Testing with named arguments (named param isn't required)");
 lives_ok { foo 1, x => 20, y => 300, 4000 },
@@ -136,7 +139,7 @@ L<<S06/List parameters/Slurpy scalar parameters capture what would otherwise be 
 
 sub first(*$f, *$s, *@r){ return $f };
 sub second(*$f, *$s, *@r){ return $s };
-sub rest(*$f, *$s, *@r){ return @r.sum };
+sub rest(*$f, *$s, *@r){ return [+] @r };
 diag 'Testing with slurpy scalar';
 is first(1, 2, 3, 4, 5), 1,
   'Testing the first slurpy scalar...';

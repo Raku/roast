@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 class Array is also { method test_method  { 1 }; };
 class Hash is also { method test_method  { 1 }; };
@@ -46,3 +46,15 @@ is(try({ (:key<value>).value; }), 'value', "method on a bare pair");
 my $pair = :key<value>;
 
 is $pair.value, 'value', "method on a named pair";
+
+{
+    class List is also {
+        method twice {
+            gather {
+                take $_ * 2 for self;
+            }
+        }
+    }
+
+    is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class List';
+}

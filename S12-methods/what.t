@@ -31,7 +31,6 @@ plan 10;
 # And a quick test for Code:
 {
   my $a = sub ($x) { 100 + $x };
-  #?rakudo 2 todo 'correct types for subs and blocks'
   ok($a.WHAT === Sub,    "a sub's type is Sub");
   ok($a.WHAT ~~ Routine, "a sub isa Routine");
   ok($a.WHAT ~~ Code,    "a sub isa Code");

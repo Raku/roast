@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/"List"/"=item classify">
 
-plan 11;
+plan 10;
 
 #?pugs todo 'feature'
 { 
@@ -25,10 +25,8 @@ plan 11;
     is( %by_five{20}, 4);
 }
 
-# .classify shouldn't work on non-arrays
+# .classify should work on non-arrays
 {
-  dies_ok { 42.classify: { $_ } },      "method form of classify should not work on numbers";
-  dies_ok { "str".classify: { $_ } },   "method form of classify should not work on strings";
-#?pugs todo 'feature'
-  is eval(q<<< ~(42,).classify: { 1 } >>>), "42", "method form of classify should work on arrays";
+  lives_ok { 42.classify: { $_ } },      "method form of classify should not work on numbers";
+  lives_ok { "str".classify: { $_ } },   "method form of classify should not work on strings";
 }

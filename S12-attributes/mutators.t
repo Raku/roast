@@ -23,6 +23,7 @@ my $lvm = LValueMutator.new(:foo(3));
 #?pugs todo 'oo'
 # XXX is this correct? .new calls BUILD, which in turn calls bless,
 # which in turns initializes the attributes directly
+#?rakudo todo 'OO (test needs review)'
 is($lvm.foo, 3, "constructor uses lvalue accessor method");
 ok($lvm.get_foo ~~ undef, "constructor doesn't simply set attributes");
 
@@ -55,17 +56,21 @@ is($mv.constant, 6, "normal attribute");
 dies_ok { $mv.constant = 7 }, "can't change a non-rw attribute";
 is($mv.constant, 6, "attribute didn't change value");
 
+#?rakudo todo 'overring mutators'
 is($count, 2, "mutator was called");
-is($mv.varies, 9, "mutator called during object construction");
-is($count, 3, "accessor was called");
-is($mv.varies, 11, "attribute with mutating accessor");
-is($count, 4, "accessor was called");
+#?rakudo skip 'oo: mutators'
+{
+    is($mv.varies, 9, "mutator called during object construction");
+    is($count, 3, "accessor was called");
+    is($mv.varies, 11, "attribute with mutating accessor");
+    is($count, 4, "accessor was called");
 
-$count = 0;
-$mv.varies = 13;
-is($count, 2, "mutator was called");
-is($mv.varies, 16, "attribute with overridden mutator");
-is($count, 3, "accessor and mutator were called");
+    $count = 0;
+    $mv.varies = 13;
+    is($count, 2, "mutator was called");
+    is($mv.varies, 16, "attribute with overridden mutator");
+    is($count, 3, "accessor and mutator were called");
+}
 
 # test interface tentatively not entirely disapproved of by
 # all(@Larry) at L<"http://xrl.us/gnxp">
@@ -81,15 +86,18 @@ class MagicSub {
     }
 }
 
-my $mv = MagicVal.new(:constant(6), :varies(6));
+#?rakudo skip 'class Proxy'
+{
+    my $mv = MagicVal.new(:constant(6), :varies(6));
 
-is($mv.constant, 6, "normal attribute");
-is($mv.constant, 6, "normal attribute");
-dies_ok { $mv.constant = 7 }, "can't change a non-rw attribute";
-is($mv.constant, 6, "attribute didn't change value");
+    is($mv.constant, 6, "normal attribute");
+    is($mv.constant, 6, "normal attribute");
+    dies_ok { $mv.constant = 7 }, "can't change a non-rw attribute";
+    is($mv.constant, 6, "attribute didn't change value");
 
-is($mv.varies, 9, "mutator called during object construction");
-is($mv.varies, 11, "attribute with mutating accessor");
+    is($mv.varies, 9, "mutator called during object construction");
+    is($mv.varies, 11, "attribute with mutating accessor");
 
-$mv.varies = 13;
-is($mv.varies, 16, "attribute with overridden mutator");
+    $mv.varies = 13;
+    is($mv.varies, 16, "attribute with overridden mutator");
+}
