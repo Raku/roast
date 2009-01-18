@@ -275,7 +275,6 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
 
 # check mixture of positional/named args to BUILD
 
-#?rakudo skip 'submethod parsing'
 {
     class Foo9 {
         has $.a;

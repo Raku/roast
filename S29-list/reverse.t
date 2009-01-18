@@ -25,7 +25,6 @@ is( $a, 'Hello World !', "reverse should not be in-place" );
 is( $a .= reverse, '! dlroW olleH', "after a .=reverse" );
 
 # Multiple iterations (don't work in 6.2.12) :
-#?rakudo skip 'parsefail'
 is( 'Hello World !'.reverse.reverse, 'Hello World !', 
         "two reverse in a row." );
         

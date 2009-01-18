@@ -47,7 +47,6 @@ dies_ok {$o."b" },  'can not call private method via quotes from outside';
 # also installs the &foo alias for &!foo
 # but it's only stated for roles. Is that true for classes as well?
 
-#?rakudo skip 'my method !foo'
 {
     role C {
         my method role_shared {
