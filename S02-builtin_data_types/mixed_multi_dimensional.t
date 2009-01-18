@@ -84,7 +84,6 @@ Some deeper tests were already added.
     @array[2] = -> { 3 };
 
     is(+@array, 3, 'got three elements in the Array');
-    #?rakudo todo 'type Sub'
     isa_ok(@array[0], Sub);
     isa_ok(@array[1], Block);
     isa_ok(@array[2], Block);
