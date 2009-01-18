@@ -12,7 +12,7 @@ This test tests the C<WHAT> builtin.
 
 # L<S12/Introspection/"WHAT">
 
-plan 10;
+plan 14;
 
 # Basic subroutine/method form tests for C<WHAT>.
 {
@@ -49,4 +49,14 @@ plan 10;
     my $meth = "WHAT";
     #?rakudo skip 'indirect method calls'
     is($o.$meth,  'Bar', '.$meth calls the method instead of the macro');
+}
+
+# these used to be Rakudo regressions, RT #62006
+
+{
+    # proto as a term
+    lives_ok {  Match }, 'proto as a term lives';
+    lives_ok { +Match }, 'numification of proto lives';
+    is ~("bac" ~~ /a/).WHAT, 'Match', '.WHAT on a Match works';
+    is +("bac" ~~ /a/).WHAT, 0, 'numification of .WHAT of a Match works';
 }
