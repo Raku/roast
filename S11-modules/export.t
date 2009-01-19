@@ -17,7 +17,6 @@ sub exp_my_tag       is export( :my_tag )        { 'r_exp_my_tag' }
 ##  exp_no_parens
 is( exp_no_parens(), 'r_exp_no_parens',
     'exp_no_parens() is defined' );
-#?rakudo todo 'RT #62326'
 is( EXPORT::ALL::exp_no_parens(), 'r_exp_no_parens',
     'EXPORT::ALL::exp_no_parens() is defined' );
 
@@ -101,12 +100,10 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     }
 
     ##  make sure each side isn't undef
-    #?rakudo todo 'RT #62326'
     is( Foo::Foo_exp_parens(), 'r_Foo_exp_parens',
         'Foo_exp_parens() is defined' );
     is( Foo::Foo_exp_parens, 'r_Foo_exp_parens',
         'Can call Foo_exp_parens (without parens)' );
-    #?rakudo 2 todo 'RT #62326'
     is( Foo::Foo_exp_parens.(), 'r_Foo_exp_parens',
         'Can call Foo_exp_parens.()' );
     is( Foo::EXPORT::ALL::Foo_exp_parens(), 'r_Foo_exp_parens',
