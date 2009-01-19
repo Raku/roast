@@ -218,22 +218,21 @@ my @p;
     is(@p[1],11, "||= operator parses as item assignment 4");
 }
 
-#?rakudo skip "unknown reasons"
 {
     my $a;
     @p = $a //= 3, 4;
     is($a, 3, "//= operator");
-    is(@p[0],3, "||= operator parses as item assignment 1");
-    is(@p[1],4, "||= operator parses as item assignment 2");
+    is(@p[0],3, "//= operator parses as item assignment 1");
+    is(@p[1],4, "//= operator parses as item assignment 2");
     @p = $a //= 10, 11;
     is($a, 3, "... and second");
-    is(@p[0],3, "||= operator parses as item assignment 3");
-    is(@p[1],11, "||= operator parses as item assignment 4");
+    is(@p[0],3, "//= operator parses as item assignment 3");
+    is(@p[1],11, "//= operator parses as item assignment 4");
     my %hash;
     %hash<foo> //= hash();
     is(WHAT %hash<foo>, 'Hash', "Verify //= autovivifies correctly");
     %hash<bar> //= [];
-    is(WHAT %hash<foo>, 'Array', "Verify //= autovivifies correctly");
+    is(WHAT %hash<bar>, 'Array', "Verify //= autovivifies correctly");
 }
 
 #?rakudo skip "unknown reasons"
