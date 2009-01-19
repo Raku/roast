@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 79;
+plan 72;
 
 =begin pod
 
@@ -272,19 +272,6 @@ L<S03/Junctive operators/They thread through operations>
 
     is(j((1|2)|(3&4)), j(any(any(1,2),all(3,4))),
         '((1|2)|(3&4)) equiv to any(any(1,2),all(3,4))');
-}
-
-#?rakudo skip 'Junction.pick'
-{
-    ok(none(1).pick ~~ undef, 'none(1).pick should be undef');
-    ok(none(1,1).pick ~~ undef, 'none(1,1).pick should be undef');
-
-    is(one(1).pick, 1, 'one(1).pick should be 1');
-    ok(one(1,1).pick ~~ undef, 'one(1,1).pick should be undef');
-
-    is(all(1).pick, 1, 'all(1).pick should be 1');
-    is(all(1,1).pick, 1, 'all(1,1).pick should be 1');
-    ok(all(1,2).pick ~~ undef, 'all(1,2).pick should be undef');
 }
 
 # junction in boolean context
