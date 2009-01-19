@@ -46,11 +46,11 @@ plan 15;
     
     # of course the following is wrong, but it also confuses test output!
     #ok all(@rand) ~~ none(@letters), '... and they should be in the letters';
-    ok all(@rand) ~~ any(@letters), '... and they should be in the letters';
+    ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
     
     @rand = <a b c d e f g h>.pick(3);
     is @rand.elems, 3, 'pick() should return the correct number of items';
-    ok all(@rand) ~~ any(@letters), '... and they should be in the letters';
+    ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
 }
     
 {
@@ -83,7 +83,7 @@ plan 15;
     
     my @numbers = lotto(6, 49);
     is @numbers.elems, 6, 'lotto() should return the correct number of numbers';
-    ok all(@numbers) ~~ any(1..49), '... and they should be in the correct range';
+    ok ?(all(@numbers) ~~ any(1..49)), '... and they should be in the correct range';
     my %unique = map { ($_ => 1) }, @numbers;
     say %unique.perl;
     is %unique.keys.elems, 6, '... and they should all be unique numbers';

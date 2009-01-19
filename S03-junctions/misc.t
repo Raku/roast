@@ -10,6 +10,9 @@ Misc. Junction tests
 
 =end pod
 
+# avoid auto-threading on ok()
+sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
+
 # L<S03/Junctive operators>
 # L<S09/Junctions>
 {
@@ -20,53 +23,53 @@ Misc. Junction tests
     my $c = '';
     
     # make sure they all match to an empty string
-    ok('' eq ($a & $b & $c), 'junction of ($a & $b & $c) matches an empty string');
-    ok('' eq all($a, $b, $c), 'junction of all($a, $b, $c) matches an empty string');   
+    jok('' eq ($a & $b & $c), 'junction of ($a & $b & $c) matches an empty string');
+    jok('' eq all($a, $b, $c), 'junction of all($a, $b, $c) matches an empty string');   
     
     # give $a a value
     $a = 'a';  
     
     # make sure that at least one of them matches 'a' 
-    ok('a' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one "a"');
-    ok('a' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one "a"');   
+    jok('a' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one "a"');
+    jok('a' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one "a"');   
 
-    ok('' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one empty string');
-    ok('' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one empty string');
+    jok('' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one empty string');
+    jok('' eq any($b, $c, $a), 'junction of any($b, $c, $a) matches at least one empty string');
     
     # make sure that ~only~ one of them matches 'a'
-    ok('a' eq ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
-    ok('a' eq one($b, $c, $a), 'junction of one($b, $c, $a) matches at ~only~ one "a"');
+    jok('a' eq ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
+    jok('a' eq one($b, $c, $a), 'junction of one($b, $c, $a) matches at ~only~ one "a"');
     
     # give $b a value
     $b = 'a';
     
     # now this will fail
-    ok('a' ne ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at more than one "a"');              
+    jok('a' ne ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at more than one "a"');              
 
     # change $b and give $c a value
     $b = 'b';
     $c = 'c';
     
-    ok('a' eq ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
-    ok('b' eq ($a ^ $b ^ $c), 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
-    ok('c' eq ($c ^ $a ^ $b), 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
+    jok('a' eq ($b ^ $c ^ $a), 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
+    jok('b' eq ($a ^ $b ^ $c), 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
+    jok('c' eq ($c ^ $a ^ $b), 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
 
-    ok('a' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one "a"');
-    ok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
-    ok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
+    jok('a' eq ($b | $c | $a), 'junction of ($b | $c | $a) matches at least one "a"');
+    jok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
+    jok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
 
     ok(not(('a' eq ($b | $c | $a)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('b' eq ($a | $b | $c)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('c' eq ($c | $a | $b)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false'); 
     
     # test junction to junction
-    ok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
-    ok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
+    jok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
+    jok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
     
     # mix around variables and literals
     
-    ok(($a & 'b' & 'c') eq ('a' | $b | $c), 'junction ($a & "b" & "c") matches junction ("a" | $b | $c)');              
-    ok(($a & 'b' & $c) eq ('a' | $b | 'c'), 'junction ($a & "b" & $c) matches junction ("a" | $b | "c")');              
+    jok(($a & 'b' & 'c') eq ('a' | $b | $c), 'junction ($a & "b" & "c") matches junction ("a" | $b | $c)');              
+    jok(($a & 'b' & $c) eq ('a' | $b | 'c'), 'junction ($a & "b" & $c) matches junction ("a" | $b | "c")');              
     
 }
 
@@ -78,22 +81,22 @@ Misc. Junction tests
     my $c = '';
     
     my $all_of_them = $a & $b & $c;
-    ok('' eq $all_of_them, 'junction variable of ($a & $b & $c) matches and empty string');
+    jok('' eq $all_of_them, 'junction variable of ($a & $b & $c) matches and empty string');
     
     $a = 'a';  
     
     my $any_of_them = $b | $c | $a;
-    ok('a' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one "a"');  
-    ok('' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one empty string');
+    jok('a' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one "a"');  
+    jok('' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one empty string');
     
     my $one_of_them = $b ^ $c ^ $a;
-    ok('a' eq $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at ~only~ one "a"');
+    jok('a' eq $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at ~only~ one "a"');
     
     $b = 'a';
     
     {
         my $one_of_them = $b ^ $c ^ $a;
-        ok('a' ne $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at more than one "a"');              
+        jok('a' ne $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at more than one "a"');              
     }
     
     $b = 'b';
@@ -101,16 +104,16 @@ Misc. Junction tests
     
     {
         my $one_of_them = $b ^ $c ^ $a;    
-        ok('a' eq $one_of_them, 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
-        ok('b' eq $one_of_them, 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
-        ok('c' eq $one_of_them, 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
+        jok('a' eq $one_of_them, 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
+        jok('b' eq $one_of_them, 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
+        jok('c' eq $one_of_them, 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
     }
 
     {
         my $any_of_them = $b | $c | $a;
-        ok('a' eq $any_of_them, 'junction of ($b | $c | $a) matches at least one "a"');
-        ok('b' eq $any_of_them, 'junction of ($a | $b | $c) matches at least one "b"');
-        ok('c' eq $any_of_them, 'junction of ($c | $a | $b) matches at least one "c"'); 
+        jok('a' eq $any_of_them, 'junction of ($b | $c | $a) matches at least one "a"');
+        jok('b' eq $any_of_them, 'junction of ($a | $b | $c) matches at least one "b"');
+        jok('c' eq $any_of_them, 'junction of ($c | $a | $b) matches at least one "c"'); 
     }
 
 }
@@ -310,10 +313,10 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 
 {
     my @array = <1 2 3 4 5 6 7 8>;
-    ok( all(@array) == one(@array), "all(@x) == one(@x) tests uniqueness(+ve)" );
+    jok( all(@array) == one(@array), "all(@x) == one(@x) tests uniqueness(+ve)" );
 
     push @array, 6;
-    ok( !( all(@array) == one(@array) ), "all(@x) == one(@x) tests uniqueness(-ve)" );
+    jok( !( all(@array) == one(@array) ), "all(@x) == one(@x) tests uniqueness(-ve)" );
 
 }
 
