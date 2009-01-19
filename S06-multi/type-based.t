@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 22;
 
 # type based dispatching
 #
@@ -67,3 +67,16 @@ is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
+#?rakudo skip 'Dispatch on sigil-implied type constraints'
+{
+    my %h = (:a<b>, :c<d>);
+    multi sub sigil-t (&code) { 'Callable'      }
+    multi sub sigil-t ($any)  { 'Any'           }
+    multi sub sigil-t (@ary)  { 'Positional'    }
+    multi sub sigil-t (%h)    { 'Associative'   }
+    is sigil-t(1),          'Any',      'Sigil-based dispatch (Any)';
+    is sigil-t({ $_ }),     'Callable', 'Sigil-based dispatch (Callable)';
+    is sigil-t(<a b c>),    'Positional','Sigil-based dispatch (Arrays)';
+    is sigil-t(%h),         'Associative','Sigil-based dispatch (Associative)';
+
+}
