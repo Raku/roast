@@ -147,8 +147,6 @@ plan 45;
     is(@got[3], '135', 'called with correct parameters');
 }
 
-#?DOES 7
-#?rakudo todo 'named parameters, multi-dispatch and auto-threading together have issues'
 {
     # Ensure named params in multi dispatch auto-thread.
     my $count_a = 0;
