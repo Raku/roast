@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 6;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -26,4 +26,27 @@ plan 2;
 
     ok( $answer eq "1 + 9 = 10", "found right answer");
 }
+
+{
+    # Checks auto-threading works on method calls too, and that we get the
+    # right result.
+    class Foo {
+        has $.count = 0;
+        method test($x) { $!count++; return $x }
+    }
+
+    my ($x, $r, $ok);
+    $x = Foo.new;
+    $r = $x.test(1|2);
+    is($x.count, 2, 'method called right number of times');
+    $ok = $r.perl.subst(/\D/, '', :g) eq '12' | '21';
+    ok(?$ok,        'right values passed to method');
+
+    $x = Foo.new;
+    $r = $x.test(1 & 2 | 3);
+    is($x.count, 3, 'method called right number of times');
+    $ok = $r.perl.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
+    ok(?$ok,        'junction structure maintained');
+}
+
 
