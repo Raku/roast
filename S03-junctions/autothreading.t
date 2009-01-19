@@ -24,6 +24,6 @@ plan 2;
     my $answer = is_it(any(1..2), any(7..9), any(0..6));
     is($n, 42, "called lots of times :-)");
 
-    ok( $answer == "1 + 9 = 10", "found right answer");
+    ok( $answer eq "1 + 9 = 10", "found right answer");
 }
 
