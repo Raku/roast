@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 45;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -130,4 +130,39 @@ plan 32;
     is($obj.calls_a, 1, 'correct multi-method called right number of times (junction of many types)');
     is($obj.calls_c, 2, 'correct multi-method called right number of times (junction of many types)');
     is($obj.calls_b, 0, 'incorrect multi-method not called');
+}
+
+{
+    # Ensure named params in single dispatch auto-thread.
+    my $count = 0;
+    my @got;
+    sub nptest($a, :$b, :$c) { $count++; @got.push($a ~ $b ~ $c) }
+    my $r = nptest(1, c => 4|5, b => 2|3);
+    is($count, 4,      'auto-threaded over named parameters to call sub enough times');
+    @got .= sort;
+    is(@got.elems, 4,  'got array of right size to check what was called');
+    is(@got[0], '124', 'called with correct parameters');
+    is(@got[1], '125', 'called with correct parameters');
+    is(@got[2], '134', 'called with correct parameters');
+    is(@got[3], '135', 'called with correct parameters');
+}
+
+#?DOES 7
+#?rakudo todo 'named parameters, multi-dispatch and auto-threading together have issues'
+{
+    # Ensure named params in multi dispatch auto-thread.
+    my $count_a = 0;
+    my $count_b = 0;
+    my @got;
+    multi npmstest(Int $a, :$b, :$c) { $count_a++; @got.push($a ~ $b ~ $c) }
+    multi npmstest(Str $a, :$b, :$c) { $count_b++; @got.push($a ~ $b ~ $c) }
+    my $r = npmstest(1&'a', c => 2|3, b => 1);
+    is($count_a, 2,    'auto-threaded over named parameters to call multi-sub variant enough times');
+    is($count_b, 2,    'auto-threaded over named parameters to call multi-sub variant enough times');
+    @got .= sort;
+    is(@got.elems, 4,  'got array of right size to check what was called');
+    is(@got[0], '112', 'called with correct parameters');
+    is(@got[1], '113', 'called with correct parameters');
+    is(@got[2], 'a12', 'called with correct parameters');
+    is(@got[3], 'a13', 'called with correct parameters');
 }
