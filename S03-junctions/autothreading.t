@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 32;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -49,4 +49,85 @@ plan 6;
     ok(?$ok,        'junction structure maintained');
 }
 
+{
+    # Check auto-threding works right on multi-subs.
+    my $calls_a = 0;
+    my $calls_b = 0;
+    my $calls_c = 0;
+    my ($r, $ok);
+    multi mstest(Int $x) { $calls_a++; return $x }
+    multi mstest(Str $x, Str $y) { $calls_b++ }
+    multi mstest(Str $x) { $calls_c++ }
+    $r = mstest(1&2 | 3);
+    is($calls_a, 3, 'correct multi-sub called right number of times');
+    is($calls_b, 0, 'incorrect multi-sub not called');
+    is($calls_c, 0, 'incorrect multi-sub not called');
+    $ok = $r.perl.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
+    ok(?$ok,        'junction structure maintained');
 
+    $calls_a = 0;
+    $calls_b = 0;
+    $calls_c = 0;
+    mstest("a" | "b", "c" & "d");
+    is($calls_b, 4, 'correct multi-sub called right number of times');
+    is($calls_a, 0, 'incorrect multi-sub not called');
+    is($calls_c, 0, 'incorrect multi-sub not called');
+    
+    $calls_a = 0;
+    $calls_b = 0;
+    $calls_c = 0;
+    mstest('a' | 1 & 'b');
+    is($calls_a, 1, 'correct multi-sub called right number of times (junction of many types)');
+    is($calls_c, 2, 'correct multi-sub called right number of times (junction of many types)');
+    is($calls_b, 0, 'incorrect multi-sub not called');
+
+    # Extra sanity, in case some multi-dispatch caching issues existed.
+    $calls_a = 0;
+    $calls_b = 0;
+    $calls_c = 0;
+    mstest('a' | 1 & 'b');
+    is($calls_a, 1, 'correct multi-sub called again right number of times (junction of many types)');
+    is($calls_c, 2, 'correct multi-sub called again right number of times (junction of many types)');
+    is($calls_b, 0, 'incorrect multi-sub again not called');
+    
+    $calls_a = 0;
+    $calls_b = 0;
+    $calls_c = 0;
+    mstest('a');
+    is($calls_a, 0, 'non-junctional dispatch still works');
+    is($calls_b, 0, 'non-junctional dispatch still works');
+    is($calls_c, 1, 'non-junctional dispatch still works');
+}
+
+{
+    # Check auto-threading with multi-methods. Basically a re-hash of the
+    # above, but in a class.
+    class MMTest {
+        has $.calls_a = 0;
+        has $.calls_b = 0;
+        has $.calls_c = 0;
+        multi method mmtest(Int $x) { $!calls_a++; return $x }
+        multi method mmtest(Str $x, Str $y) { $!calls_b++ }
+        multi method mmtest(Str $x) { $!calls_c++ }
+    }
+    my ($obj, $r, $ok);
+    $obj = MMTest.new();
+    $r = $obj.mmtest(1&2 | 3);
+    is($obj.calls_a, 3, 'correct multi-method called right number of times');
+    is($obj.calls_b, 0, 'incorrect multi-method not called');
+    is($obj.calls_c, 0, 'incorrect multi-method not called');
+    $ok = $r.perl.subst(/\D/, '', :g) eq '123' | '213' | '312' | '321'; # e.g. & values together
+    ok(?$ok,            'junction structure maintained');
+
+    $obj = MMTest.new();
+    $obj.mmtest("a" | "b", "c" & "d");
+    is($obj.calls_b, 4, 'correct multi-method called right number of times');
+    is($obj.calls_a, 0, 'incorrect multi-method not called');
+    is($obj.calls_c, 0, 'incorrect multi-method not called');
+    
+    $obj = MMTest.new();
+    $obj.mmtest('a' | 1 & 'b');
+    is($obj.calls_a, 1, 'correct multi-method called right number of times (junction of many types)');
+    is($obj.calls_c, 2, 'correct multi-method called right number of times (junction of many types)');
+    is($obj.calls_b, 0, 'incorrect multi-method not called');
+}
