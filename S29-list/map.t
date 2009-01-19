@@ -248,7 +248,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 # This works...
     is ~(({1},{2},{3}).map: { $_; $_() }), "1 2 3", 'lone $_ in map should work (1)';
     is ~(({1},{2},{3}).map: { $_() }),     "1 2 3", 'lone $_ in map should work (2)';
-    #?rakudo todo '.() should call into $_'
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
 }
 
