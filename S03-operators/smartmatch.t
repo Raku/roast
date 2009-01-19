@@ -267,7 +267,7 @@ caught that case.
         $parsed = 1;
     };
     ok $parsed, 'C<all(@x) ~~ { ... }> parses';
-    ok $result, 'C<all(@x) ~~ { ... } when true for all';
+    ok ?$result, 'C<all(@x) ~~ { ... } when true for all';
 
     $result = 0;
     try {

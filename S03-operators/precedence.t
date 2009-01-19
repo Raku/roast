@@ -51,8 +51,8 @@ is(2 - 2 / 2, 1, "/ binds tighter than binary -");
 # additive
 
 is(1 ~ 2 * 3, 16, "~ binds looser than *");
-ok((1 ~ 2 & 12) == 12, "but tighter than &");
-ok((2 + 2 | 4 - 1) == 4, "and + binds tighter than |");
+ok(?((1 ~ 2 & 12) == 12), "but tighter than &");
+ok(?((2 + 2 | 4 - 1) == 4), "and + binds tighter than |");
 
 # replication
 
@@ -62,14 +62,14 @@ is((2 x 2) + 3, 25, "doublecheck");
 # concatenation
 
 is(2 x 2 ~ 3, "223", "x binds tighter than binary ~");
-ok((2 ~ 2 | 4 ~ 1) == 41, "and ~ binds tighter than |");
+ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 # junctive and
 
 ok(  ?(   (1 & 2 | 3) !=3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
-ok(     !(1 & 2 ^ 4) != 3, "blah blah blah");
+ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 # junctive or
 
@@ -77,12 +77,12 @@ ok(     !(1 & 2 ^ 4) != 3, "blah blah blah");
     my $a = (1 | 2 ^ 3);
     my $b = (1 ^ 2 | 3);
 
-    ok($a == 3, "only one is eq 3");
-    ok($a != 3, "either is ne 3");
-    ok($a == 1, "either is eq 1");
-    ok($b == 2, "either is eq 2, ne 3");
-    ok($b == 1, "either is eq 1");
-    ok($b == 3, "either is eq 3, of which only one is");
+    ok(?($a == 3), "only one is eq 3");
+    ok(?($a != 3), "either is ne 3");
+    ok(?($a == 1), "either is eq 1");
+    ok(?($b == 2), "either is eq 2, ne 3");
+    ok(?($b == 1), "either is eq 1");
+    ok(?($b == 3), "either is eq 3, of which only one is");
     ok(!($b != 3), "1 is ne 3, and (2 | 3) is both ne 3 and eq 3, so it's ne, so 1 ^ 2 | 3");
 };
 
