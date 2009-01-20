@@ -29,9 +29,8 @@ plan 69;
         return $w;
     } 
     is c(w => 3), 3, 'Named argument passes an integer, not a Pair';
-    my $x = 5;
-    #?rakudo 2 skip 'colonpair calling'
-    is c(:$x), 3, 'can use :$x colonpair syntax to call named arg';
+    my $w = 5;
+    is c(:$w), 5, 'can use :$x colonpair syntax to call named arg';
     eval_dies_ok 'my $y; c(:$y)', 'colonpair with wrong variable name dies';
 }
 
