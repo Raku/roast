@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 67;
+plan 69;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -29,6 +29,10 @@ plan 67;
         return $w;
     } 
     is c(w => 3), 3, 'Named argument passes an integer, not a Pair';
+    my $x = 5;
+    #?rakudo 2 skip 'colonpair calling'
+    is c(:$x), 3, 'can use :$x colonpair syntax to call named arg';
+    eval_dies_ok 'my $y; c(:$y)', 'colonpair with wrong variable name dies';
 }
 
 # L<S06/Named parameters>
