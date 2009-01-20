@@ -1,9 +1,8 @@
 use v6;
 use Test;
-plan 7;
+plan 12;
 
 # Test for proto definitions
-
 class A { }
 class B { }
 class C is A is B { }
@@ -14,6 +13,20 @@ is(foo(A.new), 2, 'dispatch on class worked');
 is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(C.new), 1, 'ambiguous dispatch fell back to proto');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
+
+{
+    # Test that proto makes all further subs in the scope also be multi.
+    proto bar() { "proto" }
+    sub bar($x) { 1 }
+    multi bar($x, $y) { 2 }
+    multi sub bar($x, $y, $z) { 3 }
+    sub bar($x, $y, $z, $a) { 4 }
+    is bar(),  "proto", "called the proto";
+    is bar(1),       1, "sub defined without multi has become one";
+    is bar(1,2),     2, "multi ... still works, though";
+    is bar(1,2,3),   3, "multi sub ... still works too";
+    is bar(1,2,3,4), 4, "called another sub as a multi candidate, made a multi by proto";
+}
 
 # L<S03/"Reduction operators">
 #?rakudo skip 1
