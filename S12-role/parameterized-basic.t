@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 22;
 
 =begin pod
 
@@ -91,6 +91,17 @@ is(AP_2.new.x,   1,    'use of type params in attr initialization works');
 is(AP_2.new.y,   2,    'use of type params in attr initialization works');
 is(AP_1.new.x,   'a',  'use of type params in attr initialization works after 2nd invocation');
 is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2nd invocation');
+
+# Use of parameters as type constraints.
+role TypeParams[::T] {
+    method x(T $x) { return "got a " ~ T ~ " it was $x" }
+}
+class TTP_1 does TypeParams[Int] { }
+class TTP_2 does TypeParams[Str] { }
+is(TTP_1.new.x(42),       'got a Int it was 42',     'type variable in scope and accepts right value');
+is(TTP_2.new.x("OH HAI"), 'got a Str it was OH HAI', 'type variable in scope and accepts right value');
+dies_ok({ TTP_1.new.x("OH HAI") },                   'type constraint with parameterized type enforced');
+dies_ok({ TTP_2.new.x(42) },                         'type constraint with parameterized type enforced');
 
 #?pugs emit =end SKIP
 
