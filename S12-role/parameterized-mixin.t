@@ -30,7 +30,6 @@ ok $a.HOW.does($a, InitialAttribVal),
   ".HOW.does gives correct information (1-1)";
 ok $a.^does(InitialAttribVal),
   ".^does gives correct information (1-1)";
-#?rakudo 2 skip '.does with parametric roles'
 ok $a.HOW.does($a, InitialAttribVal[42]),
   ".HOW.does gives correct information (1-2)";
 ok $a.^does(InitialAttribVal[42]),
@@ -45,7 +44,6 @@ ok $b.HOW.does($b, InitialAttribVal),
   ".HOW.does gives correct information (2-1)";
 ok $b.^does(InitialAttribVal),
   ".^does gives correct information (2-1)";
-#?rakudo 2 skip '.does with parametric roles'
 ok $b.HOW.does($b, InitialAttribVal[23]),
   ".HOW.does gives correct information (2-2)";
 ok $b.^does(InitialAttribVal[23]),
@@ -65,7 +63,6 @@ ok $c.HOW.does($c, InitialAttribType),
   ".HOW.does gives correct information (3-1)";
 ok $c.^does(InitialAttribType),
   ".^does gives correct information (3-1)";
-#?rakudo 2 skip '.does with parametric roles'
 ok $c.HOW.does($c, InitialAttribType[Code]),
   ".HOW.does gives correct information (3-2)";
 ok $c.^does(InitialAttribType[Code]),
