@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 24;
 
 =begin pod
 
@@ -32,6 +32,7 @@ role R2[::T] {
     method x { "ok" }
     method call_test { self.call_test_helper(T.new) }
     method call_test_helper(T $x) { "ok" }
+    method call_fail { self.call_test_helper(4.5) }
 }
 class C3 does R2[R2[Int]] { }
 class C4 does R2[R2[Str]] { }
@@ -48,9 +49,13 @@ is param_test_r(R2[R2[Int]].new), 'ok',    'roles parameterized with themselves 
 dies_ok { param_test_r(R2[R2[Str]].new) }, 'roles parameterized with themselves as type constraints';
 
 is R2[Int].new.call_test,    'ok', 'types being used as type constraints inside roles work';
+dies_ok { R2[Int].new.call_fail }, 'types being used as type constraints inside roles work';
 is C3.new.call_test,         'ok', 'roles being used as type constraints inside roles work';
+dies_ok { C3.new.call_fail },      'roles being used as type constraints inside roles work';
 is C4.new.call_test,         'ok', 'roles being used as type constraints inside roles work';
+dies_ok { C4.new.call_fail },      'roles being used as type constraints inside roles work';
 is R2[C3].new.call_test,     'ok', 'classes being used as type constraints inside roles work';
+dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints inside roles work';
 
 #?pugs emit =end SKIP
 
