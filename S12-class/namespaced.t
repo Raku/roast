@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 13;
 
 =begin pod
 
@@ -41,4 +41,15 @@ class A {
     is(A::B.new.y, 'b', 'could access attribute in class A::B');
     is(A::B.new.z, 'b', 'method access correct attribute in class A::B');
     dies_ok({ B.new },  'class A::B not available outside of class as B');
+}
+
+class C {
+    grammar D {
+        rule test { a+ }
+    }
+}
+{
+    ok(C::D ~~ Grammar,            'C::D is a grammar');
+    ok('aaa' ~~ /<C::D::test>/,    'could call rule in nested grammar');
+    ok(!('bbb' ~~ /<C::D::test>/), 'rule in nested grammar behaves correctly');
 }
