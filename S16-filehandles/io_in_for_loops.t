@@ -11,7 +11,7 @@ if $*OS eq "browser" {
   exit;
 }
 
-my $filename = 'tempfile';
+my $filename = 'tempfile_io_in_for_loop';
 
 { # write the file first
     my $fh = open($filename, :w);
