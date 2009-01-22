@@ -19,7 +19,7 @@ role OuterRole does InnerRole {
   has $.outer_role_var_2 is rw;
 };
 
-my $w = new OuterRole;
+my $w = OuterRole.new;
 
 $w.outer_role_var_1 = 2;
 $w.outer_role_var_2 = 'red';
