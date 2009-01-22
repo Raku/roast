@@ -14,7 +14,7 @@ role A::B {
     method foo { "Foo" }
 };
 
-is(A::B.WHAT, 'Role', 'A::B is a Role');
+is(A::B.WHAT, 'B', 'A::B.WHAT stringifies to short name B');
 
 class X does A::B {
 }
