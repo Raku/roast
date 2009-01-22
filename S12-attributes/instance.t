@@ -359,9 +359,8 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     my $o = ArrayAttribTest.new;
     $o.init;
     is $o.m0, 'a', '@.a[0] works';
-    #?rakudo 2 skip 'RT #61766'
     is $o.m1, 'b', '@.a[*-2] works';
-    is $o.m2, 'c', '@.a[*-2] works';
+    is $o.m2, 'c', '@.a[*-1] works';
 }
 
 {
