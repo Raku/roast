@@ -58,7 +58,7 @@ Basic tests for the trim() builtin
 # trim_start
 #
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "   foo  \n";
@@ -71,13 +71,13 @@ Basic tests for the trim() builtin
     is($foo, "foo   \t\t  \t \n", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     is(''.trim_start, '', 'trim_start on an empty string gives an empty string');
 }
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = " foo bar ";
@@ -87,7 +87,7 @@ Basic tests for the trim() builtin
     is($foo, "foo bar ", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "\n foo\n ";
@@ -101,7 +101,7 @@ Basic tests for the trim() builtin
 # trim_end
 #
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "   foo  \n";
@@ -114,13 +114,13 @@ Basic tests for the trim() builtin
     is($foo, "\t   \t  \tfoo", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     is(''.trim_end, '', 'trim_end on an empty string gives an empty string');
 }
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = " foo bar ";
@@ -130,7 +130,7 @@ Basic tests for the trim() builtin
     is($foo, " foo bar", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo todo 'waiting for patch to be accepted'
+#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "\n foo\n ";
