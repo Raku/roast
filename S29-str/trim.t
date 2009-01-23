@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 24;
 
 =begin pod
 
@@ -54,15 +54,88 @@ Basic tests for the trim() builtin
     is($trimmed, "foo", ".trim returns correctly trimmed value again");
 }
 
-# trim in list context
+#
+# trim_start
+#
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
 {
-    is_deeply(trim(("abc\n")), ("abc"), "one element list");
+    my $foo = "   foo  \n";
+    trim_start($foo);
+    is($foo, "   foo  \n", 'trim_start does not trim a variable in-place');
+    $foo .= trim_start;
+    is($foo, "foo  \n", 'trim_start works correctly');
+    $foo =  "\t   \t  \tfoo   \t\t  \t \n";
+    $foo .= trim_start;
+    is($foo, "foo   \t\t  \t \n", 'our variable is trimmed again with no effect');
 }
 
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
 {
-    #?rakudo 2 todo 'trim on empty lists'
-    is_deeply(trim(()), (), "trim on empty list");
-    #?rakudo 2 todo 'trim on lists'
-    is_deeply(trim(("abc\n", "bcd\n")), ("abc", "bcd"), "two element list");
-    is_deeply(("abc\n", "bcd\n").trim, ("abc", "bcd"), "two element list");
+    is(''.trim_start, '', 'trim_start on an empty string gives an empty string');
+}
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
+{
+    my $foo = " foo bar ";
+    $foo .= trim_start;
+    is($foo, "foo bar ", 'our variable is trimmed correctly');
+    $foo .= trim_start;
+    is($foo, "foo bar ", 'our variable is trimmed again with no effect');
+}
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
+{
+    my $foo = "\n foo\n ";
+    $foo .= trim_start;
+    $foo .= trim_start;
+    $foo .= trim_start;
+    is($foo, "foo\n ", 'our variable can be trimmed multiple times');
+}
+
+#
+# trim_end
+#
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
+{
+    my $foo = "   foo  \n";
+    trim_end($foo);
+    is($foo, "   foo  \n", 'trim_end does not trim a variable in-place');
+    $foo .= trim_end;
+    is($foo, "   foo", 'trim_end works correctly');
+    $foo =  "\t   \t  \tfoo   \t\t  \t \n";
+    $foo .= trim_end;
+    is($foo, "\t   \t  \tfoo", 'our variable is trimmed again with no effect');
+}
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
+{
+    is(''.trim_end, '', 'trim_end on an empty string gives an empty string');
+}
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
+{
+    my $foo = " foo bar ";
+    $foo .= trim_end;
+    is($foo, " foo bar", 'our variable is trimmed correctly');
+    $foo .= trim_end;
+    is($foo, " foo bar", 'our variable is trimmed again with no effect');
+}
+
+#?rakudo todo 'waiting for patch to be accepted'
+#?pugs todo 'waiting for patch to be accepted'
+{
+    my $foo = "\n foo\n ";
+    $foo .= trim_end;
+    $foo .= trim_end;
+    $foo .= trim_end;
+    is($foo, "\n foo", 'our variable can be trimmed multiple times');
 }
