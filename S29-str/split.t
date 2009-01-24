@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 27;
+plan 29;
 
 # split on an empty string
 
@@ -30,8 +30,16 @@ sub split_test(@splitted, @expected, Str $desc) {
   is @splitted[$_], @expected[$_],
      "the %ords{$_ + 1} value matched for: $desc"
      for 0 .. @splitted.end;
-  is_deeply [~<< @splitted], [~<< @expected], "values match"; 
+  is_deeply [~<< @splitted], [~<< @expected], "values match";
 }
+
+is_deeply split(:input("fiSMBoC => fREW is Station's Most Bodacious Creation"), " "),
+           qw/fiSMBoC => fREW is Station's Most Bodacious Creation/,
+           q{split(:input(Str), " "};
+
+is_deeply split(:input("UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously"), /\s+/),
+           qw/UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously/,
+           q{split(:input(Str), /\s+/};
 
 is_deeply split("", "forty-two"),
            qw/f o r t y - t w o/,
@@ -127,7 +135,7 @@ is_deeply "abcd".split(/<null>/), <a b c d>,
 
 {
   ' ' ~~ /(\s)/;
-  
+
   if $0 eq ' ' {
     is_deeply "foo bar baz".split(/<prior>/), <foo bar baz>,
              q{"foo bar baz".split(/<prior>/)};

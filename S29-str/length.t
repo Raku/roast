@@ -15,7 +15,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 57;
+plan 58;
 
 eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
@@ -26,6 +26,7 @@ eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 #?rakudo 3 skip '.bytes not implemented'
 is("".bytes,         0, "empty string");
 is("moose".bytes,    5, "moose");
+is(bytes(:string('station')),    7, "bytes works with named argument");
 my $x = undef;
 dies_ok { $x.bytes }, "undef.bytes fail()s";
 # See thread "undef.chars" on p6l started by Ingo Blechschmidt:

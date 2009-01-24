@@ -4,7 +4,7 @@ use v6;
 # NOTES ON PORTING quotemeta.t FROM Perl 5.9.3
 #
 # 1. The original test suite did include may tests to exercise the
-#    behaviour in double-quotes interpolation with \Q and \E, and their 
+#    behaviour in double-quotes interpolation with \Q and \E, and their
 #    interaction with other modification like \L and \U. These
 #    interpolating sequences no longer exist.
 #
@@ -23,7 +23,7 @@ use v6;
 use Test;
 
 
-plan 11;
+plan 12;
 
 # For the moment I don't know how to handle the lack of Config.pm...
 # Sorry for ebcdic users!
@@ -35,9 +35,10 @@ is('Config.pm', 'available', 'Config.pm availability');
 # L<S29/Str/quotemeta>
 
 is(quotemeta("HeLLo World-72_1"), "HeLLo\\ World\\-72_1", "simple quotemeta test");
+is(quotemeta(:string("fREW => fROOH represents encephelon welkin")), "frew\\ \\=\\>\\ frooh\\ represents\\ encephelon\\ welkin", "quotemeta works with named argument");
 is(quotemeta(""), "", "empty string");
 
-$_ = "HeLLo World-72_1"; 
+$_ = "HeLLo World-72_1";
 my $x = .quotemeta;
 is($x, "HeLLo\\ World\\-72_1", 'quotemeta uses $_ as default');
 
@@ -51,7 +52,7 @@ is($x, "HeLLo\\ World\\-72_1", 'quotemeta uses $_ as default');
 if (%Config<ebcdic> eq 'define') {
     $_ = (129 .. 233).map({ chr($_); }).join('');
     is($_.chars, 96, "quotemeta starting string");
-    
+
     # 105 characters - 52 letters = 53 backslashes
     # 105 characters + 53 backslashes = 158 characters
     $_ = quotemeta $_;
@@ -62,11 +63,11 @@ if (%Config<ebcdic> eq 'define') {
 else {
     $_ = (0 .. 255).map({ chr($_); }).join('');
     is($_.chars, 256, "quotemeta starting string");
-    
+
     # Original test in Perl 5.9.3:
     # 96 characters - 52 letters - 10 digits - 1 underscore = 33 backslashes
     # 96 characters + 33 backslashes = 129 characters
-    # 
+    #
     # Then added remaining 32 + 128, all escaped:
     # 129 + (32 + 128) * 2 = 449
     #

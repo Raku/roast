@@ -2,11 +2,12 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S29/Str/lcfirst>
 
 is lcfirst("HELLO WORLD"), "hELLO WORLD", "simple";
+is lcfirst(:string('FREW')), 'fREW', 'lcfirst works with named argument';
 is lcfirst(""),            "",            "empty string";
 #?rakudo 2 skip 'unicode'
 is lcfirst("ÜÜÜÜ"),        "üÜÜÜ",        "umlaut";

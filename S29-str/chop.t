@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item chop">
 
-plan 10;
+plan 11;
 
 #
 # Tests already covered by the specs
@@ -11,6 +11,7 @@ plan 10;
 
 my $str = "foo";
 is(chop($str), "fo", "o removed");
+is(chop(:string($str)), "fo", "chop works with named arguments");
 is($str, "foo", "original string unchanged");
 
 is($str.chop, "fo", "o removed");

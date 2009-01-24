@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 45;
 
 # L<S29/Str/=item substr>
 
@@ -15,6 +15,7 @@ plan 43;
     is(substr($str, -1), "r", "last char");
     is(substr($str, -4, 2), "ob", "counted from the end");
     is(substr($str, 1, 2), "oo", "arbitrary middle");
+    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, 2), "MA", "substr works with named argument");
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
     ok(!defined(substr($str, 20, 5)), "substr outside of string");
@@ -35,6 +36,9 @@ plan 43;
 
     substr($str, 2, 1, "i");
     is($str, "foibar", "fourth arg to substr replaced part");
+
+    substr(:string($str), 2, 1, "a");
+    is($str, "foabar", "substr with replacement works with named argument");
 
     substr($str, -1, 1, "blah");
     is($str, "foibablah", "longer replacement expands string");

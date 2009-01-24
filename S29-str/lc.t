@@ -2,12 +2,13 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S29/Str/lc>
 
 is(lc("hello world"), "hello world", "lowercasing string which is already lowercase");
 is(lc("Hello World"), "hello world", "simple lc test");
+is(lc(:string("STATION")), "station", "lc works with named argument");
 is(lc(""), "", "empty string");
 #?rakudo 3 skip 'unicode'
 is(lc("ÅÄÖ"), "åäö", "some finnish non-ascii chars");
@@ -16,7 +17,7 @@ is(lc("ÓÒÚÙ"), "óòúù", "accented chars");
 is(lc('A'..'C'), "a b c", "lowercasing char-range");
 
 {
-    $_ = "Hello World"; 
+    $_ = "Hello World";
     my $x = .lc;
     is($x, "hello world", 'lc uses $_ as default');
 }

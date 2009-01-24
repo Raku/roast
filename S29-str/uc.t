@@ -2,11 +2,12 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S29/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
+is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
 #?rakudo skip "unicode"
 #?DOES 3
@@ -31,12 +32,12 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
 ## Bug: GERMAN SHARP S ("ß") should uc() to "SS", but it doesn't
 ## Compare with: perl -we 'use utf8; print uc "ß"'
-# 
+#
 # XXX newest Unicode release has an upper-case ß codepoint - please
 # clarify if this should be used instead. Commenting the test so far.
 #
 # Unicode 5.1.0 SpecialCasing.txt has 00DF -> 0053 0053
-# nothing maps to 1E9E, the new "capital sharp s" 
+# nothing maps to 1E9E, the new "capital sharp s"
 # so I think this is right -rhr
 #?rakudo skip "unicode"
 #?DOES 1

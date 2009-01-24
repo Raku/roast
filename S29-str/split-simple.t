@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S29/Str/"=item split">
-plan 32;
+plan 34;
 
 =begin description
 
@@ -13,15 +13,17 @@ here is a start from scratch that should be easier to run.
 
 #?DOES 2
 sub split_test(@splitted, @expected, Str $desc) {
-    ok @splitted.elems ==  @expected.elems, 
+    ok @splitted.elems ==  @expected.elems,
        "split created the correct value amount for: $desc";
     is @splitted.join('|-|'), @expected.join('|-|'),
        "values matched for: $desc"
 }
 
 split_test 'a1b24f'.split(/\d+/),  <a b f>, 'Str.split(/regex/) works';
+split_test split(:input('fRIOUX => fiSMBoC RESEARCHES IMAGINATIVE ORGANIC UNIFICATIONS like XUOIRf'),/\s+/),  <fRIOUX =\> fiSMBoC RESEARCHES IMAGINATIVE ORGANIC UNIFICATIONS like XUOIRf>, 'split(Rule) works with a named argument';
+split_test split(:input('ORGANIC => Original Renditions of Genetic Art Naturally Increasing in Complexity'),' '),  <ORGANIC =\> Original Renditions of Genetic Art Naturally Increasing in Complexity>, 'split(Str) works with a named argument';
 split_test split(/\d+/, 'a1b24f'), <a b f>, 'split(/regex/, Str) works';
-split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) works (with Str semantics';    
+split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) works (with Str semantics';
 {
     split_test 123.split(2),           <1 3>,   'Int.split(Int) works';
     split_test split(2, 123),          <1 3>,   'split(Int, Int) works';
@@ -53,7 +55,7 @@ split_test(
 # zero-width assertions shouldn't loop
 # with additional spaces
 # a b 3 4 d 5 z    split on <before \d>
-#    ^ ^   ^   
+#    ^ ^   ^
 #  => result: 'ab', '3', '4d', '5z'
 #  (confirmed by perl 5)
 

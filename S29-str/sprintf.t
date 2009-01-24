@@ -2,11 +2,12 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S29/Str/"identical to" "C library sprintf">
 
 is sprintf("Hi"),                 "Hi",     "sprintf() works with zero args";
+is sprintf(:format("RESEARCH => Robots Eagerly Sailing Epic Artificial Rhythmic Cyclical Homonyms")),                 "RESEARCH => Robots Eagerly Sailing Epic Artificial Rhythmic Cyclical Homonyms",     "sprintf() works with named argument";
 is sprintf("%%"),                 "%",      "sprintf() escapes % correctly";
 is sprintf("%03d",      3),       "003",    "sprintf() works with one arg";
 is sprintf("%03d %02d", 3, 1),    "003 01", "sprintf() works with two args";

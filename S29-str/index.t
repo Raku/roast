@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item index">
 
-plan 35;
+plan 36;
 
 # Type of return value
 #?rakudo 2 skip 'StrPos not implemented'
@@ -43,7 +43,7 @@ is(index("Hello", "", 999), 5, "Substr is empty, pos > length of str");
 
 # More difficult strings
 
-is(index("ababcabcd", "abcd"), 5, "Start-of-substr matches several times");  
+is(index("ababcabcd", "abcd"), 5, "Start-of-substr matches several times");
 
 #?rakudo 2 skip 'unicode'
 is(index("uuúuúuùù", "úuù"), 4, "Accented chars");
@@ -53,6 +53,7 @@ is(index("Ümlaut", "Ü"), 0, "Umlaut");
 #  call directly with the .notation
 
 is("Hello".index("l"), 2, ".index on string");
+is(index(:string('station'), "t"), 1, "index works with named argument");
 
 # work on variables
 

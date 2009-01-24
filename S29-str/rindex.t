@@ -3,12 +3,13 @@ use Test;
 
 # L<S29/Str/"=item rindex">
 
-plan 32;
+plan 33;
 
 # Simple - with just a single char
 
 is(rindex("Hello World", "H"), 0, "One char, at beginning");
 is(rindex("Hello World", "l"), 9, "One char, in the middle");
+is(rindex(:string("fROOH => fRUE: Robotic Ominous Ossified Herald"), "O"), 2, "rindex works with named argument");
 is(rindex("Hello World", "d"), 10, "One char, in the end");
 ok(!defined(rindex("Hello World", "x")), "One char, no match");
 

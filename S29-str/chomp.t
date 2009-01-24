@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 =begin pod
 
@@ -25,6 +25,7 @@ Basic tests for the chomp() builtin
     is($foo, 'foo', 'our variable is chomped correctly');
     $foo .= chomp;
     is($foo, 'foo', 'our variable is chomped again with no effect');
+    is(chomp(:string("station\n")), 'station', 'chomp works with a named argument');
 }
 
 {
