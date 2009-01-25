@@ -36,7 +36,7 @@ is (@array.min: { abs $^a <=> abs $^b }), 0,
 is min({ abs $^a <=> abs $^b }, @array), 0,
   "subroutine form of min taking a comparision block works";
 
-#?rakudo todo "min on Ranges"
+#?rakudo skip "min on Ranges"
 is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
   "method form of min on Ranges taking a comparision block works";
 
@@ -49,7 +49,7 @@ is (@array.max: { $^a <=> $^b }), 7,
 isnt (@array.max: { $^a <=> $^b }), -9,
   "bug -- method form of max with identity comparison block returning min";
 
-#?rakudo todo "max on Ranges"
+#?rakudo skip "max on Ranges"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
   "method form of max on Ranges taking a comparision block works";
 
