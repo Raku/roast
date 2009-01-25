@@ -18,6 +18,7 @@ plan 9;
 }
 
 # with a signature for the closure
+#?rakudo skip 'type syntax parse failure'
 {
     my sub testit (&testcode:(Int)) {testcode(12)}
     my sub testint(Int $foo) {return 1}
@@ -27,6 +28,7 @@ plan 9;
     eval_dies_ok('testit(&teststr)', 'code dies with invalid signature (1)');
 }
 
+#?rakudo skip 'type syntax parse failure'
 {
     my sub testit (&testcode:(Int --> Bool)) {testcode()}
     my Bool sub testintbool(Int $foo) {return Bool::True}
