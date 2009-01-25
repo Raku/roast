@@ -20,8 +20,6 @@ sub split_test(@splitted, @expected, Str $desc) {
 }
 
 split_test 'a1b24f'.split(/\d+/),  <a b f>, 'Str.split(/regex/) works';
-split_test split(:input('fRIOUX => fiSMBoC RESEARCHES IMAGINATIVE ORGANIC UNIFICATIONS like XUOIRf'),/\s+/),  <fRIOUX =\> fiSMBoC RESEARCHES IMAGINATIVE ORGANIC UNIFICATIONS like XUOIRf>, 'split(Rule) works with a named argument';
-split_test split(:input('ORGANIC => Original Renditions of Genetic Art Naturally Increasing in Complexity'),' '),  <ORGANIC =\> Original Renditions of Genetic Art Naturally Increasing in Complexity>, 'split(Str) works with a named argument';
 split_test split(/\d+/, 'a1b24f'), <a b f>, 'split(/regex/, Str) works';
 split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) works (with Str semantics';
 {

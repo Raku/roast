@@ -7,6 +7,7 @@ plan 12;
 # L<S29/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
+#?rakudo skip 'calling positional params by name'
 is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
 #?rakudo skip "unicode"

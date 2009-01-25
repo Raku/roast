@@ -8,6 +8,7 @@ plan 13;
 
 is(lc("hello world"), "hello world", "lowercasing string which is already lowercase");
 is(lc("Hello World"), "hello world", "simple lc test");
+#?rakudo skip 'calling positional args by name'
 is(lc(:string("STATION")), "station", "lc works with named argument");
 is(lc(""), "", "empty string");
 #?rakudo 3 skip 'unicode'

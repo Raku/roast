@@ -53,6 +53,7 @@ is(index("Ümlaut", "Ü"), 0, "Umlaut");
 #  call directly with the .notation
 
 is("Hello".index("l"), 2, ".index on string");
+#?rakudo skip 'calling positional params by name'
 is(index(:string('station'), "t"), 1, "index works with named argument");
 
 # work on variables

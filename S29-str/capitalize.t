@@ -14,6 +14,7 @@ my $a = "";
 is capitalize($a),             "",               "capitalize empty string";
 $a = "puGS Is cOOl!";
 is capitalize($a),             "Pugs Is Cool!",  "capitalize string works";
+#?rakudo skip 'calling positional args by name'
 is capitalize(:string($a)),    "Pugs Is Cool!",  "capitalize string works with positional argument";
 is $a,                         "puGS Is cOOl!",  "original string not touched";
 is $a.capitalize,              "Pugs Is Cool!",  "capitalize string works";

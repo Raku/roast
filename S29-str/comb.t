@@ -19,6 +19,7 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
 {
     my Str $hair = "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng";
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
+    #?rakudo skip 'calling positional args by name'
     is comb(:input($hair), /\d+/), <3 3 4 3 0 3 3 1 1 1>, 'comb works with named argument for input';
     is $hair.comb(/\d+/, -10), <>, 'negative limit returns no matches';
     is $hair.comb(/\d+/, 0), <>, 'limit of 0 returns no matches';

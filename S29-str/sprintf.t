@@ -7,6 +7,7 @@ plan 42;
 # L<S29/Str/"identical to" "C library sprintf">
 
 is sprintf("Hi"),                 "Hi",     "sprintf() works with zero args";
+#?rakudo skip 'calling positional params by name'
 is sprintf(:format("RESEARCH => Robots Eagerly Sailing Epic Artificial Rhythmic Cyclical Homonyms")),                 "RESEARCH => Robots Eagerly Sailing Epic Artificial Rhythmic Cyclical Homonyms",     "sprintf() works with named argument";
 is sprintf("%%"),                 "%",      "sprintf() escapes % correctly";
 is sprintf("%03d",      3),       "003",    "sprintf() works with one arg";

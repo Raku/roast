@@ -15,6 +15,7 @@ plan 45;
     is(substr($str, -1), "r", "last char");
     is(substr($str, -4, 2), "ob", "counted from the end");
     is(substr($str, 1, 2), "oo", "arbitrary middle");
+    #?rakudo skip 'calling positional params by name'
     is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, 2), "MA", "substr works with named argument");
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
