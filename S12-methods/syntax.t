@@ -8,7 +8,7 @@ plan 13;
 class A {
     multi method doit () { 'empty' };
     multi method doit ($a, $b, *@rest) {
-        "a:$a|b:$b!" ~ @rest.join('!');
+        "a:$a|b:{$b}!" ~ @rest.join('!');
     }
 }
 
