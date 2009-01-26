@@ -6,6 +6,9 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/named_chars.t.
 
+# L<S02/Literals/"(Within a regex you may also use \C to match a character 
+# that is not the specified character.)">
+
 =end pod
 
 plan 419;
