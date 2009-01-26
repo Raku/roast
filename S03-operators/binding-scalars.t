@@ -124,5 +124,5 @@ plan 28;
   is($a, "foo", "bound keyword", :todo);
   my @tail;
   eval '($a, *@tail) := (1, 2, 3)';
-  ok($a == 1 and ~@tail eq '2 3', 'bound slurpy', :todo);
+  ok($a == 1 && ~@tail eq '2 3', 'bound slurpy', :todo);
 }
