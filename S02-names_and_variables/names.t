@@ -22,7 +22,7 @@ plan 16;
 #?rakudo 3 skip "Parse error"
     is(Terrain::Hill::<$mountain>, 1024, 'varaible name with sigil not in front of 2 package levels deep');
     is($Terrain::($mountain)::mountain, 1024, 'variable name with a package name partially given by a variable ');
-    is($($river)::mountain, 1024, 'variable name with package name completely given by variable');
+    is($::($river)::mountain, 1024, 'variable name with package name completely given by variable');
 }
 
 {

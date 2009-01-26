@@ -32,7 +32,7 @@ sub gen_hash {
 
     my $b = %h1<b>;
     #?rakudo skip 'unspecced'
-    is (exists %h1, 'a'), 1, "Test existence for single key. (Indirect notation)";
+    is (exists %h1: 'a'), 1, "Test existence for single key. (Indirect notation)";
     is (%h1.exists('a')), 1, "Test existence for single key. (method call)";
 };
 
