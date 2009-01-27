@@ -8,7 +8,7 @@ plan 18;
 # L<S03/Nonchaining binary precedence/Order::Increase, Order::Same, or Order::Decrease>
 is(+Order::Increase, -1, 'Order::Increase numifies to -1');
 is(+Order::Same,      0, 'Order::Same numifies to 0');
-is(+Order::Decrease,  1, 'Order::Increase numifies to 1');
+is(+Order::Decrease,  1, 'Order::Decrease numifies to 1');
 
 #L<S03/Comparison semantics>
 
