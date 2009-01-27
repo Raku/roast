@@ -65,7 +65,7 @@ plan 13;
 
 #?rakudo skip 'cannot parse named arguments'
 {
-  is (elems(:array((1,2,3,4))), 4, "elems (1,2,3,4) should work with named argument";
+  is elems(:array((1,2,3,4))), 4, "elems (1,2,3,4) should work with named argument";
 }
 
 {
