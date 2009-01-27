@@ -9,15 +9,15 @@ plan 19;
 # caller.subname
 sub a_sub { b_sub() }
 sub b_sub { try { caller.subname } }
-#?pugs: todo 
-is ~a_sub(), "foo", "caller.sub works";
+#?pugs todo "feature"
+is ~a_sub(), "a_sub", "caller.sub works";
 
 # caller.file
-#?pugs: todo
+#?pugs todo "feature"
 ok index(~(try { caller.file }), "caller") >= 0, "caller.file works";
 
 # caller.line (XXX: make sure to edit the expected line number!)
-#?pugs: 2 todo
+#?pugs 2 todo "feature"
 sub call_line { caller.line };
 is call_line(), 22, "caller.line works";
 
