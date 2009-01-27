@@ -291,5 +291,5 @@ caught that case.
         'C<all(@x) ~~ {...} when true for one';
 };
 
-ok NaN ~~ NaN, 'NaN ~~ Nan is True';
+ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 # vim: ft=perl6

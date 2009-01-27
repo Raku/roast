@@ -8,14 +8,12 @@ plan 8;
     my $x = Inf;
 
     ok( $x == Inf  , 'numeric equal');
-    #?rakudo skip 'Inf stringification'
     ok( $x eq 'Inf', 'string equal');
 }
 
 {
     my $x = -Inf;
     ok( $x == -Inf,   'negative numeric equal' );
-    #?rakudo skip 'Inf stringification'
     ok( $x eq '-Inf', 'negative string equal' );
 }
 
