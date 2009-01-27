@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 18;
 
 =begin description
 
@@ -13,9 +13,36 @@ Basic C<pairs> tests, see S29.
 # L<S29/"Array"/=item pairs>
 
 {
+  my @array = <a>;
+  my @pairs;
+  ok((@pairs = pairs(@array)), "basic pairs on arrays with a function");
+  is +@pairs, 1,            "pairs on arrays returned the correct number of elems";
+  if +@pairs != 1 {
+    skip 2, "skipped tests which depend on a test which failed";
+  } else {
+    is @pairs[0].key,     0,  "key of pair returned by array.pairs was correct (1)";
+    is @pairs[0].value, "a",  "value of pair returned by array.pairs was correct (1)";
+  }
+}
+
+#?rakudo skip 'named args'
+{
+  my @array = <a>;
+  my @pairs;
+  ok((@pairs = pairs(:array(@array))), "basic pairs on arrays with a function with named args");
+  is +@pairs, 1,            "pairs on arrays returned the correct number of elems";
+  if +@pairs != 1 {
+    skip 2, "skipped tests which depend on a test which failed";
+  } else {
+    is @pairs[0].key,     0,  "key of pair returned by array.pairs was correct (1)";
+    is @pairs[0].value, "a",  "value of pair returned by array.pairs was correct (1)";
+  }
+}
+
+{
   my @array = <a b c>;
   my @pairs;
-  ok((@pairs = @array.pairs), "basic pairs on arrays");
+  ok((@pairs = @array.pairs), "basic pairs on arrays with oo invocation");
   is +@pairs, 3,            "pairs on arrays returned the correct number of elems";
   if +@pairs != 3 {
     skip 6, "skipped tests which depend on a test which failed";
