@@ -4,7 +4,7 @@ use Test;
 
 # L<A02/"RFC 212: Make C<length(@array)> Work">
 # L<S29/"Array"/"elems">
-plan 12;
+plan 13;
 
 {
   my @a;
@@ -32,7 +32,7 @@ plan 12;
 # (ryporter 2007-09-22): This test fails because a VInt is
 # being converted into an array in the final defintion of doArray
 # in AST/Internals.hs ("doArray val f").  When I tried replacing
-# "val" with "(VList x)", to accept fewer inputs, this test passed, 
+# "val" with "(VList x)", to accept fewer inputs, this test passed,
 # but many others failed.
 #
 # Also relevant is the "(rw!Array)" declaration for List::elems
@@ -61,6 +61,11 @@ plan 12;
 #?rakudo skip 'unspecced'
 {
   dies_ok { elems(1,2,3,4) }, "elems(1,2,3,4) should not work";
+}
+
+#?rakudo skip 'cannot parse named arguments'
+{
+  is (elems(:array((1,2,3,4))), 4, "elems (1,2,3,4) should work with named argument";
 }
 
 {
