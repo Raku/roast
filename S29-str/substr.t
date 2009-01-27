@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 126;
 
 # L<S29/Str/=item substr>
 
@@ -127,5 +127,245 @@ plan 45;
     is("hello foo bar and baz".substr(6, 10).capitalize, "Foo Bar An", ".substr.capitalize on literal string");
     is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string");
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
+}
+
+sub l (Int $a) {  my $l = $a; return $l }
+
+#Substr with StrLen
+{ # read only
+    my $str = "foobar";
+
+    is(substr($str, 0, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
+    is(substr($str, 3, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
+    is(substr($str, 0, l(1)), "f", "first char (substr(Int, StrLen)).");
+    is(substr($str, -1, l(1)), "r", "last char (substr(Int, StrLen)).");
+    is(substr($str, -4, l(2)), "ob", "counted from the end (substr(Int, StrLen)).");
+    is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
+    #?rakudo skip 'calling positional params by name'
+    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, l(2)), "MA", "substr works with named argument (substr(Int, StrLen)).");
+    is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
+    ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
+    ok(!defined(substr($str, -100, l(5))), "... on the negative side (substr(Int, StrLen)).");
+
+    is(substr($str, 0, l(-2)), "foob", "from beginning, with negative length (substr(Int, StrLen)).");
+    is(substr($str, 2, l(-2)), "ob", "in middle, with negative length (substr(Int, StrLen)).");
+    is(substr($str, 3, l(-3)), "", "negative length - gives empty string (substr(Int, StrLen)).");
+    is(substr($str, -4, l(-1)), "oba", "negative start and length (substr(Int, StrLen)).");
+
+    is($str, "foobar", "original string still not changed (substr(Int, StrLen)).");
+};
+
+#?pugs skip 'more discussion needed'
+#?rakudo skip 'too many args'
+{ # replacement
+    my $str = "foobar";
+
+    substr($str, 2, l(1), "i");
+    is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrLen)).");
+
+    substr(:string($str), 2, l(1), "a");
+    is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrLen)).");
+
+    substr($str, -1, l(1), "blah");
+    is($str, "foibablah", "longer replacement expands string (substr(Int, StrLen)).");
+
+    substr($str, 1, l(3), "");
+    is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrLen)).");
+
+    substr($str, 1, l(-1), "aye");
+    is($str, "fayeh", "replacement with negative length (substr(Int, StrLen)).");
+};
+
+# as lvalue, XXX: not sure this should work, as that'd be action at distance:
+#   my $substr = \substr($str, ...);
+#   ...;
+#   some_func $substr; # manipulates $substr
+#   # $str altered!
+# But one could think that's the wanted behaviour, so I leave the test in.
+{
+    my $str = "gorch ding";
+
+    substr($str, 0, l(5)) = "gloop";
+#?rakudo todo "substr as lvalue"
+    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
+
+#?rakudo skip "can't parse"
+{
+    my $r = \substr($str, 0, l(5));
+    ok(~WHAT($r), '$r is a reference (substr(Int, StrLen)).');
+    is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
+
+#?pugs todo 'scalarrefs are not handled correctly'
+    $$r = "boing";
+    is($str, "boing ding", "assignment to reference modifies original (substr(Int, StrLen)).");
+    is($$r, "boing", '$r is consistent (substr(Int, StrLen)).');
+
+#?pugs todo 'scalarrefs are not handled correctly'
+    my $o = \substr($str, 3, l(2));
+    is($$o, "ng", "other ref to other lvalue (substr(Int, StrLen)).");
+    $$r = "foo";
+    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
+    is($$o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
+}
+
+};
+
+#?rakudo todo 'exception'
+{ # as lvalue, should work
+    my $str = "gorch ding";
+
+    substr($str, 0, l(5)) = "gloop";
+    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
+};
+
+{ # as lvalue, using :=, should work
+    #?rakudo 3 todo 'exception'
+    my $str = "gorch ding";
+
+    substr($str, 0, l(5)) = "gloop";
+    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
+
+    my $r := substr($str, 0, l(5));
+    is($r, "gloop", 'bound $r is eq to the substring (substr(Int, StrLen)).');
+
+    $r = "boing";
+    is($str, "boing ding", "assignment to bound var modifies original (substr(Int, StrLen)).");
+    #?pugs todo 'bug'
+    is($r, "boing", 'bound $r is consistent (substr(Int, StrLen)).');
+
+    my $o := substr($str, 3, l(2));
+    #?rakudo 3 todo ' substr lvalue binding'
+    is($o, "ng", "other bound var to other lvalue (substr(Int, StrLen)).");
+    $r = "foo";
+    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
+    #?pugs todo 'bug'
+    is($o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
+};
+
+{ # misc
+    my $str = "hello foo and bar";
+
+    is(substr($str, 6, l(3)), "foo", "substr (substr(Int, StrLen)).");
+    is($str.substr(6, l(3)), "foo", ".substr (substr(Int, StrLen)).");
+    is(substr("hello foo bar", 6, l(3)), "foo", "substr on literal string (substr(Int, StrLen)).");
+    is("hello foo bar".substr(6, l(3)), "foo", ".substr on literal string (substr(Int, StrLen)).");
+    is("hello foo bar".substr(6, l(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrLen)).");
+    is("hello foo bar and baz".substr(6, l(10)).capitalize, "Foo Bar An", ".substr.capitalize on literal string (substr(Int, StrLen)).");
+    is("hello »« foo".substr(6, l(2)), "»«", ".substr on unicode string (substr(Int, StrLen)).");
+    is("שיעבוד כבר".substr(4, l(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrLen)).");
+}
+
+sub p (Int $a) {  my $p = $a; return $p }
+
+#Substr with StrPos
+#?rakudo skip 'No support for StrPos'
+{ # read only
+    my $str = "foobar";
+    is(substr($str, 0, p(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
+    is(substr($str, 3, p(3)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
+    is(substr($str, 0, p(1)), "f", "first char (substr(Int, StrPos)).");
+
+    is(substr($str, 1, p(3)), "oo", "arbitrary middle (substr(Int, StrPos)).");
+    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
+    is(substr($str, 3, p(6)), "bar", "length goes past end (substr(Int, StrPos)).");
+    ok(!defined(substr($str, 20, p(5))), "substr outside of string (substr(Int, StrPos)).");
+    ok(!defined(substr($str, -100, p(5))), "... on the negative side (substr(Int, StrPos)).");
+
+    is($str, "foobar", "original string still not changed (substr(Int, StrPos)).");
+};
+
+#?pugs skip 'more discussion needed'
+#?rakudo skip 'No support for StrPos'
+{ # replacement
+    my $str = "foobar";
+    substr($str, 2, p(1), "i");
+    is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrPos)).");
+
+    substr(:string($str), 2, p(1), "a");
+    is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrPos)).");
+
+    substr($str, -1, p(1), "blah");
+    is($str, "foibablah", "longer replacement expands string (substr(Int, StrPos)).");
+
+    substr($str, 1, p(3), "");
+    is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrPos)).");
+};
+
+# as lvalue, XXX: not sure this should work, as that'd be action at distance:
+#   my $substr = \substr($str, ...);
+#   ...;
+#   some_func $substr; # manipulates $substr
+#   # $str altered!
+# But one could think that's the wanted behaviour, so I leave the test in.
+#?rakudo skip 'No support for StrPos'
+{
+    my $str = "gorch ding";
+
+    substr($str, 0, p(5)) = "gloop";
+#?rakudo todo "substr as lvalue"
+    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
+
+    my $r = \substr($str, 0, p(5));
+    ok(~WHAT($r), '$r is a reference (substr(Int, StrPos)).');
+    is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrPos)).');
+
+#?pugs todo 'scalarrefs are not handled correctly'
+    $$r = "boing";
+    is($str, "boing ding", "assignment to reference modifies original (substr(Int, StrPos)).");
+    is($$r, "boing", '$r is consistent (substr(Int, StrPos)).');
+
+#?pugs todo 'scalarrefs are not handled correctly'
+    my $o = \substr($str, 3, p(2));
+    is($$o, "ng", "other ref to other lvalue (substr(Int, StrPos)).");
+    $$r = "foo";
+    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrPos)).");
+    is($$o, " d", "other lvalue wiggled around (substr(Int, StrPos)).");
+
+};
+
+#?rakudo skip 'No support for StrPos'
+{ # as lvalue, should work
+    my $str = "gorch ding";
+
+    substr($str, 0, p(5)) = "gloop";
+    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
+};
+
+#?rakudo skip 'No support for StrPos'
+{ # as lvalue, using :=, should work
+    #?rakudo 3 todo 'exception'
+    my $str = "gorch ding";
+
+    substr($str, 0, p(5)) = "gloop";
+    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
+
+    my $r := substr($str, 0, p(5));
+    is($r, "gloop", 'bound $r is eq to the substring (substr(Int, StrPos)).');
+
+    $r = "boing";
+    is($str, "boing ding", "assignment to bound var modifies original (substr(Int, StrPos)).");
+    #?pugs todo 'bug'
+    is($r, "boing", 'bound $r is consistent (substr(Int, StrPos)).');
+
+    my $o := substr($str, 3, p(2));
+    #?rakudo 3 todo ' substr lvalue binding'
+    is($o, "ng", "other bound var to other lvalue (substr(Int, StrPos)).");
+    $r = "foo";
+    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrPos)).");
+    #?pugs todo 'bug'
+    is($o, " d", "other lvalue wiggled around (substr(Int, StrPos)).");
+};
+
+#?rakudo skip 'No support for StrPos'
+{ # misc
+    my $str = "hello foo and bar";
+    is(substr($str, 6, p(3)), "foo", "substr (substr(Int, StrPos)).");
+    is($str.substr(6, p(3)), "foo", ".substr (substr(Int, StrPos)).");
+    is(substr("hello foo bar", 6, p(3)), "foo", "substr on literal string (substr(Int, StrPos)).");
+    is("hello foo bar".substr(6, p(3)), "foo", ".substr on literal string (substr(Int, StrPos)).");
+    is("hello foo bar".substr(6, p(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrPos)).");
+    is("hello foo bar and baz".substr(6, p(10)).capitalize, "Foo Bar An", ".substr.capitalize on literal string (substr(Int, StrPos)).");
+    is("hello »« foo".substr(6, p(2)), "»«", ".substr on unicode string (substr(Int, StrPos)).");
+    is("שיעבוד כבר".substr(4, p(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrPos)).");
 }
 
