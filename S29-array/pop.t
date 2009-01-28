@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
- L<S29/"Array"/"=item pop">
+# L<S29/"Array"/"=item pop">
 
 =begin description
 
