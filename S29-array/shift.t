@@ -3,37 +3,44 @@ use Test;
 
 # L<S29/"Array"/"=item shift">
 
-=begin description 
+=begin description
 
 Shift tests
 
 =end description
 
-plan 27;
+plan 29;
 
 {
 
-    my @shift = (1, 2, 3, 4);
+    my @shift = (1, 2, 3, 4, 5);
 
-    is(+@shift, 4, 'we have 4 elements in our array');
+    is(+@shift, 5, 'we have 4 elements in our array');
     my $a = shift(@shift);
     is($a, 1, 'shift(@shift) works');
 
-    is(+@shift, 3, 'we have 3 elements in our array');
+    is(+@shift, 4, 'we have 3 elements in our array');
     $a = shift @shift;
     is($a, 2, 'shift @shift works');
 
-    is(+@shift, 2, 'we have 2 elements in our array');
+    is(+@shift, 3, 'we have 2 elements in our array');
     $a = @shift.shift();
     is($a, 3, '@shift.shift() works');
 
-    is(+@shift, 1, 'we have 1 element in our array');
+    is(+@shift, 2, 'we have 1 element in our array');
     $a = @shift.shift;
-    is($a, 4, '@shift.shift() works');
+    is($a, 4, '@shift.shift works');
+
+#?rakudo skip 'named args'
+{
+    is(+@shift, 1, 'we have 1 element in our array');
+    $a = shift(:array(@shift));
+    is($a, 5, 'shift(:array(@shift))');
+
 
     is(+@shift, 0, 'we have no elements in our array');
     ok(!defined(shift(@shift)), 'after the array is exhausted it give undef');
-
+}
 }
 
 {
@@ -58,7 +65,7 @@ plan 27;
 # invocant syntax with inline arrays
 {
     is([1, 2, 3].shift, 1, 'this will return 1');
-    ok(!defined([].shift), 'this will return undef');    
+    ok(!defined([].shift), 'this will return undef');
 }
 
 # testing some edge cases
@@ -70,9 +77,9 @@ plan 27;
 # testing some error cases
 {
     my @shift = 1 .. 5;
-    dies_ok({ shift()           }, 'shift() requires arguments');    
-    dies_ok({ shift(@shift, 10) }, 'shift() should not allow extra arguments');            
-    dies_ok({ @shift.shift(10)  }, 'shift() should not allow extra arguments');     
+    dies_ok({ shift()           }, 'shift() requires arguments');
+    dies_ok({ shift(@shift, 10) }, 'shift() should not allow extra arguments');
+    dies_ok({ @shift.shift(10)  }, 'shift() should not allow extra arguments');
     dies_ok({ 42.shift          }, '.shift should not work on scalars');
 }
 
@@ -83,3 +90,4 @@ plan 27;
 #     todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
 # }
 
+# vim: syn=perl6
