@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 51;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -163,4 +163,41 @@ plan 45;
     is(@got[1], '113', 'called with correct parameters');
     is(@got[2], 'a12', 'called with correct parameters');
     is(@got[3], 'a13', 'called with correct parameters');
+}
+
+{
+    # Auto-threading over an invocant.
+    class JuncInvTest1 {
+        my $.cnt is rw = 0;
+        method a { $.cnt++; }
+        has $.n;
+        method d { 2 * $.n }
+    }
+    class JuncInvTest2 {
+        my $.cnt is rw = 0;
+        method a { $.cnt++; }
+        method b($x) { $.cnt++ }
+    }
+
+    my $x = JuncInvTest1.new | JuncInvTest1.new | JuncInvTest2.new;
+    $x.a;
+    is JuncInvTest1.cnt, 2, 'basic auto-threading over invocant works';
+    is JuncInvTest2.cnt, 1, 'basic auto-threading over invocant works';
+
+    JuncInvTest1.cnt = 0;
+    JuncInvTest2.cnt = 0;
+    $x = JuncInvTest1.new | JuncInvTest2.new & JuncInvTest2.new;
+    $x.a;
+    is JuncInvTest1.cnt, 1, 'auto-threading over invocant of nested junctions works';
+    is JuncInvTest2.cnt, 2, 'auto-threading over invocant of nested junctions works';
+
+    $x = JuncInvTest1.new(n => 1) | JuncInvTest1.new(n => 2) & JuncInvTest1.new(n => 4);
+    my $r = $x.d;
+    my $ok = $r.perl.subst(/\D/, '', :g) eq '248' | '284' | '482' | '842';
+    ok($ok, 'auto-threading over invocant produced correct junctional result');
+
+    JuncInvTest2.cnt = 0;
+    $x = JuncInvTest2.new | JuncInvTest2.new;
+    $x.b('a' | 'b' | 'c');
+    is JuncInvTest2.cnt, 6, 'auto-threading over invocant and parameters works';
 }
