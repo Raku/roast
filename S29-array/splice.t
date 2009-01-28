@@ -23,7 +23,7 @@ is equivalent to:
 
 =end description
 
-plan 33;
+plan 35;
 
 my (@a,@b,@res);
 
@@ -59,6 +59,15 @@ sub splice_ok (Array @got, Array @ref, Array @exp, Array @exp_ref, Str $comment)
 
 is( @b, [], "push-via-splice result works" );
 is( @a, ([1..12]), "push-via-splice modification works");
+
+#?rakudo skip 'named args'
+{
+    my @a = (1..10);
+    my @b = splice(@a,+@a,0,11,12);
+
+    is( @b, [], "push-via-splice result works" );
+    is( @a, ([1..12]), "push-via-splice modification works");
+}
 
 @a  = ('red', 'green', 'blue');
 is( splice(@a, 1, 2), [<green blue>],
@@ -126,7 +135,7 @@ is( @b, @a, "Calling splice with immediate and indirect context returns consiste
 is( @a, [6,7,8], "Explicit call/assignment gives the expected results");
 is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
 
-my @tmp = (1..10);
+@tmp = (1..10);
 @a = item splice @tmp, 5, 3;
 is( @a, [6..8], "Explicit scalar context returns an array reference");
 
@@ -139,3 +148,4 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 
 #?pugs todo 'bug'
 dies_ok({ 42.splice }, '.splice should not work on scalars');
+# vim: ft=perl6
