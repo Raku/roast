@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/"Array"/"=item pop">
+ L<S29/"Array"/"=item pop">
 
 =begin description
 
@@ -9,29 +9,36 @@ Pop tests
 
 =end description
 
-plan 27;
+plan 29;
 
 { # pop() elements into variables
-    my @pop = (1, 2, 3, 4);
+    my @pop = (-1, 1, 2, 3, 4);
 
-    is(+@pop, 4, 'we have 4 elements in the array');
+    is(+@pop, 5, 'we have 4 elements in the array');
     my $a = pop(@pop);
     is($a, 4, 'pop(@pop) works');
 
-    is(+@pop, 3, 'we have 3 elements in the array');
+    is(+@pop, 4, 'we have 3 elements in the array');
     $a = pop @pop;
     is($a, 3, 'pop @pop works');
 
-    is(+@pop, 2, 'we have 2 elements in the array');
+    is(+@pop, 3, 'we have 2 elements in the array');
     $a = @pop.pop();
     is($a, 2, '@pop.pop() works');
 
-    is(+@pop, 1, 'we have 1 element in the array');
+    is(+@pop, 2, 'we have 1 element in the array');
     $a = @pop.pop;
     is($a, 1, '@pop.pop works');
 
-    is(+@pop, 0, 'we have no more element in the array');
-    ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undef');
+    is(+@pop, 1, 'we have 1 element in the array');
+#?rakudo skip 'named args'
+{
+       $a = pop(:array(@pop));
+       is($a, -1, '@pop.pop works');
+
+       is(+@pop, 0, 'we have no more element in the array');
+       ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undef');
+}
 }
 
 { # pop() elements inline
