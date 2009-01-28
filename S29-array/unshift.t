@@ -9,7 +9,7 @@ Unshift tests
 
 =end description
 
-plan 53;
+plan 59;
 
 # basic unshift tests
 
@@ -39,6 +39,17 @@ plan 53;
     is(@unshift[1], 3, 'we found the right element');
     is(@unshift[2], 2, 'we found the right element');
     is(@unshift[3], 1, 'we found the right element');
+
+#?rakudo skip 'named args'
+{
+    unshift(:array(@unshift), 5);
+    is(+@unshift, 5, 'we have 4 element in the array');
+    is(@unshift[0], 5, 'we found the right element');
+    is(@unshift[1], 4, 'we found the right element');
+    is(@unshift[2], 3, 'we found the right element');
+    is(@unshift[3], 2, 'we found the right element');
+    is(@unshift[4], 1, 'we found the right element');
+}
 }
 
 # try other variations on calling unshift()
@@ -76,15 +87,15 @@ plan 53;
     is(@unshift[2], 3, 'got the expected element');
 
     my @val2 = (4, 5);
-    unshift @unshift, @val2;  
+    unshift @unshift, @val2;
     is(+@unshift, 5, 'we have 5 elements in the array');
     is(@unshift[0], 4, 'got the expected element');
     is(@unshift[1], 5, 'got the expected element');
     is(@unshift[2], 1, 'got the expected element');
     is(@unshift[3], 2, 'got the expected element');
     is(@unshift[4], 3, 'got the expected element');
-    
-    unshift @unshift, 6, 7, 8;  
+
+    unshift @unshift, 6, 7, 8;
     is(+@unshift, 8, 'we have 8 elements in the array');
     is(@unshift[0], 6, 'got the expected element');
     is(@unshift[1], 7, 'got the expected element');
@@ -93,7 +104,7 @@ plan 53;
     is(@unshift[4], 5, 'got the expected element');
     is(@unshift[5], 1, 'got the expected element');
     is(@unshift[6], 2, 'got the expected element');
-    is(@unshift[7], 3, 'got the expected element');    
+    is(@unshift[7], 3, 'got the expected element');
 }
 
 # now for the unshift() on an uninitialized array issue
@@ -115,17 +126,17 @@ plan 53;
 {
     my @unshift = 0 .. 5;
     is(+@unshift, 6, 'starting length is 6');
-    
+
     unshift(@unshift);
     is(+@unshift, 6, 'length is still 6');
-    
+
     @unshift.push();
     is(+@unshift, 6, 'length is still 6');
 }
 
 # testing some error cases
 {
-    dies_ok({ unshift()     }, 'unshift() requires arguments');        
+    dies_ok({ unshift()     }, 'unshift() requires arguments');
     dies_ok({ 42.unshift(3) }, '.unshift should not work on scalars');
 }
 
@@ -135,3 +146,4 @@ plan 53;
 #     # best not to uncomment this it just go on forever
 #     todo_throws_ok { 'unshift @unshift, 10' }, '?? what should this error message be ??', 'cannot unshift onto a Inf array';
 # }
+# vim: ft=perl6
