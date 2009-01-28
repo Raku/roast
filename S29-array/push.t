@@ -3,13 +3,13 @@ use Test;
 
 # L<S29/"Array"/"=item push">
 
-=begin description 
+=begin description
 
 Push tests
 
-=end description 
+=end description
 
-plan 42;
+plan 44;
 
 # basic push tests
 {
@@ -32,6 +32,13 @@ plan 42;
     push(@push, 4);
     is(+@push, 4, 'we have 4 element in the array');
     is(@push[3], 4, 'we found the right element');
+
+#?rakudo skip 'named args'
+{
+    push(:array(@push), 5);
+    is(+@push, 5, 'we have 5 element in the array (with named arg)');
+    is(@push[4], 5, 'we found the right element (with named arg)');
+}
 }
 
 # try other variations on calling push()
@@ -64,16 +71,16 @@ plan 42;
     is(@push[2], 3, 'got the expected element');
 
     my @val2 = (4, 5);
-    push @push, @val2;  
+    push @push, @val2;
     is(+@push, 5, 'we have 5 elements in the array');
     is(@push[3], 4, 'got the expected element');
     is(@push[4], 5, 'got the expected element');
-    
+
     push @push, 6, 7, 8;  # push() should be slurpy
     is(+@push, 8, 'we have 8 elements in the array');
     is(@push[5], 6, 'got the expected element');
-    is(@push[6], 7, 'got the expected element');    
-    is(@push[7], 8, 'got the expected element');        
+    is(@push[6], 7, 'got the expected element');
+    is(@push[7], 8, 'got the expected element');
 }
 
 # now for the push() on an uninitialized array issue
@@ -94,10 +101,10 @@ plan 42;
 {
     my @push = 0 .. 5;
     is(+@push, 6, 'starting length is 6');
-    
+
     push(@push);
     is(+@push, 6, 'length is still 6');
-    
+
     @push.push();
     is(+@push, 6, 'length is still 6');
 }
