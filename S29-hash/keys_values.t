@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 16;
 
 #=begin pod
 

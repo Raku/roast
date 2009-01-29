@@ -9,12 +9,19 @@ built-in "first" tests
 
 =end pod
 
-plan 9;
+plan 11;
 
 my @list = (1 .. 10);
 
 {
     my $result = first { ($_ % 2) }, @list;
+    ok($result ~~ Int, "first() returns an Int");
+    is($result, 1, "returned value by first() is correct");
+}
+
+#?rakudo skip 'named args'
+{
+    my $result = first({ ($_ % 2) }, :values(@list));
     ok($result ~~ Int, "first() returns an Int");
     is($result, 1, "returned value by first() is correct");
 }
@@ -42,3 +49,4 @@ my @list = (1 .. 10);
     is(@list.first($matcher), 1, 'first() search for odd elements successfull');
     is($count, 1, 'Matching closure in first() is only executed once');
 }
+#vim: ft=perl6
