@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 25;
 
 =begin description
 
@@ -97,17 +97,17 @@ Basic C<delete> tests, see S29.
     "deletion of array elements accessed by a range of positive indices (4)";
 }
 
-# As a function
-{
-   my @array = <1 2 3 4>;
-   is delete(@array, 1), 2, "simple functional(ish) delete returns value deleted";
-   is ~@array, "1  3 4", "simple functional(ish) delete changes array";
-#?rakudo skip 'cannot parse named args'
-   is delete(:array(@array), 2,), 3, "simple functional(ish) delete with named argument returns value deleted";
-#?rakudo skip 'cannot parse named args'
-   is ~@array, "1  3 4", "simple functional(ish) delete with named argument changes array";
-
-}
+# As a function (THERE IS NO FUNCTION)
+#{
+#   my @array = <1 2 3 4>;
+#   is delete(@array, 1), 2, "simple functional(ish) delete returns value deleted";
+#   is ~@array, "1  3 4", "simple functional(ish) delete changes array";
+##?rakudo skip 'cannot parse named args'
+#   is delete(:array(@array), 2,), 3, "simple functional(ish) delete with named argument returns value deleted";
+##?rakudo skip 'cannot parse named args'
+#   is ~@array, "1  3 4", "simple functional(ish) delete with named argument changes array";
+#
+#}
 
 # TODO More exclusive bounds checks
 
