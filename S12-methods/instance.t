@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 28;
 
 =begin pod
 
@@ -91,4 +91,35 @@ is($foo.noargs(), 42, "... parentheses after method");
         }
     }
     is TestList.new.list, 'method list', 'can call a method "list"';
+}
+
+# Test that methods allow additional named arguments
+# http://irclog.perlgeek.de/perl6/2009-01-28#i_870566
+
+{
+    class MethodTester {
+        method m ($x, :$y = '')  {
+            "$x|$y";
+        }
+    }
+
+    my $obj = MethodTester.new;
+
+    is $obj.m('a'),        'a|',   'basic sanity 1';
+    is $obj.m('a', :y<b>), 'a|b',  'basic sanity 2';
+    #?rakudo todo 'RT #61480'
+    lives_ok { $obj.m('a', :y<b>, :z<b>) }, 'additional named args are ignored';
+    #?rakudo skip 'RT #61480'
+    is $obj.m('a', :y<b>, :z<b>), 'a|b', '... same, but test value';
+
+    # and the same with class methods
+
+    is MethodTester.m('a'),        'a|',   'basic sanity 1 (class method)';
+    is MethodTester.m('a', :y<b>), 'a|b',  'basic sanity 2 (class method)';
+    #?rakudo todo 'RT #61480'
+    lives_ok { MethodTester.m('a', :y<b>, :z<b>) }, 
+             'additional named args are ignored (class method)';
+    #?rakudo skip 'RT #61480'
+    is MethodTester.m('a', :y<b>, :z<b>), 'a|b', 
+       '... same, but test value (class method)';
 }
