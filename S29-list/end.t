@@ -42,7 +42,7 @@ plan 15;
 
     pop @array;
 #?rakudo skip 'named arg'
-    is((end(:array(@array)), 41, 'index of last element is 41 after pop');
+    is(end(:array(@array)), 41, 'index of last element is 41 after pop');
     is((end @array), 41, 'index of last element is 41 after pop');
 
     shift @array;
