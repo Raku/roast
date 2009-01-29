@@ -21,13 +21,13 @@ plan 11;
     is($i, 10, 'verify our ending condition');
 }
 
-# loop with last()
+# loop with last
 {
     my $i = 0;
     is($i, 0, 'verify our starting condition');
     loop ($i = 0; $i < 10; $i++) {
-        if ($i == 5) { 
-            last(); # should this really need the ()
+        if $i == 5 { 
+            last;
         }
     }
     is($i, 5, 'verify our ending condition');
@@ -38,7 +38,7 @@ plan 11;
 {
     my $i = 0;
     is($i, 0, 'verify our starting condition');
-    loop (;;) { $i++; last(); }
+    loop (;;) { $i++; last; }
     is($i, 1, 'verify our ending condition');
 }
 
