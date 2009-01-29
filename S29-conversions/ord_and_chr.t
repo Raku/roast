@@ -121,12 +121,20 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 36+@maps;
+plan 36+@maps*2;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
   is ord($char), $code, "ord() works for $descr";
   is chr($code), $char, "chr() works for $descr";
+}
+
+for @maps -> $char, $code {
+   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
+#?rakudo skip 'named args'
+   is ord(:string($char)), $code, "ord() works for $descr with named args";
+#?rakudo skip 'named args'
+   is chr(:graph($code)), $char, "chr() works for $descr with named args";
 }
 
 for 0..31 -> $code {
@@ -140,3 +148,4 @@ is 65.chr, 'A', "there's a .chr method";
 #?rakudo 2 skip 'multi-arg variants of ord and chr not in place yet'
 is ord('hello'), [104, 101, 108, 108, 111], 'ord works with longer strings';
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
+#vim: ft=perl6
