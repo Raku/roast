@@ -26,3 +26,4 @@ is(~values(@array), 'a b c d', 'values(@array) works');
 is(~values(:array(@array)), 'a b c d', 'values(:array(@array)) works');
 is(+@array.values, +@array, 'we have the same number of values as elements in the array');
 
+#vim: ft=perl6

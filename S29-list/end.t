@@ -8,7 +8,7 @@ Array .end tests
 L<S29/Array/=item end>
 =end docs
 
-plan 14;
+plan 15;
 
 # basic array .end tests
 
@@ -39,7 +39,10 @@ plan 14;
     @array = (1..43);
     is(end(@array), 42, 'index of last element is 42 after assignment');
 
+
     pop @array;
+#?rakudo skip 'named arg'
+    is((end(:array(@array)), 41, 'index of last element is 41 after pop');
     is((end @array), 41, 'index of last element is 41 after pop');
 
     shift @array;
@@ -58,3 +61,4 @@ plan 14;
     dies_ok { end() }, '... end() dies without an argument';
     dies_ok { 3.end }, '... .end does not work on scalars';
 }
+#vim: ft=perl6

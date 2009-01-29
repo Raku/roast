@@ -4,22 +4,26 @@ use Test;
 
 plan 14;
 
-=begin pod
+#=begin pod
 
-Basic C<keys> and C<values> tests for hashes and pairs, see S29.
+#Basic C<keys> and C<values> tests for hashes and pairs, see S29.
 
-=end pod
+#=end pod
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
 
 # L<S29/"Hash"/=item keys>
 is(~%hash.keys.sort, "a b c d", '%hash.keys works');
 is(~sort(keys(%hash)), "a b c d", 'keys(%hash) on hashes');
+#?rakudo skip 'cannot parse named arguments'
+is(~sort(keys(:array(%hash))), 'a b c d', 'keys(:array(%hash)) works with named args');
 is(+%hash.keys, +%hash, 'we have the same number of keys as elements in the hash');
 
 # L<S29/"Hash"/=item values>
 is(~%hash.values.sort, "1 2 3 4", '%hash.values works');
 is(~sort(values(%hash)), "1 2 3 4", 'values(%hash) works');
+#?rakudo skip 'cannot parse named arguments'
+is(~values(:array(%hash)), '1 2 3 4', 'values(:array(%hash)) works with named args');
 is(+%hash.values, +%hash, 'we have the same number of keys as elements in the hash');
 
 # keys and values on Pairs
@@ -41,3 +45,4 @@ is(+$pair.values,   1, 'we have one value');
     lives_ok { $x.keys },   'Can call Any.keys';
 
 }
+#vim: ft=perl6

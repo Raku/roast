@@ -108,4 +108,4 @@ Quoting Larry:
     is(@s, [%hash{%hash.keys.sort}],     "values from hash keys, part 2");
     is(@s, [%hash{(1,2,3)>>+<<(0,1,2)}], "calculated slice: hyperop");
 }
-
+#vim: ft=perl6
