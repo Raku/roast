@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 81;
+plan 87;
 
 # L<S29/"List"/"=item map">
 
@@ -12,6 +12,16 @@ plan 81;
 
 
 my @list = (1 .. 5);
+#?rakudo skip 'named args'
+{
+    my @result = map( { $_ * 2 }, :values(@list) );
+    is(+@result, 5, 'we got a list back');
+    is(@result[0], 2, 'got the value we expected');
+    is(@result[1], 4, 'got the value we expected');
+    is(@result[2], 6, 'got the value we expected');
+    is(@result[3], 8, 'got the value we expected');
+    is(@result[4], 10, 'got the value we expected');
+}
 
 {
     my @result = map { $_ * 2 }, @list;
@@ -136,9 +146,9 @@ should be equivalent to
 
 
 {
-  my @a = (1, 2, 3); 
+  my @a = (1, 2, 3);
   # XXX is hash { ... } legal?
-  my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a; 
+  my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a;
   is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
@@ -235,7 +245,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     my @foo = [1, 2, 3].map: { [100+$_, 200+$_] };
     is +@foo,    3,         "map should't flatten our arrayref (1)";
     is +@foo[0], 2,         "map should't flatten our arrayref (2)";
-    is ~@foo[0], "101 201", "map should't flatten our arrayref (3)";    
+    is ~@foo[0], "101 201", "map should't flatten our arrayref (3)";
 }
 
 # .thing inside map blocks should still default to $_

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 =begin description
 
@@ -12,6 +12,8 @@ Basic C<exists> tests on arrays, see S29.
 # L<S29/"Array"/=item exists>
 
 my @array = <a b c d>;
+#?rakudo skip 'named args'
+ok exists(:array(@array), 0),    "exists(positive index) on arrays (1)";
 ok @array.exists(0),    "exists(positive index) on arrays (1)";
 ok @array.exists(1),    "exists(positive index) on arrays (2)";
 ok @array.exists(2),    "exists(positive index) on arrays (3)";

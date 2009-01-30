@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 12;
+plan 13;
 
 # L<S29/List/=item reduce>
 
@@ -19,11 +19,14 @@ plan 12;
   my @array = <5 -3 7 0 1 -9>;
   my $sum   = 5 + -3 + 7 + 0 + 1 + -9; # laziness :)
 
+
   is((reduce { $^a + $^b }, 0, @array), $sum, "basic reduce works (1)");
+#?rakudo skip 'named args'
+  is((reduce { $^a + $^b }, 0, :values(@array)), $sum, "basic reduce works (2)");
 #?rakudo skip 'closure as non-final argument'
-  is((reduce { $^a + $^b }: 100, @array), 100 + $sum, "basic reduce works (2)");
+  is((reduce { $^a + $^b }: 100, @array), 100 + $sum, "basic reduce works (3)");
 #?rakudo skip 'method fallback to sub unimpl'
-  is(({ $^a * $^b }.reduce: 1,2,3,4,5), 120, "basic reduce works (3)");
+  is(({ $^a * $^b }.reduce: 1,2,3,4,5), 120, "basic reduce works (4)");
 }
 
 # Reduce with n-ary functions

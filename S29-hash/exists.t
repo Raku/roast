@@ -16,7 +16,7 @@ sub gen_hash {
     %h = (
         a => 1,
         b => 2,
-        c => 3, 
+        c => 3,
         d => 4,
 
         x => 24,
@@ -54,7 +54,7 @@ ok %hash.exists("a"),   "exists on hashes (1)";
 ok !%hash.exists("42"), "exists on hashes (2)";
 
 # This next group added by Darren Duncan following discovery while debugging ext/Locale-KeyedText:
-# Not an exists() test per se, but asserts that elements shouldn't be added to 
+# Not an exists() test per se, but asserts that elements shouldn't be added to
 # (exist in) a hash just because there was an attempt to read nonexistent elements.
 #?rakudo skip 'parse errors'
 {

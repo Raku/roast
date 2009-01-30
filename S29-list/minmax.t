@@ -20,6 +20,8 @@ my @array = <5 -3 7 0 1 -9>;
 # Tests for C<min>:
 is @array.min,  -3, "basic method form of min works";
 is min(@array), -3, "basic subroutine form of min works";
+#?rakudo skip 'named args'
+is min(:values(@array)), -3, "basic subroutine form of min works with named args";
 
 is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
@@ -43,6 +45,8 @@ is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
 # Tests for C<max>:
 is (@array.max),  7, "basic method form of max works";
 is max(@array), 7, "basic subroutine form of max works";
+#?rakudo skip 'named args'
+is max(:values(@array)), 7, "basic subroutine form of max works with named args";
 
 is (@array.max: { $^a <=> $^b }), 7,
   "method form of max with identity comparison block works";

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 16;
 
 =begin description
 
@@ -10,7 +10,7 @@ This test tests the C<pick> builtin. See S29#pick.
 
 Previous discussions about pick.
 
-L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e369fba3ed626e/4e893cad1016ed94?rnum=1&_done=%2Fgroup%2Fperl.perl6.language%2Fbrowse_frm%2Fthread%2F24e369fba3ed626e%2F6e6a2aad1dcc879d%3F#doc_2ed48e2376511fe3"> 
+L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e369fba3ed626e/4e893cad1016ed94?rnum=1&_done=%2Fgroup%2Fperl.perl6.language%2Fbrowse_frm%2Fthread%2F24e369fba3ed626e%2F6e6a2aad1dcc879d%3F#doc_2ed48e2376511fe3">
 
 =end description
 
@@ -38,6 +38,8 @@ ok ~(@arr.pick(4, :repl)), 'z z z z', 'method pick(:repl) with $num > +@values';
 
 #?pugs 3 todo 'feature'
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values';
+#?rakudo skip 'named args'
+is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
 is pick(4, :repl, @arr), <z z z z>, 'sub pick(:repl) with $num > +@values';
 

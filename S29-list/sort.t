@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 28;
 
 # L<S29/"List"/"=item sort">
 
@@ -10,6 +10,15 @@ plan 27;
 
     my @s = sort(@a);
     is(@s, @e, 'array of numbers was sorted');
+}
+
+#?rakudo skip 'named args'
+{
+    my @a = (4, 5, 3, 2, 5, 1);
+    my @e = (1 .. 5, 5);
+
+    my @s = sort(:values(@a));
+    is(@s, @e, 'array of numbers was sorted with named arguments');
 }
 
 {
@@ -33,7 +42,7 @@ plan 27;
     my @e = (1, 2, 3, 6, 45);
 
     my @s = sort { $^a <=> $^b }, @a;
-    is(@s, @e, '... with explicit spaceship'); 
+    is(@s, @e, '... with explicit spaceship');
 }
 
 #?rakudo skip "closure as non-final argument"
@@ -51,7 +60,7 @@ plan 27;
     my @e = (1, 2, 3, 6, 45);
 
     my @s = { $^a <=> $^b }.sort: @a;
-    is(@s, @e, '... with closure as direct invocant'); 
+    is(@s, @e, '... with closure as direct invocant');
 }
 
 {
@@ -59,7 +68,7 @@ plan 27;
     my @e = (1, 2, 3, 6, 45);
 
     my @s = @a.sort: { $^a <=> $^b };
-    is(@s, @e, '... with explicit spaceship (using invocant form)'); 
+    is(@s, @e, '... with explicit spaceship (using invocant form)');
 }
 
 {
@@ -67,7 +76,7 @@ plan 27;
     my @e = (45, 6, 3, 2, 1);
 
     my @s = sort { $^b <=> $^a }, @a;
-    is(@s, @e, '... reverse sort with explicit spaceship'); 
+    is(@s, @e, '... reverse sort with explicit spaceship');
 }
 
 {
@@ -75,7 +84,7 @@ plan 27;
     my @e = (45, 6, 3, 2, 1);
 
     my @s = @a.sort: { $^b <=> $^a };
-    is(@s, @e, '... reverse sort with explicit spaceship (using invocant form)'); 
+    is(@s, @e, '... reverse sort with explicit spaceship (using invocant form)');
 }
 
 {
@@ -107,7 +116,7 @@ plan 27;
     my @e = <aaa boo daa gaa>;
 
     my @s = sort { $^a cmp $^b }, @a;
-    is(@s, @e, '... with explicit cmp'); 
+    is(@s, @e, '... with explicit cmp');
 }
 
 {
@@ -115,7 +124,7 @@ plan 27;
     my @e = <aaa boo daa gaa>;
 
     my @s = @a.sort: { $^a cmp $^b };
-    is(@s, @e, '... with explicit cmp (using invocant form)'); 
+    is(@s, @e, '... with explicit cmp (using invocant form)');
 }
 
 
@@ -124,7 +133,7 @@ plan 27;
     my @e = (4, 1, 2, 5, 3);
 
     my @s = sort { %a{$^a} cmp %a{$^b} }, %a.keys;
-    is(@s, @e, '... sort keys by string value'); 
+    is(@s, @e, '... sort keys by string value');
 }
 
 {
@@ -165,7 +174,7 @@ plan 27;
 }
 
 {
-    is (<P e r l 6>.sort: { 0; }).join(''), 'Perl6', 
+    is (<P e r l 6>.sort: { 0; }).join(''), 'Perl6',
     'sort with arity 0 closure is stable';
 
     my @a = ([5, 4], [5, 5], [5, 6], [0, 0], [1, 2], [1, 3], [0, 1], [5, 7]);
