@@ -9,7 +9,7 @@ Basic test for the reverse() builtin with a string (Str).
 
 =end pod
 
-plan 49;
+plan 50;
 
 # As a function :
 is( reverse('Pugs'), 'sguP', "as a function");
@@ -25,9 +25,9 @@ is( $a, 'Hello World !', "reverse should not be in-place" );
 is( $a .= reverse, '! dlroW olleH', "after a .=reverse" );
 
 # Multiple iterations (don't work in 6.2.12) :
-is( 'Hello World !'.reverse.reverse, 'Hello World !', 
+is( 'Hello World !'.reverse.reverse, 'Hello World !',
         "two reverse in a row." );
-        
+
 # Reverse with unicode :
 is( 'ä€»«'.reverse,   '«»€ä', "some unicode characters" );
 
@@ -45,7 +45,11 @@ my @a = reverse(1, 2, 3, 4);
 my @e = (4, 3, 2, 1);
 
 is(@a, @e, "list was reversed");
-
+#?rakudo skip 'named args'
+{
+@a = reverse(:values(1, 2, 3, 4));
+is(@a, @e, "list was reversed");
+}
 {
     my $a = reverse("foo");
     is($a, "oof", "string was reversed");
@@ -94,13 +98,13 @@ is(@a, @e, "list was reversed");
     is(~@n, "3 2 1", "elements seem reversed");
 }
 
-{    
+{
     my @a = "foo";
     my @b = @a.reverse;
     isa_ok(@b, List);
     my $b = @a.reverse;
     isa_ok($b, List);
-    is(@b[0], "foo", 'our list is reversed properly'); 
+    is(@b[0], "foo", 'our list is reversed properly');
     is($b, "foo", 'in scalar context it is still a list');
     is(@a[0], "foo", "original array left untouched");
     @a .= reverse;
@@ -115,12 +119,12 @@ is(@a, @e, "list was reversed");
     isa_ok($b, List);
     is(@b[0], "bar", 'our array is reversed');
     is(@b[1], "foo", 'our array is reversed');
-    
+
     is($b, "bar foo", 'in scalar context it is still a list');
-    
+
     is(@a[0], "foo", "original array left untouched");
     is(@a[1], "bar", "original array left untouched");
-    
+
     @a .= reverse;
     is(@a[0], "bar", 'in place reversal works');
     is(@a[1], "foo", 'in place reversal works');
@@ -129,10 +133,10 @@ is(@a, @e, "list was reversed");
 {
     my $a = "foo";
     my @b = $a.reverse;
-    isa_ok(@b, Array);    
+    isa_ok(@b, Array);
     my $b = $a.reverse;
-    isa_ok($b, Str);    
-    
+    isa_ok($b, Str);
+
     is(@b[0], "oof", 'string in the array has been reversed');
     is($b, "oof", 'string has been reversed');
     is($a, "foo", "original scalar left untouched");
