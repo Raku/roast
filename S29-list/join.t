@@ -1,16 +1,20 @@
 use v6;
 use Test;
-plan 33;
+plan 34;
 
 # L<S29/"List"/"=item join">
 
-# test all variants of join() 
+# test all variants of join()
 
 is(["a", "b", "c"].join("|"), "a|b|c", '[].join("|") works');
 
 my @list = ("a", "b", "c");
 
 is(@list.join("|"), "a|b|c", '@list.join("|") works');
+
+#?rakudo skip 'named args'
+my $joined2 = join("|", :values(@list));
+is($joined2, "a|b|c", 'join("|", :values(@list)) works');
 
 my $joined2 = join("|", @list);
 is($joined2, "a|b|c", 'join("|", @list) works');
@@ -136,7 +140,7 @@ dies_ok({ join() }, 'join() must have arguments');
 ## :    join('str', 'other_str')
 ## : yielding 'other_str'. t/spec/S29-list/join.t disagrees, and wants the
 ## : result to be 'str'.
-## 
+##
 ## I want the result to be 'str'.
 
 #?pugs todo 'bug'
