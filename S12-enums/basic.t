@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 10;
 
 # Very basic enum tests
 
@@ -28,3 +28,5 @@ enum JustOne <Thing>;
 {
     is JustOne::Thing, 0, 'Enum of one element works.';
 }
+
+lives_ok { enum Empty <> }, "empty enum can be constructed";
