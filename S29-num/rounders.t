@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 40;
+plan 42;
 
 # L<S29/Num/"=item round">
 # L<S29/Num/"=item floor">
@@ -37,7 +37,6 @@ for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});	# XXX .[] doesn't work yet!
     for @subtests -> $test {
         my $code = "{$type}({$test[0]})";
-#        say $code;
         my $res = eval($code);
 
         if ($!) {
@@ -46,6 +45,24 @@ for %tests.keys.sort -> $type {
         } else {
             ok($res == $test[1], "$code == {$test[1]}");
         }
+    }
+}
+
+#?rakudo skip 'named args'
+{
+for %tests.keys.sort -> $type {
+    my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
+    for @subtests -> $test {
+        my $code = "{$type}(:x({$test[0]}))";
+        my $res = eval($code);
+
+        if ($!) {
+            #?pugs todo 'feature'
+            flunk("failed to parse $code ($!)");
+        } else {
+            ok($res == $test[1], "$code == {$test[1]}");
+        }
+    }
     }
 }
 

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 7;
+plan 10;
 
 # L<S29/Num/"=item sqrt">
 
@@ -13,6 +13,13 @@ Basic tests for the sqrt() builtin
 is_approx(sqrt(2), 1.4142135623730951, 'got the square root of 2');
 is_approx(sqrt(5), 2.23606797749979,   'got the square root of 5');
 is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
+
+#?rakudo skip 'named args'
+{
+   is_approx(sqrt(:x(2)), 1.4142135623730951, 'got the square root of 2 with named args');
+   is_approx(sqrt(:x(5)), 2.23606797749979,   'got the square root of 5 with named args');
+   is(sqrt(:x(-1)), NaN, 'sqrt(:x(-1)) is NaN');
+}
 
 # The spec specifies a branch cut in the complex plane of -pi <= theta <= pi
 is_approx(sqrt(-1 +0i), 1i, 'got the square root of -1+0i');

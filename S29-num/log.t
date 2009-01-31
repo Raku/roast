@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 16;
 
 =begin pod
 
@@ -13,16 +13,28 @@ Basic tests for the log() and log10() builtins
 is_approx(log(5), 1.6094379124341003, 'got the log of 5');
 is_approx(log(0.1), -2.3025850929940455, 'got the log of 0.1');
 
+#?rakudo skip 'named args'
+{
+   is_approx(log(:x(5)), 1.6094379124341003, 'got the log of 5');
+   is_approx(log(:x(0.1)), -2.3025850929940455, 'got the log of 0.1');
+}
+
 # L<S29/Num/"=item log10">
 
 is_approx(log10(5), 0.6989700043360187, 'got the log10 of 5');
 is_approx(log10(0.1), -0.9999999999999998, 'got the log10 of 0.1');
 
+#?rakudo skip 'named args'
+{
+   is_approx(log10(:x(5)), 0.6989700043360187, 'got the log10 of 5');
+   is_approx(log10(:x(0.1)), -0.9999999999999998, 'got the log10 of 0.1');
+}
+
 # please add tests for complex numbers
 #
 # The closest I could find to documentation is here: http://tinyurl.com/27pj7c
 # I use 1i instead of i since I don't know if a bare i will be supported
- 
+
 # log(exp(i pi)) = i pi log(exp(1)) = i pi
 #?pugs 2 todo 'feature'
 is_approx(log(-1 + 0i,), 0 + 1i * pi, "got the log of -1");

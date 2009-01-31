@@ -1,10 +1,10 @@
 use v6;
 use Test;
-plan 61;
+plan 66;
 
 # L<S29/Num/"=item truncate">
-# truncate and int() are synonynms. 
-# Possibly more tests for truncate should be added here, too. 
+# truncate and int() are synonynms.
+# Possibly more tests for truncate should be added here, too.
 
 =begin pod
 
@@ -20,6 +20,15 @@ is(int(0), 0, "int(0) is 0");
 is(int(1), 1, "int(1) is 1");
 is(int(3.14159265), 3, "int(3.14159265) is 3");
 is(int(-3.14159265), -3, "int(-3.14159265) is -3");
+
+#?rakudo skip 'named args'
+{
+    is(int(:x(-1)), -1, "int(-1) is -1");
+    is(int(:x(0)), 0, "int(0) is 0");
+    is(int(:x(1)), 1, "int(1) is 1");
+    is(int(:x(3.14159265)), 3, "int(3.14159265) is 3");
+    is(int(:x(-3.14159265)), -3, "int(-3.14159265) is -3");
+}
 
 is(int(0.999), 0, "int(0.999) is 0");
 is(int(0.51), 0, "int(0.51) is 0");
@@ -60,7 +69,7 @@ is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
         return $s;
     };
 
-    # Check the defaulting to $_ 
+    # Check the defaulting to $_
 
     for 0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6, -1, -50, -60.0, -99.99 {
         my $int = __int($_);
