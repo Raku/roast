@@ -40,5 +40,5 @@ ok("BA" ~~ m/B <.prior>/, 'Nested prior successful match');
 ok("A" !~~ m/B <.prior>/, 'Nested prior successful non-match');
 is ~$/, 'BA', 'matched all we wanted';
 
-ok( 'A' !~~ m/<.prior>, 'prior target updated');
+ok( 'A' !~~ m/<.prior>/, 'prior target updated');
 
