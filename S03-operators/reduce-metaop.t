@@ -178,21 +178,3 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 is( ([*]()), 1, "[*]() returns 1");
 is( ([+]()), 0, "[+]() returns 0");
 
-#?pugs todo '[=] meta ops'
-#?rakudo skip '[=] meta ops'
-{
-  my ($a, $b);
-
-  ok ([=] $a, $b, 3), '[=] evaluates successfully';
-  is($a, 3, '[=] assigns successfully (1)');
-  is($b, 3, '[=] assigns successfully (2)');
-
-  lives_ok { ([=] $a, $b, 4) = 5 }, '[=] lvalue context restored (1)';
-  is($a, 5, '[=] lvalue context restored (2)');
-  is($b, 4, '[=] lvalue context restored (3)');
-
-  dies_ok { [=] "this_is_a_constant", 42 },
-      "[=] can't assign to constants (1)";
-  dies_ok { [=] $a, $b, "this_is_a_constant", 42 },
-      "[=] can't assign to constants (2)";
-}

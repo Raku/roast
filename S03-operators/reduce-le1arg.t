@@ -55,7 +55,6 @@ is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::False, "[||] () eq False";
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is (defined ([//] ())), Bool::False, "[//] () not defined";
-is (defined ([=] ())), Bool::False, "[=] () not defined";
 is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
 
