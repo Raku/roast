@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 28;
 
 =begin description
 
