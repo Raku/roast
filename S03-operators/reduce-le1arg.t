@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 49;
+plan 48;
 
 # smartlink to top and bottom of long table
 # L<S03/Reduction operators/"Builtin reduce operators return the following identity values">
