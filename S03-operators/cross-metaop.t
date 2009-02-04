@@ -34,6 +34,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/Cross operators/formed syntactically by placing>
+#?rakudo todo 'X,'
 ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 
 # L<S03/Cross operators/"string concatenating form is">
@@ -53,6 +54,7 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 }
 
 # L<S03/Cross operators/list concatenating form when used like this>
+#?rakudo skip 'X,'
 {
     my @result = <a b> X, 1,2 X, <x y>;
     is @result.elems, 24, 'chained cross-comma produces correct number of elements';
