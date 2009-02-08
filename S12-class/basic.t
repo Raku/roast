@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 25;
 
 =begin pod
 
@@ -82,3 +82,10 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
 
 eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
              'die on non-existing class names';
+
+# you can declare classes over vivified namespaces, but not over other classes
+
+class One::Two::Three { }  # auto-vivifies package One::Two
+class One::Two { }
+ok(One::Two.new, 'created One::Two after One::Two::Three');
+eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
