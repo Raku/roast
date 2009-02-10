@@ -481,8 +481,8 @@ Hello, World
     my $t = q:s /$s/;
     is $t, $s, "Testing for q:s operator.";
 
-    my $s = "有人在笑";
-    my $t = q:s /$s/;
+    $s = "有人在笑";
+    $t = q:s /$s/;
     is $t, $s, "Testing for q:s operator. (utf8)";
 }
 

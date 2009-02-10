@@ -56,12 +56,18 @@ ok $scalar.does(Object), 'value contained in a $var does Object';
 
 
 
-my @array;
-ok @array.does(Positional), 'unitialized @var does Positional';
-my @array = [];
-ok @array.does(Positional), 'value contained in a @var does Positional';
-my @array = 1;
-ok @array.does(Positional), 'generic val in a @var is converted to Positional';
+{
+    my @array;
+    ok @array.does(Positional), 'unitialized @var does Positional';
+}
+{
+    my @array = [];
+    ok @array.does(Positional), 'value contained in a @var does Positional';
+}
+{
+    my @array = 1;
+    ok @array.does(Positional), 'generic val in a @var is converted to Positional';
+}
 
 for <List Seq Range Buf Capture> -> $c {
     ok eval($c).does(Positional), "$c does Positional";

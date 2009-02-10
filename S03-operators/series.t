@@ -53,7 +53,7 @@ plan 32;
 
 {
     my @dec = 8, 7, 6 ... *;
-    is @dev[0..5].join('|'), '8|7|6|5|4|3', 'magic series with decreasing values';
+    is @dec[0..5].join('|'), '8|7|6|5|4|3', 'magic series with decreasing values';
 }
 
 {

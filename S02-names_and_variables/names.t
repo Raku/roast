@@ -13,7 +13,7 @@ plan 16;
     my $mountain = 'Hill';
     $Terrain::mountain  = 108;
     $Terrain::Hill::mountain = 1024;
-    $river = 'Terrain::Hill';
+    our $river = 'Terrain::Hill';
     is($mountain, 'Hill', 'basic variable name');
     is($Terrain::mountain, 108, 'variable name with package');
 #?rakudo skip "Parse error"
