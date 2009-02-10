@@ -68,8 +68,8 @@ sub test2{
     my $type = %pair.WHAT;
     my $elems= +%pair;
     for %pair.kv -> $key, $value {
-        is($key, 'boo', "test2: $elems-elem $type \%pair got the right \$key");
-        is($value, 'baz', "test2: $elems-elem $type \%pair got the right \$value");
+        is($key, 'boo', "test2: $elems elem $type \%pair got the right \$key");
+        is($value, 'baz', "test2: $elems elem $type \%pair got the right \$value");
     }
 }
 test2;

@@ -44,19 +44,19 @@ class B {
         my ($foo, @bar, %baz);
 
         try {
-            $foo = $an_A!A::foo;
+            $foo = $!an_A!A::foo;
         };
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A scalar attr; '~($!//''), :todo<feature> );
         is( $foo, 'hello', 'value read by B from an A scalar var is correct', :todo<feature> );
 
         try {
-            @bar = $an_A!A::bar;
+            @bar = $!an_A!A::bar;
         };
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A array attr; '~($!//''), :todo<feature> );
         is_deeply( @bar, [1,2,3], 'value read by B from an A scalar var is correct', :todo<feature> );
 
         try {
-            %baz = $an_A!A::baz;
+            %baz = $!an_A!A::baz;
         };
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A hash attr; '~($!//''), :todo<feature> );
         is_deeply( %baz, {'m'=>'v'}, 'value read by B from an A scalar var is correct', :todo<feature> );

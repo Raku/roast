@@ -26,10 +26,9 @@ my $self = 't/spec/S16-unfiled/slurp.t';
 }
 
 # slurp in list context
-{
-  my @slurped_lines = lines(open($self));
-  ok +@slurped_lines > 30, "more than 30 lines in this file ?";
-}
+
+my @slurped_lines = lines(open($self));
+ok +@slurped_lines > 30, "more than 30 lines in this file ?";
 
 #?rakudo skip 'infix:<orelse>'
 {
