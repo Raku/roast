@@ -73,11 +73,11 @@ plan 20;
         return $points;
     }
 
-   my Point $ ($a, $b) := getpoints();
+   my (Point $ ($a, $b)) := getpoints();
    is($a, $point_a, 'unpacked TwoPoint object (1)');
    is($b, $point_b, 'unpacked TwoPoint object (2)');
 
-   my Point $ ($c, $d) := getpoints();
+   my (Point $ ($c, $d)) := getpoints();
    is($c, $point_a, 'unpacked TwoPoint object (3)');
    is($d, $point_a, 'unpacked TwoPoint object (4)');
 }
