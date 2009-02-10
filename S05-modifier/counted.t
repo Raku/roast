@@ -10,10 +10,6 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 plan 178;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
-
 # L<S05/Modifiers/If the number is followed by an>
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
@@ -165,31 +161,31 @@ my $try = $data;
 ok(!( $try ~~ s:0th{fo+}=q{bar} ), "Can't substitute 0th" );
 is($try, $data, 'No change to data for 0th');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:1st{fo+}=q{bar}, 'substitute 1st');
 is($try, $sub1, 'substituted 1st correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:2nd{fo+}=q{bar}, 'substitute 2nd');
 is($try, $sub2, 'substituted 2nd correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:3rd{fo+}=q{bar}, 'substitute 3rd');
 is($try, $sub3, 'substituted 3rd correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:4th{fo+}=q{bar}, 'substitute 4th');
 is($try, $sub4, 'substituted 4th correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:5th{fo+}=q{bar}, 'substitute 5th');
 is($try, $sub5, 'substituted 5th correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:6th{fo+}=q{bar}, 'substitute 6th');
 is($try, $sub6, 'substituted 6th correctly');
 
-my $try = $data;
+$try = $data;
 ok(!( $try ~~ s:7th{fo+}=q{bar} ), "Can't substitute 7th" );
 is($try, $data, 'No change to data for 7th');
 
@@ -277,31 +273,31 @@ my $try = $data;
 ok(!( $try ~~ s:0x{fo+}=q{bar} ), "Can't substitute 0x" );
 is($try, $data, 'No change to data for 0x');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:1x{fo+}=q{bar}, 'substitute 1x');
 is($try, $sub1, 'substituted 1x correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:2x{fo+}=q{bar}, 'substitute 2x');
 is($try, $sub2, 'substituted 2x correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:3x{fo+}=q{bar}, 'substitute 3x');
 is($try, $sub3, 'substituted 3x correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:4x{fo+}=q{bar}, 'substitute 4x');
 is($try, $sub4, 'substituted 4x correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:5x{fo+}=q{bar}, 'substitute 5x');
 is($try, $sub5, 'substituted 5x correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:6x{fo+}=q{bar}, 'substitute 6x');
 is($try, $sub6, 'substituted 6x correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:7x{fo+}=q{bar}, 'substitute 7x');
 is($try, $sub6, 'substituted 7x correctly');
 
@@ -316,33 +312,31 @@ my $gsub4 = "f fo foo fooo bar fooooo foooooo";
 my $gsub5 = "f fo foo fooo foooo bar foooooo";
 my $gsub6 = "f fo foo fooo foooo fooooo bar";
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:g:1st{fo+}=q{bar}, 'Global :1st match');
 is($try, $gsub1, 'substituted :g:1st correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:g:2nd{fo+}=q{bar}, 'Global :2nd match');
 is($try, $gsub2, 'substituted :g:2nd correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:g:3rd{fo+}=q{bar}, 'Global :3rd match');
 is($try, $gsub3, 'substituted :g:3rd correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:g:4th{fo+}=q{bar}, 'Global :4th match');
 is($try, $gsub4, 'substituted :g:4th correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:g:5th{fo+}=q{bar}, 'Global :5th match');
 is($try, $gsub5, 'substituted :g:5th correctly');
 
-my $try = $data;
+$try = $data;
 ok($try ~~ s:g:6th{fo+}=q{bar}, 'Global :6th match');
 is($try, $gsub6, 'substituted :g:6th correctly');
 
-my $try = $data;
+$try = $data;
 ok(!( $try ~~ s:g:7th{fo+}=q{bar} ), 'Global :7th match');
 is($try, $data, 'substituted :g:7th correctly');
-
-}
 

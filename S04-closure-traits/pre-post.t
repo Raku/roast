@@ -110,7 +110,7 @@ my $mp = POST_Child.new;
 
 lives_ok  { $mp.test(-42) }, "It's enough if we satisfy one of the POST blocks (Child)";
 lives_ok  { $mp.test(42)  }, "It's enough if we satisfy one of the POST blocks (Parent)";
-dies_ok   { $tmp.test(12) }, 'Violating poth POST blocks throws an error';
+dies_ok   { $mp.test(12) }, 'Violating poth POST blocks throws an error';
 
 class Another {
     method test(Num $x) {

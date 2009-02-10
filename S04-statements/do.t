@@ -43,7 +43,7 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
 =end comment
 #?rakudo skip 'if returning undef'
 {
-	$x = do if 0 { 1 } elsif 0 { 2 };
+	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undef';
 }
 

@@ -49,16 +49,16 @@ my ($item_ctx, @list_ctx);
 
 #?pugs todo 'feature'
 {
-    is try { $item_ctx = sm_ok_in_item() }, 42,
+    is try { my $item_ctx = sm_ok_in_item() }, 42,
       "want() works correctly in Item context (smartmatch-form)";
 
-    is try { @list_ctx   = sm_ok_in_list() },   42,
+    is try { my @list_ctx   = sm_ok_in_list() },   42,
         "want() works correctly in List context (smartmatch-form)";
 
-    is try { ($a, $b)    = sm_ok_in_count2() }, 42,
+    is try { my ($a, $b)    = sm_ok_in_count2() }, 42,
       "want.count() works correct if two return values are expected (smartmatch-form)";
 
-    is try { ($c,$d,$e)  = sm_ok_in_count3() }, 42,
+    is try { my ($c,$d,$e)  = sm_ok_in_count3() }, 42,
       "want.count() works correct if three return values are expected (smartmatch-form)";
 }
 
