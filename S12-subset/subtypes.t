@@ -59,8 +59,6 @@ ok eval('sub is_num_odd(Num::Odd $odd) { $odd ~~ Num::Odd }'),
 ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
 
 # Following code is evil, but should work:
-#?rakudo skip 'subests and lexicals'
-#?DOES 7
 {
   my Int $multiple_of;
   subset Num::Multiple of Int where { $^num % $multiple_of == 0 }
@@ -69,10 +67,10 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
   ok $multiple_of ~~ Int, "basic sanity (1)";
   is $multiple_of,     5, "basic sanity (2)";
 
-  ok my Num::Multiple $d = 10, "creating a new Num::Multiple";
-  is $d,                   10, "creating a new Num::Multiple actually worked";
-  dies_ok { $d = 7 },          'negative test also works';
-  is $d,                   10, 'variable kept previous value';
+  ok (my Num::Multiple $d = 10), "creating a new Num::Multiple";
+  is $d,                   10,   "creating a new Num::Multiple actually worked";
+  dies_ok { $d = 7 },            'negative test also works';
+  is $d,                   10,   'variable kept previous value';
 
   
   $multiple_of = 6;
