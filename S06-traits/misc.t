@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 17;
 
 =begin description
 
@@ -68,6 +68,18 @@ lives_ok { boom(42) }, "can modify a copy";
     dies_ok { mods_param_ref(1); }, 'is ref with non-lvalue';
     lives_ok { mods_param_ref($foo); }, 'is ref with non-lvalue', :todo;
     is($foo, 2, 'is ref works', :todo);
+}
+
+
+# with <-> we should still obey readonly traits
+{
+    my $anon1 = <-> $a is readonly, $b { $b++ };
+    my $anon2 = <-> $a is readonly, $b { $a++ };
+    my $x = 1;
+    $anon1($x, $x);
+    is($x, 2,                   '<-> does not override explicit traints (sanity)');
+    dies_ok({ $anon2($x, $x) }, '<-> does not override explicit traints');
+    is($x, 2,                   '<-> does not override explicit traints (sanity)');
 }
 
 # is context
