@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 29;
 
 =begin pod
 
@@ -28,6 +28,12 @@ ok(!$foo.isa("Bar"), '!.isa("Bar")');
     my $foo_clone = $foo.clone();
     ok($foo_clone ~~ Foo, '... smartmatch our $foo_clone to the Foo class');
 }
+
+# Definedness of proto-objects and objects.
+ok(!Foo.defined,    'proto-objects are undefined');
+my Foo $ut1;
+ok(!$ut1.defined,   'proto-objects are undefined');
+ok(Foo.new.defined, 'instances of the object are defined');
 
 class Foo::Bar {}
 
