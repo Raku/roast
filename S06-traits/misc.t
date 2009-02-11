@@ -20,7 +20,6 @@ my $foo=1;
 # test twice, once with assignment and once with increment, rakudo
 # used to catch the first but not the latter.
 #
-#?rakudo todo 'TODO: catch modification of subroutine arg'
 eval_dies_ok '
     my $tmp = 1;
     sub mods_param ($x) { $x++; }
