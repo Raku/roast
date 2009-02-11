@@ -51,6 +51,6 @@ plan 8;
   @array[return_3()]++;
   %hash{return_c()}++;
 
-  is @array[3],  16, "context inside of array subscripts when used with &postfix:<++>";
-  is %hash<c>,   24, "context inside of hash subscripts when used with &postfix:<++>";
+  is @array[3],  16, 'context inside of array subscripts when used with &postfix:<++>';
+  is %hash<c>,   24, 'context inside of hash subscripts when used with &postfix:<++>';
 }
