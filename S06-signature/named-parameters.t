@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 69;
+plan 72;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -200,6 +200,13 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     $aref[0]++;
     is($aref[0], 1, "aref actually implemented");
     is($ref[0], 1, "ref is the same as aref");
+}
+
+{
+    sub typed_named(Int :$x) { 1 }
+    is(typed_named(:x(42)), 1,      'typed named parameters work...');
+    is(typed_named(),       1,      '...when value not supplied also...');
+    dies_ok({ typed_named("BBQ") }, 'and the type check is enforced');
 }
 
 # vim: ft=perl6
