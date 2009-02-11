@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 88;
+plan 89;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
@@ -173,6 +173,12 @@ is(+(6..8), 3, 'numification');
     ok(.2  ~~ $inf, 'positive non-int matches *..*');
     ok(-2  ~~ $inf, 'negative integer matches *..*');
     ok(-.2 ~~ $inf, 'negative non-int matches *..*');
+}
+
+# ranges constructed from parameters, from RT#63002.
+{
+    sub foo($a) { ~($a .. 5) };
+    is(foo(5), '5', 'range constructed from parameter OK');
 }
 
 # vim:set ft=perl6
