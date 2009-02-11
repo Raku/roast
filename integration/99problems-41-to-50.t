@@ -50,7 +50,6 @@ plan 11;
         [ map { [$_, goldbach $_] }, grep { $_ % 2 == 0 }, $from .. $to ]
     }
     
-    #?rakudo todo 'unknown'
     is goldbachs(3, 11), [[4, 2, 2], [6, 3, 3], [8, 3, 5], [10, 3, 7]], "yep.";
 }
 
