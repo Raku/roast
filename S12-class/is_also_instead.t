@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 5;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -17,6 +17,8 @@ plan 4;
     my $o = Foo.new;
     is($o.a, 'called Foo.a', 'basic method call works');
     is($o.b, 'called Foo.b', 'added method call works');
+
+    ok(!eval('class NonExistent is also { }'), 'is also on non-existent class dies');
 }
 
 #?rakudo skip 'is instead not yet implemented'
