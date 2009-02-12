@@ -947,7 +947,7 @@ sub W () { substr(eval('want'), 0, 1) }
     ok(@z[1] ~~ undef, 'lhs treats @a[(0|0).pick] as list');
 }
 
-# L<S03/Assignment metaoperators/",=">
+# L<S03/Assignment operators/",=">
 #?rakudo skip ',='
 {
     my @a = 1, 2;

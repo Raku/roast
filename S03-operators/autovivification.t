@@ -1,7 +1,7 @@
 use Test;
 plan 19;
 
-# L<S03/Assignment metaoperators/>
+# L<S03/Assignment operators/>
 
 {
     my $x;
@@ -93,8 +93,7 @@ plan 19;
     ok $x == 1i, 'my $x; $x *= 1i works';
 }
 
-# L<S03/Assignment metaoperators/"If you apply an assignment operator to a
-# protoobject">
+# L<S03/Assignment operators/"If you apply an assignment operator to a protoobject">
 {
     # yes, this is serious. It's in the specs ;-)
     my Num $x;
