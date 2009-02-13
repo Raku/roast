@@ -12,7 +12,7 @@ L<S12/Methods/"Indirect object notation now requires a colon after the invocant,
 
 =end description
 
-plan 28;
+plan 27;
 
 
 ##### Without arguments
@@ -71,10 +71,6 @@ class T2
 
     my $meth = method { self.abc ~ self.bcd };
     is $o.$meth, 'abcbcd',   'calling method with $object.$methodref';
-
-    my $m2 = method { .abc };
-    #?rakudo skip 'RT #61106'
-    is $o.$m2,   'abc',      '$object.$methodref where the invocant is passed as $_';
 }
 
 # L<S12/Methods/"$obj.@candidates(1,2,3)">
