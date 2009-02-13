@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 10;
+plan 16;
 
 {
   sub foo($a is copy) {
@@ -35,4 +35,28 @@ plan 10;
 
     is(copy_tester($baz, $quux), 25, 'calling with two arguments');
     is($baz, 10, 'variable was not affected');
+}
+
+# is copy with arrays
+{
+    sub array_test(@testc is copy) {
+        is(@testc[0], 1,   'array copied correctly by is copy');
+        @testc[0] = 123;
+        is(@testc[0], 123, 'can modify array copied by is copy...');
+    };
+    my @test = (1, 2, 3);
+    array_test(@test);
+    is(@test[0], 1,        '...and original is unmodified.');
+}
+
+# is copy with hashes
+{
+    sub hash_test(%h is copy) {
+        is(%h<x>, 1,   'hash copied correctly by is copy');
+        %h<x> = 123;
+        is(%h<x>, 123, 'can modify hash copied by is copy...');
+    };
+    my %test = (x => 1);
+    hash_test(%test);
+    is(%test<x>, 1,    '...and original is unmodified.');
 }
