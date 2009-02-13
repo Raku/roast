@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 31;
 
 =begin description
 
@@ -86,5 +86,25 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
     eval_dies_ok 'my HasA $x = "foo"', 'where /regex/ works (negative)';
 }
 
+# You can write just an expression rather than a block after where in a sub
+# and it will smart-match it.
+{
+    sub anon_where_1($x where "x") { 1 }
+    sub anon_where_2($x where /x/) { 1 }
+    is(anon_where_1('x'), 1,       'where works with smart-matching on string');
+    dies_ok({ anon_where_1('y') }, 'where works with smart-matching on string');
+    is(anon_where_2('x'), 1,       'where works with smart-matching on regex');
+    is(anon_where_2('xyz'), 1,     'where works with smart-matching on regex');
+    dies_ok({ anon_where_2('y') }, 'where works with smart-matching on regex');
+}
+
+# Block parameter to smart-match is readonly.
+{
+    subset SoWrong of Str where { $_ = "fail" }
+    sub so_wrong_too($x where { $_ = "fail" }) { }
+    my SoWrong $x;
+    dies_ok({ $x = 42 },          '$_ parameter in subtype is read-only...');
+    dies_ok({ so_wrong_too(42) }, '...even in anonymous ones.');
+}
 
 # vim: ft=perl6
