@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 89;
+plan 91;
 
 =begin kwid
 
@@ -147,6 +147,8 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok ((1, 2, 3) ~~ @a), 'smartmatch List ~~ Array';
     ok ((1, 2, 3) ~~ @m), 'smartmatch List ~~ Array with dwim';
 
+    ok (1 ~~ *,1,*),     'smartmatch with Array RHS co-erces LHS to list';
+    ok (1..10 ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
 };
 
 #L<<S03/Smart matching/numeric equality>>
