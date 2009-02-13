@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 100;
 
 =begin kwid
 
@@ -330,4 +330,9 @@ ok NaN ~~ NaN, 'NaN ~~ NaN is True';
     ok $b, '.method(args) in when clause';
     ok !$c, '..method(args) should not trigger when-block when false';
 }
+
+# need to test in eval() since class defintions happen at compile time,
+# ie before the plan is set up.
+eval_lives_ok 'class A { method foo { say "" ~~ * } }; A.new.foo',
+              'smartmatch in a class lives (RT #62196)';
 # vim: ft=perl6
