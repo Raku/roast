@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 =begin description
 
@@ -82,5 +82,10 @@ is $str, 'inner', 'return in pointy returns from enclosing sub';
 # and the -> introduces a sig of ().  TimToady #perl6 2008-May-24
 eval_dies_ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 
+# RT #61034
+
+lives_ok {my $x = -> {}; my $y = $x(); }, 
+         'can define and execute empty pointy block';
 
 # vim: ft=perl6
+
