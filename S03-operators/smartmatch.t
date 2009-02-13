@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 81;
+plan 89;
 
 =begin kwid
 
@@ -115,13 +115,21 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok((list() ~~ list()), "array smartmatch boundary conditions");
     ok((list(1) ~~ list(1)), "array smartmatch boundary conditions");
     ok((1,2,3,4) ~~ (1,*), 'array smartmatch dwims * at end');
+    ok((1,2,3,4) ~~ (1,*,*), 'array smartmatch dwims * at end (many *s)');
     ok((1,2,3,4) ~~ (*,4), 'array smartmatch dwims * at start');
+    ok((1,2,3,4) ~~ (*,*,4), 'array smartmatch dwims * at start (many *s)');
     ok((1,2,3,4) ~~ (1,*,3,4), 'array smartmatch dwims * 1 elem');
+    ok((1,2,3,4) ~~ (1,*,*,3,4), 'array smartmatch dwims * 1 elem (many *s)');
     ok((1,2,3,4) ~~ (1,*,4), 'array smartmatch dwims * many elems');
+    ok((1,2,3,4) ~~ (1,*,*,4), 'array smartmatch dwims * many elems (many *s)');
     ok((1,2,3,4) ~~ (*,3,*), 'array smartmatch dwims * at start and end');
+    ok((1,2,3,4) ~~ (*,*,3,*,*), 'array smartmatch dwims * at start and end (many *s)');
     ok((1,2,3,4) ~~ (*,1,2,3,4), 'array smartmatch dwims * can match nothing at start');
+    ok((1,2,3,4) ~~ (*,*,1,2,3,4), 'array smartmatch dwims * can match nothing at start (many *s)');
     ok((1,2,3,4) ~~ (1,2,*,3,4), 'array smartmatch dwims * can match nothing in middle');
+    ok((1,2,3,4) ~~ (1,2,*,*,3,4), 'array smartmatch dwims * can match nothing in middle (many *s)');
     ok((1,2,3,4) ~~ (1,2,3,4,*), 'array smartmatch dwims * can match nothing at end');
+    ok((1,2,3,4) ~~ (1,2,3,4,*,*), 'array smartmatch dwims * can match nothing at end (many *s)');
     ok(!((1,2,3,4) ~~ (1,*,3)), '* dwimming does not cause craziness');
     ok(!((1,2,3,4) ~~ (*,5)), '* dwimming does not cause craziness');
     ok(!((1,2,3,4) ~~ (1,3,*)), '* dwimming does not cause craziness');
