@@ -10,7 +10,7 @@ if $*OS eq "browser" {
   exit;
 }
 
-ok(PROCESS:<$PROGRAM_NAME> eq ('t/spec/S02-magicals/progname.t' | 't\\spec\\S02-magicals\\progname.t'), "progname var matches test file path");
+ok(PROCESS::<$PROGRAM_NAME> eq ('t/spec/S02-magicals/progname.t' | 't\\spec\\S02-magicals\\progname.t'), "progname var matches test file path");
 ok($*PROGRAM_NAME eq ('t/spec/S02-magicals/progname.t' | 't\\spec\\S02-magicals\\progname.t'), "progname var accessible as context var");
 
 # NOTE:
