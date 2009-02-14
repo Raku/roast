@@ -972,18 +972,18 @@ sub W () { substr(eval('want'), 0, 1) }
 #?rakudo skip 'RT #61840]'
 {
     my $x = 3;
-    $x =min 2;
-    is $x, 2, '=min worked (positive)';
+    $x min= 2;
+    is $x, 2, 'min= worked (positive)';
 
     $x = 3;
-    $x =min 5;
-    is $x, 3, '=min worked (negative)';
+    $x min= 5;
+    is $x, 3, 'min= worked (negative)';
 
     $x = 1;
-    $x =max 2;
-    is $x, 2, '=max worked (positive)';
+    $x max= 2;
+    is $x, 2, 'max= worked (positive)';
 
     $x = 3;
-    $x =max 2;
-    is $x, 3, '=max worked (negative)';
+    $x max= 2;
+    is $x, 3, 'max= worked (negative)';
 }
