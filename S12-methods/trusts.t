@@ -42,6 +42,7 @@ class B {
 
     method read_from_A() {
         my ($foo, @bar, %baz);
+	my $an_A = $!my_A;
 
         try {
             $foo = $!an_A!A::foo;
@@ -89,6 +90,7 @@ class C {
 
     method read_from_A() {
         my ($foo, @bar, %baz);
+	my $an_A = $!my_A;
 
         try {
             $foo = $an_A!A::foo;

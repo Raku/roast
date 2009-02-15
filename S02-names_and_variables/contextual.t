@@ -9,7 +9,7 @@ plan 5;
 %*ENV<THIS_NEVER_EXISTS> = 123;
 
 {
-	is $+THIS_NEVER_EXISTS, 123, "Testing contextual variable which changed within %*ENV";
+	is $*THIS_NEVER_EXISTS, 123, "Testing contextual variable which changed within %*ENV";
 }
 
 {
