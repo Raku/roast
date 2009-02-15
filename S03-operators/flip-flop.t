@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 25;
 
 # L<S03/Changes to Perl 5 operators/flipflop operator is now done with>
 
@@ -99,6 +99,31 @@ sub always_true  { 1 }
     $bug = 1;
     if 0 ff^ {$bug=2} { $bug = 3 }; 
     ok ($bug == 1), "RHS not evaluated in \"false\" state (ff^)";
+}
+
+# LHS always evaluated when in "false" state
+{
+    my $count = 0;
+    my $got = 0;
+
+    sub lhs { ++$count; 0 };
+    for (1..2) -> {
+        if lhs() ff 0 { ++$got }
+    }
+    is($count, 2, "LHS evaluated in \"false\" state (ff)");
+    is($got,   1, ".. and result used");
+  
+    for (1..2) -> {
+        if lhs() ^ff 0 { ++$got }
+    }
+    is($count, 4, "LHS evaluated in \"false\" state (^ff)");
+    is($got,   2, ".. and result used");
+    
+    for (1..2) -> {
+        if lhs() ff^ 0 { ++$got }
+    }
+    is($count, 6, "LHS evaluated in \"false\" state (ff^)");
+    is($got,   3, ".. and result used");
 }
 
 # LHS not evaluated when in "true" state (perldoc perlop, /flip-flop)
