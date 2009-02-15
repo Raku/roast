@@ -13,8 +13,8 @@ plan 48;
 my $sq2 = 1.4142135623731;
 sub check_polar($complex, $magnitude_want, $angle_want) {
    my ($magnitude, $angle) = $complex.polar;
-   is_approx($magnitude, $magnitude_want, "$complex has a magnitude ($magnitude) of $magnitude_want");
-   is_approx($angle, $angle_want, "$complex has an angle ($angle) of $angle_want");
+   is_approx($magnitude, $magnitude_want, "$complex has a magnitude of $magnitude_want");
+   is_approx($angle, $angle_want, "$complex has an angle of $angle_want");
 }
 
 # reference angles
