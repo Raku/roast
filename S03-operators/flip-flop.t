@@ -105,17 +105,17 @@ sub always_true  { 1 }
 {
     my $count = 0;
     for (1..2) -> {
-        if( sub { ++$count; } ff 0 ) { }
+        if sub { ++$count; } ff 0 { }
     }
     is($count, 1, "LHS not evaluated in \"true\" state (ff)");
    
     for (1..2) -> {
-        if( sub { ++$count; } ^ff 0 ) { }
+        if sub { ++$count; } ^ff 0 { }
     }
     is($count, 2, "LHS not evaluated in \"true\" state (^ff)");
     
     for (1..2) -> {
-        if( sub { ++$count; } ff^ 0 ) { }
+        if sub { ++$count; } ff^ 0 { }
     }
     is($count, 3, "LHS not evaluated in \"true\" state (ff^)");
 }
