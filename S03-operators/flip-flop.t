@@ -101,31 +101,6 @@ sub always_true  { 1 }
     ok ($bug == 1), "RHS not evaluated in \"false\" state (ff^)";
 }
 
-# LHS always evaluated when in "false" state
-{
-    my $count = 0;
-    my $got = 0;
-
-    sub lhs { ++$count; 0 };
-    for (1..2) -> {
-        if lhs() ff 0 { ++$got }
-    }
-    is($count, 2, "LHS evaluated in \"false\" state (ff)");
-    is($got,   1, ".. and result used");
-  
-    for (1..2) -> {
-        if lhs() ^ff 0 { ++$got }
-    }
-    is($count, 4, "LHS evaluated in \"false\" state (^ff)");
-    is($got,   2, ".. and result used");
-    
-    for (1..2) -> {
-        if lhs() ff^ 0 { ++$got }
-    }
-    is($count, 6, "LHS evaluated in \"false\" state (ff^)");
-    is($got,   3, ".. and result used");
-}
-
 # LHS not evaluated when in "true" state (perldoc perlop, /flip-flop)
 {
     my $count = 0;
@@ -144,6 +119,41 @@ sub always_true  { 1 }
     }
     is($count, 3, "LHS not evaluated in \"true\" state (ff^)");
 }
+
+# LHS always evaluated when in "false" state
+#TODO Add same tests for RHS
+{
+    my $count = 0;
+    my $got = 0;
+
+    for (1..2) -> {
+        if sub { $count++ == 1 } ff 0 { ++$got }
+    }
+    is($count, 2, "LHS evaluated in \"false\" state (ff)");
+    is($got,   1, ".. and result used");
+}
+  
+{
+    my $count = 0;
+    my $got = 0;
+    for (1..3) -> {
+        if sub { $count++ > 0 } ^ff 0 { ++$got }
+    }
+    is($count, 2, "LHS evaluated only in \"false\" state (^ff)");
+    is($got,   1, ".. and result used");
+}
+    
+{
+    my $count = 0;
+    my $got = 0;
+
+    for (1..2) -> {
+        if sub { $count++ == 1 } ff^ 0 { ++$got }
+    }
+    is($count, 2, "LHS evaluated in \"false\" state (ff^)");
+    is($got,   1, ".. and result used");
+}
+
 
 # See thread "till (the flipflop operator, formerly ..)" on p6l started by Ingo
 # Blechschmidt, especially Larry's reply:
