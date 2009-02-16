@@ -54,7 +54,7 @@ plan 19;
     is(@pairs.fmt("%d ==> %s", "\n"), "100 ==> lovely", '.fmt works with lists of a single pair');
 
     # list of pair:
-    my @pairs = (a => 1.3, b => 2.4);
+    @pairs = (a => 1.3, b => 2.4);
     is @pairs.fmt("%s:%d", "_"), "a:1_b:2", "fmt() works with lists of pairs";
     is @pairs.fmt("(%s => %f)", ""), "(a => 1.3)(b => 2.4)",
         "fmt() works with lists of pairs";
