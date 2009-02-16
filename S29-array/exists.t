@@ -12,6 +12,7 @@ Basic C<exists> tests on arrays, see S29.
 # L<S29/"Array"/=item exists>
 
 my @array = <a b c d>;
+#?rakudo 2 skip 'attributes'
 ok @array[0]:exists,    "exists(positive index) on arrays (1)";
 ok @array[3]:exists,    "exists(positive index) on arrays (1)";
 ok @array.exists(0),    "exists(positive index) on arrays (1)";
@@ -20,6 +21,7 @@ ok @array.exists(2),    "exists(positive index) on arrays (3)";
 ok @array.exists(3),    "exists(positive index) on arrays (4)";
 ok !@array.exists(4),   "exists(positive index) on arrays (5)";
 ok !@array.exists(42),  "exists(positive index) on arrays (2)";
+#?rakudo todo 'negative array indexes'
 ok !@array.exists(-1),   "exists(negative index) on arrays (1)";
 ok @array.exists(*-1),   "exists(negative index) on arrays (1)";
 ok @array.exists(*-2),   "exists(negative index) on arrays (2)";
