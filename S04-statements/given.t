@@ -206,9 +206,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
     given $t { when TestIt { $passed = 1;} };
     is($passed, 1,"when Type {}");
     $passed = 0;
-    #?rakudo emit # the line below dies
     given $t { when .isa(TestIt) { $passed = 1;}};
-    #?rakudo 1 todo 'get_number() not implemented in class "TestIt"'
     is($passed, 1,'when .isa(Type) {}');
     $passed = 0;
     given $t { when (TestIt) { $passed = 1; }};

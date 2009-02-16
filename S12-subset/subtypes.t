@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 36;
 
 =begin description
 
@@ -22,6 +22,12 @@ ok(eval("$abs; 1"), "we can compile subtype declarations");
 is(eval("my_abs(3)"), 3, "and we can use them, too");
 is(eval("my_abs(-5)"), 5, "and they actually work");
 
+# another nice example
+{
+    multi factorial (Int $x)          { $x * factorial($x-1) };
+    multi factorial (Int $x where 0 ) { 1 };
+    is factorial(3), 6, 'subset types refine candidate matches';
+}
 
 # Basic subtype creation
 ok eval('subset Num::Odd of Num where { $^num % 2 == 1 }; 1'),
@@ -105,6 +111,17 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
     my SoWrong $x;
     dies_ok({ $x = 42 },          '$_ parameter in subtype is read-only...');
     dies_ok({ so_wrong_too(42) }, '...even in anonymous ones.');
+}
+
+# ensure that various operations do type cheks
+
+{
+    subset AnotherEven of Int where { $_ % 2 == 0 };
+    my AnotherEven $x = 2;
+    dies_ok { $x++ }, 'Even $x can not be ++ed';
+    is $x, 2,         '..and the value was preserved';
+    dies_ok { $x-- }, 'Even $x can not be --ed';
+    is $x, 2,         'and the value was preserved';
 }
 
 # vim: ft=perl6
