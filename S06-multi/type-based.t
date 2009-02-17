@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 30;
 
 # type based dispatching
 #
@@ -102,7 +102,15 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     #?rakudo 2 skip 'subset types that involve multiple parameters'
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
+}
 
+{
+    multi m($x,$y where { $x==$y }) { 0 };
+    multi m($x,$y) { 1 };
+
+    #?rakudo 2 skip 'subset types that involve multiple parameters'
+    is m(2, 3), 1, 'subset types involving mulitple parameters (fallback)';
+    is m(1, 1), 0, 'subset types involving mulitple parameters (success)';
 }
 
 
