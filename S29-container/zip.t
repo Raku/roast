@@ -11,7 +11,7 @@ L<S29/Container/"=item zip">
 
 =end pod
 
-plan 10;
+plan 12;
 
 {
     my @a = (0, 2, 4);
@@ -19,9 +19,11 @@ plan 10;
 
     my @e = (0 .. 5);
 
+    #?rakudo emit #
     my @z; @z = zip(@a; @b);
     my @x; @x = (@a Z @b);
 
+    #?rakudo skip 'zip() and semilists'
     is(~@z, ~@e, "simple zip");
     is(~@x, ~@e, "also with Z char");
 };
@@ -33,9 +35,11 @@ plan 10;
 
     my @e = (0 .. 5);
 
+    #?rakudo emit #
     my @z; @z = zip(@a; @b; @c);
     my @x; @x = (@a Z @b Z @c);
 
+    #?rakudo skip 'zip() and semilists'
     is(~@z, ~@e, "zip of 3 arrays");
     is(~@x, ~@e, "also with Z char");
 };
@@ -49,11 +53,14 @@ plan 10;
     my $todo = 'Seq(Seq(0,2),1), Seq(Seq(0,2),1), Seq(undef,5), Seq(undef,7)';
     my @e = eval $todo;
 
+    #?rakudo emit #
     my @z; @z = zip(zip(@a; @b); @c);
     my @x; @x = ((@a Z @b) Z @c);
 
 #?pugs 2 todo 'needs Seq'
+    #?rakudo skip 'zip() and semilists'
     is(~@z, ~@e, "zip of zipped arrays with other array");
+    #?rakudo skip 'test broken?'
     is(~@x, ~@e, "also as Z");
 };
 
@@ -66,6 +73,7 @@ plan 10;
     is(@z, @e, "zip uses length of shortest");
 }
 
+#?rakudo todo 'lvalue zip'
 {
     my @a;
     my @b;
@@ -84,3 +92,12 @@ plan 10;
     my @a = (1..3, 5) Z (6..8, 10);
     is(@a, [1, 6, 2, 7, 3, 8, 5, 10], 'infix:<Z> imposes list context');
 }
+
+# mix arrays and ranges
+
+is ('a'..'c' Z 1, 2, 3).join(','), 'a,1,b,2,c,3',
+    'can mix arrays and ranges for infix:<Z>';
+
+#?rakudo todo '63232'
+is ("a".."c" Z "?", "a".."b").join('|'), 'a|?|b|a|c|b',
+    'can mix arrays and ranges for infix:<Z>';
