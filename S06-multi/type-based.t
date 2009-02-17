@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 22;
+plan 28;
 
 # type based dispatching
 #
@@ -80,3 +80,30 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is sigil-t(%h),         'Associative','Sigil-based dispatch (Associative)';
 
 }
+
+{
+
+    class Scissor { };
+    class Paper   { };
+
+    multi wins(Scissor $x, Paper   $y) { 1 };
+    multi wins(::T     $x, T       $y) { 0 };
+    multi wins($x, $y)                { -1 };
+
+    is wins(Scissor.new, Paper.new),   1,  'Basic sanity';
+    #?rakudo 2 skip 'RT 63276'
+    is wins(Paper.new,   Paper.new),   0,  'multi dispatch with ::T generics';
+    is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a ::T variant';
+
+    multi wins2(Scissor $x, Paper   $y) { 1 };
+    multi wins2($x, $y where { $x.WHAT eq $y.WHAT }) { 0 };
+    multi wins2($x, $y)                { -1 };
+    is wins(Scissor.new, Paper.new),   1,  'Basic sanity 2';
+    #?rakudo 2 skip 'subset types that involve multiple parameters'
+    is wins(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
+    is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
+
+}
+
+
+# vim: ft=perl6
