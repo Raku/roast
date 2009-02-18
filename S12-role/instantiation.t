@@ -8,7 +8,7 @@ use Test;
 # classes. Hence, RoleName.new() instantiates an object that will probably fail
 # on all stubs.
 
-plan 13;
+plan 16;
 
 role SampleRole {
   method sample_method () { 42 }
@@ -52,4 +52,15 @@ role ParaRole[$x] {
 
     is $obj.get_x, 42, "instantiated object has method with correct associated role parameter";
     is $obj2.get_x, 100, "instantiated object has method with correct associated role parameter";
+}
+
+# Can also pun a role and inherit from the punned class.
+{
+    class TestA is SampleRole { }
+    is(TestA.new.sample_method, 42, "can call method from punned class of inherited role");
+    
+    class TestB is WithAttr { }
+    my $obj = TestB.new(x => 1, y => 2);
+    is($obj.x, 1, "can access attribute from punned class of inherited role");
+    is($obj.y, 2, "can access attribute from punned class of inherited role");
 }
