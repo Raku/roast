@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 20;
 
 =begin pod
 
@@ -23,6 +23,11 @@ is_approx(log(0.1), -2.3025850929940455, 'got the log of 0.1');
 
 is_approx(log10(5), 0.6989700043360187, 'got the log10 of 5');
 is_approx(log10(0.1), -0.9999999999999998, 'got the log10 of 0.1');
+
+is( log10(0), -Inf, 'log10(0) = -Inf');
+is( log10(Inf), Inf, 'log10(Inf) = Inf');
+is( log10(-Inf), NaN, 'log10(-Inf) = NaN');
+is( log10(NaN), NaN, 'log10(NaN) = NaN');
 
 #?rakudo skip 'named args'
 {
