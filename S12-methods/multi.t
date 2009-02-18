@@ -41,6 +41,7 @@ role R1 {
 role R2 {
     method foo($x, $y) { 2 }
 }
+#?rakudo skip 'produces backtrace'
 eval_dies_ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
 class C does R1 does R2 {
     proto method foo() { "proto" }
