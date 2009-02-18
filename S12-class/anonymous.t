@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<S12/Classes/"Perl 6 supports multiple inheritance, anonymous classes">
-plan 10;
+plan 12;
 
 # Create and instantiate empty class; check .WHAT works and stringifies to
 # empty string.
@@ -34,8 +34,15 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     ok ($a = $class.new), "instantiation of anonymous class";
     is $a.meth, 42, "calling a method on an instance of an anonymous class (1)";
 
-# And the same w/o using a $class variable:
+    # And the same w/o using a $class variable:
     is (class { method meth() { return 42 } }).new.meth, 42,
     "calling a method on an instance of an anonymous class (2)";
+}
 
+# Anonymous classes can inherit from named classes.
+{
+    class TestParent { method foo { 42 } }
+    my $x = class :: is TestParent { }
+    ok($x ~~ TestParent, 'anonymous class isa TestParent');
+    is($x.foo, 42,       'inherited method from TestParent');
 }
