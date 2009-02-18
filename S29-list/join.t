@@ -16,7 +16,7 @@ is(@list.join("|"), "a|b|c", '@list.join("|") works');
 my $joined2 = join("|", :values(@list));
 is($joined2, "a|b|c", 'join("|", :values(@list)) works');
 
-my $joined2 = join("|", @list);
+$joined2 = join("|", @list);
 is($joined2, "a|b|c", 'join("|", @list) works');
 
 my $joined3 = join("|", "a", "b", "c");

@@ -18,10 +18,10 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 {
     my @result = gather {
         for @(1..3 X 'a'..'b') -> $n, $a {
-            take "$n:$a"
+            take "$n|$a"
         }
     }
-    is @result, <1:a 1:b 2:a 2:b 3:a 3:b>, 'smooth cross operator works';
+    is @result, <1|a 1|b 2|a 2|b 3|a 3|b>, 'smooth cross operator works';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
@@ -76,7 +76,7 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 is (1,2 X* 3,4), (3,4,6,8), 'cross-product works';
 
 # L<S03/Cross operators/underlying operator non-associating>
-dies_ok '@result Xcmp @expected Xcmp <1 2>',
+eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
     'non-associating ops cannot be cross-ops';
 
 # let's have some fun with X..., comparison ops and junctions:

@@ -83,17 +83,17 @@ if (! $err) {
 %*ENV.delete('PUGS_ROCKS');
 ok(!%*ENV.exists('PUGS_ROCKS'), 'We can remove keys from %*ENV');
 
-my $command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
+$command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
 diag $command;
 run $command;
 
-my $child_env = slurp $tempfile;
-my %child_env = eval $child_env;
+$child_env = slurp $tempfile;
+%child_env = eval $child_env;
 unlink $tempfile;
 
 ok(!%child_env.exists('PUGS_ROCKS'), 'The child did not see %*ENV<PUGS_ROCKS>');
 
-my $err = 0;
+$err = 0;
 for %*ENV.kv -> $k,$v {
   # Ignore env vars which bash and maybe other shells set automatically.
   next if $k eq any <SHLVL _ OLDPWD PS1>;

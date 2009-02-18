@@ -76,30 +76,32 @@ so it looks like a pugs-pcre interface bug.
 
 =end pod
 
-"a" ~~ m:Perl5/a|(b)/;
-is($0, undef, 'An unmatched capture should be false.');
-my $str = "http://foo.bar/";
-ok(($str ~~ m:Perl5 {http{0,1}}));
+{
+    "a" ~~ m:Perl5/a|(b)/;
+    is($0, undef, 'An unmatched capture should be false.');
+    my $str = "http://foo.bar/";
+    ok(($str ~~ m:Perl5 {http{0,1}}));
 
-my $rule = '\d+';
-ok('2342' ~~ m:P5/$rule/, 'interpolated rule applied successfully');
+    my $rule = '\d+';
+    ok('2342' ~~ m:P5/$rule/, 'interpolated rule applied successfully');
 
-my $rule2 = 'he(l)+o';
-ok('hello' ~~ m:P5/$rule2/, 'interpolated rule applied successfully');
+    my $rule2 = 'he(l)+o';
+    ok('hello' ~~ m:P5/$rule2/, 'interpolated rule applied successfully');
 
-my $rule3 = 'r+';
-my $subst = 'z';
-my $bar = "barrrr"; 
-$bar ~~ s:P5:g{$rule3}=qq{$subst}; 
-is($bar, "baz", 'variable interpolation in substitute regexp works with :g modifier');
+    my $rule3 = 'r+';
+    my $subst = 'z';
+    my $bar = "barrrr"; 
+    $bar ~~ s:P5:g{$rule3}=qq{$subst}; 
+    is($bar, "baz", 'variable interpolation in substitute regexp works with :g modifier');
 
-my $a = 'a:';
-$a ~~ s:P5 [(..)]=qq[{uc $0}];
-is($a, 'A:', 'closure interpolation with qq[] as delimiter');
+    my $a = 'a:';
+    $a ~~ s:P5 [(..)]=qq[{uc $0}];
+    is($a, 'A:', 'closure interpolation with qq[] as delimiter');
 
-my $b = 'b:';
-$b ~~ s:P5{(..)} = uc $0;
-is($b, 'B:', 'closure interpolation with no delimiter');
+    my $b = 'b:';
+    $b ~~ s:P5{(..)} = uc $0;
+    is($b, 'B:', 'closure interpolation with no delimiter');
+}
 
 {
         diag "Now going to test numbered match variable.";

@@ -193,7 +193,7 @@ plan 51;
 
     $x = JuncInvTest1.new(n => 1) | JuncInvTest1.new(n => 2) & JuncInvTest1.new(n => 4);
     my $r = $x.d;
-    my $ok = $r.perl.subst(/\D/, '', :g) eq '248' | '284' | '482' | '842';
+    my $ok = ?($r.perl.subst(/\D/, '', :g) eq '248' | '284' | '482' | '842');
     ok($ok, 'auto-threading over invocant produced correct junctional result');
 
     JuncInvTest2.cnt = 0;

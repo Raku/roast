@@ -108,11 +108,11 @@ plan 23;
     my @odds = <1 3 5 7 9>;
     my @even = <0 2 4 6 8>;
 
-    my @numbers = do {@odds ==>> @evens};
-    is(~@numbers, ~(@evens, @odds), 'basic ==>> test');
+    my @numbers = do {@odds ==>> @even};
+    is(~@numbers, ~(@even, @odds), 'basic ==>> test');
 
-    my @numbers = do {@odds <<== @evens};
-    is(~@numbers, ~(@odds, @evens), 'basic <<== test');
+    my @numbers = do {@odds <<== @even};
+    is(~@numbers, ~(@odds, @even), 'basic <<== test');
 }
 
 # feeding to whatever using ==> and ==>>
