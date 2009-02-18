@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 194;
+plan 195;
 
 my $five = abs(-5);
 
@@ -315,6 +315,7 @@ is_approx 2**2.2, 4.59479341998814;
 is_approx 2.2**2.2, 5.66669577875008;
 is 1**0, 1;
 is 1**1, 1;
+isnt 2**3**4, 4096, "** is right associative";
 
 #?rakudo todo 'infix:<**> with complex numbers'
 {
