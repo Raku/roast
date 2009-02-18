@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 =begin description
 
@@ -21,6 +21,13 @@ ok ($bar ~~ Bar),               '... smartmatch our $bar to the Bar class';
 ok ($bar.HOW.does($bar, Foo)),  '.HOW.does said our $bar does Foo';
 ok ($bar.^does(Foo)),           '.^does said our $bar does Foo';
 ok ($bar ~~ Foo),               'smartmatch said our $bar does Foo';
+
+# Can also write does inside the class.
+role Foo2 { method x { 42 } }
+class Bar2 { does Foo2; }
+my $bar2 = Bar2.new();
+ok ($bar2 ~~ Foo2),          'smartmatch works when role is done inside class';
+is $bar2.x, 42,              'method composed when role is done inside class';
 
 # Mixing a Role into an Object using imperative C<does>
 my $baz = 3;
