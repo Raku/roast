@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 27;
 
 =begin pod
 
@@ -23,6 +23,13 @@ is_approx(log(0.1), -2.3025850929940455, 'got the log of 0.1');
 
 is_approx(log10(5), 0.6989700043360187, 'got the log10 of 5');
 is_approx(log10(0.1), -0.9999999999999998, 'got the log10 of 0.1');
+
+#?rakudo skip "log of 0 should return negative infinity"
+is( log(0), -Inf, 'log(0) = -Inf');
+
+is( log(Inf), Inf, 'log(Inf) = Inf');
+is( log(-Inf), NaN, 'log(-Inf) = NaN');
+is( log(NaN), NaN, 'log(NaN) = NaN');
 
 is( log10(0), -Inf, 'log10(0) = -Inf');
 is( log10(Inf), Inf, 'log10(Inf) = Inf');
@@ -57,7 +64,11 @@ is_approx(log10(10), 1.0, 'log10(10)=1');
 is_approx(log((1+1i) / sqrt(2)), 0 + 1i * pi / 4, "got log of exp(i pi/4)");
 is_approx(log(1i), 1i * pi / 2, "got the log of i (complex unit)");
 
+is_approx(log10(1i), 1i * pi / (2*log(10)), 'got the log10 of i');
+is_approx(log10((1+1i) / sqrt(2)), 0 + 1i * pi / (4*log(10)), "got log10 of exp(i pi/4)");
+
 #?pugs todo 'feature'
 is_approx(log(-1i), -0.5i * pi , "got the log of -i (complex unit)");
+is_approx(log10(-1i), -0.5i * pi / log(10), "got the log10 of -i (complex unit)");
 
 # TODO: please add more testcases for log10 of complex numbers
