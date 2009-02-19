@@ -1,8 +1,8 @@
 use v6;
 use Test;
-plan 7;
+plan 8;
 
-# TODO: Smartlink
+# L<S02/Mutable types/"KeySet KeyHash of Bool">
 
 # A KeySet is a KeyHash of Bool, i.e. the values are Bool
 
@@ -16,6 +16,8 @@ plan 7;
     is %h.keys.join(''), 'a', '... and the right one is gone';
     %h<c>++;
     is %h.keys.sort.join(''), 'ac', '++ on an item reinstates it';
+    %h<c>++;
+    is %h.keys.sort.join(''), 'ac', '++ on an existing item does nothing';
     %h<a>--;
     is ~%h.keys, 'c', '-- removes items';
     %h<b>--;
