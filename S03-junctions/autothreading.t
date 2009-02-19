@@ -206,7 +206,8 @@ plan 55;
 
 {
     my Junction $j = [1, 2] | 5;
-    is +$j.values.eigenstates, 3 '([1, 2] | 3).values has three eigenstates';
+    #?rakudo skip '.values and .eigenstates should flatten (?)'
+    is +$j.values.eigenstates, 3, '([1, 2] | 3).values has three eigenstates';
 
     #?rakudo 3 skip 'autothreading of prefix:<+>'
     ok ?( +$j == 5 ), 'prefix:<+> autothreads (1)';

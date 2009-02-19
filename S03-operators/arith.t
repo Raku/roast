@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 195;
+plan 196;
 
 my $five = abs(-5);
 
