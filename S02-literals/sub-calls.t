@@ -4,6 +4,9 @@ use Test;
 
 plan 20;
 
+# TODO: *really* need a better smartlink
+# L<S02/Literals/"If the unrecognized subroutine name">
+
 # Since these are all parsing tests, they should use eval to ensure all tests
 # can run even if something is broken.  (Unless things are VERY broken.)
 
