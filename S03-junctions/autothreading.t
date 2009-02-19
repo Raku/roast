@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 51;
+plan 55;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -200,4 +200,16 @@ plan 51;
     $x = JuncInvTest2.new | JuncInvTest2.new;
     $x.b('a' | 'b' | 'c');
     is JuncInvTest2.cnt, 6, 'auto-threading over invocant and parameters works';
+}
+
+# test that various things autothread
+
+{
+    my Junction $j = [1, 2] | 5;
+    is +$j.values.eigenstates, 3 '([1, 2] | 3).values has three eigenstates';
+
+    #?rakudo 3 skip 'autothreading of prefix:<+>'
+    ok ?( +$j == 5 ), 'prefix:<+> autothreads (1)';
+    ok ?( +$j == 2 ), 'prefix:<+> autothreads (2)';
+    ok !( +$j == 3 ), 'prefix:<+> autothreads (3)';
 }
