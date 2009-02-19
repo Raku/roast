@@ -17,7 +17,7 @@ L<S03/Junctive operators/>
 my $j = any(1, 2, 3);
 ok $j ~~ Junction, '$j is a Junction';
 
-my @values = $j.values.sort;
+my @values = $j.eigenstates.sort;
 is(+@values, 3, 'our junction has three values in it');
 
 is(@values[0], 1, 'our junctions first value is 1');
@@ -28,7 +28,7 @@ my $sums = $j + 3;
 
 ok $sums ~~ Junction, '$j + 3 is also a Junction';
 
-my @sums_values = sort $sums.values;
+my @sums_values = sort $sums.eigenstates;
 is(+@sums_values, 3, 'our junction has three values in it');
 is(@sums_values[0], 4, 'our junctions first value is 4');
 is(@sums_values[1], 5, 'our junctions second value is 5');
@@ -36,6 +36,6 @@ is(@sums_values[2], 6, 'our junctions third value is 6');
 
 # loop enough to go through it twice
 for (1 .. 6) {
-    ok((1 ^ 2 ^ 3) == $j.values.pick, 'it is always at least one');
-    ok((1 | 2 | 3) == $j.values.pick, 'it is always one of them');
+    ok((1 ^ 2 ^ 3) == $j.eigenstates.pick, 'it is always at least one');
+    ok((1 | 2 | 3) == $j.eigenstates.pick, 'it is always one of them');
 }
