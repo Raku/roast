@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 63;
+plan 64;
 
 # L<S02/Names and Variables/appropriate adverb to the subscript>
 
@@ -16,7 +16,7 @@ plan 63;
     is ~(@array[0]:p), "0\tA",
         ":p on an array returned the correct pair";
 
-    @array[0]:p.value = "a";
+    lives_ok { (@array[0]:p).value = "a" }, 'can assign to (@array[0]:p).value';
     is @array[0], "a",
         ":p on an array returns lvalues (like normal subscripts do as well)";
 
@@ -101,7 +101,7 @@ plan 63;
     is ~(%hash<0>:p), "0\tA",
         ":p on a hash returned the correct pair";
 
-    lives_ok { %hash<0>:p.value = "a"}, 'can assign to %hash<0>:p.value';
+    lives_ok { (%hash<0>:p).value = "a"}, 'can assign to %hash<0>:p.value';
     is %hash<0>, "a",
         ":p on a hash returns lvalues (like normal subscripts do as well)";
 
