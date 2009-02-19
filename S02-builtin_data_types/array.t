@@ -2,9 +2,29 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 100;
 
 #L<S02/Mutable types/Array>
+
+{
+    my $i = 0;
+    $i++ for 1, 2, 3;
+    is $i, 3, 'for 1, 2, 3 does three iterations';
+}
+
+{
+    my $i = 0;
+    $i++ for (1, 2, 3).item;
+    #?rakudo todo 'lists in item context'
+    is $i, 1, 'for (1, 2, 3).item does one iteration';
+}
+
+{
+    my $i = 0;
+    $i++ for [1, 2, 3];
+    is $i, 1, 'for [1, 2, 3] does one iteration';
+}
+
 
 # array of strings
 
