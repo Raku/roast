@@ -297,7 +297,7 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
 
   sub postfix:<zpost>($a,:$x){join(",",$a,$x)}
 
-  is (4 zpost :x(5)), '4,5', '(4 zpost :x(5))';
+  is (4zpost :x(5)), '4,5', '(4 zpost :x(5))';
 
   sub infix:<zin>($a,$b,:$x){join(",",$a,$b,$x)}
 

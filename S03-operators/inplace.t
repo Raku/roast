@@ -15,7 +15,7 @@ plan 18;
     is(@a[2], 4, 'inplace map [2]');
 
     my @b = <foo 123 bar 456 baz>;
-    eval_lives_ok '@b.=grep:{/<[a..z]>/}', '.= parses without surrounding whitespace');
+    eval_lives_ok('@b.=grep:{/<[a..z]>/}', '.= parses without surrounding whitespace');
     is @b[0], 'foo', 'inplace grep [0]';
     is @b[1], 'bar', 'inplace grep [1]';
     is @b[2], 'baz', 'inplace grep [2]';
