@@ -12,6 +12,8 @@ plan 100;
     is $i, 3, 'for 1, 2, 3 does three iterations';
 }
 
+
+##  This is under review -- see RT #63350.
 {
     my $i = 0;
     $i++ for (1, 2, 3).item;
