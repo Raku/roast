@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 11;
 
 # L<S12/Roles/"Roles may be composed into a class at compile time">
 
@@ -58,6 +58,22 @@ is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
     my $z = D1.new();
 
     is $z.mA1,      'D1.mA1',   'Can override method in a role with method in a class';
+}
+
+# diamond composition, see RT #63330
+
+#?rakudo skip 'RT #63330'
+{
+    role DA { 
+        method foo { "OH HAI" };
+    }
+    role DB does DA { }
+    role DC does DA { }
+    class DD does DB does DC { };
+    is DD.new.foo, 'OH HAI', 'diamond role composition';
+    class DE is DB is DC { };
+    is DE.new.foo, 'OH HAI', 'same with punning and inheritance';
+
 }
 
 # vim: syn=perl6
