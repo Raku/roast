@@ -25,6 +25,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([*]  1,2,3),    (1*2*3), "[*] works");
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
+  #?rakudo todo 'associativity in reduce-metaop'
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
 
@@ -135,15 +136,15 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 
-#?rakudo todo '[,]'
 {
     my @array = <5 -3 7 0 1 -9>;
     # according to http://irclog.perlgeek.de/perl6/2008-09-10#i_560910
     # [,] returns a scalar (holding an Array)
     my $count = 0;
     $count++ for [,] @array;
+    #?rakudo todo '[,]'
     is $count, 1, '[,] returns a single Array';
-    isa_ok ([,] @array), '[,] returns something of type Array';
+    isa_ok ([,] @array), Array, '[,] returns something of type Array';
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t

@@ -5,7 +5,7 @@ use Test;
 plan 32;
 
 # basic lvalue assignment
-#?rakudo skip 'not implemented in class Undef'
+#?rakudo skip 'hash autovivification'
 {
     my $hash; 
     isa_ok $hash, Any;

@@ -59,10 +59,9 @@ isa_ok($array_ref5, Array);
 
 # create an array_ref slice with an array_ref (in a variable)
 
-#?rakudo skip 'arrayref slice with an arrayref unimplemented'
 {
     my $slice = [ 2, 0, 1 ];
-    my $array_ref6 = [ $array_ref1[@$slice] ];
+    my $array_ref6 = [ $array_ref1[@($slice)] ];
     isa_ok($array_ref6, Array);
 
     is(+$array_ref6, 3, 'the array_ref6 has 3 elements');
