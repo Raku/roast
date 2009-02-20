@@ -160,7 +160,6 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<S03/Smart matching/array value slice truth>
-#?rakudo skip 'Null PMC access in type()'
 { 
     ok ((undef, 1, undef) ~~ .[1]),
         "element 1 of (undef, 1, undef) is true";

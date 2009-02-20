@@ -215,7 +215,6 @@ plan 31;
         'We should be able to drop list elements using list comprehension';
 }
 
-#?rakudo skip 'splice'
 {
     # P17 (*) Split a list into two parts; the length of the first part is given.
     # 
@@ -277,7 +276,6 @@ plan 31;
         '... and backwards';
 }
 
-#?rakudo skip 'splice'
 {
     # P20 (*) Remove the K'th element from a list.
     # 

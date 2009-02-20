@@ -2,7 +2,6 @@ use v6;
 use Test;
 plan 15;
 
-#?rakudo skip 'splice'
 {
     # P21 (*) Insert an element at a given position into a list.
     # 
