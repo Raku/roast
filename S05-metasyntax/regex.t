@@ -39,19 +39,17 @@ eval_dies_ok('rx :foo:', 'colons are not allowed as rx delimiters');
 
 # we'll just check that this syntax is valid for now
 {
-    lives_ok({token foo {bar}}, 'token foo {...} is valid');
-    lives_ok({regex baz {qux}}, 'regex foo {...} is valid');
+    eval_lives_ok('token foo {bar}', 'token foo {...} is valid');
+    eval_lives_ok('regex baz {qux}', 'regex foo {...} is valid');
 }
 
-#?rakudo skip 'rakudo cannot handle named regexes outside of grammars'
 {
     regex alien { ET };
     token archaeologist { Indiana };
     rule food { pasta };
 
-    ok( 'ET phone home' ~~ alien, 'named regex outside of a grammar works' );
-    ok( 'Indiana has left the fridge' ~~ archaeologist,
-                                  'named token outside of a grammar works' );
-    ok( 'mmm, pasta' ~~ food,
-                                  'named tule outside of a grammar works' );
+    ok 'ET phone home' ~~ m/<alien>/, 'named regex outside of a grammar works';
+    ok 'Indiana has left the fridge' ~~ m/<archaeologist>/,
+                                  'named token outside of a grammar works';
+    ok 'mmm, pasta' ~~ m/<food>/, 'named rule outside of a grammar works';
 }

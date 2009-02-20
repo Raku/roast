@@ -30,7 +30,7 @@ ok( @*ARGS == 5, '@*ARGS has correct elements');
 
 my $invoked = 0;
 eval 'temp @*ARGS = <a b>; sub MAIN($a, $b) { $invoked = 0 };';
-#?rakudo skip 'temp(), lexicals shared in eval()'
+#?rakudo skip 'temp(), lexicals shared in eval() (noauto)'
 is $invoked, 0, 'sub MAIN is not called in eval()';
 
 # vim: ft=perl6

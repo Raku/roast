@@ -61,15 +61,14 @@ plan 13;
 }
 
 # &sub.signature should return a Siglist object
-#?rakudo skip 'lexically scoped subs not yet implemented'
+#?rakudo skip 'runtime error "arguments passed (0) - 4 params expected"'
 {
-    my sub foo ($a, $b) {}
+    sub foo1 ($a, $b) {}
     my $siglist = :($a, $b);
 
     ok $siglist,
         "a subroutine's siglist can be accessed via .signature (1-1)";
-    #?rakudo skip 'infix:<===>'
-    cmp_ok $siglist, &infix:<===>, &foo.signature,
+    ok $siglist === &foo1.signature,
         "a subroutine's siglist can be accessed via .signature (1-2)", :todo<feature>;
 }
 

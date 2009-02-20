@@ -68,7 +68,7 @@ is(@a, @e, "list was reversed");
     is(@a[1], "foo", 'the list was reversed properly');
 }
 
-#?rakudo skip 'reverse as a function, parsefails'
+#?rakudo skip 'want()'
 {
     my @cxt_log;
 
@@ -168,10 +168,10 @@ Tests for %hash.reverse, which inverts the keys and values of a hash.
     is(%hash, {'a' => 'b', 'c' => 'd'}, 'original hash is intact');
 }
 
-#?rakudo skip 'reverse for hash not implemented (unspecced behavior here)'
 {
     my %hash = reverse {0 => 'a', 1 => 'a'};
 
-    is(%hash.keys, <a>, 'hash reversal with collision (unspecced, keys)');
+    is(%hash.keys, <a>, 'hash reversal with collision');
+    #?rakudo skip 'reverse for hash not implemented (unspecced behavior here)'
     is(%hash.values.sort, <0 1>, 'hash reversal with collision (unspecced, values)');
 }

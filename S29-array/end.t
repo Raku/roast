@@ -61,7 +61,6 @@ plan 13;
   is (end (1,2,3,4)), 3, "end (1,2,3,4) should work";
 }
 
-#?rakudo todo 'end on Array ref'
 {
   is (end [1,2,3,4]), 3, "end [1,2,3,4] should work";
 }
