@@ -5,7 +5,7 @@ use Test;
 
 # L<S12/Enums/"Two built-in enums are">
 
-plan 20;
+plan 24;
 
 # tests True and False are Bool's
 isa_ok(Bool::True, Bool);
@@ -48,3 +48,11 @@ is(+Bool::False, '0', 'False numifies to 0');
 # stringification
 is(~Bool::True, '1', 'True stringifies to 1');
 is(~Bool::False, '0', 'False stringifies to 0'); 
+
+# Arithmetic operations
+my $bool = Bool::False;
+is(++$bool, Bool::True, 'Increment of Bool::False produces Bool::True');
+is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
+is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
+is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
+
