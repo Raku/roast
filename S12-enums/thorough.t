@@ -29,7 +29,7 @@ sub test_stuff($x) {
   ok $x.does(Tue),    ".does worked correctly ($x-1)";
   ok $x.does(day),    ".does worked correctly ($x-2)";
   is $x.day, 3,       ".day worked correctly ($x)";
-  ok Tue $x,          "Tue() worked correctly ($x)";
+  ok Tue($x),          "Tue() worked correctly ($x)";
   ok $x.Tue,          ".Tue() worked correctly ($x)";
   ok $x.Tue.WHAT,     '$obj.Tue.WHAT returns a true valuee';
   ok $x.Tue.perl,     '$obj.Tue.perl returns a true valuee';
