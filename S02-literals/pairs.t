@@ -28,18 +28,18 @@ plan 40;
 sub f1 ($a, $b) { WHAT($a) ~ WHAT($b) }
 #?rakudo skip 'call positional parameters as named ones'
 {
-    is f1(a     => 42, 23), "IntInt", "'a => 42' is a named";
-    is f1(:a(42),  23),     "IntInt", "':a(42)' is a named";
-    is f1(:a,      23),     "IntInt",  "':a' is a named";
-    is f1(:!a,     23),     "IntInt",  "':!a' is also named";
+    is f1(a     => 42, 23), 'IntInt', "'a => 42' is a named";
+    is f1(:a(42),  23),     'IntInt', "':a(42)' is a named";
+    is f1(:a,      23),     'IntInt',  "':a' is a named";
+    is f1(:!a,     23),     'IntInt',  "':!a' is also named";
 
-    is f1("a"   => 42, 23), "PairInt", "'\"a\" => 42' is a named";
-    is f1(("a") => 42, 23), "PairInt", "'(\"a\") => 42' is a pair";
-    is f1((a   => 42), 23), "PairInt", "'(a => 42)' is a pair";
-    is f1(("a" => 42), 23), "PairInt", "'(\"a\" => 42)' is a pair";
-    is f1((:a(42)),    23), "PairInt", "'(:a(42))' is a pair";
-    is f1((:a),        23), "PairInt",  "'(:a)' is a pair";
-    is f1((:!a),       23), "PairInt",  "'(:a)' is also a pair";
+    is f1("a"   => 42, 23), 'PairInt', "'\"a\" => 42' is a named";
+    is f1(("a") => 42, 23), 'PairInt', "'(\"a\") => 42' is a pair";
+    is f1((a   => 42), 23), 'PairInt', "'(a => 42)' is a pair";
+    is f1(("a" => 42), 23), 'PairInt', "'(\"a\" => 42)' is a pair";
+    is f1((:a(42)),    23), 'PairInt', "'(:a(42))' is a pair";
+    is f1((:a),        23), 'PairInt',  "'(:a)' is a pair";
+    is f1((:!a),       23), 'PairInt',  "'(:a)' is also a pair";
 }
 
 sub f2 (:$a!) { ~WHAT($a) }
@@ -49,7 +49,7 @@ sub f2 (:$a!) { ~WHAT($a) }
     is f2(a     => 42), "Int", "'a => 42' is a named";
     is f2(:a(42)),      "Int", "':a(42)' is a named";
     is f2(:a),          "Int", "':a' is a named";
-    
+
     is(f2.(:a),         "Int",  "in 'f2.(:a)', ':a' is a named");
     is $f2(:a),         "Int",  "in '\$f2(:a)', ':a' is a named";
     is $f2.(:a),        "Int",  "in '\$f2.(:a)', ':a' is a named";
@@ -77,26 +77,26 @@ sub f3 ($a) { ~WHAT($a) }
     is f3($pair),  "Pair", 'a $pair is not treated magically...';
     #?pugs todo '[,]'
     #?rakudo skip 'prefix:<|>'
-    is f3(|$pair), "Int",    '...but |$pair is';
+    is f3(|$pair), 'Int',    '...but |$pair is';
 }
 
 sub f4 ($a)    { ~WHAT($a) }
 sub get_pair () { (a => 42) }
 {
 
-    is f4(get_pair()),  "Pair", 'get_pair() is not treated magically...';
+    is f4(get_pair()),  'Pair', 'get_pair() is not treated magically...';
     #?rakudo skip 'reduce meta op'
-    is f4(|get_pair()), "Int",    '...but |get_pair() is';
+    is f4(|get_pair()), 'Int',    '...but |get_pair() is';
 }
 
 sub f5 ($a) { ~WHAT($a) }
 {
     my @array_of_pairs = (a => 42);
 
-    is f5(@array_of_pairs), "Array",
+    is f5(@array_of_pairs), 'Array',
         'an array of pairs is not treated magically...';
     #?rakudo skip 'reduce meta op'
-    is f5(|@array_of_pairs), "Array", '...and |@array isn\'t either';
+    is f5(|@array_of_pairs), 'Array', '...and |@array isn\'t either';
 }
 
 sub f6 ($a) { ~WHAT($a) }
@@ -104,10 +104,10 @@ sub f6 ($a) { ~WHAT($a) }
 
     my %hash_of_pairs = (a => "str");
 
-    is f6(%hash_of_pairs),  "Hash", 'a hash is not treated magically...';
+    is f6(%hash_of_pairs),  'Hash', 'a hash is not treated magically...';
     #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
-    is f6([,] %hash_of_pairs), "Str",  '...but [,] %hash is';
+    is f6([,] %hash_of_pairs), 'Str',  '...but [,] %hash is';
     #?rakudo skip 'prefix:<|>'
     is f6(|%hash_of_pairs),     'Str',  '... and so is |%hash';
 }
@@ -115,7 +115,7 @@ sub f6 ($a) { ~WHAT($a) }
 sub f7 (:$bar!) { ~WHAT($bar) }
 #?rakudo 3 todo 'variables as keys of pairs forbidden'
 {
-    my $bar = "bar";
+    my $bar = 'bar';
 
     dies_ok { f7($bar => 42) },
         "variables cannot be keys of syntactical pairs (1)";
