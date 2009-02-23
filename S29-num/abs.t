@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 53;
 
 # L<S29/Num/"=item abs">
 
@@ -31,3 +31,7 @@ for -1, -50, -60.0, -99.99 {
     is(.abs, -$_, 'got the right absolute value for $_='~$_);
     is(WHAT .abs, WHAT $_, 'got the right data type('~WHAT($_)~') of absolute value for $_='~$_);
 }
+
+is( abs(NaN), NaN, 'absolute value of NaN is NaN');
+is( abs(Inf), Inf, 'absolute value of Inf is Inf');
+is( abs(-Inf), Inf, 'absolute value of -Inf is Inf');
