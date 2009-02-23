@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 14;
 
 # L<S29/Num/"=item sign">
 
@@ -15,6 +15,11 @@ is(sign(-100), -1, 'got the right sign for -100');
 is(sign(100), 1, 'got the right sign for 100');
 is(sign(1.5), 1, 'got the right sign for 1.5');
 is(sign(-1.5), -1, 'got the right sign for -1.5');
+is(sign(-Inf),-1, 'got correct sign for -Inf');
+
+#?rakudo 2 skip 'sign of Inf and NaN'
+is(sign(Inf), 1, 'got correct sign for +Inf');
+is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 #?rakudo skip 'named args'
 {
