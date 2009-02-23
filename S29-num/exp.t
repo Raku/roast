@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 53;
 
 # L<S29/Num/"=item exp">
 
@@ -19,8 +19,13 @@ Basic tests for the exp() builtin
     is_approx(exp(:exponent(-1i*pi)), -1, 'exp(:exponent(-i pi)) == -1');
 }
 
-is_approx(exp(5), 148.4131591025766, 'got the exponent of 5');
+is_approx(exp(5), 148.4131591025766, 'got the exponential of 5');
 is_approx(exp(0), 1, 'exp(0) == 1');
+is_approx(exp(-1),  0.3678794411714, '1/e is correct');
+is(exp(Inf), 'Inf', 'exp(Inf) == Inf');
+is(exp(-Inf), 0, 'exp(-Inf) == 0');
+is(exp(NaN), NaN, 'exp(NaN) == NaN');
+is_approx(exp(log(100)),100, 'e^(log(100))=100');
 
 is_approx(exp(1i*pi), -1, 'exp(i pi) == -1');
 is_approx(exp(-1i*pi), -1, 'exp(-i pi) == -1');
