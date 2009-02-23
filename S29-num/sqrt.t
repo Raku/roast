@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 16;
 
 # L<S29/Num/"=item sqrt">
 
@@ -12,7 +12,14 @@ Basic tests for the sqrt() builtin
 
 is_approx(sqrt(2), 1.4142135623730951, 'got the square root of 2');
 is_approx(sqrt(5), 2.23606797749979,   'got the square root of 5');
+is_approx(sqrt(42), 6.48074069840786, 'got the square root of 42');
+is_approx(sqrt(1/42), 0.1543033499620919, 'got the square root of 1/42');
+is_approx(sqrt(1e2),10, 'got square root of 1e2');
+
 is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
+is(sqrt(NaN), NaN, 'sqrt(NaN) is NaN');
+is(sqrt(Inf), Inf, 'sqrt(Inf) is Inf');
+is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
 
 #?rakudo skip 'named args'
 {
