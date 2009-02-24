@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 24;
 
 # L<S29/Str/=item comb>
 
@@ -28,9 +28,8 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
     is $hair.comb(/\d+/, 1000000000), <3 3 4 3 0 3 3 1 1 1>, 'limit of 1 billion returns all matches quickly';
 }
 
-#?rakudo skip 'comb with default matcher'
 {
-    my @list =  ('split this string'.comb).map: { "$_" };
+    my @list =  'split this string'.comb;
     is @list.join('|'), 'split|this|string', 'Str.comb';
 }
 
@@ -66,4 +65,14 @@ is eval('(<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/)'), <a ab ad ba>,
 
 # needed: comb a filehandle
 
-# needed: captures in pattern return Match objects
+{
+    my @l = 'a23 b c58'.comb(/\w(\d+)/);
+    is @l.join('|'), 'a23|c58', 'basic comb-with-matches sanity';
+    isa_ok(@l[0], Match, 'first item is a Match');
+    isa_ok(@l[1], Match, 'second item is a Match');
+    #?rakudo todo 'PGE: bind to values, not containers'
+    is @l[0].to, 2, '.to of the first item is correct';
+    #?rakudo todo 'pos-preserving .comb'
+    is @l[1].to, 8, '.to of the second item is correct';
+}
+

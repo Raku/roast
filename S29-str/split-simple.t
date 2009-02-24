@@ -35,7 +35,7 @@ split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty
 #?DOES 4
 {
 split_test 'theXbigXbang'.split(/X/, -1), <>, 'Negative limit returns empty List';
-split_test 'theXbigXbang'.split(/X/, 0),  <>, 'Zero limit returns empty List';
+split_test @('theXbigXbang'.split(/X/, 0)),  <>, 'Zero limit returns empty List';
 }
 split_test 'ab1cd12ef'.split(/\d+/, 1), @(<ab1cd12ef>), 'Limit of 1 returns a 1 element List (with identical string)';
 split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
@@ -57,7 +57,7 @@ split_test(
 #  => result: 'ab', '3', '4d', '5z'
 #  (confirmed by perl 5)
 
-split_test 'ab34d5z'.split(/<before \d>/), <ab 3 4d 5z>, 'split with zero-width assertions';
+split_test 'ab34d5z'.split(/<.before \d>/), <ab 3 4d 5z>, 'split with zero-width assertions';
 
 # As per Larry, ''.split('') is the empty list
 # http://www.nntp.perl.org/group/perl.perl6.language/2008/09/msg29730.html
