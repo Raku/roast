@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 50;
 
 # L<S29/Num/"=item round">
 # L<S29/Num/"=item floor">
@@ -9,9 +9,23 @@ plan 42;
 
 =begin pod
 
-Basic tests for the round(), floor(), truncate() and ceil() built-ins
+Basic tests for the round(), floor(), truncate() and ceiling() built-ins
 
 =end pod
+
+#?rakudo 4 skip 'Rounding NaN should give NaN'
+
+is( floor(NaN), NaN, 'floor(NaN) is NaN');
+is( round(NaN), NaN, 'round(NaN) is NaN');
+is( ceiling(NaN), NaN,  'ceiling(NaN) is NaN');
+is( truncate(NaN), NaN, 'truncate(NaN) is NaN');
+
+#?rakudo 4 skip 'Rounding Inf should give Inf'
+
+is( floor(Inf), Inf, 'floor(Inf) is Inf');
+is( round(Inf), Inf, 'round(Inf) is Inf');
+is( ceiling(Inf), Inf,  'ceiling(Inf) is Inf');
+is( truncate(Inf), Inf, 'truncate(Inf) is Inf');
 
 my %tests =
     ( ceiling => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 2 ],
