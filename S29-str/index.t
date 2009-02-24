@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Str/"=item index">
 
-plan 36;
+plan 38;
 
 # Type of return value
 #?rakudo 2 skip 'StrPos not implemented'
@@ -75,3 +75,9 @@ ok($j.index("l")  == 2, ".index on junction");
 ok($j.index("l")  == 3, ".index on junction");
 
 ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
+
+{
+    my $s = '1023';
+    is $s.substr($s.index('0')), '023', 'Str.index("0") works';
+    is $s.substr($s.index(0)),   '023', 'Str.index(0) works';
+}
