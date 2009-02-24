@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
@@ -51,3 +51,19 @@ is($obj.foo(),  'proto', 'proto caused methods from roles to be composed without
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 is($obj.foo('a','b'), 2, 'method composed into multi from role called');
 
+
+class Foo2 {
+    multi method a($d) {
+        "Any-method in Foo";
+    }
+}
+class Bar is Foo2 {
+    multi method a(Int $d) {
+        "Int-method in Bar";
+    }
+}
+
+#?rakudo skip 'Calling multi from parent class'
+is Bar.new.a("not an Int"), 'Any-method in parent';
+
+# vim: ft=perl6
