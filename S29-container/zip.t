@@ -86,8 +86,6 @@ plan 12;
     is(@b, [2, 4], "second half of the lvalue zip");
 }
 
-
-#?rakudo todo 'infix:<Z> imposes list context on its arguments'
 {
     my @a = (1..3, 5) Z (6..8, 10);
     is(@a, [1, 6, 2, 7, 3, 8, 5, 10], 'infix:<Z> imposes list context');
