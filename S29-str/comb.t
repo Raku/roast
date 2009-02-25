@@ -7,7 +7,6 @@ plan 24;
 # L<S29/Str/=item comb>
 
 # comb Str
-#?rakudo 2 skip 'comb with default matcher'
 is "".comb, (), 'comb on empty string';
 is "a bc d".comb, <a bc d>, 'default matcher and limit';
 

@@ -49,7 +49,6 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
         'edge case: srand(0) not the same as srand(1)');
 }
 
-#?rakudo skip 'named args'
 {
     sub repeat_rand ($seed) {
         srand(:x($seed));

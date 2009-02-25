@@ -149,7 +149,6 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 # list infix
 
-#?rakudo skip 'list infix and assignment'
 #?pugs todo 'list infix and assignment'
 {
     my @d;
