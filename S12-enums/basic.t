@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 13;
 
 # Very basic enum tests
 
@@ -16,7 +16,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 
 {
     my $x = 'Today' but Day::Mon;
-    #?rakudo 2 skip '.does missing'
+    #?rakudo 1 skip '.does for enum type'
     ok $x.does(Day),      'Can test with .does() for enum type';
     ok $x.does(Day::Mon), 'Can test with .does() for enum value';
     ok $x ~~ Day,         'Can smartmatch for enum type';
@@ -30,3 +30,10 @@ enum JustOne <Thing>;
 }
 
 lives_ok { enum Empty <> }, "empty enum can be constructed";
+
+enum Color <white gray black>;
+my Color $c1 = Color::white;
+is($c1, 0, 'can assign enum value to typed variable with long name');
+my Color $c2 = white;
+is($c1, 0, 'can assign enum value to typed variable with short name');
+dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
