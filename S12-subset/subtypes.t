@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 37;
 
 =begin description
 
@@ -39,6 +39,9 @@ is eval('my Num::Odd $a = 3'), 3, "3 is an odd num";
 # too :))
 is eval('my Num::Odd $b = 3; try { $b = eval "4" }; $b'), 3,
   "objects of Num::Odd don't get even";
+
+# Subtypes should be undefined.
+is eval('Num::Odd.defined'), 0, 'subtypes are undefined';
 
 # The same, but lexically
 my $eval1 = '{
