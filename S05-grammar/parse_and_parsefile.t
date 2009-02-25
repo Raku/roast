@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -22,3 +22,8 @@ is(~Foo.parsefile("parse_and_parsefile_test"), "123",  ".parsefile method invoke
 dies_ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
 dies_ok({ Foo.parsefile("non_existant_file") },        "dies if file not found");
 unlink("parse_and_parsefile_test");
+
+grammar A::B {
+    token TOP { \d+ }
+}
+is(~A::B.parse("zzz42zzz"), "42", ".parse works with namespaced grammars");
