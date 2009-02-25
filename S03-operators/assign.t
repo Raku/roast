@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 313;
+plan 316;
 
 
 # tests various assignment styles
@@ -67,7 +67,6 @@ plan 313;
 
 
 #?pugs skip 'skipping assignment with skipped values via $'
-#?rakudo skip 'skip items in list assignment with bare $ '
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
@@ -84,7 +83,6 @@ plan 313;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in signature"
-#?rakudo skip 'skip items in list assignment with bare $ '
 {
     # testing list assignments with skipped values
      my ($one, $, $three) = 1..3;
@@ -116,6 +114,16 @@ plan 313;
      (*, @b, $c) = 1..4;
      is(~@b, "2 3 4", 'list assignment (*, @) = @ works');
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
+}
+
+{
+    # testing signature binding with skipped values via *@ in a signature
+    my ($one, *@) = 1..4;
+    is($one, 1, 'signature binding my ($one, *@) = 1..4 works');
+    my ($a, $b, *@) = 1..4;
+    is("$a $b", "1 2", 'signature binding my ($a, $b, *@) = 1..4 works');
+    my ($c, $d, *@) = 1..2;
+    is("$c $d", "1 2", 'signature binding my ($c, $d, *@) = 1..2 works');
 }
 
 {
