@@ -969,7 +969,6 @@ sub W () { substr(eval('want'), 0, 1) }
     is %h<x>, 'adc', '.= on hash keyed values';
 }
 
-#?rakudo skip 'RT #61840]'
 {
     my $x = 3;
     $x min= 2;
