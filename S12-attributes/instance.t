@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 92;
+plan 93;
 
 =begin pod
 
@@ -403,4 +403,15 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     is $o.this, 3, 'could use whitespace after "has ("';
     is $o.that, 4, '.. and a newline within the has() declarator';
 }
+
+# test typed attributes and === (was Rakudo RT#62902).
+{
+    class TA1 { }
+    class TA2 {
+        has TA1 $!a;
+        method foo { $!a === TA1 }
+    }
+    ok(TA2.new.foo, '=== works on typed attribute initialized with proto-object');
+}
+
 # vim: ft=perl6
