@@ -63,7 +63,6 @@ class Bar is Foo2 {
     }
 }
 
-#?rakudo skip 'Calling multi from parent class (RT #63442)'
-is Bar.new.a("not an Int"), 'Any-method in parent';
+is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # vim: ft=perl6
