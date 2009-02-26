@@ -223,14 +223,13 @@ my @array2 = ("test", 1, undef);
   my @arr = <a normal array with nothing funny>;
   my $minus_one = -1;
 
-  # XXX should that even parse? 
   #?rakudo todo '@arr[-1] should fail'
-  dies_ok { @arr[-1] }, "readonly accessing [-1] of normal array is fatal";
-  lives_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
-                                   "through a variable is ok";
+  eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
+  dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
+                                   "through a variable is run-time error";
   #?rakudo 2 skip '@arr[-1] should fail'
-  dies_ok { @arr[-1] = 42 }, "assigning to [-1] of a normal array is fatal";
-  dies_ok { @arr[-1] := 42 }, "binding [-1] of a normal array is fatal";
+  dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
+  dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
 
 # L<S09/Fixed-size arrays>
