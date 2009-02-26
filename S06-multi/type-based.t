@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 26;
 
 # type based dispatching
 #
@@ -23,8 +23,8 @@ is(foo(2), 'Int 2', 'dispatched to the Int sub');
 my $num = '4';
 is(foo(1.4), 'Num 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool 1', 'dispatched to the Bool sub');
-#?rakudo skip 'rx:P5'
-is(foo(rx:P5/a/),'Rule Rule','dispatched to the Rule sub');
+#?rakudo skip 'type Regex'
+is(foo(/a/),'Regex Regex','dispatched to the Rule sub');
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');
@@ -34,21 +34,6 @@ my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
 is(foo(%hash), 'Hash bar, baz, foo', 'dispatched to the Hash sub');
 
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
-
-#?pugs 4 todo "feature"
-#?rakudo 2 skip 'Null PMC access in find_method()'
-ok(eval('multi sub foo( (Int, Str) $tuple: ) '
-    ~ '{ "Tuple(2) " ~ $tuple.join(",") }'),
-    "declare sub with tuple argument");
-
-ok(eval('multi sub foo( (Int, Str, Str) $tuple: ) '
-    ~ '{ "Tuple(3) " ~ $tuple.join(",") }'),
-    "declare multi sub with tuple argument");
-
-# XXX isn't that just an Array nowadays?
-#?rakudo 2 todo '"No applicable methods"'
-is(foo([3, "Four"]), "Tuple(2) 3,Four", "call tuple multi sub");
-is(foo([3, "Four", "Five"]), "Tuple(3) 3,Four,Five", "call tuple multi sub");
 
 # You're allowed to omit the "sub" when declaring a multi sub.
 # L<S06/"Routine modifiers">

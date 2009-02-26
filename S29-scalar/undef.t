@@ -253,13 +253,12 @@ Perl6-specific tests
     ok(0 , "match values don't");
 }
 
-#?rakudo skip 'rx:Perl5'
 #?DOES 1
 {
     # - $0, $1 etc. should all be undef after a failed match
     #   (except for special circumstances)
-        "abcde" ~~ rx:Perl5/(.)(.)(.)/;
-        "abcde" ~~ rx:Perl5/(\d)/;
+        "abcde" ~~ /(.)(.)(.)/;
+        "abcde" ~~ /(\d)/;
     ok((!try { grep { defined($_) }, ($0, $1, $2, $3, $4, $5) }),
             "all submatches undefined after failed match") or
         diag("match state: " ~ eval '$/');
