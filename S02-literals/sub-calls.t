@@ -37,11 +37,13 @@ plan 20;
     eval_lives_ok q/foo 1, 2; /, 'call with two args, no parens';
     eval_lives_ok q/foo(1, 2);/, 'call with two args, has parens';
 
+    #?rakudo todo 'adverbs'
     eval_lives_ok q/foo:bar;  /, 'call with adverb after no space';
     eval_lives_ok q/foo :bar; /, 'call with adverb after space';
 
     eval_lives_ok q/foo(:bar);  /, 'call with adverb in parens';
     eval_lives_ok q/foo.(:bar); /, 'call with adverb in dotted-parens';
+    #?rakudo todo 'long dot'
     eval_lives_ok q/foo\.(:bar);/, 'call with adverb in long-dotted parens';
 }
 
@@ -51,13 +53,12 @@ plan 20;
     my sub succ($x) { $x + 1 }
 
     is(eval(q/succ  (1+2) * 30;/),  91, "parens after space aren't call-parens");
-    is(eval(q/succ .(1+2) * 30;/), 120, "parens after space-dot are call-parens", :todo<bug>);
+    eval_dies_ok(q/succ .(1+2) * 30;/, 'parsed as method call on $_');
 }
 {
     my sub first() { "first" }
-    my sub second($_) { $_ ~ "second" }
     
-    is(eval(q/first.second/), 'firstsecond', '`first.second` means `&second(&first())`');
+    is(eval(q/first.uc/), 'FIRST', '`first.second` means `(first()).second()`');
 }
 
 {
