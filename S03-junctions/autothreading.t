@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 69;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -213,4 +213,19 @@ plan 55;
     ok ?( +$j == 5 ), 'prefix:<+> autothreads (1)';
     ok ?( +$j == 2 ), 'prefix:<+> autothreads (2)';
     ok !( +$j == 3 ), 'prefix:<+> autothreads (3)';
+}
+
+# this is nothing new, but it's such a cool example for 
+# autothreading that I want it to be in the test suite nonetheless ;-)
+{
+    sub primetest(Int $n) {
+        ?(none(2..$n) * any(2..$n) == $n);
+    };
+
+    #               2  3  4  5  6  7  8  9  10  11  12  13  14  15
+    my @is_prime = (1, 1, 0, 1, 0, 1, 0, 0,  0,  1,  0,  1,  0,  0);
+
+    for @is_prime.kv -> $idx, $ref {
+        is +primetest($idx + 2), $ref, "primality test for { $idx + 2 } works";
+    }
 }
