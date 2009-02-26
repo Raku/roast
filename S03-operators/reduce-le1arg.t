@@ -29,32 +29,40 @@ is ([~^] ()), '', "[~^] () eq ''";
 is ([&] ()).perl, all().perl, "[&] () eq all()";
 is ([|] ()).perl, any().perl, "[|] () eq any()";
 is ([^] ()).perl, one().perl, "[^] () eq one()";
-is ([!==] ()), Bool::False, "[!==] () eq False";
+#?rakudo todo 'New spec updates'
+is ([!==] ()), Bool::True, "[!==] () eq True";
 is ([==] ()), Bool::True, "[==] () eq True";
 is ([<] ()), Bool::True, "[<] () eq True";
 is ([<=] ()), Bool::True, "[<=] () eq True";
 is ([>] ()), Bool::True, "[>] () eq True";
 is ([>=] ()), Bool::True, "[>=] () eq True";
 is ([~~] ()), Bool::True, "[~~] () eq True";
-is ([!~~] ()), Bool::False, "[!~~] () eq False";
+#?rakudo todo 'New spec updates'
+is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
 #?rakudo skip "[!eq] not implemented"
-is ([!eq] ()), Bool::False, "[!eq] () eq False";
+is ([!eq] ()), Bool::True, "[!eq] () eq True";
 is ([lt] ()), Bool::True, "[lt] () eq True";
 is ([le] ()), Bool::True, "[le] () eq True";
 is ([gt] ()), Bool::True, "[gt] () eq True";
 is ([ge] ()), Bool::True, "[ge] () eq True";
 is ([=:=] ()), Bool::True, "[=:=] () eq True";
-is ([!=:=] ()), Bool::False, "[!=:=] () eq False";
+#?rakudo todo 'New spec updates'
+is ([!=:=] ()), Bool::True, "[!=:=] () eq True";
 is ([===] ()), Bool::True, "[===] () eq True";
-is ([!===] ()), Bool::False, "[!===] () eq False";
+#?rakudo todo 'New spec updates'
+is ([!===] ()), Bool::True, "[!===] () eq True";
 #?rakudo 9 skip "[...] not implemented"
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
-is ([!eqv] ()), Bool::False, "[!eqv] () eq False";
+#?rakudo todo 'New spec updates'
+is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 is ([&&] ()), Bool::True, "[&&] () eq True";
-is ([||] ()), Bool::False, "[||] () eq False";
-is ([^^] ()), Bool::False, "[^^] () eq False";
-is (defined ([//] ())), Bool::False, "[//] () not defined";
+#?rakudo todo 'New spec updates'
+is ([||] ()), Bool::True, "[||] () eq True";
+#?rakudo todo 'New spec updates'
+is ([^^] ()), Bool::True, "[^^] () eq True";
+#?rakudo todo 'New spec updates'
+is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
 
