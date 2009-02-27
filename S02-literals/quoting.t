@@ -43,7 +43,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     ok q{$x}.chars == 2,            'q{..} do not interpolate scalars';
 }
 
-#?rakudo skip 'Q quoting'
 {
     is Q{\n},        '\n',          'Q{..} do not interpolate \n';
     ok Q{\n}.chars == 2,            'Q{..} do not interpolate \n';
@@ -52,7 +51,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is Q {\\},       '\\\\',        'Q {..} quoting';
 }
 
-#?rakudo skip 'Q quoting'
 {
     ok Q{\\}.chars == 2,            'Q{..} do not interpolate backslashes';
 }
@@ -139,7 +137,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Literals/:qq>
-#?rakudo skip 'quoting with adverbs'
 { # adverb variation
     my @q = ();
     @q = Q:qq/$foo $bar/;
@@ -325,7 +322,6 @@ FOO
         is(@q[0], "yoink\\n\nsplort\\n\n", "backslashes");
 }
 
-#?rakudo skip 'Quoting with Q'
 { # Q L<S02/Literals/No escapes at all>
     my @q = ();
     
@@ -400,7 +396,6 @@ Hello, World
 }
 
 # Q
-#?rakudo skip 'Q'
 {
     my $s1 = "hello";
     my $t1 = Q /$s1, world/;
