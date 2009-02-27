@@ -38,8 +38,10 @@ dies_ok { class N { method set_n { $.n := 1 }}; N.new.set_n; },
 dies_ok { role O { method set_o { $.o := 1 }}; class P does O{ }; P.new.set_o },
     "Test Undeclared public attribute binding from a role";
 
-dies_ok { class Q { method q { $!q := 1 }}; ::Q.new.q; },
-    "Test Undeclared private attribute binding from a class";
+## skip class 'Q' here to avoid quote operator conflict.
+
 dies_ok { role R { method r { $!r := 1 }};class S does R{ }; S.new.r; },
     "Test Undeclared private attribute binding from a role";
+dies_ok { class T { method t { $!t := 1 }}; ::T.new.t; },
+    "Test Undeclared private attribute binding from a class";
 
