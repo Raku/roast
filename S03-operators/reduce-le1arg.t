@@ -52,16 +52,12 @@ is ([!=:=] ()), Bool::True, "[!=:=] () eq True";
 is ([===] ()), Bool::True, "[===] () eq True";
 #?rakudo todo 'New spec updates'
 is ([!===] ()), Bool::True, "[!===] () eq True";
-#?rakudo 9 skip "[...] not implemented"
+#?rakudo 8 skip "[...] not implemented"
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
-#?rakudo todo 'New spec updates'
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 is ([&&] ()), Bool::True, "[&&] () eq True";
-#?rakudo todo 'New spec updates'
 is ([||] ()), Bool::True, "[||] () eq True";
-#?rakudo todo 'New spec updates'
 is ([^^] ()), Bool::True, "[^^] () eq True";
-#?rakudo todo 'New spec updates'
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
