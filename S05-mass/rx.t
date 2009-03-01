@@ -2110,7 +2110,7 @@ ok ('xay' ~~ /xa?: y/) ~~ Match also matchcheck($_, q/<xay @ 0>/), 'ques cut 1';
 #?rakudo skip 'quoting'
 ok ('xy' ~~ /xa?: y/) ~~ Match also matchcheck($_, q/<xy @ 0>/), 'ques cut 0';
 
-#### xa?:a			xaaaay		/<xaa @ 0>	ques cut 2+
+#### xa?:a			xaaaay		/<xaa @ 0>/	ques cut 2+
 #?rakudo skip 'quoting'
 ok ('xaaaay' ~~ /xa?: a/) ~~ Match also matchcheck($_, q/<xaa @ 0>/), 'ques cut 2+';
 
@@ -2166,7 +2166,7 @@ ok ('xay' ~~ /:ratchet xa?y/) ~~ Match also matchcheck($_, q/<xay @ 0>/), 'ques 
 #?rakudo skip 'quoting'
 ok ('xy' ~~ /:ratchet xa?y/) ~~ Match also matchcheck($_, q/<xy @ 0>/), 'ques ratchet 0';
 
-#### :ratchet xa?a			xaaaay		/<xaa @ 0>	ques ratchet 2+
+#### :ratchet xa?a			xaaaay		/<xaa @ 0>/	ques ratchet 2+
 #?rakudo skip 'quoting'
 ok ('xaaaay' ~~ /:ratchet xa?a/) ~~ Match also matchcheck($_, q/<xaa @ 0>/), 'ques ratchet 2+';
 
@@ -2225,11 +2225,11 @@ ok ('xay' ~~ /:ratchet xa?!y/) ~~ Match also matchcheck($_, q/<xay @ 0>/), 'ques
 #?rakudo skip 'quoting'
 ok ('xy' ~~ /:ratchet xa?!y/) ~~ Match also matchcheck($_, q/<xy @ 0>/), 'ques ratchet greedy 0';
 
-#### :ratchet xa?!a			xaaaay		/<xaa @ 0>	ques ratchet greedy 2+
+#### :ratchet xa?!a			xaaaay		/<xaa @ 0>/	ques ratchet greedy 2+
 #?rakudo skip 'quoting'
 ok ('xaaaay' ~~ /:ratchet xa?!a/) ~~ Match also matchcheck($_, q/<xaa @ 0>/), 'ques ratchet greedy 2+';
 
-#### :ratchet xa?!a			xay		/<xa @ 0>	ques ratchet greedy 1
+#### :ratchet xa?!a			xay		/<xa @ 0>/	ques ratchet greedy 1
 #?rakudo skip 'quoting'
 ok ('xay' ~~ /:ratchet xa?!a/) ~~ Match also matchcheck($_, q/<xa @ 0>/), 'ques ratchet greedy 1';
 
