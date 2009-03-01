@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 100;
+plan 103;
 
 =begin kwid
 
@@ -165,6 +165,12 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
         "element 1 of (undef, 1, undef) is true";
     ok !((undef, undef) ~~ .[0]),
         "element 0 of (undef, undef) is false";
+    ok ((0, 1, 2, 3) ~~ .[1, 2, 3]),
+        "array slice .[1,2,3] of (0,1,2,3) is true";
+    ok !((0, 1, 2, 3) ~~ .[0]),
+        "array slice .[0] of (0,1,2,3) is false";
+    ok !((0, 1, 2, 3) ~~ .[0,1]),
+        "array slice .[0,1] of (0,1,2,3) is false";
 };
 
 #L<<S03/"Smart matching"/in range>>
