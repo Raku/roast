@@ -24,7 +24,6 @@ is_approx(log(0.1), -2.3025850929940455, 'got the log of 0.1');
 is_approx(log10(5), 0.6989700043360187, 'got the log10 of 5');
 is_approx(log10(0.1), -0.9999999999999998, 'got the log10 of 0.1');
 
-#?rakudo skip "log of 0 should return negative infinity"
 is( log(0), -Inf, 'log(0) = -Inf');
 
 is( log(Inf), Inf, 'log(Inf) = Inf');

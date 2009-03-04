@@ -269,7 +269,6 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 }
 
 # given + 0-arg sub
-#?rakudo skip 'parsefail (when &sub {block})'
 {
     my $x = 41;
     sub always_true { Bool::True }
@@ -280,7 +279,6 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 }
 
 # given + 1-arg sub
-#?rakudo skip 'parsefail (when &sub {block})'
 {
     my $x = 41;
     sub maybe_true ($value) { $value eq "mytopic" }
