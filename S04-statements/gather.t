@@ -114,7 +114,7 @@ plan 13;
     is($count, 2, "gather is lazy");	
 }
 
-#?rakudo todo 'broken gather/take with while'
+#?rakudo todo 'broken gather/take with while (RT #63634)'
 {
     my @list = gather {
         my $v = 1;
