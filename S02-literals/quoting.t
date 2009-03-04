@@ -98,7 +98,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Literals/:q>
-#?rakudo skip 'quoting with adverbs'
 { # adverb variation
     my @q = ();
     @q = (Q:q/$foo $bar/);
@@ -199,7 +198,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', '...');
 };
 
-#?rakudo skip 'quoting with adverbs'
 { # adverb variation
     my @q = ();
     @q = (q:w/$foo $bar/);
@@ -208,7 +206,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', "...");
 };
 
-#?rakudo skip 'quoting with adverbs'
 { # whitespace sep aration does not break quote constructor 
   # L<S02/Literals/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
     my @q = ();
