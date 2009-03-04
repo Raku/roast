@@ -52,8 +52,6 @@ isa_ok($pair2, Pair);
 
 is($pair2.value, 2, 'got the right value');
 
-=begin END
-
 # Pair with a Pair value
 
 my $pair3 = "foo" => ("bar" => "baz");
