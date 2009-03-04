@@ -223,7 +223,6 @@ my @array2 = ("test", 1, undef);
   my @arr = <a normal array with nothing funny>;
   my $minus_one = -1;
 
-  #?rakudo todo '@arr[-1] should fail'
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
   #?rakudo todo '@array[$minus_one] should fail'
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
