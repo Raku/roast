@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 15;
 
 # Very basic enum tests
 
@@ -37,3 +37,12 @@ is($c1, 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
 is($c1, 0, 'can assign enum value to typed variable with short name');
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
+
+# L<S12/Enums/"Like type names, enum names are parsed as standalone tokens">
+# conflict between subs and enums
+{
+    sub white { 'sub' };
+    is white, 0, 'short name of the enum without parenthesis is an enum';
+    #?rakudo skip 'subs and enums with conflicting names'
+    is white(), 'sub', 'short name with parenthesis is a sub';
+}
