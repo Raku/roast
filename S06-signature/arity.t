@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 25;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -24,6 +24,20 @@ is &a_four.arity,   4, '4 arity &foo';
 is &o_zero.arity,   0, 'arity 0 sub with optional params';
 is &o_one.arity,    1, 'arity 1 sub with optional params';
 is &o_two.arity,    2, 'arity with optional and required named params';
+
+{
+    sub b_zero  ()           { };
+    sub b_one   ($a)         { };
+    sub b_two   ($a, $b)     { };
+    sub b_three ($a, $b, @c) { };
+    sub b_four  ($a, $b, @c, %d) { };
+    is &b_zero.arity,   0, '0 arity &sub';
+    is &b_one.arity,    1, '1 arity &sub';
+    is &b_two.arity,    2, '2 arity &sub';
+    is &b_three.arity,  3, '3 arity &sub';
+    is &b_four.arity,   4, '4 arity &foo';
+
+}
 
 # It's not really specced in what way (*@slurpy_params) should influence
 # .arity. Also it's unclear what the result of &multisub.arity is.

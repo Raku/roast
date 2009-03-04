@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 32;
 
 # type based dispatching
 #
@@ -98,5 +98,23 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is m(1, 1), 0, 'subset types involving mulitple parameters (success)';
 }
 
+{
+    multi f2 ($)        { 1 };
+    multi f2 ($, $)     { 2 };
+    multi f2 ($, $, $)  { 3 };
+    multi f2 ($, $, @)  { '3+' };
+    is f2(3),               1, 'arity-based dispatch to ($)';
+    is f2('foo', f2(3)),    2, 'arity-based dispatch to ($, $)';
+    #?rakudo 2 skip 'multi dispatch based on sigils'
+    is f2('foo', 4, 8),     3, 'arity-based dispatch to ($, $, $)';
+    is f2('foo', 4, <a b>), '3+', 'arity-based dispatch to ($, $, @)';
+}
+
+{
+    multi f3 ($ where 0 ) { 1 };
+    multi f3 ($x)         { $x + 1 };
+    is f3(0), 1, 'can dispatch to "$ where 0"';
+    is f3(3), 4, '... and the ordinary dispatch still works';
+}
 
 # vim: ft=perl6
