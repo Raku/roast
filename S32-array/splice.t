@@ -1,11 +1,11 @@
 use v6;
 use Test;
 
-# L<S29/"Array"/"=item splice">
+# L<S32/Containers/"Array"/"=item splice">
 
 =begin description
 
-This test tests the C<splice> builtin, see S29 and Perl 5's perlfunc.
+This test tests the C<splice> builtin, see S32 and Perl 5's perlfunc.
 
 Ported from the equivalent Perl 5 test.
 

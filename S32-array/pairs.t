@@ -7,11 +7,11 @@ plan 18;
 
 =begin description
 
-Basic C<pairs> tests, see S29.
+Basic C<pairs> tests, see S32.
 
 =end description
 
-# L<S29/"Array"/=item pairs>
+# L<S32/Containers/"Array"/=item pairs>
 
 {
   my @array = <a>;

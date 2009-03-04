@@ -6,11 +6,11 @@ plan 11;
 
 =begin description
 
-Basic C<kv> tests, see S29.
+Basic C<kv> tests, see S32.
 
 =end description
 
-# L<S29/"Array"/=item kv>
+# L<S32/Containers/"Array"/=item kv>
 
 # (1,).kv works correctly
 {
@@ -53,3 +53,5 @@ Basic C<kv> tests, see S29.
 }
 
 is( 42.kv, [0, 42], "(42).kv works");
+
+# vim: ft=perl6

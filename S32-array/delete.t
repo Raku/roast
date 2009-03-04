@@ -5,11 +5,11 @@ plan 25;
 
 =begin description
 
-Basic C<delete> tests, see S29.
+Basic C<delete> tests, see S32.
 
 =end description
 
-# L<S29/"Array"/=item delete>
+# L<S32/Containers/"Array"/=item delete>
 
 # W/ positive indices:
 {
@@ -65,7 +65,7 @@ Basic C<delete> tests, see S29.
     "deletion of the same array element accessed by different indices (2)";
 }
 
-# L<S29/Array/"Deleted elements at the end of an Array">
+# L<S32/Containers/"Array"/"Deleted elements at the end of an Array">
 {
     my @array;
     @array[8] = 'eight';
@@ -112,4 +112,4 @@ Basic C<delete> tests, see S29.
 # TODO More exclusive bounds checks
 
 # TODO W/ multiple ranges
-
+# vim: ft=perl6

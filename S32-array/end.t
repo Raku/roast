@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S29/"Array"/"end">
+# L<S32/Containers/"Array"/"end">
 plan 13;
 
 {

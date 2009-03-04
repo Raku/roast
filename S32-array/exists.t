@@ -5,11 +5,11 @@ plan 15;
 
 =begin description
 
-Basic C<exists> tests on arrays, see S29.
+Basic C<exists> tests on arrays, see S32.
 
 =end description
 
-# L<S29/"Array"/=item exists>
+# L<S32/Containers/"Array"/=item exists>
 
 my @array = <a b c d>;
 #?rakudo 2 skip 'attributes'
@@ -30,3 +30,4 @@ ok @array.exists(*-4),   "exists(negative index) on arrays (4)";
 ok !@array.exists(*-5),  "exists(negative index) on arrays (5)";
 ok !@array.exists(*-42), "exists(negative index) on arrays (6)";
 
+# vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/"Array"/"=item push">
+# L<S32/Containers/"Array"/"=item push">
 
 =begin description
 

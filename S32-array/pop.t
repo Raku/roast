@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/"Array"/"=item pop">
+# L<S32/Containers/"Array"/"=item pop">
 
 =begin description
 
@@ -88,4 +88,4 @@ plan 29;
 #     # best not to uncomment this it just go on forever
 #     todo_throws_ok { 'pop @push' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
 # }
-
+# vim: ft=perl6
