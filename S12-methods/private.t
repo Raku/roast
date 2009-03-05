@@ -6,7 +6,7 @@ plan 9;
 # L<S12/Methods/"Private methods are declared using my">
 
 class A {
-    my method private {
+    method !private {
         12;
     }
     method public {
@@ -22,7 +22,7 @@ class Indir {
     method a {
         'aa';
     }
-    my method b {
+    method !b {
         'bb';
     }
     method b_acc1 {
@@ -58,7 +58,7 @@ dies_ok {$o."b" },  'can not call private method via quotes from outside';
     }
 
     class B does C {
-        my method private {
+        method !private {
             24;
         }
         method public1 {
