@@ -75,7 +75,7 @@ plan 20;
     my $svar_ref = $gen();
     $$svar_ref++; $$svar_ref++;
 
-    my $svar_ref = $gen();
+    $svar_ref = $gen();
     #?pugs todo "state bug"
     is $$svar_ref, 44, "reference to a state() var";
 }
@@ -91,7 +91,7 @@ plan 20;
     my $svar_ref = $gen();               # $svar == 0
     try { $$svar_ref++; $$svar_ref++ };  # $svar == 2
 
-    my $svar_ref = $gen();               # $svar == 2
+    $svar_ref = $gen();               # $svar == 2
     is try { $$svar_ref }, 2, "anonymous state() vars";
 }
 
