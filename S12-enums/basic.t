@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 16;
 
 # Very basic enum tests
 
@@ -29,7 +29,9 @@ enum JustOne <Thing>;
     is JustOne::Thing, 0, 'Enum of one element works.';
 }
 
-lives_ok { enum Empty () }, "empty enum can be constructed";
+lives_ok { enum Empty < > }, "empty enum can be constructed";
+#?rakudo todo 'empty enum with ()'
+eval_lives_ok 'enum Empty2 ()', 'empty enum with () can be constructed';
 
 enum Color <white gray black>;
 my Color $c1 = Color::white;
