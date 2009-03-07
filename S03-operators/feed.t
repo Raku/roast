@@ -111,7 +111,7 @@ plan 23;
     my @numbers = do {@odds ==>> @even};
     is(~@numbers, ~(@even, @odds), 'basic ==>> test');
 
-    my @numbers = do {@odds <<== @even};
+    @numbers = do {@odds <<== @even};
     is(~@numbers, ~(@odds, @even), 'basic <<== test');
 }
 

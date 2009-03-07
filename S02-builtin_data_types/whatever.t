@@ -3,8 +3,10 @@ use Test;
 
 plan 4;
 
-my $x = *;
-ok($x.isa(Whatever), 'can assign * to a variable and isa works');
+{
+    my $x = *;
+    ok($x.isa(Whatever), 'can assign * to a variable and isa works');
+}
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';

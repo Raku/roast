@@ -12,10 +12,10 @@ L<A05/"RFC 332: Regex: Make /\$/ equivalent to /\z/ under the '/s' modifier" /Th
 
 plan 1;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to \$*PID.";
-  exit;
-}
+#?pugs emit if $*OS eq "browser" {
+#?pugs emit   skip_rest "Programs running in browsers don't have access to \$*PID.";
+#?pugs emit   exit;
+#?pugs emit }
 
 my ($pugs,$redir,$squo) = ($*EXECUTABLE_NAME, ">", "'");
 
