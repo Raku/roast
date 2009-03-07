@@ -21,8 +21,8 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
     #?rakudo skip 'calling positional args by name'
     is comb(:input($hair), /\d+/), <3 3 4 3 0 3 3 1 1 1>, 'comb works with named argument for input';
-    is $hair.comb(/\d+/, -10), <>, 'negative limit returns no matches';
-    is $hair.comb(/\d+/, 0), <>, 'limit of 0 returns no matches';
+    is $hair.comb(/\d+/, -10), (), 'negative limit returns no matches';
+    is $hair.comb(/\d+/, 0), (), 'limit of 0 returns no matches';
     is $hair.comb(/\d+/, 1), <3>, 'limit of 1 returns 1 match';
     is $hair.comb(/\d+/, 3), <3 3 4>, 'limit of 3 returns 3 matches';
     is $hair.comb(/\d+/, 1000000000), <3 3 4 3 0 3 3 1 1 1>, 'limit of 1 billion returns all matches quickly';

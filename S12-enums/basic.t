@@ -29,7 +29,7 @@ enum JustOne <Thing>;
     is JustOne::Thing, 0, 'Enum of one element works.';
 }
 
-lives_ok { enum Empty <> }, "empty enum can be constructed";
+lives_ok { enum Empty () }, "empty enum can be constructed";
 
 enum Color <white gray black>;
 my Color $c1 = Color::white;
