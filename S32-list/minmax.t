@@ -13,25 +13,28 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 L<S29/"List"/"=item min">
 L<S29/"List"/"=item max">
 
+As per S32, the sub form requires a comparison function. The form without
+comparison function is spelled [min]
+
 =end description
 
 my @array = <5 -3 7 0 1 -9>;
 
 # Tests for C<min>:
 is @array.min,  -3, "basic method form of min works";
-is min(@array), -3, "basic subroutine form of min works";
+dies_ok {min(@array)}, 'min() requires comparison function';
 #?rakudo skip 'named args'
-is min(:values(@array)), -3, "basic subroutine form of min works with named args";
+is min({$^a <=> $^b }, :values(@array)), -3, "basic subroutine form of min works with named args";
 
 is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
 isnt (@array.min: { $^a <=> $^b }), 7,
-  "bug -- method form of min with identity comparison block returning max";
+  "method form of min with identity comparison block";
 
 is min({ $^a <=> $^b }, @array), -9,
   "subroutine form of min with identity comparison block works";
 isnt min({ $^a <=> $^b }, @array), 7,
-  "bug -- subroutine form of min with identity comparison block returning max";
+  "subroutine form of min with identity comparison block";
 
 is (@array.min: { abs $^a <=> abs $^b }), 0,
   "method form of min taking a comparision block works";
@@ -77,5 +80,5 @@ is (42,).max, 42, ".max should work on one-elem arrays";
 # Tests with literals:
 is (1,2,3).max, 3, "method form of max with literals works";
 is (1,2,3).min, 1, "method form of min with literals works";
-is max(1,2,3),  3, "subroutine form of max with literals works";
-is min(1,2,3),  1, "subroutine form of min with literals works";
+is max({$^a <=> $^b}, 1,2,3),  3, "subroutine form of max with literals works";
+is min({$^a <=> $^b}, 1,2,3),  1, "subroutine form of min with literals works";
