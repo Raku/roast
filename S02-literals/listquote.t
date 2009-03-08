@@ -32,7 +32,7 @@ describe the conflicting cases.
 
 =end kwid
 
-plan 14;
+plan 15;
 
 # L<S02/"Literals">
 # L<S03/"Chained comparisons">
@@ -41,9 +41,10 @@ my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');
 
 #?rakudo skip 'meta operators'
+#?pugs todo '|<<'
 {
 my $s = join |<< <a x y z>;
-is($s, "xayaz", 'listop |<< <list>', :todo<bug>);
+is($s, "xayaz", 'listop |<< <list>');
 }
 
 dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error';
@@ -64,10 +65,6 @@ eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 # eval 'print < 3';
 # ok($!, 'print < 3 parsefail');
 
-# XXX This test is most likely out of date...
-#?pugs todo 'parsing (wrong  test?)
-#?rakudo skip 'unspecced'
-eval_dies_ok 'reverse<1 2 3>', 'reverse<1 2 3> parsefail';
 
 eval_dies_ok ':foo <1 2 3>', ':foo <1 2 3> parsefail';
 
@@ -85,12 +82,19 @@ is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
 {
     my %e = ("foo", "bar", "blah", "blah");
 
-my %foo = (
-        "foo", "bar",
-        "blah", "blah",
-);
+    my %foo = (
+            "foo", "bar",
+            "blah", "blah",
+    );
     is(+%foo,      +%e,      "Hashes with embedded newlines in the list (1)");
     is(%foo<foo>,  %e<foo>,  "Hashes with embedded newlines in the list (2)");
     is(%foo<blah>, %e<blah>, "Hashes with embedded newlines in the list (3)");
 }
 
+# L<S02/Literals/The degenerate case C<< <> >> is disallowed>
+
+#?rakudo 2 todo 'bare <> and <STDIN>'
+eval_dies_ok '<>', 'bare <> is disallowed';
+eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
+
+# vim: ft=perl6
