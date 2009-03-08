@@ -42,7 +42,7 @@ plan 16;
     is(-> $a { $_ }.(42), 'Ack!',       'Even with parameters (?)', :todo<feature>);
     is(-> $_ { $_ }.(42), 42,           'But not when the parameter is $_');
 
-    dies_ok( sub () { -> { $^a }.() },  'Placeholders not allowed in ->');
+    eval_dies_ok( 'sub () { -> { $^a }.() }',  'Placeholders not allowed in ->');
 
     is(-> { }.arity, 0,                 '->{} is arity 0, again');
 }
