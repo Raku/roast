@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 34;
+plan 36;
 
 my @list = (1 .. 10);
 
@@ -84,5 +84,14 @@ my @list = (1 .. 10);
     'mutating $_ in grep works (1)';
   is ~@array, "ac bc cc dc",
     'mutating $_ in grep works (2)';
+}
+
+# grep with last, next etc.
+
+{
+    is (1..16).grep({last if $_ % 5 == 0; $_ % 2 == 0}).join('|'),
+       '2|4', 'last works in grep';
+    is (1..12).grep({next if $_ % 5 == 0; $_ % 2 == 0}).join('|'),
+       '2|4|6|8|12', 'next works in grep';
 }
 
