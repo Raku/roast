@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 87;
+plan 89;
 
 # L<S29/"List"/"=item map">
 
@@ -255,10 +255,17 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     $_ = 4; is .int, 4,                   "dependency for following test (2)";
     is ~((1,2,3).map: { .int }),    "1 2 3", 'int() should default to $_ inside map, too';
 
-# This works...
     is ~(({1},{2},{3}).map: { $_; $_() }), "1 2 3", 'lone $_ in map should work (1)';
     is ~(({1},{2},{3}).map: { $_() }),     "1 2 3", 'lone $_ in map should work (2)';
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
+}
+
+{
+    #?rakudo todo 'next in map'
+    is (1..4).map({ next if $_ % 2; 2 * $_ }).join('|'), 
+       '2|4|8', 'next in map works';
+    is (1..10).map({ last if $_ % 5 == 0; 2 * $_}).join(' '),
+       '2 4 6 8', 'last in map works';
 }
 
 # vim: ft=perl6
