@@ -47,14 +47,14 @@ is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
 
 # Tests for C<max>:
 is (@array.max),  7, "basic method form of max works";
-is max(@array), 7, "basic subroutine form of max works";
+is max({ $^a <=> $^b }, @array), 7, "basic subroutine form of max works";
 #?rakudo skip 'named args'
 is max(:values(@array)), 7, "basic subroutine form of max works with named args";
 
 is (@array.max: { $^a <=> $^b }), 7,
   "method form of max with identity comparison block works";
 isnt (@array.max: { $^a <=> $^b }), -9,
-  "bug -- method form of max with identity comparison block returning min";
+  "method form of max with identity comparison block";
 
 #?rakudo skip "max on Ranges"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
