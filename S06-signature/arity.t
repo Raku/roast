@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 45;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -21,21 +21,32 @@ is &a_two.arity,    2, '2 arity &sub';
 is &a_three.arity,  3, '3 arity &sub';
 is &a_four.arity,   4, '4 arity &foo';
 
+is &a_zero.count,   0, '0 count &sub';
+is &a_one.count,    1, '1 count &sub';
+is &a_two.count,    2, '2 count &sub';
+is &a_three.count,  3, '3 count &sub';
+is &a_four.count,   4, '4 count &foo';
+
 is &o_zero.arity,   0, 'arity 0 sub with optional params';
 is &o_one.arity,    1, 'arity 1 sub with optional params';
 is &o_two.arity,    2, 'arity with optional and required named params';
 
+is &o_zero.count,   2, 'count on sub with optional params';
+#?rakudo 2 todo 'bug'
+is &o_one.count,    2, 'count on sub with optional params';
+is &o_two.count,    3, 'count on sub with optional and required named params';
+
 {
     sub b_zero  ()           { };
-    sub b_one   ($a)         { };
-    sub b_two   ($a, $b)     { };
-    sub b_three ($a, $b, @c) { };
-    sub b_four  ($a, $b, @c, %d) { };
-    is &b_zero.arity,   0, '0 arity &sub';
-    is &b_one.arity,    1, '1 arity &sub';
-    is &b_two.arity,    2, '2 arity &sub';
-    is &b_three.arity,  3, '3 arity &sub';
-    is &b_four.arity,   4, '4 arity &foo';
+    sub b_one   ($)          { };
+    sub b_two   ($, $)       { };
+    sub b_three ($, $, @)    { };
+    sub b_four  ($, $, @, %) { };
+    is &b_zero.arity,   0, '0 arity &sub (sigils only)';
+    is &b_one.arity,    1, '1 arity &sub (sigils only)';
+    is &b_two.arity,    2, '2 arity &sub (sigils only)';
+    is &b_three.arity,  3, '3 arity &sub (sigils only)';
+    is &b_four.arity,   4, '4 arity &foo (sigils only)';
 
 }
 
@@ -58,6 +69,19 @@ is &o_two.arity,    2, 'arity with optional and required named params';
         "block with three placeholder vars has .arity == 3";
     is (-> $a, $b, $c { $a,$b,$c }).arity, 3,
         "pointy block with three placeholder vars has .arity == 3";
+
+    is ({ $^a         }.count), 1,
+        "block with one placeholder var has .count == 1";
+    is (-> $a { $a         }.count), 1,
+        "pointy block with one placeholder var has .count == 1";
+    is { $^a,$^b     }.count, 2,
+        "block with two placeholder vars has .count == 2";
+    is (-> $a, $b { $a,$b     }).count, 2,
+        "pointy block with two placeholder vars has .count == 2";
+    is { $^a,$^b,$^c }.count, 3,
+        "block with three placeholder vars has .count == 3";
+    is (-> $a, $b, $c { $a,$b,$c }).count, 3,
+        "pointy block with three placeholder vars has .count == 3";
 }
 
 {
@@ -67,6 +91,13 @@ is &o_two.arity,    2, 'arity with optional and required named params';
         "additional my() vars don't influence .arity calculation (1-2)";
     is { my $k; $^a,$^b,$^c }.arity, 3,
         "additional my() vars don't influence .arity calculation (1-3)";
+
+    is { my $k; $^a         }.count, 1,
+        "additional my() vars don't influence .count calculation (1-1)";
+    is { my $k; $^a,$^b     }.count, 2,
+        "additional my() vars don't influence .count calculation (1-2)";
+    is { my $k; $^a,$^b,$^c }.count, 3,
+        "additional my() vars don't influence .count calculation (1-3)";
 }
 
 {
@@ -76,4 +107,11 @@ is &o_two.arity,    2, 'arity with optional and required named params';
         "additional my() vars don't influence .arity calculation (2-2)";
     is { $^a,$^b,$^c; my $k }.arity, 3,
         "additional my() vars don't influence .arity calculation (2-3)";
+
+    is { $^a;         my $k }.count, 1,
+        "additional my() vars don't influence .count calculation (2-1)";
+    is { $^a,$^b;     my $k }.count, 2,
+        "additional my() vars don't influence .count calculation (2-2)";
+    is { $^a,$^b,$^c; my $k }.count, 3,
+        "additional my() vars don't influence .count calculation (2-3)";
 }
