@@ -2,16 +2,18 @@ use v6;
 
 use Test;
 
-plan 138;
+plan 140;
 
-=begin pod
+# Basic tests functions specific to complex numbers.
 
-Basic tests functions specific to complex numbers.
+# L<S32/Num/=item re>
 
-L<S29/Num/"=item cis">
+{
+    is (1 + 2i).re, 1, 'Complex.re works';
+    is (1 + 2i).im, 2, 'Complex.im works';
+}
 
-=end pod
-
+# L<S29/Num/"=item cis">
 my $pi = 3.141592653589793238;
 
 {
@@ -84,3 +86,4 @@ my $pi = 3.141592653589793238;
     is_approx(4.unpolar(3*$pi/4),   -$s + ($s)i,"4.unpolar(pi/4) == -2+2i");
     is_approx(4.unpolar($pi),       -4,    "4.unpolar(pi)   == -4");
 }
+
