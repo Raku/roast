@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 13;
+plan 14;
 
 # L<S29/List/=item reduce>
 
@@ -60,3 +60,6 @@ plan 13;
 
 #?rakudo todo 'Reduce of one element list. See #61610'
 is( list(1).reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
+
+#?rakudo todo 'Reduce should use .count not .arity'
+eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
