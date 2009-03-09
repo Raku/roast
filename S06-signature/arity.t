@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 47;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -114,4 +114,13 @@ is &o_two.count,    3, 'count on sub with optional and required named params';
         "additional my() vars don't influence .count calculation (2-2)";
     is { $^a,$^b,$^c; my $k }.count, 3,
         "additional my() vars don't influence .count calculation (2-3)";
+}
+
+# used to be a bug in Rakudo, RT #63744
+{
+    sub indirect-count(Code $c) { +$c.signature.params; }
+    my $tester = -> $a, $b, $c? { ... };
+    is +$tester.signature.params, 3, '+$obj.signature.params work';
+    is +$tester.signature.params, indirect-count($tester),
+       '... also when passed to a sub first';
 }
