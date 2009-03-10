@@ -16,7 +16,7 @@ plan 100;
 {
     my $i = 0;
     $i++ for (1, 2, 3).item;
-    is $i, 3, 'for (1, 2, 3).item does one iteration';
+    is $i, 3, 'for (1, 2, 3).item does three iterations';
 }
 
 {
