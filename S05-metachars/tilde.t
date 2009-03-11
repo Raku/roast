@@ -18,7 +18,6 @@ ok '(a)d'  !~~ m/<t1>/, '~ and constant atoms (wrong content)';
 #?rakudo skip 'should not throw exceptions'
 ok 'x(ab'  !~~ m/<t1>/,  '~ and constant atoms (missing closing bracket)';
 
-#?rakudo skip 'parse errors'
 {
     regex recursive {
         '(' ~ ')' [ 'a'* <recursive>* ]
@@ -29,6 +28,7 @@ ok 'x(ab'  !~~ m/<t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(aa)'   ~~ m/^ <recursive> $/, 'recursive "(aa)"';
     ok '(a(a))' ~~ m/^ <recursive> $/, 'recursive "(a(a))"';
     ok '(()())' ~~ m/^ <recursive> $/, 'recursive "(()())"';
+    #?rakudo 4 skip 'should not throw exceptions'
     ok '('     !~~ m/^ <recursive> $/, '"(" is not matched';
     ok '(()'   !~~ m/^ <recursive> $/, '"(()" is not matched';
     ok '())'   !~~ m/^ <recursive> $/, '"())" is not matched';
