@@ -61,5 +61,4 @@ plan 14;
 #?rakudo todo 'Reduce of one element list. See #61610'
 is( list(1).reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
 
-#?rakudo todo 'Reduce should use .count not .arity'
 eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
