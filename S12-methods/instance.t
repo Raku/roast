@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 26;
 
 =begin pod
 
@@ -35,22 +35,6 @@ is($foo.noargs(), 42, "... parentheses after method");
     my $val;
     lives_ok { $val = $foo.noargs\ (); }, "... <unspace> + parentheses after method";
     is($val, 42, '... we got the value correctly');
-}
-
-{
-    my $val;
-    lives_ok {
-        $val = $foo.noargs.();
-    }, "... '.' + parentheses after method", :todo<bug>;
-    is($val, 42, '... we got the value correctly', :todo<feature>);
-}
-
-{
-    my $val;
-    lives_ok {
-        $val = $foo.noargs\ .();
-    }, "... <unspace> + '.' + parentheses after method", :todo<bug>;
-    is($val, 42, '... we got the value correctly', :todo<feature>);
 }
 
 {

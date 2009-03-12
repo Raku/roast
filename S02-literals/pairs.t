@@ -50,7 +50,7 @@ sub f2 (:$a!) { ~WHAT($a) }
     is f2(:a(42)),      "Int", "':a(42)' is a named";
     is f2(:a),          "Int", "':a' is a named";
 
-    is(f2.(:a),         "Int",  "in 'f2.(:a)', ':a' is a named");
+    is(&f2.(:a),         "Int",  "in '&f2.(:a)', ':a' is a named");
     is $f2(:a),         "Int",  "in '\$f2(:a)', ':a' is a named";
     is $f2.(:a),        "Int",  "in '\$f2.(:a)', ':a' is a named";
 
@@ -61,7 +61,7 @@ sub f2 (:$a!) { ~WHAT($a) }
     dies_ok { f2(("a" => 42)) }, "'(\"a\" => 42)' is a pair";
     dies_ok { f2((:a(42)))    }, "'(:a(42))' is a pair";
     dies_ok { f2((:a))        }, "'(:a)' is a pair";
-    dies_ok { f2.((:a))       }, "in 'f2.((:a))', '(:a)' is a pair";
+    dies_ok { &f2.((:a))       }, "in '&f2.((:a))', '(:a)' is a pair";
     
     #?rakudo 4 todo 'not every pair acts as named parameters'
     dies_ok { $f2((:a))       }, "in '\$f2((:a))', '(:a)' is a pair";

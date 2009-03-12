@@ -23,13 +23,13 @@ plan 20;
 
     eval_lives_ok q/foo;      /, 'call with no args, no parens';
     eval_lives_ok q/foo();    /, 'call with no args, has parens';
-    eval_lives_ok q/foo.();   /, 'call with no args, has dot and parens';
-    eval_lives_ok q/foo\ .(); /, 'call with no args, has long dot and parens';
+    eval_lives_ok q/&foo.();   /, 'call with no args, has dot and parens';
+    eval_lives_ok q/&foo\ .(); /, 'call with no args, has long dot and parens';
 
     eval_lives_ok q/foo 1;    /, 'call with one arg, no parens';
     eval_lives_ok q/foo(1);   /, 'call with one arg, has parens';
-    eval_lives_ok q/foo.(1);  /, 'call with one arg, has dot and parens';
-    eval_lives_ok q/foo\ .(1);/, 'call with one arg, has long dot and parens';
+    eval_lives_ok q/&foo.(1);  /, 'call with one arg, has dot and parens';
+    eval_lives_ok q/&foo\ .(1);/, 'call with one arg, has long dot and parens';
     #?pugs todo 'unspecced'
     #?rakudo todo 'unspecced'
     eval_lives_ok q/foo'bar'; /, 'call with one arg, has no space and no parens';
@@ -42,9 +42,9 @@ plan 20;
     eval_lives_ok q/foo :bar; /, 'call with adverb after space';
 
     eval_lives_ok q/foo(:bar);  /, 'call with adverb in parens';
-    eval_lives_ok q/foo.(:bar); /, 'call with adverb in dotted-parens';
+    eval_lives_ok q/&foo.(:bar); /, 'call with adverb in dotted-parens';
     #?rakudo todo 'long dot'
-    eval_lives_ok q/foo\.(:bar);/, 'call with adverb in long-dotted parens';
+    eval_lives_ok q/&foo\.(:bar);/, 'call with adverb in long-dotted parens';
 }
 
 
