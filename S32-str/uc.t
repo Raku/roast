@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 22;
 
 # L<S29/"Str"/=item uc>
 
@@ -48,4 +48,15 @@ is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 #?DOES 1
 {
     is("áéíöüóűőú".uc, "ÁÉÍÖÜÓŰŐÚ", ".uc on Hungarian vowels");
+}
+
+#?rakudo skip 'loops; RT #63816'
+#?DOES 10
+{
+    for <True False> -> $t {
+        for <uc lc ucfirst lcfirst capitalize> -> $meth {
+            my $str = "('Nothing much' but $t).$meth eq 'Nothing much'.$meth";
+            ok eval($str), $str;
+        }
+    }
 }
