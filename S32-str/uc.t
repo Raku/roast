@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 27;
 
 # L<S29/"Str"/=item uc>
 
@@ -49,6 +49,12 @@ is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 {
     is("áéíöüóűőú".uc, "ÁÉÍÖÜÓŰŐÚ", ".uc on Hungarian vowels");
 }
+
+is ~(0.uc),         ~0, '.uc on Int';
+is ~(0.ucfirst),    ~0, '.ucfirst on Int';
+is ~(0.lc),         ~0, '.lc on Int';
+is ~(0.lcfirst),    ~0, '.lcfirst on Int';
+is ~(0.capitalize), ~0, '.lcfirst on Int';
 
 #?rakudo skip 'loops; RT #63816'
 #?DOES 10
