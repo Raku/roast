@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -49,3 +49,6 @@ eval_dies_ok 'proto {}', 'anonymous proto is an error';
 eval_dies_ok 'class A { only method {} }', 'anonymous only method is an error';
 eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error';
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
+
+# .WHAT reports Multi
+is(~&foo.WHAT, 'Multi', '.WHAT on a multi stringifies to Multi');
