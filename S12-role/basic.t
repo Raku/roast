@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 30;
 
 =begin description
 
@@ -35,8 +35,7 @@ ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 #?pugs skip 3 'feature'
 ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
 ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
-#?rakudo skip 'dies because Baz is not a type, so tries to call a sub - should be dies_ok?'
-ok $baz ~~ Baz,                 'smartmatch said our $baz now does Foo';
+dies_ok { $baz ~~ Baz },        'smartmatch against non-existent type dies';
 
 # L<S12/Roles/but with a role keyword:>
 # Roles may have methods
@@ -67,5 +66,24 @@ ok $baz ~~ Baz,                 'smartmatch said our $baz now does Foo';
     ok !($c ~~ B),              '$c still does not B...';
     ok $d ~~ B,                 '...but $d does B';
 }
+
+# Using roles as type constraints.
+role C { }
+class DoesC does C { }
+lives_ok { my C $x; },          'can use role as a type constraint on a variable';
+lives_ok { my C $x = undef },   'can assign undef';
+dies_ok { my C $x = 42 },       'type-check enforced';
+dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
+lives_ok {my C $x = DoesC.new },'type-check passes for class doing role';
+lives_ok { my C $x = 42 but C },'type-check passes when role mixed in';
+
+class HasC {
+    has C $.x is rw;
+}
+lives_ok { HasC.new },          'attributes typed as roles initialized OK';
+lives_ok { HasC.new.x = DoesC.new },
+                                'typed attribute accepts things it should';
+lives_ok { HasC.new.x = undef },'typed attribute accepts things it should';
+dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
 # vim: ft=perl6
