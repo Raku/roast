@@ -11,7 +11,6 @@ Tests for the eval() builtin
 =end pod
 
 # eval should evaluate the code in the lexical scope of eval's caller
-#?rakudo skip 'eval as closure'
 {
     sub make_eval_closure {
         my $a = 5;
@@ -24,7 +23,6 @@ Tests for the eval() builtin
 
 is(eval('5'), 5, 'simple eval works and returns the value');
 my $foo = 1234;
-#?rakudo skip 'eval needs access to outer scope'
 is(eval('$foo'), $foo, 'simple eval using variable defined outside');
 
 # traps die?

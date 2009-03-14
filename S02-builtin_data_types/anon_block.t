@@ -82,7 +82,6 @@ my $two;
 # added an eval().  --iblech
 try { eval '0,{$one = 1}{$two = 2}' };
 ok(!defined($one), 'two blocks ({} {}) no semicolon after either,.. first block does not execute');
-#?rakudo todo 'blocks as subscripts (?)'
 is($two, 2, '... but second block does (parsed as hash subscript)');
 
 my $one_a;
