@@ -12,8 +12,9 @@ if $*OS eq "browser" {
 
 #?rakudo skip 'No PROCESS yet'
 ok(PROCESS::<$PROGRAM_NAME> eq ('t/spec/S02-magicals/progname.t' | 't\\spec\\S02-magicals\\progname.t'), "progname var matches test file path");
-ok($*PROGRAM_NAME eq ('t/spec/S02-magicals/progname.t' | 't\\spec\\S02-magicals\\progname.t'), "progname var accessible as context var");
+ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname'.'\w+$/, "progname var accessible as context var");
 
 # NOTE:
 # above is a junction hack for Unix and Win32 file 
 # paths until the FileSpec hack is working - Stevan
+# changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
