@@ -43,7 +43,6 @@ plan 20;
 
     eval_lives_ok q/foo(:bar);  /, 'call with adverb in parens';
     eval_lives_ok q/&foo.(:bar); /, 'call with adverb in dotted-parens';
-    #?rakudo todo 'long dot'
     eval_lives_ok q/&foo\.(:bar);/, 'call with adverb in long-dotted parens';
 }
 
