@@ -323,7 +323,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 };
 
-#?rakudo skip 'No support for StrPos'
+#?rakudo todo 'lvalue substr'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -333,7 +333,6 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 #?rakudo skip 'No support for StrPos'
 { # as lvalue, using :=, should work
-    #?rakudo 3 todo 'exception'
     my $str = "gorch ding";
 
     substr($str, 0, p(5)) = "gloop";
@@ -348,7 +347,6 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($r, "boing", 'bound $r is consistent (substr(Int, StrPos)).');
 
     my $o := substr($str, 3, p(2));
-    #?rakudo 3 todo ' substr lvalue binding'
     is($o, "ng", "other bound var to other lvalue (substr(Int, StrPos)).");
     $r = "foo";
     is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrPos)).");
