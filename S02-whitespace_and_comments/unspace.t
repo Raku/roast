@@ -29,7 +29,7 @@ is("xxxxxx"\.bytes, 6, 'unspace without spaces');
 is("xxxxxx"\
     .bytes, 6, 'unspace with newline');
 
-is((:foo\ .("bar")), ('foo' => "bar"), 'unspace with adverb');
+is((:foo\ ("bar")), ('foo' => "bar"), 'unspace with adverb');
 
 is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
 
