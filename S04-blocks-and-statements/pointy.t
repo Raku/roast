@@ -92,14 +92,14 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 # L<S02/Mutable types/"default block parameter type">
 # this means that Junctions don't autothread over pointy blocks
 
-#?rakudo todo 'Blocks defaulting to type Object'
+#?rakudo skip 'Blocks defaulting to type Object'
 {
     my @a = any(3, 4);
     my $ok = 0;
     my $iterations = 0;
     for @a -> $x {
         $ok = 1 if $x ~~ Junction;
-        $iterations = 1;
+        $iterations++;
     }
     is $ok, 'Blocks receive junctions without autothreading';
     is $iterations, 1, 'no autothreading happened';
