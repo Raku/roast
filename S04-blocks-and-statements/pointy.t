@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 17;
 
 =begin description
 
@@ -86,6 +86,27 @@ eval_dies_ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 
 lives_ok {my $x = -> {}; my $y = $x(); }, 
          'can define and execute empty pointy block';
+
+# The default type of pointy blocks is Object, not Any. See 
+# http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31181.html
+# L<S02/Mutable types/"default block parameter type">
+# this means that Junctions don't autothread over pointy blocks
+
+#?rakudo todo 'Blocks defaulting to type Object'
+{
+    my @a = any(3, 4);
+    my $ok = 0;
+    my $iterations = 0;
+    for @a -> $x {
+        $ok = 1 if $x ~~ Junction;
+        $iterations = 1;
+    }
+    is $ok, 'Blocks receive junctions without autothreading';
+    is $iterations, 1, 'no autothreading happened';
+    my $b = -> $x { ... };
+    ok $b.signature.perl !~~ Any, 
+       'The .signature of a block does not contain Any';
+}
 
 # vim: ft=perl6
 
