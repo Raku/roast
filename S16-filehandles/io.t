@@ -14,14 +14,14 @@ I/O tests
 
 plan 57;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
+#?pugs emit if $*OS eq "browser" {
+#?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
+#?pugs emit   exit;
+#?pugs emit }
 
 
 sub nonce () { return (".{$*PID}." ~ int 1000.rand) }
-my $filename = 'tempfile' ~ nonce();
+my $filename = 'tempfile_filehandles_io' ~ nonce();
 
 # create and write a file
 
