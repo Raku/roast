@@ -52,6 +52,7 @@ plan 20;
 
 # state will first {...}
 #?pugs eval "parse error"
+#?rakudo todo 'will first { ... }'
 {
     my ($a, $b);
     my $gen = {
@@ -66,6 +67,7 @@ plan 20;
 }
 
 # Return of a reference to a state() var
+#?rakudo skip 'references'
 {
     my $gen = {
         state $svar = 42;
@@ -83,6 +85,7 @@ plan 20;
 # Anonymous state vars
 # L<http://groups.google.de/group/perl.perl6.language/msg/07aefb88f5fc8429>
 #?pugs todo 'anonymous state vars'
+#?rakudo skip 'references and anonymous state vars'
 {
     # XXX -- currently this is parsed as \&state()
     my $gen = eval '{ try { \state } }';
@@ -112,6 +115,7 @@ plan 20;
 }
 
 # state() inside regular expressions
+#?rakudo skip 'embedded closures in regexen'
 {
     my $str = "abc";
 
@@ -130,14 +134,13 @@ plan 20;
 }
 
 # state() inside subs, chained declaration
+#?rakudo skip 'state bug'
 {
     sub step () {
         state $svar = state $svar2 = 42;
-        try {
-            $svar++;
-            $svar2--;
-            return (+$svar, +$svar2);
-        }
+        $svar++;
+        $svar2--;
+        return (+$svar, +$svar2);
     };
 
     is(step().perl, "(43, 41)", "chained state (#1)");
@@ -158,24 +161,26 @@ plan 20;
 }
 
 # recursive state with list assignment initialization happens only first time
+#?rakudo skip 'recurses infinitely'
 {
     my $seensize;
-    my sub fib (UInt $n) {
-	state @seen = 0,1,1;
-	$seensize = +@seen;
-	@seen[$n] //= fib($n-1) + fib($n-2);
+    my sub fib (Int $n) {
+	    state @seen = 0,1,1;
+	    $seensize = +@seen;
+	    @seen[$n] //= fib($n-1) + fib($n-2);
     }
     is fib(10), 55, "fib 1 works";
     is $seensize, 11, "list assignment state in fib memoizes";
 }
 
 # recursive state with [list] assignment initialization happens only first time
+#?rakudo skip '@$foo syntax'
 {
     my $seensize;
-    my sub fib (UInt $n) {
-	state $seen = [0,1,1];
-	$seensize = +@$seen;
-	$seen[$n] //= fib($n-1) + fib($n-2);
+    my sub fib (Int $n) {
+	    state $seen = [0,1,1];
+	    $seensize = +@$seen;
+	    $seen[$n] //= fib($n-1) + fib($n-2);
     }
     is fib(10), 55, "fib 2 works";
     is $seensize, 11, "[list] assignment state in fib memoizes";
