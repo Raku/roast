@@ -134,7 +134,6 @@ plan 20;
 }
 
 # state() inside subs, chained declaration
-#?rakudo skip 'state bug'
 {
     sub step () {
         state $svar = state $svar2 = 42;
@@ -143,8 +142,8 @@ plan 20;
         return (+$svar, +$svar2);
     };
 
-    is(step().perl, "(43, 41)", "chained state (#1)");
-    is(step().perl, "(44, 40)", "chained state (#2)");
+    is(step().perl, "[43, 41]", "chained state (#1)");
+    is(step().perl, "[44, 40]", "chained state (#2)");
 }
 
 # state in cloned closures
