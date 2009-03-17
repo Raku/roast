@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 30;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -74,6 +74,19 @@ plan 28;
     }
     is swatest2(), '[1, 2, 3]', 'array state initialized from call correctly';
     is swatest2(), '[2, 2, 3]', 'array state retained between calls';
+}
+
+# (state @foo) = @bar differs from state @foo = @bar
+{
+   my @bar = 1,2,3;
+   sub swatest3 {
+       (state @foo) = @bar;
+       my $x = @foo.perl;
+       @foo[0]++;
+       return $x
+   }
+   is swatest3(), '[1, 2, 3]', '(state @foo) = @bar is not state @foo = @bar';
+   is swatest3(), '[1, 2, 3]', '(state @foo) = @bar is not state @foo = @bar';
 }
 
 # RHS of state is only run once per init
