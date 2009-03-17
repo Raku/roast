@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 23;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -157,6 +157,16 @@ plan 20;
         is $code(), 43, "state was initialized properly ($_ time)";
         is $code(), 44, "state keeps its value across calls ($_ time)";
     }
+}
+
+# state with multiple explicit calls to clone - a little bit subtle
+{
+    my $i = 0;
+    my $func = { state $x = $i++; $x };
+    my ($a, $b) = $func.clone, $func.clone; 
+    is $a(), 0, 'state was initialized correctly for clone 1';
+    is $b(), 1, 'state was initialized correctly for clone 2';
+    is $a(), 0, 'state between clones is independent';
 }
 
 # recursive state with list assignment initialization happens only first time
