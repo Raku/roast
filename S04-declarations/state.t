@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 28;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -48,6 +48,42 @@ plan 23;
             is $svar, 3, "state() works inside for-loops";
         }
     }
+}
+
+# state with arrays.
+{
+    my @bar = 1,2,3;
+    sub swatest {
+        state (@foo) = @bar;
+        my $x = @foo.perl;
+        @foo[0]++;
+        return $x
+    }
+    is swatest(), '[1, 2, 3]', 'array state initialized correctly';
+    is swatest(), '[2, 2, 3]', 'array state retained between calls';
+}
+
+# state with arrays.
+{
+    sub swainit_sub { 1,2,3 }
+    sub swatest2 {
+        state (@foo) = swainit_sub();
+        my $x = @foo.perl;
+        @foo[0]++;
+        return $x
+    }
+    is swatest2(), '[1, 2, 3]', 'array state initialized from call correctly';
+    is swatest2(), '[2, 2, 3]', 'array state retained between calls';
+}
+
+# RHS of state is only run once per init
+{
+    my $rhs_calls = 0;
+    sub impure_rhs {
+        state $x = do { $rhs_calls++ }
+    }
+    impure_rhs() for 1..3;
+    is $rhs_calls, 1, 'RHS of state $x = ... only called once';
 }
 
 # state will first {...}
