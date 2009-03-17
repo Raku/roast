@@ -20,12 +20,12 @@ plan 1;
 my ($pugs,$redir,$squo) = ($*EXECUTABLE_NAME, ">", "'");
 
 # if it's non-perl5 js backend the test would have been skipped already
-$pugs = './runjs.pl --run=jspm --perl5'
-    if $?PUGS_BACKEND eq 'BACKEND_JAVASCRIPT';
+#?pugs emit # $pugs = './runjs.pl --run=jspm --perl5'
+#?pugs emit #     if $?PUGS_BACKEND eq 'BACKEND_JAVASCRIPT';
 
-if $*OS eq any <MSWin32 mingw msys cygwin> {
-    $pugs = 'pugs.exe';
-};
+#?pugs emit # if $*OS eq any <MSWin32 mingw msys cygwin> {
+#?pugs emit #     $pugs = 'pugs.exe';
+#?pugs emit # };
 
 sub nonce () { return (".{$*PID}." ~ (^1000).pick) }
 my $tempfile = "temp-ex-output" ~ nonce;
