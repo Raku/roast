@@ -55,12 +55,12 @@ plan 30;
     my @bar = 1,2,3;
     sub swatest {
         state (@foo) = @bar;
-        my $x = @foo.perl;
+        my $x = @foo.join('|');
         @foo[0]++;
         return $x
     }
-    is swatest(), '[1, 2, 3]', 'array state initialized correctly';
-    is swatest(), '[2, 2, 3]', 'array state retained between calls';
+    is swatest(), '1|2|3', 'array state initialized correctly';
+    is swatest(), '2|2|3', 'array state retained between calls';
 }
 
 # state with arrays.
@@ -68,12 +68,12 @@ plan 30;
     sub swainit_sub { 1,2,3 }
     sub swatest2 {
         state (@foo) = swainit_sub();
-        my $x = @foo.perl;
+        my $x = @foo.join('|');
         @foo[0]++;
         return $x
     }
-    is swatest2(), '[1, 2, 3]', 'array state initialized from call correctly';
-    is swatest2(), '[2, 2, 3]', 'array state retained between calls';
+    is swatest2(), '1|2|3', 'array state initialized from call correctly';
+    is swatest2(), '2|2|3', 'array state retained between calls';
 }
 
 # (state @foo) = @bar differs from state @foo = @bar
@@ -81,12 +81,12 @@ plan 30;
    my @bar = 1,2,3;
    sub swatest3 {
        (state @foo) = @bar;
-       my $x = @foo.perl;
+       my $x = @foo.join('|');
        @foo[0]++;
        return $x
    }
-   is swatest3(), '[1, 2, 3]', '(state @foo) = @bar is not state @foo = @bar';
-   is swatest3(), '[1, 2, 3]', '(state @foo) = @bar is not state @foo = @bar';
+   is swatest3(), '1|2|3', '(state @foo) = @bar is not state @foo = @bar';
+   is swatest3(), '1|2|3', '(state @foo) = @bar is not state @foo = @bar';
 }
 
 # RHS of state is only run once per init
@@ -191,8 +191,8 @@ plan 30;
         return (+$svar, +$svar2);
     };
 
-    is(step().perl, "[43, 41]", "chained state (#1)");
-    is(step().perl, "[44, 40]", "chained state (#2)");
+    is(step().join('|'), "43|41", "chained state (#1)");
+    is(step().join('|'), "44|40", "chained state (#2)");
 }
 
 # state in cloned closures
