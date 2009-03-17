@@ -354,7 +354,6 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($o, " d", "other lvalue wiggled around (substr(Int, StrPos)).");
 };
 
-#?rakudo skip 'No support for StrPos'
 { # misc
     my $str = "hello foo and bar";
     is(substr($str, 6, p(3)), "foo", "substr (substr(Int, StrPos)).");
