@@ -213,7 +213,6 @@ plan 316;
 
 my @p;
 
-#?rakudo skip "unknown reasons"
 {
     my $a;
     @p = $a ||= 3, 4;
@@ -243,7 +242,6 @@ my @p;
     is(WHAT %hash<bar>, 'Array', "Verify //= autovivifies correctly");
 }
 
-#?rakudo skip "unknown reasons"
 {
     my $a = 3;
     @p = $a &&= 42, 43;

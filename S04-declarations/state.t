@@ -219,7 +219,6 @@ plan 30;
 }
 
 # recursive state with list assignment initialization happens only first time
-#?rakudo skip 'recurses infinitely'
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -227,7 +226,7 @@ plan 30;
 	    $seensize = +@seen;
 	    @seen[$n] //= fib($n-1) + fib($n-2);
     }
-    is fib(10), 55, "fib 1 works";
+    is fib(10), 55, "fib 10 works";
     is $seensize, 11, "list assignment state in fib memoizes";
 }
 
