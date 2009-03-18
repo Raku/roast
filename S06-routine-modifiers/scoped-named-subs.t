@@ -9,13 +9,15 @@ plan 8;
     my Str sub myNamedStr() { return 'string' };
     is myNamedStr(), 'string', 'lexical named sub() return Str';
 }
+#?rakudo todo 'lexical subs'
 is eval('myNamedStr()'), '', 'Correct : lexical named sub myNamedStr() should NOT BE available outside its scope';
 
 {
     my Int sub myNamedInt() { return 55 };
     is myNamedInt(), 55, 'lexical named sub() return Int';
 }
-eval_dies_ok('myNamedInt()'), 'Correct : lexical named sub myNamedInt() should NOT BE available outside its scope';
+#?rakudo todo 'lexical subs'
+eval_dies_ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NOT BE available outside its scope');
 
 
 #packge-scoped named subs
