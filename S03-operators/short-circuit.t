@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 34;
+plan 36;
 
 {
     my $x = 1;
@@ -154,3 +154,16 @@ plan 34;
     is($y, 1, "chained comparison short-circuit: stopping soon enough");
 }
 
+# a pugs regression 
+
+{
+    my $a = sub { 1 };
+    my $b;
+    sub c($code) { return 1 if $code and $code(); return 2 }
+
+    is c($a), 1, 'shortcircuit idiom given coderef works';
+
+    # This one will just kill pugs with the cast failure, so force fail
+    #?pugs eval 'short circuiting'
+    is c($b), 2, 'shortcircuit idiom given undef works';
+}
