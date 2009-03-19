@@ -118,7 +118,9 @@ plan 22;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (without proto on hash items)';
 }
 
+#?rakudo skip 'smartmatching non-existing array element'
 {
+    my @empty;
     is +@empty, 0, 'Sanity: empty array, @empty, has 0 elements'; 
 
     my $before =  @empty.perl;
