@@ -20,7 +20,7 @@ plan 57;
 #?pugs emit }
 
 
-sub nonce () { return (".{$*PID}." ~ Int(1000.rand)) }
+sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
 
 # create and write a file
