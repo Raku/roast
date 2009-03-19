@@ -11,11 +11,7 @@ version 0.3 (12 Apr 2004), file t/noncap.t.
 # L<S05/Bracket rationalization/"[...] is no longer a character class.
 # It now delimits a non-capturing group.">
 
-plan 8;
-
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
+plan 9;
 
 my $str = "abbbbbbbbc";
 
@@ -29,5 +25,18 @@ ok($/, 'Saved 2');
 is($/, $str, 'Grabbed all 2');
 ok(!defined($/[0]), "Correctly didn't capture 2");
 
+{
+    # this used to be a regression on pugs with external parrot
+    # some regex matched failed when other named regexes where
+    # present, but not used.
+    # moved here from t/xx-uncategoritzed/rules_with_embedded_parrot.t 
+    
+    rule abc {abc}
+
+    rule once {<.abc>}
+
+    rule mumble {<notabc>}
+
+    ok("abcabcabcabcd" ~~ m/<.once>/, 'Once match');
 }
 
