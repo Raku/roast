@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 9;
 
 {
     sub count(@a) {
@@ -38,4 +38,14 @@ plan 8;
     sub t1(@a) { return +@a };
     sub t2(@a) { return t1(@a) };
     is t2(@a), 8, 'can pass arrays through multiple subs';
+}
+
+{
+    sub test_two_array(@a,@b)
+    {
+        return @a[0] + @b[0];
+    }
+
+    is(test_two_array([100,5],[20,300]), 120, 
+    "Passing array references to functions accepting arrays works.");
 }
