@@ -1,5 +1,5 @@
 use Test;
-plan 19;
+plan 22;
 
 # L<S03/Assignment operators/>
 
@@ -117,4 +117,18 @@ plan 19;
     my %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (without proto on hash items)';
 }
+
+{
+    is +@empty, 0, 'Sanity: empty array, @empty, has 0 elements'; 
+
+    my $before =  @empty.perl;
+    @empty[5] ~~ /nothing/;
+    my $after = @empty.perl;
+
+    #?pugs 2 todo 'bugs'
+    is +@empty,0,'empty array, @empty, has 0 elements';
+
+    is $after,$before,"Array elements are not auto-vivified by smartmatch";
+}
+
 # vim: ft=perl6
