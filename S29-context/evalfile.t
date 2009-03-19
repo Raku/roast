@@ -5,7 +5,7 @@ plan 1;
 
 # L<S29/Context/"=item evalfile">
 
-sub nonce () { return (".{$*PID}." ~ int 1000.rand) }
+sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
 if $*OS eq "browser" {
     skip_rest "Programs running in browsers don't have access to regular IO.";
