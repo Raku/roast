@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -33,5 +33,15 @@ sub first_arg_copy ( *@args is copy ) { ~@args[0]; }
 is first_arg(1, 2, 3),      '1',  'can grab first item of a slurpy array';
 is first_arg_rw(1, 2, 3),   '1',  'can grab first item of a slurpy array (is rw)';
 is first_arg_copy(1, 2, 3), '1',  'can grab first item of a slurpy array (is copy)';
+
+# test that shifting works
+{
+    sub func(*@m) {
+        @m.shift;
+        return @m;
+    }
+    is_deeply(func(5), [], "Shift from an array function argument works", :todo<bug>);
+}
+
 
 # vim: ft=perl6
