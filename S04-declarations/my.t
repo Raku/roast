@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 47;
+plan 49;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -170,6 +170,25 @@ my $x = 42;
     ok( $x ~~ undef, 'my $x = $x; can not see the value of the outer $x');
 }
 
+# interaction of my and eval
+# yes, it's weird... but that's the way it is
+# http://irclog.perlgeek.de/perl6/2009-03-19#i_1001177
+{
+    sub eval_elsewhere($str) {
+        eval $str;
+    }
+    my $x = 4;
+    is eval_elsewhere('$x + 1'), 5, 
+       'eval() knows the pad where it is launched from';
+
+    #?rakudo todo 'initialization of vars happens too early'
+    ok eval_elsewhere('!$y.defined'),
+       '... but initializiation of variables might still happen afterwards';
+
+    # don't remove this line, or eval() will complain about 
+    # $y not being declared
+    my $y = 4;
+}
 
 
 # vim: ft=perl6
