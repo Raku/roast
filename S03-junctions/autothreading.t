@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 69;
+plan 70;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -228,4 +228,14 @@ plan 69;
     for @is_prime.kv -> $idx, $ref {
         is +primetest($idx + 2), $ref, "primality test for { $idx + 2 } works";
     }
+}
+
+
+#?rakudo skip 'autothreading over array indexing'
+#?pugs skip 'autothreading over array indexing'
+{
+    my $junc = 0|1|2;
+    my @a = (0,1,2);
+    my $bool = Bool::False;
+    ok ?(@a[$junc] == $junc), 'can autothread over array indexes';
 }
