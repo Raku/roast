@@ -1,0 +1,12 @@
+use v6;
+
+use Test;
+
+plan 4;
+
+is (try { 42 or Bool::False }), 42, "Bool::False as RHS";
+#?pugs todo 'parsing'
+is (try { Bool::False or 42 }), 42, "Bool::False as LHS";
+
+is (try { 42 or False }), 42, "False as RHS";
+is (try { False or 42 }), 42, "False as LHS";
