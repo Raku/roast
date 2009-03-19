@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 70;
+plan 73;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -238,4 +238,22 @@ plan 70;
     my @a = (0,1,2);
     my $bool = Bool::False;
     ok ?(@a[$junc] == $junc), 'can autothread over array indexes';
+}
+
+# Tests former autothreading junction example from Synopsis 09 
+{
+    my $c = 0;
+
+    is(substr("camel", 0, 2),  "ca", "substr()");
+
+    $c = 0;
+    sub my_substr ($str, $i, $j) {
+        $c++;
+        my @c = split "", $str;
+        join("", @c[$i..($i+$j-1)]);
+    }
+
+    my $j = my_substr("camel", 0|1, 2&3);
+
+    is($c, 4, "substr() called 4 times");
 }
