@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 97;
 
 =begin pod
 
@@ -412,6 +412,22 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
         method foo { $!a === TA1 }
     }
     ok(TA2.new.foo, '=== works on typed attribute initialized with proto-object');
+}
+
+# used to be pugs regression
+{
+    class C_Test { has $.a; }
+    sub f() { C_Test.new(:a(123)) }
+    sub g() { my C_Test $x .= new(:a(123)); $x }
+
+    is(C_Test.new(:a(123)).a, 123, 'C_Test.new().a worked');
+
+    my $o = f();
+    is($o.a, 123, 'my $o = f(); $o.a worked');
+
+    is((try { f().a }), 123, 'f().a worked (so the pugsbug is fixed (part 1))');
+
+    is((try { g().a }), 123, 'g().a worked (so the pugsbug is fixed (part 2))');
 }
 
 # vim: ft=perl6
