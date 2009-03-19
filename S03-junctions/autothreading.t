@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 73;
+plan 72;
 
 {
     # Solves the equatioin A + B = A * C for integers
