@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 44;
+plan 45;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -351,5 +351,15 @@ my @elems = <a b c d e>;
 
 #L<S04/"keywords require whitespace">
 eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
+
+# looping with more than one loop variables
+{
+  my @a = <1 2 3 4>;
+  my $str = '';
+  for @a -> $x, $y { 
+    $str ~= $x+$y;
+  }
+  is $str, "37", "for loop with two variables";
+}
 
 # vim: ft=perl6
