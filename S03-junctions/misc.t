@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 72;
+plan 82;
 
 =begin pod
 
@@ -322,3 +322,31 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 
 # used to be a rakudo regression (RT #60886)
 ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
+
+
+#?rakudo skip 'substr on juctions'
+{
+  is substr("abcd", 1, 2), "bc", "simple substr";
+  my $res = substr(any("abcd", "efgh"), 1, 2);
+  is $res.WHAT, "Junction", "substr works on junctions";
+  is $res, "bc";
+  is $res, "fg";
+}
+
+#?rakudo skip 'substr on juctions'
+{
+  my $res = substr("abcd", 1|2, 2);
+  is $res.WHAT, "Junction", "substr works on junctions";
+  is $res, "bc";
+  is $res, "cd";
+}
+
+#?rakudo skip 'substr on juctions'
+{
+  my $res = substr("abcd", 1, 1|2);
+  is $res.WHAT, "Junction", "substr works on junctions";
+  is $res, "bc";
+  is $res, "b";
+}
+
+
