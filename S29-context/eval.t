@@ -42,8 +42,6 @@ ok(v() == 456, "eval can overwrite a subroutine");
 dies_ok({eval {42}}, 'block eval is gone');
 
 # RT #63978, eval didn't work in methods
-
-#?rakudo skip 'RT #63978'
 {
     class EvalTester {
         method e($s) { eval $s };
@@ -52,7 +50,7 @@ dies_ok({eval {42}}, 'block eval is gone');
     is EvalTester.new.e('5'),   5, 'eval works inside instance methods';
 }
 
-#?rakudo skip 'RT #63978'
+#?rakudo skip 'lexicals outside class not visible inside class'
 {
     my $x = 5;
     class EvalTester {
