@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 50;
+plan 55;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -406,6 +406,40 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     $str ~= " " ~ $q*$w*$e*$r*$t;
   }
   is $str, " 1 {2**5} {3**5}", "Z-ed for loop with 5 arrays";
+}
+
+{
+  eval_dies_ok 'for 1.. { };', "Please use ..* for indefinite range";
+  eval_dies_ok 'for 1... { };', "1... does not exist";
+}
+
+{
+  my $c;
+  for 1..8 {
+    $c = $_;
+    last if $_ == 6;
+  }
+  is $c, 6, 'for loop ends in time using last';
+}
+
+#?rakudo skip 'infinite for loop'
+{
+  my $c;
+  for 1..* {
+    $c = $_;
+    last if $_ == 6;
+  }
+  is $c, 6, 'infinte for loop ends in time using last';
+}
+
+#?rakudo skip 'infinite for loop'
+{
+  my $c;
+  for 1..Inf {
+    $c = $_;
+    last if $_ == 6;
+  }
+  is $c, 6, 'infinte for loop ends in time using last';
 }
 
   
