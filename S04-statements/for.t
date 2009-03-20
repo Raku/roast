@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 45;
+plan 47;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -361,5 +361,25 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   }
   is $str, "37", "for loop with two variables";
 }
+
+{
+  #my $str = '';
+  eval_dies_ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception StopIteration'); 
+  #is $str, "1234", "loop ran before throwing exception";
+  #diag ">$str<";
+}
+
+{
+  my @a = <1 2 3>;
+  my @b = <4 5 6>;
+  my $res = '';
+  for @a Z @b -> $x, $y {
+    $res ~= " " ~ $x * $y;
+  }
+  is $res, " 4 10 18", "Z -ed for loop";
+}
+
+
+  
 
 # vim: ft=perl6
