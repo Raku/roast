@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 13;
 
 # L<S29/Context/"=item eval">
 
@@ -40,3 +40,26 @@ ok(v() == 456, "eval can overwrite a subroutine");
 
 # L<S04/Exception handlers/Perl 6's eval function only evaluates strings, not blocks.>
 dies_ok({eval {42}}, 'block eval is gone');
+
+# RT #63978, eval didn't work in methods
+
+#?rakudo skip 'RT #63978'
+{
+    class EvalTester {
+        method e($s) { eval $s };
+    }
+    is EvalTester.e('5'),       5, 'eval works inside class methods';
+    is EvalTester.new.e('5'),   5, 'eval works inside instance methods';
+}
+
+#?rakudo skip 'RT #63978'
+{
+    my $x = 5;
+    class EvalTester {
+        method e($s) { eval "$s + \$x" };
+    }
+    is EvalTester.e('1'),       6, 
+       'eval works inside class methods, with outer lexicals';
+    is EvalTester.new.e('1'),   6, 
+       'eval works inside instance methods, with outer lexicals';
+}
