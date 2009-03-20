@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 49;
+plan 50;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -377,6 +377,16 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   }
   is $str, " 2 12 0";
 }
+
+#?rakudo skip 'default value in variable in for loop'
+{
+  my $str = '';
+  for 1..5 -> $x, $y = 7 {
+    $str ~= " " ~ $x*$y;
+  }
+  is $str, " 2 12 35";
+}
+
 
 {
   my @a = <1 2 3>;
