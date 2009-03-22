@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S29/Str/"=item split">
-plan 42;
+plan 45;
 
 =begin description
 
@@ -80,5 +80,15 @@ split_test 'ab34d5z'.split(/<.before \d>/), <ab 3 4d 5z>, 'split with zero-width
 
 ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
+
+# split should return capture
+my @split = 'abc def ghi'.split(/(\s+)/);
+#?rakudo todo "split should return captures"
+#?DOES 3
+{
+    ok @split.elems == 5, q{split returns captured delimiter} ;
+    ok @split[1] eq ' ', q{split captured single space};
+    ok @split[3] eq ' ', q{split captured multiple spaces};
+}
 
 # vim: ft=perl6
