@@ -12,7 +12,7 @@ I/O tests
 
 =end pod
 
-plan 57;
+plan 58;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -156,3 +156,4 @@ ok($fh9.close, 'file closed okay (9)');
 
 #?pugs todo 'buggy on Win32'
 ok(unlink($filename), 'file has been removed');
+ok $filename !~~ :e, '... and the tempfile is gone, really';

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 20;
 
 # Very basic enum tests
 
@@ -22,6 +22,18 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok $x ~~ Day,         'Can smartmatch for enum type';
     #?rakudo 1 skip 'ACCEPTS missing for enum values'
     ok $x ~~ Day::Mon,    'Can Smartmatch for enum value';
+}
+
+{
+    # usually we don't test explicit value for .perl, but here
+    # it's specced, so we make an excpetion
+    #?rakudo 2 todo '.perl on Enums'
+    is Day::Mon.perl, 'Day::Mon', '.perl on long form of Enum value';
+    is Mon.perl,      'Day::Mon', '.perl on short form of Enum value';
+
+    #?rakudo 2 skip '.name on Enums'
+    is Day::Mon.name, 'Mon',      '.name on long form of Enum value';
+    is Mon.name,      'Mon',      '.name on short form of Enum value';
 }
 
 enum JustOne <Thing>;

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 40;
 
 =begin description
 
@@ -125,6 +125,18 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
     is $x, 2,         '..and the value was preserved';
     dies_ok { $x-- }, 'Even $x can not be --ed';
     is $x, 2,         'and the value was preserved';
+}
+
+{
+    # chained subset types
+    subset Positive of Int where { $_ > 0 };
+    subset NotTooLarge of Positive where { $_ < 10 };
+
+    my NotTooLarge $x;
+
+    lives_ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
+    dies_ok { $x = -2 }, 'violating first condition barfs';
+    dies_ok { $x = 22 }, 'violating second condition barfs';
 }
 
 # vim: ft=perl6

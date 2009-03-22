@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S29/Str/"=item split">
-plan 32;
+plan 42;
 
 =begin description
 
@@ -14,17 +14,22 @@ here is a start from scratch that should be easier to run.
 #?DOES 2
 sub split_test(@splitted, @expected, Str $desc) {
     ok @splitted.elems ==  @expected.elems,
-       "split created the correct value amount for: $desc";
+       "split created the correct number of elements for: $desc";
     is @splitted.join('|-|'), @expected.join('|-|'),
        "values matched for: $desc"
 }
 
-split_test 'a1b24f'.split(/\d+/),  <a b f>, 'Str.split(/regex/) works';
-split_test split(/\d+/, 'a1b24f'), <a b f>, 'split(/regex/, Str) works';
-split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) works (with Str semantics';
+split_test 'a1b24f'.split(/\d+/),  <a b f>, 'Str.split(/regex/)';
+split_test split(/\d+/, 'a1b24f'), <a b f>, 'split(/regex/, Str)';
+split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) (with Str semantics';
+
+split_test 'a1b24f'.split(/\d+/, *),  <a b f>, 'Str.split(/regex/) (with * limit)';
+split_test split(/\d+/, 'a1b24f', *), <a b f>, 'split(/regex/, Str) (with * limit)';
+split_test 'a1b'.split(1, *),         <a b>,   'Str.split(Any) (with Str semantics (with * limit)';
+
 {
-    split_test 123.split(2),           <1 3>,   'Int.split(Int) works';
-    split_test split(2, 123),          <1 3>,   'split(Int, Int) works';
+    split_test 123.split(2),           <1 3>,   'Int.split(Int)';
+    split_test split(2, 123),          <1 3>,   'split(Int, Int)';
 }
 
 split_test '1234'.split(/X/),          @(<1234>),  'Non-matching regex returns whole string';
@@ -49,6 +54,17 @@ split_test(
     <ab cd ef>,
     'Limit larger than number of split values doesn\'t return extranuous elements'
 );
+
+split_test
+    'abcdefg'.split('', 3),
+    <a b cdefg>,
+    'split into characters respects limit (1)';
+
+# catch possible off-by-one errors
+split_test
+    'abc'.split('', 3),
+    <a b c>,
+    'split into characters respects limit (2)';
 
 # zero-width assertions shouldn't loop
 # with additional spaces
