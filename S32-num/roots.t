@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 36;
+plan 40;
 
 # L<S29/Num/"=item roots">
 
@@ -104,5 +104,12 @@ sub has_approx($n, @list) {
     ok(@l.elems == 2, 'roots(1+1i,2) returns 2 elements');
     ok(has_approx(exp(log(2)/4 + 1i*pi/8), @l),'exp(log(2)/4 + 1i*pi/8) is a square root of 1+1i');
     ok(has_approx(exp(log(2)/4 + 9i*pi/8), @l),'exp(log(2)/4 + 9i*pi/8) is a square root of 1+1i');
+}
+{
+    my @l = 8.roots(3);
+    ok(@l.elems == 3, '8.roots(3) returns 3 elements');
+    ok(has_approx(2,@l), '2 is a cube root of 8');
+    ok(has_approx(exp(1/3*(log(8) + 2i*pi)),@l), 'exp(1/3*(log(8) + 2i*pi)) is a cube root of 8');
+    ok(has_approx(exp(1/3*(log(8) + 4i*pi)),@l), 'exp(1/3*(log(8) + 4i*pi)) is a cube root of 8');
 }
 
