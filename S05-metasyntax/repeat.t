@@ -20,7 +20,7 @@ plan 17;
 
 # Exact repetition
 ok("abcabcabcabcd" ~~ m/[abc]**4/, 'Fixed exact repetition');
-ok("abcabcabcabcd" ~~ m/[abc]**5/, 'Fail fixed exact repetition');
+ok(!("abcabcabcabcd" ~~ m/[abc]**5/), 'Fail fixed exact repetition');
 #?pugs todo force_todo
 ok("abcabcabcabcd"    ~~ m/[abc]**{4}/, 'Fixed exact repetition using closure');
 ok(!( "abcabcabcabcd" ~~ m/[abc]**{5}/ ), 'Fail fixed exact repetition using closure');
@@ -44,6 +44,7 @@ eval_dies_ok('"foo" ~~ m/o{1,3}/', 'P5-style {1,3} range mistake is caught');
 eval_dies_ok('"foo" ~~ m/o{1,}/}',  'P5-style {1,} range mistake is caught');
 
 # A successful match of such a quantifier always ends "in the middle"
+#?rakudo 3 skip 'repetion ala my $match = m/\'s\' ** \',\'/ parsefail'
 is('foo,bar,baz,' ~~ m/<alpha> ** ','/, 'foo,bar,baz', '** with a term worked');
 is('foo,bar,baz,' ~~ m/<alpha>**? ','/, 'foo', '**? with a term worked');
 is('foo, bar,' ~~ m/<alpha>**[','\s*]/, 'foo, bar', '** with a more complex term');
