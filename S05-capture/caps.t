@@ -12,8 +12,8 @@ token wc { \w };
 ok 'a b c' ~~ /:s <wc> (\w) <wc> /, 'regex matches';
 is $/.caps.join('|'), 'a|b|c', 'named and positional captures mix correctly';
 
-ok 'a b c d' ~~ /[(\w) \s+]+/, 'regex matches';
-is $/.caps.join('|'), 'a|b|c|d', '[(\w)* \s+]+ flattens (...)* for .caps';
+ok 'a b c d' ~~ /[(\w) \s*]+/, 'regex matches';
+is $/.caps.join('|'), 'a|b|c|d', '[(\w)* \s*]+ flattens (...)* for .caps';
 
 ok 'a b c d' ~~ /:s [(\w) <wc> ]+/, 'regex matches';
 is $/.caps.join('|'), 'a|b|c|d', 
