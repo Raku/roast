@@ -14,6 +14,6 @@ plan 4;
 
 }
 
+#?rakudo skip 'Importation is currently not lexical'
 ok( ! &foo,
     'Foo::foo is undefined in outer scope' );
-
