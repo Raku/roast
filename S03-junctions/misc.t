@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 82;
+plan 88;
 
 =begin pod
 
@@ -323,7 +323,7 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 # used to be a rakudo regression (RT #60886)
 ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
 
-
+## See also S03-junctions/autothreading.t
 #?rakudo skip 'substr on juctions'
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
@@ -348,5 +348,24 @@ ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
   is $res, "bc";
   is $res, "b";
 }
+
+#?rakudo skip 'index on juctions'
+{
+  my $res = index(any("abcd", "qwebdd"), "b");
+  is $res.WHAT, "Junction", "index works on junctions";
+  is $res, 1;
+  is $res, 3;
+}
+
+#?rakudo skip 'index on juctions'
+{
+  my $res = index("qwebdd", "b"|"w");
+  is $res.WHAT, "Junction", "index works on junctions";
+  is $res, 1;
+  is $res, 3;
+}
+
+# my $res = index("abcd", any("b", "c")); say $z.WHAT
+
 
 
