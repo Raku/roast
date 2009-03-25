@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 72;
+plan 74;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -208,5 +208,12 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     is(typed_named(),       1,      '...when value not supplied also...');
     dies_ok({ typed_named("BBQ") }, 'and the type check is enforced');
 }
+
+{
+    sub renames(:y($x)) { $x }
+    is(renames(:y(42)),  42, 'renaming of parameters works');
+    is(renames(y => 42), 42, 'renaming of parameters works');
+}
+
 
 # vim: ft=perl6
