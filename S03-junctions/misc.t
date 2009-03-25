@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 88;
+plan 95;
 
 =begin pod
 
@@ -364,6 +364,50 @@ ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
   ok $res == 1, "index on Junctions: 1";
   ok $res == 3, "index on Junctions: 3";
 }
+
+# Naive implementation of comparing two Junctions
+sub junction_diff(Object $this, Object $that) {
+  if ($this.WHAT ne 'Junction' and $that.WHAT ne 'Junction') {
+    return if $this ~~ $that;
+  }
+  if ($this.WHAT ne 'Junction' and $that.WHAT eq 'Junction') {
+    return "This is not a Junction";
+  }
+  if ($this.WHAT eq 'Junction' and $that.WHAT ne 'Junction') {
+    return "That is not a Junction";
+  }
+  my ($this_type) = $this.perl ~~ /^(\w+)/;
+  my ($that_type) = $that.perl ~~ /^(\w+)/;
+  if ($this_type ne $that_type) {
+    return "This is $this_type, that is $that_type";
+  }
+
+  my @these = sort $this.eigenstates;
+  my @those = sort $that.eigenstates;
+  my @errors;
+  for @these -> $value {
+    if $value !~~ any(@those) {
+      push @errors, "$value is missing from that";
+    }
+  }
+  for @those -> $value {
+    if $value !~~ any(@these) {
+      push @errors, "$value is missing from this";
+    }
+  }
+  return @errors if @errors;
+  return;
+}
+{
+  ok(! junction_diff(1, 1),     'no Junctions');
+  is_deeply(junction_diff(1, 1|2), "This is not a Junction",  'Left value is not a Junction');
+  is_deeply(junction_diff(1|2, 1), "That is not a Junction",  'Right value is not a Junction');
+  ok(! junction_diff(1|2, 1|2), 'same any junctions');
+  is_deeply(junction_diff(1|2, 1&2), 'This is any, that is all', 'different junction types');
+  is_deeply(junction_diff(1|2|3, 1|2), ["3 is missing from that"], 'Value is missing from right side');
+  is_deeply(junction_diff(1|2, 1|2|3), ["3 is missing from this"], 'Value is missing from left side');
+}
+
 
 
 
