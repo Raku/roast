@@ -8,4 +8,7 @@ plan 1;
 #?pugs emit  exit;
 #?pugs emit }
 
+# I don't understand what this test is actually trying to test for, and don't
+# see any reference in S10.
+
 is(eval("use t::spec::packages::Import 'foo'; 123;"), 123, "import doesn't get called if it doesn't exist");
