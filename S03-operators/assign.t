@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 316;
+plan 317;
 
 
 # tests various assignment styles
@@ -253,6 +253,8 @@ my @p;
     is($a, 0, "... and second");
     is(@p[0],0, "&&= operator parses as item assignment 3");
     is(@p[1],11, "&&= operator parses as item assignment 4");
+    my $x = True; $x &&= False; 
+    is($x, False, "&&= operator with True and False");
 }
 
 {
