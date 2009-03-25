@@ -328,44 +328,42 @@ ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
   my $res = substr(any("abcd", "efgh"), 1, 2);
-  is $res.WHAT, "Junction", "substr works on junctions";
-  is $res, "bc";
-  is $res, "fg";
+  isa_ok $res, "Junction";
+  ok $res eq "bc", "substr on Junctions: bc";
+  ok $res eq "fg", "substr on Junctions: fg";
 }
 
 #?rakudo skip 'substr on juctions'
 {
   my $res = substr("abcd", 1|2, 2);
-  is $res.WHAT, "Junction", "substr works on junctions";
-  is $res, "bc";
-  is $res, "cd";
+  isa_ok $res, "Junction";
+  ok $res eq "bc", "substr on Junctions: bc"; 
+  ok $res eq "cd", "substr on Junctions: cd";
 }
 
 #?rakudo skip 'substr on juctions'
 {
   my $res = substr("abcd", 1, 1|2);
-  is $res.WHAT, "Junction", "substr works on junctions";
-  is $res, "bc";
-  is $res, "b";
+  isa_ok $res, "Junction";
+  ok $res eq "bc", "substr on Junctions: bc"; 
+  ok $res eq "b", "substr on Junctions: b"; 
 }
 
 #?rakudo skip 'index on juctions'
 {
   my $res = index(any("abcd", "qwebdd"), "b");
-  is $res.WHAT, "Junction", "index works on junctions";
-  is $res, 1;
-  is $res, 3;
+  isa_ok $res, "Junction";
+  ok $res == 1, "index on Junctions: 1";
+  ok $res == 3, "index on Junctions: 3";
 }
 
 #?rakudo skip 'index on juctions'
 {
   my $res = index("qwebdd", "b"|"w");
-  is $res.WHAT, "Junction", "index works on junctions";
-  is $res, 1;
-  is $res, 3;
+  isa_ok $res, "Junction";
+  ok $res == 1, "index on Junctions: 1";
+  ok $res == 3, "index on Junctions: 3";
 }
-
-# my $res = index("abcd", any("b", "c")); say $z.WHAT
 
 
 
