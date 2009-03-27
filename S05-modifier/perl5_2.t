@@ -15,6 +15,7 @@ my $b = 'x';
 my $backspace = "\b";
 my $bang = '!';
 
+#?rakudo 8 skip 'character classes in brackets unimpl'
 ok(("a b" ~~ rx:P5/a[\s]b/), 're_tests 171  (201)');
 ok((not ("a-b" ~~ rx:P5/a[\s]b/)), 're_tests 173  (203)');
 ok((not ("a b" ~~ rx:P5/a[\S]b/)), 're_tests 175  (205)');
@@ -34,6 +35,7 @@ is(("a(b" ~~ rx:P5/a\(b/ && $/), "a(b", 're_tests 199/0 (231)');
 is(("a(b" ~~ rx:P5/a\(b/ && $0), "", 're_tests 199/1 (232)');
 is(("ab" ~~ rx:P5/a\(*b/ && $/), "ab", 're_tests 201/0 (235)');
 is(("a((b" ~~ rx:P5/a\(*b/ && $/), "a((b", 're_tests 203/0 (237)');
+#?rakudo skip "variable interpolation in p5 regex"
 is(("a\b" ~~ rx:P5/a$backspace/ && $/), "a\b", 're_tests 205/0 (239)');
 is(("a\\b" ~~ rx:P5/a\\b/ && $/), "a\\b", 're_tests 205/0 (239)');
 is(("abc" ~~ rx:P5/((a))/ && $/), "a", 're_tests 207/0 (241)');
@@ -65,6 +67,7 @@ is(("" ~~ rx:P5/a*/ && $/), "", 're_tests 237/0 (291)');
 is(("abbbcd" ~~ rx:P5/([abc])*d/ && $/), "abbbcd", 're_tests 239/0 (293)');
 is(("abbbcd" ~~ rx:P5/([abc])*d/ && $0), "c", 're_tests 239/1 (294)');
 is(("abcd" ~~ rx:P5/([abc])*bcd/ && $/), "abcd", 're_tests 241/0 (297)');
+#?rakudo skip 'unknown error'
 is(("abcd" ~~ rx:P5/([abc])*bcd/ && $0), "a", 're_tests 241/1 (298)');
 is(("e" ~~ rx:P5/a|b|c|d|e/ && $/), "e", 're_tests 243/0 (301)');
 is(("ef" ~~ rx:P5/(a|b|c|d|e)f/ && $/), "ef", 're_tests 245/0 (303)');
