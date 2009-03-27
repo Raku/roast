@@ -14,7 +14,6 @@ plan 5;
 }
 
 # simple while modifier test
-#?rakudo skip '+= operator does not work on uninitialized variable'
 {
     my $a;
     $a += 1 while $a < 10;
