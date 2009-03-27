@@ -11,8 +11,8 @@ plan 76;
 ok(4\       .sqrt == 2, 'unspace with numbers');
 #?rakudo skip 'unspace with comments'
 is(4\#(quux).sqrt, 2, 'unspace with comments');
-is("x"\     .codes, 1, 'unspace with strings');
-is("x"\     .codes(), 1, 'unspace with strings + parens');
+is("x"\     .chars, 1, 'unspace with strings');
+is("x"\     .chars(), 1, 'unspace with strings + parens');
 
 #?rakudo skip 'lexicals in eval'
 {
@@ -25,9 +25,9 @@ is(eval('$foo\       .--'), 6, 'unspace with postfix dec');
 is($foo, 5, 'unspace with postfix dec really postfix');
 }
 
-is("xxxxxx"\.bytes, 6, 'unspace without spaces');
+is("xxxxxx"\.chars, 6, 'unspace without spaces');
 is("xxxxxx"\
-    .bytes, 6, 'unspace with newline');
+    .chars, 6, 'unspace with newline');
 
 is((:foo\ ("bar")), ('foo' => "bar"), 'unspace with adverb');
 
@@ -44,6 +44,7 @@ eval "
     @array\ .»\  .++;
 ";
 #?pugs todo 'unimpl'
+#?rakudo todo 'unimpl'
 is( ~@array, "7 8 9", 'unspace with postfix hyperops');
 
 
@@ -64,13 +65,13 @@ $_ = 'b';
 
 #XXX why is eval required here?
 {
-is(eval('foo.id'), 'a', 'sanity - foo.id');
-is(eval('foo .id'), 'b', 'sanity - foo .id');
-is(eval('bar.id'), 'a', 'sanity - bar.id');
-is(eval('bar .id'), 'b', 'sanity - bar .id');
-is(eval('foo\.id'), 'a', 'short unspace');
-is(eval('foo\ .id'), 'a', 'unspace');
-is(eval('foo \ .id'), 'b', 'not a unspace');
+is((foo.id   ), 'a', 'sanity - foo.id');
+is((foo .id  ), 'b', 'sanity - foo .id');
+is((bar.id   ), 'a', 'sanity - bar.id');
+is((bar .id  ), 'b', 'sanity - bar .id');
+is((foo\.id  ), 'a', 'short unspace');
+is((foo\ .id ), 'a', 'unspace');
+is((foo \ .id), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.id', 'unspace not allowed in identifier');
 is(eval('foo\    .id'), 'a', 'longer dot');
 is(eval('foo\#( comment ).id'), 'a', 'unspace with embedded comment');
