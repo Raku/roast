@@ -12,8 +12,6 @@ ok $str.match(/h/),         'We can use match';
 is $str,  'hello',          '.. it does not do side effect';
 ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 
-#?rakudo skip 'Null PMC access in can()'
-#?DOES 6
 {
     for ('a'..'f') {
         my $r = eval("rx/$_/");
