@@ -63,8 +63,6 @@ sub bar($x? = 'a') { $x }
 
 $_ = 'b';
 
-#XXX why is eval required here?
-{
 is((foo.id   ), 'a', 'sanity - foo.id');
 is((foo .id  ), 'b', 'sanity - foo .id');
 is((bar.id   ), 'a', 'sanity - bar.id');
@@ -87,6 +85,8 @@ is(eval('foo\
 blah blah blah
 =end comment
     .id'), 'a', 'unspace with pod =begin/=end comment');
+#?rakudo skip '=for pod not implemented (in STD.pm)'
+{
 is(eval('foo\
 =for comment
 blah
@@ -94,6 +94,7 @@ blah
 blah
 
     .id'), 'a', 'unspace with pod =for comment');
+}
 is(eval('foo\
 =comment blah blah blah
     .id'), 'a', 'unspace with pod =comment');
@@ -106,6 +107,8 @@ is(eval('foo\
 blah blah blah
 =\ end comment
     .id'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
+#?rakudo skip '=for pod not implemented (in STD.pm)'
+{
 is(eval('foo\
 =\ for comment
 blah
@@ -113,6 +116,7 @@ blah
 blah
 
     .id'), 'a', 'unspace with pod =for comment w/ pod unspace');
+}
 is(eval('foo\
 =\ comment blah blah blah
     .id'), 'a', 'unspace with pod =comment w/ pod unspace');
@@ -129,6 +133,8 @@ blah blah blah
 =end nested pod
 end comment
     .id'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
+#?rakudo skip '=for pod not implemented (in STD.pm)'
+{
 is(eval('foo\
 =\
 =for nested pod
@@ -176,6 +182,7 @@ end comment		#5
     .id'), 'a', 'hideous nested pod torture test');
 
 }
+
 # L<S04/"Statement-ending blocks"/"Because subroutine declarations are expressions">
 #XXX probably shouldn't be in this file...
 
@@ -198,6 +205,7 @@ class Code is also {
     method xyzzy(Code $x: *@y) { $x.(@y) }
 }
 
+#?rakudo 3 skip 'indirect method calls'
 is(eval('xyzzy { @^x }: 1, 2, 3'), (1, 2, 3), 'colon immediately following arg block');
 is(eval('xyzzy { @^x } : 1, 2, 3'), (1, 2, 3), 'colon not immediately following arg block');
 is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following arg block');
