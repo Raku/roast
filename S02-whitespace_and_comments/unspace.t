@@ -7,14 +7,13 @@ plan 76;
 # L<S02/"Whitespace and Comments"/This is known as the "unspace">
 
 
-#?rakudo skip "get_string() not implemented in class 'ResizableStringArray'"
 ok(4\       .sqrt == 2, 'unspace with numbers');
 #?rakudo skip 'unspace with comments'
 is(4\#(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
 
-#?rakudo skip 'lexicals in eval'
+#?rakudo todo 'lexicals in eval'
 {
 my $foo = 4;
 is(eval('$foo.++'), 4, '(short) unspace with postfix inc');
