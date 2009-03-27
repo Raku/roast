@@ -11,12 +11,13 @@ unless "a" ~~ rx:P5/a/ {
   exit;
 }
 
-force_todo(73..75); # PCRE hard parsefails
+# force_todo(73..75); # PCRE hard parsefails
 
 my $b = 'x';
 my $backspace = "\b";
 my $bang = '!';
 
+#?rakudo 9 skip '(?m) not implemented'
 ok((not ("abb\nb\n" ~~ rx:P5/(?m)abb\Z/)), 're_tests 1049  (1253)');
 ok((not ("abb\nb\n" ~~ rx:P5/(?m)abb\z/)), 're_tests 1050  (1254)');
 is(("abb\nb\n" ~~ rx:P5/(?m)abb$/ && $/.from), 0, 're_tests 1051/0 (1255)');
@@ -64,12 +65,15 @@ ok((not ("b\nca" ~~ rx:P5/(?m)abb\z/)), 're_tests 1104  (1308)');
 ok((not ("b\nca" ~~ rx:P5/(?m)abb$/)), 're_tests 1105  (1309)');
 is(("ca" ~~ rx:P5/(^|x)(c)/ && $1), "c", 're_tests 1106/2 (1310)');
 ok((not ("x" ~~ rx:P5/a*abc?xyz+pqr{3}ab{2,}xy{4,5}pq{0,6}AB{0,}zz/)), 're_tests 1108  (1312)');
+#?rakudo skip '(?>...) not implemented'
 is(("_I(round(xs * sz),1)" ~~ rx:P5/round\(((?>[^()]+))\)/ && $0), "xs * sz", 're_tests 1110/1 (1314)');
 ok(("foo.bart" ~~ rx:P5/foo.bart/), 're_tests 1112  (1316)');
+#?rakudo skip '(?m) not implemented'
 ok(("abcd\ndxxx" ~~ rx:P5/(?m)^d[x][x][x]/), 're_tests 1114  (1318)');
-ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/), 're_tests 1115  (1319)', :todo<bug>);
-ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/), 're_tests 1117  (1321)', :todo<bug>);
-ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/), 're_tests 1119  (1323)', :todo<bug>);
+#?rakudo 18 skip 'expensive quantifier'
+ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/), 're_tests 1115  (1319)');
+ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/), 're_tests 1117  (1321)');
+ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/), 're_tests 1119  (1323)');
 ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/)), 're_tests 1121  (1325)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/)), 're_tests 1123  (1327)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/)), 're_tests 1125  (1329)');
@@ -86,6 +90,7 @@ ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X]/)), 're_
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X][X]/)), 're_tests 1147  (1351)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X][X](.+)+[X]/)), 're_tests 1149  (1353)');
 ok(("xxxtt" ~~ rx:P5/tt+$/), 're_tests 1151  (1355)');
+#?rakudo 6 skip 'character classes in enumerated range'
 is(("za-9z" ~~ rx:P5/([a-\d]+)/ && $0), "a-9", 're_tests 1153/1 (1357)');
 is(("a0-za" ~~ rx:P5/([\d-z]+)/ && $0), "0-z", 're_tests 1155/1 (1359)');
 is(("a0- z" ~~ rx:P5/([\d-\s]+)/ && $0), "0- ", 're_tests 1157/1 (1361)');
@@ -99,9 +104,11 @@ ok((not ("aaaXbX" ~~ rx:P5/\GX.*X/)), 're_tests 1162  (1366)');
 is(("3.1415926" ~~ rx:P5/(\d+\.\d+)/ && $0), "3.1415926", 're_tests 1163/1 (1367)');
 is(("have a web browser" ~~ rx:P5/(\ba.{0,10}br)/ && $0), "a web br", 're_tests 1165/1 (1369)');
 ok((not ("Changes" ~~ rx:P5/(?i)\.c(pp|xx|c)?$/)), 're_tests 1167  (1371)');
+#?rakudo 2 skip '(?i) not implemented'
 ok(("IO.c" ~~ rx:P5/(?i)\.c(pp|xx|c)?$/), 're_tests 1169  (1373)');
 is(("IO.c" ~~ rx:P5/(?i)(\.c(pp|xx|c)?$)/ && $0), ".c", 're_tests 1171/1 (1375)');
 ok((not ("C:/" ~~ rx:P5/^([a-z]:)/)), 're_tests 1173  (1377)');
+#?rakudo skip '(?m) not implemented'
 ok(("\nx aa" ~~ rx:P5/(?m)^\S\s+aa$/), 're_tests 1175  (1379)');
 ok(("ab" ~~ rx:P5/(^|a)b/), 're_tests 1176  (1380)');
 ok((not ("abcab" ~~ rx:P5/(\w)?(abc)\1b/)), 're_tests 1178  (1382)');
@@ -121,5 +128,7 @@ is(("aaa,b,c,d" ~~ rx:P5/^([^,]{1,},){0,3}d/ && $0), "c,", 're_tests 1204/1 (140
 is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){3}d/ && $0), "c,", 're_tests 1206/1 (1410)');
 is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){3,}d/ && $0), "c,", 're_tests 1208/1 (1412)');
 is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){0,3}d/ && $0), "c,", 're_tests 1210/1 (1414)');
+#?rakudo skip '(?i) not implemented'
 ok(("" ~~ rx:P5/(?i)/), 're_tests 1212  (1416)');
+#?rakudo skip '(?m) not implemented'
 ok(("a\nxb\n" ~~ rx:P5/(?m)(?!\A)x/), 're_tests 1214  (1418)');
