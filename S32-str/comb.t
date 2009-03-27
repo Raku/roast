@@ -57,8 +57,7 @@ isa_ok("forty-two".comb(/./), List);
 # comb a list
 
 #?pugs todo 'feature'
-#?rakudo skip 'm:Perl5'
-is eval('(<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/)'), <a ab ad ba>,
+is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
 # needed: comb a filehandle
