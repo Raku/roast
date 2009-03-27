@@ -75,11 +75,13 @@ is((foo \ .id), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.id', 'unspace not allowed in identifier');
 is(eval('foo\    .id'), 'a', 'longer dot');
 is(eval('foo\#( comment ).id'), 'a', 'unspace with embedded comment');
+#?rakudo skip 'unimplemented'
 eval_dies_ok('foo\#\ ( comment ).id', 'unspace can\'t hide space between # and opening bracket');
-is(eval('foo\ # comment
-    .id'), 'a', 'unspace with end-of-line comment');
-is(eval(':foo\ <bar>'), (:foo<bar>), 'unspace in colonpair');
-is(eval('foo\ .\ ("x")'), 'x', 'unspace is allowed both before and after method .');
+is((foo\ # comment
+    .id), 'a', 'unspace with end-of-line comment');
+is((:foo\ <bar>), (:foo<bar>), 'unspace in colonpair');
+#?rakudo skip 'unimplemented'
+is((foo\ .\ ("x")), 'x', 'unspace is allowed both before and after method .');
 is(eval('foo\
 =begin comment
 blah blah blah
