@@ -10,6 +10,7 @@ eval_dies_ok('qr/foo/', 'qr// is gone');
 #?rakudo 2 skip 'rx// syntax not implemented'
 isa_ok(rx/oo/, Regex);
 isa_ok(rx (o), Regex);
+#?rakudo skip 'rx() not detected'
 eval_dies_ok('rx(o)', 'rx () whitespace if the delims are parens');
 #?rakudo todo 'regex {} does not make a Regex object'
 isa_ok(regex {oo}, Regex);
