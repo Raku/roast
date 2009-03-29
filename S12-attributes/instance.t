@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 87;
 
 =begin pod
 
@@ -127,14 +127,14 @@ class Foo1 { has $.bar; };
 # L<S12/Construction and Initialization/If you name an attribute as a parameter, that attribute is initialized directly, so>
 
 
-#?rakudo skip 'parse fail'
+#?rakudo skip 'calling positional params by name'
 {
     class Foo6 {
         has $.bar is rw;
         has $.baz;
         has $!hidden;
 
-        submethod BUILD($.bar, $.baz, $!hidden) {}
+        submethod BUILD($self, $.bar, $.baz, $!hidden) {}
         method get_hidden() { $!hidden }
     }
 
@@ -193,17 +193,6 @@ class Foo1 { has $.bar; };
 ok eval('class Foo7 { has $.attr = 42 }; 1'), "class definition worked";
 is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 
-# L<A12/Default Values/is equivalent to this:>
-#?rakudo 4 skip 'attribute initialization'
-ok eval('class Foo8 { has $.attr is build(42) }; 1'),
-  "class definition using 'is build' worked";
-is eval('Foo8.new.attr'), 42, "default attribute value (2)";
-
-# L<A12/Default Values/is equivalent to this:>
-ok eval('class Foo9 { has $.attr will build(42) }; 1'),
-  "class definition using 'will build' worked";
-is eval('Foo9.new.attr'), 42, "default attribute value (3)";
-
 #?rakudo skip 'lexicals visible outside eval'
 {
     my $was_in_supplier = 0;
@@ -213,19 +202,6 @@ is eval('Foo9.new.attr'), 42, "default attribute value (3)";
     is eval('Foo10.new.attr'), 42, "default attribute value (4)";
     is      $was_in_supplier, 1,  "forty_two_supplier() was actually executed (1)";
 
-# The same, but using 'is build {...}'
-# XXX: Currently hard parsefail!
-    ok eval('class Foo11 { has $.attr is build { forty_two_supplier() } }; 1'),
-    'class definition using "is build {...}" worked';
-    is eval('Foo11.new.attr'), 42, "default attribute value (5)";
-    is      $was_in_supplier, 2,  "forty_two_supplier() was actually executed (2)";
-
-# The same, but using 'will build {...}'
-# XXX: Currently hard parsefail!
-    ok eval('class Foo12 { has $.attr will build { forty_two_supplier() } }; 1'),
-    "class definition using 'will build {...}' worked";
-    is eval('Foo11.new.attr'), 42, "default attribute value (6)";
-    is      $was_in_supplier, 3,  "forty_two_supplier() was actually executed (3)";
 }
 
 # check that doing something in submethod BUILD works
