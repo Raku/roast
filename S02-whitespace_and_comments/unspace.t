@@ -13,14 +13,14 @@ is(4\#(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
 
-#?rakudo todo 'lexicals in eval'
+#?rakudo skip 'unspace with postfix operators'
 {
 my $foo = 4;
-is(eval('$foo.++'), 4, '(short) unspace with postfix inc');
+is($foo.++, 4, '(short) unspace with postfix inc');
 is($foo, 5, '(short) unspace with postfix inc really postfix');
-is(eval('$foo\       .++'), 5, 'unspace with postfix inc');
+is($foo\       .++, 5, 'unspace with postfix inc');
 is($foo, 6, 'unspace with postfix inc really postfix');
-is(eval('$foo\       .--'), 6, 'unspace with postfix dec');
+is($foo\       .--, 6, 'unspace with postfix dec');
 is($foo, 5, 'unspace with postfix dec really postfix');
 }
 

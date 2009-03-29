@@ -75,10 +75,10 @@ is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure i
 # Quoting constructs
 # The next test will always succeed, but if there's a bug it probably
 # won't compile.
-#?rakudo 6 skip 'Q quoting'
 is(Q"abc\\d\\'\/", Q"abc\\d\\'\/", "raw quotation works");
 is(q"abc\\d\"\'\/", Q|abc\d"\'\/|, "single quotation works"); #"
 is(qq"abc\\d\"\'\/", Q|abc\d"'/|, "double quotation works"); #"
+#?rakudo 3 skip 'qa qb and array/hash interpolation'
 is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");
 is('$world \qq[@list[]] %hash{}', '$world 1 2 %hash{}', "interpolate quoting constructs in ''");

@@ -11,7 +11,7 @@ This covers anonymous blocks and subs, as well as pointy blocks
 
 =end description
 
-plan 32;
+plan 31;
 
 # L<S04/"The Relationship of Blocks and Declarations">
 # L<S06/"Anonymous subroutines">
@@ -61,13 +61,6 @@ is($foo, "blah", "lone block actually executes it's content");
 my $foo2;
 {$foo2 = "blah"};
 is($foo2, "blah", "lone block w/out a semicolon actually executes it's content");
-
-# XXX if this test is correct, it certainly needs a smartlink 
-my $foo3;
-({$foo3 = "blah"});
-#?pugs eval "bug"
-#?rakudo todo "unknown"
-ok(!defined($foo3), "block enclosed by parentheses should not auto-execute (1)", );
 
 my $foo4;
 ({$foo4 = "blah"},);

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 103;
+plan 101;
 
 =begin kwid
 
@@ -255,23 +255,6 @@ magically went away when used inside an eval.  So the try blocks
 caught that case.
 
 =end begin Explanation
-
-#?rakudo skip 'pointy blocks'
-{
-    #L<S09/"Junctions">
-    my @x = 1..20;
-    my $code = -> $x { $x % 2 };
-    my @result;
-    my $parsed = 0;
-    try {
-        @result = any(@x) ~~ $code;
-        $parsed = 1;
-    };
-    ok $parsed, 'C<my @result = any(@x) ~~ $code> parses';
-    my @expected_result = grep $code, @x;
-    ok @result ~~ @expected_result,
-        'C<any(@x) ~~ {...}> works like C<grep>', :todo<feature>;
-}
 
 {
     my $result = 0;

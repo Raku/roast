@@ -148,29 +148,30 @@ plan 24;
     ok($naughty, "caught superclass");
 };
 
-#?rakudo skip 'lexicals in eval()'
 {
     # uncaught class
     class Dandy is Exception {};
 
     my ($naughty, $lived);
-    'try {
-        die Dandy("error");
+    eval '
+        try {
+            die Dandy("error");
 
-        CATCH {
-            when Naughty {
-                $naughty = 1;
+            CATCH {
+                when Naughty {
+                    $naughty = 1;
+                }
             }
-        }
-    };
-
-    $lived = 1;
+        };
+        $lived = 1;
     ';
 
+    #?rakudo todo 'try/CATCH'
     ok(!$lived, "did not live past uncaught throw in try");
     ok(~WHAT($!), '$! is an object');
     ok(!$naughty, "did not get caught by wrong handler");
-    #?pugs todo 'bug'
-    is(eval('WHAT($!)'), 'Dandy', ".. of the right class");
+    #?pugs skip 'bug'
+    #?rakudo todo 'Exception types'
+    is(WHAT($!), Dandy, ".. of the right class");
 };
 

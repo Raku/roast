@@ -25,13 +25,13 @@ is($pair.value, 'bar', 'got the right $pair.value');
 
 my @pair1a = kv($pair);
 is(+@pair1a, 2, 'got the right number of elements in the list');
-#?rakudo 2 skip 'kv() ambiguity'
+#?rakudo 2 todo 'kv() ambiguity'
 is(@pair1a[0], 'foo', 'got the right key');
 is(@pair1a[1], 'bar', 'got the right value');
 
 my @pair1b = kv $pair;
 is(+@pair1b, 2, 'got the right number of elements in the list');
-#?rakudo 2 skip 'kv() ambiguity'
+#?rakudo 2 todo 'kv() ambiguity'
 is(@pair1b[0], 'foo', 'got the right key');
 is(@pair1b[1], 'bar', 'got the right value');
 
@@ -82,21 +82,18 @@ is($quux.key, 'quux', "lhs quotes" );
 {
     # L<S02/Immutable types/A single key-to-value association>
     my $pair = :when<now>;
-    #?rakudo 2 skip "parse failure"
-    is ~(%$pair), "when\tnow";
+    is ~(%($pair)), "when\tnow\n", 'hash stringification';
     # hold back this one according to audreyt
     #ok $pair.does(Hash), 'Pair does Hash';
-    # XXX is this test right? Doesn't %$stuff just imply role Associative?
     #?pugs TODO "bug"
-    ok (%$pair).does(Hash), '%() makes Pair to does Hash';
+    ok (%($pair) ~~ Hash), '%() makes creates a real Hash';
 }
 
 # illustrate a bug
 
-#?rakudo skip "parse failure"
 {
     my $var   = 'foo' => 'bar';
-    sub test1 (Any|Pair $pair) {
+    sub test1 (Pair $pair) {
         isa_ok($pair,Pair);
         my $testpair = $pair;
         isa_ok($testpair,Pair); # new lvalue variable is also a Pair
@@ -301,7 +298,7 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
 ##  These tests really belong in a different test file -- probably
 ##  something in S06.  --pmichaud
 # L<S06/Named arguments/In other words :$when is shorthand for :when($when)>
-#?rakudo skip ':$arg not implemented'
+#?rakudo skip 'infix:<eqv>'
 {
     my $item = 'bar';
     my $pair = (:$item);
@@ -314,7 +311,10 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
     my %hash = foo => 'bar', baz => 'qux';
     $pair = (:%hash);
     ok($pair eqv (hash => %hash), ':%foo syntax works');
+}
 
+#?rakudo skip "Scope not found for PAST::Var '&code'"
+{
     my sub code {return 42}
     $pair = (:&code);
     ok($pair eqv (code => &code), ':&foo syntax works');

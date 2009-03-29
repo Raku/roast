@@ -77,8 +77,8 @@ isa_ok($bool, Bool, 'it is a Bool type');
 my $pair = ("foo" => "bar");
 isa_ok($pair, Pair, 'it is a Pair type');
 
-#?rakudo skip 'rx/.../'
 {
     my $rule = rx/^hello\sworld$/;
+    #?rakudo todo 'type Regex'
     isa_ok($rule, Regex, 'it is a Regex type');
 }

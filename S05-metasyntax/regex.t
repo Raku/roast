@@ -7,7 +7,7 @@ plan 14;
 
 eval_dies_ok('qr/foo/', 'qr// is gone');
 
-#?rakudo 2 skip 'rx// syntax not implemented'
+#?rakudo 2 todo 'type for regex'
 isa_ok(rx/oo/, Regex);
 isa_ok(rx (o), Regex);
 #?rakudo skip 'rx() not detected'

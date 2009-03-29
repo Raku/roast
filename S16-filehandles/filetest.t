@@ -31,10 +31,10 @@ lives_ok { 'non_existing_dir' ~~ :d },
          'can :d-test against non-existing dir and live';
 ok !('non_existing_dir' ~~ :d ),
          'can :d-test against non-existing dir and return false';
-#?rakudo 5 skip '$*PROGRAM_NAME'
 ok $*PROGRAM_NAME ~~ :f,  "~~:f returns true on files";
 ok $*PROGRAM_NAME ~~ :e,  "~~:e returns true on files";
 ok 't' ~~ :e,             "~~:e returns true on directories";
+#?rakudo 2 skip ':r, :w'
 ok $*PROGRAM_NAME ~~ :r,  "~~:r returns true on readable files";
 ok $*PROGRAM_NAME ~~ :w,  "~~:w returns true on writable files";
 

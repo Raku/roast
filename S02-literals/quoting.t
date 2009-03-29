@@ -28,11 +28,12 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is $s, ' foo bar ', 'string using q{}';
 }
 
-#?rakudo skip 'Quoting with q{{ ... }}'
 {
+    #?rakudo skip 'nested curlies in q{...}'
     is q{ { foo } }, ' { foo } ',   'Can nest curlies in q{ .. }';
     is q{{ab}},      'ab',          'Unnested single curlies in q{{...}}';
     is q{{ fo} }},   ' fo} ',       'Unnested single curlies in q{{...}}';
+    #?rakudo skip 'nested double curlies in q{{...}}'
     is q{{ {{ } }} }}, ' {{ } }} ', 'Can nest double curlies in q{{...}}';
 }
 
@@ -350,10 +351,10 @@ FOO
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>", :todo<bug>);
 };
 
-#?rakudo skip  'escape sequences'
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');
+    #?rakudo skip '\c123'
     is("\c123", chr 123, '"\cXXX" and chr XXX are equivalent');
     is("\c[12]3", chr(12) ~ "3", '\c[12]3 is the same as chr(12) concatenated with "3"');
     is("\c[12] 3", chr(12) ~ " 3", 'respects spaces when interpolating a space character');
@@ -362,6 +363,7 @@ FOO
     is("\x41", "A", 'hex interpolation - \x41 is "A"');
     is("\o101", "A", 'octal interpolation - \o101 is also "A"' );
 
+    #?rakudo 3 skip '\c$char'
     is("\c@", "\0", 'Unicode code point "@" converts correctly to "\0"');
     is("\cA", chr 1, 'Unicode "A" is #1!');
     is("\cZ", chr 26, 'Unicode "Z" is chr 26 (or \c26)');

@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 317;
+plan 318;
 
 
 # tests various assignment styles
@@ -240,6 +240,10 @@ my @p;
     is(WHAT %hash<foo>, 'Hash', "Verify //= autovivifies correctly");
     %hash<bar> //= [];
     is(WHAT %hash<bar>, 'Array', "Verify //= autovivifies correctly");
+
+    my $f //= 5;
+    #?rakudo todo '//= in declaration'
+    is $f, 5, '//= also works in declaration';
 }
 
 {

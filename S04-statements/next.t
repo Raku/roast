@@ -53,9 +53,10 @@ plan 12;
     );
 }
 
-#?rakudo todo 'lexical vars in eval'
+#?rakudo skip 'next BLOCK'
 {
-    my $tracker="err"; eval '$tracker = 0; DONE: for 1..2 { next DONE; $tracker++;}';
+    my $tracker="err"; 
+    $tracker = 0; DONE: for 1..2 { next DONE; $tracker++;};
     is(
         $tracker,
         0,
@@ -71,9 +72,16 @@ plan 12;
     );
 }
 
-#?rakudo todo 'lexical vars in eval'
+#?rakudo skip 'next LOOP'
 {
-    my $tracker="err"; eval '$tracker = 0; OUT: for 1..2 { IN: for 1..2 { next OUT; $tracker++; } }';
+    my $tracker="err"; 
+    $tracker = 0; 
+    OUT: for 1..2 {
+        IN: for 1..2 {
+            next OUT;
+            $tracker++;
+        }
+    }
     is(
         $tracker,
         0,

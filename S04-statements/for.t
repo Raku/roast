@@ -225,44 +225,34 @@ my @elems = <a b c d e>;
 }
 
 # .key //= ++$i for @array1;
-#?rakudo skip 'implicit invocant'
+class TestClass{ has $.key is rw  };
+
+#?rakudo todo '//='
 {
-   class TestClass is rw { has $.key; };
-   my @array1 = (TestClass.new(),TestClass.new(:key<2>));
-   my @array2 = (TestClass.new(:key<1>),TestClass.new(:key<3>));   
+   my @array1 = (TestClass.new(:key<1>),TestClass.new());
    
    my $i = 0;
-   try { .key //= ++$i for @array1 };
-   my $sum1 = @array1.map:{ $_.key };
-   my $sum2 = @array2.map:{ $_.key };
-   is( $sum1, $sum2, '.key //= ++$i for @array1;', :todo<bug>);
+   my $sum1 = [+] @array1.map: { $_.key };
+   is( $sum1, 2, '.key //= ++$i for @array1;', :todo<bug>);
 
 }
 
 # .key = 1 for @array1;
-#?rakudo skip 'implicit invocant'
 {
-   class TestClass is rw { has $.key; };
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
-   my @array2 = (TestClass.new(:key<1>),TestClass.new(:key<1>));   
 
-   try { .key = 1 for @array1 };
-   my $sum1 = @array1.map:{ $_.key };
-   my $sum2 = @array2.map:{ $_.key };
-   is($sum1, $sum2, '.key = 1 for @array1;');
+   .key = 1 for @array1;
+   my $sum1 = [+] @array1.map: { $_.key };
+   is($sum1, 2, '.key = 1 for @array1;');
 }
 
 # $_.key = 1 for @array1;
-#?rakudo skip 'parsefail'
 {
-   class TestClass is rw { has $.key; };
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
-   my @array2 = (TestClass.new(:key<1>),TestClass.new(:key<1>));   
 
    $_.key = 1 for @array1;
-   my $sum1 = @array1.map: { $_.key };
-   my $sum2 = @array2.map: { $_.key };
-   is( $sum1, $sum2, '$_.key = 1 for @array1;');
+   my $sum1 = [+] @array1.map: { $_.key };
+   is( $sum1, 2, '$_.key = 1 for @array1;');
 
 }
 
@@ -422,7 +412,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $c, 6, 'for loop ends in time using last';
 }
 
-#?rakudo skip 'infinite for loop'
+#?rakudo skip 'lazy lists (loops)'
 {
   my $c;
   for 1..* {
@@ -432,7 +422,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $c, 6, 'infinte for loop ends in time using last';
 }
 
-#?rakudo skip 'infinite for loop'
+#?rakudo skip 'lazy lists (loops)'
 {
   my $c;
   for 1..Inf {

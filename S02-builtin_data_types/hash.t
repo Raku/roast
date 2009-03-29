@@ -127,8 +127,7 @@ is($key, 1, '%hash.kv gave us our key');
 is($val, 2, '%hash.kv gave us our val');
 
 %hash9{2} = 3;
-#?rakudo 1 skip "rx:Perl5// not implemented"
-like(~%hash9, rx:Perl5/1\s+2\s+2\s+3/, "hash can stringify");
+ok(~%hash9 ~~ m{^(1\t2\s+2\t3|2\t3\s+1\t2)\s*$}, "hash can stringify");
 
 my %hash10 = <1 2>;
 is(%hash10<1>, 2, "assignment of pointy qw to hash");
@@ -158,14 +157,13 @@ test2 %h;
 # the bias-to-the-right behaviour, consistent with Perl 5.
 #
 #?DOES 4
-#?rakudo skip "hash contextualizer unimplemented"
-{
+
 my %dupl = (a => 1, b => 2, a => 3);
 is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 # Moved from t/xx-uncategorized/hashes-segfault.t
 # Caused some versions of pugs to segfault
-my %hash = %(zip('a'..'d';1..4));
+my %hash = %('a'..'d' Z 1..4);
 my $i = %hash.elems; # segfaults
 is $i, 4, "%hash.elems works";
 
@@ -175,4 +173,3 @@ is $i, 4, "for %hash works";
 
 eval ' @%(a => <b>)<a> ';
 ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
-}

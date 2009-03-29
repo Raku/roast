@@ -157,3 +157,5 @@ ok($fh9.close, 'file closed okay (9)');
 #?pugs todo 'buggy on Win32'
 ok(unlink($filename), 'file has been removed');
 ok $filename !~~ :e, '... and the tempfile is gone, really';
+
+# vim: ft=perl6

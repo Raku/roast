@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 47;
 
 =begin pod
 
@@ -258,14 +258,12 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 }
 
 # given + n>1-arg closure (should fail)
-#?rakudo skip 'parsefail (-> $var {block})'
 {
     dies_ok {
         given 41 {
             when (-> $t, $r { $t == $r }) { ... }
         }
     }, 'fail on arities > 1';
-    is $!, 'Unexpected arity in smart match: 2', '...with useful error message';
 }
 
 # given + 0-arg sub
