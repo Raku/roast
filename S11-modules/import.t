@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S11/"Compile-time Importation"/>
 
@@ -33,3 +33,16 @@ plan 15;
 #?rakudo todo 'Importation is currently not lexical'
 ok( ! &foo,
     'Foo::foo is undefined in outer scope' );
+
+{
+    BEGIN { @*INC.push('t/spec/packages') };
+    class TestImportInClass {
+        use A::B;
+        method doit {
+            A::B::D.new();
+        }
+    }
+    lives_ok { TestImportInClass.doit() },
+             "can instantiate class that's loaded from inside another class";
+
+}
