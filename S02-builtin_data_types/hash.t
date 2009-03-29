@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 58;
+plan 59;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -173,3 +173,6 @@ is $i, 4, "for %hash works";
 
 eval ' @%(a => <b>)<a> ';
 ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
+
+# test for RT #62730
+lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
