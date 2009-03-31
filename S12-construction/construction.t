@@ -6,21 +6,25 @@ plan 12;
 
 # L<S12/"Construction and Initialization">
 
-my $in_own = 0;
-class OwnConstructor {
+class OwnConstr {
     has $.x = 13;
-    method own(Class $class) {
+    my $in_own = 0;
+    method own() {
         $in_own++;
-        return $class.bless(:x(42));
+        return self.bless(:x(42));
+    }
+    method in_own {
+        $in_own;
     }
 }
 ok OwnConstr.new ~~ OwnConstr, "basic class instantiation";
 is OwnConstr.new.x, 13,        "basic attribute access";
 # As usual, is instead of todo_is to suppress unexpected succeedings
-is      $in_own, 0,                   "own constructor was not called";
+is OwnConstr.in_own, 0,                   "own constructor was not called";
 ok OwnConstr.own ~~ OwnConstr, "own construction instantiated its class";
 is OwnConstr.own.x, 42,        "attribute was set from our constructor";
-is      $in_own, 1,            "own constructor was actually called";
+#?rakudo todo 'unknown'
+is OwnConstr.in_own, 1,            "own constructor was actually called";
 
 
 # L<"http://www.mail-archive.com/perl6-language@perl.org/msg20241.html">
@@ -29,15 +33,16 @@ is      $in_own, 1,            "own constructor was actually called";
 class Foo {
   has $.a;
   
-  method new (Class $self: Str $string) {
-    $.a = $string;
+  method new ($self: Str $string) {
     return $self.bless(string => $string);
+    $!a = $string;
   }
 }
 
 
 ok Foo.new("a string") ~~ Foo, '... our Foo instance was created';
 
+#?rakudo todo 'unknown'
 is Foo.new("a string").a, 'a string', "our own 'new' was called", :todo<feature>;
 
 
