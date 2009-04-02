@@ -5,7 +5,7 @@ use Test;
 plan 21;
 
 # L<S04/"Closure traits"/START "runs separately for each clone">
-#?rakudo skip '$_ inside START has some issues, it seems'
+#?rakudo todo '$_ inside START has some issues, it seems'
 {
     is(eval(q{{
         my $str;
@@ -78,7 +78,6 @@ for <first second> {
 }
 
 # L<S04/"Closure traits"/START "caches its value for all subsequent calls">
-#?rakudo skip 'term:START not yet implemented'
 {
     my $was_in_start;
     my $sub = {
