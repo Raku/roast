@@ -19,7 +19,7 @@ plan 20;
 # (They check that the parser doesn't abort, but they might still parse
 #  incorrectly.)
 {
-    my sub foo(*@args, *%named) { 1 }
+    sub foo(*@args, *%named) { 1 }
 
     eval_lives_ok q/foo;      /, 'call with no args, no parens';
     eval_lives_ok q/foo();    /, 'call with no args, has parens';
@@ -49,13 +49,13 @@ plan 20;
 
 # These tests are for mis-parses:
 {
-    my sub succ($x) { $x + 1 }
+    sub succ($x) { $x + 1 }
 
     is(eval(q/succ  (1+2) * 30;/),  91, "parens after space aren't call-parens");
     eval_dies_ok(q/succ .(1+2) * 30;/, 'parsed as method call on $_');
 }
 {
-    my sub first() { "first" }
+    sub first() { "first" }
     
     is(eval(q/first.uc/), 'FIRST', '`first.second` means `(first()).second()`');
 }
