@@ -1707,24 +1707,24 @@ ok("\x[C709]" ~~ m/<?isAny>/, q{Match unanchored (Any character)} );
 # Assigned        # Any non-Cn character (i.e. synonym for \P{Cn})
 
 
-ok("\x[C99D]" ~~ m/^<?isAssigned>$/, q{Match (Any non-Cn character (i.e. synonym for \P{Cn}))} );
-ok(!( "\x[C99D]" ~~ m/^<!isAssigned>.$/ ), q{Don't match negated (Any non-Cn character (i.e. synonym for \P{Cn}))} );
-ok(!( "\x[C99D]" ~~ m/^<-isAssigned>$/ ), q{Don't match inverted (Any non-Cn character (i.e. synonym for \P{Cn}))} );
-ok(!( "\x[D7A4]"  ~~ m/^<?isAssigned>$/ ), q{Don't match unrelated (Any non-Cn character (i.e. synonym for \P{Cn}))} );
-ok("\x[D7A4]"  ~~ m/^<!isAssigned>.$/, q{Match unrelated negated (Any non-Cn character (i.e. synonym for \P{Cn}))} );
-ok("\x[D7A4]"  ~~ m/^<-isAssigned>$/, q{Match unrelated inverted (Any non-Cn character (i.e. synonym for \P{Cn}))} );
-ok("\x[D7A4]\x[C99D]" ~~ m/<?isAssigned>/, q{Match unanchored (Any non-Cn character (i.e. synonym for \P{Cn}))} );
+ok("\x[C99D]" ~~ m/^<?isAssigned>$/, q<Match (Any non-Cn character (i.e. synonym for \P{Cn}))> );
+ok(!( "\x[C99D]" ~~ m/^<!isAssigned>.$/ ), q<Don't match negated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
+ok(!( "\x[C99D]" ~~ m/^<-isAssigned>$/ ), q<Don't match inverted (Any non-Cn character (i.e. synonym for \P{Cn}))> );
+ok(!( "\x[D7A4]"  ~~ m/^<?isAssigned>$/ ), q<Don't match unrelated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
+ok("\x[D7A4]"  ~~ m/^<!isAssigned>.$/, q<Match unrelated negated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
+ok("\x[D7A4]"  ~~ m/^<-isAssigned>$/, q<Match unrelated inverted (Any non-Cn character (i.e. synonym for \P{Cn}))> );
+ok("\x[D7A4]\x[C99D]" ~~ m/<?isAssigned>/, q<Match unanchored (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 
 # Unassigned      # Synonym for \p{Cn}
 
 
-ok("\x[27EC]" ~~ m/^<?isUnassigned>$/, q{Match (Synonym for \p{Cn})} );
-ok(!( "\x[27EC]" ~~ m/^<!isUnassigned>.$/ ), q{Don't match negated (Synonym for \p{Cn})} );
-ok(!( "\x[27EC]" ~~ m/^<-isUnassigned>$/ ), q{Don't match inverted (Synonym for \p{Cn})} );
-ok(!( "\c[RIGHT OUTER JOIN]"  ~~ m/^<?isUnassigned>$/ ), q{Don't match unrelated (Synonym for \p{Cn})} );
-ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<!isUnassigned>.$/, q{Match unrelated negated (Synonym for \p{Cn})} );
-ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<-isUnassigned>$/, q{Match unrelated inverted (Synonym for \p{Cn})} );
-ok("\c[RIGHT OUTER JOIN]\x[27EC]" ~~ m/<?isUnassigned>/, q{Match unanchored (Synonym for \p{Cn})} );
+ok("\x[27EC]" ~~ m/^<?isUnassigned>$/, q<Match (Synonym for \p{Cn})> );
+ok(!( "\x[27EC]" ~~ m/^<!isUnassigned>.$/ ), q<Don't match negated (Synonym for \p{Cn})> );
+ok(!( "\x[27EC]" ~~ m/^<-isUnassigned>$/ ), q<Don't match inverted (Synonym for \p{Cn})> );
+ok(!( "\c[RIGHT OUTER JOIN]"  ~~ m/^<?isUnassigned>$/ ), q<Don't match unrelated (Synonym for \p{Cn})> );
+ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<!isUnassigned>.$/, q<Match unrelated negated (Synonym for \p{Cn})> );
+ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<-isUnassigned>$/, q<Match unrelated inverted (Synonym for \p{Cn})> );
+ok("\c[RIGHT OUTER JOIN]\x[27EC]" ~~ m/<?isUnassigned>/, q<Match unanchored (Synonym for \p{Cn})> );
 
 # Common          # Codepoint not explicitly assigned to a script
 
