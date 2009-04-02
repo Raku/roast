@@ -16,7 +16,9 @@ is "\c[LEFT DOUBLE ANGLE BRACKET]", "《", '\c[LEFT DOUBLE ANGLE BRACKET]';
 
 #?pugs 3 todo 'Character literals with \c$number'
 is("\c[LINE FEED (LF)]", "\c10", '\c[LINE FEED (LF)] works');
+#?rakudo skip '\c[LINE FEED] not valid'
 is("\c[LINE FEED]", "\c10", '\c[LINE FEED] works');
+#?rakudo skip '\c[LF] not valid'
 is("\c[LF]", "\c10", '\c[LF] works');
 
 # L<S02/Literals/"Multiple codepoints constituting a single character">
