@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 14;
 
 # basic test that multi is lexical
 {
@@ -32,5 +32,25 @@ plan 8;
     dies_ok({ bar() },       'no multi variants callable outside of lexical scope');
     dies_ok({ bar('kava') }, 'no multi variants callable outside of lexical scope');
 }
+
+# an inner multi with a signature matching an outer will conflict
+{
+    my multi baz() { 1 }
+    {
+        my multi baz() { 2 }
+        dies_ok({ baz() }, 'inner multi conflicts with outer one');
+    }
+    is(baz(), 1, 'in outer scope, no inner multi, so no conflict');
+}
+
+# lexical multi can add to package multi if no outer lexical ones
+multi waz() { 1 }
+{
+    my multi waz($x) { 2 }
+    is(waz(),       1, 'got multi from package');
+    is(waz('slon'), 2, 'lexical multi also callable');
+}
+is(waz(), 1,             'multi from package still callable outside the inner scope...');
+dies_ok({ waz('vtak') }, '...but lexical multi no longer callable');
 
 # vim: ft=perl6 :
