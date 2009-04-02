@@ -4,7 +4,7 @@ plan 6;
 
 # L<S16/"Filehandles, files, and directories"/"unlink">
 
-sub nonce() { ".{$*PID}." ~ 1000.rand.Int }
+sub nonce() { "unlink-t-testfile-" ~ 1000.rand }
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -22,14 +22,15 @@ my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of f
 
   ok $fn ~~ :e,      "open() created a tempfile";
   is(unlink($fn), 1, "unlink() returned true");
-  ok $fn ~~ :!e,     "unlink() actually deleted the tempfile";
+  ok $fn !~~ :e,     "unlink() actually deleted the tempfile";
 }
 
 # open, implicit close because of scope exit, unlink, test
+#?rakudo skip 'implicit closure of file handle at scope exit not implemented'
 {
   { my $fh = open($fn, :w) }
 
   ok $fn ~~ :e,      "open() created a tempfile";
-  is(unlink($fn), 1, "unlink() returned true", todo => $iswin32);
-  ok $fn ~~ :!e,     "unlink() actually deleted the tempfile", todo => $iswin32;
+  is(unlink($fn), 1, "unlink() returned true");
+  ok $fn !~~ :e,     "unlink() actually deleted the tempfile";
 }
