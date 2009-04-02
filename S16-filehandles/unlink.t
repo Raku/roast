@@ -26,7 +26,6 @@ my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of f
 }
 
 # open, implicit close because of scope exit, unlink, test
-#?rakudo skip 'implicit closure of file handle at scope exit not implemented'
 {
   { my $fh = open($fn, :w) }
 
