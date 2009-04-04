@@ -98,7 +98,7 @@ Basic C<delete> tests, see S32.
 }
 
 # As a function (THERE IS NO FUNCTION)
-#{
+# {
 #   my @array = <1 2 3 4>;
 #   is delete(@array, 1), 2, "simple functional(ish) delete returns value deleted";
 #   is ~@array, "1  3 4", "simple functional(ish) delete changes array";
@@ -107,7 +107,7 @@ Basic C<delete> tests, see S32.
 ##?rakudo skip 'cannot parse named args'
 #   is ~@array, "1  3 4", "simple functional(ish) delete with named argument changes array";
 #
-#}
+# }
 
 # TODO More exclusive bounds checks
 
