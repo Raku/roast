@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 90;
+plan 92;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
@@ -52,8 +52,13 @@ is ('a'..'a'), [< a >], 'got the right array';
 {
     my $x = 0;
     $x++ for (1..4).reverse;
-    #?rakudo todo 'RT #64458'
     is $x, 4, '(1..4).reverse still turns into a list of four items';
+    my $y = 0;
+    $y++ for @( eval((1..4).reverse.perl) );
+    is $y, 4, '(1..4).reverse.perl returns something useful';
+    #?rakudo todo 'Range.reverse, :by(-1)'
+    isa_ok (1..4).reverse, Range, "... and it's a range";
+   
 }
 
 # ACCEPTS and equals tests
