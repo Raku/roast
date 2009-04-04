@@ -20,7 +20,7 @@ plan 37;
     # or to define a proper class Node
     
     sub istree($obj) returns Bool {
-      return True if $obj ~~ undef;
+      return Bool::True if $obj ~~ undef;
       return +$obj==3 and istree($obj[1]) and istree($obj[2]);
     }
         

@@ -18,13 +18,13 @@ plan 67;
     sub is_prime(Int $num) returns Bool {
         
         # 0 and 1 are not prime by definition
-        return False if $num < 2;
+        return Bool::False if $num < 2;
         
         # 2 and 3 are
-        return True  if $num < 4;
+        return Bool::True  if $num < 4;
     
         # no even number is prime
-        return False if $num % 2 == 0;
+        return Bool::False if $num % 2 == 0;
     
         # let's try what's left
         my $max=floor(sqrt($num));
@@ -33,9 +33,9 @@ plan 67;
         #  for ( 3..$max:by(2) ) {
         # but it's unimplemented yet 
         loop (my $i=3; $i <= $max ; $i+=2) {
-            return False if $num % $i == 0;
+            return Bool::False if $num % $i == 0;
         }
-        return True;
+        return Bool::True;
     }
     
     ok !is_prime(0), "We should find that 0 is not prime";

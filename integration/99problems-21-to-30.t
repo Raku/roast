@@ -35,7 +35,7 @@ plan 15;
     # 
     # Hint: Use the built-in random number generator and the result of problem P20.
     
-    sub rand_select(Int $count, *@list) returns Array {
+    sub rand_select(Int $count, *@list) returns List {
         # from Larry (on #perl6):  well, pick(3) is specced to do that but is unimplemented.
         return map { @list[floor (@list.elems).rand] }, 1 .. $count;
     }
