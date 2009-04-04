@@ -85,6 +85,7 @@ plan 45;
 }
 
 # L<S02/"Whitespace and Comments"/"Brackets may be nested">
+#?rakudo skip 'nested brackets'
 {
     is 3, #(
         (Nested parens) works also
@@ -97,6 +98,7 @@ plan 45;
 
 # I am not sure if this is speced somewhere:
 # comments can be nested
+#?rakudo skip 'nested brackets'
 {
     is 3, #(
             comment
@@ -124,6 +126,7 @@ plan 45;
 
 # L<S02/"Whitespace and Comments"/"Counting of nested brackets"
 #   "applies only to" "pairs of brackets of the same length">
+#?rakudo skip 'nested parens and braces'
 {
     is -1 #<<<
         Even <this> <<< also >>> works...
@@ -137,11 +140,11 @@ plan 45;
 
 # L<S02/"Literals"/"# at beginning of line is always a line-end comment">
 {
-    is eval("#<this is comment\n'abc'"), 'abc',
-        '# at start of line always a line-end comment';
+    eval_dies_ok "#<this is a comment\n'abc'",
+        '#+bracket at start of line is an error';
 
-    eval_dies_ok "2 * 3\n#<\n comment>", "# at",
-        '# at start of line always a line-end comment';
+    eval_dies_ok "2 * 3\n#<\n comment>",
+        '#+bracket at start of line is an error';
 }
 
 # L<S02/Whitespace and Comments/"comment may not contain an unspace">
@@ -155,7 +158,7 @@ plan 45;
 #   delimiter quoting>
 {
     my $a;
-    ok eval '$a = q{ 32 }', 'sanity check';
+    ok eval('$a = q{ 32 }'), 'sanity check';
     is $a, ' 32 ', 'sanity check';
 
     $a = undef;
