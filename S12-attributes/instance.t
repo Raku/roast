@@ -406,4 +406,25 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
     is((try { g().a }), 123, 'g().a worked (so the pugsbug is fixed (part 2))');
 }
 
+# was also a pugs regression:
+# Modification of list attributes created with constructor fails
+
+{
+    class D_Test { 
+        has @.test is rw; 
+        method get () { shift @.test }
+    }
+
+    my $test1 = D_Test.new();
+    $test1.test = [1];
+    is($test1.test, [1], "Initialized outside constructor");
+    is($test1.get ,  1 , "Get appears to have worked");
+    is($test1.test,  [], "Get Worked!");
+
+    my $test2 = D_Test.new( :test([1]) );
+    is($test2.test, [1], "Initialized inside constructor");
+    is($test2.get ,  1 , "Get appears to have worked");
+    is($test2.test,  [], "Get Worked!");
+}
+
 # vim: ft=perl6
