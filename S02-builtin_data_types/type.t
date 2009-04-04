@@ -71,20 +71,24 @@ my Str $bar;
 }
 
 # L<S02/Return types/a return type can be specified before or after the name>
-#?rakudo skip 'only the return type "of" parses correctly'
 # TODO: I'm not 100% sure about the living/dieing for all the cases below
 {
-    my sub returntype1 (Bool $pass) as Str {$pass ?? 'ok' !! -1}
-    my sub returntype2 (Bool $pass) of Int {$pass ?? 42 !! 'no'}
-    my Bool sub returntype3 (Bool $pass)   {$pass ?? True !! ':('}
+    my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
+    my sub returntype2 (Bool $pass) of Int { return $pass ?? 42 !! 'no'}
+    my Bool sub returntype3 (Bool $pass)   { return $pass ?? True !! ':('}
 
-    is(returntype1(True), 'ok good', 'good return value works (as)');
-    eval_dies_ok('returntype1(False)', 'bad return value dies (as)');
-    is(returntype2(True), 42, 'good return value works (of)');
-    eval_dies_ok('returntype2(False)', 'bad return value dies (of)');
+    is(returntype1(Bool::True), 'ok', 'good return value works (returns)');
+    dies_ok({ returntype1(Bool::False) }, 'bad return value dies (returns)');
+    is(returntype2(Bool::True), 42, 'good return value works (of)');
+    dies_ok({ returntype2(Bool::False) }, 'bad return value dies (of)');
+    
+    #?rakudo 2 skip 'return type written before routine name, Bool.ACCEPTS(True) gives false'
     is(returntype3(True), True, 'good return value works (my Type sub)');
-    eval_dies_ok('returntype3(False)', 'bad return value dies (my Type sub)');
+    dies_ok({ returntype3(False) }, 'bad return value dies (my Type sub)');
+}
 
+#?rakudo skip 'Rat not implemented, --> not implemented, as not implemented'
+{
     # the following two are the same type of behavior
     # S02: "It is possible for the of type to disagree with the as type"
     my Rat sub returntype4 ($pass)     as Num {$pass ?? 1.1 !! 1}
