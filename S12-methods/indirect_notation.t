@@ -12,7 +12,7 @@ L<S12/Methods/"Indirect object notation now requires a colon after the invocant,
 
 =end description
 
-plan 27;
+plan 28;
 
 
 ##### Without arguments
@@ -116,5 +116,7 @@ class T2
     is $x.:<++>,            4,      '.:<++> defaults to prefix';
     is $x,                  4,      '... and it changed the variable';
 }
+
+dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";
 
 # vim: ft=perl6
