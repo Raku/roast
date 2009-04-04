@@ -21,21 +21,20 @@ plan 8;
 
 {
 	my $answer = 1;
-	my @x = 41, [42 if $answer], 43;
-	my @y = 41, [($answer ?? 42 !! ())], 43;
+	my @x = 41, (42 if $answer), 43;
+	my @y = 41, ($answer ?? 42 !! ()), 43;
 	my @z = 41, 42, 43;
 	is @y, @z, "sanity check";
 	is @x, @y, "if expr on true cond"; 
 }
 
-#?rakudo todo '(N if $expr) is not equiv. to ($expr ?? N !! ()).'
 {
 	my $answer = 0;
-	my @x = 41, [42 if $answer], 43;
-	my @y = 41, [($answer ?? 42 !! ())], 43;
-	my @z = 41, 42, 43;
+	my @x = 41, (42 if $answer), 43;
+	my @y = 41, ($answer ?? 42 !! ()), 43;
+	my @z = 41, 43;
 	is @y, @z, "sanity check";
-	is @x, @y, "if expr on true cond"; 
+	is @x, @y, "if expr on false cond"; 
 }
 
 
