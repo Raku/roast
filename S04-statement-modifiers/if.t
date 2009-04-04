@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -56,4 +56,11 @@ plan 8;
 	    $ok = 0;
 	}
 	ok $ok, "condition in statement level respects context" 
+}
+
+{
+    my $x = (3 if 1);
+    my $y = (3 if 0);
+    is $x, 3, '(3 if 1) worked in scalar context';
+    ok !$y, 'my $y = (3 if 0) leaves $y false';
 }
