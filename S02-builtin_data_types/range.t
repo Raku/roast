@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 89;
+plan 90;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
@@ -47,6 +47,13 @@ is ('a'..'a'), [< a >], 'got the right array';
     ok ('d'^..'a')  !~~ 'c', "decreasing str range is empty";
     ok ('d'..^'a')  !~~ 'c', "decreasing str range is empty";
     ok ('d'^..^'a') !~~ 'c', "decreasing str range is empty";
+}
+
+{
+    my $x = 0;
+    $x++ for (1..4).reverse;
+    #?rakudo todo 'RT #64458'
+    is $x, 4, '(1..4).reverse still turns into a list of four items';
 }
 
 # ACCEPTS and equals tests
