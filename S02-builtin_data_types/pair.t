@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 106;
 
 # basic Pair
 
@@ -87,6 +87,19 @@ is($quux.key, 'quux', "lhs quotes" );
     #ok $pair.does(Hash), 'Pair does Hash';
     #?pugs TODO "bug"
     ok (%($pair) ~~ Hash), '%() makes creates a real Hash';
+}
+
+# colonpair syntax
+{
+    is(:foo.key, 'foo', 'got the right key :foo.key');
+    #?rakudo todo 'RT #64478'
+    isa_ok(:foo.value, Bool::True, ':foo.value isa Bool::True');
+    ok( :foo, ':foo is True');
+    ok( :foo.value, ':foo.value is True');
+    is(:!foo.key, 'foo', 'got the right key :!foo.key');
+    #?rakudo todo 'RT #64478'
+    isa_ok(:!foo.value, Bool::False, ':!foo.value isa Bool::False');
+    nok( :!foo.value, ':!foo.value is False');
 }
 
 # illustrate a bug
