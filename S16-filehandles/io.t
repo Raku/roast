@@ -12,7 +12,7 @@ I/O tests
 
 =end pod
 
-plan 58;
+plan 61;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -38,10 +38,13 @@ my $in1 = open($filename);
 isa_ok($in1, IO);
 my $line1a = readline($in1);
 is($line1a, "Hello World", 'readline($in) worked (and autochomps)');
+is $in1.ins, 1, 'read one line (.ins)';
 my $line1b = readline($in1);
 is($line1b, "Foo Bar Baz", 'readline($in) worked (and autochomps)');
+is $in1.ins, 2, 'read two lines (.ins)';
 my $line1c = readline($in1);
 is($line1c, "The End", 'readline($in) worked');
+is $in1.ins, 3, 'read two lines (.ins)';
 ok($in1.close, 'file closed okay (1)');
 
 my $in2 = open($filename);
