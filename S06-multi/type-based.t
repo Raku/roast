@@ -28,7 +28,6 @@ is(foo(/a/),'Regex Regex','dispatched to the Rule sub');
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');
-#?rakudo 2 skip 'dispatch on sigil-implied types'
 is(foo(@array), 'Array foo, bar, baz', 'dispatched to the Array sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
