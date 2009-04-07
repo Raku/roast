@@ -45,8 +45,8 @@ try {
 is try { dummy_sub_with_params(arg2 => "bar") }, "[foo] [bar]",
   "(use ...).assuming works", :todo<feature>;
 
-sub __hyper (Array @a, Array @b, $op?) {
-  my Array @ret;
+sub __hyper (@a, @b, $op?) {
+  my @ret;
   for 0..(@a.end, @b.end).max -> $i {
     if $i > @a.end {
       push @ret, @b[$i];

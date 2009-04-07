@@ -20,7 +20,7 @@ my $here;
 {
     my @a;
     $here = 0;
-    multi push ( Array @a, *@data ) { $here++ }
+    multi push (@a, *@data ) { $here++ }
     push @a, 2;
     is $here, 1, "push operator was redefined";
 }

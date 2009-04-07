@@ -32,7 +32,7 @@ my (@a,@b,@res);
 # should be removed later
 
 #?DOES 2
-sub splice_ok (Array @got, Array @ref, Array @exp, Array @exp_ref, Str $comment) {
+sub splice_ok (@got, @ref, @exp, @exp_ref, Str $comment) {
   is "[@got[]]", "[@exp[]]", "$comment - results match";
   is @ref, @exp_ref, "$comment - array got modified in-place";
 
