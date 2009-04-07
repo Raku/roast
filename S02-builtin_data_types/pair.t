@@ -93,12 +93,12 @@ is($quux.key, 'quux', "lhs quotes" );
 {
     is(:foo.key, 'foo', 'got the right key :foo.key');
     #?rakudo todo 'RT #64478'
-    isa_ok(:foo.value, Bool::True, ':foo.value isa Bool::True');
+    isa_ok(:foo.value, Bool, ':foo.value isa Bool');
     ok( :foo, ':foo is True');
     ok( :foo.value, ':foo.value is True');
     is(:!foo.key, 'foo', 'got the right key :!foo.key');
     #?rakudo todo 'RT #64478'
-    isa_ok(:!foo.value, Bool::False, ':!foo.value isa Bool::False');
+    isa_ok(:!foo.value, Bool, ':!foo.value isa Bool');
     nok( :!foo.value, ':!foo.value is False');
 }
 
