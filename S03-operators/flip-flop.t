@@ -9,7 +9,7 @@ plan 25;
 # XXX tests for fff
 
 #?pugs 999 skip 'TODO: infix:<ff>'
-sub my_take (Int $n, Code &f) { (1..$n).map: { f() ?? $_ !! undef } }
+sub my_take (Int $n, &f) { (1..$n).map: { f() ?? $_ !! undef } }
 sub always_false { 0 }
 sub always_true  { 1 }
 
