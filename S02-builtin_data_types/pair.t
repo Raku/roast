@@ -130,7 +130,7 @@ for  %hash.pairs -> $pair {
     is($pair.value, 'bar', 'in for loop got the right $pair.value');
 }
 
-sub test2 (Hash %h){
+sub test2 (%h){
     for %h.pairs -> $pair {
         isa_ok($pair,Pair) ; 
         is($pair.key, 'foo', 'in sub test2 got the right $pair.key');
@@ -142,7 +142,7 @@ test2 %hash;
 # See thread "$pair[0]" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22593">
 
-sub test3 (Hash %h){
+sub test3 (%h){
     for %h.pairs -> $pair {
         isa_ok($pair,Pair);
         dies_ok({$pair[0]}, 'sub test3: access by $pair[0] should not work');
@@ -155,7 +155,7 @@ test3 %hash;
 
 Hm, Hash::pair? Never heard of that.  --iblech
 
-sub test4 (Hash %h){
+sub test4 (%h){
     for %h.pair -> $pair {
         isa_ok($pair,Pair,:todo<bug>) ; 
         is($pair.key, 'foo', 'sub test4: access by unspecced "pair" got the right $pair.key');

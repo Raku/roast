@@ -13,8 +13,8 @@ multi foo (Num $bar)   { "Num "  ~ $bar  }
 multi foo (Bool $bar)  { "Bool " ~ $bar  }
 multi foo (Regex $bar) { "Regex " ~ WHAT( $bar ) } # since Rule's don't stringify
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
-multi foo (Array @bar) { "Array " ~ join(', ', @bar) }
-multi foo (Hash %bar)  { "Hash " ~ join(', ', %bar.keys.sort) }
+multi foo (@bar) { "Array " ~ join(', ', @bar) }
+multi foo (%bar)  { "Hash " ~ join(', ', %bar.keys.sort) }
 multi foo (IO $fh)     { "IO" }
 
 is(foo('test'), 'Str test', 'dispatched to the Str sub');

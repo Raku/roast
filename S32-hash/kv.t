@@ -76,7 +76,7 @@ test2;
 
 my %hash  = ('foo' => 'baz');
 #?DOES 2
-sub test3 (Hash %h){
+sub test3 (%h){
   for %h.kv -> $key, $value {
         is($key, 'foo', "test3:  from {+%h}-elem {%h.WHAT} \%h got the right \$key");
         is($value, 'baz', "test3: from {+%h}-elem {%h.WHAT} \%h got the right \$value");
@@ -84,7 +84,7 @@ sub test3 (Hash %h){
 }
 test3 %hash;
 
-sub test4 (Hash %h){
+sub test4 (%h){
     for 0..%h.kv.end -> $idx {
         is(%h.kv[$idx], %hash.kv[$idx], "test4: elem $idx of {%h.kv.elems}-elem {%h.kv.WHAT} \%hash.kv correctly accessed");
     }
