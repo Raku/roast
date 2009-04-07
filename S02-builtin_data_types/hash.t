@@ -139,7 +139,7 @@ sub test1 {
     is(~%sane.WHAT,Hash,'%sane is a Hash');
 }
 
-sub test2 (Hash %hash) {
+sub test2 (%hash) {
     is(~%hash.WHAT,Hash,'%hash is a Hash');
 }
 
