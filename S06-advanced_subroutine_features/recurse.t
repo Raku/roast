@@ -113,11 +113,11 @@ sub countdown_mod_named ($num) {
 }
 
 #?rakudo 8 skip 'argument passing'
-is(  countup_nomod_named(5).join(""),   "012345", "recursive count up: named param, no modified value");
-is(countdown_nomod_named(5).join(""),   "543210", "recursive count down: named param, no modified value");
-is(  countup_nomod_unnamed(5).join(""), "012345", "recursive count up: unnamed param, no modified value");
-is(countdown_nomod_unnamed(5).join(""), "543210", "recursive count down: unnamed param, no modified value");
-is(  countup_mod_named(5).join(""),     "012345", "recursive count up: named param, modified value");
-is(countdown_mod_named(5).join(""),     "543210", "recursive count down: named param, modified value");
-is(  countup_mod_unnamed(5).join(""),   "012345", "recursive count up: unnamed param, modified value");
-is(countdown_mod_unnamed(5).join(""),   "543210", "recursive count down: unnamed param, modified value");
+is(  countup_nomod_named(5).join,   "012345", "recursive count up: named param, no modified value");
+is(countdown_nomod_named(5).join,   "543210", "recursive count down: named param, no modified value");
+is(  countup_nomod_unnamed(5).join, "012345", "recursive count up: unnamed param, no modified value");
+is(countdown_nomod_unnamed(5).join, "543210", "recursive count down: unnamed param, no modified value");
+is(  countup_mod_named(5).join,     "012345", "recursive count up: named param, modified value");
+is(countdown_mod_named(5).join,     "543210", "recursive count down: named param, modified value");
+is(  countup_mod_unnamed(5).join,   "012345", "recursive count up: unnamed param, modified value");
+is(countdown_mod_unnamed(5).join,   "543210", "recursive count down: unnamed param, modified value");

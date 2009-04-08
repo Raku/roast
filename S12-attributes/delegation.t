@@ -149,7 +149,7 @@ class PairTest {
 {
   class MyArray {
     has @.elems handles "join";
-    method concat handles <chars bytes graphs codes> { .join("") }
+    method concat handles <chars bytes graphs codes> { .join }
   }
 
   ok MyArray.new, "class with attribute and return value delegation";

@@ -73,7 +73,7 @@ is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
 is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
 
 # two ranges
-is (1..6 Z 'a' .. 'c').join(''), '1a2b3c',   'Ranges and infix:<Z>';
+is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 
 
 {

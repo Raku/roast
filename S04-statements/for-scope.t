@@ -14,7 +14,7 @@ for 1, 2 {
 for 1, 2 {
     my @inside;
     for 1 .. 3 { push @inside, $_; }
-    is(@inside.join(""), "123", "lexical array properly initialized, round $_");
+    is(@inside.join, "123", "lexical array properly initialized, round $_");
 }
 
 # Explicit $_
@@ -27,7 +27,7 @@ for 1, 2 {
 for 1, 2 {
     my @inside;
     for 1 .. 3 -> $_ { push @inside, $_; }
-    is(@inside.join(""), "123", "lexical array properly initialized, round $_, explicit \$_");
+    is(@inside.join, "123", "lexical array properly initialized, round $_, explicit \$_");
 }
 
 # Explicit $_
@@ -40,7 +40,7 @@ for 1, 2 -> $_ {
 for 1, 2 -> $_ {
     my @inside;
     for 1 .. 3 -> $_ { push @inside, $_; }
-    is(@inside.join(""), "123", "lexical array properly initialized, round $_, two explicit \$_s");
+    is(@inside.join, "123", "lexical array properly initialized, round $_, two explicit \$_s");
 }
 
 {

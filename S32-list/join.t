@@ -25,8 +25,8 @@ is($joined3, "a|b|c", 'join("|", 1, 2, 3) works');
 my $joined4 = join("|", [ "a", "b", "c" ]);
 is($joined4, "a b c", 'join("|", []) should not join anything');
 
-# join() without a separator (defaults to ' ', per S29)
-is(<a b c>.join, 'a b c', 'join() separator defaults to " ".');
+# join() without a separator (defaults to '', per S32)
+is(<a b c>.join, 'abc', 'join() separator defaults to "".');
 
 # join() with $sep as a variable
 

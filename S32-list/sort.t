@@ -164,17 +164,17 @@ plan 28;
 {
     my %map = (p => 1, e => 2, r => 3, l => 4);
 
-    is <r e p l>.sort({ %map{$_} }).join(''), 'perl',
+    is <r e p l>.sort({ %map{$_} }).join, 'perl',
             'can sort with automated Schwartzian Transform';
 
     my @s = %map.sort: { .value };
     isa_ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
-    is (@s.map: { .key }).join(''), 'perl', 'sort with unary sub'
+    is (@s.map: { .key }).join, 'perl', 'sort with unary sub'
 
 }
 
 {
-    is (<P e r l 6>.sort: { 0; }).join(''), 'Perl6',
+    is (<P e r l 6>.sort: { 0; }).join, 'Perl6',
     'sort with arity 0 closure is stable';
 
     my @a = ([5, 4], [5, 5], [5, 6], [0, 0], [1, 2], [1, 3], [0, 1], [5, 7]);

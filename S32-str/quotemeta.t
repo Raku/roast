@@ -50,7 +50,7 @@ is($x, "HeLLo\\ World\\-72_1", 'quotemeta uses $_ as default');
 
 
 if (%Config<ebcdic> eq 'define') {
-    $_ = (129 .. 233).map({ chr($_); }).join('');
+    $_ = (129 .. 233).map({ chr($_); }).join;
     is($_.chars, 96, "quotemeta starting string");
 
     # 105 characters - 52 letters = 53 backslashes
@@ -61,7 +61,7 @@ if (%Config<ebcdic> eq 'define') {
     is($_.split('').grep({ $_ eq "\x5c" }).elems, 54, "count backslashes");
 }
 else {
-    $_ = (0 .. 255).map({ chr($_); }).join('');
+    $_ = (0 .. 255).map({ chr($_); }).join;
     is($_.chars, 256, "quotemeta starting string");
 
     # Original test in Perl 5.9.3:
