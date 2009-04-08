@@ -1,12 +1,13 @@
 use v6;
 use Test;
 
-plan 23;
+plan 31;
 
 # L<S09/Typed arrays/>
 
 {
     my Int @x;
+    ok @x.of === Int, '@x.of of typed array (my Int @x)';
     lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type';
     lives_ok { @x = 1..3    }, 'can assign range of the right type';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type';
@@ -19,6 +20,7 @@ plan 23;
 
 {
     my @x of Int;
+    ok @x.of === Int, '@x.of of typed array (my @x of Int)';
     lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type (@x of Int)';
     lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
@@ -57,3 +59,13 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
              '... but assigning values of the right type is OK';
 }
 
+{
+    my Array of Int @x;
+    ok @x.of === Array[Int], 'my Array of Int @x declaeres a nested array';
+    lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
+    lives_ok { @x.push: [8, 9] }, 'pushing works';
+    dies_ok  { @x.push: 8 }, 'type constraint is enfoced';
+    lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
+    dies_ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
+
+}
