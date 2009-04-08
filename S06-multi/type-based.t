@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 35;
 
 # type based dispatching
 #
@@ -114,5 +114,22 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is f3(0), 1, 'can dispatch to "$ where 0"';
     is f3(3), 4, '... and the ordinary dispatch still works';
 }
+
+# multi dispatch on typed containers 
+
+{
+    multi f4 (Int @a )  { 'Array of Int' }
+    multi f4 (Str @a )  { 'Array of Str' }
+    multi f4 (Array @a) { 'Array of Array' }
+
+    my Int @a = 3, 4;
+    my Str @b = <foo bar>;
+    my Array @c = [1, 2], [3, 4];
+
+    is f4(@a), 'Array of Int',   'can dispatch on typed array (Int)';
+    is f4(@b), 'Array of Str',   'can dispatch on typed array (Str)';
+    is f4(@c), 'Array of Array', 'can dispatch on typed array (Array)';
+}
+
 
 # vim: ft=perl6
