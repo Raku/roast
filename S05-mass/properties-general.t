@@ -17,8 +17,7 @@ Some notes regarding specific unicode codepoints chosen below
 
 =end pod
 
-plan *;
-
+plan 594;
 
 # L           Letter
 
@@ -167,7 +166,6 @@ ok("\x[87B5]" ~~ m/^<!isLr>.$/, q{Match related negated (Alias for "Ll", "Lu", a
 ok("\x[87B5]" ~~ m/^<-isLr>$/, q{Match related inverted (Alias for "Ll", "Lu", and "Lt".)} );
 ok("\x[87B5]\x[87B5]\c[LATIN CAPITAL LETTER A]" ~~ m/<.isLr>/, q{Match unanchored (Alias for "Ll", "Lu", and "Lt".)} );
 
-=begin END
 
 # M           Mark
 
@@ -254,6 +252,7 @@ ok("\x[7C68]"  ~~ m/^<!isEnclosingMark>.$/, q{Match unrelated negated <isEnclosi
 ok("\x[7C68]"  ~~ m/^<-isEnclosingMark>$/, q{Match unrelated inverted <isEnclosingMark>} );
 ok("\x[7C68]\c[COMBINING CYRILLIC HUNDRED THOUSANDS SIGN]" ~~ m/<.isEnclosingMark>/, q{Match unanchored <isEnclosingMark>} );
 
+
 # N           Number
 
 
@@ -285,8 +284,8 @@ ok("\x[4E2C]"  ~~ m/^<-isNd>$/, q{Match unrelated inverted <isNd> (DecimalNumber
 ok(!( "\c[SUPERSCRIPT TWO]" ~~ m/^<.isNd>$/ ), q{Don't match related <isNd> (DecimalNumber)} );
 ok("\c[SUPERSCRIPT TWO]" ~~ m/^<!isNd>.$/, q{Match related negated <isNd> (DecimalNumber)} );
 ok("\c[SUPERSCRIPT TWO]" ~~ m/^<-isNd>$/, q{Match related inverted <isNd> (DecimalNumber)} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[4E2C]\c[SUPERSCRIPT TWO]\c[DIGIT ZERO]" ~~ m/<.isNd>/, q{Match unanchored <isNd> (DecimalNumber)} );
-
 ok("\c[DIGIT ZERO]" ~~ m/^<.isDecimalNumber>$/, q{Match <.isDecimalNumber>} );
 ok(!( "\c[DIGIT ZERO]" ~~ m/^<!isDecimalNumber>.$/ ), q{Don't match negated <isDecimalNumber>} );
 ok(!( "\c[DIGIT ZERO]" ~~ m/^<-isDecimalNumber>$/ ), q{Don't match inverted <isDecimalNumber>} );
@@ -294,6 +293,7 @@ ok(!( "\x[A652]"  ~~ m/^<.isDecimalNumber>$/ ), q{Don't match unrelated <isDecim
 ok("\x[A652]"  ~~ m/^<!isDecimalNumber>.$/, q{Match unrelated negated <isDecimalNumber>} );
 ok("\x[A652]"  ~~ m/^<-isDecimalNumber>$/, q{Match unrelated inverted <isDecimalNumber>} );
 ok("\x[A652]\c[DIGIT ZERO]" ~~ m/<.isDecimalNumber>/, q{Match unanchored <isDecimalNumber>} );
+
 
 # Nl          LetterNumber
 
@@ -332,6 +332,7 @@ ok("\x[92F3]"  ~~ m/^<-isNo>$/, q{Match unrelated inverted <isNo> (OtherNumber)}
 ok(!( "\c[DIGIT ZERO]" ~~ m/^<.isNo>$/ ), q{Don't match related <isNo> (OtherNumber)} );
 ok("\c[DIGIT ZERO]" ~~ m/^<!isNo>.$/, q{Match related negated <isNo> (OtherNumber)} );
 ok("\c[DIGIT ZERO]" ~~ m/^<-isNo>$/, q{Match related inverted <isNo> (OtherNumber)} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[92F3]\c[DIGIT ZERO]\c[SUPERSCRIPT TWO]" ~~ m/<.isNo>/, q{Match unanchored <isNo> (OtherNumber)} );
 
 ok("\c[SUPERSCRIPT TWO]" ~~ m/^<.isOtherNumber>$/, q{Match <.isOtherNumber>} );
@@ -340,6 +341,7 @@ ok(!( "\c[SUPERSCRIPT TWO]" ~~ m/^<-isOtherNumber>$/ ), q{Don't match inverted <
 ok(!( "\x[5363]"  ~~ m/^<.isOtherNumber>$/ ), q{Don't match unrelated <isOtherNumber>} );
 ok("\x[5363]"  ~~ m/^<!isOtherNumber>.$/, q{Match unrelated negated <isOtherNumber>} );
 ok("\x[5363]"  ~~ m/^<-isOtherNumber>$/, q{Match unrelated inverted <isOtherNumber>} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[5363]\c[SUPERSCRIPT TWO]" ~~ m/<.isOtherNumber>/, q{Match unanchored <isOtherNumber>} );
 
 # P           Punctuation
@@ -461,6 +463,7 @@ ok("\x[3A35]"  ~~ m/^<-isPi>$/, q{Match unrelated inverted <isPi> (InitialPunctu
 ok(!( "\c[EXCLAMATION MARK]" ~~ m/^<.isPi>$/ ), q{Don't match related <isPi> (InitialPunctuation)} );
 ok("\c[EXCLAMATION MARK]" ~~ m/^<!isPi>.$/, q{Match related negated <isPi> (InitialPunctuation)} );
 ok("\c[EXCLAMATION MARK]" ~~ m/^<-isPi>$/, q{Match related inverted <isPi> (InitialPunctuation)} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[3A35]\c[EXCLAMATION MARK]\c[LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<.isPi>/, q{Match unanchored <isPi> (InitialPunctuation)} );
 
 ok("\c[LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/^<.isInitialPunctuation>$/, q{Match <.isInitialPunctuation>} );
@@ -469,6 +472,7 @@ ok(!( "\c[LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/^<-isInitialPunctuati
 ok(!( "\x[B84F]"  ~~ m/^<.isInitialPunctuation>$/ ), q{Don't match unrelated <isInitialPunctuation>} );
 ok("\x[B84F]"  ~~ m/^<!isInitialPunctuation>.$/, q{Match unrelated negated <isInitialPunctuation>} );
 ok("\x[B84F]"  ~~ m/^<-isInitialPunctuation>$/, q{Match unrelated inverted <isInitialPunctuation>} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[B84F]\c[LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<.isInitialPunctuation>/, q{Match unanchored <isInitialPunctuation>} );
 
 # Pf          FinalPunctuation
@@ -483,6 +487,7 @@ ok("\x[27CF]"  ~~ m/^<-isPf>$/, q{Match unrelated inverted <isPf> (FinalPunctuat
 ok(!( "\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]" ~~ m/^<.isPf>$/ ), q{Don't match related <isPf> (FinalPunctuation)} );
 ok("\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]" ~~ m/^<!isPf>.$/, q{Match related negated <isPf> (FinalPunctuation)} );
 ok("\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]" ~~ m/^<-isPf>$/, q{Match related inverted <isPf> (FinalPunctuation)} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[27CF]\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]\c[RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<.isPf>/, q{Match unanchored <isPf> (FinalPunctuation)} );
 
 ok("\c[RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/^<.isFinalPunctuation>$/, q{Match <.isFinalPunctuation>} );
@@ -491,6 +496,7 @@ ok(!( "\c[RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/^<-isFinalPunctuatio
 ok(!( "\x[4F65]"  ~~ m/^<.isFinalPunctuation>$/ ), q{Don't match unrelated <isFinalPunctuation>} );
 ok("\x[4F65]"  ~~ m/^<!isFinalPunctuation>.$/, q{Match unrelated negated <isFinalPunctuation>} );
 ok("\x[4F65]"  ~~ m/^<-isFinalPunctuation>$/, q{Match unrelated inverted <isFinalPunctuation>} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[4F65]\c[RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<.isFinalPunctuation>/, q{Match unanchored <isFinalPunctuation>} );
 
 # Po          OtherPunctuation
@@ -781,6 +787,7 @@ ok("\x[77B8]"  ~~ m/^<-isCf>$/, q{Match unrelated inverted <isCf> (Format)} );
 ok(!( "\x[9FC4]" ~~ m/^<.isCf>$/ ), q{Don't match related <isCf> (Format)} );
 ok("\x[9FC4]" ~~ m/^<!isCf>.$/, q{Match related negated <isCf> (Format)} );
 ok("\x[9FC4]" ~~ m/^<-isCf>$/, q{Match related inverted <isCf> (Format)} );
+#?rakudo skip "Malformed UTF-8 string"
 ok("\x[77B8]\x[9FC4]\c[SOFT HYPHEN]" ~~ m/<.isCf>/, q{Match unanchored <isCf> (Format)} );
 
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<.isFormat>$/, q{Match <.isFormat>} );
