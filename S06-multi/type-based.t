@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 35;
+plan 38;
 
 # type based dispatching
 #
@@ -121,14 +121,26 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi f4 (Int @a )  { 'Array of Int' }
     multi f4 (Str @a )  { 'Array of Str' }
     multi f4 (Array @a) { 'Array of Array' }
+    multi f4 (Int %a)   { 'Hash of Int' }
+    multi f4 (Str %a)   { 'Hash of Str' }
+    multi f4 (Array %a) { 'Hash of Array' }
 
     my Int @a = 3, 4;
     my Str @b = <foo bar>;
     my Array @c = [1, 2], [3, 4];
 
-    is f4(@a), 'Array of Int',   'can dispatch on typed array (Int)';
-    is f4(@b), 'Array of Str',   'can dispatch on typed array (Str)';
-    is f4(@c), 'Array of Array', 'can dispatch on typed array (Array)';
+    my Int %a = a => 1, b => 2;
+    my Str %b = :a<b>, :b<c>;
+    my Array %c = a => [1, 2], b => [3, 4];
+
+    #?rakudo 3 skip 'dispatch based on typed Hash'
+    is f4(%a), 'Hash of Int',    'can dispatch on typed Hash (Int)';
+    is f4(%b), 'Hash of Str',    'can dispatch on typed Hash (Str)';
+    is f4(%c), 'Hash of Array',  'can dispatch on typed Hash (Array)';
+
+    is f4(@a), 'Array of Int',   'can dispatch on typed Array (Int)';
+    is f4(@b), 'Array of Str',   'can dispatch on typed Array (Str)';
+    is f4(@c), 'Array of Array', 'can dispatch on typed Array (Array)';
 }
 
 
