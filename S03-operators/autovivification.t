@@ -107,7 +107,6 @@ plan 22;
     is $x, 5, '*= autovivifies with correct neutral element (without type constraint)';
 }
 
-#?rakudo skip 'type constraint on hashes'
 {
     my Int %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (with Int proto on hash items)';

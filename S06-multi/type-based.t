@@ -52,7 +52,6 @@ is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
-#?rakudo skip 'Dispatch on sigil-implied type constraints'
 {
     my %h = (:a<b>, :c<d>);
     multi sub sigil-t (&code) { 'Callable'      }
@@ -105,7 +104,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi f2 ($, $, @)  { '3+' };
     is f2(3),               1, 'arity-based dispatch to ($)';
     is f2('foo', f2(3)),    2, 'arity-based dispatch to ($, $)';
-    #?rakudo 2 skip 'multi dispatch based on sigils'
     is f2('foo', 4, 8),     3, 'arity-based dispatch to ($, $, $)';
     is f2('foo', 4, <a b>), '3+', 'arity-based dispatch to ($, $, @)';
 }

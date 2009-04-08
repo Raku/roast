@@ -8,7 +8,6 @@ plan 76;
 
 
 ok(4\       .sqrt == 2, 'unspace with numbers');
-#?rakudo skip 'unspace with comments'
 is(4\#(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
