@@ -11,7 +11,7 @@ ie letter vs. Letter vs isLetter
 
 =end pod
 
-plan *;
+plan 361;
 
 # BidiL       # Left-to-Right
 
