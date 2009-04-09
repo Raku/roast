@@ -60,16 +60,13 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
              '... but assigning values of the right type is OK';
 }
 
+#?rakudo skip 'Array not parametric'
 {
     my Array of Int @x;
-    #?rakudo todo 'Array not parametric'
     ok @x.of === Array[Int], 'my Array of Int @x declaeres a nested array';
     lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
     lives_ok { @x.push: [8, 9] }, 'pushing works';
-    #?rakudo todo 'type constraints on typed arrays'
     dies_ok  { @x.push: 8 }, 'type constraint is enforced';
     lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
-    #?rakudo todo 'type constraints on typed arrays'
     dies_ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
-
 }
