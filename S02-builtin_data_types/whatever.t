@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 6;
 
 {
     my $x = *;
@@ -14,6 +14,10 @@ lives_ok { $x.WHAT }, '(*-1).WHAT lives';
 isa_ok $x, Code, '*-1 is of type Code';
 #?rakudo skip '*-1 should create a closure'
 ok $x.(5), 4, 'and we can execute that Code';
+
+isa_ok *.abs, Code, '*.abs is of type Code';
+my @a = map *.abs, 1, -2, 3, -4;
+is @a, [1,2,3,4], '*.meth created closure works';
 
 
 # vim: ft=perl6
