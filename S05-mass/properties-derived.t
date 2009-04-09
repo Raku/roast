@@ -16,7 +16,7 @@ Some notes regarding specific unicode codepoints chosen below
 
 =end pod
 
-plan *;
+plan 256;
 
 # ASCIIHexDigit
 
