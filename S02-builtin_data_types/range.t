@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 92;
+plan 94;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
@@ -191,6 +191,11 @@ is(+(6..8), 3, 'numification');
 {
     sub foo($a) { ~($a .. 5) };
     is(foo(5), '5', 'range constructed from parameter OK');
+}
+
+{
+    is((1..8)[*-1], 8, 'postcircumfix:<[ ]> on range works');
+    is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');
 }
 
 # vim:set ft=perl6
