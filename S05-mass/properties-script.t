@@ -15,14 +15,14 @@ plan 361;
 
 # BidiL       # Left-to-Right
 
-#?rakudo 35 skip 'Bidi* not recognized'
+## #?rakudo 35 skip 'Bidi* not recognized'
 ok("\c[YI SYLLABLE IT]" ~~ m/^<.isBidiL>$/, q{Match (Left-to-Right)} );
 ok(!( "\c[YI SYLLABLE IT]" ~~ m/^<!isBidiL>.$/ ), q{Don't match negated (Left-to-Right)} );
 ok(!( "\c[YI SYLLABLE IT]" ~~ m/^<-isBidiL>$/ ), q{Don't match inverted (Left-to-Right)} );
-ok(!( "\x[5A87]"  ~~ m/^<.isBidiL>$/ ), q{Don't match unrelated (Left-to-Right)} );
-ok("\x[5A87]"  ~~ m/^<!isBidiL>.$/, q{Match unrelated negated (Left-to-Right)} );
-ok("\x[5A87]"  ~~ m/^<-isBidiL>$/, q{Match unrelated inverted (Left-to-Right)} );
-ok("\x[5A87]\c[YI SYLLABLE IT]" ~~ m/<.isBidiL>/, q{Match unanchored (Left-to-Right)} );
+ok(!( "\x[05D0]"  ~~ m/^<.isBidiL>$/ ), q{Don't match unrelated (Left-to-Right)} );
+ok("\x[05D0]"  ~~ m/^<!isBidiL>.$/, q{Match unrelated negated (Left-to-Right)} );
+ok("\x[05D0]"  ~~ m/^<-isBidiL>$/, q{Match unrelated inverted (Left-to-Right)} );
+ok("\x[05D0]\c[YI SYLLABLE IT]" ~~ m/<.isBidiL>/, q{Match unanchored (Left-to-Right)} );
 
 # BidiEN      # European Number
 
@@ -38,13 +38,13 @@ ok("\x[AFFB]\c[DIGIT ZERO]" ~~ m/<.isBidiEN>/, q{Match unanchored (European Numb
 # BidiES      # European Number Separator
 
 
-ok("\c[SOLIDUS]" ~~ m/^<.isBidiES>$/, q{Match (European Number Separator)} );
-ok(!( "\c[SOLIDUS]" ~~ m/^<!isBidiES>.$/ ), q{Don't match negated (European Number Separator)} );
-ok(!( "\c[SOLIDUS]" ~~ m/^<-isBidiES>$/ ), q{Don't match inverted (European Number Separator)} );
+ok("\c[PLUS SIGN]" ~~ m/^<.isBidiES>$/, q{Match (European Number Separator)} );
+ok(!( "\c[PLUS SIGN]" ~~ m/^<!isBidiES>.$/ ), q{Don't match negated (European Number Separator)} );
+ok(!( "\c[PLUS SIGN]" ~~ m/^<-isBidiES>$/ ), q{Don't match inverted (European Number Separator)} );
 ok(!( "\x[7B89]"  ~~ m/^<.isBidiES>$/ ), q{Don't match unrelated (European Number Separator)} );
 ok("\x[7B89]"  ~~ m/^<!isBidiES>.$/, q{Match unrelated negated (European Number Separator)} );
 ok("\x[7B89]"  ~~ m/^<-isBidiES>$/, q{Match unrelated inverted (European Number Separator)} );
-ok("\x[7B89]\c[SOLIDUS]" ~~ m/<.isBidiES>/, q{Match unanchored (European Number Separator)} );
+ok("\x[7B89]\c[PLUS SIGN]" ~~ m/<.isBidiES>/, q{Match unanchored (European Number Separator)} );
 
 # BidiET      # European Number Terminator
 
@@ -67,6 +67,7 @@ ok(!( "\x[6CF9]"  ~~ m/^<.isBidiWS>$/ ), q{Don't match unrelated (Whitespace)} )
 ok("\x[6CF9]"  ~~ m/^<!isBidiWS>.$/, q{Match unrelated negated (Whitespace)} );
 ok("\x[6CF9]"  ~~ m/^<-isBidiWS>$/, q{Match unrelated inverted (Whitespace)} );
 ok("\x[6CF9]\c[FORM FEED (FF)]" ~~ m/<.isBidiWS>/, q{Match unanchored (Whitespace)} );
+
 
 # Arabic
 
