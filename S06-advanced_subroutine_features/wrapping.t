@@ -18,7 +18,7 @@ sub nok_error( $error, $message? ) {
 sub hi { "Hi" };
 is( hi, "Hi", "Basic sub." );
 my $handle;
-lives_ok( { $handle = &hi.wrap({ callsame ~ " there" }) }, 
+lives_ok( { $handle = &hi.wrap({ callsame() ~ " there" }) }, 
         "Basic wrapping works ");
 
 ok( $handle, "Recieved handle for unwrapping." );
@@ -46,7 +46,7 @@ for (1..10) -> $num {
     try {
         ok( 
             &levelwrap.wrap({ 
-                callwith( $^t++ );
+                callwith( $^t + 1 );
             }),
             " Wrapping #$num"
         )
@@ -61,10 +61,10 @@ sub functionA {
 }
 is( functionA, 'z', "Sanity." );
 my $middle;
-try { ok( $middle = &functionA.wrap({ return 'y' ~ callsame }))};
+try { ok( $middle = &functionA.wrap(sub { return 'y' ~ callsame }))};
 nok_error( $!, "Wrapping failed." );
 is( functionA, "yz", "Middle wrapper sanity." );
-try { ok( &functionA.wrap({ return 'x' ~ callsame }))};
+try { ok( &functionA.wrap(sub { return 'x' ~ callsame }))};
 nok_error( $!, "Wrapping failed." );
 is( functionA, "xyz", "three wrappers sanity." );
 try { ok( &functionA.unwrap( $middle ))};
@@ -72,18 +72,20 @@ nok_error( $!, "Failed to unwrap the middle wrapper." );
 is( functionA, "xz", "First wrapper and final function only, middle removed." );
 
 #temporization (end scope removal of wrapping)
-sub functionB {
-    return 'xxx';
-}
-is( functionB, "xxx", "Sanity" );
+#?rakudo skip 'temp and wrap'
 {
-    try {
-        temp &functionB.wrap({ return 'yyy' });
-    };
-    is( functionB, 'yyy', 'Check that function is wrapped.' );
+    sub functionB {
+        return 'xxx';
+    }
+    is( functionB, "xxx", "Sanity" );
+    {
+        try {
+            temp &functionB.wrap({ return 'yyy' });
+        };
+        is( functionB, 'yyy', 'Check that function is wrapped.' );
+    }
+    is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
-is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
-
 
 #TODO:
 #nextsame
