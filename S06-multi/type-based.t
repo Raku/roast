@@ -133,7 +133,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     my Str %b = :a<b>, :b<c>;
     my Array %c = a => [1, 2], b => [3, 4];
 
-    #?rakudo 3 skip 'dispatch based on typed Hash'
     is f4(%a), 'Hash of Int',    'can dispatch on typed Hash (Int)';
     is f4(%b), 'Hash of Str',    'can dispatch on typed Hash (Str)';
     is f4(%c), 'Hash of Array',  'can dispatch on typed Hash (Array)';
