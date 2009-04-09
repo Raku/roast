@@ -146,7 +146,6 @@ my @array2 = ("test", 1, undef);
     ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array");
 }
 
-#?rakudo skip "rest not properly fudged yet"
 {
     # declare the array with data type
     my Int @array;
