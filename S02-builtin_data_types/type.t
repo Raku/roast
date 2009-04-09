@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 28;
+plan 30;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -101,3 +101,7 @@ my Str $bar;
     
 }
 
+{
+    eval_dies_ok('my Int Str $x', 'multiple prefix constraints not allowed');
+    eval_dies_ok('sub foo(Int Str $x) { }', 'multiple prefix constraints not allowed');
+}

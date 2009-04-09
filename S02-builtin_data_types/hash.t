@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 59;
+plan 63;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -51,6 +51,12 @@ my @slice2 = %hash5<three one>;
 is(+@slice2, 2, 'got the right amount of values from the %hash<> slice');
 is(@slice2[0], 3, '%hash<> slice was successful');
 is(@slice2[1], 1, '%hash<> slice was successful');
+
+my @slice3 = %hash5<>.sort;
+is(+@slice3, 3, 'empty slice got all hash values');
+is(@slice3[0], 1, 'empty slice got all hash values');
+is(@slice3[1], 2, 'empty slice got all hash values');
+is(@slice3[2], 3, 'empty slice got all hash values');
 
 # slice assignment
 
