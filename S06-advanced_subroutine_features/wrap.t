@@ -11,7 +11,7 @@ use Test;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 16;
+plan 21;
 
 my @log;
 
@@ -33,6 +33,8 @@ sub other_wrapper () {
 foo();
 is(+@log, 1, "one event logged");
 is(@log[0], "foo", "it's foo");
+
+dies_ok { &foo.unwrap() }, 'cannot upwrap a never-wrapped sub.';
 
 @log = ();
 
@@ -76,3 +78,15 @@ foo();
 
 is(+@log, 1, "one events for unwrapped (should be back to original now)");
 is(@log[0], "foo", "got execpted value");
+
+@log = ();
+
+$wrapped = &foo.wrap(&wrapper);
+$doublywrapped = &foo.wrap(&other_wrapper);
+&foo.unwrap($wrapped);
+foo();
+is(+@log, 2, "out of order unwrapping gave right number of results");
+is(@log[0], "wrapper2", "got execpted value from remaining wrapper");
+is(@log[1], "foo", "got execpted value from original sub");
+
+dies_ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
