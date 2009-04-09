@@ -50,7 +50,6 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
 {
     my Array @x;
-    #?rakudo 5 todo 'type checks on typed arrays'
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
