@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 114;
 
 =begin pod
 
@@ -427,4 +427,41 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
     is($test2.test,  [], "Get Worked!");
 }
 
+# test typed attributes
+# TODO: same checks on private attributes
+#?rakudo skip 'typed array/hash attributes'
+{
+    class TypedAttrib {
+        has Int @.a is rw;
+        has Int %.h is rw;
+    }
+    my $o = try { TypedAttrib.new };
+    ok $o.defined, 'created object with typed attributes';
+    ok $o.a.of === Int, 'array attribute is typed';
+    lives_ok { $o.a = (2, 3) }, 'Can assign to typed drw-array-attrib';
+    lives_ok { $o.a[2] = 4 },   'Can insert into typed rw-array-attrib';
+    lives_ok { $o.a.push: 5 }, 'Can push onto typed rw-array-attrib';
+    is $o.a.join('|'), '2|3|4|5', 
+        '... all of the above actually worked (not only lived)';
+
+    dies_ok { $o.a = <foo bar> }, 'type enforced on array attrib (assignment)';
+    dies_ok { $o.a[2] = $*IN   }, 'type enforced on array attrib (item assignment)';
+    dies_ok { $o.a.push: [2, 3]}, 'type enforced on array attrib (push)';
+    dies_ok { $o.a[42]<foo> = 3}, 'no autovivification (typed array)';
+
+    is $o.a.join('|'), '2|3|4|5', 
+        '... all of the above actually did nothing (not just died)';
+
+    ok $o.h.of === Int, 'hash attribute is typed';
+    lives_ok {$o.h = { a => 1, b => 2 } }, 'assign to typed hash attrib';
+    lives_ok {$o.h<c> = 3},                'insertion into typed hash attrib';
+    lives_ok {$o.h.push: (d => 4) },       'pushing onto typed hash attrib';
+    is_deeply $o.h<a b c d>, (1, 2, 3, 4),   '... all of them worked';
+
+    dies_ok  {$o.h = { :a<b> }  },         'Type enforced (hash, assignment)';
+    dies_ok  {$o.h<a> = 'b'  },            'Type enforced (hash, insertion)';
+    dies_ok  {$o.h.push: (g => 'f') },     'Type enforced (hash, push)';
+    dies_ok  {$o.h<blubb><bla> = 3 },      'No autovivification (typed hash)';
+    is_deeply $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
+}
 # vim: ft=perl6
