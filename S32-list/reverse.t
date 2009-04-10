@@ -9,7 +9,7 @@ Basic test for the reverse() builtin with a string (Str).
 
 =end pod
 
-plan 28;
+plan 24;
 
 
 
@@ -104,23 +104,4 @@ is(@a, @e, "list was reversed");
     is(@a[1], "foo", 'in place reversal works');
 }
 
-
-=begin pod
-
-Tests for %hash.reverse, which inverts the keys and values of a hash.
-
-=end pod
-
-{
-    my %hash = <a b c d>;
-    is(%hash.reverse<b d>, <a c>, 'simple hash reversal');
-    is(%hash, {'a' => 'b', 'c' => 'd'}, 'original hash is intact');
-}
-
-{
-    my %hash = reverse {0 => 'a', 1 => 'a'};
-
-    is(%hash.keys, <a>, 'hash reversal with collision');
-    #?rakudo skip 'reverse for hash not implemented (unspecced behavior here)'
-    is(%hash.values.sort, <0 1>, 'hash reversal with collision (unspecced, values)');
-}
+# vim: ft=perl6
