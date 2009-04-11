@@ -14,7 +14,7 @@ is( 'Hello World !'.flip, '! dlroW olleH', "literal" );
 my Str $a = 'Hello World !';
 is( $a.flip, '! dlroW olleH', "with a Str variable" );
 is( $a, 'Hello World !', "flip should not be in-place" );
-is( $a .= flip, '! dlroW olleH', "after a .=reverse" );
+is( $a .= flip, '! dlroW olleH', "after a .=flip" );
 
 # Multiple iterations (don't work in 6.2.12) :
 is( 'Hello World !'.flip.flip, 'Hello World !',

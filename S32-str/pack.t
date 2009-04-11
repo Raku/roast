@@ -735,7 +735,7 @@ sub byteorder
 
         is($nat, $ByteOrder eq 'big' ? $be : $le);
       }
-      is($be, reverse($le));
+      is($be, flip($le));
       my @x = eval { unpack "$format$format>$format<", $nat.$be.$le };
 
       print "# [$value][", join('][', @x), "][$@]\n";
@@ -820,7 +820,7 @@ SKIP: {
         }
 
         is($be, $ref[$i]);
-        is($be, reverse($le));
+        is($be, flip($le));
       }
     }
   }
@@ -939,10 +939,10 @@ is(ord(pack('U', 300)), 300);
 # does unpack U deref Unicode?
 is((unpack('U', chr(300)))[0], 300);
 
-# is unpack U the reverse of pack U for Unicode string?
+# is unpack U the flip of pack U for Unicode string?
 is("@{[unpack('U*', pack('U*', 100, 200, 300))]}", "100 200 300");
 
-# is unpack U the reverse of pack U for byte string?
+# is unpack U the flip of pack U for byte string?
 is("@{[unpack('U*', pack('U*', 100, 200))]}", "100 200");
 
 
