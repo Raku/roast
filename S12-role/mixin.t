@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 16;
 
 # L<S12/Roles/"Run-time mixins are done with does and but">
 
@@ -10,6 +10,9 @@ class C1 { }
 my $x = C1.new();
 $x does R1;
 is $x.test,     42,         'method from a role can be mixed in';
+is $x.?test,    42,         '.? form of call works on a mixed-in role';
+is $x.+test,    42,         '.+ form of call works on a mixed-in role';
+is $x.*test,    42,         '.* form of call works on a mixed-in role';
 
 
 role R2 { method test { 42 } }
