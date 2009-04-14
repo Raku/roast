@@ -32,14 +32,18 @@ is( levelwrap( 2 ), 2, "Sanity test." );
 lives_ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
-for (1..10) -> $num {
-    lives_ok {
-            &levelwrap.wrap({ 
-                callwith( $^t + 1 );
-            }),
-            " Wrapping #$num"
-    }, "wrapping $num";
-    is( levelwrap( 1 ), 1 + $num, "Checking $num level wrapping" );
+#?DOES 20
+#?rakudo skip 'multiple wrapping'
+{
+    for (1..10) -> $num {
+        lives_ok {
+                &levelwrap.wrap({ 
+                    callwith( $^t + 1 );
+                }),
+                " Wrapping #$num"
+        }, "wrapping $num";
+        is( levelwrap( 1 ), 1 + $num, "Checking $num level wrapping" );
+    }
 }
 
 #Check removal of wrap in the middle by handle.
