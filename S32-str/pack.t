@@ -244,7 +244,7 @@ sub list_eq ($$) {
   my $can_shriek = 'sSiIlL';
   $can_shriek .= 'nNvV' unless $no_signedness;
   # h and H can't do either, so act as sanity checks in blead
-  foreach my $base (split '', 'hHsSiIlLqQjJfFdDpPnNvV') {
+  foreach my $base (split 'hHsSiIlLqQjJfFdDpPnNvV', '') {
     foreach my $mod ('', '<', '>', '!', '<!', '>!', '!<', '!>') {
     SKIP: {
 	# Avoid void context warnings.
@@ -1979,7 +1979,7 @@ is(unpack('c'), 65, "one-arg unpack (change #18751)"); # defaulting to $_
 }
 {
     #50256
-    my ($v) = split //, unpack ('(B)*', 'ab');
+    my ($v) = split unpack ('(B)*', 'ab'), //;
     is($v, 0); # Doesn't SEGV :-)
 }
 

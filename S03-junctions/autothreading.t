@@ -249,7 +249,7 @@ plan 72;
     $c = 0;
     sub my_substr ($str, $i, $j) {
         $c++;
-        my @c = split "", $str;
+        my @c = $str.split: '';
         join("", @c[$i..($i+$j-1)]);
     }
 

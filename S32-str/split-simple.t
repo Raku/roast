@@ -20,16 +20,16 @@ sub split_test(@splitted, @expected, Str $desc) {
 }
 
 split_test 'a1b24f'.split(/\d+/),  <a b f>, 'Str.split(/regex/)';
-split_test split(/\d+/, 'a1b24f'), <a b f>, 'split(/regex/, Str)';
+split_test split('a1b24f', /\d+/), <a b f>, 'split(/regex/, Str)';
 split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) (with Str semantics';
 
 split_test 'a1b24f'.split(/\d+/, *),  <a b f>, 'Str.split(/regex/) (with * limit)';
-split_test split(/\d+/, 'a1b24f', *), <a b f>, 'split(/regex/, Str) (with * limit)';
+split_test split('a1b24f', /\d+/, *), <a b f>, 'split(/regex/, Str) (with * limit)';
 split_test 'a1b'.split(1, *),         <a b>,   'Str.split(Any) (with Str semantics (with * limit)';
 
 {
     split_test 123.split(2),           <1 3>,   'Int.split(Int)';
-    split_test split(2, 123),          <1 3>,   'split(Int, Int)';
+    split_test split(123, 2),          <1 3>,   'split(Int, Int)';
 }
 
 split_test '1234'.split(/X/),          @(<1234>),  'Non-matching regex returns whole string';
@@ -82,10 +82,10 @@ ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # split should return capture
-my @split = 'abc def ghi'.split(/(\s+)/);
-#?rakudo todo "split should return captures"
+#?rakudo skip "split should return captures"
 #?DOES 3
 {
+    my @split = 'abc def ghi'.split(/(\s+)/, :all);
     ok @split.elems == 5, q{split returns captured delimiter} ;
     ok @split[1] eq ' ', q{split captured single space};
     ok @split[3] eq ' ', q{split captured multiple spaces};
