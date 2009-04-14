@@ -4,16 +4,6 @@ use Test;
 
 plan 39;
 
-# FIXME: There is probably a better way, perhaps using try/CATCH, but I was
-# unable to figure out the try/CATCH syntax.
-# All these tests should be re-written in terms of lives_ok();
-sub nok_error( $error, $message? ) {
-    if ( $error ) {
-        say( $error );
-        ok( 0, $message );
-    }
-}
-
 #First level wrapping
 sub hi { "Hi" };
 is( hi, "Hi", "Basic sub." );
@@ -39,19 +29,16 @@ sub levelwrap($n) {
 is( levelwrap( 1 ), 1, "Sanity test." );
 is( levelwrap( 2 ), 2, "Sanity test." );
 
-try { is( &levelwrap.callwith( 1 ), 1, "Check that functions have a 'callwith' that works. " )};
-nok_error( $!, "callwith does not seem to work." );
+lives_ok { &levelwrap.callwith( 1 )},
+    "Check that functions have a 'callwith' that works. ";
 
 for (1..10) -> $num {
-    try {
-        ok( 
+    lives_ok {
             &levelwrap.wrap({ 
                 callwith( $^t + 1 );
             }),
             " Wrapping #$num"
-        )
-    };
-    nok_error( $!, "Wrapping $num failed." );
+    }, "wrapping $num";
     is( levelwrap( 1 ), 1 + $num, "Checking $num level wrapping" );
 }
 
@@ -59,17 +46,16 @@ for (1..10) -> $num {
 sub functionA {
     return 'z';
 }
-is( functionA, 'z', "Sanity." );
+is( functionA(), 'z', "Sanity." );
 my $middle;
-try { ok( $middle = &functionA.wrap(sub { return 'y' ~ callsame }))};
-nok_error( $!, "Wrapping failed." );
-is( functionA, "yz", "Middle wrapper sanity." );
-try { ok( &functionA.wrap(sub { return 'x' ~ callsame }))};
-nok_error( $!, "Wrapping failed." );
-is( functionA, "xyz", "three wrappers sanity." );
-try { ok( &functionA.unwrap( $middle ))};
-nok_error( $!, "Failed to unwrap the middle wrapper." );
-is( functionA, "xz", "First wrapper and final function only, middle removed." );
+lives_ok { $middle = &functionA.wrap(sub { return 'y' ~ callsame })}, 
+        "First wrapping lived";
+is( functionA(), "yz", "Middle wrapper sanity." );
+lives_ok { &functionA.wrap(sub { return 'x' ~ callsame })}, 
+         'Second wraping lived';
+is( functionA(), "xyz", "three wrappers sanity." );
+lives_ok { &functionA.unwrap( $middle )}, 'unwrap the middle wrapper.';
+is( functionA(), "xz", "First wrapper and final function only, middle removed." );
 
 #temporization (end scope removal of wrapping)
 #?rakudo skip 'temp and wrap'
