@@ -107,6 +107,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :nth(2) and :x(3)';
 }
 
+#?rakudo skip 's/.../../'
 {
     my $s = "ZBC";
     my @a = ("A", 'ZBC');
