@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 63;
+plan 64;
 
 =begin pod
 
@@ -58,11 +58,12 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character after the identifier is whitespace, the subsequent
 # text (following any whitespace) is passed as a regex
+#?rakudo skip 'angle quotes in regexes'
 {
     my $is_regex = 0;
     my sub test ($a) {$is_regex++ if $a ~~ Regex}
 
-    'whatever' ~~ /w <test hat>/;
+    'whatever' ~~ /w < test hat >/;
     ok($is_regex, 'text passed as a regex (1)');
 
     $is_regex = 0;
@@ -197,18 +198,21 @@ character classes), and those are referenced at the correct spot.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/A leading ! indicates a negated meaning (always a zero-width assertion)>
 {
-    ok('1./:"{}=-_' ~~ /^<!alpha>+$/, '<!alpha> matches non-letter characters');
-    ok(!('abcdef'   ~~ /<!alpha>/), '<!alpha> does not match letter characters');
-    is('.2 1' ~~ /(<!before .> \d)/, 1, '<!foo> does not capture');
+    ok('1./:"{}=-_' ~~ /^[<!alpha> .]+$/, '<!alpha> matches non-letter characters');
+    ok(!('abcdef'   ~~ /<!alpha>./), '<!alpha> does not match letter characters');
+    #?rakudo todo '<!before>'
+    is(+('.2 1' ~~ /<!before \.> \d/), 1, '<!before>');
+    is +$/.keys, 0, '<!before \\.> does not capture';
 }
 
 # A leading ? indicates a positive zero-width assertion
 {
-    is('123abc456def' ~~ /(.+ <?alpha>)/, '123', 'positive zero-width assertion');
+    is(~('123abc456def' ~~ /(.+? <?alpha>)/), '123', 'positive zero-width assertion');
 }
 
 # The <...>, <???>, and <!!!> special tokens have the same "not-defined-yet"
 # meanings within regexes that the bare elipses have in ordinary code
+#?rakudo skip '..., !!! and ??? in regexes'
 {
     eval_dies_ok('"foo" ~~ /<...>/', '<...> dies in regex match');
     # XXX: Should be warns_ok, but we don't have that yet
@@ -218,22 +222,25 @@ character classes), and those are referenced at the correct spot.
 
 # A leading * indicates that the following pattern allows a partial match.
 # It always succeeds after matching as many characters as possible.
+#?rakudo skip '<*literal>'
 {
-    is(''    ~~ /<*xyz>/, '',    'partial match (0)');
-    is('x'   ~~ /<*xyz>/, 'x',   'partial match (1a)');
-    is('xz'  ~~ /<*xyz>/, 'x',   'partial match (1b)');
-    is('yzx' ~~ /<*xyz>/, 'x',   'partial match (1c)');
-    is('xy'  ~~ /<*xyz>/, 'xy',  'partial match (2a)');
-    is('xyx' ~~ /<*xyz>/, 'xy',  'partial match (2a)');
-    is('xyz' ~~ /<*xyz>/, 'xyz', 'partial match (3)');
+    is(''    ~~ /^ <*xyz> $ /, '',    'partial match (0)');
+    is('x'   ~~ /^ <*xyz> $ /, 'x',   'partial match (1a)');
+    is('xz'  ~~ /^ <*xyz> $ /, 'x',   'partial match (1b)');
+    is('yzx' ~~ /^ <*xyz> $ /, 'x',   'partial match (1c)');
+    is('xy'  ~~ /^ <*xyz> $ /, 'xy',  'partial match (2a)');
+    is('xyx' ~~ /^ <*xyz> $ /, 'xy',  'partial match (2a)');
+    is('xyz' ~~ /^ <*xyz> $ /, 'xyz', 'partial match (3)');
 
-    is('abc'   ~~ /<*ab+c>/,   'abc',   'partial match with quantifier (1)');
-    is('abbbc' ~~ /<*ab+c>/,   'abbbc', 'partial match with quantifier (2)');
-    is('ababc' ~~ /<*'ab'+c>/, 'ababc', 'partial match with quantifier (3)');
+    is('abc'   ~~ / ^ <*ab+c> $ /,   'abc',   'partial match with quantifier (1)');
+    is('abbbc' ~~ / ^ <*ab+c> $ /,   'abbbc', 'partial match with quantifier (2)');
+    is('ababc' ~~ / ^ <*'ab'+c> $ /, 'ababc', 'partial match with quantifier (3)');
+    is('aba'   ~~ / ^ <*'ab'+c> $ /, 'ababc', 'partial match with quantifier (4)');
 }
 
 # A leading ~~ indicates a recursive call back into some or all of the
 # current rule. An optional argument indicates which subpattern to re-use
+#?rakudo skip '<~~ ... >'
 {
     ok('1.2.' ~~ /\d+\. <~~>/, 'recursive regex using whole pattern');
     ok('foodbard' ~~ /(foo|bar) d <~~0>/, 'recursive regex with partial pattern');
@@ -243,6 +250,7 @@ character classes), and those are referenced at the correct spot.
 
 # A <( token indicates the start of a result capture,
 # while the corresponding )> token indicates its endpoint
+#?rakudo skip '<( and )>'
 {
     is('foo123bar' ~~ /foo <(\d+)> bar/, 123, '<(...)> pair');
     is('foo456bar' ~~ /foo <(\d+ bar/, '456bar', '<( match');
