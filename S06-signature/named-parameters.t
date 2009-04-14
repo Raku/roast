@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 74;
+plan 75;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -213,6 +213,7 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     sub renames(:y($x)) { $x }
     is(renames(:y(42)),  42, 'renaming of parameters works');
     is(renames(y => 42), 42, 'renaming of parameters works');
+    dies_ok { renames(:x(23)) }, 'old name is not available';
 }
 
 
