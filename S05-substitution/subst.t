@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 56;
+plan 59;
 
 # L<S05/Substitution/>
 
@@ -106,3 +106,21 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a x c x e x g h',
        '.subst with :nth(2) and :x(3)';
 }
+
+{
+    my $s = "ZBC";
+    my @a = ("A", 'ZBC');
+
+    $_ = q{Now I know my abc's};
+
+    s:global/Now/Wow/;
+    is($_, q{Wow I know my abc's}, 'Constant substitution');
+
+    s:global/abc/$s/;
+    is($_, q{Wow I know my ZBC's}, 'Scalar substitution');
+
+    s:g/BC/@a[]/;
+    is($_, q{Wow I know my ZA ZBC's}, 'List substitution');
+}
+
+# vim: ft=perl6
