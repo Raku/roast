@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 63;
+plan 70;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -227,4 +227,75 @@ lives_ok({ $keys = +(foo_hash_ref().keys) },
 is($keys, 3, "got right result");
 lives_ok({ foo_hash_ref()<foo> },
     "can hash de-ref return value (hashref)");
+
+# from return2.t
+{
+  sub userdefinedcontrol_a (&block) { block(); return 24 }
+  sub official_a {
+    userdefinedcontrol_a { return 42 };
+  }
+  is official_a(), 42, "bare blocks are invisible to return";
+}
+
+{
+  sub userdefinedcontrol_b (&block) { block(); return 24 }
+  sub official_b {
+    {
+        {
+            userdefinedcontrol_b { return 42 };
+        }
+    }
+  }
+  is official_b(), 42, "nested bare blocks are invisible to return";
+}
+
+{
+  sub userdefinedcontrol_c ($value, &block) { block($value); return 24 }
+  sub official_c($value) {
+    {
+        userdefinedcontrol_c $value, -> $x { return $x };
+    }
+  }
+  is official_c(42), 42, "pointy blocks are invisible to return";
+}
+
+# return should desugar to &?ROUTINE.leave, where &?ROUTINE is lexically scoped
+#    to mean the current "official" subroutine or method.
+
+#?rakudo todo 'tie return() to lexical scope'
+{
+  sub userdefinedcontrol3 (&block) { block(); return 36 }
+  sub userdefinedcontrol2 (&block) { userdefinedcontrol3(&block); return 24 }
+  sub userdefinedcontrol1 (&block) { userdefinedcontrol2(&block); return 12 }
+  sub official_d {
+    userdefinedcontrol1 { return 42 };
+  }
+  is official_d(), 42,
+    "subcalls in user-defined control flow are invisible to return", :todo<bug>;
+}
+
+class Foo {
+  method userdefinedcontrol3 (&block) { block(); 36 }
+  submethod userdefinedcontrol2 (&block) { self.userdefinedcontrol3(&block); 24 }
+  method userdefinedcontrol1 (&block) { self.userdefinedcontrol2(&block); 12 }
+  method officialmeth {
+    self.userdefinedcontrol1({ return 42 });
+  }
+  submethod officialsubmeth {
+    self.userdefinedcontrol1({ return 43 });
+  }
+  sub official {
+    Foo.new.userdefinedcontrol1({ return 44 });
+  }
+}
+
+#?pugs 3 todo 'return(), blocks and methods'
+#?rakudo 3 todo 'tie return() to lexical scope'
+is Foo.new.officialmeth(), 42,
+    "return correctly from official method only";
+is Foo.new.officialsubmeth(), 43,
+    "return correctly from official submethod only";
+is Foo::official(), 44,
+    "return correctly from official sub only";
+
 # vim: ft=perl6
