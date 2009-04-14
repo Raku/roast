@@ -1,12 +1,13 @@
 use v6;
 use Test;
 
-plan 6;
+plan 8;
 
 #L<S06/Placeholder variables/>
 
 sub positional_slurpy {
     is @_[0],  1, "Leftover positional args get passed to @_ if present";
+    is +@_, 1, 'one item filled into @_';
 }
 
 positional_slurpy(1);
@@ -25,5 +26,15 @@ sub both {
 }
 
 both(5, :b(6), 3, :a(4));
+
+my @result;
+sub perl5sub {
+    push @result, @_[0];
+    push @result, @_[1];
+}
+perl5sub(<foo bar>);
+#?rakudo todo '@_ details'
+is(@result, [<foo bar>], 'use @_ in sub');
+
 
 # vim: syn=perl6
