@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 37;
+plan 41;
 
 # L<S09/Typed arrays/>
 
@@ -70,3 +70,19 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
     dies_ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 }
+
+# test that lists/arrays returned from array methods are typed as well
+{
+    my Int @a = 1, 2, 3;
+    my Int @b;
+    lives_ok { @b = @a }, 'can assign typed array to typed array';
+    #?rakudo todo 'Array methods should return typed arrays'
+    ok @a.values.of === Int, '@a.values is typed (1)';
+    lives_ok { @b = @a.values }, '@a.values is typed (2)';
+
+    my Str @c = <foo bar baz>;
+    #?rakudo todo 'Array methods should return typed arrays'
+    is @c.keys.of, Int, '@array.keys is typed with Int';
+}
+
+# vim: ft=perl6
