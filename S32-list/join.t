@@ -12,11 +12,10 @@ my @list = ("a", "b", "c");
 
 is(@list.join("|"), "a|b|c", '@list.join("|") works');
 
-#?rakudo skip 'named args'
-my $joined2 = join("|", :values(@list));
-is($joined2, "a|b|c", 'join("|", :values(@list)) works');
+#?rakudo skip 'calling positional params by name'
+is(join("|", :values(@list)), "a|b|c", 'join("|", :values(@list)) works');
 
-$joined2 = join("|", @list);
+my $joined2 = join("|", @list);
 is($joined2, "a|b|c", 'join("|", @list) works');
 
 my $joined3 = join("|", "a", "b", "c");
