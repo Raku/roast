@@ -3,7 +3,7 @@ use Test;
 
 # L<S09/"Autovivification">
 
-plan 39;
+plan 42;
 
 {
   my %hash;
@@ -12,32 +12,33 @@ plan 39;
   ok !%hash.exists('a'), 'just mentioning a hash value should not autovivify it';
 }
 
-#?rakudo skip 'Error Msg: elements() not implemented in class Undef'
 {
   my %hash;
 
   %hash<key>[42] = 17;
   is %hash<key>[42], 17, "autovivification of a hash element to an arrayref worked";
+  is +%hash.keys, 1, 'Created one hash item';
 }
 
-#?rakudo skip "Error Msg: Method 'postcircumfix:{ }' not found for invocant of class 'Failure'"
 {
   my %hash;
 
   %hash<key><innerkey> = 17;
   is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
+  isa_ok %hash<key>, Hash, 'Inner hash item is really a Hash';
 }
 
 # Autovification by push, unshift, etc.
-#?rakudo skip "Error Msg: No applicable methods."
+# XXX I understand that @array[0].push(...) should autovivify an Array
+# in @array[0], but is that also true for a normal scalar?
 {
   my $arrayref;
 
   push $arrayref, 1,2,3;
   is ~$arrayref, "1 2 3", "autovivification to an array by &push";
+  isa_ok $arrayref, Array, 'autovivified to Array';
 }
 
-#?rakudo skip "Error Msg: No applicable methods."
 {
   my $arrayref;
 
@@ -46,7 +47,7 @@ plan 39;
 }
 
 # Autovification by push, unshift, etc. of an array/hash element
-#?rakudo skip "Error Msg: No applicable methods."
+# L<S09/Autovivification/"push, unshift, .[]">
 {
   my @array;
 
@@ -54,7 +55,6 @@ plan 39;
   is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
 }
 
-#?rakudo skip "Error Msg: No applicable methods."
 {
   my %hash;
 
@@ -95,7 +95,6 @@ plan 39;
   
 }
 
-#?rakudo skip "Error Msg: get_pmc_keyed() not implemented in class 'Undef'"
 {
   my $hashref;
   ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (3)";
@@ -175,3 +174,5 @@ lives_ok {
 dies_ok {
   &New::Package::foo();
 }, "...but invoking undeclared globally qualifed code variable should die";
+
+# vim: ft=perl6
