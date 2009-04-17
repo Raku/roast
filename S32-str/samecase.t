@@ -17,6 +17,8 @@ is( samecase('Perl6', 'abcdE'), 'perl6', 'as a function');
 # As a method
 is( ''.samecase(''), '', 'empty string' );
 is( 'Hello World !'.samecase('AbCdEfGhIjKlMnOpQrStUvWxYz'), 'HeLlO WoRlD !', 'literal');
+
+#?rakudo skip 'calling positional params by name'
 is( samecase(:string( "fRUE => fRIOUX's Rectitude is Underpinned by Equivalence"), 'AbCdEfGhIjKlMnOpQrStUvWxYz'), "FrUe => FrIoUx's rEcTiTuDE is Underpinned by Equivalence", 'samecase works with a named argument');
 
 # On a variable
