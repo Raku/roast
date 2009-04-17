@@ -17,10 +17,8 @@ plan 14;
     is +%h, 5, '... and we have the right number of items';
 
     my Int %g;
-    #?rakudo 2 todo 'typed hashes'
     lives_ok { %g = %h }, 'can assign one typed hash to another';
     lives_ok { %h.pairs }, 'can call methods on typed hashes';
-    #?rakudo skip 'calling methods on typed hashes'
     is %h.pairs.sort.join, %g.pairs.sort.join, 
                         '... and the hashes are the same afterwards';
 
