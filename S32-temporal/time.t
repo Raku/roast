@@ -15,7 +15,7 @@ plan 10;
 # Used in place of Rules for the moment
 sub is_dt (Str $datetime) returns Bool {
 
-    my ($dow, $mon, $day, $time, $year) = $datetime.split: ' ';
+    my ($dow, $mon, $day, $time, $year) = split(' ', $datetime);
     my $result = 0;
 
     for < Sun Mon Tue Wed Thu Fri Sat > {
@@ -36,7 +36,7 @@ sub is_dt (Str $datetime) returns Bool {
         $result++;
     }
 
-    my ($hour, $min, $sec) = $time.split: ':';
+    my ($hour, $min, $sec) = split(':',$time);
 
     if $hour >= 0 && $hour <= 23 &&
        $min  >= 0 && $min  <= 59 &&

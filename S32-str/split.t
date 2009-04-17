@@ -24,7 +24,6 @@ my %ords = (
   9 => 'ninth',
 );
 
-#?DOES 3
 sub split_test(@splitted, @expected, Str $desc) {
   is +@splitted, +@expected,
      "split created the correct value amount for: $desc";
@@ -34,29 +33,25 @@ sub split_test(@splitted, @expected, Str $desc) {
   is_deeply [~<< @splitted], [~<< @expected], "values match";
 }
 
-#?rakud skip 'parse errors'
-{
-    is_deeply split(:input("fiSMBoC => fREW is Station's Most Bodacious Creation"), " "),
-            qw/fiSMBoC => fREW is Station's Most Bodacious Creation/,
-            q{split(:input(Str), " "};
+is_deeply split(:input("fiSMBoC => fREW is Station's Most Bodacious Creation"), " "),
+           qw/fiSMBoC => fREW is Station's Most Bodacious Creation/,
+           q{split(:input(Str), " "};
 
-    is_deeply split(:input("UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously"), /\s+/),
-            qw/UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously/,
-            q{split(:input(Str), /\s+/};
-}
+is_deeply split(:input("UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously"), /\s+/),
+           qw/UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously/,
+           q{split(:input(Str), /\s+/};
 
-is_deeply split("forty-two", ""),
+is_deeply split("", "forty-two"),
            qw/f o r t y - t w o/,
-           q{split Str, ""};
+           q{split "", Str};
 
 # split on a space
-is_deeply split('split this string', ' '),
+is_deeply split(' ', 'split this string'),
            qw/split this string/,
-           q{split Str, ' '};
+           q{split ' ', Str};
 
 # split on a single character delimiter
-#?rakudo skip 'parse error'
-is_deeply split('try$this$string', '$'),
+is_deeply split('$', 'try$this$string'),
            qw/try this string/,
            q{split '$', Str};
 
@@ -136,7 +131,7 @@ is_deeply "a.b".split(/\./), <a b>,
            q{"a.b".split(/\./)};
 
 is_deeply "abcd".split(/<null>/), <a b c d>,
-           q["abcd".split(/<null>/)];
+           q{"abcd".split(/<null>/)};
 
 {
   ' ' ~~ /(\s)/;
@@ -148,5 +143,3 @@ is_deeply "abcd".split(/<null>/), <a b c d>,
     skip q{' ' ~~ /\s/ did not result in ' '};
   }
 }
-
-# vim: ft=perl6
