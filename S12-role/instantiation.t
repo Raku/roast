@@ -8,7 +8,7 @@ use Test;
 # classes. Hence, RoleName.new() instantiates an object that will probably fail
 # on all stubs.
 
-plan 17;
+plan 18;
 
 role SampleRole {
   method sample_method () { 42 }
@@ -24,6 +24,8 @@ role SampleRole {
 
   my $obj2 = SampleRole.new;
   ok $obj.WHAT === $obj2.WHAT, "Punned role classes have the same .WHAT";
+
+  is $obj.WHAT, 'SampleRole', '.WHAT as a string gives the name of the role';
 }
 
 role WithAttr {
