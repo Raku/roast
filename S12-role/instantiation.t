@@ -8,7 +8,7 @@ use Test;
 # classes. Hence, RoleName.new() instantiates an object that will probably fail
 # on all stubs.
 
-plan 16;
+plan 17;
 
 role SampleRole {
   method sample_method () { 42 }
@@ -63,4 +63,12 @@ role ParaRole[$x] {
     my $obj = TestB.new(x => 1, y => 2);
     is($obj.x, 1, "can access attribute from punned class of inherited role");
     is($obj.y, 2, "can access attribute from punned class of inherited role");
+}
+
+# It isn't just .new that works - any method can be punned.
+{
+    role NotNewTest {
+        method x { 69 }
+    }
+    is(NotNewTest.x, 69, "it's not just .new that causes a pun, but any method");
 }
