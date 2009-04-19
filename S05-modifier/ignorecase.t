@@ -33,10 +33,8 @@ ok 'Hello' ~~ m/Hello/,       "match mixed case (direct)";
 ok "hello" !~~ m/<mixedcase>/, "do not match lowercase (subrule)";
 ok "hello" !~~ m/Hello/,       "do not match lowercase (direct)";
 
-#?rakudo emit skip_rest('unimplemented m:i parsing');
 
-#?rakudo emit =begin
-
+#?rakudo 7 skip 'adverbial modifiers'
 ok "hello" !~~ m:i/<mixedcase>/, "no match with :i if matched by subrule";
 ok "hello"  ~~ m:i/Hello/,       "match with :i (direct)";
 
@@ -48,6 +46,5 @@ ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
-#?rakudo emit =end
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
