@@ -15,9 +15,10 @@ L<S05/"Matching against non-strings">
 my $fh = open($?FILE);
 regex monster { dr\wgon }; # contrived pattern which does not match itself; we're going to look for it in this file
 regex cheese { camembert | cheddar  };
-my $stream:= cat =$fh;
+my $stream:= cat $fh.lines;
 
-ok($stream ~~ /<cheese>/, 'rules on streams, positive', :todo<feature>); # should match
+#?pugs todo 'matching against Cat objects'
+ok($stream ~~ /<cheese>/, 'rules on streams, positive'); # should match
 ok($stream !~~ /<monster>/, 'rules on streams, negative'); # shouldn't match
 
 # And arrays...

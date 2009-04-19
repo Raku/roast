@@ -12,7 +12,7 @@ I/O tests
 
 =end pod
 
-plan 61;
+plan 62;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -60,12 +60,15 @@ ok($in2.close, 'file closed okay (2)');
 # L<S02/Files/you now write>
 my $in3 = open($filename);
 isa_ok($in3, IO);
-my $line3a = =$in3;
-is($line3a, "Hello World", 'unary =$in worked');
-my $line3b = =$in3;
-is($line3b, "Foo Bar Baz", 'unary =$in worked');
-my $line3c = =$in3;
-is($line3c, "The End", 'unary =$in worked');
+#?rakudo 3 skip '$fh.get'
+{
+    my $line3a = $in3.get;
+    is($line3a, "Hello World", '$in.get worked(1)');
+    my $line3b = $in3.get;
+    is($line3b, "Foo Bar Baz", '$in.get worked(2)');
+    my $line3c = $in3.get;
+    is($line3c, "The End", '$in.get worked(3)');
+}
 ok($in3.close, 'file closed okay (3)');
 
 # append to the file
@@ -79,8 +82,10 @@ ok($append.close, 'file closed okay (append)');
 
 my $in4 = open($filename);
 isa_ok($in4, IO);
-my @lines4 = readline($in4);
+my @lines4 = lines($in4);
+#?rakudo 2 todo 'line counts'
 is(+@lines4, 4, 'we got four lines from the file');
+is $in4.ins, 4, 'same with .ins';
 is(@lines4[0], "Hello World", 'readline($in) worked in list context');
 is(@lines4[1], "Foo Bar Baz", 'readline($in) worked in list context');
 is(@lines4[2], "The End", 'readline($in) worked in list context');
@@ -99,12 +104,13 @@ ok($in5.close, 'file closed okay (5)');
 
 my $in6 = open($filename);
 isa_ok($in6, IO);
-my @lines6 = =$in6;
+my @lines6 = $in6.lines;
+#?rakudo todo 'line counts'
 is(+@lines6, 4, 'we got four lines from the file');
-is(@lines6[0], "Hello World", 'unary =$in worked in list context');
-is(@lines6[1], "Foo Bar Baz", 'unary =$in worked in list context');
-is(@lines6[2], "The End", 'unary =$in worked in list context');
-is(@lines6[3], "... Its not over yet!", 'unary =$in worked in list context');
+is(@lines6[0], "Hello World", '$in.lines worked in list context');
+is(@lines6[1], "Foo Bar Baz", '$in.lines worked in list context');
+is(@lines6[2], "The End", '$in.lines worked in list context');
+is(@lines6[3], "... Its not over yet!", '$in.lines worked in list context');
 ok($in6.close, 'file closed okay (6)');
 
 # test reading a file into an array and then closing before 
