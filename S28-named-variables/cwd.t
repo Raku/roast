@@ -8,13 +8,13 @@ plan 2;
 
 ok( defined($*CWD), 'we have something in our $CWD');
 
-### Get CWD from parrot
+# check if there is a t subfolder
 
-my $cwd = Q:PIR {
-    $P0 = new ['OS']
-    $S0 = $P0.'cwd'()
-    %r = box $S0
-};
-is($*CWD, $cwd, 'matches CWD from parrot');
+my $subfolder_exists = 0;
+if (-e "$*CWD/t") {
+    $subfolder_exists = 1;
+}#if
+ok( $subfolder_exists, 'we have a "t" subfolder');
+
 
 # vim: ft=perl6
