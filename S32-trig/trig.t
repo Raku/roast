@@ -10,7 +10,6 @@ Basic tests for trigonometric functions.
 
 =end description
 
-#?rakudo emit #
 use Num :Trig;
 
 # See also: L<"http://theory.cs.iitm.ernet.in/~arvindn/pi/"> :)
