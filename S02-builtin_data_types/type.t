@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 30;
+plan 32;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -75,19 +75,22 @@ my Str $bar;
 {
     my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
     my sub returntype2 (Bool $pass) of Int { return $pass ?? 42 !! 'no'}
-    my Bool sub returntype3 (Bool $pass)   { return $pass ?? True !! ':('}
+    my Bool sub returntype3 (Bool $pass)   { return $pass ?? Bool::True !! ':('}
+    my sub returntype4 (Bool $pass --> Str) { return $pass ?? 'ok' !! -1}
 
     is(returntype1(Bool::True), 'ok', 'good return value works (returns)');
     dies_ok({ returntype1(Bool::False) }, 'bad return value dies (returns)');
     is(returntype2(Bool::True), 42, 'good return value works (of)');
     dies_ok({ returntype2(Bool::False) }, 'bad return value dies (of)');
-    
-    #?rakudo 2 skip 'return type written before routine name, Bool.ACCEPTS(True) gives false'
-    is(returntype3(True), True, 'good return value works (my Type sub)');
-    dies_ok({ returntype3(False) }, 'bad return value dies (my Type sub)');
+
+    is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
+    dies_ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
+
+    is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
+    dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
-#?rakudo skip 'Rat not implemented, --> not implemented, as not implemented'
+#?rakudo skip 'Rat not implemented, as not implemented'
 {
     # the following two are the same type of behavior
     # S02: "It is possible for the of type to disagree with the as type"
