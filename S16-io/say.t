@@ -4,7 +4,7 @@ use v6;
 
 # doesn't use Test.pm and plan() intentionally
 
-say "1..5";
+say "1..6";
 
 # Tests for say
 {
@@ -26,4 +26,6 @@ say "1..5";
 {
     "ok 5 - method form of say".say;
 }
+
+$*OUT.say('ok 6 - $*OUT.say(...)');
 
