@@ -4,7 +4,7 @@ use Test;
 
 # L<S16/"Filehandles, files, and directories"/"open">
 # L<S16/"Filehandles, files, and directories"/"close">
-# L<S16/Unfiled/IO.readline>
+# L<S16/Unfiled/IO.get>
 
 =begin pod
 
@@ -36,25 +36,25 @@ ok($out.close, 'file closed okay');
 
 my $in1 = open($filename);
 isa_ok($in1, IO);
-my $line1a = readline($in1);
-is($line1a, "Hello World", 'readline($in) worked (and autochomps)');
+my $line1a = get($in1);
+is($line1a, "Hello World", 'get($in) worked (and autochomps)');
 is $in1.ins, 1, 'read one line (.ins)';
-my $line1b = readline($in1);
-is($line1b, "Foo Bar Baz", 'readline($in) worked (and autochomps)');
+my $line1b = get($in1);
+is($line1b, "Foo Bar Baz", 'get($in) worked (and autochomps)');
 is $in1.ins, 2, 'read two lines (.ins)';
-my $line1c = readline($in1);
-is($line1c, "The End", 'readline($in) worked');
-is $in1.ins, 3, 'read two lines (.ins)';
+my $line1c = get($in1);
+is($line1c, "The End", 'get($in) worked');
+is $in1.ins, 3, 'read three lines (.ins)';
 ok($in1.close, 'file closed okay (1)');
 
 my $in2 = open($filename);
 isa_ok($in2, IO);
-my $line2a = $in2.readline();
-is($line2a, "Hello World", '$in.readline() worked');
-my $line2b = $in2.readline();
-is($line2b, "Foo Bar Baz", '$in.readline() worked');
-my $line2c = $in2.readline();
-is($line2c, "The End", '$in.readline() worked');
+my $line2a = $in2.get();
+is($line2a, "Hello World", '$in.get() worked');
+my $line2b = $in2.get();
+is($line2b, "Foo Bar Baz", '$in.get() worked');
+my $line2c = $in2.get();
+is($line2c, "The End", '$in.get() worked');
 ok($in2.close, 'file closed okay (2)');
 
 # L<S02/Files/you now write>
@@ -86,20 +86,20 @@ my @lines4 = lines($in4);
 #?rakudo 2 todo 'line counts'
 is(+@lines4, 4, 'we got four lines from the file');
 is $in4.ins, 4, 'same with .ins';
-is(@lines4[0], "Hello World", 'readline($in) worked in list context');
-is(@lines4[1], "Foo Bar Baz", 'readline($in) worked in list context');
-is(@lines4[2], "The End", 'readline($in) worked in list context');
-is(@lines4[3], "... Its not over yet!", 'readline($in) worked in list context');
+is(@lines4[0], "Hello World", 'lines($in) worked in list context');
+is(@lines4[1], "Foo Bar Baz", 'lines($in) worked in list context');
+is(@lines4[2], "The End", 'lines($in) worked in list context');
+is(@lines4[3], "... Its not over yet!", 'lines($in) worked in list context');
 ok($in4.close, 'file closed okay (4)');
 
 my $in5 = open($filename);
 isa_ok($in5, IO);
-my @lines5 = $in5.readline();
+my @lines5 = $in5.lines();
 is(+@lines5, 4, 'we got four lines from the file');
-is(@lines5[0], "Hello World", '$in.readline() worked in list context');
-is(@lines5[1], "Foo Bar Baz", '$in.readline() worked in list context');
-is(@lines5[2], "The End", '$in.readline() worked in list context');
-is(@lines5[3], "... Its not over yet!", '$in.readline() worked in list context');
+is(@lines5[0], "Hello World", '$in.lines() worked in list context');
+is(@lines5[1], "Foo Bar Baz", '$in.lines() worked in list context');
+is(@lines5[2], "The End", '$in.lines() worked in list context');
+is(@lines5[3], "... Its not over yet!", '$in.lines() worked in list context');
 ok($in5.close, 'file closed okay (5)');
 
 my $in6 = open($filename);
@@ -117,13 +117,14 @@ ok($in6.close, 'file closed okay (6)');
 # doing anything with the array (in other words, is pugs too lazy)
 my $in7 = open($filename);
 isa_ok($in7, IO);
-my @lines7 = readline($in7);
+my @lines7 = lines($in7,3);
+push @lines7, "and finally" ~ $in7.get;
 ok($in7.close, 'file closed okay (7)');
 is(+@lines7, 4, 'we got four lines from the file (lazily)');
-is(@lines7[0], "Hello World", 'readline($in) worked in list context');
-is(@lines7[1], "Foo Bar Baz", 'readline($in) worked in list context');
-is(@lines7[2], "The End", 'readline($in) worked in list context');
-is(@lines7[3], "... Its not over yet!", 'readline($in) worked in list context');
+is(@lines7[0], "Hello World", 'lines($in,3) worked in list context');
+is(@lines7[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
+is(@lines7[2], "The End", 'lines($in,3) worked in list context');
+is(@lines7[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
 
 #now be sure to delete the file as well
 
@@ -138,23 +139,23 @@ ok($out8.close, 'file closed okay (out8)');
 
 my $in8 = open($filename);
 isa_ok($in8, IO);
-my $line8_1 = readline($in8);
-is($line8_1, "Hello World", 'readline($in) worked');
+my $line8_1 = get($in8);
+is($line8_1, "Hello World", 'get($in) worked');
 ok($in8.close, 'file closed okay (in8)');
 
 my $fh9 = open($filename, :r, :w);  # was "<+" ? 
 isa_ok($fh9, IO);
-#my $line9_1 = readline($fh9);
+#my $line9_1 = get($fh9);
 #is($line9_1, "Hello World");
 #$fh9.say("Second line");
 ok($fh9.close, 'file closed okay (9)');
 
 #my $in9 = open($filename);
 #isa_ok($in9, IO);
-#my $line9_1 = readline($in9);
-#my $line9_2 = readline($in9);
-#is($line9_1, "Hello World", 'readline($in) worked');
-#is($line9_2, "Second line", 'readline($in) worked');
+#my $line9_1 = get($in9);
+#my $line9_2 = get($in9);
+#is($line9_1, "Hello World", 'get($in) worked');
+#is($line9_2, "Second line", 'get($in) worked');
 
 #?rakudo skip ':rw on open() unimplemented'
 {

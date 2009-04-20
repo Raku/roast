@@ -18,7 +18,7 @@ sub test_lines(@lines) {
     my $fh = open('t/spec/S16-io/test-data');
     my $count = 0;
     while !$fh.eof {
-        my $x = $fh.readline;
+        my $x = $fh.get;
         $count++ if $x;
     }
     is $count, 3, 'Read three lines with while !$hanlde.eof';
