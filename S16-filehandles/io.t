@@ -114,13 +114,12 @@ is(@lines6[2], "The End", '$in.lines worked in list context');
 is(@lines6[3], "... Its not over yet!", '$in.lines worked in list context');
 ok($in6.close, 'file closed okay (6)');
 
-#?rakudo skip 'lines with maxlines argument'
 {
 # test reading a file into an array and then closing before 
 # doing anything with the array (in other words, is pugs too lazy)
 my $in7 = open($filename);
 isa_ok($in7, IO);
-my @lines7 = lines($in7,3);
+my @lines7 = $in7.lines(3);
 push @lines7, "and finally" ~ $in7.get;
 ok($in7.close, 'file closed okay (7)');
 is(+@lines7, 4, 'we got four lines from the file (lazily)');
