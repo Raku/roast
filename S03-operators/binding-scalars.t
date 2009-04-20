@@ -36,6 +36,8 @@ plan 28;
 
 
 # Binding and $CALLER::
+#?rakudo skip 'is context, traits followed by binding'
+#XXX This can pass bogusly (was doing for Rakudo for a while).
 {
   sub bar {
     return $CALLER::a eq $CALLER::b;
