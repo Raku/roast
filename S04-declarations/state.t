@@ -101,7 +101,7 @@ plan 34;
 
 # state will first {...}
 #?pugs eval "parse error"
-#?rakudo todo 'will first { ... }'
+#?rakudo skip 'will first { ... }'
 {
     my ($a, $b);
     my $gen = {
