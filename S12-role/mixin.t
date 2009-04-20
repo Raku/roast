@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 18;
 
 # L<S12/Roles/"Run-time mixins are done with does and but">
 
@@ -54,5 +54,14 @@ $x does B(2);
 is $x.a,        1,          'mixining in two roles one after the other';
 is $x.b,        2,          'mixining in two roles one after the other';
 
+my @array does R1;
+is @array.test, 42,         'mixing in a role at the point of declaration works';
+
+#?rakudo skip 'mixin at the point of declaration is compile time'
+{
+    my $x;
+    BEGIN { $x = @array.test }
+    is $x, 42,              'mixing in at point of declaration at compile time';
+}
 
 # vim: syn=perl6
