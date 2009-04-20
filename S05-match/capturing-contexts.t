@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 11;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -23,6 +23,7 @@ if !eval('("a" ~~ /a/)') {
   ok( $/[0] eq 'a', 'positional capture accessible');
   ok( @($/).[0] eq 'a', 'array context - correct number of positional captures');
   ok( @($/).elems == 1, 'array context - correct number of positional captures');
+  ok( $/.list.elems == 1, 'the .list methods returns a list object');
 }
 
 # L<< S05/Return values from matches/"When used as a hash, a C<Match> object" >>
@@ -31,4 +32,5 @@ if !eval('("a" ~~ /a/)') {
   ok( $/<alpha> eq 'a', 'named capture accessible');
   ok( %($/).keys == 1, 'hash context - correct number of named captures');
   ok( %($/).<alpha> eq 'a', 'hash context - named capture accessible');
+  ok( $/.hash.keys[0] eq 'alpha', 'the .hash method returns a hash object');
 }
