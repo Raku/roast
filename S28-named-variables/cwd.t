@@ -11,7 +11,7 @@ ok( defined($*CWD), 'we have something in our $CWD');
 # check if there is a t subfolder
 
 my $subfolder_exists = 0;
-if (-e "$*CWD/t") {
+if "$*CWD/t" ~~ :e {
     $subfolder_exists = 1;
 }#if
 ok( $subfolder_exists, 'we have a "t" subfolder');
