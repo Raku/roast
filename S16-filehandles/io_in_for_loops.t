@@ -30,6 +30,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
+#?rakudo 6 skip 'line counts'
 { # now read it in with the $fh controling the loop
     my $fh = open($filename);
     my $num = 1;
@@ -40,6 +41,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
+#?rakudo 6 skip 'line counts'
 { # now read it in with the $fh controling the loop w/out parens
     my $fh = open($filename);
     my $num = 1;

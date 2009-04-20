@@ -95,6 +95,7 @@ ok($in4.close, 'file closed okay (4)');
 my $in5 = open($filename);
 isa_ok($in5, IO);
 my @lines5 = $in5.lines();
+#?rakudo 1 todo 'line counts'
 is(+@lines5, 4, 'we got four lines from the file');
 is(@lines5[0], "Hello World", '$in.lines() worked in list context');
 is(@lines5[1], "Foo Bar Baz", '$in.lines() worked in list context');
@@ -113,6 +114,8 @@ is(@lines6[2], "The End", '$in.lines worked in list context');
 is(@lines6[3], "... Its not over yet!", '$in.lines worked in list context');
 ok($in6.close, 'file closed okay (6)');
 
+#?rakudo skip 'lines with maxlines argument'
+{
 # test reading a file into an array and then closing before 
 # doing anything with the array (in other words, is pugs too lazy)
 my $in7 = open($filename);
@@ -129,6 +132,7 @@ is(@lines7[3], "and finally... Its not over yet!", 'get($in) worked after lines(
 #now be sure to delete the file as well
 
 is(unlink($filename), 1, 'file has been removed');
+}
 
 # new file for testing other types of open() calls
 
