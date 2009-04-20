@@ -4,7 +4,7 @@ use Test;
 # L<S16/"Filehandles, files, and directories"/"open">
 # L<S16/"Filehandles, files, and directories"/"close">
 
-plan 49;
+plan 29;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -21,6 +21,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
+#?DOES 6
 { # now read it in and check
     my $fh = open($filename);
     for (1 .. 6) -> $num {
@@ -30,7 +31,8 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?rakudo 6 skip 'line counts'
+#?DOES 6
+#?rakudo skip '$fh.lines count'
 { # now read it in with the $fh controling the loop
     my $fh = open($filename);
     my $num = 1;
@@ -41,12 +43,13 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?rakudo 6 skip 'line counts'
+#?DOES 6
+#?rakudo skip '$fh.lines count'
 { # now read it in with the $fh controling the loop w/out parens
     my $fh = open($filename);
     my $num = 1;
     for $fh.lines -> $line {
-        is($line, "$num", '... got the right line (=$fh controlled loop)');
+        is($line, "$num", '... got the right line ($fh.lines controlled loop)');
         $num++;
     }
     $fh.close();
@@ -54,6 +57,7 @@ my $filename = 'tempfile_io_in_for_loop';
 
 ## more complex loops
 
+#?DOES 6
 { # now read it in and check
     my $fh = open($filename);
     my $num = 1;
@@ -68,32 +72,32 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
+#?rakudo skip '$fh.get in list context'
+#?DOES 2
 { # now read it in with the $fh controling the loop but call 
   # the $fh.get inside the loop inside parens (is this list context??)
     my $fh = open($filename);
     my $num = 1;
     for $fh.get -> $line {
-        #?rakudo skip "io iterator laziness unspecced"
         is($line, "$num", '... got the right line ((=$fh) controlled loop)');
         $num++;
         my $line2 = get $fh;
-        #?rakudo skip "io iterator laziness unspecced"
         is($line2, "$num", '... got the right line2 ((=$fh) controlled loop)');
         $num++;
     }
     $fh.close();
 }
 
+#?rakudo skip '$fh.get in list context'
+#?DOES 2
 { # now read it in with the $fh controling the loop but call 
   # the get $fh inside the loop w/out parens (is this scalar context??)
     my $fh = open($filename);
     my $num = 1;
     for get $fh -> $line {
-        #?rakudo skip "io iterator laziness unspecced"
         is($line, "$num", '... got the right line (=$fh controlled loop)');
         $num++;
         my $line2 = get $fh;
-        #?rakudo skip "io iterator laziness unspecced"
         is($line2, "$num", '... got the right line2 (=$fh controlled loop)');
         $num++;
     }
