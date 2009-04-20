@@ -255,9 +255,8 @@ my @array2 = ("test", 1, undef);
 
 # L<S09/Typed arrays>
 
-#?rakudo skip 'my @arr of Type parsefail'
 {
-    my @arr of Int = <1 2 3 4 5>;
+    my @arr of Int = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
     dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
@@ -293,9 +292,9 @@ my @array2 = ("test", 1, undef);
     dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
 }
 
-#?rakudo skip 'my Type @arr parsefail'
+#?rakudo skip 'no native type int yet'
 {
-    my int @arr = <1 2 3 4 5>;
+    my int @arr = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my Type @arr works');
     dies_ok({push @arr, 's'}, 'type constraints on my Type @arr works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr works (2)');

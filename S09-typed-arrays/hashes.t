@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 18;
 
 # L<S09/Typed arrays>
 
@@ -29,6 +29,14 @@ plan 14;
     dies_ok { %h<a> = 'foo' }, "Can't assign to hash item";
     dies_ok { %h{'a', 'b'} = <c d> }, "prevent mismatched hash slice";
     dies_ok { %h<z><t> = 3 }, 'Typ constraint prevents autovivification';
+}
+
+{
+    lives_ok { my %s of Int = :a(3) }, 'can initialize typed hash (of Int)';
+    dies_ok { my %s of Int = :a("3") }, 'initialization of typed hash type checked (of Int)';
+    my %s of Str;
+    lives_ok { %s<a> = 'b' }, "Can assign to typed hash element (of Int)";
+    dies_ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 }
 
 # vim: ft=perl6

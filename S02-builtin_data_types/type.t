@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 32;
+plan 34;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -30,6 +30,12 @@ my Str $bar;
     #?pugs 1 todo 
     dies_ok({$bar = 42},         'Str restricts to strings');
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
+}
+
+my $baz of Int;
+{
+    dies_ok({$baz = 'xyz'},      'of Int restricts to integers');
+    is(($baz = 42),       42,    'of Int is an integer');
 }
 
 # L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
