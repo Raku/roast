@@ -24,7 +24,7 @@ my $filename = 'tempfile_io_in_for_loop';
 { # now read it in and check
     my $fh = open($filename);
     for (1 .. 6) -> $num {
-        my $line = =$fh;
+        my $line = get $fh;
         is($line, "$num", '... got the right line (array controlled loop)');
     }
     $fh.close();
@@ -33,8 +33,8 @@ my $filename = 'tempfile_io_in_for_loop';
 { # now read it in with the $fh controling the loop
     my $fh = open($filename);
     my $num = 1;
-    for (=$fh) -> $line {
-        is($line, "$num", '... got the right line ((=$fh) controlled loop)');
+    for ($fh.lines) -> $line {
+        is($line, "$num", '... got the right line (($fh.lines) controlled loop)');
         $num++;
     }
     $fh.close();
@@ -43,7 +43,7 @@ my $filename = 'tempfile_io_in_for_loop';
 { # now read it in with the $fh controling the loop w/out parens
     my $fh = open($filename);
     my $num = 1;
-    for =$fh -> $line {
+    for $fh.lines -> $line {
         is($line, "$num", '... got the right line (=$fh controlled loop)');
         $num++;
     }
@@ -56,10 +56,10 @@ my $filename = 'tempfile_io_in_for_loop';
     my $fh = open($filename);
     my $num = 1;
     for (1 .. 3) -> $_num {
-        my $line = =$fh;
+        my $line = get $fh;
         is($line, "$num", '... got the right line (array controlled loop)');
         $num++;
-        my $line2 = =$fh;
+        my $line2 = get $fh;
         is($line2, "$num", '... got the right line2 (array controlled loop)');        
         $num++;        
     }
@@ -67,14 +67,14 @@ my $filename = 'tempfile_io_in_for_loop';
 }
 
 { # now read it in with the $fh controling the loop but call 
-  # the =$fh inside the loop inside parens (is this list context??)
+  # the $fh.get inside the loop inside parens (is this list context??)
     my $fh = open($filename);
     my $num = 1;
-    for =$fh -> $line {
+    for $fh.get -> $line {
         #?rakudo skip "io iterator laziness unspecced"
         is($line, "$num", '... got the right line ((=$fh) controlled loop)');
         $num++;
-        my $line2 = =$fh;
+        my $line2 = get $fh;
         #?rakudo skip "io iterator laziness unspecced"
         is($line2, "$num", '... got the right line2 ((=$fh) controlled loop)');
         $num++;
@@ -83,14 +83,14 @@ my $filename = 'tempfile_io_in_for_loop';
 }
 
 { # now read it in with the $fh controling the loop but call 
-  # the =$fh inside the loop w/out parens (is this scalar context??)
+  # the get $fh inside the loop w/out parens (is this scalar context??)
     my $fh = open($filename);
     my $num = 1;
-    for =$fh -> $line {
+    for get $fh -> $line {
         #?rakudo skip "io iterator laziness unspecced"
         is($line, "$num", '... got the right line (=$fh controlled loop)');
         $num++;
-        my $line2 = =$fh;
+        my $line2 = get $fh;
         #?rakudo skip "io iterator laziness unspecced"
         is($line2, "$num", '... got the right line2 (=$fh controlled loop)');
         $num++;
