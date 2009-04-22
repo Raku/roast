@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 29;
 
 =begin pod
 
@@ -71,3 +71,8 @@ is_approx(log(-1i), -0.5i * pi , "got the log of -i (complex unit)");
 is_approx(log10(-1i), -0.5i * pi / log(10), "got the log10 of -i (complex unit)");
 
 # TODO: please add more testcases for log10 of complex numbers
+
+#?rakudo 2 todo 'log10 of a Complex'
+is_approx( (-1i).log10(), -0.5i*pi / log(10), " (i).log10 = - i  * pi/(2 log(10))");
+is( log10(-1+0i).WHAT eq 'Complex', 1, 'log10 of a complex returns a complex, not a list');
+
