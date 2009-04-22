@@ -81,7 +81,7 @@ is(try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 # Unicode placeholder variables
 {
     is
-        ~(< foostraße barstraße fakestraße >.map:{ ucfirst $^straßenname }),
+        ~(< foostraße barstraße fakestraße >.map: { ucfirst $^straßenname }),
         "Foostraße Barstraße Fakestraße",
         "Unicode placeholder variables";
 }
