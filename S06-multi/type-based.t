@@ -23,7 +23,6 @@ is(foo(2), 'Int 2', 'dispatched to the Int sub');
 my $num = '4';
 is(foo(1.4), 'Num 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool 1', 'dispatched to the Bool sub');
-#?rakudo skip 'type Regex'
 is(foo(/a/),'Regex Regex','dispatched to the Rule sub');
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 

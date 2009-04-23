@@ -7,17 +7,14 @@ plan 14;
 
 eval_dies_ok('qr/foo/', 'qr// is gone');
 
-#?rakudo 2 todo 'type for regex'
 isa_ok(rx/oo/, Regex);
 isa_ok(rx (o), Regex);
 #?rakudo skip 'rx() not detected'
 eval_dies_ok('rx(o)', 'rx () whitespace if the delims are parens');
-#?rakudo todo 'regex {} does not make a Regex object'
 isa_ok(regex {oo}, Regex);
 
 eval_dies_ok('rx :foo:', 'colons are not allowed as rx delimiters');
 
-#?rakudo todo 'my $var = /foo/ does not make a Regex object'
 {
     my $var = /foo/;
     isa_ok($var, Regex, '$var = /foo/ returns a Regex object');
