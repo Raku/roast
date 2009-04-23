@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 28;
 
 #L<S03/Autoincrement precedence>
 
@@ -88,4 +88,19 @@ is($moo, 0, "var was not touched");
     my Num $y = 2.0;
     $y += 1;
     ok $y == 3.0, 'can add Int to Num with += and type constraint';
+}
+
+# also a Rakudo regression
+{
+    my $x = Bool::False;
+    is ++$x, Bool::True, '++ on False works';
+    $x = Bool::False;
+    #?rakudo skip 'RT #64366'
+    is $x.succ, Bool::True, '.succ on False works';
+
+    $x = Bool::True;
+    is --$x, Bool::False, '-- on True works';
+    $x = Bool::True;
+    #?rakudo skip 'RT #64366'
+    is $x.pred, Bool::True, '.succ on False works';
 }
