@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 51;
+plan 52;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -128,4 +128,11 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
 {
     lives_ok { (2 min undef) }, 'can do (2 min undef)'; 
     lives_ok { (undef min 2) }, 'can do (undef min 2)'; 
+}
+
+# L<S03/Hyper operators/"but a short list may always be extended arbitrarily">
+#?rakudo todo 'RT #64474'
+{
+    is (1, 2, * Z <a b c d>).join('|'),
+       '1a2b2c2d', 'A * as the last value extends lists for infix:<Z> (zip)';
 }
