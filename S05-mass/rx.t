@@ -5,7 +5,7 @@ plan 744;
 ### for now
 sub matchcheck { 1 }
 
-# L</S05/Backtracking control/"To force the preceding atom to do no
+# L<S05/Backtracking control/"To force the preceding atom to do no
 # backtracking">
 
 ##   Backtracking control tests
@@ -30,7 +30,7 @@ ok 'abc' !~~ /\d+:/, 'cut on character class shortcut';
 #### [ if    not | ify ]	verify		y	control
 ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 
-# L</S05/Backtracking control/"Backtracking over a double colon">
+# L<S05/Backtracking control/"Backtracking over a double colon">
 
 #### [ if :: not | ify ]	verify		n	inside a group
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
@@ -46,7 +46,7 @@ ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 #?pugs todo 'feature'
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
-# L</S05/Backtracking control/"Backtracking over a triple colon">
+# L<S05/Backtracking control/"Backtracking over a triple colon">
 #### [ when     ever ] | whence	whence	y	full backtrack failure
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
