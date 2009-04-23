@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 64;
+plan 68;
 
 =begin pod
 
@@ -30,6 +30,17 @@ character classes), and those are referenced at the correct spot.
 {
     is('moose'  ~~ /<alpha>/, 'm', 'capturing grammatical assertion (1)');
     is('1a2b3c' ~~ /<alpha>/, 'a', 'capturing grammatical assertion (2)');
+}
+
+#?rakudo skip 'RT #64464'
+{
+    regex with-dash { '-' }
+    ok '-'  ~~ /<with-dash>/, 'can call regexes which dashes (positive)';
+    ok '|' !~~ /<with-dash>/, 'can call regexes which dashes (negative)';
+
+    regex with'hyphen { a }
+    ok 'a'  ~~ /<with'hyphen>/, 'can call regex with hypen (positive)';
+    ok 'b' !~~ /<with'hyphen>/, 'can call regex with hypen (negative)';
 }
 
 # so if the first character is a left parenthesis, it really is a call
