@@ -16,7 +16,7 @@ emulation.
 
 sub eval_elsewhere($code){ eval($code) }
 
-#L<<S03/"Smart matching"/Any Code:($) item sub truth>>
+#L<S03/"Smart matching"/Any Code:($) item sub truth>
 {
     sub uhuh { 1 }
     sub nuhuh { undef }
@@ -38,21 +38,21 @@ my %hash3 is context = ( "oink", "da", "blah", "zork");
 my %hash4 is context = ( "bink", "yum", "gorch", "zorba");
 my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
-#L<<S03/Smart matching/"hash keys same set">>
+#L<S03/Smart matching/"hash keys same set">
 #?rakudo skip 'context variables'
 { 
     ok eval_elsewhere('(%+hash1 ~~ %+hash2)'), "hash keys identical", :todo;
     ok eval_elsewhere('!(%+hash1 ~~ %+hash4)'), "hash keys differ";
 };
 
-#L<<S03/Smart matching/hash value slice truth>>
+#L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
 { 
     ok(%hash1 ~~ any(%hash3), "intersecting keys", :todo);
     ok(%hash1 !~~ any(%hash4), "no intersecting keys");
 };
 
-#L<<S03/Smart matching/hash value slice truth>>
+#L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
 { 
     my @true = (<foo bar>);
@@ -63,14 +63,14 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok(!(%hash5 ~~ @false), "value slice false");
 };
 
-#L<<S03/Smart matching/hash value slice truth>>
+#L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
 { 
     ok((%hash1 ~~ any(<foo bar>)), "any key exists (but where is it?)", :todo);
     ok(!(%hash1 ~~ any(<gorch ding>)), "no listed key exists");
 };
 
-#L<<S03/Smart matching/hash slice existence>>
+#L<S03/Smart matching/hash slice existence>
 #?rakudo skip 'context variables'
 { 
     ok((%hash1 ~~ all(<foo blah>)), "all keys exist", :todo);
@@ -79,7 +79,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #Hash    Rule      hash key grep            match if any($_.keys) ~~ /$x/
 
-#L<<S03/Smart matching/hash slice existence>>
+#L<S03/Smart matching/hash slice existence>
 #?rakudo skip 'context variables'
 { 
     ok((%hash5 ~~ "foo"), "foo exists", :todo);
@@ -88,7 +88,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok((%hash5 ~~ "wasabi"), "wasabi does not exist", :todo);
 };
 
-#L<<S03/Smart matching/hash slice existence>>
+#L<S03/Smart matching/hash slice existence>
 #?rakudo skip 'context variables'
 { 
     my $string is context = "foo";
@@ -97,14 +97,14 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok eval_elsewhere('!(%+hash5 ~~ .{$+string})'), 'hash.{Any} untruth';
 };
 
-#L<<S03/Smart matching/hash value slice truth>>
+#L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
 { 
     ok eval_elsewhere('(%+hash5 ~~ .<foo>)'), "hash<string> truth";
     ok eval_elsewhere('!(%+hash5 ~~ .<gorch>)'), "hash<string> untruth";
 };
 
-#L<<S03/Smart matching/arrays are comparable>>
+#L<S03/Smart matching/arrays are comparable>
 { 
     ok((("blah", "blah") ~~ ("blah", "blah")), "qw/blah blah/ .eq");
     ok(!((1, 2) ~~ (1, 1)), "1 2 !~~ 1 1");
@@ -151,7 +151,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok (1..10 ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
 };
 
-#L<<S03/Smart matching/numeric equality>>
+#L<S03/Smart matching/numeric equality>
 { 
     ok(((1, 2) ~~ any(2, 3)),
        "there is intersection between (1, 2) and (2, 3)", :todo);
@@ -173,7 +173,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
         "array slice .[0,1] of (0,1,2,3) is false";
 };
 
-#L<<S03/"Smart matching"/in range>>
+#L<S03/"Smart matching"/in range>
 { 
     ok((5 ~~ 1 .. 10), "5 is in 1 .. 10", :todo);
     ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
@@ -189,7 +189,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok((undef ~~ { 1 }), 'ignores $_');
 };
 
-#L<<S03/Smart matching/type membership>>
+#L<S03/Smart matching/type membership>
 { 
     class Dog {}
     class Cat {}
@@ -201,13 +201,13 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #Any     Role      role playing             match if \$_.does(\$x)
 
-#L<<S03/Smart matching/numeric equality>>
+#L<S03/Smart matching/numeric equality>
 { 
     ok((1 ~~ 1), "one is one");
     ok(!(2 ~~ 1), "two is not one");
 };
 
-#L<<S03/Smart matching/string equality>>
+#L<S03/Smart matching/string equality>
 { 
     ok(("foo" ~~ "foo"), "foo eq foo");
     ok(!("bar" ~~ "foo"), "!(bar eq foo)");

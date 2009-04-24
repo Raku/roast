@@ -272,10 +272,10 @@ Perl6-specific tests
     sub bar ($bar, $baz?, :$quux) {
         is($bar, "BAR", "defined param"); # sanity
 
-        # L<<S06/Optional parameters/Missing optional arguments>>
+        # L<S06/Optional parameters/Missing optional arguments>
         ok(!defined($baz), "unspecified optional param");
 
-        # L<<S06/Named parameters/Named parameters are optional>>
+        # L<S06/Named parameters/Named parameters are optional>
         ok(!defined($quux), "unspecified optional param");
     }
 

@@ -9,7 +9,7 @@ if !eval('("a" ~~ /a/)') {
   exit;
 }
 
-# L<<S05/Return values from matches/"A match always returns a Match object" >>
+# L<S05/Return values from matches/"A match always returns a Match object" >
 {
   my $match = 'abd' ~~ m/ (a) (b) c || (\w) b d /;
   isa_ok( $match, 'Match', 'Match object returned');
@@ -17,7 +17,7 @@ if !eval('("a" ~~ /a/)') {
   ok( $/ === $match, 'Same match objects');
 }
 
-# L<<S05/Return values from matches/"The array elements of a C<Match> object are referred to" >>
+# L<S05/Return values from matches/"The array elements of a C<Match> object are referred to" >
 {
   'abd' ~~ m/ (a) (b) c || (\w) b d /;
   ok( $/[0] eq 'a', 'positional capture accessible');
@@ -26,7 +26,7 @@ if !eval('("a" ~~ /a/)') {
   ok( $/.list.elems == 1, 'the .list methods returns a list object');
 }
 
-# L<<S05/Return values from matches/"When used as a hash, a C<Match> object" >>
+# L<S05/Return values from matches/"When used as a hash, a C<Match> object" >
 {
   'abd' ~~ m/ <alpha> <alpha> c || <alpha> b d /;
   ok( $/<alpha> eq 'a', 'named capture accessible');

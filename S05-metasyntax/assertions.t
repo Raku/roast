@@ -9,7 +9,7 @@ version 0.3 (12 Apr 2004), file t/assert.t.
 
 It has (hopefully) been, and should continue to be, updated to
 be valid perl6.
-# L<< S05/"Extensible metasyntax (C<< <...> >>)"/"A leading C<?{> or C<!{> indicates a code assertion:" >>
+# L<S05/"Extensible metasyntax (C<< <...> >>)"/"A leading C<?{> or C<!{> indicates a code assertion:" >
 
 =end pod
 
