@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 19;
 
 =begin description
 
@@ -69,5 +69,19 @@ ok !defined($/), '$/ still undef in the outer block';
 
 # TODO: repeat ... until, gather/take, lambdas, if/unless statement modifiers
 # TODO: move to t/spec/integration/
+
+# test that a regex in an `if' matches against $_, not boolifies
+
+{
+    my $s1 = 0;
+    my $s2 = 1;
+    given 'foo' {
+        if /foo/ { $s1 = 1 }
+        if /not/ { $s2 = 0 }
+    }
+    is $s1, 1, '/foo/ matched against $_ (successfully)';
+    #?rakudo todo 'RT #64330'
+    is $s2, 0, '/not/ matched against $_ (no match)';
+}
 
 # vim: ft=perl6
