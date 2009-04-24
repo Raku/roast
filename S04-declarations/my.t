@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 49;
+plan 51;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -190,5 +190,10 @@ my $x = 42;
     my $y = 4;
 }
 
+# &variables don't need to be pre-declared
+{
+    eval_lives_ok '&x; 1', '&x does not need to be pre-declared';
+    eval_dies_ok '&x()', '&x() dies when empty';
+}
 
 # vim: ft=perl6
