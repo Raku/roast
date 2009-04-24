@@ -80,8 +80,7 @@ ok !defined($/), '$/ still undef in the outer block';
         if /not/ { $s2 = 0 }
     }
     is $s1, 1, '/foo/ matched against $_ (successfully)';
-    #?rakudo todo 'RT #64330'
-    is $s2, 0, '/not/ matched against $_ (no match)';
+    is $s2, 1, '/not/ matched against $_ (no match)';
 
     given 'foo' {
         if /bar/ {
