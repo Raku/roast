@@ -353,8 +353,8 @@ FOO
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');
-    #?rakudo skip '\c123'
-    is("\c123", chr 123, '"\cXXX" and chr XXX are equivalent');
+
+    is("\c123", chr(123), '"\cXXX" and chr XXX are equivalent');
     is("\c[12]3", chr(12) ~ "3", '\c[12]3 is the same as chr(12) concatenated with "3"');
     is("\c[12] 3", chr(12) ~ " 3", 'respects spaces when interpolating a space character');
     is("\c[13,10]", chr(13) ~ chr(10), 'allows multiple chars');
