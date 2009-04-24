@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 =begin description
 
@@ -82,6 +82,14 @@ ok !defined($/), '$/ still undef in the outer block';
     is $s1, 1, '/foo/ matched against $_ (successfully)';
     #?rakudo todo 'RT #64330'
     is $s2, 0, '/not/ matched against $_ (no match)';
+
+    given 'foo' {
+        if /bar/ {
+            ok 0, 'match in /if/;'
+        } else {
+            ok 1, 'match in /if/;'
+        }
+    }
 }
 
 # vim: ft=perl6
