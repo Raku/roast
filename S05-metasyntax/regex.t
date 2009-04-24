@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -14,6 +14,8 @@ eval_dies_ok('rx(o)', 'rx () whitespace if the delims are parens');
 isa_ok(regex {oo}, Regex);
 
 eval_dies_ok('rx :foo:', 'colons are not allowed as rx delimiters');
+
+lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 {
     my $var = /foo/;
