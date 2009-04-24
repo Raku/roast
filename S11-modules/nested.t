@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 4;
 
 # test that classes and roles declared in modules get into the correct
 # namespace
@@ -14,5 +14,7 @@ eval_lives_ok 'use A::A; A::B::D ~~ A::B::B or die()',
               '... and the composition worked';
 eval_lives_ok 'use A::A; A::B::D.new()',
               '... and instantiation works';
+
+eval_lives_ok 'use A; A.new()', 'RT #62162';
 
 # vim: ft=perl6
