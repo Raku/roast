@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 4;
 
 # L<E07/"And every one shall share..." /returns them as a single string/>
 # L<S16/"Unfiled"/"=item IO.slurp">
