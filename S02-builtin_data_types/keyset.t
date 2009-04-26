@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 8;
 
-# L<S02/Mutable types/"KeySet KeyHash of Bool">
+# L<S02/Mutable types/"KeyHash of Bool">
 
 # A KeySet is a KeyHash of Bool, i.e. the values are Bool
 

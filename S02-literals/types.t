@@ -1,8 +1,7 @@
 use v6;
 use Test;
 
-# L<S02/Literals/"There are no barewords in Perl 6. An undeclared bare
-# identifier will always be taken to mean a subroutine name. ">
+# L<S02/Literals/"There are no barewords in Perl">
 
 plan 6;
 

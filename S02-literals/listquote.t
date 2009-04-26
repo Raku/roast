@@ -91,7 +91,7 @@ is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
     is(%foo<blah>, %e<blah>, "Hashes with embedded newlines in the list (3)");
 }
 
-# L<S02/Literals/The degenerate case C<< <> >> is disallowed>
+# L<S02/Literals/"The degenerate case <> is disallowed">
 
 #?rakudo 2 todo 'bare <> and <STDIN>'
 eval_dies_ok '<>', 'bare <> is disallowed';
