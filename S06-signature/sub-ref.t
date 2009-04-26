@@ -13,8 +13,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
 =end description
 
-# See L<S02/"Built-in Data Types"> and especially L<A06/"The C<sub> form"> why {...} and ->
-# ... {...} aren't Subs, but Blocks (they're all Codes, though).
+# See L<S02/"Built-in Data Types"> 
 # Quoting A06:
 #                                   Code
 #                        ____________|________________

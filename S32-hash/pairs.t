@@ -10,7 +10,7 @@ Basic C<pairs> tests, see S29.
 
 =end description
 
-# L<S29/"Hash"/=item pairs>
+# L<S32::Containers/"Hash"/=item pairs>
 
 {
   my %hash = (a => 1, b => 2, c => 3);

@@ -4,7 +4,6 @@ use Test;
 
 plan 4;
 
-# L<E07/"And every one shall share..." /returns them as a single string/>
 # L<S16/"Unfiled"/"=item IO.slurp">
 
 # read self, so that we can know for sure what's

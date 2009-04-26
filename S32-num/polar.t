@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 48;
 
-# L<S29/Complex/"=item polar">
+# L<S32::Numeric/Complex/"=item polar">
 
 #=begin pod
 

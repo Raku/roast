@@ -6,15 +6,15 @@ plan 140;
 
 # Basic tests functions specific to complex numbers.
 
-# L<S32::Num/Complex/=item re>
-# L<S32::Num/Complex/=item im>
+# L<S32::Numeric/Complex/=item re>
+# L<S32::Numeric/Complex/=item im>
 
 {
     is (1 + 2i).re, 1, 'Complex.re works';
     is (1 + 2i).im, 2, 'Complex.im works';
 }
 
-# L<S32::Num/Complex/=item cis>
+# L<S32::Numeric/Complex/=item cis>
 my $pi = 3.141592653589793238;
 
 {
@@ -33,8 +33,8 @@ my $pi = 3.141592653589793238;
 }
 
 # Test that 1.unpor == cis
-# L<S32::Num/Complex/=item cis>
-# L<S32::Num/Complex/=item unpolar>
+# L<S32::Numeric/Complex/=item cis>
+# L<S32::Numeric/Complex/=item unpolar>
 
 {
     for 1..20 -> $i {
@@ -43,8 +43,8 @@ my $pi = 3.141592653589793238;
     }
 }
 
-# L<S32::Num/Complex/=item abs>
-# L<S32::Num/Complex/=item unpolar>
+# L<S32::Numeric/Complex/=item abs>
+# L<S32::Numeric/Complex/=item unpolar>
 #
 # Test that unpolar() doesn't change the absolute value
 
@@ -60,7 +60,7 @@ my $pi = 3.141592653589793238;
     }
 }
 
-# L<S32::Num/Complex/=item unpolar>
+# L<S32::Numeric/Complex/=item unpolar>
 #?rakudo skip 'named args'
 {
     # Basic tests for unpolar()
