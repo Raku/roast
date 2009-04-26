@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 21;
 
-# L<S29/Scalar/"=item defined">
+# L<S32::Basics/Scalar/"=item defined">
 
 =begin pod
 

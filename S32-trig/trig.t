@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 613;
 
-# L<S29/"The :Trig tag">
+# L<S32::Numeric/"The :Trig tag">
 
 =begin description
 

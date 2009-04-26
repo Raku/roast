@@ -1,6 +1,6 @@
 use v6;
 
-# L<S16/"Input and Output"/=item say>
+# L<S32::IO/IO/=item say>
 
 # doesn't use Test.pm and plan() intentionally
 

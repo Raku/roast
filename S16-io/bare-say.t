@@ -3,8 +3,7 @@ use Test;
 
 plan 2;
 
-# L<S16/Input and Output/"As with print, it is a compiler error to use a
-# bare say withoutarguments.">
+# L<S32::IO/IO::Writeable::Encoded/"it is a compiler error"
 
 eval_dies_ok('say', 'bare say is a compiler error');
 eval_dies_ok('print', 'bare print is a compiler error');

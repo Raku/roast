@@ -4,7 +4,7 @@ use Test;
 plan 40;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
-# L<S29/Any/"=item eqv">
+# L<S32::Basics/Any/"=item eqv">
 
 # eqv on values
 {
@@ -122,3 +122,5 @@ plan 40;
     is(1 eqv 1, Bool::True,  'eqv returns Bool::True when true');
     is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
 }
+
+# vim: ft=perl6

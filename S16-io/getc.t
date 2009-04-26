@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 1;
 
-# L<S16/"Input and Output"/"getc">
+# L<S32::IO/IO/"getc">
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
