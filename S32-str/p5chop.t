@@ -1,9 +1,9 @@
 use v6;
 use Test;
 
-# L<S29/Str/"=item p5chop">
+# L<S32::Str/Str/"=item p5chop">
 
-plan 6;
+plan 9;
 
 # TODO: tests with "wide" unicode characters
 
@@ -22,3 +22,19 @@ my @t = <abc def gih>;
 
 is(p5chop(@t), 'h', 'p5chop(@list) returns the last removed char');
 is(@t, <ab de gi>, 'p5chop(@list) removes the last char of each string');
+
+# TODO: shouldn't this be an exception ?
+
+is(p5chop("abc"), 'c', 'p5chop on literal string');
+
+# TODO: make sure this is a warning:
+# my $undef_var;
+# p5chop($undef_var)
+
+my @empty_array;
+my $r = p5chop(@empty_array);
+ok(defined $r, 'defined');
+is($r, '', 'p5chop on emty array returns empty string');
+
+
+
