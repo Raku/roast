@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 35;
 
-# L<S29/"List"/"=item join">
+# L<S32::Containers/"List"/"=item join">
 
 # test all variants of join()
 
@@ -116,11 +116,11 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 # Similar as with .kv: (42).kv should die, but (42,).kv should work.
 
    ## <pmichaud>:  I think the following two tests are likely incorrect.
-   ##   Prior to r20722 S29 gave the following definitions for C<join>:
+   ##   Prior to r20722 S32::Containers gave the following definitions for C<join>:
    ##     our Str multi method join ( $separator: @values )
    ##     our Str multi join ( Str $separator = ' ', *@values )
    ##   Neither of these allows C< @list.join('sep') > to work.
-   ##   In r20722 I changed S29 to read
+   ##   In r20722 I changed S32::Containers to read
    ##     our Str multi method join ( @values: $separator = ' ' )
    ##     our Str multi join ( Str $separator = ' ', *@values )
    ##   This enables C< @list.join('sep') > to work, but now
@@ -136,7 +136,7 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 ## : Fallback semantics in S12 suggest that since no matching multi method is
 ## : found, subs are tried - that is, the expression is interpreted as
 ## :    join('str', 'other_str')
-## : yielding 'other_str'. t/spec/S29-list/join.t disagrees, and wants the
+## : yielding 'other_str'. t/spec/S32::Containers-list/join.t disagrees, and wants the
 ## : result to be 'str'.
 ##
 ## I want the result to be 'str'.

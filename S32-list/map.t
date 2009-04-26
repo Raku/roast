@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 89;
 
-# L<S29/"List"/"=item map">
+# L<S32::Containers/"List"/"=item map">
 
 =begin pod
 

@@ -6,7 +6,7 @@ plan 16;
 
 =begin description
 
-This test tests the C<pick> builtin. See S29#pick.
+This test tests the C<pick> builtin. See S32::Containers#pick.
 
 Previous discussions about pick.
 
@@ -14,7 +14,7 @@ L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e
 
 =end description
 
-# L<S29/List/=item pick>
+# L<S32::Containers/List/=item pick>
 
 my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";

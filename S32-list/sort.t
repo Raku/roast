@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 28;
 
-# L<S29/"List"/"=item sort">
+# L<S32::Containers/"List"/"=item sort">
 
 {
     my @a = (4, 5, 3, 2, 5, 1);

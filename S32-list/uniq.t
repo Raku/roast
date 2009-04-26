@@ -11,7 +11,7 @@ This test tests the C<uniq> builtin.
 Reference:
 L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
-See the thread "[S29] uniq" on p6l, too.
+See the thread "[S32::Containers] uniq" on p6l, too.
 
 Not (yet?) in the spec, but implemented by (nearly?) all implementations.
 

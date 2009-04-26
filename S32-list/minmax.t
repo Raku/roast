@@ -10,8 +10,8 @@ This test tests the C<min> and C<max> builtins.
 
 Reference:
 L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
-L<S29/"List"/"=item min">
-L<S29/"List"/"=item max">
+L<S32::Containers/"List"/"=item min">
+L<S32::Containers/"List"/"=item max">
 
 As per S32, the sub form requires a comparison function. The form without
 comparison function is spelled [min]

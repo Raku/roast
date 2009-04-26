@@ -13,7 +13,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 plan 14;
 
-# L<S29/List/=item reduce>
+# L<S32::Containers/List/=item reduce>
 
 {
   my @array = <5 -3 7 0 1 -9>;

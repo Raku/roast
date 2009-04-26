@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 2;
 
-# L<S29/"List"/"=item map">
+# L<S32::Containers/"List"/"=item map">
 
 my $text  = "abc";
 my %ret;

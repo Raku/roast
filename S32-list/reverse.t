@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/List/"=item reverse">
+# L<S32::Containers/List/"=item reverse">
 
 =begin pod
 

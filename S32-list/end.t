@@ -5,7 +5,7 @@ use Test;
 =begin docs
 
 Array .end tests
-L<S29/Array/=item end>
+L<S32::Containers/Array/=item end>
 =end docs
 
 plan 15;
