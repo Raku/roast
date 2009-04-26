@@ -4,7 +4,7 @@ use Test;
 
 plan 5;
 
-# L<S29/Str/ucfirst>
+# L<S32::Str/Str/ucfirst>
 
 is ucfirst("hello world"), "Hello world", "simple";
 #?rakudo skip 'calling positional params by name'

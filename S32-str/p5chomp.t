@@ -3,7 +3,7 @@ use Test;
 
 =begin pod
 
-L<S29/Str/"=item p5chomp">
+L<S32::Str/Str/"=item p5chomp">
 
 =end pod
 

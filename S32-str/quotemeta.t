@@ -32,7 +32,7 @@ my %Config; # Empty means there's no 'ebcdic' key defined...
 #?pugs todo 'Test Config.pm availability'
 is('Config.pm', 'available', 'Config.pm availability');
 
-# L<S29/Str/quotemeta>
+# L<S32::Str/Str/quotemeta>
 
 is(quotemeta("HeLLo World-72_1"), "HeLLo\\ World\\-72_1", "simple quotemeta test");
 is(quotemeta(:string("fREW => fROOH represents encephelon welkin")), "frew\\ \\=\\>\\ frooh\\ represents\\ encephelon\\ welkin", "quotemeta works with named argument");

@@ -4,7 +4,7 @@ use Test;
 
 plan 12;
 
-# L<S29/Str/capitalize>
+# L<S32::Str/Str/capitalize>
 
 is capitalize(""),             "",               "capitalize('') works";
 is capitalize("puGS Is cOOl!"), "Pugs Is Cool!", "capitalize('...') works";

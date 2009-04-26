@@ -4,7 +4,7 @@ use Test;
 
 plan 27;
 
-# L<S29/"Str"/=item uc>
+# L<S32::Str/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
 #?rakudo skip 'calling positional params by name'

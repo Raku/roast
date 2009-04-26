@@ -4,7 +4,7 @@ use Test;
 
 plan 126;
 
-# L<S29/Str/=item substr>
+# L<S32::Str/Str/=item substr>
 
 { # read only
     my $str = "foobar";

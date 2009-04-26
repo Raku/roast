@@ -4,7 +4,7 @@ use Test;
 
 plan 9;
 
-# L<S29/Str/lcfirst>
+# L<S32::Str/Str/lcfirst>
 
 is lcfirst("HELLO WORLD"), "hELLO WORLD", "simple";
 #?rakudo skip 'calling positional args by name'
