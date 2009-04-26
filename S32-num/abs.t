@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 53;
 
-# L<S29/Num/"=item abs">
+# L<S29::Numeric/Num/"=item abs">
 
 =begin pod
 
@@ -35,3 +35,5 @@ for -1, -50, -60.0, -99.99 {
 is( abs(NaN), NaN, 'absolute value of NaN is NaN');
 is( abs(Inf), Inf, 'absolute value of Inf is Inf');
 is( abs(-Inf), Inf, 'absolute value of -Inf is Inf');
+
+# vim: ft=perl6

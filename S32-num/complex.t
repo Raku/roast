@@ -6,14 +6,15 @@ plan 140;
 
 # Basic tests functions specific to complex numbers.
 
-# L<S32/Num/=item re>
+# L<S32::Num/Complex/=item re>
+# L<S32::Num/Complex/=item im>
 
 {
     is (1 + 2i).re, 1, 'Complex.re works';
     is (1 + 2i).im, 2, 'Complex.im works';
 }
 
-# L<S29/Num/"=item cis">
+# L<S32::Num/Complex/=item cis>
 my $pi = 3.141592653589793238;
 
 {
@@ -31,10 +32,9 @@ my $pi = 3.141592653589793238;
     is_approx(cis(:angle(3*$pi / 2)),-1i,          "cis(:angle(3pi/2)) == -i");
 }
 
-# L<S29/Num/"=item cis">
-# L<S29/Num/"=item unpolar">
-#
 # Test that 1.unpor == cis
+# L<S32::Num/Complex/=item cis>
+# L<S32::Num/Complex/=item unpolar>
 
 {
     for 1..20 -> $i {
@@ -43,8 +43,8 @@ my $pi = 3.141592653589793238;
     }
 }
 
-# L<S29/Num/"=item unpolar">
-# L<S29/Num/"=item abs">
+# L<S32::Num/Complex/=item abs>
+# L<S32::Num/Complex/=item unpolar>
 #
 # Test that unpolar() doesn't change the absolute value
 
@@ -60,10 +60,9 @@ my $pi = 3.141592653589793238;
     }
 }
 
+# L<S32::Num/Complex/=item unpolar>
 #?rakudo skip 'named args'
 {
-    # L<S29/Num/"=item unpolar">
-    #
     # Basic tests for unpolar()
     my $s = 2 * sqrt(2);
 
@@ -75,8 +74,6 @@ my $pi = 3.141592653589793238;
 }
 
 {
-    # L<S29/Num/"=item unpolar">
-    #
     # Basic tests for unpolar()
     my $s = 2 * sqrt(2);
 
