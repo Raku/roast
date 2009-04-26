@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/"Time">
+# L<S32::Temporal/"Time">
 
 # Based Heavily on the t/op/time.t test from Perl5.8.6
 # Perhaps the testing of these builtins needs to be more rigorous

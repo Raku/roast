@@ -10,6 +10,8 @@ Pair list a la L<"http://www.nntp.perl.org/group/perl.perl6.language/19360">
 
 =end desc
 
+# L<S32::Containers/Array/=item pairs>
+
 my $list = (1 => (2 => (3 => 4)));
 isa_ok($list, Pair);
 

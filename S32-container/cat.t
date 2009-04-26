@@ -4,7 +4,7 @@ use Test;
 
 plan 6;
 
-# L<S29/Container/"=item cat">
+# L<S32::Containers/Container/"=item cat">
 
 =begin pod
 

@@ -4,7 +4,7 @@ use Test;
 
 plan 8;
 
-# L<S29/Container/"=item roundrobin">
+# L<S32::Containers/Container/"=item roundrobin">
 
 =begin pod
 

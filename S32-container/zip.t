@@ -6,10 +6,10 @@ use Test;
 
 The zip() builtin and operator tests
 
-L<S03/"Traversing arrays in parallel">
-L<S29/Container/"=item zip">
-
 =end pod
+
+# L<S03/"Traversing arrays in parallel">
+# L<S32::Containers/Container/"=item zip">
 
 plan 12;
 
