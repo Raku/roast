@@ -189,7 +189,7 @@ class Foo1 { has $.bar; };
     is($foo.baz,        9, "getting a public rw attribute (2)"  );
 }
 
-# L<A12/Default Values>
+# L<S12/Attributes>
 ok eval('class Foo7 { has $.attr = 42 }; 1'), "class definition worked";
 is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 

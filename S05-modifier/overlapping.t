@@ -16,9 +16,9 @@ if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
 }
 
-force_todo(2,3,5,6,10);
+#?pugs emit force_todo(2,3,5,6,10);
 
-# L</S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
+# L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
 
 my $str = "abrAcadAbbra";
 

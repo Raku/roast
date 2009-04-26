@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 4;
 
-# L<S32/Containers/"Like hash assignment insofar">
+# L<S32::Containers/Hash/"Like hash assignment insofar">
 
 my %ref1 = (a => 1, b => 2, c => 3);
 my %ref2 = (a => [1, 4, 5], b => 2, c => 3);

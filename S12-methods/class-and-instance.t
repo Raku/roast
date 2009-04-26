@@ -4,8 +4,6 @@ use Test;
 
 plan 4;
 
-# L<A12/"Class|object Invocant">
-
 class Foo {
     method bar (Foo $class: $arg) { return 100 + $arg }
 }
