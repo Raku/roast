@@ -5,11 +5,11 @@ plan 19;
 
 =begin description
 
-Basic C<exists> tests on hashes, see S29.
+Basic C<exists> tests on hashes, see S32::Containers.
 
 =end description
 
-# L<S29/"Hash"/=item exists>
+# L<S32::Containers/"Hash"/=item exists>
 
 sub gen_hash {
     my %h;

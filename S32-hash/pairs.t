@@ -6,7 +6,7 @@ plan 21;
 
 =begin description
 
-Basic C<pairs> tests, see S29.
+Basic C<pairs> tests, see S32::Containers.
 
 =end description
 

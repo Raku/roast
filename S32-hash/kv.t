@@ -6,11 +6,11 @@ plan 27;
 
 =begin pod
 
-Basic C<kv> tests, see S29.
+Basic C<kv> tests, see S32::Containers.
 
 =end pod
 
-# L<S29/"Hash"/=item kv>
+# L<S32::Containers/"Hash"/=item kv>
 { # check the invocant form
     my %hash = (a => 1, b => 2, c => 3, d => 4);
     my @kv = %hash.kv;

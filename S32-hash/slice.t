@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/"Hash">
+# L<S32::Containers/"Hash">
 
 =begin pod
 

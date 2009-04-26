@@ -6,20 +6,20 @@ plan 16;
 
 #=begin pod
 
-#Basic C<keys> and C<values> tests for hashes and pairs, see S29.
+#Basic C<keys> and C<values> tests for hashes and pairs, see S32::Containers.
 
 #=end pod
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
 
-# L<S29/"Hash"/=item keys>
+# L<S32::Containers/"Hash"/=item keys>
 is(~%hash.keys.sort, "a b c d", '%hash.keys works');
 is(~sort(keys(%hash)), "a b c d", 'keys(%hash) on hashes');
 #?rakudo skip 'cannot parse named arguments'
 is(~sort(keys(:array(%hash))), 'a b c d', 'keys(:array(%hash)) works with named args');
 is(+%hash.keys, +%hash, 'we have the same number of keys as elements in the hash');
 
-# L<S29/"Hash"/=item values>
+# L<S32::Containers/"Hash"/=item values>
 is(~%hash.values.sort, "1 2 3 4", '%hash.values works');
 is(~sort(values(%hash)), "1 2 3 4", 'values(%hash) works');
 #?rakudo skip 'cannot parse named arguments'
