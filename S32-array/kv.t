@@ -10,7 +10,7 @@ Basic C<kv> tests, see S32.
 
 =end description
 
-# L<S32/Containers/"Array"/=item kv>
+# L<S32::Containers/"Array"/=item kv>
 
 # (1,).kv works correctly
 {

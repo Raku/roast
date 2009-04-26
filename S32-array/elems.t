@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<A02/"RFC 212: Make C<length(@array)> Work">
-# L<S32/Containers/"Array"/=item "elems">
+# L<S32::Containers/"Array"/=item "elems">
 plan 13;
 
 {

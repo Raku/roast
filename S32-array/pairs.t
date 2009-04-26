@@ -11,7 +11,7 @@ Basic C<pairs> tests, see S32.
 
 =end description
 
-# L<S32/Containers/"Array"/=item pairs>
+# L<S32::Containers/"Array"/=item pairs>
 
 {
   my @array = <a>;

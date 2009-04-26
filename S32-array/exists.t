@@ -9,7 +9,7 @@ Basic C<exists> tests on arrays, see S32.
 
 =end description
 
-# L<S32/Containers/"Array"/=item exists>
+# L<S32::Containers/"Array"/=item exists>
 
 my @array = <a b c d>;
 #?rakudo 2 skip 'attributes'

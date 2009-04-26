@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S32/Containers/"Array"/"=item pop">
+# L<S32::Containers/"Array"/"=item pop">
 
 =begin description
 

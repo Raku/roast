@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S32/Containers/"Array"/"=item splice">
+# L<S32::Containers/"Array"/"=item splice">
 
 =begin description
 
