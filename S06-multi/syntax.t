@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -52,3 +52,8 @@ eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error'
 
 # .WHAT reports Multi
 is(~&foo.WHAT, 'Multi', '.WHAT on a multi stringifies to Multi');
+
+multi sub max($a, $b, $c) {return 9}
+#?rakudo eval 'RT #58948'
+# note - example in ticket a bit more elaborate
+is max(1, 2, 3), 9, 'use multi method to override builtin';
