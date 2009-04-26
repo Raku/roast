@@ -1,9 +1,9 @@
 use v6;
 use Test;
 
-# L<S29/Str/"=item chop">
+# L<S32::Str/Str/"=item chop">
 
-plan 11;
+plan 12;
 
 #
 # Tests already covered by the specs
@@ -17,6 +17,14 @@ is($str, "foo", "original string unchanged");
 
 is($str.chop, "fo", "o removed");
 is($str, "foo", "original string unchanged");
+
+is(chop("bar"), "ba", "chop on string literal");
+is(chop(""), "", "chop on empty string literal");
+
+# TODO: catch warning, what should be the return value ?
+# my $undef_scalar;
+# chop($undef_scalar)
+
 
 # See L<"http://use.perl.org/~autrijus/journal/25351">:
 #   &chomp and &wrap are now nondestructive; chomp returns the chomped part,
