@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 16;
 
-# L<S29/Num/"=item sqrt">
+# L<S32::Numeric/Num/"=item sqrt">
 
 =begin pod
 

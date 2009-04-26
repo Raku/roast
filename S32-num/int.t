@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 66;
 
-# L<S29/Num/"=item truncate">
+# L<S32::Numeric/Num/"=item truncate">
 # truncate and int() are synonynms.
 # Possibly more tests for truncate should be added here, too.
 

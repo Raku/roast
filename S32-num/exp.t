@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 53;
 
-# L<S29/Num/"=item exp">
+# L<S32::Numeric/Num/"=item exp">
 
 =begin pod
 

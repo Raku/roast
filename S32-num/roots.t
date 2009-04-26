@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 44;
 
-# L<S29/Num/"=item roots">
+# L<S32::Numeric/Num/"=item roots">
 
 sub approx($a, $b){
     my ($x,$y);
