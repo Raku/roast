@@ -34,7 +34,7 @@ is(p5chop("abc"), 'c', 'p5chop on literal string');
 my @empty_array;
 my $r = p5chop(@empty_array);
 ok(defined $r, 'defined');
-is($r, '', 'p5chop on emty array returns empty string');
+is($r, '', 'p5chop on empty array returns empty string');
 
 
 

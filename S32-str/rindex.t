@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S29/Str/"=item rindex">
+# L<S32::Str/Str/"=item rindex">
 
 plan 33;
 

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S29/Str/=item length>
+# L<S32::Str/Str/=item length>
 
 =begin pod
 
@@ -21,7 +21,7 @@ eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
 # string literals, for sanity
 
-# L<S29/Str/=item bytes>
+# L<S32::Str/Str/=item bytes>
 
 #?rakudo 3 skip '.bytes not implemented'
 is("".bytes,         0, "empty string");
@@ -32,7 +32,7 @@ dies_ok { $x.bytes }, "undef.bytes fail()s";
 # See thread "undef.chars" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22595">
 
-# L<S29/Str/=item chars>
+# L<S32::Str/Str/=item chars>
 
 # Precedence tests
 ok (chars "abcdef" > 4),     "chars() has the right precedence (1)";
@@ -62,10 +62,10 @@ my @data = (
 );
 #:map { my %hash; %hash<string bytes codes graphs> = $_; \%hash };
 
-# L<S29/Str/=item bytes>
-# L<S29/Str/=item chars>
-# L<S29/Str/=item codes>
-# L<S29/Str/=item graphs>
+# L<S32::Str/Str/=item bytes>
+# L<S32::Str/Str/=item chars>
+# L<S32::Str/Str/=item codes>
+# L<S32::Str/Str/=item graphs>
 
 for @data -> $string, $bytes, $codes, $graphs, $chars {
     is($string.bytes, $bytes, "'{$string}'.bytes");

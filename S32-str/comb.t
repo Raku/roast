@@ -4,7 +4,7 @@ use Test;
 
 plan 25;
 
-# L<S29/Str/=item comb>
+# L<S32::Str/Str/=item comb>
 
 # comb Str
 is "".comb, (), 'comb on empty string';

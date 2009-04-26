@@ -10,7 +10,7 @@ Basic tests for the chomp() builtin
 
 =end pod
 
-# L<S29/"Str"/=item chomp>
+# L<S32::Str/Str/=item chomp>
 
 # Also see L<"http://use.perl.org/~autrijus/journal/25351">
 #   &chomp and &wrap are now nondestructive; chomp returns the chomped part,
