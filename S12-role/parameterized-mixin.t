@@ -15,7 +15,7 @@ Might need some more review and love --moritz
 #?pugs emit skip_rest('parameterized roles'); exit;
 #?pugs emit =begin SKIP
 
-# L<S12/Roles/to be considered part of the long name:>
+# L<S14/Roles/to be considered part of the long name:>
   role InitialAttribVal[$val] {
     has $.attr = $val;
   }

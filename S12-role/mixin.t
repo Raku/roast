@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 18;
 
-# L<S12/Roles/"Run-time mixins are done with does and but">
+# L<S14/Roles/"Run-time mixins are done with does and but">
 
 role R1 { method test { 42 } }
 class C1 { }

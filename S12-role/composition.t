@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 11;
 
-# L<S12/Roles/"Roles may be composed into a class at compile time">
+# L<S14/Roles/"Roles may be composed into a class at compile time">
 
 role rA {
     method mA1 {

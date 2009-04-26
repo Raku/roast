@@ -6,11 +6,11 @@ plan 30;
 
 =begin description
 
-Basic role tests from L<S12/Roles>
+Basic role tests from L<S14/Roles>
 
 =end description
 
-# L<S12/Roles>
+# L<S14/Roles>
 # Basic definition
 role Foo {}
 class Bar does Foo {};
@@ -37,7 +37,7 @@ ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
 ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
 dies_ok { $baz ~~ Baz },        'smartmatch against non-existent type dies';
 
-# L<S12/Roles/but with a role keyword:>
+# L<S14/Roles/but with a role keyword:>
 # Roles may have methods
 #?pugs skip "todo"
 {
@@ -48,7 +48,7 @@ dies_ok { $baz ~~ Baz },        'smartmatch against non-existent type dies';
         '$a "inherited" the .say_hello method of A';
 }
 
-# L<S12/Roles/Roles may have attributes:>
+# L<S14/Roles/Roles may have attributes:>
 {
     role B { has $.attr is rw = 42 }
     my Bar $b .= new();
@@ -57,7 +57,7 @@ dies_ok { $baz ~~ Baz },        'smartmatch against non-existent type dies';
     is $b.attr, 42,        '$b "inherited" the $.attr attribute of B (1)';
     is ($b.attr = 23), 23, '$b "inherited" the $.attr attribute of B (2)';
 
-    # L<S12/Roles/operator creates a copy and works on that.>
+    # L<S14/Roles/operator creates a copy and works on that.>
     # As usual, ok instead of todo_ok to avoid unexpected succeedings.
     my Bar $c .= new(),
     ok defined($c),             'creating a Foo worked';

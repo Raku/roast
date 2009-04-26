@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 5;
 
-# L<S12/Roles/"Roles may have attributes">
+# L<S14/Roles/"Roles may have attributes">
 
 role R1 {
     has $!a1;
