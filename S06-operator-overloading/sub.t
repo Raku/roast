@@ -160,7 +160,6 @@ L<S06/"Operator overloading">
 # defining other conversions that may happen?
 
 # here is one that co-erces a MyClass into a Str and a Num.
-# L<A12/"Overloading" /Coercions to other classes can also be defined:/>
 {
     class OtherClass {
       has $.x is rw;
