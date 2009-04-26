@@ -102,5 +102,5 @@ is($moo, 0, "var was not touched");
     is --$x, Bool::False, '-- on True works';
     $x = Bool::True;
     #?rakudo skip 'RT #64366'
-    is $x.pred, Bool::True, '.succ on False works';
+    is $x.pred, Bool::False, '.succ on False works';
 }
