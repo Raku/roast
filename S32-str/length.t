@@ -14,7 +14,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 58;
+plan 60;
 
 eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
@@ -76,6 +76,12 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
 # test something with a codepoint above 0xFFFF to catch errors that an
 # UTF-16 based implementation might make
 
-is '丽'.codes,  1, '.codes on a >0xFFFF char';
-is '丽'.graphs, 1, '.graphs on a >0xFFFF char';
+is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
+is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
+
+# test graphemes without a precomposed character in Unicode 5
+#?rakudo 1 skip '.codes not implemented'
+is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
+#?rakudo 1 skip '.graphs not implemented'
+is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".graphs, 1, '.graphs on grapheme without precomposite';
 
