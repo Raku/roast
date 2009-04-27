@@ -25,6 +25,8 @@ my $href = \%var;
 
 # SCALARS
 
+# just document ticket test below
+#?rakudo skip 'RT 61960'
 #?pugs 2 todo 'bug'
 ok($var ~~ m/$var/, 'Simple scalar interpolation');
 ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
