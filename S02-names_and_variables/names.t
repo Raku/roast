@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 17;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -36,15 +36,25 @@ plan 16;
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
 #?rakudo skip "unimpl get_pmc_keyed"
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
-#?rakudo emit skip_rest('Parse error');
+}
 
-#?rakudo emit =begin parse error
-
+#?rakudo skip 'parse error'
+{
     my $::<!@#$> =  2.22;
     is($::{'!@#$'}, 2.22, 'variable lookup using $::{\'symbols\'}');
     is(::{'$!@#$'}, 2.22, 'variable lookup using ::{\'$symbols\'}');
     is($::<!@#$>,   2.22, 'variable lookup using $::<symbols>');
     is(::<$!@#$>,   2.22, 'variable lookup using ::<$symbols>');
-#?rakudo emit =end parse error
 
 }
+
+# RT #65138, Foo::_foo() parsefails
+
+{
+    module A {
+        sub _b() { 'sub A::_b' }
+    }
+    is A::_b(), 'sub A::_b', 'A::_b() call works';
+}
+
+# vim: ft=perl6
