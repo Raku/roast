@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 25;
+plan 27;
 
 {   my @array = (3,7,9,11);
 
@@ -99,4 +99,11 @@ plan 25;
     my @array = 1, 2, 3;
     my @other = @array[2..1];
     is +@other, 0, '@array[2..1] is an empty slice';
+}
+
+#?rakudo todo 'RT 61844'
+#?DOES 2
+{
+    eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
+    is eval('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
