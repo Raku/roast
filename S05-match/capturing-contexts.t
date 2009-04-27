@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 13;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -33,4 +33,14 @@ if !eval('("a" ~~ /a/)') {
   ok( %($/).keys == 1, 'hash context - correct number of named captures');
   ok( %($/).<alpha> eq 'a', 'hash context - named capture accessible');
   ok( $/.hash.keys[0] eq 'alpha', 'the .hash method returns a hash object');
+}
+
+# RT 62530
+{
+  class Match is also { method keys () {return %(self).keys }; };
+  rule a {H};
+  "Hello" ~~ /<a>/;
+  is $/.keys, 'a', 'get rule result';
+  my $x = $/;
+  is $x.keys, 'a', 'match copy should be same as match';
 }
