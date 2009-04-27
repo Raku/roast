@@ -209,7 +209,7 @@ character classes), and those are referenced at the correct spot.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/A leading ! indicates a negated meaning (always a zero-width assertion)>
 {
-    ok('1./:"{}=-_' ~~ /^[<!alpha> .]+$/, '<!alpha> matches non-letter characters');
+    ok('1./:"{}=-' ~~ /^[<!alpha> .]+$/, '<!alpha> matches non-letter characters');
     ok(!('abcdef'   ~~ /<!alpha>./), '<!alpha> does not match letter characters');
     #?rakudo todo '<!before>'
     is(+('.2 1' ~~ /<!before \.> \d/), 1, '<!before>');
