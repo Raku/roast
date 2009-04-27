@@ -8,8 +8,7 @@ use Test;
 
 Various length tests (though "length" should not be used)
 
-This does not adequately test .chars, which is language dependent
-and needs more careful tests.
+Don't mismatch "length" with the "width" property for Unicode characters.
 
 L<"http://www.unicode.org/unicode/reports/tr11/">
 
