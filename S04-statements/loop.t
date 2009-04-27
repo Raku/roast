@@ -2,11 +2,12 @@ use v6;
 
 use Test;
 
+# L<S04/The general loop statement>
+
 =begin kwid
 
 loop statement tests
 
-L<S04/"The general loop statement">
 
 =end kwid
 

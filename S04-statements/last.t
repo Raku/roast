@@ -2,9 +2,10 @@ use v6;
 
 use Test;
 
+# L<S04/Loop statements/last>
+
 =begin description
 
-L<S04/"Loop statements"/last>
 last
 last if <condition>;
 <condition> and last;

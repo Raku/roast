@@ -5,7 +5,7 @@ use Test;
 plan 13;
 
 
-# L<S04/The gather statement/"A variant of do is gather">
+# L<S04/The C<gather> statement prefix/>
 
 # Standard gather
 {

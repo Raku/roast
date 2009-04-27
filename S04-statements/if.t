@@ -6,9 +6,10 @@ use Test;
 
 Basic "if" tests.
 
-L<S04/"Conditional statements">
 
 =end kwid
+
+# L<S04/Conditional statements>
 
 plan 25;
 
@@ -149,7 +150,7 @@ is $foo, 1, "die should stop execution immediately.";
     is $got, '', 'else -> $c { } binding previous if';
 }
 
-#L<S04/"keywords require whitespace">
+# L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
 # vim: ft=perl6

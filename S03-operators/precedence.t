@@ -2,14 +2,14 @@ use v6;
 
 use Test;
 
+# L<S03/Operator precedence>
+
 =begin pod
 
 Tests that each level bind tighter than the next by sampling some ops.
 
 In between each precedence level are some tests that demonstrate the
 proper separation of the two levels.
-
-L<S03/Operator precedence>
 
 =end pod
 

@@ -339,7 +339,7 @@ class TestClass{ has $.key is rw  };
   is $output, "1,2,3,4,", "grep and sort work in for";
 }
 
-#L<S04/"keywords require whitespace">
+# L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # looping with more than one loop variables

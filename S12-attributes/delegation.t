@@ -52,7 +52,7 @@ ok MultiFrontend.new, "class definition using multiple method names worked";
   is ($a.cool), 1337, "method was successfully handled by backend object (5-2)";
 }
 
-# L<S12/Delegation/you put a pair/>
+# L<S12/Delegation/you put a pair>
 class PairTest {
     has $.backend1 is rw handles :hello<hi>;
     has $.backend2 is rw handles (:ahoj<hi>, :w00t('cool'));

@@ -3,7 +3,7 @@ use Test;
 
 plan 9;
 
-# L<S12/Methods/"Private methods are declared using my">
+# L<S12/Methods/"Private methods are declared using">
 
 class A {
     method !private {
@@ -41,7 +41,7 @@ is $o.b_acc1, 'bb', 'indirect call to private method (double quotes)';
 is $o.b_acc2, 'bb', 'indirect call to private method (single quotes)';
 dies_ok {$o."b" },  'can not call private method via quotes from outside';
 
-# L<S12/Roles/"same, but &foo is aliased to &!foo">
+# L<S14/Roles/"same, but &foo is aliased to &!foo">
 
 # S12 says that 'my method foo' is the same as 'my method !foo', but
 # also installs the &foo alias for &!foo

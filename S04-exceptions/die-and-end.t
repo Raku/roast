@@ -1,5 +1,7 @@
 use v6;
 
+# L<S04/Closure traits/END>
+
 use Test;
 plan 1;
 

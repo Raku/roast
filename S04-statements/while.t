@@ -1,5 +1,7 @@
 use v6;
 
+# L<S04/The C<while> and C<until> statements>
+
 use Test;
 
 plan 9;
@@ -63,7 +65,7 @@ plan 9;
   is $str, '54321', 'while ... -> $x {...} worked (2)';
 }
 
-#L<S04/"keywords require whitespace">
+# L<S04/Statement parsing/keywords require whitespace>
 {
     my $i = 0;
     eval_dies_ok('while($i < 5) { $i++; }',

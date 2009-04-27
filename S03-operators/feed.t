@@ -2,15 +2,15 @@ use v6;
 
 use Test;
 
+# L<S06/"Feed operators">
+# L<S03/"Feed operators">
+
 =begin pod
 
 Tests for the feed operators 
 
     ==> and <== 
     
-L<S06/"Feed operators">
-L<S03/"Feed operators">
-
 =end pod
 
 plan 23;

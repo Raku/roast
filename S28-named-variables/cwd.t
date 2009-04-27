@@ -1,5 +1,7 @@
 use v6;
 
+# L<S28/Named variables/$*CWD>
+
 use Test;
 
 plan 2;
