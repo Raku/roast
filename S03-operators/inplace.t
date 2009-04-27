@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S03/Assignment operators/A op= B/>
+# L<S03/Assignment operators/A op= B>
 
 plan 18;
 

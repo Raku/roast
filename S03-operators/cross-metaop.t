@@ -33,7 +33,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
     is @result, <1:A 1:B 2:A 2:B 3:A 3:B>, 'chunky cross operator works';
 }
 
-# L<S03/Cross operators/formed syntactically by placing>
+# L<S03/Cross operators>
 #?rakudo todo 'X,'
 ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 

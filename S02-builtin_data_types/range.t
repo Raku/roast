@@ -5,7 +5,7 @@ use Test;
 plan 94;
 
 # basic Range
-# L<S02/Immutable types/A pair of Ordered endpoints; gens immutables when iterated>
+# L<S02/Immutable types/A pair of Ordered endpoints>
 
 my $r = 1..5;
 isa_ok $r, Range, 'Type';
@@ -38,7 +38,7 @@ is ('a'..'a'), [< a >], 'got the right array';
 
 # Decreasing Ranges - see S03-operators/range for boundry tests
 {
-    # L<S03/Range semantics/"Ranges are not autoreversing">
+    # L<S03/Range and RangeIterator semantics/"Ranges are not autoreversing">
     ok (5..1)   !~~ 3, '(5..1)   is the null range';
     ok (5^..1)  !~~ 3, '(5^..1)  is the null range';
     ok (5..^1)  !~~ 3, '(5..^1)  is the null range';

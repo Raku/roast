@@ -4,6 +4,7 @@ use Test;
 
 plan 106;
 
+# L<S02/Mutable types/A single key-to-value association>
 # basic Pair
 
 my $pair = 'foo' => 'bar';
@@ -80,7 +81,6 @@ my $quux = (quux => "xyzzy");
 is($quux.key, 'quux', "lhs quotes" );
 
 {
-    # L<S02/Immutable types/A single key-to-value association>
     my $pair = :when<now>;
     is ~(%($pair)), "when\tnow\n", 'hash stringification';
     # hold back this one according to audreyt

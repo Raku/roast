@@ -22,7 +22,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 =end description
 
-# L<S02/Lexical Conventions/"bidirectional mirrorings" or "Ps/Pe properties">
+# L<S02/Lexical Conventions/bidirectional mirrorings>
 {
     my $s = q{ foo bar };
     is $s, ' foo bar ', 'string using q{}';

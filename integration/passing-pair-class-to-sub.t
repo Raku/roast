@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S02/Immutable types/Pair        A single key-to-value association>
+# L<S02/Mutable types/A single key-to-value association>
 # There ought to be a better reference for this.
 # And this test is also a candidate to be moved with other subroutine tests.
 
