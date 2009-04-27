@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+# L<S11/Compile-time Importation>
+
 plan 7;
 
 # test that 'use' imports class names defined in importet packages

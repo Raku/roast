@@ -1,5 +1,7 @@
 use v6;
 
+# L<S11/Runtime Importation>
+
 use Test;
 
 plan 18;

@@ -1,5 +1,7 @@
 use v6;
 
+# L<S11/Exportation>
+
 use Test;
 plan 1;
 
