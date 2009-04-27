@@ -4,6 +4,9 @@ use Test;
 
 plan 32;
 
+# L<S32::Containers/List/=item min>
+# L<S32::Containers/List/=item max>
+
 =begin description
 
 This test tests the C<min> and C<max> builtins.

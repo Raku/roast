@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+# L<S02/Whitespace and Comments>
+
 =begin kwid
 
 = DESCRIPTION

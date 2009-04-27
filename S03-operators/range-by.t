@@ -1,5 +1,6 @@
 use v6;
 
+# L<S03/Loose unary precedence/apply the adverb to the item assignment>
 use Test;
 
 plan 11;

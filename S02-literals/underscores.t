@@ -2,6 +2,9 @@ use v6;
 
 use Test;
 
+
+# L<S02/Literals/"A single underscore is allowed only">
+
 =begin pod
 
 _ should be allowed in numbers

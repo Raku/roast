@@ -2,10 +2,11 @@ use v6;
 
 use Test;
 
+# L<S32::Containers/Array/=item end>
+
 =begin docs
 
 Array .end tests
-L<S32::Containers/Array/=item end>
 =end docs
 
 plan 15;
