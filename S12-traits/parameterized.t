@@ -6,11 +6,11 @@ plan 8;
 
 =begin pod
 
-Parameterized traits tests, see L<S12/"Traits">.
+Parameterized traits tests, see L<S14/Traits>.
 
 =end pod
 
-# L<S12/"Traits">
+# L<S14/Traits>
 # Basic definition
 role cool {
     has $.cool;

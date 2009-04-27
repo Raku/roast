@@ -6,11 +6,12 @@ plan 10;
 
 =begin pod
 
-Conflict resolution role tests, see L<S12/"Roles">
+Conflict resolution role tests, see L<S14/Roles>
 
 =end pod
 
-# L<S12/"Roles">
+# L<S14/Roles>
+
 my ($was_in_sentry_shake, $was_in_pet_shake, $was_in_general_shake) = 0, 0, 0;
 role Sentry { method shake() { $was_in_sentry_shake++; "A" } }
 role Pet    { method shake() { $was_in_pet_shake++;    "B" } }

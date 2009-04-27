@@ -6,7 +6,7 @@ plan 13;
 
 #?pugs 99 todo 'anonymous roles'
 
-# L<S12/"Roles">
+# L<S14/Roles>
 {
   my $a = 3;
   is $a, 3, "basic sanity";

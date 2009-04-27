@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 13;
 
-# L<S29/Junction/eigenstates>
+# L<S32::Containers/junction/!eigenstates>
 
 sub je(Object $j) {
     return $j.eigenstates.sort.join('|');

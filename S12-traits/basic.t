@@ -6,11 +6,11 @@ plan 9;
 
 =begin pod
 
-Basic traits tests, see L<S12/Traits>.
+Basic traits tests, see L<S14/Traits>.
 
 =end pod
 
-# L<S12/Traits>
+# L<S14/Traits>
 # Basic definition
 my $was_in_any_sub   = 0;
 my $was_in_class_sub = 0;
