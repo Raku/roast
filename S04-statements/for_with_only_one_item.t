@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+# L<S04/The C<for> statement>
+
 # Test primarily aimed at PIL2JS
 
 plan 8;

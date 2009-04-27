@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+# L<S32::Str/Str/=item flip>
+
 plan 11;
 
 # As a function :

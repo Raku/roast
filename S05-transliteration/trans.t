@@ -6,9 +6,9 @@ use Test;
 
 String transliteration
 
-L<S05/Transliteration>
-
 =end pod
+
+# L<S05/Transliteration>
 
 plan 51;
 

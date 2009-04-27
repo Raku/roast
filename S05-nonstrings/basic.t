@@ -4,11 +4,7 @@ use Test;
 
 plan 5;
 
-=begin pod
-
-L<S05/"Matching against non-strings">
-
-=end pod
+# L<S05/"Matching against non-strings">
 
 # String-like things...
 

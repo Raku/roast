@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+# L<S32::Str/Str/=item trim>
+
 plan 24;
 
 =begin pod

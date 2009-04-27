@@ -2,8 +2,9 @@ use v6;
 
 use Test;
 
+# L<S04/"Loop statements"/next>
+
 =begin pod
-L<S04/"Loop statements"/next>
 next
 next if <condition>;
 <condition> and next;

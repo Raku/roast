@@ -2,6 +2,10 @@ use v6;
 
 use Test;
 
+# L<S04/The C<for> statement>
+# L<S32::Containers/List/=item map>
+# L<S32::Containers/List/=item sort>
+
 plan 4;
 
 # works
