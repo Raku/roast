@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 12;
 
 # L<S06/Named subroutines>
 
@@ -33,3 +33,20 @@ is ourNamedStr(), 'string', 'Correct : package-scoped named sub ourNamedStr() sh
 }
 is ourNamedInt(), 55, 'Correct : package-scoped named sub ourNamedInt() should BE available in the whole package';
 
+eval_dies_ok
+    'my Num List sub f () { return ("A") }; f()',
+    'Return of list with wrong type dies';
+
+#?rakudo todo 'RT 65128'
+#?DOES 3
+{
+eval_lives_ok
+    'my Num List sub f () { return () }; f()',
+    'return of empty list should live';
+is eval('my Num List sub f () { return () }; (f(), "a")'), ['a'],
+    'return of empty list should be empty list';
+
+eval_dies_ok
+    'my Num List sub f () { ("A") }; f()',
+    'implicit return of list with wrong type dies';
+}
