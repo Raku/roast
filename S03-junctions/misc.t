@@ -130,14 +130,14 @@ sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
     my $l;
 
     $j = 1|2;
-    is(~WHAT($j),'Junction', 'basic junction type reference test');
+    is(~WHAT($j), 'Junction()', 'basic junction type reference test');
 
     $k=$j;
-    is(~WHAT($k),'Junction', 'assignment preserves reference');
+    is(~WHAT($k), 'Junction()', 'assignment preserves reference');
 
     # XXX does this next one make any sense?
     $l=\$j;
-    is(~WHAT($l),'Junction', 'hard reference to junction');
+    is(~WHAT($l), 'Junction()', 'hard reference to junction');
 }
 
 
@@ -367,13 +367,13 @@ ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
 
 # Naive implementation of comparing two Junctions
 sub junction_diff(Object $this, Object $that) {
-  if ($this.WHAT ne 'Junction' and $that.WHAT ne 'Junction') {
+  if ($this.WHAT ne 'Junction()' and $that.WHAT ne 'Junction()') {
     return if $this ~~ $that;
   }
-  if ($this.WHAT ne 'Junction' and $that.WHAT eq 'Junction') {
+  if ($this.WHAT ne 'Junction()' and $that.WHAT eq 'Junction()') {
     return "This is not a Junction";
   }
-  if ($this.WHAT eq 'Junction' and $that.WHAT ne 'Junction') {
+  if ($this.WHAT eq 'Junction()' and $that.WHAT ne 'Junction()') {
     return "That is not a Junction";
   }
   my ($this_type) = $this.perl ~~ /^(\w+)/;
