@@ -2,7 +2,8 @@ use v6;
 use Test;
 plan 5;
 
-# L<S16/"Filehandles, files, and directories"/"open">
+# L<S32::IO/IO::File/open>
+# old: L<S16/"Filehandles, files, and directories"/"open">
 
 =begin pod
 

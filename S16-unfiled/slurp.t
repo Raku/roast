@@ -4,7 +4,8 @@ use Test;
 
 plan 4;
 
-# L<S16/"Unfiled"/"=item IO.slurp">
+# old: L<S16/"Unfiled"/"=item IO.slurp">
+# L<S32::IO/IO::FileNode/slurp>
 
 # read self, so that we can know for sure what's
 # in the file

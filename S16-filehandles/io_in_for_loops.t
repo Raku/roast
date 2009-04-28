@@ -1,8 +1,9 @@
 use v6;
 use Test;
 
-# L<S16/"Filehandles, files, and directories"/"open">
-# L<S16/"Filehandles, files, and directories"/"close">
+# L<S32::IO/IO::File/open>
+# old: L<S16/"Filehandles, files, and directories"/"open">
+# old: L<S16/"Filehandles, files, and directories"/"close">
 
 plan 29;
 
@@ -104,6 +105,7 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-# L<S16/"Filehandles, files, and directories"/"unlink">
+# old: L<S16/"Filehandles, files, and directories"/"unlink">
+# L<S29/IO/unlink>
 
 is(unlink($filename), 1, 'file has been removed');

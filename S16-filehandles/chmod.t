@@ -1,7 +1,8 @@
 use v6;
 use Test;
 
-# L<S16/"Filehandles, files, and directories"/"chmod">
+# L<S32::IO/IO::FSNode::Unix/chmod>
+# old: L<S16/"Filehandles, files, and directories"/"chmod">
 
 =begin pod
 

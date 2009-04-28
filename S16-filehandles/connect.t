@@ -2,7 +2,10 @@ use v6;
 
 use Test;
 
-# L<S16/"Filehandles, files, and directories"/"connect">
+# L<S32::IO/IO::File/open>
+# L<S32::IO/IO/uri>
+# L<S29/IO/connect>
+# old: L<S16/"Filehandles, files, and directories"/"connect">
 
 =begin pod
 

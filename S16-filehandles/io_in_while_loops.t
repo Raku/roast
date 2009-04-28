@@ -1,7 +1,8 @@
 use v6;
 use Test;
 
-# L<S16/"Filehandles, files, and directories"/"open">
+# L<S32::IO/IO::File/open>
+# old: L<S16/"Filehandles, files, and directories"/"open">
 
 plan 13; 
 

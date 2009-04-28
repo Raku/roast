@@ -3,13 +3,14 @@ use Test;
 use FindBin;
 plan 36;
 
-# L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
+# L<S32::IO/IO::DirectoryNode>
+# old: L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
 # XXX closedir is not defined rigth now, should it be IO::Dir::close"?
-# L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
+# old: L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
 # XXX readdir is not defined rigth now, should be it IO::Dir::read"?
-# L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
+# old: L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
 # XXX rewinddir is not defined rigth now, should it be IO::Dir::rewind"?
-# L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
+# old: L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
 
 if ($*OS eq any <browser>) {
     skip_rest "not supported on this platform";

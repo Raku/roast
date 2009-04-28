@@ -2,7 +2,8 @@ use v6;
 use Test;
 plan 6;
 
-# L<S16/"Filehandles, files, and directories"/"unlink">
+# L<S29/IO/unlink>
+# old: L<S16/"Filehandles, files, and directories"/"unlink">
 
 sub nonce() { "unlink-t-testfile-" ~ 1000.rand }
 

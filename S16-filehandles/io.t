@@ -2,9 +2,10 @@ use v6;
 
 use Test;
 
-# L<S16/"Filehandles, files, and directories"/"open">
-# L<S16/"Filehandles, files, and directories"/"close">
-# L<S16/Unfiled/IO.get>
+# L<S32::IO/IO::File/open>
+# old: L<S16/"Filehandles, files, and directories"/"open">
+# old: L<S16/"Filehandles, files, and directories"/"close">
+# old: L<S16/Unfiled/IO.get>
 
 =begin pod
 

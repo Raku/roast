@@ -1,7 +1,8 @@
 use v6;
 use Test;
 
-# L<S16/"Unfiled"/"IO.getpeername">
+# old: L<S16/"Unfiled"/"IO.getpeername">
+# L<S32::IO/IO::Socket/getpeername>
 
 =begin pod
 
