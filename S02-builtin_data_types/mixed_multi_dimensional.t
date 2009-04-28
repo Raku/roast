@@ -169,7 +169,7 @@ Some deeper tests were already added.
 
 { # nested, declared in one statement
     my $h = { a => [ 1,2,3 ] };
-    is($h<a>.WHAT, 'Array', "array nested in hashref in one declaration");
+    isa_ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
 }
 
 #?rakudo skip 'multi-level autovivification'

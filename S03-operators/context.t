@@ -13,14 +13,14 @@ plan 30;
 
     # I'm not sure that smart matching is the best operation for comparison here
     # There might be a more specific way to check that prevents false matching
-    is(~list($a).WHAT,  'List', 'list(values) returns nothing more than a List');
-    is(~@($a).WHAT,     'List', '@(values) returns nothing more than a List');
-    is(~(list $a).WHAT, 'List', '(list values) returns nothing more than a List');
+    isa_ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
+    isa_ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
+    isa_ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
 
     # These are all no-ops but still need to work correctly
-    is(~list($a, $b, $c).WHAT,   'List', 'list(values) returns nothing more than a List');
-    is(~@($a, $b, $c).WHAT,      'List', '@(values) returns nothing more than a List');
-    is(~(list $a, $b, $c).WHAT,  'List', '(list values) returns nothing more than a List');
+    isa_ok(list($a, $b, $c).WHAT,   List, 'list(values) returns nothing more than a List');
+    isa_ok(@($a, $b, $c).WHAT,      List, '@(values) returns nothing more than a List');
+    isa_ok((list $a, $b, $c).WHAT,  List, '(list values) returns nothing more than a List');
     is((list $a, $b, $c), ($a, $b, $c), 'list($a, $b, $c) is ($a, $b, $c)');
     is(@($a, $b, $c),     ($a, $b, $c), '@($a, $b, $c) is ($a, $b, $c)');
 
@@ -42,9 +42,9 @@ plan 30;
     is(item($a),  $a, 'item($a) is just $a');
     is($($a),     $a, '$($a) is just $a');
 
-    is(~(item $a, $b).WHAT, 'Array', '(item $a, $b) makes an array');
-    is(~item($a, $b).WHAT,  'Array', 'item $a, $b makes an array');
-    is(~$($a, $b).WHAT,     'Array', '$ $a, $b makes an array');
+    isa_ok((item $a, $b).WHAT, Array, '(item $a, $b) makes an array');
+    isa_ok(item($a, $b).WHAT,  Array, 'item $a, $b makes an array');
+    isa_ok($($a, $b).WHAT,     Array, '$ $a, $b makes an array');
     my @array = ($a, $b);
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 }

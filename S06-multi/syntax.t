@@ -51,7 +51,7 @@ eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error'
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
 # .WHAT reports Multi
-is(~&foo.WHAT, 'Multi', '.WHAT on a multi stringifies to Multi');
+isa_ok(&foo.WHAT, Multi, '.WHAT on a multi isa Multi');
 
 #?rakudo todo 'RT #58948'
 #?DOES 2
