@@ -297,11 +297,11 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
         has WHAT_test $.b is rw;
     }
     my $o = WHAT_test.new(a => WHAT_ref.new(), b => WHAT_test.new());
-    is $o.a.WHAT, 'WHAT_ref', '.WHAT on attributes';
-    is $o.b.WHAT, 'WHAT_test', '.WHAT on attributes of same type as class';
+    isa_ok $o.a.WHAT, WHAT_ref, '.WHAT on attributes';
+    isa_ok $o.b.WHAT, WHAT_test, '.WHAT on attributes of same type as class';
     my $r = WHAT_test.new();
     lives_ok {$r.b = $r}, 'type check on recursive data structure';
-    is $r.b.WHAT, 'WHAT_test', '.WHAT on recursive data structure';
+    isa_ok $r.b.WHAT, WHAT_test, '.WHAT on recursive data structure';
 
 }
 

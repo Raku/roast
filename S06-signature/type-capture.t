@@ -7,13 +7,13 @@ plan 7;
 # L<S02/Generic types/>
 
 # Check it captures built-in types.
-sub basic_capture(::T $x) { ~T }
-is(basic_capture(42),  'Int', 'captured built-in type');
-is(basic_capture(4.2), 'Num', 'captured built-in type');
+sub basic_capture(::T $x) { T }
+isa_ok(basic_capture(42),  Int, 'captured built-in type');
+isa_ok(basic_capture(4.2), Num, 'captured built-in type');
 
 # User defined ones too.
 class Foo { }
-is(basic_capture(Foo.new), 'Foo', 'captured user defined type');
+isa_ok(basic_capture(Foo.new), Foo, 'captured user defined type');
 
 # Check you can use captured type later in the signature.
 sub two_the_same(::T $x, T $y) { 1 }

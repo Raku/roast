@@ -14,7 +14,7 @@ sub insanity (%baloney) {
 
 # sanity 0
 my %h = 'a'..'d' Z 1..4;
-is(%h.WHAT, 'Hash', '%h is a Hash');
+isa_ok(%h.WHAT, Hash, '%h is a Hash');
 
 #sanity 1;
 sanity;

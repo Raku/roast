@@ -25,7 +25,7 @@ plan 9;
 {
     sub pa(@a) { @a.WHAT; }
     my @b = 2, 3;
-    is pa(@b), 'Array', 'basic array type sanity';
+    isa_ok pa(@b), Array, 'basic array type sanity';
     dies_ok { pa(3) }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }
