@@ -108,6 +108,7 @@ plan 15;
 
 # Following tests test whether the constants are actually constant.
 #?pugs todo 'feature'
+#?rakudo skip 'wrong parsing of grtz == 42'
 {
     my $ok;
 
@@ -137,6 +138,7 @@ plan 15;
 }
 
 #?pugs todo 'feature'
+#?rakudo skip 'wrong parsing of wobble == 42'
 {
     my $ok;
 
