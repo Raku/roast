@@ -5,13 +5,14 @@ use Test;
 plan 15;
 
 # Following tests test whether the declaration succeeded.
+#?pugs todo 'feature'
 {
     my $ok;
 
     constant foo = 42;
-    $ok = foo == 42;
+    $ok = foo() == 42;
 
-    ok $ok, "declaring a sigilless constant using 'constant' works", :todo<feature>;
+    ok $ok, "declaring a sigilless constant using 'constant' works";
 }
 
 {
@@ -33,6 +34,7 @@ plan 15;
     ok $ok, "declaring a constant in terms of another constant works";
 }
 
+#?rakudo skip 'COMPILING'
 {
     my $ok;
 
@@ -53,6 +55,7 @@ plan 15;
     ok $ok, "declaring a constant in terms of hash constant works";
 }
 
+#?rakudo skip 'COMPILING'
 {
     my $ok;
 
@@ -66,13 +69,14 @@ plan 15;
 {
     my $ok;
 
-    constant @foo = [ 0, 582 ];
+    constant @foo = 0, 582;
     constant $bar = @foo[1];
     $ok = $bar == 582;
 
-    ok $ok, "declaring a constant in terms of hash constant works";
+    ok $ok, "declaring a constant in terms of array constant works";
 }
 
+#?rakudo skip 'COMPILING'
 {
     my $ok;
 
@@ -87,21 +91,24 @@ plan 15;
     my $ok;
 
     constant Num baz = 42;
-    $ok = baz == 42;
+    $ok = baz() == 42;
 
-    ok $ok, "declaring a sigilless constant with a type specification using 'constant' works", :todo<feature>;
+    ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
 }
 
+#?rakudo skip 'unicode constant name'
 {
     my $ok;
 
     constant λ = 42;
     $ok = λ == 42;
 
-    ok $ok, "declaring an Unicode constant using 'constant' works", :todo<feature>;
+    ok $ok, "declaring an Unicode constant using 'constant' works";
 }
 
 # Following tests test whether the constants are actually constant.
+#?pugs todo 'feature'
+#?rakudo skip 'wrong parsing of grtz == 42'
 {
     my $ok;
 
@@ -112,9 +119,11 @@ plan 15;
     $ok++ if $!;
     $ok++ if grtz == 42;
 
-    is $ok, 3, "a constant declared using 'constant' is actually constant (1)", :todo<feature>;
+    is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
+#?rakudo skip 'binding'
+#?pugs todo 'feature'
 {
     my $ok;
 
@@ -125,9 +134,11 @@ plan 15;
     $ok++ if $!;
     $ok++ if baka == 42;
 
-    is $ok, 3, "a constant declared using 'constant' is actually constant (2)", :todo<feature>;
+    is $ok, 3, "a constant declared using 'constant' is actually constant (2)";
 }
 
+#?pugs todo 'feature'
+#?rakudo skip 'wrong parsing of wobble == 42'
 {
     my $ok;
 
@@ -138,9 +149,11 @@ plan 15;
     $ok++ if $!;
     $ok++ if wobble == 42;
 
-    is $ok, 3, "a constant declared using 'constant' is actually constant (3)", :todo<feature>;
+    is $ok, 3, "a constant declared using 'constant' is actually constant (3)";
 }
 
+#?rakudo skip 'binding'
+#?pugs todo 'feature'
 {
     my $ok;
 
@@ -151,11 +164,12 @@ plan 15;
     $ok++ if $!;
     $ok++ if wibble == 42;
 
-    is $ok, 3, "a constant declared using 'constant' is actually constant (4)", :todo<feature>;
+    is $ok, 3, "a constant declared using 'constant' is actually constant (4)";
 }
 
 # L<S04/The Relationship of Blocks and Declarations/The initializing
 # expression is evaluated at BEGIN time.>
+#?rakudo skip 'BEGIN and outer lexicals'
 {
     my $ok;
 
