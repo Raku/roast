@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 19;
 
 # Following tests test whether the declaration succeeded.
 #?pugs todo 'feature'
@@ -10,7 +10,7 @@ plan 15;
     my $ok;
 
     constant foo = 42;
-    $ok = foo() == 42;
+    $ok = foo == 42;
 
     ok $ok, "declaring a sigilless constant using 'constant' works";
 }
@@ -22,6 +22,20 @@ plan 15;
     $ok = $bar == 42;
 
     ok $ok, "declaring a constant with a sigil using 'constant' works";
+}
+
+{
+    {
+        constant foo2 = 42;
+    }
+    dies_ok { foo2 == 42 }, 'constants are lexically scoped';
+}
+
+{
+    constant foo3 = 42;
+    lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
+    dies_ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
+    dies_ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
 }
 
 {
@@ -91,7 +105,7 @@ plan 15;
     my $ok;
 
     constant Num baz = 42;
-    $ok = baz() == 42;
+    $ok = baz == 42;
 
     ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
 }
@@ -108,7 +122,6 @@ plan 15;
 
 # Following tests test whether the constants are actually constant.
 #?pugs todo 'feature'
-#?rakudo skip 'wrong parsing of grtz == 42'
 {
     my $ok;
 
@@ -138,7 +151,6 @@ plan 15;
 }
 
 #?pugs todo 'feature'
-#?rakudo skip 'wrong parsing of wobble == 42'
 {
     my $ok;
 
