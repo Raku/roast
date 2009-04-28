@@ -237,9 +237,9 @@ my @p;
     is(@p[1],11, "//= operator parses as item assignment 4");
     my %hash;
     %hash<foo> //= hash();
-    is(WHAT %hash<foo>, 'Hash', "Verify //= autovivifies correctly");
+    isa_ok(%hash<foo>, Hash, "Verify //= autovivifies correctly");
     %hash<bar> //= [];
-    is(WHAT %hash<bar>, 'Array', "Verify //= autovivifies correctly");
+    isa_ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
 
     my $f //= 5;
     #?rakudo todo '//= in declaration'
