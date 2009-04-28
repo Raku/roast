@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 45;
 
 =begin description
 
@@ -52,6 +52,7 @@ my $eval1 = '{
   is $c, 6, "setting a Num::Even to an odd value dies";
 }';
 eval($eval1) // skip 3, 'Cant parse';
+#?rakudo todo 'lexical subtypes'
 ok eval('!try { my Num::Even $d }'),
   "lexically declared subtype went out of scope";
 
@@ -137,6 +138,22 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
     lives_ok { $x = 5 }, 'can satisfy both conditions on chained subset types';
     dies_ok { $x = -2 }, 'violating first condition barfs';
     dies_ok { $x = 22 }, 'violating second condition barfs';
+}
+
+
+# subtypes based on user defined classes and roles
+{
+    class C1 { has $.a }
+    subset SC1 of C1 where { .a == 42 }
+    ok !(C1.new(a => 1) ~~ SC1), 'subtypes based on classes work';
+    ok C1.new(a => 42) ~~ SC1,   'subtypes based on classes work';
+}
+{
+    role R1 { }; 
+    subset SR1 of R1 where 1;
+    ok !(1 ~~ SR1), 'subtypes based on roles work';
+    my $x = 1 but R1;
+    ok $x ~~ SR1,   'subtypes based on roles work';
 }
 
 # vim: ft=perl6
