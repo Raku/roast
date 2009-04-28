@@ -57,6 +57,6 @@ plan 14;
     # proto as a term
     lives_ok {  Match }, 'proto as a term lives';
     lives_ok { +Match }, 'numification of proto lives';
-    is ~("bac" ~~ /a/).WHAT, 'Match', '.WHAT on a Match works';
+    isa_ok ("bac" ~~ /a/).WHAT, Match, '.WHAT on a Match works';
     is +("bac" ~~ /a/).WHAT, 0, 'numification of .WHAT of a Match works';
 }
