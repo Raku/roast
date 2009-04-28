@@ -53,9 +53,9 @@ plan 14;
     $hash.{$key};
   }
   is((reduce(&foo, $hash, <a b c>)), 42, 'reduce(&foo) (foo ~~ .{}) works three levels deep');
-  is(@reftypes[0], "Hash", "first application of reduced hash subscript passed in a Hash");
-  is(@reftypes[1], "Hash", "second application of reduced hash subscript passed in a Hash");
-  is(@reftypes[2], "Hash", "third application of reduced hash subscript passed in a Hash");
+  isa_ok(@reftypes[0], Hash, "first application of reduced hash subscript passed in a Hash");
+  isa_ok(@reftypes[1], Hash, "second application of reduced hash subscript passed in a Hash");
+  isa_ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
 }
 
 #?rakudo todo 'Reduce of one element list. See #61610'
