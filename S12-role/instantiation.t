@@ -25,7 +25,8 @@ role SampleRole {
   my $obj2 = SampleRole.new;
   ok $obj.WHAT === $obj2.WHAT, "Punned role classes have the same .WHAT";
 
-  is $obj.WHAT, 'SampleRole()', '.WHAT as a string gives the name of the role';
+  #?rakudo todo 'protoobject regression'
+  is ~$obj.WHAT, 'SampleRole', '.WHAT as a string gives the name of the role';
 }
 
 role WithAttr {
