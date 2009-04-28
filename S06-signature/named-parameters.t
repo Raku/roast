@@ -48,6 +48,8 @@ is(simple_pos_params( x => 4 ), 4, "simple named param");
 sub foo (:$x = 3) { $x }
 
 is(foo(), 3, "not specifying named params that aren't mandatory works");
+
+# part of RT 53814
 #?rakudo todo 'using named as positional should fail'
 #?pugs todo 'bug'
 dies_ok({foo(4)}, "using a named as a positional fails");
