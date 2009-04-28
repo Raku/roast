@@ -13,7 +13,7 @@ Basic parameterized role tests, see L<S14/Roles>
 #?pugs emit skip_rest('parameterized roles'); exit;
 #?pugs emit =begin SKIP
 
-# L<S14/Roles/to be considered part of the long name:>
+# L<S14/Roles/may be parameterized>
 
 # Some basic arity-based selection tests.
 role AritySelection {

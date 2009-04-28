@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+# L<S06/List parameters/Slurpy parameters>
+
 plan 14;
 
 sub xelems(*@args) { @args.elems }

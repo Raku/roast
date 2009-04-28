@@ -1,5 +1,8 @@
 use v6;
 
+# L<S06/Parameters and arguments>
+# TODO: better smart-linking
+
 use Test;
 plan 3;
 

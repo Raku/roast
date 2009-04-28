@@ -1,7 +1,8 @@
 use v6;
 
-
 use Test;
+
+# L<S02/"Built-In Data Types"> 
 
 plan 33;
 
@@ -13,7 +14,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
 =end description
 
-# See L<S02/"Built-in Data Types"> 
 # Quoting A06:
 #                                   Code
 #                        ____________|________________

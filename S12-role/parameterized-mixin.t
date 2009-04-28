@@ -15,7 +15,7 @@ Might need some more review and love --moritz
 #?pugs emit skip_rest('parameterized roles'); exit;
 #?pugs emit =begin SKIP
 
-# L<S14/Roles/to be considered part of the long name:>
+# L<S14/Roles/may be parameterized>
   role InitialAttribVal[$val] {
     has $.attr = $val;
   }
@@ -50,7 +50,7 @@ ok $b.^does(InitialAttribVal[23]),
 
 
 
-# L<S14/Roles/A role's main type is generic by default>
+# L<S14/Parametric Roles/main type is generic by default>
 role InitialAttribType[::vartype] {
     method hi(vartype $foo) { 42 }
 }

@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/matches any logical grapheme>
+
 =begin pod
 
 This file was derived from the perl5 CPAN module Perl6::Rules,
@@ -17,8 +19,6 @@ plan 3;
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
 } else {
-
-# L<S05/Extensible metasyntax (C<< <...> >>)/matches any logical grapheme>
 
 my $unichar = "\c[GREEK CAPITAL LETTER ALPHA]";
 my $combchar = "\c[LATIN CAPITAL LETTER A]\c[COMBINING ACUTE ACCENT]";

@@ -2,13 +2,13 @@ use v6;
 
 use Test;
 
+# L<S06/List parameters/Slurpy parameters follow any required>
+
 =begin pod
 
 =head1 List parameter test
 
 These tests are the testing for "List paameters" section of Synopsis 06
-
-L<S06/List parameters/Slurpy parameters follow any required>
 
 You might also be interested in the thread Calling positionals by name in
 presence of a slurpy hash" on p6l started by Ingo

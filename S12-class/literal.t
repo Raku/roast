@@ -4,7 +4,7 @@ use Test;
 
 plan 2;
 
-# L<S12/Classes/"class or type variable using the :: type sigil">
+# L<S12/Classes/"class or type name using">
 
 # TODO: move that to t/spec/ as well
 BEGIN { @*INC.unshift('t/oo/class/TestFiles'); }
