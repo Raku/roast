@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 31;
 
 =begin pod
 
@@ -96,25 +96,6 @@ class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT#62898';
-
-#?rakudo todo 'RT #60946'
-{
-    class Mock::PGE::Match {
-        method isa($x) { return $x === PGE::Match || self.HOW.isa(self, $x); }
-    }
-
-    sub get_pir_isa_pge_match {
-       Q:PIR {
-          get_hll_global $P0, ["Mock";"PGE"], "Match"
-          $P1 = $P0."new"()
-          $I0 = isa $P1, ["PGE";"Match"] # add "Mock" to fudge success ...
-          .return ($I0)
-       }
-    }
-
-    is get_pir_isa_pge_match(), Mock::PGE::Match.new.isa(PGE::Match),
-       'pir isa cannot see override' ;
-}
 
 #?rakudo 2 todo 'RT 61354'
 {
