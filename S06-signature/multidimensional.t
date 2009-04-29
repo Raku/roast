@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan7 ;
+plan 7;
 
 # L<S06/"Multidimensional argument list binding">
 
