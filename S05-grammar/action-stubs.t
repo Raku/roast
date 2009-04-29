@@ -1,7 +1,8 @@
 use v6;
 
 use Test;
-plan 5;
+
+plan 9;
 
 # TODO: needs specs and smartlinks
 
@@ -33,5 +34,43 @@ is $action.in-a, 1, 'first action has been called';
 is $action.in-b, 1, 'second action has been called';
 is $action.calls, 'ab', '... and in the right order';
 
+# L<S05/Bracket rationalization/"An explicit reduction using the make function">
+
+{
+    grammar Grammar::More::Test {
+        rule TOP { <a> <b><c> {*} }
+        token a { \d+ {*} }
+        token b { \w+ {*} }
+        token c { '' }      # no action stub
+    }
+    class Grammar::More::Test::Actions {
+        method TOP($/) {
+            make [ $<a>.ast, $<b>.ast ];
+        }
+        method a($/) {
+            make 3 + $/;
+        }
+        method b($/) {
+            # the given/when is pretty pointless, but rakudo
+            # used to segfault on it, so test it here
+            # http://rt.perl.org/rt3/Ticket/Display.html?id=64208
+            given 2 {
+                when * {
+                    make $/ x 3;
+                }
+            }
+        }
+        method c($/) {
+            die "don't come here";
+        }
+    }
+
+    # there's no reason why we can't use the actions as class methods
+    ok Grammar::More::Test.parse('39 b', :action(Grammar::More::Test::Actions)),
+    'grammar matches';
+    isa_ok $/.ast, Array, '$/.ast is an Array';
+    ok $/.ast.[0] == 42,  'make 3 + $/ worked';
+    is $/.ast.[1], 'bbb',  'make $/ x 3 worked';
+}
 
 # vim: ft=perl6
