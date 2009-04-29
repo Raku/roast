@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 21;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -40,5 +40,12 @@ is ca($/.caps), '0:a|wc:b|1:c|wc:d',
                       'mixed named/positional flattening with quantifiers';
 is ca($/.chunks), '0:a|~: |wc:b|~: |1:c|~: |wc:d', 
                       'mixed named/positional flattening with quantifiers';
+
+# .caps and .chunks on submatches
+
+ok '  abc' ~~ m/.*?(a(.).)/, 'Regex matches';
+is ca($0.caps),     '0:b',      '.caps on submatches';
+#?rakudo todo '.chunks on submatches'
+is ca($0.chunks),   '0:b|~:c',  '.chunks on submatches';
 
 # vim: ft=perl6
