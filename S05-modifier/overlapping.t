@@ -18,7 +18,8 @@ if !eval('("a" ~~ /a/)') {
 
 #?pugs emit force_todo(2,3,5,6,10);
 
-# L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
+# should be: L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
+# L<S05/Modifiers/match at all possible character positions>
 
 my $str = "abrAcadAbbra";
 

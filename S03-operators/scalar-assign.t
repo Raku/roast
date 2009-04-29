@@ -4,7 +4,8 @@ use Test;
 
 plan 4;
 
-# L<S03/Changes to Perl 5 operators/The scalar assignment operator still parses as it did before>
+# old: L<S03/Changes to Perl 5 operators/The scalar assignment operator still parses as it did before>
+# L<S03/Changes to Perl 5 operators>
 
 {
     my $x = 15;

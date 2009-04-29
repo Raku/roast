@@ -130,7 +130,7 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
     lives_ok { (undef min 2) }, 'can do (undef min 2)'; 
 }
 
-# L<S03/Hyper operators/"but a short list may always be extended arbitrarily">
+# L<S03/Traversing arrays in parallel/"but a short list may always be extended arbitrarily">
 #?rakudo todo 'RT #64474'
 {
     is (1, 2, * Z <a b c d>).join('|'),

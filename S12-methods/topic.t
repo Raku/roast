@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<A12/"Declaration of Methods" /methods do not set the topic now/>
+# old: L<A12/"Declaration of Methods" /methods do not set the topic now/>
 # (This is an an "update" section.)
 # not mentioned explicitly in S12, but still true.
 
