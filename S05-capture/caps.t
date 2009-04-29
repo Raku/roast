@@ -43,9 +43,8 @@ is ca($/.chunks), '0:a|~: |wc:b|~: |1:c|~: |wc:d',
 
 # .caps and .chunks on submatches
 
-ok '  abc' ~~ m/.*?(a(.).)/, 'Regex matches';
+ok '  abcdef' ~~ m/.*?(a(.).)/, 'Regex matches';
 is ca($0.caps),     '0:b',      '.caps on submatches';
-#?rakudo todo '.chunks on submatches'
-is ca($0.chunks),   '0:b|~:c',  '.chunks on submatches';
+is ca($0.chunks),   '~:a|0:b|~:c',  '.chunks on submatches';
 
 # vim: ft=perl6
