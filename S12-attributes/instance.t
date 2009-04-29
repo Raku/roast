@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 114;
+plan 118;
 
 =begin pod
 
@@ -429,14 +429,22 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 
 # test typed attributes
 # TODO: same checks on private attributes
-#?rakudo skip 'typed array/hash attributes'
 {
     class TypedAttrib {
         has Int @.a is rw;
         has Int %.h is rw;
+        has Int @!pa;
+        has Int %!ph;
+        method pac { @!pa.elems };
+        method phc { %!ph.elems };
     }
     my $o = try { TypedAttrib.new };
     ok $o.defined, 'created object with typed attributes';
+    is $o.a.elems, 0, 'typed public array attribute is empty';
+    is $o.h.elems, 0, 'typed public hash attribute is empty';
+    is $o.pac, 0, 'typed private array attribute is empty';
+    is $o.phc, 0, 'typed private hash attribute is empty';
+    #?rakudo 20 skip 'typed array and hash attributes'
     ok $o.a.of === Int, 'array attribute is typed';
     lives_ok { $o.a = (2, 3) }, 'Can assign to typed drw-array-attrib';
     lives_ok { $o.a[2] = 4 },   'Can insert into typed rw-array-attrib';
