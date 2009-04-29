@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 72;
+plan 76;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -257,3 +257,20 @@ plan 72;
 
     is($c, 4, "substr() called 4 times");
 }
+
+# test autothreading while passing arrays:
+{
+    sub my_elems(@a) {
+        @a.elems;
+    }
+    ok !(my_elems([2, 3]|[4, 5, 6]) == 1),
+       'autothreading over array parameters (0)';
+    ok ?(my_elems([2, 3]|[4, 5, 6]) == 2),
+       'autothreading over array parameters (1)';
+    ok ?(my_elems([2, 3]|[4, 5, 6]) == 3),
+       'autothreading over array parameters (2)';
+    ok !(my_elems([2, 3]|[4, 5, 6]) == 4),
+       'autothreading over array parameters (3)';
+}
+
+# vim: ft=perl6
