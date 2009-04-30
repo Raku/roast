@@ -22,7 +22,7 @@ class C is Str {
 
 is(C.new.meth1(),"worked",'m:P5/[^a]/ in method in C (is Str)');
 
-class Str is also {
+augment class Str {
     method meth2 () {
         if ("bar" ~~ m:P5/[^a]/) {
             "worked";
@@ -34,7 +34,7 @@ class Str is also {
 
 is(Str.new.meth2(),"worked",'m:P5/[^a]/ in method in Str');
 
-class Str  is also {
+augment class Str {
     method meth3 () {
         if ("bar" ~~ m:P5/[a]/) {
             "worked";
