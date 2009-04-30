@@ -43,21 +43,21 @@ dies_ok({eval {42}}, 'block eval is gone');
 
 # RT #63978, eval didn't work in methods
 {
-    my class EvalTester {
+    class EvalTester1 {
         method e($s) { eval $s };
     }
-    is EvalTester.e('5'),       5, 'eval works inside class methods';
-    is EvalTester.new.e('5'),   5, 'eval works inside instance methods';
+    is EvalTester1.e('5'),       5, 'eval works inside class methods';
+    is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
 }
 
 #?rakudo skip 'lexicals outside class not visible inside class'
 {
     my $x = 5;
-    my class EvalTester {
+    class EvalTester2 {
         method e($s) { eval "$s + \$x" };
     }
-    is EvalTester.e('1'),       6, 
+    is EvalTester2.e('1'),       6, 
        'eval works inside class methods, with outer lexicals';
-    is EvalTester.new.e('1'),   6, 
+    is EvalTester2.new.e('1'),   6, 
        'eval works inside instance methods, with outer lexicals';
 }
