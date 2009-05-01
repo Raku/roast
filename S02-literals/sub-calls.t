@@ -21,29 +21,29 @@ plan 20;
 {
     sub foo(*@args, *%named) { 1 }
 
-    eval_lives_ok q/foo;      /, 'call with no args, no parens';
-    eval_lives_ok q/foo();    /, 'call with no args, has parens';
-    eval_lives_ok q/&foo.();   /, 'call with no args, has dot and parens';
-    eval_lives_ok q/&foo\ .(); /, 'call with no args, has long dot and parens';
+    ok eval(q/foo;      /), 'call with no args, no parens';
+    ok eval(q/foo();    /), 'call with no args, has parens';
+    ok eval(q/&foo.();   /), 'call with no args, has dot and parens';
+    ok eval(q/&foo\ .(); /), 'call with no args, has long dot and parens';
 
-    eval_lives_ok q/foo 1;    /, 'call with one arg, no parens';
-    eval_lives_ok q/foo(1);   /, 'call with one arg, has parens';
-    eval_lives_ok q/&foo.(1);  /, 'call with one arg, has dot and parens';
-    eval_lives_ok q/&foo\ .(1);/, 'call with one arg, has long dot and parens';
+    ok eval(q/foo 1;    /), 'call with one arg, no parens';
+    ok eval(q/foo(1);   /), 'call with one arg, has parens';
+    ok eval(q/&foo.(1);  /), 'call with one arg, has dot and parens';
+    ok eval(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
     #?pugs todo 'unspecced'
     #?rakudo todo 'unspecced'
-    eval_lives_ok q/foo'bar'; /, 'call with one arg, has no space and no parens';
+    ok eval(q/foo'bar'; /), 'call with one arg, has no space and no parens';
 
-    eval_lives_ok q/foo 1, 2; /, 'call with two args, no parens';
-    eval_lives_ok q/foo(1, 2);/, 'call with two args, has parens';
+    ok eval(q/foo 1, 2; /), 'call with two args, no parens';
+    ok eval(q/foo(1, 2);/), 'call with two args, has parens';
 
     #?rakudo todo 'adverbs'
-    eval_lives_ok q/foo:bar;  /, 'call with adverb after no space';
-    eval_lives_ok q/foo :bar; /, 'call with adverb after space';
+    ok eval(q/foo:bar;  /), 'call with adverb after no space';
+    ok eval(q/foo :bar; /), 'call with adverb after space';
 
-    eval_lives_ok q/foo(:bar);  /, 'call with adverb in parens';
-    eval_lives_ok q/&foo.(:bar); /, 'call with adverb in dotted-parens';
-    eval_lives_ok q/&foo\.(:bar);/, 'call with adverb in long-dotted parens';
+    ok eval(q/foo(:bar);  /), 'call with adverb in parens';
+    ok eval(q/&foo.(:bar); /), 'call with adverb in dotted-parens';
+    ok eval(q/&foo\.(:bar);/), 'call with adverb in long-dotted parens';
 }
 
 
@@ -52,7 +52,7 @@ plan 20;
     sub succ($x) { $x + 1 }
 
     is(eval(q/succ  (1+2) * 30;/),  91, "parens after space aren't call-parens");
-    eval_dies_ok(q/succ .(1+2) * 30;/, 'parsed as method call on $_');
+    ok(!eval(q/succ .(1+2) * 30;/), 'parsed as method call on $_');
 }
 {
     sub first() { "first" }
