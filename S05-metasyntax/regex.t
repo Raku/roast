@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 17;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -20,6 +20,23 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 {
     my $var = /foo/;
     isa_ok($var, Regex, '$var = /foo/ returns a Regex object');
+}
+
+# fairly directly from RT #61662
+{
+    $_ = "a";
+    my $mat_tern_y = /a/ ?? "yes" !! "no";
+    my $mat_tern_n = /b/ ?? "yes" !! "no";
+    ok  $mat_tern_y eq 'yes' && $mat_tern_n eq 'no',
+        'basic implicit topic match test';
+}
+
+# Note for RT - change to $_ ~~ /oo/ to fudge ok
+#?rakudo todo 'RT #61662'
+{
+    $_ = "foo";
+    my $mat_tern = /oo/ ?? "yes" !! "no"; 
+    is($/, 'oo', 'matching should set match');
 }
 
 #?rakudo todo 'my $match = m{oo} does not match on $_'
