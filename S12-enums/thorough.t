@@ -24,7 +24,6 @@ sub test_stuff($x) {
   is $x.day, 2,            "automatically created accessor worked ($x)";
   is day::Tue, 2,          "enum provided a correct mapping ($x)";
   ok $x ~~ day,            "smartmatch worked correctly ($x-1)";
-  #?rakudo 2 todo 'smartmatch on enum elements'
   ok $x ~~ Tue,            "smartmatch worked correctly ($x-2)";
   ok $x ~~ day::Tue,       "smartmatch worked correctly ($x-3)";
   ok $x !~~  Wed,          "smartmatch worked correctly ($x-4)";
