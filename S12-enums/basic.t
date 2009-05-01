@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 24;
 
 # Very basic enum tests
 
@@ -34,6 +34,16 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Mon.name,      'Mon',      '.name on short form of Enum value';
 
     is Day::Mon.WHAT, 'Day',      '.WHAT on enum value stringifies to the enum name';
+}
+
+enum roman (i => 1,   v => 5,
+            x => 10,  l => 50,
+            c => 100, d => 500,
+            m => 1000);
+{
+	is v,      5,          'enum with parens works and non-0 starting point works';
+      is v.perl, 'roman::v', '.perl works on enum with parens';
+      is v.name, 'v',        '.name works on enum with parens';
 }
 
 enum JustOne <Thing>;
