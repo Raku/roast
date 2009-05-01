@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 30;
 
 =begin pod
 
@@ -97,13 +97,7 @@ ok(One::Two.new, 'created One::Two after One::Two::Three');
 eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT#62898';
 
-{
-eval_lives_ok 'class A61354 { eval q/method x { "OH HAI" }/ }',
-    'define method with eval in class lives';
-# switch comment lines below to fudge success
-# is eval('class A61354_1 { method x { "OH HAI" } }; A61354_1.x'),
-is  eval('class A61354_1 { eval q/method x { "OH HAI" }/ }; A61354_1.x'),
+is  (class A61354_1 { eval q/method x { "OH HAI" }/ }; A61354_1.x),
     'OH HAI',
     'define method with eval in class';
-}
 
