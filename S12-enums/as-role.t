@@ -12,7 +12,7 @@ class Bar            { }
 {
     class Foo does Maybe { }
 
-    my $x = Foo.new(Maybe => 0);
+    my $x = Foo.new(Maybe => No);
 
     ok($x.No,     'Can test for enum members set by .new()');
     ok(!$x.Yes,   'Can test for enum members set by .new()');
@@ -20,19 +20,19 @@ class Bar            { }
 }
 
 {
-    my $y = Bar.new() does Maybe(1);
+    my $y = Bar.new() does Maybe(Yes);
 
-    ok(!$y.No,    'Can test for enum members set by does Maybe(1)');
-    ok($y.Yes,    'Can test for enum members set by does Maybe(1)');
-    ok(!$y.Dunno, 'Can test for enum members set by does Maybe(1)');
+    ok(!$y.No,    'Can test for enum members set by does Maybe(Yes)');
+    ok($y.Yes,    'Can test for enum members set by does Maybe(Yes)');
+    ok(!$y.Dunno, 'Can test for enum members set by does Maybe(Yes)');
 }
 
 {
-    my $z = Bar.new() does Maybe(Dunno);
+    my $z = Bar.new() but Maybe(Dunno);
 
-    ok(!$z.No,    'Can test for enum members set by does Maybe(dunno)');
-    ok(!$z.Yes,   'Can test for enum members set by does Maybe(dunno)');
-    ok($z.Dunno,  'Can test for enum members set by does Maybe(dunno)');
+    ok(!$z.No,    'Can test for enum members set by but Maybe(Dunno)');
+    ok(!$z.Yes,   'Can test for enum members set by but Maybe(Dunno)');
+    ok($z.Dunno,  'Can test for enum members set by but Maybe(Dunno)');
 }
 
 
