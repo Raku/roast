@@ -22,7 +22,6 @@ module A {
     is $x, 3, 'for loop inside a module works';
 
     sub b { 42 };
-    #?rakudo todo 'RT #65238'
     is eval('b'), 42,
        'eval inside a module looks up subs in the right namespace';
 }
