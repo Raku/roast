@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 45;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -61,3 +61,20 @@ is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
 is sprintf('%s', -NaN),             NaN,    'sprintf %s handles NaN';
 is sprintf('%s', Inf),              Inf,    'sprintf %s handles Inf';
 is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
+
+#?rakudo todo 'RT #62316'
+lives_ok {sprintf "%s"}, 'missing sprintf string argument';
+#?rakudo skip 'RT #62316'
+ok sprintf "%s" ~~ Failure, 'missing sprintf string argument';
+
+#?rakudo todo 'RT #60672'
+{
+my $fmtd;
+eval q/$fmtd =
+    sprintf "%d%C is %d digits long",
+        1234,
+        sub ($s, @args is rw) { @args[2] = $s.elems },
+        0;
+/;
+is $fmtd, '1234 is 4 digits long', 'Implementation of S29 sprintf %C format'
+}
