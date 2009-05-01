@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 34;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -47,6 +47,9 @@ is min({ abs $^a <=> abs $^b }, @array), 0,
 is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
   "method form of min on Ranges taking a comparision block works";
 
+is ((1..10).min: { ($_-3) * ($_-5) }), 4,
+  "method form of min taking an arity-1 comparison block works";
+
 # Tests for C<max>:
 is (@array.max),  7, "basic method form of max works";
 is max({ $^a <=> $^b }, @array), 7, "basic subroutine form of max works";
@@ -70,6 +73,9 @@ is (@array.max: { abs $^a <=> abs $^b }), -9,
   "method form of max taking a comparision block works";
 is max({ abs $^a <=> abs $^b }, @array), -9,
   "subroutine form of max taking a comparision block works";
+
+is ((1..10).max: { ($_-3) * ($_-5) }), 10,
+  "method form of max taking an arity-1 comparison block works";
 
 # Error cases:
 #?pugs 2 todo 'bug'
