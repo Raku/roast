@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 63;
+plan 64;
 
 =begin description
 
@@ -14,6 +14,7 @@ Enum tests from L<S12/Enums>
 # L<S12/Enums/values are specified as a list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
+ok day ne "", 'enum itself stringififes';
 ok day.WHAT, 'enum.WHAT returned a value';
 #?rakudo todo '.perl on an enum itself'
 ok day.perl, 'enum.perl returned a value';
