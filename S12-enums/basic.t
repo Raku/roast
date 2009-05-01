@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 24;
+plan 26;
 
 # Very basic enum tests
 
@@ -20,8 +20,19 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok $x.does(Day),      'Can test with .does() for enum type';
     ok $x.does(Day::Mon), 'Can test with .does() for enum value';
     ok $x ~~ Day,         'Can smartmatch for enum type';
-    #?rakudo 1 todo 'ACCEPTS missing for enum values'
     ok $x ~~ Day::Mon,    'Can Smartmatch for enum value';
+    my $check = 0;
+    given $x {
+        when Day::Mon { $check = 1 }
+        when Day::Tue { $check = 2 }
+    }
+    is $check, 1,         'given/when with enum values';
+    $check = 0;
+    given $x {
+        when Tue { $check = 1 }
+        when Mon { $check = 2 }
+    }
+    is $check, 2,         'given/when with enum values';
 }
 
 {
