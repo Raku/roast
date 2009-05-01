@@ -53,9 +53,7 @@ eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error'
 # .WHAT reports Multi
 isa_ok(&foo.WHAT, Multi, '.WHAT on a multi isa Multi');
 
-#?rakudo todo 'RT #58948'
-#?DOES 2
-# note - example in ticket a bit more elaborate
+# note - example in ticket [perl #58948] a bit more elaborate
 {
     multi sub max($a, $b, $c) {return 9}
 
