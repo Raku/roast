@@ -164,10 +164,10 @@ is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y'), 2, '2nd my in
     is($f, 5, "two lexicals declared in scope is noop");
 }
 
-my $x = 42;
+my $z = 42;
 {
-    my $x = $x;
-    ok( $x ~~ undef, 'my $x = $x; can not see the value of the outer $x');
+    my $z = $z;
+    ok( $z ~~ undef, 'my $z = $z; can not see the value of the outer $z');
 }
 
 # interaction of my and eval
