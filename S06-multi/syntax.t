@@ -50,8 +50,7 @@ eval_dies_ok 'class A { only method {} }', 'anonymous only method is an error';
 eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error';
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
-# .WHAT reports Multi
-isa_ok(&foo.WHAT, Multi, '.WHAT on a multi isa Multi');
+ok(&foo ~~ Multi, 'a multi does Multi');
 
 # note - example in ticket [perl #58948] a bit more elaborate
 {
