@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item pack">
 
-plan => 12;
+plan 12;
 
 is(unpack("%32B*", "\o001\o002\o004\o010\o020\o040\o100\o200\o377"), 16 );
 is(unpack("%32b69", "\o001\o002\o004\o010\o020\o040\o100\o200\o017"), 12 );

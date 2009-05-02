@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan( 32 );
+plan 32;
 
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PERL5" {
