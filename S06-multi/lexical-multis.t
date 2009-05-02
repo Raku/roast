@@ -10,7 +10,7 @@ plan 14;
         my multi foo() { 42 }
         is(foo(), 42, 'can call lexically scoped multi');
     }
-    dies_ok({ foo() }, 'lexical multi not callable outside of lexical scope');
+    eval_dies_ok(q{ foo() }, 'lexical multi not callable outside of lexical scope');
 }
 
 # test that lexical multis in inner scopes add to those in outer scopes
@@ -29,8 +29,8 @@ plan 14;
         dies_ok({ bar('pivo') }, 'multi variant from inner scope not callable in outer');
     }
 
-    dies_ok({ bar() },       'no multi variants callable outside of lexical scope');
-    dies_ok({ bar('kava') }, 'no multi variants callable outside of lexical scope');
+    eval_dies_ok(q{ bar() },       'no multi variants callable outside of lexical scope');
+    eval_dies_ok(q{ bar('kava') }, 'no multi variants callable outside of lexical scope');
 }
 
 # an inner multi with a signature matching an outer will conflict

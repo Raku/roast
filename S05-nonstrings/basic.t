@@ -29,7 +29,7 @@ my Fish $c;
 
 my @array = ($a, $b, $c);
 regex canine { <.isa(Dog)> }
-regex herbivore { <.isa(Antelope)> }; 
+regex herbivore { <.isa(::Antelope)> }; 
 
 # does that work? ord does it need a Cat?
 ok(@array ~~ /<canine>/, 'rules on an array - positive');

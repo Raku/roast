@@ -15,7 +15,7 @@ ok @named_array.test_method, "Uninitialized array";
 
 ok @named_array.test_method, "Populated array";
 
-ok try({ [].test_method }), "Bare arrayref";
+ok try { [].test_method }, "Bare arrayref";
 
 
 my $arrayref = [];
@@ -31,7 +31,7 @@ ok %named_hash.test_method, "Uninitialized hash";
 
 ok %named_hash.test_method, "Populated hash";
 
-ok try({ ~{foo => "bar"}.test_method }), "Bare hashref";
+ok try { ~{foo => "bar"}.test_method }, "Bare hashref";
 
 
 my $hashref = {foo => "bar"};
@@ -41,7 +41,7 @@ ok $hashref.test_method, "Named hashref";
 # Now for pairs.
 
 #?rakudo skip "No applicable candidates found to dispatch to for 'is'"
-is(try({ (:key<value>).value; }), 'value', "method on a bare pair");
+is(try { (:key<value>).value; }, 'value', "method on a bare pair");
 
 my $pair = :key<value>;
 

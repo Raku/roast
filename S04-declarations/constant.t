@@ -28,7 +28,7 @@ plan 19;
     {
         constant foo2 = 42;
     }
-    dies_ok { foo2 == 42 }, 'constants are lexically scoped';
+    eval_dies_ok 'foo2 == 42', 'constants are lexically scoped';
 }
 
 {

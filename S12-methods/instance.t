@@ -66,6 +66,8 @@ is($foo.noargs(), 42, "... parentheses after method");
     #?rakudo todo 'method should not be usable as sub'
     dies_ok( { Zoo.new.c }, "meth(%h) is not a valid method call syntax");
 }
+# doesn't match, but defines "b"
+sub b() { die "oops" }
 
 # this used to be a Rakudo bug, RT #62046
 {

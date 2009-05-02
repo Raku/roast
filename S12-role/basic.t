@@ -35,7 +35,7 @@ ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 #?pugs skip 3 'feature'
 ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
 ok $baz.^does(Foo),             '.^does said our $baz now does Foo';
-dies_ok { $baz ~~ Baz },        'smartmatch against non-existent type dies';
+eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies';
 
 # L<S14/Roles/but with a role keyword:>
 # Roles may have methods
