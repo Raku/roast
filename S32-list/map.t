@@ -110,7 +110,7 @@ my @list = (1 .. 5);
 }
 
 # map with n-ary functions
-#?rakudo skip "adverbial block"
+#?rakudo skip "adverbial block; RT #53804"
 {
   is ~(1,2,3,4).map:{ $^a + $^b             }, "3 7", "map() works with 2-ary functions";
   is ~(1,2,3,4).map:{ $^a + $^b + $^c       }, "6 4", "map() works with 3-ary functions";
