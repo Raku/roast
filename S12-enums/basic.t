@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 30;
 
 # Very basic enum tests
 
@@ -87,4 +87,11 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     is white, 0, 'short name of the enum without parenthesis is an enum';
     #?rakudo skip 'subs and enums with conflicting names'
     is white(), 'sub', 'short name with parenthesis is a sub';
+}
+
+# L<S12/Enums/"define a .pick method">
+{
+    ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),
+            '.pick on enums';
+    ok Color.pick(2) == 2, '.pick(2) on enums';
 }
