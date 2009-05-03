@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 76;
+plan 78;
 
 {
     # Solves the equatioin A + B = A * C for integers
@@ -271,6 +271,23 @@ plan 76;
        'autothreading over array parameters (2)';
     ok !(my_elems([2, 3]|[4, 5, 6]) == 4),
        'autothreading over array parameters (3)';
+}
+
+# L<S02/Mutable types/"default block parameter type">
+
+# block parameters default to Object, so test that they don't autothread:
+#?rakudo skip '"No exception handler and no message"'
+{
+    my $c = 0;
+    for 1|2, 3|4, 5|6 -> $x {
+        $c++;
+    }
+    is $c, 3, 'do not autothread over blocks by default';
+    $c = 0;
+    for 1|2, 3|4, 5|6 -> Any $x {
+        $c++;
+    }
+    is $6, 3, 'do autothread over blocks with explicit Any';
 }
 
 # vim: ft=perl6
