@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 28;
 
 # Very basic enum tests
 
@@ -12,6 +12,13 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Day::Sat, 6, 'Last item has the right value';
     is Sun,      0, 'Values exported into namespace too.';
     is Sat,      6, 'Values exported into namespace too.';
+}
+
+{
+    # check that the values can be used for ordinary tasks, like
+    # constructing ranges
+    isa_ok (Mon..Wed), Range, 'Can construct ranges from Enum values';
+    is Mon + Tue, Wed, 'Can do arithmetics with Enum values';
 }
 
 {
