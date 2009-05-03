@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S04/"The lift statement prefix">
 
@@ -73,6 +73,21 @@ plan 13;
     # with coercion
     ok '1' ceq 1,       'basic operation with coercion (+)';
     ok !('1' ceq 2),    'basic operation with coercion (-)';
+}
+
+{
+    # I hope I understood this part of specs correctly: 
+    # L<S04/"The lift statement prefix"/"Everything else within a lift">
+    # etc.
+    # IMHO that means that it's OK to use undeclared variables in a lift:
+    sub f { lift $a + $b };
+    {
+        my $a is context = 3;
+        my $b is context = 4;
+        is f(), 7, 'Can pick up context variables from the caller';
+    }
+    eval_dies_ok 'f()',
+        'It is an error if the lifted variables are not declared in the caller';
 }
 
 # vim: ft=perl6
