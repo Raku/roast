@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 16;
 
 # L<S05/External aliasing/>
 
@@ -26,5 +26,13 @@ is ~$/.caps.[0].value, 'ab', 'right value in .caps';
 is +$/.chunks, 2, 'two chunks';
 is $/.chunks.map({.key}).join('|'), 'ident|~', 'right keys of .chunks';
 is $/.chunks.map({.value}).join('|'), 'ab| cd ef', 'right values of .chunks';
+
+{
+    my @a;
+    ok 'abc' ~~ m/@OUTER::a=(.)+/, 'regex with outer array matches';
+    is +@a, 3, 'bound the right number of matches';
+    ok ?(all(@a) ~~ Match), 'All of them are Match objects';
+    is @a.join('|'), 'a|b|c', 'right values';
+}
 
 # vim: ft=perl6
