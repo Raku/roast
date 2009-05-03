@@ -10,8 +10,6 @@ is(uc("Hello World"), "HELLO WORLD", "simple");
 #?rakudo skip 'calling positional params by name'
 is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
-#?rakudo skip "unicode"
-#?DOES 3
 {
     is(uc("åäö"), "ÅÄÖ", "some finnish non-ascii chars");
     is(uc("äöü"), "ÄÖÜ", "uc of German Umlauts");
