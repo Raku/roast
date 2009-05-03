@@ -91,3 +91,8 @@ to run, where unfudged tests are just passed through unchanged as *.t.
 Each test comes through as either fudged or not, but never both.
 The test harness then runs the selected test files as it normally
 would (it shouldn't care whether they are named *.t or *.humpty).
+
+
+In cases where the current working directory makes a difference, the tests
+assume that the working directory is the root of the test suite, so that the
+relative path to itself is t/spec/S\d\d-$section/$filename.
