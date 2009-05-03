@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 22;
 
 # L<S14/Roles/"Run-time mixins are done with does and but">
 
@@ -63,5 +63,30 @@ is @array.test, 42,         'mixing in a role at the point of declaration works'
     BEGIN { $x = @array.test }
     is $x, 42,              'mixing in at point of declaration at compile time';
 }
+
+# L<S14/Roles/"but only if the role supplies exactly one attribute">
+
+{
+    role R4a {
+        # no attribute here
+    }
+    role R4b {
+        has $.x is rw;
+    }
+    role R4c {
+        has $.x;
+        has $.y;
+    }
+
+    dies_ok { my $x = 4; $x does R4a(3) },
+            '"does role(param)" does not work without attribute';
+    lives_ok { my $x = 4; $x does R4b(3) },
+            '"does role(param)" does work with one attribute';
+    dies_ok { my $x = 4; $x does R4c(3) },
+            '"does role(param)" does not work with two attributes';
+    is ([] does R4b("foo")).x, 'foo',
+       'can mix R4b into an Array, and access the attribute';
+}
+
 
 # vim: syn=perl6
