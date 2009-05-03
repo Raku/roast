@@ -15,12 +15,11 @@ plan 75;
 }
 
 {
-    # see http://rt.perl.org/rt3/Ticket/Display.html?id=54808
     sub b($x) {
         return $x;
     }
 
-    #?rakudo skip 'Passing positional parameters as named ones'
+    #?rakudo skip 'Passing positional parameters as named ones; RT #54808'
     is b(:x(3)), 3, 'Can pass positional parameters as named ones';
 
     sub c(:$w=4){
