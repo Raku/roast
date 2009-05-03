@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 =begin pod
 
@@ -12,6 +12,8 @@ Very basic class tests from L<S12/Classes>
 
 # L<S12/Classes>
 class Foo {}
+
+is Foo.perl, 'Foo', 'Classname.perl produces the class name';
 
 my $foo = Foo.new();
 ok($foo ~~ Foo, '... smartmatch our $foo to the Foo class');
