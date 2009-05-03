@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 51;
+plan 52;
 
 
 # terms
@@ -205,3 +205,9 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 #   $    (no output)
 ok (uc "a" eq "A"), "uc has the correct precedence in comparision to eq";
 
+# L<S03/Operator precedence/my $i = int $x;   # ILLEGAL>
+
+#?rakudo todo 'remove prefix:<int>'
+eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
+
+# vim: ft=perl6
