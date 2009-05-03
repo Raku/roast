@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 {
     my $x = *;
@@ -18,6 +18,13 @@ ok $x.(5), 4, 'and we can execute that Code';
 isa_ok *.abs, Code, '*.abs is of type Code';
 my @a = map *.abs, 1, -2, 3, -4;
 is @a, [1,2,3,4], '*.meth created closure works';
+
+{
+    # check that it also works with Enums - used to be a Rakudo bug
+    # RT #63880
+    enum A <b c>;
+    isa_ok (b < *), Code, 'Enums and Whatever star interact OK';
+}
 
 
 # vim: ft=perl6
