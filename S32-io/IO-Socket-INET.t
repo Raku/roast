@@ -19,6 +19,10 @@ given $*OS {
         $netstat_cmd = "netstat -f inet -p tcp -a -n";
         $netstat_pat = regex { [ ^^  .+? <dot> (\d+) <.sp> .+? ]+ $ };
     }
+    default {
+        skip_rest('Operating system not yet supported');
+        exit 0;
+    }
     # TODO: when 'Win32' etc.
 }
 $received = fake_qx( $netstat_cmd );        # refactor into 1 line after
@@ -28,8 +32,12 @@ if $received ~~ $netstat_pat { @ports = $/[]; }   # development complete
 # sequentially search for the first unused port
 my $port = 1024;
 while $port < 65535 && $port==any(@ports) { $port++; }
-if $port > 65535 { die "no free port"; }
-# warn "CHOSEN PORT $port";
+if $port > 65535 { 
+    diag "no free port; abortin"; 
+    skip_rest 'No port free - cannot test';
+    exit 0;
+}
+diag "Testing on port $port";
 
 # test 1 creates a TCP socket but does not use it.
 constant PF_INET     = 2; # these should move into a file,
@@ -105,3 +113,5 @@ UDP. Unix sockets. Concurrent connections (needs threads).
  time    L<http://www.ietf.org/rfc/rfc868.txt> port 37
 
 =end pod
+
+# vim: ft=perl6
