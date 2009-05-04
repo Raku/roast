@@ -7,7 +7,7 @@ plan 51;
 # lexically scoped declarations are visible"> 
 {
 
-    #?rakudo todo 'lexicals bug'
+    #?rakudo todo 'lexicals bug; RT #61838'
     eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declartation');
     is(eval('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
