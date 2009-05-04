@@ -33,7 +33,6 @@ sub perl5sub {
     push @result, @_[1];
 }
 perl5sub(<foo bar>);
-#?rakudo todo '@_ details'
 is(@result, [<foo bar>], 'use @_ in sub');
 
 

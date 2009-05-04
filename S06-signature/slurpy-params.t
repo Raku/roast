@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 14;
+plan 18;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -44,6 +44,16 @@ is first_arg_copy(1, 2, 3), '1',  'can grab first item of a slurpy array (is cop
     }
     is_deeply(func(5), [], "Shift from an array function argument works", :todo<bug>);
 }
+
+
+sub whatever {
+    is(@_[3], 'd', 'implicit slurpy param flattens');
+    is(@_[2], 'c', 'implicit slurpy param flattens');
+    is(@_[1], 'b', 'implicit slurpy param flattens');
+    is(@_[0], 'a', 'implicit slurpy param flattens');
+}
+
+whatever( 'a' p5=> 'b', 'c' p5=> 'd' );
 
 
 # vim: ft=perl6
