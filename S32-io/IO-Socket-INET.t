@@ -21,12 +21,9 @@ given $*OS {
     }
     # TODO: when 'Win32' etc.
 }
-#$received = slurp( '/home/martin/osx-netstat' );
 $received = fake_qx( $netstat_cmd );        # refactor into 1 line after
 if $received ~~ $netstat_pat { @ports = $/[]; }   # development complete
-warn @ports.elems ~ " PORTS=" ~ @ports;
-
-exit(1);
+#warn @ports.elems ~ " PORTS=" ~ @ports;
 
 # sequentially search for the first unused port
 my $port = 1024;
