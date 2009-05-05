@@ -12,17 +12,22 @@ These tests exercise a bug found at least in r16241 of Pugs
 
 plan 11;
 
+# L<S02/Literals/Bare scalar variables>
+
 my $x = 'A';
 my $y;
 
 is("\$x is $x", '$x is A', 'normal scalar variable interpolation');
+
+#?rakudo skip '$x.ord() does not interpolate'
 is(
    "ord of \$x is $x.ord()",
    'ord of $x is 65',
    'normal scalar variable builtin call as a method'
 );
-lives_ok(sub { $y = "ord of \$x is $x.ord.fmt('%x')" },
+lives_ok(sub { $y = "ord of \$x is $x.ord.fmt('%d')" },
    'fmt and scalar interpolation live');
+#?rakudo skip '$x.ord() does not interpolate'
 is($y, 'ord of $x is 65', 'fmt and scalar interpolation behave well');
 
 is("\$x is {$x}", '$x is A', 'normal scalar variable interpolation');
