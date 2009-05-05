@@ -23,7 +23,6 @@ my @tests = (
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
-    #?rakudo emit #
     \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \undef,
 
     (a => 1),
@@ -41,10 +40,13 @@ my @tests = (
     # Infinite arrays, commented because they take infram and inftime in
     # current Pugs
     #?pugs emit # 
+    #?rakudo emit # Inf takes infram and inftime
     [ 3..Inf ],
-    #?pugs emit # 
+    #?pugs emit #
+    #?rakudo emit # Inf takes infram and inftime
     [ -Inf..Inf ],
     #?pugs emit # 
+    #?rakudo emit # Inf takes infram and inftime
     [ 3..42, 17..Inf, -Inf..5 ],
 
     # Nested things
@@ -71,8 +73,7 @@ plan 11 + 2*@tests;
 #   the result**.
 {
     for @tests -> $obj {
-        #?rakudo skip 'eqv not implemented'
-        ok eval($obj.perl) eqv $obj,
+        ok eval($obj.perl) eq $obj,
             "($obj.perl()).perl returned something whose eval()ed stringification is unchanged";
         is ~WHAT(eval($obj.perl)), ~$obj.WHAT,
             "($obj.perl()).perl returned something whose eval()ed .WHAT is unchanged";
