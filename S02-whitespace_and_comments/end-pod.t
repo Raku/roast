@@ -8,6 +8,7 @@ plan 1;
 
 # L<S02/Literals/"The double-underscore forms are going away:">
 
+# TODO: clarify this test; is not specified at smartlink target location
 ok 1, "Before the =END Block";
 
 =END
