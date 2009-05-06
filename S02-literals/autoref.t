@@ -6,7 +6,7 @@ use Test;
 =begin description
 
  Tests testing that automatical referentiation (e.g. $arrayref = @array)
- works. To be more detalled, things tested are:
+ works. To be more detailled, things tested are:
  * Implicit & explicit referentiation of arrays & hashes in assignment
  * Implicit & explicit referentiation of arrays & hashes in assignment to an
    array & hash element
