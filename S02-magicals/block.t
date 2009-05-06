@@ -4,7 +4,7 @@ use Test;
 
 =begin description
 
-This tests the &?BLOCK magical from Synoposis 6
+This tests the &?BLOCK magical from Synopsis 6
 
 L<S06/The C<&?BLOCK> object>
 
