@@ -43,7 +43,7 @@ plan 13;
     is("$x $y $z", "1 2 3", "siglist bindings works", :todo<feature>);
 }
 
-# Same, but more complex 
+# Same, but more complex
 #?rakudo skip '.infix:<:=>()'
 {
     my ($x, @y, @rest);

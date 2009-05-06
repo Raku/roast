@@ -23,11 +23,11 @@ my Int $foo;
 my Str $bar;
 
 {
-    #?pugs 1 todo 
+    #?pugs 1 todo
     dies_ok({$foo = 'xyz'},      'Int restricts to integers');
     is(($foo = 42),       42,    'Int is an integer');
 
-    #?pugs 1 todo 
+    #?pugs 1 todo
     dies_ok({$bar = 42},         'Str restricts to strings');
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
@@ -107,7 +107,6 @@ my $baz of Int;
     eval_dies_ok('returntype4(False)', 'bad return value dies (my Type sub as OtherType)');
     is(returntype5(True), 2.2, 'good return value works (--> Type as OtherType)');
     eval_dies_ok('returntype5(False)', 'bad return value dies (--> Type as OtherType)');
-    
 }
 
 {

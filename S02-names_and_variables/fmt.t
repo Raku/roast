@@ -13,7 +13,7 @@ plan 19;
     is (5.6).fmt('%f'), '5.6', 'fmt() works with %f';
 }
 
-# L<S02/"Names and Variables"/"format an array value" 
+# L<S02/"Names and Variables"/"format an array value"
 #   "supply a second argument">
 {
     is (1.3,2.4,3).fmt("%d", "_"), "1_2_3", "fmt() works with plain lists";

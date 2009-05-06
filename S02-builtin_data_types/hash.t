@@ -7,15 +7,15 @@ plan 63;
 # basic lvalue assignment
 # L<S09/Hashes>
 
-my %hash1; 
+my %hash1;
 isa_ok(%hash1, Hash);
-%hash1{"one"} = 5; 
+%hash1{"one"} = 5;
 is(%hash1{"one"}, 5, 'lvalue hash assignment works (w/ double quoted keys)');
 
-%hash1{'one'} = 4; 
+%hash1{'one'} = 4;
 is(%hash1{'one'}, 4, 'lvalue hash re-assignment works (w/ single quoted keys)');
 
-%hash1<three> = 3; 
+%hash1<three> = 3;
 is(%hash1<three>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)');
 
 # basic hash creation w/ comma seperated key/values
@@ -72,7 +72,7 @@ is(%hash5<three>, 1, 'value was changed successfully with slice assignment');
 is(%hash5<foo>[0], 3, 'value assigned successfully with arrayref in list context');
 is(%hash5<foo>[1], 1, 'value assigned successfully with arrayref in list context');
 
-# keys 
+# keys
 
 my %hash6 = ("one", 1, "two", 2, "three", 3);
 isa_ok(%hash6, Hash);
@@ -120,13 +120,13 @@ is(%hash8{'three'}, 3, 'colonpair :three(3)');
 my $key;
 my $val;
 
-my %hash9; 
+my %hash9;
 isa_ok(%hash9, Hash);
 %hash9{1} = 2;
 
-for (%hash9.kv) -> $k,$v { 
-    $key = $k; 
-    $val = $v; 
+for (%hash9.kv) -> $k,$v {
+    $key = $k;
+    $val = $v;
 }
 
 is($key, 1, '%hash.kv gave us our key');
@@ -151,7 +151,7 @@ sub test2 (%hash) {
 
 my %h = hash (a => 'b');
 
-#sanity: Hash created in a sub is a Hash 
+#sanity: Hash created in a sub is a Hash
 test1;
 
 test2 %h;

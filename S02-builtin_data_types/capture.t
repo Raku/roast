@@ -6,7 +6,7 @@ plan 18;
 
 {
     my $capture = \(1,2,3);
-    
+
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo1 ($a, $b, $c) { "$a!$b!$c" }
     is foo1(|$capture), "1!2!3",
@@ -15,7 +15,7 @@ plan 18;
 
 {
     my $capture = \(1,2,3,'too','many','args');
-    
+
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo2 ($a, $b, $c) { "$a!$b!$c" }
     dies_ok { foo2(|$capture) },
@@ -24,7 +24,7 @@ plan 18;
 
 {
     my $capture = \(1, named => "arg");
-    
+
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo3 ($a, :$named) { "$a!$named" }
     #?rakudo todo 'capture with named args'
@@ -34,7 +34,7 @@ plan 18;
 
 {
     my $capture = \(1, 'positional' => "pair");
-    
+
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo4 ($a, $pair) { "$a!$pair" }
     is foo4(|$capture), "1!positional\tpair",

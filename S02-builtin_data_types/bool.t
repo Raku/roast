@@ -47,7 +47,7 @@ is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
 # stringification
 is(~Bool::True, '1', 'True stringifies to 1');
-is(~Bool::False, '0', 'False stringifies to 0'); 
+is(~Bool::False, '0', 'False stringifies to 0');
 
 # Arithmetic operations
 my $bool = Bool::False;

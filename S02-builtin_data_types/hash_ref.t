@@ -7,18 +7,18 @@ plan 32;
 # basic lvalue assignment
 #?rakudo skip 'hash autovivification'
 {
-    my $hash; 
+    my $hash;
     isa_ok $hash, Any;
 
-    $hash{"1st"} = 5; 
+    $hash{"1st"} = 5;
     isa_ok $hash, Hash;
 
     is $hash{"1st"}, 5, 'lvalue hash assignment works (w/ double quoted keys)';
 
-    $hash{'1st'} = 4; 
+    $hash{'1st'} = 4;
     is $hash{'1st'}, 4, 'lvalue hash re-assignment works (w/ single quoted keys)';
 
-    $hash<3rd> = 3; 
+    $hash<3rd> = 3;
     is $hash<3rd>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)';
 }
 

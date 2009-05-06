@@ -121,7 +121,7 @@ is($quux.key, 'quux', "lhs quotes" );
 
 my %hash  = ('foo' => 'bar');
 for  %hash.pairs -> $pair {
-    isa_ok($pair,Pair) ; 
+    isa_ok($pair,Pair) ;
     my $testpair = $pair;
     isa_ok($testpair, Pair); # new lvalue variable is also a Pair
     my $boundpair := $pair;
@@ -132,7 +132,7 @@ for  %hash.pairs -> $pair {
 
 sub test2 (%h){
     for %h.pairs -> $pair {
-        isa_ok($pair,Pair) ; 
+        isa_ok($pair,Pair) ;
         is($pair.key, 'foo', 'in sub test2 got the right $pair.key');
         is($pair.value, 'bar', 'in sub test2 got the right $pair.value');
     }
@@ -157,7 +157,7 @@ Hm, Hash::pair? Never heard of that.  --iblech
 
 sub test4 (%h){
     for %h.pair -> $pair {
-        isa_ok($pair,Pair,:todo<bug>) ; 
+        isa_ok($pair,Pair,:todo<bug>) ;
         is($pair.key, 'foo', 'sub test4: access by unspecced "pair" got the right $pair.key');
         is($pair.value, 'bar', 'sub test4: access by unspecced "pair" got the right $pair.value');
 

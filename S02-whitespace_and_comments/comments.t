@@ -119,8 +119,8 @@ plan 45;
     # ok eval(" #{ comment }") failes with an error as it tries to execute
     # comment() before seeing that I meant #{ comment within this string.
 
-#?pugs todo 
-    ok eval(" #<<\n comment\n # >>\n >> 3"), 
+#?pugs todo
+    ok eval(" #<<\n comment\n # >>\n >> 3"),
         'single line comment cannot correctly nested within multiline', :todo<bug>;
 }
 

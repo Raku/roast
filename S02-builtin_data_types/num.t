@@ -82,7 +82,7 @@ plan 48;
 }
 
 {
-    my $a = 1; "$a"; 
+    my $a = 1; "$a";
     is($a + 1, 2, 'basic addition works');
 }
 

@@ -9,7 +9,7 @@ plan 30;
 # Unicode variables
 # english ;-)
 lives_ok {my $foo; sub foo {}; 1}, "ascii declaration";
-is (do {my $bar = 2; sub id ($x) { $x }; id($bar)}), 2, "evaluation"; 
+is (do {my $bar = 2; sub id ($x) { $x }; id($bar)}), 2, "evaluation";
 
 # umlauts
 lives_ok {my $übervar; sub fü {}; 1}, "umlauts declaration";
@@ -46,7 +46,7 @@ is (do {my $באר = 2; sub זהות ($x) { $x }; זהות($באר)}), 2, "evalu
 
 # magyar
 lives_ok {my $aáeéiíoóöőuúüű ; 1}, "magyar declaration";
-is (do {my $áéóőöúűüí = 42; sub űáéóőöúüí ($óőöú) { $óőöú }; űáéóőöúüí($áéóőöúűüí)}), 
+is (do {my $áéóőöúűüí = 42; sub űáéóőöúüí ($óőöú) { $óőöú }; űáéóőöúüí($áéóőöúűüí)}),
        42, "evaluation";
 
 # russian

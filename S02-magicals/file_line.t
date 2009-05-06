@@ -14,5 +14,5 @@ is($?LINE, 10, '$?LINE works');
 ok($?FILE eq ('t/spec/S02-magicals/file_line.t' | 't\\spec\\S02-magicals\\file_line.t'), '$?FILE works');
 
 # NOTE:
-# above is a junction hack for Unix and Win32 file 
+# above is a junction hack for Unix and Win32 file
 # paths until the FileSpec hack is working - Stevan

@@ -206,7 +206,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', "...");
 };
 
-{ # whitespace sep aration does not break quote constructor 
+{ # whitespace sep aration does not break quote constructor
   # L<S02/Literals/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
     my @q = ();
     @q = (q :w /$foo $bar/);
@@ -217,7 +217,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 
 #?rakudo skip 'quoting with adverbs'
-{ # qq:w,Interpolating quote constructor with words adverb 
+{ # qq:w,Interpolating quote constructor with words adverb
   # L<S02/Literals/"Split result on words (no quote protection)">
     my (@q1, @q2) = ();
     @q1 = qq:w/$foo "gorch $bar"/;
@@ -321,7 +321,7 @@ FOO
 
 { # Q L<S02/Literals/No escapes at all>
     my @q = ();
-    
+
     my $backslash = "\\";
 
     @q = (Q/foo\\bar$foo/);

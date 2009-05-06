@@ -26,9 +26,9 @@ role Callable is builtin {
   multi postcircumfix:<( )> {...}
 }
 
-# This classes actually have a definition outside of Prelude 
+# This classes actually have a definition outside of Prelude
 but this definition does not include declaration of sigil traits.
- 
+
 class List does Positional ;
 
 class Capture does Positional does Associative;

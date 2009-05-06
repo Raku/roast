@@ -13,7 +13,7 @@ is Inf / Inf, NaN, "Inf / Inf";
 is Inf - Inf, NaN, "Inf - Inf";
 # if we say that 0**0 and Inf**0 both give 1 (sse below), then for which
 # number or limit whould $number ** 0 be different from 1? so maybe just say
-# that NaN ** 0 == 1? 
+# that NaN ** 0 == 1?
 #?rakudo skip 'unspecced and inconsistent'
 is NaN ** 0,  NaN, "NaN ** 0";
 

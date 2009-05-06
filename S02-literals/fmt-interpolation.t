@@ -51,7 +51,7 @@ is(
    eval(
       q[
          $y = "hex-formatted ord of \$x is {$x.ord().fmt('%x')}";
-         $z = 1; 
+         $z = 1;
          $y;
       ]
    ),

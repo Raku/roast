@@ -7,7 +7,7 @@ use Test;
 Block tests
 
 This covers anonymous blocks and subs, as well as pointy blocks
-(with and without args) and bare blocks. 
+(with and without args) and bare blocks.
 
 =end description
 
@@ -31,7 +31,7 @@ isa_ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
 
 # L<S06/""Pointy blocks"">
-{ 
+{
     # pointy subs
     my $pointy_block = -> { 1 };
     isa_ok($pointy_block, Block);

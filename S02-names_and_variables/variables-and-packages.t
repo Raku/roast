@@ -22,8 +22,8 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 { my $a = 1; {
    my $a=2; {
       my $a=3;
-      is($a, 3,               'get regular a'); 
-      is($OUTER::a, 2,        'get $OUTER::a'); 
+      is($a, 3,               'get regular a');
+      is($OUTER::a, 2,        'get $OUTER::a');
       is($OUTER::OUTER::a, 1, 'get $OUTER::OUTER::a');
 }}}
 

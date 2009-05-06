@@ -56,12 +56,12 @@ my @array2 = ("test", 1, undef);
     my @array3 = (@array1, @array2);
     isa_ok(@array3, Array);
 
-    is(+@array3, 6, 'the array3 has 6 elements'); 
-    is(@array3[0], 'foo', 'got the right value at array3 index 0'); 
-    is(@array3[1], 'bar', 'got the right value at array3 index 1'); 
-    is(@array3[2], 'baz', 'got the right value at array3 index 2'); 
-    is(@array3[3], 'test', 'got the right value at array3 index 3'); 
-    is(@array3[4], 1,      'got the right value at array3 index 4'); 
+    is(+@array3, 6, 'the array3 has 6 elements');
+    is(@array3[0], 'foo', 'got the right value at array3 index 0');
+    is(@array3[1], 'bar', 'got the right value at array3 index 1');
+    is(@array3[2], 'baz', 'got the right value at array3 index 2');
+    is(@array3[3], 'test', 'got the right value at array3 index 3');
+    is(@array3[4], 1,      'got the right value at array3 index 4');
     ok(!@array3[5].defined,'got the right value at array3 index 5');
 }
 
@@ -97,10 +97,10 @@ my @array2 = ("test", 1, undef);
     my @array6 = @array1[@slice];
     isa_ok(@array6, Array);
 
-    is(+@array6, 3, 'the array6 has 3 elements'); 
-    is(@array6[0], 'baz', 'got the right value at array6 index 0'); 
-    is(@array6[1], 'foo', 'got the right value at array6 index 1'); 
-    is(@array6[2], 'bar', 'got the right value at array6 index 2'); 
+    is(+@array6, 3, 'the array6 has 3 elements');
+    is(@array6[0], 'baz', 'got the right value at array6 index 0');
+    is(@array6[1], 'foo', 'got the right value at array6 index 1');
+    is(@array6[2], 'bar', 'got the right value at array6 index 2');
 }
 
 {
@@ -132,7 +132,7 @@ my @array2 = ("test", 1, undef);
     is(+@array9, 0, "new arrays are empty");
 
     my @array10 = (1, 2, 3,);
-    is(+@array10, 3, "trailing commas make correct array"); 
+    is(+@array10, 3, "trailing commas make correct array");
 }
 
 #?pugs skip "multi-dim arrays not implemented"
@@ -155,7 +155,7 @@ my @array2 = ("test", 1, undef);
 
 #?pugs skip "no whatever star yet"
 {
-    my @array12 = ('a', 'b', 'c', 'e'); 
+    my @array12 = ('a', 'b', 'c', 'e');
 
     # indexing from the end
     is @array12[*-1],'e', "indexing from the end [*-1]";
@@ -165,27 +165,27 @@ my @array2 = ("test", 1, undef);
 
     # end index as lvalue
     @array12[*-1]   = 'd';
-    is @array12[*-1], 'd', "assigns to the correct end slice index"; 
+    is @array12[*-1], 'd', "assigns to the correct end slice index";
     is ~@array12,'a b c d', "assignment to end index correctly alters the array";
 }
 
 #?pugs skip "no whatever star yet"
 {
-    my @array13 = ('a', 'b', 'c', 'd'); 
+    my @array13 = ('a', 'b', 'c', 'd');
     # end index range as lvalue
     @array13[*-4 .. *-1]   = ('d', 'c', 'b', 'a'); # ('a'..'d').reverse
-    is ~@array13, 'd c b a', "end range as lvalue"; 
+    is ~@array13, 'd c b a', "end range as lvalue";
 
     #hat trick
     my @array14 = ('a', 'b', 'c', 'd');
     my @b = 0..3;
     ((@b[*-3,*-2,*-1,*-4] = @array14)= @array14[*-1,*-2,*-3,*-4]);
 
-    is ~@b, 
-        'a d c b', 
+    is ~@b,
+        'a d c b',
         "hat trick:
-        assign to a end-indexed slice array from array  
-        lvalue in assignment is then lvalue to end-indexed slice as rvalue"; 
+        assign to a end-indexed slice array from array
+        lvalue in assignment is then lvalue to end-indexed slice as rvalue";
 }
 
 # This test may seem overly simplistic, but it was actually a bug in PIL2JS, so

@@ -58,7 +58,6 @@ is ('a'..'a'), [< a >], 'got the right array';
     is $y, 4, '(1..4).reverse.perl returns something useful';
     #?rakudo todo 'Range.reverse, :by(-1)'
     isa_ok (1..4).reverse, Range, "... and it's a range";
-   
 }
 
 # ACCEPTS and equals tests

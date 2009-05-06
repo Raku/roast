@@ -61,7 +61,7 @@ ok( ?((1 | 3) < 3), '(...) < 3 no parsefail');
 #?rakudo todo 'parsing'
 eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 
-# WRONG: should be parsed as print() < 3 
+# WRONG: should be parsed as print() < 3
 # eval 'print < 3';
 # ok($!, 'print < 3 parsefail');
 

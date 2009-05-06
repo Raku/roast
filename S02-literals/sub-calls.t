@@ -56,14 +56,14 @@ plan 20;
 }
 {
     sub first() { "first" }
-    
+
     is(eval(q/first.uc/), 'FIRST', '`first.second` means `(first()).second()`');
 }
 
 {
     is(eval(q/"hello".substr: 1, 2/), "el", "listop method");
 
-    # foo $bar.baz: quux 
+    # foo $bar.baz: quux
     # should be (and is currently) interpreted as:
     # foo($bar.baz(quux))
     # where the alternate interpretation can be achieved by:

@@ -12,9 +12,9 @@ This test tests the C<$!> builtin.
 
 # L<S04/"Exceptions"/"A bare die/fail takes $! as the default argument.">
 
-eval 'nonexisting_subroutine()'; 
+eval 'nonexisting_subroutine()';
 ok defined($!), 'nonexisting sub in eval makes $! defined';
-eval 'nonexisting_subroutine()'; 
+eval 'nonexisting_subroutine()';
 ok $!, 'Calling a nonexisting subroutine sets $!';
 
 undefine $!;
