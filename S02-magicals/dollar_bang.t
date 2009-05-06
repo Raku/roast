@@ -12,8 +12,6 @@ This test tests the C<$!> builtin.
 
 # L<S04/"Exceptions"/"A bare die/fail takes $! as the default argument.">
 
-##?rakudo 3 skip 'unimpl $!'
-
 eval 'nonexisting_subroutine()'; 
 ok defined($!), 'nonexisting sub in eval makes $! defined';
 eval 'nonexisting_subroutine()'; 
