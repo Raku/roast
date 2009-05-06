@@ -20,7 +20,7 @@ my $mysub = {
 
 };
 
-ok "anon sub def parses when pod block is within it";
+ok "anon sub def parses when pod block is within it"; # TODO: complete this test
 
 my $myhash = {
 
@@ -32,7 +32,7 @@ my $myhash = {
 
 };
 
-ok "anon hash def parses when pod block is within it";
+ok "anon hash def parses when pod block is within it"; # TODO: complete this test
 
 my $myary = [
 
@@ -44,4 +44,4 @@ my $myary = [
 
 ];
 
-ok "anon array def parses when pod block is within it";
+ok "anon array def parses when pod block is within it"; # TODO: complete this test
