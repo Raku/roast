@@ -14,27 +14,16 @@ get a list of osnames that have actually passed tests.
 
 plan 4;
 
-#?rakudo emit skip_rest('unimpl $?OS');
-
-#?rakudo emit =begin unimpl
-
 # $?OS is the OS we were compiled in.
+#?rakudo skip 'unimpl $?OS'
 ok $?OS, "We were compiled in '$?OS'";
-# $*OS is the OS we are running undef.
+
+# $*OS is the OS we are running
 ok $*OS, "We are running under '$*OS'";
 
-# my $osnames = 'darwin' | 'linux' | 'MSWin32' | 'FreeBSD';
 my $osnames = any <darwin linux FreeBSD MSWin32 mingw msys cygwin browser>;
-if ($?OS eq $osnames) {
-    pass("...and we know of the OS we were compiled in")
-} else {
-    flunk("We do not know of the OS we were compiled in -- please report to the pugs team", :todo)
-}
 
-if ($*OS eq $osnames) {
-    pass("...and we know of the OS we are running under")
-} else {
-    flunk("We do not know of the OS we are running under -- please report to the pugs team", :todo)
-}
+#?rakudo skip 'unimpl $?OS'
+is $?OS, $osnames, "we know of the OS we were compiled in";
 
-#?rakudo emit =end unimpl
+is $*OS, $osnames, "we know of the OS we are running under";
