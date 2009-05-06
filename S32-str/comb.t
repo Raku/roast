@@ -2,14 +2,13 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 23;
 
 # L<S32::Str/Str/=item comb>
 
 # comb Str
 is "".comb, (), 'comb on empty string';
-is "a bc d".comb, <a bc d>, 'default matcher and limit';
-is " a bc d ".comb, <a bc d>, 'default matcher and limit (leading/trailing ws)';
+is "abcd".comb, <a b c d>, 'default matcher and limit';
 
 #?pugs todo 'feature'
 #?rakudo skip 'limit for comb'
@@ -29,11 +28,6 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
 }
 
 {
-    my @list =  'split this string'.comb;
-    is @list.join('|'), 'split|this|string', 'Str.comb';
-}
-
-{
     is "a ab bc ad ba".comb(/\ba\S*/), <a ab ad>,
         'match for any a* words';
     is "a ab bc ad ba".comb(/\S*a\S*/), <a ab ad ba>,
@@ -50,9 +44,9 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
 #?pugs todo 'feature'
 is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
-is "forty-two".comb(/./).join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
+is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
 
-isa_ok("forty-two".comb(/./), List);
+isa_ok("forty-two".comb(), List);
 
 # comb a list
 
