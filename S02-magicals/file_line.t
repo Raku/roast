@@ -6,9 +6,11 @@ use Test;
 plan 2;
 
 # L<S02/Names/Which line am I at>
-is($?LINE, 9, '$?LINE works');
+#?rakudo skip '$?LINE not implemented'
+is($?LINE, 10, '$?LINE works');
 
 # L<S02/Names/Which file am I in>
+#?rakudo skip '$?FILE not implemented'
 ok($?FILE eq ('t/spec/S02-magicals/file_line.t' | 't\\spec\\S02-magicals\\file_line.t'), '$?FILE works');
 
 # NOTE:
