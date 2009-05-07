@@ -3,7 +3,7 @@ use Test;
 
 plan 15;
 
-# L<S04/"The lift statement prefix">
+# L<S04/The C<lift> statement prefix>
 
 # lift normal multi subs
 
