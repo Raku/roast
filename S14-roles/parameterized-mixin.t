@@ -15,7 +15,7 @@ Might need some more review and love --moritz
 #?pugs emit skip_rest('parameterized roles'); exit;
 #?pugs emit =begin SKIP
 
-# L<S14/Roles/may be parameterized>
+# L<S14/Run-time Mixins/may be parameterized>
   role InitialAttribVal[$val] {
     has $.attr = $val;
   }

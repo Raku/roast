@@ -57,7 +57,7 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
     is $b.attr, 42,        '$b "inherited" the $.attr attribute of B (1)';
     is ($b.attr = 23), 23, '$b "inherited" the $.attr attribute of B (2)';
 
-    # L<S14/Roles/operator creates a copy and works on that.>
+    # L<S14/Run-time Mixins/"operator creates a copy">
     # As usual, ok instead of todo_ok to avoid unexpected succeedings.
     my Bar $c .= new(),
     ok defined($c),             'creating a Foo worked';

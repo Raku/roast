@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 22;
 
-# L<S14/Roles/"Run-time mixins are done with does and but">
+# L<S14/Run-time Mixins/>
 
 role R1 { method test { 42 } }
 class C1 { }
@@ -64,7 +64,7 @@ is @array.test, 42,         'mixing in a role at the point of declaration works'
     is $x, 42,              'mixing in at point of declaration at compile time';
 }
 
-# L<S14/Roles/"but only if the role supplies exactly one attribute">
+# L<S14/Run-time Mixins/"but only if the role supplies exactly one attribute">
 
 {
     role R4a {
