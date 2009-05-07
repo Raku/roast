@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 35;
+plan 28;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
@@ -77,15 +77,4 @@ ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
-
-# HASHES
-# L<S05/Variable (non-)interpolation/An interpolated hash provides>
-
-ok("a" ~~ m/%var/, 'Simple hash interpolation (a)');
-ok("b" ~~ m/%var/, 'Simple hash interpolation (b)');
-ok("c" ~~ m/%var/, 'Simple hash interpolation (c)');
-ok(!( "d" ~~ m/%var/ ), 'Simple hash interpolation (d)');
-ok("====a=====" ~~ m/%var/, 'Nested hash interpolation (a)');
-ok(!( "abca" ~~ m/^%var$/ ), 'Simple hash non-matching');
-
-ok("a b c a" ~~ m:s/^[ %var]+$/, 'Simple hash repeated matching');
+# vim: ft=perl6
