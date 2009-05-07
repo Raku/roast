@@ -6,7 +6,7 @@ plan 10;
 
 =begin pod
 
-Very basic meta-class tests from L<S12/Calling sets of methods>
+Tests for WALK, defined in L<S12/Calling sets of methods>
 
 =end pod
 
