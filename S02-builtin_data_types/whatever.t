@@ -3,10 +3,15 @@ use Test;
 
 plan 7;
 
+# L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
+# L<S02/Native types/"If any native type is explicitly initialized to">
+
 {
     my $x = *;
     ok($x.isa(Whatever), 'can assign * to a variable and isa works');
 }
+
+# L<S02/Built-In Data Types/"Most of the built-in numeric operators treat an argument of">
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
