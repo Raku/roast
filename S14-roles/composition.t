@@ -60,9 +60,7 @@ is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
     is $z.mA1,      'D1.mA1',   'Can override method in a role with method in a class';
 }
 
-# diamond composition, see RT #63330
-
-#?rakudo skip 'RT #63330'
+# diamond composition
 {
     role DA { 
         method foo { "OH HAI" };
@@ -71,9 +69,12 @@ is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
     role DC does DA { }
     class DD does DB does DC { };
     is DD.new.foo, 'OH HAI', 'diamond role composition';
+}
+
+#?rakudo skip 'RT #63332'
+{
     class DE is DB is DC { };
     is DE.new.foo, 'OH HAI', 'same with punning and inheritance';
-
 }
 
 # vim: syn=perl6
