@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 11;
 
 # TODO: needs specs and smartlinks
 
@@ -73,4 +73,19 @@ is $action.calls, 'ab', '... and in the right order';
     is $/.ast.[1], 'bbb',  'make $/ x 3 worked';
 }
 
+# used to be a Rakudo regression, RT #64104
+{
+    grammar Math {
+        token TOP { ^ <value> $ {*} }
+        token value { \d+ {*} }
+    }
+    class Actions {
+        method value($/) { make 1..$/};
+        method TOP($/)   { make 1 + $/<value>};
+    }
+    ok Math.parse('234', :action(Actions.new)),
+       'can parse with action stubs that make() regexes';
+    is $/.ast, 235, 'got the right .ast';
+
+}
 # vim: ft=perl6
