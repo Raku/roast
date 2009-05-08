@@ -69,10 +69,6 @@ is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
     role DC does DA { }
     class DD does DB does DC { };
     is DD.new.foo, 'OH HAI', 'diamond role composition';
-}
-
-#?rakudo skip 'RT #63332'
-{
     class DE is DB is DC { };
     is DE.new.foo, 'OH HAI', 'same with punning and inheritance';
 }
