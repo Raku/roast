@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 64;
+plan 66;
 
 =begin description
 
@@ -75,3 +75,19 @@ sub test_stuff($x) {
   ok $x.day = &day::("Tue"), "basic enum mixing worked (4-1)";
   test_stuff($x);
 }
+
+# used to be Rakudo regression, RT #64098
+{
+    class Object is also {
+        method f { 'inObject' };
+    }
+
+    class Bool is also {
+        method f { 'inBool' };
+    }
+    is True.f, 'inBool', 'method on short name pick up the one from the enum';
+    is Bool::True.f, 'inBool', 'method on long name pick up the one from the enum';
+
+}
+
+# vim: ft=perl6
