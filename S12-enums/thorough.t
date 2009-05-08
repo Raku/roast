@@ -78,11 +78,11 @@ sub test_stuff($x) {
 
 # used to be Rakudo regression, RT #64098
 {
-    class Object is also {
+    augment class Object {
         method f { 'inObject' };
     }
 
-    class Bool is also {
+    augment class Bool {
         method f { 'inBool' };
     }
     is True.f, 'inBool', 'method on short name pick up the one from the enum';
