@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 54;
+plan 76;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -307,4 +307,47 @@ my @e;
     ok ?(@a >>|<< @b), '>>|<< hyperjunction evals, ASCII';
     ok ?(@a »&« @b), '»&« hyperjunction evals';
     ok ?(@a >>&<< @b), '»&« hyperjunction evals, ASCII';
+}
+
+# test hypers on hashes
+{
+    my %a = a => 1, b => 2, c => 3;
+    my %b = a => 5, b => 6, c => 7;
+    my %c = a => 1, b => 2;
+    my %d = a => 5, b => 6;
+
+    my %r;
+    %r = %a >>+<< %b;
+    is +%r,   3,  'hash - >>+<< result has right number of keys (same keys)';
+    is %r<a>, 6,  'hash - correct result form >>+<< (same keys)';
+    is %r<b>, 8,  'hash - correct result form >>+<< (same keys)';
+    is %r<c>, 10, 'hash - correct result form >>+<< (same keys)';
+
+    %r = %a >>+<< %d;
+    is +%r,   3, 'hash - >>+<< result has right number of keys (union test)';
+    is %r<a>, 6, 'hash - correct result form >>+<< (union test)';
+    is %r<b>, 8, 'hash - correct result form >>+<< (union test)';
+    is %r<c>, 3, 'hash - correct result form >>+<< (union test)';
+
+    %r = %c >>+<< %b;
+    is +%r,   3, 'hash - >>+<< result has right number of keys (union test)';
+    is %r<a>, 6, 'hash - correct result form >>+<< (union test)';
+    is %r<b>, 8, 'hash - correct result form >>+<< (union test)';
+    is %r<c>, 7, 'hash - correct result form >>+<< (union test)';
+
+    %r = %a <<+>> %b;
+    is +%r,   3,  'hash - <<+>> result has right number of keys (same keys)';
+    is %r<a>, 6,  'hash - correct result form <<+>> (same keys)';
+    is %r<b>, 8,  'hash - correct result form <<+>> (same keys)';
+    is %r<c>, 10, 'hash - correct result form <<+>> (same keys)';
+
+    %r = %a <<+>> %d;
+    is +%r,   2, 'hash - <<+>> result has right number of keys (intersection test)';
+    is %r<a>, 6, 'hash - correct result form <<+>> (intersection test)';
+    is %r<b>, 8, 'hash - correct result form <<+>> (intersection test)';
+
+    %r = %c <<+>> %b;
+    is +%r,   2, 'hash - <<+>> result has right number of keys (intersection test)';
+    is %r<a>, 6, 'hash - correct result form <<+>> (intersection test)';
+    is %r<b>, 8, 'hash - correct result form <<+>> (intersection test)';
 }
