@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 66;
+plan 68;
 
 =begin description
 
@@ -77,6 +77,8 @@ sub test_stuff($x) {
 }
 
 # used to be Rakudo regression, RT #64098
+#?rakudo skip 'augment'
+#?DOES 2
 {
     augment class Object {
         method f { 'inObject' };
@@ -87,7 +89,9 @@ sub test_stuff($x) {
     }
     is True.f, 'inBool', 'method on short name pick up the one from the enum';
     is Bool::True.f, 'inBool', 'method on long name pick up the one from the enum';
-
 }
+
+ok True.perl ~~/^ 'Bool::True'/, 'True.perl';
+ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 
 # vim: ft=perl6
