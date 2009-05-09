@@ -87,8 +87,13 @@ is((try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोट�
         "Unicode placeholder variables";
 }
 
-# Unicode methods
+# Unicode methods and attributes
 {
-    class Str is also { method äöü { self.ucfirst } };
-    is "pugs".äöü(), "Pugs", "Unicode methods";
+    class A {
+        has $!möp = 'pugs';
+        method äöü {
+            $!möp.ucfirst();
+        }
+    }
+    is A.new().äöü(), "Pugs", "Unicode methods and attributes";
 }

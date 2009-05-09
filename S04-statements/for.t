@@ -55,7 +55,7 @@ plan 55;
 #?rakudo skip 'class accessing outer lexical'
 {
     my $d = '';
-    class Int is also {
+    augment class Int {
         method some_meth_1 { 
             $d = $d ~ self
         } 
