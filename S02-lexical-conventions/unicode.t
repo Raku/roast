@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 # L<S02/"Lexical Conventions"/"Perl is written in Unicode">
 
@@ -97,3 +97,11 @@ is((try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोट�
     }
     is A.new().äöü(), "Pugs", "Unicode methods and attributes";
 }
+
+#?rakudo skip 'non-ASCII named arguments'
+{
+    sub f(*%x) { %x<ä> };
+    is f(ä => 3), 3, 'non-ASCII named arguments';
+}
+
+# vim: ft=perl6 fileencoding=utf-8
