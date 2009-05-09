@@ -49,7 +49,6 @@ plan 17;
 }
 
 # RT #65138, Foo::_foo() parsefails
-#?rakudo skip 'parse error'
 {
     module A {
         sub _b() { 'sub A::_b' }
