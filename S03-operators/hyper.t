@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 76;
+plan 90;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -350,4 +350,26 @@ my @e;
     is +%r,   2, 'hash - <<+>> result has right number of keys (intersection test)';
     is %r<a>, 6, 'hash - correct result form <<+>> (intersection test)';
     is %r<b>, 8, 'hash - correct result form <<+>> (intersection test)';
+
+    %r = %a >>+>> %c;
+    is +%r,   3, 'hash - >>+>> result has right number of keys';
+    is %r<a>, 2, 'hash - correct result from >>+>>';
+    is %r<b>, 4, 'hash - correct result from >>+>>';
+    is %r<c>, 3, 'hash - correct result from >>+>>';
+
+    %r = %c >>+>> %b;
+    is +%r,   2, 'hash - >>+>> result has right number of keys';
+    is %r<a>, 6, 'hash - correct result from >>+>>';
+    is %r<b>, 8, 'hash - correct result from >>+>>';
+
+    %r = %c <<+<< %a;
+    is +%r,   3, 'hash - <<+<< result has right number of keys';
+    is %r<a>, 2, 'hash - correct result from <<+<<';
+    is %r<b>, 4, 'hash - correct result from <<+<<';
+    is %r<c>, 3, 'hash - correct result from <<+<<';
+
+    %r = %b <<+<< %c;
+    is +%r,   2, 'hash - <<+<< result has right number of keys';
+    is %r<a>, 6, 'hash - correct result from <<+<<';
+    is %r<b>, 8, 'hash - correct result from <<+<<';
 }
