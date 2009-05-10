@@ -14,14 +14,14 @@ diag('Test for class attribute initialization');
 {
 	class T1 { }
 	class T2 { }
-	ok eval(q{class T1 is also { has $.t = 1 }; 1}),
+	eval_lives_ok 'augment class T1 { has $.t = 1 }; 1',
 		"Try to initialize public attribute";
 
-	ok eval(q{
-		class T2 is also {
+    eval_lives_ok q'
+		augment class T2 {
 		    has $!t = 2;
 		    method get { $!t };
-		}; 1 }),
+		}; 1 }',
 		"Try to initialize private attribute";
 
 
