@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan 75;
 
 # L<S02/"Whitespace and Comments"/This is known as the "unspace">
 
@@ -66,8 +66,8 @@ is((foo\.lc  ), 'a', 'short unspace');
 is((foo\ .lc ), 'a', 'unspace');
 is((foo \ .lc), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
-is(eval('foo\    .lc'), 'a', 'longer dot');
-is(eval('foo\#( comment ).lc'), 'a', 'unspace with embedded comment');
+is((foo\    .lc), 'a', 'longer dot');
+is((foo\#( comment ).lc), 'a', 'unspace with embedded comment');
 #?rakudo skip 'unimplemented'
 eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
 is((foo\ # comment
@@ -75,20 +75,20 @@ is((foo\ # comment
 is((:foo\ <bar>), (:foo<bar>), 'unspace in colonpair');
 #?rakudo skip 'unimplemented'
 is((foo\ .\ ("x")), 'x', 'unspace is allowed both before and after method .');
-is(eval('foo\
+is((foo\
 =begin comment
 blah blah blah
 =end comment
-    .lc'), 'a', 'unspace with pod =begin/=end comment');
+    .lc), 'a', 'unspace with pod =begin/=end comment');
 #?rakudo skip '=for pod not implemented (in STD.pm)'
 {
-is(eval('foo\
+is((foo\
 =for comment
 blah
 blah
 blah
 
-    .lc'), 'a', 'unspace with pod =for comment');
+    .lc), 'a', 'unspace with pod =for comment');
 }
 is(eval('foo\
 =comment blah blah blah
@@ -181,20 +181,16 @@ end comment		#5
 # L<S04/"Statement-ending blocks"/"Because subroutine declarations are expressions">
 #XXX probably shouldn't be in this file...
 
-{
-eval('sub f { 3 } sub g { 3 }');
-eval_dies_ok('f', 'semicolon or newline required between blocks');
-eval_dies_ok('g', 'semicolon or newline required between blocks');
-}
+eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between blocks');
 
 # L<S06/"Blocks"/"unless followed immediately by a comma">
 #
 {
     sub baz(Code $x, *@y) { $x.(@y) }
 
-    is(eval('baz { @^x }, 1, 2, 3'), (1, 2, 3), 'comma immediately following arg block');
-    is(eval('baz { @^x } , 1, 2, 3'), (1, 2, 3), 'comma not immediately following arg block');
-    is(eval('baz { @^x }\ , 1, 2, 3'), (1, 2, 3), 'unspace then comma following arg block');
+    is((baz { @^x }, 1, 2, 3), (1, 2, 3), 'comma immediately following arg block');
+    is((baz { @^x } , 1, 2, 3), (1, 2, 3), 'comma not immediately following arg block');
+    is((baz { @^x }\ , 1, 2, 3), (1, 2, 3), 'unspace then comma following arg block');
 }
 
 #?rakudo skip 'indirect method calls'
@@ -203,9 +199,9 @@ eval_dies_ok('g', 'semicolon or newline required between blocks');
         method xyzzy(Code $x: *@y) { $x.(@y) }
     }
 
-    is(eval('xyzzy { @^x }: 1, 2, 3'), (1, 2, 3), 'colon immediately following arg block');
-    is(eval('xyzzy { @^x } : 1, 2, 3'), (1, 2, 3), 'colon not immediately following arg block');
-    is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following arg block');
+    is((xyzzy { @^x }: 1, 2, 3), (1, 2, 3), 'colon immediately following arg block');
+    is((xyzzy { @^x } : 1, 2, 3), (1, 2, 3), 'colon not immediately following arg block');
+    is((xyzzy { @^x }\ : 1, 2, 3), (1, 2, 3), 'unspace then colon following arg block');
     }
 }
 
@@ -223,7 +219,6 @@ eval_dies_ok('g', 'semicolon or newline required between blocks');
     sub infix:<++>($x, $y) { 42 }
 
     #'$n++$m' should be a syntax error
-    #?rakudo 3 skip 'test dependency'
     eval_dies_ok('$n++$m', 'infix requires space when ambiguous with postfix');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
@@ -251,7 +246,7 @@ eval_dies_ok('g', 'semicolon or newline required between blocks');
 
     #Unspace inside operator splits it
     $n = 1; $m = 2;
-    is(eval('$n+\ +$m'), 3, 'unspace inside operator splits it');
+    is(($n+\ +$m), 3, 'unspace inside operator splits it');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
 
@@ -260,26 +255,26 @@ eval_dies_ok('g', 'semicolon or newline required between blocks');
     is($n, 1, 'check $n');
 
     $n = 1;
-    is(eval('$n.++'), 1, 'postfix dot');
+    is($n.++, 1, 'postfix dot');
     is($n, 2, 'check $n');
 
     $n = 1;
-    is(eval('$n\ ++'), 1, 'postfix unspace');
+    is($n\ ++, 1, 'postfix unspace');
     is($n, 2, 'check $n');
 
     $n = 1;
-    is(eval('$n\ .++'), 1, 'postfix unspace');
+    is($n\ .++, 1, 'postfix unspace');
     is($n, 2, 'check $n');
 
     # L<S02/"Lexical Conventions"/"U+301D codepoint has two closing alternatives">
-    is(eval('foo\#〝 comment 〞.id'), 'a', 'unspace with U+301D/U+301E comment');
+    is((foo\#〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
     eval_dies_ok('foo\#〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
     # L<S02/"Whitespace and Comments"/".123">
     # .123 is equal to 0.123
 
-    is eval(' .123'), 0.123, ' .123 is equal to 0.123';
-    is eval('.123'), 0.123, '.123 is equal to 0.123';
+    is ( .123), 0.123, ' .123 is equal to 0.123';
+    is (.123), 0.123, '.123 is equal to 0.123';
 }
 
 # vim: ft=perl6
