@@ -6,11 +6,14 @@ plan 5;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
+
+#?rakudo emit #
+use MONKEY_PATCHING;
 {
     class Foo {
         method a {'called Foo.a'}
     }
-    class Foo is also {
+    augment class Foo {
         method b {'called Foo.b'}
     }
 
@@ -18,16 +21,14 @@ plan 5;
     is($o.a, 'called Foo.a', 'basic method call works');
     is($o.b, 'called Foo.b', 'added method call works');
 
-    ok(!eval('class NonExistent is also { }'), 'is also on non-existent class dies');
+    ok(!eval('augment class NonExistent { }'), 'augment on non-existent class dies');
 }
 
-#?rakudo skip 'is instead not yet implemented'
-#?DOES 2
 {
     class Bar {
         method c {'called Bar.c'}
     }
-    class Bar is instead {
+    supersede class Bar {
         method d {'called Bar.d'}
     }
 
@@ -35,3 +36,5 @@ plan 5;
     eval_dies_ok('$o.c', 'overridden method is gone completely');
     is($o.d, 'called Bar.d', 'new method is present instead');
 }
+
+# vim: ft=perl6
