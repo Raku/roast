@@ -101,6 +101,7 @@ plan 18;
 }
 
 # Mixing ordinary args with captures
+#?rakudo skip 'Mixing ordinary args with captures'
 {
     my $capture = \(:foo<bar>, :baz<grtz>);
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
