@@ -10,12 +10,12 @@ class Foo {
     has $.num;
     
     method bar ($self: $num) returns Foo {
-        $.num = $num; 
+        $!num = $num; 
         return $self;
     }
     
     method baz ($self: $num) returns Foo {
-        $.num += $num;
+        $!num += $num;
         return $self;
     }
 }
@@ -63,11 +63,6 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
 #?rakudo skip 'parsing [=>]'
 {
-    class Pair is also {
-        our      method car () { self.key; }
-        our Pair method cdr () { self.value; }
-    }
-    
     # (A => (B => undef)) => (C => undef))
     # ((A B) C)
     
@@ -77,6 +72,6 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
     ## Leaving this in as something that once didn't work (6.2.12 CPAN)
     
     my $p = $cons.car;
-    ok( $cons.key.key =:= $p.car, 'chaining through temp variable' );
-    ok( $cons.key.key =:= $cons.car.car, 'chaining through Any return');
+    ok( $cons.key.key =:= $p.key, 'chaining through temp variable' );
+    ok( $cons.key.key =:= $cons.key.key, 'chaining through Any return');
 }
