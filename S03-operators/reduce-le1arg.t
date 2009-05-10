@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 48;
+plan 51;
 
 # smartlink to top and bottom of long table
 # L<S03/Reduction operators/"Builtin reduce operators return the following identity values">
@@ -62,4 +62,9 @@ is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
 
-# need to add one elems list cases
+is ([==] 3), Bool::True, 'unary [==]';
+#?rakudo 2 todo 'chained unary operators are always true with one arg'
+is ([!=] 3), Bool::True, 'unary [!=]';
+is ([!==] 3), Bool::True, 'unary [!==]';
+
+# vim: ft=perl6
