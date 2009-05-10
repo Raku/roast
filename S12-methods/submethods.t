@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 28;
 
 =begin pod
 
@@ -11,24 +11,22 @@ Basic submethod tests. See L<S12/"Submethods">
 =end pod
 # L<S12/Submethods>
 {
-  my $was_in_foo_build = 0;
-  my $was_in_bar_build = 0;
 
   lives_ok {
-    class Foo        { submethod BUILD() { $was_in_foo_build++ } }
-    class Bar is Foo { submethod BUILD() { $was_in_bar_build++ } }
+    class Foo        { has $.foo_build; submethod BUILD() { $!foo_build++ } }
+    class Bar is Foo { has $.bar_build; submethod BUILD() { $!bar_build++ } }
   }, "class definitions were parsed/run/compiled";
 
   my $a;
   lives_ok {$a = Foo.new()},    "Foo.new() worked (1)";
-  is $was_in_foo_build, 1,      "Foo's BUILD was called";
+  is $a.foo_build, 1,           "Foo's BUILD was called";
   # is instead of todo_is to avoid unexpected succeedings
-  is $was_in_bar_build, 0,      "Bar's BUILD was not called";
+  dies_ok { $a.bar_build },     "Bar's BUILD counter not available";
 
   my $b;
   lives_ok {$b = Bar.new()},    "Bar.new() worked";
-  is $was_in_foo_build, 2,      "Foo's BUILD was called again";
-  is $was_in_bar_build, 1,      "Bar's BUILD was called, too";
+  is $b.foo_build, 1,           "Foo's BUILD was called again";
+  is $b.bar_build, 1,           "Bar's BUILD was called, too";
 
   # The next three tests are basically exactly the same as the first three tests
   # (not counting the initial class definition). This is to verify our call to
@@ -36,41 +34,42 @@ Basic submethod tests. See L<S12/"Submethods">
   # Foo.BUILD of getting called.
   my $c;
   lives_ok {my $c = Foo.new()}, "Foo.new() worked (2)";
-  is $was_in_foo_build, 3,      "Foo's BUILD was called again";
-  is $was_in_bar_build, 1,      "Bar's BUILD was not called again";
+  is $c.foo_build, 1,      "Foo's BUILD was called again";
 }
 
 # See thread "BUILD and other submethods" on p6l
 # L<"http://groups-beta.google.com/group/perl.perl6.language/msg/e9174e5538ded4a3">
 {
-  my $was_in_baz_submethod  = 0;
-  my $was_in_grtz_submethod = 0;
-
-  class Baz         { submethod blarb() { $was_in_baz_submethod++ } }
-  class Grtz is Baz { submethod blarb() { $was_in_grtz_submethod++ } }
+  class Baz         {
+      has $.baz_blarb = 0;
+      submethod blarb() { $!baz_blarb++ } 
+  }
+  class Grtz is Baz {
+      has $.grtz_blarb = 0;
+      submethod blarb() { $!grtz_blarb++ } 
+  }
 
   my ($baz, $grtz);
   lives_ok {$baz  = Baz.new},  "Baz.new() worked";
   lives_ok {$grtz = Grtz.new}, "Grtz.new() worked";
 
-  try { $baz.blarb };
-  is $was_in_baz_submethod,  1, "Baz's submethod blarb was called";
-  # No :todo to avoid unexpected suceedings
-  is $was_in_grtz_submethod, 0, "Grtz's submethod blarb was not called";
+  lives_ok { $baz.blarb },      'can call submethod on parent class';
+  is $baz.baz_blarb,         1, "Baz's submethod blarb was called";
+  is $baz.grtz_blarb,        0, "Grtz's submethod blarb was not called";
 
-  try { $grtz.blarb };
-  is $was_in_baz_submethod,  1, "Baz's submethod blarb was not called again";
-  is $was_in_grtz_submethod, 1, "Grtz's submethod blarb was called now";
+  lives_ok { $grtz.blarb },     'can call submethod on child class';
+  is $grtz.baz_blarb,        0, "Baz's submethod blarb was not called";
+  is $grtz.grtz_blarb,       1, "Grtz's submethod blarb was called now";
 
-  try { $grtz.Baz::blarb };
-  is $was_in_baz_submethod,  2, "Baz's submethod blarb was called again now";
-  is $was_in_grtz_submethod, 1, "Grtz's submethod blarb was not called again";
+  lives_ok { $grtz.Baz::blarb }, '$obj.Class::submthod';
+  is $grtz.baz_blarb,        1, "Baz's submethod blarb was called now";
+  is $grtz.grtz_blarb,       1, "Grtz's submethod blarb was not called again";
 }
 
 # Roles with BUILD
 # See thread "Roles and BUILD" on p6l
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/21277">
-#?rakudo skip 'roles and submethods'
+#?rakudo skip 'outer lexicals in roles'
 {
   my $was_in_a1_build = 0;
   my $was_in_a2_build = 0;
