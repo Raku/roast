@@ -73,10 +73,11 @@ plan 11 + 2*@tests;
 #   the result**.
 {
     for @tests -> $obj {
+        my $s = (~$obj).subst(/\n/, '␤', :g);
         ok eval($obj.perl) eq $obj,
-            "($obj.perl()).perl returned something whose eval()ed stringification is unchanged";
+            "($s.perl()).perl returned something whose eval()ed stringification is unchanged";
         is ~WHAT(eval($obj.perl)), ~$obj.WHAT,
-            "($obj.perl()).perl returned something whose eval()ed .WHAT is unchanged";
+            "($s.perl()).perl returned something whose eval()ed .WHAT is unchanged";
     }
 }
 
