@@ -4,8 +4,8 @@ use Test;
 
 plan 11;
 
-class Array is also { method test_method  { 1 }; };
-class Hash is also { method test_method  { 1 }; };
+augment class Array { method test_method  { 1 }; };
+augment class Hash { method test_method  { 1 }; };
 
 my @named_array;
 
@@ -48,7 +48,7 @@ my $pair = :key<value>;
 is $pair.value, 'value', "method on a named pair";
 
 {
-    class List is also {
+    augment class List {
         method twice {
             gather {
                 take $_ * 2 for self;

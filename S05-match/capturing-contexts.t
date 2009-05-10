@@ -39,11 +39,14 @@ if !eval('("a" ~~ /a/)') {
 }
 
 # RT 62530
+#?rakudo skip 'augment'
 {
-  class Match is also { method keys () {return %(self).keys }; };
+  augment class Match { method keys () {return %(self).keys }; };
   rule a {H};
   "Hello" ~~ /<a>/;
   is $/.keys, 'a', 'get rule result';
   my $x = $/;
   is $x.keys, 'a', 'match copy should be same as match';
 }
+
+# vim: ft=perl6

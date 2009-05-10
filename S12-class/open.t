@@ -14,9 +14,9 @@ my $x = Something.new(attribute => 'b');
 is $x.in_Something, 'ab', 'basic OO sanity';
 
 # although we use curlies here to be better fudge-able, remeber
-# that 'is also' class extensions are *not* lexically scoped
+# that 'augment' class extensions are *not* lexically scoped
 {
-    class Something is also {
+    augment class Something {
         method later_added {
             'later'
         }
@@ -37,7 +37,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 # now try to extend "core" types
 
 {
-    class Str is also {
+    augment class Str {
         method mydouble {
             self.uc ~ self.lc;
         }
@@ -47,14 +47,14 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 }
 
 {
-    class Int is also {
+    augment class Int {
         method triple { self * 3 }
     }
     is 3.triple, 9, 'can extend Int';
 }
 
 {
-    class List is also {
+    augment class List {
         method first-and-last {
             self[0] ~ self[self - 1]
         }
@@ -66,7 +66,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 }
 
 {
-    class Array is also {
+    augment class Array {
         method last-and-first {
             self[self - 1] ~ self[0]
         }

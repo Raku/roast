@@ -21,8 +21,9 @@ eval_lives_ok 'Stupid::Class.new()', 'can instantiate object of "imported" class
     is $o.attrib, 'c', 'setting actually worked';
 }
 
+#?rakudo skip 'augment'
 {
-    class Stupid::Class is also {
+    augment class Stupid::Class {
         method double { $.attrib ~ $.attrib };
     }
     my $o = Stupid::Class.new( attrib => 'd' );
