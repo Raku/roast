@@ -37,3 +37,5 @@ try {
     $ok = 0;
 }
 ok($ok, 'can use captured type in declaration');
+
+# vim: ft=perl6

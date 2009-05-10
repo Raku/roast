@@ -53,7 +53,7 @@ plan 18;
 }
 
 # L<S06/Argument list binding/single scalar parameter marked>
-#?rakudo skip 'lexically scoped subs'
+#?rakudo skip 'receiving raw captures'
 {
     sub bar6 ($a, $b, $c) { "$a!$b!$c" }
     sub foo6 (|$capture)  { bar6(|$capture) }
@@ -101,7 +101,6 @@ plan 18;
 }
 
 # Mixing ordinary args with captures
-#?rakudo todo 'named args in captures'
 {
     my $capture = \(:foo<bar>, :baz<grtz>);
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
@@ -111,3 +110,5 @@ plan 18;
     is foo9(1, 2, |$capture), "1!2!bar!grtz",
         "mixing ordinary args with captures (2)";
 }
+
+# vim: ft=perl6
