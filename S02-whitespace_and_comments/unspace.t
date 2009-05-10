@@ -48,11 +48,8 @@ is( ~@array, "7 8 9", 'unspace with postfix hyperops');
 
 #Test the "unspace" and unspace syntax
 
-class Str is also {
-    method id($x:) { $x }
-}
 
-#This makes 'foo.id' and 'foo .id' mean different things
+#This makes 'foo.lc' and 'foo .lc' mean different things
 multi foo() { 'a' }
 multi foo($x) { $x }
 
@@ -61,20 +58,20 @@ sub bar($x? = 'a') { $x }
 
 $_ = 'b';
 
-is((foo.id   ), 'a', 'sanity - foo.id');
-is((foo .id  ), 'b', 'sanity - foo .id');
-is((bar.id   ), 'a', 'sanity - bar.id');
-is((bar .id  ), 'b', 'sanity - bar .id');
-is((foo\.id  ), 'a', 'short unspace');
-is((foo\ .id ), 'a', 'unspace');
-is((foo \ .id), 'b', 'not a unspace');
-eval_dies_ok('fo\ o.id', 'unspace not allowed in identifier');
-is(eval('foo\    .id'), 'a', 'longer dot');
-is(eval('foo\#( comment ).id'), 'a', 'unspace with embedded comment');
+is((foo.lc   ), 'a', 'sanity - foo.lc');
+is((foo .lc  ), 'b', 'sanity - foo .lc');
+is((bar.lc   ), 'a', 'sanity - bar.lc');
+is((bar .lc  ), 'b', 'sanity - bar .lc');
+is((foo\.lc  ), 'a', 'short unspace');
+is((foo\ .lc ), 'a', 'unspace');
+is((foo \ .lc), 'b', 'not a unspace');
+eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
+is(eval('foo\    .lc'), 'a', 'longer dot');
+is(eval('foo\#( comment ).lc'), 'a', 'unspace with embedded comment');
 #?rakudo skip 'unimplemented'
-eval_dies_ok('foo\#\ ( comment ).id', 'unspace can\'t hide space between # and opening bracket');
+eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
 is((foo\ # comment
-    .id), 'a', 'unspace with end-of-line comment');
+    .lc), 'a', 'unspace with end-of-line comment');
 is((:foo\ <bar>), (:foo<bar>), 'unspace in colonpair');
 #?rakudo skip 'unimplemented'
 is((foo\ .\ ("x")), 'x', 'unspace is allowed both before and after method .');
@@ -82,7 +79,7 @@ is(eval('foo\
 =begin comment
 blah blah blah
 =end comment
-    .id'), 'a', 'unspace with pod =begin/=end comment');
+    .lc'), 'a', 'unspace with pod =begin/=end comment');
 #?rakudo skip '=for pod not implemented (in STD.pm)'
 {
 is(eval('foo\
@@ -91,11 +88,11 @@ blah
 blah
 blah
 
-    .id'), 'a', 'unspace with pod =for comment');
+    .lc'), 'a', 'unspace with pod =for comment');
 }
 is(eval('foo\
 =comment blah blah blah
-    .id'), 'a', 'unspace with pod =comment');
+    .lc'), 'a', 'unspace with pod =comment');
 #This is pretty strange: according to Perl-6.0.0-STD.pm,
 #unspace is allowed after a pod = ... which means pod is
 #syntactically recursive, i.e. you can put pod comments
@@ -104,7 +101,7 @@ is(eval('foo\
 =\ begin comment
 blah blah blah
 =\ end comment
-    .id'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
+    .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
 #?rakudo skip '=for pod not implemented (in STD.pm)'
 {
 is(eval('foo\
@@ -113,11 +110,11 @@ blah
 blah
 blah
 
-    .id'), 'a', 'unspace with pod =for comment w/ pod unspace');
+    .lc'), 'a', 'unspace with pod =for comment w/ pod unspace');
 }
 is(eval('foo\
 =\ comment blah blah blah
-    .id'), 'a', 'unspace with pod =comment w/ pod unspace');
+    .lc'), 'a', 'unspace with pod =comment w/ pod unspace');
 is(eval('foo\
 =\
 =begin nested pod
@@ -130,7 +127,7 @@ blah blah blah
 blah blah blah
 =end nested pod
 end comment
-    .id'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
+    .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
 #?rakudo skip '=for pod not implemented (in STD.pm)'
 {
 is(eval('foo\
@@ -145,12 +142,12 @@ blah
 blah
 blah
 
-    .id'), 'a', 'unspace with pod =for commenti w/ pod-in-pod');
+    .lc'), 'a', 'unspace with pod =for commenti w/ pod-in-pod');
 is(eval('foo\
 =\
 =nested pod blah blah blah
 comment blah blah blah
-    .id'), 'a', 'unspace with pod =comment w/ pod-in-pod');
+    .lc'), 'a', 'unspace with pod =comment w/ pod-in-pod');
 is(eval('foo\
 =\			#1
 =\			#2
@@ -177,7 +174,7 @@ blah
 
 comment blah blah blah	#6
 end comment		#5
-    .id'), 'a', 'hideous nested pod torture test');
+    .lc'), 'a', 'hideous nested pod torture test');
 
 }
 
@@ -193,20 +190,23 @@ eval_dies_ok('g', 'semicolon or newline required between blocks');
 # L<S06/"Blocks"/"unless followed immediately by a comma">
 #
 {
-sub baz(Code $x, *@y) { $x.(@y) }
+    sub baz(Code $x, *@y) { $x.(@y) }
 
-is(eval('baz { @^x }, 1, 2, 3'), (1, 2, 3), 'comma immediately following arg block');
-is(eval('baz { @^x } , 1, 2, 3'), (1, 2, 3), 'comma not immediately following arg block');
-is(eval('baz { @^x }\ , 1, 2, 3'), (1, 2, 3), 'unspace then comma following arg block');
-
-class Code is also {
-    method xyzzy(Code $x: *@y) { $x.(@y) }
+    is(eval('baz { @^x }, 1, 2, 3'), (1, 2, 3), 'comma immediately following arg block');
+    is(eval('baz { @^x } , 1, 2, 3'), (1, 2, 3), 'comma not immediately following arg block');
+    is(eval('baz { @^x }\ , 1, 2, 3'), (1, 2, 3), 'unspace then comma following arg block');
 }
 
-#?rakudo 3 skip 'indirect method calls'
-is(eval('xyzzy { @^x }: 1, 2, 3'), (1, 2, 3), 'colon immediately following arg block');
-is(eval('xyzzy { @^x } : 1, 2, 3'), (1, 2, 3), 'colon not immediately following arg block');
-is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following arg block');
+#?rakudo skip 'indirect method calls'
+{
+    augment class Code{
+        method xyzzy(Code $x: *@y) { $x.(@y) }
+    }
+
+    is(eval('xyzzy { @^x }: 1, 2, 3'), (1, 2, 3), 'colon immediately following arg block');
+    is(eval('xyzzy { @^x } : 1, 2, 3'), (1, 2, 3), 'colon not immediately following arg block');
+    is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following arg block');
+    }
 }
 
 # L<S02/"Whitespace and Comments"/"natural conflict between postfix operators and infix operators">
@@ -215,6 +215,7 @@ is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following ar
 # ($n++) $m
 # ($n) (++$m)
 # ($n) + (+$m)
+
 #?rakudo skip 'defining new operators'
 {
     my $n = 1;
@@ -281,3 +282,4 @@ is(eval('xyzzy { @^x }\ : 1, 2, 3'), (1, 2, 3), 'unspace then colon following ar
     is eval('.123'), 0.123, '.123 is equal to 0.123';
 }
 
+# vim: ft=perl6
