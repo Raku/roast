@@ -110,10 +110,10 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
 
 # Block parameter to smart-match is readonly.
 {
-    subset SoWrong of Str where { $_ = "fail" }
-    sub so_wrong_too($x where { $_ = "fail" }) { }
+    subset SoWrong of Str where { $^epic = "fail" }
+    sub so_wrong_too($x where { $^epic = "fail" }) { }
     my SoWrong $x;
-    dies_ok({ $x = 42 },          '$_ parameter in subtype is read-only...');
+    dies_ok({ $x = 42 },          'parameter in subtype is read-only...');
     dies_ok({ so_wrong_too(42) }, '...even in anonymous ones.');
 }
 
