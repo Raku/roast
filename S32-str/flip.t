@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/=item flip>
 
-plan 11;
+plan 13;
 
 # As a function :
 is( flip('Pugs'), 'sguP', "as a function");
@@ -24,6 +24,12 @@ is( 'Hello World !'.flip.flip, 'Hello World !',
 
 # flip with unicode :
 is( 'ä€»«'.flip,   '«»€ä', "some unicode characters" );
+
+#?rakudo 2 skip 'graphemes not implemented'
+is( "a\c[COMBINING DIAERESIS]b".flip, 'bä', "grapheme precomposed" );
+is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b",
+    "ba\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]",
+    "grapheme without precomposed");
 
 is 234.flip, '432', '.flip on non-string';
 is flip(123), '321', 'flip() on non-strings';
