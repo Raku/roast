@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 14;
 
 # L<S32::Str/Str/capitalize>
 
@@ -28,5 +28,11 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 }
 
 # Non-ASCII chars:
-#?rakudo skip "unicode"
-is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";
+# rakudo skip "unicode"
+is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";#
+
+#?rakudo 2 todo 'graphemes not implemented'
+is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize on string with grapheme precomposed';
+is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
+    "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
+    "capitalize on string with grapheme without precomposed";
