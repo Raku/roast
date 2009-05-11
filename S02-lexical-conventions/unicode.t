@@ -98,7 +98,6 @@ is((try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोट�
     is A.new().äöü(), "Pugs", "Unicode methods and attributes";
 }
 
-#?rakudo skip 'non-ASCII named arguments'
 {
     sub f(*%x) { %x<ä> };
     is f(ä => 3), 3, 'non-ASCII named arguments';
