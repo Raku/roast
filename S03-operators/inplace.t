@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 18;
+plan 19;
 
 #?rakudo skip 'adverbial blocks'
 {
@@ -47,3 +47,9 @@ is($i, "uPPERCASE", "inplace lcfirst");
 my @b = <z a b d e>;
 @b .= sort;
 is ~@b, "a b d e z", "inplace sort";
+
+{
+    $_ = -42;
+    .=abs;
+    is($_, 42, '.=foo form works on $_');
+}
