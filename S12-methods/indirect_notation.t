@@ -12,7 +12,7 @@ L<S12/Methods/"Indirect object notation now requires a colon after the invocant,
 
 =end description
 
-plan 28;
+plan 24;
 
 
 ##### Without arguments
@@ -74,34 +74,32 @@ class T2
 }
 
 # L<S12/Methods/"$obj.@candidates(1,2,3)">
-
-#?rakudo skip 'method closures, $obj.@candidates'
 {
-    my ($m1, $m2, $m3, $m4);
-    my $called = 0;
     class T3 {
         has $.x;
         has $.y;
+        has $.called is rw = 0;
 
-        $m1 = method ()         { "$.x|$.y"; $called++ };
-        $m2 = method ($a)       { "$.x|$a" ; $called++ };
-        $m3 = method ($a, $b)   { "$a|$b"  ; $called++ };
-        $m4 = method ()         { $called++; nextwith; };
+        our method m1 ()   { $!called++; "$.x|$.y" };
+        our method m2 ()   { $!called++; "$.x,$.y"; nextsame() };
+        our method m3 ()   { $!called++; "$.x~$.y" };
+        our method m4 ()   { $!called++; callsame(); };
     }
-    my @c = ($m1, $m2, $m3);
+    my @c = (&T3::m1, &T3::m2, &T3::m3);
     my $o = T3.new(:x<p>, :y<q>);
+
+    is $o.@c(),         'p|q', 'called the first candidate in the list, which did not defer';
+    is $o.called,       1,     'called only one method dispatch';
     
-    is $o.@c(),         'p|q', 'found the correct candidate (with zero args)';
-    is $called,         1,     'called only one method per dispatch';
-    is $o.@c('r'),      'p|r', 'found the correct candidate (with one arg )';
-    is $called,         2,     'called only one method per dispatch';
-    is $o.@c('r', 's'), 'r|s', 'found the correct candidate (with two args )';
-    is $called,         3,     'called only one method per dispatch';
-    @c.unshift: $m4;
-    is $o.@c(),         'p|q', 're-dispatch with nextwith worked';
-    is $called,         5,     'called both methods';
-    dies_ok { $o.@c(1, 2, 3, 4) }, 'no dispatch -> fail';
-    is $called,         3,     'no method called';
+    @c.shift();
+    $o.called = 0;
+    is $o.@c,           'p~q', 'got result from method we defered to';
+    is $o.called,       2,     'called total two methods during dispatch';
+
+    @c.unshift(&T3::m4);
+    $o.called = 0;
+    is $o.@c,           'p~q', 'got result from method we defered to, via call';
+    is $o.called,       3,     'called total three methods during dispatch';
 }
 
 # L<S12/Methods/"Another form of indirection relies on the fact">
