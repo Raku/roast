@@ -157,7 +157,6 @@ my @e;
         is(~@r, ~@e, "list-level element extension on lhs");
 };
 
-#?rakudo todo '>>.'
 { # unary postfix with integers
         my @r;
         eval '@r = (1, 4, 9)».sqrt';
@@ -169,7 +168,6 @@ my @e;
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
 };
 
-#?rakudo todo '>>.'
 { # unary postfix again, but with a twist
         my @r;
         eval '@r = ("f", "oo", "bar")».chars';
@@ -181,7 +179,6 @@ my @e;
         is(~@r, ~@e, "method call on list elements (ASCII)");
 };
 
-#?rakudo skip '>>.'
 { # unary postfix on a user-defined object
 	my $t;
 	class FooTest { method bar { 42 } }; $t = FooTest.new.bar;
@@ -190,7 +187,7 @@ my @e;
         my @r;
 	class FooTest2 { method bar { 42 } }; @r = (FooTest2.new)>>.bar;
 	my @e = (42);
-	is(~@r, ~@e, "hyper-method-call on list of user-defined objects" :todo);
+	is(~@r, ~@e, "hyper-method-call on list of user-defined objects");
 };
 
 #?rakudo skip 'unicode'
