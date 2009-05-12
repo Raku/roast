@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 33;
 
 # L<S12/"Parallel dispatch"/"Any of the method call forms may be turned into a hyperoperator">
 # syn r14547
@@ -10,6 +10,7 @@ plan 29;
 class Foo {
     has $.count is rw;
     method doit {$.count++}
+    method !priv {$.count++}
 }
 
 class Bar is Foo {
@@ -23,6 +24,10 @@ class Bar is Foo {
     is(@o.map({.count}), (6..11), 'parallel dispatch using » works');
     @o>>.doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using >> works');
+    @o»!priv;
+    is(@o.map({.count}), (8..13), 'parallel dispatch to a private using »! works');
+    @o>>!priv;
+    is(@o.map({.count}), (9..14), 'parallel dispatch to a private using >>! works');
 }
 
 {
@@ -63,6 +68,15 @@ class Bar is Foo {
 {
     is(<a bc def ghij klmno>».chars,  (1..5), '<list>».method works');
     is(<a bc def ghij klmno>>>.chars, (1..5), '<list>>>.method works');
+}
+
+{
+    my @a = -1, 2, -3;
+    my @b = -1, 2, -3;
+    @a».=abs;
+    is(@a, [1,2,3], '@list».=method works');
+    @b>>.=abs;
+    is(@b, [1,2,3], '@list>>.=method works');
 }
 
 # more return value checking
