@@ -25,7 +25,7 @@ is %hash.pick.key,   "a", "pick works on hashes (1)";
 is %hash.pick.value, "1", "pick works on hashes (2)";
 
 my $junc = (1|2|3);
-#?rakudo skip 'dubious: pick on Junctions (unspecced?)'
+# rakudo skip 'dubious: pick on Junctions (unspecced?)'
 ok ?(1|2|3 == $junc.pick), "pick works on junctions";
 
 my @arr = <z z z>;

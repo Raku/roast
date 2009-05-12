@@ -2,12 +2,13 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S32::Str/Str/=item words>
 
 # words on Str
 is "".words, (), 'words on empty string';
+is "a".words, <a>, 'words on single character';
 is "a bc d".words, <a bc d>, 'default matcher and limit';
 is " a bc d ".words, <a bc d>, 'default matcher and limit (leading/trailing ws)';
 is "a  bc  d".words, <a bc d>, 'words on string with double spaces';
