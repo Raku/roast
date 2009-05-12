@@ -2,13 +2,25 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 29;
 
 # L<S32::Str/Str/=item comb>
 
 # comb Str
 is "".comb, (), 'comb on empty string';
+is "a".comb, <a>, 'default matcher on single character';
 is "abcd".comb, <a b c d>, 'default matcher and limit';
+
+is "a\tb".comb, ('a', "\t", 'b'), 'comb on string with \t';
+is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
+
+is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
+
+#?rakudo 2 todo 'graphemes not implemented'
+is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
+is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
+    ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "b", ),
+    "comb on string with grapheme non-precomposed");
 
 #?pugs todo 'feature'
 #?rakudo skip 'limit for comb'

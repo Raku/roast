@@ -27,7 +27,7 @@ is( 'ä€»«'.flip,   '«»€ä', "some unicode characters" );
 
 #?rakudo 2 skip 'graphemes not implemented'
 is( "a\c[COMBINING DIAERESIS]b".flip, 'bä', "grapheme precomposed" );
-is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b",
+is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".flip,
     "ba\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]",
     "grapheme without precomposed");
 

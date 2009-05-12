@@ -21,7 +21,7 @@ is "ä bc d".words, <ä bc d>, 'words on string with non-ASCII letter';
 
 #?rakudo 2 todo 'graphemes not implemented'
 is "a\c[COMBINING DIAERESIS] bc d".words, ("ä", "bc", "d"), 'words on string with grapheme precomposed';
-is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d",
+is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "bc", "d"),
     "words on string with grapheme without precomposed");
 
