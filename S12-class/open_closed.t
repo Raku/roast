@@ -22,6 +22,8 @@ class Bar is open {
 augment class Bar {
     method d {'called Bar.d'}
 }
+
+{
     my $o = Bar.new;
     is($o.c, 'called Bar.c', 'old method is still present');
     is($o.d, 'called Bar.d', 'new method is also present');
