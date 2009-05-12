@@ -6,7 +6,7 @@ use Test;
 
 plan 19;
 
-#?rakudo skip '.= without spaces'
+#?rakudo skip '.= with spaces'
 {
     my @a = (1, 2, 3);
     lives_ok({@a .= map: { $_ + 1 }}, '.= runs with adverbial block');
@@ -34,10 +34,10 @@ plan 19;
     my $c =         42; $c .= WHAT;
     my $d =      42.23; $d .= WHAT;
     my @e = <a b c d>;  @e .= WHAT;
-    is($b,    "Str",   "inplace WHAT of a Str");
-    is($c,    "Int",   "inplace WHAT of a Num");
-    is($d,    "Rat",   "inplace WHAT of a Rat");
-    is(@e[0], "Array", "inplace WHAT of an Array");
+    is($b,    Str,   "inplace WHAT of a Str");
+    is($c,    Int,   "inplace WHAT of a Num");
+    is($d,    Rat,   "inplace WHAT of a Rat");
+    is(@e[0], Array, "inplace WHAT of an Array");
 }
 
 my $f = "lowercase"; $f .= uc;
