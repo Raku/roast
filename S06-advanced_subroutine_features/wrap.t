@@ -123,8 +123,6 @@ is( levelwrap( 2 ), 2, "Sanity test." );
 lives_ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
-#?DOES 20
-#?rakudo skip 'multiple wrapping'
 {
     for (1..10) -> $num {
         lives_ok {
