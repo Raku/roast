@@ -202,7 +202,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is((xyzzy { @^x }: 1, 2, 3), (1, 2, 3), 'colon immediately following arg block');
     is((xyzzy { @^x } : 1, 2, 3), (1, 2, 3), 'colon not immediately following arg block');
     is((xyzzy { @^x }\ : 1, 2, 3), (1, 2, 3), 'unspace then colon following arg block');
-    }
 }
 
 # L<S02/"Whitespace and Comments"/"natural conflict between postfix operators and infix operators">
