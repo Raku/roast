@@ -100,15 +100,14 @@ class Bar is Foo {
     is_deeply @a».?mul(3), (3, 6, 9), 'return value of @a».?method(@args)';
     is_deeply @a».?"$method"(3), (3, 6, 9), '... indirect';
 
-    #?rakudo 4 todo '.+ and .* parallelized gives'
-    is_deeply @a».+mul(2).map({ .sort }), ([2, 4], [4, 8], [6, 12]),
+    is_deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».+method is a list of lists';
-    is_deeply @a».+"$method"(2).map({ .sort }), ([2, 4], [4, 8], [6, 12]),
+    is_deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
 
-    is_deeply @a».*mul(2).map({ .sort }), ([2, 4], [4, 8], [6, 12]),
+    is_deeply @a».*mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».*method is a list of lists';
-    is_deeply @a».*"$method"(2).map({ .sort }), ([2, 4], [4, 8], [6, 12]),
+    is_deeply @a».*"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
 }
 
