@@ -4,6 +4,8 @@ use Test;
 
 plan 8;
 
+# L<S02/Literals/"A bare closure also interpolates in double-quotish context.">
+
 {
     # The code of the closure takes a reference to the number 1, discards it
     # and finally returns 42.
@@ -17,6 +19,7 @@ plan 8;
     is "{;\1;42}", "42", '{\\1 parses correctly (2)';
     is "{;;;;;;\1;42}", "42", '{\\1 parses correctly (3)';
 }
+
 
 {
     # interpolating into double quotes results in a Str

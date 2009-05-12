@@ -4,8 +4,7 @@ use Test;
 
 plan 16;
 
-# L<S09/Standard array indexing>
-# todo the spec is not clear about the exact array extending behavior
+# L<S09/Autovivification/"In Perl 6 these read-only operations are indeed non-destructive:">
 {
     # Compare with Perl 5:
     #   $ perl -we '

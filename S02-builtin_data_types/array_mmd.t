@@ -5,6 +5,8 @@ use Test;
 
 plan 4;
 
+# L<S13/Multiple dispatch/"All you have to do to overload them is to define your own multi">
+
 my $here;
 
 #?rakudo skip 'defining operators'

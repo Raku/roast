@@ -6,6 +6,7 @@ plan 8;
 
 # "The context inside of hash and array scripts seems to be/is wrong"
 
+# L<S02/Names and Variables/"The context in which a subscript is evaluated is no longer controlled by the sigil either.">
 {
   sub return_01 { my @sub_array = ("0", "1"); return @sub_array }
 
