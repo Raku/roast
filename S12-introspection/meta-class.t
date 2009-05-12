@@ -42,7 +42,6 @@ is Foo.^layout, P6opaque, '^.layout';
 
 my @methods = Foo.new().^methods();
 is @methods[0].name, 'bar', '... our first method is bar';
-#?rakudo todo 'not sure why .signature does not work :-S'
 ok @methods[0].signature.perl ~~ /'$param'/, '... our first methods signature is $param';
 is @methods[0].returns, Str, '... our first method returns a Str';
 #?rakudo skip '.multi'
