@@ -25,3 +25,5 @@ sanity;
 # Hash passed to a sub used to become a List in pugs
 insanity %h;
 
+
+# vim: ft=perl6

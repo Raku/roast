@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 6;
 
 # L<S03/Argument List Interpolating/"interpolate">
 
@@ -27,3 +27,15 @@ is(invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2), 'a: 1 b: 2',
 dies_ok {
     invoke2(sub ($a, $b) { return "a: $a b: $b"}, 1, 2, 3);
 }, '... slurpy args flattening and not matching because of too many parameters';  
+
+# used to be a Rakudo regression, RT #62730
+
+{
+    sub f1(*%h) { %h.perl }; 
+    sub f2(*%h) { f1(|%h) };
+    lives_ok { f2( :a(1) ) },
+            'Can interpolate hashes into slurpy named parameters';
+    is eval(f2(:a(4))).<a>, 4,  '... with a sane return value';
+}
+
+# vim: ft=perl6
