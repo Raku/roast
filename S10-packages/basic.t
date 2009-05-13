@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -135,3 +135,9 @@ our $outer_package = 19;
     ok  ~$! !~~ /<fairly_conclusive_platform_error>/,
         'another simple package case that should not blow platform';
 }
+
+#?rakudo skip 'RT #64606'
+eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
+              'map works in a module (RT #64606)';
+
+# vim: ft=perl6
