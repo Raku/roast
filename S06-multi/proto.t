@@ -41,7 +41,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 }
 
 # more similar tests
-#?rakudo skip 2
 {
     proto prefix:<moose> ($arg) { $arg + 1 }
     is (moose 3), 4, "proto definition of prefix:<moose> works";
