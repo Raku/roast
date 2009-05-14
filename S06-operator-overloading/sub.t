@@ -57,7 +57,6 @@ L<S06/"Operator overloading">
 	'infix operator overloading for new operator (nasty)', :todo<bug>;
 }
 
-#?rakudo skip 'infix:«...»'
 {
     sub infix:«_<_»($one, $two) { return 42 }
     is 3 _<_ 5, 42, "frenchquoted infix sub";
