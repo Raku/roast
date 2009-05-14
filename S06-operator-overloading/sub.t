@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 34;
 
 =begin pod
 
@@ -57,6 +57,7 @@ L<S06/"Operator overloading">
 	'infix operator overloading for new operator (nasty)', :todo<bug>;
 }
 
+#?rakudo skip 'infix:«...»'
 {
     sub infix:«_<_»($one, $two) { return 42 }
     is 3 _<_ 5, 42, "frenchquoted infix sub";
@@ -75,6 +76,7 @@ L<S06/"Operator overloading">
        "postfix operator overloading for new operator (weird)");
 }
 
+#?rakudo todo 'macros'
 {
     my $var = 0;
     ok(eval('macro circumfix:{"<!--","-->"} ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}', :todo<feature>);
@@ -98,6 +100,7 @@ L<S06/"Operator overloading">
 }
 
 # Overloading by setting the appropriate code variable
+#?rakudo skip "Lexical 'infix:plus' not found"
 {
   my &infix:<plus>;
   BEGIN {
@@ -109,6 +112,7 @@ L<S06/"Operator overloading">
 
 # Overloading by setting the appropriate code variable using symbolic
 # dereferentiation
+#?rakudo skip '&::'
 {
   my &infix:<times>;
   BEGIN {
@@ -129,6 +133,7 @@ L<S06/"Operator overloading">
 }
 
 # Overriding infix:<;>
+#?rakudo skip 'infix:<;>'
 {
     my proto infix:<;> ($a, $b) { $a + $b }
     is (3 ; 2), 5  # XXX correct?
@@ -160,6 +165,7 @@ L<S06/"Operator overloading">
 # defining other conversions that may happen?
 
 # here is one that co-erces a MyClass into a Str and a Num.
+#?rakudo skip 'prefix:<~> method'
 {
     class OtherClass {
       has $.x is rw;
@@ -186,6 +192,7 @@ L<S06/"Operator overloading">
   is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly", :todo<feature>;
 }
 
+#?rakudo skip 'lexical operators'
 {
 	my sub infix:<Z> ($a, $b) {
 		$a ** $b;
@@ -193,6 +200,7 @@ L<S06/"Operator overloading">
 	is (2 Z 1 Z 2), 4, "default Left-associative works.";
 }
 
+#?rakudo skip 'lexical operators'
 {
 	my sub infix:<Z> is assoc('left') ($a, $b) {
 		$a ** $b;
@@ -201,6 +209,7 @@ L<S06/"Operator overloading">
 	is (2 Z 1 Z 2), 4, "Left-associative works.";
 }
 
+#?rakudo skip 'lexical operators'
 {
 	my sub infix:<Z> is assoc('right') ($a, $b) {
 		$a ** $b;
@@ -209,6 +218,7 @@ L<S06/"Operator overloading">
 	is (2 Z 1 Z 2), 2, "Right-associative works.";
 }
 
+#?rakudo skip 'lexical operators'
 {
 	my sub infix:<Z> is assoc('chain') ($a, $b) {
 		$a eq $b;
@@ -219,6 +229,7 @@ L<S06/"Operator overloading">
 	is (1 Z 1 Z 2), Bool::False, "Chain-associative works.";
 }
 
+#?rakudo skip 'assoc("non")'
 {
 	sub infix:<our_non_assoc_infix> is assoc('non') ($a, $b) {
 		$a ** $b;
@@ -227,3 +238,5 @@ L<S06/"Operator overloading">
 	is ((2 our_non_assoc_infix 2) our_non_assoc_infix 3), (2 ** 2) ** 3, "Non-associative works when used with parens.";
 	eval_dies_ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
 }
+
+# vim: ft=perl6
