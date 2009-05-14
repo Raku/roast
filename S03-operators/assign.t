@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 318;
+plan 320;
 
 
 # tests various assignment styles
@@ -20,14 +20,17 @@ plan 318;
     is($bar, "FOO", "... and second");
 }
 
-#?rakudo skip "sub form of operators missing"
 {
     my $x = 1;
     &infix:<=>.($x, 0);
     is($x, 0, 'assignment operator called as function');
+    my Int $y;
+    lives_ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
+    dies_ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
+
 }
 
-#?rakudo skip "sub form of operators missing"
+#?rakudo skip 'infix:<=> without &'
 {
     my $x = 1;
     infix:<=>($x, 0);
@@ -998,3 +1001,5 @@ sub W () { substr(eval('want'), 0, 1) }
     $x max= 2;
     is $x, 3, 'max= worked (negative)';
 }
+
+# vim: ft=perl6
