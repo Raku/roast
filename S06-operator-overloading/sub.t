@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 =begin pod
 
@@ -58,7 +58,7 @@ L<S06/"Operator overloading">
 }
 
 {
-    sub infix:«_<_»($one, $two) { return 42 }
+    sub infix:«_<_ »($one, $two) { return 42 }
     is 3 _<_ 5, 42, "frenchquoted infix sub";
 }
 
@@ -236,6 +236,12 @@ L<S06/"Operator overloading">
 	is (2 our_non_assoc_infix 3), (2 ** 3), "Non-associative works for just tow operands.";
 	is ((2 our_non_assoc_infix 2) our_non_assoc_infix 3), (2 ** 2) ** 3, "Non-associative works when used with parens.";
 	eval_dies_ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
+}
+
+{
+    sub circumfix:<<` `>>(*@args) { @args.join('-') }
+    is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works'
+
 }
 
 # vim: ft=perl6
