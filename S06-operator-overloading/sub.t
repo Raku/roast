@@ -62,6 +62,8 @@ L<S06/"Operator overloading">
     is 3 _<_ 5, 42, "frenchquoted infix sub";
 }
 
+# unfreak perl6.vim:  >>
+
 {
     sub postfix:<W> ($wobble) { return "ANDANDAND$wobble"; };
 
