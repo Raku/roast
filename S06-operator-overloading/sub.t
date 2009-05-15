@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 40;
 
 =begin pod
 
@@ -13,6 +13,7 @@ L<S06/"Operator overloading">
 =end pod
 
 # This set of tests is very basic for now.
+# TODO: all variants of overloading syntax (see spec "So any of these")
 
 {
     sub prefix:<X> ($thing) { return "ROUGHLY$thing"; };
@@ -21,11 +22,44 @@ L<S06/"Operator overloading">
        'prefix operator overloading for new operator');
 }
 
+
+
 {
     sub prefix:<±> ($thing) { return "AROUND$thing"; };
-    is ± "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode)';
+    is ± "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, latin-1 range)';
     sub prefix:<(+-)> ($thing) { return "ABOUT$thing"; };
     is eval(q[ (+-) "fish" ]), "ABOUTfish", 'prefix operator overloading for new operator (nasty)', :todo<bug>;
+}
+
+{
+    sub prefix:<∔> ($thing) { return "AROUND$thing"; };
+    is ∔ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2214 DOT PLUS)';
+}
+
+#?rakudo skip 'prefix:{} form not implemented'
+{
+    sub prefix:{'Z'} ($thing) { return "ROUGHLY$thing"; };
+
+    is(Z "fish", "ROUGHLYfish",
+       'prefix operator overloading for new operator Z');
+}
+
+#?rakudo skip 'prefix:{} form not implemented'
+{
+    sub prefix:{"∓"} ($thing) { return "AROUND$thing"; };
+    is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2213 MINUS-OR-PLUS SIGN)';
+}
+
+#?rakudo skip 'prefix:{} form not implemented'
+{
+    sub prefix:{"\x[2213]"} ($thing) { return "AROUND$thing"; };
+    is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \x[2213] MINUS-OR-PLUS SIGN)';
+}
+
+#?rakudo skip 'prefix:{} form not implemented'
+{
+    sub prefix:{"\c[MINUS-OR-PLUS SIGN]"} ($thing) { return "AROUND$thing"; };
+    is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \c[MINUS-OR-PLUS SIGN])';
 }
 
 {
