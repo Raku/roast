@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 22;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -139,5 +139,14 @@ our $outer_package = 19;
 #?rakudo skip 'RT #64606'
 eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
               'map works in a module (RT #64606)';
+
+# used to be a  pugs regression
+{
+    BEGIN { @*INC.push: 't/spec/packages' }
+    use ArrayInit;
+    my $first_call = array_init();
+    is array_init(), $first_call,
+       'array initialization works fine in imported subs';
+}
 
 # vim: ft=perl6
