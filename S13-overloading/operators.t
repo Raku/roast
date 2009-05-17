@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 3;
 
 #L<S06/Operator overloading>
 
@@ -24,5 +24,14 @@ plan 2;
     ]) == 120, 'Can define recursive postfix operator';
 }
 
+{
+    class A does Associative {
+        method postcircumfix:<{ }>(*@ix) {
+            return @ix
+        }
+    };
+
+    is A.new<foo bar>, <foo bar>, 'defining postcircumfix:<{ }> works';
+}
 
 # vim: ft=perl6
