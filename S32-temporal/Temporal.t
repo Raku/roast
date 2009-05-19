@@ -11,7 +11,6 @@ use Test;
 use src::setting::Temporal;
 #----------------------------------------------------------------------
 # Temporal.pm
-use v6;
 my subset Month     of Int where { 1 <= $^a <= 12 };
 my subset Day       of Int where { 1 <= $^a <= 31 };
 my subset DayOfWeek of Int where { 1 <= $^a <=  7 };
@@ -235,7 +234,7 @@ ok  $g2.date.day-of-week==$d,
 
 # compare dates for a series of times earlier and later than "now"
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
-my ($offset = 8765, $t1, $t2 ); # 
+my ($t1, $t2, $offset = 8765); # 
 for 1..5 -> $test {
     $t1 = $t - $offset;
     $g1 = Time.gmtime( $t1 );
