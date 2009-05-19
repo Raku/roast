@@ -9,7 +9,7 @@ use Test;
 
 # before Temporal is included in Rakudo Setting, include it here.
 use src::setting::Temporal;
-----------------------------------------------------------------------
+#----------------------------------------------------------------------
 # Temporal.pm
 use v6;
 my subset Month     of Int where { 1 <= $^a <= 12 };
@@ -51,7 +51,7 @@ role Temporal::Date {
 
     method Str { self.iso8601 };
 
-    sub infix( Temporal::Date $left, Temporal::Date $right )
+    sub infix:«<=>»( Temporal::Date $left, Temporal::Date $right )
         is export
     {
         $left.year <=> $right.year
@@ -76,7 +76,7 @@ role Temporal::Time {
 
     method Str { self.iso8601(); }
 
-    sub infix:\x{00ab}<=>\x{00bb}( Temporal::Time $left, Temporal::Time $right )
+    sub infix:«<=>»( Temporal::Time $left, Temporal::Time $right )
         is export
     {
         $left.hour <=> $right.hour
@@ -190,7 +190,7 @@ Perl 5 perldoc L<doc:Time::Local>.
 L<S32-Temporal|http://perlcabal.org/syn/S32/Temporal.html>
 
 =end pod
-----------------------------------------------------------------------
+#----------------------------------------------------------------------
 
 plan 18;
 
