@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 36;
+plan 38;
 
 my @list = (1 .. 10);
 
@@ -95,3 +95,15 @@ my @list = (1 .. 10);
        '2|4|6|8|12', 'next works in grep';
 }
 
+# since the test argument to .grep is a Matcher, we can also
+# check type constraints:
+
+{
+    is (2, [], 4, [], 5).grep(Int).join(','),
+       '2,4,5', ".grep with non-Code matcher";
+
+    is grep(Int, 2, [], 4, [], 5).join(','),
+       '2,4,5', "grep() with non-Code matcher";
+}
+
+# vim: ft=perl6
