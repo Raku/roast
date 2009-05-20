@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 118;
+plan 122;
 
 =begin pod
 
@@ -193,15 +193,15 @@ class Foo1 { has $.bar; };
 ok eval('class Foo7 { has $.attr = 42 }; 1'), "class definition worked";
 is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 
-#?rakudo skip 'lexicals visible outside eval'
 {
     my $was_in_supplier = 0;
     sub forty_two_supplier() { $was_in_supplier++; 42 }
-    ok eval('class Foo10 { has $.attr = { forty_two_supplier() } }; 1'),
+    ok eval('class Foo10 { has $.attr = forty_two_supplier() }; 1'),
     'class definition using "= {...}" worked';
     is eval('Foo10.new.attr'), 42, "default attribute value (4)";
-    is      $was_in_supplier, 1,  "forty_two_supplier() was actually executed (1)";
-
+    is      $was_in_supplier, 1,  "forty_two_supplier() was actually executed";
+    eval('Foo10.new');
+    is      $was_in_supplier, 2,  "forty_two_supplier() is executed per instantiation";
 }
 
 # check that doing something in submethod BUILD works
@@ -473,4 +473,17 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
     dies_ok  {$o.h<blubb><bla> = 3 },      'No autovivification (typed hash)';
     is_deeply $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
 }
+
+# attribute initialization based upon other attributes
+{
+    class AttrInitTest {
+        has $.a = 1;
+        has $.b = 2;
+        has $.c = $.a + $.b;
+    }
+    is AttrInitTest.new.c, 3,         'Can initialize one attribute based on another (1)';
+    is AttrInitTest.new(a => 2).c, 4, 'Can initialize one attribute based on another (2)';
+    is AttrInitTest.new(c => 9).c, 9, 'Can initialize one attribute based on another (3)';
+}
+
 # vim: ft=perl6
