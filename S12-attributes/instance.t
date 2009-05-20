@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 122;
+plan 126;
 
 =begin pod
 
@@ -484,6 +484,19 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
     is AttrInitTest.new.c, 3,         'Can initialize one attribute based on another (1)';
     is AttrInitTest.new(a => 2).c, 4, 'Can initialize one attribute based on another (2)';
     is AttrInitTest.new(c => 9).c, 9, 'Can initialize one attribute based on another (3)';
+}
+
+# attributes with & sigil
+{
+    class CodeAttr1 { has &!m = sub { "ok" }; method f { &!m() } }
+    is CodeAttr1.new.f, "ok", '&!m = sub { ... } works and an be called';
+
+    class CodeAttr2 { has &.a = { "woot" }; method foo { &!a() } }
+    is CodeAttr2.new.foo, "woot", '&.a = { ... } works and also declares &!a';
+    is CodeAttr2.new.a().(), "woot", '&.a has accessor returning closure';
+
+    class CodeAttr3 { has &!m = method { "OH HAI" }; method f { self.&!m() } }
+    is CodeAttr3.new.f, 'OH HAI', '&!m = method { ... } and self.&!m() work';
 }
 
 # vim: ft=perl6
