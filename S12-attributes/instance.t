@@ -444,7 +444,7 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
     is $o.h.elems, 0, 'typed public hash attribute is empty';
     is $o.pac, 0, 'typed private array attribute is empty';
     is $o.phc, 0, 'typed private hash attribute is empty';
-    #?rakudo 20 skip 'typed array and hash attributes'
+
     ok $o.a.of === Int, 'array attribute is typed';
     lives_ok { $o.a = (2, 3) }, 'Can assign to typed drw-array-attrib';
     lives_ok { $o.a[2] = 4 },   'Can insert into typed rw-array-attrib';
@@ -457,6 +457,7 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
     dies_ok { $o.a.push: [2, 3]}, 'type enforced on array attrib (push)';
     dies_ok { $o.a[42]<foo> = 3}, 'no autovivification (typed array)';
 
+    #?rakudo todo 'over-eager auto-vivification bugs'
     is $o.a.join('|'), '2|3|4|5', 
         '... all of the above actually did nothing (not just died)';
 
