@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 24;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -58,4 +58,15 @@ ok(&foo ~~ Multi, 'a multi does Multi');
 
     eval_lives_ok 'max(1, 2, 3)', 'use multi method to override builtin lives';
     is eval('max(1, 2, 3)'), 9, 'use multi method to override builtin';
+}
+
+# named and slurpy interaction - there have been bugs in the past on this front
+{
+    multi nsi_1(Int $x, Bool :$flag, *@vals) { "nsi 1" };
+    is nsi_1(1),             'nsi 1', 'interaction between named and slurpy (1)';
+    is nsi_1(1, 2, 3, 4, 5), 'nsi 1', 'interaction between named and slurpy (2)';
+
+    multi nsi_2(Bool :$baz = Bool::False, *@vals) { "nsi 2" };
+    is nsi_2(:baz(Bool::True), 1, 2, 3), 'nsi 2', 'interaction between named and slurpy (3)';
+    is nsi_2(1, 2, 3),                   'nsi 2', 'interaction between named and slurpy (4)';
 }
