@@ -21,7 +21,7 @@ is ([wtf] <OMG BBQ PONIES>), 'OMGWTFBBQWTFPONIES', 'reduce meta-op generated';
 is 'BBQ' Rwtf 'OMG', 'OMGWTFBBQ', 'reverse meta-op generated';
 
 # Cross meta-op.
-is ~(('OMG','BBQ') Xwtf ('OMG','BBQ')), 'OMGWTFOMG OMGWTFBBQ BBQWTFOMG BBQWTFBBQ',
+is ~('OMG','BBQ' Xwtf 'OMG','BBQ'), 'OMGWTFOMG OMGWTFBBQ BBQWTFOMG BBQWTFBBQ',
     'cross meta-op generated';
 
 # Hyper meta-op (todo: unicode variants, check variants apply correct constraints)
