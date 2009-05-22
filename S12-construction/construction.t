@@ -11,7 +11,7 @@ class OwnConstr {
     my $in_own = 0;
     method own() {
         $in_own++;
-        return self.bless(:x(42));
+        return self.bless(self.CREATE(), :x(42));
     }
     method in_own {
         $in_own;
@@ -34,7 +34,7 @@ class Foo {
   has $.a;
   
   method new ($self: Str $string) {
-    return $self.bless(string => $string);
+    return $self.bless(*, string => $string);
     $!a = $string;
   }
 }
