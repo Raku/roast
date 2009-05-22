@@ -45,7 +45,7 @@ is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
     is("@x", "abc abc abc", 'Insensitive repeated continued match');
     ok($/.to == 9, 'Insensitive repeated continued match pos');
 
-    ok ($str !~~ m:i:p/abc/, 'no more match, string exhausted';
+    ok ($str !~~ m:i:p/abc/, 'no more match, string exhausted');
 }
 
 my $str = "abcabcabc";
