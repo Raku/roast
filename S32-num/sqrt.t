@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 15;
 
 # L<S32::Numeric/Num/"=item sqrt">
 
@@ -30,11 +30,6 @@ is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
 
 # The spec specifies a branch cut in the complex plane of -pi <= theta <= pi
 is_approx(sqrt(-1 +0i), 1i, 'got the square root of -1+0i');
-
-{
-    my $i = -1;
-    is_approx(eval("sqrt($i.i)"), 1i, 'got the square root of -1.i');
-}
 
 is_approx(sqrt(1i), (1+1i)/sqrt(2), 'got the square root of 1i');
 is_approx(sqrt(-1i), (1-1i)/sqrt(2), 'got the square root of -1i');
