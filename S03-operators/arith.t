@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 197;
+plan 199;
 
 my $five = abs(-5);
 
@@ -425,6 +425,14 @@ dies_ok( { $x := 0; say 3 / $x; }, 'Division by zero dies and is catchable with 
        'Can calcualte 25! without loss of precision';
     ok 2**65 == 36893488147419103232,
        'Can calcualte 2**65 without loss of precision';
+}
+
+# L<S03/"Negated relational operators"/"allowed for testing even
+# divisibility by an integer">
+#?rakudo skip 'infix:<!%>'
+{
+    is 6 !% 3, Bool::True,  '6 !% 3';
+    is 6 !% 4, Bool::False, '6 !% 4';
 }
 
 # vim: ft=perl6
