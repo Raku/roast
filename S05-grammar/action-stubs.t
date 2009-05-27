@@ -4,7 +4,7 @@ use Test;
 
 plan 11;
 
-# TODO: needs specs and smartlinks
+# L<S05/Grammars/"and optionally pass an action object">
 
 grammar A::Test::Grammar {
     rule  TOP { <a> <b> }
