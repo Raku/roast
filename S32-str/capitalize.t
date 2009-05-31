@@ -31,7 +31,7 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 # rakudo skip "unicode"
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";#
 
-#?rakudo 2 todo 'graphemes not implemented'
+#?rakudo 2 skip 'graphemes not implemented'
 is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize on string with grapheme precomposed';
 is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
