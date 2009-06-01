@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 10;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
@@ -22,7 +22,11 @@ class Foo {
     
     multi method bar(Num $num) {
         return "Foo.bar() called with Num : $num";
-    }    
+    }
+    
+    multi method baz($f) {
+        return "Foo.baz() called with parm : $f";
+    }
 }
 
 
@@ -34,6 +38,10 @@ is($foo.bar("Hello"), 'Foo.bar() called with Str : Hello', '... multi-method dis
 is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on Int');
 my $num = '4';
 is($foo.bar(+$num), 'Foo.bar() called with Num : 4', '... multi-method dispatched on Num');
+
+#?rakudo todo 'RT #66006'
+eval '$foo.baz()';
+ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
 role R1 {
     method foo($x) { 1 }
