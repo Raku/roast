@@ -8,16 +8,16 @@ plan 9;
 
 class Foo {
     # $.tracker is used to determine the order of calls.
-    has $.tracker;
-    method doit()  {$.tracker ~= 'foo,'}
-    method doit(Int $num) {$.tracker ~= 'fooint,'}
+    has $.tracker is rw;
+    multi method doit()  {$.tracker ~= 'foo,'}
+    multi method doit(Int $num) {$.tracker ~= 'fooint,'}
     method show  {$.tracker}
     method clear {$.tracker = ''}
 }
 
 class BarCallSame is Foo {
-    method doit() {$.tracker ~= 'bar,'; callsame; $.tracker ~= 'ret1,'}
-    method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}
+    multi method doit() {$.tracker ~= 'bar,'; callsame; $.tracker ~= 'ret1,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}
 }
 
 {
@@ -28,14 +28,15 @@ class BarCallSame is Foo {
     $o.clear;
     is($o.show, '', 'sanity test for clearing');
     $o.doit(5);
-    is($o.show, 'barint,bar,fooint,ret1,ret2,', 'callsame multimethod/inheritance test');
+    is($o.show, 'barint,fooint,ret2,', 'callsame multimethod/inheritance test');
 }
+
 
 class BarCallWithEmpty is Foo {
-    method doit() {$.tracker ~= 'bar,'; callwith(); $.tracker ~= 'ret1,'}
-    method doit(Int $num) {$.tracker ~= 'barint,'; callwith(); $.tracker ~= 'ret2,'}
+    multi method doit() {$.tracker ~= 'bar,'; callwith(); $.tracker ~= 'ret1,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(); $.tracker ~= 'ret2,'}
 }
-
+#?rakudo skip 'callwith bugs plus issue with calling MMDs with different argument sets'
 {
     my $o = BarCallWithEmpty.new;
     $o.clear;
@@ -48,10 +49,10 @@ class BarCallWithEmpty is Foo {
 }
 
 class BarCallWithInt is Foo {
-    method doit() {$.tracker ~= 'bar,'; callwith(42); $.tracker ~= 'ret1,'}
-    method doit(Int $num) {$.tracker ~= 'barint,'; callwith(42); $.tracker ~= 'ret2,'}
+    multi method doit() {$.tracker ~= 'bar,'; callwith(42); $.tracker ~= 'ret1,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(42); $.tracker ~= 'ret2,'}
 }
-
+#?rakudo skip 'callwith bugs plus issue with calling MMDs with different argument sets'
 {
     my $o = BarCallWithInt.new;
     $o.clear;
