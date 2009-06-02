@@ -14,7 +14,7 @@ class Foo {
 }
 
 class Bar is Foo {
-    method doit {$.count++; callsame;}
+    method doit {$.count++;}
 }
 
 {
@@ -56,13 +56,10 @@ class Bar is Foo {
     dies_ok({@o».+not_here},   'parallel dispatch using @o».+not_here dies');
     dies_ok({@o>>.+not_here},  'parallel dispatch using @o>>.+not_here dies');
 
-#?rakudo skip '.*, .+ and callsame'
-{
     @o».*doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o».*doit works');
     @o».+doit;
     is(@o.map({.count}), (9..14), 'parallel dispatch using @o».*doit works');
-}
 }
 
 {
