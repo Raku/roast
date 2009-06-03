@@ -93,19 +93,15 @@ sub b() { die "oops" }
 
     is $obj.m('a'),        'a|',   'basic sanity 1';
     is $obj.m('a', :y<b>), 'a|b',  'basic sanity 2';
-    #?rakudo todo 'RT #61480'
     lives_ok { $obj.m('a', :y<b>, :z<b>) }, 'additional named args are ignored';
-    #?rakudo skip 'RT #61480'
     is $obj.m('a', :y<b>, :z<b>), 'a|b', '... same, but test value';
 
     # and the same with class methods
 
     is MethodTester.m('a'),        'a|',   'basic sanity 1 (class method)';
     is MethodTester.m('a', :y<b>), 'a|b',  'basic sanity 2 (class method)';
-    #?rakudo todo 'RT #61480'
     lives_ok { MethodTester.m('a', :y<b>, :z<b>) }, 
              'additional named args are ignored (class method)';
-    #?rakudo skip 'RT #61480'
     is MethodTester.m('a', :y<b>, :z<b>), 'a|b', 
        '... same, but test value (class method)';
 }
