@@ -16,7 +16,6 @@ enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
 ok day ne "", 'enum itself stringififes';
 ok day.WHAT, 'enum.WHAT returned a value';
-#?rakudo todo '.perl on an enum itself'
 ok day.perl, 'enum.perl returned a value';
 
 sub test_stuff($x) {
