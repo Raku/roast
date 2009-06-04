@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 94;
+plan 95;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -190,6 +190,14 @@ is(+(6..8), 3, 'numification');
 {
     sub foo($a) { ~($a .. 5) };
     is(foo(5), '5', 'range constructed from parameter OK');
+}
+
+# ranges constructed from parameters, #2
+{
+    for 1 -> $i {
+        for $i..5 -> $j { };
+        is($i, 1, 'Iter range from param doesnt modify param (RT #66280)');
+    }
 }
 
 {
