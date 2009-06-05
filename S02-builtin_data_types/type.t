@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 36;
+plan 44;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -77,8 +77,8 @@ my $baz of Int;
 }
 
 # L<S02/Return types/a return type can be specified before or after the name>
-# TODO: I'm not 100% sure about the living/dieing for all the cases below
 {
+    # Check with explicit return.
     my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
     my sub returntype2 (Bool $pass) of Int { return $pass ?? 42 !! 'no'}
     my Bool sub returntype3 (Bool $pass)   { return $pass ?? Bool::True !! ':('}
@@ -94,6 +94,24 @@ my $baz of Int;
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
+}
+{
+    # Check with implicit return.
+    my sub returntype1 (Bool $pass) returns Str { $pass ?? 'ok' !! -1}
+    my sub returntype2 (Bool $pass) of Int { $pass ?? 42 !! 'no'}
+    my Bool sub returntype3 (Bool $pass)   { $pass ?? Bool::True !! ':('}
+    my sub returntype4 (Bool $pass --> Str) { $pass ?? 'ok' !! -1}
+
+    is(returntype1(Bool::True), 'ok', 'good implicit return value works (returns)');
+    dies_ok({ returntype1(Bool::False) }, 'bad implicit return value dies (returns)');
+    is(returntype2(Bool::True), 42, 'good implicit return value works (of)');
+    dies_ok({ returntype2(Bool::False) }, 'bad implicit return value dies (of)');
+
+    is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
+    dies_ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
+
+    is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
+    dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
 }
 
 #?rakudo skip 'Rat not implemented, as not implemented'
