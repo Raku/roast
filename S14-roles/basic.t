@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 =begin description
 
@@ -85,5 +85,11 @@ lives_ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
 lives_ok { HasC.new.x = undef },'typed attribute accepts things it should';
 dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
+
+# Checking if role does role
+role D {
+}
+
+ok D ~~ Role, 'a role does the Role type';
 
 # vim: ft=perl6
