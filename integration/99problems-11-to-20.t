@@ -44,7 +44,7 @@ plan 31;
     # Given a run-length code list generated as specified in problem P11.
     # Construct its uncompressed version.
     
-    sub decode(*@list) returns Array {
+    sub decode(*@list) returns List {
         gather {
             for @list -> $elem {
                 take $elem.isa(Array) ?? $elem[1] xx $elem[0] !! $elem;
