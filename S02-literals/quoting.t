@@ -90,7 +90,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Literals/Which is mandatory for parens>
-#?rakudo todo 'q() is a sub call'
 { # q() is bad
     my @q;
     sub q { @_ }
