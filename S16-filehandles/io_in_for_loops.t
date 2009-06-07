@@ -22,7 +22,6 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?DOES 6
 { # now read it in and check
     my $fh = open($filename);
     for (1 .. 6) -> $num {
@@ -32,8 +31,6 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?DOES 6
-#?rakudo skip '$fh.lines count'
 { # now read it in with the $fh controling the loop
     my $fh = open($filename);
     my $num = 1;
@@ -44,8 +41,6 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?DOES 6
-#?rakudo skip '$fh.lines count'
 { # now read it in with the $fh controling the loop w/out parens
     my $fh = open($filename);
     my $num = 1;
@@ -73,8 +68,6 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?rakudo skip '$fh.get in list context'
-#?DOES 2
 { # now read it in with the $fh controling the loop but call 
   # the $fh.get inside the loop inside parens (is this list context??)
     my $fh = open($filename);
@@ -89,8 +82,6 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
-#?rakudo skip '$fh.get in list context'
-#?DOES 2
 { # now read it in with the $fh controling the loop but call 
   # the get $fh inside the loop w/out parens (is this scalar context??)
     my $fh = open($filename);

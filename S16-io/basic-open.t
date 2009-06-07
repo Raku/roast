@@ -4,7 +4,7 @@ use Test;
 plan 9;
 
 sub test_lines(@lines) {
-    #?rakudo todo 'line counts'
+    #!rakudo todo 'line counts'
     is @lines.elems, 3, 'Three lines read';
     is @lines[0],
        "Please do not remove this file, used by S16-io/basic-open.t",
@@ -19,7 +19,7 @@ sub test_lines(@lines) {
     my $count = 0;
     while !$fh.eof {
         my $x = $fh.get;
-        $count++ if $x;
+        $count++ if $x.defined;
     }
     is $count, 3, 'Read three lines with while !$hanlde.eof';
 }

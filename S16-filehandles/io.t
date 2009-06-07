@@ -83,7 +83,6 @@ ok($append.close, 'file closed okay (append)');
 my $in4 = open($filename);
 isa_ok($in4, IO);
 my @lines4 = lines($in4);
-#?rakudo 2 todo 'line counts'
 is(+@lines4, 4, 'we got four lines from the file');
 is $in4.ins, 4, 'same with .ins';
 is(@lines4[0], "Hello World", 'lines($in) worked in list context');
@@ -95,7 +94,6 @@ ok($in4.close, 'file closed okay (4)');
 my $in5 = open($filename);
 isa_ok($in5, IO);
 my @lines5 = $in5.lines();
-#?rakudo 1 todo 'line counts'
 is(+@lines5, 4, 'we got four lines from the file');
 is(@lines5[0], "Hello World", '$in.lines() worked in list context');
 is(@lines5[1], "Foo Bar Baz", '$in.lines() worked in list context');
@@ -106,7 +104,6 @@ ok($in5.close, 'file closed okay (5)');
 my $in6 = open($filename);
 isa_ok($in6, IO);
 my @lines6 = $in6.lines;
-#?rakudo todo 'line counts'
 is(+@lines6, 4, 'we got four lines from the file');
 is(@lines6[0], "Hello World", '$in.lines worked in list context');
 is(@lines6[1], "Foo Bar Baz", '$in.lines worked in list context');

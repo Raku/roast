@@ -93,8 +93,7 @@ is min({$^a <=> $^b}, 1,2,3),  1, "subroutine form of min with literals works";
 # Try to read numbers from a file
 @array = lines("t/spec/S32-list/numbers.data");
 is @array.max, 5, "max of strings read from a file works";
-#?rakudo 1 todo 'Parrot happens to append a newline to any file'
-is @array.min, -80, "min of strings read from a file works";
+is @array.min, -1, "min of strings read from a file works";
 
 # Same, but numifying the numbers first
 @array = map { +$_ }, @array;
