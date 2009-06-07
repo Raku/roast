@@ -15,10 +15,8 @@ plan 7;
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
-#?rakudo todo '*-1 should create a closure'
 isa_ok $x, Code, '*-1 is of type Code';
-#?rakudo skip '*-1 should create a closure'
-ok $x.(5), 4, 'and we can execute that Code';
+is $x.(5), 4, 'and we can execute that Code';
 
 isa_ok *.abs, Code, '*.abs is of type Code';
 my @a = map *.abs, 1, -2, 3, -4;
