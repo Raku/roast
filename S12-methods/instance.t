@@ -23,9 +23,8 @@ my $foo = Foo.new();
 is($foo.doit(1,2,3), 6, "dot method invocation");
 
 my $val;
-#?rakudo skip 'parse error'
+#?rakudo 2 skip 'indirect object notation'
 lives_ok { $val = doit $foo: 1,2,3; }, '... indirect method invocation works';
-#?rakudo skip 'test dependency'
 is($val, 6, '... got the right value for indirect method invocation');
 
 is($foo.noargs, 42, "... no parentheses after method");
