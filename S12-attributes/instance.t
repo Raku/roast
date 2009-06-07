@@ -148,7 +148,7 @@ class Foo1 { has $.bar; };
 
 # check that doing something in submethod BUILD works
 
-#?rakudo skip 'parse fail'
+#?rakudo skip 'invalid arg type in named args (submethod)'
 {
     class Foo6a {
         has $.bar is rw;
@@ -170,14 +170,13 @@ class Foo1 { has $.bar; };
 }
 
 # check that assignment in submethod BUILD works with a bare return, too
-#?rakudo skip 'parse fail'
 {
     class Foo6b {
         has $.bar is rw;
         has $.baz;
 
         submethod BUILD ($.bar = 10, $.baz?) {
-            $.baz = 9;
+            $!baz = 9;
             return;
         }
     }
@@ -185,43 +184,45 @@ class Foo1 { has $.bar; };
     my $foo = Foo6b.new(bar => 7);
     ok($foo ~~ Foo6b, '... our Foo6b instance was created');
         
+    #?rakudo todo 'named argument passing to BUILD'
     is($foo.bar,        7, "getting a public rw attribute (1)"  );
     is($foo.baz,        9, "getting a public rw attribute (2)"  );
 }
 
 # L<S12/Attributes>
-ok eval('class Foo7 { has $.attr = 42 }; 1'), "class definition worked";
-is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
+ok eval('class Foo7e { has $.attr = 42 }; 1'), "class definition worked";
+is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
 
 {
     my $was_in_supplier = 0;
     sub forty_two_supplier() { $was_in_supplier++; 42 }
-    ok eval('class Foo10 { has $.attr = forty_two_supplier() }; 1'),
+    ok eval('class Foo10e { has $.attr = forty_two_supplier() }; 1'),
     'class definition using "= {...}" worked';
-    is eval('Foo10.new.attr'), 42, "default attribute value (4)";
+    is eval('Foo10e.new.attr'), 42, "default attribute value (4)";
     is      $was_in_supplier, 1,  "forty_two_supplier() was actually executed";
-    eval('Foo10.new');
+    eval('Foo10e.new');
     is      $was_in_supplier, 2,  "forty_two_supplier() is executed per instantiation";
 }
 
 # check that doing something in submethod BUILD works
-#?rakudo skip 'parse failure'
 {
     class Foo7 {
-    has $.bar;
-    has $.baz;
+        has $.bar;
+        has $.baz;
 
-    submethod BUILD ($.bar = 5, $baz = 10 ) {
-        $.baz = 2 * $baz;
-    }
+        submethod BUILD ($.bar = 5, $baz = 10 ) {
+            $!baz = 2 * $baz;
+        }
     }
 
     my $foo7 = Foo7.new();
+    #?rakudo skip "attributes as named parameters in BUILD"
     is( $foo7.bar, 5,
         'optional attribute should take default value without passed-in value' );
     is( $foo7.baz, 20,
         '... optional non-attribute should too' );
     $foo7    = Foo7.new( :bar(4), :baz(5) );
+    #?rakudo 2 skip "attributes as named parameters in BUILD"
     is( $foo7.bar, 4,
         'optional attribute should take passed-in value over default' );
     is( $foo7.baz, 10,
@@ -230,15 +231,14 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 
 
 # check that args are passed to BUILD
-#?rakudo skip 'submethod parsing'
 {
     class Foo8 {
         has $.a;
         has $.b;
         
         submethod BUILD(:$foo, :$bar) {
-            $.a = $foo;
-            $.b = $bar;
+            $!a = $foo;
+            $!b = $bar;
         }
     }
 
@@ -266,18 +266,17 @@ is eval('Foo7.new.attr'), 42,              "default attribute value (1)";
 }
 
 # check $self is passed to BUILD
-#?rakudo skip 'submethod parsing'
 {
     class Foo10 {
-    has $.a;
-    has $.b;
-    has $.c;
+        has $.a;
+        has $.b;
+        has $.c;
     
-    submethod BUILD(Class $self: :$foo, :$bar) {
-        $.a = $foo;
-        $.b = $bar;
-        $.c = 'y' if $self.isa(Foo10);
-    }
+        submethod BUILD($self: :$foo, :$bar) {
+            $!a = $foo;
+            $!b = $bar;
+            $!c = 'y' if $self.isa(Foo10);
+        }
     }
 
     {
