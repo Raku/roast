@@ -14,7 +14,6 @@ dies_ok  { f('m') },    'type check forbids bad return';
 sub g returns  Int ($x) { $x };
 
 lives_ok { g(3) },      'type check allows good implicit return';
-#?rakudo todo 'type checks on implicit return'
 dies_ok  { g('m') },    'type check forbids bad  implicitreturn';
 
 # vim: ft=perl6
