@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 47;
+plan 55;
 
 # L<S09/Typed arrays/>
 
@@ -94,6 +94,34 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     my Str @c = <foo bar baz>;
     #?rakudo todo 'Array methods should return typed arrays'
     is @c.keys.of, Int, '@array.keys is typed with Int';
+}
+
+# test that we can have parametric array return types
+{
+    sub ret_pos_1 returns Positional of Int { my Int @a = 1,2,3; return @a; }
+    sub ret_pos_2 returns Positional of Int { my Int @a = 1,2,3; @a }
+    sub ret_pos_3 returns Positional of Int { my @a = 1,2,3; return @a; }
+    sub ret_pos_4 returns Positional of Int { my @a = 1,2,3; @a }
+    sub ret_pos_5 returns Positional of Int { my Num @a = 1,2,3; return @a; }
+    sub ret_pos_6 returns Positional of Int { my Num @a = 1,2,3; @a }
+    sub ret_pos_7 returns Positional of Num { my Int @a = 1,2,3; return @a; }
+    sub ret_pos_8 returns Positional of Num { my Int @a = 1,2,3; @a }
+    lives_ok { ret_pos_1() },
+        'type check Positional of Int allows correctly typed array to be returned explicitly';
+    lives_ok { ret_pos_2() },
+        'type check Positional of Int allows correctly typed array to be returned implicitly';
+    dies_ok { ret_pos_3() },
+        'type check Positional of Int prevents untyped array to be returned explicitly';
+    dies_ok { ret_pos_4() },
+        'type check Positional of Int prevents untyped array to be returned implicitly';
+    dies_ok { ret_pos_5() },
+        'type check Positional of Int prevents incorrectly typed array to be returned explicitly';
+    dies_ok { ret_pos_6() },
+        'type check Positional of Int prevents incorrectly typed array to be returned implicitly';
+    lives_ok { ret_pos_7() },
+        'type check Positional of Num allows subtyped Int array to be returned explicitly';
+    lives_ok { ret_pos_8() },
+        'type check Positional of Num allows subtyped Int array to be returned implicitly';
 }
 
 # vim: ft=perl6
