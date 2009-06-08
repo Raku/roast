@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 11;
 
 =begin pod
 
@@ -32,7 +32,6 @@ ok(Foo.^isa(Foo), '... Foo is-a Foo (of course) (as class method)');
 is Foo.^name(), 'Foo', '... the name() property is Foo';
 #?rakudo skip '.version, version number parsing'
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
-ok Foo.^parents()[0] === Foo, '... the isa() property returns Foo as the first parent class';
 #?rakudo skip '.layout'
 is Foo.^layout, P6opaque, '^.layout';
 
