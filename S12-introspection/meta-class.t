@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 7;
 
 =begin pod
 
@@ -34,15 +34,3 @@ is Foo.^name(), 'Foo', '... the name() property is Foo';
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
 #?rakudo skip '.layout'
 is Foo.^layout, P6opaque, '^.layout';
-
-# L<S12/Introspection/"get the method list of MyClass">
-
-# NOTE: I am guessing on some of this here, but it's a start for now
-
-my @methods = Foo.new().^methods();
-is @methods[0].name, 'bar', '... our first method is bar';
-ok @methods[0].signature.perl ~~ /'$param'/, '... our first methods signature is $param';
-is @methods[0].returns, Str, '... our first method returns a Str';
-#?rakudo skip '.multi'
-ok !@methods[0].multi, '... our first method is not a multimethod';
-
