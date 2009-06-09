@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 40;
 
 =begin pod
 
@@ -81,6 +81,18 @@ ok @methods[3].name eq 'foo' && @methods[4].name eq 'bar' ||
    @methods[3].name eq 'bar' && @methods[4].name eq 'foo',
    'two methods from class A itself';
 
+@methods = D.^methods(:tree);
+is +@methods, 4, ':tree gives us right number of elements';
+ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
+   @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
+   'first two methods from class D itself';
+is @methods[2].WHAT, Array, 'third item is an array';
+is +@methods[2], 2, 'nested array for B had right number of elements';
+is @methods[3].WHAT, Array, 'forth item is an array';
+is +@methods[3], 1, 'nested array for C had right number of elements';
+is @methods[2], B.^methods(:tree), 'nested tree for B is correct';
+is @methods[3], C.^methods(:tree), 'nested tree for C is correct';
+
 @methods = List.^methods();
 ok +@methods > 0, 'can get methods for List (proto)';
 @methods = (1, 2, 3).^methods();
@@ -95,3 +107,6 @@ ok +List.^methods() > +Any.^methods(), 'List has more methods than Any';
 ok +Any.^methods() > +Object.^methods(), 'Any has more methods than Objects';
 
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
+ok D.^methods.perl, 'can get .perl of output of .^methods';
+
+
