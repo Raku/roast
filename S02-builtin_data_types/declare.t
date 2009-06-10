@@ -1,6 +1,8 @@
 use v6;
 use Test;
-plan 23;
+
+# see if you can declare the various built-in types
+plan 58;
 
 # L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
 
@@ -148,3 +150,189 @@ plan 23;
  isa_ok($nacpoi, buf);
 }
 
+# junction StrPos StrLen uint Nil Whatever Object Failure
+# Exception Range Bag Signature Capture Blob Instant Duration
+# Keyhash KeySet KeyBag Pair Mapping IO Routine Sub Method
+# Submethod Macro Match Package Module Class Role Grammar Any
+
+#maybe it just needs
+#?rakudo skip 'junction not implemented'
+{
+ my junction $sor;
+ isa_ok($sor, junction);
+}
+
+#?rakudo skip 'StrPos not implemented'
+{
+ my StrPos $pa;
+ isa_ok($pa,StrPos  );
+}
+
+
+#?rakudo skip 'StrLen not implemented'
+{
+ my StrLen $re;
+ isa_ok($re,StrLen  );
+}
+
+{
+ my Nil $ci;
+ isa_ok($ci,Nil  );
+}
+
+{
+ my Whatever $vo;
+ isa_ok($vo,Whatever  );
+}
+
+#?rakudo skip 'Object not working'
+{
+ my Object $mu;
+ isa_ok($mu,Object  );
+}
+
+{
+ my Failure $xa;
+ isa_ok($xa,Failure  );
+}
+
+{
+ my Exception $ze;
+ isa_ok($ze,Exception  );
+}
+
+{
+ my Range $bi;
+ isa_ok($bi,Range  );
+}
+
+#?rakudo skip 'Bag not implemented'
+{
+ my Bag $so;
+ isa_ok($so,Bag  );
+}
+
+{
+ my Signature $pano;
+ isa_ok($pano,Signature  );
+}
+
+{
+ my Capture $papa;
+ isa_ok($papa,Capture  );
+}
+
+#?rakudo skip 'Blob not implemented'
+{
+ my Blob $pare;
+ isa_ok($pare,Blob  );
+}
+
+#?rakudo skip 'Instant not implemented'
+{
+ my Instant $paci;
+ isa_ok($paci,Instant  );
+}
+
+#?rakudo skip 'Duration not implemented'
+{
+ my Duration $pavo;
+ isa_ok($pavo,Duration  );
+}
+
+#?rakudo skip 'KeyHash not implemented'
+{
+ my KeyHash $pamu;
+ isa_ok($pamu,KeyHash  );
+}
+
+#?rakudo skip 'KeySet not implemented'
+{
+ my KeySet $paxa;
+ isa_ok($paxa,KeySet  );
+}
+
+#?rakudo skip 'KeyBag not implemented'
+{
+ my KeyBag $paze;
+ isa_ok($paze,KeyBag  );
+}
+
+{
+ my Pair $pabi;
+ isa_ok($pabi,Pair  );
+}
+
+{
+ my Mapping $paso;
+ isa_ok($paso,Mapping  );
+}
+
+{
+ my IO $reno;
+ isa_ok($reno,IO  );
+}
+
+{
+ my Routine $repa;
+ isa_ok($repa,Routine  );
+}
+
+{
+ my Sub $rere;
+ isa_ok($rere, Sub );
+}
+
+{
+ my Method $reci;
+ isa_ok($reci, Method );
+}
+
+{
+ my Submethod $revo;
+ isa_ok($revo, Submethod );
+}
+
+#?rakudo skip 'Macro not implemented'
+{
+ my Macro $remu;
+ isa_ok($remu,Macro  );
+}
+
+{
+ my Match $rexa;
+ isa_ok($rexa,Match  );
+}
+
+#?rakudo skip 'Package not implemented'
+{
+ my Package $reze;
+ isa_ok($reze,Package  );
+}
+
+{
+ my Module $rebi;
+ isa_ok($rebi,Module  );
+}
+
+#?rakudo skip 'Class not implemented'
+{
+ my Class $reso;
+ isa_ok($reso,Class  );
+}
+
+#?rakudo skip 'Role causing Null PMC access in get_string()'
+{
+ my Role $cino;
+ isa_ok($cino, Role );
+}
+
+{
+ my Grammar $cire;
+ isa_ok($cire,Grammar  );
+}
+
+{
+ my Any $civo;
+ isa_ok($civo, Any );
+}
