@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # see if you can declare the various built-in types
-plan 59;
+plan 61;
 
 # L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
 
@@ -108,7 +108,18 @@ plan 59;
 
 
 # non-instantiable Roles such as Callable, Failure, and Integral
-# FIXME TODO how to test this?
+
+{
+ my Callable $fancu ;
+ isa_ok($fancu,Callable);
+}
+
+#?rakudo skip 'Integral not implemented'
+{
+ my Integral $foo;
+ isa_ok($foo,Integral);
+}
+
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
@@ -155,7 +166,6 @@ plan 59;
 # Keyhash KeySet KeyBag Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
 
-#maybe it just needs
 #?rakudo skip 'junction not implemented'
 {
  my junction $sor;
@@ -288,6 +298,23 @@ plan 59;
  my Sub $rr=&bar;
  isa_ok($rr, Sub );
 }
+
+#This test might be written incorrectly TODO AUDIT
+#?rakudo skip 'Sub Cannot handle typed variables with sigil &'
+{
+ sub baz() { return 1;};
+ sub bar() { return baz;} ;
+ my  Sub &foo = &bar;
+ is($foo(), 1,'nested sub call');
+}
+
+{
+ sub baz() { return 1;};
+ sub bar() { return baz;} ;
+ my  $foo = &bar;
+ is($($foo()), 1, 'nested sub call');
+}
+
 
 {
  my Method $reci;
