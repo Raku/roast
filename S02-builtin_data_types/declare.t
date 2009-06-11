@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # see if you can declare the various built-in types
-plan 58;
+plan 59;
 
 # L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
 
@@ -281,6 +281,12 @@ plan 58;
 {
  my Sub $rere;
  isa_ok($rere, Sub );
+}
+
+{
+ sub bar() { say 'blah' };
+ my Sub $rr=&bar;
+ isa_ok($rr, Sub );
 }
 
 {
