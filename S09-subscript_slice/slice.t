@@ -101,9 +101,8 @@ plan 27;
     is +@other, 0, '@array[2..1] is an empty slice';
 }
 
-#?rakudo todo 'RT 61844'
-#?DOES 2
 {
     eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
+    #?rakudo todo 'RT 61844'
     is eval('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
