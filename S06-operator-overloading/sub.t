@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 44;
 
 =begin pod
 
@@ -272,6 +272,16 @@ L<S06/"Operator overloading">
 	is (2 our_non_assoc_infix 3), (2 ** 3), "Non-associative works for just tow operands.";
 	is ((2 our_non_assoc_infix 2) our_non_assoc_infix 3), (2 ** 2) ** 3, "Non-associative works when used with parens.";
 	eval_dies_ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
+}
+
+#?rakudo skip 'RT #66552'
+{
+    role A { has $.v }
+    multi sub infix:<==>(A $a, A $b) { $a.v == $b.v }
+    lives_ok { 3 == 3 or  die() }, 'old == still works on integers (+)';
+    lives_ok { 3 == 4 and die() }, 'old == still works on integers (-)';
+    ok  (A.new(v => 3) == A.new(v => 3)), 'infix:<==> on A objects works (+)';
+    ok !(A.new(v => 2) == A.new(v => 3)), 'infix:<==> on A objects works (-)';
 }
 
 {
