@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S12/Methods/"no space between the method name and the left parenthesis">
 
@@ -30,5 +30,15 @@ is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 #?rakudo skip 'adverbial closures'
 is (1..8).grep: { $_ % 2 }.map: { $_ - 1}.join('|'), '0|2|4|6', 
    'adverbial closure has right precedence and associativity';
+
+# Used to be Rakudo RT #61988, $.foo form didn't accept arguments
+
+class B {
+    method a ($a, $b) { $a + $b }
+    method b { $.a(2, 3) }
+}
+
+is B.new.b, 5, '$.a can accept arguments';
+
 
 # vim: ft=perl6
