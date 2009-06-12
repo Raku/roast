@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 41;
 
 # type based dispatching
 #
@@ -114,7 +114,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is f3(3), 4, '... and the ordinary dispatch still works';
 }
 
-# multi dispatch on typed containers 
+# multi dispatch on typed containers
 
 {
     multi f4 (Int @a )  { 'Array of Int' }
@@ -141,5 +141,18 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is f4(@c), 'Array of Array', 'can dispatch on typed Array (Array)';
 }
 
+# make sure that multi sub dispatch also works if the sub is defined
+# in a class (was a Rakudo regression, RT #65674)
+
+{
+    class A {
+        multi sub a(Int $x) { 'Int ' ~ $x }
+        multi sub a(Str $x) { 'Str ' ~ $x }
+    }
+
+    is A::a(3),     'Int 3',  'multis in classes (1)';
+    is A::a('f'),   'Str f',  'multis in classes (2)';
+    dies_ok { A::a([4, 5]) }, 'multis in classes (3)';
+}
 
 # vim: ft=perl6
