@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -63,4 +63,13 @@ plan 10;
     my $y = (3 if 0);
     is $x, 3, '(3 if 1) worked in scalar context';
     ok !$y, 'my $y = (3 if 0) leaves $y false';
+}
+
+# return value of false 'if' should be Nil
+# see http://rt.perl.org/rt3/Ticket/Display.html?id=66544
+
+#?rakudo 2 todo 'RT #66544, return value of false statement modifying "if"'
+{
+    ok (42 if 0) ~~ undef, '"$something if 0" is Nil - (undef)';
+    ok (42 if 0) ~~ (),    '"$something if 0" is Nil - (empty list)';
 }
