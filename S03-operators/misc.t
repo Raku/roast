@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 52;
+plan 54;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -54,6 +54,14 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 # L<S03/Tight or precedence/short-circuit inclusive-or>
 is(2 || 3, 2, "|| returns first true value");
 ok(!(defined( 0 || undef)), "|| returns last false value of list?");
+
+#?rakudo skip 'RT #66404'
+{
+    (my @s)[0] //= 5;
+    is @s[0], 5, '(my @s)[0] //= something works';
+    (state @t)[0] //= 5;
+    is @t[0], 5, '(state @t)[0] //= something works';
+}
 
 is(?(2 ?| 3), True, "boolean or (?|) returns True or False"); 
 is(?(0 ?| undef), False, "boolean or (?|) returns True or False");
