@@ -414,12 +414,10 @@ Hello, World
 }
 
 # q:x
-#?rakudo skip 'quoting adverbs'
 {
     is q:x/echo hello/, "hello\n", "Testing for q:x operator.";
 }
 # utf8
-#?rakudo skip 'quoting adverbs'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
