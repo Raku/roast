@@ -2,7 +2,9 @@ use v6;
 use Test;
 
 # see if you can declare the various built-in types
-plan 61;
+# a broad but not in depth test of the existence of various types
+
+plan 71;
 
 # L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
 
@@ -369,3 +371,68 @@ plan 61;
  my Any $civo;
  isa_ok($civo, Any );
 }
+
+# http://svn.pugscode.org/pugs/src/perl6/CORE.pad had list of types pugs supports
+
+{
+ my Bool $jetfu;
+ isa_ok($jetfu, Bool);
+}
+
+{
+ my Order $karbi;
+ isa_ok($karbi, Order);
+}
+
+#?rakudo skip 'Matcher isa not implemented'
+{
+  my Matcher $mapti;
+  isa_ok($mapti, Matcher);
+}
+
+#?rakudo skip 'Proxy not implemented'
+{
+  my Proxy $krati;
+  isa_ok($krati, Proxy);
+}
+
+# CharLingua Byte Char AnyChar 
+
+#?rakudo skip 'Char not implemented'
+{
+  my Char $pav;
+  isa_ok($pav, Char);
+}
+
+#?rakudo skip 'Byte not implemented'
+{
+  my Byte $biv;
+  isa_ok($biv, Byte);
+}
+
+#?rakudo skip 'AnyChar not implemented'
+{
+  my AnyChar $lerfu;
+  isa_ok($lerfu, AnyChar);
+}
+
+#?rakudo skip 'CharLingua not implemented'
+{
+  my CharLingua  $lerfu;
+  isa_ok($lerfu, CharLingua );
+}
+
+#?rakudo skip 'Codepoint not implemented'
+{
+  my Codepoint $cypy;
+  isa_ok($cypy,Codepoint );
+}
+
+#?rakudo skip 'Grapheme not implemented'
+{
+  my Grapheme $gy;
+  isa_ok($gy,Grapheme );
+}
+
+# Positional Associative Abstraction Ordering Ordered
+# KeyExtractor Comparator OrderingPair HyperWhatever
