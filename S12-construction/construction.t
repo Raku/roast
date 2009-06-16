@@ -41,7 +41,6 @@ class Foo {
 
 ok Foo.new("a string") ~~ Foo, '... our Foo instance was created';
 
-#?rakudo todo 'unknown'
 is Foo.new("a string").a, 'a string', "our own 'new' was called", :todo<feature>;
 
 
