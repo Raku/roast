@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 10;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.
@@ -39,5 +39,16 @@ ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
+
+# http://rt.perl.org/rt3/Ticket/Display.html?id=66596
+# .subst within a multi sub didn't work
+
+#?rakudo skip 'RT 66596'
+{
+    multi substtest (Str $d) {
+        $d.subst(/o/, 'a')
+    }
+    is substtest("mop"), "map", '.subst works in a multi';
+}
 
 # vim: ft=perl6
