@@ -65,3 +65,5 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
     ok(repeat_rand(0) != repeat_rand(1),
         'edge case: srand(:x(0)) not the same as srand(:x(1))');
 }
+
+# vim: ft=perl6
