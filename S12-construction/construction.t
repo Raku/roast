@@ -32,12 +32,9 @@ is OwnConstr.in_own, 1,            "own constructor was actually called";
 
 class Foo {
   has $.a;
-  has $.string;
   
   method new ($self: Str $string) {
-    my $s = $self.bless(*, string => $string);
-    $!a = $string;
-    return $s;
+    $self.bless(*, a => $string);
   }
 }
 
