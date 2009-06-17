@@ -307,7 +307,7 @@ plan 85;
  sub baz() { return 1;};
  sub bar() { return baz;} ;
  my  Sub &foo = &bar;
- is($foo(), 1,'nested sub call');
+ is(&foo(), 1,'nested sub call');
 }
 
 {
