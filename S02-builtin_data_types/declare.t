@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 71;
+plan 85;
 
 # L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
 
@@ -436,3 +436,110 @@ plan 71;
 
 # Positional Associative Abstraction Ordering Ordered
 # KeyExtractor Comparator OrderingPair HyperWhatever
+
+{
+  my Positional $mokca;
+  ok($mokca ~~ Positional,'Positional exists');
+}
+
+{
+  my Associative $kansa;
+  ok($kansa ~~ Associative,'Associative exists');
+}
+
+{
+  my Abstraction $sucta;
+  ok($sucta ~~ Abstraction,'Abstraction exists');
+}
+
+#?rakudo skip 'Ordering not implemented'
+{
+  my Ordering $foo;
+  isa_ok($foo,Ordering);
+}
+
+#?rakudo skip 'KeyExtractor not implemented'
+{
+  my KeyExtractor $ckiku;
+  isa_ok($ckiku, KeyExtractor);
+}
+
+# KeyExtractor Comparator OrderingPair HyperWhatever
+
+#?rakudo skip 'Comparator not implemented'
+{
+  my Comparator $bar;
+  isa_ok($bar,Comparator);
+}
+
+#?rakudo skip 'OrderingPair not implemented'
+{
+  my OrderingPair $foop;
+  isa_ok($foop,OrderingPair);
+}
+
+#?rakudo skip 'HyperWhatever not implemented'
+{
+  my HyperWhatever $baz;
+  isa_ok($baz,HyperWhatever);
+}
+
+# utf8 utf16 utf32
+
+#?rakudo skip 'utf8  not implemented'
+{
+  my utf8 $ubi;
+  isa_ok($ubi,utf8);
+}
+
+#?rakudo skip 'utf16  not implemented'
+{
+  my utf16 $upaxa;
+  isa_ok($upaxa,utf16);
+}
+
+#?rakudo skip 'utf32  not implemented'
+{
+  my utf32 $ucire;
+  isa_ok($ucire,utf32);
+}
+
+# L<S09/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
+# int in1 int2 int4 int8 int16 in32 int64
+# uint uin1 uint2 uint4 uint8 uint16 uint32 uint64
+# t/spec/S02-builtin_data_types/int-uint.t already has these covered
+
+# L<S09/Sized types/"num16">
+# num16 num32 num64 num128
+# complex16 complex32 complex64 complex128
+# buf8 buf16 buf32 buf64 
+
+#?rakudo skip 'num16  not implemented'
+{
+  my num16 $namcupaxa;
+  isa_ok($namcupaxa,num16);
+}
+
+# TODO FIXME rakudo does not have any of them anyway
+
+# L<S02/"Hierarchical types"/"A non-scalar type may be qualified">
+# my Egg $cup; my Egg @carton; my Array of Egg @box; my Array of Array of Egg @crate;
+# my Hash of Array of Recipe %book;
+# my Hash:of(Array:of(Recipe)) %book;
+# my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
+
+#?rakudo skip 'Not yet implemented Array of Int @box'
+{
+  my Array of Int @box;
+  ok(1,'Array of Int @box');
+}
+
+#?rakudo skip 'Not yet implemented Array of Array of Int @box'
+{
+  my Array of Array of Int @box;
+  ok(1,'Array of Array of Int @box');
+}
+
+# TODO FIXME
+
+
