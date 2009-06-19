@@ -83,7 +83,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 # L<S12/Enums/"Like type names, enum names are parsed as standalone tokens">
 # conflict between subs and enums
 {
-    sub white { 'sub' };
+    my sub white { 'sub' };
     is white, 0, 'short name of the enum without parenthesis is an enum';
     #?rakudo skip 'subs and enums with conflicting names'
     is white(), 'sub', 'short name with parenthesis is a sub';
