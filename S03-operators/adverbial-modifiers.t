@@ -176,19 +176,23 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
 
 #  $v = 'eval failed';
 #  eval '$v = f :x("a") :y("b")()';
-#  is $v, "ab", 'f :x("a") :y("b")()', :todo<bug>;
+#  #?pugs todo 'bug'
+#  is $v, "ab", 'f :x("a") :y("b")()';
 
 #  $v = 'eval failed';
 #  eval '$v = f :x("a") :y("b") ()';
-#  is $v, "ab", 'f :x("a") :y("b") ()', :todo<bug>;
+#  #?pugs todo 'bug'
+#  is $v, "ab", 'f :x("a") :y("b") ()';
 
 #  $v = 'eval failed';
 #  eval '$v = f :x("a"):y("b") ()';
-#  is $v, "ab", 'f :x("a"):y("b") ()', :todo<bug>;
+#  #?pugs todo 'bug'
+#  is $v, "ab", 'f :x("a"):y("b") ()';
 
 #  $v = 'eval failed';
 #  eval '$v = f :x("a"):y("b")()';
-#  is $v, "ab", 'f :x("a"):y("b")()', :todo<bug>;
+#  #?pugs todo 'bug'
+#  is $v, "ab", 'f :x("a"):y("b")()';
 
 #  $v = f:x("a"):y("b") ();
 #  is $v, "ab", 'f:x("a"):y("b") ()';

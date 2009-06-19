@@ -79,12 +79,14 @@ my @e;
         my @r = (1, 2, 3);
         try { @r»++ };
         my @e = (2, 3, 4);
-        is(~@r, ~@e, "hyper auto increment an array", :todo);
+        #?pugs todo
+        is(~@r, ~@e, "hyper auto increment an array");
 
         @r = (1, 2, 3);
         try { @r>>++ };
         @e = (2, 3, 4);
-        is(~@r, ~@e, "hyper auto increment an array ASCII notation", :todo);
+        #?pugs todo
+        is(~@r, ~@e, "hyper auto increment an array ASCII notation");
 };
 
 #?rakudo skip 'unary hyperops'
@@ -208,12 +210,14 @@ my @e;
         @r = ([1, 2], [3, [4, 5]]);
         try { @r»++ };
         my @e = ([2, 3], [4, [5, 6]]);
-        is(~@r, ~@e, "distribution for unary postfix autoincr", :todo);
+        #?pugs todo
+        is(~@r, ~@e, "distribution for unary postfix autoincr");
 
         @r = ([1, 2], [3, [4, 5]]);
         try { @r>>++ };
         @e = ([2, 3], [4, [5, 6]]);
-        is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII", :todo);
+        #?pugs todo
+        is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII");
 };
 
 { # distribution for binary infix - ASCII

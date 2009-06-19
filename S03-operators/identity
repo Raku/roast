@@ -103,10 +103,12 @@ ok(!("7" =:= 7), "identify checks type mismatch");
   my ($foo, $bar);
   my $test = -> *@args { $foo =:= @args[0] };
 
-  ok  $test($foo), "binding of slurpy array subparam retains =:= (1)", :todo<unspecced>;
+  #?pugs todo 'unspecced'
+  ok  $test($foo), "binding of slurpy array subparam retains =:= (1)";
   ok !$test($bar), "binding of slurpy array subparam retains =:= (2)";
   $bar := $foo;
-  ok  $test($bar), "binding of slurpy array subparam retains =:= (3)", :todo<unspecced>;
+  #?pugs todo 'unspecced'
+  ok  $test($bar), "binding of slurpy array subparam retains =:= (3)";
 }
 
 # Again, unspecced that @args[0] can participate in =:=
@@ -114,10 +116,12 @@ ok(!("7" =:= 7), "identify checks type mismatch");
   my ($foo, $bar);
   my $test = sub { $foo =:= @_[0] };
 
-  ok  $test($foo), "binding of implicit @_ subparam retains =:= (1)", :todo<unspecced>;
+  #?pugs todo 'unspecced'
+  ok  $test($foo), "binding of implicit @_ subparam retains =:= (1)";
   ok !$test($bar), "binding of implicit @_ subparam retains =:= (2)";
   $bar := $foo;
-  ok  $test($bar), "binding of implicit @_ subparam retains =:= (3)", :todo<unspecced>;
+  #?pugs todo 'unspecced'
+  ok  $test($bar), "binding of implicit @_ subparam retains =:= (3)";
 }
 
 class TestObj { has $!a }

@@ -74,7 +74,8 @@ for <List Seq Range Buf Capture> -> $c {
 }
 
 my %hash;
-ok %hash.does(Associative), 'uninitialized %var does Associative', :todo<feature>;
+#?pugs todo 'feature'
+ok %hash.does(Associative), 'uninitialized %var does Associative';
 %hash = {};
 ok %hash.does(Associative), 'value in %var does Associative';
 
@@ -104,9 +105,12 @@ ok &pro.does(Callable), 'a proto does Callable';
 
 # &token, &rule return a Method?
 token bar {<?>}
-ok &bar.does(Callable), 'a token does Callable', :todo<feature>;
+#?pugs todo 'feature'
+ok &bar.does(Callable), 'a token does Callable';
 rule baz {<?>}
-ok &baz.does(Callable), 'a rule does Callable', :todo<feature>;
+#?pugs todo 'feature'
+ok &baz.does(Callable), 'a rule does Callable';
 # &quux returns a Sub ?
 macro quux {}
-ok &quux.does(Callable), 'a rule does Callable', :todo<feature>;
+#?pugs todo 'feature'
+ok &quux.does(Callable), 'a rule does Callable';
