@@ -364,7 +364,8 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is 1**Inf, 1;
 }
 
-#flunk("1**Inf is platform-specific -- it's 1 on OSX and NaN elsewhere", :todo);
+##?pugs todo
+#flunk("1**Inf is platform-specific -- it's 1 on OSX and NaN elsewhere");
 
 {
     # NaN

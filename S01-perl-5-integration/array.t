@@ -75,14 +75,18 @@ is($retarray.exists(10), @array.exists(10), 'retro nonexists' );
 
 ok(($p5array.push(9)), 'can push');
 
-is(0+$p5array.fetch(4), 9, 'push result via obj', :todo<bug>);
-is(@array[4], 9, 'push result via array', :todo<feature>);
+#?pugs todo 'bug'
+is(0+$p5array.fetch(4), 9, 'push result via obj');
+#?pugs todo 'feature'
+is(@array[4], 9, 'push result via array');
 
-flunk("push(9) non-terminates", :todo<bug>);
+#?pugs todo 'bug'
+flunk("push(9) non-terminates");
 #$retarray.push(9);  # this will loop
 
-is(0+$p5array.fetch(5), 9, 'retro push result', :todo<bug>);
-is(@array[5], 9, 'retro push result', :todo<bug>);
+#?pugs 2 todo 'bug'
+is(0+$p5array.fetch(5), 9, 'retro push result');
+is(@array[5], 9, 'retro push result');
 
 ok($p5array.store(0,3), 'can store');
 

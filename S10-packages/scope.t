@@ -58,19 +58,22 @@ dies_ok { ns() }, "no ns() leaked";
 
 # now the lexical / file level packages...
 my $pkg;
+#?pugs todo 'feature'
 dies_ok  { $pkg = Our::Package::pkg },
-    "Can't see `our' packages out of scope", :todo<feature>;
+    "Can't see `our' packages out of scope";
 lives_ok { $pkg = t::spec::packages::Test::get_our_pkg() },
     "Package in scope can see `our' package declarations";
 is($pkg, Our::Package, 'correct $?PACKAGE');
+#?pugs todo 'feature'
 ok(!($pkg === ::Our::Package),
-   'not the same as global type object', :todo<feature>);
+   'not the same as global type object');
 
 # oh no, how do we get to that object, then?
 # perhaps %t::spec::packages::Test::<Our::Package> ?
 
+#?pugs todo 'feature'
 dies_ok { $pkg = t::spec::packages::Test::cant_see_pkg() },
-    "can't see package declared out of scope", :todo<feature>;
+    "can't see package declared out of scope";
 lives_ok { $pkg = t::spec::packages::Test::my_pkg() },
     "can see package declared in same scope";
 is($pkg, ::My::Package::, 'correct $?PACKAGE');
@@ -79,8 +82,10 @@ ok($pkg !=== ::*My::Package::, 'not the same as global type object');
 # Check temporization of variables in external packages
 {
   {
-    ok(eval('temp $Test2::scalar; 1'), "parse for temp package vars", :todo<bug>);
+    #?pugs todo 'bug'
+    ok(eval('temp $Test2::scalar; 1'), "parse for temp package vars");
     $Test2::scalar++;
   }
-  is($Test2::scalar, 42, 'temporization of external package variables', :todo<bug>);
+  #?pugs todo 'bug'
+  is($Test2::scalar, 42, 'temporization of external package variables');
 }

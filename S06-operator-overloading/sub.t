@@ -28,7 +28,8 @@ L<S06/"Operator overloading">
     sub prefix:<±> ($thing) { return "AROUND$thing"; };
     is ± "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, latin-1 range)';
     sub prefix:<(+-)> ($thing) { return "ABOUT$thing"; };
-    is eval(q[ (+-) "fish" ]), "ABOUTfish", 'prefix operator overloading for new operator (nasty)', :todo<bug>;
+    #?pugs todo 'bug'
+    is eval(q[ (+-) "fish" ]), "ABOUTfish", 'prefix operator overloading for new operator (nasty)';
 }
 
 {
@@ -87,8 +88,9 @@ L<S06/"Operator overloading">
 
 {
     sub infix:<(C)> ($text, $owner) { return "$text CopyRight $owner"; };
+    #?pugs todo 'bug'
     is eval(q[ "romeo & juliet" (C) "Shakespeare" ]), "romeo & juliet CopyRight Shakespeare",
-	'infix operator overloading for new operator (nasty)', :todo<bug>;
+	'infix operator overloading for new operator (nasty)';
 }
 
 {
@@ -114,8 +116,9 @@ L<S06/"Operator overloading">
 #?rakudo todo 'macros'
 {
     my $var = 0;
-    ok(eval('macro circumfix:{"<!--","-->"} ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}', :todo<feature>);
-    ok(eval('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»', :todo<feature>);
+    #?pugs 2 todo 'feature'
+    ok(eval('macro circumfix:{"<!--","-->"} ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
+    ok(eval('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');
 }
 
 # demonstrate sum prefix
@@ -224,7 +227,8 @@ L<S06/"Operator overloading">
   } else {
     skip 1, "Stringification failed";
   };
-  is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly", :todo<feature>;
+  #?pugs todo 'feature'
+  is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
 #?rakudo skip 'lexical operators'

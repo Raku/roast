@@ -71,7 +71,8 @@ plan 18;
   }
 
   $_ = 23;
-  is bar(), 42, '$_ is implicitly declared "is context" (2)', :todo<bug>;
+  #?pugs todo 'bug'
+  is bar(), 42, '$_ is implicitly declared "is context" (2)';
 }
 
 {
@@ -117,10 +118,11 @@ plan 18;
 {
   my sub modify { $CALLER::foo++ }
   my $foo is context is rw = 42;
+  #?pugs 2 todo 'bug'
   lives_ok { modify() },
-      '"is context" vars declared "is rw" are rw when accessed with $CALLER:: (1)', :todo<bug>;
+      '"is context" vars declared "is rw" are rw when accessed with $CALLER:: (1)';
   is $foo, 43,
-      '"is context" vars declared "is rw" are rw when accessed with $CALLER:: (2)', :todo<bug>;
+      '"is context" vars declared "is rw" are rw when accessed with $CALLER:: (2)';
 }
 
 {
@@ -136,10 +138,12 @@ plan 18;
   my sub rebind_foo { $CALLER::foo := $other_var }
   my $foo is context = 42;
 
-  lives_ok { rebind_foo() }, 'rebinding $CALLER:: variables works (1)', :todo<bug>;
-  is $foo, 23,               'rebinding $CALLER:: variables works (2)', :todo<bug>;
+  #?pugs 2 todo 'bug'
+  lives_ok { rebind_foo() }, 'rebinding $CALLER:: variables works (1)';
+  is $foo, 23,               'rebinding $CALLER:: variables works (2)';
   $other_var++;
-  is $foo, 24,               'rebinding $CALLER:: variables works (3)', :todo<bug>;
+  #?pugs todo 'bug'
+  is $foo, 24,               'rebinding $CALLER:: variables works (3)';
 }
 
 =begin pod

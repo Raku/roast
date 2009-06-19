@@ -77,15 +77,17 @@ ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/), 're_tests 11
 ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/)), 're_tests 1121  (1325)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/)), 're_tests 1123  (1327)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/)), 're_tests 1125  (1329)');
-ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X]/), 're_tests 1127  (1331)', :todo<bug>);
-ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X][X]/), 're_tests 1129  (1333)', :todo<bug>);
-ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+[X]/), 're_tests 1131  (1335)', :todo<bug>);
+#?pugs 3 todo 'bug'
+ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X]/), 're_tests 1127  (1331)');
+ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X][X]/), 're_tests 1129  (1333)');
+ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+[X]/), 're_tests 1131  (1335)');
 ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X]/)), 're_tests 1133  (1337)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X][X]/)), 're_tests 1135  (1339)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+[X]/)), 're_tests 1137  (1341)');
-ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X]/), 're_tests 1139  (1343)', :todo<bug>);
-ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X][X]/), 're_tests 1141  (1345)', :todo<bug>);
-ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X][X](.+)+[X]/), 're_tests 1143  (1347)', :todo<bug>);
+#?pugs 3 todo 'bug'
+ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X]/), 're_tests 1139  (1343)');
+ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X][X]/), 're_tests 1141  (1345)');
+ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X][X](.+)+[X]/), 're_tests 1143  (1347)');
 ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X]/)), 're_tests 1145  (1349)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X][X]/)), 're_tests 1147  (1351)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X][X](.+)+[X]/)), 're_tests 1149  (1353)');
