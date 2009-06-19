@@ -61,8 +61,9 @@ is (foo3 n => 20, y => 300, 4000), 4000,
 {
 my sub foo ($n, *%h) { };
 ## NOTE: *NOT* sub foo ($n, *%h, *@a)
+#?pugs todo 'bug'
 dies_ok { foo 1, n => 20, y => 300 },
-  'Testing: `sub foo($n, *%h) { }; foo 1, n => 20, y => 300`', :todo<bug>;
+  'Testing: `sub foo($n, *%h) { }; foo 1, n => 20, y => 300`';
 }
 
 {
@@ -113,7 +114,8 @@ my sub foo(:$n!, *%h, *@a){ };
 diag('Testing with named arguments (named param is required) (++ version)');
 lives_ok { foo 1, n => 20, y => 300, 4000 },
   'Testing: `my sub foo(+:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
-dies_ok { foo 1, x => 20, y => 300, 4000 }, :todo<bug>;
+#?pugs todo 'bug'
+dies_ok { foo 1, x => 20, y => 300, 4000 };
 }
 
 #### "trait" version
@@ -122,8 +124,9 @@ my sub foo(:$n is required, *%h, *@a) { };
 diag('Testing with named arguments (named param is required) (trait version)');
 lives_ok { foo 1, n => 20, y => 300, 4000 },
   'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
+#?pugs todo 'bug'
 dies_ok { foo 1, x => 20, y => 300, 4000 },
-  'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`', :todo<bug>;
+  'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';
 }
 
 ##### Now slurpy scalar tests here.
@@ -131,7 +134,7 @@ dies_ok { foo 1, x => 20, y => 300, 4000 },
 
 =head1 List parameter test
 
-These tests are the testing for "List paameters" section of Synopsis 06
+These tests are the testing for "List parameters" section of Synopsis 06
 
 L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 

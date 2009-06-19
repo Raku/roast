@@ -112,9 +112,10 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
 #   list is in some kind of brackets, of course).
 #my $array11;
 #eval '$array11 = [ "a","b","c"; "d","e","f" ]';
-#is +$array11,      2, "AoA created using ';' contains correct number of elems", :todo;
-#is +$array11[0],   3, "AoA's subarray created using ';' contains correct number of elems", :todo;
-#is $array11[1][1], "e", "AoA created using ';' contains correct elem", :todo;
+##?pugs 3 todo
+#is +$array11,      2, "AoA created using ';' contains correct number of elems";
+#is +$array11[0],   3, "AoA's subarray created using ';' contains correct number of elems";
+#is $array11[1][1], "e", "AoA created using ';' contains correct elem";
 
 # [] creates new containers (() does not)
 {

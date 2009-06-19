@@ -14,7 +14,8 @@ plan 16;
   my $foo = 42;
 
   try { ($foo, "does_not_matter")[0] = 23 };
-  is $foo, 23, "assigning a list element changed the original variable", :todo<bug>;
+  #?pugs todo 'bug'
+  is $foo, 23, "assigning a list element changed the original variable";
 }
 
 {
@@ -28,14 +29,16 @@ plan 16;
 {
   my $foo = 42;
 
+  #?pugs todo 'unspecced'
   ok ($foo, "does_not_matter")[0] =:= $foo,
-    "list construction should not create new containers", :todo<unspecced>;
+    "list construction should not create new containers";
 }
 
 {
   my $foo = 42;
+  #?pugs todo 'unspecced'
   ok ($foo, "does_not_matter", 17)[0,1][0] =:= $foo,
-    "list construction and list slicing should not create new containers", :todo<unspecced>;
+    "list construction and list slicing should not create new containers";
 }
 
 # Lists as lvalues

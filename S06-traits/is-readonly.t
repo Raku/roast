@@ -20,7 +20,8 @@ plan 9;
     try { $a := 42 };
     is $a, 42, "binding the variable now works";
 
-    dies_ok { $a := 17 }, "but binding it again does not work", :todo<feature>;
+    #?pugs todo 'feature'
+    dies_ok { $a := 17 }, "but binding it again does not work";
 }
 
 {
@@ -28,11 +29,13 @@ plan 9;
     ok !(try { VAR($a).defined }), ".VAR returns undefined on an uninitialized var declared with 'is readonly'";
 
     $a := 42;
-    ok (try { VAR($a).defined }), ".VAR returns defined now", :todo<feature>;
+    #?pugs todo 'feature'
+    ok (try { VAR($a).defined }), ".VAR returns defined now";
 }
 
 {
     my $a = 3;
 
-    ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true", :todo<feature>;
+    #?pugs todo 'feature'
+    ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true";
 }

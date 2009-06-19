@@ -75,7 +75,8 @@ plan 3;
         method update { $var -= $.a; }
     };
     a.new( a => 10 ).update;
-    is $var, 90, "Testing suite 1.", :todo<bug>;
+    #?pugs todo 'bug'
+    is $var, 90, "Testing suite 1.";
 }
 
 
@@ -108,7 +109,8 @@ plan 3;
 
 ##### will cause pugs hang if uncomment it
 #    b.new( a => 20 );
-    is $var, 80, "Testing suite 2.", :todo<bug>;
+    #?pugs todo 'bug'
+    is $var, 80, "Testing suite 2.";
 }
 
 
@@ -133,6 +135,7 @@ plan 3;
 
 ##### cause pugs hang.
 #    c.new( b => 30 ).update;
-    is $var, 70, "Testing suite 3.", :todo<bug>;
+    #?pugs todo 'bug'
+    is $var, 70, "Testing suite 3.";
 }
 

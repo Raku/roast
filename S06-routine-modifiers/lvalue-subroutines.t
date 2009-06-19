@@ -31,10 +31,11 @@ L<S06/"Lvalue subroutines">
   my $var = 42;
   my $notlvalue = sub () { return $var };
 
+  #?pugs 2 todo 'bug'
   dies_ok { $notlvalue() = 23 },
-    "assigning to non-rw subrefs should die", :todo<bug>;
+    "assigning to non-rw subrefs should die";
   is $var, 42,
-    "assigning to non-rw subrefs shouldn't modify the original variable", :todo<bug>;
+    "assigning to non-rw subrefs shouldn't modify the original variable";
 }
 
 {
@@ -107,6 +108,7 @@ is proxyvar("PRE"), 'PREfoo', 'proxy lvalue subroutine FETCH works';
 #   should do.
 is (proxyvar("PRE") = "BAR"), 'BAR',
     'proxy lvalue subroutine STORE works and returns the correct value';
-is $realvar, 'BAR', 'variable was modified', :todo<feature>;
+#?pugs todo 'feature'
+is $realvar, 'BAR', 'variable was modified';
 
 # vim: ft=perl6
