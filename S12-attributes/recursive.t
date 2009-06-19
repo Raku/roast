@@ -69,6 +69,7 @@ Test attributes with recursively typed attributes
         $d .= new();
         $d.attr .= new();
     }, 'Can instantiate derived class with ::?CLASS attribute';
-    isa_ok $d.attr, C, '::?CLASS is lexical, not virtual', :todo<bug>;
+    #?pugs todo 'bug'
+    isa_ok $d.attr, C, '::?CLASS is lexical, not virtual';
 }
 

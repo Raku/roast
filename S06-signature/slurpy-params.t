@@ -42,7 +42,8 @@ is first_arg_copy(1, 2, 3), '1',  'can grab first item of a slurpy array (is cop
         @m.shift;
         return @m;
     }
-    is_deeply(func(5), [], "Shift from an array function argument works", :todo<bug>);
+    #?pugs todo 'bug'
+    is_deeply(func(5), [], "Shift from an array function argument works");
 }
 
 

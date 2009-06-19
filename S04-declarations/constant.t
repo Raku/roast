@@ -190,5 +190,6 @@ plan 19;
     constant timecheck = $foo;
     $ok++ if timecheck == 23;
 
-    ok $ok, "the initializing values for constants are evaluated at compile-time", :todo<feature>;
+    #?pugs todo 'feature'
+    ok $ok, "the initializing values for constants are evaluated at compile-time";
 }

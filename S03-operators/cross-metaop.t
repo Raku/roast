@@ -49,8 +49,9 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 #?rakudo skip 'parsefail: prefix hypers not implemented'
 {
     my @result = [~]«( <a b> X, <1 2> );
+    #?pugs todo 'feature'
     is @result, <a1 a2 b1 b2>,
-        'X, works with hyperconcat', :todo<feature>;
+        'X, works with hyperconcat';
 }
 
 # L<S03/Cross operators/list concatenating form when used like this>

@@ -56,7 +56,8 @@ is ['a'^..^'b'], [], "double-exclusive string range (^..^) can produce null rang
 is ['b'^..^'a'], [], "double-exclusive string auto-rev range (^..^) can produce null range";
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 
-is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator", :todo<bug>;
+#?pugs todo 'bug'
+is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator";
 
 # Test the unary ^ operator
 is ~(^5), "0 1 2 3 4", "unary ^num produces the range 0..^num";

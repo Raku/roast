@@ -93,8 +93,9 @@ There're two ways one can argue:
 {
     my sub foo is rw { my $var = 42; $var }
 
+    #?pugs todo 'bug'
     lives_ok { foo() := 23 },
-        "using the variable return value of an 'is rw' sub as the LHS in a binding operation works", :todo<bug>;
+        "using the variable return value of an 'is rw' sub as the LHS in a binding operation works";
 }
 
 =begin discussion

@@ -233,7 +233,8 @@ class TestClass{ has $.key is rw  };
    
    my $i = 0;
    my $sum1 = [+] @array1.map: { $_.key };
-   is( $sum1, 2, '.key //= ++$i for @array1;', :todo<bug>);
+   #?pugs todo 'bug'
+   is( $sum1, 2, '.key //= ++$i for @array1;' );
 
 }
 

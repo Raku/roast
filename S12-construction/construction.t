@@ -41,7 +41,8 @@ class Foo {
 
 ok Foo.new("a string") ~~ Foo, '... our Foo instance was created';
 
-is Foo.new("a string").a, 'a string', "our own 'new' was called", :todo<feature>;
+#?pugs todo 'feature'
+is Foo.new("a string").a, 'a string', "our own 'new' was called";
 
 
 # Using ".=" to create an object

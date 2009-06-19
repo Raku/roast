@@ -270,8 +270,9 @@ lives_ok({ foo_hash_ref()<foo> },
   sub official_d {
     userdefinedcontrol1 { return 42 };
   }
+  #?pugs todo 'bug'
   is official_d(), 42,
-    "subcalls in user-defined control flow are invisible to return", :todo<bug>;
+    "subcalls in user-defined control flow are invisible to return";
 }
 
 class Foo {

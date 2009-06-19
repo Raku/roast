@@ -13,7 +13,8 @@ plan 34;
     # 3[0] etc. should *not* work, but (3,)[0] should.
     # That's similar as with the .kv issue we've had: 3.kv should fail, but
     # (3,).kv should work.
-    dies_ok({@array[0][0]}, 'scalar is not implicitly array', :todo<bug>);
+    #?pugs todo 'bug'
+    dies_ok({@array[0][0]}, 'scalar is not implicitly array');
 }
 
 {

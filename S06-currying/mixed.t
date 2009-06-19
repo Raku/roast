@@ -42,8 +42,9 @@ ok(!(try { &foo.assuming(f => 3) }), "can't curry nonexistent named param");
 try {
 (eval('use t::packages::Test') // {}).assuming(arg1 => "foo");
 }
+#?pugs todo 'feature'
 is try { dummy_sub_with_params(arg2 => "bar") }, "[foo] [bar]",
-  "(use ...).assuming works", :todo<feature>;
+  "(use ...).assuming works";
 
 sub __hyper (@a, @b, $op?) {
   my @ret;

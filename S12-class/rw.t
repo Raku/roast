@@ -12,7 +12,8 @@ class Foo {
 
 {
     my Foo $foo .= new;
-    dies_ok { $foo.readonly_attr++ }, "basic sanity", :todo<bug>;
+    #?pugs todo 'bug'
+    dies_ok { $foo.readonly_attr++ }, "basic sanity";
 }
 
 

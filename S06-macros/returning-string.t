@@ -25,7 +25,8 @@ plan 8;
     macro plus_3 { "+ 3" }
     42 plus_3;
   ';
-  is $ret, 45, "simple string returning macro (3)", :todo<feature>;
+  #?pugs todo 'feature'
+  is $ret, 45, "simple string returning macro (3)";
 };
 
 {

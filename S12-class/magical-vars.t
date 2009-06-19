@@ -60,7 +60,8 @@ class SimpleClass does Bar {}
   #?pugs todo 'oo'
   is( $package, SimpleClass, '$?PACKAGE should be the package name');
 
-  is $class ~~ ::SimpleClass, 'the thing returned by $?CLASS in our role smartmatches against our class', :todo<bug>;
+  #?pugs todo 'bug'
+  is $class ~~ ::SimpleClass, 'the thing returned by $?CLASS in our role smartmatches against our class';
   my $forty_two;
   lives_ok { my $obj = $class.new; $forty_two = $obj.dummy },
     'the class returned by $?CLASS in our role way really our class (1)';

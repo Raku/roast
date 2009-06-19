@@ -44,7 +44,8 @@ is($bad, "1", 'Zero width replace works with :g');
 	my $r;
 	temp $_ = 'heaao';
 	s:Perl5 /aa/ll/ && ($r = $_);
-	is $r, 'hello', 's/// in boolean context properly defaults to $_', :todo<bug>;
+        #?pugs todo 'bug'
+	is $r, 'hello', 's/// in boolean context properly defaults to $_';
 }
 
 my $str = "http://foo.bar/";

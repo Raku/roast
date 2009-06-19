@@ -32,7 +32,8 @@ is(("ab" ~~ rx:P5/(ab)?(ab)+/ && $0), "", 're_tests 1234/1 (1440)');
 is(("ab" ~~ rx:P5/(ab)?(ab)+/ && $1), "ab", 're_tests 1234/2 (1441)');
 is(("abc" ~~ rx:P5/(abc)?(abc)+/ && $0), "", 're_tests 1236/1 (1444)');
 is(("abc" ~~ rx:P5/(abc)?(abc)+/ && $1), "abc", 're_tests 1236/2 (1445)');
-ok((not ("a\nb\n" ~~ rx:P5/(?m)b\s^/)), 're_tests 1238  (1448)', :todo<bug>);
+#?pugs todo 'bug'
+ok((not ("a\nb\n" ~~ rx:P5/(?m)b\s^/)), 're_tests 1238  (1448)');
 ok(("a" ~~ rx:P5/\ba/), 're_tests 1239  (1449)');
 flunk("PCRE hard parsefail");
 #is(("ab" ~~ rx:P5/^(a(??{"(?!)"})|(a)(?{1}))b/ && $1), "a", 're_tests 1241/2 (1451)');
