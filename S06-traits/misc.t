@@ -66,8 +66,10 @@ lives_ok { boom(42) }, "can modify a copy";
     $foo=1;
     sub mods_param_ref ($x is ref) { $x++;  }
     dies_ok { mods_param_ref(1); }, 'is ref with non-lvalue';
-    lives_ok { mods_param_ref($foo); }, 'is ref with non-lvalue', :todo;
-    is($foo, 2, 'is ref works', :todo);
+    #?pugs todo
+    lives_ok { mods_param_ref($foo); }, 'is ref with non-lvalue';
+    #?pugs todo
+    is($foo, 2, 'is ref works');
 }
 
 

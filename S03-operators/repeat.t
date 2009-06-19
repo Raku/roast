@@ -40,11 +40,13 @@ my @foo5 = 'x' xx -1;
 is(+@foo5, 0, 'repeating negative times produces an empty list');
 
 my @foo_2d = [1, 2] xx 2; # should create 2d
-is(@foo_2d[1], [1, 2], 'can create 2d arrays', :todo<bug>); # creates a flat 1d array
+#?pugs todo 'bug'
+is(@foo_2d[1], [1, 2], 'can create 2d arrays'); # creates a flat 1d array
 # Wrong/unsure: \(1, 2) does not create a ref to the array/list (1,2), but
 # returns a list containing two references, i.e. (\1, \2).
 #my @foo_2d2 = \(1, 2) xx 2; # just in case it's a parse bug
-#is(@foo_2d[1], [1, 2], 'can create 2d arrays (2)', :todo<bug>); # creates a flat 1d array
+##?pugs todo 'bug'
+#is(@foo_2d[1], [1, 2], 'can create 2d arrays (2)'); # creates a flat 1d array
 
 # test x=
 my $twin = 'Lintilla';

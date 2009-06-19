@@ -47,9 +47,10 @@ my $test6 = 0;
 lives_ok { $test6 = Quux.^bar}, 'class attribute accessible via ^name';
 is $test6, 23, 'class attribute via ^name really works';
 my $test7 = 0;
+#?pugs 2 todo 'feature'
 lives_ok {$test7 = $test4.^bar},
-    'class attribute accessible via ^name called on instance', :todo<feature>;
-is $test7, 23, 'class attribute via $obj.^name really works', :todo<feature>;
+    'class attribute accessible via ^name called on instance';
+is $test7, 23, 'class attribute via $obj.^name really works';
 
 # L<S12/Class methods/"you can associate a class method with the current
 # metaclass instance">

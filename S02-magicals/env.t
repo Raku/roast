@@ -117,9 +117,10 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 
 # %ENV must not be imported by default
 #?rakudo skip 'set_pmc() not implemented in class Exception'
+#?pugs todo 'bug'
 {
     my $x = eval "%ENV";
-    ok $! ~~ m:P5/Undeclared/, '%ENV not visible by default', :todo<bug>;
+    ok $! ~~ m:P5/Undeclared/, '%ENV not visible by default';
 }
 
 # following doesn't parse yet
@@ -132,8 +133,9 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 
 # Importation must be lexical
 #?rakudo skip 'set_pmc() not implemented in class Exception'
+#?pugs todo 'bug'
 {
     my $x = eval "%ENV";
-    ok $! ~~ m:P5/Undeclared/, '%ENV not visible by after lexical import scope', :todo<bug>;
+    ok $! ~~ m:P5/Undeclared/, '%ENV not visible by after lexical import scope';
     1;
 }

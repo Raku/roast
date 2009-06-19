@@ -123,8 +123,10 @@ plan 28;
 {
   my $a;
   eval '(:$a) := (:a<foo>)';
-  is($a, "foo", "bound keyword", :todo);
+  #?pugs todo
+  is($a, "foo", "bound keyword");
   my @tail;
   eval '($a, *@tail) := (1, 2, 3)';
-  ok($a == 1 && ~@tail eq '2 3', 'bound slurpy', :todo);
+  #?pugs todo
+  ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
 }
