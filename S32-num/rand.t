@@ -33,7 +33,7 @@ test_rand_range(11);
 lives_ok { srand(1) }, 'srand(1) lives and parses';
 
 {
-    sub repeat_rand ($seed) {
+    my sub repeat_rand ($seed) {
         srand($seed);
         for 1..99 { rand; }
         return rand;
@@ -50,7 +50,7 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 {
-    sub repeat_rand ($seed) {
+    my sub repeat_rand ($seed) {
         srand(:x($seed));
         for 1..99 { rand; }
         return rand;

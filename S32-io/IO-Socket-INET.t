@@ -9,7 +9,7 @@ plan 3;
 my $host = '127.0.0.1';   # or 'localhost' may be friendlier
 
 # To find an free port, list the ports currently in use.
-my ( $host, @ports, $netstat_cmd, $netstat_pat, $received, $expected );
+my ( @ports, $netstat_cmd, $netstat_pat, $received, $expected );
 given $*OS {
     when 'linux' {
         $netstat_cmd = "netstat --tcp --all --numeric";

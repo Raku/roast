@@ -1,5 +1,5 @@
 use v6;
-use Test;
+use Test <plan ok>;
 plan 44;
 
 # L<S32::Numeric/Num/"=item roots">

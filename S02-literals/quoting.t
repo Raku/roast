@@ -437,7 +437,7 @@ Hello, World
 # q:f
 #?rakudo skip 'quoting adverbs'
 {
-    sub f { "hello" };
+    my sub f { "hello" };
     my $t = q:f /&f(), world/;
     is $t, f() ~ ", world", "Testing for q:f operator.";
 
@@ -449,7 +449,7 @@ Hello, World
 # q:c
 #?rakudo skip 'quoting adverbs'
 {
-    sub f { "hello" };
+    my sub f { "hello" };
     my $t = q:c /{f}, world/;
     is $t, f() ~ ", world", "Testing for q:c operator.";
 }

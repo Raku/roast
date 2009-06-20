@@ -296,24 +296,23 @@ plan 85;
 }
 
 {
- sub bar() { say 'blah' };
- my Sub $rr=&bar;
+ my sub bar() { say 'blah' };
+ my Sub $rr = &bar;
  isa_ok($rr, Sub );
 }
 
-#This test might be written incorrectly TODO AUDIT
 #?rakudo skip 'Sub Cannot handle typed variables with sigil &'
 {
- sub baz() { return 1;};
- sub bar() { return baz;} ;
- my  Sub &foo = &bar;
+ my sub baz() { return 1;};
+ my sub bar() { return baz;} ;
+ my &foo := &bar;
  is(&foo(), 1,'nested sub call');
 }
 
 {
- sub baz() { return 1;};
- sub bar() { return baz;} ;
- my  $foo = &bar;
+ my sub baz() { return 1;};
+ my sub bar() { return baz;} ;
+ my $foo = &bar;
  is($($foo()), 1, 'nested sub call');
 }
 
