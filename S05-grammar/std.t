@@ -1,5 +1,6 @@
 use v6;
-need Test, STD;
+use Test;
+need STD;
 
 plan 1;
 
