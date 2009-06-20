@@ -48,7 +48,7 @@ dies_ok { foo 1, n => 20, y => 300, 4000 },
 diag('Testing without positional arguments');
 lives_ok { foo n => 20, y => 300, 4000 },
   'Testing: `sub foo($n, *%h, *@a){ }; foo n => 20, y => 300, 4000`';
-#?rakudo 5 todo 'positional params can be passed as named ones'
+#?rakudo 3 todo 'positional params can be passed as named ones'
 is (foo1 n => 20, y => 300, 4000), 20,
   'Testing the value for positional';
 is (foo2 n => 20, y => 300, 4000), 300,
@@ -62,6 +62,7 @@ is (foo3 n => 20, y => 300, 4000), 4000,
 my sub foo ($n, *%h) { };
 ## NOTE: *NOT* sub foo ($n, *%h, *@a)
 #?pugs todo 'bug'
+#?rakudo todo ''
 dies_ok { foo 1, n => 20, y => 300 },
   'Testing: `sub foo($n, *%h) { }; foo 1, n => 20, y => 300`';
 }
@@ -125,6 +126,7 @@ diag('Testing with named arguments (named param is required) (trait version)');
 lives_ok { foo 1, n => 20, y => 300, 4000 },
   'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
 #?pugs todo 'bug'
+#?rakudo todo ''
 dies_ok { foo 1, x => 20, y => 300, 4000 },
   'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';
 }
