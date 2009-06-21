@@ -3,8 +3,27 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 32;
+plan 35;
 
+# some tests firsts that don't require lazy lists
+
+{
+    # arity 1
+    my @a = 1...{ $_ >= 3 ?? () !! $_ + 1 };
+    is @a.join(', '), '1, 2, 3';
+}
+
+{
+    # arity 2
+    # http://www.perlmonks.org/?node_id=772778
+    sub gcd ($a, $b) {
+        ($a, $b ... { $^x % $^y || () })[*-1]
+    }
+    is gcd(2, 1), 1, 'gcd with infix:<...> (1)';
+    is gcd(42, 24), 6, 'gcd with infix:<...> (2)';
+}
+
+#?rakudo skip 'lazy lists'
 {
     my @fib = 1, 1 ... {$^x + $^y};
     is @fib[0], 1, 'fibonacci generator with series op works (0)';
@@ -15,6 +34,7 @@ plan 32;
     is @fib[5], 8, 'fibonacci generator with series op works (5)';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @fib = 1, 1 ... &infix:<+>;
     is @fib[0], 1, 'fibonacci generator with series op works (0)';
@@ -25,6 +45,7 @@ plan 32;
     is @fib[5], 8, 'fibonacci generator with series op works (5)';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @even = 0 ... { $_ + 2 };
     is @even[0], 0, 'infix:<...> with arity one works (0)';
@@ -33,6 +54,7 @@ plan 32;
     is @even[3], 6, 'infix:<...> with arity one works (3)';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @letters = <a b> ... { .succ };
     is @letters[0], 'a', 'infix:<...> works arith arity one (.succ) (0)';
@@ -51,16 +73,19 @@ plan 32;
     is @even[5], 10, 'infix:<...> with * magic (arithmetic, 5)';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @dec = 8, 7, 6 ... *;
     is @dec[0..5].join('|'), '8|7|6|5|4|3', 'magic series with decreasing values';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @np = 16, 8, 4 ... *;
     is @np[0..4].join('|'), '16|8|4|2|1', 'magic, decreasing power series';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @powers_of_two = 1, 2, 4, 8 ... *;
     is @powers_of_two[0..5].join('|'), 
@@ -68,6 +93,7 @@ plan 32;
        'infix:<...> with * magic (geometric)';
 }
 
+#?rakudo skip 'lazy lists'
 {
     my @multi = 1 ... { 2 * $_ if $_ < 10 },
                   ... { 3 };
@@ -77,6 +103,7 @@ plan 32;
 
 }
 
+#?rakudo skip 'lazy lists'
 { # 1 1, 2 2s, 3 3s, etc.
     my @xxed = 1 ... { my $next = $^a + 1; $next xx $next };
     is @xxed[0], 1,  'infix:<...> with list return (0)';
