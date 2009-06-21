@@ -27,6 +27,13 @@ sometimes the spec changes, and the test suite must be updated accordingly.
 Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
+* (r27106) utf8/utf16 etc buffer types
+* (r27091) [S04] require temp semantics for topical statement modifiers
+* (r27062,r27073) [S32] Array.rotate
+* (r27066) rangechars are not limited to \w anymore
+* (r27054) [S12] dwim on things like: say "Foo = $foo.";
+* (r27045) multi method scoping
+* (r26976) declarators "need" and "defines"
 * (r26401) Pi/Pf characters are allowed as brackets
 * (r26302) limit to IO.lines
 * (r26101) :all flag for Str.split

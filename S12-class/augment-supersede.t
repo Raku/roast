@@ -8,7 +8,7 @@ plan 5;
 
 
 #?rakudo emit #
-use MONKEY_PATCHING;
+use MONKEY_TYPING;
 {
     class Foo {
         method a {'called Foo.a'}
