@@ -1,5 +1,7 @@
 use v6;
+#?rakudo emit #
 use Test <plan ok>;
+#?rakudo emit use Test;
 plan 44;
 
 # L<S32::Numeric/Num/"=item roots">
