@@ -31,8 +31,9 @@ plan 13;
 
     my $siglist = :($x);
     $siglist := 42;
-    is($x, 42, "basic siglist binding works", :todo<feature>);
-    dies_ok { $x++ }, "binding was really a binding, not an assignment", :todo<feature>;
+    #?pugs 2 todo 'feature'
+    is($x, 42, "basic siglist binding works");
+    dies_ok { $x++ }, "binding was really a binding, not an assignment";
 }
 
 #?rakudo skip '.infix:<:=>()'
@@ -40,7 +41,8 @@ plan 13;
     my ($x, $y, $z);
     my $siglist = eval ':($x,$y,$z)';
     try { $siglist.infix:<:=>(1,2,3)};
-    is("$x $y $z", "1 2 3", "siglist bindings works", :todo<feature>);
+    #?pugs todo 'feature'
+    is("$x $y $z", "1 2 3", "siglist bindings works");
 }
 
 # Same, but more complex
@@ -49,7 +51,8 @@ plan 13;
     my ($x, @y, @rest);
     my $siglist = eval ':($x,@y,*@rest)';
     try { $siglist.infix:<:=>(42,[13,17],5,6,7) };
-    is("$x!@y[]!@rest[]", "42!13 17!5 6 7", "complex siglist bindings works (1)", :todo<feature>);
+    #?pugs todo 'feature'
+    is("$x!@y[]!@rest[]", "42!13 17!5 6 7", "complex siglist bindings works (1)");
 }
 
 #?rakudo skip '.infix:<:=>()'
@@ -57,7 +60,8 @@ plan 13;
     my ($x);
     my $siglist = eval ':($x?)';
     try { $siglist.infix:<:=>() };
-    ok(!VAR($x).defined, "complex siglist bindings works (2)", :todo<feature>);
+    #?pugs todo 'feature'
+    ok(!VAR($x).defined, "complex siglist bindings works (2)");
 }
 
 # &sub.signature should return a Siglist object
@@ -68,8 +72,9 @@ plan 13;
 
     ok $siglist,
         "a subroutine's siglist can be accessed via .signature (1-1)";
+    #?pugs todo 'feature'
     ok $siglist === &foo1.signature,
-        "a subroutine's siglist can be accessed via .signature (1-2)", :todo<feature>;
+        "a subroutine's siglist can be accessed via .signature (1-2)";
 }
 
 # Same as above, but more complex
@@ -78,8 +83,9 @@ plan 13;
     my sub foo (Num $a, $b?, *@rest) {}
     my $siglist = :(Num $a, $b?, *@rest);
 
+    #?pugs todo 'feature'
     cmp_ok $siglist, &infix:<===>, &foo.signature ,
-        "a subroutine's siglist can be accessed via .signature (2)", :todo<feature>;
+        "a subroutine's siglist can be accessed via .signature (2)";
 }
 
 #?rakudo 999 skip 'Rest not properly fudged'
