@@ -15,11 +15,12 @@ plan 12;
     my $obj1 = Klass1.new;
     try { $obj1.bind() };
 
-    is $obj1.x, 42, "binding public instance attribute (1)", :todo<bug>;
+    #?pugs 3 todo 'bug'
+    is $obj1.x, 42, "binding public instance attribute (1)";
     $var = 23;
-    is $obj1.x, 23, "binding public instance attribute (2)", :todo<bug>;
+    is $obj1.x, 23, "binding public instance attribute (2)";
     $obj1.x = 19;
-    is $var,    19, "binding public instance attribute (3)", :todo<bug>;
+    is $var,    19, "binding public instance attribute (3)";
 }
 
 # Private instance attributes
@@ -35,11 +36,12 @@ plan 12;
     my $obj2 = Klass2.new;
     try { $obj2.bind() };
 
-    is $obj2.get_x, 42, "binding private instance attribute (1)", :todo<bug>;
+    #?pugs 3 todo 'bug'
+    is $obj2.get_x, 42, "binding private instance attribute (1)";
     $var = 23;
-    is $obj2.get_x, 23, "binding private instance attribute (2)", :todo<bug>;
+    is $obj2.get_x, 23, "binding private instance attribute (2)";
     $obj2.set_x(19);
-    is $var,    19,     "binding private instance attribute (3)", :todo<bug>;
+    is $var,    19,     "binding private instance attribute (3)";
 }
 
 # Public class attributes
@@ -49,11 +51,12 @@ plan 12;
 
     try { Klass3.bind() };
 
-    is try { Klass3.x }, 42, "binding public class attribute (1)", :todo<bug>;
+    #?pugs 3 todo 'bug'
+    is try { Klass3.x }, 42, "binding public class attribute (1)";
     $var = 23;
-    is try { Klass3.x }, 23, "binding public class attribute (2)", :todo<bug>;
+    is try { Klass3.x }, 23, "binding public class attribute (2)";
     try { Klass3.x = 19 };
-    is $var,    19,  "binding public class attribute (3)", :todo<bug>;
+    is $var,    19,  "binding public class attribute (3)";
 }
 
 # Private class attributes

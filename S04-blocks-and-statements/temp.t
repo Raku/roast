@@ -94,7 +94,8 @@ eval('
     temp $struct[1]<key>[1] = 23;
     is $struct[1]<key>[1], 23, "temp() changed our nested arrayref/hashref element";
   }
-  is $struct[1]<key>[1], 1, "temp() restored our nested arrayref/hashref element", :todo<feature>;
+  #?pugs todo 'feature'
+  is $struct[1]<key>[1], 1, "temp() restored our nested arrayref/hashref element";
 }
 "1 - delete this line when the parsefail eval() is removed";
 ') or skip(2, "parsefail: temp \$struct[1]<key>[1]");
@@ -119,10 +120,11 @@ eval('
   is advance(), 2, "TEMP{} block (3)";
   is $next,     3, "TEMP{} block (4)";
 
-  flunk "TEMP{} block (5)", :todo<feature>;
-  flunk "TEMP{} block (6)", :todo<feature>;
-  flunk "TEMP{} block (7)", :todo<feature>;
-  flunk "TEMP{} block (8)", :todo<feature>;
+  #?pugs 4 todo 'feature'
+  flunk "TEMP{} block (5)";
+  flunk "TEMP{} block (6)";
+  flunk "TEMP{} block (7)";
+  flunk "TEMP{} block (8)";
 
   # Following does parse, but isn't executed (don't know why).
   # If the "{" on the following line is changed to "if 1 {", it is executed,
@@ -130,10 +132,11 @@ eval('
   # function.  So, for now, we just comment the following block and add
   # unconditional flunk()s.
   #{
-  #  is temp(advance()), 3, "TEMP{} block (5)", :todo<feature>;
-  #  is $next,           4, "TEMP{} block (6)", :todo<feature>;
-  #  is temp(advance()), 4, "TEMP{} block (7)", :todo<feature>;
-  #  is temp(advance()), 5, "TEMP{} block (8)", :todo<feature>;
+  #  #?pugs 4 todo 'feature'
+  #  is temp(advance()), 3, "TEMP{} block (5)";
+  #  is $next,           4, "TEMP{} block (6)";
+  #  is temp(advance()), 4, "TEMP{} block (7)";
+  #  is temp(advance()), 5, "TEMP{} block (8)";
   #}  # $next = 3
 
   is $next,     3, "TEMP{} block (9)";
