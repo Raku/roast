@@ -19,6 +19,7 @@ in over 4000 commits, I (Auzon) cleared them out.
 OVERALL
 * Add smartlinks to tests without them
 * Continue moving tests from t/ to t/spec/
+  For notes on what's involved in this, see http://perlmonks.org/?node_id=773415
 * Clean up old POD (only present in some testing modules)
 * Review XXX entries for test corrections
 
