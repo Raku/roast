@@ -1,0 +1,110 @@
+TODO items for the Perl 6 Test Suite
+
+Add any requested tests or other updates to this file. Please organize them
+by synopsis (when applicable) or put them in the OVERALL section at the top
+if they apply to the test suite in general.
+
+Please also read t/deprecated-syntax.pod for common mistakes in the test
+suite, and clear them when you update tests.
+
+When you are adding entries here, please put something like this in the
+commit message:
+[t/TASKS]: Added more tasks for S02.
+This way, people working on the test suite can easily spot these commits
+in #perl6.
+
+This file had entries in the past (r16405). Since this file wasn't touched
+in over 4000 commits, I (Auzon) cleared them out.
+
+OVERALL
+* Add smartlinks to tests without them
+* Continue moving tests from t/ to t/spec/
+* Clean up old POD (only present in some testing modules)
+* Review XXX entries for test corrections
+
+UPDATING TASKS
+sometimes the spec changes, and the test suite must be updated accordingly.
+Here's a list of what needs to be done, along with the revisions that changed
+the spec (newest first)
+
+* (r26401) Pi/Pf characters are allowed as brackets
+* (r26302) limit to IO.lines
+* (r26101) :all flag for Str.split
+* (r25891) Junction -> junction, eigenstates method is now private
+* (r25830) named parameters to open()
+* (r25821) bare values in signatures
+* (r25774) ~ and + act on the matched string, not the abstract object
+* (r25767) updates to builtin regexes
+* (r25715) lists in item context autopromote to captures
+
+S02
+* tests for KeySet. See spec/S02-builtin_data_types/keyhash.t for inspiration
+* tests for Implementation types (the Perl 6 equiv. of tie()), probably need
+  more specs as well
+* some tests in S02 assume that a floating point literal like 1.2 is of typ
+  Rat (rational), but it really is of type Num. Same for things like (1 / 2) 
+  (to produce a Rat you need (1 div 2) or (1/2) without spaces). 
+  This needs cleanup. Just grep for Rat,
+  review the tests and clean them up where appropriate
+
+S03
+* tests for cmp() and eqv() methods of objects
+* test that '@array, *' repeats the final element infinitely
+* tests for feeds using IO objects
+* more bitwise tests, for :signed and :unsigned, and uncomment the tests in
+  t/spec/S03-operators/bit.t
+
+S04
+* test warn()
+* more tests for excepts and CATCH blocks
+* tests for control exception handlers
+
+S05
+* mm//, ss/// variants
+* switch some "ok" tests to "is" tests to check the exact match
+* modifier tests. It's easy to grep to see which are present
+* tests for the "special named assertions"
+* more of everything.
+
+S09
+* more tests for multidimensional arrays (also .shape, see S29)
+* tests for user-defined array indexing
+* tests for PDL
+
+S12
+* tests for multi *method* dispatch (either write new ones, or find and review
+  some under t/oo/)
+* tests for $object.WALK
+* tests for $object.*@candidates
+* tests for "but" (such as 0 but Bool::True; should go into S12-enums/)
+* tests for metamethods (under "Introspection" in S12)
+* tests for autovivification
+* more tests for inheritance. Auzon noticed that there were no multiple inheritance tests, so other important things are bound to be missing.
+
+S16
+* tests for glob()
+* tests for lines($filehandle) and lines($filename)
+
+S29
+* tests for array: shape
+* tests for pack and unpack
+* tests to ensure that rand has a bit of entropy
+
+
+IO
+* more tests for say() and print(). For example elf prints array references
+  as ARRAY(0x8832e28). This might be a bit tricky because we either have to
+  capture stdout, or open a pipe to a second script.
+
+SINGLE TESTS
+* t/syntax/signature.t is flawed and has a XXX comment of what needs to be done
+* t/spec/S04-closure-traits/pre-post.t has an up-to-date TODO list that needs
+  implementing
+
+Spec clarification
+   These tests contain things that aren't specced, and for which we should
+   get clarification - either spec it, or delete the parts of the tests that
+   rely on it.
+* t/oo/syntax-but.t contains '$value but { closure }', which is mentioned once
+  in S02 in a different context, but not anywhere else it seems. Is that
+  intentional?
