@@ -40,15 +40,17 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #L<S03/Smart matching/"hash keys same set">
 #?rakudo skip 'context variables'
-{ 
-    ok eval_elsewhere('(%+hash1 ~~ %+hash2)'), "hash keys identical", :todo;
+{
+    #?pugs todo
+    ok eval_elsewhere('(%+hash1 ~~ %+hash2)'), "hash keys identical";
     ok eval_elsewhere('!(%+hash1 ~~ %+hash4)'), "hash keys differ";
 };
 
 #L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
-{ 
-    ok(%hash1 ~~ any(%hash3), "intersecting keys", :todo);
+{
+    #?pugs todo
+    ok(%hash1 ~~ any(%hash3), "intersecting keys");
     ok(%hash1 !~~ any(%hash4), "no intersecting keys");
 };
 
@@ -58,22 +60,25 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     my @true = (<foo bar>);
     my @sort_of = (<foo gorch>);
     my @false = (<gorch baz>);
-    ok((%hash5 ~~ @true), "value slice true", :todo);
-    ok((%hash5 ~~ @sort_of), "value slice partly true", :todo);
+    #?pugs todo 2
+    ok((%hash5 ~~ @true), "value slice true");
+    ok((%hash5 ~~ @sort_of), "value slice partly true");
     ok(!(%hash5 ~~ @false), "value slice false");
 };
 
 #L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
 { 
-    ok((%hash1 ~~ any(<foo bar>)), "any key exists (but where is it?)", :todo);
+    #?pugs todo
+    ok((%hash1 ~~ any(<foo bar>)), "any key exists (but where is it?)");
     ok(!(%hash1 ~~ any(<gorch ding>)), "no listed key exists");
 };
 
 #L<S03/Smart matching/hash slice existence>
 #?rakudo skip 'context variables'
 { 
-    ok((%hash1 ~~ all(<foo blah>)), "all keys exist", :todo);
+    #?pugs todo
+    ok((%hash1 ~~ all(<foo blah>)), "all keys exist");
     ok(!(%hash1 ~~ all(<foo edward>)), "not all keys exist");
 };
 
@@ -82,10 +87,11 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #L<S03/Smart matching/hash slice existence>
 #?rakudo skip 'context variables'
 { 
-    ok((%hash5 ~~ "foo"), "foo exists", :todo);
+    #?pugs todo 3
+    ok((%hash5 ~~ "foo"), "foo exists");
     ok((%hash5 ~~ "gorch"),
-       "gorch exists, true although value is false", :todo);
-    ok((%hash5 ~~ "wasabi"), "wasabi does not exist", :todo);
+       "gorch exists, true although value is false");
+    ok((%hash5 ~~ "wasabi"), "wasabi does not exist");
 };
 
 #L<S03/Smart matching/hash slice existence>
@@ -153,8 +159,9 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #L<S03/Smart matching/numeric equality>
 { 
+    #?pugs todo
     ok(((1, 2) ~~ any(2, 3)),
-       "there is intersection between (1, 2) and (2, 3)", :todo);
+       "there is intersection between (1, 2) and (2, 3)");
     ok(!((1, 2) ~~ any(3, 4)),
        "but none between (1, 2) and (3, 4)");
 };
@@ -175,7 +182,8 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 #L<S03/"Smart matching"/in range>
 { 
-    ok((5 ~~ 1 .. 10), "5 is in 1 .. 10", :todo);
+    #?pugs todo
+    ok((5 ~~ 1 .. 10), "5 is in 1 .. 10");
     ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
     ok(!(1 ~~ 5 .. 10), "1 is not i n 5 .. 10");
     ok(!(5 ~~ 5 ^..^ 10), "5 is not in 5 .. 10, exclusive");
@@ -243,7 +251,7 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
     #?pugs 2 skip 'parsefail'
     #?rakudo 2 skip 'context variables'
-    ok(!(%hash1 !~~ any(%hash3)), "intersecting keys", :todo);
+    ok(!(%hash1 !~~ any(%hash3)), "intersecting keys");
     ok((%hash1 !~~ any(%hash4)), "no intersecting keys");
 };
 
