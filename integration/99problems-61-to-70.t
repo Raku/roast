@@ -33,6 +33,8 @@ plan 15;
     
     # the spec does not specify if the tree should be flattened in pre/infix or
     # postfix order, let's just assue prefix or infix
+
+    my $tree = ['A', ['B', ['C', undef, undef], ['D', undef, undef]], undef];
     
     my @expected = ('C', 'D');
     
@@ -250,12 +252,7 @@ plan 15;
                     ['s', 11, 4,
                         ['q', 10, 5, undef, undef]], undef], undef]];
     
-    sub count($tree) {
-        return 0 unless defined ($tree);
-        return 1 + count($tree[1]) + count($tree[2]);
-    }
-    
-    sub align($tree, $prev_x, $prev_y, $lr){
+    sub align2($tree, $prev_x, $prev_y, $lr){
         return undef unless defined($tree);
         my $y = $prev_y + 1;
         my $x = 0;
@@ -267,10 +264,10 @@ plan 15;
         return [$tree[0], 
                $x, 
                $y, 
-               align($tree[1], $x, $y, "l"),
-               align($tree[2], $x, $y, "r")];
+               align2($tree[1], $x, $y, "l"),
+               align2($tree[2], $x, $y, "r")];
     }
-    my $result = align($tree, 0, 0, "r");
+    my $result = align2($tree, 0, 0, "r");
     
     is($result, $expected, "tree alignment works");
 }

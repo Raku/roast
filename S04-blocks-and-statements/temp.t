@@ -94,7 +94,6 @@ eval('
     temp $struct[1]<key>[1] = 23;
     is $struct[1]<key>[1], 23, "temp() changed our nested arrayref/hashref element";
   }
-  #?pugs todo 'feature'
   is $struct[1]<key>[1], 1, "temp() restored our nested arrayref/hashref element";
 }
 "1 - delete this line when the parsefail eval() is removed";
@@ -168,3 +167,4 @@ eval('
 }
 
 
+# vim: ft=perl6
