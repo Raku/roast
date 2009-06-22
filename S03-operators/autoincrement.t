@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 83;
+plan 57;
 
 #L<S03/Autoincrement precedence>
 
@@ -84,7 +84,10 @@ for @auto_tests -> %t {
 
     # This is a check on the form of the @auto_tests
     my $tests_run = 0;
-    ok( $pre.defined, "initial value '$pre' is defined" );
+    if ! $pre.defined {
+        ok 0, 'initial value not defined';
+        next;
+    }
 
     if %t.exists( 'inc' ) {
         my $val = $pre;
@@ -102,7 +105,9 @@ for @auto_tests -> %t {
     }
 
     # This is a check on the form of the @auto_tests
-    ok( $tests_run > 0, "did some test for '$pre'" );
+    if ! $tests_run {
+        ok 0, "no test ran for '$pre'";
+    }
 }
 
 
