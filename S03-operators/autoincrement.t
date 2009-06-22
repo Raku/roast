@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 57;
+plan 83;
 
 #L<S03/Autoincrement precedence>
 
@@ -56,61 +56,65 @@ is(%z{0},           $base);
 # http://www.nntp.perl.org/group/perl.perl6.compiler/2007/06/msg1598.html
 # which prompted many of the changes to Str autoincrement/autodecrement.
 
+my @auto_tests = (
+    { init => '99',  inc => '100' },
+    { init => 'a0',  inc => 'a1' },
+    { init => 'Az',  inc => 'Ba' },
+    { init => 'zz',  inc => 'aaa' },
+    { init => 'A99', inc => 'B00' },
+    { init => 'zi',  inc => 'zj',
+      name => 'EBCDIC check (i and j not contiguous)' },
+    { init => 'zr',  inc => 'zs',
+      name => 'EBCDIC check (r and s not contiguous)' },
+    { init => 'a1',  dec => 'a0' },
+    { init => '100', dec => '099' },
+    { init => 'Ba',  dec => 'Az' },
+    { init => 'B00', dec => 'A99' },
+
+    { init => '123.456',
+      inc  => '124.456',
+      name => '124.456, not 123.457' },
+    { init => '/tmp/pix000.jpg',
+      inc  => '/tmp/pix001.jpg',
+      name => 'increment a filename' },
+);
+
+for @auto_tests -> %t {
+    my $pre = %t<init>;
+
+    # This is a check on the form of the @auto_tests
+    my $tests_run = 0;
+    ok( $pre.defined, "initial value '$pre' is defined" );
+
+    if %t.exists( 'inc' ) {
+        my $val = $pre;
+        $val++;
+        my $name = %t<name> // "'$pre'++ is '{%t<inc>}'";
+        is( $val, %t<inc>, $name );
+        $tests_run++;
+    }
+    if %t.exists( 'dec' ) {
+        my $val = $pre;
+        $val--;
+        my $name = %t<name> // "'$pre'-- is '{%t<dec>}'";
+        is( $val, %t<dec>, $name );
+        $tests_run++;
+    }
+
+    # This is a check on the form of the @auto_tests
+    ok( $tests_run > 0, "did some test for '$pre'" );
+}
+
+
 my $foo;
-
-$foo = '99';
-is(++$foo, '100');
-
-$foo = 'a0';
-is(++$foo, 'a1');
-
-$foo = 'Az';
-is(++$foo, 'Ba');
-
-$foo = 'zz';
-is(++$foo, 'aaa');
-
-$foo = 'A99';
-is(++$foo, 'B00');
-
-# EBCDIC guards: i and j, r and s, are not contiguous.
-$foo = 'zi';
-is(++$foo, 'zj');
-
-$foo = 'zr';
-is(++$foo, 'zs');
-
-# test magical autodecrement
-$foo = '100';
-is(--$foo, '099');
-
-$foo = 'a1';
-is(--$foo, 'a0'); 
-
-$foo = 'Ba';
-is(--$foo, 'Az');
 
 #?rakudo skip "test incorrect? Decrement of 'aaa' should fail"
 $foo = 'aaa';
 is(--$foo, 'aaa');
 
-$foo = 'B00';
-is(--$foo, 'A99');
-
 #?rakudo skip "test incorrect? Decrement of 'A00' should fail"
 $foo = 'A00';
 is(--$foo, 'A00');
-
-
-
-my$file = "/tmp/pix000.jpg";
-$file++;            # /tmp/pix001.jpg, not /tmp/pix000.jph
-is($file,'/tmp/pix001.jpg');
-
-my $num = "123.456";
-$num++;             # 124.456, not 123.457
-
-is($num,'124.456');
 
 {
     my $x;
