@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 320;
+plan 326;
 
 
 # tests various assignment styles
@@ -1000,6 +1000,16 @@ sub W () { substr(eval('want'), 0, 1) }
     $x = 3;
     $x max= 2;
     is $x, 3, 'max= worked (negative)';
+}
+
+# from ye auld t/syntax/decl_vs_assign_prec.t
+{
+    is((try {my $t; $t = (1 == 1) ?? "true" !! "false"; $t}), "true", 'my $t; $t = (cond) ?? !! gets value from ?? !!, not conds bool');
+    is((try {my $t; $t = (1 == 0) ?? "true" !! "false"; $t}), "false", '.. also for false');
+    is((try {our $t; $t = (1 == 1) ?? "true" !! "false"; $t}), "true", 'truth with "our"');
+    is((try {our $t; $t = (1 == 0) ?? "true" !! "false"; $t}), "false", '... and false');
+    is((try {my $t = (1 == 1) ?? "true" !! "false"; $t}), "true", 'my $t = (cond) ?? !! gets value from ?? !!');
+    is((try {my $t = (1 == 0) ?? "true" !! "false"; $t}), "false", '.. also for false');
 }
 
 # vim: ft=perl6
