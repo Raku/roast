@@ -121,12 +121,11 @@ is(--$foo, 'aaa');
 $foo = 'A00';
 is(--$foo, 'A00');
 
-#?rakudo 2 todo 'autoincrement Greek'
-$foo = "\x[913]";
-is( ++$foo, "\x[914]", 'increment Greek uppercase alpha' );
+$foo = "\x[391]";
+is( ++$foo, "\x[392]", 'increment Greek uppercase alpha' );
 
-$foo = "\x[937]";
-is( ++$foo, "\x[913]\x[913]", 'increment Greek uppercase omega' );
+$foo = "\x[3a9]";
+is( ++$foo, "\x[391]\x[391]", 'increment Greek uppercase omega' );
 
 {
     my $x;
