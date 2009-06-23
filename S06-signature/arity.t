@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 48;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -124,3 +124,6 @@ is &o_two.count,    3, 'count on sub with optional and required named params';
     is +$tester.signature.params, indirect-count($tester),
        '... also when passed to a sub first';
 }
+
+#?rakudo todo 'bug #66868: Zero-arg sub interpreted as parameterless'
+dies_ok { a_zero( 'hello', 'world' ) }, 'no matching sub signature';
