@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 46;
 
 =begin description
 
@@ -155,5 +155,8 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
     my $x = 1 but R1;
     ok $x ~~ SR1,   'subtypes based on roles work';
 }
+
+#?rakudo todo 'bug #66854'
+eval_lives_ok 'subset A of Int;', 'subset declaration without where clause';
 
 # vim: ft=perl6
