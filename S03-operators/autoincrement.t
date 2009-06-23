@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 59;
+plan 64;
 
 #L<S03/Autoincrement precedence>
 
@@ -126,6 +126,21 @@ is( ++$foo, "\x[392]", 'increment Greek uppercase alpha' );
 
 $foo = "\x[3a9]";
 is( ++$foo, "\x[391]\x[391]", 'increment Greek uppercase omega' );
+
+$foo = "\x[3a1]";
+is( ++$foo, "\x[3a3]", 'there is no \\x[3a2]' );
+
+$foo = "\x[3b1]";
+is( ++$foo, "\x[3b2]", 'increment Greek lowercase alpha' );
+
+$foo = "\x[3c9]";
+is( ++$foo, "\x[3b1]\x[3b1]", 'increment Greek lowercase omega' );
+
+$foo = "\x[391]\x[3c9]";
+is( ++$foo, "\x[392]\x[3b1]", "increment '\x[391]\x[3c9]'" );
+
+$foo = "K\x[3c9]";
+is( ++$foo, "L\x[3b1]", "increment 'K\x[3c9]'" );
 
 {
     my $x;
