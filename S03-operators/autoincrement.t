@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 57;
+plan 59;
 
 #L<S03/Autoincrement precedence>
 
@@ -120,6 +120,13 @@ is(--$foo, 'aaa');
 #?rakudo skip "test incorrect? Decrement of 'A00' should fail"
 $foo = 'A00';
 is(--$foo, 'A00');
+
+#?rakudo 2 todo 'autoincrement Greek'
+$foo = "\x[913]";
+is( ++$foo, "\x[914]", 'increment Greek uppercase alpha' );
+
+$foo = "\x[937]";
+is( ++$foo, "\x[913]\x[913]", 'increment Greek uppercase omega' );
 
 {
     my $x;
