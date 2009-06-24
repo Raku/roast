@@ -113,13 +113,14 @@ for @auto_tests -> %t {
 
 my $foo;
 
-#?rakudo skip "test incorrect? Decrement of 'aaa' should fail"
 $foo = 'aaa';
-is(--$foo, 'aaa', "Decrement of 'aaa' should fail");
+ok(--$foo ~~ Failure, "Decrement of 'aaa' should fail");
 
-#?rakudo skip "test incorrect? Decrement of 'A00' should fail"
 $foo = 'A00';
-is(--$foo, 'A00', "Decrement of 'A00' should fail");
+ok(--$foo ~~ Failure, "Decrement of 'A00' should fail");
+
+# TODO: Check that the Failure is "Decrement out of range" and not
+#       some other unrelated error (for the fail tests above).
 
 $foo = "\x[391]";
 is( ++$foo, "\x[392]", 'increment Greek uppercase alpha' );
