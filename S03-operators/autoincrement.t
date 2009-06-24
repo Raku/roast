@@ -56,6 +56,27 @@ is(%z{0},           $base, '%z{0}');
 # http://www.nntp.perl.org/group/perl.perl6.compiler/2007/06/msg1598.html
 # which prompted many of the changes to Str autoincrement/autodecrement.
 
+{
+# These are the ranges specified in S03.
+# They might be handy for some DDT later.
+
+    my @rangechar = (
+        [ 'A', 'Z' ],
+        [ 'a', 'z' ],
+        [ "\x[391]", "\x[3a9]" ],
+        [ "\x[3b1]", "\x[3c9]" ],
+        [ "\x[5d0]", "\x[5ea]" ],
+
+        [ '0', '9' ],
+        [ "\x[660]", "\x[669]" ],
+        [ "\x[966]", "\x[96f]" ],
+        [ "\x[9e6]", "\x[9ef]" ],
+        [ "\x[a66]", "\x[a6f]" ],
+        [ "\x[ae6]", "\x[aef]" ],
+        [ "\x[b66]", "\x[b6f]" ],
+    );
+}
+
 my @auto_tests = (
     { init => '99',  inc => '100' },
     { init => 'a0',  inc => 'a1' },
