@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 136;
+plan 137;
 
 my $foo = "FOO";
 my $bar = "BAR";
