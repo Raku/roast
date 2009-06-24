@@ -11,42 +11,42 @@ plan 64;
 my $base = 10000;
 
 my $x = 10000;
-is(0 + ++$x - 1, $base);
-is(0 + $x-- - 1, $base);
-is(1 * $x,       $base);
-is(0 + $x-- - 0, $base);
-is(1 + $x,       $base);
-is(1 + $x++,     $base);
-is(0 + $x,       $base);
-is(0 + --$x + 1, $base);
-is(0 + ++$x + 0, $base);
-is($x,           $base);
+is(0 + ++$x - 1, $base, '0 + ++$x - 1');
+is(0 + $x-- - 1, $base, '0 + $x-- - 1');
+is(1 * $x,       $base, '1 * $x');
+is(0 + $x-- - 0, $base, '0 + $x-- - 0');
+is(1 + $x,       $base, '1 + $x');
+is(1 + $x++,     $base, '1 + $x++');
+is(0 + $x,       $base, '0 + $x');
+is(0 + --$x + 1, $base, '0 + --$x + 1');
+is(0 + ++$x + 0, $base, '0 + ++$x + 0');
+is($x,           $base, '$x');
 
 my @x;
 @x[0] = 10000;
-is(0 + ++@x[0] - 1, $base);
-is(0 + @x[0]-- - 1, $base);
-is(1 * @x[0],       $base);
-is(0 + @x[0]-- - 0, $base);
-is(1 + @x[0],       $base);
-is(1 + @x[0]++,     $base);
-is(0 + @x[0],       $base);
-is(0 + ++@x[0] - 1, $base);
-is(0 + --@x[0] + 0, $base);
-is(@x[0],           $base);
+is(0 + ++@x[0] - 1, $base, '0 + ++@x[0] - 1');
+is(0 + @x[0]-- - 1, $base, '0 + @x[0]-- - 1');
+is(1 * @x[0],       $base, '1 * @x[0]');
+is(0 + @x[0]-- - 0, $base, '0 + @x[0]-- - 0');
+is(1 + @x[0],       $base, '1 + @x[0]');
+is(1 + @x[0]++,     $base, '1 + @x[0]++');
+is(0 + @x[0],       $base, '0 + @x[0]');
+is(0 + ++@x[0] - 1, $base, '0 + ++@x[0] - 1');
+is(0 + --@x[0] + 0, $base, '0 + --@x[0] + 0');
+is(@x[0],           $base, '@x[0]');
 
 my %z;
 %z{0} = 10000;
-is(0 + ++%z{0} - 1, $base);
-is(0 + %z{0}-- - 1, $base);
-is(1 * %z{0},       $base);
-is(0 + %z{0}-- - 0, $base);
-is(1 + %z{0},       $base);
-is(1 + %z{0}++,     $base);
-is(0 + %z{0},       $base);
-is(0 + ++%z{0} - 1, $base);
-is(0 + --%z{0} + 0, $base);
-is(%z{0},           $base);
+is(0 + ++%z{0} - 1, $base, '0 + ++%z{0} - 1');
+is(0 + %z{0}-- - 1, $base, '0 + %z{0}-- - 1');
+is(1 * %z{0},       $base, '1 * %z{0}');
+is(0 + %z{0}-- - 0, $base, '0 + %z{0}-- - 0');
+is(1 + %z{0},       $base, '1 + %z{0}');
+is(1 + %z{0}++,     $base, '1 + %z{0}++');
+is(0 + %z{0},       $base, '0 + %z{0}');
+is(0 + ++%z{0} - 1, $base, '0 + ++%z{0} - 1');
+is(0 + --%z{0} + 0, $base, '0 + --%z{0} + 0');
+is(%z{0},           $base, '%z{0}');
 
 # Increment of a Str
 #L<S03/Autoincrement precedence/Increment of a>
@@ -115,11 +115,11 @@ my $foo;
 
 #?rakudo skip "test incorrect? Decrement of 'aaa' should fail"
 $foo = 'aaa';
-is(--$foo, 'aaa');
+is(--$foo, 'aaa', "Decrement of 'aaa' should fail");
 
 #?rakudo skip "test incorrect? Decrement of 'A00' should fail"
 $foo = 'A00';
-is(--$foo, 'A00');
+is(--$foo, 'A00', "Decrement of 'A00' should fail");
 
 $foo = "\x[391]";
 is( ++$foo, "\x[392]", 'increment Greek uppercase alpha' );
