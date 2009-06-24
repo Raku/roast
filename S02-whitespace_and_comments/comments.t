@@ -136,9 +136,6 @@ plan 45;
         This comment contains unmatched } and { { { {   (ignored)
         Plus a nested {{ ... }} pair                    (counted)
     }} 'cat', 'embedded comments with nested/unmatched bracket chars';
-
-    is( q<< <<woot>> >>, ' <<woot>> ',
-        'nesting of <<texas>> or <<french>> quotes' );
 }
 
 # L<S02/"Literals"/"# at beginning of line is always a line-end comment">

@@ -371,6 +371,8 @@ FOO
     is($hi, "hi", 'q<<hi>> is "hi"');
 }
 
+#?rakudo skip 'Thinks statement not terminated properly'
+is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes' );
 
 # L<S02/Literals/"for user-defined quotes">
 # q:to
