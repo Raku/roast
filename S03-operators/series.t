@@ -3,12 +3,11 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 35;
-
-exit 0;
+plan 40;
 
 # some tests firsts that don't require lazy lists
 
+#?rakudo skip 'dispatch'
 {
     # arity 1
     my @a = 1...{ $_ >= 3 ?? () !! $_ + 1 };
