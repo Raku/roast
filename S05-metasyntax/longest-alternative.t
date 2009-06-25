@@ -7,6 +7,7 @@ plan 27;
 
 my $str = 'a' x 7;
 
+#?rakudo skip ':g'
 {
     ok $str ~~ m:g/a|aa|aaaa/, 'basic sanity with |';
     is ~$/, 'aaaa', 'Longest alternative wins 1';
@@ -22,6 +23,7 @@ my $str = 'a' x 7;
 
 # now test with different order in the regex - it shouldn't matter at all
 
+#?rakudo skip ':g'
 {
     ok $str ~~ m:g/aa|a|aaaa/, 'basic sanity with |, different order';
     is ~$/, 'aaaa', 'Longest alternative wins 1, different order';
@@ -35,6 +37,7 @@ my $str = 'a' x 7;
     ok $str !~~ m:g/aa|a|aaaa/, 'No fourth match, different order';
 }
 
+#?rakudo skip 'interpolation in regexes'
 {
     my @list = <a aa aaaa>;
     ok $str ~~ m:g/ @list /, 'basic sanity with interpolated arrays';
