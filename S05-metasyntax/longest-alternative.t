@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 28;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -87,7 +87,14 @@ my $str = 'a' x 7;
 
     ok ('aaab---' ~~ /<foo1> | <foo2> /) && $<foo2>,
        'LTM only participated up to the LTM stopper :::';
+}
 
+# LTM stopper by implicit <.ws>
+{
+    rule  ltm_ws1 {\w+ '-'+}
+    token ltm_ws2 {\w+ '-'}
+    ok ('abc---' ~~ /<ltm_ws1> | <ltm_ws2>/) && $<ltm_ws2>,
+       'implicit <.ws> stops LTM';
 }
 
 # vim: ft=perl6
