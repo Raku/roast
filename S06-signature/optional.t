@@ -47,4 +47,21 @@ isnt foo_53814(1,undef,'something_extra',:y(3)), '1||something_extra',
 dies_ok {foo_53814(1,undef,'something_extra',:y(3))},
       'according to ticket - answer should be no matching signature';
 }
+
+#?rakudo todo 'RT# 54804'
+{
+    sub rt54804( $v, $w?, $x?, $y? ) {
+        (defined( $v ) ?? $v !! 'undef')
+        ~ '|' ~
+        (defined( $w ) ?? $w !! 'undef')
+        ~ '|' ~
+        (defined( $x ) ?? $x !! 'undef')
+        ~ '|' ~
+        (defined( $y ) ?? $y !! 'undef')
+    }
+
+    is rt54804( 1, , 3, ), '1|undef|3|undef',
+       'two commas parse as if undef is between them';
+}
+        
 # vim: ft=perl6
