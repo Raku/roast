@@ -142,5 +142,6 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
 #?rakudo todo 'RT #64474'
 {
     is (1, 2, * Z <a b c d>).join('|'),
-       '1a2b2c2d', 'A * as the last value extends lists for infix:<Z> (zip)';
+       '1|a|2|b|2|c|2|d',
+       'A * as the last value extends lists for infix:<Z> (zip)';
 }
