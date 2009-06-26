@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 31;
 
 #L<S05/Unchanged syntactic features/"While the syntax of | does not change">
 
@@ -95,6 +95,33 @@ my $str = 'a' x 7;
     token ltm_ws2 {\w+ '-'}
     ok ('abc---' ~~ /<ltm_ws1> | <ltm_ws2>/) && $<ltm_ws2>,
        'implicit <.ws> stops LTM';
+}
+
+{
+    # check that the execution of action methods doesn't stop LTM
+    grammar LTM::T1 {
+        token TOP { <a> | <b> }
+        token a { \w+ '-' }
+        token b { a+ <c>+ }
+        token c { '-' }
+    }
+
+    class LTM::T1::Action {
+        has $.matched_TOP;
+        has $.matched_a;
+        has $.matched_b;
+        has $.matched_c;
+        method TOP($/) { $!matched_TOP = 1 };
+        method a($/)   { $!matched_a   = 1 };
+        method b($/)   { $!matched_b   = 1 };
+        method c($/)   { $!matched_c   = 1 };
+    }
+    my $o = LTM::T1::Action.new();
+    ok LTM::T1.parse('aaa---', :action($o)), 'LTM grammar - matched';
+    is ~$/, 'aaa---', 'LTM grammar - matched full string';
+    # TODO: find out if $.matched_a is allowed to be set
+    ok $o.matched_TOP && $o.matched_b && $o.matched_c,
+       'was in the appropriate action methods';
 }
 
 # vim: ft=perl6
