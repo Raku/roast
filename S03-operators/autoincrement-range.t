@@ -1,12 +1,12 @@
 use v6;
 use Test;
 
-plan 105;
-
-my $x;
+plan 96;
 
 # TODO: Check that "Failure" results are "Decrement out of range"
 #       and not some other unrelated error.
+
+my $x;
 
 {
     diag( "Tests for 'A' .. 'Z'" );
@@ -90,8 +90,7 @@ my $x;
 {
     diag( "Tests for '\x[5d0]' .. '\x[5ea]' (Hebrew)" );
     $x = "\x[5ea]\x[5ea]";
-    is( ++$x, "\x[5d0]\x[5d0]\x[5d0]",
-        "'\x[5ea]\x[5ea]'++ is '\x[5d0]\x[5d0]\x[5d0]'" );
+    is( ++$x, "\x[5d0]\x[5d0]\x[5d0]", "'\x[5ea]\x[5ea]'++ is '\x[5d0]\x[5d0]\x[5d0]'" );
     $x = "\x[5d0]\x[5d0]\x[5d0]";
     ok( --$x ~~ Failure, "'\x[5d0]\x[5d0]\x[5d0]'-- fails" );
     $x = "A\x[5d0]";
@@ -110,9 +109,9 @@ my $x;
 {
     diag( "Tests for '0' .. '9'" );
     $x = "99";
-    is( ++$x, "000", "'99'++ is '000'" );
-    $x = "000";
-    ok( --$x ~~ Failure, "'000'-- fails" );
+    is( ++$x, "100", "'99'++ is '100'" );
+    $x = "100";
+    is( --$x, "099", "'100'-- is '099'" );
     $x = "A0";
     is( ++$x, "A1", "'A0'++ is 'A1'" );
     $x = "A1";
@@ -130,10 +129,11 @@ my $x;
 {
     diag( "Tests for '\x[660]' .. '\x[669]' (Arabic-Indic)" );
     $x = "\x[669]\x[669]";
-    is( ++$x, "\x[660]\x[660]\x[660]",
-        "'\x[669]\x[669]'++ is '\x[660]\x[660]\x[660]'" );
-    $x = "\x[660]\x[660]\x[660]";
-    ok( --$x ~~ Failure, "'\x[660]\x[660]\x[660]'-- fails" );
+    is( ++$x, "\x[661]\x[660]\x[660]",
+        "'\x[669]\x[669]'++ is '\x[661]\x[660]\x[660]'" );
+    $x = "\x[661]\x[660]\x[660]";
+    is( --$x, "\x[660]\x[669]\x[669]",
+        "'\x[661]\x[660]\x[660]'-- is '\x[660]\x[669]\x[669]'" );
     $x = "A\x[660]";
     is( ++$x, "A\x[661]", "'A\x[660]'++ is 'A\x[661]'" );
     $x = "A\x[661]";
@@ -151,10 +151,11 @@ my $x;
 {
     diag( "Tests for '\x[966]' .. '\x[96f]' (Devangari)" );
     $x = "\x[96f]\x[96f]";
-    is( ++$x, "\x[966]\x[966]\x[966]",
-        "'\x[96f]\x[96f]'++ is '\x[966]\x[966]\x[966]'" );
-    $x = "\x[966]\x[966]\x[966]";
-    ok( --$x ~~ Failure, "'\x[966]\x[966]\x[966]'-- fails" );
+    is( ++$x, "\x[967]\x[966]\x[966]",
+        "'\x[96f]\x[96f]'++ is '\x[967]\x[966]\x[966]'" );
+    $x = "\x[967]\x[966]\x[966]";
+    is( --$x, "\x[966]\x[96f]\x[96f]",
+        "'\x[967]\x[966]\x[966]'-- is '\x[966]\x[96f]\x[96f]'" );
     $x = "A\x[966]";
     is( ++$x, "A\x[967]", "'A\x[966]'++ is 'A\x[967]'" );
     $x = "A\x[967]";
@@ -172,10 +173,11 @@ my $x;
 {
     diag( "Tests for '\x[9e6]' .. '\x[9ef]' (Bengali)" );
     $x = "\x[9ef]\x[9ef]";
-    is( ++$x, "\x[9e6]\x[9e6]\x[9e6]",
-        "'\x[9ef]\x[9ef]'++ is '\x[9e6]\x[9e6]\x[9e6]'" );
-    $x = "\x[9e6]\x[9e6]\x[9e6]";
-    ok( --$x ~~ Failure, "'\x[9e6]\x[9e6]\x[9e6]'-- fails" );
+    is( ++$x, "\x[9e7]\x[9e6]\x[9e6]",
+        "'\x[9ef]\x[9ef]'++ is '\x[9e7]\x[9e6]\x[9e6]'" );
+    $x = "\x[9e7]\x[9e6]\x[9e6]";
+    is( --$x, "\x[9e6]\x[9ef]\x[9ef]",
+        "'\x[9e7]\x[9e6]\x[9e6]'-- is '\x[9e6]\x[9ef]\x[9ef]'" );
     $x = "A\x[9e6]";
     is( ++$x, "A\x[9e7]", "'A\x[9e6]'++ is 'A\x[9e7]'" );
     $x = "A\x[9e7]";
@@ -193,10 +195,11 @@ my $x;
 {
     diag( "Tests for '\x[a66]' .. '\x[a6f]' (Gurmukhi)" );
     $x = "\x[a6f]\x[a6f]";
-    is( ++$x, "\x[a66]\x[a66]\x[a66]",
-        "'\x[a6f]\x[a6f]'++ is '\x[a66]\x[a66]\x[a66]'" );
-    $x = "\x[a66]\x[a66]\x[a66]";
-    ok( --$x ~~ Failure, "'\x[a66]\x[a66]\x[a66]'-- fails" );
+    is( ++$x, "\x[a67]\x[a66]\x[a66]",
+        "'\x[a6f]\x[a6f]'++ is '\x[a67]\x[a66]\x[a66]'" );
+    $x = "\x[a67]\x[a66]\x[a66]";
+    is( --$x, "\x[a66]\x[a6f]\x[a6f]",
+        "'\x[a67]\x[a66]\x[a66]'-- is '\x[a66]\x[a6f]\x[a6f]'" );
     $x = "A\x[a66]";
     is( ++$x, "A\x[a67]", "'A\x[a66]'++ is 'A\x[a67]'" );
     $x = "A\x[a67]";
@@ -214,10 +217,11 @@ my $x;
 {
     diag( "Tests for '\x[ae6]' .. '\x[aef]' (Gujarati)" );
     $x = "\x[aef]\x[aef]";
-    is( ++$x, "\x[ae6]\x[ae6]\x[ae6]",
-        "'\x[aef]\x[aef]'++ is '\x[ae6]\x[ae6]\x[ae6]'" );
-    $x = "\x[ae6]\x[ae6]\x[ae6]";
-    ok( --$x ~~ Failure, "'\x[ae6]\x[ae6]\x[ae6]'-- fails" );
+    is( ++$x, "\x[ae7]\x[ae6]\x[ae6]",
+        "'\x[aef]\x[aef]'++ is '\x[ae7]\x[ae6]\x[ae6]'" );
+    $x = "\x[ae7]\x[ae6]\x[ae6]";
+    is( --$x, "\x[ae6]\x[aef]\x[aef]",
+        "'\x[ae7]\x[ae6]\x[ae6]'-- is '\x[ae6]\x[aef]\x[aef]'" );
     $x = "A\x[ae6]";
     is( ++$x, "A\x[ae7]", "'A\x[ae6]'++ is 'A\x[ae7]'" );
     $x = "A\x[ae7]";
@@ -235,10 +239,11 @@ my $x;
 {
     diag( "Tests for '\x[b66]' .. '\x[b6f]' (Oriya)" );
     $x = "\x[b6f]\x[b6f]";
-    is( ++$x, "\x[b66]\x[b66]\x[b66]",
-        "'\x[b6f]\x[b6f]'++ is '\x[b66]\x[b66]\x[b66]'" );
-    $x = "\x[b66]\x[b66]\x[b66]";
-    ok( --$x ~~ Failure, "'\x[b66]\x[b66]\x[b66]'-- fails" );
+    is( ++$x, "\x[b67]\x[b66]\x[b66]",
+        "'\x[b6f]\x[b6f]'++ is '\x[b67]\x[b66]\x[b66]'" );
+    $x = "\x[b67]\x[b66]\x[b66]";
+    is( --$x, "\x[b66]\x[b6f]\x[b6f]",
+        "'\x[b67]\x[b66]\x[b66]'-- is '\x[b66]\x[b6f]\x[b6f]'" );
     $x = "A\x[b66]";
     is( ++$x, "A\x[b67]", "'A\x[b66]'++ is 'A\x[b67]'" );
     $x = "A\x[b67]";
@@ -251,35 +256,4 @@ my $x;
     is( ++$x, "\x[b67]AA", "'\x[b66]ZZ'++ is '\x[b67]AA'" );
     $x = "\x[b67]AA";
     is( --$x, "\x[b66]ZZ", "'\x[b67]AA'-- is '\x[b66]ZZ'" );
-}
-
-# Maybe these belong back in autoincrement.t,
-# since they're not particularly range-based.
-diag( "Special cases" );
-{
-    # EBCDIC
-    $x = "zi";
-    is( ++$x, "zj", "'zi'++ is 'zj'" );
-    $x = "zj";
-    is( --$x, "zi", "'zj'-- is 'zi'" );
-    $x = "zr";
-    is( ++$x, "zs", "'zr'++ is 'zs'" );
-    $x = "zs";
-    is( --$x, "zr", "'zs'-- is 'zr'" );
-}
-{
-    $x = "123.456";
-    is( ++$x, "124.456", "'123.456'++ is '124.456'" );
-    $x = "124.456";
-    is( --$x, "123.456", "'124.456'-- is '123.456'" );
-}
-{
-    $x = "/tmp/pix000.jpg";
-    is( ++$x, "/tmp/pix001.jpg", "'/tmp/pix000.jpg'++ is '/tmp/pix001.jpg'" );
-    $x = "/tmp/pix001.jpg";
-    is( --$x, "/tmp/pix000.jpg", "'/tmp/pix001.jpg'-- is '/tmp/pix000.jpg'" );
-}
-{
-    my $foo = "\x[3a1]";
-    is( ++$foo, "\x[3a3]", 'there is no \\x[3a2]' );
 }

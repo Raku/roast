@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 64;
+plan 53;
 
 #L<S03/Autoincrement precedence>
 
@@ -77,92 +77,61 @@ is(%z{0},           $base, '%z{0}');
     );
 }
 
-my @auto_tests = (
-    { init => '99',  inc => '100' },
-    { init => 'a0',  inc => 'a1' },
-    { init => 'Az',  inc => 'Ba' },
-    { init => 'zz',  inc => 'aaa' },
-    { init => 'A99', inc => 'B00' },
-    { init => 'zi',  inc => 'zj',
-      name => 'EBCDIC check (i and j not contiguous)' },
-    { init => 'zr',  inc => 'zs',
-      name => 'EBCDIC check (r and s not contiguous)' },
-    { init => 'a1',  dec => 'a0' },
-    { init => '100', dec => '099' },
-    { init => 'Ba',  dec => 'Az' },
-    { init => 'B00', dec => 'A99' },
+{
+    my $x;
 
-    { init => '123.456',
-      inc  => '124.456',
-      name => '124.456, not 123.457' },
-    { init => '/tmp/pix000.jpg',
-      inc  => '/tmp/pix001.jpg',
-      name => 'increment a filename' },
-);
-
-for @auto_tests -> %t {
-    my $pre = %t<init>;
-
-    # This is a check on the form of the @auto_tests
-    my $tests_run = 0;
-    if ! $pre.defined {
-        ok 0, 'initial value not defined';
-        next;
-    }
-
-    if %t.exists( 'inc' ) {
-        my $val = $pre;
-        $val++;
-        my $name = %t<name> // "'$pre'++ is '{%t<inc>}'";
-        is( $val, %t<inc>, $name );
-        $tests_run++;
-    }
-    if %t.exists( 'dec' ) {
-        my $val = $pre;
-        $val--;
-        my $name = %t<name> // "'$pre'-- is '{%t<dec>}'";
-        is( $val, %t<dec>, $name );
-        $tests_run++;
-    }
-
-    # This is a check on the form of the @auto_tests
-    if ! $tests_run {
-        ok 0, "no test ran for '$pre'";
-    }
+    $x = "123.456";
+    is( ++$x, "124.456", "'123.456'++ is '124.456' (NOT 123.457)" );
+    $x = "124.456";
+    is( --$x, "123.456", "'124.456'-- is '123.456'" );
 }
 
+{
+    my $x;
 
-my $foo;
+    $x = "/tmp/pix000.jpg";
+    is( ++$x, "/tmp/pix001.jpg", "'/tmp/pix000.jpg'++ is '/tmp/pix001.jpg'" );
+    $x = "/tmp/pix001.jpg";
+    is( --$x, "/tmp/pix000.jpg", "'/tmp/pix001.jpg'-- is '/tmp/pix000.jpg'" );
+}
 
-$foo = 'aaa';
-ok(--$foo ~~ Failure, "Decrement of 'aaa' should fail");
+{
+    my $x;
 
-$foo = 'A00';
-ok(--$foo ~~ Failure, "Decrement of 'A00' should fail");
+    # EBCDIC check (i and j not contiguous)
+    $x = "zi";
+    is( ++$x, "zj", "'zi'++ is 'zj'" );
+    $x = "zj";
+    is( --$x, "zi", "'zj'-- is 'zi'" );
+    $x = "zr";
+
+    # EBCDIC check (r and s not contiguous)
+    is( ++$x, "zs", "'zr'++ is 'zs'" );
+    $x = "zs";
+    is( --$x, "zr", "'zs'-- is 'zr'" );
+}
+
+{
+    my $foo;
+
+    $foo = 'A00';
+    ok(--$foo ~~ Failure, "Decrement of 'A00' should fail");
 
 # TODO: Check that the Failure is "Decrement out of range" and not
 #       some other unrelated error (for the fail tests above).
+}
 
-$foo = "\x[391]";
-is( ++$foo, "\x[392]", 'increment Greek uppercase alpha' );
+{
+    my $foo;
 
-$foo = "\x[3a9]";
-is( ++$foo, "\x[391]\x[391]", 'increment Greek uppercase omega' );
+    $foo = "\x[3a1]";
+    is( ++$foo, "\x[3a3]", 'there is no \\x[3a2]' );
+}
 
-$foo = "\x[3a1]";
-is( ++$foo, "\x[3a3]", 'there is no \\x[3a2]' );
-
-$foo = "\x[3b1]";
-is( ++$foo, "\x[3b2]", 'increment Greek lowercase alpha' );
-
-$foo = "\x[3c9]";
-is( ++$foo, "\x[3b1]\x[3b1]", 'increment Greek lowercase omega' );
-
-$foo = "\x[391]\x[3c9]";
-is( ++$foo, "\x[392]\x[3b1]", "increment '\x[391]\x[3c9]'" );
-
-$foo = "K\x[3c9]";
-is( ++$foo, "L\x[3b1]", "increment 'K\x[3c9]'" );
+{
+    my $foo = "K\x[3c9]";
+    is( ++$foo, "L\x[3b1]", "increment 'K\x[3c9]'" );
+}
 
 {
     my $x;
