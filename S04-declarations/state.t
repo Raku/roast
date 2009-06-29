@@ -2,9 +2,24 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 36;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
+
+# RT #67040 -- state initialized with //= instead of =
+# (I've put this test here since it gets buggered by later tests
+#  unless RT #67058 has been fixed.)
+{
+    sub rt67040 {
+        state $x //= 17;
+        $x++;
+        return $x;
+    }
+
+    is rt67040(), 18, 'Assignment to state variable with //= works.';
+    #?rakudo todo 'RT #67040 -- state initialized with //= instead of ='
+    is rt67040(), 19, 'Assignment to state variable with //= happens once.';
+}
 
 # state() inside subs
 {
