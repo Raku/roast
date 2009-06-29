@@ -40,7 +40,7 @@ plan 40;
 
   ok  (\@a eqv \@a), "eqv on array references (1)";
   ok  (\@b eqv \@b), "eqv on array references (2)";
-  #?pugs todo 'bug'
+  #?rakudo todo 'captures and infix:<eqv>'
   ok !(\@a eqv \@b), "eqv on array references (3)";
 }
 
@@ -50,10 +50,11 @@ plan 40;
 
   ok  ($a eqv $a), "eqv on scalar references (1-1)";
   ok  ($b eqv $b), "eqv on scalar references (1-2)";
-  #?pugs todo 'bug'
+  #?rakudo todo 'captures and infix:<eqv>'
   ok !($a eqv $b), "eqv on scalar references (1-3)";
 }
 
+#?
 {
   my $a = { 3 };
   my $b = { 3 };
@@ -82,15 +83,18 @@ plan 40;
 {
   ok !([1,2,3] eqv [4,5,6]), "eqv on anonymous array references (1)";
   #?pugs 2 todo 'bug'
+  #?rakudo 2 todo 'captures? test bug?'
   ok !([1,2,3] eqv [1,2,3]), "eqv on anonymous array references (2)";
   ok !([]      eqv []),      "eqv on anonymous array references (3)";
 }
 
+#?rakudo skip 'hashes'
 {
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (1)";
   ok !({a => 1} eqv {a => 1}), "eqv on anonymous hash references (2)";
 }
 
+#?rakudo skip 'captures'
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   #?pugs 2 todo 'bug'
