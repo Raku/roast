@@ -97,7 +97,8 @@ S16
 S29
 * tests for array: shape
 * tests for pack and unpack
-* tests to ensure that rand has a bit of entropy
+* Confirm the validity of test to ensure that rand has a bit of entropy
+  (in S32-num/rand.t)
 
 
 IO
