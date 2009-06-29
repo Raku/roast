@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 40;
+plan 46;
 
 # some tests firsts that don't require lazy lists
 
@@ -22,6 +22,27 @@ plan 40;
     }
     is gcd(2, 1), 1, 'gcd with infix:<...> (1)';
     is gcd(42, 24), 6, 'gcd with infix:<...> (2)';
+}
+
+{
+    # slurpy
+	sub nextprime( *@prev_primes ) {
+        state $iterations = 0;
+		return () if $iterations > 3;
+		++$iterations;
+		my $current = @prev_primes[*-1];
+		while ++$current {
+            return $current if $current % all(@prev_primes) != 0;
+        }
+    }
+    my @seed = 2, 3;
+	my @primes = @seed ... &nextprime;
+	is @primes[0], 2, 'prime generator with series op works (0)';
+	is @primes[1], 3, 'prime generator with series op works (0)';
+	is @primes[2], 5, 'prime generator with series op works (0)';
+	is @primes[3], 7, 'prime generator with series op works (0)';
+	is @primes[4], 11, 'prime generator with series op works (0)';
+	is @primes[5], 13, 'prime generator with series op works (0)';
 }
 
 #?rakudo skip 'lazy lists'
