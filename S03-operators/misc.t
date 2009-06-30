@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 54;
+plan 56;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -144,4 +144,11 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
     is (1, 2, * Z <a b c d>).join('|'),
        '1|a|2|b|2|c|2|d',
        'A * as the last value extends lists for infix:<Z> (zip)';
+}
+
+{
+    my @a = 1,2,3,4;
+    my @b = 9,8,7,1;
+    is((@a minmax @b), (1,8), "minmax works on two arrays");
+    is((1,2 minmax 9,8), (1,8), "minmax works on two lists");
 }
