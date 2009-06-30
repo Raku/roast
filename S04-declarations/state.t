@@ -270,4 +270,12 @@ plan 36;
     lives_ok { $y = 3 }, 'the state variable in subset types works (3)';
 }
 
+# Test for RT #67058
+sub bughunt1 { (state $svar) }
+{
+    sub bughunt2 { state $x //= 17; $x++ }
+    lives_ok { bughunt2() },
+        'a state variable in parens lives with a state variable with //= init';
+}
+
 # vim: ft=perl6
