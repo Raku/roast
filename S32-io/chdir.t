@@ -15,18 +15,34 @@ if $*OS eq "MSWin32" {
 }
 
 # change to t subfolder and see if cwd is updated
-my $cwd = $*CWD;
-ok chdir("$*CWD/t"), 'chdir gave a true value';
-isnt $*CWD, $cwd, 'Directory has changed';
-is $*CWD, "$cwd{$sep}t", 'Current directory is "t" subfolder (absolute)';
+my $subdir = 't';
+if $subdir !~~ :d {
+    skip 7, "Directory, '$subdir', does not exist";
+}
+else {
+    my $cwd = $*CWD;
+    ok chdir("$*CWD/$subdir"), 'chdir gave a true value';
+    isnt $*CWD, $cwd, 'Directory has changed';
+    is $*CWD, "$cwd{$sep}$subdir",
+       "Current directory is '$subdir' subfolder (absolute)";
 
-# relative change back up.
-ok chdir( ".." ), 'chdir gave a true value';
-is $*CWD, $cwd, 'Change back up to .. worked';
+    # relative change back up.
+    ok chdir( ".." ), 'chdir gave a true value';
+    is $*CWD, $cwd, 'Change back up to .. worked';
 
-# relative change to t
-ok chdir( "t" ), 'chdir gave a true value';
-is $*CWD, "$cwd{$sep}t", 'Current directory is "t" subfolder (relative)' ;
+    # relative change to t
+    ok chdir( "$subdir" ), 'chdir gave a true value';
+    is $*CWD, "$cwd{$sep}$subdir",
+       "Current directory is '$subdir' subfolder (relative)";
+}
 
-lives_ok { chdir("lol does not exist") }, 'chdir to a non-existant does not by default throw an exception';
-ok !chdir("lol does not exist"), 'change to non-existant directory gives a false value';
+my $no_subdir = 'lol does not exist';
+if $no_subdir ~~ :d {
+    skip 2, "subdir '$no_subdir' does exist, actually.";
+}
+else {
+    lives_ok { chdir("$no_subdir") },
+             'chdir to a non-existant does not by default throw an exception';
+    ok !chdir("$no_subdir"),
+       'change to non-existant directory gives a false value';
+}
