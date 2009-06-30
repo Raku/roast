@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -51,6 +51,7 @@ eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error'
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
 ok(&foo ~~ Multi, 'a multi does Multi');
+is(~&foo, 'foo',  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
 {
