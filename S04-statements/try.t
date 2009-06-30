@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 24;
+plan 25;
 
 {
     # simple try
@@ -175,3 +175,14 @@ plan 24;
     is(WHAT($!), Dandy, ".. of the right class");
 };
 
+#?rakudo todo 'CATCH block catching its own exceptions (RT #64262)'
+{
+    my $catches = 0;
+    try {
+        die 'catch!';
+        CATCH {
+            die 'caught' if ! $catches++;
+        }
+    }
+    is $catches, 1, 'CATCH does not catch exceptions thrown within it';
+}
