@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 56;
+plan 60;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -151,4 +151,10 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
     my @b = 9,8,7,1;
     is((@a minmax @b), (1,8), "minmax works on two arrays");
     is((1,2 minmax 9,8), (1,8), "minmax works on two lists");
+    is((1,8 minmax 4,5), (1,8), 'minmax works when both are on left list');
+    is((4,5 minmax 1,8), (1,8), 'minmax works when both are on right list');
+    @a = 1,8,2,9;
+    @b = 4,7,5,0;
+    is((@a minmax @b), (1,8), 'minmax works when both are on left array');
+    is((@b minmax @a), (1,8), 'minmax works when both are on right array');
 }
