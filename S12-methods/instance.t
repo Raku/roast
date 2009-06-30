@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 =begin pod
 
@@ -104,3 +104,24 @@ sub b() { die "oops" }
     is MethodTester.m('a', :y<b>, :z<b>), 'a|b', 
        '... same, but test value (class method)';
 }
+
+# test that public attributes don't interfere with private methods of the same
+# name (RT #61774)
+
+{
+    class PrivVsAttr {
+        has @something is rw;
+        method doit {
+            @something = <1 2 3>;
+            self!something;
+        }
+        method !something {
+            'private method'
+        }
+    }
+
+    my PrivVsAttr $a .= new;
+    is $a.doit, 'private method',
+       'call to private method in presence of attribute';
+}
+
