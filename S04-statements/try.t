@@ -179,9 +179,11 @@ plan 25;
 {
     my $catches = 0;
     try {
-        die 'catch!';
-        CATCH {
-            die 'caught' if ! $catches++;
+        try {
+            die 'catch!';
+            CATCH {
+                die 'caught' if ! $catches++;
+            }
         }
     }
     is $catches, 1, 'CATCH does not catch exceptions thrown within it';
