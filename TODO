@@ -105,6 +105,8 @@ IO
 * more tests for say() and print(). For example elf prints array references
   as ARRAY(0x8832e28). This might be a bit tricky because we either have to
   capture stdout, or open a pipe to a second script.
+* Filetest methods from S32-setting-library/IO need tests (see RT #66398):
+  :o :R :W :X :O :l :p :S :b :c :t :u :g :k :T :B
 
 SINGLE TESTS
 * t/syntax/signature.t is flawed and has a XXX comment of what needs to be done
