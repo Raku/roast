@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 #                      +---- UTF8 non-breaking space here!
-#                      |
+#                      |     (in case of 22-char wide screen)
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
@@ -245,7 +245,7 @@ my @p;
     isa_ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
 
     my $f //= 5;
-    #?rakudo todo '//= in declaration'
+    #?rakudo todo '//= in declaration (RT #64288)'
     is $f, 5, '//= also works in declaration';
 }
 
