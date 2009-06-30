@@ -17,7 +17,6 @@ plan 36;
     }
 
     is rt67040(), 18, 'Assignment to state variable with //= works.';
-    #?rakudo todo 'RT #67040 -- state initialized with //= instead of ='
     is rt67040(), 19, 'Assignment to state variable with //= happens once.';
 }
 
