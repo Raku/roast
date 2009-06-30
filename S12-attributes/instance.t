@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 126;
+plan 127;
 
 =begin pod
 
@@ -303,6 +303,15 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
     isa_ok $r.b.WHAT, WHAT_test, '.WHAT on recursive data structure';
 
 }
+
+{
+    class ClosureWithself {
+        has $.cl = { self.foo }
+        method foo { 42 }
+    }
+    is ClosureWithself.new.cl().(), 42, 'use of self in closure on RHS of attr init works';
+}
+
 
 # Tests for clone.
 {
