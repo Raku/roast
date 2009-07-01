@@ -38,6 +38,7 @@ plan 16;
 
 # L<S12/Introspection/"which also bypasses the macros.">
 
+# RT #60992
 {
     class Foo {
         method WHAT {'Bar'}
