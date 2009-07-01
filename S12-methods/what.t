@@ -64,5 +64,5 @@ plan 16;
 # RT #66928
 {
     lives_ok { &infix:<+>.WHAT }, 'Can .WHAT built-in infix op';
-    isa_ok &infix:<+>.WHAT, Multi, '.WHAT of built-in infix op is Multi';
+    ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi';
 }
