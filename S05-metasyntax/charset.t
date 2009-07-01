@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 22;
+plan 24;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -48,5 +48,12 @@ ok('{' ~~ m/(<[\{]>)/, 'quoted open LCB match');
 is($0, '{', 'quoted open LCB capture');
 ok('}' ~~ m/(<[\}]>)/, 'quoted close LCB match');
 is($0, '}', 'quoted close LCB capture');
+
+# RT #67124
+#?rakudo todo 'comment in charset (RT #67124)'
+eval_lives_ok( '"foo" ~~ /<[f] #[comment] + [o]>/',
+               'comment embedded in charset can be parsed' );
+#?rakudo skip 'comment in charset (RT #67124)'
+ok( "foo" ~~ /<[f] #[comment] + [o]>/, 'comment embedded in charset works' );
 
 }
