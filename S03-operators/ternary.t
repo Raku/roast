@@ -67,6 +67,4 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op");
 }
 
-#?rakudo skip "dies when parsing"
-eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (bug #66840)';
-
+eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (RT #66840)';
