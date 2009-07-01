@@ -60,3 +60,9 @@ plan 14;
     isa_ok ("bac" ~~ /a/).WHAT, Match, '.WHAT on a Match works';
     is +("bac" ~~ /a/).WHAT, 0, 'numification of .WHAT of a Match works';
 }
+
+# RT #66928
+{
+    lives_ok { &infix:<+>.WHAT }, 'Can .WHAT built-in infix op';
+    isa_ok &infix:<+>.WHAT, Multi, '.WHAT of built-in infix op is Multi';
+}
