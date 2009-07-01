@@ -12,7 +12,7 @@ This test tests the C<WHAT> builtin.
 
 # L<S12/Introspection/"WHAT">
 
-plan 14;
+plan 16;
 
 # Basic subroutine/method form tests for C<WHAT>.
 {
