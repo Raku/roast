@@ -87,7 +87,6 @@ is((try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोट�
 }
 
 # Unicode methods and attributes
-#?rakudo skip 'Unicode method names (Parrot TT #730)'
 {
     class A {
         has $!möp = 'pugs';
