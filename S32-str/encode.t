@@ -2,6 +2,9 @@ use v6;
 use Test;
 plan 7;
 
+
+# L<S32::Containers/Buf>
+
 ok 'ab'.encode('ASCII') ~~ Buf, '$str.encode returns a Buf';
 ok ('ab'.encode('ASCII') eqv Buf.new(97, 98)),  'encoding to ASCII';
 ok ('ö'.encode('UTF-8') eqv Buf.new(195, 182)), 'encoding to UTF-8';
