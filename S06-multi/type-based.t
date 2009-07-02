@@ -74,7 +74,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi wins($x, $y)                { -1 };
 
     is wins(Scissor.new, Paper.new),   1,  'Basic sanity';
-    #?rakudo 2 skip 'RT 63276'
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with ::T generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a ::T variant';
 
@@ -82,7 +81,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi wins2($x, $y where { $x.WHAT eq $y.WHAT }) { 0 };
     multi wins2($x, $y)                { -1 };
     is wins(Scissor.new, Paper.new),   1,  'Basic sanity 2';
-    #?rakudo 2 skip 'subset types that involve multiple parameters'
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
 }
@@ -91,7 +89,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi m($x,$y where { $x==$y }) { 0 };
     multi m($x,$y) { 1 };
 
-    #?rakudo 2 skip 'subset types that involve multiple parameters'
     is m(2, 3), 1, 'subset types involving mulitple parameters (fallback)';
     is m(1, 1), 0, 'subset types involving mulitple parameters (success)';
 }
