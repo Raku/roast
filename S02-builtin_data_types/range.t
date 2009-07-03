@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 95;
+plan 83;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -91,15 +91,19 @@ is(+(6^..6), 0, 'numification');
 is(+(6..^6), 0, 'numification');
 is(+(6..8), 3, 'numification');
 
-# shift
+# immutability
 {
     my $r = 1..5;
-    my $n = $r.shift;
-    is $n, 1, "got the right shift result";
-    my @r = $r;
-    is @r, [2, 3, 4, 5], 'got the right state change';
-    my $s = 2..5;
-    is $r, $s, "range modified after shift";
+
+    #?rakudo 2 todo 'immutable ranges'
+    dies_ok { $r.shift       }, 'range is immutable (shift)';
+    dies_ok { $r.pop         }, 'range is immutable (pop)';
+    dies_ok { $r.push(10)    }, 'range is immutable (push)';
+    dies_ok { $r.unshift(10) }, 'range is immutable (unshift)';
+
+    #?rakudo todo 'immutable ranges'
+    my $s = 1..5;
+    is $r, $s, 'range has not changed';
 }
 
 # simple .to, .from
@@ -135,31 +139,14 @@ is(+(6..8), 3, 'numification');
     #?rakudo 2 skip '.reverse on ranges'
     is($r.reverse.from, 4.5, 'uneven range.reverse.from');
     is($r.reverse.to,   1,   'uneven range.reverse.to');
-
-    is($r.shift, 1, 'uneven range.shift (1)');
-    is($r.pop, 4.5, 'uneven range.pop (1)');
-
-    is($r.from,  2, 'uneven range.from after shift,pop');
-    is($r.to,  3.5, 'uneven range.to after shift,pop');
-    is($r.minmax, [2, 3.5], 'uneven range.minmax after shift,pop');
-
-    is($r.shift, 2, 'uneven range.shift (2)');
-    is($r.pop, 3.5, 'uneven range.pop (2)');
-    #?rakudo todo 'XXX test error -- result should be undef?'
-    is($r.shift, 3, 'uneven range.shift (3)');
-    ok(!$r.pop,     'uneven range.pop (empty)');
-    ok(!$r.shift,   'uneven range.shift (empty)');
 }
 
 # infinite ranges
 {
     my $inf = -Inf..Inf;
 
-    is($inf.shift, -Inf, 'bottom end of -Inf..Inf is -Inf (1)');
-    is($inf.shift, -Inf, 'bottom end of -Inf..Inf is still -Inf (2)');
-
-    is($inf.pop, Inf, 'top end of -Inf..Inf is Inf (1)');
-    is($inf.pop, Inf, 'top end of -Inf..Inf is still Inf (2)');
+    is($inf.from, -Inf, 'bottom end of -Inf..Inf is -Inf (1)');
+    is($inf.to, Inf, 'top end of -Inf..Inf is Inf (1)');
 
     ok(42  ~~ $inf, 'positive integer matches -Inf..Inf');
     ok(.2  ~~ $inf, 'positive non-int matches -Inf..Inf');
@@ -172,11 +159,8 @@ is(+(6..8), 3, 'numification');
 {
     my $inf = *..*;
 
-    is($inf.shift, -Inf, 'bottom end of *..* is -Inf (1)');
-    is($inf.shift, -Inf, 'bottom end of *..* is still -Inf (2)');
-
-    is($inf.pop, Inf, 'top end of *..* is Inf (1)');
-    is($inf.pop, Inf, 'top end of *..* is still Inf (2)');
+    is($inf.from, -Inf, 'bottom end of *..* is -Inf (1)');
+    is($inf.to, Inf, 'top end of *..* is Inf (1)');
 
     is($inf.elems, Inf, 'testing number of elements');
 
