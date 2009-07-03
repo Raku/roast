@@ -7,7 +7,7 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan 16;
+plan 18;
 
 # Indexing lists
 {
@@ -126,4 +126,18 @@ plan 16;
 
   is +$arrayref,    3, '\@array creates an arrayref (1)';
   is +$arrayref[1], 2, '\@array creates an arrayref (2)';
+}
+
+{
+    sub List::rt62836 { 62836 }
+
+    dies_ok { <1 2 3>.rt62836 },
+            'call to user-declared sub in List:: class dies';
+    eval '<1 2 3>.rt62836';
+    ok "$!" ~~ /rt62836/,       'error message contains name of sub';
+    ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
+    ok "$!" ~~ /List/,          'error message contains name of class';
+
+    class List is also { method rt62836_x { 62836 } };
+    is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
 }
