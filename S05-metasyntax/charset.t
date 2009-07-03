@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 24;
+plan 25;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -55,5 +55,10 @@ eval_lives_ok( '"foo" ~~ /<[f] #[comment] + [o]>/',
                'comment embedded in charset can be parsed' );
 #?rakudo skip 'comment in charset (RT #67124)'
 ok( "foo" ~~ /<[f] #[comment] + [o]>/, 'comment embedded in charset works' );
+
+# RT #67122
+#?rakudo skip 'large \\x char spec in regex (RT #67122)'
+eval_lives_ok( '/<[\x10000..\xEFFFF]>/',
+               'large \\x char spec in regex (RT #67122)' );
 
 }
