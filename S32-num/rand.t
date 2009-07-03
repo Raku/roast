@@ -49,21 +49,22 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
         'edge case: srand(0) not the same as srand(1)');
 }
 
+#?rakudo skip 'positional as named argument'
 {
     my sub repeat_rand ($seed) {
-        srand(:x($seed));
+        srand(:seed($seed));
         for 1..99 { rand; }
         return rand;
     }
 
     ok(repeat_rand(314159) == repeat_rand(314159),
-        'srand(:x(...)) provides repeatability for rand');
+        'srand(:seed(...)) provides repeatability for rand');
 
     ok(repeat_rand(0) == repeat_rand(0),
-        'edge case: srand(:x(0)) provides repeatability');
+        'edge case: srand(:seed(0)) provides repeatability');
 
     ok(repeat_rand(0) != repeat_rand(1),
-        'edge case: srand(:x(0)) not the same as srand(:x(1))');
+        'edge case: srand(:seed(0)) not the same as srand(:seed(1))');
 }
 
 #?rakudo skip 'Test is too slow'
