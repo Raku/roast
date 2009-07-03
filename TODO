@@ -27,7 +27,6 @@ the spec (newest first)
 
 * (r27106,r27365,r27366) utf8/utf16 etc buffer types (t/spec/S32-str/encode.t)
 * (r27324,r27331) 'use' semantics
-* (r27313) 'constant' have 'our' scope
 * (r27313) dispatch (named args, narrowness)
 * (r27312) ambiguous authority and 'use'
 * (r27091) [S04] require temp semantics for topical statement modifiers

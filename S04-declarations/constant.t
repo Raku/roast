@@ -2,7 +2,9 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
+
+# L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
 # Following tests test whether the declaration succeeded.
 #?pugs todo 'feature'
@@ -46,6 +48,13 @@ plan 19;
     $ok = $bar == 582;
 
     ok $ok, "declaring a constant in terms of another constant works";
+}
+
+{
+    package ConstantTest {
+        constant yak = 'shaving';
+    }
+    is ConstantTest::yak, 'shaving', 'constant is "our"-scoped';
 }
 
 #?rakudo skip 'COMPILING'
@@ -193,3 +202,5 @@ plan 19;
     #?pugs todo 'feature'
     ok $ok, "the initializing values for constants are evaluated at compile-time";
 }
+
+# vim: ft=perl6
