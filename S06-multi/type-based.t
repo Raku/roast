@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 41;
+plan 45;
 
 # type based dispatching
 #
@@ -150,6 +150,18 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is A::a(3),     'Int 3',  'multis in classes (1)';
     is A::a('f'),   'Str f',  'multis in classes (2)';
     dies_ok { A::a([4, 5]) }, 'multis in classes (3)';
+}
+
+{
+    multi x(@a, @b where { @a.elems == @b.elems }) { 1 };
+    multi x(@a, @b)                                { 2 };
+    is x([1,2],[3,4]), 1;
+    is x([1],[2,3,4]), 2;
+
+    multi y(::T $x, T $y) { 1 };
+    multi y($x, $y)       { 2 };
+    is y(1, 2), 1;
+    is y(1, 2.5), 2;
 }
 
 # vim: ft=perl6
