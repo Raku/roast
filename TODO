@@ -13,9 +13,6 @@ commit message:
 This way, people working on the test suite can easily spot these commits
 in #perl6.
 
-This file had entries in the past (r16405). Since this file wasn't touched
-in over 4000 commits, I (Auzon) cleared them out.
-
 OVERALL
 * Add smartlinks to tests without them
 * Continue moving tests from t/ to t/spec/
@@ -28,7 +25,11 @@ sometimes the spec changes, and the test suite must be updated accordingly.
 Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
-* (r27106) utf8/utf16 etc buffer types
+* (r27106,r27365,r27366) utf8/utf16 etc buffer types (t/spec/S32-str/encode.t)
+* (r27324,r27331) 'use' semantics
+* (r27313) 'constant' have 'our' scope
+* (r27313) dispatch (named args, narrowness)
+* (r27312) ambiguous authority and 'use'
 * (r27091) [S04] require temp semantics for topical statement modifiers
 * (r27062,r27073) [S32] Array.rotate
 * (r27066) rangechars are not limited to \w anymore
