@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
@@ -71,5 +71,15 @@ class Bar is Foo2 {
 }
 
 is Bar.new.a("not an Int"), 'Any-method in Foo';
+
+# RT #67024
+#?rakudo todo 'redefintion of non-multi method (RT #67024)'
+{
+    my $bad_code = 'class A { method a(){0}; method a($x){1} }';
+
+    eval_dies_ok $bad_code, 'redefintion of non-multi method (RT #67024)';
+    eval $bad_code;
+    ok "$!" ~~ /multi/, 'error message mentions multi-ness';
+}
 
 # vim: ft=perl6
