@@ -50,6 +50,7 @@ plan 20;
     ok $ok, "declaring a constant in terms of another constant works";
 }
 
+#?rakudo skip 'package-scoped constant'
 {
     package ConstantTest {
         constant yak = 'shaving';
