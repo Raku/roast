@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 106;
+plan 114;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -339,4 +339,23 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
     my sub code {return 42}
     $pair = (:&code);
     ok($pair eqv (code => &code), ':&foo syntax works');
+}
+
+# RT #67218
+{
+    #?rakudo todo 'RT #67218'
+    eval_lives_ok ':a()',    'can parse ":a()"';
+    #?rakudo skip 'RT #67218'
+    lives_ok     { :a() }, 'can execute ":a()"';
+
+    #?rakudo todo 'RT #67218'
+    eval_lives_ok ':a[]',    'can parse ":a[]"';
+    #?rakudo skip 'RT #67218'
+    lives_ok     { :a[] }, 'can execute ":a[]"';
+
+    eval_lives_ok '(a => ())',    'can parse "(a => ())"';
+    lives_ok     { (a => ()) }, 'can execute "(a => ())"';
+
+    eval_lives_ok '(a => [])',    'can parse "(a => [])"';
+    lives_ok     { (a => []) }, 'can execute "(a => [])"';
 }
