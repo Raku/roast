@@ -11,7 +11,7 @@ is my_second(4, 5, 6), 5, '($, $x, $) works as a signature';
 is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
 
 # RT #60408
-#?rakudo todo 'RT #60408'
+#?rakudo todo 'RT 60408'
 {
     sub rt60408_for {
         my @out;
@@ -20,7 +20,7 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
         return @out;
     }
 
-    is rt60408_for(42), (42, 42), 'use of @_[0] in a "for" block (RT #60408)';
+    is rt60408_for(42), (42, 42), 'use of @_[0] in a "for" block (RT 60408)';
 
     sub rt60408_if {
         my @out;
@@ -29,7 +29,7 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
         return @out;
     }
 
-    is rt60408_if(42), (42, 42), 'use of @_[0] in an "if" block (RT #60408)';
+    is rt60408_if(42), (42, 42), 'use of @_[0] in an "if" block (RT 60408)';
 }
 
 # vim: ft=perl6
