@@ -77,7 +77,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 {
     my $bad_code = 'class A { method a(){0}; method a($x){1} }';
 
-    eval_dies_ok $bad_code, 'redefintion of non-multi method (RT #67024)';
+    eval_dies_ok $bad_code, 'redefintion of non-multi method (RT 67024)';
     eval $bad_code;
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
