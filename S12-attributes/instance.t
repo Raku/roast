@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 127;
+plan 128;
 
 =begin pod
 
@@ -505,6 +505,30 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
 
     class CodeAttr3 { has &!m = method { "OH HAI" }; method f { self.&!m() } }
     is CodeAttr3.new.f, 'OH HAI', '&!m = method { ... } and self.&!m() work';
+}
+
+{
+    # from t/oo/class_inclusion_with_inherited_class.t
+    # used to be a pugs regression
+
+    role A {
+        method t ( *@a ) {
+            [+] @a;
+        }
+    }
+
+    class B does A {}
+
+    class C does A {
+        has $.s is rw;
+        has B $.b is rw;
+        submethod BUILD {
+            $.b = B.new;
+            $.s = $.b.t(1, 2, 3);
+        }
+    }
+
+    is C.new.s, 6, "Test class include another class which inherited from same role";
 }
 
 # vim: ft=perl6
