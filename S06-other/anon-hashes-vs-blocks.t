@@ -22,7 +22,7 @@ L<S06/Anonymous hashes vs blocks>
 
 =end pod
 
-plan 5;
+plan 8;
 
 my $hash = {
    '1' => { '2' => 3, '4' => 5 },
@@ -43,3 +43,17 @@ my $bar = { %foo };
 #?rakudo todo 'block parsing'
 ok $bar ~~ Hash, '%foo in a block causes hash composing';
 
+
+# pugs had problems with //= and the hash() contextualizer
+{
+    my %hash;
+    %hash<foo> //= hash();
+    %hash<bar> //= hash;
+    my $h_ref;
+    $h_ref  //= hash();
+    is(%hash<foo>.WHAT, ::Hash, "Parses as two items");
+    is(%hash<bar>.WHAT, ::Hash, "Parens do not help");
+    is($h_ref.WHAT,     ::Hash, "It is not limited to hash values");
+}
+
+# vim: ft=perl6
