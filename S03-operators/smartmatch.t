@@ -32,19 +32,18 @@ sub eval_elsewhere($code){ eval($code) }
     ok !(3 !~~ &is_odd), 'scalar sub truth (unary, negated smart-match)';
 };
 
+#L<S03/Smart matching/"hash keys same set">
+#?rakudo skip 'context variables'
+{
 my %hash1 is context = ( "foo", "Bar", "blah", "ding");
 my %hash2 is context = ( "foo", "zzz", "blah", "frbz");
 my %hash3 is context = ( "oink", "da", "blah", "zork");
 my %hash4 is context = ( "bink", "yum", "gorch", "zorba");
 my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
-
-#L<S03/Smart matching/"hash keys same set">
-#?rakudo skip 'context variables'
-{
     #?pugs todo
     ok eval_elsewhere('(%+hash1 ~~ %+hash2)'), "hash keys identical";
     ok eval_elsewhere('!(%+hash1 ~~ %+hash4)'), "hash keys differ";
-};
+}
 
 #L<S03/Smart matching/hash value slice truth>
 #?rakudo skip 'context variables'
