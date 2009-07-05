@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S04/"Statement-ending blocks"/"will terminate a statement">
 
@@ -34,8 +34,6 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     }
     + 1;
 
-# old: L<A04/"RFC 022: Control flow: Builtin switch statement" /the final curly is on a line by itself/>
-
     is($y, 10, "}\\n + 1 are two statements");
 
     my $z = [];
@@ -46,5 +44,10 @@ eval_dies_ok('my $x = ', 'incomplete expression');
 
     #?pugs todo 'parsing'
     is($z[0], 3, 'auto-curly doesn\'t apply unless we\'re at top level');
-
 }
+
+# There's *no* ";" before the "\n", but pugs parsed it nevertheless!
+# (and there s no infix:<is> either)
+eval_dies_ok "42 if 23\nis 50; 1",
+    "if postfix modifier and is() is parsed correctly";
+
