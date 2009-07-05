@@ -10,7 +10,7 @@ This test tests the various filetest operators.
 
 =end pod
 
-plan 37;
+plan 39;
 
 #if $*OS eq any <MSWin32 mingw msys cygwin> {
 #    skip 30, "file tests not fully available on win32";
@@ -128,3 +128,14 @@ else {
     ok not "xyzzy" ~~ :C, "~~:C returns undef when no file";
     ok not "xyzzy" ~~ :A, "~~:A returns undef when no file";
 }
+
+# potential parsing difficulties (pugs)
+{
+    sub f { return 8; }
+
+    is(f($*PROGRAM_NAME), 8, "f(...) works");
+    is(- f($*PROGRAM_NAME), -8, "- f(...) does not call the ~~:f filetest");
+}
+
+
+# vim: ft=perl6
