@@ -93,7 +93,8 @@ plan 22;
     ok $x == 1i, 'my $x; $x *= 1i works';
 }
 
-# L<S03/Assignment operators/"If you apply an assignment operator to a protoobject">
+# L<S03/Assignment operators/"If you apply an assignment operator to a
+# container">
 {
     # yes, this is serious. It's in the specs ;-)
     my Num $x;

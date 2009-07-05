@@ -10,7 +10,7 @@ Tests for the parents meta-method for introspecting class parents.
 
 =end pod
 
-# L<S12/Introspection/"The C<.^parents> method">
+# L<S12/Introspection/"The .^parents method">
 class A { }
 class B is A { }
 class C is A { }

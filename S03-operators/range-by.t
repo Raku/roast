@@ -1,6 +1,7 @@
 use v6;
 
-# L<S03/Loose unary precedence/apply the adverb to the item assignment>
+# L<S03/Invocant marker/"will apply the :xxx adverb">
+
 use Test;
 
 plan 11;

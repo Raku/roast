@@ -503,7 +503,7 @@ plan 85;
   isa_ok($ucire,utf32);
 }
 
-# L<S09/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
+# L<S09/Sized types/>
 # int in1 int2 int4 int8 int16 in32 int64
 # uint uin1 uint2 uint4 uint8 uint16 uint32 uint64
 # t/spec/S02-builtin_data_types/int-uint.t already has these covered
