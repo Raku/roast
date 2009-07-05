@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S04/"Statement-ending blocks"/"will terminate a statement">
 
@@ -51,3 +51,7 @@ eval_dies_ok('my $x = ', 'incomplete expression');
 eval_dies_ok "42 if 23\nis 50; 1",
     "if postfix modifier and is() is parsed correctly";
 
+# not sure this belong here, suggestions for better places are welcome
+eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
+
+# vim: ft=perl6
