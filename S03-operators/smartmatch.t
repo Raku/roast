@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 126;
+plan 131;
 
 =begin pod
 
@@ -117,6 +117,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok !(%h ~~ .<b>),     '%hash ~~ .<false"}';
     ok  (%h ~~ .<c d>),   '%hash ~~ .<true values>';
     ok !(%h ~~ .<c d a>), '%hash ~~ .<not all true>';
+    ok !(%h ~~ .<c d f>), '%hash ~~ .<not all exist>';
 }
 
 #L<S03/Smart matching/Any Bool simple truth>
@@ -130,6 +131,17 @@ sub eval_elsewhere($code){ eval($code) }
     ok !('a' ~~ False),      '$something ~~ False (2)';
     ok !('a' ~~ Bool::False),'$something ~~ Bool::False (2)';
 }
+
+#L<S03/Smart matching/Any Num numeric equality>
+{
+    ok  ('05' ~~ 5),            '$something ~~ number numifies';);
+    ok  ('1.2' ~~ 1.2),         '$thing ~~ number does numeric comparison';
+    # yes, this warns, but it should still be true
+    ok  (undef ~~ 0),           'undef ~~ 0';
+    ok !(undef ~~ 2.3),         'undef ~~ $other_number';
+}
+
+# reviewed by moritz on 2009-07-06 up to here.
 
 #L<S03/Smart matching/"hash keys same set">
 my %hash1 = ( "foo", "Bar", "blah", "ding");
