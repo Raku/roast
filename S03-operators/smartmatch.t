@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 131;
+plan 133;
 
 =begin pod
 
@@ -139,6 +139,14 @@ sub eval_elsewhere($code){ eval($code) }
     # yes, this warns, but it should still be true
     ok  (undef ~~ 0),           'undef ~~ 0';
     ok !(undef ~~ 2.3),         'undef ~~ $other_number';
+}
+
+#L<S03/Smart matching/Any Str string equality>
+{
+    ok(!("foo" !~~ "foo"),  "!(foo ne foo)");
+    ok(("bar" !~~ "foo"),   "bar ne foo)");
+    ok (4 ~~ '4'),          'string equality';
+    ok !(4 !~~ '4'),        'negated string equality';
 }
 
 # reviewed by moritz on 2009-07-06 up to here.
@@ -327,9 +335,6 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 { 
     # representational checks for !~~, rely on ~~ semantics to be correct
     # assume negated results
-
-    ok(!("foo" !~~ "foo"), "!(foo ne foo)");
-    ok(("bar" !~~ "foo"), "bar ne foo)");
 
     #?pugs 2 skip 'parsefail'
     ok(!(%hash1 !~~ any(%hash3)), "intersecting keys");
