@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 149;
+plan 129;
 
 =begin pod
 
@@ -184,76 +184,10 @@ sub eval_elsewhere($code){ eval($code) }
     ok  ($o ~~ :e(5)),      '$obj ~~ Pair (Int, nonexistent, -)';
 }
 
-# reviewed by moritz on 2009-07-06 up to here.
-
-#L<S03/Smart matching/"hash keys same set">
-my %hash1 = ( "foo", "Bar", "blah", "ding");
-my %hash2 = ( "foo", "zzz", "blah", "frbz");
-my %hash3 = ( "oink", "da", "blah", "zork");
-my %hash4 = ( "bink", "yum", "gorch", "zorba");
-my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
-{
-    #?pugs todo
-    ok eval_elsewhere('(%hash1 ~~ %hash2)'), "hash keys identical";
-    ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";
-}
-
-#L<S03/Smart matching/hash value slice truth>
-{
-    #?pugs todo
-    ok(%hash1 ~~ any(%hash3), "intersecting keys");
-    ok(%hash1 !~~ any(%hash4), "no intersecting keys");
-};
-
-#L<S03/Smart matching/hash value slice truth>
-{ 
-    my @true = (<foo bar>);
-    my @sort_of = (<foo gorch>);
-    my @false = (<gorch baz>);
-    #?pugs todo 2
-    ok((%hash5 ~~ @true), "value slice true");
-    ok((%hash5 ~~ @sort_of), "value slice partly true");
-    ok(!(%hash5 ~~ @false), "value slice false");
-};
-
-#L<S03/Smart matching/hash value slice truth>
-{ 
-    #?pugs todo
-    ok((%hash1 ~~ any(<foo bar>)), "any key exists (but where is it?)");
-    ok(!(%hash1 ~~ any(<gorch ding>)), "no listed key exists");
-};
-
-#L<S03/Smart matching/hash slice existence>
-{ 
-    #?pugs todo
-    ok((%hash1 ~~ all(<foo blah>)), "all keys exist");
-    ok(!(%hash1 ~~ all(<foo edward>)), "not all keys exist");
-};
-
-#Hash    Rule      hash key grep            match if any($_.keys) ~~ /$x/
-
-#L<S03/Smart matching/hash slice existence>
-{ 
-    #?pugs todo 3
-    ok((%hash5 ~~ "foo"), "foo exists");
-    ok((%hash5 ~~ "gorch"),
-       "gorch exists, true although value is false");
-    ok((%hash5 ~~ "wasabi"), "wasabi does not exist");
-};
-
-#L<S03/Smart matching/hash slice existence>
-{ 
-    my $string = "foo";
-    ok eval_elsewhere('(%hash5 ~~ .{$string})'), 'hash.{Any} truth';
-    $string = "gorch";
-    ok eval_elsewhere('!(%hash5 ~~ .{$string})'), 'hash.{Any} untruth';
-};
-
-#L<S03/Smart matching/hash value slice truth>
-{ 
-    ok eval_elsewhere('(%hash5 ~~ .<foo>)'), "hash<string> truth";
-    ok eval_elsewhere('!(%hash5 ~~ .<gorch>)'), "hash<string> untruth";
-};
+# TODO: 
+# Set   Set
+# Hash  Set
+# Any   Set
 
 #L<S03/Smart matching/arrays are comparable>
 { 
@@ -302,13 +236,48 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok (1..10 ~~ *,5,*), 'smartmatch with Array RHS co-erces LHS to list';
 };
 
-#L<S03/Smart matching/numeric equality>
-{ 
+# TODO:
+# Set   Array
+
+#L<S03/Smart matching/Hash Hash hash keys same set>
+my %hash1 = ( "foo" => "Bar", "blah" => "ding");
+my %hash2 = ( "foo" => "zzz", "blah" => "frbz");
+my %hash3 = ( "oink" => "da", "blah" => "zork");
+my %hash4 = ( "bink" => "yum", "gorch" => "zorba");
+my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
+
+{
+    #?rakudo 4 skip '%hash ~~ %hash'
+    ok  (%hash1 ~~ %hash2), 'Hash ~~ Hash (same keys, +)';
+    ok !(%hash1 ~~ %hash3), 'Hash ~~ Hash (same keys, -)';
     #?pugs todo
-    ok(((1, 2) ~~ any(2, 3)),
-       "there is intersection between (1, 2) and (2, 3)");
-    ok(!((1, 2) ~~ any(3, 4)),
-       "but none between (1, 2) and (3, 4)");
+    ok eval_elsewhere('(%hash1 ~~ %hash2)'), "hash keys identical";
+    ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";
+}
+=begin needsdiscussion
+#L<S03/Smart matching/hash value slice truth>
+{
+    #?pugs todo
+    ok(%hash1 ~~ any(%hash3), "intersecting keys");
+    ok(%hash1 !~~ any(%hash4), "no intersecting keys");
+};
+=end needsdiscussion
+
+# reviewed by moritz on 2009-07-07 up to here.
+
+#L<S03/Smart matching/hash slice existence>
+#?rakudo todo 'scoping?'
+{ 
+    my $string = "foo";
+    ok eval_elsewhere('(%hash5 ~~ .{$string})'), 'hash.{Any} truth';
+    $string = "gorch";
+    ok eval_elsewhere('!(%hash5 ~~ .{$string})'), 'hash.{Any} untruth';
+};
+
+#L<S03/Smart matching/hash value slice truth>
+{ 
+    ok eval_elsewhere('(%hash5 ~~ .<foo>)'), "hash<string> truth";
+    ok eval_elsewhere('!(%hash5 ~~ .<gorch>)'), "hash<string> untruth";
 };
 
 
@@ -321,14 +290,6 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok(!(5 ~~ 5 ^..^ 10), "5 is not in 5 .. 10, exclusive");
 };
 
-#Str     StrRange  in string range          match if $min le $_ le $max
-
-#L<S03/Smart matching/"simple closure truth">
-{ 
-    ok((1 ~~ { 1 }), "closure truth");
-    ok((undef ~~ { 1 }), 'ignores $_');
-};
-
 #L<S03/Smart matching/type membership>
 { 
     class Dog {}
@@ -339,23 +300,8 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok !(Chihuahua ~~ Cat), "chihuahua is not a cat";
 };
 
-#Any     Role      role playing             match if \$_.does(\$x)
-
-#L<S03/Smart matching/numeric equality>
-{ 
-    ok((1 ~~ 1), "one is one");
-    ok(!(2 ~~ 1), "two is not one");
-};
-
-#L<S03/Smart matching/string equality>
-{ 
-    ok(("foo" ~~ "foo"), "foo eq foo");
-    ok(!("bar" ~~ "foo"), "!(bar eq foo)");
-};
 
 # no objects, no rules
-# ... staring vin diesel and kevin kostner! (blech)
-#Any     .method   method truth*            match if $_.method
 #Any     Rule      pattern match            match if $_ ~~ /$x/
 #Any     subst     substitution match*      match if $_ ~~ subst
 
@@ -364,17 +310,6 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 
 # does this imply MMD for $_, $x?
 #Any     Any       run-time dispatch        match if infix:<~~>($_, $x)
-
-
-#L<S03/Smart matching>
-{ 
-    # representational checks for !~~, rely on ~~ semantics to be correct
-    # assume negated results
-
-    #?pugs 2 skip 'parsefail'
-    ok(!(%hash1 !~~ any(%hash3)), "intersecting keys");
-    ok((%hash1 !~~ any(%hash4)), "no intersecting keys");
-};
 
 =begin begin Explanation
 
