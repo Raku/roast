@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 133;
+plan 149;
 
 =begin pod
 
@@ -145,8 +145,43 @@ sub eval_elsewhere($code){ eval($code) }
 {
     ok(!("foo" !~~ "foo"),  "!(foo ne foo)");
     ok(("bar" !~~ "foo"),   "bar ne foo)");
-    ok (4 ~~ '4'),          'string equality';
+    ok  (4 ~~ '4'),         'string equality';
     ok !(4 !~~ '4'),        'negated string equality';
+    ok  (undef ~~ ''),      'undef ~~ ""';
+}
+
+#L<S03/Smart matching/Hash Pair test hash mapping>
+#?rakudo skip 'Hash ~~ Pair'
+{
+    my %a = (a => 1, b => 'foo', c => undef);
+    ok  (%a ~~ b => 'foo'),         '%hash ~~ Pair (Str, +)';
+    ok !(%a ~~ b => 'ugh'),         '%hash ~~ Pair (Str, -)';
+    ok  (%a ~~ a => 1.0),           '%hash ~~ Pair (Num, +)';
+    ok  (%a ~~ :b<foo>),            '%hash ~~ Colonpair';
+    ok  (%a ~~ c => undef),         '%hash ~~ Pair (undef)';
+    ok  (%a ~~ d => undef),         '%hash ~~ Pair (undef, nonexistent)';
+}
+
+#L<S03/Smart matching/Any Pair test object attribute>
+#?rakudo skip 'Any ~~ Pair'
+{
+    class SmartmatchTest::AttrPair {
+        has $.a = 4;
+        has $.b = 'foo';
+        has $.c = undef;
+    }
+    my $o = SmartmatchTest::AttrPair.new();
+    ok  ($o ~~ :a(4)),      '$obj ~~ Pair (Int, +)';
+    ok !($o ~~ :a(2)),      '$obj ~~ Pair (Int, -)';
+    ok  ($o ~~ :b(0)),      '$obj ~~ Pair (Int, +) (with coercion, warns)';
+    ok  ($o ~~ :b<foo>),    '$obj ~~ Pair (Str, +)';
+    ok !($o ~~ :b<ugh>),    '$obj ~~ Pair (Str, -)';
+    ok  ($o ~~ :c(undef)),  '$obj ~~ Pair (undef, +)';
+    ok !($o ~~ :b(undef)),  '$obj ~~ Pair (undef, -)';
+    # XXX unspecced: what to do when the attribute doesn't exist?
+    # die? I hope not...
+    ok  ($o ~~ :e(undef)),  '$obj ~~ Pair (undef, nonexistent, +)';
+    ok  ($o ~~ :e(5)),      '$obj ~~ Pair (Int, nonexistent, -)';
 }
 
 # reviewed by moritz on 2009-07-06 up to here.
