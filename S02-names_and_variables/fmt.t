@@ -76,11 +76,11 @@ plan 19;
     }
 }
 
-# Some failure modes
+# .fmt without arguments
 {
-    dies_ok { (1).fmt()         }, 'scalar .fmt fails without $fmt';
-    dies_ok { (1=>"a").fmt()    }, 'pair .fmt fails without $fmt';
-    dies_ok { (1,2).fmt()       }, 'list .fmt fails without $fmt';
-    dies_ok { [1,2].fmt()       }, 'array .fmt fails without $fmt';
-    dies_ok { {1=>"a"}.fmt()    }, 'hash .fmt fails without $fmt';
+    is (1).fmt(), '1', 'scalar .fmt without $fmt';
+    is (1=>"a").fmt(), "1\ta", 'pair .fmt without $fmt';
+    is (1,2).fmt(), '1 2', 'list .fmt without $fmt';
+    is [1,2].fmt(), '1 2', 'array .fmt without $fmt';
+    is {1=>"a"}.fmt(), "1\ta", 'hash .fmt without $fmt';
 }
