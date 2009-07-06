@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 101;
+plan 102;
 
 =begin pod
 
@@ -14,19 +14,62 @@ sub eval_elsewhere($code){ eval($code) }
 
 #L<S03/"Smart matching"/Any Callable:($) item sub truth>
 {
-    sub uhuh { 1 }
-    sub nuhuh { undef }
-
-    ok((undef ~~ &uhuh), "scalar sub truth");
-    ok(!(undef ~~ &nuhuh), "negated scalar sub false");
-
     sub is_even($x) { $x % 2 == 0 }
     sub is_odd ($x) { $x % 2 == 1 }
     ok 4 ~~ &is_even,    'scalar sub truth (unary)';
     ok 4 !~~ &is_odd,    'scalar sub truth (unary, negated smart-match)';
     ok !(3 ~~ &is_even), 'scalar sub truth (unary)';
     ok !(3 !~~ &is_odd), 'scalar sub truth (unary, negated smart-match)';
+}
+
+#L<S03/"Smart matching"/Any Callable:() simple closure truth>
+{
+    sub uhuh { 1 }
+    sub nuhuh { undef }
+
+    ok((undef ~~ &uhuh), "scalar sub truth");
+    ok(!(undef ~~ &nuhuh), "negated scalar sub false");
+
 };
+
+#L<S03/Smart matching/Any undef undefined not .defined>
+{ 
+    ok(!("foo" ~~ undef), "foo is not ~~ undef");
+    ok "foo" !~~ undef,   'foo !~~ undef';
+    ok((undef ~~ undef), "undef is");
+};
+
+#L<S03/Smart matching/Any .foo method truth>
+{
+    class Smartmatch::Tester {
+        method a { 4 };
+        method b($x) { 5 * $x };
+        method c { 0 };
+    }
+    my $t = Smartmatch::Tester.new();
+    ok ($t ~~ .a),    '$obj ~~ .method calls the method (+)';
+    ok !($t ~~ .c),   '$obj ~~ .method calls the method (-)';
+    ok ($t ~~ .b(3)), '$obj ~~ .method(arg) calls the method (true)';
+    ok ($t ~~ .b: 3), '$obj ~~ .method: arg calls the method (true)';
+    ok !($t ~~ .b(0)), '$obj ~~ .method(arg) calls the method (false)';
+    ok !($t ~~ .b: 0), '$obj ~~ .method: arg calls the method (false)';
+
+    # now change the same in when blocks, which also smart-match
+    my ($a, $b, $c) = 0 xx 3;
+    given $t {
+        when .a { $a = 1 };
+    }
+    given $t {
+        when .b(3) { $b = 1 };
+    }
+    given $t {
+        when .b(0) { $c = 1 };
+    }
+    ok $a, '.method in when clause';
+    ok $b, '.method(args) in when clause';
+    ok !$c, '..method(args) should not trigger when-block when false';
+}
+
 
 #L<S03/Smart matching/"hash keys same set">
 my %hash1 = ( "foo", "Bar", "blah", "ding");
@@ -217,13 +260,6 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 # i don't understand this one
 #Any     boolean   simple expression truth* match if true given $_
 
-#L<S03/Smart matching/Any undef undefined not .defined>
-{ 
-    ok(!("foo" ~~ undef), "foo is not ~~ undef");
-    ok "foo" !~~ undef,   'foo !~~ undef';
-    ok((undef ~~ undef), "undef is");
-};
-
 # does this imply MMD for $_, $x?
 #Any     Any       run-time dispatch        match if infix:<~~>($_, $x)
 
@@ -284,34 +320,6 @@ caught that case.
 };
 
 ok NaN ~~ NaN, 'NaN ~~ NaN is True';
-
-{
-    class Smartmatch::Tester {
-        method a { 4 };
-        method b($x) { 5 * $x };
-    }
-    my $t = Smartmatch::Tester.new();
-    ok ($t ~~ .a),    '$obj ~~ .method calls the method';
-    ok ($t ~~ .b(3)), '$obj ~~ .method(arg) calls the method (true)';
-    ok ($t ~~ .b: 3), '$obj ~~ .method: arg calls the method (true)';
-    ok !($t ~~ .b(0)), '$obj ~~ .method(arg) calls the method (false)';
-    ok !($t ~~ .b: 0), '$obj ~~ .method: arg calls the method (false)';
-
-    # now change the same in when blocks, which also smart-match
-    my ($a, $b, $c) = 0 xx 3;
-    given $t {
-        when .a { $a = 1 };
-    }
-    given $t {
-        when .b(3) { $b = 1 };
-    }
-    given $t {
-        when .b(0) { $c = 1 };
-    }
-    ok $a, '.method in when clause';
-    ok $b, '.method(args) in when clause';
-    ok !$c, '..method(args) should not trigger when-block when false';
-}
 
 # need to test in eval() since class defintions happen at compile time,
 # ie before the plan is set up.
