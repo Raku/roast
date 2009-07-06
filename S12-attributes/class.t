@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Attributes/"Class attributes are declared">
 #L<S12/Class methods/metaclass method always delegated>
 
-plan 22;
+plan 30;
 
 class Foo {
     our $.bar = 23;
@@ -85,6 +85,33 @@ is $test7, 23, 'class attribute via $obj.^name really works';
     is($x.x, 42, "class attribute accessors work");
     my $y = Oof.new();
     is($y.x, 42, "class attributes shared by all instances");
+}
+
+# RT #57336
+{
+    # XXX Right message?
+    my $good_message = q{Lexical 'self' not found};
+    my $bad_code;
+
+    $bad_code = '$.a';
+    eval $bad_code;
+    ok $! ~~ Exception, "bad code: '$bad_code'";
+    is "$!", $good_message, 'good error message';
+
+    $bad_code ='$!a';
+    eval $bad_code;
+    ok $! ~~ Exception, "bad code: '$bad_code'";
+    is "$!", $good_message, 'good error message';
+    
+    $bad_code = 'class B0rk { has $.a; say $.a; }';
+    eval $bad_code;
+    ok $! ~~ Exception, "bad code: '$bad_code'";
+    is "$!", $good_message, 'good error message';
+    
+    $bad_code = 'class Chef { my $.a; say $.a; }';
+    eval $bad_code;
+    ok $! ~~ Exception, "bad code: '$bad_code'";
+    is "$!", $good_message, 'good error message';
 }
 
 # vim: ft=perl6
