@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 118;
+plan 126;
 
 =begin pod
 
@@ -117,6 +117,18 @@ sub eval_elsewhere($code){ eval($code) }
     ok !(%h ~~ .<b>),     '%hash ~~ .<false"}';
     ok  (%h ~~ .<c d>),   '%hash ~~ .<true values>';
     ok !(%h ~~ .<c d a>), '%hash ~~ .<not all true>';
+}
+
+#L<S03/Smart matching/Any Bool simple truth>
+{
+    ok  (0 ~~ True),         '$something ~~ True (1)';
+    ok  (0 ~~ Bool::True),   '$something ~~ Bool::True (1)';
+    ok  ('a' ~~ True),       '$something ~~ True (2)';
+    ok  ('a' ~~ Bool::True), '$something ~~ Bool::True (2)';
+    ok !(0 ~~ False),        '$something ~~ False (1)';
+    ok !(0 ~~ Bool::False),  '$something ~~ Bool::False (1)';
+    ok !('a' ~~ False),      '$something ~~ False (2)';
+    ok !('a' ~~ Bool::False),'$something ~~ Bool::False (2)';
 }
 
 #L<S03/Smart matching/"hash keys same set">
