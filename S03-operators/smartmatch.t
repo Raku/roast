@@ -134,7 +134,7 @@ sub eval_elsewhere($code){ eval($code) }
 
 #L<S03/Smart matching/Any Num numeric equality>
 {
-    ok  ('05' ~~ 5),            '$something ~~ number numifies';);
+    ok  ('05' ~~ 5),            '$something ~~ number numifies';
     ok  ('1.2' ~~ 1.2),         '$thing ~~ number does numeric comparison';
     # yes, this warns, but it should still be true
     ok  (undef ~~ 0),           'undef ~~ 0';
