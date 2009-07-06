@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 102;
+plan 108;
 
 =begin pod
 
@@ -40,6 +40,7 @@ sub eval_elsewhere($code){ eval($code) }
 };
 
 #L<S03/Smart matching/Any .foo method truth>
+#L<S03/Smart matching/Any .foo(...) method truth>
 {
     class Smartmatch::Tester {
         method a { 4 };
@@ -70,6 +71,34 @@ sub eval_elsewhere($code){ eval($code) }
     ok !$c, '..method(args) should not trigger when-block when false';
 }
 
+#L<S03/Smart matching/Any .(...) sub call truth>
+{
+    my $t = sub { Bool::True };
+    my $f = sub { Bool::False };
+    my $mul = sub ($x) { $x * 2 };
+    my $div = sub ($x) { $x - 2 };
+
+    ok ($t ~~ .()),     '~~ .() sub call truth (+)';
+    ok !($f ~~ .()),    '~~ .() sub call truth (-)';
+    ok ($mul ~~ .(2)),  '~~ .($args) sub call truth (+,1)';
+    ok !($mul ~~ .(0)), '~~ .($args) sub call truth (-,1)';
+    ok !($div ~~ .(2)), '~~ .($args) sub call truth (+,2)';
+    ok ($div ~~ .(0)),  '~~ .($args) sub call truth (-,2)';
+}
+
+#L<S03/Smart matching/array value slice truth>
+{ 
+    ok ((undef, 1, undef) ~~ .[1]),
+        "element 1 of (undef, 1, undef) is true";
+    ok !((undef, undef) ~~ .[0]),
+        "element 0 of (undef, undef) is false";
+    ok ((0, 1, 2, 3) ~~ .[1, 2, 3]),
+        "array slice .[1,2,3] of (0,1,2,3) is true";
+    ok !((0, 1, 2, 3) ~~ .[0]),
+        "array slice .[0] of (0,1,2,3) is false";
+    ok !((0, 1, 2, 3) ~~ .[0,1]),
+        "array slice .[0,1] of (0,1,2,3) is false";
+};
 
 #L<S03/Smart matching/"hash keys same set">
 my %hash1 = ( "foo", "Bar", "blah", "ding");
@@ -196,19 +225,6 @@ my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
        "but none between (1, 2) and (3, 4)");
 };
 
-#L<S03/Smart matching/array value slice truth>
-{ 
-    ok ((undef, 1, undef) ~~ .[1]),
-        "element 1 of (undef, 1, undef) is true";
-    ok !((undef, undef) ~~ .[0]),
-        "element 0 of (undef, undef) is false";
-    ok ((0, 1, 2, 3) ~~ .[1, 2, 3]),
-        "array slice .[1,2,3] of (0,1,2,3) is true";
-    ok !((0, 1, 2, 3) ~~ .[0]),
-        "array slice .[0] of (0,1,2,3) is false";
-    ok !((0, 1, 2, 3) ~~ .[0,1]),
-        "array slice .[0,1] of (0,1,2,3) is false";
-};
 
 #L<S03/"Smart matching"/in range>
 { 
