@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Attributes/"Class attributes are declared">
 #L<S12/Class methods/metaclass method always delegated>
 
-plan 30;
+plan 26;
 
 class Foo {
     our $.bar = 23;
@@ -89,29 +89,26 @@ is $test7, 23, 'class attribute via $obj.^name really works';
 
 # RT #57336
 {
-    # XXX Right message?
-    my $good_message = q{Lexical 'self' not found};
+    # TODO: Test that the exceptions thrown here are the right ones
+    #       and not the result of some other bug.
+
     my $bad_code;
 
     $bad_code = '$.a';
     eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
-    is "$!", $good_message, 'good error message';
 
     $bad_code ='$!a';
     eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
-    is "$!", $good_message, 'good error message';
     
     $bad_code = 'class B0rk { has $.a; say $.a; }';
     eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
-    is "$!", $good_message, 'good error message';
     
     $bad_code = 'class Chef { my $.a; say $.a; }';
     eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
-    is "$!", $good_message, 'good error message';
 }
 
 # vim: ft=perl6
