@@ -4,15 +4,11 @@ use Test;
 
 plan 101;
 
-=begin kwid
+=begin pod
 
 This tests the smartmatch operator, defined in L<S03/"Smart matching">
 
-note that ~~ is currently a stub, and is really eq.
-the reason it's parsed is so that eval '' won't be around everywhere, not for
-emulation.
-
-=end kwid
+=end pod
 
 sub eval_elsewhere($code){ eval($code) }
 
@@ -33,20 +29,18 @@ sub eval_elsewhere($code){ eval($code) }
 };
 
 #L<S03/Smart matching/"hash keys same set">
-#?rakudo skip 'context variables'
+my %hash1 = ( "foo", "Bar", "blah", "ding");
+my %hash2 = ( "foo", "zzz", "blah", "frbz");
+my %hash3 = ( "oink", "da", "blah", "zork");
+my %hash4 = ( "bink", "yum", "gorch", "zorba");
+my %hash5 = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 {
-my %hash1 is context = ( "foo", "Bar", "blah", "ding");
-my %hash2 is context = ( "foo", "zzz", "blah", "frbz");
-my %hash3 is context = ( "oink", "da", "blah", "zork");
-my %hash4 is context = ( "bink", "yum", "gorch", "zorba");
-my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     #?pugs todo
-    ok eval_elsewhere('(%+hash1 ~~ %+hash2)'), "hash keys identical";
-    ok eval_elsewhere('!(%+hash1 ~~ %+hash4)'), "hash keys differ";
+    ok eval_elsewhere('(%hash1 ~~ %hash2)'), "hash keys identical";
+    ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";
 }
 
 #L<S03/Smart matching/hash value slice truth>
-#?rakudo skip 'context variables'
 {
     #?pugs todo
     ok(%hash1 ~~ any(%hash3), "intersecting keys");
@@ -54,7 +48,6 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<S03/Smart matching/hash value slice truth>
-#?rakudo skip 'context variables'
 { 
     my @true = (<foo bar>);
     my @sort_of = (<foo gorch>);
@@ -66,7 +59,6 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<S03/Smart matching/hash value slice truth>
-#?rakudo skip 'context variables'
 { 
     #?pugs todo
     ok((%hash1 ~~ any(<foo bar>)), "any key exists (but where is it?)");
@@ -74,7 +66,6 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<S03/Smart matching/hash slice existence>
-#?rakudo skip 'context variables'
 { 
     #?pugs todo
     ok((%hash1 ~~ all(<foo blah>)), "all keys exist");
@@ -84,7 +75,6 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 #Hash    Rule      hash key grep            match if any($_.keys) ~~ /$x/
 
 #L<S03/Smart matching/hash slice existence>
-#?rakudo skip 'context variables'
 { 
     #?pugs todo 3
     ok((%hash5 ~~ "foo"), "foo exists");
@@ -94,19 +84,17 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
 };
 
 #L<S03/Smart matching/hash slice existence>
-#?rakudo skip 'context variables'
 { 
-    my $string is context = "foo";
-    ok eval_elsewhere('(%+hash5 ~~ .{$+string})'), 'hash.{Any} truth';
+    my $string = "foo";
+    ok eval_elsewhere('(%hash5 ~~ .{$string})'), 'hash.{Any} truth';
     $string = "gorch";
-    ok eval_elsewhere('!(%+hash5 ~~ .{$+string})'), 'hash.{Any} untruth';
+    ok eval_elsewhere('!(%hash5 ~~ .{$string})'), 'hash.{Any} untruth';
 };
 
 #L<S03/Smart matching/hash value slice truth>
-#?rakudo skip 'context variables'
 { 
-    ok eval_elsewhere('(%+hash5 ~~ .<foo>)'), "hash<string> truth";
-    ok eval_elsewhere('!(%+hash5 ~~ .<gorch>)'), "hash<string> untruth";
+    ok eval_elsewhere('(%hash5 ~~ .<foo>)'), "hash<string> truth";
+    ok eval_elsewhere('!(%hash5 ~~ .<gorch>)'), "hash<string> untruth";
 };
 
 #L<S03/Smart matching/arrays are comparable>
@@ -249,7 +237,6 @@ my %hash5 is context = ( "foo", 1, "bar", 1, "gorch", undef, "baz", undef );
     ok(("bar" !~~ "foo"), "bar ne foo)");
 
     #?pugs 2 skip 'parsefail'
-    #?rakudo 2 skip 'context variables'
     ok(!(%hash1 !~~ any(%hash3)), "intersecting keys");
     ok((%hash1 !~~ any(%hash4)), "no intersecting keys");
 };
