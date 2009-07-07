@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 130;
+plan 138;
 
 =begin pod
 
@@ -179,10 +179,11 @@ sub eval_elsewhere($code){ eval($code) }
     ok !($o ~~ :b<ugh>),    '$obj ~~ Pair (Str, -)';
     ok  ($o ~~ :c(undef)),  '$obj ~~ Pair (undef, +)';
     ok !($o ~~ :b(undef)),  '$obj ~~ Pair (undef, -)';
-    # XXX unspecced: what to do when the attribute doesn't exist?
-    # die? I hope not...
-    ok  ($o ~~ :e(undef)),  '$obj ~~ Pair (undef, nonexistent, +)';
-    ok  ($o ~~ :e(5)),      '$obj ~~ Pair (Int, nonexistent, -)';
+    # unspecced, but decreed by TimToady: non-existing method
+    # or attribute dies:
+    # http://irclog.perlgeek.de/perl6/2009-07-06#i_1293199
+    dies_ok {$o ~~ :e(undef)},  '$obj ~~ Pair, nonexistent, dies';
+    dies_ok {$o ~~ :e(5)},      '$obj ~~ Pair, nonexistent, dies';
 }
 
 # TODO: 
@@ -239,6 +240,7 @@ sub eval_elsewhere($code){ eval($code) }
 
 # TODO:
 # Set   Array
+# Any   Array
 
 #L<S03/Smart matching/Hash Hash hash keys same set>
 my %hash1 = ( "foo" => "Bar", "blah" => "ding");
@@ -264,26 +266,36 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
 };
 =end needsdiscussion
 
-# reviewed by moritz on 2009-07-07 up to here.
+# TODO:
+# Set   Hash
+# Array Hash
 
-#L<S03/Smart matching/hash slice existence>
-#?rakudo todo 'scoping?'
-{ 
-    my $string = "foo";
-    ok eval_elsewhere('(%hash5 ~~ .{$string})'), 'hash.{Any} truth';
-    $string = "gorch";
-    ok eval_elsewhere('!(%hash5 ~~ .{$string})'), 'hash.{Any} untruth';
-};
+#L<S03/"Smart matching"/Regex Hash hash key grep>
+#?rakudo skip 'Regex ~~ Hash'
+{
+    my %h = (moep => 'foo', bar => 'baz');
+    ok  (/oep/ ~~ %h),      'Regex ~~ Hash (+,1)';
+    ok  (/bar/ ~~ %h),      'Regex ~~ Hash (+,2)';
+    ok !(/ugh/ ~~ %h),      'Regex ~~ Hash (-,1)';
+    ok !(/foo/ ~~ %h),      'Regex ~~ Hash (-,value)';
+}
 
-#L<S03/Smart matching/hash value slice truth>
-{ 
-    ok eval_elsewhere('(%hash5 ~~ .<foo>)'), "hash<string> truth";
-    ok eval_elsewhere('!(%hash5 ~~ .<gorch>)'), "hash<string> untruth";
-};
+#L<S03/"Smart matching"/Scalar Hash hash entry existence>
+{
+    my %h = (moep => 'foo', bar => undef);
+    ok  ('moep' ~~ %h),     'Scalar ~~ Hash (+, True)';
+    ok  ('bar' ~~ %h),      'Scalar ~~ Hash (+, False)';
+    ok !('foo' ~~ %h),      'Scalar ~~ Hash (-)';
+}
 
+# TODO:
+# Any   Hash
+
+# Regex tests are in spec/S05-*
 
 #L<S03/"Smart matching"/in range>
 { 
+    # more range tests in t/spec/S03-operators/range.t
     #?pugs todo
     ok((5 ~~ 1 .. 10), "5 is in 1 .. 10");
     ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
@@ -296,21 +308,38 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
     class Dog {}
     class Cat {}
     class Chihuahua is Dog {} # i'm afraid class Pugs will get in the way ;-)
+    role SomeRole { };
+    class Something does SomeRole { };
 
     ok (Chihuahua ~~ Dog), "chihuahua isa dog";
+    ok (Something ~~ SomeRole), 'something does dog';
     ok !(Chihuahua ~~ Cat), "chihuahua is not a cat";
 };
 
+# TODO:
+# Signature Signature
+# Callable  Signature
+# Capture   Signature
+# Any       Signature
+#                    
+# Signature Capture  
 
-# no objects, no rules
-#Any     Rule      pattern match            match if $_ ~~ /$x/
-#Any     subst     substitution match*      match if $_ ~~ subst
 
-# i don't understand this one
-#Any     boolean   simple expression truth* match if true given $_
+#L<S03/Smart matching/Any Any scalars are identical>
+#?rakudo skip 'Any ~~ Any'
+{
+    class Smartmatch::ObjTest;
+    my $a = Smartmatch::ObjTest.new;
+    my $b = Smartmatch::ObjTest.new;
+    ok  ($a ~~  $a),    'Any ~~  Any (+)';
+    ok !($a !~~ $a),    'Any !~~ Any (-)';
+    ok !($a ~~  $b),    'Any ~~  Any (-)';
+    ok  ($a !~~ $b),    'Any !~~ Any (+)';
+}
 
-# does this imply MMD for $_, $x?
-#Any     Any       run-time dispatch        match if infix:<~~>($_, $x)
+# reviewed by moritz on 2009-07-07 up to here.
+
+
 
 =begin begin Explanation
 
