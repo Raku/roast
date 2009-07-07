@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 10;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -29,5 +29,14 @@ is @a, [1,2,3,4], '*.meth created closure works';
     isa_ok (b < *), Code, 'Enums and Whatever star interact OK';
 }
 
+# check that more complex expressions work:
+
+#?rakudo skip '* to code translation for multi-step expressions'
+{
+    my $code = *.uc eq 'FOO';
+    ok $code ~~ Callable, '"*.uc eq $str" produces a Callable object';
+    ok $code("foo"), 'and it works (+)';
+    ok !$code("bar"), 'and it works (-)';
+}
 
 # vim: ft=perl6
