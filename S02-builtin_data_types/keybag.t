@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 20;
 
 # L<S02/Mutable types/"KeyBag of UInt">
 
@@ -45,8 +45,6 @@ plan 21;
     lives_ok { %h<a>-- }, 'remove a missing item lives';
     is %h.keys, ('c'), 'removing missing item does not change contents';
     is %h<a>, 0, 'item removed again is still zero';
-
-    is %h<z>, 0, 'item that was never present is zero';
 }
 
 # vim: ft=perl6
