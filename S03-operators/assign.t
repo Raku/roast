@@ -245,7 +245,6 @@ my @p;
     isa_ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
 
     my $f //= 5;
-    #?rakudo todo '//= in declaration (RT #64288)'
     is $f, 5, '//= also works in declaration';
 }
 
