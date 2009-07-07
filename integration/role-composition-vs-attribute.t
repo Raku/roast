@@ -15,7 +15,7 @@ class S does B
         {
                 $.t.x;
         }
-        method BUILD(*@_)
+        submethod BUILD(*@_)
         { $.t = T.new }
 }
 
