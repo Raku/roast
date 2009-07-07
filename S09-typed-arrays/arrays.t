@@ -15,7 +15,7 @@ plan 55;
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array';
-    is @x.unshift, 2, 'can unshift from typed array';
+    is @x.unshift(2), (2, 2, 3), 'can unshift from typed array';
 }
 
 {
@@ -28,7 +28,7 @@ plan 55;
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
-    is @x.unshift, 2, 'can unshift from typed array (@x of Int)';
+    is @x.unshift(1), (1, 2, 3), 'can unshift from typed array (@x of Int)';
 }
 
 # initialization 
@@ -44,7 +44,8 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
-    is @x.unshift, 2, 'can unshift from typed array (@x of Int)';
+    
+    ok @x.unshift, 'can unshift from typed array (@x of Int)';
 }
 
 {
