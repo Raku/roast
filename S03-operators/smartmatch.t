@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 129;
+plan 130;
 
 =begin pod
 
@@ -160,6 +160,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok  (%a ~~ :b<foo>),            '%hash ~~ Colonpair';
     ok  (%a ~~ c => undef),         '%hash ~~ Pair (undef)';
     ok  (%a ~~ d => undef),         '%hash ~~ Pair (undef, nonexistent)';
+    ok !(%a ~~ a => 'foo'),         '%hash ~~ Pair (key and val not paired)';
 }
 
 #L<S03/Smart matching/Any Pair test object attribute>
@@ -357,6 +358,7 @@ ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 
 # need to test in eval() since class defintions happen at compile time,
 # ie before the plan is set up.
-eval_lives_ok 'class A { method foo { say "" ~~ * } }; A.new.foo',
+eval_lives_ok 'class A { method foo { diag "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT #62196)';
+
 # vim: ft=perl6
