@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 44;
+plan 50;
 
 # basic push tests
 {
@@ -39,6 +39,23 @@ plan 44;
     is(+@push, 5, 'we have 5 element in the array (with named arg)');
     is(@push[4], 5, 'we found the right element (with named arg)');
 }
+}
+
+{
+    my @p;
+    @p.push( 'bughunt' );
+
+    is( +@p, 1, 'single element array' );
+    ok( @p ~~ Array, '@p ~~ Array' );
+
+    my @push_result = @p.push( 'yo, check it' );
+
+    is( +@p, 2, 'array received second element' );
+    #?rakudo todo '.push should return the modified array'
+    ok( @push_result ~~ @p, 'modified array, returned' );
+    is( ~@p, 'bughunt yo, check it', '~@p' );
+    #?rakudo todo '.push should return the modified array'
+    is( ~@p.push('!'), 'bughunt yo, check it !', '~ on the push' );
 }
 
 # try other variations on calling push()
