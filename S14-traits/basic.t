@@ -10,7 +10,7 @@ plan 8;
         method exists-only-in-test-trait {
             42;
         }
-        multi trait_auxiliary:<is>(testtrait1 $trait, $container) {
+        multi trait_mod:<is>($container, testtrait1 $trait) {
             $container does testtrait1;
         }
     }
@@ -29,7 +29,7 @@ plan 8;
         multi method mul() {
             $num * self;
         }
-        multi trait_auxiliary:<is>(multiply_with $trait, $cont, $n) {
+        multi trait_mod:<is>($cont, multiply_with $trait, $n) {
             $cont does multiply_with[$n];
         }
     }
@@ -46,7 +46,7 @@ plan 8;
         multi method mul() {
             $.num * self;
         }
-        multi trait_auxiliary:<is>(multiply_with2 $trait, $cont, $n) {
+        multi trait_mod:<is>($cont, multiply_with2 $trait, $n) {
             $cont does multiply_with2($n);
         }
     }
@@ -60,12 +60,12 @@ plan 8;
     class A { method b { 5 } };
     role different_keyword {
         multi method a() { b() };
-        multi trait_auxiliary:<implements>(different_keyword $trait, $cont) {
+        multi trait_mod:<implements>($cont, different_keyword $trait) {
             $cont does different_keyword();
         }
     }
     my A $x implements different_keyword .= new();
-    is $x.a(), 5, 'can define other trait_auxiliary keywords';
+    is $x.a(), 5, 'can define other trait_mod keywords';
 }
 
 # vim: ft=perl6
