@@ -151,7 +151,6 @@ sub eval_elsewhere($code){ eval($code) }
 }
 
 #L<S03/Smart matching/Hash Pair test hash mapping>
-#?rakudo skip 'Hash ~~ Pair'
 {
     my %a = (a => 1, b => 'foo', c => undef);
     ok  (%a ~~ b => 'foo'),         '%hash ~~ Pair (Str, +)';
