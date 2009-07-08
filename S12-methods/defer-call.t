@@ -2,9 +2,29 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 13;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
+
+# Simple test, making sure callwith passes on parameters properly.
+class A {
+    method a(*@A) {
+        (self.perl, @A)
+    }
+}
+class B is A {
+    method a() {
+        callwith("FIRST ARG", "SECOND ARG")
+    }
+}
+{
+    my $instance = B.new;
+    my @result = $instance.a();
+    is @result.elems, 3, 'nextwith passed on right number of parameters';
+    is @result[0], $instance.perl, 'invocant passed on correctly';
+    is @result[1], "FIRST ARG", 'first argument correct';
+    is @result[2], "SECOND ARG", 'second argument correct';
+}
 
 class Foo {
     # $.tracker is used to determine the order of calls.
@@ -36,7 +56,7 @@ class BarCallWithEmpty is Foo {
     multi method doit() {$.tracker ~= 'bar,'; callwith(); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(); $.tracker ~= 'ret2,'}
 }
-#?rakudo skip 'callwith bugs plus issue with calling MMDs with different argument sets'
+#?rakudo skip 'issue with calling MMDs with different argument sets'
 {
     my $o = BarCallWithEmpty.new;
     $o.clear;
@@ -54,7 +74,7 @@ class BarCallWithInt is Foo {
     multi method doit() {$.tracker ~= 'bar,'; callwith(42); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(42); $.tracker ~= 'ret2,'}
 }
-#?rakudo skip 'callwith bugs plus issue with calling MMDs with different argument sets'
+#?rakudo skip 'issue with calling MMDs with different argument sets'
 {
     my $o = BarCallWithInt.new;
     $o.clear;

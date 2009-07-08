@@ -2,9 +2,29 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 13;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
+
+# Simple test, making sure nextwith passes on parameters properly.
+class A {
+    method a(*@A) {
+        (self.perl, @A)
+    }
+}
+class B is A {
+    method a() {
+        nextwith("FIRST ARG", "SECOND ARG")
+    }
+}
+{
+    my $instance = B.new;
+    my @result = $instance.a();
+    is @result.elems, 3, 'nextwith passed on right number of parameters';
+    is @result[0], $instance.perl, 'invocant passed on correctly';
+    is @result[1], "FIRST ARG", 'first argument correct';
+    is @result[2], "SECOND ARG", 'second argument correct';
+}
 
 class Foo {
     # $.tracker is used to determine the order of calls.
@@ -35,7 +55,7 @@ class BarNextWithEmpty is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(); $.tracker ~= 'ret2,'}
 }
-#?rakudo skip 'some issues with nextwith, plus defering to MMD candidate with different args'
+#?rakudo skip 'defering to MMD candidate with different args'
 {
     my $o = BarNextWithEmpty.new;
     $o.clear;
@@ -51,7 +71,7 @@ class BarNextWithInt is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(42); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(42); $.tracker ~= 'ret2,'}
 }
-#?rakudo skip 'some issues with nextwith, plus defering to MMD candidate with different args'
+#?rakudo skip 'defering to MMD candidate with different args'
 {
     my $o = BarNextWithInt.new;
     $o.clear;
