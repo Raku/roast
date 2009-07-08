@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 32;
 
 =begin pod
 
@@ -12,6 +12,14 @@ Basic tests for the log() and log10() builtins
 
 is_approx(log(5), 1.6094379124341003, 'got the log of 5');
 is_approx(log(0.1), -2.3025850929940455, 'got the log of 0.1');
+
+# with given base:
+#?rakudo 3 skip '3-arg log'
+is_approx(log(8, 2), 3, 'log(8, 2) is 3'); 
+is_approx(log(42, 23),  1.19205119221557, 'log(42, 23)');
+
+# with non-Num
+is_approx(log("42", "23"),  1.19205119221557, 'log(42, 23) with strings');
 
 #?rakudo skip 'named args'
 {
