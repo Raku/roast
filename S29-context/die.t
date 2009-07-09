@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # L<S29/Context/=item die>
 
@@ -10,9 +10,12 @@ Tests for the die() builtin
 
 =end pod
 
-ok(!try { die "foo"; 1 });
-my $error = $!;
-is($error, 'foo', 'got $! correctly');
+#?rakudo skip 'this SOMETIMES gives Null PMC access in get_bool()'
+{
+    ok( ! try { die "foo"; 1 }, 'die in try cuts off execution');
+    my $error = $!;
+    is($error, 'foo', 'got $! correctly');
+}
 
 my $foo = "-foo-";
 try { $foo = die "bar" };
@@ -40,6 +43,14 @@ is ({ try { if 1 { die } else { die } }; 42 }()), 42, "die in if";
 
 my sub die_in_return () { return die };
 is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
+
+#?rakudo todo 'RT #67374'
+{
+    eval 'die "bughunt"';
+    my $error = "$!";
+    try { die };
+    is "$!", $error, 'die with no argument uses $!';
+}
 
 # If one of the above tests caused weird continuation bugs, the following line
 # will be executed multiple times, resulting in a "too many tests run" error
