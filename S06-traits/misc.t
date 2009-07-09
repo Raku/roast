@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 20;
 
 =begin description
 
@@ -89,7 +89,15 @@ lives_ok { boom(42) }, "can modify a copy";
 # enough to write an actual test...
 ok(eval('sub my_format (*@data is context(Item)) { }; 1'), "is context - compile check");
 
-
-
 # To do - check that is context actually works
+
+#?rakudo todo 'RT 60966'
+{
+    eval 'sub oh_noes( $gack is nonesuch ) { }';
+
+    ok  $!  ~~ Exception,  "Can't use an unknown trait";
+    ok "$!" ~~ /trait/,    'error message mentions trait';
+    ok "$!" ~~ /nonesuch/, 'error message mentions the name of the trait';
+}
+
 # vim: ft=perl6
