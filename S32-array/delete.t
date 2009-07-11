@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 29;
 
 =begin description
 
@@ -101,9 +101,11 @@ Basic C<delete> tests, see S32.
 {
     my @array = 0..1;
     lives_ok { @array.perl }, '@array.perl lives after init';
+    lives_ok { map { 1 }, @array }, 'map @array lives after init';
     @array.delete(0);
-    #?rakudo todo 'RT #67446'
+    #?rakudo 2 todo 'RT #67446'
     lives_ok { @array.perl }, '@array.perl lives after delete';
+    lives_ok { map { 1 }, @array }, 'map @array lives after delete';
 }
 
 # As a function (THERE IS NO FUNCTION)
