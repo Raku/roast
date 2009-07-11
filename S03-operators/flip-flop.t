@@ -2,11 +2,11 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 28;
 
 # L<S03/Changes to Perl 5 operators/flipflop operator is now done with>
 
-# XXX tests for fff
+# XXX more tests for fff
 
 #?pugs 999 skip 'TODO: infix:<ff>'
 sub my_take (Int $n, &f) { (1..$n).map: { f() ?? $_ !! undef } }
@@ -16,17 +16,25 @@ sub always_true  { 1 }
 # Basic ff
 {
    ok 1 ff 1, 'flip-flop operator implemented';
-
+   ok 1 fff 1, 'fff operator implemented';
 }
 
 {
     my @result = my_take 5, { ?(always_false() ff always_false()) };
     is ~@result, "    ", "always_false() ff always_false()";
 }
+{
+    my @result = my_take 5, { ?(always_false() fff always_false()) };
+    is ~@result, "    ", "always_false() fff always_false()";
+}
 
 {
     my @result = my_take 5, { ?(always_false() ff always_true()) };
     is ~@result, "    ", "always_false() ff always_true()";
+}
+{
+    my @result = my_take 5, { ?(always_false() fff always_true()) };
+    is ~@result, "    ", "always_false() fff always_true()";
 }
 
 {
