@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 27;
 
 =begin description
 
@@ -95,6 +95,15 @@ Basic C<delete> tests, see S32.
     "deletion of array elements accessed by a range of positive indices (3)";
   is +@array, 6,
     "deletion of array elements accessed by a range of positive indices (4)";
+}
+
+# RT #67446
+{
+    my @array = 0..1;
+    lives_ok { @array.perl }, '@array.perl lives after init';
+    @array.delete(0);
+    #?rakudo todo 'RT #67446'
+    lives_ok { @array.perl }, '@array.perl lives after delete';
 }
 
 # As a function (THERE IS NO FUNCTION)
