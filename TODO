@@ -43,7 +43,6 @@ the spec (newest first)
 * (r25767) updates to builtin regexes
 
 S02
-* tests for KeySet. See spec/S02-builtin_data_types/keyhash.t for inspiration
 * tests for Implementation types (the Perl 6 equiv. of tie()), probably need
   more specs as well
 * some tests in S02 assume that a floating point literal like 1.2 is of typ
@@ -77,12 +76,10 @@ S09
 * tests for PDL
 
 S12
-* tests for multi *method* dispatch (either write new ones, or find and review
-  some under t/oo/)
-* tests for $object.WALK
 * tests for $object.*@candidates
 * tests for "but" (such as 0 but Bool::True; should go into S12-enums/)
-* tests for metamethods (under "Introspection" in S12)
+* tests for metamethods (under "Introspection" in S12; so far only one in
+  S12-attributes/class.t)
 * tests for autovivification
 * more tests for inheritance. Auzon noticed that there were no multiple inheritance tests, so other important things are bound to be missing.
 
