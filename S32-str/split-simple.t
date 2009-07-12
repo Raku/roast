@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S32::Str/Str/"=item split">
-plan 45;
+plan 47;
 
 =begin description
 
@@ -81,14 +81,19 @@ split_test 'ab34d5z'.split(/<.before \d>/), <ab 3 4d 5z>, 'split with zero-width
 ok (''.split('')).elems == 0, q{''.split('') returns empty list};
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
-# split should return capture
-my @split = 'abc def ghi'.split(/(\s+)/);
-#?rakudo todo "split should return captures"
-#?DOES 3
+# split with :all should return capture
 {
+    my @split = 'abc def ghi'.split(/(\s+)/, :all);
     ok @split.elems == 5, q{split returns captured delimiter} ;
     ok @split[1] eq ' ', q{split captured single space};
     ok @split[3] eq ' ', q{split captured multiple spaces};
+}
+
+{
+    my @split = split(/\d+/, 'a4b5', :all);
+    is @split.elems, 5, 'split() with :all and trailing delimiter (count)';
+    is @split.join('|'), 'a|4|b|5|',
+       'split(:all) and trailing delimiter (values)';
 }
 
 # vim: ft=perl6

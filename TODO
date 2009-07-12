@@ -37,7 +37,6 @@ the spec (newest first)
 * (r26976) declarators "need" and "defines"
 * (r26968) Now we know how $! work.
 * (r26401) Pi/Pf characters are allowed as brackets
-* (r26101) :all flag for Str.split
 * (r25891) Junction -> junction, eigenstates method is now private
 * (r25830) named parameters to open()
 * (r25774) ~ and + act on the matched string, not the abstract object
