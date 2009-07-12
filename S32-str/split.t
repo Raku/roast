@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 29;
+plan 23;
 
 # split on an empty string
 
@@ -24,19 +24,12 @@ my %ords = (
   9 => 'ninth',
 );
 
-sub split_test(@splitted, @expected, Str $desc) {
-  is +@splitted, +@expected,
-     "split created the correct value amount for: $desc";
-  is @splitted[$_], @expected[$_],
-     "the %ords{$_ + 1} value matched for: $desc"
-     for 0 .. @splitted.end;
-  is_deeply [~<< @splitted], [~<< @expected], "values match";
-}
-
+#?rakudo skip 'named arguments to split()'
 is_deeply split(:input("fiSMBoC => fREW is Station's Most Bodacious Creation"), " "),
            qw/fiSMBoC => fREW is Station's Most Bodacious Creation/,
            q{split(:input(Str), " "};
 
+#?rakudo skip 'named arguments to split()'
 is_deeply split(:input("UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously"), /\s+/),
            qw/UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously/,
            q{split(:input(Str), /\s+/};
@@ -77,7 +70,8 @@ is_deeply split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars"),
            qw/Hello World Goodbye Mars/,
            q/split rx:Perl5 {\s+}, Str/;
 
-is_deeply split(rx:Perl5 {(\s+)}, "Hello test"),
+#?rakudo skip 'FixedIntegerArray: index out of bounds!'
+is_deeply split(rx:Perl5 {(\s+)}, "Hello test", :all),
            ('Hello', ("Hello test" ~~ rx:Perl5 {(\s+)}), 'test'),
            q/split rx:Perl5 {(\s+)}, Str/;
 
@@ -110,29 +104,28 @@ is_deeply  "Hello World    Goodbye   Mars".split(" ", 3),
 is_deeply  "Word".split("", 3), qw/W o rd/,
            q/Str.split("", limit)/;
 
-# XXX: Here Pugs emulates p5 default awk field splitting behaviour.
-is_deeply  "  abc  def  ".split(), qw/abc def/,
-           q/Str.split()/;
-# ... yet how do you do this with p6 function form of split?
-# Note that split(' ', $x) special casing of ' ' pattern (a la p5)
-# is not implemented in Pugs. Should it be?
+
+#L<S32::Str/Str/"no longer has a default delimiter">
+dies_ok {"  abc  def  ".split()}, q/Str.split() disallowed/;
 
 # This one returns an empty list
-is_deeply  "".split(), (),
-           q/"".split()/;
+is  list("".split('')).elems, 0, q/"".split()/;
 
 # ... yet this one does not (different to p5).
 # blessed by $Larry at Message-ID: <20060118191046.GB32562@wall.org>
-split_test  "".split(':'), (""),
-           q/"".split(':')/;
+is  list("".split(':')).elems, 1, q/"".split(':')/;
 
 # using /.../
 is_deeply "a.b".split(/\./), <a b>,
            q{"a.b".split(/\./)};
 
-is_deeply "abcd".split(/<null>/), <a b c d>,
-           q{"abcd".split(/<null>/)};
+#?rakudo skip 'loops on zero-width match'
+{
+    is_deeply "abcd".split(/<null>/), <a b c d>,
+              q{"abcd".split(/<null>/)};()
+}
 
+#?rakudo skip 'Null PMC access in invoke()'
 {
   ' ' ~~ /(\s)/;
 
@@ -143,3 +136,5 @@ is_deeply "abcd".split(/<null>/), <a b c d>,
     skip q{' ' ~~ /\s/ did not result in ' '};
   }
 }
+
+# vim: ft=perl6
