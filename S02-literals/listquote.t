@@ -32,7 +32,7 @@ describe the conflicting cases.
 
 =end kwid
 
-plan 15;
+plan 17;
 
 # L<S02/"Literals">
 # L<S03/"Chained comparisons">
@@ -96,5 +96,13 @@ is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
 #?rakudo 2 todo 'bare <> and <STDIN>'
 eval_dies_ok '<>', 'bare <> is disallowed';
 eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
+
+# L<S02/Literals/"is autopromoted into">
+#?rakudo skip 'List to Capture auto-promotion'
+{
+    my $c = <a b c>;
+    isa_ok($c, Capture, 'List in scalar context becomes a Capture');
+    dies_ok {$c.push: 'd'}, '... which is immutable';
+}
 
 # vim: ft=perl6

@@ -37,14 +37,11 @@ the spec (newest first)
 * (r26976) declarators "need" and "defines"
 * (r26968) Now we know how $! work.
 * (r26401) Pi/Pf characters are allowed as brackets
-* (r26302) limit to IO.lines
 * (r26101) :all flag for Str.split
 * (r25891) Junction -> junction, eigenstates method is now private
 * (r25830) named parameters to open()
-* (r25821) bare values in signatures
 * (r25774) ~ and + act on the matched string, not the abstract object
 * (r25767) updates to builtin regexes
-* (r25715) lists in item context autopromote to captures
 
 S02
 * tests for KeySet. See spec/S02-builtin_data_types/keyhash.t for inspiration
