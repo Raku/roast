@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 14;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -76,4 +76,17 @@ plan 10;
     $i += $_ for 1..3;
     is $_, 10, 'outer $_ did not get updated in lhs of for';
     is $i, 1+2+3, 'postfix for worked';
+}
+
+# RT #61494
+{
+    eval 'say for 1';
+    ok $! ~~ Exception, '"say for 1" (one space) is an error';
+    my $errmsg = "$!";
+
+    eval 'say  for 1';
+    ok $! ~~ Exception, '"say  for 1" (two spaces) is an error';
+    #?rakudo 2 todo 'RT #61494'
+    is "$!", $errmsg, 'error for two spaces is the same as one space';
+    ok "$!" ~~ /\b say \b/, 'error message is for "say"';
 }
