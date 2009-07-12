@@ -76,8 +76,7 @@ S09
 * tests for PDL
 
 S12
-* tests for $object.*@candidates
-* tests for "but" (such as 0 but Bool::True; should go into S12-enums/)
+* more tests for "but" (such as 0 but Bool::True; should go into S12-enums/)
 * tests for metamethods (under "Introspection" in S12; so far only one in
   S12-attributes/class.t)
 * tests for autovivification

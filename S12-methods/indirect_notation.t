@@ -12,7 +12,7 @@ L<S12/Methods/"Indirect object notation now requires a colon after the invocant,
 
 =end description
 
-plan 24;
+plan 29;
 
 
 ##### Without arguments
@@ -116,5 +116,25 @@ class T2
 }
 
 dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";
+
+#?rakudo skip '$obj.*@candidates NYI'
+{
+    class T4 {
+        has $.called = 0;
+        multi method m(Int $x) { $!called++; 'm-Int' }
+        multi method m(Num $x) { $!called++; 'm-Num' }
+
+        multi method n(Int $x) { $!called++; 'n-Int' }
+        multi method n(Num $x) { $!called++; 'n-Num' }
+    }
+
+    my $o = T4.new();
+    my @cand-num = <n m>;
+    is ~$o.*@cand-num(3.4).sort, 'm-Num n-Num', '$o.*@cand(arg) (1)';
+    is ~$o.*@cand-num(3).sort, 'm-Int m-Num n-Int n-Num', '$o.*@cand(arg) (2)';
+    is $o.called, 6, 'right number of method calls';
+    lives_ok { $o.*@cand-num() }, "it's ok if no candidate matched (arity)";
+    lives_ok { $o.*@cand-num([]) }, "it's ok if no candidate matched (type)";
+}
 
 # vim: ft=perl6
