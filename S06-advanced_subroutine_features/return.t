@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 70;
+plan 76;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -298,5 +298,27 @@ is Foo.new.officialsubmeth(), 43,
     "return correctly from official submethod only";
 is Foo::official(), 44,
     "return correctly from official sub only";
+
+# RT #61732
+{
+    eval_lives_ok 'sub rt61732_a { 1;; }', 'parse sub { 1;; }';
+    eval_lives_ok 'sub rt61732_b { 1; CATCH {} }', 'parse sub { 1; CATCH {} }';
+}
+#?rakudo todo 'RT #61732'
+{
+    my $x;
+
+    sub rt61732_c { 1; CATCH {} }
+    lives_ok { $x = rt61732_c() }, 'can call sub ending with empty CATCH';
+    is $x, 1, 'sub with empty catch block returns last value before block';
+}
+#?rakudo todo 'RT #61732'
+{
+    my $x;
+
+    sub rt61732_d { 1;; }
+    lives_ok { $x = rt61732_d() }, 'can call sub ending with double ;';
+    is $x, 1, 'get right value from sub with double ;';
+}
 
 # vim: ft=perl6
