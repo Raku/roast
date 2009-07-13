@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 =end pod
 
-plan 51;
+plan 52;
 
 # === on values
 {
@@ -25,6 +25,8 @@ plan 51;
   ok !("abc" === "ABC"), "=== on values(abc === ABC)";
   ok !(1 === 1.0), "=== on values (1 === 1.0)";
   ok !(1 === "1"), '=== on values (1 === "1")';
+  #?rakudo todo 'RT #61928'
+  ok (undef === undef), '=== on values (undef === undef)';
 }
 
 # Value types
