@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 43;
 
 =begin pod
 
@@ -135,4 +135,11 @@ class TestObj { has $!a }
   ok(!($foo =:= $bar), "two identical objects are not the same object");
   ok(!($foo =:= $baz), "two references to one object are still not the same object");
   ok(($foo =:= $frop), "binding makes two objects the same object");
+}
+
+{
+    ok (undef =:= undef) ~~ Failure, 'misuse of =:= is failure (undef)';
+    ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';
+    ok (1 =:= 2) ~~ Failure, 'misuse of =:= is failure (!=)';
+    ok (1 =:= 1) ~~ Failure, 'misuse of =:= is failure (even when ==)';
 }
