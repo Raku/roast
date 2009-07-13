@@ -29,8 +29,8 @@ is $handle(), 'FIC', 'CHECK {...} fired only once';
 
 $code = '$handle = { BEGIN { $hist ~= "B" } }';
 ok eval($code), 'eval BEGIN {...} works';
-is $hist, 'FICB', 'CHECK {...} fired at run-time';
-is $handle(), 'FICB', 'CHECK {...} fired only once';
+is $hist, 'FICB', 'BEGIN {...} fired at run-time';
+is $handle(), 'FICB', 'BEGIN {...} fired only once';
 
 #?rakudo skip 'variables in BEGIN/END blocks'
 {
