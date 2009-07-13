@@ -20,6 +20,7 @@ plan 42;
   is +%hash.keys, 1, 'Created one hash item';
 }
 
+# RT #61740
 {
   my %hash;
 
