@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 44;
+plan 45;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -210,5 +210,17 @@ L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be t
        'Testing the rest slurpy *@r';
 }
 
+# RT #61772
+{
+    my @array_in = <a b c>;
+
+    sub no_copy( *@a         ) { @a }
+    sub is_copy( *@a is copy ) { @a }
+
+    my @not_copied = no_copy( @array_in );
+    my @copied     = is_copy( @array_in );
+
+    is @copied, @not_copied, 'slurpy array copy same as not copied';
+}
 
 # vim: ft=perl6
