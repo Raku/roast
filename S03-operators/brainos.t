@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 1;
+plan 3;
 
 =begin pod
 
@@ -16,9 +16,6 @@ the user instead.
 
 my $str = 'foo';
 eval '$str =~ m/bar/;';
-if $!.defined {
-    pass "caught =~ braino, saying $!";
-}
-else {
-    flunk "didn't catch =~ braino";
-}
+ok  $!  ~~ Exception, 'caught "=~" braino';
+ok "$!" ~~ /'~~'/, 'error for "=~" usage mentions "~~"';
+ok "$!" ~~ /'~='/, 'error for "=~" usage metnions "~="';
