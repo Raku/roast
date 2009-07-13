@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 9;
 
 # L<S02/"Built-In Data Types" /Perl 6 should by default make standard IEEE floating point concepts visible>
 
@@ -38,3 +38,6 @@ plan 8;
 # and:
 #     Inf  eq  Inf   # same as
 #     ~Inf eq ~Inf   # true
+
+#?rakudo todo 'truncate(Inf)'
+ok truncate(Inf) ~~ Inf, 'truncate(Inf) ~~ Inf';
