@@ -61,6 +61,7 @@ ok(!("7" =:= 7), "identify checks type mismatch");
 }
 
 # Rebinding of array elements - unspecced!
+#?rakudo skip 'unspecced'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
@@ -104,10 +105,12 @@ ok(!("7" =:= 7), "identify checks type mismatch");
   my $test = -> *@args { $foo =:= @args[0] };
 
   #?pugs todo 'unspecced'
+  #?rakudo todo 'unspecced'
   ok  $test($foo), "binding of slurpy array subparam retains =:= (1)";
   ok !$test($bar), "binding of slurpy array subparam retains =:= (2)";
   $bar := $foo;
   #?pugs todo 'unspecced'
+  #?rakudo todo 'unspecced'
   ok  $test($bar), "binding of slurpy array subparam retains =:= (3)";
 }
 
@@ -117,10 +120,12 @@ ok(!("7" =:= 7), "identify checks type mismatch");
   my $test = sub { $foo =:= @_[0] };
 
   #?pugs todo 'unspecced'
+  #?rakudo todo 'unspecced'
   ok  $test($foo), "binding of implicit @_ subparam retains =:= (1)";
   ok !$test($bar), "binding of implicit @_ subparam retains =:= (2)";
   $bar := $foo;
   #?pugs todo 'unspecced'
+  #?rakudo todo 'unspecced'
   ok  $test($bar), "binding of implicit @_ subparam retains =:= (3)";
 }
 
@@ -137,6 +142,7 @@ class TestObj { has $!a }
   ok(($foo =:= $frop), "binding makes two objects the same object");
 }
 
+#?rakudo todo 'misuse of =:='
 {
     ok (undef =:= undef) ~~ Failure, 'misuse of =:= is failure (undef)';
     ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';
