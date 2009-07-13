@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Item assignment precedence>
 
-plan 46;
+plan 47;
 
 # Binding of array elements.
 # See thread "Binding of array elements" on p6l started by Ingo Blechschmidt:
@@ -225,4 +225,13 @@ plan 46;
   @array[1] = "B";
   is ~$arrayref, "a B c", 'binding @array := $arrayref works (2)';
   is ~@array,    "a B c", 'binding @array := $arrayref works (3)';
+}
+
+# RT #61566
+{
+    eval 'my @rt61566 := 1';
+    ok $! ~~ Exception, "Can't bind Int to array";
+    # TODO: check that the error is the right one
+    # <pmichaud> you should get a "Int does not do Positional role"
+    #            exception or something like that.
 }
