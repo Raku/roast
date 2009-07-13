@@ -56,7 +56,7 @@ my @tests = (
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
-plan 11 + 2*@tests;
+plan 12 + 2*@tests;
 #?pugs emit force_todo 8, 45..50, 94, 96;
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
@@ -145,4 +145,27 @@ plan 11 + 2*@tests;
     push @list, eval @list.perl;
     #?rakudo todo "List.perl bug"
     is +@list, 4, 'eval(@list.perl) gives a list, not an array ref';
+}
+
+# RT #61918
+#?rakudo todo 'RT #61918'
+{
+    class RT61918 {
+        has $.inst is rw;
+        has $!priv is rw;
+
+        method init {
+            $.inst = [ rand, rand ];
+            $!priv = [ rand, rand ].perl;
+        }
+    }
+
+    my $t1 = RT61918.new();
+    my $t1_new = $t1.perl;
+    $t1.init;
+    my $t1_init = $t1.perl;
+
+    ok $t1_new ne $t1_init, 'changing object changes .perl output';
+
+    # TODO: more tests that show eval($t1_init) has the same guts as $t1.
 }
