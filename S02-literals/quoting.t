@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 137;
+plan 140;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -424,6 +424,25 @@ Hello, World
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
+
+{
+    my $world = 'world';
+    is qq:x/echo hello $world/, "hello world\n", 'Testing qq:x operator';
+}
+
+#?rakudo todo 'q:x assigned to array'
+{
+    my @two_lines = q:x/echo hello ; echo world/;
+    is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
+}
+
+#?rakudo todo 'q:x assigned to array'
+{
+    my $hello = 'howdy';
+    my @two_lines = qq:x/echo $hello ; echo world/;
+    is @two_lines, ("$hello\n", "world\n"), 'testing qq:x assigned to array';
+}
+
 
 # L<S02/Literals/"Interpolate % vars">
 # q:h
