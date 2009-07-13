@@ -14,14 +14,14 @@ L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include
 
 =end pod
 
-plan 184;
+plan 186;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
   exit;
 }
 
-#force_todo(9,12,13,15,16);
+#?pugs emit force_todo(9,12,13,15,16);
 
 ok("abc1_2" ~~ m/^ <ident> $/, '<ident>');
 is($/<ident>, 'abc1_2', 'Captured <ident>');
@@ -294,3 +294,10 @@ ok(!( "}"  ~~ m/^<+xdigit>$/ ), q{Don't match unrelated xdigit as charset} );
 ok("}"  ~~ m/^<-xdigit>$/, q{Match inverted xdigit as charset});
 ok("}0" ~~ m/<+xdigit>/, q{Match unanchored xdigit as charset} );
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/always returns false>
+
+#?rakudo 2 skip '<!> NYI'
+ok 'abc' !~~ /a <!>/, '<!> fails';
+ok '' !~~ /<!>/, '<!> fails (empty string)';
+
+# vim: ft=perl6
