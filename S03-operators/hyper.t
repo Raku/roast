@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 90;
+plan 91;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -374,3 +374,15 @@ my @e;
     is %r<a>, 6, 'hash - correct result from <<+<<';
     is %r<b>, 8, 'hash - correct result from <<+<<';
 }
+
+
+# test non-UTF-8 input
+#?pugs skip 'eval(Buf)'
+#?rakudo skip 'eval(Buf)'
+{
+    my $t = '(1, 2, 3) »+« (4, 3, 2)';
+    ok !eval($t.encode('ISO-8859-1')),
+       'Latin-1 »+« without pre-declaration is an error';
+}
+
+# vim: ft=perl6
