@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 89;
+plan 91;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -266,6 +266,14 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
        '2|4|8', 'next in map works';
     is (1..10).map({ last if $_ % 5 == 0; 2 * $_}).join(' '),
        '2 4 6 8', 'last in map works';
+}
+
+# RT #62332
+{
+    my $x = :a<5>;
+    is $x.map({ .key, .value + 1}), ('a', 6), 'map on pair works (comma)';
+    #?rakudo skip 'Method "key" not found for invocant of class "Int"'
+    is $x.map({ .key => .value + 1}), ('a' => 6), 'map on pair works (=>)';
 }
 
 # vim: ft=perl6
