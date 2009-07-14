@@ -14,7 +14,7 @@ L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include
 
 =end pod
 
-plan 186;
+plan 183;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -32,10 +32,6 @@ ok(!( "7abc1_2" ~~ m/^ <.ident> $/ ), 'not <.ident>');
 ok("\t \n\t" ~~ m/^ <.ws> $/, '<.ws>');
 ok(!defined($/<ws>), 'Uncaptured <.ws>');
 ok(!( "7abc1_2" ~~ m/^ <.ws> $/ ), 'not <.ws>');
-
-ok(" " ~~ m/^ <.sp> $/, '<.sp>');
-ok(!defined($/<sp>), 'Uncaptured <.sp>');
-ok(!( "7abc1_2" ~~ m/<.sp>/ ), 'not <.sp>');
 
 ok(" \t\t \t" ~~ m/^ (\h+) $/, '\h');
 is($/, " \t\t \t", 'captured \h');
@@ -296,7 +292,6 @@ ok("}0" ~~ m/<+xdigit>/, q{Match unanchored xdigit as charset} );
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/always returns false>
 
-#?rakudo 2 skip '<!> NYI'
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';
 

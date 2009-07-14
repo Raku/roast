@@ -1,6 +1,6 @@
 use Test;
 
-plan 744;
+plan 729;
 
 ### for now
 sub matchcheck { 1 }
@@ -541,28 +541,6 @@ ok 'az' ~~ /<+[a..z]>+/, 'metasyntax with leading + (<+...>)';
 
 #### <+alpha>+		az		y				metasyntax with leading + (<+...>)
 ok 'az' ~~ /<+alpha>+/, 'metasyntax with leading + (<+...>)';
-
-
-#### <null>			''		y		null pattern (<null>)
-ok '' ~~ /<null>/, 'null pattern (<null>)';
-
-# XXX <null> unspecced?
-#### ^ <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 0>/	null pattern (<null>)
-#?rakudo skip 'infix:<also>'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /^ <null>/ }}) ~~ Failure also /mob<null>: < @ 0>/, 'null pattern (<null>)';
-
-#### <null> $	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<null>: < @ 65>/	null pattern (<null>)
-#?rakudo skip 'infix:<also>'
-ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<null> $/ }}) ~~ Failure also /mob<null>: < @ 65>/, 'null pattern (<null>)';
-
-#### abc <null> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
-ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /abc <null> def/, 'null pattern (<null>)';
-
-#### x | y | <null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
-ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /x | y | <null>/, 'null pattern (<null>)';
-
-#### x | y | <?null>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	y			null pattern (<null>)
-ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /x | y | <?null>/, 'null pattern (<null>)';
 
 
 #### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
@@ -2190,13 +2168,6 @@ ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
 #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
 ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 
-
-
-##  builtin subrules
-#### abc <fail> def	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	n				<fail>
-ok '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' !~~ /abc <fail> def/, '<fail>';
-
-
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
 ok ('2+3 ab2' ~~ /<ident>/) && matchcheck($/, q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
 
@@ -2343,33 +2314,6 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 
 #### <+alnum>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/	<+alnum>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>+/) && matchcheck($/, q/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/), '<+alnum>+';
-
-#### <sp>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<sp>: <  @ 3>/	<sp>
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<sp>/) && matchcheck($/, q/mob<sp>: <  @ 3>/), '<sp>';
-
-#### <+sp>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <  @ 3>/	<+sp>+
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+sp>+/) && matchcheck($/, q/mob: <  @ 3>/), '<+sp>+';
-
-#### <lt>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lt>: << @ 21>/	<lt>
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lt>/) && matchcheck($/, q/mob<lt>: << @ 21>/), '<lt>';
-
-#### <+lt>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: << @ 21>/	<+lt>+
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lt>+/) && matchcheck($/, q/mob: << @ 21>/), '<+lt>+';
-
-#### <gt>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<gt>: <> @ 23>/	<gt>
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<gt>/) && matchcheck($/, q/mob<gt>: <> @ 23>/), '<gt>';
-
-#### <+gt>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <> @ 23>/	<+gt>+
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+gt>+/) && matchcheck($/, q/mob: <> @ 23>/), '<+gt>+';
-
-#### <dot>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<dot>: <. @ 17>/	<dot>
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<dot>/) && matchcheck($/, q/mob<dot>: <. @ 17>/), '<dot>';
-
-# L<S05/Extensible metasyntax (C<< <...> >>)/"Character classes can be
-# combined">
-
-#### <+dot>+		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <. @ 17>/	<+dot>+
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+dot>+/) && matchcheck($/, q/mob: <. @ 17>/), '<+dot>+';
 
 #### <+alnum+[_]>	ident_1				y	union of character classes
 ok 'ident_1' ~~ /<+alnum+[_]>/, 'union of character classes';

@@ -3,7 +3,7 @@ use Test;
 
 =begin kwid
 
-  regex r { <null> | x <r> }
+  regex r { <?> | x <r> }
 
   "x" ~~ /<r>$/  should match "x", not "".
 
@@ -16,8 +16,8 @@ unless "a" ~~ /a/ {
   exit;
 }
 
-# rule r { <null> | x <r> }  - XXX 'rule' doesn't backtrack
-regex r { <null> | x <r> }
+# rule r { <?> | x <r> }  - XXX 'rule' doesn't backtrack
+regex r { <?> | x <r> }
 
 ok "" ~~ /<r>/, '"" ~~ /<r>/ matched';
 is $/, "", 'with ""';
@@ -43,8 +43,8 @@ is $/.from, 0, 'from 0';
 is $/.to, 2, 'to 2';
 
 
-# rule r2 { <null> | <r2> x }
-regex r2 { <null> | <r2> x }
+# rule r2 { <?> | <r2> x }
+regex r2 { <?> | <r2> x }
 
 ok "x" ~~ /<r2>$/, '"x" ~~ /<r2>$/ matched';
 is $/, "x", 'with "x"';
