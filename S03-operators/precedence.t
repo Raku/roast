@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 52;
+plan 54;
 
 
 # terms
@@ -209,5 +209,11 @@ ok (uc "a" eq "A"), "uc has the correct precedence in comparision to eq";
 
 #?rakudo todo 'remove prefix:<int>'
 eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
+
+
+# http://irclog.perlgeek.de/perl6/2009-07-14#i_1315249
+#?rakudo 2 todo 'right assoc =>'
+ok ((1 => 2 => 3).key  !~~ Pair), '=> is right-assoc (1)';
+ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 
 # vim: ft=perl6
