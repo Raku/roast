@@ -72,7 +72,7 @@ plan 19;
     if $str eq "a:1\nb:2" || $str eq "b:2\na:1" {
         pass 'default $comma works with hashes';
     } else {
-        flunk 'default $comma jfails to work with hashes';
+        flunk 'default $comma fails to work with hashes';
     }
 }
 
