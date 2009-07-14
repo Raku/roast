@@ -195,15 +195,13 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 
 # terminator
 
-# uc|ucfirst|lc|lcfirst
-# t/builtins/strings/uc|ucfirst|lc|lcfirst.t didn't compile because of this bug.
-# Compare:
-#   $ perl -we 'print uc "a" eq "A"'
-#   1
-# opposed to Pugs parses it:
-#   $ perl -we 'print uc("a" eq "A")'
-#   $    (no output)
-ok (uc "a" eq "A"), "uc has the correct precedence in comparision to eq";
+# Contrary to Perl 5 there are no prototypes, and since normal built-ins
+# are not defined as prefix ops, 'uc $a eq $A' actually parses as
+# uc($a eq $A), not uc($a) eq $A.
+# http://irclog.perlgeek.de/perl6/2009-07-14#i_1316200
+#
+# so uc(False) stringifies False to '0', and uc('0') is false. Phew.
+ok !(uc "a" eq "A"), "uc has the correct precedence in comparision to eq";
 
 # L<S03/Named unary precedence/my $i = int $x;   # ILLEGAL>
 
