@@ -71,7 +71,7 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
     ## Hmm.  Works with the latest release of Pugs (6.2.12 (r13256))
     ## Leaving this in as something that once didn't work (6.2.12 CPAN)
     
-    my $p = $cons.car;
+    my $p = $cons.key;
     ok( $cons.key.key =:= $p.key, 'chaining through temp variable' );
     ok( $cons.key.key =:= $cons.key.key, 'chaining through Any return');
 }
