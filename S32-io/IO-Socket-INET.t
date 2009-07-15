@@ -17,7 +17,7 @@ given $*OS {
     }
     when 'darwin' {
         $netstat_cmd = "netstat -f inet -p tcp -a -n";
-        $netstat_pat = regex { [ ^^  .+? <dot> (\d+) <.sp> .+? ]+ $ };
+        $netstat_pat = regex { [ ^^  .+? '.' (\d+) <.sp> .+? ]+ $ };
     }
     default {
         skip_rest('Operating system not yet supported');
