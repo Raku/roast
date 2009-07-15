@@ -379,6 +379,7 @@ my @e;
 # test non-UTF-8 input
 #?pugs skip 'eval(Buf)'
 #?rakudo skip 'eval(Buf)'
+#?DOES 1
 {
     my $t = '(1, 2, 3) »+« (4, 3, 2)';
     ok !eval($t.encode('ISO-8859-1')),
