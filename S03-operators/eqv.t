@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 43;
+plan 45;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -91,10 +91,11 @@ plan 43;
   ok ([]      eqv []),      "eqv on anonymous array references (3)";
 }
 
-#?rakudo skip 'hashes'
 {
-  ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (1)";
-  ok !({a => 1} eqv {a => 1}), "eqv on anonymous hash references (2)";
+  ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
+  ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
+  ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
+  ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
 
 #?rakudo skip 'captures'
