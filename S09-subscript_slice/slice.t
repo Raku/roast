@@ -113,7 +113,7 @@ plan 31;
     isa_ok @array, Array;
     isa_ok @array[0..1], List;
 
-    #?rakudo todo 'RT #63014'
+    #?rakudo 2 todo 'RT #63014'
     isa_ok @array[0..0], List, 'slice with one element is a list';
     my $zero = 0;
     isa_ok @array[$zero..$zero], List,
