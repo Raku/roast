@@ -121,7 +121,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 36+@maps*2;
+plan 38+@maps*2;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -148,4 +148,10 @@ is 65.chr, 'A', "there's a .chr method";
 #?rakudo 2 skip 'multi-arg variants of ord and chr not in place yet'
 is ord('hello'), [104, 101, 108, 108, 111], 'ord works with longer strings';
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
+
+#?rakudo todo 'RT #62772'
+lives_ok { ord("") }, 'ord("") lives';
+#?rakudo skip 'RT #62772'
+ok ord("") ~~ Failure, 'ord("") returns a Failure';
+
 #vim: ft=perl6
