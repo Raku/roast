@@ -53,16 +53,16 @@ ok(~(<a b c d>.pick(*).sort) eq 'a b c d', 'pick(*) returns all the items in the
        'pick(*) returned the items of the array in a random order');
 }
 
-my $c = 0;
-my @value = gather {
-  eval '
-    for (0,1).pick(*, :repl) -> $v { take($v); leave if ++$c > 3; }
-    ';
-}
+#? rakudo todo 'lazy lists'
+{
+    my $c = 0;
+    my @value = gather {
+        eval 'for (0,1).pick(*, :repl) -> $v { take($v); leave if ++$c > 3; }';
+    }
 
-#?pugs todo 'feature'
-#?rakudo todo 'lazy lists'
-ok +@value == $c && $c, 'pick(*, :repl) is lazy';
+    #?rakudo todo 'lazy lists'
+    ok +@value == $c && $c, 'pick(*, :repl) is lazy';
+}
 
 {
     # Test that List.pick doesn't flatten array refs
