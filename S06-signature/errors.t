@@ -27,8 +27,8 @@ eval_dies_ok '
     }', 
     'parser rejects members as args (2)';
 
-eval_dies_ok('sub quuux ($?VERSION) { ... }'),
-    'parser rejects magicals as args (1)';
+eval_dies_ok 'sub quuux ($?VERSION) { ... }',
+             'parser rejects magicals as args (1)';
 #?rakudo todo 'STD.pm actually parses this - is this test valid?'
 eval_dies_ok('sub quuuux ($!) { ... }',
     'parser rejects magicals as args (2)');
