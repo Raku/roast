@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 7;
 
 class Parent {
     has Str $.gather  is rw = '';
@@ -62,6 +62,23 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
     ok ?($x.initlist eq 'A_Parent1A_Parent2A_ChildA_GrandChild' 
                 | 'A_Parent2A_Parent1A_ChildA_GrandChild'),
     'initilized called in the right order (MI)';
+}
+
+# RT #63900
+{
+    class RT63900_P {
+        has %.counter is rw;
+        submethod BUILD {
+            %.counter{ 'BUILD' }++;
+        }
+    }
+    class RT63900_C is RT63900_P {
+    }
+
+    my $c;
+    lives_ok { $c = RT63900_C.new() }, 'can create child class';
+    #?rakudo todo 'RT #63900'
+    is $c.counter<BUILD>, 1, 'BUILD called once';
 }
 
 # vim: ft=perl6
