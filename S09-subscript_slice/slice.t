@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 27;
+plan 31;
 
 {   my @array = (3,7,9,11);
 
@@ -105,4 +105,17 @@ plan 27;
     eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
     #?rakudo todo 'RT 61844'
     is eval('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
+}
+
+# RT #63014
+{
+    my @array = <1 2 3>;
+    isa_ok @array, Array;
+    isa_ok @array[0..1], List;
+
+    #?rakudo todo 'RT #63014'
+    isa_ok @array[0..0], List, 'slice with one element is a list';
+    my $zero = 0;
+    isa_ok @array[$zero..$zero], List,
+           'slice with one element specified by variables';
 }
