@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2;
+plan 6;
 
 # L<S12/Construction and Initialization>
 # Basic instantiation.
@@ -20,3 +20,17 @@ class Foo2 {
 }
 my $foo2 = Foo2.new(:a(39), :b(3));
 is($foo2.check(), 42, 'initializing attributes in new');
+
+# RT #62732
+{
+    eval 'NoSuchClass.new()';
+    ok  $!  ~~ Exception, 'death to instantiating nonexistent class';
+    ok "$!" ~~ / NoSuchClass /,
+       'error for "NoSuchClass.new()" mentions NoSuchClass';
+
+    eval 'NoSuch::Subclass.new()';
+    ok  $!  ~~ Exception, 'death to instantiating nonexistent::class';
+    #?rakudo todo 'RT #62732'
+    ok "$!" ~~ / 'NoSuch::Subclass' /,
+       'error for "NoSuch::Subclass.new()" mentions NoSuch::Subclass';
+}
