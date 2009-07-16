@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 6;
 
 # RT #63894
 {
@@ -11,13 +11,8 @@ plan 8;
     $calls = 0;
     ok return_nil() ~~ Nil, 'return_nil() ~~ Nil';
     is return_nil().WHAT, 'Nil()', 'return_nil().WHAT says Nil';
-    is $calls, 2, 'return_nil() called twice';
-
-    $calls = 0;
-    #?rakudo todo 'RT #63894'
-    ok (return_nil ~~ Nil), 'return_nil ~~ Nil';
     is return_nil.WHAT, 'Nil()', 'return_nil.WHAT says Nil';
-    is $calls, 2, 'return_nil() called twice';
+    is $calls, 3, 'return_nil() called thrice';
 
     my $n = return_nil();
     ok $n ~~ Failure, 'variable holding nil ~~ Failure';
