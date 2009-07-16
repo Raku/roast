@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 51;
+plan 58;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -195,5 +195,41 @@ my $z = 42;
     eval_lives_ok '&x; 1', '&x does not need to be pre-declared';
     eval_dies_ok '&x()', '&x() dies when empty';
 }
+
+# RT #62766
+{
+    #?rakudo todo 'RT #62766'
+    eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
+
+    #?rakudo skip 'infinite loop?'
+    eval_lives_ok 'my $a;do { 1/0; my $x; CATCH { $a = $x.defined } }';
+
+    {
+        #?rakudo 2 todo 'OUTER and SETTING'
+        ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
+        ok eval('not SETTING:<$x>.defined'), 'SETTING::<$x>';
+        my $x;
+    }
+
+    {
+        my $a;
+        #?rakudo skip 'infinite loop?'
+        eval_lives_ok 'do { 1/0;my Int $x;CATCH { $a = ?($x ~~ Int) } }';
+        #?rakudo todo 'previous test skipped'
+        ok $a, 'unreached declaration in effect at block start';
+    }
+
+    eval 'my Int $x = "abc"';
+    if $! !~~ Exception {
+        skip 'type error not implemented';
+    }
+    else {
+        my $type_error = "$!";
+        eval '$x = "abc"; my Int $x';
+        #?rakudo todo 'Null PMC instead of type error'
+        is "$!", $type_error, 'type error: $x = "abc"; my Int $x';
+    }
+}
+
 
 # vim: ft=perl6
