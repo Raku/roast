@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 =begin pod
 
@@ -32,5 +32,13 @@ eval_dies_ok('sub quuux ($?VERSION) { ... }'),
 #?rakudo todo 'STD.pm actually parses this - is this test valid?'
 eval_dies_ok('sub quuuux ($!) { ... }',
     'parser rejects magicals as args (2)');
+
+# RT #64344
+#?rakudo todo 'RT #64344'
+{
+    sub empty_sig() { return @_[0] }
+    dies_ok { empty_sig( 'RT #64344' ) },
+            'argument passed to sub with empty signature';
+}
 
 # vim: ft=perl6
