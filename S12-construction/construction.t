@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 15;
 
 # L<S12/"Construction and Initialization">
 
@@ -21,6 +21,7 @@ ok OwnConstr.new ~~ OwnConstr, "basic class instantiation";
 is OwnConstr.new.x, 13,        "basic attribute access";
 # As usual, is instead of todo_is to suppress unexpected succeedings
 is OwnConstr.in_own, 0,                   "own constructor was not called";
+
 ok OwnConstr.own ~~ OwnConstr, "own construction instantiated its class";
 is OwnConstr.own.x, 42,        "attribute was set from our constructor";
 #?rakudo todo 'unknown'
@@ -64,3 +65,14 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
   lives_ok -> { $foo.x[0] = 3 }, "Array initialized in auto-constructor is not unwritable...";
   is $foo.x[0], 3, "... and keeps its value properly."
 }	
+
+# RT #64116
+{
+    class RT64116 { has %.env is rw };
+
+    my $a;
+
+    lives_ok { $a = RT64116.CREATE }, 'can .CREATE class';
+    lives_ok { $a.env = { foo => "bar" } }, 'assign to attr of .CREATEd class';
+    is $a.env<foo>, 'bar', 'assignment works';
+}
