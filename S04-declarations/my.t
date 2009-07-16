@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 59;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -219,17 +219,10 @@ my $z = 42;
         ok $a, 'unreached declaration in effect at block start';
     }
 
-    eval 'my Int $x = "abc"';
-    if $! !~~ Exception {
-        skip 'type error not implemented';
-    }
-    else {
-        my $type_error = "$!";
-        eval '$x = "abc"; my Int $x';
-        #?rakudo todo 'Null PMC instead of type error'
-        is "$!", $type_error, 'type error: $x = "abc"; my Int $x';
-    }
+    # XXX As I write this, this does not die right.  more testing needed.
+    dies_ok { my Int $x = "abc" }, 'type error';
+    #?rakudo todo 'type error not caught'
+    dies_ok { eval '$x = "abc"'; my Int $x; }, 'also a type error';
 }
-
 
 # vim: ft=perl6
