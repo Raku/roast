@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 33;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -213,6 +213,29 @@ plan 24;
     sub con { 64522 }
     dies_ok { ++con }, "constant-returning sub won't increment";
     is con, 64522, 'constant-returning sub after ++ has not changed';
+}
+
+# XXX identities (spec?)
+{
+    constant $change = 'alteration';
+
+    lives_ok { $change ~= '' }, 'can append nothing to a constant';
+    lives_ok { $change = 'alteration' }, 'can assign constant its own value';
+    my $t = $change;
+    lives_ok { $change = $t }, 'can assign constant its own value from var';
+    lives_ok { $change = 'alter' ~ 'ation' },
+             'can assign constant its own value from expression';
+
+    constant $five = 5;
+
+    lives_ok { $five += 0 }, 'can add zero to constant number';
+    lives_ok { $five *= 1 }, 'can multiply constant number by 1';
+    lives_ok { $five = 5 }, 'can assign constant its own value';
+    my $faux_five = $five;
+    lives_ok { $five = $faux_five },
+             'can assign constant its own value from variable';
+    lives_ok { $five = 2 + 3 },
+             'can assign constant its own value from expression';
 }
 
 # vim: ft=perl6
