@@ -211,11 +211,13 @@ plan 33;
     is $x, 64522, 'constant after += has not changed';
 
     sub con { 64522 }
+    #?rakudo todo '++constant_returning_sub()'
     dies_ok { ++con }, "constant-returning sub won't increment";
     is con, 64522, 'constant-returning sub after ++ has not changed';
 }
 
 # XXX identities (spec?)
+#?rakudo todo 'unspecced?'
 {
     constant $change = 'alteration';
 
