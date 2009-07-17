@@ -37,7 +37,7 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 
 # L<S06/Parameters and arguments/"required positional parameters must come
 # before those bound to optional positional">
-eval_dies_ok 'sub wrong ($a?, $b)', 'options params before required ones are forbidden';
+eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones are forbidden';
 
 sub foo_53814($w, $x?, :$y = 2){ $w~"|"~$x~"|"~$y };
 #?rakudo todo 'RT #53814'
@@ -60,8 +60,10 @@ dies_ok {foo_53814(1,undef,'something_extra',:y(3))},
         (defined( $y ) ?? $y !! 'undef')
     }
 
-    is rt54804( 1, , 3, ), '1|undef|3|undef',
-       'two commas parse as if undef is between them';
+    # old test is bogus, nullterm only allowed at the end of a list
+    # is rt54804( 1, , 3, ), '1|undef|3|undef',
+    #    'two commas parse as if undef is between them';
+    eval_dies_ok 'rt54804( 1, , 3, )', "two commas in a row doesn't parse";
 }
         
 # vim: ft=perl6
