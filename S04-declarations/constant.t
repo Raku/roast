@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 24;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
