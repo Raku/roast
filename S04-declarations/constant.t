@@ -216,28 +216,27 @@ plan 33;
     is con, 64522, 'constant-returning sub after ++ has not changed';
 }
 
-# XXX identities (spec?)
-#?rakudo todo 'unspecced?'
+# identities -- can't assign to constant even if it doesn't change it.
 {
     constant $change = 'alteration';
 
-    lives_ok { $change ~= '' }, 'can append nothing to a constant';
-    lives_ok { $change = 'alteration' }, 'can assign constant its own value';
+    dies_ok { $change ~= '' }, 'append nothing to a constant';
+    dies_ok { $change = 'alteration' }, 'assign constant its own value';
     my $t = $change;
-    lives_ok { $change = $t }, 'can assign constant its own value from var';
-    lives_ok { $change = 'alter' ~ 'ation' },
-             'can assign constant its own value from expression';
+    dies_ok { $change = $t }, 'assign constant its own value from var';
+    dies_ok { $change = 'alter' ~ 'ation' },
+             'assign constant its own value from expression';
 
     constant $five = 5;
 
-    lives_ok { $five += 0 }, 'can add zero to constant number';
-    lives_ok { $five *= 1 }, 'can multiply constant number by 1';
-    lives_ok { $five = 5 }, 'can assign constant its own value';
+    dies_ok { $five += 0 }, 'add zero to constant number';
+    dies_ok { $five *= 1 }, 'multiply constant number by 1';
+    dies_ok { $five = 5 }, 'assign constant its own value';
     my $faux_five = $five;
-    lives_ok { $five = $faux_five },
-             'can assign constant its own value from variable';
-    lives_ok { $five = 2 + 3 },
-             'can assign constant its own value from expression';
+    dies_ok { $five = $faux_five },
+             'assign constant its own value from variable';
+    dies_ok { $five = 2 + 3 },
+             'assign constant its own value from expression';
 }
 
 # vim: ft=perl6
