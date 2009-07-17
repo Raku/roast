@@ -204,4 +204,15 @@ plan 20;
     ok $ok, "the initializing values for constants are evaluated at compile-time";
 }
 
+# RT #64522
+{
+    constant $x = 64522;
+    dies_ok { $x += 2 }, 'dies: constant += n';
+    is $x, 64522, 'constant after += has not changed';
+
+    sub con { 64522 }
+    dies_ok { ++con }, "constant-returning sub won't increment";
+    is con, 64522, 'constant-returning sub after ++ has not changed';
+}
+
 # vim: ft=perl6
