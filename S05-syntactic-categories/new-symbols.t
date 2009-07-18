@@ -6,7 +6,7 @@ plan 8;
 
 {
     augment slang Regex {
-        token backslash:<Y> { YY };
+        token backslash:sym<Y> { YY };
     }
     eval_dies_ok  '/foo \y/', 
         'can not compile regex with unknown backslash rule';
