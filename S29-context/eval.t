@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 14;
 
 # L<S29/Context/"=item eval">
 
@@ -61,3 +61,8 @@ dies_ok({eval {42}}, 'block eval is gone');
     is EvalTester2.new.e('1'),   6, 
        'eval works inside instance methods, with outer lexicals';
 }
+
+#?rakudo skip 'eval(Buf)'
+is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
+
+# vim: ft=perl6
