@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 12;
 
 # L<S02/"Built-In Data Types" /Perl 6 should by default make standard IEEE floating point concepts visible>
 
@@ -39,5 +39,10 @@ plan 9;
 #     Inf  eq  Inf   # same as
 #     ~Inf eq ~Inf   # true
 
-#?rakudo todo 'truncate(Inf)'
-ok truncate(Inf) ~~ Inf, 'truncate(Inf) ~~ Inf';
+#?rakudo 4 todo 'truncate(Inf)'
+ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
+ok NaN.Int === NaN,         'Inf.Int === Int';
+ok Inf.Int === Inf,         'Inf.Int === Int';
+ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
+
+# vim: ft=perl6
