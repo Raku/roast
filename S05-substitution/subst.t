@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 70;
+plan 76;
 
 # L<S05/Substitution/>
 
@@ -146,6 +146,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         is $_, 'adec', 'substitution worked';
     }
 
+    given 'abc' {
+        s[d] = 'foo';
+        is $_, 'abc', 'failed substitutions leaves string unchanged';
+    }
+
     my $x = 'foobar';
     ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
     is $x, 'fuubar', 'and the substition worked';
@@ -164,5 +169,31 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         is $_, 'aa bb cc', 's:g[...] and captures work together well';
     }
 }
+
+#L<S05/Substitution/Any scalar assignment operator may be used>
+#?rakudo skip 's[...] op= RHS'
+{
+    given 'a 2 3' {
+        ok (s[\d] += 5), 's[...] += 5 returns True';
+        is $_, 'a 7 3', 's[...] += 5 gave right result';
+    }
+    given 'a b c' {
+        s:g[\w] x= 2;
+        is $_, 'aa bb cc', 's:g[..] x= 2 worked';
+    }
+}
+
+#?rakudo skip 's:g[...] ='
+{
+    multi sub infix:<fromplus>(Match $a, Int $b) {
+        $a.from + $b
+    }
+
+    given 'a b c' {
+        ok (s:g[\w] fromplus= 3), 's:g[...] customop= returned True';
+        is $_, '3 5 7', '... and got right result';
+    }
+}
+
 
 # vim: ft=perl6
