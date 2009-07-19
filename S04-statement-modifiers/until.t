@@ -14,7 +14,6 @@ plan 4;
 }
 
 # test the ``until'' statement modifier
-#?rakudo skip 'rakudo enters into infinite loop'
 {
     my ($a, $b);
     $a=0; $b=0;

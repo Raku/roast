@@ -9,7 +9,6 @@ my @tests = (
     42, 42/10, 4.2, sqrt(2),
     #?rakudo emit # 3e5 is converted to a Str when re-evaled
     3e5,
-    #?rakudo emit # Failure objects have no .perl method and +/-Inf/NaN fail
     Inf, -Inf, NaN,
 
     "a string", "", "\0", "\t", "\n", "\r\n", "\o7",

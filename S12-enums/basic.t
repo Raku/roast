@@ -86,7 +86,6 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     my sub white { 'sub' };
     #?rakudo todo 'subs and enums with conflicting names'
     is white, 0, 'short name of the enum without parenthesis is an enum';
-    #?rakudo skip 'subs and enums with conflicting names'
     is white(), 'sub', 'short name with parenthesis is a sub';
 }
 

@@ -319,7 +319,6 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
 ##  These tests really belong in a different test file -- probably
 ##  something in S06.  --pmichaud
 # L<S06/Named arguments/In other words :$when is shorthand for :when($when)>
-#?rakudo skip 'infix:<eqv>'
 {
     my $item = 'bar';
     my $pair = (:$item);

@@ -49,7 +49,6 @@ plan 30;
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 }
 
-#?rakudo 6 skip 'eqv and {} as hash composer not implemented'
 {
     # Most of these tests pass in Rakudo, but we must compare with
     # eqv instead of eq, since the order of hashes is not guaranteed
