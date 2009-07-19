@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 59;
+plan 67;
 
 # L<S05/Substitution/>
 
@@ -122,6 +122,33 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     s:g/BC/@a[]/;
     is($_, q{Wow I know my ZA ZBC's}, 'List substitution');
+
+    dies_ok { 'abc' ~~ s/b/g/ },
+            "can't modify string literal (only variables)";
+}
+
+# L<S05/Modifiers/The :s modifier is considered sufficiently important>
+#?rakudo skip 'ss/.../.../'
+{
+    given "a\nb\tc d" {
+        ok ss/a b c d/w x y z/, 'successful substitution returns True';
+        is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
+    }
+    
+    ok !("abc" ~~ ss/a b c/ x y z/), 'ss/// implies :s (-)';
+}
+
+#L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
+#?rakudo skip 's[...] = RHS'
+{
+    given 'abc' {
+        ok (s[b] = 'de'), 's[...] = ... returns true on success';
+        is $_, 'adec', 'substitution worked';
+    }
+
+    my $x = 'foobar';
+    ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
+    is $x, 'fuubar', 'and the substition worked';
 }
 
 # vim: ft=perl6
