@@ -65,7 +65,8 @@ S04
 
 S05
 * more tets for mm// (S05-modifier/sigspace.t)
-* ss/// variant
+* more tests for ss/// (S05-substitution/subst.t)
+* combinations of s:/// with various modifiers
 * switch some "ok" tests to "is" tests to check the exact match
 * modifier tests. It's easy to grep to see which are present
 * tests for the "special named assertions"

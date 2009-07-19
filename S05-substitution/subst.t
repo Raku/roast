@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 67;
+plan 70;
 
 # L<S05/Substitution/>
 
@@ -149,6 +149,20 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     my $x = 'foobar';
     ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
     is $x, 'fuubar', 'and the substition worked';
+
+    given 'a b c' {
+        s[\w] = uc($/);
+        is $_, 'A b c', 'can use $/ on the RHS';
+    }
+    given 'a b c' {
+        s[(\w)] = uc($0);
+        is $_, 'A b c', 'can use $0 on the RHS';
+    }
+
+    given 'a b c' {
+        s:g[ (\w) ] = $0 x 2;
+        is $_, 'aa bb cc', 's:g[...] and captures work together well';
+    }
 }
 
 # vim: ft=perl6
