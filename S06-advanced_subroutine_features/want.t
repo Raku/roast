@@ -40,10 +40,10 @@ sub obj_ok_in_rw is rw {
 
 # The same again, but this time using the smartmatch operator.
 # L<S06/The C<want> function/Or use its shorthand methods to reduce line noise>
-sub sm_ok_in_item   { want ~~ 'Item' ?? 42 !! 0 }
-sub sm_ok_in_list   { want ~~ 'List' ?? 42 !! 0 }
-sub sm_ok_in_count2 { want ~~ 2      ?? 42 !! 0 }
-sub sm_ok_in_count3 { want ~~ 3      ?? 42 !! 0 }
+sub sm_ok_in_item   { want() ~~ 'Item' ?? 42 !! 0 }
+sub sm_ok_in_list   { want() ~~ 'List' ?? 42 !! 0 }
+sub sm_ok_in_count2 { want() ~~ 2      ?? 42 !! 0 }
+sub sm_ok_in_count3 { want() ~~ 3      ?? 42 !! 0 }
 
 my ($item_ctx, @list_ctx);
 
@@ -84,3 +84,4 @@ is( @a, @b, "want() results are consistent for builtins" );
 is( @a, [9], "We got the expected results");
 is( @b, [9], "... on both calls" );
 
+# vim: ft=perl6
