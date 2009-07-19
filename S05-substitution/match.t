@@ -28,3 +28,5 @@ ok $m ~~ Match,             'is a Match object';
 is $m,    'foo',            'match object stringifies OK';
 is $m<x>, 'f',              'match object indexes as a hash';
 is $m[0], 'oo',             'match object indexes as an array';
+
+# vim: ft=perl6

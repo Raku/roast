@@ -60,11 +60,12 @@ S03
 
 S04
 * test warn()
-* more tests for excepts and CATCH blocks
+* more tests for exceptions and CATCH blocks
 * tests for control exception handlers
 
 S05
-* mm//, ss/// variants
+* more tets for mm// (S05-modifier/sigspace.t)
+* ss/// variant
 * switch some "ok" tests to "is" tests to check the exact match
 * modifier tests. It's easy to grep to see which are present
 * tests for the "special named assertions"
