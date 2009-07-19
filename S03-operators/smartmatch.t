@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 145;
+plan 151;
 
 =begin pod
 
@@ -278,18 +278,21 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
     ok eval_elsewhere('(%hash1 ~~ %hash2)'), "hash keys identical";
     ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";
 }
-=begin needsdiscussion
-#L<S03/Smart matching/hash value slice truth>
-{
-    #?pugs todo
-    ok(%hash1 ~~ any(%hash3), "intersecting keys");
-    ok(%hash1 !~~ any(%hash4), "no intersecting keys");
-};
-=end needsdiscussion
 
 # TODO:
 # Set   Hash
-# Array Hash
+#L<S03/"Smart matching"/Array Hash hash slice existence>
+{
+    my %h = (a => 'b', c => undef);
+    ok  (['a']      ~~ %h), 'Array ~~ Hash (exists and True)';
+    ok  (['c']      ~~ %h), 'Array ~~ Hash (exists but undef)';
+    ok  ([<a c>]    ~~ %h), 'Array ~~ Hash (both exist)';
+    ok  ([<c d>]    ~~ %h), 'Array ~~ Hash (one exists)';
+    # note that ?any() evaluates to False
+    ok !( ()        ~~ %h), 'Array ~~ Hash (empty list)';
+    ok !(['e']      ~~ %h), 'Array ~~ Hash (not exists)';
+
+}
 
 #L<S03/"Smart matching"/Regex Hash hash key grep>
 {
