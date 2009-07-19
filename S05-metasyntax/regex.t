@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 19;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -68,4 +68,12 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     ok 'Indiana has left the fridge' ~~ m/<archaeologist>/,
                                   'named token outside of a grammar works';
     ok 'mmm, pasta' ~~ m/<food>/, 'named rule outside of a grammar works';
+}
+
+# RT #67234
+{
+    #?rakudo todo 'RT #67234'
+    lives_ok { undef ~~ / x / }, 'match against undef lives';
+    #?rakudo skip 'RT #67234'
+    ok not undef ~~ / x /, 'match against undef does not match';
 }
