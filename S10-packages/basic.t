@@ -36,18 +36,15 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 # change to match likely error (top of file) when passes
 #?rakudo todo 'RT #62970'
 {
-    eval 'Empty::no_such_sub()';
-    ok  ~$! !~~ /<fairly_conclusive_platform_error>/,
-        'Non-existant sub through package';
+    eval_dies_ok 'Empty::no_such_sub()', 'Non-existant sub through package';
 }
 
 # Not sure whether you should be able to access something in package this way
 # might change to match likely error (top of file) when passes
 #?rakudo todo 'RT #63432'
 {
-    eval 'Empty.no_such_sub_or_prop';
-    ok  ~$! !~~ /<fairly_conclusive_platform_error>/,
-        'dot notation with package';    
+    eval_dies_ok 'Empty.no_such_sub_or_prop',
+                 'Non-existent method with package';
 }
 
 #?rakudo todo 'RT #63826'
