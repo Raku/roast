@@ -37,6 +37,7 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 
 # L<S06/Parameters and arguments/"required positional parameters must come
 # before those bound to optional positional">
+#?rakudo todo 'die on optional param before required'
 eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones are forbidden';
 
 sub foo_53814($w, $x?, :$y = 2){ $w~"|"~$x~"|"~$y };

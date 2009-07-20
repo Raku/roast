@@ -82,3 +82,5 @@ class BarNextWithInt is Foo {
     $o.doit(5);
     is($o.show, 'barint,fooint,', 'nextwith(42) multimethod/inheritance test');
 }
+
+# vim: ft=perl6
