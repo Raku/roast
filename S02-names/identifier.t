@@ -15,13 +15,13 @@ plan 21;
     is $a'b'c, 'foo', "\$a'b'c is a valid variable name";
 
     eval_dies_ok  q[sub foo-($x) { ... }],
-                 'foo- (trailing dash) is not an identifier';
+                 'foo- (trailing hyphen) is not an identifier';
     eval_dies_ok  q[sub foo'($x) { ... }],
-                 "foo' (trailing hypen) is not an identifier";
+                 "foo' (trailing apostrophe) is not an identifier";
     eval_dies_ok  q[sub foob'4($x) { ... }],
-                 "foo4'b is not a valid identifer (not alphabetic after hypen)";
+                 "foob'4 is not a valid identifer (not alphabetic after apostrophe)";
     eval_dies_ok  q[sub foob-4($x) { ... }],
-                 "foo4-b is not a valid identifer (not alphabetic after dash)";
+                 "foob-4 is not a valid identifer (not alphabetic after hyphen)";
     eval_lives_ok q[sub foo4'b($x) { ... }],
                  "foo4'b is a valid identifer";
 }
