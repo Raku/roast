@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 22;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -32,6 +32,8 @@ plan 21;
     my $calls = 0;
     eval "sub $subname \{ \$calls++ \}";
     ok $! !~~ Exception, "can define $subname";
+    #?rakudo 2 todo 'OUR::{subname}()'
+    eval_dies_ok "$subname()", "eval'd sub def can't be called via lexical name";
     eval_lives_ok "OUR::{$subname}()", "can call $subname";
     is $calls, 1, "$subname was called";
 }
