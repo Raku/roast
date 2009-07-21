@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 23;
+plan 25;
 
 # split on an empty string
 
@@ -135,6 +135,15 @@ is_deeply "a.b".split(/\./), <a b>,
   } else {
     skip q{' ' ~~ /\s/ did not result in ' '};
   }
+}
+
+# RT #63066
+#?rakudo skip 'RT #63066 loops forever'
+{
+    is_deeply 'hello-world'.split(/<ws>/), <hello - world>,
+            q{'hello-world'.split(/<ws>/)};
+    is_deeply 'hello-world'.split(/<wb>/), <hello - world>,
+            q{'hello-world'.split(/<wb>/)};
 }
 
 # vim: ft=perl6
