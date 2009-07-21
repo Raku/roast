@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 17;
 
 # L<S29/Context/"=item eval">
 
@@ -64,5 +64,16 @@ dies_ok({eval {42}}, 'block eval is gone');
 
 #?rakudo skip 'eval(Buf)'
 is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
+
+{
+    #?rakudo todo 'eval coerce to string'
+    lives_ok { eval 1 }, 'eval of non-string lives';
+    my $number = 2;
+    #?rakudo todo 'eval coerce to string'
+    lives_ok { eval $number }, 'eval of non-string variable lives';
+    #?rakudo skip 'eval coerce to string'
+    is eval $number, $number, 'eval of non-string variable works';
+}
+
 
 # vim: ft=perl6
