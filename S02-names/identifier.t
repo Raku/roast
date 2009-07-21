@@ -32,7 +32,7 @@ plan 21;
     my $calls = 0;
     eval "sub $subname \{ \$calls++ \}";
     ok $! !~~ Exception, "can define $subname";
-    eval_lives_ok "$subname()", "can call $subname";
+    eval_lives_ok "&{$subname}()", "can call $subname";
     is $calls, 1, "$subname was called";
 }
 
@@ -44,11 +44,11 @@ plan 21;
     eval "sub $subname \{ \$calls++ \}";
     ok $! !~~ Exception, "can define $subname";
     #?rakudo 2 todo 'RT #64656'
-    eval_lives_ok "$subname()", "can call $subname";
+    eval_lives_ok "&{$subname}()", "can call $subname";
     is $calls, 1, "$subname was called";
 
     # check with a different keyword
-    sub if'a($x);
+    sub if'a($x) {$x}
     is if'a(5), 5, "if'a is a valid sub name";
 }
 
@@ -59,7 +59,7 @@ plan 21;
     eval "sub $subname \{ \$calls++ \}";
     ok $! !~~ Exception, "can define $subname";
     #?rakudo 2 todo 'RT #64656'
-    eval_lives_ok "$subname()", "can call $subname";
+    eval_lives_ok "&{$subname}()", "can call $subname";
     is $calls, 1, "$subname was called";
 }
 
@@ -70,7 +70,7 @@ plan 21;
     eval "sub $subname \{ \$calls++ \}";
     ok $! !~~ Exception, "can define $subname";
     #?rakudo 2 todo 'RT #64656'
-    eval_lives_ok "$subname()", "can call $subname";
+    eval_lives_ok "&{$subname}()", "can call $subname";
     is $calls, 1, "$subname was called";
 }
 
