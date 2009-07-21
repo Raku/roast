@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 13;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -28,52 +28,38 @@ plan 22;
 
 {
     # This confirms that '-' in a sub name is legal.
-    my $subname = 'foo-bar';
     my $calls = 0;
-    eval "sub $subname \{ \$calls++ \}";
-    ok $! !~~ Exception, "can define $subname";
-    #?rakudo 2 todo 'OUR::{subname}()'
-    eval_dies_ok "$subname()", "eval'd sub def can't be called via lexical name";
-    eval_lives_ok "OUR::{$subname}()", "can call $subname";
-    is $calls, 1, "$subname was called";
+    my sub foo-bar { $calls++ };
+    foo-bar();
+    is $calls, 1, "foo-bar was called";
 }
 
 # RT #64656
-#?rakudo skip 'RT #64656'
 {
-    my $subname = 'do-check';
     my $calls = 0;
-    eval "sub $subname \{ \$calls++ \}";
-    ok $! !~~ Exception, "can define $subname";
-    #?rakudo 2 todo 'RT #64656'
-    eval_lives_ok "OUR::{$subname}()", "can call $subname";
-    is $calls, 1, "$subname was called";
+    my sub do-check { $calls++ };
+    do-check();
+    is $calls, 1, "do-check was called";
+}
 
+{
     # check with a different keyword
     sub if'a($x) {$x}
     is if'a(5), 5, "if'a is a valid sub name";
 }
 
-#?rakudo skip 'RT #64656'
 {
-    my $subname = 'sub-check';
     my $calls = 0;
-    eval "sub $subname \{ \$calls++ \}";
-    ok $! !~~ Exception, "can define $subname";
-    #?rakudo 2 todo 'RT #64656'
-    eval_lives_ok "OUR::{$subname}()", "can call $subname";
-    is $calls, 1, "$subname was called";
+    my sub sub-check { $calls++ };
+    sub-check();
+    is $calls, 1, "do-check was called";
 }
 
-#?rakudo skip 'RT #64656'
 {
-    my $subname = 'method-check';
     my $calls = 0;
-    eval "sub $subname \{ \$calls++ \}";
-    ok $! !~~ Exception, "can define $subname";
-    #?rakudo 2 todo 'RT #64656'
-    eval_lives_ok "OUR::{$subname}()", "can call $subname";
-    is $calls, 1, "$subname was called";
+    my sub method-check { $calls++ };
+    method-check();
+    is $calls, 1, "method-check was called";
 }
 
 # vim: ft=perl6
