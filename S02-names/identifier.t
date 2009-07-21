@@ -28,18 +28,14 @@ plan 13;
 
 {
     # This confirms that '-' in a sub name is legal.
-    my $calls = 0;
-    my sub foo-bar { $calls++ };
-    foo-bar();
-    is $calls, 1, "foo-bar was called";
+    my sub foo-bar { 'foo-bar' }
+    is foo-bar(), 'foo-bar', 'can call foo-bar()';
 }
 
 # RT #64656
 {
-    my $calls = 0;
-    my sub do-check { $calls++ };
-    do-check();
-    is $calls, 1, "do-check was called";
+    my sub do-check { 'do-check' }
+    is do-check(), 'do-check', 'can call do-check()';
 }
 
 {
@@ -49,17 +45,13 @@ plan 13;
 }
 
 {
-    my $calls = 0;
-    my sub sub-check { $calls++ };
-    sub-check();
-    is $calls, 1, "do-check was called";
+    my sub sub-check { 'sub-check' }
+    is sub-check(), 'sub-check', 'can call sub-check';
 }
 
 {
-    my $calls = 0;
-    my sub method-check { $calls++ };
-    method-check();
-    is $calls, 1, "method-check was called";
+    my sub method-check { 'method-check' }
+    is method-check(), 'method-check', 'can call method-check';
 }
 
 # vim: ft=perl6
