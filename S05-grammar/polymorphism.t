@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 27;
+plan 26;
 
 grammar Other {
     regex abc { a (<.bee>) c }
@@ -81,8 +81,7 @@ eval_dies_ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
 
 # RT #63466
 {
-    try { 'x' ~~ / <No::Such::Rule> / }
-    ok  $!  ~~ Exception, 'match against No::Such::Rule dies';
     #?rakudo todo 'RT #63466'
-    ok "$!" ~~ / 'No::Such::Rule' /, 'error message mentions No::Such::Rule';
+    dies_ok { 'x' ~~ / <No::Such::Rule> / },
+            'match against No::Such::Rule dies';
 }
