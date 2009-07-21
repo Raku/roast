@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 25;
+plan 29;
 
 {
     # simple try
@@ -187,4 +187,21 @@ plan 25;
         }
     }
     is $catches, 1, 'CATCH does not catch exceptions thrown within it';
+}
+
+{
+    my $catches = 0;
+    sub rt63430 {
+        try {
+            return 63430;
+            CATCH { return 73313 if ! $catches++; }
+        }
+    }
+    lives_ok { rt63430() }, 'can call rt63430()';
+    #?rakudo todo 'Null PMC access'
+    lives_ok { rt63430().perl }, 'can call rt63430() and examine the result';
+    #?rakudo skip 'Null PMC access in type()'
+    is rt63430(), 63430, 'CATCH does not intercept return from try block';
+    #?rakudo todo 'RT #63430'
+    is $catches, 0, 'CATCH block never invoked';
 }
