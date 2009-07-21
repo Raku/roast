@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -28,5 +28,10 @@ grammar A::B {
 }
 is(~A::B.parse("zzz42zzz"), "42", ".parse works with namespaced grammars");
 
-#?rakudo todo 'RT #63460'
-dies_ok { No::Such::Grammar.parse() }, '.parse on missing grammar dies';
+{
+    try { No::Such::Grammar.parse() }
+    ok  $!  ~~ Exception, '.parse on missing grammar dies';
+    #?rakudo todo 'RT #63460'
+    ok "$!" ~~ / 'No::Such::Grammar' /,
+       'error message mentions missing grammar';
+}
