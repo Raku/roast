@@ -186,6 +186,8 @@ L<"http://www.nntp.perl.org/group/perl.perl6.language/20122">
 
 (iblech) XXX: this contradicts current S03 so I could be wrong.
 
+Note, "non-chaining binary" was later renamed to "structural infix".
+
 =end discussion
 
 {
