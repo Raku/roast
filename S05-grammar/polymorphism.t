@@ -78,3 +78,11 @@ is(~$/, "DeF", '.Yet::Another.def $/');
 # Non-existent rules...
 
 eval_dies_ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
+
+# RT #63466
+{
+    try { 'x' ~~ / <No::Such::Rule> / }
+    ok  $!  ~~ Exception, 'match against No::Such::Rule dies';
+    #?rakudo todo 'RT #63466'
+    ok "$!" ~~ / 'No::Such::Rule' /, 'error message mentions No::Such::Rule';
+}
