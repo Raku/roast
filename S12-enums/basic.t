@@ -51,7 +51,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Day::Mon.name, 'Mon',      '.name on long form of Enum value';
     is Mon.name,      'Mon',      '.name on short form of Enum value';
 
-    is Day::Mon.WHAT, 'Day',      '.WHAT on enum value stringifies to the enum name';
+    is Day::Mon.WHAT, 'Day()',    '.WHAT on enum value stringifies to the enum name';
 }
 
 enum roman (i => 1,   v => 5,
