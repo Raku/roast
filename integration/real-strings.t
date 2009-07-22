@@ -32,7 +32,6 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
     is ~@foo, 'B B', 'Str.split(Str) works with postfix:<++>';
 }
 
-#?rakudo todo 'RT 66366'
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 
 #?rakudo 3 skip 'RT 66300'
