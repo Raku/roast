@@ -256,7 +256,6 @@ L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be t
     lives_ok { $y.of_x( $x ) }, 'can call method with "slurp of" sig';
     #?rakudo todo 'RT #64814'
     lives_ok { $y.x_slurp( $x ) }, 'can call method with typed slurpy sig';
-    #?rakudo todo 'RT #64814'
     dies_ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
     #?rakudo todo 'RT #64814'
     dies_ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';

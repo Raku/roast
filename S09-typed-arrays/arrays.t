@@ -111,7 +111,6 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         'type check Positional of Int allows correctly typed array to be returned explicitly';
     lives_ok { ret_pos_2() },
         'type check Positional of Int allows correctly typed array to be returned implicitly';
-    #?rakudo 4 todo 'Null PMC access'
     dies_ok { ret_pos_3() },
         'type check Positional of Int prevents untyped array to be returned explicitly';
     dies_ok { ret_pos_4() },
