@@ -10,8 +10,6 @@ Basic tests for the exp() builtin
 
 =end pod
 
-use Num :Trig;
-
 #?rakudo skip 'named args'
 {
     is_approx(exp(:exponent(5)), 148.4131591025766, 'got the exponent of 5');

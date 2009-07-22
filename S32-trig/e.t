@@ -2,15 +2,11 @@ use v6;
 use Test;
 plan 5;
 
-# L<S32::Numeric/"The :Trig tag">
-
 =begin description
 
 Basic tests for trigonometric functions.
 
 =end description
-
-use Num :Trig;
 
 # See also: L<"http://en.wikipedia.org/wiki/E_%28mathematical_constant%29"> :)
 my $e = e;
