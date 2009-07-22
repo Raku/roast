@@ -103,8 +103,7 @@ isa_ok(1 div 1, Rat);
 
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
-    #?rakudo skip "no Rat yet"
-    isa_ok($a, Rat);
+    isa_ok($a, Num);
     ok($a == 10.0, 'trailing zeros compare correctly');
 }
 

@@ -45,11 +45,6 @@ the spec (newest first)
 S02
 * tests for Implementation types (the Perl 6 equiv. of tie()), probably need
   more specs as well
-* some tests in S02 assume that a floating point literal like 1.2 is of typ
-  Rat (rational), but it really is of type Num. Same for things like (1 / 2) 
-  (to produce a Rat you need (1 div 2) or (1/2) without spaces). 
-  This needs cleanup. Just grep for Rat,
-  review the tests and clean them up where appropriate
 
 S03
 * tests for cmp() and eqv() methods of objects

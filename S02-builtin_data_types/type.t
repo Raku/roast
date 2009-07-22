@@ -118,8 +118,8 @@ my $baz of Int;
 {
     # the following two are the same type of behavior
     # S02: "It is possible for the of type to disagree with the as type"
-    my Rat sub returntype4 ($pass)     as Num {$pass ?? 1.1 !! 1}
-    my sub returntype5 ($pass --> Rat) as Num {$pass ?? 2.2 !! 2}
+    my Rat sub returntype4 ($pass)     as Num {$pass ?? 11 div 10 !! 1}
+    my sub returntype5 ($pass --> Rat) as Num {$pass ?? 11 div  5 !! 2}
 
     is(returntype4(True), 1.1, 'good return value works (my Type sub as OtherType)');
     eval_dies_ok('returntype4(False)', 'bad return value dies (my Type sub as OtherType)');
