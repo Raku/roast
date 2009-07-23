@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 46;
+plan 51;
 
 # some tests firsts that don't require lazy lists
 
@@ -136,6 +136,19 @@ plan 46;
     is @xxed[4], 3,  'infix:<...> with list return (4)';
     is @xxed[5], 3, 'infix:<...> with list return (5)';
     is @xxed[6], 4, 'infix:<...> with list return (6)';
+}
+
+# L<S03/List infix precedence/"any list ending with *">
+
+#?rakudo skip 'lazy lists'
+{
+    my @abc = <a b c>;
+    my @abccc = @abc, *;
+    is @abccc[0], 'a', '@array, * will repeat last element (0)';
+    is @abccc[1], 'b', '@array, * will repeat last element (1)';
+    is @abccc[2], 'c', '@array, * will repeat last element (2)';
+    is @abccc[3], 'c', '@array, * will repeat last element (3)';
+    is @abccc[4], 'c', '@array, * will repeat last element (4)';
 }
 
 # vim: ft=perl6

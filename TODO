@@ -48,7 +48,6 @@ S02
 
 S03
 * tests for cmp() and eqv() methods of objects
-* test that '@array, *' repeats the final element infinitely
 * tests for feeds using IO objects
 * more bitwise tests, for :signed and :unsigned, and uncomment the tests in
   t/spec/S03-operators/bit.t
