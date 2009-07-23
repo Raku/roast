@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 49;
 
 =begin pod
 
@@ -105,4 +105,31 @@ ok +Any.^methods() > +Object.^methods(), 'Any has more methods than Objects';
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
 ok D.^methods.perl, 'can get .perl of output of .^methods';
 
+class PT1 {
+    method !pm1() { }
+    method foo() { }
+}
+class PT2 is PT1 {
+    method !pm2() { }
+    method bar() { }
+}
 
+@methods = PT2.^methods();
+is @methods[0].name, 'bar',    'methods call found public method in subclass';
+is @methods[1].name, 'foo',    'methods call found public method in superclass (so no privates)';
+ok @methods[2].name ne '!pm1', 'methods call did not find private method in superclass';
+
+@methods = PT2.^methods(:private);
+ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
+                            'methods call with :private found private method in subclass';
+ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1', 
+                            'methods call with :private found private method in superclass';
+
+@methods = PT2.^methods(:local);
+is +@methods, 1,            'methods call without :private omits private methods (with :local)';
+is @methods[0].name, 'bar', 'methods call found public method in subclass (with :local)';
+
+@methods = PT2.^methods(:local, :private);
+is +@methods, 2,            'methods call with :private includes private methods (with :local)';
+ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
+                            'methods call with :private found private method in subclass (with :local)';
