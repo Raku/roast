@@ -14,11 +14,11 @@ Basic "if" tests.
 plan 25;
 
 my $x = 'test';
-if ($x eq $x) { pass("if ($x eq $x) {} works"); } else { flunk("if ($x eq $x) {} failed"); }
-if ($x ne $x) { flunk("if ($x ne $x) {} failed"); } else { pass("if ($x ne $x) {} works"); }
-if (1) { pass("if (1) {} works"); } else { flunk("if (1) {} failed"); }
-if (0) { flunk("if (0) {} failed"); } else { pass("if (0) {} works"); }
-if (undef) { flunk("if (undef) {} failed"); } else { pass("if (undef) {} works"); }
+if ($x eq $x) { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
+if ($x ne $x) { flunk('if ($x ne $x) {} failed'); } else { pass('if ($x ne $x) {} works'); }
+if (1) { pass('if (1) {} works'); } else { flunk('if (1) {} failed'); }
+if (0) { flunk('if (0) {} failed'); } else { pass('if (0) {} works'); }
+if (undef) { flunk('if (undef) {} failed'); } else { pass('if (undef) {} works'); }
 
 # die called in the condition part of an if statement should die immediately
 # rather than being evaluated as true
