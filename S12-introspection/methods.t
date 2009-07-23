@@ -41,7 +41,6 @@ is @methods[0].name(), 'foo', 'method name can be found';
 ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
 is @methods[0].returns, Num, 'method returns a Num (from .returns)';
 is @methods[0].of, Num, 'method returns a Num (from .of)';
-#?rakudo skip '.multi'
 ok !@methods[0].multi, 'method is not a multimethod';
 
 @methods = B.new().^methods(:local);
@@ -50,7 +49,6 @@ is @methods[0].name(), 'foo', 'method name can be found';
 ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
 is @methods[0].returns, Num, 'method returns a Num (from .returns)';
 is @methods[0].of, Num, 'method returns a Num (from .of)';
-#?rakudo skip '.multi'
 ok !@methods[0].multi, 'method is not a multimethod';
 
 @methods = A.^methods(:local);
@@ -59,11 +57,9 @@ my ($num_multis, $num_onlys);
 for @methods -> $meth {
     if $meth.name eq 'foo' {
         $num_onlys++;
-        #?rakudo skip '.multi'
         ok !$meth.multi, 'method foo is not a multimethod';
     } elsif $meth.name eq 'bar' {
         $num_multis++;
-        #?rakudo skip '.multi'
         ok $meth.multi, 'method bar is a multimethod';
     }
 }
