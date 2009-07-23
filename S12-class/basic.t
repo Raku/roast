@@ -67,7 +67,6 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
 
 # Same, but with the "is Foo" declaration inlined
 #?rakudo skip 'not parsing is inside class yet'
-#?DOES 3
 {
     class Baz { is Foo }
     ok(Baz ~~ Foo, '... smartmatch our Baz to the Foo class');
