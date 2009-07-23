@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -77,3 +77,6 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     #?rakudo skip 'RT #67234'
     ok not undef ~~ / x /, 'match against undef does not match';
 }
+
+#?rakudo todo 'RT #67612'
+eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
