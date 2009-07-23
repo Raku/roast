@@ -78,6 +78,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is abc(:äöü(42)),  1042, "Unicode named params (2)";
 }
 
+#?mildew skip 'placeholders are NIY'
 # Unicode placeholder variables
 {
     is
@@ -86,6 +87,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
         "Unicode placeholder variables";
 }
 
+#?mildew skip 'classes are NIY'
 # Unicode methods and attributes
 {
     class A {
@@ -97,6 +99,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is A.new().äöü(), "Pugs", "Unicode methods and attributes";
 }
 
+#?mildew skip 'slurpy named positionals are NIY'
 {
     sub f(*%x) { %x<ä> };
     is f(ä => 3), 3, 'non-ASCII named arguments';
