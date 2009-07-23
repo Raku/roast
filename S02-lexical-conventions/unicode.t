@@ -58,7 +58,7 @@ is
 
 #?rakudo 2 skip 'VOWEL SIGNs in identifiers'
 lives_ok { my $पहला = 1; }, "hindi declaration";
-is((try { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
+is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल($दूसरा) }), 4, "evaluation");
 
 # Unicode subs
 {
