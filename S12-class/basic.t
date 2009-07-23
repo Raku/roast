@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 =begin pod
 
@@ -102,3 +102,9 @@ is  (class A61354_1 { eval q/method x { "OH HAI" }/ }; A61354_1.x),
     'OH HAI',
     'define method with eval in class';
 
+# RT #67784
+{
+    class class {}
+    #?rakudo skip 'RT #67784'
+    isa_ok( class.new, 'class' );
+}
