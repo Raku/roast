@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 53;
+plan 54;
 
 #L<S03/Autoincrement precedence>
 
@@ -189,3 +189,7 @@ is(%z{0},           $base, '%z{0}');
     is $z.succ, 1 , '.succ for Num';
     is $z.pred, -1, '.pred for Num'
 }
+
+# RT #63644
+#?rakudo todo 'RT #63644'
+eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
