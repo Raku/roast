@@ -20,12 +20,14 @@ if (1) { pass('if (1) {} works'); } else { flunk('if (1) {} failed'); }
 if (0) { flunk('if (0) {} failed'); } else { pass('if (0) {} works'); }
 if (undef) { flunk('if (undef) {} failed'); } else { pass('if (undef) {} works'); }
 
-# die called in the condition part of an if statement should die immediately
-# rather than being evaluated as true
-my $foo = 1;
-try { if (die "should die") { $foo = 3 } else { $foo = 2; } };
-#say '# $foo = ' ~ $foo;
-is $foo, 1, "die should stop execution immediately.";
+{
+    # die called in the condition part of an if statement should die immediately
+    # rather than being evaluated as true
+    my $foo = 1;
+    try { if (die "should die") { $foo = 3 } else { $foo = 2; } };
+    #say '# $foo = ' ~ $foo;
+    is $foo, 1, "die should stop execution immediately.";
+}
 
 {
     my $foo = 1; # just in case
