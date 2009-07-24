@@ -2,7 +2,7 @@ module Foo::Bar;
 use v6;
 use Test;
 
-# L<S11/"Modules"/"The first form is allowed only as the first statement in the file.">
+# L<S11/"Modules"/There are two basic declaration syntaxes>
 
 plan 3;
 

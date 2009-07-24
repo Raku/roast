@@ -10,7 +10,7 @@ This test tests the C<$!> builtin.
 
 =end desc
 
-# L<S04/"Exceptions"/"A bare die/fail takes $! as the default argument.">
+# L<S04/"Exceptions"/A bare die/fail takes $! as the default argument>
 
 eval 'nonexisting_subroutine()';
 ok defined($!), 'nonexisting sub in eval makes $! defined';

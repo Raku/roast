@@ -26,7 +26,7 @@ plan 5;
     is($a, 'a', "post given");
 }
 
-# L<S04/The C<for> statement/"given" "use a private instance of" $_>
+# L<S04/The C<for> statement/for and given privately temporize>
 {
     my $i = 0;
     $_ = 10;

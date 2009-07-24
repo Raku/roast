@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 20;
 
-# L<S02/Mutable types/"KeyBag of UInt">
+# L<S02/Mutable types/KeyHash of UInt>
 
 # A KeyBag is a KeyHash of UInt, i.e. the values are positive Int
 

@@ -138,7 +138,7 @@ plan 51;
     is @xxed[6], 4, 'infix:<...> with list return (6)';
 }
 
-# L<S03/List infix precedence/"any list ending with *">
+# L<S03/List infix precedence/If the right operand is * (Whatever)>
 
 #?rakudo skip 'lazy lists'
 {

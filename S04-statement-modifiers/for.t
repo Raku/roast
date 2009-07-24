@@ -69,7 +69,7 @@ plan 14;
     is $a, 0, 'the closure was never called';
 }
 
-# L<S04/The C<for> statement/"for" use a private instance of $_>
+# L<S04/The C<for> statement/for and given privately temporize>
 {
     my $i = 0;
     $_ = 10;
