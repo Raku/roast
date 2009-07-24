@@ -10,7 +10,7 @@ Misc. Junction tests
 
 =end pod
 
-#?rakudo 2 todo 'identifying junctions'
+#?rakudo 2 todo 'identifying junctions (RT #67886)'
 isa_ok any(6,7), 'Junction';
 is any(6,7).WHAT, 'Junction', 'Junction.WHAT works';
 
