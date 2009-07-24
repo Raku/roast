@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 326;
+plan 328;
 
 
 # tests various assignment styles
@@ -967,6 +967,19 @@ sub W () { substr(eval('want'), 0, 1) }
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
     is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)';
+}
+
+# RT #63642
+#?rakudo skip 'no applicable methods (,=)'
+{
+    my %part1 = a => 'b';
+    my %part2 = a => 'c';
+    my %both = %part1, %part2;
+
+    my %retval = ( %part1 ,= %part2 );
+
+    is %retval, %both, ',= works for hashes (return value)';
+    is %part1,  %both, ',= works for hashes (hash modified)';
 }
 
 {
