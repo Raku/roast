@@ -973,13 +973,13 @@ sub W () { substr(eval('want'), 0, 1) }
 #?rakudo skip 'no applicable methods (,=)'
 {
     my %part1 = a => 'b';
-    my %part2 = a => 'c';
+    my %part2 = d => 'c';
     my %both = %part1, %part2;
 
     my %retval = ( %part1 ,= %part2 );
 
-    is %retval, %both, ',= works for hashes (return value)';
-    is %part1,  %both, ',= works for hashes (hash modified)';
+    ok %retval eqv %both, ',= works for hashes (return value)';
+    ok %part1  eqv %both, ',= works for hashes (hash modified)';
 }
 
 {
