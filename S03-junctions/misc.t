@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 95;
+plan 97;
 
 =begin pod
 
@@ -408,6 +408,14 @@ sub junction_diff(Object $this, Object $that) {
   is_deeply(junction_diff(1|2, 1|2|3), ["3 is missing from this"], 'Value is missing from left side');
 }
 
+# RT #63686
+{
+    lives_ok { try { for any(1,2) -> $x {}; } },
+             'for loop over junction in try block';
 
-
-
+    sub rt63686 {
+        for any(1,2) -> $x {};
+        return 'happiness';
+    }
+    is rt63686(), 'happiness', 'for loop over junction in sub';
+}
