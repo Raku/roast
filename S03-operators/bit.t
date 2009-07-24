@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 22;
+plan 24;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -98,5 +98,9 @@ plan 22;
 #if ("ok \xFF\x{FF}\n" ~& "ok 41\n" eq "ok 41\n") { say "ok 19" } else { say "not ok 19" }
 #if ("ok \x{FF}\xFF\n" ~& "ok 42\n" eq "ok 42\n") { say "ok 20" } else { say "not ok 20" }
 
-
-
+# RT #67852
+{
+    lives_ok { 'normal'.trans() }, 'can .trans() on normal string';
+    #?rakudo todo 'RT #67852'
+    lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
+}
