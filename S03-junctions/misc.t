@@ -2,13 +2,17 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 99;
 
 =begin pod
 
 Misc. Junction tests 
 
 =end pod
+
+#?rakudo 2 todo 'identifying junctions'
+isa_ok any(6,7), 'Junction';
+is any(6,7).WHAT, 'Junction', 'Junction.WHAT works';
 
 # avoid auto-threading on ok()
 sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
