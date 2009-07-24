@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 19;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -54,6 +54,15 @@ plan 17;
         sub _b() { 'sub A::_b' }
     }
     is A::_b(), 'sub A::_b', 'A::_b() call works';
+}
+
+# RT #63646
+#?rakudo todo 'RT #63646'
+{
+    dies_ok { OscarMikeGolf::whiskey_tango_foxtrot() },
+            'dies when calling non-existent sub in non-existent package';
+    dies_ok { Test::bravo_bravo_quebec() },
+            'dies when calling non-existent sub in existing package';
 }
 
 # vim: ft=perl6
