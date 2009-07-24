@@ -55,7 +55,7 @@ my @tests = (
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
-plan 16 + 2*@tests;
+plan 14 + 2*@tests;
 #?pugs emit force_todo 8, 45..50, 94, 96;
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
@@ -173,19 +173,15 @@ plan 16 + 2*@tests;
 {
     my @original      = (1,2,3);
     my $dehydrated    = @original.perl;
-    my @reconstituted = eval $dehydrated;
+    my @reconstituted = @( eval $dehydrated );
 
     is @reconstituted, @original,
        "eval of .perl returns original for '$dehydrated'";
-    #?rakudo todo 'RT #63724'
-    ok $dehydrated ~~ / '(' .* ',' .* ')' /, 'List.perl has parens and comma';
 
-    @original = (1,);
+    @original      = (1,);
     $dehydrated    = @original.perl;
-    @reconstituted = eval $dehydrated;
+    @reconstituted = @( eval $dehydrated );
 
     is @reconstituted, @original,
        "eval of .perl returns original for '$dehydrated'";
-    #?rakudo todo 'RT #63724'
-    ok $dehydrated ~~ / '(' .* ',' .* ')' /, 'List.perl has parens and comma';
 }
