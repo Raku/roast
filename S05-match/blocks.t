@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 21;
 
 =begin description
 
@@ -65,6 +65,17 @@ ok !defined($/), '$/ still undef in the outer block';
     }
     is $match, 'x', 'Can match in the condition of an if statement';
     is "$/",   'x', '... and can use $/ outside the block';
+}
+
+{
+    given '-Wall' {
+        if /\w+/ {
+            #?rakudo todo 'RT 67864'
+            ok $/ eq 'Wall', '$/ is properly set in a given { } block';
+        } else {
+            flunk 'regex did not match - $/ is properly set in a given { } block';
+        }
+    }
 }
 
 # TODO: repeat ... until, gather/take, lambdas, if/unless statement modifiers
