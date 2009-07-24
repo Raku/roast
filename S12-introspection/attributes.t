@@ -10,7 +10,7 @@ Tests for .^attributes from L<S12/Introspection>.
 
 =end pod
 
-# L<S12/Introspection/"The C<.^attributes> method">
+# L<S12/Introspection/"The .^attributes method">
 
 class A {
     has Str $.a = "dnes je horuci a potrebujem pivo";

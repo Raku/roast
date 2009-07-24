@@ -290,7 +290,7 @@ ok(!( "}"  ~~ m/^<+xdigit>$/ ), q{Don't match unrelated xdigit as charset} );
 ok("}"  ~~ m/^<-xdigit>$/, q{Match inverted xdigit as charset});
 ok("}0" ~~ m/<+xdigit>/, q{Match unanchored xdigit as charset} );
 
-# L<S05/Extensible metasyntax (C<< <...> >>)/always returns false>
+# L<S05/Predefined Subrules/always returns false>
 
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';

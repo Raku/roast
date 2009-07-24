@@ -2,8 +2,8 @@ use v6;
 use Test;
 plan 18;
 
-# L<S04/The Relationship of Blocks and Declarations/"A bare closure without
-# placeholder arguments that uses $_">
+# L<S04/The Relationship of Blocks and Declarations/A bare closure 
+# (except the block associated with a conditional statement)> 
 
 {
     # test with explicit $_

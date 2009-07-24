@@ -77,7 +77,7 @@ plan 15;
 
 {
     # I hope I understood this part of specs correctly: 
-    # L<S04/"The lift statement prefix"/"Everything else within a lift">
+    # L<S04/The C<lift> statement prefix/"Everything else within a lift">
     # etc.
     # IMHO that means that it's OK to use undeclared variables in a lift:
     sub f { lift $a + $b };

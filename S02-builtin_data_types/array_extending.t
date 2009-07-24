@@ -4,7 +4,7 @@ use Test;
 
 plan 16;
 
-# L<S09/Autovivification/"In Perl 6 these read-only operations are indeed non-destructive:">
+# L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
     # Compare with Perl 5:
     #   $ perl -we '
