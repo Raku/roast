@@ -257,3 +257,5 @@ my $x;
     $x = "\x[b67]AA";
     is( --$x, "\x[b66]ZZ", "'\x[b67]AA'-- is '\x[b66]ZZ'" );
 }
+
+# vim: ft=perl6

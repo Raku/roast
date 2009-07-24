@@ -10,7 +10,7 @@ Tests for the die() builtin
 
 =end pod
 
-#?rakudo skip 'this SOMETIMES gives Null PMC access in get_bool()'
+#?rakudo todo 'exception handling'
 {
     ok( ! try { die "foo"; 1 }, 'die in try cuts off execution');
     my $error = $!;
@@ -30,7 +30,7 @@ sub recurse {
   recurse(--$level);
 }
 try { recurse(1) };
-is($!, "Only this\n");
+is($!, "Only this\n", 'die() in recursively called sub');
 
 # die in if,map,grep etc.
 is ({ try { map    { die }, 1,2,3 }; 42 }()), 42, "die in map";
@@ -56,3 +56,5 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
 # will be executed multiple times, resulting in a "too many tests run" error
 # (which is what we want). (Test primarily aimed at PIL2JS)
 is 42-19, 23, "basic sanity";
+
+# vim: ft=perl6
