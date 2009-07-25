@@ -81,12 +81,13 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
     is $c.counter<BUILD>, 1, 'BUILD called once';
 }
 
+# RT #67888
 {
 my $counter = 0;
 
 class TestCompiler is Perl6::Compiler {
     submethod BUILD {
-        $counter = 1;
+        $counter++;
     }
 }
 
