@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 44;
+plan 48;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -132,4 +132,14 @@ my $baz of Int;
     eval_dies_ok('sub foo(Int Str $x) { }', 'multiple prefix constraints not allowed');
     eval_dies_ok('sub foo(--> Int Str) { }', 'multiple prefix constraints not allowed');
     eval_dies_ok('our Int Str sub foo() { }', 'multiple prefix constraints not allowed');
+}
+
+{
+    # TODO: many more of these are possible
+    ok Any ~~ Object, 'Any ~~ Object';
+    #?rakudo todo 'Object, Any relation'
+    ok Object !~~ Any, 'Object !~~ Any';
+
+    ok Int ~~ Num, 'Int ~~ Num';
+    ok Num !~~ Int, 'Num !~~ Int';
 }
