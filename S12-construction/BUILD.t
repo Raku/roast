@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 class Parent {
     has Str $.gather  is rw = '';
@@ -79,6 +79,19 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
     lives_ok { $c = RT63900_C.new() }, 'can create child class';
     #?rakudo todo 'RT #63900'
     is $c.counter<BUILD>, 1, 'BUILD called once';
+}
+
+{
+my $counter = 0;
+
+class TestCompiler is Perl6::Compiler {
+    submethod BUILD {
+        $counter = 1;
+    }
+}
+
+TestCompiler.new;
+is $counter, 1, "testing BUILD in compiler subclass";
 }
 
 # vim: ft=perl6
