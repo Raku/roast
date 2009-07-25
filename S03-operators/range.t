@@ -138,6 +138,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
 }
 
+# RT #67882
 {
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
