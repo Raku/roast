@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 80;
+plan 90;
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
 
@@ -136,6 +136,27 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
     is (1..3).first({ $_ % 2 == 0}),        2,         '.first works on ranges';
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
+}
+
+{
+    my $range;
+    lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
+             'can make range from match vars';
+    is $range.from, 1, 'range starts at one';
+    is $range.to,   3, 'range ends at three';
+    #?rakudo todo 'range from match vars defies stringification'
+    lives_ok { "$range" }, 'can stringify range';
+    #?rakudo skip 'range from match vars defies comparison'
+    is $range, (1,2,3), 'range is correct';
+}
+{
+    my $range;
+    lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = +$0..+$1 },
+             'can make range from match vars with numeric context forced';
+    is $range.from, 1, 'range starts at one';
+    is $range.to,   3, 'range ends at three';
+    lives_ok { "$range" }, 'can stringify range';
+    is $range, (1,2,3), 'range is correct';
 }
 
 # For tests involving :by, see t/spec/S03-operators/range-by.t
