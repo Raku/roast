@@ -144,9 +144,8 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
              'can make range from match vars';
     is $range.from, 1, 'range starts at one';
     is $range.to,   3, 'range ends at three';
-    #?rakudo todo 'range from match vars defies stringification'
+    #?rakudo 2 skip 'range from match vars'
     lives_ok { "$range" }, 'can stringify range';
-    #?rakudo skip 'range from match vars defies comparison'
     is $range, (1,2,3), 'range is correct';
 }
 {
