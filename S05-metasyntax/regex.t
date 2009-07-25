@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 24;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -80,3 +80,10 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 
 #?rakudo todo 'RT #67612'
 eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
+
+# L<S05/The semicolon character is specifically reserved as non-meaningful>
+
+eval_dies_ok 'rx/;/',       'bare ";" is rx is not allowed';
+eval_dies_ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
+isa_ok rx/\;/, Regex,       'escaped ";" in rx// works';
+ok ';' ~~ /\;/,             'escaped ";" in m// works';
