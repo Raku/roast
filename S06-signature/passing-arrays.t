@@ -4,7 +4,7 @@ use Test;
 # L<S06/Parameters and arguments>
 # TODO: better smart-linking
 
-plan 9;
+plan 11;
 
 {
     sub count(@a) {
@@ -53,3 +53,16 @@ plan 9;
     is(test_two_array([100,5],[20,300]), 120, 
     "Passing array references to functions accepting arrays works.");
 }
+
+# A Rakudo regression
+
+{
+    sub ro_a(@a) { };
+    sub ro_b(@a) { ro_a(@a) };
+    my @x = 1, 2, 4;
+    lives_ok { ro_b(@x) },   'can pass parameter Array on to next function';
+    #?rakudo todo 'RT 67876'
+    lives_ok { @x = 5, 6 }, '... and that did not make the caller Array ro';
+}
+
+# vim: ft=perl6
