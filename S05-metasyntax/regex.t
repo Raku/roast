@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 26;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -87,3 +87,10 @@ eval_dies_ok 'rx/;/',       'bare ";" is rx is not allowed';
 eval_dies_ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
 isa_ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
+
+# RT #64668
+{
+    eval '"RT #64668" ~~ /<nosuchrule>/';
+    ok  $!  ~~ Exception, 'use of missing named rule dies';
+    ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
+}
