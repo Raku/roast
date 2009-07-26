@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 15;
 
 =begin description
 
@@ -44,6 +44,33 @@ eval_dies_ok 'my Digit $x = -1',
              'type constraints prevents assignment 2';
 eval_dies_ok 'my Digit $x = 3.1',
              'original type prevents assignment';
+
+# RT #67818
+{
+    subset Subhash of Hash;
+    #?rakudo todo 'RT #67818'
+    lives_ok { my Subhash $a = {} },
+             'can create subset of hash';
+
+    subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
+    #?rakudo todo 'RT #67818'
+    lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
+             'can create subset of hash with where';
+
+    subset Austria of Array;
+    #?rakudo todo 'RT #67818'
+    lives_ok { my Austria $a = [] },
+             'can create subset of array';
+
+    subset Meercat of Pair;
+    lives_ok { my Meercat $p = :a<b> },
+             'can create subset of pair';
+
+    subset Sublist of List;
+    lives_ok { my Sublist $tsil = [] },
+             'can create subset of list';
+}
+
 
 
 # vim: ft=perl6
