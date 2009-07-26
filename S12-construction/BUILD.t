@@ -92,6 +92,7 @@ class TestCompiler is Perl6::Compiler {
 }
 
 TestCompiler.new;
+#?rakudo todo 'RT #67888'
 is $counter, 1, "testing BUILD in compiler subclass";
 }
 
