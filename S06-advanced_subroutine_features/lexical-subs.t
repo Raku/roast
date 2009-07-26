@@ -8,7 +8,7 @@ plan 7;
     sub f() { 
         my sub g(){"g"}; my sub h(){g()}; h();
     };
-    is(f(),'g');
+    is(f(), 'g', 'can indirectly call lexical sub');
     eval_dies_ok('g', 'lexical sub not visible outside current scope');
 }
 
@@ -19,8 +19,7 @@ plan 7;
         foo(1);
     }
 
-    is(foo(1), 2);
-    #?rakudo todo 'lexical subs do not get precedence over package subs in Raudo yet'
+    is(foo(1), 2, 'calls subs passed as &foo parameter');
     is(callit({ $^x + 2 }), 3, "lexical subs get precedence over package subs");
 }
 
