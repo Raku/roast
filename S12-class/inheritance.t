@@ -58,6 +58,7 @@ ok  Foo::Bar.isa(Foo::Bar), "subclass.isa(same_subclass) is true";
 #?pugs 2 todo "feature"
 #?rakudo skip 'does'
 ok  Foo::Bar.does(Class),   "subclass.does(Class) is true";
+#?rakudo 2 skip '::CLASS will give a Null PMC, which later explodes'
 ok !Foo::Bar.does(::CLASS),   "subclass.does(CLASS) is false";
 ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
 #?rakudo 2 todo 'oo'
