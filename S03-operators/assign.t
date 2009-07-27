@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 325;
+plan 324;
 
 
 # tests various assignment styles
@@ -525,38 +525,36 @@ sub l () { 1, 2 };
 }
 
 #?pugs eval 'notimpl'
-#?rakudo todo "want function"
 {
     my $a;
-    my @z = (($a, *) = W, W, W);
-    is($a, 'L', 'lhs treats ($a, *) as list');
-    is(@z, "L L L", 'lhs treats ($a, *) as list');
+    my @z = (($a, *) = l, l, l);
+    is($a.elems, 1, 'lhs treats ($a, *) as list (1)');
+    #?rakudo todo 'list assignment with ($var, *)'
+    is(@z.elems, 6, 'lhs treats ($a, *) as list (2)');
 }
 
-#?rakudo skip "want function"
+#?rakudo skip '@$a'
 {
     my $a;
-    my @z = (@$a = W, W, W);
-    is($a, 'L L L', 'lhs treats @$a as list');
-    ok(!defined(@z), 'lhs treats @$a as list');
+    my @z = (@$a = l, l, l);
+    is($a.elems, 6, 'lhs treats @$a as list (1)');
+    is @z.elems, 6, 'lhs treats @$a as list (2)';
 }
 
-#?rakudo skip "want function"
+#?rakudo skip '$a[] autovivification (unspecced?)'
 {
     my $a;
-    my @z = ($a[] = W, W, W);
-    is($a, 'L L L', 'lhs treats $a[] as list');
-    ok(!defined(@z), 'lhs treats $a[] as list');
+    $a[] = l, l, l
+    is($a.elems, 6, 'lhs treats $a[] as list');
 }
 
-#?rakudo todo "want function"
 {
     my $a;
     my $b;
-    my @z = (($a,$b) = W, W, W);
-    is($a, 'L',   'lhs treats ($a,$b) as list');
-    is($b, 'L',   'lhs treats ($a,$b) as list');
-    is(@z, "L L", 'lhs treats ($a,$b) as list');
+    my @z = (($a,$b) = l, l);
+    is($a,  1,   'lhs treats ($a,$b) as list');
+    is($b,  2,   'lhs treats ($a,$b) as list');
+    is(+@z, 2,   'lhs treats ($a,$b) as list, and passes only two items on');
 }
 
 {
