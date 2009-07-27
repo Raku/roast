@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 328;
+plan 325;
 
 
 # tests various assignment styles
@@ -291,7 +291,7 @@ my @p;
     @p = $x *= 3, 2;
     is($x, 12, '*= operator');
     is(@p[0],12, "*= operator parses as item assignment 1");
-    #?rakudo todo "unknown reasons"
+    #?rakudo todo 'item assignment'
     is(@p[1],12, "*= operator parses as item assignment 2");
 }
 
@@ -475,49 +475,53 @@ my @p;
 # Tests of dwimming scalar/listiness of lhs
 
 sub W () { substr(eval('want'), 0, 1) }
+sub l () { 1, 2 };
 
-#?rakudo todo "want function"
+#?rakudo todo 'item assignment'
 {
-    my $a;
-    my @z = ($a = W, W);
-    is($a, 'S',    'lhs treats $a as scalar');
-    is(@z[0], 'S', 'lhs treats $a as scalar');
-    is(@z[1], 'L', 'lhs treats $a as scalar');
+    my $x;
+    $x  = l(), 3, 4;
+    is $x.elems, 2, 'item assignment infix:<=> is tighter than the comma';
 }
 
-#?rakudo skip "want function"
+#?rakudo todo 'item assignment'
+{
+    my $x;
+    my @a = ($x = l(), 3, 4);
+    is $x.elems, 2, 'item assignment infix:<=> is tighter than the comma (2)';
+    is @a.elems, 3, 'item assignment infix:<=> is tighter than the comma (3)';
+}
+
+#?rakudo skip 'item assignment, $::(...)'
 {
     package Foo;
     our $b;
-    my @z = ($::('Foo::b') = W, W);
-    is($b, 'S',    q/lhs treats $::('Foo::b') as scalar/);
-    is(@z[0], 'S', q/lhs treats $::('Foo::b') as scalar/);
-    is(@z[1], 'L', q/lhs treats $::('Foo::b') as scalar/);
+    my @z = ($::('Foo::b') = l(), l());
+    is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
+    is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
 }
 
-#?rakudo todo "want function"
+#?rakudo todo 'item assignment'
 {
-    my @z = ($Foo::c = W, W);
-    is($Foo::c, 'S',    'lhs treats $Foo::c as scalar');
-    is(@z[0], 'S', 'lhs treats $Foo::c as scalar');
-    is(@z[1], 'L', 'lhs treats $Foo::c as scalar');
+    my @z = ($Foo::c = l, l);
+    is($Foo::c.elems, 2,    'lhs treats $Foo::c as scalar (1)');
+    is(@z.elems,      3,    'lhs treats $Foo::c as scalar (2)');
 }
 
-#?rakudo todo "want function"
+#?rakudo todo 'item assignment'
 {
     my @a;
-    my @z = ($(@a[0]) = W, W);
-    is(@a[0], 'S',    'lhs treats $(@a[0]) as scalar');
-    is(@z[0], 'S', 'lhs treats $(@a[0]) as scalar');
-    is(@z[1], 'L', 'lhs treats $(@a[0]) as scalar');
+    my @z = ($(@a[0]) = l, l);
+    is(@a[0].elems, 2, 'lhs treats $(@a[0]) as scalar (1)');
+    is(@z.elems,    2, 'lhs treats $(@a[0]) as scalar (2)');
 }
 
-#?rakudo todo "want function"
 {
     my $a;
-    my @z = (($a) = W, W, W);
-    is($a, 'L', 'lhs treats ($a) as list');
-    is(@z, "L", 'lhs treats ($a) as list');
+    my @z = (($a) = l, l, l);
+    is($a.elems, 6, 'lhs treats ($a) as list');
+    #?rakudo todo 'item/list assignment'
+    is(@z.elems, 6, 'lhs treats ($a) as list');
 }
 
 #?pugs eval 'notimpl'
