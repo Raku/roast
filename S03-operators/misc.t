@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 60;
+plan 62;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -157,4 +157,13 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
     @b = 4,7,5,0;
     is((@a minmax @b), (1,8), 'minmax works when both are on left array');
     is((@b minmax @a), (1,8), 'minmax works when both are on right array');
+}
+
+# RT #63778
+{
+    my @a = 1, 2, 3;
+    #?rakudo todo 'RT #63778'
+    lives_ok { @a min 4 }, 'lives: @array min 4';
+    #?rakudo skip 'RT #63778'
+    is @a min 4, 1, 'works: @array min 4';
 }
