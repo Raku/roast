@@ -23,8 +23,8 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 
 {
     my $x = 'Today' but Day::Mon;
-    #?rakudo 1 skip '.does for enum type'
     ok $x.does(Day),      'Can test with .does() for enum type';
+    #?rakudo 1 skip '.does for enum value - XXX is this really valid test? asked TimToady...'
     ok $x.does(Day::Mon), 'Can test with .does() for enum value';
     ok $x ~~ Day,         'Can smartmatch for enum type';
     ok $x ~~ Day::Mon,    'Can Smartmatch for enum value';

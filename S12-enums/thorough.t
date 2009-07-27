@@ -19,6 +19,7 @@ ok day.WHAT, 'enum.WHAT returned a value';
 ok day.perl, 'enum.perl returned a value';
 
 sub test_stuff($x) {
+#?rakudo 1 skip '.does for enum value - XXX is this really valid test? asked TimToady...'
   ok $x.does(day::Tue),    "basic enum mixing worked ($x-2)";
   is $x.day, 2,            "automatically created accessor worked ($x)";
   is day::Tue, 2,          "enum provided a correct mapping ($x)";
@@ -26,6 +27,7 @@ sub test_stuff($x) {
   ok $x ~~ Tue,            "smartmatch worked correctly ($x-2)";
   ok $x ~~ day::Tue,       "smartmatch worked correctly ($x-3)";
   ok $x !~~  Wed,          "smartmatch worked correctly ($x-4)";
+#?rakudo 1 skip '.does for enum value - XXX is this really valid test? asked TimToady...'
   ok $x.does(Tue),         ".does worked correctly ($x-1)";
   #?rakudo todo '.does'
   ok $x.does(day),         ".does worked correctly ($x-2)";
