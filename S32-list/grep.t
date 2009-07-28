@@ -80,7 +80,8 @@ my @list = (1 .. 10);
 
 {
   my @array = <a b c d>;
-  is ~(try { @array.grep: { $_ ~= "c"; 1 } }), "ac bc cc dc",
+  #?rakudo 2 skip 'test error -- is $_ rw here?'
+  is ~(@array.grep({ $_ ~= "c"; 1 })), "ac bc cc dc",
     'mutating $_ in grep works (1)';
   is ~@array, "ac bc cc dc",
     'mutating $_ in grep works (2)';
