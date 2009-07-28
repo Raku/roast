@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 76;
+plan 77;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -319,6 +319,13 @@ is Foo::official(), 44,
     sub rt61732_d { 1;; }
     lives_ok { $x = rt61732_d() }, 'can call sub ending with double ;';
     is $x, 1, 'get right value from sub with double ;';
+}
+
+# RT #63912
+{
+    sub rt63912 { return 1, 2; }
+    #?rakudo todo 'return wants just one argument?'
+    lives_ok { rt63912() }, 'can call sub that returns two things (no parens)';
 }
 
 # vim: ft=perl6
