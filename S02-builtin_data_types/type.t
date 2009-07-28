@@ -137,7 +137,6 @@ my $baz of Int;
 {
     # TODO: many more of these are possible
     ok Any ~~ Object, 'Any ~~ Object';
-    #?rakudo todo 'Object, Any relation'
     ok Object !~~ Any, 'Object !~~ Any';
 
     ok Int ~~ Num, 'Int ~~ Num';
