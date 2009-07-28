@@ -742,16 +742,16 @@ ok 'abc#def' ~~ /abc # xyz
 ok 'abc#def' ~~ /abc # def \n \$
 /, 'comments (#)';
 
-#### abc \# def		abc#def		y	comments (#)
-ok 'abc#def' ~~ /abc \# def
+#### abc '#' def		abc#def		y	comments (#)
+ok 'abc#def' ~~ /abc '#' def
 /, 'comments (#)';
 
-#### abc \# xyz		abc#def		n	comments (#)
-ok 'abc#def' !~~ /abc \# xyz
+#### abc '#' xyz		abc#def		n	comments (#)
+ok 'abc#def' !~~ /abc '#' xyz
 /, 'comments (#)';
 
-#### ^ abc \# def $		abc#def		y	comments (#)
-ok 'abc#def' ~~ /^ abc \# def $
+#### ^ abc '#' def $		abc#def		y	comments (#)
+ok 'abc#def' ~~ /^ abc '#' def $
 /, 'comments (#)';
 
 #### ^^ abc \n ^^ def	abc\ndef	y	line beginnings and endings (^^)
