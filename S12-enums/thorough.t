@@ -29,7 +29,6 @@ sub test_stuff($x) {
   ok $x !~~  Wed,          "smartmatch worked correctly ($x-4)";
 #?rakudo 1 skip '.does for enum value - XXX is this really valid test? asked TimToady...'
   ok $x.does(Tue),         ".does worked correctly ($x-1)";
-  #?rakudo todo '.does'
   ok $x.does(day),         ".does worked correctly ($x-2)";
   #?rakudo skip 'EnumValue($x)'
   ok Tue($x),              "Tue() worked correctly ($x)";
