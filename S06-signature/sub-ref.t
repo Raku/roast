@@ -4,7 +4,7 @@ use Test;
 
 # L<S02/"Built-In Data Types"> 
 
-plan 33;
+plan 35;
 
 =begin description
 
@@ -48,6 +48,19 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Block);
     is $foo.(42), 142,              "basic invocation of a pointy block with a param";
     dies_ok { $foo.() }, "invocation of an parameterized block expecting a param without a param dies";
+}
+
+# RT #63974
+{
+    my $topic = 'topic unchanged';
+    my @topic_array = <topic array unchanged>;
+    my $c = { $topic = $_; @topic_array = @_ };
+
+    $c( 2, 3, 4, 5 );
+
+    is $topic, 2, '$_ got right value for code ref';
+    #?rakudo todo 'RT #63974'
+    is @topic_array, ( 2, 3, 4, 5 ), '@_ got right value in code ref';
 }
 
 {
