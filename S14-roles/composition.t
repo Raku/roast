@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 19;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -47,6 +47,18 @@ is $y.mA1,      'mA1',      'Can call mixed in method (two roles) 1';
 is $y.mA2,      'mA2',      'Can call mixed in method (two roles) 2';
 is $y.mB1,      'mB1',      'Can call mixed in method (two roles) 3';
 is $y.mB2,      'mB2',      'Can call mixed in method (two roles) 4';
+
+ok C2 ~~ rA, 'class matches first role';
+ok C2 ~~ rB, 'class matches second role';
+ok rA !~~ C2, 'first role does not match class';
+ok rB !~~ C2, 'second role does not match class';
+
+role RT64002 does rA does rB {}
+#?rakudo 2 todo 'RT #64002'
+ok RT64002 ~~ rA, 'role matches first role it does';
+ok RT64002 ~~ rB, 'role matches second role it does';
+ok rA !~~ RT64002, 'role not matched by first role it does';
+ok rB !~~ RT64002, 'role not matched by second role it does';
 
 {
     class D1 does rA {
