@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 22;
 
 =begin pod
 
@@ -47,3 +47,11 @@ is @attrs[2].build().(C, $_), "dnes je horuci a potrebujem pivo",
 @attrs = C.^attributes(:local);
 is +@attrs,        1,     'attribute introspection with :local gave just attribute in base class';
 is @attrs[0].name, '$!c', 'get correct attribute with introspection';
+
+
+@attrs = C.^attributes(:tree);
+is +@attrs, 2,                  'attribute introspection with :tree gives right number of elements';
+is @attrs[0].name, '$!c',       'first element is attribute desriptor';
+ok @attrs[1] ~~ Array,          'second element is array';
+is @attrs[1][0].name, '$!b',    'can look into second element array to find next attribute';
+is @attrs[1][1][0].name, '$!a', 'can look deeper to find attribute beyond that';
