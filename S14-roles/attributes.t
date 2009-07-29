@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 6;
 
 # L<S14/Roles/"Roles may have attributes">
 
@@ -39,5 +39,11 @@ role R3 {
 }
 class C4 does R3 { }
 is C4.new.x, 42, 'initializing attributes in a role works';
+
+role R4 { has @!foo; method bar() { @!foo } }
+class C5 does R4 {
+    has $.baz;
+}
+is C5.new().bar(), [], 'Composing an attribute into a class that already has one works';
 
 # vim: syn=perl6
