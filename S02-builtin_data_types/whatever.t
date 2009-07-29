@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 16;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -45,6 +45,22 @@ is @a, [1,2,3,4], '*.meth created closure works';
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
     is @a, 1..4, 'array is unmodified after reference to [1..*]';
+}
+
+{
+    my $x = +*;
+    #?rakudo todo 'RT #68004'
+    isa_ok $x, Code, '+* is of type Code';
+
+    # following is what we expect +* to do
+    my @list = <1 10 2 3>;
+    is sort(-> $key {+$key}, @list), [1,2,3,10], '-> $key {+$key} generates closure to numify';
+
+    # and here are two actual applications of +*
+    #?rakudo todo 'RT #68004'
+    is sort($x, @list), [1,2,3,10], '+* generates closure to numify';
+    #?rakudo skip 'RT #68004'
+    is @list.sort($x), [1,2,3,10], '+* generates closure to numify';
 }
 
 # vim: ft=perl6
