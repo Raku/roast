@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 26;
 
 =begin pod
 
@@ -29,6 +29,8 @@ is @attrs[0].name,     '$!c',  'first attribute had correct name';
 is @attrs[0].type,     Object, 'first attribute had correct type';
 is @attrs[0].accessor, True,   'first attribute has an accessor';
 ok !@attrs[0].build,           'first attribute has no build value';
+ok @attrs[0].rw,               'first attribute is rw';
+ok !@attrs[0].readonly,        'first attribute is not readonly';
 
 is @attrs[1].name,     '$!b', 'second attribute had correct name';
 is @attrs[1].type,     Int,   'second attribute had correct type';
@@ -39,10 +41,12 @@ is @attrs[1].build().(C, $_), 42,
 
 is @attrs[2].name,     '$!a', 'third attribute had correct name';
 is @attrs[2].type,     Str,   'third attribute had correct type';
-is @attrs[2].accessor, True,  'first attribute has an accessor';
-ok @attrs[2].build ~~ Code,   'second attribute has build block';
+is @attrs[2].accessor, True,  'third attribute has an accessor';
+ok @attrs[2].build ~~ Code,   'third attribute has build block';
 is @attrs[2].build().(C, $_), "dnes je horuci a potrebujem pivo",
-                              'second attribute build block gives expected value';
+                              'third attribute build block gives expected value';
+ok !@attrs[2].rw,             'third attribute is not rw';
+ok @attrs[2].readonly,        'third attribute is readonly';
 
 @attrs = C.^attributes(:local);
 is +@attrs,        1,     'attribute introspection with :local gave just attribute in base class';
