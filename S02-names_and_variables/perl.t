@@ -55,7 +55,7 @@ my @tests = (
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
-plan 14 + 2*@tests;
+plan 17 + 2*@tests;
 #?pugs emit force_todo 8, 45..50, 94, 96;
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
@@ -184,4 +184,15 @@ plan 14 + 2*@tests;
 
     is @reconstituted, @original,
        "eval of .perl returns original for '$dehydrated'";
+}
+
+# RT #64080
+{
+    my %h;
+    lives_ok { %h<a> = [%h<a>] },
+             'can assign list with new hash element to itself';
+    #?rakudo skip 'RT #64080'
+    lives_ok { %h<a>.perl }, 'can take .perl from hash element';
+    #?rakudo todo 'RT #64080'
+    ok %h<a> !=== %h<a>[0], 'hoa does not refer to hash element';
 }
