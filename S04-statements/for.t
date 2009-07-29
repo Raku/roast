@@ -360,7 +360,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   #diag ">$str<";
 }
 
-#?rakudo skip 'optional variable in for loop'
+#?rakudo skip 'optional variable in for loop (RT #63994)'
 {
   my $str = '';
   for 1..5 -> $x, $y? {
