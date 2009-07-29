@@ -559,46 +559,45 @@ sub l () { 1, 2 };
 
 {
     my @a;
-    my @z = (@a[0] = W, W);
-    #?rakudo 2 todo 'want function'
-    is(@a, 'L',    'lhs treats @a[0] as list');
-    is(@z[0], 'L', 'lhs treats @a[0] as list');
-    ok(!defined(@z[1]), 'lhs treats @a[0] as list');
+    my @z = (@a[0] = l, l);
+    #?rakudo todo 'list assignment to scalar'
+    is(@a[0].elems, 1,  'lhs treats @a[0] as one-item list');
+    is(@z.elems,    1,  'lhs treats @a[0] as one-item list');
+    ok(!defined(@a[1]), 'lhs treats @a[0] as one-item list');
 }
 
 {
     my @a;
-    my @z = (@a[0,] = W, W);
-    #?rakudo 2 todo 'want function'
-    is(@a, 'L',      'lhs treats @a[0,] as list');
-    is(@z[0], 'L',   'lhs treats @a[0,] as list');
-    ok(!defined(@z[1]), 'lhs treats @a[0,] as list');
+    my @z = (@a[0,] = l, l);
+    #?rakudo todo 'list assignment to scalar'
+    is(@a[0,].elems, 1,  'lhs treats @a[0,] as one-item list');
+    is(@z.elems,     1,  'lhs treats @a[0,] as one-item list');
+    ok(!defined(@a[1,]), 'lhs treats @a[0,] as one-item list');
 }
 
 {
     my %a;
-    my @z = (%a<x> = W, W);
-    #?rakudo 2 todo 'want function'
-    is(%a{"x"}, 'L', 'lhs treats %a<x> as list');
-    is(@z[0], 'L',   'lhs treats %a<x> as list');
-    ok(!defined(@z[1]),   'lhs treats %a<x> as list');
-}
-
-#?rakudo todo "unknown reasons"
-{
-    my %a;
-    my @z = (%a<x y z> = W, W, W);
-    is(%a<x>, 'L',    'lhs treats %a<x y z> as list');
-    is(%a<y>, 'L',    'lhs treats %a<x y z> as list');
-    is(%a<z>, 'L',    'lhs treats %a<x y z> as list');
+    my @z = (%a<x> = l, l);
+    #?rakudo 2 todo 'list assignment to scalar'
+    is(%a{"x"}.elems, 1, 'lhs treats %a<x> as one-item list');
+    is(@z[0].elems,   1, 'lhs treats %a<x> as one-item list');
+    ok(!defined(@z[1]),  'lhs treats %a<x> as one-item list');
 }
 
 {
     my %a;
-    my @z = (%a{'x'} = W, W);
-    #?rakudo 2 todo "want function"
-    is(%a{"x"}, 'L', q/lhs treats %a{'x'} as list/);
-    is(@z[0], 'L',   q/lhs treats %a{'x'} as list/);
+    my @z = (%a<x y z> = l, l);
+    is(%a<x>, 1,    'lhs treats %a<x y z> as list');
+    is(%a<y>, 2,    'lhs treats %a<x y z> as list');
+    is(%a<z>, 1,    'lhs treats %a<x y z> as list');
+}
+
+{
+    my %a;
+    my @z = (%a{'x'} = l, l);
+    #?rakudo 2 todo 'list assignment to scalar'
+    is(%a{"x"}, 1,        q/lhs treats %a{'x'} as list/);
+    is(~@z[0], '1',       q/lhs treats %a{'x'} as list/);
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
 }
 
