@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Attributes/"Class attributes are declared">
 #L<S12/Class methods/metaclass method always delegated>
 
-plan 26;
+plan 28;
 
 class Foo {
     our $.bar = 23;
@@ -55,11 +55,10 @@ is $test7, 23, 'class attribute via $obj.^name really works';
 # L<S12/Class methods/"you can associate a class method with the current
 # metaclass instance">
 
-#?rakudo skip '"method ^classmethod" syntax'
 {
     class T1 {
         our $c = 0;
-        method ^count {
+        method ^count($obj) {
             return $c;
         }
         method mi { ++$c };
@@ -72,7 +71,9 @@ is $test7, 23, 'class attribute via $obj.^name really works';
     is $a.count,    2, 'can call the class method on an object';
     is T1.count,    2, '... and on the proto object';
     is T1.^count,   2, '... and on the proto object with Class.^method';
-    is $a.^count,   2, '... and $obj.^method'
+    is $a.^count,   2, '... and $obj.^method';
+    is T1.HOW.count(T1), 2, '... and by explicitly using .HOW with proto object';
+    is $a.HOW.count($a), 2, '... and by explicitly using .HOW with instance';
 
 }
 
