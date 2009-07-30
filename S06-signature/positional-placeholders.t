@@ -25,7 +25,8 @@ sub non_twigil {
 
 non_twigil(5);
 
-eval_dies_ok( ' {$foo; $^foo;} ',
+#?rakudo todo 'non-twigil variable before twigil variable'
+eval_dies_ok( ' {$foo; $^foo;}(1) ',
 'A non-twigil variable should not precede a corresponding twigil variable' );
 
 # vim: syn=perl6
