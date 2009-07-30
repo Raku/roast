@@ -63,12 +63,14 @@ is ~@b, "a b d e z", "inplace sort";
 # RT #64268
 {
     my @a = 1,3,2;
+    my @a_orig = @a;
+
     my @b = @a.sort: {1};
-    is @b, (1,3,2), 'works: @a.sort: {1}';
+    is @b, @a_orig,            'worked: @a.sort: {1}';
 
     lives_ok { @a.=sort: {1} }, 'lives: @a.=sort: {1}';
-    is @a, (1,3,2), 'worked: @a.=sort: {1}';
+    is @a, @a_orig,            'worked: @a.=sort: {1}';
 
-    lives_ok { @a.=sort }, 'lives: @a.=sort';
-    is @a, (1,2,3), 'worked: @a.=sort';
+    lives_ok { @a.=sort      }, 'lives: @a.=sort';
+    is @a, (1,2,3),            'worked: @a.=sort';
 }
