@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 32;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -144,6 +144,20 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     my $first_call = array_init();
     is array_init(), $first_call,
        'array initialization works fine in imported subs';
+}
+
+#?rakudo todo 'RT #64688'
+{
+    eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
+    eval_lives_ok 'class RT64688_c1 { use Test }', 'use in class block';
+    eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
+    eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
+    eval_lives_ok 'package RT64688_p1;use Test', 'use after package line';
+    eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
+    eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
+    eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
+    eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
+    eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
 # vim: ft=perl6
