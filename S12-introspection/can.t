@@ -78,7 +78,6 @@ my $pup = Puppy.new();
     is $found, "yapbow", "subclass got right methods called (on instance)";
 }
 
-#?rakudo todo 'issues with .can on the proto-object'
 {
     my $iters = 0;
     my $found = "";

@@ -77,7 +77,6 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
 
     my $c;
     lives_ok { $c = RT63900_C.new() }, 'can create child class';
-    #?rakudo todo 'RT #63900'
     is $c.counter<BUILD>, 1, 'BUILD called once';
 }
 
