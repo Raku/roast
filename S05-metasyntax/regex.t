@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 27;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -94,3 +94,6 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
     ok  $!  ~~ Exception, 'use of missing named rule dies';
     ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
 }
+
+#?rakudo todo 'RT #64220'
+eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
