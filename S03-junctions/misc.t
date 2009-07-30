@@ -10,9 +10,9 @@ Misc. Junction tests
 
 =end pod
 
-#?rakudo 2 todo 'identifying junctions (RT #67886)'
-isa_ok any(6,7), 'Junction';
-is any(6,7).WHAT, 'Junction', 'Junction.WHAT works';
+#?rakudo skip 'Null PMC access in get_integer() (RT #64184)'
+isa_ok any(6,7), Junction;
+is any(6,7).WHAT, Junction, 'Junction.WHAT works';
 
 # avoid auto-threading on ok()
 sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
