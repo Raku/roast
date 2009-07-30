@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -132,3 +132,6 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 
 # Make sure inheritnace from Object works (got broken in Rakudo once).
 eval_lives_ok 'class NotAny is Object { }; NotAny.new', 'inheritance from Object works';
+
+#?rakudo todo 'trying to inherit from a non-existent class'
+eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
