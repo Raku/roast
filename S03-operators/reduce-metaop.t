@@ -25,7 +25,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([*]  1,2,3),    (1*2*3), "[*] works");
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
-  #?rakudo todo 'associativity in reduce-metaop'
+  #?rakudo todo 'associativity in reduce-metaop (RT #63306)'
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
 
