@@ -196,7 +196,7 @@ my @e;
         my @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements");
 
-        eval '@r = ("f", "oo", "bar")».chars';
+        eval '@r = ("f", "oo", "bar").».chars';
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (Same thing, dot form)");
 
