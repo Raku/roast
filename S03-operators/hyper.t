@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 91;
+plan 98;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -168,6 +168,26 @@ my @e;
         eval '@r = (1, 4, 9)>>.sqrt';
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
+
+        eval '@r = (1, 4, 9)»++';
+        @e = (2, 5, 9);
+        is(~@r, ~@e, "operator call on integer list elements");
+
+        eval '@r = (1, 4, 9).»++';
+        @e = (2, 5, 9);
+        is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
+
+        eval '@r = (1, 4, 9)».++';
+        @e = (2, 5, 9);
+        is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
+
+        eval '@r = (1, 4, 9).».++';
+        @e = (2, 5, 9);
+        is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
+
+        eval '@r = (1, 4, 9)\  .»\  .++';
+        @e = (2, 5, 9);
+        is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
 
 { # unary postfix again, but with a twist
@@ -176,9 +196,19 @@ my @e;
         my @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements");
 
+        eval '@r = ("f", "oo", "bar")».chars';
+        @e = (1, 2, 3);
+        is(~@r, ~@e, "method call on list elements (Same thing, dot form)");
+
+
         eval '@r = ("f", "oo", "bar")>>.chars';
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (ASCII)");
+
+        eval '@r = ("f", "oo", "bar").>>.chars';
+        @e = (1, 2, 3);
+        is(~@r, ~@e, "method call on list elements (ASCII, Same thing, dot form)");
+
 };
 
 { # unary postfix on a user-defined object
