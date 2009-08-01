@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 75;
+plan 76;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -217,5 +217,7 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     dies_ok { renames(:x(23)) }, 'old name is not available';
 }
 
+#?rakudo todo 'RT #68086'
+eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
 # vim: ft=perl6
