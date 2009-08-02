@@ -81,7 +81,7 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 #?rakudo todo 'RT #67612'
 eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
 
-# L<S05/The semicolon character is specifically reserved as non-meaningful>
+# L<S05/Simplified lexical parsing of patterns/The semicolon character>
 
 eval_dies_ok 'rx/;/',       'bare ";" is rx is not allowed';
 eval_dies_ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';

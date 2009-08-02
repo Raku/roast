@@ -3,7 +3,7 @@ use Test;
 
 plan 13;
 
-# L<12/Enums/There's also a pseudo-functional form>
+# L<S12/Enums/There's also a pseudo-functional form>
 
 enum day <<:Sun(1) Mon Tue Wed Thu Fri Sat>>;
 
