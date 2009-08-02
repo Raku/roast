@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 55;
+plan 56;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -183,6 +183,13 @@ my @elems = <a b c d e>;
     my @s = (1..3);
     for @array_s { $_++ };
     is(@array_s, @s, 'for @array { $_++ }');
+}
+
+{
+  my @array = <a b c d>;
+  for @array { $_ ~= "c" }
+  is ~@array, "ac bc cc dc",
+    'mutating $_ in for works';
 }
 
 {
