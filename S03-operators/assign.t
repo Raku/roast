@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 238;
+plan 239;
 
 
 # tests various assignment styles
@@ -318,6 +318,10 @@ my @p;
     is(@p[0],'abcyz', "~= operator parses as item assignment 1");
     is(@p[1],'plugh', "~= operator parses as item assignment 2");
 }
+
+# RT #64818
+eval_dies_ok q{my $foo = 'foo'; $foo R~= 'foo';},
+             'R~= operator is a parse error';
 
 {
     my $x = "abc";
