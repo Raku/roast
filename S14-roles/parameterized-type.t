@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 24;
 
 =begin pod
 
@@ -58,31 +58,6 @@ is C4.new.call_test,         'ok', 'roles being used as type constraints inside 
 dies_ok { C4.new.call_fail },      'roles being used as type constraints inside roles work';
 is R2[C3].new.call_test,     'ok', 'classes being used as type constraints inside roles work';
 dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints inside roles work';
-
-#?rakudo skip 'RT #68074'
-{
-    role A[Int $x where { $x % 2 == 0 }] {
-        method s { 'even' }
-    }
-    role A[Int $x where { $x % 2 == 1 }] {
-        method s { 'odd' }
-    }
-
-    class RT68074odd does A[5] {}
-
-    my $a;
-    lives_ok { $a = RT68074odd.new.s },
-             'can call method of class from role with parametric signature using where (odd)'; # and a partridge in a pear tree!
-    is $a, 'odd',
-       'role disambiguation via parametric signature with where works (odd)';
-
-    class RT68074even does A[74] {}
-
-    lives_ok { $a = RT68074even.new.s },
-             'can call method of class from role with parametric signature using where (even)';
-    is $a, 'even',
-       'role disambiguation via parametric signature with where works (even)';
-}
 
 #?pugs emit =end SKIP
 
