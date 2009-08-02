@@ -5,13 +5,14 @@ use Test;
 =begin description
 
 Tests curried subs as defined by 
-L<S06/Currying>
 
 = TODO
 
 * assuming on a use statement
 
 =end description
+
+# L<S06/Currying>
 
 plan 13;
 

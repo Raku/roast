@@ -4,8 +4,6 @@ use Test;
 
 =begin pod
 
-L<S03/"Chaining binary precedence" /Value identity>
-
 C<===> and C<eqv> are 2 distinct operators, where C<===> tests value
 equivalence for immutable types and reference equivalence for 
 mutable types, and C<eqv> tests value equivalence for snapshots of mutable
@@ -13,6 +11,8 @@ types.  So C<(1,2) === (1,2)> returns true but C<[1,2] === [1,2]> returns
 false, and C<[1,2] eqv [1,2]> returns true.
 
 =end pod
+
+# L<S03/"Chaining binary precedence" /Value identity>
 
 plan 52;
 

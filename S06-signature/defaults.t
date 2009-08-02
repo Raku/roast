@@ -5,9 +5,10 @@ use Test;
 =begin description
 
 Tests assigning default values to variables of type code in sub definitions.
-L<S06/Optional parameters/Default values can be calculated at run-time>
 
 =end description
+
+# L<S06/Optional parameters/Default values can be calculated at run-time>
 
 plan 3;
 

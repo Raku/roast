@@ -8,9 +8,9 @@ plan 20;
 
 Testing parameter traits for subroutines
 
-L<S06/"Parameter traits">
-
 =end description
+
+# L<S06/"Parameter traits">
 
 my $foo=1;
 

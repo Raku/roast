@@ -32,9 +32,9 @@ is different from
 
   say( (any <foo bar baz>), "Hello World")
 
-L<S03/Changes to Perl 5 operators/"Note that Perl 6 is making a consistent">
-
 =end kwid
+
+# L<S03/Changes to Perl 5 operators/"Note that Perl 6 is making a consistent">
 
 my @matching_strings = <foo bar>;
 my @nonmatching_strings = ('fo','foo ', 'foo bar baz', 'oo', 'bar b', 'bar baz');

@@ -152,9 +152,9 @@ Tests junction examples from Synopsis 03
 j() is used to convert a junction to canonical string form, currently
 just using .perl until a better approach presents itself.
 
-L<S03/Junctive operators>
-
 =end description
+
+# L<S03/Junctive operators>
 
 # Canonical stringification of a junction
 sub j (Junction $j) { return $j.perl }
@@ -227,8 +227,6 @@ sub j (Junction $j) { return $j.perl }
 
 These are implemented but still awaiting clarification on p6l.
 
-L<S03/Junctive operators/They thread through operations>
-
  On Fri, 2005-02-11 at 10:46 +1100, Damian Conway wrote:
  > Subject: Re: Fwd: Junctive puzzles.
  >
@@ -237,6 +235,8 @@ L<S03/Junctive operators/They thread through operations>
  > operations, and rejunctify the results.
 
 =end description
+
+# L<S03/Junctive operators/They thread through operations>
 
 #?rakudo skip 'Junctions of Code Objects'
 {

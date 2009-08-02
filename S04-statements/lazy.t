@@ -2,23 +2,7 @@ use v6;
 
 use Test;
 
-=begin pod
-=head1 DESCRIPTION
-
-This test tests nothingmuch's C<lazy> proposal.
-
-This proposal was accepted on 2005-08-23 in a p6l post by Larry
-L<"http://www.nntp.perl.org/group/perl.perl6.language/22890">:
-
-  > Which already seems to be there with
-  > 
-  >     lazy {...}
-  > 
-  > which is, I presume, mostly syntactic sugar for something like:
-  > 
-  >     sub is cached {...}
-
-=end pod
+# L<S04/Other C<do>-like forms/lazy>
 
 plan 15;
 

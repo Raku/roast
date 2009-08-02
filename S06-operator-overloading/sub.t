@@ -8,9 +8,9 @@ plan 44;
 
 Testing operator overloading subroutines
 
-L<S06/"Operator overloading">
-
 =end pod
+
+# L<S06/"Operator overloading">
 
 # This set of tests is very basic for now.
 # TODO: all variants of overloading syntax (see spec "So any of these")

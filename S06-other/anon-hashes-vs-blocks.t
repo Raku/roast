@@ -18,9 +18,9 @@ say '$hash<1><4>.WHAT = ', $hash<1><4>.perl;
 
 Also with array refs nested in hash refs.
 
-L<S06/Anonymous hashes vs blocks>
-
 =end pod
+
+# L<S06/Anonymous hashes vs blocks>
 
 plan 8;
 

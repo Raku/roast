@@ -193,9 +193,10 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 These tests are the testing for "List parameters" section of Synopsis 06
 
-L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 
 =end desc
+
+# L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 
 {
     sub first(*$f, *$s, *@r){ return $f };

@@ -8,9 +8,9 @@ plan 14;
 
 Testing lvalue-returning subroutines
 
-L<S06/"Lvalue subroutines">
-
 =end description
+
+# L<S06/"Lvalue subroutines">
 
 # Lvalue subrefs
 {

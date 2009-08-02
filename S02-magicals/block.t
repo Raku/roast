@@ -6,15 +6,12 @@ use Test;
 
 This tests the &?BLOCK magical from Synopsis 6
 
-L<S06/The C<&?BLOCK> object>
-
 =end description
+
+# L<S06/The C<&?BLOCK> object>
 
 plan 1;
 
-#?rakudo emit skip_rest('Parse error');
-
-#?rakudo emit =begin parse
 
 # L<S02/Names/Which block am I in?>
 # L<S06/The C<&?BLOCK> object/tail-recursion on an anonymous block:>
@@ -22,5 +19,5 @@ my $anonfactorial = -> Int $n { $n < 2 ?? 1 !! $n * &?BLOCK($n-1) };
 
 my $result = $anonfactorial(3);
 is($result, 6, 'the $?BLOCK magical worked');
-#?rakudo emit =end parse
 
+# vim: ft=perl6

@@ -8,8 +8,6 @@ plan 17;
 
 Test pointy sub behaviour described in S06
 
-L<S06/""Pointy blocks"">
-
 =end description
 
 # L<S06/""Pointy blocks""/"parameter list of a pointy block does not require

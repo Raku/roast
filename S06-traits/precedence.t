@@ -6,9 +6,9 @@ use Test;
 
 Tests for precedence of self defined operators
 
-L<S06/Subroutine traits/"relative to an existing">
-
 =end pod
+
+# L<S06/Subroutine traits/"relative to an existing">
 
 plan 10;
 

@@ -2,11 +2,7 @@ use v6;
 
 use Test;
 
-=begin kwid
-
-The spaceship operator parses incorrectly in multiple ways
-
-=end kwid
+# L<S03/Nonchaining binary precedence/Sort comparisons>
 
 plan 5;
 

@@ -8,9 +8,9 @@ plan 50;
 
 Tests subtypes, specifically in the context of multimethod dispatch.
 
-L<S12/"Types and Subtypes">
-
 =end description
+
+# L<S12/"Types and Subtypes">
 
 my $abs = '
 multi sub my_abs (Num $n where { $^n >= 0 }){ $n }
