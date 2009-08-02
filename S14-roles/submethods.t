@@ -8,19 +8,24 @@ plan 1;
 
 Tests of roles with submethods
 
+# L<S14/Roles>
+# L<S12/Submethods>
+
 =end pod
 
-my $did_build = 0;
 
 role AddBuild
 {
+    has $.did_build = 0;
     submethod BUILD ( $self: )
     {
-        $did_build = 1;
+        $!did_build = 1;
     }
 }
 
 class MyClass does AddBuild {}
 
 my $class = MyClass.new();
-ok( $did_build, 'Class that does role should do submethods of role' );
+ok( $class.did_build, 'Class that does role should do submethods of role' );
+
+# vim: ft=perl6

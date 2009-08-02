@@ -3,6 +3,9 @@ use Test;
 
 plan 15;
 
+# L<S06/Perl5ish subroutine declarations/You can declare a sub without
+# parameter list>
+
 sub simple { 'simple' }
 #?rakudo skip 'siglist'
 is &simple.signature, :(), 'signature is :() when none is specified';

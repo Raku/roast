@@ -14,6 +14,8 @@ be valid perl6.
 
 plan 4;
 
+# L<S05/Extensible metasyntax (C<< <...> >>)/A leading & interpolates>
+
 regex abc { a b c } 
 
 my $var = "";
