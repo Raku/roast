@@ -9,6 +9,8 @@ plan 4;
 # Test two attributes in each role because roles with single attributes are special
 # Author: Richard Hainsworth, Oct 2, 2006
 
+# L<S14/Roles/but may be composed of other roles>
+
 role InnerRole {
   has $.inner_role_var_1 is rw;
   has $.inner_role_var_2 is rw;

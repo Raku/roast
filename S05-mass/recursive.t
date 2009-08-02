@@ -11,12 +11,8 @@ use Test;
 
 plan 20;
 
-unless "a" ~~ /a/ {
-  skip_rest "skipped tests - rule support appears to be missing";
-  exit;
-}
+# L<S05/Extensible metasyntax (C<< <...> >>)>
 
-# rule r { <?> | x <r> }  - XXX 'rule' doesn't backtrack
 regex r { <?> | x <r> }
 
 ok "" ~~ /<r>/, '"" ~~ /<r>/ matched';

@@ -2,11 +2,7 @@ use v6;
 
 use Test;
 
-=begin pod
-
-See L<S06/"Macros">.
-
-=end pod
+# L<S06/Macros>
 
 plan 8;
 
@@ -48,3 +44,5 @@ plan 8;
   is (prefix_2000 42), 200042,
     "simple string returning macro without argparens is parsed correctly (2)";
 }
+
+# vim: ft=perl6

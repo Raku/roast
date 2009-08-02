@@ -10,6 +10,8 @@ Tests for WALK, defined in L<S12/Calling sets of methods>
 
 =end pod
 
+#L<S12/Calling sets of methods>
+
 class A {
     method m { 'A' }
 }

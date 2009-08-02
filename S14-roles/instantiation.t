@@ -75,3 +75,5 @@ role ParaRole[$x] {
     }
     is(NotNewTest.x, 69, "it's not just .new that causes a pun, but any method");
 }
+
+# vim: ft=perl6

@@ -3,6 +3,8 @@ use Test;
 
 plan 16;
 
+# L<S12/Methods/may be declared as lvalues with is rw.>
+
 class T {
     has $.a;
     has $.b;

@@ -2,11 +2,7 @@ use v6;
 
 use Test;
 
-=begin pod
-
-See L<S06/"Macros">.
-
-=end pod
+#L<S06/"Macros">
 
 plan 4;
 
@@ -25,3 +21,5 @@ plan 4;
   is returns_a_closure, 145, "closure returning macro";
   is $in_macro_clos,      1, "macro closure was executed during runtime";
 }
+
+# vim: ft=perl6

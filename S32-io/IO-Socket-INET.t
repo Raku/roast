@@ -3,6 +3,8 @@ use Test;
 
 plan 3;
 
+# L<S32::IO/IO::Socket::INET>
+
 # Testing socket must solve 2 problems: find an unused port to bind to,
 # and fork a client process before the server is blocked in accept().
 

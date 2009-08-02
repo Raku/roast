@@ -3,6 +3,9 @@ use Test;
 
 plan 8;
 
+# L<S12/Construction and Initialization/The default BUILD and BUILDALL>
+
+
 class Parent {
     has Str $.gather  is rw = '';
     has Int $.parent-counter is rw = 0;

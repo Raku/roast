@@ -13,6 +13,9 @@ Tests for using parameterized roles as types, plus the of keyword.
 #?pugs emit skip_rest('parameterized roles'); exit;
 #?pugs emit =begin SKIP
 
+# L<S14/Parametric Roles>
+# L<S14/Relationship Between of And Types>
+
 role R1[::T] { method x { T } }
 class C1 does R1[Int] { }
 class C2 does R1[Str] { }
