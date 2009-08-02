@@ -19,7 +19,8 @@ is &positional.signature, :(Object *@_),
    'signature is :(Object *@_) when none is specified and @_ is used';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
 ok positional() ~~ undef, 'sub using positional param called with no params';
-ok positional( :victor<whiskey> ) ~~ undef,
+#?rakudo todo 'should die from too many arguments'
+dies_ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 
 sub named { %_<bravo> }
