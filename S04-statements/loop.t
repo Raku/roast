@@ -11,7 +11,7 @@ loop statement tests
 
 =end kwid
 
-plan 11;
+plan 12;
 
 # basic loop
 
@@ -80,6 +80,17 @@ plan 11;
         last if ++$loopvar == 3;
     }
     is($loopvar, 3, "bare loop exited after 3 iterations");
+}
+
+#?rakudo skip 'RT #65962'
+{
+    my $rt65962 = 'did not loop';
+    
+    loop ( my $a = 1, my $b = 2; $a < 5; $a++, $b++ ) {
+        $rt65962 = "$a $b";
+    }
+
+    is $rt65962, '4 5', 'loop with two variables in init works';
 }
 
 # vim: ft=perl6
