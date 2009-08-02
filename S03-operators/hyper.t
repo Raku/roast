@@ -161,31 +161,34 @@ my @e;
 
 { # unary postfix with integers
         my @r;
-        eval '@r = (1, 4, 9)».sqrt';
+        @r = (1, 4, 9)».sqrt;
         my @e = (1, 2, 3);
         is(~@r, ~@e, "method call on integer list elements");
 
-        eval '@r = (1, 4, 9)>>.sqrt';
+        @r = (1, 4, 9)>>.sqrt;
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
+}
 
-        eval '@r = (1, 4, 9)»++';
-        @e = (2, 5, 9);
+#?rakudo skip '@array»++'
+{
+
+        my (@r, @e)
+        (@r = (1, 4, 9))»++;
+        @e = (2, 5, 10);
         is(~@r, ~@e, "operator call on integer list elements");
 
-        eval '@r = (1, 4, 9).»++';
+        (@r = (1, 4, 9)).»++;
+        is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
+
+        (@r = (1, 4, 9))».++;
         @e = (2, 5, 9);
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 
-        eval '@r = (1, 4, 9)».++';
-        @e = (2, 5, 9);
+        (@r = (1, 4, 9)).».++;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 
-        eval '@r = (1, 4, 9).».++';
-        @e = (2, 5, 9);
-        is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
-
-        eval '@r = (1, 4, 9)\  .»\  .++';
+        (@r = (1, 4, 9))\  .»\  .++;
         @e = (2, 5, 9);
         is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
