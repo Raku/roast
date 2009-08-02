@@ -134,27 +134,27 @@ my @e;
 #?rakudo skip 'unicode hypers'
 { # dimension upgrade - unicode
         my @r;
-        @r = (1, 2, 3) »+« 1;
+        @r = (1, 2, 3) »+» 1;
         my @e = (2, 3, 4);
         is(~@r, ~@e, "auto dimension upgrade on rhs");
 
-        @r = 2 »*« (10, 20, 30);
+        @r = 2 «*« (10, 20, 30);
         @e = (20, 40, 60);
         is(~@r, ~@e, "auto dimension upgrade on lhs");
 
-        @r = (1,2,3,4) »+« (1,2);
+        @r = (1,2,3,4) »+» (1,2);
         @e = (2,4,3,4);
         is(~@r, ~@e, "list-level element extension on rhs");
         
-        @r = (1,2) »+« (1,2,3,4);
+        @r = (1,2) «+« (1,2,3,4);
         @e = (2,4,3,4);
         is(~@r, ~@e, "list-level element extension on lhs");
   
-        @r = (1,2,3,4) »+« (1,);
+        @r = (1,2,3,4) »+» (1,);
         @e = (2,2,3,4);
         is(~@r, ~@e, "list-level element extension on rhs");
         
-        @r = (1,) »+« (1,2,3,4);
+        @r = (1,) «+« (1,2,3,4);
         @e = (2,2,3,4);
         is(~@r, ~@e, "list-level element extension on lhs");
 };
