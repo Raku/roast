@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 14;
 
 # L<S06/Closure parameters>
 
@@ -40,6 +40,28 @@ plan 9;
     eval_dies_ok('testit(&testintint)',  'code dies with invalid signature (2)');
     eval_dies_ok('testit(&teststrbool)', 'code dies with invalid signature (3)');
     eval_dies_ok('testit(&teststrint)',  'code dies with invalid signature (4)');
+}
+
+#?rakudo skip 'type syntax parse failure'
+{
+    multi sub t1 (&code:(Int)) { 'Int' };
+    multi sub t1 (&code:(Str)) { 'Str' };
+    multi sub t1 (&code:(Str --> Bool)) { 'Str --> Bool' };
+    multi sub t1 (&code:(Any, Any)) { 'Two' };
+
+    is t1(-> $a, $b { }), 'Two',
+       'Multi dispatch based on closure parameter syntax (1)'
+    is t1(-> Int $a { }), 'Int',
+       'Multi dispatch based on closure parameter syntax (2)'
+    is t1(-> Str $a { }), 'Str',
+       'Multi dispatch based on closure parameter syntax (3)'
+
+    sub takes-str-returns-bool(Str $x --> Bool) { True }
+    is t1(&takes-str-returns-bool), 'Str --> Bool',
+       'Multi dispatch based on closure parameter syntax (4)'
+
+    dies_ok { t1( -> { 3 }) }, 
+       'Multi dispatch based on closure parameter syntax (5)'
 }
 
 # vim: ft=perl6
