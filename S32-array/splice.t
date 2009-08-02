@@ -120,8 +120,6 @@ splice_ok splice(@a, 1, -1, 7, 7), @a, [2], [1,7,7,3], "Replacing a array into t
 splice_ok splice(@a,-3,-2,2), @a, [7], [1,2,7,3], "Replacing negative count of elements";
 
 # Test the identity of calls to splice:
-# See also t/builtins/want.t, for the same test in a different
-# setting
 sub indirect_slurpy_context( *@got ) { @got };
 
 
