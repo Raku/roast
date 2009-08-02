@@ -30,7 +30,7 @@ plan 9;
 
 #?rakudo skip 'type syntax parse failure'
 {
-    my sub testit (&testcode:(Int --> Bool)) {testcode()}
+    my sub testit (&testcode:(Int --> Bool)) {testcode(3)}
     my Bool sub testintbool(Int $foo) {return Bool::True}
     my Bool sub teststrbool(Str $foo) {return Bool::False}
     my Int  sub testintint (Int $foo) {return 1}
@@ -41,3 +41,5 @@ plan 9;
     eval_dies_ok('testit(&teststrbool)', 'code dies with invalid signature (3)');
     eval_dies_ok('testit(&teststrint)',  'code dies with invalid signature (4)');
 }
+
+# vim: ft=perl6
