@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 32;
 
 =begin pod
 
@@ -102,6 +102,53 @@ is(TTP_1.new.x(42),       'got a Int() it was 42',     'type variable in scope a
 is(TTP_2.new.x("OH HAI"), 'got a Str() it was OH HAI', 'type variable in scope and accepts right value');
 dies_ok({ TTP_1.new.x("OH HAI") },                   'type constraint with parameterized type enforced');
 dies_ok({ TTP_2.new.x(42) },                         'type constraint with parameterized type enforced');
+
+# test multi dispatch on parameterized roles
+# not really basic anymore, but I don't know where else to put these tests
+#?rakudo skip 'composition time multi dispatch with generics/where-blocks'
+{
+    role MD_block[Int $x where { $x % 2 == 0 }] {
+        method what { 'even' };
+    }
+    role MD_block[Int $x where { $x % 2 == 1 }] {
+        method what { 'odd' };
+    }
+
+    class CEven does MD_block[4] { };
+    class COdd  does MD_block[3] { };
+
+    is CEven.new.what, 'even',
+       'multi dispatch on parameterized role works with where-blocks (1)';
+    is COdd.new.what,  'odd',
+       'multi dispatch on parameterized role works with where-blocks (2)';
+    is CEven.what, 'even',
+       'same with class methods (1)';
+    is COdd.what,  'odd',
+       'same with class methods (2)';
+    eval_dies_ok 'class MD_not_Int does MD_block["foo"] { }',
+                 "Can't compose without matching role multi";
+
+    role MD_generics[::T $a, T $b] {
+        method what { 'same type' }
+    }
+    role MD_generics[$a, $b] {
+        method what { 'different type' }
+    }
+    class CSame does MD_generics[[], []] { }
+    class CDiff does MD_generics[4,  {}] { }
+
+    is CSame.new.what, 'same type',
+       'MD with generics at class composition time (1)';
+    is CDiff.new.what, 'different type',
+       'MD with generics at class composition time (2)';
+
+    is CSame.what, 'same type',
+       'MD with generics at class composition time (class method) (1)';
+    is CDiff.what, 'different type',
+       'MD with generics at class composition time (class method) (2)';
+    eval_dies_ok 'class WrongFu does MD_generics[3] { }',
+       'MD with generics at class composition times fails (wrong arity)';
+}
 
 #?pugs emit =end SKIP
 
