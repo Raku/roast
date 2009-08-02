@@ -99,7 +99,6 @@ IO
   :o :R :W :X :O :l :p :S :b :c :t :u :g :k :T :B
 
 SINGLE TESTS
-* t/syntax/signature.t is flawed and has a XXX comment of what needs to be done
 * t/spec/S04-closure-traits/pre-post.t has an up-to-date TODO list that needs
   implementing
 
