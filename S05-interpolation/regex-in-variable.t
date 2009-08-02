@@ -8,13 +8,11 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 21;
+plan 15;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
+# L<S05/Variable (non-)interpolation>
 
-#?pugs emit force_todo(3,4,5,6,7,9,10,11,13,14,15,17,19);
+#?pugs emit force_todo(3,4,5,6,7,9,10,11,13,14,15)
 
 my $var = rx/a+b/;
 
@@ -51,18 +49,7 @@ ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
+# L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
+eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 
-# HASHES
-
-ok("a 4" ~~ m/%var/, 'Simple hash interpolation (a)');
-ok("b cos" ~~ m/%var/, 'Simple hash interpolation (b)');
-ok("c 1234" ~~ m/%var/, 'Simple hash interpolation (c)');
-ok(!( "d" ~~ m/%var/ ), 'Simple hash interpolation (d)');
-ok("====a 4=====" ~~ m/%var/, 'Nested hash interpolation (a)');
-ok(!( "abca" ~~ m/^%var$/ ), 'Simple hash non-matching');
-
-
-ok("a 4 b cos c 99  a 4" ~~ m:s/^[ %var]+$/, 'Simple hash repeated matching');
-
-}
-
+# vim: ft=perl6
