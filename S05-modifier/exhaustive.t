@@ -6,13 +6,9 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/exhaustive.t.
 
+# L<S05/Modifiers/:exhaustive>
+
 =end pod
-
-plan 44; # Will need to be changed once :exhaustive starts working.
-
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
 
 #?pugs emit force_todo(2,3,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42);
 
@@ -146,5 +142,7 @@ is(~$/[2]<noun>, 'arrow', 'Rule capture 2 noun');
 
 ok(!( "fooooo" ~~ m:exhaustive { s o+ } ), 'Subsequent failed any match...');
     ok(@$/ == 0, '...leaves @$/ empty');
-}
 
+done_testing();
+
+# vim: ft=perl6
