@@ -10,15 +10,11 @@ version 0.3 (12 Apr 2004), file t/anchors.t.
 It has (hopefully) been, and should continue to be, updated to
 be valid perl6.
 
-L<S05/New metacharacters/"^^ and $$ match line beginnings and endings">
-
 =end pod
 
-plan 19;
+# L<S05/New metacharacters/"^^ and $$ match line beginnings and endings">
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
+plan 19;
 
 my $str = q{abc
 def
@@ -44,4 +40,4 @@ ok(   $str ~~ m/ghi$$/, 'ghi EOL' );
 ok(   $str ~~ m/ghi$/, 'ghi EOS' );
 ok(   $str ~~ m/^abc$$\n^^d.*f$$\n^^ghi$/, 'All dot' );
 
-}
+# vim: ft=perl6

@@ -12,12 +12,9 @@ be valid perl6.
 
 =end pod
 
-plan 10;
+# L<S05/Bracket rationalization/It now delimits an embedded closure>
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
+plan 10;
 
 ok("abc" ~~ m/a(bc){$<caught> = $0}/, 'Inner match');
 is(~$/<caught>, "bc", 'Inner caught');
