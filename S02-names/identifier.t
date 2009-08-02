@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -52,6 +52,12 @@ plan 13;
 {
     my sub method-check { 'method-check' }
     is method-check(), 'method-check', 'can call method-check';
+}
+
+# RT #65804
+{
+    sub sub($foo) { $foo }
+    is sub('RT #65804'), 'RT #65804', 'sub named "sub" works';
 }
 
 # vim: ft=perl6
