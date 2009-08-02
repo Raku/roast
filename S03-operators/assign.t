@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 251;
+plan 238;
 
 
 # tests various assignment styles
@@ -474,7 +474,6 @@ my @p;
 
 # Tests of dwimming scalar/listiness of lhs
 
-sub W () { substr(eval('want'), 0, 1) }
 sub l () { 1, 2 };
 
 #?rakudo todo 'item assignment'
@@ -668,61 +667,17 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
-#?rakudo skip "want function"
 {
     my @a;
     my $b = 0;
-    my sub foo { \@a }
-    my @z = ($(@a[foo()[$b]]) = W, W);
-    is(@a, 'S',    'lhs treats @a[foo()[$b]] as item');
-    is(@z[0], 'S', 'lhs treats @a[foo()[$b]] as item');
-    is(@z[1], 'L', 'lhs treats @a[foo()[$b]] as item');
-}
-
-{
-    my @a;
-    my $b = 0;
-    my sub foo { \@a }
-    my @z = (@a[foo()[$b,]] = l, l);
-    #?rakudo 2 todo 'list assignment'
-    is(~@a, '1',        'lhs treats @a[foo()[$b,]] as list');
-    is(~@z[0], '1',     'lhs treats @a[foo()[$b,]] as list');
-    ok(!defined(@z[1]), 'lhs treats @a[foo()[$b,]] as list');
+    my @z = ($(@a[$b]) = l, l);
+    is(@a.elems,    1, 'lhs treats $(@a[$b]) as item (1)');
+    #?rakudo 2 todo 'item assignment'
+    is(@a[0].elems, 1, 'lhs treats $(@a[$b]) as item (2)');
+    is(@z[1].elems, 3, 'lhs treats $(@a[$b]) as item (3)');
 }
 
 
-
-#?rakudo skip "want function"
-{
-    my %a;
-    my $b = 0;
-    my sub foo { 0, * }
-    my @z = (%a{foo()} = W, W);
-    is(%a{0}, 'L', 'lhs treats %a{foo()} as list');
-    is(@z[0], 'L L', 'lhs treats %a{foo()} as list');
-    ok(@z[1] ~~ undef, 'lhs treats %a{foo()} as list');
-}
-
-#?rakudo skip "my sub"
-{
-    my %a;
-    my $b = 0;
-    my sub foo { 0,1 }
-    my @z = (%a{foo()} = W, W);
-    is(%a{0}, 'L', 'lhs treats %a{foo()} as run-time list');
-    is(%a{1}, 'L', 'lhs treats %a{foo()} as run-time list');
-    is(@z[0], 'L', 'lhs treats %a{foo()} as run-time list');
-    is(@z[1], 'L', 'lhs treats %a{foo()} as run-time list');
-}
-
-#?rakudo skip "unknown reasons"
-{
-    my @a;
-    my @z = (@a[(0|0).pick] = W, W);
-    is(@a, 'L L',    'lhs treats @a[(0|0).pick] as list');
-    is(@z[0], 'L L', 'lhs treats @a[(0|0).pick] as list');
-    ok(@z[1] ~~ undef, 'lhs treats @a[(0|0).pick] as list');
-}
 
 # L<S03/Assignment operators/",=">
 #?rakudo skip ',='

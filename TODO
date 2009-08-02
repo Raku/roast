@@ -49,10 +49,6 @@ S02
   more specs as well
 
 S03
-* S03-operators/assign.t uses uses want() in a lot of places, but that
-  function was removed. So somebody has to investigate if these tests can be
-  written without want(). Those that can should be re-written, those that
-  can't should be deleted.
 * tests for cmp() and eqv() methods of objects
 * tests for feeds using IO objects
 * more bitwise tests, for :signed and :unsigned, and uncomment the tests in
