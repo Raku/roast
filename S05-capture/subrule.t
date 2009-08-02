@@ -14,21 +14,17 @@ be valid perl6.
 
 plan 31;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
+# L<S05/Match objects/When used as a hash>
 
 regex abc {abc}
-
 
 regex once {<.abc>}
 
 ok("abcabcabcabcd" ~~ m/<.once>/, 'Once match');
 ok($/, 'Once matched');
 is(~$/, "abc", 'Once matched');
-ok(@$/ == 0, 'Once no array capture');
-ok(%$/.keys == 0, 'Once no hash capture');
+ok(@($/) == 0, 'Once no array capture');
+ok(%($/).keys == 0, 'Once no hash capture');
 
 
 regex rep {<.abc>**{4}}
@@ -36,8 +32,8 @@ regex rep {<.abc>**{4}}
 ok("abcabcabcabcd" ~~ m/<.rep>/, 'Rep match');
 ok($/, 'Rep matched');
 is(~$/, "abcabcabcabc", 'Rep matched');
-ok(@$/ == 0, 'Rep no array capture');
-ok(%$/.keys == 0, 'Rep no hash capture');
+ok(@($/) == 0, 'Rep no array capture');
+ok(%($/).keys == 0, 'Rep no hash capture');
 
 
 regex cap {<abc>}
@@ -48,8 +44,8 @@ is(~$/, "abc", 'Cap zero matched');
 is(~$/<cap>, "abc", 'Cap captured');
 
 is(~$/<cap><abc>, "abc", 'Cap abc captured');
-ok(@$/ == 0, 'Cap no array capture');
-ok(%$/.keys == 1, 'Cap hash capture');
+ok(@($/) == 0, 'Cap no array capture');
+ok(%($/).keys == 1, 'Cap hash capture');
 
 regex repcap {<abc>**{4}}
 
@@ -61,7 +57,7 @@ is(~$/<repcap><abc>[0], "abc", 'Repcap abc zero captured');
 is(~$/<repcap><abc>[1], "abc", 'Repcap abc one captured');
 is(~$/<repcap><abc>[2], "abc", 'Repcap abc two captured');
 is(~$/<repcap><abc>[3], "abc", 'Repcap abc three captured');
-ok(@$/ == 0, 'Repcap no array capture');
+ok(@($/) == 0, 'Repcap no array capture');
 
 
 regex caprep {(<.abc>**{4})}
@@ -72,3 +68,4 @@ is(~$/, "abcabcabcabc", 'Caprep matched');
 is(~$/<caprep>, "abcabcabcabc", 'Caprep captured');
 is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
 
+# vim: ft=perl6

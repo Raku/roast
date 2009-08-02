@@ -6,6 +6,8 @@ plan 8;
 
 Testing the C<:aa> or C<:sameaccent> modifier - as always, need more tests
 
+# L<S05/Modifiers/:sameaccent>
+
 =end description
 
 #?pugs 999 skip feature
