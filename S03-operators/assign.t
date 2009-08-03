@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 239;
+plan 240;
 
 
 # tests various assignment styles
@@ -320,8 +320,12 @@ my @p;
 }
 
 # RT #64818
-eval_dies_ok q{my $foo = 'foo'; $foo R~= 'foo';},
-             'R~= operator is a parse error';
+{
+    my $parsed = 0;
+    eval_dies_ok q{$parsed = 1; my $foo = 'foo'; $foo R~= 'foo';},
+                 'use of R~= operator dies';
+    nok $parsed, 'use of R~= is a parse error';
+}
 
 {
     my $x = "abc";
