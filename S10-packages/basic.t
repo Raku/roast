@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 42;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -74,6 +74,34 @@ lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
 {
     eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
+}
+
+{
+    my $x;
+
+    eval '$x = RT64828g; grammar RT64828g {}';
+    ok  $!  ~~ Exception, 'reference to grammar before definition dies';
+    #?rakudo todo 'RT #64828'
+    ok "$!" ~~ / RT64828g /, 'error message mentions the undefined grammar';
+
+    eval '$x = RT64828m; module RT64828m {}';
+    ok  $!  ~~ Exception, 'reference to module before definition dies';
+    #?rakudo todo 'RT #64828'
+    ok "$!" ~~ / RT64828m /, 'error message mentions the undefined module';
+
+    eval '$x = RT64828r; role RT64828r {}';
+    ok  $!  ~~ Exception, 'reference to role before definition dies';
+    #?rakudo todo 'RT #64828'
+    ok "$!" ~~ / RT64828r /, 'error message mentions the undefined role';
+
+    eval '$x = RT64828c; class RT64828c {}';
+    ok  $!  ~~ Exception, 'reference to class before definition dies';
+    ok "$!" ~~ / RT64828c /, 'error message mentions the undefined class';
+
+    eval '$x = RT64828p; package RT64828p {}';
+    ok  $!  ~~ Exception, 'reference to package before definition dies';
+    #?rakudo todo 'RT #64828'
+    ok "$!" ~~ / RT64828p /, 'error message mentions the undefined package';
 }
 
 #?rakudo todo 'ticket based on class(es) not package; RT #65022'
