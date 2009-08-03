@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 59;
+plan 63;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -261,6 +261,35 @@ These tests are the testing for "List parameters" section of Synopsis 06
     #?rakudo todo 'RT #64814'
     dies_ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
     dies_ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
+}
+
+{
+    my $count = 0;
+    sub slurp_obj_thread(*@a) { $count++; }
+    multi sub slurp_obj_multi(*@a) { $count++; }
+
+    $count = 0;
+    slurp_obj_thread(3|4|5);
+    is $count, 1, 'Object slurpy param doesnt autothread';
+    $count = 0;
+    slurp_obj_multi(3|4|5);
+    is $count, 1, 'Object slurpy param doesnt autothread';
+}
+
+#?rakudo skip 'Typed slurpy, junctions, and autothreading (RT 68142)'
+##  Note:  I've listed these as though they succeed, but it's possible
+##  that the parameter binding should fail outright.  --pmichaud
+{
+    sub slurp_any_thread(Any *@a) { $count++; }
+    multi sub slurp_any_multi(Any *@a) { $count++; }
+
+    $count = 0;
+    slurp_any_thread(3|4|5);
+    is $count, 1, 'Any slurpy param doesnt autothread';
+    $count = 0;
+    #?rakudo skip 
+    slurp_any_multi(3|4|5);
+    is $count, 1, 'Any slurpy param doesnt autothread';
 }
 
 # vim: ft=perl6
