@@ -11,7 +11,7 @@ This covers anonymous blocks and subs, as well as pointy blocks
 
 =end description
 
-plan 31;
+plan 34;
 
 # L<S04/"The Relationship of Blocks and Declarations">
 # L<S06/"Anonymous subroutines">
@@ -29,6 +29,25 @@ is($anon_sub_w_arg(3), 4, 'sub ($arg) {} works');
 my $anon_block = { 1 };
 isa_ok($anon_block, Block);
 is($anon_block(), 1, '{} <anon block> works');
+
+# RT #64844
+{
+    eval '$anon_block( 1 )';
+    #?rakudo todo 'Parrot support for zero-arg subs?'
+    ok $! ~~ Exception, 'too many parameters';
+
+    if $! !~~ Exception {
+        skip 2, q{tests don't work if previous test fails};
+    }
+    else {
+        my $errmsg = ~$!;
+
+        eval '$anon_block( foo => "RT #64844" )';
+        ok $! ~~ Exception, 'too many parameters';
+        #?rakudo todo 'RT #64844'
+        is ~$!, $errmsg, 'same error for named param as positional';
+    }
+}
 
 # L<S06/""Pointy blocks"">
 {
