@@ -420,32 +420,32 @@ ok '... --- ...' ~~ /"... --- ..."/, 'literal match (\")';
 
 #### "... --- ..."		...---...	n	literal match (\")
 #?pugs todo 'feature'
-#?rakudo skip 'parse error'
+#?rakudo skip 'parse error (RT #64880)'
 ok '...---...' !~~ /"... --- ..."/, 'literal match (\")';
 
 #### "ab<\">cd"		ab<">cd		y	literal match with quote
 #?pugs todo 'feature'
-#?rakudo skip 'parse error'
+#?rakudo skip 'parse error (RT #64880)'
 ok 'ab<">cd' ~~ /"ab<\">cd"/, 'literal match with quote';
 
 #### "ab<'>cd"		ab<\'>cd		y	literal match with quote
 #?pugs todo 'feature'
-#?rakudo skip 'parse error'
+#?rakudo skip 'parse error (RT #64880)'
 ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 
 #?pugs todo 'feature'
 #### "ab\\cd"		ab\x5ccd	y	literal match with backslash
-#?rakudo skip 'parse error'
+#?rakudo skip 'parse error (RT #64880)'
 ok 'ab\x5ccd' ~~ /"ab\\cd"/, 'literal match with backslash';
 
 #### (ab)x"$0"		abxab		y	literal match with interpolation
 #?pugs todo 'feature'
-#?rakudo skip 'parse error'
+#?rakudo skip 'parse error (RT #64880)'
 ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
 
 #### (ab)"x$0"		abxab		y	literal match with interpolation
 #?pugs todo 'feature'
-#?rakudo skip 'parse error'
+#?rakudo skip 'parse error (RT #64880)'
 ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading ? indicates">
