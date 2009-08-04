@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 11;
 
 # tests for Match.perl
 
@@ -25,5 +25,18 @@ regex o { o };
 ok "foo" ~~ /<f> <o>+ /, 'Regex matches (2)';
 lives_ok { $/.perl }, 'lives on quantified named captures';
 
+# RT #64874
+{
+    my $code_str = 'say <OH HAI>';
+    $code_str ~~ /<Perl6::Grammar::TOP>/;
+
+    isa_ok $/, Match;
+    is $/.ast, $code_str, 'Match.ast is the code matched';
+    is $/.Str, $code_str, 'Match.Str is the code matched';
+    #?rakudo todo 'RT #64874'
+    lives_ok { $/.perl }, 'can Match.perl';
+    #?rakudo skip 'RT #64874'
+    is_deeply eval($/.perl), $/, 'eval of Match.perl recreates Match';
+}
 
 # vim: ft=perl6
