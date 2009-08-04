@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<S12/Classes/"Perl 6 supports multiple inheritance, anonymous classes">
-plan 12;
+plan 16;
 
 # Create and instantiate empty class; check .WHAT works and stringifies to
 # empty string.
@@ -45,4 +45,25 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     my $x = class :: is TestParent { }
     ok($x ~~ TestParent, 'anonymous class isa TestParent');
     is($x.foo, 42,       'inherited method from TestParent');
+}
+
+# RT #64888
+{
+    sub rt64888 {
+        (
+         class {
+             method Str() { 'RT #64888' }
+             method Num() { 64888 }
+         }
+        ).new
+    }
+    my $i1;
+    my $i2;
+
+    lives_ok { $i1 = rt64888() }, 'can get anonymous class instance once';
+    #?rakudo todo 'RT #64888'
+    lives_ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
+
+    is ~$i1, 'RT #64888', 'anonymous class stringified works';
+    is +$i1, 64888, 'anonymous class numified works';
 }
