@@ -173,7 +173,7 @@ my @e;
 #?rakudo skip '@array»++'
 {
 
-        my (@r, @e)
+        my (@r, @e);
         (@r = (1, 4, 9))»++;
         @e = (2, 5, 10);
         is(~@r, ~@e, "operator call on integer list elements");
