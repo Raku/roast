@@ -50,18 +50,18 @@ plan 14;
     multi sub t1 (&code:(Any, Any)) { 'Two' };
 
     is t1(-> $a, $b { }), 'Two',
-       'Multi dispatch based on closure parameter syntax (1)'
+       'Multi dispatch based on closure parameter syntax (1)';
     is t1(-> Int $a { }), 'Int',
-       'Multi dispatch based on closure parameter syntax (2)'
+       'Multi dispatch based on closure parameter syntax (2)';
     is t1(-> Str $a { }), 'Str',
-       'Multi dispatch based on closure parameter syntax (3)'
+       'Multi dispatch based on closure parameter syntax (3)';
 
     sub takes-str-returns-bool(Str $x --> Bool) { True }
     is t1(&takes-str-returns-bool), 'Str --> Bool',
-       'Multi dispatch based on closure parameter syntax (4)'
+       'Multi dispatch based on closure parameter syntax (4)';
 
     dies_ok { t1( -> { 3 }) }, 
-       'Multi dispatch based on closure parameter syntax (5)'
+       'Multi dispatch based on closure parameter syntax (5)';
 }
 
 # vim: ft=perl6
