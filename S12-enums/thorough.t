@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 68;
+plan 69;
 
 =begin description
 
@@ -93,5 +93,12 @@ sub test_stuff($x) {
 
 ok True.perl ~~/^ 'Bool::True'/, 'True.perl';
 ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
+
+{
+    enum Negation << :isnt<isnt> :arent<arent> :amnot<amnot> :aint<aint> >>;
+    my Negation $foo;
+    #?rakudo todo 'Null PMC Access in invoke()'
+    lives_ok { $foo = Negation::isnt }, 'simple assignment from enum';
+}
 
 # vim: ft=perl6
