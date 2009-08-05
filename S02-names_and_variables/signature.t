@@ -20,14 +20,14 @@ plan 10;
 
 {
     my ($x, $y, $z);
-    :($x,$y,$z); := (1,2,3);
+    :($x,$y,$z) := (1,2,3);
     is("$x $y $z", "1 2 3", "siglist bindings works");
 }
 
 # Same, but more complex
 {
     my ($x, @y, @rest);
-    :($x,@y,*@rest); := (42,[13,17],5,6,7);
+    :($x,@y,*@rest) := (42,[13,17],5,6,7);
     #?pugs todo 'feature'
     is("$x!{@y}!{@rest}", "42!13 17!5 6 7", "complex siglist bindings works (1)");
 }
