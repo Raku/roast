@@ -238,7 +238,6 @@ These are implemented but still awaiting clarification on p6l.
 
 # L<S03/Junctive operators/They thread through operations>
 
-#?rakudo skip 'Junctions of Code Objects'
 {
     my @subs = (sub {3}, sub {2});
 
