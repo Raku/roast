@@ -8,7 +8,7 @@ plan 14;
 
 {
     class TypeCastSub {
-        method postcircumfix:<( )> (|$capture) {return 'pretending to be a sub'}
+        method postcircumfix:<( )> () {return 'pretending to be a sub'}
     }
 
     my $thing = TypeCastSub.new;
@@ -18,7 +18,7 @@ plan 14;
 
 {
     class TypeCastArray {
-        method postcircumfix:<[ ]> (*@@slice) {return 'pretending to be an array'}
+        method postcircumfix:<[ ]> (*@slice) {return 'pretending to be an array'}
     }
 
     my $thing = TypeCastArray.new;
@@ -30,7 +30,7 @@ plan 14;
 
 {
     class TypeCastHash {
-        method postcircumfix:<{ }> (*@@slice) {return 'pretending to be a hash'}
+        method postcircumfix:<{ }> (*@slice) {return 'pretending to be a hash'}
     }
 
     my $thing = TypeCastHash.new;
