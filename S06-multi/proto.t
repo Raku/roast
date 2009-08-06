@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # Test for proto definitions
 class A { }
@@ -49,3 +49,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     multi prefix:<elk> ($arg) { $arg + 1 }
     is (elk 3), 4, "multi definition of prefix:<elk> works";
 }
+
+#?rakudo todo 'RT #68242'
+eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
+    'attempt to define two proto subs with the same name dies';
