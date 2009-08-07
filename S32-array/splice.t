@@ -23,7 +23,7 @@ is equivalent to:
 
 =end description
 
-plan 35;
+plan 41;
 
 my (@a,@b,@res);
 
@@ -33,25 +33,8 @@ my (@a,@b,@res);
 
 #?DOES 2
 sub splice_ok (@got, @ref, @exp, @exp_ref, Str $comment) {
-  is "[@got[]]", "[@exp[]]", "$comment - results match";
+  is "[{~@got}]", "[{~@exp}]", "$comment - results match";
   is @ref, @exp_ref, "$comment - array got modified in-place";
-
-  # Once we get Test::Builder, this will be better:
-  #if ( (@got ~~ @exp) and (@ref ~~ @exp_ref)) {
-  #  flunk($comment);
-  #  if (@got !~~ @exp) {
-  #    diag "The returned result is wrong:";
-  #    diag "  Expected: @exp";
-  #    diag "  Got     : @got";
-  #  };
-  #  if (@ref !~~ @exp_ref) {
-  #    diag "The modified array is wrong:";
-  #    diag "  Expected: @exp_ref";
-  #    diag "  Got     : @exp";
-  #  };
-  #} else {
-  #  ok($comment);
-  #};
 };
 
 @a = (1..10);
@@ -146,4 +129,20 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 
 #?pugs todo 'bug'
 dies_ok({ 42.splice }, '.splice should not work on scalars');
+
+@tmp = (1..5);
+@a = splice @tmp, 1.3, 2;
+is( @a, [2,3], "splice with non-int offset floors it (1)");
+is( @tmp, [1,4,5], "splice with non-int offset floors it (2)");
+
+@tmp = (1..5);
+@a = splice @tmp, 1.3;
+is( @a, [2,3,4,5], "splice with non-int offset floors it (no size, 1)");
+is( @tmp, [1], "splice with non-int offset floors it (no size, 2)");
+
+@tmp = (1..5);
+@a = splice @tmp, 2, 1.3;
+is( @a, [3], "splice with non-int size floors it (1)");
+is( @tmp, [1,2,4,5], "splice with non-int size floors it (2)");
+
 # vim: ft=perl6
