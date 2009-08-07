@@ -52,7 +52,7 @@ lives_ok {$test7 = $test4.^bar},
     'class attribute accessible via ^name called on instance';
 is $test7, 23, 'class attribute via $obj.^name really works';
 
-# L<S12/Class methods/"you can associate a class method with the current
+# L<S12/Class methods/"you can associate a method with the current
 # metaclass instance">
 
 {
