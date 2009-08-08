@@ -90,3 +90,5 @@ is("x  \c[65,66,000067]  x", "x  ABC  x",  "\\c[] allows multiple chars (2)");
 
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
 is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
+
+# vim: ft=perl6

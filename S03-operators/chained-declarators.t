@@ -37,3 +37,5 @@ eval_dies_ok '
    ', "scoping our, my ('our' doesn't leak)";
 
 # XXX: add more!
+
+# vim: ft=perl6

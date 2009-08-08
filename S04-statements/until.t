@@ -29,3 +29,5 @@ plan 4;
     until (5 <= $i) { $i++; };
     is($i, 5, 'until (5 <= $i) {} works');
 }
+
+# vim: ft=perl6

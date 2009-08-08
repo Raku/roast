@@ -120,3 +120,5 @@ is(eval('$multi2[1;2]'), 6, 'got the right value at multi2 index 1,2');
 is($multi2[1][0], 4, 'got the right value at multi2 index 1,0');
 is($multi2[1][1], 5, 'got the right value at multi2 index 1,1');
 is($multi2[1][2], 6, 'got the right value at multi2 index 1,2');
+
+# vim: ft=perl6

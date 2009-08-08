@@ -41,3 +41,5 @@ plan 5;
     ++$a while shift(@a) ne 'd';
     is($a, 3, "post while");
 }
+
+# vim: ft=perl6

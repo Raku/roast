@@ -80,3 +80,5 @@ isa_ok($pair, Pair, 'it is a Pair type');
     my $rule = rx/^hello\sworld$/;
     isa_ok($rule, Regex, 'it is a Regex type');
 }
+
+# vim: ft=perl6

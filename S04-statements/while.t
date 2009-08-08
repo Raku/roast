@@ -74,3 +74,5 @@ plan 9;
     eval_dies_ok('while($i < 5) { $i++; }',
         'keyword needs at least one whitespace after it');
 }
+
+# vim: ft=perl6

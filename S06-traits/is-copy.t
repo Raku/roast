@@ -60,3 +60,5 @@ plan 16;
     hash_test(%test);
     is(%test<x>, 1,    '...and original is unmodified.');
 }
+
+# vim: ft=perl6

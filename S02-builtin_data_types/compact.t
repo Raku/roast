@@ -41,3 +41,5 @@ plan 10;
     is($buf8.bytes,  26, '.bytes works on a buf8');
     is($buf16.bytes, 26, '.bytes works on a buf16 (and returns the size in bytes)');
 }
+
+# vim: ft=perl6

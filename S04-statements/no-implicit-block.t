@@ -62,3 +62,5 @@ plan 12;
     is $x, 2, '$x assigned in loop\'s condition';
     is $y, 5, '$y assigned in loop\'s body';
 }
+
+# vim: ft=perl6

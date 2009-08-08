@@ -36,3 +36,5 @@ eval_dies_ok('sub foo;', 'old Perl 5 "sub foo;" syntax is dead');
     sub hail is instead {8}
     is(hail(), 8, 'redefining non-stub subroutine with is instead');
 }
+
+# vim: ft=perl6

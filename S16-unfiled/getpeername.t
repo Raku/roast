@@ -19,3 +19,5 @@ if $*OS eq "browser" {
 
 my $sock = connect('google.com', 80);
 ok $sock.getpeername.defined, "IO.getpeer works";
+
+# vim: ft=perl6

@@ -38,3 +38,5 @@ is Foo.^name(), 'Foo', '... the name() property is Foo';
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
 #?rakudo skip '.layout'
 is Foo.^layout, P6opaque, '^.layout';
+
+# vim: ft=perl6

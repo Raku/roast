@@ -107,3 +107,5 @@ sub add_in_perl5 ($x, $y) {
 }
 
 is(add_in_perl5(42, 42), 84, 'Defining subroutines with "use v5" blocks');
+
+# vim: ft=perl6

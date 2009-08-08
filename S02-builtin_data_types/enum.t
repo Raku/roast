@@ -140,3 +140,5 @@ is %hash.values, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'), '
     #?rakudo skip 'RT #63826'
     is EnumGrammar::G::b, 1, 'enum element in grammar has the right value';
 }
+
+# vim: ft=perl6

@@ -58,3 +58,5 @@ plan 12;
   #?rakudo todo 'Array interpolation b0rked'
   is "@array[]", "a\t  b  c", "array whose elements do contain whitespace stringify correctly (3-2)";
 }
+
+# vim: ft=perl6

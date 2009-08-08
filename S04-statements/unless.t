@@ -72,3 +72,5 @@ eval_dies_ok(
 eval_dies_ok( 
         ' unless 1 { 2 } elsif 4 { 3 } ', 
         'no elsif allowed in unless');
+
+# vim: ft=perl6

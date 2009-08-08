@@ -60,3 +60,5 @@ plan 11;
   }
   is @array[1], 1, "let() restored our array element";
 }
+
+# vim: ft=perl6

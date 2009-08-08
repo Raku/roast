@@ -157,3 +157,5 @@ Check that C<next> works on the correct loop/block
     
     is($i, 3, '$i++ was not executed when next was called before it in loop {}');
 }
+
+# vim: ft=perl6

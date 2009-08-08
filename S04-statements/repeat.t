@@ -102,3 +102,5 @@ plan 16;
   my $x = 0; repeat until 1 { $x++; redo if $x < 10 };
   is($x, 10, 'redo works in repeat until {}');
 }
+
+# vim: ft=perl6

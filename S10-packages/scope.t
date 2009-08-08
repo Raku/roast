@@ -89,3 +89,5 @@ ok($pkg !=== ::*My::Package::, 'not the same as global type object');
   #?pugs todo 'bug'
   is($Test2::scalar, 42, 'temporization of external package variables');
 }
+
+# vim: ft=perl6

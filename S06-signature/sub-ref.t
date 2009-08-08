@@ -117,3 +117,5 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     is($inc2(), 0, "clousures: inc2 == 0");
     is($inc2(), 1, "clousures: inc2 == 1");
 }
+
+# vim: ft=perl6

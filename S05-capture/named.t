@@ -55,3 +55,5 @@ if !eval('("a" ~~ /a/)') {
   is($/<number><notation>, 'roman', 'binding to alias as side-effect');
 }
 
+
+# vim: ft=perl6

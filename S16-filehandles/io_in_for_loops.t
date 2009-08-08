@@ -100,3 +100,5 @@ my $filename = 'tempfile_io_in_for_loop';
 # L<S29/IO/unlink>
 
 is(unlink($filename), 1, 'file has been removed');
+
+# vim: ft=perl6

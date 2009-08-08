@@ -107,3 +107,5 @@ ok(!("3" gt "4" lt "5"), "!(3 gt 4 lt 5) chained str comparison");
 ok("5" eq "5" gt "0", '"5" eq "5" gt "0" chained str comparison with equality');
 ok("5" le "5" gt "0", "5 le 5 gt 0 chained str comparison with le");
 ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
+
+# vim: ft=perl6

@@ -100,3 +100,5 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
             '.pick on enums';
     ok Color.pick(2) == 2, '.pick(2) on enums';
 }
+
+# vim: ft=perl6

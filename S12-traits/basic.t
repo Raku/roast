@@ -44,3 +44,5 @@ is($b.is_cool,    42,  'our class "inherited" an attribute');
 
 eval_dies_ok(' %!P = 1; 1',
         'calling a trait outside of a class should be a syntax error');
+
+# vim: ft=perl6

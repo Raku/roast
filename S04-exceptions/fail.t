@@ -30,3 +30,5 @@ plan 4;
   is $was_after_fail, 0, "fail() causes our sub to return (2)";
   is $was_after_sub,  0, "fail() causes our try{} to die";
 }
+
+# vim: ft=perl6

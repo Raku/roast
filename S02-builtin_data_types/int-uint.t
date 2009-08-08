@@ -30,3 +30,5 @@ for @inttypes -> $type {
     eval_dies_ok("my $type \$var = 42.1", "$type cannot be non-integer");
     eval_dies_ok("my $type \$var = NaN", "$type cannot be NaN");
 }
+
+# vim: ft=perl6

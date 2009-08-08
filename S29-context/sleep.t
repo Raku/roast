@@ -16,3 +16,5 @@ ok( $sleep_says <= 10 , '... and no more than 10');
 
 ok( $diff >= 2 , 'Sleep says it slept at least 2 seconds');
 ok( $diff <= 10 , '... and no more than 10');
+
+# vim: ft=perl6

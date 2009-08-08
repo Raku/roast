@@ -77,3 +77,5 @@ $b = -$a;
 $b= $b - 1;
 is($b, -(++$a), 'est oder of predecrement in -(++$a)');
 
+
+# vim: ft=perl6

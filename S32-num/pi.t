@@ -33,3 +33,5 @@ is_approx(eval("use Num :constants; 3 + pi"),   $PI+3,
 
 is_approx(eval("use Num :constants; pi + 3"),   $PI+3, 
                         "pi+3, as a bareword");
+
+# vim: ft=perl6

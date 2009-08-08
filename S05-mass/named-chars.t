@@ -557,3 +557,5 @@ ok("\x[ff6e]" ~~ m/^ <[\X[A42D]]>/, 'Negative charclass hex \X[A42D] match');
 
 }
 
+
+# vim: ft=perl6

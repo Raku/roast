@@ -56,3 +56,5 @@ for 1, 2 -> $_ {
     is respect([1,2,3]), 1, '... but only over one array ref';
     is respect( my @a = 1, 2, 3 ), 3, '...and when the array is declared in the argument list';
 }
+
+# vim: ft=perl6

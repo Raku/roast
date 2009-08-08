@@ -117,3 +117,5 @@ is(~$/, "john", 'Metaname match is john');
 ok(~$/ ne "jean", "Metaname match isn't jean");
 is(~$/<name>, "john", 'Metaname is john');
 
+
+# vim: ft=perl6

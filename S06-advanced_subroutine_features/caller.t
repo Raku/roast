@@ -65,3 +65,5 @@ chain({ caller(Method, :skip<1>).subname }, "&B::try_it_caller_B", "Method, :ski
 
 # WRITEME: label tests
 
+
+# vim: ft=perl6

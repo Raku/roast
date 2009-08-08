@@ -55,3 +55,5 @@ is($x,"Nothing happened", "Macros can return noops");
        'A macro can declare lexicals that are visible where called';
 
 }
+
+# vim: ft=perl6

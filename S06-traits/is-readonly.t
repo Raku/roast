@@ -39,3 +39,5 @@ plan 9;
     #?pugs todo 'feature'
     ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true";
 }
+
+# vim: ft=perl6

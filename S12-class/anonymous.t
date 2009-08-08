@@ -67,3 +67,5 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
     is +$i1, 64888, 'anonymous class numified works';
 }
+
+# vim: ft=perl6

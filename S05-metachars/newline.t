@@ -41,3 +41,5 @@ ok("abc" ~~ m/\N/, 'abc');
 
 }
 
+
+# vim: ft=perl6

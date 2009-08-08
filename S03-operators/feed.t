@@ -133,3 +133,5 @@ plan 23;
     ('a' .. 'd'; 0 .. 3) ==> my @@data;
     is(@(@@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
+
+# vim: ft=perl6

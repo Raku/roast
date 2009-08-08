@@ -73,3 +73,5 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
     $var = @list[q〈1〉];
     is $var, 'b', 'q-style string with LEFT/RIGHT ANGLE BRACKET';
 }
+
+# vim: ft=perl6

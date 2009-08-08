@@ -91,3 +91,5 @@ plan 32;
     is %hash<ref><val>,      42, "access to infinite HoHoHoH... (1)";
     is %hash<ref><ref><val>, 42, "access to infinite HoHoHoH... (2)";
 }
+
+# vim: ft=perl6

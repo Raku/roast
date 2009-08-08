@@ -50,3 +50,5 @@ lives_ok( { $ref[0] }, 'Accessing a hash as a list of pairs is fine');
     lives_ok { $y = [0, 7] }, 'can assign arrayref to scalar that held an hashref';
 
 }
+
+# vim: ft=perl6

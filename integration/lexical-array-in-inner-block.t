@@ -22,3 +22,5 @@ for 2..3 -> $n {
 
 
 
+
+# vim: ft=perl6

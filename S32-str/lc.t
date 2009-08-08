@@ -32,3 +32,5 @@ is(lc('A'..'C'), "a b c", "lowercasing char-range");
 
 #?rakudo skip 'unicode'
 is("ÁÉÍÖÜÓŰŐÚ".lc, "áéíöüóűőú", ".lc on Hungarian vowels");
+
+# vim: ft=perl6

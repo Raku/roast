@@ -18,3 +18,5 @@ eval q[
 use perl5:Text::Wrap 'wrap';
 is(wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
 ] or die $!.perl;
+
+# vim: ft=perl6

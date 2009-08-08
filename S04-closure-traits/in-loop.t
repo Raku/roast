@@ -69,3 +69,5 @@ plan 2;
             "(4 E1)(4 E2)"  ~                       "(4 Lv2)(4 Lv1)" ~ "(4 Lst2)(4 Lst1)",
        'trait blocks work properly in for loop';
 }
+
+# vim: ft=perl6

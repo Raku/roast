@@ -11,3 +11,5 @@ $str ~~ m/oo/;
 eval_dies_ok('$str.pos', 'Str.pos superseeded by $/.to');
 
 is($/.to, 3, '$/.to works');
+
+# vim: ft=perl6

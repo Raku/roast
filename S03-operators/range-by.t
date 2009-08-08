@@ -20,3 +20,5 @@ is ~(2..0 :by(-.5)), '2 1.5 1 0.5 0', ':by(-.5) on numeric range';
 is ~('c'..'a' :by(-.5)), 'c b b a a', ':by(-.5) on char range';
 
 is ~('a'..'f' :by(1.6)), 'a b d e',  ':by(1.6) on char range';
+
+# vim: ft=perl6

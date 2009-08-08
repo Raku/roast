@@ -64,3 +64,5 @@ is($s.lc.ucfirst.rindex("w"), 6, ".lc.ucfirst.rindex");
 
 # rindex on non-strings
 ok 3459.rindex(5) == 2, 'rindex on integers';
+
+# vim: ft=perl6

@@ -71,3 +71,5 @@ ok(!defined($foo), 'undefine $foo works');
 my %a = (a => 1);
 ok defined(%a{"a"}),        "defined on a hash with parens (1)";
 ok !defined(%a{"b"}),       "defined on a hash with parens (2)";
+
+# vim: ft=perl6

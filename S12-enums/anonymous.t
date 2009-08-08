@@ -15,3 +15,5 @@ is %e<ook?>,      2, 'anonymous enum created correctly';
 my %e1 = enum <foo>;
 is %e1.keys.elems, 1, 'single-value anonymous enum created correct sized hash';
 is %e1<foo>,       0, 'single-value anonymous enum created correctly';
+
+# vim: ft=perl6

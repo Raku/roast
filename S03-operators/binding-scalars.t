@@ -130,3 +130,5 @@ plan 28;
   #?pugs todo
   ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
 }
+
+# vim: ft=perl6

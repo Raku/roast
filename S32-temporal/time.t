@@ -184,3 +184,5 @@ ok(is_dt({ my $str = localtime() }()), 'localtime(), scalar context');
     #                    /,
     #            'gmtime(), scalar context');
 }
+
+# vim: ft=perl6

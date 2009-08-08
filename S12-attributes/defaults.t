@@ -101,3 +101,5 @@ eval 'class Foo {
 
     is try { $foo.self_in_code }, "echo", "self is the object being initialized";
 }
+
+# vim: ft=perl6

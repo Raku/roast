@@ -90,3 +90,5 @@ is(@t[0], 100,             'array attribute initialized/works');
 is(@t[1], 200,             'array attribute initialized/works');
 $bar.bar[2] = 300;
 is($bar.bar[2], 300,       'array attribute initialized/works');
+
+# vim: ft=perl6

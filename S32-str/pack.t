@@ -1985,3 +1985,5 @@ is(unpack('c'), 65, "one-arg unpack (change #18751)"); # defaulting to $_
 
 =end pod
 
+
+# vim: ft=perl6

@@ -14,3 +14,5 @@ my @a = (1, 2);
 ok(@a[0] < @a[1], 'comparing array values');
 ok(@a[0] <= @a[1], 'comparing array values');
 is(@a[0] <=> @a[1], -1, 'comparing array values');
+
+# vim: ft=perl6

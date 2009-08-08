@@ -30,3 +30,5 @@ ok($unichar ~~ m/^<.>$/, 'Unicode');
 
 }
 
+
+# vim: ft=perl6

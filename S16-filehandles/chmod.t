@@ -101,3 +101,5 @@ ok(try { "nonesuch" ~~ :!e }, "~~:!e syntax works");
 eval q{
     ok(try { "nonesuch".:!e }, ".:!e syntax works");
 }
+
+# vim: ft=perl6

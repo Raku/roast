@@ -84,3 +84,5 @@ do {
     ok(not defined eval '4 !',  "Whitespace not allowed before user-defined postfix");
 }
 
+
+# vim: ft=perl6

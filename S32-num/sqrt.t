@@ -33,3 +33,5 @@ is_approx(sqrt(-1 +0i), 1i, 'got the square root of -1+0i');
 
 is_approx(sqrt(1i), (1+1i)/sqrt(2), 'got the square root of 1i');
 is_approx(sqrt(-1i), (1-1i)/sqrt(2), 'got the square root of -1i');
+
+# vim: ft=perl6

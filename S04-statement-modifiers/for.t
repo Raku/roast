@@ -90,3 +90,5 @@ plan 14;
     is "$!", $errmsg, 'error for two spaces is the same as one space';
     ok "$!" ~~ /\b say \b/, 'error message is for "say"';
 }
+
+# vim: ft=perl6

@@ -39,3 +39,5 @@ plan 10;
     is "%hash{'b'}",  "b",  'can quote hash indexes in interpolations 1';
     is "%hash{"b"}",  "b",  'can quote hash indexes in interpolations 2';
 }
+
+# vim: ft=perl6

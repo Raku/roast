@@ -59,3 +59,5 @@ is @attrs[0].name, '$!c',       'first element is attribute desriptor';
 ok @attrs[1] ~~ Array,          'second element is array';
 is @attrs[1][0].name, '$!b',    'can look into second element array to find next attribute';
 is @attrs[1][1][0].name, '$!a', 'can look deeper to find attribute beyond that';
+
+# vim: ft=perl6

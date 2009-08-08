@@ -39,3 +39,5 @@ ok($foo == 0,      "Undef == 0");
 ok(@foo[0] == 0,   "Array undef == 0");
 
 # XXX: need tests for coercion string and numeric coercions
+
+# vim: ft=perl6

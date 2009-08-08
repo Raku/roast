@@ -149,3 +149,5 @@ class TestObj { has $!a }
     ok (1 =:= 2) ~~ Failure, 'misuse of =:= is failure (!=)';
     ok (1 =:= 1) ~~ Failure, 'misuse of =:= is failure (even when ==)';
 }
+
+# vim: ft=perl6

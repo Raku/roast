@@ -120,3 +120,5 @@ $my_B.read_from_A();
 
 my $my_C = C.new();
 $my_C.read_from_A();
+
+# vim: ft=perl6

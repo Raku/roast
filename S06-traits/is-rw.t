@@ -40,3 +40,5 @@ plan 6;
 }
 
 # for ... -> ... is rw {...} already tested for in t/statements/for.t.
+
+# vim: ft=perl6

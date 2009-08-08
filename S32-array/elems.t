@@ -79,3 +79,5 @@ plan 13;
 {
   is (elems ([1,2,3,4],)), 1, "elems ([1,2,3,4],) should return 1";
 }
+
+# vim: ft=perl6

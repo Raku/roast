@@ -17,3 +17,5 @@ is(A.h(), 42, '>1 level deep inheritance works on class methods');
 is(D.h(), 42, 'multiple inheritance works on class methods (1)');
 is(D.i(), 108, 'multiple inheritance works on class methods (2)');
 is(D.f(), 2, 'method from class is selected over inherited method');
+
+# vim: ft=perl6

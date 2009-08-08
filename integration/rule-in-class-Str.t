@@ -45,3 +45,5 @@ augment class Str {
 }
 
 is(Str.new.meth3(),"worked",'m:P5/[a]/ in method in Str');
+
+# vim: ft=perl6

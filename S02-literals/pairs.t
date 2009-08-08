@@ -136,3 +136,5 @@ sub f9 (:$bar!) { WHAT($bar) }
     dies_ok { f9($arrayref => 42) },
         "variables cannot be keys of syntactical pairs (3)";
 }
+
+# vim: ft=perl6

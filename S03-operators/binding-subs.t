@@ -111,3 +111,5 @@ constant?
 }
 
 =end discussion
+
+# vim: ft=perl6

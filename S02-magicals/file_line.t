@@ -16,3 +16,5 @@ ok($?FILE eq ('t/spec/S02-magicals/file_line.t' | 't\\spec\\S02-magicals\\file_l
 # NOTE:
 # above is a junction hack for Unix and Win32 file
 # paths until the FileSpec hack is working - Stevan
+
+# vim: ft=perl6

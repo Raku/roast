@@ -144,3 +144,5 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 #?pugs todo 'bug'
 is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
 is(('hi').join(':'), 'hi', '("foo").join(":") should be the same as join(":", "foo")');
+
+# vim: ft=perl6

@@ -177,3 +177,5 @@ Larry ruled that as erroneous.
 }
 
 =end pod
+
+# vim: ft=perl6

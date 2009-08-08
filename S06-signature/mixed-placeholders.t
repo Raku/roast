@@ -22,3 +22,5 @@ sub t {
 }
 
 t(1, 2, 3, :moritz(4), :TimToady(5), :DietCoke(6), 7, 8, 9, :foo(10), :bar(11), :baz(12));
+
+# vim: ft=perl6

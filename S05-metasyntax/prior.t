@@ -42,3 +42,5 @@ is ~$/, 'BA', 'matched all we wanted';
 
 ok( 'A' !~~ m/<.prior>/, 'prior target updated');
 
+
+# vim: ft=perl6

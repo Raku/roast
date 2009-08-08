@@ -17,3 +17,5 @@ is ~%ret.sort, "a\tA b\tB c\tC", "=> works in a map block";
 
 %ret = map { $_, uc $_ }, split "", $text;
 is ~%ret.sort, "a\tA b\tB c\tC", "map called with function return values works";
+
+# vim: ft=perl6

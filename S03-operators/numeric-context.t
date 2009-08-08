@@ -71,3 +71,5 @@ is(+(~(-Inf)), -Inf, "'-Inf' is -Inf");
     lives_ok { $x = "4" - 3 }, 'lives: Num $x = "4" - 3';
     is( $x, 1, 'works: Num $x = "4" - 3' );
 }
+
+# vim: ft=perl6

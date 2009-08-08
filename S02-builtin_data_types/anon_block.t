@@ -125,3 +125,5 @@ is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');
 dies_ok({(sub { { $^x } }).()}, 'implicit params become errors');
 isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
+
+# vim: ft=perl6

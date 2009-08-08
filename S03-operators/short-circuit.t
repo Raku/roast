@@ -167,3 +167,5 @@ plan 36;
     #?pugs eval 'short circuiting'
     is c($b), 2, 'shortcircuit idiom given undef works';
 }
+
+# vim: ft=perl6

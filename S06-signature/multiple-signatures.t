@@ -57,3 +57,5 @@ plan 11;
 # common sense
 eval_dies_ok q[ only sub y (Int $x, Str $y) | (Str $x, Int $y) ],
     'and "only" sub can not have multiple signatures';
+
+# vim: ft=perl6

@@ -37,3 +37,5 @@ is $val, 'Baz', '... this should be "Baz"';
 my $val2;
 lives_ok { $val2 = $foo.call_bar_indirectly() }, '... this should work';
 is($val2, 'Baz', '... this should be "Baz"');
+
+# vim: ft=perl6

@@ -422,3 +422,5 @@ sub junction_diff(Object $this, Object $that) {
     }
     is rt63686(), 'happiness', 'for loop over junction in sub';
 }
+
+# vim: ft=perl6

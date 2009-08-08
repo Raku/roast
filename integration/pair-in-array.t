@@ -16,3 +16,5 @@ sub catWhat (*@a) { [~] map -> $v { WHAT($v) }, @a; }
 is catWhat(@p1), 'Pair()', 'array of single Pair holds a Pair';
 is catWhat(@p2), 'Pair()Pair()', 'array of Pairs holds Pairs';
 is catWhat(@p3), 'Pair()Int()', 'array of Pair and others holds a Pair';
+
+# vim: ft=perl6

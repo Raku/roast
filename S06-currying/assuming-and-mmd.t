@@ -16,3 +16,5 @@ is &testsub(23,      42), "Int", "basic MMD works with subrefs (2)";
 #?pugs todo 'bug'
 is &testsub.assuming("a_str")(42), "Str", "basic MMD works with assuming (1)";
 is &testsub.assuming(23)\   .(42), "Int", "basic MMD works with assuming (2)";
+
+# vim: ft=perl6

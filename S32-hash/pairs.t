@@ -80,3 +80,5 @@ Basic C<pairs> tests, see S32::Containers.
 
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
 }
+
+# vim: ft=perl6

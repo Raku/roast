@@ -141,3 +141,5 @@ Basic tests for the trim() builtin
     $foo .= trim_end;
     is($foo, "\n foo", 'our variable can be trimmed multiple times');
 }
+
+# vim: ft=perl6

@@ -28,3 +28,5 @@ class Bar is rw {
     is $bar.readwrite_attr, 1,
         "'is rw' on the class declaration applies to all attributes (2)";
 }
+
+# vim: ft=perl6

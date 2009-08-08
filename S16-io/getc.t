@@ -28,3 +28,5 @@ my $tmpfile = "temp-test" ~ nonce();
 }
 
 END { unlink $tmpfile }
+
+# vim: ft=perl6

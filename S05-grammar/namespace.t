@@ -49,3 +49,5 @@ is("foo" ~~ &Foo::Bar::foo, 'foo', 'regex in a namespace callable');
 grammar Grammar::Deep { token foo { 'foo' }; }
 grammar GrammarShallow { token TOP { <Grammar::Deep::foo> 'bar' }; }
 ok('foobar' ~~ /<GrammarShallow::TOP>/, 'regex can call regex in nested namespace');
+
+# vim: ft=perl6

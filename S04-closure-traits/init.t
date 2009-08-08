@@ -70,3 +70,5 @@ is $str, 'io', 'INIT {} always runs before the mainline code runs';
 		is $var, 1, "INIT has run exactly once ($_ time)";
 	}
 }
+
+# vim: ft=perl6

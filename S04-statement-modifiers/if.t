@@ -73,3 +73,5 @@ plan 12;
     ok (42 if 0) ~~ undef, '"$something if 0" is Nil - (undef)';
     ok (42 if 0) ~~ (),    '"$something if 0" is Nil - (empty list)';
 }
+
+# vim: ft=perl6

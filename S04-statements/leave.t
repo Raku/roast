@@ -203,3 +203,5 @@ eval q[[
 
   is $sub(), 1042, 'leave() works with an internal do label';
 ]];
+
+# vim: ft=perl6

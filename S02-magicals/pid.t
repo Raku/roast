@@ -39,3 +39,5 @@ $child_pid .= chomp;
 unlink $tempfile;
 
 ok $*PID ne $child_pid, "My PID differs from the child pid ($*PID != $child_pid)";
+
+# vim: ft=perl6

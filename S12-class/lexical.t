@@ -16,3 +16,5 @@ eval_lives_ok 'my class A {}', 'my class parses OK';
 #?rakudo todo 'RT #61108'
 eval_lives_ok '{ my class B {} } { my class B {} }',
               'declare classes with the same name in two scopes.';
+
+# vim: ft=perl6

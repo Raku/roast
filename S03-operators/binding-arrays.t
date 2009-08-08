@@ -235,3 +235,5 @@ plan 47;
     # <pmichaud> you should get a "Int does not do Positional role"
     #            exception or something like that.
 }
+
+# vim: ft=perl6

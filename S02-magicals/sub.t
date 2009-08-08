@@ -27,3 +27,5 @@ is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' 
 
 my $baz = try { &?ROUTINE };
 ok(defined($baz), '&?ROUTINE is defined for the MAIN routine');
+
+# vim: ft=perl6

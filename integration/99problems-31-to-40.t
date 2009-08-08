@@ -261,3 +261,5 @@ plan 67;
     
     is goldbach(28), (5, 23), "Goldbach works.";
 }
+
+# vim: ft=perl6

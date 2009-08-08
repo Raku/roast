@@ -205,3 +205,5 @@ plan 29;
     #?rakudo todo 'RT #63430'
     is $catches, 0, 'CATCH block never invoked';
 }
+
+# vim: ft=perl6

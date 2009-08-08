@@ -338,3 +338,5 @@ plan 43;
         "rebinding to some other value destroys the previous binding (5)";
 }
 
+
+# vim: ft=perl6

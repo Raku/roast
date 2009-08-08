@@ -104,3 +104,5 @@ for <first second> {
     is $was_in_start, 1,
         'our START { ...; undef } block was invoked exactly once';
 }
+
+# vim: ft=perl6

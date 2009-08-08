@@ -39,3 +39,5 @@ for (1 .. 6) {
     ok((1 ^ 2 ^ 3) == $j.eigenstates.pick, 'it is always at least one');
     ok((1 | 2 | 3) == $j.eigenstates.pick, 'it is always one of them');
 }
+
+# vim: ft=perl6

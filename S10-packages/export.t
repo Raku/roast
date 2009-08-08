@@ -32,3 +32,5 @@ sub moose {
 moose();
 moose();
 moose();
+
+# vim: ft=perl6

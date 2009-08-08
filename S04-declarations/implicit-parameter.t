@@ -53,3 +53,5 @@ plan 18;
 {
     eval_dies_ok('sub { $^foo }.(42)',  'Placeholders not allowed in sub()');
 }
+
+# vim: ft=perl6

@@ -48,3 +48,5 @@ while shift [A.new( :b(0) )] -> $a {
     is($x.b, 1, 'however, in the clone it was changed');
     last;
 }
+
+# vim: ft=perl6

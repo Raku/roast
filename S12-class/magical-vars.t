@@ -124,3 +124,5 @@ class SimpleClass does Bar {}
 {
   eval_dies_ok 'self' , "there is no self outside of a method";
 }
+
+# vim: ft=perl6

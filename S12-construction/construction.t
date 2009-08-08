@@ -76,3 +76,5 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     lives_ok { $a.env = { foo => "bar" } }, 'assign to attr of .CREATEd class';
     is $a.env<foo>, 'bar', 'assignment works';
 }
+
+# vim: ft=perl6

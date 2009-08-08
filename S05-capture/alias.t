@@ -64,3 +64,5 @@ is(~$1, '22', 'Value match' );
 ok("22 <= foo" ~~ m:s/$0=(foo) '=>' (\d+) | $1=(\d+) '<=' $0=(foo) /, 'Pair match');
 is(~$0, 'foo', 'Reverse key match');
 is(~$1, '22', 'Reverse value match');
+
+# vim: ft=perl6

@@ -135,3 +135,5 @@ eval_lives_ok 'class NotAny is Object { }; NotAny.new', 'inheritance from Object
 
 #?rakudo todo 'trying to inherit from a non-existent class'
 eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
+
+# vim: ft=perl6

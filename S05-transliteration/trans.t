@@ -227,3 +227,5 @@ is($_, "X  \t", 'tr/// on $_ with explicit character lists');
 
 # y/// is dead
 eval_dies_ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
+
+# vim: ft=perl6

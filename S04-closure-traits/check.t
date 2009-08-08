@@ -33,3 +33,5 @@ plan 5;
     is $handle(), 'C', 'our CHECK {...} block returned the correct var (2)';
     is $str, 'C', 'our rvalue CHECK {...} block was executed exactly once';
 }
+
+# vim: ft=perl6

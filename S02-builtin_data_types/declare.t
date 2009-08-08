@@ -545,3 +545,5 @@ plan 85;
 # TODO FIXME
 
 
+
+# vim: ft=perl6

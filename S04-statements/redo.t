@@ -108,3 +108,5 @@ plan 10;
     }
     is($sum, 220, "test redo with while");
 }
+
+# vim: ft=perl6

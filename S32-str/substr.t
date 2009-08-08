@@ -366,3 +366,5 @@ sub p (Int $a) {  my $p = $a; return $p }
     is("שיעבוד כבר".substr(4, p(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrPos)).");
 }
 
+
+# vim: ft=perl6

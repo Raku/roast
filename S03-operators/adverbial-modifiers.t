@@ -308,3 +308,5 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
   is (3 zin 4 :x(5)), '3,4,5', '(3 zin 4 :x(5))';
 
 }
+
+# vim: ft=perl6

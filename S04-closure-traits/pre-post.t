@@ -124,3 +124,5 @@ class Another {
 my $pt = Another.new;
 lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
 dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
+
+# vim: ft=perl6

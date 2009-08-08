@@ -114,3 +114,5 @@ ok &baz.does(Callable), 'a rule does Callable';
 macro quux {}
 #?pugs todo 'feature'
 ok &quux.does(Callable), 'a rule does Callable';
+
+# vim: ft=perl6

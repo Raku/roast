@@ -85,3 +85,5 @@ is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.
 #?rakudo 1 skip '.graphs not implemented'
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".graphs, 1, '.graphs on grapheme without precomposite';
 
+
+# vim: ft=perl6

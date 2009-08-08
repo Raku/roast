@@ -21,3 +21,5 @@ plan 4;
     }
 }
 
+
+# vim: ft=perl6

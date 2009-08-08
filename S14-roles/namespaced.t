@@ -23,3 +23,5 @@ class X::Y does A::B {
 
 is(X.new.foo,    'Foo', 'Composing namespaced role to non-namespaced class');
 is(X::Y.new.foo, 'Foo', 'Composing namespaced role to namespaced class');
+
+# vim: ft=perl6

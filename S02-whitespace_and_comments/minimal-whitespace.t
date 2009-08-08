@@ -25,3 +25,5 @@ eval_dies_ok('Thing. new', 'whitespace is not allowed after . after class name')
 my $o = Thing.new;
 eval_dies_ok('$o .whatever(5)', 'whitespace is not allowed before . before method');
 eval_dies_ok('$o. whatever(5)', 'whitespace is not allowed after . before method');
+
+# vim: ft=perl6

@@ -30,3 +30,5 @@ plan 6;
     is $true_pair  ?? 1 !! 0, 1, 'Ternary on a true pair returns first option';
     is $false_pair ?? 1 !! 0, 1, 'Ternary on a false pair returns first option too';
 }
+
+# vim: ft=perl6

@@ -30,3 +30,5 @@ class BarLastCallSame is Foo {
     $o.doit(5);
     is($o.show, 'barint,bar,ret1,ret2,', 'lastcall multimethod/inheritance test');
 }
+
+# vim: ft=perl6

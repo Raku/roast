@@ -7,3 +7,5 @@ plan 1;
 
 ok(eval('regex foo { <[ } > ]> }; 1'),
     "can parse non-backslashed curly and right bracket in cclass");
+
+# vim: ft=perl6

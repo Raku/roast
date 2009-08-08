@@ -103,3 +103,5 @@ sub cand_order(@cands, $instance) {
     #?rakudo skip ':include/:omit together fail'
     is cand_order(@cands, $x), 'D', ':include and :omit together work';
 }
+
+# vim: ft=perl6

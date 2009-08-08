@@ -195,3 +195,5 @@ plan 64;
     is ~(%hash<0 1 2>:kv), "0 42 1  2 23",
         "undefined but existing entries should not be weeded out (4)";
 }
+
+# vim: ft=perl6

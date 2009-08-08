@@ -18,3 +18,5 @@ module Foo {
         is($?MODULE,  'Foo::Bar', '$?MODULE for "module Foo::Bar {}"');
     }
 }
+
+# vim: ft=perl6

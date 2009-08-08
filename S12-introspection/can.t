@@ -88,3 +88,5 @@ my $pup = Puppy.new();
     is $iters, 2,        "subclass had right number of methods found (on proto)";
     is $found, "yapbow", "subclass got right methods called (on proto)";
 }
+
+# vim: ft=perl6

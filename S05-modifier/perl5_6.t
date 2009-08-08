@@ -125,3 +125,5 @@ ok((not ("b\naa\n" ~~ rx:P5/(?m)aa\z/)), 're_tests 909  (1113)');
 is(("b\naa\n" ~~ rx:P5/(?m)aa$/ && $/.from), 2, 're_tests 910/0 (1114)');
 is(("b\naa" ~~ rx:P5/(?m)aa\Z/ && $/.from), 2, 're_tests 911/0 (1115)');
 is(("b\naa" ~~ rx:P5/(?m)aa\z/ && $/.from), 2, 're_tests 912/0 (1116)');
+
+# vim: ft=perl6

@@ -84,3 +84,5 @@ plan 19;
     is [1,2].fmt(), '1 2', 'array .fmt without $fmt';
     is {1=>"a"}.fmt(), "1\ta", 'hash .fmt without $fmt';
 }
+
+# vim: ft=perl6

@@ -54,3 +54,5 @@ plan 5;
 =begin DATA
 hello, world!
 =end DATA
+
+# vim: ft=perl6

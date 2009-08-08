@@ -61,3 +61,5 @@ is(
 ok($z, 'eval was *really* ok');
 is($y, $expected, 'fmt and code interpolation behave well');
 
+
+# vim: ft=perl6

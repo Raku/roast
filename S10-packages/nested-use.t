@@ -45,3 +45,5 @@ my $foobar = ::FooBar.new();
     }, '... the Foo::foo method resolved';
     is($val, 'foo', '... the Foo::foo method resolved');
 }
+
+# vim: ft=perl6

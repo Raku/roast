@@ -187,3 +187,5 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 
 # For tests involving :by, see t/spec/S03-operators/range-by.t
 # and t/operators/adverbial_modifiers.t
+
+# vim: ft=perl6

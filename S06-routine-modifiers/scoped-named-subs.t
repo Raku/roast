@@ -47,3 +47,5 @@ is eval('my Num List sub f () { return () }; (f(), "a")'), ['a'],
 eval_dies_ok
     'my Num List sub f () { ("A") }; f()',
     'implicit return of list with wrong type dies';
+
+# vim: ft=perl6

@@ -15,3 +15,5 @@ ok 1, "Before the =END Block";
 
 ok 2, "Afer the end block";
 
+
+# vim: ft=perl6

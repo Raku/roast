@@ -101,3 +101,5 @@ class MagicSub {
     $mv.varies = 13;
     is($mv.varies, 16, "attribute with overridden mutator");
 }
+
+# vim: ft=perl6

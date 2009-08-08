@@ -34,3 +34,5 @@ plan 4;
     $a++ until shift(@a) eq 'c';
     is($a, 2, "post until");
 }
+
+# vim: ft=perl6

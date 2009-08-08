@@ -85,3 +85,5 @@ eval_dies_ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
     dies_ok { 'x' ~~ / <No::Such::Rule> / },
             'match against No::Such::Rule dies';
 }
+
+# vim: ft=perl6

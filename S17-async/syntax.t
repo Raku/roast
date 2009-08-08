@@ -35,3 +35,5 @@ sub e {
     my $x; return ++$x;
 }
 ok contend { e(); },'method <contend> known';
+
+# vim: ft=perl6

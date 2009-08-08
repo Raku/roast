@@ -38,3 +38,5 @@ is($r, '', 'p5chop on empty array returns empty string');
 
 
 
+
+# vim: ft=perl6

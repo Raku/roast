@@ -28,3 +28,5 @@ plan 12;
     is( gaz(1), 'Foo::gaz2', 'Foo::gaz($x) is the sub we expect' );
     
 }
+
+# vim: ft=perl6

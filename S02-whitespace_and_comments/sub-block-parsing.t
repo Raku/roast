@@ -16,3 +16,5 @@ plan 2;
 
 ok(sub { 42 }(), 'sub {...} works'); # TODO: clarify
 ok(sub{ 42 }(),  'sub{...} works'); # TODO: clarify
+
+# vim: ft=perl6

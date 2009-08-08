@@ -203,3 +203,5 @@ plan 18 + 2*@tests;
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     # TODO: check that eval( RT67790.HOW.perl ) 'is' RT67790.HOW
 }
+
+# vim: ft=perl6

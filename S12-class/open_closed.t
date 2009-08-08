@@ -60,3 +60,5 @@ class Qux {method g {'called Qux.g'}}
 # try a few things that come to mind to make sure it's not lurking
 eval_dies_ok('class ClosedAlpha is closed {}', '"is closed" is not implemented');
 eval_dies_ok('class ClosedBeta  is final  {}', '"is final"  is not implemented');
+
+# vim: ft=perl6

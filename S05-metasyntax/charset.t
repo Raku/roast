@@ -62,3 +62,5 @@ eval_lives_ok( '/<[\x10000..\xEFFFF]>/',
                'large \\x char spec in regex (RT #67122)' );
 
 }
+
+# vim: ft=perl6

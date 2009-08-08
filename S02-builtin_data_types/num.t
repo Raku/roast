@@ -152,3 +152,5 @@ is(4_2.0_1, 42.01,  'single underscores are ok');
 
 is 0_1, 1, "0_1 is parsed as 0d1";
 is +^1, -2, '+^1 == -2 as promised';
+
+# vim: ft=perl6

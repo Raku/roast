@@ -286,3 +286,5 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
     is $x, 42, 'given tests 1-arg subs for truth';
 }
 
+
+# vim: ft=perl6

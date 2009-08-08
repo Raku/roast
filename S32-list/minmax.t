@@ -93,3 +93,5 @@ is @array.min, -1, "min of strings read from a file works";
 is @array.max, 28, "max of strings read from a file works";
 is @array.min, -80, "min of strings read from a file works";
 
+
+# vim: ft=perl6

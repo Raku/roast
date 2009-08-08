@@ -18,3 +18,5 @@ ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname
 # above is a junction hack for Unix and Win32 file
 # paths until the FileSpec hack is working - Stevan
 # changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
+
+# vim: ft=perl6

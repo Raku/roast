@@ -63,3 +63,5 @@ sub foo ($baz is rw) {
 sub bar ($baz is readonly) {
     # readonly signature, should it autovivify?
 }
+
+# vim: ft=perl6

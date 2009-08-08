@@ -49,3 +49,5 @@ my &foo_c ::= { $^a + 5 };
 is foo_c(1), 6, "Testing the value for placeholder(Compile-time binding)";
 }
 
+
+# vim: ft=perl6

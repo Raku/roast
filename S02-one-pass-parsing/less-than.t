@@ -28,3 +28,5 @@ ok eval('?< foo bar >'),            "?<...> is parsed correctly";
 is eval('~(< foo bar >)'), "foo bar", "~(<...>) is parsed correctly";
 is eval('+(< foo bar >)'),         2, "+(<...>) is parsed correctly";
 ok eval('?(< foo bar >)'),            "?(<...>) is parsed correctly";
+
+# vim: ft=perl6

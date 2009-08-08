@@ -134,3 +134,5 @@ is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){0,3}d/ && $0), "c,", 're_tests 1210/1 (14
 ok(("" ~~ rx:P5/(?i)/), 're_tests 1212  (1416)');
 #?rakudo skip '(?m) not implemented'
 ok(("a\nxb\n" ~~ rx:P5/(?m)(?!\A)x/), 're_tests 1214  (1418)');
+
+# vim: ft=perl6

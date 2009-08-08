@@ -37,3 +37,5 @@ plan 6;
         is @x, @y, "unless expr on false cond";
 }
 
+
+# vim: ft=perl6

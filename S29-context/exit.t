@@ -9,3 +9,5 @@ plan 1;
 pass;
 exit;
 ok 0, "exit() didn't work";
+
+# vim: ft=perl6

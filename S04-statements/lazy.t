@@ -58,3 +58,5 @@ plan 15;
 
 # Arguably, we should remove the $was_in_lazy tests, as it doesn't really
 # matter when the lazy {...} block is actually executed.
+
+# vim: ft=perl6

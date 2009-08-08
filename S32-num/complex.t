@@ -84,3 +84,5 @@ my $pi = 3.141592653589793238;
     is_approx(4.unpolar($pi),       -4,    "4.unpolar(pi)   == -4");
 }
 
+
+# vim: ft=perl6

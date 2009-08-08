@@ -46,3 +46,5 @@ ok( ! &foo,
              "can instantiate class that's loaded from inside another class";
 
 }
+
+# vim: ft=perl6

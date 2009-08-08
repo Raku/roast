@@ -37,3 +37,5 @@ lives_ok( {
     my $err = $!;
     $err.test;
 }, "Accessing Perl5 method doesn't die");
+
+# vim: ft=perl6

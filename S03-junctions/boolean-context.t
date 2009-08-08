@@ -66,3 +66,5 @@ ok true(Bool::True & Bool::False) ==  Bool::False, $message1;
 ok true(Bool::True & Bool::False) !~~ Junction,    $message2;
 ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
 ok not(Bool::True & Bool::False)  !~~ Junction,    $message2;
+
+# vim: ft=perl6

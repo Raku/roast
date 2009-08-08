@@ -24,3 +24,5 @@ plan 4;
     is $x, 9, 'lvalue expressions are only evaluated once';
 }
 
+
+# vim: ft=perl6

@@ -26,3 +26,5 @@ proto foo ($any) { ":)" }
 multi foo ($foo where { $_ eq "foo"}) { $foo }
 is foo("foo"), "foo", "when we have a single candidate with a constraint, it's enforced";
 is foo("bar"), ":)",  "proto called when single constraint causes failed dispatch";
+
+# vim: ft=perl6

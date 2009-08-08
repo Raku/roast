@@ -98,3 +98,5 @@ sub test_gmtime( Num $t is copy ) {
     $isdst = 0;
     return ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
 }
+
+# vim: ft=perl6

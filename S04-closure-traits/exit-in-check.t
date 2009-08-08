@@ -50,3 +50,5 @@ CHECK {
   # ...and exit, which does _not_ call END.
   exit;
 }
+
+# vim: ft=perl6

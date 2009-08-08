@@ -97,3 +97,5 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 #?rakudo todo 'RT #64220'
 eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
+
+# vim: ft=perl6

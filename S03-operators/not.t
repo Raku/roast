@@ -28,3 +28,5 @@ is(not Bool::True, Bool::False, "'Bool::True' is not 'Bool::False'");
 is(not Bool::True, False,       "'Bool::True' is not 'False'");
 is(not True, False,             "'True' is not 'False'");
 is(not True, Bool::False,       "'True' is not 'Bool::False'");
+
+# vim: ft=perl6

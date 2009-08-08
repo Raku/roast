@@ -35,3 +35,5 @@ lives_ok { $o = GrandChild.new( Parent{ :x<5> }, Child{ :y(4) }) },
          'can instantiate class with explicit specification of parent attrib (many parents, other order)';
 is $o.y, 4, '... worked for the class Child (other order)';
 is $o.x, 5, '... worked for the class Parent (other order)';
+
+# vim: ft=perl6

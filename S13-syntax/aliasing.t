@@ -29,3 +29,5 @@ class Baz {
   }, "calling an aliased method worked";
   is $ret, 42, "the aliased method returned the right thing";
 }
+
+# vim: ft=perl6

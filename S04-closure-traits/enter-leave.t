@@ -91,3 +91,5 @@ plan 11;
         $a;
     }), 1, 'leave triggers LEAVE {}';
 }
+
+# vim: ft=perl6

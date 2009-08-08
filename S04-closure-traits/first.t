@@ -43,3 +43,5 @@ plan 4;
     }
     is $str, 'f1f2ee', 'FIRST {} ran before ENTER {}';
 }
+
+# vim: ft=perl6

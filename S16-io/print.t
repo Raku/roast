@@ -60,3 +60,5 @@ print "1..12\n";
 }
 
 
+
+# vim: ft=perl6

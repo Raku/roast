@@ -73,3 +73,5 @@ sub lvalue_test2() is rw {
     is lvalue_test2(),               16, "getting var through Proxy (5)";
     is      $was_inside,              3, "lvalue_test2() was called (5)";
 }
+
+# vim: ft=perl6

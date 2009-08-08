@@ -85,3 +85,5 @@ class BarCallWithInt is Foo {
     $o.doit(5);
     is($o.show, 'barint,fooint,ret2,', 'callwith(42) multimethod/inheritance test');
 }
+
+# vim: ft=perl6

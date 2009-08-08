@@ -954,3 +954,5 @@ is_approx( cotanh(:x(1)), 1/tanh(1) );
 # asech
 is_approx( asech(:x(1)), 0 );
 }
+
+# vim: ft=perl6

@@ -68,3 +68,5 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
 }
 
 eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (RT #66840)';
+
+# vim: ft=perl6

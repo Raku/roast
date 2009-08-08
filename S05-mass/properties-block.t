@@ -1124,3 +1124,5 @@ ok("\c[PARALLEL WITH HORIZONTAL STROKE]"  ~~ m/^<-isInYiSyllables>$/, q{Match un
 ok("\c[PARALLEL WITH HORIZONTAL STROKE]\c[YI SYLLABLE IT]" ~~ m/<.isInYiSyllables>/, q{Match unanchored <isInYiSyllables>} );
 
 
+
+# vim: ft=perl6

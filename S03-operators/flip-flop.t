@@ -170,3 +170,5 @@ sub always_true  { 1 }
     ok do { my sub foo ($x) { try { $x ff 0 } }; if foo(0) || !foo(1) || !foo(0) { die }},
     	"all sub invocations share the same ff-state";
 }
+
+# vim: ft=perl6

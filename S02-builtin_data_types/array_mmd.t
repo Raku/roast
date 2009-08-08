@@ -46,3 +46,5 @@ my $here;
     #?pugs todo 'bug'
     is $here, 1, "slice store was redefined";
 }
+
+# vim: ft=perl6

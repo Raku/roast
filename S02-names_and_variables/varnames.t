@@ -15,3 +15,5 @@ eval_lives_ok 'my $/', 'as does $/';
 eval_dies_ok 'my $f!ao = "beh";', "but normal varnames can't have ! in their name";
 eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their names either";
 
+
+# vim: ft=perl6

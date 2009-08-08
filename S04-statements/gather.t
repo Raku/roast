@@ -136,3 +136,5 @@ plan 14;
     };
     is ~@list, "2 4 6 8 10", "gather with nested loop";
 }
+
+# vim: ft=perl6

@@ -25,3 +25,5 @@ plan 5;
 	ok $rv ~~ undef, "Testing for value of contextual variables that never existed.";
 }
 
+
+# vim: ft=perl6

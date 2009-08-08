@@ -63,3 +63,5 @@ is ~(0.capitalize), ~0, '.lcfirst on Int';
         ok eval($str), $str;
     }
 }
+
+# vim: ft=perl6

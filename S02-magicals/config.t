@@ -27,3 +27,5 @@ my $osnames = any <darwin linux FreeBSD MSWin32 mingw msys cygwin browser>;
 ok $?OS eq $osnames, "we know of the OS we were compiled in";
 
 ok $*OS eq $osnames, "we know of the OS we are running under";
+
+# vim: ft=perl6

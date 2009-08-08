@@ -36,3 +36,5 @@ BEGIN { $hist ~= 'B ' }
 BEGIN { $hist ~= 'b ' }
 
 is $hist, 'B b c C I i S s ', 'running order of multiple closure traits';
+
+# vim: ft=perl6

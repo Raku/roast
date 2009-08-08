@@ -35,3 +35,5 @@ plan 5;
     is $_, 10, 'outer $_ did not get updated in lhs of given';
     is $i, 13, 'postfix given worked';
 }
+
+# vim: ft=perl6

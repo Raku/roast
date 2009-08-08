@@ -67,3 +67,5 @@ my @got      = eval $got;
 is @got, @expected, "-e '' does not eat a following argument";
 
 unlink $out_fn;
+
+# vim: ft=perl6

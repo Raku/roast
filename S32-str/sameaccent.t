@@ -18,3 +18,5 @@ is('ȺɃƀ'.sameaccent('ƗƗƗ'), 'ȺɃƀ', 'sameaccent without a change (accent
 
 is('text'.sameaccent('this is longer'), 'text', 'sameaccent with longer base string');
 is('ABCD'.sameaccent('ƗƗ'), 'ȺɃCD', 'sameaccent with longer source string');
+
+# vim: ft=perl6

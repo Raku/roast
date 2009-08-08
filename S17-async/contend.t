@@ -85,3 +85,5 @@ http://irclog.perlgeek.de/perl6/2008-02-09
 	and most of the (non)-locking will be handled by STM
 
 =end comment
+
+# vim: ft=perl6

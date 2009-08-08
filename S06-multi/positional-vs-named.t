@@ -64,3 +64,5 @@ is( wind('c', her => 3),      'pos c her 3',       'pos, named her');
 is( wind('d', 'e'),           'pos d pos e',       'pos, pos');
 is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 
+
+# vim: ft=perl6

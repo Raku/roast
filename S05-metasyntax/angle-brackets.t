@@ -278,3 +278,5 @@ character classes), and those are referenced at the correct spot.
    is('abc!'  ~~ /abc>>/,   'abc', 'right word boundary (\W character)');
    is('!abc!' ~~ /<<abc>>/, 'abc', 'both word boundaries (\W character)');
 }
+
+# vim: ft=perl6

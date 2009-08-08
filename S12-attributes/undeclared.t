@@ -47,3 +47,5 @@ dies_ok { role R { method r { $!r := 1 }};class S does R{ }; S.new.r; },
 dies_ok { class T { method t { $!t := 1 }}; ::T.new.t; },
     "Test Undeclared private attribute binding from a class";
 
+
+# vim: ft=perl6

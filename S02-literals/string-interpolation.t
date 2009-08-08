@@ -27,3 +27,5 @@ plan 8;
     ok "$a" ~~ Str, '"$a" results in a Str';
     ok "{3}" ~~ Str, '"{3}" results in a Str';
 }
+
+# vim: ft=perl6

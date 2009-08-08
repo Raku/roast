@@ -287,3 +287,5 @@ plan 31;
         'We should be able to remove elements from a list';
     is @array, <a c d>, '... and have the correct list as the result';
 }
+
+# vim: ft=perl6

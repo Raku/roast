@@ -54,3 +54,5 @@ class C {
     ok('aaa' ~~ /<C::D::test>/,    'could call rule in nested grammar');
     ok(!('bbb' ~~ /<C::D::test>/), 'rule in nested grammar behaves correctly');
 }
+
+# vim: ft=perl6

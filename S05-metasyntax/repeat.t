@@ -47,3 +47,5 @@ eval_dies_ok('"foo" ~~ m/o{1,}/}',  'P5-style {1,} range mistake is caught');
 is(~('foo,bar,baz,' ~~ m/[<alpha>+] ** ','/), 'foo,bar,baz', '** with a term worked');
 is(~('foo,bar,baz,' ~~ m/[<alpha>+] **? ','/), 'foo', '**? with a term worked');
 is(~('foo, bar,' ~~ m/[<alpha>+] **[','\s*]/), 'foo, bar', '** with a more complex term');
+
+# vim: ft=perl6

@@ -122,3 +122,5 @@ isa_ok($rule, 'Regex');
 
 ok("hello world" ~~ $rule, '... applying rule object returns true');
 ok(!("helloworld" ~~ $rule), '... applying rule object returns false (correctly)');
+
+# vim: ft=perl6

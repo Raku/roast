@@ -64,3 +64,5 @@ ok eval q{@threads[3].suspend},' send him back to a waiting room..';
 #?pugs todo 'unimpl'
 ok eval q{@threads[3].resume},'... now he is back';
 
+
+# vim: ft=perl6

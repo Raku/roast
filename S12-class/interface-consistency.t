@@ -30,3 +30,5 @@ class Bar is Foo is hidden {
 dies_ok { Bar.new.m1(1, :x<1>, :y<2>) },  'is hidden means no implict *%_';
 ok &Bar::m1.signature.perl !~~ /'*%_'/,   '*%_ does not show up in .perl of the Signature';
 
+
+# vim: ft=perl6

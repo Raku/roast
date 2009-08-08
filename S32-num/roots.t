@@ -122,3 +122,5 @@ sub has_approx($n, @list) {
     ok(has_approx(exp(1/3*(log(8) + 5i*pi)),@l), 'exp(1/3*(log(8) + 5i*pi)) is a cube root of -8');
 }
 
+
+# vim: ft=perl6

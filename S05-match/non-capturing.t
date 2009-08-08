@@ -40,3 +40,5 @@ ok(!defined($/[0]), "Correctly didn't capture 2");
     ok("abcabcabcabcd" ~~ m/<.once>/, 'Once match');
 }
 
+
+# vim: ft=perl6

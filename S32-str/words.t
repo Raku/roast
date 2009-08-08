@@ -30,3 +30,5 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     is @list.join('|'), 'split|this|string', 'Str.words';
 }
 
+
+# vim: ft=perl6

@@ -310,3 +310,5 @@ my @array2 = ("test", 1, undef);
     dies_ok({push @arr, 's'}, 'type constraints on my Type @arr[num] works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr[num]  works (2)');
 }
+
+# vim: ft=perl6

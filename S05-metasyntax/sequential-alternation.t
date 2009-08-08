@@ -33,3 +33,5 @@ plan 10;
     ok $str ~~ m/ ||@list /;
     is ~$/,  'xx', 'first ||@list alternative matches';
 }
+
+# vim: ft=perl6

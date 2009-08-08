@@ -32,3 +32,5 @@ plan 8;
     is(+@d, 1, 'Array length, nested (), outer []s');
     is(+$d, 4, 'Array object length, nested (), outer []s');
 }
+
+# vim: ft=perl6

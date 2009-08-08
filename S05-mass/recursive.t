@@ -47,3 +47,5 @@ is $/, "x", 'with "x"';
 is $/.from, 0, 'from 0';
 is $/.to, 1, 'to 1';
 
+
+# vim: ft=perl6

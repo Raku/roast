@@ -104,3 +104,5 @@ plan 24;
     #?rakudo todo 'RT #67852'
     lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
 }
+
+# vim: ft=perl6

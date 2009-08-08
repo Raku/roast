@@ -26,3 +26,5 @@ ok((1 p5=> 2) !~~ Pair, 'p5=> does not construct a Pair');
 # We'll test that it doesn't quote the LHS.
 
 isnt(eval('my @arr = abc p5=> def;'), <abc def>, 'p5=> does not quote the LHS');
+
+# vim: ft=perl6

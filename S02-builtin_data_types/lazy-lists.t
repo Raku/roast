@@ -220,3 +220,5 @@ is( (1..Inf, (1..Inf).reverse ).perl,
     "(1, 2, 3,, ..., 3, 2, 1)",
     "end of infinite list is readable" );
 
+
+# vim: ft=perl6

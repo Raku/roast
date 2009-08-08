@@ -115,3 +115,5 @@ is(~("ace" ~~ rx:P5/a(?:b|c|d)*(.)/ && $0), "e", 're_tests 601/1 (785)');
 is(~("ace" ~~ rx:P5/a(?:b|c|d)+?(.)/ && $0), "e", 're_tests 603/1 (787)');
 is(~("acdbcdbe" ~~ rx:P5/a(?:b|c|d)+?(.)/ && $0), "d", 're_tests 605/1 (789)');
 is(~("acdbcdbe" ~~ rx:P5/a(?:b|c|d)+(.)/ && $0), "e", 're_tests 607/1 (791)');
+
+# vim: ft=perl6

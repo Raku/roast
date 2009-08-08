@@ -31,3 +31,5 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 #?rakudo todo 'feature'
 dies_ok { sign(undef) }, 'sign on undefined value fails';
+
+# vim: ft=perl6

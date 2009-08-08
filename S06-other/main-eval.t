@@ -12,3 +12,5 @@ plan 1;
 my $invoked = 0;
 eval 'temp @*ARGS = <a b>; sub MAIN($a, $b) { $invoked = 1 };';
 is $invoked, 0, 'sub MAIN is not called in eval()';
+
+# vim: ft=perl6

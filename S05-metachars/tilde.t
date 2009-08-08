@@ -64,3 +64,5 @@ ok 'x(ab'  !~~ m/<t1>/,  '~ and constant atoms (missing closing bracket)';
     ok 'aaaa' ~~ m/^ <even_b> /, 'tilde regex backtracks to find its goal';
     ok 'aaa' !~~ m/^ <even_b> /, '...and fails for odd numbers';
 }  
+
+# vim: ft=perl6

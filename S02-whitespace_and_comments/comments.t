@@ -210,3 +210,5 @@ are both here, yay!
 }
 
 =end oppsFIXME
+
+# vim: ft=perl6

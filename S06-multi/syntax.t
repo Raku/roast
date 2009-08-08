@@ -71,3 +71,5 @@ is(~&foo, 'foo',  'a multi stringifies sensibly');
     is nsi_2(:baz(Bool::True), 1, 2, 3), 'nsi 2', 'interaction between named and slurpy (3)';
     is nsi_2(1, 2, 3),                   'nsi 2', 'interaction between named and slurpy (4)';
 }
+
+# vim: ft=perl6

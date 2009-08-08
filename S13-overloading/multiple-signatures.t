@@ -28,3 +28,5 @@ multi sub postfix:<!> (Base $x) |
 is($base!, 1, 'shared routine test 1');
 is($exp!,  2, 'shared routine test 2');
 is($base!, 3, 'shared routine test 3');
+
+# vim: ft=perl6

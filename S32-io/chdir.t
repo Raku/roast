@@ -46,3 +46,5 @@ else {
     ok !chdir("$no_subdir"),
        'change to non-existant directory gives a false value';
 }
+
+# vim: ft=perl6

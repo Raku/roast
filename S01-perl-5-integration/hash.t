@@ -72,3 +72,5 @@ is($p5hash.fetch(5), 'a', 'fetch result');
 is($p5hash.my_exists(5), %hash.exists(5), 'exists');
 #?pugs todo 'bug'
 is($p5hash.my_exists(12), %hash.exists(12), 'nonexists fail');
+
+# vim: ft=perl6

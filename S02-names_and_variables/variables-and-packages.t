@@ -136,3 +136,5 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   $a++;
   is rmbl(), 2, "var captured by sub is the right var (2)";
 }
+
+# vim: ft=perl6

@@ -21,3 +21,5 @@ is($list.value.key, 2, 'the list.value.key is 2');
 isa_ok($list.value.value, Pair, '$list.value.value is-a Pair');
 is($list.value.value.key, 3, 'the list.value.value.key is 3');
 is($list.value.value.value, 4, 'the list.value.value.value is 4');
+
+# vim: ft=perl6

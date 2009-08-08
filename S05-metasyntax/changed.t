@@ -38,3 +38,5 @@ plan 13;
     eval_dies_ok('$str ~~ /\Z/', '\\Z is gone');
     eval_dies_ok('$str ~~ /\z/', '\\z is gone');
 }
+
+# vim: ft=perl6

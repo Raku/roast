@@ -95,3 +95,5 @@ ok("GATTACA" ~~ m/ @bases=(A|C|G|T)**{4} (@bases+) /, 'Array reinterpolation');
 is("@bases[]", "G A T T", '...are belong to...');
 is("$0", "A", '...A');
 
+
+# vim: ft=perl6

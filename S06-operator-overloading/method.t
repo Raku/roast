@@ -73,3 +73,5 @@ sub run_tests_with($class) {
       is $res, "pugs! pugs! pugs!", "stringification overloading was hyperized correctly";
     }
 }
+
+# vim: ft=perl6

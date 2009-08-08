@@ -40,3 +40,5 @@ my %hash = (foo => 'bar', hate => 'software');
 {
     is_deeply([%hash.keys].sort, [$keys_p5(VAR %hash)].sort);
 }
+
+# vim: ft=perl6

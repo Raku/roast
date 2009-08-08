@@ -149,3 +149,5 @@ plan 13;
 
     is($str, '01234', 'NEXT {} works in for loop');
 }
+
+# vim: ft=perl6

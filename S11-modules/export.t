@@ -114,3 +114,5 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     ok( &Foo::Foo_exp_parens =:= &Foo::EXPORT::ALL::Foo_exp_parens,
         'Foo_exp_parens() -- containers agree' );
 }
+
+# vim: ft=perl6

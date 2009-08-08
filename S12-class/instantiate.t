@@ -34,3 +34,5 @@ is($foo2.check(), 42, 'initializing attributes in new');
     ok "$!" ~~ / 'NoSuch::Subclass' /,
        'error for "NoSuch::Subclass.new()" mentions NoSuch::Subclass';
 }
+
+# vim: ft=perl6

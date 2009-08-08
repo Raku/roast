@@ -87,3 +87,5 @@ plan 16;
     ok @a[1] ~~ undef, '... and the second is undef';
     is @a[2], 6,       '... and  the third is 6';
 }
+
+# vim: ft=perl6

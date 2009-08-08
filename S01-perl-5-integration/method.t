@@ -124,3 +124,5 @@ my $obj;
     $obj.modify_array(VAR @rw);
     is(@rw[0], 99, 'modify a scalar ref');
 }
+
+# vim: ft=perl6

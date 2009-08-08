@@ -27,3 +27,5 @@ plan 2;
 
     lives_ok { foo($Int) }, "passing ::Int to a sub works";
 }
+
+# vim: ft=perl6

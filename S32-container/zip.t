@@ -98,3 +98,5 @@ is ('a'..'c' Z 1, 2, 3).join(','), 'a,1,b,2,c,3',
 
 is ("a".."c" Z "?", "a".."b").join('|'), 'a|?|b|a|c|b',
     'can mix arrays and ranges for infix:<Z>';
+
+# vim: ft=perl6

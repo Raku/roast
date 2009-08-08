@@ -19,3 +19,5 @@ eval '$str =~ m/bar/;';
 ok  $!  ~~ Exception, 'caught "=~" braino';
 ok "$!" ~~ /'~~'/, 'error for "=~" usage mentions "~~"';
 ok "$!" ~~ /'~='/, 'error for "=~" usage metnions "~="';
+
+# vim: ft=perl6

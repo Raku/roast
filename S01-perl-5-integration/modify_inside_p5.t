@@ -10,3 +10,5 @@ my $y = 'case';
 };
 
 is $x, 'testing', "scalar modified inside perl5 block";
+
+# vim: ft=perl6

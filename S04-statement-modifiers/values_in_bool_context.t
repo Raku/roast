@@ -87,3 +87,5 @@ plan 24;
     ok !$g, 'hash in bool context - undef value';
     ok  $h, 'hash in bool context - hash as a whole';
 }
+
+# vim: ft=perl6

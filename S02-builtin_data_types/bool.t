@@ -56,3 +56,5 @@ is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
 is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
 is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
+
+# vim: ft=perl6

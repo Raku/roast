@@ -31,3 +31,5 @@ is( $a .= samecase('aaaaaaaaaaaaaaaaaaaaaaaa'), 'just another perl6 hacker', 'af
 # samecase with unicode
 is( 'ä€»«'.samecase('xXxX'), 'ä€»«', 'some unicode characters' );
 
+
+# vim: ft=perl6

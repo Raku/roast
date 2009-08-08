@@ -125,3 +125,5 @@ sub b() { die "oops" }
        'call to private method in presence of attribute';
 }
 
+
+# vim: ft=perl6

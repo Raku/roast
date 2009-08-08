@@ -29,3 +29,5 @@ lives_ok {
 $fh.close;
 
 ok unlink($filename), "temp file unlinked successfully";
+
+# vim: ft=perl6

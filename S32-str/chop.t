@@ -55,3 +55,5 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
     is(@array[0], "fiz", "first elem");
     is(@array[1], "buz", "second elem");
 };
+
+# vim: ft=perl6

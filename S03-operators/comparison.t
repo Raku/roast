@@ -32,3 +32,5 @@ is(1 cmp 1,     Order::Same,     '1 cmp 1 is same');
 is(1 cmp 2,     Order::Increase, '1 cmp 2 is increase');
 is(2 cmp 1,     Order::Decrease, '2 cmp 1 is decrease');
 is('a' cmp 1,   Order::Decrease, '"a" cmp 1 is decrease'); # unspecced but P5 behavior
+
+# vim: ft=perl6

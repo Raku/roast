@@ -67,3 +67,5 @@ plan 16;
     lives_ok { &infix:<+>.WHAT }, 'Can .WHAT built-in infix op';
     ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi';
 }
+
+# vim: ft=perl6

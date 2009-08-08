@@ -165,3 +165,5 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
     }
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
+
+# vim: ft=perl6

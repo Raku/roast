@@ -139,3 +139,5 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
     ok $! ~~ m:P5/Undeclared/, '%ENV not visible by after lexical import scope';
     1;
 }
+
+# vim: ft=perl6

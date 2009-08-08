@@ -57,3 +57,5 @@ for @examples -> $ex {
 }
 
 unlink $in_fn;
+
+# vim: ft=perl6

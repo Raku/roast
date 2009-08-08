@@ -182,3 +182,5 @@ ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
 
 # test for RT #62730
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
+
+# vim: ft=perl6

@@ -43,3 +43,5 @@ Not (yet?) in the spec, but implemented by (nearly?) all implementations.
   dies_ok { 42.uniq }, ".uniq should not work on scalars";
   is (42,).uniq, 42,   ".uniq should work on one-elem arrays";
 }
+
+# vim: ft=perl6

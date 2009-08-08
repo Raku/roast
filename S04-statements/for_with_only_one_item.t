@@ -74,3 +74,5 @@ plan 8;
 
   is $count, 1, 'for $arrayref {...} executes the loop body only once';
 }
+
+# vim: ft=perl6

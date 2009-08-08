@@ -80,3 +80,5 @@ plan 34;
     push @a, %foo;
     is(@a.elems, 5, 'Hash flattened');
 }
+
+# vim: ft=perl6

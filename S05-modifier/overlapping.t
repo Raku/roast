@@ -53,3 +53,5 @@ for (@$/) {
     %expected{$_} :delete;
 }
 
+
+# vim: ft=perl6

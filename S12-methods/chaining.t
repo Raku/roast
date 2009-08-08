@@ -75,3 +75,5 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
     ok( $cons.key.key =:= $p.key, 'chaining through temp variable' );
     ok( $cons.key.key =:= $cons.key.key, 'chaining through Any return');
 }
+
+# vim: ft=perl6

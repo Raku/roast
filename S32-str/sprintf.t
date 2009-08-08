@@ -78,3 +78,5 @@ eval q/$fmtd =
 /;
 is $fmtd, '1234 is 4 digits long', 'Implementation of S29 sprintf %C format'
 }
+
+# vim: ft=perl6

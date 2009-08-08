@@ -53,3 +53,5 @@ plan 4;
 
   is $output, "2,4,6,8,", "map and sort work in for";
 }
+
+# vim: ft=perl6

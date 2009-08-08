@@ -50,3 +50,5 @@ skip_rest("waiting on 'use fatal'"); exit;
   ok !connect("localhost", 70000),
     "&connect returns a false value when it can't connect";
 }
+
+# vim: ft=perl6

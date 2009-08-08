@@ -19,3 +19,5 @@ plan 2;
 
     eval_dies_ok( "new A( :b('bulbous bouffant') )", 'what looks like a constructor call is really a coersion to A, and should therefore be disallowed' );
 }
+
+# vim: ft=perl6

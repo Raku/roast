@@ -81,3 +81,5 @@ ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
     is $s.substr($s.index('0')), '023', 'Str.index("0") works';
     is $s.substr($s.index(0)),   '023', 'Str.index(0) works';
 }
+
+# vim: ft=perl6

@@ -529,3 +529,5 @@ Hello, World
     is('test\\', "test\\", "backslashes at end of single quoted string");
     is 'a\\b\''.chars, 4, 'backslash and single quote';
 }
+
+# vim: ft=perl6

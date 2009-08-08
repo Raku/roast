@@ -400,3 +400,5 @@ plan 15;
     
     skip 1, "Test(s) not yet written: (**) Tree construction from a node string";
 }
+
+# vim: ft=perl6

@@ -91,3 +91,5 @@ our $h;
     lives_ok { $handle() }, 'can call code with END block';
     is $end, '12', 'END {} does not run at run time either';
 }
+
+# vim: ft=perl6

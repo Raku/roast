@@ -101,3 +101,5 @@ is +@parents, 0, 'Object has no parents (no params)';
 is +@parents, 0, 'Object has no parents (:local)';
 @parents = Object.^parents(:tree);
 is +@parents, 0, 'Object has no parents (:tree)';
+
+# vim: ft=perl6

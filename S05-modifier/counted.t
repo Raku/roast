@@ -342,3 +342,5 @@ $try = $data;
 ok(!( $try ~~ s:g:7th{fo+}=q{bar} ), 'Global :7th match');
 is($try, $data, 'substituted :g:7th correctly');
 
+
+# vim: ft=perl6

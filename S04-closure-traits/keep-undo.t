@@ -69,3 +69,5 @@ plan 10;
     }
     is $str, 'U2 U1 ', '2 UNDO blocks triggered';
 }
+
+# vim: ft=perl6

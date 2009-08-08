@@ -27,3 +27,5 @@ is "Other String".lcfirst,  "other String", ".lcfirst on  literal string";
 }
 
 
+
+# vim: ft=perl6

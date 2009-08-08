@@ -37,3 +37,5 @@ is(~('foo' ~~ /^<Grammar::Baz::any>$/), 'foo', 'got right match');
 is(~('bar' ~~ /^<Grammar::Baz::any>$/), 'bar', 'got right match');
 is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 
+
+# vim: ft=perl6

@@ -218,3 +218,5 @@ sub eval_elsewhere($code){ eval($code) }
     is (^@a).elems, 10, '^10 has 10 elems';
     isa_ok ^@a, Range;
 }
+
+# vim: ft=perl6

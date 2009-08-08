@@ -121,3 +121,5 @@ is(("a\nb\nc\n" ~~ rx:P5/((?s).)c(?!.)/ && $0), "\n", 're_tests 757/1 (953)');
 is(("a\nb\nc\n" ~~ rx:P5/((?s)b.)c(?!.)/ && $0), "b\n", 're_tests 758/1 (954)');
 ok((not ("a\nb\nc\n" ~~ rx:P5/^b/)), 're_tests 759  (955)');
 ok((not ("a\nb\nc\n" ~~ rx:P5/()^b/)), 're_tests 761  (957)');
+
+# vim: ft=perl6

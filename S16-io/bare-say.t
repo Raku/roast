@@ -10,3 +10,5 @@ eval_dies_ok('print', 'bare print is a compiler error');
 
 # TODO: to test that 'say ()', 'say()' etc work
 # we have to redirect their output
+
+# vim: ft=perl6

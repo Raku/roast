@@ -48,3 +48,5 @@ try {
     die $foo;
 };
 is( $!.WHAT, Object, 'following try { die() } with Object arg, $! contains a Object value' );
+
+# vim: ft=perl6

@@ -44,3 +44,5 @@ plan 7;
   %foo<a>[0]++;
   is %foo<a>[0], 1, 'lvalue %var<>[] works';
 }
+
+# vim: ft=perl6

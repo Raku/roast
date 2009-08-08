@@ -133,3 +133,5 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
 is +@methods, 2,            'methods call with :private includes private methods (with :local)';
 ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
                             'methods call with :private found private method in subclass (with :local)';
+
+# vim: ft=perl6

@@ -49,3 +49,5 @@ my $scalar;
 #?pugs 2 todo ''
 ok(try { open $*OUT,">",\$scalar },'Direct STDOUT to a scalar');
 ok(try { open $*ERR,">",\$scalar },'Direct STDERR to a scalar');
+
+# vim: ft=perl6

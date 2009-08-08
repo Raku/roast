@@ -119,3 +119,5 @@ plan 31;
     isa_ok @array[$zero..$zero], List,
            'slice with one element specified by variables';
 }
+
+# vim: ft=perl6

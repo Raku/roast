@@ -88,3 +88,5 @@ Test attributes with recursively typed attributes
     lives_ok { $bad_a.as.push( Z.new ) }, 'can push';
     isa_ok $bad_a.as[0], Z;
 }
+
+# vim: ft=perl6

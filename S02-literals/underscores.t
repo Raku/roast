@@ -50,3 +50,5 @@ ok 2.1_23 == 2.123, "2.1_23 parses as number";
 dies_ok { 2._foo },    "2._foo parses as method call";
 dies_ok { 2._123 },    "2._123 parses as method call";
 dies_ok { 2._e23 },    "2._23  parses as method call";
+
+# vim: ft=perl6

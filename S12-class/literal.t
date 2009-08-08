@@ -23,3 +23,5 @@ lives_ok {
 
 my $x = eval 'Foo';
 ok($x ===  ::Foo, "Foo is now a valid class literal");
+
+# vim: ft=perl6

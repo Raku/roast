@@ -27,3 +27,5 @@ ok_eval1('Codepoint.isa(AnyChar)');
 ok_eval1('Byte.isa(AnyChar)');
 ok_eval1('Byte.isa(Num)');
 ok_eval1('subset MatchTest of Item | Junction;');
+
+# vim: ft=perl6

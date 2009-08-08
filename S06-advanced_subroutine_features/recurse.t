@@ -121,3 +121,5 @@ is(  countup_mod_named(5).join,     "012345", "recursive count up: named param, 
 is(countdown_mod_named(5).join,     "543210", "recursive count down: named param, modified value");
 is(  countup_mod_unnamed(5).join,   "012345", "recursive count up: unnamed param, modified value");
 is(countdown_mod_unnamed(5).join,   "543210", "recursive count down: unnamed param, modified value");
+
+# vim: ft=perl6

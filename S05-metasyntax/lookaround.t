@@ -33,3 +33,5 @@ ok(!( "abcd f" ~~ m/abc <!before d <.ws> f>/ ), 'Negative lookahead failure');
 ok("abcdef" ~~ m/abc <!before d <.ws> f> (.)/, 'Negative lookahead');
 is(~$0, 'd', 'Verify negative lookahead');
 
+
+# vim: ft=perl6

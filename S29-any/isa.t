@@ -58,3 +58,5 @@ plan 11;
     ok([1, 2, 3, 4].isa(Array), '... [1, 2, 3, 4].isa("Array") works');
     ok(![1, 2, 3, 4].isa(Hash), '... [1, 2, 3, 4].isa("Hash") fail predicably');    
 }
+
+# vim: ft=perl6

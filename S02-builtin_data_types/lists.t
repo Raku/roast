@@ -141,3 +141,5 @@ plan 21;
     class List is also { method rt62836_x { 62836 } };
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
 }
+
+# vim: ft=perl6

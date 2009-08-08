@@ -42,3 +42,5 @@ plan 9;
     $a = 24;
     is @list[0], 42, "Assignment to scalar didn't create a binding";
 }
+
+# vim: ft=perl6

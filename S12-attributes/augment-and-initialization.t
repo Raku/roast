@@ -46,3 +46,5 @@ diag('Test for class attribute initialization');
 	is try { $o2.get }, 4,
 		"Testing value for private attribue which is initialized by constructor.";
 }
+
+# vim: ft=perl6

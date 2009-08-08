@@ -32,3 +32,5 @@ sub get_multidim_arglist (*@@AoA) { @@AoA }
         "three scalars are not compatible with a sub expecting a multidim arglist";
 }
 
+
+# vim: ft=perl6

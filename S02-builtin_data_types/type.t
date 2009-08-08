@@ -147,3 +147,5 @@ my $baz of Int;
     ok List ~~ Positional, 'A List does Positional';
     ok Array ~~ Positional, 'Array does Positional too';
 }
+
+# vim: ft=perl6

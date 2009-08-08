@@ -25,3 +25,5 @@ ok(!$res, "run() to a nonexisting program does not die (and returns something fa
 
 $res = run("program_that_does_not_exist_ignore_errors_please.exe","a","b");
 ok(!$res, "run() to a nonexisting program with an argument list does not die (and returns something false)");
+
+# vim: ft=perl6

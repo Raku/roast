@@ -25,3 +25,5 @@ plan 7;
     #?rakudo skip 'OUR::subname() does not work'
     is OUR::c(), 'sub c', 'sub c called with OUR:: works';
 }
+
+# vim: ft=perl6

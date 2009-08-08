@@ -29,3 +29,5 @@ say "1..6";
 
 $*OUT.say('ok 6 - $*OUT.say(...)');
 
+
+# vim: ft=perl6

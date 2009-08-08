@@ -45,3 +45,5 @@ my $myary = [
 ];
 
 ok "anon array def parses when pod block is within it"; # TODO: complete this test
+
+# vim: ft=perl6

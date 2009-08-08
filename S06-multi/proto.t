@@ -53,3 +53,5 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 #?rakudo todo 'RT #68242'
 eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     'attempt to define two proto subs with the same name dies';
+
+# vim: ft=perl6

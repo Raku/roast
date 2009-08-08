@@ -72,3 +72,5 @@ plan 20;
     # $bar.baz.foo(quux)
     # but we need tests, tests, tests! XXX
 }
+
+# vim: ft=perl6

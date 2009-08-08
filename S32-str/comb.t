@@ -79,3 +79,5 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is @l[1].to, 8, '.to of the second item is correct';
 }
 
+
+# vim: ft=perl6

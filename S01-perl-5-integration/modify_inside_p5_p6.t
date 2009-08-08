@@ -23,3 +23,5 @@ is $x, 'testing', "scalar modified inside perl5 block";
 
 #?pugs todo 'nested p5/p6 embedding'
 is $y, 'casebook', "scalar modified inside perl6 block inside perl5 block";
+
+# vim: ft=perl6

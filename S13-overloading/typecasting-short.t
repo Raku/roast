@@ -43,3 +43,5 @@ plan 14;
     is($thing.<d>, 'pretending to be a hash', 'overloaded .<> call works');
     is($thing.<e f>, 'pretending to be a hash', 'overloaded .<> call works (slice)');
 }
+
+# vim: ft=perl6

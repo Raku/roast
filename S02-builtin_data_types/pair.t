@@ -360,3 +360,5 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     eval_lives_ok '(a => [])',    'can parse "(a => [])"';
     lives_ok     { (a => []) }, 'can execute "(a => [])"';
 }
+
+# vim: ft=perl6

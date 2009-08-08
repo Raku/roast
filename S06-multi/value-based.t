@@ -32,3 +32,5 @@ plan 7;
     is m2("x"), "d", 'if not an Int at all, fall back to Any candidate';
 }
 
+
+# vim: ft=perl6

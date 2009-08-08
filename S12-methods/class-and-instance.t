@@ -24,3 +24,5 @@ class Foo {
     }, '... class|instance methods work for instance';
     is($val, 142, '... basic instance method access worked');
 }
+
+# vim: ft=perl6

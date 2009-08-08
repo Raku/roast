@@ -22,3 +22,5 @@ my $tmpfile = "temp-evalfile" ~ nonce();
 is evalfile($tmpfile), 42, "evalfile() works";
 
 END { unlink $tmpfile }
+
+# vim: ft=perl6

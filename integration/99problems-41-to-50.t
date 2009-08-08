@@ -309,3 +309,5 @@ fail fail fail
     
         
 }
+
+# vim: ft=perl6

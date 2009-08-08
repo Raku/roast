@@ -415,3 +415,5 @@ ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<!isCommon>.$/, q{Match related negated (
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<-isCommon>$/, q{Match related inverted (Codepoint not explicitly assigned to a script)} );
 ok("\c[KANNADA SIGN ANUSVARA]\c[KHMER VOWEL INHERENT AQ]\x[0C7E]" ~~ m/<.isCommon>/, q{Match unanchored (Codepoint not explicitly assigned to a script)} );
 
+
+# vim: ft=perl6

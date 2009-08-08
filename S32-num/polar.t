@@ -52,3 +52,5 @@ sub check_polar($complex, $magnitude_want, $angle_want) {
    check_polar( 0-    0.763i, 0.763   , -pi/2     );
    check_polar( 9.927-5.192i, 11.20277, -0.4818920);
 }
+
+# vim: ft=perl6

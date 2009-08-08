@@ -94,3 +94,5 @@ is(@array[0], 3, 'store result');
 is(0+$p5array.fetch(0), 3, 'store result');
 
 # TODO: pop, shift, unshift, splice, delete
+
+# vim: ft=perl6

@@ -30,3 +30,5 @@ is(~A::B.parse("zzz42zzz"), "42", ".parse works with namespaced grammars");
 
 #?rakudo todo 'RT #63460'
 dies_ok { No::Such::Grammar.parse() }, '.parse on missing grammar dies';
+
+# vim: ft=perl6

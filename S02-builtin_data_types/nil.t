@@ -18,3 +18,5 @@ plan 6;
     ok $n ~~ Failure, 'variable holding nil ~~ Failure';
     is $n.WHAT, 'Failure()', '.WHAT on Nil variable says Failure';
 }
+
+# vim: ft=perl6

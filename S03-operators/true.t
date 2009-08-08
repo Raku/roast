@@ -18,3 +18,5 @@ ok(!true(true  0), "true(true  0) is false");
 
 ok(true Bool::True, "'Bool::True' is true");
 ok(true True, "'True' is true");
+
+# vim: ft=perl6

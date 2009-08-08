@@ -100,3 +100,5 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
     $c := $b;
     ok ( ? one $a, $b X=:=  $c, $d ), 'one X=:=';
 }
+
+# vim: ft=perl6

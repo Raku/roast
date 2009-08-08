@@ -51,3 +51,5 @@ ok $var_at_init ~~ undef, 'INIT {...} ran at runtime, but ASAP';
 ok $var_at_enter ~~ undef, 'ENTER {...} at runtime, but before the mainline body';
 
 $eof_var = 29;
+
+# vim: ft=perl6

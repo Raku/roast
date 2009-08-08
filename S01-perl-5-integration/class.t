@@ -19,3 +19,5 @@ unless (try { eval("1", :lang<perl5>) }) {
         or die $!;
     }, "perl5:CLASS.new";
 }
+
+# vim: ft=perl6

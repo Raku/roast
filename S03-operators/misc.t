@@ -167,3 +167,5 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
     #?rakudo skip 'RT #63778'
     is @a min 4, 1, 'works: @array min 4';
 }
+
+# vim: ft=perl6

@@ -74,3 +74,5 @@ is ~@b, "a b d e z", "inplace sort";
     lives_ok { @a.=sort      }, 'lives: @a.=sort';
     is @a, (1,2,3),            'worked: @a.=sort';
 }
+
+# vim: ft=perl6

@@ -102,3 +102,5 @@ is($moo, 0, "var was not touched");
     $x = Bool::True;
     is $x.pred, Bool::False, '.succ on False works';
 }
+
+# vim: ft=perl6

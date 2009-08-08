@@ -18,3 +18,5 @@ is($string, "abc\n", 'p5chomp removed one \n');
 my @s = "abc", "def\n", "gh\n";
 is(p5chomp(@s), 2, 'p5chomp on lists returns the number of removed \ns');
 is(@s, <abc def gh>, 'p5chomp on lists works');
+
+# vim: ft=perl6

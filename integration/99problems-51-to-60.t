@@ -300,3 +300,5 @@ plan 37;
 
     skip 1, "Test(s) not yet written: (**) Construct height-balanced binary trees with a given number of nodes";
 }
+
+# vim: ft=perl6

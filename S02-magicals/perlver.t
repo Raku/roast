@@ -13,3 +13,5 @@ ok $*OS, '$*OS is present';
 
 ok $?OSVER, '$?OSVER is present';
 ok $*OSVER, '$*OSVER is present';
+
+# vim: ft=perl6

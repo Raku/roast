@@ -798,3 +798,5 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<!isFormat>.$/, q{Match unrelated negat
 ok("\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<-isFormat>$/, q{Match unrelated inverted <isFormat>} );
 ok("\c[DEVANAGARI VOWEL SIGN AU]\c[KHMER VOWEL INHERENT AQ]" ~~ m/<.isFormat>/, q{Match unanchored <isFormat>} );
 
+
+# vim: ft=perl6

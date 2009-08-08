@@ -157,3 +157,5 @@ is_deeply(@files_once_more_s.sort, @files_s.sort, 'same list of files,after reop
 ok($dir_s.close, 'close using $dir.close format');
 
 
+
+# vim: ft=perl6

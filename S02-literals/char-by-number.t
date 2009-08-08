@@ -85,3 +85,5 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
     eval_dies_ok q{"\05"}, 'next char of \0 is 5';
     eval_dies_ok q{"\07"}, 'next char of \0 is 7';
 }
+
+# vim: ft=perl6

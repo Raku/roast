@@ -181,3 +181,5 @@ plan 37;
   is ~$hashref.values.sort, "a c", 'binding %hash := $hashref works (2)';
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
+
+# vim: ft=perl6

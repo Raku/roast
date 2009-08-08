@@ -139,3 +139,5 @@ plan 3;
     is $var, 70, "Testing suite 3.";
 }
 
+
+# vim: ft=perl6

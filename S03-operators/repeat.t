@@ -74,3 +74,5 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     @b[3] = 'a';
     is @b.join('|'), 'z|y|x|a|x|y', 'change to one item left the others unchanged';
 }
+
+# vim: ft=perl6

@@ -81,3 +81,5 @@ plan 20;
    is($c, $point_a, 'unpacked TwoPoint object (3)');
    is($d, $point_a, 'unpacked TwoPoint object (4)');
 }
+
+# vim: ft=perl6

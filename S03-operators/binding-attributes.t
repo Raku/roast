@@ -78,3 +78,5 @@ plan 12;
     is $var,    19,      "binding private class attribute (3)";
 }
 
+
+# vim: ft=perl6

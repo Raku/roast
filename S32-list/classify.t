@@ -30,3 +30,5 @@ plan 10;
   lives_ok { 42.classify: { $_ } },      "method form of classify should not work on numbers";
   lives_ok { "str".classify: { $_ } },   "method form of classify should not work on strings";
 }
+
+# vim: ft=perl6

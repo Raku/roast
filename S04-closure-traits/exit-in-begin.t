@@ -20,3 +20,5 @@ BEGIN {
   # ...and exit, implicitly calling END.
   exit;
 }
+
+# vim: ft=perl6
