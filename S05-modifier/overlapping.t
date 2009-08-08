@@ -12,10 +12,6 @@ It probably needs a few syntax updates to remove p5isms
 
 plan 10;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-}
-
 #?pugs emit force_todo(2,3,5,6,10);
 
 # should be: L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
