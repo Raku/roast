@@ -26,7 +26,7 @@ is $<T1::r3><ws>, 'x',     'explicit  <ws> did capture';
 {
     lives_ok { '' ~~ / <ws>  / }, 'match <ws>  against empty string';
     lives_ok { '' ~~ / <ws>? / }, 'match <ws>? against empty string';
-    #?rakudo 2 skip 'infinite loop: RT #64094'
+    #?rakudo 2 skip 'infinite loop: RT #64094 (noauto)'
     lives_ok { '' ~~ / <ws>+ / }, 'match <ws>+ against empty string';
     lives_ok { '' ~~ / <ws>* / }, 'match <ws>* against empty string';
 }

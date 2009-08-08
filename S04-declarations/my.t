@@ -201,7 +201,7 @@ my $z = 42;
     #?rakudo todo 'RT #62766'
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
-    #?rakudo skip 'infinite loop?'
+    #?rakudo skip 'infinite loop? (noauto)'
     eval_lives_ok 'my $a;do { 1/0; my $x; CATCH { $a = $x.defined } }';
 
     {
@@ -213,7 +213,7 @@ my $z = 42;
 
     {
         my $a;
-        #?rakudo skip 'infinite loop?'
+        #?rakudo skip 'infinite loop? (noauto)'
         eval_lives_ok 'do { 1/0;my Int $x;CATCH { $a = ?($x ~~ Int) } }';
         #?rakudo todo 'previous test skipped'
         ok $a, 'unreached declaration in effect at block start';
