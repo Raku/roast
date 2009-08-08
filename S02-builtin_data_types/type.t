@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 48;
+plan 52;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -141,4 +141,9 @@ my $baz of Int;
 
     ok Int ~~ Num, 'Int ~~ Num';
     ok Num !~~ Int, 'Num !~~ Int';
+
+    ok Array ~~ List, 'Array is a kind of List';
+    ok List !~~ Array, 'A List is not an Array';
+    ok List ~~ Positional, 'A List does Positional';
+    ok Array ~~ Positional, 'Array does Positional too';
 }
