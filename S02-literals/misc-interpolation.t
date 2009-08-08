@@ -2,15 +2,15 @@ use v6;
 
 use Test;
 
-=begin kwid
+=begin pod
 
 =head1 String interpolation
 
 These tests derived from comments in L<http://use.perl.org/~autrijus/journal/23398>
 
-=end kwid
+=end pod
 
-plan 39;
+plan 38;
 
 my $world = "World";
 my $number = 1;
@@ -36,13 +36,10 @@ is("&func() is where I live", 'func-y town is where I live', "make sure function
 is("$number {$number}", '1 1', 'number inside and outside closure works');
 is("$number {my $number=2}", '1 2', 'local version of number in closure works');
 is("$number {my $number=2} $number", '1 2 1', 'original number still available after local version in closure: works' );
-#?rakudo skip 'Null PMC access in get_bool()'
-#?DOES 3
+#?rakudo skip 'interpolatin of $(my $x = 2)'
 {
-eval( q[is("$number {my $number=2} {$number}", '1 2 1', 'original number
-still available in closure after local version in closure: works' );] ) or ok('');
-eval( q[is("$(my $x = 2) $x", '2 2', 'Variable should interpolate and still be available in the outer scope.');] ) // ok('', 'Syntax should be recognized for $(my $x = 2)');
-eval( q[is("$(my $x = 2)" ~ $x, '22', 'Variable should interpolate and still be available in the outer scope.');] ) // ok('', 'Syntax should be recognized for $(my $x = 2)');
+    is "$(my $x = 2) $x", '2 2', 'Variable should interpolate and still be available in the outer scope.';
+    is("$(my $x = 2)" ~ $x, '22', 'Variable should interpolate and still be available in the outer scope.');
 }
 
 # L<S02/Names and Variables/form of each subscript>
