@@ -55,7 +55,7 @@ my @tests = (
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
-plan 17 + 2*@tests;
+plan 18 + 2*@tests;
 #?pugs emit force_todo 8, 45..50, 94, 96;
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
@@ -195,4 +195,11 @@ plan 17 + 2*@tests;
     lives_ok { %h<a>.perl }, 'can take .perl from hash element';
     #?rakudo todo 'RT #64080'
     ok %h<a> !=== %h<a>[0], 'hoa does not refer to hash element';
+}
+
+# RT #67790
+{
+    class RT67790 {}
+    lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
+    # TODO: check that eval( RT67790.HOW.perl ) 'is' RT67790.HOW
 }
