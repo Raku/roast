@@ -9,3 +9,5 @@ plan 3;
 is($?PACKAGE, 'Foo::Bar', '$?PACKAGE for "module Foo::Bar;"');
 is($?CLASS,   'Main',     '$?CLASS for "module Foo::Bar;"');
 is($?MODULE,  'Foo::Bar', '$?MODULE for "module Foo::Bar;"');
+
+# vim: ft=perl6

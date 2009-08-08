@@ -20,27 +20,30 @@ plan 8;
 # test for loops with last
 
 {
-    is(
-        eval('sub mylast { last; }; my $tracker = 0; for 1 .. 5 { $tracker = $_; mylast(); }; $tracker'),
-        1,
-        "tracker is 1 because mylast exits loop";
-    );
-}
-
-{
     my $tracker = 0;
     for 1 .. 5 {
         $tracker = $_;
-        last;  
+        last;
     }
     is($tracker, 1, '... our loop only got to 1 (last)');
 }
 
 {
+    sub mylast { last; };
     my $tracker = 0;
     for 1 .. 5 {
         $tracker = $_;
-        last if $_ == 3;  
+        mylast();
+    };
+    is $tracker, 1, 'can last() outside a subroutine and a for-loop';
+}
+
+
+{
+    my $tracker = 0;
+    for 1 .. 5 {
+        $tracker = $_;
+        last if $_ == 3;
     }
     is($tracker, 3, '... our loop only got to 3 (last if <cond>)');
 }
@@ -49,7 +52,7 @@ plan 8;
     my $tracker = 0;
     for 1 .. 5 {
         $tracker = $_;
-        $_ == 3 && last;  
+        $_ == 3 && last;
     }
     is($tracker, 3, '... our loop only got to 3 (<cond> && last)');
 }
@@ -58,18 +61,20 @@ plan 8;
     my $tracker = 0;
     for 1 .. 5 {
         $tracker = $_;
-        $_ == 3 and last;  
+        $_ == 3 and last;
     }
     is($tracker, 3, '... our loop only got to 3 (<cond> and last)');
 }
 
+#?pugs skip 'last LABEL'
+#?rakudo skip 'last LABEL'
 {
-    #?pugs todo 'bug'
-    is(
-        eval('my $var=0; DONE: for (1..2) { last DONE; $var++;}; $var'),
-        0,
-        "var is 0 because last before increment"
-    );
+    my $var = 0;
+    DONE: for (1..2) {
+              last DONE;
+              $var++;
+    };
+    is($var, 0, "var is 0 because last before increment")
 }
 
 {
@@ -83,13 +88,17 @@ plan 8;
     is($tracker, 15, 'our inner loop only runs once per (last inside nested loops)');
 }
 
+#?pugs skip 'last LABEL'
+#?rakudo skip 'last LABEL'
 {
-    is(
-        eval('my $var=0; OUT: for (1..2) { IN: for (1..2) { last OUT }; $var++;}; $var'),
-        0,
-        "var is 0 because last before increment in nested loop",
-        :todo(1)
-    );
+    my $var = 0;
+    OUT: for (1..2) {
+        IN: for (1..2) {
+            last OUT;
+        }
+        $var++;
+    };
+    is($var, 0, "var is 0 because last before increment in nested loop");
 }
 
 # vim: ft=perl6
