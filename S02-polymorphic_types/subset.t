@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 31;
 
 =begin description
 
@@ -118,6 +118,18 @@ eval_dies_ok 'my Digit $x = 3.1',
        'assignment to subset of Str where pattern in braces worked';
     dies_ok { $text = 'oops' },
             'subset of Str where pattern in braces enforces pattern';
+}
+
+# RT #67786
+{
+    subset RT67786 of Int where { $^i > 0 }
+    my RT67786 $rt67786;
+
+    try { $rt67786 = -42 }
+
+    ok  $!  ~~ Exception, 'subset of Int enforces where clause';
+    #?rakudo todo 'RT #67786'
+    ok "$!" ~~ / RT67786 /, 'error for bad assignment mentions subset';
 }
 
 # vim: ft=perl6
