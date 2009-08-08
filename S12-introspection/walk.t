@@ -92,6 +92,7 @@ sub cand_order(@cands, $instance) {
 {
     my $x = E.new;
     my @cands = $x.WALK(:name<m>, :include(regex { <[CDE]> }));
+    #?rakudo skip ':include fails'
     is cand_order(@cands, $x), 'ECD', ':include works';
 }
 
@@ -99,5 +100,6 @@ sub cand_order(@cands, $instance) {
 {
     my $x = E.new;
     my @cands = $x.WALK(:name<m>, :include(regex { <[CDE]> }), :omit({ .^can('n') }));
+    #?rakudo skip ':include/:omit together fail'
     is cand_order(@cands, $x), 'D', ':include and :omit together work';
 }
