@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 30;
 
 =begin description
 
@@ -94,26 +94,29 @@ eval_dies_ok 'my Digit $x = 3.1',
             'subset of List with where enforces where';
 }
 
+#?rakudo skip 'my subset = Null PMC Access'
 {
     my subset Str_not2b of Str where /^[isnt|arent|amnot|aint]$/;
-    #?rakudo todo 'my subset = Null PMC Access'
-    lives_ok { my Str_not2b $text }, 'can use lexically scoped subset';
+    my Str_not2b $text;
+    $text = 'amnot';
+    is $text, 'amnot', 'assignment to my subset of Str where pattern worked';
+    dies_ok { $text = 'oops' },
+            'my subset of Str where pattern enforces pattern';
 }
 
 {
     subset Negation of Str where /^[isnt|arent|amnot|aint]$/;
     my Negation $text;
-    lives_ok { $text = 'amnot' }, 'can use subset of Str where pattern';
+    $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
     dies_ok { $text = 'oops' }, 'subset of Str where pattern enforces pattern';
 }
 
+#?rakudo skip 'adding braces breaks subset?'
 {
     subset Naht of Str where { /^[isnt|arent|amnot|aint]$/ };
     my Naht $text;
-    #?rakudo 2 todo 'adding braces breaks subset?'
-    lives_ok { $text = 'amnot' },
-             'can assign to Str subset where pattern in braces';
+    $text = 'amnot';
     is $text, 'amnot',
        'assignment to subset of Str where pattern in braces worked';
     dies_ok { $text = 'oops' },
