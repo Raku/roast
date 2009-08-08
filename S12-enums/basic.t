@@ -95,6 +95,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     lives_ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
     isa_ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';
 
+    #?rakudo 2 skip 'enum .pick regression'
     ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),
             '.pick on enums';
     ok Color.pick(2) == 2, '.pick(2) on enums';
