@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -124,4 +124,15 @@ plan 13;
         }
     };
     is ~@list, "2 4 6 8 10", "gather with nested while";
+}
+
+#?rakudo todo 'broken gather/take with loop (RT #63634)'
+{
+    my @list = gather {
+        loop (my $v = 1; $v <= 10; $v++)
+        {
+            take $v if $v % 2 == 0;
+        }
+    };
+    is ~@list, "2 4 6 8 10", "gather with nested loop";
 }
