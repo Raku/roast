@@ -22,7 +22,9 @@ class Foo:ver<0.0.1> {
 #?pugs emit exit;
 
 ok(Foo.HOW.can(Foo, 'bar'), '... Foo can bar');
+#?rakudo skip 'precedence of HOW'
 ok(HOW(Foo).can(Foo, 'bar'), '... Foo can bar (anthoer way)');
+#?rakudo skip 'precedence of prefix:<^>'
 ok(^Foo.can(Foo, 'bar'), '... Foo can bar (another way)');
 ok(Foo.^can('bar'), '... Foo can bar (as class method)');
 ok(Foo.HOW.isa(Foo, Foo), '... Foo is-a Foo (of course)');
