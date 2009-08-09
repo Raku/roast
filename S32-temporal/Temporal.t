@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 my ( Temporal::DateTime $g1, Temporal::DateTime $g2, Num $t, Int $d );
 
@@ -72,6 +72,15 @@ $g1 = Temporal::DateTime.new(
 ok $g1.epoch==3661, "epoch at 1970-01-01 01:01:01"; # test 15
 ok ~$g1 eq '1970-01-01T01:01:01+0100', "as Str 1970-01-01T01:01:01+0100"; # test 16
 
+# round trip test for current number of seconds in the Unix epoch
+$t = int time;
+my @t = test_gmtime( $t );
+$g1 = Temporal::DateTime.new(
+          date => Temporal::Date.new( :year(@t[5]+1900), :month(@t[4]+1), :day(@t[3]) ),
+          time => Temporal::Time.new( :hour(@t[2]),      :minute(@t[1]),  :second(@t[0]) ),
+          timezone => Temporal::TimeZone::Observance.new(
+              offset=>-8*3600, isdst=>Bool::False, abbreviation=>'PDT' ) );
+ok $g1.epoch == $t, "at $g1, epoch is {$g1.epoch}"; # test 17
 
 # An independent calculation to cross check the Temporal algorithms.
 sub test_gmtime( Num $t is copy ) {
