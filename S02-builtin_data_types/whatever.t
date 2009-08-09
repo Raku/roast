@@ -49,7 +49,6 @@ is @a, [1,2,3,4], '*.meth created closure works';
 
 {
     my $x = +*;
-    #?rakudo todo 'RT #68004'
     isa_ok $x, Code, '+* is of type Code';
 
     # following is what we expect +* to do
@@ -57,9 +56,7 @@ is @a, [1,2,3,4], '*.meth created closure works';
     is sort(-> $key {+$key}, @list), [1,2,3,10], '-> $key {+$key} generates closure to numify';
 
     # and here are two actual applications of +*
-    #?rakudo todo 'RT #68004'
     is sort($x, @list), [1,2,3,10], '+* generates closure to numify';
-    #?rakudo skip 'RT #68004'
     is @list.sort($x), [1,2,3,10], '+* generates closure to numify';
 }
 
