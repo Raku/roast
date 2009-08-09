@@ -430,7 +430,6 @@ dies_ok( { $x := 0; say 3 / $x; }, 'Division by zero dies and is catchable with 
 
 # L<S03/"Negated relational operators"/"allowed for testing even
 # divisibility by an integer">
-#?rakudo skip 'infix:<!%>'
 {
     is 6 !% 3, Bool::True,  '6 !% 3';
     is 6 !% 4, Bool::False, '6 !% 4';
