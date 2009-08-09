@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 6;
 
 # test that classes and roles declared in modules get into the correct
 # namespace
@@ -15,6 +15,16 @@ eval_lives_ok 'use A::A; A::B::D ~~ A::B::B or die()',
 eval_lives_ok 'use A::A; A::B::D.new()',
               '... and instantiation works';
 
-eval_lives_ok 'use A; A.new()', 'RT #62162';
+eval_lives_ok 'use A; A.new()', 'RT 62162';
+
+eval_lives_ok 'use RoleA',
+              'can use multiple "Role $name" statements (in multiple files) RT 67976';
+
+{
+    use RoleA;
+
+    class MyFu does RoleB;
+    ok MyFu ~~ RoleB, 'Composition worked';
+}
 
 # vim: ft=perl6
