@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 21;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
@@ -86,6 +86,23 @@ plan 16;
     ok @a[0] ~~ undef, '... and the first is undef';
     ok @a[1] ~~ undef, '... and the second is undef';
     is @a[2], 6,       '... and  the third is 6';
+}
+
+# RT #62948
+{
+    my @a;
+    @a[2] = 'b';
+    my @b = @a;
+    is +@b, 3, 'really a degenerative case of assigning list to array';
+    @b = (6, @a);
+    is +@b, 4, 'assigning list with extended array to an array';
+    my $s = @a.join(':');
+    is $s, '::b', 'join on extended array';
+    my $n = + @a.grep({ $_ eq 'b'});
+    is $n, 1, 'grep on extended array';
+    @a[1] = 'c'; # cmp doesn't handle undef cmp undef yet
+    #?rakudo skip 'RT #62948'
+    ok not defined @a.min(), 'min on list with undefined el returns undef';
 }
 
 # vim: ft=perl6
