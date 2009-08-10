@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 27;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -70,6 +70,15 @@ is(~&foo, 'foo',  'a multi stringifies sensibly');
     multi nsi_2(Bool :$baz = Bool::False, *@vals) { "nsi 2" };
     is nsi_2(:baz(Bool::True), 1, 2, 3), 'nsi 2', 'interaction between named and slurpy (3)';
     is nsi_2(1, 2, 3),                   'nsi 2', 'interaction between named and slurpy (4)';
+}
+
+# RT #68234
+{
+    multi rt68234(:$key!) { 'with key' };
+    multi rt68234(*%_)    { 'unknown' };
+    is rt68234(:key), 'with key', 'can find multi method with key';
+    #?rakudo skip 'RT #68234'
+    is rt68234(:unknown), 'unknown', 'can find multi method with slurpy';
 }
 
 # vim: ft=perl6
