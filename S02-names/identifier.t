@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -58,6 +58,15 @@ plan 14;
 {
     sub sub($foo) { $foo }
     is sub('RT #65804'), 'RT #65804', 'sub named "sub" works';
+}
+
+# RT #68358
+{
+    my ($x);
+    sub my($a) { $a + 17 }
+    $x = 5;
+    #?rakudo todo 'RT #68358'
+    is my($x), 23, 'call to sub named "my" works';
 }
 
 # vim: ft=perl6
