@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 128;
+plan 129;
 
 =begin pod
 
@@ -529,6 +529,18 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
     }
 
     is C.new.s, 6, "Test class include another class which inherited from same role";
+}
+
+# RT #68370
+{
+    class RT68370 {
+        has $!a;
+        method rt68370 { $!a = 68370 }
+    }
+
+    #?rakudo todo 'RT #68370 -- Null PMC Access in getprop()'
+    dies_ok { RT68370.rt68370() },
+        'dies: modify instance attribute via class method call';
 }
 
 # vim: ft=perl6
