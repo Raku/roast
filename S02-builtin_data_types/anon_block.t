@@ -11,7 +11,7 @@ This covers anonymous blocks and subs, as well as pointy blocks
 
 =end description
 
-plan 34;
+plan 42;
 
 # L<S04/"The Relationship of Blocks and Declarations">
 # L<S06/"Anonymous subroutines">
@@ -125,5 +125,28 @@ is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');
 dies_ok({(sub { { $^x } }).()}, 'implicit params become errors');
 isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
+
+# RT #68116
+{
+    sub rt68116 { 68116 }
+    is &rt68116(), 68116, 'check that sub is callable via &';
+    is { &^x() }.( &rt68116 ), 68116,
+        'call via { &^pos() }( &s ) works for sub';
+    is -> &x { &x() }.( &rt68116 ), 68116,
+        'call via -> &point { &point() }.( &s ) works for sub';
+    is (sub (&x) { &x() }).( &rt68116 ), 68116,
+        'call via (sub (&x) { &x() }).( &s ) works for sub';
+
+    multi mone { 'one' }
+    is &mone(), 'one', 'check that mutli is callable via &';
+    #?rakudo 3 skip 'RT #68116'
+    is { &^x() }.( &mone ), 'one',
+        'call via { &^pos() }( &s ) works for multi';
+    is -> &x { &x() }.( &mone ), 'one',
+        'call via -> &point { &point() }.( &s ) works for multi';
+    is (sub (&x) { &x() }).( &mone ), 'one',
+        'call via (sub (&x) { &x() }).( &s ) works for multi';
+    
+}
 
 # vim: ft=perl6
