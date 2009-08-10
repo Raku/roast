@@ -22,6 +22,8 @@ given $test {
             $server.bind( $host, int($port) );
             $server.listen(); # should accept max queue size parameter
             # warn "SERVER LISTENING";
+            my $fd = open( 't/spec/S32-io/server-ready-flag', :w );
+            $fd.close();
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
                 my $received = $client.recv();
@@ -35,7 +37,7 @@ given $test {
             # warn "CLIENT TEST=$test PORT=$port";
             # avoid a race condition, where the client tries to
             # open() before the server gets to accept().
-            sleep 1; # crude, sorry
+            until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
             my $client = IO::Socket::INET.new;
             $client.open( $host, int($port) );
             # warn "CLIENT OPENED";

@@ -27,7 +27,7 @@ given $*OS {
     }
     # TODO: when 'Win32' etc.
 }
-$received = fake_qx( $netstat_cmd );        # refactor into 1 line after
+$received = qqx{$netstat_cmd};                    # refactor into 1 line after
 if $received ~~ $netstat_pat { @ports = $/[]; }   # development complete
 #warn @ports.elems ~ " PORTS=" ~ @ports;
 
@@ -50,17 +50,16 @@ isa_ok $server, IO::Socket::INET;
 # Do not bind to this socket in the parent process, that would prevent a
 # child process from using it.
 
-#
 if $*OS eq any <linux darwin> { # please add more valid OS names
 
     # test 2 does echo protocol - Internet RFC 862
-    $received = fake_qx( "sh t/spec/S32-io/IO-Socket-INET.sh 2 $port" );
+    $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
     is $received, $expected, "echo server and client";
 
     # test 3 does discard protocol - Internet RFC 863
-    $received = fake_qx( "sh t/spec/S32-io/IO-Socket-INET.sh 3 $port" );
+    $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 3 $port};
     #warn "TEST 3 $received";
     $expected = "discard '' received\n";
     is $received, $expected, "discard server and client";
@@ -70,15 +69,6 @@ else {
     skip 1, "OS '$*OS' shell support not confirmed";
 }
 
-# inefficient workaround - remove when Rakudo gets a qx operator
-sub fake_qx( $command ) {
-    my $tempfile = "/tmp/rakudo_httpd_qx.tmp";
-    my $fullcommand = "$command >$tempfile";
-    run $fullcommand;
-    my $result = slurp( $tempfile );
-    unlink $tempfile;
-    return $result;
-}
 
 =begin pod
 
