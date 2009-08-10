@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 69;
+plan 70;
 
 =begin description
 
@@ -99,6 +99,13 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     my Negation $foo;
     #?rakudo todo 'Null PMC Access in invoke()'
     lives_ok { $foo = Negation::isnt }, 'simple assignment from enum';
+}
+
+# RT #66886
+{
+    enum RT66886 <b>;
+    #?rakudo todo 'RT #66886'
+    dies_ok { RT66886::c }, 'accessing non-value of enum dies proper-like';
 }
 
 # vim: ft=perl6
