@@ -125,7 +125,7 @@ is &o_two.count,    3, 'count on sub with optional and required named params';
        '... also when passed to a sub first';
 }
 
-#?rakudo todo 'bug #66868: Zero-arg sub interpreted as parameterless'
+#?rakudo todo 'RT #66868: Zero-arg sub interpreted as parameterless'
 dies_ok { a_zero( 'hello', 'world' ) }, 'no matching sub signature';
 
 # vim: ft=perl6
