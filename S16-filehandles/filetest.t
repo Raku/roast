@@ -12,11 +12,6 @@ This test tests the various filetest operators.
 
 plan 39;
 
-#if $*OS eq any <MSWin32 mingw msys cygwin> {
-#    skip 30, "file tests not fully available on win32";
-#    exit;
-#};
-
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
   exit;
@@ -57,14 +52,6 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
 ok not "t".IO ~~ :f, "~~:f returns false on directories";
 ok "t".IO ~~ :r,  "~~:r returns true on a readable directory";
 
-#skip 2, "/etc/shadow tests skipped";
-#if $*OS eq any <MSWin32 mingw msys cygwin> {
-#  skip 2, "win32 doesn't have /etc/shadow";
-#} else {
-#  ok not "/etc/shadow" ~~ :r, "~~:r returns false on unreadable files";
-#  ok not "/etc/shadow" ~~ :w, "~~:w returns false on unwritable files";
-#}
-
 ok 'doesnotexist'.IO !~~ :d, "~~:d returns false on non existant directories";
 ok 'doesnotexist'.IO !~~ :r, "~~:r returns false on non existant directories";
 ok 'doesnotexist'.IO !~~ :w, "~~:w returns false on non existant directories";
@@ -77,13 +64,9 @@ ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non existant files";
 ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non existant files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non existant files";
 
-#if $*OS eq any <MSWin32 mingw msys cygwin> {
-#  skip 1, "~~:s is not working on Win32 yet"
-#}
-#else {
-  # XXX - Without parens, $*PROGRAM_NAME ~~ :s>42 is chaincomp.
-  ok(($*PROGRAM_NAME~~:s) > 42,   "~~:s returns size on existant files");
-#}
+# XXX - Without parens, $*PROGRAM_NAME ~~ :s>42 is chaincomp.
+ok(($*PROGRAM_NAME~~:s) > 42,   "~~:s returns size on existant files");
+
 ok not "doesnotexist.t".IO ~~ :s, "~~:s returns false on non existant files";
 
 ok not $*PROGRAM_NAME.IO ~~ :z,   "~~:z returns false on existant files";
@@ -92,12 +75,7 @@ ok not "t".IO ~~ :z,              "~~:z returns false on directories";
 
 my $fh = open("empty_file", :w);
 close $fh;
-#if $*OS eq any <MSWin32 mingw msys cygwin> {
-#  skip 1, " ~~ :z is not working on Win32 yet"
-#}
-#else {
-  ok "empty_file".IO ~~ :z,      "~~:z returns true for an empty file";
-#}
+ok "empty_file".IO ~~ :z,      "~~:z returns true for an empty file";
 unlink "empty_file";
 
 if $*OS eq any <MSWin32 mingw msys cygwin> {
