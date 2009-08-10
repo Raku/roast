@@ -123,16 +123,16 @@ eval_dies_ok 'my Digit $x = 3.1',
             'subset of Str where pattern in braces enforces pattern';
 }
 
-# RT #67786
+# RT #67256
 {
-    subset RT67786 of Int where { $^i > 0 }
-    my RT67786 $rt67786;
+    subset RT67256 of Int where { $^i > 0 }
+    my RT67256 $rt67256;
 
-    try { $rt67786 = -42 }
+    try { $rt67256 = -42 }
 
     ok  $!  ~~ Exception, 'subset of Int enforces where clause';
-    #?rakudo todo 'RT #67786'
-    ok "$!" ~~ / RT67786 /, 'error for bad assignment mentions subset';
+    #?rakudo todo 'RT #67256'
+    ok "$!" ~~ / RT67256 /, 'error for bad assignment mentions subset';
 }
 
 # vim: ft=perl6
