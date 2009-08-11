@@ -130,13 +130,13 @@ eval('
   # too, but then it dies complaining about not finding a matching temp()
   # function.  So, for now, we just comment the following block and add
   # unconditional flunk()s.
-  #{
+  # {
   #  #?pugs 4 todo 'feature'
   #  is temp(advance()), 3, "TEMP{} block (5)";
   #  is $next,           4, "TEMP{} block (6)";
   #  is temp(advance()), 4, "TEMP{} block (7)";
   #  is temp(advance()), 5, "TEMP{} block (8)";
-  #}  # $next = 3
+  # }  # $next = 3
 
   is $next,     3, "TEMP{} block (9)";
   is advance(), 3, "TEMP{} block (10)";

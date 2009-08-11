@@ -8,7 +8,7 @@ plan 75;
 
 
 ok(4\       .sqrt == 2, 'unspace with numbers');
-is(4\#(quux).sqrt, 2, 'unspace with comments');
+is(4\#`(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
 
@@ -67,7 +67,7 @@ is((foo\ .lc ), 'a', 'unspace');
 is((foo \ .lc), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
 is((foo\    .lc), 'a', 'longer dot');
-is((foo\#( comment ).lc), 'a', 'unspace with embedded comment');
+is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
 #?rakudo skip 'unimplemented'
 eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
 is((foo\ # comment
@@ -266,8 +266,8 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n, 2, 'check $n');
 
     # L<S02/"Lexical Conventions"/"U+301D codepoint has two closing alternatives">
-    is((foo\#〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
-    eval_dies_ok('foo\#〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
+    is((foo\#`〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
+    eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
     # L<S02/"Whitespace and Comments"/".123">
     # .123 is equal to 0.123

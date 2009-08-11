@@ -10,61 +10,61 @@ plan 45;
 #  "#" plus any bracket>
 {
 
-    ok #[
+    ok #`[
         Multiline
         comments
         is fine
-    ] 1, 'multiline embedded comment with #[]';
+    ] 1, 'multiline embedded comment with #`[]';
 
-    ok #(
+    ok #`(
         Parens works also
-    ) 1, 'multiline embedded comment with #()';
+    ) 1, 'multiline embedded comment with #`()';
 
-    ok eval("2 * 3\n #<<<\n comment>>>"), "multiline comment with <<<";
+    ok eval("2 * 3\n #`<<<\n comment>>>"), "multiline comment with <<<";
 
-    my $var = #{ foo bar } 32;
-    is $var, 32, 'embedded comment with #{}';
+    my $var = #`{ foo bar } 32;
+    is $var, 32, 'embedded comment with #`{}';
 
-    $var = 3 + #「 this is a comment 」 56;
+    $var = 3 + #`「 this is a comment 」 56;
     is $var, 59, 'embedded comment with LEFT/RIGHT CORNER BRACKET';
 
-    is 2 #『 blah blah blah 』 * 3, 6, 'embedded comment with LEFT/RIGHT WHITE CORNER BRACKET';
+    is 2 #`『 blah blah blah 』 * 3, 6, 'embedded comment with LEFT/RIGHT WHITE CORNER BRACKET';
 
     my @list = 'a'..'c';
 
-    is @list[ #（注释）2 ], 'c', 'embedded comment with FULLWIDTH LEFT/RIGHT PARENTHESIS';
+    is @list[ #`（注释）2 ], 'c', 'embedded comment with FULLWIDTH LEFT/RIGHT PARENTHESIS';
 
-    is @list[ 0 #《注释》], 'a', 'embedded comment with LEFT/RIGHT DOUBLE ANGLE BRACKET';
+    is @list[ 0 #`《注释》], 'a', 'embedded comment with LEFT/RIGHT DOUBLE ANGLE BRACKET';
 
-    is @list[#〈注释〉1], 'b', 'embedded comment with LEFT/RIGHT ANGLE BRACKET';
+    is @list[#`〈注释〉1], 'b', 'embedded comment with LEFT/RIGHT ANGLE BRACKET';
 
     # Note that 'LEFT/RIGHT SINGLE QUOTATION MARK' (i.e. ‘’) and
     # LEFT/RIGHT DOUBLE QUOTATION MARK (i.e. “”) are not valid delimiter
     # characters.
 
     #test some 13 more lucky unicode bracketing pairs
-    is(1 #᚛ pa ᚜ +1, 2, 'embedded comment with #᚛᚜');
-    is(1 #⁅ re ⁆ +2, 3, 'embedded comment with #⁅⁆');
-    is(2 #⁽ ci ⁾ +3, 5, 'embedded comment with #⁽⁾');
-    is(3 #❨ vo ❩ +5, 8, 'embedded comment with #❨ vo ❩');
-    is(5 #❮ mu ❯   +8, 13, 'embedded comment with #❮❯');
-    is(8 #❰ xa ❱   +13, 21, 'embedded comment with #❰❱');
-    is(13 #❲ ze ❳   +21, 34, 'embedded comment with #❲❳');
-    is(21 #⟦ bi ⟧   +34, 55, 'embedded comment with #⟦⟧');
-    is(34 #⦅ so ⦆ +55, 89, 'embedded comment with #⦅⦆');
-    is(55 #⦓ pano ⦔   +89, 144, 'embedded comment with #⦓⦔');
-    is(144 #⦕ papa ⦖   +233, 377, 'embedded comment with #⦕⦖');
-    is(377 #『 pare 』   +610, 987, 'embedded comment with #『』');
-    is(610 #﴾ paci ﴿   +987, 1597, 'embedded comment with #﴾﴿');
+    is(1 #`᚛ pa ᚜ +1, 2, 'embedded comment with #`᚛᚜');
+    is(1 #`⁅ re ⁆ +2, 3, 'embedded comment with #`⁅⁆');
+    is(2 #`⁽ ci ⁾ +3, 5, 'embedded comment with #`⁽⁾');
+    is(3 #`❨ vo ❩ +5, 8, 'embedded comment with #`❨ vo ❩');
+    is(5 #`❮ mu ❯   +8, 13, 'embedded comment with #`❮❯');
+    is(8 #`❰ xa ❱   +13, 21, 'embedded comment with #`❰❱');
+    is(13 #`❲ ze ❳   +21, 34, 'embedded comment with #`❲❳');
+    is(21 #`⟦ bi ⟧   +34, 55, 'embedded comment with #`⟦⟧');
+    is(34 #`⦅ so ⦆ +55, 89, 'embedded comment with #`⦅⦆');
+    is(55 #`⦓ pano ⦔   +89, 144, 'embedded comment with #⦓`⦔');
+    is(144 #`⦕ papa ⦖   +233, 377, 'embedded comment with #`⦕⦖');
+    is(377 #`『 pare 』   +610, 987, 'embedded comment with #`『』');
+    is(610 #`﴾ paci ﴿   +987, 1597, 'embedded comment with #`﴾﴿');
 }
 
 # L<S02/"Whitespace and Comments"/"no space" between "#" and bracket>
 {
 
-    ok !eval("3 * # (invalid comment) 2"), "no space allowed between '#' and '('";
-    ok !eval("3 * #\t[invalid comment] 2"), "no tab allowed between '#' and '['";
-    ok !eval("3 * #  \{invalid comment\} 2"), "no spaces allowed between '#' and '\{'";
-    ok !eval("3 * #\n<invalid comment> 2"), "no spaces allowed between '#' and '<'";
+    ok !eval("3 * #` (invalid comment) 2"), "no space allowed between '#`' and '('";
+    ok !eval("3 * #`\t[invalid comment] 2"), "no tab allowed between '#`' and '['";
+    ok !eval("3 * #`  \{invalid comment\} 2"), "no spaces allowed between '#`' and '\{'";
+    ok !eval("3 * #`\n<invalid comment> 2"), "no spaces allowed between '#`' and '<'";
 
 }
 
@@ -72,55 +72,55 @@ plan 45;
 #   "closing brackets">
 {
 
-    ok #<<<
+    ok #`<<<
         Or this <also> works...
-    >>> 1, '#<<<...>>>';
+    >>> 1, '#`<<<...>>>';
 
-    my $var = \#((( comment ))) 12;
-    is $var, 12, '#(((...)))';
+    my $var = \#`((( comment ))) 12;
+    is $var, 12, '#`(((...)))';
 
-    is(5 * #<< < >> 5, 25, '#<< < >>');
+    is(5 * #`<< < >> 5, 25, '#`<< < >>');
 
-    is(6 * #<< > >> 6, 36, '#<< > >>');
+    is(6 * #`<< > >> 6, 36, '#`<< > >>');
 }
 
 # L<S02/"Whitespace and Comments"/"Brackets may be nested">
 #?rakudo skip 'nested brackets'
 {
-    is 3, #(
+    is 3, #`(
         (Nested parens) works also
-    ) 3, 'nested parens #(...(...)...)';
+    ) 3, 'nested parens #`(...(...)...)';
 
-    is 3, #{
+    is 3, #`{
         {Nested braces} works also {}
-    } 3, 'nested braces #{...{...}...}';
+    } 3, 'nested braces #`{...{...}...}';
 }
 
 # I am not sure if this is speced somewhere:
 # comments can be nested
 #?rakudo skip 'nested brackets'
 {
-    is 3, #(
+    is 3, #`(
             comment
-            #{
+            #`{
               internal comment
             }
             more comment
         ) 3, 'comments can be nested with different brackets';
-    is 3, #(
+    is 3, #`(
             comment
-            #(
+            #`(
                 internal comment
             )
             more
             ) 3, 'comments can be nested with same brackets';
 
     # TODO:
-    # ok eval(" #{ comment }") failes with an error as it tries to execute
-    # comment() before seeing that I meant #{ comment within this string.
+    # ok eval(" #`{ comment }") failes with an error as it tries to execute
+    # comment() before seeing that I meant #`{ comment within this string.
 
 #?pugs todo 'bug'
-    ok eval(" #<<\n comment\n # >>\n >> 3"),
+    ok eval(" #`<<\n comment\n # >>\n >> 3"),
         'single line comment cannot correctly nested within multiline';
 }
 
@@ -128,11 +128,11 @@ plan 45;
 #   "applies only to" "pairs of brackets of the same length">
 #?rakudo skip 'nested parens and braces'
 {
-    is -1 #<<<
+    is -1 #`<<<
         Even <this> <<< also >>> works...
     >>>, -1, 'nested brackets in embedded comment';
 
-    is 'cat', #{{
+    is 'cat', #`{{
         This comment contains unmatched } and { { { {   (ignored)
         Plus a nested {{ ... }} pair                    (counted)
     }} 'cat', 'embedded comments with nested/unmatched bracket chars';
@@ -150,7 +150,7 @@ plan 45;
 # L<S02/Whitespace and Comments/"comment may not contain an unspace">
 {
     my $a;
-    ok !eval '$a = #\  (comment) 32', "comments can't contain unspace";
+    ok !eval '$a = #`\  (comment) 32', "comments can't contain unspace";
     ok !$a.defined, '$a remains undef';
 }
 

@@ -51,10 +51,10 @@ is($0, '}', 'quoted close LCB capture');
 
 # RT #67124
 #?rakudo todo 'comment in charset (RT #67124)'
-eval_lives_ok( '"foo" ~~ /<[f] #[comment] + [o]>/',
+eval_lives_ok( '"foo" ~~ /<[f] #`[comment] + [o]>/',
                'comment embedded in charset can be parsed' );
 #?rakudo skip 'comment in charset (RT #67124)'
-ok( "foo" ~~ /<[f] #[comment] + [o]>/, 'comment embedded in charset works' );
+ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 
 # RT #67122
 #?rakudo skip 'large \\x char spec in regex (RT #67122) (noauto)'
