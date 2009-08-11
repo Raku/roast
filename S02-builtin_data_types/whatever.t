@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -58,6 +58,14 @@ is @a, [1,2,3,4], '*.meth created closure works';
     # and here are two actual applications of +*
     is sort($x, @list), [1,2,3,10], '+* generates closure to numify';
     is @list.sort($x), [1,2,3,10], '+* generates closure to numify';
+
+    # test that  +* works in a slice
+    my @x1;
+    for 1..4 {
+        @x1[+*] = $_;
+    }
+    is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT 67450)';
 }
+
 
 # vim: ft=perl6
