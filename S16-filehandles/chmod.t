@@ -46,9 +46,9 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
     #?pugs todo ''
     is @result[0], $file, "name of the file returned";
     if ($*EUID) {
-        ok $file ~~ :!r, "not readable after 0";
-        ok $file ~~ :!w, "not writeable after 0";
-        ok $file ~~ :!x, "not executable after 0";
+        ok $file.IO ~~ :!r, "not readable after 0";
+        ok $file.IO ~~ :!w, "not writeable after 0";
+        ok $file.IO ~~ :!x, "not executable after 0";
     }
     else {
         skip 3, ":r :w :x can accidentally work with root permission";
@@ -64,9 +64,9 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
     #?pugs todo ''
     is @result[0], $file, "name of the file returned";
 
-    ok $file ~~ :r, "readable after 700";
-    ok $file ~~ :w, "writabel after 700";
-    ok $file ~~ :x, "executable after 700";
+    ok $file.IO ~~ :r, "readable after 700";
+    ok $file.IO ~~ :w, "writabel after 700";
+    ok $file.IO ~~ :x, "executable after 700";
     remove_file($file);
 }
 
@@ -78,9 +78,9 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
     #?pugs todo ''
     is @result[0], $file, "name of the file returned";
 
-    ok $file ~~ :r, "readable after 777";
-    ok $file ~~ :w, "writable after 777";
-    ok $file ~~ :x, "executable after 777";
+    ok $file.IO ~~ :r, "readable after 777";
+    ok $file.IO ~~ :w, "writable after 777";
+    ok $file.IO ~~ :x, "executable after 777";
     remove_file($file);
 }
 
@@ -93,13 +93,13 @@ sub create_temporary_file {
 }
 sub remove_file ($file) {
     unlink $file;
-    ok($file ~~ :!e, "Test file was successfully removed");
+    ok($file.IO ~~ :!e, "Test file was successfully removed");
 }
 
-ok(try { "nonesuch" ~~ :!e }, "~~:!e syntax works");
+ok(try { "nonesuch".IO ~~ :!e }, "~~:!e syntax works");
 
 eval q{
-    ok(try { "nonesuch".:!e }, ".:!e syntax works");
-}
+    ok(try { "nonesuch".IO.:!e }, ".:!e syntax works");
+};
 
 # vim: ft=perl6
