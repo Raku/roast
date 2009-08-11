@@ -21,19 +21,19 @@ my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of f
   my $fh = open($fn, :w);
   close $fh;
 
-  ok $fn ~~ :e,      "open() created a tempfile";
+  ok $fn.IO ~~ :e,   "open() created a tempfile";
   is(unlink($fn), 1, "unlink() returned true");
-  ok $fn !~~ :e,     "unlink() actually deleted the tempfile";
+  ok $fn.IO !~~ :e,  "unlink() actually deleted the tempfile";
 }
 
 # open, implicit close because of scope exit, unlink, test
 {
   { my $fh = open($fn, :w) }
 
-  ok $fn ~~ :e,      "open() created a tempfile";
+  ok $fn.IO ~~ :e,   "open() created a tempfile";
   is(unlink($fn), 1, "unlink() returned true");
   #?rakudo skip 'implicit closure of file handle at scope exit not implemented (FAILS ON WINDOWS)'
-  ok $fn !~~ :e,     "unlink() actually deleted the tempfile";
+  ok $fn.IO !~~ :e,  "unlink() actually deleted the tempfile";
 }
 
 # vim: ft=perl6
