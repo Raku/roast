@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 24;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -77,6 +77,18 @@ if !eval('("a" ~~ /a/)') {
        'Match stored in Hash has "exists" method';
     ok %match_as_hash.exists( 'alpha' ),
        '"alpha" exists in Match stored in Hash';
+}
+
+# RT #64952
+{
+    'ab' ~~ /(.)+/;
+    is $/[0][0], 'a', 'match element [0][0] from /(.)+/';
+    is $/[0][1], 'b', 'match element [0][1] from /(.)+/';
+
+    my @match = @( 'ab' ~~ /(.)+/ );
+    #?rakudo 2 todo 'match coerced to array is flattened (RT #64952)'
+    is @match[0][0], 'a', 'match element [0][0] from /(.)+/ coerced';
+    is @match[0][1], 'b', 'match element [0][1] from /(.)+/ coerced';
 }
 
 # vim: ft=perl6
