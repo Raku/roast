@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 18;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -61,6 +61,17 @@ if !eval('("a" ~~ /a/)') {
     # Note that calling .WHAT (as in the original ticket) does not have
     # the same effect.
     is ~$<o>, 'o o', 'match list stringifies like a normal list AFTER "isa"';
+}
+
+# RT #64948
+{
+    #?rakudo todo 'RT #64948'
+    ok %( 'foo' ~~ /foo/ ).can( 'exists' ),
+       'Match coerced to Hash has "exists" method';
+
+    my %match_as_hash = %( 'foo' ~~ /foo/ );
+    ok %match_as_hash.can( 'exists' ),
+       'Match stored in Hash has "exists" method';
 }
 
 # vim: ft=perl6
