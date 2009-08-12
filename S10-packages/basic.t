@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 47;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -172,6 +172,21 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     my $first_call = array_init();
     is array_init(), $first_call,
        'array initialization works fine in imported subs';
+}
+
+# RT #68290
+{
+    eval_dies_ok q[class A { sub a { say "a" }; sub a { say "a" } }],
+                 'sub redefined in class dies';
+    eval_dies_ok q[package P { sub p { say "p" }; sub p { say "p" } }],
+                 'sub redefined in package dies';
+    eval_dies_ok q[module M { sub m { say "m" }; sub m { say "m" } }],
+                 'sub redefined in module dies';
+    #?rakudo 2 skip 'RT #68290'
+    eval_dies_ok q[grammar B { token b { 'b' }; token b { 'b' } };],
+                 'token redefined in grammar dies';
+    eval_dies_ok q[class C { method c { say "c" }; method c { say "c" } }],
+                 'method redefined in class dies';
 }
 
 #?rakudo todo 'RT #64688'
