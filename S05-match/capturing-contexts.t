@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 16;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -47,6 +47,20 @@ if !eval('("a" ~~ /a/)') {
   is $/.keys, 'a', 'get rule result';
   my $x = $/;
   is $x.keys, 'a', 'match copy should be same as match';
+}
+
+# RT #64946
+{
+    regex o { o };
+    "foo" ~~ /f<o>+/;
+
+    #?rakudo todo 'RT #64946'
+    is ~$<o>, 'o o', 'match list stringifies like a normal list';
+    isa_ok $<o>, List;
+    # I don't know what difference 'isa' makes, but it does.
+    # Note that calling .WHAT (as in the original ticket) does not have
+    # the same effect.
+    is ~$<o>, 'o o', 'match list stringifies like a normal list AFTER "isa"';
 }
 
 # vim: ft=perl6
