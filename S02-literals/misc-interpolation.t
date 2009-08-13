@@ -10,7 +10,7 @@ These tests derived from comments in L<http://use.perl.org/~autrijus/journal/233
 
 =end pod
 
-plan 39;
+plan 40;
 
 my $world = "World";
 my $number = 1;
@@ -88,6 +88,7 @@ is("x  \x[41,42,00043]  x",  "x  ABC  x",  "\\x[] allows multiple chars (2)");
 is("x  \x[ 41, 42, 43 ]  x", "x  ABC  x",  "\\x[] allows multiple chars with white space");
 is("x  \c[65,66,67]  x",     "x  ABC  x",  "\\c[] allows multiple chars (1)");
 is("x  \c[65,66,000067]  x", "x  ABC  x",  "\\c[] allows multiple chars (2)");
+is("x  \c[ 65, 66, 67 ]  x", "x  ABC  x",  "\\c[] allows multiple chars with white space");
 
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
 is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
