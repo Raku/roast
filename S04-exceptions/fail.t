@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 # L<S04/Exceptions/The fail function>
 
@@ -33,9 +33,13 @@ plan 5;
 
 # RT #64990
 {
-    our Int sub rt64990 { return fail() }
+    our Int sub rt64990 { fail() }
     #?rakudo skip 'RT #64990'
-    ok rt64990() ~~ Failure, 'sub typed Int can return Failure';
+    ok rt64990() ~~ Failure, 'sub typed Int can fail()';
+
+    our Int sub repeat { return fail() }
+    #?rakudo skip 'RT #64990'
+    ok repeat() ~~ Failure, 'sub typed Int can return Failure';
 }
 
 # vim: ft=perl6
