@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -71,6 +71,14 @@ if !eval('("a" ~~ /a/)') {
     #?rakudo skip 'RT #64948'
     ok %( 'foo' ~~ /<alpha> oo/ ).exists( 'alpha' ),
        'Match coerced to Hash says "alpha" exists';
+
+    'foo' ~~ /<alpha> oo/;
+    #?rakudo todo 'RT #64948'
+    ok %( $/ ).can( 'exists' ),
+       'Match in $/ coerced to Hash has "exists" method';
+    #?rakudo skip 'RT #64948'
+    ok %( $/ ).exists( 'alpha' ),
+       'Match in $/ coerced to Hash says "alpha" exists';
 
     my %match_as_hash = %( 'foo' ~~ /<alpha> oo/ );
     ok %match_as_hash.can( 'exists' ),
