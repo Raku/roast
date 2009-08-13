@@ -417,7 +417,8 @@ Hello, World
 
 # q:x
 {
-    is q:x/echo hello/, "hello\n", "Testing for q:x operator.";
+    my $result = %*VM.perl ~~ /MSWIN32/ ?? "hello\r\n" !! "hello\n";
+    is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
 {
