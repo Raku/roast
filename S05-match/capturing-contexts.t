@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -73,6 +73,13 @@ if !eval('("a" ~~ /a/)') {
     #?rakudo 2 todo 'match coerced to array is flattened (RT #64952)'
     is @match[0][0], 'a', 'match element [0][0] from /(.)+/ coerced';
     is @match[0][1], 'b', 'match element [0][1] from /(.)+/ coerced';
+}
+
+# RT #64948
+{
+    #?rakudo skip 'RT #64948'
+    ok %( 'foo' ~~ /<alpha> oo/ ){ 'alpha' }:exists,
+       'Match coerced to Hash says match exists';
 }
 
 # vim: ft=perl6
