@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 5;
 
 # L<S04/Exceptions/The fail function>
 
@@ -29,6 +29,13 @@ plan 4;
 
   is $was_after_fail, 0, "fail() causes our sub to return (2)";
   is $was_after_sub,  0, "fail() causes our try{} to die";
+}
+
+# RT #64990
+{
+    our Int sub rt64990 { return fail() }
+    #?rakudo skip 'RT #64990'
+    ok rt64990() ~~ Failure, 'sub typed Int can return Failure';
 }
 
 # vim: ft=perl6
