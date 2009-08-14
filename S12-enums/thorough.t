@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 70;
+plan 71;
 
 =begin description
 
@@ -99,6 +99,8 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     my Negation $foo;
     #?rakudo todo 'Null PMC Access in invoke()'
     lives_ok { $foo = Negation::isnt }, 'simple assignment from enum';
+    #?rakudo skip 'Null PMC Access in invoke()'
+    is $foo, Negation::isnt, 'assignment from enum works';
 }
 
 # RT #66886

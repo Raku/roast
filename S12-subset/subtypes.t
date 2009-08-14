@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 50;
+plan 49;
 
 =begin description
 
@@ -156,7 +156,6 @@ ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
     ok $x ~~ SR1,   'subtypes based on roles work';
 }
 
-eval_lives_ok 'subset A of Int;', 'subset declaration without where clause';
 subset NW1 of Int;
 ok NW1 ~~ Int,  'subset declaration without where clause does type it refines';
 ok 0 ~~ NW1,    'subset declaration without where clause accepts right value';

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 12;
 
 # tests for Match.perl
 
@@ -33,8 +33,6 @@ lives_ok { $/.perl }, 'lives on quantified named captures';
     isa_ok $/, Match;
     is $/.ast, $code_str, 'Match.ast is the code matched';
     is $/.Str, $code_str, 'Match.Str is the code matched';
-    #?rakudo todo 'RT #64874'
-    lives_ok { $/.perl }, 'can Match.perl';
     #?rakudo skip 'RT #64874'
     is_deeply eval($/.perl), $/, 'eval of Match.perl recreates Match';
 }
@@ -44,9 +42,10 @@ lives_ok { $/.perl }, 'lives on quantified named captures';
     my $m = 'foo' ~~ /foo/;
     eval '$m<greeting> = "OH HAI"';
 
-    #?rakudo 2 todo 'RT #65610'
+    #?rakudo todo 'RT #65610'
     ok  $!  ~~ Exception, 'die before modifying a Match';
-    lives_ok { $m.perl }, 'can .perl a Match after attempt to modify';
+    #?rakudo skip 'RT #65610'
+    is_deeply eval($m.perl), $m, 'Match.perl works after attempt to modify';
 }
 
 # vim: ft=perl6
