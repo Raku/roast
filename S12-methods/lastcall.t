@@ -8,7 +8,7 @@ plan 3;
 
 class Foo {
     # $.tracker is used to determine the order of calls.
-    has $.tracker;
+    has $.tracker is rw;
     method doit()  {$.tracker ~= 'foo,'}
     method doit(Int $num) {$.tracker ~= 'fooint,'}
     method show  {$.tracker}
@@ -16,14 +16,14 @@ class Foo {
 }
 
 class BarLastCallSame is Foo {
-    method doit() {$.tracker ~= 'bar,'; lastcall; $.tracker ~= 'ret1,'}
-    method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}
+    multi method doit($foo) {$.tracker ~= 'bar,'; lastcall; $.tracker ~= 'ret1,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}
 }
 
 {
     my $o = BarLastCallSame.new;
     $o.clear;
-    $o.doit;
+    $o.doit("");
     is($o.show, 'bar,ret1,', 'lastcall inheritance test');
     $o.clear;
     is($o.show, '', 'sanity test for clearing');
