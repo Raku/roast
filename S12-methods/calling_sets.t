@@ -1,5 +1,5 @@
 use Test;
-plan 29;
+plan 30;
 
 # L<S12/"Calling sets of methods">
 
@@ -163,5 +163,13 @@ class G is F does R2 {
     $g.*mm();
     is $g.cnt, 4, 'multi dispatch method from role found with .*';
 }
+
+class MMT1 {
+    multi method foo($x) { 42 }
+}
+class MMT2 is MMT1 {
+    multi method foo(Int $x) { "oh noes" }
+}
+is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find next one up';
 
 # vim: ft=perl6
