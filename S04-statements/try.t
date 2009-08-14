@@ -202,7 +202,7 @@ plan 28;
     is rt63430().perl, 63430.perl, 'can call rt63430() and examine the result';
     #?rakudo skip 'Null PMC access in type()'
     is rt63430(), 63430, 'CATCH does not intercept return from try block';
-    #?rakudo todo 'RT #63430'
+    #?rakudo skip 'invalid since other calls were skipped (noauto)'
     is $catches, 0, 'CATCH block never invoked';
 }
 
