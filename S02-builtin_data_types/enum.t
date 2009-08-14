@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 35;
 # L<S12/Enums>
 {
     my %hash; eval '%hash = enum «:Mon(1) Tue Wed Thu Fri Sat Sun»';
@@ -111,32 +111,22 @@ is %hash.values, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'), '
 # RT #63826
 {
     class EnumClass     { enum C <a b c> }
-    #?rakudo todo 'RT #63826'
-    lives_ok { EnumClass::C::a }, 'can refer to enum element in class';
     #?rakudo skip 'RT #63826'
     is EnumClass::C::a, 0, 'enum element in class has the right value';
 
     module EnumModule   { enum M <a b c> }
-    #?rakudo todo 'RT #63826'
-    lives_ok { EnumModule::M::a }, 'can refer to enum element in module';
     #?rakudo skip 'RT #63826'
     is EnumModule::M::b, 1, 'enum element in module has the right value';
 
     package EnumPackage { enum P <a b c> }
-    #?rakudo todo 'RT #63826'
-    lives_ok { EnumPackage::P::a }, 'can refer to enum element in package';
     #?rakudo skip 'RT #63826'
     is EnumPackage::P::c, 2, 'enum element in package has the right value';
 
     role EnumRole       { enum R <a b c> }
-    #?rakudo todo 'RT #63826'
-    lives_ok { EnumRole::R::a }, 'can refer to enum element in role';
     #?rakudo skip 'RT #63826'
     is EnumRole::R::a, 0, 'enum element in role has the right value';
 
     grammar EnumGrammar { enum G <a b c> }
-    #?rakudo todo 'RT #63826'
-    lives_ok { EnumGrammar::G::a }, 'can refer to enum element in grammar';
     #?rakudo skip 'RT #63826'
     is EnumGrammar::G::b, 1, 'enum element in grammar has the right value';
 }

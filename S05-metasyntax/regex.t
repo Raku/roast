@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 26;
 
 # L<S05/Regexes are now first-class language, not strings>
 
@@ -70,20 +70,15 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     ok 'mmm, pasta' ~~ m/<food>/, 'named rule outside of a grammar works';
 }
 
-# RT #67234
-{
-    #?rakudo todo 'RT #67234'
-    lives_ok { undef ~~ / x / }, 'match against undef lives';
-    #?rakudo skip 'RT #67234'
-    ok not undef ~~ / x /, 'match against undef does not match';
-}
+#?rakudo skip 'RT #67234'
+ok not undef ~~ / 'RT #67234' /, 'match against undef does not match';
 
 #?rakudo todo 'RT #67612'
 eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
 
 # L<S05/Simplified lexical parsing of patterns/The semicolon character>
 
-eval_dies_ok 'rx/;/',       'bare ";" is rx is not allowed';
+eval_dies_ok 'rx/;/',       'bare ";" in rx is not allowed';
 eval_dies_ok q{';' ~~ /;/}, 'bare ";" in match is not allowed';
 isa_ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';

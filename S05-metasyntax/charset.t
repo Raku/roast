@@ -58,7 +58,7 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 
 # RT #67122
 #?rakudo skip 'large \\x char spec in regex (RT #67122) (noauto)'
-eval_lives_ok( '/<[\x10000..\xEFFFF]>/', 'large \\x char spec in regex' );
+ok "\x[10001]" ~~ /<[\x10000..\xEFFFF]>/, 'large \\x char spec';
 
 }
 

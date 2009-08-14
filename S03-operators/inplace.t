@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 24;
+plan 22;
 
 #?rakudo skip '.= with spaces'
 {
@@ -68,10 +68,10 @@ is ~@b, "a b d e z", "inplace sort";
     my @b = @a.sort: {1};
     is @b, @a_orig,            'worked: @a.sort: {1}';
 
-    lives_ok { @a.=sort: {1} }, 'lives: @a.=sort: {1}';
+    @a.=sort: {1};
     is @a, @a_orig,            'worked: @a.=sort: {1}';
 
-    lives_ok { @a.=sort      }, 'lives: @a.=sort';
+    @a.=sort;
     is @a, (1,2,3),            'worked: @a.=sort';
 }
 

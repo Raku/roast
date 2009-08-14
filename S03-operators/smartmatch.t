@@ -410,7 +410,7 @@ ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 
 # need to test in eval() since class defintions happen at compile time,
 # ie before the plan is set up.
-eval_lives_ok 'class A { method foo { diag "" ~~ * } }; A.new.foo',
-              'smartmatch in a class lives (RT #62196)';
+eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
+              'smartmatch in a class lives (RT 62196)';
 
 # vim: ft=perl6

@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 15;
+plan 14;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -30,8 +30,6 @@ ok("aaaaab" ~~ m/<{$var}>/, 'Rulish scalar match');
 # RT #61960
 {
     my $a = 'a';
-    #?rakudo todo 'Null PMC access in get_string()'
-    lives_ok { 'a' ~~ / $a / }, 'can match with a string as a rx';
     #?rakudo skip 'Null PMC access in get_string()'
     ok 'a' ~~ / $a /, 'match with string as rx works';
 }

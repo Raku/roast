@@ -100,8 +100,8 @@ Basic C<delete> tests, see S32.
 # RT #67446
 {
     my @array = 0..1;
-    lives_ok { @array.perl }, '@array.perl lives after init';
-    lives_ok { map { 1 }, @array }, 'map @array lives after init';
+    is ~(eval @array.perl ), '0 1', '@array.perl works after init';
+    is ~( map { 1 }, @array ), '1 1', 'map @array works after init';
     @array.delete(0);
     #?rakudo 2 todo 'RT #67446'
     lives_ok { @array.perl }, '@array.perl lives after delete';

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 16;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
@@ -75,10 +75,8 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # RT #67024
 #?rakudo todo 'redefintion of non-multi method (RT #67024)'
 {
-    my $bad_code = 'class A { method a(){0}; method a($x){1} }';
-
-    eval_dies_ok $bad_code, 'redefintion of non-multi method (RT 67024)';
-    eval $bad_code;
+    eval 'class A { method a(){0}; method a($x){1} }';
+    ok  $!  ~~ Exception, 'redefintion of non-multi method (RT 67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
 
@@ -91,9 +89,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         multi method b() { @.order.push( 'class' ); nextsame }
     }
 
-    my $c;
-    lives_ok { $c = C3.new }, 'can create class C3';
-    isa_ok $c, C3;
+    my $c = C3.new;
     lives_ok { $c.b }, 'can call multi-method from class with role';
 
     is $c.order, <class role>, 'call order is correct for class and role'
@@ -110,9 +106,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     class C4 is P4 does R4 {
         multi method b() { @.order.push( 'class'  ); nextsame }
     }
-    my $c;
-    lives_ok { $c = C4.new }, 'can create class C4';
-    isa_ok $c, C4;
+    my $c = C4.new;
     lives_ok { $c.b }, 'call multi-method from class with parent and role';
 
     is $c.order, <class role parent>,

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 7;
 
 # L<S12/Construction and Initialization/The default BUILD and BUILDALL>
 
@@ -78,8 +78,7 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
     class RT63900_C is RT63900_P {
     }
 
-    my $c;
-    lives_ok { $c = RT63900_C.new() }, 'can create child class';
+    my $c = RT63900_C.new();
     is $c.counter<BUILD>, 1, 'BUILD called once';
 }
 

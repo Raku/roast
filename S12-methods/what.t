@@ -12,7 +12,7 @@ This test tests the C<WHAT> builtin.
 
 # L<S12/Introspection/"WHAT">
 
-plan 16;
+plan 15;
 
 # Basic subroutine/method form tests for C<WHAT>.
 {
@@ -64,7 +64,6 @@ plan 16;
 
 # RT #66928
 {
-    lives_ok { &infix:<+>.WHAT }, 'Can .WHAT built-in infix op';
     ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi';
 }
 

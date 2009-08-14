@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 62;
+plan 61;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -162,8 +162,6 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
 # RT #63778
 {
     my @a = 1, 2, 3;
-    #?rakudo todo 'RT #63778'
-    lives_ok { @a min 4 }, 'lives: @array min 4';
     #?rakudo skip 'RT #63778'
     is @a min 4, 1, 'works: @array min 4';
 }

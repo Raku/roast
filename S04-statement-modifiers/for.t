@@ -86,6 +86,8 @@ plan 14;
 
     eval 'say  for 1';
     ok $! ~~ Exception, '"say  for 1" (two spaces) is an error';
+    # XXX The problem with this test is the error messages might differ
+    #     for innocuous reasons (e.g., a line number)
     #?rakudo 2 todo 'RT #61494'
     is "$!", $errmsg, 'error for two spaces is the same as one space';
     ok "$!" ~~ /\b say \b/, 'error message is for "say"';

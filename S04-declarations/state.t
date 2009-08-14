@@ -273,9 +273,9 @@ plan 37;
 # Test for RT #67058
 sub bughunt1 { (state $svar) }
 {
-    sub bughunt2 { state $x //= 17; $x++ }
-    lives_ok { bughunt2() },
-        'a state variable in parens lives with a state variable with //= init';
+    sub bughunt2 { state $x //= 17; ++$x }
+    is bughunt2(), 18,
+       'a state variable in parens works with a state variable with //= init';
 }
 
 # vim: ft=perl6
