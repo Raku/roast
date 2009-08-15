@@ -56,7 +56,7 @@ eval_dies_ok 'my Digit $x = 3.1',
     #?rakudo todo 'RT #67818'
     lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
-    #?rakudo skip 'succeeds for the wrong reason (need to test the error)'
+    #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
     dies_ok { my Person $p = { :first<Charlie>, :last<Delta> } },
             'subset of hash with where enforces where clause';
 
@@ -69,7 +69,7 @@ eval_dies_ok 'my Digit $x = 3.1',
     #?rakudo todo 'RT #67818'
     lives_ok { my NumArray $n = [] },
              'can create subset of array with where';
-    #?rakudo skip 'succeeds for the wrong reason (need to test the error)'
+    #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
     dies_ok { my NumArray $n = <Echo 2> },
             'subset of array with where enforces where clause';
 
