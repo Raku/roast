@@ -138,8 +138,11 @@ plan 21;
     ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
     ok "$!" ~~ /List/,          'error message contains name of class';
 
-    class List is also { method rt62836_x { 62836 } };
+    #?rakudo skip 'unskip when "augment" works'
+    {
+    augment class List { method rt62836_x { 62836 } };
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
+    }
 }
 
 # vim: ft=perl6
