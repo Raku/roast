@@ -287,7 +287,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     slurp_any_thread(3|4|5);
     is $count, 1, 'Any slurpy param doesnt autothread';
     $count = 0;
-    #?rakudo skip 
     slurp_any_multi(3|4|5);
     is $count, 1, 'Any slurpy param doesnt autothread';
 }

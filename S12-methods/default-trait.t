@@ -25,7 +25,6 @@ multi sub slurpy() is default { return 'a' };
 multi sub slurpy(*@args)      { return 'b' };
 
 is slurpy(2), 'b', 'basic sanity with arity based dispatch and slurpies';
-#?rakudo skip 'possibly bogus test?'
 is slurpy(),  'a', '"is default" trait wins against empty slurpy param';
 
 # vim: ft=perl6

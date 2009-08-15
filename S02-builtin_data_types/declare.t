@@ -94,7 +94,6 @@ plan 85;
  isa_ok($brodi, Hash);
 }
 
-#?rakudo skip 'Buf not implemented'
 {
  my Buf $nacpoi;
  isa_ok($nacpoi, Buf);
@@ -304,7 +303,6 @@ plan 85;
  isa_ok($rr, Sub );
 }
 
-#?rakudo skip 'Sub Cannot handle typed variables with sigil &'
 {
  my sub baz() { return 1;};
  my sub bar() { return baz;} ;
@@ -358,7 +356,6 @@ plan 85;
  isa_ok($reso,Class  );
 }
 
-#?rakudo skip 'Role causing Null PMC access in get_string()'
 {
  my Role $cino;
  isa_ok($cino, Role );
@@ -530,13 +527,11 @@ plan 85;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
-#?rakudo skip 'Not yet implemented Array of Int @box'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
-#?rakudo skip 'Not yet implemented Array of Array of Int @box'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');

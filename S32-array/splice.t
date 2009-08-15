@@ -43,7 +43,6 @@ sub splice_ok (@got, @ref, @exp, @exp_ref, Str $comment) {
 is( @b, [], "push-via-splice result works" );
 is( @a, ([1..12]), "push-via-splice modification works");
 
-#?rakudo skip 'named args'
 {
     my @a = (1..10);
     my @b = splice(@a,+@a,0,11,12);
