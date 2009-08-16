@@ -73,7 +73,7 @@ ok $g1.epoch==3661, "epoch at 1970-01-01 01:01:01"; # test 15
 ok ~$g1 eq '1970-01-01T01:01:01+0100', "as Str 1970-01-01T01:01:01+0100"; # test 16
 
 # round trip test for current number of seconds in the Unix epoch
-$t = int time;
+$t = time.int;
 my @t = test_gmtime( $t );
 $g1 = Temporal::DateTime.new(
           date => Temporal::Date.new( :year(@t[5]+1900), :month(@t[4]+1), :day(@t[3]) ),

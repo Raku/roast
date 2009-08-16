@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 66;
+plan 68;
 
 # L<S32::Numeric/Num/"=item truncate">
 # truncate and int() are synonynms.
@@ -86,5 +86,13 @@ is(int(1.9e3), 1900, "int 1.9e3 is 1900");
 is(int(Inf),    Inf, "int Inf is Inf");
 is(int(-Inf),  -Inf, "int -Inf is -Inf");
 is(int(NaN),    NaN, "int NaN is NaN");
+
+# RT #65132
+{
+    #?rakudo todo 'no more prefix:int'
+    eval_dies_ok 'int time', 'dies: int time (prefix:int is gone)';
+    my $t = time;
+    is int($t), $t.int, 'int(time) == time.int'
+}
 
 # vim: ft=perl6
