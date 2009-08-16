@@ -9,7 +9,7 @@ use Test;
 # TODO: 
 #  * Multiple inheritance + PRE/POST blocks
 
-plan 18;
+plan 25;
 
 sub foo(Num $i) {
     PRE {
@@ -124,5 +124,83 @@ class Another {
 my $pt = Another.new;
 lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
 dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
+
+{
+    my $str;
+    {
+        PRE  { $str ~= '('; 1 }
+        POST { $str ~= ')'; 1 }
+        $str ~= 'x';
+    }
+    is $str, '(x)', 'PRE and POST run on ordinary blocks';
+}
+
+{
+    my $str;
+    {
+        POST  { $str ~= ')'; 1 }
+        LEAVE { $str ~= ']' }
+        ENTER { $str ~= '[' }
+        PRE   { $str ~= '('; 1 }
+        $str ~= 'x';
+    }
+    is $str, '([x])', 'PRE/POST run outside ENTER/LEAVE';
+}
+
+{
+    my $str;
+    try {
+        {
+            PRE     { $str ~= '('; 0 }
+            PRE     { $str ~= '*'; 1 }
+            ENTER   { $str ~= '[' }
+            $str ~= 'x';
+            LEAVE   { $str ~= ']' }
+            POST    { $str ~= ')'; 1 }
+        }
+    }
+    is $str, '(', 'failing PRE runs nothing else';
+}
+
+{
+    my $str;
+    try {
+        {
+            POST  { $str ~= 'x'; 0 }
+            LEAVE { $str ~= 'y' }
+            POST  { $str ~= 'z'; 1 }
+        }
+    }
+    is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
+}
+
+{
+    my $str;
+    try {
+        POST { $str ~= $! // '<undef>'; 1 }
+        die 'foo';
+    }
+    is $str, 'foo', 'POST runs on exception, with correct $!';
+}
+
+{
+    my $str;
+    try {
+        POST { $str ~= (defined $! ? 'yes' : 'no'); 1 }
+        try { die 'foo' }
+        $str ~= (defined $! ? 'aye' : 'nay');
+    }
+    is $str, 'ayeno', 'POST has undef $! on no exception';
+}
+
+{
+    try {
+        POST { 0 }
+        die 'foo';
+    }
+    is $!, 'foo', 'failing POST on exception doesn\'t replace $!';
+    # XXX
+    # is $!.pending.[-1], 'a POST exception', 'does push onto $!.pending';
+}
 
 # vim: ft=perl6

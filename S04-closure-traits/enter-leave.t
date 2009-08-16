@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 19;
 
 # L<S04/Closure traits/ENTER "at every block entry time">
 # L<S04/Closure traits/LEAVE "at every block exit time">
@@ -90,6 +90,94 @@ plan 11;
         }
         $a;
     }), 1, 'leave triggers LEAVE {}';
+}
+
+{
+    my $str;
+    try {
+        ENTER { $str ~= '(' }
+        LEAVE { $str ~= ')' }
+        $str ~= 'x';
+        die 'foo';
+    }
+    is $str, '(x)', 'die calls LEAVE blocks';
+}
+
+{
+    my $str;
+    try {
+        LEAVE { $str ~= $! // '<undef>' }
+        die 'foo';
+    }
+    is $str, 'foo', '$! set in LEAVE if exception thrown';
+}
+
+{
+    my $str;
+    {
+        LEAVE { $str ~= (defined $! ? 'yes' : 'no') }
+        try { die 'foo' }
+        $str ~= (defined $! ? 'aye' : 'nay');
+    }
+    is $str, 'ayeno', '$! not set in LEAVE if exception not thrown';
+}
+
+{
+    my $str;
+    try {
+        $str ~= '(';
+        try {
+            ENTER { die 'foo' }
+            $str ~= 'x';
+        }
+        $str ~= ')';
+    }
+    is $str, '()', 'die in ENTER caught by try';
+}
+
+{
+    my $str;
+    try {
+        $str ~= '(';
+        try {
+            LEAVE { die 'foo' }
+            $str ~= 'x';
+        }
+        $str ~= ')';
+    }
+    is $str, '(x)', 'die in LEAVE caught by try';
+}
+
+{
+    my $str;
+    try {
+        $str ~= '(';
+        try {
+            ENTER { $str ~= '['; die 'foo' }
+            LEAVE { $str ~= ']' }
+            $str ~= 'x';
+        }
+        $str ~= ')';
+    }
+    is $str, '([])', 'die in ENTER calls LEAVE';
+}
+
+{
+    my $str;
+    try {
+        ENTER { $str ~= '1'; die 'foo' }
+        ENTER { $str ~= '2' }
+    }
+    is $str, '1', 'die aborts ENTER queue';
+}
+
+{
+    my $str;
+    try {
+        LEAVE { $str ~= '1' }
+        LEAVE { $str ~= '2'; die 'foo' }
+    }
+    is $str, '21', 'die doesn\'t abort LEAVE queue';
 }
 
 # vim: ft=perl6
