@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 71;
 
 =begin pod
 
@@ -178,5 +178,24 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 is( ([*]()), 1, "[*]() returns 1");
 is( ([+]()), 0, "[+]() returns 0");
+
+# RT #65164 (TODO: implement [^^])
+#?rakudo skip 'implement [^^]'
+{
+    is [^^](0, 42), 42, '[^^] works (one of two true)';
+    is [^^](42, 0), 42, '[^^] works (one of two true)';
+    ok ! [^^](1, 42),   '[^^] works (two true)';
+    ok ! [^^](0, 0),    '[^^] works (two false)';
+
+    ok ! [^^](0, 0, 0), '[^^] works (three false)';
+    ok ! [^^](5, 9, 17), '[^^] works (three true)';
+
+    is [^^](5, 9, 0),  (5 ^^ 9 ^^ 0),  '[^^] mix 1';
+    is [^^](5, 0, 17), (5 ^^ 0 ^^ 17), '[^^] mix 2';
+    is [^^](0, 9, 17), (0 ^^ 9 ^^ 17), '[^^] mix 3';
+    is [^^](5, 0, 0),  (5 ^^ 0 ^^ 0),  '[^^] mix 4';
+    is [^^](0, 9, 0),  (0 ^^ 9 ^^ 0),  '[^^] mix 5';
+    is [^^](0, 0, 17), (0 ^^ 0 ^^ 17), '[^^] mix 6';
+}
 
 # vim: ft=perl6
