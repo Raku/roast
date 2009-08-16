@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 15;
+plan 17;
 
 #L<S02/"Built-In Data Types"/".bytes, .codes or .graphs">
 
@@ -15,6 +15,16 @@ is "foo\r\nbar".graphs, 7, 'CRLF is 1 graph';
 
 # Speculation, .chars is unspecced, also use Bytes etc.
 is $u.chars, 1, '.chars defaults to .graphs';
+
+# RT #65170
+{
+    my $rt65170;
+
+    $rt65170 = "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]";
+    is $rt65170.chars, 1, '.chars defaults to .graphs (2)';
+    $rt65170 = "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE, COMBINING DOT BELOW]";
+    is $rt65170.chars, 1, '.chars defaults to .graphs (3)';
+}
 
 #L<S02/"Built-In Data Types"/"coerce to the proper units">
     $u = "\x[41,
