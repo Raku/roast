@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 56;
+plan 57;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -440,6 +440,12 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $c, 6, 'infinte for loop ends in time using last';
 }
 
-  
+# RT #65212
+{
+    my $parsed = 0;
+    eval '$parsed = 1; for (1..3)->$n { last }';
+    #?rakudo todo 'RT #65212'
+    ok ! $parsed, 'for (1..3)->$n   fails to parse';
+}
 
 # vim: ft=perl6
