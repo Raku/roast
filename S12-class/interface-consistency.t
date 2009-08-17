@@ -4,7 +4,7 @@ use Test;
 
 # L<S12/Interface Consistency>
 
-plan 6;
+plan 8;
 
 class Foo {
     method m1($a) {
@@ -30,5 +30,27 @@ class Bar is Foo is hidden {
 dies_ok { Bar.new.m1(1, :x<1>, :y<2>) },  'is hidden means no implict *%_';
 ok &Bar::m1.signature.perl !~~ /'*%_'/,   '*%_ does not show up in .perl of the Signature';
 
+
+class Baz is Bar {
+    method m1($a) {
+        nextsame;
+    }
+}
+
+is Baz.new.m1(42), 1, 'is hidden on Bar means we skip over it in deferal';
+
+
+class Fiz is Foo {
+    method m1($a) {
+        4
+    }
+}
+class Faz hides Fiz {
+    method m1($a) {
+        nextsame;
+    }
+}
+
+is Faz.new.m1(42), 1, 'hides Fiz means we skip over Fiz in deferal';
 
 # vim: ft=perl6
