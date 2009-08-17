@@ -115,9 +115,9 @@ plan 19;
 {
     my $str;
     {
-        LEAVE { $str ~= (defined $! ? 'yes' : 'no') }
+        LEAVE { $str ~= (defined $! ?? 'yes' !! 'no') }
         try { die 'foo' }
-        $str ~= (defined $! ? 'aye' : 'nay');
+        $str ~= (defined $! ?? 'aye' !! 'nay');
     }
     is $str, 'ayeno', '$! not set in LEAVE if exception not thrown';
 }
