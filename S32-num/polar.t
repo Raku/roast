@@ -4,11 +4,11 @@ plan 48;
 
 # L<S32::Numeric/Complex/"=item polar">
 
-#=begin pod
+=begin pod
 
 #Basic tests for polar()
 
-#=end pod
+=end pod
 
 my $sq2 = 1.4142135623731;
 sub check_polar($complex, $magnitude_want, $angle_want) {

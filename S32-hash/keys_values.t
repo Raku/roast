@@ -4,11 +4,11 @@ use Test;
 
 plan 16;
 
-#=begin pod
+=begin pod
 
 #Basic C<keys> and C<values> tests for hashes and pairs, see S32::Containers.
 
-#=end pod
+=end pod
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
 
