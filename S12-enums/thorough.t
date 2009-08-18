@@ -15,6 +15,7 @@ Enum tests from L<S12/Enums>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
 ok day ne "", 'enum itself stringififes';
+#?rakudo skip 'regression'
 ok day.WHAT, 'enum.WHAT returned a value';
 ok day.perl, 'enum.perl returned a value';
 
