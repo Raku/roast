@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 =begin pod
 
@@ -25,6 +25,8 @@ if !eval('("a" ~~ /a/)') {
   "whaleshark" ~~ m/<fishy>/;
   is($/<fishy>[0], "whale", "named rule ordinal capture");
   is($<fishy>[0], "whale", "named rule ordinal capture with abbreviated variable");
+  #?rakudo skip 'RT 68680'
+  is $/.orig, 'whaleshark', '$/.orig works';
 };
 
 #L<S05/Named scalar aliasing to subpatterns>
