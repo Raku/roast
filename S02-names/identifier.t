@@ -61,11 +61,11 @@ plan 15;
 }
 
 # RT #68358
+#?rakudo skip 'RT #68358'
 {
     my ($x);
     sub my($a) { $a + 17 }
     $x = 5;
-    #?rakudo todo 'RT #68358'
     is my($x), 23, 'call to sub named "my" works';
 }
 
