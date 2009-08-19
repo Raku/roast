@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 31;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -79,6 +79,22 @@ is(~&foo, 'foo',  'a multi stringifies sensibly');
     is rt68234(:key), 'with key', 'can find multi method with key';
     #?rakudo skip 'RT #68234'
     is rt68234(:unknown), 'unknown', 'can find multi method with slurpy';
+}
+
+# RT #68158
+{
+    multi rt68158() { 1 }
+    multi rt68158(*@x) { 2 }
+    is rt68158(),  1, 'non-slurpy wins over slurpy';
+    is rt68158(9), 2, 'slurpy called when non-slurpy can not bind';
+}
+
+# RT #64922
+{
+    multi rt64922($x, %h?) { 1 }
+    multi rt64922(@x) { 2 }
+    is rt64922(1),     1, 'optional parameter does not break type-based candidate sorting';
+    is rt64922([1,2]), 2, 'optional parameter does not break type-based candidate sorting';
 }
 
 # vim: ft=perl6
