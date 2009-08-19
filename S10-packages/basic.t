@@ -156,7 +156,7 @@ our $outer_package = 19;
         'simple package case that should not blow platform';
 
     eval 'A::B';
-    ok  ~$! !~~ /<fairly_conclusive_platform_error>/,
+    ok  ~$! ~~ /<likely_perl6_not_found_err>/,
         'another simple package case that should not blow platform';
 }
 

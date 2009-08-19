@@ -28,7 +28,7 @@ grammar A::B {
 }
 is(~A::B.parse("zzz42zzz"), "42", ".parse works with namespaced grammars");
 
-#?rakudo todo 'RT #63460'
+# TODO: Check for a good error message, not just the absence of a bad one.
 dies_ok { No::Such::Grammar.parse() }, '.parse on missing grammar dies';
 
 # vim: ft=perl6
