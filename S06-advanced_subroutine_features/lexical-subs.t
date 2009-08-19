@@ -2,10 +2,10 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 9;
 
 {
-    sub f() { 
+    sub f() {
         my sub g(){"g"}; my sub h(){g()}; h();
     };
     is(f(), 'g', 'can indirectly call lexical sub');
@@ -44,6 +44,16 @@ plan 7;
     if ($!) {
         fail "Could call ok from within a lexical sub";
     }
+}
+
+# used to be http://rt.perl.org/rt3/Ticket/Display.html?id=65498
+{
+    sub a { 'outer' };
+    {
+        my sub a { 'inner' };
+        is a(), 'inner', 'inner lexical hides outer sub of same name';
+    }
+    is a(), 'outer', '... but only where it is visisble';
 }
 
 # vim: ft=perl6 :
