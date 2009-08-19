@@ -41,7 +41,6 @@ is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
 # http://rt.perl.org/rt3/Ticket/Display.html?id=66596
 # .subst within a multi sub didn't work
 
-#?rakudo skip 'RT 66596'
 {
     multi substtest (Str $d) {
         $d.subst(/o/, 'a')
