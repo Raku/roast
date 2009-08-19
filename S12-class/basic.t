@@ -110,7 +110,6 @@ is  (class A61354_1 { eval q/method x { "OH HAI" }/ }; A61354_1.x),
 }
 
 # RT #64686
-#?rakudo todo 'RT #64686'
 eval_dies_ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
              'call to missing method in A::B dies after class A::C defined';
 

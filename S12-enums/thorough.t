@@ -107,7 +107,6 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 # RT #66886
 {
     enum RT66886 <b>;
-    #?rakudo todo 'RT #66886'
     eval_dies_ok 'RT66886::c', 'accessing non-value of enum dies proper-like';
 }
 

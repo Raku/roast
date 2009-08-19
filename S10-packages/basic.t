@@ -34,7 +34,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 # change to match likely error (top of file) when passes
-#?rakudo todo 'RT #62970'
 {
     eval_dies_ok 'Empty::no_such_sub()', 'Non-existant sub through package';
 }

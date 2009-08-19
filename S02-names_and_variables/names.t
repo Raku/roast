@@ -57,7 +57,6 @@ plan 19;
 }
 
 # RT #63646
-#?rakudo todo 'RT #63646'
 {
     dies_ok { OscarMikeGolf::whiskey_tango_foxtrot() },
             'dies when calling non-existent sub in non-existent package';
