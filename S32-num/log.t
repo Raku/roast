@@ -81,6 +81,5 @@ is_approx(log10(-1i), -0.5i * pi / log(10), "got the log10 of -i (complex unit)"
 
 #?rakudo 2 skip 'log10 of a Complex'
 is_approx( (-1i).log10(), -0.5i*pi / log(10), " (i).log10 = - i  * pi/(2 log(10))");
-#?rakudo 1 todo 'complex log10()'
 isa_ok( log10(-1+0i), Complex, 'log10 of a complex returns a complex, not a list');
 # vim: ft=perl6

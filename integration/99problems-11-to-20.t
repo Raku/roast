@@ -153,7 +153,6 @@ plan 31;
     
     my @result = eval '<a b c c d> ==> map { $_ xx 2 }';
     #?pugs todo 'feed ops'
-    #?rakudo todo 'feed ops'
     is @result, <a a b b c c c c d d>,
         'We should be able to duplicate the elements of a list';
 }

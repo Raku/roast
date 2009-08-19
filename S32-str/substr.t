@@ -302,7 +302,6 @@ sub p (Int $a) {  my $p = $a; return $p }
     my $str = "gorch ding";
 
     substr($str, 0, p(5)) = "gloop";
-#?rakudo todo "substr as lvalue"
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
 
     my $r = \substr($str, 0, p(5));
