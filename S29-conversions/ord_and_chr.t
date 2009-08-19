@@ -149,7 +149,6 @@ is 65.chr, 'A', "there's a .chr method";
 is ord('hello'), [104, 101, 108, 108, 111], 'ord works with longer strings';
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 
-#?rakudo skip 'RT #62772'
 ok ord("") ~~ Failure, 'ord("") returns a Failure';
 
 # RT #65172
