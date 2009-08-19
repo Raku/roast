@@ -34,11 +34,9 @@ plan 6;
 # RT #64990
 {
     our Int sub rt64990 { fail() }
-    #?rakudo skip 'RT #64990'
     ok rt64990() ~~ Failure, 'sub typed Int can fail()';
 
     our Int sub repeat { return fail() }
-    #?rakudo skip 'RT #64990'
     ok repeat() ~~ Failure, 'sub typed Int can return Failure';
 }
 
