@@ -166,8 +166,6 @@ class PairTest {
 }
 
 # delegation with lvalue routines
-#?rakudo skip 'lvalue delegation'
-#?DOES 5
 {
     class BackendRw {
         has $.a is rw;
@@ -177,7 +175,7 @@ class PairTest {
     class FrontendRw {
         has BackendRw $.backend handles <a b c>;
         submethod BUILD {
-            $!backend .= new();
+            $!backend = BackendRw.new();
         }
     }
     my $t = FrontendRw.new();
