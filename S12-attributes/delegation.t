@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 61;
+plan 66;
 
 =begin desc
 
@@ -145,7 +145,7 @@ class PairTest {
 }
 
 #?DOES 7
-#?rakudo skip 'unimplemented'
+#?rakudo skip '"handles" on array attributes'
 {
   class MyArray {
     has @.elems handles "join";
@@ -163,6 +163,29 @@ class PairTest {
     is $a.codes  , 5, "return delegation worked";
     is $a.graphs , 5, "return delegation worked";
   }
+}
+
+# delegation with lvalue routines
+#?rakudo skip 'lvalue delegation'
+#?DOES 5
+{
+    class BackendRw {
+        has $.a is rw;
+        has $.b is rw;
+        has $.c;
+    }
+    class FrontendRw {
+        has BackendRw $.backend handles <a b c>;
+        submethod BUILD {
+            $!backend .= new();
+        }
+    }
+    my $t = FrontendRw.new();
+    lives_ok { $t.a = 'foo' }, 'can assign to lvalue delegated attribute';
+    dies_ok  { $t.c = 'foo' }, '... but only to lvaues attributes';
+    is $t.a, 'foo', 'assignment worked';
+    is $t.backend.a, 'foo', 'can also query that through the backend';
+    ok $t.c ~~ undef, 'died assignment had no effect';
 }
 
 # vim: syn=perl6
