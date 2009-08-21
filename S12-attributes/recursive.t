@@ -83,7 +83,6 @@ Test attributes with recursively typed attributes
     lives_ok { $good_a.as[0] = Z.new }, 'can assign';
     isa_ok $good_a.as[0], Z;
 
-    #?rakudo 2 todo 'RT #67236'
     my $bad_a = Z.new;
     lives_ok { $bad_a.as.push( Z.new ) }, 'can push';
     isa_ok $bad_a.as[0], Z;
