@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 23;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -67,5 +67,19 @@ is @a, [1,2,3,4], '*.meth created closure works';
     is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT 67450)';
 }
 
+# L<S02/Built-In Data Types/If multiple * appear as terms>
+{
+    my $c = * * *;
+    ok $c ~~ Code, '* * * generated a closure';
+    is $c(-3), 9, '... that behaves correctly (1)';
+    is $c(5), 25, '... that behaves correctly (2)';
+}
+
+{
+    my $c = * * * + *;
+    ok $c ~~ Code, '* * * + * generated a closure';
+    is $c(2), 6,  '... that works';
+    is $c(-3), 6, '... that respects precdence';
+}
 
 # vim: ft=perl6
