@@ -1,72 +1,36 @@
 use v6;
 use Test;
 
-plan 8;
+plan 5;
 
 # L<S14/Traits/>
 
-{
-    role testtrait1 {
-        method exists-only-in-test-trait {
-            42;
-        }
-    }
-    multi trait_mod:<is>(Object $container, testtrait1 $trait) {
-        $container does testtrait1;
-    }
-
-    my Int $x is testtrait1 = 3;
-    lives_ok { $x.exists-only-in-test-trait() }, 
-             'can access method that was mixed in by the trait';
-    ok $x ~~ testtrait1, 'since its a mixin, it should do that role';
-    is $x.exists-only-in-test-trait(), 42, 'right value';
+my @var_names;
+multi trait_mod:<is>(ContainerDeclarand $a, :$noted!) {
+    push @var_names, $a.name;
 }
 
-# now a version that uses an attribute
-{
-    role multiply_with2 {
-        has $.num is rw;
-        multi method mul() {
-            $.num * self;
-        }
-    }
-    multi trait_mod:<is>(Object $cont, multiply_with2 $trait, $n) {
-        $cont does multiply_with2($n);
-    }
-
-    my Num $x is multiply_with2(4) = 5;
-    ok $x ~~ multiply_with2, 'matches multiply_with2';
-    is $x.mul, 20, 'trait taking attribute';
+role doc { has $.doc is rw }
+multi trait_mod:<is>(ContainerDeclarand $a, doc, $arg) {
+    $a.container.VAR does doc($arg);
 }
 
-# with an argument, plus parametric roles
-#?rakudo skip 'unknown bug'
-{
-    role multiply_with[$num] {
-        multi method mul() {
-            $num * self;
-        }
-    }
-    multi trait_mod:<is>($cont, multiply_with $trait) {
-        $cont does $trait;
-    }
 
-    my Num $x is multiply_with[4] = 5;
-    ok $x ~~ multiply_with[4], 'matches multiply_with[4]';
-    is $x.mul, 20, 'parametric traits';
-}
+my $a is noted;
+my %b is noted;
+my @c is noted;
 
-#?rakudo skip 'no custom trait_mod names possible yet'
-{
-    class A { method b { 5 } };
-    role different_keyword {
-        multi method a() { b() };
-    }
-    multi trait_mod:<implements>($cont, different_keyword $trait) {
-        $cont does different_keyword();
-    }
-    my A $x implements different_keyword .= new();
-    is $x.a(), 5, 'can define other trait_mod keywords';
-}
+@var_names .= sort;
+is +@var_names, 3, 'have correct number of names noted from trait applied by name';
+is @var_names, ['$a','%b','@c'], 'trait recorded correct information';
+
+
+my $dog is doc('barks');
+my @birds is doc('tweet');
+my %cows is doc('moooo');
+
+is $dog.VAR.doc, 'barks', 'trait applied to scalar variable correctly';
+is @birds.doc,   'tweet', 'trait applied to array variable correctly';
+is %cows.doc,    'moooo', 'trait applied to hash variable correctly';
 
 # vim: ft=perl6
