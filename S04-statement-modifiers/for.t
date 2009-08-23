@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 16;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -91,6 +91,16 @@ plan 14;
     #?rakudo 2 todo 'RT #61494'
     is "$!", $errmsg, 'error for two spaces is the same as one space';
     ok "$!" ~~ /\b say \b/, 'error message is for "say"';
+}
+
+# L<S04/The for statement/When used as statement modifiers on implicit blocks>
+
+{
+    $_ = 42;
+    my @trace;
+    @trace.push: $_ for 2, 3;
+    is @trace.join(':'), '2:3', 'statement modifier "for" sets $_ correctl';
+    is $_, 42, '"for" statement modifier restored $_ of outer block';
 }
 
 # vim: ft=perl6
