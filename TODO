@@ -25,8 +25,6 @@ sometimes the spec changes, and the test suite must be updated accordingly.
 Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
-* (r27801) subroutines without signature don't always default to (*@_, *%_)
-  anymore (ack 'sub \w+\s*{' for a list of named subs without signature)
 * (r27503) filetest methods
 * (r27106,r27365,r27366) utf8/utf16 etc buffer types (t/spec/S32-str/encode.t)
 * (r27324,r27331) 'use' semantics
@@ -39,7 +37,6 @@ the spec (newest first)
 * (r26401) Pi/Pf characters are allowed as brackets
 * (r25891) Junction -> junction, eigenstates method is now private
 * (r25830) named parameters to open()
-* (r25774) ~ and + act on the matched string, not the abstract object
 * (r25767) updates to builtin regexes
 
 S02
