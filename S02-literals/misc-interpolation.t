@@ -10,7 +10,7 @@ These tests derived from comments in L<http://use.perl.org/~autrijus/journal/233
 
 =end pod
 
-plan 40;
+plan 43;
 
 my $world = "World";
 my $number = 1;
@@ -92,5 +92,22 @@ is("x  \c[ 65, 66, 67 ]  x", "x  ABC  x",  "\\c[] allows multiple chars with whi
 
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
 is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
+
+# L<S12/Methods/Within an interpolation, the double-quoted form>
+#?rakudo skip 'interpolation of indirect method calls'
+{
+    class InterpolationTest {
+        method f { 'int' }
+    }
+    my $x = InterpolationTest.new;
+
+    # ORLY, STD.pm parses that as an indirect method call. It will warn,
+    # but strictly speaking it's legal.
+    is "|$x.'f'()|", '|int|',
+       'interpolation of indirect method calls (different quotes)';
+    is "|$x."f"()|", '|int|',
+       'interpolation of indirect method calls (same quotes)';
+    eval_dies_ok q["|$x."f "()"], '... but whitespaces are not allowed';
+}
 
 # vim: ft=perl6
