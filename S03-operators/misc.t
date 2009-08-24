@@ -55,7 +55,6 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 is(2 || 3, 2, "|| returns first true value");
 ok(!(defined( 0 || undef)), "|| returns last false value of list?");
 
-#?rakudo skip 'RT #66404'
 {
     (my @s)[0] //= 5;
     is @s[0], 5, '(my @s)[0] //= something works';
