@@ -13,8 +13,8 @@ multi foo (Num $bar)   { "Num "  ~ $bar  }
 multi foo (Bool $bar)  { "Bool " ~ $bar  }
 multi foo (Regex $bar) { "Regex " ~ WHAT( $bar ) } # since Rule's don't stringify
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
-multi foo (@bar) { "Array " ~ join(', ', @bar) }
-multi foo (%bar)  { "Hash " ~ join(', ', %bar.keys.sort) }
+multi foo (@bar) { "Positional " ~ join(', ', @bar) }
+multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
 multi foo (IO $fh)     { "IO" }
 
 is(foo('test'), 'Str test', 'dispatched to the Str sub');
@@ -27,10 +27,10 @@ is(foo(/a/),'Regex Regex()','dispatched to the Rule sub');
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');
-is(foo(@array), 'Array foo, bar, baz', 'dispatched to the Array sub');
+is(foo(@array), 'Positional foo, bar, baz', 'dispatched to the Positional sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
-is(foo(%hash), 'Hash bar, baz, foo', 'dispatched to the Hash sub');
+is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub');
 
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
 
