@@ -6,6 +6,7 @@ plan 14;
 # L<S13/"Type Casting"/"method postcircumfix:<{ }> (*@@slice) {...}">
 # basic tests to see if the methods overload correctly.
 
+#?rakudo skip "rakudo still implements it without an inner capture"
 {
     my multi testsub ($a,$b) {
         return 1;
