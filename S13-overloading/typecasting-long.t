@@ -7,13 +7,24 @@ plan 14;
 # basic tests to see if the methods overload correctly.
 
 {
+    my multi testsub ($a,$b) {
+        return 1;
+    }
+    my multi testsub ($a) {
+        return 2;
+    }
+    my multi testsub () {
+        return 3;
+    }
     class TypeCastSub {
-        method postcircumfix:<( )> () {return 'pretending to be a sub'}
+        method postcircumfix:<( )> ($capture) {return 'pretending to be a sub '.testsub(|$capture) }
     }
 
     my $thing = TypeCastSub.new;
-    is($thing(), 'pretending to be a sub', 'overloaded () call works');
-    is($thing.(), 'pretending to be a sub', 'overloaded .() call works');
+    is($thing(), 'pretending to be a sub 3', 'overloaded () call works');
+    is($thing.(), 'pretending to be a sub 3', 'overloaded .() call works');
+    is($thing.(1), 'pretending to be a sub 2', 'overloaded .() call works');
+    is($thing.(1,2), 'pretending to be a sub 1', 'overloaded .() call works');
 }
 
 {
