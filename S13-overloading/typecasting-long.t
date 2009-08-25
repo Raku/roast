@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 # L<S13/"Type Casting"/"method postcircumfix:<{ }> (*@@slice) {...}">
 # basic tests to see if the methods overload correctly.
