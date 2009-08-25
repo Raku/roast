@@ -40,7 +40,7 @@ lives_ok { $test4 = Quux.new() },
     'Can instantiate with overridden instance method';
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';
 my $test5 = 0;
-lives_ok {$test5 = Quux.bar}, 'class attribute still accessible via class name';
+dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in subclass; we do not magically ignore it';
 #?rakudo 5 todo 'class attributes'
 is $test5, 23, 'class attribute really works, even when overridden';
 my $test6 = 0;
