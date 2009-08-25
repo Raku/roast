@@ -538,9 +538,8 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
         method rt68370 { $!a = 68370 }
     }
 
-    #?rakudo todo 'RT #68370 -- Null PMC Access in getprop()'
     dies_ok { RT68370.rt68370() },
-        'dies: modify instance attribute via class method call';
+        'dies: trying to modify instance attribute when invocant is type object';
 }
 
 # Binding an attribute (was RT #64850)
