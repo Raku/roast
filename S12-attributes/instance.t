@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 129;
+plan 130;
 
 =begin pod
 
@@ -541,6 +541,17 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
     #?rakudo todo 'RT #68370 -- Null PMC Access in getprop()'
     dies_ok { RT68370.rt68370() },
         'dies: modify instance attribute via class method call';
+}
+
+# Binding an attribute (was RT #64850)
+{
+    class RT64850 {
+        has $.x;
+        method foo { $!x := 42 }
+    }
+    my $a = RT64850.new; 
+    $a.foo;
+    is $a.x, 42, 'binding to an attribute works';
 }
 
 # vim: ft=perl6
