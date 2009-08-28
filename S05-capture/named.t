@@ -25,7 +25,6 @@ if !eval('("a" ~~ /a/)') {
   "whaleshark" ~~ m/<fishy>/;
   is($/<fishy>[0], "whale", "named rule ordinal capture");
   is($<fishy>[0], "whale", "named rule ordinal capture with abbreviated variable");
-  #?rakudo skip 'RT 68680'
   is $/.orig, 'whaleshark', '$/.orig works';
 };
 
