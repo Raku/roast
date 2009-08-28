@@ -54,7 +54,6 @@ if !eval('("a" ~~ /a/)') {
     regex o { o };
     "foo" ~~ /f<o>+/;
 
-    #?rakudo todo 'RT #64946'
     is ~$<o>, 'o o', 'match list stringifies like a normal list';
     isa_ok $<o>, List;
     # I don't know what difference 'isa' makes, but it does.
