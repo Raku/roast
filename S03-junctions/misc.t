@@ -401,6 +401,8 @@ sub junction_diff(Object $this, Object $that) {
   return @errors if @errors;
   return;
 }
+
+#?rakudo skip 'Confusing tests (to pmichaud)'
 {
   ok(! junction_diff(1, 1),     'no Junctions');
   is_deeply(junction_diff(1, 1|2), "This is not a Junction",  'Left value is not a Junction');
