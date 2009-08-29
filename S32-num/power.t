@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 29;
 
 # Real **
 is(1 ** 2,    1, "1 **  2 ==  1");
@@ -10,6 +10,26 @@ is(4 ** 0,    1, "4 **  0 ==  1");
 is(4 ** 1,    4, "4 **  1 ==  4");
 is(4 ** 2,   16, "4 **  2 == 16");
 is(4 ** 0.5,  2, "4 ** .5 ==  2");
+
+is(Inf ** 2, Inf, 'Inf**2 = Inf');
+is((-Inf) ** 3, -Inf, '(-Inf)**3 = -Inf');
+
+is(Inf ** Inf, Inf, 'Inf**Inf = Inf');
+is(NaN ** 2, NaN, "NaN propagates with integer powers");
+is(NaN ** 3.14, NaN, "NaN propagates with numeric powers");
+
+is(0 ** NaN, NaN, "0**NaN=NaN");
+
+is(NaN ** 1i, NaN, "NaN**1i=NaN");
+#?rakudo todo '1i**NaN should be NaN'
+is(1i ** NaN, NaN, "1i**NaN=NaN");
+
+#?rakudo todo 'NaN**0 should be NaN'
+is(NaN ** 0, NaN, "NaN**0=NaN");
+
+is(NaN ** NaN, NaN, "NaN**NaN=NaN");
+is(Inf ** NaN, NaN, "Inf**NaN=NaN");
+is(NaN ** Inf, NaN, "NaN**Inf=NaN");
 
 is_approx(exp(1) ** 0.5,  exp(0.5), "e **  .5 ==   exp(.5)");
 is_approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
