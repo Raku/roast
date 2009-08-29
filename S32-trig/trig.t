@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 613;
+plan *;
 
 =begin description
 
@@ -172,66 +172,40 @@ is_approx(atan2(-1, 1/3*sqrt(3), 1) + 1, 300/360, 'atan2 - revolutions (Q IV)');
 
 # -- sin, cos, tan
 # sin
-is_approx(sin(0/4*$PI), 0, "sin - default");
-is_approx(sin(1/4*$PI), 1/2*sqrt(2), "sin - default");
-is_approx(sin(2/4*$PI), 1, "sin - default");
-is_approx(sin(3/4*$PI), 1/2*sqrt(2), "sin - default");
-is_approx(sin(4/4*$PI), 0, "sin - default");
-is_approx(sin(5/4*$PI), -1/2*sqrt(2), "sin - default");
-is_approx(sin(6/4*$PI), -1, "sin - default");
-is_approx(sin(7/4*$PI), -1/2*sqrt(2), "sin - default");
-is_approx(sin(8/4*$PI), 0, "sin - default");
+my %sines = ( -360 => 0,
+              135 - 360 => 1/2*sqrt(2),
+              330 - 360 => -0.5,
+              0 => 0,
+              30 => 0.5,
+			  45 => 1/2*sqrt(2),
+			  90 => 1,
+			  135 => 1/2*sqrt(2),
+			  180 => 0,
+			  225 => -1/2*sqrt(2),
+			  270 => -1,
+			  315 => -1/2*sqrt(2),
+			  360 => 0,
+              30 + 360 => 0.5,
+			  225 + 360 => -1/2*sqrt(2),
+              720 => 0
+		    );
+		
+for %sines.kv -> $angle, $sine
+{
+	is_approx(sin( $angle/180*$PI), $sine, "sin - default");
+	is_approx(sin( $angle/180*$PI, 'radians'), $sine, "sin - radians");
+	is_approx(sin( $angle, 'degrees'), $sine, "sin - degrees");
+	is_approx(sin( $angle/180*200, 'gradians'), $sine, "sin - gradians");
+	is_approx(sin( $angle/360, 1), $sine, "sin - revolutions");
+}
+
 is(sin(Inf), NaN, "sin - default");
 is(sin(-Inf), NaN, "sin - default");
-
-is_approx(sin(  0, 'degrees'), 0, "sin - degrees");
-is_approx(sin( 45, 'degrees'), 1/2*sqrt(2), "sin - degrees");
-is_approx(sin( 90, 'degrees'), 1, "sin - degrees");
-is_approx(sin(135, 'degrees'), 1/2*sqrt(2), "sin - degrees");
-is_approx(sin(180, 'degrees'), 0, "sin - degrees");
-is_approx(sin(225, 'degrees'), -1/2*sqrt(2), "sin - degrees");
-is_approx(sin(270, 'degrees'), -1, "sin - degrees");
-is_approx(sin(315, 'degrees'), -1/2*sqrt(2), "sin - degrees");
-is_approx(sin(360, 'degrees'), 0, "sin - degrees");
-is(sin(Inf,  'degrees'), NaN, "sin - degrees");
-is(sin(-Inf, 'degrees'), NaN, "sin - degrees");
-
-is_approx(sin(  0, 'gradians'), 0, "sin - gradians");
-is_approx(sin( 50, 'gradians'), 1/2*sqrt(2), "sin - gradians");
-is_approx(sin(100, 'gradians'), 1, "sin - gradians");
-is_approx(sin(150, 'gradians'), 1/2*sqrt(2), "sin - gradians");
-is_approx(sin(200, 'gradians'), 0, "sin - gradians");
-is_approx(sin(250, 'gradians'), -1/2*sqrt(2), "sin - gradians");
-is_approx(sin(300, 'gradians'), -1, "sin - gradians");
-is_approx(sin(350, 'gradians'), -1/2*sqrt(2), "sin - gradians");
-is_approx(sin(400, 'gradians'), 0, "sin - gradians");
-is(sin(Inf,  'gradians'), NaN, "sin - gradians");
-is(sin(-Inf, 'gradians'), NaN, "sin - gradians");
-
-is_approx(sin(0/4*$PI, 'radians'), 0, "sin - radians");
-is_approx(sin(1/4*$PI, 'radians'), 1/2*sqrt(2), "sin - radians");
-is_approx(sin(2/4*$PI, 'radians'), 1, "sin - radians");
-is_approx(sin(3/4*$PI, 'radians'), 1/2*sqrt(2), "sin - radians");
-is_approx(sin(4/4*$PI, 'radians'), 0, "sin - radians");
-is_approx(sin(5/4*$PI, 'radians'), -1/2*sqrt(2), "sin - radians");
-is_approx(sin(6/4*$PI, 'radians'), -1, "sin - radians");
-is_approx(sin(7/4*$PI, 'radians'), -1/2*sqrt(2), "sin - radians");
-is_approx(sin(8/4*$PI, 'radians'), 0, "sin - radians");
-is(sin(Inf,  'radians'), NaN, "sin - radians");
-is(sin(-Inf, 'radians'), NaN, "sin - radians");
-
-is_approx(sin(0/8, 1), 0, "sin - revolutions");
-is_approx(sin(1/8, 1), 1/2*sqrt(2), "sin - revolutions");
-is_approx(sin(2/8, 1), 1, "sin - revolutions");
-is_approx(sin(3/8, 1), 1/2*sqrt(2), "sin - revolutions");
-is_approx(sin(4/8, 1), 0, "sin - revolutions");
-is_approx(sin(5/8, 1), -1/2*sqrt(2), "sin - revolutions");
-is_approx(sin(6/8, 1), -1, "sin - revolutions");
-is_approx(sin(7/8, 1), -1/2*sqrt(2), "sin - revolutions");
-is_approx(sin(8/8, 1), 0, "sin - revolutions");
-is(sin(Inf,  1), NaN, "sin - revolutions");
-is(sin(-Inf, 1), NaN, "sin - revolutions");
-
+for <degrees radians gradians revolutions> -> $base
+{
+    is(sin(Inf,  $base), NaN, "sin - $base");
+    is(sin(-Inf, $base), NaN, "sin - $base");
+}
 
 # cos
 is_approx(cos(0/4*$PI), 1, "cos - default");
@@ -954,5 +928,7 @@ is_approx( cotanh(:x(1)), 1/tanh(1) );
 # asech
 is_approx( asech(:x(1)), 0 );
 }
+
+done_testing;
 
 # vim: ft=perl6
