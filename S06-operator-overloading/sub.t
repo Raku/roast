@@ -103,7 +103,7 @@ Testing operator overloading subroutines
 {
     sub postfix:<W> ($wobble) { return "ANDANDAND$wobble"; };
 
-    is("boop"W, "ANDANDANDboop", 
+    is("boop"W, "ANDANDANDboop",
        'postfix operator overloading for new operator');
 }
 
@@ -292,6 +292,14 @@ Testing operator overloading subroutines
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
     is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works'
 
+}
+
+#?rakudo skip 'RT #68662'
+{
+    multi sub infix:<+=> (Num $a, Num $b) { $a -= $b }
+    my $frew = 10;
+    $frew += 5;
+    is $frew, 15, 'infix redefinition of += works';
 }
 
 # vim: ft=perl6
