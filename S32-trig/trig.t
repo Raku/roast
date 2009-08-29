@@ -197,6 +197,8 @@ for %sines.kv -> $angle, $sine
 	is_approx(sin( $angle, 'degrees'), $sine, "sin - degrees");
 	is_approx(sin( $angle/180*200, 'gradians'), $sine, "sin - gradians");
 	is_approx(sin( $angle/360, 1), $sine, "sin - revolutions");
+	
+    # is_approx(sin($angle/180*$PI + 0i), $sine, "sin Complex - default");  
 }
 
 is(sin(Inf), NaN, "sin - default");
@@ -207,67 +209,31 @@ for <degrees radians gradians revolutions> -> $base
     is(sin(-Inf, $base), NaN, "sin - $base");
 }
 
-# cos
-is_approx(cos(0/4*$PI), 1, "cos - default");
-is_approx(cos(1/4*$PI), 1/2*sqrt(2), "cos - default");
-is_approx(cos(2/4*$PI), 0, "cos - default");
-is_approx(cos(3/4*$PI), -1/2*sqrt(2), "cos - default");
-is_approx(cos(4/4*$PI), -1, "cos - default");
-is_approx(cos(5/4*$PI), -1/2*sqrt(2), "cos - default");
-is_approx(cos(6/4*$PI), 0, "cos - default");
-is_approx(cos(7/4*$PI), 1/2*sqrt(2), "cos - default");
-is_approx(cos(8/4*$PI), 1, "cos - default");
+# cos	
+my %cosines;
+for %sines.kv -> $angle, $sine
+{
+    %cosines{$angle - 90} = $sine;
+}
+
+for %cosines.kv -> $angle, $cosine
+{
+	is_approx(cos( $angle/180*$PI), $cosine, "cos - default");
+	is_approx(cos( $angle/180*$PI, 'radians'), $cosine, "cos - radians");
+	is_approx(cos( $angle, 'degrees'), $cosine, "cos - degrees");
+	is_approx(cos( $angle/180*200, 'gradians'), $cosine, "cos - gradians");
+	is_approx(cos( $angle/360, 1), $cosine, "cos - revolutions");
+	
+    # is_approx(cos($angle/180*$PI + 0i), $cosine, "cos Complex - default");  
+}
+
 is(cos(Inf), NaN, "cos - default");
 is(cos(-Inf), NaN, "cos - default");
-
-is_approx(cos(  0, 'degrees'), 1, "cos - degrees");
-is_approx(cos( 45, 'degrees'), 1/2*sqrt(2), "cos - degrees");
-is_approx(cos( 90, 'degrees'), 0, "cos - degrees");
-is_approx(cos(135, 'degrees'), -1/2*sqrt(2), "cos - degrees");
-is_approx(cos(180, 'degrees'), -1, "cos - degrees");
-is_approx(cos(225, 'degrees'), -1/2*sqrt(2), "cos - degrees");
-is_approx(cos(270, 'degrees'), 0, "cos - degrees");
-is_approx(cos(315, 'degrees'), 1/2*sqrt(2), "cos - degrees");
-is_approx(cos(360, 'degrees'), 1, "cos - degrees");
-is(cos(Inf,  'degrees'), NaN, "cos - degrees");
-is(cos(-Inf, 'degrees'), NaN, "cos - degrees");
-
-is_approx(cos(  0, 'gradians'), 1, "cos - gradians");
-is_approx(cos( 50, 'gradians'), 1/2*sqrt(2), "cos - gradians");
-is_approx(cos(100, 'gradians'), 0, "cos - gradians");
-is_approx(cos(150, 'gradians'), -1/2*sqrt(2), "cos - gradians");
-is_approx(cos(200, 'gradians'), -1, "cos - gradians");
-is_approx(cos(250, 'gradians'), -1/2*sqrt(2), "cos - gradians");
-is_approx(cos(300, 'gradians'), 0, "cos - gradians");
-is_approx(cos(350, 'gradians'), 1/2*sqrt(2), "cos - gradians");
-is_approx(cos(400, 'gradians'), 1, "cos - gradians");
-is(cos(Inf,  'gradians'), NaN, "cos - gradians");
-is(cos(-Inf, 'gradians'), NaN, "cos - gradians");
-
-is_approx(cos(0/4*$PI, 'radians'), 1, "cos - radians");
-is_approx(cos(1/4*$PI, 'radians'), 1/2*sqrt(2), "cos - radians");
-is_approx(cos(2/4*$PI, 'radians'), 0, "cos - radians");
-is_approx(cos(3/4*$PI, 'radians'), -1/2*sqrt(2), "cos - radians");
-is_approx(cos(4/4*$PI, 'radians'), -1, "cos - radians");
-is_approx(cos(5/4*$PI, 'radians'), -1/2*sqrt(2), "cos - radians");
-is_approx(cos(6/4*$PI, 'radians'), 0, "cos - radians");
-is_approx(cos(7/4*$PI, 'radians'), 1/2*sqrt(2), "cos - radians");
-is_approx(cos(8/4*$PI, 'radians'), 1, "cos - radians");
-is(cos(Inf,  'radians'), NaN, "cos - radians");
-is(cos(-Inf, 'radians'), NaN, "cos - radians");
-
-is_approx(cos(0/8, 1), 1, "cos - revolutions");
-is_approx(cos(1/8, 1), 1/2*sqrt(2), "cos - revolutions");
-is_approx(cos(2/8, 1), 0, "cos - revolutions");
-is_approx(cos(3/8, 1), -1/2*sqrt(2), "cos - revolutions");
-is_approx(cos(4/8, 1), -1, "cos - revolutions");
-is_approx(cos(5/8, 1), -1/2*sqrt(2), "cos - revolutions");
-is_approx(cos(6/8, 1), 0, "cos - revolutions");
-is_approx(cos(7/8, 1), 1/2*sqrt(2), "cos - revolutions");
-is_approx(cos(8/8, 1), 1, "cos - revolutions");
-is(cos(Inf,  1), NaN, "cos - revolutions");
-is(cos(-Inf, 1), NaN, "cos - revolutions");
-
+for <degrees radians gradians revolutions> -> $base
+{
+    is(cos(Inf,  $base), NaN, "cos - $base");
+    is(cos(-Inf, $base), NaN, "cos - $base");
+}
 
 # tan
 is_approx(tan(0/4*$PI),  0, "tan - default");
