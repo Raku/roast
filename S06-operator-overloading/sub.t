@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 45;
 
 =begin pod
 
@@ -299,7 +299,7 @@ Testing operator overloading subroutines
     multi sub infix:<+=> (Num $a, Num $b) { $a -= $b }
     my $frew = 10;
     $frew += 5;
-    is $frew, 15, 'infix redefinition of += works';
+    is $frew, 5, 'infix redefinition of += works';
 }
 
 # vim: ft=perl6
