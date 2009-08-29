@@ -43,6 +43,7 @@ is_approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
 # These work by accident
 is_approx((4 + 0i) ** 2, 4 ** 2, "(4+0i) ** 2 == 16");
 is_approx(1i ** 4, 1, "i ** 4 == 1");
+is_approx((4 + 0i) ** .5, 2, "(4+0i) ** .5 == 2");
 
 #?rakudo 5 todo 'Complex ** not properly implemented yet'
 is_approx(1i ** 2, -1, "i ** 2 == -1");
