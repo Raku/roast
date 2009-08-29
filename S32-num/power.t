@@ -2,27 +2,31 @@ use v6;
 
 use Test;
 
-plan *;
+plan 17;
 
 # Real **
-is_approx(1 ** 2,    1, "1 **  2 ==  1");
-is_approx(4 ** 0,    1, "4 **  0 ==  1");
-is_approx(4 ** 1,    4, "4 **  1 ==  4");
-is_approx(4 ** 2,   16, "4 **  2 == 16");
-is_approx(4 ** 0.5,  2, "4 ** .5 ==  2");
+is(1 ** 2,    1, "1 **  2 ==  1");
+is(4 ** 0,    1, "4 **  0 ==  1");
+is(4 ** 1,    4, "4 **  1 ==  4");
+is(4 ** 2,   16, "4 **  2 == 16");
+is(4 ** 0.5,  2, "4 ** .5 ==  2");
 
 is_approx(exp(1) ** 0.5,  exp(0.5), "e **  .5 ==   exp(.5)");
 is_approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
 
 # Complex **
 # This one only works by accident at the moment
-is_approx((4 + 0i) ** 2, 4 ** 2, "(4+0i) ** 2 == 16");
+is((4 + 0i) ** 2, 4 ** 2, "(4+0i) ** 2 == 16");
 
 #?rakudo 2 todo 'Complex ** not properly implemented yet'
-is_approx(1i ** 2, -1, "i ** 2 == -1");
-is_approx(1i ** 3, -1i, "i ** 3 == -i");
+is(1i ** 2, -1, "i ** 2 == -1");
+is(1i ** 3, -1i, "i ** 3 == -i");
+
 # This one only works by accident at the moment
-is_approx(1i ** 4, 1, "i ** 4 == 1");
+is(1i ** 4, 1, "i ** 4 == 1");
+
+#?rakudo todo 'complex powers'
+is(1i ** 3, -1i, "i ** 3 == -1i");
   
 #?rakudo todo 'Complex ** not properly implemented yet'
 { 
