@@ -93,16 +93,16 @@ is @array.min, -1, "min of strings read from a file works";
 is @array.max, 28, "max of strings read from a file works";
 is @array.min, -80, "min of strings read from a file works";
 
-is <1 Inf>.max, Inf,"Inf is greater than 1";
+is (1, Inf).max, Inf,"Inf is greater than 1";
+is (-1, -Inf).min, -Inf,"-Inf is less than -1";
 
-#?rakudo 5 todo 'min/max do not play nicely with Inf/NaN'
-is <-1 -Inf>.min, -Inf,"-Inf is less than -1";
+#?rakudo 4 todo 'min/max do not play nicely with Inf/NaN'
 
-is <0 NaN>.min, NaN,    "min(0,NaN)=NaN";
-is <0 NaN>.max, NaN,    "max(0,NaN)=NaN";
+is (0, NaN).min, NaN,    "min(0,NaN)=NaN";
+is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 
-is <Inf NaN>.max, NaN,    "max(Inf,NaN)=NaN";
-is <Inf NaN>.min, NaN,    "max(Inf,NaN)=NaN";
+is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
+is (Inf, NaN).min, NaN,    "max(Inf,NaN)=NaN";
 
 
 # vim: ft=perl6
