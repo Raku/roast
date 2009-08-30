@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 16;
 
 # L<S32::Numeric/Num/"=item sqrt">
 
@@ -20,6 +20,8 @@ is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
 is(sqrt(NaN), NaN, 'sqrt(NaN) is NaN');
 is(sqrt(Inf), Inf, 'sqrt(Inf) is Inf');
 is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
+
+is(sqrt(-0.0), -0.0, 'sqrt preserves sign of zero');
 
 #?rakudo skip 'named args'
 {
