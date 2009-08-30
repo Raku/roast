@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 29;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -26,7 +26,14 @@ plan 28;
     my @e = (1 .. 5, 5);
 
     my @s = sort @a;
-    is(@s, @e, 'array of numbers was sorted (w/out parans)');
+    is(@s, @e, 'array of numbers was sorted (w/out parens)');
+}
+
+{
+    my @a = (1.1,2,NaN,-3.05,0.1,Inf,42,-1e-07,-Inf).sort;
+    my @e = (NaN,-Inf,-3.05,-1e-07,0.1,1.1,2,42,Inf);
+    my @s = sort @a;
+    is(@s, @e, 'array of mixed numbers including Inf/NaN');
 }
 
 {
@@ -100,7 +107,7 @@ plan 28;
     my @e = <bar baz foo gorch>;
 
     my @s = sort @a;
-    is(@s, @e, 'array of strings was sorted (w/out parans)');
+    is(@s, @e, 'array of strings was sorted (w/out parens)');
 }
 
 {
