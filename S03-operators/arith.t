@@ -320,7 +320,6 @@ isnt 2**3**4, 4096, "** is right associative";
 # test associativity
 is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
-#?rakudo todo 'infix:<**> with complex numbers'
 {
     is_approx(-1, (0 + 1i)**2, "i^2 == -1");
     is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
