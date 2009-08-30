@@ -106,10 +106,10 @@ is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 is (Inf, NaN).min, NaN,    "max(Inf,NaN)=NaN";
 
-is ([min] (5,10,-15,20)), -15, 'hyperop min int';
-is ([max] (5,10,-15,20)), 20, 'hyperop max int';
+is ([min] (5,10,-15,20)), -15, 'reduce min int';
+is ([max] (5,10,-15,20)), 20, 'reduce max int';
 
-is ([min] (5.1,10.3,-15.7,20.9)), -15.7, 'hyperop min numeric';
-is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'hyperop max numeric';
+is ([min] (5.1,10.3,-15.7,20.9)), -15.7, 'reduce min numeric';
+is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
 
 # vim: ft=perl6
