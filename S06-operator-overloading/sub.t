@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 46;
 
 =begin pod
 
@@ -300,6 +300,20 @@ Testing operator overloading subroutines
     my $frew = 10;
     $frew += 5;
     is $frew, 5, 'infix redefinition of += works';
+}
+
+{
+    class MMDTestType {
+        has $.a is rw;
+        method add(MMDTestType $b) { $.a ~ $b.a }
+    }
+
+    multi sub infix:<+>(MMDTestType $a, MMDTestType $b) { $a.add($b) };
+
+    my MMDTestType $a .= new(a=>'foo');
+    my MMDTestType $b .= new(a=>'bar');
+
+    is $a + $b, 'foobar', 'can overload exiting operators (here: infix:<+>)';
 }
 
 # vim: ft=perl6
