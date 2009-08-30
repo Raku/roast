@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 46;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -95,6 +95,8 @@ is @array.min, -80, "min of strings read from a file works";
 
 is (1, Inf).max, Inf,"Inf is greater than 1";
 is (-1, -Inf).min, -Inf,"-Inf is less than -1";
+is (-Inf, Inf).min, -Inf,"-Inf is less than Inf";
+is (-Inf, Inf).max, Inf,"Inf is greater than -Inf";
 
 #?rakudo 4 todo 'min/max do not play nicely with Inf/NaN'
 
@@ -104,5 +106,10 @@ is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 is (Inf, NaN).min, NaN,    "max(Inf,NaN)=NaN";
 
+is ([min] (5,10,-15,20)), -15, 'hyperop min int';
+is ([max] (5,10,-15,20)), 20, 'hyperop max int';
+
+is ([min] (5.1,10.3,-15.7,20.9)), -15.7, 'hyperop min numeric';
+is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'hyperop max numeric';
 
 # vim: ft=perl6
