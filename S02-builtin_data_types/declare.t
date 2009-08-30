@@ -82,13 +82,13 @@ plan 85;
  isa_ok($brode, Scalar);
 }
 
-#?rakudo skip 'Could not build C3 linearization: ambiguous hierarchy'
+#?rakudo skip 'RT #68726: Could not build C3 linearization: ambiguous hierarchy'
 {
  my Array $porsi;
  isa_ok($porsi, Array);
 }
 
-#?rakudo skip 'Could not build C3 linearization: ambiguous hierarchy'
+#?rakudo skip 'RT #68726: Could not build C3 linearization: ambiguous hierarchy'
 {
  my Hash $brodi;
  isa_ok($brodi, Hash);
