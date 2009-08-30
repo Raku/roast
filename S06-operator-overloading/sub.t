@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 47;
 
 =begin pod
 
@@ -314,6 +314,13 @@ Testing operator overloading subroutines
     my MMDTestType $b .= new(a=>'bar');
 
     is $a + $b, 'foobar', 'can overload exiting operators (here: infix:<+>)';
+}
+
+# test that multis with other arity don't interfere with existing ones
+# used to be RT #65640
+{
+    multi sub infix:<+>() { 42 };
+    ok 5 + 5 == 10, "New multis don't disturb old ones";
 }
 
 # vim: ft=perl6
