@@ -28,7 +28,6 @@ plan 85;
  isa_ok($namcu,Complex);
 }
 
-#?rakudo skip 'Rat not implemented'
 {
  my Rat $namcu = 7 div 4;
  isa_ok($namcu,Rat);

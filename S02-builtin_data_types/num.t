@@ -18,11 +18,10 @@ plan 48;
 }
 
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
-#?rakudo skip "no Rat yet"
 {
     my $a = 1 div 1;
     isa_ok($a, Rat);
-    is($a, "1", '1.0 stringification works');
+    is($a, "1/1", '1.0 stringification works');
 }
 
 {
@@ -92,7 +91,6 @@ plan 48;
 }
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
 
-#?rakudo skip 'Rat, infix:<div>'
 isa_ok(1 div 1, Rat);
 
 {
