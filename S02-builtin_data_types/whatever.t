@@ -51,7 +51,7 @@ is @a, [1,2,3,4], '*.meth created closure works';
 #?rakudo skip 'RT 68894'
 {
     my @a = <a b>;
-    my $t = join '', map { @a[$_ % *] }, 1..5;
+    my $t = join '', map { @a[$_ % *] }, ^5;
     is $t, 'ababa', '$_ % * works';
 }
 
