@@ -48,7 +48,6 @@ is @a, [1,2,3,4], '*.meth created closure works';
 }
 
 # RT #68894
-#?rakudo skip 'RT 68894'
 {
     my @a = <a b>;
     my $t = join '', map { @a[$_ % *] }, ^5;
