@@ -192,13 +192,31 @@ my %sines = ( -360 => 0,
 		
 for %sines.kv -> $angle, $sine
 {
-	is_approx(sin( $angle/180*$PI), $sine, "sin - default");
-	is_approx(sin( $angle/180*$PI, 'radians'), $sine, "sin - radians");
-	is_approx(sin( $angle, 'degrees'), $sine, "sin - degrees");
-	is_approx(sin( $angle/180*200, 'gradians'), $sine, "sin - gradians");
-	is_approx(sin( $angle/360, 1), $sine, "sin - revolutions");
+	is_approx(sin($angle/180*$PI), $sine, "sin - default");
+	is_approx(sin($angle/180*$PI, 'radians'), $sine, "sin - radians");
+	is_approx(sin($angle, 'degrees'), $sine, "sin - degrees");
+	is_approx(sin($angle/180*200, 'gradians'), $sine, "sin - gradians");
+	is_approx(sin($angle/360, 1), $sine, "sin - revolutions");
+	              
+    # Num.sin tests
+	is_approx(($angle/180*$PI).sin, $sine, ".sin - default");
+	#?rakudo 4 skip "method .sin plus base doesn't seem to work?"
+    is_approx(($angle/180*$PI).sin('radians'), $sine, ".sin - radians");
+    is_approx(($angle * 1.0).sin('degrees'), $sine, ".sin - degrees");
+    is_approx(($angle/180*200).sin('gradians'), $sine, ".sin - gradians");
+    is_approx(($angle/360).sin(1), $sine, ".sin - revolutions");
+    
+    # Int.sin tests
+	#?rakudo skip "Int.sin not yet implemented"
+    is_approx($angle.Int.sin('degrees'), $sine, "Int.sin - degrees");  
 	
-    # is_approx(sin($angle/180*$PI + 0i), $sine, "sin Complex - default");  
+	# sin Complex tests
+	#?rakudo skip "sin(Complex) not yet implemented"
+    is_approx(sin($angle/180*$PI + 0i), $sine, "sin Complex - default");  
+
+	# Complex.sin tests
+	#?rakudo skip "Complex.sin not yet implemented"
+	is_approx(($angle/180*$PI + 0i).sin, $sine, ".sin - default");
 }
 
 is(sin(Inf), NaN, "sin - default");
