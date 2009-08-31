@@ -114,7 +114,7 @@ my $baz of Int;
     dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
 }
 
-#?rakudo skip 'Rat not implemented, as not implemented'
+#?rakudo skip '"as" return type coercion'
 {
     # the following two are the same type of behavior
     # S02: "It is possible for the of type to disagree with the as type"

@@ -64,7 +64,6 @@ ok(+$num ~~ Num, 'it is an Num type');
 
 my $float = 0.5;
 isa_ok($float, Num, 'it is an Num type');
-#?rakudo skip 'infix:<div>, Rat'
 isa_ok(1 div 4, Rat, 'infix:<div> produces a Rat');
 
 my $string = "Hello World";
