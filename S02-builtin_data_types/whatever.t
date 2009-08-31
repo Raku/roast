@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 24;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -45,6 +45,14 @@ is @a, [1,2,3,4], '*.meth created closure works';
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
     is @a, 1..4, 'array is unmodified after reference to [1..*]';
+}
+
+# RT #68894
+#?rakudo skip 'RT 68894'
+{
+    my @a = <a b>;
+    my $t = join '', map { @a[$_ % *] }, 1..5;
+    is $t, 'ababa', '$_ % * works';
 }
 
 {
