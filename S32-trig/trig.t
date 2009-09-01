@@ -215,8 +215,14 @@ for %sines.kv -> $angle, $sine
     is_approx(sin($angle/180*$PI + 0i), $sine, "sin Complex - default");  
 
 	# Complex.sin tests
-	#?rakudo skip "Complex.sin not yet implemented"
-	is_approx(($angle/180*$PI + 0i).sin, $sine, ".sin - default");
+	#?rakudo 3 skip "sin(Complex) not yet implemented"
+	is_approx(($angle/180*$PI + 0i).sin, $sine, "Complex.sin - default");
+	is_approx(($angle/180*$PI + 1i).sin, 
+	          $sine * cosh(1.0) + 1i * cos($angle/180*$PI) * sinh(1.0), 
+	          "Complex.sin - default");
+  	is_approx(($angle/180*$PI + 2i).sin, 
+  	          $sine * cosh(2.0) + 1i * cos($angle/180*$PI) * sinh(2.0), 
+  	          "Complex.sin - default");
 }
 
 is(sin(Inf), NaN, "sin - default");
