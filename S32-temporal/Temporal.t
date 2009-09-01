@@ -31,7 +31,8 @@ ok  $g1.date.day-of-week==7 && $g1.date.month-name eq 'January' &&
     '2000-01-01 00:00:00 was on a Saturday in January'; # test 6
 
 $t  = time;
-$d  = (int($t/86400) + 4) % 7 + 1;
+while time == $t { ; } # empty loop until the next second begins
+$d  = (floor($t/86400) + 4) % 7 + 1;
 $g1 = Time.gmtime($t);
 $g2 = Time.gmtime;            # $g1 and $g2 might differ very occasionally
 ok  $g1.date.year  ==$g2.date.year   && $g1.date.month ==$g2.date.month &&
@@ -73,7 +74,7 @@ ok $g1.epoch==3661, "epoch at 1970-01-01 01:01:01"; # test 15
 ok ~$g1 eq '1970-01-01T01:01:01+0100', "as Str 1970-01-01T01:01:01+0100"; # test 16
 
 # round trip test for current number of seconds in the Unix epoch
-$t = time.int;
+$t = time.floor;
 my @t = test_gmtime( $t );
 $g1 = Temporal::DateTime.new(
           date => Temporal::Date.new( :year(@t[5]+1900), :month(@t[4]+1), :day(@t[3]) ),
@@ -85,9 +86,9 @@ ok $g1.epoch == $t, "at $g1, epoch is {$g1.epoch}"; # test 17
 # An independent calculation to cross check the Temporal algorithms.
 sub test_gmtime( Num $t is copy ) {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
-    $sec  = int($t) % 60; $t = int($t/60); # $t is now epoch minutes
-    $min  = $t % 60;      $t = int($t/60); # $t is now epoch hours
-    $hour = $t % 24;      $t = int($t/24); # $t is now epoch days
+    $sec  = floor($t) % 60; $t = floor($t/60); # $t is now epoch minutes
+    $min  = $t % 60;        $t = floor($t/60); # $t is now epoch hours
+    $hour = $t % 24;        $t = floor($t/24); # $t is now epoch days
     # Not a sophisticated or fast algorithm, just an understandable one
     # only valid from 1970-01-01 until 2100-02-28
     $wday = ($t+4) % 7;  # 1970-01-01 was a Thursday
