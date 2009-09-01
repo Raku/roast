@@ -21,7 +21,7 @@ plan 48;
 {
     my $a = 1 / 1;
     isa_ok($a, Rat);
-    is($a, "1/1", '1.0 stringification works');
+    is(~$a, "1", '1/1 stringification works');
 }
 
 {
