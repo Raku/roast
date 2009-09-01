@@ -61,25 +61,25 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
     for (-7, -1, 0, 1, 2, 5, 7, 42) -> $b {
-        is_approx($a + $b, $a.Num + $b.Num, "Rat + Int works");
-        is_approx($b + $a, $b.Num + $a.Num, "Int + Rat works");
-        is_approx($a - $b, $a.Num - $b.Num, "Rat - Int works");
-        is_approx($b - $a, $b.Num - $a.Num, "Int - Rat works");
-        is_approx($a * $b, $a.Num * $b.Num, "Rat * Int works");
-        is_approx($b * $a, $b.Num * $a.Num, "Int * Rat works");
-        is_approx($a / $b, $a.Num / $b.Num, "Rat / Int works") if $b != 0;
-        is_approx($b / $a, $b.Num / $a.Num, "Int / Rat works");
+        is_approx($a + $b, $a.Num + $b.Num, "Rat + Int works ($a, $b)");
+        is_approx($b + $a, $b.Num + $a.Num, "Int + Rat works ($a, $b)");
+        is_approx($a - $b, $a.Num - $b.Num, "Rat - Int works ($a, $b)");
+        is_approx($b - $a, $b.Num - $a.Num, "Int - Rat works ($a, $b)");
+        is_approx($a * $b, $a.Num * $b.Num, "Rat * Int works ($a, $b)");
+        is_approx($b * $a, $b.Num * $a.Num, "Int * Rat works ($a, $b)");
+        is_approx($a / $b, $a.Num / $b.Num, "Rat / Int works ($a, $b)") if $b != 0;
+        is_approx($b / $a, $b.Num / $a.Num, "Int / Rat works ($a, $b)");
     }
 
     for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $b {
-        is_approx($a + $b, $a.Num + $b.Num, "Rat + Rat works");
-        is_approx($b + $a, $b.Num + $a.Num, "Rat + Rat works");
-        is_approx($a - $b, $a.Num - $b.Num, "Rat - Rat works");
-        is_approx($b - $a, $b.Num - $a.Num, "Rat - Rat works");
-        is_approx($a * $b, $a.Num * $b.Num, "Rat * Rat works");
-        is_approx($b * $a, $b.Num * $a.Num, "Rat * Rat works");
-        is_approx($a / $b, $a.Num / $b.Num, "Rat / Rat works");
-        is_approx($b / $a, $b.Num / $a.Num, "Rat / Rat works");
+        is_approx($a + $b, $a.Num + $b.Num, "Rat + Rat works ($a, $b)");
+        is_approx($b + $a, $b.Num + $a.Num, "Rat + Rat works ($a, $b)");
+        is_approx($a - $b, $a.Num - $b.Num, "Rat - Rat works ($a, $b)");
+        is_approx($b - $a, $b.Num - $a.Num, "Rat - Rat works ($a, $b)");
+        is_approx($a * $b, $a.Num * $b.Num, "Rat * Rat works ($a, $b)");
+        is_approx($b * $a, $b.Num * $a.Num, "Rat * Rat works ($a, $b)");
+        is_approx($a / $b, $a.Num / $b.Num, "Rat / Rat works ($a, $b)");
+        is_approx($b / $a, $b.Num / $a.Num, "Rat / Rat works ($a, $b)");
     }
 }
 
