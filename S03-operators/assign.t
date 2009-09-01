@@ -297,10 +297,10 @@ my @p;
 
 {
     my $x = 6;
-    @p = $x /= 3, 4;
-    is($x, 2, '/= operator');
-    is(@p[0],2, "/= operator parses as item assignment 1");
-    is(@p[1],4, "/= operator parses as item assignment 2");
+    @p = $x div= 3, 4;
+    is($x, 2, 'div= operator');
+    is(@p[0],2, "div= operator parses as item assignment 1");
+    is(@p[1],4, "div= operator parses as item assignment 2");
 }
 
 {

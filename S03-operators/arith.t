@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 199;
+plan 200;
 
 my $five = abs(-5);
 
@@ -263,15 +263,17 @@ tryeq -1.2, " -1.2";
 
 # divide
 
-tryeq 28/14, 2;
-tryeq 28/-7, -4;
-tryeq -28/4, -7;
-tryeq -28/-2, 14;
+tryeq 28 div 14, 2;
+tryeq 28 div -7, -4;
+tryeq -28 div 4, -7;
+tryeq -28 div -2, 14;
 
-tryeq 0x80000000/1, 0x80000000;
-tryeq 0x80000000/-1, -0x80000000;
-tryeq -0x80000000/1, -0x80000000;
-tryeq -0x80000000/-1, 0x80000000;
+tryeq 0x80000000 div 1, 0x80000000;
+tryeq 0x80000000 div -1, -0x80000000;
+tryeq -0x80000000 div 1, -0x80000000;
+tryeq -0x80000000 div -1, 0x80000000;
+
+is(9 div 4, 2, "9 div 4 == 2");
 
 # The example for sloppy divide, rigged to avoid the peephole optimiser.
 is_approx "20." / "5.", 4;
@@ -283,12 +285,14 @@ tryeq -5.5 / -2, 2.75;
 
 # Bluuurg if your floating point can't accurately cope with powers of 2
 # [I suspect this is parsing string-to-float problems, not actual arith]
-is 18446744073709551616/1, 18446744073709551616; # Bluuurg
+#?rakudo todo 'big numbers'
+is 18446744073709551616 div 1, 18446744073709551616; # Bluuurg
 
 {
-    tryeq_sloppy 18446744073709551616/2, 9223372036854775808;
-    tryeq_sloppy 18446744073709551616/4294967296, 4294967296;
-    tryeq_sloppy 18446744073709551616/9223372036854775808, 2;
+    tryeq_sloppy 18446744073709551616 div 2, 9223372036854775808;
+    tryeq_sloppy 18446744073709551616 div 4294967296, 4294967296;
+    #?rakudo skip 'big numbers'
+    ok 18446744073709551616 div 9223372036854775808 == 2, '$bignum1 div $bignum2';
 }
 
 {
@@ -323,7 +327,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 {
     is_approx(-1, (0 + 1i)**2, "i^2 == -1");
     is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
-    is_approx(1i, (-1+0i)**(1/2), '(-1+0i)**(1/2) == i ');
+    is_approx(1i, (-1+0i)**0.5, '(-1+0i)**0.5 == i ');
 }
 
 {
@@ -335,16 +339,16 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is Inf+100, Inf;
     is Inf-100, Inf;
     is Inf*100, Inf;
-    is Inf/100, Inf;
+    is Inf / 100, Inf;
     is Inf*-100, -Inf;
-    is Inf/-100, -Inf;
-    is 100/Inf, 0;
+    is Inf / -100, -Inf;
+    is 100 / Inf, 0;
     is Inf**100, Inf;
     is Inf*0, NaN;
     is Inf - Inf, NaN;
     is Inf*Inf, Inf;
-    is Inf/Inf, NaN;
-    is Inf*Inf/Inf, NaN;
+    is Inf / Inf, NaN;
+    is Inf*Inf / Inf, NaN;
     is Inf**0, 1;
     is 0**0, 1;
     is 0**Inf, 0;
@@ -373,18 +377,18 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is NaN+100, NaN;
     is NaN-100, NaN;
     is NaN*100, NaN;
-    is NaN/100, NaN;
+    is NaN / 100, NaN;
     is NaN**100, NaN;
     is NaN+NaN, NaN;
     is NaN - NaN, NaN;
     is NaN*NaN, NaN;
-    is NaN/NaN, NaN;
+    is NaN / NaN, NaN;
 
     is NaN+Inf, NaN;
     is NaN - Inf, NaN;
     is NaN*Inf, NaN;
-    is NaN/Inf, NaN;
-    is Inf/NaN, NaN;
+    is NaN / Inf, NaN;
+    is Inf / NaN, NaN;
 
     my $nan1 = NaN**NaN;
     is $nan1, NaN, "NaN**NaN";
@@ -413,9 +417,9 @@ dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
-dies_ok( { say 3 / 0 }, 'Division by zero dies and is catchable');
-dies_ok( { $x = 0; say 3 / $x; }, 'Division by zero dies and is catchable with VInt/VRat variables');
-dies_ok( { $x := 0; say 3 / $x; }, 'Division by zero dies and is catchable with VRef variables');
+dies_ok( { say 3 div 0 }, 'Division by zero dies and is catchable');
+dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
+dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
 # This is a rakudo regression wrt bignum:
 #?rakudo skip 'bigint'

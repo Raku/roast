@@ -64,7 +64,7 @@ ok(+$num ~~ Num, 'it is an Num type');
 
 my $float = 0.5;
 isa_ok($float, Num, 'it is an Num type');
-isa_ok(1 div 4, Rat, 'infix:<div> produces a Rat');
+isa_ok(1 / 4, Rat, 'infix:</> of integers produces a Rat');
 
 my $string = "Hello World";
 isa_ok($string, Str, 'it is a Str type');

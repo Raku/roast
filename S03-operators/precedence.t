@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 54;
+plan 55;
 
 
 # terms
@@ -46,7 +46,8 @@ is(?2*2, 2, "binary -> numify causes reinterpretation as, binds tighter than *")
 # multiplicative
 
 is(4 + 3 * 2, 10, "* binds tighter than binary +");
-is(2 - 2 / 2, 1, "/ binds tighter than binary -");
+is(2 - 2 div 2, 1, "div binds tighter than binary -");
+is(2 - 2 / 2, 1 / 1, "/ binds tighter than binary -");
 
 # additive
 

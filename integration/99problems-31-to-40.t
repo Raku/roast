@@ -147,7 +147,7 @@ plan 67;
         while $n > 1 {
           if $n % $cond == 0 {
     	$count++;
-    	$n /= $cond;
+    	$n div= $cond;
           }
           else {
     	if $count > 0 {

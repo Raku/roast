@@ -35,7 +35,7 @@ my @e;
         @e = ((1,1,1), (2,2), (3));
         is(~@r, ~@e, "hyper-xx two arrays");
 
-        @r = (20, 40, 60) »/« (2, 5, 10);
+        @r = (20, 40, 60) »div« (2, 5, 10);
         @e = (10, 8, 6);
         is(~@r, ~@e, "hyper-divide two arrays");
 
@@ -65,7 +65,7 @@ my @e;
         @e = ((1,1,1), (2,2), (3));
         is(~@r, ~@e, "hyper-xx two arrays ASCII notation");
 
-        @r = (20, 40, 60) >>/<< (2, 5, 10);
+        @r = (20, 40, 60) >>div<< (2, 5, 10);
         @e = (10, 8, 6);
         is(~@r, ~@e, "hyper-divide two arrays ASCII notation");
 

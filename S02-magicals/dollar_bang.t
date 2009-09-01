@@ -34,7 +34,7 @@ ok $!, 'Calling a subroutine with a nonmatching signature sets $!';
 ok !$called, 'The subroutine also was not called';
 
 undefine $!;
-try { 1 / 0 };
+try { 1 div 0 };
 ok $!, 'Dividing one by zero sets $!';
 
 sub incr ( $a is rw ) { $a++ };

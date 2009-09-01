@@ -106,7 +106,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # L<S02/Literals/"Any radix may include a fractional part">
 
 #?rakudo todo 'fractionals base 16'
-is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / ( 16 ** 4 ), 'Fractional base 16 works' );
+is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE div ( 16 ** 4 ), 'Fractional base 16 works' );
 
 
 # L<S02/Literals/":8<177777>">
@@ -225,7 +225,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +":1_0<14_56>", 1456, "underscore seperators works";
     is +":10<123.456>", 123.456, "base 10 decimal notation works";
     is +":2<1.111>", 1.875, "base 2 decimal notation works";
-    is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / (16 ** 4), "fractional base 16 works";
+    is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
 
     for 2..36 {
         is +":{$_}<11>", $_ + 1, "stringified form of base $_ works";

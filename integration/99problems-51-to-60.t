@@ -56,14 +56,14 @@ plan 37;
         return undef               if $n == 0;
         gather {
             if $n % 2 == 1 {
-                my $k = ($n - 1) / 2;
+                my $k = ($n - 1) div 2;
                 for cbal-tree($k) -> $a {
                     for cbal-tree($k) -> $b {
                         take ['x', $a, $b];
                     }
                 }
             } else {
-                my $k = $n / 2;
+                my $k = $n div 2;
                 for cbal-tree($k) -> $a {
                     for cbal-tree($k - 1) -> $b {
                         take ['x', $a, $b];

@@ -19,7 +19,7 @@ plan 48;
 
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
 {
-    my $a = 1 div 1;
+    my $a = 1 / 1;
     isa_ok($a, Rat);
     is($a, "1/1", '1.0 stringification works');
 }
@@ -91,7 +91,7 @@ plan 48;
 }
 #L<S02/Built-In Data Types/Rat supports arbitrary precision rational arithmetic>
 
-isa_ok(1 div 1, Rat);
+isa_ok(1 / 1, Rat);
 
 {
     my $a = 80000.0000000000000000000000000;

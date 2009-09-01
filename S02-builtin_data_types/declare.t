@@ -29,7 +29,7 @@ plan 85;
 }
 
 {
- my Rat $namcu = 7 div 4;
+ my Rat $namcu = 7 / 4;
  isa_ok($namcu,Rat);
 }
 
@@ -148,7 +148,7 @@ plan 85;
 
 #?rakudo skip 'rat not implemented'
 {
- my rat $namcu = 7 div 4;
+ my rat $namcu = 7 / 4;
  isa_ok($namcu,rat);
 }
 
