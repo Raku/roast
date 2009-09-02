@@ -81,6 +81,10 @@ for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
         is_approx($a / $b, $a.Num / $b.Num, "Rat / Rat works ($a, $b)");
         is_approx($b / $a, $b.Num / $a.Num, "Rat / Rat works ($a, $b)");
     }
+    
+    my $neg = -$a;
+    isa_ok($neg, Rat, "prefix<-> generates a Rat on $a");
+    is_approx($neg, -($a.Num), "prefix<-> generates the correct number for $a");
 }
 
 # SHOULD: Add divide by zero / zero denominator tests
