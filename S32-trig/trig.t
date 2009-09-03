@@ -258,7 +258,6 @@ for @sines -> $angle
     is_approx(sin($angle.radians + 0i), $sine, "sin Complex - default");  
  
     # Complex.sin tests
-    #?rakudo 3 skip "Complex.sin not yet implemented"
     is_approx(($angle.radians + 0i).sin, $sine, "Complex.sin - default");
     is_approx(($angle.radians + 1i).sin, 
               $sine * cosh(1.0) + 1i * cos($angle.radians) * sinh(1.0), 
