@@ -92,6 +92,7 @@ for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
 is_approx sin(5.0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add divide by zero / zero denominator tests
+# SHOULD: Add NaN / Inf tests
 
 done_testing;
 
