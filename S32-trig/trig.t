@@ -30,6 +30,31 @@ class AngleAndResult
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
+    method num($base) {
+        given $base {
+            when "degrees"     { $.angle_in_degrees.Num }
+            when "radians"     { $.angle_in_degrees.Num / 180.0 * pi }
+            when "gradians"    { $.angle_in_degrees.Num / 180.0 * 200.0 }
+            when "revolutions" { $.angle_in_degrees.Num / 360.0 }
+        }
+    }
+    
+    method rat($base) {
+        given $base {
+            when "degrees"     { $.angle_in_degrees / 1 }
+            when "radians"     { $.angle_in_degrees / 180 * (355 / 113) }
+            when "gradians"    { $.angle_in_degrees * (200 / 180) }
+            when "revolutions" { $.angle_in_degrees / 360 }
+        }
+    }
+    
+    method int($base) {
+        given $base {
+            when "degrees"     { $.angle_in_degrees }
+        }
+    }
+    
+    
     method degrees() { $.angle_in_degrees; }
     method radians() { $.angle_in_degrees / 180 * pi; }
     method gradians() { $.angle_in_degrees / 180 * 200; }
@@ -231,28 +256,60 @@ my %sines = ( -360 => 0,
 			  225 + 360 => -1/2*sqrt(2),
               720 => 0
 		    );
+		    
+my %official_base = (
+    "radians" => "radians",
+    "gradians" => "gradians", 
+    "degrees" => "degrees",
+    "revolutions" => 1
+);
 		
 for @sines -> $angle
 {
     my $sine = $angle.result;
-	is_approx(sin($angle.radians), $sine, "sin - default");
-	is_approx(sin($angle.radians, 'radians'), $sine, "sin - radians");
-	is_approx(sin($angle.degrees, 'degrees'), $sine, "sin - degrees");
-	is_approx(sin($angle.gradians, 'gradians'), $sine, "sin - gradians");
-	is_approx(sin($angle.revolutions, 1), $sine, "sin - revolutions");
+    
+    # sin(Num)
+	is_approx(sin($angle.num("radians")), $sine, 
+	          "sin(Num) - {$angle.num('radians')} default");
+	for <radians degrees gradians revolutions> -> $base {
+	    is_approx(sin($angle.num($base), %official_base{$base}), $sine, 
+	              "sin(Num) - {$angle.num($base)} $base");
+	}
 	              
     # Num.sin tests
-    is_approx($angle.radians.sin, $sine, ".sin - default");
-    #?rakudo 4 skip "method .sin plus base doesn't seem to work?"
-    is_approx($angle.radians.sin('radians'), $sine, ".sin - radians");
-    is_approx($angle.degrees.Num.sin('degrees'), $sine, ".sin - degrees");
-    is_approx($angle.gradians.Num.sin('gradians'), $sine, ".sin - gradians");
-    is_approx($angle.revolutions.Num.sin(1), $sine, ".sin - revolutions");
-        
-    # Int.sin tests
+    is_approx($angle.num("radians").sin, $sine, 
+              "Num.sin - {$angle.num('radians')} default");
+	for <radians degrees gradians revolutions> -> $base {
+        #?rakudo skip "method .sin plus base doesn't seem to work?"
+	    is_approx($angle.num($base).sin(%official_base{$base}), $sine, 
+	              "Num.sin - {$angle.num($base)} $base");
+	}
+	
+	# sin(Rat)
+	is_approx(sin($angle.rat("radians")), $sine, 
+	          "sin(Rat) - {$angle.rat('radians')} default");
+	for <radians degrees gradians revolutions> -> $base {
+	    is_approx(sin($angle.rat($base), %official_base{$base}), $sine, 
+	              "sin(Rat) - {$angle.rat($base)} $base");
+	}
+	              
+    # Rat.sin tests
+    #?rakudo skip "Rat.sin not yet implemented"
+    is_approx($angle.rat("radians").sin, $sine, 
+              "Rat.sin - {$angle.rat('radians')} default");
+	for <radians degrees gradians revolutions> -> $base {
+        #?rakudo skip "Rat.sin not yet implemented"
+	    is_approx($angle.rat($base).sin(%official_base{$base}), $sine, 
+	              "Rat.sin - {$angle.rat($base)} $base");
+	}
+
+    # sin(Int)
+    is_approx(sin($angle.int("degrees"), %official_base{"degrees"}), $sine, 
+              "sin(Int) - {$angle.int('degrees')} degrees");
     #?rakudo skip "Int.sin not yet implemented"
-    is_approx($angle.degrees.Int.sin('degrees'), $sine, "Int.sin - degrees");  
-    
+    is_approx($angle.int('degrees').sin(%official_base{'degrees'}), $sine, 
+              "Int.sin - {$angle.int('degrees')} degrees");
+
     # sin Complex tests
     #?rakudo skip "sin(Complex) not yet implemented"
     is_approx(sin($angle.radians + 0i), $sine, "sin Complex - default");  
