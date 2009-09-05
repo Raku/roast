@@ -2,13 +2,12 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 9;
 
 # L<S02/Names/"for the identifier of the variable">
 
 %*ENV<THIS_NEVER_EXISTS> = 123;
 
-#?rakudo skip 'setting %*ENV nyi'
 {
 	is $*THIS_NEVER_EXISTS, 123, "Testing contextual variable which changed within %*ENV";
 }
@@ -20,8 +19,7 @@ plan 10;
 }
 
 {
-	my $rv = eval('$+THIS_IS_NEVER_THERE_EITHER');
-        ok $!, "Test for contextual which doesn't exists.";
+	my $rv = eval('$*THIS_IS_NEVER_THERE_EITHER');
 	ok $rv ~~ undef, "Testing for value of contextual variables that never existed.";
 }
 
@@ -31,7 +29,7 @@ sub foo() { $*VAR };
 {
     my $*VAR = 'one';
     is $*VAR, 'one', 'basic contextual declaration works';
-    is foo(), 'one', 'called subroutine sees caller $*FOO';
+    is foo(), 'one', 'called subroutine sees caller $*VAR';
     {
         my $*VAR = 'two';
         is $*VAR, 'two', 'inner contextual declaration works';

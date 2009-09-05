@@ -37,7 +37,6 @@ ok %*ENV<PATH> ne "42",
 
 # Similarily, I don't think creating a new entry in %vars should affect the
 # environment:
-#?rakudo 3 todo 'clarify the test'
 diag '%*ENV<PUGS_ROCKS>=' ~ %*ENV<PUGS_ROCKS>;
 ok !defined(%*ENV<PUGS_ROCKS>), "there's no env variable 'PUGS_ROCKS'";
 %vars<PUGS_ROCKS> = "42";
