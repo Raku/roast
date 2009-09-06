@@ -19,6 +19,9 @@ is(Rat.new(2, 4).nude, (1, 2), "Reduce to simplest form in constructor");
 is(Rat.new(39, 33).nude, (13, 11), "Reduce to simplest form in constructor");
 is(Rat.new(0, 33).nude, (0, 1), "Reduce to simplest form in constructor");
 is(Rat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to simplest form in constructor");
+is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero becomes one over zero");
+is(Rat.new(-7, 0).nude, (-1, 0), "Negative over zero becomes negative one over zero");
+dies_ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
 
 # Test basic math
 is(1 / 4 + 1 / 4, 1/2, "1/4 + 1/4 = 1/2");
@@ -92,7 +95,31 @@ for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
 is_approx sin(5.0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add divide by zero / zero denominator tests
+# Added three constructor tests above.  Unsure about the
+# wisdom of allowing math with zero denominator Rats,
+# so I'm holding off on writing tests for it.
+
 # SHOULD: Add NaN / Inf tests
+
+# Quick test of some basic mixed type math
+
+is_approx (1 / 2) + 3.5, 4.0, "1/2 + 3.5 = 4.0";
+is_approx 3.5 + (1 / 2), 4.0, "3.5 + 1/2 = 4.0";
+is_approx (1 / 2) - 3.5, -3.0, "1/2 - 3.5 = -3.0";
+is_approx 3.5 - (1 / 2), 3.0, "3.5 - 1/2 = 3.0";
+is_approx (1 / 3) * 6.6, 2.2, "1/3 * 6.6 = 2.2";
+is_approx 6.6 * (1 / 3), 2.2, "6.6 * 1/3 = 2.2";
+is_approx (1 / 3) / 2.0, 1 / 6, "1/3 / 2.0 = 1/6";
+is_approx 2.0 / (1 / 3), 6.0, "2.0 / 1/3 = 6.0";
+
+is_approx (1 / 2) + 3.5 + 1i, 4.0 + 1i, "1/2 + 3.5 + 1i = 4.0 + 1i";
+is_approx (3.5 + 1i) + (1 / 2), 4.0 + 1i, "(3.5 + 1i) + 1/2 = 4.0 + 1i";
+is_approx (1 / 2) - (3.5 + 1i), -3.0 - 1i, "1/2 - (3.5 + 1i) = -3.0 - 1i";
+is_approx (3.5 + 1i) - (1 / 2), 3.0 + 1i, "(3.5 + 1i) - 1/2 = 3.0 + 1i";
+is_approx (1 / 3) * (6.6 + 1i), 2.2 + (1i/3), "1/3 * (6.6 + 1i) = 2.2 + (1/3)i";
+is_approx (6.6 + 1i) * (1 / 3), 2.2 + (1i/3), "(6.6 + 1i) * 1/3 = 2.2 + (1/3)i";
+is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
+is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
 
 done_testing;
 
