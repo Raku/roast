@@ -30,6 +30,16 @@ class AngleAndResult
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
+    method complex($imaginary_part_in_radians, $base) {
+        my $z_in_radians = $.angle_in_degrees.Num / 180.0 * pi + ($imaginary_part_in_radians)i; 
+        given $base {
+            when "degrees"     { $z_in_radians * 180.0 / pi; }
+            when "radians"     { $z_in_radians; }
+            when "gradians"    { $z_in_radians * 200.0 / pi; }
+            when "revolutions" { $z_in_radians / (2.0 * pi); }
+        }
+    }
+    
     method num($base) {
         given $base {
             when "degrees"     { $.angle_in_degrees.Num }
@@ -53,12 +63,6 @@ class AngleAndResult
             when "degrees"     { $.angle_in_degrees }
         }
     }
-    
-    
-    method degrees() { $.angle_in_degrees; }
-    method radians() { $.angle_in_degrees / 180 * pi; }
-    method gradians() { $.angle_in_degrees / 180 * 200; }
-    method revolutions() { $.angle_in_degrees / 360; }
 }
 
 my @sines = ( 
@@ -238,31 +242,45 @@ is_approx(atan2(-1, 1/3*sqrt(3), 1) + 1, 300/360, 'atan2 - revolutions (Q IV)');
 
 
 # -- sin, cos, tan
-# sin
-my %sines = ( -360 => 0,
-              135 - 360 => 1/2*sqrt(2),
-              330 - 360 => -0.5,
-              0 => 0,
-              30 => 0.5,
-			  45 => 1/2*sqrt(2),
-			  90 => 1,
-			  135 => 1/2*sqrt(2),
-			  180 => 0,
-			  225 => -1/2*sqrt(2),
-			  270 => -1,
-			  315 => -1/2*sqrt(2),
-			  360 => 0,
-              30 + 360 => 0.5,
-			  225 + 360 => -1/2*sqrt(2),
-              720 => 0
-		    );
-		    
+	    
 my %official_base = (
     "radians" => "radians",
     "gradians" => "gradians", 
     "degrees" => "degrees",
     "revolutions" => 1
 );
+
+# SHOULD BE IN COMPLEX.PM!
+# but that doesn't work for some reason...
+
+# For some reason, the default values mechanism is giving trouble here.
+# So write this function out twice for now.
+
+multi sub sin(Complex $a)
+{
+    $a.sin;
+}
+
+multi sub sin(Complex $a, $base)
+{
+    # Doing it this way allows us to bypass the default value mechanism
+    ($a.re!to-radians($base) + $a.im!to-radians($base) * 1i).sin;
+}
+
+multi sub cos(Complex $a)
+{
+    $a.cos;
+}
+
+multi sub cos(Complex $a, $base)
+{
+    # Doing it this way allows us to bypass the default value mechanism
+    ($a.re!to-radians($base) + $a.im!to-radians($base) * 1i).cos;
+}
+
+# END SHOULD BE IN COMPLEX.PM!
+
+# sin
 		
 for @sines -> $angle
 {
@@ -271,7 +289,7 @@ for @sines -> $angle
     # sin(Num)
 	is_approx(sin($angle.num("radians")), $sine, 
 	          "sin(Num) - {$angle.num('radians')} default");
-	for <radians degrees gradians revolutions> -> $base {
+	for %official_base.keys -> $base {
 	    is_approx(sin($angle.num($base), %official_base{$base}), $sine, 
 	              "sin(Num) - {$angle.num($base)} $base");
 	}
@@ -279,7 +297,7 @@ for @sines -> $angle
     # Num.sin tests
     is_approx($angle.num("radians").sin, $sine, 
               "Num.sin - {$angle.num('radians')} default");
-	for <radians degrees gradians revolutions> -> $base {
+	for %official_base.keys -> $base {
         #?rakudo skip "method .sin plus base doesn't seem to work?"
 	    is_approx($angle.num($base).sin(%official_base{$base}), $sine, 
 	              "Num.sin - {$angle.num($base)} $base");
@@ -288,17 +306,15 @@ for @sines -> $angle
 	# sin(Rat)
 	is_approx(sin($angle.rat("radians")), $sine, 
 	          "sin(Rat) - {$angle.rat('radians')} default");
-	for <radians degrees gradians revolutions> -> $base {
+	for %official_base.keys -> $base {
 	    is_approx(sin($angle.rat($base), %official_base{$base}), $sine, 
 	              "sin(Rat) - {$angle.rat($base)} $base");
 	}
 	              
     # Rat.sin tests
-    #?rakudo skip "Rat.sin not yet implemented"
     is_approx($angle.rat("radians").sin, $sine, 
               "Rat.sin - {$angle.rat('radians')} default");
-	for <radians degrees gradians revolutions> -> $base {
-        #?rakudo skip "Rat.sin not yet implemented"
+	for %official_base.keys -> $base {
 	    is_approx($angle.rat($base).sin(%official_base{$base}), $sine, 
 	              "Rat.sin - {$angle.rat($base)} $base");
 	}
@@ -306,56 +322,156 @@ for @sines -> $angle
     # sin(Int)
     is_approx(sin($angle.int("degrees"), %official_base{"degrees"}), $sine, 
               "sin(Int) - {$angle.int('degrees')} degrees");
-    #?rakudo skip "Int.sin not yet implemented"
     is_approx($angle.int('degrees').sin(%official_base{'degrees'}), $sine, 
               "Int.sin - {$angle.int('degrees')} degrees");
 
-    # sin Complex tests
-    #?rakudo skip "sin(Complex) not yet implemented"
-    is_approx(sin($angle.radians + 0i), $sine, "sin Complex - default");  
- 
+    # Complex tests
+    my Complex $zp0 = $angle.complex(0.0, "radians");
+    my Complex $sz0 = $sine + 0i;
+    my Complex $zp1 = $angle.complex(1.0, "radians");
+    my Complex $sz1 = (exp($zp1 * 1i) - exp(-$zp1 * 1i)) / 2i;
+    my Complex $zp2 = $angle.complex(2.0, "radians");
+    my Complex $sz2 = (exp($zp2 * 1i) - exp(-$zp2 * 1i)) / 2i;
+    
+    # sin(Complex) tests
+    is_approx(sin($zp0), $sz0, "sin(Complex) - $zp0 default");
+    is_approx(sin($zp1), $sz1, "sin(Complex) - $zp1 default");
+    is_approx(sin($zp2), $sz2, "sin(Complex) - $zp2 default");
+    
+    for %official_base.keys -> $base {
+        my Complex $z = $angle.complex(0.0, $base);
+        is_approx(sin($z, %official_base{$base}), $sz0, "sin(Complex) - $z $base");
+        
+        $z = $angle.complex(1.0, $base);
+        is_approx(sin($z, %official_base{$base}), $sz1, "sin(Complex) - $z $base");
+        
+        $z = $angle.complex(2.0, $base);
+        is_approx(sin($z, %official_base{$base}), $sz2, "sin(Complex) - $z $base");
+    }
+    
     # Complex.sin tests
-    is_approx(($angle.radians + 0i).sin, $sine, "Complex.sin - default");
-    is_approx(($angle.radians + 1i).sin, 
-              $sine * cosh(1.0) + 1i * cos($angle.radians) * sinh(1.0), 
-              "Complex.sin - default");
-    is_approx(($angle.radians + 2i).sin, 
-              $sine * cosh(2.0) + 1i * cos($angle.radians) * sinh(2.0), 
-              "Complex.sin - default");
+    is_approx($zp0.sin, $sz0, "Complex.sin - $zp0 default");
+    is_approx($zp1.sin, $sz1, "Complex.sin - $zp1 default");
+    is_approx($zp2.sin, $sz2, "Complex.sin - $zp2 default");
+              
+	for %official_base.keys -> $base {
+        my Complex $z = $angle.complex(0.0, $base);
+        #?rakudo skip "Complex.sin plus base doesn't work yet"
+        is_approx($z.sin(%official_base{$base}), $sz0, "Complex.sin - $z $base");
+        
+        $z = $angle.complex(1.0, $base);
+        #?rakudo skip "Complex.sin plus base doesn't work yet"
+        is_approx($z.sin(%official_base{$base}), $sz1, "Complex.sin - $z $base");
+        
+        $z = $angle.complex(2.0, $base);
+        #?rakudo skip "Complex.sin plus base doesn't work yet"
+        is_approx($z.sin(%official_base{$base}), $sz2, "Complex.sin - $z $base");
+    }
 }
 
 is(sin(Inf), NaN, "sin - default");
 is(sin(-Inf), NaN, "sin - default");
-for <degrees radians gradians revolutions> -> $base
+for %official_base.keys -> $base
 {
-    is(sin(Inf,  $base), NaN, "sin - $base");
-    is(sin(-Inf, $base), NaN, "sin - $base");
+    is(sin(Inf,  %official_base{$base}), NaN, "sin - $base");
+    is(sin(-Inf, %official_base{$base}), NaN, "sin - $base");
 }
 
-# cos	
-my %cosines;
-for %sines.kv -> $angle, $sine
+# cos
+		
+for @cosines -> $angle
 {
-    %cosines{$angle - 90} = $sine;
-}
-
-for %cosines.kv -> $angle, $cosine
-{
-	is_approx(cos( $angle/180*$PI), $cosine, "cos - default");
-	is_approx(cos( $angle/180*$PI, 'radians'), $cosine, "cos - radians");
-	is_approx(cos( $angle, 'degrees'), $cosine, "cos - degrees");
-	is_approx(cos( $angle/180*200, 'gradians'), $cosine, "cos - gradians");
-	is_approx(cos( $angle/360, 1), $cosine, "cos - revolutions");
+    my $cosine = $angle.result;
+    
+    # cos(Num)
+	is_approx(cos($angle.num("radians")), $cosine, 
+	          "cos(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cos($angle.num($base), %official_base{$base}), $cosine, 
+	              "cos(Num) - {$angle.num($base)} $base");
+	}
+	              
+    # Num.cos tests
+    is_approx($angle.num("radians").cos, $cosine, 
+              "Num.cos - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+        #?rakudo skip "method .cos plus base doesn't seem to work?"
+	    is_approx($angle.num($base).cos(%official_base{$base}), $cosine, 
+	              "Num.cos - {$angle.num($base)} $base");
+	}
 	
-    # is_approx(cos($angle/180*$PI + 0i), $cosine, "cos Complex - default");  
+	# cos(Rat)
+	is_approx(cos($angle.rat("radians")), $cosine, 
+	          "cos(Rat) - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cos($angle.rat($base), %official_base{$base}), $cosine, 
+	              "cos(Rat) - {$angle.rat($base)} $base");
+	}
+	              
+    # Rat.cos tests
+    is_approx($angle.rat("radians").cos, $cosine, 
+              "Rat.cos - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.rat($base).cos(%official_base{$base}), $cosine, 
+	              "Rat.cos - {$angle.rat($base)} $base");
+	}
+
+    # cos(Int)
+    is_approx(cos($angle.int("degrees"), %official_base{"degrees"}), $cosine, 
+              "cos(Int) - {$angle.int('degrees')} degrees");
+    is_approx($angle.int('degrees').cos(%official_base{'degrees'}), $cosine, 
+              "Int.cos - {$angle.int('degrees')} degrees");
+
+    # Complex tests
+    my Complex $zp0 = $angle.complex(0.0, "radians");
+    my Complex $sz0 = $cosine + 0i;
+    my Complex $zp1 = $angle.complex(1.0, "radians");
+    my Complex $sz1 = (exp($zp1 * 1i) + exp(-$zp1 * 1i)) / 2.0;
+    my Complex $zp2 = $angle.complex(2.0, "radians");
+    my Complex $sz2 = (exp($zp2 * 1i) + exp(-$zp2 * 1i)) / 2.0;
+    
+    # cos(Complex) tests
+    is_approx(cos($zp0), $sz0, "cos(Complex) - $zp0 default");
+    is_approx(cos($zp1), $sz1, "cos(Complex) - $zp1 default");
+    is_approx(cos($zp2), $sz2, "cos(Complex) - $zp2 default");
+    
+    for %official_base.keys -> $base {
+        my Complex $z = $angle.complex(0.0, $base);
+        is_approx(cos($z, %official_base{$base}), $sz0, "cos(Complex) - $z $base");
+        
+        $z = $angle.complex(1.0, $base);
+        is_approx(cos($z, %official_base{$base}), $sz1, "cos(Complex) - $z $base");
+        
+        $z = $angle.complex(2.0, $base);
+        is_approx(cos($z, %official_base{$base}), $sz2, "cos(Complex) - $z $base");
+    }
+    
+    # Complex.cos tests
+    is_approx($zp0.cos, $sz0, "Complex.cos - $zp0 default");
+    is_approx($zp1.cos, $sz1, "Complex.cos - $zp1 default");
+    is_approx($zp2.cos, $sz2, "Complex.cos - $zp2 default");
+              
+	for %official_base.keys -> $base {
+        my Complex $z = $angle.complex(0.0, $base);
+        #?rakudo skip "Complex.cos plus base doesn't work yet"
+        is_approx($z.cos(%official_base{$base}), $sz0, "Complex.cos - $z $base");
+        
+        $z = $angle.complex(1.0, $base);
+        #?rakudo skip "Complex.cos plus base doesn't work yet"
+        is_approx($z.cos(%official_base{$base}), $sz1, "Complex.cos - $z $base");
+        
+        $z = $angle.complex(2.0, $base);
+        #?rakudo skip "Complex.cos plus base doesn't work yet"
+        is_approx($z.cos(%official_base{$base}), $sz2, "Complex.cos - $z $base");
+    }
 }
 
 is(cos(Inf), NaN, "cos - default");
 is(cos(-Inf), NaN, "cos - default");
-for <degrees radians gradians revolutions> -> $base
+for %official_base.keys -> $base
 {
-    is(cos(Inf,  $base), NaN, "cos - $base");
-    is(cos(-Inf, $base), NaN, "cos - $base");
+    is(cos(Inf,  %official_base{$base}), NaN, "cos - $base");
+    is(cos(-Inf, %official_base{$base}), NaN, "cos - $base");
 }
 
 # tan
