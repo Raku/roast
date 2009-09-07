@@ -41,9 +41,9 @@ my $no_endianness = $] > 5.009 ? '' :
 my $no_signedness = $] > 5.009 ? '' :
   "Signed/unsigned pack modifiers not available on this perl";
 
-plan tests => 14675;
+# plan tests => 14675;
 
-use Config;
+# use Config;
 
 my $Is_EBCDIC = (defined $Config{ebcdic} && $Config{ebcdic} eq 'define');
 my $Perl = which_perl();
