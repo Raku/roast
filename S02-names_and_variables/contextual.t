@@ -2,27 +2,9 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 6;
 
 # L<S02/Names/"for the identifier of the variable">
-
-%*ENV<THIS_NEVER_EXISTS> = 123;
-
-{
-	is $*THIS_NEVER_EXISTS, 123, "Testing contextual variable which changed within %*ENV";
-}
-
-{
-	%*ENV.delete('THIS_NEVER_EXISTS');
-        my $rv = eval('$*THIS_NEVER_EXISTS');
-	ok $rv ~~ undef, "Testing for value of contextual variables that was deleted.";
-}
-
-{
-	my $rv = eval('$*THIS_IS_NEVER_THERE_EITHER');
-	ok $rv ~~ undef, "Testing for value of contextual variables that never existed.";
-}
-
 
 sub foo() { $*VAR };
 
