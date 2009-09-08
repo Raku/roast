@@ -268,10 +268,13 @@ tryeq 28 div -7, -4;
 tryeq -28 div 4, -7;
 tryeq -28 div -2, 14;
 
-tryeq 0x80000000 div 1, 0x80000000;
-tryeq 0x80000000 div -1, -0x80000000;
-tryeq -0x80000000 div 1, -0x80000000;
-tryeq -0x80000000 div -1, 0x80000000;
+#?rakudo todo "Big number issues with div"
+is(0x80000000 div 1, 0x80000000, "0x80000000 div 1 == 0x80000000");
+#?rakudo skip "Big number issues with div"
+is(0x80000000 div -1, -0x80000000, "0x80000000 div -1 == -0x80000000");
+is(-0x80000000 div 1, -0x80000000, "-0x80000000 div 1 == -0x80000000");
+#?rakudo skip "Big number issues with div"
+is(-0x80000000 div -1, 0x80000000, "-0x80000000 div -1 == 0x80000000");
 
 is(9 div 4, 2, "9 div 4 == 2");
 
@@ -289,8 +292,8 @@ tryeq -5.5 / -2, 2.75;
 is 18446744073709551616 div 1, 18446744073709551616; # Bluuurg
 
 {
-    tryeq_sloppy 18446744073709551616 div 2, 9223372036854775808;
-    tryeq_sloppy 18446744073709551616 div 4294967296, 4294967296;
+    tryeq_sloppy 18446744073709551616 div 2, 9223372036854775808, "Bignums are not working yet";
+    tryeq_sloppy 18446744073709551616 div 4294967296, 4294967296, "Bignums are not working yet";
     #?rakudo skip 'big numbers'
     ok 18446744073709551616 div 9223372036854775808 == 2, '$bignum1 div $bignum2';
 }
