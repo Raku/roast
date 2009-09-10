@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 32;
+plan 36;
 
 # L<S11/"Exportation"/>
 
@@ -113,6 +113,20 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
         'Foo_exp_parens() -- values agree' );
     ok( &Foo::Foo_exp_parens =:= &Foo::EXPORT::ALL::Foo_exp_parens,
         'Foo_exp_parens() -- containers agree' );
+}
+
+{
+    class Bar {
+        multi method bar ($baz = 'default') is export {
+            return $baz;
+        };
+    }
+
+    my $a = Bar.new;
+    is($a.bar, "default", '$a.bar gets default value');
+    is($a.bar("sixties"), "sixties", '$a.bar() gets passed value');
+    is(Bar::bar($a), "default", 'Bar::bar($a) gets default value');
+    is(Bar::bar($a, "moonlight"), "moonlight", 'Bar::bar($a, ) gets default value');
 }
 
 # vim: ft=perl6
