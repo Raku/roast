@@ -298,7 +298,6 @@ for @sines -> $angle
     is_approx($angle.num("radians").sin, $sine, 
               "Num.sin - {$angle.num('radians')} default");
 	for %official_base.keys -> $base {
-        #?rakudo skip "method .sin plus base doesn't seem to work?"
 	    is_approx($angle.num($base).sin(%official_base{$base}), $sine, 
 	              "Num.sin - {$angle.num($base)} $base");
 	}
@@ -395,7 +394,6 @@ for @cosines -> $angle
     is_approx($angle.num("radians").cos, $cosine, 
               "Num.cos - {$angle.num('radians')} default");
 	for %official_base.keys -> $base {
-        #?rakudo skip "method .cos plus base doesn't seem to work?"
 	    is_approx($angle.num($base).cos(%official_base{$base}), $cosine, 
 	              "Num.cos - {$angle.num($base)} $base");
 	}
