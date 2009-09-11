@@ -473,55 +473,119 @@ for %official_base.keys -> $base
 }
 
 # tan
-is_approx(tan(0/4*$PI),  0, "tan - default");
-is_approx(tan(1/4*$PI),  1, "tan - default");
-is_approx(tan(3/4*$PI), -1, "tan - default");
-is_approx(tan(4/4*$PI),  0, "tan - default");
-is_approx(tan(5/4*$PI),  1, "tan - default");
-is_approx(tan(7/4*$PI), -1, "tan - default");
-is_approx(tan(8/4*$PI),  0, "tan - default");
+for @sines -> $angle
+{
+    next if abs(cos($angle.num("radians"))) < 1e-10; 
+    my $tan = sin($angle.num("radians")) / cos($angle.num("radians"));
+    
+    # tan(Num)
+	is_approx(tan($angle.num("radians")), $tan, 
+	          "tan(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(tan($angle.num($base), %official_base{$base}), $tan, 
+	              "tan(Num) - {$angle.num($base)} $base");
+	}
+	              
+    # Num.tan tests
+    is_approx($angle.num("radians").tan, $tan, 
+              "Num.tan - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.num($base).tan(%official_base{$base}), $tan, 
+	              "Num.tan - {$angle.num($base)} $base");
+	}
+	
+	# tan(Rat)
+	is_approx(tan($angle.rat("radians")), $tan, 
+	          "tan(Rat) - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(tan($angle.rat($base), %official_base{$base}), $tan, 
+	              "tan(Rat) - {$angle.rat($base)} $base");
+	}
+	              
+    # Rat.tan tests
+    #?rakudo skip "Rat.tan not available yet"
+    is_approx($angle.rat("radians").tan, $tan, 
+              "Rat.tan - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+        #?rakudo skip "Rat.tan not available yet"
+	    is_approx($angle.rat($base).tan(%official_base{$base}), $tan, 
+	              "Rat.tan - {$angle.rat($base)} $base");
+	}
+
+    # tan(Int)
+    #?rakudo skip "tan(Int) not available yet"
+    is_approx(tan($angle.int("degrees"), %official_base{"degrees"}), $tan, 
+              "tan(Int) - {$angle.int('degrees')} degrees");
+    #?rakudo skip "Int.tan not available yet"
+    is_approx($angle.int('degrees').tan(%official_base{'degrees'}), $tan, 
+              "Int.tan - {$angle.int('degrees')} degrees");
+}
+
 is(tan(Inf), NaN, "tan - default");
 is(tan(-Inf), NaN, "tan - default");
+for %official_base.keys -> $base
+{
+    is(tan(Inf,  %official_base{$base}), NaN, "tan - $base");
+    is(tan(-Inf, %official_base{$base}), NaN, "tan - $base");
+}
 
-is_approx(tan(  0, 'degrees'),  0, "tan - degrees");
-is_approx(tan( 45, 'degrees'),  1, "tan - degrees");
-is_approx(tan(135, 'degrees'), -1, "tan - degrees");
-is_approx(tan(180, 'degrees'),  0, "tan - degrees");
-is_approx(tan(225, 'degrees'),  1, "tan - degrees");
-is_approx(tan(315, 'degrees'), -1, "tan - degrees");
-is_approx(tan(360, 'degrees'),  0, "tan - degrees");
-is(tan(Inf, 'degrees'), NaN, "tan - degrees");
-is(tan(-Inf, 'degrees'), NaN, "tan - degrees");
 
-is_approx(tan(  0, 'gradians'),  0, "tan - gradians");
-is_approx(tan( 50, 'gradians'),  1, "tan - gradians");
-is_approx(tan(150, 'gradians'), -1, "tan - gradians");
-is_approx(tan(200, 'gradians'),  0, "tan - gradians");
-is_approx(tan(250, 'gradians'),  1, "tan - gradians");
-is_approx(tan(350, 'gradians'), -1, "tan - gradians");
-is_approx(tan(400, 'gradians'),  0, "tan - gradians");
-is(tan(Inf, 'gradians'), NaN, "tan - gradians");
-is(tan(-Inf, 'gradians'), NaN, "tan - gradians");
+# cotan
+for @sines -> $angle
+{
+    next if abs(sin($angle.num("radians"))) < 1e-10; 
+    my $cotan = cos($angle.num("radians")) / sin($angle.num("radians"));
+    
+    # cotan(Num)
+	is_approx(cotan($angle.num("radians")), $cotan, 
+	          "cotan(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cotan($angle.num($base), %official_base{$base}), $cotan, 
+	              "cotan(Num) - {$angle.num($base)} $base");
+	}
+	              
+    # Num.cotan tests
+    is_approx($angle.num("radians").cotan, $cotan, 
+              "Num.cotan - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.num($base).cotan(%official_base{$base}), $cotan, 
+	              "Num.cotan - {$angle.num($base)} $base");
+	}
+	
+	# cotan(Rat)
+	is_approx(cotan($angle.rat("radians")), $cotan, 
+	          "cotan(Rat) - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cotan($angle.rat($base), %official_base{$base}), $cotan, 
+	              "cotan(Rat) - {$angle.rat($base)} $base");
+	}
+	              
+    # Rat.cotan tests
+    #?rakudo skip "Rat.cotan not available yet"
+    is_approx($angle.rat("radians").cotan, $cotan, 
+              "Rat.cotan - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+        #?rakudo skip "Rat.cotan not available yet"
+	    is_approx($angle.rat($base).cotan(%official_base{$base}), $cotan, 
+	              "Rat.cotan - {$angle.rat($base)} $base");
+	}
 
-is_approx(tan(0/4*$PI, 'radians'),  0, "tan - radians");
-is_approx(tan(1/4*$PI, 'radians'),  1, "tan - radians");
-is_approx(tan(3/4*$PI, 'radians'), -1, "tan - radians");
-is_approx(tan(4/4*$PI, 'radians'),  0, "tan - radians");
-is_approx(tan(5/4*$PI, 'radians'),  1, "tan - radians");
-is_approx(tan(7/4*$PI, 'radians'), -1, "tan - radians");
-is_approx(tan(8/4*$PI, 'radians'),  0, "tan - radians");
-is(tan(Inf, 'radians'), NaN, "tan - radians");
-is(tan(-Inf, 'radians'), NaN, "tan - radians");
+    # cotan(Int)
+    #?rakudo skip "cotan(Int) not available yet"
+    is_approx(cotan($angle.int("degrees"), %official_base{"degrees"}), $cotan, 
+              "cotan(Int) - {$angle.int('degrees')} degrees");
+    #?rakudo skip "Int.cotan not available yet"
+    is_approx($angle.int('degrees').cotan(%official_base{'degrees'}), $cotan, 
+              "Int.cotan - {$angle.int('degrees')} degrees");
+}
 
-is_approx(tan(0/8, 1),  0, "tan - revolutions");
-is_approx(tan(1/8, 1),  1, "tan - revolutions");
-is_approx(tan(3/8, 1), -1, "tan - revolutions");
-is_approx(tan(4/8, 1),  0, "tan - revolutions");
-is_approx(tan(5/8, 1),  1, "tan - revolutions");
-is_approx(tan(7/8, 1), -1, "tan - revolutions");
-is_approx(tan(8/8, 1),  0, "tan - revolutions");
-is(tan(Inf, 1), NaN, "tan - revolutions");
-is(tan(-Inf, 1), NaN, "tan - revolutions");
+is(cotan(Inf), NaN, "cotan - default");
+is(cotan(-Inf), NaN, "cotan - default");
+for %official_base.keys -> $base
+{
+    is(cotan(Inf,  %official_base{$base}), NaN, "cotan - $base");
+    is(cotan(-Inf, %official_base{$base}), NaN, "cotan - $base");
+}
 
 
 # sec
@@ -615,74 +679,130 @@ is_approx(asec(1.5707963267949, 1), 0.140166045144972, 'asec - revolutions');
 
 
 # cosh
-is_approx(cosh(0), 1, 'cosh - default');
-is_approx(cosh(1), 1.54308063481524, 'cosh - default');
+my @coshes = ( 
+    AngleAndResult.new(0, 1),
+    AngleAndResult.new(45, (exp(pi / 4.0) + exp(-pi / 4.0)) / 2.0),
+    AngleAndResult.new(90, (exp(pi / 2.0) + exp(-pi / 2.0)) / 2.0),
+    AngleAndResult.new(180, (exp(pi) + exp(-pi)) / 2.0)
+);
 
-is_approx(cosh(0, 'degrees'), 57.2957795130823, 'cosh - degrees');
-is_approx(cosh(1, 'degrees'), 88.4120078232813, 'cosh - degrees');
-
-is_approx(cosh(0, 'gradians'), 63.6619772367581, 'cosh - gradians');
-is_approx(cosh(1, 'gradians'), 98.2355642480903, 'cosh - gradians');
-
-is_approx(cosh(0, 'radians'), 1, 'cosh - radians');
-is_approx(cosh(1, 'radians'), 1.54308063481524, 'cosh - radians');
-
-is_approx(cosh(0, 1), 0.159154943091895, 'cosh - revolutions');
-is_approx(cosh(1, 1), 0.245588910620226, 'cosh - revolutions');
+for @coshes -> $angle
+{
+    my $cosh = $angle.result;
+    
+    # cosh(Num)
+	is_approx(cosh($angle.num("radians")), $cosh, 
+	          "cosh(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cosh($angle.num($base), %official_base{$base}), $cosh, 
+	              "cosh(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
 is(cosh(Inf), Inf);
 is(cosh(-Inf), Inf);
 
 
 # sinh
-is_approx(sinh(0), 0, 'sinh - default');
-is_approx(sinh(1), 1.1752011936438, 'sinh - default');
+my @sinhes = ( 
+    AngleAndResult.new(0, 0.0),
+    AngleAndResult.new(45, (exp(pi / 4.0) - exp(-pi / 4.0)) / 2.0),
+    AngleAndResult.new(90, (exp(pi / 2.0) - exp(-pi / 2.0)) / 2.0),
+    AngleAndResult.new(180, (exp(pi) - exp(-pi)) / 2.0)
+);
 
-is_approx(sinh(0, 'degrees'), 0, 'sinh - degrees');
-is_approx(sinh(1, 'degrees'), 67.3340684745264, 'sinh - degrees');
-
-is_approx(sinh(0, 'gradians'), 0, 'sinh - gradians');
-is_approx(sinh(1, 'gradians'), 74.8156316383627, 'sinh - gradians');
-
-is_approx(sinh(0, 'radians'), 0, 'sinh - radians');
-is_approx(sinh(1, 'radians'), 1.1752011936438, 'sinh - radians');
-
-is_approx(sinh(0, 1), 0, 'sinh - revolutions');
-is_approx(sinh(1, 1), 0.187039079095907, 'sinh - revolutions');
-
+for @sinhes -> $angle
+{
+    my $sinh = $angle.result;
+    
+    # sinh(Num)
+	is_approx(sinh($angle.num("radians")), $sinh, 
+	          "sinh(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(sinh($angle.num($base), %official_base{$base}), $sinh, 
+	              "sinh(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
 # sech
-is_approx(sech(0), 1, 'sech - default');
-is_approx(sech(1), 0.648054273663885, 'sech - default');
-
-is_approx(sech(0, 'degrees'), 57.2957795130823, 'sech - degrees');
-is_approx(sech(1, 'degrees'), 37.1307747763567, 'sech - degrees');
-
-is_approx(sech(0, 'gradians'), 63.6619772367581, 'sech - gradians');
-is_approx(sech(1, 'gradians'), 41.2564164181741, 'sech - gradians');
-
-is_approx(sech(0, 'radians'), 1, 'sech - radians');
-is_approx(sech(1, 'radians'), 0.648054273663885, 'sech - radians');
-
-is_approx(sech(0, 1), 0.159154943091895, 'sech - revolutions');
-is_approx(sech(1, 1), 0.103141041045435, 'sech - revolutions');
+for @coshes -> $angle
+{
+    my $sech = 1.0 / $angle.result;
+    
+    # sech(Num)
+	is_approx(sech($angle.num("radians")), $sech, 
+	          "sech(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(sech($angle.num($base), %official_base{$base}), $sech, 
+	              "sech(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
 
 # tanh
-is_approx(tanh(0), 0, 'tanh - default');
-is_approx(tanh(1), 0.761594155955765, 'tanh - default');
+my @tanhes = ( 
+    AngleAndResult.new(0, 0.0),
+    AngleAndResult.new(45, (exp(pi / 2.0) - 1.0) / (exp(pi / 2.0) + 1.0)),
+    AngleAndResult.new(90, (exp(pi) - 1.0) / (exp(pi) + 1.0)),
+    AngleAndResult.new(180, (exp(2.0 * pi) - 1.0) / (exp(2.0 * pi) + 1.0)),
+);
 
-is_approx(tanh(0, 'degrees'), 0, 'tanh - degrees');
-is_approx(tanh(1, 'degrees'), 43.6361308380935, 'tanh - degrees');
+for @tanhes -> $angle
+{
+    my $tanh = $angle.result;
+    
+    # tanh(Num)
+	is_approx(tanh($angle.num("radians")), $tanh, 
+	          "tanh(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(tanh($angle.num($base), %official_base{$base}), $tanh, 
+	              "tanh(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
-is_approx(tanh(0, 'gradians'), 0, 'tanh - gradians');
-is_approx(tanh(1, 'gradians'), 48.4845898201039, 'tanh - gradians');
 
-is_approx(tanh(0, 'radians'), 0, 'tanh - radians');
-is_approx(tanh(1, 'radians'), 0.761594155955765, 'tanh - radians');
+# cosech
+for @sinhes -> $angle
+{
+    next if $angle.result == 0.0;
+    my $cosech = 1.0 / $angle.result;
+    
+    # cosech(Num)
+	is_approx(cosech($angle.num("radians")), $cosech, 
+	          "cosech(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cosech($angle.num($base), %official_base{$base}), $cosech, 
+	              "cosech(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
-is_approx(tanh(0, 1), 0, 'tanh - revolutions');
-is_approx(tanh(1, 1), 0.12121147455026, 'tanh - revolutions');
+
+# cotanh
+for @tanhes -> $angle
+{
+    next if $angle.result == 0.0;
+    my $cotanh = 1.0 / $angle.result;
+    
+    # cotanh(Num)
+	is_approx(cotanh($angle.num("radians")), $cotanh, 
+	          "cotanh(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cotanh($angle.num($base), %official_base{$base}), $cotanh, 
+	              "cotanh(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
 
 # acosh
@@ -754,71 +874,21 @@ is_approx(atanh(0.5, 1), 0.087424788141515, 'atanh - revolutions');
 
 
 # cosec
-is_approx(cosec(-1.5707963267949), -1, 'cosec - default');
-is_approx(cosec(1.5707963267949), 1, 'cosec - default');
-
-is_approx(cosec(-1.5707963267949, 'degrees'), -57.2957795130823, 'cosec - degrees');
-is_approx(cosec(1.5707963267949, 'degrees'), 57.2957795130823, 'cosec - degrees');
-
-is_approx(cosec(-1.5707963267949, 'gradians'), -63.6619772367581, 'cosec - gradians');
-is_approx(cosec(1.5707963267949, 'gradians'), 63.6619772367581, 'cosec - gradians');
-
-is_approx(cosec(-1.5707963267949, 'radians'), -1, 'cosec - radians');
-is_approx(cosec(1.5707963267949, 'radians'), 1, 'cosec - radians');
-
-is_approx(cosec(-1.5707963267949, 1), -0.159154943091895, 'cosec - revolutions');
-is_approx(cosec(1.5707963267949, 1), 0.159154943091895, 'cosec - revolutions');
-
-
-# cotan
-is_approx(cotan(-0.785398163397448), -1, 'cotan - default');
-is_approx(cotan(0.785398163397448), 1, 'cotan - default');
-
-is_approx(cotan(-0.785398163397448, 'degrees'), -57.2957795130824, 'cotan - degrees');
-is_approx(cotan(0.785398163397448, 'degrees'), 57.2957795130824, 'cotan - degrees');
-
-is_approx(cotan(-0.785398163397448, 'gradians'), -63.6619772367582, 'cotan - gradians');
-is_approx(cotan(0.785398163397448, 'gradians'), 63.6619772367582, 'cotan - gradians');
-
-is_approx(cotan(-0.785398163397448, 'radians'), -1, 'cotan - radians');
-is_approx(cotan(0.785398163397448, 'radians'), 1, 'cotan - radians');
-
-is_approx(cotan(-0.785398163397448, 1), -0.159154943091895, 'cotan - revolutions');
-is_approx(cotan(0.785398163397448, 1), 0.159154943091895, 'cotan - revolutions');
-
-
-# cosech
-is_approx(cosech(-1.5707963267949), -0.434537208094694, 'cosech - default');
-is_approx(cosech(1.5707963267949), 0.434537208094694, 'cosech - default');
-
-is_approx(cosech(-1.5707963267949, 'degrees'), -24.897148065224, 'cosech - degrees');
-is_approx(cosech(1.5707963267949, 'degrees'), 24.897148065224, 'cosech - degrees');
-
-is_approx(cosech(-1.5707963267949, 'gradians'), -27.6634978502489, 'cosech - gradians');
-is_approx(cosech(1.5707963267949, 'gradians'), 27.6634978502489, 'cosech - gradians');
-
-is_approx(cosech(-1.5707963267949, 'radians'), -0.434537208094694, 'cosech - radians');
-is_approx(cosech(1.5707963267949, 'radians'), 0.434537208094694, 'cosech - radians');
-
-is_approx(cosech(-1.5707963267949, 1), -0.0691587446256221, 'cosech - revolutions');
-is_approx(cosech(1.5707963267949, 1), 0.0691587446256221, 'cosech - revolutions');
-
-
-# cotanh
-is_approx(cotanh(-1.5707963267949), -1.09033141072737, 'cotanh - default');
-is_approx(cotanh(1.5707963267949), 1.09033141072737, 'cotanh - default');
-
-is_approx(cotanh(-1.5707963267949, 'degrees'), -62.4713881052233, 'cotanh - degrees');
-is_approx(cotanh(1.5707963267949, 'degrees'), 62.4713881052233, 'cotanh - degrees');
-
-is_approx(cotanh(-1.5707963267949, 'gradians'), -69.4126534502481, 'cotanh - gradians');
-is_approx(cotanh(1.5707963267949, 'gradians'), 69.4126534502481, 'cotanh - gradians');
-
-is_approx(cotanh(-1.5707963267949, 'radians'), -1.09033141072737, 'cotanh - radians');
-is_approx(cotanh(1.5707963267949, 'radians'), 1.09033141072737, 'cotanh - radians');
-
-is_approx(cotanh(-1.5707963267949, 1), -0.17353163362562, 'cotanh - revolutions');
-is_approx(cotanh(1.5707963267949, 1), 0.17353163362562, 'cotanh - revolutions');
+for @sines -> $angle
+{
+    next if $angle.result == 0.0;
+    my $cosec = 1.0 / $angle.result;
+    
+    # cosec(Num)
+	is_approx(cosec($angle.num("radians")), $cosec, 
+	          "cosec(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cosec($angle.num($base), %official_base{$base}), $cosec, 
+	              "cosec(Num) - {$angle.num($base)} $base");
+	}
+	
+	# MUST: Add all the other forms
+}
 
 
 # acosec
