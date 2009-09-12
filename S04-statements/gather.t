@@ -19,7 +19,7 @@ plan 14;
         }
     };
 
-    #?rakudo todo 'lazy gather/takr'
+    #?rakudo todo 'lazy gather/take'
     ok(!$i, "not yet gathered");
     is(+@a, 5, "5 elements gathered");
     ok($i, "gather code executed");
