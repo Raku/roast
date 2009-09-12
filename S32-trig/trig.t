@@ -503,20 +503,16 @@ for @sines -> $angle
 	}
 	              
     # Rat.tan tests
-    #?rakudo skip "Rat.tan not available yet"
     is_approx($angle.rat("radians").tan, $tan, 
               "Rat.tan - {$angle.rat('radians')} default");
 	for %official_base.keys -> $base {
-        #?rakudo skip "Rat.tan not available yet"
 	    is_approx($angle.rat($base).tan(%official_base{$base}), $tan, 
 	              "Rat.tan - {$angle.rat($base)} $base");
 	}
 
     # tan(Int)
-    #?rakudo skip "tan(Int) not available yet"
     is_approx(tan($angle.int("degrees"), %official_base{"degrees"}), $tan, 
               "tan(Int) - {$angle.int('degrees')} degrees");
-    #?rakudo skip "Int.tan not available yet"
     is_approx($angle.int('degrees').tan(%official_base{'degrees'}), $tan, 
               "Int.tan - {$angle.int('degrees')} degrees");
 }
@@ -561,20 +557,16 @@ for @sines -> $angle
 	}
 	              
     # Rat.cotan tests
-    #?rakudo skip "Rat.cotan not available yet"
     is_approx($angle.rat("radians").cotan, $cotan, 
               "Rat.cotan - {$angle.rat('radians')} default");
 	for %official_base.keys -> $base {
-        #?rakudo skip "Rat.cotan not available yet"
 	    is_approx($angle.rat($base).cotan(%official_base{$base}), $cotan, 
 	              "Rat.cotan - {$angle.rat($base)} $base");
 	}
 
     # cotan(Int)
-    #?rakudo skip "cotan(Int) not available yet"
     is_approx(cotan($angle.int("degrees"), %official_base{"degrees"}), $cotan, 
               "cotan(Int) - {$angle.int('degrees')} degrees");
-    #?rakudo skip "Int.cotan not available yet"
     is_approx($angle.int('degrees').cotan(%official_base{'degrees'}), $cotan, 
               "Int.cotan - {$angle.int('degrees')} degrees");
 }
@@ -589,30 +581,111 @@ for %official_base.keys -> $base
 
 
 # sec
-is_approx(sec(0),    1, 'sec - default');
-is_approx(sec($PI), -1, 'sec - default');
-is(sec(Inf), NaN, 'sec - default');
-is(sec(-Inf), NaN, 'sec - default');
+for @cosines -> $angle
+{
+    next if $angle.result == 0.0;
+    my $sec = 1.0 / $angle.result;
+    
+    # sec(Num)
+	is_approx(sec($angle.num("radians")), $sec, 
+	          "sec(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(sec($angle.num($base), %official_base{$base}), $sec, 
+	              "sec(Num) - {$angle.num($base)} $base");
+	}
+	              
+    # Num.sec tests
+    is_approx($angle.num("radians").sec, $sec, 
+              "Num.sec - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.num($base).sec(%official_base{$base}), $sec, 
+	              "Num.sec - {$angle.num($base)} $base");
+	}
+	
+	# sec(Rat)
+	is_approx(sec($angle.rat("radians")), $sec, 
+	          "sec(Rat) - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(sec($angle.rat($base), %official_base{$base}), $sec, 
+	              "sec(Rat) - {$angle.rat($base)} $base");
+	}
+	              
+    # Rat.sec tests
+    is_approx($angle.rat("radians").sec, $sec, 
+              "Rat.sec - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.rat($base).sec(%official_base{$base}), $sec, 
+	              "Rat.sec - {$angle.rat($base)} $base");
+	}
 
-is_approx(sec(0, 'degrees'),    1, 'sec - degrees');
-is_approx(sec(180, 'degrees'), -1, 'sec - degrees');
-is(sec(Inf, 'degrees'), NaN, 'sec - degrees');
-is(sec(-Inf, 'degrees'), NaN, 'sec - degrees');
+    # sec(Int)
+    is_approx(sec($angle.int("degrees"), %official_base{"degrees"}), $sec, 
+              "sec(Int) - {$angle.int('degrees')} degrees");
+    is_approx($angle.int('degrees').sec(%official_base{'degrees'}), $sec, 
+              "Int.sec - {$angle.int('degrees')} degrees");
+}
 
-is_approx(sec(0, 'gradians'),    1, 'sec - gradians');
-is_approx(sec(200, 'gradians'), -1, 'sec - gradians');
-is(sec(Inf, 'gradians'), NaN, 'sec - gradians');
-is(sec(-Inf, 'gradians'), NaN, 'sec - gradians');
+is(sec(Inf), NaN, "sec - default");
+is(sec(-Inf), NaN, "sec - default");
+for %official_base.keys -> $base
+{
+    is(sec(Inf,  %official_base{$base}), NaN, "sec - $base");
+    is(sec(-Inf, %official_base{$base}), NaN, "sec - $base");
+}
 
-is_approx(sec(0, 'radians'),    1, 'sec - radians');
-is_approx(sec($PI, 'radians'), -1, 'sec - radians');
-is(sec(Inf, 'radians'), NaN, 'sec - radians');
-is(sec(-Inf, 'radians'), NaN, 'sec - radians');
 
-is_approx(sec(0, 1),    1, 'sec - revolutions');
-is_approx(sec(4/8, 1), -1, 'sec - revolutions');
-is(sec(Inf, 1), NaN, 'sec - revolutions');
-is(sec(-Inf, 1), NaN, 'sec - revolutions');
+# cosec
+for @sines -> $angle
+{
+    next if $angle.result == 0.0;
+    my $cosec = 1.0 / $angle.result;
+    
+    # cosec(Num)
+	is_approx(cosec($angle.num("radians")), $cosec, 
+	          "cosec(Num) - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cosec($angle.num($base), %official_base{$base}), $cosec, 
+	              "cosec(Num) - {$angle.num($base)} $base");
+	}
+	              
+    # Num.cosec tests
+    is_approx($angle.num("radians").cosec, $cosec, 
+              "Num.cosec - {$angle.num('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.num($base).cosec(%official_base{$base}), $cosec, 
+	              "Num.cosec - {$angle.num($base)} $base");
+	}
+	
+	# cosec(Rat)
+	is_approx(cosec($angle.rat("radians")), $cosec, 
+	          "cosec(Rat) - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx(cosec($angle.rat($base), %official_base{$base}), $cosec, 
+	              "cosec(Rat) - {$angle.rat($base)} $base");
+	}
+	              
+    # Rat.cosec tests
+    is_approx($angle.rat("radians").cosec, $cosec, 
+              "Rat.cosec - {$angle.rat('radians')} default");
+	for %official_base.keys -> $base {
+	    is_approx($angle.rat($base).cosec(%official_base{$base}), $cosec, 
+	              "Rat.cosec - {$angle.rat($base)} $base");
+	}
+
+    # cosec(Int)
+    is_approx(cosec($angle.int("degrees"), %official_base{"degrees"}), $cosec, 
+              "cosec(Int) - {$angle.int('degrees')} degrees");
+    is_approx($angle.int('degrees').cosec(%official_base{'degrees'}), $cosec, 
+              "Int.cosec - {$angle.int('degrees')} degrees");
+}
+
+is(cosec(Inf), NaN, "cosec - default");
+is(cosec(-Inf), NaN, "cosec - default");
+for %official_base.keys -> $base
+{
+    is(cosec(Inf,  %official_base{$base}), NaN, "cosec - $base");
+    is(cosec(-Inf, %official_base{$base}), NaN, "cosec - $base");
+}
 
 
 # asin
