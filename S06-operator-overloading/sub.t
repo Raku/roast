@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 56;
 
 =begin pod
 
@@ -321,6 +321,55 @@ Testing operator overloading subroutines
 {
     multi sub infix:<+>() { 42 };
     ok 5 + 5 == 10, "New multis don't disturb old ones";
+}
+
+# taken from S06-operator-overloading/method.t
+{
+    class Bar {
+        has $.bar is rw;
+    }
+
+    multi sub prefix:<~> (Bar $self)      { return $self.bar }
+    multi sub infix:<+>  (Bar $a, Bar $b) { return "$a $b" }
+
+    {
+        my $val;
+        lives_ok {
+            my $foo = Bar.new();
+            $foo.bar = 'software';
+            $val = "$foo"
+        }, '... class methods work for class';
+        is($val, 'software', '... basic prefix operator overloading worked');
+
+        lives_ok {
+            my $foo = Bar.new();
+            $foo.bar = 'software';
+            $val = $foo + $foo;
+        }, '... class methods work for class';
+        is($val, 'software software', '... basic infix operator overloading worked');
+    }
+
+# Test that the object is correctly stringified when it is in an array.
+# And test that »...« automagically work, too.
+    {
+        my $obj;
+        lives_ok {
+        $obj     = Bar.new;
+        $obj.bar = "pugs";
+        }, "instantiating a class which defines operators worked";
+
+        my @foo = ($obj, $obj, $obj);
+        my $res;
+        lives_ok { $res = ~@foo }, "stringification didn't die";
+        #?rakudo skip 'spec clarification needed'
+        is $res, "pugs pugs pugs", "stringification overloading worked in array stringification";
+
+        lives_ok { $res = ~[@foo »~« "!"] }, "stringification with hyperization didn't die";
+        #?rakudo skip 'spec clarification needed'
+        is $res, "pugs! pugs! pugs!", "stringification overloading was hyperized correctly";
+    }
+
+
 }
 
 # vim: ft=perl6
