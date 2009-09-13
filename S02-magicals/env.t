@@ -123,10 +123,10 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 }
 
 # following doesn't parse yet
-#?rakudo skip 'Unknown import list expression in use'
+#?rakudo skip 'infix:<defines>'
 {
     # It must be importable
-    use GLOBAL <%ENV>;
+    GLOBAL defines <%ENV>;
     ok +%ENV.keys, 'imported %ENV has keys';
 }
 

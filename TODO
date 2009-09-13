@@ -28,7 +28,6 @@ Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
 * (r28208, r28210, r28213, r28215) Temporal updates
-* (r28201) [S06] remove the slightly non-sensical 'use GLOBAL' in favor of 'defines'
 * (r28199) Execution time of package blocks and module mainline code
 * (r28196, r28197) Stubbed classes
 * (r28188) [S04] clarify semantics of break for masak++
