@@ -27,6 +27,12 @@ sometimes the spec changes, and the test suite must be updated accordingly.
 Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
+* (r28208, r28210, r28213, r28215) Temporal updates
+* (r28201) [S06] remove the slightly non-sensical 'use GLOBAL' in favor of 'defines'
+* (r28199) Execution time of package blocks and module mainline code
+* (r28196, r28197) Stubbed classes
+* (r28188) [S04] clarify semantics of break for masak++
+* (r28173) Rat and Complex literals
 * (r27503) filetest methods
 * (r27106,r27365,r27366) utf8/utf16 etc buffer types (t/spec/S32-str/encode.t)
 * (r27324,r27331) 'use' semantics
@@ -34,7 +40,10 @@ the spec (newest first)
 * (r27312) ambiguous authority and 'use'
 * (r27066) rangechars are not limited to \w anymore
 * (r27045) multi method scoping
-* (r26968) Now we know how $! work.
+* (r28171) [S03] forbid List and Range as endpoint to ranges
+* (r28169) :my in regexen
+* (r28150, r28151) ::=, implicit 'is context' on $*foo variables
+* (r26968) Now we know how $! works.
 * (r26401) Pi/Pf characters are allowed as brackets
 * (r25891) Junction -> junction, eigenstates method is now private
 * (r25830) named parameters to open()
