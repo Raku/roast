@@ -38,7 +38,6 @@ the spec (newest first)
 * (r27312) ambiguous authority and 'use'
 * (r27066) rangechars are not limited to \w anymore
 * (r27045) multi method scoping
-* (r28171) [S03] forbid List and Range as endpoint to ranges
 * (r28169) :my in regexen
 * (r28150, r28151) ::=, implicit 'is context' on $*foo variables
 * (r26968) Now we know how $! works.

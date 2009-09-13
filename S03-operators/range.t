@@ -2,7 +2,10 @@ use v6;
 
 use Test;
 
-plan 104;
+plan 105;
+
+
+# L<S03/Nonchaining binary precedence/Range object constructor>
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
 
@@ -21,8 +24,6 @@ is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
-
-isnt ~(0..^10), ~(0.. ^10), '(0..^10) is not the same as (0.. ^10)';
 
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
 is ~(5..9-5), "",        "(..) has correct precedence (2)";
@@ -183,6 +184,15 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.to.WHAT, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
     is $range.list, <1 2 3>, 'range is correct';
+}
+
+# L<S03/Nonchaining binary precedence/it is illegal to use a Range or a
+# List as implicitly numeric:>
+
+#?rakudo todo 'forbid Ranges and Lists as Range endpoints'
+{
+    ok !defined(try { 0 .. ^10 }), '0 .. ^10 is illegal';
+    ok !defined(try { 0 .. (0, 1, 2) }), '0 .. List is illegal';
 }
 
 # For tests involving :by, see t/spec/S03-operators/range-by.t
