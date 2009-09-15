@@ -1,0 +1,95 @@
+use v6;
+use Test;
+plan *;
+
+# This class, designed to help simplify the tests, is very much in a transitional
+# state.  But it works as well as the previous version at the moment.  I'm checking
+# it in just to clean up my local build (and save a remote copy as I take my
+# the machine it lives on vacation).  Should have more updates to this over the 
+# next several days.  --colomon, Sept 3rd 2009.
+
+class AngleAndResult
+{
+    has $.angle_in_degrees;
+    has $.result;
+    
+    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+        self.bless(*, :$angle_in_degrees, :$result);
+    }
+    
+    method complex($imaginary_part_in_radians, $base) {
+        my $z_in_radians = $.angle_in_degrees.Num / 180.0 * pi + ($imaginary_part_in_radians)i; 
+        given $base {
+            when "degrees"     { $z_in_radians * 180.0 / pi; }
+            when "radians"     { $z_in_radians; }
+            when "gradians"    { $z_in_radians * 200.0 / pi; }
+            when "revolutions" { $z_in_radians / (2.0 * pi); }
+        }
+    }
+    
+    method num($base) {
+        given $base {
+            when "degrees"     { $.angle_in_degrees.Num }
+            when "radians"     { $.angle_in_degrees.Num / 180.0 * pi }
+            when "gradians"    { $.angle_in_degrees.Num / 180.0 * 200.0 }
+            when "revolutions" { $.angle_in_degrees.Num / 360.0 }
+        }
+    }
+    
+    method rat($base) {
+        given $base {
+            when "degrees"     { $.angle_in_degrees / 1 }
+            when "radians"     { $.angle_in_degrees / 180 * (355 / 113) }
+            when "gradians"    { $.angle_in_degrees * (200 / 180) }
+            when "revolutions" { $.angle_in_degrees / 360 }
+        }
+    }
+    
+    method int($base) {
+        given $base {
+            when "degrees"     { $.angle_in_degrees }
+        }
+    }
+}
+
+my @sines = ( 
+    AngleAndResult.new(-360, 0),
+    AngleAndResult.new(135 - 360, 1/2*sqrt(2)),
+    AngleAndResult.new(330 - 360, -0.5),
+    AngleAndResult.new(0, 0),
+    AngleAndResult.new(30, 0.5),
+    AngleAndResult.new(45, 1/2*sqrt(2)),
+    AngleAndResult.new(90, 1),
+    AngleAndResult.new(135, 1/2*sqrt(2)),
+    AngleAndResult.new(180, 0),
+    AngleAndResult.new(225, -1/2*sqrt(2)),
+    AngleAndResult.new(270, -1),
+    AngleAndResult.new(315, -1/2*sqrt(2)),
+    AngleAndResult.new(360, 0),
+    AngleAndResult.new(30 + 360, 0.5),
+    AngleAndResult.new(225 + 360, -1/2*sqrt(2)),
+    AngleAndResult.new(720, 0)
+);
+
+my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
+
+my @sinhes = ( 
+    AngleAndResult.new(0, 0.0),
+    AngleAndResult.new(45, (exp(pi / 4.0) - exp(-pi / 4.0)) / 2.0),
+    AngleAndResult.new(90, (exp(pi / 2.0) - exp(-pi / 2.0)) / 2.0),
+    AngleAndResult.new(180, (exp(pi) - exp(-pi)) / 2.0)
+);
+
+my @coshes = ( 
+    AngleAndResult.new(0, 1),
+    AngleAndResult.new(45, (exp(pi / 4.0) + exp(-pi / 4.0)) / 2.0),
+    AngleAndResult.new(90, (exp(pi / 2.0) + exp(-pi / 2.0)) / 2.0),
+    AngleAndResult.new(180, (exp(pi) + exp(-pi)) / 2.0)
+);
+
+my %official_base = (
+    "radians" => "radians",
+    "gradians" => "gradians", 
+    "degrees" => "degrees",
+    "revolutions" => 1
+);
