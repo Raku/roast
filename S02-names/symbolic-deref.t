@@ -93,7 +93,7 @@ plan 22;
 
   ok &::("true")(42),
     "symbolic dereferentiation of global subs without the star works (2)";
-  is &::("int")(3.1), 3,
+  is &::("truncate")(3.1), 3,
     "symbolic dereferentiation of global subs without the star works (3)";
 }
 

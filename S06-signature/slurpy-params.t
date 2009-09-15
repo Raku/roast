@@ -232,16 +232,16 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
     sub slurp_int( Int *@a ) { @a[0] }
     #?rakudo todo 'RT #64814'
-    lives_ok { slurp_int( 27.int ) }, 'can call sub with (Int *@a) sig';
+    lives_ok { slurp_int( 27.Int ) }, 'can call sub with (Int *@a) sig';
     dies_ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
     #?rakudo skip 'RT #64814'
-    is slurp_int( 27.int ), 27, 'call to sub with (Int *@a) works';
+    is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
 
     sub slurp_of_int( *@a of Int ) { @a[0] }
+    #?rakudo 2 todo 'RT #64814'
     lives_ok { slurp_of_int( 64814.int ) }, 'can call (*@a of Int) sub';
-    #?rakudo todo 'RT #64814'
     dies_ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
-    is slurp_of_int( 99.int ), 99, 'call to (*@a of Int) sub works';
+    is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
 
     class X64814 {}
     class Y64814 {

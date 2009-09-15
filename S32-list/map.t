@@ -251,9 +251,9 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 # .thing inside map blocks should still default to $_
 # used to be a pugs regression
 {
-    is ~((1,2,3).map: { int($_) }), "1 2 3", "dependency for following test (1)";
-    $_ = 4; is .int, 4,                   "dependency for following test (2)";
-    is ~((1,2,3).map: { .int }),    "1 2 3", 'int() should default to $_ inside map, too';
+    is ~((1,2,3).map: { $_.Int }), "1 2 3", "dependency for following test (1)";
+    $_ = 4; is .Int, 4,                   "dependency for following test (2)";
+    is ~((1,2,3).map: { .Int }),    "1 2 3", 'int() should default to $_ inside map, too';
 
     is ~(({1},{2},{3}).map: { $_; $_() }), "1 2 3", 'lone $_ in map should work (1)';
     is ~(({1},{2},{3}).map: { $_() }),     "1 2 3", 'lone $_ in map should work (2)';

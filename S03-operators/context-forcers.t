@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 93;
 
 { # L<S03/"Changes to Perl 5 operators"/imposes boolean context/>
   is ?True,    True,  "? context forcer works (1)";
@@ -163,19 +163,7 @@ sub eval_elsewhere($code){ eval($code) }
 }
 
 # int context
-{
-    my $a = '2 is my favorite number';
-    isa_ok(int($a), Int, 'it is forced into a Int');
-    is(+$a, 2, 'forced into integer context');
-
-    my $b = 'Did you know that, 2 is my favorite number';
-    isa_ok(int($b), Int, 'it is forced into a Int');
-    is(int($b), 0, 'non numbers forced into integer context are 0');
-
-    my $c = 1.21122111;
-    isa_ok(int($c), Int, 'it is forced into a Int');
-    is(int($c), 1, 'float numbers forced into integer context are 0');
-}
+# tested in t/spec/S32-num/int.t
 
 #?rakudo skip 'TODO: @(), list assignment'
 {

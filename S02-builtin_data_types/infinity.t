@@ -19,14 +19,14 @@ plan 12;
 
 #?rakudo todo 'integer Inf'
 {
-    my $x = int( Inf );
+    my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
     ok( $x eq 'Inf', 'int string equal' );
 }
 
 #?rakudo todo 'integer Inf'
 {
-    my $x = int( -Inf );
+    my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
     ok( $x eq '-Inf', 'int string equal' );
 }

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 68;
+plan 62;
 
 # L<S32::Numeric/Num/"=item truncate">
 # truncate and int() are synonynms.
@@ -15,52 +15,43 @@ Basic tests for the int() builtin
 # basic sanity:
 is(-0, 0, '-0 is the same as 0 - hey, they are integers ;-)');
 
-is(int(-1), -1, "int(-1) is -1");
-is(int(0), 0, "int(0) is 0");
-is(int(1), 1, "int(1) is 1");
-is(int(3.14159265), 3, "int(3.14159265) is 3");
-is(int(-3.14159265), -3, "int(-3.14159265) is -3");
+is((-1).Int, -1, "(-1).Int is -1");
+is(0.Int, 0, "int(0) is 0");
+is(1.Int, 1, "int(1) is 1");
+is(3.14159265.Int, 3, "int(3.14159265) is 3");
+is((-3.14159265).Int, -3, "int(-3.14159265) is -3");
 
-#?rakudo skip 'named args'
-{
-    is(int(:x(-1)), -1, "int(-1) is -1");
-    is(int(:x(0)), 0, "int(0) is 0");
-    is(int(:x(1)), 1, "int(1) is 1");
-    is(int(:x(3.14159265)), 3, "int(3.14159265) is 3");
-    is(int(:x(-3.14159265)), -3, "int(-3.14159265) is -3");
-}
+is(0.999.Int, 0, "int(0.999) is 0");
+is(0.51.Int, 0, "int(0.51) is 0");
+is(0.5.Int, 0, "int(0.5) is 0");
+is(0.49.Int, 0, "int(0.49) is 0");
+is(0.1.Int, 0, "int(0.1) is 0");
+isa_ok(0.1.Int, Int, 'int(0.1) returns an Int');
 
-is(int(0.999), 0, "int(0.999) is 0");
-is(int(0.51), 0, "int(0.51) is 0");
-is(int(0.5), 0, "int(0.5) is 0");
-is(int(0.49), 0, "int(0.49) is 0");
-is(int(0.1), 0, "int(0.1) is 0");
-isa_ok(int(0.1), Int, 'int(0.1) returns an Int');
+is((-0.999).Int, 0, "int(-0.999) is 0");
+is((-0.51).Int,  0, "int(-0.51) is 0");
+is((-0.5).Int,   0, "int(-0.5) is 0");
+is((-0.49).Int,  0, "int(-0.49) is 0");
+is((-0.1).Int,   0, "int(-0.1) is 0");
+isa_ok((-0.1).Int, Int, 'int(-0.1) returns an Int');
 
-is(int(-0.999), 0, "int(-0.999) is 0");
-is(int(-0.51),  0, "int(-0.51) is 0");
-is(int(-0.5),   0, "int(-0.5) is 0");
-is(int(-0.49),  0, "int(-0.49) is 0");
-is(int(-0.1),   0, "int(-0.1) is 0");
-isa_ok(int(-0.1), Int, 'int(-0.1) returns an Int');
+is(1.999.Int, 1, "int(1.999) is 1");
+is(1.51.Int,  1, "int(1.51) is 1");
+is(1.5.Int,   1, "int(1.5) is 1");
+is(1.49.Int,  1, "int(1.49) is 1");
+is(1.1.Int,   1, "int(1.1) is 1");
 
-is(int(1.999), 1, "int(1.999) is 1");
-is(int(1.51), 1, "int(1.51) is 1");
-is(int(1.5), 1, "int(1.5) is 1");
-is(int(1.49), 1, "int(1.49) is 1");
-is(int(1.1), 1, "int(1.1) is 1");
+is((-1.999).Int, -1, "int(-1.999) is -1");
+is((-1.51).Int, -1, "int(-1.51) is -1");
+is((-1.5).Int, -1, "int(-1.5) is -1");
+is((-1.49).Int, -1, "int(-1.49) is -1");
+is((-1.1).Int, -1, "int(-1.1) is -1");
 
-is(int(-1.999), -1, "int(-1.999) is -1");
-is(int(-1.51), -1, "int(-1.51) is -1");
-is(int(-1.5), -1, "int(-1.5) is -1");
-is(int(-1.49), -1, "int(-1.49) is -1");
-is(int(-1.1), -1, "int(-1.1) is -1");
-
-is(int('-1.999'), -1, "int('-1.999') is -1");
-is(int('0x123'), 0x123, "int('0x123') is 0x123");
-is(int('0d456'), 0d456, "int('0d456') is 0d456");
-is(int('0o678'), 0o67, "int('0o678') is 0o67");
-is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
+is('-1.999'.Int, -1, "int('-1.999') is -1");
+is('0x123'.Int, 0x123, "int('0x123') is 0x123");
+is('0d456'.Int, 0d456, "int('0d456') is 0d456");
+is('0o678'.Int, 0o67, "int('0o678') is 0o67");
+is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 
 {
     sub __int( $s ) {
@@ -73,26 +64,21 @@ is(int('3e4d5'), 3e4, "int('3e4d5') is 3e4");
 
     for 0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6, -1, -50, -60.0, -99.99 {
         my $int = __int($_);
-        is(.int, $int, "integral value for $_ is $int");
-        isa_ok(.int, "Int");
+        is(.Int, $int, "integral value for $_ is $int");
+        isa_ok(.Int, "Int");
     }
 }
 
 #?DOES 1
 # Special values
-is(int(1.9e3), 1900, "int 1.9e3 is 1900");
+is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
 #?rakudo 3 todo 'Inf and NaN not yet implemented'
-is(int(Inf),    Inf, "int Inf is Inf");
-is(int(-Inf),  -Inf, "int -Inf is -Inf");
-is(int(NaN),    NaN, "int NaN is NaN");
+is((Inf).Int,    Inf, "int Inf is Inf");
+is((-Inf).Int,  -Inf, "int -Inf is -Inf");
+is((NaN).Int,    NaN, "int NaN is NaN");
 
 # RT #65132
-{
-    #?rakudo todo 'no more prefix:int'
-    eval_dies_ok 'int time', 'dies: int time (prefix:int is gone)';
-    my $t = time;
-    is int($t), $t.int, 'int(time) == time.int'
-}
+eval_dies_ok 'int 3.14', 'dies: int 3.14 (prefix:int is gone)';
 
 # vim: ft=perl6

@@ -19,7 +19,7 @@ given $test {
         if $server_or_client eq 'server' {
             # warn "SERVER TEST=$test PORT=$port";
             my $server = IO::Socket::INET.socket( PF_INET, SOCK_STREAM, TCP );
-            $server.bind( $host, int($port) );
+            $server.bind( $host, $port.Int );
             $server.listen(); # should accept max queue size parameter
             # warn "SERVER LISTENING";
             my $fd = open( 't/spec/S32-io/server-ready-flag', :w );
@@ -39,7 +39,7 @@ given $test {
             # open() before the server gets to accept().
             until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
             my $client = IO::Socket::INET.new;
-            $client.open( $host, int($port) );
+            $client.open( $host, $port.Int );
             # warn "CLIENT OPENED";
             $client.send( [~] '0'..'9', 'a'..'z' );
             # warn "CLIENT SENT";
@@ -55,7 +55,7 @@ given $test {
         if $server_or_client eq 'server' {
             # warn "SERVER TEST=$test PORT=$port";
             my $server = IO::Socket::INET.socket( PF_INET, SOCK_STREAM, TCP );
-            $server.bind( $host, int($port) );
+            $server.bind( $host, $port.Int );
             $server.listen(); # should accept max queue size parameter
             # warn "SERVER LISTENING";
             while my $client = $server.accept() {
@@ -71,7 +71,7 @@ given $test {
             # open() before the server gets to accept().
             sleep 1; # crude, sorry
             my $client = IO::Socket::INET.new;
-            $client.open( $host, int($port) );
+            $client.open( $host, $port.Int );
             # warn "CLIENT OPENED";
             $client.send( [~] '0'..'9', 'a'..'z' );
             # warn "CLIENT SENT";

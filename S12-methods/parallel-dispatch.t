@@ -84,7 +84,7 @@ class Bar is Foo {
             $.data * $a;
         }
         multi method mul(Num $a) {
-            $.data * $a.int  * 2
+            $.data * $a.Int  * 2
         }
     }
 

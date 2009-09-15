@@ -206,7 +206,6 @@ ok !(uc "a" eq "A"), "uc has the correct precedence in comparision to eq";
 
 # L<S03/Named unary precedence/my $i = int $x;   # ILLEGAL>
 
-#?rakudo todo 'remove prefix:<int>'
 eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
 
 

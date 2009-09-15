@@ -123,8 +123,8 @@ isa_ok(1 / 1, Rat);
 
 {
     my $a = "1.01";
-    isa_ok(int($a), "Int");
-    is(int($a), 1, "1.01 intifies to 1");
+    isa_ok($a.Int, "Int");
+    is($a.Int, 1, "1.01 intifies to 1");
 }
 
 #L<S02/Built-In Data Types/Num may support arbitrary-precision floating-point>
