@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 25;
 
 #L<S03/Autoincrement precedence>
 
@@ -76,6 +76,18 @@ $a = 2147483648;
 $b = -$a;
 $b= $b - 1;
 is($b, -(++$a), 'est oder of predecrement in -(++$a)');
+
+#?rakudo skip "Big number issues with div"
+{
+    is(0x80000000 div 1, 0x80000000, "0x80000000 div 1 == 0x80000000");
+    is(0x80000000 div -1, -0x80000000, "0x80000000 div -1 == -0x80000000");
+    is(-0x80000000 div 1, -0x80000000, "-0x80000000 div 1 == -0x80000000");
+    is(-0x80000000 div -1, 0x80000000, "-0x80000000 div -1 == 0x80000000");
+    is 18446744073709551616 div 1, 18446744073709551616;
+    is 18446744073709551616 div 2, 9223372036854775808, "Bignums are not working yet";
+    is 18446744073709551616 div 4294967296, 4294967296, "Bignums are not working yet";
+    ok 18446744073709551616 div 9223372036854775808 == 2, '$bignum1 div $bignum2';
+}
 
 
 # vim: ft=perl6

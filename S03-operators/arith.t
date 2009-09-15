@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 200;
+plan 192;
 
 my $five = abs(-5);
 
@@ -268,13 +268,6 @@ tryeq 28 div -7, -4;
 tryeq -28 div 4, -7;
 tryeq -28 div -2, 14;
 
-#?rakudo todo "Big number issues with div"
-is(0x80000000 div 1, 0x80000000, "0x80000000 div 1 == 0x80000000");
-#?rakudo skip "Big number issues with div"
-is(0x80000000 div -1, -0x80000000, "0x80000000 div -1 == -0x80000000");
-is(-0x80000000 div 1, -0x80000000, "-0x80000000 div 1 == -0x80000000");
-#?rakudo skip "Big number issues with div"
-is(-0x80000000 div -1, 0x80000000, "-0x80000000 div -1 == 0x80000000");
 
 is(9 div 4, 2, "9 div 4 == 2");
 
@@ -286,17 +279,6 @@ tryeq 3.5 / -2, -1.75;
 tryeq -4.5 / 2, -2.25;
 tryeq -5.5 / -2, 2.75;
 
-# Bluuurg if your floating point can't accurately cope with powers of 2
-# [I suspect this is parsing string-to-float problems, not actual arith]
-#?rakudo todo 'big numbers'
-is 18446744073709551616 div 1, 18446744073709551616; # Bluuurg
-
-{
-    tryeq_sloppy 18446744073709551616 div 2, 9223372036854775808, "Bignums are not working yet";
-    tryeq_sloppy 18446744073709551616 div 4294967296, 4294967296, "Bignums are not working yet";
-    #?rakudo skip 'big numbers'
-    ok 18446744073709551616 div 9223372036854775808 == 2, '$bignum1 div $bignum2';
-}
 
 {
     # The peephole optimiser is wrong to think that it can substitute intops
