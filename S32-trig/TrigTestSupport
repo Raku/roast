@@ -39,7 +39,7 @@ class AngleAndResult
     method rat($base) {
         given $base {
             when "degrees"     { $.angle_in_degrees / 1 }
-            when "radians"     { $.angle_in_degrees / 180 * (355 / 113) }
+            when "radians"     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
             when "gradians"    { $.angle_in_degrees * (200 / 180) }
             when "revolutions" { $.angle_in_degrees / 360 }
         }
@@ -73,19 +73,12 @@ my @sines = (
 
 my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
 
-my @sinhes = ( 
-    AngleAndResult.new(0, 0.0),
-    AngleAndResult.new(45, (exp(pi / 4.0) - exp(-pi / 4.0)) / 2.0),
-    AngleAndResult.new(90, (exp(pi / 2.0) - exp(-pi / 2.0)) / 2.0),
-    AngleAndResult.new(180, (exp(pi) - exp(-pi)) / 2.0)
-);
+my @sinhes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
+                                             (exp($_.num('radians')) - exp(-$_.num('radians'))) / 2.0)});
 
-my @coshes = ( 
-    AngleAndResult.new(0, 1),
-    AngleAndResult.new(45, (exp(pi / 4.0) + exp(-pi / 4.0)) / 2.0),
-    AngleAndResult.new(90, (exp(pi / 2.0) + exp(-pi / 2.0)) / 2.0),
-    AngleAndResult.new(180, (exp(pi) + exp(-pi)) / 2.0)
-);
+my @coshes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
+                                             (exp($_.num('radians')) + exp(-$_.num('radians'))) / 2.0)});
+
 
 my %official_base = (
     "radians" => "radians",

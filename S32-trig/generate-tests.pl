@@ -142,26 +142,27 @@ $tf = TrigFunction.new("cotan", "@sines",
                        my \$desired_result = cos(\$angle.num('radians')) / sin(\$angle.num('radians'));");
 $tf.dump_tests($file);
 
-# $tf = TrigFunction.new("sinh", "@sinhes", "my \$desired_result = \$angle.result;");
-# $tf.dump_tests($file);
-# $tf = TrigFunction.new("cosh", "@cosinhes", "my \$desired_result = \$angle.result;");
-# $tf.dump_tests($file);
-# $tf = TrigFunction.new("tanh", "@sines", 
-#                        "next if abs(cosh(\$angle.num('radians'))) < 1e-6; 
-#                        my \$desired_result = sinh(\$angle.num('radians')) / cosh(\$angle.num('radians'));");
-# $tf.dump_tests($file);
-# $tf = TrigFunction.new("sech", "@cosines", 
-#                        "next if abs(cosh(\$angle.num('radians'))) < 1e-6; 
-#                        my \$desired_result = 1.0 / cosh(\$angle.num('radians'));");
-# $tf.dump_tests($file);
-# $tf = TrigFunction.new("cosech", "@sines", 
-#                        "next if abs(sinh(\$angle.num('radians'))) < 1e-6; 
-#                        my \$desired_result = 1.0 / sinh(\$angle.num('radians'));");
-# $tf.dump_tests($file);
-# $tf = TrigFunction.new("cotanh", "@sines", 
-#                        "next if abs(sinh(\$angle.num('radians'))) < 1e-6; 
-#                        my \$desired_result = cosh(\$angle.num('radians')) / sinh(\$angle.num('radians'));");
-# $tf.dump_tests($file);
+$tf = TrigFunction.new("sinh", "@sinhes", "my \$desired_result = \$angle.result;");
+$tf.dump_tests($file);
+$tf = TrigFunction.new("cosh", "@coshes", 
+                       "my \$desired_result = \$angle.result;");
+$tf.dump_tests($file);
+$tf = TrigFunction.new("tanh", "@sines", 
+                       "next if abs(cosh(\$angle.num('radians'))) < 1e-6; 
+                       my \$desired_result = sinh(\$angle.num('radians')) / cosh(\$angle.num('radians'));");
+$tf.dump_tests($file);
+$tf = TrigFunction.new("sech", "@cosines", 
+                       "next if abs(cosh(\$angle.num('radians'))) < 1e-6; 
+                       my \$desired_result = 1.0 / cosh(\$angle.num('radians'));");
+$tf.dump_tests($file);
+$tf = TrigFunction.new("cosech", "@sines", 
+                       "next if abs(sinh(\$angle.num('radians'))) < 1e-6; 
+                       my \$desired_result = 1.0 / sinh(\$angle.num('radians'));");
+$tf.dump_tests($file);
+$tf = TrigFunction.new("cotanh", "@sines", 
+                       "next if abs(sinh(\$angle.num('radians'))) < 1e-6; 
+                       my \$desired_result = cosh(\$angle.num('radians')) / sinh(\$angle.num('radians'));");
+$tf.dump_tests($file);
 
 $file.say: "done_testing;
 
