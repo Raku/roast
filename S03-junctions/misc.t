@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 103;
 
 =begin pod
 
@@ -423,6 +423,14 @@ sub junction_diff(Object $this, Object $that) {
         return 'happiness';
     }
     is rt63686(), 'happiness', 'for loop over junction in sub';
+}
+
+# RT#67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
+{
+    ok((WHAT any()) === Junction, "test WHAT on empty any junction");
+    ok(any().WHAT === Junction, "test WHAT on empty any junction");
+    ok((WHAT any(1,2)) === Junction, "test WHAT on any junction");
+    ok(any(1,2).WHAT === Junction, "test WHAT on any junction");
 }
 
 # vim: ft=perl6
