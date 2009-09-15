@@ -1,7 +1,7 @@
 use v6;
 
 my $forward_functions_file = "forward.functions";
-my $prelude_file = "TrigTestSupport.prelude";
+my $prelude_file = "TrigTestSupport";
 my $output_file = "new_trig.t";
 
 class TrigFunction
