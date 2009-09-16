@@ -113,6 +113,8 @@ class TrigFunction
                 # \}
             \}
         ];
+        $code.=subst: / ^^ ' ' ** 12 /, '', :g;
+
         $file.say: $code;
     }
     
@@ -139,8 +141,9 @@ class TrigFunction
                     is_approx(\$desired_result.Num.{$.inverted_function_name}(%official_base\{\$base\}).{$.function_name}(%official_base\{\$base\}), \$desired_result,
                               "{$.inverted_function_name}(Num) - \{\$angle.num(\$base)\} \$base");
                 \}
-           \}
+            \}
         ];
+        $code.=subst: / ^^ ' ' ** 12 /, '', :g;
         $file.say: $code;
     }
 }
@@ -148,6 +151,10 @@ class TrigFunction
 # my $fff = open $forward_functions_file, :r or die "Unable to open $forward_functions_file: $!\n";
 
 my $file = open $output_file, :w or die "Unable to open $output_file $!\n";
+
+$file.say: '# WARNING:
+# This is a generated file and should not be edited directly.
+# look into generate-tests.pl instead';
 
 my $prelude = open $prelude_file, :r or die "Unable to open $prelude_file: $!\n";
 for $prelude.lines -> $line {
@@ -211,6 +218,11 @@ $tf = TrigFunction.new("cotanh", "acotanh", "@sines",
 $tf.dump_forward_tests($file);
 $tf.dump_inverse_tests($file);
 
+# the {} afer 'vim' just generate an empty string.
+# this is to avoid the string constant being interpreted as a modeline
+# here in generate-tests.pl
 $file.say: "done_testing;
 
-# vim: ft=perl6";
+# vim{}: ft=perl6 nomodifiable";
+
+# vim: ft=perl6
