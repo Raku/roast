@@ -7,18 +7,23 @@ my $output_file = "new_trig.t";
 class TrigFunction
 {
     has $.function_name;
+    has $.inverted_function_name;
     has $.angle_and_results_name;
     has $.setup_block;
     
     multi method new(Str $function_name is copy, 
+                     Str $inverted_function_name is copy;
                      Str $angle_and_results_name is copy,
                      Str $setup_block is copy) {
-        self.bless(*, :$function_name, :$angle_and_results_name, :$setup_block);
+        self.bless(*, 
+                   :$function_name, 
+                   :$inverted_function_name, 
+                   :$angle_and_results_name, 
+                   :$setup_block);
     }
     
     
-    method dump_tests($file)
-    {
+    method dump_forward_tests($file) {
         my $code = qq[
             # {$.function_name} tests
 
@@ -110,6 +115,34 @@ class TrigFunction
         ];
         $file.say: $code;
     }
+    
+    method dump_inverse_tests($file) {
+        my $code = qq[
+            # {$.inverted_function_name} tests
+
+            for $.angle_and_results_name -> \$angle
+            \{
+                $.setup_block
+
+                # {$.function_name}(Num) tests
+                is_approx({$.function_name}({$.inverted_function_name}(\$desired_result)), \$desired_result, 
+                          "{$.inverted_function_name}(Num) - \{\$angle.num('radians')\} default");
+                for %official_base.keys -> \$base \{
+                    is_approx({$.function_name}({$.inverted_function_name}(\$desired_result, %official_base\{\$base\}), %official_base\{\$base\}), \$desired_result, 
+                              "{$.inverted_function_name}(Num) - \{\$angle.num(\$base)\} \$base");
+                \}
+                
+                # Num.{$.function_name} tests
+                is_approx(\$desired_result.Num.{$.inverted_function_name}.{$.function_name}, \$desired_result, 
+                          "{$.inverted_function_name}(Num) - \{\$angle.num('radians')\} default");
+                for %official_base.keys -> \$base \{
+                    is_approx(\$desired_result.Num.{$.inverted_function_name}(%official_base\{\$base\}).{$.function_name}(%official_base\{\$base\}), \$desired_result,
+                              "{$.inverted_function_name}(Num) - \{\$angle.num(\$base)\} \$base");
+                \}
+           \}
+        ];
+        $file.say: $code;
+    }
 }
 
 # my $fff = open $forward_functions_file, :r or die "Unable to open $forward_functions_file: $!\n";
@@ -121,48 +154,62 @@ for $prelude.lines -> $line {
     $file.say: $line;
 }
 
-my $tf = TrigFunction.new("sin", "@sines", "my \$desired_result = \$angle.result;");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("cos", "@cosines", "my \$desired_result = \$angle.result;");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("tan", "@sines", 
+my $tf = TrigFunction.new("sin", "asin", "@sines", 
+                          "my \$desired_result = \$angle.result;");
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("cos", "acos", "@cosines", 
+                       "my \$desired_result = \$angle.result;");
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("tan", "atan", "@sines", 
                        "next if abs(cos(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = sin(\$angle.num('radians')) / cos(\$angle.num('radians'));");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("sec", "@cosines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("sec", "asec", "@cosines", 
                        "next if abs(cos(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = 1.0 / cos(\$angle.num('radians'));");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("cosec", "@sines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("cosec", "acosec", "@sines", 
                        "next if abs(sin(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = 1.0 / sin(\$angle.num('radians'));");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("cotan", "@sines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("cotan", "acotan", "@sines", 
                        "next if abs(sin(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = cos(\$angle.num('radians')) / sin(\$angle.num('radians'));");
-$tf.dump_tests($file);
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
 
-$tf = TrigFunction.new("sinh", "@sinhes", "my \$desired_result = \$angle.result;");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("cosh", "@coshes", 
+$tf = TrigFunction.new("sinh", "asinh", "@sinhes", "my \$desired_result = \$angle.result;");
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("cosh", "acosh", "@coshes", 
                        "my \$desired_result = \$angle.result;");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("tanh", "@sines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("tanh", "atanh", "@sines", 
                        "next if abs(cosh(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = sinh(\$angle.num('radians')) / cosh(\$angle.num('radians'));");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("sech", "@cosines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("sech", "asech", "@cosines", 
                        "next if abs(cosh(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = 1.0 / cosh(\$angle.num('radians'));");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("cosech", "@sines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("cosech", "acosech", "@sines", 
                        "next if abs(sinh(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = 1.0 / sinh(\$angle.num('radians'));");
-$tf.dump_tests($file);
-$tf = TrigFunction.new("cotanh", "@sines", 
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
+$tf = TrigFunction.new("cotanh", "acotanh", "@sines", 
                        "next if abs(sinh(\$angle.num('radians'))) < 1e-6; 
                        my \$desired_result = cosh(\$angle.num('radians')) / sinh(\$angle.num('radians'));");
-$tf.dump_tests($file);
+$tf.dump_forward_tests($file);
+$tf.dump_inverse_tests($file);
 
 $file.say: "done_testing;
 
