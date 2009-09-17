@@ -35,7 +35,7 @@ is ~$/, 'afoo', '... and it matched the constant';
 ok !DeclaratorTest1.parse( 'abar' ), 'does not work with wrong text';
 
 ok DeclaratorTest1.parse( 'b yack yack' ), 'can declare :my in regex';
-is ~$/, 'b yack yack', 'correct match with "my" variable'
+is ~$/, 'b yack yack', 'correct match with "my" variable';
 ok !DeclaratorTest1.parse('b yack shaving'), 'does not work with wrong text';
 
 ok DeclaratorTest1.parse('c1'), ':state in regex (match) (1)';
