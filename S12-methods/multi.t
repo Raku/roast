@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 19;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
@@ -111,6 +111,41 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
     is $c.order, <class role parent>,
        'call order is correct for class, role, parent'
+}
+
+# RT 69192
+{
+    role R5 {
+        multi method rt69192()       { push @.order, 'empty' }
+        multi method rt69192(Str $a) { push @.order, 'Str'   }
+    }
+    role R6 {
+        multi method rt69192(Num $a) { push @.order, 'Num'   }
+    }
+    class RT69192 { has @.order }
+
+    {
+        my RT69192 $bot .= new();
+        $bot does R5 does R6;
+        $bot.*rt69192;
+        #?rakudo todo 'RT #69192'
+        is $bot.order, <empty>, 'multi method called once on empty signature';
+    }
+
+    {
+        my RT69192 $bot .= new();
+        $bot does R5 does R6;
+        $bot.*rt69192('RT #69192');
+        #?rakudo todo 'RT #69192'
+        is $bot.order, <Str>, 'multi method called once on Str signature';
+    }
+
+    {
+        my RT69192 $bot .= new();
+        $bot does R5 does R6;
+        $bot.*rt69192( 69192 );
+        is $bot.order, <Num>, 'multi method called once on Num signature';
+    }
 }
 
 # vim: ft=perl6
