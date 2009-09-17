@@ -183,6 +183,24 @@ class TrigFunction
                     is_approx($desired_result.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
                               "$.inverted_function_name(Rat) - $desired_result $base");
                 }
+                
+                next unless $desired_result.denominator == 1;
+                
+                # $.inverted_function_name(Int) tests
+                is_approx($.function_name($.inverted_function_name($desired_result.numerator)), $desired_result, 
+                          "$.inverted_function_name(Int) - $desired_result default");
+                for %official_base.keys -> $base {
+                    is_approx($.function_name($.inverted_function_name($desired_result.numerator, %official_base{$base}), %official_base{$base}), $desired_result, 
+                              "$.inverted_function_name(Int) - $desired_result $base");
+                }
+                
+                # Int.$.inverted_function_name tests
+                is_approx($desired_result.numerator.$.inverted_function_name.$.function_name, $desired_result, 
+                          "$.inverted_function_name(Int) - $desired_result default");
+                for %official_base.keys -> $base {
+                    is_approx($desired_result.numerator.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
+                              "$.inverted_function_name(Int) - $desired_result $base");
+                }
             }
         ];
         $code.=subst: '$.function_name', $.function_name, :g;

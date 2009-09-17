@@ -71,7 +71,7 @@ setup:
 	next if abs(cosh($angle.num('radians'))) < 1e-6; 
 	my $desired_result = sinh($angle.num('radians')) / cosh($angle.num('radians'));
 end-setup
-rational_inverse_tests: (-2/2, -1/2, 0, 1/2)
+rational_inverse_tests: (-2/2, -1/2, 0/1, 1/2)
 plus_inf: 1
 minus_inf: -1
 End
