@@ -12,7 +12,7 @@ isa_ok 0x01/0x02, Rat, 'same with hexadecimal numbers';
 ok 1/2 / 1/2 == 1, '1/2 / 1/2 parses as division of two Rat terms';
 ok 0x01/0x02 / 0x01/0x02 == 1, 'same with hexadecimal numbers';
 is 1/2 ** 3, 1/8,
-   '1/2 is a term, and has tighter precedence than infix<**'>;
+   '1/2 is a term, and has tighter precedence than infix<**>';
 
 # L<S02/Literals/Complex literals are similarly indicated>
 
