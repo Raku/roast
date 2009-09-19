@@ -36,10 +36,12 @@ is(&multi-sub.cando(\(1)).[0].(1),"m2","you can invoke through introspection");
 is(&multi-sub.cando(\()).[0].(),"m3","you can invoke through introspection");
 
 # .signature
-my $sig = &multi-sub.signature;
-ok(\(1,2) ~~ $sig,"junction sig matches first candidate");
-ok(\(1)   ~~ $sig,"junction sig matches second candidate");
-ok(\()    ~~ $sig, "junction sig matches third candidate");
+{
+    my $sig = &multi-sub.signature;
+    ok(\(1,2) ~~ $sig,"junction sig matches first candidate");
+    ok(\(1)   ~~ $sig,"junction sig matches second candidate");
+    ok(\()    ~~ $sig, "junction sig matches third candidate");
+}
 
 # creating a multi in runtime
 my $multi = Multi.new();
@@ -59,7 +61,9 @@ is($multi.cando(\(1)).[0].(1),"m2","you can invoke through introspection");
 is($multi.cando(\()).[0].(),"m3","you can invoke through introspection");
 
 # .signature
-my $sig = $multi.signature;
-ok(\(1,2) ~~ $sig,"junction sig matches first candidate");
-ok(\(1)   ~~ $sig,"junction sig matches second candidate");
-ok(\()    ~~ $sig, "junction sig matches third candidate");
+{
+    my $sig = $multi.signature;
+    ok(\(1,2) ~~ $sig,"junction sig matches first candidate");
+    ok(\(1)   ~~ $sig,"junction sig matches second candidate");
+    ok(\()    ~~ $sig, "junction sig matches third candidate");
+}
