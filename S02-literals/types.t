@@ -3,7 +3,7 @@ use Test;
 
 # L<S02/Literals/"There are no barewords in Perl">
 
-plan 6;
+plan 7;
 
 eval_dies_ok 'class A { }; class A { }', "Can't redeclare a class";
 #?rakudo todo 'redeclaration of stubbed classes'
@@ -19,4 +19,12 @@ eval_dies_ok 'my F $x;', 'Unknown types in type constraints are an error';
 eval_lives_ok 'class Task { has $.a }; Task.new(a => 3 );',
               'can call a class "Task" - RT 61128';
 
+# L<S02/Literals/If a postdeclaration is not seen, the compile fails at CHECK
+# time>
+
+#?rakudo todo 'post declaration of subroutines necessary'
+eval_dies_ok q[caffeine(eval('sub caffeine($a){~$a}'))],
+        'Post declaration necessary';
+
 # vim: ft=perl6
+
