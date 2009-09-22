@@ -74,7 +74,7 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
     my $b = 5/2;
     is --$b, 3/2, 'prefix:<--> on Rats';
     is $b--, 3/2, 'postfix:<--> on Rats (1)';
-    is $b,   3/2, 'postfix:<--> on Rats (2)';
+    is $b,   1/2, 'postfix:<--> on Rats (2)';
     $b = -15/8;
     is --$b, -23/8, 'prefix:<--> on negative Rat';
 }
