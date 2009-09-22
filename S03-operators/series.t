@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 51;
+plan 56;
 
 # some tests firsts that don't require lazy lists
 
@@ -111,7 +111,7 @@ plan 51;
 #?rakudo skip 'lazy lists'
 {
     my @powers_of_two = 1, 2, 4, 8 ... *;
-    is @powers_of_two[0..5].join('|'), 
+    is @powers_of_two[0..5].join('|'),
        '1|2|4|8|16|32',
        'infix:<...> with * magic (geometric)';
 }
@@ -149,6 +149,22 @@ plan 51;
     is @abccc[2], 'c', '@array, * will repeat last element (2)';
     is @abccc[3], 'c', '@array, * will repeat last element (3)';
     is @abccc[4], 'c', '@array, * will repeat last element (4)';
+}
+
+
+#?rakudo skip 'series with limits'
+{
+    is ~(1, 2 ... *+1, 5),  ~(1..5),
+        'series operator with closure and limit (1)';
+    is ~(5, 4 ... *-1, 1),  ~(5, 4, 3, 2, 1),
+        'series operator with closure and limit (negative increment) (2)';
+    is ~(1, 3 ... *+2, 5),  ~(1, 3, 5),
+        'series operator with closure and limit (3)';
+    is ~(2, 4 ... *+2, 7),  ~(2, 4, 6, 7),
+        'series operator with closure and limit that does not match';
+    #?rakudo skip 'lazy lists'
+    is (1, 3 ... *+2, -1)[4], 9,
+       '*+2 closure with limit < last number results in infinite list';
 }
 
 # vim: ft=perl6
