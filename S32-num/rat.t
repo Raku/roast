@@ -60,6 +60,25 @@ is(2 / (1 / 3), 6, "2 / 1/3 = 6");
 isa_ok(2 / (1 / 3), Rat, "2 / 1/3 is a Rat");
 is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
+{
+    # use numbers that can be exactly represented as floating points
+    # so there's no need to use is_approx 
+
+    my $a = 1/2;
+    is ++$a, 3/2, 'prefix:<++> on Rats';
+    is $a++, 3/2, 'postfix:<++> on Rats (1)';
+    is $a,   5/2, 'postfix:<++> on Rats (2)';
+    $a = -15/8;
+    is ++$a, -7/8, 'prefix:<++> on negative Rat';
+
+    my $b = 5/2;
+    is --$b, 3/2, 'prefix:<--> on Rats';
+    is $b--, 3/2, 'postfix:<--> on Rats (1)';
+    is $b,   3/2, 'postfix:<--> on Rats (2)';
+    $b = -15/8;
+    is --$b, -23/8, 'prefix:<--> on negative Rat';
+}
+
 # Give the arithmetical operators a workout
 
 for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
