@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 56;
+plan 58;
 
 # some tests firsts that don't require lazy lists
 
@@ -160,11 +160,17 @@ plan 56;
         'series operator with closure and limit (negative increment) (2)';
     is ~(1, 3 ... *+2, 5),  ~(1, 3, 5),
         'series operator with closure and limit (3)';
-    is ~(2, 4 ... *+2, 7),  ~(2, 4, 6, 7),
+    is ~(2, 4 ... *+2, 7),  ~(2, 4, 6),
         'series operator with closure and limit that does not match';
     #?rakudo skip 'lazy lists'
     is (1, 3 ... *+2, -1)[4], 9,
        '*+2 closure with limit < last number results in infinite list';
+}
+
+#?rakudo skip 'Str ... Str'
+{
+    is ~('a' ... 'd'), ~<a b c d>, 'Str ... Str works (forward)';
+    is ~('d' ... 'a'), ~<d b c a>, 'Str ... Str works (backwards)';
 }
 
 # vim: ft=perl6
