@@ -19,11 +19,11 @@ plan 15;
     eval_dies_ok  q[sub foo'($x) { ... }],
                  "foo' (trailing apostrophe) is not an identifier";
     eval_dies_ok  q[sub foob'4($x) { ... }],
-                 "foob'4 is not a valid identifer (not alphabetic after apostrophe)";
+                 "foob'4 is not a valid identifier (not alphabetic after apostrophe)";
     eval_dies_ok  q[sub foob-4($x) { ... }],
-                 "foob-4 is not a valid identifer (not alphabetic after hyphen)";
+                 "foob-4 is not a valid identifier (not alphabetic after hyphen)";
     eval_lives_ok q[sub foo4'b($x) { ... }],
-                 "foo4'b is a valid identifer";
+                 "foo4'b is a valid identifier";
 }
 
 {
