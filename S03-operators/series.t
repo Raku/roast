@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 58;
+plan 60;
 
 # some tests firsts that don't require lazy lists
 
@@ -165,10 +165,11 @@ plan 58;
        '*+2 closure with limit < last number results in infinite list';
 }
 
-#?rakudo skip 'Str ... Str'
 {
+    is ~( 1  ...  4 ), ~<1 2 3 4>, 'Int ... Int works (forward)';
+    is ~( 4  ...  1 ), ~<4 3 2 1>, 'Int ... Int works (backward)';
     is ~('a' ... 'd'), ~<a b c d>, 'Str ... Str works (forward)';
-    is ~('d' ... 'a'), ~<d b c a>, 'Str ... Str works (backwards)';
+    is ~('d' ... 'a'), ~<d c b a>, 'Str ... Str works (backward)';
 }
 
 # vim: ft=perl6
