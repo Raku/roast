@@ -7,11 +7,10 @@ plan 58;
 
 # some tests firsts that don't require lazy lists
 
-#?rakudo skip 'dispatch'
 {
     # arity 1
     my @a = 1...{ $_ >= 3 ?? () !! $_ + 1 };
-    is @a.join(', '), '1, 2, 3';
+    is @a.join(', '), '1, 2, 3', 'simply series with one item on the LHS';
 }
 
 {
@@ -152,7 +151,6 @@ plan 58;
 }
 
 
-#?rakudo skip 'series with limits'
 {
     is ~(1, 2 ... *+1, 5),  ~(1..5),
         'series operator with closure and limit (1)';
