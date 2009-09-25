@@ -1,8 +1,11 @@
+# Simple file to control trig test creation.
+
 Function: sin
 loop_over: @sines
 setup:
 	my $desired_result = $angle.result;
 end-setup
+complex_check: { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }
 End
 
 Function: cos
@@ -10,6 +13,7 @@ loop_over: @cosines
 setup:
 	my $desired_result = $angle.result;
 end-setup
+complex_check: { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }
 End
 
 Function: tan
@@ -18,6 +22,7 @@ setup:
 	next if abs(cos($angle.num('radians'))) < 1e-6; 
     my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
 end-setup
+complex_check: { sin($_) / cos($_) }
 End
 
 Function: sec
@@ -27,6 +32,7 @@ setup:
     my $desired_result = 1.0 / cos($angle.num('radians'));
 end-setup
 rational_inverse_tests: (-3/2, -2/2, 2/2, 3/2)
+complex_check: { 1.0 / cos($_) }
 End
 
 Function: cosec
@@ -36,6 +42,7 @@ setup:
 	my $desired_result = 1.0 / sin($angle.num('radians'));
 end-setup
 rational_inverse_tests: (-3/2, -2/2, 2/2, 3/2)
+complex_check: { 1.0 / sin($_) }
 End
 
 Function: cotan
@@ -44,6 +51,7 @@ setup:
 	next if abs(sin($angle.num('radians'))) < 1e-6; 
 	my $desired_result = cos($angle.num('radians')) / sin($angle.num('radians'));
 end-setup
+complex_check: { cos($_) / sin($_) }
 End
 
 Function: sinh
@@ -51,6 +59,7 @@ loop_over: @sinhes
 setup:
 	my $desired_result = $angle.result;
 end-setup
+complex_check: { (exp($_) - exp(-$_)) / 2 }
 plus_inf: Inf
 minus_inf: -Inf
 End
@@ -61,6 +70,7 @@ setup:
 	my $desired_result = $angle.result;
 end-setup
 rational_inverse_tests: (2/2, 3/2, 4/2, 5/2)
+complex_check: { (exp($_) + exp(-$_)) / 2 }
 plus_inf: Inf
 minus_inf: Inf
 End
@@ -72,6 +82,7 @@ setup:
 	my $desired_result = sinh($angle.num('radians')) / cosh($angle.num('radians'));
 end-setup
 rational_inverse_tests: (-2/2, -1/2, 0/1, 1/2)
+complex_check: { sinh($_) / cosh($_) }
 plus_inf: 1
 minus_inf: -1
 End
@@ -83,6 +94,7 @@ setup:
 	my $desired_result = 1.0 / cosh($angle.num('radians'));
 end-setup
 rational_inverse_tests: (1/4, 1/2, 3/4, 2/2)
+complex_check: { 1.0 / cosh($_) }
 plus_inf: 0
 minus_inf: 0
 End
@@ -93,6 +105,7 @@ setup:
 	next if abs(sinh($angle.num('radians'))) < 1e-6; 
 	my $desired_result = 1.0 / sinh($angle.num('radians'));
 end-setup
+complex_check: { 1.0 / sinh($_) }
 plus_inf: 0
 minus_inf: "-0"
 End
@@ -104,6 +117,7 @@ setup:
 	my $desired_result = cosh($angle.num('radians')) / sinh($angle.num('radians'));
 end-setup
 rational_inverse_tests: (-4/2, -3/2, 3/2, 4/2)
+complex_check: { cosh($_) / sinh ($_) }
 plus_inf: 1
 minus_inf: -1
 End

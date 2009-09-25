@@ -86,3 +86,247 @@ my %official_base = (
     "degrees" => "degrees",
     "revolutions" => 1
 );
+
+
+# SHOULD BE IN COMPLEX.PM!
+# but that doesn't work for some reason...
+
+multi sub sin(Complex $x, $base = "radians")
+{
+    $x!to-radians($base).sin;
+}
+
+multi sub cos(Complex $x, $base = "radians")
+{
+    $x!to-radians($base).cos;
+}
+
+multi sub tan(Complex $x, $base = "radians")
+{
+    $x!to-radians($base).tan;
+}
+
+multi sub sec(Complex $x, $base = "radians")
+{
+    $x!to-radians($base).sec;
+}
+
+multi sub cosec(Complex $x, $base = "radians")
+{
+    $x!to-radians($base).cosec;
+}
+
+multi sub cotan(Complex $x, $base = "radians")
+{
+    $x!to-radians($base).cotan;
+}
+
+multi sub sinh(Complex $x, $base = "radians") {
+	$x!to-radians($base).sinh;
+}
+
+multi sub cosh(Complex $x, $base = "radians") {
+	$x!to-radians($base).cosh;
+}
+
+multi sub tanh(Complex $x, $base = "radians") {
+	$x!to-radians($base).tanh;
+}
+
+multi sub sech(Complex $x, $base = "radians") {
+	$x!to-radians($base).sech;
+}
+
+multi sub cosech(Complex $x, $base = "radians") {
+	$x!to-radians($base).cosech;
+}
+
+multi sub cotanh(Complex $x, $base = "radians") {
+	$x!to-radians($base).cotanh;
+}
+
+multi sub asin(Complex $x, $base = "radians")
+{
+    $x.asin!from-radians($base);
+}
+
+multi sub acos(Complex $x, $base = "radians")
+{
+    $x.acos!from-radians($base);
+}
+
+multi sub atan(Complex $x, $base = "radians")
+{
+    $x.atan!from-radians($base);
+}
+
+multi sub asec(Complex $x, $base = "radians")
+{
+    $x.asec!from-radians($base);
+}
+
+multi sub acosec(Complex $x, $base = "radians")
+{
+    $x.acosec!from-radians($base);
+}
+
+multi sub acotan(Complex $x, $base = "radians")
+{
+    $x.acotan!from-radians($base);
+}
+
+multi sub asinh(Complex $x, $base = "radians") {
+	$x.asinh!from-radians($base);
+}
+
+multi sub acosh(Complex $x, $base = "radians") {
+	$x.acosh!from-radians($base);
+}
+
+multi sub atanh(Complex $x, $base = "radians") {
+	$x.atanh!from-radians($base);
+}
+
+multi sub asech(Complex $x, $base = "radians") {
+	$x.asech!from-radians($base);
+}
+
+multi sub acosech(Complex $x, $base = "radians") {
+	$x.acosech!from-radians($base);
+}
+
+multi sub acotanh(Complex $x, $base = "radians") {
+	$x.acotanh!from-radians($base);
+}
+
+# END SHOULD BE IN COMPLEX.PM!
+
+
+# atan2 tests
+
+# First, test atan2 with the default $x parameter of 1
+
+for @sines -> $angle
+{
+    next if abs(cos($angle.num('radians'))) < 1e-6;     
+	my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
+
+    # atan2(Num) tests
+    is_approx(tan(atan2($desired_result)), $desired_result, 
+              "atan2(Num) - {$angle.num('radians')} default");
+    
+    # atan2(:y(Num))
+    #?rakudo skip 'named args'
+    is_approx(tan(atan2(:y($desired_result))), $desired_result, 
+              "atan2(:y(Num)) - {$angle.num('radians')} default");
+    for %official_base.keys -> $base {
+        #?rakudo skip 'named args'
+        is_approx(tan(atan2(:y($desired_result), :base(%official_base{$base})), 
+                      %official_base{$base}), $desired_result, 
+                  "atan2(:y(Num)) - {$angle.num($base)} $base");
+    }
+    
+    # Num.atan2 tests
+    is_approx($desired_result.Num.atan2.tan, $desired_result, 
+              "atan2(Num) - {$angle.num('radians')} default");
+}
+
+for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
+{
+    # atan2(Rat) tests
+    is_approx(tan(atan2($desired_result)), $desired_result, 
+              "atan2(Rat) - $desired_result default");
+    
+    # Rat.atan2 tests
+    is_approx($desired_result.atan2.tan, $desired_result, 
+              "atan2(Rat) - $desired_result default");
+    
+    next unless $desired_result.denominator == 1;
+    
+    # atan2(Int) tests
+    is_approx(tan(atan2($desired_result.numerator)), $desired_result, 
+              "atan2(Int) - $desired_result default");
+    
+    # Int.atan2 tests
+    is_approx($desired_result.numerator.atan2.tan, $desired_result, 
+              "atan2(Int) - $desired_result default");
+}
+
+# Now test the full atan2 interface
+
+for @sines -> $angle
+{
+    next if abs(cos($angle.num('radians'))) < 1e-6;     
+	my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
+
+    # atan2(Num) tests
+    is_approx(tan(atan2($desired_result, 1)), $desired_result, 
+              "atan2(Num, 1) - {$angle.num('radians')} default");
+    for %official_base.keys -> $base {
+        is_approx(tan(atan2($desired_result, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+                  "atan2(Num, 1) - {$angle.num($base)} $base");
+    }
+    
+    # atan2(:x(Num))
+    #?rakudo skip 'named args'
+    is_approx(tan(atan2(:y($desired_result), :x(1))), $desired_result, 
+              "atan2(:x(Num), :y(1)) - {$angle.num('radians')} default");
+    for %official_base.keys -> $base {
+        #?rakudo skip 'named args'
+        is_approx(tan(atan2(:y($desired_result), :x(1), :base(%official_base{$base})), 
+                                  %official_base{$base}), $desired_result, 
+                  "atan2(:x(Num), :y(1)) - {$angle.num($base)} $base");
+    }
+    
+    # # Num.atan2 tests
+    # is_approx($desired_result.Num.atan2.tan, $desired_result, 
+    #           "atan2(Num) - {$angle.num('radians')} default");
+    # for %official_base.keys -> $base {
+    #     is_approx($desired_result.Num.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #               "atan2(Num) - {$angle.num($base)} $base");
+    # }
+}
+
+for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
+{
+    # atan2(Rat) tests
+    is_approx(tan(atan2($desired_result, 1)), $desired_result, 
+              "atan2(Rat) - $desired_result default");
+    for %official_base.keys -> $base {
+        is_approx(tan(atan2($desired_result, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+                  "atan2(Rat) - $desired_result $base");
+    }
+    
+    # # Rat.atan2 tests
+    # is_approx($desired_result.atan2.tan, $desired_result, 
+    #           "atan2(Rat) - $desired_result default");
+    # for %official_base.keys -> $base {
+    #     is_approx($desired_result.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #               "atan2(Rat) - $desired_result $base");
+    # }
+    
+    next unless $desired_result.denominator == 1;
+    
+    # atan2(Int) tests
+    is_approx(tan(atan2($desired_result.numerator, 1)), $desired_result, 
+              "atan2(Int) - $desired_result default");
+    for %official_base.keys -> $base {
+        is_approx(tan(atan2($desired_result.numerator, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+                  "atan2(Int) - $desired_result $base");
+    }
+    
+    # # Int.atan2 tests
+    # is_approx($desired_result.numerator.atan2.tan, $desired_result, 
+    #           "atan2(Int) - $desired_result default");
+    # for %official_base.keys -> $base {
+    #     is_approx($desired_result.numerator.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #               "atan2(Int) - $desired_result $base");
+    # }
+}
+
+# check that the proper quadrant is returned
+
+is_approx(atan2(4, 4, "degrees"), 45, "atan2(4, 4) is 45 degrees");
+is_approx(atan2(-4, 4, "degrees"), -45, "atan2(-4, 4) is -45 degrees");
+is_approx(atan2(4, -4, "degrees"), 135, "atan2(4, -4) is 135 degrees");
+is_approx(atan2(-4, -4, "degrees"), -135, "atan2(-4, -4) is -135 degrees");
