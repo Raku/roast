@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 38;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -18,6 +18,10 @@ class Foo::Bar is Foo {
     method baz { return 'Foo::Bar::baz' }
     method fud { return 'Foo::Bar::fud' }
     method super_baz ($self:) { return $self.Foo::baz() }
+}
+
+class Unrelated {
+    method something { 'bad' };
 }
 
 my $foo_bar = Foo::Bar.new();
@@ -46,6 +50,11 @@ my $fud;
 
 lives_ok { $fud = $foo_bar.getme.fud }, 'chained method dispatch on altered method';
 is($fud, "Foo::Bar::fud", "returned value is correct");
+
+is $foo_bar.Foo::baz, 'Foo::baz', '$obj.Class::method syntax works';
+#?rakudo todo 'RT 69262'
+dies_ok { $foo_bar.Unrelated::something() },
+    'Cannot call unrelated method with $obj.Class::method syntax';
 
 # See thread "Quick OO .isa question" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22220">
