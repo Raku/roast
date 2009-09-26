@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 =begin pod
 
@@ -125,5 +125,14 @@ sub b() { die "oops" }
        'call to private method in presence of attribute';
 }
 
+# used to be RT #69206
+
+class AnonInvocant {
+    method me(::T $:) {
+        T;
+    }
+}
+
+is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
 
 # vim: ft=perl6
