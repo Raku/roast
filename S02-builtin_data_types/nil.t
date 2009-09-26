@@ -19,4 +19,11 @@ plan 6;
     is $n.WHAT, 'Failure()', '.WHAT on Nil variable says Failure';
 }
 
+#?rakudo todo 'RT 69270'
+{
+    my $x = '';
+    $x ~= $_ for Nil;
+    is $x, '', '$Statement for Nil; does zero iterations';
+}
+
 # vim: ft=perl6
