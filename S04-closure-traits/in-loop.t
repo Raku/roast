@@ -8,6 +8,7 @@ plan 2;
 #
 # * KEEP, UNDO, PRE, POST, CONTROL
 #   CATCH is tested in t/spec/S04-statements/try.t
+#                  and t/spec/S04-exception-handlers/catch.t
 #
 # * $var will undo, etc
 #
