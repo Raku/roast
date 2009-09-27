@@ -128,11 +128,11 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     my $s = '';
     die 3;
     CATCH {
-        1 {$s =~ 'a';}
-        2 {$s =~ 'b';}
-        3 {$s =~ 'c';}
-        4 {$s =~ 'd';}
-        default {$s =~ 'z';}
+        when 1 {$s ~= 'a';}
+        when 2 {$s ~= 'b';}
+        when 3 {$s ~= 'c';}
+        when 4 {$s ~= 'd';}
+        default {$s ~= 'z';}
     }
 
     is $s, 'c', 'Caught number';
@@ -187,11 +187,11 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         die 'alpha';
         CATCH {
             default {
-                $s =~ 'a';
+                $s ~= 'a';
                 die 'beta';
             }
             CATCH {
-                default { $s =~ 'b'; }
+                default { $s ~= 'b'; }
             }
         }
     };
@@ -203,10 +203,10 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         die 'alpha';
         CATCH {
             default {
-                $s =~ 'a';
+                $s ~= 'a';
                 die 'beta';
                 CATCH {
-                    default { $s =~ 'b'; }
+                    default { $s ~= 'b'; }
                 }
             }
         }
