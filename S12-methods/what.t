@@ -44,7 +44,7 @@ plan 15;
         method WHAT {'Bar'}
     }
     my $o = Foo.new;
-    is($o."WHAT", 'Bar', '."WHAT" calls the method instead of the macro');
+    is($o."WHAT"(), 'Bar', '."WHAT" calls the method instead of the macro');
     #?rakudo todo '.WHAT not (easily overridable)'
     is($o.WHAT,   'Foo', '.WHAT still works as intended');
     my $meth = "WHAT";

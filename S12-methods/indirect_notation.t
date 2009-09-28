@@ -55,10 +55,10 @@ class T2
     }
     my $o = A.new();
 
-    is $o."abc",    'abc',   'calling method with $object."methodname"';
+    is $o."abc"(),    'abc',   'calling method with $object."methodname"';
     my $bc = 'bc';
-    is $o."a$bc",   'abc',  'calling method with $object."method$name"';
-    is $o."{$bc}d", 'bcd',  'calling method with $object."method$name"';
+    is $o."a$bc"(),   'abc',  'calling method with $object."method$name"';
+    is $o."{$bc}d"(), 'bcd',  'calling method with $object."method$name"';
 
 
     my $meth = method { self.abc ~ self.bcd };

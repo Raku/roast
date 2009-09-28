@@ -32,12 +32,12 @@ is($x.bar(), 101, 'called a method with parens');
 is($x.identity("w00t"), "w00t", 'called a method with a parameter');
 
 # L<S12/Methods/"You can replace the identifier with a quoted string">
-is($x.'foo', 42, 'indirect method call using quotes, no parens');
+dies_ok(q/$x.'foo'/, 'indirect method call using quotes, no parens');
 is($x.'bar'(), 101, 'indirect method call using quotes, with parens');
 is($x.'identity'('qwerty'), 'qwerty', 'indirect method call using quotes, with parameter');
 {
     my $name = 'foo';
-    is($x."$name", 42, 'indirect method call, no parens');
+    dies_ok(q/$x."$name"/, 42, 'indirect method call, no parens');
     is($x."$name"(), 42, 'indirect method call, with parens');
 }
 {

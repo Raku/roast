@@ -26,20 +26,20 @@ class Indir {
         'bb';
     }
     method b_acc1 {
-        self!"b";
+        self!"b"();
     }
     method b_acc2 {
-        self!'b';
+        self!'b'();
     }
 }
 
 my $o = Indir.new();
 
-is $o."a",    "aa", 'indirect call to public method (double quotes)';
-is $o.'a',    "aa", 'indirect call to public method (single quotes)';
+is $o."a"(),    "aa", 'indirect call to public method (double quotes)';
+is $o.'a'(),    "aa", 'indirect call to public method (single quotes)';
 is $o.b_acc1, 'bb', 'indirect call to private method (double quotes)';
 is $o.b_acc2, 'bb', 'indirect call to private method (single quotes)';
-dies_ok {$o."b" },  'can not call private method via quotes from outside';
+dies_ok {$o."b"() },  'can not call private method via quotes from outside';
 
 # L<S14/Roles/"same, but &foo is aliased to &!foo">
 
