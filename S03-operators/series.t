@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 60;
+plan 61;
 
 # some tests firsts that don't require lazy lists
 
@@ -166,6 +166,7 @@ plan 60;
 }
 
 {
+    is ~( 1  ...  1 ), '1',        '1 ... 1 works (degenerate case';
     is ~( 1  ...  4 ), ~<1 2 3 4>, 'Int ... Int works (forward)';
     is ~( 4  ...  1 ), ~<4 3 2 1>, 'Int ... Int works (backward)';
     is ~('a' ... 'd'), ~<a b c d>, 'Str ... Str works (forward)';
