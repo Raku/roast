@@ -6,6 +6,10 @@ plan *;
 
 # Basic test functions specific to rational numbers.
 
+# Test two ways of making Rats
+isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
+isa_ok(1 / 4, Rat, "/ makes a Rat");
+
 # Test ~
 is(~(Rat.new(1,4)), ~(0.25), "Rats stringify properly");
 is(~(Rat.new(-1,2)), ~(-0.5), "Rats stringify properly");
