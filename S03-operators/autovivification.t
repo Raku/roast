@@ -78,19 +78,19 @@ plan 22;
 {
     my $x;
     $x = $x + 1i;
-    ok $x == 0 + 1i, 'my $x; $x = $x + 1i; works';
+    is_approx($x, 0 + 1i, 'my $x; $x = $x + 1i; works');
 }
 
 {
     my $x;
     $x += 1i;
-    ok $x == 0 + 1i, 'my $x; $x += 1i; works';
+    is_approx($x, 0 + 1i, 'my $x; $x += 1i; works');
 }
 
 {
     my $x;
     $x *= 1i;
-    ok $x == 1i, 'my $x; $x *= 1i works';
+    is_approx($x, 1i, 'my $x; $x *= 1i works');
 }
 
 # L<S03/Assignment operators/"If you apply an assignment operator to a
