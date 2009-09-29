@@ -123,10 +123,10 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 }
 
 # following doesn't parse yet
-#?rakudo skip 'infix:<defines>'
+#?rakudo skip 'import keyword'
 {
     # It must be importable
-    GLOBAL defines <%ENV>;
+    import GLOBAL <%ENV>;
     ok +%ENV.keys, 'imported %ENV has keys';
 }
 
@@ -135,7 +135,7 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 #?pugs todo 'bug'
 {
     my $x = eval "%ENV";
-    ok $! ~~ m:P5/Undeclared/, '%ENV not visible by after lexical import scope';
+    ok !$x.defined, '%ENV not visible by after lexical import scope';
     1;
 }
 
