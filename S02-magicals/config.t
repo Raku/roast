@@ -12,7 +12,7 @@ get a list of osnames that have actually passed tests.
 
 =end kwid
 
-plan 6;
+plan 5;
 
 # $?OS is the OS we were compiled in.
 #?rakudo skip 'unimpl $?OS'
