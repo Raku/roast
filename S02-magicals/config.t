@@ -12,7 +12,7 @@ get a list of osnames that have actually passed tests.
 
 =end kwid
 
-plan 4;
+plan 6;
 
 # $?OS is the OS we were compiled in.
 #?rakudo skip 'unimpl $?OS'
@@ -27,5 +27,8 @@ my $osnames = any <darwin linux FreeBSD MSWin32 mingw msys cygwin browser solari
 ok $?OS eq $osnames, "we know of the OS we were compiled in";
 
 ok $*OS eq $osnames, "we know of the OS we are running under";
+
+# like $*OS, this is tested in perlver.t but that test is not included
+ok $*OSVER, '$*OSVER is present';
 
 # vim: ft=perl6
