@@ -8,6 +8,22 @@ plan *;
 
 isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
 
+is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
+is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
+
+# checked with the open CAS system "yacas":
+# In> (3+4*I) / (2-I)
+# Out> Complex(2/5,11/5)
+# In> (3+4*I) * (2-I)
+# Out> Complex(10,5)
+# etc
+is_approx (3+4i)/(2-1i), 2/5 + (11/5)i, 'Complex division';
+is_approx (3+4i)*(2-1i), 10+5i,         'Complex division';
+is_approx (6+4i)/2,      3+2i,          'dividing Complex by a Real';
+is_approx 2/(3+1i),      3/5 -(1/5)i,   'divinding a Real by a Complex';
+is_approx 2 * (3+7i),    6+14i,         'Real * Complex';
+is_approx (3+7i) * 2,    6+14i,         'Complex * Real';
+
 # MUST: test .perl, .Str
 
 my @examples = (0i, 1 + 0i, -1 + 0i, 1i, -1i, 2 + 0i, -2 + 0i, 2i, -2i,
