@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 151;
+plan 154;
 
 =begin pod
 
@@ -139,6 +139,9 @@ sub eval_elsewhere($code){ eval($code) }
     # yes, this warns, but it should still be true
     ok  (undef ~~ 0),           'undef ~~ 0';
     ok !(undef ~~ 2.3),         'undef ~~ $other_number';
+    ok  (3+0i  ~~ 3),           'Complex ~~ Num (+)';
+    ok !(3+1i  ~~ 3),           'Complex ~~ Num (-)';
+    ok !(4+0i  ~~ 3),           'Complex ~~ Num (-)';
 }
 
 #L<S03/Smart matching/Any Str string equality>
