@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 154;
+plan *;
 
 =begin pod
 
@@ -142,6 +142,22 @@ sub eval_elsewhere($code){ eval($code) }
     ok  (3+0i  ~~ 3),           'Complex ~~ Num (+)';
     ok !(3+1i  ~~ 3),           'Complex ~~ Num (-)';
     ok !(4+0i  ~~ 3),           'Complex ~~ Num (-)';
+}
+
+#?rakudo skip '$thing ~~ Complex'
+{
+    ok (1 + 2i)    ~~ (1 + 2i),  'Complex  ~~ Complex (+)';
+    ok (1 + 2i)    ~~ (1 + 1i),  'Complex  ~~ Complex (-)';
+    ok (1 + 2i)    ~~ (2 + 2i),  'Complex  ~~ Complex (-)';
+    ok !((1 + 2i) !~~ (1 + 2i)), 'Complex !~~ Complex (-)';
+    ok !((1 + 2i) !~~ (1 + 1i)), 'Complex !~~ Complex (+)';
+    ok !((1 + 2i) !~~ (2 + 2i)), 'Complex !~~ Complex (+)';
+    ok 3           ~~ (3 + 0i),  'Num  ~~ Complex (+)';
+    ok 2           ~~ (3 + 0i),  'Num  ~~ Complex (-)';
+    ok 3           ~~ (3 + 1i),  'Num  ~~ Complex (-)';
+    ok !(3        !~~ (3 + 0i)), 'Num !~~ Complex (-)';
+    ok !(2        !~~ (3 + 0i)), 'Num !~~ Complex (+)';
+    ok !(3        !~~ (3 + 1i)), 'Num !~~ Complex (+)';
 }
 
 #L<S03/Smart matching/Any Str string equality>
@@ -416,4 +432,5 @@ ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT 62196)';
 
+done_testing();
 # vim: ft=perl6
