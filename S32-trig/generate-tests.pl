@@ -209,6 +209,12 @@ class TrigFunction
                         is_approx($.function_name($.inverted_function_name($z, %official_base{$base}), %official_base{$base}), $z, 
                                   "$.inverted_function_name(Complex) - {$angle.num($base)} $base");
                     }
+                    is_approx($z.$.inverted_function_name.$.function_name, $z, 
+                              "Complex.$.inverted_function_name - {$angle.num('radians')} default");
+                    for %official_base.keys -> $base {
+                        is_approx($z.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $z, 
+                                  "Complex.$.inverted_function_name - {$angle.num($base)} $base");
+                    }
                 }
             }
             
