@@ -262,16 +262,34 @@ class TrigFunction
     }
 }
 
-my $file = open $output_file, :w or die "Unable to open $output_file $!\n";
+sub OpenAndStartOutputFile($output_file)
+{
+    my $file = open $output_file, :w or die "Unable to open $output_file $!\n";
 
-$file.say: '# WARNING:
+    $file.say: '# WARNING:
 # This is a generated file and should not be edited directly.
 # look into generate-tests.pl instead';
 
-my $prelude = open $prelude_file, :r or die "Unable to open $prelude_file: $!\n";
-for $prelude.lines -> $line {
-    $file.say: $line;
+    my $prelude = open $prelude_file, :r or die "Unable to open $prelude_file: $!\n";
+    for $prelude.lines -> $line {
+        $file.say: $line;
+    }
+    
+    return $file;
 }
+
+sub CloseOutputFile($file)
+{
+    # the {} afer 'vim' just generate an empty string.
+    # this is to avoid the string constant being interpreted as a modeline
+    # here in generate-tests.pl
+    $file.say: "done_testing;
+
+# vim{}: ft=perl6 nomodifiable";
+    $file.close
+}
+
+my $file;
 
 my $functions = open $functions_file, :r or die "Unable to open $functions_file: $!\n";
 
@@ -288,7 +306,7 @@ for $functions.lines {
     when /^\#/ { } # skip comment lines
     when $in_setup && /^\s/ { $setup_block ~= $_; }
     $in_setup = Bool::False;
-    when /Function\:\s+(.*)/ { 
+    when /Function\:\s+(.*)/ {
         $function_name = ~$0; 
         $inverted_function_name = "a$0";
         $angle_and_results_name = "";
@@ -297,6 +315,8 @@ for $functions.lines {
         $complex_check = "";
         $plus_inf = "NaN";
         $minus_inf = "NaN";
+        
+        $file = OpenAndStartOutputFile($function_name ~ ".t");
     }
     when /setup:/ { $in_setup = Bool::True; }
     when /loop_over\:\s+(.*)/ { $angle_and_results_name = ~$0; }
@@ -310,14 +330,8 @@ for $functions.lines {
                                   $rational_inverse_tests, $setup_block, $complex_check, $plus_inf, $minus_inf);
         $tf.dump_forward_tests($file);
         $tf.dump_inverse_tests($file);
+        CloseOutputFile($file);
     }
 }
-
-# the {} afer 'vim' just generate an empty string.
-# this is to avoid the string constant being interpreted as a modeline
-# here in generate-tests.pl
-$file.say: "done_testing;
-
-# vim{}: ft=perl6 nomodifiable";
 
 # vim: ft=perl6
