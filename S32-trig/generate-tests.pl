@@ -303,7 +303,7 @@ my Str $complex_check;
 my Str $plus_inf;
 my Str $minus_inf;
 for $functions.lines {
-    when /^\#/ { } # skip comment lines
+    when /^'#'/ { } # skip comment lines
     when $in_setup && /^\s/ { $setup_block ~= $_; }
     $in_setup = Bool::False;
     when /Function\:\s+(.*)/ {
