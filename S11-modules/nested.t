@@ -22,6 +22,7 @@ eval_lives_ok 'use RoleA',
 
 {
     use RoleA;
+    role RoleB {...}
 
     class MyFu does RoleB;
     ok MyFu ~~ RoleB, 'Composition worked';

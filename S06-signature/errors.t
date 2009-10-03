@@ -36,7 +36,7 @@ eval_dies_ok('sub quuuux ($!) { ... }',
 # RT #64344
 #?rakudo todo 'RT #64344'
 {
-    sub empty_sig() { return @_[0] }
+    sub empty_sig() { return }
     dies_ok { empty_sig( 'RT #64344' ) },
             'argument passed to sub with empty signature';
 }

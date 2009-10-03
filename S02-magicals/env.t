@@ -126,7 +126,7 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 #?rakudo skip 'import keyword'
 {
     # It must be importable
-    import GLOBAL <%ENV>;
+    import PROCESS <%ENV>;
     ok +%ENV.keys, 'imported %ENV has keys';
 }
 

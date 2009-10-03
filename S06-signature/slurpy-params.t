@@ -280,10 +280,10 @@ These tests are the testing for "List parameters" section of Synopsis 06
 ##  Note:  I've listed these as though they succeed, but it's possible
 ##  that the parameter binding should fail outright.  --pmichaud
 {
+    my $count = 0;
     sub slurp_any_thread(Any *@a) { $count++; }
     multi sub slurp_any_multi(Any *@a) { $count++; }
 
-    $count = 0;
     slurp_any_thread(3|4|5);
     is $count, 1, 'Any slurpy param doesnt autothread';
     $count = 0;
