@@ -340,4 +340,139 @@ for $functions.lines {
     }
 }
 
+# output the atan2 file, a special case
+
+$file = OpenAndStartOutputFile("atan2.t");
+$file.say: q[
+# atan2 tests
+
+# First, test atan2 with the default $x parameter of 1
+
+for @sines -> $angle
+{
+    next if abs(cos($angle.num('radians'))) < 1e-6;     
+	my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
+
+    # atan2(Num) tests
+    is_approx(tan(atan2($desired_result)), $desired_result, 
+              "atan2(Num) - {$angle.num('radians')} default");
+    
+    # atan2(:y(Num))
+    #?rakudo skip 'named args'
+    is_approx(tan(atan2(:y($desired_result))), $desired_result, 
+              "atan2(:y(Num)) - {$angle.num('radians')} default");
+    for %official_base.keys -> $base {
+        #?rakudo skip 'named args'
+        is_approx(tan(atan2(:y($desired_result), :base(%official_base{$base})), 
+                      %official_base{$base}), $desired_result, 
+                  "atan2(:y(Num)) - {$angle.num($base)} $base");
+    }
+    
+    # Num.atan2 tests
+    is_approx($desired_result.Num.atan2.tan, $desired_result, 
+              "atan2(Num) - {$angle.num('radians')} default");
+}
+
+for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
+{
+    # atan2(Rat) tests
+    is_approx(tan(atan2($desired_result)), $desired_result, 
+              "atan2(Rat) - $desired_result default");
+    
+    # Rat.atan2 tests
+    is_approx($desired_result.atan2.tan, $desired_result, 
+              "atan2(Rat) - $desired_result default");
+    
+    next unless $desired_result.denominator == 1;
+    
+    # atan2(Int) tests
+    is_approx(tan(atan2($desired_result.numerator)), $desired_result, 
+              "atan2(Int) - $desired_result default");
+    
+    # Int.atan2 tests
+    is_approx($desired_result.numerator.atan2.tan, $desired_result, 
+              "atan2(Int) - $desired_result default");
+}
+
+# Now test the full atan2 interface
+
+for @sines -> $angle
+{
+    next if abs(cos($angle.num('radians'))) < 1e-6;     
+	my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
+
+    # atan2(Num) tests
+    is_approx(tan(atan2($desired_result, 1)), $desired_result, 
+              "atan2(Num, 1) - {$angle.num('radians')} default");
+    for %official_base.keys -> $base {
+        is_approx(tan(atan2($desired_result, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+                  "atan2(Num, 1) - {$angle.num($base)} $base");
+    }
+    
+    # atan2(:x(Num))
+    #?rakudo skip 'named args'
+    is_approx(tan(atan2(:y($desired_result), :x(1))), $desired_result, 
+              "atan2(:x(Num), :y(1)) - {$angle.num('radians')} default");
+    for %official_base.keys -> $base {
+        #?rakudo skip 'named args'
+        is_approx(tan(atan2(:y($desired_result), :x(1), :base(%official_base{$base})), 
+                                  %official_base{$base}), $desired_result, 
+                  "atan2(:x(Num), :y(1)) - {$angle.num($base)} $base");
+    }
+    
+    # # Num.atan2 tests
+    # is_approx($desired_result.Num.atan2.tan, $desired_result, 
+    #           "atan2(Num) - {$angle.num('radians')} default");
+    # for %official_base.keys -> $base {
+    #     is_approx($desired_result.Num.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #               "atan2(Num) - {$angle.num($base)} $base");
+    # }
+}
+
+for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
+{
+    # atan2(Rat) tests
+    is_approx(tan(atan2($desired_result, 1)), $desired_result, 
+              "atan2(Rat) - $desired_result default");
+    for %official_base.keys -> $base {
+        is_approx(tan(atan2($desired_result, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+                  "atan2(Rat) - $desired_result $base");
+    }
+    
+    # # Rat.atan2 tests
+    # is_approx($desired_result.atan2.tan, $desired_result, 
+    #           "atan2(Rat) - $desired_result default");
+    # for %official_base.keys -> $base {
+    #     is_approx($desired_result.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #               "atan2(Rat) - $desired_result $base");
+    # }
+    
+    next unless $desired_result.denominator == 1;
+    
+    # atan2(Int) tests
+    is_approx(tan(atan2($desired_result.numerator, 1)), $desired_result, 
+              "atan2(Int) - $desired_result default");
+    for %official_base.keys -> $base {
+        is_approx(tan(atan2($desired_result.numerator, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+                  "atan2(Int) - $desired_result $base");
+    }
+    
+    # # Int.atan2 tests
+    # is_approx($desired_result.numerator.atan2.tan, $desired_result, 
+    #           "atan2(Int) - $desired_result default");
+    # for %official_base.keys -> $base {
+    #     is_approx($desired_result.numerator.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #               "atan2(Int) - $desired_result $base");
+    # }
+}
+
+# check that the proper quadrant is returned
+
+is_approx(atan2(4, 4, "degrees"), 45, "atan2(4, 4) is 45 degrees");
+is_approx(atan2(-4, 4, "degrees"), -45, "atan2(-4, 4) is -45 degrees");
+is_approx(atan2(4, -4, "degrees"), 135, "atan2(4, -4) is 135 degrees");
+is_approx(atan2(-4, -4, "degrees"), -135, "atan2(-4, -4) is -135 degrees");
+];
+CloseOutputFile($file);
+
 # vim: ft=perl6
