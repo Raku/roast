@@ -6,9 +6,11 @@ plan *;
 
 # Basic test functions specific to rational numbers.
 
-# Test two ways of making Rats
+# Test ways of making Rats
 isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
 isa_ok(1 / 4, Rat, "/ makes a Rat");
+isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
+isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
 # Test ~
 is(~(Rat.new(1,4)), ~(0.25), "Rats stringify properly");
@@ -143,6 +145,12 @@ is_approx (1 / 3) * (6.6 + 1i), 2.2 + (1i/3), "1/3 * (6.6 + 1i) = 2.2 + (1/3)i";
 is_approx (6.6 + 1i) * (1 / 3), 2.2 + (1i/3), "(6.6 + 1i) * 1/3 = 2.2 + (1/3)i";
 is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
 is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
+
+# Cast from Num uses an epsilon value.
+is( exp(1).Rat, Rat.new(2721, 1001), "Num to Rat with default epsilon");
+is( exp(1).Rat(1e-4), Rat.new(193, 71), "Num to Rat with epsilon 1e-4");
+is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
+    "Num to Rat with epsilon of Rat");
 
 done_testing;
 
