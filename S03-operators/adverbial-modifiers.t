@@ -2,18 +2,9 @@ use v6;
 
 use Test;
 
-plan 54;
+plan 48;
+
 # L<S03/Invocant marker/"will apply the :xxx adverb">
-is infix:<..>(1, 10, by => 2), <1 3 5 7 9>, 'range operator, :by parameter, long name';
-is 1..10 :by(2), <1 3 5 7 9>, 'range operator, :by adverb, space';
-is 1..10:by(2), <1 3 5 7 9>, 'range operator, :by adverb, without space';
-
-is infix:<..>(1, *, by => 2)[0..4], <1 3 5 7 9>, 'infinite range operator, long name';
-is 1..(*) :by(2)[0..4], <1 3 5 7 9>, 'infinite range operator, :by adverb, space';
-is 1..(*):by(2)[0..4], <1 3 5 7 9>, 'infinite range operator, :by adverb, without space';
-
-# XXX need to test prefix:<=> on $handle with :prompt adverb
-
 sub prefix:<blub> (Str $foo, Int :$times = 1) {
   ("BLUB" x $times) ~ $foo;
 }

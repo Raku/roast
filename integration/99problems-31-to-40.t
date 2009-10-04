@@ -30,8 +30,8 @@ plan 67;
         my $max=floor(sqrt($num));
     
         # we could use
-        #  for ( 3..$max:by(2) ) {
-        # but it's unimplemented yet 
+        #  for  3 ... *+2, $max -> $i {
+        # but it doesn't seem to work yet
         loop (my $i=3; $i <= $max ; $i+=2) {
             return Bool::False if $num % $i == 0;
         }
