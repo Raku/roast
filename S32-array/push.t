@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 50;
+plan 52;
 
 # basic push tests
 {
@@ -26,17 +26,17 @@ plan 50;
     is(@push[1], 2, 'we found the right element');
 
     push(@push, 3);
-    is(+@push, 3, 'we have 3 element in the array');
+    is(+@push, 3, 'we have 3 elements in the array');
     is(@push[2], 3, 'we found the right element');
 
     push(@push, 4);
-    is(+@push, 4, 'we have 4 element in the array');
+    is(+@push, 4, 'we have 4 elements in the array');
     is(@push[3], 4, 'we found the right element');
 
 #?rakudo skip 'named args'
 {
     push(:array(@push), 5);
-    is(+@push, 5, 'we have 5 element in the array (with named arg)');
+    is(+@push, 5, 'we have 5 elements in the array (with named arg)');
     is(@push[4], 5, 'we found the right element (with named arg)');
 }
 }
@@ -150,5 +150,26 @@ plan 50;
     is(@push[0][0],    21, 'nested arrayref, first value is 21');
     is(@push[0][*-1],  25, 'nested arrayref, last value is 25');
 }
+
+# RT #69548
+{
+    {
+        my $x = 1;
+        my @a;
+        push @a, $x;
+        ++$x;
+    
+        is @a[0], 1, 'New element created by push(@a, $x) isn\'t affected by changes to $x';
+    }
+    {
+        my $x = 1;
+        my @a;
+        push @a, $x;
+        ++@a[0];
+    
+        is $x, 1, '$x isn\'t affected by changes to new element created by push(@a, $x)';
+    }
+}
+
 
 # vim: syn=perl6
