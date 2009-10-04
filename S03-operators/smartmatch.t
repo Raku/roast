@@ -144,20 +144,19 @@ sub eval_elsewhere($code){ eval($code) }
     ok !(4+0i  ~~ 3),           'Complex ~~ Num (-)';
 }
 
-#?rakudo skip '$thing ~~ Complex'
 {
     ok (1 + 2i)    ~~ (1 + 2i),  'Complex  ~~ Complex (+)';
-    ok (1 + 2i)    ~~ (1 + 1i),  'Complex  ~~ Complex (-)';
-    ok (1 + 2i)    ~~ (2 + 2i),  'Complex  ~~ Complex (-)';
+    ok !((1 + 2i)  ~~ (1 + 1i)), 'Complex  ~~ Complex (-)';
+    ok !((1 + 2i)  ~~ (2 + 2i)), 'Complex  ~~ Complex (-)';
     ok !((1 + 2i) !~~ (1 + 2i)), 'Complex !~~ Complex (-)';
-    ok !((1 + 2i) !~~ (1 + 1i)), 'Complex !~~ Complex (+)';
-    ok !((1 + 2i) !~~ (2 + 2i)), 'Complex !~~ Complex (+)';
+    ok (1 + 2i)   !~~ (1 + 1i),  'Complex !~~ Complex (+)';
+    ok (1 + 2i)   !~~ (2 + 2i),  'Complex !~~ Complex (+)';
     ok 3           ~~ (3 + 0i),  'Num  ~~ Complex (+)';
-    ok 2           ~~ (3 + 0i),  'Num  ~~ Complex (-)';
-    ok 3           ~~ (3 + 1i),  'Num  ~~ Complex (-)';
+    ok !(2         ~~ (3 + 0i)), 'Num  ~~ Complex (-)';
+    ok !(3         ~~ (3 + 1i)), 'Num  ~~ Complex (-)';
     ok !(3        !~~ (3 + 0i)), 'Num !~~ Complex (-)';
-    ok !(2        !~~ (3 + 0i)), 'Num !~~ Complex (+)';
-    ok !(3        !~~ (3 + 1i)), 'Num !~~ Complex (+)';
+    ok  (2        !~~ (3 + 0i)), 'Num !~~ Complex (+)';
+    ok  (3        !~~ (3 + 1i)), 'Num !~~ Complex (+)';
 }
 
 #L<S03/Smart matching/Any Str string equality>
