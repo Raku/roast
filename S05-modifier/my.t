@@ -50,5 +50,29 @@ is ~$/, 'dzho', ':our in regex ($/)';
 
 is $DeclaratorTest1::our, 'zho', 'can access our variable from the outside';
 
+{
+    my $a = 1;
+    regex ta { :temp $a = 5; <ma> };
+    regex ma { $a $a };
+    ok '11'  ~~ m/ ^ <ma> $ /, "can access variables in regex (not temp'ed)";
+    ok '55' !~~ m/ ^ <ma> $ /, "(-) not temp'ed";
+    is $a, 1, "temp'ed variable still 1";
+
+    ok '55'  ~~ m/ ^ <ta> $ /, "can access temp'ed variable in regex (+)";
+    ok '11' !~~ m/ ^ <ta> $ /, "(-) temp'ed";
+    is $a, 1, "temp'ed variable again 1";
+}
+
+{
+    my $a = 1;
+    regex la { :let $a = 5; <lma> };
+    regex lma { $a $a };
+    ok '23' !~~ m/ ^ <la> $ /, 'can detect a non-match with :let';
+    is $a, 1, 'unsuccessful match did not affect :let variable';
+
+    ok '55' ~~ m/ ^ <la> $ /, 'can match changed :let variable';
+    is $a, 5, 'successful match preserves new :let value';
+}
+
 done_testing;
 # vim: ft=perl6 sw=4 ts=4 expandtab

@@ -30,7 +30,6 @@ the spec (newest first)
 * (r28528) quietly, note, warning exceptions
 * (r28506) defines -> import
 * (r28502) Stringy, Numeric etc. roles; PairVal and PairValSet
-* (r28480) :temp and :let in regexes
 * (r28344, r28348, r28351) Range object changes + magic series operator
 * (r28444) [S12] require parens on .'method'() form
 * (r28284) Introspecting subs and multis
