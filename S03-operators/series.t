@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 61;
+plan 63;
 
 # some tests firsts that don't require lazy lists
 
@@ -171,6 +171,14 @@ plan 61;
     is ~( 4  ...  1 ), ~<4 3 2 1>, 'Int ... Int works (backward)';
     is ~('a' ... 'd'), ~<a b c d>, 'Str ... Str works (forward)';
     is ~('d' ... 'a'), ~<d c b a>, 'Str ... Str works (backward)';
+}
+
+#?rakudo skip 'slices, series'
+{
+    is ~( 1 ... *+1, 5 ... *+2, 9), ~<1 2 3 4 5 7 9>,
+            'expression with two magic series operators';
+    is ~( 1 ... *+2, 6 ... *+3, 9), ~<1 3 5 8>,
+            'expression with two magic series operators and non-matching end points';
 }
 
 # vim: ft=perl6
