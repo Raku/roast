@@ -152,6 +152,7 @@ plan 52;
 }
 
 # RT #69548
+#?rakudo todo 'RT 69548'
 {
     {
         my $x = 1;
