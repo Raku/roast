@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 2;
+plan 4;
 
 # L<S13/Type Casting/"whose name is a declared type, it is taken as a coercion
 # to that type">
@@ -13,5 +13,21 @@ class CoercionTest {
 my $o = CoercionTest.new();
 is ~$o, 'foo', 'method Str takes care of correct stringification';
 ok +$o == 1.2, 'method Num takes care of correct numification';
+
+# RT #69378
+{
+    class RT69378 {
+        has $.x = 'working';
+        method Str() { $.x }
+    }
+    is RT69378.new.Str, 'working', 'call to .Str works';
+
+    class RT69378str is Str {
+        has $.a = 'RT #69378';
+        method Str() { $.a }
+    }
+    #?rakudo todo 'RT 69378'
+    is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
+}
 
 # vim: ft=perl6
