@@ -230,7 +230,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
 
     sub slurp_int( Int *@a ) { @a[0] }
-    #?rakudo todo 'regression introduced by 41bc84f00d'
+    #?rakudo todo 'regression introduced by 41bc84f00d (RT 69622)'
     dies_ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
     #?rakudo skip 'RT #64814'
     is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
@@ -257,7 +257,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
     dies_ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
     #?rakudo todo 'RT #64814'
     dies_ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
-    #?rakudo todo 'regression introduced by 41bc84f00d'
+    #?rakudo todo 'regression introduced by 41bc84f00d (RT 69622)'
     dies_ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
 }
 
