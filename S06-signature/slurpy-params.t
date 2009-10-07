@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 63;
+plan 60;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -227,19 +227,16 @@ These tests are the testing for "List parameters" section of Synopsis 06
 # RT #64814
 {
     sub slurp_any( Any *@a ) { @a[0] }
-    lives_ok { slurp_any( 'foo' ) }, 'can call sub with (Any *@a) sig';
     is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
 
     sub slurp_int( Int *@a ) { @a[0] }
-    #?rakudo todo 'RT #64814'
-    lives_ok { slurp_int( 27.Int ) }, 'can call sub with (Int *@a) sig';
+    #?rakudo todo 'regression between d91717dff and cf8884db'
     dies_ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
     #?rakudo skip 'RT #64814'
     is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
 
     sub slurp_of_int( *@a of Int ) { @a[0] }
-    #?rakudo 2 todo 'RT #64814'
-    lives_ok { slurp_of_int( 64814.int ) }, 'can call (*@a of Int) sub';
+    #?rakudo todo 'RT #64814'
     dies_ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
     is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
 
@@ -252,14 +249,15 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
     my $x = X64814.new;
     my $y = Y64814.new;
-    #?rakudo todo 'RT #64814'
-    lives_ok { $y.x_array( $x ) }, 'can call method with typed array sig';
-    lives_ok { $y.of_x( $x ) }, 'can call method with "slurp of" sig';
-    #?rakudo todo 'RT #64814'
-    lives_ok { $y.x_slurp( $x ) }, 'can call method with typed slurpy sig';
+    #?rakudo skip 'RT #64814'
+    is $y.x_array( $x ), 4, 'call to method with typed array sig works';
+    is $y.of_x( $x ),    3, 'call to method with "slurp of" sig works';
+    #?rakudo skip 'RT #64814'
+    is $y.x_slurp( $x ), 2, 'call to method with typed slurpy sig works';
     dies_ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
     #?rakudo todo 'RT #64814'
     dies_ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
+    #?rakudo todo 'regression between d91717dff and cf8884db'
     dies_ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
 }
 
