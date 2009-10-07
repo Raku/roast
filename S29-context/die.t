@@ -1,6 +1,8 @@
 use v6;
 use Test;
-plan 13;
+BEGIN { @*INC.push('t/spec/packages/') };
+use Test::Util;
+plan 15;
 
 # L<S29/Context/=item die>
 
@@ -51,6 +53,20 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
     try { die };
     is "$!", $error, 'die with no argument uses $!';
 }
+
+is_run( 'die "first line"',
+        { status => sub { 0 != $^a },
+          out    => '',
+          err    => rx/^'first line'/,
+        },
+        'die with no output' );
+
+is_run( 'say "hello"; die "Nos morituri te salutant!\n"',
+        { status => sub { 0 != $^a },
+          out    => "hello\n",
+          err    => rx/^'Nos morituri te salutant!' \n/,
+        },
+        'say something and die' );
 
 # If one of the above tests caused weird continuation bugs, the following line
 # will be executed multiple times, resulting in a "too many tests run" error
