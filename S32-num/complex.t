@@ -20,7 +20,7 @@ is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 is_approx (3+4i)/(2-1i), 2/5 + (11/5)i, 'Complex division';
 is_approx (3+4i)*(2-1i), 10+5i,         'Complex division';
 is_approx (6+4i)/2,      3+2i,          'dividing Complex by a Real';
-is_approx 2/(3+1i),      3/5 -(1/5)i,   'divinding a Real by a Complex';
+is_approx 2/(3+1i),      3/5 -(1/5)i,   'dividing a Real by a Complex';
 is_approx 2 * (3+7i),    6+14i,         'Real * Complex';
 is_approx (3+7i) * 2,    6+14i,         'Complex * Real';
 
