@@ -114,7 +114,7 @@ sub get_out( Str $code, Str $input? ) is export {
     return %out;
 }
 
-=pod
+=begin pod
 
 =head1 NAME
 
@@ -190,4 +190,4 @@ hash should be disregarded.
 This will die if it can't clean up the temp files it uses to do its work.
 All other errors should be trapped and reported via the 'test_died' item.
 
-=cut
+=end pod
