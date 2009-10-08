@@ -1587,7 +1587,7 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
 #?pugs todo 'feature'
 #?rakudo skip 'parse error'
-ok 'a bcd$ef' ~~ /:Perl5 \A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
+ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
 #### :x(6) \d			123456		y	repetition (:x)
 #?pugs todo 'feature'
