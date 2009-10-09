@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 76;
+plan 77;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -219,5 +219,13 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
 
 #?rakudo todo 'RT #68086'
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
+
+# RT #68524
+#?rakudo todo 'RT 68524'
+{
+    sub rt68524( :$a! ) {}
+    ok( &rt68524.signature.perl ~~ m/\!/,
+        '.signature.perl with required parameter includes requirement' );
+}
 
 # vim: ft=perl6
