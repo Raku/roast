@@ -33,7 +33,8 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
 # RT #68578
 {
     sub rt68578( Callable &x ) {}
-    dies_ok { rt68578({ 'block' }) }, "Can't pass block that doesn't do Callable";
+    dies_ok { rt68578({ 'block' }) },
+            "Can't pass something that isn't typed as returning Callable";
 }
 
 # vim: ft=perl6
