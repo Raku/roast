@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 6;
 
 # TODO: move this test to closure-parameters.t if it works in the future
 
@@ -27,5 +27,13 @@ dies_ok {tester2(42)}, "can't pass thing that doesn't do Callable";
 sub not_returns_a_sub { 3 };
 dies_ok {tester2(not_returns_a_sub)}, 
         "can't pass thing that doesn't do Callable";
+
+is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
+
+# RT #68578
+{
+    sub rt68578( Callable &x ) {}
+    dies_ok { rt68578({ 'block' }) }, "Can't pass block that doesn't do Callable";
+}
 
 # vim: ft=perl6
