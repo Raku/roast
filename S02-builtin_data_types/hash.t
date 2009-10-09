@@ -44,8 +44,8 @@ isa_ok(%hash5, Hash);
 
 my @slice1 = %hash5{"one", "three"};
 is(+@slice1, 2, 'got the right amount of values from the %hash{} slice');
-is(@slice1[0], 1, '%hash{} slice successfull');
-is(@slice1[1], 3, '%hash{} slice successfull');
+is(@slice1[0], 1, '%hash{} slice successful');
+is(@slice1[1], 3, '%hash{} slice successful');
 
 my @slice2 = %hash5<three one>;
 is(+@slice2, 2, 'got the right amount of values from the %hash<> slice');

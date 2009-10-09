@@ -26,7 +26,7 @@ is(baz(), "empty", "multi with no signature");
 is(baz(42), "one", "multi with parameter list");
 
 # multi with some parameters not counting in dispatch (;;) - note that if the
-# second paramter is counted as part of the dispatch, then invoking with 2
+# second parameter is counted as part of the dispatch, then invoking with 2
 # ints means they are tied candidates as one isn't narrower than the other.
 # (Note Int is narrower than Num - any two types where one is narrower than
 # the other will do it, though.)

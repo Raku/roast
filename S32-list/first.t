@@ -40,13 +40,13 @@ my @list = (1 .. 10);
 }
 
 {
-    ok(@list.first( { ($_ == 11) }) ~~ undef, 'first returns undef unsuccessfull match');
+    ok(@list.first( { ($_ == 11) }) ~~ undef, 'first returns undef unsuccessful match');
 }
 
 {
     my $count = 0;
     my $matcher = sub (Int $x) { $count++; $x % 2 };
-    is(@list.first($matcher), 1, 'first() search for odd elements successfull');
+    is(@list.first($matcher), 1, 'first() search for odd elements successful');
     is($count, 1, 'Matching closure in first() is only executed once');
 }
 #vim: ft=perl6

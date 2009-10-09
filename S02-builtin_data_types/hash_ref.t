@@ -46,8 +46,8 @@ plan 32;
 
     my @slice1 = $hash{"1st", "3rd"};
     is +@slice1,   2, 'got the right amount of values from the %hash{} slice';
-    is @slice1[0], 1, '%hash{} slice successfull (1)';
-    is @slice1[1], 3, '%hash{} slice successfull (2)';
+    is @slice1[0], 1, '%hash{} slice successful (1)';
+    is @slice1[1], 3, '%hash{} slice successful (2)';
 
     my @slice2;
     @slice2 = $hash<3rd 1st>;

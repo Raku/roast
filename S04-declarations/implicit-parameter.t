@@ -8,7 +8,7 @@ plan 18;
 {
     # test with explicit $_
     my $f1 = { 2*$_ };
-    is $f1(2), 4, 'Block with explit $_ has one formal paramter';
+    is $f1(2), 4, 'Block with explicit $_ has one formal parameter';
 }
 
 {
@@ -26,7 +26,7 @@ plan 18;
     is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer');
     is({ $_ }.('Goodbye'), 'Goodbye',   'but it is only a default');
     is({ 42 }.(), 42,                   'no implicit $_ usage checking');
-    is({ 42 }.('Goodbye'), 42,          '$_ gets assigned but isn\'t used');
+    is({ 42 }.('Goodbye'), 42,          '$_ gets assigned but is not used');
 
     is(({ $_ }.arity), 0,                 '{$_} is arity 0, of course');
     is(({ .say }.arity), 0,               'Blocks that uses $_ implicitly have arity 0');
