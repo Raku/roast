@@ -58,6 +58,16 @@ plan *;
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
 }
 
+#?rakudo skip '.default'
+{
+    sub e($x = 3; $y = { 2 + $x }) { };
+    my @l = &e.signature.params>>.default;
+    ok ?( all(@l) ~~ Code ), '.default returns closure';
+    is @l[0].(),    3, 'first closure works';
+    is @l[1].().(), 5, 'closure as default value captured outer default value';
+
+}
+
 
 done_testing;
 
