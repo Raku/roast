@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 77;
+plan 78;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -225,6 +225,13 @@ eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.perl ~~ m/\!/,
         '.signature.perl with required parameter includes requirement' );
+}
+
+# RT #69516
+{
+    sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
+    ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
+        'parameter rename appears in .signature.perl' );
 }
 
 # vim: ft=perl6
