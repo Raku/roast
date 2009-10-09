@@ -221,7 +221,6 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
 # RT #68524
-#?rakudo todo 'RT 68524'
 {
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.perl ~~ m/\!/,
