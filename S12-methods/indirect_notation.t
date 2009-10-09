@@ -85,12 +85,12 @@ class T2
     
     @c.shift();
     $o.called = 0;
-    is $o.@c,           'p~q', 'got result from method we defered to';
+    is $o.@c,           'p~q', 'got result from method we deferred to';
     is $o.called,       2,     'called total two methods during dispatch';
 
     @c.unshift(&T3::m4);
     $o.called = 0;
-    is $o.@c,           'p~q', 'got result from method we defered to, via call';
+    is $o.@c,           'p~q', 'got result from method we deferred to, via call';
     is $o.called,       3,     'called total three methods during dispatch';
 }
 

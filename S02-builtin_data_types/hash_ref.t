@@ -22,11 +22,11 @@ plan 32;
     is $hash<3rd>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)';
 }
 
-# basic hash creation w/ comma seperated key/values
+# basic hash creation w/ comma separated key/values
 {
     my $hash = hash("1st", 1);
     isa_ok $hash, Hash;
-    is $hash{"1st"}, 1, 'comma seperated key/value hash creation works';
+    is $hash{"1st"}, 1, 'comma separated key/value hash creation works';
     is $hash<1st>,   1, 'unquoted <key> fetching works';
 }
 
@@ -34,9 +34,9 @@ plan 32;
     my $hash = hash("1st", 1, "2nd", 2);
     isa_ok $hash, Hash;
     is $hash{"1st"}, 1,
-      'comma seperated key/value hash creation works with more than 1st pair';
+      'comma separated key/value hash creation works with more than 1st pair';
     is $hash{"2nd"}, 2,
-      'comma seperated key/value hash creation works with more than 1st pair';
+      'comma separated key/value hash creation works with more than 1st pair';
 }
 
 # hash slicing

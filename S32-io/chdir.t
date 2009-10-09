@@ -42,9 +42,9 @@ if $no_subdir ~~ :d {
 }
 else {
     lives_ok { chdir("$no_subdir") },
-             'chdir to a non-existant does not by default throw an exception';
+             'chdir to a non-existent does not by default throw an exception';
     ok !chdir("$no_subdir"),
-       'change to non-existant directory gives a false value';
+       'change to non-existent directory gives a false value';
 }
 
 # vim: ft=perl6

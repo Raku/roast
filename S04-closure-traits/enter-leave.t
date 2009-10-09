@@ -74,9 +74,9 @@ plan 19;
         LEAVE { $str ~= $x }
     }
     is is_even(3), 0, 'basic sanity check (1)';
-    is $str, '3', 'LEAVE executed at the 1st explict return';
+    is $str, '3', 'LEAVE executed at the 1st explicit return';
     is is_even(2), 1, 'basic sanity check (2)';
-    is $str, '32', 'LEAVE executed at the 2nd explict return';
+    is $str, '32', 'LEAVE executed at the 2nd explicit return';
 }
 
 # normal closure:

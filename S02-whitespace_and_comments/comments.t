@@ -116,7 +116,7 @@ plan 45;
             ) 3, 'comments can be nested with same brackets';
 
     # TODO:
-    # ok eval(" #`{ comment }") failes with an error as it tries to execute
+    # ok eval(" #`{ comment }") fails with an error as it tries to execute
     # comment() before seeing that I meant #`{ comment within this string.
 
 #?pugs todo 'bug'

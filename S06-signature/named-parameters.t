@@ -11,7 +11,7 @@ plan 78;
         return $x;
     }
     is a(3), 3, 'Can pass positional arguments';
-    eval_dies_ok('a(g=>7)', 'Dies on passing superflous arguments');
+    eval_dies_ok('a(g=>7)', 'Dies on passing superfluous arguments');
 }
 
 {

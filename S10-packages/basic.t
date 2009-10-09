@@ -35,7 +35,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # change to match likely error (top of file) when passes
 {
-    eval_dies_ok 'Empty::no_such_sub()', 'Non-existant sub through package';
+    eval_dies_ok 'Empty::no_such_sub()', 'Non-existent sub through package';
 }
 
 # Not sure whether you should be able to access something in package this way

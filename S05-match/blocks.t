@@ -5,7 +5,7 @@ plan 21;
 
 =begin description
 
-Rakudo had a bug which caused failures when a regex match happend inside the
+Rakudo had a bug which caused failures when a regex match happened inside the
 body of a C<while> loop.
 See L<See http://rt.perl.org/rt3/Ticket/Display.html?id=58306>.
 

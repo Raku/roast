@@ -8,7 +8,7 @@ plan *;
     sub a($x, Int $y?, :$z) { };
     isa_ok &a.signature.params, List, '.params is a List';
     my @l = &a.signature.params;
-    ok ?(all(@l) ~~ Parameter), 'And all items are Paramters';
+    ok ?(all(@l) ~~ Parameter), 'And all items are Parameters';
     is +@l, 3, 'we have three of them';
     is ~(@l>>.name), '$x $y $z', 'can get the names with sigils';
     ok @l[0].type === Any, 'Could get first type';

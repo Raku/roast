@@ -44,7 +44,7 @@ is(
    'fmt and code interpolation behave well'
 );
 
-# These tests actually excercise what's a bug in eval() IMHO -- polettix
+# These tests actually exercise what's a bug in eval() IMHO -- polettix
 my $z;
 my $expected = 'hex-formatted ord of $x is 41';
 is(

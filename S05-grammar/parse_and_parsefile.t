@@ -20,7 +20,7 @@ $fh.say("abc\n123\nxyz");
 $fh.close();
 is(~Foo.parsefile("parse_and_parsefile_test"), "123",  ".parsefile method invokes TOP rule");
 dies_ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
-dies_ok({ Foo.parsefile("non_existant_file") },        "dies if file not found");
+dies_ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
 unlink("parse_and_parsefile_test");
 
 grammar A::B {

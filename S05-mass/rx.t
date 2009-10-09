@@ -1601,19 +1601,19 @@ ok '123456' ~~ /:x(3) \d/, 'repetition (:x)';
 #?pugs todo 'feature'
 ok '123456' ~~ /:x(0) \d/, 'repetition (:x)';
 
-#### :nth(3) a \d			a1a2a3		y	nth occurance (:nth)
+#### :nth(3) a \d			a1a2a3		y	nth occurrence (:nth)
 #?pugs todo 'feature'
-ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurance (:nth)';
+ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurrence (:nth)';
 
 # todo :pge<feature>
-#### :nth(4) a \d			a1a2a3		n	nth occurance (:nth)
+#### :nth(4) a \d			a1a2a3		n	nth occurrence (:nth)
 #?rakudo todo 'unknown'
-ok 'a1a2a3' !~~ /:nth(4) a \d/, 'nth occurance (:nth)';
+ok 'a1a2a3' !~~ /:nth(4) a \d/, 'nth occurrence (:nth)';
 
 # todo :pge<feature>
-#### :nth(0) a \d			a1a2a3		n	nth occurance (:nth)
+#### :nth(0) a \d			a1a2a3		n	nth occurrence (:nth)
 #?rakudo todo 'unknown'
-ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurance (:nth)';
+ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurrence (:nth)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';

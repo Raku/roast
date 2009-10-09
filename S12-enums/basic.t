@@ -44,7 +44,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 
 {
     # usually we don't test explicit value for .perl, but here
-    # it's specced, so we make an excpetion
+    # it's specced, so we make an exception
     is Day::Mon.perl, 'Day::Mon', '.perl on long form of Enum value';
     is Mon.perl,      'Day::Mon', '.perl on short form of Enum value';
 

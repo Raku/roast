@@ -18,7 +18,7 @@ my $self = 't/spec/S16-unfiled/slurp.t';
 }
 
 {
-  dies_ok { slurp "does-not-exist" }, "slurp() on not-existant files fails";
+  dies_ok { slurp "does-not-exist" }, "slurp() on non-existent files fails";
 }
 
 {

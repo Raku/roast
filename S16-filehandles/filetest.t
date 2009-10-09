@@ -54,25 +54,25 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
 ok not "t".IO ~~ :f, "~~:f returns false on directories";
 ok "t".IO ~~ :r,  "~~:r returns true on a readable directory";
 
-ok 'doesnotexist'.IO !~~ :d, "~~:d returns false on non existant directories";
-ok 'doesnotexist'.IO !~~ :r, "~~:r returns false on non existant directories";
-ok 'doesnotexist'.IO !~~ :w, "~~:w returns false on non existant directories";
-ok 'doesnotexist'.IO !~~ :x, "~~:x returns false on non existant directories";
-ok 'doesnotexist'.IO !~~ :f, "~~:f returns false on non existant directories";
+ok 'doesnotexist'.IO !~~ :d, "~~:d returns false on non-existent directories";
+ok 'doesnotexist'.IO !~~ :r, "~~:r returns false on non-existent directories";
+ok 'doesnotexist'.IO !~~ :w, "~~:w returns false on non-existent directories";
+ok 'doesnotexist'.IO !~~ :x, "~~:x returns false on non-existent directories";
+ok 'doesnotexist'.IO !~~ :f, "~~:f returns false on non-existent directories";
 
-ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non existant files";
-ok not 'doesnotexist.t'.IO ~~ :r, "~~:r returns false on non existant files";
-ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non existant files";
-ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non existant files";
-ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non existant files";
+ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
+ok not 'doesnotexist.t'.IO ~~ :r, "~~:r returns false on non-existent files";
+ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non-existent files";
+ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
+ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
 # XXX - Without parens, $*PROGRAM_NAME ~~ :s>42 is chaincomp.
-ok(($*PROGRAM_NAME~~:s) > 42,   "~~:s returns size on existant files");
+ok(($*PROGRAM_NAME~~:s) > 42,   "~~:s returns size on existent files");
 
-ok not "doesnotexist.t".IO ~~ :s, "~~:s returns false on non existant files";
+ok not "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
 
-ok not $*PROGRAM_NAME.IO ~~ :z,   "~~:z returns false on existant files";
-ok not "doesnotexist.t".IO ~~ :z, "~~:z returns false on non existant files";
+ok not $*PROGRAM_NAME.IO ~~ :z,   "~~:z returns false on existent files";
+ok not "doesnotexist.t".IO ~~ :z, "~~:z returns false on non-existent files";
 ok not "t".IO ~~ :z,              "~~:z returns false on directories";
 
 my $fh = open("empty_file", :w);

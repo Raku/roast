@@ -183,7 +183,7 @@ my $z = 42;
 
     #?rakudo todo 'initialization of vars happens too early'
     ok eval_elsewhere('!$y.defined'),
-       '... but initializiation of variables might still happen afterwards';
+       '... but initialization of variables might still happen afterwards';
 
     # don't remove this line, or eval() will complain about 
     # $y not being declared

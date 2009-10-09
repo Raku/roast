@@ -70,7 +70,7 @@ plan 29;
 
 {
     my @pop;
-    ok(!defined(@pop.pop()), 'pop on an un-initalized array returns undef');
+    ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undef');
 }
 
 # testing some error cases

@@ -18,7 +18,7 @@ subset Even of Int where { $_ % 2 == 0 };
 };
 
 eval_dies_ok  'my Even $x = 3',
-              "Can't assing value that violates type constraint via subst";
+              "Can't assign value that violates type constraint via subset";
 
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';

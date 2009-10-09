@@ -222,7 +222,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":32<2q>", 90, "radix 32 notation works";
     is +":100<1e>", 114, "high order radix (limited alphabet) works";
-    is +":1_0<14_56>", 1456, "underscore seperators works";
+    is +":1_0<14_56>", 1456, "underscore separators works";
     is +":10<123.456>", 123.456, "base 10 decimal notation works";
     is +":2<1.111>", 1.875, "base 2 decimal notation works";
     is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
@@ -238,10 +238,10 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +":10<12f>", 0, "invalid alphabet parsefail works";
     is +":1b<10>", 0, "invalid radix alphabet parsefail works";
     is +":10<>", 0, "missing radix conversion number parsefail works";
-    is +":_2<01>", 0, "underscore seperator misuse parsefail works (1)";
-    is +":2<_01>", 0, "underscore seperator misuse parsefail works (2)";
-    is +":2<01_>", 0, "underscore seperator misuse parsefail works (3)";
-    is +":_2_<_0_1_>_", 0, "underscore seperator misuse parsefail works (4)";
+    is +":_2<01>", 0, "underscore separator misuse parsefail works (1)";
+    is +":2<_01>", 0, "underscore separator misuse parsefail works (2)";
+    is +":2<01_>", 0, "underscore separator misuse parsefail works (3)";
+    is +":_2_<_0_1_>_", 0, "underscore separator misuse parsefail works (4)";
     is +":2<1.3>", 0, "invalid radix conversion alphabet parsefail works";
     is +"0b1.1e10", 1, "0b1.1e10 parses as 0b1";
     is +":2<10dlk", 0, "missing closing angle bracket";

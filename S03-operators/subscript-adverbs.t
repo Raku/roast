@@ -163,7 +163,7 @@ plan 64;
     is ~(%hash<0>:v), "A",
         ":v on a hash returned the correct one-elem array";
 
-    lives_ok {%hash<0>:v = "a"}, 'can assing to %hash<0>:v';
+    lives_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
     is %hash<0>, "a",
         ":v on a hash returns lvalues (like normal subscripts do as well)";
 

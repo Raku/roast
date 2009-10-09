@@ -21,7 +21,7 @@ sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
 # L<S09/Junctions>
 {
 
-    # initalize them all to empty strings
+    # initialize them all to empty strings
     my $a = '';
     my $b = '';
     my $c = '';
@@ -79,7 +79,7 @@ sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
 
 # same tests, but with junctions as variables
 {
-        # initalize them all to empty strings
+        # initialize them all to empty strings
     my $a = '';
     my $b = '';
     my $c = '';

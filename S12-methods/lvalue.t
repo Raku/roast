@@ -22,11 +22,11 @@ my $o = T.new(:a<x>, :b<y>);
 is $o.l1,       'x',    'lvalue method as rvalue with explicit return';
 is $o.l2,       'y',    'lvalue method as rvalue with implicit return';
 
-lives_ok { $o.l1 = 3 }, 'can assign to the lvalue method (explict return)';
+lives_ok { $o.l1 = 3 }, 'can assign to the lvalue method (explicit return)';
 is $o.l1,       3,      '... and the assignment worked';
 is $o.a,        3,      '...also to the attribute';
 
-lives_ok { $o.l2 = 4 }, 'can assign to the lvalue method (implict return)';
+lives_ok { $o.l2 = 4 }, 'can assign to the lvalue method (implicit return)';
 is $o.l2,       4,      '... and the assignment worked';
 is $o.b,        4,      '...also to the attribute';
 

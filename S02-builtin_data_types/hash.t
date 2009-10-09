@@ -18,24 +18,24 @@ is(%hash1{'one'}, 4, 'lvalue hash re-assignment works (w/ single quoted keys)');
 %hash1<three> = 3;
 is(%hash1<three>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)');
 
-# basic hash creation w/ comma seperated key/values
+# basic hash creation w/ comma separated key/values
 
 my %hash2 = ("one", 1);
 isa_ok(%hash2, Hash);
-is(%hash2{"one"}, 1, 'comma seperated key/value hash creation works');
+is(%hash2{"one"}, 1, 'comma separated key/value hash creation works');
 is(%hash2<one>, 1, 'unquoted <key> fetching works');
 
 my %hash3 = ("one", 1, "two", 2);
 isa_ok(%hash3, Hash);
-is(%hash3{"one"}, 1, 'comma seperated key/value hash creation works with more than one pair');
-is(%hash3{"two"}, 2, 'comma seperated key/value hash creation works with more than one pair');
+is(%hash3{"one"}, 1, 'comma separated key/value hash creation works with more than one pair');
+is(%hash3{"two"}, 2, 'comma separated key/value hash creation works with more than one pair');
 
-# basic hash creation w/ => seperated key/values (pairs?)
+# basic hash creation w/ => separated key/values (pairs?)
 
 my %hash4;
 isa_ok(%hash4, Hash);
 %hash4 = ("key" => "value");
-is(%hash4{"key"}, 'value', '(key => value) seperated key/value has creation works');
+is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
 # hash slicing
 

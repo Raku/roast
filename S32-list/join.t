@@ -67,7 +67,7 @@ is($joined4b, "a b c", 'join $sep, [] should not join anything');
 my $joined4c = join ":", [ "a", "b", "c" ];
 is($joined4c, "a b c", 'join ":", [] should not join anything');
 
-# join() with empty string as seperator
+# join() with empty string as separator
 
 is(["a", "b", "c"].join(''), "abc", '[].join("") works');
 

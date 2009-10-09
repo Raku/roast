@@ -47,7 +47,7 @@ my ($redir,$squo) = (">", "'");
 
 my $expected = 'Hello from subprocess';
 %*ENV<PUGS_ROCKS> = $expected;
-# Note that the "?" preceeding the "(" is necessary, because we need a Bool,
+# Note that the "?" preceding the "(" is necessary, because we need a Bool,
 # not a junction of Bools.
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
