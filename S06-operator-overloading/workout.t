@@ -98,7 +98,12 @@ isnt_approx_array(2 «*« @vectors, @vectors, "Hyper: doubling does not equal se
 is_approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vectors »+« @vectors, 
                 "Hyper: doubling twice equals self+self+self+self");
 
-
+is_approx_array((@vectors »⋅« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
+#?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
+is_approx_array((@vectors >>⋅<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
+is_approx_array((@vectors »dot« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
+#?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
+is_approx_array((@vectors >>dot<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
 
 done_testing;
 
