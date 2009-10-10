@@ -9,6 +9,7 @@ plan 5;
 
 eval_dies_ok('say', 'bare say is a compiler error');
 eval_dies_ok('print', 'bare print is a compiler error');
+eval_dies_ok('say()', 'say requires an argument');
 
 is_run( 'say ()',
         {
@@ -17,14 +18,6 @@ is_run( 'say ()',
             err    => '',
         },
         'say ()' );
-
-is_run( 'say()',
-        {
-            status => sub { $^a != 0 },
-            out    => '',
-            err    => rx/'say requires an argument'/,
-        },
-        'say()' );
 
 is_run( 'say("")',
         {
