@@ -40,7 +40,7 @@ is( $h2<x>[1], '3', 'Second nested element.');
 
 my %foo = (1 => 2);
 my $bar = { %foo };
-#?rakudo todo 'block parsing'
+
 ok $bar ~~ Hash, '%foo in a block causes hash composing';
 
 
