@@ -18,12 +18,11 @@ is_run( 'say ()',
         },
         'say ()' );
 
-#?rakudo todo 'say()'
 is_run( 'say()',
         {
-            status => 0,
-            out    => "\n",
-            err    => '',
+            status => sub { $^a != 0 },
+            out    => '',
+            err    => rx/'say requires an argument'/,
         },
         'say()' );
 
