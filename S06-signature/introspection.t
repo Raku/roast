@@ -73,10 +73,14 @@ plan *;
     #?rakudo todo '.constraints'
     ok 4  ~~ $p.constraints, '.constraints (+)';
     ok 5 !~~ $p.constraints, '.constraints (-)';
-    #?rakudo todo '.constraints'
+    #?rakudo 2 todo '.constraints'
     ok 5 ~~ (-> $x { }).signature.params[0].constraints,
        '.constraints on unconstraint param should still smartmatch truely';
     sub g(Any $x where Int) { };
+    ok 3 ~~ &g.signature.params[0].constraints,
+       'smartmach against non-closure constraint (+)';
+    ok !(3.5 ~~ &g.signature.params[0].constraints),
+       'smartmach against non-closure constraint (-)';
 }
 
 done_testing;
