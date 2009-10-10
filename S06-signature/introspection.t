@@ -83,6 +83,13 @@ plan *;
        'smartmach against non-closure constraint (-)';
 }
 
+{
+    sub h(::T $x, T $y) { };
+    my @l = &h.signature.params;
+    is @l[0].type_captures, 'T', '.type_captures';
+    lives_ok { @l[1].type }, "can access a type_capture'd type";
+}
+
 done_testing;
 
 # vim: ft=perl6
