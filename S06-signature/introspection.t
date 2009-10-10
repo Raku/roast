@@ -58,22 +58,20 @@ plan *;
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
 }
 
-#?rakudo skip '.default'
 {
     sub e($x = 3; $y = { 2 + $x }) { };
     my @l = &e.signature.params>>.default;
     ok ?( all(@l) ~~ Code ), '.default returns closure';
     is @l[0].(),    3, 'first closure works';
+    #?rakudo skip 'default closure when no call made fails lexical lookup with NPMCA'
     is @l[1].().(), 5, 'closure as default value captured outer default value';
 }
 
 {
     sub f(Int $x where { $_ % 2 == 0 }) { };
     my $p = &f.signature.params[0];
-    #?rakudo todo '.constraints'
     ok 4  ~~ $p.constraints, '.constraints (+)';
     ok 5 !~~ $p.constraints, '.constraints (-)';
-    #?rakudo 2 todo '.constraints'
     ok 5 ~~ (-> $x { }).signature.params[0].constraints,
        '.constraints on unconstraint param should still smartmatch truely';
     sub g(Any $x where Int) { };
