@@ -333,7 +333,7 @@ FOO
 {
   # <<:Pair>>
     my @q = <<:p(1)>>;
-    #?rakudo 2 todo '<< :pair(1) >>'
+    #?rakudo 2 todo '<< :pair(1) >> (RT 65304)'
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - simple");
 
     @q = <<:p(1) junk>>;
