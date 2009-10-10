@@ -9,7 +9,7 @@ Pop tests
 
 =end description
 
-plan 29;
+plan *;
 
 { # pop() elements into variables
     my @pop = (-1, 1, 2, 3, 4);
@@ -38,6 +38,7 @@ plan 29;
 
        is(+@pop, 0, 'we have no more element in the array');
        ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undef');
+       ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 }
 }
 
@@ -58,12 +59,14 @@ plan 29;
 
     is(+@pop, 0, 'we have no more element in the array');
     ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undef');
+    ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 }
 
 # invocant syntax with inline arrays
 {
     is([1, 2, 3].pop, 3, 'this will return 3');
     ok(!defined([].pop), 'this will return undef');
+    ok( [].pop ~~ Failure, '[].pop is a Failure' );
 }
 
 # some edge cases
@@ -71,6 +74,7 @@ plan 29;
 {
     my @pop;
     ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undef');
+    ok( @pop.pop() ~~ Failure, 'pop off uninitialized array is a Failure' );
 }
 
 # testing some error cases
@@ -88,4 +92,7 @@ plan 29;
 #     # best not to uncomment this it just go on forever
 #     todo_throws_ok { 'pop @push' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
 # }
+
+done_testing;
+
 # vim: ft=perl6
