@@ -63,6 +63,40 @@ is_approx($v1 / (2/3), Vector.new(-3/4, 3, 17*3), "Scalar division correct");
 is_approx($v1 ⋅ $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 is_approx($v1 dot $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 
+#?DOES 1
+multi sub is_approx_array(@got, @expected, $desc) {
+    my $test = all((@got >>-<< @expected)>>.abs.map({$_ <= 0.00001}));
+    ok(?$test, $desc);
+}
+
+#?DOES 1
+multi sub isnt_approx_array(@got, @expected, $desc) {
+    my $test = all((@got >>-<< @expected)>>.abs.map({$_ <= 0.00001}));
+    ok(!(?$test), $desc);
+}
+
+
+
+my @vectors = ($v1, $v2, $v1 + $v2, $v1 - $v2, $v2 - $v1);
+
+is_approx_array(@vectors >>*>> 2, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
+isnt_approx_array(@vectors >>*>> 2, @vectors, "Hyper: doubling does not equal self");
+is_approx_array((@vectors >>*>> 2) >>*>> 2, (@vectors >>+<< @vectors) >>+<< (@vectors >>+<< @vectors), 
+                "Hyper: doubling twice equals self+self+self+self");
+is_approx_array(2 <<*<< @vectors, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
+isnt_approx_array(2 <<*<< @vectors, @vectors, "Hyper: doubling does not equal self");
+is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors, 
+                "Hyper: doubling twice equals self+self+self+self");
+                
+#?rakudo 6 skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes bug"
+is_approx_array(@vectors »*» 2, @vectors »+« @vectors, "Hyper: doubling equals self + self");
+isnt_approx_array(@vectors »*» 2, @vectors, "Hyper: doubling does not equal self");
+is_approx_array((@vectors »*» 2) »*» 2, (@vectors »+« @vectors) »+« (@vectors »+« @vectors), 
+                "Hyper: doubling twice equals self+self+self+self");
+is_approx_array(2 «*« @vectors, @vectors »+« @vectors, "Hyper: doubling equals self + self");
+isnt_approx_array(2 «*« @vectors, @vectors, "Hyper: doubling does not equal self");
+is_approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vectors »+« @vectors, 
+                "Hyper: doubling twice equals self+self+self+self");
 
 
 
