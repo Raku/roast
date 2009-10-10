@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan *;
 
 # Test for proto definitions
 class A { }
@@ -53,5 +53,17 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 #?rakudo todo 'RT #68242'
 eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     'attempt to define two proto subs with the same name dies';
+
+# RT #65322
+{
+    my $rt65322 = q[
+        multi sub rt65322( Int $n where 1 ) { 1 }
+              sub rt65322( Int $n ) { 2 }
+    ];
+    #?rakudo todo 'RT #65322'
+    eval_dies_ok $rt65322, "Can't define sub and multi sub without proto";
+}
+
+done_testing;
 
 # vim: ft=perl6
