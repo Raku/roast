@@ -65,9 +65,19 @@ plan *;
     ok ?( all(@l) ~~ Code ), '.default returns closure';
     is @l[0].(),    3, 'first closure works';
     is @l[1].().(), 5, 'closure as default value captured outer default value';
-
 }
 
+{
+    sub f(Int $x where { $_ % 2 == 0 }) { };
+    my $p = &f.signature.params[0];
+    #?rakudo todo '.constraints'
+    ok 4  ~~ $p.constraints, '.constraints (+)';
+    ok 5 !~~ $p.constraints, '.constraints (-)';
+    #?rakudo todo '.constraints'
+    ok 5 ~~ (-> $x { }).signature.params[0].constraints,
+       '.constraints on unconstraint param should still smartmatch truely';
+    sub g(Any $x where Int) { };
+}
 
 done_testing;
 
