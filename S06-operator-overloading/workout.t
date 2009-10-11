@@ -25,6 +25,7 @@ multi sub prefix:<->(Vector $a) { Vector.new(0 <<-<< $a.coords); }
 multi sub infix:<*>(Vector $a, $b) { Vector.new($a.coords >>*>> $b); }
 multi sub infix:<*>($a, Vector $b) { Vector.new($a <<*<< $b.coords); }
 multi sub infix:</>(Vector $a, $b) { Vector.new($a.coords >>/>> $b); }
+multi sub infix:<**>(Vector $a, $b) { Vector.new($a.coords >>**>> $b); }
 multi sub infix:<⋅>(Vector $a, Vector $b) { [+]($a.coords »*« $b.coords); }
 multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
 
@@ -64,6 +65,7 @@ is_approx(-$v1, Vector.new(1/2, -2, -34), "Negation correct");
 is_approx((3/2) * $v1, Vector.new(-3/4, 3, 17*3), "Scalar multiply correct");
 is_approx($v1 * (3/2), Vector.new(-3/4, 3, 17*3), "Scalar multiply correct");
 is_approx($v1 / (2/3), Vector.new(-3/4, 3, 17*3), "Scalar division correct");
+is_approx($v1 ** 2, Vector.new(1/4, 4, 34*34), "Scalar power correct");
 is_approx($v1 ⋅ $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 is_approx($v1 dot $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 
@@ -78,8 +80,6 @@ multi sub isnt_approx_array(@got, @expected, $desc) {
     my $test = all((@got >>-<< @expected)>>.abs.map({$_ <= 0.00001}));
     ok(!(?$test), $desc);
 }
-
-
 
 my @vectors = ($v1, $v2, $v1 + $v2, $v1 - $v2, $v2 - $v1);
 
