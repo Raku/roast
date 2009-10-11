@@ -33,7 +33,7 @@ Basic submethod tests. See L<S12/"Submethods">
   # Bar.new didn't removed/changed some internal structures which'd prevent
   # Foo.BUILD of getting called.
   my $c;
-  lives_ok {my $c = Foo.new()}, "Foo.new() worked (2)";
+  lives_ok {$c = Foo.new()}, "Foo.new() worked (2)";
   is $c.foo_build, 1,      "Foo's BUILD was called again";
 }
 
@@ -42,10 +42,10 @@ Basic submethod tests. See L<S12/"Submethods">
 {
   class Baz         {
       has $.baz_blarb = 0;
+      has $.grtz_blarb = 0;
       submethod blarb() { $!baz_blarb++ } 
   }
   class Grtz is Baz {
-      has $.grtz_blarb = 0;
       submethod blarb() { $!grtz_blarb++ } 
   }
 
