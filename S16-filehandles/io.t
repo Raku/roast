@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 62;
+plan *;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -164,8 +164,28 @@ ok($fh9.close, 'file closed okay (9)');
     #ok($fh10.close, 'file closed okay (10)');
 }
 
+# RT #65348
+{
+    my $rt65348_out = open($filename, :w);
+    isa_ok $rt65348_out, IO;
+    $rt65348_out.say( 'RT #65348' );
+    $rt65348_out.say( '13.37' );
+    $rt65348_out.say( '42.17' );
+    ok $rt65348_out.close, 'close worked (rt65348 out)';
+
+    my $rt65348_in = open( $filename );
+    isa_ok $rt65348_in, IO;
+    my @list_context = ($rt65348_in.get);
+    is +@list_context, 1, '.get in list context reads only one line';
+    ok $rt65348_in.get.Int ~~ Int, '.get.Int gets int';
+    is $rt65348_in.get.Int, 42, '.get.Int gets the right int';
+    ok $rt65348_in.close, 'close worked (rt65348 in)';
+}
+
 #?pugs todo 'buggy on Win32'
 ok(unlink($filename), 'file has been removed');
 ok $filename !~~ :e, '... and the tempfile is gone, really';
+
+done_testing;
 
 # vim: ft=perl6
