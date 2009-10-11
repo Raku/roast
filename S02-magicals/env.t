@@ -131,7 +131,6 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 }
 
 # Importation must be lexical
-#?rakudo skip 'set_pmc() not implemented in class Exception'
 #?pugs todo 'bug'
 {
     my $x = eval "%ENV";
