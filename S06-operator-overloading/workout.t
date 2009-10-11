@@ -19,6 +19,8 @@ class Vector {
 
 multi sub infix:<+>(Vector $a, Vector $b) { Vector.new($a.coords »+« $b.coords); }
 multi sub infix:<->(Vector $a, Vector $b) { Vector.new($a.coords »-« $b.coords); }
+multi sub infix:<T+>(Vector $a, Vector $b) { Vector.new($a.coords >>+<< $b.coords); }
+multi sub infix:<T->(Vector $a, Vector $b) { Vector.new($a.coords >>-<< $b.coords); }
 multi sub prefix:<->(Vector $a) { Vector.new(0 <<-<< $a.coords); }
 multi sub infix:<*>(Vector $a, $b) { Vector.new($a.coords >>*>> $b); }
 multi sub infix:<*>($a, Vector $b) { Vector.new($a <<*<< $b.coords); }
@@ -56,6 +58,8 @@ multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
 my Vector $v1 = Vector.new(-1/2, 2, 34);
 my Vector $v2 = Vector.new(1.0, 1/5, 0.3);
 is_approx($v1 + $v2, Vector.new(0.5, 2.2, 34.3), "Addition correct");
+is_approx($v1 T+ $v2, $v1 + $v2, "T Addition correct");
+is_approx($v1 T- $v2, $v1 - $v2, "T Subtraction correct");
 is_approx(-$v1, Vector.new(1/2, -2, -34), "Negation correct");
 is_approx((3/2) * $v1, Vector.new(-3/4, 3, 17*3), "Scalar multiply correct");
 is_approx($v1 * (3/2), Vector.new(-3/4, 3, 17*3), "Scalar multiply correct");
@@ -87,7 +91,12 @@ is_approx_array(2 <<*<< @vectors, @vectors >>+<< @vectors, "Hyper: doubling equa
 isnt_approx_array(2 <<*<< @vectors, @vectors, "Hyper: doubling does not equal self");
 is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors, 
                 "Hyper: doubling twice equals self+self+self+self");
-                
+is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>T+<< @vectors >>+<< @vectors, 
+                "Hyper: doubling twice equals self+self+self+self");
+#?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
+is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors), 
+                "Hyper: doubling twice equals self+self+self+self");
+                                                
 #?rakudo 6 skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes bug"
 is_approx_array(@vectors »*» 2, @vectors »+« @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(@vectors »*» 2, @vectors, "Hyper: doubling does not equal self");
