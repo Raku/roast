@@ -14,7 +14,7 @@ class Vector {
     has @.coords;
     multi method new (*@x where { @x.elems == 3 }) { self.bless(*, coords => @x); }
     multi method new (@x where { @x.elems == 3 }) { self.bless(*, coords => @x); }
-    multi method abs() { sqrt([+](self.coords »*« self.coords)); }
+    multi method abs() is export { sqrt([+](self.coords »*« self.coords)); }
 }
 
 multi sub infix:<+>(Vector $a, Vector $b) { Vector.new($a.coords »+« $b.coords); }
@@ -30,6 +30,9 @@ multi sub infix:<⋅>(Vector $a, Vector $b) { [+]($a.coords »*« $b.coords); }
 multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
 
 # a few Vector sanity tests, verifying we can use is_approx for Vectors
+# Note that this assumes that is_approx (1) lifts its operators (See S04)
+# and (2) uses the method form of abs(), or lifts abs() too.
+# Needs more discussion and spec coverage.
 {
     isa_ok(Vector.new(1, 2, 3), Vector, "Vector.new produces a Vector object");
     my @a1 = (3, -3/2, 5.4);
