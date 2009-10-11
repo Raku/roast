@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan *;
 
 # L<S05/Substitution/>
 
@@ -195,5 +195,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
+# RT #69044
+{
+    sub s { 'sub s' }
+    #?rakudo skip 'RT 69044'
+    is s,   'sub s', 'can call sub s as "s"';
+    is s(), 'sub s', 'can call sub s as "s()"';
+}
+
+done_testing;
 
 # vim: ft=perl6
