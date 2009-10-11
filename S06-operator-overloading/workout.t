@@ -91,7 +91,7 @@ is_approx_array(2 <<*<< @vectors, @vectors >>+<< @vectors, "Hyper: doubling equa
 isnt_approx_array(2 <<*<< @vectors, @vectors, "Hyper: doubling does not equal self");
 is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors, 
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>T+<< @vectors >>+<< @vectors, 
+is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>+<< @vectors) >>T+<< (@vectors >>+<< @vectors), 
                 "Hyper: doubling twice equals self+self+self+self");
 #?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
 is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors), 
@@ -108,12 +108,24 @@ is_approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vecto
                 "Hyper: doubling twice equals self+self+self+self");
 
 is_approx_array((@vectors »⋅« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
-#?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
+#?rakudo 2 skip "ResizablePMCArray: Can't pop from an empty array! bug"
+is_approx_array((@vectors >>⋅<< @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
 is_approx_array((@vectors >>⋅<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
+
 is_approx_array((@vectors »dot« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
 #?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
 is_approx_array((@vectors >>dot<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
 
+is_approx_array(((3/2) <<*<< @vectors) >>-<< @vectors , @vectors >>/>> 2, 
+                "Hyper: 3/2 v - v equals v / 2");
+is_approx_array(((3/2) <<*<< @vectors) »-« @vectors , @vectors >>/>> 2, 
+                "Hyper: 3/2 v - v equals v / 2");
+is_approx_array(((3/2) <<*<< @vectors) >>T-<< @vectors , @vectors >>/>> 2, 
+                "Hyper: 3/2 v - v equals v / 2");
+#?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
+is_approx_array(((3/2) <<*<< @vectors) »T-« @vectors , @vectors >>/>> 2, 
+                "Hyper: 3/2 v - v equals v / 2");
+                                
 done_testing;
 
 # vim: ft=perl6
