@@ -12,6 +12,10 @@ isa_ok(1 / 4, Rat, "/ makes a Rat");
 isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
 isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
+isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
+#?rakudo skip 'maybe related to RT 68958'
+isa_ok( eval Rat.new.perl, Rat, 'eval Rat.new.perl is Rat' );
+
 # Test ~
 is(~(Rat.new(1,4)), ~(0.25), "Rats stringify properly");
 is(~(Rat.new(-1,2)), ~(-0.5), "Rats stringify properly");
