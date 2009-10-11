@@ -37,7 +37,7 @@ multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
     dies_ok({ Vector.new(1, 2, 3, 4) }, "Vector.new requires 3 parameters");
     my @a2 = (-3/2, 5.4);
     dies_ok({ Vector.new(@a2) }, "Vector.new requires an array with 3 members");
-    
+
     my Vector $v1 = Vector.new(@a1);
     is($v1.coords[0], @a1[0], "Constructor correctly assigns @coords[0]");
     is($v1.coords[1], @a1[1], "Constructor correctly assigns @coords[1]");
@@ -49,10 +49,10 @@ multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
     is($v3.coords[2], $v1.coords[2] - $v2.coords[2], "Subtraction correct for @coords[2]");
     ok($v1.abs > 5, "$v1.abs is of appropriate size");
     is_approx($v1.abs, sqrt([+] (@a1 <<*>> @a1)), "v1.abs returns correct value");
-    
+
     is_approx($v1, $v1, "v1 is approximately equal to itself");
     is_approx(Vector.new(0, 1, 0), Vector.new(0, .99999999, 0), "Different but very close Vectors");
-    ok((Vector.new(1, 0, 0) - Vector.new(0, 1, 0)).abs > 1e-5, 
+    ok((Vector.new(1, 0, 0) - Vector.new(0, 1, 0)).abs > 1e-5,
        "Vectors of same size but different direction are not approximately equal");
 }
 
@@ -78,35 +78,35 @@ multi sub is_approx_array(@got, @expected, $desc) {
 #?DOES 1
 multi sub isnt_approx_array(@got, @expected, $desc) {
     my $test = all((@got >>-<< @expected)>>.abs.map({$_ <= 0.00001}));
-    ok(!(?$test), $desc);
+    ok(!$test, $desc);
 }
 
 my @vectors = ($v1, $v2, $v1 + $v2, $v1 - $v2, $v2 - $v1);
 
 is_approx_array(@vectors >>*>> 2, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(@vectors >>*>> 2, @vectors, "Hyper: doubling does not equal self");
-is_approx_array((@vectors >>*>> 2) >>*>> 2, (@vectors >>+<< @vectors) >>+<< (@vectors >>+<< @vectors), 
+is_approx_array((@vectors >>*>> 2) >>*>> 2, (@vectors >>+<< @vectors) >>+<< (@vectors >>+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
 is_approx_array(2 <<*<< @vectors, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(2 <<*<< @vectors, @vectors, "Hyper: doubling does not equal self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors, 
+is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vectors >>+<< @vectors,
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>+<< @vectors) >>T+<< (@vectors >>+<< @vectors), 
+is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>+<< @vectors) >>T+<< (@vectors >>+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
 #?rakudo 2 skip "ResizablePMCArray: Can't pop from an empty array! bug"
-is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors), 
+is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
-is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>+<< (@vectors >>T+<< @vectors), 
+is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>+<< (@vectors >>T+<< @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
-                                                
+
 #?rakudo 6 skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes bug"
 is_approx_array(@vectors »*» 2, @vectors »+« @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(@vectors »*» 2, @vectors, "Hyper: doubling does not equal self");
-is_approx_array((@vectors »*» 2) »*» 2, (@vectors »+« @vectors) »+« (@vectors »+« @vectors), 
+is_approx_array((@vectors »*» 2) »*» 2, (@vectors »+« @vectors) »+« (@vectors »+« @vectors),
                 "Hyper: doubling twice equals self+self+self+self");
 is_approx_array(2 «*« @vectors, @vectors »+« @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(2 «*« @vectors, @vectors, "Hyper: doubling does not equal self");
-is_approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vectors »+« @vectors, 
+is_approx_array(2 «*« (2 «*« @vectors), @vectors »+« @vectors »+« @vectors »+« @vectors,
                 "Hyper: doubling twice equals self+self+self+self");
 
 is_approx_array((@vectors »⋅« @vectors)».sqrt, @vectors».abs, "Hyper sqrt of hyper dot equals hyper length");
@@ -118,16 +118,16 @@ is_approx_array((@vectors »dot« @vectors)».sqrt, @vectors».abs, "Hyper sqrt 
 #?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
 is_approx_array((@vectors >>dot<< @vectors)>>.sqrt, @vectors>>.abs, "Hyper sqrt of hyper dot equals hyper length");
 
-is_approx_array(((3/2) <<*<< @vectors) >>-<< @vectors , @vectors >>/>> 2, 
+is_approx_array(((3/2) <<*<< @vectors) >>-<< @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
-is_approx_array(((3/2) <<*<< @vectors) »-« @vectors , @vectors >>/>> 2, 
+is_approx_array(((3/2) <<*<< @vectors) »-« @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
-is_approx_array(((3/2) <<*<< @vectors) >>T-<< @vectors , @vectors >>/>> 2, 
+is_approx_array(((3/2) <<*<< @vectors) >>T-<< @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
 #?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
-is_approx_array(((3/2) <<*<< @vectors) »T-« @vectors , @vectors >>/>> 2, 
+is_approx_array(((3/2) <<*<< @vectors) »T-« @vectors , @vectors >>/>> 2,
                 "Hyper: 3/2 v - v equals v / 2");
-                                
+
 done_testing;
 
 # vim: ft=perl6
