@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 60;
+plan *;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -288,5 +288,11 @@ These tests are the testing for "List parameters" section of Synopsis 06
     slurp_any_multi(3|4|5);
     is $count, 1, 'Any slurpy param doesnt autothread';
 }
+
+#?rakudo todo 'RT 65324'
+eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
+             "Can't put required parameter after variadic parameters";
+
+done_testing;
 
 # vim: ft=perl6
