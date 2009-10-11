@@ -19,7 +19,7 @@ grammar Grammar::Bar is Grammar::Foo {
 };
 
 is(~('bar' ~~ /^<Grammar::Bar::bar>$/), 'bar', 'got right match (bar)');
-#?rakudo skip 'directly calling inherited grammar rule'
+#?rakudo skip 'directly calling inherited grammar rule (RT 65474)'
 is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match (foo)');
 is(~('foo' ~~ /^<Grammar::Bar::any>$/), 'foo', 'got right match (any)');
 is(~('bar' ~~ /^<Grammar::Bar::any>$/), 'bar', 'got right match (any)');
