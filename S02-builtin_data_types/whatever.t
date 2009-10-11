@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan *;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -88,5 +88,10 @@ is @a, [1,2,3,4], '*.meth created closure works';
     is $c(2), 6,  '... that works';
     is $c(-3), 6, '... that respects precdence';
 }
+
+#?rakudo todo 'RT 65482'
+is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
+
+done_testing;
 
 # vim: ft=perl6
