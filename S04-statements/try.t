@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 15;
+plan *;
 
 {
     # simple try
@@ -82,5 +82,12 @@ plan 15;
     dies_ok { test2() },
         "return() inside a try{}-block should cause following exceptions to really die";
 }
+
+{
+    sub argcount { return +@_ }
+    is argcount( try { 17 }, 23, 99 ), 3, 'try gets a block, nothing more';
+}
+
+done_testing;
 
 # vim: ft=perl6
