@@ -13,7 +13,7 @@ isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
 isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
-#?rakudo skip 'maybe related to RT 68958'
+#?rakudo skip 'RT 69726, maybe related to RT 68958'
 isa_ok( eval Rat.new.perl, Rat, 'eval Rat.new.perl is Rat' );
 
 # Test ~
