@@ -93,8 +93,10 @@ is_approx_array(2 <<*<< (2 <<*<< @vectors), @vectors >>+<< @vectors >>+<< @vecto
                 "Hyper: doubling twice equals self+self+self+self");
 is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>+<< @vectors) >>T+<< (@vectors >>+<< @vectors), 
                 "Hyper: doubling twice equals self+self+self+self");
-#?rakudo skip "ResizablePMCArray: Can't pop from an empty array! bug"
+#?rakudo 2 skip "ResizablePMCArray: Can't pop from an empty array! bug"
 is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>T+<< (@vectors >>T+<< @vectors), 
+                "Hyper: doubling twice equals self+self+self+self");
+is_approx_array(2 <<*<< (2 <<*<< @vectors), (@vectors >>T+<< @vectors) >>+<< (@vectors >>T+<< @vectors), 
                 "Hyper: doubling twice equals self+self+self+self");
                                                 
 #?rakudo 6 skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes bug"
