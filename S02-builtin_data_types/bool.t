@@ -1,11 +1,8 @@
 use v6;
-
 use Test;
-
+plan *;
 
 # L<S12/Enums/"Two built-in enums are">
-
-plan 24;
 
 # tests True and False are Bool's
 isa_ok(Bool::True, Bool);
@@ -56,5 +53,13 @@ is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
 is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
 is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
+# RT #65514
+{
+    #?rakudo 2 skip 'RT #65514 mix in bool with "but"'
+    ok (0 but Bool::True), 'Bool::True works with "but"';
+    is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
+}
+
+done_testing;
 
 # vim: ft=perl6
