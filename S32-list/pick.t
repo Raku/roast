@@ -32,8 +32,7 @@ my @arr = <z z z>;
 ok ~(@arr.pick(2)) eq 'z z',   'method pick with $num < +@values';
 ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 #?pugs todo 'feature'
-#?rakudo skip 'List.pick($count, :repl)'
-ok ~(@arr.pick(4, :repl)), 'z z z z', 'method pick(:repl) with $num > +@values';
+is ~(@arr.pick(4, :repl)), 'z z z z', 'method pick(:repl) with $num > +@values';
 
 #?pugs 3 todo 'feature'
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values';
