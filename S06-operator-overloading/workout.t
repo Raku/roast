@@ -42,14 +42,14 @@ multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
     dies_ok({ Vector.new(@a2) }, "Vector.new requires an array with 3 members");
 
     my Vector $v1 = Vector.new(@a1);
-    is($v1.coords[0], @a1[0], "Constructor correctly assigns @coords[0]");
-    is($v1.coords[1], @a1[1], "Constructor correctly assigns @coords[1]");
-    is($v1.coords[2], @a1[2], "Constructor correctly assigns @coords[2]");
+    is($v1.coords[0], @a1[0], 'Constructor correctly assigns @coords[0]');
+    is($v1.coords[1], @a1[1], 'Constructor correctly assigns @coords[1]');
+    is($v1.coords[2], @a1[2], 'Constructor correctly assigns @coords[2]');
     my Vector $v2 = Vector.new(0.1, 1/5, 0.3);
     my Vector $v3 = $v1 - $v2;
-    is($v3.coords[0], $v1.coords[0] - $v2.coords[0], "Subtraction correct for @coords[0]");
-    is($v3.coords[1], $v1.coords[1] - $v2.coords[1], "Subtraction correct for @coords[1]");
-    is($v3.coords[2], $v1.coords[2] - $v2.coords[2], "Subtraction correct for @coords[2]");
+    is($v3.coords[0], $v1.coords[0] - $v2.coords[0], 'Subtraction correct for @coords[0]');
+    is($v3.coords[1], $v1.coords[1] - $v2.coords[1], 'Subtraction correct for @coords[1]');
+    is($v3.coords[2], $v1.coords[2] - $v2.coords[2], 'Subtraction correct for @coords[2]');
     ok($v1.abs > 5, "$v1.abs is of appropriate size");
     is_approx($v1.abs, sqrt([+] (@a1 <<*>> @a1)), "v1.abs returns correct value");
 
