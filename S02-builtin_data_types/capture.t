@@ -27,7 +27,7 @@ plan 18;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo3 ($a, :$named) { "$a!$named" }
-    #?rakudo todo 'capture with named args'
+    #?rakudo skip 'capture with named args'
     is foo3(|$capture), "1!arg",
         'simply capture creation with \\( works (3)';
 }
