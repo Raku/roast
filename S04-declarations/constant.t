@@ -2,29 +2,36 @@ use v6;
 
 use Test;
 
-plan 33;
+plan *;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
 # Following tests test whether the declaration succeeded.
 #?pugs todo 'feature'
 {
-    my $ok;
-
     constant foo = 42;
-    $ok = foo == 42;
 
-    ok $ok, "declaring a sigilless constant using 'constant' works";
+    ok foo == 42, "declaring a sigilless constant using 'constant' works";
+    dies_ok { foo = 3 }, "can't reasign to a sigil-less constant";
 }
 
 {
     my $ok;
 
     constant $bar = 42;
-    $ok = $bar == 42;
-
-    ok $ok, "declaring a constant with a sigil using 'constant' works";
+    ok $bar == 42, "declaring a constant with a sigil using 'constant' works";
+    dies_ok { $bar = 2 }, "Can't reasign to a sigiled constant";
 }
+
+#?rakudo skip 'RT 69740'
+{
+    constant ($a, $b) = (3, 4);
+    is $a, 3, 'multiple constant in one declaration(1)';
+    is $b, 4, 'multiple constant in one declaration(2)';
+    dies_ok { $a = 4 }, 'and they are really constant (1)';
+    dies_ok { $b = 4 }, 'and they are really constant (2)';
+}
+
 
 {
     {
@@ -238,5 +245,7 @@ plan 33;
     dies_ok { $five = 2 + 3 },
              'assign constant its own value from expression';
 }
+
+done_testing;
 
 # vim: ft=perl6
