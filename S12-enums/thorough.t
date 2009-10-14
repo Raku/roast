@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 71;
+plan *;
 
 =begin description
 
@@ -109,5 +109,15 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     enum RT66886 <b>;
     eval_dies_ok 'RT66886::c', 'accessing non-value of enum dies proper-like';
 }
+
+# RT #65658
+{
+    enum RT65658 <Todo Bug Feature Ticket>;
+    #?rakudo 2 skip 'RT 65658'
+    is RT65658(2), RT65658::Feature, 'can index enum by number';
+    is RT65658((Todo + 3.2).Int), RT65658::Ticket, 'enum and math and index';
+}
+
+done_testing;
 
 # vim: ft=perl6
