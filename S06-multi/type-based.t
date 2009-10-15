@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan *;
 
 # type based dispatching
 #
@@ -83,7 +83,21 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is wins(Scissor.new, Paper.new),   1,  'Basic sanity 2';
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
+
+    # now try again with anonymous parameters (see RT #69798)
+    multi wins_anon(Scissor $, Paper   $) { 1  }
+    multi wins_anon(Paper   $, Stone   $) { 1  }
+    multi wins_anon(Stone   $, Scissor $) { 1  }
+    multi wins_anon(::T     $, T       $) { 0  }
+    multi wins_anon(        $,         $) { -1 }
+
+    #?rakudo 3 skip 'RT 69798'
+    is wins_anon(Scissor, Paper),  1, 'MMD with anonymous parameters (1)';
+    is wins_anon(Paper,   Paper),  0, 'MMD with anonymous parameters (2)';
+    is wins_anon(Stone,   Paper), -1, 'MMD with anonymous parameters (3)';
+
 }
+
 
 {
     multi m($x,$y where { $x==$y }) { 0 };
@@ -163,5 +177,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is y(1, 2), 1, 'generics in multis (+)';
     is y(1, 2.5), 2, 'generics in multis (-)';
 }
+
+done_testing;
 
 # vim: ft=perl6
