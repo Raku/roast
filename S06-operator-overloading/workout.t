@@ -72,6 +72,48 @@ is_approx($v1 ** 2, Vector.new(1/4, 4, 34*34), "Scalar power correct");
 is_approx($v1 ⋅ $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 is_approx($v1 dot $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 
+{
+    my $v = $v1;
+    $v += $v2;
+    is_approx($v, $v1 + $v2, "+= works");
+}
+
+{
+    my $v = $v1;
+    $v T+= $v2;
+    is_approx($v, $v1 T+ $v2, "T+= works");
+}
+
+{
+    my $v = 3/2;
+    $v *= $v1;
+    is_approx($v, (3/2) * $v1, "*= works starting with scalar");
+}
+
+{
+    my $v = $v1;
+    $v /= (2/3);
+    is_approx($v, (3/2) * $v1, "/= works");
+}
+
+{
+    my $v = $v1;
+    $v **= 3;
+    is_approx($v, $v1 ** 3, "**= works");
+}
+
+{
+    my $v = $v1;
+    $v ⋅= $v2;
+    is_approx($v, $v1 ⋅ $v2, "⋅= works");
+}
+
+{
+    my $v = $v1;
+    $v dot= $v2;
+    is_approx($v, $v1 dot $v2, "dot= works");
+}
+
 #?DOES 1
 multi sub is_approx_array(@got, @expected, $desc) {
     my $test = all((@got >>-<< @expected)>>.abs.map({$_ <= 0.00001}));
