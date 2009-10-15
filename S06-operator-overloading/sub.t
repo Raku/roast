@@ -378,7 +378,7 @@ Testing operator overloading subroutines
     is eval('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
     #?rakudo todo 'RT 65638'
-    is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<#>($a, $b)';
+    is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
     #?rakudo 2 skip 'Redefinition of infix:<+> causes Test.pm to miscount'
     is eval('sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
