@@ -6,7 +6,7 @@ plan *;
 class A { }
 class B { }
 class C is A is B { }
-proto foo() { 1 }
+proto foo($x) { 1 }
 multi foo(A $x) { 2 }
 multi foo(B $x) { 3 }
 is(foo(A.new), 2, 'dispatch on class worked');
