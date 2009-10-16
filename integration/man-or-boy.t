@@ -14,7 +14,7 @@ plan +@results;
 
 sub A($k is copy, &x1, &x2, &x3, &x4, &x5) {
     my $B;
-    $B = sub { A(--$k, $B, &x1, &x2, &x3, &x4) };
+    $B = sub (*@) { A(--$k, $B, &x1, &x2, &x3, &x4) };
     if ($k <= 0) {
         return    x4($k, &x1, &x2, &x3, &x4, &x5)
                 + x5($k, &x1, &x2, &x3, &x4, &x5);
@@ -23,7 +23,7 @@ sub A($k is copy, &x1, &x2, &x3, &x4, &x5) {
 };
 
 for 0 .. (@results-1) -> $i {
-    is A($i, sub {1}, sub {-1}, sub {-1}, sub {1}, sub {0}),
+    is A($i, sub (*@) {1}, sub (*@) {-1}, sub (*@) {-1}, sub (*@) {1}, sub (*@) {0}),
        @results[$i],
        "man-or-boy test for start value $i";
 }
