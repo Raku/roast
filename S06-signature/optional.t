@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 14;
+plan 13;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -42,12 +42,8 @@ eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones a
 
 sub foo_53814($w, $x?, :$y = 2){ $w~"|"~$x~"|"~$y };
 #?rakudo todo 'RT #53814'
-{
-isnt foo_53814(1,undef,'something_extra',:y(3)), '1||something_extra',
-      'should not pass positional param to named';
 dies_ok {foo_53814(1,undef,'something_extra',:y(3))},
-      'according to ticket - answer should be no matching signature';
-}
+      'die on too many parameters (was once bug RT#53814)';
 
 #?rakudo todo 'RT# 54804'
 {
