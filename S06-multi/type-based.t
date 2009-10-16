@@ -66,20 +66,21 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 {
 
-    class Scissor { };
-    class Paper   { };
+    class Scissor { }
+    class Paper   { }
+    class Stone   { }
 
-    multi wins(Scissor $x, Paper   $y) { 1 };
-    multi wins(::T     $x, T       $y) { 0 };
-    multi wins($x, $y)                { -1 };
+    multi wins(Scissor $x, Paper   $y) { 1 }
+    multi wins(::T     $x, T       $y) { 0 }
+    multi wins($x, $y)                { -1 }
 
     is wins(Scissor.new, Paper.new),   1,  'Basic sanity';
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with ::T generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a ::T variant';
 
-    multi wins2(Scissor $x, Paper   $y) { 1 };
-    multi wins2($x, $y where { $x.WHAT eq $y.WHAT }) { 0 };
-    multi wins2($x, $y)                { -1 };
+    multi wins2(Scissor $x, Paper   $y) { 1 }
+    multi wins2($x, $y where { $x.WHAT eq $y.WHAT }) { 0 }
+    multi wins2($x, $y)                { -1 }
     is wins(Scissor.new, Paper.new),   1,  'Basic sanity 2';
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
@@ -100,18 +101,18 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 
 {
-    multi m($x,$y where { $x==$y }) { 0 };
-    multi m($x,$y) { 1 };
+    multi m($x,$y where { $x==$y }) { 0 }
+    multi m($x,$y) { 1 }
 
     is m(2, 3), 1, 'subset types involving mulitple parameters (fallback)';
     is m(1, 1), 0, 'subset types involving mulitple parameters (success)';
 }
 
 {
-    multi f2 ($)        { 1 };
-    multi f2 ($, $)     { 2 };
-    multi f2 ($, $, $)  { 3 };
-    multi f2 ($, $, @)  { '3+' };
+    multi f2 ($)        { 1 }
+    multi f2 ($, $)     { 2 }
+    multi f2 ($, $, $)  { 3 }
+    multi f2 ($, $, @)  { '3+' }
     is f2(3),               1, 'arity-based dispatch to ($)';
     is f2('foo', f2(3)),    2, 'arity-based dispatch to ($, $)';
     is f2('foo', 4, 8),     3, 'arity-based dispatch to ($, $, $)';
@@ -119,8 +120,8 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 {
-    multi f3 ($ where 0 ) { 1 };
-    multi f3 ($x)         { $x + 1 };
+    multi f3 ($ where 0 ) { 1 }
+    multi f3 ($x)         { $x + 1 }
     is f3(0), 1, 'can dispatch to "$ where 0"';
     is f3(3), 4, '... and the ordinary dispatch still works';
 }
@@ -167,13 +168,13 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 {
-    multi x(@a, @b where { @a.elems == @b.elems }) { 1 };
-    multi x(@a, @b)                                { 2 };
+    multi x(@a, @b where { @a.elems == @b.elems }) { 1 }
+    multi x(@a, @b)                                { 2 }
     is x([1,2],[3,4]), 1, 'where-clause that uses multiple params (1)';
     is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)'; 
 
-    multi y(::T $x, T $y) { 1 };
-    multi y($x, $y)       { 2 };
+    multi y(::T $x, T $y) { 1 }
+    multi y($x, $y)       { 2 }
     is y(1, 2), 1, 'generics in multis (+)';
     is y(1, 2.5), 2, 'generics in multis (-)';
 }
