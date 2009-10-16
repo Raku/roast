@@ -14,7 +14,7 @@ plan 3;
 
 sub doubler($x) { return 2 * $x }
 
-sub value_v(Code :$func = &doubler) {
+sub value_v(Code $func = &doubler) {
     return $func(5);
 }
 
