@@ -61,6 +61,8 @@ multi sub infix:<dot>(Vector $a, Vector $b) { $a ⋅ $b; }
 
 my Vector $v1 = Vector.new(-1/2, 2, 34);
 my Vector $v2 = Vector.new(1.0, 1/5, 0.3);
+
+# basic operations
 is_approx($v1 + $v2, Vector.new(0.5, 2.2, 34.3), "Addition correct");
 is_approx($v1 T+ $v2, $v1 + $v2, "T Addition correct");
 is_approx($v1 T- $v2, $v1 - $v2, "T Subtraction correct");
@@ -72,6 +74,7 @@ is_approx($v1 ** 2, Vector.new(1/4, 4, 34*34), "Scalar power correct");
 is_approx($v1 ⋅ $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 is_approx($v1 dot $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
 
+# equals versions
 {
     my $v = $v1;
     $v += $v2;
@@ -113,6 +116,18 @@ is_approx($v1 dot $v2, -1/2 + 2/5 + 34 * 0.3, "Dot product correct");
     $v dot= $v2;
     is_approx($v, $v1 dot $v2, "dot= works");
 }
+
+# reversed versions
+is_approx($v1 R+ $v2, Vector.new(0.5, 2.2, 34.3), "R Addition correct");
+is_approx($v1 RT+ $v2, $v1 + $v2, "R T Addition correct");
+is_approx($v2 R- $v1, $v1 - $v2, "R Subtraction correct");
+is_approx($v2 RT- $v1, $v1 - $v2, "R T Subtraction correct");
+is_approx((3/2) R* $v1, Vector.new(-3/4, 3, 17*3), "R Scalar multiply correct");
+is_approx($v1 R* (3/2), Vector.new(-3/4, 3, 17*3), "R Scalar multiply correct");
+is_approx((2/3) R/ $v1, Vector.new(-3/4, 3, 17*3), "R Scalar division correct");
+is_approx(2 R** $v1, Vector.new(1/4, 4, 34*34), "R Scalar power correct");
+is_approx($v1 R⋅ $v2, -1/2 + 2/5 + 34 * 0.3, "R Dot product correct");
+is_approx($v1 Rdot $v2, -1/2 + 2/5 + 34 * 0.3, "R Dot product correct");
 
 #?DOES 1
 multi sub is_approx_array(@got, @expected, $desc) {
