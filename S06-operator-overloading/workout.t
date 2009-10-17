@@ -128,6 +128,10 @@ multi sub isnt_approx_array(@got, @expected, $desc) {
 
 my @vectors = ($v1, $v2, $v1 + $v2, $v1 - $v2, $v2 - $v1);
 
+is_approx(([+] @vectors), 2 * $v1 + 2 * $v2, "[+] of vectors == 2 * (v1 + v2)");
+#?rakudo skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes or dimensions bug"
+is_approx(([T+] @vectors), 2 * $v1 + 2 * $v2, "[T+] of vectors == 2 * (v1 + v2)");
+
 is_approx_array(@vectors >>*>> 2, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
 isnt_approx_array(@vectors >>*>> 2, @vectors, "Hyper: doubling does not equal self");
 is_approx_array((@vectors >>*>> 2) >>*>> 2, (@vectors >>+<< @vectors) >>+<< (@vectors >>+<< @vectors),
