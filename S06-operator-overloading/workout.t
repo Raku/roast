@@ -197,9 +197,15 @@ multi sub isnt_approx_array(@got, @expected, $desc) {
 
 my @vectors = ($v1, $v2, $v1 + $v2, $v1 - $v2, $v2 - $v1);
 
+# Bad news error: the next four tests can all be made to work, just not at the same time.
+# If you delete the skip line, the [T+] test works but the [-] test returns the "Can't get 
+# Num from Vector" error.  If you include skip line, the [-] test works.  Help?
+
 is_approx(([+] @vectors), (2 T* $v1) + (2 T* $v2), "[+] of vectors == 2 * (v1 + v2)");
-#?rakudo skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes or dimensions bug"
+#?rakudo skip "If we don't skip this test, the next test mysteriously fails"
 is_approx(([T+] @vectors), (2 T* $v1) + (2 T* $v2), "[T+] of vectors == 2 * (v1 + v2)");
+is_approx(([-] @vectors), -2 T* $v2, "[-] of vectors == -2 * v2");
+is_approx(([T-] @vectors), -2 T* $v2, "[T-] of vectors == -2 * v2");
 
 #?rakudo 9 skip "ResizablePMCArray: Can't pop from an empty array! bug"
 is_approx_array(@vectors >>*>> 2, @vectors >>+<< @vectors, "Hyper: doubling equals self + self");
