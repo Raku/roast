@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 62;
+plan 70;
 
 # L<S32::Numeric/Num/"=item truncate">
 # truncate and int() are synonynms.
@@ -14,6 +14,15 @@ Basic tests for the int() builtin
 
 # basic sanity:
 is(-0, 0, '-0 is the same as 0 - hey, they are integers ;-)');
+
+isa_ok( eval(1.perl), Int, 'eval 1.perl is Int' );
+is( eval(1.perl), 1, 'eval 1.perl is 1' );
+isa_ok( eval((-12).perl), Int, 'eval -12.perl is Int' );
+is( eval((-12).perl), -12, 'eval -12.perl is -12' );
+isa_ok( eval(0.perl), Int, 'eval 0.perl is Int' );
+is( eval(0.perl), 0, 'eval 0.perl is 0' );
+isa_ok( eval((-0).perl), Int, 'eval -0.perl is Int' );
+is( eval((-0).perl), -0, 'eval -0.perl is 0' );
 
 is((-1).Int, -1, "(-1).Int is -1");
 is(0.Int, 0, "int(0) is 0");
