@@ -6,13 +6,13 @@ use Test;
 
 plan 58;
 
-#?rakudo todo "Num.perl doesn't report the decimal part if it is 0"
+#?rakudo todo "Num.perl doesn't report the decimal part if it is 0 (RT 69869)"
 isa_ok( eval(1.Num.perl), Num, 'eval 1.Num.perl is Num' );
 is_approx( eval(1.Num.perl), 1, 'eval 1.Num.perl is 1' );
-#?rakudo todo "Num.perl doesn't report the decimal part if it is 0"
+#?rakudo todo "Num.perl doesn't report the decimal part if it is 0 (RT 69869)"
 isa_ok( eval(0.Num.perl), Num, 'eval 0.Num.perl is Num' );
 is_approx( eval(0.Num.perl), 0, 'eval 0.Num.perl is 0' );
-#?rakudo todo "Num.perl doesn't report the decimal part if it is 0"
+#?rakudo todo "Num.perl doesn't report the decimal part if it is 0 (RT 69869)"
 isa_ok( eval((-1).Num.perl), Num, 'eval -1.Num.perl is Num' );
 is_approx( eval((-1).Num.perl), -1, 'eval -1.Num.perl is -1' );
 isa_ok( eval(1.1.perl), Num, 'eval 1.1.Num.perl is Num' );
