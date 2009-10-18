@@ -24,7 +24,14 @@ is_approx 2/(3+1i),      3/5 -(1/5)i,   'dividing a Real by a Complex';
 is_approx 2 * (3+7i),    6+14i,         'Real * Complex';
 is_approx (3+7i) * 2,    6+14i,         'Complex * Real';
 
-# MUST: test .perl, .Str
+isa_ok( eval((1+3i).perl), Complex, 'eval (1+3i).perl is Complex' );
+is_approx( (eval (1+3i).perl), 1+3i, 'eval (1+3i).perl is 1+3i' );
+isa_ok( eval((1+0i).perl), Complex, 'eval (1+0i).perl is Complex' );
+is_approx( (eval (1+0i).perl), 1, 'eval (1+0i).perl is 1' );
+isa_ok( eval((3i).perl), Complex, 'eval (3i).perl is Complex' );
+is_approx( (eval (3i).perl), 3i, 'eval (3i).perl is 3i' );
+
+# MUST: test .Str
 
 my @examples = (0i, 1 + 0i, -1 + 0i, 1i, -1i, 2 + 0i, -2 + 0i, 2i, -2i,
                 2 + 3i, 2 - 3i, -2 + 3i, -2 - 3i,
