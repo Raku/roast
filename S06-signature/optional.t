@@ -41,11 +41,11 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones are forbidden';
 
 sub foo_53814($w, $x?, :$y = 2){ $w~"|"~$x~"|"~$y };
-#?rakudo todo 'RT #53814'
+#?rakudo todo 'RT 53814'
 dies_ok {foo_53814(1,undef,'something_extra',:y(3))},
-      'die on too many parameters (was once bug RT#53814)';
+      'die on too many parameters (was once bug RT 53814)';
 
-#?rakudo todo 'RT# 54804'
+#?rakudo todo 'RT 54804'
 {
     sub rt54804( $v, $w?, $x?, $y? ) {
         (defined( $v ) ?? $v !! 'undef')
