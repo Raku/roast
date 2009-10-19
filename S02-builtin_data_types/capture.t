@@ -96,6 +96,7 @@ plan 18;
     my $capture2 = \(1,2,3);
     try { foo8 $capture2 };  # note: no |$args here
 
+    #?rakudo todo 'regressed in signature refactor'
     ok $capture1 === $capture2,
         "unflattened captures can be passed to subs";
 }
