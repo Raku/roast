@@ -53,7 +53,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 # more sophisticated variants of test exist elsewhere - but seems basic ...
-#?rakudo todo 'RT #59484'
+#?rakudo skip 'RT #59484'
 {
     is  eval('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
         'Simp2', 'access to $?PACKAGE variable'
