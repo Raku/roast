@@ -105,11 +105,9 @@ for @sines -> $angle
     }
     
     # cotanh(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(cotanh(:x($angle.num("radians"))), $desired_result, 
               "cotanh(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cotanh(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
                   "cotanh(:x(Num)) - {$angle.num($base)} $base");
     }
@@ -131,11 +129,9 @@ for @sines -> $angle
     }
 
     # cotanh(:x(Rat))
-    #?rakudo skip 'named args'
     is_approx(cotanh(:x($angle.rat("radians"))), $desired_result, 
               "cotanh(:x(Rat)) - {$angle.rat('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cotanh(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
                   "cotanh(:x(Rat)) - {$angle.rat($base)} $base");
     }
@@ -185,15 +181,12 @@ for @sines -> $angle
     
     for %official_base.keys -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        #?rakudo skip "Complex.cotanh plus base doesn't work yet"
         is_approx($z.cotanh(%official_base{$base}), $sz0, "Complex.cotanh - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        #?rakudo skip "Complex.cotanh plus base doesn't work yet"
         is_approx($z.cotanh(%official_base{$base}), $sz1, "Complex.cotanh - $z $base");
     
         $z = $angle.complex(2.0, $base);
-        #?rakudo skip "Complex.cotanh plus base doesn't work yet"
         is_approx($z.cotanh(%official_base{$base}), $sz2, "Complex.cotanh - $z $base");
     }
 }
@@ -222,11 +215,9 @@ for @sines -> $angle
     }
     
     # acotanh(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(cotanh(acotanh(:x($desired_result))), $desired_result, 
               "acotanh(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cotanh(acotanh(:x($desired_result), 
                                                            :base(%official_base{$base})), 
                                   %official_base{$base}), $desired_result, 

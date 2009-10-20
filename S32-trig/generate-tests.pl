@@ -51,11 +51,9 @@ class TrigFunction
                 }
                 
                 # $.function_name(:x(Num))
-                #?rakudo skip 'named args'
                 is_approx($.function_name(:x($angle.num("radians"))), $desired_result, 
                           "$.function_name(:x(Num)) - {$angle.num('radians')} default");
                 for %official_base.keys -> $base {
-                    #?rakudo skip 'named args'
                     is_approx($.function_name(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
                               "$.function_name(:x(Num)) - {$angle.num($base)} $base");
                 }
@@ -77,11 +75,9 @@ class TrigFunction
                 }
 
                 # $.function_name(:x(Rat))
-                #?rakudo skip 'named args'
                 is_approx($.function_name(:x($angle.rat("radians"))), $desired_result, 
                           "$.function_name(:x(Rat)) - {$angle.rat('radians')} default");
                 for %official_base.keys -> $base {
-                    #?rakudo skip 'named args'
                     is_approx($.function_name(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
                               "$.function_name(:x(Rat)) - {$angle.rat($base)} $base");
                 }
@@ -131,15 +127,12 @@ class TrigFunction
                 
                 for %official_base.keys -> $base {
                     my Complex $z = $angle.complex(0.0, $base);
-                    #?rakudo skip "Complex.$.function_name plus base doesn't work yet"
                     is_approx($z.$.function_name(%official_base{$base}), $sz0, "Complex.$.function_name - $z $base");
                 
                     $z = $angle.complex(1.0, $base);
-                    #?rakudo skip "Complex.$.function_name plus base doesn't work yet"
                     is_approx($z.$.function_name(%official_base{$base}), $sz1, "Complex.$.function_name - $z $base");
                 
                     $z = $angle.complex(2.0, $base);
-                    #?rakudo skip "Complex.$.function_name plus base doesn't work yet"
                     is_approx($z.$.function_name(%official_base{$base}), $sz2, "Complex.$.function_name - $z $base");
                 }
             }
@@ -182,11 +175,9 @@ class TrigFunction
                 }
                 
                 # $.inverted_function_name(:x(Num))
-                #?rakudo skip 'named args'
                 is_approx($.function_name($.inverted_function_name(:x($desired_result))), $desired_result, 
                           "$.inverted_function_name(:x(Num)) - {$angle.num('radians')} default");
                 for %official_base.keys -> $base {
-                    #?rakudo skip 'named args'
                     is_approx($.function_name($.inverted_function_name(:x($desired_result), 
                                                                        :base(%official_base{$base})), 
                                               %official_base{$base}), $desired_result, 

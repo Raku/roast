@@ -105,11 +105,9 @@ for @sines -> $angle
     }
     
     # cotan(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(cotan(:x($angle.num("radians"))), $desired_result, 
               "cotan(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cotan(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
                   "cotan(:x(Num)) - {$angle.num($base)} $base");
     }
@@ -131,11 +129,9 @@ for @sines -> $angle
     }
 
     # cotan(:x(Rat))
-    #?rakudo skip 'named args'
     is_approx(cotan(:x($angle.rat("radians"))), $desired_result, 
               "cotan(:x(Rat)) - {$angle.rat('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cotan(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
                   "cotan(:x(Rat)) - {$angle.rat($base)} $base");
     }
@@ -185,15 +181,12 @@ for @sines -> $angle
     
     for %official_base.keys -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        #?rakudo skip "Complex.cotan plus base doesn't work yet"
         is_approx($z.cotan(%official_base{$base}), $sz0, "Complex.cotan - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        #?rakudo skip "Complex.cotan plus base doesn't work yet"
         is_approx($z.cotan(%official_base{$base}), $sz1, "Complex.cotan - $z $base");
     
         $z = $angle.complex(2.0, $base);
-        #?rakudo skip "Complex.cotan plus base doesn't work yet"
         is_approx($z.cotan(%official_base{$base}), $sz2, "Complex.cotan - $z $base");
     }
 }
@@ -222,11 +215,9 @@ for @sines -> $angle
     }
     
     # acotan(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(cotan(acotan(:x($desired_result))), $desired_result, 
               "acotan(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cotan(acotan(:x($desired_result), 
                                                            :base(%official_base{$base})), 
                                   %official_base{$base}), $desired_result, 

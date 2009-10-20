@@ -105,11 +105,9 @@ for @sines -> $angle
     }
     
     # cosech(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(cosech(:x($angle.num("radians"))), $desired_result, 
               "cosech(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cosech(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
                   "cosech(:x(Num)) - {$angle.num($base)} $base");
     }
@@ -131,11 +129,9 @@ for @sines -> $angle
     }
 
     # cosech(:x(Rat))
-    #?rakudo skip 'named args'
     is_approx(cosech(:x($angle.rat("radians"))), $desired_result, 
               "cosech(:x(Rat)) - {$angle.rat('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cosech(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
                   "cosech(:x(Rat)) - {$angle.rat($base)} $base");
     }
@@ -185,15 +181,12 @@ for @sines -> $angle
     
     for %official_base.keys -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        #?rakudo skip "Complex.cosech plus base doesn't work yet"
         is_approx($z.cosech(%official_base{$base}), $sz0, "Complex.cosech - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        #?rakudo skip "Complex.cosech plus base doesn't work yet"
         is_approx($z.cosech(%official_base{$base}), $sz1, "Complex.cosech - $z $base");
     
         $z = $angle.complex(2.0, $base);
-        #?rakudo skip "Complex.cosech plus base doesn't work yet"
         is_approx($z.cosech(%official_base{$base}), $sz2, "Complex.cosech - $z $base");
     }
 }
@@ -222,11 +215,9 @@ for @sines -> $angle
     }
     
     # acosech(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(cosech(acosech(:x($desired_result))), $desired_result, 
               "acosech(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(cosech(acosech(:x($desired_result), 
                                                            :base(%official_base{$base})), 
                                   %official_base{$base}), $desired_result, 

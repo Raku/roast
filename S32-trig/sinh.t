@@ -105,11 +105,9 @@ for @sinhes -> $angle
     }
     
     # sinh(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(sinh(:x($angle.num("radians"))), $desired_result, 
               "sinh(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(sinh(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
                   "sinh(:x(Num)) - {$angle.num($base)} $base");
     }
@@ -131,11 +129,9 @@ for @sinhes -> $angle
     }
 
     # sinh(:x(Rat))
-    #?rakudo skip 'named args'
     is_approx(sinh(:x($angle.rat("radians"))), $desired_result, 
               "sinh(:x(Rat)) - {$angle.rat('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(sinh(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
                   "sinh(:x(Rat)) - {$angle.rat($base)} $base");
     }
@@ -185,15 +181,12 @@ for @sinhes -> $angle
     
     for %official_base.keys -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        #?rakudo skip "Complex.sinh plus base doesn't work yet"
         is_approx($z.sinh(%official_base{$base}), $sz0, "Complex.sinh - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        #?rakudo skip "Complex.sinh plus base doesn't work yet"
         is_approx($z.sinh(%official_base{$base}), $sz1, "Complex.sinh - $z $base");
     
         $z = $angle.complex(2.0, $base);
-        #?rakudo skip "Complex.sinh plus base doesn't work yet"
         is_approx($z.sinh(%official_base{$base}), $sz2, "Complex.sinh - $z $base");
     }
 }
@@ -222,11 +215,9 @@ for @sinhes -> $angle
     }
     
     # asinh(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(sinh(asinh(:x($desired_result))), $desired_result, 
               "asinh(:x(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(sinh(asinh(:x($desired_result), 
                                                            :base(%official_base{$base})), 
                                   %official_base{$base}), $desired_result, 
