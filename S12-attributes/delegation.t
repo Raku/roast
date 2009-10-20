@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 66;
+plan *;
 
 =begin desc
 
@@ -146,5 +146,7 @@ class PairTest {
     is $t.backend.a, 'foo', 'can also query that through the backend';
     ok $t.c ~~ undef, 'died assignment had no effect';
 }
+
+done_testing;
 
 # vim: syn=perl6
