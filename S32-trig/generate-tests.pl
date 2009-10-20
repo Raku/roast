@@ -349,11 +349,9 @@ for @sines -> $angle
               "atan2(Num) - {$angle.num('radians')} default");
     
     # atan2(:y(Num))
-    #?rakudo skip 'named args'
     is_approx(tan(atan2(:y($desired_result))), $desired_result, 
               "atan2(:y(Num)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(tan(atan2(:y($desired_result), :base(%official_base{$base})), 
                       %official_base{$base}), $desired_result, 
                   "atan2(:y(Num)) - {$angle.num($base)} $base");
@@ -401,11 +399,9 @@ for @sines -> $angle
     }
     
     # atan2(:x(Num))
-    #?rakudo skip 'named args'
     is_approx(tan(atan2(:y($desired_result), :x(1))), $desired_result, 
               "atan2(:x(Num), :y(1)) - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
-        #?rakudo skip 'named args'
         is_approx(tan(atan2(:y($desired_result), :x(1), :base(%official_base{$base})), 
                                   %official_base{$base}), $desired_result, 
                   "atan2(:x(Num), :y(1)) - {$angle.num($base)} $base");
