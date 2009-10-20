@@ -126,45 +126,6 @@ class PairTest {
     is $a.cool, 1337, "...but otherwise it delegates, and first * wins";
 }
 
-# L<S12/Delegation/"If your delegation object happens to be an array:">
-{
-    class ArrFrontend { has @.handlers is rw handles 'hi' }
-    ok ArrFrontend.new, "class definition using handles on an array worked";
-    my $a = ArrFrontend.new();
-    dies_ok { $a.hi }, "calling a method on an empty array didn't succeed";
-    $a.handlers = "OH HAI",Backend1.new,Backend2.new;
-    is $a.hi, 42, "called the delegated method on the first item in the array that had it";
-}
-{
-    class ArrFrontend2 { has @.handlers is rw handles Backend1 }
-    ok ArrFrontend2.new, "class definition using handles on an array with a class name worked";
-    my $a = ArrFrontend2.new();
-    dies_ok { $a.hi }, "calling a method on an empty array didn't succeed";
-    $a.handlers = "OH HAI",Backend1.new,Backend2.new;
-    is $a.hi, 42, "called the delegated method on the first item in the array that had it";
-}
-
-#?DOES 7
-#?rakudo skip '"handles" on array attributes'
-{
-  class MyArray {
-    has @.elems handles "join";
-    method concat handles <chars bytes graphs codes> { .join }
-  }
-
-  ok MyArray.new, "class with attribute and return value delegation";
-  {
-    my $a;
-    ok ($a = MyArray.new(elems => [1..5])), "basic instantiation worked";
-    #?pugs 5 eval 'feature'
-    is $a.concat , "12345", "attribute delegation worked";
-    is $a.bytes  , 5, "return delegation worked";
-    is $a.chars  , 5, "return delegation worked";
-    is $a.codes  , 5, "return delegation worked";
-    is $a.graphs , 5, "return delegation worked";
-  }
-}
-
 # delegation with lvalue routines
 {
     class BackendRw {
