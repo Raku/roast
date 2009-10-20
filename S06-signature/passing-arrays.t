@@ -61,7 +61,6 @@ plan 11;
     sub ro_b(@a) { ro_a(@a) };
     my @x = 1, 2, 4;
     lives_ok { ro_b(@x) },   'can pass parameter Array on to next function';
-    #?rakudo todo 'RT 67876'
     lives_ok { @x = 5, 6 }, '... and that did not make the caller Array ro';
 }
 

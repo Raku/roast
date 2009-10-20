@@ -36,11 +36,11 @@ plan 18;
 
 {
     #?pugs 4 todo 'pointy blocks'
-    #?rakudo 4 todo 'pointy blocks and $_'
     $_ = 'Ack';
     dies_ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
     dies_ok({ (-> { $_ }).(42) },         'Even when we use $_>');
     
+    #?rakudo 2 todo 'pointy blocks and $_'
     is((-> { $_ }).(),      'Ack!',       '$_ is lexical here');
     is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters (?)');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');

@@ -29,7 +29,7 @@ eval_dies_ok '
 
 eval_dies_ok 'sub quuux ($?VERSION) { ... }',
              'parser rejects magicals as args (1)';
-#?rakudo todo 'STD.pm actually parses this - is this test valid?'
+#?rakudo skip 'STD.pm actually parses this - is this test valid?'
 eval_dies_ok('sub quuuux ($!) { ... }',
     'parser rejects magicals as args (2)');
 

@@ -32,7 +32,6 @@ is &o_one.arity,    1, 'arity 1 sub with optional params';
 is &o_two.arity,    2, 'arity with optional and required named params';
 
 is &o_zero.count,   2, 'count on sub with optional params';
-#?rakudo 2 todo 'bug'
 is &o_one.count,    2, 'count on sub with optional params';
 is &o_two.count,    3, 'count on sub with optional and required named params';
 
@@ -125,7 +124,6 @@ is &o_two.count,    3, 'count on sub with optional and required named params';
        '... also when passed to a sub first';
 }
 
-#?rakudo todo 'RT #66868: Zero-arg sub interpreted as parameterless'
 dies_ok { a_zero( 'hello', 'world' ) }, 'no matching sub signature';
 
 # vim: ft=perl6

@@ -47,7 +47,6 @@ sub foo (:$x = 3) { $x }
 is(foo(), 3, "not specifying named params that aren't mandatory works");
 
 # part of RT 53814
-#?rakudo todo 'using named as positional should fail'
 #?pugs todo 'bug'
 dies_ok({foo(4)}, "using a named as a positional fails");
 
@@ -58,7 +57,6 @@ sub foo2 (:$x = 3, :$y = 5) { $x + $y }
 
 is(foo2(), 8, "not specifying named params that aren't mandatory works (foo2)");
 #?pugs 2 todo 'bug'
-#?rakudo 2 todo 'using named as positional should fail'
 dies_ok({foo2(4)}, "using a named as a positional fails (foo2)");
 dies_ok({foo2(4, 10)}, "using a named as a positional fails (foo2)");
 is(foo2( x => 5), 10, "naming named param x also works (foo2)");
