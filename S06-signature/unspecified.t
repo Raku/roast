@@ -10,7 +10,6 @@ sub simple { 'simple' }
 #?rakudo skip 'siglist'
 is &simple.signature, :(), 'signature is :() when none is specified';
 is simple(), 'simple', 'can call sub with no signature specified';
-#?rakudo 2 todo 'should die from too many arguments'
 dies_ok { simple( :golf<hotel> ) },
         'sub with no signature dies when given a named argument';
 dies_ok { simple( 'india' ) },
@@ -22,7 +21,6 @@ is &positional.signature, :(Object *@_),
    'signature is :(Object *@_) when none is specified and @_ is used';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
 ok positional() ~~ undef, 'sub using positional param called with no params';
-#?rakudo todo 'should die from too many arguments'
 dies_ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 

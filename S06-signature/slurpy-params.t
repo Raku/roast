@@ -103,7 +103,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag('Testing without positional arguments');
     lives_ok { foo n => 20, y => 300, 4000 },
     'Testing: `sub foo($n, *%h, *@a){ }; foo n => 20, y => 300, 4000`';
-#?rakudo 3 todo 'positional params can be passed as named ones'
     is (foo1 n => 20, y => 300, 4000), 20,
     'Testing the value for positional';
     is (foo2 n => 20, y => 300, 4000), 300,
@@ -117,7 +116,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     my sub foo ($n, *%h) { };
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
     #?pugs todo 'bug'
-    #?rakudo todo ''
     dies_ok { foo 1, n => 20, y => 300 },
         'Testing: `sub foo($n, *%h) { }; foo 1, n => 20, y => 300`';
 }

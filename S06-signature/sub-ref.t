@@ -29,7 +29,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(), 42,                 "basic invocation of an anonymous sub";
-    #?rakudo todo 'signature error checking'
     dies_ok { $foo.(23) }, "invocation of an parameterless anonymous sub with a parameter dies";
 }
 
@@ -38,7 +37,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Code);
     isa_ok($foo, Block);
     is $foo.(), 42,                 "basic invocation of a pointy block";
-    #?rakudo todo 'signature error checking'
     dies_ok { $foo.(23) },  "invocation of an parameterless pointy block with a parameter dies";
 }
 
@@ -59,7 +57,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     $c( 2, 3, 4, 5 );
 
     is $topic, 2, '$_ got right value for code ref';
-    #?rakudo todo 'RT #63974'
     is @topic_array, ( 3, 4, 5 ), '@_ got right value in code ref';
 }
 
