@@ -32,7 +32,6 @@ plan 31;
         @encoded.push([$count, $x]);
         return @encoded;
     }
-    #?rakudo todo 'wrong result, find out why'
     is encode(<a a a a b c c a a d e e e e>),
         [ [<4 a>], 'b', [<2 c>], [<2 a>], 'd', [<4 e>] ],
         'We should be able to run-length encode lists';

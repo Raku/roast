@@ -44,7 +44,6 @@ is($anon_block(), 1, '{} <anon block> works');
 
         eval '$anon_block( foo => "RT #64844" )';
         ok $! ~~ Exception, 'too many parameters';
-        #?rakudo todo 'RT #64844'
         is ~$!, $errmsg, 'same error for named param as positional';
     }
 }

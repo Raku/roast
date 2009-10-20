@@ -125,7 +125,6 @@ plan 67;
         return @factors
     }
 
-    #?rakudo todo 'containers, values, is copy'
     is prime_factors(315), (3,3,5,7), 'prime factors of 315 are 3,3,5,7';
 }
 
