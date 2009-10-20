@@ -129,7 +129,6 @@ lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
 }
 
 my $outer_lex = 17;
-#?rakudo todo 'ticket used class; RT #61356'
 {
     package RetOuterLex {sub outer_lex_val { $outer_lex } };
     is eval('RetOuterLex::outer_lex_val()'), $outer_lex, 'use outer lexical'

@@ -26,7 +26,6 @@ class Bar is Foo is hidden {
     }
 }
 
-#?rakudo todo 'Parrot bug sees us not complaining about uncaptured named parameters'
 dies_ok { Bar.new.m1(1, :x<1>, :y<2>) },  'is hidden means no implicit *%_';
 ok &Bar::m1.signature.perl !~~ /'*%_'/,   '*%_ does not show up in .perl of the Signature';
 
