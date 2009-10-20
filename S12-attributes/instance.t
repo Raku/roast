@@ -127,14 +127,13 @@ class Foo1 { has $.bar; };
 # L<S12/Construction and Initialization/If you name an attribute as a parameter, that attribute is initialized directly, so>
 
 
-#?rakudo skip 'calling positional params by name'
 {
     class Foo6 {
         has $.bar is rw;
-        has $.baz;
+        has $.baz is rw;
         has $!hidden;
 
-        submethod BUILD($self, $.bar, $.baz, $!hidden) {}
+        submethod BUILD($.bar, $.baz, $!hidden) {}
         method get_hidden() { $!hidden }
     }
 
@@ -148,11 +147,10 @@ class Foo1 { has $.bar; };
 
 # check that doing something in submethod BUILD works
 
-#?rakudo skip 'invalid arg type in named args (submethod)'
 {
     class Foo6a {
         has $.bar is rw;
-        has $.baz;
+        has $.baz is rw;
         has $!hidden;
 
         submethod BUILD ($!hidden, $.bar = 10, $.baz?) {
@@ -173,7 +171,7 @@ class Foo1 { has $.bar; };
 {
     class Foo6b {
         has $.bar is rw;
-        has $.baz;
+        has $.baz is rw;
 
         submethod BUILD ($.bar = 10, $.baz?) {
             $!baz = 9;
@@ -184,7 +182,6 @@ class Foo1 { has $.bar; };
     my $foo = Foo6b.new(bar => 7);
     ok($foo ~~ Foo6b, '... our Foo6b instance was created');
         
-    #?rakudo todo 'named argument passing to BUILD'
     is($foo.bar,        7, "getting a public rw attribute (1)"  );
     is($foo.baz,        9, "getting a public rw attribute (2)"  );
 }
@@ -207,7 +204,7 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
 # check that doing something in submethod BUILD works
 {
     class Foo7 {
-        has $.bar;
+        has $.bar is rw;
         has $.baz;
 
         submethod BUILD ($.bar = 5, $baz = 10 ) {
@@ -216,13 +213,11 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
     }
 
     my $foo7 = Foo7.new();
-    #?rakudo skip "attributes as named parameters in BUILD"
     is( $foo7.bar, 5,
         'optional attribute should take default value without passed-in value' );
     is( $foo7.baz, 20,
         '... optional non-attribute should too' );
     $foo7    = Foo7.new( :bar(4), :baz(5) );
-    #?rakudo 2 skip "attributes as named parameters in BUILD"
     is( $foo7.bar, 4,
         'optional attribute should take passed-in value over default' );
     is( $foo7.baz, 10,
