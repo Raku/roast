@@ -25,13 +25,13 @@ use Test;
 
 plan 40;
 
-sub f1 ($a, $b) { WHAT($a) ~ WHAT($b) }
-#?rakudo skip 'call positional parameters as named ones'
+sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
 {
     is f1(a     => 42, 23), 'Int()Int()', "'a => 42' is a named";
     is f1(:a(42),  23),     'Int()Int()', "':a(42)' is a named";
-    is f1(:a,      23),     'Int()Int()',  "':a' is a named";
-    is f1(:!a,     23),     'Int()Int()',  "':!a' is also named";
+    #?rakudo 2 todo ':a and :!a should be Bool'
+    is f1(:a,      23),     'Bool()Int()',  "':a' is a named";
+    is f1(:!a,     23),     'Bool()Int()',  "':!a' is also named";
 
     is f1("a"   => 42, 23), 'Pair()Int()', "'\"a\" => 42' is a named";
     is f1(("a") => 42, 23), 'Pair()Int()', "'(\"a\") => 42' is a pair";
@@ -110,7 +110,6 @@ sub f6 ($a) { WHAT($a) }
 }
 
 sub f7 (:$bar!) { WHAT($bar) }
-#?rakudo 3 todo 'variables as keys of pairs forbidden'
 {
     my $bar = 'bar';
 

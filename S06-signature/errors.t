@@ -34,7 +34,6 @@ eval_dies_ok('sub quuuux ($!) { ... }',
     'parser rejects magicals as args (2)');
 
 # RT #64344
-#?rakudo todo 'RT #64344'
 {
     sub empty_sig() { return }
     dies_ok { empty_sig( 'RT #64344' ) },
