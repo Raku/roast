@@ -38,19 +38,8 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name ) is export(:DEFAU
         next if ! %expected.exists( $attr );
 
         my $attr_good;
-        my $diag_ok = 0;
-        given %expected{$attr} {
-            when Regex {
-                $attr_good = %got{$attr} ~~ %expected{$attr};
-            }
-            when Callable {
-                $attr_good = %expected{$attr}( %got{$attr} );
-            }
-            default {
-                $attr_good = %got{$attr} eq %expected{$attr};
-                $diag_ok = 1;
-            }
-        }
+        $attr_good = %got{$attr} ~~ %expected{$attr};
+        my $diag_ok = ?(%got{$attr} ~~ Str|Num);
 
         # The check for this attribute failed.
         # Note why for a diag() after the test failure is reported.
@@ -191,3 +180,5 @@ This will die if it can't clean up the temp files it uses to do its work.
 All other errors should be trapped and reported via the 'test_died' item.
 
 =end pod
+
+# vim: ft=perl6
