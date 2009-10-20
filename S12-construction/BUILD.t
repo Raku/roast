@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 # L<S12/Construction and Initialization/The default BUILD and BUILDALL>
 
@@ -95,6 +95,15 @@ class TestCompiler is Perl6::Compiler {
 TestCompiler.new;
 #?rakudo todo 'RT #67888'
 is $counter, 1, "testing BUILD in compiler subclass";
+}
+
+{
+    BEGIN { @*INC.push: 't/spec/packages' }
+    use Test::Util;
+    is_run
+        'class Foo { method BUILD() { ... } }',
+        { out => '', err => /BUILD/ & /submethod/ },
+        'method BUILD produces a compile-time warning';
 }
 
 # vim: ft=perl6
