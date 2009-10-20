@@ -87,7 +87,6 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
     ok(!($b != 3), "1 is ne 3, and (2 | 3) is both ne 3 and eq 3, so it's ne, so 1 ^ 2 | 3");
 };
 
-#?rakudo skip 'autothreading over abs()'
 {
     my $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
     ok(!($a == 1), 'junctive or binds more tightly then abs (1)');

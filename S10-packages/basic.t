@@ -117,7 +117,6 @@ lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
 }
 
 # making test below todo causes trouble right now ...
-#?rakudo skip 'ticket based on module; RT #64876'
 {
     eval_lives_ok 'package InternalCall { sub foo() { return 42 }; foo() }',
         'call of method defined in package';

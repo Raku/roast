@@ -72,7 +72,6 @@ ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
 ok !Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is false";
 ok !Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is false";
 #?pugs todo "bug"
-#?rakudo skip 'Class type not declared'
 ok !Foo::Bar.HOW.isa(Foo::Bar, Class),    "subclass.HOW.isa(Class) is false";
 ok !Foo::Bar.HOW.does(Foo::Bar, Class),   "subclass.HOW.does(Class) is false";
 #?rakudo 2 skip 'no ::CLASS class'

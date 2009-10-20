@@ -19,7 +19,6 @@ plan 78;
         return $x;
     }
 
-    #?rakudo skip 'Passing positional parameters as named ones; RT #54808'
     is b(:x(3)), 3, 'Can pass positional parameters as named ones';
 
     sub c(:$w=4){
@@ -34,7 +33,6 @@ plan 78;
 # L<S06/Named parameters>
 
 sub simple_pos_param($x) { $x }
-#?rakudo 2 skip 'x => 3 does not assign to $x in sub signature'
 is simple_pos_param(x => 3), 3, "positional param may be addressed by name (1)";
 is simple_pos_param(:x(3)),  3, "positional param may be addressed by name (2)";
 
@@ -190,7 +188,6 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     ok(%rest<grass> ~~ undef, "grass argument was NOT slurped");
 }
 
-#?rakudo skip 'positional value passed by name did not work'
 {
     my $ref;
     sub setref($refin) {

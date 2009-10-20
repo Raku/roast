@@ -26,7 +26,6 @@ eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
 eval_dies_ok 'only sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
-#?rakudo skip 'eval error in redeclared subs'
 eval_lives_ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 

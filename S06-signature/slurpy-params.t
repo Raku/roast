@@ -232,7 +232,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     sub slurp_int( Int *@a ) { @a[0] }
     #?rakudo todo 'regression introduced by 41bc84f00d (RT 69622)'
     dies_ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
-    #?rakudo skip 'RT #64814'
     is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
 
     sub slurp_of_int( *@a of Int ) { @a[0] }
@@ -252,7 +251,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     #?rakudo skip 'RT #64814'
     is $y.x_array( $x ), 4, 'call to method with typed array sig works';
     is $y.of_x( $x ),    3, 'call to method with "slurp of" sig works';
-    #?rakudo skip 'RT #64814'
     is $y.x_slurp( $x ), 2, 'call to method with typed slurpy sig works';
     dies_ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
     #?rakudo todo 'RT #64814'
@@ -274,7 +272,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is $count, 1, 'Object slurpy param doesnt autothread';
 }
 
-#?rakudo skip 'Typed slurpy, junctions, and autothreading (RT 68142)'
 ##  Note:  I've listed these as though they succeed, but it's possible
 ##  that the parameter binding should fail outright.  --pmichaud
 {

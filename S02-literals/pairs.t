@@ -108,7 +108,6 @@ sub f6 ($a) { WHAT($a) }
     #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
     isa_ok f6([,] %hash_of_pairs), Str,  '...but [,] %hash is';
-    #?rakudo skip 'prefix:<|>'
     isa_ok f6(|%hash_of_pairs),     Str,  '... and so is |%hash';
 }
 

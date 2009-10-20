@@ -78,7 +78,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
-    #?rakudo skip 'calling positional parameters by name'
     is $foo.(x => 42), 142,    "calling an anonymous sub with a positional param addressed by name";
     dies_ok { $foo.() }, 
         "calling an anonymous sub expecting a param without a param dies";

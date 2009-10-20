@@ -50,7 +50,6 @@ dies_ok({eval {42}}, 'block eval is gone');
     is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
 }
 
-#?rakudo skip 'lexicals outside class not visible inside class'
 {
     my $x = 5;
     class EvalTester2 {

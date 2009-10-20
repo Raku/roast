@@ -92,7 +92,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi wins_anon(::T     $, T       $) { 0  }
     multi wins_anon(        $,         $) { -1 }
 
-    #?rakudo 3 skip 'RT 69798'
     is wins_anon(Scissor, Paper),  1, 'MMD with anonymous parameters (1)';
     is wins_anon(Paper,   Paper),  0, 'MMD with anonymous parameters (2)';
     is wins_anon(Stone,   Paper), -1, 'MMD with anonymous parameters (3)';

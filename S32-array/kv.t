@@ -46,9 +46,7 @@ Basic C<kv> tests, see S32.
 { # check the non-invocant form with named arguments
     my @array = <a b c d>;
     my @kv = kv(:array(@array));
-#?rakudo skip 'named args'
     is(+@kv, 8, 'kv(:array(@array)) returns the correct number of elems');
-#?rakudo skip 'named args'
     is(~@kv, "0 a 1 b 2 c 3 d", 'kv(:array(@array)) has no inner list');
 }
 
