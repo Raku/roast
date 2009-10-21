@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan *;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -84,5 +84,19 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     class DE is DB is DC { };
     is DE.new.foo, 'OH HAI', 'same with punning and inheritance';
 }
+
+# RT #69919
+{
+    role RT69919 {
+        my $lex = 'Luthor';
+        method rt69919 { return $lex }
+    }
+    class IL does RT69919 {}
+
+    #?rakudo skip 'RT 69919, Null PMC access in type()'
+    is IL.new.rt69919, 'Luthor', 'access lexical declared in role from method called via class that does the role';
+}
+
+done_testing;
 
 # vim: syn=perl6
