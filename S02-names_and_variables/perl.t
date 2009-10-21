@@ -1,6 +1,6 @@
 use v6;
-
 use Test;
+plan *;
 
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
@@ -55,7 +55,6 @@ my @tests = (
     [ { :a(1) }, { :b(2), :c(3) } ],
 );
 
-plan 18 + 2*@tests;
 #?pugs emit force_todo 8, 45..50, 94, 96;
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
@@ -203,5 +202,14 @@ plan 18 + 2*@tests;
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     # TODO: check that eval( RT67790.HOW.perl ) 'is' RT67790.HOW
 }
+
+# RT #69869
+{
+    is 1.0.WHAT, Num, '1.0 is Num';
+    #?rakudo todo 'RT #69869'
+    is eval( 1.0.perl ).WHAT, Num, "1.0 perl'd and eval'd is Num";
+}
+
+done_testing;
 
 # vim: ft=perl6
