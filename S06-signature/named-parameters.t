@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 78;
+plan *;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -212,8 +212,18 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     dies_ok { renames(:x(23)) }, 'old name is not available';
 }
 
+# L<06/Parameters and arguments/"All parameters must either have a unique name">
+
 #?rakudo todo 'RT #68086'
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
+
+#?rakudo 3 todo 'sub params with the same name'
+eval_dies_ok 'sub svn28865( $a, :a($b) ) {}',
+             'sub params with the same name via renaming';
+eval_dies_ok 'sub svn28865( $a, :a(@b) ) {}',
+             'sub params with same name via renaming and different types';
+eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
+             'sub params with the same name and different types';
 
 # RT #68524
 {
@@ -228,5 +238,7 @@ eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
     ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
         'parameter rename appears in .signature.perl' );
 }
+
+done_testing;
 
 # vim: ft=perl6
