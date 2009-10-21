@@ -1,6 +1,6 @@
 use v6;
-
 use Test;
+plan *;
 
 =begin pod
 
@@ -11,8 +11,6 @@ This test tests the C<WHAT> builtin.
 =end pod
 
 # L<S12/Introspection/"WHAT">
-
-plan 15;
 
 # Basic subroutine/method form tests for C<WHAT>.
 {
@@ -66,5 +64,30 @@ plan 15;
 {
     ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi';
 }
+
+# RT #69915
+{
+    sub rt69915f( $a, $b ) { return WHAT($a) ~ '~' ~ WHAT($b) }
+    sub rt69915m( $a, $b ) { return $a.WHAT  ~ '~' ~ $b.WHAT  }
+
+    is rt69915m( a => 42, 23 ), 'Int()~Int()', 'WHAT method on ints';
+
+    #?rakudo 4 todo 'RT 69915'
+    is rt69915f( a => 42, 23 ), 'Int()~Int()', 'WHAT function on ints (1)';
+    is rt69915f( 23, a => 42 ), 'Int()~Int()', 'WHAT function on ints (2)';
+
+    is rt69915f( :a, 23 ), 'Bool()~Int()', 'WHAT function on bool and int';
+    is rt69915m( :a, 23 ), 'Bool()~Int()', 'WHAT method on bool and int';
+
+    sub wm($x) { return $x.WHAT }
+    sub rt69915wm( $a, $b ) { return wm($a) ~ '~' ~ wm($b) }
+    is rt69915wm( a => 42, 23 ), 'Int()~Int()', 'WHAT method on ints via func';
+    
+    sub wf($x) { return WHAT($x) }
+    sub rt69915wf( $a, $b ) { return wf($a) ~ '~' ~ wf($b) }
+    is rt69915wf( a => 42, 23 ), 'Int()~Int()', 'WHAT func on ints via func';
+}
+
+done_testing;
 
 # vim: ft=perl6
