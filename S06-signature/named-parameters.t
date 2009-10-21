@@ -212,7 +212,7 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     dies_ok { renames(:x(23)) }, 'old name is not available';
 }
 
-# L<06/Parameters and arguments/"All parameters must either have a unique name">
+# L<06/Parameters and arguments/"A signature containing a name collision">
 
 #?rakudo todo 'RT #68086'
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
@@ -224,6 +224,16 @@ eval_dies_ok 'sub svn28865( $a, :a(@b) ) {}',
              'sub params with same name via renaming and different types';
 eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
              'sub params with the same name and different types';
+
+{
+    sub svn28870( $a, @a ) { return ( $a, +@a ) }
+
+    my $item = 'bughunt';
+    my @many = ( 22, 'twenty-two', 47 );
+
+    is( svn28870( $item, @many ), ( 'bughunt', 3 ),
+        'call to sub with position params of same name and different type' );
+}
 
 # RT #68524
 {
