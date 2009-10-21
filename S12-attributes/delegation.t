@@ -147,6 +147,30 @@ class PairTest {
     ok $t.c ~~ undef, 'died assignment had no effect';
 }
 
+# arrays, hashes
+{
+    class PseudoArray {
+        has @!data handles <Str push pop elems shift unshift>;
+    }
+    my $x = PseudoArray.new();
+    $x.push: 3, 4;
+    $x.push: 6;
+    is ~$x, '3 4 6',    'delegation of .Str and .push to array attribute';
+    $x.pop;
+    is ~$x, '3 4',      'delegation of .pop';
+    $x.unshift('foo');
+    is ~$x, 'foo 3 4',  'delegation of .unshift';
+    is $x.shift, 'foo', 'delegatin of .shift (1)';
+    is ~$x, '3 4',      'delegation of .shift (2)';
+    is $x.elems, 2,     'delegation of .elems';
+}
+{
+    class PseudoHash { has %!data handles <push Str> };
+    my $h = PseudoHash.new;
+    $h.push: 'a' => 5;
+    is $h.Str, ~{a => 5}, 'delegatin of .Str and .push to hash';
+}
+
 done_testing;
 
 # vim: syn=perl6
