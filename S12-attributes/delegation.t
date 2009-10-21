@@ -160,7 +160,7 @@ class PairTest {
     is ~$x, '3 4',      'delegation of .pop';
     $x.unshift('foo');
     is ~$x, 'foo 3 4',  'delegation of .unshift';
-    is $x.shift, 'foo', 'delegatin of .shift (1)';
+    is $x.shift, 'foo', 'delegation of .shift (1)';
     is ~$x, '3 4',      'delegation of .shift (2)';
     is $x.elems, 2,     'delegation of .elems';
 }
@@ -168,7 +168,7 @@ class PairTest {
     class PseudoHash { has %!data handles <push Str> };
     my $h = PseudoHash.new;
     $h.push: 'a' => 5;
-    is $h.Str, ~{a => 5}, 'delegatin of .Str and .push to hash';
+    is $h.Str, ~{a => 5}, 'delegation of .Str and .push to hash';
 }
 
 done_testing;
