@@ -1,7 +1,5 @@
 use v6;
-
 use Test;
-
 plan *;
 
 =begin pod
@@ -431,5 +429,48 @@ ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT 62196)';
 
+# RT #69762
+{
+    ok sub {} ~~ Callable, '~~ Callable (true)';
+    nok 68762 ~~ Callable, '~~ Callable (false)';
+    ok 69762 !~~ Callable, '!~~ Callable (true)';
+    #?rakudo todo 'false: sub {} !~~ Callable'
+    nok sub {} !~~ Callable, '!~~ Callable (false)';
+
+    ok sub {} ~~ Routine, '~~ Routine (true)';
+    nok 68762 ~~ Routine, '~~ Routine (false)';
+    #?rakudo 2 skip 'RT 69762, Class P6protoobject already registered!'
+    ok 69762 !~~ Routine, '!~~ Routine (true)';
+    nok sub {} !~~ Routine, '!~~ Routine (false)';
+
+    ok sub {} ~~ Sub, '~~ Sub (true)';
+    nok 68762 ~~ Sub, '~~ Sub (false)';
+    #?rakudo 2 skip 'RT 69762, Class P6protoobject already registered!'
+    ok 69762 !~~ Sub, '!~~ Sub (true)';
+    nok sub {} !~~ Sub, '!~~ Sub (false)';
+
+    ok sub {} ~~ Block, '~~ Block (true)';
+    nok 68762 ~~ Block, '~~ Block (false)';
+    #?rakudo 2 skip 'RT 69762, Class P6protoobject already registered!'
+    ok 69762 !~~ Block, '!~~ Block (true)';
+    nok sub {} !~~ Block, '!~~ Block (false)';
+
+    ok sub {} ~~ Code, '~~ Code (true)';
+    nok 68762 ~~ Code, '~~ Code (false)';
+    #?rakudo 2 skip 'RT 69762, Class P6protoobject already registered!'
+    ok 69762 !~~ Code, '!~~ Code (true)';
+    nok sub {} !~~ Code, '!~~ Code (false)';
+
+    class RT68762 { method rt68762 {} };
+
+    ok &RT68762::rt68762 ~~ Method, '~~ Method (true)';
+    nok 68762            ~~ Method, '~~ Method (false)';
+    #?rakudo 2 skip 'RT 69762, Class P6protoobject already registered!'
+    ok 69762              !~~ Method, '!~~ Method (true)';
+    nok &RT68762::rt68762 !~~ Method, '!~~ Method (false)';
+
+}
+
 done_testing();
+
 # vim: ft=perl6
