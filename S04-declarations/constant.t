@@ -246,6 +246,21 @@ plan *;
              'assign constant its own value from expression';
 }
 
+#?rakudo skip 'RT 69967'
+{
+    constant C = 6;
+    class A {
+        constant B = 5;
+        has $.x = B;
+        has $.y = A::B;
+        has $.z = C;
+    }
+
+    is A.new.x, 5, 'Can declare and use a constant in a class';
+    is A.new.y, 5, 'Can declare and use a constant with FQN in a class';
+    is A.new.z, 6, 'Can use outer constants in a class';
+}
+
 done_testing;
 
 # vim: ft=perl6
