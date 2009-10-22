@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan *;
 
 # L<S14/Traits/>
 
@@ -37,5 +37,21 @@ is cheezburger(), "nom", 'can call sub that has had a trait applied to it by nam
 is &cheezburger.description, 'tasty',  'named trait handler applied other role set with argument';
 is lolcat(), "undescribable", 'can call sub that has had a trait applied to it by named param without arg';
 is &lolcat.description, 'missing description!', 'named trait handler applied other role without argument';
+
+#?rakudo skip 'RT 69893'
+{
+    my $recorder = '';
+    role woowoo { }
+    multi trait_mod:<is>(Routine $c, woowoo) {
+        $c.wrap: sub {
+            $recorder ~= 'wrap';
+        }
+    }
+    sub foo is woowoo { };
+    lives_ok &foo, 'Can call subroutine that was wrapped by a trait';
+    is $recorder, 'wrap', 'and the wrapper has been called once';
+}
+
+done_testing();
 
 # vim: ft=perl6
