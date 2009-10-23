@@ -205,9 +205,10 @@ my @tests = (
 
 # RT #69869
 {
-    is 1.0.WHAT, Num, '1.0 is Num';
+    #?rakudo todo 'decimal is Rat per Spec r28881'
+    is 1.0.WHAT, Rat, '1.0 is Rat';
     #?rakudo todo 'RT #69869'
-    is eval( 1.0.perl ).WHAT, Num, "1.0 perl'd and eval'd is Num";
+    is eval( 1.0.perl ).WHAT, Rat, "1.0 perl'd and eval'd is Rat";
 }
 
 done_testing;

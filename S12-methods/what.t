@@ -85,6 +85,11 @@ ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
     is rt69915wf( a => 42, 23 ), 'Int()~Int()', 'WHAT func on ints via func';
 }
 
+is 6.02e23.WHAT, Num, 'decimal using "e" is a Num';
+#?rakudo todo 'decimal is Rat per Spec r28881'
+is 1.23456.WHAT, Rat, 'decimal without "e" is Rat';
+ok 1.1 == 11/10, 'decimal == the equivalent rational';
+
 done_testing;
 
 # vim: ft=perl6
