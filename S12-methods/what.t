@@ -60,10 +60,7 @@ This test tests the C<WHAT> builtin.
     is +("bac" ~~ /a/).WHAT, 0, 'numification of .WHAT of a Match works';
 }
 
-# RT #66928
-{
-    ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi';
-}
+ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
 
 # RT #69915
 {
