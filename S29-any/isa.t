@@ -18,7 +18,7 @@ L<S29/Any/=item isa/>
 
 =end kwid 
 
-plan 11;
+plan 15;
 
 { # invocant notation  
     my @arr = <1 2 3 4>;
@@ -57,6 +57,19 @@ plan 11;
 
     ok([1, 2, 3, 4].isa(Array), '... [1, 2, 3, 4].isa("Array") works');
     ok(![1, 2, 3, 4].isa(Hash), '... [1, 2, 3, 4].isa("Hash") fail predicably');    
+}
+
+class Thing {};
+{
+    my $thing = Thing.new();
+    ok($thing.isa("Thing"));
+    ok($thing.isa(Thing));
+}
+class Thing::something {};
+{
+    my $thing = Thing::something.new();
+    ok($thing.isa("Thing::something"));
+    ok($thing.isa(Thing::something));
 }
 
 # vim: ft=perl6
