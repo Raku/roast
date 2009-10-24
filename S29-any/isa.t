@@ -62,14 +62,15 @@ plan 15;
 class Thing {};
 {
     my $thing = Thing.new();
-    ok($thing.isa("Thing"));
-    ok($thing.isa(Thing));
+    ok($thing.isa("Thing"), '.isa string naming class with no colon');
+    ok($thing.isa(Thing), '.isa named class');
 }
 class Thing::something {};
 {
     my $thing = Thing::something.new();
-    ok($thing.isa("Thing::something"));
-    ok($thing.isa(Thing::something));
+    #?rakudo todo 'RT 69999'
+    ok($thing.isa("Thing::something"), '.isa string naming class with colons');
+    ok($thing.isa(Thing::something), '.isa named class with colons');
 }
 
 # vim: ft=perl6
