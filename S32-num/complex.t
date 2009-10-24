@@ -11,6 +11,11 @@ isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 
+#?rakudo 3 skip 'standalone i NYI'
+is_approx(i, 1i, 'standalone i works to generate a Complex number');
+is_approx(1 - i, 1 - 1i, 'standalone i works to generate a Complex number');
+is_approx(2i * i, -2, 'standalone i works times a Complex number');
+
 # checked with the open CAS system "yacas":
 # In> (3+4*I) / (2-I)
 # Out> Complex(2/5,11/5)
