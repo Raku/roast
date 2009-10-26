@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan *;
 
 =begin description
 
@@ -69,6 +69,12 @@ ok !defined($/), '$/ still undef in the outer block';
 
 {
     given '-Wall' {
+        if $_ ~~ /al/ {
+            ok $/ eq 'al', '$/ is properly set with explicit $_ in a given { } block';
+        }
+        else {
+            flunk 'regex did not match - $/ is properly set with explicit $_ in a given { } block';
+        }
         if /\w+/ {
             #?rakudo todo 'RT 67864'
             ok $/ eq 'Wall', '$/ is properly set in a given { } block';
@@ -101,5 +107,7 @@ ok !defined($/), '$/ still undef in the outer block';
         }
     }
 }
+
+done_testing;
 
 # vim: ft=perl6
