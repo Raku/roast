@@ -12,9 +12,8 @@ Tests for the die() builtin
 
 =end pod
 
-#?rakudo todo 'exception handling'
 {
-    ok( ! try { die "foo"; 1 }, 'die in try cuts off execution');
+    ok( !defined( try { die "foo"; 1; } ), 'die in try cuts off execution');
     my $error = $!;
     is($error, 'foo', 'got $! correctly');
 }
