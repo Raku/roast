@@ -421,7 +421,6 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
     is 6 !% 4, Bool::False, '6 !% 4';
 
     is (1..10).grep({ $_ !% 3 }), <3 6 9>, '!% works with explicit closure';
-    #?rakudo todo 'RT 69172'
     is (1..10).grep( * !% 3 ), <3 6 9>, '!% works with whatever *'
 }
 
