@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 11;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -63,6 +63,21 @@ if $*OS eq any <linux darwin> { # please add more valid OS names
     #warn "TEST 3 $received";
     $expected = "discard '' received\n";
     is $received, $expected, "discard server and client";
+
+    #?rakudo 8 skip
+    # test 4 tests recv with a parameter
+    $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
+    $expected = $received.split("\n");
+    my $i = 0;
+    is $expected[$i++], '0123456', 'received first 7 characters';
+    is $expected[$i++], '789', 'received next 3 characters';
+    is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', 'remaining 26 were buffered';
+    # Multibyte characters
+    is $expected[$i++], chr(0xbeef), "received {chr 0xbeef}";
+    is $expected[$i++], 3, '... which is 3 bytes';
+    is $expected[$i++], 2, 'received 2 bytes of a 3 byte unicode character';
+    is $expected[$i++], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
+    is $expected[$i++], 3, '... which is 3 bytes';
 }
 else {
     # eg Win32 shell script needs writing

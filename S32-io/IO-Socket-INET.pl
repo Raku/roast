@@ -82,6 +82,45 @@ given $test {
             $client.close();
         }
     }
+
+    when 4 { # test number 4 - recv with parameter
+        if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.socket(PF_INET, SOCK_STREAM, TCP);
+            $server.bind($host, $port.Int);
+            $server.listen();
+            my $fd = open( 't/spec/S32-io/server-ready-flag', :w );
+            $fd.close();
+            while my $client = $server.accept() {
+                my $received = $client.recv(); # receive everything
+                $client.send($received); # send it all back
+                $client.close();
+            }
+        }
+        else {
+            my $sock = IO::Socket::INET.new;
+            until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
+            $sock.open($host, $port.Int);
+            # Also sends two 3 byte unicode characters
+            $sock.send(([~] '0'..'9', 'a'..'z') ~ "{chr 0xbeef}{chr 0xbabe}");
+            # Tests that if we do not receive all the data available
+            # it is buffered correctly for when we do request it
+            say $sock.recv(7); # 0123456
+            say $sock.recv(3); # 789
+            say $sock.recv(26); # a-z
+            # All is left are the two 3 byte characters 
+            my $beef = $sock.recv(3);
+            say $beef;
+            say $beef.bytes;
+            # get two bytes now
+            my $babe = $sock.recv(2);
+            say $babe.bytes;
+            # join it together
+            $babe ~= $sock.recv(1);
+            say $babe;
+            say $babe.bytes;
+            $sock.close();
+        }
+    }
 }
 
 =begin pod
