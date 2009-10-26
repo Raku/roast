@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 14;
+plan *;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -62,5 +62,13 @@ plan 14;
 is( list(1).reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
 
 eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
+
+#?rakudo skip 'RT 65668'
+{
+    is( ((1..10).list.reduce: &infix:<+>), 55, '.reduce: &infix:<+> works' );
+    is( ((1..4).list.reduce: &infix:<*>), 24, '.reduce: &infix:<*> works' );
+}
+
+done_testing;
 
 # vim: ft=perl6
