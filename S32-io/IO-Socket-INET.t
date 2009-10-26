@@ -64,7 +64,6 @@ if $*OS eq any <linux darwin> { # please add more valid OS names
     $expected = "discard '' received\n";
     is $received, $expected, "discard server and client";
 
-    #?rakudo 8 skip
     # test 4 tests recv with a parameter
     $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
     $expected = $received.split("\n");
