@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan *;
 
 =begin description
 
@@ -162,5 +162,23 @@ ok 0 ~~ NW1,    'subset declaration without where clause accepts right value';
 ok 42 ~~ NW1,   'subset declaration without where clause accepts right value';
 ok 4.2 !~~ NW1, 'subset declaration without where clause rejects wrong value';
 ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
+
+# RT #65700
+{
+    subset Small of Int where { $^n < 10 }
+    class RT65700 {
+        has Small $.small;
+    }
+    dies_ok { RT65700.new( small => 20 ) }, 'subset type is enforced as attribute in new() (1)';
+    lives_ok { RT65700.new( small => 2 ) }, 'subset type enforced as attribute in new() (2)';
+
+    my subset Teeny of Int where { $^n < 10 }
+    class T { has Teeny $.teeny }
+    #?rakudo 2 todo 'RT 65700'
+    dies_ok { T.new( small => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
+    lives_ok { T.new( small => 2 ) }, 'my subset type enforced as attribute in new() (2)';
+}
+
+done_testing;
 
 # vim: ft=perl6
