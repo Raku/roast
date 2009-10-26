@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan *;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -51,6 +51,8 @@ eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error'
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
 ok(&foo ~~ Multi, 'a multi does Multi');
+#?rakudo todo 'RT 65672'
+ok(&foo ~~ Callable, 'a multi does Callable');
 is(~&foo, 'foo',  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
@@ -96,5 +98,16 @@ is(~&foo, 'foo',  'a multi stringifies sensibly');
     is rt64922(1),     1, 'optional parameter does not break type-based candidate sorting';
     is rt64922([1,2]), 2, 'optional parameter does not break type-based candidate sorting';
 }
+
+# RT #65672
+{
+    multi rt65672()   { 99 }
+    multi rt65672($x) { $x }
+    sub rt65672caller( &x ) { &x() }
+    #?rakudo skip 'RT 65672'
+    is rt65672caller( &rt65672 ), 99, 'multi can be passed as callable';
+}
+
+done_testing;
 
 # vim: ft=perl6
