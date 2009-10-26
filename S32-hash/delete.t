@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 9;
+plan *;
 
 # L<S02/Names and Variables/:delete>
 
@@ -45,5 +45,18 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
     eval_dies_ok '$a :delete', "Can't :delete a scalar";
 }
 
+# RT #68482
+{
+    my %rt68482 = 1 => 3;
+    #?rakudo todo 'RT 68482'
+    is %rt68482.delete(1).WHAT, 3.WHAT, '.delete.WHAT is the element';
+
+    %rt68482 = 1 => 3;
+    my $rt68482 = %rt68482.delete(1);
+    #?rakudo todo 'RT 68482'
+    is $rt68482.WHAT, 3.WHAT, '.WHAT of stored .delete is the element';
+}
+
+done_testing;
 
 # vim: ft=perl6
