@@ -1,8 +1,8 @@
 use v6;
-
 use Test;
-
-plan 21;
+BEGIN { @*INC.push('t/spec/packages/') };
+use Test::Util;
+plan *;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -80,5 +80,18 @@ if !eval('("a" ~~ /a/)') {
     ok %( 'foo' ~~ /<alpha> oo/ ){ 'alpha' }:exists,
        'Match coerced to Hash says match exists';
 }
+
+#?rakudo skip 'RT 70007'
+nok 'aa' ~~ /(.)$1/, 'match with non-existent capture does not match';
+#?rakudo todo 'RT 70007'
+is_run( q{'aa' ~~ /(.)$1/},
+        {
+            status => 0,
+            out    => '',
+            err    => rx/\S/,
+        },
+        'match with non-existent capture emits a warning' );
+
+done_testing;
 
 # vim: ft=perl6
