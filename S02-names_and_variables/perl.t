@@ -211,6 +211,13 @@ my @tests = (
     is eval( 1.0.perl ).WHAT, Rat, "1.0 perl'd and eval'd is Rat";
 }
 
+# RT #65988
+{
+    my $rt65988 = (\(1,2), \(3,4));
+    #?rakudo skip 'RT 65988'
+    is_deeply eval( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
+}
+
 done_testing;
 
 # vim: ft=perl6
