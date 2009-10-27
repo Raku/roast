@@ -4,35 +4,11 @@ use Test;
 
 =begin kwid
 
-= DESCRIPTION
-
-This file tests a parse failure between expressions
-and list quotes <>:
-
-The C<< <3 >> is seen as the start of a list that
-extends into the commented line. The expression
-should be parsed as restricted to the one C<ok()>
-line of course.
-
-The following expressions also contend for the
-same problem:
-
-Two-way comparison:
-
-  1 < EXPR > 2
-
-Hash access:
-
-  HASHEXPR<KEY>
-
-= TODO
-
-Add relevant Sxx and/or Axx references, that
-describe the conflicting cases.
+This file tests the circumfix:«< >» quoting constructs
 
 =end kwid
 
-plan 17;
+plan *;
 
 # L<S02/"Literals">
 # L<S03/"Chained comparisons">
@@ -104,5 +80,19 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
     isa_ok($c, Capture, 'List in scalar context becomes a Capture');
     dies_ok {$c.push: 'd'}, '... which is immutable';
 }
+
+#?rakudo skip 'magic type of <...> contents'
+{
+    # L<S02/Literals/For any item in the list that appears to be numeric>
+    my @a = <foo 3 4.5 5.60 1.2e1>;
+    is ~@a, 'foo 3 4.5 5.60 1.2e1',
+       '<...> numeric literals stringify correctly';
+    isa_ok @a[0], Str, '<foo ...> is a Str';
+    isa_ok @a[1], Int, '< ... 3 ...> is an Int';
+    isa_ok @a[2], Rat, '< ... 4.5 ...> is a Rat';
+    isa_ok @a[4], Num, '< ... 1.2e1 ...> is a Num';
+}
+
+done_testing();
 
 # vim: ft=perl6
