@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 18;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -77,6 +77,20 @@ if $*OS eq any <linux darwin> { # please add more valid OS names
     is $expected[$i++], 2, 'received 2 bytes of a 3 byte unicode character';
     is $expected[$i++], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
     is $expected[$i++], 3, '... which is 3 bytes';
+
+    #?rakudo 7 skip
+    # test 5 tests get()
+    $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 5 $port};
+    $expected = $received.split("\n");
+    $i = 0;
+    is $expected[$i++], "'Twas brillig, and the slithy toves",
+    	'get() with default separator';
+    is $expected[$i++], 'Did gyre and gimble in the wabe;', 'default separator';
+    is $expected[$i++], 'All mimsy were the borogoves,', '\r\n separator';
+    is $expected[$i++], 'And the mome raths outgrabe', '. as a separator';
+    is $expected[$i++], 'O frabjous day', '! separator not at end of string';
+    is $expected[$i++], ' Callooh', 'Multiple separators not at end of string';
+    is $expected[$i++], ' Callay', '! separator at end of string';
 }
 else {
     # eg Win32 shell script needs writing

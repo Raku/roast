@@ -121,6 +121,43 @@ given $test {
             $sock.close();
         }
     }
+
+    when 5 { # test number 5 - get()
+        if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.socket(PF_INET, SOCK_STREAM, TCP);
+            $server.bind($host, $port.Int);
+            $server.listen();
+            my $fd = open('t/spec/S32-io/server-ready-flag', :w);
+            $fd.close();
+            while my $client = $server.accept() {
+                # default line separator
+                $client.send("'Twas brillig, and the slithy toves\n");
+                $client.send("Did gyre and gimble in the wabe;\n");
+                # custom line separator: \r\n
+                $client.send("All mimsy were the borogoves,\r\n");
+                # another custom separator: .
+                $client.send("And the mome raths outgrabe.");
+                # separator not at the end of the sent data: !
+                $client.send("O frabjous day! Callooh! Callay!");
+                $client.close();
+            }
+        } else { # client
+            my $sock = IO::Socket::INET.new;
+            until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
+            $sock.open($host, $port.Int);
+            say $sock.get();
+            say $sock.get();
+            $sock.input-line-separator = "\r\n";
+            say $sock.get();
+            $sock.input-line-separator = '.';
+            say $sock.get();
+            $sock.input-line-separator = '!';
+            say $sock.get();
+            say $sock.get(); # will begin
+            say $sock.get(); # with a space
+            $sock.close();
+        }
+    }
 }
 
 =begin pod
