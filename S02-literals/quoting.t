@@ -1,8 +1,6 @@
 use v6;
-
 use Test;
-
-plan 140;
+plan *;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -250,6 +248,13 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q3, 'FOO gorch BAR', ", texas quotes");
     is(~@q4, 'FOO gorch BAR', ", and long form");
 };
+
+#?rakudo todo 'RT 65654'
+{
+    my $rt65654 = 'two words';
+    is «a $rt65654 z».elems,   4, 'interpolate variable with spaces (French)';
+    is <<a $rt65654 z>>.elems, 4, 'interpolate variable with spaces (Texas)';
+}
 
 #?rakudo skip '«...»'
 {
@@ -530,5 +535,7 @@ Hello, World
     is('test\\', "test\\", "backslashes at end of single quoted string");
     is 'a\\b\''.chars, 4, 'backslash and single quote';
 }
+
+done_testing;
 
 # vim: ft=perl6
