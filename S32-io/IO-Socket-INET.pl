@@ -26,7 +26,7 @@ given $test {
             $fd.close();
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
-                my $received = $client.recv();
+                my $received = $client.recv(36);
                 # warn "SERVER RECEIVED '$received'";
                 $client.send( $received );
                 # warn "SERVER REPLIED";
@@ -60,7 +60,7 @@ given $test {
             # warn "SERVER LISTENING";
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
-                my $received = $client.recv();
+                my $received = $client.recv(36);
                 # warn "SERVER RECEIVED '$received'";
                 $client.close(); # without sending anything back
             }
@@ -91,8 +91,9 @@ given $test {
             my $fd = open( 't/spec/S32-io/server-ready-flag', :w );
             $fd.close();
             while my $client = $server.accept() {
-                my $received = $client.recv(); # receive everything
-                $client.send($received); # send it all back
+                # Also sends two 3 byte unicode characters
+                $client.send(([~] '0'..'9', 'a'..'z') 
+                    ~ "{chr 0xbeef}{chr 0xbabe}");
                 $client.close();
             }
         }
@@ -100,8 +101,6 @@ given $test {
             my $sock = IO::Socket::INET.new;
             until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
             $sock.open($host, $port.Int);
-            # Also sends two 3 byte unicode characters
-            $sock.send(([~] '0'..'9', 'a'..'z') ~ "{chr 0xbeef}{chr 0xbabe}");
             # Tests that if we do not receive all the data available
             # it is buffered correctly for when we do request it
             say $sock.recv(7); # 0123456
