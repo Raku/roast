@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 14;
+plan 16;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -49,5 +49,22 @@ ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
 eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
+
+# L<S05/Variable (non-)interpolation/If $var is undefined>
+{
+    my $u;
+    ok 'a' !~~ /$u/, 'undef variable does not match';
+    BEGIN { @*INC.push: 't/spec/packages/' }
+    use Test::Util;
+    is_run(
+            q{my $u; 'a' ~~ /$u/},
+            {
+                status  => 0,
+                out     => '',
+                err     => rx/undef/,
+            },
+            'interpolating undef into a regex warns'
+          );
+}
 
 # vim: ft=perl6
