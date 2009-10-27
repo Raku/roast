@@ -128,7 +128,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         my RT69192 $bot .= new();
         ($bot does R5) does R6;
         $bot.*rt69192;
-        #?rakudo todo 'RT #69192'
         is $bot.order, <empty>, 'multi method called once on empty signature';
     }
 
@@ -136,7 +135,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         my RT69192 $bot .= new();
         ($bot does R5) does R6;
         $bot.*rt69192('RT #69192');
-        #?rakudo todo 'RT #69192'
         is $bot.order, <Str>, 'multi method called once on Str signature';
     }
 
