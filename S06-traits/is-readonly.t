@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is readonly">
 # should be moved with other subroutine tests?
 
-plan 9;
+plan *;
 
 {
     my $a is readonly := 42;
@@ -39,5 +39,17 @@ plan 9;
     #?pugs todo 'feature'
     ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true";
 }
+
+# RT #65900
+{
+    my ($rt65900 is readonly) = 5;
+    is $rt65900, 5, 'my ($x is readonly) can take assignment';
+    dies_ok { $rt65900 = 'ro' }, 'dies on assignment to readonly variable';
+
+    dies_ok { (my $rt65900 is readonly) = 5 },
+        'dies on assignment to (my $x is readonly)';
+}
+
+done_testing;
 
 # vim: ft=perl6
