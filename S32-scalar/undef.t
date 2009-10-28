@@ -364,6 +364,8 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
     #?rakudo 2 todo 'subs are eternal too'
     dies_ok { undefine &def }, 'attempt to undefine sub dies';
     ok defined &def, 'attempt to undefine sub fails';
+    #?rakudo skip 'Rakudo lets me undefine a sub'
+    ok def() ~~ Array, 'can still call sub after attempt to undefine it';
 }
 
 done_testing;
