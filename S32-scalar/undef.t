@@ -1,6 +1,7 @@
 use v6;
-
 use Test;
+BEGIN { @*INC.push('t/spec/packages/') };
+use Test::Util;
 
 =begin pod
 
@@ -22,7 +23,7 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan 75;
+plan *;
 
 our $GLOBAL;
 
@@ -38,8 +39,10 @@ ok(!defined(undef), "undef is not defined");
 
     ok(!defined($GLOBAL), "uninitialized package vars are undef");
 
-    $a += 1; # should not emit a warning. how to test that?
+    $a += 1;
     ok(defined($a), "initialized var is defined");
+    is_run( 'my $a; $a += 1', { err => '', out => '', status => 0 },
+            'increment of undefined variable does not warn' );
 
     undefine $a;
     ok(!defined($a), "undefine($a) does");
@@ -109,6 +112,9 @@ ok(!defined(undef), "undef is not defined");
     ok(eval('!defined(&a_subwoofer)'), "undefined sub");
 #?pugs todo 'feature'
     ok(eval('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
+    
+    dies_ok { undefine &a_sub }, 'die trying to undefine a sub';
+    ok defined &a_sub, 'sub is still defined after attempt to undefine';
 }
 
 # TODO: find a read-only value to try and assign to, since we don't
@@ -340,4 +346,26 @@ is ?(@(undef,)), Bool::False, '?(@(undef,)) is false';
 is ?(list(undef,)), Bool::False, '?(@(undef,)) is false';
 
 lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
+
+{
+    sub lie { Bool::False }
+    ok lie() ~~ Bool, 'sub returns a bool';
+    #?rakudo 2 todo 'truth should be eternal'
+    dies_ok { undefine lie }, 'attempt to undefine returned Bool type dies';
+    ok lie() ~~ Bool, 'sub still returns a bool';
+}
+
+{
+    sub def { my $x = [] }
+    ok def() ~~ Array, 'sub returns array';
+    lives_ok { undefine def }, 'attempt to undefine returned array lives';
+    ok def() ~~ Array, 'sub still returns array';
+
+    #?rakudo 2 todo 'subs are eternal too'
+    dies_ok { undefine &def }, 'attempt to undefine sub dies';
+    ok defined &def, 'attempt to undefine sub fails';
+}
+
+done_testing;
+
 # vim: ft=perl6
