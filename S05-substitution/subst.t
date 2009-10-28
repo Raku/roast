@@ -198,9 +198,13 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 # RT #69044
 {
     sub s { 'sub s' }
+    $_ = "foo";
     #?rakudo skip 'RT 69044'
-    is s,   'sub s', 'can call sub s as "s"';
+    ok s,foo,bar, , 'bare s is always substititution';
     is s(), 'sub s', 'can call sub s as "s()"';
+    #?rakudo skip 's () = RHS'
+    $_ = "foo";
+    ok s (foo) = 'bar', 'bare s is substitution before whitespace then parens';
 }
 
 done_testing;
