@@ -28,7 +28,6 @@ Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
 * (r28882) upper precision limit for Rat (not sure if it needs explict tests)
-* (r28881) most number literals are actually Rats, not Nums
 * (r28528) quietly, note, warning exceptions
 * (r28506) defines -> import
 * (r28502) Stringy, Numeric etc. roles; PairVal and PairValSet

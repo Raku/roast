@@ -81,6 +81,7 @@ if !eval('("a" ~~ /a/)') {
        'Match coerced to Hash says match exists';
 }
 
+# This is similar to a test in S05-interpolation/regex-in-variable.t
 #?rakudo skip 'RT 70007'
 nok 'aa' ~~ /(.)$1/, 'match with non-existent capture does not match';
 #?rakudo todo 'RT 70007'
@@ -88,7 +89,7 @@ is_run( q{'aa' ~~ /(.)$1/},
         {
             status => 0,
             out    => '',
-            err    => rx/\S/,
+            err    => rx/undef/,
         },
         'match with non-existent capture emits a warning' );
 

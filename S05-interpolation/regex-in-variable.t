@@ -51,6 +51,7 @@ ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
+# This is similar to a test in S05-match/capturing-contexts.t
 {
     my $u;
     ok 'a' !~~ /$u/, 'undef variable does not match';
