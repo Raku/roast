@@ -150,6 +150,16 @@ my $pi = 3.141592653589793238;
     is_approx(4.unpolar($pi),       -4,    "4.unpolar(pi)   == -4");
 }
 
+
+# used to be RT #68848
+{
+    is_approx exp(3.0 * log(1i)), -1.83697e-16-1i,
+              'exp(3.0 * log(1i))';
+    sub iPower($a, $b) { exp($b * log($a)) };
+    is_approx iPower(1i, 3.0), -1.83697e-16-1i, 'same as wrapped as sub';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
