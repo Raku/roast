@@ -288,6 +288,14 @@ These tests are the testing for "List parameters" section of Synopsis 06
 eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
              "Can't put required parameter after variadic parameters";
 
+# used to be RT #69424
+{
+    sub typed-slurpy(Int *@a) { 5 }
+    my Int @b;
+    is typed-slurpy(@b), 5, 'can fill typed slurpy with typed array';
+}
+
+
 done_testing;
 
 # vim: ft=perl6
