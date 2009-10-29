@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan *;
 
 # L<S32::Numeric/Num/"=item sign">
 
@@ -29,5 +29,8 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 }
 
 ok sign(undef) ~~ undef, 'sign(undef) is undef';
+ok sign(3+4i) ~~ undef, 'sign(Complex) fails';
+
+done_testing;
 
 # vim: ft=perl6
