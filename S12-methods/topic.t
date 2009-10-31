@@ -9,8 +9,8 @@ use Test;
 plan 2;
 
 class Foo {
-    method no_topic     { $_.echo }
-    method topic ($_: ) { $_.echo }
+    method no_topic     { .echo }
+    method topic ($_: ) { .echo }
     method echo         { "echo"  }
 }
 
