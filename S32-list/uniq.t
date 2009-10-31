@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 11;
 
 =begin description
 
@@ -42,6 +42,14 @@ Not (yet?) in the spec, but implemented by (nearly?) all implementations.
   #?pugs todo 'bug'
   dies_ok { 42.uniq }, ".uniq should not work on scalars";
   is (42,).uniq, 42,   ".uniq should work on one-elem arrays";
+}
+
+# http://irclog.perlgeek.de/perl6/2009-10-31#i_1669037
+{
+    my $range = [1..4];
+    my @array = $range, $range.WHICH;
+    is @array.elems, 2, ".uniq does not use naive WHICH (1)";
+    is @array.uniq.elems, 2, ".uniq does not use naive WHICH (2)";
 }
 
 # vim: ft=perl6
