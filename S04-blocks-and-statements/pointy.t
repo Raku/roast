@@ -88,14 +88,14 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 # The default type of pointy blocks is Object, not Any. See 
 # http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31181.html
 # L<S02/Mutable types/"default block parameter type">
-# this means that Junctions don't autothread over pointy blocks
+# this means that junctions don't autothread over pointy blocks
 
 {
     my @a = any(3, 4);
     my $ok = 0;
     my $iterations = 0;
     for @a -> $x {
-        $ok = 1 if $x ~~ Junction;
+        $ok = 1 if $x ~~ junction;
         $iterations++;
     }
     ok $ok, 'Blocks receive junctions without autothreading';

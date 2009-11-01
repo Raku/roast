@@ -8,7 +8,7 @@ plan 14;
 # TODO: need smartlink
 
 sub jv(Object $j) {
-    return $j.eigenstates.sort.join(' ');
+    return $j!eigenstates.sort.join(' ');
     
 
 }

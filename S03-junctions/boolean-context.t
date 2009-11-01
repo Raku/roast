@@ -58,13 +58,13 @@ ok ?(0|$undef == 0), '0|undef == 0 in boolean context';
 my $message1 = 'boolean context collapses junctions';
 my $message2 = '...so that they\'re not junctions anymore';
 ok ?(Bool::True & Bool::False)    ==  Bool::False, $message1;
-ok ?(Bool::True & Bool::False)    !~~ Junction,    $message2;
+ok ?(Bool::True & Bool::False)    !~~ junction,    $message2;
 ok !(Bool::True & Bool::False)    ==  Bool::True,  $message1;
-ok !(Bool::True & Bool::False)    !~~ Junction,    $message2;
+ok !(Bool::True & Bool::False)    !~~ junction,    $message2;
 #?rakudo 2 todo 'named unary as function call'
 ok true(Bool::True & Bool::False) ==  Bool::False, $message1;
-ok true(Bool::True & Bool::False) !~~ Junction,    $message2;
+ok true(Bool::True & Bool::False) !~~ junction,    $message2;
 ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
-ok not(Bool::True & Bool::False)  !~~ Junction,    $message2;
+ok not(Bool::True & Bool::False)  !~~ junction,    $message2;
 
 # vim: ft=perl6

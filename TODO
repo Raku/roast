@@ -48,7 +48,6 @@ the spec (newest first)
 * (r28150, r28151) ::=, implicit 'is context' on $*foo variables
 * (r26968) Now we know how $! works.
 * (r26401) Pi/Pf characters are allowed as brackets
-* (r25891) Junction -> junction, eigenstates method is now private
 * (r25830) named parameters to open()
 * (r25767) updates to builtin regexes
 
@@ -61,6 +60,8 @@ S03
 * tests for feeds using IO objects
 * more bitwise tests, for :signed and :unsigned, and uncomment the tests in
   t/spec/S03-operators/bit.t
+* the tests in S03-junctions should somehow specially arrange for
+  access to the private method !eigenstates
 
 S04
 * test warn()

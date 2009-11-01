@@ -11,8 +11,8 @@ Misc. Junction tests
 =end pod
 
 #?rakudo skip 'Null PMC access in get_integer() (RT #64184)'
-isa_ok any(6,7), Junction;
-is any(6,7).WHAT, Junction, 'Junction.WHAT works';
+isa_ok any(6,7), junction;
+is any(6,7).WHAT, junction, 'junction.WHAT works';
 
 # avoid auto-threading on ok()
 sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
@@ -134,14 +134,14 @@ sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
     my $l;
 
     $j = 1|2;
-    is(~WHAT($j), 'Junction()', 'basic junction type reference test');
+    is(~WHAT($j), 'junction()', 'basic junction type reference test');
 
     $k=$j;
-    is(~WHAT($k), 'Junction()', 'assignment preserves reference');
+    is(~WHAT($k), 'junction()', 'assignment preserves reference');
 
     # XXX does this next one make any sense?
     $l=\$j;
-    is(~WHAT($l), 'Junction()', 'hard reference to junction');
+    is(~WHAT($l), 'junction()', 'hard reference to junction');
 }
 
 
@@ -157,7 +157,7 @@ just using .perl until a better approach presents itself.
 # L<S03/Junctive operators>
 
 # Canonical stringification of a junction
-sub j (Junction $j) { return $j.perl }
+sub j (junction $j) { return $j.perl }
 
 {
     # L<S03/Junctive operators/They thread through operations>
@@ -327,57 +327,57 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
 
 ## See also S03-junctions/autothreading.t
-#?rakudo skip 'substr on juctions'
+#?rakudo skip 'substr on junctions'
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
   my $res = substr(any("abcd", "efgh"), 1, 2);
-  isa_ok $res, "Junction";
-  ok $res eq "bc", "substr on Junctions: bc";
-  ok $res eq "fg", "substr on Junctions: fg";
+  isa_ok $res, "junction";
+  ok $res eq "bc", "substr on junctions: bc";
+  ok $res eq "fg", "substr on junctions: fg";
 }
 
-#?rakudo skip 'substr on juctions'
+#?rakudo skip 'substr on junctions'
 {
   my $res = substr("abcd", 1|2, 2);
-  isa_ok $res, "Junction";
-  ok $res eq "bc", "substr on Junctions: bc"; 
-  ok $res eq "cd", "substr on Junctions: cd";
+  isa_ok $res, "junction";
+  ok $res eq "bc", "substr on junctions: bc"; 
+  ok $res eq "cd", "substr on junctions: cd";
 }
 
-#?rakudo skip 'substr on juctions'
+#?rakudo skip 'substr on junctions'
 {
   my $res = substr("abcd", 1, 1|2);
-  isa_ok $res, "Junction";
-  ok $res eq "bc", "substr on Junctions: bc"; 
-  ok $res eq "b", "substr on Junctions: b"; 
+  isa_ok $res, "junction";
+  ok $res eq "bc", "substr on junctions: bc"; 
+  ok $res eq "b", "substr on junctions: b"; 
 }
 
-#?rakudo skip 'index on juctions'
+#?rakudo skip 'index on junctions'
 {
   my $res = index(any("abcd", "qwebdd"), "b");
-  isa_ok $res, "Junction";
-  ok $res == 1, "index on Junctions: 1";
-  ok $res == 3, "index on Junctions: 3";
+  isa_ok $res, "junction";
+  ok $res == 1, "index on junctions: 1";
+  ok $res == 3, "index on junctions: 3";
 }
 
-#?rakudo skip 'index on juctions'
+#?rakudo skip 'index on junctions'
 {
   my $res = index("qwebdd", "b"|"w");
-  isa_ok $res, "Junction";
-  ok $res == 1, "index on Junctions: 1";
-  ok $res == 3, "index on Junctions: 3";
+  isa_ok $res, "junction";
+  ok $res == 1, "index on junctions: 1";
+  ok $res == 3, "index on junctions: 3";
 }
 
-# Naive implementation of comparing two Junctions
+# Naive implementation of comparing two junctions
 sub junction_diff(Object $this, Object $that) {
-  if ($this.WHAT ne 'Junction()' and $that.WHAT ne 'Junction()') {
+  if ($this.WHAT ne 'junction()' and $that.WHAT ne 'junction()') {
     return if $this ~~ $that;
   }
-  if ($this.WHAT ne 'Junction()' and $that.WHAT eq 'Junction()') {
-    return "This is not a Junction";
+  if ($this.WHAT ne 'junction()' and $that.WHAT eq 'junction()') {
+    return "This is not a junction";
   }
-  if ($this.WHAT eq 'Junction()' and $that.WHAT ne 'Junction()') {
-    return "That is not a Junction";
+  if ($this.WHAT eq 'junction()' and $that.WHAT ne 'junction()') {
+    return "That is not a junction";
   }
   my ($this_type) = $this.perl ~~ /^(\w+)/;
   my ($that_type) = $that.perl ~~ /^(\w+)/;
@@ -385,8 +385,8 @@ sub junction_diff(Object $this, Object $that) {
     return "This is $this_type, that is $that_type";
   }
 
-  my @these = sort $this.eigenstates;
-  my @those = sort $that.eigenstates;
+  my @these = sort $this!eigenstates;
+  my @those = sort $that!eigenstates;
   my @errors;
   for @these -> $value {
     if $value !~~ any(@those) {
@@ -404,9 +404,9 @@ sub junction_diff(Object $this, Object $that) {
 
 #?rakudo skip 'Confusing tests (to pmichaud)'
 {
-  ok(! junction_diff(1, 1),     'no Junctions');
-  is_deeply(junction_diff(1, 1|2), "This is not a Junction",  'Left value is not a Junction');
-  is_deeply(junction_diff(1|2, 1), "That is not a Junction",  'Right value is not a Junction');
+  ok(! junction_diff(1, 1),     'no junctions');
+  is_deeply(junction_diff(1, 1|2), "This is not a junction",  'Left value is not a junction');
+  is_deeply(junction_diff(1|2, 1), "That is not a junction",  'Right value is not a junction');
   ok(! junction_diff(1|2, 1|2), 'same any junctions');
   is_deeply(junction_diff(1|2, 1&2), 'This is any, that is all', 'different junction types');
   is_deeply(junction_diff(1|2|3, 1|2), ["3 is missing from that"], 'Value is missing from right side');
@@ -427,10 +427,10 @@ sub junction_diff(Object $this, Object $that) {
 
 # RT#67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
 {
-    ok((WHAT any()) === Junction, "test WHAT on empty any junction");
-    ok(any().WHAT === Junction, "test WHAT on empty any junction");
-    ok((WHAT any(1,2)) === Junction, "test WHAT on any junction");
-    ok(any(1,2).WHAT === Junction, "test WHAT on any junction");
+    ok((WHAT any()) === junction, "test WHAT on empty any junction");
+    ok(any().WHAT === junction, "test WHAT on empty any junction");
+    ok((WHAT any(1,2)) === junction, "test WHAT on any junction");
+    ok(any(1,2).WHAT === junction, "test WHAT on any junction");
 }
 
 # vim: ft=perl6

@@ -4,7 +4,7 @@ use Test;
 plan 78;
 
 {
-    # Solves the equatioin A + B = A * C for integers
+    # Solves the equation A + B = A * C for integers
     # by autothreading over all interesting values
 
     my $n = 0;
@@ -12,9 +12,9 @@ plan 78;
         $n++;
         if ($a != $b && $b != $c && $a != $c &&
         $a * 10 + $c == $a + $b ) {
-        return "$a + $b = $a$c";
+            return "$a + $b = $a$c";
         } else {
-        return ();
+            return ();
         }
     }
 
@@ -205,9 +205,9 @@ plan 78;
 # test that various things autothread
 
 {
-    my Junction $j = [1, 2] | 5;
-    #?rakudo skip '.values and .eigenstates should flatten (?)'
-    is +$j.values.eigenstates, 3, '([1, 2] | 3).values has three eigenstates';
+    my junction $j = [1, 2] | 5;
+    #?rakudo skip '.values and !eigenstates should flatten (?)'
+    is +$j.values!eigenstates, 3, '([1, 2] | 3).values has three eigenstates';
 
     #?rakudo 3 skip 'autothreading of prefix:<+>'
     ok ?( +$j == 5 ), 'prefix:<+> autothreads (1)';

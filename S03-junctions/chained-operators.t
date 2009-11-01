@@ -8,15 +8,15 @@ use Test;
 
 plan 7;
 
-is +any(1,2,3).eigenstates, 3;
-is +(1 | 2 | 3).eigenstates, 3;
+is +any(1,2,3)!eigenstates, 3;
+is +(1 | 2 | 3)!eigenstates, 3;
 
-is +all(1,2,3).eigenstates, 3;
-is +(1 & 2 & 3).eigenstates, 3;
+is +all(1,2,3)!eigenstates, 3;
+is +(1 & 2 & 3)!eigenstates, 3;
 
-is +one(1,2,3).eigenstates, 3;
-is +(1 ^ 2 ^ 3).eigenstates, 3;
+is +one(1,2,3)!eigenstates, 3;
+is +(1 ^ 2 ^ 3)!eigenstates, 3;
 
-is +none(1,2,3).eigenstates, 3;
+is +none(1,2,3)!eigenstates, 3;
 
 # vim: ft=perl6
