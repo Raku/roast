@@ -37,15 +37,13 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name ) is export(:DEFAU
         # Attributes not specified are not tested.
         next if ! %expected.exists( $attr );
 
-        my $attr_good;
-        $attr_good = %got{$attr} ~~ %expected{$attr};
-        my $diag_ok = ?(%got{$attr} ~~ Str|Num);
+        my $attr_good = %got{$attr} ~~ %expected{$attr};
 
         # The check for this attribute failed.
         # Note why for a diag() after the test failure is reported.
         if !$attr_good {
             @diag_q.push(     "     got $attr: {%got{$attr}.perl}"      );
-            if $diag_ok {
+            if %expected{$attr} ~~ Str|Num {
                 @diag_q.push( "expected $attr: {%expected{$attr}.perl}" );
             }
         }
