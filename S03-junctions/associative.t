@@ -2,15 +2,15 @@ use v6;
 
 use Test;
 
-plan 14;
+plan *;
 
 # Checking Junctions' Associativeness
 # TODO: need smartlink
 
 sub jv(Object $j) {
-    return $j!eigenstates.sort.join(' ');
-    
-
+    my @e;
+    (-> Any $x { @e.push: $x }).($j);
+    return @e.sort.join(' ');
 }
 
 # L<S03/"Junctive operators">
@@ -29,15 +29,11 @@ sub jv(Object $j) {
     is('1 2 3', jv(all(all(1,2),3)), "Left-associative all()");
     is('1 2 3', jv(all(1,all(2,3))), "Right-associative all()");
 
-    isnt('1 2 3', jv((1^2)^3), "Left-associative one, ^ operator");
-    isnt('1 2 3', jv(1^(2^3)), "Right-associative one, ^ operator");
-
-    isnt('1 2 3', jv(one(one(1,2),3)), "Left-associative one()");
-    isnt('1 2 3', jv(one(1,one(2,3))), "Right-associative one()");
-
     is('1 2 3', jv(none(none(1,2),3)), "Left-associative none()");
     is('1 2 3', jv(none(1,none(2,3))), "Right-associative none()");
 
 }
+
+done_testing();
 
 # vim: ft=perl6

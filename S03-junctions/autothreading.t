@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 78;
+plan 77;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -204,12 +204,10 @@ plan 78;
 
 # test that various things autothread
 
+#?rakudo skip 'auto-threading over prefix:<+>'
 {
-    my junction $j = [1, 2] | 5;
-    #?rakudo skip '.values and !eigenstates should flatten (?)'
-    is +$j.values!eigenstates, 3, '([1, 2] | 3).values has three eigenstates';
+    my $j = [1, 2] | 5;
 
-    #?rakudo 3 skip 'autothreading of prefix:<+>'
     ok ?( +$j == 5 ), 'prefix:<+> autothreads (1)';
     ok ?( +$j == 2 ), 'prefix:<+> autothreads (2)';
     ok !( +$j == 3 ), 'prefix:<+> autothreads (3)';
