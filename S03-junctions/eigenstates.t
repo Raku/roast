@@ -4,7 +4,7 @@ plan 14;
 
 # L<S32::Containers/junction/!eigenstates>
 
-dies_ok { (1|2).eigenstates }, 'junction doesn't have a public .eigenstates';
+dies_ok { (1|2).eigenstates }, 'junction doesn\'t have a public .eigenstates';
 
 sub je(Object $j) {
     return $j!eigenstates.sort.join('|');
