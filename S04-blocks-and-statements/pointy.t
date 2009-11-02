@@ -90,6 +90,7 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 # L<S02/Mutable types/"default block parameter type">
 # this means that junctions don't autothread over pointy blocks
 
+#?rakudo skip 'Could not find non-existent sub junction'
 {
     my @a = any(3, 4);
     my $ok = 0;
