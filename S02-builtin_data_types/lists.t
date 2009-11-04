@@ -7,7 +7,7 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan 21;
+plan *;
 
 # Indexing lists
 {
@@ -143,5 +143,24 @@ plan 21;
     #?rakudo skip 'unskip when "augment" works'
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
 }
+
+# RT #66304
+{
+    my $rt66304 = (1, 2, 4);
+    isa_ok $rt66304, List, 'List assigned to scalar is-a List';
+    #?rakudo 3 todo 'RT 66304'
+    is( $rt66304.WHAT, (1, 2, 4).WHAT,
+        'List.WHAT is the same as .WHAT of list assigned to scalar' );
+    dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';
+    is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';
+    
+    my $x = 44;
+    $rt66304 = ( 11, $x, 22 );
+    lives_ok { $rt66304[1] = 'rw' }, 'variable List element is mutable';
+    #?rakudo todo 'RT 66304'
+    is $x, 'rw', 'variable changed via assignment to list element';
+}
+
+done_testing;
 
 # vim: ft=perl6
