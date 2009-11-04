@@ -93,6 +93,15 @@ is_run( q{'aa' ~~ /(.)$1/},
         },
         'match with non-existent capture emits a warning' );
 
+# RT #66252
+{
+    $_ = 'RT 66252';
+    /(R.)/;
+    #?rakudo 2 todo 'RT 66252'
+    isa_ok $/, 'Match', 'Match object in $/ after match in void context';
+    is $/, 'RT', 'Matched as intended in void context';
+}
+
 done_testing;
 
 # vim: ft=perl6
