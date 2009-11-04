@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan *;
 
 =begin description
 
@@ -101,5 +101,10 @@ ok D ~~ Role, 'a role does the Role type';
     eval_lives_ok 'class DoesInt does Int {}',
                   'can compile "class does Int"';
 }
+
+#?rakudo todo 'RT 66178'
+eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
+
+done_testing;
 
 # vim: ft=perl6
