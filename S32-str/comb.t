@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan *;
 
 # L<S32::Str/Str/=item comb>
 
@@ -79,5 +79,22 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is @l[1].to, 8, '.to of the second item is correct';
 }
 
+# RT #66340
+{
+    my $expected_reason = rx/^'No applicable candidates '/;
+    
+    try { 'RT 66340'.comb( 1 ) };
+    ok $! ~~ Exception, '.comb(1) dies';
+    ok "$!" ~~ $expected_reason, '.comb(1) dies for the expected reason';
+
+    my $calls = 0;
+    try { 'RT 66340'.comb( { $calls++ } ) };
+    #?rakudo 3 todo 'RT 66340'
+    is $calls, 0, 'code passed to .comb is not called';
+    ok $! ~~ Exception, '.comb({...}) dies';
+    ok "$!" ~~ $expected_reason, '.comb({...}) dies for the expected reason';
+}
+
+done_testing;
 
 # vim: ft=perl6
