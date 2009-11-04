@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 103;
+plan *;
 
 =begin pod
 
@@ -10,7 +10,7 @@ Misc. Junction tests
 
 =end pod
 
-#?rakudo skip 'Null PMC access in get_integer() (RT #64184)'
+#?rakudo 2 skip 'Null PMC access in get_integer() (RT #64184)'
 isa_ok any(6,7), junction;
 is any(6,7).WHAT, junction, 'junction.WHAT works';
 
@@ -134,6 +134,7 @@ sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
     my $l;
 
     $j = 1|2;
+    #?rakudo 3 todo 'lower case junction type'
     is(~WHAT($j), 'junction()', 'basic junction type reference test');
 
     $k=$j;
@@ -157,7 +158,7 @@ just using .perl until a better approach presents itself.
 # L<S03/Junctive operators>
 
 # Canonical stringification of a junction
-sub j (junction $j) { return $j.perl }
+sub j (Object $j) { return $j.perl }
 
 {
     # L<S03/Junctive operators/They thread through operations>
@@ -426,11 +427,13 @@ sub junction_diff(Object $this, Object $that) {
 }
 
 # RT#67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
+#?rakudo skip 'lower case junction'
 {
     ok((WHAT any()) === junction, "test WHAT on empty any junction");
     ok(any().WHAT === junction, "test WHAT on empty any junction");
     ok((WHAT any(1,2)) === junction, "test WHAT on any junction");
     ok(any(1,2).WHAT === junction, "test WHAT on any junction");
 }
+done_testing();
 
 # vim: ft=perl6
