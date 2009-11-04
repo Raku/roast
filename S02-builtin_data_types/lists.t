@@ -156,9 +156,9 @@ plan *;
     
     my $x = 44;
     $rt66304 = ( 11, $x, 22 );
-    lives_ok { $rt66304[1] = 'rw' }, 'variable List element is mutable';
     #?rakudo todo 'RT 66304'
-    is $x, 'rw', 'variable changed via assignment to list element';
+    dies_ok { $rt66304[1] = 'rw' }, 'variable List element is immutable';
+    is $x, 44, 'variable not changed via assignment to list element';
 }
 
 done_testing;
