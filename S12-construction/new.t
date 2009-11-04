@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan *;
 
 class Parent {
     has $.x;
@@ -35,5 +35,16 @@ lives_ok { $o = GrandChild.new( Parent{ :x<5> }, Child{ :y(4) }) },
          'can instantiate class with explicit specification of parent attrib (many parents, other order)';
 is $o.y, 4, '... worked for the class Child (other order)';
 is $o.x, 5, '... worked for the class Parent (other order)';
+
+# RT #66204
+{
+    class RT66204 {}
+    ok ! RT66204.defined, 'NewClass is not .defined';
+    #?rakudo 2 todo 'RT 66204'
+    dies_ok { RT66204 .= new }, 'class asked to build itself refuses';
+    ok ! RT66204.defined, 'NewClass is still not .defined';
+}
+
+done_testing;
 
 # vim: ft=perl6
