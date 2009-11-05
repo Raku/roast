@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan *;
 
 # L<S04/Exceptions/The fail function>
 
@@ -39,5 +39,16 @@ plan 6;
     our Int sub repeat { return fail() }
     ok repeat() ~~ Failure, 'sub typed Int can return Failure';
 }
+
+# RT #70229
+{
+    sub rt70229 { return fail() }
+    my $rt70229 = rt70229();
+    ok $rt70229 ~~ Failure, 'got a Failure';
+    #?rakudo todo 'RT 70229'
+    dies_ok { "$rt70229" }, 'attempt to stringify Failure dies';
+}
+
+done_testing;
 
 # vim: ft=perl6

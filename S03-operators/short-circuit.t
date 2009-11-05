@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 36;
+plan *;
 
 {
     my $x = 1;
@@ -111,8 +111,9 @@ plan 36;
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
-    ok(!(1 ^^ 42),         "^^  operator working (both true)");
-    ok(!(0 ^^ 0),          "^^  operator working (both false)");
+    #?rakudo 2 todo 'RT 70229'
+    ok((1 ^^ 42) === (?0), "^^  operator working (both true)");
+    ok((0 ^^ 0)  === (?0), "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
@@ -167,5 +168,7 @@ plan 36;
     #?pugs eval 'short circuiting'
     is c($b), 2, 'shortcircuit idiom given undef works';
 }
+
+done_testing;
 
 # vim: ft=perl6
