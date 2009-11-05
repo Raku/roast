@@ -21,9 +21,9 @@ plan 7;
 
 #?rakudo todo 'RT 69270'
 {
-    my $x = '';
-    $x ~= $_ for Nil;
-    is $x, '', '$Statement for Nil; does zero iterations';
+    my $x = 0;
+    $x++ for Nil;
+    is $x, 0, '$Statement for Nil; does zero iterations';
 }
 
 # vim: ft=perl6
