@@ -32,14 +32,14 @@ my @arr = <z z z>;
 ok ~(@arr.pick(2)) eq 'z z',   'method pick with $num < +@values';
 ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 #?pugs todo 'feature'
-is ~(@arr.pick(4, :repl)), 'z z z z', 'method pick(:repl) with $num > +@values';
+is ~(@arr.pick(4, :replace)), 'z z z z', 'method pick(:replace) with $num > +@values';
 
 #?pugs 3 todo 'feature'
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values';
 #?rakudo skip 'named args'
 is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
-is pick(4, :repl, @arr), <z z z z>, 'sub pick(:repl) with $num > +@values';
+is pick(4, :replace, @arr), <z z z z>, 'sub pick(:replace) with $num > +@values';
 
 ok(~(<a b c d>.pick(*).sort) eq 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)');
 
@@ -55,11 +55,11 @@ ok(~(<a b c d>.pick(*).sort) eq 'a b c d', 'pick(*) returns all the items in the
 {
     my $c = 0;
     my @value = gather {
-        eval 'for (0,1).pick(*, :repl) -> $v { take($v); leave if ++$c > 3; }';
+        eval 'for (0,1).pick(*, :replace) -> $v { take($v); leave if ++$c > 3; }';
     }
 
     #?rakudo todo 'lazy lists'
-    ok +@value == $c && $c, 'pick(*, :repl) is lazy';
+    ok +@value == $c && $c, 'pick(*, :replace) is lazy';
 }
 
 {
