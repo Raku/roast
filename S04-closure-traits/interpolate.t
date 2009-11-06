@@ -1,6 +1,6 @@
 use v6;
 
-# Test closure traits interpolated in double-quoted strings
+# Test phasers interpolated in double-quoted strings
 
 use Test;
 

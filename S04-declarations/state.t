@@ -34,7 +34,7 @@ plan 37;
 }
 
 # state() inside coderefs
-# L<S04/Closure traits/"semantics to any initializer, so this also works">
+# L<S04/Phasers/"semantics to any initializer, so this also works">
 {
     my $gen = {
         # Note: The following line is only executed once, because it's equivalent

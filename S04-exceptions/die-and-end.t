@@ -1,6 +1,6 @@
 use v6;
 
-# L<S04/Closure traits/END>
+# L<S04/Phasers/END>
 
 use Test;
 plan 1;

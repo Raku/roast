@@ -1,6 +1,6 @@
 use v6;
 
-# Test closure traits in eval strings
+# Test phasers in eval strings
 
 use Test;
 
