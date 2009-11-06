@@ -89,7 +89,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
     my $calls = 0;
     try { 'RT 66340'.comb( { $calls++ } ) };
-    #?rakudo 3 todo 'RT 66340'
     is $calls, 0, 'code passed to .comb is not called';
     ok $! ~~ Exception, '.comb({...}) dies';
     ok "$!" ~~ $expected_reason, '.comb({...}) dies for the expected reason';
