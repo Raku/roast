@@ -16,7 +16,7 @@ plan 2;
 #
 # * PRE/POST in classes is not the same as LEAVE/ENTER
 
-# L<S04/"Closure traits">
+# L<S04/"Phasers">
 
 {
     my $str;

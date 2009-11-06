@@ -4,7 +4,7 @@ use Test;
 
 plan 5;
 
-# L<S04/"Closure traits"/CHECK "at compile time" ALAP>
+# L<S04/"Phasers"/CHECK "at compile time" ALAP>
 # CHECK {...} block in "void" context
 {
     my $str = '';

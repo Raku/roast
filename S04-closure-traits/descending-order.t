@@ -8,7 +8,7 @@ use Test;
 
 plan 7;
 
-# L<S04/Closure traits/END "at run time" ALAP>
+# L<S04/Phasers/END "at run time" ALAP>
 
 my $var;
 my ($var_at_enter, $var_at_init, $var_at_check, $var_at_begin);

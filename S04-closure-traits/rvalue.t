@@ -7,7 +7,7 @@ use Test;
 
 plan 10;
 
-# L<S04/Closure traits/"marked with a *" "used within" expression>
+# L<S04/Phasers/"marked with a *" "used within" expression>
 
 my $hist = '';
 

@@ -4,8 +4,8 @@ use Test;
 
 plan 10;
 
-# L<S04/Closure traits/KEEP "at every successful block exit">
-# L<S04/Closure traits/UNDO "at every unsuccessful block exit">
+# L<S04/Phasers/KEEP "at every successful block exit">
+# L<S04/Phasers/UNDO "at every unsuccessful block exit">
 
 {
     my $str;
@@ -25,7 +25,7 @@ plan 10;
     is $str, '1 > 0 0 <= 0 -1 <= 0 ', 'UNDO worked as expected';
 }
 
-# L<S04/Closure traits/KEEP UNDO are "variants of LEAVE"
+# L<S04/Phasers/KEEP UNDO are "variants of LEAVE"
 #   "treated as part of the queue of LEAVE blocks">
 {
     my $str;
@@ -44,7 +44,7 @@ plan 10;
     is $str, '(1 > 0)(-5 <= 0)', 'UNDO triggered as part of LEAVE blocks';
 }
 
-# L<S04/Closure traits/"can occur multiple times">
+# L<S04/Phasers/"can occur multiple times">
 
 # multiple KEEP/UNDO
 {

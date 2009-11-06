@@ -4,7 +4,7 @@ use Test;
 
 plan 4;
 
-# L<S04/Closure traits/FIRST "at loop initialization time">
+# L<S04/Phasers/FIRST "at loop initialization time">
 {
     my $str = '';
     for 1..2 {
@@ -22,7 +22,7 @@ plan 4;
     is $a_in_first, undef, 'FIRST {} ran before the loop body';
 }
 
-# L<S04/Closure traits/can occur multiple times>
+# L<S04/Phasers/can occur multiple times>
 {
     my $str = '';
     for 1..2 {
@@ -33,7 +33,7 @@ plan 4;
     is $str, '1: ', 'multiple FIRST {} ran in order';
 }
 
-# L<S04/Closure traits/FIRST "at loop initialization time" "before any ENTER">
+# L<S04/Phasers/FIRST "at loop initialization time" "before any ENTER">
 {
     my $str = '';
     for 1..2 {

@@ -8,7 +8,7 @@ use Test;
 
 plan 2;
 
-# L<S04/Closure traits/"occur multiple times">
+# L<S04/Phasers/"occur multiple times">
 # IRC log:
 # [05:41] <agentzh> TimToady: S04 doesn't discuss the running order 
 #                   of multiple closure traits (say, two END {} in 

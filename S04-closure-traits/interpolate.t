@@ -8,7 +8,7 @@ plan 6;
 
 # [TODO] add tests for ENTER/LEAVE/KEEP/UNDO/PRE/POST/etc
 
-# L<S04/Closure traits/END "at run time" ALAP>
+# L<S04/Phasers/END "at run time" ALAP>
 
 # IRC log:
 # ----------------------------------------------------------------

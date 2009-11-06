@@ -3,7 +3,7 @@ use v6;
 use Test;
 # Test of PRE and POST traits
 #
-# L<S04/Closure traits/"assert precondition at every block ">
+# L<S04/Phasers/"assert precondition at every block ">
 # L<S06/Subroutine traits/"Mark blocks that are to be unconditionally executed">
 #
 # TODO: 

@@ -4,7 +4,7 @@ use Test;
 
 plan 21;
 
-# L<S04/"Closure traits"/START "runs separately for each clone">
+# L<S04/"Phasers"/START "runs separately for each clone">
 #?rakudo todo '$_ inside START has some issues, it seems'
 {
     is(eval(q{{
@@ -20,7 +20,7 @@ plan 21;
     }}), '12');
 };
 
-# L<S04/"Closure traits"/START "puts off" initialization till
+# L<S04/"Phasers"/START "puts off" initialization till
 #   "last possible moment">
 {
     my $var;
@@ -35,7 +35,7 @@ plan 21;
     is $var, 2, "START {} only runs once for each clone";
 }
 
-# L<S04/"Closure traits"/START "on first ever execution">
+# L<S04/"Phasers"/START "on first ever execution">
 {
     my $str ~= 'o';
     {
@@ -44,7 +44,7 @@ plan 21;
     is $str, 'oi', 'START {} runs when we first try to use a block';
 }
 
-# L<S04/"Closure traits"/START "executes inline">
+# L<S04/"Phasers"/START "executes inline">
 
 # Execute the tests twice to make sure that START binds to
 # the lexical scope, not the lexical position.
@@ -77,7 +77,7 @@ for <first second> {
     is $str, 'banana', "START block modified the correct variable ($_ time)";
 }
 
-# L<S04/"Closure traits"/START "caches its value for all subsequent calls">
+# L<S04/"Phasers"/START "caches its value for all subsequent calls">
 {
     my $was_in_start;
     my $sub = {

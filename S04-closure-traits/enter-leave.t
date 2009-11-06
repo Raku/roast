@@ -4,8 +4,8 @@ use Test;
 
 plan 19;
 
-# L<S04/Closure traits/ENTER "at every block entry time">
-# L<S04/Closure traits/LEAVE "at every block exit time">
+# L<S04/Phasers/ENTER "at every block entry time">
+# L<S04/Phasers/LEAVE "at every block exit time">
 
 {
     my $str;
@@ -52,7 +52,7 @@ plan 19;
     is $str, '[({21})]', 'multiple ENTER/LEAVE worked';
 }
 
-# L<S04/Closure traits/ENTER "repeats on loop blocks">
+# L<S04/Phasers/ENTER "repeats on loop blocks">
 {
     my $str;
     for 1..2 {
@@ -63,7 +63,7 @@ plan 19;
     is $str, 'E1,L1 E2,L2 ', 'ENTER/LEAVE repeats on loop blocks';
 }
 
-# L<S04/Closure traits/LEAVE "at every block exit time">
+# L<S04/Phasers/LEAVE "at every block exit time">
 
 # named sub:
 {

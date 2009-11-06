@@ -4,7 +4,7 @@ use Test;
 
 plan 11;
 
-# L<S04/"Closure traits"/INIT "at run time" ASAP>
+# L<S04/"Phasers"/INIT "at run time" ASAP>
 # INIT {...} blocks in "void" context
 {
     my $str;
@@ -54,7 +54,7 @@ plan 11;
     is $str, 'o', 'the value set by INIT {} wiped out by the initializer of $str';
 }
 
-# L<S04/"Closure traits"/INIT "runs before" "mainline code">
+# L<S04/"Phasers"/INIT "runs before" "mainline code">
 
 my $str ~= 'o';  # Note that this is different from  "my $str = 'o';".
 {
@@ -62,7 +62,7 @@ my $str ~= 'o';  # Note that this is different from  "my $str = 'o';".
 }
 is $str, 'io', 'INIT {} always runs before the mainline code runs';
 
-# L<S04/Closure traits/INIT "runs once for all copies of" "cloned closure">
+# L<S04/Phasers/INIT "runs once for all copies of" "cloned closure">
 {
 	my $var;
 	for <first second> {
