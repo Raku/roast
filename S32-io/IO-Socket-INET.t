@@ -21,6 +21,10 @@ given $*OS {
         $netstat_cmd = "netstat -f inet -p tcp -a -n";
         $netstat_pat = regex { [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
     }
+    when 'solaris' {
+        $netstat_cmd = "netstat -an -P tcp -f inet";
+        $netstat_pat = regex { [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
+    }
     default {
         skip_rest('Operating system not yet supported');
         exit 0;
@@ -50,7 +54,7 @@ isa_ok $server, IO::Socket::INET;
 # Do not bind to this socket in the parent process, that would prevent a
 # child process from using it.
 
-if $*OS eq any <linux darwin> { # please add more valid OS names
+if $*OS eq any <linux darwin solaris> { # please add more valid OS names
 
     # test 2 does echo protocol - Internet RFC 862
     $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
