@@ -26,7 +26,7 @@ given $test {
             $fd.close();
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
-                my $received = $client.recv(36);
+                my $received = $client.recv();
                 # warn "SERVER RECEIVED '$received'";
                 $client.send( $received );
                 # warn "SERVER REPLIED";
@@ -60,7 +60,7 @@ given $test {
             # warn "SERVER LISTENING";
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
-                my $received = $client.recv(36);
+                my $received = $client.recv();
                 # warn "SERVER RECEIVED '$received'";
                 $client.close(); # without sending anything back
             }
