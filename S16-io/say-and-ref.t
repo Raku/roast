@@ -18,6 +18,6 @@ is_run q{my $a = [1, 2, 3]; print  $a},
         out     => "1 2 3",
         err     => '',
         status  => 0,
-    }, 'Can say array ref';
+    }, 'Can print array ref';
 
 # vim: ft=perl6
