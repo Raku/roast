@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 7;
 
 # L<S13/Type Casting/"whose name is a declared type, it is taken as a coercion
 # to that type">
@@ -26,7 +26,8 @@ ok +$o == 1.2, 'method Num takes care of correct numification';
         has $.a = 'RT #69378';
         method Str() { $.a }
     }
-    #?rakudo todo 'RT 69378'
+    #?rakudo 2 todo 'RT 69378'
+    is RT69378str.new.a, 'RT #69378', 'call to RT69378str.new properly initializes $.a';
     is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
 }
 
