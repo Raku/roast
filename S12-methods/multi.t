@@ -177,6 +177,24 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     ok @candies[2] ~~ Method, 'candidate 2 is a method';
 }
 
+{
+    class BrokenTie {
+        multi method has_tie(Int $x) { 'tie1' };
+        multi method has_tie(Int $y) { 'tie2' };
+    }
+
+    #?rakudo todo 'ambiguous dispatch should die'
+    dies_ok { BrokenTie.has_tie( 42 ) }, 'call to tied method dies';
+
+    class WorkingTie is BrokenTie {
+        multi method has_tie(Int $z) { 'tie3' };
+        multi method has_tie(Str $s) { 'tie4' };
+    }
+
+    is WorkingTie.has_tie( 42 ), 'tie3', 'broken class fixed by subclass (1)';
+    is WorkingTie.has_tie( 'x' ), 'tie4', 'broken class fixed by subclass (2)';
+}
+
 done_testing;
 
 # vim: ft=perl6
