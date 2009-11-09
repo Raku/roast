@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan *;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
@@ -145,5 +145,38 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         is $bot.order, <Num>, 'multi method called once on Num signature';
     }
 }
+
+{
+    role RoleS {
+        multi method d( Str $x ) { 'string' }
+    }
+    role RoleI {
+        multi method d( Int $x ) { 'integer' }
+    }
+    class M does RoleS does RoleI {
+        multi method d( Any $x ) { 'any' }
+    }
+
+    my M $m .= new;
+
+    is $m.d( 876 ), 'integer', 'dispatch to one role';
+    is $m.d( '7' ), 'string',  'dispatch to other role';
+    is $m.d( 1.2 ), 'any',     'dispatch to the class with the roles';
+
+    my @multi_method = $m.^methods.grep({ ~$_ eq 'd' });
+    is @multi_method.elems, 1, '.^methods returns one element for a multi';
+
+    my $routine = @multi_method[0];
+    #?rakudo todo 'multi method appears as Routine per r27045'
+    ok $routine ~~ Routine, 'multi method from ^methods is a Routine';
+    my @candies = $routine.candidates;
+    is @candies.elems, 3, 'got three candidates for multi method';
+
+    ok @candies[0] ~~ Method, 'candidate 0 is a method';
+    ok @candies[1] ~~ Method, 'candidate 1 is a method';
+    ok @candies[2] ~~ Method, 'candidate 2 is a method';
+}
+
+done_testing;
 
 # vim: ft=perl6
