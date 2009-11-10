@@ -367,7 +367,7 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
 #L<S03/Smart matching/Any Any scalars are identical>
 #?rakudo skip 'Any ~~ Any'
 {
-    class Smartmatch::ObjTest;
+    class Smartmatch::ObjTest {}
     my $a = Smartmatch::ObjTest.new;
     my $b = Smartmatch::ObjTest.new;
     ok  ($a ~~  $a),    'Any ~~  Any (+)';

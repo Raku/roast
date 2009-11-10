@@ -35,7 +35,7 @@ is $was_in_any_sub, 1, 'trait_auxiliary:is was called on container';
 is eval('my $a is cool; $a.is_cool'), 42,  'our var "inherited" an attribute';
 
 my $b;
-class B is cool;
+class B is cool {}
 ok(::B.HOW, 'mixing in our role into a class via "is" worked');
 is $was_in_class_sub, 1, 'trait_auxiliary:is was called on class';
 $b = B.new;
