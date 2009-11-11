@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan *;
 
 # L<S04/Phasers/Code "generated at run time" "still fire off"
 #   "can't" "travel back in time" >
@@ -26,11 +26,15 @@ our $h;
     is $h, '1F212', 'START {...} fired only once';
 
     # test that it runs again for a clone of $handle
+    $h = '';
     my $start_clone = $handle.clone;
+    is $h, '', 'cloning code does not run anything';
     lives_ok { $start_clone() }, 'can run clone of code with START block';
-    is $h, '1F2121F2', 'START {...} fired again for the clone';
+    #?rakudo todo 'clone of code with START should run START again'
+    is $h, '1F2', 'START {...} fired again for the clone';
     lives_ok { $start_clone() }, 'can run clone of START block code again';
-    is $h, '1F2121F212', 'cloned START {...} fired only once';
+    #?rakudo todo 'clone of code with START should not run START again'
+    is $h, '1F212', 'cloned START {...} fired only once';
 }
 
 {
@@ -91,5 +95,7 @@ our $h;
     lives_ok { $handle() }, 'can call code with END block';
     is $end, '12', 'END {} does not run at run time either';
 }
+
+done_testing;
 
 # vim: ft=perl6
