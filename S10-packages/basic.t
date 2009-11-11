@@ -59,11 +59,11 @@ is Simple::Bar.new.baz, 'hi', 'class test';
         'Simp2', 'access to $?PACKAGE variable'
 }
 
-#?rakudo todo 'ticket based only on class; RT #60446'
 {
     lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
-    is eval('~(Simple::Bar.new.WHO)'), 'Simple::Bar',
-        'WHO implementation with longname'
+    #?rakudo skip 'ticket based only on class... RT #60446'
+    is ~(Simple::Bar.new.WHO), 'Simple::Bar',
+        'WHO implementation with longname';
 }
 
 lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
