@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan *;
 # L<S12/Enums>
 {
     my %hash; eval '%hash = enum «:Mon(1) Tue Wed Thu Fri Sat Sun»';
@@ -130,5 +130,14 @@ is %hash.values, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'), '
     #?rakudo skip 'RT #63826'
     is EnumGrammar::G::b, 1, 'enum element in grammar has the right value';
 }
+
+# RT 66648
+{
+    enum RT66648 <a b c>;
+    #?rakudo todo 'RT 66648'
+    dies_ok { RT66648.c }, 'die attempting to access enum item as method';
+}
+
+done_testing;
 
 # vim: ft=perl6
