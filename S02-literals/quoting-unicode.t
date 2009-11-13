@@ -1,7 +1,6 @@
 use v6;
 use Test;
-
-plan 70;
+plan *;
 
 #L<S02/Literals>
 # TODO:
@@ -73,5 +72,16 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
     $var = @list[q〈1〉];
     is $var, 'b', 'q-style string with LEFT/RIGHT ANGLE BRACKET';
 }
+
+# RT #66498
+{
+    eval_dies_ok "q\c[SNOWMAN].\c[COMET]",
+        "Can't quote a string with a snowman and comet (U+2603 and U+2604)";
+    #?rakudo todo 'RT 66498'
+    eval_dies_ok "'RT 66498' ~~ m\c[SNOWMAN].\c[COMET]",
+        "Can't quote a regex with a snowman and comet (U+2603 and U+2604)";
+}
+
+done_testing;
 
 # vim: ft=perl6
