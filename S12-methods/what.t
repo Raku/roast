@@ -90,6 +90,14 @@ is 6.02e23.WHAT, Num, 'decimal using "e" is a Num';
 is 1.23456.WHAT, Rat, 'decimal without "e" is Rat';
 ok 1.1 == 11/10, 'decimal == the equivalent rational';
 
+# RT #70237
+{
+    is ~1.WHAT, 'Int()', '1.WHAT sanity';
+    #?rakudo 2 todo 'RT 70237: assignment to .WHAT dies'
+    dies_ok { Int.WHAT = Str }, '.WHAT is readonly';
+    is ~2.WHAT, 'Int()', 'assignment to Int.WHAT does nothing';
+}
+
 done_testing;
 
 # vim: ft=perl6
