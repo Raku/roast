@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan *;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -102,5 +102,14 @@ plan 16;
     is @trace.join(':'), '2:3', 'statement modifier "for" sets $_ correctl';
     is $_, 42, '"for" statement modifier restored $_ of outer block';
 }
+
+# RT 66622
+{
+    my $rt66622 = 66622 for 1, 2, 3;
+    #?rakudo skip 'RT 66622'
+    is $rt66622, 66622, 'statement modifier "for" makes no implicit block';
+}
+
+done_testing;
 
 # vim: ft=perl6
