@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan *;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.
@@ -20,6 +20,8 @@ plan 11;
        'Still works with strings returned from split() (lives)';
     is $x.trans(['a'] => ['b']), 'b',
        'Still works with strings returned from split() (result)';
+    $x = 'abc'.split('b').[0];
+    is $x.trans(['a'] => ['b']), 'b', 'same for split(Str)';
 }
 
 dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returned from split and passed to pointy block are still ro';
@@ -55,5 +57,7 @@ is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
     for %*VM.kv -> $k, $v { $x++};
     is $x, +%*VM.keys, '%*VM.kv is self-consistent';
 }
+
+done_testing;
 
 # vim: ft=perl6
