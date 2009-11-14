@@ -1,7 +1,21 @@
 use v6;
 use Test;
 
-plan 7;
+plan *;
+
+sub empty_sub {}
+sub empty_do { do {} }
+sub empty_branch_true { if 1 {} else { 1; } }
+sub empty_branch_false { if 0 { 1; } else {} }
+sub bare_return { return; }
+
+#?rakudo 3 todo 'empty blocks result in Nil'
+ok empty_sub()          ~~ Nil, 'empty sub returns Nil';
+ok empty_do()           ~~ Nil, 'do {} is Nil';
+ok empty_branch_true()  ~~ Nil, 'if 1 {} is Nil';
+#?rakudo skip 'Null PMC access in can()'
+ok empty_branch_false() ~~ Nil, 'else {} is Nil';
+ok bare_return()        ~~ Nil, 'bare return returns Nil';
 
 # RT #63894
 {
@@ -25,5 +39,7 @@ plan 7;
     $x++ for Nil;
     is $x, 0, '$Statement for Nil; does zero iterations';
 }
+
+done_testing;
 
 # vim: ft=perl6
