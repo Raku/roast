@@ -1,5 +1,4 @@
 # shell script (unix style) to supply a fork() for Rakudo
-# request to Windows developers - make a similar script for cmd shell?
 TEST="$1"
 PORT="$2"
 # commented out echo lines are diagnostics used during development.

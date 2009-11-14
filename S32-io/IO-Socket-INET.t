@@ -33,7 +33,7 @@ given $*OS {
         skip_rest('Operating system not yet supported');
         exit 0;
     }
-    # TODO: when 'Win32' etc.
+    # TODO: other operating systems; *BSD etc.	 
 }
 $received = qqx{$netstat_cmd};                    # refactor into 1 line after
 if $received ~~ $netstat_pat { @ports = $/[]; }   # development complete
@@ -120,7 +120,6 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], ' Callay', '! separator at end of string';
 }
 else {
-    # eg Win32 shell script needs writing
     skip 1, "OS '$*OS' shell support not confirmed";
 }
 
