@@ -102,6 +102,13 @@ is_run( q{'aa' ~~ /(.)$1/},
     is $/, 'RT', 'Matched as intended in void context';
 }
 
+# RT #70003
+{
+    'a' ~~ /a/;
+    #?rakudo skip 'RT 70003'
+    is ($/.orig).rindex('a'), 0, 'rindex() works on $/.orig';
+}
+
 done_testing;
 
 # vim: ft=perl6
