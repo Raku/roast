@@ -58,6 +58,12 @@ is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
     is $x, +%*VM.keys, '%*VM.kv is self-consistent';
 }
 
+# RT #67852
+{
+    lives_ok { 'normal'.trans() }, 'can .trans() on normal string';
+    #?rakudo todo 'RT 67852'
+    lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
+}
 done_testing;
 
 # vim: ft=perl6
