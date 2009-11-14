@@ -11,7 +11,7 @@ use Test;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 60;
+plan *;
 
 my @log;
 
@@ -165,5 +165,10 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
     }
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
+
+#?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
+dies_ok { {nextsame}() }, '{nextsame}() dies properly';
+
+done_testing;
 
 # vim: ft=perl6
