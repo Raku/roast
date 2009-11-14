@@ -21,9 +21,9 @@ isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );
 is( (eval (1/3).perl).nude, (1, 3), 'eval (1/3).perl is 1/3' );
 
 # Test ~
-is(~(Rat.new(1,4)), ~(0.25), "Rats stringify properly");
-is(~(Rat.new(-1,2)), ~(-0.5), "Rats stringify properly");
-is(~(Rat.new(7,4)), ~(1.75), "Rats stringify properly");
+is(~(Rat.new(1,4)), ~(0.25e0), "Rats stringify properly");
+is(~(Rat.new(-1,2)), ~(-0.5e0), "Rats stringify properly");
+is(~(Rat.new(7,4)), ~(1.75e0), "Rats stringify properly");
 is(~(Rat.new(7,-1)), ~(-7), "Rats stringify properly");
 
 # Test new
@@ -124,8 +124,9 @@ for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
 }
 
 # used to be a (never ticketed) Rakudo bug: sin(Rat) died
+# (note that trig on Rats is tested extensively in S32-trig)
 
-is_approx sin(5.0), sin(10/2), 'sin(Rat) works';
+is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add divide by zero / zero denominator tests
 # Added three constructor tests above.  Unsure about the
@@ -136,21 +137,21 @@ is_approx sin(5.0), sin(10/2), 'sin(Rat) works';
 
 # Quick test of some basic mixed type math
 
-is_approx (1 / 2) + 3.5, 4.0, "1/2 + 3.5 = 4.0";
-is_approx 3.5 + (1 / 2), 4.0, "3.5 + 1/2 = 4.0";
-is_approx (1 / 2) - 3.5, -3.0, "1/2 - 3.5 = -3.0";
-is_approx 3.5 - (1 / 2), 3.0, "3.5 - 1/2 = 3.0";
-is_approx (1 / 3) * 6.6, 2.2, "1/3 * 6.6 = 2.2";
-is_approx 6.6 * (1 / 3), 2.2, "6.6 * 1/3 = 2.2";
-is_approx (1 / 3) / 2.0, 1 / 6, "1/3 / 2.0 = 1/6";
-is_approx 2.0 / (1 / 3), 6.0, "2.0 / 1/3 = 6.0";
+is_approx (1 / 2) + 3.5e0, 4.0, "1/2 + 3.5 = 4.0";
+is_approx 3.5e0 + (1 / 2), 4.0, "3.5 + 1/2 = 4.0";
+is_approx (1 / 2) - 3.5e0, -3.0, "1/2 - 3.5 = -3.0";
+is_approx 3.5e0 - (1 / 2), 3.0, "3.5 - 1/2 = 3.0";
+is_approx (1 / 3) * 6.6e0, 2.2, "1/3 * 6.6 = 2.2";
+is_approx 6.6e0 * (1 / 3), 2.2, "6.6 * 1/3 = 2.2";
+is_approx (1 / 3) / 2.0e0, 1 / 6, "1/3 / 2.0 = 1/6";
+is_approx 2.0e0 / (1 / 3), 6.0, "2.0 / 1/3 = 6.0";
 
-is_approx (1 / 2) + 3.5 + 1i, 4.0 + 1i, "1/2 + 3.5 + 1i = 4.0 + 1i";
-is_approx (3.5 + 1i) + (1 / 2), 4.0 + 1i, "(3.5 + 1i) + 1/2 = 4.0 + 1i";
-is_approx (1 / 2) - (3.5 + 1i), -3.0 - 1i, "1/2 - (3.5 + 1i) = -3.0 - 1i";
-is_approx (3.5 + 1i) - (1 / 2), 3.0 + 1i, "(3.5 + 1i) - 1/2 = 3.0 + 1i";
-is_approx (1 / 3) * (6.6 + 1i), 2.2 + (1i/3), "1/3 * (6.6 + 1i) = 2.2 + (1/3)i";
-is_approx (6.6 + 1i) * (1 / 3), 2.2 + (1i/3), "(6.6 + 1i) * 1/3 = 2.2 + (1/3)i";
+is_approx (1 / 2) + 3.5e0 + 1i, 4.0 + 1i, "1/2 + 3.5 + 1i = 4.0 + 1i";
+is_approx (3.5e0 + 1i) + (1 / 2), 4.0 + 1i, "(3.5 + 1i) + 1/2 = 4.0 + 1i";
+is_approx (1 / 2) - (3.5e0 + 1i), -3.0 - 1i, "1/2 - (3.5 + 1i) = -3.0 - 1i";
+is_approx (3.5e0 + 1i) - (1 / 2), 3.0 + 1i, "(3.5 + 1i) - 1/2 = 3.0 + 1i";
+is_approx (1 / 3) * (6.6e0 + 1i), 2.2 + (1i/3), "1/3 * (6.6 + 1i) = 2.2 + (1/3)i";
+is_approx (6.6e0 + 1i) * (1 / 3), 2.2 + (1i/3), "(6.6 + 1i) * 1/3 = 2.2 + (1/3)i";
 is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
 is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
 
