@@ -25,10 +25,10 @@ given $*OS {
         $netstat_cmd = "netstat -an -P tcp -f inet";
         $netstat_pat = regex { [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ }; # same as darwin
     }
-	when 'MSWin32' {
-	    $netstat_cmd = "netstat -n";
+    when 'MSWin32' {
+        $netstat_cmd = "netstat -n";
         $netstat_pat = regex { State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ }; # same as linux
-	}
+    }
     default {
         skip_rest('Operating system not yet supported');
         exit 0;
@@ -60,36 +60,36 @@ isa_ok $server, IO::Socket::INET;
 
 if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
 
-	my $is-win;
-	$is-win = True if $*OS eq 'MSWin32';
+    my $is-win;
+    $is-win = True if $*OS eq 'MSWin32';
 
     # test 2 does echo protocol - Internet RFC 862
-	if $is-win {
-		$received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 2 $port};
-	} else {
-		$received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
-	}
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 2 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
+    }
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
     is $received, $expected, "echo server and client";
 
     # test 3 does discard protocol - Internet RFC 863
-	if $is-win {
-		$received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 3 $port};
-	} else {
-		$received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 3 $port};
-	}
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 3 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 3 $port};
+    }
     #warn "TEST 3 $received";
     $expected = "discard '' received\n";
     is $received, $expected, "discard server and client";
 
     # test 4 tests recv with a parameter
-	if $is-win {
-		$received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};
-	} else {
-		$received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
     }
-	$expected = $received.split("\n");
+    $expected = $received.split("\n");
     my $i = 0;
     is $expected[$i++], '0123456', 'received first 7 characters';
     is $expected[$i++], '789', 'received next 3 characters';
@@ -103,15 +103,15 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
 
     #?rakudo 7 skip
     # test 5 tests get()
-	if $is-win {
-		$received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
-	} else {
-		$received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 5 $port};
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 5 $port};
     }
-	$expected = $received.split("\n");
+    $expected = $received.split("\n");
     $i = 0;
     is $expected[$i++], "'Twas brillig, and the slithy toves",
-    	'get() with default separator';
+        'get() with default separator';
     is $expected[$i++], 'Did gyre and gimble in the wabe;', 'default separator';
     is $expected[$i++], 'All mimsy were the borogoves,', '\r\n separator';
     is $expected[$i++], 'And the mome raths outgrabe', '. as a separator';
