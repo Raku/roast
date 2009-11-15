@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 68;
+plan *;
 
 =begin pod
 
@@ -63,8 +63,17 @@ character classes), and those are referenced at the correct spot.
 # If the first character after the identifier is an =,
 # then the identifier is taken as an alias for what follows
 {
-    # placeholder test for <foo=bar>
-    lives_ok({'foo' ~~ /<foo=alpha>/}, 'placeholder test for <foo=bar>');
+    ok 'foo' ~~ /<foo=alpha>/, 'basic <foo=bar> aliasing';
+    is $<foo>, 'f', 'alias works';
+    #?rakudo todo 'alias does not throw away original name'
+    is $<alpha>, 'f', 'alias does not throw away original name';
+}
+
+#?rakudo skip 'submatch renaming with =.'
+{
+    ok '123gb' ~~ / <foo=.alpha> /, '<foo=.bar>';
+    is $<foo>, 'g', '=. renaming worked';
+    ok $<alpha> ~~ undef, '=. removed the old capture name';
 }
 
 # If the first character after the identifier is whitespace, the subsequent
@@ -278,5 +287,7 @@ character classes), and those are referenced at the correct spot.
    is('abc!'  ~~ /abc>>/,   'abc', 'right word boundary (\W character)');
    is('!abc!' ~~ /<<abc>>/, 'abc', 'both word boundaries (\W character)');
 }
+
+done_testing();
 
 # vim: ft=perl6
