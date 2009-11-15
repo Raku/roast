@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 6;
 
 sub my_first  ($x, $,  $ ) { $x };
 sub my_second ($,  $x, $ ) { $x };
@@ -30,6 +30,16 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
     }
 
     is rt60408_if(42), (42, 42), 'use of @_[0] in an "if" block (RT 60408)';
+}
+
+#?rakudo todo 'RT 70469'
+{
+
+    sub f(@a, $i) {
+        $i ~ "[{map { f($_, $i + 1) }, @a}]"
+    };
+    is f([[], [[]], []], 0), "0[1[] 1[2[]] 1[]]",
+       'recusion and parameter binding work out fine';
 }
 
 # vim: ft=perl6
