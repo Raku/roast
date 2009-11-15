@@ -81,7 +81,7 @@ for @examples -> $z {
 }
 
 # L<S32::Numeric/Num/=item cis>
-my $pi = 3.141592653589793238;
+my $pi = 3.141592653589793238e0;
 
 {
     is_approx(cis(0),        1 + 0i,       "cis(0)     == 1");
