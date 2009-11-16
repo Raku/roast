@@ -60,6 +60,12 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
 }
 
+#?rakudo skip 'RT 66576: .name method on bool values'
+{
+    is Bool::True.name, 'True', 'Bool::True.name works (is "True")';
+    is Bool::False.name, 'False', 'Bool::False.name works (is "False")';
+}
+
 done_testing;
 
 # vim: ft=perl6
