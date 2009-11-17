@@ -169,6 +169,30 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
 #?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
+# RT #66658
+{
+    sub meet(  $person ) { return "meet $person"  }
+    sub greet( $person ) { return "greet $person" }
+
+    my $wrapped;
+
+    for &greet, &meet -> $wrap {
+        my $name = $wrap.name;
+        $wrap.wrap({ $wrapped = $name; callsame; });
+    }
+
+    ok ! $wrapped.defined, 'wrapper test variable is undefined';
+    is greet('japhb'), 'greet japhb', 'wrapped greet() works';
+    #?rakudo todo 'RT 66658: .wrap gets lexicals confused'
+    is $wrapped, 'greet', 'wrapper sees lexical from time of wrap (greet)';
+
+    undefine $wrapped;
+
+    ok ! $wrapped.defined, 'wrapper test variable is undefined';
+    is meet('masak'), 'meet masak', 'wrapped meet() works';
+    is $wrapped, 'meet', 'wrapper sees lexical from time of wrap (meet)';
+}
+
 done_testing;
 
 # vim: ft=perl6
