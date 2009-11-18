@@ -1,6 +1,6 @@
 use Test;
 
-plan 729;
+plan *;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2460,5 +2460,10 @@ ok eval(q{{ 'abcdef' ~~ // }}) ~~ Failure also /null pattern/, '';
 ####   		abcdef		/Null pattern illegal/		ws null pattern
 #?rakudo skip 'infix:<also>'
 ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure also /Null pattern illegal/, 'ws null pattern';
+
+#?rakudo todo 'RT 70606'
+eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
+
+done_testing;
 
 # vim: ft=perl6 sw=4 expandtab
