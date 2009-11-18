@@ -538,6 +538,7 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
 }
 
 # Binding an attribute (was RT #64850)
+#?rakudo skip 'null pmc access on binding an attribute'
 {
     class RT64850 {
         has $.x;
