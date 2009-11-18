@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 24;
 
 # L<S32::Numeric/Num/"=item sqrt">
 
@@ -10,23 +10,32 @@ Basic tests for the sqrt() builtin
 
 =end pod
 
-is_approx(sqrt(2), 1.4142135623730951, 'got the square root of 2');
-is_approx(sqrt(5), 2.23606797749979,   'got the square root of 5');
-is_approx(sqrt(42), 6.48074069840786, 'got the square root of 42');
-is_approx(sqrt(1/42), 0.1543033499620919, 'got the square root of 1/42');
+is_approx(sqrt(2), 1.41421356, 'got the square root of 2');
+is_approx(sqrt(5) * sqrt(5), 5,   'got the square root of 5');
+is_approx(sqrt(42) * sqrt(42), 42, 'got the square root of 42');
+is_approx(sqrt(1/42) * sqrt(1/42), 1/42, 'got the square root of 1/42');
 is_approx(sqrt(1e2),10, 'got square root of 1e2');
+
+is_approx(2.sqrt, 1.41421356, 'got the square root of 2');
+is_approx(5.sqrt * sqrt(5), 5,   'got the square root of 5');
+is_approx(42.sqrt * sqrt(42), 42, 'got the square root of 42');
+is_approx(1/42.sqrt * sqrt(1/42), 1/42, 'got the square root of 1/42');
+is_approx(1e2.sqrt, 10, 'got square root of 1e2');
 
 is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
 is(sqrt(NaN), NaN, 'sqrt(NaN) is NaN');
 is(sqrt(Inf), Inf, 'sqrt(Inf) is Inf');
 is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
 
-is(sqrt(-0.0), -0.0, 'sqrt preserves sign of zero');
+is(sqrt(-0/1), -0/1, 'sqrt preserves sign of Rat zero');
+is(sqrt(-0.0e0), -0.0e0, 'sqrt preserves sign of Num zero');
 
 #?rakudo skip 'named args'
 {
-   is_approx(sqrt(:x(2)), 1.4142135623730951, 'got the square root of 2 with named args');
-   is_approx(sqrt(:x(5)), 2.23606797749979,   'got the square root of 5 with named args');
+   is_approx(sqrt(:x(2)), 1.41421356, 'got the square root of 2 with named args');
+   is_approx(sqrt(:x(5)) * sqrt(5), 5,   'got the square root of 5 with named args');
+   is_approx(sqrt(:x(1/42)) * sqrt(1/42), 1/42,   'got the square root of 1/42 with named args');
+   is_approx(sqrt(:x(1e2)) * sqrt(1e2), 10,   'got the square root of 1e2 with named args');
    is(sqrt(:x(-1)), NaN, 'sqrt(:x(-1)) is NaN');
 }
 
