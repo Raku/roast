@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan *;
 
 # N.B.:  relational ops are in relational.t
 
@@ -18,6 +18,19 @@ is(1 <=> 2, Order::Increase, '1 <=> 2 is increase');
 is(2 <=> 1, Order::Decrease, '2 <=> 1 is decrease');
 is('a' <=> '1', Order::Increase, '<=> is in numeric context');
 
+is 0 <=> -1,   Order::Decrease, '0 <=> -1 is increase';
+is -1 <=> 0,      Order::Increase, '-1 <=> 0 is decrease';
+#?rakudo 2 todo 'RT 70664'
+is 0 <=> -1/2,    Order::Decrease, '0 <=> -1/2 is increase';
+is 0 <=> 1/2,     Order::Increase, '0 <=> 1/2 is increase';
+#?rakudo 6 skip 'No suitable candidate found for cmp_num, with signature PP->I'
+is -1/2 <=> 0,    Order::Increase, '-1/2 <=> 0 is decrease';
+is 1/2 <=> 0,     Order::Decrease, '1/2 <=> 0 is decrease';
+is 1/2 <=> 1/2,   Order::Same, '1/2 <=> 1/2 is same';
+is -1/2 <=> -1/2, Order::Same, '-1/2 <=> -1/2 is same';
+is 1/2 <=> -1/2,  Order::Decrease, '1/2 <=> -1/2 is decrease';
+is -1/2 <=> 1/2,  Order::Increase, '-1/2 <=> 1/2 is increase';
+
 # leg comparison (Str)
 is('a' leg 'a', Order::Same,     'a leg a is same');
 is('a' leg 'b', Order::Increase, 'a leg b is increase');
@@ -32,5 +45,7 @@ is(1 cmp 1,     Order::Same,     '1 cmp 1 is same');
 is(1 cmp 2,     Order::Increase, '1 cmp 2 is increase');
 is(2 cmp 1,     Order::Decrease, '2 cmp 1 is decrease');
 is('a' cmp 1,   Order::Decrease, '"a" cmp 1 is decrease'); # unspecced but P5 behavior
+
+done_testing;
 
 # vim: ft=perl6
