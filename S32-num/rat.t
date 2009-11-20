@@ -162,7 +162,7 @@ is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
     "Num to Rat with epsilon of Rat");
 
 is (5/4).Int,       1, 'Rat.Int';
-is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT #69738)';
+is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
 
 done_testing;
 

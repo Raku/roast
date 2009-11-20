@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 70; 
+plan *;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -15,16 +15,38 @@ plan 70;
 ok(1 < 2, '1 is less than 2');
 ok(!(2 < 1), '2 is ~not~ less than 1');
 
+ok 1/4 < 3/4, '1/4 is less than 3/4';
+ok !(3/4 < 1/4), '3/4 is not less than 1/4';
+ok 1/2 < 1, '1/2 is less than 1';
+ok !(1 < 1/2), '1 is not less than 1/2';
+
 ok(2 > 1, '2 is greater than 1');
 ok(!(1 > 2), '1 is ~not~ greater than 2');
+
+ok 3/4 > 1/4, '3/4 is greater than 1/4';
+ok !(1/4 > 3/4), '1/2 is not greater than 3/4';
+ok 1 > 1/2, '1 is greater than 1/2';
+ok !(1/2 > 1), '1/2 is not greater than 1';
 
 ok(1 <= 2, '1 is less than or equal to 2');
 ok(1 <= 1, '1 is less than or equal to 1');
 ok(!(1 <= 0), '1 is ~not~ less than or equal to 0');
 
+ok 1/4 <= 3/4, '1/4 is less than or equal to 3/4';
+ok !(3/4 <= 1/4), '3/4 is not less than or equal to 1/4';
+ok 1/2 <= 1, '1/2 is less than or equal to 1';
+ok !(1 <= 1/2), '1 is not less than or equal to 1/2';
+ok 1/2 <= 1/2, '1/2 is less than or equal to 1/2';
+
 ok(2 >= 1, '2 is greater than or equal to 1');
 ok(2 >= 2, '2 is greater than or equal to 2');
 ok(!(2 >= 3), '2 is ~not~ greater than or equal to 3');
+
+ok !(1/4 >= 3/4), '1/4 is greater than or equal to 3/4';
+ok 3/4 >= 1/4, '3/4 is not greater than or equal to 1/4';
+ok !(1/2 >= 1), '1/2 is greater than or equal to 1';
+ok 1 >= 1/2, '1 is not greater than or equal to 1/2';
+ok 1/2 >= 1/2, '1/2 is greater than or equal to 1/2';
 
 # +'a' is 0. This means 1 is less than 'a' in numeric context but not string
 ok('a' < '1',  '< uses numeric context');
@@ -107,5 +129,7 @@ ok(!("3" gt "4" lt "5"), "!(3 gt 4 lt 5) chained str comparison");
 ok("5" eq "5" gt "0", '"5" eq "5" gt "0" chained str comparison with equality');
 ok("5" le "5" gt "0", "5 le 5 gt 0 chained str comparison with le");
 ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
+
+done_testing;
 
 # vim: ft=perl6
