@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 13;
+plan *;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -61,5 +61,11 @@ dies_ok {foo_53814(1,undef,'something_extra',:y(3))},
     #    'two commas parse as if undef is between them';
     eval_dies_ok 'rt54804( 1, , 3, )', "two commas in a row doesn't parse";
 }
+
+#?rakudo todo 'RT 66822'
+eval_dies_ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
+              "Can't put required parameter after optional parameters" );
+
+done_testing;
         
 # vim: ft=perl6
