@@ -25,11 +25,7 @@ plan *;
 
 #?rakudo skip 'RT 69740'
 {
-    constant ($a, $b) = (3, 4);
-    is $a, 3, 'multiple constant in one declaration(1)';
-    is $b, 4, 'multiple constant in one declaration(2)';
-    dies_ok { $a = 4 }, 'and they are really constant (1)';
-    dies_ok { $b = 4 }, 'and they are really constant (2)';
+    eval_dies_ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
 }
 
 
@@ -63,6 +59,22 @@ plan *;
         constant yak = 'shaving';
     }
     is ConstantTest::yak, 'shaving', 'constant is "our"-scoped';
+}
+
+#?rakudo skip 'RT 66636: package-scoped constant'
+{
+    package ConstantTest2 {
+        our constant yak = 'shaving';
+    }
+    is ConstantTest2::yak, 'shaving', 'constant can be explicitly "our"-scoped';
+}
+
+#?rakudo skip 'probably can't parse yet'
+{
+    package ConstantTest3 {
+        my constant yak = 'shaving';
+    }
+    ok !ConstantTest3::yak.defined, 'constant can be explicitly "my"-scoped';
 }
 
 #?rakudo skip 'COMPILING'
