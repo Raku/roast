@@ -69,7 +69,7 @@ plan *;
     is ConstantTest2::yak, 'shaving', 'constant can be explicitly "our"-scoped';
 }
 
-#?rakudo skip 'probably can't parse yet'
+#?rakudo skip "probably can't parse yet"
 {
     package ConstantTest3 {
         my constant yak = 'shaving';
