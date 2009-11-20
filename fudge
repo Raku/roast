@@ -102,7 +102,7 @@ sub fudgeblock {
             $DOES = $1;
             next;
         }
-        if (/^\s*\#\? (\w+)[:\s] \s* (.*)/x and $1 eq $ME) {
+        if (/^\s*\#\? (\S+?)[:\s] \s* (.*)/x and $1 eq $ME) {
             $REALLY_FUDGED = 1;
             $ARGS = $2;
             if ($ARGS =~ s/^emit\s*//) {
