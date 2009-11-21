@@ -111,7 +111,6 @@ nok 5.001e0 ~~ 1^..^5,  'not 5.001e0 ~~ 1^..^5';
 ok 'c' ~~ 'b'..'g',      "'c' ~~ 'b'..'g'";
 ok 'b' ~~ 'b'..'g',      "'b' ~~ 'b'..'g'";
 ok 'g' ~~ 'b'..'g',      "'g' ~~ 'b'..'g'";
-#?rakudo 3 todo 'ACCEPT and string Ranges do not mix yet'
 nok 'a' ~~ 'b'..'g',     "not 'a' ~~ 'b'..'g'";
 nok 'h' ~~ 'b'..'g',     "not 'h' ~~ 'b'..'g'";
 nok 0 ~~ 'a'..'g',       "not 0 ~~ 'a'..'g'";
