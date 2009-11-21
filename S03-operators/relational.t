@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 88;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
