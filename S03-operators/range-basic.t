@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 90;
+plan 106;
 
 {
     my $range = 2..6;
@@ -42,6 +42,34 @@ plan 90;
     is $range.excludes_min, Bool::True, "'a'^..^'g'.excludes_min is true";
     is $range.excludes_max, Bool::True, "'a'^..^'g'.excludes_max is true";
     is $range.perl, '"a"^..^"g"', '.perl is correct';
+}
+
+{
+    my $range = ^5;
+    isa_ok $range, Range, '^5 is a Range';
+    is $range.min, 0, "^5.min is 0";
+    is $range.max, 5, "^5.max is 5";
+    is $range.excludes_min, Bool::False, "^5.excludes_min is false";
+    is $range.excludes_max, Bool::True, "^5.excludes_max is true";
+    is $range.perl, "0..^5", '.perl is correct';
+}
+
+{
+    my $range = ^5.5;
+    isa_ok $range, Range, '^5.5 is a Range';
+    is $range.min, 0, "^5.5.min is 0";
+    is $range.max, 5.5, "^5.5.max is 5.5";
+    is $range.excludes_min, Bool::False, "^5.5.excludes_min is false";
+    is $range.excludes_max, Bool::True, "^5.5.excludes_max is true";
+}
+
+{
+    my $range = ^5.5e0;
+    isa_ok $range, Range, '^5.5e0 is a Range';
+    is $range.min, 0, "^5.5e0.min is 0";
+    is $range.max, 5.5e0, "^5.5e0.max is 5.5e0";
+    is $range.excludes_min, Bool::False, "^5.5e0.excludes_min is false";
+    is $range.excludes_max, Bool::True, "^5.5e0.excludes_max is true";
 }
 
 ok 3 ~~ 1..5,         '3 ~~ 1..5';
