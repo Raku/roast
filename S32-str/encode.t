@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 10;
 
 
 # L<S32::Containers/Buf>
@@ -23,5 +23,8 @@ ok Buf.new(195, 182).decode ~~ Str, '.decode returns a Str';
 is Buf.new(195, 182).decode, 'ö', 'decoding a Buf with UTF-8';
 #?rakudo todo 'real .decode'
 is Buf.new(246).decode('ISO-8859-1'), 'ö', 'decoding a Buf with Latin-1';
+
+#?rakudo skip 'Stringy'
+ok Buf ~~ Stringy, 'Buf does Stringy';
 
 # vim: ft=perl6

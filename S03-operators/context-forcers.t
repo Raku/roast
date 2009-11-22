@@ -79,11 +79,13 @@ sub eval_elsewhere($code){ eval($code) }
 # L<S03/Symbolic unary precedence/"prefix:<->">
 {
     my $a = '2 is my favorite number';
-    isa_ok(-$a, Num, 'it is forced into a Num');
+    #?rakudo skp 'Numeric'
+    ok(-$a ~~ Numeric, 'it is forced into a Num');
     is(-$a, -2, 'forced into numeric context');
 
     my $b = 'Did you know that, 2 is my favorite number';
-    isa_ok(-$b, Num, 'it is forced into a Num');
+    #?rakudo skp 'Numeric'
+    ok(-$b ~~ Numeric, 'it is forced into a Num');
 
     # doubly-negated because -0 === 0 isn't neccessarily true
     is(-(-$b), 0, 'non numbers forced into numeric context are 0');
@@ -94,15 +96,18 @@ sub eval_elsewhere($code){ eval($code) }
 # string context
 {
     my $a = 10.500000;
-    isa_ok(~$a, Str, 'it is forced into a Str');
+    #?rakudo skip 'Stringy'
+    ok(~$a ~~ Stringy, 'it is forced into a Str');
     is(~$a, '10.5', 'forced into string context');
 
     my $b = -100;
-    isa_ok(~$b, Str, 'it is forced into a Str');
+    #?rakudo skip 'Stringy'
+    ok(~$b ~~ Stringy, 'it is forced into a Str');
     is(~$b, '-100', 'forced into string context');
 
     my $c = -100.1010;
-    isa_ok(~$c, Str, 'it is forced into a Str');
+    #?rakudo skip 'Stringy'
+    ok(~$c ~~ Stringy, 'it is forced into a Str');
     is(~$c, '-100.101', 'forced into string context');
 }
 
