@@ -35,6 +35,28 @@ plan *;
     is $i, 8, '... block executed';
 }
 
+{
+    my $obj;
+    my Int $int;
+
+    is ~$obj, '', 'prefix:<~> on type object gives empty string (Object)';
+    is ~$int, '', 'prefix:<~> on type object gives empty string (Int)';
+    is $obj.Stringy, '', '.Stringy on type object gives empty string (Object)';
+    is $int.Stringy, '', '.Stringy on type object gives empty string (Int)';
+
+    ok (~$obj) ~~ Stringy, 'prefix:<~> returns a Stringy (Object)';
+    ok (~$int) ~~ Stringy, 'prefix:<~> returns a Stringy (Int)';
+
+    ok $obj.Stringy ~~ Stringy, '.Stringy returns a Stringy (Object)';
+    ok $int.Stringy ~~ Stringy, '.Stringy returns a Stringy (Int)';
+
+    is $obj.Str, 'Object()', '.Str on type object gives Object()';
+    is $int.Str, 'Int()',    '.Str on type object gives Int()';
+
+    is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Object)';
+    is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
+}
+
 done_testing;
 
 # vim: ft=perl6
