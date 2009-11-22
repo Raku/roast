@@ -52,8 +52,8 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     sub rt64888 {
         (
          class {
-             method Str() { 'RT #64888' }
-             method Num() { 64888 }
+             method Stringy() { 'RT #64888' }
+             method Numeric() { 64888 }
          }
         ).new
     }
@@ -64,7 +64,9 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     #?rakudo todo 'RT #64888'
     lives_ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
 
+    #?rakudo todo 'Numeric, Stringy'
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
+    #?rakudo skip 'Numeric, Stringy'
     is +$i1, 64888, 'anonymous class numified works';
 }
 
