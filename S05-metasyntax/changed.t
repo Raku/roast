@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 12;
 
 # L<S05/Changed metacharacters>
 
@@ -10,9 +10,6 @@ plan 13;
     my $str = "abc\ndef";
     ok($str ~~ /./,   '. matches something');
     ok($str ~~ /c.d/, '. matches \n');
-    
-    # (The /s modifier is gone.)
-    eval_dies_ok('$str ~~ m:s/./', '/s modifier (as :s) is gone');
     
     # ^ and $ now always match the start/end of a string, like the old \A and \z.
     ok($str ~~ /^abc/, '^ matches beginning of string');
