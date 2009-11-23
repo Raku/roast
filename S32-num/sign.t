@@ -10,14 +10,24 @@ Basic tests for the sign() builtin
 
 =end pod
 
+is(0.sign, 0, 'got the right sign for 0');
+is(-100.sign, -1, 'got the right sign for -100');
+is(100.sign, 1, 'got the right sign for 100');
+is((3/2).sign, 1, 'got the right sign for 3/2');
+is((-3/2).sign, -1, 'got the right sign for -3/2');
+is(1.5e1.sign, 1, 'got the right sign for 1.5e1');
+is(-1.5e1.sign, -1, 'got the right sign for -1.5e1');
+
 is(sign(0), 0, 'got the right sign for 0');
 is(sign(-100), -1, 'got the right sign for -100');
 is(sign(100), 1, 'got the right sign for 100');
 is(sign(1.5), 1, 'got the right sign for 1.5');
 is(sign(-1.5), -1, 'got the right sign for -1.5');
-is(sign(-Inf),-1, 'got correct sign for -Inf');
+is(sign(1.5e1), 1, 'got the right sign for 1.5e1');
+is(sign(-1.5e1), -1, 'got the right sign for -1.5e1');
 
 is(sign(Inf), 1, 'got correct sign for +Inf');
+is(sign(-Inf),-1, 'got correct sign for -Inf');
 is(sign(NaN),NaN, 'sign of NaN is NaN');
 
 {
@@ -26,6 +36,8 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
    is(sign(:x(100)), 1, 'got the right sign for 100');
    is(sign(:x(1.5)), 1, 'got the right sign for 1.5');
    is(sign(:x(-1.5)), -1, 'got the right sign for -1.5');
+   is(sign(:x(1.5e-1)), 1, 'got the right sign for 1.5e-1');
+   is(sign(:x(-1.5e-1)), -1, 'got the right sign for -1.5e-1');
 }
 
 ok sign(undef) ~~ undef, 'sign(undef) is undef';
