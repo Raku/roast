@@ -15,16 +15,16 @@ is(-100.sign, -1, 'got the right sign for -100');
 is(100.sign, 1, 'got the right sign for 100');
 is((3/2).sign, 1, 'got the right sign for 3/2');
 is((-3/2).sign, -1, 'got the right sign for -3/2');
-is(1.5e1.sign, 1, 'got the right sign for 1.5e1');
-is(-1.5e1.sign, -1, 'got the right sign for -1.5e1');
+is(1.5e0.sign, 1, 'got the right sign for 1.5e1');
+is(-1.5e0.sign, -1, 'got the right sign for -1.5e1');
 
 isa_ok(0.sign, Int, 'got the right type for 0');
 isa_ok(-100.sign, Int, 'got the right type for -100');
 isa_ok(100.sign, Int, 'got the right type for 100');
 isa_ok((3/2).sign, Int, 'got the right type for 3/2');
 isa_ok((-3/2).sign, Int, 'got the right type for -3/2');
-isa_ok(1.5e1.sign, Int, 'got the right type for 1.5e1');
-isa_ok(-1.5e1.sign, Int, 'got the right type for -1.5e1');
+isa_ok(1.5e0.sign, Int, 'got the right type for 1.5e1');
+isa_ok(-1.5e0.sign, Int, 'got the right type for -1.5e1');
 
 is(sign(0), 0, 'got the right sign for 0');
 is(sign(-100), -1, 'got the right sign for -100');
