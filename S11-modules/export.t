@@ -99,7 +99,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
         sub Foo_exp_parens is export()  { 'r_Foo_exp_parens' }
     }
 
-    ##  make sure each side isn't undef
+    ##  make sure each side isn't undefined
     is( Foo::Foo_exp_parens(), 'r_Foo_exp_parens',
         'Foo_exp_parens() is defined' );
     is( Foo::Foo_exp_parens, 'r_Foo_exp_parens',

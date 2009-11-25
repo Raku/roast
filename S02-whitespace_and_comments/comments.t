@@ -151,7 +151,7 @@ plan 45;
 {
     my $a;
     ok !eval '$a = #`\  (comment) 32', "comments can't contain unspace";
-    ok !$a.defined, '$a remains undef';
+    ok !$a.defined, '$a remains undefined';
 }
 
 # L<S02/Whitespace and Comments/"# may not be used as" 
@@ -161,7 +161,7 @@ plan 45;
     ok eval('$a = q{ 32 }'), 'sanity check';
     is $a, ' 32 ', 'sanity check';
 
-    $a = undef;
+    $a = Nil;
     eval_dies_ok '$a = q# 32 #;', 'misuse of # as quote delimiters';
     ok !$a.defined, "``#'' can't be used as quote delimiters";
 }

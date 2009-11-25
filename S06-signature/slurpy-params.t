@@ -139,7 +139,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag("Testing with named arguments (named param isn't required)");
     lives_ok { foo 1, x => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
-    ok (foo1 1, x => 20, y => 300, 4000) ~~ undef,
+    ok (foo1 1, x => 20, y => 300, 4000).notdef,
       'Testing value for named argument';
     is (foo2 1, x => 20, y => 300, 4000), 320,
       'Testing value for slurpy *%h';
@@ -147,7 +147,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
       'Testing the value for slurpy *@a';
     
     ### named parameter pair will always have a higher "priority" while passing
-    ### so %h<n> will always be undef
+    ### so %h<n> will always be undefined
     lives_ok { foo1 1, n => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000`';
     is (foo1 1, n => 20, y => 300, 4000), 20,
@@ -264,10 +264,10 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
     $count = 0;
     slurp_obj_thread(3|4|5);
-    is $count, 1, 'Object slurpy param doesnt autothread';
+    is $count, 1, 'Mu slurpy param doesnt autothread';
     $count = 0;
     slurp_obj_multi(3|4|5);
-    is $count, 1, 'Object slurpy param doesnt autothread';
+    is $count, 1, 'Mu slurpy param doesnt autothread';
 }
 
 ##  Note:  I've listed these as though they succeed, but it's possible

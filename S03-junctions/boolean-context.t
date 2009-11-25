@@ -4,7 +4,7 @@ plan 45;
 
 # L<S03/Junctive operators/>
 
-my $undef = undef;  $undef.defined();
+my $undef = Mu;  $undef.defined();
 
 ok ?any(1..2), 'any(1..2) in boolean context';
 ok !(any(0,0)), 'any(0,0) in boolean context';

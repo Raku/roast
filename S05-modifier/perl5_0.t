@@ -79,7 +79,7 @@ so it looks like a pugs-pcre interface bug.
 
 {
     "a" ~~ m:Perl5/a|(b)/;
-    is($0, undef, 'An unmatched capture should be false.');
+    ok($0.notdef, 'An unmatched capture should be undefined.');
     my $str = "http://foo.bar/";
     ok(($str ~~ m:Perl5 {http{0,1}}));
 

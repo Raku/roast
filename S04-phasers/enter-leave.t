@@ -109,7 +109,7 @@ plan 19;
         LEAVE { $str ~= $! // '<undef>' }
         die 'foo';
     }
-    is $str, 'foo', '$! set in LEAVE if exception thrown';
+    ok $str ~~ /foo/, '$! set in LEAVE if exception thrown';
 }
 
 {

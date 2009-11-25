@@ -23,7 +23,7 @@ plan 11;
   my $a = 42;
   {
     is(eval('let $a = 23; $a'), 23, "let() changed the variable (1)");
-    undef;
+    Mu;
   }
   is $a, 42, "let() should restore the variable, as our block failed";
 }
@@ -56,7 +56,7 @@ plan 11;
   my @array = (0, 1, 2);
   {
     is(eval('let @array[1] = 42; @array[1]'), 42, "let() changed our array element");
-    undef;
+    Mu;
   }
   is @array[1], 1, "let() restored our array element";
 }

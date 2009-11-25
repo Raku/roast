@@ -26,7 +26,7 @@ plan 21;
     my $var;
     my $sub = sub ($x) { START { $var += $x } };
  
-    ok $var ~~ undef, 'START {...} has not run yet';
+    ok $var.notdef, 'START {...} has not run yet';
 
     $sub(2);
     is $var, 2, 'START {} has executed';
@@ -86,23 +86,23 @@ for <first second> {
       $var;
     };
 
-    ok $was_in_start ~~ undef, 'START {} has not run yet';
+    ok $was_in_start.notdef, 'START {} has not run yet';
     is $sub(), 23, 'START {} block set our variable (2)';
     is $sub(), 23, 'the returned value of START {} still there';
     is $was_in_start, 1, 'our START {} block was invoked exactly once';
 }
 
-# Test that START {} blocks are executed only once even if they return undef
+# Test that START {} blocks are executed only once even if they return undefined
 # (the first implementation ran them twice instead).
 {
     my $was_in_start;
-    my $sub = { START { $was_in_start++; undef } };
+    my $sub = { START { $was_in_start++; Mu } };
 
-    ok $sub() ~~ undef, 'START {} returned undef';
+    ok $sub().notdef, 'START {} returned undefined';
     $sub();
     $sub();
     is $was_in_start, 1,
-        'our START { ...; undef } block was invoked exactly once';
+        'our START { ...; Mu } block was invoked exactly once';
 }
 
 # vim: ft=perl6

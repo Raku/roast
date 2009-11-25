@@ -38,13 +38,13 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
 	
 =begin comment
 	If the final statement is a conditional which does not execute 
-	any branch, the return value is undef in item context and () 
+	any branch, the return value is undefined in item context and () 
 	in list context.
 =end comment
-#?rakudo skip 'if returning undef'
+#?rakudo skip 'if returning Nil'
 {
 	my $x = do if 0 { 1 } elsif 0 { 2 };
-	ok !$x.defined, 'when if does not execute any branch, return undef';
+	ok !$x.defined, 'when if does not execute any branch, return undefined';
 }
 
 {

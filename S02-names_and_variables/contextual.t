@@ -39,6 +39,6 @@ my $o = CT.new;
     is CT.foo_priv, 'one', 'back (private class method)';
 }
 
-ok !foo().defined, 'contextual $*VAR is undef';
+ok foo().notdef, 'contextual $*VAR is undefined';
 
 # vim: ft=perl6

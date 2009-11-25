@@ -50,9 +50,9 @@ class Code does Callable;
 plan 38;
 
 my $scalar;
-ok $scalar.does(Object), 'unitialized $var does Object';
+ok $scalar.does(Mu), 'unitialized $var does Mu';
 $scalar = 1;
-ok $scalar.does(Object), 'value contained in a $var does Object';
+ok $scalar.does(Mu), 'value contained in a $var does Mu';
 
 
 

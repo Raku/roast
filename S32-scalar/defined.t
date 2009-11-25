@@ -1,8 +1,8 @@
 use v6;
 use Test;
-plan 21;
+plan 29;
 
-# L<S32::Basics/Object/=item defined>
+# L<S32::Basics/Mu/=item defined>
 
 =begin pod
 
@@ -12,7 +12,11 @@ Tests for the defined() builtin
 
 
 
-ok(!defined(undef), 'undef is not defined');
+ok(!defined(Mu), 'Mu is not defined');
+ok(!defined(Int), 'Int is not defined');
+ok(!defined(Num), 'Num is not defined');
+ok(!defined(Str), 'Str is not defined');
+ok(!defined(Nil), 'Nil is not defined');
 
 ok(defined(1),   'numeric literal 1 is defined');
 ok(defined(""),  'empty string is defined');
@@ -28,11 +32,17 @@ ok(defined($foo), 'variable $foo is now defined (as numeric literal 1)');
 $foo = "";
 ok(defined($foo), 'variable $foo is now defined (as a empty string)');
 
-$foo = undef;
+$foo = Nil;
 ok(!defined($foo), 'variable $foo is now undefined again');
 
 $foo = "a";
 ok(defined($foo), 'variable $foo is now defined (as string "a")');
+
+$foo = Mu;
+ok(!defined($foo), 'variable $foo is now undefined again');
+
+$foo = "b";
+ok(defined($foo), 'variable $foo is now defined (as string "b")');
 
 $foo = 0;
 ok(defined($foo), 'variable $foo is now defined (as numeric literal 0)');
@@ -52,17 +62,23 @@ ok(!defined($foo), 'undefine $foo works');
     $foo = "";
     ok($foo.defined, 'variable $foo is now defined (as a empty string)');
 
-    $foo = undef;
+    $foo = Nil;
     ok(!$foo.defined, 'variable $foo is now undefined again');
 
     $foo = "a";
     ok($foo.defined, 'variable $foo is now defined (as string "a")');
 
+    $foo = Mu;
+    ok(!$foo.defined, 'variable $foo is now undefined again');
+
+    $foo = "b";
+    ok($foo.defined, 'variable $foo is now defined (as string "b")');
+
     $foo = 0;
     ok($foo.defined, 'variable $foo is now defined (as numeric literal 0)');
 
     undefine($foo);
-    ok(!$foo.defined, 'undef $foo works');
+    ok(!$foo.defined, 'undefine $foo works');
 }
 
 # While porting a Perl 5 solution to QoTW regular #24, I noticed the following bug:

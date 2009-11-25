@@ -81,8 +81,8 @@ sub test_stuff($x) {
 #?rakudo skip 'augment'
 #?DOES 2
 {
-    augment class Object {
-        method f { 'inObject' };
+    augment class Mu {
+        method f { 'inMu' };
     }
 
     augment class Bool {

@@ -167,7 +167,7 @@ is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y'), 2, '2nd my in
 my $z = 42;
 {
     my $z = $z;
-    ok( $z ~~ undef, 'my $z = $z; can not see the value of the outer $z');
+    ok( $z.notdef, 'my $z = $z; can not see the value of the outer $z');
 }
 
 # interaction of my and eval

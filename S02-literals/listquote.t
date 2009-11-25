@@ -25,9 +25,8 @@ is($s, "xayaz", 'listop |<< <list>');
 
 dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error';
 
-# XXX shouldn't compare List to Array, need better test
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
-is(@y, [1,2,undef], '{...}<a b c> is hash subscript');
+ok(@y eqv [1,2,Mu], '{...}<a b c> is hash subscript');
 
 eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
 

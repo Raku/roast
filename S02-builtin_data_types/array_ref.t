@@ -18,7 +18,7 @@ is($array_ref1.[0], 'foo', 'got the right value at array_ref1 index 0 using the 
 
 # array_ref with strings, numbers and undef
 
-my $array_ref2 = [ "test", 1, undef ];
+my $array_ref2 = [ "test", 1, Mu ];
 isa_ok($array_ref2, Array);
 
 is(+$array_ref2, 3, 'the array_ref2 has 3 elements');

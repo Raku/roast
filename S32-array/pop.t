@@ -37,7 +37,7 @@ plan *;
        is($a, -1, '@pop.pop works');
 
        is(+@pop, 0, 'we have no more element in the array');
-       ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undef');
+       ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
        ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 }
 }
@@ -58,14 +58,14 @@ plan *;
     is(@pop.pop, 1, 'inline @pop.pop works');
 
     is(+@pop, 0, 'we have no more element in the array');
-    ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undef');
+    ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
     ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 }
 
 # invocant syntax with inline arrays
 {
     is([1, 2, 3].pop, 3, 'this will return 3');
-    ok(!defined([].pop), 'this will return undef');
+    ok(!defined([].pop), 'this will return undefined');
     ok( [].pop ~~ Failure, '[].pop is a Failure' );
 }
 
@@ -73,7 +73,7 @@ plan *;
 
 {
     my @pop;
-    ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undef');
+    ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undefined');
     ok( @pop.pop() ~~ Failure, 'pop off uninitialized array is a Failure' );
 }
 

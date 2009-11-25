@@ -21,7 +21,7 @@ undefine $!;
 # XXX nonexisting_subroutine is detectable at compile time,
 # this test should be fixed somehow
 try { nonexisting_subroutine; };
-ok $! !~~ undef, 'Calling a nonexisting subroutine defines $!';
+ok $!.defined, 'Calling a nonexisting subroutine defines $!';
 try { nonexisting_subroutine; };
 ok $!, 'Calling a nonexisting subroutine sets $!';
 

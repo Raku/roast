@@ -40,7 +40,7 @@ my @list = (1 .. 10);
 }
 
 {
-    ok(@list.first( { ($_ == 11) }) ~~ undef, 'first returns undef unsuccessful match');
+    ok(@list.first( { ($_ == 11) }).notdef, 'first returns undefined unsuccessful match');
 }
 
 {

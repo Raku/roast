@@ -19,7 +19,7 @@ if 1 {
     is ~$/, 'a', '... and can use the match var';
 }
 
-ok !defined($/), '$/ still undef in the outer block';
+ok !defined($/), '$/ still undefined in the outer block';
 
 my $loop = 1;
 
@@ -28,20 +28,20 @@ while $loop {
     is ~$/, 'b', '... and can use the match var';
     $loop = 0;
 }
-ok !defined($/), '$/ still undef in the outer block';
+ok !defined($/), '$/ still undefined in the outer block';
 
 {
     ok 'c' ~~ /./, 'Can match in a bare block';
     is ~$/, 'c', '... and can use the match var';
 }
-ok !defined($/), '$/ still undef in the outer block';
+ok !defined($/), '$/ still undefined in the outer block';
 
 my $discarded = do {
     ok 'd' ~~ /./, 'Can match in a do block';
     is ~$/, 'd', '... and can use the match var';
 
 }
-ok !defined($/), '$/ still undef in the outer block';
+ok !defined($/), '$/ still undefined in the outer block';
 
 {
     my $str = 'abc';

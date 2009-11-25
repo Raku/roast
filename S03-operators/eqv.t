@@ -101,9 +101,10 @@ plan 45;
 #?rakudo skip 'captures'
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
+  # XXX the following seems bogus nowadays
   #?pugs 2 todo 'bug'
   ok !(\3 eqv \3),         "eqv on anonymous scalar references (2)";
-  ok !(\undef eqv \undef), "eqv on anonymous scalar references (3)";
+  ok !(\Mu eqv \Mu), "eqv on anonymous scalar references (3)";
 }
 
 # Chained eqv (not specced, but obvious)

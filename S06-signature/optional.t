@@ -40,8 +40,8 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 #?rakudo todo 'die on optional param before required'
 eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones are forbidden';
 
-sub foo_53814($w, $x?, :$y = 2){ $w~"|"~$x~"|"~$y };
-dies_ok {foo_53814(1,undef,'something_extra',:y(3))},
+sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
+dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
       'die on too many parameters (was once bug RT 53814)';
 
 #?rakudo todo 'RT 54804'

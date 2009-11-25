@@ -53,7 +53,7 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 
 # L<S03/Tight or precedence/short-circuit inclusive-or>
 is(2 || 3, 2, "|| returns first true value");
-ok(!(defined( 0 || undef)), "|| returns last false value of list?");
+ok(!(defined( 0 || Mu)), "|| returns last false value of list?");
 
 {
     (my @s)[0] //= 5;
@@ -63,7 +63,7 @@ ok(!(defined( 0 || undef)), "|| returns last false value of list?");
 }
 
 is(?(2 ?| 3), True, "boolean or (?|) returns True or False"); 
-is(?(0 ?| undef), False, "boolean or (?|) returns True or False");
+is(?(0 ?| Mu), False, "boolean or (?|) returns True or False");
 
 # L<S03/Junctive operators/They thread through operations>
 ok(?((all((4|5|6) + 3) == one(7|8|9))), "all elements in junction are incremented");
@@ -124,8 +124,8 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
   ok( ?(True ?^True  == False), '?^ works with Bools');
 
   ok( ?(''   ?^''    == False), '?^ works');
-  ok( ?(undef?^ 1    == True),  '?^ works');
-  ok( ?(-1   ?^undef == True),  '?^ works');
+  ok( ?(Mu   ?^ 1    == True),  '?^ works');
+  ok( ?(-1   ?^Mu    == True),  '?^ works');
 
 }
 
@@ -133,8 +133,8 @@ ok(?(42 > 12 & 20 & 32), "test the all infix operator");
 # or -Inf values">
 #?rakudo todo 'RT #61836'
 {
-    lives_ok { (2 min undef) }, 'can do (2 min undef)'; 
-    lives_ok { (undef min 2) }, 'can do (undef min 2)'; 
+    lives_ok { (2 min Mu) }, 'can do (2 min Mu)'; 
+    lives_ok { (Mu min 2) }, 'can do (Mu min 2)'; 
 }
 
 # L<S03/Traversing arrays in parallel/"but a short list may always be extended arbitrarily">

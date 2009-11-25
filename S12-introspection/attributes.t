@@ -25,12 +25,12 @@ class C is B {
 my @attrs = C.^attributes();
 is +@attrs, 3, 'attribute introspection gave correct number of elements';
 
-is @attrs[0].name,         '$!c',  'first attribute had correct name';
-is @attrs[0].type,         Object, 'first attribute had correct type';
-is @attrs[0].has-accessor, True,   'first attribute has an accessor';
-ok !@attrs[0].build,               'first attribute has no build value';
-ok @attrs[0].rw,                   'first attribute is rw';
-ok !@attrs[0].readonly,            'first attribute is not readonly';
+is @attrs[0].name,         '$!c', 'first attribute had correct name';
+is @attrs[0].type,         Mu,    'first attribute had correct type';
+is @attrs[0].has-accessor, True,  'first attribute has an accessor';
+ok !@attrs[0].build,              'first attribute has no build value';
+ok @attrs[0].rw,                  'first attribute is rw';
+ok !@attrs[0].readonly,           'first attribute is not readonly';
 
 is @attrs[1].name,         '$!b', 'second attribute had correct name';
 is @attrs[1].type,         Int,   'second attribute had correct type';

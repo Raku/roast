@@ -39,7 +39,7 @@ plan *;
 
 
     is(+@shift, 0, 'we have no elements in our array');
-    ok(!defined(shift(@shift)), 'after the array is exhausted it give undef');
+    ok(!defined(shift(@shift)), 'after the array is exhausted it gives undefined');
 }
 }
 
@@ -59,21 +59,21 @@ plan *;
     is(@shift.shift, 4, 'inline @shift.shift works');
 
     is(+@shift, 0, 'we have no elements in our array');
-    ok(!defined(shift(@shift)), 'again, the array is exhausted and we get undef');
+    ok(!defined(shift(@shift)), 'again, the array is exhausted and we get undefined');
     ok( shift(@shift) ~~ Failure, 'again, Failure from shifting empty array' );
 }
 
 # invocant syntax with inline arrays
 {
     is([1, 2, 3].shift, 1, 'this will return 1');
-    ok(!defined([].shift), 'this will return undef');
+    ok(!defined([].shift), 'this will return undefined');
     ok( [].shift ~~ Failure, 'shift of empty array is Failure' );
 }
 
 # testing some edge cases
 {
     my @shift;
-    ok(!defined(shift(@shift)), 'shift on an empty array returns undef');
+    ok(!defined(shift(@shift)), 'shift on an empty array returns undefined');
     ok( shift(@shift) ~~ Failure, 'shift on empty array is Failure');
 }
 

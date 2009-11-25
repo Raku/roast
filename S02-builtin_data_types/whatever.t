@@ -94,12 +94,12 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 #?rakudo skip 'RT 68714'
 {
-    is (1, undef, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';
+    is (1, Mu, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';
 
     my $rt68714 = *.defined;
     ok $rt68714 ~~ Code, '*.defined generates a closure';
     ok $rt68714(68714), '*.defined works (true)';
-    ok $rt68714(undef), '*.defined works (false)';
+    ok not $rt68714(Mu), '*.defined works (false)';
 }
 
 done_testing;

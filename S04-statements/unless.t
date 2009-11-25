@@ -40,8 +40,8 @@ my $x = 'test';
 
 {
     my $found = 0;
-    unless undef { $found = 1; }
-    ok($found, 'unless undef is executed');
+    unless Mu { $found = 1; }
+    ok($found, 'unless undefined is executed');
 }
 
 # with parentheses

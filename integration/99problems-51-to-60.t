@@ -20,13 +20,13 @@ plan 37;
     # or to define a proper class Node
     
     sub istree($obj) returns Bool {
-      return Bool::True if $obj ~~ undef;
+      return Bool::True unless $obj.defined;
       return +$obj==3 and istree($obj[1]) and istree($obj[2]);
     }
         
-    ok istree(undef), "We tell that an empty tree is a tree";
-    ok istree(['a',undef,undef]), ".. and a one-level tree is a tree";
-    ok istree(['a',undef,['c',undef,undef]]), ".. and n-level trees";
+    ok istree(Mu), "We tell that an empty tree is a tree";
+    ok istree(['a',Mu,Mu]), ".. and a one-level tree is a tree";
+    ok istree(['a',Mu,['c',Mu,Mu]]), ".. and n-level trees";
     ok !istree([]), ".. and fail with empty lists";
     ok !istree(<a b>),".. or other malformed trees";
 }
@@ -53,7 +53,7 @@ plan 37;
     # etc......No
 
     sub cbal-tree(Int $n) {
-        return undef               if $n == 0;
+        return Mu               if $n == 0;
         gather {
             if $n % 2 == 1 {
                 my $k = ($n - 1) div 2;
@@ -79,16 +79,16 @@ plan 37;
     }
 
     is cbal-tree(1),
-       (['x', undef, undef],),
+       (['x', Mu, Mu],),
        'built a balanced binary tree with 1 item';
 
     is cbal-tree(2), 
-       (['x', ['x', undef, undef], undef],
-        ['x', undef,               ['x', undef, undef]],),
+       (['x', ['x', Mu, Mu], Mu],
+        ['x', Mu,               ['x', Mu, Mu]],),
        'built a balanced binary tree with 2 items';
 
     is cbal-tree(3),
-       (['x', ['x', undef, undef], ['x', undef, undef]],),
+       (['x', ['x', Mu, Mu], ['x', Mu, Mu]],),
        'built a balanced binary tree with 3 items';
 
     is +cbal-tree(4), 4, 'built the right number of balanced trees with 4 items';
@@ -115,14 +115,14 @@ plan 37;
     # We use multi subs so that in theory we can replace this definitions 
     # for example using classes or Array subtyping instead of lispish trees
     
-    # in Rakudo you can't pass an undef to where an Array is expected,
-    # so we add multis for explicit undef values
-    multi sub mirror(Failure $a, Failure $b) { return True;  }
-    multi sub mirror(Failure $a, @b)         { return False; }
-    multi sub mirror(@a,         Failure $b) { return False; }
+    # in Rakudo you can't pass a Mu to where an Array is expected,
+    # so we add multis for explicit undefined values
+    multi sub mirror(Any:U $a, Any:U $b) { return True;  }
+    multi sub mirror(Any:U $a, @b)       { return False; }
+    multi sub mirror(@a,       Any:U $b) { return False; }
 
     multi sub mirror(@first, @second) {
-        if (@first|@second == (undef,)) {
+        if (@first|@second == (Mu,)) {
             return @first == @second ;
         }
         mirror(left(@first),right(@second)) and mirror(right(@first),left(@second))
@@ -138,20 +138,20 @@ plan 37;
     is left(('a',1,2)), 1, "left()  works";
     is right(('b',1,2)), 2, "right() works";
 
-    ok mirror(undef,undef),"mirror works with empty trees";
-    ok !mirror(undef,[]),"mirror spots differences";
-    ok mirror((1,undef,undef),(2,undef,undef)),"mirror can recurse";
-    ok !mirror((1,undef,[]),(2,undef,undef)),"mirror spots differences recurring";
+    ok mirror(Mu,Mu),"mirror works with empty trees";
+    ok !mirror(Mu,[]),"mirror spots differences";
+    ok mirror((1,Mu,Mu),(2,Mu,Mu)),"mirror can recurse";
+    ok !mirror((1,Mu,[]),(2,Mu,Mu)),"mirror spots differences recurring";
 
-    ok symmetric([1,undef,undef]), "symmetric works with 1-level trees";
-    ok !symmetric([1,undef,[2,undef,undef]]),"symmetric find asymettric trees";
+    ok symmetric([1,Mu,Mu]), "symmetric works with 1-level trees";
+    ok !symmetric([1,Mu,[2,Mu,Mu]]),"symmetric find asymettric trees";
     ok symmetric([1,
             [11,
-            [111,undef,undef],
-            [112,[1121,undef,undef],undef]],
+            [111,Mu,Mu],
+            [112,[1121,Mu,Mu],Mu]],
             [12,
-            [121,undef,[1221,undef,undef]],
-            [122,undef,undef]]]),
+            [121,Mu,[1221,Mu,Mu]],
+            [122,Mu,Mu]]]),
        "symmetric works with n-level trees"; 
 }
 
@@ -173,8 +173,8 @@ plan 37;
     # No
 
     sub add-to-tree($tree, $node) {
-        if $tree ~~ undef {
-            return [$node, undef, undef] 
+        if $tree ~~ Mu {
+            return [$node, Mu, Mu] 
         } elsif $node <= $tree[0] {
             return [$tree[0], add-to-tree($tree[1], $node), $tree[2]];
         } else {
@@ -190,7 +190,7 @@ plan 37;
     }
 
     is construct(3, 2, 5, 7, 1), 
-       [3, [2, [1, undef, undef], undef], [5, undef, [7, undef, undef]]],
+       [3, [2, [1, Mu, Mu], Mu], [5, Mu, [7, Mu, Mu]]],
        'Can construct a binary search tree';
 }
 
@@ -230,7 +230,7 @@ plan 37;
     # etc......No
 
     sub heights($x) {
-        return 0 if $x ~~ undef;
+        return 0 unless $x.defined;
         gather {
             for heights($x[1]) { take 1 + $_ };
             for heights($x[2]) { take 1 + $_ };
@@ -243,8 +243,8 @@ plan 37;
     }
 
     sub hbal-tree(Int $n) {
-        return undef if $n == 0;
-        return ['x', undef, undef] if $n == 1;
+        return Mu if $n == 0;
+        return ['x', Mu, Mu] if $n == 1;
         gather {
             for hbal-tree($n - 1) -> $a {
                 for hbal-tree($n - 1) -> $b {

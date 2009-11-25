@@ -13,12 +13,12 @@ Verify that autoincrement/autodecrement work properly.
 
 =end description
 
-#?rakudo skip 'unimpl undef++'
-my $a = undef;
-is($a++, 0, 'undef++ == 0');
+#?rakudo skip 'unimpl Mu++'
+my $a = Mu;
+is($a++, 0, 'Mu++ == 0');
 
-$a = undef;
-ok($a-- ~~ undef, 'undef-- is undefined');
+$a = Mu;
+ok(notdef($a--), 'Mu-- is undefined');
 
 $a = 'x';
 is($a++, 'x', 'magical ++ should not be numified');

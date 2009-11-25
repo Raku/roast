@@ -23,18 +23,18 @@ sub eval_elsewhere($code){ eval($code) }
 #L<S03/"Smart matching"/Any Callable:() simple closure truth>
 {
     sub uhuh { 1 }
-    sub nuhuh { undef }
+    sub nuhuh { Mu }
 
-    ok((undef ~~ &uhuh), "scalar sub truth");
-    ok(!(undef ~~ &nuhuh), "negated scalar sub false");
+    ok((Mu ~~ &uhuh), "scalar sub truth");
+    ok(!(Mu ~~ &nuhuh), "negated scalar sub false");
 
 };
 
 #L<S03/Smart matching/Any undef undefined not .defined>
 { 
-    ok(!("foo" ~~ undef), "foo is not ~~ undef");
-    ok "foo" !~~ undef,   'foo !~~ undef';
-    ok((undef ~~ undef), "undef is");
+    ok(!("foo" ~~ .notdef), "foo is not ~~ .notdef");
+    ok "foo" !~~ .notdef,   'foo !~~ .notdef';
+    ok((Mu ~~ .notdef), "Mu is");
 };
 
 #L<S03/Smart matching/Any .foo method truth>
@@ -86,10 +86,10 @@ sub eval_elsewhere($code){ eval($code) }
 
 #L<S03/Smart matching/array value slice truth>
 { 
-    ok ((undef, 1, undef) ~~ .[1]),
-        "element 1 of (undef, 1, undef) is true";
-    ok !((undef, undef) ~~ .[0]),
-        "element 0 of (undef, undef) is false";
+    ok ((Mu, 1, Mu) ~~ .[1]),
+        "element 1 of (Mu, 1, Mu) is true";
+    ok !((Mu, Mu) ~~ .[0]),
+        "element 0 of (Mu, Mu) is false";
     ok ((0, 1, 2, 3) ~~ .[1, 2, 3]),
         "array slice .[1,2,3] of (0,1,2,3) is true";
     ok !((0, 1, 2, 3) ~~ .[0]),
@@ -135,8 +135,8 @@ sub eval_elsewhere($code){ eval($code) }
     ok  ('05' ~~ 5),            '$something ~~ number numifies';
     ok  ('1.2' ~~ 1.2),         '$thing ~~ number does numeric comparison';
     # yes, this warns, but it should still be true
-    ok  (undef ~~ 0),           'undef ~~ 0';
-    ok !(undef ~~ 2.3),         'undef ~~ $other_number';
+    ok  (Mu ~~ 0),              'Mu ~~ 0';
+    ok !(Mu ~~ 2.3),            'Mu ~~ $other_number';
     ok  (3+0i  ~~ 3),           'Complex ~~ Num (+)';
     ok !(3+1i  ~~ 3),           'Complex ~~ Num (-)';
     ok !(4+0i  ~~ 3),           'Complex ~~ Num (-)';
@@ -163,18 +163,18 @@ sub eval_elsewhere($code){ eval($code) }
     ok(("bar" !~~ "foo"),   "bar ne foo)");
     ok  (4 ~~ '4'),         'string equality';
     ok !(4 !~~ '4'),        'negated string equality';
-    ok  (undef ~~ ''),      'undef ~~ ""';
+    ok  (Mu ~~ ''),         'Mu ~~ ""';
 }
 
 #L<S03/Smart matching/Hash Pair test hash mapping>
 {
-    my %a = (a => 1, b => 'foo', c => undef);
+    my %a = (a => 1, b => 'foo', c => Mu);
     ok  (%a ~~ b => 'foo'),         '%hash ~~ Pair (Str, +)';
     ok !(%a ~~ b => 'ugh'),         '%hash ~~ Pair (Str, -)';
     ok  (%a ~~ a => 1.0),           '%hash ~~ Pair (Num, +)';
     ok  (%a ~~ :b<foo>),            '%hash ~~ Colonpair';
-    ok  (%a ~~ c => undef),         '%hash ~~ Pair (undef)';
-    ok  (%a ~~ d => undef),         '%hash ~~ Pair (undef, nonexistent)';
+    ok  (%a ~~ c => *.notdef),         '%hash ~~ Pair (.notdef, Mu)';
+    ok  (%a ~~ d => *.notdef),         '%hash ~~ Pair (.notdef, Nil)';
     ok !(%a ~~ a => 'foo'),         '%hash ~~ Pair (key and val not paired)';
 }
 
@@ -189,7 +189,7 @@ sub eval_elsewhere($code){ eval($code) }
     class SmartmatchTest::AttrPair {
         has $.a = 4;
         has $.b = 'foo';
-        has $.c = undef;
+        has $.c = Mu;
     }
     my $o = SmartmatchTest::AttrPair.new();
     ok  ($o ~~ :a(4)),      '$obj ~~ Pair (Int, +)';
@@ -197,13 +197,13 @@ sub eval_elsewhere($code){ eval($code) }
     ok !($o ~~ :b(0)),      '$obj ~~ Pair (different types)';
     ok  ($o ~~ :b<foo>),    '$obj ~~ Pair (Str, +)';
     ok  ($o ~~ :b<ugh>),    '$obj ~~ Pair (Str, -)';
-    ok  ($o ~~ :c(undef)),  '$obj ~~ Pair (undef, +)';
+    ok  ($o ~~ :c(Mu)),     '$obj ~~ Pair (Mu, +)';
     ok  ($o ~~ :c(0)),      '$obj ~~ Pair (0, +)';
-    ok !($o ~~ :b(undef)),  '$obj ~~ Pair (undef, -)';
+    ok !($o ~~ :b(Mu)),     '$obj ~~ Pair (Mu, -)';
     # not explicitly specced, but implied by the spec and decreed 
     # by TimToady: non-existing method or attribute dies:
     # http://irclog.perlgeek.de/perl6/2009-07-06#i_1293199
-    dies_ok {$o ~~ :e(undef)},  '$obj ~~ Pair, nonexistent, dies (1)';
+    dies_ok {$o ~~ :e(Mu)},  '$obj ~~ Pair, nonexistent, dies (1)';
     dies_ok {$o ~~ :e(5)},      '$obj ~~ Pair, nonexistent, dies (2)';
 }
 
@@ -285,7 +285,7 @@ my %hash1 = ( "foo" => "Bar", "blah" => "ding");
 my %hash2 = ( "foo" => "zzz", "blah" => "frbz");
 my %hash3 = ( "oink" => "da", "blah" => "zork");
 my %hash4 = ( "bink" => "yum", "gorch" => "zorba");
-my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
+my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => Mu, "baz" => Mu );
 
 {
     ok  (%hash1 ~~ %hash2), 'Hash ~~ Hash (same keys, +)';
@@ -299,9 +299,9 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
 # Set   Hash
 #L<S03/"Smart matching"/Array Hash hash slice existence>
 {
-    my %h = (a => 'b', c => undef);
+    my %h = (a => 'b', c => Mu);
     ok  (['a']      ~~ %h), 'Array ~~ Hash (exists and True)';
-    ok  (['c']      ~~ %h), 'Array ~~ Hash (exists but undef)';
+    ok  (['c']      ~~ %h), 'Array ~~ Hash (exists but Mu)';
     ok  ([<a c>]    ~~ %h), 'Array ~~ Hash (both exist)';
     ok  ([<c d>]    ~~ %h), 'Array ~~ Hash (one exists)';
     # note that ?any() evaluates to False
@@ -321,7 +321,7 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => undef, "baz" => undef );
 
 #L<S03/"Smart matching"/Scalar Hash hash entry existence>
 {
-    my %h = (moep => 'foo', bar => undef);
+    my %h = (moep => 'foo', bar => Mu);
     ok  ('moep' ~~ %h),     'Scalar ~~ Hash (+, True)';
     ok  ('bar' ~~ %h),      'Scalar ~~ Hash (+, False)';
     ok !('foo' ~~ %h),      'Scalar ~~ Hash (-)';

@@ -63,10 +63,10 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
 #?rakudo skip 'parsing [=>]'
 {
-    # (A => (B => undef)) => (C => undef))
+    # (A => (B => Mu)) => (C => Mu))
     # ((A B) C)
     
-    my $cons = [=>] ( [=>] <A B>, undef ), <C>, undef;
+    my $cons = [=>] ( [=>] <A B>, Mu ), <C>, Mu;
     
     ## Hmm.  Works with the latest release of Pugs (6.2.12 (r13256))
     ## Leaving this in as something that once didn't work (6.2.12 CPAN)

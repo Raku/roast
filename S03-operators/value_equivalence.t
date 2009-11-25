@@ -26,7 +26,7 @@ plan 52;
   ok !(1 === 1.0), "=== on values (1 === 1.0)";
   ok !(1 === "1"), '=== on values (1 === "1")';
   #?rakudo todo 'RT #61928'
-  ok (undef === undef), '=== on values (undef === undef)';
+  ok (Mu === Mu), '=== on values (Mu === Mu)';
 }
 
 # Value types
@@ -108,7 +108,7 @@ plan 52;
   ok !(\3 === \4),         "=== on anonymous scalar references (1)";
   #?rakudo todo 'scalar reference equivalence'
   ok !(\3 === \3),         "=== on anonymous scalar references (2)";
-  ok !(\undef === \undef), "=== on anonymous scalar references (3)";
+  ok !(\Mu === \Mu), "=== on anonymous scalar references (3)";
 }
 
 # Chained === (not specced, but obvious)

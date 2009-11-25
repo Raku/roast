@@ -23,8 +23,8 @@ plan 18;
     is ~%h<b c>, '2 abc', 'can store a string as well';
     %h<c> = '';
     is +%h, 1, 'setting a value to the null string also removes it';
-    %h<b> = undef;
-    is %h, 0, 'setting a value to undef also removes it';
+    %h<b> = Nil;
+    is %h, 0, 'setting a value to Nil also removes it';
     ok !%h, '... and the empty hash is false in boolean context';
 }
 

@@ -29,7 +29,7 @@ my $bar2 = Bar2.new();
 ok ($bar2 ~~ Foo2),          'smartmatch works when role is done inside class';
 is $bar2.x, 42,              'method composed when role is done inside class';
 
-# Mixing a Role into an Object using imperative C<does>
+# Mixing a Role into a Mu using imperative C<does>
 my $baz = 3;
 ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 #?pugs skip 3 'feature'
@@ -71,7 +71,7 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
 role C { }
 class DoesC does C { }
 lives_ok { my C $x; },          'can use role as a type constraint on a variable';
-lives_ok { my C $x = undef },   'can assign undef';
+lives_ok { my C $x = Mu },      'can assign undefined';
 dies_ok { my C $x = 42 },       'type-check enforced';
 dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
 lives_ok {my C $x = DoesC.new },'type-check passes for class doing role';
@@ -83,7 +83,7 @@ class HasC {
 lives_ok { HasC.new },          'attributes typed as roles initialized OK';
 lives_ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
-lives_ok { HasC.new.x = undef },'typed attribute accepts things it should';
+lives_ok { HasC.new.x = Mu },   'typed attribute accepts things it should';
 dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
 # Checking if role does role

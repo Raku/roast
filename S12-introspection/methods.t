@@ -67,7 +67,7 @@ is $num_onlys, 1, 'class A has one only method';
 is $num_multis, 1, 'class A has one multi methods';
 
 @methods = D.^methods();
-ok +@methods > 5, 'got all methods in hierarchy plus more from Any/Object';
+ok +@methods > 5, 'got all methods in hierarchy plus more from Any/Mu';
 ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
    @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
    'first two methods from class D itself';
@@ -100,7 +100,7 @@ ok +@methods > 0, 'can get methods for Str (proto)';
 ok +@methods > 0, 'can get methods for Str (instance)';
 
 ok +List.^methods() > +Any.^methods(), 'List has more methods than Any';
-ok +Any.^methods() > +Object.^methods(), 'Any has more methods than Objects';
+ok +Any.^methods() > +Mu.^methods(), 'Any has more methods than Mu';
 
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
 ok D.^methods.perl, 'can get .perl of output of .^methods';

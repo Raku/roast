@@ -17,12 +17,12 @@ my @tests = (
     '$a @string %with &sigils()',
 
     ?1, ?0,
-    undef,
+    Mu,
     #?rakudo emit # parse error
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
-    \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \undef,
+    \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \Mu,
 
     (a => 1),
     :b(2),

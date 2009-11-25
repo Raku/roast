@@ -6,7 +6,7 @@ plan 14;
 
 dies_ok { (1|2).eigenstates }, 'junction doesn\'t have a public .eigenstates';
 
-sub je(Object $j) {
+sub je(Mu $j) {
     return $j!eigenstates.sort.join('|');
 }
 

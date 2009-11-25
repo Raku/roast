@@ -19,14 +19,14 @@ ok(!("a" ne "a"),  "ne false");
 # potential problem cases
 ok("\0" eq "\0",   "eq on strings with null chars");
 
-# string context on undef values
+# string context on undefined values
 my $foo;
 ok($foo eq "",     "Undef eq ''");
 ok($foo ne "f",    "Undef ne 'f'");
 
 my @foo;
-ok(@foo[0] eq "",  "Array undef eq ''");
-ok(@foo[0] ne "f",  "Array undef ne 'f'");
+ok(@foo[0] eq "",  "Array Mu eq ''");
+ok(@foo[0] ne "f",  "Array Mu ne 'f'");
 
 # numeric equality & inequality
 ok(2 == 2,         "== true");
@@ -34,9 +34,9 @@ ok(!(2 == 3),      "== false");
 ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
 
-# numeric context on undef values
-ok($foo == 0,      "Undef == 0");
-ok(@foo[0] == 0,   "Array undef == 0");
+# numeric context on undefined values
+ok($foo == 0,      "Mu == 0");
+ok(@foo[0] == 0,   "Array Mu == 0");
 
 # XXX: need tests for coercion string and numeric coercions
 

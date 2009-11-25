@@ -31,8 +31,8 @@ plan *;
 
 # Reduce with n-ary functions
 {
-  my @array  = <1 2 3 4 5 6 7 8>, undef;
-  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * undef;
+  my @array  = <1 2 3 4 5 6 7 8>, Mu;
+  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Mu;
 
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }

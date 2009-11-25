@@ -23,7 +23,7 @@ ok($/.from == 3,        'Match.from is 3');
 
 ok($str !~~ m/ Z .+ a /, 'No match');
 #?rakudo todo 'unspecced'
-ok($/.from ~~ undef,      'Match pos is undef');
+ok($/.from.notdef,      'Match pos is undefined');
 
 regex Aa { A .* a }
 ok($str ~~ m/ .*? <Aa> /, 'Subrule match from 3');

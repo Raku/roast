@@ -73,7 +73,7 @@ character classes), and those are referenced at the correct spot.
 {
     ok '123gb' ~~ / <foo=.alpha> /, '<foo=.bar>';
     is $<foo>, 'g', '=. renaming worked';
-    ok $<alpha> ~~ undef, '=. removed the old capture name';
+    ok $<alpha>.notdef, '=. removed the old capture name';
 }
 
 # If the first character after the identifier is whitespace, the subsequent

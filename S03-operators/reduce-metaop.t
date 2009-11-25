@@ -92,19 +92,19 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 {
-  my @array = (undef, undef, 3, undef, 5);
+  my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
    #?rakudo skip '[orelse]'
   is ([orelse] @array), 3, "[orelse] works";
 }
 
 {
-  my @array = (undef, undef, 0, 3, undef, 5);
+  my @array = (Mu, Mu, 0, 3, Mu, 5);
   is ([||] @array), 3, "[||] works";
   #?rakudo skip '[or]'
   is ([or] @array), 3, "[or] works";
 
-  # undefs as well as [//] should work too, but testing it like
+  # Mu as well as [//] should work too, but testing it like
   # this would presumably emit warnings when we have them.
   #?rakudo skip '[\||]'
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";

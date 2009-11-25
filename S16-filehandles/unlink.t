@@ -14,7 +14,7 @@ if $*OS eq "browser" {
 
 my $fn = "unlink-test-file" ~ nonce;
 
-my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of file handles does not yet work" !! undef;
+my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of file handles does not yet work" !! False;
 
 # open, explicit close, unlink, test
 {

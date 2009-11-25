@@ -273,7 +273,7 @@ plan 77;
 
 # L<S02/Mutable types/"default block parameter type">
 
-# block parameters default to Object, so test that they don't autothread:
+# block parameters default to Mu, so test that they don't autothread:
 #?rakudo skip '"No exception handler and no message"'
 {
     my $c = 0;

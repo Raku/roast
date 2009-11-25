@@ -42,8 +42,8 @@ class Bar is Foo {
     is(@o.map({.count}), (6..11), 'parallel dispatch using @o».?doit works');
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
-    is_deeply @o».?not_here, @o.map({ undef }),
-              '$obj».?nonexistingmethod returns a list of undefs';
+    is_deeply @o».?not_here, @o.map({ Mu }),
+              '$obj».?nonexistingmethod returns a list of undefineds';
     is_deeply @o».?count, @o.map({.count}),
               '$obj».?existingmethod returns a list of the return values';
 }

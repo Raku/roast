@@ -85,7 +85,7 @@ eval_dies_ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 lives_ok {my $x = -> {}; my $y = $x(); }, 
          'can define and execute empty pointy block';
 
-# The default type of pointy blocks is Object, not Any. See 
+# The default type of pointy blocks is Mu, not Any. See 
 # http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31181.html
 # L<S02/Mutable types/"default block parameter type">
 # this means that junctions don't autothread over pointy blocks

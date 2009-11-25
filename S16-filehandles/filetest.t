@@ -104,9 +104,9 @@ else {
     }
 
     #?rakudo 3 skip ':M, :C, :A'
-    ok not "xyzzy".IO ~~ :M, "~~:M returns undef when no file";
-    ok not "xyzzy".IO ~~ :C, "~~:C returns undef when no file";
-    ok not "xyzzy".IO ~~ :A, "~~:A returns undef when no file";
+    ok not "xyzzy".IO ~~ :M, "~~:M returns undefined when no file";
+    ok not "xyzzy".IO ~~ :C, "~~:C returns undefined when no file";
+    ok not "xyzzy".IO ~~ :A, "~~:A returns undefined when no file";
 }
 
 # potential parsing difficulties (pugs)

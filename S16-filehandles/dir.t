@@ -33,7 +33,7 @@ my @more_files = readdir($dir);
 is(+@more_files, 0, "No more things to read");
 
 my $row = readdir($dir);
-ok(!defined($row), "in scalar context it returns undef");
+ok(!defined($row), "in scalar context it returns undefined");
 
 my $rew_1 = rewinddir($dir);
 is($rew_1, 1, "success of rewinddir 1 returns 1");
@@ -70,7 +70,7 @@ my @more_files_2 = $dir.readdir;
 is(+@more_files_2, 0, "No more things to read");
 
 my $row_2 = $dir.readdir;
-ok(!defined($row_2), "in scalar context it returns undef");
+ok(!defined($row_2), "in scalar context it returns undefined");
 
 
 ok(closedir($dir), "as does closedir");
@@ -102,7 +102,7 @@ my @more_files_s = read($dir);
 is(+@more_files_s, 0, "No more things to read");
 
 my $row_s = read($dir_s);
-ok(!defined($row_s), "in scalar context it returns undef");
+ok(!defined($row_s), "in scalar context it returns undefined");
 
 my $rew_1_s = rewind($dir_s);
 is($rew_1_s, 1, "success of rewind 1 returns 1");
@@ -139,7 +139,7 @@ my @more_files_2_s = $dir_s.read;
 is(+@more_files_2_s, 0, "No more things to read");
 
 my $row_2_s = $dir_s.read;
-ok(!defined($row_2_s), "in scalar context it returns undef");
+ok(!defined($row_2_s), "in scalar context it returns undefined");
 
 
 ok(close($dir_s), "as does close");

@@ -179,7 +179,7 @@ plan 64;
 # The adverbial forms weed out non-existing entries, but undefined (but
 # existing) entries should be unaffected by this rule.
 {
-    my @array = (42, undef, 23);
+    my @array = (42, Mu, 23);
 
     is +(@array[0,1,2]:kv), 6,
         "undefined but existing entries should not be weeded out (1)";
@@ -188,7 +188,7 @@ plan 64;
 }
 
 {
-    my %hash = (0 => 42, 1 => undef, 2 => 23);
+    my %hash = (0 => 42, 1 => Mu, 2 => 23);
 
     is +(%hash<0 1 2>:kv), 6,
         "undefined but existing entries should not be weeded out (3)";

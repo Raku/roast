@@ -135,11 +135,11 @@ is(%z{0},           $base, '%z{0}');
 
 {
     my $x;
-    is ++$x, 1, 'Can autoincrement an undef variable (prefix)';
+    is ++$x, 1, 'Can autoincrement a Mu variable (prefix)';
 
     my $y;
     $y++;
-    is $y, 1, 'Can autoincrement an undef variable (postfix)';
+    is $y, 1, 'Can autoincrement a Mu variable (postfix)';
 }
 
 {

@@ -42,11 +42,11 @@ my $baz of Int;
 #?rakudo skip 'native types (causes false positives if marked with todo)'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
-    eval_dies_ok('my int $alpha = undef', 'native int type cannot be undef');
-    lives_ok({my Int $beta = undef},      'object Int type can be undef');
+    eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
+    lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1',    'Has native type num');
-    eval_dies_ok('my num $alpha = undef', 'native num type cannot be undef');
-    lives_ok({my Num $beta = undef},      'object Num type can be undef');
+    eval_dies_ok('my num $alpha = Nil', 'native num type cannot be undefined');
+    lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }
 
 # L<S02/Parameter types/Parameters may be given types, just like any other variable>
@@ -136,8 +136,8 @@ my $baz of Int;
 
 {
     # TODO: many more of these are possible
-    ok Any ~~ Object, 'Any ~~ Object';
-    ok Object !~~ Any, 'Object !~~ Any';
+    ok Any ~~ Mu, 'Any ~~ Mu';
+    ok Mu !~~ Any, 'Mu !~~ Any';
 
     ok Int ~~ Num, 'Int ~~ Num';
     ok Num !~~ Int, 'Num !~~ Int';

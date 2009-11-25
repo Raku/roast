@@ -164,7 +164,7 @@ plan 85;
  isa_ok($nacpoi, buf);
 }
 
-# junction StrPos StrLen uint Nil Whatever Object Failure
+# junction StrPos StrLen uint Nil Whatever Mu Failure
 # Exception Range Bag Signature Capture Blob Instant Duration
 # Keyhash KeySet KeyBag Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
@@ -198,10 +198,10 @@ plan 85;
  isa_ok($vo,Whatever  );
 }
 
-#?rakudo skip 'Object not working'
+#?rakudo skip 'Mu not working'
 {
- my Object $mu;
- isa_ok($mu,Object  );
+ my Mu $mu;
+ isa_ok($mu,Mu  );
 }
 
 {

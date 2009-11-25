@@ -8,9 +8,9 @@ plan *;
 
 {
     # simple try
-    my $lived = undef;
+    my $lived = Mu;
     try { die "foo" };
-    is($!, "foo", "error var was set");
+    ok($! ~~ /foo/, "error var was set");
 };
 
 # try should work when returning an array or hash

@@ -54,7 +54,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 # This is similar to a test in S05-match/capturing-contexts.t
 {
     my $u;
-    ok 'a' !~~ /$u/, 'undef variable does not match';
+    ok 'a' !~~ /$u/, 'undefined variable does not match';
     BEGIN { @*INC.push: 't/spec/packages/' }
     use Test::Util;
     is_run(
@@ -64,7 +64,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
                 out     => '',
                 err     => rx/undef/,
             },
-            'interpolating undef into a regex warns'
+            'interpolating undefined into a regex warns'
           );
 }
 

@@ -7,7 +7,7 @@ plan *;
 # Checking Junctions' Associativeness
 # TODO: need smartlink
 
-sub jv(Object $j) {
+sub jv(Mu $j) {
     my @e;
     (-> Any $x { @e.push: $x }).($j);
     return @e.sort.join(' ');

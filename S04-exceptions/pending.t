@@ -71,12 +71,12 @@ sub fail_it { fail $^a }
     ok ! $!, '$! has been cleared';
 }
 
-# L<S04/Exceptions/"an Object method, not a Failure method">
+# L<S04/Exceptions/"a Mu method, not a Failure method">
 
 {
-    my $win = Object.new;
+    my $win = Mu.new;
     #?rakudo skip '$object.handled'
-    ok $win.handled, '.handled method is true for all Objects';
+    ok $win.handled, '.handled method is true for all Mus';
 }
 
 done_testing;

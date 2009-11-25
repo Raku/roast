@@ -49,8 +49,8 @@ plan 12;
     my @b = (2, 6);
     my @c = (1, 3, 5, 7);
 
-    # [((0, 2), 1), ((4, 6), 3), (undef, 5), (undef, 7)]
-    my $todo = 'Seq(Seq(0,2),1), Seq(Seq(0,2),1), Seq(undef,5), Seq(undef,7)';
+    # [((0, 2), 1), ((4, 6), 3), (Mu, 5), (Mu, 7)]
+    my $todo = 'Seq(Seq(0,2),1), Seq(Seq(0,2),1), Seq(Mu,5), Seq(Mu,7)';
     my @e = eval $todo;
 
     #?rakudo emit #

@@ -24,7 +24,7 @@ END {
     is $hist, 'BCISE', 'interpolated END {...} executed';
 }
 
-ok "{ END { $hist ~= 'E' } }" ~~ undef,
+ok "{ END { $hist ~= 'E' } }".notdef,
     'END {...} not yet executed';
 
 is "{ START { $hist ~= 'S' } }", "BCIS",

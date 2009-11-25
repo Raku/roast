@@ -15,7 +15,7 @@ isa_ok any(6,7), junction;
 is any(6,7).WHAT, junction, 'junction.WHAT works';
 
 # avoid auto-threading on ok()
-sub jok(Object $condition, $msg?) { ok ?($condition), $msg };
+sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
 # L<S03/Junctive operators>
 # L<S09/Junctions>
@@ -158,7 +158,7 @@ just using .perl until a better approach presents itself.
 # L<S03/Junctive operators>
 
 # Canonical stringification of a junction
-sub j (Object $j) { return $j.perl }
+sub j (Mu $j) { return $j.perl }
 
 {
     # L<S03/Junctive operators/They thread through operations>
@@ -325,7 +325,7 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 }
 
 # used to be a rakudo regression (RT #60886)
-ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
+ok ?(Mu & Mu.notdef), 'Mu & Mu.notdef works';
 
 ## See also S03-junctions/autothreading.t
 #?rakudo skip 'substr on junctions'
@@ -370,7 +370,7 @@ ok ?(undef & undef ~~ undef), 'undef & undef ~~ undef works';
 }
 
 # Naive implementation of comparing two junctions
-sub junction_diff(Object $this, Object $that) {
+sub junction_diff(Mu $this, Mu $that) {
   if ($this.WHAT ne 'junction()' and $that.WHAT ne 'junction()') {
     return if $this ~~ $that;
   }

@@ -24,7 +24,7 @@ sub has_approx($n, @list) {
             return 1;
         }
     }
-    return undef;
+    return Mu;
 }
 
 {

@@ -102,7 +102,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     is(eval('named_array2(:!y, 1)'), (1, 42, 0), 'named and unnamed args - one named, one pos');
     is(eval('named_array2(1, :!y)'), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
     is(eval('named_array2(:y, 1, :!y)'), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
-    ok(eval('named_array2(:y, :y)') ~~ undef, 'named and unnamed args - two named with same name');
+    ok(eval('named_array2(:y, :y)').notdef, 'named and unnamed args - two named with same name');
     is(eval('named_array2(:y, (:x))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
     is(eval('named_array2(:y, (:y))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair of same name');
     is(eval('named_array2(:y, :z)'), (0, 1, 42, 1), 'named and unnamed args - passing pair of unrelated name');
@@ -138,7 +138,7 @@ sub formalize($text, :$case, :$justify)  returns List {
 {
 my ($text,$case,$justify)  = formalize('title', case=>'upper');
 is($text,'title', "text param was positional");
-ok($justify ~~ undef, "justification param was not given");
+ok($justify.notdef, "justification param was not given");
 is($case, 'upper', "case param was named, and in justification param's position");
 }
 
@@ -147,7 +147,7 @@ is($case, 'upper', "case param was named, and in justification param's position"
 my ($text,$case,$justify)   = formalize('title', justify=>'left');
 is($text,'title', "text param was positional");
 is($justify, 'left', "justify param was named");
-ok($case ~~ undef, "case was not given at all");
+ok($case.notdef, "case was not given at all");
 }
 
 #?rakudo skip 'parsefail'
@@ -172,7 +172,7 @@ my %fellowship = slurpee(hobbit => 'Frodo', wizard => 'Gandalf');
 is(%fellowship<hobbit>, 'Frodo', "hobbit arg was slurped");
 is(%fellowship<wizard>, 'Gandalf', "wizard arg was slurped");
 is(+%fellowship, 2, "exactly 2 arguments were slurped");
-ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
+ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
 }
 
 #?rakudo skip 'parsefail on lvalue'
@@ -183,7 +183,7 @@ ok(%fellowship<dwarf> ~~ undef, "dwarf arg was not given");
     is(+%rest, 2, "exactly 2 arguments were slurped");
     is(%rest<sky>, 'blue', "sky argument was slurped");
     is(%rest<fire>, 'red', "fire argument was slurped");
-    ok(%rest<grass> ~~ undef, "grass argument was NOT slurped");
+    ok(%rest<grass>.notdef, "grass argument was NOT slurped");
 }
 
 {

@@ -18,7 +18,7 @@ plan 21;
     my $foo = @array[20];
     # We've only *accessed* @array[20], but we haven't assigned anything to it, so
     # @array shouldn't change. But currently, @array *is* automatically extended,
-    # i.e. @array is ("a", "b", "c", "d", undef, undef, ...). This is wrong.
+    # i.e. @array is ("a", "b", "c", "d", Mu, Mu, ...). This is wrong.
     #?rakudo todo 'extend array'
     is +@array, 4,
       "accessing a not existing array element should not automatically extend the array";
@@ -28,7 +28,7 @@ plan 21;
     my @array = <a b c d>;
     @array[20] = 42;
     # Now, we did assign @array[20], so @array should get automatically extended.
-    # @array should be ("a", "b", "c", "d", undef, undef, ..., 42).
+    # @array should be ("a", "b", "c", "d", Mu, Mu, ..., 42).
     is +@array, 21,
       "creating an array element should automatically extend the array (1)";
     # And, of course, @array.exists(20) has to be true -- we've just assigned
@@ -83,8 +83,8 @@ plan 21;
     my @a;
     @a[2] = 6;
     is +@a, 3, '@a[2] = 6 ensures that @a has three items';
-    ok @a[0] ~~ undef, '... and the first is undef';
-    ok @a[1] ~~ undef, '... and the second is undef';
+    ok @a[0].notdef, '... and the first is not defined';
+    ok @a[1].notdef, '... and the second is not defined';
     is @a[2], 6,       '... and  the third is 6';
 }
 
@@ -100,9 +100,9 @@ plan 21;
     is $s, '::b', 'join on extended array';
     my $n = + @a.grep({ $_ eq 'b'});
     is $n, 1, 'grep on extended array';
-    @a[1] = 'c'; # cmp doesn't handle undef cmp undef yet
+    @a[1] = 'c'; # cmp doesn't handle Mu cmp Mu yet
     #?rakudo skip 'RT #62948'
-    ok not defined @a.min(), 'min on list with undefined el returns undef';
+    ok not defined @a.min(), 'min on list with undefined el returns Mu';
 }
 
 # vim: ft=perl6

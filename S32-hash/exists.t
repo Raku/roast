@@ -40,10 +40,10 @@ sub gen_hash {
     my %h;
     %h<none> = 0;
     %h<one> = 1;
-    %h<nothing> = undef;
+    %h<nothing> = Mu;
     is %h.exists('none'),     1,  "Existence of single key with 0 as value: none";
     is %h.exists('one'),      1,  "Existence of single key: one";
-    is %h.exists('nothing'),  1,  "Existence of single key with undef as value: nothing";
+    is %h.exists('nothing'),  1,  "Existence of single key with undefined as value: nothing";
     is defined(%h<none>),     1,  "Defined 0 value for key: none";
     is defined(%h<one>),      1,  "Defined 1 value for key: one";
     ok !defined(%h<nothing>),     "NOT Defined value for key: nothing";

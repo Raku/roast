@@ -41,7 +41,7 @@ is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notati
 
 
 # array with strings, numbers and undef
-my @array2 = ("test", 1, undef);
+my @array2 = ("test", 1, Mu);
 {
     isa_ok(@array2, Array);
 

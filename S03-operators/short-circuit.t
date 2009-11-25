@@ -66,7 +66,7 @@ plan *;
 }
 
 {
-    my $x;      # should be undef
+    my $x;      # should be Mu
     my $y = 2;
     $x // ($y = 42);
 
@@ -75,7 +75,7 @@ plan *;
 
 #?rakudo skip 'no inifx:<orelse> yet'
 {
-    my $x;      # should be undef
+    my $x;      # should be Mu
     my $y = 2;
     $x orelse $y = 42;
 
@@ -83,7 +83,7 @@ plan *;
 }
 
 {
-    my $x;      # should be undef
+    my $x;      # should be Mu
     my $y = 2;
     $x ^^ ($y = 42);
 
@@ -91,7 +91,7 @@ plan *;
 }
 
 {
-    my $x;      # should be undef
+    my $x;      # should be Mu
     my $y = 2;
     $x xor $y = 42;
 
@@ -106,8 +106,8 @@ plan *;
     is((0 or 42),      42, "or   operator working");
 
     #?rakudo 2 skip 'no inifx:<orelse> yet'
-    is((undef // 42),  42, "//   operator working"); #"
-    is((undef orelse 42), 42, "orelse  operator working");
+    is((Mu // 42),  42, "//   operator working"); #"
+    is((Mu orelse 42), 42, "orelse  operator working");
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
@@ -166,7 +166,7 @@ plan *;
 
     # This one will just kill pugs with the cast failure, so force fail
     #?pugs eval 'short circuiting'
-    is c($b), 2, 'shortcircuit idiom given undef works';
+    is c($b), 2, 'shortcircuit idiom given Mu works';
 }
 
 done_testing;

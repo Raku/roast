@@ -73,7 +73,7 @@ plan 31;
     sub encode_direct {
         my @chars = @_;
         my $encoded;
-        my $prev_ch = undef;
+        my $prev_ch = '';
         my $ch_cnt = 0;
         while (my $ch = @chars.shift) {
             if ($ch ~~ $prev_ch) {
@@ -87,7 +87,7 @@ plan 31;
                 }
             }
             # the very first one..
-            elsif (not $prev_ch.defined) { 
+            elsif ($prev_ch eq '') { 
                 $ch_cnt++;
                 # If it's the last char, add it.
                 if (@chars.elems == 1) {

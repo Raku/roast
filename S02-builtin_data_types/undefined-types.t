@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan *;
 
-# L<S02/Undefined types>
+# L<S02/Names and Variables/The empty>
 
 {
     ok !Nil.defined, 'Nil is undefined';
@@ -39,21 +39,21 @@ plan *;
     my $obj;
     my Int $int;
 
-    is ~$obj, '', 'prefix:<~> on type object gives empty string (Object)';
+    is ~$obj, '', 'prefix:<~> on type object gives empty string (Mu)';
     is ~$int, '', 'prefix:<~> on type object gives empty string (Int)';
-    is $obj.Stringy, '', '.Stringy on type object gives empty string (Object)';
+    is $obj.Stringy, '', '.Stringy on type object gives empty string (Mu)';
     is $int.Stringy, '', '.Stringy on type object gives empty string (Int)';
 
-    ok (~$obj) ~~ Stringy, 'prefix:<~> returns a Stringy (Object)';
+    ok (~$obj) ~~ Stringy, 'prefix:<~> returns a Stringy (Mu)';
     ok (~$int) ~~ Stringy, 'prefix:<~> returns a Stringy (Int)';
 
-    ok $obj.Stringy ~~ Stringy, '.Stringy returns a Stringy (Object)';
+    ok $obj.Stringy ~~ Stringy, '.Stringy returns a Stringy (Mu)';
     ok $int.Stringy ~~ Stringy, '.Stringy returns a Stringy (Int)';
 
-    is $obj.Str, 'Object()', '.Str on type object gives Object()';
+    is $obj.Str, 'Mu()', '.Str on type object gives Mu()';
     is $int.Str, 'Int()',    '.Str on type object gives Int()';
 
-    is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Object)';
+    is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Mu)';
     is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
 }
 

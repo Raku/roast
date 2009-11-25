@@ -17,7 +17,7 @@ Basic C<delete> tests, see S32.
   is ~@array, "a b c d", "basic sanity (1)";
   is ~@array.delete(2), "c",
     "deletion of an array element returned the right thing";
-  # Note: The double space here is correct (it's the stringification of undef).
+  # Note: The double space here is correct (it's the stringification of undefined).
   is ~@array, "a b  d", "deletion of an array element";
 
   is ~@array.delete(0, 3), "a d",
@@ -31,13 +31,13 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d>;
   is ~@array.delete(-2), "c",
     "deletion of array element accessed by an negative index returned the right thing";
-  # @array is now ("a", "b", undef, "d") ==> double spaces
+  # @array is now ("a", "b", Mu, "d") ==> double spaces
   is ~@array, "a b  d", "deletion of an array element accessed by an negative index (1)";
   is +@array,        4, "deletion of an array element accessed by an negative index (2)";
 
   is ~@array.delete(-1), "d",
     "deletion of last array element returned the right thing";
-  # @array is now ("a", "b", undef)
+  # @array is now ("a", "b", Mu)
   is ~@array, "a b", "deletion of last array element (1)";
   is +@array,     2, "deletion of last array element (2)";
 }
@@ -47,7 +47,7 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d e f>;
   is ~@array.delete(2, -3, -1), "c d f",
     "deletion of array elements accessed by positive and negative indices returned right things";
-  # @array is now ("a", "b", undef, undef, "e") ==> double spaces
+  # @array is now ("a", "b", Mu, Mu, "e") ==> double spaces
   is ~@array, "a b   e",
     "deletion of array elements accessed by positive and negative indices (1)";
   is +@array, 5,
@@ -79,7 +79,7 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d e f>;
   is ~@array.delete(2..4), "c d e",
     "deletion of array elements accessed by a range of positives indices returned right things";
-  # @array is now ("a", "b", undef, undef, undef, "f") ==> 4 spaces
+  # @array is now ("a", "b", Mu, Mu, Mu, "f") ==> 4 spaces
   is ~@array, "a b    f",
     "deletion of array elements accessed by a range of positive indices (1)";
   is +@array, 6,
@@ -90,7 +90,7 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d e f>;
   is ~@array.delete(2^..4), "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
-  # @array is now ("a", "b", "c", undef, undef, "f") ==> 4 spaces
+  # @array is now ("a", "b", "c", Mu, Mu, "f") ==> 4 spaces
   is ~@array, "a b c   f",
     "deletion of array elements accessed by a range of positive indices (3)";
   is +@array, 6,

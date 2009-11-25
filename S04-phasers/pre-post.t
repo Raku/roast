@@ -180,7 +180,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST { $str ~= $! // '<undef>'; 1 }
         die 'foo';
     }
-    is $str, 'foo', 'POST runs on exception, with correct $!';
+    ok $str ~~ /foo/, 'POST runs on exception, with correct $!';
 }
 
 {
@@ -190,7 +190,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         try { die 'foo' }
         $str ~= (defined $! ?? 'aye' !! 'nay');
     }
-    is $str, 'ayeno', 'POST has undef $! on no exception';
+    is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
 
 {
@@ -198,7 +198,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST { 0 }
         die 'foo';
     }
-    is $!, 'foo', 'failing POST on exception doesn\'t replace $!';
+    ok $! ~~ /foo/, 'failing POST on exception doesn\'t replace $!';
     # XXX
     # is $!.pending.[-1], 'a POST exception', 'does push onto $!.pending';
 }

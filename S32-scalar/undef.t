@@ -5,9 +5,9 @@ use Test::Util;
 
 =begin pod
 
-`undef` and `undefine` tests
+'Mu' and 'undefine' tests
 
-This test file contains two sections: a port of the perl5 `undef.t` tests, and
+This test file contains two sections: a port of the perl5 'undef.t' tests, and
 perl6-specific tests.
 
 =end pod
@@ -28,16 +28,16 @@ plan *;
 our $GLOBAL;
 
 # L<S32::Basics/Scalar/=item undef>
-# L<S32::Basics/Object/=item defined>
+# L<S32::Basics/Mu/=item defined>
 
-is(undef, undef, "undef is equal to undef");
-ok(!defined(undef), "undef is not defined");
+ok(Mu === Mu, "Mu is equal to Mu");
+ok(!defined(Mu), "Mu is not defined");
 
 {
     my $a;
-    ok(!defined($a), "uninitialized lexicals are undef");
+    ok(!defined($a), "uninitialized lexicals are undefined");
 
-    ok(!defined($GLOBAL), "uninitialized package vars are undef");
+    ok(!defined($GLOBAL), "uninitialized package vars are undefined");
 
     $a += 1;
     ok(defined($a), "initialized var is defined");
@@ -52,13 +52,13 @@ ok(!defined(undef), "undef is not defined");
 
     my $b;
     $a = $b;
-    ok(!defined($a), "assigning another undef lexical");
+    ok(!defined($a), "assigning another undefined lexical");
 
     $a = $GLOBAL;
-    ok(!defined($a), "assigning another undef global");
+    ok(!defined($a), "assigning another undefined global");
 }
 
-# L<S32::Basics/Object/"=item undefine">
+# L<S32::Basics/Mu/"=item undefine">
 {
     my @ary = "arg1";
     my $a = @ary.pop;
@@ -133,24 +133,24 @@ ok(!defined(undef), "undef is not defined");
 
 # Test LHS assignment to undef:
 # XXX shouldn't that be * instead of undef?
-# if it's correct like this, we need a smartlink for it.
+# yes, this chunk should move to a different file --Larry
 
 {
     my $interesting;
-    (undef, undef, $interesting) = (1,2,3);
+    (*, *, $interesting) = (1,2,3);
     is($interesting, 3, "Undef on LHS of list assignment");
 
-    (undef, $interesting, undef) = (1,2,3);
+    (*, $interesting, *) = (1,2,3);
     is($interesting, 2, "Undef on LHS of list assignment");
 
-    ($interesting, undef, undef) = (1,2,3);
+    ($interesting, *, *) = (1,2,3);
     is($interesting, 1, "Undef on LHS of list assignment");
 
     sub two_elements() { (1,2) };
-    (undef,$interesting) = two_elements();
+    (*,$interesting) = two_elements();
     is($interesting, 2, "Undef on LHS of function assignment");
 
-    ($interesting, undef) = two_elements();
+    ($interesting, *) = two_elements();
     is($interesting, 1, "Undef on LHS of function assignment");
 }
 
@@ -169,7 +169,7 @@ Perl6-specific tests
     ok(defined($ary_r), "array reference");
 
     undefine @ary;
-    ok(!+$ary_r, "undef array referent");
+    ok(!+$ary_r, "undefine array referent");
 
     is(+$ary_r, 0, "dangling array reference");
 
@@ -190,7 +190,7 @@ Perl6-specific tests
 
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
-    ok((try { !defined($an_ary[0]) }), "my Array subscript - undef");
+    ok((try { !defined($an_ary[0]) }), "my Array subscript - Mu");
     try { $an_ary.push("blergh") };
     ok((try { defined($an_ary.pop) }), "push");
     ok((try { !defined($an_ary.pop) }), "comes to shove");
@@ -198,8 +198,8 @@ Perl6-specific tests
     my Hash $a_hash;
 
     ok(!defined($a_hash), "my Hash");
-    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - undef");
-    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - undef, no autovivification happened");
+    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - Mu");
+    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - Mu, no autovivification happened");
 
     $a_hash<blergh> = 1;
     ok(defined($a_hash.delete('blergh')), "delete");
@@ -250,7 +250,7 @@ Perl6-specific tests
         ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
     }
 
-    # - binding to hash keys only would leave values undef
+    # - binding to hash keys only would leave values undefined
     eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
     #?pugs todo 'unimpl'
     ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
@@ -262,7 +262,7 @@ Perl6-specific tests
 
 #?DOES 1
 {
-    # - $0, $1 etc. should all be undef after a failed match
+    # - $0, $1 etc. should all be undefined after a failed match
     #   (except for special circumstances)
         "abcde" ~~ /(.)(.)(.)/;
         "abcde" ~~ /(\d)/;
@@ -330,20 +330,20 @@ flunk('FIXME: parsefail');
 # }
 
 # Extra tests added due to apparent bugs
-is((undef) + 1, 1, 'undef + 1');
-is(1 + (undef), 1, '1 + undef');
-is((undef) * 2, 0, 'undef * 2');
-is(2 * (undef), 0, '2 * undef');
-is((undef) xx 2, [undef, undef], 'undef xx 2');
-is((undef) * (undef), 0, 'undef * undef');
+is((Mu) + 1, 1, 'Mu + 1');
+is(1 + (Mu), 1, '1 + Mu');
+is((Mu) * 2, 0, 'Mu * 2');
+is(2 * (Mu), 0, '2 * Mu');
+is((Mu) xx 2, [Mu, Mu], 'Mu xx 2');
+is((Mu) * (Mu), 0, 'Mu * Mu');
 
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
 # See log above.  From IRC, TimToady says that both of these
-# should be false.  (At time of writing, @(undef,) is true.)
+# should be false.  (At time of writing, @(Mu,) is true.)
 #?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
 #?rakudo 2 skip 'todo: lists, defined, truthness'
-is ?(@(undef,)), Bool::False, '?(@(undef,)) is false';
-is ?(list(undef,)), Bool::False, '?(@(undef,)) is false';
+is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
+is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
 lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 

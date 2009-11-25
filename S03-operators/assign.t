@@ -198,7 +198,7 @@ plan 240;
     @a = 1;
     @b = 2;
     (@b, @a) = (@a, @b);
-    ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undef');
+    ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
@@ -209,7 +209,7 @@ plan 240;
     @a = (1);
     @b = (2);
     (@b, @a) = @a, @b;
-    ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undef');
+    ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
 }

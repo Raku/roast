@@ -13,10 +13,10 @@ Basic tests for "return"
 =end pod
 
 sub bar { return }
-ok(!defined(bar()), '... bare return statement returned undef');
+ok(!defined(bar()), '... bare return statement returned undefined');
 
 sub bar2 { return() }
-ok(!defined(bar2()), '... bare return statement w/ parens returned undef');
+ok(!defined(bar2()), '... bare return statement w/ parens returned undefined');
 
 sub baz { return 10 if 1; }
 is(baz(), 10, '... return worked with a statement modifier');

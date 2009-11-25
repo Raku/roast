@@ -28,7 +28,7 @@ is(eval('$foo'), $foo, 'simple eval using variable defined outside');
 # traps die?
 ok(!eval('die; 1'), "eval can trap die");
 
-ok(eval('my @a = (1); @a!<0>') ~~ undef, "eval returns undef on syntax error");
+ok(eval('my @a = (1); @a!<0>').notdef, "eval returns undefined on syntax error");
 
 ok(!eval('use Poison; 1'), "eval can trap a fatal use statement");
 

@@ -10,7 +10,7 @@ plan 10;
 {
     my $str;
     my sub is_pos ($n) {
-        return (($n > 0) ?? 1 !! undef);
+        return (($n > 0) ?? 1 !! Mu);
         KEEP { $str ~= "$n > 0 " }
         UNDO { $str ~= "$n <= 0 " }
     }
@@ -30,7 +30,7 @@ plan 10;
 {
     my $str;
     my sub is_pos($n) {
-        return (($n > 0) ?? 1 !! undef);
+        return (($n > 0) ?? 1 !! Mu);
         LEAVE { $str ~= ")" }
         KEEP { $str ~= "$n > 0" }
         UNDO { $str ~= "$n <= 0" }

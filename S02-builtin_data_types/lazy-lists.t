@@ -86,13 +86,13 @@ is( (1..Inf)[2..5],
     my @a = (1..Inf);
     @a[1].delete;
     is ~@a[0, 2], '1 3', 'array elemente delete (1)';
-    ok @a[1] ~~ undef, 'array element delete (2)';
+    ok @a[1].notdef, 'array element delete (2)';
 }
 
 {
     my @a = (1..Inf);
     @a[0,1].delete;
-    ok( all(@a[0, 1]) ~~ undef,
+    ok( all(@a[0, 1]).notdef,
         "array slice delete()" );
 }
 

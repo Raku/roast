@@ -58,8 +58,8 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
    is(sign(:x(-1.5e-1)), -1, 'got the right sign for -1.5e-1');
 }
 
-ok sign(undef) ~~ undef, 'sign(undef) is undef';
-ok sign(3+4i) ~~ undef, 'sign(Complex) fails';
+ok sign(Mu).notdef, 'sign(Mu) is undefined';
+ok sign(3+4i).notdef, 'sign(Complex) fails';
 
 done_testing;
 

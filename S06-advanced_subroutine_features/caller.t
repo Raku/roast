@@ -52,11 +52,11 @@ chain({ caller().sub },     &try_it_caller, "caller sub (code)");
 chain({ caller(Any).subname },    "&Main::try_it_caller", "code type - Any");
 chain({ caller("Any").subname },  "&Main::try_it_caller", "code type - Any (string)");
 chain({ caller(Method).subname }, "&A::try_it_caller_A", "code type - Method");
-chain({ caller("Moose") },         undef, "code type - not found");
+chain({ caller("Moose") },         Mu, "code type - not found");
 
 # :skip
 chain({ caller(:skip<1>).subname }, "&A::try_it_caller_A", ":skip<1>");
-chain({ caller(:skip<128>) },       undef, ":skip<128> - not found");
+chain({ caller(:skip<128>) },       Mu, ":skip<128> - not found");
 
 # type + :skip
 chain({ caller(Sub, :skip<1>).subname }, "&Main::try_it_caller_caller", "Sub, :skip<1>");

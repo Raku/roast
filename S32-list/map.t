@@ -207,14 +207,14 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 {
   my @array  = <a b c d>;
-  my @result = map { undef }, @array;
+  my @result = map { Mu }, @array;
 
-  is +@result, 4, "map works with the map body returning undef";
+  is +@result, 4, "map works with the map body returning undefined";
 }
 
 {
   my @array  = <a b c d>;
-  my $undef  = undef;
+  my $undef  = Mu;
   my @result = map { $undef }, @array;
 
   is +@result, 4, "map works with the map body returning an undefined variable";

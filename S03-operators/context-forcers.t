@@ -23,7 +23,7 @@ plan 93;
   is ?(?"3"),  True,  "? context forcer works (13)";
   is ?(?"0"),  False, "? context forcer works (14)";
 
-  is ?undef,   False, "? context forcer works (15)";
+  is ?Mu,      False, "? context forcer works (15)";
 }
 { # L<S02/"Names and Variables" /In boolean contexts/>
   is ?[],      False,  "? context forcer: empty container is false";
@@ -40,7 +40,7 @@ plan 93;
   is +"1",         1, "+ context forcer works (3)";
   is +"0",         0, "+ context forcer works (4)";
   is +"",          0, "+ context forcer works (5)";
-  is +undef,       0, "+ context forcer works (6)";
+  is +Mu,          0, "+ context forcer works (6)";
   is +"Inf",     Inf, "+ context forcer works (7)";
   is +"-Inf",   -Inf, "+ context forcer works (8)";
   is +"NaN",     NaN, "+ context forcer works (9)";
@@ -55,7 +55,7 @@ plan 93;
   is ~"1",       "1", "~ context forcer works (3)";
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
-  is ~undef,      "", "~ context forcer works (6)";
+  is ~Mu,         "", "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";
   is ~"NaN",   "NaN", "~ context forcer works (9)";

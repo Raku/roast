@@ -144,7 +144,7 @@ class TestObj { has $!a }
 
 #?rakudo todo 'misuse of =:='
 {
-    ok (undef =:= undef) ~~ Failure, 'misuse of =:= is failure (undef)';
+    ok (Mu =:= Mu) ~~ Failure, 'misuse of =:= is failure (Mu)';
     ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';
     ok (1 =:= 2) ~~ Failure, 'misuse of =:= is failure (!=)';
     ok (1 =:= 1) ~~ Failure, 'misuse of =:= is failure (even when ==)';
