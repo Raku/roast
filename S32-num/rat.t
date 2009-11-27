@@ -164,6 +164,9 @@ is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
 is (5/4).Int,       1, 'Rat.Int';
 is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
 
+#?rakudo skip "too many positional arguments: 3 passed, 1 expected weirdness"
+is 424/61731 +  832/61731, 424.Num / 61731.Num +  832.Num / 61731.Num, "424/61731 +  832/61731 works";
+
 done_testing;
 
 # vim: ft=perl6
