@@ -31,13 +31,11 @@ plan 20;
     ok eval(q/&foo.(1);  /), 'call with one arg, has dot and parens';
     ok eval(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
     #?pugs todo 'unspecced'
-    #?rakudo todo 'unspecced'
     ok eval(q/foo'bar'; /), 'call with one arg, has no space and no parens';
 
     ok eval(q/foo 1, 2; /), 'call with two args, no parens';
     ok eval(q/foo(1, 2);/), 'call with two args, has parens';
 
-    #?rakudo todo 'adverbs'
     ok eval(q/foo:bar;  /), 'call with adverb after no space';
     ok eval(q/foo :bar; /), 'call with adverb after space';
 
