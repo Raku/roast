@@ -54,9 +54,15 @@ is 'abcb'.split(/b/).Str, "a c ", 'trailing matches leave an empty string';
 # Limit tests
 is 'theXbigXbang'.split(/X/, -1).elems, 0, 'Negative limit returns empty List';
 is 'theXbigXbang'.split(/X/, 0).elems, 0, 'Zero limit returns empty List';
+is 'theXbigXbang'.split('X', -1).elems, 0, 'Negative limit returns empty List';
+is 'theXbigXbang'.split('X', 0).elems, 0, 'Zero limit returns empty List';
 
 is 'ab1cd12ef'.split(/\d+/, 1).elems, 1, 'Limit of 1 returns a 1 element List (with identical string)';
 is 'ab1cd12ef'.split(/\d+/, 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element List (with identical string)';
+#?rakudo 2 skip "Inexplicably fail in Rakudo-ng"
+is 'ab1cd12ef'.split('\d+', 1).elems, 1, 'Limit of 1 returns a 1 element List (with identical string)';
+is 'ab1cd12ef'.split('\d+', 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element List (with identical string)';
+
 # split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
 # split_test(
 #     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),
