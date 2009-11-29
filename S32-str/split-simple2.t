@@ -22,6 +22,9 @@ sub split_test(@splitted, @expected, $desc) {
     say "hj";
 }
 
+is 'abcdefg'.split('').elems, 7, 'split into characters';
+is 'abcdefg'.split('').Str, "a b c d e f g", 'split into characters';
+
 is 'a1b24f'.split(/\d+/).elems, 3, 'Str.split(/regex/)';
 is 'a1b24f'.split(/\d+/).Str, "a b f", 'Str.split(/regex/)';
 
@@ -29,6 +32,9 @@ is 'a1b24f'.split(/\d+/).Str, "a b f", 'Str.split(/regex/)';
 # split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) (with Str semantics';
 is 'theXXbigXXbang'.split('XX').elems, 3, 'Str.split(Str)';
 is 'theXXbigXXbang'.split('XX').Str, 'the big bang', 'Str.split(Str)';
+#?rakudo 2 todo "split(Str) doesn't work if the split string is at the first position"
+is 'XXtheXXbigXXbang'.split('XX').elems, 4, 'Str.split(Str)';
+is 'XXtheXXbigXXbang'.split('XX').Str, ' the big bang', 'Str.split(Str)';
 
 is 'a1b24f'.split(/\d+/, *).elems, 3, 'Str.split(/regex/) (with * limit)';
 is 'a1b24f'.split(/\d+/, *).Str, "a b f", 'Str.split(/regex/) (with * limit)';
@@ -64,27 +70,29 @@ is 'ab1cd12ef'.split('\d+', 1).elems, 1, 'Limit of 1 returns a 1 element List (w
 is 'ab1cd12ef'.split('\d+', 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element List (with identical string)';
 
 # split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
-# split_test(
-#     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),
-#     ('','soup',''),
-#     'Limit of 3 returns 3 element List including empty Strings'
-# );
-# split_test(
-#     'ab1cd12ef'.split(/\d+/, 10),
-#     <ab cd ef>,
-#     'Limit larger than number of split values doesn\'t return extranuous elements'
-# );
 
-# split_test
-#     'abcdefg'.split('', 3),
-#     <a b cdefg>,
-#     'split into characters respects limit (1)';
-# 
-# # catch possible off-by-one errors
-# split_test
-#     'abc'.split('', 3),
-#     <a b c>,
-#     'split into characters respects limit (2)';
+is '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3).elems, 3,
+   'Limit of 3 returns 3 element List including empty Strings';
+is '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3).Str, " soup ",
+    'Limit of 3 returns 3 element List including empty Strings';
+
+is 'ab1cd12ef'.split(/\d+/, 10).elems, 3, 
+   'Limit larger than number of split values doesn\'t return extranuous elements';
+is 'ab1cd12ef'.split(/\d+/, 10).Str, "ab cd ef", 
+   'Limit larger than number of split values doesn\'t return extranuous elements';
+
+#?rakudo 2 skip "Blows up for inexplicable reasons"
+is 'aZbZcZdZeZfZg'.split(/Z/, 3).elems, 3, 'split respects limit (1)';
+is 'aZbZcZdZeZfZg'.split(/Z/, 3).Str, "a b cZdZeZfZg", 'split respects limit (1)';
+is 'a,b,c,d,e,f,g'.split(',', 3).elems, 3, 'split respects limit (2)';
+is 'a,b,c,d,e,f,g'.split(',', 3).Str, "a b c,d,e,f,g", 'split respects limit (2)';
+
+is 'abcdefg'.split('', 3).elems, 3, 'split into characters respects limit (1)';
+is 'abcdefg'.split('', 3).Str, "a b cdefg", 'split into characters respects limit (1)';
+
+# catch possible off-by-one errors
+is 'abc'.split('', 3).elems, 3, 'split into characters respects limit (2)';
+is 'abc'.split('', 3).Str, "a b c", 'split into characters respects limit (2)';
 
 # zero-width assertions shouldn't loop
 # with additional spaces
@@ -115,5 +123,7 @@ is 'ab1cd12ef'.split('\d+', 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element 
 #     is @split.join('|'), 'a|4|b|5|',
 #        'split(:all) and trailing delimiter (values)';
 # }
+
+done_testing;
 
 # vim: ft=perl6
