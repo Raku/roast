@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 43;
+plan 45;
 
 # L<S03/Changes to Perl 5 operators/"imposes a numeric">
 
@@ -51,14 +51,17 @@ is(+(~(-Inf)), -Inf, "'-Inf' is -Inf");
 
 
 # RT #62622
-#?rakudo todo 'RT #62622'
 {
     my Int $x;
 
     lives_ok { $x = +'2' }, 'can assign string "2" to Int variable';
+    #?rakudo todo 'Assignment of +"2" to Int variable creates a Num variable in Rakudo-ng'
+    isa_ok( $x, Int, 'assign string "2" to Int creates an Int' );
     is( $x, 2, 'assign string "2" to Int variable works' );
 
     lives_ok { $x = "4" - 3 }, 'lives: Int $x = "4" - 3';
+    #?rakudo todo 'Assignment of +"2" to Int variable creates a Num variable in Rakudo-ng'
+    isa_ok( $x, Int, 'Int $x = "4" - 3 creates an Int' );
     is( $x, 1, 'works: Int $x = "4" - 3' );
 }
 
