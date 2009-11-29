@@ -10,6 +10,7 @@ plan *;
 isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
 isa_ok(1 / 4, Rat, "/ makes a Rat");
 isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
+#?rakudo skip 'Num.Rat not implemented yet in Rakudo-ng'
 isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
@@ -126,6 +127,7 @@ for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
 # used to be a (never ticketed) Rakudo bug: sin(Rat) died
 # (note that trig on Rats is tested extensively in S32-trig)
 
+#?rakudo skip 'sin NYI in Rakudo-ng'
 is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add divide by zero / zero denominator tests
@@ -156,20 +158,22 @@ is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
 is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
 
 # Cast from Num uses an epsilon value.
+#?rakudo 3 skip 'Num.Rat NYI in Rakudo-ng'
 is( exp(1).Rat, Rat.new(2721, 1001), "Num to Rat with default epsilon");
 is( exp(1).Rat(1e-4), Rat.new(193, 71), "Num to Rat with epsilon 1e-4");
 is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
     "Num to Rat with epsilon of Rat");
 
 is (5/4).Int,       1, 'Rat.Int';
+#?rakudo skip '[4/3] NYI in Rakudo-ng'
 is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
 
+#?rakudo 24 skip 'Int overflow in Rat calculations NYI in Rakudo-ng'
 is_approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";
 is_approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424/61731 - 832/61731 works";
 is_approx 424/61731 + 833/123462, 424.Num / 61731.Num + 833.Num / 123462.Num, "424/61731 + 833/123462 works";
 is_approx 424/61731 - 833/123462, 424.Num / 61731.Num - 833.Num / 123462.Num, "424/61731 - 833/123462 works";
 
-#?rakudo 4 todo "Need to make sure that reasonable Rats summed are still a Rat"
 isa_ok 424/61731 + 832/61731, Rat, "424/61731 + 832/61731 is a Rat";
 isa_ok 424/61731 - 832/61731, Rat, "424/61731 - 832/61731 is a Rat";
 isa_ok 424/61731 + 833/123462, Rat, "424/61731 + 833/123462 is a Rat";
@@ -184,7 +188,6 @@ is_approx 424/61731 + 832/61733, 424.Num / 61731.Num + 832.Num / 61733.Num, "424
 is_approx 424/61731 - 832/61733, 424.Num / 61731.Num - 832.Num / 61733.Num, "424/61731 - 832/61733 works";
 
 is_approx (424/61731) * (832/61731), (424.Num / 61731.Num) * (832.Num / 61731.Num), "424/61731 * 832/61731 works";
-#?rakudo skip "Rat multiplication is dumb"
 is_approx (424/61731) / (61731/832), (424.Num / 61731.Num) * (61731.Num / 832.Num), "424/61731 / 61731/832 works";
 
 is_approx 61731 * (61731/832), 61731.Num * (61731.Num / 832.Num), "61731 * 61731/832 works";
@@ -193,12 +196,9 @@ is_approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 6
 is_approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
 
 is_approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
-#?rakudo todo "Need to make sure that reasonable Rats multiplied are still a Rat"
 isa_ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
 is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
-#?rakudo todo "Need to make sure that reasonable Rats multiplied are still a Rat"
 isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
-
 
 done_testing;
 
