@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan 52;
 
 # L<S03/Changes to Perl 5 operators/"imposes a numeric">
 
@@ -9,7 +9,15 @@ is(+'0012', 12, "+'0012' is 12");
 is(+'0000',  0, "+'0000' is  0");
 is(+'000a',  0, "+'000a' is  0 (illegal number)");
 
+is(+'1900', 1900, "+'1900' is 1900");
+#?rakudo todo "+'1900' is a Num in Rakudo-ng"
+isa_ok(+'1900', Int, "+'1900' is an Int");
+#?rakudo 2 skip "Rat in string not supported yet in Rakudo-ng"
+is(+'3/2', 3/2, "+'3/2' is 3/2");
+isa_ok(+'3/2', Rat, "+'3/2' is a Rat");
 is(+'1.9e3', 1900, "+'1.9e3' is 1900");
+isa_ok(+'1.9e3', Num, "+'1.9e3' is a Num");
+
 is(+'Inf', Inf, "+'Inf' is Inf");
 is(+'Info', 0, "+'Info' is 0");
 is(+'-Inf', -Inf, "+'-Inf' is -Inf");
@@ -65,13 +73,16 @@ is(+(~(-Inf)), -Inf, "'-Inf' is -Inf");
     is( $x, 1, 'works: Int $x = "4" - 3' );
 }
 
+# TimToady says this should work, see http://irclog.perlgeek.de/perl6/2009-11-29#i_1780142
 {
     my Num $x;
 
     lives_ok { $x = +'2' }, 'can assign string "2" to Num variable';
+    isa_ok( $x, Num, 'assign string "2" to Num creates an Num' );
     is( $x, 2, 'assign string "2" to Num variable works' );
 
     lives_ok { $x = "4" - 3 }, 'lives: Num $x = "4" - 3';
+    isa_ok( $x, Num, 'Num $x = "4" - 3 creates an Num' );
     is( $x, 1, 'works: Num $x = "4" - 3' );
 }
 
