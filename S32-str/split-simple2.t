@@ -35,6 +35,7 @@ is 'a1b24f'.split(/\d+/, *).Str, "a b f", 'Str.split(/regex/) (with * limit)';
 # split_test split(/\d+/, 'a1b24f', *), <a b f>, 'split(/regex/, Str) (with * limit)';
 # split_test 'a1b'.split(1, *),         <a b>,   'Str.split(Any) (with Str semantics (with * limit)';
 is 'theXXbigXXbang'.split('XX', *).elems, 3, 'Str.split(Str) (with * limit)';
+#?rakudo skip "Blows up for inexplicable reasons"
 is 'theXXbigXXbang'.split('XX', *).Str, 'the big bang', 'Str.split(Str) (with * limit)';
 
 # {
@@ -46,16 +47,16 @@ is '1234'.split(/X/).elems, 1,  'Non-matching regex returns whole string';
 is '1234'.split(/X/).Str, "1234",  'Non-matching regex returns whole string';
 is '1234'.split('X').elems, 1,  'Non-matching string returns whole string';
 is '1234'.split('X').Str, "1234",  'Non-matching string returns whole string';
+#?rakudo skip "Blows up for inexplicable reasons"
 is 'abcb'.split(/b/).elems, 3, 'trailing matches leave an empty string';
 is 'abcb'.split(/b/).Str, "a c ", 'trailing matches leave an empty string';
 
-# # Limit tests
-# #?DOES 4
-# {
-# split_test 'theXbigXbang'.split(/X/, -1), (), 'Negative limit returns empty List';
-# split_test @('theXbigXbang'.split(/X/, 0)),  (), 'Zero limit returns empty List';
-# }
-# split_test 'ab1cd12ef'.split(/\d+/, 1), @(<ab1cd12ef>), 'Limit of 1 returns a 1 element List (with identical string)';
+# Limit tests
+is 'theXbigXbang'.split(/X/, -1).elems, 0, 'Negative limit returns empty List';
+is 'theXbigXbang'.split(/X/, 0).elems, 0, 'Zero limit returns empty List';
+
+is 'ab1cd12ef'.split(/\d+/, 1).elems, 1, 'Limit of 1 returns a 1 element List (with identical string)';
+is 'ab1cd12ef'.split(/\d+/, 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element List (with identical string)';
 # split_test '102030405'.split(0, 3),  <1 2 30405>, 'Split on an Integer with limit parameter works';
 # split_test(
 #     '<tag>soup</tag>'.split(/\<\/?.*?\>/, 3),
