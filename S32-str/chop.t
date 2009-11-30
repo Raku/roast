@@ -38,18 +38,18 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 
 =end more-discussion-needed
 
+#?rakudo skip "unspecced"
 { # chop several things
     my ($a, $b) = ("bar", "gorch");
 #?pugs 3 todo ''
-#?rakudo 3 skip "unspecced"
     is(chop($a, $b), "h", "two chars removed, second returned");
     is($a, "ba", "first string");
     is($b, "gorc", "second string");
 };
 
+#?rakudo skip "unspecced"
 { # chop elements of array
     my @array = ("fizz", "buzz");
-#?rakudo 3 skip "unspecced"
     is(chop(@array), "z", "two chars removed second returned");
 #?pugs 2 todo 'unspecced'
     is(@array[0], "fiz", "first elem");
