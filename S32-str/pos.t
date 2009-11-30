@@ -7,7 +7,7 @@ use Test;
 plan 2;
 
 my $str = 'moose';
-$str ~~ m/oo/;
+$str ~~ /oo/;
 eval_dies_ok('$str.pos', 'Str.pos superseeded by $/.to');
 
 is($/.to, 3, '$/.to works');
