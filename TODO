@@ -28,7 +28,7 @@ Here's a list of what needs to be done, along with the revisions that changed
 the spec (newest first)
 
 * (r28882) upper precision limit for Rat (not sure if it needs explict tests)
-* (r28502) Stringy, Numeric etc. roles; PairVal and PairValSet
+* (r28502) Stringy, Numeric etc. roles; PairVal and PairValSet (now Enum and EnumMap)
 * (r28344, r28348, r28351) Range object changes + magic series operator
 * (r28284) Introspecting subs and multis
 * (r28219) [S06] supply missing list splitting primitive as a form of binding
