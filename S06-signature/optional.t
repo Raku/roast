@@ -44,7 +44,6 @@ sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
 dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
       'die on too many parameters (was once bug RT 53814)';
 
-#?rakudo todo 'RT 54804'
 {
     sub rt54804( $v, $w?, $x?, $y? ) {
         (defined( $v ) ?? $v !! 'undef')
