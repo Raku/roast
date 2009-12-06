@@ -71,8 +71,30 @@ my $pi = 312689/99532;
     is_approx(4.unpolar(0),         4,     "4.unpolar(0)    == 4");
     is_approx(4.unpolar($pi/4),     $s + ($s)i ,"4.unpolar(pi/4) == 2+2i");
     is_approx(4.unpolar($pi/2),     4i,    "4.unpolar(pi/2) == 4i");
-    is_approx(4.unpolar(3*$pi/4),   -$s + ($s)i,"4.unpolar(pi/4) == -2+2i");
+    is_approx(4.unpolar(3.Num*$pi/4),   -$s + ($s)i,"4.unpolar(3*pi/4) == -2+2i");
     is_approx(4.unpolar($pi),       -4,    "4.unpolar(pi)   == -4");
+}
+
+{
+    # Basic tests for unpolar()
+    my $s = 2 * sqrt(2);
+
+    is_approx(4.Rat.unpolar(0),         4,     "4.Rat.unpolar(0)    == 4");
+    is_approx(4.Rat.unpolar($pi/4),     $s + ($s)i ,"4.Rat.unpolar(pi/4) == 2+2i");
+    is_approx(4.Rat.unpolar($pi/2),     4i,    "4.Rat.unpolar(pi/2) == 4i");
+    is_approx(4.Rat.unpolar(3.Num*$pi/4),   -$s + ($s)i,"4.Rat.unpolar(3*pi/4) == -2+2i");
+    is_approx(4.Rat.unpolar($pi),       -4,    "4.Rat.unpolar(pi)   == -4");
+}
+
+{
+    # Basic tests for unpolar()
+    my $s = 2 * sqrt(2);
+
+    is_approx(4.Num.unpolar(0),         4,     "4.Num.unpolar(0)    == 4");
+    is_approx(4.Num.unpolar($pi/4),     $s + ($s)i ,"4.Num.unpolar(pi/4) == 2+2i");
+    is_approx(4.Num.unpolar($pi/2),     4i,    "4.Num.unpolar(pi/2) == 4i");
+    is_approx(4.Num.unpolar(3.Num*$pi/4),   -$s + ($s)i,"4.Num.unpolar(3*pi/4) == -2+2i");
+    is_approx(4.Num.unpolar($pi),       -4,    "4.Num.unpolar(pi)   == -4");
 }
 
 done_testing;
