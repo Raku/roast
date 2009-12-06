@@ -32,7 +32,6 @@ is 'a1b24f'.split(/\d+/).Str, "a b f", 'Str.split(/regex/)';
 # split_test 'a1b'.split(1),         <a b>,   'Str.split(Any) (with Str semantics';
 is 'theXXbigXXbang'.split('XX').elems, 3, 'Str.split(Str)';
 is 'theXXbigXXbang'.split('XX').Str, 'the big bang', 'Str.split(Str)';
-#?rakudo 2 todo "split(Str) doesn't work if the split string is at the first position"
 is 'XXtheXXbigXXbang'.split('XX').elems, 4, 'Str.split(Str)';
 is 'XXtheXXbigXXbang'.split('XX').Str, ' the big bang', 'Str.split(Str)';
 
@@ -41,7 +40,6 @@ is 'a1b24f'.split(/\d+/, *).Str, "a b f", 'Str.split(/regex/) (with * limit)';
 # split_test split(/\d+/, 'a1b24f', *), <a b f>, 'split(/regex/, Str) (with * limit)';
 # split_test 'a1b'.split(1, *),         <a b>,   'Str.split(Any) (with Str semantics (with * limit)';
 is 'theXXbigXXbang'.split('XX', *).elems, 3, 'Str.split(Str) (with * limit)';
-#?rakudo skip "Blows up for inexplicable reasons"
 is 'theXXbigXXbang'.split('XX', *).Str, 'the big bang', 'Str.split(Str) (with * limit)';
 
 # {
@@ -53,7 +51,6 @@ is '1234'.split(/X/).elems, 1,  'Non-matching regex returns whole string';
 is '1234'.split(/X/).Str, "1234",  'Non-matching regex returns whole string';
 is '1234'.split('X').elems, 1,  'Non-matching string returns whole string';
 is '1234'.split('X').Str, "1234",  'Non-matching string returns whole string';
-#?rakudo skip "Blows up for inexplicable reasons"
 is 'abcb'.split(/b/).elems, 3, 'trailing matches leave an empty string';
 is 'abcb'.split(/b/).Str, "a c ", 'trailing matches leave an empty string';
 
@@ -65,7 +62,6 @@ is 'theXbigXbang'.split('X', 0).elems, 0, 'Zero limit returns empty List';
 
 is 'ab1cd12ef'.split(/\d+/, 1).elems, 1, 'Limit of 1 returns a 1 element List (with identical string)';
 is 'ab1cd12ef'.split(/\d+/, 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element List (with identical string)';
-#?rakudo 2 skip "Inexplicably fail in Rakudo-ng"
 is 'ab1cd12ef'.split('\d+', 1).elems, 1, 'Limit of 1 returns a 1 element List (with identical string)';
 is 'ab1cd12ef'.split('\d+', 1)[0], 'ab1cd12ef', 'Limit of 1 returns a 1 element List (with identical string)';
 
@@ -81,7 +77,6 @@ is 'ab1cd12ef'.split(/\d+/, 10).elems, 3,
 is 'ab1cd12ef'.split(/\d+/, 10).Str, "ab cd ef", 
    'Limit larger than number of split values doesn\'t return extranuous elements';
 
-#?rakudo 2 skip "Blows up for inexplicable reasons"
 is 'aZbZcZdZeZfZg'.split(/Z/, 3).elems, 3, 'split respects limit (1)';
 is 'aZbZcZdZeZfZg'.split(/Z/, 3).Str, "a b cZdZeZfZg", 'split respects limit (1)';
 is 'a,b,c,d,e,f,g'.split(',', 3).elems, 3, 'split respects limit (2)';
