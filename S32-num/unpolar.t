@@ -30,6 +30,9 @@ my $pi = 312689/99532;
     for 1...20 -> $i {
         my $angle = 2 * $pi * $i / 20;
         is_approx(cis($i), 1.unpolar($i), "cis(x) == 1.unpolar(x) No. $i");
+        is_approx($i.cis, 1.unpolar($i), "x.cis == 1.unpolar(x) No. $i");
+        is_approx($i.Rat.cis, 1.unpolar($i), "x.Rat.cis == 1.unpolar(x) No. $i");
+        is_approx($i.Num.cis, 1.unpolar($i), "x.Num.cis == 1.unpolar(x) No. $i");
     }
 }
 
