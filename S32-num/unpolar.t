@@ -41,13 +41,12 @@ my $pi = 312689/99532;
 #
 # Test that unpolar() doesn't change the absolute value
 
-#?rakudo skip "Causing issues in Rakudo-ng"
 {
     my $counter = 1;
     for 1...10 -> $abs {
         for 1...10 -> $a {
             my $angle = 2 * $pi * $a / 10;
-            is_approx(abs($abs.unpolar($angle)), $abs,
+            is_approx($abs.unpolar($angle).abs, $abs,
                       "unpolar doesn't change the absolute value (No. $counter)");
             $counter++;
         }
