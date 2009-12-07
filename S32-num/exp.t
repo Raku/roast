@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 59;
 
 # L<S32::Numeric/Num/"=item exp">
 
@@ -21,6 +21,16 @@ my $pi = 312689/99532;
 
     is_approx(exp(:exponent(1i*$pi)), -1, 'exp(:exponent(i $pi)) == -1');
     is_approx(exp(:exponent(-1i*$pi)), -1, 'exp(:exponent(-i $pi)) == -1');
+}
+
+{
+    is_approx(5.exp, $e_to_the_fifth, '5.exp == e to the fifth');
+    is_approx(5.Rat.exp, $e_to_the_fifth, '5.Rat.exp == e to the fifth');
+    is_approx(5.Num.exp, $e_to_the_fifth, '5.Num.exp == e to the fifth');
+    is_approx(0.exp, 1, '0.exp == 1');
+
+    is_approx((1i*$pi).exp, -1, '(i pi).exp == -1');
+    is_approx((-1i*$pi).exp, -1, '(-i pi).exp == -1');
 }
 
 is_approx(exp(5), $e_to_the_fifth, 'got the exponential of 5');
