@@ -10,10 +10,11 @@ Basic tests for the exp() builtin
 
 =end pod
 
+# SHOULD: test method forms of exp as well.
+
 my $e_to_the_fifth = 5497075/37039;
 my $pi = 312689/99532;
 
-#?rakudo skip 'named args'
 {
     is_approx(exp(:exponent(5)), $e_to_the_fifth, 'got the exponent of 5');
     is_approx(exp(:exponent(0)), 1, 'exp(:exponent(0)) == 1');
