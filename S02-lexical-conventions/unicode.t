@@ -67,7 +67,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 {
     my sub äöü ($x) { 1000 + $x }
-    is (äöü 17), 1017, "Unicode subs with one parameter (parsed as prefix ops)";
+    is (äöü 17), 1017, "Unicode subs with one parameter (parsed as listop)";
 }
 
 # Unicode parameters

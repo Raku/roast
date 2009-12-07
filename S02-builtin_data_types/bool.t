@@ -62,8 +62,8 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 #?rakudo skip 'RT 66576: .name method on bool values'
 {
-    is Bool::True.name, 'True', 'Bool::True.name works (is "True")';
-    is Bool::False.name, 'False', 'Bool::False.name works (is "False")';
+    is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
+    is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
 done_testing;
