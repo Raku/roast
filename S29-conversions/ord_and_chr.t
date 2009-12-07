@@ -131,9 +131,7 @@ for @maps -> $char, $code {
 
 for @maps -> $char, $code {
    my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
-#?rakudo skip 'named args'
    is ord(:string($char)), $code, "ord() works for $descr with named args";
-#?rakudo skip 'named args'
    is chr(:graph($code)), $char, "chr() works for $descr with named args";
 }
 
@@ -149,7 +147,7 @@ is 65.chr, 'A', "there's a .chr method";
 is ord('hello'), [104, 101, 108, 108, 111], 'ord works with longer strings';
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 
-ok ord("") ~~ Failure, 'ord("") returns a Failure';
+ok not defined(ord("")), 'ord("") returns an undefined value';
 
 # RT #65172
 {
