@@ -23,8 +23,7 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     "comb on string with grapheme non-precomposed");
 
 #?pugs todo 'feature'
-#?rakudo skip 'limit for comb'
-is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
+is "abcd".comb(:limit(2)), <a b>, 'default matcher with supplied limit';
 
 #?pugs skip "todo: Str.comb"
 {
