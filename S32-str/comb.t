@@ -39,6 +39,7 @@ is "a bc d".comb(:limit(2)), <a bc>, 'default matcher with supplied limit';
     is $hair.comb(/\d+/, 1000000000), <3 3 4 3 0 3 3 1 1 1>, 'limit of 1 billion returns all matches quickly';
 }
 
+#?rakudo skip "Null PMC in Rakudo-ng"
 {
     is "a ab bc ad ba".comb(/\ba\S*/), <a ab ad>,
         'match for any a* words';
@@ -63,6 +64,7 @@ isa_ok("forty-two".comb(), List);
 # comb a list
 
 #?pugs todo 'feature'
+#?rakudo skip "bad all around in Rakudo-ng"
 is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
@@ -70,16 +72,25 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/);
+    is @l.join('|'), 'a23|c58', 'basic comb-without-matches sanity';
+    isa_ok(@l[0], Str, 'first item is a Str');
+    isa_ok(@l[1], Str, 'second item is a Str');
+}
+
+{
+    my @l = 'a23 b c58'.comb(/\w(\d+)/, :match);
     is @l.join('|'), 'a23|c58', 'basic comb-with-matches sanity';
+    #?rakudo 2 skip "Type is incorrectly named Regex::Match in Rakudo-ng"
     isa_ok(@l[0], Match, 'first item is a Match');
     isa_ok(@l[1], Match, 'second item is a Match');
-    #?rakudo todo 'PGE: bind to values, not containers'
-    is @l[0].to, 2, '.to of the first item is correct';
-    #?rakudo todo 'pos-preserving .comb'
-    is @l[1].to, 8, '.to of the second item is correct';
+    is @l[0].from, 0, '.from of the first item is correct';
+    is @l[0].to, 3, '.to of the first item is correct';
+    is @l[1].from, 6, '.from of the second item is correct';
+    is @l[1].to, 9, '.to of the second item is correct';    
 }
 
 # RT #66340
+#?rakudo skip "bad all around in Rakudo-ng"
 {
     my $expected_reason = rx/^'No applicable candidates '/;
     
