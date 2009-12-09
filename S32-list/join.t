@@ -90,11 +90,13 @@ my $undefined;
 my @odd_list1 = (1, $undefined, 2, $undefined, 3);
 
 my $joined2e = join(':', @odd_list1);
+#?rakudo todo "Mu in list is not handled properly by join"
 is($joined2e, "1::2::3", 'join(":", @odd_list1) works');
 
 my @odd_list2 = (1, Mu, 2, Mu, 3);
 
 my $joined2f = join(':', @odd_list2);
+#?rakudo todo "Mu in list is not handled properly by join"
 is($joined2f, "1::2::3", 'join(":", @odd_list2) works');
 
 # should these even be tests ???
@@ -110,6 +112,7 @@ is($joined1a, "a, b, c", '().join($sep) should dwim');
 
 is(join("!", "hi"),   "hi", "&join works with one-element lists (1)");
 is(join("!", <hi>),   "hi", "&join works with one-element lists (2)");
+#?rakudo skip "Rakudo-ng thinks this is a parcel instead of a list"
 is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 
 
@@ -142,6 +145,7 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 ## I want the result to be 'str'.
 
 #?pugs todo 'bug'
+#?rakudo 2 skip "Rakudo-ng doesn't know how to make a list from a Str"
 is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
 is(('hi').join(':'), 'hi', '("foo").join(":") should be the same as join(":", "foo")');
 
