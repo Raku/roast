@@ -17,8 +17,8 @@ for 0, 0 / 1, 0.0e0, 1, 50, 60.0e0, 99.99 {
     is(abs(:x($_)), $_, "got the right absolute value for $_");
 
     #?rakudo 2 todo 'WHAT aspect is wrong for Ints'
-    is((abs($_)).WHAT, $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");
-    is(($_.abs).WHAT, $_.WHAT, 'got the right data type (' ~ $_.WHAT ~ ') of absolute value for $_='~$_);
+    ok(abs($_) ~~ $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");
+    ok($_.abs ~~ $_.WHAT, 'got the right data type (' ~ $_.WHAT ~ ') of absolute value for $_='~$_);
 }
 for -1, -50, -60.0e0, -9999 / 100 {
     is(abs($_), -$_, "got the right absolute value for $_");
@@ -27,8 +27,8 @@ for -1, -50, -60.0e0, -9999 / 100 {
     is(abs(:x($_)), -$_, "got the right absolute value for $_");
 
     #?rakudo 2 todo 'WHAT aspect is wrong for Ints'
-    is((abs($_)).WHAT, $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");
-    is(($_.abs).WHAT, $_.WHAT, 'got the right data type (' ~ $_.WHAT ~ ') of absolute value for $_='~$_);
+    is(abs($_) ~~ $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");
+    is($_.abs ~~ $_.WHAT, 'got the right data type (' ~ $_.WHAT ~ ') of absolute value for $_='~$_);
 }
 
 #?rakudo 3 skip "abs(NaN or Inf) leads to infinite recursion in Rakudo-ng"
