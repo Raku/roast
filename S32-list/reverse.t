@@ -27,15 +27,15 @@ my @e = (4, 3, 2, 1);
 is(@a, @e, "list was reversed");
 #?rakudo skip 'named args'
 {
-@a = reverse(:values(1, 2, 3, 4));
-is(@a, @e, "list was reversed");
+    @a = reverse(:values(1, 2, 3, 4));
+    is(@a, @e, "list was reversed");
 }
+
 {
     my $a = reverse("foo");
     is($a, "foo", "string was not reversed; that's what flip() is for");
 
-
-    @a = list reverse "foo", "bar";
+    @a = reverse "foo", "bar";
     is(+@a, 2, 'the reversed list has two elements');
     is(@a[0], "bar", 'the list was reversed properly');
 
