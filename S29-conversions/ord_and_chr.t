@@ -135,7 +135,7 @@ for @maps -> $char, $code {
    is chr(:graph($code)), $char, "chr() works for $descr with named args";
 }
 
-for 0..31 -> $code {
+for 0...31 -> $code {
   my $char = chr($code);
   is ord($char), $code, "ord(chr($code)) is $code";
 }
