@@ -31,8 +31,8 @@ role R2 {
     has Int $!a;
 }
 
-eval_lives_ok 'class C2 does R2 { has Int $!a }', 'Same name, same type will not conflict';
 eval_dies_ok 'class C3 does R2 { has $!a }',      'Roles with conflicing attributes';
+eval_dies_ok 'class C2 does R2 { has Int $!a }',  'Same name, same type will also conflicts';
 
 role R3 {
     has $.x = 42;
