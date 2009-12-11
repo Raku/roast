@@ -10,6 +10,7 @@ plan 13;
   is @a.elems, 0, ".elems works on uninitialized arrays";
 }
 
+#?rakudo todo "Unclear what this should actually be"
 {
   my @a = ();
   is @a.elems, 0, ".elems works on empty arrays";
@@ -67,15 +68,17 @@ plan 13;
   is elems(:array((1,2,3,4))), 4, "elems (1,2,3,4) should work with named argument";
 }
 
+#?rakudo skip 'no sub version of elems yet'
 {
   is (elems (1,2,3,4)), 4, "elems (1,2,3,4) should work";
 }
 
-#?rakudo todo 'elems on Array ref'
+#?rakudo skip 'elems on Array ref'
 {
   is (elems [1,2,3,4]), 4, "elems [1,2,3,4] should work";
 }
 
+#?rakudo skip 'no sub version of elems yet'
 {
   is (elems ([1,2,3,4],)), 1, "elems ([1,2,3,4],) should return 1";
 }
