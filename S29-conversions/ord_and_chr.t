@@ -121,7 +121,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 38+@maps*2;
+plan 39+@maps*2;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -153,7 +153,9 @@ ok not defined(ord("")), 'ord("") returns an undefined value';
 {
     my $rt65172a = "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]";
     my $rt65172b = "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]";
-    #?rakudo todo 'RT #65172'
+    #?rakudo todo "slash-c doesn't work yet in Rakudo-ng"
+    ok $rt65172b.chars > 0, "Check that we actually got a string here";
+    #?rakudo skip 'incorrectly passing'
     is $rt65172a.ord, $rt65172b.ord, '.ord defaults to grapheme mode';
 }
 
