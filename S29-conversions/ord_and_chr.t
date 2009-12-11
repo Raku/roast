@@ -150,13 +150,15 @@ is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 ok not defined(ord("")), 'ord("") returns an undefined value';
 
 # RT #65172
+#?rakudo todo 'RT 6512'
 {
-    my $rt65172a = "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]";
-    my $rt65172b = "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]";
-    #?rakudo todo "slash-c doesn't work yet in Rakudo-ng"
-    ok $rt65172b.chars > 0, "Check that we actually got a string here";
-    #?rakudo skip 'incorrectly passing'
-    is $rt65172a.ord, $rt65172b.ord, '.ord defaults to grapheme mode';
+    is  "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord,
+        555,
+        '.ord defaults to graphemes (1)';
+
+    is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]",
+        555,
+        '.ord defaults to graphemes (2)';
 }
 
 #vim: ft=perl6
