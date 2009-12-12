@@ -143,8 +143,8 @@ for 0...31 -> $code {
 is 'A'.ord, 65, "there's a .ord method";
 is 65.chr, 'A', "there's a .chr method";
 
-#?rakudo 2 skip 'multi-arg variants of ord and chr not in place yet'
 is ord('hello'), [104, 101, 108, 108, 111], 'ord works with longer strings';
+#?rakudo skip 'multi-arg variants of chr not in place yet'
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 
 ok not defined(ord("")), 'ord("") returns an undefined value';
