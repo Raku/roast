@@ -200,6 +200,13 @@ isa_ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
 is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
 isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
+ok (1/2) == (1/2).Rat, 'Rat.Rat works';
+isa_ok (1/2).Rat, '... and actually returns a Rat';
+
+#?rakudo todo '=== on Rats'
+ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
+ok 1/2 !=== 1/3, '=== with false outcome';
+
 done_testing;
 
 # vim: ft=perl6
