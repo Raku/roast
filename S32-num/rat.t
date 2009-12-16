@@ -205,6 +205,7 @@ isa_ok (1/2).Rat, '... and actually returns a Rat';
 
 #?rakudo todo '=== on Rats'
 ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
+#?rakudo skip '!==='
 ok 1/2 !=== 1/3, '=== with false outcome';
 
 done_testing;
