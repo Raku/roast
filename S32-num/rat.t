@@ -201,7 +201,7 @@ is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 6173
 isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
-isa_ok (1/2).Rat, '... and actually returns a Rat';
+isa_ok (1/2).Rat, Rat, '... and actually returns a Rat';
 
 #?rakudo todo '=== on Rats'
 ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
