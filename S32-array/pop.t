@@ -31,15 +31,16 @@ plan *;
     is($a, 1, '@pop.pop works');
 
     is(+@pop, 1, 'we have 1 element in the array');
-#?rakudo skip 'named args'
-{
-       $a = pop(:array(@pop));
-       is($a, -1, '@pop.pop works');
+    
+    {
+        $a = pop(:array(@pop));
+        is($a, -1, '@pop.pop works');
 
-       is(+@pop, 0, 'we have no more element in the array');
-       ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
-       ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
-}
+        is(+@pop, 0, 'we have no more element in the array');
+        ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
+        #?rakudo skip "Failure is not yet defined in Rakudo-ng"
+        ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
+    }
 }
 
 { # pop() elements inline
@@ -49,7 +50,7 @@ plan *;
     is(pop(@pop), 4, 'inline pop(@pop) works');
 
     is(+@pop, 3, 'we have 3 elements in the array');
-    is(pop @pop, 3, 'inline pop @pop works');
+    is((pop @pop), 3, 'inline pop @pop works');
 
     is(+@pop, 2, 'we have 2 elements in the array');
     is(@pop.pop(), 2, 'inline @pop.pop() works');
@@ -59,6 +60,7 @@ plan *;
 
     is(+@pop, 0, 'we have no more element in the array');
     ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
+    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 }
 
@@ -66,6 +68,7 @@ plan *;
 {
     is([1, 2, 3].pop, 3, 'this will return 3');
     ok(!defined([].pop), 'this will return undefined');
+    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( [].pop ~~ Failure, '[].pop is a Failure' );
 }
 
@@ -74,6 +77,7 @@ plan *;
 {
     my @pop;
     ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undefined');
+    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( @pop.pop() ~~ Failure, 'pop off uninitialized array is a Failure' );
 }
 
