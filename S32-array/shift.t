@@ -31,16 +31,14 @@ plan *;
     $a = @shift.shift;
     is($a, 4, '@shift.shift works');
 
-#?rakudo skip 'named args'
-{
-    is(+@shift, 1, 'we have 1 element in our array');
-    $a = shift(:array(@shift));
-    is($a, 5, 'shift(:array(@shift))');
+    {
+        is(+@shift, 1, 'we have 1 element in our array');
+        $a = shift(:array(@shift));
+        is($a, 5, 'shift(:array(@shift))');
 
-
-    is(+@shift, 0, 'we have no elements in our array');
-    ok(!defined(shift(@shift)), 'after the array is exhausted it gives undefined');
-}
+        is(+@shift, 0, 'we have no elements in our array');
+        ok(!defined(shift(@shift)), 'after the array is exhausted it gives undefined');
+    }
 }
 
 {
@@ -50,7 +48,7 @@ plan *;
     is(shift(@shift), 1, 'inline shift(@shift) works');
 
     is(+@shift, 3, 'we have 3 elements in our array');
-    is(shift @shift, 2, 'inline shift @shift works');
+    is((shift @shift), 2, 'inline shift @shift works');
 
     is(+@shift, 2, 'we have 2 elements in our array');
     is(@shift.shift(), 3, 'inline @shift.shift() works');
@@ -60,6 +58,7 @@ plan *;
 
     is(+@shift, 0, 'we have no elements in our array');
     ok(!defined(shift(@shift)), 'again, the array is exhausted and we get undefined');
+    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( shift(@shift) ~~ Failure, 'again, Failure from shifting empty array' );
 }
 
@@ -67,6 +66,7 @@ plan *;
 {
     is([1, 2, 3].shift, 1, 'this will return 1');
     ok(!defined([].shift), 'this will return undefined');
+    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( [].shift ~~ Failure, 'shift of empty array is Failure' );
 }
 
@@ -74,6 +74,7 @@ plan *;
 {
     my @shift;
     ok(!defined(shift(@shift)), 'shift on an empty array returns undefined');
+    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( shift(@shift) ~~ Failure, 'shift on empty array is Failure');
 }
 
