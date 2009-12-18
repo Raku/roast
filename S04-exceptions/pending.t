@@ -20,7 +20,7 @@ plan *;
 
 sub fail_it { fail $^a }
 
-# L<S04/Exceptions/"test a Failure for .defined or .true">
+# L<S04/Exceptions/"test a Failure for .defined or as boolean">
 
 {
     my @fails = ( fail_it(1), fail_it(2), fail_it(3), fail_it(4) );
@@ -32,7 +32,7 @@ sub fail_it { fail $^a }
        '$!.pending has three unhandled exceptions';
 
     ok ! @fails[0].handled, 'fail 0 is not handled';
-    ok ! @fails[0].true,    'fail 0 is not true';
+    ok   @fails[0].not,     'fail 0 is not true';
     ok   @fails[0].handled, 'fail 0 is now handled';
 
     ok ! @fails[1].handled, 'fail 1 is not handled';

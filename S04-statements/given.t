@@ -233,13 +233,13 @@ my @got;
 
 for @input -> $x {
     given $x {
-        when .true { push @got, "true" }
+        when .so { push @got, "true" }
         default { push @got, "false" }
     }
 }
 
-#?rakudo 1 todo '.true in given does not work'
-is(@got.join(","), "false,true", 'given { when .true { } }');
+#?rakudo 1 todo '.so in given does not work'
+is(@got.join(","), "false,true", 'given { when .so { } }');
 
 # given + hash deref
 {
