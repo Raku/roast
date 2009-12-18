@@ -14,35 +14,33 @@ plan 15;
 # basic array .end tests
 
 { # invocant style
-    my @array = ();
+    my @array;
     is(@array.end, -1, 'we have an empty array');
 
-    @array = (1..43);
+    @array = 1...43;
     is(@array.end, 42, 'index of last element is 42 after assignment');
 
-    pop @array;
+    @array.pop;
     is(@array.end, 41, 'index of last element is 41 after pop');
 
-    shift @array;
+    @array.shift;
     is(@array.end, 40, 'index of last element is 40 after shift');
 
-    unshift @array, 'foo';
+    @array.unshift('foo');
     is(@array.end, 41, 'index of last element is 41 after unshift');
 
-    push @array, 'bar';
+    @array.push('bar');
     is(@array.end, 42, 'index of last element is 42 after push');
 }
 
 { # non-invocant style
-    my @array = ();
+    my @array;
     is(end(@array), -1, 'we have an empty array');
 
-    @array = (1..43);
+    @array = (1...43);
     is(end(@array), 42, 'index of last element is 42 after assignment');
 
-
-    pop @array;
-#?rakudo skip 'named arg'
+    @array.pop;
     is(end(:array(@array)), 41, 'index of last element is 41 after pop');
     is((end @array), 41, 'index of last element is 41 after pop');
 
