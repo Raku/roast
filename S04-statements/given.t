@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 49;
 
 =begin pod
 
@@ -28,14 +28,14 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
     given 5 {
         when 2 { $two = 1 }
-        when 5 { $five = 1; continue }
+        when 5 { $five = 1; proceed }
         when Int { $int = 1 }
         when 5 { $unreached = 1 }
     }
 
     ok(!$two, "5 is not two");
     ok($five, "5 is five");
-    ok($int, "short fell-through to next true when using 'continue'");
+    ok($int, "short fell-through to next true when using 'proceed'");
     ok(!$unreached, "but didn't do so normally");
 };
 
@@ -97,7 +97,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
 {
     # topic not given by 'given' L<S04/"Switch statements" /including a for loop/>
     my ($b_one, $b_two, $b_three,$panic) = (0,0,0,0);
-    for (<1 2 3>) {
+    for <1 2 3> {
         when 1 {$b_one = 1}
         when 2 {$b_two = 1}
         when 3 {$b_three = 1}
@@ -111,53 +111,53 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
 {
     my $foo = 1;
-    given (1) {
-        my $_ = 2;
-        when (2) { $foo = 2; }
-        when (1) { $foo = 3; }
+    given 1 {
+        $_ = 2;
+        when 2 { $foo = 2; }
+        when 1 { $foo = 3; }
         default  { $foo = 4; }
     }
-    is($foo, 2, 'Rebind $_ to new lexical');
+    is($foo, 2, 'Assign new value to $_ inside topicalizer');
 }
 
 {
     my ($foo, $bar) = (1, 0);
-    given (1) {
-        when (1) { $foo = 2; continue; $foo = 3; }
-        when (2) { $foo = 4; }
+    given 1 {
+        when 1 { $foo = 2; proceed; $foo = 3; }
+        when 2 { $foo = 4; }
         default { $bar = 1; }
         $foo = 5;
     };
-    is($foo, 2, 'continue aborts when block');
-    ok($bar, 'continue does not prevent default');
+    is($foo, 2, 'proceed aborts when block');
+    ok($bar, 'proceed does not prevent default');
 }
 
 {
     my ($foo, $bar) = (1, 0);
-    given (1) {
-        when (1) { $foo = 2; break; $foo = 3; }
-        when (2) { $foo = 4; }
+    given 1 {
+        when 1 { $foo = 2; succeed; $foo = 3; }
+        when 2 { $foo = 4; }
         default { $bar = 1 }
         $foo = 5;
     };
-    is($foo, 2, 'break aborts when');
-    ok(!$bar, 'break prevents default');
+    is($foo, 2, 'succeed aborts when');
+    ok(!$bar, 'succeed prevents default');
 }
 
 {
     my ($foo, $bar, $baz, $bad) = (0, 0, -1, 0);
     my $quux = 0;
     for 0, 1, 2 {
-        when 0 { $foo++; continue }
-        when 1 { $bar++; break }
+        when 0 { $foo++; proceed }
+        when 1 { $bar++; succeed }
         when 2 { $quux++; }
         default { $baz = $_ }
         $bad = 1;
     };
     is($foo, 1, 'first iteration');
     is($bar, 1, 'second iteration');
-    is($baz, 0, 'continue worked');
-    is($quux, 1, "break didn't abort loop");
+    is($baz, 0, 'proceed worked');
+    is($quux, 1, "succeed didn't abort loop");
     ok(!$bad, "default didn't fall through");
 }
 
@@ -168,6 +168,19 @@ Tests the given block, as defined in L<S04/"Switch statements">
        given $arg {
          when "a" { "A" }
          when "b" { "B" }
+       }
+     }
+
+    is( ret_test("a"), "A", "given returns the correct value (1)" ); 
+    is( ret_test("b"), "B", "given returns the correct value (2)" ); 
+}
+
+# given/succeed returns the correct value:
+{
+     sub ret_test($arg) {
+       given $arg {
+         when "a" { succeed "A"; 'X'; }
+         when "b" { succeed "B"; 'X'; }
        }
      }
 
@@ -209,8 +222,8 @@ Tests the given block, as defined in L<S04/"Switch statements">
     given $t { when .isa(TestIt) { $passed = 1;}};
     is($passed, 1,'when .isa(Type) {}');
     $passed = 0;
-    given $t { when (TestIt) { $passed = 1; }};
-    is($passed, 1,'when (Type) {}');
+    given $t { when TestIt { $passed = 1; }};
+    is($passed, 1,'when Type {}');
 }
 
 # given + true
@@ -241,8 +254,8 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 {
     my $x = 0;
     given 41 {
-        when ({ $_ == 49 }) { diag "this really shouldn't happen"; $x = 49 }
-        when ({ $_ == 41 }) { $x++ }
+        when { $_ == 49 } { diag "this really shouldn't happen"; $x = 49 }
+        when { $_ == 41 } { $x++ }
     }
     ok $x, 'given tests 0-arg closures for truth';
 }
@@ -251,8 +264,8 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 {
     my $x;
     given 41 {
-        when (-> $t { $t == 49 }) { diag "this really shouldn't happen"; $x = 49 }
-        when (-> $t { $t == 41 }) { $x++ }
+        when -> $t { $t == 49 } { diag "this really shouldn't happen"; $x = 49 }
+        when -> $t { $t == 41 } { $x++ }
     }
     ok $x, 'given tests 1-arg closures for truth';
 }
@@ -261,7 +274,7 @@ is(@got.join(","), "false,true", 'given { when .true { } }');
 {
     dies_ok {
         given 41 {
-            when (-> $t, $r { $t == $r }) { ... }
+            when -> $t, $r { $t == $r } { ... }
         }
     }, 'fail on arities > 1';
 }
