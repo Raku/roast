@@ -66,9 +66,9 @@ ok !(Bool::True & Bool::False)    ==  Bool::True,  $message1;
 #?rakudo skip 'junction type (lower case)'
 ok !(Bool::True & Bool::False)    !~~ junction,    $message2;
 #?rakudo todo 'named unary as function call'
-ok true(Bool::True & Bool::False) ==  Bool::False, $message1;
+ok so(Bool::True & Bool::False) ==  Bool::False, $message1;
 #?rakudo skip 'junction type (lower case)'
-ok true(Bool::True & Bool::False) !~~ junction,    $message2;
+ok so(Bool::True & Bool::False) !~~ junction,    $message2;
 ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
 #?rakudo skip 'junction type (lower case)'
 ok not(Bool::True & Bool::False)  !~~ junction,    $message2;

@@ -143,7 +143,7 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 # loose unary
 
 my $x;
-is((true $x = 42), 1, "item assignment is tighter than true");
+is((so $x = 42), 1, "item assignment is tighter than true");
 
 # comma
 
