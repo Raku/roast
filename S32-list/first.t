@@ -9,38 +9,37 @@ built-in "first" tests
 
 =end pod
 
-plan 11;
+plan 19;
 
-my @list = (1 .. 10);
+my @list = (1 ... 10);
 
 {
-    my $result = first { ($_ % 2) }, @list;
-    ok($result ~~ Int, "first() returns an Int");
-    is($result, 1, "returned value by first() is correct");
-}
-
-#?rakudo skip 'named args'
-{
-    my $result = first({ ($_ % 2) }, :values(@list));
+    my $result = first { ($^a % 2) }, @list;
     ok($result ~~ Int, "first() returns an Int");
     is($result, 1, "returned value by first() is correct");
 }
 
 {
-    my $result = @list.first( { ($_ == 4)});
+    my $result = first({ ($^a % 2) }, :values(@list));
+    ok($result ~~ Int, "first() returns an Int");
+    is($result, 1, "returned value by first() is correct");
+}
+
+{
+    my $result = @list.first( { ($^a == 4)});
     ok($result ~~ Int, "method form of first returns an Int");
     is($result, 4, "method form of first returns the expected item");
 }
 
 #?rakudo skip "adverbial block"
 {
-    my $result = @list.first():{ ($_ == 4) };
+    my $result = @list.first():{ ($^a == 4) };
     ok($result ~~ Int, "first():<block> returns an Int");
     is($result, 4, "first() returned the expected value");
 }
 
 {
-    ok(@list.first( { ($_ == 11) }).notdef, 'first returns undefined unsuccessful match');
+    ok(@list.first( { ($^a == 11) }).notdef, 'first returns undefined unsuccessful match');
 }
 
 {
@@ -49,4 +48,24 @@ my @list = (1 .. 10);
     is(@list.first($matcher), 1, 'first() search for odd elements successful');
     is($count, 1, 'Matching closure in first() is only executed once');
 }
+
+{
+    is(@list.first(4..6), 4, "method form of first with range returns the expected item");
+    is(@list.first(4^..6), 5, "method form of first with range returns the expected item");
+}
+
+{
+    my @fancy_list = (1, 2, "Hello", 3/4, 4.Num);
+    is(@fancy_list.first(Str), "Hello", "Looking up first by type Str works");
+    is(@fancy_list.first(Int), 1, "Looking up first by type Int works");
+    is(@fancy_list.first(Rat), 3/4, "Looking up first by type Rat works");
+}
+
+{
+    my @fancy_list = <Philosopher Goblet Prince>;
+    is(@fancy_list.first(/o/), "Philosopher", "Looking up first by regex /o/");
+    is(@fancy_list.first(/ob/), "Goblet", "Looking up first by regex /ob/");
+    is(@fancy_list.first(/l.*o/), "Philosopher", "Looking up first by regex /l.*o/");
+}
+
 #vim: ft=perl6
