@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 63;
+plan *;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -182,5 +182,22 @@ ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
 
 # test for RT #62730
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
+
+# RT #71064
+{
+    class RT71064 {
+        method postcircumfix:<{ }>($x) { 'bughunt' }
+        method rt71064() {
+            my %h = ( foo => 'victory' );
+            return %h<foo>;
+        }
+    }
+
+    #?rakudo todo 'RT 71064: hash access broken by postcircumfix:<{ }>'
+    is( RT71064.new.rt71064(), 'victory',
+        'postcircumfix:<{ }> method does not break ordinary hash access' );
+}
+
+done_testing;
 
 # vim: ft=perl6
