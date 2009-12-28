@@ -183,6 +183,16 @@ ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
 # test for RT #62730
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
+# RT #71022
+#?rakudo skip 'RT 71022: infinite loop (noauto)'
+{
+    my %rt71022;
+    %rt71022<bughunt> = %rt71022<bughunt>;
+    ok( ! defined( %rt71022<bughunt> ),
+        'non-existent hash element assigned to itself is not defined, not segfault' );
+}
+
+# This test breaks all hash access after it in Rakudo, so keep it last.
 # RT #71064
 {
     class RT71064 {
