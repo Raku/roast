@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan *;
 
 # Very basic enum tests
 
@@ -98,5 +98,13 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
             '.pick on enums';
     ok Color.pick(2) == 2, '.pick(2) on enums';
 }
+
+#?rakudo skip 'RT 71460: Null PMC access'
+{
+    enum RT71460::Bug <rt71460 bug71460 ticket71460>;
+    is bug71460, 1, 'enum element of enum with double colons is in namespace';
+}
+
+done_testing;
 
 # vim: ft=perl6
