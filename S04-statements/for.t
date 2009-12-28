@@ -11,7 +11,7 @@ for statement as possible
 
 =end description
 
-plan 57;
+plan *;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -447,5 +447,17 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     #?rakudo todo 'RT #65212'
     ok ! $parsed, 'for (1..3)->$n   fails to parse';
 }
+
+# RT #71268
+{
+    sub rt71268 { for ^1 {} }
+    #?rakudo todo 'RT 71268'
+    lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
+    #?rakudo skip 'RT 71268'
+    ok rt71268() ~~ Nil, 'result of "for ^1 {}" is Nil (what else?)';
+}
+
+
+done_testing;
 
 # vim: ft=perl6
