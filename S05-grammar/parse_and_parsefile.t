@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan *;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -30,5 +30,14 @@ is(~A::B.parse("zzz42zzz"), "42", ".parse works with namespaced grammars");
 
 # TODO: Check for a good error message, not just the absence of a bad one.
 dies_ok { No::Such::Grammar.parse() }, '.parse on missing grammar dies';
+
+# RT #71062
+{
+    grammar Integer { rule TOP { x } };
+    #?rakudo todo 'RT 71062: dies calling grammar named "Integer"'
+    lives_ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
+}
+
+done_testing;
 
 # vim: ft=perl6
