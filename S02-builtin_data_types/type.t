@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
 
-plan 52;
+plan *;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -25,10 +25,14 @@ my Str $bar;
 {
     #?pugs 1 todo
     dies_ok({$foo = 'xyz'},      'Int restricts to integers');
+    #?rakudo todo 'RT 71044: an Int variable should not accept Mu'
+    dies_ok { $foo = Mu },       'Int does not accept Mu';
     is(($foo = 42),       42,    'Int is an integer');
 
     #?pugs 1 todo
     dies_ok({$bar = 42},         'Str restricts to strings');
+    #?rakudo todo 'RT 71044: a Str variable should not accept Mu'
+    dies_ok { $bar = Mu },       'Str does not accept Mu';
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
@@ -138,6 +142,7 @@ my $baz of Int;
     # TODO: many more of these are possible
     ok Any ~~ Mu, 'Any ~~ Mu';
     ok Mu !~~ Any, 'Mu !~~ Any';
+    ok Mu !~~ Int, 'Mu !~~ Int';
 
     ok Int ~~ Num, 'Int ~~ Num';
     ok Num !~~ Int, 'Num !~~ Int';
@@ -147,5 +152,7 @@ my $baz of Int;
     ok List ~~ Positional, 'A List does Positional';
     ok Array ~~ Positional, 'Array does Positional too';
 }
+
+done_testing;
 
 # vim: ft=perl6
