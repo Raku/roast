@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan 16;
+plan *;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
@@ -68,5 +68,10 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
 }
 
 eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (RT 66840)';
+
+#?rakudo todo 'RT 71704: "x !! y" should be a parse error'
+eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
+
+done_testing;
 
 # vim: ft=perl6
