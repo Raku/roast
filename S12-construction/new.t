@@ -45,6 +45,16 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     ok ! RT66204.defined, 'NewClass is still not .defined';
 }
 
+# RT 71706
+{
+    class RT71706 {
+        class RT71706::Artie {}
+    }
+    # TODO: check the error message, not just the timing.
+    #?rakudo todo 'RT 71706: Null PMC Access'
+    dies_ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
+}
+
 done_testing;
 
 # vim: ft=perl6
