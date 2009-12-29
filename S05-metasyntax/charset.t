@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 25;
+plan *;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -60,6 +60,12 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 #?rakudo skip 'large \\x char spec in regex (RT #67122) (noauto)'
 ok "\x[10001]" ~~ /<[\x10000..\xEFFFF]>/, 'large \\x char spec';
 
+#?rakudo todo 'RT 71702: lethal reverse range in charset'
+eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
+    'reverse range in charset is lethal (RT 71702)' );
+
 }
+
+done_testing;
 
 # vim: ft=perl6
