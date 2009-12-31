@@ -10,7 +10,7 @@ plan 13;
   is @a.elems, 0, ".elems works on uninitialized arrays";
 }
 
-#?rakudo todo "Unclear what this should actually be"
+#?rakudo skip "Unclear what this should actually be"
 {
   my @a = ();
   is @a.elems, 0, ".elems works on empty arrays";
