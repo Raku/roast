@@ -66,7 +66,7 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 {
     sub __int( $s ) {
         my $pos = $s.index('.');
-        if ($pos > 0) { return substr($s, 0, $pos); }
+        if defined($pos) { return substr($s, 0, $pos); }
         return $s;
     };
 
