@@ -2,7 +2,9 @@ use v6;
 use Test;
 plan *;
 
-# L<S02/Names and Variables/square brackets around list values>
+# L<S02/Names and Variables/so that Perl can evaluate the result
+# back to the same object>
+
 
 my @tests = (
 
@@ -71,12 +73,17 @@ my @tests = (
 }
 
 {
-    # test for a rakudo (r29667) bug:
+    # beware: S02 says that .perl should evaluate the invocant in item
+    # context, so eval @thing.perl returns a scalar. Always.
+
+    # L<S02/Names and Variables/regenerate the object as a scalar in
+    # item context>
+
 
     my @list = (1, 2);
     push @list, eval (3, 4).perl;
-    #?rakudo todo "List.perl bug"
-    is +@list, 4, 'eval(@list.perl) gives a list, not an array ref';
+    #?rakudo skip "List.perl bug"
+    is +@list, 3, 'eval(@list.perl) gives a list, not an array ref';
 }
 
 # RT #63724
@@ -107,3 +114,4 @@ my @tests = (
 done_testing;
 
 # vim: ft=perl6
+
