@@ -46,7 +46,7 @@ plan *;
     my $rt70229 = rt70229();
     ok $rt70229 ~~ Failure, 'got a Failure';
     #?rakudo todo 'RT 70229'
-    dies_ok { "$rt70229" }, 'attempt to stringify Failure dies';
+    dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
 }
 
 done_testing;
