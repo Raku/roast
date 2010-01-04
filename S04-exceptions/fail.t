@@ -18,7 +18,6 @@ plan *;
   is $was_after_fail,  0, "fail() causes our sub to return (1)";
 }
 
-#?rakudo skip '"use fatal"'
 {
   my $was_after_fail = 0;
   my $was_after_sub  = 0;
@@ -28,7 +27,7 @@ plan *;
   try { $sub(); $was_after_sub++ };
 
   is $was_after_fail, 0, "fail() causes our sub to return (2)";
-  is $was_after_sub,  0, "fail() causes our try{} to die";
+  is $was_after_sub,  0, "fail() causes our try to die";
 }
 
 # RT #64990
@@ -45,7 +44,6 @@ plan *;
     sub rt70229 { return fail() }
     my $rt70229 = rt70229();
     ok $rt70229 ~~ Failure, 'got a Failure';
-    #?rakudo todo 'RT 70229'
     dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
 }
 
