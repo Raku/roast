@@ -41,7 +41,7 @@ is "abcd".comb(:limit(2)), <a b>, 'default matcher with supplied limit';
 
 #?rakudo skip "Null PMC in Rakudo-ng"
 {
-    is "a ab bc ad ba".comb(/\ba\S*/), <a ab ad>,
+    is "a ab bc ad ba".comb(/«a\S*/), <a ab ad>,
         'match for any a* words';
     is "a ab bc ad ba".comb(/\S*a\S*/), <a ab ad ba>,
         'match for any *a* words';

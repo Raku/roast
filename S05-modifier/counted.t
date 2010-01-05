@@ -198,8 +198,8 @@ is($/, 'fooo', 'Matched value for 3rd f[\d|\w+]');
 ok($data ~~ m:3rd/ <?ident> /, 'Match 3rd <?ident>');
 is($/, 'o', 'Matched value for 3th <?ident>');
 
-ok($data ~~ m:3rd/ \b <?ident> /, 'Match 3rd \b <?ident>');
-is($/, 'foo', 'Matched value for 3th \b <?ident>');
+ok($data ~~ m:3rd/ « <?ident> /, 'Match 3rd « <?ident>');
+is($/, 'foo', 'Matched value for 3th « <?ident>');
 
 
 $data = "f fo foo fooo foooo fooooo foooooo";

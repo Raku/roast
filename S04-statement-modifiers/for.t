@@ -90,7 +90,7 @@ plan *;
     #     for innocuous reasons (e.g., a line number)
     #?rakudo 2 todo 'RT #61494'
     is "$!", $errmsg, 'error for two spaces is the same as one space';
-    ok "$!" ~~ /\b say \b/, 'error message is for "say"';
+    ok "$!" ~~ /« say »/, 'error message is for "say"';
 }
 
 # L<S04/The for statement/When used as statement modifiers on implicit blocks>
