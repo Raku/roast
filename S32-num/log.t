@@ -20,11 +20,11 @@ is_approx(log(5), $log_5, 'got the log of 5');
 is_approx(log(0.1), $log_one_tenth, 'got the log of 0.1');
 
 # with given base:
-#?rakudo 3 skip '3-arg log'
 is_approx(log(8, 2), 3, 'log(8, 2) is 3'); 
-is_approx(log(42, 23),  1.19205119221557, 'log(42, 23)');
+is_approx(log(42, 23),  1.192051192, 'log(42, 23)');
 
 # with non-Num
+#?rakudo skip '3-arg log'
 is_approx(log("42", "23"),  1.19205119221557, 'log(42, 23) with strings');
 
 {
