@@ -133,7 +133,7 @@ plan *;
 {
     my $ok;
 
-    constant Num baz = 42;
+    my Num constant baz = 42;
     $ok = baz == 42;
 
     ok $ok, "declaring a sigilless constant with a type specification using 'constant' works";
