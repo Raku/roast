@@ -395,13 +395,15 @@ All uses of a zero modulus or divisor should 'die', and the
 
 my $x;
 
-#?rakudo 3 todo 'modulo by zero'
+#?rakudo 2 todo 'modulo by zero'
 dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
+#?rakudo skip 'modulo by zero'
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
 dies_ok( { say 3 div 0 }, 'Division by zero dies and is catchable');
 dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
+#?rakudo skip 'modulo by zero'
 dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
 # This is a rakudo regression wrt bignum:
@@ -416,6 +418,7 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 
 # L<S03/"Negated relational operators"/"allowed for testing even
 # divisibility by an integer">
+#?rakudo skip '!% NYI'
 {
     is 6 !% 3, Bool::True,  '6 !% 3';
     is 6 !% 4, Bool::False, '6 !% 4';
