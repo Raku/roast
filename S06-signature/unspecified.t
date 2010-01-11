@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan *;
 
 # L<S06/Perl5ish subroutine declarations/You can declare a sub without
 # parameter list>
@@ -40,5 +40,16 @@ is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
    'can call sub with both named and positional params used';
 is both(), '',
    'sub using both named and position params works with no params';
+
+# RT 71112
+{
+    sub rt71112 { @_[0] = 'bug' }
+    my $tender = 'sanity';
+    #?rakudo todo 'RT 71112: Cannot assign to readonly variable.'
+    dies_ok { rt71112( $tender ) }, 'Sub that tries to modify @_ dies';
+    is $tender, 'sanity', 'The variable passed is unchanged.';
+}
+
+done_testing;
 
 # vim: ft=perl6
