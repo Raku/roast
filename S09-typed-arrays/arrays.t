@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan *;
 
 # L<S09/Typed arrays/>
 
@@ -124,5 +124,18 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     lives_ok { ret_pos_8() },
         'type check Positional of Num allows subtyped Int array to be returned implicitly';
 }
+
+# RT 71958
+{
+    class RT71958 {
+        has @.rt71958 is rw;
+    }
+    my Int @typed_array;
+    #?rakudo todo 'RT 71958: Array type constraint leaks'
+    lives_ok { RT71958.new().rt71958[0] = RT71958.new() },
+             'can assign to untyped array in presence of typed array';
+}
+
+done_testing;
 
 # vim: ft=perl6
