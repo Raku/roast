@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 38;
+plan *;
 
 my @list = (1 .. 10);
 
@@ -106,5 +106,19 @@ my @list = (1 .. 10);
     is grep(Int, 2, [], 4, [], 5).join(','),
        '2,4,5', "grep() with non-Code matcher";
 }
+
+# RT 71544
+{
+    my @in = ( 1, 1, 2, 3, 4, 4 );
+
+# This test passes, but it's disabled because it doesn't belong here.
+# It just kind of clarifies the test that follows.
+#    is (map { $^a == $^b }, @in), (?1, ?0, ?1), 'map takes two at a time';
+
+    #?rakudo skip 'RT 71754: grep arity sensitivity different from map'
+    is (grep { $^a == $^b }, @in), (1, 1, 4, 4), 'grep takes two at a time';
+}
+
+done_testing;
 
 # vim: ft=perl6
