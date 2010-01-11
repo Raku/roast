@@ -9,7 +9,7 @@ plan 7;
 # Check it captures built-in types.
 sub basic_capture(::T $x) { T }
 isa_ok(basic_capture(42),  Int, 'captured built-in type');
-isa_ok(basic_capture(4.2), Num, 'captured built-in type');
+isa_ok(basic_capture(4.2), Rat, 'captured built-in type');
 
 # User defined ones too.
 class Foo { }
