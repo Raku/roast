@@ -47,21 +47,23 @@ is(AS2_2.new.x, 1, 'Foo[] invoked as Foo[]');
 is(AS2_3.new.x, 2, 'Foo[1] (for sanity)');
 
 # Some type based choices.
+class NarrownessTestA { }
+class NarrownessTestB is NarrownessTestA { }
 role TypeSelection[Str $x] {
     method x { 1 }
 }
-role TypeSelection[Num $x] {
+role TypeSelection[NarrownessTestA $x] {
     method x { 2 }
 }
-role TypeSelection[Int $x] {
+role TypeSelection[NarrownessTestB $x] {
     method x { 3 }
 }
 role TypeSelection[::T] {
     method x { 4 }
 }
 class TS_1 does TypeSelection["OH HAI"] { }
-class TS_2 does TypeSelection[42] { }
-class TS_3 does TypeSelection[4.2] { }
+class TS_2 does TypeSelection[NarrownessTestB.new] { }
+class TS_3 does TypeSelection[NarrownessTestA.new] { }
 class TS_4 does TypeSelection[Pair] { }
 is(TS_1.new.x, 1, 'type-based selection of role');
 is(TS_2.new.x, 3, 'type-based selection of role (narrowness test)');
