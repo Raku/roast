@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan *;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -54,6 +54,23 @@ plan 15;
     is method-check(), 'method-check', 'can call method-check';
 }
 
+#?rakudo skip 'RT 72084: sub name beginning with last-'
+{
+    my sub last-check { 'last-check' }
+    is last-check(), 'last-check', 'can call last-check';
+}
+
+#?rakudo skip 'sub name beginning with next-'
+{
+    my sub next-check { 'next-check' }
+    is next-check(), 'next-check', 'can call next-check';
+}
+
+{
+    my sub redo-check { 'redo-check' }
+    is redo-check(), 'redo-check', 'can call redo-check';
+}
+
 # RT #65804
 {
     sub sub($foo) { $foo }
@@ -68,5 +85,7 @@ plan 15;
     $x = 5;
     is my($x), 23, 'call to sub named "my" works';
 }
+
+done_testing;
 
 # vim: ft=perl6
