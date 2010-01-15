@@ -353,7 +353,7 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => Mu, "baz" => Mu );
     ok (Chihuahua ~~ Dog), "chihuahua isa dog";
     ok (Something ~~ SomeRole), 'something does dog';
     ok !(Chihuahua ~~ Cat), "chihuahua is not a cat";
-};
+}
 
 # TODO:
 # Signature Signature
@@ -469,6 +469,16 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     ok 69762              !~~ Method, '!~~ Method (true)';
     nok &RT68762::rt68762 !~~ Method, '!~~ Method (false)';
 
+}
+
+# RT 72048
+{
+    role RT72048_role {}
+    class RT72048_class does RT72048_role {}
+
+    ok RT72048_class.new ~~ RT72048_role, 'class instance matches role';
+    #?rakudo todo 'RT 72048: !~~ of role on instance is always true'
+    nok RT72048_class.new !~~ RT72048_role, 'class instance !!matches role';
 }
 
 done_testing();
