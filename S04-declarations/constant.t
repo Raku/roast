@@ -12,7 +12,7 @@ plan *;
     constant foo = 42;
 
     ok foo == 42, "declaring a sigilless constant using 'constant' works";
-    dies_ok { foo = 3 }, "can't reasign to a sigil-less constant";
+    dies_ok { foo = 3 }, "can't reassign to a sigil-less constant";
 }
 
 {
@@ -20,7 +20,7 @@ plan *;
 
     constant $bar = 42;
     ok $bar == 42, "declaring a constant with a sigil using 'constant' works";
-    dies_ok { $bar = 2 }, "Can't reasign to a sigiled constant";
+    dies_ok { $bar = 2 }, "Can't reassign to a sigiled constant";
 }
 
 #?rakudo skip 'RT 69740'

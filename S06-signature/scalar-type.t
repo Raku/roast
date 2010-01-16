@@ -4,7 +4,7 @@ use Test;
 
 plan 8;
 
-# a scalar paramater can be bound to any type below Any, and should
+# a scalar parameter can be bound to any type below Any, and should
 # preserve its type
 
 {
