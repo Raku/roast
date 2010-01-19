@@ -43,13 +43,12 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';
 
 # L<S14/Roles/"same, but &foo is aliased to &!foo">
 
-# S12 says that 'my method foo' is the same as 'my method !foo', but
-# also installs the &foo alias for &!foo
-# but it's only stated for roles. Is that true for classes as well?
+# method !foo in a role gets composed in as a private method and is callable
+# as one. XXX Role Private Methods? my method !foo() { ... } different?
 
 {
     role C {
-        my method role_shared {
+        method !role_shared {
             18;
         }
         my method !role_private {
@@ -76,7 +75,8 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';
 
     is $b.public1, 24, '"my method private" can be called as self!private';
     is $b.public2, 18, 'can call role shared private methods';
-    dies_ok { $b.public3() }, 'can not call role privaate methods';
+    #?rakudo todo 'role private methods - spec?'
+    dies_ok { $b.public3() }, 'can not call role privaate methods scoped with my';
 }
 
 # vim: syn=perl6
