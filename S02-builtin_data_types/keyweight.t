@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 4;
 
 # L<S02/Mutable types>
 
@@ -13,5 +13,15 @@ plan 3;
     is %h.elems, 1, '... and an item is gone';
     is %h.keys.join, 'a', '... and the right one is gone';
 }
+
+# L<S32/Containers>
+{
+    my %h is KeyWeight;
+
+    %h = (a => FatRat.new(1,2), b => FatRat.new(3,4));
+    %h<a> = FatRat(-1,1); # negative key
+    is +%h.elems, 2, 'No deletion of negative keys'; # may warn
+}
+
 
 # vim: ft=perl6
