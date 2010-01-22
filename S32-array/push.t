@@ -51,6 +51,7 @@ plan 52;
     my @push_result = @p.push( 'yo, check it' );
 
     is( +@p, 2, 'array received second element' );
+    #?rakudo skip "ACCEPTS not found for Array"
     ok( @push_result ~~ @p, 'modified array, returned' );
     is( ~@p, 'bughunt yo, check it', '~@p' );
     is( ~@p.push('!'), 'bughunt yo, check it !', '~ on the push' );
@@ -114,7 +115,7 @@ plan 52;
 
 # testing some edge cases
 {
-    my @push = 0 .. 5;
+    my @push = 0 ... 5;
     is(+@push, 6, 'starting length is 6');
 
     push(@push);
@@ -143,11 +144,12 @@ plan 52;
 # nested arrayref
 {
     my @push;
-    push @push, [ 21 .. 25 ];
+    push @push, [ 21 ... 25 ];
 
     is(@push.elems,     1, 'nested arrayref, array length is 1');
     is(@push[0].elems,  5, 'nested arrayref, arrayref length is 5');
     is(@push[0][0],    21, 'nested arrayref, first value is 21');
+    #?rakudo skip "*-1 doesn't seem to work"
     is(@push[0][*-1],  25, 'nested arrayref, last value is 25');
 }
 
