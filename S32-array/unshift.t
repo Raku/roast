@@ -124,7 +124,7 @@ plan 59;
 
 # testing some edge cases
 {
-    my @unshift = 0 .. 5;
+    my @unshift = 0 ... 5;
     is(+@unshift, 6, 'starting length is 6');
 
     unshift(@unshift);
