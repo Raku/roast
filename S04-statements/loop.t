@@ -63,7 +63,8 @@ plan 12;
 
 # Loop with next should still execute the continue expression
 {
-    my ($i,    $continued);
+    my $i;
+    my $continued;
     loop ($i = 0;; $continued = 1)
     {
         last if $i;
