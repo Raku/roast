@@ -15,4 +15,41 @@ plan *;
     is $r.get, IterDone, '$r.get is still done';
 }
 
+{
+    my $r = RangeIterator.new(-1.5.Num..^3);
+    isa_ok $r, RangeIterator, '$r is a RangeIterator';
+    is $r.get, -1.5, '$r.get == -1.5';
+    is $r.get, -.5, '$r.get == -0.5';
+    is $r.get, .5, '$r.get == .5';
+    is $r.get, 1.5, '$r.get == 1.5';
+    is $r.get, 2.5, '$r.get == 2.5';
+    is $r.get, IterDone, '$r.get is done';
+    is $r.get, IterDone, '$r.get is still done';
+}
+
+# Heh.  skip doesn't work for ng1 yet?
+# #?rakudo skip 'cmp doesn't work for Rat yet'
+# {
+#     my $r = RangeIterator.new(-1.5..^3);
+#     isa_ok $r, RangeIterator, '$r is a RangeIterator';
+#     is $r.get, -1.5, '$r.get == -1.5';
+#     is $r.get, -.5, '$r.get == -0.5';
+#     is $r.get, .5, '$r.get == .5';
+#     is $r.get, 1.5, '$r.get == 1.5';
+#     is $r.get, 2.5, '$r.get == 2.5';
+#     is $r.get, IterDone, '$r.get is done';
+#     is $r.get, IterDone, '$r.get is still done';
+# }
+
+{
+    my $r = RangeIterator.new(-1.5.Num^..3);
+    isa_ok $r, RangeIterator, '$r is a RangeIterator';
+    is $r.get, -.5, '$r.get == -0.5';
+    is $r.get, .5, '$r.get == .5';
+    is $r.get, 1.5, '$r.get == 1.5';
+    is $r.get, 2.5, '$r.get == 2.5';
+    is $r.get, IterDone, '$r.get is done';
+    is $r.get, IterDone, '$r.get is still done';
+}
+
 done_testing;
