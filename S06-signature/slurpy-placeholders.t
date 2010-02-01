@@ -27,13 +27,16 @@ sub both {
 
 both(5, :b(6), 3, :a(4));
 
-my @result;
-sub perl5sub {
-    push @result, @_[0];
-    push @result, @_[1];
+#?rakudo skip "Broken by ng1"
+{
+    my @result;
+    sub perl5sub {
+        push @result, @_[0];
+        push @result, @_[1];
+    }
+    perl5sub(<foo bar>);
+    is(@result, [<foo bar>], 'use @_ in sub');
 }
-perl5sub(<foo bar>);
-is(@result, [<foo bar>], 'use @_ in sub');
 
 
 # vim: syn=perl6
