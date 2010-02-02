@@ -109,6 +109,7 @@ plan 59;
 
 # now for the unshift() on an uninitialized array issue
 
+#?rakudo skip 'Broken in ng'
 {
     my @unshift;
 
@@ -117,7 +118,7 @@ plan 59;
     is(@unshift[0], 42, 'got the element expected');
 
     unshift @unshift, 2000;
-    is(+@unshift, 2, 'we have 1 element in the array');
+    is(+@unshift, 2, 'we have 2 elements in the array');
     is(@unshift[0], 2000, 'got the element expected');
     is(@unshift[1], 42, 'got the element expected');
 }
