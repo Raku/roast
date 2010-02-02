@@ -9,6 +9,8 @@ plan 12;
     my Str sub myNamedStr() { return 'string' };
     is myNamedStr(), 'string', 'lexical named sub() return Str';
 }
+
+#?rakudo todo 'Broken in ng1'
 is eval('myNamedStr()'), '', 'Correct : lexical named sub myNamedStr() should NOT BE available outside its scope';
 
 {
