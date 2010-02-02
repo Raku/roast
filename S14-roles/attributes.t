@@ -44,6 +44,7 @@ role R4 { has @!foo; method bar() { @!foo } }
 class C5 does R4 {
     has $.baz;
 }
+#?rakudo skip 'Broken in ng1'
 is C5.new().bar(), [], 'Composing an attribute into a class that already has one works';
 
 # vim: syn=perl6
