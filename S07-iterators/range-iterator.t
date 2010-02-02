@@ -11,8 +11,8 @@ plan *;
     is $r.get, 3, '$r.get == 3';
     is $r.get, 4, '$r.get == 4';
     is $r.get, 5, '$r.get == 5';
-    is $r.get, IterDone, '$r.get is done';
-    is $r.get, IterDone, '$r.get is still done';
+    is $r.get, EMPTY, '$r.get is done';
+    is $r.get, EMPTY, '$r.get is still done';
 }
 
 {
@@ -23,8 +23,8 @@ plan *;
     is $r.get, .5, '$r.get == .5';
     is $r.get, 1.5, '$r.get == 1.5';
     is $r.get, 2.5, '$r.get == 2.5';
-    is $r.get, IterDone, '$r.get is done';
-    is $r.get, IterDone, '$r.get is still done';
+    is $r.get, EMPTY, '$r.get is done';
+    is $r.get, EMPTY, '$r.get is still done';
 }
 
 # Heh.  skip doesn't work for ng1 yet?
@@ -37,8 +37,8 @@ plan *;
 #     is $r.get, .5, '$r.get == .5';
 #     is $r.get, 1.5, '$r.get == 1.5';
 #     is $r.get, 2.5, '$r.get == 2.5';
-#     is $r.get, IterDone, '$r.get is done';
-#     is $r.get, IterDone, '$r.get is still done';
+#     is $r.get, EMPTY, '$r.get is done';
+#     is $r.get, EMPTY, '$r.get is still done';
 # }
 
 {
@@ -48,8 +48,8 @@ plan *;
     is $r.get, .5, '$r.get == .5';
     is $r.get, 1.5, '$r.get == 1.5';
     is $r.get, 2.5, '$r.get == 2.5';
-    is $r.get, IterDone, '$r.get is done';
-    is $r.get, IterDone, '$r.get is still done';
+    is $r.get, EMPTY, '$r.get is done';
+    is $r.get, EMPTY, '$r.get is still done';
 }
 
 done_testing;
