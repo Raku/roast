@@ -55,11 +55,11 @@ for (1..6) -> $N {
 # more interesting variations of :nth(...)
 {
     ok($data ~~ m:nth(2,3)/(fo+)/, 'nth(list) is ok');
-    is(@@(), <foo fooo>, 'nth(list) matched correctly');
+    is(@(), <foo fooo>, 'nth(list) matched correctly');
     ok($data ~~ m:nth(2|4)/(fo+)/, 'nth(junction) is ok');
-    is(@@(), <foo foooo>, 'nth(junction) matched correctly');
+    is(@(), <foo foooo>, 'nth(junction) matched correctly');
     ok($data ~~ m:nth({$_ == 3 || $_ == 4})/(fo+)/, 'nth({code}) is ok');
-    is(@@(), <fooo foooo>, 'nth({code} matched correctly');
+    is(@(), <fooo foooo>, 'nth({code} matched correctly');
 }
 
 

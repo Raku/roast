@@ -77,7 +77,6 @@ plan 30;
 
 eval_dies_ok('$', 'Anonymous variable outside of declaration');
 eval_dies_ok('@', 'Anonymous variable outside of declaration');
-eval_dies_ok('@@', 'Anonymous variable outside of declaration');
 eval_dies_ok('%', 'Anonymous variable outside of declaration');
 eval_dies_ok('&', 'Anonymous variable outside of declaration');
 

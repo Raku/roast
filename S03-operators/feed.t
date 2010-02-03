@@ -90,7 +90,7 @@ plan 23;
     is(@data, <2 4 6 8 10>, 'final result was unaffected by the tap variable');
 }
 
-# no need for temp variables in feeds: $(*), @(*), @@(*), %(*)
+# no need for temp variables in feeds: $(*), @(*), %(*)
 {
     my @data = 'a' .. 'z';
     my @out  = <a e i o u y>;
@@ -100,7 +100,7 @@ plan 23;
     @data ==> grep {/<[aeiouy]>/} ==> is(%(*), %(@out), 'basic test for %(*)');
 
     # XXX: currently the same as the @(*) test above. Needs to be improved
-    @data ==> grep {/<[aeiouy]>/} ==> is(@@(*), @@(@out), 'basic test for @@(*)');
+    @data ==> grep {/<[aeiouy]>/} ==> is(@(*).slice, @(@out).slice, 'basic test for @(*).slice');
 }
 
 # <<== and ==>> pretending to be unshift and push, respectively
@@ -130,8 +130,8 @@ plan 23;
 
 # stacked feeds
 {
-    ('a' .. 'd'; 0 .. 3) ==> my @@data;
-    is(@(@@data), <a b c d 0 1 2 3>, 'two stacked feeds');
+    ('a' .. 'd'; 0 .. 3) ==> my @data;
+    is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
 
 # vim: ft=perl6

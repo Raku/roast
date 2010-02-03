@@ -25,9 +25,8 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
-#?rakudo skip 'parsefail: @@( ... )'
 {
-    my @result = gather for @@(1..3 X 'A'..'B') -> $na {
+    my @result = gather for (1..3 X 'A'..'B').slice -> $na {
         take $na.join(':');
     }
     is @result, <1:A 1:B 2:A 2:B 3:A 3:B>, 'chunky cross operator works';

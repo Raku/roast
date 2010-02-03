@@ -11,7 +11,7 @@ plan 8;
 Tests of
 
   our Lazy multi Container::roundrobin( Bool :$shortest,
-      Bool :$finite, *@@list );
+      Bool :$finite, **@list );
 
 =end pod
 

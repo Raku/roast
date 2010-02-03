@@ -3,14 +3,14 @@ use Test;
 
 plan 14;
 
-# L<S13/"Type Casting"/"method %.{ *@@slice } {...}">
+# L<S13/"Type Casting"/"method %.{ **@slice } {...}">
 # basic tests to see if the methods overload correctly.
 
 {
     class TypeCastMixed {
         method &.( |$capture ) {return 'pretending to be a sub'}
-        method postcircumfix:<[ ]> (*@@slice) {return 'pretending to be an array'}
-        method %.{ *@@slice } {return 'pretending to be a hash'}
+        method postcircumfix:<[ ]> (**@slice) {return 'pretending to be an array'}
+        method %.{ **@slice } {return 'pretending to be a hash'}
     }
 
     my $thing = TypeCastMixed.new;

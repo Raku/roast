@@ -10,7 +10,7 @@ plan 6;
 
 Tests of
 
-  our Lazy multi Container::cat( *@@list );
+  our Lazy multi Container::cat( **@list );
 
 =end pod
 
