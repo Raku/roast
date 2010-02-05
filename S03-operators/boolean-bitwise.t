@@ -33,7 +33,7 @@ plan 28;
   ok( ?('' ?& 'yes'  == False), '?& works');
   ok( ?(1  ?& False  == False), '?& works');
   ok( ?(42 ?& 42     == True),  '?& works');
-  ok( ?(3  ?& 12     == False), '?& works');
+  ok( ?(3  ?& 12     == True),  '?& works');
   ok( ?(3  ?& 13     == True),  '?& works');
   ok( ?(13 ?& 3      == True),  '?& works');
 }
@@ -49,5 +49,5 @@ plan 28;
   ok( ?(Mu   ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^Mu    == True),  '?^ works');
   ok( ?(42   ?^ 42   == False), '?^ works');
-  ok( ?(42   ?^ 41   == True),  '?^ works');
+  ok( ?(42   ?^ 41   == False),  '?^ works');
 }
