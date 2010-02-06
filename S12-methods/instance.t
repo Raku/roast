@@ -62,7 +62,6 @@ is($foo.noargs(), 42, "... parentheses after method");
         method b () { 1 }
     }
     dies_ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
-    #?rakudo todo 'method should not be usable as sub'
     dies_ok( { Zoo.new.c }, "meth(%h) is not a valid method call syntax");
 }
 # doesn't match, but defines "b"
