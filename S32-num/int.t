@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 70;
+plan 82;
 
 # L<S32::Numeric/Num/"=item truncate">
 # truncate and int() are synonynms.
@@ -55,6 +55,20 @@ is((-1.51).Int, -1, "int(-1.51) is -1");
 is((-1.5).Int, -1, "int(-1.5) is -1");
 is((-1.49).Int, -1, "int(-1.49) is -1");
 is((-1.1).Int, -1, "int(-1.1) is -1");
+
+nok ?0, "?0 is false";
+isa_ok ?0, Bool, "?0 is Bool";
+ok ?1, "?1 is true";
+isa_ok ?1, Bool, "?1 is Bool";
+ok ?42, "?42 is true";
+isa_ok ?42, Bool, "?42 is Bool";
+
+nok 0.Bool, "0.Bool is false";
+isa_ok 0.Bool, Bool, "0.Bool is Bool";
+ok 1.Bool, "1.Bool is true";
+isa_ok 1.Bool, Bool, "1.Bool is Bool";
+ok 42.Bool, "42.Bool is true";
+isa_ok 42.Bool, Bool, "42.Bool is Bool";
 
 #?rakudo 5 skip 'Str.Int not implemented yet in Rakudo-ng'
 is('-1.999'.Int, -1, "int('-1.999') is -1");
