@@ -15,6 +15,18 @@ isa_ok($a, Bool);
 $a = Bool::False;
 isa_ok($a, Bool);
 
+# tests that Bool.Bool works
+isa_ok (Bool::True).Bool, Bool, "Bool.Bool is a Bool";
+isa_ok (Bool::False).Bool, Bool, "Bool.Bool is a Bool";
+is (Bool::True).Bool, Bool::True, "Bool.Bool works for True";
+is (Bool::False).Bool, Bool::False, "Bool.Bool works for False";
+
+# tests that ?Bool works
+isa_ok ?(Bool::True), Bool, "?Bool is a Bool";
+isa_ok ?(Bool::False), Bool, "?Bool is a Bool";
+is ?(Bool::True), Bool::True, "?Bool works for True";
+is ?(Bool::False), Bool::False, "?Bool works for False";
+
 # tests they work with && and ||
 Bool::True  && pass('True works');
 Bool::False || pass('False works');
