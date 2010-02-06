@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 28;
+plan 31;
 
 { # L<S03/Changes to Perl 5 operators/ "?| is a logical OR">
   # work with pure Bool's
@@ -21,6 +21,8 @@ plan 28;
   ok( ?(0    ?| 72   == True),  '?| works');
   ok( ?(42   ?| 42   == True),  '?| works');
   ok( ?(42   ?| 41   == True),  '?| works');
+  
+  isa_ok (42 ?| 41), Bool, '?| yields a Bool';
 }
 
 { # L<S03/Changes to Perl 5 operators/ "?& is a logical AND">
@@ -36,6 +38,8 @@ plan 28;
   ok( ?(3  ?& 12     == True),  '?& works');
   ok( ?(3  ?& 13     == True),  '?& works');
   ok( ?(13 ?& 3      == True),  '?& works');
+  
+  isa_ok (42 ?& 41), Bool, '?& yields a Bool';
 }
 
 { ## L<S03/Changes to Perl 5 operators/ "?^ is a logical XOR">
@@ -50,4 +54,6 @@ plan 28;
   ok( ?(-1   ?^Mu    == True),  '?^ works');
   ok( ?(42   ?^ 42   == False), '?^ works');
   ok( ?(42   ?^ 41   == False),  '?^ works');
+  
+  isa_ok (42 ?^ 41), Bool, '?^ yields a Bool';
 }
