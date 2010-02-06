@@ -8,7 +8,7 @@ plan *;
 # L<S09/Hashes>
 
 my %hash1;
-isa_ok(%hash1, Hash);
+ok(%hash1.does(Hash), '%hash1 does Hash');
 %hash1{"one"} = 5;
 is(%hash1{"one"}, 5, 'lvalue hash assignment works (w/ double quoted keys)');
 
