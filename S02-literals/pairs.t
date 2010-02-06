@@ -29,7 +29,7 @@ sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
 {
     is f1(a     => 42, 23), 'Int()Int()', "'a => 42' is a named";
     is f1(:a(42),  23),     'Int()Int()', "':a(42)' is a named";
-    #?rakudo 2 todo ':a and :!a should be Bool'
+
     is f1(:a,      23),     'Bool()Int()',  "':a' is a named";
     is f1(:!a,     23),     'Bool()Int()',  "':!a' is also named";
 
@@ -48,11 +48,11 @@ sub f2 (:$a!) { WHAT($a) }
 
     isa_ok f2(a     => 42), Int, "'a => 42' is a named";
     isa_ok f2(:a(42)),      Int, "':a(42)' is a named";
-    isa_ok f2(:a),          Int, "':a' is a named";
+    isa_ok f2(:a),          Bool,"':a' is a named";
 
-    isa_ok(&f2.(:a),        Int,  "in '&f2.(:a)', ':a' is a named");
-    isa_ok $f2(:a),         Int,  "in '\$f2(:a)', ':a' is a named";
-    isa_ok $f2.(:a),        Int,  "in '\$f2.(:a)', ':a' is a named";
+    isa_ok(&f2.(:a),        Bool, "in '&f2.(:a)', ':a' is a named");
+    isa_ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
+    isa_ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
 
     dies_ok { f2("a"   => 42) }, "'\"a\" => 42' is a pair";
     dies_ok { f2(("a") => 42) }, "'(\"a\") => 42' is a pair";
@@ -93,7 +93,7 @@ sub f5 ($a) { WHAT($a) }
 
     isa_ok f5(@array_of_pairs), Array,
         'an array of pairs is not treated magically...';
-    #?rakudo skip 'reduce meta op'
+    #?rakudo skip 'prefix:<|>'
     isa_ok f5(|@array_of_pairs), Array, '...and |@array isn\'t either';
 }
 
@@ -102,10 +102,11 @@ sub f6 ($a) { WHAT($a) }
 
     my %hash_of_pairs = (a => "str");
 
-    isa_ok f6(%hash_of_pairs),  Hash, 'a hash is not treated magically...';
+    ok (f6(%hash_of_pairs)).does(Hash), 'a hash is not treated magically...';
     #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
     isa_ok f6([,] %hash_of_pairs), Str,  '...but [,] %hash is';
+    #?rakudo skip 'prefix:<|>'
     isa_ok f6(|%hash_of_pairs),     Str,  '... and so is |%hash';
 }
 
