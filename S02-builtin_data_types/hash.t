@@ -21,26 +21,26 @@ is(%hash1<three>, 3, 'lvalue hash assignment works (w/ unquoted style <key>)');
 # basic hash creation w/ comma separated key/values
 
 my %hash2 = ("one", 1);
-isa_ok(%hash2, Hash);
+ok(%hash2.does(Hash), '%hash2 does Hash');
 is(%hash2{"one"}, 1, 'comma separated key/value hash creation works');
 is(%hash2<one>, 1, 'unquoted <key> fetching works');
 
 my %hash3 = ("one", 1, "two", 2);
-isa_ok(%hash3, Hash);
+ok(%hash3.does(Hash), '%hash3 does Hash');
 is(%hash3{"one"}, 1, 'comma separated key/value hash creation works with more than one pair');
 is(%hash3{"two"}, 2, 'comma separated key/value hash creation works with more than one pair');
 
 # basic hash creation w/ => separated key/values (pairs?)
 
 my %hash4;
-isa_ok(%hash4, Hash);
+ok(%hash4.does(Hash), '%hash4 does Hash');
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
 # hash slicing
 
 my %hash5 = ("one", 1, "two", 2, "three", 3);
-isa_ok(%hash5, Hash);
+ok(%hash5.does(Hash), '%hash5 does Hash');
 
 my @slice1 = %hash5{"one", "three"};
 is(+@slice1, 2, 'got the right amount of values from the %hash{} slice');
@@ -75,7 +75,7 @@ is(%hash5<foo>[1], 1, 'value assigned successfully with arrayref in list context
 # keys
 
 my %hash6 = ("one", 1, "two", 2, "three", 3);
-isa_ok(%hash6, Hash);
+ok(%hash6.does(Hash), '%hash6 does Hash');
 
 my @keys1 = sort keys %hash6;
 is(+@keys1, 3, 'got the right number of keys');
@@ -92,7 +92,7 @@ is(@keys2[2], 'two', 'got the right key');
 # values
 
 my %hash7 = ("one", 1, "two", 2, "three", 3);
-isa_ok(%hash7, Hash);
+ok(%hash7.does(Hash), '%hash7 does Hash');
 
 my @values1 = sort values %hash7;
 is(+@values1, 3, 'got the right number of values');
@@ -109,7 +109,7 @@ is(@values1[2], 3, 'got the right values');
 # misc stuff ...
 
 my %hash8;
-isa_ok(%hash8, Hash);
+ok(%hash8.does(Hash), '%hash8 does Hash');
 %hash8 = (:one, :key<value>, :three(3));
 is(%hash8{'one'}, 1, 'colonpair :one');
 is(%hash8{'key'}, 'value', 'colonpair :key<value>');
@@ -121,7 +121,7 @@ my $key;
 my $val;
 
 my %hash9;
-isa_ok(%hash9, Hash);
+ok(%hash9.does(Hash), '%hash9 does Hash');
 %hash9{1} = 2;
 
 for (%hash9.kv) -> $k,$v {
