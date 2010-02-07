@@ -14,7 +14,7 @@ my $self = 't/spec/S16-unfiled/slurp.t';
 {
   my $contents = slurp $self;
  #ok index($contents, "StringThatsNowhereElse") != -1, "slurp() worked";
-  ok $contents ~~ m/'StringThatsNowhereElse'/, "slurp() worked";
+  ok $contents ~~ /'StringThatsNowhereElse'/, "slurp() worked";
 }
 
 {
