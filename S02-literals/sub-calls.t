@@ -24,13 +24,11 @@ plan 20;
     ok eval(q/foo;      /), 'call with no args, no parens';
     ok eval(q/foo();    /), 'call with no args, has parens';
     ok eval(q/&foo.();   /), 'call with no args, has dot and parens';
-    #?rakudo todo 'Broken in ng1'
     ok eval(q/&foo\ .(); /), 'call with no args, has long dot and parens';
 
     ok eval(q/foo 1;    /), 'call with one arg, no parens';
     ok eval(q/foo(1);   /), 'call with one arg, has parens';
     ok eval(q/&foo.(1);  /), 'call with one arg, has dot and parens';
-    #?rakudo 2 todo 'Broken in ng1'
     ok eval(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
     #?pugs todo 'unspecced'
     ok eval(q/foo'bar'; /), 'call with one arg, has no space and no parens';
@@ -38,13 +36,11 @@ plan 20;
     ok eval(q/foo 1, 2; /), 'call with two args, no parens';
     ok eval(q/foo(1, 2);/), 'call with two args, has parens';
 
-    #?rakudo todo 'Broken in ng1'
     ok eval(q/foo:bar;  /), 'call with adverb after no space';
     ok eval(q/foo :bar; /), 'call with adverb after space';
 
     ok eval(q/foo(:bar);  /), 'call with adverb in parens';
     ok eval(q/&foo.(:bar); /), 'call with adverb in dotted-parens';
-    #?rakudo todo 'Broken in ng1'
     ok eval(q/&foo\.(:bar);/), 'call with adverb in long-dotted parens';
 }
 
