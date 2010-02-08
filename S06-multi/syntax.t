@@ -51,15 +51,14 @@ eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error'
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
 ok(&foo ~~ Multi, 'a multi does Multi');
-#?rakudo todo 'RT 65672'
 ok(&foo ~~ Callable, 'a multi does Callable');
-is(~&foo, 'foo',  'a multi stringifies sensibly');
+is(~&foo, '&foo',  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
 {
     multi sub max($a, $b, $c) {return 9}
 
-    eval_lives_ok 'max(1, 2, 3)', 'use multi method to override builtin lives';
+    lives_ok { max(1, 2, 3) }, 'use multi method to override builtin lives';
     is eval('max(1, 2, 3)'), 9, 'use multi method to override builtin';
 }
 
