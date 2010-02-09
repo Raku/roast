@@ -52,7 +52,7 @@ eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error'
 
 ok(&foo ~~ Multi, 'a multi does Multi');
 ok(&foo ~~ Callable, 'a multi does Callable');
-is(~&foo, '&foo',  'a multi stringifies sensibly');
+ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
 {
