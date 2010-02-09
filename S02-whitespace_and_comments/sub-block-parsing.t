@@ -12,7 +12,7 @@ use Test;
 #   module{...}
 #   class{...}
 
-plan *;
+plan 4;
 
 #?rakudo skip 'confused near "(sub { 42 "'
 ok(sub { 42 }(), 'sub {...} works'); # TODO: clarify

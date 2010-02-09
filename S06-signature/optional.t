@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan *;
+plan 14;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 20;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 

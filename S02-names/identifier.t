@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 18;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 

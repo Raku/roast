@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 21;
 
 # L<S02/Names and Variables/so that Perl can evaluate the result
 # back to the same object>

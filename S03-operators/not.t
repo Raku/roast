@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 14;
 
 sub not_ok($cond,$desc) {
     if $cond {

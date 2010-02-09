@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 10;
 
 #L<S03/Smart matching/Any Pair test object attribute>
 #?rakudo skip 'Any ~~ Pair'
