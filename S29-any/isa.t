@@ -18,13 +18,13 @@ L<S29/Any/=item isa/>
 
 =end kwid 
 
-plan 15;
+plan 14;
 
 { # invocant notation  
     my @arr = <1 2 3 4>;
     
     ok(@arr.isa(Array), '... @arr is-a Array (invocant notation)');
-    ok(@arr.isa(List), '... @arr is-also-a List (invocant notation)');
+    ok(@arr.isa(Seq), '... @arr is-also-a Seq (invocant notation)');
     
     # check a failing case
     ok(!@arr.isa(Hash), '... @arr is-not-a Hash (invocant notation)');
@@ -33,9 +33,8 @@ plan 15;
 
 { # invocant notation   
     my $arr_ref = <1 2 3 4>;
-    
-    ok($arr_ref.isa(Array), '... $arr is-a Array (invocant notation)');
-    ok($arr_ref.isa(List), '... $arr is-also-a List (invocant notation)');
+
+    ok($arr_ref.isa(Seq),   '... $arr is-also-a Seq (invocant notation)');
 
     # check a failing case
     ok(!$arr_ref.isa(Hash), '... $arr is-not-a Hash (invocant notation)');      
