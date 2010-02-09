@@ -139,13 +139,10 @@ nok 5.001e0 ~~ 1^..^5,  'not 5.001e0 ~~ 1^..^5';
 # Tests which check to see if Range is properly doing numeric 
 # comparisons for numbers.
 
-#?rakudo todo "Range.min_test and Range.max_test need work"
-{
-    ok 6 ~~ 5..21,          '6 ~~ 5..21';
-    ok 21 ~~ 3..50,         '21 ~~ 3..50';
-    nok 3 ~~ 11..50,        'not 3 ~~ 11..50';
-    nok 21 ~~ 1..5,         'not 21 ~~ 1..5';
-}
+ok 6 ~~ 5..21,          '6 ~~ 5..21';
+ok 21 ~~ 3..50,         '21 ~~ 3..50';
+nok 3 ~~ 11..50,        'not 3 ~~ 11..50';
+nok 21 ~~ 1..5,         'not 21 ~~ 1..5';
 
 ok 'c' ~~ 'b'..'g',     "'c' ~~ 'b'..'g'";
 ok 'b' ~~ 'b'..'g',     "'b' ~~ 'b'..'g'";
