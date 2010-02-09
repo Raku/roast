@@ -9,7 +9,7 @@ plan *;
 
 multi foo (Int $bar)   { "Int "  ~ $bar  }
 multi foo (Str $bar)   { "Str "  ~ $bar  }
-multi foo (Num $bar)   { "Num "  ~ $bar  }
+multi foo (Rat $bar)   { "Rat "  ~ $bar  }
 multi foo (Bool $bar)  { "Bool " ~ $bar  }
 multi foo (Regex $bar) { "Regex " ~ WHAT( $bar ) } # since Rule's don't stringify
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
@@ -21,7 +21,7 @@ is(foo('test'), 'Str test', 'dispatched to the Str sub');
 is(foo(2), 'Int 2', 'dispatched to the Int sub');
 
 my $num = '4';
-is(foo(1.4), 'Num 1.4', 'dispatched to the Num sub');
+is(foo(1.4), 'Rat 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool 1', 'dispatched to the Bool sub');
 is(foo(/a/),'Regex Regex()','dispatched to the Rule sub');
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
