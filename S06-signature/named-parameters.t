@@ -186,6 +186,7 @@ ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
     ok(%rest<grass>.notdef, "grass argument was NOT slurped");
 }
 
+#?rakudo skip 'anonymously created array assignment issues'
 {
     my $ref;
     sub setref($refin) {
