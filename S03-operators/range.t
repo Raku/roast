@@ -17,11 +17,14 @@ is ~(8..11), "8 9 10 11",   "(..) works on carried numbers (3)";
 is ~("a".."c"), "a b c", "(..) works on chars (1)";
 is ~("a".."a"), "a",     "(..) works on chars (2)";
 is ~("b".."a"), "",      "(..) works on chars (3)";
+#?rakudo 2 todo "Alphabetic ranges misbehave in ng"
 is ~("Y".."AB"), "Y Z AA AB", "(..) works on carried chars (3)";
 is ~("AB".."Y"), "",     "(..) works on auto-rev carried chars (4)";
 
+#?rakudo skip "Bad things happen to this in ng"
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
+#?rakudo skip "Bad things happen to this in ng"
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 
@@ -66,17 +69,17 @@ is [^1],   [0],        "unary ^ on the boundary ^1 works";
 is [^0],   [],         "unary ^0 produces null range";
 is [^-1],  [],         "unary ^-1 produces null range";
 is [^0.1], [0],        "unary ^0.1 produces the range 0..^x where 0 < x < 1";
+#?rakudo skip "Bad things happen to this in ng"
 is [^'a'], [],         "unary ^'a' produces null range";
 
 # test that the zip operator works with ranges
-
+#?rakudo 4 skip "ng does not yet have zip operator"
 is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
 is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
 is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
 
 # two ranges
 is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
-
 
 {
     # Test with floats
@@ -134,8 +137,11 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 # test that .map and .grep work on ranges
 {
     is (0..3).map({$_ * 2}).join('|'),      '0|2|4|6', '.map works on ranges';
+    #?rakudo skip "Probles using grep with junctions"
     is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
+    #?rakudo todo '.first suffers from the bug where code blocks get the wrong $_'
     is (1..3).first({ $_ % 2 == 0}),        2,         '.first works on ranges';
+    #?rakudo skip ".reduce NYI"
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
 }
 
@@ -146,44 +152,46 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my $end = "102.B";
     lives_ok { $range = $start..$end },
              'can make range from numeric string vars';
-    is $range.from, $start, 'range starts at start';
-    is $range.from.WHAT, "Str()", 'range start is a string';
-    is $range.to,   $end, 'range ends at end';
-    is $range.to.WHAT, "Str()", 'range end is a string';
+    is $range.min, $start, 'range starts at start';
+    is $range.min.WHAT, "Str()", 'range start is a string';
+    is $range.max,   $end, 'range ends at end';
+    is $range.max.WHAT, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
-    is $range.list, ("100.B","101.B","102.B"), 'range is correct';
+    is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
-
+ 
 # RT #67882
+#?rakudo skip "Causes parsing failure in ng"
 {
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
              'can make range from match vars';
-    is $range.from, 1, 'range starts at one';
-    is $range.to,   3, 'range ends at three';
-    #?rakudo 2 skip 'range from match vars'
+    is $range.min, 1, 'range starts at one';
+    is $range.max,   3, 'range ends at three';
     lives_ok { "$range" }, 'can stringify range';
-    is $range.list, (1,2,3), 'range is correct';
+    is ~$range, "1 2 3", 'range is correct';
 }
+#?rakudo skip "Causes parsing failure in ng"
 {
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = +$0..+$1 },
              'can make range from match vars with numeric context forced';
-    is $range.from, 1, 'range starts at one';
-    is $range.to,   3, 'range ends at three';
+    is $range.min, 1, 'range starts at one';
+    is $range.max,   3, 'range ends at three';
     lives_ok { "$range" }, 'can stringify range';
-    is $range.list, (1,2,3), 'range is correct';
+    is ~$range, "1 2 3", 'range is correct';
 }
+#?rakudo skip "Causes parsing failure in ng"
 {
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = ~$0..~$1 },
              'can make range from match vars with string context forced';
-    is $range.from, 1, 'range starts at one';
-    is $range.from.WHAT, "Str()", 'range start is a string';
-    is $range.to,   3, 'range ends at three';
-    is $range.to.WHAT, "Str()", 'range end is a string';
+    is $range.min, 1, 'range starts at one';
+    is $range.min.WHAT, "Str()", 'range start is a string';
+    is $range.max,   3, 'range ends at three';
+    is $range.max.WHAT, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
-    is $range.list, <1 2 3>, 'range is correct';
+    is ~$range, "1 2 3", 'range is correct';
 }
 
 # L<S03/Nonchaining binary precedence/it is illegal to use a Range or a
@@ -195,4 +203,4 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     ok !defined(try { 0 .. (0, 1, 2) }), '0 .. List is illegal';
 }
 
-# vim: ft=perl6
+# # vim: ft=perl6
