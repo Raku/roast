@@ -141,7 +141,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
     #?rakudo todo '.first suffers from the bug where code blocks get the wrong $_'
     is (1..3).first({ $_ % 2 == 0}),        2,         '.first works on ranges';
-    #?rakudo skip ".reduce NYI"
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
 }
 
