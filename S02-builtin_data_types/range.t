@@ -34,9 +34,11 @@ is @r, [< a b c >], 'got the right array';
 is (1..1).perl, '1..1', "stationary num .perl ..";
 is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
+#?rakudo todo "Not sure if this should work, but it definitely doesn't right now"
 is ('a'..'a'), [< a >], 'got the right array';
 
 # Decreasing Ranges - see S03-operators/range for boundry tests
+#?rakudo skip "niether ng nor I understand these tests"
 {
     # L<S03/Range and RangeIterator semantics/"Ranges are not autoreversing">
     ok (5..1)   !~~ 3, '(5..1)   is the null range';
@@ -49,6 +51,7 @@ is ('a'..'a'), [< a >], 'got the right array';
     ok ('d'^..^'a') !~~ 'c', "decreasing str range is empty";
 }
 
+#?rakudo skip "modifer for NYI"
 {
     my $x = 0;
     $x++ for (1..4).reverse;
@@ -93,13 +96,11 @@ is(+(6..8), 3, 'numification');
 {
     my $r = 1..5;
 
-    #?rakudo 2 todo 'immutable ranges'
     dies_ok { $r.shift       }, 'range is immutable (shift)';
     dies_ok { $r.pop         }, 'range is immutable (pop)';
     dies_ok { $r.push(10)    }, 'range is immutable (push)';
     dies_ok { $r.unshift(10) }, 'range is immutable (unshift)';
 
-    #?rakudo todo 'immutable ranges'
     my $s = 1..5;
     is $r, $s, 'range has not changed';
 }
@@ -112,7 +113,7 @@ is(+(6..8), 3, 'numification');
 
     is($r.min, 1, 'range.min');
     is($r.max, 5, 'range.max');
-    is($r.minmax, [1,5], 'range.minmax');
+    is($r.minmax, (1,5), 'range.minmax');
 
     #?rakudo 5 skip 'range reverse not in spec'
     ### pmichaud, 2008-07-04:  XXX  no spec for .reverse
@@ -121,7 +122,7 @@ is(+(6..8), 3, 'numification');
     ### pmichaud, 2008-07-04:  XXX  doesn't test reversed min/max/minmax
     is($r.min, 1, 'range.reverse.min');
     is($r.max, 5, 'range.reverse.max');
-    is($r.minmax, [1,5], 'range.reverse.minmax');
+    is($r.minmax, (1,5), 'range.reverse.minmax');
 }
 
 # uneven ranges
@@ -132,7 +133,7 @@ is(+(6..8), 3, 'numification');
 
     is($r.min, 1,   'range.min');
     is($r.max, 4.5, 'range.max');
-    is($r.minmax, [1, 4.5], 'range.minmax');
+    is($r.minmax, (1, 4.5), 'range.minmax');
 
     #?rakudo 2 skip '.reverse on ranges'
     is($r.reverse.from, 4.5, 'uneven range.reverse.from');
@@ -149,6 +150,7 @@ is(+(6..8), 3, 'numification');
     ok(42  ~~ $inf, 'positive integer matches -Inf..Inf');
     ok(.2  ~~ $inf, 'positive non-int matches -Inf..Inf');
     ok(-2  ~~ $inf, 'negative integer matches -Inf..Inf');
+    #?rakudo todo "ng thinks -Inf is not before -.2"
     ok(-.2 ~~ $inf, 'negative non-int matches -Inf..Inf');
 }
 
@@ -182,6 +184,7 @@ is(+(6..8), 3, 'numification');
     }
 }
 
+#?rakudo skip "Neither *-1 or slices work yet in ng"
 {
     is((1..8)[*-1], 8, 'postcircumfix:<[ ]> on range works');
     is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');
