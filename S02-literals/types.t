@@ -6,7 +6,6 @@ use Test;
 plan 7;
 
 eval_dies_ok 'class A { }; class A { }', "Can't redeclare a class";
-#?rakudo todo 'redeclaration of stubbed classes'
 eval_lives_ok 'class G { ... }; class G { }', 'can redeclare stub classes';
 eval_dies_ok 'class B is C { }', "Can't inherit from a non-existing class";
 eval_dies_ok 'class D does E { }', "Can't do a non-existing role";
@@ -22,7 +21,6 @@ eval_lives_ok 'class Task { has $.a }; Task.new(a => 3 );',
 # L<S02/Literals/If a postdeclaration is not seen, the compile fails at CHECK
 # time>
 
-#?rakudo todo 'post declaration of subroutines necessary'
 eval_dies_ok q[caffeine(eval('sub caffeine($a){~$a}'))],
         'Post declaration necessary';
 
