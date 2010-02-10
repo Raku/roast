@@ -168,7 +168,6 @@ is (5/4).Int,       1, 'Rat.Int';
 #?rakudo skip '[4/3] NYI in Rakudo-ng'
 is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
 
-#?rakudo 24 skip 'Int overflow in Rat calculations NYI in Rakudo-ng'
 is_approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";
 is_approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424/61731 - 832/61731 works";
 is_approx 424/61731 + 833/123462, 424.Num / 61731.Num + 833.Num / 123462.Num, "424/61731 + 833/123462 works";
@@ -188,7 +187,7 @@ is_approx 424/61731 + 832/61733, 424.Num / 61731.Num + 832.Num / 61733.Num, "424
 is_approx 424/61731 - 832/61733, 424.Num / 61731.Num - 832.Num / 61733.Num, "424/61731 - 832/61733 works";
 
 is_approx (424/61731) * (832/61731), (424.Num / 61731.Num) * (832.Num / 61731.Num), "424/61731 * 832/61731 works";
-is_approx (424/61731) / (61731/832), (424.Num / 61731.Num) * (61731.Num / 832.Num), "424/61731 / 61731/832 works";
+is_approx (424/61731) / (61731/832), (424.Num / 61731.Num) / (61731.Num / 832.Num), "424/61731 / 61731/832 works";
 
 is_approx 61731 * (61731/832), 61731.Num * (61731.Num / 832.Num), "61731 * 61731/832 works";
 is_approx (61731/832) * 61731, 61731.Num * (61731.Num / 832.Num), "61731/832 * 61731 works";
@@ -196,8 +195,10 @@ is_approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 6
 is_approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
 
 is_approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
+#?rakudo todo 'Getting a Num when a Rat would be better'
 isa_ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
 is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
+#?rakudo todo 'Getting a Num when a Rat would be better'
 isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
