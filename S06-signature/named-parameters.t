@@ -130,7 +130,7 @@ eval_dies_ok('mandatory()',  "not specifying a mandatory parameter fails");
 
 
 # L<S06/Named parameters/sub formalize>
-sub formalize($text, :$case, :$justify)  returns List {
+sub formalize($text, :$case, :$justify) {
    return($text,$case,$justify); 
 }
 
