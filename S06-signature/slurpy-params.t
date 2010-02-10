@@ -54,7 +54,7 @@ sub whatever {
     is(@_[0], 'a', 'implicit slurpy param flattens');
 }
 
-whatever( 'a' p5=> 'b', 'c' p5=> 'd' );
+whatever( 'a', 'b', 'c', 'd' );
 
 # use to be t/spec/S06-signature/slurpy-params-2.t
 
