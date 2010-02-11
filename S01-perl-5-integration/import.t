@@ -15,7 +15,7 @@ unless (try { eval("1", :lang<perl5>) }) {
 }
 
 eval q[
-use perl5:Text::Wrap 'wrap';
+use Text::Wrap:from<perl5> 'wrap';
 is(wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
 ] or die $!.perl;
 

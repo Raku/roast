@@ -12,12 +12,12 @@ unless (try { eval("1", :lang<perl5>) }) {
 {
     lives_ok {
         eval q|
-            use perl5:CGI;
+            use CGI:from<perl5>;
             my $q = CGI.new;
             is $q.isa(CGI), 1, "Correct isa";
         |
         or die $!;
-    }, "perl5:CLASS.new";
+    }, "CLASS:from<perl5>.new";
 }
 
 # vim: ft=perl6
