@@ -7,24 +7,24 @@ plan 19;
 # WHAT() on basic types
 
 my $a;
-isa_ok($a, Any, 'it is an Any type');
+is($a.WHAT, Mu, 'empty scalar is Mu');
 
 my @a;
-isa_ok(@a, Array, 'it is an Array type');
+ok(@a ~~ Array, 'it is an Array type');
 ok @a ~~ Positional, 'An Array does Positional';
 
 my %a;
-isa_ok(%a, Hash, 'it is an Hash type');
+ok(%a ~~ Hash, 'it is an Hash type');
 ok %a ~~ Associative, 'A Hash does Associative';
 
 # WHAT() on reference types
 
 my $b1 = [];
-isa_ok($b1, List, 'it is a List type');
+ok($b1 ~~ Array, 'it is a Array type');
 
 # this seems to be the only way to make a hash - ref at the moment
 my %b2 = ("one", 1); my $b2 = %b2;
-isa_ok($b2, Hash, 'it is a Hash type'); 
+ok($b2 ~~ Hash, 'it is a Hash type'); 
 
 # WHAT() on subroutines
 
@@ -43,7 +43,7 @@ isa_ok($s1, Sub, 'it is a Sub type');
 
 # L<S06/Anonymous hashes vs blocks>
 my $s2 = {};
-isa_ok($s2, Hash, 'it is a Hash type (bare block)');
+ok($s2 ~~ Hash, 'it is a Hash type (bare block)');
 
 # L<S06/"Placeholder variables">
 my $s2a = { $^a };
@@ -62,7 +62,7 @@ isa_ok($int, Int, 'it is an Int type');
 my $num = '';
 ok(+$num ~~ Num, 'it is an Num type');
 
-my $float = 0.5;
+my $float = 0.5e0;
 isa_ok($float, Num, 'it is an Num type');
 isa_ok(1 / 4, Rat, 'infix:</> of integers produces a Rat');
 
