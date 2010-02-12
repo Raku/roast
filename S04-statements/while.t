@@ -50,7 +50,7 @@ plan 9;
 # while ... -> $x {...}
 {
   my @array = 1..5;
-  my $str;
+  my $str = "";
   while @array.pop -> $x {
       $str ~= $x;
   }
@@ -60,7 +60,7 @@ plan 9;
 #?mildew skip 1
 {
   my @array = 0..5;
-  my $str;
+  my $str = "";
   while pop @array -> $x {
       $str ~= $x;
   }
