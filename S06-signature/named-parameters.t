@@ -215,7 +215,6 @@ ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
 
 # L<06/Parameters and arguments/"A signature containing a name collision">
 
-#?rakudo todo 'RT #68086'
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
 #?rakudo 3 todo 'sub params with the same name'
