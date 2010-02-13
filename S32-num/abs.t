@@ -16,7 +16,6 @@ for 0, 0 / 1, 0.0e0, 1, 50, 60.0e0, 99.99 {
     #?rakudo skip 'named args'
     is(abs(:x($_)), $_, "got the right absolute value for $_");
 
-    #?rakudo 2 todo 'WHAT aspect is wrong for Ints'
     ok(abs($_) ~~ $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");
     ok($_.abs ~~ $_.WHAT, 'got the right data type (' ~ $_.WHAT ~ ') of absolute value for $_='~$_);
 }
