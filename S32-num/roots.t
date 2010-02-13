@@ -97,31 +97,34 @@ sub has_approx($n, @list) {
     #?rakudo skip "Should this be == or ~~?" 
     ok(@l[0] ~~ Inf, 'roots(Inf,1) returns Inf');
 }
+
+my $pi = 312689/99532;
+
 {
     my @l = roots(1i,2);
     ok(@l.elems == 2, 'roots(1i,2) returns 2 elements');
-    ok(has_approx(exp(5i*pi/4), @l), 'exp(5i*pi/4) is a square root of i');
-    ok(has_approx(exp(1i*pi/4), @l), 'exp(1i*pi/4) is a square root of i');
+    ok(has_approx(exp(5i*$pi/4), @l), 'exp(5i*$pi/4) is a square root of i');
+    ok(has_approx(exp(1i*$pi/4), @l), 'exp(1i*$pi/4) is a square root of i');
 }
 {
     my @l = roots(1+1i,2);
     ok(@l.elems == 2, 'roots(1+1i,2) returns 2 elements');
-    ok(has_approx(exp(log(2)/4 + 1i*pi/8), @l),'exp(log(2)/4 + 1i*pi/8) is a square root of 1+1i');
-    ok(has_approx(exp(log(2)/4 + 9i*pi/8), @l),'exp(log(2)/4 + 9i*pi/8) is a square root of 1+1i');
+    ok(has_approx(exp(log(2)/4 + 1i*$pi/8), @l),'exp(log(2)/4 + 1i*$pi/8) is a square root of 1+1i');
+    ok(has_approx(exp(log(2)/4 + 9i*$pi/8), @l),'exp(log(2)/4 + 9i*$pi/8) is a square root of 1+1i');
 }
 {
     my @l = 8.roots(3);
     ok(@l.elems == 3, '8.roots(3) returns 3 elements');
     ok(has_approx(2,@l), '2 is a cube root of 8');
-    ok(has_approx(exp(1/3*(log(8) + 2i*pi)),@l), 'exp(1/3*(log(8) + 2i*pi)) is a cube root of 8');
-    ok(has_approx(exp(1/3*(log(8) + 4i*pi)),@l), 'exp(1/3*(log(8) + 4i*pi)) is a cube root of 8');
+    ok(has_approx(exp(1/3*(log(8) + 2i*$pi)),@l), 'exp(1/3*(log(8) + 2i*$pi)) is a cube root of 8');
+    ok(has_approx(exp(1/3*(log(8) + 4i*$pi)),@l), 'exp(1/3*(log(8) + 4i*$pi)) is a cube root of 8');
 }
 {
     my @l = (-8).roots(3);
     ok(@l.elems == 3, '(-8).roots(3) returns 3 elements');
     ok(has_approx(-2,@l), '2 is a cube root of -8');
-    ok(has_approx(exp(1/3*(log(8) + 3i*pi)),@l), 'exp(1/3*(log(8) + 3i*pi)) is a cube root of -8');
-    ok(has_approx(exp(1/3*(log(8) + 5i*pi)),@l), 'exp(1/3*(log(8) + 5i*pi)) is a cube root of -8');
+    ok(has_approx(exp(1/3*(log(8) + 3i*$pi)),@l), 'exp(1/3*(log(8) + 3i*$pi)) is a cube root of -8');
+    ok(has_approx(exp(1/3*(log(8) + 5i*$pi)),@l), 'exp(1/3*(log(8) + 5i*$pi)) is a cube root of -8');
 }
 
 
