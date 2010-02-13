@@ -38,7 +38,6 @@ for -1, -50, -60.0e0, -9999 / 100 {
     }
 }
 
-#?rakudo 3 skip "abs(NaN or Inf) leads to infinite recursion in Rakudo-ng"
 is( abs(NaN), NaN, 'absolute value of NaN is NaN');
 is( abs(Inf), Inf, 'absolute value of Inf is Inf');
 is( abs(-Inf), Inf, 'absolute value of -Inf is Inf');
