@@ -158,7 +158,6 @@ is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
 is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
 
 # Cast from Num uses an epsilon value.
-#?rakudo 3 skip 'Num.Rat NYI in Rakudo-ng'
 is( exp(1).Rat, Rat.new(2721, 1001), "Num to Rat with default epsilon");
 is( exp(1).Rat(1e-4), Rat.new(193, 71), "Num to Rat with epsilon 1e-4");
 is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
