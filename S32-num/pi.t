@@ -16,7 +16,7 @@ Basic tests for builtin Num::pi
 # See also: L<"http://theory.cs.iitm.ernet.in/~arvindn/pi/"> :)
 my $PI = 3.14159265358979323846264338327950288419716939937510e0;
 
-#?rakudo 6 skip 'module Num not implemented'
+#?rakudo 6 skip 'module Num not implemented (and the spec has changed)'
 is_approx(Num::pi, $PI, "Num::pi");
 
 is_approx(eval("use Num :constants; pi"), $PI, 
