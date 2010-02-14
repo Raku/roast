@@ -106,6 +106,7 @@ is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 is (Inf, NaN).min, NaN,    "max(Inf,NaN)=NaN";
 
+#?rakudo 4 skip '[op] NYI'
 is ([min] (5,10,-15,20)), -15, 'reduce min int';
 is ([max] (5,10,-15,20)), 20, 'reduce max int';
 
