@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/=item trim>
 
-plan 24;
+plan 28;
 
 =begin pod
 
@@ -28,6 +28,13 @@ Basic tests for the trim() builtin
 
 {
     is(''.trim, '', 'trimming an empty string gives an empty string');
+}
+
+{
+    is('a'.trim, 'a', 'trimming one character string, no spaces, works');
+    is(' a'.trim, 'a', 'trimming one character string preceded by space works');
+    is('a '.trim, 'a', 'trimming one character string followed by space works');
+    is(' a '.trim, 'a', 'trimming one character string surrounded by spaces works');
 }
 
 {
@@ -57,88 +64,80 @@ Basic tests for the trim() builtin
 }
 
 #
-# trim_start
+# trim-leading
 #
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "   foo  \n";
-    trim_start($foo);
-    is($foo, "   foo  \n", 'trim_start does not trim a variable in-place');
-    $foo .= trim_start;
-    is($foo, "foo  \n", 'trim_start works correctly');
+    trim-leading($foo);
+    is($foo, "   foo  \n", 'trim-leading does not trim a variable in-place');
+    $foo .= trim-leading;
+    is($foo, "foo  \n", 'trim-leading works correctly');
     $foo =  "\t   \t  \tfoo   \t\t  \t \n";
-    $foo .= trim_start;
+    $foo .= trim-leading;
     is($foo, "foo   \t\t  \t \n", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
-    is(''.trim_start, '', 'trim_start on an empty string gives an empty string');
+    is(''.trim-leading, '', 'trim-leading on an empty string gives an empty string');
 }
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = " foo bar ";
-    $foo .= trim_start;
+    $foo .= trim-leading;
     is($foo, "foo bar ", 'our variable is trimmed correctly');
-    $foo .= trim_start;
+    $foo .= trim-leading;
     is($foo, "foo bar ", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "\n foo\n ";
-    $foo .= trim_start;
-    $foo .= trim_start;
-    $foo .= trim_start;
+    $foo .= trim-leading;
+    $foo .= trim-leading;
+    $foo .= trim-leading;
     is($foo, "foo\n ", 'our variable can be trimmed multiple times');
 }
 
 #
-# trim_end
+# trim-trailing
 #
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "   foo  \n";
-    trim_end($foo);
-    is($foo, "   foo  \n", 'trim_end does not trim a variable in-place');
-    $foo .= trim_end;
-    is($foo, "   foo", 'trim_end works correctly');
+    trim-trailing($foo);
+    is($foo, "   foo  \n", 'trim-trailing does not trim a variable in-place');
+    $foo .= trim-trailing;
+    is($foo, "   foo", 'trim-trailing works correctly');
     $foo =  "\t   \t  \tfoo   \t\t  \t \n";
-    $foo .= trim_end;
+    $foo .= trim-trailing;
     is($foo, "\t   \t  \tfoo", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
-    is(''.trim_end, '', 'trim_end on an empty string gives an empty string');
+    is(''.trim-trailing, '', 'trim-trailing on an empty string gives an empty string');
 }
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = " foo bar ";
-    $foo .= trim_end;
+    $foo .= trim-trailing;
     is($foo, " foo bar", 'our variable is trimmed correctly');
-    $foo .= trim_end;
+    $foo .= trim-trailing;
     is($foo, " foo bar", 'our variable is trimmed again with no effect');
 }
 
-#?rakudo skip 'waiting for patch to be accepted'
 #?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "\n foo\n ";
-    $foo .= trim_end;
-    $foo .= trim_end;
-    $foo .= trim_end;
+    $foo .= trim-trailing;
+    $foo .= trim-trailing;
+    $foo .= trim-trailing;
     is($foo, "\n foo", 'our variable can be trimmed multiple times');
 }
 
