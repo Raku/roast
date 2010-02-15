@@ -27,6 +27,7 @@ Not (yet?) in the spec, but implemented by (nearly?) all implementations.
 }
 
 # With a userspecified criterion
+#?rakudo skip "Not spec'd, and this seems unlikely to be how it will be spec'd"
 {
   my @array = <a b A c b d>;
   # Semantics w/o junctions
@@ -40,6 +41,7 @@ Not (yet?) in the spec, but implemented by (nearly?) all implementations.
 # Error cases
 {
   #?pugs todo 'bug'
+  #?rakudo todo "Not spec'd, and why shouldn't it work anyway?"
   dies_ok { 42.uniq }, ".uniq should not work on scalars";
   is (42,).uniq, 42,   ".uniq should work on one-elem arrays";
 }
