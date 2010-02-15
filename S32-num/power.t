@@ -27,11 +27,11 @@ is(0 ** NaN, NaN, "0**NaN=NaN");
 
 # Not at all sure the next three cases are correct!
 
-#?rakudo todo 'NaN**1i should be NaN'
+#?rakudo skip 'NaN**1i should be NaN'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
-#?rakudo todo '1i**NaN should be NaN'
+#?rakudo skip '1i**NaN should be NaN'
 is(1i ** NaN, NaN, "1i**NaN=NaN");
-#?rakudo todo 'NaN**0 should be NaN'
+#?rakudo skip 'NaN**0 should be NaN'
 is(NaN ** 0, NaN, "NaN**0=NaN");
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
@@ -60,8 +60,7 @@ for (8i).roots(4) -> $z
 
 # Real ** Complex
 {
-    my $PI = 3.14159265358979323846264338327950288419716939937510;
-    is_approx(exp(1) ** ($PI * 1i), -1, "e ** pi i = -1");
+    is_approx(exp(1) ** (pi * 1i), -1, "e ** pi i = -1");
 }
 
 # Complex ** Complex
