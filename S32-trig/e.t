@@ -12,7 +12,6 @@ Basic tests for trigonometric functions.
 my $e = e;
 
 is(e      , $e,    "e, as a value");
-#?rakudo todo 'e() still parses as sub'
 eval_dies_ok('e()', "e(), dies as a sub");
 is(1 + e,   $e+1, "1+e, as a value");
 #?rakudo skip 'parse error, space after the e'
