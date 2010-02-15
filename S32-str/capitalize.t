@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 16;
 
 # L<S32::Str/Str/capitalize>
 
@@ -36,5 +36,16 @@ is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize
 is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
     "capitalize on string with grapheme without precomposed";
+    
+# rest of the tests are moved from uc.t
+is ~(0.capitalize), ~0, '.capitalize on Int';
+
+{
+    role A {
+        has $.thing = 3;
+    }
+    my $str = "('Nothing much' but A).capitalize eq 'Nothing much'capitalize";
+    ok eval($str), $str;
+}
 
 # vim: ft=perl6

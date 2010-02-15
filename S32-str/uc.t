@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 20;
 
 # L<S32::Str/"Str"/=item uc>
 
@@ -52,13 +52,12 @@ is ~(0.uc),         ~0, '.uc on Int';
 is ~(0.ucfirst),    ~0, '.ucfirst on Int';
 is ~(0.lc),         ~0, '.lc on Int';
 is ~(0.lcfirst),    ~0, '.lcfirst on Int';
-is ~(0.capitalize), ~0, '.lcfirst on Int';
 
 {
     role A {
         has $.thing = 3;
     }
-    for <uc lc ucfirst lcfirst capitalize> -> $meth {
+    for <uc lc ucfirst lcfirst> -> $meth {
         my $str = "('Nothing much' but A).$meth eq 'Nothing much'.$meth";
         ok eval($str), $str;
     }
