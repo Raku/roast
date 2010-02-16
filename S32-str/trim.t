@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/=item trim>
 
-plan 28;
+plan 34;
 
 =begin pod
 
@@ -82,6 +82,9 @@ Basic tests for the trim() builtin
 #?pugs todo 'waiting for patch to be accepted'
 {
     is(''.trim-leading, '', 'trim-leading on an empty string gives an empty string');
+    is(' '.trim-leading, '', 'trim-leading on an one-space string gives an empty string');
+    is("\n".trim-leading, '', 'trim-leading on newline string gives an empty string');
+    is('  '.trim-leading, '', 'trim-leading on a two-space string gives an empty string');
 }
 
 #?pugs todo 'waiting for patch to be accepted'
@@ -121,6 +124,9 @@ Basic tests for the trim() builtin
 #?pugs todo 'waiting for patch to be accepted'
 {
     is(''.trim-trailing, '', 'trim-trailing on an empty string gives an empty string');
+    is(' '.trim-trailing, '', 'trim-trailing on an one-space string gives an empty string');
+    is("\n".trim-trailing, '', 'trim-trailing on newline string gives an empty string');
+    is('  '.trim-trailing, '', 'trim-trailing on a two-space string gives an empty string');
 }
 
 #?pugs todo 'waiting for patch to be accepted'
