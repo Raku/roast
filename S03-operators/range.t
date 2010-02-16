@@ -137,7 +137,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 # test that .map and .grep work on ranges
 {
     is (0..3).map({$_ * 2}).join('|'),      '0|2|4|6', '.map works on ranges';
-    #?rakudo skip "Probles using grep with junctions"
     is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
     is (1..3).first({ $_ % 2 == 0}),        2,         '.first works on ranges';
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
