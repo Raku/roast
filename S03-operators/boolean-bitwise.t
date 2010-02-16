@@ -50,6 +50,7 @@ plan 31;
   ok( ?(True ?^True  == False), '?^ works with Bools');
 
   ok( ?(''   ?^''    == False), '?^ works');
+  #?rakudo 2 skip 'Mu as argument to bitwise operators'
   ok( ?(Mu   ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^Mu    == True),  '?^ works');
   ok( ?(42   ?^ 42   == False), '?^ works');
