@@ -27,7 +27,6 @@ plan 18;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo3 ($a, :$named) { "$a!$named" }
-    #?rakudo skip 'capture with named args'
     is foo3(|$capture), "1!arg",
         'simply capture creation with \\( works (3)';
 }
@@ -37,6 +36,7 @@ plan 18;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo4 ($a, $pair) { "$a!$pair" }
+    #?rakudo skip 'should this pair not become positional?'
     is foo4(|$capture), "1!positional\tpair",
         'simply capture creation with \\( works (4)';
 }
@@ -47,7 +47,6 @@ plan 18;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo5 (@arr) { ~@arr }
-    #?rakudo skip 'arrays in captures are interpolated too eagerly'
     is foo5(|$capture), "a b c",
         'capture creation with \\( works';
 }
@@ -96,13 +95,11 @@ plan 18;
     my $capture2 = \(1,2,3);
     try { foo8 $capture2 };  # note: no |$args here
 
-    #?rakudo todo 'regressed in signature refactor'
     ok $capture1 === $capture2,
         "unflattened captures can be passed to subs";
 }
 
 # Mixing ordinary args with captures
-#?rakudo skip 'Mixing ordinary args with captures'
 {
     my $capture = \(:foo<bar>, :baz<grtz>);
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
