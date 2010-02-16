@@ -30,6 +30,7 @@ my @array = ('foo', 'bar', 'baz');
 is(foo(@array), 'Positional foo, bar, baz', 'dispatched to the Positional sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
+#?rakudo skip 'sort NYI'
 is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub');
 
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
@@ -59,6 +60,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi sub sigil-t (%h)    { 'Associative'   }
     is sigil-t(1),          'Any',      'Sigil-based dispatch (Any)';
     is sigil-t({ $_ }),     'Callable', 'Sigil-based dispatch (Callable)';
+    #?rakudo skip '<a b c> in parameter list flattens :-('
     is sigil-t(<a b c>),    'Positional','Sigil-based dispatch (Arrays)';
     is sigil-t(%h),         'Associative','Sigil-based dispatch (Associative)';
 
@@ -126,7 +128,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 # multi dispatch on typed containers
-
+#?rakudo skip 'typed array and hash containers are NYI'
 {
     multi f4 (Int @a )  { 'Array of Int' }
     multi f4 (Str @a )  { 'Array of Str' }

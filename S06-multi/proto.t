@@ -41,6 +41,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 }
 
 # more similar tests
+#?rakudo skip 'no custom operators yet'
 {
     proto prefix:<moose> ($arg) { $arg + 1 }
     is (moose 3), 4, "proto definition of prefix:<moose> works";
@@ -60,7 +61,6 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
         multi sub rt65322( Int $n where 1 ) { 1 }
               sub rt65322( Int $n ) { 2 }
     ];
-    #?rakudo todo 'RT #65322'
     eval_dies_ok $rt65322, "Can't define sub and multi sub without proto";
 }
 
