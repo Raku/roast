@@ -55,6 +55,7 @@ is( @l, [], "A bare return is an empty list in array/list context");
 my $s = "hello";
 $s = bare_return();
 
+#?rakudo todo 'A bare return is undefined in scalar context'
 ok($s.notdef, "A bare return is undefined in scalar context");
 
 ## scalars
@@ -144,7 +145,7 @@ sub foo_array_ref {
    return $foo;
 }
 my $foo_array_ref_return = foo_array_ref();
-isa_ok($foo_array_ref_return, List);
+isa_ok($foo_array_ref_return, Array);
 is(+$foo_array_ref_return, 3, 'got the right number of return value');
 is($foo_array_ref_return[0], 'foo', 'got the right return value');
 is($foo_array_ref_return[1], 'bar', 'got the right return value');
@@ -157,7 +158,7 @@ sub foo_array_ref2 {
    $foo;
 }
 my $foo_array_ref_return2 = foo_array_ref2();
-isa_ok($foo_array_ref_return2, List);
+isa_ok($foo_array_ref_return2, Array);
 is(+$foo_array_ref_return2, 3, 'got the right number of return value');
 is($foo_array_ref_return2[0], 'foo', 'got the right return value');
 is($foo_array_ref_return2[1], 'bar', 'got the right return value');
@@ -169,7 +170,7 @@ sub foo_array_ref3 {
    return ['foo', 'bar', 'baz'];
 }
 my $foo_array_ref_return3 = foo_array_ref3();
-isa_ok($foo_array_ref_return3, List);
+isa_ok($foo_array_ref_return3, Array);
 is(+$foo_array_ref_return3, 3, 'got the right number of return value');
 is($foo_array_ref_return3[0], 'foo', 'got the right return value');
 is($foo_array_ref_return3[1], 'bar', 'got the right return value');
@@ -181,7 +182,7 @@ sub foo_array_ref4 {
    ['foo', 'bar', 'baz'];
 }
 my $foo_array_ref_return4 = foo_array_ref4();
-isa_ok($foo_array_ref_return4, List);
+isa_ok($foo_array_ref_return4, Array);
 is(+$foo_array_ref_return4, 3, 'got the right number of return value');
 is($foo_array_ref_return4[0], 'foo', 'got the right return value');
 is($foo_array_ref_return4[1], 'bar', 'got the right return value');
@@ -195,13 +196,15 @@ sub foo_hash {
 }
 
 my %foo_hash_return = foo_hash();
-isa_ok(%foo_hash_return, Hash);
+ok(%foo_hash_return ~~ Hash);
+#?rakudo skip 'numification of return value from Hash.keys'
 is(+%foo_hash_return.keys, 3, 'got the right number of return value');
 is(%foo_hash_return<foo>, 1, 'got the right return value');
 is(%foo_hash_return<bar>, 2, 'got the right return value');
 is(%foo_hash_return<baz>, 3, 'got the right return value');
 
 my $keys;
+#?rakudo 2 todo 'numification of return value from Hash.keys'
 lives_ok({ $keys = +(foo_hash().keys) },
     "can call method on return value (hashref)");
 is($keys, 3, "got right result");
@@ -211,17 +214,19 @@ lives_ok({ foo_hash()<foo> },
 # now hash refs
 
 sub foo_hash_ref {
-    my %foo = ( 'foo', 1, 'bar', 2, 'baz', 3 );
-    return \%foo;
+    my $foo = { 'foo' => 1, 'bar' => 2, 'baz' => 3 };
+    return $foo;
 }
 
 my $foo_hash_ref_return = foo_hash_ref();
-isa_ok($foo_hash_ref_return, Hash);
+ok($foo_hash_ref_return ~~ Hash);
+#?rakudo skip 'numification of return value from Hash.keys'
 is(+$foo_hash_ref_return.keys, 3, 'got the right number of return value');
 is($foo_hash_ref_return<foo>, 1, 'got the right return value');
 is($foo_hash_ref_return<bar>, 2, 'got the right return value');
 is($foo_hash_ref_return<baz>, 3, 'got the right return value');
 
+#?rakudo 2 todo 'numification of return value from Hash.keys'
 lives_ok({ $keys = +(foo_hash_ref().keys) },
     "can call method on return value (hashref)");
 is($keys, 3, "got right result");
@@ -308,14 +313,12 @@ is Foo::official(), 44,
 
 {
     sub rt61732_d { 1;; }
-    #?rakudo skip 'RT #61732'
     is rt61732_d(), 1, 'get right value from sub with double ;';
 }
 
 # RT #63912
 {
     sub rt63912 { return 1, 2; }
-    #?rakudo todo 'return wants just one argument?'
     lives_ok { rt63912() }, 'can call sub that returns two things (no parens)';
 }
 
