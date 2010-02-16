@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 82;
+plan 74;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -36,19 +36,6 @@ is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
 #?rakudo todo "Not sure if this should work, but it definitely doesn't right now"
 is ('a'..'a'), [< a >], 'got the right array';
-
-# Decreasing Ranges - see S03-operators/range for boundry tests
-{
-    # L<S03/Range and RangeIterator semantics/"Ranges are not autoreversing">
-    ok (5..1)   !~~ 3, '(5..1)   is the null range';
-    ok (5^..1)  !~~ 3, '(5^..1)  is the null range';
-    ok (5..^1)  !~~ 3, '(5..^1)  is the null range';
-    ok (5^..^1) !~~ 3, '(5^..^1) is the null range';
-    ok ('d'..'a')   !~~ 'c', "decreasing str range is empty";
-    ok ('d'^..'a')  !~~ 'c', "decreasing str range is empty";
-    ok ('d'..^'a')  !~~ 'c', "decreasing str range is empty";
-    ok ('d'^..^'a') !~~ 'c', "decreasing str range is empty";
-}
 
 #?rakudo skip "modifer for NYI"
 {
