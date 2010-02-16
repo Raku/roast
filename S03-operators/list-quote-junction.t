@@ -51,7 +51,6 @@ for @nonmatching_strings -> $str {
   ok( $str !~~ any(<foo bar baz>), "'$str' does not match any(<foo bar baz>)" );
 };
 
-#?rakudo todo 'any<a b c> should be parsed as postcircumfix'
 eval_dies_ok 'any<a b c>', 'any<a b c> is illegal';
 
 # vim: ft=perl6
