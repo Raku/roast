@@ -52,7 +52,6 @@ plan 18;
 }
 
 # L<S06/Argument list binding/single scalar parameter marked>
-#?rakudo skip 'receiving raw captures'
 {
     sub bar6 ($a, $b, $c) { "$a!$b!$c" }
     sub foo6 (|$capture)  { bar6(|$capture) }
@@ -72,7 +71,6 @@ plan 18;
 }
 
 # Arglists are first-class objects
-#?rakudo skip 'parse error: Malformed routine definition'
 {
     my $capture;
     sub foo7 (|$args) { $capture = $args }
