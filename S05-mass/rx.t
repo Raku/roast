@@ -33,9 +33,11 @@ ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 # L<S05/Backtracking control/"Backtracking over a double colon">
 
 #### [ if :: not | ify ]	verify		n	inside a group
+#?rakudo skip ':: NYI'
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
 ####   if :: not | ify	verify		n	the default all group
+#?rakudo skip ':: NYI'
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
 #### [ if :  not | ify ]	verify		y	simple backtrack still works
@@ -44,6 +46,7 @@ ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 
 #### [ if :: not | ify ] | verify	verify	y	rule continues
 #?pugs todo 'feature'
+#?rakudo skip ':: NYI'
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
 # L<S05/Backtracking control/"Backtracking over a triple colon">
@@ -51,20 +54,25 @@ ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
+#?rakudo skip '::: NYI'
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
 #?pugs todo 'feature'
+#?rakudo skip ':: NYI'
 ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
+#?rakudo skip ':: NYI'
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
 #?pugs todo 'feature'
+#?rakudo skip ':: NYI'
 ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
+#?rakudo skip '::: NYI'
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
@@ -826,30 +834,38 @@ ok eval(q{{ '|' ~~ /|/ }}) ~~ Failure S& /rule error/, 'alternation (|) - litera
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?pugs todo 'feature'
+#?rakudo skip '& NYI'
 ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..d]> & <[d..e]>	c		n	conjunction (&)
+#?rakudo skip '& NYI'
 ok 'c' !~~ /<[a..d]> & <[d..e]>/, 'conjunction (&)';
 
 #### <[a..b]> & <[b..e]>	c		n	conjunction (&)
+#?rakudo skip '& NYI'
 ok 'c' !~~ /<[a..b]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..b]> & <[d..e]>	c		n	conjunction (&)
+#?rakudo skip '& NYI'
 ok 'c' !~~ /<[a..b]> & <[d..e]>/, 'conjunction (&)';
 
 #### <[a..d]>+ & <[b..e]>+	bcd		y	conjunction (&)
+#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..d]>+ & <[b..e]>+/, 'conjunction (&)';
 
 #### ^ [ <[a..d]>+ & <[b..e]>+ ] $	bcd		y	conjunction (&)
+#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /^ [ <[a..d]>+ & <[b..e]>+ ] $/, 'conjunction (&)';
 
 #### <[a..c]>+ & <[b..e]>+	bcd		y	conjunction (&)
+#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
 
 #### <[a..d]>+ & <[c..e]>+	bcd		y	conjunction (&)
+#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
@@ -1564,6 +1580,7 @@ ok 'foo-bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s*';
 ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
+#?rakudo skip ':s()'
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
@@ -1576,12 +1593,15 @@ ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier 
 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
 #?pugs todo 'feature'
+#?rakudo skip ':: NYI'
 ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
+#?rakudo skip ':: NYI'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 0: <dog @ 0>/), 'sigspace and capture together';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 1: <spot @ 7>/	sigspace and capture together
+#?rakudo skip ':: NYI'
 ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 7>/), 'sigspace and capture together';
 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
@@ -1591,28 +1611,34 @@ ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
 #### :x(6) \d			123456		y	repetition (:x)
 #?pugs todo 'feature'
+#?rakudo skip ':x NYI'
 ok '123456' ~~ /:x(6) \d/, 'repetition (:x)';
 
 #### :x(3) \d			123456		y	repetition (:x)
 #?pugs todo 'feature'
+#?rakudo skip ':x NYI'
 ok '123456' ~~ /:x(3) \d/, 'repetition (:x)';
 
 #### :x(0) \d			123456		y	repetition (:x)
 #?pugs todo 'feature'
+#?rakudo skip ':x NYI'
 ok '123456' ~~ /:x(0) \d/, 'repetition (:x)';
 
 #### :nth(3) a \d			a1a2a3		y	nth occurrence (:nth)
 #?pugs todo 'feature'
+#?rakudo skip ':nth NYI'
 ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurrence (:nth)';
 
 # todo :pge<feature>
 #### :nth(4) a \d			a1a2a3		n	nth occurrence (:nth)
 #?rakudo todo 'unknown'
+#?rakudo skip ':nth NYI'
 ok 'a1a2a3' !~~ /:nth(4) a \d/, 'nth occurrence (:nth)';
 
 # todo :pge<feature>
 #### :nth(0) a \d			a1a2a3		n	nth occurrence (:nth)
 #?rakudo todo 'unknown'
+#?rakudo skip ':nth NYI'
 ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurrence (:nth)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
