@@ -53,6 +53,7 @@ ok !($undef ^ 0), 'undef^0 in boolean context';
     (0 ^ $undef && flunk '0^undef in boolean context') || pass '0^undef in boolean context';
 }
 
+#?DOES 1
 #?rakudo skip 'Mu and =='
 ok ?(0|$undef == 0), '0|undef == 0 in boolean context';
 
