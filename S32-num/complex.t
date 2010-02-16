@@ -81,7 +81,6 @@ for @examples -> $z {
 }
 
 # used to be RT #68848
-#?rakudo skip "NYI in Rakudo-ng"
 {
     is_approx exp(3.0 * log(1i)), -1.83697e-16-1i,
               'exp(3.0 * log(1i))';

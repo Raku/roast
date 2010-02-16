@@ -134,7 +134,6 @@ sub formalize($text, :$case, :$justify) {
    return($text,$case,$justify); 
 }
 
-#?rakudo skip 'parsefail'
 {
 my ($text,$case,$justify)  = formalize('title', case=>'upper');
 is($text,'title', "text param was positional");
@@ -142,7 +141,6 @@ ok($justify.notdef, "justification param was not given");
 is($case, 'upper', "case param was named, and in justification param's position");
 }
 
-#?rakudo skip 'parsefail'
 {
 my ($text,$case,$justify)   = formalize('title', justify=>'left');
 is($text,'title', "text param was positional");
@@ -150,7 +148,6 @@ is($justify, 'left', "justify param was named");
 ok($case.notdef, "case was not given at all");
 }
 
-#?rakudo skip 'parsefail'
 {
 my  ($text,$case,$justify) = formalize("title", :justify<right>, :case<title>);
 
@@ -175,7 +172,6 @@ is(+%fellowship, 2, "exactly 2 arguments were slurped");
 ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
 }
 
-#?rakudo skip 'parsefail on lvalue'
 {
     sub named_and_slurp(:$grass, *%rest) { return($grass, %rest) }
     my ($grass, %rest) = named_and_slurp(sky => 'blue', grass => 'green', fire => 'red');
@@ -186,7 +182,6 @@ ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
     ok(%rest<grass>.notdef, "grass argument was NOT slurped");
 }
 
-#?rakudo skip 'anonymously created array assignment issues'
 {
     my $ref;
     sub setref($refin) {

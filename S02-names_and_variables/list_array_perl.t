@@ -17,15 +17,12 @@ my @tests = (
     # Infinite arrays, commented because they take infram and inftime in
     # current Pugs
     #?pugs emit #
-    #?rakudo emit # Inf takes infram and inftime
     #[ 3..Inf ],
 
     #?pugs emit #
-    #?rakudo emit # Inf takes infram and inftime
     #[ -Inf..Inf ],
 
     #?pugs emit #
-    #?rakudo emit # Inf takes infram and inftime
     #[ 3..42, 17..Inf, -Inf..5 ],
 
     # Nested arrays
@@ -105,7 +102,6 @@ my @tests = (
 
 # RT #65988
 {
-    #?rakudo emit # ng can't parse references yet
     my $rt65988 = (\(1,2), \(3,4));
     #?rakudo skip 'RT 65988'
     is_deeply eval( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';

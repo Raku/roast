@@ -10,7 +10,6 @@ plan *;
 isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
 isa_ok(1 / 4, Rat, "/ makes a Rat");
 isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
-#?rakudo skip 'Num.Rat not implemented yet in Rakudo-ng'
 isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
@@ -127,7 +126,6 @@ for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
 # used to be a (never ticketed) Rakudo bug: sin(Rat) died
 # (note that trig on Rats is tested extensively in S32-trig)
 
-#?rakudo skip 'sin NYI in Rakudo-ng'
 is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add divide by zero / zero denominator tests
@@ -164,7 +162,6 @@ is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
     "Num to Rat with epsilon of Rat");
 
 is (5/4).Int,       1, 'Rat.Int';
-#?rakudo skip '[4/3] NYI in Rakudo-ng'
 is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
 
 is_approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";

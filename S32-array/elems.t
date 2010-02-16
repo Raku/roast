@@ -7,11 +7,9 @@ plan 13;
 
 {
   my @a;
-  #?rakudo skip "Broken by ng1"
   is @a.elems, 0, ".elems works on uninitialized arrays";
 }
 
-#?rakudo skip "Unclear what this should actually be"
 {
   my @a = ();
   is @a.elems, 0, ".elems works on empty arrays";

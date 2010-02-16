@@ -10,7 +10,6 @@ plan 13;
   is @a.end, -1, ".end works on uninitialized arrays";
 }
 
-#?rakudo skip 'Rakudo-ng thinks this is an array with a single Parcel in it?'
 {
   my @a = ();
   is @a.end, -1, ".end works on empty arrays";
@@ -65,7 +64,6 @@ plan 13;
   is (end [1,2,3,4]), 3, "end [1,2,3,4] should work";
 }
 
-#?rakudo skip 'Rakudo-ng thinks this is a Parcel'
 {
   is (end ([1,2,3,4],)), 0, "end ([1,2,3,4],) should return 0";
 }

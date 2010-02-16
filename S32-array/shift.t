@@ -58,7 +58,6 @@ plan *;
 
     is(+@shift, 0, 'we have no elements in our array');
     ok(!defined(shift(@shift)), 'again, the array is exhausted and we get undefined');
-    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( shift(@shift) ~~ Failure, 'again, Failure from shifting empty array' );
 }
 
@@ -66,7 +65,6 @@ plan *;
 {
     is([1, 2, 3].shift, 1, 'this will return 1');
     ok(!defined([].shift), 'this will return undefined');
-    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( [].shift ~~ Failure, 'shift of empty array is Failure' );
 }
 
@@ -74,7 +72,6 @@ plan *;
 {
     my @shift;
     ok(!defined(shift(@shift)), 'shift on an empty array returns undefined');
-    #?rakudo skip "Failure is not yet defined in Rakudo-ng"
     ok( shift(@shift) ~~ Failure, 'shift on empty array is Failure');
 }
 

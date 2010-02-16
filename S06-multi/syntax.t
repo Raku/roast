@@ -103,7 +103,6 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     multi rt65672()   { 99 }
     multi rt65672($x) { $x }
     sub rt65672caller( &x ) { &x() }
-    #?rakudo skip 'RT 65672'
     is rt65672caller( &rt65672 ), 99, 'multi can be passed as callable';
 }
 

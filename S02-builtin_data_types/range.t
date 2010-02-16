@@ -38,7 +38,6 @@ is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
 is ('a'..'a'), [< a >], 'got the right array';
 
 # Decreasing Ranges - see S03-operators/range for boundry tests
-#?rakudo skip "niether ng nor I understand these tests"
 {
     # L<S03/Range and RangeIterator semantics/"Ranges are not autoreversing">
     ok (5..1)   !~~ 3, '(5..1)   is the null range';

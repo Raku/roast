@@ -22,7 +22,6 @@ plan 18;
     
     $_ = 'Hello';
     #?pugs todo 'feature'
-    #?rakudo skip 'dispatch error (non-catchable)'
     is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer');
     is({ $_ }.('Goodbye'), 'Goodbye',   'but it is only a default');
     is({ 42 }.(), 42,                   'no implicit $_ usage checking');

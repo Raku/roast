@@ -42,7 +42,6 @@ is( abs(NaN), NaN, 'absolute value of NaN is NaN');
 is( abs(Inf), Inf, 'absolute value of Inf is Inf');
 is( abs(-Inf), Inf, 'absolute value of -Inf is Inf');
 
-#?rakudo skip 'abs("-10") NYI in Rakudo-ng'
 is( abs("-10"), 10, 'absolute value of "-10" is 10');
 
 #?rakudo skip 'RT 70596'

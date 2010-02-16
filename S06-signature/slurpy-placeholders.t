@@ -27,7 +27,6 @@ sub both {
 
 both(5, :b(6), 3, :a(4));
 
-#?rakudo skip "Broken by ng1"
 {
     my @result;
     sub perl5sub {

@@ -70,7 +70,6 @@ isa_ok 1.Bool, Bool, "1.Bool is Bool";
 ok 42.Bool, "42.Bool is true";
 isa_ok 42.Bool, Bool, "42.Bool is Bool";
 
-#?rakudo 5 skip 'Str.Int not implemented yet in Rakudo-ng'
 is('-1.999'.Int, -1, "int('-1.999') is -1");
 is('0x123'.Int, 0x123, "int('0x123') is 0x123");
 is('0d456'.Int, 0d456, "int('0d456') is 0d456");

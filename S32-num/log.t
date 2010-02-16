@@ -39,10 +39,8 @@ is_approx(log10(0.1), $log10_one_tenth, 'got the log10 of 0.1');
 
 is( log(0), -Inf, 'log(0) = -Inf');
 
-#?rakudo skip "log(Inf) does not work in Rakudo-ng"
 is( log(Inf), Inf, 'log(Inf) = Inf');
 is( log(-Inf), NaN, 'log(-Inf) = NaN');
-#?rakudo skip "log(NaN) does not work in Rakudo-ng"
 is( log(NaN), NaN, 'log(NaN) = NaN');
 
 is( log10(0), -Inf, 'log10(0) = -Inf');

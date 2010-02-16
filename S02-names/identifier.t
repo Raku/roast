@@ -54,13 +54,11 @@ plan 18;
     is method-check(), 'method-check', 'can call method-check';
 }
 
-#?rakudo skip 'RT 72084: sub name beginning with last-'
 {
     my sub last-check { 'last-check' }
     is last-check(), 'last-check', 'can call last-check';
 }
 
-#?rakudo skip 'sub name beginning with next-'
 {
     my sub next-check { 'next-check' }
     is next-check(), 'next-check', 'can call next-check';

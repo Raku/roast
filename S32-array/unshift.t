@@ -109,7 +109,6 @@ plan 59;
 
 # now for the unshift() on an uninitialized array issue
 
-#?rakudo skip 'Broken in ng'
 {
     my @unshift;
 

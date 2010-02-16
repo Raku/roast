@@ -100,7 +100,6 @@ plan 51;
 }
 
 # now for the push() on an uninitialized array issue
-#?rakudo skip 'Broken in ng1'
 {
     my @push;
 
@@ -164,7 +163,6 @@ plan 51;
     
         is @a[0], 1, 'New element created by push(@a, $x) isn\'t affected by changes to $x';
     }
-    #?rakudo skip 'Broken in ng1'
     # {
     #     my $x = 1;
     #     my @a = ();

@@ -93,7 +93,6 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     }
     class IL does RT69919 {}
 
-    #?rakudo skip 'RT 69919, Null PMC access in type()'
     is IL.new.rt69919, 'Luthor', 'access lexical declared in role from method called via class that does the role';
 }
 

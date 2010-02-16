@@ -3,7 +3,6 @@ use Test;
 plan 10;
 
 #L<S03/Smart matching/Any Pair test object attribute>
-#?rakudo skip 'Any ~~ Pair'
 {
     # ?."{X.key}" === ?X.value
     # means:

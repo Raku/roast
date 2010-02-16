@@ -112,7 +112,6 @@ is($joined1a, "a, b, c", '().join($sep) should dwim');
 
 is(join("!", "hi"),   "hi", "&join works with one-element lists (1)");
 is(join("!", <hi>),   "hi", "&join works with one-element lists (2)");
-#?rakudo skip "Rakudo-ng thinks this is a parcel instead of a list"
 is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 
 

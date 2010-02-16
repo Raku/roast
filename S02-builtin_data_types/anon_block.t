@@ -138,7 +138,6 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
 
     multi mone { 'one' }
     is &mone(), 'one', 'check that mutli is callable via &';
-    #?rakudo 3 skip 'RT #68116'
     is { &^x() }.( &mone ), 'one',
         'call via { &^pos() }( &s ) works for multi';
     is -> &x { &x() }.( &mone ), 'one',
