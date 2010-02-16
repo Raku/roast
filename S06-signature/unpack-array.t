@@ -9,10 +9,10 @@ sub foo($x, [$y, *@z]) {
 }
 
 my @a = 2, 3, 4, 5;
-is foo(1, @a), '2|3|4;5',  'array unpacking';
+is foo(1, @a), '1|2|3;4;5',  'array unpacking';
 
 sub bar([$x, $y, $z]) {
-    return [*] $x, $y, $z;
+    return $x * $y * $z;
 }
 
 ok bar(@a[0..2]) == 24, 'fixed length array unpacking';
