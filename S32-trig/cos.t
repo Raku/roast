@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @cosines -> $angle
     
     # Num.acos tests
     is_approx($desired_result.Num.acos.cos, $desired_result, 
-              "acos(Num) - {$angle.num('radians')} default");
+              "Num.acos - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.acos(%official_base{$base}).cos(%official_base{$base}), $desired_result,
-                  "acos(Num) - {$angle.num($base)} $base");
+                  "Num.acos - {$angle.num($base)} $base");
     }
     
     # acos(Complex) tests
@@ -261,10 +261,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Rat.acos tests
     is_approx($desired_result.acos.cos, $desired_result, 
-              "acos(Rat) - $desired_result default");
+              "Rat.acos - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.acos(%official_base{$base}).cos(%official_base{$base}), $desired_result,
-                  "acos(Rat) - $desired_result $base");
+                  "Rat.acos - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Int.acos tests
     is_approx($desired_result.numerator.acos.cos, $desired_result, 
-              "acos(Int) - $desired_result default");
+              "Int.acos - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.acos(%official_base{$base}).cos(%official_base{$base}), $desired_result,
-                  "acos(Int) - $desired_result $base");
+                  "Int.acos - $desired_result $base");
     }
 }
         

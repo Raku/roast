@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @sines -> $angle
     
     # Num.acosech tests
     is_approx($desired_result.Num.acosech.cosech, $desired_result, 
-              "acosech(Num) - {$angle.num('radians')} default");
+              "Num.acosech - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.acosech(%official_base{$base}).cosech(%official_base{$base}), $desired_result,
-                  "acosech(Num) - {$angle.num($base)} $base");
+                  "Num.acosech - {$angle.num($base)} $base");
     }
     
     # acosech(Complex) tests
@@ -261,10 +261,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Rat.acosech tests
     is_approx($desired_result.acosech.cosech, $desired_result, 
-              "acosech(Rat) - $desired_result default");
+              "Rat.acosech - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.acosech(%official_base{$base}).cosech(%official_base{$base}), $desired_result,
-                  "acosech(Rat) - $desired_result $base");
+                  "Rat.acosech - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Int.acosech tests
     is_approx($desired_result.numerator.acosech.cosech, $desired_result, 
-              "acosech(Int) - $desired_result default");
+              "Int.acosech - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.acosech(%official_base{$base}).cosech(%official_base{$base}), $desired_result,
-                  "acosech(Int) - $desired_result $base");
+                  "Int.acosech - $desired_result $base");
     }
 }
         

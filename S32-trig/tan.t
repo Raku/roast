@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @sines -> $angle
     
     # Num.atan tests
     is_approx($desired_result.Num.atan.tan, $desired_result, 
-              "atan(Num) - {$angle.num('radians')} default");
+              "Num.atan - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.atan(%official_base{$base}).tan(%official_base{$base}), $desired_result,
-                  "atan(Num) - {$angle.num($base)} $base");
+                  "Num.atan - {$angle.num($base)} $base");
     }
     
     # atan(Complex) tests
@@ -261,10 +261,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Rat.atan tests
     is_approx($desired_result.atan.tan, $desired_result, 
-              "atan(Rat) - $desired_result default");
+              "Rat.atan - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.atan(%official_base{$base}).tan(%official_base{$base}), $desired_result,
-                  "atan(Rat) - $desired_result $base");
+                  "Rat.atan - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Int.atan tests
     is_approx($desired_result.numerator.atan.tan, $desired_result, 
-              "atan(Int) - $desired_result default");
+              "Int.atan - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.atan(%official_base{$base}).tan(%official_base{$base}), $desired_result,
-                  "atan(Int) - $desired_result $base");
+                  "Int.atan - $desired_result $base");
     }
 }
         

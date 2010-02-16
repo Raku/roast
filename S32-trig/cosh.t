@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @coshes -> $angle
     
     # Num.acosh tests
     is_approx($desired_result.Num.acosh.cosh, $desired_result, 
-              "acosh(Num) - {$angle.num('radians')} default");
+              "Num.acosh - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.acosh(%official_base{$base}).cosh(%official_base{$base}), $desired_result,
-                  "acosh(Num) - {$angle.num($base)} $base");
+                  "Num.acosh - {$angle.num($base)} $base");
     }
     
     # acosh(Complex) tests
@@ -261,10 +261,10 @@ for (2/2, 3/2, 4/2, 5/2) -> $desired_result
     
     # Rat.acosh tests
     is_approx($desired_result.acosh.cosh, $desired_result, 
-              "acosh(Rat) - $desired_result default");
+              "Rat.acosh - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.acosh(%official_base{$base}).cosh(%official_base{$base}), $desired_result,
-                  "acosh(Rat) - $desired_result $base");
+                  "Rat.acosh - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (2/2, 3/2, 4/2, 5/2) -> $desired_result
     
     # Int.acosh tests
     is_approx($desired_result.numerator.acosh.cosh, $desired_result, 
-              "acosh(Int) - $desired_result default");
+              "Int.acosh - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.acosh(%official_base{$base}).cosh(%official_base{$base}), $desired_result,
-                  "acosh(Int) - $desired_result $base");
+                  "Int.acosh - $desired_result $base");
     }
 }
         

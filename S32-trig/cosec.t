@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @sines -> $angle
     
     # Num.acosec tests
     is_approx($desired_result.Num.acosec.cosec, $desired_result, 
-              "acosec(Num) - {$angle.num('radians')} default");
+              "Num.acosec - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.acosec(%official_base{$base}).cosec(%official_base{$base}), $desired_result,
-                  "acosec(Num) - {$angle.num($base)} $base");
+                  "Num.acosec - {$angle.num($base)} $base");
     }
     
     # acosec(Complex) tests
@@ -261,10 +261,10 @@ for (-3/2, -2/2, 2/2, 3/2) -> $desired_result
     
     # Rat.acosec tests
     is_approx($desired_result.acosec.cosec, $desired_result, 
-              "acosec(Rat) - $desired_result default");
+              "Rat.acosec - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.acosec(%official_base{$base}).cosec(%official_base{$base}), $desired_result,
-                  "acosec(Rat) - $desired_result $base");
+                  "Rat.acosec - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-3/2, -2/2, 2/2, 3/2) -> $desired_result
     
     # Int.acosec tests
     is_approx($desired_result.numerator.acosec.cosec, $desired_result, 
-              "acosec(Int) - $desired_result default");
+              "Int.acosec - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.acosec(%official_base{$base}).cosec(%official_base{$base}), $desired_result,
-                  "acosec(Int) - $desired_result $base");
+                  "Int.acosec - $desired_result $base");
     }
 }
         

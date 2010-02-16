@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @cosines -> $angle
     
     # Num.asec tests
     is_approx($desired_result.Num.asec.sec, $desired_result, 
-              "asec(Num) - {$angle.num('radians')} default");
+              "Num.asec - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.asec(%official_base{$base}).sec(%official_base{$base}), $desired_result,
-                  "asec(Num) - {$angle.num($base)} $base");
+                  "Num.asec - {$angle.num($base)} $base");
     }
     
     # asec(Complex) tests
@@ -261,10 +261,10 @@ for (-3/2, -2/2, 2/2, 3/2) -> $desired_result
     
     # Rat.asec tests
     is_approx($desired_result.asec.sec, $desired_result, 
-              "asec(Rat) - $desired_result default");
+              "Rat.asec - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.asec(%official_base{$base}).sec(%official_base{$base}), $desired_result,
-                  "asec(Rat) - $desired_result $base");
+                  "Rat.asec - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-3/2, -2/2, 2/2, 3/2) -> $desired_result
     
     # Int.asec tests
     is_approx($desired_result.numerator.asec.sec, $desired_result, 
-              "asec(Int) - $desired_result default");
+              "Int.asec - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.asec(%official_base{$base}).sec(%official_base{$base}), $desired_result,
-                  "asec(Int) - $desired_result $base");
+                  "Int.asec - $desired_result $base");
     }
 }
         

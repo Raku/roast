@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @sines -> $angle
     
     # Num.asin tests
     is_approx($desired_result.Num.asin.sin, $desired_result, 
-              "asin(Num) - {$angle.num('radians')} default");
+              "Num.asin - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.asin(%official_base{$base}).sin(%official_base{$base}), $desired_result,
-                  "asin(Num) - {$angle.num($base)} $base");
+                  "Num.asin - {$angle.num($base)} $base");
     }
     
     # asin(Complex) tests
@@ -261,10 +261,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Rat.asin tests
     is_approx($desired_result.asin.sin, $desired_result, 
-              "asin(Rat) - $desired_result default");
+              "Rat.asin - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.asin(%official_base{$base}).sin(%official_base{$base}), $desired_result,
-                  "asin(Rat) - $desired_result $base");
+                  "Rat.asin - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     
     # Int.asin tests
     is_approx($desired_result.numerator.asin.sin, $desired_result, 
-              "asin(Int) - $desired_result default");
+              "Int.asin - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.asin(%official_base{$base}).sin(%official_base{$base}), $desired_result,
-                  "asin(Int) - $desired_result $base");
+                  "Int.asin - $desired_result $base");
     }
 }
         

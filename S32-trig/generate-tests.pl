@@ -186,10 +186,10 @@ class TrigFunction
                 
                 # Num.$.inverted_function_name tests
                 is_approx($desired_result.Num.$.inverted_function_name.$.function_name, $desired_result, 
-                          "$.inverted_function_name(Num) - {$angle.num('radians')} default");
+                          "Num.$.inverted_function_name - {$angle.num('radians')} default");
                 for %official_base.keys -> $base {
                     is_approx($desired_result.Num.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
-                              "$.inverted_function_name(Num) - {$angle.num($base)} $base");
+                              "Num.$.inverted_function_name - {$angle.num($base)} $base");
                 }
                 
                 # $.inverted_function_name(Complex) tests
@@ -221,10 +221,10 @@ class TrigFunction
                 
                 # Rat.$.inverted_function_name tests
                 is_approx($desired_result.$.inverted_function_name.$.function_name, $desired_result, 
-                          "$.inverted_function_name(Rat) - $desired_result default");
+                          "Rat.$.inverted_function_name - $desired_result default");
                 for %official_base.keys -> $base {
                     is_approx($desired_result.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
-                              "$.inverted_function_name(Rat) - $desired_result $base");
+                              "Rat.$.inverted_function_name - $desired_result $base");
                 }
                 
                 next unless $desired_result.denominator == 1;
@@ -239,10 +239,10 @@ class TrigFunction
                 
                 # Int.$.inverted_function_name tests
                 is_approx($desired_result.numerator.$.inverted_function_name.$.function_name, $desired_result, 
-                          "$.inverted_function_name(Int) - $desired_result default");
+                          "Int.$.inverted_function_name - $desired_result default");
                 for %official_base.keys -> $base {
                     is_approx($desired_result.numerator.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
-                              "$.inverted_function_name(Int) - $desired_result $base");
+                              "Int.$.inverted_function_name - $desired_result $base");
                 }
             }
         ];

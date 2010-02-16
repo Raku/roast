@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @sines -> $angle
     
     # Num.acotanh tests
     is_approx($desired_result.Num.acotanh.cotanh, $desired_result, 
-              "acotanh(Num) - {$angle.num('radians')} default");
+              "Num.acotanh - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $desired_result,
-                  "acotanh(Num) - {$angle.num($base)} $base");
+                  "Num.acotanh - {$angle.num($base)} $base");
     }
     
     # acotanh(Complex) tests
@@ -261,10 +261,10 @@ for (-4/2, -3/2, 3/2, 4/2) -> $desired_result
     
     # Rat.acotanh tests
     is_approx($desired_result.acotanh.cotanh, $desired_result, 
-              "acotanh(Rat) - $desired_result default");
+              "Rat.acotanh - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $desired_result,
-                  "acotanh(Rat) - $desired_result $base");
+                  "Rat.acotanh - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-4/2, -3/2, 3/2, 4/2) -> $desired_result
     
     # Int.acotanh tests
     is_approx($desired_result.numerator.acotanh.cotanh, $desired_result, 
-              "acotanh(Int) - $desired_result default");
+              "Int.acotanh - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $desired_result,
-                  "acotanh(Int) - $desired_result $base");
+                  "Int.acotanh - $desired_result $base");
     }
 }
         

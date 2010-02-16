@@ -16,7 +16,7 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
     
-    multi method new(Int $angle_in_degrees is copy, Num $result is copy) {
+    multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
@@ -226,10 +226,10 @@ for @sines -> $angle
     
     # Num.atanh tests
     is_approx($desired_result.Num.atanh.tanh, $desired_result, 
-              "atanh(Num) - {$angle.num('radians')} default");
+              "Num.atanh - {$angle.num('radians')} default");
     for %official_base.keys -> $base {
         is_approx($desired_result.Num.atanh(%official_base{$base}).tanh(%official_base{$base}), $desired_result,
-                  "atanh(Num) - {$angle.num($base)} $base");
+                  "Num.atanh - {$angle.num($base)} $base");
     }
     
     # atanh(Complex) tests
@@ -261,10 +261,10 @@ for (-2/2, -1/2, 0/1, 1/2) -> $desired_result
     
     # Rat.atanh tests
     is_approx($desired_result.atanh.tanh, $desired_result, 
-              "atanh(Rat) - $desired_result default");
+              "Rat.atanh - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.atanh(%official_base{$base}).tanh(%official_base{$base}), $desired_result,
-                  "atanh(Rat) - $desired_result $base");
+                  "Rat.atanh - $desired_result $base");
     }
     
     next unless $desired_result.denominator == 1;
@@ -279,10 +279,10 @@ for (-2/2, -1/2, 0/1, 1/2) -> $desired_result
     
     # Int.atanh tests
     is_approx($desired_result.numerator.atanh.tanh, $desired_result, 
-              "atanh(Int) - $desired_result default");
+              "Int.atanh - $desired_result default");
     for %official_base.keys -> $base {
         is_approx($desired_result.numerator.atanh(%official_base{$base}).tanh(%official_base{$base}), $desired_result,
-                  "atanh(Int) - $desired_result $base");
+                  "Int.atanh - $desired_result $base");
     }
 }
         
