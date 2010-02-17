@@ -174,10 +174,10 @@ for @sines -> $angle
 for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
 {
     # atan2(Rat) tests
-    is_approx(tan(atan2($desired_result, 1)), $desired_result, 
+    is_approx(tan(atan2($desired_result, 1/1)), $desired_result, 
               "atan2(Rat) - $desired_result default");
     for %official_base.keys -> $base {
-        is_approx(tan(atan2($desired_result, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+        is_approx(tan(atan2($desired_result, 1/1, %official_base{$base}), %official_base{$base}), $desired_result, 
                   "atan2(Rat) - $desired_result $base");
     }
     
