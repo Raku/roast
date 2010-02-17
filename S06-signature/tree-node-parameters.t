@@ -8,7 +8,7 @@ plan 20;
 # hash left/right
 {
     #?DOES 2
-    my sub traverse_hash (%top ($left, $right), $desc?) {
+    my sub traverse_hash (%top ($left, $right, *%), $desc?) {
         is($left,  %top<left>,  "left value is correct: $desc");
         is($right, %top<right>, "right value is correct: $desc");
     }
@@ -19,12 +19,13 @@ plan 20;
 
     %hash<left>  = {left => 'foo', right => 'bar'};
     %hash<right> = {left => 'baz', right => 'qux'};
+    #?rakudo skip 'stringifying hashes NYI'
     traverse_hash(%hash, 'hash with values that are hashes');
 }
 
 {
     #?DOES 2
-    my sub traverse_hash (%top ($east, $west), $desc?) {
+    my sub traverse_hash (%top ($east, $west, *%), $desc?) {
         is($east, %top<east>, "east value is correct: $desc");
         is($west, %top<west>, "west value is correct: $desc");
     }
@@ -35,6 +36,7 @@ plan 20;
 
     %hash<east> = {east => 'foo', west => 'bar'};
     %hash<west> = {east => 'baz', west => 'qux'};
+    #?rakudo skip 'stringifying hashes NYI'
     traverse_hash(%hash, 'custom hash with values that are hashes');
 }
 
@@ -43,6 +45,7 @@ plan 20;
     class BinTree {
         has $.left is rw;
         has $.right is rw;
+        method Str() { $.left.WHICH ~ ',' ~ $.right.WHICH }
     }
 
     #?DOES 2
@@ -54,12 +57,14 @@ plan 20;
     my $tree = BinTree.new(left => 'abc', right => 'def');
     traverse_obj($tree, 'simple object');
 
-    $tree.left($tree);
-    $tree.right($tree);
+    $tree.left = $tree;
+    $tree.right = $tree;
     traverse_obj($tree, 'nested object tree');
 }
 
 # L<S06/Unpacking tree node parameters/You may omit the top variable if you prefix the parentheses>
+#?DOES 4
+#?rakudo skip 'signautre binding of return values NYI'
 {
     class Point {has $.x is rw; has $.y is rw}
     class TwoPoints {has Point $.a is rw; has Point $.b is rw}
