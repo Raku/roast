@@ -89,11 +89,14 @@ splice_ok splice(@a,0,0,0,1), @a, [], [0..10], "Prepending values works";
 splice_ok splice(@a,5,1,5), @a, [5], [0..11], "Replacing an element with itself";
 
 @a = (0..11);
-splice_ok splice(@a, @a, 0, 12, 13), @a, [], [0..13], "Appending a array";
+splice_ok splice(@a, +@a, 0, 12, 13), @a, [], [0..13], "Appending a array";
 
-@a = (0..13);
-@res = splice(@a, -@a, @a, 1, 2, 3);
-splice_ok @res, @a, [0..13], [1..3], "Replacing the array contents from right end";
+#?rakudo skip "Test behaves weirdly in rakudo"
+{
+    @a = (0..13);
+    @res = splice(@a, -@a, +@a, 1, 2, 3);
+    splice_ok @res, @a, [0..13], [1..3], "Replacing the array contents from right end";
+}
 
 @a = (1, 2, 3);
 splice_ok splice(@a, 1, -1, 7, 7), @a, [2], [1,7,7,3], "Replacing a array into the middle";
@@ -115,9 +118,12 @@ is( @b, @a, "Calling splice with immediate and indirect context returns consiste
 is( @a, [6,7,8], "Explicit call/assignment gives the expected results");
 is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
 
-@tmp = (1..10);
-@a = item splice @tmp, 5, 3;
-is( @a, [6..8], "Explicit scalar context returns an array reference");
+#?rakudo skip "item NYI"
+{
+    @tmp = (1..10);
+    @a = item splice @tmp, 5, 3;
+    is( @a, [6..8], "Explicit scalar context returns an array reference");
+}
 
 ## test some error conditions
 
@@ -129,19 +135,22 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 #?pugs todo 'bug'
 dies_ok({ 42.splice }, '.splice should not work on scalars');
 
-@tmp = (1..5);
-@a = splice @tmp, 1.3, 2;
-is( @a, [2,3], "splice with non-int offset floors it (1)");
-is( @tmp, [1,4,5], "splice with non-int offset floors it (2)");
+#?rakudo skip "splice is no longer spec'd as taking non-Int offset or size"
+{
+    @tmp = (1..5);
+    @a = splice @tmp, 1.3, 2;
+    is( @a, [2,3], "splice with non-int offset floors it (1)");
+    is( @tmp, [1,4,5], "splice with non-int offset floors it (2)");
 
-@tmp = (1..5);
-@a = splice @tmp, 1.3;
-is( @a, [2,3,4,5], "splice with non-int offset floors it (no size, 1)");
-is( @tmp, [1], "splice with non-int offset floors it (no size, 2)");
+    @tmp = (1..5);
+    @a = splice @tmp, 1.3;
+    is( @a, [2,3,4,5], "splice with non-int offset floors it (no size, 1)");
+    is( @tmp, [1], "splice with non-int offset floors it (no size, 2)");
 
-@tmp = (1..5);
-@a = splice @tmp, 2, 1.3;
-is( @a, [3], "splice with non-int size floors it (1)");
-is( @tmp, [1,2,4,5], "splice with non-int size floors it (2)");
+    @tmp = (1..5);
+    @a = splice @tmp, 2, 1.3;
+    is( @a, [3], "splice with non-int size floors it (1)");
+    is( @tmp, [1,2,4,5], "splice with non-int size floors it (2)");
+}
 
 # vim: ft=perl6
