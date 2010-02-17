@@ -10,7 +10,7 @@ plan 48;
 
 =end pod
 
-my $sq2 = 1.4142135623731;
+my $sq2 = 2.sqrt;
 sub check_polar($complex, $magnitude_want, $angle_want) {
    my ($magnitude, $angle) = $complex.polar;
    is_approx($magnitude, $magnitude_want, "$complex has a magnitude of $magnitude_want");
@@ -41,7 +41,7 @@ sub check_polar($complex, $magnitude_want, $angle_want) {
    check_polar( 7-6i, 9.21954, -0.7086263);
 }
 
-# floats
+# rats
 {
    check_polar( 9.375+0i    , 9.375   , 0         );
    check_polar( 4.302+8.304i, 9.352198, 1.09280250);
