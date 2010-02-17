@@ -12,7 +12,6 @@ Basic tests for the rand builtin
 
 # L<S32::Numeric/Num/"=item rand">
 
-#?rakudo 2 skip "No idea why these tests do not parse"
 ok(rand >= 0, 'rand returns numbers greater than or equal to 0');
 ok(rand < 1, 'rand returns numbers less than 1');
 
