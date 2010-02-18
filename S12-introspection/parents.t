@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 54;
 
 =begin pod
 
@@ -65,25 +65,28 @@ is @parents[1].WHAT, 'C()', 'second parent is C';
 is +@parents, 2,         'with :tree, D has two immediate parents (on proto)';
 ok @parents[0] ~~ Array, ':tree gives back nested arrays for each parent (on proto)';
 ok @parents[1] ~~ Array, ':tree gives back nested arrays for each parent (on proto)';
-is @parents.perl, ([B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]).perl,
+is @parents, [[B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]],
                          ':tree gives back the expected data structure (on proto)';
 
 @parents = D.new.^parents(:tree);
 is +@parents, 2,         'with :tree, D has two immediate parents (on instance)';
 ok @parents[0] ~~ Array, ':tree gives back nested arrays for each parent (on instance)';
 ok @parents[1] ~~ Array, ':tree gives back nested arrays for each parent (on instance)';
-is @parents.perl, ([B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]).perl,
+is @parents, [[B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]],
                          ':tree gives back the expected data structure (on instance)';
 
 @parents = List.^parents();
-is +@parents, 2, 'right number of parents for List built-in, from proto-object';
-is @parents[0].WHAT, 'Any()', 'first parent is Any';
-is @parents[1].WHAT, 'Mu()', 'second parent is Mu';
+is +@parents, 4, 'right number of parents for List built-in, from proto-object';
+is @parents[0].WHAT, 'Iterator()', 'first parent is Iterator';
+is @parents[1].WHAT, 'Iterable()', 'second parent is Iterable';
+is @parents[2].WHAT, 'Any()', 'third parent is Any';
+is @parents[3].WHAT, 'Mu()', 'forth parent is Mu';
 
-@parents = list(1,2,3).^parents();
-is +@parents, 2, 'right number of parents for List built-in, from instance';
-is @parents[0].WHAT, 'Any()', 'first parent is Any';
-is @parents[1].WHAT, 'Mu()', 'second parent is Mu';
+@parents = (1,2,3).Seq.^parents();
+is +@parents, 3, 'right number of parents for Seq built-in, from instance';
+is @parents[0].WHAT, 'Iterable()', 'first parent is Any';
+is @parents[1].WHAT, 'Any()', 'second parent is Any';
+is @parents[2].WHAT, 'Mu()', 'third parent is Mu';
 
 @parents = Str.^parents();
 is +@parents, 2, 'right number of parents for Str built-in, from proto-object';
