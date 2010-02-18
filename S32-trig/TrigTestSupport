@@ -20,34 +20,34 @@ class AngleAndResult
     method complex($imaginary_part_in_radians, $base) {
         my $z_in_radians = $.angle_in_degrees.Num / 180.0 * pi + ($imaginary_part_in_radians)i; 
         given $base {
-            when "degrees"     { $z_in_radians * 180.0 / pi; }
-            when "radians"     { $z_in_radians; }
-            when "gradians"    { $z_in_radians * 200.0 / pi; }
-            when "revolutions" { $z_in_radians / (2.0 * pi); }
+            when Degrees     { $z_in_radians * 180.0 / pi; }
+            when Radians     { $z_in_radians; }
+            when Gradians    { $z_in_radians * 200.0 / pi; }
+            when Circles     { $z_in_radians / (2.0 * pi); }
         }
     }
     
     method num($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees.Num }
-            when "radians"     { $.angle_in_degrees.Num / 180.0 * pi }
-            when "gradians"    { $.angle_in_degrees.Num / 180.0 * 200.0 }
-            when "revolutions" { $.angle_in_degrees.Num / 360.0 }
+            when Degrees     { $.angle_in_degrees.Num }
+            when Radians     { $.angle_in_degrees.Num / 180.0 * pi }
+            when Gradians    { $.angle_in_degrees.Num / 180.0 * 200.0 }
+            when Circles     { $.angle_in_degrees.Num / 360.0 }
         }
     }
     
     method rat($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees / 1 }
-            when "radians"     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
-            when "gradians"    { $.angle_in_degrees * (200 / 180) }
-            when "revolutions" { $.angle_in_degrees / 360 }
+            when Degrees     { $.angle_in_degrees / 1 }
+            when Radians     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
+            when Gradians    { $.angle_in_degrees * (200 / 180) }
+            when Circles     { $.angle_in_degrees / 360 }
         }
     }
     
     method int($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees }
+            when Degrees     { $.angle_in_degrees }
         }
     }
 }
@@ -74,15 +74,9 @@ my @sines = (
 my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
 
 my @sinhes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num('radians')) - exp(-$_.num('radians'))) / 2.0)});
+                                             (exp($_.num(Radians)) - exp(-$_.num(Radians))) / 2.0)});
 
 my @coshes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num('radians')) + exp(-$_.num('radians'))) / 2.0)});
+                                             (exp($_.num(Radians)) + exp(-$_.num(Radians))) / 2.0)});
 
-
-my %official_base = (
-    "radians" => "radians",
-    "gradians" => "gradians", 
-    "degrees" => "degrees",
-    "revolutions" => 1
-);
+my @official_bases = (Radians, Degrees, Gradians, Circles);

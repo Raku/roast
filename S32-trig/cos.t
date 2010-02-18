@@ -23,34 +23,34 @@ class AngleAndResult
     method complex($imaginary_part_in_radians, $base) {
         my $z_in_radians = $.angle_in_degrees.Num / 180.0 * pi + ($imaginary_part_in_radians)i; 
         given $base {
-            when "degrees"     { $z_in_radians * 180.0 / pi; }
-            when "radians"     { $z_in_radians; }
-            when "gradians"    { $z_in_radians * 200.0 / pi; }
-            when "revolutions" { $z_in_radians / (2.0 * pi); }
+            when Degrees     { $z_in_radians * 180.0 / pi; }
+            when Radians     { $z_in_radians; }
+            when Gradians    { $z_in_radians * 200.0 / pi; }
+            when Circles     { $z_in_radians / (2.0 * pi); }
         }
     }
     
     method num($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees.Num }
-            when "radians"     { $.angle_in_degrees.Num / 180.0 * pi }
-            when "gradians"    { $.angle_in_degrees.Num / 180.0 * 200.0 }
-            when "revolutions" { $.angle_in_degrees.Num / 360.0 }
+            when Degrees     { $.angle_in_degrees.Num }
+            when Radians     { $.angle_in_degrees.Num / 180.0 * pi }
+            when Gradians    { $.angle_in_degrees.Num / 180.0 * 200.0 }
+            when Circles     { $.angle_in_degrees.Num / 360.0 }
         }
     }
     
     method rat($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees / 1 }
-            when "radians"     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
-            when "gradians"    { $.angle_in_degrees * (200 / 180) }
-            when "revolutions" { $.angle_in_degrees / 360 }
+            when Degrees     { $.angle_in_degrees / 1 }
+            when Radians     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
+            when Gradians    { $.angle_in_degrees * (200 / 180) }
+            when Circles     { $.angle_in_degrees / 360 }
         }
     }
     
     method int($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees }
+            when Degrees     { $.angle_in_degrees }
         }
     }
 }
@@ -77,18 +77,12 @@ my @sines = (
 my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
 
 my @sinhes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num('radians')) - exp(-$_.num('radians'))) / 2.0)});
+                                             (exp($_.num(Radians)) - exp(-$_.num(Radians))) / 2.0)});
 
 my @coshes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num('radians')) + exp(-$_.num('radians'))) / 2.0)});
+                                             (exp($_.num(Radians)) + exp(-$_.num(Radians))) / 2.0)});
 
-
-my %official_base = (
-    "radians" => "radians",
-    "gradians" => "gradians", 
-    "degrees" => "degrees",
-    "revolutions" => 1
-);
+my @official_bases = (Radians, Degrees, Gradians, Circles);
 
 # cos tests
 
@@ -97,65 +91,65 @@ for @cosines -> $angle
     	my $desired_result = $angle.result;
 
     # cos(Num)
-    is_approx(cos($angle.num("radians")), $desired_result, 
-              "cos(Num) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cos($angle.num($base), %official_base{$base}), $desired_result, 
+    is_approx(cos($angle.num(Radians)), $desired_result, 
+              "cos(Num) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cos($angle.num($base), $base), $desired_result, 
                   "cos(Num) - {$angle.num($base)} $base");
     }
     
     # cos(:x(Num))
-    is_approx(cos(:x($angle.num("radians"))), $desired_result, 
-              "cos(:x(Num)) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cos(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
+    is_approx(cos(:x($angle.num(Radians))), $desired_result, 
+              "cos(:x(Num)) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cos(:x($angle.num($base)), :base($base)), $desired_result, 
                   "cos(:x(Num)) - {$angle.num($base)} $base");
     }
 
     # Num.cos tests
-    is_approx($angle.num("radians").cos, $desired_result, 
-              "Num.cos - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx($angle.num($base).cos(%official_base{$base}), $desired_result, 
+    is_approx($angle.num(Radians).cos, $desired_result, 
+              "Num.cos - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx($angle.num($base).cos($base), $desired_result, 
                   "Num.cos - {$angle.num($base)} $base");
     }
 
     # cos(Rat)
-    is_approx(cos($angle.rat("radians")), $desired_result, 
-              "cos(Rat) - {$angle.rat('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cos($angle.rat($base), %official_base{$base}), $desired_result, 
+    is_approx(cos($angle.rat(Radians)), $desired_result, 
+              "cos(Rat) - {$angle.rat(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cos($angle.rat($base), $base), $desired_result, 
                   "cos(Rat) - {$angle.rat($base)} $base");
     }
 
     # cos(:x(Rat))
-    is_approx(cos(:x($angle.rat("radians"))), $desired_result, 
-              "cos(:x(Rat)) - {$angle.rat('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cos(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
+    is_approx(cos(:x($angle.rat(Radians))), $desired_result, 
+              "cos(:x(Rat)) - {$angle.rat(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cos(:x($angle.rat($base)), :base($base)), $desired_result, 
                   "cos(:x(Rat)) - {$angle.rat($base)} $base");
     }
 
     # Rat.cos tests
-    is_approx($angle.rat("radians").cos, $desired_result, 
-              "Rat.cos - {$angle.rat('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx($angle.rat($base).cos(%official_base{$base}), $desired_result, 
+    is_approx($angle.rat(Radians).cos, $desired_result, 
+              "Rat.cos - {$angle.rat(Radians)} default");
+    for @official_bases -> $base {
+        is_approx($angle.rat($base).cos($base), $desired_result, 
                   "Rat.cos - {$angle.rat($base)} $base");
     }
 
     # cos(Int)
-    is_approx(cos($angle.int("degrees"), %official_base{"degrees"}), $desired_result, 
-              "cos(Int) - {$angle.int('degrees')} degrees");
-    is_approx($angle.int('degrees').cos(%official_base{'degrees'}), $desired_result, 
-              "Int.cos - {$angle.int('degrees')} degrees");
+    is_approx(cos($angle.int(Degrees), Degrees), $desired_result, 
+              "cos(Int) - {$angle.int(Degrees)} degrees");
+    is_approx($angle.int(Degrees).cos(Degrees), $desired_result, 
+              "Int.cos - {$angle.int(Degrees)} degrees");
 
     # Complex tests
-    my Complex $zp0 = $angle.complex(0.0, "radians");
+    my Complex $zp0 = $angle.complex(0.0, Radians);
     my Complex $sz0 = $desired_result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, "radians");
+    my Complex $zp1 = $angle.complex(1.0, Radians);
     my Complex $sz1 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, "radians");
+    my Complex $zp2 = $angle.complex(2.0, Radians);
     my Complex $sz2 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp2);
     
     # cos(Complex) tests
@@ -163,15 +157,15 @@ for @cosines -> $angle
     is_approx(cos($zp1), $sz1, "cos(Complex) - $zp1 default");
     is_approx(cos($zp2), $sz2, "cos(Complex) - $zp2 default");
     
-    for %official_base.keys -> $base {
+    for @official_bases -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        is_approx(cos($z, %official_base{$base}), $sz0, "cos(Complex) - $z $base");
+        is_approx(cos($z, $base), $sz0, "cos(Complex) - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        is_approx(cos($z, %official_base{$base}), $sz1, "cos(Complex) - $z $base");
+        is_approx(cos($z, $base), $sz1, "cos(Complex) - $z $base");
                         
         $z = $angle.complex(2.0, $base);
-        is_approx(cos($z, %official_base{$base}), $sz2, "cos(Complex) - $z $base");
+        is_approx(cos($z, $base), $sz2, "cos(Complex) - $z $base");
     }
     
     # Complex.cos tests
@@ -179,24 +173,24 @@ for @cosines -> $angle
     is_approx($zp1.cos, $sz1, "Complex.cos - $zp1 default");
     is_approx($zp2.cos, $sz2, "Complex.cos - $zp2 default");
     
-    for %official_base.keys -> $base {
+    for @official_bases -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        is_approx($z.cos(%official_base{$base}), $sz0, "Complex.cos - $z $base");
+        is_approx($z.cos($base), $sz0, "Complex.cos - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        is_approx($z.cos(%official_base{$base}), $sz1, "Complex.cos - $z $base");
+        is_approx($z.cos($base), $sz1, "Complex.cos - $z $base");
     
         $z = $angle.complex(2.0, $base);
-        is_approx($z.cos(%official_base{$base}), $sz2, "Complex.cos - $z $base");
+        is_approx($z.cos($base), $sz2, "Complex.cos - $z $base");
     }
 }
 
 is(cos(Inf), NaN, "cos(Inf) - default");
 is(cos(-Inf), NaN, "cos(-Inf) - default");
-for %official_base.keys -> $base
+for @official_bases -> $base
 {
-    is(cos(Inf,  %official_base{$base}), NaN, "cos(Inf) - $base");
-    is(cos(-Inf, %official_base{$base}), NaN, "cos(-Inf) - $base");
+    is(cos(Inf,  $base), NaN, "cos(Inf) - $base");
+    is(cos(-Inf, $base), NaN, "cos(-Inf) - $base");
 }
         
 
@@ -208,42 +202,42 @@ for @cosines -> $angle
 
     # acos(Num) tests
     is_approx(cos(acos($desired_result)), $desired_result, 
-              "acos(Num) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cos(acos($desired_result, %official_base{$base}), %official_base{$base}), $desired_result, 
+              "acos(Num) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cos(acos($desired_result, $base), $base), $desired_result, 
                   "acos(Num) - {$angle.num($base)} $base");
     }
     
     # acos(:x(Num))
     is_approx(cos(acos(:x($desired_result))), $desired_result, 
-              "acos(:x(Num)) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
+              "acos(:x(Num)) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
         is_approx(cos(acos(:x($desired_result), 
-                                                           :base(%official_base{$base})), 
-                                  %official_base{$base}), $desired_result, 
+                                                           :base($base)), 
+                                  $base), $desired_result, 
                   "acos(:x(Num)) - {$angle.num($base)} $base");
     }
     
     # Num.acos tests
     is_approx($desired_result.Num.acos.cos, $desired_result, 
-              "Num.acos - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx($desired_result.Num.acos(%official_base{$base}).cos(%official_base{$base}), $desired_result,
+              "Num.acos - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx($desired_result.Num.acos($base).cos($base), $desired_result,
                   "Num.acos - {$angle.num($base)} $base");
     }
     
     # acos(Complex) tests
     for ($desired_result + 0i, $desired_result + .5i, $desired_result + 2i) -> $z {
         is_approx(cos(acos($z)), $z, 
-                  "acos(Complex) - {$angle.num('radians')} default");
-        for %official_base.keys -> $base {
-            is_approx(cos(acos($z, %official_base{$base}), %official_base{$base}), $z, 
+                  "acos(Complex) - {$angle.num(Radians)} default");
+        for @official_bases -> $base {
+            is_approx(cos(acos($z, $base), $base), $z, 
                       "acos(Complex) - {$angle.num($base)} $base");
         }
         is_approx($z.acos.cos, $z, 
-                  "Complex.acos - {$angle.num('radians')} default");
-        for %official_base.keys -> $base {
-            is_approx($z.acos(%official_base{$base}).cos(%official_base{$base}), $z, 
+                  "Complex.acos - {$angle.num(Radians)} default");
+        for @official_bases -> $base {
+            is_approx($z.acos($base).cos($base), $z, 
                       "Complex.acos - {$angle.num($base)} $base");
         }
     }
@@ -254,16 +248,16 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     # acos(Rat) tests
     is_approx(cos(acos($desired_result)), $desired_result, 
               "acos(Rat) - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx(cos(acos($desired_result, %official_base{$base}), %official_base{$base}), $desired_result, 
+    for @official_bases -> $base {
+        is_approx(cos(acos($desired_result, $base), $base), $desired_result, 
                   "acos(Rat) - $desired_result $base");
     }
     
     # Rat.acos tests
     is_approx($desired_result.acos.cos, $desired_result, 
               "Rat.acos - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx($desired_result.acos(%official_base{$base}).cos(%official_base{$base}), $desired_result,
+    for @official_bases -> $base {
+        is_approx($desired_result.acos($base).cos($base), $desired_result,
                   "Rat.acos - $desired_result $base");
     }
     
@@ -272,16 +266,16 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     # acos(Int) tests
     is_approx(cos(acos($desired_result.numerator)), $desired_result, 
               "acos(Int) - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx(cos(acos($desired_result.numerator, %official_base{$base}), %official_base{$base}), $desired_result, 
+    for @official_bases -> $base {
+        is_approx(cos(acos($desired_result.numerator, $base), $base), $desired_result, 
                   "acos(Int) - $desired_result $base");
     }
     
     # Int.acos tests
     is_approx($desired_result.numerator.acos.cos, $desired_result, 
               "Int.acos - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx($desired_result.numerator.acos(%official_base{$base}).cos(%official_base{$base}), $desired_result,
+    for @official_bases -> $base {
+        is_approx($desired_result.numerator.acos($base).cos($base), $desired_result,
                   "Int.acos - $desired_result $base");
     }
 }

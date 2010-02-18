@@ -43,65 +43,65 @@ class TrigFunction
                 $.setup_block
 
                 # $.function_name(Num)
-                is_approx($.function_name($angle.num("radians")), $desired_result, 
-                          "$.function_name(Num) - {$angle.num('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name($angle.num($base), %official_base{$base}), $desired_result, 
+                is_approx($.function_name($angle.num(Radians)), $desired_result, 
+                          "$.function_name(Num) - {$angle.num(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($.function_name($angle.num($base), $base), $desired_result, 
                               "$.function_name(Num) - {$angle.num($base)} $base");
                 }
                 
                 # $.function_name(:x(Num))
-                is_approx($.function_name(:x($angle.num("radians"))), $desired_result, 
-                          "$.function_name(:x(Num)) - {$angle.num('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
+                is_approx($.function_name(:x($angle.num(Radians))), $desired_result, 
+                          "$.function_name(:x(Num)) - {$angle.num(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($.function_name(:x($angle.num($base)), :base($base)), $desired_result, 
                               "$.function_name(:x(Num)) - {$angle.num($base)} $base");
                 }
 
                 # Num.$.function_name tests
-                is_approx($angle.num("radians").$.function_name, $desired_result, 
-                          "Num.$.function_name - {$angle.num('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($angle.num($base).$.function_name(%official_base{$base}), $desired_result, 
+                is_approx($angle.num(Radians).$.function_name, $desired_result, 
+                          "Num.$.function_name - {$angle.num(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($angle.num($base).$.function_name($base), $desired_result, 
                               "Num.$.function_name - {$angle.num($base)} $base");
                 }
 
                 # $.function_name(Rat)
-                is_approx($.function_name($angle.rat("radians")), $desired_result, 
-                          "$.function_name(Rat) - {$angle.rat('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name($angle.rat($base), %official_base{$base}), $desired_result, 
+                is_approx($.function_name($angle.rat(Radians)), $desired_result, 
+                          "$.function_name(Rat) - {$angle.rat(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($.function_name($angle.rat($base), $base), $desired_result, 
                               "$.function_name(Rat) - {$angle.rat($base)} $base");
                 }
 
                 # $.function_name(:x(Rat))
-                is_approx($.function_name(:x($angle.rat("radians"))), $desired_result, 
-                          "$.function_name(:x(Rat)) - {$angle.rat('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
+                is_approx($.function_name(:x($angle.rat(Radians))), $desired_result, 
+                          "$.function_name(:x(Rat)) - {$angle.rat(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($.function_name(:x($angle.rat($base)), :base($base)), $desired_result, 
                               "$.function_name(:x(Rat)) - {$angle.rat($base)} $base");
                 }
 
                 # Rat.$.function_name tests
-                is_approx($angle.rat("radians").$.function_name, $desired_result, 
-                          "Rat.$.function_name - {$angle.rat('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($angle.rat($base).$.function_name(%official_base{$base}), $desired_result, 
+                is_approx($angle.rat(Radians).$.function_name, $desired_result, 
+                          "Rat.$.function_name - {$angle.rat(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($angle.rat($base).$.function_name($base), $desired_result, 
                               "Rat.$.function_name - {$angle.rat($base)} $base");
                 }
 
                 # $.function_name(Int)
-                is_approx($.function_name($angle.int("degrees"), %official_base{"degrees"}), $desired_result, 
-                          "$.function_name(Int) - {$angle.int('degrees')} degrees");
-                is_approx($angle.int('degrees').$.function_name(%official_base{'degrees'}), $desired_result, 
-                          "Int.$.function_name - {$angle.int('degrees')} degrees");
+                is_approx($.function_name($angle.int(Degrees), Degrees), $desired_result, 
+                          "$.function_name(Int) - {$angle.int(Degrees)} degrees");
+                is_approx($angle.int(Degrees).$.function_name(Degrees), $desired_result, 
+                          "Int.$.function_name - {$angle.int(Degrees)} degrees");
 
                 # Complex tests
-                my Complex $zp0 = $angle.complex(0.0, "radians");
+                my Complex $zp0 = $angle.complex(0.0, Radians);
                 my Complex $sz0 = $desired_result + 0i;
-                my Complex $zp1 = $angle.complex(1.0, "radians");
+                my Complex $zp1 = $angle.complex(1.0, Radians);
                 my Complex $sz1 = $.complex_check($zp1);
-                my Complex $zp2 = $angle.complex(2.0, "radians");
+                my Complex $zp2 = $angle.complex(2.0, Radians);
                 my Complex $sz2 = $.complex_check($zp2);
                 
                 # $.function_name(Complex) tests
@@ -109,15 +109,15 @@ class TrigFunction
                 is_approx($.function_name($zp1), $sz1, "$.function_name(Complex) - $zp1 default");
                 is_approx($.function_name($zp2), $sz2, "$.function_name(Complex) - $zp2 default");
                 
-                for %official_base.keys -> $base {
+                for @official_bases -> $base {
                     my Complex $z = $angle.complex(0.0, $base);
-                    is_approx($.function_name($z, %official_base{$base}), $sz0, "$.function_name(Complex) - $z $base");
+                    is_approx($.function_name($z, $base), $sz0, "$.function_name(Complex) - $z $base");
                 
                     $z = $angle.complex(1.0, $base);
-                    is_approx($.function_name($z, %official_base{$base}), $sz1, "$.function_name(Complex) - $z $base");
+                    is_approx($.function_name($z, $base), $sz1, "$.function_name(Complex) - $z $base");
                                     
                     $z = $angle.complex(2.0, $base);
-                    is_approx($.function_name($z, %official_base{$base}), $sz2, "$.function_name(Complex) - $z $base");
+                    is_approx($.function_name($z, $base), $sz2, "$.function_name(Complex) - $z $base");
                 }
                 
                 # Complex.$.function_name tests
@@ -125,24 +125,24 @@ class TrigFunction
                 is_approx($zp1.$.function_name, $sz1, "Complex.$.function_name - $zp1 default");
                 is_approx($zp2.$.function_name, $sz2, "Complex.$.function_name - $zp2 default");
                 
-                for %official_base.keys -> $base {
+                for @official_bases -> $base {
                     my Complex $z = $angle.complex(0.0, $base);
-                    is_approx($z.$.function_name(%official_base{$base}), $sz0, "Complex.$.function_name - $z $base");
+                    is_approx($z.$.function_name($base), $sz0, "Complex.$.function_name - $z $base");
                 
                     $z = $angle.complex(1.0, $base);
-                    is_approx($z.$.function_name(%official_base{$base}), $sz1, "Complex.$.function_name - $z $base");
+                    is_approx($z.$.function_name($base), $sz1, "Complex.$.function_name - $z $base");
                 
                     $z = $angle.complex(2.0, $base);
-                    is_approx($z.$.function_name(%official_base{$base}), $sz2, "Complex.$.function_name - $z $base");
+                    is_approx($z.$.function_name($base), $sz2, "Complex.$.function_name - $z $base");
                 }
             }
             
             is($.function_name(Inf), $.plus_inf, "$.function_name(Inf) - default");
             is($.function_name(-Inf), $.minus_inf, "$.function_name(-Inf) - default");
-            for %official_base.keys -> $base
+            for @official_bases -> $base
             {
-                is($.function_name(Inf,  %official_base{$base}), $.plus_inf, "$.function_name(Inf) - $base");
-                is($.function_name(-Inf, %official_base{$base}), $.minus_inf, "$.function_name(-Inf) - $base");
+                is($.function_name(Inf,  $base), $.plus_inf, "$.function_name(Inf) - $base");
+                is($.function_name(-Inf, $base), $.minus_inf, "$.function_name(-Inf) - $base");
             }
         ];
         $code.=subst: '$.function_name', $.function_name, :g;
@@ -168,42 +168,42 @@ class TrigFunction
 
                 # $.inverted_function_name(Num) tests
                 is_approx($.function_name($.inverted_function_name($desired_result)), $desired_result, 
-                          "$.inverted_function_name(Num) - {$angle.num('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name($.inverted_function_name($desired_result, %official_base{$base}), %official_base{$base}), $desired_result, 
+                          "$.inverted_function_name(Num) - {$angle.num(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($.function_name($.inverted_function_name($desired_result, $base), $base), $desired_result, 
                               "$.inverted_function_name(Num) - {$angle.num($base)} $base");
                 }
                 
                 # $.inverted_function_name(:x(Num))
                 is_approx($.function_name($.inverted_function_name(:x($desired_result))), $desired_result, 
-                          "$.inverted_function_name(:x(Num)) - {$angle.num('radians')} default");
-                for %official_base.keys -> $base {
+                          "$.inverted_function_name(:x(Num)) - {$angle.num(Radians)} default");
+                for @official_bases -> $base {
                     is_approx($.function_name($.inverted_function_name(:x($desired_result), 
-                                                                       :base(%official_base{$base})), 
-                                              %official_base{$base}), $desired_result, 
+                                                                       :base($base)), 
+                                              $base), $desired_result, 
                               "$.inverted_function_name(:x(Num)) - {$angle.num($base)} $base");
                 }
                 
                 # Num.$.inverted_function_name tests
                 is_approx($desired_result.Num.$.inverted_function_name.$.function_name, $desired_result, 
-                          "Num.$.inverted_function_name - {$angle.num('radians')} default");
-                for %official_base.keys -> $base {
-                    is_approx($desired_result.Num.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
+                          "Num.$.inverted_function_name - {$angle.num(Radians)} default");
+                for @official_bases -> $base {
+                    is_approx($desired_result.Num.$.inverted_function_name($base).$.function_name($base), $desired_result,
                               "Num.$.inverted_function_name - {$angle.num($base)} $base");
                 }
                 
                 # $.inverted_function_name(Complex) tests
                 for ($desired_result + 0i, $desired_result + .5i, $desired_result + 2i) -> $z {
                     is_approx($.function_name($.inverted_function_name($z)), $z, 
-                              "$.inverted_function_name(Complex) - {$angle.num('radians')} default");
-                    for %official_base.keys -> $base {
-                        is_approx($.function_name($.inverted_function_name($z, %official_base{$base}), %official_base{$base}), $z, 
+                              "$.inverted_function_name(Complex) - {$angle.num(Radians)} default");
+                    for @official_bases -> $base {
+                        is_approx($.function_name($.inverted_function_name($z, $base), $base), $z, 
                                   "$.inverted_function_name(Complex) - {$angle.num($base)} $base");
                     }
                     is_approx($z.$.inverted_function_name.$.function_name, $z, 
-                              "Complex.$.inverted_function_name - {$angle.num('radians')} default");
-                    for %official_base.keys -> $base {
-                        is_approx($z.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $z, 
+                              "Complex.$.inverted_function_name - {$angle.num(Radians)} default");
+                    for @official_bases -> $base {
+                        is_approx($z.$.inverted_function_name($base).$.function_name($base), $z, 
                                   "Complex.$.inverted_function_name - {$angle.num($base)} $base");
                     }
                 }
@@ -214,16 +214,16 @@ class TrigFunction
                 # $.inverted_function_name(Rat) tests
                 is_approx($.function_name($.inverted_function_name($desired_result)), $desired_result, 
                           "$.inverted_function_name(Rat) - $desired_result default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name($.inverted_function_name($desired_result, %official_base{$base}), %official_base{$base}), $desired_result, 
+                for @official_bases -> $base {
+                    is_approx($.function_name($.inverted_function_name($desired_result, $base), $base), $desired_result, 
                               "$.inverted_function_name(Rat) - $desired_result $base");
                 }
                 
                 # Rat.$.inverted_function_name tests
                 is_approx($desired_result.$.inverted_function_name.$.function_name, $desired_result, 
                           "Rat.$.inverted_function_name - $desired_result default");
-                for %official_base.keys -> $base {
-                    is_approx($desired_result.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
+                for @official_bases -> $base {
+                    is_approx($desired_result.$.inverted_function_name($base).$.function_name($base), $desired_result,
                               "Rat.$.inverted_function_name - $desired_result $base");
                 }
                 
@@ -232,16 +232,16 @@ class TrigFunction
                 # $.inverted_function_name(Int) tests
                 is_approx($.function_name($.inverted_function_name($desired_result.numerator)), $desired_result, 
                           "$.inverted_function_name(Int) - $desired_result default");
-                for %official_base.keys -> $base {
-                    is_approx($.function_name($.inverted_function_name($desired_result.numerator, %official_base{$base}), %official_base{$base}), $desired_result, 
+                for @official_bases -> $base {
+                    is_approx($.function_name($.inverted_function_name($desired_result.numerator, $base), $base), $desired_result, 
                               "$.inverted_function_name(Int) - $desired_result $base");
                 }
                 
                 # Int.$.inverted_function_name tests
                 is_approx($desired_result.numerator.$.inverted_function_name.$.function_name, $desired_result, 
                           "Int.$.inverted_function_name - $desired_result default");
-                for %official_base.keys -> $base {
-                    is_approx($desired_result.numerator.$.inverted_function_name(%official_base{$base}).$.function_name(%official_base{$base}), $desired_result,
+                for @official_bases -> $base {
+                    is_approx($desired_result.numerator.$.inverted_function_name($base).$.function_name($base), $desired_result,
                               "Int.$.inverted_function_name - $desired_result $base");
                 }
             }
@@ -341,25 +341,25 @@ $file.say: q[
 
 for @sines -> $angle
 {
-    next if abs(cos($angle.num('radians'))) < 1e-6;     
-	my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
+    next if abs(cos($angle.num(Radians))) < 1e-6;     
+	my $desired_result = sin($angle.num(Radians)) / cos($angle.num(Radians));
 
     # atan2(Num) tests
     is_approx(tan(atan2($desired_result)), $desired_result, 
-              "atan2(Num) - {$angle.num('radians')} default");
+              "atan2(Num) - {$angle.num(Radians)} default");
     
     # atan2(:y(Num))
     is_approx(tan(atan2(:y($desired_result))), $desired_result, 
-              "atan2(:y(Num)) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(tan(atan2(:y($desired_result), :base(%official_base{$base})), 
-                      %official_base{$base}), $desired_result, 
+              "atan2(:y(Num)) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(tan(atan2(:y($desired_result), :base($base)), 
+                      $base), $desired_result, 
                   "atan2(:y(Num)) - {$angle.num($base)} $base");
     }
     
     # Num.atan2 tests
     is_approx($desired_result.Num.atan2.tan, $desired_result, 
-              "atan2(Num) - {$angle.num('radians')} default");
+              "atan2(Num) - {$angle.num(Radians)} default");
 }
 
 for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
@@ -387,31 +387,31 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
 
 for @sines -> $angle
 {
-    next if abs(cos($angle.num('radians'))) < 1e-6;     
-	my $desired_result = sin($angle.num('radians')) / cos($angle.num('radians'));
+    next if abs(cos($angle.num(Radians))) < 1e-6;     
+	my $desired_result = sin($angle.num(Radians)) / cos($angle.num(Radians));
 
     # atan2(Num) tests
     is_approx(tan(atan2($desired_result, 1)), $desired_result, 
-              "atan2(Num, 1) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(tan(atan2($desired_result, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+              "atan2(Num, 1) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(tan(atan2($desired_result, 1, $base), $base), $desired_result, 
                   "atan2(Num, 1) - {$angle.num($base)} $base");
     }
     
     # atan2(:x(Num))
     is_approx(tan(atan2(:y($desired_result), :x(1))), $desired_result, 
-              "atan2(:x(Num), :y(1)) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(tan(atan2(:y($desired_result), :x(1), :base(%official_base{$base})), 
-                                  %official_base{$base}), $desired_result, 
+              "atan2(:x(Num), :y(1)) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(tan(atan2(:y($desired_result), :x(1), :base($base)), 
+                                  $base), $desired_result, 
                   "atan2(:x(Num), :y(1)) - {$angle.num($base)} $base");
     }
     
     # # Num.atan2 tests
     # is_approx($desired_result.Num.atan2.tan, $desired_result, 
-    #           "atan2(Num) - {$angle.num('radians')} default");
-    # for %official_base.keys -> $base {
-    #     is_approx($desired_result.Num.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    #           "atan2(Num) - {$angle.num(Radians)} default");
+    # for @official_bases -> $base {
+    #     is_approx($desired_result.Num.atan2($base).tan($base), $desired_result,
     #               "atan2(Num) - {$angle.num($base)} $base");
     # }
 }
@@ -421,16 +421,16 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     # atan2(Rat) tests
     is_approx(tan(atan2($desired_result, 1/1)), $desired_result, 
               "atan2(Rat) - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx(tan(atan2($desired_result, 1/1, %official_base{$base}), %official_base{$base}), $desired_result, 
+    for @official_bases -> $base {
+        is_approx(tan(atan2($desired_result, 1/1, $base), $base), $desired_result, 
                   "atan2(Rat) - $desired_result $base");
     }
     
     # # Rat.atan2 tests
     # is_approx($desired_result.atan2.tan, $desired_result, 
     #           "atan2(Rat) - $desired_result default");
-    # for %official_base.keys -> $base {
-    #     is_approx($desired_result.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    # for @official_bases -> $base {
+    #     is_approx($desired_result.atan2($base).tan($base), $desired_result,
     #               "atan2(Rat) - $desired_result $base");
     # }
     
@@ -439,26 +439,26 @@ for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
     # atan2(Int) tests
     is_approx(tan(atan2($desired_result.numerator, 1)), $desired_result, 
               "atan2(Int) - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx(tan(atan2($desired_result.numerator, 1, %official_base{$base}), %official_base{$base}), $desired_result, 
+    for @official_bases -> $base {
+        is_approx(tan(atan2($desired_result.numerator, 1, $base), $base), $desired_result, 
                   "atan2(Int) - $desired_result $base");
     }
     
     # # Int.atan2 tests
     # is_approx($desired_result.numerator.atan2.tan, $desired_result, 
     #           "atan2(Int) - $desired_result default");
-    # for %official_base.keys -> $base {
-    #     is_approx($desired_result.numerator.atan2(%official_base{$base}).tan(%official_base{$base}), $desired_result,
+    # for @official_bases -> $base {
+    #     is_approx($desired_result.numerator.atan2($base).tan($base), $desired_result,
     #               "atan2(Int) - $desired_result $base");
     # }
 }
 
 # check that the proper quadrant is returned
 
-is_approx(atan2(4, 4, "degrees"), 45, "atan2(4, 4) is 45 degrees");
-is_approx(atan2(-4, 4, "degrees"), -45, "atan2(-4, 4) is -45 degrees");
-is_approx(atan2(4, -4, "degrees"), 135, "atan2(4, -4) is 135 degrees");
-is_approx(atan2(-4, -4, "degrees"), -135, "atan2(-4, -4) is -135 degrees");
+is_approx(atan2(4, 4, Degrees), 45, "atan2(4, 4) is 45 degrees");
+is_approx(atan2(-4, 4, Degrees), -45, "atan2(-4, 4) is -45 degrees");
+is_approx(atan2(4, -4, Degrees), 135, "atan2(4, -4) is 135 degrees");
+is_approx(atan2(-4, -4, Degrees), -135, "atan2(-4, -4) is -135 degrees");
 ];
 CloseOutputFile($file);
 

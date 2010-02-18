@@ -23,34 +23,34 @@ class AngleAndResult
     method complex($imaginary_part_in_radians, $base) {
         my $z_in_radians = $.angle_in_degrees.Num / 180.0 * pi + ($imaginary_part_in_radians)i; 
         given $base {
-            when "degrees"     { $z_in_radians * 180.0 / pi; }
-            when "radians"     { $z_in_radians; }
-            when "gradians"    { $z_in_radians * 200.0 / pi; }
-            when "revolutions" { $z_in_radians / (2.0 * pi); }
+            when Degrees     { $z_in_radians * 180.0 / pi; }
+            when Radians     { $z_in_radians; }
+            when Gradians    { $z_in_radians * 200.0 / pi; }
+            when Circles     { $z_in_radians / (2.0 * pi); }
         }
     }
     
     method num($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees.Num }
-            when "radians"     { $.angle_in_degrees.Num / 180.0 * pi }
-            when "gradians"    { $.angle_in_degrees.Num / 180.0 * 200.0 }
-            when "revolutions" { $.angle_in_degrees.Num / 360.0 }
+            when Degrees     { $.angle_in_degrees.Num }
+            when Radians     { $.angle_in_degrees.Num / 180.0 * pi }
+            when Gradians    { $.angle_in_degrees.Num / 180.0 * 200.0 }
+            when Circles     { $.angle_in_degrees.Num / 360.0 }
         }
     }
     
     method rat($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees / 1 }
-            when "radians"     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
-            when "gradians"    { $.angle_in_degrees * (200 / 180) }
-            when "revolutions" { $.angle_in_degrees / 360 }
+            when Degrees     { $.angle_in_degrees / 1 }
+            when Radians     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
+            when Gradians    { $.angle_in_degrees * (200 / 180) }
+            when Circles     { $.angle_in_degrees / 360 }
         }
     }
     
     method int($base) {
         given $base {
-            when "degrees"     { $.angle_in_degrees }
+            when Degrees     { $.angle_in_degrees }
         }
     }
 }
@@ -77,18 +77,12 @@ my @sines = (
 my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
 
 my @sinhes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num('radians')) - exp(-$_.num('radians'))) / 2.0)});
+                                             (exp($_.num(Radians)) - exp(-$_.num(Radians))) / 2.0)});
 
 my @coshes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num('radians')) + exp(-$_.num('radians'))) / 2.0)});
+                                             (exp($_.num(Radians)) + exp(-$_.num(Radians))) / 2.0)});
 
-
-my %official_base = (
-    "radians" => "radians",
-    "gradians" => "gradians", 
-    "degrees" => "degrees",
-    "revolutions" => 1
-);
+my @official_bases = (Radians, Degrees, Gradians, Circles);
 
 # cotanh tests
 
@@ -97,65 +91,65 @@ for @sines -> $angle
     	next if abs(sinh($angle.num('radians'))) < 1e-6; 	my $desired_result = cosh($angle.num('radians')) / sinh($angle.num('radians'));
 
     # cotanh(Num)
-    is_approx(cotanh($angle.num("radians")), $desired_result, 
-              "cotanh(Num) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh($angle.num($base), %official_base{$base}), $desired_result, 
+    is_approx(cotanh($angle.num(Radians)), $desired_result, 
+              "cotanh(Num) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cotanh($angle.num($base), $base), $desired_result, 
                   "cotanh(Num) - {$angle.num($base)} $base");
     }
     
     # cotanh(:x(Num))
-    is_approx(cotanh(:x($angle.num("radians"))), $desired_result, 
-              "cotanh(:x(Num)) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh(:x($angle.num($base)), :base(%official_base{$base})), $desired_result, 
+    is_approx(cotanh(:x($angle.num(Radians))), $desired_result, 
+              "cotanh(:x(Num)) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cotanh(:x($angle.num($base)), :base($base)), $desired_result, 
                   "cotanh(:x(Num)) - {$angle.num($base)} $base");
     }
 
     # Num.cotanh tests
-    is_approx($angle.num("radians").cotanh, $desired_result, 
-              "Num.cotanh - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx($angle.num($base).cotanh(%official_base{$base}), $desired_result, 
+    is_approx($angle.num(Radians).cotanh, $desired_result, 
+              "Num.cotanh - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx($angle.num($base).cotanh($base), $desired_result, 
                   "Num.cotanh - {$angle.num($base)} $base");
     }
 
     # cotanh(Rat)
-    is_approx(cotanh($angle.rat("radians")), $desired_result, 
-              "cotanh(Rat) - {$angle.rat('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh($angle.rat($base), %official_base{$base}), $desired_result, 
+    is_approx(cotanh($angle.rat(Radians)), $desired_result, 
+              "cotanh(Rat) - {$angle.rat(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cotanh($angle.rat($base), $base), $desired_result, 
                   "cotanh(Rat) - {$angle.rat($base)} $base");
     }
 
     # cotanh(:x(Rat))
-    is_approx(cotanh(:x($angle.rat("radians"))), $desired_result, 
-              "cotanh(:x(Rat)) - {$angle.rat('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh(:x($angle.rat($base)), :base(%official_base{$base})), $desired_result, 
+    is_approx(cotanh(:x($angle.rat(Radians))), $desired_result, 
+              "cotanh(:x(Rat)) - {$angle.rat(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cotanh(:x($angle.rat($base)), :base($base)), $desired_result, 
                   "cotanh(:x(Rat)) - {$angle.rat($base)} $base");
     }
 
     # Rat.cotanh tests
-    is_approx($angle.rat("radians").cotanh, $desired_result, 
-              "Rat.cotanh - {$angle.rat('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx($angle.rat($base).cotanh(%official_base{$base}), $desired_result, 
+    is_approx($angle.rat(Radians).cotanh, $desired_result, 
+              "Rat.cotanh - {$angle.rat(Radians)} default");
+    for @official_bases -> $base {
+        is_approx($angle.rat($base).cotanh($base), $desired_result, 
                   "Rat.cotanh - {$angle.rat($base)} $base");
     }
 
     # cotanh(Int)
-    is_approx(cotanh($angle.int("degrees"), %official_base{"degrees"}), $desired_result, 
-              "cotanh(Int) - {$angle.int('degrees')} degrees");
-    is_approx($angle.int('degrees').cotanh(%official_base{'degrees'}), $desired_result, 
-              "Int.cotanh - {$angle.int('degrees')} degrees");
+    is_approx(cotanh($angle.int(Degrees), Degrees), $desired_result, 
+              "cotanh(Int) - {$angle.int(Degrees)} degrees");
+    is_approx($angle.int(Degrees).cotanh(Degrees), $desired_result, 
+              "Int.cotanh - {$angle.int(Degrees)} degrees");
 
     # Complex tests
-    my Complex $zp0 = $angle.complex(0.0, "radians");
+    my Complex $zp0 = $angle.complex(0.0, Radians);
     my Complex $sz0 = $desired_result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, "radians");
+    my Complex $zp1 = $angle.complex(1.0, Radians);
     my Complex $sz1 = { cosh($_) / sinh ($_) }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, "radians");
+    my Complex $zp2 = $angle.complex(2.0, Radians);
     my Complex $sz2 = { cosh($_) / sinh ($_) }($zp2);
     
     # cotanh(Complex) tests
@@ -163,15 +157,15 @@ for @sines -> $angle
     is_approx(cotanh($zp1), $sz1, "cotanh(Complex) - $zp1 default");
     is_approx(cotanh($zp2), $sz2, "cotanh(Complex) - $zp2 default");
     
-    for %official_base.keys -> $base {
+    for @official_bases -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        is_approx(cotanh($z, %official_base{$base}), $sz0, "cotanh(Complex) - $z $base");
+        is_approx(cotanh($z, $base), $sz0, "cotanh(Complex) - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        is_approx(cotanh($z, %official_base{$base}), $sz1, "cotanh(Complex) - $z $base");
+        is_approx(cotanh($z, $base), $sz1, "cotanh(Complex) - $z $base");
                         
         $z = $angle.complex(2.0, $base);
-        is_approx(cotanh($z, %official_base{$base}), $sz2, "cotanh(Complex) - $z $base");
+        is_approx(cotanh($z, $base), $sz2, "cotanh(Complex) - $z $base");
     }
     
     # Complex.cotanh tests
@@ -179,24 +173,24 @@ for @sines -> $angle
     is_approx($zp1.cotanh, $sz1, "Complex.cotanh - $zp1 default");
     is_approx($zp2.cotanh, $sz2, "Complex.cotanh - $zp2 default");
     
-    for %official_base.keys -> $base {
+    for @official_bases -> $base {
         my Complex $z = $angle.complex(0.0, $base);
-        is_approx($z.cotanh(%official_base{$base}), $sz0, "Complex.cotanh - $z $base");
+        is_approx($z.cotanh($base), $sz0, "Complex.cotanh - $z $base");
     
         $z = $angle.complex(1.0, $base);
-        is_approx($z.cotanh(%official_base{$base}), $sz1, "Complex.cotanh - $z $base");
+        is_approx($z.cotanh($base), $sz1, "Complex.cotanh - $z $base");
     
         $z = $angle.complex(2.0, $base);
-        is_approx($z.cotanh(%official_base{$base}), $sz2, "Complex.cotanh - $z $base");
+        is_approx($z.cotanh($base), $sz2, "Complex.cotanh - $z $base");
     }
 }
 
 is(cotanh(Inf), 1, "cotanh(Inf) - default");
 is(cotanh(-Inf), -1, "cotanh(-Inf) - default");
-for %official_base.keys -> $base
+for @official_bases -> $base
 {
-    is(cotanh(Inf,  %official_base{$base}), 1, "cotanh(Inf) - $base");
-    is(cotanh(-Inf, %official_base{$base}), -1, "cotanh(-Inf) - $base");
+    is(cotanh(Inf,  $base), 1, "cotanh(Inf) - $base");
+    is(cotanh(-Inf, $base), -1, "cotanh(-Inf) - $base");
 }
         
 
@@ -208,42 +202,42 @@ for @sines -> $angle
 
     # acotanh(Num) tests
     is_approx(cotanh(acotanh($desired_result)), $desired_result, 
-              "acotanh(Num) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh(acotanh($desired_result, %official_base{$base}), %official_base{$base}), $desired_result, 
+              "acotanh(Num) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx(cotanh(acotanh($desired_result, $base), $base), $desired_result, 
                   "acotanh(Num) - {$angle.num($base)} $base");
     }
     
     # acotanh(:x(Num))
     is_approx(cotanh(acotanh(:x($desired_result))), $desired_result, 
-              "acotanh(:x(Num)) - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
+              "acotanh(:x(Num)) - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
         is_approx(cotanh(acotanh(:x($desired_result), 
-                                                           :base(%official_base{$base})), 
-                                  %official_base{$base}), $desired_result, 
+                                                           :base($base)), 
+                                  $base), $desired_result, 
                   "acotanh(:x(Num)) - {$angle.num($base)} $base");
     }
     
     # Num.acotanh tests
     is_approx($desired_result.Num.acotanh.cotanh, $desired_result, 
-              "Num.acotanh - {$angle.num('radians')} default");
-    for %official_base.keys -> $base {
-        is_approx($desired_result.Num.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $desired_result,
+              "Num.acotanh - {$angle.num(Radians)} default");
+    for @official_bases -> $base {
+        is_approx($desired_result.Num.acotanh($base).cotanh($base), $desired_result,
                   "Num.acotanh - {$angle.num($base)} $base");
     }
     
     # acotanh(Complex) tests
     for ($desired_result + 0i, $desired_result + .5i, $desired_result + 2i) -> $z {
         is_approx(cotanh(acotanh($z)), $z, 
-                  "acotanh(Complex) - {$angle.num('radians')} default");
-        for %official_base.keys -> $base {
-            is_approx(cotanh(acotanh($z, %official_base{$base}), %official_base{$base}), $z, 
+                  "acotanh(Complex) - {$angle.num(Radians)} default");
+        for @official_bases -> $base {
+            is_approx(cotanh(acotanh($z, $base), $base), $z, 
                       "acotanh(Complex) - {$angle.num($base)} $base");
         }
         is_approx($z.acotanh.cotanh, $z, 
-                  "Complex.acotanh - {$angle.num('radians')} default");
-        for %official_base.keys -> $base {
-            is_approx($z.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $z, 
+                  "Complex.acotanh - {$angle.num(Radians)} default");
+        for @official_bases -> $base {
+            is_approx($z.acotanh($base).cotanh($base), $z, 
                       "Complex.acotanh - {$angle.num($base)} $base");
         }
     }
@@ -254,16 +248,16 @@ for (-4/2, -3/2, 3/2, 4/2) -> $desired_result
     # acotanh(Rat) tests
     is_approx(cotanh(acotanh($desired_result)), $desired_result, 
               "acotanh(Rat) - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh(acotanh($desired_result, %official_base{$base}), %official_base{$base}), $desired_result, 
+    for @official_bases -> $base {
+        is_approx(cotanh(acotanh($desired_result, $base), $base), $desired_result, 
                   "acotanh(Rat) - $desired_result $base");
     }
     
     # Rat.acotanh tests
     is_approx($desired_result.acotanh.cotanh, $desired_result, 
               "Rat.acotanh - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx($desired_result.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $desired_result,
+    for @official_bases -> $base {
+        is_approx($desired_result.acotanh($base).cotanh($base), $desired_result,
                   "Rat.acotanh - $desired_result $base");
     }
     
@@ -272,16 +266,16 @@ for (-4/2, -3/2, 3/2, 4/2) -> $desired_result
     # acotanh(Int) tests
     is_approx(cotanh(acotanh($desired_result.numerator)), $desired_result, 
               "acotanh(Int) - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx(cotanh(acotanh($desired_result.numerator, %official_base{$base}), %official_base{$base}), $desired_result, 
+    for @official_bases -> $base {
+        is_approx(cotanh(acotanh($desired_result.numerator, $base), $base), $desired_result, 
                   "acotanh(Int) - $desired_result $base");
     }
     
     # Int.acotanh tests
     is_approx($desired_result.numerator.acotanh.cotanh, $desired_result, 
               "Int.acotanh - $desired_result default");
-    for %official_base.keys -> $base {
-        is_approx($desired_result.numerator.acotanh(%official_base{$base}).cotanh(%official_base{$base}), $desired_result,
+    for @official_bases -> $base {
+        is_approx($desired_result.numerator.acotanh($base).cotanh($base), $desired_result,
                   "Int.acotanh - $desired_result $base");
     }
 }
