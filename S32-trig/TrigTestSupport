@@ -12,43 +12,32 @@ class AngleAndResult
 {
     has $.angle_in_degrees;
     has $.result;
-    
+
+    INIT {
+        our @radians-to-whatever = (1, 180 / pi, 200 / pi, 1 / (2 * pi));
+        our @degrees-to-whatever = ((312689/99532) / 180, 1, 200 / 180, 1 / 360);
+        our @degrees-to-whatever-num = @degrees-to-whatever.map({ .Num });
+    }
+
     multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
     
     method complex($imaginary_part_in_radians, $base) {
-        my $z_in_radians = $.angle_in_degrees.Num / 180.0 * pi + ($imaginary_part_in_radians)i; 
-        given $base {
-            when Degrees     { $z_in_radians * 180.0 / pi; }
-            when Radians     { $z_in_radians; }
-            when Gradians    { $z_in_radians * 200.0 / pi; }
-            when Circles     { $z_in_radians / (2.0 * pi); }
-        }
+        my $z_in_radians = $.angle_in_degrees / 180.0 * pi + ($imaginary_part_in_radians)i;
+		$z_in_radians * pir::get_global__Ps('@radians-to-whatever')[$base];
     }
     
     method num($base) {
-        given $base {
-            when Degrees     { $.angle_in_degrees.Num }
-            when Radians     { $.angle_in_degrees.Num / 180.0 * pi }
-            when Gradians    { $.angle_in_degrees.Num / 180.0 * 200.0 }
-            when Circles     { $.angle_in_degrees.Num / 360.0 }
-        }
+		$.angle_in_degrees * pir::get_global__Ps('@degrees-to-whatever-num')[$base];
     }
     
     method rat($base) {
-        given $base {
-            when Degrees     { $.angle_in_degrees / 1 }
-            when Radians     { $.angle_in_degrees / 180 * (314159265 / 100000000) }
-            when Gradians    { $.angle_in_degrees * (200 / 180) }
-            when Circles     { $.angle_in_degrees / 360 }
-        }
+		$.angle_in_degrees * pir::get_global__Ps('@degrees-to-whatever')[$base];
     }
     
     method int($base) {
-        given $base {
-            when Degrees     { $.angle_in_degrees }
-        }
+        $.angle_in_degrees;
     }
 }
 
