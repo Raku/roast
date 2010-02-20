@@ -17,7 +17,6 @@ is ~(8..11), "8 9 10 11",   "(..) works on carried numbers (3)";
 is ~("a".."c"), "a b c", "(..) works on chars (1)";
 is ~("a".."a"), "a",     "(..) works on chars (2)";
 is ~("b".."a"), "",      "(..) works on chars (3)";
-#?rakudo 2 todo "Alphabetic ranges misbehave in ng"
 is ~("Y".."AB"), "Y Z AA AB", "(..) works on carried chars (3)";
 is ~("AB".."Y"), "",     "(..) works on auto-rev carried chars (4)";
 
