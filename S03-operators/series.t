@@ -3,16 +3,50 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 67;
+plan *;
 
 # some tests firsts that don't require lazy lists
 
 {
-    # arity 1
-    my @a = 1...{ $_ >= 3 ?? () !! $_ + 1 };
-    is @a.join(', '), '1, 2, 3', 'simply series with one item on the LHS';
+    my @a = 1 ... 5;
+    is @a.join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
 }
 
+{
+    my @a = 1, 3 ... 7;
+    is @a.join(', '), '1, 3, 5, 7', 'simple additive series with two items on the LHS';
+}
+
+{
+    my @a = 1, 3, 5 ... 9;
+    is @a.join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
+}
+
+{
+    my @a = 1, 3, 9 ... 81;
+    is @a.join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
+}
+
+{
+    # arity 1
+    my @a = 1, { $_ + 2 } ... 7;
+    is @a.join(', '), '1, 3, 5, 7', 'simple series with one item and closure on the LHS';
+}
+
+{
+    # arity 2
+    my @fib = 1, 1, { $^x + $^y } ... 13;
+    is @fix.elems, 7, 'fibonacci generator with series op works (-1)';
+    is @fib[0], 1, 'fibonacci generator with series op works (0)';
+    is @fib[1], 1, 'fibonacci generator with series op works (1)';
+    is @fib[2], 2, 'fibonacci generator with series op works (2)';
+    is @fib[3], 3, 'fibonacci generator with series op works (3)';
+    is @fib[4], 5, 'fibonacci generator with series op works (4)';
+    is @fib[5], 8, 'fibonacci generator with series op works (5)';
+    is @fib[6], 13, 'fibonacci generator with series op works (6)';
+}
+
+#?rakudo skip "Not up to current spec"
 {
     # arity 2
     # http://www.perlmonks.org/?node_id=772778
@@ -23,6 +57,7 @@ plan 67;
     is gcd(42, 24), 6, 'gcd with infix:<...> (2)';
 }
 
+#?rakudo skip "state NYI"
 {
     # slurpy
 	sub nextprime( *@prev_primes ) {
@@ -46,7 +81,7 @@ plan 67;
 
 #?rakudo skip 'lazy lists'
 {
-    my @fib = 1, 1 ... {$^x + $^y};
+    my @fib = 1, 1, { $^x + $^y } ... *;
     is @fib[0], 1, 'fibonacci generator with series op works (0)';
     is @fib[1], 1, 'fibonacci generator with series op works (1)';
     is @fib[2], 2, 'fibonacci generator with series op works (2)';
@@ -188,5 +223,7 @@ plan 67;
     is ~( 1 ... *+2, 6 ... *+3, 9), ~<1 3 5 8>,
             'expression with two magic series operators and non-matching end points';
 }
+
+done_testing;
 
 # vim: ft=perl6
