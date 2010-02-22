@@ -50,23 +50,18 @@ plan *;
     check $_ for @a;
 }
 
-# The following tests are all legal syntactically, but neither
-# of these do anything other than produce a closure muliple
-# times without calling it.
-# See Larry's clarification on p6l:
-# L<http://www.nntp.perl.org/group/perl.perl6.language/26071>
-
-#?rakudo todo '{ ... } for 1..3 should not execute the closure'
+#?rakudo todo '{ ... } for 1..3 should execute the closure'
 {
     my $a = 0;
     { $a++ } for 1..3;
-    is $a, 0, 'the closure was never called';
+    is $a, 3, 'the closure was called';
 }
 
+#?rakudo todo '{ ... } for 1..3 should execute the closure'
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;
-    is $a, 0, 'the closure was never called';
+    is $a, 6, 'the closure was called';
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
@@ -76,21 +71,6 @@ plan *;
     $i += $_ for 1..3;
     is $_, 10, 'outer $_ did not get updated in lhs of for';
     is $i, 1+2+3, 'postfix for worked';
-}
-
-# RT #61494
-{
-    eval 'say for 1';
-    ok $! ~~ Exception, '"say for 1" (one space) is an error';
-    my $errmsg = "$!";
-
-    eval 'say  for 1';
-    ok $! ~~ Exception, '"say  for 1" (two spaces) is an error';
-    # XXX The problem with this test is the error messages might differ
-    #     for innocuous reasons (e.g., a line number)
-    #?rakudo 2 todo 'RT #61494'
-    is "$!", $errmsg, 'error for two spaces is the same as one space';
-    ok "$!" ~~ /« say »/, 'error message is for "say"';
 }
 
 # L<S04/The for statement/When used as statement modifiers on implicit blocks>
