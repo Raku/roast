@@ -7,44 +7,14 @@ plan *;
 
 # some tests firsts that don't require lazy lists
 
-{
-    my @a = 1 ... 5;
-    is @a.join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
-}
+is (1 ... 5).join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
+is (1, 3 ... 7).join(', '), '1, 3, 5, 7', 'simple additive series with two items on the LHS';
+is (1, 3, 5 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
+is (1, 3, 9 ... 81).join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
+is (1, { $_ + 2 } ... 7).join(', '), '1, 3, 5, 7', 'simple series with one item and closure on the LHS';
 
-{
-    my @a = 1, 3 ... 7;
-    is @a.join(', '), '1, 3, 5, 7', 'simple additive series with two items on the LHS';
-}
+is (1, 1, { $^x + $^y } ... 13).join(', '), '1, 1, 2, 3, 5, 8, 13', 'limited fibonacci generator';
 
-{
-    my @a = 1, 3, 5 ... 9;
-    is @a.join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
-}
-
-{
-    my @a = 1, 3, 9 ... 81;
-    is @a.join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
-}
-
-{
-    # arity 1
-    my @a = 1, { $_ + 2 } ... 7;
-    is @a.join(', '), '1, 3, 5, 7', 'simple series with one item and closure on the LHS';
-}
-
-{
-    # arity 2
-    my @fib = 1, 1, { $^x + $^y } ... 13;
-    is @fix.elems, 7, 'fibonacci generator with series op works (-1)';
-    is @fib[0], 1, 'fibonacci generator with series op works (0)';
-    is @fib[1], 1, 'fibonacci generator with series op works (1)';
-    is @fib[2], 2, 'fibonacci generator with series op works (2)';
-    is @fib[3], 3, 'fibonacci generator with series op works (3)';
-    is @fib[4], 5, 'fibonacci generator with series op works (4)';
-    is @fib[5], 8, 'fibonacci generator with series op works (5)';
-    is @fib[6], 13, 'fibonacci generator with series op works (6)';
-}
 
 #?rakudo skip "Not up to current spec"
 {
@@ -56,6 +26,18 @@ plan *;
     is gcd(2, 1), 1, 'gcd with infix:<...> (1)';
     is gcd(42, 24), 6, 'gcd with infix:<...> (2)';
 }
+
+is (1 ... *).batch(5).join(', '), '1, 2, 3, 4, 5', 'lazy series with one item on the LHS';
+is (1, 3 ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'lazy additive series with two items on the LHS';
+is (1, 3, 5 ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'lazy additive series with three items on the LHS';
+is (1, 3, 9 ... *).batch(5).join(', '), '1, 3, 9, 27, 81', 'lazy multiplicative series with three items on the LHS';
+is (1, 1 ... *).batch(5).join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with two items on the LHS';
+is (1, 1, 1 ... *).batch(5).join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with three items on the LHS';
+is (1, { $_ + 2 } ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'lazy series with one item and arity-1 closure on the LHS';
+
+is (1, 1, { $^x + $^y } ... *).batch(7).join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
+#?rakudo skip "Symbol '&infix:<+>' not predeclared in <anonymous>"
+is (1, 1, &infix:<+> ... *).batch(7).join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
 
 #?rakudo skip "state NYI"
 {
@@ -79,76 +61,16 @@ plan *;
 	is @primes[5], 13, 'prime generator with series op works (0)';
 }
 
-#?rakudo skip 'lazy lists'
-{
-    my @fib = 1, 1, { $^x + $^y } ... *;
-    is @fib[0], 1, 'fibonacci generator with series op works (0)';
-    is @fib[1], 1, 'fibonacci generator with series op works (1)';
-    is @fib[2], 2, 'fibonacci generator with series op works (2)';
-    is @fib[3], 3, 'fibonacci generator with series op works (3)';
-    is @fib[4], 5, 'fibonacci generator with series op works (4)';
-    is @fib[5], 8, 'fibonacci generator with series op works (5)';
-}
+is ('a'  ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string from single generator';
+#?rakudo 2 skip "Rakudo treats <a b> as a single object, which doesn't have a .succ"
+is (<a b> ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string from double generator';
+is (<a b>, { .succ } ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string and arity-1';
 
-#?rakudo skip 'lazy lists'
-{
-    my @fib = 1, 1 ... &infix:<+>;
-    is @fib[0], 1, 'fibonacci generator with series op works (0)';
-    is @fib[1], 1, 'fibonacci generator with series op works (1)';
-    is @fib[2], 2, 'fibonacci generator with series op works (2)';
-    is @fib[3], 3, 'fibonacci generator with series op works (3)';
-    is @fib[4], 5, 'fibonacci generator with series op works (4)';
-    is @fib[5], 8, 'fibonacci generator with series op works (5)';
-}
+is (8, 7 ... *).batch(5).join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
+is (8, 7, 6 ... *).batch(5).join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
+is (16, 8, 4 ... *).batch(5).join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
 
-#?rakudo skip 'lazy lists'
-{
-    my @even = 0 ... { $_ + 2 };
-    is @even[0], 0, 'infix:<...> with arity one works (0)';
-    is @even[1], 2, 'infix:<...> with arity one works (1)';
-    is @even[2], 4, 'infix:<...> with arity one works (2)';
-    is @even[3], 6, 'infix:<...> with arity one works (3)';
-}
 
-#?rakudo skip 'lazy lists'
-{
-    my @letters = <a b> ... { .succ };
-    is @letters[0], 'a', 'infix:<...> works arith arity one (.succ) (0)';
-    is @letters[1], 'b', 'infix:<...> works arith arity one (.succ) (1)';
-    is @letters[2], 'c', 'infix:<...> works arith arity one (.succ) (2)';
-    is @letters[3], 'd', 'infix:<...> works arith arity one (.succ) (3)';
-}
-
-#?rakudo skip 'lazy lists'
-{
-    my @even = 0, 2, 4, ... *;
-    is @even[0], 0,  'infix:<...> with * magic (arithmetic, 0)';
-    is @even[1], 2 , 'infix:<...> with * magic (arithmetic, 1)';
-    is @even[2], 4,  'infix:<...> with * magic (arithmetic, 2)';
-    is @even[3], 6,  'infix:<...> with * magic (arithmetic, 3)';
-    is @even[4], 8,  'infix:<...> with * magic (arithmetic, 4)';
-    is @even[5], 10, 'infix:<...> with * magic (arithmetic, 5)';
-}
-
-#?rakudo skip 'lazy lists'
-{
-    my @dec = 8, 7, 6 ... *;
-    is @dec[0..5].join('|'), '8|7|6|5|4|3', 'magic series with decreasing values';
-}
-
-#?rakudo skip 'lazy lists'
-{
-    my @np = 16, 8, 4 ... *;
-    is @np[0..4].join('|'), '16|8|4|2|1', 'magic, decreasing power series';
-}
-
-#?rakudo skip 'lazy lists'
-{
-    my @powers_of_two = 1, 2, 4, 8 ... *;
-    is @powers_of_two[0..5].join('|'),
-       '1|2|4|8|16|32',
-       'infix:<...> with * magic (geometric)';
-}
 
 #?rakudo skip 'lazy lists'
 {
@@ -160,7 +82,7 @@ plan *;
 
 }
 
-#?rakudo skip 'lazy lists'
+#?rakudo skip 'Is this really what this should do?'
 { # 1 1, 2 2s, 3 3s, etc.
     my @xxed = 1 ... { my $next = $^a + 1; $next xx $next };
     is @xxed[0], 1,  'infix:<...> with list return (0)';
@@ -174,6 +96,7 @@ plan *;
 
 # L<S03/List infix precedence/If the right operand is * (Whatever)>
 
+# Does this test belond in series?
 #?rakudo skip 'lazy lists'
 {
     my @abc = <a b c>;
@@ -185,26 +108,24 @@ plan *;
     is @abccc[4], 'c', '@array, * will repeat last element (4)';
 }
 
-
 {
-    is ~(1, 2 ... *+1, 5),  ~(1..5),
+    is ~(1, 2, *+1 ... 5),  ~(1..5),
         'series operator with closure and limit (1)';
-    is ~(5, 4 ... *-1, 1),  ~(5, 4, 3, 2, 1),
+    is ~(5, 4, *-1 ... 1),  ~(5, 4, 3, 2, 1),
         'series operator with closure and limit (negative increment) (2)';
-    is ~(1, 3 ... *+2, 5),  ~(1, 3, 5),
+    is ~(1, 3, *+2 ... 5),  ~(1, 3, 5),
         'series operator with closure and limit (3)';
-    is ~(2, 4 ... *+2, 7),  ~(2, 4, 6),
+    is ~(2, 4, *+2 ... 7),  ~(2, 4, 6),
         'series operator with closure and limit that does not match';
-    is ~(2 ... *+1, 5),  ~(2..5),
+    is ~(2, *+1 ... 5),  ~(2..5),
         'series operator with closure and limit (1) (one item on LHS)';
-    is ~(4 ... *-1, 1),  ~(4, 3, 2, 1),
+    is ~(4, *-1 ... 1),  ~(4, 3, 2, 1),
         'series operator with closure and limit (negative increment) (2) (one item on LHS)';
-    is ~(3 ... *+2, 5),  ~(3, 5),
+    is ~(3, *+2 ... 5),  ~(3, 5),
         'series operator with closure and limit (3) (one item on LHS)';
-    is ~(4 ... *+2, 7),  ~(4, 6),
+    is ~(4, *+2 ... 7),  ~(4, 6),
         'series operator with closure and limit that does not match (one item on LHS)';
-    #?rakudo skip 'lazy lists'
-    is (1, 3 ... *+2, -1)[4], 9,
+    is (1, 3, *+2 ... -1)[4], 9,
        '*+2 closure with limit < last number results in infinite list';
 }
 
@@ -218,9 +139,9 @@ plan *;
 
 #?rakudo skip 'slices, series'
 {
-    is ~( 1 ... *+1, 5 ... *+2, 9), ~<1 2 3 4 5 7 9>,
+    is ~( 1, *+1 ... 5, *+2 ... 9), ~<1 2 3 4 5 7 9>,
             'expression with two magic series operators';
-    is ~( 1 ... *+2, 6 ... *+3, 9), ~<1 3 5 8>,
+    is ~( 1, *+2 ... 6, *+3 ... 9), ~<1 3 5 8>,
             'expression with two magic series operators and non-matching end points';
 }
 
