@@ -13,11 +13,9 @@ class AngleAndResult
     has $.angle_in_degrees;
     has $.result;
 
-    INIT {
-        our @radians-to-whatever = (1, 180 / pi, 200 / pi, 1 / (2 * pi));
-        our @degrees-to-whatever = ((312689/99532) / 180, 1, 200 / 180, 1 / 360);
-        our @degrees-to-whatever-num = @degrees-to-whatever.map({ .Num });
-    }
+    our @radians-to-whatever = (1, 180 / pi, 200 / pi, 1 / (2 * pi));
+    our @degrees-to-whatever = ((312689/99532) / 180, 1, 200 / 180, 1 / 360);
+    our @degrees-to-whatever-num = @degrees-to-whatever.map({ .Num });
 
     multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
@@ -25,15 +23,15 @@ class AngleAndResult
     
     method complex($imaginary_part_in_radians, $base) {
         my $z_in_radians = $.angle_in_degrees / 180.0 * pi + ($imaginary_part_in_radians)i;
-		$z_in_radians * pir::get_global__Ps('@radians-to-whatever')[$base];
+		$z_in_radians * @radians-to-whatever[$base];
     }
     
     method num($base) {
-		$.angle_in_degrees * pir::get_global__Ps('@degrees-to-whatever-num')[$base];
+		$.angle_in_degrees * @degrees-to-whatever-num[$base];
     }
     
     method rat($base) {
-		$.angle_in_degrees * pir::get_global__Ps('@degrees-to-whatever')[$base];
+		$.angle_in_degrees * @degrees-to-whatever[$base];
     }
     
     method int($base) {
