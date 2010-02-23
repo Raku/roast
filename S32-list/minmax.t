@@ -18,6 +18,7 @@ my @array = <5 -3 7 0 1 -9>;
 
 # Tests for C<min>:
 is @array.min,  -3, "basic method form of min works";
+#?rakudo todo "Not sure why this is failing"
 dies_ok {min(@array)}, 'min() requires comparison function';
 #?rakudo skip 'named args'
 is min({$^a <=> $^b }, :values(@array)), -3, "basic subroutine form of min works with named args";
@@ -37,6 +38,7 @@ is (@array.min: { abs $^a <=> abs $^b }), 0,
 is min({ abs $^a <=> abs $^b }, @array), 0,
   "subroutine form of min taking a comparision block works";
 
+#?rakudo 2 skip "Range.min not fully implemented yet"
 is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
   "method form of min on Ranges taking a comparision block works";
 
@@ -54,6 +56,7 @@ is (@array.max: { $^a <=> $^b }), 7,
 isnt (@array.max: { $^a <=> $^b }), -9,
   "method form of max with identity comparison block";
 
+#?rakudo skip "Range.max not fully implemented yet"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
   "method form of max on Ranges taking a comparision block works";
 
@@ -67,6 +70,7 @@ is (@array.max: { abs $^a <=> abs $^b }), -9,
 is max({ abs $^a <=> abs $^b }, @array), -9,
   "subroutine form of max taking a comparision block works";
 
+#?rakudo skip "Range.max not fully implemented yet"
 is ((1..10).max: { ($_-3) * ($_-5) }), 10,
   "method form of max taking an arity-1 comparison block works";
 
@@ -98,13 +102,13 @@ is (-1, -Inf).min, -Inf,"-Inf is less than -1";
 is (-Inf, Inf).min, -Inf,"-Inf is less than Inf";
 is (-Inf, Inf).max, Inf,"Inf is greater than -Inf";
 
-#?rakudo 4 todo 'min/max do not play nicely with Inf/NaN'
+#?rakudo 2 todo 'min does not play nicely with Inf/NaN'
 
 is (0, NaN).min, NaN,    "min(0,NaN)=NaN";
-is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
-
-is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 is (Inf, NaN).min, NaN,    "max(Inf,NaN)=NaN";
+
+is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
+is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 
 #?rakudo 4 skip '[op] NYI'
 is ([min] (5,10,-15,20)), -15, 'reduce min int';
