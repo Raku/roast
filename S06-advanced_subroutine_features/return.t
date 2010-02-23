@@ -197,14 +197,12 @@ sub foo_hash {
 
 my %foo_hash_return = foo_hash();
 ok(%foo_hash_return ~~ Hash);
-#?rakudo skip 'numification of return value from Hash.keys'
 is(+%foo_hash_return.keys, 3, 'got the right number of return value');
 is(%foo_hash_return<foo>, 1, 'got the right return value');
 is(%foo_hash_return<bar>, 2, 'got the right return value');
 is(%foo_hash_return<baz>, 3, 'got the right return value');
 
 my $keys;
-#?rakudo 2 todo 'numification of return value from Hash.keys'
 lives_ok({ $keys = +(foo_hash().keys) },
     "can call method on return value (hashref)");
 is($keys, 3, "got right result");
@@ -220,13 +218,11 @@ sub foo_hash_ref {
 
 my $foo_hash_ref_return = foo_hash_ref();
 ok($foo_hash_ref_return ~~ Hash);
-#?rakudo skip 'numification of return value from Hash.keys'
 is(+$foo_hash_ref_return.keys, 3, 'got the right number of return value');
 is($foo_hash_ref_return<foo>, 1, 'got the right return value');
 is($foo_hash_ref_return<bar>, 2, 'got the right return value');
 is($foo_hash_ref_return<baz>, 3, 'got the right return value');
 
-#?rakudo 2 todo 'numification of return value from Hash.keys'
 lives_ok({ $keys = +(foo_hash_ref().keys) },
     "can call method on return value (hashref)");
 is($keys, 3, "got right result");
