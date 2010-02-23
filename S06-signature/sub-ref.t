@@ -56,6 +56,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
     $c( 2, 3, 4, 5 );
 
+    #?rakudo 2 todo 'RT 63974'
     is $topic, 2, '$_ got right value for code ref';
     is @topic_array, ( 3, 4, 5 ), '@_ got right value in code ref';
 }
@@ -108,10 +109,11 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     my $inc1 = $mkinc();
     my $inc2 = $mkinc();
 
-    is($inc1(), 0, "clousures: inc1 == 0");
-    is($inc1(), 1, "clousures: inc1 == 1");
-    is($inc2(), 0, "clousures: inc2 == 0");
-    is($inc2(), 1, "clousures: inc2 == 1");
+    is($inc1(), 0, "closures: inc1 == 0");
+    is($inc1(), 1, "closures: inc1 == 1");
+    #?rakudo 2 todo 'RT 73034'
+    is($inc2(), 0, "closures: inc2 == 0");
+    is($inc2(), 1, "closures: inc2 == 1");
 }
 
 # vim: ft=perl6
