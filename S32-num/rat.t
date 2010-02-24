@@ -95,8 +95,8 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 # Give the arithmetical operators a workout
 
-for (1/2, 2/3, -1/4, 4/5, 2/7, 65/8) -> $a {
-    for (-7, -1, 0, 1, 2, 5, 7, 42) -> $b {
+for 1/2, 2/3, -1/4, 4/5, 2/7, 65/8 -> $a {
+    for -7, -1, 0, 1, 2, 5, 7, 42 -> $b {
         is_approx($a + $b, $a.Num + $b.Num, "Rat + Int works ($a, $b)");
         is_approx($b + $a, $b.Num + $a.Num, "Int + Rat works ($a, $b)");
         is_approx($a - $b, $a.Num - $b.Num, "Rat - Int works ($a, $b)");
@@ -204,6 +204,10 @@ isa_ok (1/2).Rat, Rat, '... and actually returns a Rat';
 ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 #?rakudo skip '!==='
 ok 1/2 !=== 1/3, '=== with false outcome';
+
+# http://irclog.perlgeek.de/perl6/2010-02-24#i_2027452
+is (3/0).Num, Inf, "(3/0).Num = +Inf";
+is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
 done_testing;
 
