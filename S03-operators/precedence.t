@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 55;
+plan 50;
 
 
 # terms
@@ -74,17 +74,9 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 # junctive or
 
-{ # test that | and ^ are on the same level
-    my $a = (1 | 2 ^ 3);
-    my $b = (1 ^ 2 | 3);
-
-    ok(?($a == 3), "only one is eq 3");
-    ok(?($a != 3), "either is ne 3");
-    ok(?($a == 1), "either is eq 1");
-    ok(?($b == 2), "either is eq 2, ne 3");
-    ok(?($b == 1), "either is eq 1");
-    ok(?($b == 3), "either is eq 3, of which only one is");
-    ok(!($b != 3), "1 is ne 3, and (2 | 3) is both ne 3 and eq 3, so it's ne, so 1 ^ 2 | 3");
+{ # test that | and ^ are on the same level but parsefail
+    eval_dies_ok 'my $a = (1 | 2 ^ 3)', '| and ^ may not associate';
+    eval_dies_ok 'my $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
 {
