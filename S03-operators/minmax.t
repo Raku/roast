@@ -26,10 +26,10 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 {
-    is "foo" min +Inf, "foo"
-    is "foo" min -Inf, -Inf
-    is "foo" max +Inf, +Inf
-    is "foo" max -Inf, "foo"
+    is "foo" min +Inf, "foo";
+    is "foo" min -Inf, -Inf;
+    is "foo" max +Inf, +Inf;
+    is "foo" max -Inf, "foo";
 }
 
 #testing the minmax operator
