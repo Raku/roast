@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 38;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -23,17 +23,11 @@ dies_ok {min(@array)}, 'min() requires comparison function';
 #?rakudo skip 'named args'
 is min({$^a <=> $^b }, :values(@array)), -9, "basic subroutine form of min works with named args";
 
-#the isnt's here seem useful only if a coder mixes up (somehow) min and max. Is it just me? --lue
-
 is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
-isnt (@array.min: { $^a <=> $^b }), 7,
-  "method form of min with identity comparison block";
 
 is min({ $^a <=> $^b }, @array), -9,
   "subroutine form of min with identity comparison block works";
-isnt min({ $^a <=> $^b }, @array), 7,
-  "subroutine form of min with identity comparison block";
 
 is (@array.min: { abs $^a <=> abs $^b }), 0,
   "method form of min taking a comparision block works";
@@ -55,8 +49,6 @@ is max(:values(@array)), 7, "basic subroutine form of max works with named args"
 
 is (@array.max: { $^a <=> $^b }), 7,
   "method form of max with identity comparison block works";
-isnt (@array.max: { $^a <=> $^b }), -9,
-  "method form of max with identity comparison block";
 
 #?rakudo skip "Range.max not fully implemented yet"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
@@ -64,8 +56,6 @@ is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
 
 is max({ $^a <=> $^b }, @array), 7,
   "subroutine form of max with identity comparison block works";
-isnt max({ $^a <=> $^b }, @array), -9,
-  "bug -- subroutine form of max with identity comparison block returning min";
 
 is (@array.max: { abs $^a <=> abs $^b }), -9,
   "method form of max taking a comparision block works";
