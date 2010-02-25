@@ -71,11 +71,11 @@ class D {
     has $.cnt is rw;
     multi method foo() { $.cnt++ }
     multi method foo(Int $x) { $.cnt++ }
-    multi method foo(Num $x) { $.cnt++ }
+    multi method foo($x) { $.cnt++ }
 }
 class E is D {
     multi method foo() { $.cnt++ }
-    multi method foo(Num $x) { $.cnt++ }
+    multi method foo($x) { $.cnt++ }
 }
 
 {
@@ -113,13 +113,13 @@ class E is D {
     $e.+foo(2);
     is $e.cnt, 3, '.+ calls up inheritance hierarchy and all possible multis';
 
-    ok !defined($e.?foo("OH HAI")), '.? when no possible multis gives undefined';
+    ok !defined($e.?foo("lol", "no", "match")), '.? when no possible multis gives undefined';
 
     my $lived = 0;
-    try { $e.+foo("OH HAI"); $lived = 1; }
+    try { $e.+foo("lol", "no", "match"); $lived = 1; }
     is $lived, 0, '.+ with no matching multis is an error';
 
-    is ($e.*foo("OH HAI")).elems, 0, '.* when no possible multis gives empty list';
+    is ($e.*foo("lol", "no", "match")).elems, 0, '.* when no possible multis gives empty list';
 }
 
 # Some tests to make sure we walk methods from roles too.
