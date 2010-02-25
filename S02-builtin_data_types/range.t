@@ -37,7 +37,6 @@ is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
 #?rakudo todo "Not sure if this should work, but it definitely doesn't right now"
 is ('a'..'a'), [< a >], 'got the right array';
 
-#?rakudo skip "modifer for NYI"
 {
     my $x = 0;
     $x++ for (1..4).reverse;

@@ -144,7 +144,6 @@ is(("hi",).join("!"), "hi", "&join works with one-element lists (3)");
 ## I want the result to be 'str'.
 
 #?pugs todo 'bug'
-#?rakudo 2 skip "Rakudo-ng doesn't know how to make a list from a Str"
 is('hi'.join(':'), 'hi', '"foo".join(":") should be the same as join(":", "foo")');
 is(('hi').join(':'), 'hi', '("foo").join(":") should be the same as join(":", "foo")');
 

@@ -91,7 +91,6 @@ splice_ok splice(@a,5,1,5), @a, [5], [0..11], "Replacing an element with itself"
 @a = (0..11);
 splice_ok splice(@a, +@a, 0, 12, 13), @a, [], [0..13], "Appending a array";
 
-#?rakudo skip "Test behaves weirdly in rakudo"
 {
     @a = (0..13);
     @res = splice(@a, -@a, +@a, 1, 2, 3);

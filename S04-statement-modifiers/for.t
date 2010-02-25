@@ -39,7 +39,6 @@ plan *;
     is($a, 3 * 5 * 7 * 9, "post for array");
 }
 
-#?rakudo skip 'lexically scoped subs not yet implemented'
 {
     my @a = (5, 7, 9);
     my $i = 5;
@@ -86,7 +85,6 @@ plan *;
 # RT 66622
 {
     my $rt66622 = 66622 for 1, 2, 3;
-    #?rakudo skip 'RT 66622'
     is $rt66622, 66622, 'statement modifier "for" makes no implicit block';
 }
 
