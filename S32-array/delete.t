@@ -17,12 +17,13 @@ Basic C<delete> tests, see S32.
   is ~@array, "a b c d", "basic sanity (1)";
   is ~@array.delete(2), "c",
     "deletion of an array element returned the right thing";
-  # Note: The double space here is correct (it's the stringification of undefined).
-  is ~@array, "a b  d", "deletion of an array element";
+  #?rakudo todo "undefined should be Any(), not Mu()"
+  is ~@array, "a b Any() d", "deletion of an array element";
 
   is ~@array.delete(0, 3), "a d",
     "deletion of array elements returned the right things";
-  is ~@array, " b", "deletion of array elements (1)";
+  #?rakudo todo "undefined should be Any(), not Mu()"
+  is ~@array, "Any() b", "deletion of array elements (1)";
   is +@array, 2,     "deletion of array elements (2)";
 }
 
@@ -31,13 +32,14 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d>;
   is ~@array.delete(-2), "c",
     "deletion of array element accessed by an negative index returned the right thing";
-  # @array is now ("a", "b", Mu, "d") ==> double spaces
-  is ~@array, "a b  d", "deletion of an array element accessed by an negative index (1)";
+  # @array is now ("a", "b", Any, "d") ==> double spaces
+  #?rakudo todo "undefined should be Any(), not Mu()"
+  is ~@array, "a b Any() d", "deletion of an array element accessed by an negative index (1)";
   is +@array,        4, "deletion of an array element accessed by an negative index (2)";
 
   is ~@array.delete(-1), "d",
     "deletion of last array element returned the right thing";
-  # @array is now ("a", "b", Mu)
+  # @array is now ("a", "b")
   is ~@array, "a b", "deletion of last array element (1)";
   is +@array,     2, "deletion of last array element (2)";
 }
@@ -47,8 +49,9 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d e f>;
   is ~@array.delete(2, -3, -1), "c d f",
     "deletion of array elements accessed by positive and negative indices returned right things";
-  # @array is now ("a", "b", Mu, Mu, "e") ==> double spaces
-  is ~@array, "a b   e",
+  # @array is now ("a", "b", Any, Any, "e") ==> double spaces
+  #?rakudo todo "undefined should be Any(), not Mu()"
+  is ~@array, "a b Any() Any() e",
     "deletion of array elements accessed by positive and negative indices (1)";
   is +@array, 5,
     "deletion of array elements accessed by positive and negative indices (2)";
@@ -79,8 +82,9 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d e f>;
   is ~@array.delete(2..4), "c d e",
     "deletion of array elements accessed by a range of positives indices returned right things";
-  # @array is now ("a", "b", Mu, Mu, Mu, "f") ==> 4 spaces
-  is ~@array, "a b    f",
+  # @array is now ("a", "b", Any, Any, Any, "f") ==> 4 spaces
+  #?rakudo todo "undefined should be Any(), not Mu()"
+  is ~@array, "a b Any() Any() Any() f",
     "deletion of array elements accessed by a range of positive indices (1)";
   is +@array, 6,
     "deletion of array elements accessed by a range of positive indices (2)";
@@ -90,8 +94,9 @@ Basic C<delete> tests, see S32.
   my @array = <a b c d e f>;
   is ~@array.delete(2^..4), "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
-  # @array is now ("a", "b", "c", Mu, Mu, "f") ==> 4 spaces
-  is ~@array, "a b c   f",
+  # @array is now ("a", "b", "c", Any, Any, "f") ==> 4 spaces
+  #?rakudo todo "undefined should be Any(), not Mu()"
+  is ~@array, "a b c Any() Any() f",
     "deletion of array elements accessed by a range of positive indices (3)";
   is +@array, 6,
     "deletion of array elements accessed by a range of positive indices (4)";
@@ -111,7 +116,7 @@ Basic C<delete> tests, see S32.
 # {
 #   my @array = <1 2 3 4>;
 #   is delete(@array, 1), 2, "simple functional(ish) delete returns value deleted";
-#   is ~@array, "1  3 4", "simple functional(ish) delete changes array";
+#   is ~@array, "1 Any()  3 4", "simple functional(ish) delete changes array";
 ##?rakudo skip 'cannot parse named args'
 #   is delete(:array(@array), 2,), 3, "simple functional(ish) delete with named argument returns value deleted";
 ##?rakudo skip 'cannot parse named args'
