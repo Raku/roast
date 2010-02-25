@@ -65,7 +65,7 @@ is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 lives_ok {sprintf "%s"}, 'missing sprintf string argument';
 ok sprintf("%s") ~~ Failure, 'missing sprintf string argument';
 
-#?rakudo todo 'RT #60672'
+#?rakudo skip 'RT #60672'
 {
 my $fmtd;
 eval q/$fmtd =
