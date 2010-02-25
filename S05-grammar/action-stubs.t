@@ -28,7 +28,7 @@ class An::Action1 {
 
 ok A::Test::Grammar.parse('alpha beta'), 'basic sanity: .parse works';
 my $action = An::Action1.new();
-lives_ok { A::Test::Grammar.parse('alpha beta', :action($action)) },
+lives_ok { A::Test::Grammar.parse('alpha beta', :actions($action)) },
         'parse with :action (and no make) lives';
 is $action.in-a, 1, 'first action has been called';
 is $action.in-b, 1, 'second action has been called';
@@ -61,16 +61,17 @@ is $action.calls, 'ab', '... and in the right order';
             }
         }
         method c($/) {
-            die "don't come here";
+            #die "don't come here";
+            # There's an implicity {*} at the end now
         }
     }
 
     # there's no reason why we can't use the actions as class methods
-    ok Grammar::More::Test.parse('39 b', :action(Grammar::More::Test::Actions)),
-    'grammar matches';
-    isa_ok $/.ast, Array, '$/.ast is an Array';
-    ok $/.ast.[0] == 42,  'make 3 + $/ worked';
-    is $/.ast.[1], 'bbb',  'make $/ x 3 worked';
+    my $match = Grammar::More::Test.parse('39 b', :actions(Grammar::More::Test::Actions));
+    ok $match, 'grammar matches';
+    isa_ok $match.ast, Array, '$/.ast is an Array';
+    ok $match.ast.[0] == 42,  'make 3 + $/ worked';
+    is $match.ast.[1], 'bbb',  'make $/ x 3 worked';
 }
 
 # used to be a Rakudo regression, RT #64104
@@ -83,9 +84,9 @@ is $action.calls, 'ab', '... and in the right order';
         method value($/) { make 1..$/};
         method TOP($/)   { make 1 + $/<value>};
     }
-    ok Math.parse('234', :action(Actions.new)),
-       'can parse with action stubs that make() regexes';
-    is $/.ast, 235, 'got the right .ast';
+    my $match = Math.parse('234', :actions(Actions.new));
+    ok $match,  'can parse with action stubs that make() regexes';
+    is $match.ast, 235, 'got the right .ast';
 
 }
 # vim: ft=perl6
