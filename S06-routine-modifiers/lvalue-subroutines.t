@@ -64,6 +64,8 @@ Testing lvalue-returning subroutines
     "assigning to non-rw subs shouldn't modify the original variable";
 }
 
+my $val2; # XXX prevent parsefail below, not sure what test wants
+
 sub check ($passwd) { return $passwd eq "fish"; };
 
 sub checklastval ($passwd) is rw {
