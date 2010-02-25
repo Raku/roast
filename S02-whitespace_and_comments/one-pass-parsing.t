@@ -5,7 +5,7 @@ plan 1;
 
 # L<S02/"One-pass parsing">
 
-ok(eval('regex foo { <[ } > ]> }; 1'),
+ok(eval('regex { <[ } > ]> }; 1'),
     "can parse non-backslashed curly and right bracket in cclass");
 
 # vim: ft=perl6
