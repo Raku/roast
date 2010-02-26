@@ -7,7 +7,6 @@ plan 20;
 # L<S32::Str/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
-#?rakudo skip 'calling positional params by name'
 is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
 {
@@ -38,12 +37,8 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 # Unicode 5.1.0 SpecialCasing.txt has 00DF -> 0053 0053
 # nothing maps to 1E9E, the new "capital sharp s"
 # so I think this is right -rhr
-#?rakudo skip "unicode"
-#?DOES 1
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
-#?rakudo skip "unicode"
-#?DOES 1
 {
     is("áéíöüóűőú".uc, "ÁÉÍÖÜÓŰŐÚ", ".uc on Hungarian vowels");
 }
@@ -53,7 +48,7 @@ is ~(0.ucfirst),    ~0, '.ucfirst on Int';
 is ~(0.lc),         ~0, '.lc on Int';
 is ~(0.lcfirst),    ~0, '.lcfirst on Int';
 
-#?rakudo skip "uc/lc tests fail on roles"
+#?rakudo todo "uc/lc tests fail on roles"
 #?DOES 4
 {
     role A {

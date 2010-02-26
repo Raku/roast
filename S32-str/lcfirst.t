@@ -7,10 +7,8 @@ plan 9;
 # L<S32::Str/Str/lcfirst>
 
 is lcfirst("HELLO WORLD"), "hELLO WORLD", "simple";
-#?rakudo skip 'calling positional args by name'
 is lcfirst(:string('FREW')), 'fREW', 'lcfirst works with named argument';
 is lcfirst(""),            "",            "empty string";
-#?rakudo 2 skip 'unicode'
 is lcfirst("ÜÜÜÜ"),        "üÜÜÜ",        "umlaut";
 is lcfirst("ÓÓÓÓŃ"),       "óÓÓÓŃ",       "accented chars";
 
