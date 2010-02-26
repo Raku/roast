@@ -8,7 +8,7 @@ plan 59;
 {
 
     #?rakudo todo 'lexicals bug; RT #61838'
-    eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declartation');
+    eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
     is(eval('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
 
