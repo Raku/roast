@@ -14,7 +14,6 @@ my $a = "";
 is capitalize($a),             "",               "capitalize empty string";
 $a = "puGS Is cOOl!";
 is capitalize($a),             "Pugs Is Cool!",  "capitalize string works";
-#?rakudo skip 'calling positional args by name'
 is capitalize(:string($a)),    "Pugs Is Cool!",  "capitalize string works with positional argument";
 is $a,                         "puGS Is cOOl!",  "original string not touched";
 is $a.capitalize,              "Pugs Is Cool!",  "capitalize string works";
@@ -28,10 +27,9 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 }
 
 # Non-ASCII chars:
-# rakudo skip "unicode"
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";#
 
-#?rakudo 2 skip 'graphemes not implemented'
+#?rakudo 2 todo 'graphemes results wrong'
 is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize on string with grapheme precomposed';
 is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
@@ -40,6 +38,7 @@ is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
 # rest of the tests are moved from uc.t
 is ~(0.capitalize), ~0, '.capitalize on Int';
 
+#?rakudo todo "Roles do not behave as this test expects yet"
 {
     role A {
         has $.thing = 3;
