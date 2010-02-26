@@ -34,7 +34,6 @@ is @r, [< a b c >], 'got the right array';
 is (1..1).perl, '1..1', "stationary num .perl ..";
 is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
-#?rakudo todo "Not sure if this should work, but it definitely doesn't right now"
 is ('a'..'a'), [< a >], 'got the right array';
 
 {
