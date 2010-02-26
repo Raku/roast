@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 100;
+plan 94;
 
 #L<S02/Mutable types/Array>
 
@@ -273,24 +273,25 @@ my @array2 = ("test", 1, Mu);
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr[num] of Type works (2)');
 }
 
-#?rakudo skip 'my @arr(-->Type) parsefail'
-{
-    my @arr(-->Num) = <1 2.1 3.2>;
-    is(@arr, <1 2.1 3.2>, 'my @arr[-->Type] works');
-
-    lives_ok({push @arr, 4.3}, 'adding the proper type works');
-    dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
-}
-
-#?rakudo skip 'my @arr[num-->Type] parsefail'
-{
-    my @arr[3](-->Num) = <1 2.1 3.2>;
-    is(@arr, <1 2.1 3.2>, 'my @arr[num-->Type] works');
-
-    dies_ok({push @arr, 4.3}, 'boundary constraints work on my @arr[num-->Type]');
-    pop @arr; # remove the last item to ensure the next ones are type constraints
-    dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
-}
+# syntax is currently reserved
+# #?rakudo skip 'my @arr(-->Type) parsefail'
+# {
+#     my @arr(-->Num) = <1 2.1 3.2>;
+#     is(@arr, <1 2.1 3.2>, 'my @arr[-->Type] works');
+# 
+#     lives_ok({push @arr, 4.3}, 'adding the proper type works');
+#     dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
+# }
+# 
+# #?rakudo skip 'my @arr[num-->Type] parsefail'
+# {
+#     my @arr[3](-->Num) = <1 2.1 3.2>;
+#     is(@arr, <1 2.1 3.2>, 'my @arr[num-->Type] works');
+# 
+#     dies_ok({push @arr, 4.3}, 'boundary constraints work on my @arr[num-->Type]');
+#     pop @arr; # remove the last item to ensure the next ones are type constraints
+#     dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
+# }
 
 #?rakudo skip 'no native type int yet'
 {
