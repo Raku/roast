@@ -17,12 +17,10 @@ Basic C<delete> tests, see S32.
   is ~@array, "a b c d", "basic sanity (1)";
   is ~@array.delete(2), "c",
     "deletion of an array element returned the right thing";
-  #?rakudo todo "undefined should be Any(), not Mu()"
   is ~@array, "a b Any() d", "deletion of an array element";
 
   is ~@array.delete(0, 3), "a d",
     "deletion of array elements returned the right things";
-  #?rakudo todo "undefined should be Any(), not Mu()"
   is ~@array, "Any() b", "deletion of array elements (1)";
   is +@array, 2,     "deletion of array elements (2)";
 }
@@ -33,7 +31,6 @@ Basic C<delete> tests, see S32.
   is ~@array.delete(-2), "c",
     "deletion of array element accessed by an negative index returned the right thing";
   # @array is now ("a", "b", Any, "d") ==> double spaces
-  #?rakudo todo "undefined should be Any(), not Mu()"
   is ~@array, "a b Any() d", "deletion of an array element accessed by an negative index (1)";
   is +@array,        4, "deletion of an array element accessed by an negative index (2)";
 
@@ -50,7 +47,6 @@ Basic C<delete> tests, see S32.
   is ~@array.delete(2, -3, -1), "c d f",
     "deletion of array elements accessed by positive and negative indices returned right things";
   # @array is now ("a", "b", Any, Any, "e") ==> double spaces
-  #?rakudo todo "undefined should be Any(), not Mu()"
   is ~@array, "a b Any() Any() e",
     "deletion of array elements accessed by positive and negative indices (1)";
   is +@array, 5,
@@ -83,7 +79,6 @@ Basic C<delete> tests, see S32.
   is ~@array.delete(2..4), "c d e",
     "deletion of array elements accessed by a range of positives indices returned right things";
   # @array is now ("a", "b", Any, Any, Any, "f") ==> 4 spaces
-  #?rakudo todo "undefined should be Any(), not Mu()"
   is ~@array, "a b Any() Any() Any() f",
     "deletion of array elements accessed by a range of positive indices (1)";
   is +@array, 6,
@@ -95,7 +90,6 @@ Basic C<delete> tests, see S32.
   is ~@array.delete(2^..4), "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
   # @array is now ("a", "b", "c", Any, Any, "f") ==> 4 spaces
-  #?rakudo todo "undefined should be Any(), not Mu()"
   is ~@array, "a b c Any() Any() f",
     "deletion of array elements accessed by a range of positive indices (3)";
   is +@array, 6,
