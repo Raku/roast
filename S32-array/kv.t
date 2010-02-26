@@ -57,17 +57,13 @@ is( 42.kv, [0, 42], "(42).kv works");
     my $x = bar => [ baz => 42, sloth => 43 ];
     my $y = :bar[ baz => 42, sloth => 43 ];
 
-    #?rakudo todo "If value is an array it currently flattens"
     is $x.kv.elems, 2,      'Pair.kv (count)';
     is $x.kv.[0],   'bar',  'Pair.kv (first key)';
-    #?rakudo todo "If value is an array it currently flattens"
     is $y.kv.elems, 2,      'Pair.kv (colonpair)';
     is $y.kv.[0],   'bar',  'Pair.kv (first key) (colonpair)';
 
-    #?rakudo todo "If value is an array it currently flattens"
     is kv($x).elems, 2,     'kv(Pair) (count)';
     is kv($x).[0],  'bar',  'kv(Pair) (first key)';
-    #?rakudo todo "If value is an array it currently flattens"
     is kv($y).elems, 2,     'kv(Pair) (colonpair)';
     is kv($y).[0],  'bar',  'kv(Pair) (first key (colonpair))';
 }
