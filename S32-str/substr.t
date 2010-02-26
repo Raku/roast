@@ -57,35 +57,35 @@ plan 126;
 #   some_func $substr; # manipulates $substr
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
+#?rakudo skip "substr as lvalue NYI"
 {
     my $str = "gorch ding";
 
     substr($str, 0, 5) = "gloop";
-#?rakudo todo "substr as lvalue"
     is($str, "gloop ding", "lvalue assignment modified original string");
 
-#?rakudo skip "can't parse"
-{
-    my $r = \substr($str, 0, 5);
-    ok(~WHAT($r), '$r is a reference');
-    is($$r, "gloop", '$r referent is eq to the substring');
+    #?rakudo skip "can't parse"
+    {
+        my $r = \substr($str, 0, 5);
+        ok(~WHAT($r), '$r is a reference');
+        is($$r, "gloop", '$r referent is eq to the substring');
 
-#?pugs todo 'scalarrefs are not handled correctly'
-    $$r = "boing";
-    is($str, "boing ding", "assignment to reference modifies original");
-    is($$r, "boing", '$r is consistent');
+        #?pugs todo 'scalarrefs are not handled correctly'
+        $$r = "boing";
+        is($str, "boing ding", "assignment to reference modifies original");
+        is($$r, "boing", '$r is consistent');
 
-#?pugs todo 'scalarrefs are not handled correctly'
-    my $o = \substr($str, 3, 2);
-    is($$o, "ng", "other ref to other lvalue");
-    $$r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works");
-    is($$o, " d", "other lvalue wiggled around");
+        #?pugs todo 'scalarrefs are not handled correctly'
+        my $o = \substr($str, 3, 2);
+        is($$o, "ng", "other ref to other lvalue");
+        $$r = "foo";
+        is($str, "foo ding", "lvalue ref size varies but still works");
+        is($$o, " d", "other lvalue wiggled around");
+    }
+
 }
 
-};
-
-#?rakudo todo 'exception'
+#?rakudo skip 'substr as lvalue NYI'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -93,6 +93,7 @@ plan 126;
     is($str, "gloop ding", "lvalue assignment modified original string");
 };
 
+#?rakudo skip "substr as lvalue NYI"
 { # as lvalue, using :=, should work
     #?rakudo 3 todo 'exception'
     my $str = "gorch ding";
@@ -124,6 +125,7 @@ plan 126;
     is(substr("hello foo bar", 6, 3), "foo", "substr on literal string");
     is("hello foo bar".substr(6, 3), "foo", ".substr on literal string");
     is("hello foo bar".substr(6, 3).uc, "FOO", ".substr.uc on literal string");
+    #?rakudo skip ".capitalize NYI"
     is("hello foo bar and baz".substr(6, 10).capitalize, "Foo Bar An", ".substr.capitalize on literal string");
     is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string");
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
@@ -182,6 +184,7 @@ sub l (Int $a) {  my $l = $a; return $l }
 #   some_func $substr; # manipulates $substr
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
+#?rakudo skip "substr as lvalue NYI"
 {
     my $str = "gorch ding";
 
@@ -189,28 +192,28 @@ sub l (Int $a) {  my $l = $a; return $l }
 #?rakudo todo "substr as lvalue"
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
 
-#?rakudo skip "can't parse"
-{
-    my $r = \substr($str, 0, l(5));
-    ok(~WHAT($r), '$r is a reference (substr(Int, StrLen)).');
-    is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
+    #?rakudo skip "can't parse"
+    {
+        my $r = \substr($str, 0, l(5));
+        ok(~WHAT($r), '$r is a reference (substr(Int, StrLen)).');
+        is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
 
-#?pugs todo 'scalarrefs are not handled correctly'
-    $$r = "boing";
-    is($str, "boing ding", "assignment to reference modifies original (substr(Int, StrLen)).");
-    is($$r, "boing", '$r is consistent (substr(Int, StrLen)).');
+    #?pugs todo 'scalarrefs are not handled correctly'
+        $$r = "boing";
+        is($str, "boing ding", "assignment to reference modifies original (substr(Int, StrLen)).");
+        is($$r, "boing", '$r is consistent (substr(Int, StrLen)).');
 
-#?pugs todo 'scalarrefs are not handled correctly'
-    my $o = \substr($str, 3, l(2));
-    is($$o, "ng", "other ref to other lvalue (substr(Int, StrLen)).");
-    $$r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
-    is($$o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
+    #?pugs todo 'scalarrefs are not handled correctly'
+        my $o = \substr($str, 3, l(2));
+        is($$o, "ng", "other ref to other lvalue (substr(Int, StrLen)).");
+        $$r = "foo";
+        is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
+        is($$o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
+    }
+
 }
 
-};
-
-#?rakudo todo 'exception'
+#?rakudo skip 'substr as lvalue NYI'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -218,8 +221,9 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
 };
 
+#?rakudo skip 'substr as lvalue NYI'
 { # as lvalue, using :=, should work
-    #?rakudo 3 todo 'exception'
+    #?rakudo 3 todo 'substr as lvalue NYI'
     my $str = "gorch ding";
 
     substr($str, 0, l(5)) = "gloop";
@@ -250,6 +254,7 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr("hello foo bar", 6, l(3)), "foo", "substr on literal string (substr(Int, StrLen)).");
     is("hello foo bar".substr(6, l(3)), "foo", ".substr on literal string (substr(Int, StrLen)).");
     is("hello foo bar".substr(6, l(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrLen)).");
+    #?rakudo skip ".capitalize NYI"
     is("hello foo bar and baz".substr(6, l(10)).capitalize, "Foo Bar An", ".substr.capitalize on literal string (substr(Int, StrLen)).");
     is("hello »« foo".substr(6, l(2)), "»«", ".substr on unicode string (substr(Int, StrLen)).");
     is("שיעבוד כבר".substr(4, l(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrLen)).");
@@ -322,7 +327,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 };
 
-#?rakudo todo 'lvalue substr'
+#?rakudo skip 'lvalue substr'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -360,6 +365,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is(substr("hello foo bar", 6, p(3)), "foo", "substr on literal string (substr(Int, StrPos)).");
     is("hello foo bar".substr(6, p(3)), "foo", ".substr on literal string (substr(Int, StrPos)).");
     is("hello foo bar".substr(6, p(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrPos)).");
+    #?rakudo skip ".capitalize NYI"
     is("hello foo bar and baz".substr(6, p(10)).capitalize, "Foo Bar An", ".substr.capitalize on literal string (substr(Int, StrPos)).");
     is("hello »« foo".substr(6, p(2)), "»«", ".substr on unicode string (substr(Int, StrPos)).");
     is("שיעבוד כבר".substr(4, p(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrPos)).");
