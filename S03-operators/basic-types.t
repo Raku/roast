@@ -7,7 +7,7 @@ plan 19;
 # WHAT() on basic types
 
 my $a;
-is($a.WHAT, Mu, 'empty scalar is Mu');
+is($a.WHAT, Any, 'empty scalar is Any');
 
 my @a;
 ok(@a ~~ Array, 'it is an Array type');
