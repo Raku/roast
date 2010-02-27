@@ -325,7 +325,7 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 }
 
 # used to be a rakudo regression (RT #60886)
-ok ?(Mu & Mu.notdef), 'Mu & Mu.notdef works';
+ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 ## See also S03-junctions/autothreading.t
 #?rakudo skip 'substr on junctions'
@@ -370,41 +370,41 @@ ok ?(Mu & Mu.notdef), 'Mu & Mu.notdef works';
 }
 
 # Naive implementation of comparing two junctions
-sub junction_diff(Mu $this, Mu $that) {
-  if ($this.WHAT ne 'junction()' and $that.WHAT ne 'junction()') {
-    return if $this ~~ $that;
-  }
-  if ($this.WHAT ne 'junction()' and $that.WHAT eq 'junction()') {
-    return "This is not a junction";
-  }
-  if ($this.WHAT eq 'junction()' and $that.WHAT ne 'junction()') {
-    return "That is not a junction";
-  }
-  my ($this_type) = $this.perl ~~ /^(\w+)/;
-  my ($that_type) = $that.perl ~~ /^(\w+)/;
-  if ($this_type ne $that_type) {
-    return "This is $this_type, that is $that_type";
-  }
-
-  my @these = sort $this!eigenstates;
-  my @those = sort $that!eigenstates;
-  my @errors;
-  for @these -> $value {
-    if $value !~~ any(@those) {
-      push @errors, "$value is missing from that";
-    }
-  }
-  for @those -> $value {
-    if $value !~~ any(@these) {
-      push @errors, "$value is missing from this";
-    }
-  }
-  return @errors if @errors;
-  return;
-}
-
 #?rakudo skip 'Confusing tests (to pmichaud)'
 {
+    sub junction_diff(Mu $this, Mu $that) {
+      if ($this.WHAT ne 'junction()' and $that.WHAT ne 'junction()') {
+        return if $this ~~ $that;
+      }
+      if ($this.WHAT ne 'junction()' and $that.WHAT eq 'junction()') {
+        return "This is not a junction";
+      }
+      if ($this.WHAT eq 'junction()' and $that.WHAT ne 'junction()') {
+        return "That is not a junction";
+      }
+      my ($this_type) = $this.perl ~~ /^(\w+)/;
+      my ($that_type) = $that.perl ~~ /^(\w+)/;
+      if ($this_type ne $that_type) {
+        return "This is $this_type, that is $that_type";
+      }
+
+      my @these = sort $this!eigenstates;
+      my @those = sort $that!eigenstates;
+      my @errors;
+      for @these -> $value {
+        if $value !~~ any(@those) {
+          push @errors, "$value is missing from that";
+        }
+      }
+      for @those -> $value {
+        if $value !~~ any(@these) {
+          push @errors, "$value is missing from this";
+        }
+      }
+      return @errors if @errors;
+      return;
+    }
+
   ok(! junction_diff(1, 1),     'no junctions');
   is_deeply(junction_diff(1, 1|2), "This is not a junction",  'Left value is not a junction');
   is_deeply(junction_diff(1|2, 1), "That is not a junction",  'Right value is not a junction');
