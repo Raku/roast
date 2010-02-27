@@ -42,8 +42,9 @@ class Bar is Foo {
     is(@o.map({.count}), (6..11), 'parallel dispatch using @o».?doit works');
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
-    is_deeply @o».?not_here, @o.map({ Mu }),
-              '$obj».?nonexistingmethod returns a list of undefineds';
+    #?rakudo 2 todo 'is_deeply does not think map results are the same as list on LHS'
+    is_deeply @o».?not_here, @o.map({ Nil }),
+              '$obj».?nonexistingmethod returns a list of Nil';
     is_deeply @o».?count, @o.map({.count}),
               '$obj».?existingmethod returns a list of the return values';
 }
@@ -63,8 +64,8 @@ class Bar is Foo {
 }
 
 {
-    is(<a bc def ghij klmno>».chars,  (1..5), '<list>».method works');
-    is(<a bc def ghij klmno>>>.chars, (1..5), '<list>>>.method works');
+    is(<a bc def ghij klmno>».chars,  (1, 2, 3, 4, 5), '<list>».method works');
+    is(<a bc def ghij klmno>>>.chars, (1, 2, 3, 4, 5), '<list>>>.method works');
 }
 
 {
@@ -97,6 +98,7 @@ class Bar is Foo {
     is_deeply @a».?mul(3), (3, 6, 9), 'return value of @a».?method(@args)';
     is_deeply @a».?"$method"(3), (3, 6, 9), '... indirect';
 
+    #?rakudo 4 todo 'is_deeply does not think map results are the same as list on LHS'
     is_deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».+method is a list of lists';
     is_deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
