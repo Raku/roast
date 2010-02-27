@@ -14,7 +14,6 @@ my $pi = 312689/99532;
     is_approx(cis(3*$pi / 2),-1i,          "cis(3pi/2) == -i");
 }
 
-#?rakudo skip 'named args'
 {
     is_approx(cis(:angle(0)),        1 + 0i,       "cis(:angle(0))     == 1");
     is_approx(cis(:angle($pi)),      -1 + 0i,      "cis(:angle(pi))    == -1");
@@ -54,7 +53,6 @@ my $pi = 312689/99532;
 }
 
 # L<S32::Numeric/Num/=item unpolar>
-#?rakudo skip 'named args'
 {
     # Basic tests for unpolar()
     my $s = 2 * sqrt(2);
