@@ -6,7 +6,6 @@ plan 16;
 # L<S13/"Type Casting"/"method postcircumfix:<{ }> (**@slice) {...}">
 # basic tests to see if the methods overload correctly.
 
-#?rakudo skip "rakudo still implements it without an inner capture"
 {
     my multi testsub ($a,$b) {
         return 1;
@@ -18,7 +17,7 @@ plan 16;
         return 3;
     }
     class TypeCastSub {
-        method postcircumfix:<( )> ($capture) {return 'pretending to be a sub '.testsub(|$capture) }
+        method postcircumfix:<( )> ($capture) {return 'pretending to be a sub ' ~ testsub(|$capture) }
     }
 
     my $thing = TypeCastSub.new;
