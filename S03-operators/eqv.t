@@ -34,13 +34,13 @@ plan 45;
 }
 
 # Reference types
+#?rakudo skip 'binding NYI'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
 
   ok  (\@a eqv \@a), "eqv on array references (1)";
   ok  (\@b eqv \@b), "eqv on array references (2)";
-  #?rakudo todo 'captures and infix:<eqv>'
   ok !(\@a eqv \@b), "eqv on array references (3)";
   @a := @b;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
@@ -53,7 +53,7 @@ plan 45;
   ok ($a eqv $a), "eqv on scalar references (1-1)";
   ok ($b eqv $b), "eqv on scalar references (1-2)";
   ok ($a eqv $b), "eqv on scalar references (1-3)";
-  #?rakudo skip 'infix:<!eqv>, captures and infix:<eqv>'
+  #?rakudo skip 'infix:<!eqv>'
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
