@@ -23,7 +23,6 @@ plan 77;
     # when a result is found.
     my $answer = is_it(any(1..2), any(7..9), any(0..6));
     is($n, 42, "called lots of times :-)");
-
     ok( ?($answer eq "1 + 9 = 10"), "found right answer");
 }
 
@@ -165,6 +164,7 @@ plan 77;
     is(@got[3], 'a13', 'called with correct parameters');
 }
 
+#?rakudo skip 'class attributes NYI'
 {
     # Auto-threading over an invocant.
     class JuncInvTest1 {
