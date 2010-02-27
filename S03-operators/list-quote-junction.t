@@ -39,7 +39,7 @@ is different from
 my @matching_strings = <foo bar>;
 my @nonmatching_strings = ('fo','foo ', 'foo bar baz', 'oo', 'bar b', 'bar baz');
 
-plan 17;
+plan 16;
 
 for @matching_strings -> $str {
   ok( $str ~~ (any <foo bar baz>), "'$str' matches any <foo bar baz>" );
@@ -50,7 +50,5 @@ for @nonmatching_strings -> $str {
   ok( ($str !~~ any <foo bar baz>), "'$str' does not match any <foo bar baz>" );
   ok( $str !~~ any(<foo bar baz>), "'$str' does not match any(<foo bar baz>)" );
 };
-
-eval_dies_ok 'any<a b c>', 'any<a b c> is illegal';
 
 # vim: ft=perl6
