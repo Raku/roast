@@ -26,13 +26,11 @@ is($pair.value, 'bar', 'got the right $pair.value');
 
 my @pair1a = kv($pair);
 is(+@pair1a, 2, 'got the right number of elements in the list');
-#?rakudo 2 todo 'kv() ambiguity'
 is(@pair1a[0], 'foo', 'got the right key');
 is(@pair1a[1], 'bar', 'got the right value');
 
 my @pair1b = kv $pair;
 is(+@pair1b, 2, 'got the right number of elements in the list');
-#?rakudo 2 todo 'kv() ambiguity'
 is(@pair1b[0], 'foo', 'got the right key');
 is(@pair1b[1], 'bar', 'got the right value');
 
@@ -82,6 +80,7 @@ is($quux.key, 'quux', "lhs quotes" );
 
 {
     my $pair = :when<now>;
+    #?rakudo skip "Hash stringification very broken"
     is ~(%($pair)), "when\tnow\n", 'hash stringification';
     # hold back this one according to audreyt
     #ok $pair.does(Hash), 'Pair does Hash';
@@ -104,6 +103,7 @@ is($quux.key, 'quux', "lhs quotes" );
 
 # illustrate a bug
 
+#?rakudo skip ":= NYI"
 {
     my $var   = 'foo' => 'bar';
     sub test1 (Pair $pair) {
@@ -120,14 +120,18 @@ is($quux.key, 'quux', "lhs quotes" );
 }
 
 my %hash  = ('foo' => 'bar');
-for  %hash.pairs -> $pair {
-    isa_ok($pair,Pair) ;
-    my $testpair = $pair;
-    isa_ok($testpair, Pair); # new lvalue variable is also a Pair
-    my $boundpair := $pair;
-    isa_ok($boundpair,Pair); # bound variable is also a Pair
-    is($pair.key, 'foo', 'in for loop got the right $pair.key');
-    is($pair.value, 'bar', 'in for loop got the right $pair.value');
+
+#?rakudo skip ":= NYI"
+{
+    for  %hash.pairs -> $pair {
+        isa_ok($pair,Pair) ;
+        my $testpair = $pair;
+        isa_ok($testpair, Pair); # new lvalue variable is also a Pair
+        my $boundpair := $pair;
+        isa_ok($boundpair,Pair); # bound variable is also a Pair
+        is($pair.key, 'foo', 'in for loop got the right $pair.key');
+        is($pair.value, 'bar', 'in for loop got the right $pair.value');
+    }
 }
 
 sub test2 (%h){
@@ -223,6 +227,7 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 #   Actually, it looks like the bug is probably that => is forcing
 #   stringification on its left argument too agressively.  It should only do
 #   that for an identifier.
+#?rakudo skip "LHS of pair is Str for now"
 {
   my $arrayref = [< a b c >];
   my $hashref  = { :d(1), :e(2) };
@@ -344,12 +349,10 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
 # RT #67218
 {
-    #?rakudo todo 'RT #67218'
     eval_lives_ok ':a()',    'can parse ":a()"';
     #?rakudo skip 'RT #67218'
     lives_ok     { :a() }, 'can execute ":a()"';
 
-    #?rakudo todo 'RT #67218'
     eval_lives_ok ':a[]',    'can parse ":a[]"';
     #?rakudo skip 'RT #67218'
     lives_ok     { :a[] }, 'can execute ":a[]"';
