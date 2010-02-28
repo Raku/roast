@@ -97,7 +97,6 @@ Basic C<delete> tests, see S32.
 }
 
 # RT #67446
-#?rakudo skip 'odd eval error'
 {
     my @array = 0..1;
     is ~(eval @array.perl ), '0 1', '@array.perl works after init';

@@ -16,7 +16,6 @@ ok(!defined(Mu), 'Mu is not defined');
 ok(!defined(Int), 'Int is not defined');
 ok(!defined(Num), 'Num is not defined');
 ok(!defined(Str), 'Str is not defined');
-#?rakudo todo 'ng regression: Nil should be undef'
 ok(!defined(Nil), 'Nil is not defined');
 
 ok(defined(1),   'numeric literal 1 is defined');

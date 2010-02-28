@@ -30,7 +30,6 @@ my @array = ('foo', 'bar', 'baz');
 is(foo(@array), 'Positional foo, bar, baz', 'dispatched to the Positional sub');
 
 my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
-#?rakudo skip 'sort NYI'
 is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub');
 
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
