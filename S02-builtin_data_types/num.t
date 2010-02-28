@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/Built-In Data Types/Perl intrinsically supports big integers>
 
-plan 58;
+plan 66;
 
 #?rakudo todo "Num.perl doesn't report the decimal part if it is 0 (RT 69869)"
 isa_ok( eval(1.Num.perl), Num, 'eval 1.Num.perl is Num' );
@@ -15,8 +15,10 @@ is_approx( eval(0.Num.perl), 0, 'eval 0.Num.perl is 0' );
 #?rakudo todo "Num.perl doesn't report the decimal part if it is 0 (RT 69869)"
 isa_ok( eval((-1).Num.perl), Num, 'eval -1.Num.perl is Num' );
 is_approx( eval((-1).Num.perl), -1, 'eval -1.Num.perl is -1' );
+#?rakudo todo "Num.perl generates a Rat"
 isa_ok( eval(1.1.perl), Num, 'eval 1.1.Num.perl is Num' );
 is_approx( eval(1.1.perl), 1.1, 'eval 1.1.Num.perl is 1.1' );
+#?rakudo todo "Num.perl generates a Rat"
 isa_ok( eval((-1.1).perl), Num, 'eval -1.1.Num.perl is Num' );
 is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
 
@@ -41,24 +43,48 @@ is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
 
 {
     my $a = -1.0;
-    isa_ok($a, Num);
+    isa_ok($a, Rat);
     is($a, "-1", '-1 stringification works');
 }
 
 {
     my $a = 0.1;
-    isa_ok($a, Num);
+    isa_ok($a, Rat);
     is($a, "0.1", '0.1 stringification works');
 }
 
 {
     my $a = -0.1; "$a";
-    isa_ok($a, Num);
+    isa_ok($a, Rat);
     is($a, "-0.1", '-0.1 stringification works');
 }
 
 {
     my $a = 10.01; "$a";
+    isa_ok($a, Rat);
+    is($a, "10.01", '10.01 stringification works');
+}
+
+{
+    my $a = -1.0e0;
+    isa_ok($a, Num);
+    is($a, "-1", '-1 stringification works');
+}
+
+{
+    my $a = 0.1e0;
+    isa_ok($a, Num);
+    is($a, "0.1", '0.1 stringification works');
+}
+
+{
+    my $a = -0.1e0; "$a";
+    isa_ok($a, Num);
+    is($a, "-0.1", '-0.1 stringification works');
+}
+
+{
+    my $a = 10.01e0; "$a";
     isa_ok($a, Num);
     is($a, "10.01", '10.01 stringification works');
 }
@@ -108,12 +134,14 @@ is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
 
 isa_ok(1 / 1, Rat);
 
+#?rakudo skip "Numbers with too many decimal places fail"
 {
     my $a = 80000.0000000000000000000000000;
     isa_ok($a, Num);
     ok($a == 80000.0, 'trailing zeros compare correctly');
 }
 
+#?rakudo skip "Numbers with too many decimal places fail"
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
     isa_ok($a, Num);
@@ -150,6 +178,7 @@ isa_ok(1 / 1, Rat);
     is(+$a, 101, "0d0101 numifies to 101");
 }
 
+#?rakudo todo "No bignums yet"
 {
     my $a = 2 ** 65; # over the 64 bit limit too
     is($a, 36893488147419103232, "we have bignums, not weeny floats");
