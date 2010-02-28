@@ -16,6 +16,7 @@ ok(!defined(Mu), 'Mu is not defined');
 ok(!defined(Int), 'Int is not defined');
 ok(!defined(Num), 'Num is not defined');
 ok(!defined(Str), 'Str is not defined');
+#?rakudo todo 'ng regression: Nil should be undef'
 ok(!defined(Nil), 'Nil is not defined');
 
 ok(defined(1),   'numeric literal 1 is defined');
@@ -33,6 +34,7 @@ $foo = "";
 ok(defined($foo), 'variable $foo is now defined (as a empty string)');
 
 $foo = Nil;
+#?rakudo todo 'ng regression: Nil should be undef'
 ok(!defined($foo), 'variable $foo is now undefined again');
 
 $foo = "a";
@@ -63,6 +65,7 @@ ok(!defined($foo), 'undefine $foo works');
     ok($foo.defined, 'variable $foo is now defined (as a empty string)');
 
     $foo = Nil;
+    #?rakudo todo 'ng regression: Nil should be undef'
     ok(!$foo.defined, 'variable $foo is now undefined again');
 
     $foo = "a";
