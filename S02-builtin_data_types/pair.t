@@ -80,7 +80,6 @@ is($quux.key, 'quux', "lhs quotes" );
 
 {
     my $pair = :when<now>;
-    #?rakudo skip "Hash stringification very broken"
     is ~(%($pair)), "when\tnow\n", 'hash stringification';
     # hold back this one according to audreyt
     #ok $pair.does(Hash), 'Pair does Hash';
