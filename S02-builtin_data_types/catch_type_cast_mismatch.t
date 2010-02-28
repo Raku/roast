@@ -13,9 +13,9 @@ be trapped by Pugs.
 plan 10;
 
 my $ref = { val => 42 };
+#?rakudo todo 'Hash.isa(Hash)'
 isa_ok($ref, Hash);
-#?rakudo skip "unspecced (if specced please add smartlink)"
-lives_ok( { $ref[0] }, 'Accessing a hash as a list of pairs is fine');
+dies_ok { $ref[0] }, 'Hash !~~ Positional';
 
 {
     $ref = [ 42 ];
