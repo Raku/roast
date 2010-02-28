@@ -53,10 +53,14 @@ for @separators -> $sep {
 
 for @nonseparators -> $sep {
   my $ex = @list.join($sep);
+  say "Seperator: '$sep'";
   my $str = "<" ~$ex~ ">";
   my @res = eval $str;
+  say @res.perl;
+  say $sep.PARROT;
 
   my $vis = sprintf "%02x", ord $sep;
+  say "alive";
   #?rakudo emit if $sep eq "\xa0" {
   #?rakudo emit      todo('\xa0 should not be a separator for list quotes');
   #?rakudo emit };

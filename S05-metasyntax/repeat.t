@@ -14,12 +14,13 @@ be valid perl6.
 
 # Note: single-quotes.t tests repetition on single quoted items in regexes.
 
-plan 17;
+plan 18;
 
 # L<S05/Bracket rationalization/The general repetition specifier is now>
 
 # Exact repetition
 ok("abcabcabcabcd" ~~ m/[abc]**4/, 'Fixed exact repetition');
+is $/, 'abc' x 4, '...with the correct capture';
 ok(!("abcabcabcabcd" ~~ m/[abc]**5/), 'Fail fixed exact repetition');
 #?pugs todo force_todo
 ok("abcabcabcabcd"    ~~ m/[abc]**{4}/, 'Fixed exact repetition using closure');

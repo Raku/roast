@@ -60,7 +60,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi sub sigil-t (%h)    { 'Associative'   }
     is sigil-t(1),          'Any',      'Sigil-based dispatch (Any)';
     is sigil-t({ $_ }),     'Callable', 'Sigil-based dispatch (Callable)';
-    #?rakudo skip '<a b c> in parameter list flattens :-('
     is sigil-t(<a b c>),    'Positional','Sigil-based dispatch (Arrays)';
     is sigil-t(%h),         'Associative','Sigil-based dispatch (Associative)';
 

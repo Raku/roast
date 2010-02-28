@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 45;
+plan 48;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -33,7 +33,6 @@ plan 45;
   ok !($a eqv $b), "eqv on value types (2-3)";
 }
 
-# Reference types
 #?rakudo skip 'binding NYI'
 {
   my @a = (1,2,3);
@@ -76,8 +75,7 @@ plan 45;
 }
 
 {
-  my $num = 3;
-  my $a   = \$num;
+  my $num = 3; my $a   = \$num;
   my $b   = \$num;
 
   ok  ($a eqv $a), "eqv on scalar references (2-1)";
@@ -130,6 +128,12 @@ plan 45;
 {
     is(1 eqv 1, Bool::True,  'eqv returns Bool::True when true');
     is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
+}
+
+{
+    is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
+    is Any eqv Any, Bool::True, 'Any eqv Any';
+    is Any eqv Mu, Bool::False, 'Any !eqv Mu';
 }
 
 # vim: ft=perl6

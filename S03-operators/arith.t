@@ -427,6 +427,11 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
     is (1..10).grep( * !% 3 ), <3 6 9>, '!% works with whatever *'
 }
 
+{
+    is &infix:<+>(3, 6), 9, 'Can access &infix:<+>';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
