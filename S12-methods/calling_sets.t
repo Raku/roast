@@ -1,5 +1,5 @@
 use Test;
-plan 30;
+plan 31;
 
 # L<S12/"Calling sets of methods">
 
@@ -171,5 +171,10 @@ class MMT2 is MMT1 {
     multi method foo(Int $x) { "oh noes" }
 }
 is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find next one up';
+
+{
+    my @list =  MMT1.new.?nonexistent();
+    is +@list, 0, '.?nonexisent() returns Nil';
+}
 
 # vim: ft=perl6
