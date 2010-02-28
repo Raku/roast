@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 =begin pod
 
@@ -112,5 +112,9 @@ class A61354_1 {
 # RT #64686
 eval_dies_ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
              'call to missing method in A::B dies after class A::C defined';
+
+# RT 72286
+eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
+            'self is not writable';
 
 # vim: ft=perl6
