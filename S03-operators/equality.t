@@ -21,12 +21,13 @@ ok("\0" eq "\0",   "eq on strings with null chars");
 
 # string context on undefined values
 my $foo;
-ok($foo eq "",     "Undef eq ''");
-ok($foo ne "f",    "Undef ne 'f'");
+#?rakudo todo "+Any() doesn't work yet"
+ok($foo eq "",     "Any eq ''");
+ok($foo ne "f",    "Any ne 'f'");
 
 my @foo;
-ok(@foo[0] eq "",  "Array Mu eq ''");
-ok(@foo[0] ne "f",  "Array Mu ne 'f'");
+ok(@foo[0] eq "",  "Array Any eq ''");
+ok(@foo[0] ne "f",  "Array Any ne 'f'");
 
 # numeric equality & inequality
 ok(2 == 2,         "== true");
@@ -35,8 +36,9 @@ ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
 
 # numeric context on undefined values
-ok($foo == 0,      "Mu == 0");
-ok(@foo[0] == 0,   "Array Mu == 0");
+#?rakudo skip "+Any doesn't work yet"
+ok($foo == 0,      "Any == 0");
+ok(@foo[0] == 0,   "Array Any == 0");
 
 # XXX: need tests for coercion string and numeric coercions
 
