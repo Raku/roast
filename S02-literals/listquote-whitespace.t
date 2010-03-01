@@ -41,7 +41,7 @@ my @list = <a b c d>;
 my @separators = ("\t","\r","\n"," ");
 my @nonseparators = (",","/","\\",";","\xa0");
 
-plan +@separators + @nonseparators;
+plan +@separators + @nonseparators + 1;
 
 for @separators -> $sep {
   my $str = "<$sep" ~ @list.join("$sep$sep") ~ "$sep>";
@@ -66,5 +66,8 @@ for @nonseparators -> $sep {
   #?rakudo emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
+
+is < foo  
+	    >, 'foo', 'various combinations of whitespaces are stripped';
 
 # vim: ft=perl6
