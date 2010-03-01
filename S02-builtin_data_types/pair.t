@@ -90,12 +90,10 @@ is($quux.key, 'quux', "lhs quotes" );
 # colonpair syntax
 {
     is(:foo.key, 'foo', 'got the right key :foo.key');
-    #?rakudo todo 'RT #64478'
     isa_ok(:foo.value, Bool, ':foo.value isa Bool');
     ok( (:foo), ':foo is True');
     ok( :foo.value, ':foo.value is True');
     is(:!foo.key, 'foo', 'got the right key :!foo.key');
-    #?rakudo todo 'RT #64478'
     isa_ok(:!foo.value, Bool, ':!foo.value isa Bool');
     nok( :!foo.value, ':!foo.value is False');
 }
