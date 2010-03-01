@@ -18,8 +18,8 @@ is("\x[20]", ' ', '\x[20] normal space');
 is("\x[a0]", chr(0xa0), '\x[a0] non-breaking space');
 is("\x[263a]", '☺', '\x[263a] wide hex character (SMILEY)');
 is("\x[6211]", '我', '\x[597d] wide hex character (Chinese char)');
+#?rakudo 2 todo 'Detecting malformed escape sequences NYI'
 eval_dies_ok('"\x[6211"', 'broken "\x[6211"');
-#?rakudo todo 'feature'
 eval_dies_ok('"\x [6211]"', 'broken "\x [6211]"');
 
 is("\x[41,42,43]", 'ABC', '\x[list]');
@@ -36,8 +36,8 @@ is("\o[40]", ' ', '\o[40] normal space');
 is("\o[240]", chr(160), '\o[240] non-breaking space');
 is("\o[23072]", '☺', '\o[23072] wide hex character (SMILEY)');
 is("\o[61021]", '我', '\o[61021] wide hex character (Chinese char)');
+#?rakudo 2 todo 'Detecting malformed escape sequences NYI'
 eval_dies_ok('"\o[6211"', 'broken "\o[6211"');
-#?rakudo todo 'feature'
 eval_dies_ok('"\o [6211]"', 'broken "\o [6211]"');
 
 is("\o[101,102,103]", 'ABC', '\o[list]');
@@ -55,7 +55,6 @@ is("\c[160]", chr(160), '\c[240] non-breaking space');
 is("\c[9786]", '☺', '\c[9786] wide hex character (SMILEY)');
 is("\c[25105]", '我', '\c[25105] wide hex character (Chinese char)');
 eval_dies_ok('"\c[6211"', 'broken "\c[6211"');
-#?rakudo todo '\c broken escape'
 eval_dies_ok('"\c [6211]"', 'broken "\c [6211]"');
 
 is("\c[65,66,67]", 'ABC', '\c[list]');
@@ -63,12 +62,14 @@ is("\c[20320,22909]", '你好', '\c[a,b]');
 is("\c65,66,67", 'A,66,67', '\clist not valid');
 
 # L<S02/Literals/"\123 form" is illegal>
+#?rakudo todo 'Detecting malformed escape sequences NYI'
 {
     eval_dies_ok q{"\123"}, '"\123" form is no longer valid Perl 6';
     eval_dies_ok q{"\10"}, '"\10" form is no longer valid Perl 6';
 }
 
 # L<S02/Literals/illegal "\0123 form">
+#?rakudo todo 'Detecting malformed escape sequences NYI'
 {
     eval_dies_ok q{"\040"}, '"\040" form is no longer valid Perl 6';
     eval_dies_ok q{"\0123"}, '"\0123" form is no longer valid Perl 6';
@@ -76,6 +77,7 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
 
 # L<S02/Literals/"Only \0 remains" "only if"
 #   "next character" not in "'0'..'7'">
+#?rakudo todo 'Detecting malformed escape sequences NYI'
 {
     is "\08", chr(0) ~ '8', 'next char of \0 is 8 (> 7)';
     is "\0fff", chr(0) ~ 'fff', 'next char of \0 is `f`';
