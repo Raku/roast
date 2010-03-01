@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 30;
 
 #L<S03/Autoincrement precedence>
 
@@ -18,6 +18,7 @@ my $a = Mu;
 is($a++, 0, 'Mu++ == 0');
 
 $a = Mu;
+#?rakudo skip 'unimpl Mu--'
 ok(notdef($a--), 'Mu-- is undefined');
 
 $a = 'x';
@@ -83,9 +84,19 @@ is($moo, 0, "var was not touched");
 {
     my $x = 2.0;
     $x += 1;
+    ok $x == 3.0, 'can add Int to Rat with +=';
+
+    my Rat $y = 2.0;
+    $y += 1;
+    ok $y == 3.0, 'can add Int to Rat with += and type constraint';
+}
+
+{
+    my $x = 2.0.Num;
+    $x += 1;
     ok $x == 3.0, 'can add Int to Num with +=';
 
-    my Num $y = 2.0;
+    my Num $y = 2.0.Num;
     $y += 1;
     ok $y == 3.0, 'can add Int to Num with += and type constraint';
 }
