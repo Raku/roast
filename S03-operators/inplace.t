@@ -6,7 +6,6 @@ use Test;
 
 plan 22;
 
-#?rakudo skip '.= with spaces'
 {
     my @a = (1, 2, 3);
     lives_ok({@a .= map: { $_ + 1 }}, '.= runs with block');
@@ -20,14 +19,14 @@ plan 22;
     lives_ok { @b.=grep({/<[a..z]>/})},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
+    #?rakudo 2 todo "this match is failing"
     is @b[1], 'bar', 'inplace grep [1]';
     is @b[2], 'baz', 'inplace grep [2]';
 }
 
-#?rakudo skip '.='
 {
     my $a=3.14;
-    $a .= int;
+    $a .= Int;
     is($a, 3, "inplace int");
 
     my $b = "a_string"; $b .= WHAT;
@@ -54,6 +53,7 @@ my @b = <z a b d e>;
 @b .= sort;
 is ~@b, "a b d e z", "inplace sort";
 
+#?rakudo skip "Doubtful Error: Cannot assign to readonly value"
 {
     $_ = -42;
     .=abs;
@@ -72,7 +72,7 @@ is ~@b, "a b d e z", "inplace sort";
     is @a, @a_orig,            'worked: @a.=sort: {1}';
 
     @a.=sort;
-    is @a, (1,2,3),            'worked: @a.=sort';
+    is @a, [1,2,3],            'worked: @a.=sort';
 }
 
 # vim: ft=perl6
