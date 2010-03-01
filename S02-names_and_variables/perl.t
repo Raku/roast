@@ -6,17 +6,22 @@ plan *;
 
 my @tests = (
     # Basic scalar values
-    42, 42/10, 4.2, sqrt(2),
+    42, 42/10, 4.2, 
+    #?rakudo emit # sqrt(2) is a Num which we cannot currently .perl / eval
+    sqrt(2),
     #?rakudo emit # 3e5 is converted to a Str when re-evaled
     3e5,
     Inf, -Inf, NaN,
 
     "a string", "", "\0", "\t", "\n", "\r\n", "\o7",
+    #?rakudo emit # "\{" not handled properly yet
     '{', # "\d123",	# XXX there is no \d escape!!!
     '}',
+    #?rakudo emit # "\$" etc not handled properly yet
     '$a @string %with &sigils()',
 
     ?1, ?0,
+    #?rakudo emit # Mu eq Mu is an error now
     Mu,
     #?rakudo emit # parse error
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
@@ -88,6 +93,7 @@ my @tests = (
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
+#?rakudo skip "invoke() not implemented in class 'Any'"
 {
     # test a bug reported by Chewie[] - apparently this is from S03
     is(eval((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");
@@ -137,9 +143,7 @@ my @tests = (
 
 # RT #69869
 {
-    #?rakudo todo 'decimal is Rat per Spec r28881'
     is 1.0.WHAT, Rat, '1.0 is Rat';
-    #?rakudo todo 'RT #69869'
     is eval( 1.0.perl ).WHAT, Rat, "1.0 perl'd and eval'd is Rat";
 }
 
