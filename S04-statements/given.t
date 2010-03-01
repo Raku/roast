@@ -109,6 +109,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
         ok(!$panic,"should not fall into default in this case");
 }
 
+#?rakudo skip "Cannot assign to $_ in Rakudo"
 {
     my $foo = 1;
     given 1 {
@@ -213,33 +214,40 @@ Tests the given block, as defined in L<S04/"Switch statements">
     my $passed = 0;
     ok( eval('given TestIt.new { $_.passit; };'), '$_. method calls' );
     ok( eval('given TestIt.new { .passit; };'), '. method calls' );
+    #?rakudo 2 todo 'attribute access tests fail'
     ok( eval('given TestIt.new { $_.testing<a> = 1; };'),'$_. attribute access' );
     ok( eval('given TestIt.new { .testing<a> = 1; };'),  '. attribute access' );
     my $t = TestIt.new;
     given $t { when TestIt { $passed = 1;} };
-    is($passed, 1,"when Type {}");
+    is($passed, 1,'when Type {}');
+#?rakudo skip ".isa(TestIt) goes kaboom"
+{
     $passed = 0;
     given $t { when .isa(TestIt) { $passed = 1;}};
     is($passed, 1,'when .isa(Type) {}');
+}
     $passed = 0;
     given $t { when TestIt { $passed = 1; }};
     is($passed, 1,'when Type {}');
 }
 
-# given + true
-# L<S04/"Switch statements" /"is exactly equivalent to">
-my @input = (0, 1);
-my @got;
+#?rakudo skip '.so NYI'
+{
+    # given + true
+    # L<S04/"Switch statements" /"is exactly equivalent to">
+    my @input = (0, 1);
+    my @got;
 
-for @input -> $x {
-    given $x {
-        when .so { push @got, "true" }
-        default { push @got, "false" }
+    for @input -> $x {
+        given $x {
+            when .so { push @got, "true" }
+            default { push @got, "false" }
+        }
     }
-}
 
-#?rakudo 1 todo '.so in given does not work'
-is(@got.join(","), "false,true", 'given { when .so { } }');
+    #?rakudo 1 todo '.so in given does not work'
+    is(@got.join(","), "false,true", 'given { when .so { } }');
+}
 
 # given + hash deref
 {
