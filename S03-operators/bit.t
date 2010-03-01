@@ -48,8 +48,8 @@ plan 22;
   is( 33023 +> 7,         257,    'shift seven bits right' ); 
 
   # Tests to see if you really can do casts negative floats to unsigned properly
-  my $neg1 = -1.0;
-  my $neg7 = -7.0;
+  my $neg1 = -1.0.Num;
+  my $neg7 = -7.0.Num;
 
   is(+^ $neg1, 0, 'cast numeric float to unsigned' );
   is(+^ $neg7, 6, 'cast -7 to 6 with +^' );
