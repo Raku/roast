@@ -5,7 +5,9 @@ plan *;
 # L<S02/Names and Variables/The empty>
 
 {
-    ok !Nil.defined, 'Nil is undefined';
+    # Nil is an empty container. As a container, it is defined.
+    ok Nil.defined, 'Nil is defined';
+    ok ().defined, '() is defined';
     my @a;
     @a.push: Nil;
     is @a.elems, 0, 'Nil in list context is empty list';
