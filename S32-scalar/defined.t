@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 35;
 
 # L<S32::Basics/Mu/=item defined>
 
