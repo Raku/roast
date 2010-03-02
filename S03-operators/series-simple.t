@@ -16,4 +16,6 @@ is (1, { $_ + 2 } ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'simple series wi
 
 is (1, { 1 / ((1 / $_) + 1) } ... *).batch(5).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
 
+
+
 done_testing;
