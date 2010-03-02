@@ -16,12 +16,15 @@ ok(!defined(Mu), 'Mu is not defined');
 ok(!defined(Int), 'Int is not defined');
 ok(!defined(Num), 'Num is not defined');
 ok(!defined(Str), 'Str is not defined');
-ok(!defined(Nil), 'Nil is not defined');
 
 ok(defined(1),   'numeric literal 1 is defined');
 ok(defined(""),  'empty string is defined');
 ok(defined("a"), '"a" is defined');
 ok(defined(0),   'numeric literal 0 is defined');
+ok(defined(Nil), 'Nil is defined');
+ok(defined(()),  'empty Parcel is defined');
+ok(defined([]),  'empty Array is defined');
+ok(defined({}),  'empty Hash is defined');
 
 my $foo;
 ok(!defined($foo), 'unassigned variable $foo is undefined');
@@ -50,6 +53,17 @@ ok(defined($foo), 'variable $foo is now defined (as numeric literal 0)');
 
 undefine($foo);
 ok(!defined($foo), 'undefine $foo works');
+
+# containers
+
+my @bax;
+ok(defined(@bax), 'unassigned variable @bax is defined');
+
+@bax = 3, 4, 5;
+ok(defined(@bax), 'unassigned variable @bax is defined');
+
+@bax = Nil;
+ok(defined(@bax), 'variable @bax is defined after assigning Nil');
 
 # try the invocant syntax
 
