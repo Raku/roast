@@ -21,6 +21,7 @@ ok(defined(1),   'numeric literal 1 is defined');
 ok(defined(""),  'empty string is defined');
 ok(defined("a"), '"a" is defined');
 ok(defined(0),   'numeric literal 0 is defined');
+#?rakudo 2 todo "Nil and empty Parcel should be defined"
 ok(defined(Nil), 'Nil is defined');
 ok(defined(()),  'empty Parcel is defined');
 ok(defined([]),  'empty Array is defined');
