@@ -17,6 +17,7 @@ is (1, { $_ + 2 } ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'simple series wi
 is (1, { $_ - 2 } ... *).batch(5).join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
 
 is (1, { 1 / ((1 / $_) + 1) } ... *).batch(5).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... *).batch(5).join(', '), '1, -1, 1, -1, 1', 'simple repeating series with one item and closure on the LHS';
 
 # some tests which exactly hit a limit
 
@@ -30,6 +31,8 @@ is (1, { $_ + 2 } ... 9).batch(10).join(', '), '1, 3, 5, 7, 9', 'simple series w
 is (1, { $_ - 2 } ... -7).batch(10).join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
 
 is (1, { 1 / ((1 / $_) + 1) } ... 1/5).batch(10).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... 1).batch(10).join(', '), '1', 'simple repeating series with one item and closure on the LHS';
+is (1, { -$_ } ... 3).batch(5).join(', '), '1, -1, 1, -1, 1', 'simple repeating series with one item and closure on the LHS';
 
 # some tests which go past a limit
 
@@ -43,5 +46,6 @@ is (1, { $_ + 2 } ... 10).batch(10).join(', '), '1, 3, 5, 7, 9', 'simple series 
 is (1, { $_ - 2 } ... -8).batch(10).join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
 
 is (1, { 1 / ((1 / $_) + 1) } ... 11/60).batch(10).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... 0).batch(10).join(', '), '1', 'simple repeating series with one item and closure on the LHS';
 
 done_testing;
