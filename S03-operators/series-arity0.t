@@ -16,7 +16,8 @@ plan *;
 
 {
     my @rolls = ({ (1..2).pick } ... 2).batch(100);
-    ok +@rolls < 100, 'the series terminated';
+    ok +@rolls > 0, 'the series had at least one element...';
+    ok +@rolls < 100, '... and the series terminated';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
     is @rolls.grep(2).elems, 1, 'There was exactly one 2 rolled...';
     is @rolls[@rolls.elems - 1], 2, '...and it was the last roll';
@@ -24,11 +25,10 @@ plan *;
 
 {
     my @rolls = ({ (1..2).pick } ... 1.5).batch(100);
-    ok +@rolls < 100, 'the series terminated...';
-    ok +@rolls > 1, '... and the series had more than one element';
+    ok +@rolls > 0, 'the series had at least one element...';
+    ok +@rolls < 100, '... and the series terminated';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
-    is @rolls.grep(@rolls[@rolls.elems - 1]).elems, 1, 
-       'The last roll was the only roll of its number';
+    is @rolls.grep(@rolls[0]).elems, +@rolls, 'All the rolls are the same';
 }
 
 
