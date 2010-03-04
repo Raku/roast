@@ -9,7 +9,7 @@ plan 6;
 #Str methods
 ##existence
 is 'pi.txt'.e, 1, 'It exists';
-is 'xyzzy'.e, 0, 'It doesn't';
+is 'xyzzy'.e, 0, "It doesn't";
 
 ##is empty
 is 'empty.txt'.z, 1, 'Is empty';
