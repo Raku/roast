@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 =begin description
 
@@ -17,14 +17,16 @@ L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e
 # L<S32::Containers/List/=item pick>
 
 my @array = <a b c d>;
+#?rakudo skip "Junction does not autothread yet"
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
 
 my %hash = (a => 1);
+#?rakudo 2 skip "Hashes do not listify yet"
 is %hash.pick.key,   "a", "pick works on hashes (1)";
 is %hash.pick.value, "1", "pick works on hashes (2)";
 
 my $junc = (1|2|3);
-# rakudo skip 'dubious: pick on Junctions (unspecced?)'
+#?rakudo skip 'dubious: pick on Junctions (unspecced?)'
 ok ?(1|2|3 == $junc.pick), "pick works on junctions";
 
 my @arr = <z z z>;
@@ -35,14 +37,17 @@ ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 is ~(@arr.pick(4, :replace)), 'z z z z', 'method pick(:replace) with $num > +@values';
 
 #?pugs 3 todo 'feature'
-is pick(2, @arr), <z z>, 'sub pick with $num < +@values';
-#?rakudo skip 'named args'
-is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
+is ~(pick(2, :replace(False), @arr)), 'z z', 'sub pick with $num < +@values, explicit no-replace';
+#?rakudo 2 skip "Skipping :replace arg doesn't seem to work"
+is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
-is pick(4, :replace, @arr), <z z z z>, 'sub pick(:replace) with $num > +@values';
+#?rakudo skip "Calling values by name fails hard"
+is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
+is ~(pick(4, :replace, @arr)), 'z z z z', 'sub pick(:replace) with $num > +@values';
 
-ok(~(<a b c d>.pick(*).sort) eq 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)');
+is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 
+#?rakudo skip "xx NYI"
 {
   my @items = <1 2 3 4>;
   my @shuffled_items_10;
@@ -51,16 +56,7 @@ ok(~(<a b c d>.pick(*).sort) eq 'a b c d', 'pick(*) returns all the items in the
        'pick(*) returned the items of the array in a random order');
 }
 
-#? rakudo todo 'lazy lists'
-{
-    my $c = 0;
-    my @value = gather {
-        eval 'for (0,1).pick(*, :replace) -> $v { take($v); leave if ++$c > 3; }';
-    }
-
-    #?rakudo todo 'lazy lists'
-    ok +@value == $c && $c, 'pick(*, :replace) is lazy';
-}
+is (0, 1).pick(*, :replace).batch(10).elems, 10, '.pick(*, :replace) returns an answer';
 
 {
     # Test that List.pick doesn't flatten array refs
