@@ -4,7 +4,7 @@ use Test;
 # Maybe someone can put in a better smartlink? --lue
 # L<S32::IO/"A file test, where X is one of the letters listed below.">
 
-plan 8;
+plan 26;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -23,17 +23,39 @@ my $zero-length-file = "tempfile-zero-length-file-tests";
 
 #Str methods
 ##existence
-is $existing-file.e, 1, 'It exists';
-is $non-existent-file.e, 0, "It doesn't";
+ok $existing-file.e, 'It exists';
+isa_ok $existing-file.e, Bool, '.e returns Bool';
+ok $existing-file ~~ :e, 'It exists';
+#?rakudo todo 'Rakudo gets the type of ~~ :e form incorrect'
+isa_ok $existing-file ~~ :e, Bool, '~~ :e returns Bool';
+nok $non-existent-file.e, "It doesn't";
+isa_ok $non-existent-file.e, Bool, '.e returns Bool';
+nok $non-existent-file ~~ :e, "It doesn't";
+#?rakudo todo 'Rakudo gets the type of ~~ :e form incorrect'
+isa_ok $non-existent-file ~~ :e, Bool, '~~ :e returns Bool';
 
 ##is empty
-is $zero-length-file.z, 1, 'Is empty';
-is $existing-file.z, 0, 'Is not';
+ok $zero-length-file.z, 'Is empty';
+isa_ok $zero-length-file.z, Bool, '.z returns Bool';
+ok $zero-length-file ~~ :z, 'Is empty';
+#?rakudo todo 'Rakudo gets the type of ~~ :z form incorrect'
+isa_ok $zero-length-file ~~ :z, Bool, '~~ :z returns Bool';
+nok $existing-file.z, 'Is not';
+isa_ok $existing-file.z, Bool, '.z returns Bool';
+nok $existing-file ~~ :z, 'Is not';
+#?rakudo todo 'Rakudo gets the type of ~~ :z form incorrect'
+isa_ok $existing-file ~~ :z, Bool, '~~ :z returns Bool';
 
 ##file size
 is $zero-length-file.s, 0, 'No size';
-is $existing-file.s, 11, 'size of file'; #if this test fails, check the size of pi.txt first, and change if necessary :)
-
+isa_ok $zero-length-file.s, Int, '.s returns Int';
+is $zero-length-file ~~ :s, 0, 'No size';
+isa_ok $zero-length-file ~~ :s, Int, '~~ :s returns Int';
+is $existing-file.s, 11, 'size of file';
+isa_ok $existing-file.s, Int, '.s returns Int';
+#?rakudo todo 'Rakudo gets the size wrong with the ~~ :s form'
+is $existing-file ~~ :s, 11, 'size of file';
+isa_ok $existing-file ~~ :s, Int, '~~ :s returns Int';
 
 # clean up
 is unlink($existing-file), 1, 'file has been removed';
