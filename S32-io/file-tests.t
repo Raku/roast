@@ -4,7 +4,7 @@ use Test;
 # Maybe someone can put in a better smartlink? --lue
 # L<S32::IO/"A file test, where X is one of the letters listed below.">
 
-plan 26;
+plan 22;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -43,16 +43,10 @@ nok $existing-file ~~ :z, 'Is not';
 isa_ok $existing-file ~~ :z, Bool, '~~ :z returns Bool';
 
 ##file size
-is $zero-length-file.s, 0, 'No size';
-isa_ok $zero-length-file.s, Int, '.s returns Int';
-is $zero-length-file ~~ :s, 0, 'No size';
-#?rakudo todo 'Rakudo gets the type and size wrong with the ~~ :s form'
-isa_ok $zero-length-file ~~ :s, Int, '~~ :s returns Int';
-is $existing-file.s, 11, 'size of file';
-isa_ok $existing-file.s, Int, '.s returns Int';
-#?rakudo 2 todo 'Rakudo gets the type and size wrong with the ~~ :s form'
-is $existing-file ~~ :s, 11, 'size of file';
-isa_ok $existing-file ~~ :s, Int, '~~ :s returns Int';
+is $zero-length-file.filebytes, 0, 'No size';
+isa_ok $zero-length-file.filebytes, Int, '.filebytes returns Int';
+is $existing-file.filebytes, 11, 'size of file';
+isa_ok $existing-file.filebytes, Int, '.filebytes returns Int';
 
 # clean up
 is unlink($existing-file), 1, 'file has been removed';
