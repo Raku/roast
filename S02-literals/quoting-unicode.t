@@ -77,7 +77,6 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
 {
     eval_dies_ok "q\c[SNOWMAN].\c[COMET]",
         "Can't quote a string with a snowman and comet (U+2603 and U+2604)";
-    #?rakudo todo 'RT 66498'
     eval_dies_ok "'RT 66498' ~~ m\c[SNOWMAN].\c[COMET]",
         "Can't quote a regex with a snowman and comet (U+2603 and U+2604)";
 }

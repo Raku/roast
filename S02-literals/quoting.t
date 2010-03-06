@@ -96,6 +96,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Literals/:q>
+#?rakudo skip 'Q:q adverbs'
 { # adverb variation
     my @q = ();
     @q = (Q:q/$foo $bar/);
@@ -134,6 +135,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Literals/:qq>
+#?rakudo skip 'Q:qq adverbs'
 { # adverb variation
     my @q = ();
     @q = Q:qq/$foo $bar/;
@@ -162,6 +164,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
+#?rakudo todo '\\0 delimiters'
 { # quote with \0 as delimiters L<news:20050101220112.GF25432@plum.flirble.org>
     my @q = ();
     eval "\@q = (q\0foo bar\0)";
@@ -170,6 +173,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 
+#?rakudo skip 'qw'
 { # traditional quote word
     my @q = ();
     @q = (qw/$foo $bar/);
@@ -195,6 +199,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', '...');
 };
 
+#?rakudo skip 'q:w'
 { # adverb variation
     my @q = ();
     @q = (q:w/$foo $bar/);
@@ -203,6 +208,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', "...");
 };
 
+#?rakudo skip 'q:w'
 { # whitespace sep aration does not break quote constructor
   # L<S02/Literals/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
     my @q = ();
@@ -249,7 +255,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q4, 'FOO gorch BAR', ", and long form");
 };
 
-#?rakudo todo 'RT 65654'
+#?rakudo skip 'RT 65654'
 {
     my $rt65654 = 'two words';
     is «a $rt65654 z».elems,   4, 'interpolate variable with spaces (French)';
@@ -331,6 +337,7 @@ FOO
     @q = (Q/foo\\bar$foo/);
 
     is(+@q, 1, "Q// is singular");
+    #?rakudo todo 'special chars in Q/.../'
     is(@q[0], "foo\\\\bar\$foo", "special chars are meaningless"); # double quoting is to be more explicit
 };
 
@@ -354,6 +361,7 @@ FOO
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");
 };
 
+#?rakudo skip '\c97 etc'
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');
@@ -421,28 +429,32 @@ Hello, World
 }
 
 # q:x
+#?rakudo skip 'q:x'
 {
     my $result = %*VM.perl ~~ /MSWIN32/ ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
+
+#?rakudo skip 'q:x'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
+#?rakudo skip 'qq:x'
 {
     my $world = 'world';
     is qq:x/echo hello $world/, "hello world\n", 'Testing qq:x operator';
 }
 
-#?rakudo todo 'q:x assigned to array'
+#?rakudo skip 'q:x assigned to array'
 {
     my @two_lines = q:x/echo hello ; echo world/;
     is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
 }
 
-#?rakudo todo 'q:x assigned to array'
+#?rakudo skip 'q:x assigned to array'
 {
     my $hello = 'howdy';
     my @two_lines = qq:x/echo $hello ; echo world/;
