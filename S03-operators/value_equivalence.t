@@ -25,7 +25,6 @@ plan 52;
   ok !("abc" === "ABC"), "=== on values(abc === ABC)";
   ok !(1 === 1.0), "=== on values (1 === 1.0)";
   ok !(1 === "1"), '=== on values (1 === "1")';
-  #?rakudo todo 'RT #61928'
   ok (Mu === Mu), '=== on values (Mu === Mu)';
 }
 
@@ -65,7 +64,6 @@ plan 52;
 
   ok  ($a === $a), "=== on scalar references (1-1)";
   ok  ($b === $b), "=== on scalar references (1-2)";
-  #?rakudo todo 'scalar reference equivalence'
   ok !($a === $b), "=== on scalar references (1-3)";
 }
 
@@ -108,7 +106,6 @@ plan 52;
 
 {
   ok !(\3 === \4),         "=== on anonymous scalar references (1)";
-  #?rakudo todo 'scalar reference equivalence'
   ok !(\3 === \3),         "=== on anonymous scalar references (2)";
   ok !(\Mu === \Mu), "=== on anonymous scalar references (3)";
 }
