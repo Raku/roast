@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 130;
+plan 131;
 
 =begin pod
 
@@ -547,6 +547,16 @@ is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
     my $a = RT64850.new; 
     $a.foo;
     is $a.x, 42, 'binding to an attribute works';
+}
+
+#?rakudo skip 'RT 73368'
+{
+    class InitializationThunk {
+        has $.foo = my $x = 5;
+        method bar { $x };
+    }
+
+    is InitializationThunk.new.bar, 5, 'a lexical is not tied to a thunk';
 }
 
 # vim: ft=perl6
