@@ -31,6 +31,20 @@ plan *;
   isa_ok (Mu === Mu), Bool, '=== on values (Mu === Mu)';
 }
 
+# more value tests
+{
+  #?rakudo todo "=== broken on Rat"
+  ok 1/2 === 1/2,                "=== on Rats";
+  ok 1/2 !=== 3/2,               "!=== on Rats";
+  isa_ok 1/2 === 1/2, Bool,      "=== on Rats yields Bool";
+  isa_ok 1/2 !=== 3/2, Bool,     "!=== on Rats yields Bool";
+  ok 0.5e0 === 0.5e0,            "=== on Nums";
+  ok 0.5e0 !=== 1.5e0,           "!=== on Nums";
+  #?rakudo todo "=== does not yield Bool on Num"
+  isa_ok 0.5e0 === 0.5e0, Bool,  "=== on Nums yields Bool";
+  isa_ok 0.5e0 !=== 1.5e0, Bool, "!=== on Nums yields Bool";
+}
+
 # Value types
 {
   my $a = 1;
