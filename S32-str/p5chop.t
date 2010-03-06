@@ -21,20 +21,22 @@ is($test, "abcde", "repeated call to p5chop removes last character");
 my @t = <abc def gih>;
 
 is(p5chop(@t), 'h', 'p5chop(@list) returns the last removed char');
-is(@t, <ab de gi>, 'p5chop(@list) removes the last char of each string');
+is(@t, [<ab de gi>], 'p5chop(@list) removes the last char of each string');
 
-# TODO: shouldn't this be an exception ?
-
-is(p5chop("abc"), 'c', 'p5chop on literal string');
+$test = "abc";
+is(p5chop($test), 'c', 'p5chop on literal string');
 
 # TODO: make sure this is a warning:
 # my $undef_var;
 # p5chop($undef_var)
 
-my @empty_array;
-my $r = p5chop(@empty_array);
-ok(defined $r, 'defined');
-is($r, '', 'p5chop on empty array returns empty string');
+#?rakudo skip "Null PMC in Rakudo-ng"
+{
+	my @empty_array;
+	my $r = p5chop(@empty_array);
+	ok(defined $r, 'defined');
+	is($r, '', 'p5chop on empty array returns empty string');
+}
 
 
 
