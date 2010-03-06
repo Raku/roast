@@ -40,7 +40,6 @@ plan *;
   isa_ok 1/2 !=== 3/2, Bool,     "!=== on Rats yields Bool";
   ok 0.5e0 === 0.5e0,            "=== on Nums";
   ok 0.5e0 !=== 1.5e0,           "!=== on Nums";
-  #?rakudo todo "=== does not yield Bool on Num"
   isa_ok 0.5e0 === 0.5e0, Bool,  "=== on Nums yields Bool";
   isa_ok 0.5e0 !=== 1.5e0, Bool, "!=== on Nums yields Bool";
 }
