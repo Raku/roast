@@ -35,37 +35,39 @@ is_deeply split(:input("UNIFICATIONS => Unions Normally Identified From Initial 
            q{split(:input(Str), /\s+/};
 
 is_deeply split("", "forty-two"),
-           qw/f o r t y - t w o/,
+           <f o r t y - t w o>,
            q{split "", Str};
 
 # split on a space
 is_deeply split(' ', 'split this string'),
-           qw/split this string/,
+           <split this string>,
            q{split ' ', Str};
 
 # split on a single character delimiter
 is_deeply split('$', 'try$this$string'),
-           qw/try this string/,
+           <try this string>,
            q{split '$', Str};
 
 # split on a multi-character delimiter
 is_deeply split(', ', "comma, separated, values"),
-           qw/comma separated values/,
+           <comma separated values>,
            q{split ', ', Str};
 
 # split on a variable delimiter
 
 my $delimiter = '::';
 is_deeply split($delimiter, "Perl6::Pugs::Test"),
-           qw/Perl6 Pugs Test/,
+           <Perl6 Pugs Test>,
            q{split $delimiter, Str};
 
 # split with a reg-exp
+#?rakudo skip 'rx:Perl5'
 is_deeply split(rx:Perl5 {,}, "split,me"),
            qw/split me/,
            q/split rx:Perl5 {,}, Str/;
 
 # split on multiple space characters
+#?rakudo skip 'rx:Perl5'
 is_deeply split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars"),
            qw/Hello World Goodbye Mars/,
            q/split rx:Perl5 {\s+}, Str/;
@@ -76,32 +78,34 @@ is_deeply split(rx:Perl5 {(\s+)}, "Hello test", :all),
            q/split rx:Perl5 {(\s+)}, Str/;
 
 is_deeply "to be || ! to be".split(' '),
-           qw/to be || ! to be/,
+           <to be || ! to be>,
            q/Str.split(' ')/;
 
+#?rakudo skip 'rx:Perl5'
 is_deeply "this will be split".split(rx:Perl5 { }),
-           qw/this will be split/,
+           <this will be split>,
            q/Str.split(rx:Perl5 { })/;
 
 # split on multiple space characters
-diag "here";
+#?rakudo skip 'rx:Perl5'
 is_deeply split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars", 3),
-           ( qw/Hello World/, "Goodbye   Mars" ),
+           ( <Hello World>, "Goodbye   Mars" ),
            q/split rx:Perl5 {\s+}, Str, limit/;
 
 is_deeply split(" ", "Hello World    Goodbye   Mars", 3),
-           ( qw/Hello World/, "   Goodbye   Mars" ),
+           ( <Hello World>, "   Goodbye   Mars" ),
            q/split " ", Str, limit/;
 
+#?rakudo skip 'rx:Perl5'
 is_deeply  "Hello World    Goodbye   Mars".split(rx:Perl5 {\s+}, 3),
-           ( qw/Hello World/, "Goodbye   Mars" ),
+           ( <Hello World>, "Goodbye   Mars" ),
            q/Str.split(rx:Perl5 {\s+}, limit)/;
 
 is_deeply  "Hello World    Goodbye   Mars".split(" ", 3),
-           ( qw/Hello World/, "   Goodbye   Mars" ),
+           ( <Hello World>, "   Goodbye   Mars" ),
            q/Str.split(" ", limit)/;
 
-is_deeply  "Word".split("", 3), qw/W o rd/,
+is_deeply  "Word".split("", 3), <W o rd>,
            q/Str.split("", limit)/;
 
 
