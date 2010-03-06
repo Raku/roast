@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 50;
+plan 51;
 
 
 # terms
@@ -69,11 +69,13 @@ ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 ok(  ?(   (1 & 2 | 3) !=3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
+#?rakudo skip 'autothreading bug'
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
 ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 # junctive or
 
+#?rakudo todo 'non-associativeness of infix:<^> and |'
 { # test that | and ^ are on the same level but parsefail
     eval_dies_ok 'my $a = (1 | 2 ^ 3)', '| and ^ may not associate';
     eval_dies_ok 'my $a = (1 ^ 2 | 3)', '^ and | may not associate';
@@ -135,6 +137,7 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 # loose unary
 
 my $x;
+#?rakudo skip 'parsing of "so"'
 is((so $x = 42), 1, "item assignment is tighter than true");
 
 # comma
@@ -161,6 +164,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 {
     my $c;
     eval('$c = any 1, 2, Z 3, 4');
+    #?rakudo skip 'unknown error'
     ok($c == 3, "any is less tight than comma and Z");
 }
 
@@ -203,5 +207,12 @@ eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
 # http://irclog.perlgeek.de/perl6/2009-07-14#i_1315249
 ok ((1 => 2 => 3).key  !~~ Pair), '=> is right-assoc (1)';
 ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
+
+
+# L<S03/Operator precedence/only works between identical operators>
+
+#?rakudo skip 'false positive (passes due to absense of infix:<X>'
+eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
+    'list associativity only works between identical operators';
 
 # vim: ft=perl6
