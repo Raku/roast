@@ -19,7 +19,6 @@ plan 20;
 
     %hash<left>  = {left => 'foo', right => 'bar'};
     %hash<right> = {left => 'baz', right => 'qux'};
-    #?rakudo skip 'stringifying hashes NYI'
     traverse_hash(%hash, 'hash with values that are hashes');
 }
 
@@ -36,7 +35,6 @@ plan 20;
 
     %hash<east> = {east => 'foo', west => 'bar'};
     %hash<west> = {east => 'baz', west => 'qux'};
-    #?rakudo skip 'stringifying hashes NYI'
     traverse_hash(%hash, 'custom hash with values that are hashes');
 }
 

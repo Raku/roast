@@ -64,7 +64,6 @@ plan 126;
     substr($str, 0, 5) = "gloop";
     is($str, "gloop ding", "lvalue assignment modified original string");
 
-    #?rakudo skip "can't parse"
     {
         my $r = \substr($str, 0, 5);
         ok(~WHAT($r), '$r is a reference');
@@ -191,7 +190,6 @@ sub l (Int $a) {  my $l = $a; return $l }
 #?rakudo todo "substr as lvalue"
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
 
-    #?rakudo skip "can't parse"
     {
         my $r = \substr($str, 0, l(5));
         ok(~WHAT($r), '$r is a reference (substr(Int, StrLen)).');

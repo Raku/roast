@@ -184,7 +184,6 @@ ok($fh9.close, 'file closed okay (9)');
 
 #?pugs todo 'buggy on Win32'
 ok(unlink($filename), 'file has been removed');
-#?rakudo skip ':e NYI in ng'
 ok $filename !~~ :e, '... and the tempfile is gone, really';
 
 done_testing;

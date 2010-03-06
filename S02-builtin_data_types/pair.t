@@ -224,7 +224,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 #   Actually, it looks like the bug is probably that => is forcing
 #   stringification on its left argument too agressively.  It should only do
 #   that for an identifier.
-#?rakudo skip "LHS of pair is Str for now"
 {
   my $arrayref = [< a b c >];
   my $hashref  = { :d(1), :e(2) };
@@ -337,7 +336,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     ok($pair eqv (hash => %hash), ':%foo syntax works');
 }
 
-#?rakudo skip "Scope not found for PAST::Var '&code'"
 {
     my sub code {return 42}
     $pair = (:&code);
