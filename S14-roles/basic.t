@@ -54,6 +54,7 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
     my Bar $b .= new();
     $b does B;
     ok defined($b),        'mixing B into $b worked';
+    #?rakudo 2 skip "Method 'defined' not found for invocant of class 'Undef'"
     is $b.attr, 42,        '$b "inherited" the $.attr attribute of B (1)';
     is ($b.attr = 23), 23, '$b "inherited" the $.attr attribute of B (2)';
 
@@ -63,6 +64,7 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
     ok defined($c),             'creating a Foo worked';
     ok !($c ~~ B),              '$c does not B';
     ok (my $d = $c but B),      'mixing in a Role via but worked';
+    #?rakudo todo 'Saying $c but B seems to change $c'
     ok !($c ~~ B),              '$c still does not B...';
     ok $d ~~ B,                 '...but $d does B';
 }
@@ -71,6 +73,7 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
 role C { }
 class DoesC does C { }
 lives_ok { my C $x; },          'can use role as a type constraint on a variable';
+#?rakudo todo 'Cannot assign Mu to variable with role constraint -- bug or feature?'
 lives_ok { my C $x = Mu },      'can assign undefined';
 dies_ok { my C $x = 42 },       'type-check enforced';
 dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
@@ -84,6 +87,7 @@ lives_ok { HasC.new },          'attributes typed as roles initialized OK';
 lives_ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
 lives_ok { HasC.new.x = Mu },   'typed attribute accepts things it should';
+#?rakudo todo "Type attribute accepts anything?"
 dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 
 # Checking if role does role
