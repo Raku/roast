@@ -37,7 +37,6 @@ line 2
 line 3 etc
 line 4
 ];
-#?rakudo todo 'RT 65538'
 is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
 
 done_testing;
