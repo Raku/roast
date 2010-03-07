@@ -19,7 +19,6 @@ plan 21;
     # We've only *accessed* @array[20], but we haven't assigned anything to it, so
     # @array shouldn't change. But currently, @array *is* automatically extended,
     # i.e. @array is ("a", "b", "c", "d", Mu, Mu, ...). This is wrong.
-    #?rakudo todo 'extend array'
     is +@array, 4,
       "accessing a not existing array element should not automatically extend the array";
 }
@@ -33,6 +32,7 @@ plan 21;
       "creating an array element should automatically extend the array (1)";
     # And, of course, @array.exists(20) has to be true -- we've just assigned
     # @array[20].
+    #?rakudo skip "not implemented"
     ok @array.exists(20),
       "creating an array element should automatically extend the array (2)";
 }
@@ -43,7 +43,6 @@ plan 21;
 
     ok !$defined,
         'defined @array[$index_out_of_bounds] should be false';
-    #?rakudo todo 'extend array'
     is +@array, 4,
         'defined @array[$index_out_of_bounds] should not have altered @array';
 }
@@ -59,6 +58,7 @@ plan 21;
         'defined @array[$negative_index_out_of_bounds] should not have altered @array';
 }
 
+#?rakudo skip "exists() not implemented"
 {
     my @array  = <a b c d>;
     my $exists = @array.exists(100);
@@ -69,6 +69,7 @@ plan 21;
         '@array.exists($index_out_of_bounds) should not have altered @array';
 }
 
+#?rakudo skip "exists() not implemented"
 {
     my @array  = <a b c d>;
     my $exists = @array.exists(-5);
@@ -89,6 +90,7 @@ plan 21;
 }
 
 # RT #62948
+#?rakudo skip "Null PMC bug"
 {
     my @a;
     @a[2] = 'b';
