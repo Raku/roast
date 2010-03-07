@@ -61,12 +61,10 @@ eval_dies_ok 'my Digit $x = 3.1',
             'subset of hash with where enforces where clause';
 
     subset Austria of Array;
-    #?rakudo todo 'RT #67818'
     lives_ok { my Austria $a = [] },
              'can create subset of array';
 
     subset NumArray of Array where { .elems == .grep: { $_ ~~ Num } }
-    #?rakudo todo 'RT #67818'
     lives_ok { my NumArray $n = [] },
              'can create subset of array with where';
     #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
@@ -83,15 +81,15 @@ eval_dies_ok 'my Digit $x = 3.1',
     dies_ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
 
-    subset Sublist of List;
-    lives_ok { my Sublist $tsil = [] },
-             'can create subset of list';
+    subset Subseq of Seq;
+    lives_ok { my Subseq $tsil = <a b c>.Seq },
+             'can create subset of Seq';
 
-    subset FewOdds of List where { 2 > .grep: { $_ % 2 } }
-    lives_ok { my FewOdds $fe = <78 99 24 36> },
-             'can create subset of List with where';
-    dies_ok { my FewOdds $bomb = <78 99 24 36 101> },
-            'subset of List with where enforces where';
+    subset FewOdds of Seq where { 2 > .grep: { $_ % 2 } }
+    lives_ok { my FewOdds $fe = <78 99 24 36>.Seq },
+             'can create subset of Seq with where';
+    dies_ok { my FewOdds $bomb = <78 99 24 36 101>.Seq },
+            'subset of Seq with where enforces where';
 }
 
 #?rakudo skip 'my subset = Null PMC Access'
