@@ -148,6 +148,7 @@ tryeq 0 - -2147483647, 2147483647;
 tryeq 2000000000 - 4000000000, -2000000000;
 
 # No warnings should appear;
+#?rakudo skip 'warnings freak out rakudo :('
 {
     my $a;
     $a += 1;
@@ -169,6 +170,7 @@ tryeq 2000000000 - 4000000000, -2000000000;
     tryeq $a, -4294967297;
 }
 
+#?rakudo skip 'warnings freak out rakudo :('
 {
     my $s;
     $s -= 1;
@@ -278,6 +280,7 @@ tryeq -4.5 / 2, -2.25;
 tryeq -5.5 / -2, 2.75;
 
 
+#?rakudo skip 'bigint'
 {
     # The peephole optimiser is wrong to think that it can substitute intops
     # in place of regular ops, because i_multiply can overflow.
@@ -298,6 +301,7 @@ tryeq -5.5 / -2, 2.75;
 
 is 2**2, 4;
 is 2.2**2, 4.84;
+#?rakudo 2 skip 'long rats'
 is_approx 2**2.2, 4.59479341998814;
 is_approx 2.2**2.2, 5.66669577875008;
 is 1**0, 1;
@@ -312,6 +316,8 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
 {
     is_approx(-1, (0 + 1i)**2, "i^2 == -1");
+
+    #?rakudo skip 'long rats'
     is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
     is_approx(1i, (-1+0i)**0.5, '(-1+0i)**0.5 == i ');
 }
@@ -428,11 +434,6 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 
     is (1..10).grep({ $_ !% 3 }), <3 6 9>, '!% works with explicit closure';
     is (1..10).grep( * !% 3 ), <3 6 9>, '!% works with whatever *'
-}
-
-{
-    is &infix:<+>(3, 6), 9, 'Can access &infix:<+>';
-
 }
 
 done_testing;
