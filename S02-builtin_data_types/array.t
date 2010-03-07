@@ -22,6 +22,7 @@ plan 94;
 {
     my $i = 0;
     $i++ for [1, 2, 3];
+    #?rakudo todo "undesired flattening"
     is $i, 1, 'for [1, 2, 3] does one iteration';
 }
 
@@ -149,11 +150,13 @@ my @array2 = ("test", 1, Mu);
 {
     # declare the array with data type
     my Int @array;
+    #?rakudo todo "parametrization issues"
     lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
 
 #?pugs skip "no whatever star yet"
+#?rakudo skip ""
 {
     my @array12 = ('a', 'b', 'c', 'e');
 
@@ -170,6 +173,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?pugs skip "no whatever star yet"
+#?rakudo skip ""
 {
     my @array13 = ('a', 'b', 'c', 'd');
     # end index range as lvalue
@@ -196,21 +200,23 @@ my @array2 = ("test", 1, Mu);
   is @arr[0], "new value", "modifying of array contents (constants) works";
 }
 
-#?rakudo skip "access out of array bounds"
 #?pugs skip "no whatever star yet"
 {
   my @arr;
+  #?rakudo todo ""
   lives_ok { @arr[*-1] },  "readonly accessing [*-1] of an empty array is ok (1)";
+  #?rakudo skip "Null PMC access bug"
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is ok (2)";
   dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
-#?rakudo skip "access out of array bounds"
 #?pugs skip "no whatever star yet"
 {
   my @arr = (23);
+  #?rakudo todo ""
   lives_ok { @arr[*-2] },  "readonly accessing [*-2] of an one-elem array is ok (1)";
+  #?rakudo skip "Null PMC access bug"
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is ok (2)";
   dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
   dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
@@ -221,32 +227,28 @@ my @array2 = ("test", 1, Mu);
   my $minus_one = -1;
 
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
-  #?rakudo todo '@array[$minus_one] should fail'
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is run-time error";
-  #?rakudo 2 skip '@arr[-1] should fail'
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
 
 # L<S09/Fixed-size arrays>
 
-#?rakudo skip 'my @arr[*] parsefail'
 {
     my @arr[*];
     @arr[42] = "foo";
-    ok(+@arr, 42, 'my @arr[*] autoextends like my @arr');
+    is(+@arr, 43, 'my @arr[*] autoextends like my @arr');
 }
 
-#?rakudo skip 'my @arr[num] parsefail'
 {
     my @arr[7] = <a b c d e f g>;
-    is(@arr, <a b c d e f g>, 'my @arr[num] can hold num things');
+    is(@arr, [<a b c d e f g>], 'my @arr[num] can hold num things');
+    #?rakudo 2 todo "no bounds checking"
     dies_ok({push @arr, 'h'}, 'adding past num items in my @arr[num] dies');
     dies_ok({@arr[7]}, 'accessing past num items in my @arr[num] dies');
 }
 
-#?rakudo skip 'my @arr[num] parsefail'
 {
     lives_ok({ my @arr\    [7]}, 'array with fixed size with unspace');
     eval_dies_ok('my @arr.[8]', 'array with dot form dies');
@@ -257,18 +259,20 @@ my @array2 = ("test", 1, Mu);
 
 {
     my @arr of Int = 1, 2, 3, 4, 5;
+    #?rakudo 3 todo "parametrization issues"
     is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
     dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
 }
 
-#?rakudo skip 'my @arr[num] of Type parsefail'
 {
     my @arr[5] of Int = <1 2 3 4 5>;
+    #?rakudo 2 todo "parametrization issues"
     is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
 
     dies_ok({push @arr, 123}, 'boundary constraints on my @arr[num] of Type works');
     pop @arr; # remove the last item to ensure the next ones are type constraints
+    #?rakudo 2 todo "parametrization issues"
     dies_ok({push @arr, 's'}, 'type constraints on my @arr[num] of Type works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr[num] of Type works (2)');
 }
