@@ -1,6 +1,6 @@
 use Test;
 
-plan *;
+plan 730;
 
 ### for now
 sub matchcheck(*@) { 1 }
