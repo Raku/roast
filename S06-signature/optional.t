@@ -45,7 +45,11 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
       'die on too many parameters (was once bug RT 53814)';
 
 {
-    sub rt54804( $v, $w?, $x?, $y? ) {
+
+    # old test is bogus, nullterm only allowed at the end of a list
+    # is rt54804( 1, , 3, ), '1|undef|3|undef',
+    #    'two commas parse as if undef is between them';
+    eval_dies_ok q/sub rt54804( $v, $w?, $x?, $y? ) {
         (defined( $v ) ?? $v !! 'undef')
         ~ '|' ~
         (defined( $w ) ?? $w !! 'undef')
@@ -54,11 +58,7 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
         ~ '|' ~
         (defined( $y ) ?? $y !! 'undef')
     }
-
-    # old test is bogus, nullterm only allowed at the end of a list
-    # is rt54804( 1, , 3, ), '1|undef|3|undef',
-    #    'two commas parse as if undef is between them';
-    eval_dies_ok 'rt54804( 1, , 3, )', "two commas in a row doesn't parse";
+    rt54804( 1, , 3, )/, "two commas in a row doesn't parse";
 }
 
 #?rakudo todo 'RT 66822'
