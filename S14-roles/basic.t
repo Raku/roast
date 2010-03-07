@@ -64,7 +64,6 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
     ok defined($c),             'creating a Foo worked';
     ok !($c ~~ B),              '$c does not B';
     ok (my $d = $c but B),      'mixing in a Role via but worked';
-    #?rakudo todo 'Saying $c but B seems to change $c'
     ok !($c ~~ B),              '$c still does not B...';
     ok $d ~~ B,                 '...but $d does B';
 }
