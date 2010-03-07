@@ -76,6 +76,7 @@ ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
+#?rakudo todo 'unknown'
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
 #### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
@@ -83,6 +84,7 @@ ok 'xyzabcde' !~~ /( ab | abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
 #?pugs todo 'feature'
+#?rakudo skip '<commit> not implemented'
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
 #L<S05/Modifiers/"The new :ratchet modifier">
@@ -281,6 +283,7 @@ ok 'abcdef' ~~ /^<[a]>?/, 'anchored optional character class';
 ok 'abcdef' ~~ /<-[e]>?/, 'negated optional character class';
 
 #### <-[dcb]>**{3}		abcdef		n	repeated negated character class
+#?rakudo todo 'unknown'
 ok 'abcdef' !~~ /<-[dcb]>**{3}/, 'repeated negated character class';
 
 #### ^<-[e]>			abcdef		y	anchored negated character class
@@ -428,32 +431,32 @@ ok '... --- ...' ~~ /"... --- ..."/, 'literal match (\")';
 
 #### "... --- ..."		...---...	n	literal match (\")
 #?pugs todo 'feature'
-#?rakudo skip 'parse error (RT #64880)'
+########### ?rakudo skip 'parse error (RT #64880)'
 ok '...---...' !~~ /"... --- ..."/, 'literal match (\")';
 
 #### "ab<\">cd"		ab<">cd		y	literal match with quote
 #?pugs todo 'feature'
-#?rakudo skip 'parse error (RT #64880)'
+#            ?rakudo skip 'parse error (RT #64880)'
 ok 'ab<">cd' ~~ /"ab<\">cd"/, 'literal match with quote';
 
 #### "ab<'>cd"		ab<\'>cd		y	literal match with quote
 #?pugs todo 'feature'
-#?rakudo skip 'parse error (RT #64880)'
+#              ?rakudo skip 'parse error (RT #64880)'
 ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 
-#?pugs todo 'feature'
 #### "ab\\cd"		ab\x5ccd	y	literal match with backslash
-#?rakudo skip 'parse error (RT #64880)'
-ok 'ab\x5ccd' ~~ /"ab\\cd"/, 'literal match with backslash';
+#?pugs todo 'feature'
+#?rakudo todo 'unknown'
+ok "ab\x5ccd" ~~ /"ab\\cd"/, 'literal match with backslash';
 
 #### (ab)x"$0"		abxab		y	literal match with interpolation
 #?pugs todo 'feature'
-#?rakudo skip 'parse error (RT #64880)'
+#?rakudo todo 'unknown'
 ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
 
 #### (ab)"x$0"		abxab		y	literal match with interpolation
 #?pugs todo 'feature'
-#?rakudo skip 'parse error (RT #64880)'
+#?rakudo todo 'unknown'
 ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading ? indicates">
@@ -494,49 +497,62 @@ ok ('aabaaa' ~~ /<!before ..b> aa/) && matchcheck($/, q/mob: <aa @ 3>/), 'negate
 
 #### <after a>b		ab		y				lookbehind <after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'ab' ~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		cb		n				lookbehind <after>
+#?rakudo skip 'NYI'
 ok 'cb' !~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		b		n				lookbehind <after>
+#?rakudo skip 'NYI'
 ok 'b' !~~ /<after a>b/, 'lookbehind <after>';
 
 #### <!after c>b		ab		y				lookbehind <!after>
+#?rakudo skip 'NYI'
 #?pugs todo 'feature'
 ok 'ab' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		cb		n				lookbehind <!after>
+#?rakudo skip 'NYI'
 ok 'cb' !~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		b		y				lookbehind <!after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'b' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>>b	dbcb		n				lookbehind <!after>
+#?rakudo skip 'NYI'
 ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>><[ab]>	dbaacb		y				lookbehind <!after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
 
 #### <!after c|d>b		dbcb		n				lookbehind <!after>
+#?rakudo skip 'NYI'
 ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
 
 #### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 
 #### <!after cd><[ab]>	cbaccb		y				lookbehind <!after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 #?pugs todo 'feature'
+#?rakudo skip 'NYI'
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading + may also">
@@ -1058,6 +1074,7 @@ ok "abc\r\rdef" !~~ /c \R+ d/, 'not return (\R)';
 ok 'abcdef' ~~ /a \R+ f/, 'not return (\R)';
 
 #### c \f d			abc\fdef	y	formfeed (\f)
+#?rakudo todo 'unknown'
 ok "abc\fdef" ~~ /c \f d/, 'formfeed (\f)';
 
 #### c \f+ d			abc\f\fdef	y	formfeed (\f)
@@ -1089,6 +1106,7 @@ ok 'abcdef' ~~ /a \F+ f/, 'not formfeed (\F)';
 
 #### c \e d			abc\edef	y	escape (\e)
 #?pugs todo 'feature'
+#?rakudo todo 'unknown'
 ok "abc\edef" ~~ /c \e d/, 'escape (\e)';
 
 #### c \e+ d			abc\e\edef	y	escape (\e)
@@ -1119,6 +1137,7 @@ ok "abc\edef" !~~ /c \E d/, 'not escape (\E)';
 ok "abc\e\edef" !~~ /c \E+ d/, 'not escape (\E)';
 
 #### a \E+ f			abcdef		y	not escape (\E)
+#?rakudo todo 'unknown'
 ok 'abcdef' ~~ /a \E+ f/, 'not escape (\E)';
 
 #### c \x0021 d		abc!def	y	hex (\x)
@@ -2079,21 +2098,25 @@ ok ('xay' ~~ /:ratchet xa?!a/) && matchcheck($/, q/<xa @ 0>/), 'ques ratchet gre
 
 ## Quantifier closure
 #### .**{2}			a			n	only one character
+#?rakudo todo 'unknown'
 ok 'a' !~~ /.**{2}/, 'only one character';
 
 #### .**{2}			ab			y	two characters
 ok 'ab' ~~ /.**{2}/, 'two characters';
 
 #### a**{2}			foobar		n	only one "a" character
+#?rakudo todo 'unknown'
 ok 'foobar' !~~ /a**{2}/, 'only one "a" character';
 
 #### a**{2}			baabaa		y	two "a" characters
 ok 'baabaa' ~~ /a**{2}/, 'two "a" characters';
 
 #### a**{0..4}		bbbbbbb		y	no "a" characters
+#?rakudo todo 'unknown'
 ok 'bbbbbbb' ~~ /a**{0..4}/, 'no "a" characters';
 
 #### a**{2..4}		bababab		n	not two consecutive "a" characters
+#?rakudo todo 'unknown'
 ok 'bababab' !~~ /a**{2..4}/, 'not two consecutive "a" characters';
 
 #### a**{2..4}		baabbbb		y	two "a" characters
@@ -2198,6 +2221,7 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 ok ('2+3 ab2' ~~ /<ident>/) && matchcheck($/, q/mob<ident>: <ab2 @ 4>/), 'capturing builtin <ident>';
 
 #### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
+#?rakudo skip 'regex <name>'
 ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
 
 
