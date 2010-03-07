@@ -97,7 +97,7 @@ role D {
 ok D ~~ Role, 'a role does the Role type';
 
 # If these two tests are swapped, rakudo gives a stack trace on exit.
-#?rakudo todo 'class as role (RT #60176)'
+#?rakudo skip 'class as role (RT #60176)'
 {
     eval_lives_ok 'class Plain {}; class DoesClass does Plain {}',
                   'a class is also a role';
@@ -106,7 +106,6 @@ ok D ~~ Role, 'a role does the Role type';
                   'can compile "class does Int"';
 }
 
-#?rakudo todo 'RT 66178'
 eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
 done_testing;
