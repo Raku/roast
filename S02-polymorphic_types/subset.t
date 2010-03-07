@@ -92,7 +92,6 @@ eval_dies_ok 'my Digit $x = 3.1',
             'subset of Seq with where enforces where';
 }
 
-#?rakudo skip 'my subset = Null PMC Access'
 {
     my subset Str_not2b of Str where /^[isnt|arent|amnot|aint]$/;
     my Str_not2b $text;
