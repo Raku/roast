@@ -90,7 +90,6 @@ plan 21;
 }
 
 # RT #62948
-#?rakudo skip "Null PMC bug"
 {
     my @a;
     @a[2] = 'b';
