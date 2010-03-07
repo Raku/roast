@@ -12,10 +12,11 @@ plan *;
     lives_ok { @x = 1..3    }, 'can assign range of the right type';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type';
     lives_ok { @x.unshift: 3}, 'can unshift values of the right type';
+    #?rakudo todo "readonly slices"
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array';
-    is @x.unshift(2), (2, 2, 3), 'can unshift from typed array';
+    is @x.unshift(2), [2, 2, 3], 'can unshift from typed array';
 }
 
 {
@@ -25,10 +26,11 @@ plan *;
     lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
     lives_ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
+    #?rakudo todo "readonly slices"
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
-    is @x.unshift(1), (1, 2, 3), 'can unshift from typed array (@x of Int)';
+    is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (@x of Int)';
 }
 
 # initialization 
@@ -41,6 +43,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
     lives_ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
+    #?rakudo todo "readonly slices"
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
@@ -50,6 +53,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
 {
     my Array @x;
+    #?rakudo 4 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
@@ -62,6 +66,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
 {
     my @x of Array;
+    #?rakudo 4 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
@@ -94,7 +99,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
     my Str @c = <foo bar baz>;
     #?rakudo todo 'Array methods should return typed arrays'
-    is @c.keys.of, Int, '@array.keys is typed with Int';
+    ok @c.keys.of === Str, '@array.keys is typed with Int';
 }
 
 # test that we can have parametric array return types
@@ -111,6 +116,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         'type check Positional of Int allows correctly typed array to be returned explicitly';
     lives_ok { ret_pos_2() },
         'type check Positional of Int allows correctly typed array to be returned implicitly';
+    #?rakudo 4 todo "no parametrization"
     dies_ok { ret_pos_3() },
         'type check Positional of Int prevents untyped array to be returned explicitly';
     dies_ok { ret_pos_4() },
@@ -131,7 +137,6 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         has @.rt71958 is rw;
     }
     my Int @typed_array;
-    #?rakudo todo 'RT 71958: Array type constraint leaks'
     lives_ok { RT71958.new().rt71958[0] = RT71958.new() },
              'can assign to untyped array in presence of typed array';
 }
