@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 2;
+plan 3;
 
 =begin description
 
@@ -12,7 +12,8 @@ Tests for pi function.
 my $PI = 3.14159265358979323846264338327950288419716939937510e0;
 
 # -- pi
-is_approx(pi, $PI, "pi()");
-is_approx(pi + 3, $PI + 3, "'pi() + 3' may drop its parentheses before +3");
+is_approx(pi, $PI, "pi (using constant)");
+is_approx(pi, atan(1)*4, "pi checked by atan(1)*4");
+is_approx(pi + 3, $PI + 3, "'pi + 3' = PI +3");
 
 # vim: ft=perl6
