@@ -7,7 +7,7 @@ plan 45;
 # array_ref of strings
 
 my $array_ref1 = ("foo", "bar", "baz");
-isa_ok($array_ref1, Array);
+isa_ok($array_ref1, Seq);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
 is($array_ref1[0], 'foo', 'got the right value at array_ref1 index 0');
@@ -123,6 +123,7 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
   ok !([$foo][0] =:= $foo), "creating arrays using [] creates new containers (1)";
 }
 
+#?rakudo skip "parsefail (no !=:= operator)"
 {
   my $foo;
   my $arrayref = [$foo];
