@@ -304,6 +304,9 @@ is 1**0, 1;
 is 1**1, 1;
 isnt 2**3**4, 4096, "** is right associative";
 
+# RT #73262
+is_approx 7**(-1), 0.14285714285714, '7**(-1) works';
+
 # test associativity
 is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
