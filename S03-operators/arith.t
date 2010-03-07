@@ -280,7 +280,6 @@ tryeq -4.5 / 2, -2.25;
 tryeq -5.5 / -2, 2.75;
 
 
-#?rakudo skip 'bigint'
 {
     # The peephole optimiser is wrong to think that it can substitute intops
     # in place of regular ops, because i_multiply can overflow.
@@ -407,12 +406,10 @@ my $x;
 #?rakudo 2 todo 'modulo by zero'
 dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
-#?rakudo skip 'modulo by zero'
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
 dies_ok( { say 3 div 0 }, 'Division by zero dies and is catchable');
 dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
-#?rakudo skip 'modulo by zero'
 dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
 # This is a rakudo regression wrt bignum:
