@@ -17,7 +17,6 @@ L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e
 # L<S32::Containers/List/=item pick>
 
 my @array = <a b c d>;
-#?rakudo skip "Junction does not autothread yet"
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
 
 my %hash = (a => 1);
@@ -38,7 +37,6 @@ is ~(@arr.pick(4, :replace)), 'z z z z', 'method pick(:replace) with $num > +@va
 
 #?pugs 3 todo 'feature'
 is ~(pick(2, :replace(False), @arr)), 'z z', 'sub pick with $num < +@values, explicit no-replace';
-#?rakudo 2 skip "Skipping :replace arg doesn't seem to work"
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
 #?rakudo skip "Calling values by name fails hard"
@@ -47,7 +45,6 @@ is ~(pick(4, :replace, @arr)), 'z z z z', 'sub pick(:replace) with $num > +@valu
 
 is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 
-#?rakudo skip "xx NYI"
 {
   my @items = <1 2 3 4>;
   my @shuffled_items_10;

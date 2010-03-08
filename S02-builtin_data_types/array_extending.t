@@ -102,7 +102,6 @@ plan 21;
     my $n = + @a.grep({ $_ eq 'b'});
     is $n, 1, 'grep on extended array';
     @a[1] = 'c'; # cmp doesn't handle Mu cmp Mu yet
-    #?rakudo skip 'RT #62948'
     ok not defined @a.min(), 'min on list with undefined el returns Mu';
 }
 

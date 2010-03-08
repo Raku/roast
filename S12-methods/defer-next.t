@@ -55,7 +55,6 @@ class BarNextWithEmpty is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(); $.tracker ~= 'ret2,'}
 }
-#?rakudo skip 'defering to MMD candidate with different args'
 {
     my $o = BarNextWithEmpty.new;
     $o.clear;
@@ -71,7 +70,6 @@ class BarNextWithInt is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(42); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(42); $.tracker ~= 'ret2,'}
 }
-#?rakudo skip 'defering to MMD candidate with different args'
 {
     my $o = BarNextWithInt.new;
     $o.clear;

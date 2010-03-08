@@ -30,7 +30,6 @@ is(p5chop($test), 'c', 'p5chop on literal string');
 # my $undef_var;
 # p5chop($undef_var)
 
-#?rakudo skip "Null PMC in Rakudo-ng"
 {
 	my @empty_array;
 	my $r = p5chop(@empty_array);

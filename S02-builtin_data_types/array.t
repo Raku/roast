@@ -264,17 +264,17 @@ my @array2 = ("test", 1, Mu);
 
 {
     my @arr of Int = 1, 2, 3, 4, 5;
-    #?rakudo 3 todo "parametrization issues"
     is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
+    #?rakudo 2 todo "parametrization issues"
     dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
 }
 
 {
     my @arr[5] of Int = <1 2 3 4 5>;
-    #?rakudo 2 todo "parametrization issues"
     is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
 
+    #?rakudo todo "parametrization issues"
     dies_ok({push @arr, 123}, 'boundary constraints on my @arr[num] of Type works');
     pop @arr; # remove the last item to ensure the next ones are type constraints
     #?rakudo 2 todo "parametrization issues"
