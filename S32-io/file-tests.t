@@ -33,20 +33,20 @@ nok $non-existent-file ~~ :e, "It doesn't";
 isa_ok $non-existent-file ~~ :e, Bool, '~~ :e returns Bool';
 
 ##is empty
-ok $zero-length-file.z, 'Is empty';
-isa_ok $zero-length-file.z, Bool, '.z returns Bool';
-ok $zero-length-file ~~ :z, 'Is empty';
-isa_ok $zero-length-file ~~ :z, Bool, '~~ :z returns Bool';
-nok $existing-file.z, 'Is not';
-isa_ok $existing-file.z, Bool, '.z returns Bool';
-nok $existing-file ~~ :z, 'Is not';
-isa_ok $existing-file ~~ :z, Bool, '~~ :z returns Bool';
+nok $zero-length-file.s, 'Is empty';
+isa_ok $zero-length-file.s, Int, '.s returns Int';
+ok $zero-length-file ~~ :!s, 'Is empty';
+isa_ok $zero-length-file ~~ :!s, Bool, '~~ :!s returns Bool';
+ok $existing-file.s, 'Is not';
+isa_ok $existing-file.s, Int, '.s returns Int';
+ok $existing-file ~~ :s, 'Is not';
+isa_ok $existing-file ~~ :s, Bool, '~~ :s returns Bool';
 
 ##file size
-is $zero-length-file.filebytes, 0, 'No size';
-isa_ok $zero-length-file.filebytes, Int, '.filebytes returns Int';
-is $existing-file.filebytes, 11, 'size of file';
-isa_ok $existing-file.filebytes, Int, '.filebytes returns Int';
+is $zero-length-file.s, 0, 'No size';
+isa_ok $zero-length-file.s, Int, '.s returns Int';
+is $existing-file.s, 11, 'size of file';
+isa_ok $existing-file.s, Int, '.s returns Int';
 
 # clean up
 is unlink($existing-file), 1, 'file has been removed';
