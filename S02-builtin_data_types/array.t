@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 94;
+plan 95;
 
 #L<S02/Mutable types/Array>
 
@@ -26,6 +26,11 @@ plan 94;
     is $i, 1, 'for [1, 2, 3] does one iteration';
 }
 
+# uninitialized array variables should work too...
+{
+    my @a;
+    is eval(@a.perl).elems, 0, '@a.perl on uninitialized variable';
+}
 
 # array of strings
 

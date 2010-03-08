@@ -2,36 +2,45 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 94;
+
+#?DOES 1
+sub iis(Mu $a, Mu $b, $descr) {
+    unless ok($a === $b, $descr) {
+        diag "Got:      " ~ $a.perl;
+        diag "Expected: " ~ $b.perl;
+    }
+
+}
 
 { # L<S03/"Changes to Perl 5 operators"/imposes boolean context/>
-  is ?True,    True,  "? context forcer works (1)";
-  is ?False,   False, "? context forcer works (2)";
+  iis ?True,    True,  "? context forcer works (1)";
+  iis ?False,   False, "? context forcer works (2)";
 
-  is ?1,       True,  "? context forcer works (3)";
-  is ?0,       False, "? context forcer works (4)";
-  is ?(?1),    True,  "? context forcer works (5)";
-  is ?(?0),    False, "? context forcer works (6)";
+  iis ?1,       True,  "? context forcer works (3)";
+  iis ?0,       False, "? context forcer works (4)";
+  iis ?(?1),    True,  "? context forcer works (5)";
+  iis ?(?0),    False, "? context forcer works (6)";
 
-  is ?"hi",    True,  "? context forcer works (7)";
-  is ?"",      False, "? context forcer works (8)";
-  is ?(?"hi"), True,  "? context forcer works (9)";
-  is ?(?""),   False, "? context forcer works (10)";
+  iis ?"hi",    True,  "? context forcer works (7)";
+  iis ?"",      False, "? context forcer works (8)";
+  iis ?(?"hi"), True,  "? context forcer works (9)";
+  iis ?(?""),   False, "? context forcer works (10)";
 
-  is ?"3",     True,  "? context forcer works (11)";
-  is ?"0",     False, "? context forcer works (12)";
-  is ?(?"3"),  True,  "? context forcer works (13)";
-  is ?(?"0"),  False, "? context forcer works (14)";
+  iis ?"3",     True,  "? context forcer works (11)";
+  iis ?"0",     False, "? context forcer works (12)";
+  iis ?(?"3"),  True,  "? context forcer works (13)";
+  iis ?(?"0"),  False, "? context forcer works (14)";
 
-  is ?Mu,      False, "? context forcer works (15)";
+  iis ?Mu,      False, "? context forcer works (15)";
 }
 { # L<S02/"Names and Variables" /In boolean contexts/>
-  is ?[],      False,  "? context forcer: empty container is false";
-  is ?[1],     True,   "? context forcer: non-empty container is true";
+  iis ?[],      False,  "? context forcer: empty container is false";
+  iis ?[1],     True,   "? context forcer: non-empty container is true";
 }
 { # L<SO2/"Names and Variables" /In a boolean context, a Hash/>
-  is ?{},      False,  "? context forcer: empty hash is false";
-  is ?{:a},    True,   "? context forcer: non-empty hash is true";
+  iis ?{},      False,  "? context forcer: empty hash is false";
+  iis ?{:a},    True,   "? context forcer: non-empty hash is true";
 }
 
 { # L<S03/"Changes to Perl 5 operators" /imposes a numeric context/>
@@ -40,6 +49,7 @@ plan 93;
   is +"1",         1, "+ context forcer works (3)";
   is +"0",         0, "+ context forcer works (4)";
   is +"",          0, "+ context forcer works (5)";
+  #?rakudo skip 'numeification of Mu'
   is +Mu,          0, "+ context forcer works (6)";
   is +"Inf",     Inf, "+ context forcer works (7)";
   is +"-Inf",   -Inf, "+ context forcer works (8)";
@@ -55,12 +65,15 @@ plan 93;
   is ~"1",       "1", "~ context forcer works (3)";
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
+  #?rakudo skip '~Mu'
   is ~Mu,         "", "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";
   is ~"NaN",   "NaN", "~ context forcer works (9)";
   is ~"3e5",   "3e5", "~ context forcer works (10)";
 }
+
+ok 4.Str ~~ Str, 'Int.Str returns a Str';
 
 sub eval_elsewhere($code){ eval($code) }
 
@@ -195,6 +208,7 @@ sub eval_elsewhere($code){ eval($code) }
 {
     ok   0 ~~ ^10, '0 is in ^10';
     ok   9 ~~ ^10, '9 is in ^10';
+    #?rakudo 3 skip '^$num ranges'
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
@@ -207,6 +221,7 @@ sub eval_elsewhere($code){ eval($code) }
     ok   0 ~~ ^@a, '0 is in ^10';
     ok   9 ~~ ^@a, '9 is in ^10';
     ok 9.9 ~~ ^@a, '9.99 is in ^10';
+    #?rakudo 2 skip '^$num ranges'
     ok  10 !~~ ^@a, '10 is not in ^10';
     is (^@a).elems, 10, '^10 has 10 elems';
     isa_ok ^@a, Range;
