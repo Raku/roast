@@ -89,5 +89,132 @@ is($b, -(++$a), 'est oder of predecrement in -(++$a)');
     ok 18446744073709551616 div 9223372036854775808 == 2, '$bignum1 div $bignum2';
 }
 
+# UVs should behave properly
+{
+    is 4063328477 % 65535, 27407;
+    is 4063328477 % 4063328476, 1;
+    is 4063328477 % 2031664238, 1;
+    
+    is 2031664238 % 4063328477, 2031664238;
+
+    # These should trigger wrapping on 32 bit IVs and UVs
+
+    is 2147483647 + 0, 2147483647;
+
+    # IV + IV promote to UV
+    is 2147483647 + 1, 2147483648;
+    is 2147483640 + 10, 2147483650;
+    is 2147483647 + 2147483647, 4294967294;
+    # IV + UV promote to NV
+    is 2147483647 + 2147483649, 4294967296;
+    # UV + IV promote to NV
+    is 4294967294 + 2, 4294967296;
+    # UV + UV promote to NV
+    is 4294967295 + 4294967295, 8589934590;
+
+    # UV + IV to IV
+    is 2147483648 + -1, 2147483647;
+    is 2147483650 + -10, 2147483640;
+    # IV + UV to IV
+    is -1 + 2147483648, 2147483647;
+    is -10 + 4294967294, 4294967284;
+    # IV + IV to NV
+    is -2147483648 + -2147483648, -4294967296;
+    is -2147483640 + -10, -2147483650;
+}
+
+{ 
+    tryeq 2147483648 - 0, 2147483648;
+    tryeq -2147483648 - 0, -2147483648;
+    tryeq 2000000000 - 4000000000, -2000000000;
+}
+
+# Believe it or not, this one overflows on 32-bit Rakduo as of 3/8/2010.
+{
+    # RT #73262
+    is_approx 7**(-1), 0.14285714285714, '7**(-1) works';
+}
+
+{
+    # The peephole optimiser is wrong to think that it can substitute intops
+    # in place of regular ops, because i_multiply can overflow.
+    # (Perl 5) Bug reported by "Sisyphus" (kalinabears@hdc.com.au)
+    my $n = 1127;
+    my $float = ($n % 1000) * 167772160.0;
+    tryeq_sloppy $float, 21307064320;
+  
+    # On a 32 bit machine, if the i_multiply op is used, you will probably get
+    # -167772160. It's actually undefined behaviour, so anything may happen.
+    my $int = ($n % 1000) * 167772160;
+    tryeq $int, 21307064320;
+
+}
+
+{
+    tryeq -1 - -2147483648, 2147483647;
+    tryeq 2 - -2147483648, 2147483650;
+
+    tryeq 4294967294 - 3, 4294967291;
+    tryeq -2147483648 - -1, -2147483647;
+
+    # IV - IV promote to UV
+    tryeq 2147483647 - -1, 2147483648;
+    tryeq 2147483647 - -2147483648, 4294967295;
+    # UV - IV promote to NV
+    tryeq 4294967294 - -3, 4294967297;
+    # IV - IV promote to NV
+    tryeq -2147483648 - +1, -2147483649;
+    # UV - UV promote to IV
+    tryeq 2147483648 - 2147483650, -2;
+}
+
+# check with 0xFFFF and 0xFFFF
+{
+    is 65535 * 65535, 4294836225;
+    is 65535 * -65535, -4294836225;
+    is -65535 * 65535, -4294836225;
+    is -65535 * -65535, 4294836225;
+
+    # check with 0xFFFF and 0x10001
+    is 65535 * 65537, 4294967295;
+    is 65535 * -65537, -4294967295;
+    is -65535 * 65537, -4294967295;
+    is -65535 * -65537, 4294967295;
+    
+    # check with 0x10001 and 0xFFFF
+    is 65537 * 65535, 4294967295;
+    is 65537 * -65535, -4294967295;
+    is -65537 * 65535, -4294967295;
+    is -65537 * -65535, 4294967295;
+    
+    # These should all be dones as NVs
+    is 65537 * 65537, 4295098369;
+    is 65537 * -65537, -4295098369;
+    is -65537 * 65537, -4295098369;
+    is -65537 * -65537, 4295098369;
+    
+    # will overflow an IV (in 32-bit)
+    is 46340 * 46342, 0x80001218;
+    is 46340 * -46342, -0x80001218;
+    is -46340 * 46342, -0x80001218;
+    is -46340 * -46342, 0x80001218;
+    
+    is 46342 * 46340, 0x80001218;
+    is 46342 * -46340, -0x80001218;
+    is -46342 * 46340, -0x80001218;
+    is -46342 * -46340, 0x80001218;
+    
+    # will overflow a positive IV (in 32-bit)
+    is 65536 * 32768, 0x80000000;
+    is 65536 * -32768, -0x80000000;
+    is -65536 * 32768, -0x80000000;
+    is -65536 * -32768, 0x80000000;
+    
+    is 32768 * 65536, 0x80000000;
+    is 32768 * -65536, -0x80000000;
+    is -32768 * 65536, -0x80000000;
+    is -32768 * -65536, 0x80000000;
+}
+
 
 # vim: ft=perl6
