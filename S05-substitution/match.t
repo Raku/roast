@@ -10,6 +10,7 @@ my $str = 'hello';
 
 ok $str.match(/h/),         'We can use match';
 is $str,  'hello',          '.. it does not do side effect';
+#?rakudo skip 'Match'
 ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 
 {
@@ -24,6 +25,7 @@ ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 
 $str = 'food';
 my $m = $str.match(/$<x>=[f](o+)/);
+#?rakudo skip 'Match'
 ok $m ~~ Match,             'is a Match object';
 is $m,    'foo',            'match object stringifies OK';
 is $m<x>, 'f',              'match object indexes as a hash';
