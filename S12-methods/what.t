@@ -52,6 +52,7 @@ This test tests the C<WHAT> builtin.
 
 # these used to be Rakudo regressions, RT #62006
 
+#?rakudo skip 'Match object'
 {
     # proto as a term
     lives_ok {  Match }, 'proto as a term lives';
@@ -69,7 +70,6 @@ ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
 
     is rt69915m( a => 42, 23 ), 'Int()~Int()', 'WHAT method on ints';
 
-    #?rakudo 4 todo 'RT 69915'
     is rt69915f( a => 42, 23 ), 'Int()~Int()', 'WHAT function on ints (1)';
     is rt69915f( 23, a => 42 ), 'Int()~Int()', 'WHAT function on ints (2)';
 
@@ -86,14 +86,12 @@ ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
 }
 
 is 6.02e23.WHAT, Num, 'decimal using "e" is a Num';
-#?rakudo todo 'decimal is Rat per Spec r28881'
 is 1.23456.WHAT, Rat, 'decimal without "e" is Rat';
 ok 1.1 == 11/10, 'decimal == the equivalent rational';
 
 # RT #70237
 {
     is ~1.WHAT, 'Int()', '1.WHAT sanity';
-    #?rakudo 2 todo 'RT 70237: assignment to .WHAT dies'
     dies_ok { Int.WHAT = Str }, '.WHAT is readonly';
     is ~2.WHAT, 'Int()', 'assignment to Int.WHAT does nothing';
 }
