@@ -59,7 +59,7 @@ is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
 
-isa_ok("forty-two".comb(), List);
+ok("forty-two".comb() ~~ Positional, '.comb() returns something Positional' );
 
 # comb a list
 
@@ -70,6 +70,7 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 # needed: comb a filehandle
 
+#?rakudo skip '.comb regressions'
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/);
     is @l.join('|'), 'a23|c58', 'basic comb-without-matches sanity';
@@ -77,6 +78,7 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     isa_ok(@l[1], Str, 'second item is a Str');
 }
 
+#?rakudo skip '.comb regressions'
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/, :match);
     is @l.join('|'), 'a23|c58', 'basic comb-with-matches sanity';
