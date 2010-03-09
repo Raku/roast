@@ -195,7 +195,6 @@ my @elems = <a b c d e>;
     'mutating $_ in for works';
 }
 
-#?rakudo todo "is rw NYI"
 {
     my @array_t = (0..2);
     my @t = (1..3);
