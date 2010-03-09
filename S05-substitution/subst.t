@@ -32,6 +32,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 {
     is 'a b c d'.subst(/\w/, 'x', :g),      'x x x x', '.subst and :g';
+    is 'a b c d'.subst(/\w/, 'x', :global), 'x x x x', '.subst and :global';
     is 'a b c d'.subst(/\w/, 'x', :x(0)),   'a b c d', '.subst and :x(0)';
     is 'a b c d'.subst(/\w/, 'x', :x(1)),   'x b c d', '.subst and :x(1)';
     is 'a b c d'.subst(/\w/, 'x', :x(2)),   'x x c d', '.subst and :x(2)';
