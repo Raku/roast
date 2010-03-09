@@ -4,7 +4,7 @@ use Test;
 # Maybe someone can put in a better smartlink? --lue
 # L<S32::IO/"A file test, where X is one of the letters listed below.">
 
-plan 22;
+plan 30;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -31,6 +31,18 @@ nok $non-existent-file.e, "It doesn't";
 isa_ok $non-existent-file.e, Bool, '.e returns Bool';
 nok $non-existent-file ~~ :e, "It doesn't";
 isa_ok $non-existent-file ~~ :e, Bool, '~~ :e returns Bool';
+
+##is normal file
+ok $existing-file.f, 'Is normal file';
+isa_ok $existing-file.f, Bool, '.f returns Bool';
+ok $existing-file ~~ :f, 'Is normal file';
+isa_ok $existing-file ~~ :f, Bool, '~~ :f returns Bool';
+# what should happen when this is called on a non-existent file?
+nok $non-existent-file.f, 'Is not a normal file';
+isa_ok $non-existent-file.f, Bool, '.f returns Bool';
+#?rakudo todo "non-existent ~~ :!f returns false at the moment"
+ok $non-existent-file ~~ :!f, 'Is not a normal file';
+isa_ok $non-existent-file ~~ :!f, Bool, '~~ :!f returns Bool';
 
 ##is empty
 nok $zero-length-file.s, 'Is empty';
