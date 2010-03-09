@@ -28,7 +28,7 @@ is $str,                      'heilo', '.. it changes the receiver';
 #?rakudo 3 skip '$/ not involved in .subst yet (unspecced?)'
 is 'a'.subst(/(.)/,"$1$0"), '',       '.. and it can not access captures from strings';
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure';
-is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures'; 
+is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 {
     is 'a b c d'.subst(/\w/, 'x', :g),      'x x x x', '.subst and :g';
@@ -66,6 +66,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a a a a'.subst('a', 'x', :x(3..2)), 'a a a a', '.subst (str pattern) and :x(3..2)';
 }
 
+
+#?rakudo skip ':nth'
 {
     is 'a b c d'.subst(/\w/, 'x', :nth(0)), 'a b c d', '.subst and :nth(0)';
     is 'a b c d'.subst(/\w/, 'x', :nth(1)), 'x b c d', '.subst and :nth(1)';
@@ -83,9 +85,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a a a a'.subst('a', 'x', :nth(5)), 'a a a a', '.subst (str pattern) and :nth(5)';
 }
 
+#?rakudo skip ':nth'
 {
     # combining :g and :nth:
-    #?rakudo 2 todo 'RT #61130'
+#    #?rakudo 2 todo 'RT #61130'
     is 'a b c d'.subst(/\w/, 'x', :nth(1), :g), 'x x x x', '.subst and :g, :nth(1)';
     is 'a b c d'.subst(/\w/, 'x', :nth(2), :g), 'a x c x', '.subst and :g, :nth(2)';
     is 'a b c d'.subst(/\w/, 'x', :nth(3), :g), 'a b x d', '.subst and :g, :nth(3)';
