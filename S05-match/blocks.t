@@ -89,6 +89,7 @@ ok !defined($/), '$/ still undefined in the outer block';
 
 # test that a regex in an `if' matches against $_, not boolifies
 
+#?rakudo todo "if not properly smartmatching"
 {
     my $s1 = 0;
     my $s2 = 1;
