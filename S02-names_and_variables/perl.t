@@ -137,7 +137,7 @@ my @tests = (
 {
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
-    # TODO: check that eval( RT67790.HOW.perl ) 'is' RT67790.HOW
+    ok eval(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }
 
 # RT #69869
