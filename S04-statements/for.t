@@ -26,7 +26,7 @@ plan *;
 ## for with plain old range operator w/out parens
 
 {
-    my $a;
+    my $a = "";
     for 0 .. 5 { $a = $a ~ $_; };
     is($a, '012345', 'for 0..5 {} works');
 }
@@ -34,7 +34,7 @@ plan *;
 # ... with pointy blocks
 
 {
-    my $b;
+    my $b = "";
     for 0 .. 5 -> $_ { $b = $b ~ $_; };
     is($b, '012345', 'for 0 .. 5 -> {} works');
 }
@@ -66,14 +66,14 @@ plan *;
 
 ## and now with parens around the range operator
 {
-    my $e;
+    my $e = "";
     for (0 .. 5) { $e = $e ~ $_; };
     is($e, '012345', 'for () {} works');
 }
 
 # ... with pointy blocks
 {
-    my $f;
+    my $f = "";
     for (0 .. 5) -> $_ { $f = $f ~ $_; };
     is($f, '012345', 'for () -> {} works');
 }
@@ -83,10 +83,12 @@ plan *;
 {
     $_ = "GLOBAL VALUE";
     for "INNER VALUE" {
-    is( .lc, "inner value", "Implicit default topic is seen by lc()");
+        is( .lc, "inner value", "Implicit default topic is seen by lc()");
     };
     is($_,"GLOBAL VALUE","After the loop the implicit topic gets restored");
 }
+
+#?rakudo skip "This test is behaving very oddly"
 {
     # as statement modifier
     $_ = "GLOBAL VALUE";
@@ -99,13 +101,13 @@ plan *;
 
 # ... w/out parens
 
-my $i;
+my $i = "";
 for 0 .. 5 -> $topic { $i = $i ~ $topic; };
 is($i, '012345', 'for 0 .. 5 -> $topic {} works');
 
 # ... with parens
 
-my $j;
+my $j = "";
 for (0 .. 5) -> $topic { $j = $j ~ $topic; };
 is($j, '012345', 'for () -> $topic {} works');
 
@@ -113,28 +115,28 @@ is($j, '012345', 'for () -> $topic {} works');
 ## for with @array operator w/out parens
 
 my @array_k = (0 .. 5);
-my $k;
+my $k = "";
 for @array_k { $k = $k ~ $_; };
 is($k, '012345', 'for @array {} works');
 
 # ... with pointy blocks
 
 my @array_l = (0 .. 5);
-my $l;
+my $l = "";
 for @array_l -> $_ { $l = $l ~ $_; };
 is($l, '012345', 'for @array -> {} works');
 
 ## and now with parens around the @array
 
 my @array_o = (0 .. 5);
-my $o;
+my $o = "";
 for (@array_o) { $o = $o ~ $_; };
 is($o, '012345', 'for (@array) {} works');
 
 # ... with pointy blocks
 {
     my @array_p = (0 .. 5);
-    my $p;
+    my $p = "";
     for (@array_p) -> $_ { $p = $p ~ $_; };
     is($p, '012345', 'for (@array) -> {} works');
 }
@@ -165,6 +167,7 @@ my @elems = <a b c d e>;
 }
 
 # "for @a -> $var" is ro by default.
+#?rakudo skip "<-> is confusing the parser, I think"
 {
     my @a = <1 2 3 4>;
 
@@ -192,6 +195,7 @@ my @elems = <a b c d e>;
     'mutating $_ in for works';
 }
 
+#?rakudo todo "is rw NYI"
 {
     my @array_t = (0..2);
     my @t = (1..3);
@@ -200,6 +204,7 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo skip "is rw NYI"
 {
     my @array_v = (0..2);
     my @v = (1..3);
@@ -208,6 +213,7 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo skip "is rw NYI"
 {
     my @array_kv = (0..2);
     my @kv = (1..3);
@@ -216,6 +222,7 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo skip "is rw NYI"
 {
     my %hash_v = ( a => 1, b => 2, c => 3 );
     my %v = ( a => 2, b => 3, c => 4 );
@@ -224,6 +231,7 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
+#?rakudo skip "is rw NYI"
 {
     my %hash_kv = ( a => 1, b => 2, c => 3 );
     my %kv = ( a => 2, b => 3, c => 4 );
@@ -234,7 +242,7 @@ my @elems = <a b c d e>;
 # .key //= ++$i for @array1;
 class TestClass{ has $.key is rw  };
 
-#?rakudo todo '//='
+#?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(:key<1>),TestClass.new());
    
@@ -246,6 +254,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # .key = 1 for @array1;
+#?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
 
@@ -255,6 +264,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # $_.key = 1 for @array1;
+#?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
 
@@ -322,25 +332,25 @@ class TestClass{ has $.key is rw  };
     $output ~= "$elem,";
   }
 
-  is $output, "1,2,3,4,", "grep and sort work in for";
+  is $output, "1,2,3,4,", "grep works in for";
 }
 
 {
   my @array = <1 2 3 4>;
   my $output = '';
 
-  for sort @array -> $elem {
+  for @array.sort -> $elem {
     $output ~= "$elem,";
   }
 
-  is $output, "1,2,3,4,", "grep and sort work in for";
+  is $output, "1,2,3,4,", "sort works in for";
 }
 
 {
   my @array = <1 2 3 4>;
   my $output = '';
 
-  for (grep { 1 }, sort @array) -> $elem {
+  for (grep { 1 }, @array.sort) -> $elem {
     $output ~= "$elem,";
   }
 
@@ -348,6 +358,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # L<S04/Statement parsing/keywords require whitespace>
+#?rakudo todo "for(0..5) should die because there is no space after the for"
 eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # looping with more than one loop variables
@@ -396,6 +407,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $res, " 4 10 18", "Z -ed for loop";
 }
 
+#?rakudo skip "Z only works with 2 arrays at the moment"
 {
   my @a = <1 2 3>;
   my $str = '';
@@ -438,6 +450,14 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     last if $_ == 6;
   }
   is $c, 6, 'infinte for loop ends in time using last';
+}
+
+# RT #62478
+{
+    eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }');
+    ok "$!" ~~ /C\-style/,   'mentions C-style';
+    ok "$!" ~~ /for/,        'mentions for';
+    ok "$!" ~~ /loop/,       'mentions loop';
 }
 
 # RT #65212
