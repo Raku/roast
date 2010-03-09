@@ -18,6 +18,7 @@ lives_ok { $o =  Child.new(:x(2), :y(3)) },
 is $o.y, 3, '... worked for the child';
 is $o.x, 2, '... worked for the parent';
 
+#?rakudo 3 skip 'parent attributes in initialization'
 lives_ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
 
@@ -27,7 +28,8 @@ is $o.x, 5, '... worked for the parent';
 class GrandChild is Child {
 }
 
-lives_ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) }, 
+#?rakudo 6 skip 'parent attributes in initialization'
+lives_ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';
 is $o.y, 4, '... worked for the class Child';
 is $o.x, 5, '... worked for the class Parent';
@@ -40,7 +42,6 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 {
     class RT66204 {}
     ok ! RT66204.defined, 'NewClass is not .defined';
-    #?rakudo 2 todo 'RT 66204'
     dies_ok { RT66204 .= new }, 'class asked to build itself refuses';
     ok ! RT66204.defined, 'NewClass is still not .defined';
 }
@@ -51,7 +52,6 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         class RT71706::Artie {}
     }
     # TODO: check the error message, not just the timing.
-    #?rakudo todo 'RT 71706: Null PMC Access'
     dies_ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
 }
 
