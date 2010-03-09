@@ -25,13 +25,11 @@ my Str $bar;
 {
     #?pugs 1 todo
     dies_ok({$foo = 'xyz'},      'Int restricts to integers');
-    #?rakudo todo 'RT 71044: an Int variable should not accept Mu'
     dies_ok { $foo = Mu },       'Int does not accept Mu';
     is(($foo = 42),       42,    'Int is an integer');
 
     #?pugs 1 todo
     dies_ok({$bar = 42},         'Str restricts to strings');
-    #?rakudo todo 'RT 71044: a Str variable should not accept Mu'
     dies_ok { $bar = Mu },       'Str does not accept Mu';
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
@@ -81,6 +79,7 @@ my $baz of Int;
 }
 
 # L<S02/Return types/a return type can be specified before or after the name>
+#?rakudo skip 'return type checking'
 {
     # Check with explicit return.
     my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
@@ -99,6 +98,8 @@ my $baz of Int;
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
+
+#?rakudo skip 'return type checking'
 {
     # Check with implicit return.
     my sub returntype1 (Bool $pass) returns Str { $pass ?? 'ok' !! -1}
@@ -147,9 +148,9 @@ my $baz of Int;
     ok Int ~~ Num, 'Int ~~ Num';
     ok Num !~~ Int, 'Num !~~ Int';
 
-    ok Array ~~ List, 'Array is a kind of List';
-    ok List !~~ Array, 'A List is not an Array';
-    ok List ~~ Positional, 'A List does Positional';
+    ok Array ~~ Seq, 'Array is a kind of Seq';
+    ok Seq !~~ Array, 'A Seq is not an Array';
+    ok Seq ~~ Positional, 'A Seq does Positional';
     ok Array ~~ Positional, 'Array does Positional too';
 }
 
