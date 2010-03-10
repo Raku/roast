@@ -8,7 +8,7 @@ plan 16;
 my $x;
 our $y;
 
-ok 'ab cd ef' ~~ m/:s <ident> $OUTER::x=<ident> $OUTER::y=<ident>/, 
+ok 'ab cd ef' ~~ m/:s <ident> $x=<ident> $y=<ident>/, 
    'regex matched';
 isa_ok $x, Match, 'stored a match object in outer lexical var';
 isa_ok $y, Match, 'stored a match object in outer package var';
@@ -29,7 +29,7 @@ is $/.chunks.map({.value}).join('|'), 'ab| cd ef', 'right values of .chunks';
 
 {
     my @a;
-    ok 'abc' ~~ m/@OUTER::a=(.)+/, 'regex with outer array matches';
+    ok 'abc' ~~ m/@a=(.)+/, 'regex with outer array matches';
     is +@a, 3, 'bound the right number of matches';
     ok ?(all(@a) ~~ Match), 'All of them are Match objects';
     is @a.join('|'), 'a|b|c', 'right values';
