@@ -49,6 +49,18 @@ plan *;
     check $_ for @a;
 }
 
+{
+    my $a = "";
+    $a ~= "<$_>" for "hello";
+    is $a, "<hello>", 'iterating one constant element works';
+}
+
+{
+    my $a = ""; my $v = "hello";
+    $a ~= "<$_>" for $v;
+    is $a, "<hello>", 'iterating one variable element works';
+}
+
 #?rakudo todo '{ ... } for 1..3 should execute the closure'
 {
     my $a = 0;
