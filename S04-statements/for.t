@@ -88,7 +88,6 @@ plan *;
     is($_,"GLOBAL VALUE","After the loop the implicit topic gets restored");
 }
 
-#?rakudo skip "This test is behaving very oddly"
 {
     # as statement modifier
     $_ = "GLOBAL VALUE";
