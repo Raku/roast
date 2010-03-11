@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 # The :() form constructs signatures similar to how \() constructs Captures.
 # A subroutine's .signature is a Siglist object.
@@ -15,6 +15,9 @@ plan 10;
     :($a) := 3;
     is $a, 3, 'can bind to one-element signature';
     dies_ok { $a++ }, 'cannot increment an Int';
+
+    my $b = :();
+    ok $b.WHAT === Signature, '.WHAT on :() is Signature';
 }
 
 
