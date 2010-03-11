@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 22;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -95,6 +95,19 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
     is IL.new.rt69919, 'Luthor', 'access lexical declared in role from method called via class that does the role';
 }
+
+
+# inheritance through role composition - specced in A12
+# RT 69254
+{
+    class irA {};
+    role  irB is   irA {};
+    class irC does irB {};
+    ok irC ~~ irB, 'role composition worked';
+    ok irC ~~ irA, 'role composition transported inheritance';
+
+}
+
 
 done_testing;
 
