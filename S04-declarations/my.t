@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 60;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -9,6 +9,7 @@ plan 59;
 
     #?rakudo todo 'lexicals bug; RT #61838'
     eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
+    #?rakudo todo 'scoping bug'
     is(eval('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
 
@@ -22,6 +23,7 @@ plan 59;
 {
     my $ret = 42;
     lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
+    #?rakudo todo 'scoping bug'
     is $ret, "",                      'my() variable is visible (2)';
 }
 
@@ -32,6 +34,7 @@ plan 59;
     is fortytwo(),  42,               'my variable with & sigil works (2)';
 }
 
+#?rakudo skip 'binding'
 {
   my $was_in_sub;
   my &foo := -> $arg { $was_in_sub = $arg };
@@ -41,7 +44,6 @@ plan 59;
 
 eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 
-#?rakudo todo 'do { } and lexicals'
 {
   is(do {my $a = 3; $a}, 3, 'do{my $a = 3; $a} works');
   is(do {1; my $a = 3; $a}, 3, 'do{1; my $a = 3; $a} works');
@@ -49,6 +51,7 @@ eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 
 eval_lives_ok 'my $x = my $y = 0;', '"my $x = my $y = 0" parses';
 
+#?rakudo skip 'fatal redeclarations'
 {
     my $test = "value should still be set for arg, even if there's a later my";
     sub foo2 (*%p) {
@@ -89,6 +92,7 @@ my $d = 1;
 is($d, 1, '$d has not changed');
 
 # eval() introduces new lexical scope
+#?rakudo todo 'scoping'
 is( eval('
 my $d = 1;
 { 
@@ -140,11 +144,13 @@ my $x = 0;
     is $result, 1, 'my in while cond seen from body';
 }
 
+#?rakudo 2 todo 'scoping'
 is(eval('while my $x = 1 { last }; $x'), 1, 'my in while cond seen after');
 
 is(eval('if my $x = 1 { $x } else { 0 }'), 1, 'my in if cond seen from then');
 #?rakudo skip 'Null PMC access in type()'
 is(eval('if not my $x = 1 { 0 } else { $x }'), 1, 'my in if cond seen from else');
+#?rakudo todo 'scoping'
 is(eval('if my $x = 1 { 0 } else { 0 }; $x'), 1, 'my in if cond seen after');
 
 # check proper scoping of my in loop initializer
@@ -157,6 +163,7 @@ is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y'), 2, '2nd my in
 
 
 # check that declaring lexical twice is noop
+#?rakudo skip 'fatal redeclarations'
 {
     my $f;
     $f = 5;
@@ -181,7 +188,6 @@ my $z = 42;
     is eval_elsewhere('$x + 1'), 5, 
        'eval() knows the pad where it is launched from';
 
-    #?rakudo todo 'initialization of vars happens too early'
     ok eval_elsewhere('!$y.defined'),
        '... but initialization of variables might still happen afterwards';
 
@@ -192,13 +198,13 @@ my $z = 42;
 
 # &variables don't need to be pre-declared
 {
+    #?rakudo todo '&-sigiled variables'
     eval_lives_ok '&x; 1', '&x does not need to be pre-declared';
     eval_dies_ok '&x()', '&x() dies when empty';
 }
 
 # RT #62766
 {
-    #?rakudo todo 'RT #62766'
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
     #?rakudo skip 'infinite loop? (noauto)'
@@ -223,6 +229,15 @@ my $z = 42;
     dies_ok { my Int $x = "abc" }, 'type error';
     #?rakudo todo 'type error not caught'
     dies_ok { eval '$x = "abc"'; my Int $x; }, 'also a type error';
+}
+
+{
+    ok declare_later().notdef,
+        'Can access variable returned from a named closure that is declared below the calling position';
+    my $x;
+    sub declare_later {
+        $x;
+    }
 }
 
 # vim: ft=perl6
