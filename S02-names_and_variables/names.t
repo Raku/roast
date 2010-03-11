@@ -2,13 +2,14 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
 # L<S02/Names/>
 # syn r14552
 
+#?rakudo skip 'package variable autovivification'
 {
     my $mountain = 'Hill';
     $Terrain::mountain  = 108;
@@ -62,6 +63,12 @@ plan 19;
             'dies when calling non-existent sub in non-existent package';
     dies_ok { Test::bravo_bravo_quebec() },
             'dies when calling non-existent sub in existing package';
+}
+
+# RT #71194
+{
+    sub self { 4 };
+    is self(), 4, 'can define and call a sub self()';
 }
 
 # vim: ft=perl6
