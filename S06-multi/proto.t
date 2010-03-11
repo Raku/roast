@@ -64,6 +64,22 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     eval_dies_ok $rt65322, "Can't define sub and multi sub without proto";
 }
 
+{
+    eval_dies_ok q[
+        multi sub i1(Int $x) {}
+        sub i1(Int $x, Str $y) {} 
+    ], 'declaring a multi and a single routine dies';
+
+    #?rakudo todo 'RT 71810'
+    eval_dies_ok q[
+        sub i2(Int $x, Str $y) {1}
+        sub i2(Int $x, Str $y) {2}
+    ], 'declaring two only-subs with same name dies';
+
+
+
+}
+
 done_testing;
 
 # vim: ft=perl6
