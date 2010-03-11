@@ -72,7 +72,7 @@ is (16, 8, 4 ... *).batch(5).join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
 
 
 
-#?rakudo skip 'lazy lists'
+#?rakudo skip 'chained series NYI'
 {
     my @multi = 1 ... { 2 * $_ if $_ < 10 },
                   ... { 3 };
@@ -125,12 +125,13 @@ is (16, 8, 4 ... *).batch(5).join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
         'series operator with closure and limit (3) (one item on LHS)';
     is ~(4, *+2 ... 7),  ~(4, 6),
         'series operator with closure and limit that does not match (one item on LHS)';
+    #?rakudo skip "[4] is eager rather than lazy ATM"
     is (1, 3, *+2 ... -1)[4], 9,
        '*+2 closure with limit < last number results in infinite list';
 }
 
 {
-    is ~( 1  ...  1 ), '1',        '1 ... 1 works (degenerate case';
+    is ~( 1  ...  1 ), '1',        '1 ... 1 works (degenerate case)';
     is ~( 1  ...  4 ), ~<1 2 3 4>, 'Int ... Int works (forward)';
     is ~( 4  ...  1 ), ~<4 3 2 1>, 'Int ... Int works (backward)';
     is ~('a' ... 'd'), ~<a b c d>, 'Str ... Str works (forward)';
