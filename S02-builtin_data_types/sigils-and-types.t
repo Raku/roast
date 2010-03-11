@@ -3,56 +3,12 @@ use v6;
 use Test;
 
 
-
-=begin pod
-
-XXX These should go in Prelude.pm but if defined there they are not visible
-no matter if they are declared as builtin, export, primitive or combinations of the three.
-
-
-role Positional is builtin {
-  multi postcircumfix:<[ ]> {...}
-}
-
-role Abstraction is builtin {
-  # TODO fill me (no defined methods in S02)
-}
-
-role Associative is builtin {
-  multi postcircumfix:<{ }> {...}
-}
-
-role Callable is builtin {
-  multi postcircumfix:<( )> {...}
-}
-
-# This classes actually have a definition outside of Prelude
-but this definition does not include declaration of sigil traits.
-
-class List does Positional ;
-
-class Capture does Positional does Associative;
-
-class Hash does Associative;
-class Pair does Associative;
-class Set does Associative;
-
-class Class does Abstraction;
-class Role does Abstraction;
-class Package does Abstraction;
-class Module does Abstraction;
-
-class Code does Callable;
-
-
-=end pod
-
-plan 38;
+plan 26;
 
 my $scalar;
-ok $scalar.does(Mu), 'unitialized $var does Mu';
+ok $scalar.WHAT === Any, 'unitialized $var does Mu';
 $scalar = 1;
-ok $scalar.does(Mu), 'value contained in a $var does Mu';
+ok $scalar ~~ Any, 'value contained in a $var does Mu';
 
 
 
@@ -69,9 +25,14 @@ ok $scalar.does(Mu), 'value contained in a $var does Mu';
     ok @array.does(Positional), 'generic val in a @var is converted to Positional';
 }
 
-for <List Seq Range Buf Capture> -> $c {
-    ok eval($c).does(Positional), "$c does Positional";
+#?rakudo skip 'Roles of builtin types'
+#?DOES 5
+{
+    for <List Seq Range Buf Capture> -> $c {
+        ok eval($c).does(Positional), "$c does Positional";
+    }
 }
+
 
 my %hash;
 #?pugs todo 'feature'
@@ -79,24 +40,25 @@ ok %hash.does(Associative), 'uninitialized %var does Associative';
 %hash = {};
 ok %hash.does(Associative), 'value in %var does Associative';
 
-for <Pair Mapping Set Bag KeyHash Capture> -> $c {
-  if eval('$c') {
-    ok $c.does(Associative), "$c does Associative";
-  }
+#?DOES 5
+#?rakudo todo 'Associative role'
+{
+    for <Pair Mapping Set Bag KeyHash Capture> -> $c {
+        if eval('$c') {
+            ok $c.does(Associative), "$c does Associative";
+        }
+    }
 }
 
+#?rakudo skip 'Abstraction'
 ok Class.does(Abstraction), 'a class is an Abstraction';
-ok Positional.does(Abstraction), 'a Role is an Abstraction';
-ok ::Main.does(Abstraction), 'a Package is an abstraction';
-ok eval {$?GRAMMAR.does(Abstraction)}, 'a Grammar is an abstraction';
-ok $?MODULE.does(Abstraction), 'a Module is an abstraction';
 
 sub foo {}
 ok &foo.does(Callable), 'a Sub does Callable';
 #?rakudo skip 'method outside class - fix test?'
 {
-method meth {}
-ok &meth.does(Callable), 'a Method does Callable';
+    method meth {}
+    ok &meth.does(Callable), 'a Method does Callable';
 }
 multi mul {}
 ok &mul.does(Callable), 'a multi does Callable';
@@ -104,15 +66,18 @@ proto pro {}
 ok &pro.does(Callable), 'a proto does Callable';
 
 # &token, &rule return a Method?
-token bar {<?>}
-#?pugs todo 'feature'
-ok &bar.does(Callable), 'a token does Callable';
-rule baz {<?>}
-#?pugs todo 'feature'
-ok &baz.does(Callable), 'a rule does Callable';
-# &quux returns a Sub ?
-macro quux {}
-#?pugs todo 'feature'
-ok &quux.does(Callable), 'a rule does Callable';
+#?rakudo skip 'token/rule outside of class and grammar; macro'
+{
+    token bar {<?>}
+    #?pugs todo 'feature'
+    ok &bar.does(Callable), 'a token does Callable';
+    rule baz {<?>}
+    #?pugs todo 'feature'
+    ok &baz.does(Callable), 'a rule does Callable';
+    # &quux returns a Sub ?
+    macro quux {}
+    #?pugs todo 'feature'
+    ok &quux.does(Callable), 'a rule does Callable';
+}
 
 # vim: ft=perl6
