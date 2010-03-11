@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S05/Grammars/"and optionally pass an action object">
 
@@ -89,4 +89,24 @@ is $action.calls, 'ab', '... and in the right order';
     is $match.ast, 235, 'got the right .ast';
 
 }
+
+# another former rakudo regression, RT #71514
+{
+    grammar ActionsTestGrammar {
+        token TOP {
+            ^ .+ $
+        }
+    }
+    class TestActions {
+        method TOP($/) {
+            "a\nb".subst(/\n+/, '', :g);
+            make 123;
+        }
+    }
+
+    is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions.new)).ast, 123,
+        'Can call Str.subst in an action method without any trouble';
+}
+
+
 # vim: ft=perl6
