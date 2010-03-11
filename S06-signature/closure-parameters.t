@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S06/Closure parameters>
 
@@ -62,6 +62,12 @@ plan 14;
 
     dies_ok { t1( -> { 3 }) }, 
        'Multi dispatch based on closure parameter syntax (5)';
+}
+
+{
+    sub foo(:&a) { bar(:&a) }
+    sub bar(*%_) { "OH HAI" }
+    is foo(), 'OH HAI', 'can use &a as a named parameter';
 }
 
 # vim: ft=perl6
