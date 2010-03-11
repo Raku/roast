@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 
-plan 26;
+plan 28;
 
 my $scalar;
 ok $scalar.WHAT === Any, 'unitialized $var does Mu';
@@ -78,6 +78,15 @@ ok &pro.does(Callable), 'a proto does Callable';
     macro quux {}
     #?pugs todo 'feature'
     ok &quux.does(Callable), 'a rule does Callable';
+}
+
+# RT 69318
+{
+    sub a { return 'a' };
+    sub b { return 'b' };
+    dies_ok { &a = &b }, 'cannot just assign &b to &a';
+    is a(), 'a', 'and the correct function is still in place';
+
 }
 
 # vim: ft=perl6
