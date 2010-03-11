@@ -131,6 +131,15 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         'type check Positional of Num allows subtyped Int array to be returned implicitly';
 }
 
+# RT #69482
+{
+    our Int @a1;
+    our @a2;
+    lives_ok { @a2[0] = 'string' },
+        'Can assign to untyped package array in presence of typed array';
+
+}
+
 # RT 71958
 {
     class RT71958 {
