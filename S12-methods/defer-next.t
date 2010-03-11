@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -79,6 +79,20 @@ class BarNextWithInt is Foo {
     is($o.show, '', 'sanity test for clearing');
     $o.doit(5);
     is($o.show, 'barint,fooint,', 'nextwith(42) multimethod/inheritance test');
+}
+
+{
+    my $called = 0;
+    class DeferWithoutCandidate {
+        multi method a($x) {
+            $called = 1;
+            nextwith();
+        }
+    }
+    #?rakudo todo 'variant of RT 69608'
+    dies_ok { DeferWithoutCandidate.new.a(1) },
+        'Dies when nextwith() does not find a candidate to dispatch to';
+    is $called, 1, 'but was in the correct method before death';
 }
 
 # vim: ft=perl6
