@@ -40,12 +40,11 @@ is((&foo.assuming:x(1):y(2))(), foo(1, 2), "same thing, but more pre colon");
 ok(!(try { &foo.assuming(f => 3) }), "can't curry nonexistent named param");
 
 # L<S06/Currying/The result of a use statement>
-try {
-(eval('use t::packages::Test') // {}).assuming(arg1 => "foo");
-}
-#?pugs todo 'feature'
-is try { dummy_sub_with_params(arg2 => "bar") }, "[foo] [bar]",
-  "(use ...).assuming works";
+eval_lives_ok q'
+    (use t::packages::Test) // {}).assuming(arg1 => "foo");
+    die "not working" unless
+        dummy_sub_with_params(arg2 => "bar") } eq "[foo] [bar]",
+', "(use ...).assuming works";
 
 sub __hyper (@a, @b, $op?) {
   my @ret;
