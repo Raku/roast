@@ -8,6 +8,7 @@ plan *;
     ok(("bar" !~~ "foo"),   "bar ne foo)");
     ok  (4 ~~ '4'),         'string equality';
     ok !(4 !~~ '4'),        'negated string equality';
+    #?rakudo skip 'smartmatching Mu against Str'
     ok  (Mu ~~ ''),         'Mu ~~ ""';
 }
 
