@@ -2,8 +2,14 @@ use v6;
 use Test;
 plan 2;
 
+# can't  use eval_lives_ok or eval_dies_ok here, because it runs
+# the eval() in a different lexical scope, thus never finding lexical
+# imports.
+
 {
     use t::spec::packages::S11-modules::Foo;
-    eval_lives_ok 'foo()', 'imported sub from module';
+    is foo(), 'Foo::foo', 'could import foo()';
 }
-eval_dies_ok 'foo()', 'sub is only imported into the inner lexical scope';
+ok !eval('foo()'), 'sub is only imported into the inner lexical scope';
+
+# vim: ft=perl6
