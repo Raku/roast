@@ -89,7 +89,6 @@ ok !defined($/), '$/ still undefined in the outer block';
 
 # test that a regex in an `if' matches against $_, not boolifies
 
-#?rakudo todo "if not properly smartmatching"
 {
     my $s1 = 0;
     my $s2 = 1;
@@ -98,6 +97,7 @@ ok !defined($/), '$/ still undefined in the outer block';
         if /not/ { $s2 = 0 }
     }
     is $s1, 1, '/foo/ matched against $_ (successfully)';
+#?rakudo 2 todo "if not properly smartmatching"
     is $s2, 1, '/not/ matched against $_ (no match)';
 
     given 'foo' {
