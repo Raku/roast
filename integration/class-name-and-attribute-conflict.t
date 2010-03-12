@@ -88,27 +88,17 @@ plan 3;
     # All calls to &a::update will really call the &a::update as defined by
     # subtest #3, which will update the $var of subtest #3's scope (not this
     # $var).
-    class a {
-        has $.a;
-        method update { $var -= $.a; }
+    class _a {
+        has $._a;
+        method update { $var -= $._a; }
     };
-    class b {
-        has $.a;
-        submethod BUILD { a.new( a => $.a ).update; };
+    class _b {
+        has $._a;
+        submethod BUILD { _a.new( _a => $._a ).update; };
     };
 
-=begin pod
-  pugs> class a { has $.a; method update { $var -= $.a; } };class b { has $.a; submethod BUILD { a.new( a => $.a ).update; };};b.new( a => 20 );
-  *** No compatible subroutine found: "&update"
-      at <interactive> line 1, column 90-114
-      <interactive> line 1, column 120-136
-      <interactive> line 1, column 120-136
-  pugs>
-
-=end pod
-
-##### will cause pugs hang if uncomment it
-#    b.new( a => 20 );
+    #?pugs emit #
+    _b.new( _a => 20 );
     #?pugs todo 'bug'
     is $var, 80, "Testing suite 2.";
 }
@@ -120,21 +110,21 @@ plan 3;
     # XXX This definition *does* have an effect. This $var *is* captured.
     # All calls to &a::update will update this $var, not the $var of subtest #1
     # or #2.
-    class a {
-        has $.a;
-        method update { $var -= $.a; }
+    class Aa {
+        has $.Aa;
+        method update { $var -= $.Aa; }
     };
-    class b {
-        has $.a;
-        submethod BUILD { a.new( a => $.a ); }
+    class Ab {
+        has $.Aa;
+        submethod BUILD { Aa.new( Aa => $.Aa ); }
     };
-    class c {
-        has $.b;
-        submethod BUILD { b.new( a => $.b ); }
+    class Ac {
+        has $.Ab;
+        submethod BUILD { Ab.new( Aa => $.Ab ); }
     };
 
-##### cause pugs hang.
-#    c.new( b => 30 ).update;
+    #?pugs emit #
+    Ac.new( Ab => 30 ).update;
     #?pugs todo 'bug'
     is $var, 70, "Testing suite 3.";
 }
