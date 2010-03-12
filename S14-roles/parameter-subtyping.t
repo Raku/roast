@@ -24,6 +24,7 @@ ok(R1[C3] !~~ R1[C1], 'subtyping by role parameters (one param)');
 
 # Subtyping with nested roles.
 ok(R1[R1[C1]] ~~ R1,          'basic sanity');
+#?rakudo 4 skip 'smart-matching'
 ok(R1[R1[C1]] ~~ R1[R1[C1]],  'basic sanity');
 ok(R1[R1[C2]] ~~ R1[R1[C1]],  'subtyping by role parameters (nested)');
 ok(R1[R1[C1]] !~~ R1[R1[C2]], 'subtyping by role parameters (nested)');
@@ -31,6 +32,7 @@ ok(R1[R1[C3]] !~~ R1[R1[C1]], 'subtyping by role parameters (nested)');
 
 # Subtyping with multiple role parameters.
 ok(R1[C1,C3] ~~ R1,         'basic sanity');
+#?rakudo 6 skip 'smart-matching'
 ok(R1[C1,C3] ~~ R1[C1,C3],  'basic sanity');
 ok(R1[C2,C3] ~~ R1[C1,C3],  'subtyping by role parameters (two params)');
 ok(R1[C2,C2] ~~ R1[C1,C1],  'subtyping by role parameters (two params)');
@@ -56,6 +58,7 @@ dies_ok({ modify(@x) }, 'type constraints enforced properly');
 my Num @a;
 my Int @b = 1,2;
 lives_ok({ @a = @b }, 'assignment worked as expected');
+#?rakudo skip 'weird error'
 is(@a[0], 1,          'assignment worked as expected');
 
 # vim: ft=perl6
