@@ -29,7 +29,7 @@ grammar A::B {
 is(~A::B.parse("zzz42zzz"), "42", ".parse works with namespaced grammars");
 
 # TODO: Check for a good error message, not just the absence of a bad one.
-dies_ok { No::Such::Grammar.parse() }, '.parse on missing grammar dies';
+dies_ok { ::No::Such::Grammar.parse() }, '.parse on missing grammar dies';
 
 # RT #71062
 {
