@@ -5,7 +5,7 @@ use Test;
 plan 24;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
-#?rakudo 6 todo 'do {} while/until/if is valid but should not be'
+#?rakudo 5 todo 'do {} while/until/if is valid but should not be'
 eval_dies_ok 'my $i = 1; do { $i++ } while $i < 5;',
     "'do' can't take the 'while' modifier";
 
@@ -142,6 +142,7 @@ eval_dies_ok 'my $i; do { $i++ } given $i;',
     is $a, 3, "final `}' on a line reverted to `;'";
 }
 
-lives_ok { my $a = do given 5 {} }, 'empty do block lives (RT #61034)';
+#?rakudo todo 'regression on RT 61034'
+lives_ok { my $a = do given 5 {} }, 'empty do block lives (RT 61034)';
 
 # vim: ft=perl6
