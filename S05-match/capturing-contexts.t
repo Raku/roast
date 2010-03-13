@@ -1,4 +1,6 @@
 use v6;
+use MONKEY_TYPING;
+
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;

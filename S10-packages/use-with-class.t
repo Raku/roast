@@ -1,4 +1,6 @@
 use v6;
+use MONKEY_TYPING;
+
 use Test;
 
 # L<S11/Compile-time Importation>

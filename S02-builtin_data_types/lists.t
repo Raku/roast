@@ -1,5 +1,7 @@
 use v6;
 
+use MONKEY_TYPING;
+
 use Test;
 
 # L<S02/Lists>
