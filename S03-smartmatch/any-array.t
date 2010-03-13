@@ -16,8 +16,7 @@ plan *;
     ok  ($o ~~ [1, *]),         'Any ~~ Array (dwim, +)';
     ok !($o ~~ [8, *]),         'Any ~~ Array (dwim, -)';
     ok  (1  ~~ [1]),            'Any ~~ Array (Int, +)';
-    #?rakudo todo 'Int ~~ Array'
-    ok  (1  ~~ [1, 2]),         'Any ~~ Array (Int, -, it is not any())';
+    ok !(1  ~~ [1, 2]),         'Any ~~ Array (Int, -, it is not any())';
 }
 
 done_testing;
