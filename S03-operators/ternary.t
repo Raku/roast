@@ -55,6 +55,7 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, Bool::True, "a statement with both ??!! and :: in it did compile") ;
 }
 
+#?rakudo skip 'user defined operators, if statement modifier'
 {
     # Defining an N! postfix (for factorial) causes a misparse on ternary op
     proto postfix:<!>($n) {
@@ -69,7 +70,6 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
 
 eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (RT 66840)';
 
-#?rakudo todo 'RT 71704: "x !! y" should be a parse error'
 eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
 
 done_testing;
