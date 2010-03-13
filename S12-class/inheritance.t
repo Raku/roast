@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 37;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -52,7 +52,6 @@ lives_ok { $fud = $foo_bar.getme.fud }, 'chained method dispatch on altered meth
 is($fud, "Foo::Bar::fud", "returned value is correct");
 
 is $foo_bar.Foo::baz, 'Foo::baz', '$obj.Class::method syntax works';
-#?rakudo todo 'RT 69262'
 dies_ok { $foo_bar.Unrelated::something() },
     'Cannot call unrelated method with $obj.Class::method syntax';
 
@@ -62,19 +61,17 @@ dies_ok { $foo_bar.Unrelated::something() },
 # XXX are these still conforming to S12?
 ok  Foo::Bar.isa(Foo),      "subclass.isa(superclass) is true";
 ok  Foo::Bar.isa(Foo::Bar), "subclass.isa(same_subclass) is true";
-#?pugs 2 todo "feature"
-#?rakudo skip 'does'
-ok  Foo::Bar.does(Class),   "subclass.does(Class) is true";
+#?pugs todo "feature"
 #?rakudo 2 skip '::CLASS will give a Null PMC, which later explodes'
 ok !Foo::Bar.does(::CLASS),   "subclass.does(CLASS) is false";
 ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
-#?rakudo 2 todo 'oo'
-ok !Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is false";
-ok !Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is false";
+ok Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is true";
+ok Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is true";
 #?pugs todo "bug"
+#?rakudo 2 skip 'no Class class'
 ok !Foo::Bar.HOW.isa(Foo::Bar, Class),    "subclass.HOW.isa(Class) is false";
 ok !Foo::Bar.HOW.does(Foo::Bar, Class),   "subclass.HOW.does(Class) is false";
-#?rakudo 2 skip 'no ::CLASS class'
+#?rakudo 2 skip '::CLASS is NYI'
 ok !Foo::Bar.HOW.isa(Foo::Bar, ::CLASS),  "subclass.HOW.isa(CLASS) is false";
 #?pugs todo "feature"
 ok  Foo::Bar.HOW.does(Foo::Bar, ::CLASS),  "subclass.HOW.does(CLASS) is true";
@@ -102,6 +99,7 @@ class Y is X {
 is(Z.new.j(), 'X', 'inherited method dispatch works');
 is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
 
+#?rakudo skip '$.foo with args'
 {
     class A {
       has @.x = <a b c>;
@@ -138,7 +136,6 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 # Make sure inheritnace from Mu works (got broken in Rakudo once).
 eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 
-#?rakudo todo 'trying to inherit from a non-existent class'
 eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
 
 # vim: ft=perl6
