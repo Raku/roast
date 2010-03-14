@@ -55,6 +55,7 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 is(2 || 3, 2, "|| returns first true value");
 ok(!(defined( 0 || Mu)), "|| returns last false value of list?");
 
+#?rakudo skip "state NYI"
 {
     (my @s)[0] //= 5;
     is @s[0], 5, '(my @s)[0] //= something works';
@@ -62,33 +63,34 @@ ok(!(defined( 0 || Mu)), "|| returns last false value of list?");
     is @t[0], 5, '(state @t)[0] //= something works';
 }
 
-is(?(2 ?| 3), True, "boolean or (?|) returns True or False"); 
-is(?(0 ?| Mu), False, "boolean or (?|) returns True or False");
+is(2 ?| 3, True, "boolean or (?|) returns True or False");
+is(0 ?| Any, False, "boolean or (?|) returns True or False");
 
 # L<S03/Junctive operators/They thread through operations>
 ok(?((all((4|5|6) + 3) == one(7|8|9))), "all elements in junction are incremented");
 ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 
+#?rakudo skip "autothreading comparisons cause problems at the moment"
+{
+    ok( ?(7 > any(4..12)), "any test against scalar" );
 
-ok( ?(7 > any(4..12)), "any test against scalar" );
+    my @oldval  = (5, 8, 12);
 
+    my @newval1 = (17, 15, 14); # all greater
+    my @newval2 = (15, 7,  20); # some less some greater
+    my @newval3 = (3, 1, 4);    # all less
+    my @newval4 = (1,2,40);
 
-my @oldval  = (5, 8, 12);
+    ok( ?(any(@newval4) > any(@oldval)), "any test array against any array" );
+    ok( ?(any(@newval4) > all(@oldval)), "any test array against all array" );
+    ok( ?(all(@newval2) > any(@oldval)), "all test array against any array" );
+    ok( ?(all(@newval1) > all(@oldval)), "all test array against all array" );
 
-my @newval1 = (17, 15, 14); # all greater
-my @newval2 = (15, 7,  20); # some less some greater
-my @newval3 = (3, 1, 4);    # all less
-my @newval4 = (1,2,40);
-
-ok( ?(any(@newval4) > any(@oldval)), "any test array against any array" );
-ok( ?(any(@newval4) > all(@oldval)), "any test array against all array" );
-ok( ?(all(@newval2) > any(@oldval)), "all test array against any array" );
-ok( ?(all(@newval1) > all(@oldval)), "all test array against all array" );
-
-ok(?(42 > 12 & 20 & 32), "test the all infix operator");
-
+    ok(?(42 > 12 & 20 & 32), "test the all infix operator");
+}
 
 # L<S03/Hyper operators/hyper operator distributes over them as lists>
+#?rakudo skip "Hyper ops NYI"
 {
     my @rv;
     @rv = (1,2,3,4) >>+<< (1,2,3,4);
