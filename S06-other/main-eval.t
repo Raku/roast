@@ -16,6 +16,7 @@ eval q[
     sub MAIN($a, $b) { $main_invoked = 1 };
     $eval_worked = 1;
 ];
+#?rakudo 2 todo "temp NYI"
 ok ! $!, 'no exception thrown';
 ok $eval_worked, 'eval code executed';
 is $main_invoked, 0, 'sub MAIN is not called in eval()';
