@@ -16,7 +16,7 @@ plan 85;
 }
 
 {
- my Num $namcu =1.1;
+ my Num $namcu =1.1e1;
  isa_ok($namcu,Num);
 }
 
@@ -65,7 +65,6 @@ plan 85;
  isa_ok($liste, List);
 }
 
-#?rakudo skip 'Seq not implemented'
 {
  my Seq $porsi;
  isa_ok($porsi, Seq);
@@ -81,7 +80,6 @@ plan 85;
  isa_ok($brode, Scalar);
 }
 
-#?rakudo skip 'RT #68726: Could not build C3 linearization: ambiguous hierarchy'
 {
  my Array $porsi;
  isa_ok($porsi, Array);
@@ -93,6 +91,7 @@ plan 85;
  isa_ok($brodi, Hash);
 }
 
+#?rakudo skip 'Buf NYI'
 {
  my Buf $nacpoi;
  isa_ok($nacpoi, Buf);
@@ -103,6 +102,7 @@ plan 85;
  isa_ok($gunka, Routine);
 }
 
+#?rakudo skip 'No Module type yet'
 {
  my Module $brodu;
  isa_ok($brodu, Module);
@@ -111,16 +111,15 @@ plan 85;
 
 # non-instantiable Roles such as Callable, Failure, and Integral
 
-#?rakudo todo 'Callable'
 {
  my Callable $fancu ;
- isa_ok($fancu,Callable);
+ ok($fancu ~~ Callable);
 }
 
 #?rakudo skip 'Integral not implemented'
 {
  my Integral $foo;
- isa_ok($foo,Integral);
+ ok($foo ~~ Integral);
 }
 
 
@@ -188,9 +187,10 @@ plan 85;
  isa_ok($re,StrLen  );
 }
 
+#?rakudo skip 'Nil as type constraint - is this test valid?'
 {
  my Nil $ci;
- isa_ok($ci,Nil  );
+ ok($ci ~~ Nil);
 }
 
 {
@@ -198,10 +198,9 @@ plan 85;
  isa_ok($vo,Whatever  );
 }
 
-#?rakudo skip 'Mu not working'
 {
  my Mu $mu;
- isa_ok($mu,Mu  );
+ ok($mu ~~ Mu  );
 }
 
 {
@@ -277,8 +276,8 @@ plan 85;
 }
 
 {
- my Mapping $paso;
- isa_ok($paso,Mapping  );
+ my EnumMap $paso;
+ isa_ok($paso,EnumMap  );
 }
 
 {
@@ -302,6 +301,7 @@ plan 85;
  isa_ok($rr, Sub );
 }
 
+#?rakudo skip 'binding NYI'
 {
  my sub baz() { return 1;};
  my sub bar() { return baz;} ;
@@ -309,6 +309,7 @@ plan 85;
  is(&foo(), 1,'nested sub call');
 }
 
+#?rakudo skip '$(...) issues'
 {
  my sub baz() { return 1;};
  my sub bar() { return baz;} ;
@@ -333,6 +334,7 @@ plan 85;
  isa_ok($remu,Macro  );
 }
 
+#?rakudo skip 'bug - Match type not exposed as Match, but Regex::Match'
 {
  my Match $rexa;
  isa_ok($rexa,Match  );
@@ -344,6 +346,7 @@ plan 85;
  isa_ok($reze,Package  );
 }
 
+#?rakudo skip 'Module not yet implemented'
 {
  my Module $rebi;
  isa_ok($rebi,Module  );
@@ -360,6 +363,7 @@ plan 85;
  isa_ok($cino, Role );
 }
 
+#?rakudo skip 'Grammar !~~ Any, so missing .isa'
 {
  my Grammar $cire;
  isa_ok($cire,Grammar  );
@@ -377,6 +381,7 @@ plan 85;
  isa_ok($jetfu, Bool);
 }
 
+#?rakudo skip 'Order NYI'
 {
  my Order $karbi;
  isa_ok($karbi, Order);
@@ -388,7 +393,6 @@ plan 85;
   isa_ok($mapti, Matcher);
 }
 
-#?rakudo skip 'Proxy not implemented'
 {
   my Proxy $krati;
   isa_ok($krati, Proxy);
@@ -526,11 +530,13 @@ plan 85;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
+#?rakudo skip 'Array of Int'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
+#?rakudo skip 'Array of Array of Int'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');
