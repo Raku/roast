@@ -10,6 +10,7 @@ plan 75;
 
 
 ok(4\       .sqrt == 2, 'unspace with numbers');
+#?rakudo skip 'unimplemented'
 is(4\#`(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
@@ -66,9 +67,11 @@ is((bar.lc   ), 'a', 'sanity - bar.lc');
 is((bar .lc  ), 'b', 'sanity - bar .lc');
 is((foo\.lc  ), 'a', 'short unspace');
 is((foo\ .lc ), 'a', 'unspace');
+#?rakudo skip 'parse fail'
 is((foo \ .lc), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
 is((foo\    .lc), 'a', 'longer dot');
+#?rakudo skip 'unimplemented'
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
 #?rakudo skip 'unimplemented'
 eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
@@ -99,6 +102,7 @@ is(eval('foo\
 #unspace is allowed after a pod = ... which means pod is
 #syntactically recursive, i.e. you can put pod comments
 #inside pod directives recursively!
+#?rakudo todo 'pod and unspace'
 is(eval('foo\
 =\ begin comment
 blah blah blah
@@ -114,9 +118,11 @@ blah
 
     .lc'), 'a', 'unspace with pod =for comment w/ pod unspace');
 }
+#?rakudo todo 'pod and unspace'
 is(eval('foo\
 =\ comment blah blah blah
     .lc'), 'a', 'unspace with pod =comment w/ pod unspace');
+#?rakudo todo 'pod and unspace'
 is(eval('foo\
 =\
 =begin nested pod
@@ -187,6 +193,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
 # L<S06/"Blocks"/"unless followed immediately by a comma">
 #
+#?rakudo skip 'parse error'
 {
     sub baz(Code $x, *@y) { $x.(@y) }
 
