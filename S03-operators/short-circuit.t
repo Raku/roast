@@ -105,19 +105,20 @@ plan *;
     is(0 || 42,        42, "||   operator working");
     is((0 or 42),      42, "or   operator working");
 
-    #?rakudo 2 skip 'no inifx:<orelse> yet'
     is((Mu // 42),  42, "//   operator working"); #"
+    #?rakudo skip 'no inifx:<orelse> yet'
     is((Mu orelse 42), 42, "orelse  operator working");
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
-    #?rakudo 2 todo 'RT 70229'
+    #?rakudo skip '1 ^^ 42 yields Mu?'
     ok((1 ^^ 42) === (?0), "^^  operator working (both true)");
     ok((0 ^^ 0)  === (?0), "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
+    #?rakudo skip '1 ^^ 42 yields Mu?'
     ok(!(1 xor 42),        "xor operator working (both true)");
     ok(!(0 xor 0),         "xor operator working (both false)");
 }
@@ -160,7 +161,7 @@ plan *;
 {
     my $a = sub { 1 };
     my $b;
-    sub c($code) { return 1 if $code and $code(); return 2 }
+    sub c($code) { if $code and $code() { return 1 }; return 2 }
 
     is c($a), 1, 'shortcircuit idiom given coderef works';
 
