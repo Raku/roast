@@ -15,7 +15,7 @@ plan *;
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
-ok $x ~~ Code, '*-1 is some form of Code'
+ok $x ~~ Code, '*-1 is some form of Code';
 isa_ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';
 
@@ -132,7 +132,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # L<S02/Built-In Data Types/This is only for operators that are not
 # Whatever-aware.>
 {
-    multi sub infix quack($x, $y) { "$x|$y" };
+    multi sub infix:<quack>($x, $y) { "$x|$y" };
     isa_ok * quack 5, WhateverCode,
         '* works on LHS of user-defined operator (type)';
     isa_ok 5 quack *, WhateverCode,
