@@ -4,7 +4,7 @@ plan *;
 
 # Very basic enum tests
 
-# L<S12/Enumerations/values are specified as a list>
+# L<S12/Enumerations/the keys are specified as a parenthesized list>
 
 enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
@@ -45,11 +45,11 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
     # usually we don't test explicit value for .perl, but here
     # it's specced, so we make an exception
-    is Day::Mon.perl, 'Day::Mon', '.perl on long form of Enum value';
+    is Day::Mon.perl, 'Day::Mon', '.perl on long form of Enum key';
     is Mon.perl,      'Day::Mon', '.perl on short form of Enum value';
 
-    is Day::Mon.name, 'Mon',      '.name on long form of Enum value';
-    is Mon.name,      'Mon',      '.name on short form of Enum value';
+    is Day::Mon.key,  'Mon',      '.key on long form of Enum value';
+    is Mon.key,       'Mon',      '.key on short form of Enum value';
 
     is Day::Mon.WHAT, 'Day()',    '.WHAT on enum value stringifies to the enum name';
 }
@@ -61,7 +61,7 @@ enum roman (i => 1,   v => 5,
 {
 	is v,      5,          'enum with parens works and non-0 starting point works';
       is v.perl, 'roman::v', '.perl works on enum with parens';
-      is v.name, 'v',        '.name works on enum with parens';
+      is v.key,  'v',        '.key works on enum with parens';
 }
 
 enum JustOne <Thing>;
@@ -80,7 +80,6 @@ my Color $c2 = white;
 is($c1, 0, 'can assign enum value to typed variable with short name');
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
-# L<S12/Enumerations/"Like type names, enum names are parsed as standalone tokens">
 # conflict between subs and enums
 {
     my sub white { 'sub' };
