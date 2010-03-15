@@ -87,7 +87,7 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 
 # The default type of pointy blocks is Mu, not Any. See 
 # http://www.nntp.perl.org/group/perl.perl6.language/2009/03/msg31181.html
-# L<S02/Mutable types/"default block parameter type">
+# L<S02/Undefined types/default block parameter type>
 # this means that junctions don't autothread over pointy blocks
 
 #?rakudo skip 'Could not find non-existent sub junction'
