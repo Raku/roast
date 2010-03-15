@@ -296,17 +296,6 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
        'Can calcualte 2**65 without loss of precision';
 }
 
-# L<S03/"Negated relational operators"/"allowed for testing even
-# divisibility by an integer">
-#?rakudo skip '!% NYI'
-{
-    is 6 !% 3, Bool::True,  '6 !% 3';
-    is 6 !% 4, Bool::False, '6 !% 4';
-
-    is (1..10).grep({ $_ !% 3 }), <3 6 9>, '!% works with explicit closure';
-    is (1..10).grep( * !% 3 ), <3 6 9>, '!% works with whatever *'
-}
-
 done_testing;
 
 # vim: ft=perl6

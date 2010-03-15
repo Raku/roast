@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 12;
 
 # L<S03/Loose unary precedence>
 
@@ -18,5 +18,8 @@ ok(not so(so 0), "so(so 0) is false");
 
 ok(so Bool::True, "'Bool::True' is true");
 ok(so True, "'True' is true");
+
+#?rakudo todo 'RT 65556'
+is (so($b) + 1), ((so $b) + 1), 'so($b) is (so $b)';
 
 # vim: ft=perl6
