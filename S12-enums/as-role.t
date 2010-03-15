@@ -3,8 +3,7 @@ use Test;
 
 plan 9;
 
-#L<S12/Enums/"An enum is a low-level class that can function as a role 
-# or property">
+#L<S12/Enumerations/they may be used to name a desired property>
 
 enum Maybe <No Yes Dunno>;
 class Bar            { }

@@ -3,7 +3,7 @@ use Test;
 
 plan 13;
 
-# L<S12/Enums/There's also a pseudo-functional form>
+# L<S12/Enumerations/enumeration supplies the type name as a coercion>
 
 enum day <<:Sun(1) Mon Tue Wed Thu Fri Sat>>;
 
