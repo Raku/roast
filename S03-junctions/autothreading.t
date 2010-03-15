@@ -271,7 +271,7 @@ plan 77;
        'autothreading over array parameters (3)';
 }
 
-# L<S02/Mutable types/"default block parameter type">
+# L<S02/Undefined types/"default block parameter type">
 
 # block parameters default to Mu, so test that they don't autothread:
 #?rakudo skip '"No exception handler and no message"'
@@ -285,7 +285,7 @@ plan 77;
     for 1|2, 3|4, 5|6 -> Any $x {
         $c++;
     }
-    is $6, 3, 'do autothread over blocks with explicit Any';
+    is $c, 6, 'do autothread over blocks with explicit Any';
 }
 
 # vim: ft=perl6

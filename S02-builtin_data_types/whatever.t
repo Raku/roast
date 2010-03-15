@@ -11,7 +11,7 @@ plan *;
     ok($x.isa(Whatever), 'can assign * to a variable and isa works');
 }
 
-# L<S02/Built-In Data Types/"Most of the built-in numeric operators treat an argument of">
+# L<S02/Built-In Data Types/"Most of the built-in numeric operators">
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
