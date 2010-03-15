@@ -15,10 +15,12 @@ plan *;
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
-isa_ok $x, Code, '*-1 is of type Code';
+ok $x ~~ Code, '*-1 is some form of Code'
+isa_ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';
 
-isa_ok *.abs, Code, '*.abs is of type Code';
+ok *.abs ~~ Code, '*.abs is of type Code';
+isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 my @a = map *.abs, 1, -2, 3, -4;
 is @a, [1,2,3,4], '*.meth created closure works';
 
@@ -74,19 +76,20 @@ is @a, [1,2,3,4], '*.meth created closure works';
     is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT 67450)';
 }
 
-# L<S02/Built-In Data Types/If multiple * appear as terms>
+# L<S02/Built-In Data Types/are internally curried into closures of one or two
+# arguments>
 {
     my $c = * * *;
     ok $c ~~ Code, '* * * generated a closure';
-    is $c(-3), 9, '... that behaves correctly (1)';
-    is $c(5), 25, '... that behaves correctly (2)';
+    is $c(-3, -5), 15, '... that takes two arguments';
 }
 
 {
     my $c = * * * + *;
     ok $c ~~ Code, '* * * + * generated a closure';
-    is $c(2), 6,  '... that works';
-    is $c(-3), 6, '... that respects precdence';
+    is $c(2, 2, 2), 6,  '... that works';
+    is $c(-3, -3, -3), 6, '... that respects precdence';
+    is $c(0, -10, 3), 3, 'that can work with three different arguments';
 }
 
 #?rakudo todo 'RT 65482'
@@ -99,7 +102,53 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     my $rt68714 = *.defined;
     ok $rt68714 ~~ Code, '*.defined generates a closure';
     ok $rt68714(68714), '*.defined works (true)';
-    ok not $rt68714(Mu), '*.defined works (false)';
+    ok not $rt68714(Any), '*.defined works (false)';
+}
+
+# L<S02/Built-In Data Types/skip first two elements>
+{
+    # TODO: find out if this allowed for item assignment, or for list
+    # assignment only
+    eval_lives_ok ' * = 5 ', 'can dummy-asign to *';
+
+    my $x;
+    (*, *, $x) = 1, 2, 3, 4, 5;
+    is $x, 3, 'Can skip lvalues and replace them by Whatever';
+}
+
+
+# L<S02/Built-In Data Types/This rewrite happens after variables are looked up
+# in their lexical scope>
+
+{
+    my $x = 3;
+    {
+        is (* + (my $x = 5)).(8), 40,
+            'can use a declaration in Whatever-curried expression';
+        is $x, 5, 'and it did not get promoted into its own scope';
+    }
+}
+
+# L<S02/Built-In Data Types/This is only for operators that are not
+# Whatever-aware.>
+{
+    multi sub infix quack($x, $y) { "$x|$y" };
+    isa_ok * quack 5, WhateverCode,
+        '* works on LHS of user-defined operator (type)';
+    isa_ok 5 quack *, WhateverCode,
+        '* works on RHS of user-defined operator (type)';
+    isa_ok * quack *, WhateverCode,
+        '* works on both sides of user-defined operator (type)';
+    is (* quack 5).(3), '3|5',
+        '* works on LHS of user-defined operator (result)';
+    is (7 quack *).(3), '7|3',
+        '* works on RHS of user-defined operator (result)';
+    is (* quack *).('a', 'b'), 'a|b',
+        '* works on both sides of user-defined operator (result)';
+    is ((* quack *) quack *).(1, 2, 3), '1|2|3',
+        'also with three *';
+    is ((* quack *) quack 'a').(2, 3), '2|3|a',
+        'also if the last is not a *, but a normal value';
 }
 
 done_testing;
