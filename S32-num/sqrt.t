@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 24;
 
-# L<S32::Numeric/Num/"=item sqrt">
+# L<S32::Numeric/Real/"=item sqrt">
 
 =begin pod
 

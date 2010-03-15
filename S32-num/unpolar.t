@@ -4,7 +4,7 @@ use Test;
 
 plan *;
 
-# L<S32::Numeric/Num/=item cis>
+# L<S32::Numeric/Numeric/=item cis>
 my $pi = 312689/99532;
 
 {
@@ -22,8 +22,8 @@ my $pi = 312689/99532;
 }
 
 # Test that 1.unpolar == cis
-# L<S32::Numeric/Num/=item cis>
-# L<S32::Numeric/Num/=item unpolar>
+# L<S32::Numeric/Numeric/=item cis>
+# L<S32::Numeric/Numeric/=item unpolar>
 
 {
     for 1...20 -> $i {
@@ -35,8 +35,8 @@ my $pi = 312689/99532;
     }
 }
 
-# L<S32::Numeric/Num/=item abs>
-# L<S32::Numeric/Num/=item unpolar>
+# L<S32::Numeric/Numeric/=item abs>
+# L<S32::Numeric/Numeric/=item unpolar>
 #
 # Test that unpolar() doesn't change the absolute value
 
@@ -52,7 +52,7 @@ my $pi = 312689/99532;
     }
 }
 
-# L<S32::Numeric/Num/=item unpolar>
+# L<S32::Numeric/Numeric/=item unpolar>
 {
     # Basic tests for unpolar()
     my $s = 2 * sqrt(2);

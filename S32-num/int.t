@@ -2,8 +2,8 @@ use v6;
 use Test;
 plan 82;
 
-# L<S32::Numeric/Num/"=item truncate">
-# truncate and int() are synonynms.
+# L<S32::Numeric/Real/=item truncate>
+# truncate and .Int are synonynms.
 # Possibly more tests for truncate should be added here, too.
 
 =begin pod
@@ -25,23 +25,23 @@ isa_ok( eval((-0).perl), Int, 'eval -0.perl is Int' );
 is( eval((-0).perl), -0, 'eval -0.perl is 0' );
 
 is((-1).Int, -1, "(-1).Int is -1");
-is(0.Int, 0, "int(0) is 0");
-is(1.Int, 1, "int(1) is 1");
-is(3.14159265.Int, 3, "int(3.14159265) is 3");
-is((-3.14159265).Int, -3, "int(-3.14159265) is -3");
+is(0.Int, 0, "0.Int is 0");
+is(1.Int, 1, "1.Int is 1");
+is(3.14159265.Int, 3, "3.14159265.Int is 3");
+is((-3.14159265).Int, -3, "(-3.14159265).Int is -3");
 
-is(0.999.Int, 0, "int(0.999) is 0");
-is(0.51.Int, 0, "int(0.51) is 0");
-is(0.5.Int, 0, "int(0.5) is 0");
-is(0.49.Int, 0, "int(0.49) is 0");
-is(0.1.Int, 0, "int(0.1) is 0");
-isa_ok(0.1.Int, Int, 'int(0.1) returns an Int');
+is(0.999.Int,   0, "0.999.Int is 0");
+is(0.51.Int,    0, "0.51.Int is 0");
+is(0.5.Int,     0, "0.5.Int is 0");
+is(0.49.Int,    0, "0.49.Int is 0");
+is(0.1.Int,     0, "0.1.Int is 0");
+isa_ok(0.1.Int, Int, '0.1.Int returns an Int');
 
-is((-0.999).Int, 0, "int(-0.999) is 0");
-is((-0.51).Int,  0, "int(-0.51) is 0");
-is((-0.5).Int,   0, "int(-0.5) is 0");
-is((-0.49).Int,  0, "int(-0.49) is 0");
-is((-0.1).Int,   0, "int(-0.1) is 0");
+is((-0.999).Int, 0, "(-0.999).Int is 0");
+is((-0.51).Int,  0, "(-0.51).Int is 0");
+is((-0.5).Int,   0, "(-0.5).Int is 0");
+is((-0.49).Int,  0, "(-0.49).Int is 0");
+is((-0.1).Int,   0, "(-0.1).Int is 0");
 isa_ok((-0.1).Int, Int, 'int(-0.1) returns an Int');
 
 is(1.999.Int, 1, "int(1.999) is 1");

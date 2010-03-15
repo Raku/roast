@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 6;
 
-# L<S32::Numeric/Num/"Num provides a number of constants">
+# L<S32::Numeric/Numeric/"Numeric provides some constants">
 
 =begin pod
 

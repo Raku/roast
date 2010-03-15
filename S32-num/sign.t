@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 42;
 
-# L<S32::Numeric/Num/"=item sign">
+# L<S32::Numeric/Real/"=item sign">
 
 =begin pod
 

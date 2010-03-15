@@ -208,7 +208,7 @@ ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
     dies_ok { renames(:x(23)) }, 'old name is not available';
 }
 
-# L<06/Parameters and arguments/"A signature containing a name collision">
+# L<S06/Parameters and arguments/"A signature containing a name collision">
 
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 

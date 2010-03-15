@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 50;
 
-# L<S32::Numeric/Num/"=item abs">
+# L<S32::Numeric/Numeric/"=item abs">
 
 =begin pod
 

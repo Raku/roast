@@ -14,7 +14,7 @@ my $log10_5 = 49471/70777;
 my $log10_one_tenth = -1;
 my $pi = 312689/99532;
 
-# L<S32::Numeric/Num/"=item log">
+# L<S32::Numeric/Numeric/"=item log">
 
 is_approx(log(5), $log_5, 'got the log of 5');
 is_approx(log(0.1), $log_one_tenth, 'got the log of 0.1');
@@ -32,7 +32,7 @@ is_approx(log("42", "23"),  1.19205119221557, 'log(42, 23) with strings');
    is_approx(log(:x(0.1)), $log_one_tenth, 'got the log of 0.1');
 }
 
-# L<S32::Numeric/Num/"=item log10">
+# L<S32::Numeric/Numeric/"=item log10">
 
 is_approx(log10(5), $log10_5, 'got the log10 of 5');
 is_approx(log10(0.1), $log10_one_tenth, 'got the log10 of 0.1');

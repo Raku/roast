@@ -2,10 +2,10 @@ use v6;
 use Test;
 plan 50;
 
-# L<S32::Numeric/Num/"=item round">
-# L<S32::Numeric/Num/"=item floor">
-# L<S32::Numeric/Num/"=item truncate">
-# L<S32::Numeric/Num/"=item ceiling">
+# L<S32::Numeric/Real/"=item round">
+# L<S32::Numeric/Real/"=item floor">
+# L<S32::Numeric/Real/"=item truncate">
+# L<S32::Numeric/Real/"=item ceiling">
 
 =begin pod
 

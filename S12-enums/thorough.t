@@ -8,12 +8,12 @@ plan *;
 
 =begin description
 
-Enum tests from L<S12/Enums>
+Enum tests from L<S12/Enumerations>
 
 =end description
 
 #?pugs 999 skip
-# L<S12/Enums/values are specified as a list>
+# L<S12/Enumerations/values are specified as a list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
 ok day ne "", 'enum itself stringififes';
@@ -44,7 +44,7 @@ sub test_stuff($x) {
 {
   my $x = 1;
   is $x, 1, "basic sanity (1)";
-  # L<S12/Enums/has the right semantics mixed in:>
+  # L<S12/Enumerations/has the right semantics mixed in:>
   ok $x does day(Tue), "basic enum mixing worked (1-1)";
   test_stuff($x);
 }
@@ -54,7 +54,7 @@ sub test_stuff($x) {
 {
   my $x = 2;
   is $x, 2, "basic sanity (2)";
-  # L<S12/Enums/or pseudo-hash form:>
+  # L<S12/Enumerations/or pseudo-hash form:>
   ok $x does day<Tue>, "basic enum mixing worked (2-1)";
   test_stuff($x);
 }
@@ -63,7 +63,7 @@ sub test_stuff($x) {
 {
   my $x = 3;
   is $x, 3, "basic sanity (3)";
-  # L<S12/Enums/is the same as>
+  # L<S12/Enumerations/is the same as>
   ok $x does day::Tue, "basic enum mixing worked (3-1)";
   test_stuff($x);
 }
@@ -73,7 +73,7 @@ sub test_stuff($x) {
 {
   my $x = 4;
   is $x, 4, "basic sanity (4)";
-  # L<S12/Enums/which is short for something like:>
+  # L<S12/Enumerations/which is short for something like:>
   ok $x does day,            "basic enum mixing worked (4-0)";
   ok $x.day = &day::("Tue"), "basic enum mixing worked (4-1)";
   test_stuff($x);

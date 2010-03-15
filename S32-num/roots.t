@@ -4,7 +4,7 @@ use Test <plan ok>;
 #?rakudo emit use Test;
 plan 44;
 
-# L<S32::Numeric/Num/"=item roots">
+# L<S32::Numeric/Numeric/"=item roots">
 
 sub approx($a, $b){
     my ($x,$y);

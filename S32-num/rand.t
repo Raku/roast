@@ -10,7 +10,7 @@ Basic tests for the rand builtin
 
 =end pod
 
-# L<S32::Numeric/Num/"=item rand">
+# L<S32::Numeric/Numeric/"=item rand">
 
 ok(rand >= 0, 'rand returns numbers greater than or equal to 0');
 ok(rand < 1, 'rand returns numbers less than 1');
@@ -28,7 +28,7 @@ test_rand_range(5);
 test_rand_range(7);
 test_rand_range(11);
 
-# L<S32::Numeric/Num/"=item srand">
+# L<S32::Numeric/Real/"=item srand">
 
 lives_ok { srand(1) }, 'srand(1) lives and parses';
 

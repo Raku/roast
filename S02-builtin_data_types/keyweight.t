@@ -14,7 +14,7 @@ plan 4;
     is %h.keys.join, 'a', '... and the right one is gone';
 }
 
-# L<S32/Containers/KeyWeight>
+# L<S32::Containers/KeyWeight>
 {
     my %h is KeyWeight;
 

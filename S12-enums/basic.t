@@ -4,7 +4,7 @@ plan *;
 
 # Very basic enum tests
 
-# L<S12/Enums/values are specified as a list>
+# L<S12/Enumerations/values are specified as a list>
 
 enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
@@ -80,7 +80,7 @@ my Color $c2 = white;
 is($c1, 0, 'can assign enum value to typed variable with short name');
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
-# L<S12/Enums/"Like type names, enum names are parsed as standalone tokens">
+# L<S12/Enumerations/"Like type names, enum names are parsed as standalone tokens">
 # conflict between subs and enums
 {
     my sub white { 'sub' };
@@ -89,7 +89,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     is white(), 'sub', 'short name with parenthesis is a sub';
 }
 
-# L<S12/Enums/"define a .pick method">
+# L<S12/Enumerations/"define a .pick method">
 {
     lives_ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
     isa_ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';

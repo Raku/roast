@@ -27,7 +27,6 @@ plan *;
 
 our $GLOBAL;
 
-# L<S32::Basics/Scalar/=item undef>
 # L<S32::Basics/Mu/=item defined>
 
 ok(Mu === Mu, "Mu is equal to Mu");
