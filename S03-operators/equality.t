@@ -19,10 +19,10 @@ ok(!("a" ne "a"),  "ne false");
 # potential problem cases
 ok("\0" eq "\0",   "eq on strings with null chars");
 ok(!("\0" eq "\0\0"),   "!eq on strings with null chars but different lengths");
-ok(!("a" eq "a\0"),   "eq doesn't have null-padding semantics")
-ok(!("a" eq "a "),   "eq doesn't have space-padding semantics")
-ok("a" ne "a\0",   "ne doesn't have null-padding semantics")
-ok("a" ne "a ",   "ne doesn't have space-padding semantics")
+ok(!("a" eq "a\0"),   "eq doesn't have null-padding semantics");
+ok(!("a" eq "a "),   "eq doesn't have space-padding semantics");
+ok("a" ne "a\0",   "ne doesn't have null-padding semantics");
+ok("a" ne "a ",   "ne doesn't have space-padding semantics");
 
 # string context on undefined values
 my $foo;
