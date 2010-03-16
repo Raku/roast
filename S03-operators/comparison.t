@@ -36,6 +36,9 @@ is('a' leg 'a', Order::Same,     'a leg a is same');
 is('a' leg 'b', Order::Increase, 'a leg b is increase');
 is('b' leg 'a', Order::Decrease, 'b leg a is decrease');
 is('a' leg 1,   Order::Decrease, 'leg is in string context');
+is("a" leg "a\0", Order::Increase, 'a leg a\0 is increase');
+is("a\0" leg "a\0", Order::Same, 'a\0 leg a\0 is same');
+is("a\0" leg "a", Order::Decrease, 'a\0 leg a is decrease');
 
 # cmp comparison
 is('a' cmp 'a', Order::Same,     'a cmp a is same');
@@ -45,6 +48,9 @@ is(1 cmp 1,     Order::Same,     '1 cmp 1 is same');
 is(1 cmp 2,     Order::Increase, '1 cmp 2 is increase');
 is(2 cmp 1,     Order::Decrease, '2 cmp 1 is decrease');
 is('a' cmp 1,   Order::Decrease, '"a" cmp 1 is decrease'); # unspecced but P5 behavior
+is("a" cmp "a\0", Order::Increase, 'a cmp a\0 is increase');
+is("a\0" cmp "a\0", Order::Same, 'a\0 cmp a\0 is same');
+is("a\0" cmp "a", Order::Decrease, 'a\0 cmp a is decrease');
 
 done_testing;
 
