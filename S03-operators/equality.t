@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 20;
 
 # adapted from t/operators/eq.t and t/operators/cond.t
 # relational ops are in relational.t
@@ -18,6 +18,11 @@ ok(!("a" ne "a"),  "ne false");
 
 # potential problem cases
 ok("\0" eq "\0",   "eq on strings with null chars");
+ok(!("\0" eq "\0\0"),   "!eq on strings with null chars but different lengths");
+ok(!("a" eq "a\0"),   "eq doesn't have null-padding semantics")
+ok(!("a" eq "a "),   "eq doesn't have space-padding semantics")
+ok("a" ne "a\0",   "ne doesn't have null-padding semantics")
+ok("a" ne "a ",   "ne doesn't have space-padding semantics")
 
 # string context on undefined values
 my $foo;
