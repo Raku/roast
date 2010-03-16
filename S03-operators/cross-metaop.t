@@ -6,6 +6,7 @@ plan 21;
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 
+#?rakudo skip "X temporarily disabled"
 {
     my @result = <a b> X <1 2>;
     is @result, <a 1 a 2 b 1 b 2>,
@@ -15,6 +16,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/This becomes a flat list in>
+#?rakudo skip "X temporarily disabled"
 {
     my @result = gather {
         for @(1..3 X 'a'..'b') -> $n, $a {
@@ -25,6 +27,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
+#?rakudo skip "X temporarily disabled"
 {
     my @result = gather for (1..3 X 'A'..'B').slice -> $na {
         take $na.join(':');
@@ -33,7 +36,6 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/Cross operators>
-#?rakudo todo 'X,'
 ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 
 # L<S03/Cross operators/"string concatenating form is">
@@ -54,7 +56,7 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 }
 
 # L<S03/Cross operators/list concatenating form when used like this>
-#?rakudo skip 'X,'
+#?rakudo skip 'chained cross NYI'
 {
     my @result = <a b> X, 1,2 X, <x y>;
     is @result.elems, 24, 'chained cross-comma produces correct number of elements';
@@ -83,12 +85,14 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
 
 {
     ok ( ? all 1, 2 X<= 2, 3, 4 ), 'all @list1 X<= @list2';
+    #?rakudo skip "[|] NYI"
     ok ( ? [|] 1, 2 X<= 0, 3),     '[|] @l1 X<= @l2';
     ok ( ! all 1, 2 X<  2, 3),     'all @l1 X<  @l2';
     ok ( ? one 1, 2 X== 2, 3, 4),  'one @l1 X== @l2';
     ok ( ! one 1, 2 X== 2, 1, 4),  'one @l1 X== @l2';
 }
 
+#?rakudo skip "=:= NYI"
 {
     my ($a, $b, $c, $d);
     # test that the containers on the LHS are mutually exclusive from
