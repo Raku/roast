@@ -147,12 +147,14 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 # list infix
 
 #?pugs todo 'list infix and assignment'
+#?rakudo skip "Z temporarily disabled"
 {
     my @d;
     ok eval('@d = 1,3 Z 2,4'), "list infix tighter than list assignment, looser t than comma";
     is(@d, [1 .. 4], "to complicate things further, it dwims");
 }
 
+#?rakudo skip "Z temporarily disabled"
 {
     my @b;
     eval('@b = ((1, 3) Z (2, 4))');
