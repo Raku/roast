@@ -70,7 +70,6 @@ is [^0.1], [0],        "unary ^0.1 produces the range 0..^x where 0 < x < 1";
 is [^'a'], [],         "unary ^'a' produces null range";
 
 # test that the zip operator works with ranges
-#?rakudo 4 skip "Z temporarily disabled"
 is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
 is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
 is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
