@@ -39,8 +39,12 @@ ok(2 == 2,         "== true");
 ok(!(2 == 3),      "== false");
 ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
+
+#L<S03/Negated relational operators>
 ok(2 !== 3,         "!== true");
 ok(!(2 !== 2),      "!== false");
+ok($foo !eq "f",    "!eq true");
+ok(!($foo !eq ""),  "!eq false");
 
 # numeric context on undefined values
 #?rakudo skip "+Any doesn't work yet"
