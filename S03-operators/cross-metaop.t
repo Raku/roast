@@ -1,22 +1,25 @@
 use v6;
 
 use Test;
-plan 21;
+plan 23;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 
-#?rakudo skip "X temporarily disabled"
 {
     my @result = <a b> X <1 2>;
     is @result, <a 1 a 2 b 1 b 2>,
     'non-meta cross produces expected result';
 
-    ok ([+] 1, 2, 3 X** 2, 4) == (1+1 + 4+16 + 9+81), '[+] and X** work';
 }
 
+is (1, 2, 3 X** 2, 4), (1, 1, 4, 16, 9, 81), 'X** works';
+
+#?rakudo skip "[+] NYI"
+is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
+
 # L<S03/List infix precedence/This becomes a flat list in>
-#?rakudo skip "X temporarily disabled"
+#?rakudo todo "Array/list/iterator issues"
 {
     my @result = gather {
         for @(1..3 X 'a'..'b') -> $n, $a {
@@ -27,7 +30,7 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 }
 
 # L<S03/List infix precedence/and a list of arrays in>
-#?rakudo skip "X temporarily disabled"
+#?rakudo skip ".slice for iterators NYI"
 {
     my @result = gather for (1..3 X 'A'..'B').slice -> $na {
         take $na.join(':');
@@ -76,6 +79,8 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 
 # L<S03/Cross operators/any existing non-mutating infix operator>
 is (1,2 X* 3,4), (3,4,6,8), 'cross-product works';
+
+is (1,2 Xcmp 3,2,0), (-1, -1, 1, -1, 0, 1), 'Xcmp works';
 
 # L<S03/Cross operators/underlying operator non-associating>
 eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
