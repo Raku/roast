@@ -3,10 +3,8 @@ use v6;
 use Test;
 plan *;
 
-#?rakudo todo "Z temporarily disabled"
 ok eval('<a b> Z <c d>'), 'cross non-meta operator parses';
 
-#?rakudo skip "Z temporarily disabled"
 ok <a b> Z <1 2>, <a 1 b 2>, 'non-meta zip produces expected result';
 
 is (1, 2, 3 Z** 2, 4), (1, 16), 'zip-power works';
