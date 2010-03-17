@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 14;
 
 # L<S29/Context/"=item eval">
 
@@ -32,12 +32,6 @@ ok(eval('my @a = (1); @a!<0>').notdef, "eval returns undefined on syntax error")
 
 ok(!eval('use Poison; 1'), "eval can trap a fatal use statement");
 
-sub v { 123 }
-ok(v() == 123, "a plain subroutine");
-eval 'sub v { 456 }';
-#?rakudo todo 'eval can override subroutines (specced?)'
-ok(v() == 456, "eval can overwrite a subroutine");
-
 # L<S04/Exception handlers/Perl 6's eval function only evaluates strings, not blocks.>
 dies_ok({eval {42}}, 'block eval is gone');
 
@@ -50,6 +44,7 @@ dies_ok({eval {42}}, 'block eval is gone');
     is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
 }
 
+#?rakudo todo 'eval in methods'
 {
     my $x = 5;
     class EvalTester2 {
