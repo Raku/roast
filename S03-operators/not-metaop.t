@@ -19,7 +19,6 @@ is 4 !<= 5, !(4 <= 5), "4 !<= 5";
 isa_ok 4 !<= 5, Bool, "4 !<= 5 is Bool";
 is 4 !>= 5, !(4 >= 5), "4 !>= 5";
 isa_ok 4 !>= 5, Bool, "4 !>= 5 is Bool";
-#?rakudo 2 skip "!== is parsed as != ="
 is 4 !== 5, !(4 == 5), "4 !== 5";
 isa_ok 4 !== 5, Bool, "4 !== 5 is Bool";
 

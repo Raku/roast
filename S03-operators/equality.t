@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 23;
 
 # adapted from t/operators/eq.t and t/operators/cond.t
 # relational ops are in relational.t
@@ -43,8 +43,12 @@ ok(!(2 != 2),      "!= false");
 #L<S03/Negated relational operators>
 ok(2 !== 3,         "!== true");
 ok(!(2 !== 2),      "!== false");
-ok($foo !eq "f",    "!eq true");
-ok(!($foo !eq ""),  "!eq false");
+ok($foo !eq "f",    "!eq true undef");
+ok("" !eq "f",    "!eq true empty string");
+ok(!($foo !eq ""),  "!eq false undef and empty string");
+ok(!($foo !eq $foo),  "!eq false undef twice");
+ok(!("" !eq ""),  "!eq false empty string twice");
+ok(!("xc" !eq "xc"),  "!eq false non-empty string twice");
 
 # numeric context on undefined values
 #?rakudo skip "+Any doesn't work yet"
