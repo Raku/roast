@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 28;
 
 # adapted from t/operators/eq.t and t/operators/cond.t
 # relational ops are in relational.t
