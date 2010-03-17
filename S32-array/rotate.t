@@ -21,7 +21,7 @@ plan *;
     is ~@a.rotate(5), 'a b c d e', '.rotate(5)';
     is ~@a.rotate(15), 'a b c d e', '.rotate(15)';
 
-    is ~@a.rotate(7), 'd e a b c', '.rotate(7)';
+    is ~@a.rotate(7), 'c d e a b', '.rotate(7)';
     is ~@a, 'a b c d e', 'original still unmodified (negative)';
 
     is ~@a.rotate(-8), 'c d e a b', '.rotate(-8)';
@@ -44,7 +44,7 @@ plan *;
     is ~rotate(@a, 5), 'a b c d e', 'rotate(@a, 5)';
     is ~rotate(@a, 15), 'a b c d e', 'rotate(@a, 15)';
 
-    is ~rotate(@a, 7), 'd e a b c', 'rotate(@a, 7)';
+    is ~rotate(@a, 7), 'c d e a b', 'rotate(@a, 7)';
     is ~@a, 'a b c d e', 'original still unmodified (negative)';
 
     is ~rotate(@a, -8), 'c d e a b', 'rotate(@a, -8)';
