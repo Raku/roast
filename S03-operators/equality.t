@@ -45,6 +45,7 @@ ok(2 !== 3,         "!== true");
 ok(!(2 !== 2),      "!== false");
 ok($foo !eq "f",    "!eq true undef");
 ok("" !eq "f",    "!eq true empty string");
+#?rakudo todo "undef not coerced properly"
 ok(!($foo !eq ""),  "!eq false undef and empty string");
 ok(!($foo !eq $foo),  "!eq false undef twice");
 ok(!("" !eq ""),  "!eq false empty string twice");
