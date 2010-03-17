@@ -68,6 +68,7 @@ plan *;
     is $was_in_foo, 1, 'return() inside try{}-blocks works (2)';
 }
 
+#?rakudo skip 'Null PMC access'
 {
     sub test1 {
         try { return 42 };
