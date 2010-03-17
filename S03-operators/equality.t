@@ -39,6 +39,8 @@ ok(2 == 2,         "== true");
 ok(!(2 == 3),      "== false");
 ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
+ok(2 !== 3,         "!== true");
+ok(!(2 !== 2),      "!== false");
 
 # numeric context on undefined values
 #?rakudo skip "+Any doesn't work yet"
