@@ -274,7 +274,6 @@ plan 77;
 # L<S02/Undefined types/"default block parameter type">
 
 # block parameters default to Mu, so test that they don't autothread:
-#?rakudo skip '"No exception handler and no message"'
 {
     my $c = 0;
     for 1|2, 3|4, 5|6 -> $x {

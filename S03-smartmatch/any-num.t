@@ -20,7 +20,6 @@ plan *;
     ok !(Mu ~~ 2.3),            'Mu ~~ $other_number';
 
     ok  (3+0i  ~~ 3),           'Complex ~~ Int (+)';
-    #?rakudo skip "Complex ~~ Int does something weird right now"
     nok (3+1i  ~~ 3),           'Complex ~~ Int (-)';
     nok (4+0i  ~~ 3),           'Complex ~~ Int (-)';
     ok  (3+0i  ~~ 3.Rat),       'Complex ~~ Rat (+)';

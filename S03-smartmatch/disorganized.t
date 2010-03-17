@@ -91,7 +91,6 @@ caught that case.
         'C<all(@x) ~~ {...} when true for one';
 };
 
-#?rakudo skip 'smartmatching against Num'
 ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 
 # need to test in eval() since class defintions happen at compile time,

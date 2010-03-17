@@ -24,7 +24,6 @@ ok(R1[C3] !~~ R1[C1], 'subtyping by role parameters (one param)');
 
 # Subtyping with nested roles.
 ok(R1[R1[C1]] ~~ R1,          'basic sanity');
-#?rakudo 4 skip 'smart-matching'
 ok(R1[R1[C1]] ~~ R1[R1[C1]],  'basic sanity');
 ok(R1[R1[C2]] ~~ R1[R1[C1]],  'subtyping by role parameters (nested)');
 ok(R1[R1[C1]] !~~ R1[R1[C2]], 'subtyping by role parameters (nested)');

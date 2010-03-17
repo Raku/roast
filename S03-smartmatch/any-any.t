@@ -3,7 +3,6 @@ use Test;
 plan *;
 
 #L<S03/Smart matching/Any Any scalars are identical>
-#?rakudo skip 'Any ~~ Any'
 {
     class Smartmatch::ObjTest {}
     my $a = Smartmatch::ObjTest.new;

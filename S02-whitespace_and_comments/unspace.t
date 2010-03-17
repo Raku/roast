@@ -73,7 +73,6 @@ eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
 is((foo\    .lc), 'a', 'longer dot');
 #?rakudo skip 'unimplemented'
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
-#?rakudo skip 'unimplemented'
 eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
 is((foo\ # comment
     .lc), 'a', 'unspace with end-of-line comment');

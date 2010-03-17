@@ -56,7 +56,6 @@ sub j(*@i) {
 }
 
 
-#?rakudo skip 'multi-level renamed parameters'
 {
     sub d(:x(:y(:z($a)))) { };
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';

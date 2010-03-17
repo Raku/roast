@@ -208,7 +208,6 @@ sub eval_elsewhere($code){ eval($code) }
 {
     ok   0 ~~ ^10, '0 is in ^10';
     ok   9 ~~ ^10, '9 is in ^10';
-    #?rakudo 3 skip '^$num ranges'
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
