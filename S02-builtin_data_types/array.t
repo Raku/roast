@@ -22,7 +22,6 @@ plan 95;
 {
     my $i = 0;
     $i++ for [1, 2, 3];
-    #?rakudo todo "undesired flattening"
     is $i, 1, 'for [1, 2, 3] does one iteration';
 }
 

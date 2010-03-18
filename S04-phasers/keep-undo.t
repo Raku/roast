@@ -25,8 +25,7 @@ plan 10;
     is $str, '1 > 0 0 <= 0 -1 <= 0 ', 'UNDO worked as expected';
 }
 
-# L<S04/Phasers/KEEP UNDO are "variants of LEAVE"
-#   "treated as part of the queue of LEAVE blocks">
+# L<S04/Phasers/This includes the LEAVE variants, KEEP and UNDO.>
 {
     my $str;
     my sub is_pos($n) {

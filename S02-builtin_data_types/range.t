@@ -134,7 +134,6 @@ is(+(6..8), 3, 'numification');
     ok(42  ~~ $inf, 'positive integer matches -Inf..Inf');
     ok(.2  ~~ $inf, 'positive non-int matches -Inf..Inf');
     ok(-2  ~~ $inf, 'negative integer matches -Inf..Inf');
-    #?rakudo todo "ng thinks -Inf is not before -.2"
     ok(-.2 ~~ $inf, 'negative non-int matches -Inf..Inf');
 }
 

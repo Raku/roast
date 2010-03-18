@@ -85,7 +85,7 @@ plan 13;
     is $str, '123', "return didn't trigger NEXT \{}";
 }
 
-# L<S04/Phasers/last bypasses "NEXT blocks">
+# L<S04/Phasers/last bypasses evaluation of NEXT phasers>
 {
     my $str = '';
     for 1..5 {

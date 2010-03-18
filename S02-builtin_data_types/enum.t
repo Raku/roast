@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 plan *;
-# L<S12/Enums>
+# L<S12/Enumerations>
 {
     my %hash; eval '%hash = enum «:Mon(1) Tue Wed Thu Fri Sat Sun»';
 

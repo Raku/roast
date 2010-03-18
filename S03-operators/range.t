@@ -31,7 +31,7 @@ is ~(2+1..6), "3 4 5 6", "(..) has correct precedence (3)";
 is ~(2+5..6), "",        "(..) has correct precedence (4)";
 
 # Test the three exclusive range operators:
-# L<S03/Range and RangeIterator semantics/range operator has variants>
+# L<S03/Range and RangeIter semantics/range operator has variants>
 is [1^..9], [2..9],  "bottom-exclusive range (^..) works (1)";
 is [2^..2], [],      "bottom-exclusive range (^..) works (2)";
 is [3^..2], [],      "bottom-exclusive auto-rev range (^..) works (3)";

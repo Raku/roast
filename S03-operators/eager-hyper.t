@@ -4,7 +4,7 @@ use Test;
 
 plan 8;
 
-# L<S02/Lists/To force non-lazy list flattening, use the eager list operator>
+# L<S02/Lists/To force non-lazy list processing, use the eager list operator>
 
 # Laziness test
 #?rakudo skip 'gather {..} parsefail'

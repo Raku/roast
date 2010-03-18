@@ -69,7 +69,6 @@ plan 12;
 # return value of false 'if' should be Nil
 # see http://rt.perl.org/rt3/Ticket/Display.html?id=66544
 
-#?rakudo 2 todo 'RT #66544, return value of false statement modifying "if"'
 {
     ok (42 if 0).notdef, '"$something if 0" is Nil - (undefined)';
     ok (42 if 0) ~~ (),    '"$something if 0" is Nil - (empty list)';

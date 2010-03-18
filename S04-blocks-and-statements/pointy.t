@@ -24,7 +24,7 @@ $got = '';
 is $got, 'x 123', 'called pointy immediately: -> $x { ... }.(...)';
 
 $got = '';
--> $x { $got = "x $x" }(123); 
+-> $x { $got = "x $x" }(123);
 is $got, 'x 123', 'called pointy immediately: -> $x { ... }(...)';
 
 

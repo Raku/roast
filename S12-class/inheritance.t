@@ -99,7 +99,6 @@ class Y is X {
 is(Z.new.j(), 'X', 'inherited method dispatch works');
 is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
 
-#?rakudo skip '$.foo with args'
 {
     class A {
       has @.x = <a b c>;

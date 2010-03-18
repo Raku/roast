@@ -84,7 +84,7 @@ plan *;
     is $i, 1+2+3, 'postfix for worked';
 }
 
-# L<S04/The for statement/When used as statement modifiers on implicit blocks>
+# L<S04/The C<for> statement/When used as statement modifiers on implicit blocks>
 
 {
     $_ = 42;

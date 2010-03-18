@@ -20,7 +20,7 @@ plan *;
 
 sub fail_it { fail $^a }
 
-# L<S04/Exceptions/"test a Failure for .defined or as boolean">
+# L<S04/Exceptions/"test a Failure for .defined or .Bool">
 
 {
     my @fails = ( fail_it(1), fail_it(2), fail_it(3), fail_it(4) );

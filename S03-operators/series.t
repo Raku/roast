@@ -94,7 +94,7 @@ is (16, 8, 4 ... *).batch(5).join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
     is @xxed[6], 4, 'infix:<...> with list return (6)';
 }
 
-# L<S03/List infix precedence/If the right operand is * (Whatever)>
+# L<S03/List infix precedence/If the limit is *>
 
 # Does this test belond in series?
 #?rakudo skip 'lazy lists'

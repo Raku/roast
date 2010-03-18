@@ -19,7 +19,6 @@ ok(not so(so 0), "so(so 0) is false");
 ok(so Bool::True, "'Bool::True' is true");
 ok(so True, "'True' is true");
 
-#?rakudo todo 'RT 65556'
 is (so($b) + 1), ((so $b) + 1), 'so($b) is (so $b)';
 
 # vim: ft=perl6

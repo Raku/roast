@@ -30,7 +30,6 @@ my @tests = (
     [[2,3],4,[6,8]], # three elems
 );
 
-# L<S02/Names and Variables/such that standard Perl could reparse the result>
 {
     for @tests -> $obj {
         my $s = (~$obj).subst(/\n/, '␤');

@@ -4,7 +4,7 @@ use Test;
 
 plan 19;
 
-# L<S06/The C<context> and C<caller> functions>
+# L<S06/The C<callframe> and C<caller> functions>
 
 # caller.subname
 sub a_sub { b_sub() }

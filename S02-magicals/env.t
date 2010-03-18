@@ -3,7 +3,7 @@ use v6;
 # Tests for magic variables
 
 use Test;
-# L<S02/Names/environment variables passed to program>
+# L<S28/Named variables>
 plan 14;
 
 if $*OS eq "browser" {

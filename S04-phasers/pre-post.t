@@ -4,7 +4,7 @@ use Test;
 # Test of PRE and POST traits
 #
 # L<S04/Phasers/"assert precondition at every block ">
-# L<S06/Subroutine traits/"Mark blocks that are to be unconditionally executed">
+# L<S06/Subroutine traits/PRE/POST>
 #
 # TODO: 
 #  * Multiple inheritance + PRE/POST blocks

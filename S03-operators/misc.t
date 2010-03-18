@@ -70,7 +70,6 @@ is(0 ?| Any, False, "boolean or (?|) returns True or False");
 ok(?((all((4|5|6) + 3) == one(7|8|9))), "all elements in junction are incremented");
 ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 
-#?rakudo skip "autothreading comparisons cause problems at the moment"
 {
     ok( ?(7 > any(4..12)), "any test against scalar" );
 

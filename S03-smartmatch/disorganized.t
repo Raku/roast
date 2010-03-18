@@ -57,7 +57,6 @@ caught that case.
 
 =end begin Explanation
 
-#?rakudo skip 'unknown reasons'
 {
     my $result = 0;
     my $parsed = 0;
