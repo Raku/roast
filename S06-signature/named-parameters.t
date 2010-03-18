@@ -257,6 +257,18 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
     ok $t ~~ /b.*c/, '$b was bound before $c';
 }
 
+# RT #67558
+{
+    eval_dies_ok q[sub a(:$x, :foo($x) = $x) { $x }],
+        'Cannot rename a parameter to an already existing positional';
+    sub a(:$x, :foo($y) = $x) { $y };
+    is a(x => 2), 2, 'Can fill named parameter with default from other named';
+    is a(foo => 3), 3, 'Can fill in directly even it has a default value';
+    is a(x => 2, foo => 3), 3, 'direct fill takes precedence';
+
+
+}
+
 done_testing;
 
 # vim: ft=perl6
