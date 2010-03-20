@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 128;
+plan 127;
 
 =begin pod
 
@@ -184,8 +184,8 @@ class Foo1 { has $.bar; };
 }
 
 # L<S12/Attributes>
-ok eval('class Foo7e { has $.attr = 42 }; 1'), "class definition worked";
-is eval('Foo7e.new.attr'), 42,              "default attribute value (1)";
+class Foo7e { has $.attr = 42 }
+is Foo7e.new.attr, 42, "default attribute value (1)";
 
 #?rakudo todo 'scoping issues'
 {
