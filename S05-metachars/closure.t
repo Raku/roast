@@ -14,21 +14,37 @@ be valid perl6.
 
 # L<S05/Bracket rationalization/It now delimits an embedded closure>
 
-plan 10;
+plan 12;
 
-ok("abc" ~~ m/a(bc){$<caught> = $0}/, 'Inner match');
-is(~$/<caught>, "bc", 'Inner caught');
+{
+    my $x = 3;
+    my $y = 2;
+    ok 'a' ~~ /. { $y = $x; 0 }/, 'can match and execute a closure';
+    is $y, 3, 'could access and update outer lexicals';
+}
+
+#?rakudo skip 'assignment to match variables (dubious)'
+{
+    ok("abc" ~~ m/a(bc){$<caught> = $0}/, 'Inner match');
+    is(~$/<caught>, "bc", 'Inner caught');
+}
 
 my $caught = "oops!";
 ok("abc" ~~ m/a(bc){$caught = $0}/, 'Outer match');
 is($caught, "bc", 'Outer caught');
 
-ok("abc" ~~ m/a(bc){$0 = uc $0}/, 'Numeric match');
-is($/, "abc", 'Numeric matched');
-is($0, "BC", 'Numeric caught');
+#?rakudo skip 'assignment to match variables (dubious)'
+{
+    ok("abc" ~~ m/a(bc){$0 = uc $0}/, 'Numeric match');
+    is($/, "abc", 'Numeric matched');
+    is($0, "BC", 'Numeric caught');
+}
 
-ok("abc" ~~ m/a(bc){make uc $0}/ , 'Zero match');
-is($($/), "BC", 'Zero matched');
-is(~$0, "bc", 'One matched');
+#?rakudo skip 'make() inside closure'
+{
+    ok("abc" ~~ m/a(bc){make uc $0}/ , 'Zero match');
+    is($($/), "BC", 'Zero matched');
+    is(~$0, "bc", 'One matched');
+}
 
 # vim: ft=perl6
