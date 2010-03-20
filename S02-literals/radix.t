@@ -81,12 +81,10 @@ is :16<DEAD_BEEF>,  0xDEADBEEF, 'got the correct int value from hex DEAD_BEEF';
 is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D';
 
 # L<S02/Literals/"interpret leading 0b or 0d as hex digits">
-#?rakudo 2 skip ":radix() NYI"
 is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
-#?rakudo skip ":radix() NYI"
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
 #?rakudo 2 todo 'feature'
@@ -226,7 +224,6 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
     is +":32<2q>", 90, "radix 32 notation works";
     is +":100<1e>", 114, "high order radix (limited alphabet) works";
     is +":1_0<14_56>", 1456, "underscore separators works";
-    #?rakudo 3 skip "Fractional parts NYI"
     is +":10<123.456>", 123.456, "base 10 decimal notation works";
     is +":2<1.111>", 1.875, "base 2 decimal notation works";
     is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
