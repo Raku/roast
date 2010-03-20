@@ -80,7 +80,7 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
 my %hash6 = ("one", 1, "two", 2, "three", 3);
 ok(%hash6.does(Hash), '%hash6 does Hash');
 
-my @keys1 = sort keys %hash6;
+my @keys1 = (keys %hash6).sort;
 is(+@keys1, 3, 'got the right number of keys');
 is(@keys1[0], 'one', 'got the right key');
 is(@keys1[1], 'three', 'got the right key');
@@ -97,7 +97,7 @@ is(@keys2[2], 'two', 'got the right key');
 my %hash7 = ("one", 1, "two", 2, "three", 3);
 ok(%hash7.does(Hash), '%hash7 does Hash');
 
-my @values1 = sort values %hash7;
+my @values1 = (values %hash7).sort;
 is(+@values1, 3, 'got the right number of values');
 is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
@@ -172,18 +172,22 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 # Moved from t/xx-uncategorized/hashes-segfault.t
 # Caused some versions of pugs to segfault
-my %hash = %('a'..'d' Z 1..4);
-my $i = %hash.elems; # segfaults
-is $i, 4, "%hash.elems works";
+#?rakudo skip 'hash contextualizer on lazy list'
+{
+    my %hash = %('a'..'d' Z 1..4);
+    my $i = %hash.elems; # segfaults
+    is $i, 4, "%hash.elems works";
 
-$i = 0;
-$i++ for %hash; # segfaults
-is $i, 4, "for %hash works";
+    $i = 0;
+    $i++ for %hash; # segfaults
+    is $i, 4, "for %hash works";
+}
 
 eval ' @%(a => <b>)<a> ';
 ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
 
 # test for RT #62730
+#?rakudo todo 'RT #62730'
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
@@ -206,7 +210,6 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
         }
     }
 
-    #?rakudo todo 'RT 71064: hash access broken by postcircumfix:<{ }>'
     is( RT71064.new.rt71064(), 'victory',
         'postcircumfix:<{ }> method does not break ordinary hash access' );
 }
