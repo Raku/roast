@@ -23,7 +23,7 @@ use Test;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 40;
+plan 47;
 
 sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
 {
@@ -40,6 +40,21 @@ sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
     is f1((:a(42)),    23), 'Pair()Int()', "'(:a(42))' is a pair";
     is f1((:a),        23), 'Pair()Int()',  "'(:a)' is a pair";
     is f1((:!a),       23), 'Pair()Int()',  "'(:a)' is also a pair";
+    is f1(:a[1, 2, 3], :b[]), 'Array()Array()', ':a[...] constructs an Array value';
+    is f1(:a{b => 3}, :b{}), 'Hash()Hash()', ':a{...} constructs a Hash value';
+}
+
+{
+    my $p = :a[1, 2, 3];
+    is $p.key, 'a', 'correct key for :a[1, 2, 3]';
+    is $p.value.join('|'), '1|2|3', 'correct value for :a[1, 2, 3]';
+}
+
+{
+    my $p = :a{b => 'c'};
+    is $p.key, 'a', 'correct key for :a{ b => "c" }';
+    is $p.value.keys, 'b', 'correct value for :a{ b => "c" } (keys)';
+    is $p.value.values, 'c', 'correct value for :a{ b => "c" } (values)';
 }
 
 sub f2 (:$a!) { WHAT($a) }

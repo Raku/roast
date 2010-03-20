@@ -387,13 +387,12 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $str, " 2 12 0";
 }
 
-#?rakudo skip 'default value in variable in for loop'
 {
   my $str = '';
   for 1..5 -> $x, $y = 7 {
     $str ~= " " ~ $x*$y;
   }
-  is $str, " 2 12 35";
+  is $str, " 2 12 35", 'default values in for-loops';
 }
 
 
