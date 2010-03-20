@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 # L<S02/Names/"for the identifier of the variable">
 
@@ -40,5 +40,18 @@ my $o = CT.new;
 }
 
 ok foo().notdef, 'contextual $*VAR is undefined';
+
+{
+    sub  a1() { @*AR; @*AR.join('|') };
+    my @*AR = <foo bar>;
+    is a1(), 'foo|bar', 'contextual @-variables work';
+}
+
+{
+    sub a2() { &*CC('a') };
+    my &*CC = -> $x { 'b' ~ $x };
+    is a2(), 'ba', 'contextual Callable variables work';
+
+}
 
 # vim: ft=perl6
