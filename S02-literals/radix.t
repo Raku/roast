@@ -18,6 +18,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
+#?rakudo skip ":radix() NYI"
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
 #?rakudo 4 todo "unimpl"
@@ -75,16 +76,20 @@ is(:16<FF>, 255, 'got the correct int value from hex FF');
 is(:16<fF>, 255, 'got the correct int value from (mixed case) hex fF');
 
 # some random mad up hex strings (these values are checked against perl5)
+#?rakudo 2 skip ":radix() NYI"
 is :16("FFACD5FE"), 4289517054, 'got the correct int value from hex FFACD5FE';
 is :16("AAA4872D"), 2862909229, 'got the correct int value from hex AAA4872D';
+#?rakudo todo "Seems like :16<DEAD_BEEF> is correct and 0xDEADBEEF is wrong"
 is :16<DEAD_BEEF>,  0xDEADBEEF, 'got the correct int value from hex DEAD_BEEF';
 is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D';
 
 # L<S02/Literals/"interpret leading 0b or 0d as hex digits">
+#?rakudo 2 skip ":radix() NYI"
 is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Literals/"Think of these as setting the default radix">
+#?rakudo skip ":radix() NYI"
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
 #?rakudo 2 todo 'feature'
@@ -138,12 +143,13 @@ is(:8<377>,     255, 'got the correct int value from oct 377');
 is(:8<400>,     256, 'got the correct int value from oct 400');
 is(:8<177777>, 65535, 'got the correct int value from oct 177777');
 is(:8<200000>, 65536, 'got the correct int value from oct 200000');
+#?rakudo todo "Seems like :16<DEAD_BEEF> is correct and 0xDEADBEEF is wrong"
 is(:8<37777777777>, 0xffff_ffff, 'got the correct int value from oct 3777777777');
 
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo todo 'feature'
+#?rakudo skip ":radix() NYI"
 #?pugs todo 'feature'
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');
@@ -160,6 +166,7 @@ is(:2<1>,     1, 'got the correct int value from bin 1');
 is(:2<10>,    2, 'got the correct int value from bin 10');
 is(:2<1010>, 10, 'got the correct int value from bin 1010');
 
+#?rakudo todo "Overflow"
 is(
     :2<11111111111111111111111111111111>,
     0xFFFFFFFF,
@@ -170,7 +177,7 @@ is(
 # setting the default radix
 
 #?pugs todo 'feature'
-#?rakudo todo 'feature'
+#?rakudo 2 skip ":radix() NYI"
 {
     is(:2('0b1110'),  0d14, ':2<0b1110> stays binary');
     is(:2('0x20'),    0d32, ':2<0x20> converts from hexadecimal');
@@ -219,10 +226,12 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
 {
     is +":2<0101>", 5, "radix 2 notation works";
+    #?rakudo todo "Seems like :16<DEAD_BEEF> is correct and 0xDEADBEEF is wrong"
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":32<2q>", 90, "radix 32 notation works";
     is +":100<1e>", 114, "high order radix (limited alphabet) works";
     is +":1_0<14_56>", 1456, "underscore separators works";
+    #?rakudo 3 skip "Fractional parts NYI"
     is +":10<123.456>", 123.456, "base 10 decimal notation works";
     is +":2<1.111>", 1.875, "base 2 decimal notation works";
     is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
