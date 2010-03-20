@@ -111,7 +111,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   sub bar { $a++ }
 }
 
-#?rakudo todo 'BEGIN'
+#?rakudo skip 'BEGIN'
 {
   is baz(), 3, "initilization from BEGIN block (1)";
   is baz(), 4, "initilization from BEGIN block (2)";
