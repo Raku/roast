@@ -49,7 +49,6 @@ plan 85;
  isa_ok($morna, Regex);
 }
 
-#?rakudo skip 'Set not implemented'
 {
  my Set $selcmima;
  isa_ok($selcmima, Set);
@@ -309,7 +308,6 @@ plan 85;
  is(&foo(), 1,'nested sub call');
 }
 
-#?rakudo skip '$(...) issues'
 {
  my sub baz() { return 1;};
  my sub bar() { return baz;} ;

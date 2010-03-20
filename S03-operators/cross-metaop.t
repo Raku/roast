@@ -15,7 +15,6 @@ ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
 
 is (1, 2, 3 X** 2, 4), (1, 1, 4, 16, 9, 81), 'X** works';
 
-#?rakudo skip "[+] NYI"
 is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 
 # L<S03/List infix precedence/This becomes a flat list in>
@@ -90,7 +89,6 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
 
 {
     ok ( ? all 1, 2 X<= 2, 3, 4 ), 'all @list1 X<= @list2';
-    #?rakudo skip "[|] NYI"
     ok ( ? [|] 1, 2 X<= 0, 3),     '[|] @l1 X<= @l2';
     ok ( ! all 1, 2 X<  2, 3),     'all @l1 X<  @l2';
     ok ( ? one 1, 2 X== 2, 3, 4),  'one @l1 X== @l2';

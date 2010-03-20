@@ -117,7 +117,6 @@ is( @b, @a, "Calling splice with immediate and indirect context returns consiste
 is( @a, [6,7,8], "Explicit call/assignment gives the expected results");
 is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
 
-#?rakudo skip "item NYI"
 {
     @tmp = (1..10);
     @a = item splice @tmp, 5, 3;
