@@ -100,6 +100,8 @@ plan *;
     is $rt66622, 66622, 'statement modifier "for" makes no implicit block';
 }
 
+eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
+
 done_testing;
 
 # vim: ft=perl6
