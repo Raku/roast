@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 23;
+plan 26;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -108,5 +108,10 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
     $c := $b;
     ok ( ? one $a, $b X=:=  $c, $d ), 'one X=:=';
 }
+
+# tests for non-list arguments
+is (1 X* 3,4), (3, 4), 'cross-product works with scalar left side';
+is (1, 2 X* 3), (3, 6), 'cross-product works with scalar right side';
+is (1 X* 3), (3), 'cross-product works with scalar both sides';
 
 # vim: ft=perl6

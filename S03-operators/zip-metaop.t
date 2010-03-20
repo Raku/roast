@@ -21,6 +21,11 @@ is (1,2 Zcmp 3,2,0), (-1, 0), 'zip-cmp works';
 is (1..* Z** 1..*).batch(5), (1**1, 2**2, 3**3, 4**4, 5**5), 'zip-power with lazy lists';
 is (1..* Z+ (3, 2 ... *)).batch(5), (1+3, 2+2, 3+1, 4+0, 5-1), 'zip-plus with lazy lists';
 
+# tests for non-list arguments
+is (1 Z* 3,4), (3), 'zip-product works with scalar left side';
+is (1, 2 Z* 3), (3), 'zip-product works with scalar right side';
+is (1 Z* 3), (3), 'zip-product works with scalar both sides';
+
 done_testing;
 
 # vim: ft=perl6
