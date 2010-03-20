@@ -269,6 +269,17 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 }
 
+{
+    sub test_positional_named(:@a) { @a.join('|'); }
+    is test_positional_named(:a(3, 4, 5)), '3|4|5',
+        ':a(1, 2, 3) can be passed to a :@a parameter';
+    is test_positional_named(:a[3, 4, 5]), '3|4|5',
+        ':a[1, 2, 3] can be passed to a :@a parameter';
+    is test_positional_named(:a<3 4 5>), '3|4|5',
+        ':a<1 2 3> can be passed to a :@a parameter';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
