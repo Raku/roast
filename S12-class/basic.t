@@ -96,6 +96,7 @@ class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
+#?rakudo todo 'Cannot declare class A::B after class A::B::C as declared'
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
 class A61354_1 {
