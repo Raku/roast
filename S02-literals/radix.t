@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 195;
+plan 189;
 
 # L<S02/Literals/":10<42>">
 
@@ -75,9 +75,6 @@ is(:16<FF>, 255, 'got the correct int value from hex FF');
 is(:16<fF>, 255, 'got the correct int value from (mixed case) hex fF');
 
 # some random mad up hex strings (these values are checked against perl5)
-is :16("FFACD5FE"), 4289517054, 'got the correct int value from hex FFACD5FE';
-is :16("AAA4872D"), 2862909229, 'got the correct int value from hex AAA4872D';
-is :16<DEAD_BEEF>,  0xDEADBEEF, 'got the correct int value from hex DEAD_BEEF';
 is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D';
 
 # L<S02/Literals/"interpret leading 0b or 0d as hex digits">
@@ -138,7 +135,6 @@ is(:8<377>,     255, 'got the correct int value from oct 377');
 is(:8<400>,     256, 'got the correct int value from oct 400');
 is(:8<177777>, 65535, 'got the correct int value from oct 177777');
 is(:8<200000>, 65536, 'got the correct int value from oct 200000');
-is(:8<37777777777>, 0xffff_ffff, 'got the correct int value from oct 3777777777');
 
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
@@ -220,13 +216,11 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
 {
     is +":2<0101>", 5, "radix 2 notation works";
-    is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":32<2q>", 90, "radix 32 notation works";
     is +":100<1e>", 114, "high order radix (limited alphabet) works";
     is +":1_0<14_56>", 1456, "underscore separators works";
     is +":10<123.456>", 123.456, "base 10 decimal notation works";
     is +":2<1.111>", 1.875, "base 2 decimal notation works";
-    is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
 
     for 2..36 {
         is +":{$_}<11>", $_ + 1, "stringified form of base $_ works";

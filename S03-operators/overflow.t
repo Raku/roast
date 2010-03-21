@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 31;
 
 #L<S03/Autoincrement precedence>
 
@@ -214,6 +214,18 @@ is($b, -(++$a), 'est oder of predecrement in -(++$a)');
     is 32768 * -65536, -0x80000000;
     is -32768 * 65536, -0x80000000;
     is -32768 * -65536, 0x80000000;
+}
+
+#overflow tests from radix.t
+{
+    # some random mad up hex strings (these values are checked against perl5)
+    is :16("FFACD5FE"), 4289517054, 'got the correct int value from hex FFACD5FE';
+    is :16("AAA4872D"), 2862909229, 'got the correct int value from hex AAA4872D';
+    is :16<DEAD_BEEF>,  0xDEADBEEF, 'got the correct int value from hex DEAD_BEEF';
+
+    is(:8<37777777777>, 0xffff_ffff, 'got the correct int value from oct 3777777777');
+    is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
+    is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
 }
 
 
