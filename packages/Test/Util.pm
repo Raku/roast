@@ -68,10 +68,10 @@ sub get_out( Str $code, Str $input? ) is export {
     my $fnbase = 'getout-';
     $fnbase ~= $*PID // 1_000_000.rand.Int;
 
-    my $clobber = sub {
-        my $fh = open $^a, :w
-            or die "Can't create '$^a': $!";
-        $fh.print( $^b );
+    my $clobber = sub ($a, $b) {
+        my $fh = open $a, :w
+            or die "Can't create '$a': $!";
+        $fh.print( $b );
         $fh.close or die "close failed: $!";
     };
 
