@@ -1,5 +1,7 @@
 module Test::Util;
 
+use Test;
+
 # Tests for this testing code may be in the pugs repo under t/03-test-util/
 
 # This seems necessary, and yet it crashes Rakudo.
