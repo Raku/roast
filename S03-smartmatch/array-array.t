@@ -3,12 +3,11 @@ use Test;
 plan *;
 
 #L<S03/Smart matching/arrays are comparable>
-{ 
+{
     ok((("blah", "blah") ~~ ("blah", "blah")), "qw/blah blah/ .eq");
     ok(!((1, 2) ~~ (1, 1)), "1 2 !~~ 1 1");
     ok(!((1, 2, 3) ~~ (1, 2)), "1 2 3 !~~ 1 2");
     ok(!((1, 2) ~~ (1, 2, 3)), "1 2 !~~ 1 2 3");
-    #?rakudo todo 'some regression'
     ok(!([] ~~ [1]), "array smartmatch boundary conditions");
     ok(!([1] ~~ []), "array smartmatch boundary conditions");
     ok(([] ~~ []), "array smartmatch boundary conditions");
