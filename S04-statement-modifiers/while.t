@@ -14,6 +14,7 @@ plan 5;
 }
 
 # simple while modifier test
+#?rakudo skip 'Use of type object as value in numeric context'
 {
     my $a;
     $a += 1 while $a < 10;
