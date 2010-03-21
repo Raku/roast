@@ -50,7 +50,7 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name ) is export(:DEFAU
             }
         }
 
-        $ok &&= $attr_good;
+        $ok = $ok && $attr_good;
         $tests_aggregated++;
     }
 
