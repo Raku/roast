@@ -23,6 +23,7 @@ my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>');
 }
 
+#?rakudo 2 todo 'unknown errors'
 dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error';
 
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
@@ -68,7 +69,6 @@ is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
 
 # L<S02/Literals/"The degenerate case <> is disallowed">
 
-#?rakudo 2 todo 'bare <> and <STDIN>'
 eval_dies_ok '<>', 'bare <> is disallowed';
 eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
 
