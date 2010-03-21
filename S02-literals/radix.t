@@ -20,7 +20,6 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
-#?rakudo 4 todo "unimpl"
 #?pugs 4 todo "unimpl"
     is(:10('0b1110'), 0b1110, ":10('0b1110') overrides default decimal");
     is(:10('0x20'),   0x20, ":10('0x20') overrides default decimal");
@@ -84,7 +83,6 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # L<S02/Literals/"Think of these as setting the default radix">
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
-#?rakudo 2 todo 'feature'
 #?pugs 2 todo 'feature'
     is(:16('0x20'),      0x20, ":16('0x20') stays hexadecimal");
     is(:16('0o377'),    0o377, ":16('0o255') converts from octal");
@@ -102,7 +100,6 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Literals/"Any radix may include a fractional part">
 
-#?rakudo todo 'fractionals base 16'
 is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
 
 
@@ -139,7 +136,6 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # L<S02/Literals/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo skip ":radix() NYI"
 #?pugs todo 'feature'
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');
@@ -156,7 +152,6 @@ is(:2<1>,     1, 'got the correct int value from bin 1');
 is(:2<10>,    2, 'got the correct int value from bin 10');
 is(:2<1010>, 10, 'got the correct int value from bin 1010');
 
-#?rakudo todo "Overflow"
 is(
     :2<11111111111111111111111111111111>,
     0xFFFFFFFF,
@@ -167,7 +162,6 @@ is(
 # setting the default radix
 
 #?pugs todo 'feature'
-#?rakudo 2 skip ":radix() NYI"
 {
     is(:2('0b1110'),  0d14, ':2<0b1110> stays binary');
     is(:2('0x20'),    0d32, ':2<0x20> converts from hexadecimal');
@@ -180,7 +174,6 @@ eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
 
 # L<S02/Literals/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
-#?rakudo 3 todo "base 2 literals with fractional numbers"
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
 is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
@@ -189,16 +182,13 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # these should be the same values as the previous tests
 #?pugs todo 'feature'
 {
-    #?rakudo 2 todo "base 2 literals with fractional numbers"
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
-    #?rakudo skip "can't parse"
     is( eval('2«1.1*:2<10>**:2<10>»'),    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations
 # L<S02/Literals/"Alternately you can use a list of digits in decimal">
-#?rakudo skip 'Cannot parse :60[LIST]'
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
@@ -258,7 +248,6 @@ dies_ok { 2.foo  },    "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
-#?rakudo 2 todo 'radix parsing'
 eval_dies_ok ':2<2>',   ':2<2> is illegal';
 eval_dies_ok ':10<3a>', ':10<3a> is illegal';
 
