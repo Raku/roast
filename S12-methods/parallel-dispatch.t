@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 38;
 
 # L<S12/"Parallel dispatch"/"Any of the method call forms may be turned into a hyperoperator">
 # syn r14547
@@ -108,6 +108,20 @@ class Bar is Foo {
               'return value of @a».*method is a list of lists';
     is_deeply @a».*"$method"(2), ([2, 4], [4, 8], [6, 12]),
               '... indirect';
+}
+
+# test postcircumfix parallel dispatch
+{
+    is (([1, 2], [7, 8])>>[1]).join(' '), '2 8',
+        '>>[1]';
+    is (([1, 2], [7, 8])>>.[1]).join(' '), '2 8',
+        '>>.[1]';
+    is (({ a => 3, b => 5}, {a => 6})>>{'a'}).join('|'),
+        '3|6', '>>{"a"}';
+    is (({ a => 3, b => 5}, {a => 6})>><a>).join('|'),
+        '3|6', '>><a>';
+    is (({ a => 3, b => 5}, {a => 6})>>.<a>).join('|'),
+        '3|6', '>>.<a>';
 }
 
 # vim: ft=perl6
