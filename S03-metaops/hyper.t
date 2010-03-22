@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 98;
+plan *;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -253,6 +253,8 @@ my @e;
         is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII");
 };
 
+#?DOES 3
+#?rakudo skip 'non-unicode hypers'
 { # distribution for binary infix - ASCII
         my @r;
         @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
@@ -344,6 +346,7 @@ my @e;
 }
 
 # test hypers on hashes
+#?rakudo skip "Hyper on hashes NYI"
 {
     my %a = a => 1, b => 2, c => 3;
     my %b = a => 5, b => 6, c => 7;
@@ -418,5 +421,7 @@ my @e;
     ok !eval($t.encode('ISO-8859-1')),
        'Latin-1 »+« without pre-declaration is an error';
 }
+
+done_testing;
 
 # vim: ft=perl6
