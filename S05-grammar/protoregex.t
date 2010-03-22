@@ -6,7 +6,8 @@ grammar Alts {
     token TOP { ^ <alt> $ };
 
     # no idea what I have to put in the proto token, and if matters;
-    proto token alt { '' }
+    # the <...> is just cargo-culted from STD.pm
+    proto token alt { <...> }
     token alt:sym<foo> { <sym> };
     token alt:sym<bar> { 'bar' };
     token alt:sym<baz> { 'argl' };
