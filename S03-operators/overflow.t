@@ -226,6 +226,10 @@ is($b, -(++$a), 'est oder of predecrement in -(++$a)');
     is(:8<37777777777>, 0xffff_ffff, 'got the correct int value from oct 3777777777');
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
     is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
+    
+    is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
+    is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
+    
 }
 
 

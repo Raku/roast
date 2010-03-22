@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 189;
+plan 187;
 
 # L<S02/Literals/":10<42>">
 
@@ -137,6 +137,7 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # setting the default radix
 
 #?pugs todo 'feature'
+#?rakudo todo "Some question of what this form should actually do"
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');
     is(:8('0x20'),    0o32, ':8(0x20) converts from decimal');
@@ -175,7 +176,6 @@ eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
 # L<S02/Literals/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
-is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
 
 # L<S02/Literals/"So we write those as">
@@ -183,12 +183,13 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 #?pugs todo 'feature'
 {
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
-    is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
+    #?rakudo todo "Really?!"
     is( eval('2«1.1*:2<10>**:2<10>»'),    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations
 # L<S02/Literals/"Alternately you can use a list of digits in decimal">
+#?rakudo skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
