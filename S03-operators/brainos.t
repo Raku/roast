@@ -2,13 +2,13 @@ use v6;
 
 use Test;
 
-plan 3;
+plan 4;
 
 =begin pod
 
 Perl 6 has an explicitly declared C<=~> which should die at compile time
-and is intended to catch user "brainos"; it recommends C<~~> or C<~=> to
-the user instead.
+and is intended to catch user "brainos"; it recommends C<~~> to the user
+instead. Similar for C<!~>.
 
 =end pod
 
@@ -18,6 +18,9 @@ my $str = 'foo';
 eval '$str =~ m/bar/;';
 ok  $!  ~~ Exception, 'caught "=~" braino';
 ok "$!" ~~ /'~~'/, 'error for "=~" usage mentions "~~"';
-ok "$!" ~~ /'~='/, 'error for "=~" usage metnions "~="';
+
+eval '$str !~ m/bar/;';
+ok  $!  ~~ Exception, 'caught "!~" braino';
+ok "$!" ~~ /'!~~'/, 'error for "!~" usage mentions "!~~"';
 
 # vim: ft=perl6
