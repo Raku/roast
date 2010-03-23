@@ -14,6 +14,7 @@ plan 30;
     # I'm not sure that smart matching is the best operation for comparison here
     # There might be a more specific way to check that prevents false matching
     isa_ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
+    #?rakudo todo 'Ongoing list-y spec changes; this test maybe is no longer valid'
     isa_ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
     isa_ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
 
@@ -27,6 +28,7 @@ plan 30;
     # Test the only difference between @() and list()
     is(list(), (), 'list() should return an empty list');
     'foo' ~~ /oo/; # run a regex so we have $/ below
+    #?rakudo skip '@()'
     is(@(),  @($/), '@() should be the same as @($/)');
 }
 
@@ -42,9 +44,9 @@ plan 30;
     is(item($a),  $a, 'item($a) is just $a');
     is($($a),     $a, '$($a) is just $a');
 
-    isa_ok((item $a, $b).WHAT, Array, '(item $a, $b) makes an array');
-    isa_ok(item($a, $b).WHAT,  Array, 'item $a, $b makes an array');
-    isa_ok($($a, $b).WHAT,     Array, '$ $a, $b makes an array');
+    isa_ok((item $a, $b).WHAT, Seq, '(item $a, $b) makes a Seq');
+    isa_ok(item($a, $b).WHAT,  Seq, 'item $a, $b makes a Seq');
+    isa_ok($($a, $b).WHAT,     Seq, '$ $a, $b makes a Seq');
     my @array = ($a, $b);
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 }
@@ -58,6 +60,7 @@ plan 30;
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
+    #?rakudo todo 'hash of one element dies'
     eval_dies_ok('hash("a")', 'building a hash of one item fails');
 }
 
