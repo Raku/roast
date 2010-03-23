@@ -33,7 +33,6 @@ is @($should_ret_empty_list1(),).elems, 0, "our sub returned an empty list (1)";
 sub return_1 { return 1; }
 is(return_1(), 1, '... return_1() returned 1 correctly');
 
-#?rakudo skip 'no applicable method'
 is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() }, 24, 'return in while');
 
 # S04: "A return always exits from the lexically surrounding sub or method definition"
