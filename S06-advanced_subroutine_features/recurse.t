@@ -112,7 +112,7 @@ sub countdown_mod_named ($num) {
     return $num, countdown_mod_named($n);
 }
 
-#?rakudo 8 skip 'argument passing'
+
 is(  countup_nomod_named(5).join,   "012345", "recursive count up: named param, no modified value");
 is(countdown_nomod_named(5).join,   "543210", "recursive count down: named param, no modified value");
 is(  countup_nomod_unnamed(5).join, "012345", "recursive count up: unnamed param, no modified value");
