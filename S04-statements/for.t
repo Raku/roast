@@ -254,7 +254,6 @@ class TestClass{ has $.key is rw  };
 }
 
 # .key = 1 for @array1;
-#?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
 
@@ -264,7 +263,6 @@ class TestClass{ has $.key is rw  };
 }
 
 # $_.key = 1 for @array1;
-#?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(),TestClass.new(:key<2>));
 

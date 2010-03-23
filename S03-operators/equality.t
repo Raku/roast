@@ -52,7 +52,6 @@ ok(!("" !eq ""),  "!eq false empty string twice");
 ok(!("xc" !eq "xc"),  "!eq false non-empty string twice");
 
 # numeric context on undefined values
-#?rakudo skip "+Any doesn't work yet"
 ok($foo == 0,      "Any == 0");
 ok(@foo[0] == 0,   "Array Any == 0");
 

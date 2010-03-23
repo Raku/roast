@@ -49,7 +49,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   is +"1",         1, "+ context forcer works (3)";
   is +"0",         0, "+ context forcer works (4)";
   is +"",          0, "+ context forcer works (5)";
-  #?rakudo skip 'numeification of Mu'
   is +Mu,          0, "+ context forcer works (6)";
   is +"Inf",     Inf, "+ context forcer works (7)";
   is +"-Inf",   -Inf, "+ context forcer works (8)";

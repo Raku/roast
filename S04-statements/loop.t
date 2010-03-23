@@ -83,7 +83,6 @@ plan 12;
     is($loopvar, 3, "bare loop exited after 3 iterations");
 }
 
-#?rakudo skip 'RT #65962'
 {
     my $rt65962 = 'did not loop';
     

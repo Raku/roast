@@ -57,7 +57,6 @@ my @tests = (
     my @foo = ([-1, -2], -3);
     is @foo.perl, '[[-1, -2], -3]', ".perl on a nested list";
 
-    #?rakudo emit # parsefail on hyper operator
     my @hyp = -« ([1, 2], 3);
     # what it currently (r16460) gives
     #?rakudo 2 skip 'parsefail on hyper operator'

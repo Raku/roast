@@ -49,7 +49,6 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 }
 
 # L<S03/Cross operators/desugars to something like>
-#?rakudo skip 'parsefail: prefix hypers not implemented'
 {
     my @result = [~]«( <a b> X, <1 2> );
     #?pugs todo 'feature'

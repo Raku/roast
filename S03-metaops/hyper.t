@@ -74,7 +74,6 @@ my @e;
         is(~@r, ~@e, "precedence - >>+<< vs >>*<< ASCII notation");
 };
 
-#?rakudo skip 'unary hyperops'
 { # unary postfix
         my @r = (1, 2, 3);
         try { @r»++ };
@@ -89,7 +88,6 @@ my @e;
         is(~@r, ~@e, "hyper auto increment an array ASCII notation");
 };
 
-#?rakudo skip 'unary hyperops'
 { # unary prefix
         my @r;
         @r = -« (3, 2, 1);
@@ -319,7 +317,6 @@ my @e;
 =end todo unspecced
 
 #?pugs todo 'hyper ops'
-#?rakudo skip 'unimplemented hypers'
 { # hyper dereferencing
     my @array = (
         { key => 'val' },
@@ -335,7 +332,6 @@ my @e;
 }
 
 #?pugs todo 'feature'
-#?rakudo skip 'hyper ops and junctions'
 { # junction hyper -- regression?
     my @a = 1..3;
     my @b = 4..6;

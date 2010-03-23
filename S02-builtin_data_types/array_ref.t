@@ -123,7 +123,6 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
   ok !([$foo][0] =:= $foo), "creating arrays using [] creates new containers (1)";
 }
 
-#?rakudo skip "parsefail (no !=:= operator)"
 {
   my $foo;
   my $arrayref = [$foo];

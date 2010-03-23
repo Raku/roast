@@ -88,7 +88,6 @@ tryeq 2147483647 - 0, 2147483647;
 tryeq 0 - -2147483647, 2147483647;
 
 # No warnings should appear;
-#?rakudo skip 'warnings freak out rakudo :('
 {
     my $a;
     $a += 1;
@@ -110,7 +109,6 @@ tryeq 0 - -2147483647, 2147483647;
     tryeq $a, -4294967297;
 }
 
-#?rakudo skip 'warnings freak out rakudo :('
 {
     my $s;
     $s -= 1;
