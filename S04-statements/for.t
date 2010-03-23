@@ -392,6 +392,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   for 1..5 -> $x, $y = 7 {
     $str ~= " " ~ $x*$y;
   }
+  #?rakudo todo 'RT 68110'
   is $str, " 2 12 35", 'default values in for-loops';
 }
 
