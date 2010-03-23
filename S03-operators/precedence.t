@@ -67,7 +67,7 @@ ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 # junctive and
 
-ok(  ?(   (1 & 2 | 3) ==3), '& binds tighter than |');
+ok(  ?(   (1 & 2 | 3) !=3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
 ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
