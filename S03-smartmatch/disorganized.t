@@ -142,7 +142,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     class RT72048_class does RT72048_role {}
 
     ok RT72048_class.new ~~ RT72048_role, 'class instance matches role';
-    #?rakudo todo 'RT 72048: !~~ of role on instance is always true'
     nok RT72048_class.new !~~ RT72048_role, 'class instance !!matches role';
 }
 
