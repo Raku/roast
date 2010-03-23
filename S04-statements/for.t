@@ -478,7 +478,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # RT 62478
 {
-    eval_dies_ok 'for (my $i; $i <=3; $i++) { say $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
+    eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 {
 eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!);
