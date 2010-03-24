@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 1;
+plan 2;
 
 # this used to segfault in rakudo
 is_run(
@@ -12,6 +12,11 @@ is_run(
        'Can stringify $!.WHAT without segfault',
 );
 
+is_run(
+       'try { 1/0; CATCH { when * { say $!.WHAT } }; };',
+       { status => 0, out => sub { .chars > 2 }},
+       'Can say $!.WHAT in a CATCH block',
+);
 
 
 
