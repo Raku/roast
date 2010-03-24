@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 51;
+plan 53;
 
 
 # terms
@@ -67,7 +67,7 @@ ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 # junctive and
 
-ok(  ?(   (1 & 2 | 3) !=3), '& binds tighter than |');
+ok(  ?(   (1 & 2 | 3) ==3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
 ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
@@ -210,8 +210,19 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 
 # L<S03/Operator precedence/only works between identical operators>
 
-#?rakudo skip 'false positive (passes due to absense of infix:<X>'
+#?rakudo todo 'list associativity bug'
 eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     'list associativity only works between identical operators';
+
+{
+    # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
+    # Needs careful following of STD to get it right. :-)
+    my $r;
+    sub foo($x) { $r = $x }
+    foo 3 != 3;
+    is($r, 0, 'sanity 3 != 3');
+    foo 3 !=3;
+    is($r, 0, 'ensure 3 !=3 gives same result as 3 != 3');
+}
 
 # vim: ft=perl6
