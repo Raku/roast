@@ -45,7 +45,6 @@ plan 12;
 	is $x, 43, "?? || sanity check";
 }
 
-#?rakudo skip "return if NYI"
 {
 	sub foo() {
 	 return if 1;

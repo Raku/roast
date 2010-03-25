@@ -30,7 +30,6 @@ plan 240;
 
 }
 
-#?rakudo skip 'infix:<=> without &'
 {
     my $x = 1;
     infix:<=>($x, 0);

@@ -125,7 +125,6 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 
 # XXX this should be a todo, not a skip, but that
 # messes up the rest of the file, somehow :(
-#?rakudo skip 'item assignment'
 {
     my $c = 1, 2, 3;
     is($c, 1, '$ = binds tighter than ,');
@@ -136,7 +135,6 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 # loose unary
 
 my $x;
-#?rakudo skip 'parsing of "so"'
 is((so $x = 42), 1, "item assignment is tighter than true");
 
 # comma
