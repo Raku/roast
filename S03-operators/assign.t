@@ -37,6 +37,7 @@ plan 240;
     is($x, 0, 'assignment operator called as function');
 }
 
+#?rakudo skip 'assigning to array slices'
 {
     # swap two elements in the same array 
     # (moved this from array.t)
@@ -46,6 +47,7 @@ plan 240;
     is(@a[1], 1, "slice assignment swapping two element in the same array");
 }
 
+#?rakudo skip 'assigning to array slices'
 {
     # swap two elements as slice, dwim slice from @b subscript
     
@@ -119,6 +121,7 @@ plan 240;
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
 
+#?rakudo skip 'assigning to *@'
 {
     # testing signature binding with skipped values via *@ in a signature
     my ($one, *@) = 1..4;
@@ -145,6 +148,7 @@ plan 240;
     is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
 }
 
+#?rakudo skip 'assigning to array slices'
 {
     my @a;
     @a[1, 2, 3] = 100, 200, 300;
@@ -160,7 +164,7 @@ plan 240;
     is(@b[2], 401, "... and third");
 }
 
-#?rakudo skip "ResizablePMCArray: Can't shift from an empty array!"
+#?rakudo skip 'assigning to array slices'
 { 
     my @c;
     my @d;
@@ -184,6 +188,7 @@ plan 240;
     is(@a[1], @b[1], 'chained @ = % = list assignment');
 }
 
+#?rakudo skip 'Odd number of elements found where hash expected'
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
@@ -192,6 +197,7 @@ plan 240;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
+#?rakudo todo '(@a, @b) = (@b, @a)'
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
@@ -203,6 +209,7 @@ plan 240;
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
+#?rakudo todo '(@a, @b) = (@b, @a)'
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);
@@ -216,6 +223,7 @@ plan 240;
 
 my @p;
 
+#?rakudo skip '@p = $a ||= 3, 4'
 {
     my $a;
     @p = $a ||= 3, 4;
@@ -240,6 +248,7 @@ my @p;
     is(@p[1],11, "//= operator parses as item assignment 4");
     my %hash;
     %hash<foo> //= hash();
+    #?rakudo todo 'autoviv'
     isa_ok(%hash<foo>, Hash, "Verify //= autovivifies correctly");
     %hash<bar> //= [];
     isa_ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
@@ -248,6 +257,7 @@ my @p;
     is $f, 5, '//= also works in declaration';
 }
 
+#?rakudo skip '&&= in assignment'
 {
     my $a = 3;
     @p = $a &&= 42, 43;
@@ -346,7 +356,6 @@ my @p;
     is(@x[4], 'a', 'xx= operator 4');
     is(@x[5], 'z', 'xx= operator 5');
     ok(!defined(@x[6]), 'xx= operator 6');
-    #?rakudo todo 'LHS of @p = @x xx= 3, 4'
     is(~@p,~(@x,4), "xx= operator parses as item assignment 1");
 }
 
@@ -484,14 +493,12 @@ my @p;
 
 sub l () { 1, 2 };
 
-#?rakudo todo 'item assignment'
 {
     my $x;
     $x  = l(), 3, 4;
     is $x.elems, 2, 'item assignment infix:<=> is tighter than the comma';
 }
 
-#?rakudo todo 'item assignment'
 {
     my $x;
     my @a = ($x = l(), 3, 4);
@@ -508,18 +515,18 @@ sub l () { 1, 2 };
     is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
 }
 
-#?rakudo todo 'item assignment'
+#?rakudo skip 'Autovivify full qualified name'
 {
     my @z = ($Foo::c = l, l);
     is($Foo::c.elems, 2,    'lhs treats $Foo::c as scalar (1)');
     is(@z.elems,      3,    'lhs treats $Foo::c as scalar (2)');
 }
 
-#?rakudo todo 'item assignment'
 {
     my @a;
     my @z = ($(@a[0]) = l, l);
     is(@a[0].elems, 2, 'lhs treats $(@a[0]) as scalar (1)');
+    #?rakudo todo 'item assignment'
     is(@z.elems,    2, 'lhs treats $(@a[0]) as scalar (2)');
 }
 
@@ -531,7 +538,7 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a) as list');
 }
 
-#?pugs eval 'notimpl'
+#?rakudo skip "Method 'elems' not found for invocant of class 'Integer'"
 {
     my $a;
     my @z = (($a, *) = l, l, l);
@@ -591,6 +598,7 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]),  'lhs treats %a<x> as one-item list');
 }
 
+#?rakudo todo '%a<x y z> on LHS should be a list'
 {
     my %a;
     my @z = (%a<x y z> = l, l);
@@ -608,6 +616,7 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
 }
 
+#?rakudo todo '%a{List} should trigger list assignment'
 {
     my %a;
     my @z = (%a{'x','y','z'} = l, l);
@@ -619,6 +628,7 @@ sub l () { 1, 2 };
     is(@z[2], 1,    q/lhs treats %a{'x','y','z'} as list/);
 }
 
+#?rakudo todo '%a{List} should trigger list assignment'
 {
     my %a;
     my @z = (%a{'x'..'z'} = l, l);
@@ -653,6 +663,7 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats @a[@b[$c,]] as list');
 }
 
+#?rakudo skip 'unknown'
 {
     my @a;
     my $b = 0;
@@ -664,6 +675,7 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats foo()[$b] as list');
 }
 
+#?rakudo skip 'unknown'
 {
     my @a;
     my $b = 0;
@@ -675,6 +687,7 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
+#?rakudo skip 'unknown'
 {
     my @a;
     my $b = 0;
