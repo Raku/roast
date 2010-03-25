@@ -170,6 +170,9 @@ plan *;
     is c($b), 2, 'shortcircuit idiom given Mu works';
 }
 
+# a rakudo regression
+ok (0 || 0 || 1), '0 || 0 || 1 is true';
+
 done_testing;
 
 # vim: ft=perl6
