@@ -99,8 +99,8 @@ class T2
 {
     is 1.infix:<+>(2),      3,      'Can call $obj.infix:<+>';
     my $op = '*';
-    is 2.infix:{$op}(3),    6,      'can call $obj.infix:{$op}';
-    is 2.infix:{'*'}(4),    8,      'can call $obj.infix:{"*"}';
+    is 2.infix:($op)(3),    6,      'can call $obj.infix:($op)';
+    is 2.infix:('*')(4),    8,      'can call $obj.infix:("*")';
     is 2.:<+>(7),           9,      'short form also works';
     my $x = 3;
     is $x.:<++>,            4,      '.:<++> defaults to prefix';
