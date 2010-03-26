@@ -1,6 +1,6 @@
 use Test;
 
-plan 730;
+plan 724;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -1627,38 +1627,6 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 
 #?pugs todo 'feature'
 #?rakudo skip 'parse error'
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
-
-#### :x(6) \d			123456		y	repetition (:x)
-#?pugs todo 'feature'
-#?rakudo skip ':x NYI'
-ok '123456' ~~ /:x(6) \d/, 'repetition (:x)';
-
-#### :x(3) \d			123456		y	repetition (:x)
-#?pugs todo 'feature'
-#?rakudo skip ':x NYI'
-ok '123456' ~~ /:x(3) \d/, 'repetition (:x)';
-
-#### :x(0) \d			123456		y	repetition (:x)
-#?pugs todo 'feature'
-#?rakudo skip ':x NYI'
-ok '123456' ~~ /:x(0) \d/, 'repetition (:x)';
-
-#### :nth(3) a \d			a1a2a3		y	nth occurrence (:nth)
-#?pugs todo 'feature'
-#?rakudo skip ':nth NYI'
-ok 'a1a2a3' ~~ /:nth(3) a \d/, 'nth occurrence (:nth)';
-
-# todo :pge<feature>
-#### :nth(4) a \d			a1a2a3		n	nth occurrence (:nth)
-#?rakudo todo 'unknown'
-#?rakudo skip ':nth NYI'
-ok 'a1a2a3' !~~ /:nth(4) a \d/, 'nth occurrence (:nth)';
-
-# todo :pge<feature>
-#### :nth(0) a \d			a1a2a3		n	nth occurrence (:nth)
-#?rakudo todo 'unknown'
-#?rakudo skip ':nth NYI'
-ok 'a1a2a3' !~~ /:nth(0) a \d/, 'nth occurrence (:nth)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
