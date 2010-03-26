@@ -65,5 +65,6 @@ Basic C<pairs> tests, see S32.
         $pair.value += 100;
     } }, 'aliases returned by @array.pairs should be rw (1)';
 
+    #?rakudo todo 'Apparently not rw yet?'
     is @array[1], 123, 'aliases returned by @array.pairs should be rw (2)';
 }
