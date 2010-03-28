@@ -6,29 +6,33 @@ use Test;
 
 plan 47;
 
+#?rakudo emit #
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
-regex likely_perl6_not_found_err
-    {:i ^\N*<<not>>\N*<<[f[i|ou]nd|located?|access[ed]?]>>}
+#?rakudo emit #
+regex likely_perl6_not_found_err {:i ^\N*<<not>>\N*<<[f[i|ou]nd|located?|access[ed]?]>>}
 
 package Empty {}
 package AlsoEmpty::Nested {}
 
 package Simple {
+    #?rakudo emit #
     enum B <a>;
+    #?rakudo emit #
     class Bar {method baz {'hi'}};
     our $forty_two = 42;
 }
 
+#?rakudo skip 'nested packages'
 is Simple::Bar.new.baz, 'hi', 'class test';
 
-#?rakudo todo 'ticket uses role; RT #62900'
+#?rakudo skip 'ticket uses role; RT #62900'
 {
     is  eval('~AlsoEmpty'), 'AlsoEmpty()',
         'autovivification(?) for nested packages'
 }
 
-#?rakudo todo 'RT #65404'
+#?rakudo skip 'RT #65404'
 {
     lives_ok {Empty.perl ne "tbd"}, 'test for working .perl method'
 }
@@ -40,7 +44,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # Not sure whether you should be able to access something in package this way
 # might change to match likely error (top of file) when passes
-#?rakudo todo 'RT #63432'
 {
     eval_dies_ok 'Empty.no_such_sub_or_prop',
                  'Non-existent method with package';
@@ -60,16 +63,17 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 {
+    #?rakudo todo 'WHO'
     lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
     #?rakudo skip 'ticket based only on class... RT #60446'
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
         'WHO implementation with longname';
 }
 
-lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
+#?rakudo skip 'role in package'
+eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 
-#?rakudo todo 'ticket based on module; RT #63510'
 {
     eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
@@ -80,17 +84,14 @@ lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
 
     eval '$x = RT64828g; grammar RT64828g {}';
     ok  $!  ~~ Exception, 'reference to grammar before definition dies';
-    #?rakudo todo 'RT #64828'
     ok "$!" ~~ / RT64828g /, 'error message mentions the undefined grammar';
 
     eval '$x = RT64828m; module RT64828m {}';
     ok  $!  ~~ Exception, 'reference to module before definition dies';
-    #?rakudo todo 'RT #64828'
     ok "$!" ~~ / RT64828m /, 'error message mentions the undefined module';
 
     eval '$x = RT64828r; role RT64828r {}';
     ok  $!  ~~ Exception, 'reference to role before definition dies';
-    #?rakudo todo 'RT #64828'
     ok "$!" ~~ / RT64828r /, 'error message mentions the undefined role';
 
     eval '$x = RT64828c; class RT64828c {}';
@@ -99,7 +100,6 @@ lives_ok {package A1 { role B1 {}; class C1 does A1::B1 {}} },
 
     eval '$x = RT64828p; package RT64828p {}';
     ok  $!  ~~ Exception, 'reference to package before definition dies';
-    #?rakudo todo 'RT #64828'
     ok "$!" ~~ / RT64828p /, 'error message mentions the undefined package';
 }
 
@@ -135,19 +135,18 @@ my $outer_lex = 17;
 }
 
 our $outer_package = 19;
-#?rakudo todo 'ticket used class; RT #63588'
 {
     package RetOuterPack {sub outer_pack_val { $outer_package } };
     is  eval('RetOuterPack::outer_pack_val()'), $outer_package,
         'use outer package var';
 
     eval_lives_ok
-        'package ModOuterPack { $outer_package = 3 }; $outer_package',
+        'my $outer; package ModOuterPack { $outer= 3 }; $outer',
         'Should be able to update outer package var';
 }
 
 # change tests to match likely error (top of file) when they pass
-#?rakudo todo 'RT #64204'
+#?rakudo skip 'regex declarations; RT 64204'
 {
     eval 'my $x = ::P';
     ok  ~$! !~~ /<fairly_conclusive_platform_error>/, 
@@ -173,6 +172,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 # RT #68290
 {
+    #?rakudo 3 todo 'RT 68290'
     eval_dies_ok q[class A { sub a { say "a" }; sub a { say "a" } }],
                  'sub redefined in class dies';
     eval_dies_ok q[package P { sub p { say "p" }; sub p { say "p" } }],
@@ -186,17 +186,21 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
                  'method redefined in class dies';
 }
 
-#?rakudo todo 'RT #64688'
 {
     eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
+    #?rakudo todo 'RT #64688'
     eval_lives_ok 'class RT64688_c1 { use Test }', 'use in class block';
     eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
+    #?rakudo todo 'RT #64688'
     eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
     eval_lives_ok 'package RT64688_p1;use Test', 'use after package line';
+    #?rakudo todo 'RT #64688'
     eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
     eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
+    #?rakudo todo 'RT #64688'
     eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
     eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
+    #?rakudo todo 'RT #64688'
     eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
