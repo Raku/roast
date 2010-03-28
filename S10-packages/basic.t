@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 49;
 
 #?rakudo emit #
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
@@ -204,4 +204,12 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
+{
+    @*INC.unshift: 't/spec/packages';
+    eval_lives_ok 'use LoadFromInsideAModule',
+        'can "use" a class inside a module';
+    eval_lives_ok 'use LoadFromInsideAClass',
+        'can "use" a class inside a class';
+
+}
 # vim: ft=perl6
