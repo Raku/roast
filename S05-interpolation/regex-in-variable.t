@@ -18,7 +18,7 @@ my $var = rx/a+b/;
 
 my @var = (rx/a/, rx/b/, rx/c/, rx/\w/);
 
-my %var = (a=>rx:s/ 4/, b=>rx:s/ cos/, c=>rx:s/ \d+/);
+my %var = (a=>rx/ 4/, b=>rx/ cos/, c=>rx/ \d+/);
 
 
 # SCALARS
@@ -30,7 +30,6 @@ ok("aaaaab" ~~ m/<{$var}>/, 'Rulish scalar match');
 # RT #61960
 {
     my $a = 'a';
-    #?rakudo skip 'Null PMC access in get_string()'
     ok 'a' ~~ / $a /, 'match with string as rx works';
 }
 
@@ -57,6 +56,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
     ok 'a' !~~ /$u/, 'undefined variable does not match';
     BEGIN { @*INC.push: 't/spec/packages/' }
     use Test::Util;
+    #?rakudo todo 'warn on undef'
     is_run(
             q{my $u; 'a' ~~ /$u/},
             {
