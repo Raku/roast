@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 22;
 
 # L<S02/Names/"for the identifier of the variable">
 
@@ -52,6 +52,21 @@ ok foo().notdef, 'contextual $*VAR is undefined';
     my &*CC = -> $x { 'b' ~ $x };
     is a2(), 'ba', 'contextual Callable variables work';
 
+}
+
+# no idea if it actually makes sense to put contextuals inside a package, but
+# the lexical alias that's also created should work just fine:
+#
+{
+    sub f { $*a };
+    our $*a = 'h';
+    is f(), 'h', 'our $*a';
+}
+
+{
+    sub f { %*a };
+    our %*a =  a => 'h';
+    is f().keys, 'a', 'our %*a';
 }
 
 # vim: ft=perl6
