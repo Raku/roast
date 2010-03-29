@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 32;
+plan 33;
 
 my $str1 = "foo";
 my $str2 = "bar";
@@ -102,5 +102,10 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
        '1|a|2|b|2|c|2|d',
        'A * as the last value extends lists for infix:<Z> (zip)';
 }
+
+# L<S03/List infix precedence/"the zip operator">
+#for RT #73836
+my @z=2,3;
+is (2 Z 3), @z, 'joining of single items';
 
 # vim: ft=perl6
