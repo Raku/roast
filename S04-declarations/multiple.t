@@ -12,6 +12,7 @@ eval_lives_ok 'my $x; my $x',
 eval_lives_ok 'state $x; state $x', 
               'it is legal to declare state $x twice in the same scope.';
 
+#?rakudo skip 'binding'
 {
     my $x = 2;
     my $y := $x;

@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 3;
+plan 4;
 
 # this used to segfault in rakudo
 is_run(
@@ -22,6 +22,13 @@ is_run(
        '[].WHAT.say',
        { status => 0, out => "Array()\n"},
        'Can [].WHAT.say',
+);
+
+# RT #70922
+is_run(
+    'class A { method postcircumfix:<{ }>() {} }; my &r = {;}; if 0 { if 0 { my $a } }',
+    { status => 0, out => '', err => ''},
+    'presence of postcircumfix does not lead to redeclaration warnings',
 );
 
 

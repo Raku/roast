@@ -65,8 +65,13 @@ character classes), and those are referenced at the correct spot.
 {
     ok 'foo' ~~ /<foo=alpha>/, 'basic <foo=bar> aliasing';
     is $<foo>, 'f', 'alias works';
-    #?rakudo todo 'alias does not throw away original name'
     is $<alpha>, 'f', 'alias does not throw away original name';
+}
+
+{
+    ok 'foo' ~~ /<foo=.alpha>/, 'basic <foo=.bar> aliasing';
+    is $<foo>, 'f', 'alias works';
+    ok !defined($<alpha>), 'alias does throw away original name';
 }
 
 #?rakudo skip 'submatch renaming with =.'
@@ -222,6 +227,7 @@ character classes), and those are referenced at the correct spot.
     ok(!('abcdef'   ~~ /<!alpha>./), '<!alpha> does not match letter characters');
     #?rakudo todo '<!before>'
     is(+('.2 1' ~~ /<!before \.> \d/), 1, '<!before>');
+    #?rakudo skip 'Match.keys'
     is +$/.keys, 0, '<!before \\.> does not capture';
 }
 
