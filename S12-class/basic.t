@@ -100,8 +100,9 @@ eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
 class A61354_1 {
-    ok !eval('method x { "OH HAI" }'), "can't just use eval to add method to class";
+    eval('method x { "OH HAI" }')
 };
+dies_ok { A61354_1.x }, "can't just use eval to add method to class";
 
 # RT #67784
 {
