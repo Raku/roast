@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 34;
 
 =begin pod
 
@@ -30,6 +30,8 @@ is_approx(log("42", "23"),  1.19205119221557, 'log(42, 23) with strings');
 {
    is_approx(log(:x(5)), $log_5, 'got the log of 5');
    is_approx(log(:x(0.1)), $log_one_tenth, 'got the log of 0.1');
+   is_approx(log(:x(5), :base(10)), $log10_5, 'got the log10 of 5');
+   is_approx(log(:x(0.1), :base(10)), $log10_one_tenth, 'got the log10 of 0.1');
 }
 
 # L<S32::Numeric/Numeric/"=item log10">
