@@ -87,10 +87,13 @@ ok(!defined(Mu), "Mu is not defined");
 
     undefine(@ary);
 #?pugs todo 'bug'
+#?rakudo todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
+    #?rakudo emit #
     undefine(%hash);
 #?pugs todo 'bug'
+#?rakudo todo 'definedness of hash'
     ok(!defined(%hash), "undefine hash");
 
     @ary = (1);
@@ -159,6 +162,7 @@ Perl6-specific tests
 
 =end pod
 
+#?rakudo skip 'fun with undefine'
 {
     # aggregate references
 
@@ -177,7 +181,6 @@ Perl6-specific tests
     isa_ok($hash_r, "Hash");
     ok(defined($hash_r), "hash reference");
     undefine %hash;
-    #?rakudo 2 skip 'hash binding (?)'
     ok(defined($hash_r), "undefine hash referent:");
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
@@ -265,6 +268,7 @@ Perl6-specific tests
     #   (except for special circumstances)
         "abcde" ~~ /(.)(.)(.)/;
         "abcde" ~~ /(\d)/;
+    #?rakudo todo 'definedness of captures'
     ok((!try { grep { defined($_) }, ($0, $1, $2, $3, $4, $5) }),
             "all submatches undefined after failed match") or
         diag("match state: " ~ eval '$/');
@@ -329,12 +333,12 @@ flunk('FIXME: parsefail');
 # }
 
 # Extra tests added due to apparent bugs
-is((Mu) + 1, 1, 'Mu + 1');
-is(1 + (Mu), 1, '1 + Mu');
-is((Mu) * 2, 0, 'Mu * 2');
-is(2 * (Mu), 0, '2 * Mu');
-is((Mu) xx 2, [Mu, Mu], 'Mu xx 2');
-is((Mu) * (Mu), 0, 'Mu * Mu');
+is((Any) + 1, 1, 'Any + 1');
+is(1 + (Any), 1, '1 + Any');
+is((Any) * 2, 0, 'Any * 2');
+is(2 * (Any), 0, '2 * Any');
+is((Any) xx 2, [Any, Any], 'Any xx 2');
+is((Any) * (Any), 0, 'Any * Any');
 
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
 # See log above.  From IRC, TimToady says that both of these
@@ -344,12 +348,12 @@ is((Mu) * (Mu), 0, 'Mu * Mu');
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
+#?rakudo todo 'eval'
 lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 
 {
     sub lie { Bool::False }
     ok lie() ~~ Bool, 'sub returns a bool';
-    #?rakudo 2 todo 'truth should be eternal'
     dies_ok { undefine lie }, 'attempt to undefine returned Bool type dies';
     ok lie() ~~ Bool, 'sub still returns a bool';
 }
@@ -360,10 +364,8 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
     lives_ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';
 
-    #?rakudo 2 todo 'subs are eternal too'
     dies_ok { undefine &def }, 'attempt to undefine sub dies';
     ok defined &def, 'attempt to undefine sub fails';
-    #?rakudo skip 'Rakudo lets me undefine a sub'
     ok def() ~~ Array, 'can still call sub after attempt to undefine it';
 }
 
