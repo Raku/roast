@@ -111,6 +111,7 @@ IO
 SINGLE TESTS
 * t/spec/S04-closure-traits/pre-post.t has an up-to-date TODO list that needs
   implementing
+* Tests for old_regex_mods and C++ constructor detection errors as per STD
 
 Spec clarification
    These tests contain things that aren't specced, and for which we should
