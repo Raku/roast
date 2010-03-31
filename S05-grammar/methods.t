@@ -14,4 +14,11 @@ dies_ok { WithMethod.parse('unrelated') },
 try { WithMethod.parse('unrelated') };
 ok "$!" ~~ /'The sky is falling!'/, 'and got the exception message';
 
+my $x = 0;
+grammar WithOuterLex {
+    regex TOP { x { $x = 42 } }
+}
+WithOuterLex.parse('xxx');
+is $x, 42, 'regex in a grammar can see outer lexicals';
+
 done_testing;
