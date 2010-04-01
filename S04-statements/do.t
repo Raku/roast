@@ -5,24 +5,24 @@ use Test;
 plan 24;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
-#?rakudo 5 todo 'do {} while/until/if is valid but should not be'
+# Note in accordance with STD, conditionals are OK, loops are not.
 eval_dies_ok 'my $i = 1; do { $i++ } while $i < 5;',
     "'do' can't take the 'while' modifier";
 
 eval_dies_ok 'my $i = 1; do { $i++ } until $i > 4;',
     "'do' can't take the 'until' modifier";
 
-eval_dies_ok 'my $i = 1; do { $i++ } if $i;',
-    "'do' can't take the 'if' modifier";
-
 eval_dies_ok 'my $i; do { $i++ } for 1..3;',
     "'do' can't take the 'for' modifier";
 
-eval_dies_ok 'my $i; do { $i++ } unless $i;',
-    "'do' can't take the 'unless' modifier";
-
 eval_dies_ok 'my $i; do { $i++ } given $i;',
     "'do' can't take the 'given' modifier";
+
+eval_lives_ok 'my $i; do { $i++ } unless $i;',
+    "'do' can take the 'unless' modifier";
+
+eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
+    "'do' can take the 'if' modifier";
 
 # L<S04/The do-once loop/statement "prefixing with" do>
 {
