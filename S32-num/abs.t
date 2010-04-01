@@ -44,7 +44,6 @@ is( abs(-Inf), Inf, 'absolute value of -Inf is Inf');
 
 is( abs("-10"), 10, 'absolute value of "-10" is 10');
 
-#?rakudo skip 'RT 70596'
 is( abs(70596).WHAT, 70596.abs.WHAT, 'abs(x).WHAT parses as x.abs.WHAT' );
 
 done_testing;

@@ -148,7 +148,6 @@ plan 51;
     is(@push.elems,     1, 'nested arrayref, array length is 1');
     is(@push[0].elems,  5, 'nested arrayref, arrayref length is 5');
     is(@push[0][0],    21, 'nested arrayref, first value is 21');
-    #?rakudo skip "*-1 doesn't seem to work"
     is(@push[0][*-1],  25, 'nested arrayref, last value is 25');
 }
 

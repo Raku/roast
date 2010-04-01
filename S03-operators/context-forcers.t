@@ -91,12 +91,10 @@ sub eval_elsewhere($code){ eval($code) }
 # L<S03/Symbolic unary precedence/"prefix:<->">
 {
     my $a = '2 is my favorite number';
-    #?rakudo skip 'Numeric'
     ok(-$a ~~ Numeric, 'it is forced into a Num');
     is(-$a, -2, 'forced into numeric context');
 
     my $b = 'Did you know that, 2 is my favorite number';
-    #?rakudo skip 'Numeric'
     ok(-$b ~~ Numeric, 'it is forced into a Num');
 
     # doubly-negated because -0 === 0 isn't neccessarily true

@@ -124,7 +124,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     ok 69762 !~~ Code, '!~~ Code (true)';
     nok sub {} !~~ Code, '!~~ Code (false)';
 }
-#?rakudo skip 'RT 68762'
 {
 
     class RT68762 { method rt68762 {} };

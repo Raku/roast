@@ -32,7 +32,6 @@ plan 21;
       "creating an array element should automatically extend the array (1)";
     # And, of course, @array.exists(20) has to be true -- we've just assigned
     # @array[20].
-    #?rakudo skip "not implemented"
     ok @array.exists(20),
       "creating an array element should automatically extend the array (2)";
 }
@@ -58,7 +57,6 @@ plan 21;
         'defined @array[$negative_index_out_of_bounds] should not have altered @array';
 }
 
-#?rakudo skip "exists() not implemented"
 {
     my @array  = <a b c d>;
     my $exists = @array.exists(100);
@@ -69,7 +67,6 @@ plan 21;
         '@array.exists($index_out_of_bounds) should not have altered @array';
 }
 
-#?rakudo skip "exists() not implemented"
 {
     my @array  = <a b c d>;
     my $exists = @array.exists(-5);

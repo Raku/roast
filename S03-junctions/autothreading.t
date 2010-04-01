@@ -229,7 +229,6 @@ plan 77;
 }
 
 
-#?rakudo skip 'autothreading over array indexing'
 #?pugs skip 'autothreading over array indexing'
 {
     my $junc = 0|1|2;

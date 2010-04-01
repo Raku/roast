@@ -74,7 +74,6 @@ character classes), and those are referenced at the correct spot.
     ok !defined($<alpha>), 'alias does throw away original name';
 }
 
-#?rakudo skip 'submatch renaming with =.'
 {
     ok '123gb' ~~ / <foo=.alpha> /, '<foo=.bar>';
     is $<foo>, 'g', '=. renaming worked';
@@ -178,7 +177,6 @@ character classes), and those are referenced at the correct spot.
 
 # A leading { indicates code that produces a regex to be
 # interpolated into the pattern at that point as a subrule:
-#?rakudo skip '<{code}> not implemented'
 {
     ok('abcdef' ~~ /<{'<al' ~ 'pha>'}>/, 'code interpolation');
 }

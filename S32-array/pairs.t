@@ -26,7 +26,6 @@ Basic C<pairs> tests, see S32.
   }
 }
 
-#?rakudo skip 'named args'
 {
   my @array = <a>;
   my @pairs;

@@ -6,19 +6,15 @@ use Test;
 
 plan 49;
 
-#?rakudo emit #
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
-#?rakudo emit #
 regex likely_perl6_not_found_err {:i ^\N*<<not>>\N*<<[f[i|ou]nd|located?|access[ed]?]>>}
 
 package Empty {}
 package AlsoEmpty::Nested {}
 
 package Simple {
-    #?rakudo emit #
     enum B <a>;
-    #?rakudo emit #
     class Bar {method baz {'hi'}};
     our $forty_two = 42;
 }
@@ -157,7 +153,6 @@ our $outer_package = 19;
         'another simple package case that should not blow platform';
 }
 
-#?rakudo skip 'RT #64606'
 eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
               'map works in a module (RT #64606)';
 

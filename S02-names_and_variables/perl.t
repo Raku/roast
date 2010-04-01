@@ -93,7 +93,6 @@ my @tests = (
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
-#?rakudo skip "invoke() not implemented in class 'Any'"
 {
     # test a bug reported by Chewie[] - apparently this is from S03
     is(eval((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");

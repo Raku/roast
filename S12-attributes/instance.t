@@ -335,7 +335,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     my $o = ArrayAttribTest.new;
     $o.init;
     is $o.m0, 'a', '@.a[0] works';
-    #?rakudo 2 skip '*-n is NYI'
     is $o.m1, 'b', '@.a[*-2] works';
     is $o.m2, 'c', '@.a[*-1] works';
 }

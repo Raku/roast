@@ -528,7 +528,6 @@ plan 85;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
-#?rakudo skip 'Array of Int'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
