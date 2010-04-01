@@ -47,6 +47,14 @@ is_run( '"method form".note',
         },
         'method form of note' );
 
+is_run( 'try { note "with try" }',
+        {
+            status => 0,
+            out    => '',
+            err    => "with try\n",
+        },
+        'try { } block does not prevent note() from outputting something' );
+
 done_testing;
 
 # vim: ft=perl6
