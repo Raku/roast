@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 =begin description
 
@@ -66,6 +66,20 @@ is( 42.kv, [0, 42], "(42).kv works");
     is kv($x).[0],  'bar',  'kv(Pair) (first key)';
     is kv($y).elems, 2,     'kv(Pair) (colonpair)';
     is kv($y).[0],  'bar',  'kv(Pair) (first key (colonpair))';
+}
+
+{
+    use MONKEY_TYPING;
+    augment class Parcel {
+        method test_kv() {
+            my @a;
+            for <a b c>.kv -> $x {
+                @a.push($x);
+            }
+            @a.join('|');
+        }
+    }
+    is (1, 2).test_kv, '0|a|1|b|2|c', '.kv works within class Parcel';
 }
 
 # vim: ft=perl6
