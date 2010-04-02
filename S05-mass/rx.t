@@ -1074,7 +1074,6 @@ ok "abc\r\rdef" !~~ /c \R+ d/, 'not return (\R)';
 ok 'abcdef' ~~ /a \R+ f/, 'not return (\R)';
 
 #### c \f d			abc\fdef	y	formfeed (\f)
-#?rakudo todo 'unknown'
 ok "abc\fdef" ~~ /c \f d/, 'formfeed (\f)';
 
 #### c \f+ d			abc\f\fdef	y	formfeed (\f)
@@ -1106,7 +1105,6 @@ ok 'abcdef' ~~ /a \F+ f/, 'not formfeed (\F)';
 
 #### c \e d			abc\edef	y	escape (\e)
 #?pugs todo 'feature'
-#?rakudo todo 'unknown'
 ok "abc\edef" ~~ /c \e d/, 'escape (\e)';
 
 #### c \e+ d			abc\e\edef	y	escape (\e)
@@ -1137,7 +1135,6 @@ ok "abc\edef" !~~ /c \E d/, 'not escape (\E)';
 ok "abc\e\edef" !~~ /c \E+ d/, 'not escape (\E)';
 
 #### a \E+ f			abcdef		y	not escape (\E)
-#?rakudo todo 'unknown'
 ok 'abcdef' ~~ /a \E+ f/, 'not escape (\E)';
 
 #### c \x0021 d		abc!def	y	hex (\x)
