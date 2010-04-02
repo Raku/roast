@@ -36,6 +36,7 @@ ok(!("7" =:= 7), "identify checks type mismatch");
   ok !($f =:= &say),   '$subref1 =:= $subref2 is false';
 }
 
+#?rakudo skip 'binding'
 {
   my ($a, $b, $c, $d);
 
@@ -85,7 +86,9 @@ ok(!("7" =:= 7), "identify checks type mismatch");
 
   ok  $test($foo), "binding of scalar subparam retains =:= (1)";
   ok !$test($bar), "binding of scalar subparam retains =:= (2)";
+  #?rakudo emit #
   $bar := $foo;
+  #?rakudo skip 'binding'
   ok  $test($bar), "binding of scalar subparam retains =:= (3)";
 }
 
@@ -95,7 +98,9 @@ ok(!("7" =:= 7), "identify checks type mismatch");
 
   ok  $test($foo), "binding of scalar subparam marked is rw retains =:= (1)";
   ok !$test($bar), "binding of scalar subparam marked is rw retains =:= (2)";
+  #?rakudo emit #
   $bar := $foo;
+  #?rakudo skip 'binding'
   ok  $test($bar), "binding of scalar subparam marked is rw retains =:= (3)";
 }
 
@@ -108,13 +113,15 @@ ok(!("7" =:= 7), "identify checks type mismatch");
   #?rakudo todo 'unspecced'
   ok  $test($foo), "binding of slurpy array subparam retains =:= (1)";
   ok !$test($bar), "binding of slurpy array subparam retains =:= (2)";
+  #?rakudo emit #
   $bar := $foo;
   #?pugs todo 'unspecced'
-  #?rakudo todo 'unspecced'
+  #?rakudo skip 'unspecced'
   ok  $test($bar), "binding of slurpy array subparam retains =:= (3)";
 }
 
 # Again, unspecced that @args[0] can participate in =:=
+#?rakudo skip 'binding'
 {
   my ($foo, $bar);
   my $test = sub { $foo =:= @_[0] };
@@ -131,6 +138,7 @@ ok(!("7" =:= 7), "identify checks type mismatch");
 
 class TestObj { has $!a }
 
+#?rakudo skip 'binding'
 {
   my $foo = ::TestObj.new(:a<3>);
   my $bar = ::TestObj.new(:a<3>);
