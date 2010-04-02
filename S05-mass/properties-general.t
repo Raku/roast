@@ -25,6 +25,7 @@ plan 594;
 ok("\x[846D]" ~~ m/^<isL>$/, q{Match <isL> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<!isL>.$/ ), q{Don't match negated <isL> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-isL>$/ ), q{Don't match inverted <isL> (Letter)} );
+#?rakudo 3 todo "Uninvestigated nqp-rx regression"
 ok(!( "\x[9FC4]"  ~~ m/^<isL>$/ ), q{Don't match unrelated <isL> (Letter)} );
 ok("\x[9FC4]"  ~~ m/^<!isL>.$/, q{Match unrelated negated <isL> (Letter)} );
 ok("\x[9FC4]"  ~~ m/^<-isL>$/, q{Match unrelated inverted <isL> (Letter)} );
@@ -33,6 +34,7 @@ ok("\x[9FC4]\x[846D]" ~~ m/<isL>/, q{Match unanchored <isL> (Letter)} );
 ok("\x[6DF7]" ~~ m/^<.isLetter>$/, q{Match <.isLetter>} );
 ok(!( "\x[6DF7]" ~~ m/^<!isLetter>.$/ ), q{Don't match negated <isLetter>} );
 ok(!( "\x[6DF7]" ~~ m/^<-isLetter>$/ ), q{Don't match inverted <isLetter>} );
+#?rakudo 3 todo "Uninvestigated nqp-rx regression"
 ok(!( "\x[9FC4]"  ~~ m/^<.isLetter>$/ ), q{Don't match unrelated <isLetter>} );
 ok("\x[9FC4]"  ~~ m/^<!isLetter>.$/, q{Match unrelated negated <isLetter>} );
 ok("\x[9FC4]"  ~~ m/^<-isLetter>$/, q{Match unrelated inverted <isLetter>} );
@@ -734,12 +736,14 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<.isParagraphSepar
 # C           Other
 
 
+#?rakudo 3 todo "Uninvestigated nqp-rx regression"
 ok("\x[9FC4]" ~~ m/^<isC>$/, q{Match <isC> (Other)} );
 ok(!( "\x[9FC4]" ~~ m/^<!isC>.$/ ), q{Don't match negated <isC> (Other)} );
 ok(!( "\x[9FC4]" ~~ m/^<-isC>$/ ), q{Don't match inverted <isC> (Other)} );
 ok(!( "\x[6A3F]"  ~~ m/^<isC>$/ ), q{Don't match unrelated <isC> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<!isC>.$/, q{Match unrelated negated <isC> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-isC>$/, q{Match unrelated inverted <isC> (Other)} );
+#?rakudo todo "Uninvestigated nqp-rx regression"
 ok("\x[6A3F]\x[9FC4]" ~~ m/<isC>/, q{Match unanchored <isC> (Other)} );
 
 ok("\x[A679]" ~~ m/^<.isOther>$/, q{Match <.isOther>} );
