@@ -63,7 +63,9 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [=:=]  $x, $y, $x), '[=:=] basic sanity 2';
     ok (    [!=:=] $x, $y, $x), '[!=:=] basic sanity (positive)';
     ok (not [!=:=] $y, $y, $x), '[!=:=] basic sanity (negative)';
+    #?rakudo emit #
     $y := $x;
+    #?rakudo skip 'binding (dependent test)'
     ok (    [=:=]  $y, $x, $y), '[=:=] after binding';
 
     my $a = [1, 2];
@@ -101,7 +103,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   is ([||] @array), 3, "[||] works";
-  #?rakudo skip '[or]'
   is ([or] @array), 3, "[or] works";
 
   # Mu as well as [//] should work too, but testing it like
@@ -155,6 +156,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
 #?pugs todo 'bug'
+#?rakudo skip 'reduce of user defined op'
 {
     sub infix:<more_than_plus>(Int $a, Int $b) { $a + $b + 1 }
     is (try { [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops";
