@@ -31,7 +31,6 @@ plan 5;
     my $i = 0;
     $_ = 10;
     $i += $_ given $_+3;
-    #?rakudo todo 'outer $_ should not get updated in given modifier'
     is $_, 10, 'outer $_ did not get updated in lhs of given';
     is $i, 13, 'postfix given worked';
 }
