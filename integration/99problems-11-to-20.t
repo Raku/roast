@@ -186,6 +186,7 @@ plan 31;
     sub drop2(@list, Int $nth) {
         return map { @list[$_] if ($_+1) % $nth }, ^@list;
     }
+    #?rakudo skip 'infinite loop'
     is drop2(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements based on if returning ()';
     
@@ -194,24 +195,26 @@ plan 31;
             take @list[$_] if ($_+1) % $nth;
         }
     }
+    #?rakudo skip 'infinite loop'
     is drop3(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using gather';
     
     sub drop4(@list, Int $nth) {
         return (@list[$_] if ($_+1) % $nth) for ^@list;
     }
-    #?rakudo todo 'for with void result'
+    #?rakudo skip 'infinite loop'
     is drop4(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using (statement if) for';
     
     sub drop5(@list, Int $nth) {
         return @list[$_] if ($_+1) % $nth for ^@list;
     }
-    #?rakudo todo 'for with void result'
+    #?rakudo skip 'infinite loop'
     is drop5(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using list comprehension';
 }
 
+#?rakudo skip 'array slices'
 {
     # P17 (*) Split a list into two parts; the length of the first part is given.
     # 

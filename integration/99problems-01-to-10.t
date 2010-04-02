@@ -2,6 +2,7 @@ use v6;
 use Test;
 plan 22;
 
+#?rakudo skip '*-1'
 {
     # P01 (*) Find the last box of a list.
     # 
@@ -18,6 +19,7 @@ plan 22;
     is my_last(<a b c d>), 'd', 'Find the last box of a list via func.';
 }
 
+#?rakudo skip '*-1'
 {
     # P02 (*) Find the last but one box of a list.
     # 
@@ -187,7 +189,9 @@ plan 22;
     is group(<a a a a b c c a a d e e e e>),
         [ [<a a a a>], [<b>], [<c c>], [<a a>], [<d>], [<e e e e>] ],
         '... even using gather/take';
-    
+}
+#?rakudo skip 'groupless gather/take'
+{    
     sub group2 (*@array is copy) {
         gather while @array {
             take [ 
