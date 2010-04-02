@@ -30,7 +30,6 @@ is($foo2.check(), 42, 'initializing attributes in new');
 
     eval 'NoSuch::Subclass.new()';
     ok  $!  ~~ Exception, 'death to instantiating nonexistent::class';
-    #?rakudo todo 'RT #62732'
     ok "$!" ~~ / 'NoSuch::Subclass' /,
        'error for "NoSuch::Subclass.new()" mentions NoSuch::Subclass';
 }
