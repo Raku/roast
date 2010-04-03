@@ -25,7 +25,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([*]  1,2,3),    (1*2*3), "[*] works");
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
-  #?rakudo todo 'associativity in reduce-metaop (RT #63306)'
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
 
@@ -50,24 +49,29 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [==] 4, 5, 4),    "[==] works (2)";
     ok (    [!=] 4, 5, 6),    "[!=] works (1)";
     ok (not [!=] 4, 4, 4),    "[!=] works (2)";
+}
 
+{
     ok (! [eq] <a a b a>),    '[eq] basic sanity (positive)';
     ok (  [eq] <a a a a>),    '[eq] basic sanity (negative)';
     ok (  [ne] <a b c a>),    '[ne] basic sanity (positive)';
     ok (! [ne] <a a b c>),    '[ne] basic sanity (negative)';
     ok (  [lt] <a b c e>),    '[lt] basic sanity (positive)';
     ok (! [lt] <a a c e>),    '[lt] basic sanity (negative)';
+}
 
+#?rakudo skip "=:= NYI"
+{
     my ($x, $y);
     ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
     ok (not [=:=]  $x, $y, $x), '[=:=] basic sanity 2';
     ok (    [!=:=] $x, $y, $x), '[!=:=] basic sanity (positive)';
     ok (not [!=:=] $y, $y, $x), '[!=:=] basic sanity (negative)';
-    #?rakudo emit #
     $y := $x;
-    #?rakudo skip 'binding (dependent test)'
     ok (    [=:=]  $y, $x, $y), '[=:=] after binding';
+}
 
+{
     my $a = [1, 2];
     my $b = [1, 2];
 
@@ -76,7 +80,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [===] $a, $a, [1, 2]),  '[===] with vars (negative)';
     ok (    [!===] $a, $b, $a),     '[!===] basic sanity (positive)';
     ok (not [!===] $a, $b, $b),     '[!===] basic sanity (negative)';
-
 }
 
 #?rakudo skip '[\...] meta ops'
@@ -137,14 +140,13 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (try {$list.value.value}), 3, "[=>] works (3)";
 }
 
-
+#?rakudo todo '[,] issues'
 {
     my @array = <5 -3 7 0 1 -9>;
     # according to http://irclog.perlgeek.de/perl6/2008-09-10#i_560910
     # [,] returns a scalar (holding an Array)
     my $count = 0;
     $count++ for [,] @array;
-    #?rakudo todo '[,]'
     is $count, 1, '[,] returns a single Array';
     isa_ok ([,] @array), Array, '[,] returns something of type Array';
 }
