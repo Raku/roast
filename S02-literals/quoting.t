@@ -164,7 +164,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
-#?rakudo todo '\\0 delimiters'
 { # quote with \0 as delimiters L<news:20050101220112.GF25432@plum.flirble.org>
     my @q = ();
     eval "\@q = (q\0foo bar\0)";
@@ -337,7 +336,6 @@ FOO
     @q = (Q/foo\\bar$foo/);
 
     is(+@q, 1, "Q// is singular");
-    #?rakudo todo 'special chars in Q/.../'
     is(@q[0], "foo\\\\bar\$foo", "special chars are meaningless"); # double quoting is to be more explicit
 };
 

@@ -134,7 +134,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (try {$list.value.value}), 3, "[=>] works (3)";
 }
 
-#?rakudo todo '[,] issues'
 {
     my @array = <5 -3 7 0 1 -9>;
     # according to http://irclog.perlgeek.de/perl6/2008-09-10#i_560910
@@ -142,7 +141,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     my $count = 0;
     $count++ for [,] @array;
     is $count, 1, '[,] returns a single Array';
-    isa_ok ([,] @array), Array, '[,] returns something of type Array';
+    ok ([,] @array) ~~ Positional, '[,] returns something Positional';
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t

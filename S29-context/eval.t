@@ -44,7 +44,6 @@ dies_ok({eval {42}}, 'block eval is gone');
     is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
 }
 
-#?rakudo todo 'eval in methods'
 {
     my $x = 5;
     class EvalTester2 {
