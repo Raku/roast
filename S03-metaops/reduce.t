@@ -79,7 +79,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (not [!===] $a, $b, $b),     '[!===] basic sanity (negative)';
 }
 
-#?rakudo skip '[\...] meta ops'
 {
     is (~ [\<]  1, 2, 3, 4), "1 1 1 1", "[\\<] works (1)";
     is (~ [\<]  1, 3, 2, 4), "1 1 0 0", "[\\<] works (2)";
@@ -107,7 +106,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 
   # Mu as well as [//] should work too, but testing it like
   # this would presumably emit warnings when we have them.
-  #?rakudo skip '[\||]'
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
