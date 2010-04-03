@@ -284,7 +284,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is $count, 1, 'Any slurpy param doesnt autothread';
 }
 
-#?rakudo todo 'RT 65324'
 eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
              "Can't put required parameter after variadic parameters";
 
