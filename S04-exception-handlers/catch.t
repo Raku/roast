@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 =begin desc
 
@@ -218,6 +218,11 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     is $s, 'ab', 'CATCH indirectly nested in CATCH catches exceptions thrown in the outer CATCH';
 };
 
+# RT #62264
+{
+    try { die "Goodbye cruel world!" };
+    ok $!.^isa(Exception), '$!.^isa works';
+}
 
 
 # vim: ft=perl6
