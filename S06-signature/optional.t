@@ -37,7 +37,6 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 
 # L<S06/Parameters and arguments/"required positional parameters must come
 # before those bound to optional positional">
-#?rakudo todo 'die on optional param before required'
 eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones are forbidden';
 
 sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
@@ -63,7 +62,6 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
     rt54804( 1, , 3, )/, "two commas in a row doesn't parse";
 }
 
-#?rakudo todo 'RT 66822'
 eval_dies_ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
               "Can't put required parameter after optional parameters" );
 
