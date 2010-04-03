@@ -75,7 +75,7 @@ sub f2 (:$a!) { WHAT($a) }
     dies_ok { f2(("a" => 42)) }, "'(\"a\" => 42)' is a pair";
     dies_ok { f2((:a(42)))    }, "'(:a(42))' is a pair";
     dies_ok { f2((:a))        }, "'(:a)' is a pair";
-    dies_ok { &f2.((:a))       }, "in '&f2.((:a))', '(:a)' is a pair";
+    dies_ok { &f2.((:a))       }, 'in \'&f2.((:a))\', \'(:a)\' is a pair';
 
     dies_ok { $f2((:a))       }, "in '\$f2((:a))', '(:a)' is a pair";
     dies_ok { $f2.((:a))      }, "in '\$f2.((:a))', '(:a)' is a pair";
