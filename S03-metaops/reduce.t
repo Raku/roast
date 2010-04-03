@@ -28,15 +28,12 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
 
-  #?rakudo 2 skip '[\...] meta ops'
   is((~ [\+] @array), "5 2 9 9 10 1", "[\\+] works");
   is((~ [\-] 1, 2, 3), "1 -1 -4",      "[\\-] works");
 }
 
 {
   is ([~] <a b c d>), "abcd", "[~] works";
-
-  #?rakudo  skip '[\...] meta ops'
   is (~ [\~] <a b c d>), "a ab abc abcd", "[\\~] works";
 }
 
@@ -130,7 +127,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 #   is ([.[]] $arr, 1, 0, 2), 9, '[.[]] works';
 # }
 
-#?rakudo skip '[=>]'
 {
   # 18:45 < autrijus> hm, I found a way to easily do linked list consing in Perl6
   # 18:45 < autrijus> [=>] 1..10;
@@ -152,7 +148,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t
-#?rakudo 2 skip '>>+<<'
 lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
