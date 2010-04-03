@@ -62,7 +62,6 @@ dies_ok { $foo_bar.Unrelated::something() },
 ok  Foo::Bar.isa(Foo),      "subclass.isa(superclass) is true";
 ok  Foo::Bar.isa(Foo::Bar), "subclass.isa(same_subclass) is true";
 #?pugs todo "feature"
-#?rakudo 2 skip '::CLASS will give a Null PMC, which later explodes'
 ok !Foo::Bar.does(::CLASS),   "subclass.does(CLASS) is false";
 ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
 ok Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is true";

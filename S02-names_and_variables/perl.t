@@ -14,10 +14,8 @@ my @tests = (
     Inf, -Inf, NaN,
 
     "a string", "", "\0", "\t", "\n", "\r\n", "\o7",
-    #?rakudo emit # "\{" not handled properly yet
     '{', # "\d123",	# XXX there is no \d escape!!!
     '}',
-    #?rakudo emit # "\$" etc not handled properly yet
     '$a @string %with &sigils()',
 
     ?1, ?0,
