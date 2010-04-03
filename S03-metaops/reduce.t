@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 76;
+plan 81;
 
 =begin pod
 
@@ -177,9 +177,14 @@ is( ([+]()), 0, "[+]() returns 0");
 
 is( ([*] 41), 41, "[*] 41 returns 41");
 is( ([*] 42), 42, "[*] 42 returns 42");
+is( ~([\*] 42), "42", "[\*] 42 returns (42)");
 is( ([~] 'towel'), 'towel', "[~] 'towel' returns 'towel'");
 is( ([~] 'washcloth'), 'washcloth', "[~] 'washcloth' returns 'washcloth'");
+is( ([\~] 'towel'), 'towel', "[\~] 'towel' returns 'towel'");
+ok( ([\~] 'towel') ~~ Iterable, , "[\~] 'towel' returns something Iterable");
 is( ([<] 42), Bool::True, "[<] 42 returns true");
+is( ~([\<] 42), "1", "[\<] 42 returns '1'");
+ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 # RT #65164 (TODO: implement [^^])
 #?rakudo skip 'implement [^^]'
