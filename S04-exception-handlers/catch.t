@@ -14,6 +14,7 @@ Tests C<CATCH> blocks.
 
 # L<S04/"Exception handlers"/If you define a CATCH block within the try, it replaces the default CATCH>
 
+#?rakudo 2 todo 'empty CATCH block'
 dies_ok { die 'blah'; CATCH {} }, 'Empty CATCH rethrows exception';
 dies_ok { try {die 'blah'; CATCH {}} }, 'CATCH in try overrides default exception handling';
 
@@ -72,6 +73,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     ok($caught, "caught exception of class Naughty");
 };
 
+#?rakudo skip 'parse error'
 {
     # exception superclass
     class Naughty::Specific is Naughty {};
@@ -124,6 +126,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     is(WHAT($!), Dandy, ".. of the right class");
 };
 
+#?rakudo skip 'llops'
 {
     my $s = '';
     die 3;
@@ -159,7 +162,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
 # L<S04/"Exception handlers"/a CATCH block never attempts to handle any exception thrown within its own dynamic scope>
 
-#?rakudo 4 todo 'CATCH block catching its own exceptions (RT #64262)'
 {
     my $catches = 0;
     try {
@@ -169,6 +171,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         };
     }
 
+    #?rakudo 2 todo 'CATCH block catching its own exceptions (RT #64262)'
     is $catches, 1, "CATCH doesn't catch exceptions thrown in its own lexical scope";
 
     $catches = 0;
