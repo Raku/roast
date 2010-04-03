@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 71;
+plan 76;
 
 =begin pod
 
@@ -174,6 +174,12 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 is( ([*]()), 1, "[*]() returns 1");
 is( ([+]()), 0, "[+]() returns 0");
+
+is( ([*] 41), 41, "[*] 41 returns 41");
+is( ([*] 42), 42, "[*] 42 returns 42");
+is( ([~] 'towel'), 'towel', "[~] 'towel' returns 'towel'");
+is( ([~] 'washcloth'), 'washcloth', "[~] 'washcloth' returns 'washcloth'");
+is( ([<] 42), Bool::True, "[<] 42 returns true");
 
 # RT #65164 (TODO: implement [^^])
 #?rakudo skip 'implement [^^]'
