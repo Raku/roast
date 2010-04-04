@@ -14,7 +14,6 @@ eval_dies_ok 'my F $x;', 'Unknown types in type constraints are an error';
 # integration tests - in Rakudo some class names from Parrot leaked through,
 # so you couldn't name a class 'Task' - RT #61128
 
-#?rakudo todo 'test conflicts oddly with test 4 above'
 eval_lives_ok 'class Task { has $.a }; Task.new(a => 3 );',
               'can call a class "Task" - RT 61128';
 
