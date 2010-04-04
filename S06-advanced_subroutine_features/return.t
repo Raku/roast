@@ -286,7 +286,7 @@ class Foo {
   submethod officialsubmeth {
     self.userdefinedcontrol1({ return 43 });
   }
-  sub official {
+  our sub official {
     Foo.new.userdefinedcontrol1({ return 44 });
   }
 }
