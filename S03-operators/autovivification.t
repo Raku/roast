@@ -1,5 +1,5 @@
 use Test;
-plan 22;
+plan 23;
 
 # L<S03/Assignment operators/>
 
@@ -39,6 +39,7 @@ plan 22;
     ok $x == -1, 'my Int $x; $x -= 1 works'
 }
 
+#?rakudo 6 todo 'defaults for op= on undefined values'
 {
     my $s;
     $s ~= 'ab';
@@ -88,6 +89,12 @@ plan 22;
 }
 
 {
+    my $i **= $i;
+    is $i, 1, 'my $i **= $i';
+}
+
+#?rakudo 3 todo 'defaults for op= on undefined values'
+{
     my $x;
     $x *= 1i;
     is_approx($x, 1i, 'my $x; $x *= 1i works');
@@ -108,11 +115,13 @@ plan 22;
     is $x, 5, '*= autovivifies with correct neutral element (without type constraint)';
 }
 
+#?rakudo skip 'Hash element autoviv'
 {
     my Int %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (with Int proto on hash items)';
 }
 
+#?rakudo skip 'Hash element autoviv'
 {
     my %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (without proto on hash items)';
