@@ -19,7 +19,6 @@ my $y;
 
 is("\$x is $x", '$x is A', 'normal scalar variable interpolation');
 
-#?rakudo skip '$x.ord() does not interpolate'
 is(
    "ord of \$x is $x.ord()",
    'ord of $x is 65',
@@ -27,7 +26,6 @@ is(
 );
 lives_ok(sub { $y = "ord of \$x is $x.ord.fmt('%d')" },
    'fmt and scalar interpolation live');
-#?rakudo skip '$x.ord() does not interpolate'
 is($y, 'ord of $x is 65', 'fmt and scalar interpolation behave well');
 
 is("\$x is {$x}", '$x is A', 'normal scalar variable interpolation');
