@@ -157,8 +157,8 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 {
     class A {
-        multi sub a(Int $x) { 'Int ' ~ $x }
-        multi sub a(Str $x) { 'Str ' ~ $x }
+        our multi sub a(Int $x) { 'Int ' ~ $x }
+        our multi sub a(Str $x) { 'Str ' ~ $x }
     }
 
     is A::a(3),     'Int 3',  'multis in classes (1)';
