@@ -18,7 +18,7 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
 # RT #69610
 {
     class RT69610 {
-        method rt69610() {
+        our method rt69610() {
             return self;
         }
     }

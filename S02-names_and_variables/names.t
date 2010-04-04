@@ -50,7 +50,7 @@ plan 20;
 # RT #65138, Foo::_foo() parsefails
 {
     module A {
-        sub _b() { 'sub A::_b' }
+        our sub _b() { 'sub A::_b' }
     }
     is A::_b(), 'sub A::_b', 'A::_b() call works';
 }

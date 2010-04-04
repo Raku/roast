@@ -25,7 +25,7 @@ package MyPack {
 
     sub double($x) { return 2 * $x }
 
-    sub val_v(Code :$func = &double) is export {
+    our sub val_v(Code :$func = &double) is export {
         return $func(5);
     }
 

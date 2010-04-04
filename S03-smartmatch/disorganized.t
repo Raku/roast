@@ -126,7 +126,7 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
 }
 {
 
-    class RT68762 { method rt68762 {} };
+    class RT68762 { our method rt68762 {} };
 
     ok &RT68762::rt68762 ~~ Method, '~~ Method (true)';
     nok 68762            ~~ Method, '~~ Method (false)';

@@ -126,13 +126,13 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 
 my $outer_lex = 17;
 {
-    package RetOuterLex {sub outer_lex_val { $outer_lex } };
+    package RetOuterLex { our sub outer_lex_val { $outer_lex } };
     is eval('RetOuterLex::outer_lex_val()'), $outer_lex, 'use outer lexical'
 }
 
 our $outer_package = 19;
 {
-    package RetOuterPack {sub outer_pack_val { $outer_package } };
+    package RetOuterPack { our sub outer_pack_val { $outer_package } };
     is  eval('RetOuterPack::outer_pack_val()'), $outer_package,
         'use outer package var';
 
