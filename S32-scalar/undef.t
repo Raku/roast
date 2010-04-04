@@ -369,6 +369,12 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
     ok def() ~~ Array, 'can still call sub after attempt to undefine it';
 }
 
+# RT #69238
+{
+    sub foo { my $a = "baz"; undefine $a; undefine $a; $a; }
+    ok !defined(foo()), 'can undefine $a twice without any troubles';
+}
+
 done_testing;
 
 # vim: ft=perl6
