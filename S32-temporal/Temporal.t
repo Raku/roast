@@ -3,47 +3,48 @@ use Test;
 
 plan 17;
 
-my ( Temporal::DateTime $g1, Temporal::DateTime $g2, Num $t, Int $d );
+my ( DateTime $g1, DateTime $g2, Num $t, Int $d );
 
-$g1 = Time.gmtime(0);
-ok  $g1.date.year==1970 && $g1.date.month == 1 && $g1.date.day   == 1 &&
-    $g1.time.hour==0    && $g1.time.minute== 0 && $g1.time.second== 0 ,
-    'gmtime at beginning of Unix epoch'; # test 1
-ok  $g1.date.day-of-week==5 && $g1.date.month-name eq 'January' &&
-    $g1.date.iso8601 eq '1970-01-01',
+$g1 = DateTime.from_epoch(0);
+ok  $g1.year==1970 && $g1.month == 1 && $g1.day   == 1 &&
+    $g1.hour==0    && $g1.minute== 0 && $g1.second== 0 ,
+    'DateTime at beginning of Unix epoch'; # test 1
+
+ok  $g1.day-of-week==5 && $g1.month-name eq 'January' &&
+    $g1.iso8601 eq '1970-01-01T00:00:00+00',
     '1970-01-01 was a Thursday in January'; # test 2
 
 $t = 946684799; # last second of previous Millennium, FSVO 'Millennium'.
-$g1 = Time.gmtime($t);
-ok  $g1.date.year==1999 && $g1.date.month ==12 && $g1.date.day   ==31 &&
-    $g1.time.hour==23   && $g1.time.minute==59 && $g1.time.second==59 ,
-    'gmtime at 1999-12-31 23:59:59'; # test 3
-ok  $g1.date.day-name=='Friday' && $g1.date.month-name eq 'December' &&
-    $g1.date.iso8601 eq '1999-12-31' && $g1.time.iso8601 eq '23:59:59',
+$g1 = DateTime.from_epoch($t);
+ok  $g1.year==1999 && $g1.month ==12 && $g1.day   ==31 &&
+    $g1.hour==23   && $g1.minute==59 && $g1.second==59 ,
+    'from_epoch at 1999-12-31 23:59:59'; # test 3
+ok  $g1.day-name=='Friday' && $g1.month-name eq 'December' &&
+    $g1.iso8601 eq '1999-12-31T23:59:59+00',
     '1999-12-31 23:59:59 was on a Friday in December'; # test 4
 
-$g1 = Time.gmtime(++$t); # one second later, sing Auld Lang Syne.
-ok  $g1.date.year==2000 && $g1.date.month == 1 && $g1.date.day   == 1 &&
-    $g1.time.hour==0    && $g1.time.minute== 0 && $g1.time.second== 0 ,
+$g1 = DateTime.from_epoch(++$t); # one second later, sing Auld Lang Syne.
+ok  $g1.year==2000 && $g1.month == 1 && $g1.day   == 1 &&
+    $g1.hour==0    && $g1.minute== 0 && $g1.second== 0 ,
     'gmtime at 2000-01-01 00:00:00'; # test 5
-ok  $g1.date.day-of-week==7 && $g1.date.month-name eq 'January' &&
-    $g1.date.iso8601 eq '2000-01-01' && $g1.time.iso8601 eq '00:00:00',
+ok  $g1.day-of-week==7 && $g1.month-name eq 'January' &&
+    $g1.iso8601 eq '2000-01-01T00:00:00+00',
     '2000-01-01 00:00:00 was on a Saturday in January'; # test 6
 
-$t  = floor(time);
+$t  = floor(time());
 while floor(time) == $t { ; } # empty loop until the next second begins
 $t  = time;
 $d  = (floor($t) div 86400 + 4) % 7 + 1;
-$g1 = Time.gmtime($t);
-$g2 = Time.gmtime;            # $g1 and $g2 might differ very occasionally
-ok  $g1.date.year  ==$g2.date.year   && $g1.date.month ==$g2.date.month &&
-    $g1.date.day   ==$g2.date.day    && $g1.time.hour  ==$g2.time.hour  &&
-    $g1.time.minute==$g2.time.minute && $g1.time.second==$g2.time.second,
-    'gmtime defaults to current time'; # test 7
-ok  $g2.date.day-of-week==$d,
+$g1 = DateTime.from_epoch($t);
+$g2 = DateTime.new;            # $g1 and $g2 might differ very occasionally
+ok  $g1.year  ==$g2.year   && $g1.month ==$g2.month &&
+    $g1.day   ==$g2.day    && $g1.hour  ==$g2.hour  &&
+    $g1.minute==$g2.minute && $g1.second==$g2.second,
+    'from_epoch defaults to current time'; # test 7
+ok  $g2.day-of-week==$d,
     "today, {$g2.date} {$g2.time}," ~
     " is a {$g2.date.day-name} in {$g2.date.month-name}"; # test 8
-
+exit;
 # compare dates for a series of times earlier and later than "now", so
 # that every test run will use different values
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
