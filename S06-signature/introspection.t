@@ -95,6 +95,14 @@ sub j(*@i) {
     lives_ok { @l[1].type }, "can access a type_capture'd type";
 }
 
+{
+    sub i(%h($a, $b)) { };
+    my $s = &i.signature.perl;
+    ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
+    ok $s ~~ /'$b' >> /, '.perl on a nested signature contains variables of the subsignature (2)';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
