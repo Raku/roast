@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 31;
 
 =begin pod
 
@@ -149,6 +149,38 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     }
     MSClash.new.foo('bla');
     is $tracker, 'bla', 'can call a sub of the same name as the current method';
-
 }
+
+# usage of *%_ in in methods
+
+{
+    my $tracker = '';
+    sub track(:$x) {
+        $tracker = $x;
+    }
+    class PercentUnderscore {
+        method t(*%_) {
+            track(|%_);
+        }
+    }
+    lives_ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method';
+    is $tracker, 5, ' ... and got right result';
+}
+
+#?rakudo skip 'RT 73892'
+{
+    my $tracker = '';
+    sub track(:$x) {
+        $tracker = $x;
+    }
+
+    class ImplicitPercentUnderscore {
+        method t {
+            track(|%_);
+        }
+    }
+    lives_ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method (implicit)';
+    is $tracker, 5, ' ... and got right result (implicit)';
+}
+
 # vim: ft=perl6
