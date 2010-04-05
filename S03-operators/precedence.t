@@ -77,17 +77,17 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 #?rakudo todo 'non-associativeness of infix:<^> and |'
 { # test that | and ^ are on the same level but parsefail
-    eval_dies_ok 'my $a = (1 | 2 ^ 3)', '| and ^ may not associate';
-    eval_dies_ok 'my $a = (1 ^ 2 | 3)', '^ and | may not associate';
+    eval_dies_ok 'my Mu $a = (1 | 2 ^ 3)', '| and ^ may not associate';
+    eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
 {
-    my $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
+    my Mu $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
     ok(!($a == 1), 'junctive or binds more tightly then abs (1)');
 }
 
 {
-    my $b = ((abs -1) ^ -1); # -> (1 ^ -1)
+    my Mu $b = ((abs -1) ^ -1); # -> (1 ^ -1)
     ok($b == 1, "this is true because only one is == 1");
 };
 
