@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 60;
+plan 61;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -239,5 +239,7 @@ my $z = 42;
         $x;
     }
 }
+
+eval_lives_ok 'my (%h?)', 'my (%h?) lives';
 
 # vim: ft=perl6
