@@ -126,6 +126,16 @@ my @list = (1 .. 10);
 
 }
 
+# seensible boolification
+# RT #74056
+# since rakudo returns an iterator (and not a list) and some internals leaked,
+# a zero item list/iterator would return True, which is obviously wrong
+{
+    ok <0 1 2>.grep(1), 'Non-empty return value from grep is true (1)';
+    ok <0 1 2>.grep(0), 'Non-empty return value from grep is true (2)';
+    nok <0 1 2>.grep(3), 'Empty return value from grep is false';
+}
+
 done_testing;
 
 # vim: ft=perl6
