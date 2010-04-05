@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 =begin pod
 
@@ -134,4 +134,21 @@ class AnonInvocant {
 
 is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
 
+# check that sub foo() is available from withing method foo();
+# RT #74014
+
+{
+    my $tracker = '';
+    sub foo($x) {
+        $tracker = $x;
+    }
+    class MSClash {
+        method foo($x) {
+            foo($x);
+        }
+    }
+    MSClash.new.foo('bla');
+    is $tracker, 'bla', 'can call a sub of the same name as the current method';
+
+}
 # vim: ft=perl6
