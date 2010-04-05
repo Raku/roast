@@ -280,6 +280,11 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 }
 
+{
+    sub quoted_named(:$x = 5) { $x };
+    dies_ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
+}
+
 done_testing;
 
 # vim: ft=perl6
