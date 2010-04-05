@@ -268,7 +268,6 @@ Perl6-specific tests
     #   (except for special circumstances)
         "abcde" ~~ /(.)(.)(.)/;
         "abcde" ~~ /(\d)/;
-    #?rakudo todo 'definedness of captures'
     ok((!try { grep { defined($_) }, ($0, $1, $2, $3, $4, $5) }),
             "all submatches undefined after failed match") or
         diag("match state: " ~ eval '$/');
@@ -348,7 +347,6 @@ is((Any) * (Any), 0, 'Any * Any');
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
-#?rakudo todo 'eval'
 lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 
 {
