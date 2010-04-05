@@ -119,6 +119,13 @@ my @list = (1 .. 10);
     is (grep { $^a == $^b }, @in), (1, 1, 4, 4), 'grep takes two at a time';
 }
 
+{
+    my @a = <a b c>;
+    my @b = <b c d>;
+    is @a.grep(any(@b)).join('|'), 'b|c', 'Junction matcher';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
