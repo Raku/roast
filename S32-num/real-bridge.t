@@ -70,6 +70,15 @@ nok 1.Rat < $one, "not 1 < 1";
 ok 1.001 < $one-and-one-hundredth, "1.001 < 1.01";
 nok $neg-pi < -3.14, "not -3.14 < -3.14";
 
+is_approx -$zero, 0, "-0 == 0";
+is_approx -$one, -1, "-1 == -1";
+is_approx -$one-and-one-hundredth, -1.01, "-1.01 == -1.01";
+is_approx -$neg-pi, 3.14, "-(-3.14) == 3.14";
+
+is $one - $one, 0, "1 - 1 == 0";
+is $one-and-one-hundredth - $one-and-one-hundredth, 0, "1.01 - 1.01 == 0";
+is_approx $one-and-one-hundredth - $one, 0.01, "1.01 - 1 == 0.01";
+
 done_testing;
 
 # vim: ft=perl6
