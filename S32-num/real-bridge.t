@@ -52,6 +52,15 @@ is_approx $one.sign, 1, "1.sign works";
 is_approx $one-and-one-hundredth.sign, 1, "1.01.sign works";
 is_approx $neg-pi.sign, -1, "-3.14.sign works";
 
+is $zero <=> 0, 0, "0 == 0";
+is $one <=> 0.Num, 1, "1 > 0";
+is $one-and-one-hundredth <=> 1.1, -1, "1.01 < 1.1";
+is $neg-pi <=> -3, -1, "-3.14 < -3";
+is -1 <=> $zero, -1, "-1 < 0";
+is 1.Rat <=> $one, 0, "1 == 1";
+is 1.001 <=> $one-and-one-hundredth, -1, "1.001 < 1.01";
+is $neg-pi <=> -3.14, 0, "-3.14 == -3.14";
+
 done_testing;
 
 # vim: ft=perl6
