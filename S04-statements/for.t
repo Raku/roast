@@ -462,7 +462,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 {
     my $parsed = 0;
     eval '$parsed = 1; for (1..3)->$n { last }';
-    #?rakudo todo 'RT #65212'
     ok ! $parsed, 'for (1..3)->$n   fails to parse';
 }
 
