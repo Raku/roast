@@ -61,6 +61,15 @@ is 1.Rat <=> $one, 0, "1 == 1";
 is 1.001 <=> $one-and-one-hundredth, -1, "1.001 < 1.01";
 is $neg-pi <=> -3.14, 0, "-3.14 == -3.14";
 
+nok $zero < 0, "not 0 < 0";
+nok $one < 0.Num, "not 1 < 0";
+ok $one-and-one-hundredth < 1.1, "1.01 < 1.1";
+ok $neg-pi < -3, "-3.14 < -3";
+ok -1 < $zero, "-1 < 0";
+nok 1.Rat < $one, "not 1 < 1";
+ok 1.001 < $one-and-one-hundredth, "1.001 < 1.01";
+nok $neg-pi < -3.14, "not -3.14 < -3.14";
+
 done_testing;
 
 # vim: ft=perl6
