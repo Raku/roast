@@ -13,6 +13,7 @@ plan 11;
     my $a;
     ok :($a) ~~ Signature, ':($a) create a Signature object';
     :($a) := 3;
+    #?rakudo 2 todo 'signature binding'
     is $a, 3, 'can bind to one-element signature';
     dies_ok { $a++ }, 'cannot increment an Int';
 
@@ -21,6 +22,7 @@ plan 11;
 }
 
 
+#?rakudo 2 todo 'signature binding'
 {
     my ($x, $y, $z);
     :($x,$y,$z) := (1,2,3);
@@ -49,6 +51,7 @@ plan 11;
     ok ~$siglist,
         "a siglist stringifies";
     #?pugs todo 'feature'
+    #?rakudo todo 'eqv on signatures'
     ok $siglist eqv &foo1.signature,
         "a subroutine's siglist can be accessed via .signature (1)";
 }
@@ -59,6 +62,7 @@ plan 11;
     my $siglist = :(Num $a, $b?, *@rest);
 
     #?pugs todo 'feature'
+    #?rakudo todo 'eqv on signatures'
     ok $siglist eqv &foo.signature ,
         "a subroutine's siglist can be accessed via .signature (2)";
 }
