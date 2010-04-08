@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 51;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -207,4 +207,11 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         'can "use" a class inside a class';
 
 }
+
+{
+    eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
+    is eval('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
+
+}
+
 # vim: ft=perl6
