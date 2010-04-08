@@ -217,7 +217,6 @@ plan 67;
     skip 1, 'No Benchmark module yet'
 }
 
-#?rakudo skip 'unknown problems'
 {
     # P39 (*) A list of prime numbers.
     #
