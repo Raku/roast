@@ -12,6 +12,7 @@ is_run(
        'Can stringify $!.WHAT without segfault',
 );
 
+#?rakudo todo 'make 1/0 in void context die?'
 is_run(
        'try { 1/0; CATCH { when * { say $!.WHAT } }; };',
        { status => 0, out => -> $o { $o.chars > 2 }},
