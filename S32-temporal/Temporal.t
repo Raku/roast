@@ -39,7 +39,7 @@ $g1 = DateTime.from_epoch($t);
 $g2 = DateTime.now;         # $g1 and $g2 might differ very occasionally
 ok  $g1.year  ==$g2.year   && $g1.month ==$g2.month &&
     $g1.day   ==$g2.day    && $g1.hour  ==$g2.hour  &&
-    $g1.minute==$g2.minute && $g1.second==$g2.second,
+    $g1.minute==$g2.minute && floor($g1.second)==floor($g2.second),
     'from_epoch defaults to current time'; # test 7
 ok  $g2.day-of-week==$d,
     "today, {$g2.ymd} {$g2.hms}," ~
@@ -49,7 +49,7 @@ ok  $g2.day-of-week==$d,
 # that every test run will use different values
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
 # the offset changes all time components and causes overflow/underflow
-$t = time;
+$t = floor(time);
 my $t1 = $t;
 my $t2 = $t;
 my $offset = ((((7*31+1)*24+10)*60+21)*60+21);
