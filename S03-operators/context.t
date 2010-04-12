@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan *;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -51,6 +51,7 @@ plan 30;
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 }
 
+#?rakudo skip 'loops'
 {
     # Most of these tests pass in Rakudo, but we must compare with
     # eqv instead of eq, since the order of hashes is not guaranteed
@@ -82,5 +83,7 @@ eval_dies_ok('$', 'Anonymous variable outside of declaration');
 eval_dies_ok('@', 'Anonymous variable outside of declaration');
 eval_dies_ok('%', 'Anonymous variable outside of declaration');
 eval_dies_ok('&', 'Anonymous variable outside of declaration');
+
+done_testing;
 
 # vim: ft=perl6
