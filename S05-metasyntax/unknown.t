@@ -17,8 +17,11 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 
 # used to be a pugs bug
 
-rule foo { \{ };
-ok '{'  ~~ /<foo>/, '\\{ in a rule (+)';
-ok '!' !~~ /<foo>/, '\\{ in a rule (-)';
+#?rakudo skip 'calling <foo> from outer scopes'
+{
+    my rule foo { \{ };
+    ok '{'  ~~ /<foo>/, '\\{ in a rule (+)';
+    ok '!' !~~ /<foo>/, '\\{ in a rule (-)';
+}
 
 # vim: ft=perl6
