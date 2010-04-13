@@ -23,6 +23,7 @@ my @list = (1 .. 10);
     is(@result[4], 9, 'got the value we expected');
 }
 
+#?rakudo skip 'calling a slurpy by name, RT 74344'
 {
     my @result = grep({ ($_ % 2) }, :values(@list));
     is(+@result, 5, 'we got a list back');
@@ -102,7 +103,6 @@ my @list = (1 .. 10);
     is (2, [], 4, [], 5).grep(Int).join(','),
        '2,4,5', ".grep with non-Code matcher";
 
-    #?rakudo skip "sub grep isn't properly slurpy"
     is grep(Int, 2, [], 4, [], 5).join(','),
        '2,4,5', "grep() with non-Code matcher";
 }
