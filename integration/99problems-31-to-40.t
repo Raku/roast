@@ -235,7 +235,6 @@ plan 67;
     is primes(16,100), (17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97), "a few more.";
 }
 
-#?rakudo skip 'unknown problems'
 {
     # P40 (**) Goldbach's conjecture.
     #
