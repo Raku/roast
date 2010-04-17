@@ -214,6 +214,13 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
         'postcircumfix:<{ }> method does not break ordinary hash access' );
 }
 
+{
+    my %h;
+    my $x = %h<foo>;
+    is %h.keys.elems, 0, 'merely reading a non-existing hash keys does not create it';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
