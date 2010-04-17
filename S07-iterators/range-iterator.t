@@ -136,4 +136,18 @@ plan *;
     is $r.get, 'i', '$r.get == i';
 }
 
+{
+    my $r = RangeIter.new(0..'50');
+    isa_ok $r, RangeIter, '$r is a RangeIter';
+    is $r.get, 0, '$r.get == 0';
+    is $r.get, 1, '$r.get == 1';
+    is $r.get, 2, '$r.get == 2';
+    is $r.get, 3, '$r.get == 3';
+    is $r.get, 4, '$r.get == 4';
+    is $r.get, 5, '$r.get == 5';
+    #?rakudo 2 todo "Mixing Int and Str doesn't work yet"
+    is $r.get, 6, '$r.get == 6';
+    is $r.get, 7, '$r.get == 7';
+}
+
 done_testing;
