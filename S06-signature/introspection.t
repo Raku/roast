@@ -103,6 +103,12 @@ sub j(*@i) {
 
 }
 
+# RT #69492
+{
+    sub foo(:$) {};
+    ok &foo.signature.perl ~~ / ':' /, '.perl of a signature with anonymous named parameter';
+}
+
 done_testing;
 
 # vim: ft=perl6
