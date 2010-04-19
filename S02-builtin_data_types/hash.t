@@ -42,7 +42,6 @@ is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation work
 my %hash5 = ("one", 1, "two", 2, "three", 3);
 ok(%hash5.does(Hash), '%hash5 does Hash');
 
-#?rakudo skip 'hash slices'
 {
     my @slice1 = %hash5{"one", "three"};
     is(+@slice1, 2, 'got the right amount of values from the %hash{} slice');
@@ -53,15 +52,19 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
     is(+@slice2, 2, 'got the right amount of values from the %hash<> slice');
     is(@slice2[0], 3, '%hash<> slice was successful');
     is(@slice2[1], 1, '%hash<> slice was successful');
+}
 
+#?rakudo skip '%hash<> does not work'
+{
     my @slice3 = %hash5<>.sort;
     is(+@slice3, 3, 'empty slice got all hash values');
     is(@slice3[0], 1, 'empty slice got all hash values');
     is(@slice3[1], 2, 'empty slice got all hash values');
     is(@slice3[2], 3, 'empty slice got all hash values');
+}
 
 # slice assignment
-
+{
     %hash5{"one", "three"} = (5, 10);
     is(%hash5<one>, 5, 'value was changed successfully with slice assignment');
     is(%hash5<three>, 10, 'value was changed successfully with slice assignment');
