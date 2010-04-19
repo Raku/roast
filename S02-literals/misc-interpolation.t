@@ -21,7 +21,6 @@ sub func_w_args($x,$y) { return "[$x][$y]" }
 
 # Double quotes
 is("Hello $world", 'Hello World', 'double quoted string interpolation works');
-#?rakudo todo 'array interpolation'
 is("@list[]\ 3 4", '1 2 3 4', 'double quoted list interpolation works');
 is("@list 3 4", '@list 3 4', 'array without empty square brackets does not interpolate');
 #?rakudo skip 'zen hash slice'
