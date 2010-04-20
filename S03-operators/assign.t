@@ -597,7 +597,6 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]),  'lhs treats %a<x> as one-item list');
 }
 
-#?rakudo todo '%a<x y z> on LHS should be a list'
 {
     my %a;
     my @z = (%a<x y z> = l, l);
@@ -615,7 +614,6 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
 }
 
-#?rakudo todo '%a{List} should trigger list assignment'
 {
     my %a;
     my @z = (%a{'x','y','z'} = l, l);

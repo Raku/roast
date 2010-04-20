@@ -23,11 +23,11 @@ my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>');
 }
 
-#?rakudo 2 todo 'unknown errors'
 dies_ok { [1,2,3].join<a b c> }, '.join<abc> parses but semantic error';
 
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
-ok(@y eqv [1,2,Mu], '{...}<a b c> is hash subscript');
+#?rakudo todo 'unknown errors'
+ok(@y eqv [1,2,Any], '{...}<a b c> is hash subscript');
 
 eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
 
