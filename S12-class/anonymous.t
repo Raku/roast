@@ -11,8 +11,7 @@ my $c1 = class { };
 my $t1 = $c1.new();
 ok(defined($t1),     'instantiated the class');
 ok($t1 ~~ $c1,       'isa check works');
-#?rakudo skip 'are anonymous classes required to be nameless?'
-is(~$c1.WHAT(), '',  '.WHAT stringifies to empty string');
+is(~$c1.WHAT(), '()',  '.WHAT stringifies to ()');
 
 # Anonymous classes with methods.
 my $c2 = class { method foo { 42 }; method bar { 28 } };
@@ -61,7 +60,6 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     my $i2;
 
     lives_ok { $i1 = rt64888() }, 'can get anonymous class instance once';
-    #?rakudo todo 'RT #64888'
     lives_ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
 
     #?rakudo todo 'Numeric, Stringy'
