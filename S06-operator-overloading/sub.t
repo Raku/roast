@@ -296,7 +296,7 @@ Testing operator overloading subroutines
 
 #?rakudo skip 'RT #68662'
 {
-    multi sub infix:<+=> (Num $a, Num $b) { $a -= $b }
+    multi sub infix:<+=> (Num $a is rw, Num $b) { $a -= $b }
     my $frew = 10;
     $frew += 5;
     is $frew, 5, 'infix redefinition of += works';
