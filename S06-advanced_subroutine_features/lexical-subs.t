@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 10;
 
 {
     sub f() {
@@ -54,6 +54,14 @@ plan 9;
         is a(), 'inner', 'inner lexical hides outer sub of same name';
     }
     is a(), 'outer', '... but only where it is visisble';
+}
+
+{
+    package TestScope {
+        sub f { };
+    }
+    dies_ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
+
 }
 
 # vim: ft=perl6 :
