@@ -9,6 +9,10 @@ ok &infix:<+>  === &[+],  'long and short form are the same (+)';
 ok &infix:<==> === &[==], 'long and short form are the same (==)';
 is sort( &[<=>], <5 3 2 1 4> ), <1 2 3 4 5>, 'sort works using &[<=>]';
 
+is &[+](1, 2), 3, '&[+] as a function';
+#?rakudo skip '[+] as an infix'
+is 1 [+] 2, 3, '[+] as an infix';
+
 done_testing;
 
 # vim: ft=perl6
