@@ -55,6 +55,7 @@ class C does R1 does R2 {
 }
 my $obj = C.new;
 is($obj.foo(),  'proto', 'proto caused methods from roles to be composed without conflict');
+#?rakudo 2 skip 'proto does not promote to multi'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 is($obj.foo('a','b'), 2, 'method composed into multi from role called');
 
@@ -73,7 +74,7 @@ class Bar is Foo2 {
 is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #67024
-#?rakudo todo 'redefintion of non-multi method (RT #67024)'
+#?rakudo skip 'redefintion of non-multi method (RT #67024)'
 {
     eval 'class A { method a(){0}; method a($x){1} }';
     ok  $!  ~~ Exception, 'redefintion of non-multi method (RT 67024)';
@@ -146,6 +147,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     }
 }
 
+#?rakudo skip 'multis from roles, introspection'
 {
     role RoleS {
         multi method d( Str $x ) { 'string' }
