@@ -91,6 +91,16 @@ is_approx cis($one-and-one-hundredth), 1.01.cis, "cis(1.01) is correct";
 is_approx $one-and-one-hundredth.unpolar($neg-pi), 1.01.unpolar(-3.14), "1.01.unpolar(-3.14) is correct";
 is_approx unpolar($one-and-one-hundredth, $neg-pi), 1.01.unpolar(-3.14), "1.01.unpolar(-3.14) is correct";
 
+is $one-and-one-hundredth.floor, 1, "1.01.floor is correct";
+is floor(1), 1, "1.floor is correct";
+is $one-and-one-hundredth.ceiling, 2, "1.01.ceiling is correct";
+is ceiling(1), 1, "1.ceiling is correct";
+is $one-and-one-hundredth.truncate, 1, "1.01.truncate is correct";
+is truncate($neg-pi), -3, "-3.14.truncate is correct";
+is $one-and-one-hundredth.round(1/100), 1.01, "1.01.round(1/100) is correct";
+is round($one-and-one-hundredth, 1/10), 1, "1.01.round(1/10) is correct";
+is round($one-and-one-hundredth), 1, "1.01.round is correct";
+
 done_testing;
 
 # vim: ft=perl6
