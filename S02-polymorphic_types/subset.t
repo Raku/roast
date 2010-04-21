@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 32;
 
 =begin description
 
@@ -130,6 +130,15 @@ eval_dies_ok 'my Digit $x = 3.1',
     ok  $!  ~~ Exception, 'subset of Int enforces where clause';
     #?rakudo todo 'RT #67256'
     ok "$!" ~~ / RT67256 /, 'error for bad assignment mentions subset';
+}
+
+# RT #69334
+{
+    class Y {has $.z};
+    subset sY of Y where {.z == 0};
+
+    lives_ok { 4 ~~ sY }, 'Nominal type is checked first';
+    ok 4 !~~ sY, 'and if nominal type check fails, it is False';
 }
 
 # vim: ft=perl6
