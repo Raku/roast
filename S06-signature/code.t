@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 8;
 
 # TODO: move this test to closure-parameters.t if it works in the future
 
@@ -35,6 +35,17 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     sub rt68578( Callable &x ) {}
     dies_ok { rt68578({ 'block' }) },
             "Can't pass something that isn't typed as returning Callable";
+}
+
+# RT #67932
+{
+    my $tracker;
+    sub foo(&foo = &foo) {
+        $tracker = &foo
+    };
+    lives_ok { foo },
+        'can call a sub with a code object defaulting to something of its own name';
+    ok !$tracker.defined, 'the inner &foo is undefined (scoping)';
 }
 
 # vim: ft=perl6
