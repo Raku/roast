@@ -64,7 +64,6 @@ is($t3.x, 42,        'anonymous classes can have attributes');
 
     #?rakudo todo 'Numeric, Stringy'
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
-    #?rakudo skip 'Numeric, Stringy'
     is +$i1, 64888, 'anonymous class numified works';
 }
 
