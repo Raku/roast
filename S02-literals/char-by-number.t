@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 42;
 
 =begin kwid
 
@@ -65,11 +65,8 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
     eval_dies_ok q{"\10"}, '"\10" form is no longer valid Perl 6';
 }
 
-# L<S02/Literals/illegal "\0123 form">
-#?rakudo todo 'Detecting malformed escape sequences NYI'
 {
-    eval_dies_ok q{"\040"}, '"\040" form is no longer valid Perl 6';
-    eval_dies_ok q{"\0123"}, '"\0123" form is no longer valid Perl 6';
+    is "\040", "\x[0]40", '\0stuff is actually valid';
 }
 
 # L<S02/Literals/"Only \0 remains" "only if"
