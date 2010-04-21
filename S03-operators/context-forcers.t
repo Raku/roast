@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 96;
+plan 95;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -51,7 +51,8 @@ sub iis(Mu $a, Mu $b, $descr) {
   is +"1",         1, "+ context forcer works (5)";
   is +"0",         0, "+ context forcer works (6)";
   is +"",          0, "+ context forcer works (7)";
-  is +Mu,          0, "+ context forcer works (8)";
+  # jnthn and pmichaud believe the next test is incorrect
+  # is +Mu,          0, "+ context forcer works (8)";
   is +"Inf",     Inf, "+ context forcer works (9)";
   is +"-Inf",   -Inf, "+ context forcer works (10)";
   is +"NaN",     NaN, "+ context forcer works (11)";
