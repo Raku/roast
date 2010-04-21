@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -61,6 +61,10 @@ plan 20;
             'dies when calling non-existent sub in non-existent package';
     dies_ok { Test::bravo_bravo_quebec() },
             'dies when calling non-existent sub in existing package';
+    # RT #74520
+    class TestA { };
+    eval 'TestA::b(3, :foo)';
+    ok "$!" ~~ / ' TestA::b' /, 'error message mentions function name';
 }
 
 # RT #71194
