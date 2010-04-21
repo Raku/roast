@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 94;
+plan 96;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -46,16 +46,18 @@ sub iis(Mu $a, Mu $b, $descr) {
 { # L<S03/"Changes to Perl 5 operators" /imposes a numeric context/>
   is +1,           1, "+ context forcer works (1)";
   is +0,           0, "+ context forcer works (2)";
-  is +"1",         1, "+ context forcer works (3)";
-  is +"0",         0, "+ context forcer works (4)";
-  is +"",          0, "+ context forcer works (5)";
-  is +Mu,          0, "+ context forcer works (6)";
-  is +"Inf",     Inf, "+ context forcer works (7)";
-  is +"-Inf",   -Inf, "+ context forcer works (8)";
-  is +"NaN",     NaN, "+ context forcer works (9)";
-  is +"3e5",  300000, "+ context forcer works (10)";
-  is +(?0),        0, "+ context forcer works (11)";
-  is +(?3),        1, "+ context forcer works (11)";
+  is +(3/4),     3/4, "+ context forcer works (3)";
+  is +(3i),       3i, "+ context forcer works (4)";
+  is +"1",         1, "+ context forcer works (5)";
+  is +"0",         0, "+ context forcer works (6)";
+  is +"",          0, "+ context forcer works (7)";
+  is +Mu,          0, "+ context forcer works (8)";
+  is +"Inf",     Inf, "+ context forcer works (9)";
+  is +"-Inf",   -Inf, "+ context forcer works (10)";
+  is +"NaN",     NaN, "+ context forcer works (11)";
+  is +"3e5",  300000, "+ context forcer works (12)";
+  is +(?0),        0, "+ context forcer works (13)";
+  is +(?3),        1, "+ context forcer works (14)";
 }
 
 { # L<S03/"Changes to Perl 5 operators" /imposes a string context/>
