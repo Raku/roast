@@ -10,6 +10,7 @@ sub empty_do { do {} }
 sub empty_branch_true { if 1 {} else { 1; } }
 sub empty_branch_false { if 0 { 1; } else {} }
 sub bare_return { return; }
+sub rt74448 { eval '' }
 
 #?rakudo 4 skip 'return value of if/for etc'
 ok empty_sub()          ~~ Nil, 'empty sub returns Nil';
@@ -17,6 +18,8 @@ ok empty_do()           ~~ Nil, 'do {} is Nil';
 ok empty_branch_true()  ~~ Nil, 'if 1 {} is Nil';
 ok empty_branch_false() ~~ Nil, 'else {} is Nil';
 ok bare_return()        ~~ Nil, 'bare return returns Nil';
+#?rakudo todo 'RT 74448: eval of empty string should be Nil'
+ok rt74448()            ~~ Nil, 'eval of empty string is Nil';
 
 # RT #63894
 {
