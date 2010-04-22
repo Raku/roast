@@ -31,9 +31,10 @@ plan *;
 
 # Reduce with n-ary functions
 {
-  my @array  = <1 2 3 4 5 6 7 8>, Mu;
-  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Mu;
+  my @array  = <1 2 3 4 5 6 7 8>, Any;
+  my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Any;
 
+  #?rakudo todo 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
@@ -53,6 +54,7 @@ plan *;
     $hash.{$key};
   }
   is((reduce(&foo, $hash, <a b c>)), 42, 'reduce(&foo) (foo ~~ .{}) works three levels deep');
+  #?rakudo 3 todo 'unknown'
   isa_ok(@reftypes[0], Hash, "first application of reduced hash subscript passed in a Hash");
   isa_ok(@reftypes[1], Hash, "second application of reduced hash subscript passed in a Hash");
   isa_ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
@@ -63,7 +65,6 @@ is( list(1).reduce({$^a * $^b}), 0, "Reduce of one element list produces correct
 
 eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
-#?rakudo skip 'RT 65668'
 {
     is( ((1..10).list.reduce: &infix:<+>), 55, '.reduce: &infix:<+> works' );
     is( ((1..4).list.reduce: &infix:<*>), 24, '.reduce: &infix:<*> works' );
