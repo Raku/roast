@@ -65,7 +65,8 @@ class Foo {
     }
 }
 my $foo = Foo.new;
-isa_ok($foo.bar.WHAT, Hash, 'hash attribute initialized');
+#?rakudo todo "Somehow this is Hash and not Hash at the same time?"
+isa_ok($foo.bar, Hash,    'hash attribute initialized');
 $foo.set_bar();
 is($foo.bar<a>, 'baz',    'hash attribute initialized/works');
 my %s = $foo.bar;
