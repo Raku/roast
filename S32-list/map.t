@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 91;
+plan 54;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -12,73 +12,46 @@ plan 91;
 
 
 my @list = (1 .. 5);
-#?rakudo skip 'named args'
 {
     my @result = map( { $_ * 2 }, :values(@list) );
-    is(+@result, 5, 'we got a list back');
-    is(@result[0], 2, 'got the value we expected');
-    is(@result[1], 4, 'got the value we expected');
-    is(@result[2], 6, 'got the value we expected');
-    is(@result[3], 8, 'got the value we expected');
-    is(@result[4], 10, 'got the value we expected');
+    is(+@result, 5, 'named :values: we got a list back');
+    is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
 {
     my @result = map { $_ * 2 }, @list;
-    is(+@result, 5, 'we got a list back');
-    is(@result[0], 2, 'got the value we expected');
-    is(@result[1], 4, 'got the value we expected');
-    is(@result[2], 6, 'got the value we expected');
-    is(@result[3], 8, 'got the value we expected');
-    is(@result[4], 10, 'got the value we expected');
+    is(+@result, 5, 'sub form: we got a list back');
+    is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
 #?rakudo skip "adverbial block"
 {
     my @result = @list.map():{ $_ * 2 };
-    is(+@result, 5, 'we got a list back');
-    is(@result[0], 2, 'got the value we expected');
-    is(@result[1], 4, 'got the value we expected');
-    is(@result[2], 6, 'got the value we expected');
-    is(@result[3], 8, 'got the value we expected');
-    is(@result[4], 10, 'got the value we expected');
+    is(+@result, 5, 'adverbial block: we got a list back');
+    is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
 {
     my @result = @list.map: { $_ * 2 };
-    is(+@result, 5, 'we got a list back');
-    is(@result[0], 2, 'got the value we expected');
-    is(@result[1], 4, 'got the value we expected');
-    is(@result[2], 6, 'got the value we expected');
-    is(@result[3], 8, 'got the value we expected');
-    is(@result[4], 10, 'got the value we expected');
+    is(+@result, 5, 'invcant colon method form: we got a list back');
+    is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
 #?rakudo skip "closure as non-final argument"
 {
     my @result = map { $_ * 2 }: @list;
     is(+@result, 5, 'we got a list back');
-    is(@result[0], 2, 'got the value we expected');
-    is(@result[1], 4, 'got the value we expected');
-    is(@result[2], 6, 'got the value we expected');
-    is(@result[3], 8, 'got the value we expected');
-    is(@result[4], 10, 'got the value we expected');
+    is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
 }
 
 # Testing map that returns an array
+#?rakudo todo 'Parcel flattening'
 {
     my @result = map { ($_, $_ * 2) }, @list;
-    is(+@result, 10, 'we got a list back');
-    is(@result[0], 1, 'got the value we expected');
-    is(@result[1], 2, 'got the value we expected');
-    is(@result[2], 2, 'got the value we expected');
-    is(@result[3], 4, 'got the value we expected');
-    is(@result[4], 3, 'got the value we expected');
-    is(@result[5], 6, 'got the value we expected');
-    is(@result[6], 4, 'got the value we expected');
-    is(@result[7], 8, 'got the value we expected');
-    is(@result[8], 5, 'got the value we expected');
-    is(@result[9], 10, 'got the value we expected');
+    is(+@result, 10, 'Parcel returned from closure: we got a list back');
+    is @result.join(', '),
+        '1, 2, 2, 4, 3, 6, 4, 8, 5, 10',
+        'got the values we expected';
 }
 
 # Testing multiple statements in the closure
@@ -87,14 +60,12 @@ my @list = (1 .. 5);
          my $fullpath = "fish/$_";
          $fullpath;
     }, @list;
-    is(+@result, 5, 'we got a list back');
-    is(@result[0], "fish/1", 'got the value we expected');
-    is(@result[1], "fish/2", 'got the value we expected');
-    is(@result[2], "fish/3", 'got the value we expected');
-    is(@result[3], "fish/4", 'got the value we expected');
-    is(@result[4], "fish/5", 'got the value we expected');
+    is(+@result, 5, 'multiple statements in block: we got a list back');
+    is @result.join('|'), 'fish/1|fish/2|fish/3|fish/4|fish/5',
+        'got the values we expect';
 }
 
+#?rakudo skip '{; $_ => 1} should be block'
 {
     my @list = 1 .. 5;
     is +(map {;$_ => 1 }, @list), 5,
@@ -102,11 +73,8 @@ my @list = (1 .. 5);
 
     my %result = map {; $_ => ($_*2) }, @list;
     isa_ok(%result, Hash);
-    is(%result<1>, 2,  'got the value we expected');
-    is(%result<2>, 4,  'got the value we expected');
-    is(%result<3>, 6,  'got the value we expected');
-    is(%result<4>, 8,  'got the value we expected');
-    is(%result<5>, 10, 'got the value we expected');
+    is %result<1 2 3 4 5>.join(', '), '2, 4, 6, 8, 10',
+        ' got the hash we expect';
 }
 
 # map with n-ary functions
@@ -149,6 +117,7 @@ should be equivalent to
   my @a = (1, 2, 3);
   # XXX is hash { ... } legal?
   my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a;
+  #?rakudo todo 'flattening in list context'
   is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
@@ -174,6 +143,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # map with empty lists in the block
 # Test was primarily aimed at PIL2JS, which did not pass this test (fixed now).
+#?rakudo todo 'Parcel flattening'
 {
   my @array  = <a b c d>;
   my @result = map { (), }, @array;
@@ -181,6 +151,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 0, "map works with the map body returning an empty list";
 }
 
+#?rakudo todo 'Parcel flattening'
 {
   my @array  = <a b c d>;
   my @empty  = ();
@@ -220,6 +191,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 4, "map works with the map body returning an undefined variable";
 }
 
+#?rakudo todo 'Parcel flattening'
 {
   my @array  = <a b c d>;
   my @result = map { () }, @array;
@@ -260,8 +232,8 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
 }
 
+#?rakudo todo 'next and last in map'
 {
-    #?rakudo todo 'next in map'
     is (1..4).map({ next if $_ % 2; 2 * $_ }).join('|'), 
        '2|4|8', 'next in map works';
     is (1..10).map({ last if $_ % 5 == 0; 2 * $_}).join(' '),
