@@ -207,6 +207,8 @@ ok 1/2 !=== 1/3, '=== with false outcome';
 is (3/0).Num, Inf, "(3/0).Num = +Inf";
 is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
+ok Rat.new() == 0, 'Rat.new() is 0';
+
 done_testing;
 
 # vim: ft=perl6
