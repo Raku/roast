@@ -28,6 +28,7 @@ ok $arrayref.test_method, "arrayref in a variable";
 
 my %named_hash;
 
+#?rakudo 4 skip "Hash extension issues"
 ok %named_hash.test_method, "Uninitialized hash";
 %named_hash = (Foo => "bar");
 
@@ -42,7 +43,6 @@ ok $hashref.test_method, "Named hashref";
 
 # Now for pairs.
 
-#?rakudo skip "No applicable candidates found to dispatch to for 'is'"
 is(try { (:key<value>).value; }, 'value', "method on a bare pair");
 
 my $pair = :key<value>;
@@ -50,7 +50,7 @@ my $pair = :key<value>;
 is $pair.value, 'value', "method on a named pair";
 
 {
-    augment class List {
+    augment class Parcel {
         method twice {
             gather {
                 take $_ * 2 for self;
@@ -58,7 +58,7 @@ is $pair.value, 'value', "method on a named pair";
         }
     }
 
-    is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class List';
+    is (1, 2, 3).twice.join('|'), "2|4|6", 'can extend class Parcel';
 }
 
 # vim: ft=perl6
