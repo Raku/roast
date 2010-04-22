@@ -285,6 +285,14 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
     dies_ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
 }
 
+{
+    sub named_empty(:$) {
+        42
+    }
+    my %h = '' => 500;
+    is named_empty(|%h), 42, 'can call function with empty named argument';
+}
+
 done_testing;
 
 # vim: ft=perl6
