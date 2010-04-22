@@ -103,8 +103,8 @@ my $need = "1582/10/04 13:02:03 15 4 01=13 1\t654pm Mon,1582-10-04%.\n";
 ok $g1.strftime($format) eq $need, 'first strftime'; # test 20
 $g1 = DateTime.new(:year(1), :month(2),  :day(3),
                    :hour(4), :minute(5), :second(6.987654) );
-$format = '%I %6N %A';
-$need = "04 987654 Saturday";
+$format = '%I %6N %A %b=%B';
+$need = "04 987654 Saturday Feb=February";
 ok $g1.strftime($format) eq $need, 'second strftime'; # test 21
 
 # An independent calculation to cross check the Temporal algorithms.
