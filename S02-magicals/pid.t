@@ -30,7 +30,7 @@ my ($perl6_executable,$redir,$squo) = ($*EXECUTABLE_NAME, ">", "'");
 sub nonce () { return (".{$*PID}." ~ (^1000).pick) }
 my $tempfile = "temp-ex-output" ~ nonce;
 
-my $command = $perl6_executable ~ q! -e 'say $*PID'! ~ qq!$redir $tempfile!;
+my $command = $perl6_executable ~ q! -e "say $*PID"! ~ qq!$redir $tempfile!;
 diag $command;
 run $command;
 
