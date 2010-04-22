@@ -40,6 +40,9 @@ my @tests = (
     { a => [1,2,3] },  # only one elem
     { a => [1,2,3], b => [4,5,6] },
     [ { :a(1) }, { :b(2), :c(3) } ],
+
+    # a Seq
+    <a b c>.Seq,
 );
 
 #?pugs emit force_todo 8, 45..50, 94, 96;
