@@ -38,6 +38,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 
 # now try to extend "core" types
 
+#?rakudo skip "'abc' is of type Perl6Str rather than Str"
 {
     augment class Str {
         method mydouble {
@@ -48,6 +49,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     is 'aBc'.mydouble, 'ABCabc', 'can extend Str';
 }
 
+#?rakudo skip "3 is of type Integer rather than Int"
 {
     augment class Int {
         method triple { self * 3 }
@@ -56,13 +58,13 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 }
 
 {
-    augment class List {
+    augment class Seq {
         method first-and-last {
             self[0] ~ self[self - 1]
         }
     }
 
-    is <a b c d e f>.first-and-last, 'af', 'can extend class List';
+    is <a b c d e f>.Seq.first-and-last, 'af', 'can extend class Seq';
     my @a = 1, 3, 7, 0;
     is @a.first-and-last, '10', 'can call extended methods from child classes';
 }
