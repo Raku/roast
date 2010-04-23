@@ -95,7 +95,6 @@ is(AP_1.new.x,   'a',  'use of type params in attr initialization works after 2n
 is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2nd invocation');
 
 # Use of parameters as type constraints.
-#?rakudo skip 'use of parameters as type constraints'
 {
     role TypeParams[::T] {
         method x(T $x) { return "got a " ~ T ~ " it was $x" }
@@ -110,7 +109,6 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
 
 # test multi dispatch on parameterized roles
 # not really basic anymore, but I don't know where else to put these tests
-#?rakudo skip 'composition time multi dispatch with generics/where-blocks'
 {
     role MD_block[Int $x where { $x % 2 == 0 }] {
         method what { 'even' };
@@ -132,7 +130,10 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
        'same with class methods (2)';
     eval_dies_ok 'class MD_not_Int does MD_block["foo"] { }',
                  "Can't compose without matching role multi";
+}
 
+#?rakudo skip 'generics parameters in generic roles'
+{
     role MD_generics[::T $a, T $b] {
         method what { 'same type' }
     }
