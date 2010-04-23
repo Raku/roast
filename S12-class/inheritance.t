@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -133,6 +133,11 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 
 # Make sure inheritnace from Mu works (got broken in Rakudo once).
 eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
+{
+    class DirectMu is Mu { };
+    ok DirectMu !~~ Any, 'class inheriting from Mu is not Any';
+    ok !( any(DirectMu.^parents) === Any), 'and Any does not appear in the list of parents either';
+}
 
 eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
 
