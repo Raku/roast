@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 46;
 
 # L<S02/"Whitespace and Comments"/"Embedded comments"
 #  "#" plus any bracket>
@@ -164,6 +164,12 @@ plan 45;
     $a = Nil;
     eval_dies_ok '$a = q# 32 #;', 'misuse of # as quote delimiters';
     ok !$a.defined, "``#'' can't be used as quote delimiters";
+}
+
+# L<S02/Whitespace and Comments/"single-line comments"
+{
+    # ticket http://rt.perl.org/rt3/Ticket/Display.html?id=70752
+    eval_lives_ok "#=======\n#=======\nuse v6;", "pragma use after single line comments";
 }
 
 # L<S02/"Whitespace and Comments"/POD sections may be>
