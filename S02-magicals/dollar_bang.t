@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 =begin desc
 
@@ -16,16 +16,14 @@ eval 'nonexisting_subroutine()';
 ok defined($!), 'nonexisting sub in eval makes $! defined';
 eval 'nonexisting_subroutine()';
 ok $!, 'Calling a nonexisting subroutine sets $!';
+try { 1 };
+nok $!.defined, 'successfull try { } resets $!';
 
-undefine $!;
-# XXX nonexisting_subroutine is detectable at compile time,
-# this test should be fixed somehow
-try { nonexisting_subroutine; };
-ok $!.defined, 'Calling a nonexisting subroutine defines $!';
-try { nonexisting_subroutine; };
-ok $!, 'Calling a nonexisting subroutine sets $!';
+try { 1.nonexisting_method; };
+ok $!.defined, 'Calling a nonexisting method defines $!';
+try { 1.nonexisting_method; };
+ok $!, 'Calling a nonexisting smethod sets $!';
 
-undefine $!;
 my $called;
 sub foo(Str $s) { return $called++ };
 my @a;
@@ -33,14 +31,11 @@ try { foo(@a,@a) };
 ok $!, 'Calling a subroutine with a nonmatching signature sets $!';
 ok !$called, 'The subroutine also was not called';
 
-undefine $!;
 try { 1 div 0 };
 ok $!, 'Dividing one by zero sets $!';
 
 sub incr ( $a is rw ) { $a++ };
-undefine $!;
 try { incr(19) };
-#?rakudo todo 'RT 66588: containers/values'
 ok $!, 'Modifying a constant sets $!';
 
 try {
@@ -66,7 +61,6 @@ ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
     #is $!, 'goodbye', '$! has correct value after try';
     ok ($!), '$! as boolean works (true)';
 
-    undefine $!;
     eval q[ die('farewell'); ];
     ok defined($!.perl), '$! has working Perl 6 object methods after eval';
     ok ($!.WHAT ~~ Exception), '$! is Exception object after eval';
@@ -76,7 +70,6 @@ ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
     # rather than pattern matches, we check equality here, too.
     is $!, 'farewell', '$! has correct value after eval';
 
-    undefine $!;
     try { 1; }
     ok (! $!), '$! as boolean works (false)';
 }
