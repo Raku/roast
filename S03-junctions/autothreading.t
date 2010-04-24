@@ -204,7 +204,6 @@ plan 77;
 
 # test that various things autothread
 
-#?rakudo skip 'auto-threading over prefix:<+>'
 {
     my $j = [1, 2] | 5;
 

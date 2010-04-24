@@ -15,7 +15,6 @@ my %hash = (a => 1, b => 2, c => 3, d => 4);
 # L<S32::Containers/"Hash"/=item keys>
 is(~%hash.keys.sort, "a b c d", '%hash.keys works');
 is(~sort(keys(%hash)), "a b c d", 'keys(%hash) on hashes');
-#?rakudo skip 'cannot parse named arguments'
 is(~sort(keys(:array(%hash))), 'a b c d', 'keys(:array(%hash)) works with named args');
 is(+%hash.keys, +%hash, 'we have the same number of keys as elements in the hash');
 

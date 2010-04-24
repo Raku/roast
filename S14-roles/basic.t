@@ -54,7 +54,6 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
     my Bar $b .= new();
     $b does B;
     ok defined($b),        'mixing B into $b worked';
-    #?rakudo 2 skip "Method 'defined' not found for invocant of class 'Undef'"
     is $b.attr, 42,        '$b "inherited" the $.attr attribute of B (1)';
     is ($b.attr = 23), 23, '$b "inherited" the $.attr attribute of B (2)';
 
