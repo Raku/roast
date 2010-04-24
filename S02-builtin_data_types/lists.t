@@ -20,6 +20,7 @@ plan *;
   is $foo, 23, "assigning a list element changed the original variable";
 }
 
+#?rakudo skip 'indexing with *-2'
 {
   my $foo = 42;
 
@@ -68,6 +69,7 @@ plan *;
   my $bar = 43;
 
   try { ($foo, 42, $bar, 19)[0, 2] = (23, 24) };
+  #?rakudo todo 'lvalue list slices'
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
@@ -122,6 +124,7 @@ plan *;
     "using lists as lvalues in a binding operation to swap three variables works";
 }
 
+#?rakudo skip 'auto-dereferencing of captures (?)'
 {
   my @array    = (1,2,3);
   my $arrayref = \@array;
@@ -138,7 +141,8 @@ plan *;
     eval '<1 2 3>.rt62836';
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
-    ok "$!" ~~ /List/,          'error message contains name of class';
+    diag $!;
+    ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
 
     #?rakudo emit #
     augment class List { method rt62836_x { 62836 } };
@@ -149,13 +153,12 @@ plan *;
 # RT #66304
 {
     my $rt66304 = (1, 2, 4);
-    isa_ok $rt66304, List, 'List assigned to scalar is-a List';
-    #?rakudo 3 todo 'RT 66304'
+    isa_ok $rt66304, Seq, 'List assigned to scalar is-a Seq';
     is( $rt66304.WHAT, (1, 2, 4).WHAT,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';
     is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';
-    
+
     my $x = 44;
     $rt66304 = ( 11, $x, 22 );
     #?rakudo todo 'RT 66304'
