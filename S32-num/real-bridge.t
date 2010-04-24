@@ -101,6 +101,14 @@ is $one-and-one-hundredth.round(1/100), 1.01, "1.01.round(1/100) is correct";
 is round($one-and-one-hundredth, 1/10), 1, "1.01.round(1/10) is correct";
 is round($one-and-one-hundredth), 1, "1.01.round is correct";
 
+is $one-and-one-hundredth ** $neg-pi, 1.01 ** -3.14, "1.01 ** -3.14 is correct";
+is $neg-pi ** $one, -3.14 ** 1, "-3.14 ** 1 is correct";
+
+is $one-and-one-hundredth.exp, 1.01.exp, "1.01.exp is correct";
+is $neg-pi.exp, (-3.14).exp, "-3.14.exp is correct";
+is $one-and-one-hundredth.exp(10.Rat), 1.01.exp(10), "1.01.exp(10) is correct";
+is 2.exp($neg-pi), 2.exp(-3.14), "2.exp(-3.14) is correct";
+
 done_testing;
 
 # vim: ft=perl6
