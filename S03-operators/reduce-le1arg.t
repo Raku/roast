@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 51;
+plan 53;
 
 # smartlink to top and bottom of long table
 # L<S03/Reduction operators/"Builtin reduce operators return the following identity values">
@@ -31,12 +31,14 @@ is ([~^] ()), '', "[~^] () eq ''";
 is ([&] ()).perl, all().perl, "[&] () eq all()";
 is ([|] ()).perl, any().perl, "[|] () eq any()";
 is ([^] ()).perl, one().perl, "[^] () eq one()";
-\is ([!==] ()), Bool::True, "[!==] () eq True";
+is ([!==] ()), Bool::True, "[!==] () eq True";
 is ([==] ()), Bool::True, "[==] () eq True";
 is ([<] ()), Bool::True, "[<] () eq True";
 is ([<=] ()), Bool::True, "[<=] () eq True";
 is ([>] ()), Bool::True, "[>] () eq True";
 is ([>=] ()), Bool::True, "[>=] () eq True";
+is ([before] ()), Bool::True, "[before] () eq True";
+is ([after] ()), Bool::True, "[after] () eq True";
 is ([~~] ()), Bool::True, "[~~] () eq True";
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
