@@ -17,10 +17,12 @@ is ([+&] ()), +^0, "[+&] () eq +^0";
 ok( !([+<] ()).defined, "[+<] () should fail");
 ok( !([+>] ()).defined, "[+>] () should fail");
 ok( !([~&] ()).defined, "[~&] () should fail");
+#?rakudo 2 skip "~< and ~> NYI"
 ok( !([~<] ()).defined, "[~<] () should fail");
 ok( !([~>] ()).defined, "[~>] () should fail");
 is ([+] ()), 0, "[+] () eq 0";
 is ([-] ()), 0, "[-] () eq 0";
+#?rakudo skip "~ cannot be defined until the parent type is moved from PIR"
 is ([~] ()), '', "[~] () eq ''";
 is ([+|] ()), 0, "[+|] () eq 0";
 is ([+^] ()), 0, "[+^] () eq 0";
@@ -29,32 +31,29 @@ is ([~^] ()), '', "[~^] () eq ''";
 is ([&] ()).perl, all().perl, "[&] () eq all()";
 is ([|] ()).perl, any().perl, "[|] () eq any()";
 is ([^] ()).perl, one().perl, "[^] () eq one()";
-#?rakudo todo 'New spec updates'
-is ([!==] ()), Bool::True, "[!==] () eq True";
+\is ([!==] ()), Bool::True, "[!==] () eq True";
 is ([==] ()), Bool::True, "[==] () eq True";
 is ([<] ()), Bool::True, "[<] () eq True";
 is ([<=] ()), Bool::True, "[<=] () eq True";
 is ([>] ()), Bool::True, "[>] () eq True";
 is ([>=] ()), Bool::True, "[>=] () eq True";
 is ([~~] ()), Bool::True, "[~~] () eq True";
-#?rakudo todo 'New spec updates'
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
-#?rakudo skip "[!eq] not implemented"
 is ([!eq] ()), Bool::True, "[!eq] () eq True";
 is ([lt] ()), Bool::True, "[lt] () eq True";
 is ([le] ()), Bool::True, "[le] () eq True";
 is ([gt] ()), Bool::True, "[gt] () eq True";
 is ([ge] ()), Bool::True, "[ge] () eq True";
+#?rakudo 2 skip '=!= NYI'
 is ([=:=] ()), Bool::True, "[=:=] () eq True";
-#?rakudo todo 'New spec updates'
 is ([!=:=] ()), Bool::True, "[!=:=] () eq True";
+#?rakudo skip '=== still in PIR'
 is ([===] ()), Bool::True, "[===] () eq True";
-#?rakudo todo 'New spec updates'
 is ([!===] ()), Bool::True, "[!===] () eq True";
-#?rakudo 8 skip "[...] not implemented"
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
+#?rakudo 6 skip "[...] not implemented"
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::True, "[||] () eq True";
 is ([^^] ()), Bool::True, "[^^] () eq True";
@@ -63,7 +62,6 @@ is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
 
 is ([==] 3), Bool::True, 'unary [==]';
-#?rakudo 2 todo 'chained unary operators are always true with one arg'
 is ([!=] 3), Bool::True, 'unary [!=]';
 is ([!==] 3), Bool::True, 'unary [!==]';
 
