@@ -16,9 +16,12 @@ my @list = ('a');
 
 for @list -> $letter { is( $letter , 'a', 'can bind to variable in pointy') }
 
-# Do pointy subs send along an implicit param? No!
-for @list -> {
-    isnt($_, 'a', '$_ does not get set implicitly if a pointy is given')
+#?rakudo skip 'for() with nullary block'
+{
+    # Do pointy subs send along an implicit param? No!
+    for @list -> {
+        isnt($_, 'a', '$_ does not get set implicitly if a pointy is given')
+    }
 }
 
 # Hm. PIL2JS currently dies here (&statement_control:<for> passes one argument
@@ -29,6 +32,7 @@ for @list -> $letter {
     isnt( $_ ,'a', '$_ does not get set implicitly if a pointy is given')
 }
 
+#?rakudo skip 'scalar binding'
 {
     my $a := $_; $_ = 30;
     for 1 .. 3 { $a++ };
