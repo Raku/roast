@@ -73,7 +73,6 @@ plan *;
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
-  #?rakudo todo 'ro-ness in slices'
   dies_ok { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     "using list slices as lvalues works (2)";
 }
@@ -154,6 +153,7 @@ plan *;
 {
     my $rt66304 = (1, 2, 4);
     isa_ok $rt66304, Seq, 'List assigned to scalar is-a Seq';
+    #?rakudo todo 'exact list type'
     is( $rt66304.WHAT, (1, 2, 4).WHAT,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';
@@ -161,7 +161,6 @@ plan *;
 
     my $x = 44;
     $rt66304 = ( 11, $x, 22 );
-    #?rakudo todo 'RT 66304'
     dies_ok { $rt66304[1] = 'rw' }, 'variable List element is immutable';
     is $x, 44, 'variable not changed via assignment to list element';
 }
