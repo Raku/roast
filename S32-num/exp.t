@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 59;
+plan 62;
 
 # L<S32::Numeric/Numeric/"=item exp">
 
@@ -21,6 +21,11 @@ my $pi = 312689/99532;
 
     is_approx(exp(:exponent(1i*$pi)), -1, 'exp(:exponent(i $pi)) == -1');
     is_approx(exp(:exponent(-1i*$pi)), -1, 'exp(:exponent(-i $pi)) == -1');
+
+    is_approx(exp(:exponent(5), :base(10)), 100000, 'got the base-10 exponent of 5');
+    is_approx(exp(:exponent(0), :base(10)), 1, 'exp(:exponent(0), :base(10)) == 1');
+
+    is_approx(exp(:exponent(1i*$pi), :base(2)), 2 ** (1i * pi), 'exp(:exponent(i $pi), :base(2)) == 2 ** (i * pi)');
 }
 
 {
