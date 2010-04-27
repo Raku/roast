@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 38;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -276,6 +276,17 @@ sub bughunt1 { (state $svar) }
     sub bughunt2 { state $x //= 17; ++$x }
     is bughunt2(), 18,
        'a state variable in parens works with a state variable with //= init';
+}
+
+{
+    # http://irclog.perlgeek.de/perl6/2010-04-27#i_2269848
+    my @tracker;
+    for (1..3) {
+        my $x = sub { state $s++; @tracker.push: $s }
+        $x();
+    };
+    is @tracker.join('|'), '1|1|1',
+        'state var in anonymous closure in loop is not shared';
 }
 
 # vim: ft=perl6
