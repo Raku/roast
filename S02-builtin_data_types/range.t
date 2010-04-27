@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 74;
+plan 67;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -97,16 +97,7 @@ is(+(6..8), 3, 'numification');
 
     is($r.min, 1, 'range.min');
     is($r.max, 5, 'range.max');
-    is($r.minmax, (1,5), 'range.minmax');
-
-    #?rakudo 5 skip 'range reverse not in spec'
-    ### pmichaud, 2008-07-04:  XXX  no spec for .reverse
-    is($r.reverse.from, 5, 'range.reverse.from');
-    is($r.reverse.to,   1, 'range.reverse.to');
-    ### pmichaud, 2008-07-04:  XXX  doesn't test reversed min/max/minmax
-    is($r.min, 1, 'range.reverse.min');
-    is($r.max, 5, 'range.reverse.max');
-    is($r.minmax, (1,5), 'range.reverse.minmax');
+    is($r.bounds, (1,5), 'range.bounds');
 }
 
 # uneven ranges
@@ -117,11 +108,7 @@ is(+(6..8), 3, 'numification');
 
     is($r.min, 1,   'range.min');
     is($r.max, 4.5, 'range.max');
-    is($r.minmax, (1, 4.5), 'range.minmax');
-
-    #?rakudo 2 skip '.reverse on ranges'
-    is($r.reverse.from, 4.5, 'uneven range.reverse.from');
-    is($r.reverse.to,   1,   'uneven range.reverse.to');
+    is($r.bounds, (1, 4.5), 'range.bounds');
 }
 
 # infinite ranges

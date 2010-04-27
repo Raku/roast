@@ -67,28 +67,28 @@ is ((1..10).max: { ($_-3) * ($_-5) }), 10,
   "method form of max taking an arity-1 comparison block works";
 
 # Tests for C<minmax>:
-is @array.minmax,  (-9, 7), "basic method form of minmax works";
+is @array.minmax,  -9..7, "basic method form of minmax works";
 #?rakudo todo "Not sure why this is failing"
 dies_ok {minmax(@array)}, 'minmax() requires comparison function';
 #?rakudo skip 'named args'
-is minmax({$^a <=> $^b }, :values(@array)), -9, "basic subroutine form of minmax works with named args";
+is minmax({$^a <=> $^b }, :values(@array)), -9..7, "basic subroutine form of minmax works with named args";
 
-is (@array.minmax: { $^a <=> $^b }), (-9, 7),
+is (@array.minmax: { $^a <=> $^b }), -9..7,
   "method form of minmax with identity comparison block works";
 
-is minmax({ $^a <=> $^b }, @array), (-9, 7),
+is minmax({ $^a <=> $^b }, @array), -9..7,
   "subroutine form of minmax with identity comparison block works";
 
-is (@array.minmax: { abs $^a <=> abs $^b }), (0, -9),
+is (@array.minmax: { abs $^a <=> abs $^b }), 0..-9,
   "method form of minmax taking a comparision block works";
-is minmax({ abs $^a <=> abs $^b }, @array), (0, -9),
+is minmax({ abs $^a <=> abs $^b }, @array), 0..-9,
   "subroutine form of minmax taking a comparision block works";
 
 #?rakudo 2 skip "Range.minmax not fully implemented yet"
-is ((-10..9).minmax: { abs $^a <=> abs $^b }), (0, -10),
+is ((-10..9).minmax: { abs $^a <=> abs $^b }), 0..-10,
   "method form of minmax on Ranges taking a comparision block works";
 
-is ((1..10).minmax: { ($_-3) * ($_-5) }), (4, 10),
+is ((1..10).minmax: { ($_-3) * ($_-5) }), 4..10,
   "method form of minmax taking an arity-1 comparison block works";
 
 # Error cases:
