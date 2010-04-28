@@ -158,8 +158,17 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     isa_ok @a[1], Match, "second is a Match object";
     isa_ok @a[3], Match, "fourth is a Match object";
     isa_ok @a[5], Match, "sixth is a Match object";
-    #?rakudo todo "Captured Match objects are not stringifying properly"
     is ~@a, ~("h", "e", "ll", "o", " w", "o", "rld"), "The pieces are correct";
+}
+
+{
+    my @a = "hello world".split(/(<[aeiou]>)(.)/, :all);
+    is +@a, 7, "split:all resulted in seven pieces";
+    is ~@a, ~("h", "el", "l", "o ", "w", "or", "ld"), "The pieces are correct";
+    is @a[1][0], "e", "First capture worked";
+    is @a[1][1], "l", "Second capture worked";
+    is @a[3][0], "o", "Third capture worked";
+    is @a[3][1], " ", "Fourth capture worked";
 }
 
 done_testing;
