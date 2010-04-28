@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 25;
+plan *;
 
 # split on an empty string
 
@@ -150,5 +150,18 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     is 'hello-world'.split(/<wb>/).join(','), <hello - world>.join(','),
        q{'hello-world'.split(/<wb>/)};
 }
+
+{
+    my @a = "hello world".split(/<[aeiou]>/, :all);
+    is +@a, 7, "split:all resulted in seven pieces";
+    #?rakudo 3 skip "Match is currently Regex::Match"
+    isa_ok @a[1], Match, "second is a Match object";
+    isa_ok @a[3], Match, "fourth is a Match object";
+    isa_ok @a[5], Match, "sixth is a Match object";
+    #?rakudo todo "Captured Match objects are not stringifying properly"
+    is ~@a, ~("h", "e", "ll", "o", " w", "o", "rld"), "The pieces are correct";
+}
+
+done_testing;
 
 # vim: ft=perl6
