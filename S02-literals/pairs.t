@@ -23,7 +23,7 @@ use Test;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 47;
+plan 48;
 
 sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
 {
@@ -146,6 +146,10 @@ sub f9 (:$bar!) { WHAT($bar) }
 
     dies_ok { f9($arrayref => 42) },
         "variables cannot be keys of syntactical pairs (3)";
+}
+
+{
+    is (a => 3).elems, 1, 'Pair.elems';
 }
 
 # vim: ft=perl6
