@@ -54,9 +54,10 @@ plan 15;
     is(end(@array), 42, 'index of last element is 42 after push');
 }
 
+is  3.end, 0,  'Scalars look like wrapped in a single-item list';
+
 # test some errors
 {
     dies_ok { end() }, '... end() dies without an argument';
-    dies_ok { 3.end }, '... .end does not work on scalars';
 }
 #vim: ft=perl6
