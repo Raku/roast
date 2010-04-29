@@ -68,7 +68,7 @@ eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
 
 # RT #64220
 
-ok 'b' ~~ /<[...b]>/, 'weird char class matches at least its end point';
+ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 
 done_testing;
 
