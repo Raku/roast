@@ -108,7 +108,6 @@ is 'abc'.split('', 3).Str, "a b c", 'split into characters respects limit (2)';
 {
     my @split = 'abc def ghi'.split(/(\s+)/, :all);
     ok @split.elems == 5, q{split returns captured delimiter} ;
-    #?rakudo 2 todo 'Broken in ng1'
     ok @split[1] eq ' ', q{split captured single space};
     ok @split[3] eq ' ', q{split captured multiple spaces};
 }

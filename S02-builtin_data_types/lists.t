@@ -143,7 +143,6 @@ plan *;
     diag $!;
     ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
 
-    #?rakudo emit #
     augment class List { method rt62836_x { 62836 } };
     #?rakudo skip 'unskip when "augment" works'
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
