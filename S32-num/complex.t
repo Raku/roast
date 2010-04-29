@@ -45,29 +45,29 @@ my @examples = (0i, 1 + 0i, -1 + 0i, 1i, -1i, 2 + 0i, -2 + 0i, 2i, -2i,
 for @examples -> $z {
     is_approx($z + 0, $z, "$z + 0 = $z");
     is_approx(0 + $z, $z, "0 + $z = $z");
-    is_approx($z + 0.0, $z, "$z + 0.0 = $z");
-    is_approx(0.0 + $z, $z, "0.0 + $z = $z");
+    is_approx($z + 0.0.Num, $z, "$z + 0.0.Num = $z");
+    is_approx(0.0.Num + $z, $z, "0.0.Num + $z = $z");
     is_approx($z + 0 / 1, $z, "$z + 0/1 = $z");
     is_approx(0 / 1 + $z, $z, "0/1 + $z = $z");
     
     is_approx($z - 0, $z, "$z - 0 = $z");
     is_approx(0 - $z, -$z, "0 - $z = -$z");
-    is_approx($z - 0.0, $z, "$z - 0.0 = $z");
-    is_approx(0.0 - $z, -$z, "0.0 - $z = -$z");
+    is_approx($z - 0.0.Num, $z, "$z - 0.0.Num = $z");
+    is_approx(0.0.Num - $z, -$z, "0.0.Num - $z = -$z");
     is_approx($z - 0 / 1, $z, "$z - 0/1 = $z");
     is_approx(0 / 1 - $z, -$z, "0/1 - $z = -$z");
     
     is_approx($z + 2, $z.re + 2 + ($z.im)i, "$z + 2");
     is_approx(2 + $z, $z.re + 2 + ($z.im)i, "2 + $z");
-    is_approx($z + 2.5, $z.re + 2.5 + ($z.im)i, "$z + 2.5 = $z");
-    is_approx(2.5 + $z, $z.re + 2.5 + ($z.im)i, "2.5 + $z = $z");
+    is_approx($z + 2.5.Num, $z.re + 2.5.Num + ($z.im)i, "$z + 2.5.Num = $z");
+    is_approx(2.5.Num + $z, $z.re + 2.5.Num + ($z.im)i, "2.5.Num + $z = $z");
     is_approx($z + 3 / 2, $z.re + 3/2 + ($z.im)i, "$z + 3/2");
     is_approx(3 / 2 + $z, $z.re + 3/2 + ($z.im)i, "3/2 + $z");
 
     is_approx($z - 2, $z.re - 2 + ($z.im)i, "$z - 2");
     is_approx(2 - $z, -$z.re + 2 - ($z.im)i, "2 - $z");
-    is_approx($z - 2.5, $z.re - 2.5 + ($z.im)i, "$z - 2.5 = $z");
-    is_approx(2.5 - $z, -$z.re + 2.5 - ($z.im)i, "2.5 - $z = $z");
+    is_approx($z - 2.5.Num, $z.re - 2.5.Num + ($z.im)i, "$z - 2.5.Num = $z");
+    is_approx(2.5.Num - $z, -$z.re + 2.5.Num - ($z.im)i, "2.5.Num - $z = $z");
     is_approx($z - 3 / 2, $z.re - 3/2 + ($z.im)i, "$z - 3/2");
     is_approx(3 / 2 - $z, -$z.re + 3/2 - ($z.im)i, "3/2 - $z");
 }
