@@ -89,6 +89,21 @@ for @examples -> $z {
 
 }
 
+# Complex math with strings, to make sure type coercion is working correctly
+{
+    is 3i + "1", 1 + 3i, '3i + "1"';
+    is "1" + 3i, 1 + 3i, '"1" + 3i';
+    is 3i - "1", 3i - 1, '3i - "1"';
+    is "1" - 3i, 1 - 3i, '"1" - 3i';
+    is 3i * "1", 3i * 1, '3i * "1"';
+    is "1" * 3i, 1 * 3i, '"1" * 3i';
+    is 3i / "1", 3i / 1, '3i / "1"';
+    is "1" / 3i, 1 / 3i, '"1" / 3i';
+    is 3i ** "1", 3i ** 1, '3i ** "1"';
+    is "1" ** 3i, 1 ** 3i, '"1" ** 3i';
+    
+}
+
 done_testing;
 
 # vim: ft=perl6
