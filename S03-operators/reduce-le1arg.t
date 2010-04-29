@@ -22,7 +22,6 @@ ok( !([~<] ()).defined, "[~<] () should fail");
 ok( !([~>] ()).defined, "[~>] () should fail");
 is ([+] ()), 0, "[+] () eq 0";
 is ([-] ()), 0, "[-] () eq 0";
-#?rakudo skip "~ cannot be defined until the parent type is moved from PIR"
 is ([~] ()), '', "[~] () eq ''";
 is ([+|] ()), 0, "[+|] () eq 0";
 is ([+^] ()), 0, "[+^] () eq 0";
@@ -55,11 +54,12 @@ is ([===] ()), Bool::True, "[===] () eq True";
 is ([!===] ()), Bool::True, "[!===] () eq True";
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
-#?rakudo 6 skip "[...] not implemented"
+#?rakudo 3 skip "[...] not implemented"
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::True, "[||] () eq True";
 is ([^^] ()), Bool::True, "[^^] () eq True";
 is ([//] ()), Any, "[//] () is Any";
+#?rakudo 2 skip "[...] not implemented"
 is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
 
