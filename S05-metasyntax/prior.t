@@ -25,7 +25,7 @@ if !eval('("a" ~~ /a/)') {
 
 ok("A" !~~ m/<.prior>/, 'No prior successful match');
 
-ok("A" ~~ m/<[A-Z]>/, 'Successful match');
+ok("A" ~~ m/<[A..Z]>/, 'Successful match');
 
 ok("ABC" ~~ m/<.prior>/, 'Prior successful match');
 ok("B" !~~ m/<.prior>/, 'Prior successful non-match');
