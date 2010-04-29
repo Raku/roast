@@ -16,9 +16,8 @@ is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
 
 is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
 
-#?rakudo todo 'graphemes not implemented'
+#?rakudo 2 todo 'graphemes not implemented'
 is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
-#?rakudo skip 'graphemes really not implemented'
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "b", ),
     "comb on string with grapheme non-precomposed");
@@ -39,7 +38,6 @@ is "abcd".comb(:limit(2)), <a b>, 'default matcher with supplied limit';
     is $hair.comb(/\d+/, 1000000000), <3 3 4 3 0 3 3 1 1 1>, 'limit of 1 billion returns all matches quickly';
 }
 
-#?rakudo skip "Null PMC in Rakudo-ng"
 {
     is "a ab bc ad ba".comb(/«a\S*/), <a ab ad>,
         'match for any a* words';
@@ -70,7 +68,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 # needed: comb a filehandle
 
-#?rakudo skip '.comb regressions'
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/);
     is @l.join('|'), 'a23|c58', 'basic comb-without-matches sanity';
@@ -78,7 +75,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     isa_ok(@l[1], Str, 'second item is a Str');
 }
 
-#?rakudo skip '.comb regressions'
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/, :match);
     is @l.join('|'), 'a23|c58', 'basic comb-with-matches sanity';
@@ -92,7 +88,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 }
 
 # RT #66340
-#?rakudo skip "bad all around in Rakudo-ng"
 {
     my $expected_reason = rx/^'No applicable candidates '/;
     
