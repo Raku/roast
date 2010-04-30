@@ -12,10 +12,11 @@ is(foo(), '&Main::foo', 'got the right routine name in the default package');
 
 {
     # This testcase might be really redundant
-    package Bar;
-    sub bar { return &?ROUTINE.name }
-    is(bar(), '&Bar::bar', 'got the right routine name outside the default package');
-};
+    package Bar {
+	sub bar { return &?ROUTINE.name }
+	is(bar(), '&Bar::bar', 'got the right routine name outside the default package');
+    }
+}
 
 my $bar = sub { return &?ROUTINE.name };
 is($bar(), '<anon>', 'got the right routine name (anon-block)');

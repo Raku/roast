@@ -507,11 +507,12 @@ sub l () { 1, 2 };
 
 #?rakudo skip 'item assignment, $::(...)'
 {
-    package Foo;
-    our $b;
-    my @z = ($::('Foo::b') = l(), l());
-    is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
-    is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
+    package Foo {
+	our $b;
+	my @z = ($::('Foo::b') = l(), l());
+	is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
+	is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
+    }
 }
 
 #?rakudo skip 'Autovivify full qualified name'
