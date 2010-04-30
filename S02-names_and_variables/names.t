@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 22;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -71,6 +71,13 @@ plan 21;
 {
     sub self { 4 };
     is self(), 4, 'can define and call a sub self()';
+}
+
+# RT #69752
+{
+    eval 'Module.new';
+    ok "$!" ~~ / 'Module' /,
+        'error message mentions name not recognized, no maximum recursion depth exceeded';
 }
 
 # vim: ft=perl6
