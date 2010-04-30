@@ -113,7 +113,7 @@ Testing operator overloading subroutines
        "postfix operator overloading for new operator (weird)");
 }
 
-#?rakudo todo 'macros'
+#?rakudo skip 'macros'
 {
     my $var = 0;
     #?pugs 2 todo 'feature'
@@ -161,6 +161,7 @@ Testing operator overloading subroutines
 }
 
 # Accessing an operator using its subroutine name
+#?rakudo skip 'scalar binding'
 {
   is &infix:<+>(2, 3), 5, "accessing a builtin operator using its subroutine name";
 
@@ -289,15 +290,15 @@ Testing operator overloading subroutines
     ok !(A.new(v => 2) == A.new(v => 3)), 'infix:<==> on A objects works (-)';
 }
 
+#?rakudo skip 'circumfix overloading'
 {
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
     is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works'
 
 }
 
-#?rakudo skip 'RT #68662'
 {
-    multi sub infix:<+=> (Num $a is rw, Num $b) { $a -= $b }
+    multi sub infix:<+=> (Int $a is rw, Int $b) { $a -= $b }
     my $frew = 10;
     $frew += 5;
     is $frew, 5, 'infix redefinition of += works';
@@ -319,12 +320,14 @@ Testing operator overloading subroutines
 
 # test that multis with other arity don't interfere with existing ones
 # used to be RT #65640
+#?rakudo skip 'RT 65640'
 {
     multi sub infix:<+>() { 42 };
     ok 5 + 5 == 10, "New multis don't disturb old ones";
 }
 
 # taken from S06-operator-overloading/method.t
+#?rakudo skip 'unknown errors'
 {
     class Bar {
         has $.bar is rw;
@@ -374,6 +377,7 @@ Testing operator overloading subroutines
 }
 
 # RT #65638
+#?rakudo skip 'foo'
 {
     is eval('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
     is eval('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
