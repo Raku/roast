@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # L<S02/"Built-In Data Types" /Perl 6 should by default make standard IEEE floating point concepts visible>
 
@@ -44,5 +44,10 @@ ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 ok NaN.Int === NaN,         'Inf.Int === Int';
 ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
+
+# RT #70730
+{
+    ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
+}
 
 # vim: ft=perl6
