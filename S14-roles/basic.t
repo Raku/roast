@@ -106,6 +106,14 @@ ok D ~~ Role, 'a role does the Role type';
 
 eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
+{
+    my $x = eval 'class Animal does NonExistentRole { }; 1';
+    my $err = "$!";
+    ok !$x, 'a class dies when it does a non-existent role';
+    ok $err ~~ /NonExistentRole/,
+       '... and the error message mentions the role';
+}
+
 done_testing;
 
 # vim: ft=perl6
