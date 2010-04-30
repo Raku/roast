@@ -39,7 +39,6 @@ plan 23;
     ok $x == -1, 'my Int $x; $x -= 1 works'
 }
 
-#?rakudo 6 todo 'defaults for op= on undefined values'
 {
     my $s;
     $s ~= 'ab';
@@ -93,7 +92,6 @@ plan 23;
     is $i, 1, 'my $i **= $i';
 }
 
-#?rakudo 3 todo 'defaults for op= on undefined values'
 {
     my $x;
     $x *= 1i;
