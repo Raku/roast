@@ -5,7 +5,7 @@ use Test;
 
 # L<S11/Compile-time Importation>
 
-plan 7;
+plan 8;
 
 # test that 'use' imports class names defined in importet packages
 
@@ -29,6 +29,20 @@ eval_lives_ok 'Stupid::Class.new()', 'can instantiate object of "imported" class
     }
     my $o = Stupid::Class.new( attrib => 'd' );
     is $o.double, 'dd', 'can extend "imported" class';
+
+}
+
+# class loading inside a method
+# RT #73886
+{
+    BEGIN { @*INC.push: 't/spec/packages' }
+    class MethodLoadingTest {
+        method doit {
+            use Foo;
+            Foo.new.foo();
+        }
+    }
+    is MethodLoadingTest.doit(), 'foo', 'can load class from inside a method';
 
 }
 
