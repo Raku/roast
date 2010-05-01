@@ -1103,6 +1103,7 @@ ok "abc\f\fdef" !~~ /c \F+ d/, 'not formfeed (\F)';
 #### a \F+ f			abcdef		y	not formfeed (\F)
 ok 'abcdef' ~~ /a \F+ f/, 'not formfeed (\F)';
 
+#?rakudo 11 skip '\e'
 #### c \e d			abc\edef	y	escape (\e)
 #?pugs todo 'feature'
 ok "abc\edef" ~~ /c \e d/, 'escape (\e)';
