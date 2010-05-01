@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 8;
 
 =begin pod
 
@@ -24,6 +24,13 @@ eval_dies_ok  '{ my class R3 {}; R3; }; R3',
     }
     is ~Model, 'Model()',            'lexical role type object stringifies OK';
     is Model.catwalk, 'ooh pretty!', 'can pun lexical role';
+
+    my class SuperModel does Model {
+    }
+    ok SuperModel ~~ Model,        'lexical role can be composed and smart-matches';
+    my $sm = SuperModel.new();
+    ok $sm ~~ Model,               'instance smart-matches against lexical role too';
+    is $sm.catwalk, 'ooh pretty!', 'can call composed method';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 13;
 
 =begin pod
 
@@ -30,6 +30,16 @@ eval_dies_ok  '{ my class B {}; B.new; }; B.new',
     is $pint.name, 'Erdinger',                'attribute in lexical class works';
     is $pint.describe, 'outstanding flavour', 'method call on lexical class works';
     is WeissBier, 'WeissBier()',              'lexical type object stringifies correct';
+
+    my class LessThanAmazingWeissBier is WeissBier {
+        method describe() { 'tastes like sweetcorn' }
+    }
+    ok LessThanAmazingWeissBier ~~ WeissBier,      'inehritance between lexical classes works';
+    my $ltapint = LessThanAmazingWeissBier.new(name => 'Baltika 7');
+    ok $ltapint ~~ LessThanAmazingWeissBier,       'can smart-match class that inherits';
+    ok $ltapint ~~ WeissBier,                      'can smart-match against parent class too';
+    is $ltapint.describe, 'tastes like sweetcorn', 'can call overridden method';
+    is $ltapint.name, 'Baltika 7',                 'can call inherited method that accesses inherited attribute';
 }
 
 # vim: ft=perl6
