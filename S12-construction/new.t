@@ -47,6 +47,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 }
 
 # RT 71706
+#?rakudo todo 'nested classes'
 {
     class RT71706 {
         class RT71706::Artie {}
