@@ -76,7 +76,6 @@ ok !defined($/), '$/ still undefined in the outer block';
             flunk 'regex did not match - $/ is properly set with explicit $_ in a given { } block';
         }
         if /\w+/ {
-            #?rakudo todo 'RT 67864'
             ok $/ eq 'Wall', '$/ is properly set in a given { } block';
         } else {
             flunk 'regex did not match - $/ is properly set in a given { } block';
@@ -97,7 +96,6 @@ ok !defined($/), '$/ still undefined in the outer block';
         if /not/ { $s2 = 0 }
     }
     is $s1, 1, '/foo/ matched against $_ (successfully)';
-#?rakudo 2 todo "if not properly smartmatching"
     is $s2, 1, '/not/ matched against $_ (no match)';
 
     given 'foo' {
