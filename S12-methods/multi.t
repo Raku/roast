@@ -147,7 +147,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     }
 }
 
-#?rakudo skip 'multis from roles, introspection'
 {
     role RoleS {
         multi method d( Str $x ) { 'string' }
@@ -175,6 +174,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is @candies.elems, 3, 'got three candidates for multi method';
 
     ok @candies[0] ~~ Method, 'candidate 0 is a method';
+    #?rakudo 2 todo 'wrong type for some candidates'
     ok @candies[1] ~~ Method, 'candidate 1 is a method';
     ok @candies[2] ~~ Method, 'candidate 2 is a method';
 }
