@@ -19,7 +19,6 @@ plan 22;
     lives_ok { @b.=grep({/<[a..z]>/})},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
-    #?rakudo 2 todo "this match is failing"
     is @b[1], 'bar', 'inplace grep [1]';
     is @b[2], 'baz', 'inplace grep [2]';
 }
