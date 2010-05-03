@@ -73,7 +73,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     ok($caught, "caught exception of class Naughty");
 };
 
-#?rakudo skip 'parse error'
 {
     # exception superclass
     class Naughty::Specific is Naughty {};

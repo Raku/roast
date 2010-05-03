@@ -82,7 +82,6 @@ is $one-and-one-hundredth - 1.01, 0, "1.01 - 1.01 == 0";
 is_approx 1.01 - $one, 0.01, "1.01 - 1 == 0.01";
 is_approx $one-and-one-hundredth - 1.Num, 0.01, "1.01 - 1 == 0.01";
 
-#?rakudo 2 skip "log is a multi method and multi methods and roles don't mix yet"
 is_approx $one-and-one-hundredth.log, 1.01.log, "1.01.log is correct";
 is_approx log($one-and-one-hundredth), 1.01.log, "log(1.01) is correct";
 

@@ -365,11 +365,9 @@ Testing operator overloading subroutines
         my @foo = ($obj, $obj, $obj);
         my $res;
         lives_ok { $res = ~@foo }, "stringification didn't die";
-        #?rakudo skip 'spec clarification needed'
         is $res, "pugs pugs pugs", "stringification overloading worked in array stringification";
 
         lives_ok { $res = ~[@foo »~« "!"] }, "stringification with hyperization didn't die";
-        #?rakudo skip 'spec clarification needed'
         is $res, "pugs! pugs! pugs!", "stringification overloading was hyperized correctly";
     }
 
@@ -377,14 +375,13 @@ Testing operator overloading subroutines
 }
 
 # RT #65638
-#?rakudo skip 'foo'
 {
     is eval('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
     is eval('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
     #?rakudo todo 'RT 65638'
     is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
-    #?rakudo 2 skip 'Redefinition of infix:<+> causes Test.pm to miscount'
+    #?rakudo todo 'mixed overloaded operators of different arities'
     is eval('sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }

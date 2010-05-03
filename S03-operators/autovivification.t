@@ -119,7 +119,6 @@ plan 23;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (with Int proto on hash items)';
 }
 
-#?rakudo skip 'Hash element autoviv'
 {
     my %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (without proto on hash items)';
