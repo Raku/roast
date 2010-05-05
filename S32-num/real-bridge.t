@@ -27,6 +27,7 @@ class Fixed2 does Real {
 my $zero = Fixed2.new(0);
 my $one = Fixed2.new(1);
 my $one-and-one-hundredth = Fixed2.new(1.01);
+my $ten = Fixed2.new(10);
 my $neg-pi = Fixed2.new(-3.14);
 
 isa_ok $zero, Fixed2, "Fixed2 sanity test";
@@ -84,6 +85,12 @@ is_approx $one-and-one-hundredth - 1.Num, 0.01, "1.01 - 1 == 0.01";
 
 is_approx $one-and-one-hundredth.log, 1.01.log, "1.01.log is correct";
 is_approx log($one-and-one-hundredth), 1.01.log, "log(1.01) is correct";
+#?rakudo 2 skip "Real.log(Real) doesn't yet work"
+is_approx $one-and-one-hundredth.log($ten), 1.01.log10, "1.01.log(10) is correct";
+is_approx log($one-and-one-hundredth, $ten), 1.01.log10, "log(1.01, 10) is correct";
+#?rakudo skip "Real.log(Complex) doesn't yet work"
+is_approx $one-and-one-hundredth.log($ten * 1i), 1.01.log / log(10i), "1.01.log(10i) is correct";
+is_approx ($one-and-one-hundredth * 1i).log($ten), log(1.01i) / log(10), "1.01i.log(10) is correct";
 
 is_approx $one-and-one-hundredth.cis, 1.01.cis, "1.01.cis is correct";
 is_approx cis($one-and-one-hundredth), 1.01.cis, "cis(1.01) is correct";
