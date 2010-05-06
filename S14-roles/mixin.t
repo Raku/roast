@@ -11,6 +11,7 @@ my $x = C1.new();
 $x does R1;
 is $x.test,     42,         'method from a role can be mixed in';
 is $x.?test,    42,         '.? form of call works on a mixed-in role';
+#?rakudo todo '$obj.+method dispatch'
 is $x.+test,    42,         '.+ form of call works on a mixed-in role';
 is $x.*test,    42,         '.* form of call works on a mixed-in role';
 
@@ -41,21 +42,28 @@ is $y.answer,   13,         'attribute from multi-role mixing OK';
 is $y.test,     42,         'method from other role was OK too';
 
 
-role Answer { has $.answer is rw }
-$x = 0;
-$x does Answer(42);
-is $x.answer,   42,         'role mix-in with initialization value worked';
-is $x,          0,          'mixing into Int still makes it function as an Int';
+#?rakudo skip 'sub form of mixins'
+{
+    role Answer { has $.answer is rw }
+    my $x = 0;
+    $x does Answer(42);
+    is $x.answer,   42,         'role mix-in with initialization value worked';
+    is $x,          0,          'mixing into Int still makes it function as an Int';
+}
 
-role A { has $.a is rw }
-role B { has $.b is rw }
-$x does A(1);
-$x does B(2);
-is $x.a,        1,          'mixining in two roles one after the other';
-is $x.b,        2,          'mixining in two roles one after the other';
+#?rakudo skip 'sub form of mixins'
+{
+    my $x = 0;
+    role A { has $.a is rw }
+    role B { has $.b is rw }
+    $x does A(1);
+    $x does B(2);
+    is $x.a,        1,          'mixining in two roles one after the other';
+    is $x.b,        2,          'mixining in two roles one after the other';
 
-my @array does R1;
-is @array.test, 42,         'mixing in a role at the point of declaration works';
+    my @array does R1;
+    is @array.test, 42,         'mixing in a role at the point of declaration works';
+}
 
 #?rakudo skip 'mixin at the point of declaration is compile time'
 {
@@ -66,6 +74,7 @@ is @array.test, 42,         'mixing in a role at the point of declaration works'
 
 # L<S14/Run-time Mixins/"but only if the role supplies exactly one attribute">
 
+#?rakudo skip 'sub form of mixin'
 {
     role R4a {
         # no attribute here
