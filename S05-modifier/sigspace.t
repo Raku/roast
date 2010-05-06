@@ -22,7 +22,7 @@ ok(   "abc  def" ~~ m:sigspace/abc <.ws> def/, 'Word explicit space match');
 
 ok 'abc def'     ~~ m/:s abc def/,  'inline :s (+)';
 ok 'zabc def'   !~~ m/:s abc def/,  'inline :s implies <.ws> immediately (-)';
-ok 'zabc def'   ~~  m/:s[abc] def/, 'inline :s implies <.ws> immediately (+)';
+ok 'zabc def'   ~~  m/:s'abc' def/, 'inline :s implies <.ws> immediately (+)';
 
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
