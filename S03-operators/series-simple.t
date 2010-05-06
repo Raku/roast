@@ -62,5 +62,15 @@ is (1, 1, 1 ... 10).batch(10).join(', '), '1, 1, 1, 1, 1, 1, 1, 1, 1, 1', 'serie
 is (1, 1, 1, 2, 3 ... 10).batch(10).join(', '), '1, 1, 1, 2, 3, 4, 5, 6, 7, 8', 'series started with three identical numbers, but then goes arithmetic';
 is (1, 1, 1, 2, 4 ... 16).batch(10).join(', '), '1, 1, 1, 2, 4, 8, 16', 'series started with three identical numbers, but then goes geometric';
 is (4, 2, 1, 2, 4 ... 16).batch(10).join(', '), '4, 2, 1, 2, 4, 8, 16', 'series started with three identical numbers, but then goes geometric';
+is ('a', 'b' ... *).batch(10).join(', '), 'a, b, c, d, e, f, g, h, i, j', 'series started with two different letters';
+is (<a b c> ... *).batch(10).join(', '), "a, b, c, d, e, f, g, h, i, j", "string-valued series staring from array";
+is ('z' ... 'a').batch(10).join(', '), 'z, y, x, w, v, u, t, s, r, q', 'descending series started with one letter';
+is (<z y> ... 'a').batch(10).join(', '), 'z, y, x, w, v, u, t, s, r, q', 'descending series started with two different letters';
+is (<z y x> ... 'a').batch(10).join(', '), 'z, y, x, w, v, u, t, s, r, q', 'descending series started with two different letters';
+
+# tests for repetition 
+is ('c', { $_ } ... *).batch(10).join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series started with letter and identify closure';
+is ('c', 'c' ... *).batch(10).join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series started with two identical letters';
+is ('c', 'c', 'c' ... *).batch(10).join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series started with three identical letters';
 
 done_testing;
