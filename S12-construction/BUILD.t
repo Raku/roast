@@ -97,6 +97,7 @@ TestCompiler.new;
 is $counter, 1, "testing BUILD in compiler subclass";
 }
 
+#?rakudo todo 'method BUILD should warn'
 {
     BEGIN { @*INC.push: 't/spec/packages' }
     use Test::Util;
