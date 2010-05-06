@@ -171,7 +171,7 @@ ok ('abc' ~~ /( (.) )*/) && matchcheck($/, q/mob 0 1 0: <b @ 1>/), 'nested repea
 ok ('abc' ~~ /[ (.) ]*/) && matchcheck($/, q/mob 0 1: <b @ 1>/), 'nested repeated captures';
 
 #### ( [.] )*				abc	/mob 0 1: <b @ 1>/	nested repeated captures
-ok ('abc' ~~ /( [.] )*/) && matchcheck($/, q/mob 0 1: <b @ 1>/), 'nested repeated captures';
+ok ('abc' ~~ /( [ . ] )*/) && matchcheck($/, q/mob 0 1: <b @ 1>/), 'nested repeated captures';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 0: <a @ 0>/	numbered aliases $1
 ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 0: <a @ 0>/), 'numbered aliases $1';
@@ -225,7 +225,7 @@ ok ('abc def ghi' ~~ /<alpha> [ \- <alpha> ]?/) && matchcheck($/, q/mob<alpha> 0
 
 #### [(.)$0]+				bookkeeper	y			backreference
 #?pugs todo 'feature'
-ok 'bookkeeper' ~~ /[(.)$0]+/, 'backreference';
+ok 'bookkeeper' ~~ /[ (.) $0 ]+/, 'backreference';
 
 #### (\w+) <+ws> $0				hello hello	y			backreference at end of string
 #?pugs todo 'feature'
@@ -233,15 +233,15 @@ ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
 
 #### [(.)$0]+				bookkeeper	/mob 0 0: <o @ 1>/	backref $1
 #?pugs todo 'feature'
-ok ('bookkeeper' ~~ /[(.)$0]+/) && matchcheck($/, q/mob 0 0: <o @ 1>/), 'backref $1';
+ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 0: <o @ 1>/), 'backref $1';
 
 #### [(.)$0]+				bookkeeper	/mob 0 1: <k @ 3>/	backref $1
 #?pugs todo 'feature'
-ok ('bookkeeper' ~~ /[(.)$0]+/) && matchcheck($/, q/mob 0 1: <k @ 3>/), 'backref $1';
+ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 1: <k @ 3>/), 'backref $1';
 
 #### [(.)$0]+				bookkeeper	/mob 0 2: <e @ 5>/	backref $1
 #?pugs todo 'feature'
-ok ('bookkeeper' ~~ /[(.)$0]+/) && matchcheck($/, q/mob 0 2: <e @ 5>/), 'backref $1';
+ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 2: <e @ 5>/), 'backref $1';
 
 #### (.)*x					123x		/mob: <123x @ 0>/	repeated dot capture
 #?pugs todo 'feature'
