@@ -107,33 +107,33 @@ plan 15;
         '.pick(*) should return a permutation of a list';
 }
 
+# P26 (**) Generate the combinations of K distinct objects chosen from the N
+# elements of a list
+#
+# In how many ways can a committee of 3 be chosen from a group of 12 people? We
+# all know that there are C(12,3) = 220 possibilities (C(N,K) denotes the
+# well-known binomial coefficients). For pure mathematicians, this result may be
+# great. But we want to really generate all the possibilities in a list.
+#
+# Example:
+# * (combination 3 '(a b c d e f))
+# ((A B C) (A B D) (A B E) ... )
+
+sub combination($n, @xs) {
+    if $n > @xs {
+	()
+    } elsif $n == 0 {
+	([])
+    } elsif $n == @xs {
+	[@xs]
+    } else {
+	((map { [@xs[0],$_] },combination($n-1,@xs[1..*])),
+	 combination($n,@xs[1..*]))
+    }
+}
+
 #?rakudo skip 'elements() not implemented in class Range'
 {
-    # P26 (**) Generate the combinations of K distinct objects chosen from the N
-    # elements of a list
-    #
-    # In how many ways can a committee of 3 be chosen from a group of 12 people? We
-    # all know that there are C(12,3) = 220 possibilities (C(N,K) denotes the
-    # well-known binomial coefficients). For pure mathematicians, this result may be
-    # great. But we want to really generate all the possibilities in a list.
-    #
-    # Example:
-    # * (combination 3 '(a b c d e f))
-    # ((A B C) (A B D) (A B E) ... )
-    
-    sub combination($n, @xs) {
-        if $n > @xs {
-            ()
-        } elsif $n == 0 {
-            ([])
-        } elsif $n == @xs {
-            [@xs]
-        } else {
-            ((map { [@xs[0],$_] },combination($n-1,@xs[1..*])),
-             combination($n,@xs[1..*]))
-        }
-    }
-    
     
     is combination(3, (1..5)),
     ([1, 2, 3],
