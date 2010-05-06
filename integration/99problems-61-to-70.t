@@ -139,6 +139,11 @@ plan 15;
     skip 1, "Test(s) not yet written: (**) Construct a complete binary tree";
 }
 
+sub count($tree) {
+    return 0 unless $tree.defined;
+    return 1 + count($tree[1]) + count($tree[2]);
+}
+    
 {
     # P64 (**) Layout a binary tree (1)
     # 
@@ -182,11 +187,6 @@ plan 15;
                 ['p', 9, 3, Mu, 
                     ['s', 11, 4,
                         ['q', 10, 5, Mu, Mu]], Mu], Mu]];
-    
-    sub count($tree) {
-        return 0 unless $tree.defined;
-        return 1 + count($tree[1]) + count($tree[2]);
-    }
     
     sub align($tree, $prev_x, $prev_y, $lr){
         return Mu unless defined($tree);
