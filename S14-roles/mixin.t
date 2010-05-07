@@ -51,6 +51,8 @@ is $y.test,     42,         'method from other role was OK too';
     is $x,          0,          'mixing into Int still makes it function as an Int';
 }
 
+my @array;
+
 #?rakudo skip 'sub form of mixins'
 {
     my $x = 0;
@@ -61,7 +63,7 @@ is $y.test,     42,         'method from other role was OK too';
     is $x.a,        1,          'mixining in two roles one after the other';
     is $x.b,        2,          'mixining in two roles one after the other';
 
-    my @array does R1;
+    @array does R1;
     is @array.test, 42,         'mixing in a role at the point of declaration works';
 }
 
