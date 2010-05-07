@@ -3,13 +3,28 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 10;
+plan 16;
+
+{
+    my @list = 1, 2, 3, 4;
+    my @results = @list.classify: { $_ % 2 ?? 'odd' !! 'even' };
+    ok @results[0] ~~ Pair, 'got Pairs back from classify';
+    is +@results, 2,  'got two values back from classify';
+
+    @results = @results.sort;
+    is @results[0].key, 'even', 'got correct "first" key';
+    is @results[1].key, 'odd',  'got correct "second" key';
+
+    is @results[0].value.join(','), '2,4', 'correct values from "even" key';
+    is @results[1].value.join(','), '1,3', 'correct values from "odd" key';
+}
 
 #?pugs todo 'feature'
+#?rakudo skip 'binding'
 { 
     my   @list = (1, 2, 3, 4);
     my (@even,@odd);
-    ok(eval(q"(:@even, :@odd) := classify { $_ % 2 ?? 'odd' !! 'even' } 1,2,3,4; ") );
+    lives_ok { (:@even, :@odd) := classify { $_ % 2 ?? 'odd' !! 'even' }, 1,2,3,4}, 'Can bind result list of classify';
     is_deeply(@even, [2,4], "got expected evens");
     is_deeply(@odd,  [1,3], "got expected odds");
 }
@@ -17,7 +32,8 @@ plan 10;
 #?pugs todo 'feature'
 {
     my %by_five;
-    ok(eval(q" %by_five = classify { $_ * 5 } 1,2,3,4 "));
+    lives_ok { %by_five = classify { $_ * 5 }, 1, 2, 3, 4},
+        'can classify by numbers';
 
     is( %by_five{5},  1);
     is( %by_five{10}, 2);
