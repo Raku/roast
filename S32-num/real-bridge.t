@@ -71,6 +71,51 @@ nok 1.Rat < $one, "not 1 < 1";
 ok 1.001 < $one-and-one-hundredth, "1.001 < 1.01";
 nok $neg-pi < -3.14, "not -3.14 < -3.14";
 
+ok $zero <= 0, "0 <= 0";
+nok $one <= 0.Num, "not 1 <= 0";
+ok $one-and-one-hundredth <= 1.1, "1.01 <= 1.1";
+ok $neg-pi <= -3, "-3.14 <= -3";
+ok -1 <= $zero, "-1 <= 0";
+ok 1.Rat <= $one, "1 <= 1";
+ok 1.001 <= $one-and-one-hundredth, "1.001 <= 1.01";
+ok $neg-pi <= -3.14, "-3.14 <= -3.14";
+
+nok $zero > 0, "not 0 > 0";
+ok $one > 0.Num, "1 > 0";
+nok $one-and-one-hundredth > 1.1, "not 1.01 > 1.1";
+nok $neg-pi > -3, "not -3.14 > -3";
+nok -1 > $zero, "not -1 > 0";
+nok 1.Rat > $one, "not 1 > 1";
+nok 1.001 > $one-and-one-hundredth, "not 1.001 > 1.01";
+nok $neg-pi > -3.14, "not -3.14 > -3.14";
+
+ok $zero >= 0, "0 >= 0";
+ok $one >= 0.Num, "1 >= 0";
+nok $one-and-one-hundredth >= 1.1, "not 1.01 >= 1.1";
+nok $neg-pi >= -3, "not -3.14 >= -3";
+nok -1 >= $zero, "not -1 >= 0";
+ok 1.Rat >= $one, "1 >= 1";
+nok 1.001 >= $one-and-one-hundredth, "not 1.001 >= 1.01";
+ok $neg-pi >= -3.14, "-3.14 >= -3.14";
+
+ok $zero == 0, "0 == 0";
+nok $one == 0.Num, "not 1 == 0";
+nok $one-and-one-hundredth == 1.1, "not 1.01 == 1.1";
+nok $neg-pi == -3, "not -3.14 == -3";
+nok -1 == $zero, "not -1 == 0";
+ok 1.Rat == $one, "1 == 1";
+nok 1.001 == $one-and-one-hundredth, "not 1.001 == 1.01";
+ok $neg-pi == -3.14, "-3.14 == -3.14";
+
+nok $zero != 0, "not 0 != 0";
+ok $one != 0.Num, "1 != 0";
+ok $one-and-one-hundredth != 1.1, "1.01 != 1.1";
+ok $neg-pi != -3, "-3.14 != -3";
+ok -1 != $zero, "-1 != 0";
+nok 1.Rat != $one, "not 1 != 1";
+ok 1.001 != $one-and-one-hundredth, "1.001 != 1.01";
+nok $neg-pi != -3.14, "not -3.14 != -3.14";
+
 is_approx -$zero, 0, "-0 == 0";
 is_approx -$one, -1, "-1 == -1";
 is_approx -$one-and-one-hundredth, -1.01, "-1.01 == -1.01";
