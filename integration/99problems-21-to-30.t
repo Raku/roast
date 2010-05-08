@@ -88,7 +88,7 @@ plan 15;
     #?rakudo todo 'unknown'
     ok ?(all(@numbers) ~~ any(1..49)), '... and they should be in the correct range';
     my %unique = map { ($_ => 1) }, @numbers;
-    say %unique.perl;
+    diag %unique.perl;
     is %unique.keys.elems, 6, '... and they should all be unique numbers';
 }
 
