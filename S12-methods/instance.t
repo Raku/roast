@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 =begin pod
 
@@ -181,6 +181,15 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     }
     lives_ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method (implicit)';
     is $tracker, 5, ' ... and got right result (implicit)';
+}
+
+# RT #72940
+{
+    class X {
+        method x(*@_) { @_[0] };
+    }
+    is X.new.x('5'), '5', 'can use explicit @_ in method signature';
+
 }
 
 # vim: ft=perl6
