@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 52;
 
 regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -206,6 +206,11 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval_lives_ok 'use LoadFromInsideAClass',
         'can "use" a class inside a class';
 
+    # RT #65738
+    use Foo;
+    use OverrideTest;
+    is test_ucfirst('moin'), 'Moin',
+        'overrides from one module do not affect a module that is loaded later on';
 }
 
 {
