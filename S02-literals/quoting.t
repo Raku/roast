@@ -546,6 +546,11 @@ Hello, World
     is 'a\\b\''.chars, 4, 'backslash and single quote';
 }
 
+{
+    isa_ok rx/foo/, Regex, 'rx/.../';
+    isa_ok rx{foo}, Regex, 'rx{...}';
+}
+
 done_testing;
 
 # vim: ft=perl6
