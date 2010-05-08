@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 #L<S06/Placeholder variables/>
 
@@ -28,5 +28,14 @@ non_twigil(5);
 #?rakudo todo 'non-twigil variable before twigil variable'
 eval_dies_ok( ' {$foo; $^foo;}(1) ',
 'A non-twigil variable should not precede a corresponding twigil variable' );
+
+# RT #74778
+{
+    my $tracker = '';
+    for 1, 2 {
+        $tracker ~= $^a ~ $^a ~ '|';
+    }
+    is $tracker, '11|22|', 'two occurences of $^a count as one param';
+}
 
 # vim: syn=perl6
