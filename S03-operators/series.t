@@ -62,7 +62,6 @@ is (1, 1, &infix:<+> ... *).batch(7).join(', '), '1, 1, 2, 3, 5, 8, 13', 'infini
 }
 
 is ('a'  ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string from single generator';
-#?rakudo 2 skip "Rakudo treats <a b> as a single object, which doesn't have a .succ"
 is (<a b> ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string from double generator';
 is (<a b>, { .succ } ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string and arity-1';
 
