@@ -7,7 +7,6 @@ plan 5;
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
 
-#?rakudo emit #
 use MONKEY_TYPING;
 {
     class Foo {
@@ -24,6 +23,7 @@ use MONKEY_TYPING;
     ok(!eval('augment class NonExistent { }'), 'augment on non-existent class dies');
 }
 
+#?rakudo skip 'supersede'
 {
     class Bar {
         method c {'called Bar.c'}
