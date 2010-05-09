@@ -7,15 +7,13 @@ plan 2;
 # L<S12/Classes/"class or type name using">
 
 # TODO: move that to t/spec/ as well
-BEGIN { @*INC.unshift('t/oo/class/TestFiles'); }
+BEGIN { @*INC.unshift('t/spec/packages/'); }
 
 # Testing class literals
-require Foo;
+use  Foo;
 my $test1;
 
-lives_ok {
-    $test1 = ::Foo;
-}, "::Foo is a valid class literal";
+ok $test1 = ::Foo, "::Foo is a valid class literal";
 
 # Test removed per L<"http://www.nntp.perl.org/group/perl.perl6.language/22220">
 # Foo.isa(Class) is false.
