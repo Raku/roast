@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 105;
+plan 107;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -66,8 +66,13 @@ is [^1],   [0],        "unary ^ on the boundary ^1 works";
 is [^0],   [],         "unary ^0 produces null range";
 is [^-1],  [],         "unary ^-1 produces null range";
 is [^0.1], [0],        "unary ^0.1 produces the range 0..^x where 0 < x < 1";
-#?rakudo skip "Bad things happen to this in ng"
 is [^'a'], [],         "unary ^'a' produces null range";
+is ~(^"5"), "0 1 2 3 4", 'unary ^"num" produces the range 0..^num';
+
+{
+    my @a = 3, 5, 3;
+    is (^@a).perl, (0..^3).perl,    'unary ^@a produces 0..^+@a';
+}
 
 # test that the zip operator works with ranges
 is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
@@ -154,7 +159,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
  
 # RT #67882
-#?rakudo skip "Causes parsing failure in ng"
+#?rakudo skip "Does not automatically turn match objects into strings / numbers"
 {
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
