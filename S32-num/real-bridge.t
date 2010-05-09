@@ -116,6 +116,33 @@ nok 1.Rat != $one, "not 1 != 1";
 ok 1.001 != $one-and-one-hundredth, "1.001 != 1.01";
 nok $neg-pi != -3.14, "not -3.14 != -3.14";
 
+is $zero cmp 0, 0, "0 eq 0";
+is $one cmp 0.Num, 1, "1 gt 0";
+is $one-and-one-hundredth cmp 1.1, -1, "1.01 lt 1.1";
+is $neg-pi cmp -3, -1, "-3.14 lt -3";
+is -1 cmp $zero, -1, "-1 lt 0";
+is 1.Rat cmp $one, 0, "1 eq 1";
+is 1.001 cmp $one-and-one-hundredth, -1, "1.001 lt 1.01";
+is $neg-pi cmp -3.14, 0, "-3.14 eq -3.14";
+
+nok $zero before 0, "not 0 before 0";
+nok $one before 0.Num, "not 1 before 0";
+ok $one-and-one-hundredth before 1.1, "1.01 before 1.1";
+ok $neg-pi before -3, "-3.14 before -3";
+ok -1 before $zero, "-1 before 0";
+nok 1.Rat before $one, "not 1 before 1";
+ok 1.001 before $one-and-one-hundredth, "1.001 before 1.01";
+nok $neg-pi before -3.14, "not -3.14 before -3.14";
+
+nok $zero after 0, "not 0 after 0";
+ok $one after 0.Num, "1 after 0";
+nok $one-and-one-hundredth after 1.1, "not 1.01 after 1.1";
+nok $neg-pi after -3, "not -3.14 after -3";
+nok -1 after $zero, "not -1 after 0";
+nok 1.Rat after $one, "not 1 after 1";
+nok 1.001 after $one-and-one-hundredth, "not 1.001 after 1.01";
+nok $neg-pi after -3.14, "not -3.14 after -3.14";
+
 is_approx -$zero, 0, "-0 == 0";
 is_approx -$one, -1, "-1 == -1";
 is_approx -$one-and-one-hundredth, -1.01, "-1.01 == -1.01";
@@ -157,8 +184,8 @@ is $one-and-one-hundredth.exp, 1.01.exp, "1.01.exp is correct";
 is $neg-pi.exp, (-3.14).exp, "-3.14.exp is correct";
 is $one-and-one-hundredth.exp(10.Rat), 1.01.exp(10), "1.01.exp(10) is correct";
 is 2.exp($neg-pi), 2.exp(-3.14), "2.exp(-3.14) is correct";
-is $one-and-one-hundredth.exp(10i), 1.01.exp(10i), "1.01.exp(10i) is correct";
-is 2i.exp($neg-pi), 2i.exp(-3.14), "2i.exp(-3.14) is correct";
+is_approx $one-and-one-hundredth.exp(10i), 1.01.exp(10i), "1.01.exp(10i) is correct";
+is_approx 2i.exp($neg-pi), 2i.exp(-3.14), "2i.exp(-3.14) is correct";
 
 done_testing;
 
