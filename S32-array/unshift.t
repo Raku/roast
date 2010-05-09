@@ -40,7 +40,6 @@ plan 59;
     is(@unshift[2], 2, 'we found the right element');
     is(@unshift[3], 1, 'we found the right element');
 
-#?rakudo skip 'named args'
 {
     unshift(:array(@unshift), 5);
     is(+@unshift, 5, 'we have 4 element in the array');
