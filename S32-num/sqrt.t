@@ -30,12 +30,11 @@ is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
 is(sqrt(-0/1), -0/1, 'sqrt preserves sign of Rat zero');
 is(sqrt(-0.0e0), -0.0e0, 'sqrt preserves sign of Num zero');
 
-#?rakudo skip 'named args'
 {
    is_approx(sqrt(:x(2)), 1.41421356, 'got the square root of 2 with named args');
    is_approx(sqrt(:x(5)) * sqrt(5), 5,   'got the square root of 5 with named args');
    is_approx(sqrt(:x(1/42)) * sqrt(1/42), 1/42,   'got the square root of 1/42 with named args');
-   is_approx(sqrt(:x(1e2)) * sqrt(1e2), 10,   'got the square root of 1e2 with named args');
+   is_approx(sqrt(:x(1e2)) * sqrt(1e2), 100,   'got the square root of 1e2 with named args');
    is(sqrt(:x(-1)), NaN, 'sqrt(:x(-1)) is NaN');
 }
 
