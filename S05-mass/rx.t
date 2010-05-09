@@ -327,7 +327,7 @@ ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 ok ('bbccdd' ~~ /<-[d..b]>/) && matchcheck($/, q/parse error/), 'illegal character range';
 
 #### <[-]>			ab-def		/parse error/	unescaped hyphen
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}) ~~ Failure S& /parse error/, 'unescaped hyphen';
 
 #### <[\-]>			ab-def		y	escaped hyphen
@@ -379,7 +379,7 @@ ok '\\' ~~ /<["\\]>/, 'escaped backslash';
 ok ']' ~~ /<[\]]>/, 'escaped close bracket';
 
 #### <[\]>			\\]]		/parse error/	unescaped backslash (or no closing brace)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ '\\]]' ~~ /<[\]>/ }}) ~~ Failure S& /parse error/, 'unescaped backslash (or no closing brace)';
 
 #### ^\><[<]>		><		y	lt character class
@@ -568,7 +568,7 @@ ok 'az' ~~ /<+alpha>+/, 'metasyntax with leading + (<+...>)';
 
 
 #### a[b}		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/rule error/	mismatched close
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ '\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /a[b}/ }}) ~~ Failure S& /rule error/, 'mismatched close';
 
 
@@ -731,27 +731,27 @@ ok "abc\r\ndef" !~~ /c \N d/, 'not logical newline (\N)';
 ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\A)';
 
 #### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\A)';
 
 #### abc\Z			abcZ		/reserved/	retired metachars (\Z)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\Z)';
 
 #### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\Z)';
 
 #### abc\z			abcz		/reserved/	retired metachars (\z)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcz' ~~ /abc\z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\z)';
 
 #### def\z			abc\ndef	/reserved/	retired metachars (\z)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\z)';
 
 #### abc # def		abc#def		y	comments (#)
@@ -831,21 +831,21 @@ ok 'bcd' ~~ /^ [ <[a..c]>+ | <[b..e]>+ ] $/, 'alternation (|)';
 ok 'bcd' ~~ /^ [ <[a..d]>+ | <[c..e]>+ ] $/, 'alternation (|)';
 
 #### b|			bcd		/rule error/	alternation (|) - null right arg illegal
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'bcd' ~~ /b|/ }}) ~~ Failure S& /rule error/, 'alternation (|) - null right arg illegal';
 
 #### |b			bcd		y	alternation (|) - null left arg ignored
 ok 'bcd' ~~ /|b/, 'alternation (|) - null left arg ignored';
 
 #### |			bcd		/rule error/	alternation (|) - null both args illegal
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'bcd' ~~ /|/ }}) ~~ Failure S& /rule error/, 'alternation (|) - null both args illegal';
 
 #### \|			|		y	alternation (|) - literal must be escaped
 ok '|' ~~ /\|/, 'alternation (|) - literal must be escaped';
 
 #### |			|		/rule error/	alternation (|) - literal must be escaped
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ '|' ~~ /|/ }}) ~~ Failure S& /rule error/, 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
@@ -886,31 +886,31 @@ ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
 ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
 #### b&			bcd		/rule error/	conjunction (&) - null right arg illegal
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'bcd' ~~ /b&/ }}) ~~ Failure S& /rule error/, 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg illegal
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'bcd' ~~ /&b/ }}) ~~ Failure S& /rule error/, 'conjunction (&) - null left arg illegal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'bcd' ~~ /&/ }}) ~~ Failure S& /rule error/, 'conjunction (&) - null both args illegal';
 
 #### \&			&		y	conjunction (&) - literal must be escaped
 ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
 
 #### &			&		/rule error/	conjunction (&) - literal must be escaped
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ '&' ~~ /&/ }}) ~~ Failure S& /rule error/, 'conjunction (&) - literal must be escaped';
 
 # todo :pge<leading |>
 #### a&|b			a&|b		/rule error/	alternation and conjunction (&|) - parse error
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'a&|b' ~~ /a&|b/ }}) ~~ Failure S& /rule error/, 'alternation and conjunction (&|) - parse error';
 
 #### a|&b			a|&b		/rule error/	alternation and conjunction (|&) - parse error
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'a|&b' ~~ /a|&b/ }}) ~~ Failure S& /rule error/, 'alternation and conjunction (|&) - parse error';
 
 #### |d|b			abc		y	leading alternation ignored
@@ -927,55 +927,55 @@ ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 
 ####  b |  | d		abc		n	null pattern invalid
 #?pugs todo 'feature'
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc' !~~ / b |  | d/ }}) ~~ Failure S& /reserved/, 'null pattern invalid';
 
 #### \pabc			pabc		/reserved/	retired metachars (\p)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'pabc' ~~ /\pabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\p)';
 
 #### \p{InConsonant}		a		/reserved/	retired metachars (\p)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'a' ~~ /\p{InConsonant}/ }}) ~~ Failure S& /reserved/, 'retired metachars (\p)';
 
 #### \Pabc			Pabc		/reserved/	retired metachars (\P)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'Pabc' ~~ /\Pabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\P)';
 
 #### \P{InConsonant}		a		/reserved/	retired metachars (\P)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'a' ~~ /\P{InConsonant}/ }}) ~~ Failure S& /reserved/, 'retired metachars (\P)';
 
 #### \Labc\E			LabcE		/reserved/	retired metachars (\L...\E)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'LabcE' ~~ /\Labc\E/ }}) ~~ Failure S& /reserved/, 'retired metachars (\L...\E)';
 
 #### \LABC\E			abc		/reserved/	retired metachars (\L...\E)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc' ~~ /\LABC\E/ }}) ~~ Failure S& /reserved/, 'retired metachars (\L...\E)';
 
 #### \Uabc\E			UabcE		/reserved/	retired metachars (\U...\E)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'UabcE' ~~ /\Uabc\E/ }}) ~~ Failure S& /reserved/, 'retired metachars (\U...\E)';
 
 #### \Uabc\E			ABC		/reserved/	retired metachars (\U...\E)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'ABC' ~~ /\Uabc\E/ }}) ~~ Failure S& /reserved/, 'retired metachars (\U...\E)';
 
 #### \Qabc\E			QabcE		/reserved/	retired metachars (\Q...\E)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'QabcE' ~~ /\Qabc\E/ }}) ~~ Failure S& /reserved/, 'retired metachars (\Q...\E)';
 
 #### \Qabc d?\E		abc d		/reserved/	retired metachars (\Q...\E)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc d' ~~ /\Qabc d?\E/ }}) ~~ Failure S& /reserved/, 'retired metachars (\Q...\E)';
 
 #### \Gabc			Gabc		/reserved/	retired metachars (\G)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'Gabc' ~~ /\Gabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\G)';
 
 #### \1abc			1abc		/reserved/	retired metachars (\1)
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ '1abc' ~~ /\1abc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\1)';
 
 #### ^ \s+ $			\x0009\x0020\x00a0\x000a\x000b\x000c\x000d\x0085	y	0-255 whitespace (\s)
@@ -2377,104 +2377,104 @@ ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 ##  syntax errors
 
 #### {{		abcdef		/Missing closing braces/	unterminated closure
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q[ 'abcdef' ~~ /{{/ ]) ~~ Failure S& /Missing closing braces/, 'unterminated closure';
 
 #### \1		abcdef		/reserved/			back references
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /\1/ }}) ~~ Failure S& /reserved/, 'back references';
 
 #### \x[		abcdef		/Missing close bracket/		unterminated \x[..]
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /\x[/ }}) ~~ Failure S& /Missing close bracket/, 'unterminated \x[..]';
 
 #### \X[		abcdef		/Missing close bracket/		unterminated \X[..]
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /\X[/ }}) ~~ Failure S& /Missing close bracket/, 'unterminated \X[..]';
 
 
 #### * abc		abcdef		/Quantifier follows nothing/	bare * at start
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /* abc/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /  * abc/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare * after ws';
 
 #### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[*|a]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[ *|a]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare * after [+sp';
 
 #### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[a|*]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[a| *]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare * after |+sp';
 
 
 #### + abc		abcdef		/Quantifier follows nothing/	bare + at start
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /+ abc/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /  + abc/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare + after ws';
 
 #### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[+|a]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[ +|a]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare + after [+sp';
 
 #### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[a|+]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[a| +]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare + after |+sp';
 
 
 #### ? abc		abcdef		/Quantifier follows nothing/	bare ? at start
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /? abc/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /  ? abc/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare ? after ws';
 
 #### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[?|a]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[ ?|a]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare ? after [+sp';
 
 #### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[a|?]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /[a| ?]/ }}) ~~ Failure S& /Quantifier follows nothing/, 'bare ? after |+sp';
 
 # L<S05/Nothing is illegal/"The empty pattern is now illegal">
 
 #### 		abcdef		/Null pattern illegal/		null pattern
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ // }}) ~~ Failure S& /null pattern/, '';
 
 ####   		abcdef		/Null pattern illegal/		ws null pattern
-#?rakudo skip 'infix:<S&>'
+#?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure S& /Null pattern illegal/, 'ws null pattern';
 
 #?rakudo todo 'RT 70606'
