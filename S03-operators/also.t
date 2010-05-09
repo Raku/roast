@@ -4,6 +4,7 @@ plan 8;
 # L<S03/"Junctive and (all) precedence"/"infix:<&>">
 
 ok ?(1 S& 2),         "basic infix:<S&>";
+#?rakudo skip "multiple S& NYI"
 ok ?(1 S& 2 S& 3), "basic infix:<S&> (multiple S&'s)";
 ok !(0 S& 1),         "S& has and-semantics (first term 0)";
 ok !(1 S& 0),         "also has and-semantics (second term 0)";
