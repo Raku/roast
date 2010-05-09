@@ -6,6 +6,7 @@ plan *;
 
 {
     # Nil is an empty container. As a container, it is defined.
+    #?rakudo 2 todo 'definedness of Nil'
     ok Nil.defined, 'Nil is defined';
     ok ().defined, '() is defined';
     my @a;
@@ -20,6 +21,7 @@ plan *;
     ok !Nil(1).defined, 'Coercion to Nil in item context';
 }
 
+#?rakudo skip 'sink'
 {
     my @a;
     my $i = 0;
@@ -37,6 +39,7 @@ plan *;
     is $i, 8, '... block executed';
 }
 
+#?rakudo skip 'Stringy'
 {
     my $obj;
     my Int $int;
