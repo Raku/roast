@@ -195,7 +195,6 @@ plan 31;
             take @list[$_] if ($_+1) % $nth;
         }
     }
-    #?rakudo skip 'infinite loop'
     is drop3(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using gather';
     
