@@ -327,8 +327,8 @@ ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 ok ('bbccdd' ~~ /<-[d..b]>/) && matchcheck($/, q/parse error/), 'illegal character range';
 
 #### <[-]>			ab-def		/parse error/	unescaped hyphen
-#?rakudo todo 'infix:<S&>'
-ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}) ~~ Failure S& /parse error/, 'unescaped hyphen';
+#?rakudo todo 'unknown'
+ok eval(q{{ 'ab-def' ~~ /<[-]>/ }}) ~~ Failure S& /'Obsolete use of hypen'/, 'unescaped hyphen';
 
 #### <[\-]>			ab-def		y	escaped hyphen
 ok 'ab-def' ~~ /<[\-]>/, 'escaped hyphen';
@@ -732,25 +732,25 @@ ok "abc\ndef" ~~ /b \N \n/, 'not logical newline (\N)';
 
 #### \Aabc			Aabc		/reserved/	retired metachars (\A)
 #?rakudo todo 'infix:<S&>'
-ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\A)';
+ok eval(q{{ 'Aabc' ~~ /\Aabc/ }}) ~~ Failure S& /reserved|Obsolete/, 'retired metachars (\A)';
 
 #### \Aabc			abc\ndef	/reserved/	retired metachars (\A)
 #?rakudo todo 'infix:<S&>'
-ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}) ~~ Failure S& /reserved/, 'retired metachars (\A)';
+ok eval(q{{ 'abc\ndef' ~~ /\Aabc/ }}) ~~ Failure S& /reserved|Obsolete/, 'retired metachars (\A)';
 
 #### abc\Z			abcZ		/reserved/	retired metachars (\Z)
 #?rakudo todo 'infix:<S&>'
-ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\Z)';
+ok eval(q{{ 'abcZ' ~~ /abc\Z/ }}) ~~ Failure S& /reserved|Obsolete/, 'retired metachars (\Z)';
 
 #### abc\Z			abc\ndef	/reserved/	retired metachars (\Z)
 #?rakudo todo 'infix:<S&>'
-ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\Z)';
+ok eval(q{{ 'abc\ndef' ~~ /abc\Z/ }}) ~~ Failure S& /reserved|Obsolete/, 'retired metachars (\Z)';
 
 #### abc\z			abcz		/reserved/	retired metachars (\z)
 #?rakudo todo 'infix:<S&>'
-ok eval(q{{ 'abcz' ~~ /abc\z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\z)';
+ok eval(q{{ 'abcz' ~~ /abc\z/ }}) ~~ Failure S& /reserved|Obsolete/, 'retired metachars (\z)';
 
-#### def\z			abc\ndef	/reserved/	retired metachars (\z)
+#### def\z			abc\ndef	/reserved|Obsolete/	retired metachars (\z)
 #?rakudo todo 'infix:<S&>'
 ok eval(q{{ 'abc\ndef' ~~ /def\z/ }}) ~~ Failure S& /reserved/, 'retired metachars (\z)';
 
