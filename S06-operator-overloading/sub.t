@@ -386,6 +386,22 @@ Testing operator overloading subroutines
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
 
+#?rakudo skip 'not yet implemented'
+{
+    multi sub infix:<foo>($a, $b) {$a + $b};
+
+    my $x foo=6;
+    is $x, 6, 'foo= works for custom operators';
+}
+
+#?rakudo skip 'not yet implemented'
+{
+    our multi sub infix:<bar>($a, $b) {$a + $b};
+
+    my $x bar=6;
+    is $x, 6, 'bar= works for custom operators';
+
+}
 done_testing;
 
 # vim: ft=perl6
