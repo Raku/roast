@@ -23,19 +23,43 @@ is( round(Inf), Inf, 'round(Inf) is Inf');
 is( ceiling(Inf), Inf,  'ceiling(Inf) is Inf');
 is( truncate(Inf), Inf, 'truncate(Inf) is Inf');
 
+is( floor(-Inf), -Inf, 'floor(-Inf) is -Inf');
+is( round(-Inf), -Inf, 'round(-Inf) is -Inf');
+is( ceiling(-Inf), -Inf,  'ceiling(-Inf) is -Inf');
+is( truncate(-Inf), -Inf, 'truncate(-Inf) is -Inf');
+
+is( NaN.floor, NaN, 'NaN.floor is NaN');
+is( NaN.round, NaN, 'NaN.round is NaN');
+is( NaN.ceiling, NaN,  'NaN.ceiling is NaN');
+is( NaN.truncate, NaN, 'NaN.truncate is NaN');
+
+is( Inf.floor, Inf, 'Inf.floor is Inf');
+is( Inf.round, Inf, 'Inf.round is Inf');
+is( Inf.ceiling, Inf,  'Inf.ceiling is Inf');
+is( Inf.truncate, Inf, 'Inf.truncate is Inf');
+
+is( (-Inf).floor, -Inf, '(-Inf).floor is -Inf');
+is( (-Inf).round, -Inf, '(-Inf).round is -Inf');
+is( (-Inf).ceiling, -Inf,  '(-Inf).ceiling is -Inf');
+is( (-Inf).truncate, -Inf, '(-Inf).truncate is -Inf');
+
 my %tests =
     ( ceiling => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 2 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -5 ],
-         [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ] ],
+         [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ],
+         [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ], [ "2.Num", 2 ] ],
       floor => [ [ 1.5, 1 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, -1 ], [ -1, -1 ], [ -5.9, -6 ],
-         [ -0.5, -1 ], [ -0.499, -1 ], [ -5.499, -6 ]  ],
+         [ -0.5, -1 ], [ -0.499, -1 ], [ -5.499, -6 ],
+         [ "-0.499.Num", -1 ], [ "-5.499.Num", -6 ], [ "2.Num", 2 ]  ],
       round => [ [ 1.5, 2 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -6 ],
-         [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ]  ],
+         [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ],
+         [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ], [ "2.Num", 2 ]  ],
       truncate => [ [ 1.5, 1 ], [ 2, 2 ], [ 1.4999, 1 ],
          [ -0.1, 0 ], [ -1, -1 ], [ -5.9, -5 ],
-         [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ]  ],
+         [ -0.5, 0 ], [ -0.499, 0 ], [ -5.499, -5 ],
+         [ "-0.499.Num", 0 ], [ "-5.499.Num", -5 ], [ "2.Num", 2 ]  ],
     );
 
 #?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
@@ -58,7 +82,6 @@ for %tests.keys.sort -> $type {
     }
 }
 
-{
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
     for @subtests -> $test {
@@ -72,6 +95,20 @@ for %tests.keys.sort -> $type {
             ok($res == $test[1], "$code == {$test[1]}");
         }
     }
+}
+ 
+for %tests.keys.sort -> $type {
+    my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
+    for @subtests -> $test {
+        my $code = "({$test[0]}).{$type}";
+        my $res = eval($code);
+
+        if ($!) {
+            #?pugs todo 'feature'
+            flunk("failed to parse $code ($!)");
+        } else {
+            ok($res == $test[1], "$code == {$test[1]}");
+        }
     }
 }
 
