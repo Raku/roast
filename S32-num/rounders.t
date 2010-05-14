@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan *;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -62,7 +62,6 @@ for %tests.keys.sort -> $type {
     }
 }
 
-#?rakudo skip 'named args'
 {
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
@@ -84,5 +83,7 @@ for %tests.keys.sort -> $t {
     isa_ok eval("{$t}(1.1)"), Int, "rounder $t returns an int";
 
 }
+
+done_testing;
 
 # vim: ft=perl6
