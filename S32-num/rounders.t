@@ -13,14 +13,10 @@ Basic tests for the round(), floor(), truncate() and ceiling() built-ins
 
 =end pod
 
-#?rakudo 4 skip 'Rounding NaN should give NaN'
-
 is( floor(NaN), NaN, 'floor(NaN) is NaN');
 is( round(NaN), NaN, 'round(NaN) is NaN');
 is( ceiling(NaN), NaN,  'ceiling(NaN) is NaN');
 is( truncate(NaN), NaN, 'truncate(NaN) is NaN');
-
-#?rakudo 4 skip 'Rounding Inf should give Inf'
 
 is( floor(Inf), Inf, 'floor(Inf) is Inf');
 is( round(Inf), Inf, 'round(Inf) is Inf');
