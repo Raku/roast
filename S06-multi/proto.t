@@ -69,7 +69,6 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
         sub i1(Int $x, Str $y) {} 
     ], 'declaring a multi and a single routine dies';
 
-    #?rakudo todo 'RT 71810'
     eval_dies_ok q[
         sub i2(Int $x, Str $y) {1}
         sub i2(Int $x, Str $y) {2}

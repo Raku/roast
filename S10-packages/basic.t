@@ -6,9 +6,9 @@ use Test;
 
 plan 52;
 
-regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
+my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
-regex likely_perl6_not_found_err {:i ^\N*<<not>>\N*<<[f[i|ou]nd|located?|access'ed'?]>>}
+my regex likely_perl6_not_found_err {:i ^\N*<<not>>\N*<<[f[i|ou]nd|located?|access'ed'?]>>}
 
 package Empty {}
 package AlsoEmpty::Nested {}
@@ -167,16 +167,15 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 # RT #68290
 {
-    #?rakudo 3 todo 'RT 68290'
     eval_dies_ok q[class A { sub a { say "a" }; sub a { say "a" } }],
                  'sub redefined in class dies';
     eval_dies_ok q[package P { sub p { say "p" }; sub p { say "p" } }],
                  'sub redefined in package dies';
     eval_dies_ok q[module M { sub m { say "m" }; sub m { say "m" } }],
                  'sub redefined in module dies';
-    #?rakudo 2 skip 'RT #68290'
     eval_dies_ok q[grammar B { token b { 'b' }; token b { 'b' } };],
                  'token redefined in grammar dies';
+    #?rakudo todo 'RT 68290, redinition of method in class should die'
     eval_dies_ok q[class C { method c { say "c" }; method c { say "c" } }],
                  'method redefined in class dies';
 }
