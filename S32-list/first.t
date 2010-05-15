@@ -3,13 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-=begin pod
-
-built-in "first" tests
-
-=end pod
-
-plan 19;
+plan 21;
 
 my @list = (1 ... 10);
 
@@ -66,6 +60,14 @@ my @list = (1 ... 10);
     is(@fancy_list.first(/o/), "Philosopher", "Looking up first by regex /o/");
     is(@fancy_list.first(/ob/), "Goblet", "Looking up first by regex /ob/");
     is(@fancy_list.first(/l.*o/), "Philosopher", "Looking up first by regex /l.*o/");
+}
+
+{
+    is <a b c b a>.first('c' | 'b').join('|'),
+        'b', '.first also takes a junction as matcher';
+
+    is (first 'c'| 'b', <a b c b a>).join('|'),
+        'b', '.first also takes a junction as matcher (sub form)';
 }
 
 #vim: ft=perl6
