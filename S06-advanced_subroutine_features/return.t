@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 73;
+plan 76;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -299,6 +299,17 @@ is Foo.new.officialsubmeth(), 43,
     "return correctly from official submethod only";
 is Foo::official(), 44,
     "return correctly from official sub only";
+
+# RT #75118
+{
+    sub named() {
+        return 1, 2, :c(3);
+    }
+    is named().elems, 3,       'return with named arguments';
+    is named().[2].key, 'c',   ' ... correct key';
+    #?rakudo todo 'named argument to return()'
+    is named().[2].value, '3', ' ... correct value';
+}
 
 # RT #61732
 {
