@@ -24,8 +24,7 @@ is_approx(log(8, 2), 3, 'log(8, 2) is 3');
 is_approx(log(42, 23),  1.192051192, 'log(42, 23)');
 
 # with non-Num
-#?rakudo skip '3-arg log'
-is_approx(log("42", "23"),  1.19205119221557, 'log(42, 23) with strings');
+is_approx(log("42", "23"),  1.192051192, 'log(42, 23) with strings');
 
 {
    is_approx(log(:x(5)), $log_5, 'got the log of 5');
