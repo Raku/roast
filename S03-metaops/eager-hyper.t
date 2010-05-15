@@ -16,7 +16,6 @@ plan 8;
 }
 
 # "Counting the elements in the array will also force eager completion."
-#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = gather { for 1 .. 5 { $counter++; take $_ } };
@@ -25,7 +24,6 @@ plan 8;
 }
 
 # Eager
-#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = eager gather { for 1 .. 5 { $counter++; take $_ } };
