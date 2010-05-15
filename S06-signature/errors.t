@@ -19,9 +19,8 @@ lives_ok { bar(reverse(1,2)) }, 'slurpy args are not bounded (2)';
 
 eval_dies_ok 'sub quuux ($?VERSION) { ... }',
              'parser rejects magicals as args (1)';
-#?rakudo skip 'STD.pm actually parses this - is this test valid?'
-eval_dies_ok('sub quuuux ($!) { ... }',
-    'parser rejects magicals as args (2)');
+#?rakudo todo '$! as parameter'
+eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
 # RT #64344
 {
