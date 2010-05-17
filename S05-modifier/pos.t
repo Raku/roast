@@ -8,23 +8,28 @@ version 0.3 (12 Apr 2004), file t/continue.t.
 
 =end origin
 
-plan 14;
+plan *;
 
 #?pugs emit force_todo(1,2,3,4,6);
 
 # L<S05/Modifiers/causes the pattern to try to match only at>
 
 for ("abcdef") {
+    #?rakudo 4 skip "m:pos// NYI"
     ok(m:pos/abc/, "Matched 1: '$/'" );
     is($/.to, 3, 'Interim position correct');
     ok(m:pos/ghi|def/, "Matched 2: '$/'" );
     is($/.to, 6, 'Final position correct');
 }
 
-my $_ = "foofoofoo foofoofoo";
-ok(s:global:pos/foo/FOO/, 'Globally contiguous substitution');
-is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
+#?rakudo skip "s:pos/// NYI"
+{
+    my $_ = "foofoofoo foofoofoo";
+    ok(s:global:pos/foo/FOO/, 'Globally contiguous substitution');
+    is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
+}
 
+#?rakudo skip "m:p/// NYI"
 {
     my $str = "abcabcabc";
     ok($str ~~ m:p/abc/, 'Continued match');
@@ -48,9 +53,36 @@ is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
     ok ($str !~~ m:i:p/abc/, 'no more match, string exhausted');
 }
 
-my $str = "abcabcabc";
-my @x = ?($str ~~ m:p:i:g/abc/);
-# XXX is that correct?
-is($/.to,  3, 'Insensitive scalar repeated continued match pos');
+#?rakudo skip "m:p:i:g// NYI"
+{
+    my $str = "abcabcabc";
+    my @x = ?($str ~~ m:p:i:g/abc/);
+    # XXX is that correct?
+    is($/.to,  3, 'Insensitive scalar repeated continued match pos');
+}
+
+{
+   my $str = "abcabcabc";
+   my $match = $str.match(/abc/, :p(0));
+   ok $match.Bool, "Match anchored to 0";
+   is $match.from, 0, "and the match is in the correct position";
+   nok $str.match(/abc/, :p(1)).Bool, "No match anchored to 1";
+   nok $str.match(/abc/, :p(2)).Bool, "No match anchored to 2";
+
+   $match = $str.match(/abc/, :p(3));
+   ok $match.Bool, "Match anchored to 3";
+   is $match.from, 3, "and the match is in the correct position;
+   nok $str.match(/abc/, :p(4)).Bool, "No match anchored to 4";
+   
+   $match = $str.match(/abc/, :p(6));
+   ok $match.Bool, "Match anchored to 6";
+   is $match.from, 6, "and the match is in the correct position;
+   nok $str.match(/abc/, :p(7)).Bool, "No match anchored to 7";
+   nok $str.match(/abc/, :p(8)).Bool, "No match anchored to 8";
+   nok $str.match(/abc/, :p(9)).Bool, "No match anchored to 9";
+   nok $str.match(/abc/, :p(10)).Bool, "No match anchored to 10";
+}
+
+done_testing;
 
 # vim: ft=perl6
