@@ -71,12 +71,12 @@ for ("abcdef") {
 
    $match = $str.match(/abc/, :p(3));
    ok $match.Bool, "Match anchored to 3";
-   is $match.from, 3, "and the match is in the correct position;
+   is $match.from, 3, "and the match is in the correct position";
    nok $str.match(/abc/, :p(4)).Bool, "No match anchored to 4";
    
    $match = $str.match(/abc/, :p(6));
    ok $match.Bool, "Match anchored to 6";
-   is $match.from, 6, "and the match is in the correct position;
+   is $match.from, 6, "and the match is in the correct position";
    nok $str.match(/abc/, :p(7)).Bool, "No match anchored to 7";
    nok $str.match(/abc/, :p(8)).Bool, "No match anchored to 8";
    nok $str.match(/abc/, :p(9)).Bool, "No match anchored to 9";
