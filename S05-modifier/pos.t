@@ -24,7 +24,7 @@ for ("abcdef") {
 
 #?rakudo skip "s:pos/// NYI"
 {
-    my $_ = "foofoofoo foofoofoo";
+    $_ = "foofoofoo foofoofoo";
     ok(s:global:pos/foo/FOO/, 'Globally contiguous substitution');
     is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
 }
