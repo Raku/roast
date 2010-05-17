@@ -83,6 +83,28 @@ for ("abcdef") {
    nok $str.match(/abc/, :p(10)).Bool, "No match anchored to 10";
 }
 
+{
+   my $str = "abcabcabc";
+   my $match = $str.match(/abc/, :pos(0));
+   ok $match.Bool, "Match anchored to 0";
+   is $match.from, 0, "and the match is in the correct position";
+   nok $str.match(/abc/, :pos(1)).Bool, "No match anchored to 1";
+   nok $str.match(/abc/, :pos(2)).Bool, "No match anchored to 2";
+
+   $match = $str.match(/abc/, :pos(3));
+   ok $match.Bool, "Match anchored to 3";
+   is $match.from, 3, "and the match is in the correct position";
+   nok $str.match(/abc/, :pos(4)).Bool, "No match anchored to 4";
+   
+   $match = $str.match(/abc/, :pos(6));
+   ok $match.Bool, "Match anchored to 6";
+   is $match.from, 6, "and the match is in the correct position";
+   nok $str.match(/abc/, :pos(7)).Bool, "No match anchored to 7";
+   nok $str.match(/abc/, :pos(8)).Bool, "No match anchored to 8";
+   nok $str.match(/abc/, :pos(9)).Bool, "No match anchored to 9";
+   nok $str.match(/abc/, :pos(10)).Bool, "No match anchored to 10";
+}
+
 done_testing;
 
 # vim: ft=perl6
