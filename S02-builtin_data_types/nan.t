@@ -20,7 +20,6 @@ is NaN ** 0,  NaN, "NaN ** 0";
 is 0**0     , 1, "0**0 is 1, _not_ NaN";
 is Inf**0   , 1, "Inf**0 is 1, _not_ NaN";
 
-#?rakudo todo 'truncate(NaN)'
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
 
 # vim: ft=perl6

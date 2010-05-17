@@ -39,8 +39,8 @@ plan 13;
 #     Inf  eq  Inf   # same as
 #     ~Inf eq ~Inf   # true
 
-#?rakudo 4 todo 'truncate(Inf)'
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
+#?rakudo 3 todo 'Int conversion of NaN and Inf'
 ok NaN.Int === NaN,         'Inf.Int === Int';
 ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
