@@ -67,6 +67,17 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is @match, <foo foooo foooooo>, 'nth(code) matched correctly';
 }
 
+{
+    is 'abecidofug'.match(/<[aeiou]>./, :nth(1|3|5), :x(2)).join('|'),
+        'ab|id', ':x and :nth';
+
+    nok 'abecidofug'.match(/<[aeiou]>./, :nth(1|3|5|7|9), :x(6)).join('|'),
+        ':x and :nth (not matching)';
+
+    is 'abcdefg'.match(/.*/, :nth(2|4|6|7), :x(2..3), :overlap).join('|'),
+        'bcdefg|defg|fg', ':x and :nth and :overlap';
+}
+
 done_testing;
 
 # vim: ft=perl6
