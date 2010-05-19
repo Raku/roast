@@ -76,6 +76,9 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
     is 'abcdefg'.match(/.*/, :nth(2|4|6|7), :x(2..3), :overlap).join('|'),
         'bcdefg|defg|fg', ':x and :nth and :overlap';
+
+    nok 'abcdefg'.match(/.+/, :nth(2|4|6|7), :x(6..8), :overlap).join('|'),
+        ':x and :nth and :overlap (not matching)'
 }
 
 done_testing;
