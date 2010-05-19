@@ -37,6 +37,9 @@ ok(%hash4.does(Hash), '%hash4 does Hash');
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
+#hash in list context
+is( (map { .WHAT } , {"a"=> 1 , "b"=>2}).join(' ') , 'Pair() Pair()' , 'Hashes become pairs in list context');
+
 # hash slicing
 
 my %hash5 = ("one", 1, "two", 2, "three", 3);
