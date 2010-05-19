@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 55;
 
 # L<S32::Numeric/Numeric/"=item roots">
 
@@ -50,6 +50,21 @@ sub has_approx($n, @list) {
     my @m = roots(1, 0);
     ok(@m.elems == 1, 'roots(1, 0) returns 1 element');
     ok(@m[0] ~~ 'NaN', 'roots(1,0) returns NaN');
+}
+{
+    my @m = roots(Inf, 0);
+    ok(@m.elems == 1, 'roots(Inf, 0) returns 1 element');
+    ok(@m[0] ~~ 'NaN', 'roots(Inf,0) returns NaN');
+}
+{
+    my @m = roots(-Inf, 0);
+    ok(@m.elems == 1, 'roots(-Inf, 0) returns 1 element');
+    ok(@m[0] ~~ 'NaN', 'roots(-Inf,0) returns NaN');
+}
+{
+    my @m = roots(NaN, 0);
+    ok(@m.elems == 1, 'roots(NaN, 0) returns 1 element');
+    ok(@m[0] ~~ 'NaN', 'roots(NaN,0) returns NaN');
 }
 {
     my @l = roots(4, 2);
@@ -117,12 +132,20 @@ my $pi = 312689/99532;
     ok(has_approx(exp(1/3*(log(8) + 4i*$pi)),@l), 'exp(1/3*(log(8) + 4i*$pi)) is a cube root of 8');
 }
 {
-    my @l = (-8).roots(3);
+    my @l = (-8).Num.roots(3);
     ok(@l.elems == 3, '(-8).roots(3) returns 3 elements');
     ok(has_approx(-2,@l), '2 is a cube root of -8');
     ok(has_approx(exp(1/3*(log(8) + 3i*$pi)),@l), 'exp(1/3*(log(8) + 3i*$pi)) is a cube root of -8');
     ok(has_approx(exp(1/3*(log(8) + 5i*$pi)),@l), 'exp(1/3*(log(8) + 5i*$pi)) is a cube root of -8');
 }
-
+{
+    my @l = 8.5.roots(4);
+    ok(@l.elems == 4, '8.5.roots(4) returns 4 elements');
+    my $quartic = 8.5 ** .25;
+    ok(has_approx($quartic, @l), '8.5 ** 1/4 is a quartic root of 8.5');
+    ok(has_approx(-$quartic, @l), '-(8.5 ** 1/4) is a quartic root of 8.5');
+    ok(has_approx($quartic\i, @l), '(8.5 ** 1/4)i is a quartic root of 8.5');
+    ok(has_approx(-$quartic\i, @l), '-(8.5 ** 1/4)i is a quartic root of 8.5');
+}
 
 # vim: ft=perl6
