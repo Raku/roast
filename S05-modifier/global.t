@@ -28,6 +28,14 @@ Testing the C<:global> regex modifier - more tests are always welcome
     is +@matches, 0, "Zero matches found";
 }
 
+{
+    my @matches = "hello world".match(/<[aeiou]>./, :global);
+    is +@matches, 3, "Three matches found";
+    is ~(@matches[0]), "el", "First match is 'el'";
+    is ~(@matches[1]), "o ", "Second match is 'o '";
+    is ~(@matches[2]), "or", "Third match is 'or'";
+}
+
 done_testing;
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
