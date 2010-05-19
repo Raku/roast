@@ -192,6 +192,16 @@ is 2.exp($neg-pi), 2.exp(-3.14), "2.exp(-3.14) is correct";
 is_approx $one-and-one-hundredth.exp(10i), 1.01.exp(10i), "1.01.exp(10i) is correct";
 is_approx 2i.exp($neg-pi), 2i.exp(-3.14), "2i.exp(-3.14) is correct";
 
+{
+    my @l = $neg-pi.roots(4);
+    ok(@l.elems == 4, '(-3.14).roots(4) returns 4 elements');
+    my $quartic = (-3.14.Complex) ** .25;
+    ok(@l.grep({ ($_ - $quartic).abs < 1e-5 }).Bool, '(-3.14) ** 1/4 is a quartic root of -3.14');
+    ok(@l.grep({ ($_ + $quartic).abs < 1e-5 }).Bool, '-(-3.14) ** 1/4 is a quartic root of -3.14');
+    ok(@l.grep({ ($_ - $quartic\i).abs < 1e-5 }).Bool, '(-3.14)i ** 1/4 is a quartic root of -3.14');
+    ok(@l.grep({ ($_ + $quartic\i).abs < 1e-5 }).Bool, '-(-3.14)i ** 1/4 is a quartic root of -3.14');
+}
+
 done_testing;
 
 # vim: ft=perl6
