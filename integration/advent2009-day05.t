@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan(17);
+plan 17;
 
 my $a = 4;
 my $b = 2;
@@ -31,3 +31,5 @@ is ([+] ( @b »**» 2)), 696, 'Hyper operator - sum of squares';
 is ($a1 = $a; $a1 += 5;), ($a2 = $a; $a2 = $a2 + 5), 'In-place += operator is a meta form of + with = suffix';
 is ($a1 = $a; $a1 //= 7;), ($a2 = $a; $a2 = $a2 // 7), 'In-place //= operator is a meta form of // with = suffix';
 is ($a1 = $a; $a1 min= $b;), ($a2 = $a; $a2 = $a2 min $b), 'In-place min= operator is a meta form of min with = suffix';
+
+done_testing;
