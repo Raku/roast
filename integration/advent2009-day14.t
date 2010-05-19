@@ -33,9 +33,7 @@ ok $a ~~Num, 'cos() returned a Num';
 is_approx $a, 0.999999999861111;
 
 is 3.14.Rat.perl, "157/50";
-#?rakudo skip "Method '!modf' not found for invocant of class 'Num'"
 is pi.Rat.perl, "355/113";
-#?rakudo skip "Method '!modf' not found for invocant of class 'Num'"
 is pi.Rat(1e-10).perl, "312689/99532";
 
 is 1.75.WHAT, "Rat()";
