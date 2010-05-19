@@ -2,6 +2,7 @@
 
 use v6;
 use Test;
+plan 6;
 
 my Int $days = 24;
 
@@ -33,10 +34,9 @@ multi sub identify(Str $x, Str $y) {
     return "You have two strings \"$x\" and \"$y\".";
 }
 
-# XXX these fail ATM
-# is ( ( identify(42) ), "42 is an integer");
-# is ( ( identify("This rules!") ), "");
-# is ( ( identify(42, "This rules!") ), "");
-# is ( ( identify("This rules!", 42) ), "");
-# is ( ( identify("This rules!", "I agree!") ), "");
-# is ( ( identify(42, 24) ), "");
+is identify(42), "42 is an integer.", 'MMD with one Int';
+is identify("This rules!"), '"This rules!" is a string.', 'MMD with one Str';
+is identify(42, "This rules!"), 'You have an integer 42, and a string "This rules!".' , "MMD with Int and Str";
+is identify("This rules!", 42), 'You have a string "This rules!", and an integer 42.' , "MMD with Int and Str";
+is identify("This rules!", "I agree!"), "You have two strings \"This rules!\" and \"I agree!\".", 'Str, Str';
+is identify(42, 24), "You have two integers 42 and 24.";
