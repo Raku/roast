@@ -6,9 +6,9 @@ use Test;
 plan 22;
 
 is (3/7).WHAT, "Rat()";
-is_approx (3/7), 0.428571428571429;
+is_approx (3/7), 0.4285714;
 
-is (3/7).Num + (2/7).Num + (2/7).Num - 1, -1.11022302462516e-16;
+is_approx (3/7).Num + (2/7).Num + (2/7).Num - 1, -1.1102230e-16;
 is 3/7 + 2/7 + 2/7 - 1,  0;
 
 is (3/7).perl, "3/7";
@@ -19,18 +19,18 @@ is (3/7).nude.join('|'), "3|7";
 
 my $a = 1/60000 + 1/60000; 
 is $a.WHAT, "Rat()";
-is_approx $a, 3.33333333333333e-05;
+is_approx $a, 3.3333333e-05;
 is $a.perl, "1/30000";
 
 $a = 1/60000 + 1/60001;
 is $a.WHAT, "Num()";
-is_approx $a, 3.33330555601851e-05;
+is_approx $a, 3.333305e-05;
 ok $a.perl ~~ / '3.3333' /;
 
 
 $a = cos(1/60000);
 ok $a ~~Num, 'cos() returned a Num';
-is_approx $a, 0.999999999861111;
+is_approx $a, 0.99999999;
 
 is 3.14.Rat.perl, "157/50";
 is pi.Rat.perl, "355/113";

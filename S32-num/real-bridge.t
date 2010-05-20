@@ -27,6 +27,7 @@ class Fixed2 does Real {
 my $zero = Fixed2.new(0);
 my $one = Fixed2.new(1);
 my $one-and-one-hundredth = Fixed2.new(1.01);
+my $one-and-ninety-nine-hundredths = Fixed2.new(1.99);  
 my $ten = Fixed2.new(10);
 my $neg-pi = Fixed2.new(-3.14);
 
@@ -43,6 +44,36 @@ is $zero.succ, 1, "0.succ works";
 is $neg-pi.succ, -2.14, "(-3.14).succ works";
 is $zero.pred, -1, "0.pred works";
 is $neg-pi.pred, -4.14, "(-3.14).pred works";
+
+{
+    my $i = $neg-pi.Int;
+    isa_ok $i, Int, "-3.14.Int is an Int";
+    is $i, -3, "-3.14.Int is -3";
+    
+    $i = $one-and-ninety-nine-hundredths.Int;
+    isa_ok $i, Int, "1.99.Int is an Int";
+    is $i, 1, "1.99.Int is 1";
+}
+
+{
+    my $i = $neg-pi.Rat;
+    isa_ok $i, Rat, "-3.14.Rat is an Rat";
+    is_approx $i, -3.14, "-3.14.Rat is -3.14";
+    
+    $i = $one-and-ninety-nine-hundredths.Rat;
+    isa_ok $i, Rat, "1.99.Rat is an Rat";
+    is_approx $i, 1.99, "1.99.Rat is 1.99";
+}
+
+{
+    my $i = $neg-pi.Num;
+    isa_ok $i, Num, "-3.14.Num is an Num";
+    is_approx $i, -3.14, "-3.14.Num is -3.14";
+    
+    $i = $one-and-ninety-nine-hundredths.Num;
+    isa_ok $i, Num, "1.99.Num is an Num";
+    is_approx $i, 1.99, "1.99.Num is 1.99";
+}
 
 is_approx $zero.abs, 0, "0.abs works";
 ok $zero.abs ~~ Real, "0.abs produces a Real";

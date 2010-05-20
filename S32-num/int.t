@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 82;
+plan 86;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -56,6 +56,12 @@ is((-1.5).Int, -1, "int(-1.5) is -1");
 is((-1.49).Int, -1, "int(-1.49) is -1");
 is((-1.1).Int, -1, "int(-1.1) is -1");
 
+is(1.999.Num.Int, 1, "int(1.999.Num) is 1");
+is(1.1.Num.Int,   1, "int(1.1.Num) is 1");
+
+is((-1.999).Num.Int, -1, "int(-1.999.Num) is -1");
+is((-1.1).Num.Int, -1, "int(-1.1.Num) is -1");
+
 nok ?0, "?0 is false";
 isa_ok ?0, Bool, "?0 is Bool";
 ok ?1, "?1 is true";
@@ -96,7 +102,7 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 # Special values
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
-#?rakudo 3 skip 'Inf and NaN not yet implemented'
+#?rakudo 3 todo 'Inf and NaN NYI for Int'
 is((Inf).Int,    Inf, "int Inf is Inf");
 is((-Inf).Int,  -Inf, "int -Inf is -Inf");
 is((NaN).Int,    NaN, "int NaN is NaN");
