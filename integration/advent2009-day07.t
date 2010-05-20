@@ -33,7 +33,7 @@ is $a, '1234', 'simple range';
 
 $a = '';
 for ^4 { $a ~= $_ };
-is $a, '0123', 'prefix-range';
+is $a, '0123', 'upto';
 
 my @array1 = <11 12 13>;
 my @array2 = <21 22 23>;
@@ -44,11 +44,11 @@ is $a, '11 21 12 22 13 23 ', 'zip with multiple topics';
 
 $a = '';
 for ^Inf Z @array -> $index, $item { $a ~= "$index $item " };
-is $a, '0 a 1 b 2 c 3 d ', 'inf prefix-range, zip with multiple topics';
+is $a, '0 a 1 b 2 c 3 d ', 'infinite upto, zip with multiple topics';
 
 $a = '';
 for ^@array.elems Z @array -> $index, $item { $a ~= "$index $item " };
-is $a, '0 a 1 b 2 c 3 d ', 'elems prefix-range, zip with multiple topics';
+is $a, '0 a 1 b 2 c 3 d ', 'elems upto, zip with multiple topics';
 
 $a = '';
 for @array.kv -> $index, $item { $a ~= "$index $item " };
