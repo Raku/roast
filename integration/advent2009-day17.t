@@ -25,6 +25,16 @@ sub subdivide($low, $high, $count) {
     (^$count).map({ $low + ($_ / ($count - 1)) * ($high - $low) });
 }
 
+# RAKUDO - needs 'our' here
+our sub postfix:<☃>(Complex $c) {
+    my $z = 0i;
+    for ^$max_iterations {
+        $z = $z * $z + $c;
+        return 1 if ($z.abs > 2);
+    }
+    return 0;
+}
+
 my $snowman =
 Q{1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -61,10 +71,18 @@ Q{1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 
 my @snowman-data = $snowman.split("\n");
 
+# using map
 for ^$height Z subdivide($upper-right.re, $lower-left.re, $height) -> $i, $re {
     my @line = subdivide($re + ($upper-right.im)i, $re + 0i, ($width + 1) / 2).map({ mandel($_) });
     my $middle = @line.pop;
-    is (@line, $middle, @line.reverse).join(' '), @snowman-data[$i], 'Line matched';
+    is (@line, $middle, @line.reverse).join(' '), @snowman-data[$i], "Line $i matched using map()";
+}
+
+# using the >>☃ hyperoperator
+for ^$height Z subdivide($upper-right.re, $lower-left.re, $height) -> $i, $re {
+    my @line = subdivide($re + ($upper-right.im)i, $re + 0i, ($width + 1) / 2)>>☃;
+    my $middle = @line.pop;
+    is (@line, $middle, @line.reverse).join(' '), @snowman-data[$i], "Line $i matched using >>☃ hyperoperator";
 }
 
 done_testing;
