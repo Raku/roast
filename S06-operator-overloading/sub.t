@@ -37,29 +37,29 @@ Testing operator overloading subroutines
     is ∔ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2214 DOT PLUS)';
 }
 
-#?rakudo skip 'prefix:() form not implemented'
+#?rakudo skip 'prefix:[] form not implemented'
 {
-    sub prefix:('Z') ($thing) { return "ROUGHLY$thing"; };
+    sub prefix:['Z'] ($thing) { return "ROUGHLY$thing"; };
 
     is(Z "fish", "ROUGHLYfish",
        'prefix operator overloading for new operator Z');
 }
 
-#?rakudo skip 'prefix:() form not implemented'
+#?rakudo skip 'prefix:[] form not implemented'
 {
-    sub prefix:("∓") ($thing) { return "AROUND$thing"; };
+    sub prefix:["∓"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2213 MINUS-OR-PLUS SIGN)';
 }
 
-#?rakudo skip 'prefix:() form not implemented'
+#?rakudo skip 'prefix:[] form not implemented'
 {
-    sub prefix:("\x[2213]") ($thing) { return "AROUND$thing"; };
+    sub prefix:["\x[2213]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \x[2213] MINUS-OR-PLUS SIGN)';
 }
 
-#?rakudo skip 'prefix:() form not implemented'
+#?rakudo skip 'prefix:[] form not implemented'
 {
-    sub prefix:("\c[MINUS-OR-PLUS SIGN]") ($thing) { return "AROUND$thing"; };
+    sub prefix:["\c[MINUS-OR-PLUS SIGN]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \c[MINUS-OR-PLUS SIGN])';
 }
 
@@ -117,7 +117,7 @@ Testing operator overloading subroutines
 {
     my $var = 0;
     #?pugs 2 todo 'feature'
-    ok(eval('macro circumfix:("<!--","-->") ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
+    ok(eval('macro circumfix:["<!--","-->"] ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
     ok(eval('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');
 }
 
@@ -154,7 +154,7 @@ Testing operator overloading subroutines
 {
   my &infix:<times>;
   BEGIN {
-    &::("infix:<times>") := { $^a * $^b };
+    &::["infix:<times>"] := { $^a * $^b };
   }
 
   is 3 times 5, 15, 'operator overloading using symbolic dereferentiation';
