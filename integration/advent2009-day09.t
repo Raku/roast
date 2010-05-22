@@ -2,3 +2,80 @@
 
 use v6;
 use Test;
+
+sub sum {
+    [+] @_ ;
+}
+
+sub grade_essay(Str $essay, Int $grade where 0..5) { #Type Essay replace w/ Str to avoid extraneous programming.
+    my %grades;
+    %grades{$essay} = $grade;
+}
+
+sub entreat($message = 'Pretty please, with sugar on top!', $times = 1) {
+    say $message for ^$times;
+    $message
+}
+
+sub xml_tag ($tag, $endtag = ($tag ~ ">") ) {
+    $tag ~ $endtag;
+}
+
+sub deactivate(Str $plant, Str $comment?) {
+    say $plant;
+    say $comment if $comment;
+}
+
+sub drawline($x1,$x2,$y1,$y2) {
+    $x1,$x2,$y1,$y2;
+}
+sub drawline2(:$x1,:$x2,:$y1,:$y2) {
+    $x1,$x2,$y1,$y2;
+}
+
+sub varsum(*@terms) {
+    [+] @terms
+}
+
+sub detector(:$foo!, *%bar) {
+    %bar.keys.fmt("'%s'", ', ');
+}
+sub up1($n) {
+    ++$n;
+}
+sub up1_2($n is rw) {
+    ++$n;
+}
+sub up1_3($n is copy) {
+    ++$n;
+}
+sub namen($x, $y, $z) {
+    $x,$y,$z;
+}
+
+is (sum 100,20,3), 123, 'Parameter handling in subroutines (@_)';
+ok (grade_essay("How to eat a Fish", 0)), 'P6 auto unpacking/verification';
+ok (entreat()), 'Default values for parameters works';
+is (xml_tag("hi")), "hihi>", 'Default values using previously supplied arguments';
+ok (deactivate("Rakudo Quality Fission")), 'optional parameters';
+is (drawline(:x1(1),:y2(4),:x2(2),:y1(3))), (1,2,3,4), 'Passing named parameters';
+dies_ok {drawline2(1,2,3,4)}, 'Must be named';
+ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
+#the required & must-be named (:$var!) test not here, its opposite is 1 up
+is (varsum(100,200,30,40,5)), 375, 'Parameters with a * in front can take as many items as you wish';
+#?rakudo 2 skip '.fmt wont play nice with hashes'
+is (detector(:foo(1), :bar(2), :camel(3))), ('bar', 'camel'), 'Capturing arbitrary named parameters';
+is (detector(foo => 1, bar => 2, camel => 3)), ('bar', 'camel'), 'Same as above test, only passed as hash';
+my $t = 3;
+dies_ok {up1($t)}, "Can't modify parameters within by default.";
+up1_2($t);
+is $t, 4, 'Set a parameter to "is rw", and then you can modify';
+up1_3($t);
+is $t, 4, '"is copy" leaves original alone"';
+my @te = <a b c>;
+dies_ok {namen(@te)}, 'Autoflattening doesnt exist';
+is (namen(|@te)), ('a','b','c'), "Put a | in front of the variable, and you're ok!";
+#type constraint on parameters skipped, due to that part of Day 9 being just a caution
+
+#test done, below is the day's one-liner (in case you wish to enable it :) )
+#.fmt("%b").trans("01" => " #").say for <734043054508967647390469416144647854399310>.comb(/.**7/)
