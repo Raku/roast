@@ -123,7 +123,6 @@ character classes), and those are referenced at the correct spot.
 
 # If the dot is not followed by an identifier, it is parsed as
 # a "dotty" postfix of some type, such as an indirect method call
-#?rakudo skip 'indirect subrule call not implemented'
 {
     # placeholder test for <.$foo>
     lives_ok({
@@ -155,7 +154,6 @@ character classes), and those are referenced at the correct spot.
 
 # A leading @ matches like a bare array except that each element is
 # treated as a subrule (string or Regex object) rather than as a literal
-#?rakudo skip '<@array> not implemented'
 {
     my @first = <a b c .**4>;
     ok('dddd' ~~ /<@first>/, 'strings are treated as a subrule in <@foo>');

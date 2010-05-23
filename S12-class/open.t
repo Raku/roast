@@ -38,7 +38,6 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 
 # now try to extend "core" types
 
-#?rakudo skip "'abc' is of type Perl6Str rather than Str"
 {
     augment class Str {
         method mydouble {

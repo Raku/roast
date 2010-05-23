@@ -20,7 +20,6 @@ my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
 
 my %hash = (a => 1);
-#?rakudo 2 skip "Hashes do not listify yet"
 is %hash.pick.key,   "a", "pick works on hashes (1)";
 is %hash.pick.value, "1", "pick works on hashes (2)";
 
