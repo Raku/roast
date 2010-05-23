@@ -2,6 +2,7 @@
 
 use v6;
 use Test;
+plan *;
 
 sub sum {
     [+] @_ ;
@@ -13,8 +14,7 @@ sub grade_essay(Str $essay, Int $grade where 0..5) { #Type Essay replace w/ Str 
 }
 
 sub entreat($message = 'Pretty please, with sugar on top!', $times = 1) {
-    say $message for ^$times;
-    $message
+    $message x $times
 }
 
 sub xml_tag ($tag, $endtag = ($tag ~ ">") ) {
@@ -22,8 +22,7 @@ sub xml_tag ($tag, $endtag = ($tag ~ ">") ) {
 }
 
 sub deactivate(Str $plant, Str $comment?) {
-    say $plant;
-    say $comment if $comment;
+    return 1 if $comment;
 }
 
 sub drawline($x1,$x2,$y1,$y2) {
@@ -57,15 +56,15 @@ is (sum 100,20,3), 123, 'Parameter handling in subroutines (@_)';
 ok (grade_essay("How to eat a Fish", 0)), 'P6 auto unpacking/verification';
 ok (entreat()), 'Default values for parameters works';
 is (xml_tag("hi")), "hihi>", 'Default values using previously supplied arguments';
-ok (deactivate("Rakudo Quality Fission")), 'optional parameters';
+nok deactivate("Rakudo Quality Fission"), 'optional parameters';
 is (drawline(:x1(1),:y2(4),:x2(2),:y1(3))), (1,2,3,4), 'Passing named parameters';
 dies_ok {drawline2(1,2,3,4)}, 'Must be named';
 ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
 #the required & must-be named (:$var!) test not here, its opposite is 1 up
 is (varsum(100,200,30,40,5)), 375, 'Parameters with a * in front can take as many items as you wish';
 #?rakudo 2 skip '.fmt wont play nice with hashes'
-is (detector(:foo(1), :bar(2), :camel(3))), ('bar', 'camel'), 'Capturing arbitrary named parameters';
-is (detector(foo => 1, bar => 2, camel => 3)), ('bar', 'camel'), 'Same as above test, only passed as hash';
+is detector(:foo(1), :bar(2), :camel(3)), ('bar, camel'|'camel, bar'), 'Capturing arbitrary named parameters';
+is (detector(foo => 1, bar => 2, camel => 3)), ('bar, camel'|'camel, bar'), 'Same as above test, only passed as hash';
 my $t = 3;
 dies_ok {up1($t)}, "Can't modify parameters within by default.";
 up1_2($t);
@@ -75,6 +74,8 @@ is $t, 4, '"is copy" leaves original alone"';
 my @te = <a b c>;
 dies_ok {namen(@te)}, 'Autoflattening doesnt exist';
 is (namen(|@te)), ('a','b','c'), "Put a | in front of the variable, and you're ok!";
+
+done_testing;
 #type constraint on parameters skipped, due to that part of Day 9 being just a caution
 
 #test done, below is the day's one-liner (in case you wish to enable it :) )
