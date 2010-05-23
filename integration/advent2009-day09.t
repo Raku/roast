@@ -63,8 +63,8 @@ ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
 #the required & must-be named (:$var!) test not here, its opposite is 1 up
 is (varsum(100,200,30,40,5)), 375, 'Parameters with a * in front can take as many items as you wish';
 #?rakudo 2 skip '.fmt wont play nice with hashes'
-is detector(:foo(1), :bar(2), :camel(3)), ('bar, camel'|'camel, bar'), 'Capturing arbitrary named parameters';
-is (detector(foo => 1, bar => 2, camel => 3)), ('bar, camel'|'camel, bar'), 'Same as above test, only passed as hash';
+is detector(:foo(1), :bar(2), :camel(3)), ("'bar', 'camel'"|"'camel', 'bar'"), 'Capturing arbitrary named parameters';
+is (detector(foo => 1, bar => 2, camel => 3)), ("'bar', 'camel'"|"'camel', 'bar'"), 'Same as above test, only passed as hash';
 my $t = 3;
 dies_ok {up1($t)}, "Can't modify parameters within by default.";
 up1_2($t);
