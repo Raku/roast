@@ -53,7 +53,7 @@ sub namen($x, $y, $z) {
 }
 
 is (sum 100,20,3), 123, 'Parameter handling in subroutines (@_)';
-ok (grade_essay("How to eat a Fish", 0)), 'P6 auto unpacking/verification';
+is grade_essay("How to eat a Fish", 0), 0, 'P6 auto unpacking/verification';
 ok (entreat()), 'Default values for parameters works';
 is (xml_tag("hi")), "hihi>", 'Default values using previously supplied arguments';
 nok deactivate("Rakudo Quality Fission"), 'optional parameters';
