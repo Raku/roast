@@ -114,6 +114,15 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
        '... and the error message mentions the role';
 }
 
+# RT #67278
+{
+    class AClass { };
+    my $x = eval 'class BClass does AClass { }; 1';
+    nok $x, 'class SomeClass does AnotherClass  dies';
+    ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
