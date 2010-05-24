@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 83;
+plan 86;
 
 =begin pod
 
@@ -208,6 +208,22 @@ is( ([\R~] 'a'..*).batch(8).join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcb
     is [^^](5, 0, 0),  (5 ^^ 0 ^^ 0),  '[^^] mix 4';
     is [^^](0, 9, 0),  (0 ^^ 9 ^^ 0),  '[^^] mix 5';
     is [^^](0, 0, 17), (0 ^^ 0 ^^ 17), '[^^] mix 6';
+}
+
+# RT #75234
+# rakudo had a problem where once-used meta operators weren't installed
+# in a sufficiently global location, so using a meta operator in class once
+# makes it unusable further on
+{
+    class A {
+        method m { return [~] gather for ^3 {take 'a'} }
+    }
+    class B {
+        method n { return [~] gather for ^4 {take 'b'}}
+    }
+    is A.new.m, 'aaa',  '[~] works in first class';
+    is B.new.n, 'bbbb', '[~] works in second class';
+    is ([~] 1, 2, 5), '125', '[~] works outside class';
 }
 
 # vim: ft=perl6
