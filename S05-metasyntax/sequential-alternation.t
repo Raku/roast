@@ -21,6 +21,7 @@ plan 10;
 
 #L<S05/"Variable (non-)interpolation"/"An interpolated array:">
 
+#?rakudo todo 'sequential alternation NYI'
 {
     my $str = 'x' x 7;
     my @list = <x xx xxxx>;
