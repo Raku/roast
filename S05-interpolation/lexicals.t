@@ -14,4 +14,10 @@ ok 'fooabcdef' ~~ / . <abc=&abc> . /, '<abc=&abc> captures lexical regex';
 is ~$/, 'oabcd', 'correctly matched string';
 is $<abc>, 'abc', 'correctly captured to $<abc>';
 
+ok 'fooabcdef' ~~ / . <other=&abc> . /, '<other=&abc> captures lexical regex';
+
+is ~$/, 'oabcd', 'correctly matched string';
+is $<other>, 'abc', 'correctly captured to $<other>';
+
+
 done_testing;
