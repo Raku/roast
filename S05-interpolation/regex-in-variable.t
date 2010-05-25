@@ -47,6 +47,7 @@ ok(!("aaaaab" ~~ m/$foo/),  'Rulish scalar match 6');
 
 # Arrays
 
+#?rakudo 4 todo 'array of regexes'
 ok("a" ~~ m/@var/, 'Simple array match (a)');
 ok("b" ~~ m/@var/, 'Simple array match (b)');
 ok("c" ~~ m/@var/, 'Simple array match (c)');
