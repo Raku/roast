@@ -10,7 +10,7 @@ my $str = 'hello';
 
 is $str.subst(/h/,'f'),       'fello', 'We can use subst';
 is $str,                      'hello', '.. withouth side effect';
-#?rakudo skip "multiple adverbs not implemented"
+#?rakudo skip "adverbs on rx// NYI"
 is $str.subst(rx:g:i/L/,'p'), 'heppo', '.. with multiple adverbs';
 
 is $str.subst('h','f'),       'fello', '.. or using Str as pattern';
@@ -18,7 +18,7 @@ is $str.subst('.','f'),       'hello', '.. with literal string matching';
 
 my $i=0;
 is $str.subst(/l/,{$i++}),    'he0lo', 'We can have a closure as replacement';
-#?rakudo skip "multiple adverbs not implemented"
+#?rakudo skip "adverbs on rx// NYI"
 is $str.subst(rx:g/l/,{$i++}),'he12o', '.. which act like closure and can be called more then once';
 is $str.=subst(/l/,'i'),      'heilo', '.. and with the .= modifier';
 is $str,                      'heilo', '.. it changes the receiver';
@@ -84,10 +84,9 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a a a a'.subst('a', 'x', :nth(5)), 'a a a a', '.subst (str pattern) and :nth(5)';
 }
 
-#?rakudo skip ':nth'
 {
     # combining :g and :nth:
-#    #?rakudo 2 todo 'RT #61130'
+    #?rakudo 2 todo 'RT #61130 -- are these tests actually wrong?'
     is 'a b c d'.subst(/\w/, 'x', :nth(1), :g), 'x x x x', '.subst and :g, :nth(1)';
     is 'a b c d'.subst(/\w/, 'x', :nth(2), :g), 'a x c x', '.subst and :g, :nth(2)';
     is 'a b c d'.subst(/\w/, 'x', :nth(3), :g), 'a b x d', '.subst and :g, :nth(3)';
@@ -108,7 +107,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :nth(2) and :x(3)';
 }
 
-#?rakudo skip 's/.../../'
+#?rakudo skip 's:global/.../../ NYI'
 {
     my $s = "ZBC";
     my @a = ("A", 'ZBC');
@@ -140,7 +139,18 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
-#?rakudo skip 's[...] = RHS'
+{
+    my $a = 'abc';
+    ok $a ~~ s[b] = 'de', 's[...] = ... returns true on success';
+    is $a, 'adec', 'substitution worked';
+
+    $a = 'abc';
+    #?rakudo todo 's[...] seems to always return true?'
+    nok $a ~~ s[d] = 'de', 's[...] = ... returns false on failure';
+    is $a, 'abc', 'failed substitutions leaves string unchanged';
+}
+
+#?rakudo skip '$_ and s[...] do not work together yet'
 {
     given 'abc' {
         ok (s[b] = 'de'), 's[...] = ... returns true on success';
@@ -151,7 +161,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         s[d] = 'foo';
         is $_, 'abc', 'failed substitutions leaves string unchanged';
     }
+}
 
+#?rakudo skip "s:g[] and s[] with $/ NYI"
+{
     my $x = 'foobar';
     ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
     is $x, 'fuubar', 'and the substition worked';
