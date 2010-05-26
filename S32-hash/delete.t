@@ -19,7 +19,6 @@ sub gen_hash {
     is %h1.delete('b'), $b, "Test for delete single key.";
 }
 
-#?rakudo todo 'Slices'
 {
     my %h1 = gen_hash;
     my @cde = %h1<c d e>;
@@ -48,12 +47,10 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 # RT #68482
 {
     my %rt68482 = 1 => 3;
-    #?rakudo todo 'RT 68482'
     is %rt68482.delete(1).WHAT, 3.WHAT, '.delete.WHAT is the element';
 
     %rt68482 = 1 => 3;
     my $rt68482 = %rt68482.delete(1);
-    #?rakudo todo 'RT 68482'
     is $rt68482.WHAT, 3.WHAT, '.WHAT of stored .delete is the element';
 }
 
