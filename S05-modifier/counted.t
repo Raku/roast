@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 178;
+plan 174;
 
 # L<S05/Modifiers/If the number is followed by an>
 
@@ -56,10 +56,6 @@ for (1..6) -> $N {
 {
     ok($data ~~ m:nth(2,3)/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
-    ok($data ~~ m:nth(2|4)/(fo+)/, 'nth(junction) is ok');
-    is(@(), <foo foooo>, 'nth(junction) matched correctly');
-    ok($data ~~ m:nth({$_ == 3 || $_ == 4})/(fo+)/, 'nth({code}) is ok');
-    is(@(), <fooo foooo>, 'nth({code} matched correctly');
 }
 
 
