@@ -50,10 +50,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     is +@match, 2, 'nth(list) is ok';
     is @match, <foo fooo>, 'nth(list) matched correctly';
 
-    @match = $data.match(/fo+/, :nth(2 | 4));
-    is +@match, 2, 'nth(junction) is ok';
-    is @match, <foo foooo>, 'nth(junction) matched correctly';
-
     @match = $data.match(/fo+/, :nth(2..4));
     is +@match, 3, 'nth(Range) is ok';
     is @match, <foo fooo foooo>, 'nth(Range) matched correctly';
@@ -64,17 +60,24 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 }
 
 {
-    is 'abecidofug'.match(/<[aeiou]>./, :nth(1|3|5), :x(2)).join('|'),
+    is 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2)).join('|'),
         'ab|id', ':x and :nth';
 
-    nok 'abecidofug'.match(/<[aeiou]>./, :nth(1|3|5|7|9), :x(6)).join('|'),
+    nok 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5,7,9), :x(6)).join('|'),
         ':x and :nth (not matching)';
 
-    is 'abcdefg'.match(/.*/, :nth(2|4|6|7), :x(2..3), :overlap).join('|'),
+    is 'abcdefg'.match(/.*/, :nth(2,4,6,7), :x(2..3), :overlap).join('|'),
         'bcdefg|defg|fg', ':x and :nth and :overlap';
 
-    nok 'abcdefg'.match(/.+/, :nth(2|4|6|7), :x(6..8), :overlap).join('|'),
+    nok 'abcdefg'.match(/.+/, :nth(2,4,6,7), :x(6..8), :overlap).join('|'),
         ':x and :nth and :overlap (not matching)'
+}
+
+# test that non-monotonic items in :nth lists are ignored
+#?rakudo todo 'ignore non-monotonic items in :nth'
+{
+    is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
+        'ac, ae', 'non-monotonic items in :nth are ignored';
 }
 
 done_testing;
