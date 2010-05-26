@@ -53,10 +53,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
     @match = $data.match(/fo+/, :nth(2..4));
     is +@match, 3, 'nth(Range) is ok';
     is @match, <foo fooo foooo>, 'nth(Range) matched correctly';
-
-    @match = $data.match(/fo+/, :nth({ $_ !% 2 }));
-    is +@match, 3, 'nth(code) is ok';
-    is @match, <foo foooo foooooo>, 'nth(code) matched correctly';
 }
 
 {
