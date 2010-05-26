@@ -74,7 +74,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 }
 
 # test that non-monotonic items in :nth lists are ignored
-#?rakudo todo 'ignore non-monotonic items in :nth'
 {
     is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
         'ac, ae', 'non-monotonic items in :nth are ignored';
