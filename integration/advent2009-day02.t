@@ -14,7 +14,7 @@ is(<10 11 12>.fmt('%x'),      'a b c');
 is(<1 2 3>.fmt('%02d', '; '), '01; 02; 03');
 
 
-is {foo => 1, bar => 2}.fmt, "foo\t1\nbar\t2"|"bar\t2\nfoo\t2", 'Hash.fmt';
+is {foo => 1, bar => 2}.fmt, "foo\t1\nbar\t2"|"bar\t2\nfoo\t1", 'Hash.fmt';
 
 is { Apples => 5, Oranges => 10 }.fmt('%s cost %d euros'),
     "Apples cost 5 euros\nOranges cost 10 euros"|"Oranges cost 10 euros\nApples cost 5 euros";
