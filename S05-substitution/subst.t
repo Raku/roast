@@ -94,15 +94,16 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 {
     # combining :nth with :x
-    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(1|2|3|4), :x(3)),
+    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(1,2,3,4), :x(3)),
        'x x x d e f g h',
-       '.subst with :nth(1) and :x(3)';
+       '.subst with :nth(1,2,3,4)) and :x(3)';
 
-    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2|4|6|8), :x(2)),
+    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2,4,6,8), :x(2)),
        'a x c x e f g h',
-       '.subst with :nth(2) and :x(2)';
+       '.subst with :nth(2,4,6,8) and :x(2)';
 
-    is 'a b c d e f g h'.subst(/\w/, 'x', :nth({$_ !% 2}), :x(3)),
+    #?rakudo todo 'non-monotonic items in :nth should be ignored'
+    is 'a b c d e f g h'.subst(/\w/, 'x', :nth(2, 4, 1, 6), :x(3)),
        'a x c x e x g h',
        '.subst with :nth(2) and :x(3)';
 }
