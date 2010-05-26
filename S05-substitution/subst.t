@@ -107,6 +107,75 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :nth(2) and :x(3)';
 }
 
+{
+    # :p
+    is 'a b c d e f g h'.subst(/\w/, 'x', :p(0)),
+       'x b c d e f g h',
+       '.subst with :p(0)';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :p(1)),
+       'a b c d e f g h',
+       '.subst with :p(1)';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :p(2)),
+       'a x c d e f g h',
+       '.subst with :p(2)';
+       
+    # :p and :g
+    is 'a b c d e f g h'.subst(/\w/, 'x', :p(0), :g),
+       'x x x x x x x x',
+       '.subst with :p(0) and :g';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :p(1), :g),
+       'a b c d e f g h',
+       '.subst with :p(1) and :g';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :p(2), :g),
+       'a x x x x x x x',
+       '.subst with :p(2) and :g';
+}
+
+{
+    # :c
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(0)),
+       'x b c d e f g h',
+       '.subst with :c(0)';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(1)),
+       'a x c d e f g h',
+       '.subst with :c(1)';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(2)),
+       'a x c d e f g h',
+       '.subst with :c(2)';
+       
+    # :c and :g
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :g),
+       'x x x x x x x x',
+       '.subst with :c(0) and :g';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(1), :g),
+       'a x x x x x x x',
+       '.subst with :c(1) and :g';
+
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(2), :g),
+       'a x x x x x x x',
+       '.subst with :c(2) and :g';
+
+    # :c and :nth(3, 4)
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
+       'a b x x e f g h',
+       '.subst with :c(0) and :nth(3, 4)';
+    
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(1), :nth(3, 4)),
+       'a b c x x f g h',
+       '.subst with :c(1) and :nth(3, 4)';
+    
+    is 'a b c d e f g h'.subst(/\w/, 'x', :c(2), :nth(3, 4)),
+       'a b c x x f g h',
+       '.subst with :c(2) and :nth(3, 4)';
+}
+
 #?rakudo skip 's:global/.../../ NYI'
 {
     my $s = "ZBC";
