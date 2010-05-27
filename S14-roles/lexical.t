@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 =begin pod
 
@@ -31,6 +31,16 @@ eval_dies_ok  '{ my class R3 {}; R3; }; R3',
     my $sm = SuperModel.new();
     ok $sm ~~ Model,               'instance smart-matches against lexical role too';
     is $sm.catwalk, 'ooh pretty!', 'can call composed method';
+}
+
+{
+    # This one was a former Rakudo bug.
+    my role Drinking { method go-to-bar() { "glug" } }
+    my role Gymnastics { method go-to-bar() { "ouch" } }
+    my class DrunkGymnast does Gymnastics does Drinking {
+        method go-to-bar() { self.Gymnastics::go-to-bar() }
+    }
+    is DrunkGymnast.new.go-to-bar, "ouch", 'the $obj.RoleName::meth() syntax works on lexical roles';
 }
 
 # vim: ft=perl6
