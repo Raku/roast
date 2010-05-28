@@ -16,7 +16,6 @@ sub weather($weather) {
 }
 is weather(Any), 'Looks like any other day.', 'Weather given/when';
 
-#?rakudo skip "Use of * in given doesn't work in current Rakudo"
 {
     sub probability($probability) {
         given $probability {

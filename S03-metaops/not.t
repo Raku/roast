@@ -58,7 +58,6 @@ isa_ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
     isa_ok 6 !% 4, Bool, '6 !% 4 isa Bool';
 
     is (1..10).grep({ $_ !% 3 }), <3 6 9>, '!% works with explicit closure';
-    #?rakudo skip "!% does not work with whatever yet"
     is (1..10).grep( * !% 3 ), <3 6 9>, '!% works with whatever *';
 }
 
