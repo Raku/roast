@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 =begin pod
 
@@ -190,6 +190,14 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     }
     is X.new.x('5'), '5', 'can use explicit @_ in method signature';
 
+}
+
+#?rakudo todo "Weird things happening with (method) y(*)"
+{
+    class Y {
+        method y(Whatever) { 1; };
+    }
+    is Y.new.y(*), 1, 'Can dispatch y(*)';
 }
 
 # vim: ft=perl6
