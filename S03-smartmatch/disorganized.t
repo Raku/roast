@@ -144,6 +144,10 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     nok RT72048_class.new !~~ RT72048_role, 'class instance !!matches role';
 }
 
+ok "foo" ~~ *, 'thing ~~ * is true';
+#?rakudo todo 'smart matching against Whatever'
+ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
+
 done_testing();
 
 # vim: ft=perl6
