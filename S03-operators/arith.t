@@ -293,6 +293,12 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
        'Can calcualte 2**65 without loss of precision';
 }
 
+# RT #73264
+# Rat literals are gone
+{
+    ok 1/7 / 1/7 == 1/49, 'no more Rat literals, infix:</> has normal left assoc';
+}
+
 done_testing;
 
 # vim: ft=perl6
