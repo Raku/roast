@@ -145,7 +145,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
 }
 
 ok "foo" ~~ *, 'thing ~~ * is true';
-#?rakudo todo 'smart matching against Whatever'
 ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
 
 done_testing();
