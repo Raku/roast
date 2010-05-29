@@ -22,10 +22,11 @@ ok($str ~~ m/ A .+ a /, 'Match from 3');
 ok($/.from == 3,        'Match.from is 3');
 
 ok($str !~~ m/ Z .+ a /, 'No match');
-#?rakudo todo 'unspecced'
+#?rakudo skip 'unspecced'
 ok($/.from.notdef,      'Match pos is undefined');
 
-regex Aa { A .* a }
+my regex Aa { A .* a }
+#?rakudo 3 skip 'lexical lookup of <Aa>'
 ok($str ~~ m/ .*? <Aa> /, 'Subrule match from 3');
 ok($/.from == 0,          'Full match pos is 0');
 ok($/<Aa>.from == 3,      'Subrule match pos is 3');
