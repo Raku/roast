@@ -13,15 +13,10 @@ Testing named capture variables nested inside each other. This doesn't appear to
 # At the time of writing, these fail under Win32 so they are marked as bugs
 # I haven't yet run them under UNIX but I believe they will work
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
 #L<S05/Nested subpattern captures>
 
 {
-  regex fishy { (.*)shark };
+  my regex fishy { (.*)shark };
   "whaleshark" ~~ m/<fishy>/;
   is($/<fishy>[0], "whale", "named rule ordinal capture");
   is($<fishy>[0], "whale", "named rule ordinal capture with abbreviated variable");
@@ -34,7 +29,7 @@ if !eval('("a" ~~ /a/)') {
 #?rakudo todo '$alias = <other>'
 {
   my $not_really_a_mammal;
-  regex fishy2 { $not_really_a_mammal = (.*)shark };
+  my regex fishy2 { $not_really_a_mammal = (.*)shark };
   "whaleshark" ~~ m/<fishy2>/;
   is($/<fishy2><not_really_a_mammal>, "whale", "named rule named capture");
   is($<fishy2><not_really_a_mammal>, "whale", "named rule named capture with abbreviated variable");
@@ -44,7 +39,7 @@ if !eval('("a" ~~ /a/)') {
 
 #?rakudo skip '$<alias> = <other>'
 {
-  regex number {
+  my regex number {
     [ $<numeral> = <roman_numeral>  { $<notation> = 'roman' }
     | $<numeral> = <arabic_numeral> { $<notation> = 'arabic' }
     ]
