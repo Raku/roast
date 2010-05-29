@@ -13,14 +13,14 @@ plan 20;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)>
 
-regex r { <?> | x <r> }
+my regex r { <?> | x <&r> }
 
-ok "" ~~ /<r>/, '"" ~~ /<r>/ matched';
+ok "" ~~ /<&r>/, '"" ~~ /<r>/ matched';
 is $/, "", 'with ""';
 is $/.from, 0, 'from 0';
 is $/.to, 0, 'to 0';
 
-ok "x" ~~ /<r>/, '"x" ~~ /<r>/ matched';
+ok "x" ~~ /<&r>/, '"x" ~~ /<r>/ matched';
 is $/, "", 'with ""';
 is $/.from, 0, 'from 0';
 is $/.to, 0, 'to 0';
@@ -28,21 +28,24 @@ is $/.to, 0, 'to 0';
 #?pugs emit skip_rest 'infinite loop in PCR - XXX fix this before release!';
 #?pugs emit exit;
 
-ok "x" ~~ /<r>$/, '"x" ~~ /<r>$/ matched';
+ok "x" ~~ /<&r>$/, '"x" ~~ /<r>$/ matched';
+#?rakudo 3 skip 'match object oddness'
 is $/, "x", 'with "x"';
 is $/.from, 0, 'from 0';
 is $/.to, 1, 'to 1';
 
-ok "xx" ~~ /<r>$/, '"xx" ~~ /<r>$/ matched';
+ok "xx" ~~ /<&r>$/, '"xx" ~~ /<r>$/ matched';
+#?rakudo 3 skip 'match object oddness'
 is $/, "xx", 'with "xx"';
 is $/.from, 0, 'from 0';
 is $/.to, 2, 'to 2';
 
 
 # rule r2 { <?> | <r2> x }
-regex r2 { <?> | <r2> x }
+my regex r2 { <?> | <&r2> x }
 
-ok "x" ~~ /<r2>$/, '"x" ~~ /<r2>$/ matched';
+ok "x" ~~ /<&r2>$/, '"x" ~~ /<r2>$/ matched';
+#?rakudo 3 skip 'match object oddness'
 is $/, "x", 'with "x"';
 is $/.from, 0, 'from 0';
 is $/.to, 1, 'to 1';
