@@ -332,7 +332,6 @@ plan 85;
  isa_ok($remu,Macro  );
 }
 
-#?rakudo skip 'bug - Match type not exposed as Match, but Regex::Match'
 {
  my Match $rexa;
  isa_ok($rexa,Match  );
@@ -361,7 +360,6 @@ plan 85;
  isa_ok($cino, Role );
 }
 
-#?rakudo skip 'Grammar !~~ Any, so missing .isa'
 {
  my Grammar $cire;
  isa_ok($cire,Grammar  );

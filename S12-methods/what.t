@@ -52,7 +52,6 @@ This test tests the C<WHAT> builtin.
 
 # these used to be Rakudo regressions, RT #62006
 
-#?rakudo skip 'Match object'
 {
     # proto as a term
     lives_ok {  Match }, 'proto as a term lives';

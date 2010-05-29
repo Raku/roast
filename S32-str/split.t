@@ -154,7 +154,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 {
     my @a = "hello world".split(/<[aeiou]>/, :all);
     is +@a, 7, "split:all resulted in seven pieces";
-    #?rakudo 3 skip "Match is currently Regex::Match"
     isa_ok @a[1], Match, "second is a Match object";
     isa_ok @a[3], Match, "fourth is a Match object";
     isa_ok @a[5], Match, "sixth is a Match object";

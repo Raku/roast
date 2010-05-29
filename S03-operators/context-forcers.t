@@ -109,17 +109,14 @@ sub eval_elsewhere($code){ eval($code) }
 # string context
 {
     my $a = 10.500000;
-    #?rakudo skip 'Stringy'
     ok(~$a ~~ Stringy, 'it is forced into a Str');
     is(~$a, '10.5', 'forced into string context');
 
     my $b = -100;
-    #?rakudo skip 'Stringy'
     ok(~$b ~~ Stringy, 'it is forced into a Str');
     is(~$b, '-100', 'forced into string context');
 
     my $c = -100.1010;
-    #?rakudo skip 'Stringy'
     ok(~$c ~~ Stringy, 'it is forced into a Str');
     is(~$c, '-100.101', 'forced into string context');
 }

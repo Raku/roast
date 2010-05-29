@@ -10,7 +10,6 @@ plan 75;
 
 
 ok(4\       .sqrt == 2, 'unspace with numbers');
-#?rakudo skip 'unimplemented'
 is(4\#`(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
@@ -71,7 +70,6 @@ is((foo\ .lc ), 'a', 'unspace');
 is((foo \ .lc), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
 is((foo\    .lc), 'a', 'longer dot');
-#?rakudo skip 'unimplemented'
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
 eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
 is((foo\ # comment
