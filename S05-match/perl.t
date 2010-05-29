@@ -20,12 +20,13 @@ lives_ok { $m.perl }, '$/.perl lives (with named captures';
 is_deeply eval($m.perl), $m, '... and it reproduces the right thing (1)'; 
 is ~eval($m.perl).<operator>, '+', ' right result (2)';
 
-regex f { f };
-regex o { o };
-ok "foo" ~~ /<f> <o>+ /, 'Regex matches (2)';
+my regex f { f };
+my regex o { o };
+ok "foo" ~~ /<f=&f> <o=&o>+ /, 'Regex matches (2)';
 lives_ok { $/.perl }, 'lives on quantified named captures';
 
 # RT #64874
+#?rakudo skip '<foo::bar>'
 {
     my $code_str = 'say <OH HAI>';
     $code_str ~~ /<Perl6::Grammar::TOP>/;
@@ -42,7 +43,6 @@ lives_ok { $/.perl }, 'lives on quantified named captures';
     my $m = 'foo' ~~ /foo/;
     eval '$m<greeting> = "OH HAI"';
 
-    #?rakudo todo 'RT #65610'
     ok  $!  ~~ Exception, 'die before modifying a Match';
     #?rakudo skip 'RT #65610'
     is_deeply eval($m.perl), $m, 'Match.perl works after attempt to modify';
