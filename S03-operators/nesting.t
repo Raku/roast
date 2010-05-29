@@ -38,9 +38,13 @@ is (1,2 [Z[cmp]] 3,2,0), (-1, 0), 'zip-cmp works';
 
 # reduce
 
-#?rakudo 2 skip "[[+]] doesn't work'"
 is ([[+]] 1, 20, 300, 4000), 4321, "[[+]] works";
 is ([R[+]] 1, 20, 300, 4000), 4321, "[R[+]] works";
+
+# deeper nesting
+
+is (1 R[R[R-]] 2), 1, 'R[R[R-]] works';
+is (1 RR[R-] 2),   1, 'RR[R-] works';
 
 # crazy stuff
 {
