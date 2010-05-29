@@ -36,6 +36,20 @@ is (<a b> Z[~] <1 2>), <a1 b2>, 'zip-concat produces expected result';
 is (1,2 [Z*] 3,4), (3,8), 'zip-product works';
 is (1,2 [Z[cmp]] 3,2,0), (-1, 0), 'zip-cmp works';
 
+# reduce
+
+#?rakudo 2 skip "[[+]] doesn't work'"
+is ([[+]] 1, 20, 300, 4000), 4321, "[[+]] works";
+is ([R[+]] 1, 20, 300, 4000), 4321, "[R[+]] works";
+
+# crazy stuff
+{
+    our sub infix:<blue>($a, $b) { 
+        $a % $b 
+    }
+    is 1031 [blue] 4, 3, "1031 [blue] 4 == 3";
+}
+
 done_testing;
 
 # vim: ft=perl6
