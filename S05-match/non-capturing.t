@@ -31,13 +31,13 @@ ok(!defined($/[0]), "Correctly didn't capture 2");
     # present, but not used.
     # moved here from t/xx-uncategoritzed/rules_with_embedded_parrot.t 
     
-    rule abc {abc}
+    my rule abc {abc}
 
-    rule once {<.abc>}
+    my rule once {<&abc>}
 
-    rule mumble {<notabc>}
+    my rule mumble {<notabc>}
 
-    ok("abcabcabcabcd" ~~ m/<.once>/, 'Once match');
+    ok("abcabcabcabcd" ~~ m/<&once>/, 'Once match');
 }
 
 
