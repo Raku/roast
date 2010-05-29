@@ -6,11 +6,6 @@ BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
 plan *;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
 {
@@ -25,6 +20,7 @@ if !eval('("a" ~~ /a/)') {
 {
   'abd' ~~ m/ (a) (b) c || (\w) b d /;
   ok( $/[0] eq 'a', 'positional capture accessible');
+  #?rakudo todo 'array context'
   ok( @($/).[0] eq 'a', 'array context - correct number of positional captures');
   ok( @($/).elems == 1, 'array context - correct number of positional captures');
   ok( $/.list.elems == 1, 'the .list methods returns a list object');
@@ -35,6 +31,7 @@ if !eval('("a" ~~ /a/)') {
 {
   'abd' ~~ m/ <alpha> <alpha> c || <alpha> b d /;
   ok( $/<alpha> eq 'a', 'named capture accessible');
+  #?rakudo 2 todo 'hash context'
   ok( %($/).keys == 1, 'hash context - correct number of named captures');
   ok( %($/).<alpha> eq 'a', 'hash context - named capture accessible');
   ok( $/.hash.keys[0] eq 'alpha', 'the .hash method returns a hash object');
@@ -53,10 +50,11 @@ if !eval('("a" ~~ /a/)') {
 
 # RT #64946
 {
-    regex o { o };
-    "foo" ~~ /f<o>+/;
+    my regex o { o };
+    "foo" ~~ /f<o=&o>+/;
 
     is ~$<o>, 'o o', 'match list stringifies like a normal list';
+    #?rakudo todo 'exact types'
     isa_ok $<o>, List;
     # I don't know what difference 'isa' makes, but it does.
     # Note that calling .WHAT (as in the original ticket) does not have
@@ -71,14 +69,14 @@ if !eval('("a" ~~ /a/)') {
     is $/[0][1], 'b', 'match element [0][1] from /(.)+/';
 
     my @match = @( 'ab' ~~ /(.)+/ );
-    #?rakudo 2 todo 'match coerced to array is flattened (RT #64952)'
+    #?rakudo 2 skip 'match coerced to array is flattened (RT #64952)'
     is @match[0][0], 'a', 'match element [0][0] from /(.)+/ coerced';
     is @match[0][1], 'b', 'match element [0][1] from /(.)+/ coerced';
 }
 
 # RT #64948
+#?rakudo skip 'RT 64948'
 {
-    #?rakudo skip 'RT #64948'
     ok %( 'foo' ~~ /<alpha> oo/ ){ 'alpha' }:exists,
        'Match coerced to Hash says match exists';
 }
