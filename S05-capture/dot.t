@@ -18,12 +18,7 @@ Broken:
 
 plan 61;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
-regex dotdot { (.)(.) };
+my regex dotdot { (.)(.) };
 
 ok("zzzabcdefzzz" ~~ m/(a.)<.dotdot>(..)/, 'Match');
 ok($/, 'Matched');
@@ -110,7 +105,7 @@ ok("ivan" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'Russian 
 is(~$/, "ivan", 'Match is ivan');
 is(~$/<name>, "ivan", 'Name is ivan');
 
-regex name { <.English::name> | <.French::name> | <.Russian::name> }
+my regex name { <.English::name> | <.French::name> | <.Russian::name> }
  
 ok("john" ~~ m/<name>/, 'English metaname');
 is(~$/, "john", 'Metaname match is john');
