@@ -9,6 +9,7 @@ plan 26;
 eval_dies_ok('qr/foo/', 'qr// is gone');
 
 isa_ok(rx/oo/, Regex);
+#?rakudo skip 'rx (o)'
 isa_ok(rx (o), Regex);
 eval_dies_ok('rx(o)', 'rx () whitespace if the delims are parens');
 isa_ok(regex {oo}, Regex);
@@ -32,7 +33,6 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 }
 
 # Note for RT - change to $_ ~~ /oo/ to fudge ok
-#?rakudo todo 'RT #61662'
 {
     $_ = "foo";
     my $mat_tern = /oo/ ?? "yes" !! "no"; 
@@ -60,10 +60,11 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     eval_lives_ok('regex baz {qux}', 'regex foo {...} is valid');
 }
 
+#?rakudo skip 'lexical lookup of regexes'
 {
-    regex alien { ET };
-    token archaeologist { Indiana };
-    rule food { pasta };
+    my regex alien { ET };
+    my token archaeologist { Indiana };
+    my rule food { pasta };
 
     ok 'ET phone home' ~~ m/<alien>/, 'named regex outside of a grammar works';
     ok 'Indiana has left the fridge' ~~ m/<archaeologist>/,
@@ -71,9 +72,9 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     ok 'mmm, pasta' ~~ m/<food>/, 'named rule outside of a grammar works';
 }
 
-ok not Mu ~~ / 'RT #67234' /, 'match against undefined does not match';
+#?rakudo skip 'smart-matching against undefined values'
+ok Any !~~ / 'RT #67234' /, 'match against undefined does not match';
 
-#?rakudo todo 'RT #67612'
 eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
 
 # L<S05/Simplified lexical parsing of patterns/The semicolon character>
@@ -90,7 +91,6 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
     ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
 }
 
-#?rakudo todo 'RT #64220'
 eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
 
 # vim: ft=perl6
