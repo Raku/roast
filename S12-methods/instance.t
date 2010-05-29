@@ -192,7 +192,6 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
 
 }
 
-#?rakudo todo "Weird things happening with (method) y(*)"
 {
     class Y {
         method y(Whatever) { 1; };
