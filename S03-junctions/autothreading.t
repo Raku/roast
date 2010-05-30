@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 77;
+plan 83;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -283,6 +283,20 @@ plan 77;
         $c++;
     }
     is $c, 6, 'do autothread over blocks with explicit Any';
+}
+
+# used to be RT #75368
+# L<S03/Junctive operators/Use of negative operators with junctions>
+{
+    my Mu $x = 'a' ne ('a'|'b'|'c');
+    ok $x ~~ Bool, 'infix:<ne> collapses the junction (1)';
+    ok $x !~~ Junction, 'infix:<ne> collapses the junction (2)';
+    nok $x, '... and the result is False';
+
+    my Mu $y = 'a' !eq ('a'|'b'|'c');
+    ok $y ~~ Bool, 'infix:<!eq> collapses the junction (1)';
+    ok $y !~~ Junction, 'infix:<!eq> collapses the junction (2)';
+    nok $y, '... and the result is False';
 }
 
 # vim: ft=perl6
