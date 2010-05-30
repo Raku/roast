@@ -62,7 +62,7 @@ is($t3.x, 42,        'anonymous classes can have attributes');
     lives_ok { $i1 = rt64888() }, 'can get anonymous class instance once';
     lives_ok { $i2 = rt64888() }, 'can get anonymous class instance twice';
 
-    #?rakudo todo 'Numeric, Stringy'
+    #?rakudo todo 'prefix:<~> should be Stringy'
     is ~$i1, 'RT #64888', 'anonymous class stringified works';
     is +$i1, 64888, 'anonymous class numified works';
 }
