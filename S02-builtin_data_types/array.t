@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 95;
+plan 96;
 
 #L<S02/Mutable types/Array>
 
@@ -318,6 +318,11 @@ my @array2 = ("test", 1, Mu);
     pop @arr; # remove the last item to ensure the next ones are type constraints
     dies_ok({push @arr, 's'}, 'type constraints on my Type @arr[num] works (1)');
     dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr[num]  works (2)');
+}
+
+# RT #73308
+{
+    is [][].elems, 0, '[][] returns empty list/array';
 }
 
 # vim: ft=perl6
