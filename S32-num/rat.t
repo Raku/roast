@@ -209,6 +209,12 @@ is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
 ok Rat.new() == 0, 'Rat.new() is 0';
 
+{
+    my Rat $a;
+    $a += 0.1 for ^10;
+    ok $a == 1, 'can do += on variable initialized by type object';
+}
+
 done_testing;
 
 # vim: ft=perl6
