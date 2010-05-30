@@ -120,7 +120,21 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
     my $x = eval 'class BClass does AClass { }; 1';
     nok $x, 'class SomeClass does AnotherClass  dies';
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
+}
 
+# RT #72840
+{
+    eval 'class Boo does Boo { };';
+    ok "$!" ~~ /Boo/, 'class does itself produces sensible error message';
+}
+
+# RT #69170
+{
+    role StrTest {
+        method s { self.Str }
+    };
+    ok StrTest.s ~~ /StrTest/,
+        'default role stringification contains role name';
 }
 
 done_testing;
