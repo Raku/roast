@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 10;
 
 # L<S05/Simplified lexical parsing of patterns/not all non-identifier glyphs are currently meaningful as metasyntax>
 
@@ -22,6 +22,12 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
     my rule foo { \{ };
     ok '{'  ~~ /<foo>/, '\\{ in a rule (+)';
     ok '!' !~~ /<foo>/, '\\{ in a rule (-)';
+}
+
+# RT #74832
+{
+    nok eval('/ a+ + /'), 'Cannot parse regex a+ +';
+    ok "$!" ~~ /quantif/, 'error message mentions quantif{y,ier}';
 }
 
 # vim: ft=perl6
