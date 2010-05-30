@@ -14,6 +14,7 @@ plan 11;
     }
 
     is count([1, 2, 3, 4]),       4, 'count([1, 2, 3, 4])';
+    #?rakudo skip 'bogus error message'
     is count(my @b = 1, 2, 3, 4), 4, 'count(my @b = 1, 2, 3)';
     is count((1, 2, 3)),          3, 'count((1, 2, 3))';
 

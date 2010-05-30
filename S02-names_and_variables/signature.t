@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # The :() form constructs signatures similar to how \() constructs Captures.
 # A subroutine's .signature is a Siglist object.
@@ -73,6 +73,15 @@ plan 11;
 
     ok $siglist !eqv &foo.signature,
         "a subroutine's siglist can be accessed via .signature (3)";
+}
+
+{
+    my @a = 1,2,3;
+    my (@c) = @a;
+    my $i = 0;
+    $i++ for @c;
+    #?rakudo todo 'RT 74336'
+    is $i, 3, 'asigning to an array in a signature is sane';
 }
 
 # vim: ft=perl6
