@@ -295,6 +295,13 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
 }
 
 
+# RT #74344
+#?rakudo skip 'RT 74344'
+{
+    sub slurpy-by-name(*@var) { @var.join('|') }
+    is slurpy-by-name(:var<a v g>), 'a|v|g', 'Can call slurpy param by name';
+}
+
 done_testing;
 
 # vim: ft=perl6
