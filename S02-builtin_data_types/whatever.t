@@ -6,6 +6,7 @@ plan *;
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
 
+#?rakudo todo 'isa'
 {
     my $x = *;
     ok($x.isa(Whatever), 'can assign * to a variable and isa works');
@@ -16,13 +17,19 @@ plan *;
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
 ok $x ~~ Code, '*-1 is some form of Code';
+#?rakudo skip 'WhateverCode'
 isa_ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';
 
 ok *.abs ~~ Code, '*.abs is of type Code';
+#?rakudo skip 'WhateverCode'
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
-my @a = map *.abs, 1, -2, 3, -4;
-is @a, [1,2,3,4], '*.meth created closure works';
+
+#?rakudo skip 'sub form of map'
+{
+    my @a = map *.abs, 1, -2, 3, -4;
+    is @a, [1,2,3,4], '*.meth created closure works';
+}
 
 {
     # check that it also works with Enums - used to be a Rakudo bug
@@ -42,7 +49,7 @@ is @a, [1,2,3,4], '*.meth created closure works';
 }
 
 # RT #64566
-#?rakudo todo 'RT #64566'
+#?rakudo skip 'RT #64566'
 {
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
@@ -84,6 +91,7 @@ is @a, [1,2,3,4], '*.meth created closure works';
     is $c(-3, -5), 15, '... that takes two arguments';
 }
 
+#?rakudo skip 'multiple * in an expression'
 {
     my $c = * * * + *;
     ok $c ~~ Code, '* * * + * generated a closure';
@@ -92,7 +100,7 @@ is @a, [1,2,3,4], '*.meth created closure works';
     is $c(0, -10, 3), 3, 'that can work with three different arguments';
 }
 
-#?rakudo todo 'RT 65482'
+#?rakudo skip 'RT 65482'
 is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 #?rakudo skip 'RT 68714'
@@ -120,6 +128,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # L<S02/Built-In Data Types/This rewrite happens after variables are looked up
 # in their lexical scope>
 
+#?rakudo skip '* and lexicals'
 {
     my $x = 3;
     {
@@ -131,6 +140,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 # L<S02/Built-In Data Types/This is only for operators that are not
 # Whatever-aware.>
+#?rakudo skip '* and user-defined ops'
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };
     isa_ok * quack 5, WhateverCode,
