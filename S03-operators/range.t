@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 107;
+plan 110;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -159,7 +159,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
  
 # RT #67882
-#?rakudo skip "Does not automatically turn match objects into strings / numbers"
 {
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
@@ -168,6 +167,13 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.max,   3, 'range ends at three';
     lives_ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
+}
+# and another set, just for the lulz
+# RT #67882
+{
+    ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
+    isa_ok $0..$1, Range, '$0..$1 constructs a Range';
+    is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
 {
     my $range;
@@ -198,5 +204,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     ok !defined(try { 0 .. ^10 }), '0 .. ^10 is illegal';
     ok !defined(try { 0 .. (0, 1, 2) }), '0 .. List is illegal';
 }
+
 
 # # vim: ft=perl6
