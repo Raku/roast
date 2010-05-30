@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 33;
 
 =begin description
 
@@ -139,6 +139,13 @@ eval_dies_ok 'my Digit $x = 3.1',
 
     lives_ok { 4 ~~ sY }, 'Nominal type is checked first';
     ok 4 !~~ sY, 'and if nominal type check fails, it is False';
+}
+
+# RT #74234
+{
+    #?rakudo todo 'RT 74234'
+    eval_lives_ok 'subset A of Mu; my A $x = 23;',
+        'subset A of Mu + type check and assignment works';
 }
 
 # vim: ft=perl6
