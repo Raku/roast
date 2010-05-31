@@ -49,6 +49,7 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 }
 
 # L<S03/Cross operators/desugars to something like>
+#?rakudo todo "Not at all clear if this test is correct or not"
 {
     my @result = [~]«( <a b> X, <1 2> );
     #?pugs todo 'feature'

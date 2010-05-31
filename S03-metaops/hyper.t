@@ -76,13 +76,13 @@ my @e;
 
 { # unary postfix
         my @r = (1, 2, 3);
-        try { @r»++ };
+        @r»++;
         my @e = (2, 3, 4);
         #?pugs todo
         is(~@r, ~@e, "hyper auto increment an array");
 
         @r = (1, 2, 3);
-        try { @r>>++ };
+        @r>>++;
         @e = (2, 3, 4);
         #?pugs todo
         is(~@r, ~@e, "hyper auto increment an array ASCII notation");
@@ -223,66 +223,72 @@ my @e;
 	is(~@r, ~@e, "hyper-method-call on list of user-defined objects");
 };
 
-#?rakudo skip 'unicode'
 { # distribution for unary prefix
         my @r;
         @r = -« ([1, 2], [3, [4, 5]]);
         my @e = ([-1, -2], [-3, [-4, -5]]);
         is(~@r, ~@e, "distribution for unary prefix");
+        is_deeply(@r, @e, "distribution for unary prefix, deep comparison");
 
         @r = -<< ([1, 2], [3, [4, 5]]);
         @e = ([-1, -2], [-3, [-4, -5]]);
         is(~@r, ~@e, "distribution for unary prefix, ASCII");
+        is_deeply(@r, @e, "distribution for unary prefix, ASCII, deep comparison");
 };
 
-#?rakudo skip 'unicode'
 { # distribution for unary postfix autoincrement
         my @r;
         @r = ([1, 2], [3, [4, 5]]);
-        try { @r»++ };
+        @r»++;
         my @e = ([2, 3], [4, [5, 6]]);
         #?pugs todo
         is(~@r, ~@e, "distribution for unary postfix autoincr");
+        is_deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
 
         @r = ([1, 2], [3, [4, 5]]);
-        try { @r>>++ };
+        @r>>++;
         @e = ([2, 3], [4, [5, 6]]);
         #?pugs todo
         is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII");
+        is_deeply(@r, @e, "distribution for unary postfix autoincr, ASCII, deep comparison");
 };
 
 #?DOES 3
-#?rakudo skip 'non-unicode hypers'
 { # distribution for binary infix - ASCII
         my @r;
         @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
         my @e = (5, 7, [9, 11]);
         is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
+        is_deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparision");
 
         @r = (1, 2, [3, 4]) >>+>> (5, 6, 7);
         @e = (6, 8, [10, 11]);
         is(~@r, ~@e, "distribution for binary infix, dimension upgrade, ASCII");
+        is_deeply(@r, @e, "distribution for binary infix, dimension upgrade, ASCII, deep comparison");
 
         @r = ([1, 2], 3) <<+>> (4, [5, 6]);
         @e = ([5, 6], [8, 9]);
         is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade, ASCII");
+        is_deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, ASCII, deep comparison");
 };
 
 #?DOES 3
-#?rakudo skip 'unicode hypers'
 { # distribution for binary infix - unicode
         my @r;
         @r = (1, 2, [3, 4]) »+« (4, 5, [6, 7]);
         my @e = (5, 7, [9, 11]);
         is(~@r, ~@e, "distribution for binary infix, same shape");
+        is_deeply(@r, @e, "distribution for binary infix, same shape, deep comparison");
 
-        @r = (1, 2, [3, 4]) »+« (5, 6, 7);
+        @r = (1, 2, [3, 4]) »+» (5, 6, 7);
         @e = (6, 8, [10, 11]);
         is(~@r, ~@e, "distribution for binary infix, dimension upgrade");
+        is_deeply(@r, @e, "distribution for binary infix, dimension upgrade, deep comparison");
 
-        @r = ([1, 2], 3) »+« (4, [5, 6]);
+        @r = ([1, 2], 3) «+» (4, [5, 6]);
         @e = ([5, 6], [8, 9]);
         is(~@r, ~@e, "distribution for binary infix, S03 cross-upgrade");
+        is_deeply(@r, @e, "distribution for binary infix, S03 cross-upgrade, deep comparison");
 };
 
 { # regression test, ensure that hyper works on arrays
@@ -338,7 +344,7 @@ my @e;
     ok ?(@a »|« @b), '»|« hyperjunction evals';
     ok ?(@a >>|<< @b), '>>|<< hyperjunction evals, ASCII';
     ok ?(@a »&« @b), '»&« hyperjunction evals';
-    ok ?(@a >>&<< @b), '»&« hyperjunction evals, ASCII';
+    ok ?(@a >>&<< @b), '>>&<< hyperjunction evals, ASCII';
 }
 
 # test hypers on hashes
