@@ -37,6 +37,7 @@ is ca($/.chunks), '0:a|~: |1:b|~: |2:c|~: |3:d',
                 '[(\w)* \s*]+ flattens (...)* for .chunks';
 
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
+#?rakudo 2 skip 'RT 75484 (fails randomly) (noauto)'
 is ca($/.caps), '0:a|wc:b|1:c|wc:d',
                       'mixed named/positional flattening with quantifiers';
 is ca($/.chunks), '0:a|~: |wc:b|~: |1:c|~: |wc:d',
