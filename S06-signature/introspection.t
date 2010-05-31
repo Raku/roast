@@ -88,6 +88,12 @@ sub j(*@i) {
        'smartmach against non-closure constraint (-)';
 }
 
+# RT #70720
+{
+    is :(3).params[0].constraints, 3, ':(3) contains the 3';
+    ok :(3).params[0].type === Int,   ':(3) has a parameter of type Int';
+}
+
 {
     sub h(::T $x, T $y) { };
     my @l = &h.signature.params;
