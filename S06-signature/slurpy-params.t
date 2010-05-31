@@ -302,6 +302,16 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
     is slurpy-by-name(:var<a v g>), 'a|v|g', 'Can call slurpy param by name';
 }
 
+# RT #61772
+{
+    sub array_slurpy_copy(*@a is copy) {
+        return @a;
+    }
+    my @array = <a b c>;
+    my @c = array_slurpy_copy(@array);
+    is @c[0], 'a', 'slurpy is copy-array works fine, thank you';
+}
+
 done_testing;
 
 # vim: ft=perl6
