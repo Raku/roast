@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 my @a = 1, 2, 3, 4;
 my @b = 3, 1;
@@ -25,5 +25,10 @@ for @pi Z @pi-sin -> $elem, $elem-sin {
     is_approx $elem.sin, $elem-sin, 'Hyperoperator used to call .sin on each list element';
 }
 is ((-1, 0, 3, 42)>>.Str), ["-1", "0", "3", "42"], 'Hyperoperator used to call .Str on each list element';
+
+#?rakudo skip "Cannot assign to readonly value"
+{
+	is (@a-copy = @a; @a-copy >>/=>> 2; @a-copy), [2, 3, 4, 5], 'in-place operators work';
+}
 
 done_testing;
