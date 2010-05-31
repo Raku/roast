@@ -25,7 +25,13 @@ is $a, 'abcd', '$_ is default topic, variable list';
 
 # XXX These need to be converted to something testable.
 # @array.map: *.say;
+#?rakudo skip "No candidates found to invoke"
+{
+	is @array.map: *.Int , (1, 2, 3, 4) , 'Testing map form';
+}
 # @array>>.say;
+is @array».Str , <a b c d> , 'Testing hyperoperator form';
+
 
 $a = '';
 for 1..4 { $a ~= $_ };
