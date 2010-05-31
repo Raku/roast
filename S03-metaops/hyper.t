@@ -361,11 +361,11 @@ my @e;
     is %r<b>, 8,  'hash - correct result form >>+<< (same keys)';
     is %r<c>, 10, 'hash - correct result form >>+<< (same keys)';
 
-    %r = %a >>+<< %d;
-    is +%r,   3, 'hash - >>+<< result has right number of keys (union test)';
-    is %r<a>, 6, 'hash - correct result form >>+<< (union test)';
-    is %r<b>, 8, 'hash - correct result form >>+<< (union test)';
-    is %r<c>, 3, 'hash - correct result form >>+<< (union test)';
+    %r = %a »+« %d;
+    is +%r,   3, 'hash - »+« result has right number of keys (union test)';
+    is %r<a>, 6, 'hash - correct result form »+« (union test)';
+    is %r<b>, 8, 'hash - correct result form »+« (union test)';
+    is %r<c>, 3, 'hash - correct result form »+« (union test)';
 
     %r = %c >>+<< %b;
     is +%r,   3, 'hash - >>+<< result has right number of keys (union test)';
@@ -410,6 +410,48 @@ my @e;
     is +%r,   2, 'hash - <<+<< result has right number of keys';
     is %r<a>, 6, 'hash - correct result from <<+<<';
     is %r<b>, 8, 'hash - correct result from <<+<<';
+}
+
+{
+    my %a = a => 1, b => 2, c => 3;
+    my %r = -<<%a;
+    is +%r,   3, 'hash - -<< result has right number of keys';
+    is %r<a>, -1, 'hash - correct result from -<<';
+    is %r<b>, -2, 'hash - correct result from -<<';
+    is %r<c>, -3, 'hash - correct result from -<<';
+    
+    %r = --<<%a;
+    is +%r,   3, 'hash - --<< result has right number of keys';
+    is %r<a>, 0, 'hash - correct result from --<<';
+    is %r<b>, 1, 'hash - correct result from --<<';
+    is %r<c>, 2, 'hash - correct result from --<<';
+    is +%a,   3, 'hash - --<< result has right number of keys';
+    is %a<a>, 0, 'hash - correct result from --<<';
+    is %a<b>, 1, 'hash - correct result from --<<';
+    is %a<c>, 2, 'hash - correct result from --<<';
+    
+    %r = %a>>++;
+    is +%r,   3, 'hash - >>++ result has right number of keys';
+    is %r<a>, 0, 'hash - correct result from >>++';
+    is %r<b>, 1, 'hash - correct result from >>++';
+    is %r<c>, 2, 'hash - correct result from >>++';
+    is +%a,   3, 'hash - >>++ result has right number of keys';
+    is %a<a>, 1, 'hash - correct result from >>++';
+    is %a<b>, 2, 'hash - correct result from >>++';
+    is %a<c>, 3, 'hash - correct result from >>++';
+}
+
+{
+    our sub postfix:<!>($a) {
+        [*] 1..$a;
+    }
+
+    my %a = a => 1, b => 2, c => 3;
+    my %r = %a>>!;
+    is +%r,   3, 'hash - >>! result has right number of keys';
+    is %r<a>, 1, 'hash - correct result from >>!';
+    is %r<b>, 2, 'hash - correct result from >>!';
+    is %r<c>, 6, 'hash - correct result from >>!';
 }
 
 
