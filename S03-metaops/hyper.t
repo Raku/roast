@@ -348,7 +348,6 @@ my @e;
 }
 
 # test hypers on hashes
-#?rakudo skip "Hyper on hashes NYI"
 {
     my %a = a => 1, b => 2, c => 3;
     my %b = a => 5, b => 6, c => 7;
