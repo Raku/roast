@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 #L<S06/Placeholder variables/>
 
@@ -28,6 +28,9 @@ non_twigil(5);
 #?rakudo todo 'non-twigil variable before twigil variable'
 eval_dies_ok( ' {$foo; $^foo;}(1) ',
 'A non-twigil variable should not precede a corresponding twigil variable' );
+
+# RT #64310
+eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclaration';
 
 # RT #74778
 {
