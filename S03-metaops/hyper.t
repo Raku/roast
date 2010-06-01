@@ -454,6 +454,33 @@ my @e;
     is %r<c>, 6, 'hash - correct result from >>!';
 }
 
+{
+    my %a = a => 1, b => 2, c => 3;
+
+    my %r = %a >>*>> 4;
+    is +%r,   3, 'hash - >>*>> result has right number of keys';
+    is %r<a>, 4, 'hash - correct result from >>*>>';
+    is %r<b>, 8, 'hash - correct result from >>*>>';
+    is %r<c>, 12, 'hash - correct result from >>*>>';
+    
+    %r = 2 <<**<< %a ;
+    is +%r,   3, 'hash - <<**<< result has right number of keys';
+    is %r<a>, 2, 'hash - correct result from <<**<<';
+    is %r<b>, 4, 'hash - correct result from <<**<<';
+    is %r<c>, 8, 'hash - correct result from <<**<<';
+    
+    %r = %a <<*>> 4;
+    is +%r,   3, 'hash - <<*>> result has right number of keys';
+    is %r<a>, 4, 'hash - correct result from <<*>>';
+    is %r<b>, 8, 'hash - correct result from <<*>>';
+    is %r<c>, 12, 'hash - correct result from <<*>>';
+    
+    %r = 2 <<**>> %a ;
+    is +%r,   3, 'hash - <<**>> result has right number of keys';
+    is %r<a>, 2, 'hash - correct result from <<**>>';
+    is %r<b>, 4, 'hash - correct result from <<**>>';
+    is %r<c>, 8, 'hash - correct result from <<**>>';
+}
 
 # test non-UTF-8 input
 #?pugs skip 'eval(Buf)'
