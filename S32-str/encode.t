@@ -19,12 +19,9 @@ ok ('ä'.encode('UTF-8', 'D') eqv Buf.new([:16<61>, :16<cc>, :16<88>])),
                 'encoding to UTF-8, with NFD';
 
 ok Buf.new([195, 182]).decode ~~ Str, '.decode returns a Str';
-#?rakudo todo 'real .decode'
 is Buf.new([195, 182]).decode, 'ö', 'decoding a Buf with UTF-8';
-#?rakudo todo 'real .decode'
 is Buf.new([246]).decode('ISO-8859-1'), 'ö', 'decoding a Buf with Latin-1';
 
-#?rakudo skip 'Stringy'
 ok Buf ~~ Stringy, 'Buf does Stringy';
 
 # vim: ft=perl6
