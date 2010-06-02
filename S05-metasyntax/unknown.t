@@ -27,7 +27,7 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 # RT #74832
 {
     nok eval('/ a+ + /'), 'Cannot parse regex a+ +';
-    ok "$!" ~~ /quantif/, 'error message mentions quantif{y,ier}';
+    ok "$!" ~~ /:i quantif/, 'error message mentions quantif{y,ier}';
 }
 
 # vim: ft=perl6
