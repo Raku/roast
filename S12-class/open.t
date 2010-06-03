@@ -48,7 +48,6 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     is 'aBc'.mydouble, 'ABCabc', 'can extend Str';
 }
 
-#?rakudo skip "3 is of type Integer rather than Int"
 {
     augment class Int {
         method triple { self * 3 }
