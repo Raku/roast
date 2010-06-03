@@ -110,8 +110,15 @@ my @e;
         is(~@r, ~@e, "auto dimension upgrade on lhs ASCII notation");
 }
 
-#?rakudo todo 'list level extension'
 { # extension
+        @r = (1,2,3,4) >>~>> <A B C D E>;
+        @e = <1A 2B 3C 4D>;
+        is(~@r, ~@e, "list-level element truncate on rhs ASCII notation");
+
+        @r = (1,2,3,4,5) <<~<< <A B C D>;
+        @e =  <1A 2B 3C 4D>;
+        is(~@r, ~@e, "list-level element truncate on lhs ASCII notation");
+
         @r = (1,2,3,4) >>~>> <A B C>;
         @e = <1A 2B 3C 4A>;
         is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
@@ -145,8 +152,15 @@ my @e;
         is(~@r, ~@e, "scalar element extension on lhs ASCII notation");
 };
 
-#?rakudo todo 'unicode hypers'
 { # dimension upgrade - unicode
+        @r = (1,2,3,4) »~» <A B C D E>;
+        @e = <1A 2B 3C 4D>;
+        is(~@r, ~@e, "list-level element truncate on rhs unicode notation");
+
+        @r = (1,2,3,4,5) «~« <A B C D>;
+        @e =  <1A 2B 3C 4D>;
+        is(~@r, ~@e, "list-level element truncate on lhs unicode notation");
+
         @r = (1,2,3,4) »~» <A B C>;
         @e = <1A 2B 3C 4A>;
         is(~@r, ~@e, "list-level element extension on rhs unicode notation");
