@@ -77,8 +77,7 @@ is("Whfg nabgure Crey unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
 is("Whfg nabgure Crey unpxre".trans(' a..z' => '_n..za..m', 'A..Z' => 'N..ZA..M'),
     "Just_another_Perl_hacker",
     "Spaces in interpreted ranges are not skipped (all spaces are important)");
-    
-is("Whfg nabgure Crey unpxre".trans(' a .. z' => '_n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
+is("Whfg nabgure Crey unpxre".trans('a .. z' => 'n .. za .. m', 'A .. Z' => 'N .. ZA .. M'),
     "Whfg nnbgure Crey unpxre",
     "Spaces in interpreted ranges are not skipped (all spaces are important)");
 };
@@ -98,6 +97,7 @@ is("I\xcaJ".trans('I..J' => 'i..j'), "i\xcaj");
 is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 
 # should these be combined?
+#?rakudo todo 'disambiguate ranges'
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
     'ambiguous ranges combined');
 
@@ -113,6 +113,7 @@ is($b.trans('..A..H..' => '__a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     
 # complement, squeeze/squash, delete
 
+#?rakudo 2 skip 'flags'
 is('bookkeeper'.trans(:s, 'a..z' => 'a..z'), 'bokeper',
     ':s flag (squash)');
 
@@ -122,6 +123,7 @@ is('bookkeeper'.trans(:d, 'ok' => ''), 'beeper',
 is('ABC123DEF456GHI'.trans('A..Z' => 'x'), 'xxx123xxx456xxx',
     'no flags');
 
+#?rakudo 4 skip 'flags'
 is('ABC123DEF456GHI'.trans(:c, 'A..Z' => 'x'),'ABCxxxDEFxxxGHI',
     '... with :c');
 
@@ -137,6 +139,7 @@ is('ABC111DEF222GHI'.trans(:c, :d, 'A..Z' => ''),'ABCDEFGHI',
 is('Good&Plenty'.trans('len' => 'x'), 'Good&Pxxxty',
     'no flags');
 
+#?rakudo 5 skip 'flags'
 is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',
     'squashing depends on replacement repeat, not searchlist repeat');
 
@@ -160,25 +163,26 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     '&nbsp;???&gt;&amp;',
     '... and now complement and squash');
 
+#?rakudo skip 'regexes'
 {
 # remove vowel and character after
-is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdgh', 'basic regex works');
-is( # vowels become 'y' and whitespace becomes '_'
-    "ab\ncd\tef gh".trans(/<[aeiou]>/ => 'y', /\s/ => '_'),
-    'yb_cd_yf_gh',
-    'regexes pairs work',
-);
+    is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdgh', 'basic regex works');
+    is( # vowels become 'y' and whitespace becomes '_'
+        "ab\ncd\tef gh".trans(/<[aeiou]>/ => 'y', /\s/ => '_'),
+        'yb_cd_yf_gh',
+        'regexes pairs work',
+    );
 
-my $i = 0;
-is('ab_cd_ef_gh'.trans('_' => {$i++}), 'ab0cd1ef2gh', 'basic closure');
+    my $i = 0;
+    is('ab_cd_ef_gh'.trans('_' => {$i++}), 'ab0cd1ef2gh', 'basic closure');
 
-$i = 0;
-my $j = 0;
-is(
-    'a_b/c_d/e_f'.trans('_' => {$i++}, '/' => {$j++}),
-    'a0b0c1d1e2f',
-    'closure pairs work',
-);
+    $i = 0;
+    my $j = 0;
+    is(
+        'a_b/c_d/e_f'.trans('_' => {$i++}, '/' => {$j++}),
+        'a0b0c1d1e2f',
+        'closure pairs work',
+    );
 };
 
 #?rakudo skip 'closures and regexes'
