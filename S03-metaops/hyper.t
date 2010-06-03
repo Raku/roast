@@ -111,50 +111,73 @@ my @e;
 }
 
 #?rakudo todo 'list level extension'
-{ # list level extension
-        @r = (1,2,3,4) >>+>> (1,2);
-        @e = (2,4,3,4);
+{ # extension
+        @r = (1,2,3,4) >>~>> <A B C>;
+        @e = <1A 2B 3C 4A>;
+        is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
+
+        @r = (1,2,3) <<~<< <A B C D>;
+        @e =  <1A 2B 3C 1D>;
+        is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
+
+        @r = (1,2,3,4) >>~>> <A B>;
+        @e = <1A 2B 3A 4B>;
         is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
         
-        @r = (1,2) <<+<< (1,2,3,4);
-        @e = (2,4,3,4);
+        @r = (1,2) <<~<< <A B C D>;
+        @e =  <1A 2B 1C 2D>;
         is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
          
-        @r = (1,2,3,4) >>+>> (1,);
-        @e = (2,2,3,4);
+        @r = (1,2,3,4) >>~>> <A>;
+        @e = <1A 2A 3A 4A>;
         is(~@r, ~@e, "list-level element extension on rhs ASCII notation");
         
-        @r = (1,) <<+<< (1,2,3,4);
-        @e = (2,2,3,4);
+        @r = (1,) <<~<< <A B C D>;
+        @e = <1A 1B 1C 1D>;
         is(~@r, ~@e, "list-level element extension on lhs ASCII notation");
+
+        @r = (1,2,3,4) >>~>> 'A';
+        @e = <1A 2A 3A 4A>;
+        is(~@r, ~@e, "scalar element extension on rhs ASCII notation");
+
+        @r = 1 <<~<< <A B C D>;
+        @e = <1A 1B 1C 1D>;
+        is(~@r, ~@e, "scalar element extension on lhs ASCII notation");
 };
 
-#?rakudo skip 'unicode hypers'
+#?rakudo todo 'unicode hypers'
 { # dimension upgrade - unicode
-        my @r;
-        @r = (1, 2, 3) »+» 1;
-        my @e = (2, 3, 4);
-        is(~@r, ~@e, "auto dimension upgrade on rhs");
+        @r = (1,2,3,4) »~» <A B C>;
+        @e = <1A 2B 3C 4A>;
+        is(~@r, ~@e, "list-level element extension on rhs unicode notation");
 
-        @r = 2 «*« (10, 20, 30);
-        @e = (20, 40, 60);
-        is(~@r, ~@e, "auto dimension upgrade on lhs");
+        @r = (1,2,3) «~« <A B C D>;
+        @e =  <1A 2B 3C 1D>;
+        is(~@r, ~@e, "list-level element extension on lhs unicode notation");
 
-        @r = (1,2,3,4) »+» (1,2);
-        @e = (2,4,3,4);
-        is(~@r, ~@e, "list-level element extension on rhs");
-        
-        @r = (1,2) «+« (1,2,3,4);
-        @e = (2,4,3,4);
-        is(~@r, ~@e, "list-level element extension on lhs");
-  
-        @r = (1,2,3,4) »+» (1,);
-        @e = (2,2,3,4);
-        is(~@r, ~@e, "list-level element extension on rhs");
-        
-        @r = (1,) «+« (1,2,3,4);
-        @e = (2,2,3,4);
-        is(~@r, ~@e, "list-level element extension on lhs");
+        @r = (1,2,3,4) »~» <A B>;
+        @e = <1A 2B 3A 4B>;
+        is(~@r, ~@e, "list-level element extension on rhs unicode notation");
+
+        @r = (1,2) «~« <A B C D>;
+        @e =  <1A 2B 1C 2D>;
+        is(~@r, ~@e, "list-level element extension on lhs unicode notation");
+ 
+        @r = (1,2,3,4) »~» <A>;
+        @e = <1A 2A 3A 4A>;
+        is(~@r, ~@e, "list-level element extension on rhs unicode notation");
+
+        @r = (1,) «~« <A B C D>;
+        @e = <1A 1B 1C 1D>;
+        is(~@r, ~@e, "list-level element extension on lhs unicode notation");
+
+        @r = (1,2,3,4) »~» 'A';
+        @e = <1A 2A 3A 4A>;
+        is(~@r, ~@e, "scalar element extension on rhs unicode notation");
+
+        @r = 1 «~« <A B C D>;
+        @e = <1A 1B 1C 1D>;
+        is(~@r, ~@e, "scalar element extension on lhs unicode notation");
 };
 
 { # unary postfix with integers
@@ -170,7 +193,6 @@ my @e;
 
 #?rakudo skip '@array»++'
 {
-
         my (@r, @e);
         (@r = (1, 4, 9))»++;
         @e = (2, 5, 10);
