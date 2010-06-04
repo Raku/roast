@@ -37,9 +37,11 @@ ok(%hash4.does(Hash), '%hash4 does Hash');
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
-#hash in list context
-#?rakudo todo "This test is broken"
-is( (map { .WHAT } , {"a"=> 1 , "b"=>2}).join(' ') , 'Pair() Pair()' , 'Hashes become pairs in list context');
+is( (map { .WHAT } , {"a"=> 1 , "b"=>2}).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
+my $does_not_flatten= {"a"=> 1 , "b"=>2};
+is( (map { .WHAT } , $does_not_flatten).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
+my %flattens= ("a"=> 1 , "b"=>2);
+is( (map { .WHAT } , %flattens).join(' ') , 'Pair() Pair()' , 'Flattening Hashes become Pairs when passed to map');
 
 # hash slicing
 
