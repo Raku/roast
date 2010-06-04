@@ -63,4 +63,13 @@ is (.[0] + .[1] + .[2] given @list), 6, 'Statement ending given';
     is ('Boo!' when /phantom/ given $castle), 'Boo!', 'Nesting when inside given';
 }
 
+#Test DNA one liner at the end
+my $result;
+for ^20 {my ($a,$b)=<AT CG>.pick.comb.pick(*); my ($c,$d)=sort map({6+4*sin($_/2)},($_,$_+4)); $result ~= sprintf "%{$c}s%{$d-$c}s\n",$a,$b}
+is $result.chars , 169 , 'We got a bunch of DNA';
+is $result.split("\n").Int , 21 , 'On 20 line';
+is $result.subst(/\s/ , '' , :g).chars , 40 , 'Containing 20 pairs';
+
+lives_ok 'for ^20 {my ($a,$b)=<AT CG>.pick.comb.pick(*); my ($c,$d)=sort map {6+4*sin($_/2)},$_,$_+4; printf "%{$c}s%{$d-$c}s\n",$a,$b}' , 'Can handle "map {...} ,$x,$y"';
+
 done_testing;
