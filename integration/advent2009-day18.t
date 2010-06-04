@@ -54,7 +54,10 @@ is $mug.WHAT.perl , 'Cup[EggNog]' , 'the $mug is a Cup of EggNog';
 is $glass.WHAT.perl , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine';
 is $valuable.WHAT.perl , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
 
-#TODO: The following is producing an error, have to investigate if the example is faulty or just NYI
+#?rakudo skip 'parse error'
+lives_ok 'role DeliveryCalculation[::Calculator] {has $.mass;method calculate($destination) {my $calc = Calculator.new(:$!mass);}}' , "Refering to $.mass and $!mass";
+
+#TODO: When rakudo can pass the previous test we can add full tests for the role.
 #~ role DeliveryCalculation[::Calculator] {
     #~ has $.mass;
     #~ has $.dimensions;
