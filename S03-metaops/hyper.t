@@ -610,6 +610,63 @@ my @e;
     is @r[5], "4f", 'hash in array - correct result from «~»';
 }
 
+{
+    my @a = (1, { a => 2, b => 3 }, 4);
+    my @r = -<<@a;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], -1, 'hash in array - correct result from -<<';
+    is @r[1]<a>, -2, 'hash in array - correct result from -<<';
+    is @r[1]<b>, -3, 'hash in array - correct result from -<<';
+    is @r[2], -4, 'hash in array - correct result from -<<';
+    
+    @r = ++<<@a;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], 2, 'hash in array - correct result from ++<<';
+    is @r[1]<a>, 3, 'hash in array - correct result from ++<<';
+    is @r[1]<b>, 4, 'hash in array - correct result from ++<<';
+    is @r[2], 5, 'hash in array - correct result from ++<<';
+    
+    @r = @a>>--;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], 2, 'hash in array - correct result from ++<<';
+    is @r[1]<a>, 3, 'hash in array - correct result from ++<<';
+    is @r[1]<b>, 4, 'hash in array - correct result from ++<<';
+    is @r[2], 5, 'hash in array - correct result from ++<<';
+    is +@a, 3, 'hash in array - result array is the correct length';
+    is @a[0], 1, 'hash in array - correct result from ++<<';
+    is @a[1]<a>, 2, 'hash in array - correct result from ++<<';
+    is @a[1]<b>, 3, 'hash in array - correct result from ++<<';
+    is @a[2], 4, 'hash in array - correct result from ++<<';
+}
+
+{
+    my @a = (1, { a => 2, b => 3 }, 4);
+    my @r = -«@a;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], -1, 'hash in array - correct result from -«';
+    is @r[1]<a>, -2, 'hash in array - correct result from -«';
+    is @r[1]<b>, -3, 'hash in array - correct result from -«';
+    is @r[2], -4, 'hash in array - correct result from -«';
+    
+    @r = ++«@a;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], 2, 'hash in array - correct result from ++«';
+    is @r[1]<a>, 3, 'hash in array - correct result from ++«';
+    is @r[1]<b>, 4, 'hash in array - correct result from ++«';
+    is @r[2], 5, 'hash in array - correct result from ++«';
+    
+    @r = @a»--;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], 2, 'hash in array - correct result from ++«';
+    is @r[1]<a>, 3, 'hash in array - correct result from ++«';
+    is @r[1]<b>, 4, 'hash in array - correct result from ++«';
+    is @r[2], 5, 'hash in array - correct result from ++«';
+    is +@a, 3, 'hash in array - result array is the correct length';
+    is @a[0], 1, 'hash in array - correct result from ++«';
+    is @a[1]<a>, 2, 'hash in array - correct result from ++«';
+    is @a[1]<b>, 3, 'hash in array - correct result from ++«';
+    is @a[2], 4, 'hash in array - correct result from ++«';
+}
 
 # test non-UTF-8 input
 #?pugs skip 'eval(Buf)'
