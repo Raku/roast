@@ -518,6 +518,16 @@ my @e;
     is %r<c>, 8, 'hash - correct result from <<**>>';
 }
 
+#?rakudo skip '>>. NYI on hashes'
+{
+    my %a = a => 1, b => -2, c => 3;
+    my %r = %a>>.abs;
+    is +%r,   3, 'hash - >>.abs result has right number of keys';
+    is %r<a>, 1, 'hash - correct result from >>.abs';
+    is %r<b>, 2, 'hash - correct result from >>.abs';
+    is %r<c>, 3, 'hash - correct result from >>.abs';
+}
+
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
