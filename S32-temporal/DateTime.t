@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 26;
 
 my ( DateTime $g1, DateTime $g2, Num $t, Int $d );
 
@@ -133,5 +133,15 @@ sub test-gmtime( Num $t is copy ) {
     $isdst = 0;
     return ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
 }
+
+## Tests for DateTime to Date functionality.
+
+$g1 = DateTime.new(:year(2010), :month(06), :day(04));
+my $date;
+lives_ok { $date = $g1.Date(); }, 'Calling .Date() method';
+isa_ok $date, Date, 'Date object is correct class';
+is $date.year, 2010, 'Date year';
+is $date.month, 6, 'Date month';
+is $date.day, 4, 'Date day';
 
 # vim: ft=perl6

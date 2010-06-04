@@ -8,7 +8,11 @@ plan *;
     lives_ok { Date.new('2010-01-01') }, 'Date.new("2010-01-01")';
     lives_ok { Date.new(2010, 1, 1) }, 'List constructor';
     lives_ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
-    lives_ok { Date.today}, 'Date.today';
+    lives_ok { Date.today }, 'Date.today';
+    lives_ok { 
+        my $dt = DateTime.new(:year(2010),:month(06), :day(04)); 
+        Date.new($dt); 
+    }, 'Date.new from DateTime';
 
     dies_ok { Date.new('malformed') }, 'obviously malformed string';
     dies_ok { Date.new('2010-00-23') }, 'dies on zero-based months';
