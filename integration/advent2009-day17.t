@@ -75,14 +75,14 @@ my @snowman-data = $snowman.split("\n");
 for ^$height Z subdivide($upper-right.re, $lower-left.re, $height) -> $i, $re {
     my @line = subdivide($re + ($upper-right.im)i, $re + 0i, ($width + 1) / 2).map({ mandel($_) });
     my $middle = @line.pop;
-    is (@line, $middle, @line.reverse).join(' '), @snowman-data[$i], "Line $i matched using map()";
+    is (@line, $middle, @line.reverse).join(' ').trim, @snowman-data[$i].trim, "Line $i matched using map()";
 }
 
 # using the >>☃ hyperoperator
 for ^$height Z subdivide($upper-right.re, $lower-left.re, $height) -> $i, $re {
     my @line = subdivide($re + ($upper-right.im)i, $re + 0i, ($width + 1) / 2)>>☃;
     my $middle = @line.pop;
-    is (@line, $middle, @line.reverse).join(' '), @snowman-data[$i], "Line $i matched using >>☃ hyperoperator";
+    is (@line, $middle, @line.reverse).join(' ').trim, @snowman-data[$i].trim, "Line $i matched using >>☃ hyperoperator";
 }
 
 done_testing;
