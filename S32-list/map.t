@@ -12,6 +12,8 @@ plan 54;
 
 
 my @list = (1 .. 5);
+
+#?rakudo skip "Named value argument NYI"
 {
     my @result = map( { $_ * 2 }, :values(@list) );
     is(+@result, 5, 'named :values: we got a list back');
