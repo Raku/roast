@@ -518,6 +518,99 @@ my @e;
     is %r<c>, 8, 'hash - correct result from <<**>>';
 }
 
+{
+    my @a = (1, { a => 2, b => 3 }, 4);
+    my @b = <a b c>;
+    my @c = ('z', { a => 'y', b => 'x' }, 'w');
+    my @d = 'a'..'f';
+
+    my @r = @a <<~>> @b;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from <<~>>';
+    is @r[1]<a>, "2b", 'hash in array - correct result from <<~>>';
+    is @r[1]<b>, "3b", 'hash in array - correct result from <<~>>';
+    is @r[2], "4c", 'hash in array - correct result from <<~>>';
+
+    @r = @a >>~<< @c;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1z", 'hash in array - correct result from >>~<<';
+    is @r[1]<a>, "2y", 'hash in array - correct result from >>~<<';
+    is @r[1]<b>, "3x", 'hash in array - correct result from >>~<<';
+    is @r[2], "4w", 'hash in array - correct result from >>~<<';
+    
+    @r = @a >>~>> @d;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from >>~>>';
+    is @r[1]<a>, "2b", 'hash in array - correct result from >>~>>';
+    is @r[1]<b>, "3b", 'hash in array - correct result from >>~>>';
+    is @r[2], "4c", 'hash in array - correct result from >>~>>';
+
+    @r = @d <<R~<< @a;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from <<R~<<';
+    is @r[1]<a>, "2b", 'hash in array - correct result from <<R~<<';
+    is @r[1]<b>, "3b", 'hash in array - correct result from <<R~<<';
+    is @r[2], "4c", 'hash in array - correct result from <<R~<<';
+
+    @r = @a <<~>> @d;
+    is +@r, 6, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from <<~>>';
+    is @r[1]<a>, "2b", 'hash in array - correct result from <<~>>';
+    is @r[1]<b>, "3b", 'hash in array - correct result from <<~>>';
+    is @r[2], "4c", 'hash in array - correct result from <<~>>';
+    is @r[3], "1d", 'hash in array - correct result from <<~>>';
+    is @r[4]<a>, "2e", 'hash in array - correct result from <<~>>';
+    is @r[4]<b>, "3e", 'hash in array - correct result from <<~>>';
+    is @r[5], "4f", 'hash in array - correct result from <<~>>';
+}
+
+{
+    my @a = (1, { a => 2, b => 3 }, 4);
+    my @b = <a b c>;
+    my @c = ('z', { a => 'y', b => 'x' }, 'w');
+    my @d = 'a'..'f';
+
+    my @r = @a «~» @b;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from «~»';
+    is @r[1]<a>, "2b", 'hash in array - correct result from «~»';
+    is @r[1]<b>, "3b", 'hash in array - correct result from «~»';
+    is @r[2], "4c", 'hash in array - correct result from «~»';
+
+    @r = @a »~« @c;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1z", 'hash in array - correct result from »~«';
+    is @r[1]<a>, "2y", 'hash in array - correct result from »~«';
+    is @r[1]<b>, "3x", 'hash in array - correct result from »~«';
+    is @r[2], "4w", 'hash in array - correct result from »~«';
+    
+    @r = @a »~» @d;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from »~»';
+    is @r[1]<a>, "2b", 'hash in array - correct result from »~»';
+    is @r[1]<b>, "3b", 'hash in array - correct result from »~»';
+    is @r[2], "4c", 'hash in array - correct result from »~»';
+
+    @r = @d «R~« @a;
+    is +@r, 3, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from «R~«';
+    is @r[1]<a>, "2b", 'hash in array - correct result from «R~«';
+    is @r[1]<b>, "3b", 'hash in array - correct result from «R~«';
+    is @r[2], "4c", 'hash in array - correct result from «R~«';
+
+    @r = @a «~» @d;
+    is +@r, 6, 'hash in array - result array is the correct length';
+    is @r[0], "1a", 'hash in array - correct result from «~»';
+    is @r[1]<a>, "2b", 'hash in array - correct result from «~»';
+    is @r[1]<b>, "3b", 'hash in array - correct result from «~»';
+    is @r[2], "4c", 'hash in array - correct result from «~»';
+    is @r[3], "1d", 'hash in array - correct result from «~»';
+    is @r[4]<a>, "2e", 'hash in array - correct result from «~»';
+    is @r[4]<b>, "3e", 'hash in array - correct result from «~»';
+    is @r[5], "4f", 'hash in array - correct result from «~»';
+}
+
+
 # test non-UTF-8 input
 #?pugs skip 'eval(Buf)'
 #?rakudo skip 'eval(Buf)'
