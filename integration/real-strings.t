@@ -14,8 +14,9 @@ plan *;
        'basic sanity: .trans works with native Perl 6 strings';
 }
 
+#?rakudo skip 'borked'
 {
-    my $x = 'abc'.split(m/b/).[0];
+    my $x = 'abc'.split(/b/).[0];
     lives_ok {$x.trans(['a'] => ['b']) }, 
        'Still works with strings returned from split() (lives)';
     is $x.trans(['a'] => ['b']), 'b',
@@ -36,6 +37,7 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
 
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 
+#?rakudo 3 skip 'borked'
 is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
@@ -52,6 +54,7 @@ is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
 
 # not a "real string', but a "real hash" bug found in Rakudo:
 
+#?rakudo skip 'borked'
 {
     my $x = 0;
     for %*VM.kv -> $k, $v { $x++};
@@ -63,6 +66,13 @@ is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
     lives_ok { 'normal'.trans() }, 'can .trans() on normal string';
     #?rakudo todo 'RT 67852'
     lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
+}
+
+# RT #75456 hilarity
+{
+    ok ('1 ' ~~ /.+/) && $/ eq '1 ', 'matching sanity';
+    ok +$/ == 1, 'numification of match objects with trailing whitespaces';
+
 }
 done_testing;
 
