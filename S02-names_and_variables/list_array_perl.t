@@ -59,7 +59,6 @@ my @tests = (
 
     my @hyp = -« ([1, 2], 3);
     # what it currently (r16460) gives
-    #?rakudo 2 skip 'parsefail on hyper operator'
     #?pugs 2 todo 'bug'
     isnt @hyp.perl, '[(-1, -2), -3]', "strange inner parens from .perl on result of hyperop";
 
