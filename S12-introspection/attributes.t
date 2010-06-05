@@ -26,13 +26,15 @@ my @attrs = C.^attributes();
 is +@attrs, 3, 'attribute introspection gave correct number of elements';
 
 is @attrs[0].name,         '$!c', 'first attribute had correct name';
-is @attrs[0].type,         Mu,    'first attribute had correct type';
+#?rakudo 3 skip 'Attribute class not too complete yet'
+is @attrs[0].type,         Any,   'first attribute had correct type';
 is @attrs[0].has-accessor, True,  'first attribute has an accessor';
 ok !@attrs[0].build,              'first attribute has no build value';
 ok @attrs[0].rw,                  'first attribute is rw';
 ok !@attrs[0].readonly,           'first attribute is not readonly';
 
 is @attrs[1].name,         '$!b', 'second attribute had correct name';
+#?rakudo 2 skip 'Attribute class not too complete yet'
 is @attrs[1].type,         Int,   'second attribute had correct type';
 is @attrs[1].has-accessor, False, 'second attribute has no accessor';
 ok @attrs[1].build ~~ Code,       'second attribute has build block';
@@ -40,6 +42,7 @@ is @attrs[1].build().(C, $_), 42,
                               'second attribute build block gives expected value';
 
 is @attrs[2].name,         '$!a', 'third attribute had correct name';
+#?rakudo 2 skip 'Attribute class not too complete yet'
 is @attrs[2].type,         Str,   'third attribute had correct type';
 is @attrs[2].has-accessor, True,  'third attribute has an accessor';
 ok @attrs[2].build ~~ Code,       'third attribute has build block';
