@@ -1,13 +1,24 @@
 use v6;
 use Test;
 
+plan 3;
+
 # L<S29/Context/"=item exit">
 
-# This test is primarily aimed at PIL2JS.
+BEGIN { @*INC.push: 't/spec/packages' };
+use Test::Util;
 
-plan 1;
-pass;
-exit;
-ok 0, "exit() didn't work";
+is_run 'say 3; exit; say 5',
+    { out => "3\n", err => "", status => 0 },
+    'bare exit; works';
+
+is_run 'say 3; exit 5; say 5',
+    { out => "3\n", err => "", status => 5 },
+    'exit 5; works';
+
+#?rakudo todo 'try { } catches exit'
+is_run 'say 3; try { exit 5 }; say 5',
+    { out => "3\n", err => "", status => 5 },
+    'try-block does not catch exit exceptions';
 
 # vim: ft=perl6
