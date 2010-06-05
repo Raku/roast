@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 4;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -23,5 +23,18 @@ is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
         out     => /Hello\r?\n/,
-        err     => all(rx/my_non_existent_method_6R5/ & rx/:i 'line 4'/),
+        err     => all(rx/my_non_existent_method_6R5/, rx/:i 'line 4'/),
     }, 'Method not found error mentions method name and line number';
+
+# RT #75446
+is_run 'use v6;
+sub bar {
+    pfff();
+}
+
+bar()',
+    {
+        status => { $_ != 0 },
+        out     => '',
+        err     => all(rx/pfff/, rx/'line 3'>>/),
+    }, 'got the right line number for nonexisting sub inside another sub';
