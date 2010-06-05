@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -105,6 +105,14 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     multi rt65672($x) { $x }
     sub rt65672caller( &x ) { &x() }
     is rt65672caller( &rt65672 ), 99, 'multi can be passed as callable';
+}
+
+# We had a bug where the multiness leaked into a sub, so we got errors
+# about anonymous methods not being allowed to be multi.
+{
+    multi sub kangaroo() { return method () { self * 2 } }
+    my $m = kangaroo();
+    is 21.$m(), 42, 'can write anonymous methods inside multi subs';
 }
 
 done_testing;
