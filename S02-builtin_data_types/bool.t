@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 39;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -67,8 +67,9 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #65514
 {
-    #?rakudo 2 skip 'RT #65514 mix in bool with "but"'
     ok (0 but Bool::True), 'Bool::True works with "but"';
+    is (0 but Bool::True), 0, 'Bool::True works with "but"';
+    ok !('RT65514' but Bool::False), 'Bool::False works with "but"';
     is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
 }
 
