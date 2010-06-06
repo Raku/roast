@@ -22,7 +22,7 @@ eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their nam
             "foo$x";
         }
     }
-    $/ = MyMatch.new;
+    $/ := MyMatch.new;
     is $0, 'foo0', 'Aliasing of $0 into $/ (1)';
     is $4, 'foo4', 'Aliasing of $0 into $/ (2)';
 }
