@@ -1,6 +1,6 @@
 use v6;
 
-package t::packages::LoadCounter;
+module t::packages::LoadCounter;
 
 $Main::loaded++;
 
@@ -11,3 +11,5 @@ sub import {
 sub unimport {
     $Main::imported--;
 }
+
+# vim: ft=perl6
