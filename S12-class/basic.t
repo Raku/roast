@@ -120,6 +120,7 @@ eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
             'self is not writable';
 
 # RT 65022
+#?rakudo todo 'Nested classes not working - RT #65022'
 eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
 # vim: ft=perl6
