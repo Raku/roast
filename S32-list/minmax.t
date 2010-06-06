@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan *;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -18,7 +18,6 @@ my @array = (5,-3,7,0,1,-9); #NOTICE! The <> don't work like they should, rakudo
 
 # Tests for C<min>:
 is @array.min,  -9, "basic method form of min works";
-#?rakudo todo "Not sure why this is failing"
 dies_ok {min(@array)}, 'min() requires comparison function';
 #?rakudo skip 'named args'
 is min({$^a <=> $^b }, :values(@array)), -9, "basic subroutine form of min works with named args";
@@ -32,6 +31,11 @@ is min({ $^a <=> $^b }, @array), -9,
 is (@array.min: { abs $^a <=> abs $^b }), 0,
   "method form of min taking a comparision block works";
 is min({ abs $^a <=> abs $^b }, @array), 0,
+  "subroutine form of min taking a comparision block works";
+
+is (@array.min: { abs $^a }), 0,
+  "method form of min taking a comparision block works";
+is min({ $^a.abs }, @array), 0,
   "subroutine form of min taking a comparision block works";
 
 #?rakudo 2 skip "Range.min not fully implemented yet"
@@ -61,6 +65,10 @@ is (@array.max: { abs $^a <=> abs $^b }), -9,
   "method form of max taking a comparision block works";
 is max({ abs $^a <=> abs $^b }, @array), -9,
   "subroutine form of max taking a comparision block works";
+is (@array.max: { $^a.abs }), -9,
+  "method form of max taking a modifier block works";
+is max({ $^a.abs }, @array), -9,
+  "subroutine form of max taking a modifier block works";
 
 #?rakudo skip "Range.max not fully implemented yet"
 is ((1..10).max: { ($_-3) * ($_-5) }), 10,
@@ -68,7 +76,6 @@ is ((1..10).max: { ($_-3) * ($_-5) }), 10,
 
 # Tests for C<minmax>:
 is @array.minmax,  -9..7, "basic method form of minmax works";
-#?rakudo todo "Not sure why this is failing"
 dies_ok {minmax(@array)}, 'minmax() requires comparison function';
 #?rakudo skip 'named args'
 is minmax({$^a <=> $^b }, :values(@array)), -9..7, "basic subroutine form of minmax works with named args";
@@ -82,6 +89,10 @@ is minmax({ $^a <=> $^b }, @array), -9..7,
 is (@array.minmax: { abs $^a <=> abs $^b }), 0..-9,
   "method form of minmax taking a comparision block works";
 is minmax({ abs $^a <=> abs $^b }, @array), 0..-9,
+  "subroutine form of minmax taking a comparision block works";
+is (@array.minmax: { abs $^a }), 0..-9,
+  "method form of minmax taking a comparision block works";
+is minmax({ $^a.abs }, @array), 0..-9,
   "subroutine form of minmax taking a comparision block works";
 
 #?rakudo 2 skip "Range.minmax not fully implemented yet"
@@ -139,5 +150,7 @@ is ([max] (5,10,-15,20)), 20, 'reduce max int';
 
 is ([min] (5.1,10.3,-15.7,20.9)), -15.7, 'reduce min numeric';
 is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
+
+done_testing;
 
 # vim: ft=perl6
