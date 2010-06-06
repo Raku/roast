@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 51;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -187,7 +187,6 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
     #?rakudo todo 'RT #64688'
     eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
-    eval_lives_ok 'package RT64688_p1;use Test', 'use after package line';
     #?rakudo todo 'RT #64688'
     eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
     eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
