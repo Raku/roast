@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 39;
 
 # L<S12/"Parallel dispatch"/"Any of the method call forms may be turned into a hyperoperator">
 # syn r14547
@@ -122,6 +122,14 @@ class Bar is Foo {
         '3|6', '>><a>';
     is (({ a => 3, b => 5}, {a => 6})>>.<a>).join('|'),
         '3|6', '>>.<a>';
+}
+
+{
+    BEGIN { @*INC.push: 't/spec/packages' };
+    use ContainsUnicode;
+    is uc-and-join('foo', 'bar'), 'FOO, BAR',
+        'parallel dispatch with » works in modules too';
+
 }
 
 # vim: ft=perl6
