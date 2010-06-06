@@ -26,10 +26,6 @@ is t2([1]), "godis", "signature smart-match against array works (1)";
 is t2([1,2]), "om nom nom", "signature smart-match against array works (2)";
 
 
-
-
 done_testing;
-
-
 
 # vim: ft=perl6
