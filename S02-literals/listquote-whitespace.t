@@ -41,7 +41,7 @@ my @list = <a b c d>;
 my @separators = ("\t","\r","\n"," ");
 my @nonseparators = (",","/","\\",";","\xa0");
 
-plan +@separators + @nonseparators + 1;
+plan +@separators + @nonseparators + 3;
 
 for @separators -> $sep {
   my $str = "<$sep" ~ @list.join("$sep$sep") ~ "$sep>";
@@ -69,5 +69,9 @@ for @nonseparators -> $sep {
 
 is < foo  
 	    >, 'foo', 'various combinations of whitespaces are stripped';
+
+# RT #73772
+isa_ok < >, Parcel, '< > (only whitespaces) is empty Parcel';
+is < >.elems, 0, ".. and it's really empty";
 
 # vim: ft=perl6
