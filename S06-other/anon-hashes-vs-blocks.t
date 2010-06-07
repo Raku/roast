@@ -2,27 +2,9 @@ use v6;
 
 use Test;
 
-=begin pod
-
-The parser has difficulties with nested hash refs.
-my $hash = {
-   '1' =>  { '2' => 3,  '4' => 5}
-   };
- 
-say "Perl: ", $hash.perl;
-say "Ref: ", $hash.WHAT;
-say '$hash<1>.WHAT = ', $hash<1>.perl;
-say '$hash<1><2>.WHAT = ', $hash<1><2>.WHAT;
-say '$hash<1><4>.WHAT = ', $hash<1><4>.WHAT;
-say '$hash<1><4>.WHAT = ', $hash<1><4>.perl;
-
-Also with array refs nested in hash refs.
-
-=end pod
-
 # L<S06/Anonymous hashes vs blocks>
 
-plan 8;
+plan *;
 
 my $hash = {
    '1' => { '2' => 3, '4' => 5 },
@@ -55,5 +37,16 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     is(%hash<bar>.WHAT, ::Hash, "Parens do not help");
     is($h_ref.WHAT,     ::Hash, "It is not limited to hash values");
 }
+
+{
+    ok {; a => 1 } ~~ Block, '{; ... } is a Block';
+    ok {  a => 1 } ~~ Hash,  '{ a => 1} is a Hash';
+    ok { $^a => $^b } ~~ Block, 'placeholders force it to be a block';
+    ok { $^a => 'b' } ~~ Block, '... as a key';
+    ok { a => $^x }   ~~ Block, '... as a value';
+    ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
+}
+
+done_testing;
 
 # vim: ft=perl6
