@@ -61,7 +61,6 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
     is(@slice2[1], 1, '%hash<> slice was successful');
 }
 
-#?rakudo skip '%hash<> does not work'
 {
     my @slice3 = %hash5<>.sort;
     is(+@slice3, 3, 'empty slice got all hash values');

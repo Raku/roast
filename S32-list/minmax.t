@@ -95,7 +95,6 @@ is (@array.minmax: { abs $^a }), 0..-9,
 is minmax({ $^a.abs }, @array), 0..-9,
   "subroutine form of minmax taking a comparision block works";
 
-#?rakudo 2 skip "Range.minmax not fully implemented yet"
 is ((-10..9).minmax: { abs $^a <=> abs $^b }), 0..-10,
   "method form of minmax on Ranges taking a comparision block works";
 
