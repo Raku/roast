@@ -28,6 +28,7 @@ my $zero = Fixed2.new(0);
 my $one = Fixed2.new(1);
 my $one-and-one-hundredth = Fixed2.new(1.01);
 my $one-and-ninety-nine-hundredths = Fixed2.new(1.99);  
+my $three = Fixed2.new(3);
 my $ten = Fixed2.new(10);
 my $neg-pi = Fixed2.new(-3.14);
 
@@ -218,6 +219,12 @@ is_approx $one / 1, $one, "1 / 1 == 1";
 is_approx $one-and-one-hundredth / $one, 1.01, "1.01 / 1 == 1.01";
 is_approx -1 / $neg-pi, 1 / 3.14, "-1 / -3.14 == 1 / 3.14";
 is_approx $neg-pi / 2.Num, -1.57, "-3.14 / 2 == -1.57";
+
+is_approx $one % $one, $zero, "1 % 1 == 0";
+is_approx $ten % $three, $one, "10 % 3 == 1";
+is_approx $one-and-ninety-nine-hundredths % $one-and-one-hundredth, 0.98, "1.99 % 1.01 = 0.98";
+is_approx 10 % $one-and-ninety-nine-hundredths, 0.05, "10 % 1.99 = 0.05";
+is_approx $one-and-one-hundredth % 0.2, 0.01, "1.01 % 0.2 = 0.01";
 
 is_approx $one-and-one-hundredth.log, 1.01.log, "1.01.log is correct";
 is_approx log($one-and-one-hundredth), 1.01.log, "log(1.01) is correct";
