@@ -46,6 +46,16 @@ is $zero.pred, -1, "0.pred works";
 is $neg-pi.pred, -4.14, "(-3.14).pred works";
 
 {
+    my $i = $zero.Bool;
+    isa_ok $i, Bool, "0.Bool is an Bool";
+    is $i, Bool::False, "0.Bool is False";
+    
+    $i = $one-and-ninety-nine-hundredths.Bool;
+    isa_ok $i, Bool, "1.99.Bool is an Bool";
+    is $i, Bool::True, "1.99.Bool is True";
+}
+
+{
     my $i = $neg-pi.Int;
     isa_ok $i, Int, "-3.14.Int is an Int";
     is $i, -3, "-3.14.Int is -3";
@@ -184,12 +194,30 @@ is_approx -$one, -1, "-1 == -1";
 is_approx -$one-and-one-hundredth, -1.01, "-1.01 == -1.01";
 is_approx -$neg-pi, 3.14, "-(-3.14) == 3.14";
 
+is $one + $one, 2, "1 + 1 == 2";
+is $one + -1, 0, "1 + -1 == 0";
+is $one-and-one-hundredth + $one-and-one-hundredth, 2.02, "1.01 + 1.01 == 2.02";
+is_approx 1.01 + -$one, 0.01, "1.01 + -1 == 0.01";
+is_approx $one-and-one-hundredth + 1.Num, 2.01, "1.01 + 1 == 2.01";
+
 is $one - $one, 0, "1 - 1 == 0";
 is $one - 1, 0, "1 - 1 == 0";
 is $one-and-one-hundredth - $one-and-one-hundredth, 0, "1.01 - 1.01 == 0";
 is $one-and-one-hundredth - 1.01, 0, "1.01 - 1.01 == 0";
 is_approx 1.01 - $one, 0.01, "1.01 - 1 == 0.01";
 is_approx $one-and-one-hundredth - 1.Num, 0.01, "1.01 - 1 == 0.01";
+
+is_approx $one * $one, $one, "1 * 1 == 1";
+is_approx $one * 1, $one, "1 * 1 == 1";
+is_approx $one-and-one-hundredth * $one, 1.01, "1.01 * 1 == 1.01";
+is_approx -1 * $neg-pi, 3.14, "-1 * -3.14 == 3.14";
+is_approx $one-and-one-hundredth * 2.Num, 2.02, "1.01 * 2 == 2.02";
+
+is_approx $one / $one, $one, "1 / 1 == 1";
+is_approx $one / 1, $one, "1 / 1 == 1";
+is_approx $one-and-one-hundredth / $one, 1.01, "1.01 / 1 == 1.01";
+is_approx -1 / $neg-pi, 1 / 3.14, "-1 / -3.14 == 1 / 3.14";
+is_approx $neg-pi / 2.Num, -1.57, "-3.14 / 2 == -1.57";
 
 is_approx $one-and-one-hundredth.log, 1.01.log, "1.01.log is correct";
 is_approx log($one-and-one-hundredth), 1.01.log, "log(1.01) is correct";
