@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 86;
+plan 88;
 
 =begin pod
 
@@ -25,8 +25,10 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([*]  1,2,3),    (1*2*3), "[*] works");
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
+  is(([div]  12,4,3),  (12 div 4 div 3), "[div] works");
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
+  is(([mod]  13,7,4), (13 mod 7 mod 4),  "[mod] works");
 
   is((~ [\+] @array), "5 2 9 9 10 1", "[\\+] works");
   is((~ [\-] 1, 2, 3), "1 -1 -4",      "[\\-] works");
