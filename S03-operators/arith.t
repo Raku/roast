@@ -160,8 +160,17 @@ tryeq 28 div -7, -4;
 tryeq -28 div 4, -7;
 tryeq -28 div -2, 14;
 
-
 is(9 div 4, 2, "9 div 4 == 2");
+is(-9 div 4, -3, "-9 div 4 == -3");
+is(9 div -4, -3, "9 div -4 == -3");
+is(-9 div -4, 2, "-9 div -4 == 2");
+
+# modulo
+
+tryeq  13 mod  4, 1;
+tryeq -13 mod  4, 3;
+tryeq  13 mod -4, -3;
+tryeq -13 mod -4, -1;
 
 # The example for sloppy divide, rigged to avoid the peephole optimiser.
 is_approx "20." / "5.", 4;
