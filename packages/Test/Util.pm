@@ -8,22 +8,22 @@ use Test;
 #use Test;
 
 # No input, no test name
-multi sub is_run( Str $code, %expected ) is export(:DEFAULT) {
-    return is_run( $code, '', %expected, '' );
+multi sub is_run( Str $code, %expected, :@args ) is export(:DEFAULT) {
+    return is_run( $code, '', %expected, '', :@args );
 }
 
 # Has input, but not a test name
-multi sub is_run( Str $code, Str $input, %expected ) is export(:DEFAULT) {
-    return is_run( $code, $input, %expected, '' );
+multi sub is_run( Str $code, Str $input, %expected, :@args ) is export(:DEFAULT) {
+    return is_run( $code, $input, %expected, '', :@args );
 }
 
 # No input, named
-multi sub is_run( Str $code, %expected, Str $name ) is export(:DEFAULT) {
-    return is_run( $code, '', %expected, $name );
+multi sub is_run( Str $code, %expected, Str $name, :@args ) is export(:DEFAULT) {
+    return is_run( $code, '', %expected, $name, :@args );
 }
 
-multi sub is_run( Str $code, Str $input, %expected, Str $name ) is export(:DEFAULT) {
-    my %got = get_out( $code, $input // '' );
+multi sub is_run( Str $code, Str $input, %expected, Str $name, :@args ) is export(:DEFAULT) {
+    my %got = get_out( $code, $input // '', :@args );
 
     # The test may have executed, but if so, the results couldn't be collected.
     if %got<test_died> {
@@ -64,7 +64,7 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name ) is export(:DEFAU
     return;
 }
 
-sub get_out( Str $code, Str $input? ) is export {
+sub get_out( Str $code, Str $input?, :@args) is export {
     my $fnbase = 'getout-';
     $fnbase ~= $*PID // 1_000_000.rand.Int;
 
@@ -75,6 +75,15 @@ sub get_out( Str $code, Str $input? ) is export {
         $fh.close or die "close failed: $!";
     };
 
+    my @actual_args;
+    my $sep = q[']; # TODO: adapt this to q["] on windows
+    for @args {
+        if /<['"]>/ {
+            die "Command line arguments may not contain single or double quotes";
+        }
+        @actual_args.push: $sep ~ $_ ~ $sep;
+    }
+
     my %out;
 
     try {
@@ -83,7 +92,7 @@ sub get_out( Str $code, Str $input? ) is export {
 
         my $perl6 = $*EXECUTABLE_NAME;
 
-        %out<status> = run( "$perl6 $fnbase.code < $fnbase.in > $fnbase.out 2> $fnbase.err" );
+        %out<status> = run( "$perl6 $fnbase.code @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err" );
         %out<out> = slurp "$fnbase.out";
         %out<err> = slurp "$fnbase.err";
 
@@ -166,13 +175,16 @@ is_run() will skip() (but it will still execute the code not being tested).
 is_run() depends on get_out(), which might die.  In that case, it dies
 also (this error is not trapped).
 
-=head2 get_out( Str $code, Str $input? )
+=head2 get_out( Str $code, Str $input?, :@args )
 
 This is what is_run() uses to do its work.  It returns a hash with the
 'status', 'err', and 'out' of the code run.  In addition, if the hash
 it returns has an element named 'test_died', that means it failed to
 either run the code or collect the results.  Any other elements of the
 hash should be disregarded.
+
+C<:@args> can contain command line arguments passed to the program.
+They may not contain quote characters, or get_out will complain loudly.
 
 =head3 Errors
 
