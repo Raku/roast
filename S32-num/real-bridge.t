@@ -86,6 +86,16 @@ is $neg-pi.pred, -4.14, "(-3.14).pred works";
     is_approx $i, 1.99, "1.99.Num is 1.99";
 }
 
+{
+    my $s = $one-and-ninety-nine-hundredths.Str;
+    isa_ok $s, Str, "1.99.Str is a Str";
+    is $s, "1.99", '1.99.Str is "1.99"';
+
+    $s = $neg-pi.Str;
+    isa_ok $s, Str, "-3.14.Str is a Str";
+    is $s, "-3.14", '-3.14.Str is "-3.14"';
+}
+
 is_approx $zero.abs, 0, "0.abs works";
 ok $zero.abs ~~ Real, "0.abs produces a Real";
 is_approx $one.abs, 1, "1.abs works";
