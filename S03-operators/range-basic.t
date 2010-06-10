@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 110;
+plan 115;
 
 {
     my $range = 2..6;
@@ -70,6 +70,16 @@ plan 110;
     is $range.max, 5.5e0, "^5.5e0.max is 5.5e0";
     is $range.excludes_min, Bool::False, "^5.5e0.excludes_min is false";
     is $range.excludes_max, Bool::True, "^5.5e0.excludes_max is true";
+}
+
+{
+    my $range = 1..*;
+    isa_ok $range, Range, '1..* is a Range';
+    is $range.min, 1, "1..*.min is 1";
+    #?rakudo todo "* net yet properly handled in Range"
+    is $range.max, Inf, "1..*.max is Inf";
+    is $range.excludes_min, Bool::False, "1..*.excludes_min is false";
+    is $range.excludes_max, Bool::False, "1..*.excludes_max is false";
 }
 
 ok 3 ~~ 1..5,         '3 ~~ 1..5';
