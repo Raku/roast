@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 115;
+plan 117;
 
 {
     my $range = 2..6;
@@ -160,6 +160,13 @@ ok 'g' ~~ 'b'..'g',     "'g' ~~ 'b'..'g'";
 nok 'a' ~~ 'b'..'g',    "not 'a' ~~ 'b'..'g'";
 nok 'h' ~~ 'b'..'g',    "not 'h' ~~ 'b'..'g'";
 nok 0 ~~ 'a'..'g',      "not 0 ~~ 'a'..'g'";
+
+# RT#75526: [BUG] Some non-alphanumeric ranges don't work
+#?rakudo skip 'these tests hang forever'
+{
+    ok ' ' ~~ ' '..' ', "' ' ~~ ' '..' '";
+    ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";
+}
 
 done_testing;
 
