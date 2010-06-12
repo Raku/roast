@@ -91,7 +91,8 @@ is(@lines4[2], "The End", 'lines($in) worked in list context');
 is(@lines4[3], "... Its not over yet!", 'lines($in) worked in list context');
 ok($in4.close, 'file closed okay (4)');
 
-#?rakudo 7 skip "prototype of sub lines(...) doesn't have $limit yet"
+#?rakudo skip "prototype of sub lines(...) doesn't have $limit yet"
+{
 my $in5 = open($filename);
 isa_ok($in5, IO);
 my @lines5 = lines($in5, 3);
@@ -101,6 +102,7 @@ is(@lines5[0], "Hello World", 'lines($in) worked in list context');
 is(@lines5[1], "Foo Bar Baz", 'lines($in) worked in list context');
 is(@lines5[2], "The End", 'lines($in) worked in list context');
 ok($in5.close, 'file closed okay (5)');
+}
 
 my $in6 = open($filename);
 isa_ok($in6, IO);
