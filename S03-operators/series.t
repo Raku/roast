@@ -145,6 +145,11 @@ is (16, 8, 4 ... *).batch(5).join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
             'expression with two magic series operators and non-matching end points';
 }
 
+{
+    is ~(4 ... ^5), ~<4 3 2 1 0 1 2 3 4>, '4 ... ^5 works';
+    is ~(4 ... 0, 1, 2, 3, 4), ~<4 3 2 1 0 1 2 3 4>, '4 ... 0, 1, 2, 3,4 works';
+}
+
 done_testing;
 
 # vim: ft=perl6
