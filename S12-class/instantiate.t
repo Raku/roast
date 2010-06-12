@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S12/Construction and Initialization>
 # Basic instantiation.
@@ -32,6 +32,18 @@ is($foo2.check(), 42, 'initializing attributes in new');
     ok  $!  ~~ Exception, 'death to instantiating nonexistent::class';
     ok "$!" ~~ / 'NoSuch::Subclass' /,
        'error for "NoSuch::Subclass.new()" mentions NoSuch::Subclass';
+}
+
+# RT 65224
+
+#instantiation from class name unexpectedly creates a class object instead of Str object
+
+{
+    class Foo { };
+    my $x = 'Foo';
+    my $y = $x.new;
+    #?rakudo todo 'instantiating from class name string unexpectedly creates a class object'
+    is($y.WHAT, Str, "instantiating from class name string creates a Str object");
 }
 
 # vim: ft=perl6
