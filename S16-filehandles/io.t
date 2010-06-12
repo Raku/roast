@@ -91,46 +91,74 @@ is(@lines4[2], "The End", 'lines($in) worked in list context');
 is(@lines4[3], "... Its not over yet!", 'lines($in) worked in list context');
 ok($in4.close, 'file closed okay (4)');
 
+#?rakudo 7 skip "prototype of sub lines(...) doesn't have $limit yet"
 my $in5 = open($filename);
 isa_ok($in5, IO);
-my @lines5 = $in5.lines();
-is(+@lines5, 4, 'we got four lines from the file');
-is(@lines5[0], "Hello World", '$in.lines() worked in list context');
-is(@lines5[1], "Foo Bar Baz", '$in.lines() worked in list context');
-is(@lines5[2], "The End", '$in.lines() worked in list context');
-is(@lines5[3], "... Its not over yet!", '$in.lines() worked in list context');
+my @lines5 = lines($in5, 3);
+is(+@lines5, 3, 'we got two lines from the file');
+is $in5.ins, 3, 'same with .ins';
+is(@lines5[0], "Hello World", 'lines($in) worked in list context');
+is(@lines5[1], "Foo Bar Baz", 'lines($in) worked in list context');
+is(@lines5[2], "The End", 'lines($in) worked in list context');
 ok($in5.close, 'file closed okay (5)');
 
 my $in6 = open($filename);
 isa_ok($in6, IO);
-my @lines6 = $in6.lines;
+my @lines6 = $in6.lines();
 is(+@lines6, 4, 'we got four lines from the file');
-is(@lines6[0], "Hello World", '$in.lines worked in list context');
-is(@lines6[1], "Foo Bar Baz", '$in.lines worked in list context');
-is(@lines6[2], "The End", '$in.lines worked in list context');
-is(@lines6[3], "... Its not over yet!", '$in.lines worked in list context');
+is(@lines6[0], "Hello World", '$in.lines() worked in list context');
+is(@lines6[1], "Foo Bar Baz", '$in.lines() worked in list context');
+is(@lines6[2], "The End", '$in.lines() worked in list context');
+is(@lines6[3], "... Its not over yet!", '$in.lines() worked in list context');
 ok($in6.close, 'file closed okay (6)');
+
+my $in7 = open($filename);
+isa_ok($in7, IO);
+my @lines7 = $in7.lines;
+is(+@lines7, 4, 'we got four lines from the file');
+is(@lines7[0], "Hello World", '$in.lines worked in list context');
+is(@lines7[1], "Foo Bar Baz", '$in.lines worked in list context');
+is(@lines7[2], "The End", '$in.lines worked in list context');
+is(@lines7[3], "... Its not over yet!", '$in.lines worked in list context');
+ok($in7.close, 'file closed okay (7)');
 
 {
 # test reading a file into an array and then closing before 
 # doing anything with the array (in other words, is pugs too lazy)
-my $in7 = open($filename);
-isa_ok($in7, IO);
-my @lines7 = $in7.lines(3);
-push @lines7, "and finally" ~ $in7.get;
-ok($in7.close, 'file closed okay (7)');
-is(+@lines7, 4, 'we got four lines from the file (lazily)');
-is(@lines7[0], "Hello World", 'lines($in,3) worked in list context');
-is(@lines7[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
-is(@lines7[2], "The End", 'lines($in,3) worked in list context');
-is(@lines7[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
-
-#now be sure to delete the file as well
-
-is(unlink($filename), 1, 'file has been removed');
+my $in8 = open($filename);
+isa_ok($in8, IO);
+my @lines8 = $in8.lines(3);
+push @lines8, "and finally" ~ $in8.get;
+ok($in8.close, 'file closed okay (8)');
+is(+@lines8, 4, 'we got four lines from the file (lazily)');
+is(@lines8[0], "Hello World", 'lines($in,3) worked in list context');
+is(@lines8[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
+is(@lines8[2], "The End", 'lines($in,3) worked in list context');
+is(@lines8[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
 }
 
+{
+my @lines9 = lines($filename);
+is(+@lines9, 4, 'we got four lines from the file (lines for filename)');
+is(@lines9[0], "Hello World", 'lines($filename) worked in list context');
+is(@lines9[1], "Foo Bar Baz", 'lines($filename) worked in list context');
+is(@lines9[2], "The End", 'lines($filename) worked in list context');
+is(@lines9[3], "... Its not over yet!", 'lines($filename) worked in list context');
+}
+
+{
+my @lines10 = lines($filename, 3);
+is(+@lines10, 3, 'we got two lines from the file (lines($filename,3))');
+is(@lines10[0], "Hello World", 'lines($filename,3) worked in list context');
+is(@lines10[1], "Foo Bar Baz", 'lines($filename,3) worked in list context');
+is(@lines10[2], "The End", 'lines($filename,3) worked in list context');
+}
+
+#now be sure to delete the file as well
+is(unlink($filename), 1, 'file has been removed');
+
 # new file for testing other types of open() calls
+
 
 my $out8 = open($filename, :w);
 isa_ok($out8, IO);
