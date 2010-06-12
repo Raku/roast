@@ -73,4 +73,8 @@ is ('c', { $_ } ... *).batch(10).join(', '), 'c, c, c, c, c, c, c, c, c, c', 'se
 is ('c', 'c' ... *).batch(10).join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series started with two identical letters';
 is ('c', 'c', 'c' ... *).batch(10).join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series started with three identical letters';
 
+# tests for alphabetical series crossing 'z'
+#?rakudo 1 todo "RT#74990: Series of letters doesn't stop at end point"
+is ('x' ... 'z').join(', '), 'x, y, z', "series ending with 'z' don't cross to two-letter strings";
+
 done_testing;
