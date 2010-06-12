@@ -162,7 +162,6 @@ nok 'h' ~~ 'b'..'g',    "not 'h' ~~ 'b'..'g'";
 nok 0 ~~ 'a'..'g',      "not 0 ~~ 'a'..'g'";
 
 # RT#75526: [BUG] Some non-alphanumeric ranges don't work
-#?rakudo skip 'these tests hang forever'
 {
     ok ' ' ~~ ' '..' ', "' ' ~~ ' '..' '";
     ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";
