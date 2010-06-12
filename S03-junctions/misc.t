@@ -389,6 +389,17 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     ok((WHAT any(1,2)) === junction, "test WHAT on any junction");
     ok(any(1,2).WHAT === junction, "test WHAT on any junction");
 }
+
+# Any list has junction methods
+{
+    jok(5 < (6,7,8).all, '.all method builds "all" junction');
+    jok(!(7 < (6,7,8).all), '.all method builds "all" junction');
+    jok(7 == (6,7,8).one, '.one method builds "one" junction');
+    jok(9 == (6,7,8).none, '.none method builds "none" junction');
+
+    my @x = (6,7,8);
+    jok(5 < @x.all, '.all method works on array objects');
+}
 done_testing();
 
 # vim: ft=perl6
