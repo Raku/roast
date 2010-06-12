@@ -30,6 +30,28 @@ plan *;
     eval_dies_ok 'my $y; c(:$y)', 'colonpair with wrong variable name dies';
 }
 
+#?rakudo skip 'colonpair shortcuts with twigils (RT#73908)'
+{
+    sub add5(:$g) {
+        return $g + 5;
+    }
+    class A {
+        has $!g = 3;
+        method colonpair_private { add5(:$!g) }
+    };
+    class B {
+        has $.g = 7;
+        method colonpair_public { add5(:$.g) }
+    };
+    sub colonpair_positional {
+        add5(:$^g);
+    }
+
+    is A.new.colonpair_private, 8, 'colonpair with a privare variable';
+    is B.new.colonpair_public, 12, 'colonpair with a public variable';
+    is colonpair_positional(:g<10>), 15, 'colonpair with a positional variable';
+}
+
 # L<S06/Named parameters>
 
 sub simple_pos_param($x) { $x }
