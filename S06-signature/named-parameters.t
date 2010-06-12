@@ -30,7 +30,6 @@ plan *;
     eval_dies_ok 'my $y; c(:$y)', 'colonpair with wrong variable name dies';
 }
 
-#?rakudo skip 'colonpair shortcuts with twigils (RT#73908)'
 {
     sub add5(:$g) {
         return $g + 5;
