@@ -13,10 +13,12 @@ plan 96;
 }
 
 
+#?rakudo todo "RT #63350"
 {
+    # see also RT #63350 for discussion
     my $i = 0;
     $i++ for (1, 2, 3).item;
-    is $i, 3, 'for (1, 2, 3).item does three iterations';
+    is $i, 1, 'for (1, 2, 3).item does one iteration';
 }
 
 {
@@ -154,7 +156,7 @@ my @array2 = ("test", 1, Mu);
 {
     # declare the array with data type
     my Int @array;
-    #?rakudo todo "parametrization issues"
+    #?rakudo 2 todo "parametrization issues"
     lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
