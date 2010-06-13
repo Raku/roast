@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  4;
+plan  8;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -33,3 +33,33 @@ is_run 'sub MAIN($x) { };',
     },
     :args['--help'],
     '--help triggers a message to $*OUT';
+
+is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
+    {
+        out => "yes\n",
+        err => '',
+        status => 0,
+    },
+    :args['--x'],
+    'boolean option +';
+
+is_run 'sub MAIN(Bool :$x) { print "yes" if $x }',
+    {
+        out => "",
+    },
+    :args['--/x'],
+    'boolean option -';
+
+is_run 'sub MAIN(:$x) { print $x }',
+    {
+        out => "23",
+    },
+    :args['--x=23'],
+    'option with value';
+
+is_run 'sub MAIN(:$x) { print $x }',
+    {
+        out => "23",
+    },
+    :args['--x', '23'],
+    'option with spacey value';
