@@ -36,13 +36,15 @@ given $*OS {
     # TODO: other operating systems; *BSD etc.	 
 }
 $received = qqx{$netstat_cmd};                    # refactor into 1 line after
-if $received ~~ $netstat_pat { @ports = $/[]; }   # development complete
+if $received ~~ $netstat_pat { @ports = $/.list; }  # development complete
+                         # was @ports = $/[]      in Rakudo/alpha
+                         #     @ports = $/[0] also now in master
 #warn @ports.elems ~ " PORTS=" ~ @ports;
 
 # sequentially search for the first unused port
 my $port = 1024;
 while $port < 65535 && $port==any(@ports) { $port++; }
-if $port > 65535 { 
+if $port > 65535 {
     diag "no free port; abortin"; 
     skip_rest 'No port free - cannot test';
     exit 0;
@@ -50,9 +52,10 @@ if $port > 65535 {
 diag "Testing on port $port";
 
 # test 1 creates a TCP socket but does not use it.
-constant PF_INET     = 2; # these should move into a file,
-constant SOCK_STREAM = 1; # but what name and directory?
-constant TCP         = 6;
+# use Perl 5 style subs for constants until 'constant' works again
+sub PF_INET     { 2 } # constant PF_INET     = 2; # these should move into a file,
+sub SOCK_STREAM { 1 } # constant SOCK_STREAM = 1; # but what name and directory?
+sub TCP         { 6 } # constant TCP         = 6;
 my $server = IO::Socket::INET.socket( PF_INET, SOCK_STREAM, TCP );
 isa_ok $server, IO::Socket::INET;
 # Do not bind to this socket in the parent process, that would prevent a
@@ -83,6 +86,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $expected = "discard '' received\n";
     is $received, $expected, "discard server and client";
 
+    #?rakudo 8 skip
     # test 4 tests recv with a parameter
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};

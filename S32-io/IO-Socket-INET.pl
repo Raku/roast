@@ -7,9 +7,10 @@
 
 use v6;
 
-constant PF_INET     = 2; # these should move into a file,
-constant SOCK_STREAM = 1; # but what name and directory?
-constant TCP         = 6;
+# use Perl 5 style subs for constants until 'constant' works again
+sub PF_INET     { 2 } # constant PF_INET     = 2; # these should move into a file,
+sub SOCK_STREAM { 1 } # constant SOCK_STREAM = 1; # but what name and directory?
+sub TCP         { 6 } # constant TCP         = 6;
 my ( $test, $port, $server_or_client ) = @*ARGS;
 my $host = '127.0.0.1';
 
