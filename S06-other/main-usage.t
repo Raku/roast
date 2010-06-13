@@ -20,7 +20,6 @@ is_run 'sub MAIN() { print "main() called" }; sub USAGE() { print "usage() calle
     },
     'a user-defined USAGE sub not is called if MAIN-dispatch succeeds';
 
-#?rakudo todo '$*OUT/$*ERR distinction'
 is_run 'sub MAIN($foo) { }',
     {
         err     => /<< foo >>/,
