@@ -4,11 +4,11 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 85;
+plan 84;
 
 # L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
 
-# immutable types (e.g. Int, Num, Complex, Rat, Str, Bit, Regex, Set, Block, List, Seq)
+# immutable types (e.g. Int, Num, Complex, Rat, Str, Bit, Regex, Set, Block, List)
 
 {
  my Int $namcu =2;
@@ -62,11 +62,6 @@ plan 85;
 {
  my List $liste;
  isa_ok($liste, List);
-}
-
-{
- my Seq $porsi;
- isa_ok($porsi, Seq);
 }
 
 
