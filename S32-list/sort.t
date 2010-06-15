@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 28;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -10,15 +10,6 @@ plan 29;
 
     my @s = sort(@a);
     is(@s, @e, 'array of numbers was sorted');
-}
-
-#?rakudo skip 'named args'
-{
-    my @a = (4, 5, 3, 2, 5, 1);
-    my @e = (1 .. 5, 5);
-
-    my @s = sort(:values(@a));
-    is(@s, @e, 'array of numbers was sorted with named arguments');
 }
 
 {
