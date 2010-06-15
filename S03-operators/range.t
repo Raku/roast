@@ -17,13 +17,14 @@ is ~(8..11), "8 9 10 11",   "(..) works on carried numbers (3)";
 is ~("a".."c"), "a b c", "(..) works on chars (1)";
 is ~("a".."a"), "a",     "(..) works on chars (2)";
 is ~("b".."a"), "",      "(..) works on chars (3)";
-is ~("Y".."AB"), "Y Z AA AB", "(..) works on carried chars (3)";
+#?rakudo todo "Think master still gets this one wrong"
+is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
+#?rakudo todo "This test is now incorrect"
 is ~("AB".."Y"), "",     "(..) works on auto-rev carried chars (4)";
 
-#?rakudo skip 'RangeIter needs string comparison code in list branch'
+#?rakudo 4 skip 'Spec under design here'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
-#?rakudo skip 'RangeIter needs string comparison code in list branch'
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 
