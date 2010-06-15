@@ -27,17 +27,17 @@ is (1, 1, { $^x + $^y } ... 13).join(', '), '1, 1, 2, 3, 5, 8, 13', 'limited fib
     is gcd(42, 24), 6, 'gcd with infix:<...> (2)';
 }
 
-is (1 ... *).batch(5).join(', '), '1, 2, 3, 4, 5', 'lazy series with one item on the LHS';
-is (1, 3 ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'lazy additive series with two items on the LHS';
-is (1, 3, 5 ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'lazy additive series with three items on the LHS';
-is (1, 3, 9 ... *).batch(5).join(', '), '1, 3, 9, 27, 81', 'lazy multiplicative series with three items on the LHS';
-is (1, 1 ... *).batch(5).join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with two items on the LHS';
-is (1, 1, 1 ... *).batch(5).join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with three items on the LHS';
-is (1, { $_ + 2 } ... *).batch(5).join(', '), '1, 3, 5, 7, 9', 'lazy series with one item and arity-1 closure on the LHS';
+is (1 ... *).[^5].join(', '), '1, 2, 3, 4, 5', 'lazy series with one item on the LHS';
+is (1, 3 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'lazy additive series with two items on the LHS';
+is (1, 3, 5 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'lazy additive series with three items on the LHS';
+is (1, 3, 9 ... *).[^5].join(', '), '1, 3, 9, 27, 81', 'lazy multiplicative series with three items on the LHS';
+is (1, 1 ... *).[^5].join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with two items on the LHS';
+is (1, 1, 1 ... *).[^5].join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with three items on the LHS';
+is (1, { $_ + 2 } ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'lazy series with one item and arity-1 closure on the LHS';
 
-is (1, 1, { $^x + $^y } ... *).batch(7).join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
+is (1, 1, { $^x + $^y } ... *).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
 #?rakudo skip "Symbol '&infix:<+>' not predeclared in <anonymous>"
-is (1, 1, &infix:<+> ... *).batch(7).join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
+is (1, 1, &infix:<+> ... *).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
 
 #?rakudo skip "state NYI"
 {
@@ -61,13 +61,13 @@ is (1, 1, &infix:<+> ... *).batch(7).join(', '), '1, 1, 2, 3, 5, 8, 13', 'infini
 	is @primes[5], 13, 'prime generator with series op works (0)';
 }
 
-is ('a'  ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string from single generator';
-is (<a b> ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string from double generator';
-is (<a b>, { .succ } ... *).batch(7).join(', '), 'a, b, c, d, e, f, g', 'string and arity-1';
+is ('a'  ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'string from single generator';
+is (<a b> ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'string from double generator';
+is (<a b>, { .succ } ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'string and arity-1';
 
-is (8, 7 ... *).batch(5).join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
-is (8, 7, 6 ... *).batch(5).join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
-is (16, 8, 4 ... *).batch(5).join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
+is (8, 7 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
+is (8, 7, 6 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
+is (16, 8, 4 ... *).[^5].join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
 
 
 

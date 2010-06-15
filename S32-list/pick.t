@@ -52,7 +52,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
        'pick(*) returned the items of the array in a random order');
 }
 
-is (0, 1).pick(*, :replace).batch(10).elems, 10, '.pick(*, :replace) returns an answer';
+is (0, 1).pick(*, :replace).[^10].elems, 10, '.pick(*, :replace) returns an answer';
 
 {
     # Test that List.pick doesn't flatten array refs

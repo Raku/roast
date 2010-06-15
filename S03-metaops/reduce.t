@@ -188,9 +188,9 @@ is( ([<] 42), Bool::True, "[<] 42 returns true");
 is( ~([\<] 42), "1", "[\<] 42 returns '1'");
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
-is( ([\*] 1..*).batch(10).join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
+is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
     'triangle reduce is lazy');
-is( ([\R~] 'a'..*).batch(8).join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
+is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
     'triangle reduce is lazy');
 
 # RT #65164 (TODO: implement [^^])
