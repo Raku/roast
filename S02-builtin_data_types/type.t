@@ -148,8 +148,9 @@ my $baz of Int;
     ok Int ~~ Num, 'Int ~~ Num';
     ok Num !~~ Int, 'Num !~~ Int';
 
-    ok Array ~~ Seq, 'Array is a kind of Seq';
-    ok Seq !~~ Array, 'A Seq is not an Array';
+    #?rakudo todo 'awaiting list refactor merge'
+    ok Array ~~ List, 'Array is a kind of List';
+    ok List !~~ Array, 'A Seq is not an Array';
     ok Seq ~~ Positional, 'A Seq does Positional';
     ok Array ~~ Positional, 'Array does Positional too';
 }

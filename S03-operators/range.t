@@ -20,8 +20,10 @@ is ~("b".."a"), "",      "(..) works on chars (3)";
 is ~("Y".."AB"), "Y Z AA AB", "(..) works on carried chars (3)";
 is ~("AB".."Y"), "",     "(..) works on auto-rev carried chars (4)";
 
+#?rakudo skip 'RangeIter needs string comparison code in list branch'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
+#?rakudo skip 'RangeIter needs string comparison code in list branch'
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 

@@ -73,6 +73,7 @@ plan *;
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
+  #?rakudo todo 'lvalue list slices'
   dies_ok { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     "using list slices as lvalues works (2)";
 }
