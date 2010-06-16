@@ -61,7 +61,7 @@ plan *;
 }
 
 #?rakudo todo 'Reduce of one element list. See #61610'
-is( list(1).reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
+is( (1).list.reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
 
 eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
