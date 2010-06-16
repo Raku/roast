@@ -233,6 +233,7 @@ my @array2 = ("test", 1, Mu);
   my $minus_one = -1;
 
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
+  #?rakudo todo '@arr[-1] returns failure, not dies'
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is run-time error";
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
@@ -265,6 +266,7 @@ my @array2 = ("test", 1, Mu);
 
 {
     my @arr of Int = 1, 2, 3, 4, 5;
+    #?rakudo skip 'typed array recursion issue'
     is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
     #?rakudo 2 todo "parametrization issues"
     dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
@@ -273,6 +275,7 @@ my @array2 = ("test", 1, Mu);
 
 {
     my @arr[5] of Int = <1 2 3 4 5>;
+    #?rakudo skip 'typed array recursion issue'
     is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
 
     #?rakudo todo "parametrization issues"

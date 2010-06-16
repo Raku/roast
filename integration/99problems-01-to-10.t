@@ -137,6 +137,8 @@ plan 22;
     my @compressed = map $compress, <a a a a b c c a a d e e e e>;
     is @compressed, <a b c a d e>, 'We should be able to compress lists';
 }
+
+#?rakudo todo "Needs review in light of list changes"
 {
     multi compress2 () { () }
     multi compress2 ($a) { item $a }

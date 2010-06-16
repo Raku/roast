@@ -24,6 +24,7 @@ plan 14;
     my @arr = <1 2 3 4>;
     
     ok(@arr.isa(Array), '... @arr is-a Array (invocant notation)');
+    #?rakudo skip "Array is now ~~ List"
     ok(@arr.isa(Seq), '... @arr is-also-a Seq (invocant notation)');
     
     # check a failing case
