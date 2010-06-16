@@ -28,7 +28,7 @@ sub foobar2 { return() if 1; }
 ok(!defined(foobar2()), '... bare return worked with a statement modifier');
 
 my $should_ret_empty_list1 = sub { return; 1 };
-is @($should_ret_empty_list1(),).elems, 0, "our sub returned an empty list (1)";
+is $should_ret_empty_list1().elems, 0, "our sub returned an empty list (1)";
 
 sub return_1 { return 1; }
 is(return_1(), 1, '... return_1() returned 1 correctly');

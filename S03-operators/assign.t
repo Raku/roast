@@ -586,7 +586,7 @@ sub l () { 1, 2 };
     #?rakudo todo 'list assignment to scalar'
     is(@a[0,].elems, 1,  'lhs treats @a[0,] as one-item list');
     is(@z.elems,     1,  'lhs treats @a[0,] as one-item list');
-    ok(!defined(@a[1,]), 'lhs treats @a[0,] as one-item list');
+    ok(defined(@a[1,]),  'lhs treats @a[0,] as one-item list');
 }
 
 {
