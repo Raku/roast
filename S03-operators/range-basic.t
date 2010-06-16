@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 117;
+plan 132;
 
 {
     my $range = 2..6;
@@ -76,10 +76,44 @@ plan 117;
     my $range = 1..*;
     isa_ok $range, Range, '1..* is a Range';
     is $range.min, 1, "1..*.min is 1";
-    #?rakudo todo "* net yet properly handled in Range"
+    #?rakudo todo "* not yet properly handled in Range"
     is $range.max, Inf, "1..*.max is Inf";
     is $range.excludes_min, Bool::False, "1..*.excludes_min is false";
     is $range.excludes_max, Bool::False, "1..*.excludes_max is false";
+}
+
+# next three blocks of tests may seem kind of redundant, but actually check that 
+# the various Range operators are not mistakenly turned into Whatever
+# closures.
+
+{
+    my $range = 1^..*;
+    isa_ok $range, Range, '1^..* is a Range';
+    is $range.min, 1, "1^..*.min is 1";
+    #?rakudo todo "* not yet properly handled in Range"
+    is $range.max, Inf, "1^..*.max is Inf";
+    is $range.excludes_min, Bool::True, "1^..*.excludes_min is true";
+    is $range.excludes_max, Bool::False, "1^..*.excludes_max is false";
+}
+
+{
+    my $range = *..^1;
+    isa_ok $range, Range, '*..^1 is a Range';
+    #?rakudo todo "* not yet properly handled in Range"
+    is $range.min, -Inf, "*..^1.min is -Inf";
+    is $range.max, 1, "*..^1.max is 1";
+    is $range.excludes_min, Bool::False, "*..^1.excludes_min is false";
+    is $range.excludes_max, Bool::True, "*..^1.excludes_max is true";
+}
+
+{
+    my $range = 1^..^*;
+    isa_ok $range, Range, '1^..^* is a Range';
+    is $range.min, 1, "1^..^*.min is 1";
+    #?rakudo todo "* not yet properly handled in Range"
+    is $range.max, Inf, "1^..^*.max is Inf";
+    is $range.excludes_min, Bool::True, "1^..^*.excludes_min is true";
+    is $range.excludes_max, Bool::True, "1^..^*.excludes_max is true";
 }
 
 ok 3 ~~ 1..5,         '3 ~~ 1..5';
