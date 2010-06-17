@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 132;
+plan 136;
 
 {
     my $range = 2..6;
@@ -190,6 +190,11 @@ ok 'g' ~~ 'b'..'g',     "'g' ~~ 'b'..'g'";
 nok 'a' ~~ 'b'..'g',    "not 'a' ~~ 'b'..'g'";
 nok 'h' ~~ 'b'..'g',    "not 'h' ~~ 'b'..'g'";
 nok 0 ~~ 'a'..'g',      "not 0 ~~ 'a'..'g'";
+
+ok 'd' ~~ 'c'..*,       "'d' ~~ 'c'..*";
+nok 'b' ~~ 'c'..*,      "not 'b' ~~ 'c'..*";
+ok 'b' ~~ *..'c',       "'b' ~~ *..'c'";
+nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
 
 # RT#75526: [BUG] Some non-alphanumeric ranges don't work
 {

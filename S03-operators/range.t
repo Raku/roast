@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 110;
+plan 114;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -17,6 +17,8 @@ is ~(8..11), "8 9 10 11",   "(..) works on carried numbers (3)";
 is ~("a".."c"), "a b c", "(..) works on chars (1)";
 is ~("a".."a"), "a",     "(..) works on chars (2)";
 is ~("b".."a"), "",      "(..) works on chars (3)";
+is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) works on char range ending in z";
+is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
 #?rakudo todo "Think master still gets this one wrong"
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 #?rakudo todo "This test is now incorrect"
@@ -76,6 +78,10 @@ is ~(^"5"), "0 1 2 3 4", 'unary ^"num" produces the range 0..^num';
     my @a = 3, 5, 3;
     is (^@a).perl, (0..^3).perl,    'unary ^@a produces 0..^+@a';
 }
+
+# test iterating on infinite ranges
+is (1..*).[^5].join('|'), '1|2|3|4|5', '1..*';
+is ('a'..*).[^5].join('|'), 'a|b|c|d|e', '"a"..*';
 
 # test that the zip operator works with ranges
 is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';

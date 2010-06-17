@@ -74,7 +74,14 @@ is ('c', 'c' ... *).[^10].join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series st
 is ('c', 'c', 'c' ... *).[^10].join(', '), 'c, c, c, c, c, c, c, c, c, c', 'series started with three identical letters';
 
 # tests for alphabetical series crossing 'z'
-#?rakudo 1 todo "RT#74990: Series of letters doesn't stop at end point"
 is ('x' ... 'z').join(', '), 'x, y, z', "series ending with 'z' don't cross to two-letter strings";
+is ('A' ... 'z').elems, 'z'.ord - 'A'.ord + 1, "series from 'A' to 'z' is finite and of correct length";
+
+# tests for alphabetical series which are not single-character
+ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
+ok ('AA' ... 'Z').munch(1000).elems < 1000, "'AA' ... 'Z' does not go on forever";
+#?rakudo skip "'ZZ' ... 'A' breaks Rakudo"
+ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
+ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
 
 done_testing;
