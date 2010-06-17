@@ -583,7 +583,6 @@ sub l () { 1, 2 };
 {
     my @a;
     my @z = (@a[0,] = l, l);
-    #?rakudo todo 'list assignment to scalar'
     is(@a[0,].elems, 1,  'lhs treats @a[0,] as one-item list');
     is(@z.elems,     1,  'lhs treats @a[0,] as one-item list');
     ok(defined(@a[1,]),  'lhs treats @a[0,] as one-item list');
@@ -626,7 +625,6 @@ sub l () { 1, 2 };
     is(@z[2], 1,    q/lhs treats %a{'x','y','z'} as list/);
 }
 
-#?rakudo todo '%a{List} should trigger list assignment'
 {
     my %a;
     my @z = (%a{'x'..'z'} = l, l);
