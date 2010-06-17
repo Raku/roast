@@ -47,7 +47,6 @@ my @list = (1 .. 5);
 }
 
 # Testing map that returns an array
-#?rakudo todo 'Parcel flattening'
 {
     my @result = map { ($_, $_ * 2) }, @list;
     is(+@result, 10, 'Parcel returned from closure: we got a list back');
@@ -145,7 +144,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # map with empty lists in the block
 # Test was primarily aimed at PIL2JS, which did not pass this test (fixed now).
-#?rakudo todo 'Parcel flattening'
 {
   my @array  = <a b c d>;
   my @result = map { (), }, @array;
@@ -153,7 +151,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 0, "map works with the map body returning an empty list";
 }
 
-#?rakudo todo 'Parcel flattening'
 {
   my @array  = <a b c d>;
   my @empty  = ();
@@ -193,7 +190,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 4, "map works with the map body returning an undefined variable";
 }
 
-#?rakudo todo 'Parcel flattening'
 {
   my @array  = <a b c d>;
   my @result = map { () }, @array;

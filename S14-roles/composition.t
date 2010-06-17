@@ -54,7 +54,6 @@ ok rA !~~ C2, 'first role does not match class';
 ok rB !~~ C2, 'second role does not match class';
 
 role RT64002 does rA does rB {}
-#?rakudo 2 todo 'RT #64002'
 ok RT64002 ~~ rA, 'role matches first role it does';
 ok RT64002 ~~ rB, 'role matches second role it does';
 ok rA !~~ RT64002, 'role not matched by first role it does';
