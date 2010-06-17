@@ -14,7 +14,6 @@ plan *;
     # I'm not sure that smart matching is the best operation for comparison here
     # There might be a more specific way to check that prevents false matching
     isa_ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
-    #?rakudo todo 'Ongoing list-y spec changes; this test maybe is no longer valid'
     isa_ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
     isa_ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
 

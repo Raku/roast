@@ -18,7 +18,6 @@ is (1, 2, 3 X** 2, 4), (1, 1, 4, 16, 9, 81), 'X** works';
 is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 
 # L<S03/List infix precedence/This becomes a flat list in>
-#?rakudo todo "Array/list/iterator issues"
 {
     my @result = gather {
         for @(1..3 X 'a'..'b') -> $n, $a {
