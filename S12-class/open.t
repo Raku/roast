@@ -55,6 +55,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     is 3.triple, 9, 'can extend Int';
 }
 
+#?rakudo skip "Soft area of spec"
 {
     augment class Seq {
         method first-and-last {
