@@ -54,7 +54,6 @@ plan *;
     "foo" ~~ /f<o=&o>+/;
 
     is ~$<o>, 'o o', 'match list stringifies like a normal list';
-    #?rakudo todo 'exact types'
     isa_ok $<o>, List;
     # I don't know what difference 'isa' makes, but it does.
     # Note that calling .WHAT (as in the original ticket) does not have
