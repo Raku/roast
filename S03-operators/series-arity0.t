@@ -15,7 +15,7 @@ plan *;
 
 # Test with exact limit
 {
-    my @rolls = ({ (1..2).pick } ... 2).[^100];
+    my @rolls = ({ (1..2).pick } ... 2).munch(100);
     ok +@rolls > 0, 'the series had at least one element...';
     ok +@rolls < 100, '... and the series terminated';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
@@ -25,7 +25,7 @@ plan *;
 
 # Test with limit between possible values
 {
-    my @rolls = ({ (1..2).pick } ... 1.5).[^100];
+    my @rolls = ({ (1..2).pick } ... 1.5).munch(100);
     ok +@rolls > 0, 'the series had at least one element...';
     ok +@rolls < 100, '... and the series terminated';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
@@ -34,7 +34,7 @@ plan *;
 
 # Test with limit that cannot be hit
 {
-    my @rolls = ({ (1..6).pick } ... 7).[^40];
+    my @rolls = ({ (1..6).pick } ... 7).munch(40);
     is +@rolls, 40, 'Got the number of rolls we asked for';
     is @rolls.grep(Int).elems, 40, 'all the rolls are Ints';
     is @rolls.grep(1..6).elems, 40, 'all the rolls are in the Range 1..6';
