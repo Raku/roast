@@ -16,6 +16,7 @@ plan *;
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array';
+    #?rakudo skip "dies with Parrot error"
     is @x.unshift(2), [2, 2, 3], 'can unshift from typed array';
 }
 
@@ -30,6 +31,7 @@ plan *;
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
+    #?rakudo skip "dies with Parrot error"
     is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (@x of Int)';
 }
 
