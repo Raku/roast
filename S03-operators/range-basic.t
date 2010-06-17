@@ -76,7 +76,6 @@ plan 132;
     my $range = 1..*;
     isa_ok $range, Range, '1..* is a Range';
     is $range.min, 1, "1..*.min is 1";
-    #?rakudo todo "* not yet properly handled in Range"
     is $range.max, Inf, "1..*.max is Inf";
     is $range.excludes_min, Bool::False, "1..*.excludes_min is false";
     is $range.excludes_max, Bool::False, "1..*.excludes_max is false";
@@ -90,7 +89,6 @@ plan 132;
     my $range = 1^..*;
     isa_ok $range, Range, '1^..* is a Range';
     is $range.min, 1, "1^..*.min is 1";
-    #?rakudo todo "* not yet properly handled in Range"
     is $range.max, Inf, "1^..*.max is Inf";
     is $range.excludes_min, Bool::True, "1^..*.excludes_min is true";
     is $range.excludes_max, Bool::False, "1^..*.excludes_max is false";
@@ -99,7 +97,6 @@ plan 132;
 {
     my $range = *..^1;
     isa_ok $range, Range, '*..^1 is a Range';
-    #?rakudo todo "* not yet properly handled in Range"
     is $range.min, -Inf, "*..^1.min is -Inf";
     is $range.max, 1, "*..^1.max is 1";
     is $range.excludes_min, Bool::False, "*..^1.excludes_min is false";
@@ -110,7 +107,6 @@ plan 132;
     my $range = 1^..^*;
     isa_ok $range, Range, '1^..^* is a Range';
     is $range.min, 1, "1^..^*.min is 1";
-    #?rakudo todo "* not yet properly handled in Range"
     is $range.max, Inf, "1^..^*.max is Inf";
     is $range.excludes_min, Bool::True, "1^..^*.excludes_min is true";
     is $range.excludes_max, Bool::True, "1^..^*.excludes_max is true";
