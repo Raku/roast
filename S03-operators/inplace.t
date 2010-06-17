@@ -52,7 +52,6 @@ my @b = <z a b d e>;
 @b .= sort;
 is ~@b, "a b d e z", "inplace sort";
 
-#?rakudo skip "Doubtful Error: Cannot assign to readonly value"
 {
     $_ = -42;
     .=abs;

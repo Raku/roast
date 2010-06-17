@@ -154,7 +154,6 @@ is(+(6..8), 3, 'numification');
     }
 }
 
-#?rakudo skip "Neither *-1 or slices work yet in ng"
 {
     is((1..8)[*-1], 8, 'postcircumfix:<[ ]> on range works');
     is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');

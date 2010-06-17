@@ -86,7 +86,6 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $expected = "discard '' received\n";
     is $received, $expected, "discard server and client";
 
-    #?rakudo 8 skip
     # test 4 tests recv with a parameter
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};

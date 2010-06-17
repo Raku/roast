@@ -101,7 +101,6 @@ Quoting Larry:
 }
 
 # Calculated slices
-#?rakudo skip 'hyper operators NYI'
 {   my %hash = (1=>2,3=>4,5=>6);
     my @s=(2,4,6);
 

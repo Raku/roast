@@ -59,7 +59,6 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 }
 
 ok sign(Int).notdef, 'sign(Int) is undefined';
-#?rakudo skip "Why should Complex.sign fail gracefully enough to work with this test?"
 ok sign(3+4i).notdef, 'sign(Complex) fails';
 
 done_testing;

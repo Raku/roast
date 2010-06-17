@@ -526,7 +526,6 @@ plan 84;
   ok(1,'Array of Int @box');
 }
 
-#?rakudo skip 'Array of Array of Int'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');

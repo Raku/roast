@@ -124,7 +124,6 @@ is (16, 8, 4 ... *).[^5].join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
         'series operator with closure and limit (3) (one item on LHS)';
     is ~(4, *+2 ... 7),  ~(4, 6),
         'series operator with closure and limit that does not match (one item on LHS)';
-    #?rakudo skip "[4] is eager rather than lazy ATM"
     is (1, 3, *+2 ... -1)[4], 9,
        '*+2 closure with limit < last number results in infinite list';
 }

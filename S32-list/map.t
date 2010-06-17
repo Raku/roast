@@ -118,7 +118,6 @@ should be equivalent to
   my @a = (1, 2, 3);
   # XXX is hash { ... } legal?
   my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a;
-  #?rakudo todo 'flattening in list context'
   is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
