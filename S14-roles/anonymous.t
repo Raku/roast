@@ -11,7 +11,6 @@ plan 13;
   my $a = 3;
   is $a, 3, "basic sanity";
   lives_ok { $a does role { has $.cool = "yeah" }}, "anonymous role mixin";
-  #?rakudo todo 'fails intermitently'
   is $a, 3, "still basic sanity";
   is $a.cool, "yeah", "anonymous role gave us an attribute";
 }
@@ -23,7 +22,6 @@ plan 13;
   my $role;
   lives_ok { $role = role { has $.cool = "yeah" } }, "anonymous role definition";
   lives_ok { $a does $role }, "anonymous role variable mixin";
-  #?rakudo todo 'fails intermitently'
   is $a, 3, "still basic sanity";
   is $a.cool, "yeah", "anonymous role variable gave us an attribute";
 }
@@ -39,7 +37,6 @@ plan 13;
   my $a = 3;
   is $a, 3, "basic sanity";
   lives_ok {$a does role_generator("hi")}, "role generating function mixin";
-  #?rakudo todo 'fails intermitently'
   is $a, 3, "still basic sanity";
   is $a.cool, "hi", "role generating function gave us an attribute";
 }
