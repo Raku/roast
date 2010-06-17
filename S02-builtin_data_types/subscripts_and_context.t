@@ -19,7 +19,6 @@ plan 8;
 }
 
 # Same for hashes.
-#?rakudo todo 'hash slices'
 {
   sub return_ab { my @sub_array = <a b>; return @sub_array }
 
