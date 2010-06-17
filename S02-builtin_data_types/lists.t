@@ -20,7 +20,6 @@ plan *;
   is $foo, 23, "assigning a list element changed the original variable";
 }
 
-#?rakudo skip 'indexing with *-2'
 {
   my $foo = 42;
 
@@ -69,11 +68,9 @@ plan *;
   my $bar = 43;
 
   try { ($foo, 42, $bar, 19)[0, 2] = (23, 24) };
-  #?rakudo todo 'lvalue list slices'
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
-  #?rakudo todo 'lvalue list slices'
   dies_ok { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
     "using list slices as lvalues works (2)";
 }
