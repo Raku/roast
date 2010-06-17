@@ -51,7 +51,6 @@ is($multi1[0], 1, 'got the right value at multi1 index 0');
     is(+$multi1[1], 3, '+$multi1[1] works')
 }
 
-#?rakudo todo "Doubtful if this is still correct"
 isa_ok($multi1[1], List);
 
 # multi-dimensional array slices
@@ -84,7 +83,6 @@ is(+$multi2, 2, 'the multi2 has 2 elements');
     is(+$array, 3, 'multi2[0] has 3 elements');
     is(+$multi2[0], 3, '+$multi2[0] works');
 }
-#?rakudo todo "Doubtful if this is still correct"
 isa_ok($multi2[0], List);
 
 # slice
@@ -107,7 +105,6 @@ is($multi2[0][2], 3, 'got the right value at multi2 index 0,2');
     is(+$array, 3, 'multi2[1] has 3 elements');
     is(+$multi2[1], 3, '+$multi2[1] works');
 }
-#?rakudo todo "Doubtful if this is still correct"
 isa_ok($multi2[1], List);
 
 # slice

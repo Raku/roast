@@ -468,9 +468,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #71268
 {
     sub rt71268 { for ^1 {} }
-    #?rakudo todo 'RT 71268'
     lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
-    #?rakudo skip 'RT 71268'
     ok rt71268() ~~ Nil, 'result of "for ^1 {}" is Nil (what else?)';
 }
 
