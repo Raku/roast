@@ -11,7 +11,6 @@ my $x = C1.new();
 $x does R1;
 is $x.test,     42,         'method from a role can be mixed in';
 is $x.?test,    42,         '.? form of call works on a mixed-in role';
-#?rakudo todo '$obj.+method dispatch'
 is $x.+test,    42,         '.+ form of call works on a mixed-in role';
 is $x.*test,    42,         '.* form of call works on a mixed-in role';
 
