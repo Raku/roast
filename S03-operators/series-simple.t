@@ -80,7 +80,6 @@ is ('A' ... 'z').elems, 'z'.ord - 'A'.ord + 1, "series from 'A' to 'z' is finite
 # tests for alphabetical series which are not single-character
 ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
 ok ('AA' ... 'Z').munch(1000).elems < 1000, "'AA' ... 'Z' does not go on forever";
-#?rakudo skip "'ZZ' ... 'A' breaks Rakudo"
 ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
 ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
 
