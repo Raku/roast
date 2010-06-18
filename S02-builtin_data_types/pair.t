@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 114;
+plan 117;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -357,6 +357,12 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
     eval_lives_ok '(a => [])',    'can parse "(a => [])"';
     lives_ok     { (a => []) }, 'can execute "(a => [])"';
+}
+
+{
+    is (a => 3).invert.key, 3, 'Pair.invert.key';
+    isa_ok (a => 3).invert.key, Int, 'Pair.invert.key type';
+    is (a => 3).invert.value, 'a', 'Pair.invert.value';
 }
 
 # vim: ft=perl6
