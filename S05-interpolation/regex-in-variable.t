@@ -53,12 +53,14 @@ ok("b" ~~ m/@var/, 'Simple array match (b)');
 ok("c" ~~ m/@var/, 'Simple array match (c)');
 ok("d" ~~ m/@var/, 'Simple array match (d)');
 ok(!( "!" ~~ m/@var/ ), 'Simple array match (!)');
+#?rakudo 3 todo 'array variable interpolation'
 ok("!!!!a!!!!!" ~~ m/@var/, 'Nested array match (a)');
 ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
 
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
+#?rakudo todo 'array variable interpolation'
 ok("a+bb+ca+b" ~~ /^@foo+$/, 'Multiple array non-compiling');
 ok(!("a+bb+ca+b" ~~ /^<@foo>+$/), 'Multiple array compiling');
 ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
