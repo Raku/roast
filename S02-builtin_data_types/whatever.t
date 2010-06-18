@@ -6,7 +6,6 @@ plan *;
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
 
-#?rakudo todo 'isa'
 {
     my $x = *;
     ok($x.isa(Whatever), 'can assign * to a variable and isa works');
@@ -25,7 +24,7 @@ ok *.abs ~~ Code, '*.abs is of type Code';
 #?rakudo skip 'WhateverCode'
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
-#?rakudo skip 'sub form of map'
+
 {
     my @a = map *.abs, 1, -2, 3, -4;
     is @a, [1,2,3,4], '*.meth created closure works';
@@ -103,7 +102,6 @@ isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 #?rakudo skip 'RT 65482'
 is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
-#?rakudo skip 'RT 68714'
 {
     is (1, Mu, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';
 
@@ -140,14 +138,13 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 # L<S02/Built-In Data Types/This is only for operators that are not
 # Whatever-aware.>
-#?rakudo skip '* and user-defined ops'
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };
-    isa_ok * quack 5, WhateverCode,
+    isa_ok * quack 5, Code,
         '* works on LHS of user-defined operator (type)';
-    isa_ok 5 quack *, WhateverCode,
+    isa_ok 5 quack *, Code,
         '* works on RHS of user-defined operator (type)';
-    isa_ok * quack *, WhateverCode,
+    isa_ok * quack *, Code,
         '* works on both sides of user-defined operator (type)';
     is (* quack 5).(3), '3|5',
         '* works on LHS of user-defined operator (result)';
@@ -155,10 +152,30 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
         '* works on RHS of user-defined operator (result)';
     is (* quack *).('a', 'b'), 'a|b',
         '* works on both sides of user-defined operator (result)';
+    #?rakudo 2 skip 'nested * currying NYI'
     is ((* quack *) quack *).(1, 2, 3), '1|2|3',
         'also with three *';
     is ((* quack *) quack 'a').(2, 3), '2|3|a',
         'also if the last is not a *, but a normal value';
+}
+
+# Ensure that in *.foo(blah()), blah() is not called until we invoke the closure.
+{
+    my $called = 0;
+    sub oh_noes() { $called = 1; 4 }
+    my $x = *.substr(oh_noes());
+    is $called, 0, 'in *.foo(oh_noes()), oh_noes() not called when making closure';
+    ok $x ~~ Callable, 'and we get a Callable as expected';
+    is $x('lovelorn'), 'lorn', 'does get called when invoked';
+    is $called, 1, 'does get called when invoked';
+}
+
+# chains of methods
+#?rakudo skip 'chains of whatevers are NYI'
+{
+    my $x = *.uc.flip;
+    ok $x ~~ Callable, 'we get a Callable from chained methods with *';
+    is $x('dog'), 'GOD', 'we call both methods';
 }
 
 done_testing;
