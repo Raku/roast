@@ -15,7 +15,6 @@ is @x.pick(*).elems, @x.elems, 'pick(*)';
     my $x = * * 2;
     is $x(4), 8, '* * 2 generates a code block';
 
-    #?rakudo skip 'map with *.succ'
     is (@x.map: *.succ), ["b", "c", "d", "e", "f"], '*.succ with map';
 
     my @list = 1, 5, 'a', 10, 6;
