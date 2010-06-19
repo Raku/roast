@@ -8,7 +8,7 @@ use Test;
 # classes. Hence, RoleName.new() instantiates an object that will probably fail
 # on all stubs.
 
-plan 18;
+plan 19;
 
 role SampleRole {
   method sample_method () { 42 }
@@ -25,8 +25,7 @@ role SampleRole {
   my $obj2 = SampleRole.new;
   ok $obj.WHAT === $obj2.WHAT, "Punned role classes have the same .WHAT";
 
-  #?rakudo todo 'protoobject regression'
-  is ~$obj.WHAT, 'SampleRole', '.WHAT as a string gives the name of the role';
+  is ~$obj.WHAT, 'SampleRole()', '.WHAT as a string gives the name of the role';
 }
 
 role WithAttr {
@@ -56,6 +55,12 @@ role ParaRole[$x] {
     is $obj.get_x, 42, "instantiated object has method with correct associated role parameter";
     is $obj2.get_x, 100, "instantiated object has method with correct associated role parameter";
 }
+
+role ParaRole2Args[$x, $y] {
+    method x { $x + $y }
+}
+
+is ParaRole2Args[4, 5].new.x, 9, 'instantiating a parametric role with two arguments works';
 
 # Can also pun a role and inherit from the punned class.
 {
