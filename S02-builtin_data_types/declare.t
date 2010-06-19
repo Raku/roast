@@ -521,11 +521,13 @@ plan 84;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
+#?rakudo skip 'Array of Foo not yet implemented'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
+#?rakudo skip 'Array of Foo not yet implemented'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');
