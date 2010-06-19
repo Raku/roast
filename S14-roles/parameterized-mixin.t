@@ -16,11 +16,11 @@ Might need some more review and love --moritz
 #?pugs emit =begin SKIP
 
 # L<S14/Run-time Mixins/may be parameterized>
-  role InitialAttribVal[$val] {
+role InitialAttribVal[$val] {
     has $.attr = $val;
-  }
+}
 
-my $a;
+my $a = 0;
 lives_ok {$a does InitialAttribVal[42]},
   "imperative does to apply a parametrized role (1)";
 is $a.attr, 42,
@@ -34,7 +34,7 @@ ok $a.HOW.does($a, InitialAttribVal[42]),
 ok $a.^does(InitialAttribVal[42]),
   ".^does gives correct information (1-2)";
 
-my $b;
+my $b = 0;
 lives_ok { $b does InitialAttribVal[23] },
   "imperative does to apply a parametrized role (2)";
 is $b.attr, 23,
@@ -54,7 +54,7 @@ ok $b.^does(InitialAttribVal[23]),
 role InitialAttribType[::vartype] {
     method hi(vartype $foo) { 42 }
 }
-my $c;
+my $c = 0;
 lives_ok { $c does InitialAttribType[Code] },
   "imperative does to apply a parametrized role (3)";
 ok $c.HOW.does($c, InitialAttribType),
@@ -89,21 +89,26 @@ dies_ok { $c.hi("not a code object") },
     has $.type = $type;
     has $.name = $name;
   }
-my $d;
+my $d = 0;
 lives_ok { $d does InitialAttribBoth["type1", "name1"] },
   "imperative does to apply a parametrized role (4)";
-ok $d.HOW.does($d, InitialAttribType),
+ok $d.HOW.does($d, InitialAttribBoth),
   ".HOW.does gives correct information (4-1)";
-ok $d.^does(InitialAttribType),
+ok $d.^does(InitialAttribBoth),
   ".^does gives correct information (4-1)";
 #?rakudo 4 skip '.does with parametric roles'
-ok $d.HOW.does($d, InitialAttribType["type1"]),
+# Are these really right? Trying to supply one parameter to a role that
+# needs two? Even if the second doesn't participate in the multi dispatch,
+# it still exists as a role parameter that needs supplying. Maybe we do
+# not create multiple role variants though...but these are almost certainly
+# not correct. -- jnthn
+ok $d.HOW.does($d, InitialAttribBoth["type1"]),
   ".HOW.does gives correct information (4-2)";
-ok $d.^does(InitialAttribType["type1"]),
+ok $d.^does(InitialAttribBoth["type1"]),
   ".^does gives correct information (4-2)";
-ok !$d.HOW.does($d, InitialAttribType["type1", "name1"]),
+ok !$d.HOW.does($d, InitialAttribBoth["type1", "name1"]),
   ".HOW.does gives correct information (4-3)";
-ok !$d.^does(InitialAttribType["type1", "name1"]),
+ok !$d.^does(InitialAttribBoth["type1", "name1"]),
   ".^does gives correct information (4-3)";
 is $d.type, "type1", ".type works correctly";
 is $d.name, "name1", ".name works correctly";
