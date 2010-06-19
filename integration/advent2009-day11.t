@@ -30,7 +30,6 @@ class DogWalker {
 }
 my $bob = DogWalker.new(name => 'Bob', dog => $fido);
 is $bob.name, 'Bob', 'dog walker has a name';
-#?rakudo skip 'handles'
 is $bob.dog_name, 'Fido', 'dog name can be accessed by delegation';
 
 # RT 75180
