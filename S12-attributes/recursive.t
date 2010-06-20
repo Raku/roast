@@ -29,6 +29,7 @@ Test attributes with recursively typed attributes
 }
 
 #L<S12/Attributes/"Class attributes are declared">
+#?rakudo skip 'class attributes NYI'
 {
     class B {
         my B $.attr is rw;
