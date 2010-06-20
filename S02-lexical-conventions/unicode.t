@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 38;
 
 # L<S02/"Lexical Conventions"/"Perl is written in Unicode">
 
@@ -106,4 +106,20 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is f(ä => 3), 3, 'non-ASCII named arguments';
 }
 
+# L<S02/Lexical Conventions/Perl can count Unicode line and paragraph separators>
+
+#?rakudo: todo 'PS does not work to separate lines'
+eval_lives_ok "\{ 1 \} \x2029 \{ 1 \}", "Unicode 2029 can terminate lines";
+
+# L<S02/Lexical Conventions/If a character is already used>
+
+eval_lives_ok "q\x298d test \x298e", "Unicode open-298d maps to close-298e";
+eval_lives_ok "q\x301d test \x301e", "Unicode open-301d maps to close-301e";
+eval_dies_ok "q\x301d test \x301f", "Unicode open-301d does not map to close-301f";
+#?rakudo: 3 todo 'Alternate open/close not working yet'
+eval_lives_ok "q\x2018 test \x2019", "Unicode open-2018 maps to to close-2019";
+eval_lives_ok "q\x201a test \x2019", "Unicode open-201a maps to to close-2019";
+eval_lives_ok "q\x2018 \x201a test \x2019", "Alternative open-brakets treat their other alternates as non-special";
+
 # vim: ft=perl6 fileencoding=utf-8
+
