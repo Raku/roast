@@ -69,7 +69,6 @@ class PairTest {
 }
 
 # L<S12/Delegation/If you say>
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
   class ClassFrontend { has $.backend is rw handles Backend2 };
   ok ClassFrontend.new, "class definition using a Class handle worked";
@@ -83,8 +82,6 @@ class PairTest {
     is $a.hi, 42, "method was successfully handled by backend object (4)";
   }
 }
-
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
     role R1 { method awesome { "yeah!" } }
     class Backend3 does R1 { method sucks { "boo" } }
@@ -98,7 +95,6 @@ class PairTest {
 }
 
 # L<S12/Delegation/"Any other kind of argument" "smartmatch selector for method">
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
   class ReFrontend { has $.backend is rw handles /^hi|oo/ };
   ok ReFrontend.new, "class definition using a smartmatch handle worked";
@@ -114,7 +110,6 @@ class PairTest {
     is $a.cool, 1337, "method was successfully handled by backend object (3)";
   }
 }
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
     class WorrevaFrontend {
         has $.backend is rw handles *;
@@ -132,7 +127,6 @@ class PairTest {
 }
 
 # delegation with lvalue routines
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
     class BackendRw {
         has $.a is rw;
