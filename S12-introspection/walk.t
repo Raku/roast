@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 =begin pod
 
@@ -91,17 +91,21 @@ sub cand_order(@cands, $instance) {
 # :include
 {
     my $x = E.new;
-    my @cands = $x.WALK(:name<m>, :include(regex { <[CDE]> }));
-    #?rakudo skip ':include fails'
+    my @cands = $x.WALK(:name<m>, :include({ ~$^c ~~ regex { <[CDE]> } }));
     is cand_order(@cands, $x), 'ECD', ':include works';
 }
 
 # :include and :omit
 {
     my $x = E.new;
-    my @cands = $x.WALK(:name<m>, :include(regex { <[CDE]> }), :omit({ .^can('n') }));
-    #?rakudo skip ':include/:omit together fail'
+    my @cands = $x.WALK(:name<m>, :include({ ~$^c ~~ regex { <[CDE]> } }), :omit({ .^can('n') }));
     is cand_order(@cands, $x), 'D', ':include and :omit together work';
+}
+
+# Grammar.WALK had issues once
+{
+    my ($meth) = Grammar.WALK(:name<parse>);
+    is $meth.name, 'parse', 'Grammar.WALK works';
 }
 
 # vim: ft=perl6
