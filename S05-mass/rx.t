@@ -101,14 +101,14 @@ ok 'bazaar' ~~ /:ratchet a*! a/, 'force backtracking !';
 #### (a.)..(..)		zzzabcdefzzz	y			basic match
 ok 'zzzabcdefzzz' ~~ /(a.)..(..)/, 'basic match';
 
-#### (a.)..(..)		zzzabcdefzzz	/mob: <abcdef @ 3>/	basic $0
-ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) && matchcheck($/, q/mob: <abcdef @ 3>/), 'basic $0';
+#### (a.)..(..)		zzzabcdefzzz	/mob: <abcdef @ 3>/	basic $/
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) && matchcheck($/, q/mob: <abcdef @ 3>/), 'basic $/';
 
-#### (a.)..(..)		zzzabcdefzzz	/mob 0: <ab @ 3>/	basic $1
-ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) && matchcheck($/, q/mob 0: <ab @ 3>/), 'basic $1';
+#### (a.)..(..)		zzzabcdefzzz	/mob 0: <ab @ 3>/	basic $0
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) && matchcheck($/, q/mob 0: <ab @ 3>/), 'basic $0';
 
-#### (a.)..(..)		zzzabcdefzzz	/mob 1: <ef @ 7>/	basic $2
-ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) && matchcheck($/, q/mob 1: <ef @ 7>/), 'basic $2';
+#### (a.)..(..)		zzzabcdefzzz	/mob 1: <ef @ 7>/	basic $1
+ok ('zzzabcdefzzz' ~~ /(a.)..(..)/) && matchcheck($/, q/mob 1: <ef @ 7>/), 'basic $1';
 
 #### (a(b(c))(d))		abcd		y			nested match
 ok 'abcd' ~~ /(a(b(c))(d))/, 'nested match';
@@ -173,11 +173,11 @@ ok ('abc' ~~ /[ (.) ]*/) && matchcheck($/, q/mob 0 1: <b @ 1>/), 'nested repeate
 #### ( [.] )*				abc	/mob 0 1: <b @ 1>/	nested repeated captures
 ok ('abc' ~~ /( [ . ] )*/) && matchcheck($/, q/mob 0 1: <b @ 1>/), 'nested repeated captures';
 
-#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 0: <a @ 0>/	numbered aliases $1
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 0: <a @ 0>/), 'numbered aliases $1';
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 0: <a @ 0>/	numbered aliases $0
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 0: <a @ 0>/), 'numbered aliases $0';
 
-#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 1: <b @ 1>/	numbered aliases $2
-ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 1: <b @ 1>/), 'numbered aliases $2';
+#### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 1: <b @ 1>/	numbered aliases $1
+ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 1: <b @ 1>/), 'numbered aliases $1';
 
 #### (.) (.) $7=(.) (.) $4=(.)		abcdefg	/mob 7: <c @ 2>/	numbered aliases $7
 ok ('abcdefg' ~~ /(.) (.) $7=(.) (.) $4=(.)/) && matchcheck($/, q/mob 7: <c @ 2>/), 'numbered aliases $7';
@@ -231,17 +231,17 @@ ok 'bookkeeper' ~~ /[ (.) $0 ]+/, 'backreference';
 #?pugs todo 'feature'
 ok 'hello hello' ~~ /(\w+) <+ws> $0/, 'backreference at end of string';
 
-#### [(.)$0]+				bookkeeper	/mob 0 0: <o @ 1>/	backref $1
+#### [(.)$0]+				bookkeeper	/mob 0 0: <o @ 1>/	backref $0
 #?pugs todo 'feature'
-ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 0: <o @ 1>/), 'backref $1';
+ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 0: <o @ 1>/), 'backref $0';
 
-#### [(.)$0]+				bookkeeper	/mob 0 1: <k @ 3>/	backref $1
+#### [(.)$0]+				bookkeeper	/mob 0 1: <k @ 3>/	backref $0
 #?pugs todo 'feature'
-ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 1: <k @ 3>/), 'backref $1';
+ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 1: <k @ 3>/), 'backref $0';
 
-#### [(.)$0]+				bookkeeper	/mob 0 2: <e @ 5>/	backref $1
+#### [(.)$0]+				bookkeeper	/mob 0 2: <e @ 5>/	backref $0
 #?pugs todo 'feature'
-ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 2: <e @ 5>/), 'backref $1';
+ok ('bookkeeper' ~~ /[ (.) $0 ]+/) && matchcheck($/, q/mob 0 2: <e @ 5>/), 'backref $0';
 
 #### (.)*x					123x		/mob: <123x @ 0>/	repeated dot capture
 #?pugs todo 'feature'
