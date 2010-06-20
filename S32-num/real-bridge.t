@@ -164,6 +164,14 @@ ok 1.Rat == $one, "1 == 1";
 nok 1.001 == $one-and-one-hundredth, "not 1.001 == 1.01";
 ok $neg-pi == -3.14, "-3.14 == -3.14";
 
+# bonus round!
+isa_ok $zero.Complex, Complex, "0.Complex is a Complex";
+ok $zero == $zero.Complex, "0 == 0.Complex";
+ok $neg-pi == $neg-pi.Complex, "-3.14 == -3.14.Complex";
+ok $neg-pi == -3.14.Complex, "-3.14 == -3.14.Complex";
+ok -3.14 == $neg-pi.Complex, "-3.14 == -3.14.Complex";
+nok $zero == $neg-pi.Complex, "not 0 == -3.14.Complex";
+
 nok $zero != 0, "not 0 != 0";
 ok $one != 0.Num, "1 != 0";
 ok $one-and-one-hundredth != 1.1, "1.01 != 1.1";
@@ -172,6 +180,13 @@ ok -1 != $zero, "-1 != 0";
 nok 1.Rat != $one, "not 1 != 1";
 ok 1.001 != $one-and-one-hundredth, "1.001 != 1.01";
 nok $neg-pi != -3.14, "not -3.14 != -3.14";
+
+# bonus round!
+nok $zero != $zero.Complex, "not 0 != 0.Complex";
+nok $neg-pi != $neg-pi.Complex, "not -3.14 != -3.14.Complex";
+nok $neg-pi != -3.14.Complex, "not -3.14 != -3.14.Complex";
+nok -3.14 != $neg-pi.Complex, "not -3.14 != -3.14.Complex";
+ok $zero != $neg-pi.Complex, "0 != -3.14.Complex";
 
 is $zero cmp 0, 0, "0 eq 0";
 is $one cmp 0.Num, 1, "1 gt 0";
