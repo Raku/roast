@@ -4,7 +4,7 @@ use Test;
 
 # L<S12/Methods/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
 
-plan 39;
+plan 33;
 
 
 ##### Without arguments
@@ -66,6 +66,7 @@ class T2
 }
 
 # L<S12/Methods/"$obj.@candidates(1,2,3)">
+#?rakudo skip '.@foo not yet working'
 {
     class T3 {
         has $.x;
@@ -94,21 +95,9 @@ class T2
     is $o.called,       3,     'called total three methods during dispatch';
 }
 
-# L<S12/Methods/"Another form of indirection relies on the fact">
-#?rakudo skip '$obj.infix:<+>'
-{
-    is 1.infix:<+>(2),      3,      'Can call $obj.infix:<+>';
-    my $op = '*';
-    is 2.infix:($op)(3),    6,      'can call $obj.infix:($op)';
-    is 2.infix:('*')(4),    8,      'can call $obj.infix:("*")';
-    is 2.:<+>(7),           9,      'short form also works';
-    my $x = 3;
-    is $x.:<++>,            4,      '.:<++> defaults to prefix';
-    is $x,                  4,      '... and it changed the variable';
-}
-
 dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";
 
+#?rakudo skip '.*, .+ and .? with @foo'
 {
     class T4 {
         has $.called = 0;
