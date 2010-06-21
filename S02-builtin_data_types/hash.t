@@ -180,7 +180,6 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 # Moved from t/xx-uncategorized/hashes-segfault.t
 # Caused some versions of pugs to segfault
-#?rakudo skip 'hash contextualizer on lazy list'
 {
     my %hash = %('a'..'d' Z 1..4);
     my $i = %hash.elems; # segfaults

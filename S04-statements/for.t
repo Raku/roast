@@ -430,7 +430,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $c, 6, 'for loop ends in time using last';
 }
 
-#?rakudo skip 'lazy lists (loops)'
 {
   my $c;
   for 1..* {
@@ -440,7 +439,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $c, 6, 'infinte for loop ends in time using last';
 }
 
-#?rakudo skip 'lazy lists (loops)'
 {
   my $c;
   for 1..Inf {
