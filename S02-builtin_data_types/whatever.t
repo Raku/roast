@@ -16,12 +16,10 @@ plan *;
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
 ok $x ~~ Code, '*-1 is some form of Code';
-#?rakudo skip 'WhateverCode'
 isa_ok $x, WhateverCode, '*-1 is a WhateverCode object';
 is $x.(5), 4, 'and we can execute that Code';
 
 ok *.abs ~~ Code, '*.abs is of type Code';
-#?rakudo skip 'WhateverCode'
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 
