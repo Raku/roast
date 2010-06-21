@@ -2,12 +2,6 @@ use v6;
 use Test;
 plan *;
 
-# This class, designed to help simplify the tests, is very much in a transitional
-# state.  But it works as well as the previous version at the moment.  I'm checking
-# it in just to clean up my local build (and save a remote copy as I take my
-# the machine it lives on vacation).  Should have more updates to this over the 
-# next several days.  --colomon, Sept 3rd 2009.
-
 class AngleAndResult
 {
     has $.angle_in_degrees;
@@ -36,6 +30,10 @@ class AngleAndResult
     
     method int($base) {
         $.angle_in_degrees;
+    }
+    
+    method str($base) {
+	    ($.angle_in_degrees * @degrees-to-whatever-num[$base]).Str;
     }
 }
 
