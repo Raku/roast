@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 114;
+plan 113;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -19,10 +19,7 @@ is ~("a".."a"), "a",     "(..) works on chars (2)";
 is ~("b".."a"), "",      "(..) works on chars (3)";
 is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) works on char range ending in z";
 is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
-#?rakudo todo "Think master still gets this one wrong"
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
-#?rakudo todo "This test is now incorrect"
-is ~("AB".."Y"), "",     "(..) works on auto-rev carried chars (4)";
 
 #?rakudo 4 skip 'Spec under design here'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
