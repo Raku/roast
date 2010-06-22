@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/=item trim>
 
-plan 34;
+plan 36;
 
 =begin pod
 
@@ -145,6 +145,11 @@ Basic tests for the trim() builtin
     $foo .= trim-trailing;
     $foo .= trim-trailing;
     is($foo, "\n foo", 'our variable can be trimmed multiple times');
+}
+
+{
+    ok ' ab ' ~~ /.*/, 'regex sanity';
+    is $/.trim, 'ab', 'Match.trim';
 }
 
 # vim: ft=perl6
