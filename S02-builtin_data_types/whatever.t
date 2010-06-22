@@ -176,6 +176,15 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     is $x('dog'), 'GOD', 'we call both methods';
 }
 
+# RT #69362
+{
+    my $x = *.uc;
+    my $y = * + 3;
+    ok $x.signature, 'Whatever-curried method calls have a signature';
+    ok $y.signature, 'Whatever-curried operators have a signature';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
