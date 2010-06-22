@@ -12,9 +12,14 @@ Delegation tests from L<S12/Delegation>
 
 # L<S12/Delegation>
 
-class Backend1 { method hi() { 42 }; method cool() { 1337 } }
+class Backend1 {
+    method hi() { 42 };
+    method cool() { 1337 };
+    method with_params($x) { $x xx 2 };
+}
 class Backend2 { method hi() { 23 }; method cool() {  539 } }
 class Frontend { has $.backend is rw handles "hi" }
+class Frontend2 { has $.backend handles <with_params> };
 ok Backend1.new, "class definition worked";
 
 is Backend1.new.hi, 42, "basic sanity (1)";
@@ -36,6 +41,12 @@ is Backend2.new.hi, 23, "basic sanity (2)";
   ok ($a.backend = Backend2.new()), "setting a handler object (2)";
   ok (!($a ~~ Backend2)), "object wasn't isa()ed (2)";
   is $a.hi, 23, "method was successfully handled by backend object (2)";
+}
+
+#?rakudo skip 'RT 75966'
+{
+    my $a = Frontend2.new( backend => Backend1.new() );
+    is $a.with_params('abc'), 'abcabc', 'Delegation works with parameters';
 }
 
 # L<S12/Delegation/You can specify multiple method names:>
