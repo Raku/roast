@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 128;
+plan 129;
 
 =begin pod
 
@@ -337,6 +337,10 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.m0, 'a', '@.a[0] works';
     is $o.m1, 'b', '@.a[*-2] works';
     is $o.m2, 'c', '@.a[*-1] works';
+
+    # RT #75266
+    is ArrayAttribTest.new(a => <x y z>).a[2.0], 'z',
+        'Can index array attributes with non-integers';
 }
 
 {
@@ -572,5 +576,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     }
     is TestMethodAll.new(a => 5).all, 5, 'Can call a method all()';
 }
+
 
 # vim: ft=perl6
