@@ -14,7 +14,7 @@ is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
 #?rakudo skip 'No indexing into Buf yet'
 is 'abc'.encode()[0], 97, 'can index one element in a Buf';
 #?rakudo skip 'No indexing into Buf yet'
-is_deeply 'abc'.encode()[1, 2], [98, 99], 'can slice-index a Buf';
+is_deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 
 # verified with Perl 5:
 # perl -CS -Mutf8 -MUnicode::Normalize -e 'print NFD("ä")' | hexdump -C
