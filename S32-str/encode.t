@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 12;
 
 
 # L<S32::Containers/Buf>
@@ -10,6 +10,11 @@ ok ('ab'.encode('ASCII') eqv Buf.new([97, 98])),  'encoding to ASCII';
 is 'ab'.encode('ASCII').elems, 2, 'right length of Buf';
 ok ('ö'.encode('UTF-8') eqv Buf.new([195, 182])), 'encoding to UTF-8';
 is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
+
+#?rakudo skip 'No indexing into Buf yet'
+is 'abc'.encode()[0], 97, 'can index one element in a Buf';
+#?rakudo skip 'No indexing into Buf yet'
+is_deeply 'abc'.encode()[1, 2], [98, 99], 'can slice-index a Buf';
 
 # verified with Perl 5:
 # perl -CS -Mutf8 -MUnicode::Normalize -e 'print NFD("ä")' | hexdump -C
