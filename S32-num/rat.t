@@ -134,6 +134,9 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 # SHOULD: Add NaN / Inf tests
 
+# RT #74648
+isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
+
 # Quick test of some basic mixed type math
 
 is_approx (1 / 2) + 3.5e0, 4.0, "1/2 + 3.5 = 4.0";
