@@ -218,6 +218,8 @@ ok Rat.new() == 0, 'Rat.new() is 0';
     ok $a == 1, 'can do += on variable initialized by type object';
 }
 
+ok 16/5 eqv 16/5, 'infix:<eqv> works with rats';
+
 done_testing;
 
 # vim: ft=perl6
