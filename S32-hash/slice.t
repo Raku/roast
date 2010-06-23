@@ -9,7 +9,7 @@ Testing hash slices.
 
 =end pod
 
-plan 26;
+plan 29;
 
 {   my %hash = (1=>2,3=>4,5=>6);
     my @s=(2,4,6);
@@ -28,6 +28,21 @@ plan 26;
     is(%hash{@slice}, (4,6),      "slice from array, part 2");
     is(%hash{@slice[1]}, (6),     "slice from array slice, part 1");
     is(%hash{@slice[0,1]}, (4,6), "slice from array slice, part 2");
+}
+
+{   my %hash;
+
+    %hash{(1,2)} = "one", "two";
+    is %hash, {"1" => "one", "2" => "two"},
+        "assigning a slice using keys from Parcel";
+
+    %hash{Array.new(1,2)} = "one", "two";
+    is %hash, {"1" => "one", "2" => "two"},
+        "assigning a slice using keys from Array";
+
+    %hash{"12".comb(/(\d)/)} = "one", "two";
+    is %hash, {"1" => "one", "2" => "two"},
+        "assigning a slice using keys from GatherIterator";
 }
 
 #?pugs todo 'feature'
