@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S03/List infix precedence/"the series operator">
+# L<S03/List infix precedence/"can be 0-ary as well">
 
 plan *;
 

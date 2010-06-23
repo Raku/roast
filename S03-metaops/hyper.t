@@ -688,6 +688,11 @@ my @e;
        'Latin-1 »+« without pre-declaration is an error';
 }
 
+# L<S03/"Hyper operators"/is assumed to be infinitely extensible>
+@r = <A B C D E> »~» (1, 2, 3, *);
+@e = <A1 B2 C3 D3 E3>;
+is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
+
 done_testing;
 
 # vim: ft=perl6

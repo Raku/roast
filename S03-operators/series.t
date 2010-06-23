@@ -5,156 +5,136 @@ use Test;
 
 plan *;
 
-# some tests firsts that don't require lazy lists
+# single-term series
+
+is ~( 1  ...  1 ), '1', '1 ... 1';
+is ~( 'a'  ...  'a' ), 'a', "'a' ... 'a'";
+
+# finite series that exactly hit their limit
 
 is (1 ... 5).join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
-is (1, 3 ... 7).join(', '), '1, 3, 5, 7', 'simple additive series with two items on the LHS';
+is (1 ... -3).join(', '), '1, 0, -1, -2, -3', 'simple decreasing series with one item on the LHS';
+is (1, 3 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive series with two items on the LHS';
+is (1, 0 ... -3).join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive series with two items on the LHS';
 is (1, 3, 5 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
 is (1, 3, 9 ... 81).join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
-is (1, { $_ + 2 } ... 7).join(', '), '1, 3, 5, 7', 'simple series with one item and closure on the LHS';
+is (81, 27, 9 ... 1).join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative series with three items on the LHS';
+is (1, { $_ + 2 } ... 9).join(', '), '1, 3, 5, 7, 9', 'simple series with one item and block closure on the LHS';
+is (1, *+2 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple series with one item and * closure on the LHS';
+is (1, { $_ - 2 } ... -7).join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
+is (1, 3, 5, { $_ + 2 } ... 13).join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple series with three items and block closure on the LHS';
 
-is (1, 1, { $^x + $^y } ... 13).join(', '), '1, 1, 2, 3, 5, 8, 13', 'limited fibonacci generator';
+is (1, { 1 / ((1 / $_) + 1) } ... 1/5).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... 1).join(', '), '1', 'simple alternating series with one item and closure on the LHS';
+is (1, { -$_ } ... 3).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating series with one item and closure on the LHS';
 
+is (1 ... 5, 6, 7).join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two further terms on the RHS';
+is (1 ... 5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple series with two extra terms on the RHS';
+is (1 ... 5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple series with two weird items on the RHS';
 
-#?rakudo skip "Not up to current spec"
-{
-    # arity 2
-    # http://www.perlmonks.org/?node_id=772778
-    sub gcd ($a, $b) {
-        ($a, $b ... { $^x % $^y || () })[*-1]
-    }
-    is gcd(2, 1), 1, 'gcd with infix:<...> (1)';
-    is gcd(42, 24), 6, 'gcd with infix:<...> (2)';
-}
+# finite series that go past their limit
 
-is (1 ... *).[^5].join(', '), '1, 2, 3, 4, 5', 'lazy series with one item on the LHS';
-is (1, 3 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'lazy additive series with two items on the LHS';
-is (1, 3, 5 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'lazy additive series with three items on the LHS';
-is (1, 3, 9 ... *).[^5].join(', '), '1, 3, 9, 27, 81', 'lazy multiplicative series with three items on the LHS';
-is (1, 1 ... *).[^5].join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with two items on the LHS';
-is (1, 1, 1 ... *).[^5].join(', '), '1, 1, 1, 1, 1', 'lazy "additive" series with three items on the LHS';
-is (1, { $_ + 2 } ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'lazy series with one item and arity-1 closure on the LHS';
+is (1 ... 5.5).join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
+is (1 ... -3.5).join(', '), '1, 0, -1, -2, -3', 'simple decreasing series with one item on the LHS';
+is (1, 3 ... 10).join(', '), '1, 3, 5, 7, 9', 'simple additive series with two items on the LHS';
+is (1, 0 ... -3.5).join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive series with two items on the LHS';
+is (1, 3, 5 ... 10).join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
+is (1, 3, 9 ... 100).join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
+is (81, 27, 9 ... 8/9).join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative series with three items on the LHS';
+is (1, { $_ + 2 } ... 10).join(', '), '1, 3, 5, 7, 9', 'simple series with one item and block closure on the LHS';
+is (1, *+2 ... 10).join(', '), '1, 3, 5, 7, 9', 'simple series with one item and * closure on the LHS';
+is (1, { $_ - 2 } ... -8).join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
+is (1, 3, 5, { $_ + 2 } ... 14).join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple series with three items and block closure on the LHS';
 
-is (1, 1, { $^x + $^y } ... *).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
-#?rakudo skip "Symbol '&infix:<+>' not predeclared in <anonymous>"
-is (1, 1, &infix:<+> ... *).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'infinite fibonacci generator';
+is (1, { 1 / ((1 / $_) + 1) } ... 11/60).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... 0).join(', '), '1', 'simple alternating series with one item and closure on the LHS';
 
-#?rakudo skip "state NYI"
-{
-    # slurpy
-	sub nextprime( *@prev_primes ) {
-        state $iterations = 0;
-		return () if $iterations > 3;
-		++$iterations;
-		my $current = @prev_primes[*-1];
-		while ++$current {
-            return $current if $current % all(@prev_primes) != 0;
-        }
-    }
-    my @seed = 2, 3;
-	my @primes = @seed ... &nextprime;
-	is @primes[0], 2, 'prime generator with series op works (0)';
-	is @primes[1], 3, 'prime generator with series op works (0)';
-	is @primes[2], 5, 'prime generator with series op works (0)';
-	is @primes[3], 7, 'prime generator with series op works (0)';
-	is @primes[4], 11, 'prime generator with series op works (0)';
-	is @primes[5], 13, 'prime generator with series op works (0)';
-}
+is (1 ... 5.5, 6, 7).join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two further terms on the RHS';
+is (1 ... 5.5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple series with two extra terms on the RHS';
+is (1 ... 5.5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple series with two weird items on the RHS';
 
-is ('a'  ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'string from single generator';
-is (<a b> ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'string from double generator';
-is (<a b>, { .succ } ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'string and arity-1';
+# infinite series without limits
 
-is (8, 7 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
-is (8, 7, 6 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'arith decreasing';
-is (16, 8, 4 ... *).[^5].join(', '), '16, 8, 4, 2, 1', 'geom decreasing';
+is (1 ... *).[^5].join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
+is (1, 3 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple additive series with two items on the LHS';
+is (1, 0 ... *).[^5].join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive series with two items on the LHS';
+is (1, 3, 5 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
+is (8, 7, 6 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'simple decreasing additive series with three items on the LHS';
+is (1, 3, 9 ... *).[^5].join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
+is (81, 27, 9 ... *).[^5].join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative series with three items on the LHS';
+is (1, { $_ + 2 } ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple series with one item and block closure on the LHS';
+is (1, *+2 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple series with one item and * closure on the LHS';
+is (1, { $_ - 2 } ... *).[^5].join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
+is (1, 3, 5, { $_ + 2 } ... *).[^7].join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple series with three items and block closure on the LHS';
 
+is (1, { 1 / ((1 / $_) + 1) } ... *).[^5].map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... *).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating series with one item and closure on the LHS';
 
+is (1 ... *, 6, 7).[^7].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two further terms on the RHS';
+is (1 ... *, 4, 3).[^7].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two extra terms on the RHS';
+is (1 ... *, 'xyzzy', 'plugh').[^7].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two weird items on the RHS';
 
-#?rakudo skip 'chained series NYI'
-{
-    my @multi = 1 ... { 2 * $_ if $_ < 10 },
-                  ... { 3 };
-    is @multi[0..9].join('|'),
-       '1|2|3|4|8|16|3|3|3|3',
-       'block transfer control to next block once empty list is returned';
+# constant series
 
-}
+is ('c', { $_ } ... *).[^10].join(', '), 'c, c, c, c, c, c, c, c, c, c', 'constant series started with letter and identity closure';
+is ('c', 'c' ... *).[^10].join(', '), 'c, c, c, c, c, c, c, c, c, c', 'constant series started with two letters';
+is ('c', 'c', 'c' ... *).[^10].join(', '), 'c, c, c, c, c, c, c, c, c, c', 'constant series started with three letters';
+is (1, 1 ... *).[^10].join(', '), '1, 1, 1, 1, 1, 1, 1, 1, 1, 1', 'constant series started with two numbers';
+is (1, 1, 1 ... *).[^10].join(', '), '1, 1, 1, 1, 1, 1, 1, 1, 1, 1', 'constant series started with three numbers';
 
-#?rakudo skip 'Is this really what this should do?'
-{ # 1 1, 2 2s, 3 3s, etc.
-    my @xxed = 1 ... { my $next = $^a + 1; $next xx $next };
-    is @xxed[0], 1,  'infix:<...> with list return (0)';
-    is @xxed[1], 2 , 'infix:<...> with list return (1)';
-    is @xxed[2], 2,  'infix:<...> with list return (2)';
-    is @xxed[3], 3,  'infix:<...> with list return (3)';
-    is @xxed[4], 3,  'infix:<...> with list return (4)';
-    is @xxed[5], 3, 'infix:<...> with list return (5)';
-    is @xxed[6], 4, 'infix:<...> with list return (6)';
-}
+# misleading starts
 
-# L<S03/List infix precedence/If the limit is *>
+is (1, 1, 1, 2, 3 ... 10).[^10].join(', '), '1, 1, 1, 2, 3, 4, 5, 6, 7, 8', 'series started with three identical numbers, but then goes arithmetic';
+is (1, 1, 1, 2, 4 ... 16).join(', '), '1, 1, 1, 2, 4, 8, 16', 'series started with three identical numbers, but then goes geometric';
+is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric series started in one direction and continues in the other';
 
-# Does this test belond in series?
-#?rakudo skip 'lazy lists'
-{
-    my @abc = <a b c>;
-    my @abccc = @abc, *;
-    is @abccc[0], 'a', '@array, * will repeat last element (0)';
-    is @abccc[1], 'b', '@array, * will repeat last element (1)';
-    is @abccc[2], 'c', '@array, * will repeat last element (2)';
-    is @abccc[3], 'c', '@array, * will repeat last element (3)';
-    is @abccc[4], 'c', '@array, * will repeat last element (4)';
-}
+# some tests taken from Spec
 
-{
-    is ~(1, 2, *+1 ... 5),  ~(1..5),
-        'series operator with closure and limit (1)';
-    is ~(5, 4, *-1 ... 1),  ~(5, 4, 3, 2, 1),
-        'series operator with closure and limit (negative increment) (2)';
-    is ~(1, 3, *+2 ... 5),  ~(1, 3, 5),
-        'series operator with closure and limit (3)';
-    is ~(2, 4, *+2 ... 7),  ~(2, 4, 6),
-        'series operator with closure and limit that does not match';
-    is ~(2, *+1 ... 5),  ~(2..5),
-        'series operator with closure and limit (1) (one item on LHS)';
-    is ~(4, *-1 ... 1),  ~(4, 3, 2, 1),
-        'series operator with closure and limit (negative increment) (2) (one item on LHS)';
-    is ~(3, *+2 ... 5),  ~(3, 5),
-        'series operator with closure and limit (3) (one item on LHS)';
-    is ~(4, *+2 ... 7),  ~(4, 6),
-        'series operator with closure and limit that does not match (one item on LHS)';
-    is (1, 3, *+2 ... -1)[4], 9,
-       '*+2 closure with limit < last number results in infinite list';
-}
+#?rakudo 2 skip '&prefix:<!> does not work with series yet'
+is (False, &prefix:<!> ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
+is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
+is (False, { !$_ } ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
+is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
 
-{
-    is ~( 1  ...  1 ), '1',        '1 ... 1 works (degenerate case)';
-    is ~( 1  ...  4 ), ~<1 2 3 4>, 'Int ... Int works (forward)';
-    is ~( 4  ...  1 ), ~<4 3 2 1>, 'Int ... Int works (backward)';
-    is ~('a' ... 'd'), ~<a b c d>, 'Str ... Str works (forward)';
-    is ~('d' ... 'a'), ~<d c b a>, 'Str ... Str works (backward)';
-}
+# L<S03/List infix precedence/'"asymptotically approaching" is not the same as "equals"'>
+# infinite series with limits
 
-#?rakudo skip 'slices, series'
-{
-    is ~( 1, *+1 ... 5, *+2 ... 9), ~<1 2 3 4 5 7 9>,
-            'expression with two magic series operators';
-    is ~( 1, *+2 ... 6, *+3 ... 9), ~<1 3 5 8>,
-            'expression with two magic series operators and non-matching end points';
-}
+is (1, 1/2, 1/4, ... 0).[^5].map({.perl}).join(', '), '1 1/2 1/4 1/8 1/16', 'geometric series that never reaches its limit';
+is (1, -1/2, 1/4, ... 0).[^5].map({.perl}).join(', '), '1 -1/2 1/4 -1/8 1/16', 'alternating geometric series that never reaches its limit';
+is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', '"harmonic" series that never reaches its limit';
 
-{
-    is ~(4 ... ^5), ~<4 3 2 1 0 1 2 3 4>, '4 ... ^5 works';
-    is ~(4 ... 0, 1, 2, 3, 4), ~<4 3 2 1 0 1 2 3 4>, '4 ... 0, 1, 2, 3,4 works';
+# empty series
 
-    is ~(-4 ... ^5), ~<-4 -3 -2 -1 0 1 2 3 4>, '-4 ... ^5 works';
-    is ~(-4 ... 0, 1, 2, 3, 4), ~<-4 -3 -2 -1 0 1 2 3 4>, '-5 ... 0, 1, 2, 3, 4 works';
+# L<S03/List infix precedence/'limit value is on the "wrong"'>
+is (1, 2 ... 0), Nil, 'empty increasing arithmetic series';
+is (1, 0 ... 2), Nil, 'empty decreasing arithmetic series';
+is (1, 2, 4, ... -5), Nil, 'empty increasing geometric series';
+is (64, 32, 16, ... 70), Nil, 'empty decreasing geometric series';
+is (1, 2 ... 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'series empty but for extra items';
 
-    is ~(4, 3 ... ^5), ~<4 3 2 1 0 1 2 3 4>, '4, 3 ... ^5 works';
-    is ~(4, 2 ... 0, 1, 2, 3, 4), ~<4 2 0 1 2 3 4>, '4, 2 ... 0, 1, 2, 3, 4 works';
-    is ~(4, 1 ... 0, 1, 2, 3, 4), ~<4 1 1 2 3 4>, '4, 1 ... 0, 1, 2, 3, 4 works';
-}
+# L<S03/List infix precedence/For a geometric series with sign changes>
+is (1, -2, 4, ... 1/2), Nil, 'empty alternating increasing-in-magnitude geometric series';
+is (-64, 32, -16, ... 70), Nil, 'empty alternating decreasing-in-magnitude geometric series';
+is (1, -1, 1, ... 2), Nil, 'empty alternating series (1)';
+is (1, -1, 1, ... -2), Nil, 'empty alternating series (2)';
+
+# L<S03/List infix precedence/excludes the limit if it happens to match exactly>
+# excluded limits via "...^"
+#?rakudo emit skip_rest '"...^" NYI';
+
+is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive series';
+is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing series';
+is (1 ...^ 5.5).join(', '), '1, 2, 3, 4, 5', "exclusive series that couldn't hit its limit anyway";
+is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric series';
+is (81, 27, 9 ...^ 2).join(', '), '81, 27, 9, 3', "exclusive decreasing geometric series that couldn't hit its limit anyway";
+is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series';
+is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16, 32', 'exclusive alternating geometric series (not an exact match)';
+is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive series with closure';
+is (1 ...^ 1), Nil, 'empty exclusive series';
+is (1, 1 ...^ 1), Nil, 'empty exclusive constant series';
+is (1, 2 ...^ 0), Nil, 'empty exclusive arithmetic series';
+is (1, 2 ...^ 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'exclusive series empty but for extra items';
+is ~(1 ...^ 0), '1', 'singleton exclusive series';
 
 done_testing;
 
