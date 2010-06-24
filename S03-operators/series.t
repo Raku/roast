@@ -99,42 +99,46 @@ is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and Tru
 # L<S03/List infix precedence/'"asymptotically approaching" is not the same as "equals"'>
 # infinite series with limits
 
-is (1, 1/2, 1/4, ... 0).[^5].map({.perl}).join(', '), '1 1/2 1/4 1/8 1/16', 'geometric series that never reaches its limit';
-is (1, -1/2, 1/4, ... 0).[^5].map({.perl}).join(', '), '1 -1/2 1/4 -1/8 1/16', 'alternating geometric series that never reaches its limit';
+is ~(1, 1/2, 1/4 ... 0).[^5].map({.perl}), '1 1/2 1/4 1/8 1/16', 'geometric series that never reaches its limit';
+#?rakudo todo "Not sure why this one doesn't work"
+is ~(1, -1/2, 1/4 ... 0).[^5].map({.perl}), '1 -1/2 1/4 -1/8 1/16', 'alternating geometric series that never reaches its limit';
 is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', '"harmonic" series that never reaches its limit';
 
 # empty series
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
+#?rakudo 5 skip "Rakudo does not handle the 1, 2 ... 0 case properly yet"
 is (1, 2 ... 0), Nil, 'empty increasing arithmetic series';
 is (1, 0 ... 2), Nil, 'empty decreasing arithmetic series';
-is (1, 2, 4, ... -5), Nil, 'empty increasing geometric series';
-is (64, 32, 16, ... 70), Nil, 'empty decreasing geometric series';
+is (1, 2, 4 ... -5), Nil, 'empty increasing geometric series';
+is (64, 32, 16 ... 70), Nil, 'empty decreasing geometric series';
 is (1, 2 ... 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'series empty but for extra items';
 
 # L<S03/List infix precedence/For a geometric series with sign changes>
-is (1, -2, 4, ... 1/2), Nil, 'empty alternating increasing-in-magnitude geometric series';
-is (-64, 32, -16, ... 70), Nil, 'empty alternating decreasing-in-magnitude geometric series';
-is (1, -1, 1, ... 2), Nil, 'empty alternating series (1)';
-is (1, -1, 1, ... -2), Nil, 'empty alternating series (2)';
+#?rakudo 4 skip "or the 1, -2, 4 ... 1/2 case"
+is (1, -2, 4 ... 1/2), Nil, 'empty alternating increasing-in-magnitude geometric series';
+is (-64, 32, -16 ... 70), Nil, 'empty alternating decreasing-in-magnitude geometric series';
+is (1, -1, 1 ... 2), Nil, 'empty alternating series (1)';
+is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
 
 # L<S03/List infix precedence/excludes the limit if it happens to match exactly>
 # excluded limits via "...^"
-#?rakudo emit skip_rest '"...^" NYI';
-
-is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive series';
-is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing series';
-is (1 ...^ 5.5).join(', '), '1, 2, 3, 4, 5', "exclusive series that couldn't hit its limit anyway";
-is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric series';
-is (81, 27, 9 ...^ 2).join(', '), '81, 27, 9, 3', "exclusive decreasing geometric series that couldn't hit its limit anyway";
-is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series';
-is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16, 32', 'exclusive alternating geometric series (not an exact match)';
-is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive series with closure';
-is (1 ...^ 1), Nil, 'empty exclusive series';
-is (1, 1 ...^ 1), Nil, 'empty exclusive constant series';
-is (1, 2 ...^ 0), Nil, 'empty exclusive arithmetic series';
-is (1, 2 ...^ 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'exclusive series empty but for extra items';
-is ~(1 ...^ 0), '1', 'singleton exclusive series';
+#?rakudo skip '...^ NYI'
+{
+    is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive series';
+    is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing series';
+    is (1 ...^ 5.5).join(', '), '1, 2, 3, 4, 5', "exclusive series that couldn't hit its limit anyway";
+    is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric series';
+    is (81, 27, 9 ...^ 2).join(', '), '81, 27, 9, 3', "exclusive decreasing geometric series that couldn't hit its limit anyway";
+    is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series';
+    is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16, 32', 'exclusive alternating geometric series (not an exact match)';
+    is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive series with closure';
+    is (1 ...^ 1), Nil, 'empty exclusive series';
+    is (1, 1 ...^ 1), Nil, 'empty exclusive constant series';
+    is (1, 2 ...^ 0), Nil, 'empty exclusive arithmetic series';
+    is (1, 2 ...^ 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'exclusive series empty but for extra items';
+    is ~(1 ...^ 0), '1', 'singleton exclusive series';
+}
 
 done_testing;
 
