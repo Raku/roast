@@ -27,6 +27,7 @@ is (1, 2 Z* 3), (3), 'zip-product works with scalar right side';
 is (1 Z* 3), (3), 'zip-product works with scalar both sides';
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
+#?rakudo todo "Doesn't extend lists ending in , * yet"
 is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip extends arguments ending with *';
 
 done_testing;
