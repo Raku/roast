@@ -100,14 +100,12 @@ is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and Tru
 # infinite series with limits
 
 is ~(1, 1/2, 1/4 ... 0).[^5].map({.perl}), '1 1/2 1/4 1/8 1/16', 'geometric series that never reaches its limit';
-#?rakudo todo "Not sure why this one doesn't work"
 is ~(1, -1/2, 1/4 ... 0).[^5].map({.perl}), '1 -1/2 1/4 -1/8 1/16', 'alternating geometric series that never reaches its limit';
 is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', '"harmonic" series that never reaches its limit';
 
 # empty series
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
-#?rakudo 5 skip "Rakudo does not handle the 1, 2 ... 0 case properly yet"
 is (1, 2 ... 0), Nil, 'empty increasing arithmetic series';
 is (1, 0 ... 2), Nil, 'empty decreasing arithmetic series';
 is (1, 2, 4 ... -5), Nil, 'empty increasing geometric series';
