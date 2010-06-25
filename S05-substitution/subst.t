@@ -304,6 +304,13 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
+# RT #66816
+{
+    my $str = "a\nbc\nd";
+    is $str.subst(/^^/, '# ', :g), "# a\n# bc\n# d",
+        'Zero-width substitution does not make the GC recurse';
+}
+
 done_testing;
 
 # vim: ft=perl6
