@@ -30,7 +30,7 @@ class C is B {
     $c.+foo();
     is $c.cnt, 7, '.+ calls up inheritance hierarchy';
 
-    ok !defined($c.?bar()),  '.? on undefined method gives undefined';
+    is $c.?bar(), Nil,  '.? on undefined method gives Nil';
 
     my $lived = 0;
     try { $c.+bar(); $lived = 1; }
@@ -113,7 +113,7 @@ class E is D {
     $e.+foo(2);
     is $e.cnt, 3, '.+ calls up inheritance hierarchy and all possible multis';
 
-    ok !defined($e.?foo("lol", "no", "match")), '.? when no possible multis gives undefined';
+    is $e.?foo("lol", "no", "match"), Nil, '.? when no possible multis gives Nil';
 
     my $lived = 0;
     try { $e.+foo("lol", "no", "match"); $lived = 1; }

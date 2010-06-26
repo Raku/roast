@@ -13,19 +13,19 @@ Basic tests for "return"
 =end pod
 
 sub bar { return }
-ok(!defined(bar()), '... bare return statement returned undefined');
+is(bar(), Nil, '... bare return statement returned Nil');
 
 sub bar2 { return() }
-ok(!defined(bar2()), '... bare return statement w/ parens returned undefined');
+is(bar2(), Nil, '... bare return statement w/ parens returned Nil');
 
 sub baz { return 10 if 1; }
 is(baz(), 10, '... return worked with a statement modifier');
 
 sub foobar { return if 1; };
-ok(!defined(foobar()), '... bare return worked with a statement modifier');
+is(foobar(), Nil, '... bare return worked with a statement modifier');
 
 sub foobar2 { return() if 1; }
-ok(!defined(foobar2()), '... bare return worked with a statement modifier');
+is(foobar2(), Nil, '... bare return worked with a statement modifier');
 
 my $should_ret_empty_list1 = sub { return; 1 };
 is $should_ret_empty_list1().elems, 0, "our sub returned an empty list (1)";

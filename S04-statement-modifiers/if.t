@@ -69,8 +69,7 @@ plan 12;
 # see http://rt.perl.org/rt3/Ticket/Display.html?id=66544
 
 {
-    ok (42 if 0).notdef, '"$something if 0" is Nil - (undefined)';
-    ok (42 if 0) ~~ (),    '"$something if 0" is Nil - (empty list)';
+    is (42 if 0), Nil, '"$something if 0" is Nil';
 }
 
 # vim: ft=perl6

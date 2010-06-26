@@ -18,7 +18,6 @@ ok empty_do()           ~~ Nil, 'do {} is Nil';
 ok empty_branch_true()  ~~ Nil, 'if 1 {} is Nil';
 ok empty_branch_false() ~~ Nil, 'else {} is Nil';
 ok bare_return()        ~~ Nil, 'bare return returns Nil';
-#?rakudo todo 'RT 74448: eval of empty string should be Nil'
 ok rt74448()            ~~ Nil, 'eval of empty string is Nil';
 
 # RT #63894
@@ -33,7 +32,6 @@ ok rt74448()            ~~ Nil, 'eval of empty string is Nil';
     is $calls, 3, 'return_nil() called thrice';
 
     my $n = return_nil();
-    #?rakudo todo 'Nil stored in a variable should be undef'
     ok $n.notdef, 'variable holding nil is not defined';
 }
 

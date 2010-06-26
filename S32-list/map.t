@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 54;
+plan 52;
 
 # L<S32::Containers/"List"/"=item map">
 

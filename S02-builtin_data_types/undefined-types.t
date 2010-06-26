@@ -18,10 +18,9 @@ plan *;
     my @a;
     @a.push: Nil(1);
     is @a.elems, 0, 'Coercion to Nil in list context';
-    ok !Nil(1).defined, 'Coercion to Nil in item context';
+    ok Nil(1).defined, 'Coercion to Nil in item context';
 }
 
-#?rakudo skip 'sink'
 {
     my @a;
     my $i = 0;
@@ -31,11 +30,11 @@ plan *;
 
     @a = ();
     @a.push: 2, sink { $i = 2 };
-    is @a.elems, 2, 'sink block prefix returns Nil (list context)';
+    is @a.elems, 1, 'sink block prefix returns Nil (list context)';
     is $i, 2, 'the block was executed';
-    ok !defined(sink $i = 5 ), 'sink in scalar context (statement)';
+    ok defined(sink $i = 5 ), 'sink in scalar context (statement)';
     is $i, 5, '... statement executed';
-    ok !defined(sink {$i = 8} ), 'sink in scalar context (block)';
+    ok defined(sink {$i = 8} ), 'sink in scalar context (block)';
     is $i, 8, '... block executed';
 }
 
