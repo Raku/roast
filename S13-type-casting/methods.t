@@ -28,7 +28,6 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
         has $.a = 'RT #69378';
         method Str() { $.a }
     }
-    #?rakudo 2 todo 'RT 69378'
     is RT69378str.new.a, 'RT #69378', 'call to RT69378str.new properly initializes $.a';
     is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
 }
