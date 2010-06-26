@@ -125,7 +125,6 @@ is(+(6..8), 3, 'numification');
 }
 
 # infinite ranges using Whatever
-#?rakudo skip "infinite ranges not implemented"
 {
     my $inf = *..*;
 
