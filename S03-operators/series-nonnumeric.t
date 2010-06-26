@@ -5,6 +5,7 @@ plan *;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
+#?rakudo skip 'loops'
 {
     class Alternating {
         has Int $.val;
@@ -45,6 +46,7 @@ is (<a b>, { .succ } ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'characters 
 is ('x' ... 'z').join(', '), 'x, y, z', "series ending with 'z' don't cross to two-letter strings";
 is ('A' ... 'z').elems, 'z'.ord - 'A'.ord + 1, "series from 'A' to 'z' is finite and of correct length";
 is ('α' ... 'ω').elems, 'ω'.ord - 'α'.ord + 1, "series from 'α' to 'ω' is finite and of correct length";
+#?rakudo 2 skip 'Unicode stuff'
 is ('☀' ... '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔☕', "series from '☀' to '☕'";
 is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔', "exclusive series from '☀' to '☕'";
 
@@ -55,6 +57,7 @@ ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever
 ok ('AA' ... 'Z').munch(1000).elems < 1000, "'AA' ... 'Z' does not go on forever";
 ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
 ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
+#?rakudo skip '...^'
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 # be sure the test works as specced even for user classes
@@ -71,8 +74,10 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
     multi infix:<eqv> (Periodic $x, Int $n)      { $x.v eqv $n }
     my $f = { Periodic.new(val => $^v) };
     
+    #?rakudo todo 'unkonwn'
     is ($f(0) ... 5)[^7].join(' '), 'P0 P1 P2 P0 P1 P2 P0', 'increasing periodic series';
     is ($f(0) ... -1)[^7].join(' '), 'P0 P2 P1 P0 P2 P1 P0', 'decreasing periodic series';
+    #?rakudo 4 skip 'loops'
     is ($f(0) ... 2).join(' '), 'P0 P1 P2', 'increasing not-quite-periodic series';
     is ($f(2) ... 0).join(' '), 'P2 P1 P0', 'decreasing not-quite-periodic series';
     is ($f(0) ...^ 2).join(' '), 'P0 P1', 'exclusive increasing not-quite-periodic series';
