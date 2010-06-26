@@ -79,7 +79,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
-#?rakudo todo 'RT 71462: Smartmatch a type yields Int, not a Bool'
 isa_ok ('RT71462' ~~ Str), Bool;
 
 done_testing;
