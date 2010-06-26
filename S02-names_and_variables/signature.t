@@ -80,7 +80,6 @@ plan 12;
     my (@c) = @a;
     my $i = 0;
     $i++ for @c;
-    #?rakudo todo 'RT 74336'
     is $i, 3, 'asigning to an array in a signature is sane';
 }
 

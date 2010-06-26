@@ -153,10 +153,10 @@ my @array2 = ("test", 1, Mu);
     ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array");
 }
 
+#?rakudo skip "parametrization issues"
 {
     # declare the array with data type
     my Int @array;
-    #?rakudo 2 todo "parametrization issues"
     lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
