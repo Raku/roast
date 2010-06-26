@@ -114,7 +114,6 @@ plan 14;
     is($count, 2, "gather is lazy");	
 }
 
-#?rakudo todo 'broken gather/take with while (RT #62178)'
 {
     my @list = gather {
         my $v = 1;
@@ -126,7 +125,6 @@ plan 14;
     is ~@list, "2 4 6 8 10", "gather with nested while";
 }
 
-#?rakudo todo 'broken gather/take with loop (RT #62178)'
 {
     my @list = gather {
         loop (my $v = 1; $v <= 10; $v++)

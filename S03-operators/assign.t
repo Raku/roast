@@ -196,25 +196,25 @@ plan 240;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
-#?rakudo todo '(@a, @b) = (@b, @a)'
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
     @a = 1;
     @b = 2;
     (@b, @a) = (@a, @b);
+    #?rakudo todo '(@a, @b) = (@b, @a)'
     ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
-#?rakudo todo '(@a, @b) = (@b, @a)'
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);
     @a = (1);
     @b = (2);
     (@b, @a) = @a, @b;
+    #?rakudo todo '(@a, @b) = (@b, @a)'
     ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
