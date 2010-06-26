@@ -345,12 +345,10 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 # RT #67218
 {
     eval_lives_ok ':a()',    'can parse ":a()"';
-    #?rakudo skip 'RT #67218'
-    lives_ok     { :a() }, 'can execute ":a()"';
+    lives_ok     {; :a() }, 'can execute ":a()"';
 
     eval_lives_ok ':a[]',    'can parse ":a[]"';
-    #?rakudo skip 'RT #67218'
-    lives_ok     { :a[] }, 'can execute ":a[]"';
+    lives_ok     {; :a[] }, 'can execute ":a[]"';
 
     eval_lives_ok '(a => ())',    'can parse "(a => ())"';
     lives_ok     { (a => ()) }, 'can execute "(a => ())"';
