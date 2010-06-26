@@ -54,7 +54,6 @@ is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
 
 # not a "real string', but a "real hash" bug found in Rakudo:
 
-#?rakudo skip 'borked'
 {
     my $x = 0;
     for %*VM.kv -> $k, $v { $x++};

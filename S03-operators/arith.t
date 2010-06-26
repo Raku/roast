@@ -196,7 +196,6 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 {
     is_approx(-1, (0 + 1i)**2, "i^2 == -1");
 
-    #?rakudo skip 'long rats'
     is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
     is_approx(1i, (-1+0i)**0.5, '(-1+0i)**0.5 == i ');
 }
