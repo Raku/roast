@@ -168,7 +168,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is @multi_method.elems, 1, '.^methods returns one element for a multi';
 
     my $routine = @multi_method[0];
-    #?rakudo todo 'multi method appears as Routine per r27045'
     ok $routine ~~ Routine, 'multi method from ^methods is a Routine';
     my @candies = $routine.candidates;
     is @candies.elems, 3, 'got three candidates for multi method';
