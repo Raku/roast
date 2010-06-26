@@ -43,10 +43,9 @@ is Backend2.new.hi, 23, "basic sanity (2)";
   is $a.hi, 23, "method was successfully handled by backend object (2)";
 }
 
-#?rakudo skip 'RT 75966'
 {
     my $a = Frontend2.new( backend => Backend1.new() );
-    is $a.with_params('abc'), 'abcabc', 'Delegation works with parameters';
+    is $a.with_params('abc'), ('abc' xx 2), 'Delegation works with parameters';
 }
 
 # L<S12/Delegation/You can specify multiple method names:>
@@ -159,7 +158,6 @@ class PairTest {
 }
 
 # arrays, hashes
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
     class PseudoArray {
         has @!data handles <Str push pop elems shift unshift>;
@@ -176,7 +174,6 @@ class PairTest {
     is ~$x, '3 4',      'delegation of .shift (2)';
     is $x.elems, 2,     'delegation of .elems';
 }
-#?rakudo skip 'not all cases of handles are implemented yet'
 {
     class PseudoHash { has %!data handles <push Str> };
     my $h = PseudoHash.new;
