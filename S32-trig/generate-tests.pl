@@ -77,7 +77,7 @@ class TrigFunction
                 
                 # now that we've established the math works,
                 # less thorough tests for everything else
-                next if $iter_count++ !% 7;
+                next if $iter_count++ %% 7;
 
                 # $.function_name(Num)
                 is_approx($.function_name($angle.num(Radians)), $desired_result, 
@@ -215,7 +215,7 @@ class TrigFunction
                 }
                 
                 # less thorough tests
-                next if $iter_count++ !% 7;
+                next if $iter_count++ %% 7;
                 
                 # $.inverted_function_name(Num) tests
                 is_approx($.function_name($.inverted_function_name($desired_result)), $desired_result, 
