@@ -83,7 +83,8 @@ is %hash.values.sort, <A B C D E>, '...and the right values are assigned';
 
 %hash = ();
 
-lives_ok { %hash = enum <<:Alpha<A> Bravo Charlie Delta Echo>>; }, 'specifying a string up front works (Texas quotes)', :todo<feature>;
+#?rakudo todo 'feature'
+lives_ok { %hash = enum <<:Alpha<A> Bravo Charlie Delta Echo>>; }, 'specifying a string up front works (Texas quotes)'; 
 
 #?pugs todo 'feature'
 is %hash.keys.sort, <Alpha Bravo Charlie Delta Echo>, '...and the right keys are assigned';
@@ -131,6 +132,15 @@ is %hash.values, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'), '
     enum RT66648 <a b c>;
     #?rakudo todo 'RT 66648'
     dies_ok { RT66648.c }, 'die attempting to access enum item as method';
+}
+
+# RT #70894
+
+{
+    enum SomeEnum <a b c>;
+    #?rakudo skip "RT #70894"
+    lives_ok {SomeEnum::.keys}, 'keys on enum stash works';
+
 }
 
 done_testing;
