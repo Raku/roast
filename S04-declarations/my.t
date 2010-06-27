@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 62;
+plan 63;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -246,5 +246,12 @@ eval_lives_ok 'my (%h?)', 'my (%h?) lives';
 #?rakudo todo 'global my variables are not visible inside class declarations'
 eval_lives_ok 'my $x = 3; class A { has .$y = $x; }; say A.new.y', 
         'global scoped variables are visible inside class definitions';
+
+#RT #72814
+
+{
+    #?rakudo skip 'RT 72814' 
+    lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';
+}
 
 # vim: ft=perl6
