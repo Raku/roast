@@ -6,7 +6,6 @@ plan *;
 
 {
     # Nil is an empty container. As a container, it is defined.
-    #?rakudo 2 todo 'definedness of Nil'
     ok Nil.defined, 'Nil is defined';
     ok ().defined, '() is defined';
     my @a;
