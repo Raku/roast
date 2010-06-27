@@ -13,10 +13,10 @@ plan *;
         method succ { Alternating.new(val => -($.val + 1)) }
         method pred { Alternating.new(val => -($.val - 1)) }
     }
-    multi infix:<cmp> (Alternating $x, Alternating $y) { abs($x.v) cmp abs($y.v) }
-    multi infix:<cmp> (Alternating $x, Int $n)         { abs($x.v) cmp abs($n) }
-    multi infix:<eqv> (Alternating $x, Alternating $y) { abs($x.v) eqv abs($y.v) }
-    multi infix:<eqv> (Alternating $x, Int $n)         { abs($x.v) eqv abs($n) }
+    our multi infix:<cmp> (Alternating $x, Alternating $y) { abs($x.val) cmp abs($y.val) }
+    our multi infix:<cmp> (Alternating $x, Int $n)         { abs($x.val) cmp abs($n) }
+    our multi infix:<eqv> (Alternating $x, Alternating $y) { abs($x.val) eqv abs($y.val) }
+    our multi infix:<eqv> (Alternating $x, Int $n)         { abs($x.val) eqv abs($n) }
     my $f = { Alternating.new(val => $^v) };
 
     is ($f(0) ... $f(4)).join(' '), 'A0 A-1 A2 A-3 A4', 'finite increasing series with user class (1)';
@@ -68,10 +68,10 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
         method succ { Periodic.new(val => ($.val >= 2 ?? 0 !! $.val + 1)) }
         method pred { Periodic.new(val => ($.val <= 0 ?? 2 !! $.val - 1)) }
     }
-    multi infix:<cmp> (Periodic $x, Periodic $y) { $x.v cmp $y.v }
-    multi infix:<cmp> (Periodic $x, Int $n)      { $x.v cmp $n }
-    multi infix:<eqv> (Periodic $x, Periodic $y) { $x.v eqv $y.v }
-    multi infix:<eqv> (Periodic $x, Int $n)      { $x.v eqv $n }
+    our multi infix:<cmp> (Periodic $x, Periodic $y) { $x.val cmp $y.val }
+    our multi infix:<cmp> (Periodic $x, Int $n)      { $x.val cmp $n }
+    our multi infix:<eqv> (Periodic $x, Periodic $y) { $x.val eqv $y.val }
+    our multi infix:<eqv> (Periodic $x, Int $n)      { $x.val eqv $n }
     my $f = { Periodic.new(val => $^v) };
     
     #?rakudo todo 'unkonwn'
