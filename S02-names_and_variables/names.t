@@ -27,17 +27,14 @@ plan 22;
 {
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
-#?rakudo skip "Parse error"
+#?rakudo 4 skip '::{ } package lookup NYI'
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
-#?rakudo skip "Parse error"
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
-#?rakudo skip "Parse error"
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
-#?rakudo skip "unimpl get_pmc_keyed"
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
 
-#?rakudo skip 'parse error'
+#?rakudo skip '::{ } package lookup NYI'
 {
     my $::<!@#$> =  2.22;
     is($::{'!@#$'}, 2.22, 'variable lookup using $::{\'symbols\'}');
