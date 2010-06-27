@@ -16,6 +16,20 @@ plan *;
     is @called, <Int Num>, 'multi with "callsame" worked';
 }
 
+# RT 69314
+
+{
+    sub rt69314($n) { 
+        if $n { 
+            callsame($n-1);
+        }
+    }; 
+    
+    #?rakudo todo 'Calling callsame directly from a sub'
+    lives_ok {rt69314(1)}, 'Calling callsame directly from a sub works';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
