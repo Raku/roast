@@ -142,7 +142,6 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
     is $a, 3, "final `}' on a line reverted to `;'";
 }
 
-#?rakudo todo 'regression on RT 61034'
 lives_ok { my $a = do given 5 {} }, 'empty do block lives (RT 61034)';
 
 # vim: ft=perl6

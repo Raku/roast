@@ -202,7 +202,6 @@ plan 240;
     @a = 1;
     @b = 2;
     (@b, @a) = (@a, @b);
-    #?rakudo todo '(@a, @b) = (@b, @a)'
     ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
@@ -214,7 +213,6 @@ plan 240;
     @a = (1);
     @b = (2);
     (@b, @a) = @a, @b;
-    #?rakudo todo '(@a, @b) = (@b, @a)'
     ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
     is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
@@ -653,8 +651,8 @@ sub l () { 1, 2 };
     my @b = (0,0);
     my $c = 1;
     my @z = (@a[@b[$c,]] = l, l);
-    #?rakudo 2 todo 'list assignment'
     is(~@a,     '1',    'lhs treats @a[@b[$c,]] as list');
+    #?rakudo todo 'list assignment'
     is(~@z[0],  '2',    'lhs treats @a[@b[$c,]] as list');
     ok(!defined(@z[1]), 'lhs treats @a[@b[$c,]] as list');
 }

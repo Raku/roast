@@ -21,7 +21,6 @@ ok(defined(1),   'numeric literal 1 is defined');
 ok(defined(""),  'empty string is defined');
 ok(defined("a"), '"a" is defined');
 ok(defined(0),   'numeric literal 0 is defined');
-#?rakudo 2 todo "Nil and empty Parcel should be defined"
 ok(defined(Nil), 'Nil is defined');
 ok(defined(()),  'empty Parcel is defined');
 ok(defined([]),  'empty Array is defined');
@@ -37,7 +36,6 @@ $foo = "";
 ok(defined($foo), 'variable $foo is now defined (as a empty string)');
 
 $foo = Nil;
-#?rakudo todo 'ng regression: Nil should be undef'
 ok(!defined($foo), 'variable $foo is now undefined again');
 
 $foo = "a";
@@ -79,7 +77,6 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
     ok($foo.defined, 'variable $foo is now defined (as a empty string)');
 
     $foo = Nil;
-    #?rakudo todo 'ng regression: Nil should be undef'
     ok(!$foo.defined, 'variable $foo is now undefined again');
 
     $foo = "a";

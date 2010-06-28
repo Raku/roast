@@ -55,7 +55,6 @@ is( @l, [], "A bare return is an empty list in array/list context");
 my $s = "hello";
 $s = bare_return();
 
-#?rakudo todo 'A bare return is undefined in scalar context'
 ok($s.notdef, "A bare return is undefined in scalar context");
 
 ## scalars
