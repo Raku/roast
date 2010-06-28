@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 22;
+plan 23;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -107,6 +107,14 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 
 }
 
+# RT #72856
+{
+    role RT72856A { method foo {} };
+    role RT72856B { method foo {} };
+    eval 'class RT72856C does RT72856A does RT72856B {}';
+    ok $! ~~ /foo .* collides/,
+        'method of the same name from two different roles collide in a class composition';
+}
 
 done_testing;
 
