@@ -109,6 +109,16 @@ sub j(*@i) {
 
 }
 
+{
+    my $x;
+    ok :(|$x).params[0].capture, 'prefix | makes .capture true';
+    ok :(|$x).perl  ~~ / '|' /,  'prefix | appears in .perl output';
+
+    #?rakudo 2 skip 'parcel binding'
+    ok :(\|$x).params[0].parcel, 'prefix \| makes .parcel true';
+    ok :(\|$x).perl ~~ / '\|' /, 'prefix \| appears in .perl output';
+}
+
 # RT #69492
 {
     sub foo(:$) {};
