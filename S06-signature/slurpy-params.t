@@ -312,6 +312,17 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
     is @c[0], 'a', 'slurpy is copy-array works fine, thank you';
 }
 
+# RT #72600
+{
+    sub A (*@_) {
+        is @_, [5, 4], 'slurpy @_ contains proper values';
+        if 1 {
+            is @_, [5, 4], 'slurpy @_ values not clobbered by if statement';
+        }
+    };
+    A(5, 4);
+}
+
 done_testing;
 
 # vim: ft=perl6
