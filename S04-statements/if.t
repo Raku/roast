@@ -11,7 +11,7 @@ Basic "if" tests.
 
 # L<S04/Conditional statements>
 
-plan 25;
+plan 26;
 
 my $x = 'test';
 if ($x eq $x) { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
@@ -155,5 +155,13 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 # L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
+
+# RT #76174
+# scoping of $_ in 'if' shouldn't break aliasing
+{
+    my @a = 0, 1, 2;
+    for @a { if $_ { $_++ } };
+    is ~@a, '0 2 3', '"if" does not break lexical aliasing of $_'
+}
 
 # vim: ft=perl6
