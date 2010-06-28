@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 113;
+plan 114;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -26,6 +26,8 @@ is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
+
+is ~(' '..' '), ' ',    'all-whitespace range works';
 
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
 is ~(5..9-5), "",        "(..) has correct precedence (2)";
