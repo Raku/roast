@@ -137,6 +137,9 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
         'default role stringification contains role name';
 }
 
+# RT #72848
+lives_ok {0 but True}, '0 but True has applicable candidate';
+
 done_testing;
 
 # vim: ft=perl6
