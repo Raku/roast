@@ -7,6 +7,7 @@ plan *;
 #L<S06/"Longname parameters">
 #L<S12/"Multisubs and Multimethods">
 
+multi foo (5)          { "Constant"  }
 multi foo (Int $bar)   { "Int "  ~ $bar  }
 multi foo (Str $bar)   { "Str "  ~ $bar  }
 multi foo (Rat $bar)   { "Rat "  ~ $bar  }
@@ -16,9 +17,13 @@ multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (@bar) { "Positional " ~ join(', ', @bar) }
 multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
 multi foo (IO $fh)     { "IO" }
+multi foo (Inf)        { "Inf" }
+multi foo (NaN)        { "NaN" }
 
-is(foo('test'), 'Str test', 'dispatched to the Str sub');
+is foo(5), 'Constant', 'dispatched to the constant sub';
+
 is(foo(2), 'Int 2', 'dispatched to the Int sub');
+is(foo('test'), 'Str test', 'dispatched to the Str sub');
 
 my $num = '4';
 is(foo(1.4), 'Rat 1.4', 'dispatched to the Num sub');
@@ -33,6 +38,9 @@ my %hash = ('foo' => 1, 'bar' => 2, 'baz' => 3);
 is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub');
 
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
+
+is foo(Inf), 'Inf', 'dispatched to the Inf sub';
+is foo(NaN), 'NaN', 'dispatched to the NaN sub';
 
 # You're allowed to omit the "sub" when declaring a multi sub.
 # L<S06/"Routine modifiers">
