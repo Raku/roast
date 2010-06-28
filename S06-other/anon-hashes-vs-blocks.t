@@ -45,6 +45,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok { $^a => 'b' } ~~ Block, '... as a key';
     ok { a => $^x }   ~~ Block, '... as a value';
     ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
+    ok {;} ~~ Block, '{;} is a Block';
 }
 
 done_testing;
