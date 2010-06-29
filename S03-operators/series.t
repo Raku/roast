@@ -138,6 +138,10 @@ is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
     is ~(1 ...^ 0), '1', 'singleton exclusive series';
 }
 
+
+# RT #75698
+ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
+
 done_testing;
 
 # vim: ft=perl6
