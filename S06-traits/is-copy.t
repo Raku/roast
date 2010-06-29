@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 16;
+plan 17;
 
 {
   sub foo($a is copy) {
@@ -59,6 +59,18 @@ plan 16;
     my %test = (x => 1);
     hash_test(%test);
     is(%test<x>, 1,    '...and original is unmodified.');
+}
+
+# RT #76242
+{
+    sub t(@a is copy) {
+        my $x = 0;
+        $x++ for @a;
+        $x;
+    }
+
+    my $a = [1, 2, 3];
+    is t($a), 3, 'passing [1,2,3] to @a is copy does results in three array items';
 }
 
 # vim: ft=perl6

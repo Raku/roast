@@ -7,7 +7,8 @@ plan 5;
 # L<S05/Bracket rationalization/reduction using the>
 
 "4" ~~ / (\d) { make $0.sqrt } Remainder /;
-nok($/);
+nok($/, 'No match');
+#?rakudo todo '.ast of failed match (questionable)'
 is($/.ast , 2);
 
 # L<S05/Match objects/"Fortunately, when you just want to return a different">
@@ -15,7 +16,8 @@ is($/.ast , 2);
 "blah foo blah" ~~ / foo                 # Match 'foo'
                       { make 'bar' }     # But pretend we matched 'bar'
                     /;
-ok($/);
+ok($/, 'matched');
+#?rakudo todo '$()'
 is($(), 'bar');
 is $/.ast, 'bar', '$/.ast';
 
