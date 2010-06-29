@@ -185,6 +185,9 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 }
 
+# RT #73162
+eval_lives_ok '{*.{}}()', '{*.{}}() lives';
+
 done_testing;
 
 # vim: ft=perl6
