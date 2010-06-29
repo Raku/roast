@@ -143,6 +143,10 @@ is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
 # RT #75698
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
+# RT #75316
+isa_ok (1...()), Failure,
+    'empty list on right side of series operator does not cause infinite loop';
+
 done_testing;
 
 # vim: ft=perl6
