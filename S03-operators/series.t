@@ -147,6 +147,10 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 isa_ok (1...()), Failure,
     'empty list on right side of series operator does not cause infinite loop';
 
+# RT #73508
+is (1,2,4...*)[10], 1024,
+    'element from list generated using infinite series is accessible by index';
+
 done_testing;
 
 # vim: ft=perl6
