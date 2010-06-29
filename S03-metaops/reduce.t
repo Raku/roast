@@ -111,6 +111,15 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
+{
+  my @array = (Mu, Mu, 0, 3, Mu, 5);
+  my @array1 = (2, 3, 4);
+  nok ([&&] @array), "[&&] works with 1 false";
+  is ([&&] @array1), 4, "[&&] works";
+  nok ([and] @array), "[and] works with 1 false";
+  is ([and] @array1), 4, "[and] works";
+}
+
 # not currently legal without an infix subscript operator
 # {
 #   my $hash = {a => {b => {c => {d => 42, e => 23}}}};
