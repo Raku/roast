@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 240;
+plan 242;
 
 
 # tests various assignment styles
@@ -755,6 +755,15 @@ sub l () { 1, 2 };
     is((try {our $t; $t = (1 == 0) ?? "true" !! "false"; $t}), "false", '... and false');
     is((try {my $t = (1 == 1) ?? "true" !! "false"; $t}), "true", 'my $t = (cond) ?? !! gets value from ?? !!');
     is((try {my $t = (1 == 0) ?? "true" !! "false"; $t}), "false", '.. also for false');
+}
+
+# RT #75950
+#?rakudo skip 'RT 75950'
+{
+    my $x;
+    lives_ok { ($x) = grep 5, 1..1_000_000 },
+            'Can grep lazily through a very long range';
+    is $x, 5, '... with correct result';
 }
 
 # vim: ft=perl6
