@@ -6,7 +6,7 @@ use Test;
 
 # Test primarily aimed at PIL2JS
 
-plan 8;
+plan 9;
 
 # sanity tests
 {
@@ -73,6 +73,15 @@ plan 8;
   for $arrayref { $count++ }
 
   is $count, 1, 'for $arrayref {...} executes the loop body only once';
+}
+
+# RT #73400
+{
+  my $capture = \[1,2,3];
+  my $count = 0;
+  for $capture { $count++ }
+
+  is $count, 1, 'for $capture {...} executes the loop body only once';
 }
 
 # vim: ft=perl6
