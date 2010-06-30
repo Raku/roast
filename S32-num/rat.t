@@ -223,6 +223,12 @@ ok 16/5 eqv 16/5, 'infix:<eqv> works with rats';
 # RT #72870
 is .88888888888.WHAT, 'Rat()', 'WHAT works on Rat created from 11 digit decimal fraction';
 
+# RT #74624
+{
+    my $a += 0.1;
+    isa_ok $a, Rat, 'Any() + 0.1 is a Rat';
+}
+
 done_testing;
 
 # vim: ft=perl6
