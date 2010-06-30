@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 114;
+plan 116;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -213,5 +213,11 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     ok !defined(try { 0 .. (0, 1, 2) }), '0 .. List is illegal';
 }
 
+# RT #68788
+{
+    $_ = Any; # unsetting $_ to reproduce bug literally
+    lives_ok {(1..$_)}, '(1..$_) lives';
+    isa_ok (1..$_), Range, '(..) works on Int .. Any';
+}
 
 # # vim: ft=perl6
