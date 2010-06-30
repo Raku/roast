@@ -400,6 +400,21 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     my @x = (6,7,8);
     jok(5 < @x.all, '.all method works on array objects');
 }
+
+# RT #63126
+{
+    my @a = "foo", "foot";
+    ok @a[all(0,1)] ~~ /^foo/,
+        'junction can be used to index Array';
+
+    my %h = (
+        "0" => "foo",
+        "1" => "foot"
+    );
+    ok %h{all(0,1)} ~~ /^foo/,
+        'junction can be used to index Hash';
+}
+
 done_testing();
 
 # vim: ft=perl6
