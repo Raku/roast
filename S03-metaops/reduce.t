@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 88;
+plan *;
 
 =begin pod
 
@@ -238,4 +238,5 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     is ([~] 1, 2, 5), '125', '[~] works outside class';
 }
 
+done_testing;
 # vim: ft=perl6
