@@ -157,7 +157,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 
 # Following two tests taken verbatim from former t/operators/reduce.t
 lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
-#?rakudo todo "[1..3] >>+<< [1..3] returns [[2, 4, 6]] at the moment"
 lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
