@@ -6,7 +6,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 
 my @list = ('a');
@@ -42,6 +42,19 @@ for @list -> $letter {
 {
     my @mutable_array = 1..3;
     lives_ok { for @mutable_array { $_++ } }, 'default topic is rw by default';
+}
+
+{
+    $_ = 1;
+    my $tracker = '';
+
+    for 11,12 -> $a {
+        if $_ == 1 { $tracker ~= "1 : $_|"; $_ = 2; }
+        else {       $tracker ~= "* : $_" }
+    }
+
+    is $tracker, '1 : 1|* : 2',
+        'Two iterations of a loop share the same $_ if it is not a formal parameter';
 }
 
 # vim: ft=perl6
