@@ -80,7 +80,7 @@ plan *;
     }
 
     dies_ok { test2() },
-        "return() inside a try{}-block should cause following exceptions to really die";
+        'return() inside a try{}-block should cause following exceptions to really die';
 }
 
 {
