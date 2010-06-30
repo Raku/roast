@@ -155,6 +155,10 @@ is (1,2,4...*)[10], 1024,
 is (4...^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
     'geometric series started in one direction and continues in the other with exclusion';
 
+lives_ok { (1 ... 5).perl }, 'Can take .perl of series';
+is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
+    'eval($series.perl) reproduces result list';
+
 done_testing;
 
 # vim: ft=perl6
