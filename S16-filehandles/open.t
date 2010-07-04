@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 3;
 
 # L<S32::IO/IO::File/open>
 # old: L<S16/"Filehandles, files, and directories"/"open">
@@ -40,14 +40,5 @@ if $*OS eq "browser" {
 I/O Redirection to scalar tests
 
 =end pod
-
-skip_rest("needs speccing"); exit;
-
-my $scalar;
-
-# XXX: gaal: dunno how this should be, but this isn't it.
-#?pugs 2 todo ''
-ok(try { open $*OUT,">",\$scalar },'Direct STDOUT to a scalar');
-ok(try { open $*ERR,">",\$scalar },'Direct STDERR to a scalar');
 
 # vim: ft=perl6
