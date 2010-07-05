@@ -102,6 +102,7 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     ok sub {} ~~ Callable, '~~ Callable (true)';
     nok 68762 ~~ Callable, '~~ Callable (false)';
     ok 69762 !~~ Callable, '!~~ Callable (true)';
+    #?rakudo todo 'RT #72048'
     nok sub {} !~~ Callable, '!~~ Callable (false)';
 
     ok sub {} ~~ Routine, '~~ Routine (true)';
@@ -141,6 +142,7 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     class RT72048_class does RT72048_role {}
 
     ok RT72048_class.new ~~ RT72048_role, 'class instance matches role';
+    #?rakudo todo 'RT #72048'
     nok RT72048_class.new !~~ RT72048_role, 'class instance !!matches role';
 }
 
