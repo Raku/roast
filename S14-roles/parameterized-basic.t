@@ -132,7 +132,6 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
                  "Can't compose without matching role multi";
 }
 
-#?rakudo skip 'generics parameters in generic roles'
 {
     role MD_generics[::T $a, T $b] {
         method what { 'same type' }

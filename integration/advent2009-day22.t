@@ -31,7 +31,6 @@ multi sub infix:<==>(PieceOfString $lhs, PieceOfString $rhs --> Bool) {
 }
 
 my $d = PieceOfString.new(:length(6));
-#?rakudo skip "== override not working"
 ok $b == $d, "override equality";
 
 # XXX This pragma was NOT used in the advent calendar.

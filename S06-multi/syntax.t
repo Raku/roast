@@ -55,7 +55,6 @@ ok(&foo ~~ Callable, 'a multi does Callable');
 ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
-#?rakudo skip 'RT 58948'
 {
     multi sub max($a, $b, $c) {return 9}
 

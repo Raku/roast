@@ -32,7 +32,6 @@ is my_third( 4, 5, 6), 6, '($, $, $x) works as a signature';
     is rt60408_if(42), (42, 42), 'use of @_[0] in an "if" block (RT 60408)';
 }
 
-#?rakudo skip 'RT 70469'
 {
 
     sub f(@a, $i) {

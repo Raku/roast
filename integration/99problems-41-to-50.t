@@ -212,7 +212,6 @@ fail fail fail
         '0' xx 2**($n-1) >>~<< gray($n-1), 
             '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse;
     }
-    #?rakudo 3 skip 're-evaluate test in light of parcels'
     is gray(1), <0 1>;
     is gray(2), <00 01 11 10>;
     is gray(3), <000 001 011 010 110 111 101 100>;

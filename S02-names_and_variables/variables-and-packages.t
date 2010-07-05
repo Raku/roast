@@ -121,7 +121,6 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   sub baz { $a++ }
 }
 
-#?rakudo skip 'lexicals in our subs'
 {
   {
     my $a = 3;

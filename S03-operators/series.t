@@ -106,7 +106,6 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3,
 # empty series
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
-#?rakudo 5 skip "RT #75832, series does not stop at end point"
 is (1, 2 ... 0), Nil, 'empty increasing arithmetic series';
 is (1, 0 ... 2), Nil, 'empty decreasing arithmetic series';
 is (1, 2, 4 ... -5), Nil, 'empty increasing geometric series';

@@ -280,7 +280,6 @@ Testing operator overloading subroutines
 	eval_dies_ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
 }
 
-#?rakudo skip 'RT #66552'
 {
     role A { has $.v }
     multi sub infix:<==>(A $a, A $b) { $a.v == $b.v }
@@ -320,7 +319,6 @@ Testing operator overloading subroutines
 
 # test that multis with other arity don't interfere with existing ones
 # used to be RT #65640
-#?rakudo skip 'RT 65640'
 {
     multi sub infix:<+>() { 42 };
     ok 5 + 5 == 10, "New multis don't disturb old ones";
