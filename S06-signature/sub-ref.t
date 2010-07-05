@@ -111,7 +111,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
     is($inc1(), 0, "closures: inc1 == 0");
     is($inc1(), 1, "closures: inc1 == 1");
-    #?rakudo 2 todo 'RT 73034'
     is($inc2(), 0, "closures: inc2 == 0");
     is($inc2(), 1, "closures: inc2 == 1");
 }

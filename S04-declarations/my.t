@@ -9,7 +9,6 @@ plan 63;
 
     #?rakudo todo 'lexicals bug; RT #61838'
     eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
-    #?rakudo todo 'scoping bug'
     is(eval('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
 
@@ -92,7 +91,6 @@ my $d = 1;
 is($d, 1, '$d has not changed');
 
 # eval() introduces new lexical scope
-#?rakudo todo 'scoping'
 is( eval('
 my $d = 1;
 { 
@@ -124,7 +122,6 @@ $d;
 is(eval('my $e1 = my $e2 = 42'), 42, 'can parse squinting my value');
 is(eval('my $e1 = my $e2 = 42; $e1'), 42, 'can capture squinting my value');
 is(eval('my $e1 = my $e2 = 42; $e2'), 42, 'can set squinting my variable');
-#?rakudo skip 'item assignment'
 is(eval('my $x = 1, my $y = 2; $y'), 2, 'precedence of my wrt = and ,');
 
 # test that my (@array, @otherarray) correctly declares
@@ -144,18 +141,14 @@ my $x = 0;
     is $result, 1, 'my in while cond seen from body';
 }
 
-#?rakudo 2 todo 'scoping'
 is(eval('while my $x = 1 { last }; $x'), 1, 'my in while cond seen after');
 
 is(eval('if my $x = 1 { $x } else { 0 }'), 1, 'my in if cond seen from then');
-#?rakudo skip 'Null PMC access in type()'
 is(eval('if not my $x = 1 { 0 } else { $x }'), 1, 'my in if cond seen from else');
-#?rakudo todo 'scoping'
 is(eval('if my $x = 1 { 0 } else { 0 }; $x'), 1, 'my in if cond seen after');
 
 # check proper scoping of my in loop initializer
 
-#?rakudo 4 skip 'Null PMC access in type()'
 is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $x; last }; $result'), 1, '1st my in loop cond seen from body');
 is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $y; last }; $result'), 2, '2nd my in loop cond seen from body');
 is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $x'), 1, '1st my in loop cond seen after');

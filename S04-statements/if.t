@@ -101,7 +101,6 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 # I'm not sure where this should go
 
-#?rakudo todo "'my' variable within 'if' conditional fails"
 {
     is(
         eval('if ( my $x = 2 ) == 2 { $x; }'),
