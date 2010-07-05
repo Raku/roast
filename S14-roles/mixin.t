@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 22;
+plan 23;
 
 # L<S14/Run-time Mixins/>
 
@@ -97,5 +97,12 @@ is $y.test,     42,         'method from other role was OK too';
        'can mix R4b into an Array, and access the attribute';
 }
 
+# RT #69654
+{
+    role ProvidesFoo { method foo { } }
+    class NoFoo { };
+    is (NoFoo.new does ProvidesFoo).^methods(:local)>>.name, 'foo',
+        'mixin with "does" lists method during introspection';
+}
 
 # vim: syn=perl6
