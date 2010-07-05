@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 =begin pod
 
@@ -197,6 +197,15 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
         method y(Whatever) { 1; };
     }
     is Y.new.y(*), 1, 'Can dispatch y(*)';
+}
+
+{
+    class InvocantTypeCheck {
+        method x(Int $a:) {
+            42;
+        }
+    }
+    dies_ok { InvocantTypeCheck.new.x() }, 'Invocant type is checked';
 }
 
 # vim: ft=perl6
