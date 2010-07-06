@@ -185,18 +185,17 @@ Perl6-specific tests
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 
-#?rakudo skip 'Autovivify arrays'
 {
-    # types
-    # TODO: waiting on my Dog $spot;
-
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
     ok((try { !defined($an_ary[0]) }), "my Array subscript - Mu");
     try { $an_ary.push("blergh") };
     ok((try { defined($an_ary.pop) }), "push");
     ok((try { !defined($an_ary.pop) }), "comes to shove");
+}
 
+#?rakudo skip 'Autovivify hashes'
+{
     my Hash $a_hash;
 
     ok(!defined($a_hash), "my Hash");
@@ -206,7 +205,10 @@ Perl6-specific tests
     $a_hash<blergh> = 1;
     ok(defined($a_hash.delete('blergh')), "delete");
     ok(!defined($a_hash.delete("blergh")), " - once only");
+}
 
+
+{
     class Dog {};
     my Dog $spot;
 
