@@ -64,6 +64,7 @@ is ([Z] ()), [], "[Z] () eq []";
 
 is ([==] 3), Bool::True, 'unary [==]';
 is ([!=] 3), Bool::True, 'unary [!=]';
+#?rakudo 3 skip "[!==] not implemented"
 is ([!==] 3), Bool::True, 'unary [!==]';
 
 # vim: ft=perl6
