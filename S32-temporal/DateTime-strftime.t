@@ -12,12 +12,12 @@ my $g1 = DateTime.new(:year(1582), :month(10), :day(4),
 
 my $format = '%Y/%m/%d %H:%M:%S %C%e %I=%k%l%t%3N%p %a,%F%%.%n';
 my $need = "1582/10/04 13:02:03 15 4 01=13 1\t654pm Mon,1582-10-04%.\n";
-ok $g1.strftime($format) eq $need, 'first strftime'; # test 1
+ok strftime($format, $g1) eq $need, 'first strftime'; # test 1
 
 $g1 = DateTime.new(:year(1), :month(2),  :day(3),
                    :hour(4), :minute(5), :second(6.987654) );
 
 $format = '%I %6N %A %b=%B';
 $need = "04 987654 Saturday Feb=February";
-ok $g1.strftime($format) eq $need, 'second strftime'; # test 2
+ok strftime($format, $g1) eq $need, 'second strftime'; # test 2
 
