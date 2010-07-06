@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan *;
 
 my ( DateTime $g1, DateTime $g2, Num $t, Int $d );
 
@@ -73,8 +73,8 @@ for 1..3 {
 $g1 = DateTime.new(
           year=>1970, month=>1,  day=>1,
           hour=>1,    minute=>1, second=>1,
-          time-zone=>'+0100' );
-ok $g1.to-epoch==3661, "epoch at 1970-01-01 01:01:01"; # test 15
+          timezone=>'+0100' );
+ok $g1.to-epoch==61, "epoch at 1970-01-01 01:01:01"; # test 15
 ok ~$g1 eq '1970-01-01T01:01:01+0100',
     "as Str 1970-01-01T01:01:01+0100"; # test 16
 
@@ -92,7 +92,7 @@ $g1 = DateTime.new(year=>1969, day=>15, hour=>9, minute=>15);
 ok ~$g1 eq '1969-01-15T09:15:00+0000', 'new without some params'; # test 18
 
 # Loopback
-$g1 = DateTime.parse('2009-12-31T22:33:44+1100');
+$g1 = DateTime.new('2009-12-31T22:33:44+1100');
 ok $g1.ymd eq '2009-12-31' && $g1.hms eq '22:33:44', 'parse ISO 8601'; # test 19
 
 # Try currently implemented strftime() formats
@@ -143,5 +143,122 @@ isa_ok $date, Date, 'Date object is correct class';
 is $date.year, 2010, 'Date year';
 is $date.month, 6, 'Date month';
 is $date.day, 4, 'Date day';
+
+# ---------------------------------------------------------------
+
+sub dt { DateTime.new(year => 1984, |%_); }
+sub ds (Str $s) { DateTime.new($s) }
+sub ymd ($y, $m, $d) { DateTime.new(year => $y, month => $m, day => $d); }
+
+my $now = DateTime.now;
+
+# ---------------------------------------------------------------
+# Input validation
+# ---------------------------------------------------------------
+
+# L<S32::Temporal/'C<DateTime>'/outside of the ranges specified>
+
+lives_ok { dt month => 1 }, 'DateTime accepts January';
+dies_ok { dt month => 0 }, 'DateTime rejects month 0';
+dies_ok { dt month => -1 }, 'DateTime rejects month -1';
+lives_ok { dt month => 12 }, 'DateTime accepts December';
+dies_ok { dt month => 13 }, 'DateTime rejects month 13';
+lives_ok { dt month => 1, day => 31 }, 'DateTime accepts January 31';
+dies_ok { dt month => 1, day => 32 }, 'DateTime rejects January 32';
+lives_ok { dt month => 6, day => 30 }, 'DateTime accepts June 30';
+dies_ok { dt month => 6, day => 31 }, 'DateTime rejects June 31';
+dies_ok { dt month => 2, day => 30 }, 'DateTime rejects February 30';
+lives_ok { ymd 1996, 2, 29 }, 'DateTime accepts 29 Feb 1996';
+dies_ok { ymd 1995, 2, 29 }, 'DateTime rejects 29 Feb 1995';
+lives_ok { ymd 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000';
+lives_ok { ds '2000-02-29T22:33:44+0000' }, 'DateTime accepts 29 Feb 2000 (ISO)';
+dies_ok { ymd 1900, 2, 29 }, 'DateTime rejects 29 Feb 1900';
+dies_ok { ds '1900-02-29T22:33:44+0000' }, 'DateTime rejects 29 Feb 1900 (ISO)';
+lives_ok { dt hour => 0 }, 'DateTime accepts hour 0';
+dies_ok { dt hour => -1 }, 'DateTime rejects hour 0';
+lives_ok { dt hour => 23 }, 'DateTime accepts hour 23';
+dies_ok { dt hour => 24 }, 'DateTime rejects hour 24';
+lives_ok { dt minute => 0 }, 'DateTime accepts minute 0';
+dies_ok { dt minute => -1 }, 'DateTime rejects minute -1';
+lives_ok { dt minute => 59 }, 'DateTime accepts minute 59';
+lives_ok { ds '1999-01-01T00:59:22+0000' }, 'DateTime accepts minute 59 (ISO)';
+lives_ok { dt date => Date.new(1999, 1, 1), minute => 59 }, 'DateTime accepts minute 59 (with Date)';
+dies_ok { dt minute => 60 }, 'DateTime rejects minute 60';
+dies_ok { ds '1999-01-01T00:60:22+0000' }, 'DateTime rejects minute 60 (ISO)';
+dies_ok { dt date => Date.new(1999, 1, 1), minute => 60 }, 'DateTime rejects minute 60 (with Date)';
+lives_ok { dt second => 0 }, 'DateTime accepts second 0';
+lives_ok { dt second => 1/2 }, 'DateTime accepts second 1/2';
+dies_ok { dt second => -1 }, 'DateTime rejects second -1';
+dies_ok { dt second => -1/2 }, 'DateTime rejects second -1/2';
+lives_ok { dt second => 60 }, 'DateTime accepts second 60';
+lives_ok { dt second => 61 }, 'DateTime accepts second 61';
+lives_ok { ds '1999-01-01T12:10:61+0000' }, 'DateTime accepts second 61 (ISO)';
+lives_ok { dt second => 61.5 }, 'DateTime accepts second 61.5';
+lives_ok { dt second => 61.99 }, 'DateTime accepts second 61.99';
+lives_ok { dt date => Date.new(1999, 1, 1), second => 61.99 }, 'DateTime accepts second 61.99 (with Date)';
+dies_ok { dt second => 62 }, 'DateTime rejects second 62';
+dies_ok { ds '1999-01-01T12:10:62+0000' }, 'DateTime rejects second 62 (ISO)';
+dies_ok { dt date => Date.new(1999, 1, 1), second => 62 }, 'DateTime rejects second 62 (with Date)';
+
+# L<S32::Temporal/'"Set" methods'/'Just as with the C<new> method, validation'>
+
+lives_ok { $now.set(year => 2000, month => 2, day => 29) }, 'DateTime accepts 29 Feb 2000 (.set)';
+dies_ok { $now.set(year => 1900, month => 2, day => 29) }, 'DateTime rejects 29 Feb 1900 (.set)';
+lives_ok { $now.set(minute => 59) }, 'DateTime accepts minute 59 (.set)';
+dies_ok { $now.set(minute => 60) }, 'DateTime rejects minute 60 (.set)';
+lives_ok { $now.set(second => 61.5) }, 'DateTime accepts second 61.5 (.set)';
+dies_ok { $now.set(second => 62) }, 'DateTime rejects second 62 (.set)';
+
+# ---------------------------------------------------------------
+# L<S32::Temporal/'"Get" methods'/'The method C<whole-second>'>
+# ---------------------------------------------------------------
+
+is dt(second => 22).whole-second, 22, 'DateTime.whole-second (22)';
+is dt(second => 22.1).whole-second, 22, 'DateTime.whole-second (22.1)';
+is dt(second => 15.9).whole-second, 15, 'DateTime.whole-second (15.9)';
+is dt(second => 0).whole-second, 0, 'DateTime.whole-second (0)';
+is dt(second => 0.9).whole-second, 0, 'DateTime.whole-second (0.9)';
+is dt(second => 60).whole-second, 60, 'DateTime.whole-second (60)';
+is dt(second => 60.5).whole-second, 60, 'DateTime.whole-second (60.5)';
+
+# ---------------------------------------------------------------
+# L<S32::Temporal/'"Get" methods'/'The method C<week>'>
+# ---------------------------------------------------------------
+
+is ymd(1977, 8, 20).week.join(' '), '1977 33', 'DateTime.week (1977-8-20)';
+is ymd(1977, 8, 20).week-year, 1977, 'DateTime.week (1977-8-20)';
+is ymd(1977, 8, 20).week-number, 33, 'DateTime.week-number (1977-8-20)';
+is ymd(1987, 12, 18).week.join(' '), '1987 51', 'DateTime.week (1987-12-18)';
+is ymd(2020, 5, 4).week.join(' '), '2020 19', 'DateTime.week (2020-5-4)';
+
+# From http://en.wikipedia.org/w/index.php?title=ISO_week_date&oldid=370553706#Examples
+
+is ymd(2005, 01, 01).week.join(' '), '2004 53', 'DateTime.week (2005-01-01)';
+is ymd(2005, 01, 02).week.join(' '), '2004 53', 'DateTime.week (2005-01-02)';
+is ymd(2005, 12, 31).week.join(' '), '2005 52', 'DateTime.week (2005-12-31)';
+is ymd(2007, 01, 01).week.join(' '), '2007 1',  'DateTime.week (2007-01-01)';
+is ymd(2007, 12, 30).week.join(' '), '2007 52', 'DateTime.week (2007-12-30)';
+is ymd(2007, 12, 30).week-year, 2007, 'DateTime.week (2007-12-30)';
+is ymd(2007, 12, 30).week-number, 52, 'DateTime.week-number (2007-12-30)';
+is ymd(2007, 12, 31).week.join(' '), '2008 1',  'DateTime.week (2007-12-31)';
+is ymd(2008, 01, 01).week.join(' '), '2008 1',  'DateTime.week (2008-01-01)';
+is ymd(2008, 12, 29).week.join(' '), '2009 1',  'DateTime.week (2008-12-29)';
+is ymd(2008, 12, 31).week.join(' '), '2009 1',  'DateTime.week (2008-12-31)';
+is ymd(2009, 01, 01).week.join(' '), '2009 1',  'DateTime.week (2009-01-01)';
+is ymd(2009, 12, 31).week.join(' '), '2009 53', 'DateTime.week (2009-12-31)';
+is ymd(2010, 01, 03).week.join(' '), '2009 53', 'DateTime.week (2010-01-03)';
+is ymd(2010, 01, 03).week-year, 2009, 'DateTime.week-year (2010-01-03)';
+is ymd(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
+
+# ---------------------------------------------------------------
+# L<S32::Temporal/'"Get" methods'/"also $dt.date('-')">
+# ---------------------------------------------------------------
+
+is $now.date, $now.ymd, 'DateTime.date can be spelled as DateTime.ymd';
+is $now.time, $now.hms, 'DateTime.date can be spelled as DateTime.ymd';
+
+# TODO: day-of-month
+
+done_testing;
 
 # vim: ft=perl6
