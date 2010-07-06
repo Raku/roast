@@ -95,18 +95,6 @@ ok ~$g1 eq '1969-01-15T09:15:00+0000', 'new without some params'; # test 18
 $g1 = DateTime.new('2009-12-31T22:33:44+1100');
 ok $g1.ymd eq '2009-12-31' && $g1.hms eq '22:33:44', 'parse ISO 8601'; # test 19
 
-# Try currently implemented strftime() formats
-$g1 = DateTime.new(:year(1582), :month(10), :day(4),
-                   :hour(13),   :minute(2), :second(3.654321) );
-my $format = '%Y/%m/%d %H:%M:%S %C%e %I=%k%l%t%3N%p %a,%F%%.%n';
-my $need = "1582/10/04 13:02:03 15 4 01=13 1\t654pm Mon,1582-10-04%.\n";
-ok $g1.strftime($format) eq $need, 'first strftime'; # test 20
-$g1 = DateTime.new(:year(1), :month(2),  :day(3),
-                   :hour(4), :minute(5), :second(6.987654) );
-$format = '%I %6N %A %b=%B';
-$need = "04 987654 Saturday Feb=February";
-ok $g1.strftime($format) eq $need, 'second strftime'; # test 21
-
 # An independent calculation to cross check the Temporal algorithms.
 sub test-gmtime( Num $t is copy ) {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst);
@@ -138,11 +126,11 @@ sub test-gmtime( Num $t is copy ) {
 
 $g1 = DateTime.new(:year(2010), :month(06), :day(04));
 my $date;
-lives_ok { $date = $g1.Date(); }, 'Calling .Date() method';
-isa_ok $date, Date, 'Date object is correct class';
-is $date.year, 2010, 'Date year';
-is $date.month, 6, 'Date month';
-is $date.day, 4, 'Date day';
+lives_ok { $date = $g1.Date(); }, 'Calling .Date() method'; # test 20
+isa_ok $date, Date, 'Date object is correct class'; # test 21
+is $date.year, 2010, 'Date year'; # test 22
+is $date.month, 6, 'Date month'; # test 23
+is $date.day, 4, 'Date day'; # test 24
 
 # ---------------------------------------------------------------
 
@@ -255,7 +243,7 @@ is ymd(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
 # ---------------------------------------------------------------
 
 is $now.date, $now.ymd, 'DateTime.date can be spelled as DateTime.ymd';
-is $now.time, $now.hms, 'DateTime.date can be spelled as DateTime.ymd';
+is $now.time, $now.hms, 'DateTime.date can be spelled as DateTime.hms';
 
 # TODO: day-of-month
 
