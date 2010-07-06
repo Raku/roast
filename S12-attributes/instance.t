@@ -458,7 +458,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.a.join('|'), '2|3|4|5', 
         '... all of the above actually worked (not only lived)';
 
-    #?rakudo 3 todo 'typed arrays'
+    #?rakudo 4 todo 'typed arrays'
     dies_ok { $o.a = <foo bar> }, 'type enforced on array attrib (assignment)';
     dies_ok { $o.a[2] = $*IN   }, 'type enforced on array attrib (item assignment)';
     dies_ok { $o.a.push: [2, 3]}, 'type enforced on array attrib (push)';
@@ -476,12 +476,11 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
     is_deeply $o.h<a b c d>, (1, 2, 3, 4),   '... all of them worked';
 
-    #?rakudo 3 todo 'typed hash'
+    #?rakudo 5 todo 'typed hash'
     dies_ok  {$o.h = { :a<b> }  },         'Type enforced (hash, assignment)';
     dies_ok  {$o.h<a> = 'b'  },            'Type enforced (hash, insertion)';
     dies_ok  {$o.h.push: (g => 'f') },     'Type enforced (hash, push)';
     dies_ok  {$o.h<blubb><bla> = 3 },      'No autovivification (typed hash)';
-    #?rakudo todo 'typed hash'
     is_deeply $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
 }
 

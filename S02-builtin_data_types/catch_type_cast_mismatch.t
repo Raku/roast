@@ -15,11 +15,13 @@ plan 10;
 my $ref = { val => 42 };
 #?rakudo todo 'Hash.isa(Hash)'
 isa_ok($ref, Hash);
+#?rakudo todo "die or fail?"
 dies_ok { $ref[0] }, 'Hash !~~ Positional';
 
 {
     $ref = [ 42 ];
     isa_ok($ref, Array);
+    #?rakudo todo "die or fail?"
     dies_ok( { $ref<0> }, 'Accessing an array as a hash dies');
 }
 

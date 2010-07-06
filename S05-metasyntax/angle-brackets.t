@@ -221,9 +221,8 @@ character classes), and those are referenced at the correct spot.
 {
     ok('1./:"{}=-' ~~ /^[<!alpha> .]+$/, '<!alpha> matches non-letter characters');
     ok(!('abcdef'   ~~ /<!alpha>./), '<!alpha> does not match letter characters');
-    #?rakudo todo '<!before>'
-    is(+('.2 1' ~~ /<!before \.> \d/), 1, '<!before>');
-    is +$/.keys, 0, '<!before \\.> does not capture';
+    is(+('.2 1' ~~ /<!before 2> \d/), 1, '<!before>');
+    is +$/.caps, 0, '<!before 2> does not capture';
 }
 
 # A leading ? indicates a positive zero-width assertion

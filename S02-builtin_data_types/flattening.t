@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 33;
 
 {
     my @array = 11 .. 15;
@@ -13,8 +13,6 @@ plan 34;
     # 3[0] etc. should *not* work, but (3,)[0] should.
     # That's similar as with the .kv issue we've had: 3.kv should fail, but
     # (3,).kv should work.
-    #?pugs todo 'bug'
-    dies_ok({@array[0][0]}, 'scalar is not implicitly array');
 }
 
 {

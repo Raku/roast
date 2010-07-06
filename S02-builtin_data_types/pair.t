@@ -146,8 +146,8 @@ test2 %hash;
 sub test3 (%h){
     for %h.pairs -> $pair {
         isa_ok($pair,Pair);
-        dies_ok({$pair[0]}, 'sub test3: access by $pair[0] should not work');
-        dies_ok({$pair[1]}, 'sub test3: access by $pair[1] should not work');
+        isa_ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
+        ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure');
     }
 }
 test3 %hash;

@@ -31,6 +31,7 @@ ok($foo eq "",     "Any eq ''");
 ok($foo ne "f",    "Any ne 'f'");
 
 my @foo;
+#?rakudo todo "Any.Stringy"
 ok(@foo[0] eq "",  "Array Any eq ''");
 ok(@foo[0] ne "f",  "Array Any ne 'f'");
 
