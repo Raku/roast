@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S32::Str/Str/"=item split">
-plan 47;
+plan *;
 
 =begin description
 
@@ -95,5 +95,7 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     is @split.join('|'), 'a|4|b|5|',
        'split(:all) and trailing delimiter (values)';
 }
+
+done_testing;
 
 # vim: ft=perl6
