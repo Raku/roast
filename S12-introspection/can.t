@@ -67,6 +67,7 @@ class Puppy is Dog {
 }
 my $pup = Puppy.new();
 
+#?rakudo todo '.can returning lists'
 {
     my $iters = 0;
     my $found = "";
@@ -78,6 +79,7 @@ my $pup = Puppy.new();
     is $found, "yapbow", "subclass got right methods called (on instance)";
 }
 
+#?rakudo todo '.can returning lists'
 {
     my $iters = 0;
     my $found = "";
