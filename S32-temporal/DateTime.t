@@ -242,8 +242,8 @@ is ymd(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
 # L<S32::Temporal/'"Get" methods'/"also $dt.date('-')">
 # ---------------------------------------------------------------
 
-is $now.date, $now.ymd, 'DateTime.date can be spelled as DateTime.ymd';
-is $now.time, $now.hms, 'DateTime.date can be spelled as DateTime.hms';
+is $now.date, $now.ymd, 'DateTime.ymd can be spelled as DateTime.date';
+is $now.time, $now.hms, 'DateTime.hms can be spelled as DateTime.time';
 
 # TODO: day-of-month
 
