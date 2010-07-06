@@ -147,7 +147,7 @@ sub test3 (%h){
     for %h.pairs -> $pair {
         isa_ok($pair,Pair);
         isa_ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
-        ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure');
+        ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure';
     }
 }
 test3 %hash;
