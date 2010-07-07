@@ -4,7 +4,7 @@ use Test;
 use Temporal; use Date; # XXX
 
 plan *;
-#`⁅
+
 my ( DateTime $g1, DateTime $g2, Num $t, Int $d );
 
 $g1 = DateTime.from-epoch(0);
@@ -135,13 +135,13 @@ is $date.month, 6, 'Date month'; # test 23
 is $date.day, 4, 'Date day'; # test 24
 
 # --------------------------------------------------------------------
-#`⁆
+#`⁅
 sub dt { DateTime.new(year => 1984, |%_); }
 sub ds (Str $s) { DateTime.new($s) }
 sub ymd ($y, $m, $d) { DateTime.new(year => $y, month => $m, day => $d); }
 
 my $now = DateTime.now;
-#`⁅
+
 # --------------------------------------------------------------------
 # Input validation
 # --------------------------------------------------------------------
