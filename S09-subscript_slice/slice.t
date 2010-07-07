@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 31;
+plan 23;
 
 {   my @array = (3,7,9,11);
 
@@ -31,53 +31,11 @@ plan 31;
 }
 
 # Behaviour assumed to be the same as Perl 5
+#?rakudo skip ":= nyi"
 {   my @array  = <a b c d>;
     my @slice := @array[1,2];
     is ~(@slice = <A B C D>), "A B",
         "assigning a slice too many items yields a correct return value";
-}
-
-# Binding on array slices
-#?rakudo skip 'Error Msg: "rtype not set" when binding to an array slices'
-{   my @array = <a b c d>;
-
-    try { @array[1, 2] := <B C> };
-    #?pugs todo 'feature'
-    is ~@array, "a B C d", "binding array slices works (1)";
-}
-
-#?rakudo skip 'Error Msg: "rtype not set" when binding to an array slices'
-{   my @array = <a b c d>;
-
-    try { @array[1, 2] := <B> };
-    #?pugs 2 todo 'feature'
-    is ~@array, "a B d",    "binding array slices works (2-1)";
-    ok !defined(@array[2]), "binding array slices works (2-2)";
-}
-
-
-#?rakudo skip 'Error Msg: "rtype not set" when binding to an array slices'
-{   my @array = <a b c d>;
-    my $foo   = "B";
-    my $bar   = "C";
-
-    @array[1, 2] := ($foo, $bar);
-    #?pugs todo 'feature'
-    is ~@array, "a B C d", "binding array slices works (3-1)";
-
-    $foo = "BB";
-    $bar = "CC";
-    #?pugs todo 'feature'
-    is ~@array, "a BB CC d", "binding array slices works (3-2)";
-
-    try {
-        @array[1] = "BBB";
-        @array[2] = "CCC";
-    };
-    is ~@array, "a BBB CCC d", "binding array slices works (3-3)";
-    #?pugs 2 todo 'feature'
-    is $foo,    "BBB",         "binding array slices works (3-4)";
-    is $bar,    "CCC",         "binding array slices works (3-5)";
 }
 
 # Slices on array literals
@@ -101,9 +59,9 @@ plan 31;
     is +@other, 0, '@array[2..1] is an empty slice';
 }
 
+#?rakudo skip 'RT 61844'
 {
     eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
-    #?rakudo todo 'RT 61844'
     is eval('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
 
@@ -111,12 +69,11 @@ plan 31;
 {
     my @array = <1 2 3>;
     isa_ok @array, Array;
-    isa_ok @array[0..1], List;
+    ok @array[0..1] ~~ Positional;
 
-    #?rakudo 2 todo 'RT #63014'
-    isa_ok @array[0..0], List, 'slice with one element is a list';
+    ok @array[0..0] ~~ Positional, 'slice with one element is a list';
     my $zero = 0;
-    isa_ok @array[$zero..$zero], List,
+    ok @array[$zero..$zero] ~~ Positional,
            'slice with one element specified by variables';
 }
 
