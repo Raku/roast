@@ -1,8 +1,10 @@
 use v6;
 use Test;
 
-plan *;
+use Temporal; use Date; # XXX
 
+plan *;
+#`⁅
 my ( DateTime $g1, DateTime $g2, Num $t, Int $d );
 
 $g1 = DateTime.from-epoch(0);
@@ -132,17 +134,17 @@ is $date.year, 2010, 'Date year'; # test 22
 is $date.month, 6, 'Date month'; # test 23
 is $date.day, 4, 'Date day'; # test 24
 
-# ---------------------------------------------------------------
-
+# --------------------------------------------------------------------
+#`⁆
 sub dt { DateTime.new(year => 1984, |%_); }
 sub ds (Str $s) { DateTime.new($s) }
 sub ymd ($y, $m, $d) { DateTime.new(year => $y, month => $m, day => $d); }
 
 my $now = DateTime.now;
-
-# ---------------------------------------------------------------
+#`⁅
+# --------------------------------------------------------------------
 # Input validation
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 
 # L<S32::Temporal/'C<DateTime>'/outside of the ranges specified>
 
@@ -197,9 +199,9 @@ dies_ok { $now.set(minute => 60) }, 'DateTime rejects minute 60 (.set)';
 lives_ok { $now.set(second => 61.5) }, 'DateTime accepts second 61.5 (.set)';
 dies_ok { $now.set(second => 62) }, 'DateTime rejects second 62 (.set)';
 
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 # L<S32::Temporal/'"Get" methods'/'The method C<whole-second>'>
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 
 is dt(second => 22).whole-second, 22, 'DateTime.whole-second (22)';
 is dt(second => 22.1).whole-second, 22, 'DateTime.whole-second (22.1)';
@@ -209,9 +211,9 @@ is dt(second => 0.9).whole-second, 0, 'DateTime.whole-second (0.9)';
 is dt(second => 60).whole-second, 60, 'DateTime.whole-second (60)';
 is dt(second => 60.5).whole-second, 60, 'DateTime.whole-second (60.5)';
 
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 # L<S32::Temporal/'"Get" methods'/'The method C<week>'>
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 
 is ymd(1977, 8, 20).week.join(' '), '1977 33', 'DateTime.week (1977-8-20)';
 is ymd(1977, 8, 20).week-year, 1977, 'DateTime.week (1977-8-20)';
@@ -238,14 +240,121 @@ is ymd(2010, 01, 03).week.join(' '), '2009 53', 'DateTime.week (2010-01-03)';
 is ymd(2010, 01, 03).week-year, 2009, 'DateTime.week-year (2010-01-03)';
 is ymd(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
 
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 # L<S32::Temporal/'"Get" methods'/"also $dt.date('-')">
-# ---------------------------------------------------------------
+# --------------------------------------------------------------------
 
 is $now.date, $now.ymd, 'DateTime.ymd can be spelled as DateTime.date';
 is $now.time, $now.hms, 'DateTime.hms can be spelled as DateTime.time';
 
+# --------------------------------------------------------------------
+# L<S32::Temporal/'"Set" methods'/'The C<truncate> method'>
+# --------------------------------------------------------------------
+
+{
+    my $moon-landing = dt    # Although the seconds part is fictional.
+       year => 1969, month => 6, day => 20,
+       hour => 8, minute => 17, second => 32.4;
+
+    my $dt = $moon-landing.clone; $dt.truncate(to => 'second');
+    is $dt.second, 32, 'DateTime.truncate(to => "second")';
+    $dt = $moon-landing.clone; $dt.truncate(to => 'minute');
+    is $dt.iso8601, '1969-06-20T08:17:00+0000', 'DateTime.truncate(to => "minute")';
+    $dt = $moon-landing.clone; $dt.truncate(to => 'hour');
+    is $dt.iso8601, '1969-06-20T08:00:00+0000', 'DateTime.truncate(to => "hour")';
+    $dt = $moon-landing.clone; $dt.truncate(to => 'day');
+    is $dt.iso8601, '1969-06-20T00:00:00+0000', 'DateTime.truncate(to => "day")';
+    $dt = $moon-landing.clone; $dt.truncate(to => 'month');
+    is $dt.iso8601, '1969-06-01T00:00:00+0000', 'DateTime.truncate(to => "month")';
+    $dt = $moon-landing.clone; $dt.truncate(to => 'year');
+    is $dt.iso8601, '1969-01-01T00:00:00+0000', 'DateTime.truncate(to => "year")';
+
+    $dt = ymd 1999, 1, 18; $dt.truncate(to => 'week');
+    is $dt.iso8601, '1999-01-18T00:00:00+0000', 'DateTime.truncate(to => "week") (no change in day)';
+    $dt = ymd 1999, 1, 19; $dt.truncate(to => 'week');
+    is $dt.iso8601, '1999-01-18T00:00:00+0000', 'DateTime.truncate(to => "week") (short jump)';
+    $dt = ymd 1999, 1, 17; $dt.truncate(to => 'week');
+    is $dt.iso8601, '1999-01-11T00:00:00+0000', 'DateTime.truncate(to => "week") (long jump)';
+    $dt = ymd 1999, 4, 2; $dt.truncate(to => 'week');
+    is $dt.iso8601, '1999-03-29T00:00:00+0000', 'DateTime.truncate(to => "week") (changing month)';
+    $dt = ymd 1999, 1, 3; $dt.truncate(to => 'week');
+    is $dt.iso8601, '1998-12-28T00:00:00+0000', 'DateTime.truncate(to => "week") (changing year)';
+    $dt = ymd 2000, 3, 1; $dt.truncate(to => 'week');
+    is $dt.iso8601, '2000-02-28T00:00:00+0000', 'DateTime.truncate(to => "week") (skipping over Leap Day)';
+    $dt = ymd 1988, 3, 3; $dt.truncate(to => 'week');
+    is $dt.iso8601, '1988-02-29T00:00:00+0000', 'DateTime.truncate(to => "week") (landing on Leap Day)';
+}
+
+# --------------------------------------------------------------------
+# L<S32::Temporal/'"Get" methods'/'The C<day-of-year> method'>
+# --------------------------------------------------------------------
+
+is ymd(1975,  1,  1).day-of-year,   1, 'DateTime.day-of-year (1975-01-01)';
+is ymd(1977,  5,  5).day-of-year, 125, 'DateTime.day-of-year (1977-05-05)';
+is ymd(1983, 11, 27).day-of-year, 331, 'DateTime.day-of-year (1983-11-27)';
+is ymd(1999,  2, 28).day-of-year,  59, 'DateTime.day-of-year (1999-02-28)';
+is ymd(1999,  3,  1).day-of-year,  60, 'DateTime.day-of-year (1999-03-01)';
+is ymd(1999, 12, 31).day-of-year, 365, 'DateTime.day-of-year (1999-12-31)';
+is ymd(2000,  2, 28).day-of-year,  59, 'DateTime.day-of-year (2000-02-28)';
+is ymd(2000,  2, 29).day-of-year,  60, 'DateTime.day-of-year (2000-02-29)';
+is ymd(2000,  3,  1).day-of-year,  61, 'DateTime.day-of-year (2000-03-01)';
+is ymd(2000, 12, 31).day-of-year, 366, 'DateTime.day-of-year (2000-12-31)';
+
+# --------------------------------------------------------------------
+# L<S32::Temporal/'"Get" methods'/'The C<weekday-of-month> method'>
+# --------------------------------------------------------------------
+
+is ymd(1982, 2,  1).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-02-01)';
+is ymd(1982, 2,  7).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-02-07)';
+is ymd(1982, 2,  8).weekday-of-month, 2, 'DateTime.weekday-of-month (1982-02-08)';
+is ymd(1982, 2, 18).weekday-of-month, 3, 'DateTime.weekday-of-month (1982-02-18)';
+is ymd(1982, 2, 28).weekday-of-month, 4, 'DateTime.weekday-of-month (1982-02-28)';
+is ymd(1982, 4,  4).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-04-04)';
+is ymd(1982, 4,  7).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-04-07)';
+is ymd(1982, 4,  8).weekday-of-month, 2, 'DateTime.weekday-of-month (1982-04-08)';
+is ymd(1982, 4, 13).weekday-of-month, 2, 'DateTime.weekday-of-month (1982-04-13)';
+is ymd(1982, 4, 30).weekday-of-month, 5, 'DateTime.weekday-of-month (1982-04-30)';
+
+# --------------------------------------------------------------------
+# L<S32::Temporal/'"Set" methods'/adjust the time zone>
+# --------------------------------------------------------------------
+
+# We use $dt.set(timezone => FOO) instead of $dt.timezone = FOO
+# because Rakudo hasn't yet implemented the latter.
+
+{
+    sub t0($tz) { ds "2005-02-04T15:25:00$tz" }
+
+    say 'a';
+    my $dt = t0 '+0900'; $dt.set(timezone => '+0600');
+    is $dt.hour, 12, 'Changing time zones';
+
+    $dt = t0 '+0200'; $dt.set(timezone => '+0400');
+    is $dt.iso8601, '2005-02-04T17:25:00+0400', 'Changing time zones';
+    $dt = t0 '+0000'; $dt.set(timezone => '-0100');
+    is $dt.iso8601, '2005-02-04T14:25:00-0100', 'Changing time zones';
+    $dt = t0 '+0100'; $dt.set(timezone => '-0100');
+    is $dt.iso8601, '2005-02-04T13:25:00-0100', 'Changing time zones';
+    $dt = t0 '-0200'; $dt.set(timezone => '-0500');
+    is $dt.iso8601, '2005-02-04T12:25:00-0500', 'Changing time zones';
+    $dt = t0 '+0000'; $dt.set(timezone => '-0013');
+    is $dt.iso8601, '2005-02-04T15:12:00-0013', 'Changing time zones (minus minutes)';
+    $dt = t0 '+0000'; $dt.set(timezone => '-0027');
+    is $dt.iso8601, '2005-02-04T14:58:00-0027', 'Changing time zones (hour rollover 1)';
+    $dt = t0 '+0000'; $dt.set(timezone => '+0044');
+    is $dt.iso8601, '2005-02-04T16:09:00+0044', 'Changing time zones (hour rollover 2)';
+    $dt = t0 '+0311'; $dt.set(timezone => '-0227');
+    is $dt.iso8601, '2005-02-04T09:47:00-0227', 'Changing time zones (hours and minutes)';
+    $dt = t0 '+0000'; $dt.set(timezone => '-1855');
+    is $dt.iso8601, '2005-02-03T20:30:00-1855', 'Changing time zones (day rollover)';
+    $dt = ds "2005-01-01T02:22:00+0300"; $dt.set(timezone => '+0035');
+    is $dt.iso8601, '2004-12-31T23:57:00+0035', 'Changing time zones (year rollover)';
+}
+#`⁆
+
+
 # TODO: day-of-month
+# TODO: offset
 
 done_testing;
 
