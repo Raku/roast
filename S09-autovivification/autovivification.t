@@ -26,12 +26,14 @@ plan 42;
 
   %hash<key><innerkey> = 17;
   is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
+  #?rakudo todo 'isa and Hash'
   isa_ok %hash<key>, Hash, 'Inner hash item is really a Hash';
 }
 
 # Autovification by push, unshift, etc.
 # XXX I understand that @array[0].push(...) should autovivify an Array
 # in @array[0], but is that also true for a normal scalar?
+#?rakudo skip 'autoviv with push/unshift'
 {
   my $arrayref;
 
@@ -40,6 +42,7 @@ plan 42;
   isa_ok $arrayref, Array, 'autovivified to Array';
 }
 
+#?rakudo skip 'autoviv with push/unshift'
 {
   my $arrayref;
 
@@ -49,6 +52,7 @@ plan 42;
 
 # Autovification by push, unshift, etc. of an array/hash element
 # L<S09/Autovivification/"push, unshift, .[]">
+#?rakudo skip 'autoviv with push/unshift'
 {
   my @array;
 
@@ -56,6 +60,7 @@ plan 42;
   is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
 }
 
+#?rakudo skip 'autoviv with push/unshift'
 {
   my %hash;
 
@@ -69,44 +74,46 @@ plan 42;
 #?rakudo skip "Error Msg: get_pmc_keyed() not implemented in class 'Undef'"
 {
   my $hashref;
-  ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (1)";
+  ok $hashref !~~ Hash, "uninitialized variable is not a Hash (1)";
 
   $hashref<key> = 23;
   is $hashref<key>,  23, "hash element assignment worked";
-  ok $hashref.isa(Hash), "uninitialized variable was autovivified to a hash (1)";
+  ok $hashref.isa !~~ Hash, "uninitialized variable was autovivified to a hash (1)";
 }
 
 #?pugs todo: 'The lives_ok items are failing'
 {
   my $hashref;
-  ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (2)";
+  ok $hashref !~~ Hash, "uninitialized variable is not a Hash (2)";
 
 # Note that 
 #    Autovivification will only happen if the *vivifiable* *path* is used as a container
 #    ... value extraction does not autovivify.
   lives_ok { my $elem = $hashref<key> },
     "accessing a not existing hash element of an uninitialized variable works";
-  ok !$hashref.isa(Hash), "uninitialized variable is not autovivified to a hash (2)";
+  ok $hashref !~~ Hash, "uninitialized variable is not autovivified to a hash (2)";
 
   my $hashref2;
   lives_ok { my $elem2 = $hashref2<key2><a><b><c><d><e><f> },
     "accessing a not existing hash element of an uninitialized variable works (2)";
-  ok !$hashref2.isa(Hash), "uninitialized variable is not autovivified to a hash (3)";
-  ok !$hashref2<key2><a><b><c><d><e>.isa(Hash), "uninitialized variable is not autovivified to a hash (4)";
+  ok $hashref2 !~~ Hash, "uninitialized variable is not autovivified to a hash (3)";
+  ok $hashref2<key2><a><b><c><d><e> !~~ Hash, "uninitialized variable is not autovivified to a hash (4)";
   
 }
 
 {
   my $hashref;
-  ok !$hashref.isa(Hash), "uninitialized variable is not a Hash (3)";
+  ok $hashref !~~ Hash, "uninitialized variable is not a Hash (3)";
 
   lives_ok { my $elem := $hashref<key> },
     "binding a not existing hash element of an uninitialized variable works";
-  ok $hashref.isa(Hash), "uninitialized variable is autovivified to a hash (4)";
+  #?rakudo todo 'autoviv, binding'
+  ok $hashref ~~ Hash, "uninitialized variable is autovivified to a hash (4)";
 
   lives_ok { my $elem2 := $hashref<key2><a><b><c><d><e><f> },
     "binding a not existing hash element of an uninitialized variable works (2)";
-  ok $hashref<key2><a><b><c><d><e>.isa(Hash), "uninitialized variable is autovivified to a hash (5)";
+  #?rakudo todo 'autoviv, binding'
+  ok $hashref<key2><a><b><c><d><e> ~~ Hash, "uninitialized variable is autovivified to a hash (5)";
 }
 
 # Simple array autovivification
@@ -143,10 +150,12 @@ plan 42;
 
   lives_ok { my $elem := $arrayref[42] },
     "binding a not existing array element of an uninitialized variable works (1)";
+  #?rakudo todo 'unknown'
   ok $arrayref.isa(Array), "uninitialized variable is autovivified to an array (1)";
 
   lives_ok { my $elem2 := $arrayref[1][2][3][4][5][6] },
     "binding a not existing array element of an uninitialized variable works (2)";
+  #?rakudo todo 'unknown'
   ok $arrayref[1][2][3][4][5].isa(Array), "uninitialized variable is autovivified to an array (2)";
 }
 
