@@ -26,7 +26,6 @@ is Buf.new([195, 182]).decode, 'ö', 'decoding a Buf with UTF-8';
 is Buf.new([246]).decode('ISO-8859-1'), 'ö', 'decoding a Buf with Latin-1';
 
 ok Buf ~~ Stringy, 'Buf does Stringy';
-#?rakudo todo 'Not doing Positional yet'
 ok Buf ~~ Positional, 'Buf does Positional';
 
 # vim: ft=perl6

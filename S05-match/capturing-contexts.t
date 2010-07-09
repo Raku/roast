@@ -20,7 +20,6 @@ plan *;
 {
   'abd' ~~ m/ (a) (b) c || (\w) b d /;
   ok( $/[0] eq 'a', 'positional capture accessible');
-  #?rakudo todo 'array context'
   ok( @($/).[0] eq 'a', 'array context - correct number of positional captures');
   ok( @($/).elems == 1, 'array context - correct number of positional captures');
   ok( $/.list.elems == 1, 'the .list methods returns a list object');
@@ -31,7 +30,6 @@ plan *;
 {
   'abd' ~~ m/ <alpha> <alpha> c || <alpha> b d /;
   ok( $/<alpha> eq 'a', 'named capture accessible');
-  #?rakudo 2 todo 'hash context'
   ok( %($/).keys == 1, 'hash context - correct number of named captures');
   ok( %($/).<alpha> eq 'a', 'hash context - named capture accessible');
   ok( $/.hash.keys[0] eq 'alpha', 'the .hash method returns a hash object');

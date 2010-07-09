@@ -113,7 +113,6 @@ is "Word".split("", 3).join(','), <W o rd>.join(','),
 dies_ok {"  abc  def  ".split()}, q/Str.split() disallowed/;
 
 # This one returns an empty list
-#?rakudo todo "Empty split on empty yields a single result"
 is  "".split('').elems, 0, q/"".split()/;
 
 # ... yet this one does not (different to p5).
