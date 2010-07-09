@@ -89,7 +89,6 @@ plan 47;
   is @array[1], "g",   "binding of array elements works with rebinding the array (5)";
 }
 
-#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (@arr) { @arr[1] = "new_value" }
 
@@ -102,7 +101,6 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a sub expecting an array behaves correctly (2)";
 }
 
-#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (Array $arr) { $arr[1] = "new_value" }
 
@@ -115,7 +113,6 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a sub expecting an arrayref behaves correctly (2)";
 }
 
-#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (@args) { @args[1] = "new_value" }
 
@@ -156,7 +153,6 @@ plan 47;
 }
 
 # Binding with .splice
-#?rakudo skip 'splice'
 {
   my @array  = <a b c>;
   my $var    = "d";

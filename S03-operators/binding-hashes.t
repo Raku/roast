@@ -89,7 +89,6 @@ plan 37;
   is %hash<b>, "g", "binding of hash elements works with rebinding the hash (5)";
 }
 
-#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (%h) { %h<b> = "new_value" }
 
@@ -103,7 +102,6 @@ plan 37;
     "passing a hash to a sub expecting a hash behaves correctly (2)";
 }
 
-#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (Hash $h) { $h<b> = "new_value" }
 

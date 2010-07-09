@@ -100,7 +100,6 @@ is($quux.key, 'quux', "lhs quotes" );
 
 # illustrate a bug
 
-#?rakudo skip ":= NYI"
 {
     my $var   = 'foo' => 'bar';
     sub test1 (Pair $pair) {
@@ -118,7 +117,6 @@ is($quux.key, 'quux', "lhs quotes" );
 
 my %hash  = ('foo' => 'bar');
 
-#?rakudo skip ":= NYI"
 {
     for  %hash.pairs -> $pair {
         isa_ok($pair,Pair) ;
@@ -273,7 +271,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   is $val,                 "val",   "setting .value does not change the original var";
 }
 
-#?rakudo skip 'pair binding not implemented'
 {
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
@@ -291,7 +288,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   dies_ok { $pair.value = 42 },      "the .value was really bound";  # (can't modify constant)
 }
 
-#?rakudo skip 'pair binding not implemented'
 {
   my ($key, $val) = <key val>;
   my $pair        = (abc => "def");

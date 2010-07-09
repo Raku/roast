@@ -33,7 +33,6 @@ plan 63;
     is fortytwo(),  42,               'my variable with & sigil works (2)';
 }
 
-#?rakudo skip 'binding'
 {
   my $was_in_sub;
   my &foo := -> $arg { $was_in_sub = $arg };

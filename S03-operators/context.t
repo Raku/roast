@@ -27,7 +27,6 @@ plan *;
     # Test the only difference between @() and list()
     is(list(), (), 'list() should return an empty list');
     'foo' ~~ /oo/; # run a regex so we have $/ below
-    #?rakudo skip '@()'
     is(@(),  @($/), '@() should be the same as @($/)');
 }
 

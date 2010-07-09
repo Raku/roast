@@ -295,7 +295,6 @@ plan 84;
  isa_ok($rr, Sub );
 }
 
-#?rakudo skip 'binding NYI'
 {
  my sub baz() { return 1;};
  my sub bar() { return baz;} ;
