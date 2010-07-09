@@ -551,6 +551,12 @@ Hello, World
     isa_ok rx{foo}, Regex, 'rx{...}';
 }
 
+{
+    my $var = 'world';
+    is  qx/echo world/, "world\n", 'qx';
+    is qqx/echo $var/,  "world\n", 'qqx';
+}
+
 done_testing;
 
 # vim: ft=perl6
