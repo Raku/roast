@@ -9,7 +9,6 @@ is eval(q[
 	foo;
 ]), 'foo',  "Calling block binding without argument. (Runtime)";
 
-#?rakudo skip '::='
 {
 is eval(q[
 	my &foo ::= { "foo" };
@@ -27,7 +26,6 @@ is eval(q[
 	foo 1;
 ]), 1,  "Calling block binding with argument. (Runtime, no parens)";
 
-#?rakudo skip '::='
 {
 is eval(q[
 	my &foo ::= { $^a };
@@ -43,7 +41,6 @@ is eval(q[
 
 my &foo_r := { $^a + 5 };
 is foo_r(1), 6, "Testing the value for placeholder(Runtime binding)";
-#?rakudo skip '::='
 {
 my &foo_c ::= { $^a + 5 };
 is foo_c(1), 6, "Testing the value for placeholder(read-only binding)";

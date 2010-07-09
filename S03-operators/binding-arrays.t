@@ -38,6 +38,7 @@ plan 47;
   @array.delete(1);
   # $var unchanged, but assigning to $var doesn't modify @array any
   # longer; similarily, changing @array[1] doesn't modify $var now
+  #?rakudo 3 todo 'array binding, delete'
   is $var,    "e",    "binding of array elements works with .delete (2)";
   is ~@array, "a  c", "binding of array elements works with .delete (3)";
 
@@ -190,7 +191,6 @@ plan 47;
   # @array[$idx] and $var are now "f", but @new_array is unchanged.
   is $var,        "f",     "array assignment creates new containers (2)";
   is ~@array,     "a f c", "array assignment creates new containers (3)";
-  #?rakudo todo 'unknown'
   is ~@new_array, "a e c", "array assignment creates new containers (4)";
 }
 
@@ -230,6 +230,7 @@ plan 47;
 # RT #61566
 {
     eval 'my @rt61566 := 1';
+    #?rakudo todo 'Positional type check on array binding'
     ok $! ~~ Exception, "Can't bind Int to array";
     # TODO: check that the error is the right one
     # <pmichaud> you should get a "Int does not do Positional role"

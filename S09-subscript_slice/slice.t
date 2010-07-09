@@ -31,7 +31,6 @@ plan 23;
 }
 
 # Behaviour assumed to be the same as Perl 5
-#?rakudo skip ":= nyi"
 {   my @array  = <a b c d>;
     my @slice := @array[1,2];
     is ~(@slice = <A B C D>), "A B",

@@ -20,6 +20,7 @@ plan 28;
   my $y := $x;
   is($y, 'Just Another', 'y is now bound to x');
 
+  #?rakudo todo 'binding, =:='
   ok($y =:= $x, 'y is bound to x (we checked with the =:= identity op)');
 
   my $z = $x;
