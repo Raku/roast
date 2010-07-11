@@ -88,6 +88,20 @@ plan *;
     is argcount( try { 17 }, 23, 99 ), 3, 'try gets a block, nothing more';
 }
 
+
+{
+    my $catches = 0;
+    try {
+        try {
+            die 'catch!';
+            CATCH {
+                die 'caught' if ! $catches++;
+            }
+        }
+    }
+    is $catches, 1, 'CATCH does not catch exceptions thrown within it';
+}
+
 done_testing;
 
 # vim: ft=perl6
