@@ -7,11 +7,11 @@ plan 8;
 # L<S02/Lists/To force non-lazy list processing, use the eager list operator>
 
 # Laziness test
-#?rakudo skip 'gather {..} parsefail'
 {
     my $counter = 0;
     my @test = gather { for 1 .. 5 { $counter++; take $_ } };
     is(@test[0], 1, 'iterator works as expected');
+    #?rakudo todo "Array assignment is not lazy -- is this test wrong?"
     is($counter, 1, 'iterator was lazy and only ran the block once');
 }
 
@@ -33,7 +33,7 @@ plan 8;
 
 # L<S02/Lists/A variant of eager is the hyper list operator>
 # Hyper
-#?rakudo skip 'gather {..} parsefail'
+#?rakudo skip 'hyper prefix NYI'
 {
     my $counter = 0;
     my @test = hyper gather { for 1 .. 5 { $counter++; take $_; } };
