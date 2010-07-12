@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 29;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -201,6 +201,13 @@ plan 28;
     dies_ok { 42.sort: { 0 } },   "method form of sort should not work on numbers";
     dies_ok { "str".sort :{ 0 } },"method form of sort should not work on strings";
     is ~(42,).sort: { 0 }, "42",  "method form of sort should work on arrays";
+}
+
+# RT #67010
+{
+    my @list = 1, 2, Code;
+    lives_ok { @list.sort: { $^a cmp $^b } },
+        'sort by class name';
 }
 
 # vim: ft=perl6
