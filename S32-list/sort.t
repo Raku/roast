@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 31;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -208,6 +208,15 @@ plan 29;
     my @list = 1, 2, Code;
     lives_ok { @list.sort: { $^a cmp $^b } },
         'sort by class name';
+}
+
+# RT #68112
+{
+    sub foo () { 0 }
+    lives_ok { (1..10).sort(&foo) },
+        'sort accepts 0-arity method';
+    lives_ok { (1..10).sort(&rand) },
+        'sort accepts rand method';
 }
 
 # vim: ft=perl6
