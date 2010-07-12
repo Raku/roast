@@ -211,6 +211,7 @@ plan 31;
 }
 
 # RT #68112
+#?rakudo skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }
     lives_ok { (1..10).sort(&foo) },
