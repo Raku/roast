@@ -553,8 +553,8 @@ Hello, World
 
 {
     my $var = 'world';
-    is  qx/echo world/, "world\n", 'qx';
-    is qqx/echo $var/,  "world\n", 'qqx';
+    is  qx/echo world/.chomp, "world", 'qx';
+    is qqx/echo $var/.chomp,  "world", 'qqx';
 }
 
 done_testing;
