@@ -694,6 +694,18 @@ my @e;
     @r = <A B C D E> »~» (1, 2, 3, *);
     @e = <A1 B2 C3 D3 E3>;
     is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
+
+    @r = <A B C D E> «~» (1, 2, 3, *);
+    @e = <A1 B2 C3 D3 E3>;
+    is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
+
+    @r = (1, 2, 3, *) «~« <A B C D E>;
+    @e = <1A 2B 3C 3D 3E>;
+    is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
+
+    @r = (1, 2, 3, *) «~» <A B C D E>;
+    @e = <1A 2B 3C 3D 3E>;
+    is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
 }
 
 done_testing;
