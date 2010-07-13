@@ -45,7 +45,7 @@ ok(!Bool::False, 'False works');
 isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
 ok(~Bool::True, 'stringified True works');
-ok(!(~Bool::False), 'stringified False works');
+ok(~Bool::False, 'stringified False is true');
 # NOTE. We don't try to freeze ~True into '1'
 # and ~False into '' as pugs does now. Maybe we should (?!)
 
@@ -55,8 +55,8 @@ ok(+Bool::False ~~ Num);
 is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
 # stringification
-is(~Bool::True, '1', 'True stringifies to 1');
-is(~Bool::False, '0', 'False stringifies to 0');
+is(~Bool::True, 'True', 'True stringifies to True');
+is(~Bool::False, 'False', 'False stringifies to False');
 
 # Arithmetic operations
 my $bool = Bool::False;
