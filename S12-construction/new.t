@@ -18,7 +18,7 @@ lives_ok { $o =  Child.new(:x(2), :y(3)) },
 is $o.y, 3, '... worked for the child';
 is $o.x, 2, '... worked for the parent';
 
-#?rakudo 3 skip 'parent attributes in initialization'
+#?rakudo 3 todo 'parent attributes in initialization'
 lives_ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
 
@@ -28,7 +28,7 @@ is $o.x, 5, '... worked for the parent';
 class GrandChild is Child {
 }
 
-#?rakudo 6 skip 'parent attributes in initialization'
+#?rakudo 6 todo 'parent attributes in initialization'
 lives_ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';
 is $o.y, 4, '... worked for the class Child';
