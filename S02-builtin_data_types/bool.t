@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 41;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -45,18 +45,22 @@ ok(!Bool::False, 'False works');
 isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
 ok(~Bool::True, 'stringified True works');
+#?rakudo todo '~Bool'
 ok(~Bool::False, 'stringified False is true');
 # NOTE. We don't try to freeze ~True into '1'
 # and ~False into '' as pugs does now. Maybe we should (?!)
 
 # numification - interaction with +
-ok(+Bool::True ~~ Num);
-ok(+Bool::False ~~ Num);
+ok(+Bool::True ~~ Numeric);
+ok(+Bool::False ~~ Numeric);
 is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
 # stringification
+#?rakudo 2 todo '~Bool'
 is(~Bool::True, 'True', 'True stringifies to True');
 is(~Bool::False, 'False', 'False stringifies to False');
+is Bool::True.Str, 'Bool::True', 'True.Str';
+is Bool::False.Str, 'Bool::False', 'False.Str';
 
 # Arithmetic operations
 my $bool = Bool::False;
