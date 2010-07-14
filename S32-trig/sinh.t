@@ -1,166 +1,43 @@
 # WARNING:
 # This is a generated file and should not be edited directly.
 # look into generate-tests.pl instead
+
 use v6;
 use Test;
-plan *;
+BEGIN { @*INC.push("t/spec/packages/") };
+use TrigTestSupport;
 
-# This class, designed to help simplify the tests, is very much in a transitional
-# state.  But it works as well as the previous version at the moment.  I'm checking
-# it in just to clean up my local build (and save a remote copy as I take my
-# the machine it lives on vacation).  Should have more updates to this over the 
-# next several days.  --colomon, Sept 3rd 2009.
-
-class AngleAndResult
-{
-    has $.angle_in_degrees;
-    has $.result;
-
-    our @radians-to-whatever = (1, 180 / pi, 200 / pi, 1 / (2 * pi));
-    our @degrees-to-whatever = ((312689/99532) / 180, 1, 200 / 180, 1 / 360);
-    our @degrees-to-whatever-num = @degrees-to-whatever.map({ .Num });
-
-    multi method new(Int $angle_in_degrees is copy, $result is copy) {
-        self.bless(*, :$angle_in_degrees, :$result);
-    }
-    
-    method complex($imaginary_part_in_radians, $base) {
-        my $z_in_radians = $.angle_in_degrees / 180.0 * pi + ($imaginary_part_in_radians)i;
-		$z_in_radians * @radians-to-whatever[$base];
-    }
-    
-    method num($base) {
-		$.angle_in_degrees * @degrees-to-whatever-num[$base];
-    }
-    
-    method rat($base) {
-		$.angle_in_degrees * @degrees-to-whatever[$base];
-    }
-    
-    method int($base) {
-        $.angle_in_degrees;
-    }
-}
-
-my @sines = ( 
-    AngleAndResult.new(-360, 0),
-    AngleAndResult.new(135 - 360, 1/2*sqrt(2)),
-    AngleAndResult.new(330 - 360, -0.5),
-    AngleAndResult.new(0, 0),
-    AngleAndResult.new(30, 0.5),
-    AngleAndResult.new(45, 1/2*sqrt(2)),
-    AngleAndResult.new(90, 1),
-    AngleAndResult.new(135, 1/2*sqrt(2)),
-    AngleAndResult.new(180, 0),
-    AngleAndResult.new(225, -1/2*sqrt(2)),
-    AngleAndResult.new(270, -1),
-    AngleAndResult.new(315, -1/2*sqrt(2)),
-    AngleAndResult.new(360, 0),
-    AngleAndResult.new(30 + 360, 0.5),
-    AngleAndResult.new(225 + 360, -1/2*sqrt(2)),
-    AngleAndResult.new(720, 0)
-);
-
-my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
-
-my @sinhes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num(Radians)) - exp(-$_.num(Radians))) / 2.0)});
-
-my @coshes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num(Radians)) + exp(-$_.num(Radians))) / 2.0)});
-
-my @official_bases = (Radians, Degrees, Gradians, Circles);
 
 # sinh tests
 
-for @sinhes -> $angle
+my $base_list = (TrigTest::official_bases() xx *).flat;
+my $iter_count = 0;
+for TrigTest::sinhes() -> $angle
 {
-    	my $desired_result = $angle.result;
-
-    # sinh(Num)
-    is_approx(sinh($angle.num(Radians)), $desired_result, 
-              "sinh(Num) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(sinh($angle.num($base), $base), $desired_result, 
-                  "sinh(Num) - {$angle.num($base)} $base");
-    }
     
-    # sinh(:x(Num))
-    is_approx(sinh(:x($angle.num(Radians))), $desired_result, 
-              "sinh(:x(Num)) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(sinh(:x($angle.num($base)), :base($base)), $desired_result, 
-                  "sinh(:x(Num)) - {$angle.num($base)} $base");
-    }
+    my $desired-result = $angle.result;
 
-    # Num.sinh tests
-    is_approx($angle.num(Radians).sinh, $desired_result, 
+    # Num.sinh tests -- very thorough
+    is_approx($angle.num(Radians).sinh, $desired-result, 
               "Num.sinh - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx($angle.num($base).sinh($base), $desired_result, 
+    for TrigTest::official_bases() -> $base {
+        is_approx($angle.num($base).sinh($base), $desired-result, 
                   "Num.sinh - {$angle.num($base)} $base");
     }
 
-    # sinh(Rat)
-    is_approx(sinh($angle.rat(Radians)), $desired_result, 
-              "sinh(Rat) - {$angle.rat(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(sinh($angle.rat($base), $base), $desired_result, 
-                  "sinh(Rat) - {$angle.rat($base)} $base");
-    }
-
-    # sinh(:x(Rat))
-    is_approx(sinh(:x($angle.rat(Radians))), $desired_result, 
-              "sinh(:x(Rat)) - {$angle.rat(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(sinh(:x($angle.rat($base)), :base($base)), $desired_result, 
-                  "sinh(:x(Rat)) - {$angle.rat($base)} $base");
-    }
-
-    # Rat.sinh tests
-    is_approx($angle.rat(Radians).sinh, $desired_result, 
-              "Rat.sinh - {$angle.rat(Radians)} default");
-    for @official_bases -> $base {
-        is_approx($angle.rat($base).sinh($base), $desired_result, 
-                  "Rat.sinh - {$angle.rat($base)} $base");
-    }
-
-    # sinh(Int)
-    is_approx(sinh($angle.int(Degrees), Degrees), $desired_result, 
-              "sinh(Int) - {$angle.int(Degrees)} degrees");
-    is_approx($angle.int(Degrees).sinh(Degrees), $desired_result, 
-              "Int.sinh - {$angle.int(Degrees)} degrees");
-
-    # Complex tests
+    # Complex.sinh tests -- also very thorough
     my Complex $zp0 = $angle.complex(0.0, Radians);
-    my Complex $sz0 = $desired_result + 0i;
+    my Complex $sz0 = $desired-result + 0i;
     my Complex $zp1 = $angle.complex(1.0, Radians);
     my Complex $sz1 = { (exp($_) - exp(-$_)) / 2 }($zp1);
     my Complex $zp2 = $angle.complex(2.0, Radians);
     my Complex $sz2 = { (exp($_) - exp(-$_)) / 2 }($zp2);
     
-    # sinh(Complex) tests
-    is_approx(sinh($zp0), $sz0, "sinh(Complex) - $zp0 default");
-    is_approx(sinh($zp1), $sz1, "sinh(Complex) - $zp1 default");
-    is_approx(sinh($zp2), $sz2, "sinh(Complex) - $zp2 default");
-    
-    for @official_bases -> $base {
-        my Complex $z = $angle.complex(0.0, $base);
-        is_approx(sinh($z, $base), $sz0, "sinh(Complex) - $z $base");
-    
-        $z = $angle.complex(1.0, $base);
-        is_approx(sinh($z, $base), $sz1, "sinh(Complex) - $z $base");
-                        
-        $z = $angle.complex(2.0, $base);
-        is_approx(sinh($z, $base), $sz2, "sinh(Complex) - $z $base");
-    }
-    
-    # Complex.sinh tests
     is_approx($zp0.sinh, $sz0, "Complex.sinh - $zp0 default");
     is_approx($zp1.sinh, $sz1, "Complex.sinh - $zp1 default");
     is_approx($zp2.sinh, $sz2, "Complex.sinh - $zp2 default");
     
-    for @official_bases -> $base {
+    for TrigTest::official_bases() -> $base {
         my Complex $z = $angle.complex(0.0, $base);
         is_approx($z.sinh($base), $sz0, "Complex.sinh - $z $base");
     
@@ -174,99 +51,145 @@ for @sinhes -> $angle
 
 is(sinh(Inf), Inf, "sinh(Inf) - default");
 is(sinh(-Inf), -Inf, "sinh(-Inf) - default");
-for @official_bases -> $base
+given $base_list.shift
 {
-    is(sinh(Inf,  $base), Inf, "sinh(Inf) - $base");
-    is(sinh(-Inf, $base), -Inf, "sinh(-Inf) - $base");
+    is(sinh(Inf,  $_), Inf, "sinh(Inf) - $_");
+    is(sinh(-Inf, $_), -Inf, "sinh(-Inf) - $_");
 }
         
+# Num tests
+is_approx((-6.28318530723787).Num.sinh(:base(Radians)), -267.744894056623, "Num.sinh(:base(Radians)) - -6.28318530723787");
+is_approx(sinh((-3.92699081702367).Num), -25.367158320299, "sinh(Num) - -3.92699081702367");
+is_approx(sinh((-30).Num, Degrees), -0.547853473893578, "sinh(Num, Degrees) - -30");
+is_approx(sinh(:x((0).Num)), 0, "sinh(:x(Num)) - 0");
+is_approx(sinh(:x((33.3333333333333).Num), :base(Gradians)), 0.547853473893578, "sinh(:x(Num), :base(Gradians)) - 33.3333333333333");
+
+# Rat tests
+is_approx((0.785398163404734).Rat(1e-9).sinh, 0.86867096149566, "Rat.sinh - 0.785398163404734");
+is_approx((0.25).Rat(1e-9).sinh(Circles), 2.30129890234386, "Rat.sinh(Circles) - 0.25");
+is_approx((2.3561944902142).Rat(1e-9).sinh(:base(Radians)), 5.22797192479415, "Rat.sinh(:base(Radians)) - 2.3561944902142");
+is_approx(sinh((3.14159265361894).Rat(1e-9)), 11.5487393575956, "sinh(Rat) - 3.14159265361894");
+is_approx(sinh((225).Rat(1e-9), Degrees), 25.367158320299, "sinh(Rat, Degrees) - 225");
+is_approx(sinh(:x((4.7123889804284).Rat(1e-9))), 55.6543976018509, "sinh(:x(Rat)) - 4.7123889804284");
+is_approx(sinh(:x((350).Rat(1e-9)), :base(Gradians)), 122.073483520919, "sinh(:x(Rat), :base(Gradians)) - 350");
+
+# Complex tests
+is_approx((1 + 0.318309886183791i).Complex.sinh(:base(Circles)), -111.421190663313 + 243.461441272272i, "Complex.sinh(:base(Circles)) - 1 + 0.318309886183791i");
+is_approx(sinh((6.80678408277788 + 2i).Complex), -188.089623498406 + 410.984331115396i, "sinh(Complex) - 6.80678408277788 + 2i");
+is_approx(sinh((-6.28318530717959 + 2i).Complex, Radians), 111.421190663313 + 243.461441272272i, "sinh(Complex, Radians) - -6.28318530717959 + 2i");
+is_approx(sinh(:x((-3.92699081698724 + 2i).Complex)), 10.5564626871829 + 23.0842075582347i, "sinh(:x(Complex)) - -3.92699081698724 + 2i");
+is_approx(sinh(:x((-30 + 114.591559026165i).Complex), :base(Degrees)), 0.227987490052175 + 1.03681577132525i, "sinh(:x(Complex), :base(Degrees)) - -30 + 114.591559026165i");
+
+# Str tests
+is_approx((0).Str.sinh, 0, "Str.sinh - 0");
+is_approx((33.3333333333333).Str.sinh(Gradians), 0.547853473893578, "Str.sinh(Gradians) - 33.3333333333333");
+is_approx((0.125).Str.sinh(:base(Circles)), 0.86867096149566, "Str.sinh(:base(Circles)) - 0.125");
+is_approx(sinh((1.57079632680947).Str), 2.30129890234386, "sinh(Str) - 1.57079632680947");
+is_approx(sinh((2.3561944902142).Str, Radians), 5.22797192479415, "sinh(Str, Radians) - 2.3561944902142");
+is_approx(sinh(:x((3.14159265361894).Str)), 11.5487393575956, "sinh(:x(Str)) - 3.14159265361894");
+is_approx(sinh(:x((225).Str), :base(Degrees)), 25.367158320299, "sinh(:x(Str), :base(Degrees)) - 225");
+
+# NotComplex tests
+is_approx(NotComplex.new(4.71238898038469 + 2i).sinh, -23.1604015019471 + 50.614569014306i, "NotComplex.sinh - 4.71238898038469 + 2i");
+is_approx(NotComplex.new(350 + 127.323954473516i).sinh(Gradians), -50.8004939935201 + 111.004828772251i, "NotComplex.sinh(Gradians) - 350 + 127.323954473516i");
+is_approx(NotComplex.new(1 + 0.318309886183791i).sinh(:base(Circles)), -111.421190663313 + 243.461441272272i, "NotComplex.sinh(:base(Circles)) - 1 + 0.318309886183791i");
+is_approx(sinh(NotComplex.new(6.80678408277788 + 2i)), -188.089623498406 + 410.984331115396i, "sinh(NotComplex) - 6.80678408277788 + 2i");
+is_approx(sinh(NotComplex.new(-6.28318530717959 + 2i), Radians), 111.421190663313 + 243.461441272272i, "sinh(NotComplex, Radians) - -6.28318530717959 + 2i");
+is_approx(sinh(:x(NotComplex.new(-3.92699081698724 + 2i))), 10.5564626871829 + 23.0842075582347i, "sinh(:x(NotComplex)) - -3.92699081698724 + 2i");
+is_approx(sinh(:x(NotComplex.new(-30 + 114.591559026165i)), :base(Degrees)), 0.227987490052175 + 1.03681577132525i, "sinh(:x(NotComplex), :base(Degrees)) - -30 + 114.591559026165i");
+
+# DifferentReal tests
+is_approx(DifferentReal.new(0).sinh, 0, "DifferentReal.sinh - 0");
+is_approx(DifferentReal.new(33.3333333333333).sinh(Gradians), 0.547853473893578, "DifferentReal.sinh(Gradians) - 33.3333333333333");
+is_approx(DifferentReal.new(0.125).sinh(:base(Circles)), 0.86867096149566, "DifferentReal.sinh(:base(Circles)) - 0.125");
+is_approx(sinh(DifferentReal.new(1.57079632680947)), 2.30129890234386, "sinh(DifferentReal) - 1.57079632680947");
+is_approx(sinh(DifferentReal.new(2.3561944902142), Radians), 5.22797192479415, "sinh(DifferentReal, Radians) - 2.3561944902142");
+is_approx(sinh(:x(DifferentReal.new(3.14159265361894))), 11.5487393575956, "sinh(:x(DifferentReal)) - 3.14159265361894");
+is_approx(sinh(:x(DifferentReal.new(225)), :base(Degrees)), 25.367158320299, "sinh(:x(DifferentReal), :base(Degrees)) - 225");
+
+# Int tests
+is_approx((270).Int.sinh(:base(Degrees)), 55.6543976018509, "Int.sinh(:base(Degrees)) - 270");
+is_approx(sinh((315).Int, Degrees), 122.073483520919, "sinh(Int, Degrees) - 315");
+is_approx(sinh(:x((400).Int), :base(Gradians)), 267.744894056623, "sinh(:x(Int), :base(Gradians)) - 400");
 
 # asinh tests
 
-for @sinhes -> $angle
+for TrigTest::sinhes() -> $angle
 {
-    	my $desired_result = $angle.result;
+    
+    my $desired-result = $angle.result;
 
-    # asinh(Num) tests
-    is_approx(sinh(asinh($desired_result)), $desired_result, 
-              "asinh(Num) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(sinh(asinh($desired_result, $base), $base), $desired_result, 
-                  "asinh(Num) - {$angle.num($base)} $base");
-    }
-    
-    # asinh(:x(Num))
-    is_approx(sinh(asinh(:x($desired_result))), $desired_result, 
-              "asinh(:x(Num)) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(sinh(asinh(:x($desired_result), 
-                                                           :base($base)), 
-                                  $base), $desired_result, 
-                  "asinh(:x(Num)) - {$angle.num($base)} $base");
-    }
-    
-    # Num.asinh tests
-    is_approx($desired_result.Num.asinh.sinh, $desired_result, 
+    # Num.asinh tests -- thorough
+    is_approx($desired-result.Num.asinh.sinh, $desired-result, 
               "Num.asinh - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx($desired_result.Num.asinh($base).sinh($base), $desired_result,
+    for TrigTest::official_bases() -> $base {
+        is_approx($desired-result.Num.asinh($base).sinh($base), $desired-result,
                   "Num.asinh - {$angle.num($base)} $base");
     }
     
-    # asinh(Complex) tests
-    for ($desired_result + 0i, $desired_result + .5i, $desired_result + 2i) -> $z {
+    # Num.asinh(Complex) tests -- thorough
+    for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(sinh(asinh($z)), $z, 
                   "asinh(Complex) - {$angle.num(Radians)} default");
-        for @official_bases -> $base {
-            is_approx(sinh(asinh($z, $base), $base), $z, 
-                      "asinh(Complex) - {$angle.num($base)} $base");
-        }
         is_approx($z.asinh.sinh, $z, 
                   "Complex.asinh - {$angle.num(Radians)} default");
-        for @official_bases -> $base {
+        for TrigTest::official_bases() -> $base {
             is_approx($z.asinh($base).sinh($base), $z, 
                       "Complex.asinh - {$angle.num($base)} $base");
         }
     }
 }
-
-for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
-{
-    # asinh(Rat) tests
-    is_approx(sinh(asinh($desired_result)), $desired_result, 
-              "asinh(Rat) - $desired_result default");
-    for @official_bases -> $base {
-        is_approx(sinh(asinh($desired_result, $base), $base), $desired_result, 
-                  "asinh(Rat) - $desired_result $base");
-    }
-    
-    # Rat.asinh tests
-    is_approx($desired_result.asinh.sinh, $desired_result, 
-              "Rat.asinh - $desired_result default");
-    for @official_bases -> $base {
-        is_approx($desired_result.asinh($base).sinh($base), $desired_result,
-                  "Rat.asinh - $desired_result $base");
-    }
-    
-    next unless $desired_result.denominator == 1;
-    
-    # asinh(Int) tests
-    is_approx(sinh(asinh($desired_result.numerator)), $desired_result, 
-              "asinh(Int) - $desired_result default");
-    for @official_bases -> $base {
-        is_approx(sinh(asinh($desired_result.numerator, $base), $base), $desired_result, 
-                  "asinh(Int) - $desired_result $base");
-    }
-    
-    # Int.asinh tests
-    is_approx($desired_result.numerator.asinh.sinh, $desired_result, 
-              "Int.asinh - $desired_result default");
-    for @official_bases -> $base {
-        is_approx($desired_result.numerator.asinh($base).sinh($base), $desired_result,
-                  "Int.asinh - $desired_result $base");
-    }
-}
         
+# Num tests
+is_approx((0.547853473893578).Num.asinh(:base(Radians)), 0.523598775603156, "Num.asinh(:base(Radians)) - 0.523598775603156");
+is_approx(asinh((0.86867096149566).Num), 0.785398163404734, "asinh(Num) - 0.785398163404734");
+is_approx(asinh((0.547853473893578).Num, Degrees), 30, "asinh(Num, Degrees) - 30");
+is_approx(asinh(:x((0.86867096149566).Num)), 0.785398163404734, "asinh(:x(Num)) - 0.785398163404734");
+is_approx(asinh(:x((0.547853473893578).Num), :base(Gradians)), 33.3333333333333, "asinh(:x(Num), :base(Gradians)) - 33.3333333333333");
+
+# Rat tests
+is_approx(((0.86867096149566).Rat(1e-9)).asinh, 0.785398163404734, "Rat.asinh - 0.785398163404734");
+is_approx((0.547853473893578).Rat(1e-9).asinh(Circles), 0.0833333333333333, "Rat.asinh(Circles) - 0.0833333333333333");
+is_approx((0.86867096149566).Rat(1e-9).asinh(:base(Radians)), 0.785398163404734, "Rat.asinh(:base(Radians)) - 0.785398163404734");
+is_approx(asinh((0.547853473893578).Rat(1e-9)), 0.523598775603156, "asinh(Rat) - 0.523598775603156");
+is_approx(asinh((0.86867096149566).Rat(1e-9), Degrees), 45, "asinh(Rat, Degrees) - 45");
+is_approx(asinh(:x((0.547853473893578).Rat(1e-9))), 0.523598775603156, "asinh(:x(Rat)) - 0.523598775603156");
+is_approx(asinh(:x((0.86867096149566).Rat(1e-9)), :base(Gradians)), 50, "asinh(:x(Rat), :base(Gradians)) - 50");
+
+# Complex tests
+is_approx((0.523598775603156 + 2i).Complex.asinh(:base(Circles)), 0.217378232794649 + 0.203866513229826i, "Complex.asinh(:base(Circles)) - 0.217378232794649 + 0.203866513229826i");
+is_approx(asinh((0.785398163404734 + 2i).Complex), 1.41841325789332 + 1.15495109689711i, "asinh(Complex) - 1.41841325789332 + 1.15495109689711i");
+is_approx(asinh((0.523598775603156 + 2i).Complex, Radians), 1.365827718396 + 1.28093108055158i, "asinh(Complex, Radians) - 1.365827718396 + 1.28093108055158i");
+is_approx(asinh(:x((0.785398163404734 + 2i).Complex)), 1.41841325789332 + 1.15495109689711i, "asinh(:x(Complex)) - 1.41841325789332 + 1.15495109689711i");
+is_approx(asinh(:x((0.523598775603156 + 2i).Complex), :base(Degrees)), 78.2561638060736 + 73.3919447627375i, "asinh(:x(Complex), :base(Degrees)) - 78.2561638060736 + 73.3919447627375i");
+
+# Str tests
+is_approx(((0.86867096149566).Str).asinh, 0.785398163404734, "Str.asinh - 0.785398163404734");
+is_approx((0.547853473893578).Str.asinh(Gradians), 33.3333333333333, "Str.asinh(Gradians) - 33.3333333333333");
+is_approx((0.86867096149566).Str.asinh(:base(Circles)), 0.125, "Str.asinh(:base(Circles)) - 0.125");
+is_approx(asinh((0.547853473893578).Str), 0.523598775603156, "asinh(Str) - 0.523598775603156");
+is_approx(asinh((0.86867096149566).Str, Radians), 0.785398163404734, "asinh(Str, Radians) - 0.785398163404734");
+is_approx(asinh(:x((0.547853473893578).Str)), 0.523598775603156, "asinh(:x(Str)) - 0.523598775603156");
+is_approx(asinh(:x((0.86867096149566).Str), :base(Degrees)), 45, "asinh(:x(Str), :base(Degrees)) - 45");
+
+# NotComplex tests
+is_approx((NotComplex.new(0.523598775603156 + 2i)).asinh, 1.365827718396 + 1.28093108055158i, "NotComplex.asinh - 1.365827718396 + 1.28093108055158i");
+is_approx(NotComplex.new(0.785398163404734 + 2i).asinh(Gradians), 90.2989925363205 + 73.5264704402324i, "NotComplex.asinh(Gradians) - 90.2989925363205 + 73.5264704402324i");
+is_approx(NotComplex.new(0.523598775603156 + 2i).asinh(:base(Circles)), 0.217378232794649 + 0.203866513229826i, "NotComplex.asinh(:base(Circles)) - 0.217378232794649 + 0.203866513229826i");
+is_approx(asinh(NotComplex.new(0.785398163404734 + 2i)), 1.41841325789332 + 1.15495109689711i, "asinh(NotComplex) - 1.41841325789332 + 1.15495109689711i");
+is_approx(asinh(NotComplex.new(0.523598775603156 + 2i), Radians), 1.365827718396 + 1.28093108055158i, "asinh(NotComplex, Radians) - 1.365827718396 + 1.28093108055158i");
+is_approx(asinh(:x(NotComplex.new(0.785398163404734 + 2i))), 1.41841325789332 + 1.15495109689711i, "asinh(:x(NotComplex)) - 1.41841325789332 + 1.15495109689711i");
+is_approx(asinh(:x(NotComplex.new(0.523598775603156 + 2i)), :base(Degrees)), 78.2561638060736 + 73.3919447627375i, "asinh(:x(NotComplex), :base(Degrees)) - 78.2561638060736 + 73.3919447627375i");
+
+# DifferentReal tests
+is_approx((DifferentReal.new(0.86867096149566)).asinh, 0.785398163404734, "DifferentReal.asinh - 0.785398163404734");
+is_approx(DifferentReal.new(0.547853473893578).asinh(Gradians), 33.3333333333333, "DifferentReal.asinh(Gradians) - 33.3333333333333");
+is_approx(DifferentReal.new(0.86867096149566).asinh(:base(Circles)), 0.125, "DifferentReal.asinh(:base(Circles)) - 0.125");
+is_approx(asinh(DifferentReal.new(0.547853473893578)), 0.523598775603156, "asinh(DifferentReal) - 0.523598775603156");
+is_approx(asinh(DifferentReal.new(0.86867096149566), Radians), 0.785398163404734, "asinh(DifferentReal, Radians) - 0.785398163404734");
+is_approx(asinh(:x(DifferentReal.new(0.547853473893578))), 0.523598775603156, "asinh(:x(DifferentReal)) - 0.523598775603156");
+is_approx(asinh(:x(DifferentReal.new(0.86867096149566)), :base(Degrees)), 45, "asinh(:x(DifferentReal), :base(Degrees)) - 45");
+
 done_testing;
 
 # vim: ft=perl6 nomodifiable

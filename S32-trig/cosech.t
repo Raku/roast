@@ -1,166 +1,43 @@
 # WARNING:
 # This is a generated file and should not be edited directly.
 # look into generate-tests.pl instead
+
 use v6;
 use Test;
-plan *;
+BEGIN { @*INC.push("t/spec/packages/") };
+use TrigTestSupport;
 
-# This class, designed to help simplify the tests, is very much in a transitional
-# state.  But it works as well as the previous version at the moment.  I'm checking
-# it in just to clean up my local build (and save a remote copy as I take my
-# the machine it lives on vacation).  Should have more updates to this over the 
-# next several days.  --colomon, Sept 3rd 2009.
-
-class AngleAndResult
-{
-    has $.angle_in_degrees;
-    has $.result;
-
-    our @radians-to-whatever = (1, 180 / pi, 200 / pi, 1 / (2 * pi));
-    our @degrees-to-whatever = ((312689/99532) / 180, 1, 200 / 180, 1 / 360);
-    our @degrees-to-whatever-num = @degrees-to-whatever.map({ .Num });
-
-    multi method new(Int $angle_in_degrees is copy, $result is copy) {
-        self.bless(*, :$angle_in_degrees, :$result);
-    }
-    
-    method complex($imaginary_part_in_radians, $base) {
-        my $z_in_radians = $.angle_in_degrees / 180.0 * pi + ($imaginary_part_in_radians)i;
-		$z_in_radians * @radians-to-whatever[$base];
-    }
-    
-    method num($base) {
-		$.angle_in_degrees * @degrees-to-whatever-num[$base];
-    }
-    
-    method rat($base) {
-		$.angle_in_degrees * @degrees-to-whatever[$base];
-    }
-    
-    method int($base) {
-        $.angle_in_degrees;
-    }
-}
-
-my @sines = ( 
-    AngleAndResult.new(-360, 0),
-    AngleAndResult.new(135 - 360, 1/2*sqrt(2)),
-    AngleAndResult.new(330 - 360, -0.5),
-    AngleAndResult.new(0, 0),
-    AngleAndResult.new(30, 0.5),
-    AngleAndResult.new(45, 1/2*sqrt(2)),
-    AngleAndResult.new(90, 1),
-    AngleAndResult.new(135, 1/2*sqrt(2)),
-    AngleAndResult.new(180, 0),
-    AngleAndResult.new(225, -1/2*sqrt(2)),
-    AngleAndResult.new(270, -1),
-    AngleAndResult.new(315, -1/2*sqrt(2)),
-    AngleAndResult.new(360, 0),
-    AngleAndResult.new(30 + 360, 0.5),
-    AngleAndResult.new(225 + 360, -1/2*sqrt(2)),
-    AngleAndResult.new(720, 0)
-);
-
-my @cosines = @sines.map({ AngleAndResult.new($_.angle_in_degrees - 90, $_.result) });
-
-my @sinhes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num(Radians)) - exp(-$_.num(Radians))) / 2.0)});
-
-my @coshes = @sines.grep({ $_.angle_in_degrees < 500 }).map({ AngleAndResult.new($_.angle_in_degrees, 
-                                             (exp($_.num(Radians)) + exp(-$_.num(Radians))) / 2.0)});
-
-my @official_bases = (Radians, Degrees, Gradians, Circles);
 
 # cosech tests
 
-for @sines -> $angle
+my $base_list = (TrigTest::official_bases() xx *).flat;
+my $iter_count = 0;
+for TrigTest::sines() -> $angle
 {
-    	next if abs(sinh($angle.num('radians'))) < 1e-6; 	my $desired_result = 1.0 / sinh($angle.num('radians'));
+    next if abs(sinh($angle.num(Radians))) < 1e-6;
+    my $desired-result = 1.0 / sinh($angle.num(Radians));
 
-    # cosech(Num)
-    is_approx(cosech($angle.num(Radians)), $desired_result, 
-              "cosech(Num) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(cosech($angle.num($base), $base), $desired_result, 
-                  "cosech(Num) - {$angle.num($base)} $base");
-    }
-    
-    # cosech(:x(Num))
-    is_approx(cosech(:x($angle.num(Radians))), $desired_result, 
-              "cosech(:x(Num)) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(cosech(:x($angle.num($base)), :base($base)), $desired_result, 
-                  "cosech(:x(Num)) - {$angle.num($base)} $base");
-    }
-
-    # Num.cosech tests
-    is_approx($angle.num(Radians).cosech, $desired_result, 
+    # Num.cosech tests -- very thorough
+    is_approx($angle.num(Radians).cosech, $desired-result, 
               "Num.cosech - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx($angle.num($base).cosech($base), $desired_result, 
+    for TrigTest::official_bases() -> $base {
+        is_approx($angle.num($base).cosech($base), $desired-result, 
                   "Num.cosech - {$angle.num($base)} $base");
     }
 
-    # cosech(Rat)
-    is_approx(cosech($angle.rat(Radians)), $desired_result, 
-              "cosech(Rat) - {$angle.rat(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(cosech($angle.rat($base), $base), $desired_result, 
-                  "cosech(Rat) - {$angle.rat($base)} $base");
-    }
-
-    # cosech(:x(Rat))
-    is_approx(cosech(:x($angle.rat(Radians))), $desired_result, 
-              "cosech(:x(Rat)) - {$angle.rat(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(cosech(:x($angle.rat($base)), :base($base)), $desired_result, 
-                  "cosech(:x(Rat)) - {$angle.rat($base)} $base");
-    }
-
-    # Rat.cosech tests
-    is_approx($angle.rat(Radians).cosech, $desired_result, 
-              "Rat.cosech - {$angle.rat(Radians)} default");
-    for @official_bases -> $base {
-        is_approx($angle.rat($base).cosech($base), $desired_result, 
-                  "Rat.cosech - {$angle.rat($base)} $base");
-    }
-
-    # cosech(Int)
-    is_approx(cosech($angle.int(Degrees), Degrees), $desired_result, 
-              "cosech(Int) - {$angle.int(Degrees)} degrees");
-    is_approx($angle.int(Degrees).cosech(Degrees), $desired_result, 
-              "Int.cosech - {$angle.int(Degrees)} degrees");
-
-    # Complex tests
+    # Complex.cosech tests -- also very thorough
     my Complex $zp0 = $angle.complex(0.0, Radians);
-    my Complex $sz0 = $desired_result + 0i;
+    my Complex $sz0 = $desired-result + 0i;
     my Complex $zp1 = $angle.complex(1.0, Radians);
     my Complex $sz1 = { 1.0 / sinh($_) }($zp1);
     my Complex $zp2 = $angle.complex(2.0, Radians);
     my Complex $sz2 = { 1.0 / sinh($_) }($zp2);
     
-    # cosech(Complex) tests
-    is_approx(cosech($zp0), $sz0, "cosech(Complex) - $zp0 default");
-    is_approx(cosech($zp1), $sz1, "cosech(Complex) - $zp1 default");
-    is_approx(cosech($zp2), $sz2, "cosech(Complex) - $zp2 default");
-    
-    for @official_bases -> $base {
-        my Complex $z = $angle.complex(0.0, $base);
-        is_approx(cosech($z, $base), $sz0, "cosech(Complex) - $z $base");
-    
-        $z = $angle.complex(1.0, $base);
-        is_approx(cosech($z, $base), $sz1, "cosech(Complex) - $z $base");
-                        
-        $z = $angle.complex(2.0, $base);
-        is_approx(cosech($z, $base), $sz2, "cosech(Complex) - $z $base");
-    }
-    
-    # Complex.cosech tests
     is_approx($zp0.cosech, $sz0, "Complex.cosech - $zp0 default");
     is_approx($zp1.cosech, $sz1, "Complex.cosech - $zp1 default");
     is_approx($zp2.cosech, $sz2, "Complex.cosech - $zp2 default");
     
-    for @official_bases -> $base {
+    for TrigTest::official_bases() -> $base {
         my Complex $z = $angle.complex(0.0, $base);
         is_approx($z.cosech($base), $sz0, "Complex.cosech - $z $base");
     
@@ -174,99 +51,145 @@ for @sines -> $angle
 
 is(cosech(Inf), 0, "cosech(Inf) - default");
 is(cosech(-Inf), "-0", "cosech(-Inf) - default");
-for @official_bases -> $base
+given $base_list.shift
 {
-    is(cosech(Inf,  $base), 0, "cosech(Inf) - $base");
-    is(cosech(-Inf, $base), "-0", "cosech(-Inf) - $base");
+    is(cosech(Inf,  $_), 0, "cosech(Inf) - $_");
+    is(cosech(-Inf, $_), "-0", "cosech(-Inf) - $_");
 }
         
+# Num tests
+is_approx((-6.28318530723787).Num.cosech(:base(Radians)), -0.00373489848806797, "Num.cosech(:base(Radians)) - -6.28318530723787");
+is_approx(cosech((-3.92699081702367).Num), -0.0394210493494572, "cosech(Num) - -3.92699081702367");
+is_approx(cosech((-30).Num, Degrees), -1.8253055746695, "cosech(Num, Degrees) - -30");
+is_approx(cosech(:x((0.523598775603156).Num)), 1.8253055746695, "cosech(:x(Num)) - 0.523598775603156");
+is_approx(cosech(:x((50).Num), :base(Gradians)), 1.15118387090806, "cosech(:x(Num), :base(Gradians)) - 50");
+
+# Rat tests
+is_approx((1.57079632680947).Rat(1e-9).cosech, 0.434537208087792, "Rat.cosech - 1.57079632680947");
+is_approx((0.375).Rat(1e-9).cosech(Circles), 0.191278762469516, "Rat.cosech(Circles) - 0.375");
+is_approx((3.14159265361894).Rat(1e-9).cosech(:base(Radians)), 0.086589537527514, "Rat.cosech(:base(Radians)) - 3.14159265361894");
+is_approx(cosech((3.92699081702367).Rat(1e-9)), 0.0394210493494572, "cosech(Rat) - 3.92699081702367");
+is_approx(cosech((270).Rat(1e-9), Degrees), 0.0179680320529917, "cosech(Rat, Degrees) - 270");
+is_approx(cosech(:x((5.49778714383314).Rat(1e-9))), 0.00819178720191627, "cosech(:x(Rat)) - 5.49778714383314");
+is_approx(cosech(:x((400).Rat(1e-9)), :base(Gradians)), 0.00373489848806797, "cosech(:x(Rat), :base(Gradians)) - 400");
+
+# Complex tests
+is_approx((1.08333333333333 + 0.318309886183791i).Complex.cosech(:base(Circles)), -0.000920717929196107 + -0.00201181030212346i, "Complex.cosech(:base(Circles)) - 1.08333333333333 + 0.318309886183791i");
+is_approx(cosech((10.2101761241668 + 2i).Complex), -3.06234024500267e-05 + -6.6913355283183e-05i, "cosech(Complex) - 10.2101761241668 + 2i");
+is_approx(cosech((12.5663706143592 + 2i).Complex, Radians), -2.90249297856666e-06 + -6.34206286115907e-06i, "cosech(Complex, Radians) - 12.5663706143592 + 2i");
+is_approx(cosech(:x((-6.28318530717959 + 2i).Complex)), 0.00155424826436473 + -0.00339611810181237i, "cosech(:x(Complex)) - -6.28318530717959 + 2i");
+is_approx(cosech(:x((-225 + 114.591559026165i).Complex), :base(Degrees)), 0.0163838933661525 + -0.0358272658449737i, "cosech(:x(Complex), :base(Degrees)) - -225 + 114.591559026165i");
+
+# Str tests
+is_approx((-0.523598775603156).Str.cosech, -1.8253055746695, "Str.cosech - -0.523598775603156");
+is_approx((33.3333333333333).Str.cosech(Gradians), 1.8253055746695, "Str.cosech(Gradians) - 33.3333333333333");
+is_approx((0.125).Str.cosech(:base(Circles)), 1.15118387090806, "Str.cosech(:base(Circles)) - 0.125");
+is_approx(cosech((1.57079632680947).Str), 0.434537208087792, "cosech(Str) - 1.57079632680947");
+is_approx(cosech((2.3561944902142).Str, Radians), 0.191278762469516, "cosech(Str, Radians) - 2.3561944902142");
+is_approx(cosech(:x((3.14159265361894).Str)), 0.086589537527514, "cosech(:x(Str)) - 3.14159265361894");
+is_approx(cosech(:x((225).Str), :base(Degrees)), 0.0394210493494572, "cosech(:x(Str), :base(Degrees)) - 225");
+
+# NotComplex tests
+is_approx(NotComplex.new(4.71238898038469 + 2i).cosech, -0.00747534423267824 + -0.0163365616325251i, "NotComplex.cosech - 4.71238898038469 + 2i");
+is_approx(NotComplex.new(350 + 127.323954473516i).cosech(Gradians), -0.00340879719539436 + -0.00744860766594804i, "NotComplex.cosech(Gradians) - 350 + 127.323954473516i");
+is_approx(NotComplex.new(1 + 0.318309886183791i).cosech(:base(Circles)), -0.00155424826436473 + -0.00339611810181237i, "NotComplex.cosech(:base(Circles)) - 1 + 0.318309886183791i");
+is_approx(cosech(NotComplex.new(6.80678408277788 + 2i)), -0.000920717929196107 + -0.00201181030212346i, "cosech(NotComplex) - 6.80678408277788 + 2i");
+is_approx(cosech(NotComplex.new(10.2101761241668 + 2i), Radians), -3.06234024500267e-05 + -6.6913355283183e-05i, "cosech(NotComplex, Radians) - 10.2101761241668 + 2i");
+is_approx(cosech(:x(NotComplex.new(12.5663706143592 + 2i))), -2.90249297856666e-06 + -6.34206286115907e-06i, "cosech(:x(NotComplex)) - 12.5663706143592 + 2i");
+is_approx(cosech(:x(NotComplex.new(-360 + 114.591559026165i)), :base(Degrees)), 0.00155424826436473 + -0.00339611810181237i, "cosech(:x(NotComplex), :base(Degrees)) - -360 + 114.591559026165i");
+
+# DifferentReal tests
+is_approx(DifferentReal.new(-3.92699081702367).cosech, -0.0394210493494572, "DifferentReal.cosech - -3.92699081702367");
+is_approx(DifferentReal.new(-33.3333333333333).cosech(Gradians), -1.8253055746695, "DifferentReal.cosech(Gradians) - -33.3333333333333");
+is_approx(DifferentReal.new(0.0833333333333333).cosech(:base(Circles)), 1.8253055746695, "DifferentReal.cosech(:base(Circles)) - 0.0833333333333333");
+is_approx(cosech(DifferentReal.new(0.785398163404734)), 1.15118387090806, "cosech(DifferentReal) - 0.785398163404734");
+is_approx(cosech(DifferentReal.new(1.57079632680947), Radians), 0.434537208087792, "cosech(DifferentReal, Radians) - 1.57079632680947");
+is_approx(cosech(:x(DifferentReal.new(2.3561944902142))), 0.191278762469516, "cosech(:x(DifferentReal)) - 2.3561944902142");
+is_approx(cosech(:x(DifferentReal.new(180)), :base(Degrees)), 0.086589537527514, "cosech(:x(DifferentReal), :base(Degrees)) - 180");
+
+# Int tests
+is_approx((225).Int.cosech(:base(Degrees)), 0.0394210493494572, "Int.cosech(:base(Degrees)) - 225");
+is_approx(cosech((270).Int, Degrees), 0.0179680320529917, "cosech(Int, Degrees) - 270");
+is_approx(cosech(:x((350).Int), :base(Gradians)), 0.00819178720191627, "cosech(:x(Int), :base(Gradians)) - 350");
 
 # acosech tests
 
-for @sines -> $angle
+for TrigTest::sines() -> $angle
 {
-    	next if abs(sinh($angle.num('radians'))) < 1e-6; 	my $desired_result = 1.0 / sinh($angle.num('radians'));
+    next if abs(sinh($angle.num(Radians))) < 1e-6;
+    my $desired-result = 1.0 / sinh($angle.num(Radians));
 
-    # acosech(Num) tests
-    is_approx(cosech(acosech($desired_result)), $desired_result, 
-              "acosech(Num) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(cosech(acosech($desired_result, $base), $base), $desired_result, 
-                  "acosech(Num) - {$angle.num($base)} $base");
-    }
-    
-    # acosech(:x(Num))
-    is_approx(cosech(acosech(:x($desired_result))), $desired_result, 
-              "acosech(:x(Num)) - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx(cosech(acosech(:x($desired_result), 
-                                                           :base($base)), 
-                                  $base), $desired_result, 
-                  "acosech(:x(Num)) - {$angle.num($base)} $base");
-    }
-    
-    # Num.acosech tests
-    is_approx($desired_result.Num.acosech.cosech, $desired_result, 
+    # Num.acosech tests -- thorough
+    is_approx($desired-result.Num.acosech.cosech, $desired-result, 
               "Num.acosech - {$angle.num(Radians)} default");
-    for @official_bases -> $base {
-        is_approx($desired_result.Num.acosech($base).cosech($base), $desired_result,
+    for TrigTest::official_bases() -> $base {
+        is_approx($desired-result.Num.acosech($base).cosech($base), $desired-result,
                   "Num.acosech - {$angle.num($base)} $base");
     }
     
-    # acosech(Complex) tests
-    for ($desired_result + 0i, $desired_result + .5i, $desired_result + 2i) -> $z {
+    # Num.acosech(Complex) tests -- thorough
+    for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cosech(acosech($z)), $z, 
                   "acosech(Complex) - {$angle.num(Radians)} default");
-        for @official_bases -> $base {
-            is_approx(cosech(acosech($z, $base), $base), $z, 
-                      "acosech(Complex) - {$angle.num($base)} $base");
-        }
         is_approx($z.acosech.cosech, $z, 
                   "Complex.acosech - {$angle.num(Radians)} default");
-        for @official_bases -> $base {
+        for TrigTest::official_bases() -> $base {
             is_approx($z.acosech($base).cosech($base), $z, 
                       "Complex.acosech - {$angle.num($base)} $base");
         }
     }
 }
-
-for (-2/2, -1/2, 1/2, 2/2) -> $desired_result
-{
-    # acosech(Rat) tests
-    is_approx(cosech(acosech($desired_result)), $desired_result, 
-              "acosech(Rat) - $desired_result default");
-    for @official_bases -> $base {
-        is_approx(cosech(acosech($desired_result, $base), $base), $desired_result, 
-                  "acosech(Rat) - $desired_result $base");
-    }
-    
-    # Rat.acosech tests
-    is_approx($desired_result.acosech.cosech, $desired_result, 
-              "Rat.acosech - $desired_result default");
-    for @official_bases -> $base {
-        is_approx($desired_result.acosech($base).cosech($base), $desired_result,
-                  "Rat.acosech - $desired_result $base");
-    }
-    
-    next unless $desired_result.denominator == 1;
-    
-    # acosech(Int) tests
-    is_approx(cosech(acosech($desired_result.numerator)), $desired_result, 
-              "acosech(Int) - $desired_result default");
-    for @official_bases -> $base {
-        is_approx(cosech(acosech($desired_result.numerator, $base), $base), $desired_result, 
-                  "acosech(Int) - $desired_result $base");
-    }
-    
-    # Int.acosech tests
-    is_approx($desired_result.numerator.acosech.cosech, $desired_result, 
-              "Int.acosech - $desired_result default");
-    for @official_bases -> $base {
-        is_approx($desired_result.numerator.acosech($base).cosech($base), $desired_result,
-                  "Int.acosech - $desired_result $base");
-    }
-}
         
+# Num tests
+is_approx((1.8253055746695).Num.acosech(:base(Radians)), 0.523598775603156, "Num.acosech(:base(Radians)) - 0.523598775603156");
+is_approx(acosech((1.15118387090806).Num), 0.785398163404734, "acosech(Num) - 0.785398163404734");
+is_approx(acosech((1.8253055746695).Num, Degrees), 30, "acosech(Num, Degrees) - 30");
+is_approx(acosech(:x((1.15118387090806).Num)), 0.785398163404734, "acosech(:x(Num)) - 0.785398163404734");
+is_approx(acosech(:x((1.8253055746695).Num), :base(Gradians)), 33.3333333333333, "acosech(:x(Num), :base(Gradians)) - 33.3333333333333");
+
+# Rat tests
+is_approx(((1.15118387090806).Rat(1e-9)).acosech, 0.785398163404734, "Rat.acosech - 0.785398163404734");
+is_approx((1.8253055746695).Rat(1e-9).acosech(Circles), 0.0833333333333333, "Rat.acosech(Circles) - 0.0833333333333333");
+is_approx((1.15118387090806).Rat(1e-9).acosech(:base(Radians)), 0.785398163404734, "Rat.acosech(:base(Radians)) - 0.785398163404734");
+is_approx(acosech((1.8253055746695).Rat(1e-9)), 0.523598775603156, "acosech(Rat) - 0.523598775603156");
+is_approx(acosech((1.15118387090806).Rat(1e-9), Degrees), 45, "acosech(Rat, Degrees) - 45");
+is_approx(acosech(:x((1.8253055746695).Rat(1e-9))), 0.523598775603156, "acosech(:x(Rat)) - 0.523598775603156");
+is_approx(acosech(:x((1.15118387090806).Rat(1e-9)), :base(Gradians)), 50, "acosech(:x(Rat), :base(Gradians)) - 50");
+
+# Complex tests
+is_approx((0.523598775603156 + 2i).Complex.acosech(:base(Circles)), 0.0219340274537799 + -0.0767068658616915i, "Complex.acosech(:base(Circles)) - 0.0219340274537799 + -0.0767068658616915i");
+is_approx(acosech((0.785398163404734 + 2i).Complex), 0.186914543518615 + -0.439776333846415i, "acosech(Complex) - 0.186914543518615 + -0.439776333846415i");
+is_approx(acosech((0.523598775603156 + 2i).Complex, Radians), 0.137815559024863 + -0.481963452541975i, "acosech(Complex, Radians) - 0.137815559024863 + -0.481963452541975i");
+is_approx(acosech(:x((0.785398163404734 + 2i).Complex)), 0.186914543518615 + -0.439776333846415i, "acosech(:x(Complex)) - 0.186914543518615 + -0.439776333846415i");
+is_approx(acosech(:x((0.523598775603156 + 2i).Complex), :base(Degrees)), 7.89624988336075 + -27.6144717102089i, "acosech(:x(Complex), :base(Degrees)) - 7.89624988336075 + -27.6144717102089i");
+
+# Str tests
+is_approx(((1.15118387090806).Str).acosech, 0.785398163404734, "Str.acosech - 0.785398163404734");
+is_approx((1.8253055746695).Str.acosech(Gradians), 33.3333333333333, "Str.acosech(Gradians) - 33.3333333333333");
+is_approx((1.15118387090806).Str.acosech(:base(Circles)), 0.125, "Str.acosech(:base(Circles)) - 0.125");
+is_approx(acosech((1.8253055746695).Str), 0.523598775603156, "acosech(Str) - 0.523598775603156");
+is_approx(acosech((1.15118387090806).Str, Radians), 0.785398163404734, "acosech(Str, Radians) - 0.785398163404734");
+is_approx(acosech(:x((1.8253055746695).Str)), 0.523598775603156, "acosech(:x(Str)) - 0.523598775603156");
+is_approx(acosech(:x((1.15118387090806).Str), :base(Degrees)), 45, "acosech(:x(Str), :base(Degrees)) - 45");
+
+# NotComplex tests
+is_approx((NotComplex.new(0.523598775603156 + 2i)).acosech, 0.137815559024863 + -0.481963452541975i, "NotComplex.acosech - 0.137815559024863 + -0.481963452541975i");
+is_approx(NotComplex.new(0.785398163404734 + 2i).acosech(Gradians), 11.8993494147011 + -27.9970309545954i, "NotComplex.acosech(Gradians) - 11.8993494147011 + -27.9970309545954i");
+is_approx(NotComplex.new(0.523598775603156 + 2i).acosech(:base(Circles)), 0.0219340274537799 + -0.0767068658616915i, "NotComplex.acosech(:base(Circles)) - 0.0219340274537799 + -0.0767068658616915i");
+is_approx(acosech(NotComplex.new(0.785398163404734 + 2i)), 0.186914543518615 + -0.439776333846415i, "acosech(NotComplex) - 0.186914543518615 + -0.439776333846415i");
+is_approx(acosech(NotComplex.new(0.523598775603156 + 2i), Radians), 0.137815559024863 + -0.481963452541975i, "acosech(NotComplex, Radians) - 0.137815559024863 + -0.481963452541975i");
+is_approx(acosech(:x(NotComplex.new(0.785398163404734 + 2i))), 0.186914543518615 + -0.439776333846415i, "acosech(:x(NotComplex)) - 0.186914543518615 + -0.439776333846415i");
+is_approx(acosech(:x(NotComplex.new(0.523598775603156 + 2i)), :base(Degrees)), 7.89624988336075 + -27.6144717102089i, "acosech(:x(NotComplex), :base(Degrees)) - 7.89624988336075 + -27.6144717102089i");
+
+# DifferentReal tests
+is_approx((DifferentReal.new(1.15118387090806)).acosech, 0.785398163404734, "DifferentReal.acosech - 0.785398163404734");
+is_approx(DifferentReal.new(1.8253055746695).acosech(Gradians), 33.3333333333333, "DifferentReal.acosech(Gradians) - 33.3333333333333");
+is_approx(DifferentReal.new(1.15118387090806).acosech(:base(Circles)), 0.125, "DifferentReal.acosech(:base(Circles)) - 0.125");
+is_approx(acosech(DifferentReal.new(1.8253055746695)), 0.523598775603156, "acosech(DifferentReal) - 0.523598775603156");
+is_approx(acosech(DifferentReal.new(1.15118387090806), Radians), 0.785398163404734, "acosech(DifferentReal, Radians) - 0.785398163404734");
+is_approx(acosech(:x(DifferentReal.new(1.8253055746695))), 0.523598775603156, "acosech(:x(DifferentReal)) - 0.523598775603156");
+is_approx(acosech(:x(DifferentReal.new(1.15118387090806)), :base(Degrees)), 45, "acosech(:x(DifferentReal), :base(Degrees)) - 45");
+
 done_testing;
 
 # vim: ft=perl6 nomodifiable

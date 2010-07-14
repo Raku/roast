@@ -12,7 +12,11 @@ class AngleAndResult
     multi method new(Int $angle_in_degrees is copy, $result is copy) {
         self.bless(*, :$angle_in_degrees, :$result);
     }
-    
+
+    multi method perl() {
+        "AngleAndResult.new($.angle_in_degrees, $.result)";
+    }
+
     method complex($imaginary_part_in_radians, $base) {
         my $z_in_radians = $.angle_in_degrees / 180.0 * pi + ($imaginary_part_in_radians)i;
         $z_in_radians * @radians-to-whatever[$base];
