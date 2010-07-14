@@ -101,11 +101,11 @@ my @tests = (
 
 
 # RT #61918
-#?rakudo todo 'RT #61918'
 {
     class RT61918 {
         has $.inst is rw;
         has $!priv is rw;
+        has $.string = 'krach';
 
         method init {
             $.inst = [ rand, rand ];
@@ -121,6 +121,8 @@ my @tests = (
     ok $t1_new ne $t1_init, 'changing object changes .perl output';
 
     # TODO: more tests that show eval($t1_init) has the same guts as $t1.
+    
+    ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .perl output';
 }
 
 # RT #64080
