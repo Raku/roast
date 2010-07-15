@@ -21,7 +21,7 @@ ok $collector == 6, 'Can call my_sub() if &my_sub was a parameter';
 tester(sub ($x) { $collector = 3 * $x });
 ok $collector == 12, 'same with anonymous sub';
 
-sub tester2(&my_sub) { 1 }
+sub tester2(&my_sub) { 1 }    #OK not used
 dies_ok {tester2(42)}, "can't pass thing that doesn't do Callable";
 
 sub not_returns_a_sub { 3 };

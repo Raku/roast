@@ -33,8 +33,8 @@ is($x.identity("w00t"), "w00t", 'called a method with a parameter');
 
 # L<S12/Methods/"You can replace the identifier with a quoted string">
 eval_dies_ok(q{$x.'foo'}, 'indirect method call using quotes, no parens');
-is($x.'bar'(), 101, 'indirect method call using quotes, with parens');
-is($x.'identity'('qwerty'), 'qwerty', 'indirect method call using quotes, with parameter');
+is($x.'bar'(), 101, 'indirect method call using quotes, with parens');   #OK use of quotes
+is($x.'identity'('qwerty'), 'qwerty', 'indirect method call using quotes, with parameter');   #OK use of quotes
 {
     my $name = 'foo';
     eval_dies_ok(q{$x."$name"}, 'indirect method call, no parens');

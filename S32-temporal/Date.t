@@ -10,7 +10,7 @@ plan *;
     lives_ok { Date.new(:year(2010), :month(1), :day(1)) }, 'named arguments';
     lives_ok { Date.today }, 'Date.today';
     lives_ok { 
-        my $dt = DateTime.new(:year(2010),:month(06), :day(04)); 
+        my $dt = DateTime.new(:year(2010),:month(06), :day(04));   #OK octal
         Date.new($dt); 
     }, 'Date.new from DateTime';
 
@@ -18,7 +18,7 @@ plan *;
     dies_ok { Date.new('2010-00-23') }, 'dies on zero-based months';
     dies_ok { Date.new('2010-01-00') }, 'dies on zero-based days';
 
-    isa_ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';
+    isa_ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';  #OK octal
 }
 
 # stringification

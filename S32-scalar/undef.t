@@ -359,7 +359,7 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 }
 
 {
-    sub def { my $x = [] }
+    sub def { my $x = [] }   #OK not used
     ok def() ~~ Array, 'sub returns array';
     lives_ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';

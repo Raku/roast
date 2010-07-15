@@ -27,7 +27,7 @@ ok($ok, 'used captured type later in the sig');
 
 # Check you can use them to declare variables.
 sub declare_cap_type(::T $x) {   #OK not used
-    my T $y = 4.2;
+    my T $y = 4.2;   #OK not used
     1
 }
 ok(declare_cap_type(3.3), 'can use captured type in declaration');

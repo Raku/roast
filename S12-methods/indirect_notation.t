@@ -55,7 +55,7 @@ class T2
     }
     my $o = A.new();
 
-    is $o."abc"(),    'abc',   'calling method with $object."methodname"';
+    is $o."abc"(),    'abc',   'calling method with $object."methodname"';   #OK use of quotes
     my $bc = 'bc';
     is $o."a$bc"(),   'abc',  'calling method with $object."method$name"';
     is $o."{$bc}d"(), 'bcd',  'calling method with $object."method$name"';
@@ -95,7 +95,7 @@ class T2
     is $o.called,       3,     'called total three methods during dispatch';
 }
 
-dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";
+dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
 #?rakudo skip '.*, .+ and .? with @foo'
 {

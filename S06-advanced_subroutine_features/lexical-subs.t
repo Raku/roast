@@ -36,7 +36,7 @@ plan 10;
 }
 
 {
-    my sub test_this {
+    my sub test_this {     #OK not used
         ok 1, "Could call ok from within a lexical sub";
         return 1;
     }

@@ -19,7 +19,7 @@ plan 15;
 
     # introduce a scope with another lexical multi 
     {
-        my multi sub mt(Str $x) { 'Str' }
+        my multi sub mt(Str $x) { 'Str' }    #OK not used
         is lt1(), 'Str', "lift picked up multis from caller's scope (Str)";
         is lt2(), 'Any', "lift still considers outer multis";
     }
@@ -32,8 +32,8 @@ plan 15;
     multi sub lt4() { lift ``4 };
 
     {
-        my multi sub prefix:<``>(Str $x) { 'Str ``' };
-        my multi sub prefix:<``>(Int $x) { 'Int ``' };
+        my multi sub prefix:<``>(Str $x) { 'Str ``' };    #OK not used
+        my multi sub prefix:<``>(Int $x) { 'Int ``' };    #OK not used
         is lt3(), 'Str ``',
            "lifted operator picked up multi from caller's scope (Str)";
         is lt4(), 'Int ``',

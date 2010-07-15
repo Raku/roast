@@ -37,7 +37,7 @@ plan 14;
 {
     my multi baz() { 1 }
     {
-        my multi baz() { 2 }
+        my multi baz() { 2 }   #OK not used
         dies_ok({ baz() }, 'inner multi conflicts with outer one');
     }
     is(baz(), 1, 'in outer scope, no inner multi, so no conflict');
@@ -46,7 +46,7 @@ plan 14;
 # lexical multi can add to package multi if no outer lexical ones
 multi waz() { 1 }
 {
-    my multi waz($x) { 2 }
+    my multi waz($x) { 2 }   #OK not used
     is(waz(),       1, 'got multi from package');
     is(waz('slon'), 2, 'lexical multi also callable');
 }
