@@ -8,7 +8,12 @@ plan *;
 
 {
     my $x = *;
-    ok($x.isa(Whatever), 'can assign * to a variable and isa works');
+    isa_ok $x, Whatever, 'can assign * to a variable and isa works';
+
+    my Whatever $y;
+    ok $y.WHAT === Whatever, 'can type variables with Whatever';
+
+    ok *.WHAT === Whatever, '*.WHAT does not autocurry';
 }
 
 # L<S02/Built-In Data Types/"Most of the built-in numeric operators">
