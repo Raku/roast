@@ -24,6 +24,9 @@ plan *;
     my $a = 3;
     ok "$a" ~~ Str, '"$a" results in a Str';
     ok "{3}" ~~ Str, '"{3}" results in a Str';
+
+    # RT #76234
+    is "{}", '', 'Interpolating an empty block is cool';
 }
 
 my $rt65538_in = qq[line { (1,2,3).min }
