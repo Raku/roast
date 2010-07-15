@@ -17,9 +17,8 @@ sub show-dt($dt) {
 }
 
 # An independent calculation to cross check the Temporal algorithms.
-sub test-gmtime( Num $t is copy ) {
+sub test-gmtime( Int $t is copy ) {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday);
-    $t = floor($t);
     $sec  = $t % 60; $t div= 60; # $t is now epoch minutes
     $min  = $t % 60; $t div= 60; # $t is now epoch hours
     $hour = $t % 24; $t div= 24; # $t is now epoch days
@@ -42,6 +41,12 @@ sub test-gmtime( Num $t is copy ) {
     $mday = $t + 1;
     return ($sec, $min, $hour, $mday, $mon + 1, $year + 1900, $wday + 1);
 }        #   0     1      2      3       4          5             6 
+
+# --------------------------------------------------------------------
+# L<S32::Temporal/'C<time>'>
+# --------------------------------------------------------------------
+
+isa_ok time, Int, 'time returns an Int';
 
 # --------------------------------------------------------------------
 # Input validation
@@ -118,7 +123,7 @@ is show-dt(DateTime.new(946684800)), '0 0 0 1 1 2000 6', 'from POSIX at 2000-01-
 # compare dates for a series of times earlier and later than "now", so
 # that every test run will use different values
 {
-    my $t = floor time;
+    my $t = time;
     my $t1 = $t;
     my $t2 = $t;
     # the offset changes all time components and causes overflow/underflow
@@ -162,15 +167,15 @@ is DateTime.new('2009-12-31T22:33:44',
 # --------------------------------------------------------------------
 
 {
-    my $t = floor time;
-    1 while floor time == $t; # loop until the next second
+    my $t = time;
+    1 while time == $t; # loop until the next second
     $t = time;
     my $dt1 = DateTime.new($t);
     my $dt2 = DateTime.now;        # $dt1 and $dt2 might differ very occasionally
     is show-dt($dt1), show-dt($dt2), 'DateTime.now uses current time';
 
-    $t = floor time;
-    1 while floor time == $t;
+    $t = time;
+    1 while time == $t;
     $t = time;
     $dt1 = DateTime.new($t);
     $dt2 = DateTime.now(
@@ -178,12 +183,6 @@ is DateTime.new('2009-12-31T22:33:44',
         formatter => { ~($^x.hour) });
     is ~$dt2, ~(($dt1.hour + 22) % 24), 'DateTime.now with time zone and formatter';
 }
-
-# --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'the synonym C<day-of-month>'>
-# --------------------------------------------------------------------
-
-is dt(day => 18).day-of-month, 18, 'DateTime.day can be spelled as DateTime.day-of-month';
 
 # TODO: DateTime.Instant
 
@@ -203,74 +202,13 @@ is dt(day => 18).day-of-month, 18, 'DateTime.day can be spelled as DateTime.day-
         timezone => -1*60*60 -1*60;
     is $dt.posix, 7321, 'DateTime.posix (1970-01-01T01:01:01-0101)';
     # round-trip test for the current time
-    my $t = floor time;
+    my $t = time;
     my @t = test-gmtime $t;
     $dt = dt
         year => @t[5], month => @t[4], day => @t[3],
         hour => @t[2], minute => @t[1], second => @t[0];
     is $dt.posix, $t, "at $dt, POSIX is {$dt.posix}";
 }
-
-# --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'The method C<week>'>
-# --------------------------------------------------------------------
-
-is ymd(1977, 8, 20).week.join(' '), '1977 33', 'DateTime.week (1977-8-20)';
-is ymd(1977, 8, 20).week-year, 1977, 'DateTime.week (1977-8-20)';
-is ymd(1977, 8, 20).week-number, 33, 'DateTime.week-number (1977-8-20)';
-is ymd(1987, 12, 18).week.join(' '), '1987 51', 'DateTime.week (1987-12-18)';
-is ymd(2020, 5, 4).week.join(' '), '2020 19', 'DateTime.week (2020-5-4)';
-
-# From http://en.wikipedia.org/w/index.php?title=ISO_week_date&oldid=370553706#Examples
-
-is ymd(2005, 01, 01).week.join(' '), '2004 53', 'DateTime.week (2005-01-01)';
-is ymd(2005, 01, 02).week.join(' '), '2004 53', 'DateTime.week (2005-01-02)';
-is ymd(2005, 12, 31).week.join(' '), '2005 52', 'DateTime.week (2005-12-31)';
-is ymd(2007, 01, 01).week.join(' '), '2007 1',  'DateTime.week (2007-01-01)';
-is ymd(2007, 12, 30).week.join(' '), '2007 52', 'DateTime.week (2007-12-30)';
-is ymd(2007, 12, 30).week-year, 2007, 'DateTime.week (2007-12-30)';
-is ymd(2007, 12, 30).week-number, 52, 'DateTime.week-number (2007-12-30)';
-is ymd(2007, 12, 31).week.join(' '), '2008 1',  'DateTime.week (2007-12-31)';
-is ymd(2008, 01, 01).week.join(' '), '2008 1',  'DateTime.week (2008-01-01)';
-is ymd(2008, 12, 29).week.join(' '), '2009 1',  'DateTime.week (2008-12-29)';
-is ymd(2008, 12, 31).week.join(' '), '2009 1',  'DateTime.week (2008-12-31)';
-is ymd(2009, 01, 01).week.join(' '), '2009 1',  'DateTime.week (2009-01-01)';
-is ymd(2009, 12, 31).week.join(' '), '2009 53', 'DateTime.week (2009-12-31)';
-is ymd(2010, 01, 03).week.join(' '), '2009 53', 'DateTime.week (2010-01-03)';
-is ymd(2010, 01, 03).week-year, 2009, 'DateTime.week-year (2010-01-03)';
-is ymd(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
-
-# day-of-week is tested each time show-dt is called.
-
-# --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'The C<weekday-of-month> method'>
-# --------------------------------------------------------------------
-
-is ymd(1982, 2,  1).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-02-01)';
-is ymd(1982, 2,  7).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-02-07)';
-is ymd(1982, 2,  8).weekday-of-month, 2, 'DateTime.weekday-of-month (1982-02-08)';
-is ymd(1982, 2, 18).weekday-of-month, 3, 'DateTime.weekday-of-month (1982-02-18)';
-is ymd(1982, 2, 28).weekday-of-month, 4, 'DateTime.weekday-of-month (1982-02-28)';
-is ymd(1982, 4,  4).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-04-04)';
-is ymd(1982, 4,  7).weekday-of-month, 1, 'DateTime.weekday-of-month (1982-04-07)';
-is ymd(1982, 4,  8).weekday-of-month, 2, 'DateTime.weekday-of-month (1982-04-08)';
-is ymd(1982, 4, 13).weekday-of-month, 2, 'DateTime.weekday-of-month (1982-04-13)';
-is ymd(1982, 4, 30).weekday-of-month, 5, 'DateTime.weekday-of-month (1982-04-30)';
-
-# --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'The C<day-of-year> method'>
-# --------------------------------------------------------------------
-
-is ymd(1975,  1,  1).day-of-year,   1, 'DateTime.day-of-year (1975-01-01)';
-is ymd(1977,  5,  5).day-of-year, 125, 'DateTime.day-of-year (1977-05-05)';
-is ymd(1983, 11, 27).day-of-year, 331, 'DateTime.day-of-year (1983-11-27)';
-is ymd(1999,  2, 28).day-of-year,  59, 'DateTime.day-of-year (1999-02-28)';
-is ymd(1999,  3,  1).day-of-year,  60, 'DateTime.day-of-year (1999-03-01)';
-is ymd(1999, 12, 31).day-of-year, 365, 'DateTime.day-of-year (1999-12-31)';
-is ymd(2000,  2, 28).day-of-year,  59, 'DateTime.day-of-year (2000-02-28)';
-is ymd(2000,  2, 29).day-of-year,  60, 'DateTime.day-of-year (2000-02-29)';
-is ymd(2000,  3,  1).day-of-year,  61, 'DateTime.day-of-year (2000-03-01)';
-is ymd(2000, 12, 31).day-of-year, 366, 'DateTime.day-of-year (2000-12-31)';
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/'"Get" methods'/'The method C<whole-second>'>
@@ -406,6 +344,9 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     is ~$dt, '2005-02-06T00:31:00+1655', 'Changing time zones (two-day rollover)';
     $dt = ds '2005-01-01T02:22:00+0300'; set-tz($dt, 0, 35);
     is ~$dt, '2004-12-31T23:57:00+0035', 'Changing time zones (year rollover)';
+
+    $dt = dt second => 15.5; set-tz($dt, 0, 0, 5);
+    is $dt.second, 20.5, 'Changing time zones (fractional seconds)';
 
     $dt = dt year => 2005, month => 1, day => 3,
              hour => 2, minute => 22, second => 4,
