@@ -45,7 +45,7 @@ is foo(NaN), 'NaN', 'dispatched to the NaN sub';
 # You're allowed to omit the "sub" when declaring a multi sub.
 # L<S06/"Routine modifiers">
 
-Multi declared_wo_sub (Int $x) { 1 }   #OK not used
+multi declared_wo_sub (Int $x) { 1 }   #OK not used
 multi declared_wo_sub (Str $x) { 2 }   #OK not used
 is declared_wo_sub(42),   1, "omitting 'sub' when declaring 'multi sub's works (1)";
 is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (2)";
