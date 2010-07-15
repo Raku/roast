@@ -21,6 +21,7 @@ ok ($bar ~~ Bar),               '... smartmatch our $bar to the Bar class';
 ok ($bar.HOW.does($bar, Foo)),  '.HOW.does said our $bar does Foo';
 ok ($bar.^does(Foo)),           '.^does said our $bar does Foo';
 ok ($bar ~~ Foo),               'smartmatch said our $bar does Foo';
+nok Foo.defined,                'role type objects are undefined';
 
 # Can also write does inside the class.
 #?rakudo skip 'also'
