@@ -237,6 +237,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
     dies_ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
     is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
 
+    class X64814 {}
     class Y64814 {
         method x_slurp ( X64814 *@a ) { 2 }   #OK not used
         method of_x ( *@a of X64814 ) { 3 }   #OK not used
