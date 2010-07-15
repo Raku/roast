@@ -106,8 +106,8 @@ plan 83;
         has $.calls_b = 0;
         has $.calls_c = 0;
         multi method mmtest(Int $x) { $!calls_a++; return $x }
-        multi method mmtest(Str $x, Str $y) { $!calls_b++ }
-        multi method mmtest(Str $x) { $!calls_c++ }
+        multi method mmtest(Str $x, Str $y) { $!calls_b++ }    #OK not used
+        multi method mmtest(Str $x) { $!calls_c++ }    #OK not used
     }
     my ($obj, $r, $ok);
     $obj = MMTest.new();
@@ -176,7 +176,7 @@ plan 83;
     class JuncInvTest2 {
         my $.cnt is rw = 0;
         method a { $.cnt++; }
-        method b($x) { $.cnt++ }
+        method b($x) { $.cnt++ }    #OK not used
     }
 
     my $x = JuncInvTest1.new | JuncInvTest1.new | JuncInvTest2.new;

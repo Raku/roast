@@ -68,7 +68,7 @@ plan 12;
 }
 
 {
-    my sub foo ($a, $b) {}
+    my sub foo ($a, $b) {}   #OK not used
     my $siglist = :($a);
 
     ok $siglist !eqv &foo.signature,

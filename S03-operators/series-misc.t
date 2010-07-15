@@ -27,7 +27,7 @@ is ('a', 'b', 'c', { $^x ~ 'x', $^y ~ 'y' ~ $^z ~ 'z' } ... *)[^9].join(' '), 'a
 
 # L<S03/List infix precedence/it will be taken as a yada>
 
-dies_ok {(1, 2, ... 3)[2]}, 'yada operator not confused for series operator';
+dies_ok {(1, 2, ... 3)[2]}, 'yada operator not confused for series operator';    #OK apparent series operator
 
 # L<S03/List infix precedence/and another function to continue the list>
 # chained series

@@ -76,10 +76,10 @@ is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
 
 # L<S02/Literals/separating the numbers with comma:>
 is("x  \x[41,42,43]  x",     "x  ABC  x",  "\\x[] allows multiple chars (1)");
-is("x  \x[41,42,00043]  x",  "x  ABC  x",  "\\x[] allows multiple chars (2)");
+is("x  \x[41,42,00043]  x",  "x  ABC  x",  "\\x[] allows multiple chars (2)");   #OK not indicate octal
 is("x  \x[ 41, 42, 43 ]  x", "x  ABC  x",  "\\x[] allows multiple chars with white space");
 is("x  \c[65,66,67]  x",     "x  ABC  x",  "\\c[] allows multiple chars (1)");
-is("x  \c[65,66,000067]  x", "x  ABC  x",  "\\c[] allows multiple chars (2)");
+is("x  \c[65,66,000067]  x", "x  ABC  x",  "\\c[] allows multiple chars (2)");   #OK not indicate octal
 is("x  \c[ 65, 66, 67 ]  x", "x  ABC  x",  "\\c[] allows multiple chars with white space");
 
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
@@ -94,9 +94,9 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
 
     # ORLY, STD.pm parses that as an indirect method call. It will warn,
     # but strictly speaking it's legal.
-    is "|$x.'f'()|", '|int|',
+    is "|$x.'f'()|", '|int|',    #OK use of quotes
        'interpolation of indirect method calls (different quotes)';
-    is "|$x."f"()|", '|int|',
+    is "|$x."f"()|", '|int|',    #OK use of quotes
        'interpolation of indirect method calls (same quotes)';
     eval_dies_ok q["|$x."f "()"], '... but whitespaces are not allowed';
 }

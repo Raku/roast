@@ -60,7 +60,7 @@ sub foo ($baz is rw) {    #OK not used
     # just some random subroutine.
 }
 
-sub bar ($baz is readonly) {
+sub bar ($baz is readonly) {    #OK not used
     # readonly signature, should it autovivify?
 }
 
