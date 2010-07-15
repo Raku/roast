@@ -6,7 +6,7 @@ use Test;
 plan 8;
 
 multi sub very_odd(Int $odd where {$odd % 2}) { Bool::True }
-multi sub very_odd(Int $odd) { Bool::False }
+multi sub very_odd(Int $odd) { Bool::False }   #OK not used
 
 ok very_odd(1), 'Type constraint - odd number';
 nok very_odd(2), 'Type constraint - even number';

@@ -17,7 +17,7 @@ Tests of roles with submethods
 role AddBuild
 {
     has $.did_build = 0;
-    submethod BUILD ( $self: )
+    submethod BUILD ( $self: )   #OK not used
     {
         $!did_build = 1;
     }

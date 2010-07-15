@@ -58,7 +58,7 @@ is $test7, 23, 'class attribute via $obj.^name really works';
 {
     class T1 {
         our $c = 0;
-        method ^count($obj) {
+        method ^count($obj) {   #OK not used
             return $c;
         }
         method mi { ++$c };

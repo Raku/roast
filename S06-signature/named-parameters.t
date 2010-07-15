@@ -268,9 +268,9 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 # L<S06/Named parameters/Bindings happen in declaration order>
 {
     my $t = '';
-    sub order_test($a where { $t ~= 'a' },
-                   $b where { $t ~= 'b' },
-                   $c where { $t ~= 'c' }) { 8 };
+    sub order_test($a where { $t ~= 'a' },   #OK not used
+                   $b where { $t ~= 'b' },   #OK not used
+                   $c where { $t ~= 'c' }) { 8 };   #OK not used
     is order_test(c => 5, a => 3, b => 2), 8,
         'can fill positional by name';
     ok $t ~~ /a.*b/, '$a was bound before $b';

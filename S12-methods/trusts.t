@@ -42,7 +42,7 @@ class B {
 
     method read_from_A() {
         my ($foo, @bar, %baz);
-	my $an_A = $!my_A;
+	my $an_A = $!my_A;   #OK not used
 
         try {
             $foo = $!an_A!A::foo;

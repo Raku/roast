@@ -10,11 +10,11 @@ These are misc. sub argument errors.
 
 =end pod
 
-sub foo (*$x) { 1 }
+sub foo (*$x) { 1 }   #OK not used
 #?rakudo todo 'RT #61094'
 dies_ok  { foo(reverse(1,2)) }, 'slurpy args are now bounded (1)';
 
-sub bar (*@x) { 1 }
+sub bar (*@x) { 1 }   #OK not used
 lives_ok { bar(reverse(1,2)) }, 'slurpy args are not bounded (2)';  
 
 eval_dies_ok 'sub quuux ($?VERSION) { ... }',
@@ -31,7 +31,7 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
 # RT #71478
 {
-    my $success = eval 'sub foo(%h) { }; foo(1, 2); 1';
+    my $success = eval 'sub foo(%h) { %h }; foo(1, 2); 1';
     my $error   = "$!";
     nok $success,
         "Passing two arguments to a function expecting one hash is an error";

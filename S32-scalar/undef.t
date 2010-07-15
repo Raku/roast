@@ -227,7 +227,7 @@ Perl6-specific tests
 #?DOES 10
 {
     my ($num, $alpha);
-    my ($rx1, $rx2);
+    my ($rx1, $rx2);   #OK not used
     eval '
         $rx1 = rx
         / [ (\d+)      { let $<num>   := $0 }

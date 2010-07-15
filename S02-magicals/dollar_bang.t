@@ -25,7 +25,7 @@ try { 1.nonexisting_method; };
 ok $!, 'Calling a nonexisting smethod sets $!';
 
 my $called;
-sub foo(Str $s) { return $called++ };
+sub foo(Str $s) { return $called++ };    #OK not used
 my @a;
 try { foo(@a,@a) };
 ok $!, 'Calling a subroutine with a nonmatching signature sets $!';

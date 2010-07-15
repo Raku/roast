@@ -35,8 +35,8 @@ plan 11;
 # L<S13/Syntax/"except that there really is only one body">
 
 {
-    multi sub count  (Str $s, Int $i)
-                | (Int $i, Str $s) {
+    multi sub count  (Str $s, Int $i)   #OK not used
+                | (Int $i, Str $s) {   #OK not used
         state $x = 0;
         ++$x;
     }

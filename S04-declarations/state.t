@@ -107,7 +107,7 @@ plan 38;
 {
     my $rhs_calls = 0;
     sub impure_rhs {
-        state $x = do { $rhs_calls++ }
+        state $x = do { $rhs_calls++ }    #OK not used
     }
     impure_rhs() for 1..3;
     is $rhs_calls, 1, 'RHS of state $x = ... only called once';
@@ -271,7 +271,7 @@ plan 38;
 }
 
 # Test for RT #67058
-sub bughunt1 { (state $svar) }
+sub bughunt1 { (state $svar) }    #OK not used
 {
     sub bughunt2 { state $x //= 17; ++$x }
     is bughunt2(), 18,

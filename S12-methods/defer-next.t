@@ -30,14 +30,14 @@ class Foo {
     # $.tracker is used to determine the order of calls.
     has $.tracker is rw;
     multi method doit()  {$.tracker ~= 'foo,'}
-    multi method doit(Int $num) {$.tracker ~= 'fooint,'}
+    multi method doit(Int $num) {$.tracker ~= 'fooint,'}   #OK not used
     method show  {$.tracker}
     method clear {$.tracker = ''}
 }
 
 class BarNextSame is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextsame; $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextsame; $.tracker ~= 'ret2,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextsame; $.tracker ~= 'ret2,'}   #OK not used
 }
 
 {
@@ -53,7 +53,7 @@ class BarNextSame is Foo {
 
 class BarNextWithEmpty is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(); $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(); $.tracker ~= 'ret2,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(); $.tracker ~= 'ret2,'}   #OK not used
 }
 {
     my $o = BarNextWithEmpty.new;
@@ -68,7 +68,7 @@ class BarNextWithEmpty is Foo {
 
 class BarNextWithInt is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(42); $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(42); $.tracker ~= 'ret2,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(42); $.tracker ~= 'ret2,'}   #OK not used
 }
 {
     my $o = BarNextWithInt.new;
@@ -84,7 +84,7 @@ class BarNextWithInt is Foo {
 {
     my $called = 0;
     class DeferWithoutCandidate {
-        multi method a($x) {
+        multi method a($x) {   #OK not used
             $called = 1;
             nextwith();
         }

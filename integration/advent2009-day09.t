@@ -21,7 +21,7 @@ sub xml_tag ($tag, $endtag = ($tag ~ ">") ) {
     $tag ~ $endtag;
 }
 
-sub deactivate(Str $plant, Str $comment?) {
+sub deactivate(Str $plant, Str $comment?) {   #OK not used
     return 1 if $comment;
 }
 

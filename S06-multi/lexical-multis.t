@@ -19,7 +19,7 @@ plan 14;
         my multi bar() { 1 }
     
         {
-            my multi bar($x) { 2 }
+            my multi bar($x) { 2 }    #OK not used
 		    
             is(bar(),      1, 'outer lexical multi callable');
             is(bar('syr'), 2, 'new inner lexical multi callable');

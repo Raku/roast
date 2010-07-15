@@ -75,10 +75,10 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 {
     # Positional with slurpy *%h and slurpy *@a
-    my sub foo($n, *%h, *@a) { };
-    my sub foo1($n, *%h, *@a) { $n }
-    my sub foo2($n, *%h, *@a) { %h<x> + %h<y> + %h<n> }
-    my sub foo3($n, *%h, *@a) { [+] @a }
+    my sub foo($n, *%h, *@a) { };   #OK not used
+    my sub foo1($n, *%h, *@a) { $n }   #OK not used
+    my sub foo2($n, *%h, *@a) { %h<x> + %h<y> + %h<n> }   #OK not used
+    my sub foo3($n, *%h, *@a) { [+] @a }   #OK not used
 
 ## all pairs will be slurped into hash, except the key which has the same name
 ## as positional parameter
@@ -113,7 +113,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 
 {
-    my sub foo ($n, *%h) { };
+    my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
     #?pugs todo 'bug'
     dies_ok { foo 1, n => 20, y => 300 },
@@ -121,7 +121,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 }
 
 {
-    my sub foo ($n, *%h) { };
+    my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
     dies_ok { foo 1, x => 20, y => 300, 4000 },
         'Testing: `sub foo($n, *%h) { }; foo 1, x => 20, y => 300, 4000`';
@@ -131,10 +131,10 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 # Named with slurpy *%h and slurpy *@a
 # named arguments aren't required in tests below
 {
-    my sub foo(:$n, *%h, *@a) { };
-    my sub foo1(:$n, *%h, *@a) { $n };
-    my sub foo2(:$n, *%h, *@a) { %h<x> + %h<y> + %h<n> };
-    my sub foo3(:$n, *%h, *@a) { [+] @a };
+    my sub foo(:$n, *%h, *@a) { };   #OK not used
+    my sub foo1(:$n, *%h, *@a) { $n };   #OK not used
+    my sub foo2(:$n, *%h, *@a) { %h<x> + %h<y> + %h<n> };   #OK not used
+    my sub foo3(:$n, *%h, *@a) { [+] @a };   #OK not used
     
     diag("Testing with named arguments (named param isn't required)");
     lives_ok { foo 1, x => 20, y => 300, 4000 },
@@ -164,7 +164,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 #### ++ version
 {
-    my sub foo(:$n!, *%h, *@a){ };
+    my sub foo(:$n!, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (++ version)');
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(+:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
@@ -174,7 +174,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 #### "trait" version
 {
-    my sub foo(:$n is required, *%h, *@a) { };
+    my sub foo(:$n is required, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (trait version)');
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
@@ -197,9 +197,9 @@ These tests are the testing for "List parameters" section of Synopsis 06
 # L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 
 {
-    sub first(*$f, *$s, *@r){ return $f };
-    sub second(*$f, *$s, *@r){ return $s };
-    sub rest(*$f, *$s, *@r){ return [+] @r };
+    sub first(*$f, *$s, *@r) { return $f };   #OK not used
+    sub second(*$f, *$s, *@r) { return $s };   #OK not used
+    sub rest(*$f, *$s, *@r) { return [+] @r };   #OK not used
     diag 'Testing with slurpy scalar';
     is first(1, 2, 3, 4, 5), 1,
        'Testing the first slurpy scalar...';
@@ -237,11 +237,10 @@ These tests are the testing for "List parameters" section of Synopsis 06
     dies_ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
     is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
 
-    class X64814 {}
     class Y64814 {
-        method x_slurp ( X64814 *@a ) { 2 }
-        method of_x ( *@a of X64814 ) { 3 }
-        method x_array ( X64814 @a ) { 4 }
+        method x_slurp ( X64814 *@a ) { 2 }   #OK not used
+        method of_x ( *@a of X64814 ) { 3 }   #OK not used
+        method x_array ( X64814 @a ) { 4 }   #OK not used
     }
 
     my $x = X64814.new;
@@ -259,8 +258,8 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 {
     my $count = 0;
-    sub slurp_obj_thread(*@a) { $count++; }
-    multi sub slurp_obj_multi(*@a) { $count++; }
+    sub slurp_obj_thread(*@a) { $count++; }   #OK not used
+    multi sub slurp_obj_multi(*@a) { $count++; }   #OK not used
 
     $count = 0;
     slurp_obj_thread(3|4|5);
@@ -274,8 +273,8 @@ These tests are the testing for "List parameters" section of Synopsis 06
 ##  that the parameter binding should fail outright.  --pmichaud
 {
     my $count = 0;
-    sub slurp_any_thread(Any *@a) { $count++; }
-    multi sub slurp_any_multi(Any *@a) { $count++; }
+    sub slurp_any_thread(Any *@a) { $count++; }   #OK not used
+    multi sub slurp_any_multi(Any *@a) { $count++; }   #OK not used
 
     slurp_any_thread(3|4|5);
     is $count, 1, 'Any slurpy param doesnt autothread';
@@ -289,7 +288,7 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
 
 # used to be RT #69424
 {
-    sub typed-slurpy(Int *@a) { 5 }
+    sub typed-slurpy(Int *@a) { 5 }   #OK not used
     my Int @b;
     is typed-slurpy(@b), 5, 'can fill typed slurpy with typed array';
 }

@@ -569,7 +569,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 {
     class TestMethodAll {
         has $.a;
-        method x(Str $x) {};
+        method x(Str $x) {};   #OK not used
         method all() { $!a }
     }
     is TestMethodAll.new(a => 5).all, 5, 'Can call a method all()';

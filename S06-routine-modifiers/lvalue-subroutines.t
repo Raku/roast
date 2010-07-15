@@ -70,10 +70,10 @@ sub check ($passwd) { return $passwd eq "fish"; };
 
 sub checklastval ($passwd) is rw {
     my $proxy is Proxy(
-    FETCH => sub ($self) {
+    FETCH => sub ($self) {   #OK not used
             return lastval();
          },
-    STORE => sub ($self, $val) {
+    STORE => sub ($self, $val) {   #OK not used
             die "wrong password" unless check($passwd);
             lastval() = $val;
          }

@@ -9,7 +9,7 @@ sub j(*@i) {
 }
 
 {
-    sub a($x, Int $y?, :$z) { };
+    sub a($x, Int $y?, :$z) { };   #OK not used
     ok &a.signature.params ~~ Positional, '.params does Positional';
     my @l = &a.signature.params;
     #?rakudo todo 'types or autothreading'
@@ -30,7 +30,7 @@ sub j(*@i) {
 }
 
 {
-    sub b(:x($a)! is rw, :$y is ref, :$z is copy) { };
+    sub b(:x($a)! is rw, :$y is ref, :$z is copy) { };   #OK not used
     my @l = &b.signature.params;
     #?rakudo todo 'is ref'
     is j(@l>>.readonly), '0 0 0', '(second sig) none are all read-only';
@@ -48,7 +48,7 @@ sub j(*@i) {
 }
 
 {
-    sub d(*@pos, *%named) { };
+    sub d(*@pos, *%named) { };   #OK not used
     my @l = &d.signature.params;
     is j(@l>>.named),    '0 1', '.named for slurpies';
     is j(@l>>.slurpy),   '1 1', '.slurpy';
@@ -57,13 +57,13 @@ sub j(*@i) {
 
 
 {
-    sub d(:x(:y(:z($a)))) { };
+    sub d(:x(:y(:z($a)))) { };   #OK not used
     is ~&d.signature.params.[0].named_names.sort, 'x y z', 'multi named_names';
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
 }
 
 {
-    sub e($x = 3; $y = { 2 + $x }) { };
+    sub e($x = 3; $y = { 2 + $x }) { };   #OK not used
     my @l = &e.signature.params>>.default;
     #?rakudo todo 'types or autothreading'
     ok ?( all(@l) ~~ Code ), '.default returns closure';
@@ -73,14 +73,14 @@ sub j(*@i) {
 }
 
 {
-    sub f(Int $x where { $_ % 2 == 0 }) { };
+    sub f(Int $x where { $_ % 2 == 0 }) { };   #OK not used
     my $p = &f.signature.params[0];
     #?rakudo todo 'constraints'
     ok 4  ~~ $p.constraints, '.constraints (+)';
     ok 5 !~~ $p.constraints, '.constraints (-)';
     ok 5 ~~ (-> $x { }).signature.params[0].constraints,
        '.constraints on unconstraint param should still smartmatch truely';
-    sub g(Any $x where Int) { };
+    sub g(Any $x where Int) { };   #OK not used
     #?rakudo todo 'constraints'
     ok 3 ~~ &g.signature.params[0].constraints,
        'smartmach against non-closure constraint (+)';
@@ -95,14 +95,14 @@ sub j(*@i) {
 }
 
 {
-    sub h(::T $x, T $y) { };
+    sub h(::T $x, T $y) { };   #OK not used
     my @l = &h.signature.params;
     is @l[0].type_captures, 'T', '.type_captures';
     lives_ok { @l[1].type }, "can access a type_capture'd type";
 }
 
 {
-    sub i(%h($a, $b)) { };
+    sub i(%h($a, $b)) { };   #OK not used
     my $s = &i.signature.perl;
     ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
     ok $s ~~ /'$b' >> /, '.perl on a nested signature contains variables of the subsignature (2)';

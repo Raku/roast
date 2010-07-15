@@ -70,12 +70,12 @@ class C is B {
 class D {
     has $.cnt is rw;
     multi method foo() { $.cnt++ }
-    multi method foo(Int $x) { $.cnt++ }
-    multi method foo($x) { $.cnt++ }
+    multi method foo(Int $x) { $.cnt++ }   #OK not used
+    multi method foo($x) { $.cnt++ }   #OK not used
 }
 class E is D {
     multi method foo() { $.cnt++ }
-    multi method foo($x) { $.cnt++ }
+    multi method foo($x) { $.cnt++ }   #OK not used
 }
 
 {
@@ -165,10 +165,10 @@ class G is F does R2 {
 }
 
 class MMT1 {
-    multi method foo($x) { 42 }
+    multi method foo($x) { 42 }   #OK not used
 }
 class MMT2 is MMT1 {
-    multi method foo(Int $x) { "oh noes" }
+    multi method foo(Int $x) { "oh noes" }   #OK not used
 }
 is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find next one up';
 

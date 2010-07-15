@@ -57,8 +57,8 @@ ok !%hash.exists("42"), "exists on hashes (2)";
 # Not an exists() test per se, but asserts that elements shouldn't be added to
 # (exist in) a hash just because there was an attempt to read nonexistent elements.
 {
-  sub foo( $any ) {}
-  sub bar( $any is copy ) {}
+  sub foo( $any ) {}   #OK not used
+  sub bar( $any is copy ) {}   #OK not used
 
   my $empty_hash = hash();
   is( $empty_hash.pairs.sort.join( ',' ), '', "empty hash stays same when read from (1)" );

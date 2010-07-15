@@ -8,7 +8,7 @@ plan 14;
 
 {
     class TypeCastSub {
-        method &.( |$capture ) {return 'pretending to be a sub'}
+        method &.( |$capture ) {return 'pretending to be a sub'}   #OK not used
     }
 
     my $thing = TypeCastSub.new;
@@ -18,7 +18,7 @@ plan 14;
 
 {
     class TypeCastArray {
-        method @.[ **@slice ] {return 'pretending to be an array'}
+        method @.[ **@slice ] {return 'pretending to be an array'}   #OK not used
     }
 
     my $thing = TypeCastArray.new;
@@ -30,7 +30,7 @@ plan 14;
 
 {
     class TypeCastHash {
-        method %.{ **@slice } {return 'pretending to be a hash'}
+        method %.{ **@slice } {return 'pretending to be a hash'}   #OK not used
     }
 
     my $thing = TypeCastHash.new;

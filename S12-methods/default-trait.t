@@ -22,7 +22,7 @@ lives_ok { doit_sub(3) }, "'is default' trait makes otherwise ambiguous method d
 is doit_sub(3), 9, "'is default' trait on subs";
 
 multi sub slurpy() is default { return 'a' };
-multi sub slurpy(*@args)      { return 'b' };
+multi sub slurpy(*@args)      { return 'b' };   #OK not used
 
 is slurpy(2), 'b', 'basic sanity with arity based dispatch and slurpies';
 is slurpy(),  'a', '"is default" trait wins against empty slurpy param';

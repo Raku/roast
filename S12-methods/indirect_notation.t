@@ -101,11 +101,11 @@ dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";
 {
     class T4 {
         has $.called = 0;
-        our multi method m(Int $x) { $!called++; 'm-Int' }
-        our multi method m(Num $x) { $!called++; 'm-Num' }
+        our multi method m(Int $x) { $!called++; 'm-Int' }   #OK not used
+        our multi method m(Num $x) { $!called++; 'm-Num' }   #OK not used
 
-        our multi method n(Int $x) { $!called++; 'n-Int' }
-        our multi method n(Num $x) { $!called++; 'n-Num' }
+        our multi method n(Int $x) { $!called++; 'n-Int' }   #OK not used
+        our multi method n(Num $x) { $!called++; 'n-Num' }   #OK not used
     }
 
     my $o = T4.new();

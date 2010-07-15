@@ -375,7 +375,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
              'for loop over junction in try block';
 
     sub rt63686 {
-        for any(1,2) -> $x {};
+        for any(1,2) -> $x {};    #OK not used
         return 'happiness';
     }
     is rt63686(), 'happiness', 'for loop over junction in sub';

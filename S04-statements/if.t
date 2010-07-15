@@ -94,7 +94,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 {
     my $var = 9;
-    my sub func( $a, $b, $c ) { $var };
+    my sub func( $a, $b, $c ) { $var };    #OK not used
     if func 1, 2, 3 { $var = 4 } else { $var = 5 };
     is $var, 4, 'if with no parens, and call a function without parenthesis';
 }

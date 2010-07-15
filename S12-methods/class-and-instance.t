@@ -5,7 +5,7 @@ use Test;
 plan 4;
 
 class Foo {
-    method bar (Foo $class: $arg) { return 100 + $arg }
+    method bar (Foo $class: $arg) { return 100 + $arg }   #OK not used
 }
 
 {

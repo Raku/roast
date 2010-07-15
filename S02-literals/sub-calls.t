@@ -19,7 +19,7 @@ plan 20;
 # (They check that the parser doesn't abort, but they might still parse
 #  incorrectly.)
 {
-    sub foo(*@args, *%named) { 1 }
+    sub foo(*@args, *%named) { 1 }    #OK not used
 
     ok eval(q/foo;      /), 'call with no args, no parens';
     ok eval(q/foo();    /), 'call with no args, has parens';

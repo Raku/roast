@@ -5,10 +5,10 @@ plan *;
 # RT 71754
 {
     my @called;
-    multi rt71754( Num $x ) {
+    multi rt71754( Num $x ) {    #OK not used
         push @called, 'Num';
     }
-    multi rt71754( Int $x ) {
+    multi rt71754( Int $x ) {    #OK not used
         push @called, 'Int';
         callsame;
     }

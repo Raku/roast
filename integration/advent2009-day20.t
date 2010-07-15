@@ -5,7 +5,7 @@ use Test;
 
 plan *;
 
-sub foo (Int $i, @stuff, $blah = 5) { ... }
+sub foo (Int $i, @stuff, $blah = 5) { ... }   #OK not used
 is &foo.name, 'foo', 'Introspecting subroutine name';
 
 my $bar = &foo;

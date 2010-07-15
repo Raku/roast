@@ -7,10 +7,10 @@ plan 16;
 # basic tests to see if the methods overload correctly.
 
 {
-    my multi testsub ($a,$b) {
+    my multi testsub ($a,$b) {   #OK not used
         return 1;
     }
-    my multi testsub ($a) {
+    my multi testsub ($a) {   #OK not used
         return 2;
     }
     my multi testsub () {
@@ -29,7 +29,7 @@ plan 16;
 
 {
     class TypeCastArray {
-        method postcircumfix:<[ ]> (*@slice) {return 'pretending to be an array'}
+        method postcircumfix:<[ ]> (*@slice) {return 'pretending to be an array'}   #OK not used
     }
 
     my $thing = TypeCastArray.new;
@@ -41,7 +41,7 @@ plan 16;
 
 {
     class TypeCastHash {
-        method postcircumfix:<{ }> (*@slice) {return 'pretending to be a hash'}
+        method postcircumfix:<{ }> (*@slice) {return 'pretending to be a hash'}   #OK not used
     }
 
     my $thing = TypeCastHash.new;

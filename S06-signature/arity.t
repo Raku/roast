@@ -6,14 +6,14 @@ plan 48;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
-sub a_one   ($a)         { };
-sub a_two   ($a, $b)     { };
-sub a_three ($a, $b, @c) { };
-sub a_four  ($a, $b, @c, %d) { };
+sub a_one   ($a)         { };   #OK not used
+sub a_two   ($a, $b)     { };   #OK not used
+sub a_three ($a, $b, @c) { };   #OK not used
+sub a_four  ($a, $b, @c, %d) { };   #OK not used
 
-sub o_zero  ($x?, $y?)   { };
-sub o_one   ($x, :$y)    { };
-sub o_two   ($x, :$y!, :$z) { };
+sub o_zero  ($x?, $y?)   { };   #OK not used
+sub o_one   ($x, :$y)    { };   #OK not used
+sub o_two   ($x, :$y!, :$z) { };   #OK not used
 
 is &a_zero.arity,   0, '0 arity &sub';
 is &a_one.arity,    1, '1 arity &sub';
@@ -84,41 +84,41 @@ is &o_two.count,    3, 'count on sub with optional and required named params';
 }
 
 {
-    is { my $k; $^a         }.arity, 1,
+    is { my $k; $^a         }.arity, 1,   #OK not used
         "additional my() vars don't influence .arity calculation (1-1)";
-    is { my $k; $^a,$^b     }.arity, 2,
+    is { my $k; $^a,$^b     }.arity, 2,   #OK not used
         "additional my() vars don't influence .arity calculation (1-2)";
-    is { my $k; $^a,$^b,$^c }.arity, 3,
+    is { my $k; $^a,$^b,$^c }.arity, 3,   #OK not used
         "additional my() vars don't influence .arity calculation (1-3)";
 
-    is { my $k; $^a         }.count, 1,
+    is { my $k; $^a         }.count, 1,   #OK not used
         "additional my() vars don't influence .count calculation (1-1)";
-    is { my $k; $^a,$^b     }.count, 2,
+    is { my $k; $^a,$^b     }.count, 2,   #OK not used
         "additional my() vars don't influence .count calculation (1-2)";
-    is { my $k; $^a,$^b,$^c }.count, 3,
+    is { my $k; $^a,$^b,$^c }.count, 3,   #OK not used
         "additional my() vars don't influence .count calculation (1-3)";
 }
 
 {
-    is { $^a;         my $k }.arity, 1,
+    is { $^a;         my $k }.arity, 1,   #OK not used
         "additional my() vars don't influence .arity calculation (2-1)";
-    is { $^a,$^b;     my $k }.arity, 2,
+    is { $^a,$^b;     my $k }.arity, 2,   #OK not used
         "additional my() vars don't influence .arity calculation (2-2)";
-    is { $^a,$^b,$^c; my $k }.arity, 3,
+    is { $^a,$^b,$^c; my $k }.arity, 3,   #OK not used
         "additional my() vars don't influence .arity calculation (2-3)";
 
-    is { $^a;         my $k }.count, 1,
+    is { $^a;         my $k }.count, 1,   #OK not used
         "additional my() vars don't influence .count calculation (2-1)";
-    is { $^a,$^b;     my $k }.count, 2,
+    is { $^a,$^b;     my $k }.count, 2,   #OK not used
         "additional my() vars don't influence .count calculation (2-2)";
-    is { $^a,$^b,$^c; my $k }.count, 3,
+    is { $^a,$^b,$^c; my $k }.count, 3,   #OK not used
         "additional my() vars don't influence .count calculation (2-3)";
 }
 
 # used to be a bug in Rakudo, RT #63744
 {
     sub indirect-count(Code $c) { +$c.signature.params; }
-    my $tester = -> $a, $b, $c? { ... };
+    my $tester = -> $a, $b, $c? { ... };   #OK not used
     is +$tester.signature.params, 3, '+$obj.signature.params work';
     is +$tester.signature.params, indirect-count($tester),
        '... also when passed to a sub first';

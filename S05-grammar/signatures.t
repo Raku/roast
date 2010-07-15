@@ -12,7 +12,7 @@ grammar Grammar::With::Signatures {
         <fred: 2, 3>
     }
 
-    token fred($arg, $bar?) {
+    token fred($arg, $bar?) {    #OK not used
         | { $arg == 1 } 'bar'
         | { $arg == 2 } 'foo'
     }

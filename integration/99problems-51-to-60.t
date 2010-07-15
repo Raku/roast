@@ -117,9 +117,9 @@ plan 37;
     
     # in Rakudo you can't pass a Mu to where an Array is expected,
     # so we add multis for explicit undefined values
-    multi sub mirror(Any:U $a, Any:U $b) { return True;  }
-    multi sub mirror(Any:U $a, @b)       { return False; }
-    multi sub mirror(@a,       Any:U $b) { return False; }
+    multi sub mirror(Any:U $a, Any:U $b) { return True;  }   #OK not used
+    multi sub mirror(Any:U $a, @b)       { return False; }   #OK not used
+    multi sub mirror(@a,       Any:U $b) { return False; }   #OK not used
 
     multi sub mirror(@first, @second) {
         if (@first|@second == (Mu,)) {

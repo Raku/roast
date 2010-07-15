@@ -7,8 +7,8 @@ class A { }
 class B { }
 class C is A is B { }
 proto foo($x) { 1 }
-multi foo(A $x) { 2 }
-multi foo(B $x) { 3 }
+multi foo(A $x) { 2 }    #OK not used
+multi foo(B $x) { 3 }    #OK not used
 is(foo(A.new), 2, 'dispatch on class worked');
 is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(C.new), 1, 'ambiguous dispatch fell back to proto');
@@ -17,10 +17,10 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 {
     # Test that proto makes all further subs in the scope also be multi.
     proto bar() { "proto" }
-    sub bar($x) { 1 }
-    multi bar($x, $y) { 2 }
-    multi sub bar($x, $y, $z) { 3 }
-    sub bar($x, $y, $z, $a) { 4 }
+    sub bar($x) { 1 }    #OK not used
+    multi bar($x, $y) { 2 }    #OK not used
+    multi sub bar($x, $y, $z) { 3 }    #OK not used
+    sub bar($x, $y, $z, $a) { 4 }    #OK not used
     is bar(),  "proto", "called the proto";
     is bar(1),       1, "sub defined without multi has become one";
     is bar(1,2),     2, "multi ... still works, though";

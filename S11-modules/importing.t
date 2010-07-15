@@ -21,7 +21,7 @@ plan 16;
     ok( &bop, 'Foo::bop is defined (implicitly :DEFAULT)' );
     is( bop(), 'Foo::bop', 'Foo::bop is the sub we expect' );
 
-    multi waz($x) { 'Foo::wazhere' }
+    multi waz($x) { 'Foo::wazhere' }   #OK not used
     ok( &waz, 'Foo::waz multi is defined (implicitly :DEFAULT)' );
     is( waz(), 'Foo::waz', 'Foo::waz is the sub we expect' );
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );

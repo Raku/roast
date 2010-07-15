@@ -112,7 +112,7 @@ my $obj;
 
 {
     class Foo6 {
-        method me ($class: $arg) { 'Foo6'~$arg };
+        method me ($class: $arg) { 'Foo6'~$arg };    #OK not used
     };
     my $obj6 = Foo6.new;
     $obj = eval("FooBar->new", :lang<perl5>);

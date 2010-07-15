@@ -30,14 +30,14 @@ class Foo {
     # $.tracker is used to determine the order of calls.
     has $.tracker is rw;
     multi method doit()  {$.tracker ~= 'foo,'}
-    multi method doit(Int $num) {$.tracker ~= 'fooint,'}
+    multi method doit(Int $num) {$.tracker ~= 'fooint,'}   #OK not used
     method show  {$.tracker}
     method clear {$.tracker = ''}
 }
 
 class BarCallSame is Foo {
     multi method doit() {$.tracker ~= 'bar,'; callsame; $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}   #OK not used
 }
 
 {
@@ -54,7 +54,7 @@ class BarCallSame is Foo {
 
 class BarCallWithEmpty is Foo {
     multi method doit() {$.tracker ~= 'bar,'; callwith(); $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(); $.tracker ~= 'ret2,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(); $.tracker ~= 'ret2,'}   #OK not used
 }
 {
     my $o = BarCallWithEmpty.new;
@@ -71,7 +71,7 @@ class BarCallWithEmpty is Foo {
 
 class BarCallWithInt is Foo {
     multi method doit() {$.tracker ~= 'bar,'; callwith(42); $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(42); $.tracker ~= 'ret2,'}
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callwith(42); $.tracker ~= 'ret2,'}   #OK not used
 }
 {
     my $o = BarCallWithInt.new;

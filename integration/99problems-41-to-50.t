@@ -295,7 +295,7 @@ fail fail fail
     
     my %res;
     
-    sub traverse ($a, Str $code = ""){
+    sub traverse ($a, Str $code = "") {
         if $a ~~ Str {
             %res{$a} = $code;
         } else {

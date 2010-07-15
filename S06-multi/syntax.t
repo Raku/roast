@@ -9,19 +9,19 @@ plan 34;
 
 # multi sub with signature
 multi sub foo() { "empty" }
-multi sub foo($a) { "one" }
+multi sub foo($a) { "one" }    #OK not used
 is(foo(), "empty", "multi sub with empty signature");
 is(foo(42), "one", "multi sub with parameter list");
 
 # multi sub without signature
 multi sub bar { "empty" }
-multi sub bar($a) { "one" }
+multi sub bar($a) { "one" }    #OK not used
 is(bar(), "empty", "multi sub with no signature");
 is(bar(42), "one", "multi sub with parameter list");
 
 # multi without a routine type
 multi baz { "empty" }
-multi baz($a) { "one" }
+multi baz($a) { "one" }    #OK not used
 is(baz(), "empty", "multi with no signature");
 is(baz(42), "one", "multi with parameter list");
 
@@ -30,10 +30,10 @@ is(baz(42), "one", "multi with parameter list");
 # ints means they are tied candidates as one isn't narrower than the other.
 # (Note Int is narrower than Num - any two types where one is narrower than
 # the other will do it, though.)
-multi foo(Int $a, Num $b) { 1 }
-multi foo(Num $a, Int $b) { 2 }
-multi bar(Int $a;; Num $b) { 1 }
-multi bar(Num $a;; Int $b) { 2 }
+multi foo(Int $a, Num $b) { 1 }    #OK not used
+multi foo(Num $a, Int $b) { 2 }    #OK not used
+multi bar(Int $a;; Num $b) { 1 }    #OK not used
+multi bar(Num $a;; Int $b) { 2 }    #OK not used
 my $lived = 0;
 try { foo(1,1); $lived = 1 }
 is($lived, 0, "dispatch tied as expected");
@@ -56,7 +56,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
 {
-    multi sub max($a, $b, $c) {return 9}
+    multi sub max($a, $b, $c) {return 9}    #OK not used
 
     lives_ok { max(1, 2, 3) }, 'use multi method to override builtin lives';
     is eval('max(1, 2, 3)'), 9, 'use multi method to override builtin';
@@ -64,19 +64,19 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # named and slurpy interaction - there have been bugs in the past on this front
 {
-    multi nsi_1(Int $x, Bool :$flag, *@vals) { "nsi 1" };
+    multi nsi_1(Int $x, Bool :$flag, *@vals) { "nsi 1" };    #OK not used
     is nsi_1(1),             'nsi 1', 'interaction between named and slurpy (1)';
     is nsi_1(1, 2, 3, 4, 5), 'nsi 1', 'interaction between named and slurpy (2)';
 
-    multi nsi_2(Bool :$baz = Bool::False, *@vals) { "nsi 2" };
+    multi nsi_2(Bool :$baz = Bool::False, *@vals) { "nsi 2" };    #OK not used
     is nsi_2(:baz(Bool::True), 1, 2, 3), 'nsi 2', 'interaction between named and slurpy (3)';
     is nsi_2(1, 2, 3),                   'nsi 2', 'interaction between named and slurpy (4)';
 }
 
 # RT #68234
 {
-    multi rt68234(:$key!) { 'with key' };
-    multi rt68234(*%_)    { 'unknown' };
+    multi rt68234(:$key!) { 'with key' };    #OK not used
+    multi rt68234(*%_)    { 'unknown' };    #OK not used
     is rt68234(:key), 'with key', 'can find multi method with key';
     #?rakudo skip 'RT #68234'
     is rt68234(:unknown), 'unknown', 'can find multi method with slurpy';
@@ -85,15 +85,15 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 # RT #68158
 {
     multi rt68158() { 1 }
-    multi rt68158(*@x) { 2 }
+    multi rt68158(*@x) { 2 }    #OK not used
     is rt68158(),  1, 'non-slurpy wins over slurpy';
     is rt68158(9), 2, 'slurpy called when non-slurpy can not bind';
 }
 
 # RT #64922
 {
-    multi rt64922($x, %h?) { 1 }
-    multi rt64922(@x) { 2 }
+    multi rt64922($x, %h?) { 1 }    #OK not used
+    multi rt64922(@x) { 2 }    #OK not used
     is rt64922(1),     1, 'optional parameter does not break type-based candidate sorting';
     is rt64922([1,2]), 2, 'optional parameter does not break type-based candidate sorting';
 }

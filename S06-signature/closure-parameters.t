@@ -21,8 +21,8 @@ plan 15;
 #?rakudo skip 'type syntax parse failure'
 {
     my sub testit (&testcode:(Int)) {testcode(12)}
-    my sub testint(Int $foo) {return 1}
-    my sub teststr(Str $foo) {return 'foo'}
+    my sub testint(Int $foo) {return 1}   #OK not used
+    my sub teststr(Str $foo) {return 'foo'}   #OK not used
 
     ok(testit(&testint), 'code runs with proper signature (1)');
     eval_dies_ok('testit(&teststr)', 'code dies with invalid signature (1)');
@@ -31,10 +31,10 @@ plan 15;
 #?rakudo skip 'type syntax parse failure'
 {
     my sub testit (&testcode:(Int --> Bool)) {testcode(3)}
-    my Bool sub testintbool(Int $foo) {return Bool::True}
-    my Bool sub teststrbool(Str $foo) {return Bool::False}
-    my Int  sub testintint (Int $foo) {return 1}
-    my Int  sub teststrint (Str $foo) {return 0}
+    my Bool sub testintbool(Int $foo) {return Bool::True}   #OK not used
+    my Bool sub teststrbool(Str $foo) {return Bool::False}   #OK not used
+    my Int  sub testintint (Int $foo) {return 1}   #OK not used
+    my Int  sub teststrint (Str $foo) {return 0}   #OK not used
 
     ok(testit(&testintbool), 'code runs with proper signature (2)');
     eval_dies_ok('testit(&testintint)',  'code dies with invalid signature (2)');
@@ -44,19 +44,19 @@ plan 15;
 
 #?rakudo skip 'type syntax parse failure'
 {
-    multi sub t1 (&code:(Int)) { 'Int' };
-    multi sub t1 (&code:(Str)) { 'Str' };
-    multi sub t1 (&code:(Str --> Bool)) { 'Str --> Bool' };
-    multi sub t1 (&code:(Any, Any)) { 'Two' };
+    multi sub t1 (&code:(Int)) { 'Int' };   #OK not used
+    multi sub t1 (&code:(Str)) { 'Str' };   #OK not used
+    multi sub t1 (&code:(Str --> Bool)) { 'Str --> Bool' };   #OK not used
+    multi sub t1 (&code:(Any, Any)) { 'Two' };   #OK not used
 
-    is t1(-> $a, $b { }), 'Two',
+    is t1(-> $a, $b { }), 'Two',   #OK not used
        'Multi dispatch based on closure parameter syntax (1)';
-    is t1(-> Int $a { }), 'Int',
+    is t1(-> Int $a { }), 'Int',   #OK not used
        'Multi dispatch based on closure parameter syntax (2)';
-    is t1(-> Str $a { }), 'Str',
+    is t1(-> Str $a { }), 'Str',   #OK not used
        'Multi dispatch based on closure parameter syntax (3)';
 
-    sub takes-str-returns-bool(Str $x --> Bool) { True }
+    sub takes-str-returns-bool(Str $x --> Bool) { True }   #OK not used
     is t1(&takes-str-returns-bool), 'Str --> Bool',
        'Multi dispatch based on closure parameter syntax (4)';
 

@@ -9,7 +9,7 @@ plan 15;
 
 {
     # the multi being lifted
-    multi sub mt(Any $x) { 'Any' }
+    multi sub mt(Any $x) { 'Any' }    #OK not used
 
     multi sub lt1() { lift mt('String') }
     multi sub lt2() { lift mt(['Array']) }

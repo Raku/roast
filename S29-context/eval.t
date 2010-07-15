@@ -13,7 +13,7 @@ Tests for the eval() builtin
 # eval should evaluate the code in the lexical scope of eval's caller
 {
     sub make_eval_closure {
-        my $a = 5;
+        my $a = 5;   #OK not used
         return sub ($s) {
             eval $s 
         };

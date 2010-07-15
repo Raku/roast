@@ -15,7 +15,7 @@ Parameterized traits tests, see L<S14/Traits>.
 role cool {
     has $.cool;
 
-    multi sub trait_auxiliary:<is>(cool $trait, Any $container; $val) {
+    multi sub trait_auxiliary:<is>(cool $trait, Any $container; $val) {   #OK not used
         $.cool = $val;
         $container does cool($val);
     }

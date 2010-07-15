@@ -5,10 +5,10 @@ plan 8;
 # L<S12/"Multisubs and Multimethods">
 # L<S06/Unpacking array parameters>
 
-multi sub foo ([$a])            { return "one" }
-multi sub foo ([$a,$b])         { return "two" }
-multi sub foo ([$a,$b,$c])      { return "three" }
-multi sub foo (*[$a,$b,$c,$d])  { return "four" }
+multi sub foo ([$a])            { return "one" }   #OK not used
+multi sub foo ([$a,$b])         { return "two" }   #OK not used
+multi sub foo ([$a,$b,$c])      { return "three" }   #OK not used
+multi sub foo (*[$a,$b,$c,$d])  { return "four" }   #OK not used
 
 my @a = (1);
 my @b = (1,2);

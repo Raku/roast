@@ -5,9 +5,9 @@ plan *;
 #L<S12/Method call vs. Subroutine call>
 
 class test {
-    method foo($a:) { 'method' }
+    method foo($a:) { 'method' }   #OK not used
 };
-sub foo($a) { 'sub' };
+sub foo($a) { 'sub' };   #OK not used
 my $obj = test.new;
 
 #?rakudo skip 'confused near "($obj:),  "'

@@ -52,7 +52,7 @@ ok $b.^does(InitialAttribVal[23]),
 
 # L<S14/Parametric Roles/main type is generic by default>
 role InitialAttribType[::vartype] {
-    method hi(vartype $foo) { 42 }
+    method hi(vartype $foo) { 42 }   #OK not used
 }
 my $c = 0;
 lives_ok { $c does InitialAttribType[Code] },

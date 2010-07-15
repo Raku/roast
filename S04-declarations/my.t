@@ -243,7 +243,7 @@ eval_lives_ok 'my $x = 3; class A { has .$y = $x; }; say A.new.y',
 
 {
     #?rakudo skip 'RT 72814' 
-    lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';
+    lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }
 
 # vim: ft=perl6

@@ -56,7 +56,7 @@ plan 7;
 }
 
 
-sub foo ($baz is rw) {
+sub foo ($baz is rw) {    #OK not used
     # just some random subroutine.
 }
 

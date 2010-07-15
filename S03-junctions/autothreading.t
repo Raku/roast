@@ -55,8 +55,8 @@ plan 83;
     my $calls_c = 0;
     my ($r, $ok);
     multi mstest(Int $x) { $calls_a++; return $x }
-    multi mstest(Str $x, Str $y) { $calls_b++ }
-    multi mstest(Str $x) { $calls_c++ }
+    multi mstest(Str $x, Str $y) { $calls_b++ }    #OK not used
+    multi mstest(Str $x) { $calls_c++ }    #OK not used
     $r = mstest(1&2 | 3);
     is($calls_a, 3, 'correct multi-sub called right number of times');
     is($calls_b, 0, 'incorrect multi-sub not called');

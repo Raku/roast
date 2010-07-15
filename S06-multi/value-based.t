@@ -23,8 +23,8 @@ plan 7;
 {
     multi m2(1)      { "a" }
     multi m2(2)      { "b" }
-    multi m2(Int $x) { "c" }
-    multi m2($x)     { "d" }
+    multi m2(Int $x) { "c" }   #OK not used
+    multi m2($x)     { "d" }   #OK not used
 
     is m2(1),   "a", 'literal Int in signature matches value correctly';
     is m2(2),   "b", 'literal Int in signature matches value correctly';

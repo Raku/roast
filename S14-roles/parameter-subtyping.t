@@ -39,9 +39,9 @@ ok(R1[C1,C2] !~~ R1[C2,C1], 'subtyping by role parameters (two params)');
 ok(R1[C2,C1] !~~ R1[C1,C3], 'subtyping by role parameters (two params)');
 
 # Use of parametric subtyping in dispatch.
-sub s(C1 @arr) { 1 }
-multi m(C1 @arr) { 2 }
-multi m(@arr) { 3 }
+sub s(C1 @arr) { 1 }   #OK not used
+multi m(C1 @arr) { 2 }   #OK not used
+multi m(@arr) { 3 }   #OK not used
 my C2 @x;
 is(s(@x), 1, 'single dispatch relying on parametric subtype');
 is(m(@x), 2, 'multi dispatch relying on parametric subtype');

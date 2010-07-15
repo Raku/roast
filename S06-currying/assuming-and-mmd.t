@@ -4,8 +4,8 @@ use Test;
 
 plan 6;
 
-multi testsub (Str $x, $y) { "Str" }
-multi testsub (Int $x, $y) { "Int" }
+multi testsub (Str $x, $y) { "Str" }    #OK not used
+multi testsub (Int $x, $y) { "Int" }    #OK not used
 
 is testsub("a_str", 42), "Str", "basic MMD works (1)";
 is testsub(23,      42), "Int", "basic MMD works (2)";

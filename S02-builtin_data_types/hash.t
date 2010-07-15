@@ -210,7 +210,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # RT #71064
 {
     class RT71064 {
-        method postcircumfix:<{ }>($x) { 'bughunt' }
+        method postcircumfix:<{ }>($x) { 'bughunt' }    #OK not used
         method rt71064() {
             my %h = ( foo => 'victory' );
             return %h<foo>;

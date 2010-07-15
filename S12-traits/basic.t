@@ -17,12 +17,12 @@ my $was_in_class_sub = 0;
 role cool {
   has $.is_cool = 42;
 
-  multi sub trait_auxiliary:<is>(cool $trait, Any $container:) {
+  multi sub trait_auxiliary:<is>(cool $trait, Any $container:) {   #OK not used
     $was_in_any_sub++;
     $container does cool;
   }
 
-  multi sub trait_auxiliary:<is>(cool $trait, Class $container:) {
+  multi sub trait_auxiliary:<is>(cool $trait, Class $container:) {   #OK not used
     $was_in_class_sub++;
     $container does cool;
   }

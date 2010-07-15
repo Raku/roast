@@ -16,7 +16,7 @@ multi foo (Regex $bar) { "Regex " ~ WHAT( $bar ) } # since Rule's don't stringif
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (@bar) { "Positional " ~ join(', ', @bar) }
 multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
-multi foo (IO $fh)     { "IO" }
+multi foo (IO $fh)     { "IO" }   #OK not used
 multi foo (Inf)        { "Inf" }
 multi foo (NaN)        { "NaN" }
 
@@ -45,15 +45,15 @@ is foo(NaN), 'NaN', 'dispatched to the NaN sub';
 # You're allowed to omit the "sub" when declaring a multi sub.
 # L<S06/"Routine modifiers">
 
-multi declared_wo_sub (Int $x) { 1 }
-multi declared_wo_sub (Str $x) { 2 }
+Multi declared_wo_sub (Int $x) { 1 }   #OK not used
+multi declared_wo_sub (Str $x) { 2 }   #OK not used
 is declared_wo_sub(42),   1, "omitting 'sub' when declaring 'multi sub's works (1)";
 is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (2)";
 
 # Test for slurpy MMDs
 proto mmd {}  # L<S06/"Routine modifiers">
 multi mmd () { 1 }
-multi mmd (*$x, *@xs) { 2 }
+multi mmd (*$x, *@xs) { 2 }   #OK not used
 
 is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
@@ -61,10 +61,10 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 {
     my %h = (:a<b>, :c<d>);
-    multi sub sigil-t (&code) { 'Callable'      }
-    multi sub sigil-t ($any)  { 'Any'           }
-    multi sub sigil-t (@ary)  { 'Positional'    }
-    multi sub sigil-t (%h)    { 'Associative'   }
+    multi sub sigil-t (&code) { 'Callable'      }   #OK not used
+    multi sub sigil-t ($any)  { 'Any'           }   #OK not used
+    multi sub sigil-t (@ary)  { 'Positional'    }   #OK not used
+    multi sub sigil-t (%h)    { 'Associative'   }   #OK not used
     is sigil-t(1),          'Any',      'Sigil-based dispatch (Any)';
     is sigil-t({ $_ }),     'Callable', 'Sigil-based dispatch (Callable)';
     is sigil-t(<a b c>),    'Positional','Sigil-based dispatch (Arrays)';
@@ -78,17 +78,17 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     class Paper   { }
     class Stone   { }
 
-    multi wins(Scissor $x, Paper   $y) { 1 }
-    multi wins(::T     $x, T       $y) { 0 }
-    multi wins($x, $y)                { -1 }
+    multi wins(Scissor $x, Paper   $y) { 1 }   #OK not used
+    multi wins(::T     $x, T       $y) { 0 }   #OK not used
+    multi wins($x, $y)                { -1 }   #OK not used
 
     is wins(Scissor.new, Paper.new),   1,  'Basic sanity';
     is wins(Paper.new,   Paper.new),   0,  'multi dispatch with ::T generics';
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a ::T variant';
 
-    multi wins2(Scissor $x, Paper   $y) { 1 }
+    multi wins2(Scissor $x, Paper   $y) { 1 }   #OK not used
     multi wins2($x, $y where { $x.WHAT eq $y.WHAT }) { 0 }
-    multi wins2($x, $y)                { -1 }
+    multi wins2($x, $y)                { -1 }   #OK not used
     is wins2(Scissor.new, Paper.new),   1,  'Basic sanity 2';
     is wins2(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';
     is wins2(Paper.new,   Scissor.new), -1, 'fallback if there is a faked generic';
@@ -109,7 +109,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 {
     multi m($x,$y where { $x==$y }) { 0 }
-    multi m($x,$y) { 1 }
+    multi m($x,$y) { 1 }   #OK not used
 
     is m(2, 3), 1, 'subset types involving mulitple parameters (fallback)';
     is m(1, 1), 0, 'subset types involving mulitple parameters (success)';
@@ -136,12 +136,12 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 # multi dispatch on typed containers
 #?rakudo skip 'typed array and hash containers are NYI'
 {
-    multi f4 (Int @a )  { 'Array of Int' }
-    multi f4 (Str @a )  { 'Array of Str' }
-    multi f4 (Array @a) { 'Array of Array' }
-    multi f4 (Int %a)   { 'Hash of Int' }
-    multi f4 (Str %a)   { 'Hash of Str' }
-    multi f4 (Array %a) { 'Hash of Array' }
+    multi f4 (Int @a )  { 'Array of Int' }   #OK not used
+    multi f4 (Str @a )  { 'Array of Str' }   #OK not used
+    multi f4 (Array @a) { 'Array of Array' }   #OK not used
+    multi f4 (Int %a)   { 'Hash of Int' }   #OK not used
+    multi f4 (Str %a)   { 'Hash of Str' }   #OK not used
+    multi f4 (Array %a) { 'Hash of Array' }   #OK not used
 
     my Int @a = 3, 4;
     my Str @b = <foo bar>;
@@ -176,12 +176,12 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 {
     multi x(@a, @b where { @a.elems == @b.elems }) { 1 }
-    multi x(@a, @b)                                { 2 }
+    multi x(@a, @b)                                { 2 }   #OK not used
     is x([1,2],[3,4]), 1, 'where-clause that uses multiple params (1)';
     is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)'; 
 
-    multi y(::T $x, T $y) { 1 }
-    multi y($x, $y)       { 2 }
+    multi y(::T $x, T $y) { 1 }   #OK not used
+    multi y($x, $y)       { 2 }   #OK not used
     is y(1, 2), 1, 'generics in multis (+)';
     is y(1, 2.5), 2, 'generics in multis (-)';
 }

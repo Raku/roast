@@ -33,7 +33,7 @@ dies_ok { param_test(R1[Str].new) },        'using of as type constraint on para
 role R2[::T] {
     method x { "ok" }
     method call_test { self.call_test_helper(T.new) }
-    method call_test_helper(T $x) { "ok" }
+    method call_test_helper(T $x) { "ok" }   #OK not used
     method call_fail { self.call_test_helper(4.5) }
 }
 class C3 does R2[R2[Int]] { }

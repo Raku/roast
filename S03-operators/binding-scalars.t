@@ -46,7 +46,7 @@ plan 28;
 
   sub foo {
     my $a is context = "foo";
-    my $b is context := $a;
+    my $b is context := $a;    #OK not used
     return bar(); # && bar2();
   }
 

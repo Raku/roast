@@ -45,7 +45,7 @@ plan 12;
 
 # &sub.signature should return a Siglist object
 {
-    sub foo1 ($a, $b) {}
+    sub foo1 ($a, $b) {}    #OK not used
     my $siglist = :($a, $b);
 
     ok ~$siglist,
@@ -58,7 +58,7 @@ plan 12;
 
 # Same as above, but more complex
 {
-    my sub foo (Num $a, $b?, *@rest) {}
+    my sub foo (Num $a, $b?, *@rest) {}    #OK not used
     my $siglist = :(Num $a, $b?, *@rest);
 
     #?pugs todo 'feature'

@@ -221,7 +221,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 {
     my $n = 1;
     my $m = 2;
-    sub infix:<++>($x, $y) { 42 }
+    sub infix:<++>($x, $y) { 42 }    #OK not used
 
     #'$n++$m' should be a syntax error
     eval_dies_ok('$n++$m', 'infix requires space when ambiguous with postfix');

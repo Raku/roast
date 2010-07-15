@@ -9,14 +9,14 @@ plan 6;
 class Foo {
     # $.tracker is used to determine the order of calls.
     has $.tracker is rw;
-    method doit($foo) { $.tracker ~= 'foo,' }
+    method doit($foo) { $.tracker ~= 'foo,' }   #OK not used
     method show  {$.tracker}
     method clear {$.tracker = ''}
 }
 
 class BazLastCallNext is Foo {
-    multi method doit($foo) { $.tracker ~= 'baz,'; nextsame; }
-    multi method doit(Int $foo) {
+    multi method doit($foo) { $.tracker ~= 'baz,'; nextsame; }   #OK not used
+    multi method doit(Int $foo) {   #OK not used
         $.tracker ~= 'bazint,';
         if 1 { lastcall }
         nextsame;
@@ -36,8 +36,8 @@ class BazLastCallNext is Foo {
 }
 
 class BarLastCallSame is Foo {
-    multi method doit($foo) {$.tracker ~= 'bar,'; lastcall; callsame; $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}
+    multi method doit($foo) {$.tracker ~= 'bar,'; lastcall; callsame; $.tracker ~= 'ret1,'}   #OK not used
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; callsame; $.tracker ~= 'ret2,'}   #OK not used
 }
 
 {

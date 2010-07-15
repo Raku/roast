@@ -33,7 +33,7 @@ plan 11;
     isa_ok pa(@b), Array, 'basic array type sanity';
     dies_ok { pa(3) }, 'non-slurpy array does not take a single Int';
 
-    sub ph(%h) { 1 }
+    sub ph(%h) { 1 }   #OK not used
     dies_ok { ph(3) }, 'an Int is not a Hash';
 }
 
@@ -58,7 +58,7 @@ plan 11;
 # A Rakudo regression
 
 {
-    sub ro_a(@a) { };
+    sub ro_a(@a) { };   #OK not used
     sub ro_b(@a) { ro_a(@a) };
     my @x = 1, 2, 4;
     lives_ok { ro_b(@x) },   'can pass parameter Array on to next function';

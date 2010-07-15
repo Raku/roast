@@ -9,7 +9,7 @@ plan 20;
 # L<S06/Other matters/Introspection>
 
 # introspecting only subs
-only sub only-sub($a, $b) { "only" };
+only sub only-sub($a, $b) { "only" };   #OK not used
 
 # .candidates
 is(&only-sub.candidates.elems,1,"an only subs lists itself in the .candidates");

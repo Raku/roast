@@ -20,7 +20,7 @@ class An::Action1 {
         $!in-a++;
         $!calls ~= 'a';
     }
-    method b($x) {
+    method b($x) {    #OK not used
         $!in-b++;
         $!calls ~= 'b';
     }

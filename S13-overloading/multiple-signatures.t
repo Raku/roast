@@ -22,8 +22,8 @@ is($exp + $base, 32, 'Second order works');
 
 # specifically make sure that there is only one state variable
 # this tells us that there is only one multi sub body
-multi sub postfix:<!> (Base $x) |
-                      (Exponent $x) {state $counter = 0; return ++$counter;}
+multi sub postfix:<!> (Base $x) |   #OK not used
+                      (Exponent $x) {state $counter = 0; return ++$counter;}   #OK not used
 
 is($base!, 1, 'shared routine test 1');
 is($exp!,  2, 'shared routine test 2');

@@ -44,10 +44,10 @@ eval '$foo.baz()';
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
 role R1 {
-    method foo($x) { 1 }
+    method foo($x) { 1 }   #OK not used
 }
 role R2 {
-    method foo($x, $y) { 2 }
+    method foo($x, $y) { 2 }   #OK not used
 }
 eval_dies_ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
 class C does R1 does R2 {
@@ -61,12 +61,12 @@ is($obj.foo('a','b'), 2, 'method composed into multi from role called');
 
 
 class Foo2 {
-    multi method a($d) {
+    multi method a($d) {   #OK not used
         "Any-method in Foo";
     }
 }
 class Bar is Foo2 {
-    multi method a(Int $d) {
+    multi method a(Int $d) {   #OK not used
         "Int-method in Bar";
     }
 }
@@ -118,10 +118,10 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 {
     role R5 {
         multi method rt69192()       { push @.order, 'empty' }
-        multi method rt69192(Str $a) { push @.order, 'Str'   }
+        multi method rt69192(Str $a) { push @.order, 'Str'   }   #OK not used
     }
     role R6 {
-        multi method rt69192(Num $a) { push @.order, 'Num'   }
+        multi method rt69192(Num $a) { push @.order, 'Num'   }   #OK not used
     }
     class RT69192 { has @.order }
 
@@ -149,13 +149,13 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 {
     role RoleS {
-        multi method d( Str $x ) { 'string' }
+        multi method d( Str $x ) { 'string' }   #OK not used
     }
     role RoleI {
-        multi method d( Int $x ) { 'integer' }
+        multi method d( Int $x ) { 'integer' }   #OK not used
     }
     class M does RoleS does RoleI {
-        multi method d( Any $x ) { 'any' }
+        multi method d( Any $x ) { 'any' }   #OK not used
     }
 
     my M $m .= new;
@@ -180,16 +180,16 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 {
     class BrokenTie {
-        multi method has_tie(Int $x) { 'tie1' };
-        multi method has_tie(Int $y) { 'tie2' };
+        multi method has_tie(Int $x) { 'tie1' };   #OK not used
+        multi method has_tie(Int $y) { 'tie2' };   #OK not used
     }
 
     #?rakudo todo 'ambiguous dispatch should die'
     dies_ok { BrokenTie.has_tie( 42 ) }, 'call to tied method dies';
 
     class WorkingTie is BrokenTie {
-        multi method has_tie(Int $z) { 'tie3' };
-        multi method has_tie(Str $s) { 'tie4' };
+        multi method has_tie(Int $z) { 'tie3' };   #OK not used
+        multi method has_tie(Str $s) { 'tie4' };   #OK not used
     }
 
     is WorkingTie.has_tie( 42 ), 'tie3', 'broken class fixed by subclass (1)';

@@ -13,18 +13,18 @@ Tests for .^methods from L<S12/Introspection>.
 # L<S12/Introspection/"get the method list of MyClass">
 
 class A {
-    method foo($param --> Any) { }
-    multi method bar($thingy) { }
-    multi method bar($thingy, $other_thingy) { }
+    method foo($param --> Any) { }   #OK not used
+    multi method bar($thingy) { }   #OK not used
+    multi method bar($thingy, $other_thingy) { }   #OK not used
 }
 class B is A {
-    method foo($param) of Num { }
+    method foo($param) of Num { }   #OK not used
 }
 class C is A {
 }
 class D is B is C {
-    multi method bar($a, $b, $c) { }
-    method foo($param) returns Int { }
+    multi method bar($a, $b, $c) { }   #OK not used
+    method foo($param) returns Int { }   #OK not used
 }
 
 my (@methods, $meth1, $meth2);

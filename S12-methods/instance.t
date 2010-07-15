@@ -201,7 +201,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
 
 {
     class InvocantTypeCheck {
-        method x(Int $a:) {
+        method x(Int $a:) {   #OK not used
             42;
         }
     }
