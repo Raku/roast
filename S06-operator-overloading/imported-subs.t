@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 BEGIN { @*INC.push: 't/spec/packages' };
 
@@ -9,23 +9,25 @@ BEGIN { @*INC.push: 't/spec/packages' };
     # defined in t/spec/packages/Exportops.pm
     use Exportops;
 
-    eval_lives_ok '5!', 'postfix:<!> was exported...';
-    eval_lives_ok '5! == 120 or die', '... and it works';
+    # note that eval_dies_ok executes in the context of
+    # Test.pm, and Test.pm doesn't import or lift the operators
 
-    eval_lives_ok '"a" yadayada "b"', 'infix:<yadayada> was exported';
-    eval_lives_ok '"a" yadayada "b" eq "a..b" or die',
-                  '... and it works';
+    ok eval('5!'), 'postfix:<!> was exported...';
+    ok eval('5! == 120 or die'), '... and it works';
+    eval_dies_ok '5!', 'Test.pm does not import the operators';
 
-    eval_lives_ok '¢"foo"', 'imported Unicode prefix operator';
-    eval_lives_ok '¢4 eq "4 cent" or die ', '... and it works';
+    ok eval('"a" yadayada "b"'), 'infix:<yadayada> was exported';
+    ok eval('"a" yadayada "b" eq "a..b" or die'), '... and it works';
 
-    eval_lives_ok '3 ± 4', 'infix:<±> was exported';
-    eval_lives_ok '(3 ± 4).isa(Range) or die', '... and it works';
+    ok eval('¢"foo"'), 'imported Unicode prefix operator';
+    ok eval('¢4 eq "4 cent" or die '), '... and it works';
 
-    eval_dies_ok '3 notthere 4', 'not-exported operator was not imported';
+    ok eval('3 ± 4'), 'infix:<±> was exported';
+    ok eval('(3 ± 4).isa(Range) or die'), '... and it works';
+
+    nok eval('3 notthere 4'), 'not-exported operator was not imported';
 }
 
-#?rakudo todo 'lexical import'
 eval_dies_ok '5!', 'import of operators is lexical';
 
 # vim: ft=perl6
