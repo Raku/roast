@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 63;
+plan 65;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -230,6 +230,19 @@ my $z = 42;
     sub declare_later {
         $x;
     }
+}
+
+# used to be RT #76366
+{
+    lives_ok { access_lexical_a() },
+        'can call our-sub that accesses a lexical before the block was run';
+    {
+        my $a = 42;
+        our sub access_lexical_a() { $a }
+    }
+    is  access_lexical_a(), 42,
+        'can call our-sub that accesses a lexical after the block was run';
+
 }
 
 eval_lives_ok 'my (%h?)', 'my (%h?) lives';
