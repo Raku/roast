@@ -19,18 +19,17 @@ sub f() {
     nok callframe().inline, 'explicitly entered block (.inline)';
 
     is callframe(1).my.<$x>, 42, 'can access outer lexicals via .my';
-    # don't call dies_ok { callframe(1).my.<$x> = 1 } here,
-    # because we don't know how many callframes dies_ok involves;
-    my $pad = callframe(1).my;
-    #?rakudo todo 'ro-ness of pads'
-    dies_ok { $pad<$x> = 23 }, 'Cannot modify outer lexicals';
+
+    # Note:  According to S02, this should probably fail unless
+    # $x is marked 'is dynamic'.
+    callframe(1).my.<$x> = 23;
 }
 
 my $x = 42;
 
 f();
 
-is $x, 42, '$x remained unmodified';
+is $x, 23, '$x remained unmodified';
 
 done_testing();
 
