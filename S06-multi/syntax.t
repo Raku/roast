@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan *;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -112,6 +112,20 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     multi sub kangaroo() { return method () { self * 2 } }
     my $m = kangaroo();
     is 21.$m(), 42, 'can write anonymous methods inside multi subs';
+}
+
+
+# RT #75136
+# a multi declaration should only return the current candidate, not the whole
+# set of candidates.
+{
+    multi sub koala(Int $x) { 42 * $x };
+
+    my $x = multi sub koala(Str $x) { 42 ~ $x }
+    is $x.candidates.elems,
+        1, 'multi sub declaration returns just the current candidate';
+    is $x('moep'), '42moep', 'and that candidate works';
+    dies_ok { $x(23) }, '... and does not contain the full multiness';
 }
 
 done_testing;
