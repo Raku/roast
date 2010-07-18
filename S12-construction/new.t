@@ -56,6 +56,23 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     dies_ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
 }
 
+# RT #69676
+{
+    class NewFromMu {
+        has $.x;
+        has $.y;
+
+        method new($a, $b) {
+            self.Mu::new(:x($a), :y($b));
+        }
+    }
+
+    my $x;
+    lives_ok { $x = NewFromMu.new('j', 'k') }, 'can delegate to self.Mu::new';
+    is $x.x, 'j', '... got the right attribute (1)';
+    is $x.y, 'k', '... got the right attribute (2)';
+}
+
 done_testing;
 
 # vim: ft=perl6
