@@ -13,7 +13,7 @@ Tests for the feed operators
     
 =end pod
 
-plan 23;
+plan *;
 
 #?pugs skip '<== dies with cast error'
 {
@@ -60,6 +60,7 @@ plan 23;
 
     #?pugs todo 'feed operators do not work'
     is($got_x, "x", "x was passed as explicit param");
+    #?rakudo 2 todo 'feeds + signatures'
     ok(!defined($got_y), "optional param y was not bound to fed list");
     #?pugs todo 'feed operators do not work'
     is(~@got_z, ~@a, '...slurpy array *@z got it');
@@ -73,6 +74,7 @@ plan 23;
 
     @data = <1 2 4 5 7 8>;
     @data <== grep {$_ % 2} <== eager @data;
+    #?rakudo 2 todo 'feeds + eager'
     is(~@data, ~@odds, '@arr <== grep <== eager @arr works');
 
     @data = <1 2 4 5 7 8>;
@@ -87,10 +89,12 @@ plan 23;
 
     @data <== map {$_ + 1} <== @tap <== grep {$_ % 2} <== eager @data;
     is(@tap, <1 3 5 7 9>, '@tap contained what was expected at the time');
+    #?rakudo todo 'feeds + eager'
     is(@data, <2 4 6 8 10>, 'final result was unaffected by the tap variable');
 }
 
 # no need for temp variables in feeds: $(*), @(*), %(*)
+#?rakudo skip '* feeds'
 {
     my @data = 'a' .. 'z';
     my @out  = <a e i o u y>;
@@ -104,6 +108,7 @@ plan 23;
 }
 
 # <<== and ==>> pretending to be unshift and push, respectively
+#?rakudo skip 'double-ended feeds'
 {
     my @odds = <1 3 5 7 9>;
     my @even = <0 2 4 6 8>;
@@ -117,6 +122,7 @@ plan 23;
 
 # feeding to whatever using ==> and ==>>
 
+#?rakudo skip 'double-ended feeds'
 {
     my @data = 'a' .. 'e';
 
@@ -129,9 +135,12 @@ plan 23;
 }
 
 # stacked feeds
+#?rakudo skip '* feeds'
 {
     ('a' .. 'd'; 0 .. 3) ==> my @data;
     is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
+
+done_testing;
 
 # vim: ft=perl6
