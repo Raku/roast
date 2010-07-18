@@ -214,7 +214,7 @@ ok($fh9.close, 'file closed okay (9)');
 
 #?pugs todo 'buggy on Win32'
 ok(unlink($filename), 'file has been removed');
-ok $filename !~~ :e, '... and the tempfile is gone, really';
+nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 
 {
     my $binary_out_fh = open($filename, :w, :bin);

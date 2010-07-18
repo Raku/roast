@@ -38,7 +38,7 @@ given $test {
             # warn "CLIENT TEST=$test PORT=$port";
             # avoid a race condition, where the client tries to
             # open() before the server gets to accept().
-            until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
+            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(1) }
             my $client = IO::Socket::INET.new;
             $client.open( $host, $port.Int );
             # warn "CLIENT OPENED";
@@ -100,7 +100,7 @@ given $test {
         }
         else {
             my $sock = IO::Socket::INET.new;
-            until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
+            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(1) }
             $sock.open($host, $port.Int);
             # Tests that if we do not receive all the data available
             # it is buffered correctly for when we do request it
@@ -143,7 +143,7 @@ given $test {
             }
         } else { # client
             my $sock = IO::Socket::INET.new;
-            until 't/spec/S32-io/server-ready-flag' ~~ :e { sleep(1) }
+            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(1) }
             $sock.open($host, $port.Int);
             say $sock.get();
             say $sock.get();

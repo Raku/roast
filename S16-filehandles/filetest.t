@@ -10,7 +10,7 @@ This test tests the various filetest operators.
 
 =end pod
 
-plan 40;
+plan 41;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -50,30 +50,31 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
   ok 't'.IO ~~ :x,    "~~:x returns true on cwd()able directories";
 }
 
-#?rakudo 999 skip 'other file test operations'
-ok not "t".IO ~~ :f, "~~:f returns false on directories";
+nok "t".IO ~~ :f, "~~:f returns false on directories";
+#?rakudo skip ':r'
 ok "t".IO ~~ :r,  "~~:r returns true on a readable directory";
 
 ok 'doesnotexist'.IO !~~ :d, "~~:d returns false on non-existent directories";
+#?rakudo 3 skip 'rwx'
 ok 'doesnotexist'.IO !~~ :r, "~~:r returns false on non-existent directories";
 ok 'doesnotexist'.IO !~~ :w, "~~:w returns false on non-existent directories";
 ok 'doesnotexist'.IO !~~ :x, "~~:x returns false on non-existent directories";
 ok 'doesnotexist'.IO !~~ :f, "~~:f returns false on non-existent directories";
 
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
+#?rakudo 3 skip 'rwx'
 ok not 'doesnotexist.t'.IO ~~ :r, "~~:r returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
-# XXX - Without parens, $*PROGRAM_NAME ~~ :s>42 is chaincomp.
-ok(($*PROGRAM_NAME~~:s) > 42,   "~~:s returns size on existent files");
+ok($*PROGRAM_NAME.IO.s > 42,   "~~:s returns size on existent files");
 
-ok not "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
+nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
 
-ok not $*PROGRAM_NAME.IO ~~ :z,   "~~:z returns false on existent files";
-ok not "doesnotexist.t".IO ~~ :z, "~~:z returns false on non-existent files";
-ok not "t".IO ~~ :z,              "~~:z returns false on directories";
+nok $*PROGRAM_NAME.IO ~~ :z,   "~~:z returns false on existent files";
+nok "doesnotexist.t".IO ~~ :z, "~~:z returns false on non-existent files";
+nok "t".IO ~~ :z,              "~~:z returns false on directories";
 
 my $fh = open("empty_file", :w);
 close $fh;
@@ -94,7 +95,7 @@ else {
     ok ($fn.IO ~~ :A) < 0,      "~~:A works on new file";
     unlink $fn;
 
-    if (! "README" ~~ :f) {
+    if "README".IO !~~ :f {
         skip 3, "no file README";
     } else {
         #?rakudo 3 skip ':M, :C, :A'
@@ -111,9 +112,10 @@ else {
 
 # potential parsing difficulties (pugs)
 {
-    sub f { return 8; }
+    sub f($x) { return 8; }
 
     is(f($*PROGRAM_NAME), 8, "f(...) works");
+    is(-f($*PROGRAM_NAME), -8, "- f(...) does not call the ~~:f filetest");
     is(- f($*PROGRAM_NAME), -8, "- f(...) does not call the ~~:f filetest");
 }
 

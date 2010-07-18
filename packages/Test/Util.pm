@@ -103,8 +103,7 @@ sub get_out( Str $code, Str $input?, :@args) is export {
     my @files = map { "$fnbase.$_" }, <code in out err>;
     unlink $_ for @files;
     for @files -> $f {
-        # TODO: File existence test works in Rakudo but is not current spec
-        if $f ~~ :e {
+        if $f.IO ~~ :e {
             die "Can't unlink '$f'";
         }
     }
