@@ -92,6 +92,16 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
     isa_ok @a[4], Num, '< ... 1.2e1 ...> is a Num';
 }
 
+# probably doesn't really belong here, but I don't know where else to put it
+# :(    --moritz
+
+# RT #76452
+#?rakudo skip 'RT 76452'
+{
+    sub f($x) { $x[0] };
+    is f(my @x = (1, 2, 3)), 1, 'function call with assignment to list';
+}
+
 done_testing();
 
 # vim: ft=perl6
