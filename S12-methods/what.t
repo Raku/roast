@@ -95,6 +95,19 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
     is ~2.WHAT, 'Int()', 'assignment to Int.WHAT does nothing';
 }
 
+{
+    class AccessMethods {
+        our method a { };
+        method b { };
+    }
+
+    ok &AccessMethods::a.defined, 'Can access "our" method with &class::method';
+    ok &AccessMethods::a ~~ Method, '... and got a Method back';
+    nok &AccessMethods::b.defined, '"has" methods are hidden';
+    lives_ok {&AccessMethods::c.defined and die "foo"}, 'non-existant method access livess (and returns undef)';
+
+}
+
 done_testing;
 
 # vim: ft=perl6
