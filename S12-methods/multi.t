@@ -194,6 +194,16 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
     is WorkingTie.has_tie( 42 ), 'tie3', 'broken class fixed by subclass (1)';
     is WorkingTie.has_tie( 'x' ), 'tie4', 'broken class fixed by subclass (2)';
+
+    my $error;
+    try {
+        WorkingTie.new.has_tie([]);
+    }
+    $error = "$!";
+    ok $error ~~ /<< 'has_tie' >>/,
+        'error message for failed dispatch contains method name';
+    ok $error ~~ /<< 'WorkingTie' >>/,
+        'error message for failed dispatch contains invocant type';
 }
 
 done_testing;
