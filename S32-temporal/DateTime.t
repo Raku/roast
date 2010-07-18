@@ -43,7 +43,7 @@ sub test-gmtime( Int $t is copy ) {
 }        #   0     1      2      3       4          5             6 
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'C<time>'>
+# L<S32::Temporal/C<time>>
 # --------------------------------------------------------------------
 
 isa_ok time, Int, 'time returns an Int';
@@ -52,7 +52,7 @@ isa_ok time, Int, 'time returns an Int';
 # Input validation
 # --------------------------------------------------------------------
 
-# L<S32::Temporal/'C<DateTime>'/outside of the ranges specified>
+# L<S32::Temporal/C<DateTime>/outside of the ranges specified>
 
 lives_ok { dt month => 1 }, 'DateTime accepts January';
 dies_ok  { dt month => 0 }, 'DateTime rejects month 0';
@@ -96,7 +96,7 @@ dies_ok  { dt second => 62 }, 'DateTime rejects second 62';
 dies_ok  { ds '1999-01-01T12:10:62Z' }, 'DateTime rejects second 62 (ISO)';
 dies_ok  { dt date => Date.new(1999, 1, 1), second => 62 }, 'DateTime rejects second 62 (with Date)';
 
-# L<S32::Temporal/'"Set" methods'/'Just as with the C<new> method, validation'>
+# L<S32::Temporal/"Set" methods/'Just as with the new method, validation'>
 
 {
     my $dt = dt year => 2007;
@@ -111,7 +111,7 @@ dies_ok  { dt date => Date.new(1999, 1, 1), second => 62 }, 'DateTime rejects se
 # TODO: DateTime.new(Instant $i, …)
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'C<DateTime>'/DateTime.new(time)>
+# L<S32::Temporal/C<DateTime>/DateTime.new(time)>
 # --------------------------------------------------------------------
 
 is show-dt(DateTime.new(0)), '0 0 0 1 1 1970 4', 'DateTime at beginning of Unix epoch';
@@ -147,7 +147,7 @@ is show-dt(DateTime.new(946684800)), '0 0 0 1 1 2000 6', 'from POSIX at 2000-01-
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'C<DateTime>'/A shorter way to send in date>
+# L<S32::Temporal/C<DateTime>/'A shorter way to send in date'>
 # DateTime.new(Str)
 # --------------------------------------------------------------------
 
@@ -163,7 +163,7 @@ is DateTime.new('2009-12-31T22:33:44',
     '10ish', 'DateTime.new(Str) with formatter';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'C<DateTime>'/'one additional constructor: C<now>'>
+# L<S32::Temporal/C<DateTime>/'one additional constructor: now'>
 # --------------------------------------------------------------------
 
 {
@@ -187,7 +187,7 @@ is DateTime.new('2009-12-31T22:33:44',
 # TODO: DateTime.Instant
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'the method C<posix>'>
+# L<S32::Temporal/"Get" methods/'the method posix'>
 # --------------------------------------------------------------------
 
 {
@@ -211,7 +211,7 @@ is DateTime.new('2009-12-31T22:33:44',
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'The method C<whole-second>'>
+# L<S32::Temporal/"Get" methods/'The method whole-second'>
 # --------------------------------------------------------------------
 
 is dt(second => 22).whole-second, 22, 'DateTime.whole-second (22)';
@@ -223,7 +223,7 @@ is dt(second => 60).whole-second, 60, 'DateTime.whole-second (60)';
 is dt(second => 60.5).whole-second, 60, 'DateTime.whole-second (60.5)';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'The C<Date> method'>
+# L<S32::Temporal/"Get" methods/'The Date method'>
 # --------------------------------------------------------------------
 
 {
@@ -237,7 +237,7 @@ is dt(second => 60.5).whole-second, 60, 'DateTime.whole-second (60.5)';
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Get" methods'/'The method C<offset>'>
+# L<S32::Temporal/"Get" methods/'The method offset'>
 # --------------------------------------------------------------------
 
 is tz(    'Z').offset,      0, 'DateTime.offset (Z)';
@@ -264,7 +264,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Set" methods'/'The C<truncate> method'>
+# L<S32::Temporal/"Set" methods/'The truncate method'>
 # --------------------------------------------------------------------
 
 {
@@ -302,7 +302,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Set" methods'/adjust the time zone>
+# L<S32::Temporal/"Set" methods/'adjust the time zone'>
 # --------------------------------------------------------------------
 
 # We use $dt.set(timezone => FOO) instead of $dt.timezone = FOO
@@ -412,7 +412,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/'"Set" methods'/'C<set> and C<truncate> return'>
+# L<S32::Temporal/"Set" methods/'set and truncate return'>
 # ...the calling object
 # --------------------------------------------------------------------
 
