@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S12/"Construction and Initialization">
 
@@ -74,6 +74,19 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 
     lives_ok { $a.env = { foo => "bar" } }, 'assign to attr of .CREATEd class';
     is $a.env<foo>, 'bar', 'assignment works';
+}
+
+# RT #76476
+{
+    use MONKEY_TYPING;
+    class MonkeyNew { has $.x is rw };
+    augment class MonkeyNew {
+        method new() {
+            self.bless(*, :x('called'));
+        }
+    };
+    #?rakudo todo 'RT 76476'
+    is MonkeyNew.new().x, 'called', 'monkey-typed .new() method is called';
 }
 
 # vim: ft=perl6
