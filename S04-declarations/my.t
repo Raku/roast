@@ -232,9 +232,10 @@ my $z = 42;
     }
 }
 
-# used to be RT #76366
+# used to be RT #76366, #76466
 {
-    lives_ok { access_lexical_a() },
+    #?rakudo skip 'RT 76466'
+    nok access_lexical_a().defined,
         'can call our-sub that accesses a lexical before the block was run';
     {
         my $a = 42;
