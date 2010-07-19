@@ -49,10 +49,8 @@ my $wrapped = &foo.wrap(&wrapper);
 
 foo();
 
-is(+@log, 3, "three events logged");
-is(@log[0], "wrapper before", "wrapper before");
-is(@log[1], "foo", "the wrapped sub");
-is(@log[2], "wrapper after", "wrapper after");
+#?rakudo 2 todo 'unknown'
+is @log.join('|'), 'wrapper before|foo|wrapper after', 'logged the correct events';
 
 @log = ();
 
@@ -61,6 +59,7 @@ foo();
 
 is(+@log, 4, "four events");
 is(@log[0], "wrapper2", "additional wrapping takes effect");
+#?rakudo 2 todo 'unknown'
 is(@log[1], "wrapper before", "... on top of initial wrapping");
 
 @log = ();
@@ -85,8 +84,10 @@ $wrapped = &foo.wrap(&wrapper);
 $doublywrapped = &foo.wrap(&other_wrapper);
 &foo.unwrap($wrapped);
 foo();
+#?rakudo todo 'unknown'
 is(+@log, 2, "out of order unwrapping gave right number of results");
 is(@log[0], "wrapper2", "got execpted value from remaining wrapper");
+#?rakudo todo 'unknown'
 is(@log[1], "foo", "got execpted value from original sub");
 
 dies_ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
@@ -123,6 +124,8 @@ is( levelwrap( 2 ), 2, "Sanity test." );
 lives_ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
+#?DOES 20
+#?rakudo skip 'multi-level wrapping'
 {
     for (1..10) -> $num {
         lives_ok {
@@ -166,7 +169,7 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
 
-#?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
+#?rakudo skip 'RT 70267: call to nextsame with nowhere to go'
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
 # RT #66658
@@ -183,7 +186,6 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
     ok ! $wrapped.defined, 'wrapper test variable is undefined';
     is greet('japhb'), 'greet japhb', 'wrapped greet() works';
-    #?rakudo todo 'RT 66658: .wrap gets lexicals confused'
     is $wrapped, 'greet', 'wrapper sees lexical from time of wrap (greet)';
 
     undefine $wrapped;
