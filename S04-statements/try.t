@@ -89,6 +89,7 @@ plan *;
 }
 
 
+#?rakudo todo "CATCH doesn't catch its own exceptions"
 {
     my $catches = 0;
     try {
