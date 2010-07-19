@@ -48,11 +48,13 @@ Some deeper tests were already added.
     isa_ok(@array, Array);
 
     my %hash = ('key', 'value', 'key1', 'value1');
+    #?rakudo todo 'isa hash'
     isa_ok(%hash, Hash);
     is(+%hash.keys, 2, 'our hash has two keys');
 
     @array[0] = %hash;
     is(+@array, 1, 'the array has one value in it');
+    #?rakudo todo 'isa hash'
     isa_ok(@array[0], Hash);
     is(@array[0]{"key"}, 'value', 'got the right value for key');
     is(@array[0]<key1>, 'value1', 'got the right value1 for key1');
@@ -96,6 +98,7 @@ Some deeper tests were already added.
 # UNSPECCED
 { # Hash of Arrays
     my %hash;
+    #?rakudo todo 'isa hash'
     isa_ok(%hash, Hash);
 
     %hash<key> = [ 1, 2, 3 ];
@@ -126,6 +129,7 @@ Some deeper tests were already added.
 { # Hash of Array-refs
   # UNSPECCED
     my %hash;
+    #?rakudo todo 'isa hash'
     isa_ok(%hash, Hash);
 
     my @array = ( 1, 2, 3 );
@@ -157,7 +161,7 @@ Some deeper tests were already added.
 }
 
 { # Hashref survive addition to an array.
-  my %h = qw<a 5 b 6>;
+  my %h = <a 5 b 6>;
   my $hr = \%h;
   my $a0 = [ \%h ,'extra' ];
   my $a1 = [ \%h ];
@@ -172,7 +176,6 @@ Some deeper tests were already added.
     isa_ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
 }
 
-#?rakudo skip 'multi-level autovivification'
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;
@@ -185,19 +188,25 @@ Some deeper tests were already added.
 
     @array[1]<two>[0]<four>[0]<six> = 6;
     isa_ok(@array, Array);
+    #?rakudo todo 'isa hash'
     isa_ok(@array[1], Hash);
     isa_ok(@array[1]<two>, Array);
+    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0], Hash);
     is(+@array[1]<two>[0], 1, "one key at level 4");
     isa_ok(@array[1]<two>[0]<four>, Array);
+    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0]<four>[0], Hash);
     is(@array[1]<two>[0]<four>[0]<six>, 6, "6 level deep mixed structure");
 
 
     @array[2]<two>[0]<f><other> = 5;
+    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0], Hash);
     #?pugs 3 todo 'bug'
+    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0]<f>, Hash);
+    #?rakudo 2 todo 'unknown'
     is(+@array[1]<two>[0], 2, "two keys at level 4");
     is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }
