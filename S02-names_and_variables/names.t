@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 23;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -75,6 +75,13 @@ plan 22;
     eval 'Module.new';
     ok "$!" ~~ / 'Module' /,
         'error message mentions name not recognized, no maximum recursion depth exceeded';
+}
+
+# RT #74276
+# Rakudo had troubles with names starting with Q
+{
+    eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
+
 }
 
 # vim: ft=perl6
