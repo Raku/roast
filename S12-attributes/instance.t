@@ -554,7 +554,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $a.x, 42, 'binding to an attribute works';
 }
 
-#?rakudo skip 'RT 73368'
 {
     class InitializationThunk {
         has $.foo = my $x = 5;

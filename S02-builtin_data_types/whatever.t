@@ -42,7 +42,6 @@ isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 # check that more complex expressions work:
 
-#?rakudo skip '* to code translation for multi-step expressions'
 {
     my $code = *.uc eq 'FOO';
     ok $code ~~ Callable, '"*.uc eq $str" produces a Callable object';
@@ -93,7 +92,6 @@ isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
     is $c(-3, -5), 15, '... that takes two arguments';
 }
 
-#?rakudo skip 'multiple * in an expression'
 {
     my $c = * * * + *;
     ok $c ~~ Code, '* * * + * generated a closure';
@@ -155,7 +153,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
         '* works on RHS of user-defined operator (result)';
     is (* quack *).('a', 'b'), 'a|b',
         '* works on both sides of user-defined operator (result)';
-    #?rakudo 2 skip 'nested * currying NYI'
     is ((* quack *) quack *).(1, 2, 3), '1|2|3',
         'also with three *';
     is ((* quack *) quack 'a').(2, 3), '2|3|a',
@@ -174,7 +171,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # chains of methods
-#?rakudo skip 'chains of whatevers are NYI'
 {
     my $x = *.uc.flip;
     ok $x ~~ Callable, 'we get a Callable from chained methods with *';

@@ -52,7 +52,6 @@ is @b, (@people.sort: { +.karma }), 'Sort explicitly numerically';
 # TODO - need another test to explicitly test correct numerical sorting
 isnt @b, (@people.sort: { ~.karma }), "Sort numerically is different to stringily";
 
-#?rakudo skip "Fails on current Rakudo"
 {
     is @b, (@people.sort: *.karma), 'Using a Whatever to sort numerically (be default)';
     is (@people.min: { +.karma }), (@people.min: +*.karma), 'Explicit numeric comparison is equivalent to numeric comparison with a Whatever';
