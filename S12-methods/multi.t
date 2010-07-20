@@ -20,8 +20,8 @@ class Foo {
         return "Foo.bar() called with Int : $int";
     }
     
-    multi method bar(Num $num) {
-        return "Foo.bar() called with Num : $num";
+    multi method bar(Numeric $num) {
+        return "Foo.bar() called with Numeric : $num";
     }
     
     multi method baz($f) {
@@ -37,7 +37,7 @@ is($foo.bar("Hello"), 'Foo.bar() called with Str : Hello', '... multi-method dis
 
 is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on Int');
 my $num = '4';
-is($foo.bar(+$num), 'Foo.bar() called with Num : 4', '... multi-method dispatched on Num');
+is($foo.bar(+$num), 'Foo.bar() called with Numeric : 4', '... multi-method dispatched on Numeric');
 
 #?rakudo todo 'RT #66006'
 eval '$foo.baz()';
@@ -121,7 +121,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         multi method rt69192(Str $a) { push @.order, 'Str'   }   #OK not used
     }
     role R6 {
-        multi method rt69192(Num $a) { push @.order, 'Num'   }   #OK not used
+        multi method rt69192(Numeric $a) { push @.order, 'Numeric'   }   #OK not used
     }
     class RT69192 { has @.order }
 
@@ -143,7 +143,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         my RT69192 $bot .= new();
         ($bot does R5) does R6;
         $bot.*rt69192( 69192 );
-        is $bot.order, <Num>, 'multi method called once on Num signature';
+        is $bot.order, <Numeric>, 'multi method called once on Numeric signature';
     }
 }
 

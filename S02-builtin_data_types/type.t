@@ -71,12 +71,8 @@ my $baz of Int;
     is fact(5), 120, 'recursive factorial with type contstraints work';
 }
 
-# Num accepts Int too.
-{
-    my Num $n;
-    $n = 42;
-    is $n, 42, 'Num accepts Int too';
-}
+# Num does not accept Int (used to, then spec changed)
+dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 # L<S02/Return types/a return type can be specified before or after the name>
 #?rakudo skip 'return type checking'
@@ -145,8 +141,8 @@ my $baz of Int;
     ok Mu !~~ Any, 'Mu !~~ Any';
     ok Mu !~~ Int, 'Mu !~~ Int';
 
-    ok Int ~~ Num, 'Int ~~ Num';
-    ok Num !~~ Int, 'Num !~~ Int';
+    ok Int ~~ Numeric, 'Int !~~ Numeric';
+    ok Numeric !~~ Int, 'Numeric !~~ Int';
 
     ok Array ~~ List, 'Array is a kind of List';
     ok List !~~ Array, 'A Seq is not an Array';

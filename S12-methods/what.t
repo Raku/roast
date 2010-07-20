@@ -22,7 +22,7 @@ This test tests the C<WHAT> builtin.
 # Now testing basic correct inheritance.
 {
   my $a = 3;
-  ok($a.WHAT ~~ Num, "an Int isa Num");
+  ok($a.WHAT ~~ Numeric, "an Int isa Numeric");
   ok($a.WHAT ~~ Mu,  "an Int isa Mu");
 }
 

@@ -102,7 +102,7 @@ plan 23;
 # container">
 {
     # yes, this is serious. It's in the specs ;-)
-    my Num $x;
+    my Int $x;
     $x *= 5;
     is $x, 5, '*= autovivifies with correct neutral element (with Num proto)';
 }

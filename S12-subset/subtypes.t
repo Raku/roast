@@ -13,8 +13,8 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 # L<S12/"Types and Subtypes">
 
 my $abs = '
-multi sub my_abs (Num $n where { $^n >= 0 }){ $n }
-multi sub my_abs (Num $n where { $^n <  0 }){ -$n }
+multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
+multi sub my_abs (Int $n where { $^n <  0 }){ -$n }
 ';
 
 ok(eval("$abs; 1"), "we can compile subtype declarations");
