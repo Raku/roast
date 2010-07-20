@@ -48,7 +48,6 @@ is ~(0.ucfirst),    ~0, '.ucfirst on Int';
 is ~(0.lc),         ~0, '.lc on Int';
 is ~(0.lcfirst),    ~0, '.lcfirst on Int';
 
-#?rakudo todo "uc/lc tests fail on roles"
 #?DOES 4
 {
     role A {
