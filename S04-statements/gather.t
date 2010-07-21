@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 17;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -141,6 +141,17 @@ plan 16;
 
     is (gather { take 1, 2, 3; take 4, 5, 6; }).flat.elems, 6,
         'take with multiple arguments .flat tens out';
+}
+
+{
+    my sub grep-div(@a, $n) {
+        gather for @a {
+            take $_ if $_ %% $n;
+        }
+    }
+    
+    my @evens := grep-div((1...*), 2);
+    is ~grep-div(@evens, 3).munch(16), ~grep-div((1...100), 6), "Nested identical gathers";
 }
 
 

@@ -158,6 +158,8 @@ lives_ok { (1 ... 5).perl }, 'Can take .perl of series';
 is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
     'eval($series.perl) reproduces result list';
 
+is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series in parallel";
+
 done_testing;
 
 # vim: ft=perl6
