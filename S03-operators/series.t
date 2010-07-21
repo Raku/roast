@@ -160,6 +160,45 @@ is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
 
 is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series in parallel";
 
+# tests for the types returned
+
+{
+    my @a = 1, 2, 3 ... 100;
+    is @a.elems, 100, "1, 2, 3 ... 100 generates a series with one hundred elements...";
+    is @a.grep(Int).elems, 100, "... all of which are Ints";
+}
+
+{
+    my @a = 1.Rat, 2.Rat, 3.Rat ... 100;
+    is @a.elems, 100, "1.Rat, 2.Rat, 3.Rat ... 100 generates a series with one hundred elements...";
+    is @a.grep(Rat).elems, 100, "... all of which are Rats";
+}
+
+{
+    my @a = 1.Num, 2.Num, 3.Num ... 100;
+    is @a.elems, 100, "1.Num, 2.Num, 3.Num ... 100 generates a series with one hundred elements...";
+    is @a.grep(Num).elems, 100, "... all of which are Nums";
+}
+
+{
+    my @a = 1, 2, 4 ... 100;
+    is @a.elems, 7, "1, 2, 4 ... 100 generates a series with seven elements...";
+    #?rakudo todo "Geometric series op always multiplies by Rats"
+    is @a.grep(Int).elems, 7, "... all of which are Ints";
+}
+
+{
+    my @a = 1.Rat, 2.Rat, 4.Rat ... 100;
+    is @a.elems, 7, "1.Rat, 2.Rat, 4.Rat ... 100 generates a series with seven elements...";
+    is @a.grep(Rat).elems, 7, "... all of which are Rats";
+}
+
+{
+    my @a = 1.Num, 2.Num, 4.Num ... 100;
+    is @a.elems, 7, "1.Num, 2.Num, 4.Num ... 100 generates a series with seven elements...";
+    is @a.grep(Num).elems, 7, "... all of which are Nums";
+}
+
 done_testing;
 
 # vim: ft=perl6
