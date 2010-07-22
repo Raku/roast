@@ -190,6 +190,8 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
 {
     is ~(1, 2,  4 ... 2), '1 2', 'geometric series with smaller RHS';
     is ~(1, -2, 4 ... 2), '1 -2', 'geometric series with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 25).[^10], '1 -2 4 -8 16',
+        'geometric series with sign-change and non-matching end point';
 }
 
 {
