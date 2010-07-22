@@ -183,8 +183,7 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
 {
     my @a = 1, 2, 4 ... 100;
     is @a.elems, 7, "1, 2, 4 ... 100 generates a series with seven elements...";
-    #?rakudo todo "Geometric series op always multiplies by Rats"
-    is @a.grep(Int).elems, 7, "... all of which are Ints";
+    is @a.grep(Int).elems, @a.elems, "... all of which are Ints";
 }
 
 {
