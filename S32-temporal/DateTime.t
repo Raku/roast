@@ -3,9 +3,13 @@ use Test;
 
 plan *;
 
+my $orwell = DateTime.new(year => 1984);
+
 sub dt(*%args) { DateTime.new(year => 1984, |%args) }
+sub dtc(*%args) { $orwell.clone(|%args) }
 
 sub ymd($year, $month, $day) { dt :$year, :$month, :$day }
+sub ymdc($year, $month, $day) { dtc :$year, :$month, :$day }
 
 sub ds(Str $s) { DateTime.new($s) }
 
@@ -49,6 +53,18 @@ sub test-gmtime( Int $t is copy ) {
 isa_ok time, Int, 'time returns an Int';
 
 # --------------------------------------------------------------------
+# L<S32::Temporal/C<DateTime>/immutable>
+# --------------------------------------------------------------------
+
+{
+    my $dt = ymd 1999, 5, 6;
+    dies_ok { $dt.year = 2000 }, 'DateTimes are immutable (1)';
+    dies_ok { $dt.minute = 30 }, 'DateTimes are immutable (2)';
+    dies_ok { $dt.timezone = 0 }, 'DateTimes are immutable (3)';
+    dies_ok { $dt.formatter = { $dt.hour } }, 'DateTimes are immutable (4)';
+}
+
+# --------------------------------------------------------------------
 # Input validation
 # --------------------------------------------------------------------
 
@@ -67,9 +83,11 @@ dies_ok  { dt month => 2, day => 30 }, 'DateTime rejects February 30';
 lives_ok { ymd 1996, 2, 29 }, 'DateTime accepts 29 Feb 1996';
 dies_ok  { ymd 1995, 2, 29 }, 'DateTime rejects 29 Feb 1995';
 lives_ok { ymd 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000';
-lives_ok { ds '2000-02-29T22:33:44Z' }, 'DateTime accepts 29 Feb 2000 (ISO)';
+lives_ok { ymdc 2000, 2, 29 }, 'DateTime accepts 29 Feb 2000 (clone)';
+lives_ok { ds '2000-02-29T22:33:44' }, 'DateTime accepts 29 Feb 2000 (ISO)';
 dies_ok  { ymd 1900, 2, 29 }, 'DateTime rejects 29 Feb 1900';
-dies_ok  { ds '1900-02-29T22:33:44Z' }, 'DateTime rejects 29 Feb 1900 (ISO)';
+dies_ok  { ymdc 1900, 2, 29 }, 'DateTime rejects 29 Feb 1900 (clone)';
+dies_ok  { ds '1900-02-29T22:33:44' }, 'DateTime rejects 29 Feb 1900 (ISO)';
 lives_ok { dt hour => 0 }, 'DateTime accepts hour 0';
 dies_ok  { dt hour => -1 }, 'DateTime rejects hour 0';
 lives_ok { dt hour => 23 }, 'DateTime accepts hour 23';
@@ -77,36 +95,52 @@ dies_ok  { dt hour => 24 }, 'DateTime rejects hour 24';
 lives_ok { dt minute => 0 }, 'DateTime accepts minute 0';
 dies_ok  { dt minute => -1 }, 'DateTime rejects minute -1';
 lives_ok { dt minute => 59 }, 'DateTime accepts minute 59';
-lives_ok { ds '1999-01-01T00:59:22Z' }, 'DateTime accepts minute 59 (ISO)';
+lives_ok { dtc minute => 59 }, 'DateTime accepts minute 59 (clone)';
+lives_ok { ds '1999-01-01T00:59:22' }, 'DateTime accepts minute 59 (ISO)';
 lives_ok { dt date => Date.new(1999, 1, 1), minute => 59 }, 'DateTime accepts minute 59 (with Date)';
 dies_ok  { dt minute => 60 }, 'DateTime rejects minute 60';
-dies_ok  { ds '1999-01-01T00:60:22Z' }, 'DateTime rejects minute 60 (ISO)';
+dies_ok  { dtc minute => 60 }, 'DateTime rejects minute 60 (clone)';
+dies_ok  { ds '1999-01-01T00:60:22' }, 'DateTime rejects minute 60 (ISO)';
 dies_ok  { dt date => Date.new(1999, 1, 1), minute => 60 }, 'DateTime rejects minute 60 (with Date)';
 lives_ok { dt second => 0 }, 'DateTime accepts second 0';
 lives_ok { dt second => 1/2 }, 'DateTime accepts second 1/2';
 dies_ok  { dt second => -1 }, 'DateTime rejects second -1';
 dies_ok  { dt second => -1/2 }, 'DateTime rejects second -1/2';
-lives_ok { dt second => 60 }, 'DateTime accepts second 60';
-lives_ok { dt second => 61 }, 'DateTime accepts second 61';
-lives_ok { ds '1999-01-01T12:10:61Z' }, 'DateTime accepts second 61 (ISO)';
-lives_ok { dt second => 61.5 }, 'DateTime accepts second 61.5';
-lives_ok { dt second => 61.99 }, 'DateTime accepts second 61.99';
-lives_ok { dt date => Date.new(1999, 1, 1), second => 61.99 }, 'DateTime accepts second 61.99 (with Date)';
+lives_ok { dt second => 59.5 }, 'DateTime accepts second 59.5';
+lives_ok { dtc second => 59.5 }, 'DateTime accepts second 59.5 (clone)';
 dies_ok  { dt second => 62 }, 'DateTime rejects second 62';
-dies_ok  { ds '1999-01-01T12:10:62Z' }, 'DateTime rejects second 62 (ISO)';
+dies_ok  { dtc second => 62 }, 'DateTime rejects second 62 (clone)';
+dies_ok  { ds '1999-01-01T12:10:62' }, 'DateTime rejects second 62 (ISO)';
 dies_ok  { dt date => Date.new(1999, 1, 1), second => 62 }, 'DateTime rejects second 62 (with Date)';
 
-# L<S32::Temporal/"Set" methods/'Just as with the new method, validation'>
+# Validate leap seconds.
 
-{
-    my $dt = dt year => 2007;
-    lives_ok { $dt.set(year => 2000, month => 2, day => 29) }, 'DateTime accepts 29 Feb 2000 (.set)';
-    dies_ok  { $dt.set(year => 1900, month => 2, day => 29) }, 'DateTime rejects 29 Feb 1900 (.set)';
-    lives_ok { $dt.set(minute => 59) }, 'DateTime accepts minute 59 (.set)';
-    dies_ok  { $dt.set(minute => 60) }, 'DateTime rejects minute 60 (.set)';
-    lives_ok { $dt.set(second => 61.5) }, 'DateTime accepts second 61.5 (.set)';
-    dies_ok  { $dt.set(second => 62) }, 'DateTime rejects second 62 (.set)';
-}
+dies_ok  { ds '1999-01-01T12:10:60' }, 'Leap-second validation: Wrong time and date';
+dies_ok  { ds '1999-01-01T23:59:60' }, 'Leap-second validation: Wrong date';
+dies_ok  { ds '1999-06-30T23:59:60' }, 'Leap-second validation: Wrong year (1)';
+dies_ok  { ds '1999-12-31T23:59:60' }, 'Leap-second validation: Wrong year (2)';
+dies_ok  { ds '1998-06-30T23:59:60' }, 'Leap-second validation: Wrong; June 30 on a year with a leap second in December 31';
+dies_ok  { ds '1998-12-31T23:58:60' }, 'Leap-second validation: Wrong minute';
+dies_ok  { ds '1998-12-31T22:59:60' }, 'Leap-second validation: Wrong hour';
+lives_ok { ds '1998-12-31T23:59:60' }, 'Leap-second validation: Okay; December 31';
+dies_ok  { ds '1997-12-31T23:59:60' }, 'Leap-second validation: Wrong; December 31 on a year with a leap second in June 30';
+dies_ok  { dt year => 1997, month => 12, day => 31,
+              hour => 23, minute => 59, second => 60.9 }, 'Leap-second validation: Wrong; December 31 on a year with a leap second in June 30 (second 60.9)';
+lives_ok { ds '1997-06-30T23:59:60' }, 'Leap-second validation: Okay; June 30';
+lives_ok { dt year => 1997, month => 6, day => 30,
+              hour => 23, minute => 59, second => 60.9 }, 'Leap-second validation: Okay; June 30 (second 60.9)';
+dies_ok  { ds '1997-06-30T23:59:61' }, 'Leap-second validation: Wrong; there are no seconds 61 (in the 20th century, anyway).';
+
+dies_ok  { ds '1998-12-31T23:59:60+0200' }, 'Leap-second validation: Wrong because of TZ; December 31';
+lives_ok { ds '1999-01-01T01:59:60+0200' }, 'Leap-second validation: Okay because of TZ; January 1';
+dies_ok  { ds '1997-06-30T23:59:60-0200' }, 'Leap-second validation: Wrong because of TZ; June 30';
+lives_ok { ds '1997-06-30T21:59:60-0200' }, 'Leap-second validation: Okay because of TZ; June 30';
+dies_ok  { dt year => 1998, month => 12, day => 31,
+              hour => 23, minute => 59, second => 60.9,
+              timezone => 2*60*60 }, 'Leap-second validation: Wrong because of TZ; December 31 (second 60.9)';
+lives_ok { dt year => 1999, month => 1, day => 1,
+              hour => 1, minute => 59, second => 60.9,
+              timezone => 2*60*60 }, 'Leap-second validation: Okay because of TZ; January 1 (second 60.9)';
 
 # TODO: DateTime.new(Instant $i, …)
 
@@ -163,6 +197,24 @@ is DateTime.new('2009-12-31T22:33:44',
     '10ish', 'DateTime.new(Str) with formatter';
 
 # --------------------------------------------------------------------
+# L<S32::Temporal/C<DateTime>/'truncated-to'>
+# --------------------------------------------------------------------
+
+{
+    my $moon-landing = dt    # Although the seconds part is fictional.
+       year => 1969, month => 7, day => 20,
+       hour => 8, minute => 17, second => 32.4;
+    my $dt = $moon-landing.truncated-to(:second);
+    is $dt.second, 32, 'DateTime.truncated-to(:second)';
+    $dt = $moon-landing.truncated-to(:minute);
+    is ~$dt, '1969-07-20T08:17:00Z', 'DateTime.truncated-to(:minute)';
+    $dt = $moon-landing.truncated-to(:hour);
+    is ~$dt, '1969-07-20T08:00:00Z', 'DateTime.truncated-to(:hour)';
+    $dt = $moon-landing.truncated-to(:day);
+    is ~$dt, '1969-07-20T00:00:00Z', 'DateTime.truncate-to(:day)';
+}
+
+# --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/'one additional constructor: now'>
 # --------------------------------------------------------------------
 
@@ -187,7 +239,7 @@ is DateTime.new('2009-12-31T22:33:44',
 # TODO: DateTime.Instant
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'the method posix'>
+# L<S32::Temporal/Accessors/'the method posix'>
 # --------------------------------------------------------------------
 
 {
@@ -211,7 +263,7 @@ is DateTime.new('2009-12-31T22:33:44',
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The method whole-second'>
+# L<S32::Temporal/Accessors/'The method whole-second'>
 # --------------------------------------------------------------------
 
 is dt(second => 22).whole-second, 22, 'DateTime.whole-second (22)';
@@ -219,11 +271,16 @@ is dt(second => 22.1).whole-second, 22, 'DateTime.whole-second (22.1)';
 is dt(second => 15.9).whole-second, 15, 'DateTime.whole-second (15.9)';
 is dt(second => 0).whole-second, 0, 'DateTime.whole-second (0)';
 is dt(second => 0.9).whole-second, 0, 'DateTime.whole-second (0.9)';
-is dt(second => 60).whole-second, 60, 'DateTime.whole-second (60)';
-is dt(second => 60.5).whole-second, 60, 'DateTime.whole-second (60.5)';
+is ds('1997-06-30T23:59:60Z').whole-second, 60, 'DateTime.whole-second (60)';
+
+{
+    my $dt = dt year => 1997, month => 6, day => 30,
+                hour => 23, minute => 59, second => 60.5;
+    is $dt.whole-second, 60, 'DateTime.whole-second (60.5)';
+}
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The Date method'>
+# L<S32::Temporal/Accessors/'The Date method'>
 # --------------------------------------------------------------------
 
 {
@@ -237,7 +294,7 @@ is dt(second => 60.5).whole-second, 60, 'DateTime.whole-second (60.5)';
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The method offset'>
+# L<S32::Temporal/Accessors/'The method offset'>
 # --------------------------------------------------------------------
 
 is tz(    'Z').offset,      0, 'DateTime.offset (Z)';
@@ -264,97 +321,57 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 }
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Set" methods/'The truncate method'>
+# L<S32::Temporal/C<DateTime>/in-timezone>
 # --------------------------------------------------------------------
 
 {
-    my $moon-landing = dt    # Although the seconds part is fictional.
-       year => 1969, month => 7, day => 20,
-       hour => 8, minute => 17, second => 32.4;
-
-    my $dt = $moon-landing.clone; $dt.truncate(to => 'second');
-    is $dt.second, 32, 'DateTime.truncate(to => "second")';
-    $dt = $moon-landing.clone; $dt.truncate(to => 'minute');
-    is ~$dt, '1969-07-20T08:17:00Z', 'DateTime.truncate(to => "minute")';
-    $dt = $moon-landing.clone; $dt.truncate(to => 'hour');
-    is ~$dt, '1969-07-20T08:00:00Z', 'DateTime.truncate(to => "hour")';
-    $dt = $moon-landing.clone; $dt.truncate(to => 'day');
-    is ~$dt, '1969-07-20T00:00:00Z', 'DateTime.truncate(to => "day")';
-    $dt = $moon-landing.clone; $dt.truncate(to => 'month');
-    is ~$dt, '1969-07-01T00:00:00Z', 'DateTime.truncate(to => "month")';
-    $dt = $moon-landing.clone; $dt.truncate(to => 'year');
-    is ~$dt, '1969-01-01T00:00:00Z', 'DateTime.truncate(to => "year")';
-
-    $dt = ymd 1999, 1, 18; $dt.truncate(to => 'week');
-    is ~$dt, '1999-01-18T00:00:00Z', 'DateTime.truncate(to => "week") (no change in day)';
-    $dt = ymd 1999, 1, 19; $dt.truncate(to => 'week');
-    is ~$dt, '1999-01-18T00:00:00Z', 'DateTime.truncate(to => "week") (short jump)';
-    $dt = ymd 1999, 1, 17; $dt.truncate(to => 'week');
-    is ~$dt, '1999-01-11T00:00:00Z', 'DateTime.truncate(to => "week") (long jump)';
-    $dt = ymd 1999, 4, 2; $dt.truncate(to => 'week');
-    is ~$dt, '1999-03-29T00:00:00Z', 'DateTime.truncate(to => "week") (changing month)';
-    $dt = ymd 1999, 1, 3; $dt.truncate(to => 'week');
-    is ~$dt, '1998-12-28T00:00:00Z', 'DateTime.truncate(to => "week") (changing year)';
-    $dt = ymd 2000, 3, 1; $dt.truncate(to => 'week');
-    is ~$dt, '2000-02-28T00:00:00Z', 'DateTime.truncate(to => "week") (skipping over Feb 29)';
-    $dt = ymd 1988, 3, 3; $dt.truncate(to => 'week');
-    is ~$dt, '1988-02-29T00:00:00Z', 'DateTime.truncate(to => "week") (landing on Feb 29)';
-}
-
-# --------------------------------------------------------------------
-# L<S32::Temporal/"Set" methods/'adjust the time zone'>
-# --------------------------------------------------------------------
-
-# We use $dt.set(timezone => FOO) instead of $dt.timezone = FOO
-# because Rakudo hasn't yet implemented the latter.
-
-{
-    sub set-tz($dt, $hours, $minutes=0, $seconds=0) {
-        $dt.set(timezone => $hours*60*60 + $minutes*60 + $seconds);
+    sub with-tz($dt, $hours, $minutes=0, $seconds=0) {
+        $dt.in-timezone($hours*60*60 + $minutes*60 + $seconds);
     }
     sub hms($dt) {
         $dt.hour ~ ',' ~ $dt.minute ~ ',' ~ $dt.second
     }
 
-    my $dt = tz '+0200'; set-tz($dt, 4);
-    is ~$dt, '2005-02-04T17:25:00+0400', 'Changing time zones (adding hours)';
-    $dt = tz '+0000'; set-tz($dt, -1);
-    is ~$dt, '2005-02-04T14:25:00-0100', 'Changing time zones (subtracting hours)';
-    $dt = tz '-0100'; set-tz($dt, 0);
-    is ~$dt, '2005-02-04T16:25:00Z', 'Changing time zones (-0100 to UTC)';
-    $dt = tz '+0100'; set-tz($dt, -1);
-    is ~$dt, '2005-02-04T13:25:00-0100', 'Changing time zones (+ hours to - hours)';
-    $dt = tz '-0200'; set-tz($dt, -5);
-    is ~$dt, '2005-02-04T12:25:00-0500', 'Changing time zones (decreasing negative hours)';
-    $dt = tz '+0000'; set-tz($dt, 0, -13);
-    is ~$dt, '2005-02-04T15:12:00-0013', 'Changing time zones (negative minutes)';
-    $dt = tz '+0000'; set-tz($dt, 0, 0, -5);
-    is hms($dt), '15,24,55', 'Changing time zones (negative seconds)';
-    $dt = tz '+0000'; set-tz($dt, 0, -27);
-    is ~$dt, '2005-02-04T14:58:00-0027', 'Changing time zones (hour rollover 1)';
-    $dt = tz '+0000'; set-tz($dt, 0, 44);
-    is ~$dt, '2005-02-04T16:09:00+0044', 'Changing time zones (hour rollover 2)';
-    $dt = tz '+0311'; set-tz($dt, -2, -27);
-    is ~$dt, '2005-02-04T09:47:00-0227', 'Changing time zones (hours and minutes)';
-    $dt = tz '+0311'; set-tz($dt, -2, -27, -19);
-    is hms($dt), '9,46,41', 'Changing time zones (hours, minutes, and seconds)';
-    $dt = tz '+0000'; set-tz($dt, -18, -55);
-    is ~$dt, '2005-02-03T20:30:00-1855', 'Changing time zones (one-day rollover)';
-    $dt = tz '-1611'; set-tz($dt, 16, 55);
-    is ~$dt, '2005-02-06T00:31:00+1655', 'Changing time zones (two-day rollover)';
-    $dt = ds '2005-01-01T02:22:00+0300'; set-tz($dt, 0, 35);
-    is ~$dt, '2004-12-31T23:57:00+0035', 'Changing time zones (year rollover)';
+    my $dt = with-tz(tz('+0200'), 4);
+    is ~$dt, '2005-02-04T17:25:00+0400', 'DateTime.in-timezone (adding hours)';
+    $dt = with-tz(tz('+0000'), -1);
+    is ~$dt, '2005-02-04T14:25:00-0100', 'DateTime.in-timezone (subtracting hours)';
+    $dt = with-tz(tz('-0100'), 0);
+    is ~$dt, '2005-02-04T16:25:00Z', 'DateTime.in-timezone (-0100 to UTC)';
+    $dt = tz('-0100').utc;
+    is ~$dt, '2005-02-04T16:25:00Z', 'DateTime.utc (from -0100)';
+    $dt = with-tz(tz('+0100'), -1);
+    is ~$dt, '2005-02-04T13:25:00-0100', 'DateTime.in-timezone (+ hours to - hours)';
+    $dt = with-tz(tz('-0200'), -5);
+    is ~$dt, '2005-02-04T12:25:00-0500', 'DateTime.in-timezone (decreasing negative hours)';
+    $dt = with-tz(tz('+0000'), 0, -13);
+    is ~$dt, '2005-02-04T15:12:00-0013', 'DateTime.in-timezone (negative minutes)';
+    $dt = with-tz(tz('+0000'), 0, 0, -5);
+    is hms($dt), '15,24,55', 'DateTime.in-timezone (negative seconds)';
+    $dt = with-tz(tz('+0000'), 0, -27);
+    is ~$dt, '2005-02-04T14:58:00-0027', 'DateTime.in-timezone (hour rollover 1)';
+    $dt = with-tz(tz('+0000'), 0, 44);
+    is ~$dt, '2005-02-04T16:09:00+0044', 'DateTime.in-timezone (hour rollover 2)';
+    $dt = with-tz(tz('+0311'), -2, -27);
+    is ~$dt, '2005-02-04T09:47:00-0227', 'DateTime.in-timezone (hours and minutes)';
+    $dt = with-tz(tz('+0311'), -2, -27, -19);
+    is hms($dt), '9,46,41', 'DateTime.in-timezone (hours, minutes, and seconds)';
+    $dt = with-tz(tz('+0000'), -18, -55);
+    is ~$dt, '2005-02-03T20:30:00-1855', 'DateTime.in-timezone (one-day rollover)';
+    $dt = with-tz(tz('-1611'), 16, 55);
+    is ~$dt, '2005-02-06T00:31:00+1655', 'DateTime.in-timezone (two-day rollover)';
+    $dt = with-tz(ds('2005-01-01T02:22:00+0300'), 0, 35);
+    is ~$dt, '2004-12-31T23:57:00+0035', 'DateTime.in-timezone (year rollover)';
 
-    $dt = dt second => 15.5; set-tz($dt, 0, 0, 5);
-    is $dt.second, 20.5, 'Changing time zones (fractional seconds)';
+    $dt = with-tz(dt(second => 15.5), 0, 0, 5);
+    is $dt.second, 20.5, 'DateTime.in-timezone (fractional seconds)';
 
-    $dt = dt year => 2005, month => 1, day => 3,
+    $dt = dt(year => 2005, month => 1, day => 3,
              hour => 2, minute => 22, second => 4,
-             timezone => 13;
-    $dt.set(timezone => -529402);
+             timezone => 13).in-timezone(timezone => -529402);
       # A difference from UTC of 6 days, 3 hours, 3 minutes, and
       # 22 seconds.
-    is show-dt($dt), '29 18 23 27 12 2004 1', 'Changing time zones (big rollover)';    
+    is show-dt($dt), '29 18 23 27 12 2004 1', 'DateTime.in-timezone (big rollover)';    
 
     # DateTime doesn't implement DST, but it ought to make
     # implementing DST possible. We test that here.
@@ -383,49 +400,34 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
             timezone => &nyc-tz
     }
 
-    $dt = ds '2007-01-02T02:22:00Z'; $dt.set(timezone => &nyc-tz);
-    is ~$dt, '2007-01-01T21:22:00-0500', 'Changing time zones (UTC to NYC, outside of DST)';
-    $dt = ds '2007-08-01T02:22:00Z'; $dt.set(timezone => &nyc-tz);
-    is ~$dt, '2007-07-31T22:22:00-0400', 'Changing time zones (UTC to NYC, during DST)';
-    $dt = ds '2007-03-11T06:55:00Z'; $dt.set(timezone => &nyc-tz);
-    is ~$dt, '2007-03-11T01:55:00-0500', 'Changing time zones (UTC to NYC, just before DST)';
-    $dt = ds '2007-03-11T07:02:00Z'; $dt.set(timezone => &nyc-tz);
-    is ~$dt, '2007-03-11T03:02:00-0400', 'Changing time zones (UTC to NYC, just after DST)';
-    $dt = ds '2007-03-11T09:58:00+0303'; $dt.set(timezone => &nyc-tz);
-    is ~$dt, '2007-03-11T01:55:00-0500', 'Changing time zones (+0303 to NYC, just before DST)';
-    $dt = ds '2007-03-10T14:50:00-1612'; $dt.set(timezone => &nyc-tz);
-    is ~$dt, '2007-03-11T03:02:00-0400', 'Changing time zones (-1612 to NYC, just after DST)';
-    $dt = nyc-dt 2007,  1,  1,   21, 22; $dt.set(timezone => 0);
-    is ~$dt, '2007-01-02T02:22:00Z', 'Changing time zones (NYC to UTC, outside of DST)';
-    $dt = nyc-dt 2007,  7, 31,   22, 22; $dt.set(timezone => 0);
-    is ~$dt, '2007-08-01T02:22:00Z', 'Changing time zones (NYC to UTC, during DST)';
-    $dt = nyc-dt 2007,  3, 11,    1, 55; $dt.set(timezone => 0);
-    is ~$dt, '2007-03-11T06:55:00Z', 'Changing time zones (NYC to UTC, just before DST)';
-    $dt = nyc-dt 2007,  3, 11,    3,  2; set-tz($dt, -16, -12);
-    is ~$dt, '2007-03-10T14:50:00-1612', 'Changing time zones (NYC to -1612, just after DST)';
-    $dt = nyc-dt 2007,  3, 11,    1, 55; $dt.set(timezone => &lax-tz);
-    is ~$dt, '2007-03-10T22:55:00-0800', 'Changing time zones (NYC to LAX, just before NYC DST)';
-    $dt = nyc-dt 2007,  3, 11,    3,  2; $dt.set(timezone => &lax-tz);
-    is ~$dt, '2007-03-10T23:02:00-0800', 'Changing time zones (NYC to LAX, just after NYC DST)';
-    $dt = nyc-dt 2007,  3, 11,    6,  2; $dt.set(timezone => &lax-tz);
-    is ~$dt, '2007-03-11T03:02:00-0700', 'Changing time zones (NYC to LAX, just after LAX DST)';
-}
-
-# --------------------------------------------------------------------
-# L<S32::Temporal/"Set" methods/'set and truncate return'>
-# ...the calling object
-# --------------------------------------------------------------------
-
-{
-    my $dt = ymd 1998, 4, 2;
-    my $same-dt = $dt.set(year => 1997);
-    $same-dt.set(month => 3);
-    is ~$dt, '1997-03-02T00:00:00Z', 'DateTime.set returns the calling object';
-
-    $dt = ymd 1998, 1, 30;
-    $same-dt = $dt.truncate(to => 'month');
-    $same-dt.truncate(to => 'week');
-    is $dt.year, 1997, 'DateTime.truncate returns the calling object';
+    $dt = ds('2007-01-02T02:22:00Z').in-timezone(&nyc-tz);
+    is ~$dt, '2007-01-01T21:22:00-0500', 'DateTime.in-timezone (UTC to NYC, outside of DST)';
+    $dt = ds('2007-08-01T02:22:00Z').in-timezone(&nyc-tz);
+    is ~$dt, '2007-07-31T22:22:00-0400', 'DateTime.in-timezone (UTC to NYC, during DST)';
+    $dt = ds('2007-03-11T06:55:00Z').in-timezone(&nyc-tz);
+    is ~$dt, '2007-03-11T01:55:00-0500', 'DateTime.in-timezone (UTC to NYC, just before DST)';
+    $dt = ds('2007-03-11T07:02:00Z').in-timezone(&nyc-tz);
+    is ~$dt, '2007-03-11T03:02:00-0400', 'DateTime.in-timezone (UTC to NYC, just after DST)';
+    $dt = ds('2007-03-11T09:58:00+0303').in-timezone(&nyc-tz);
+    is ~$dt, '2007-03-11T01:55:00-0500', 'DateTime.in-timezone (+0303 to NYC, just before DST)';
+    $dt = ds('2007-03-10T14:50:00-1612').in-timezone(&nyc-tz);
+    is ~$dt, '2007-03-11T03:02:00-0400', 'DateTime.in-timezone (-1612 to NYC, just after DST)';
+    $dt = nyc-dt(2007,  1,  1,   21, 22).utc;
+    is ~$dt, '2007-01-02T02:22:00Z', 'DateTime.utc (from NYC, outside of DST)';
+    $dt = nyc-dt(2007,  7, 31,   22, 22).utc;
+    is ~$dt, '2007-08-01T02:22:00Z', 'DateTime.utc (from NYC, during DST)';
+    $dt = nyc-dt(2007,  7, 31,   22, 22).utc;
+    is ~$dt, '2007-08-01T02:22:00Z', 'DateTime.utc (from NYC, during DST)';
+    $dt = nyc-dt(2007,  3, 11,    1, 55).utc;
+    is ~$dt, '2007-03-11T06:55:00Z', 'DateTime.utc (from NYC, just before DST)';
+    $dt = with-tz(nyc-dt(2007,  3, 11,    3,  2), -16, -12);
+    is ~$dt, '2007-03-10T14:50:00-1612', 'DateTime.in-timezone (NYC to -1612, just after DST)';
+    $dt = nyc-dt(2007,  3, 11,    1, 55).in-timezone(&lax-tz);
+    is ~$dt, '2007-03-10T22:55:00-0800', 'DateTime.in-timezone (NYC to LAX, just before NYC DST)';
+    $dt = nyc-dt(2007,  3, 11,    3,  2).in-timezone(&lax-tz);
+    is ~$dt, '2007-03-10T23:02:00-0800', 'DateTime.in-timezone (NYC to LAX, just after NYC DST)';
+    $dt = nyc-dt(2007,  3, 11,    6,  2).in-timezone(&lax-tz);
+    is ~$dt, '2007-03-11T03:02:00-0700', 'DateTime.in-timezone (NYC to LAX, just after LAX DST)';
 }
 
 done_testing;

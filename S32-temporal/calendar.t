@@ -6,18 +6,45 @@ use Test;
 
 plan *;
 
-sub date($year, $month, $day) { Date.new(:$year, :$month, :$day) }
-sub dtim($year, $month, $day) { DateTime.new(:$year, :$month, :$day) }
+sub date($year, $month, $day) {
+    Date.new(:$year, :$month, :$day)
+}
+
+sub dtim($year, $month, $day) {
+    DateTime.new(:$year, :$month, :$day,
+        :hour(17), :minute(33), :second(2.9))
+}
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'the synonym day-of-month'>
+# L<S32::Temporal/C<DateTime>/'truncated-to'>
+# --------------------------------------------------------------------
+
+is ~date(1969, 7, 20).truncated-to(:month), '1969-07-01', 'Date.truncated-to(:month)';
+is ~dtim(1969, 7, 20).truncated-to(:month), '1969-07-01T00:00:00Z', 'DateTime.truncated-to(:month)';
+is ~date(1969, 7, 20).truncated-to(:year), '1969-01-01', 'Date.truncated-to(:year)';
+is ~dtim(1969, 7, 20).truncated-to(:year), '1969-01-01T00:00:00Z', 'DateTime.truncated-to(:year)';
+
+is ~date(1999, 1, 18).truncated-to(:week), '1999-01-18', 'Date.truncated-to(:week) (no change in day)';
+is ~date(1999, 1, 19).truncated-to(:week), '1999-01-18', 'Date.truncated-to(:week) (short jump)';
+is ~date(1999, 1, 17).truncated-to(:week), '1999-01-11', 'Date.truncated-to(:week) (long jump)';
+is ~dtim(1999, 1, 17).truncated-to(:week), '1999-01-11T00:00:00Z', 'DateTime.truncated-to(:week) (long jump)';
+is ~date(1999, 4,  2).truncated-to(:week), '1999-03-29', 'Date.truncated-to(:week) (changing month)';
+is ~date(1999, 1,  3).truncated-to(:week), '1998-12-28', 'Date.truncated-to(:week) (changing year)';
+is ~dtim(1999, 1,  3).truncated-to(:week), '1998-12-28T00:00:00Z', 'DateTime.truncated-to(:week) (changing year)';
+is ~date(2000, 3,  1).truncated-to(:week), '2000-02-28', 'Date.truncated-to(:week) (skipping over Feb 29)';
+is ~dtim(2000, 3,  1).truncated-to(:week), '2000-02-28T00:00:00Z', 'DateTime.truncated-to(:week) (skipping over Feb 29)';
+is ~date(1988, 3,  3).truncated-to(:week), '1988-02-29', 'Date.truncated-to(:week) (landing on Feb 29)';
+is ~dtim(1988, 3,  3).truncated-to(:week), '1988-02-29T00:00:00Z', 'DateTime.truncated-to(:week) (landing on Feb 29)';
+
+# --------------------------------------------------------------------
+# L<S32::Temporal/Accessors/'the synonym day-of-month'>
 # --------------------------------------------------------------------
 
 is date(2003, 3, 18).day-of-month, 18, 'Date.day can be spelled as Date.day-of-month';
 is dtim(2003, 3, 18).day-of-month, 18, 'DateTime.day can be spelled as DateTime.day-of-month';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'day-of-week method'>
+# L<S32::Temporal/Accessors/'day-of-week method'>
 # --------------------------------------------------------------------
 
 # much of this is blatantly stolen from the Date::Simple test suite
@@ -65,7 +92,7 @@ is date(1600,  2, 29).day-of-week, 2, 'Date.day-of-week (1600-02-29)';
 is date(1600,  2, 28).day-of-week, 1, 'Date.day-of-week (1600-02-28)';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The method week'>
+# L<S32::Temporal/Accessors/'The method week'>
 # --------------------------------------------------------------------
 
 is date(1977, 8, 20).week.join(' '), '1977 33', 'Date.week (1977-8-20)';
@@ -105,7 +132,7 @@ is dtim(2010, 01, 03).week-number, 53, 'DateTime.week-number (2010-01-03)';
 # day-of-week is tested each time show-dt is called.
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The weekday-of-month method'>
+# L<S32::Temporal/Accessors/'The weekday-of-month method'>
 # --------------------------------------------------------------------
 
 is date(1982, 2,  1).weekday-of-month, 1, 'Date.weekday-of-month (1982-02-01)';
@@ -123,7 +150,7 @@ is date(1982, 4, 30).weekday-of-month, 5, 'Date.weekday-of-month (1982-04-30)';
 is dtim(1982, 4, 30).weekday-of-month, 5, 'DateTime.weekday-of-month (1982-04-30)';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The days-in-month method'>
+# L<S32::Temporal/Accessors/'The days-in-month method'>
 # --------------------------------------------------------------------
 
 is date(1999,  5,  5).days-in-month, 31, 'Date.days-in-month (May 1999)';
@@ -134,7 +161,7 @@ is date(2000,  2,  5).days-in-month, 29, 'Date.days-in-month (Feb 2000)';
 is dtim(2000,  2,  5).days-in-month, 29, 'DateTime.days-in-month (Feb 2000)';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The day-of-year method'>
+# L<S32::Temporal/Accessors/'The day-of-year method'>
 # --------------------------------------------------------------------
 
 is date(1975,  1,  1).day-of-year,   1, 'Date.day-of-year (1975-01-01)';
@@ -154,7 +181,7 @@ is date(2000,  3,  1).day-of-year,  61, 'Date.day-of-year (2000-03-01)';
 is date(2000, 12, 31).day-of-year, 366, 'Date.day-of-year (2000-12-31)';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/"Get" methods/'The method is-leap-year'>
+# L<S32::Temporal/Accessors/'The method is-leap-year'>
 # --------------------------------------------------------------------
 
 nok date(1800,  1,  1).is-leap-year, 'Date.is-leap-year (1800)';

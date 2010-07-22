@@ -16,9 +16,18 @@ plan *;
 
     dies_ok { Date.new('malformed') }, 'obviously malformed string';
     dies_ok { Date.new('2010-00-23') }, 'dies on zero-based months';
+    dies_ok { Date.new('2010-13-23') }, 'dies on month 13';
     dies_ok { Date.new('2010-01-00') }, 'dies on zero-based days';
+    dies_ok { Date.new('2010-01-32') }, 'dies on day of month 32';
+    dies_ok { Date.new('1999-02-29') }, 'dies on 29 February 1999';
+    dies_ok { Date.new('1900-02-29') }, 'dies on 29 February 1900';
+    lives_ok { Date.new('2000-02-29') }, '...but not 29 February 2000';
 
     isa_ok Date.new(2010, 01, 01), Date, 'Date.new() returns a Date';  #OK octal
+
+    my $date = Date.new('1999-01-29');
+    dies_ok { $date.clone(month => 2) }, 'dies on 29 February 1999 (Date.clone)';
+    lives_ok { $date.clone(:month(2), :year(2000)) }, '..but not 29 February 2000 (Date.clone)';
 }
 
 # stringification
