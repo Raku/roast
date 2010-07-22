@@ -127,10 +127,10 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # L<S02/Built-In Data Types/This rewrite happens after variables are looked up
 # in their lexical scope>
 
-#?rakudo skip '* and lexicals'
 {
     my $x = 3;
     {
+        #?rakudo todo '* and lexicals'
         is (* + (my $x = 5)).(8), 40,
             'can use a declaration in Whatever-curried expression';
         is $x, 5, 'and it did not get promoted into its own scope';
@@ -175,6 +175,12 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     my $x = *.uc.flip;
     ok $x ~~ Callable, 'we get a Callable from chained methods with *';
     is $x('dog'), 'GOD', 'we call both methods';
+}
+
+# chains of operators, RT #71846
+{
+    is (0, 1, 2, 3).grep(!(* % 2)).join('|'),
+        '0|2', 'prefix:<!> Whatever-curries correctly';
 }
 
 # RT #69362
