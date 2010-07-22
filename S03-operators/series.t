@@ -186,6 +186,12 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
     is @a.grep(Int).elems, @a.elems, "... all of which are Ints";
 }
 
+#?rakudo skip 'loops'
+{
+    is ~(1, 2,  4 ... 2), '1 2', 'geometric series with smaller RHS';
+    is ~(1, -2, 4 ... 2), '1 -2', 'geometric series with smaller RHS and sign change';
+}
+
 {
     my @a = 1.Rat, 2.Rat, 4.Rat ... 100;
     is @a.elems, 7, "1.Rat, 2.Rat, 4.Rat ... 100 generates a series with seven elements...";
