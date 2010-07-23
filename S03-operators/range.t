@@ -126,7 +126,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 ##     that coerces its arguments to numeric context, or we can
 ##     remove these tests from the suite.
 # RT #58018
-#?rakudo skip 'MMD function __cmp not found for types (101, 95)'
 {
     my @three = (1, 1, 1);
     my @one = 1;
@@ -134,12 +133,16 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
     is ~(@one ^.. 3)    , "2 3"  , "lower exclusive limit is in scalar context";
     is ~(3 ^.. @one)    , ""     , "lower exclusive limit is in scalar context";
+    #?rakudo todo 'RT 58018'
     is ~(1 .. @three)   , "1 2 3", "upper inclusive limit is in scalar context";
     is ~(4 .. @three)   , ""     , "upper inclusive limit is in scalar context";
+    #?rakudo todo 'RT 58018'
     is ~(1 ..^ @three)  , "1 2"  , "upper exclusive limit is in scalar context";
     is ~(4 ..^ @three)  , ""     , "upper exclusive limit is in scalar context";
+    #?rakudo todo 'RT 58018'
     is ~(@one .. @three), "1 2 3", "both inclusive limits are in scalar context";
     is ~(@three .. @one), ""     , "null range produced with lists forced to scalar context";
+    #?rakudo todo 'RT 58018'
     is ~(@one ^..^ @three), "2"  , "both exclusive limits are in scalar context";
     is ~(@three ^..^ @one), ""   , "both exclusive limits are in scalar context";
 }
