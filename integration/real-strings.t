@@ -14,7 +14,6 @@ plan *;
        'basic sanity: .trans works with native Perl 6 strings';
 }
 
-#?rakudo skip 'borked'
 {
     my $x = 'abc'.split(/b/).[0];
     lives_ok {$x.trans(['a'] => ['b']) }, 
@@ -37,10 +36,12 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
 
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 
-#?rakudo 3 skip 'borked'
 is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
+is <h e l o>.join.trans, 'helo', 'join returns P6 strings (RT 76564, RT 71088)';
+is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 71088)';
+
 
 # http://rt.perl.org/rt3/Ticket/Display.html?id=66596
 # .subst within a multi sub didn't work
