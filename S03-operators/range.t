@@ -125,6 +125,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 ##     need to either declare that there's a version of infix:<..>
 ##     that coerces its arguments to numeric context, or we can
 ##     remove these tests from the suite.
+# RT #58018
 #?rakudo skip 'MMD function __cmp not found for types (101, 95)'
 {
     my @three = (1, 1, 1);
