@@ -225,7 +225,13 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my %h;
     my $x = %h<foo>;
     is %h.keys.elems, 0, 'merely reading a non-existing hash keys does not create it';
+}
 
+#RT #76644
+{
+    my %h = statement => 3;
+    is %h.keys.[0], 'statement',
+        '"statement" autoquoted hash key does not collide with "state"';
 }
 
 done_testing;
