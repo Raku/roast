@@ -253,6 +253,49 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
+{
+    my $x = 'ABCD';
+    $x ~~ s:x(2)/<.alpha>/x/;
+    is $x, 'xxCD', 's:x(2)';
+}
+
+{
+    my $x = 'ooooo';
+    ok $x ~~ s:1st/./X/,    's:1st return value';
+    is $x,  'Xoooo',        's:1st side effect';
+
+    $x    = 'ooooo';
+    ok $x ~~ s:2nd/./X/,    's:2nd return value';
+    is $x,  'oXooo',        's:2nd side effect';
+
+    $x    = 'ooooo';
+    ok $x ~~ s:3rd/./X/,    's:3rd return value';
+    is $x,  'ooXoo',        's:3rd side effect';
+
+    $x    = 'ooooo';
+    ok $x ~~ s:4th/./X/,    's:4th return value';
+    is $x,  'oooXo',        's:4th side effect';
+
+    $x    = 'ooooo';
+    ok $x ~~ s:nth(5)/./X/, 's:nth(5) return value';
+    is $x,  'ooooX',        's:nth(5) side effect';
+
+    $x    = 'ooooo';
+    #?rakudo todo 'no-match substitution should return False'
+    nok $x ~~ s:nth(6)/./X/, 's:nth(6) return value';
+    is $x,  'ooooo',        's:nth(6) no side effect';
+}
+
+{
+    my $x = 'ooooo';
+    $x ~~ s:x(2):nth(1,3)/o/A/;
+    is $x,  'AoAoo', 's:x(2):nth(1,3) works in combination';
+
+    $x = 'ooooo';
+    $x ~~ s:2x:nth(1,3)/o/A/;
+    is $x,  'AoAoo', 's:2x:nth(1,3) works in combination';
+}
+
 #L<S05/Substitution/Any scalar assignment operator may be used>
 #?rakudo skip 's[...] op= RHS'
 {
