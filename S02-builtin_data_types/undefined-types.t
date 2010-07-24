@@ -15,13 +15,6 @@ plan *;
 
 {
     my @a;
-    @a.push: Nil(1);
-    is @a.elems, 0, 'Coercion to Nil in list context';
-    ok Nil(1).defined, 'Coercion to Nil in item context';
-}
-
-{
-    my @a;
     my $i = 0;
     @a.push: 1, sink $i++;
     is @a.elems, 1, 'sink statement prefix returns Nil (list context)';
