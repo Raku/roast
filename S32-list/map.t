@@ -229,10 +229,9 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
 }
 
-#?rakudo eval 'next and last in map'
 {
     is (1..4).map({ next if $_ % 2; 2 * $_ }).join('|'), 
-       '2|4|8', 'next in map works';
+       '4|8', 'next in map works';
     is (1..10).map({ last if $_ % 5 == 0; 2 * $_}).join(' '),
        '2 4 6 8', 'last in map works';
 }
