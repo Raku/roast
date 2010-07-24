@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 BEGIN { @*INC.push: 't/spec/packages' };
 
@@ -27,6 +27,11 @@ BEGIN { @*INC.push: 't/spec/packages' };
 
     is eval("(NotANumber.new(:number(4)) NAN+ NotANumber.new(:number(-1))).number"), 3, "infix:<NAN+> was exported";
     is eval("(NotANumber.new(:number(4)) + NotANumber.new(:number(-1))).number"), 3, "multi infix:<+> was exported and is visible";
+    
+    #?rakudo 2 todo "op= form doesn't work for imported operators?"
+    is eval('my $a = NotANumber.new(:number(4)); $a NAN+= NotANumber.new(:number(-1)); $a.number;'), 3, "NAN+= works too";
+    is eval('my $a = NotANumber.new(:number(4)); $a += NotANumber.new(:number(-1)); $a.number;'), 3, "+= works too";
+    
     is 4 + 2, 6, "Normal infix:<+> still works";
 
     nok eval('3 notthere 4'), 'not-exported operator was not imported';
