@@ -13,8 +13,8 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 # L<S12/"Types and Subtypes">
 
 my $abs = '
-multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
-multi sub my_abs (Int $n where { $^n <  0 }){ -$n }
+our multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
+our multi sub my_abs (Int $n where { $^n <  0 }){ -$n }
 ';
 
 ok(eval("$abs; 1"), "we can compile subtype declarations");
@@ -30,45 +30,46 @@ is(eval("my_abs(-5)"), 5, "and they actually work");
 }
 
 # Basic subtype creation
-ok eval('subset Num::Odd of Num where { $^num % 2 == 1 }; 1'),
-  "subtype is correctly parsed";
-is eval('my Num::Odd $a = 3'), 3, "3 is an odd num";
-# The eval inside the eval is/will be necessary to hider our smarty
-# compiler's compile-time from bailing.
-# (Actually, if the compiler is *really* smarty, it will notice our eval trick,
-# too :))
-is eval('my Num::Odd $b = 3; try { $b = eval "4" }; $b'), 3,
-  "objects of Num::Odd don't get even";
 
-# Subtypes should be undefined.
-is eval('Num::Odd.defined'), 0, 'subtypes are undefined';
+{
+    subset Num::Odd of Num where { $^num % 2 == 1 };
+    #?rakudo 2 todo 'subsets and eval (?)'
+    is eval('my Num::Odd $a = 3'), 3, "3 is an odd num";
+    # The eval inside the eval is/will be necessary to hider our smarty
+    # compiler's compile-time from bailing.
+    # (Actually, if the compiler is *really* smarty, it will notice our eval trick,
+    # too :))
+    is eval('my Num::Odd $b = 3; try { $b = eval "4" }; $b'), 3,
+      "objects of Num::Odd don't get even";
+
+    # Subtypes should be undefined.
+    nok Num::Odd.defined, 'subtypes are undefined';
+
+    # Subs with arguments of a subtype
+    sub only_accepts_odds(Num::Odd $odd) { $odd + 1 }
+    is only_accepts_odds(3), 4, "calling sub worked";
+    dies_ok { only_accepts_odds(4) },  "calling sub did not work";
+
+    # Normal Ints automatically morphed to Num::Odd
+    sub is_num_odd(Num::Odd $odd) { $odd ~~ Num::Odd },
+    ok is_num_odd(3), "Int accepted by Num::Odd";
+}
 
 # The same, but lexically
-my $eval1 = '{
-  my subset Num::Even of Num where { $^num % 2 == 0 }
-  ok my Num::Even $c = 6;
-  ok $c ~~ Num::Even, "our var is a Num::Even";
-  try { $c = eval 7 }
-  is $c, 6, "setting a Num::Even to an odd value dies";
-}';
-eval($eval1) // skip 3, 'Cant parse';
-#?rakudo todo 'lexical subtypes'
-ok eval('!try { my Num::Even $d }'),
-  "lexically declared subtype went out of scope";
+{
+    my subset Num::Even of Num where { $^num % 2 == 0 }
+    ok my Num::Even $c = 6;
+    ok $c ~~ Num::Even, "our var is a Num::Even";
+    try { $c = eval 7 }
+    is $c, 6, "setting a Num::Even to an odd value dies";
+    #?rakudo todo 'lexical subtypes'
+    ok eval('!try { my Num::Even $d }'),
+        "lexically declared subtype went out of scope";
 
-# Subs with arguments of a subtype
-ok eval('sub only_accepts_odds(Num::Odd $odd) { $odd + 1 }'),
-  "sub requiring a Num::Odd as argument defined (1)";
-is eval('only_accepts_odds(3)'), 4, "calling sub worked";
-#?rakudo skip 'return value of try on a failure is null'
-ok eval('!try { only_accepts_odds(4) }'), "calling sub did not work";
-
-# Normal Ints automatically morphed to Num::Odd
-ok eval('sub is_num_odd(Num::Odd $odd) { $odd ~~ Num::Odd }'),
-  "sub requiring a Num::Odd as argument defined (2)";
-ok eval('is_num_odd(3)'), "Int accepted by Num::Odd";
+}
 
 # Following code is evil, but should work:
+#?rakudo skip 'scoping bug'
 {
   my Int $multiple_of;
   subset Num::Multiple of Int where { $^num % $multiple_of == 0 }
