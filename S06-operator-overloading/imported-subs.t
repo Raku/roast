@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 17;
 
 BEGIN { @*INC.push: 't/spec/packages' };
 
@@ -18,6 +18,7 @@ BEGIN { @*INC.push: 't/spec/packages' };
 
     ok eval('"a" yadayada "b"'), 'infix:<yadayada> was exported';
     ok eval('"a" yadayada "b" eq "a..b" or die'), '... and it works';
+    ok eval('my $a = "a"; $a yadayada= "b"; $a eq "a..b" or die'), '... and yadayada= works too';
 
     ok eval('¢"foo"'), 'imported Unicode prefix operator';
     ok eval('¢4 eq "4 cent" or die '), '... and it works';
