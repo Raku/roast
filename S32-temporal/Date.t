@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+# L<S32::Temporal/Date>
+
 plan *;
 
 # construction
