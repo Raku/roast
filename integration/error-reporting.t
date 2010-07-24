@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 6;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -38,3 +38,19 @@ bar()',
         out     => '',
         err     => all(rx/pfff/, rx/'line 3'>>/),
     }, 'got the right line number for nonexisting sub inside another sub';
+
+# RT #74348
+{
+    subset Even of Int where { $_ %% 2 };
+    sub f(Even $x) { $x };
+    eval 'f(3)';
+    my $e = "$!";
+    diag "Error message: $e";
+    ok $e ~~ /:i 'type check'/,
+        'subset type check fail mentions type check';
+    ok $e ~~ /:i constraint/,
+        'subset type check fail mentions constraint';
+
+}
+
+# vim: ft=perl6
