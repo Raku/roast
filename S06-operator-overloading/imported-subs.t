@@ -27,7 +27,6 @@ BEGIN { @*INC.push: 't/spec/packages' };
 
     is eval("(NotANumber.new(:number(4)) NAN+ NotANumber.new(:number(-1))).number"), 3, "infix:<NAN+> was exported";
     is eval("(NotANumber.new(:number(4)) + NotANumber.new(:number(-1))).number"), 3, "multi infix:<+> was exported and is visible";
-    #?rakudo skip "Adding NotANumber's infix:<+> hides normal infix:<+> (maybe related to RT 74104?)"
     is 4 + 2, 6, "Normal infix:<+> still works";
 
     nok eval('3 notthere 4'), 'not-exported operator was not imported';
