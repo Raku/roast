@@ -232,12 +232,12 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
-#?rakudo skip "s:g[] and s[] with $/ NYI"
 {
     my $x = 'foobar';
     ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
     is $x, 'fuubar', 'and the substition worked';
 
+    #?rakudo 3 todo '$/ on RHS'
     given 'a b c' {
         s[\w] = uc($/);
         is $_, 'A b c', 'can use $/ on the RHS';
