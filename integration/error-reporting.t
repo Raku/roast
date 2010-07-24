@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -50,7 +50,16 @@ bar()',
         'subset type check fail mentions type check';
     ok $e ~~ /:i constraint/,
         'subset type check fail mentions constraint';
-
 }
+
+# RT #76112
+is_run 'use v6;
+class A { has $.x is rw };
+A.new.x(42);',
+    {
+        status => { $_ != 0 },
+        out     => '',
+        err     => rx/'line 3'>>/,
+    }, 'got the right line number for accessors';
 
 # vim: ft=perl6
