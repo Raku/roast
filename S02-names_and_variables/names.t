@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 24;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -79,9 +79,13 @@ plan 23;
 
 # RT #74276
 # Rakudo had troubles with names starting with Q
-{
-    eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
+eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
 
-}
+# RT #58488 
+lives_ok {
+    eval 'class A { has $.a};  my $a = A.new();';
+    eval 'class A { has $.a};  my $a = A.new();';
+    eval 'class A { has $.a};  my $a = A.new();';
+}, 'can redefine a class in eval multiple times without permanent damange';
 
 # vim: ft=perl6
