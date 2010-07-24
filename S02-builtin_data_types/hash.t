@@ -234,6 +234,16 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
         '"statement" autoquoted hash key does not collide with "state"';
 }
 
+# RT #58372
+# By collective knowledge of #perl6 and @larry, .{ } is actually defined in
+# Any
+{
+    my $x;
+    lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
+    nok $x{'a'}.defined, '... and the result is not defined';
+    dies_ok { Mu.{'a'} }, 'no .{ } in Mu';
+}
+
 done_testing;
 
 # vim: ft=perl6
