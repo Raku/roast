@@ -25,6 +25,9 @@ BEGIN { @*INC.push: 't/spec/packages' };
     ok eval('3 ± 4'), 'infix:<±> was exported';
     ok eval('(3 ± 4).isa(Range) or die'), '... and it works';
 
+    is eval("(NotANumber.new(:number(4)) NAN+ NotANumber.new(:number(-1))).number"), 3, "infix:<NAN+> was exported";
+    is eval("(NotANumber.new(:number(4)) + NotANumber.new(:number(-1))).number"), 3, "multi infix:<+> was exported and is visible";
+
     nok eval('3 notthere 4'), 'not-exported operator was not imported';
 }
 
