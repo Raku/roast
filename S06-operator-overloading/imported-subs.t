@@ -18,6 +18,7 @@ BEGIN { @*INC.push: 't/spec/packages' };
 
     ok eval('"a" yadayada "b"'), 'infix:<yadayada> was exported';
     ok eval('"a" yadayada "b" eq "a..b" or die'), '... and it works';
+    #?rakudo todo "op= form doesn't work for imported operators?"
     ok eval('my $a = "a"; $a yadayada= "b"; $a eq "a..b" or die'), '... and yadayada= works too';
 
     ok eval('¢"foo"'), 'imported Unicode prefix operator';
