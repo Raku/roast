@@ -142,8 +142,6 @@ lives_ok { dt year => 1999, month => 1, day => 1,
               hour => 1, minute => 59, second => 60.9,
               timezone => 2*60*60 }, 'Leap-second validation: Okay because of TZ; January 1 (second 60.9)';
 
-# TODO: DateTime.new(Instant $i, …)
-
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/DateTime.new(time)>
 # --------------------------------------------------------------------
@@ -177,7 +175,7 @@ is show-dt(DateTime.new(946684800)), '0 0 0 1 1 2000 6', 'from POSIX at 2000-01-
         timezone => -(5*60*60 + 55*60),
         formatter => { .day ~ '/' ~ .month ~ '/' ~ .year ~ ' ' ~
                        .second ~ 's' ~ .minute ~ 'm' ~ .hour ~ 'h' });
-    is ~$dt, '31/12/1999 59s4m18h', 'DateTime.new(Numeric) with time zone and formatter';
+    is ~$dt, '31/12/1999 59s4m18h', 'DateTime.new(Int) with time zone and formatter';
 }
 
 # --------------------------------------------------------------------
@@ -223,7 +221,7 @@ is DateTime.new('2009-12-31T22:33:44',
     1 while time == $t; # loop until the next second
     $t = time;
     my $dt1 = DateTime.new($t);
-    my $dt2 = DateTime.now;        # $dt1 and $dt2 might differ very occasionally
+    my $dt2 = DateTime.now.utc;        # $dt1 and $dt2 might differ very occasionally
     is show-dt($dt1), show-dt($dt2), 'DateTime.now uses current time';
 
     $t = time;
@@ -235,8 +233,6 @@ is DateTime.new('2009-12-31T22:33:44',
         formatter => { ~($^x.hour) });
     is ~$dt2, ~(($dt1.hour + 22) % 24), 'DateTime.now with time zone and formatter';
 }
-
-# TODO: DateTime.Instant
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/Accessors/'the method posix'>

@@ -23,6 +23,7 @@ isa_ok eval('now +300'), Instant, 'now is a term, not a function';
     my $t1 = now;
     my $d = $t1 - $t0;
 
+    ok $t0 < $t1, 'later Instants are greater';
     dies_ok { $t0 + $t1 }, 'Instant + Instant is illegal';
     isa_ok $d, Duration, 'Instant - Instant ~~ Duration';
     ok $d ~~ Real, 'Durations are Real';
@@ -32,10 +33,13 @@ isa_ok eval('now +300'), Instant, 'now is a term, not a function';
     isa_ok $t0 - $d, Instant, 'Instant - Duration ~~ Instant';
     is $t0 + ($t1 - $t0), $t1, 'Instant A + (Instant B - Instant A) == Instant A';
     dies_ok { $d * $d }, 'Duration * Duration is illegal';
+    dies_ok { $d ** 2 }, 'Duration ** Int is illegal';
     isa_ok 2 * $d, Duration, 'Int * Duration ~~ Duration';
     isa_ok $d / (2/3), Duration, 'Duration / Rat ~~ Duration';
 }
 
 done_testing;
+
+# See S32-temporal/DateTime-Instant-Duration.t for more.
 
 # vim: ft=perl6

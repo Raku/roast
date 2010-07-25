@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S32::Temporal/Date>
+# L<S32::Temporal/C<Date>>
 
 plan *;
 
