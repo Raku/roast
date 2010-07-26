@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 27;
+plan 28;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -74,5 +74,11 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     @b[3] = 'a';
     is @b.join('|'), 'z|y|x|a|x|y', 'change to one item left the others unchanged';
 }
+
+#?rakudo skip 'xx without a number does not stop'
+# make sure repeat numifies rhs
+my @d = <a b c>;
+is(("a" xx @d).join('|'), 'a|a|a', 'repeat properly numifies rhs');
+
 
 # vim: ft=perl6
