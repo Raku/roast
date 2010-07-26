@@ -77,7 +77,6 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
 
 # tests for non-number values on rhs of xx
-#?rakudo skip 'non-num arguments to XX'
 {
     # make sure repeat numifies rhs, but respects whatever
     my @a = <a b c>;
