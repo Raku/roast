@@ -9,7 +9,17 @@ rather than in S02/instants-and-duration.t.
 
 =end pod
 
+sub dtp($year, $month, $day, $hour, $minute, $second) {
+    DateTime.new(:$year, :$month, :$day, :$hour, :$minute, :$second)
+}
+
+sub dtpi($year, $month, $day, $hour, $minute, $second) {
+    DateTime.new(:$year, :$month, :$day, :$hour, :$minute, :$second).Instant
+}
+
 sub dti(*%args) { DateTime.new(year => 1984, |%args).Instant }
+
+sub dsi($s) { DateTime.new($s).Instant }
 
 sub diff(%early = (), *%late) { + do dti(|%late) - dti(|%early) }
 
@@ -22,6 +32,9 @@ plan *;
 isa_ok dti, Instant, 'DateTime.Instant returns an Instant';
 is dti, dti, 'Equal DateTimes yield equal Instants';
 is diff, 0, 'The difference of equal Instants is 0';
+
+is dsi('2005-12-31T23:59:60') < dsi('2006-01-01T00:00:00'), 'DateTime.Instant counts leap seconds';
+  # These seconds have equal POSIX times.
 
 is diff(second => 5), 5, 'Instant subtraction (seconds)';
 is diff(second => 3.14159), 3.14159, 'Instant subtraction (non-integral seconds)';
@@ -38,10 +51,8 @@ is +(dti() - DateTime.new('1985-03-14T13:28:22').Instant),
     days(366 + 31 + 28 + 14) + 13*60*60 + 28*60 + 22, 'Instant subtraction (YMDHMS)';
 
 {
-    my $a = DateTime.new(:year(2005), :month(1), :day(1),
-        :hour(2), :minute(22), :second(13.4));
-    my $b = DateTime.new(:year(2004), :month(12), :day(31),
-        :hour(23), :minute(57), :second(8.5));
+    my $a = dtp(2005,  1,  1,    2, 22, 13.4);
+    my $b = dtp(2004, 12, 31,   23, 57,  8.5);
     my $expected-diff = 60 - 8.5 + 2*60 + 2*60*60 + 22*60 + 13.4;
     is +($b.Instant - $a.Instant), $expected-diff, 'Instant subtraction (ugly case)';
     
@@ -72,7 +83,37 @@ is +(dti() - DateTime.new('1985-03-14T13:28:22').Instant),
 
 # L<S32::Temporal/C<DateTime>/DateTime.new(now)>
 
-# TODO
+is ~DateTime.new(dsi('2004-03-05T12:43:22')), '2004-03-05T12:43:22Z', 'Round-tripping DateTime.Instant (2004-03-05T12:43:22Z)';
+is ~DateTime.new(dsi('2005-12-31T23:59:59')), '2005-12-31T23:59:59Z', 'Round-tripping DateTime.Instant (2005-12-31T23:59:59Z)';
+is ~DateTime.new(dsi('2005-12-31T23:59:60')), '2005-12-31T23:59:60Z', 'Round-tripping DateTime.Instant (2005-12-31T23:59:60Z)';
+is ~DateTime.new(dsi('2006-01-01T00:00:00')), '2006-01-01T00:00:00Z', 'Round-tripping DateTime.Instant (2006-01-01T00:00:00Z)';
+
+is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.5).second, 59.5, 'Round-tripping DateTime.Instant (2005-12-31T23:59:59.5Z)';
+is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.5).second, 60.5, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.5Z)';
+is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.5).second,  0.5, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.5Z)';
+
+{
+    my $last-t = time;
+    my $t;
+    loop { # Loop until we reach the beginning of the next second.
+        $t = time;
+        last if $t > $last-t;
+        $last-t = $t;
+    }
+    my $i = now;    # $t and $i are supposed to be within the
+                    # same UTC second, but if we're unlucky they
+                    # might not be.
+    is ~DateTime.new($i), ~DateTime.new($t), 'DateTime.new(now)';
+}
+
+{
+    my $dt = DateTime.new(dsi('1999-12-31T23:59:59'),
+        timezone => -(5*60*60 + 55*60),
+        formatter => { .day ~ '/' ~ .month ~ '/' ~ .year ~ ' ' ~
+                       .second ~ 's' ~ .minute ~ 'm' ~ .hour ~ 'h' });
+    is ~$dt, '31/12/1999 59s4m18h', 'DateTime.new(Instant) with time zone and formatter';
+}
+
 
 done_testing;
 

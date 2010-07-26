@@ -143,8 +143,10 @@ lives_ok { dt year => 1999, month => 1, day => 1,
               timezone => 2*60*60 }, 'Leap-second validation: Okay because of TZ; January 1 (second 60.9)';
 
 # --------------------------------------------------------------------
-# L<S32::Temporal/C<DateTime>/DateTime.new(time)>
+# DateTime.new(Int)
 # --------------------------------------------------------------------
+
+# L<S32::Temporal/C<DateTime>/DateTime.new(time)>
 
 is show-dt(DateTime.new(0)), '0 0 0 1 1 1970 4', 'DateTime at beginning of Unix epoch';
 is show-dt(DateTime.new(946684799)), '59 59 23 31 12 1999 5', 'from POSIX at 1999-12-31T23:59:59Z';
@@ -177,6 +179,15 @@ is show-dt(DateTime.new(946684800)), '0 0 0 1 1 2000 6', 'from POSIX at 2000-01-
                        .second ~ 's' ~ .minute ~ 'm' ~ .hour ~ 'h' });
     is ~$dt, '31/12/1999 59s4m18h', 'DateTime.new(Int) with time zone and formatter';
 }
+
+# L<S32::Temporal/C<DateTime>/'Ambiguous POSIX times'>
+
+is show-dt(DateTime.new(915148800)), '0 0 0 1 1 1999 5', 'from POSIX at 1999-01-01T00:00:00Z';
+  # 915148800 is also the POSIX time of the leap second
+  # 1998-12-31T23:59:60.
+is show-dt(DateTime.new(425865600)), '0 0 0 1 7 1983 5', 'from POSIX at 1983-07-01T00:00:00Z';
+  # 425865600 is also the POSIX time of the leap second
+  # 1983-06-30T23:59:60.
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/'A shorter way to send in date'>
