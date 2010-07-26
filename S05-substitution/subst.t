@@ -219,14 +219,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $a, 'abc', 'failed substitutions leaves string unchanged';
 }
 
-#?rakudo skip '$_ and s[...] do not work together yet'
+# note that when a literal is passed to 'given', $_ is bound read-only
 {
-    given 'abc' {
+    given my $x = 'abc' {
         ok (s[b] = 'de'), 's[...] = ... returns true on success';
         is $_, 'adec', 'substitution worked';
     }
 
-    given 'abc' {
+    given my $y = 'abc' {
         s[d] = 'foo';
         is $_, 'abc', 'failed substitutions leaves string unchanged';
     }
