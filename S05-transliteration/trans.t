@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 51;
+plan 52;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -110,7 +110,10 @@ is($b.trans('A..H..' => 'a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
 
 is($b.trans('..A..H..' => '__a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     'leading, trailing ranges interpreted as string');
-    
+
+#?rakudo skip 'replace with empty string'
+is("hello".trans("l" => ""), "heo", "can replace with empty string");
+
 # complement, squeeze/squash, delete
 
 #?rakudo 2 skip 'flags'
