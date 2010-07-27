@@ -113,7 +113,6 @@ is (64, 32, 16 ... 70), Nil, 'empty decreasing geometric series';
 is (1, 2 ... 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'series empty but for extra items';
 
 # L<S03/List infix precedence/For a geometric series with sign changes>
-#?rakudo 4 skip "or the 1, -2, 4 ... 1/2 case"
 is (1, -2, 4 ... 1/2), Nil, 'empty alternating increasing-in-magnitude geometric series';
 is (-64, 32, -16 ... 70), Nil, 'empty alternating decreasing-in-magnitude geometric series';
 is (1, -1, 1 ... 2), Nil, 'empty alternating series (1)';
