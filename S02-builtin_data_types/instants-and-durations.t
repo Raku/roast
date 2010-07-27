@@ -8,11 +8,11 @@ plan *;
 {
     my $i = now;
     isa_ok $i, Instant, 'now returns an Instant';
-    ok $i ~~ Real, 'Instants are Real';
     isa_ok 5 + $i, Instant, 'Int + Instant ~~ Instant';
     isa_ok $i - 1/3, Instant, 'Instant - Rat ~~ Instant';
 }
 
+#?rakudo skip "'now' as term NYI"
 isa_ok eval('now +300'), Instant, 'now is a term, not a function';
 
 # L<S02/Immutable types/'you may not add two instants'>

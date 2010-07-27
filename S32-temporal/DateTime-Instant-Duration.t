@@ -33,49 +33,51 @@ isa_ok dti, Instant, 'DateTime.Instant returns an Instant';
 is dti, dti, 'Equal DateTimes yield equal Instants';
 is diff, 0, 'The difference of equal Instants is 0';
 
-is dsi('2005-12-31T23:59:60') < dsi('2006-01-01T00:00:00'), 'DateTime.Instant counts leap seconds';
+ok dsi('2005-12-31T23:59:60') < dsi('2006-01-01T00:00:00'), 'DateTime.Instant counts leap seconds';
   # These seconds have equal POSIX times.
 
 is diff(second => 5), 5, 'Instant subtraction (seconds)';
-is diff(second => 3.14159), 3.14159, 'Instant subtraction (non-integral seconds)';
+is diff(second => 2/7), 2/7, 'Instant subtraction (non-integral seconds)';
+#?rakudo skip 'high-precision Instants NYI (needs FatRats)'
+# is diff(second => 3.14159), 3.14159, 'Instant subtraction (needing high precision)';
 is diff(minute => 15), 15 * 60, 'Instant subtraction (minutes)';
 is diff(:hour(3), :minute(15), :second(33)),
     3*60*60 + 15*60 + 33, 'Instant subtraction (HMS)';
-is diff(day => 3), days(3), 'Instant subtraction (days)';
+is diff(day => 4), days(3), 'Instant subtraction (days)';
 is diff(month => 2), days(31), 'Instant subtraction (a month)';
 is diff(month => 3), days(31 + 29), 'Instant subtraction (Jan and Feb, leap year)';
-is diff({year => 1985}, month => 3), days(31 + 28), 'Instant subtraction (Jan and Feb, common year)';
+is diff({year => 1985}, year => 1985, month => 3), days(31 + 28), 'Instant subtraction (Jan and Feb, common year)';
 is diff(:year(1985), :month(3), :day(14)),
-    days(366 + 31 + 28 + 14), 'Instant subtraction (YMD)';
-is +(dti() - DateTime.new('1985-03-14T13:28:22').Instant),
-    days(366 + 31 + 28 + 14) + 13*60*60 + 28*60 + 22, 'Instant subtraction (YMDHMS)';
+    days(366 + 31 + 28 + 13), 'Instant subtraction (YMD)';
+is +(DateTime.new('1985-03-14T13:28:22').Instant - dti),
+    days(366 + 31 + 28 + 13) + 13*60*60 + 28*60 + 22, 'Instant subtraction (YMDHMS)';
 
 {
-    my $a = dtp(2005,  1,  1,    2, 22, 13.4);
-    my $b = dtp(2004, 12, 31,   23, 57,  8.5);
+    my $a = dtp(2004, 12, 31,   23, 57,  8.5);
+    my $b = dtp(2005,  1,  1,    2, 22, 13.4);
     my $expected-diff = 60 - 8.5 + 2*60 + 2*60*60 + 22*60 + 13.4;
-    is +($b.Instant - $a.Instant), $expected-diff, 'Instant subtraction (ugly case)';
+    is +($b.Instant() - $a.Instant), $expected-diff, 'Instant subtraction (ugly case)';
     
-    $a .= clone(timezone => 3*60*60);
-    $b .= clone(timezone => 35*60 - 5);
-    is +($b.Instant - $a.Instant), 0.1, 'Instant subtraction (time zones)';
+    $a .= clone(timezone => 35*60 - 5);
+    $b .= clone(timezone => 3*60*60);
+    is +($a.Instant() - $b.Instant), 0.1, 'Instant subtraction (time zones)';
 
     diff({:year(1997), :month(6), :day(30)},
             :year(1997), :month(7), :day(1)),
         days(1) + 1, 'Instant subtraction (June 30 leap second)';
     $a .= clone(year => 2005, timezone => 0);
     $b .= clone(year => 2006, timezone => 0);
-    is +($b.Instant - $a.Instant), $expected-diff + 1, 'Instant subtraction (December 31 leap second)';
+    is +($b.Instant() - $a.Instant), $expected-diff + 1, 'Instant subtraction (December 31 leap second)';
 
-    $a = DateTime.new('2006-01-01T12:33:58+1234')
+    $a = DateTime.new('2006-01-01T12:33:58+1234');
       # In UTC, $a is 2005-12-31T23:59:58.
     $b = DateTime.new('2006-01-01T12:44:03+1244');
       # In UTC, $b is 2006-01-01T00:00:03.
-    is +($b.Instant - $a.Instant), 6, 'Instant subtraction (leap second and time zones)';
+    is +($b.Instant() - $a.Instant), 6, 'Instant subtraction (leap second and time zones)';
 
     $a .= clone(year => 1973);
     $b .= clone(year => 2008);
-    is +($b.Instant - $a.Instant), 1_104_451_227, 'Instant subtraction (thirty-year span)';
+    is +($b.Instant() - $a.Instant), 1_104_451_227, 'Instant subtraction (thirty-year span)';
       # I got this figure by adding 22 (the number of leap seconds 
       # between the two moments) to the difference of POSIX
       # times.
