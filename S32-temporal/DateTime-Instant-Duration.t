@@ -94,6 +94,12 @@ is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.5).second, 59.5, 'Round-tripping
 is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.5).second, 60.5, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.5Z)';
 is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.5).second,  0.5, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.5Z)';
 
+#?rakudo skip 3 'high-precision Instants NYI (need FatRats)'
+is DateTime.new(dtpi 2005, 12, 31,   23, 59, 59.2).second, 59.2, 'Round-tripping DateTime.Instant (2005-12-31T23:59:59.2Z)';
+is DateTime.new(dtpi 2005, 12, 31,   23, 59, 60.2).second, 60.2, 'Round-tripping DateTime.Instant (2005-12-31T23:59:60.2Z)';
+is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping DateTime.Instant (2006-01-01T00:00:00.2Z)';
+
+
 {
     my $last-t = time;
     my $t;
