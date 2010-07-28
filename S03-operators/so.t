@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 14;
 
 # L<S03/Loose unary precedence>
 
@@ -21,4 +21,7 @@ ok(so True, "'True' is true");
 
 is (so($b) + 1), ((so $b) + 1), 'so($b) is (so $b)';
 
-# vim: ft=perl6
+ok (so my $x = 5), 'so + declaration';
+is $x, 5, 'assignment after so worked';
+
+???
