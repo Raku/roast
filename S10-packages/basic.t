@@ -141,15 +141,14 @@ our $outer_package = 19;
         'Should be able to update outer package var';
 }
 
-# change tests to match likely error (top of file) when they pass
-#?rakudo skip 'regex declarations; RT 64204'
+# change tests to match likely error (top of file) when they pass (RT 64204)
 {
     eval 'my $x = ::P';
-    ok  ~$! !~~ /<fairly_conclusive_platform_error>/, 
+    ok  ~$! !~~ /<&fairly_conclusive_platform_error>/, 
         'simple package case that should not blow platform';
 
     eval 'A::B';
-    ok  ~$! ~~ /<likely_perl6_not_found_err>/,
+    ok  ~$! ~~ /<&likely_perl6_not_found_err>/,
         'another simple package case that should not blow platform';
 }
 
