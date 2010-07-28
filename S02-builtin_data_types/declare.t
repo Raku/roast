@@ -234,6 +234,7 @@ plan 84;
  isa_ok($pare,Blob  );
 }
 
+#?rakudo 2 skip "Instant, Duration"
 {
  my Instant $paci;
  isa_ok($paci,Instant  );
