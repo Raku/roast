@@ -176,7 +176,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :nth(3, 4)';
 }
 
-#?rakudo skip 's:global/.../../ NYI'
 {
     my $s = "ZBC";
     my @a = ("A", 'ZBC');
