@@ -76,7 +76,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 }
 
 
-# tests for non-number values on rhs of xx
+# tests for non-number values on rhs of xx (RT #76720)
 {
     # make sure repeat numifies rhs, but respects whatever
     my @a = <a b c>;
