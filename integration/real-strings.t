@@ -57,8 +57,8 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 {
     my $x = 0;
-    for %*VM.kv -> $k, $v { $x++};
-    is $x, +%*VM.keys, '%*VM.kv is self-consistent';
+    for $*VM.kv -> $k, $v { $x++};
+    is $x, +$*VM.keys, '$*VM.kv is self-consistent';
 }
 
 # RT #67852
