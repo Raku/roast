@@ -556,7 +556,7 @@ sub l () { 1, 2 };
 #?rakudo skip '$a[] autovivification (unspecced?)'
 {
     my $a;
-    $a[] = l, l, l
+    $a[] = l, l, l;
     is($a.elems, 6, 'lhs treats $a[] as list');
 }
 

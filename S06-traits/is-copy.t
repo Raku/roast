@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 17;
+plan 19;
 
 {
   sub foo($a is copy) {
@@ -72,5 +72,18 @@ plan 17;
     my $a = [1, 2, 3];
     is t($a), 3, 'passing [1,2,3] to @a is copy does results in three array items';
 }
+
+# RT #76804
+#?rakudo skip 'RT 76804'
+{
+    sub f($arg is copy) {
+        my $other;
+        ($arg, $other) = 5, 6;
+        $arg;
+    };
+    is f(0), 5, 'list assignment (0)';
+    is f(1), 5, 'list assignment (1)';
+}
+
 
 # vim: ft=perl6
