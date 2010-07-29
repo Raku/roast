@@ -218,6 +218,11 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $a, 'abc', 'failed substitutions leaves string unchanged';
 }
 
+{
+    eval_dies_ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
+    eval_dies_ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
+}
+
 # note that when a literal is passed to 'given', $_ is bound read-only
 {
     given my $x = 'abc' {
