@@ -10,7 +10,7 @@ Tests assigning default values to variables of type code in sub definitions.
 
 # L<S06/Optional parameters/Default values can be calculated at run-time>
 
-plan 4;
+plan 5;
 
 sub doubler($x) { return 2 * $x }
 
@@ -39,6 +39,12 @@ ok((MyPack::val_v), "default sub called in package namespace");
         $x[0];
     }
     is default_with_list(), 1, 'can have a parcel literal as default value';
+}
+
+# RT #69200
+{
+    sub rt69200(Bool :$x) { $x };
+    is rt69200(:x), True, '":x" is the same as "x => True" in sub call';
 }
 
 # vim: ft=perl6
