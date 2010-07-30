@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 52;
+plan 53;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -234,5 +234,11 @@ is($_, "X  \t", 'tr/// on $_ with explicit character lists');
 
 # y/// is dead
 eval_dies_ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
+
+# RT #71088
+{
+    lives_ok { "".subst(/x/, "").trans() },
+        'trans on subst output lives';
+}
 
 # vim: ft=perl6
