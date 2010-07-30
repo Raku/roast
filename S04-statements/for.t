@@ -478,6 +478,16 @@ eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!);
 ok $! ~~ / 'C-style' /, 'Sensible error message';
 }
 
+# RT #64886
+{
+    my $a = 0;
+    for (1..10000000000) {
+        $a++;
+        last;
+    }
+    is $a, 1, 'for on Range with huge max value is lazy and enters block';
+}
+
 done_testing;
 
 # vim: ft=perl6
