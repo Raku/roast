@@ -242,6 +242,7 @@ my @elems = <a b c d e>;
 # .key //= ++$i for @array1;
 class TestClass{ has $.key is rw  };
 
+#?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(:key<1>),TestClass.new());
    
