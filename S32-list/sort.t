@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 35;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -218,6 +218,39 @@ plan 31;
         'sort accepts 0-arity method';
     lives_ok { (1..10).sort(&rand) },
         'sort accepts rand method';
+}
+
+# RT #71258
+{
+    class RT71258_1 { };
+
+    my @sorted;
+
+    lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
+        'sorting by stringified class instance (name and memory address)';
+
+    ok ([<]@sorted.map({.WHERE})),
+        'checking sort order by class memory address';
+
+    class RT71258_2 {
+        has $.x;
+        method Str { $.x }
+    };
+
+    multi sub cmp(RT71258_2 $a, RT71258_2 $b) {
+        $a.x <=> $b.x;
+    }
+
+    lives_ok {
+        @sorted = (
+            RT71258_2.new(x => 2),
+            RT71258_2.new(x => 3),
+            RT71258_2.new(x => 1)
+        ).sort
+    }, 'sorting stringified class instance with custom cmp';
+
+    is ~@sorted, '1 2 3',
+        'checking sort order with custom cmp';
 }
 
 # vim: ft=perl6
