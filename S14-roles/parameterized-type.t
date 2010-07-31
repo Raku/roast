@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 =begin pod
 
@@ -58,6 +58,9 @@ is C4.new.call_test,         'ok', 'roles being used as type constraints inside 
 dies_ok { C4.new.call_fail },      'roles being used as type constraints inside roles work';
 is R2[C3].new.call_test,     'ok', 'classes being used as type constraints inside roles work';
 dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints inside roles work';
+
+# RT #72694
+eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
 
 #?pugs emit =end SKIP
 
