@@ -9,7 +9,7 @@ Unshift tests
 
 =end description
 
-plan 59;
+plan 61;
 
 # basic unshift tests
 
@@ -145,4 +145,25 @@ plan 59;
 #     # best not to uncomment this it just go on forever
 #     todo_throws_ok { 'unshift @unshift, 10' }, '?? what should this error message be ??', 'cannot unshift onto a Inf array';
 # }
+
+# RT #69548
+{
+    {
+        my $x = 1;
+        my @a = ();
+        unshift @a, $x;
+        ++$x;
+
+        is @a[0], 1, 'New element created by unshift(@a, $x) isn\'t affected by changes to $x';
+    }
+    {
+        my $x = 1;
+        my @a = ();
+        unshift @a, $x;
+        ++@a[0];
+
+        is $x, 1, '$x isn\'t affected by changes to new element created by unshift(@a, $x)';
+    }
+}
+
 # vim: ft=perl6

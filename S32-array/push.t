@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 50;
+plan 51;
 
 # basic push tests
 {
@@ -157,17 +157,17 @@ plan 50;
         my @a = ();
         push @a, $x;
         ++$x;
-    
+
         is @a[0], 1, 'New element created by push(@a, $x) isn\'t affected by changes to $x';
     }
-    # {
-    #     my $x = 1;
-    #     my @a = ();
-    #     push @a, $x;
-    #     ++@a[0];
-    # 
-    #     is $x, 1, '$x isn\'t affected by changes to new element created by push(@a, $x)';
-    # }
+    {
+        my $x = 1;
+        my @a = ();
+        push @a, $x;
+        ++@a[0];
+
+        is $x, 1, '$x isn\'t affected by changes to new element created by push(@a, $x)';
+    }
 }
 
 
