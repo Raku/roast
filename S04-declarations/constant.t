@@ -23,7 +23,7 @@ plan *;
     dies_ok { $bar = 2 }, "Can't reassign to a sigiled constant";
 }
 
-#?rakudo skip 'RT 69740'
+# RT #69740
 {
     eval_dies_ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
 }
