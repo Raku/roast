@@ -14,7 +14,7 @@ be valid perl6.
 
 # Note: single-quotes.t tests repetition on single quoted items in regexes.
 
-plan 21;
+plan 22;
 
 # L<S05/Bracket rationalization/The general repetition specifier is now>
 
@@ -56,5 +56,8 @@ is(~('foo, bar,' ~~ m/[<alpha>+] **[','\s*]/), 'foo, bar', '** with a more compl
 ok 'a, b, c' !~~ /:s^<alpha>**\,$/, 'with no spaces around **, no spaces can be matched';
 ok 'a, b, c'  ~~ /:s^ <alpha> ** \, $/, 'with spaces around **, spaces can be matched';
 ok 'a , b ,c' ~~ /:s^ <alpha> ** \, $/, 'same, but with leading spaces';
+
+# RT #76792
+ok ('a b,c,d' ~~ token { \w \s \w ** \, }), 'can combine ** with backslash character classes';
 
 # vim: ft=perl6
