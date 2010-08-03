@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S12/Methods/"For a call on your own private method">
 
@@ -91,5 +91,19 @@ is(@t[0], 100,             'array attribute initialized/works');
 is(@t[1], 200,             'array attribute initialized/works');
 $bar.bar[2] = 300;
 is($bar.bar[2], 300,       'array attribute initialized/works');
+
+# RT #73808
+{
+    class RT73808 {
+        has ($!a, $!b);
+        method foo {
+            $!a = 1;
+            $!b = 3;
+            return $!a + $!b;
+        }
+    }
+    is RT73808.new.foo, 4,
+        'Providing a list of attributes to a single "has" works';
+}
 
 # vim: ft=perl6
