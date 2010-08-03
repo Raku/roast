@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 65;
+plan 68;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -258,6 +258,16 @@ eval_lives_ok 'my $x = 3; class A { has .$y = $x; }; say A.new.y',
 {
     #?rakudo skip 'RT 72814' 
     lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
+}
+
+# RT #72946
+{
+    is ( my $ = 'foo' ), 'foo',
+        'declaration of anonymous Scalar';
+    is ( my @ = 'foo', 'bar', 'baz' ), ['foo', 'bar', 'baz'],
+        'declaration of anonymous Array';
+    is ( my % = 'foo' => 1, 'bar' => 2, 'baz' => 3 ), {'foo' => 1, 'bar' => 2, 'baz' => 3},
+        'declaration of anonymous Hash';
 }
 
 # vim: ft=perl6
