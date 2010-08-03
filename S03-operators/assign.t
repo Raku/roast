@@ -220,7 +220,6 @@ plan 242;
 
 my @p;
 
-#?rakudo skip '@p = $a ||= 3, 4'
 {
     my $a;
     @p = $a ||= 3, 4;
@@ -254,7 +253,6 @@ my @p;
     is $f, 5, '//= also works in declaration';
 }
 
-#?rakudo skip '&&= in assignment'
 {
     my $a = 3;
     @p = $a &&= 42, 43;
