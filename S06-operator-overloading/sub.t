@@ -399,6 +399,14 @@ Testing operator overloading subroutines
     is $x, 6, 'bar= works for custom operators';
 
 }
+
+# RT #74104
+{
+    class RT74104 {}
+    multi sub infix:<+>(RT74104 $, RT74104 $) { -1 }
+    is 2+2, 4, 'overloading an operator does not hide other candidates';
+}
+
 done_testing;
 
 # vim: ft=perl6
