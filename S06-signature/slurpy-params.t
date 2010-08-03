@@ -323,6 +323,12 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
     A(5, 4);
 }
 
+# RT #74410
+{
+    is -> *@a { @a[+0] }.([5]), 5,
+        'slurpy array can be indexed if index contains prefix:<+>';
+}
+
 done_testing;
 
 # vim: ft=perl6
