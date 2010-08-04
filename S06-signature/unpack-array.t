@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 13;
 
 # L<S06/Unpacking array parameters>
 
@@ -35,5 +35,20 @@ sub blat ($x, @a [$a, *@b]) {
 
 is blat( 1, [2,3,4] ), "2|3|4", 'unpack named array';
 is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
+
+# RT #75900
+{
+    my @my-array = 4,2,3,4;
+
+    sub fsort-only([$p?,*@r]) {
+        return fsort-only(@r.grep( {$_ <= $p} )),$p,fsort-only(@r.grep( {$_ > $p} )) if $p || @r;
+    }
+    sub fsort-multi([$p?,*@r]) {
+        return fsort-multi(@r.grep( {$_ <= $p} )),$p,fsort-multi(@r.grep( {$_ > $p} )) if $p || @r;
+    }
+
+   is fsort-only(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-subs';
+   is fsort-multi(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-multi';
+}
 
 # vim: ft=perl6
