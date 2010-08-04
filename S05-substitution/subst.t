@@ -353,6 +353,17 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
+{
+    $_ = 'foObar';
+    s:ii/oo/au/;
+    is $_, 'faUbar', ':ii implies :i';
+
+    $_ = 'foObar';
+    s:samecase/oo/au/;
+    is $_, 'faUbar', ':samecase implies :i';
+
+}
+
 # RT #66816
 {
     my $str = "a\nbc\nd";
