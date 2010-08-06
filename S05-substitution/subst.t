@@ -371,6 +371,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         'Zero-width substitution does not make the GC recurse';
 }
 
+{
+    eval_dies_ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
+        'Value of :i must be known at compile time';
+    #?rakudo todo 'be smarter about constant detection'
+    eval_lives_ok q[ $_ = "abc";s:i(1)/a/b/ ],
+        ':i(1) is OK';
+}
+
 done_testing;
 
 # vim: ft=perl6
