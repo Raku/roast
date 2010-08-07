@@ -340,6 +340,14 @@ my @array2 = ("test", 1, Mu);
     dies_ok { Mu.[0] }, 'but Mu has no .[]';
 }
 
+#RT #77072
+
+#?rakudo skip 'RT 77072 star not working for array indexing yet - code fails' 
+{
+    my @a = <1 2 3>;
+    is @a[*], <1 2 3> , 'using * to access all array elements works';
+}
+
 done_testing;
 
 # vim: ft=perl6
