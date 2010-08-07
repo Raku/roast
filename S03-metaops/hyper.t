@@ -708,6 +708,14 @@ my @e;
     is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
 }
 
+# RT #77010
+
+#?rakudo skip 'RT 77010 - use hypers with local scoped user-defined operators'
+{
+    sub infix:<+++>($a, $b) { ($a + $b) div 2 };
+    eval_lives_ok '10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
+} 
+
 done_testing;
 
 # vim: ft=perl6
