@@ -6,7 +6,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 9;
 
 
 my @list = ('a');
@@ -54,6 +54,18 @@ for @list -> $letter {
 
     is $tracker, '1 : 1|* : 2',
         'Two iterations of a loop share the same $_ if it is not a formal parameter';
+}
+
+{
+     # Inner subs get a new $_, not the OUTER::<$_>
+     $_ = 1;
+     sub foo {
+         ok !defined($_), '$_ starts undefined';
+         $_ = 2;
+         is $_, 2,  'now $_ is 2';
+     }
+     foo();
+     is $_, 1, 'outer $_ is unchanged'
 }
 
 # vim: ft=perl6
