@@ -181,7 +181,6 @@ plan 84;
  isa_ok($re,StrLen  );
 }
 
-#?rakudo skip 'Nil as type constraint - is this test valid?'
 {
  my Nil $ci;
  ok($ci ~~ Nil);

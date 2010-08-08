@@ -34,7 +34,6 @@ lives_ok { $/.perl }, 'lives on quantified named captures';
     isa_ok $/, Match;
     is $/.ast, $code_str, 'Match.ast is the code matched';
     is $/.Str, $code_str, 'Match.Str is the code matched';
-    #?rakudo skip 'RT #64874'
     is_deeply eval($/.perl), $/, 'eval of Match.perl recreates Match';
 }
 
