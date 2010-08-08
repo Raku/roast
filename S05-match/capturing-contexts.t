@@ -100,10 +100,10 @@ is_run( q{'aa' ~~ /(.)$1/},
 }
 
 # RT #70003
+#?rakudo skip 'RT 70003'
 {
-    'a' ~~ /a/;
-    #?rakudo skip 'RT 70003'
-    is ($/.orig).rindex('a'), 0, 'rindex() works on $/.orig';
+    is ($/.orig).rindex('a'), 1, 'rindex() works on $/.orig';
+    is ($/.orig).rindex('a', 2), 1, 'rindex() works on $/.orig';
 }
 
 done_testing;
