@@ -8,7 +8,7 @@ plan *;
 
 isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
 isa_ok(i, Complex, 'i creates a Complex number');
-ok i == 1i, '1 == 1i';
+ok i == 1i, 'i == 1i';
 
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
