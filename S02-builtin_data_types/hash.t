@@ -244,6 +244,12 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     dies_ok { Mu.{'a'} }, 'no .{ } in Mu';
 }
 
+# Zen slices work on hashes too
+{
+    my %h = { a => 1, b => 2, c => 3};
+    is %h{*}.join('|'), %h.values.join('|'), '{*} zen slice';
+}
+
 done_testing;
 
 # vim: ft=perl6
