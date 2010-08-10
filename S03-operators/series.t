@@ -135,6 +135,7 @@ is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
     is (1, 2 ...^ 0), Nil, 'empty exclusive arithmetic series';
     is (1, 2 ...^ 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'exclusive series empty but for extra items';
     is ~(1 ...^ 0), '1', 'singleton exclusive series';
+    is (4...^5).join(', '), '4', '4...^5 should parse as 4 ...^ 5 and not 4 ... ^5';
 }
 
 
