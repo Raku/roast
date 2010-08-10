@@ -57,7 +57,6 @@ my $castle = 'phantom';
 my $full-of-vowels = 'aaaooouuuiiee';
 is (.[0] + .[1] + .[2] given @list), 6, 'Statement ending given';
 
-#?rakudo skip "This given/when usage doesn't work in current Rakudo"
 {
     is ("My God, it's full of vowels!" when $full-of-vowels ~~ /^ <[aeiou]>+ $/), "My God, it's full of vowels!", 'Statement ending when';
     is ('Boo!' when /phantom/ given $castle), 'Boo!', 'Nesting when inside given';
