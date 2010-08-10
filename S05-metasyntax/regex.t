@@ -39,14 +39,12 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     is($/, 'oo', 'matching should set match');
 }
 
-#?rakudo todo 'my $match = m{oo} does not match on $_'
 {
     $_ = 'foo';
     my $match = m{oo};
     is($match, 'oo', 'm{} always matches instead of making a Regex object');
 }
 
-#?rakudo todo 'my $match = m/oo/ parsefail'
 {
 
     $_ = 'foo';
