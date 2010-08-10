@@ -150,7 +150,7 @@ is (1,2,4...*)[10], 1024,
     'element from list generated using infinite series is accessible by index';
 
 # RT #72914
-is (4...^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
+is (4 ... ^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
     'geometric series started in one direction and continues in the other with exclusion';
 
 lives_ok { (1 ... 5).perl }, 'Can take .perl of series';
