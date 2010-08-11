@@ -23,26 +23,25 @@ ok(!( "abcDEFGHI" ~~ m/abc (:i def) ghi/ ), 'Mismatch');
 
 #L<S05/Modifiers/"The :i">
 
-regex mixedcase { Hello };
+my regex mixedcase { Hello };
 
 # without :i
 
-ok "Hello" ~~ m/<mixedcase>/, "match mixed case (subrule)";
+ok "Hello" ~~ m/<&mixedcase>/, "match mixed case (subrule)";
 ok 'Hello' ~~ m/Hello/,       "match mixed case (direct)";
 
-ok "hello" !~~ m/<mixedcase>/, "do not match lowercase (subrule)";
+ok "hello" !~~ m/<&mixedcase>/, "do not match lowercase (subrule)";
 ok "hello" !~~ m/Hello/,       "do not match lowercase (direct)";
 
-
-#?rakudo 7 skip 'adverbial modifiers'
-ok "hello" !~~ m:i/<mixedcase>/, "no match with :i if matched by subrule";
+ok "hello" !~~ m:i/<&mixedcase>/, "no match with :i if matched by subrule";
 ok "hello"  ~~ m:i/Hello/,       "match with :i (direct)";
 
-ok "hello" !~~ m:ignorecase/<mixedcase>/,  "no match with :ignorecase + subrule";
+ok "hello" !~~ m:ignorecase/<&mixedcase>/,  "no match with :ignorecase + subrule";
 ok "hello" !~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
+#?rakudo 2 todo 'ignorecase and SS/&szlig;'
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
