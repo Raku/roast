@@ -106,6 +106,15 @@ is_run( q{'aa' ~~ /(.)$1/},
     is ($/.orig).rindex('a', 2), 1, 'rindex() works on $/.orig';
 }
 
+# RT #72956
+{
+    $/ = Any;
+    lives_ok { $0 },
+        '$0 accessible when $/ is undefined';
+    isa_ok $0, Any,
+        '$0 is Any when $/ is undefined';
+}
+
 done_testing;
 
 # vim: ft=perl6
