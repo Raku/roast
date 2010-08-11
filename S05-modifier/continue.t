@@ -8,15 +8,15 @@ plan *;
 my regex simple { . a };
 my $string = "1a2a3a";
 
-#?rakudo skip "m:c NYI"
+#?rakudo skip ':C should default to $/.to'
 {
-    $string ~~ m:c/<simple>/;
+    $string ~~ m:c/<&simple>/;
     is(~$/, '1a', "match first 'a'");
-    $string ~~ m:c/<simple>/;
+    $string ~~ m:c/<&simple>/;
     is(~$/, '2a', "match second 'a'");
-    $string ~~ m:c/<simple>/;
+    $string ~~ m:c/<&simple>/;
     is(~$/, '3a', "match third 'a'");
-    $string ~~ m:c/<simple>/;
+    $string ~~ m:c/<&simple>/;
     is(~$/, '', "no more 'a's to match");
 }
 
