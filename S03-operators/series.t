@@ -208,6 +208,10 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
     is @a.grep(Num).elems, 7, "... all of which are Nums";
 }
 
+# RT #74606
+is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
+    '1, +* works for series';
+
 done_testing;
 
 # vim: ft=perl6
