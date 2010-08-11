@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 76;
+plan 77;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -326,6 +326,15 @@ is Foo::official(), 44,
 {
     sub rt63912 { return 1, 2; }
     lives_ok { rt63912() }, 'can call sub that returns two things (no parens)';
+}
+
+# RT #72836
+{
+    class RT72836 {
+        method new() { }
+    }
+    lives_ok {my $c = RT72836.new},
+        'can use value returned from empty routine';
 }
 
 # vim: ft=perl6
