@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  8;
+plan  11;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -63,3 +63,26 @@ is_run 'sub MAIN(:$x) { print $x }',
     },
     :args['--x', '23'],
     'option with spacey value';
+
+is_run 'sub MAIN(:xen(:$x)) { print $x }',
+    {
+        out => "23",
+    },
+    :args['--xen', '23'],
+    'long option with spacey value';
+
+#?rakudo todo 'named aliases'
+is_run 'sub MAIN(:xen(:$xin)) { print $x }',
+    {
+        out => "23",
+    },
+    :args['--xin', '23'],
+    'named aliases';
+
+#?rakudo todo 'short forms'
+is_run 'sub MAIN(:xen(:$x)) { print $x }',
+    {
+        out => "23",
+    },
+    :args['-x', '23'],
+    'short option with spacey value';
