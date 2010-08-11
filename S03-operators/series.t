@@ -28,6 +28,8 @@ is (1, { 1 / ((1 / $_) + 1) } ... 1/5).map({.perl}).join(', '), '1, 1/2, 1/3, 1/
 is (1, { -$_ } ... 1).join(', '), '1', 'simple alternating series with one item and closure on the LHS';
 is (1, { -$_ } ... 3).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating series with one item and closure on the LHS';
 
+is ({ 3+2; } ... *).[^5].join(', '), '5, 5, 5, 5, 5', 'series with one scalar containing Code on the LHS';
+
 is (1 ... 5, 6, 7).join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two further terms on the RHS';
 is (1 ... 5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple series with two extra terms on the RHS';
 is (1 ... 5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple series with two weird items on the RHS';
