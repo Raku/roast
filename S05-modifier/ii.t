@@ -4,7 +4,6 @@ use Test;
 plan 9;
 
 #?pugs emit skip_rest("unimpl");
-#?rakudo emit skip_rest("unimpl");
 #?kp6 emit skip_rest("unimpl");
 
 #L<S05/Modifiers/"The :ii">
@@ -47,6 +46,9 @@ my @smart_tests = (
 for @smart_tests -> $t {
     my $test_str = $t[0];
     $test_str ~~ s:ii:sigspace/.*/$t[1]/;
+    # some of these tests actuall pass in Rakudo, so skipping them to avoid
+    # too many passing TODOs
+    #?rakudo skip 's:ii:sigspace'
     is $test_str, $t[2], ":ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
 }
 
