@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan *;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -32,9 +32,13 @@ is ca($/.chunks), 'wc:a|~: |0:b|~: |wc:c',
                   'named and positional captures mix correctly (chunks)';
 
 ok 'a b c d' ~~ /[(\w) \s*]+/, 'regex matches';
-is ca($/.caps), '0:a|1:b|2:c|3:d', '[(\w)* \s*]+ flattens (...)* for .caps';
-is ca($/.chunks), '0:a|~: |1:b|~: |2:c|~: |3:d',
+is ca($/.caps), '0:a|0:b|0:c|0:d', '[(\w)* \s*]+ flattens (...)* for .caps';
+is ca($/.chunks), '0:a|~: |0:b|~: |0:c|~: |0:d',
                 '[(\w)* \s*]+ flattens (...)* for .chunks';
+
+ok 'a b c' ~~ /[(\S) \s] ** 2 (\S)/, 'regex matches';
+is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple ()';
+is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
 #?rakudo 2 skip 'RT 75484 (fails randomly) (noauto)'
@@ -48,5 +52,7 @@ is ca($/.chunks), '0:a|~: |wc:b|~: |1:c|~: |wc:d',
 ok '  abcdef' ~~ m/.*?(a(.).)/, 'Regex matches';
 is ca($0.caps),     '0:b',      '.caps on submatches';
 is ca($0.chunks),   '~:a|0:b|~:c',  '.chunks on submatches';
+
+done_testing;
 
 # vim: ft=perl6

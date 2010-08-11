@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan *;
 
 #?pugs emit skip_rest("unimpl");
 #?kp6 emit skip_rest("unimpl");
@@ -51,5 +51,7 @@ for @smart_tests -> $t {
     #?rakudo skip 's:ii:sigspace'
     is $test_str, $t[2], ":ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
 }
+
+done_testing;
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
