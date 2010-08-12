@@ -111,8 +111,21 @@ is_run( q{'aa' ~~ /(.)$1/},
     $/ = Any;
     lives_ok { $0 },
         '$0 accessible when $/ is undefined';
-    isa_ok $0, Any,
+    ok $0 === Any,
         '$0 is Any when $/ is undefined';
+}
+
+# RT #77160
+{
+    ok 'abc' ~~ /(.)+/, 'regex sanity';
+    my $x = 0;
+    $x++ for $/.list;
+    is $x, 1, '$/.list does not flatten quantified subcaptures';
+
+    ok 'abc' ~~ /(.)**2 (.)/, 'regex sanity';
+    $x = 0;
+    $x++ for $/.list;
+    is $x, 2, '$/.list does not flattens subcaptures';
 }
 
 done_testing;
