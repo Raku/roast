@@ -113,6 +113,7 @@ is_run( q{'aa' ~~ /(.)$1/},
         '$0 accessible when $/ is undefined';
     ok $0 === Any,
         '$0 is Any when $/ is undefined';
+    nok $0.defined, '$0 is undefined';
 }
 
 # RT #77160
