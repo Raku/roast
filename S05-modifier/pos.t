@@ -15,7 +15,6 @@ plan *;
 # L<S05/Modifiers/causes the pattern to try to match only at>
 
 for ("abcdef") {
-    #?rakudo 4 skip "m:pos// NYI"
     ok(m:pos/abc/, "Matched 1: '$/'" );
     is($/.to, 3, 'Interim position correct');
     ok(m:pos/ghi|def/, "Matched 2: '$/'" );
@@ -29,7 +28,6 @@ for ("abcdef") {
     is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
 }
 
-#?rakudo skip "m:p/// NYI"
 {
     my $str = "abcabcabc";
     ok($str ~~ m:p/abc/, 'Continued match');
@@ -44,8 +42,11 @@ for ("abcdef") {
 
     $x = $str ~~ m:i:p/abc/;
     ok($/.to == 9, 'Insensitive recontinued match pos');
+}
 
-    $str = "abcabcabc";
+#?rakudo skip 'm:g'
+{
+    my $str = "abcabcabc";
     my @x = $str ~~ m:i:g:p/abc/;
     is("@x", "abc abc abc", 'Insensitive repeated continued match');
     ok($/.to == 9, 'Insensitive repeated continued match pos');

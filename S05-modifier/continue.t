@@ -8,7 +8,6 @@ plan *;
 my regex simple { . a };
 my $string = "1a2a3a";
 
-#?rakudo skip ':C should default to $/.to'
 {
     $string ~~ m:c/<&simple>/;
     is(~$/, '1a', "match first 'a'");
