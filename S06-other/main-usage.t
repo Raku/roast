@@ -16,7 +16,7 @@ is_run 'sub MAIN($x) { }; sub USAGE() { print "usage() called" }',
 is_run 'sub MAIN() { print "main() called" }; sub USAGE() { print "usage() called" }',
     {
         out    => 'main() called',
-        status => 0, 
+        status => 0,
     },
     'a user-defined USAGE sub not is called if MAIN-dispatch succeeds';
 
@@ -72,7 +72,7 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     'long option with spacey value';
 
 #?rakudo todo 'named aliases'
-is_run 'sub MAIN(:xen(:$xin)) { print $x }',
+is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
     },
