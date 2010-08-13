@@ -46,15 +46,15 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 # more interesting variations of :nth(...)
 {
-    my @match = $data.match(/fo+/, :nth(2, 3));
+    my @match = $data.match(/fo+/, :nth(2, 3)).list;
     is +@match, 2, 'nth(list) is ok';
     is @match, <foo fooo>, 'nth(list) matched correctly';
 
-    @match = $data.match(/fo+/, :nth(2..4));
+    @match = $data.match(/fo+/, :nth(2..4)).list;
     is +@match, 3, 'nth(Range) is ok';
     is @match, <foo fooo foooo>, 'nth(Range) matched correctly';
 
-    @match = $data.match(/fo+/, :nth(2, 4 ... *));
+    @match = $data.match(/fo+/, :nth(2, 4 ... *)).list;
     is +@match, 3, 'nth(infinite series) is ok';
     is @match, <foo foooo foooooo>, 'nth(infinite series) matched correctly';
 }

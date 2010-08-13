@@ -61,7 +61,7 @@ my @expected = (
 
 {
     # $str eq abrAcadAbbra
-    my @match = $str.match(/a .* a/, :ov);
+    my @match = $str.match(/a .* a/, :ov).list;
     is +@match, 2, "Two matches found";
     is ~@match[0], "abrAcadAbbra", "First is abrAcadAbbra";
     is ~@match[1], "adAbbra", "Second is adAbbra";
@@ -69,14 +69,14 @@ my @expected = (
 
 {
     # $str eq abrAcadAbbra
-    my @match = $str.match(/a .* a/, :overlap);
+    my @match = $str.match(/a .* a/, :overlap).list;
     is +@match, 2, "Two matches found";
     is ~@match[0], "abrAcadAbbra", "First is abrAcadAbbra";
     is ~@match[1], "adAbbra", "Second is adAbbra";
 }
 
 {
-    my @match = "aababcabcd".match(/a .*/, :ov);
+    my @match = "aababcabcd".match(/a .*/, :ov).list;
     is +@match, 4, "Four matches found";
     is ~@match[0], "aababcabcd", "First is aababcabcd";
     is ~@match[1], "ababcabcd", "Second is ababcabcd";
