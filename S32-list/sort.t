@@ -213,7 +213,7 @@ plan 35;
 # RT #68112
 #?rakudo skip "determine behavior of 0-arity methods passed to sort"
 {
-    sub foo () { 0 }
+    sub foo () { 0 }   #OK not used
     lives_ok { (1..10).sort(&foo) },
         'sort accepts 0-arity method';
     lives_ok { (1..10).sort(&rand) },
@@ -229,7 +229,7 @@ plan 35;
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 
-    ok ([<]@sorted.map({.WHERE})),
+    ok ([<] @sorted.map({.WHERE})),
         'checking sort order by class memory address';
 
     class RT71258_2 {
