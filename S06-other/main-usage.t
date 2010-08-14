@@ -71,7 +71,6 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     :args['--xen', '23'],
     'long option with spacey value';
 
-#?rakudo todo 'named aliases'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
@@ -79,7 +78,6 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     :args['--xin', '23'],
     'named aliases';
 
-#?rakudo todo 'short forms'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
