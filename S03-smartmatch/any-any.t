@@ -13,6 +13,19 @@ plan *;
     ok  ($a !~~ $b),    'Any !~~ Any (+)';
 }
 
+
+{
+    $_ = 42;
+    my $x;
+    'abc' ~~ ($x = $_);
+    is $x, 'abc', '~~ sets $_ to the LHS';
+    is $_, 42, 'original $_ restored';
+    'defg' !~~ ($x = $_);
+    is $x, 'defg', '!~~ sets $_ to the LHS';
+    is $_, 42, 'original $_ restored';
+    'defg' !~~ ($x = $_);
+}
+
 done_testing;
 
 # vim: ft=perl6
