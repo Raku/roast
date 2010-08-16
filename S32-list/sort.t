@@ -20,7 +20,6 @@ plan 35;
     is(@s, @e, 'array of numbers was sorted (w/out parens)');
 }
 
-#?rakudo todo 'sorting NaN'
 {
     my @a = (1.1,2,NaN,-3.05,0.1,Inf,42,-1e-07,-Inf).sort;
     my @e = (NaN,-Inf,-3.05,-1e-07,0.1,1.1,2,42,Inf);

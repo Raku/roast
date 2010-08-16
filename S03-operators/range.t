@@ -133,10 +133,8 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
     is ~(@one ^.. 3)    , "2 3"  , "lower exclusive limit is in scalar context";
     is ~(3 ^.. @one)    , ""     , "lower exclusive limit is in scalar context";
-    #?rakudo todo 'RT 58018'
     is ~(1 .. @three)   , "1 2 3", "upper inclusive limit is in scalar context";
     is ~(4 .. @three)   , ""     , "upper inclusive limit is in scalar context";
-    #?rakudo todo 'RT 58018'
     is ~(1 ..^ @three)  , "1 2"  , "upper exclusive limit is in scalar context";
     is ~(4 ..^ @three)  , ""     , "upper exclusive limit is in scalar context";
     #?rakudo todo 'RT 58018'

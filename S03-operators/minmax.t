@@ -27,10 +27,8 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 {
-    #?rakudo todo "String comparisons with Inf NYI"
     is "foo" min +Inf, "foo";
     is "foo" min -Inf, -Inf;
-    #?rakudo todo "String comparisons with Inf NYI"
     is "foo" max +Inf, +Inf;
     is "foo" max -Inf, "foo";
 }
