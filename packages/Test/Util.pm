@@ -4,9 +4,6 @@ use Test;
 
 # Tests for this testing code may be in the pugs repo under t/03-test-util/
 
-# This seems necessary, and yet it crashes Rakudo.
-#use Test;
-
 # No input, no test name
 multi sub is_run( Str $code, %expected, :@args ) is export(:DEFAULT) {
     return is_run( $code, '', %expected, '', :@args );
