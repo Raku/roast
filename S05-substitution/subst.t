@@ -10,16 +10,12 @@ my $str = 'hello';
 
 is $str.subst(/h/,'f'),       'fello', 'We can use subst';
 is $str,                      'hello', '.. withouth side effect';
-#?rakudo skip "adverbs on rx// NYI"
-is $str.subst(rx:g:i/L/,'p'), 'heppo', '.. with multiple adverbs';
 
 is $str.subst('h','f'),       'fello', '.. or using Str as pattern';
 is $str.subst('.','f'),       'hello', '.. with literal string matching';
 
 my $i=0;
 is $str.subst(/l/,{$i++}),    'he0lo', 'We can have a closure as replacement';
-#?rakudo skip "adverbs on rx// NYI"
-is $str.subst(rx:g/l/,{$i++}),'he12o', '.. which act like closure and can be called more then once';
 is $str.=subst(/l/,'i'),      'heilo', '.. and with the .= modifier';
 is $str,                      'heilo', '.. it changes the receiver';
 
