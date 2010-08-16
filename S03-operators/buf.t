@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 7;
+
 ok (~^"foo".encode eqv Buf.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
 ok ("foo".encode ~& "bar".encode eqv "bab".encode), 'infix:<~&>';

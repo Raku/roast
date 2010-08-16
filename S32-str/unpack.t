@@ -38,3 +38,5 @@ plan 12;
     is $lilend_short, 0x1234,     'v works';
     is $lilend_long,  0x12345678, 'V works';
 }
+
+# vim: ft=perl6

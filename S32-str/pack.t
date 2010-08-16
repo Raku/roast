@@ -30,3 +30,5 @@ plan 3;
                0x34, 0x12, 0x78, 0x56, 0x34, 0x12],
               "C S L n N v V work";
 }
+
+# vim: ft=perl6
