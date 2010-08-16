@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 35;
+plan 34;
 
 # L<S32::Basics/Mu/=item defined>
 
@@ -21,7 +21,6 @@ ok(defined(1),   'numeric literal 1 is defined');
 ok(defined(""),  'empty string is defined');
 ok(defined("a"), '"a" is defined');
 ok(defined(0),   'numeric literal 0 is defined');
-ok(defined(Nil), 'Nil is defined');
 ok(defined(()),  'empty Parcel is defined');
 ok(defined([]),  'empty Array is defined');
 ok(defined({}),  'empty Hash is defined');
@@ -67,7 +66,7 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
 # try the invocant syntax
 
 {
-    my $foo;
+    my Mu $foo;
     ok(!$foo.defined, 'unassigned variable $foo is undefined');
 
     $foo = 1;

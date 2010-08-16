@@ -19,6 +19,11 @@ ok empty_branch_false() ~~ Nil, 'else {} is Nil';
 ok bare_return()        ~~ Nil, 'bare return returns Nil';
 ok rt74448()            ~~ Nil, 'eval of empty string is Nil';
 
+nok Nil.defined, 'Nil is not defined';
+ok  ().defined,  '() is defined';
+nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined';
+ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
+
 # RT #63894
 {
     my $calls;
