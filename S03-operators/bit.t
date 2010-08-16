@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 22;
+plan 26;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -55,6 +55,14 @@ plan 22;
   is(+^ $neg7, 6, 'cast -7 to 6 with +^' );
   ok(+^ $neg7 == 6, 'cast -7 with equality testing' );
 
+}
+
+# RT #77232 - precedence of +< and +>
+{
+  is( 48 + 0 +< 8, 48 + (0 +< 8), 'RT 77232 precedence of +<' );
+  is( 48 + 0 +< 8, 48 + (0 +< 8), 'RT 77232 precedence of +>' );
+  is( 2 ** 3 +< 3, (2 ** 3) +< 3, 'RT 77232 precedence of +<' );
+  is( 2 ** 5 +> 2, (2 ** 5) +> 2, 'RT 77232 precedence of +>' );
 }
 
 
