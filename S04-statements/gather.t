@@ -12,14 +12,13 @@ plan 17;
     my @a;
     my $i;
     
-    @a = gather {
+    @a := gather {
         $i = 1;
         for (1 .. 5) -> $j {
             take $j;
         }
     };
 
-    #?rakudo todo 'lazy gather/take'
     ok(!$i, "not yet gathered");
     is(+@a, 5, "5 elements gathered");
     ok($i, "gather code executed");
@@ -101,10 +100,9 @@ plan 17;
 }
 
 # lazy gather
-#?rakudo todo 'lazy gather/take'
 {
     my $count = 0;
-    my @list = gather {
+    my @list := gather {
         for 1 .. 10 -> $a {
             take $a;
             $count++
