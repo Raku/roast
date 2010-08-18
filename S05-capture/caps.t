@@ -36,7 +36,7 @@ is ca($/.caps), '0:a|0:b|0:c|0:d', '[(\w)* \s*]+ flattens (...)* for .caps';
 is ca($/.chunks), '0:a|~: |0:b|~: |0:c|~: |0:d',
                 '[(\w)* \s*]+ flattens (...)* for .chunks';
 
-ok 'a b c' ~~ /[(\S) \s] ** 2 (\S)/, 'regex matches';
+ok 'a b c' ~~ /[ (\S) \s ] ** 2 (\S)/, 'regex matches';
 is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple ()';
 is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
