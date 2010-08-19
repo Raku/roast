@@ -106,6 +106,13 @@ is_run( q{'aa' ~~ /(.)$1/},
     is ($/.orig).rindex('a', 2), 1, 'rindex() works on $/.orig';
 }
 
+# RT #71362
+{
+    $/ := 'foobar';
+    is $0, 'foobar', '$0 works like $/[0], even for non-Match objects';
+    nok $1.defined, '$1 is not defined';
+}
+
 # RT #72956
 {
     $/ = Any;
