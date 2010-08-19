@@ -716,6 +716,11 @@ my @e;
     eval_lives_ok '10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
 } 
 
+# RT #74530
+{
+    is ~(-<<(1..3)), '-1 -2 -3', 'ranges and hyper ops mix';;
+}
+
 done_testing;
 
 # vim: ft=perl6
