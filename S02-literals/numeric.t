@@ -49,6 +49,10 @@ is_approx 3.14159265358979323846264338327950288419716939937510e0,
         'parsing 0.000... with 1024 decimal places lives';
 }
 
+# RT #70600
+#?todo 'RT 70600'
+ok 0e999999999999999 == 0, '0e999999999999 equals zero';
+
 done_testing;
 
 # vim: ft=perl6 sw=4 ts=4 expandtab
