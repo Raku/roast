@@ -31,9 +31,8 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
 
     $calls = 0;
     ok return_nil() ~~ Nil, 'return_nil() ~~ Nil';
-    is return_nil().WHAT, 'Parcel()', 'return_nil().WHAT says Parcel';
-    is return_nil.WHAT, 'Parcel()', 'return_nil.WHAT says Nil';
-    is $calls, 3, 'return_nil() called thrice';
+    is return_nil().WHAT, 'Nil()', 'return_nil().WHAT says Nil';
+    is $calls, 2, 'return_nil() called twice';
 
     my $n = return_nil();
     ok $n.notdef, 'variable holding nil is not defined';

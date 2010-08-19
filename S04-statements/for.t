@@ -466,7 +466,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 {
     sub rt71268 { for ^1 {} }
     lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
-    ok rt71268() ~~ Nil, 'result of "for ^1 {}" is Nil (what else?)';
+    ok rt71268() ~~ (), 'result of "for ^1 {}" is ()';
 }
 
 # RT 62478

@@ -6,7 +6,7 @@ plan *;
 
 {
     # Nil is an empty container. As a container, it is defined.
-    ok Nil.defined, 'Nil is defined';
+    ok !Nil.defined, 'Nil is undefined';
     ok ().defined, '() is defined';
     my @a;
     @a.push: Nil;
@@ -24,9 +24,9 @@ plan *;
     @a.push: 2, sink { $i = 2 };
     is @a.elems, 1, 'sink block prefix returns Nil (list context)';
     is $i, 2, 'the block was executed';
-    ok defined(sink $i = 5 ), 'sink in scalar context (statement)';
+    ok !defined(sink $i = 5 ), 'sink in scalar context (statement)';
     is $i, 5, '... statement executed';
-    ok defined(sink {$i = 8} ), 'sink in scalar context (block)';
+    ok !defined(sink {$i = 8} ), 'sink in scalar context (block)';
     is $i, 8, '... block executed';
 }
 
