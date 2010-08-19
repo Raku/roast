@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -22,6 +22,12 @@ use MONKEY_TYPING;
 
     ok(!eval('augment class NonExistent { }'), 'augment on non-existent class dies');
 }
+
+# RT #66694
+eval_dies_ok q[
+    class MethodClash { method foo() { 3 } };
+    augment class MethodClash { method foo() { 3 } };
+], 'cannot override a method by monkey-typing';
 
 #?rakudo skip 'supersede'
 {
