@@ -26,9 +26,12 @@ plan *;
 
     # Test the only difference between @() and list()
     is(list(), (), 'list() should return an empty list');
-    'foo' ~~ /oo/; # run a regex so we have $/ below
+    'foo' ~~ /(o)o/; # run a regex so we have $/ below
+    #?rakudo skip '@() not implemented'
     is(@(),  @($/), '@() should be the same as @($/)');
 }
+
+=begin END
 
 # L<S03/List prefix precedence/The item contextualizer>
 # L<S02/Lists/To force a non-flattening item context>

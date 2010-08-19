@@ -26,6 +26,7 @@ plan *;
     ok "{3}" ~~ Str, '"{3}" results in a Str';
 
     # RT #76234
+    #?rakudo todo "RT 76234, Nil stringy interpolation"
     is "{}", '', 'Interpolating an empty block is cool';
 }
 
