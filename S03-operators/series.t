@@ -212,6 +212,9 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
 is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
     '1, +* works for series';
 
+# RT #75768
+is ~(1...10)[2...4], '3 4 5', 'can index series with series';
+
 done_testing;
 
 # vim: ft=perl6
