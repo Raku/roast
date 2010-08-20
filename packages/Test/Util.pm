@@ -20,7 +20,7 @@ multi sub is_run( Str $code, %expected, Str $name, :@args ) is export(:DEFAULT) 
 }
 
 multi sub is_run( Str $code, Str $input, %expected, Str $name, :@args ) is export(:DEFAULT) {
-    my %got = get_out( $code, $input // '', :@args );
+    my %got = get_out( $code, $input, :@args );
 
     # The test may have executed, but if so, the results couldn't be collected.
     if %got<test_died> {
@@ -85,12 +85,16 @@ sub get_out( Str $code, Str $input?, :@args) is export {
     my %out;
 
     try {
-        $clobber( "$fnbase.in", $input // '' );
-        $clobber( "$fnbase.code", $code );
+        $clobber( "$fnbase.in", $input );
+        $clobber( "$fnbase.code", $code ) if defined $code;
 
         my $perl6 = $*EXECUTABLE_NAME;
 
-        %out<status> = run( "$perl6 $fnbase.code @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err" );
+        my $cmd = 'perl6 ';
+        $cmd ~= $fnbase ~ '.code'  if $code.defined;
+        $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
+#        diag("Command line: $cmd");
+        %out<status> = run( $cmd );
         %out<out> = slurp "$fnbase.out";
         %out<err> = slurp "$fnbase.err";
 
