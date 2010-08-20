@@ -66,7 +66,6 @@ plan *;
     is $/[0][1], 'b', 'match element [0][1] from /(.)+/';
 
     my @match = @( 'ab' ~~ /(.)+/ );
-    #?rakudo 2 skip 'match coerced to array is flattened (RT #64952)'
     is @match[0][0], 'a', 'match element [0][0] from /(.)+/ coerced';
     is @match[0][1], 'b', 'match element [0][1] from /(.)+/ coerced';
 }
