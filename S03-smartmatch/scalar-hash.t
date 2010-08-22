@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 3;
 
 #L<S03/"Smart matching"/Scalar Hash hash entry existence>
 {

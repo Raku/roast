@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan *;
+plan 19;
 
 # some tests without regard to ending 
 

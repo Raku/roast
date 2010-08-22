@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan *;
+plan 37;
 
 {
     my $x = 1;

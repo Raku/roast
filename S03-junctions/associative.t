@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 10;
 
 # Checking Junctions' Associativeness
 # TODO: need smartlink

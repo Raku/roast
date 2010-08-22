@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 8;
 
 #L<S03/Smart matching/Any Any scalars are identical>
 {

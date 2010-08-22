@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 35;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 

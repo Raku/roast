@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 12;
 
 #L<S03/Smart matching/Any Bool simple truth>
 #?rakudo skip 'RT 77080'

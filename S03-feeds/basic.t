@@ -13,7 +13,7 @@ Tests for the feed operators
     
 =end pod
 
-plan *;
+plan 19;
 
 #?pugs skip '<== dies with cast error'
 {

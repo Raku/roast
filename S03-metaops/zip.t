@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan *;
+plan 13;
 
 ok eval('<a b> Z <c d>'), 'cross non-meta operator parses';
 

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 25;
 
 # N.B.:  relational ops are in relational.t
 

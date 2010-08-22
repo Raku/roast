@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan *;
+plan 74;
 
 # === on values
 {

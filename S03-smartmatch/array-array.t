@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 36;
 
 #L<S03/Smart matching/arrays are comparable>
 {

@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 4;
 
 sub eval_elsewhere($code){ eval($code) }
 

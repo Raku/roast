@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 5;
 
 #L<S03/Smart matching/Any Str string equality>
 {

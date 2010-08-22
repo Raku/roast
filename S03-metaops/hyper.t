@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan *;
+plan 265;
 
 # L<S03/Hyper operators>
  # binary infix

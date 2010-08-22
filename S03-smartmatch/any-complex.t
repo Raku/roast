@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 12;
 
 {
     ok (1 + 2i)    ~~ (1 + 2i),  'Complex  ~~ Complex (+)';

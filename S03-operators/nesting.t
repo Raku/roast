@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 26;
 
 # L<S03/Meta operators/Nesting of metaoperators/Any infix function may be referred to as a noun either by the normal long form or a short form>
 

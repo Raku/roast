@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 6;
 
 #L<S03/"Smart matching"/Any Callable:($) item sub truth>
 {

@@ -4,7 +4,7 @@ use Test;
 
 #Ternary operator ?? !!
 
-plan *;
+plan 17;
 #L<S03/Changes to Perl 5 operators/"The ? : conditional operator becomes ?? !!">
 
 my $str1 = "aaa";
