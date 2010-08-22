@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 57;
 
 # L<S09/Typed arrays/>
 

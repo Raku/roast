@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan *;
+plan 90;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";

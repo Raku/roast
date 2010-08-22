@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 33;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Multi dispatch">
