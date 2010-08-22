@@ -10,7 +10,7 @@ It probably needs a few syntax updates to remove p5isms
 
 =end pod
 
-plan *;
+plan 21;
 
 #?pugs emit force_todo(2,3,5,6,10);
 

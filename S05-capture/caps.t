@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 24;
 
 # L<S05/Match objects/"$/.caps">
 

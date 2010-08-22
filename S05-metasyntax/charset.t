@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan *;
+plan 27;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";

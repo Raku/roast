@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 48;
 
 # L<S06/Signature Introspection>
 

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 13;
 
 #L<S05/Modifiers/"The :c">
 

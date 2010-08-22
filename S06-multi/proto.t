@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 16;
 
 # Test for proto definitions
 class A { }

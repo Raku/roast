@@ -4,7 +4,7 @@ use Test;
 
 # L<S06/Anonymous hashes vs blocks>
 
-plan *;
+plan 15;
 
 my $hash = {
    '1' => { '2' => 3, '4' => 5 },

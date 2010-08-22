@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/continue.t.
 
 =end origin
 
-plan *;
+plan 40;
 
 #?pugs emit force_todo(1,2,3,4,6);
 

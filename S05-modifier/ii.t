@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 17;
 
 #?pugs emit skip_rest("unimpl");
 #?kp6 emit skip_rest("unimpl");

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 6;
 
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.

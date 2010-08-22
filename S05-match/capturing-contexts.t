@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan *;
+plan 36;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >

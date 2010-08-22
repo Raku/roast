@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 98;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">

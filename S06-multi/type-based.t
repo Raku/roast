@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 51;
 
 # type based dispatching
 #

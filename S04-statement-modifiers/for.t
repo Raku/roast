@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 18;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 

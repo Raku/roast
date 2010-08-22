@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 17;
 
 # L<S06/Perl5ish subroutine declarations/You can declare a sub without
 # parameter list>

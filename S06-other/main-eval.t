@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 3;
 
 # L<S06/Declaring a C<MAIN> subroutine/"the compilation unit was directly
 # invoked rather than by being required by another compilation unit">

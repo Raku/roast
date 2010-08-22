@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 11;
 
 # tests .parse and .parsefile methods on a grammar
 

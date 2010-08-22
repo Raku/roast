@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 37;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>

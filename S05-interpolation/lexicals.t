@@ -1,5 +1,5 @@
 use Test;
-plan *;
+plan 10;
 
 my regex abc { abc }
 

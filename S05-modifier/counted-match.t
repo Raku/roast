@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan *;
+plan 21;
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
 

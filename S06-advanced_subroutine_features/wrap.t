@@ -11,7 +11,7 @@ use Test;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan *;
+plan 64;
 
 my @log;
 

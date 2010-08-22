@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 17;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 

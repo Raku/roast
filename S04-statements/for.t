@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan *;
+plan 65;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
