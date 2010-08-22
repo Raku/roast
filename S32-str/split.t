@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan *;
+plan 36;
 
 # split on an empty string
 
