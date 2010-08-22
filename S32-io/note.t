@@ -2,7 +2,7 @@ use v6;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan *;
+plan 6;
 
 # L<S32::IO/IO::Writeable::Encoded/=item multi note>
 

@@ -4,7 +4,7 @@ use Test;
 # calendar.t: tests some calendar-related methods common to
 # Date.t and DateTime.t
 
-plan *;
+plan 129;
 
 sub date($year, $month, $day) {
     Date.new(:$year, :$month, :$day)

@@ -23,7 +23,7 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan *;
+plan 88;
 
 our $GLOBAL;
 

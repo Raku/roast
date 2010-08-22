@@ -9,7 +9,7 @@ Shift tests
 
 =end description
 
-plan *;
+plan 32;
 
 {
 

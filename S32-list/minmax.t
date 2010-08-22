@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 53;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>

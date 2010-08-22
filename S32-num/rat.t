@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 799;
 
 # Basic test functions specific to rational numbers.
 

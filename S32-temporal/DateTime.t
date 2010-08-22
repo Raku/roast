@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 149;
 
 my $orwell = DateTime.new(year => 1984);
 

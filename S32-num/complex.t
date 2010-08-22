@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 477;
 
 # Basic tests functions specific to complex numbers.
 

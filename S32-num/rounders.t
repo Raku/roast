@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 148;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">

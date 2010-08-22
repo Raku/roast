@@ -9,7 +9,7 @@ Pop tests
 
 =end description
 
-plan *;
+plan 33;
 
 { # pop() elements into variables
     my @pop = (-1, 1, 2, 3, 4);

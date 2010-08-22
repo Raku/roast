@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan *;
+plan 16;
 
 # L<S32::Containers/List/=item reduce>
 

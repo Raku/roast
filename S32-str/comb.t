@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 39;
 
 # L<S32::Str/Str/=item comb>
 

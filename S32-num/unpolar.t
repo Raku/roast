@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 208;
 
 # L<S32::Numeric/Numeric/=item cis>
 my $pi = 312689/99532;

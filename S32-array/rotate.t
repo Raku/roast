@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 28;
 
 # L<S32::Containers/Array/rotate>
 

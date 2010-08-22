@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan *;
+plan 11;
 
 # L<S02/Names and Variables/:delete>
 
