@@ -8,7 +8,7 @@ This file tests the circumfix:«< >» quoting constructs
 
 =end kwid
 
-plan *;
+plan 23;
 
 # L<S02/"Literals">
 # L<S03/"Chained comparisons">

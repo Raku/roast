@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 22;
 
 isa_ok 1, Int, '1 produces a Int';
 ok 1 ~~ Numeric, '1 is Numeric';

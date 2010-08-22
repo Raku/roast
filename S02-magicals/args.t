@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 4;
 
 isa_ok @*ARGS, Array, '@*ARGS is an Array';
 is_deeply @*ARGS, [], 'by default @*ARGS is empty array';

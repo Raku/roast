@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 23;
 
 # L<S02/Names and Variables/The empty>
 

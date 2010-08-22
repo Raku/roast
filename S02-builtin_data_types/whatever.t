@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 55;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">

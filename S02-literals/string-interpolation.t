@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 10;
 
 # L<S02/Literals/"A bare closure also interpolates in double-quotish context.">
 

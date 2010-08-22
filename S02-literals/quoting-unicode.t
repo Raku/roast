@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 72;
 
 #L<S02/Literals>
 # TODO:

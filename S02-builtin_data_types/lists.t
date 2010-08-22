@@ -9,7 +9,7 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan *;
+plan 27;
 
 # Indexing lists
 {

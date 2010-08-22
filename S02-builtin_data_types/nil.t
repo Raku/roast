@@ -3,7 +3,7 @@ use Test;
 
 # note that Nil is not actually a type, but just an empty parcel
 
-plan *;
+plan 15;
 
 sub empty_sub {}
 sub empty_do { do {} }

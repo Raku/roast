@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan *;
+plan 74;
 
 # basic lvalue assignment
 # L<S09/Hashes>
