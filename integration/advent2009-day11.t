@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 6;
 
 class Dog {
     has $.name;

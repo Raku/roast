@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 18;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.

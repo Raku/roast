@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 62;
 
 my $height = @*ARGS[0] // 31;
 my $width = $height;

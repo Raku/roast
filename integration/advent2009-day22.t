@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 4;
 
 multi sub postfix:<!>(Int $n) {
     [*] 1..$n;

@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 21;
 
 sub foo (Int $i, @stuff, $blah = 5) { ... }   #OK not used
 is &foo.name, 'foo', 'Introspecting subroutine name';

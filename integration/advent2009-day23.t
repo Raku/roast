@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 4;
 
 my @gather-result = gather { take $_ for 5..7 };
 

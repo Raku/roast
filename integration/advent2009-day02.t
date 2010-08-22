@@ -2,7 +2,7 @@
 
 use v6;
 use Test;
-plan *;
+plan 10;
 
 is(42.fmt('%+d'),           '+42'     );
 is(42.fmt('%4d'),           '  42'    );

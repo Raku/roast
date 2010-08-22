@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 13;
 
 my $a = '';
 for 1, 2, 3, 4 { $a ~= $_ }

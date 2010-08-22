@@ -2,7 +2,7 @@
 
 use v6;
 use Test;
-plan *;
+plan 6;
 
 role BatteryPower {
     has $.battery-type;
