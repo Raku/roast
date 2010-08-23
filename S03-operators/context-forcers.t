@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 95;
+plan 100;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -196,6 +196,15 @@ sub eval_elsewhere($code){ eval($code) }
     is (@total[1], 100, "total[1] is 100");
     is (@total[6], 601, "total[1] is 100");
     is (@total[8], 888, "total[1] is 100");
+}
+
+{
+    ok %() ~~ Hash, '%() returns a Hash';
+    is +%(), 0, '%() is an empty Hash';
+    my $x = %(a => 3, b => 5);
+    is $x<a>, 3, 'hash constructor worked (1)';
+    is $x<b>, 5, 'hash constructor worked (1)';
+    is $x.keys.join(', '), 'a, b', 'hash constructor produced the right keys';
 }
 
 # the "upto" operator
