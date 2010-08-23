@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 114;
+plan 121;
 
 # single-term series
 
@@ -162,6 +162,24 @@ is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
 
 is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series in parallel";
 
+{
+    is (1, 2, 4 ... 3), (1, 2), "series that aborts during LHS";
+    is (1, 2, 4 ... 2), (1, 2), "series that aborts during LHS";
+    #?rakudo skip "Infinite loop atm"
+    is (1, 2, 4 ... 1.5), (1), "series that aborts during LHS";
+    is (1, 2, 4 ... 1), (1), "series that aborts during LHS";
+
+    is ~(1, -2, 4 ... 1), '1', 'geometric series with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 2), '1 -2', 'geometric series with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 3), '1 -2', 'geometric series with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16',
+        'geometric series with sign-change and non-matching end point';
+    
+    is (1, 2, 4, 5, 6 ... 2), (1, 2), "series that aborts during LHS, before actual calculations kick in";
+    #?rakudo skip "Infinite loop atm"
+    is (1, 2, 4, 5, 6 ... 3), (1, 2), "series that aborts during LHS, before actual calculations kick in";
+}
+
 # tests for the types returned
 
 {
@@ -186,14 +204,6 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
     my @a = 1, 2, 4 ... 100;
     is @a.elems, 7, "1, 2, 4 ... 100 generates a series with seven elements...";
     is @a.grep(Int).elems, @a.elems, "... all of which are Ints";
-}
-
-#?rakudo skip 'loops'
-{
-    is ~(1, 2,  4 ... 2), '1 2', 'geometric series with smaller RHS';
-    is ~(1, -2, 4 ... 2), '1 -2', 'geometric series with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 25).[^10], '1 -2 4 -8 16',
-        'geometric series with sign-change and non-matching end point';
 }
 
 {
