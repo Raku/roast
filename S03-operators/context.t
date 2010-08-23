@@ -31,7 +31,6 @@ plan *;
     is(@(),  @($/), '@() should be the same as @($/)');
 }
 
-=begin END
 
 # L<S03/List prefix precedence/The item contextualizer>
 # L<S02/Lists/To force a non-flattening item context>
