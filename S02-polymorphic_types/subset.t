@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 33;
+plan 37;
 
 =begin description
 
@@ -38,11 +38,11 @@ subset Digit of Int where ^10;
     is  $x,     9,  "other end of range";
 }
 
-eval_dies_ok 'my Digit $x = 10',
+dies_ok { my Digit $x = 10 },
              'type constraints prevents assignment 1';
-eval_dies_ok 'my Digit $x = -1',
-             'type constraints prevents assignment 2';
-eval_dies_ok 'my Digit $x = 3.1',
+dies_ok { my Digit $x = -1 },
+        'type constraints prevents assignment 2';
+dies_ok { my Digit $x = 3.1 },
              'original type prevents assignment';
 
 # RT #67818
@@ -148,4 +148,20 @@ eval_dies_ok 'my Digit $x = 3.1',
         'subset A of Mu + type check and assignment works';
 }
 
+# RT #77356
+#?rakudo skip 'RT 77356'
+{
+    sub limit() { 0 }
+    subset aboveLexLimit of Int where { $_ > limit() };
+    ok 1 ~~ aboveLexLimit, 'can use subset that depends on lexical sub (1)';
+    nok -1 ~~ aboveLexLimit, 'can use subset that depends on lexical sub (2)';
+}
+
+#?rakudo skip 'RT 77356'
+{
+    my $limit = 0;
+    subset aboveLexVarLimit of Int where { $_ > $limit };
+    ok 1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (1)';
+    nok -1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (2)';
+}
 # vim: ft=perl6
