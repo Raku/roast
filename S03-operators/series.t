@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 121;
+plan 122;
 
 # single-term series
 
@@ -224,6 +224,9 @@ is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
 
 # RT #75768
 is ~(1...10)[2...4], '3 4 5', 'can index series with series';
+
+# RT #75828
+eval_dies_ok '1, 2, 3, ... 5', 'comma before series operator is caught';
 
 done_testing;
 
