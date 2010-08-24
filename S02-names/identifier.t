@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 20;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -82,6 +82,25 @@ plan 18;
     sub my($a) { $a + 17 }
     $x = 5;
     is my($x), 23, 'call to sub named "my" works';
+}
+
+# RT #77218
+# Rakudo had troubles with identifiers whos prefix is an alphanumeric infix
+# operator; for example 'sub order' would fail because 'order' begins with
+# 'or'
+{
+    my $res;
+    sub order-beer($what) { $res = "a $what please!" };
+    order-beer('Pils');
+    is $res, 'a Pils please!',
+        'can call subroutines whos name begin with an alphabetic infix (or)';
+
+    my $tempo;
+    sub andante() { $tempo = 'walking pace' }
+    andante;
+
+    is $tempo, 'walking pace',
+        'can call subroutines whos name begin with an alphabetic infix (and)';
 }
 
 done_testing;
