@@ -130,7 +130,7 @@ is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
     is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric series';
     is (81, 27, 9 ...^ 2).join(', '), '81, 27, 9, 3', "exclusive decreasing geometric series that couldn't hit its limit anyway";
     is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series';
-    is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16, 32', 'exclusive alternating geometric series (not an exact match)';
+    is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series (not an exact match)';
     is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive series with closure';
     is (1 ...^ 1), Nil, 'empty exclusive series';
     is (1, 1 ...^ 1), Nil, 'empty exclusive constant series';
