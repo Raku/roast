@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 122;
+plan 124;
 
 # single-term series
 
@@ -92,9 +92,10 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric series 
 
 # some tests taken from Spec
 
-#?rakudo 2 skip '&prefix:<!> does not work with series yet'
+#?rakudo 3 skip '&prefix:<!> does not work with series yet'
 is (False, &prefix:<!> ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
+is (1,2,&[+] ... 10).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
 is (False, { !$_ } ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
 
@@ -172,8 +173,7 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
     is ~(1, -2, 4 ... 1), '1', 'geometric series with smaller RHS and sign change';
     is ~(1, -2, 4 ... 2), '1 -2', 'geometric series with smaller RHS and sign change';
     is ~(1, -2, 4 ... 3), '1 -2', 'geometric series with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16',
-        'geometric series with sign-change and non-matching end point';
+    is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16', 'geometric series with sign-change and non-matching end point';
 
     is (1, 2, 4, 5, 6 ... 2), (1, 2), "series that aborts during LHS, before actual calculations kick in";
     #?rakudo skip "Infinite loop atm"
@@ -228,6 +228,10 @@ is ~(1...10)[2...4], '3 4 5', 'can index series with series';
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before series operator is caught';
 
+#?rakudo skip 'Code on the RHS NYI'
+{
+    is (1, 2 ... *<5), (1,2,3,4), "series with code on the rhs";
+}
 done_testing;
 
 # vim: ft=perl6
