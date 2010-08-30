@@ -132,8 +132,8 @@ is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
     is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series';
     is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series (not an exact match)';
     is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive series with closure';
-    is (1 ...^ 1), Nil, 'empty exclusive series';
-    is (1, 1 ...^ 1), Nil, 'empty exclusive constant series';
+    is (1 ...^ 1), (), 'empty exclusive series';
+    is (1, 1 ...^ 1), (), 'empty exclusive constant series';
     is (1, 2 ...^ 0), Nil, 'empty exclusive arithmetic series';
     is (1, 2 ...^ 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'exclusive series empty but for extra items';
     is ~(1 ...^ 0), '1', 'singleton exclusive series';
@@ -174,7 +174,7 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
     is ~(1, -2, 4 ... 3), '1 -2', 'geometric series with smaller RHS and sign change';
     is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16',
         'geometric series with sign-change and non-matching end point';
-    
+
     is (1, 2, 4, 5, 6 ... 2), (1, 2), "series that aborts during LHS, before actual calculations kick in";
     #?rakudo skip "Infinite loop atm"
     is (1, 2, 4, 5, 6 ... 3), (1, 2), "series that aborts during LHS, before actual calculations kick in";
