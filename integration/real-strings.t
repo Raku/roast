@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 20;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.
@@ -74,6 +74,17 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
     ok +$/ == 1, 'numification of match objects with trailing whitespaces';
 
 }
+
+{
+    my $x = 'this is a test'.chomp;
+    #?rakudo todo '$x.chomp does not return a Str'
+    lives_ok {$x.trans(['t'] => ['T']) }, 
+       'Still works with strings returned from chomp() (lives)';
+    #?rakudo skip '$x.chomp does not return a Str'
+    is $x.trans(['t'] => ['T']), 'This is a TesT',
+       'Still works with strings returned from chomp() (result)';
+}
+
 done_testing;
 
 # vim: ft=perl6
