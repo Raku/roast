@@ -57,23 +57,18 @@ ok !($undef ^ 0), 'undef^0 in boolean context';
 #?rakudo skip 'Mu and =='
 ok ?(0|$undef == 0), '0|undef == 0 in boolean context';
 
-my $message1 = 'boolean context collapses junctions';
-my $message2 = '...so that they\'re not junctions anymore';
+my $message1 = 'boolean context collapses Junctions';
+my $message2 = '...so that they\'re not Junctions anymore';
 ok ?(Bool::True & Bool::False)    ==  Bool::False, $message1;
 #?DOES 1
-#?rakudo skip 'junction type (lower case)'
-ok ?(Bool::True & Bool::False)    !~~ junction,    $message2;
+ok ?(Bool::True & Bool::False)    !~~ Junction,    $message2;
 ok !(Bool::True & Bool::False)    ==  Bool::True,  $message1;
 #?DOES 1
-#?rakudo skip 'junction type (lower case)'
-ok !(Bool::True & Bool::False)    !~~ junction,    $message2;
+ok !(Bool::True & Bool::False)    !~~ Junction,    $message2;
 #?rakudo todo 'named unary as function call'
 ok so(Bool::True & Bool::False) ==  Bool::False, $message1;
-#?rakudo skip 'junction type (lower case)'
-ok so(Bool::True & Bool::False) !~~ junction,    $message2;
-#?rakudo todo 'not does not enforce boolean context?'
-ok not(Bool::True & Bool::False)  ==  Bool::True,  $message1;
-#?rakudo skip 'junction type (lower case)'
-ok not(Bool::True & Bool::False)  !~~ junction,    $message2;
+ok (so Bool::True & Bool::False) !~~ Junction,    $message2;
+ok ( not Bool::True & Bool::False)  ==  Bool::True,  $message1;
+ok not(Bool::True & Bool::False)  !~~ Junction,    $message2;
 
 # vim: ft=perl6
