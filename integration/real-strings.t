@@ -77,10 +77,8 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 {
     my $x = 'this is a test'.chomp;
-    #?rakudo todo '$x.chomp does not return a Str'
     lives_ok {$x.trans(['t'] => ['T']) }, 
        'Still works with strings returned from chomp() (lives)';
-    #?rakudo skip '$x.chomp does not return a Str'
     is $x.trans(['t'] => ['T']), 'This is a TesT',
        'Still works with strings returned from chomp() (result)';
 }
