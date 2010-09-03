@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan *;
+plan 42;
 
 # N.B.:  relational ops are in relational.t
 
@@ -20,10 +20,8 @@ is('a' <=> '1', Order::Increase, '<=> is in numeric context');
 
 is 0 <=> -1,   Order::Decrease, '0 <=> -1 is increase';
 is -1 <=> 0,      Order::Increase, '-1 <=> 0 is decrease';
-#?rakudo 2 todo 'RT 70664'
-is 0 <=> -1/2,    Order::Decrease, '0 <=> -1/2 is increase';
+is 0 <=> -1/2,    Order::Decrease, '0 <=> -1/2 is decrease';
 is 0 <=> 1/2,     Order::Increase, '0 <=> 1/2 is increase';
-#?rakudo 6 skip 'No suitable candidate found for cmp_num, with signature PP->I'
 is -1/2 <=> 0,    Order::Increase, '-1/2 <=> 0 is decrease';
 is 1/2 <=> 0,     Order::Decrease, '1/2 <=> 0 is decrease';
 is 1/2 <=> 1/2,   Order::Same, '1/2 <=> 1/2 is same';
@@ -52,6 +50,22 @@ is("a" cmp "a\0", Order::Increase, 'a cmp a\0 is increase');
 is("a\0" cmp "a\0", Order::Same, 'a\0 cmp a\0 is same');
 is("a\0" cmp "a", Order::Decrease, 'a\0 cmp a is decrease');
 
-done_testing;
+# compare numerically with non-numeric
+{
+    class Blue { 
+        method Numeric() { 3 + 5i; }
+    } 
+    my $a = Blue.new;
+
+    ok +$a == 3 + 5i, '+$a == 3 + 5i (just checking)';
+    ok $a == 3 + 5i, '$a == 3 + 5i';
+    ok $a != 3 + 4i, '$a != 3 + 4i';
+    nok $a != 3 + 5i, 'not true that $a != 3 + 5i';
+    
+    lives_ok { $a < 5 }, '$a < 5 lives okay';
+    lives_ok { $a <= 5 }, '$a <= 5 lives okay';
+    lives_ok { $a > 5 }, '$a > 5 lives okay';
+    lives_ok { $a >= 5 }, '$a => 5 lives okay';
+}
 
 # vim: ft=perl6
