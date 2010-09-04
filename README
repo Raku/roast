@@ -1,17 +1,12 @@
 	The Official Perl 6 Test Suite (someday...)
 
-This is the Official Perl 6 test suite which, although it lives
-in a corner of the pugs repo, should not be confused with pugs's
-(the Haskell implementation's) prototype test suite (as good as
-that may be).  The original test suite was written with only the one
-implementation in mind; we are currently in the process of copying
-files from the pugs test suite into this directory and making them
-platform independent.
+This is the Official Perl 6 test suite. It evolved out of the pugs
+test suite, and is now maintained in a separate repository.
 
-In addition to copying those prototype tests in, we will keep adding
-additional tests as deemed necessary for the purpose of validating
-those implementations that wish to be known as a conforming Perl 6
-implementation.  Please consider this test suite to be the result
+Its purpose is to validate implementations that wish to be known
+as a conforming Perl 6 implementation. 
+
+Please consider this test suite to be the result
 of an ongoing negotiation: since many of these tests are inspired
 by seeing how the various prototype implementations are screwed up
 (or even more likely, how the design of Perl 6 is screwed up), this
