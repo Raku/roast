@@ -204,7 +204,7 @@ sub eval_elsewhere($code){ eval($code) }
     my $x = %(a => 3, b => 5);
     is $x<a>, 3, 'hash constructor worked (1)';
     is $x<b>, 5, 'hash constructor worked (1)';
-    is $x.keys.join(', '), 'a, b', 'hash constructor produced the right keys';
+    is $x.keys.sort.join(', '), 'a, b', 'hash constructor produced the right keys';
 }
 
 # the "upto" operator
