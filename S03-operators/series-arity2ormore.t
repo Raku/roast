@@ -29,11 +29,12 @@ is (42, 24, * % * ... 0)[*-2], 6, 'arity-2 GCD';
 #?rakudo skip "...^ NYI"
 is (42, 24, * % * ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
 
-# some tests which go past a limit
+# some tests which miss a limit
 
-is (1, 1, { $^a + $^b } ... 9).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci';
-is (1, 1, 2, -> $a, $b { $a + $b } ... 9).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
-is (1, 1, 2, 3, { $^a + $^b } ... 9).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 4 seeds';
+#?rakudo 3 todo "Exact limit condition requirement NYI"
+is (1, 1, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci';
+is (1, 1, 2, -> $a, $b { $a + $b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 3 seeds';
+is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 4 seeds';
 
 # series with slurpy functions
 
@@ -45,6 +46,6 @@ is (1, 1, 2, 3, { $^a + $^b } ... 9).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fi
     }
     is (2, &nextprime ... 13).join(' '), '2 3 5 7 11 13', 'slurpy prime generator';
 }
-is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 1000).join(' '), '1 2 6 24 120 720', 'slurpy factorial generator';
+is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slurpy factorial generator';
 
 done_testing;
