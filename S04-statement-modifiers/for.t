@@ -61,14 +61,12 @@ plan 18;
     is $a, "<hello>", 'iterating one variable element works';
 }
 
-#?rakudo todo '{ ... } for 1..3 should execute the closure'
 {
     my $a = 0;
     { $a++ } for 1..3;
     is $a, 3, 'the closure was called';
 }
 
-#?rakudo todo '{ ... } for 1..3 should execute the closure'
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;
