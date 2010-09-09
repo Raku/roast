@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 101;
+plan 102;
 
 #L<S02/Mutable types/Array>
 
@@ -345,6 +345,12 @@ my @array2 = ("test", 1, Mu);
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
+}
+
+#Rt #73402
+{
+    my @a = <1 2 3>;
+    isa_ok +@a, Int, "Numifying an Array yields an Int";
 }
 
 done_testing;
