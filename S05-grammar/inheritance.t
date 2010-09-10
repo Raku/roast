@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 
@@ -58,6 +58,7 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 
 }
 
+is(Grammar.WHAT,"Grammar()", "Grammar.WHAT = Grammar()");
 
 done_testing;
 
