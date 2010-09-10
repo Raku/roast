@@ -34,27 +34,28 @@ is (1 ... 5, 6, 7).join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two fu
 is (1 ... 5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple series with two extra terms on the RHS';
 is (1 ... 5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple series with two weird items on the RHS';
 
-# finite series that go past their limit
+# infinite series that go past their limit
+#rakudo skip new spec
+{
+is (1 ... 5.5).munch(6).join(', '), '1, 2, 3, 4, 5, 6', 'simple series with one item on the LHS';
+is (1 ... -3.5).munch(6).join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing series with one item on the LHS';
+is (1, 3 ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple additive series with two items on the LHS';
+is (1, 0 ... -3.5).munch(6).join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing additive series with two items on the LHS';
+is (1, 3, 5 ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple additive series with three items on the LHS';
+is (1, 3, 9 ... 100).munch(6).join(', '), '1, 3, 9, 27, 81, 243', 'simple multiplicative series with three items on the LHS';
+is (81, 27, 9 ... 8/9).munch(6), (81, 27, 9, 3, 1, 1/3), 'decreasing multiplicative series with three items on the LHS';
+is (1, { $_ + 2 } ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple series with one item and block closure on the LHS';
+is (1, *+2 ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple series with one item and * closure on the LHS';
+is (1, { $_ - 2 } ... -8).munch(6).join(', '), '1, -1, -3, -5, -7, -9', 'simple series with one item and closure on the LHS';
+is (1, 3, 5, { $_ + 2 } ... 14).munch(8).join(', '), '1, 3, 5, 7, 9, 11, 13, 15', 'simple series with three items and block closure on the LHS';
 
-is (1 ... 5.5).join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
-is (1 ... -3.5).join(', '), '1, 0, -1, -2, -3', 'simple decreasing series with one item on the LHS';
-is (1, 3 ... 10).join(', '), '1, 3, 5, 7, 9', 'simple additive series with two items on the LHS';
-is (1, 0 ... -3.5).join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive series with two items on the LHS';
-is (1, 3, 5 ... 10).join(', '), '1, 3, 5, 7, 9', 'simple additive series with three items on the LHS';
-is (1, 3, 9 ... 100).join(', '), '1, 3, 9, 27, 81', 'simple multiplicative series with three items on the LHS';
-is (81, 27, 9 ... 8/9).join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative series with three items on the LHS';
-is (1, { $_ + 2 } ... 10).join(', '), '1, 3, 5, 7, 9', 'simple series with one item and block closure on the LHS';
-is (1, *+2 ... 10).join(', '), '1, 3, 5, 7, 9', 'simple series with one item and * closure on the LHS';
-is (1, { $_ - 2 } ... -8).join(', '), '1, -1, -3, -5, -7', 'simple series with one item and closure on the LHS';
-is (1, 3, 5, { $_ + 2 } ... 14).join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple series with three items and block closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... 11/60).munch(6).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5, 1/6', 'tricky series with one item and closure on the LHS';
+is (1, { -$_ } ... 0).munch(4).join(', '), '1, -1, 1, -1', 'simple alternating series with one item and closure on the LHS';
 
-is (1, { 1 / ((1 / $_) + 1) } ... 11/60).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5', 'tricky series with one item and closure on the LHS';
-is (1, { -$_ } ... 0).join(', '), '1', 'simple alternating series with one item and closure on the LHS';
-
-is (1 ... 5.5, 6, 7).join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple series with two further terms on the RHS';
-is (1 ... 5.5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple series with two extra terms on the RHS';
-is (1 ... 5.5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple series with two weird items on the RHS';
-
+is (1 ... 5.5, 6, 7).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple series with two further terms on the RHS';
+is (1 ... 5.5, 4, 3).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple series with two extra terms on the RHS';
+is (1 ... 5.5, 'xyzzy', 'plugh').[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple series with two weird items on the RHS';
+}
 # infinite series without limits
 
 is (1 ... *).[^5].join(', '), '1, 2, 3, 4, 5', 'simple series with one item on the LHS';
@@ -95,7 +96,7 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric series 
 #?rakudo 3 skip '&prefix:<!> does not work with series yet'
 is (False, &prefix:<!> ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
-is (1,2,&[+] ... 10).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
+is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
 is (False, { !$_ } ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
 
@@ -109,11 +110,10 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3,
 # empty series
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
-is (1, 2 ... 0), Nil, 'empty increasing arithmetic series';
-is (1, 0 ... 2), Nil, 'empty decreasing arithmetic series';
-is (1, 2, 4 ... -5), Nil, 'empty increasing geometric series';
-is (64, 32, 16 ... 70), Nil, 'empty decreasing geometric series';
-is (1, 2 ... 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'series empty but for extra items';
+#rakudo skip new spec
+{
+is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
+}
 
 # L<S03/List infix precedence/For a geometric series with sign changes>
 is (1, -2, 4 ... 1/2), Nil, 'empty alternating increasing-in-magnitude geometric series';

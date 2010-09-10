@@ -24,12 +24,11 @@ plan 15;
 }
 
 # Test with limit between possible values
+#?rakudo skip new spec
 {
     my @rolls = ({ (1..2).pick } ... 1.5).munch(100);
-    ok +@rolls > 0, 'the series had at least one element...';
-    ok +@rolls < 100, '... and the series terminated';
+    ok +@rolls == 100, 'the series is infinite...';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
-    is @rolls.grep(@rolls[0]).elems, +@rolls, 'All the rolls are the same';
 }
 
 # Test with limit that cannot be hit
