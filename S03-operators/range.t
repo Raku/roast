@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 116;
+plan 112;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -137,12 +137,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~(4 .. @three)   , ""     , "upper inclusive limit is in scalar context";
     is ~(1 ..^ @three)  , "1 2"  , "upper exclusive limit is in scalar context";
     is ~(4 ..^ @three)  , ""     , "upper exclusive limit is in scalar context";
-    #?rakudo todo 'RT 58018'
-    is ~(@one .. @three), "1 2 3", "both inclusive limits are in scalar context";
-    is ~(@three .. @one), ""     , "null range produced with lists forced to scalar context";
-    #?rakudo todo 'RT 58018'
-    is ~(@one ^..^ @three), "2"  , "both exclusive limits are in scalar context";
-    is ~(@three ^..^ @one), ""   , "both exclusive limits are in scalar context";
 }
 
 # test that .map and .grep work on ranges
@@ -175,6 +169,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
              'can make range from match vars';
     is $range.min, 1, 'range starts at one';
     is $range.max,   3, 'range ends at three';
+    #?rakudo 2 skip 'range stringification'
     lives_ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }
@@ -183,6 +178,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa_ok $0..$1, Range, '$0..$1 constructs a Range';
+    #?rakudo skip 'range with match object endpoints'
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
 {
