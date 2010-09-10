@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 116;
+plan 122;
 
 # single-term series
 
@@ -223,6 +223,18 @@ is ~(1...10)[2...4], '3 4 5', 'can index series with series';
 #?rakudo skip 'Code on the RHS NYI'
 {
     is (1, 2 ... *>=5), (1,2,3,4,5), "series with code on the rhs";
+    is (1, 2 ... *>5), (1,2,3,4,5,6), "series with code on the rhs";
+    is (1, 2 ...^ *>=5), (1,2,3,4), "exclusive series with code on the rhs";
+    is (1, 2 ...^ *>5), (1,2,3,4,5), "exclusive series with code on the rhs";
+}
+
+is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "series that lasts in the last item of lhs";
+
+#?rakudo skip 'Infinite series on the lhs'
+{
+	is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
+	my @fib := (0, 1, *+* ... * );
+	is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
 # RT #75828
