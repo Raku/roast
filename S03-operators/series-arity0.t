@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"can be 0-ary as well">
 
-plan 15;
+plan 13;
 
 # Test with Whatever limit
 {

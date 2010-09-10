@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the series operator">
 
-plan 124;
+plan 116;
 
 # single-term series
 
@@ -115,28 +115,22 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3,
 is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
 }
 
-# L<S03/List infix precedence/For a geometric series with sign changes>
-is (1, -2, 4 ... 1/2), Nil, 'empty alternating increasing-in-magnitude geometric series';
-is (-64, 32, -16 ... 70), Nil, 'empty alternating decreasing-in-magnitude geometric series';
-is (1, -1, 1 ... 2), Nil, 'empty alternating series (1)';
-is (1, -1, 1 ... -2), Nil, 'empty alternating series (2)';
-
 # L<S03/List infix precedence/excludes the limit if it happens to match exactly>
 # excluded limits via "...^"
 #?rakudo skip '...^ NYI'
 {
     is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive series';
     is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing series';
-    is (1 ...^ 5.5).join(', '), '1, 2, 3, 4, 5', "exclusive series that couldn't hit its limit anyway";
+    is (1 ...^ 5.5).munch(6).join(', '), '1, 2, 3, 4, 5, 6', "exclusive series that couldn't hit its limit anyway";
     is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric series';
-    is (81, 27, 9 ...^ 2).join(', '), '81, 27, 9, 3', "exclusive decreasing geometric series that couldn't hit its limit anyway";
+    is (81, 27, 9 ...^ 2).munch(5).join(', '), '81, 27, 9, 3, 1', "exclusive decreasing geometric series that couldn't hit its limit anyway";
     is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series';
-    is (2, -4, 8 ...^ -32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric series (not an exact match)';
+    is (2, -4, 8 ...^ -32).munch(6).join(', '), '2, -4, 8, -16, 32, -64', 'exclusive alternating geometric series (not an exact match)';
     is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive series with closure';
     is (1 ...^ 1), (), 'empty exclusive series';
     is (1, 1 ...^ 1), (), 'empty exclusive constant series';
-    is (1, 2 ...^ 0), Nil, 'empty exclusive arithmetic series';
-    is (1, 2 ...^ 0, 'xyzzy', 'plugh').join(' '), 'xyzzy plugh', 'exclusive series empty but for extra items';
+    is (1, 2 ...^ 0).munch(3), (1, 2, 3), 'empty exclusive arithmetic series';
+    is (1, 2 ...^ 0, 'xyzzy', 'plugh').[^3].join(', '), '1, 2, 3', 'exclusive series empty but for extra items';
     is ~(1 ...^ 0), '1', 'singleton exclusive series';
     is (4...^5).join(', '), '4', '4...^5 should parse as 4 ...^ 5 and not 4 ... ^5';
 }
@@ -163,21 +157,22 @@ is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
 
 is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series in parallel";
 
+#?rakudo skip 'new spec'
 {
-    is (1, 2, 4 ... 3), (1, 2), "series that aborts during LHS";
+    is (1, 2, 4 ... 3).munch(4), (1, 2, 4, 8), "series that does not hit the limit";
     is (1, 2, 4 ... 2), (1, 2), "series that aborts during LHS";
-    #?rakudo skip "Infinite loop atm"
-    is (1, 2, 4 ... 1.5), (1), "series that aborts during LHS";
+
+    is (1, 2, 4 ... 1.5).munch(4), (1,2,4,8), "series that does not hit the limit";
     is (1, 2, 4 ... 1), (1), "series that aborts during LHS";
 
     is ~(1, -2, 4 ... 1), '1', 'geometric series with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 2), '1 -2', 'geometric series with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 3), '1 -2', 'geometric series with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16', 'geometric series with sign-change and non-matching end point';
+    is ~(1, -2, 4 ... 2).munch(4), '1 -2 4 -8', 'geometric series with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 3).munch(4), '1 -2 4 -8', 'geometric series with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16 -32 64 -128 256 -512', 'geometric series with sign-change and non-matching end point';
 
     is (1, 2, 4, 5, 6 ... 2), (1, 2), "series that aborts during LHS, before actual calculations kick in";
-    #?rakudo skip "Infinite loop atm"
-    is (1, 2, 4, 5, 6 ... 3), (1, 2), "series that aborts during LHS, before actual calculations kick in";
+
+    is (1, 2, 4, 5, 6 ... 3).munch(6), (1,2,4,5,6,7), "series that aborts during LHS, before actual calculations kick in";
 }
 
 # tests for the types returned
@@ -201,20 +196,20 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series
 }
 
 {
-    my @a = 1, 2, 4 ... 100;
-    is @a.elems, 7, "1, 2, 4 ... 100 generates a series with seven elements...";
+    my @a = 1, 2, 4 ... 64;
+    is @a.elems, 7, "1, 2, 4 ... 64 generates a series with seven elements...";
     is @a.grep(Int).elems, @a.elems, "... all of which are Ints";
 }
 
 {
-    my @a = 1.Rat, 2.Rat, 4.Rat ... 100;
-    is @a.elems, 7, "1.Rat, 2.Rat, 4.Rat ... 100 generates a series with seven elements...";
+    my @a = 1.Rat, 2.Rat, 4.Rat ... 64;
+    is @a.elems, 7, "1.Rat, 2.Rat, 4.Rat ... 64 generates a series with seven elements...";
     is @a.grep(Rat).elems, 7, "... all of which are Rats";
 }
 
 {
-    my @a = 1.Num, 2.Num, 4.Num ... 100;
-    is @a.elems, 7, "1.Num, 2.Num, 4.Num ... 100 generates a series with seven elements...";
+    my @a = 1.Num, 2.Num, 4.Num ... 64;
+    is @a.elems, 7, "1.Num, 2.Num, 4.Num ... 64 generates a series with seven elements...";
     is @a.grep(Num).elems, 7, "... all of which are Nums";
 }
 
@@ -225,13 +220,14 @@ is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
 # RT #75768
 is ~(1...10)[2...4], '3 4 5', 'can index series with series';
 
+#?rakudo skip 'Code on the RHS NYI'
+{
+    is (1, 2 ... *>=5), (1,2,3,4,5), "series with code on the rhs";
+}
+
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before series operator is caught';
 
-#?rakudo skip 'Code on the RHS NYI'
-{
-    is (1, 2 ... *<5), (1,2,3,4), "series with code on the rhs";
-}
 done_testing;
 
 # vim: ft=perl6
