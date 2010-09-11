@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 35;
+plan 34;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
@@ -54,7 +54,6 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 # the tricky termination test
 
 ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
-ok ('AA' ... 'Z').munch(1000).elems < 1000, "'AA' ... 'Z' does not go on forever";
 ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
 ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
 #?rakudo skip '...^'
