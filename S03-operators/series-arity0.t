@@ -24,7 +24,7 @@ plan 13;
 }
 
 # Test with limit between possible values
-#?rakudo skip new spec
+#?rakudo skip 'new spec'
 {
     my @rolls = ({ (1..2).pick } ... 1.5).munch(100);
     ok +@rolls == 100, 'the series is infinite...';

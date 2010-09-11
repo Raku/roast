@@ -61,6 +61,7 @@ ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 # be sure the test works as specced even for user classes
+#?rakudo skip 'lifting comparison ops'
 {
     class Periodic {
         has Int $.val;
@@ -74,10 +75,9 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
     our multi infix:<eqv> (Periodic $x, Int $n)      { $x.val eqv $n }
     my $f = { Periodic.new(val => $^v) };
     
-    #?rakudo todo 'unkonwn'
     is ($f(0) ... 5)[^7].join(' '), 'P0 P1 P2 P0 P1 P2 P0', 'increasing periodic series';
     is ($f(0) ... -1)[^7].join(' '), 'P0 P2 P1 P0 P2 P1 P0', 'decreasing periodic series';
-    #?rakudo 4 skip 'loops'
+
     is ($f(0) ... 2).join(' '), 'P0 P1 P2', 'increasing not-quite-periodic series';
     is ($f(2) ... 0).join(' '), 'P2 P1 P0', 'decreasing not-quite-periodic series';
     is ($f(0) ...^ 2).join(' '), 'P0 P1', 'exclusive increasing not-quite-periodic series';
