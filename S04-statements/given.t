@@ -244,7 +244,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
         }
     }
 
-    #?rakudo 1 todo '.so in given does not work'
     is(@got.join(","), "false,true", 'given { when .so { } }');
 }
 
