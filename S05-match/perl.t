@@ -16,7 +16,6 @@ grammar ExprT1 {
 my $m = ExprT1.parse('2 + 4');
 ok $m, 'Regex matches (1)';
 lives_ok { $m.perl }, '$/.perl lives (with named captures';
-#?rakudo 2 skip 'eval()ing Match.perl'
 is_deeply eval($m.perl), $m, '... and it reproduces the right thing (1)'; 
 is ~eval($m.perl).<operator>, '+', ' right result (2)';
 
