@@ -5,7 +5,6 @@ plan 34;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
-#?rakudo skip 'loops'
 {
     class Alternating {
         has Int $.val;

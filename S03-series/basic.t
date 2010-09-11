@@ -35,7 +35,6 @@ is (1 ... 5, 4, 3).join(', '), '1, 2, 3, 4, 5, 4, 3', 'simple series with two ex
 is (1 ... 5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simple series with two weird items on the RHS';
 
 # infinite series that go past their limit
-#rakudo skip new spec
 {
 is (1 ... 5.5).munch(6).join(', '), '1, 2, 3, 4, 5, 6', 'simple series with one item on the LHS';
 is (1 ... -3.5).munch(6).join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing series with one item on the LHS';
@@ -93,7 +92,6 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric series 
 
 # some tests taken from Spec
 
-#?rakudo 3 skip '&prefix:<!> does not work with series yet'
 is (False, &prefix:<!> ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
 is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
@@ -110,14 +108,12 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3,
 # empty series
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
-#rakudo skip new spec
 {
 is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
 }
 
 # L<S03/List infix precedence/excludes the limit if it happens to match exactly>
 # excluded limits via "...^"
-#?rakudo skip '...^ NYI'
 {
     is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive series';
     is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing series';
@@ -157,7 +153,6 @@ is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
 
 is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two series in parallel";
 
-#?rakudo skip 'new spec'
 {
     is (1, 2, 4 ... 3).munch(4), (1, 2, 4, 8), "series that does not hit the limit";
     is (1, 2, 4 ... 2), (1, 2), "series that aborts during LHS";
@@ -220,7 +215,6 @@ is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
 # RT #75768
 is ~(1...10)[2...4], '3 4 5', 'can index series with series';
 
-#?rakudo skip 'Code on the RHS NYI'
 {
     is (1, 2 ... *>=5), (1,2,3,4,5), "series with code on the rhs";
     is (1, 2 ... *>5), (1,2,3,4,5,6), "series with code on the rhs";
@@ -230,7 +224,6 @@ is ~(1...10)[2...4], '3 4 5', 'can index series with series';
 
 is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "series that lasts in the last item of lhs";
 
-#?rakudo skip 'Infinite series on the lhs'
 {
 	is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
 	my @fib := (0, 1, *+* ... * );
