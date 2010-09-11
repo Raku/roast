@@ -56,7 +56,7 @@ isa_ok 4 Rcmp 5, (5 cmp 4).WHAT, "4 Rcmp 5 is the same type as 5 cmp 4";
 
 is 3 R/ 9 + 5, 8, 'R/ gets precedence of /';
 is 4 R- 5 R/ 10, -2, "Rop gets the precedence of op";
-is (10 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
+is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
 done_testing;
 
