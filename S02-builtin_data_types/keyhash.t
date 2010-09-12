@@ -9,9 +9,10 @@ plan 18;
     my %h is KeyHash;
 
     %h = (a => 1, b => 3, c => -1, d => 7);
-    is +%h.elems, 4, 'Inititalization worked';
+    is +%h.keys, 4, 'Inititalization worked';
+    is %h.elems, 10, '.elems';
     lives_ok { %h<d> = 0 }, 'can set an item to 0';
-    is %h.elems, 3, '... and an item is gone';
+    is +%h.keys, 3, '... and an item is gone';
     is %h.keys.sort.join(''), 'abc', '... and the right one is gone';
     %h<c>++;
     is %h.keys.sort.join(''), 'ab', '++ on an item with -1 deletes it';
@@ -33,9 +34,10 @@ plan 18;
     my Int %h is KeyHash;
 
     %h = (a => 1, b => 3, c => -1, d => 7);
-    is +%h.elems, 4, 'Inititalization worked';
+    is +%h.keys, 4, 'Inititalization worked';
+    is %h.elems, 10, '.elems';
     lives_ok { %h<d> = 0 }, 'can set an item to 0';
-    is %h.elems, 3, '... and an item is gone';
+    is +%h.keys, 3, '... and an item is gone';
     is %h.keys.sort.join(''), 'abc', '... and the right one is gone';
     %h<c>++;
     is %h.keys.sort.join(''), 'ab', '++ on an item with -1 deletes it';
