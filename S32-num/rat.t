@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 799;
+plan 801;
 
 # Basic test functions specific to rational numbers.
 
@@ -229,6 +229,9 @@ is .88888888888.WHAT, 'Rat()', 'WHAT works on Rat created from 11 digit decimal 
     my $a += 0.1;
     isa_ok $a, Rat, 'Any() + 0.1 is a Rat';
 }
+
+isa_ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
+is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 done_testing;
 
