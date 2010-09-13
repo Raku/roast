@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 801;
+plan 802;
 
 # Basic test functions specific to rational numbers.
 
@@ -133,6 +133,9 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 # so I'm holding off on writing tests for it.
 
 # SHOULD: Add NaN / Inf tests
+
+#?rakudo todo "NaN.Rat == NaN"
+is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 # RT #74648
 isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
