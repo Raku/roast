@@ -28,7 +28,6 @@ is (42, 24, * % * ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
 
 # some tests which miss a limit
 
-#?rakudo 3 todo "Exact limit condition requirement NYI"
 is (1, 1, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci';
 is (1, 1, 2, -> $a, $b { $a + $b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 4 seeds';
