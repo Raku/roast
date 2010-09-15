@@ -38,7 +38,6 @@ is_run( 'my $a = <stringify args>; note $a',
         },
         'note an array reference' );
 
-#?rakudo todo 'method form of note - needs spec'
 is_run( '"method form".note',
         {
             status => 0,
