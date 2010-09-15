@@ -74,11 +74,17 @@ sub showkv($x) {
     is +@a, 3, '.pick(*) returns the right number of items';
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
+}
 
-    @a = $b.pick: 100, :replace;
-    is +@a, 100, '.pick(100, :replace) returns 100 items';
-    ok 2 < @a.grep(* eq 'a') < 75, '.pick(100, :replace) (1)';
-    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.pick(100, :replace) (2)';
+# L<S32::Containers/Bag/roll>
+
+{
+    my $b = bag <a b b>;
+
+    @a = $b.roll: 100;
+    is +@a, 100, '.roll(100,) returns 100 items';
+    ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
+    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
 # vim: ft=perl6
