@@ -81,8 +81,8 @@ sub showkv($x) {
 {
     my $b = bag <a b b>;
 
-    @a = $b.roll: 100;
-    is +@a, 100, '.roll(100,) returns 100 items';
+    my @a = $b.roll: 100;
+    is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
