@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 41;
+plan 46;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -81,6 +81,17 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 {
     is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
+}
+
+{
+    my $x = Bool.pick;
+    ok ($x === True || $x === False), 'Bool.pick return True or False';
+    is Bool.pick(*).elems, 2, 'Bool.pick(*) returns two elems';;
+    my @a = Bool.pick(30, :replace);
+    ok @a.grep({$_}),  'Bool.pick(30, :replace) contains a True';
+    ok @a.grep({!$_}), 'Bool.pick(30, :replace) contains a False';
+    is Bool.pick(*).[^10].elems, 10, 'Bool.pick(*) contains at least 10 elems';
+
 }
 
 isa_ok ('RT71462' ~~ Str), Bool;
