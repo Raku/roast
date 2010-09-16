@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 61;
+plan 123;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -147,6 +147,115 @@ is(+(6..8), 3, 'numification');
 {
     is((1..8)[*-1], 8, 'postcircumfix:<[ ]> on range works');
     is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');
+}
+
+{
+    my @b = pick(*, 1..100);
+    is @b.elems, 100, "pick(*, 1..100) returns the correct number of elements";
+    is ~@b.sort, ~(1..100), "pick(*, 1..100) returns the correct elements";
+    is ~@b.grep(Int).elems, 100, "pick(*, 1..100) returns Ints";
+
+    @b = (1..100).pick(*);
+    is @b.elems, 100, "pick(*, 1..100) returns the correct number of elements";
+    is ~@b.sort, ~(1..100), "pick(*, 1..100) returns the correct elements";
+    is ~@b.grep(Int).elems, 100, "pick(*, 1..100) returns Ints";
+
+    isa_ok (1..100).pick, Int, "picking a single element from an range of Ints produces an Int";
+    ok (1..100).pick ~~ 1..100, "picking a single element from an range of Ints produces one of them";
+
+    isa_ok (1..100).pick(1), Int, "picking 1 from an range of Ints produces an Int";
+    ok (1..100).pick(1) ~~ 1..100, "picking 1 from an range of Ints produces one of them";
+
+    my @c = (1..100).pick(2);
+    isa_ok @c[0], Int, "picking 2 from an range of Ints produces an Int...";
+    isa_ok @c[1], Int, "... and an Int";
+    ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "picking 2 from an range of Ints produces two of them";
+    ok @c[0] != @c[1], "picking 2 from an range of Ints produces two distinct results";
+
+    is (1..100).pick("25").elems, 25, ".pick works Str arguments";
+    is pick("25", 1..100).elems, 25, "pick works Str arguments";
+}
+
+{
+    my @b = pick(*, 'b' .. 'y');
+    is @b.elems, 24, "pick(*, 'b' .. 'y') returns the correct number of elements";
+    is ~@b.sort, ~('b' .. 'y'), "pick(*, 'b' .. 'y') returns the correct elements";
+    is ~@b.grep(Str).elems, 24, "pick(*, 'b' .. 'y') returns Strs";
+
+    @b = ('b' .. 'y').pick(*);
+    is @b.elems, 24, "pick(*, 'b' .. 'y') returns the correct number of elements";
+    is ~@b.sort, ~('b' .. 'y'), "pick(*, 'b' .. 'y') returns the correct elements";
+    is ~@b.grep(Str).elems, 24, "pick(*, 'b' .. 'y') returns Strs";
+
+    isa_ok ('b' .. 'y').pick, Str, "picking a single element from an range of Strs produces an Str";
+    ok ('b' .. 'y').pick ~~ 'b' .. 'y', "picking a single element from an range of Strs produces one of them";
+
+    isa_ok ('b' .. 'y').pick(1), Str, "picking 1 from an range of Strs produces an Str";
+    ok ('b' .. 'y').pick(1) ~~ 'b' .. 'y', "picking 1 from an range of Strs produces one of them";
+
+    my @c = ('b' .. 'y').pick(2);
+    isa_ok @c[0], Str, "picking 2 from an range of Strs produces an Str...";
+    isa_ok @c[1], Str, "... and an Str";
+    ok (@c[0] ~~ 'b' .. 'y') && (@c[1] ~~ 'b' .. 'y'), "picking 2 from an range of Strs produces two of them";
+    ok @c[0] ne @c[1], "picking 2 from an range of Strs produces two distinct results";
+
+    is ('b' .. 'y').pick("10").elems, 10, ".pick works Str arguments";
+    is pick("10", 'b' .. 'y').elems, 10, "pick works Str arguments";
+}
+
+{
+    my @b = roll(100, 1..100);
+    is @b.elems, 100, "roll(100, 1..100) returns the correct number of elements";
+    is ~@b.grep(1..100).elems, 100, "roll(100, 1..100) returns elements from 1..100";
+    is ~@b.grep(Int).elems, 100, "roll(100, 1..100) returns Ints";
+
+    @b = (1..100).roll(100);
+    is @b.elems, 100, "roll(100, 1..100) returns the correct number of elements";
+    is ~@b.grep(1..100).elems, 100, "roll(100, 1..100) returns elements from 1..100";
+    is ~@b.grep(Int).elems, 100, "roll(100, 1..100) returns Ints";
+
+    isa_ok (1..100).roll, Int, "rolling a single element from an range of Ints produces an Int";
+    ok (1..100).roll ~~ 1..100, "rolling a single element from an range of Ints produces one of them";
+
+    #?rakudo todo 'roll(1) returning a one-element List at the moment'
+    isa_ok (1..100).roll(1), Int, "rolling 1 from an range of Ints produces an Int";
+    #?rakudo todo 'roll(1) returning a one-element List at the moment'
+    ok (1..100).roll(1) ~~ 1..100, "rolling 1 from an range of Ints produces one of them";
+
+    my @c = (1..100).roll(2);
+    isa_ok @c[0], Int, "rolling 2 from an range of Ints produces an Int...";
+    isa_ok @c[1], Int, "... and an Int";
+    ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "rolling 2 from an range of Ints produces two of them";
+
+    is (1..100).roll("25").elems, 25, ".roll works Str arguments";
+    is roll("25", 1..100).elems, 25, "roll works Str arguments";
+}
+
+{
+    my @b = roll(100, 'b' .. 'y');
+    is @b.elems, 100, "roll(100, 'b' .. 'y') returns the correct number of elements";
+    is ~@b.grep('b' .. 'y').elems, 100, "roll(100, 'b' .. 'y') returns elements from b..y";
+    is ~@b.grep(Str).elems, 100, "roll(100, 'b' .. 'y') returns Strs";
+
+    @b = ('b' .. 'y').roll(100);
+    is @b.elems, 100, "roll(100, 'b' .. 'y') returns the correct number of elements";
+    is ~@b.grep('b' .. 'y').elems, 100, "roll(100, 'b' .. 'y') returns elements from b..y";
+    is ~@b.grep(Str).elems, 100, "roll(100, 'b' .. 'y') returns Strs";
+
+    isa_ok ('b' .. 'y').roll, Str, "rolling a single element from an range of Strs produces an Str";
+    ok ('b' .. 'y').roll ~~ 'b' .. 'y', "rolling a single element from an range of Strs produces one of them";
+
+    #?rakudo todo 'roll(1) returning a one-element List at the moment'
+    isa_ok ('b' .. 'y').roll(1), Str, "rolling 1 from an range of Strs produces an Str";
+    ok ('b' .. 'y').roll(1) ~~ 'b' .. 'y', "rolling 1 from an range of Strs produces one of them";
+
+    my @c = ('b' .. 'y').roll(2);
+    isa_ok @c[0], Str, "rolling 2 from an range of Strs produces an Str...";
+    isa_ok @c[1], Str, "... and an Str";
+    ok (@c[0] ~~ 'b' .. 'y') && (@c[1] ~~ 'b' .. 'y'), "rolling 2 from an range of Strs produces two of them";
+
+    is ('b' .. 'y').roll("10").elems, 10, ".roll works Str arguments";
+    is roll("10", 'b' .. 'y').elems, 10, "roll works Str arguments";
 }
 
 # vim:set ft=perl6

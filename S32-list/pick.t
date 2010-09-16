@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 25;
 
 =begin description
 
@@ -27,15 +27,12 @@ my @arr = <z z z>;
 
 ok ~(@arr.pick(2)) eq 'z z',   'method pick with $num < +@values';
 ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
-#?pugs todo 'feature'
-is ~(@arr.roll(4)), 'z z z z', 'method roll() with $num > +@values';
 
 #?pugs 2 todo 'feature'
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
 #?rakudo skip "Calling values by name fails hard"
 is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
-is ~(roll(4, @arr)), 'z z z z', 'sub roll() with $num > +@values';
 
 is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 
@@ -47,8 +44,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
        'pick(*) returned the items of the array in a random order');
 }
 
-is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns an answer';
-
 {
     # Test that List.pick doesn't flatten array refs
     ok ?([[1, 2], [3, 4]].pick.join('|') eq any('1|2', '3|4')), '[[1,2],[3,4]].pick does not flatten';
@@ -58,6 +53,29 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns an answer';
 {
     ok <5 5>.pick() == 5,
        '.pick() returns something can be used as single scalar';
+}
+
+{
+    my @a = 1..100;
+    my @b = pick(*, @a);
+    is @b.elems, 100, "pick(*, @a) returns the correct number of elements";
+    is ~@b.sort, ~(1..100), "pick(*, @a) returns the correct elements";
+    is ~@b.grep(Int).elems, 100, "pick(*, @a) returns Ints (if @a is Ints)";
+
+    isa_ok @a.pick, Int, "picking a single element from an array of Ints produces an Int";
+    ok @a.pick ~~ 1..100, "picking a single element from an array of Ints produces one of them";
+
+    isa_ok @a.pick(1), Int, "picking 1 from an array of Ints produces an Int";
+    ok @a.pick(1) ~~ 1..100, "picking 1 from an array of Ints produces one of them";
+
+    my @c = @a.pick(2);
+    isa_ok @c[0], Int, "picking 2 from an array of Ints produces an Int...";
+    isa_ok @c[1], Int, "... and an Int";
+    ok (@c[0] ~~ 1..100) && (@c[1] ~~ 1..100), "picking 2 from an array of Ints produces two of them";
+    ok @c[0] != @c[1], "picking 2 from an array of Ints produces two distinct results";
+
+    is @a.pick("25").elems, 25, ".pick works Str arguments";
+    is pick("25", @a).elems, 25, "pick works Str arguments";
 }
 
 # vim: ft=perl6
