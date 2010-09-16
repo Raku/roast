@@ -111,8 +111,9 @@ plan 37;
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
-    #?rakudo skip '1 ^^ 42 yields Mu?'
+    #?rakudo skip '1 ^^ 42 should return False (or maybe Nil)'
     ok((1 ^^ 42) === (?0), "^^  operator working (both true)");
+    #?rakudo skip '0 ^^ 0 should return False (or maybe Nil)'
     ok((0 ^^ 0)  === (?0), "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
