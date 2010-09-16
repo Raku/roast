@@ -12,7 +12,6 @@ plan *;
     isa_ok $i - 1/3, Instant, 'Instant - Rat ~~ Instant';
 }
 
-#?rakudo skip "'now' as term NYI"
 isa_ok eval('now +300'), Instant, 'now is a term, not a function';
 
 # L<S02/Immutable types/'you may not add two instants'>
