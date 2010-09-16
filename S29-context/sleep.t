@@ -6,10 +6,10 @@ use Test;
 
 plan 4;
 
-my $start = time();
+my $start = time;
 diag "Sleeping for 3s";
 my $sleep_says = sleep 3;
-my $diff = time() - $start;
+my $diff = time - $start;
 
 ok( $sleep_says >= 2 , 'Sleep says it slept at least 2 seconds');
 ok( $sleep_says <= 10 , '... and no more than 10');
