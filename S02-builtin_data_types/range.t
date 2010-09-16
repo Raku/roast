@@ -217,9 +217,7 @@ is(+(6..8), 3, 'numification');
     isa_ok (1..100).roll, Int, "rolling a single element from an range of Ints produces an Int";
     ok (1..100).roll ~~ 1..100, "rolling a single element from an range of Ints produces one of them";
 
-    #?rakudo todo 'roll(1) returning a one-element List at the moment'
     isa_ok (1..100).roll(1), Int, "rolling 1 from an range of Ints produces an Int";
-    #?rakudo todo 'roll(1) returning a one-element List at the moment'
     ok (1..100).roll(1) ~~ 1..100, "rolling 1 from an range of Ints produces one of them";
 
     my @c = (1..100).roll(2);
@@ -245,7 +243,6 @@ is(+(6..8), 3, 'numification');
     isa_ok ('b' .. 'y').roll, Str, "rolling a single element from an range of Strs produces an Str";
     ok ('b' .. 'y').roll ~~ 'b' .. 'y', "rolling a single element from an range of Strs produces one of them";
 
-    #?rakudo todo 'roll(1) returning a one-element List at the moment'
     isa_ok ('b' .. 'y').roll(1), Str, "rolling 1 from an range of Strs produces an Str";
     ok ('b' .. 'y').roll(1) ~~ 'b' .. 'y', "rolling 1 from an range of Strs produces one of them";
 
