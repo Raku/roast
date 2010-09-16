@@ -87,10 +87,10 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';
     is Bool.pick(*).elems, 2, 'Bool.pick(*) returns two elems';;
-    my @a = Bool.pick(30, :replace);
-    ok @a.grep({$_}),  'Bool.pick(30, :replace) contains a True';
-    ok @a.grep({!$_}), 'Bool.pick(30, :replace) contains a False';
-    is Bool.pick(*).[^10].elems, 10, 'Bool.pick(*) contains at least 10 elems';
+    my @a = Bool.roll(30);
+    ok @a.grep({$_}),  'Bool.roll(30) contains a True';
+    ok @a.grep({!$_}), 'Bool.roll(30) contains a False';
+    is Bool.roll(*).[^10].elems, 10, 'Bool.roll(*) contains at least 10 elems';
 
 }
 

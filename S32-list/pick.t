@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 15;
 
 =begin description
 
@@ -28,15 +28,14 @@ my @arr = <z z z>;
 ok ~(@arr.pick(2)) eq 'z z',   'method pick with $num < +@values';
 ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 #?pugs todo 'feature'
-is ~(@arr.pick(4, :replace)), 'z z z z', 'method pick(:replace) with $num > +@values';
+is ~(@arr.roll(4)), 'z z z z', 'method roll() with $num > +@values';
 
-#?pugs 3 todo 'feature'
-is ~(pick(2, :replace(False), @arr)), 'z z', 'sub pick with $num < +@values, explicit no-replace';
+#?pugs 2 todo 'feature'
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
 #?rakudo skip "Calling values by name fails hard"
 is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
-is ~(pick(4, :replace, @arr)), 'z z z z', 'sub pick(:replace) with $num > +@values';
+is ~(roll(4, @arr)), 'z z z z', 'sub roll() with $num > +@values';
 
 is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 
@@ -48,7 +47,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
        'pick(*) returned the items of the array in a random order');
 }
 
-is (0, 1).pick(*, :replace).[^10].elems, 10, '.pick(*, :replace) returns an answer';
+is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns an answer';
 
 {
     # Test that List.pick doesn't flatten array refs
