@@ -44,7 +44,6 @@ ok("abcabcabcabcd" ~~ m/'abc'**{2..*}/, 'Open range repetition using closure');
 ok(!( "abcd"       ~~ m/'abc'**{2..*}/), 'Fail open range repetition using closure');
 
 # It is illegal to return a list, so this easy mistake fails:
-#?rakudo todo 'catch {1,3} old-style repetition quantifier'
 eval_dies_ok('"foo" ~~ m/o{1,3}/', 'P5-style {1,3} range mistake is caught');
 eval_dies_ok('"foo" ~~ m/o{1,}/}',  'P5-style {1,} range mistake is caught');
 
