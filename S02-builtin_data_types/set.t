@@ -37,6 +37,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s, 3, 'Keys are counted correctly even when a key is False';
 }
 
+# RT #77760
 {
     my %h = set <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Set has been assigned remains a hash';
