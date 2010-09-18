@@ -21,11 +21,10 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Mon + Tue, Wed, 'Can do arithmetics with Enum values';
 }
 
+#?rakudo todo 'smart-matching against enums'
 {
     my $x = 'Today' but Day::Mon;
     ok $x.does(Day),      'Can test with .does() for enum type';
-    #?rakudo 1 skip '.does for enum value - XXX is this really valid test? asked TimToady...'
-    ok $x.does(Day::Mon), 'Can test with .does() for enum value';
     ok $x ~~ Day,         'Can smartmatch for enum type';
     ok $x ~~ Day::Mon,    'Can Smartmatch for enum value';
     my $check = 0;
@@ -51,6 +50,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Day::Mon.key,  'Mon',      '.key on long form of Enum value';
     is Mon.key,       'Mon',      '.key on short form of Enum value';
 
+    #?rakudo todo 'enum + .WHAT'
     is Day::Mon.WHAT, 'Day()',    '.WHAT on enum value stringifies to the enum name';
 }
 
@@ -78,12 +78,12 @@ my Color $c1 = Color::white;
 is($c1, 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
 is($c1, 0, 'can assign enum value to typed variable with short name');
+#?rakudo todo 'enum type checks'
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
 # conflict between subs and enums
 {
     my sub white { 'sub' };
-    #?rakudo todo 'subs and enums with conflicting names'
     is white, 0, 'short name of the enum without parenthesis is an enum';
     is white(), 'sub', 'short name with parenthesis is a sub';
 }
@@ -95,6 +95,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
     ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),
             '.pick on enums';
+    #?rakudo todo 'enum + .pick'
     ok Color.pick(2) == 2, '.pick(2) on enums';
 }
 
