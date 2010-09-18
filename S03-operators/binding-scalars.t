@@ -10,7 +10,7 @@ These tests are derived from the "Item assignment precedence" section of Synopsi
 
 =end head1 Binding tests
 
-plan 28;
+plan 29;
 
 # Basic scalar binding tests
 {
@@ -130,6 +130,13 @@ plan 28;
   eval '($a, *@tail) := (1, 2, 3)';
   #?pugs todo
   ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
+}
+
+# RT #77462
+# binding how has the same precedence as list assignment
+{
+    my $x := 1, 2;
+    is $x.join, '12', 'binding has same precdence as list assignment'
 }
 
 # vim: ft=perl6
