@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 37;
+plan 39;
 
 {
     my $x = 1;
@@ -173,6 +173,17 @@ plan 37;
 
 # a rakudo regression
 ok (0 || 0 || 1), '0 || 0 || 1 is true';
+
+# RT #77864
+{
+    my $x;
+    $x &&= 5;
+    #?rakudo todo '77864'
+    nok $x.defined, '&&= leaves var on the right undefined';
+    my $y ||= 'moin';
+    is $y, 'moin', '||= on a fresh variable works';
+
+}
 
 done_testing;
 
