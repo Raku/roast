@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 149;
+plan 167;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -435,6 +435,34 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     is ~$dt, '2007-03-10T23:02:00-0800', 'DateTime.in-timezone (NYC to LAX, just after NYC DST)';
     $dt = nyc-dt(2007,  3, 11,    6,  2).in-timezone(&lax-tz);
     is ~$dt, '2007-03-11T03:02:00-0700', 'DateTime.in-timezone (NYC to LAX, just after LAX DST)';
+}
+
+# --------------------------------------------------------------------
+# Miscellany
+# --------------------------------------------------------------------
+
+# RT #77910
+# Ensure that any method of producing a DateTime keeps attributes
+# that should be Ints Ints.
+{
+    isa_ok dt(second => 1/3).year, Int, 'DateTime.new(...).year isa Int';
+    isa_ok dt(second => 1/3).hour, Int, 'DateTime.new(...).hour isa Int';
+    isa_ok dt(hour => 13, second => 1/3).hour, Int, 'DateTime.new(..., hour => 13).hour isa Int';
+    isa_ok dtc(second => 1/3).year, Int, '$dt.clone(...).year isa Int';
+    isa_ok dtc(second => 1/3).hour, Int, '$dt.clone(...).hour isa Int';
+    isa_ok dtc(hour => 13, second => 1/3).hour, Int, '$dt.clone(..., hour => 13).hour isa Int';
+    isa_ok DateTime.new(5).year, Int, 'DateTime.new(Int).year isa Int';
+    isa_ok DateTime.new(5).hour, Int, 'DateTime.new(Int).hour isa Int';
+    isa_ok DateTime.new(now).year, Int, 'DateTime.new(Instant).year isa Int';
+    isa_ok DateTime.new(now).hour, Int, 'DateTime.new(Instant).hour isa Int';
+    isa_ok ds('2005-02-04T15:25:00Z').year, Int, 'ds(Str).year isa Int';
+    isa_ok ds('2005-02-04T15:25:00Z').hour, Int, 'ds(Str).hour isa Int';
+    isa_ok dt.in-timezone(60*60).year, Int, 'dt.in-timezone(Int).year isa Int';
+    isa_ok dt.in-timezone(60*60).hour, Int, 'dt.in-timezone(Int).hour isa Int';
+    isa_ok dt.truncated-to(:week).year, Int, 'dt.truncated-to(:week).year isa Int';
+    isa_ok dt.truncated-to(:week).hour, Int, 'dt.truncated-to(:week).hour isa Int';
+    isa_ok DateTime.now.year, Int, 'DateTime.now.year isa Int';
+    isa_ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
 
 done_testing;
