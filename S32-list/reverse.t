@@ -3,13 +3,7 @@ use Test;
 
 # L<S32::Containers/List/"=item reverse">
 
-=begin pod
-
-Basic test for the reverse() builtin with a string (Str).
-
-=end pod
-
-plan 21;
+plan 22;
 
 
 
@@ -102,6 +96,11 @@ is(@a, @e, "list was reversed");
     @a .= reverse;
     is(@a[0], "bar", 'in place reversal works');
     is(@a[1], "foo", 'in place reversal works');
+}
+
+# RT #77914
+{
+    is (<a b>, <c d>).reverse.join, 'dcba', '.reverse flattens parcels';
 }
 
 # vim: ft=perl6
