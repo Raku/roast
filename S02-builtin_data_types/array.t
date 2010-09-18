@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 102;
+plan 103;
 
 #L<S02/Mutable types/Array>
 
@@ -329,7 +329,7 @@ my @array2 = ("test", 1, Mu);
     is [][].elems, 0, '[][] returns empty list/array';
 }
 
-# RT #58372
+# RT #58372 and RT #57790
 # by current group understanding of #perl6, postcircumifx:<[ ]> is actually
 # defined in Any, so that .[0] is the identity operation for non-Positional
 # types
@@ -337,6 +337,7 @@ my @array2 = ("test", 1, Mu);
     is 1[0], 1, '.[0] is identiity operation for scalars (Int)';
     is 'abc'[0], 'abc', '.[0] is identiity operation for scalars (Str)';
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
+    isa_ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
     dies_ok { Mu.[0] }, 'but Mu has no .[]';
 }
 
