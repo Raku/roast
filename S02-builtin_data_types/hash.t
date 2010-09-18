@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 74;
+plan 76;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -248,6 +248,15 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 {
     my %h = { a => 1, b => 2, c => 3};
     is %h{*}.join('|'), %h.values.join('|'), '{*} zen slice';
+}
+
+# RT #75868
+{
+    my %h = (ab => 'x', 'a' => 'y');
+    'abc' ~~ /^(.)./;
+    is %h{$/}, 'x', 'can use $/ as hash key';
+    is %h{$0}, 'y', 'can use $0 as hash key';
+
 }
 
 done_testing;
