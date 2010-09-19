@@ -178,8 +178,7 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 {
     my $x;
     $x &&= 5;
-    #?rakudo todo '77864'
-    nok $x.defined, '&&= leaves var on the right undefined';
+    is $x, 5, '&&= on a fresh variable works';
     my $y ||= 'moin';
     is $y, 'moin', '||= on a fresh variable works';
 
