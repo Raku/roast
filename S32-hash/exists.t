@@ -32,8 +32,8 @@ sub gen_hash {
 
     my $b = %h1<b>;
     #?rakudo skip 'unspecced'
-    is (exists %h1: 'a'), 1, "Test existence for single key. (Indirect notation)";
-    is (%h1.exists('a')), 1, "Test existence for single key. (method call)";
+    is (exists %h1: 'a'), True, "Test existence for single key. (Indirect notation)";
+    is (%h1.exists('a')), True, "Test existence for single key. (method call)";
 };
 
 {
@@ -41,12 +41,12 @@ sub gen_hash {
     %h<none> = 0;
     %h<one> = 1;
     %h<nothing> = Mu;
-    is %h.exists('none'),     1,  "Existence of single key with 0 as value: none";
-    is %h.exists('one'),      1,  "Existence of single key: one";
-    is %h.exists('nothing'),  1,  "Existence of single key with undefined as value: nothing";
-    is defined(%h<none>),     1,  "Defined 0 value for key: none";
-    is defined(%h<one>),      1,  "Defined 1 value for key: one";
-    ok !defined(%h<nothing>),     "NOT Defined value for key: nothing";
+    ok %h.exists('none'),     "Existence of single key with 0 as value: none";
+    ok %h.exists('one'),      "Existence of single key: one";
+    ok %h.exists('nothing'),  "Existence of single key with undefined as value: nothing";
+    ok defined(%h<none>),     "Defined 0 value for key: none";
+    ok defined(%h<one>),      "Defined 1 value for key: one";
+    ok !defined(%h<nothing>), "NOT Defined value for key: nothing";
 }
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
