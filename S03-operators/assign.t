@@ -422,8 +422,8 @@ my @p;
 {
     my $x = 42;
     @p = $x ?|= 24, 25;
-    is($x, 1, '?|= operator');
-    is(@p[0],1, "?|= operator parses as item assignment 1");
+    is($x, True, '?|= operator');
+    is(@p[0], True, "?|= operator parses as item assignment 1");
     is(@p[1],25, "?|= operator parses as item assignment 2");
 }
 
@@ -431,18 +431,18 @@ my @p;
 {
     my $x = 42;
     @p = $x ?&= 24, 25;
-    is($x, 1, '?&= operator');
-    is(@p[0],1, "?&= operator parses as item assignment 1");
-    is(@p[1],25, "?&= operator parses as item assignment 2");
+    is($x, True, '?&= operator');
+    is(@p[0], True, "?&= operator parses as item assignment 1");
+    is(@p[1], 25, "?&= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'
 {
     my $x = 0;
     @p = $x ?^= 42, 43;
-    is($x, 1, '?^= operator');
-    is(@p[0],1, "?^= operator parses as item assignment 1");
-    is(@p[1],43, "?^= operator parses as item assignment 2");
+    is($x, True, '?^= operator');
+    is(@p[0], True, "?^= operator parses as item assignment 1");
+    is(@p[1], 43, "?^= operator parses as item assignment 2");
 }
 
 #?pugs eval 'parsefail'

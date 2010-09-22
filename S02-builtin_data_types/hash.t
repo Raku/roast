@@ -122,7 +122,7 @@ is(@values1[2], 3, 'got the right values');
 my %hash8;
 ok(%hash8.does(Hash), '%hash8 does Hash');
 %hash8 = (:one, :key<value>, :three(3));
-is(%hash8{'one'}, 1, 'colonpair :one');
+ok(%hash8{'one'} === True, 'colonpair :one');
 is(%hash8{'key'}, 'value', 'colonpair :key<value>');
 is(%hash8{'three'}, 3, 'colonpair :three(3)');
 

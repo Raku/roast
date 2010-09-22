@@ -24,4 +24,4 @@ is (so($b) + 1), ((so $b) + 1), 'so($b) is (so $b)';
 ok (so my $x = 5), 'so + declaration';
 is $x, 5, 'assignment after so worked';
 
-???
+# vim: ft=perl6

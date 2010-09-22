@@ -92,10 +92,10 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric series 
 
 # some tests taken from Spec
 
-is (False, &prefix:<!> ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
+is (False, &prefix:<!> ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
 is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
-is (False, { !$_ } ... *).[^10].join(', '), "0, 1, 0, 1, 0, 1, 0, 1, 0, 1", "alternating False and True";
+is (False, { !$_ } ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
 
 # L<S03/List infix precedence/'"asymptotically approaching" is not the same as "equals"'>

@@ -40,14 +40,14 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 {
-    ok (    [<]  1, 2, 3, 4), "[<] works (1)";
-    ok (not [<]  1, 3, 2, 4), "[<] works (2)";
-    ok (    [>]  4, 3, 2, 1), "[>] works (1)";
-    ok (not [>]  4, 2, 3, 1), "[>] works (2)";
-    ok (    [==] 4, 4, 4),    "[==] works (1)";
-    ok (not [==] 4, 5, 4),    "[==] works (2)";
-    ok (    [!=] 4, 5, 6),    "[!=] works (1)";
-    ok (not [!=] 4, 4, 4),    "[!=] works (2)";
+    ok  ([<]  1, 2, 3, 4), "[<] works (1)";
+    nok ([<]  1, 3, 2, 4), "[<] works (2)";
+    ok  ([>]  4, 3, 2, 1), "[>] works (1)";
+    nok ([>]  4, 2, 3, 1), "[>] works (2)";
+    ok  ([==] 4, 4, 4),    "[==] works (1)";
+    nok ([==] 4, 5, 4),    "[==] works (2)";
+    ok  ([!=] 4, 5, 6),    "[!=] works (1)";
+    nok ([!=] 4, 4, 4),    "[!=] works (2)";
 }
 
 {
@@ -74,11 +74,11 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     my $a = [1, 2];
     my $b = [1, 2];
 
-    ok (    [===] 1, 1, 1, 1),      '[===] with literals';
-    ok (    [===] $a, $a, $a),      '[===] with vars (positive)';
-    ok (not [===] $a, $a, [1, 2]),  '[===] with vars (negative)';
-    ok (    [!===] $a, $b, $a),     '[!===] basic sanity (positive)';
-    ok (not [!===] $a, $b, $b),     '[!===] basic sanity (negative)';
+    ok  ([===] 1, 1, 1, 1),      '[===] with literals';
+    ok  ([===] $a, $a, $a),      '[===] with vars (positive)';
+    nok ([===] $a, $a, [1, 2]),  '[===] with vars (negative)';
+    ok  ([!===] $a, $b, $a),     '[!===] basic sanity (positive)';
+    nok ([!===] $a, $b, $b),     '[!===] basic sanity (negative)';
 }
 
 {
@@ -194,7 +194,7 @@ is( ([~] 'washcloth'), 'washcloth', "[~] 'washcloth' returns 'washcloth'");
 is( ([\~] 'towel'), 'towel', "[\~] 'towel' returns 'towel'");
 ok( ([\~] 'towel') ~~ Iterable, "[\~] 'towel' returns something Iterable");
 is( ([<] 42), Bool::True, "[<] 42 returns true");
-is( ~([\<] 42), "1", "[\<] 42 returns '1'");
+is( ~([\<] 42), ~True, "[\<] 42 returns '1'");
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 

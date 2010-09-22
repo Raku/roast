@@ -40,7 +40,7 @@ isa_ok(~2**4, Str, "~4**4 is a string");
 # symbolic unary
 
 is(!0 * 2, 2, "unary ! binds tighter than *");
-is(!(0 * 2), 1, "beh");
+ok(!(0 * 2), "beh");
 is(?2*2, 2, "binary -> numify causes reinterpretation as, binds tighter than *");
 
 # multiplicative
@@ -135,7 +135,7 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 # loose unary
 
 my $x;
-is((so $x = 42), 1, "item assignment is tighter than true");
+is((so $x = 42), True, "item assignment is tighter than true");
 
 # comma
 
@@ -218,9 +218,9 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     my $r;
     sub foo($x) { $r = $x }
     foo 3 != 3;
-    is($r, 0, 'sanity 3 != 3');
+    is($r, False, 'sanity 3 != 3');
     foo 3 !=3;
-    is($r, 0, 'ensure 3 !=3 gives same result as 3 != 3');
+    is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
 }
 
 # vim: ft=perl6
