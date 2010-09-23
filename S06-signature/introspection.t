@@ -5,7 +5,7 @@ plan 48;
 # L<S06/Signature Introspection>
 
 sub j(*@i) {
-    @i.map({ ?$_}).join(' ');
+    @i.map({ $_ ?? '1' !! '0' }).join(' ');
 }
 
 {

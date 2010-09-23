@@ -19,6 +19,7 @@ ok(not so(so 0), "so(so 0) is false");
 ok(so Bool::True, "'Bool::True' is true");
 ok(so True, "'True' is true");
 
+#?rakudo todo 'check test and rakudo'
 is (so($b) + 1), ((so $b) + 1), 'so($b) is (so $b)';
 
 ok (so my $x = 5), 'so + declaration';
