@@ -44,11 +44,9 @@ ok(!Bool::False, 'False works');
 # tests Bool stringification - interaction with ~
 isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
-ok(~Bool::True, 'stringified True works');
-#?rakudo todo '~Bool'
-ok(~Bool::False, 'stringified False is true');
-# NOTE. We don't try to freeze ~True into '1'
-# and ~False into '' as pugs does now. Maybe we should (?!)
+is(~Bool::True, 'Bool::True', 'Bool stringification (True)');
+is(~Bool::False, 'Bool::False', 'Bool stringification (False)');
+
 
 # numification - interaction with +
 ok(+Bool::True ~~ Numeric);
