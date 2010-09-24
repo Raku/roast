@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S03/List infix precedence/"the series operator">
+# L<S03/List infix precedence/"the sequence operator">
 
 plan 19;
 
@@ -32,7 +32,7 @@ is (1, 1, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2
 is (1, 1, 2, -> $a, $b { $a + $b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 4 seeds';
 
-# series with slurpy functions
+# sequence with slurpy functions
 
 {
     sub nextprime( *@prev_primes ) {

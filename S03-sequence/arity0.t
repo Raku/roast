@@ -16,8 +16,8 @@ plan 13;
 # Test with exact limit
 {
     my @rolls = ({ (1..2).pick } ... 2).munch(100);
-    ok +@rolls > 0, 'the series had at least one element...';
-    ok +@rolls < 100, '... and the series terminated';
+    ok +@rolls > 0, 'the sequence had at least one element...';
+    ok +@rolls < 100, '... and the sequence terminated';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
     is @rolls.grep(2).elems, 1, 'There was exactly one 2 rolled...';
     is @rolls[@rolls.elems - 1], 2, '...and it was the last roll';
@@ -26,7 +26,7 @@ plan 13;
 # Test with limit between possible values
 {
     my @rolls = ({ (1..2).pick } ... 1.5).munch(100);
-    ok +@rolls == 100, 'the series is infinite...';
+    ok +@rolls == 100, 'the sequence is infinite...';
     is @rolls.grep(Int).elems, +@rolls, 'all the rolls are Ints';
 }
 
