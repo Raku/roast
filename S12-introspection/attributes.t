@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 30;
 
 =begin pod
 
@@ -59,5 +59,15 @@ is @attrs[0].name, '$!c',       'first element is attribute desriptor';
 ok @attrs[1] ~~ Array,          'second element is array';
 is @attrs[1][0].name, '$!b',    'can look into second element array to find next attribute';
 is @attrs[1][1][0].name, '$!a', 'can look deeper to find attribute beyond that';
+
+{
+    my $x = A.new(a => 'abc');
+    my $attr = $x.^attributes(:local).[0];
+    isa_ok $attr, Attribute;
+    is $attr.get_value($x), 'abc', '.get_value works';
+    lives_ok { $attr.set_value($x, 'new') }, 'can set_value';
+    is $x.a, 'new', 'set_value worked';
+
+}
 
 # vim: ft=perl6
