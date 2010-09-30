@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 44;
 
 # L<S32::Str/Str/=item comb>
 
@@ -84,13 +84,13 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is @l[0].from, 0, '.from of the first item is correct';
     is @l[0].to, 3, '.to of the first item is correct';
     is @l[1].from, 6, '.from of the second item is correct';
-    is @l[1].to, 9, '.to of the second item is correct';    
+    is @l[1].to, 9, '.to of the second item is correct';
 }
 
 # RT #66340
 {
     my $expected_reason = rx/^'No applicable candidates '/;
-    
+
     try { 'RT 66340'.comb( 1 ) };
     ok $! ~~ Exception, '.comb(1) dies';
     ok "$!" ~~ $expected_reason, '.comb(1) dies for the expected reason';
@@ -100,6 +100,15 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     is $calls, 0, 'code passed to .comb is not called';
     ok $! ~~ Exception, '.comb({...}) dies';
     ok "$!" ~~ $expected_reason, '.comb({...}) dies for the expected reason';
+}
+
+#?rakudo skip "RT #78100"
+{
+    is comb( /./ , "abcd"), <a b c d>, 'Subroutine form default limit';
+    is comb(/./ , "abcd" , 2 ), <a b>, 'Subroutine form with supplied limit';
+    is comb(/./ , "abcd" , :limit(2)), <a b>, 'Subroutine form with supplied limit';
+    is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng"), <3 3 4 3 0 3 3 1 1 1>, 'Subroutine form with no limit returns all matches';
+    is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
 }
 
 done_testing;
