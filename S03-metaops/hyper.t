@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 265;
+plan 269;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -717,7 +717,16 @@ my @e;
 
 # RT #74530
 {
-    is ~(-<<(1..3)), '-1 -2 -3', 'ranges and hyper ops mix';;
+    is ~(-<<(1..3)), '-1 -2 -3', 'ranges and hyper ops mix';
+}
+
+# RT #77800
+# Parsing hyper-subtraction
+{
+    is ((9, 8) <<-<< (1, 2, 3, 4)), (8, 6, 6, 4), '<<-<<';
+    is ((9, 8, 10, 12) >>->> (1, 2)), (8, 6, 9, 10), '>>->>';
+    is ((9, 8) >>-<< (1, 2)), (8, 6), '>>-<<';
+    is ((9, 8) <<->> (1, 2, 5)), (8, 6, 4), '<<->>';
 }
 
 done_testing;
