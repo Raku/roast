@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 52;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -210,7 +210,13 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 {
     eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
     is eval('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
+}
 
+# package Foo; is perl 5 code;
+# RT #75458
+{
+    eval_dies_ok "package Perl5Code;\n'this is Perl 5 code'",
+        'package Foo; is indicator for Perl 5 code';
 }
 
 # vim: ft=perl6
