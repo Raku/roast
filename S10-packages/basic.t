@@ -206,6 +206,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         'overrides from one module do not affect a module that is loaded later on';
 }
 
+# also checks RT #73740
 {
     eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
     is eval('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
