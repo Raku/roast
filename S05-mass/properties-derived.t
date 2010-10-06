@@ -101,6 +101,7 @@ ok("\c[BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE]\c[KATAKANA MIDDLE DOT]" ~~ m/<.
 ok("\x[8AB0]" ~~ m/^<.isIdeographic>$/, q{Match <.isIdeographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<!isIdeographic>.$/ ), q{Don't match negated <isIdeographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<-isIdeographic>$/ ), q{Don't match inverted <isIdeographic>} );
+#?rakudo 3 skip 'icu problems'
 ok(!( "\x[9FC4]"  ~~ m/^<.isIdeographic>$/ ), q{Don't match unrelated <isIdeographic>} );
 ok("\x[9FC4]"  ~~ m/^<!isIdeographic>.$/, q{Match unrelated negated <isIdeographic>} );
 ok("\x[9FC4]"  ~~ m/^<-isIdeographic>$/, q{Match unrelated inverted <isIdeographic>} );
@@ -280,6 +281,7 @@ ok("\x[3C9D]\c[EXCLAMATION MARK]" ~~ m/<.isTerminalPunctuation>/, q{Match unanch
 ok("\x[7896]" ~~ m/^<.isUnifiedIdeograph>$/, q{Match <.isUnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<!isUnifiedIdeograph>.$/ ), q{Don't match negated <isUnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<-isUnifiedIdeograph>$/ ), q{Don't match inverted <isUnifiedIdeograph>} );
+#?rakudo 3 skip 'icu'
 ok(!( "\x[9FC4]"  ~~ m/^<.isUnifiedIdeograph>$/ ), q{Don't match unrelated <isUnifiedIdeograph>} );
 ok("\x[9FC4]"  ~~ m/^<!isUnifiedIdeograph>.$/, q{Match unrelated negated <isUnifiedIdeograph>} );
 ok("\x[9FC4]"  ~~ m/^<-isUnifiedIdeograph>$/, q{Match unrelated inverted <isUnifiedIdeograph>} );
@@ -363,6 +365,7 @@ ok("\x[D7A4]\x[C276]" ~~ m/<.isID_Start>/, q{Match unanchored (Lu + Ll + Lt + Lm
 ok("\x[949B]" ~~ m/^<.isID_Continue>$/, q{Match (ID_Start + Mn + Mc + Nd + Pc)} );
 ok(!( "\x[949B]" ~~ m/^<!isID_Continue>.$/ ), q{Don't match negated (ID_Start + Mn + Mc + Nd + Pc)} );
 ok(!( "\x[949B]" ~~ m/^<-isID_Continue>$/ ), q{Don't match inverted (ID_Start + Mn + Mc + Nd + Pc)} );
+#?rakudo 3 skip 'icu'
 ok(!( "\x[9FC4]"  ~~ m/^<.isID_Continue>$/ ), q{Don't match unrelated (ID_Start + Mn + Mc + Nd + Pc)} );
 ok("\x[9FC4]"  ~~ m/^<!isID_Continue>.$/, q{Match unrelated negated (ID_Start + Mn + Mc + Nd + Pc)} );
 ok("\x[9FC4]"  ~~ m/^<-isID_Continue>$/, q{Match unrelated inverted (ID_Start + Mn + Mc + Nd + Pc)} );
