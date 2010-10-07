@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 269;
+plan 277;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -705,6 +705,14 @@ my @e;
     @r = (1, 2, 3, *) «~» <A B C D E>;
     @e = <1A 2B 3C 3D 3E>;
     is ~@r, ~@e, 'dwimmy hyper extends lists ending with * by copying the last element';
+
+    @r = (1, 2, *) «~» (4, 5, *);
+    @e = <14 25>;
+    is ~@r, ~@e, 'dwimmy hyper omits * when both arguments of same length have one';
+
+    @r = (1, 2, *) «~» (4, 5, 6, *);
+    @e = <14 25 26>;
+    is ~@r, ~@e, 'dwimmy hyper takes longer length given two arguments ending with *';
 }
 
 # RT #77010
@@ -727,6 +735,32 @@ my @e;
     is ((9, 8, 10, 12) >>->> (1, 2)), (8, 6, 9, 10), '>>->>';
     is ((9, 8) >>-<< (1, 2)), (8, 6), '>>-<<';
     is ((9, 8) <<->> (1, 2, 5)), (8, 6, 4), '<<->>';
+}
+
+# RT #77876
+# L<S03/Hyper operators/'@array »+=»'>
+# Hyper assignment operators
+{
+    my @array = 3, 8, 2, 9, 3, 8;
+    @r = @array »+=« (1, 2, 3, 4, 5, 6);
+    @e = 4, 10, 5, 13, 8, 14;
+    is @r, @e, '»+=« returns the right value';
+    is @array, @e, '»+=« changes its lvalue';
+
+    @array = 3, 8, 2, 9, 3, 8;
+    @r = @array »*=» (1, 2, 3);
+    @e = 3, 16, 6, 9, 6, 24;
+    is @r, @e, '»*=» returns the right value';
+    is @array, @e, '»*=» changes its lvalue';
+
+    my $a = 'apple';
+    my $b = 'blueberry';
+    my $c = 'cherry';
+    @r = ($a, $b, $c) »~=» <pie tart>;
+    @e = <applepie blueberrytart cherrypie>;
+    is @r, @e, '»~=» with list of scalars on the left returns the right value';
+    my $e = 'applepie, blueberrytart, cherrypie';
+    is "$a, $b, $c", $e, '»~=» changes each scalar';
 }
 
 done_testing;
