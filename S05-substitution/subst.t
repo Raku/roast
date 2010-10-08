@@ -192,14 +192,12 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
-#?rakudo skip 'ss/.../.../'
 {
-    given "a\nb\tc d" {
-        ok ss/a b c d/w x y z/, 'successful substitution returns True';
-        is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
-    }
+    $_ = "a\nb\tc d";
+    ok ss/a b c d/w x y z/, 'successful substitution returns True';
+    is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
-    ok !("abc" ~~ ss/a b c/ x y z/), 'ss/// implies :s (-)';
+    dies_ok {"abc" ~~ ss/a b c/ x y z/}, 'Cannot ss/// string literal';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
