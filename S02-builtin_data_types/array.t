@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 103;
+plan 104;
 
 #L<S02/Mutable types/Array>
 
@@ -13,12 +13,16 @@ plan 103;
 }
 
 
-#?rakudo todo "RT #63350"
 {
-    # see also RT #63350 for discussion
+    # see RT #63350 for discussion
+    # also: 78284
     my $i = 0;
     $i++ for (1, 2, 3).item;
     is $i, 1, 'for (1, 2, 3).item does one iteration';
+
+    $i = 0;
+    $i++ for $(1, 2, 3);
+    is $i, 1, 'for $(1, 2, 3) does one iteration';
 }
 
 {
