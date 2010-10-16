@@ -392,14 +392,9 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     }
 
     sub us2007dst($dt, $critical-hour) {
-        $dt.month >  3
-            || $dt.month ==  3
-                && ($dt.day > 11
-                    || $dt.day == 11 && $dt.hour >= $critical-hour)
-        and $dt.month < 11
-            || $dt.month == 11
-                && ($dt.day < 4
-                    || $dt.day == 4 && $dt.hour < $critical-hour)
+        my $t = ($dt.month, $dt.day, $dt.hour);
+        ([or] (3, 11, $critical-hour) »<=>« $t) == 0|-1
+           and ([or] $t »<=>« (11, 4, $critical-hour)) == -1
     }
 
     sub nyc-dt($year, $month, $day, $hour, $minute) {
