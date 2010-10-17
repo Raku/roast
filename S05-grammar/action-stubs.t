@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 18;
 
 # L<S05/Grammars/"and optionally pass an action object">
 
@@ -108,5 +108,41 @@ is $action.calls, 'ab', '... and in the right order';
         'Can call Str.subst in an action method without any trouble';
 }
 
+# Test for a Rakudo bug revealed by 5ce8fcfe5 that (given the
+# below code) set $x.ast[0] to (1, 2).
+{
+    grammar Grammar::Trivial {
+        token TOP { a }
+    };
+
+    class Grammar::Trivial::A {
+       method TOP($/) { make (1, 2) }
+    };
+
+    my $x = Grammar::Trivial.parse: 'a',
+        actions => Grammar::Trivial::A.new;
+    ok $x, 'Trivial grammar parsed';
+    is $x.ast[0], 1, 'make(Parcel) (1)';
+    is $x.ast[1], 2, 'make(Parcel) (2)';
+}
+
+# &make with multiple arguments.
+{
+    grammar Grammar::AlsoTrivial {
+        token TOP { a }
+    };
+
+    class Grammar::AlsoTrivial::A {
+       method TOP($/) { make 1, 2 }
+    };
+
+    my $x = Grammar::AlsoTrivial.parse: 'a',
+        actions => Grammar::AlsoTrivial::A.new;
+    ok $x, 'Trivial grammar parsed';
+
+    my ($a, $b) = @($x.ast);
+    is $a, 1, 'Multi-argument &make (1)';
+    is $b, 2, 'Multi-argument &make (2)';
+}
 
 # vim: ft=perl6
