@@ -23,7 +23,7 @@ use Test;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 48;
+plan 53;
 
 sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
 {
@@ -33,7 +33,7 @@ sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
     is f1(:a,      23),     'Bool()Int()',  "':a' is a named";
     is f1(:!a,     23),     'Bool()Int()',  "':!a' is also named";
 
-    is f1("a"   => 42, 23), 'Pair()Int()', "'\"a\" => 42' is a named";
+    is f1("a"   => 42, 23), 'Pair()Int()', "'\"a\" => 42' is a pair";
     is f1(("a") => 42, 23), 'Pair()Int()', "'(\"a\") => 42' is a pair";
     is f1((a   => 42), 23), 'Pair()Int()', "'(a => 42)' is a pair";
     is f1(("a" => 42), 23), 'Pair()Int()', "'(\"a\" => 42)' is a pair";
@@ -150,6 +150,14 @@ sub f9 (:$bar!) { WHAT($bar) }
 
 {
     is (a => 3).elems, 1, 'Pair.elems';
+}
+
+{
+    is (self => 1).key, 'self', 'Pair with "self" as key';
+    is (rand => 1).key, 'rand', 'Pair with "rand" as key';
+    is (time => 1).key, 'time', 'Pair with "time" as key';
+    is (now => 1).key, 'now', 'Pair with "now" as key';
+    is (YOU_ARE_HERE => 1).key, 'YOU_ARE_HERE', 'Pair with "YOU_ARE_HERE" as key';
 }
 
 # vim: ft=perl6
