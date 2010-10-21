@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 122;
+plan 123;
 
 # single-term sequence
 
@@ -229,6 +229,9 @@ is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in th
 	my @fib := (0, 1, *+* ... * );
 	is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
+
+#?rakudo skip 'RT #78324'
+is (32,16,8 ...^ Rat), (32,16,8) , 'When the limit is a type we do not get an infinite sequence';
 
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
