@@ -40,6 +40,7 @@ is("ABCDEFGH".trans( ('A..CE..G' => 'a..ce..g') ),
     "abcDefgH",
     "The two sides can consist of multiple ranges");
 
+#?rakudo: todo "arrays don't work yet"
 is("ABCXYZ".trans( (['A'..'C'] => ['a'..'c']), (<X Y Z> => <x y z>) ),
     "abcxyz",
     "The two sides of each pair may also be array references" );
