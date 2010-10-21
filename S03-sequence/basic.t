@@ -230,7 +230,7 @@ is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in th
 	is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
-#?rakudo skip 'RT #78324'
+# RT #78324
 is (32,16,8 ...^ Rat), (32,16,8) , 'When the limit is a type we do not get an infinite sequence';
 
 # RT #75828
