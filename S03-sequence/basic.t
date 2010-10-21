@@ -231,7 +231,7 @@ is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in th
 }
 
 # RT #78324
-is (32,16,8 ...^ Rat), (32,16,8) , 'When the limit is a type we do not get an infinite sequence';
+is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type';
 
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
