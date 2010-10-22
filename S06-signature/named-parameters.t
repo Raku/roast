@@ -100,7 +100,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
    "When we explicitly specify, we get our value");
 
 # L<S06/Named arguments/multiple same-named arguments>
-#?rakudo skip 'parsefail'
+#?rakudo todo 'multiple same-named arguments NYI'
 {
     sub named_array(:@x) { +«@x }
 
@@ -110,11 +110,11 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
 }
 
 # L<S06/Named arguments/Pairs intended as positional arguments>
-#?rakudo skip 'parsefail'
 {
     sub named_array2(@x, :@y) { (+«@x, 42, +«@y) }
     # +«(:x) is (0, 1)
 
+    #?rakudo 8 todo "named arguments not fully up to spec"
     is(eval('named_array2(:!x, :y)'), (0, 42, 1), 'named and unnamed args - two named');
     is(eval('named_array2(:!x, y => 1)'), (0, 42, 1), 'named and unnamed args - two named - fatarrow');
     is(eval('named_array2(:y, :!x)'), (0, 42, 1), 'named and unnamed args - two named - backwards');
@@ -123,7 +123,10 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     is(eval('named_array2(:!y, 1)'), (1, 42, 0), 'named and unnamed args - one named, one pos');
     is(eval('named_array2(1, :!y)'), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
     is(eval('named_array2(:y, 1, :!y)'), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
+    
     ok(eval('named_array2(:y, :y)').notdef, 'named and unnamed args - two named with same name');
+
+    #?rakudo 4 todo "named arguments not fully up to spec"
     is(eval('named_array2(:y, (:x))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
     is(eval('named_array2(:y, (:y))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair of same name');
     is(eval('named_array2(:y, :z)'), (0, 1, 42, 1), 'named and unnamed args - passing pair of unrelated name');
