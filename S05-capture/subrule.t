@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 31;
+plan 34;
 
 # L<S05/Match objects/When used as a hash>
 
@@ -67,5 +67,12 @@ ok($/, 'Caprep matched');
 is(~$/, "abcabcabcabc", 'Caprep matched');
 is(~$/<caprep>, "abcabcabcabc", 'Caprep captured');
 is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
+
+# RT #76892
+{
+    nok 'abc' !~~ /<alpha>(.)/, 'unsuccessful non-match';
+    is $0,       'b', 'failed !~~ still makes $0 available';
+    is $<alpha>, 'a', 'failed !~~ still makes $<foo> available';
+}
 
 # vim: ft=perl6
