@@ -40,7 +40,6 @@ isa_ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
 # what should happen when this is called on a non-existent file?
 nok $non-existent-file.IO.f, 'Is not a normal file';
 isa_ok $non-existent-file.IO.f, Bool, '.f returns Bool';
-#?rakudo todo "non-existent ~~ :!f returns false at the moment"
 ok $non-existent-file.IO ~~ :!f, 'Is not a normal file';
 isa_ok $non-existent-file.IO ~~ :!f, Bool, '~~ :!f returns Bool';
 
