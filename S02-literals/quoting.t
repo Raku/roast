@@ -171,8 +171,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], "foo bar", "and return correct value");
 };
 
-
-#?rakudo skip 'qw'
 { # traditional quote word
     my @q = ();
     @q = (qw/$foo $bar/);
