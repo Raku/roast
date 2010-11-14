@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 33;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -62,6 +62,16 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     dies_ok { %s<a> = True }, "Can't assign to an element (Sets are immutable)";
     dies_ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
+}
+
+# L<S02/Hyper operators/'unordered type'>
+
+{
+    is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
+    is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';
+    is showset(-« set(3, 9, -4)), '-9 -3 4', '-« Set';
+    #?rakudo skip 'Hyper-method calls on Sets NYI'
+    is showset(set(<b e g k z>)».pred), 'a d f j y', 'Set».pred';
 }
 
 # L<S32::Containers/Set/pick>
