@@ -8,7 +8,7 @@ use Test;
 
 =end pod
 
-plan 277;
+plan 278;
 
 # L<S03/Hyper operators>
  # binary infix
@@ -686,6 +686,13 @@ my @e;
     my $t = '(1, 2, 3) »+« (4, 3, 2)';
     ok !eval($t.encode('ISO-8859-1')),
        'Latin-1 »+« without pre-declaration is an error';
+}
+
+# Test for 'my @a = <a b c> »~» "z";' wrongly
+# setting @a to [['az', 'bz', 'cz']].
+{
+    my @a = <a b c> »~» 'z';
+    is "{@a[0]}, {@a[1]}, {@a[2]}", 'az, bz, cz', "dwimmy hyper doesn't return an itemized list";
 }
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
