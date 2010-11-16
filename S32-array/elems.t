@@ -67,7 +67,6 @@ plan 13;
   is elems(:array((1,2,3,4))), 4, "elems (1,2,3,4) should work with named argument";
 }
 
-#?rakudo skip 'no sub version of elems yet'
 {
   is (elems (1,2,3,4)), 4, "elems (1,2,3,4) should work";
 }
@@ -77,7 +76,6 @@ plan 13;
   is (elems [1,2,3,4]), 4, "elems [1,2,3,4] should work";
 }
 
-#?rakudo skip 'no sub version of elems yet'
 {
   is (elems ([1,2,3,4],)), 1, "elems ([1,2,3,4],) should return 1";
 }

@@ -51,7 +51,6 @@ plan *;
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 }
 
-#?rakudo skip 'loops'
 {
     # Most of these tests pass in Rakudo, but we must compare with
     # eqv instead of eq, since the order of hashes is not guaranteed
@@ -61,7 +60,6 @@ plan *;
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
-    #?rakudo todo 'hash of one element dies'
     eval_dies_ok('hash("a")', 'building a hash of one item fails');
 }
 
