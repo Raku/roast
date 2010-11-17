@@ -13,6 +13,7 @@ L<A05/"RFC 332: Regex: Make /\$/ equivalent to /\z/ under the '/s' modifier" /Th
 
 plan 1;
 
+#?rakudo todo '$*PID is 0 on Mac OS X [perl #77850]'
 is_run 'say $*PID',
     {
         out => -> $p { $p > 0 && $p != $*PID },

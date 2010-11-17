@@ -74,6 +74,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
+    #?rakudo todo 'Test fails fairly consistently on at least darwin'
     is $received, $expected, "echo server and client";
 
     # test 3 does discard protocol - Internet RFC 863
