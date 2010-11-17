@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 55;
+plan 62;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -27,6 +27,10 @@ is $x.(5), 4, 'and we can execute that Code';
 ok *.abs ~~ Code, '*.abs is of type Code';
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
+isa_ok 1..*, Range, '1..* is a Range, not a Code';
+#?rakudo 2 skip "1..*-1 not right yet"
+isa_ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
+isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 {
     my @a = map *.abs, 1, -2, 3, -4;
@@ -98,6 +102,15 @@ isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
     is $c(2, 2, 2), 6,  '... that works';
     is $c(-3, -3, -3), 6, '... that respects precdence';
     is $c(0, -10, 3), 3, 'that can work with three different arguments';
+}
+
+#?rakudo skip "* + * * * badly broken at the moment"
+{
+    my $c = * + * * *;
+    ok $c ~~ Code, '* + * * * generated a closure';
+    is $c(2, 2, 2), 6,  '... that works';
+    is $c(-3, -3, -3), 6, '... that respects precdence';
+    is $c(3, 0, -10), 3, 'that can work with three different arguments';
 }
 
 #?rakudo skip 'RT 65482'
