@@ -32,6 +32,6 @@ is_run(
     'presence of postcircumfix does not lead to redeclaration warnings',
 );
 
-dies_ok { time(1, 2, 3) }, 'time() with arguments dies';
+eval_dies_ok 'time(1, 2, 3)', 'time() with arguments dies';
 
 
