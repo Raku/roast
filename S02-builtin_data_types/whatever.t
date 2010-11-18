@@ -28,7 +28,6 @@ ok *.abs ~~ Code, '*.abs is of type Code';
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 isa_ok 1..*, Range, '1..* is a Range, not a Code';
-#?rakudo 2 skip "1..*-1 not right yet"
 isa_ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
 isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
@@ -104,7 +103,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $c(0, -10, 3), 3, 'that can work with three different arguments';
 }
 
-#?rakudo skip "* + * * * badly broken at the moment"
 {
     my $c = * + * * *;
     ok $c ~~ Code, '* + * * * generated a closure';
