@@ -166,7 +166,6 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     '&nbsp;???&gt;&amp;',
     '... and now complement and squash');
 
-#?rakudo skip 'regexes'
 {
 # remove vowel and character after
     is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdgh', 'basic regex works');
