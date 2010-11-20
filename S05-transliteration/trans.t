@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 53;
+plan 57;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -238,5 +238,20 @@ eval_dies_ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
     lives_ok { "".subst(/x/, "").trans() },
         'trans on subst output lives';
 }
+
+is('aaaaabbbbb'.trans(['aaa', 'aa', 'bb', 'bbb'] => ['1', '2', '3', '4']),
+   '1243',
+   'longest constant token preferred, regardless of declaration order');
+
+is('foobar'.trans(/\w+/ => 'correct', /foo/ => 'RONG'), 'correct',
+   'longest regex token preferred, regardless of declaration order');
+
+is('aaaa'.trans(/a/ => '1', /\w/ => '2', /./ => '3'), '1111',
+   'in case of a tie between regex lengths, prefer the first one');
+
+is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
+                   ['1',  '2',   '3',   '4'   ]),
+   '23',
+   'longest token still holds, even between constant strings and regexes');
 
 # vim: ft=perl6
