@@ -208,27 +208,26 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 
 #?rakudo skip 'tr///, feed operator not implemented'
 {
-is(eval('"abc".trans(<== "a" => "A")'), "Abc",
-    "you're allowed to leave off the (...) named arg parens when you use <==");
+    is(eval('"abc".trans(<== "a" => "A")'), "Abc",
+        "you're allowed to leave off the (...) named arg parens when you use <==");
 
-# Make sure the tr/// version works, too.  
+    # Make sure the tr/// version works, too.  
 
-$_ = "ABC";
-tr/ABC/abc/;
-is($_, 'abc', 'tr/// on $_ with explicit character lists');
+    $_ = "ABC";
+    tr/ABC/abc/;
+    is($_, 'abc', 'tr/// on $_ with explicit character lists');
 
-$_ = "abc";
-tr|a..c|A..C|;
-is($_, 'ABC', 'tr||| on $_ with character range');
+    $_ = "abc";
+    tr|a..c|A..C|;
+    is($_, 'ABC', 'tr||| on $_ with character range');
 
-my $japh = "Whfg nabgure Crey unpxre";
-$japh ~~ tr[a..z A..Z][n..z a..m  N..Z A..M];
-is($japh, "Just another Perl hacker", 'tr[][] on lexical var via ~~');
+    my $japh = "Whfg nabgure Crey unpxre";
+    $japh ~~ tr[a..z A..Z][n..z a..m  N..Z A..M];
+    is($japh, "Just another Perl hacker", 'tr[][] on lexical var via ~~');
 
-$_ = '$123';
-tr/$123/X\x20\o40\t/;
-is($_, "X  \t", 'tr/// on $_ with explicit character lists');
-
+    $_ = '$123';
+    tr/$123/X\x20\o40\t/;
+    is($_, "X  \t", 'tr/// on $_ with explicit character lists');
 }
 
 # y/// is dead
