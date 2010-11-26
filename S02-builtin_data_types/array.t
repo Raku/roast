@@ -166,7 +166,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?pugs skip "no whatever star yet"
-#?rakudo skip ""
 {
     my @array12 = ('a', 'b', 'c', 'e');
 
@@ -183,7 +182,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?pugs skip "no whatever star yet"
-#?rakudo skip ""
 {
     my @array13 = ('a', 'b', 'c', 'd');
     # end index range as lvalue
