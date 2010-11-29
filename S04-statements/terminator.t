@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 15;
 
 # L<S04/"Statement-ending blocks"/"will terminate a statement">
 
@@ -53,5 +53,9 @@ eval_dies_ok "42 if 23\nis 50; 1",
 
 # not sure this belong here, suggestions for better places are welcome
 eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
+
+# RT #79964
+#?rakudo todo 'RT #79964'
+eval_lives_ok "my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
 
 # vim: ft=perl6
