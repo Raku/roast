@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 46;
+plan 48;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -52,7 +52,9 @@ is(~Bool::False, 'Bool::False', 'Bool stringification (False)');
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
 is(+Bool::True, '1', 'True numifies to 1');
+isa_ok(+Bool::True, Int, 'True numifies to an Int');
 is(+Bool::False, '0', 'False numifies to 0');
+isa_ok(+Bool::False, Int, 'False numifies to an Int');
 # stringification
 #?rakudo 2 todo '~Bool'
 is(~Bool::True, 'True', 'True stringifies to True');
