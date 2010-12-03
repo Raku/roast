@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<DateTime>/'local time zone'>
 
-plan 23;
+plan 25;
 
 sub ds(Str $s) { DateTime.new: $s }
 
@@ -53,8 +53,10 @@ $dt = ds('1984-04-29T07:02:00Z').local;
 is ~$dt, '1984-04-29T03:02:00-0400', 'DateTime.local (from UTC, just after DST begins)';
 $dt = ds('2008-11-02T05:55:00Z').local;
 is ~$dt, '2008-11-02T01:55:00-0400', 'DateTime.local (from UTC, just before DST ends)';
+is ~eval($dt.perl), '2008-11-02T01:55:00-0400', 'DateTime.local (from UTC, just before DST ends, .perl)';
 $dt = ds('2008-11-02T06:55:00Z').local;
 is ~$dt, '2008-11-02T01:55:00-0500', 'DateTime.local (from UTC, just after DST ends)';
+is ~eval($dt.perl), '2008-11-02T01:55:00-0500', 'DateTime.local (from UTC, just after DST ends, .perl)';
 $dt = ds('2008-11-02T08:58:00+0303').local;
 is ~$dt, '2008-11-02T01:55:00-0400', 'DateTime.local (from +0303, just before DST ends)';
 $dt = ds('2008-11-01T14:43:00-1612').local;
