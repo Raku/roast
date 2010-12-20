@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 62;
+plan 71;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -205,6 +205,23 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 # RT #73162
 eval_lives_ok '{*.{}}()', '{*.{}}() lives';
+
+# RT #80256
+{
+    my $f = * !< 3;
+    isa_ok $f, Code, 'Whatever-currying !< (1)';
+    nok $f(2), 'Whatever-currying !< (2)';
+    ok $f(3), 'Whatever-currying !< (3)';
+    ok $f(4), 'Whatever-currying !< (4)';
+
+    $f = 5 R- *;
+    isa_ok $f, Code, 'Whatever-currying with R- (1)';
+    is $f(7), 2, 'Whatever-currying with R- (2)';
+    is $f(0), -5, 'Whatever-currying with R- (3)';
+
+    dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+}
 
 done_testing;
 
