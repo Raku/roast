@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 242;
+plan 244;
 
 
 # tests various assignment styles
@@ -762,6 +762,17 @@ sub l () { 1, 2 };
     lives_ok { ($x) = grep 5, 1..1_000_000 },
             'Can grep lazily through a very long range';
     is $x, 5, '... with correct result';
+}
+
+# RT #80614
+{
+   my @a = 1,2,3;
+   my @b;
+   my $rt80614 = @b[0] = @a[1];
+
+   is $rt80614, 2, 'assignment to scalar via array item from array item';
+   #?rakudo todo 'RT 80614'
+   is @b[0], 2, 'assignment to array item from array item to scalar';
 }
 
 # vim: ft=perl6
