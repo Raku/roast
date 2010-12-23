@@ -62,4 +62,12 @@ A.new.x(42);',
         err     => rx/'line 3'>>/,
     }, 'got the right line number for accessors';
 
+# RT #80982
+is_run 'say 0080982',
+    {
+        status => 0,
+        out => "80982\n",
+        err => rx/ octal /,
+    }, 'use of leading zero causes warning about octal';
+
 # vim: ft=perl6
