@@ -190,6 +190,39 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is @*rt78318, <bug hunt>, 'code called when subtype built on subtype';
 }
 
+# RT #78322
+{
+    my $*call1;
+    my $*call2;
+
+    $*call1 = 0;$*call2 = 0;
+
+    subset RT78322 of Int     where { $*call1++; $^a == 78322 };
+    subset Bughunt of RT78322 where { $*call2++; ?1 };
+
+    $*call1 = 0;$*call2 = 0;
+    nok 22 ~~ RT78322, 'level one subset check is false';
+    is $*call1, 1, 'level one subset checked (should fail)';
+    is $*call2, 0, 'level two subset not checked';
+
+    #?rakudo 3 todo 'RT 78322'
+    $*call1 = 0;$*call2 = 0;
+    nok 22 ~~ Bughunt, 'overall subset check is false';
+    is $*call1, 1, 'level one subset checked (should fail)';
+    is $*call2, 0, 'level two subset not checked';
+
+    $*call1 = 0;$*call2 = 0;
+    ok 78322 ~~ RT78322, 'level one subset check is true';
+    is $*call1, 1, 'level one subset checked (should succeed)';
+    is $*call2, 0, 'level two subset not checked';
+
+    $*call1 = 0;$*call2 = 0;
+    ok 78322 ~~ Bughunt, 'overall subset check is true';
+    #?rakudo 2 todo 'RT 78322'
+    is $*call1, 1, 'level one subset checked (should succeed)';
+    is $*call2, 1, 'level two subset checked (should succeed)';
+}
+
 done_testing;
 
 # vim: ft=perl6
