@@ -73,6 +73,12 @@ is (1, 2 ... 0, 1 ... 3).join(' '),
     '0 1 2 3',
     'chained sequence with an empty subsequence';
 
+{
+    my @rt80574 := -> { 'zero', 'one' } ... *;
+    #?rakudo todo 'RT 80574'
+    is @rt80574[0], 'zero', 'Generator output is flattened';
+}
+
 done_testing;
 
 # vim: ft=perl6
