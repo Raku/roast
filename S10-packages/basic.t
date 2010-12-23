@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 53;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -218,5 +218,9 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval_dies_ok "package Perl5Code;\n'this is Perl 5 code'",
         'package Foo; is indicator for Perl 5 code';
 }
+
+#?rakudo todo 'RT 80856'
+eval_dies_ok 'module RT80856 is not_RT80856 {}',
+             'die if module "is" a nonexistent';
 
 # vim: ft=perl6
