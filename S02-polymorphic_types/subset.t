@@ -164,4 +164,10 @@ dies_ok { my Digit $x = 3.1 },
     ok 1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (1)';
     nok -1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (2)';
 }
+
+subset Bug::RT80930 of Int where { $_ %% 2 };
+#?rakudo todo 'RT 80930'
+lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
+
+
 # vim: ft=perl6
