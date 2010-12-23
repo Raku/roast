@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 71;
+plan 73;
 
 # L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -221,6 +221,15 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
 
     dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
     dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+}
+
+# RT 79166
+{
+    my $rt79166 = *;
+    isa_ok $rt79166, Whatever, 'assignment of whatever still works';
+    $rt79166 = 'RT 79166';
+    #?rakudo todo 'RT 79166'
+    is $rt79166, 'RT 79166', 'assignment to variable with whatever in it';
 }
 
 done_testing;
