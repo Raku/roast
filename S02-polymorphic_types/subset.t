@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 37;
+plan 38;
 
 =begin description
 

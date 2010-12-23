@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
