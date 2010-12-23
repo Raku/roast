@@ -180,6 +180,16 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     lives_ok { T.new( small => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
 
+# RT #78318
+{
+    my @*rt78318;
+    subset Bug  of Int where { @*rt78318.push( 'bug' ) };
+    subset Hunt of Bug where { @*rt78318.push( 'hunt' ) };
+    78318 ~~ Hunt;
+    #?rakudo todo 'RT 78318'
+    is @*rt78318, <bug hunt>, 'code called when subtype built on subtype';
+}
+
 done_testing;
 
 # vim: ft=perl6
