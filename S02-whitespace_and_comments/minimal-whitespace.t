@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 9;
 
 # L<S03/Minimal whitespace DWIMmery/Whitespace is no longer allowed before>
 
@@ -25,5 +25,9 @@ eval_dies_ok('Thing. new', 'whitespace is not allowed after . after class name')
 my $o = Thing.new;
 eval_dies_ok('$o .whatever(5)', 'whitespace is not allowed before . before method');
 eval_dies_ok('$o. whatever(5)', 'whitespace is not allowed after . before method');
+
+eval_lives_ok 'my @rt80330; [+] @rt80330', 'a [+] with whitespace works';
+#?rakudo todo 'RT 80330'
+eval_dies_ok  'my @rt80330; [+]@rt80330', 'a [+] without whitespace dies';
 
 # vim: ft=perl6
