@@ -227,7 +227,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     my $binary_in_fh = open($filename, :r, :bin);
     isa_ok($binary_in_fh, IO);
     my $buf = $binary_in_fh.read(4);
-    #?rakudo todo 'ISO-8859-1 does not work yet'
     is $buf.elems, 3, "three bytes were read";
     is $buf.decode("ISO-8859-1"), "föö", "the bytes decode into the right Str";
 }
