@@ -11,6 +11,9 @@ is(1 ** 2,    1, "1 **  2 ==  1");
 is(4 ** 0,    1, "4 **  0 ==  1");
 is(4 ** 1,    4, "4 **  1 ==  4");
 is(4 ** 2,   16, "4 **  2 == 16");
+
+#?niecza 31 skip "unimpl"
+
 is(4 ** 0.5,  2, "4 ** .5 ==  2");
 is(4 ** (1/2), 2, "4 ** (1/2) == 2 ");
 is(4 ** (-1/2), 0.5, "4 ** (-1/2) == 1/2 ");
@@ -53,9 +56,10 @@ is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
-for (8i).roots(4) -> $z
 {
-    is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
+    for (8i).roots(4) -> $z {
+        is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
+    }
 }
 
 # Real ** Complex
