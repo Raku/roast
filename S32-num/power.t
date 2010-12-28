@@ -56,11 +56,13 @@ is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
+#?DOES 4
 {
     for (8i).roots(4) -> $z {
         is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
     }
 }
+#?DOES 1
 
 # Real ** Complex
 {
