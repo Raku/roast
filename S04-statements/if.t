@@ -60,6 +60,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is $foo, 1, 'if (0) {} elsif (0) {}';
 }
 
+
 # if...elsif...else
 
 {
@@ -101,6 +102,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 # I'm not sure where this should go
 
+#?niecza skip "eval_unimpl"
 {
     is(
         eval('if ( my $x = 2 ) == 2 { $x; }'),
@@ -108,10 +110,12 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
         "'my' variable within 'if' conditional");
 }
 
+#?niecza skip "eval_dies_ok unimpl"
 {
     eval_dies_ok('if 1; 2', '"if" requires a block');
 }
 
+#?niecza skip 'elsif -> $foo is not implemented in niecza yet'
 # L<S04/"Conditional statements"/The value of the conditional expression may be optionally bound to a closure parameter>
 {
     my ($got, $a_val, $b_val);
@@ -146,6 +150,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is $got, '', 'else -> $c { } binding previous if';
 }
 
+#?niecza skip "eval_unimpl"
 # L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
