@@ -112,12 +112,6 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     eval_dies_ok('if 1; 2', '"if" requires a block');
 }
 
-
-{# .... if condition;
-    my $var = 5 if 1;
-    is $var, 5, ' <action> if <cond> ;  - works';
-}
-
 # L<S04/"Conditional statements"/The value of the conditional expression may be optionally bound to a closure parameter>
 {
     my ($got, $a_val, $b_val);
