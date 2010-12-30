@@ -1,7 +1,6 @@
 use v6;
 use Test;
 
-plan *;
 
 # L<S05/Modifiers/Any grammar regex is really just a kind of method>
 

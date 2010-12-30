@@ -1,7 +1,6 @@
 use v6;
 use Test;
 
-plan *;
 
 {
     my $r = RangeIter.new(1..5);

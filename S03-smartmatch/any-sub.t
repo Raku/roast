@@ -1,6 +1,5 @@
 use v6;
 use Test;
-plan *;
 
 #L<S03/Smart matching/Any .(...) sub call truth>
 {

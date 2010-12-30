@@ -1,6 +1,5 @@
 use v6;
 use Test;
-plan *;
 
 #L<S05/Modifiers/"The new :ratchet modifier">
 # for other tests see

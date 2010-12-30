@@ -1,6 +1,5 @@
 use v6;
 use Test;
-plan *;
 
 # Very basic enum tests
 

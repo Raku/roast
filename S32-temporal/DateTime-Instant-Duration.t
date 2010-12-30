@@ -25,7 +25,6 @@ sub diff(%early = (), *%late) { + do dti(|%late) - dti(|%early) }
 
 sub days($n) { $n * 24 * 60 * 60 }
 
-plan *;
 
 # L<S32::Temporal/Accessors/'the method Instant'>
 

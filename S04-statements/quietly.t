@@ -2,7 +2,6 @@ use v6;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan *;
 
 dies_ok { quietly { die 'not quiet enough' } }, '"die" in "quietly" dies';
 

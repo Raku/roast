@@ -1,6 +1,5 @@
 use v6;
 use Test;
-plan *;
 
 # XXX I'm not very confident in my reading of S04, so give a suspicious eye
 #     to these tests before using them.

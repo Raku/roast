@@ -4,7 +4,6 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan *;
 
 =begin description
 

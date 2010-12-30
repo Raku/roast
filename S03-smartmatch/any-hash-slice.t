@@ -1,6 +1,5 @@
 use v6;
 use Test;
-plan *;
 
 #L<S03/Smart matching/hash value slice truth>
 

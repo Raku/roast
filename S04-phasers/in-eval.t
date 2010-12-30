@@ -4,7 +4,6 @@ use v6;
 
 use Test;
 
-plan *;
 
 # L<S04/Phasers/Code "generated at run time" "still fire off"
 #   "can't" "travel back in time" >

@@ -2,7 +2,6 @@ use v6;
 
 use Test;
 
-plan *;
 
 # L<S03/List prefix precedence/The list contextualizer>
 

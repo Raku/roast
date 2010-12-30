@@ -4,7 +4,6 @@ use Test;
 # L<S06/"Parameter traits"/"=item is readonly">
 # should be moved with other subroutine tests?
 
-plan *;
 
 {
     my $a is readonly := 42;

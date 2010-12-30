@@ -2,7 +2,6 @@ use v6;
 
 use Test;
 
-plan *;
 
 =begin desc
 

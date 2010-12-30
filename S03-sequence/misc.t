@@ -1,7 +1,6 @@
 use v6;
 use Test;
 
-plan *;
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
 

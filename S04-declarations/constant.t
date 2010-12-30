@@ -2,7 +2,6 @@ use v6;
 
 use Test;
 
-plan *;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 

@@ -3,7 +3,6 @@
 use v6;
 use Test;
 
-plan *;
 
 sub weather($weather) {
     given $weather {

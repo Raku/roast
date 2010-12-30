@@ -1,7 +1,6 @@
 use v6;
 use Test;
 
-plan *;
 
 # L<S14/Traits/>
 
