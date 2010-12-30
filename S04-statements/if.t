@@ -113,7 +113,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     eval_dies_ok('if 1; 2', '"if" requires a block');
 }
 
-#?niecza skip 'elsif -> $foo is not implemented in niecza yet'
+##?niecza skip 'elsif -> $foo is not implemented in niecza yet'
 # L<S04/"Conditional statements"/The value of the conditional expression may be optionally bound to a closure parameter>
 {
     my ($got, $a_val, $b_val);
@@ -163,10 +163,11 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 }
 
 
-#?niecza skip "eval_unimplemented"
+#?niecza skip "eval_dies unimplemented"
 # L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
+#?niecza skip "$_ is broken"
 # RT #76174
 # scoping of $_ in 'if' shouldn't break aliasing
 {
