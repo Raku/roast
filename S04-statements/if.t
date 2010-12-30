@@ -11,7 +11,7 @@ Basic "if" tests.
 
 # L<S04/Conditional statements>
 
-plan 25;
+plan 29;
 
 my $x = 'test';
 if ($x eq $x) { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
@@ -149,6 +149,21 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     else          -> $c { $got = $c }
     is $got, '', 'else -> $c { } binding previous if';
 }
+
+{
+    my $called = 0;
+    sub cond($when) {
+        is $called,$when,"condition is checked in correct order";
+        $called++;
+        0;
+    }
+    if cond(0) {
+    } elsif cond(1) {
+    } elsif cond(2) {
+    }
+    is $called,3,"all conditions are checked";
+}
+
 
 #?niecza skip "eval_unimplemented"
 # L<S04/Statement parsing/keywords require whitespace>
