@@ -11,7 +11,7 @@ Basic "if" tests.
 
 # L<S04/Conditional statements>
 
-plan 26;
+plan 25;
 
 my $x = 'test';
 if ($x eq $x) { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
@@ -102,7 +102,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 # I'm not sure where this should go
 
-#?niecza skip "eval_unimpl"
+#?niecza skip "eval unimplemented"
 {
     is(
         eval('if ( my $x = 2 ) == 2 { $x; }'),
@@ -110,7 +110,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
         "'my' variable within 'if' conditional");
 }
 
-#?niecza skip "eval_dies_ok unimpl"
+#?niecza skip "eval_dies_ok unimplemented"
 {
     eval_dies_ok('if 1; 2', '"if" requires a block');
 }
@@ -150,7 +150,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is $got, '', 'else -> $c { } binding previous if';
 }
 
-#?niecza skip "eval_unimpl"
+#?niecza skip "eval_unimplemented"
 # L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
