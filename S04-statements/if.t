@@ -102,12 +102,10 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 # I'm not sure where this should go
 
-#?niecza skip "eval unimplemented"
 {
-    is(
-        eval('if ( my $x = 2 ) == 2 { $x; }'),
-        2,
-        "'my' variable within 'if' conditional");
+    my $flag = 0;
+    if ( my $x = 2 ) == 2 { $flag = $x }
+    is($flag, 2, "'my' variable within 'if' conditional");
 }
 
 #?niecza skip "eval_dies_ok unimplemented"
