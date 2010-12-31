@@ -76,10 +76,10 @@ use Test;
     eval_dies_ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
 }
 
-eval_dies_ok('$', 'Anonymous variable outside of declaration');
-eval_dies_ok('@', 'Anonymous variable outside of declaration');
-eval_dies_ok('%', 'Anonymous variable outside of declaration');
-eval_dies_ok('&', 'Anonymous variable outside of declaration');
+eval_dies_ok('$', 'Anonymous $ variable outside of declaration');
+eval_dies_ok('@', 'Anonymous @ variable outside of declaration');
+eval_dies_ok('%', 'Anonymous % variable outside of declaration');
+eval_dies_ok('&', 'Anonymous & variable outside of declaration');
 
 done;
 
