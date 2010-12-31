@@ -237,6 +237,6 @@ is .88888888888.WHAT, 'Rat()', 'WHAT works on Rat created from 11 digit decimal 
 isa_ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
 is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -104,6 +104,6 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     is bug71460, 1, 'enum element of enum with double colons is in namespace';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

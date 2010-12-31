@@ -222,6 +222,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is $*call2, 1, 'level two subset checked (should succeed)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

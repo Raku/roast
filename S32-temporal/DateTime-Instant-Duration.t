@@ -122,6 +122,6 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
 }
 
 
-done_testing;
+done;
 
 # vim: ft=perl6

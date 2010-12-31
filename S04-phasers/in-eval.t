@@ -95,6 +95,6 @@ our $h;
     is $end, '12', 'END {} does not run at run time either';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

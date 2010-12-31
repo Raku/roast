@@ -40,4 +40,4 @@ is 1.75.WHAT, "Rat()";
 is 1.75.perl, "7/4";
 is 1.752.perl, "219/125";
 
-done_testing;
+done;

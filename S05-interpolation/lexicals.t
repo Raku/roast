@@ -20,4 +20,4 @@ is ~$/, 'oabcd', 'correctly matched string';
 is $<other>, 'abc', 'correctly captured to $<other>';
 
 
-done_testing;
+done;

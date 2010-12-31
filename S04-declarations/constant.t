@@ -272,6 +272,6 @@ use Test;
     is A.new.z, 6, 'Can use outer constants in a class';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

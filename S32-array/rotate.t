@@ -57,6 +57,6 @@ plan 28;
     is ~<a b c d e>.rotate, 'b c d e a', 'List.rotate';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -78,6 +78,6 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -38,7 +38,7 @@ isa_ok eval('now +300'), Instant, 'now is a term, not a function';
     isa_ok $d / (2/3), Duration, 'Duration / Rat ~~ Duration';
 }
 
-done_testing;
+done;
 
 # See S32-temporal/DateTime-Instant-Duration.t for more.
 

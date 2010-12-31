@@ -22,4 +22,4 @@ is { huey => 1, dewey => 2, louie => 3 }.fmt('%s', ' -- ').split(' -- ').sort.jo
     'dewey -- huey -- louie', 'Hash with two-arg fmt';
 
 
-done_testing;
+done;

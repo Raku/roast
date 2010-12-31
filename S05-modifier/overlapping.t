@@ -84,6 +84,6 @@ my @expected = (
     is ~@match[3], "abcd", "Last is abcd";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -232,6 +232,6 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     is $rt79166, 'RT 79166', 'assignment to variable with whatever in it';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

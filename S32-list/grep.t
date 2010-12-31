@@ -141,6 +141,6 @@ my @list = (1 .. 10);
     is ~(1...100).grep(* %% 2).grep(* %% 3), ~(6, 12 ... 96), "chained greps work";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

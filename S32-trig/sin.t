@@ -190,6 +190,6 @@ is_approx(asin(DifferentReal.new(0.707106781186548), Radians), 0.785398163404734
 is_approx(asin(:x(DifferentReal.new(0.5))), 0.523598775603156, "asin(:x(DifferentReal)) - 0.523598775603156");
 is_approx(asin(:x(DifferentReal.new(0.707106781186548)), :base(Degrees)), 45, "asin(:x(DifferentReal), :base(Degrees)) - 45");
 
-done_testing;
+done;
 
 # vim: ft=perl6 nomodifiable

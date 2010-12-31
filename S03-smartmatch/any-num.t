@@ -30,6 +30,6 @@ plan 18;
     nok (4+0i  ~~ 3.Num),       'Complex ~~ Num (-)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

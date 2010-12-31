@@ -373,6 +373,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         ':i(1) is OK';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

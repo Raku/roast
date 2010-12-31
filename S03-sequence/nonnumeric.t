@@ -82,6 +82,6 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
     is ($f(2) ...^ 0).join(' '), 'P2 P1', 'exclusive decreasing not-quite-periodic sequence';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

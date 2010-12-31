@@ -314,6 +314,6 @@ is_approx(atan2(DifferentReal.new(10), DifferentReal.new(-0.1), Degrees), 90.572
 is_approx(atan2(:y(DifferentReal.new(1)), :x(DifferentReal.new(-1))), 2.35619449019234, "atan2(:y(DifferentReal), :x(DifferentReal))");
 is_approx(atan2(:y(DifferentReal.new(10)), :x(DifferentReal.new(1)), :base(Gradians)), 93.6548965138893, "atan2(:y(DifferentReal), :x(DifferentReal), :base(Gradians))");
 
-done_testing;
+done;
 
 # vim: ft=perl6 nomodifiable

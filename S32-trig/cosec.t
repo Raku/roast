@@ -190,6 +190,6 @@ is_approx(acosec(DifferentReal.new(1.41421356236279), Radians), 0.78539816340473
 is_approx(acosec(:x(DifferentReal.new(1.99999999998317))), 0.523598775603156, "acosec(:x(DifferentReal)) - 0.523598775603156");
 is_approx(acosec(:x(DifferentReal.new(1.41421356236279)), :base(Degrees)), 45, "acosec(:x(DifferentReal), :base(Degrees)) - 45");
 
-done_testing;
+done;
 
 # vim: ft=perl6 nomodifiable

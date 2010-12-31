@@ -180,6 +180,6 @@ class PairTest {
     is $h.Str, ~{a => 5}, 'delegation of .Str and .push to hash';
 }
 
-done_testing;
+done;
 
 # vim: syn=perl6

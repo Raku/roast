@@ -35,6 +35,6 @@ is  $x.a.join('|'), '1|2', 'slurpy array param set correctly';
 is  $x.ssh(a=> 1, b => 2), 15, 'slurpy hash attributive paramed method returns the right thing';
 is  $x.h<b a>.join('|'), '2|1', 'slurpy hash param set correctly';
 
-done_testing;
+done;
 
 # vim: ft=perl6

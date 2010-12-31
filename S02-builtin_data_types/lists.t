@@ -162,6 +162,6 @@ plan 27;
     is $x, 44, 'variable not changed via assignment to list element';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

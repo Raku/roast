@@ -26,6 +26,6 @@ plan 8;
     'defg' !~~ ($x = $_);
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

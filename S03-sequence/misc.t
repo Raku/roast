@@ -78,6 +78,6 @@ is (1, 2 ... 0, 1 ... 3).join(' '),
     is @rt80574[0], 'zero', 'Generator output is flattened';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

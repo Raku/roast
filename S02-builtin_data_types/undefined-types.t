@@ -53,6 +53,6 @@ plan 23;
     is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

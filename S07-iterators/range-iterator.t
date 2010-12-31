@@ -149,4 +149,4 @@ use Test;
     is $r.get, 7, '$r.get == 7';
 }
 
-done_testing;
+done;

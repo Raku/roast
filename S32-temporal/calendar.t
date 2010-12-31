@@ -194,6 +194,6 @@ nok date(1999,  1,  1).is-leap-year, 'Date.is-leap-year (1999)';
 ok  date(2000,  1,  1).is-leap-year, 'Date.is-leap-year (2000)';
 ok  dtim(2000,  1,  1).is-leap-year, 'DateTime.is-leap-year (2000)';
 
-done_testing;
+done;
 
 # vim: ft=perl6

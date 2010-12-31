@@ -91,6 +91,6 @@ plan 32;
 #     todo_throws_ok { 'shift(@shift)' }, '?? what should this error message be ??', 'cannot shift off of a Inf array';
 # }
 
-done_testing;
+done;
 
 # vim: syn=perl6

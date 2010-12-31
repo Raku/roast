@@ -143,6 +143,6 @@ is(~$/[2]<noun>, 'arrow', 'Rule capture 2 noun');
 ok(!( "fooooo" ~~ m:exhaustive { s o+ } ), 'Subsequent failed any match...');
     ok(@$/ == 0, '...leaves @$/ empty');
 
-done_testing();
+done();
 
 # vim: ft=perl6

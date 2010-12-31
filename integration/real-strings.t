@@ -90,6 +90,6 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
        'Still works with strings returned from slurp() (lives)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

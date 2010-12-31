@@ -70,6 +70,6 @@ eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
 
 ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 
-done_testing;
+done;
 
 # vim: ft=perl6

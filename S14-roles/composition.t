@@ -116,6 +116,6 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
         'method of the same name from two different roles collide in a class composition';
 }
 
-done_testing;
+done;
 
 # vim: syn=perl6

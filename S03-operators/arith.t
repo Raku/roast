@@ -308,6 +308,6 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
     ok 1/7 / 1/7 == 1/49, 'no more Rat literals, infix:</> has normal left assoc';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

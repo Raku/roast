@@ -78,6 +78,6 @@ sub fail_it { fail $^a }
     ok $win.handled, '.handled method is true for all Mus';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -80,7 +80,7 @@ is <734043054508967647390469416144647854399310>.comb(/.**7/).join('|') , '734043
 	is '7340430'.fmt("%b").trans("01" => " #") , '###           ##   ### ' , 'Test one liner at end of post (part2)';
 }
 
-done_testing;
+done;
 #type constraint on parameters skipped, due to that part of Day 9 being just a caution
 
 #test done, below is the day's one-liner (in case you wish to enable it :) )

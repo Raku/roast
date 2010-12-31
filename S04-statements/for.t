@@ -488,6 +488,6 @@ ok $! ~~ / 'C-style' /, 'Sensible error message';
     is $a, 1, 'for on Range with huge max value is lazy and enters block';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

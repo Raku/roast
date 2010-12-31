@@ -27,6 +27,6 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
         "Can return from method called from a hash lookup (RT 69610)" );
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

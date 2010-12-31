@@ -298,6 +298,6 @@ ok 0 <= (4/3).rand < 4/3, "Rat.rand returns a valid result";
 ok 0 <= $one-and-one-hundredth.rand < $one-and-one-hundredth, "Fixed2.rand returns a valid result";
 ok 0 <= 32.75.Num.rand < 32.75, "Num.rand returns a valid result";
 
-done_testing;
+done;
 
 # vim: ft=perl6

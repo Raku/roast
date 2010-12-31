@@ -75,4 +75,4 @@ lives_ok 'role DeliveryCalculation[::Calculator] {has $.mass;method calculate($d
 #~ class HeavyWater does DeliveryCalculation[ByMass] {
 #~ }
 
-done_testing();
+done();

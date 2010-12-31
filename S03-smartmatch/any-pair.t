@@ -30,6 +30,6 @@ plan 10;
     dies_ok {$o ~~ :e(5)},      '$obj ~~ Pair, nonexistent, dies (2)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

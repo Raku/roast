@@ -115,4 +115,4 @@ sub d($x) { Date.new($x); }
     is $c <=> $a,  1, '<=> (+1)';
 }
 
-done_testing;
+done;

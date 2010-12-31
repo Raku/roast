@@ -128,6 +128,6 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     dies_ok { $x(23) }, '... and does not contain the full multiness';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

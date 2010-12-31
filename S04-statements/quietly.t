@@ -17,6 +17,6 @@ is_run( 'quietly { note "eton" }; say "life"',
         { status => 0, err => "eton\n", out => "life\n" },
         '"note" in "quietly" works' );
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -33,6 +33,6 @@ is(not False, True,             "'False' is not 'True'");
 isa_ok(not False, Bool,         "'not False' is a Bool");
 is(not False, Bool::True,       "'False' is not 'Bool::True'");
 
-done_testing;
+done;
 
 # vim: ft=perl6

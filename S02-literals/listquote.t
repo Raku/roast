@@ -102,6 +102,6 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
     is f(my @x = (1, 2, 3)), 1, 'function call with assignment to list';
 }
 
-done_testing();
+done();
 
 # vim: ft=perl6

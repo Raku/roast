@@ -39,4 +39,4 @@ plan 13;
 }
 
 
-done_testing;
+done;

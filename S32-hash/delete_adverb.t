@@ -44,6 +44,6 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
     eval_dies_ok '$a :delete', "Can't :delete a scalar";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -49,6 +49,6 @@ use Test;
         'dies on assignment to (my $x is readonly)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

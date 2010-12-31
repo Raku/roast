@@ -93,6 +93,6 @@ plan 33;
 #     todo_throws_ok { 'pop @push' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
 # }
 
-done_testing;
+done;
 
 # vim: ft=perl6

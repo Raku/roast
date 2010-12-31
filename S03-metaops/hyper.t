@@ -770,6 +770,6 @@ my @e;
     is "$a, $b, $c", $e, '»~=» changes each scalar';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

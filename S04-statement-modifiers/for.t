@@ -100,6 +100,6 @@ plan 18;
 
 eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -23,6 +23,6 @@ ok 'aaaa'  ~~ m/ :ratchet ^ [ :!ratchet <aplus> a ]  /,
 ok 'aaaa'  ~~ m/ ^ :!ratchet <aplus> :ratchet a  /,
    'Same if not grouped';
 
-done_testing;
+done;
 
 # vim: ft=perl6

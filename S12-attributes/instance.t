@@ -587,6 +587,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 }
 
-done_testing();
+done();
 
 # vim: ft=perl6

@@ -463,6 +463,6 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     isa_ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -119,6 +119,6 @@ is 'abc'.split('', 3).Str, "a b c", 'split into characters respects limit (2)';
 #        'split(:all) and trailing delimiter (values)';
 # }
 
-done_testing;
+done;
 
 # vim: ft=perl6

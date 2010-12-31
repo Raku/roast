@@ -175,6 +175,6 @@ plan 74;
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

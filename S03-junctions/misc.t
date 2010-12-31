@@ -415,6 +415,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
         'junction can be used to index Hash';
 }
 
-done_testing();
+done();
 
 # vim: ft=perl6

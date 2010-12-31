@@ -31,4 +31,4 @@ is ((-1, 0, 3, 42)>>.Str), ["-1", "0", "3", "42"], 'Hyperoperator used to call .
 	is (@a-copy = @a; @a-copy >>/=>> 2; @a-copy), [2, 3, 4, 5], 'in-place operators work';
 }
 
-done_testing;
+done;

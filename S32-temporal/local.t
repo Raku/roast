@@ -83,6 +83,6 @@ dies_ok { nyc-dt 1997, 6, 30,   23, 59, 60 }, 'Local time zone rejects bogus lea
 $dt = ds('1998-12-31T23:59:60Z').local;
 is ~$dt, '1998-12-31T18:59:60-0500', 'DateTime.local (from UTC, with leap second)';
 
-done_testing;
+done;
 
 # vim: ft=perl6

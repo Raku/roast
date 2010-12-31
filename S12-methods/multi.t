@@ -206,6 +206,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         'error message for failed dispatch contains invocant type';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -196,6 +196,6 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     is $wrapped, 'meet', 'wrapper sees lexical from time of wrap (meet)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

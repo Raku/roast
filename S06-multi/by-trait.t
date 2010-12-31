@@ -17,6 +17,6 @@ use Test;
     is $rw_call, 1, 'read-write multi was called';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

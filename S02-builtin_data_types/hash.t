@@ -259,6 +259,6 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

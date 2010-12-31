@@ -108,6 +108,6 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
 
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

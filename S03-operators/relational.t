@@ -136,6 +136,6 @@ ok("a" lt "a ", 'a lt a\x20');
 ok("a\0" gt "a", 'a\0 gt a');
 ok("a " gt "a", 'a\x20 gt a');
 
-done_testing;
+done;
 
 # vim: ft=perl6

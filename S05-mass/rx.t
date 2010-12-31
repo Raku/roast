@@ -2474,6 +2474,6 @@ ok eval(q{{ 'abcdef' ~~ /  / }}) ~~ Failure && $! ~~ /Null pattern illegal/, 'ws
 #?rakudo todo 'RT 70606'
 eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
 
-done_testing;
+done;
 
 # vim: ft=perl6 sw=4 expandtab

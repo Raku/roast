@@ -58,4 +58,4 @@ isnt @b, (@people.sort: { ~.karma }), "Sort numerically is different to stringil
     is (@people.max: { ~.name }), (@people.max: ~*.name), 'Explicit string comparison is equivalent to a string comparison with a Whatever';
 }
 
-done_testing;
+done;

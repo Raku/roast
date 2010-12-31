@@ -19,6 +19,6 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => Mu, "baz" => Mu );
     ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

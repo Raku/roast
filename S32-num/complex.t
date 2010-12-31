@@ -120,6 +120,6 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
     
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

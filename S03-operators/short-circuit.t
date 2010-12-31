@@ -184,6 +184,6 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -135,6 +135,6 @@ is_run( q{'aa' ~~ /(.)$1/},
     is $x, 2, '$/.list does not flattens subcaptures';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

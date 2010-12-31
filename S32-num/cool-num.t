@@ -81,6 +81,6 @@ is "0".sign, 0, '"0".sign == 0';
 is_approx "17".cis, 17.cis, '"17".cis == 17.cis';
 is_approx "17".unpolar("42"), 17.unpolar(42), '"17".unpolar("42") == 17.unpolar(42)';
 
-done_testing;
+done;
 
 # vim: ft=perl6

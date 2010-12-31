@@ -31,6 +31,6 @@ f();
 
 is $x, 23, '$x successfully modified';
 
-done_testing();
+done();
 
 # vim: ft=perl6 number

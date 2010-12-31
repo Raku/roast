@@ -186,6 +186,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is y(1, 2.5), 2, 'generics in multis (-)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

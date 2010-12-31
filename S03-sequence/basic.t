@@ -236,6 +236,6 @@ is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type';
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
 
-done_testing;
+done;
 
 # vim: ft=perl6

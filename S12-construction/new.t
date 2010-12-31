@@ -73,6 +73,6 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     is $x.y, 'k', '... got the right attribute (2)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

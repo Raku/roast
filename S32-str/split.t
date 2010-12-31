@@ -169,6 +169,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     is @a[3][1], " ", "Fourth capture worked";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

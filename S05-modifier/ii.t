@@ -52,6 +52,6 @@ for @smart_tests -> $t {
     is $test_str, $t[2], ":ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
 }
 
-done_testing;
+done;
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

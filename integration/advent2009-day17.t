@@ -85,4 +85,4 @@ for ^$height Z subdivide($upper-right.re, $lower-left.re, $height) -> $i, $re {
     is (@line, $middle, @line.reverse).join(' ').trim, @snowman-data[$i].trim, "Line $i matched using >>☃ hyperoperator";
 }
 
-done_testing;
+done;

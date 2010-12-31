@@ -81,6 +81,6 @@ eval_dies_ok('@', 'Anonymous variable outside of declaration');
 eval_dies_ok('%', 'Anonymous variable outside of declaration');
 eval_dies_ok('&', 'Anonymous variable outside of declaration');
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -44,4 +44,4 @@ plan 11;
     is @Fibonacci[30], 832040, 'And @Fibonacci is still unbounded';
 }
 
-done_testing();
+done();

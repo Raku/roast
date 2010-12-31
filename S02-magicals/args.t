@@ -19,4 +19,4 @@ is_run 'print @*ARGS.join(", ")', :args[1, 2, "foo"],
         status => 0,
     }, 'providing command line arguments sets @*ARGS';
 
-done_testing;
+done;

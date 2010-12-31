@@ -42,6 +42,6 @@ line 4
 ];
 is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -60,6 +60,6 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 
 is(Grammar.WHAT,"Grammar()", "Grammar.WHAT = Grammar()");
 
-done_testing;
+done;
 
 # vim: ft=perl6

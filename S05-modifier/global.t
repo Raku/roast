@@ -30,6 +30,6 @@ Testing the C<:global> regex modifier - more tests are always welcome
     is ~(@matches[2]), "or", "Third match is 'or'";
 }
 
-done_testing;
+done;
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

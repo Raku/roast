@@ -147,6 +147,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
 ok "foo" ~~ *, 'thing ~~ * is true';
 ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
 
-done_testing();
+done();
 
 # vim: ft=perl6

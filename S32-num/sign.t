@@ -61,6 +61,6 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 ok sign(Int).notdef, 'sign(Int) is undefined';
 ok sign(3+4i).notdef, 'sign(Complex) fails';
 
-done_testing;
+done;
 
 # vim: ft=perl6

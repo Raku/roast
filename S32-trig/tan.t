@@ -190,6 +190,6 @@ is_approx(atan(DifferentReal.new(1.00000000001457), Radians), 0.785398163404734,
 is_approx(atan(:x(DifferentReal.new(0.577350269196102))), 0.523598775603156, "atan(:x(DifferentReal)) - 0.523598775603156");
 is_approx(atan(:x(DifferentReal.new(1.00000000001457)), :base(Degrees)), 45, "atan(:x(DifferentReal), :base(Degrees)) - 45");
 
-done_testing;
+done;
 
 # vim: ft=perl6 nomodifiable

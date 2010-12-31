@@ -17,6 +17,6 @@ plan 12;
     ok  (3        !~~ (3 + 1i)), 'Num !~~ Complex (+)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

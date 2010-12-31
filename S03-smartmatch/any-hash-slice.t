@@ -21,6 +21,6 @@ use Test;
     ok !(%h ~~ .<c d f>), '%hash ~~ .<not all exist>';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

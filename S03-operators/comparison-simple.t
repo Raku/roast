@@ -39,6 +39,6 @@ is(1 cmp 2, -1,     '1 cmp 2 is increase');
 is(2 cmp 1, 1,      '2 cmp 1 is decrease');
 is('a' cmp 1, 1,    '"a" cmp 1 is decrease'); # unspecced but P5 behavior
 
-done_testing;
+done;
 
 # vim: ft=perl6

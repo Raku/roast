@@ -72,6 +72,6 @@ is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 # Complex ** Complex
 is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 
-done_testing;
+done;
 
 # vim: ft=perl6

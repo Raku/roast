@@ -154,6 +154,6 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
         'can call method from a role with a name already assigned to a class';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

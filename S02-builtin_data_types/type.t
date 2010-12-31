@@ -150,6 +150,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     ok Array ~~ Positional, 'Array does Positional too';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

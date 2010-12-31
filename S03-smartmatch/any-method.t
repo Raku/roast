@@ -33,6 +33,6 @@ use Test;
     ok !$c, '..method(args) should not trigger when-block when false';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -110,6 +110,6 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     is RT65658((Todo + 3.2).Int), RT65658::Ticket, 'enum and math and index';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

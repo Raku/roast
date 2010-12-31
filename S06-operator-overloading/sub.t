@@ -407,6 +407,6 @@ Testing operator overloading subroutines
     is 2+2, 4, 'overloading an operator does not hide other candidates';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

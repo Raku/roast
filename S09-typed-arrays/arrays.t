@@ -152,6 +152,6 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
              'can assign to untyped array in presence of typed array';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

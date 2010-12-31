@@ -96,6 +96,6 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
        'split(:all) and trailing delimiter (values)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

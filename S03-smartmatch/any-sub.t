@@ -16,6 +16,6 @@ use Test;
     ok ($div ~~ .(0)),  '~~ .($args) sub call truth (-,2)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

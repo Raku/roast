@@ -96,6 +96,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 isa_ok ('RT71462' ~~ Str), Bool;
 
-done_testing;
+done;
 
 # vim: ft=perl6

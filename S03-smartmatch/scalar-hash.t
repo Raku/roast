@@ -10,6 +10,6 @@ plan 3;
     ok !('foo' ~~ %h),      'Scalar ~~ Hash (-)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

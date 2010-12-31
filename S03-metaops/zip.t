@@ -40,6 +40,6 @@ is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends l
 is (2, 10, * Z* 3, 4, 5, *).munch(5),
     (6, 40, 50, 50, 50), 'zip-product extends two arguments ending with *';
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -317,6 +317,6 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
     is named_empty(|%h), 42, 'can call function with empty named argument';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

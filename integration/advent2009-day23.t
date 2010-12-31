@@ -114,4 +114,4 @@ sub hamming-sequence() { # 2**a * 3**b * 5**c, where { all(a,b,c) >= 0 }
 
 # TODO - we need some tests for merge and hamming problem above
 
-done_testing;
+done;

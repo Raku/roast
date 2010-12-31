@@ -202,6 +202,6 @@ nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
     ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

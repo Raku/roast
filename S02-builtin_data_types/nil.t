@@ -44,6 +44,6 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
     is $x, 0, '$Statement for Nil; does zero iterations';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -356,6 +356,6 @@ my @array2 = ("test", 1, Mu);
     isa_ok +@a, Int, "Numifying an Array yields an Int";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

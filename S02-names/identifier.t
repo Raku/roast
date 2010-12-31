@@ -103,6 +103,6 @@ plan 20;
         'can call subroutines whos name begin with an alphabetic infix (and)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

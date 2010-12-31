@@ -71,6 +71,6 @@ eval_dies_ok q[ 1 ?? 2,3 !! 4,5 ], 'Ternary error (RT 66840)';
 
 eval_dies_ok q[ 71704 !! 'bust' ], 'Ternary error (RT 71704)';
 
-done_testing;
+done;
 
 # vim: ft=perl6

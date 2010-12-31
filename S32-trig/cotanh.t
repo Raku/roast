@@ -190,6 +190,6 @@ is_approx(acotanh(DifferentReal.new(1.52486861881241), Radians), 0.7853981634047
 is_approx(acotanh(:x(DifferentReal.new(2.08128336391745))), 0.523598775603156, "acotanh(:x(DifferentReal)) - 0.523598775603156");
 is_approx(acotanh(:x(DifferentReal.new(1.52486861881241)), :base(Degrees)), 45, "acotanh(:x(DifferentReal), :base(Degrees)) - 45");
 
-done_testing;
+done;
 
 # vim: ft=perl6 nomodifiable

@@ -21,4 +21,4 @@ grammar WithOuterLex {
 WithOuterLex.parse('xxx');
 is $x, 42, 'regex in a grammar can see outer lexicals';
 
-done_testing;
+done;

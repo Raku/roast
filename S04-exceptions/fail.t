@@ -47,6 +47,6 @@ plan 8;
     dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

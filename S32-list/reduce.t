@@ -70,6 +70,6 @@ eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
     is( ((1..4).list.reduce: &infix:<*>), 24, '.reduce: &infix:<*> works' );
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

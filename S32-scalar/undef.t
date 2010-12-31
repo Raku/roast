@@ -375,6 +375,6 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
     ok !defined(foo()), 'can undefine $a twice without any troubles';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

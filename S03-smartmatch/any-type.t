@@ -15,6 +15,6 @@ plan 3;
     ok !(Chihuahua ~~ Cat), "chihuahua is not a cat";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

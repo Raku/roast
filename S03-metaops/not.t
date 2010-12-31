@@ -63,6 +63,6 @@ isa_ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 
 
 
-done_testing;
+done;
 
 # vim: ft=perl6

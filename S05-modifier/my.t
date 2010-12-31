@@ -73,5 +73,5 @@ is $DeclaratorTest1::our, 'zho', 'can access our variable from the outside';
     is $a, 5, 'successful match preserves new :let value';
 }
 
-done_testing;
+done;
 # vim: ft=perl6 sw=4 ts=4 expandtab

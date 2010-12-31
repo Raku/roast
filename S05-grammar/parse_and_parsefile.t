@@ -48,6 +48,6 @@ dies_ok { ::No::Such::Grammar.parse() }, '.parse on missing grammar dies';
     lives_ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

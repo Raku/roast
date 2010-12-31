@@ -561,6 +561,6 @@ Hello, World
     is qqx/echo $var/.chomp,  "world", 'qqx';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

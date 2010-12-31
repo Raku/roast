@@ -51,6 +51,6 @@ is &lolcat.description, 'missing description!', 'named trait handler applied oth
     is $recorder, 'wrap', 'and the wrapper has been called once';
 }
 
-done_testing();
+done();
 
 # vim: ft=perl6

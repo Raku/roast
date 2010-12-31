@@ -36,4 +36,4 @@ is $bob.dog_name, 'Fido', 'dog name can be accessed by delegation';
 is Dog.^methods(:local).map({.name}).sort.join('|'),
     'bark|name', 'can introspect Dog';
 
-done_testing;
+done;

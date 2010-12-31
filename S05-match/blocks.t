@@ -107,6 +107,6 @@ ok !defined($/), '$/ still undefined in the outer block';
     }
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

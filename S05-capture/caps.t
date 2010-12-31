@@ -53,6 +53,6 @@ ok '  abcdef' ~~ m/.*?(a(.).)/, 'Regex matches';
 is ca($0.caps),     '0:b',      '.caps on submatches';
 is ca($0.chunks),   '~:a|0:b|~:c',  '.chunks on submatches';
 
-done_testing;
+done;
 
 # vim: ft=perl6

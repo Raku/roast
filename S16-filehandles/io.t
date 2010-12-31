@@ -231,6 +231,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     is $buf.decode("ISO-8859-1"), "föö", "the bytes decode into the right Str";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -97,6 +97,6 @@ my $pi = 312689/99532;
     is_approx(4.Num.unpolar($pi),       -4,    "4.Num.unpolar(pi)   == -4");
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

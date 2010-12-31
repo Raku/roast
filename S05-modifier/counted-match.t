@@ -79,6 +79,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
         'ac, ae', 'non-monotonic items in :nth are ignored';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

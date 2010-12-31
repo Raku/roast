@@ -11,6 +11,6 @@ plan 4;
     ok !(/foo/ ~~ %h),      'Regex ~~ Hash (-,value)';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

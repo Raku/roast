@@ -141,6 +141,6 @@ plan 19;
     is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

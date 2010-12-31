@@ -162,6 +162,6 @@ my @tests = (
     }
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

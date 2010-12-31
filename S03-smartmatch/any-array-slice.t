@@ -15,6 +15,6 @@ use Test;
         "array slice .[0,1] of (0,1,2,3) is false";
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

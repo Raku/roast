@@ -104,7 +104,7 @@ my @tests = (
     is_deeply eval( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6
 

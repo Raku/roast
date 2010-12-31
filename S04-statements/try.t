@@ -103,6 +103,6 @@ plan 17;
     is $catches, 1, 'CATCH does not catch exceptions thrown within it';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

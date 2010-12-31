@@ -65,6 +65,6 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
 eval_dies_ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
               "Can't put required parameter after optional parameters" );
 
-done_testing;
+done;
         
 # vim: ft=perl6

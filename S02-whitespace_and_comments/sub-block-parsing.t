@@ -31,6 +31,6 @@ eval_dies_ok q[
     x();
 ], 'block parsing works with semicolon';
 
-done_testing;
+done;
 
 # vim: ft=perl6

@@ -117,6 +117,6 @@ for %tests.keys.sort -> $t {
 
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6

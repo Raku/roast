@@ -48,6 +48,6 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok {;} ~~ Block, '{;} is a Block';
 }
 
-done_testing;
+done;
 
 # vim: ft=perl6
