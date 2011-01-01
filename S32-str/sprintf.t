@@ -53,8 +53,8 @@ is sprintf('%X', 12),             'C',      'simple %X';
 is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
-#?rakudo 2 todo "%n and %p doesn't yet throw exception - but should they, or just Failure?"
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
+#?rakudo todo "%p doesn't yet throw exception - but should it, or just Failure?"
 dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
 
 is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
