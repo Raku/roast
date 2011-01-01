@@ -16,7 +16,7 @@ class Backend1 {
     method cool() { 1337 };
     method with_params($x) { $x xx 2 };
 }
-class Backend2 { method hi() { 23 }; method cool() {  539 } }
+role Backend2 { method hi() { 23 }; method cool() {  539 } }
 class Frontend { has $.backend is rw handles "hi" }
 class Frontend2 { has $.backend handles <with_params> };
 ok Backend1.new, "class definition worked";
@@ -178,6 +178,35 @@ class PairTest {
     my $h = PseudoHash.new;
     $h.push: 'a' => 5;
     is $h.Str, ~{a => 5}, 'delegation of .Str and .push to hash';
+}
+
+{
+    class TypePseudoHash { has %!data handles Associative }
+    my $h = TypePseudoHash.new;
+    $h<a> = 'c';
+    $h<b> = 'd';
+    is $h<a b>.join('|'), 'c|d', 'can do handles + type object (1)';
+}
+
+{
+    role OtherRole {
+        method c() { 3 }
+    }
+    role RBackend does OtherRole {
+        method a() { 1 }
+        method b() { 2 }
+    }
+    class PunnedRBackend does RBackend { };
+
+    class RFrontend {
+        has $!backend handles RBackend = PunnedRBackend.new;
+    }
+
+    my $a = RFrontend.new;
+    is $a.a(), 1, 'got all methods via "handles $typeObject" (1)';
+    is $a.b(), 2, 'got all methods via "handles $typeObject" (2)';
+    is $a.c(), 3, 'got all methods via "handles $typeObject" (next role)';
+    dies_ok { $a.d() }, '... but non existing methods still die';
 }
 
 done;
