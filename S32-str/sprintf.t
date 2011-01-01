@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 45;
+plan 44;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -62,8 +62,8 @@ is sprintf('%s', -NaN),             NaN,    'sprintf %s handles NaN';
 is sprintf('%s', Inf),              Inf,    'sprintf %s handles Inf';
 is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 
-lives_ok {sprintf "%s"}, 'missing sprintf string argument';
-ok sprintf("%s") ~~ Failure, 'missing sprintf string argument';
+# RT #74610
+dies_ok {sprintf "%s"}, 'missing sprintf string argument';
 
 #?rakudo skip 'RT #60672'
 {
