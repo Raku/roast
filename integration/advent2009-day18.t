@@ -27,7 +27,7 @@ role SocketPower {
 }
 
 #~ class Laptop does BatteryPower does SocketPower {}
-dies_ok 'class Laptop does BatteryPower does SocketPower {}' , "Method 'find-power-accessories' collides and a resolution must be provided by the class";
+eval_dies_ok 'class Laptop does BatteryPower does SocketPower {}' , "Method 'find-power-accessories' collides and a resolution must be provided by the class";
 
 class Laptop does BatteryPower does SocketPower {
     method find-power-accessories() {
