@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 34;
+plan 54;
 
 # L<S32::Basics/Mu/=item defined>
 
@@ -92,6 +92,36 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
 
     undefine($foo);
     ok(!$foo.defined, 'undefine $foo works');
+}
+
+# RT #81352
+# Ensure that we always get Bools
+{
+    isa_ok defined(Mu), Bool, 'defined(Mu) returns a Bool';
+    isa_ok Mu.defined, Bool, 'Mu.defined returns a Bool';
+    isa_ok defined(Int), Bool, 'defined(Int) returns a Bool';
+    isa_ok Int.defined, Bool, 'Int.defined returns a Bool';
+    isa_ok defined(1), Bool, 'defined(1) returns a Bool';
+    isa_ok 1.defined, Bool, '1.defined returns a Bool';
+    isa_ok defined("a"), Bool, 'defined("a") returns a Bool';
+    isa_ok "a".defined, Bool, '"a".defined returns a Bool';
+    isa_ok defined(()), Bool, 'defined(()) returns a Bool';
+    isa_ok ().defined, Bool, '().defined returns a Bool';
+    isa_ok defined({}), Bool, 'defined({}) returns a Bool';
+    isa_ok {}.defined, Bool, '{}.defined returns a Bool';
+
+    my $bar;
+    isa_ok defined($bar), Bool, 'defined($bar) with $bar unset returns a Bool';
+    isa_ok $bar.defined, Bool, '$bar.defined with $bar unset returns a Bool';
+    $bar = "";
+    isa_ok defined($bar), Bool, 'defined($bar) with $bar eq "" returns a Bool';
+    isa_ok $bar.defined, Bool, '$bar.defined with $bar eq "" returns a Bool';
+    $bar = 7;
+    isa_ok defined($bar), Bool, 'defined($bar) with $bar == 7 returns a Bool';
+    isa_ok $bar.defined, Bool, '$bar.defined with $bar == 7 returns a Bool';
+    $bar = Mu;
+    isa_ok defined($bar), Bool, 'defined($bar) with $bar set to Mu returns a Bool';
+    isa_ok $bar.defined, Bool, '$bar.defined with $bar set to Mu returns a Bool';
 }
 
 # While porting a Perl 5 solution to QoTW regular #24, I noticed the following bug:
