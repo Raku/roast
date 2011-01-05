@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 13;
 
 # L<S02/Immutable types/'term now'>
 
@@ -31,11 +31,6 @@ isa_ok eval('now +300'), Instant, 'now is a term, not a function';
     isa_ok $d + $t0, Instant, 'Duration + Instant ~~ Instant';
     isa_ok $t0 - $d, Instant, 'Instant - Duration ~~ Instant';
     is ($t0 + ($t1 - $t0)).perl, $t1.perl, 'Instant A + (Instant B - Instant A) == Instant B';
-    dies_ok { $d * $d }, 'Duration * Duration is illegal';
-    # Allowing this one for now; see RT #78896.
-    # dies_ok { $d ** 2 }, 'Duration ** Int is illegal';
-    isa_ok 2 * $d, Duration, 'Int * Duration ~~ Duration';
-    isa_ok $d / (2/3), Duration, 'Duration / Rat ~~ Duration';
 }
 
 done;
