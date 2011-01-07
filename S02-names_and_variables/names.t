@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 52;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -68,6 +68,43 @@ plan 24;
 {
     sub self { 4 };
     is self(), 4, 'can define and call a sub self()';
+}
+
+# RT #77528
+# Subroutines whose names begin with a keyword followed by a hyphen
+{
+    sub test($kw, $rest) {
+        eval_lives_ok "sub $kw-$rest \{}; $kw-$rest;",
+            "sub whose name starts with '$kw-'";
+    }
+    test 'hyphen',    'ated';
+    test 'package',   'delivery';
+    test 'module',    'maven';
+    test 'class',     'struggle';
+    test 'role',      'playing';
+    test 'grammar',   'lesson';
+    test 'my',        'mistake';
+    test 'our',       'hero';
+    test 'state',     'of-the-art';
+    test 'let',       'it-be';
+    test 'temp',      'worker';
+    test 'has',       'had';
+    test 'augment',   'arglye';
+    test 'anon',      'nymous';
+    test 'supersede', 'silliness';
+    test 'sub',       'zero';
+    test 'method',    'to-the-madness';
+    test 'submethod', 'sanity';
+    test 'macro',     'economics';
+    test 'multi',     'colored';
+    test 'proto',     'linguistcs';
+    test 'only',      'you';
+    test 'regex',     'issues';
+    test 'token',     'support';
+    test 'rule',      'following';
+    test 'constant',  'threat';
+    test 'enum',      'eration';
+    test 'subset',    'sum';
 }
 
 # RT #69752
