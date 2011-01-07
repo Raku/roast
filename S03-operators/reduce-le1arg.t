@@ -57,7 +57,7 @@ is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 #?rakudo 3 skip "[...] not implemented"
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::True, "[||] () eq True";
-is ([^^] ()), Bool::True, "[^^] () eq True";
+is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
 is ([Z] ()), [], "[Z] () eq []";
