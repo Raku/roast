@@ -88,6 +88,10 @@ plan 39;
     $x ^^ ($y = 42);
 
     is($y, 42, "^^ operator not short circuiting");
+
+    $x = 0;
+    1 ^^ 2 ^^ ($x = 5);
+    is($x, 0, "^^ operator short circuiting");
 }
 
 {
