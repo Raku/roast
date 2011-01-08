@@ -57,11 +57,11 @@ This test min/max functions in their operator form. To see them tested in their 
     isnt @a max 4, 4, 'NYS';
 }
 
-#Comparing to Mu (this is miscellenia, so should be in misc.t, but best to keep related tests together --lue)
-#?rakudo todo 'RT #61836'
+# RT #61836
+# RT #77868
 {
-    lives_ok { (2 min Mu) }, 'can do (2 min Mu)'; 
-    lives_ok { (Mu min 2) }, 'can do (Mu min 2)';
-    lives_ok { (2 max Mu) }, 'can do (2 max Mu)';
-    lives_ok { (Mu max 2) }, 'can do (Mu max 2)';
+    is 2 min Any, 2, '2 min Any';
+    is Any min 2, 2, 'Any min 2';
+    is 2 max Any, 2, '2 max Any';
+    is Any max 2, 2, 'Any max 2';
 }
