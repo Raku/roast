@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 80;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -72,12 +72,15 @@ plan 52;
 
 # RT #77528
 # Subroutines whose names begin with a keyword followed by a hyphen
+# or apostrophe
 {
     sub test($kw, $rest) {
         eval_lives_ok "sub $kw-$rest \{}; $kw-$rest;",
-            "sub whose name starts with '$kw-'";
+            "sub whose name starts with \"$kw-\"";
+        eval_lives_ok "sub $kw'$rest \{}; $kw'$rest;",
+            "sub whose name starts with \"$kw'\"";
     }
-    test 'hyphen',    'ated';
+    test 'foo',       'bar';
     test 'package',   'delivery';
     test 'module',    'maven';
     test 'class',     'struggle';
