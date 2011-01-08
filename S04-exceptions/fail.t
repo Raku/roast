@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 # L<S04/Exceptions/The fail function>
 
@@ -45,6 +45,14 @@ plan 8;
     my $rt70229 = rt70229();
     ok $rt70229 ~~ Failure, 'got a Failure';
     dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
+}
+
+# RT #77946
+{
+    sub rt77946 { return fail() }
+    my $rt77946 = rt77946();
+    isa_ok ?$rt77946, Bool, '?Failure returns a Bool';
+    isa_ok $rt77946.defined, Bool, 'Failure.defined returns a Bool';
 }
 
 done;
