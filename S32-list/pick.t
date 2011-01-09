@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 28;
 
 =begin description
 
@@ -80,6 +80,14 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 
 {
     dies_ok({ [1,2,3].pick(4, :replace) }, 'error on deprecated :replace');
+}
+
+# enums + pick
+{
+    is Bool.pick(*).elems, 2, 'Bool.pick works';
+
+    enum A <b c d>;
+    is A.pick(*).elems, 3, 'RandomEnum.pick works';
 }
 
 # vim: ft=perl6
