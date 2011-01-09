@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 80;
+plan 138;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -73,41 +73,24 @@ plan 80;
 # RT #77528
 # Subroutines whose names begin with a keyword followed by a hyphen
 # or apostrophe
+# RT #72438
+# Subroutines with keywords for names (may need to be called with
+# parentheses).
 {
-    sub test($kw, $rest) {
-        eval_lives_ok "sub $kw-$rest \{}; $kw-$rest;",
-            "sub whose name starts with \"$kw-\"";
-        eval_lives_ok "sub $kw'$rest \{}; $kw'$rest;",
-            "sub whose name starts with \"$kw'\"";
-    }
-    test 'foo',       'bar';
-    test 'package',   'delivery';
-    test 'module',    'maven';
-    test 'class',     'struggle';
-    test 'role',      'playing';
-    test 'grammar',   'lesson';
-    test 'my',        'mistake';
-    test 'our',       'hero';
-    test 'state',     'of-the-art';
-    test 'let',       'it-be';
-    test 'temp',      'worker';
-    test 'has',       'had';
-    test 'augment',   'arglye';
-    test 'anon',      'nymous';
-    test 'supersede', 'silliness';
-    test 'sub',       'zero';
-    test 'method',    'to-the-madness';
-    test 'submethod', 'sanity';
-    test 'macro',     'economics';
-    test 'multi',     'colored';
-    test 'proto',     'linguistcs';
-    test 'only',      'you';
-    test 'regex',     'issues';
-    test 'token',     'support';
-    test 'rule',      'following';
-    test 'constant',  'threat';
-    test 'enum',      'eration';
-    test 'subset',    'sum';
+     {
+        eval_lives_ok "sub $^kw \{}; {$^kw}();",
+            "sub named \"$^kw\" called with parentheses";
+        eval_lives_ok "sub {$^kw}-rest \{}; {$^kw}-rest;",
+            "sub whose name starts with \"$^kw-\"";
+        eval_lives_ok "sub {$^kw}'rest \{}; {$^kw}'rest;",
+            "sub whose name starts with \"$^kw'\"";
+    } for <
+        foo package module class role grammar my our state let
+        temp has augment anon supersede sub method submethod
+        macro multi proto only regex token rule constant enum
+        subset if unless while repeat for foreach loop given
+        when default
+    >;
 }
 
 # RT #69752
