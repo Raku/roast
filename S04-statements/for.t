@@ -356,7 +356,6 @@ class TestClass{ has $.key is rw  };
 }
 
 # L<S04/Statement parsing/keywords require whitespace>
-#?rakudo todo "for(0..5) should die because there is no space after the for"
 eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 # looping with more than one loop variables
