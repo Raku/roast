@@ -50,7 +50,11 @@ is @a, @b, 'Can eliminate the auto-declared placeholder, and sorting is still eq
 
 is @b, (@people.sort: { +.karma }), 'Sort explicitly numerically';
 # TODO - need another test to explicitly test correct numerical sorting
-isnt @b, (@people.sort: { ~.karma }), "Sort numerically is different to stringily";
+ok ([<=] @b>>.karma), 'proper numeric sorting';
+
+# numerical sort isn't always the same as stringy sorting, so
+# this test randomly fails.
+# isnt @b, (@people.sort: { ~.karma }), "Sort numerically is different to stringily";
 
 {
     is @b, (@people.sort: *.karma), 'Using a Whatever to sort numerically (be default)';
