@@ -23,7 +23,7 @@ use Test;
 #   S02 lists ':a' as being equivlaent to a => 1, so
 #   the type of the value of that pair is Int, not Bool
 
-plan 53;
+plan 80;
 
 sub f1 ($a, $b) { $a.WHAT ~ $b.WHAT }
 {
@@ -152,12 +152,15 @@ sub f9 (:$bar!) { WHAT($bar) }
     is (a => 3).elems, 1, 'Pair.elems';
 }
 
+# RT #74948
 {
-    is (self => 1).key, 'self', 'Pair with "self" as key';
-    is (rand => 1).key, 'rand', 'Pair with "rand" as key';
-    is (time => 1).key, 'time', 'Pair with "time" as key';
-    is (now => 1).key, 'now', 'Pair with "now" as key';
-    is (YOU_ARE_HERE => 1).key, 'YOU_ARE_HERE', 'Pair with "YOU_ARE_HERE" as key';
+    # We use a block because of RT #77646.
+    { is eval("($^s => 1).key"), $^s, "Pair with \"$^s\" as key" } for <
+        self rand time now YOU_ARE_HERE package module class role
+        grammar my our state let temp has augment anon supersede
+        sub method submethod macro multi proto only regex token
+        rule constant enum subset
+    >;
 }
 
 # vim: ft=perl6
