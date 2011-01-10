@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 39;
+plan 54;
 
 {
     my $x = 1;
@@ -126,6 +126,32 @@ plan 39;
     #?rakudo skip '1 ^^ 42 yields Mu?'
     ok(!(1 xor 42),        "xor operator working (both true)");
     ok(!(0 xor 0),         "xor operator working (both false)");
+}
+
+
+# RT #73820 infix ^^ return wrong types
+# RT #72826 infix ^^ return wrong types
+#?rakudo 14 skip 'test return type of infix ^^'
+{
+    is ( 7 ^^ 7 ).WHAT, 'Bool()', 'Bool()';
+    is ( 7 ^^ Mu ).WHAT, 'Int()', 'Int()';
+    is ( 0 ^^ ^7 ).WHAT, 'Range()', 'Range()';
+    is ( ^7 ^^ 0 ).WHAT, 'Range()', 'Range()';
+    is ( 7.5i ^^ Mu ).WHAT, 'Complex()', 'Complex()';
+    is ( Inf ^^ Mu ).WHAT, 'Num()', 'Num()';
+    is ( 'Inf' ^^ Mu ).WHAT, 'Str()', 'Str()';
+
+    my @a = (1,2,3);
+    my @b = (4,5,6);
+    my (@c, @d);
+
+    is (@a ^^ @c), '1 2 3', 'Array ^^ true returns true array';
+    is (@c ^^ @a), '1 2 3', 'Array ^^ true returns true array';
+    ok (@a ^^ @b) == (), 'Array ^^ true returns empty list';
+    ok (@c ^^ @d) == (), 'Array ^^ true returns empty list';
+    is (@a ^^ ()), '1 2 3', 'True array ^^ empty list returns array';
+    is (() ^^ @a), '1 2 3', 'Empty list ^^ true array returns array';
+    ok (() ^^ @c) == (), 'Empty list ^^ empty array returns ()';
 }
 
 {
