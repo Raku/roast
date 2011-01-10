@@ -54,9 +54,11 @@ is ([===] ()), Bool::True, "[===] () eq True";
 is ([!===] ()), Bool::True, "[!===] () eq True";
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
-#?rakudo 3 skip "[...] not implemented"
+#?rakudo 2 skip "[...] not implemented"
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::True, "[||] () eq True";
+# RT #65164 (TODO: implement [^^])
+#?rakudo 1 skip "[...] not implemented"
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
