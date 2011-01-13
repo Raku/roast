@@ -49,6 +49,7 @@ ok 1 >= 1/2, '1 is not greater than or equal to 1/2';
 ok 1/2 >= 1/2, '1/2 is greater than or equal to 1/2';
 
 # +'a' is 0. This means 1 is less than 'a' in numeric context but not string
+#?niecza 6 skip 'Str.Numeric'
 ok('a' < '1',  '< uses numeric context');
 ok('a' <= '1', '<= uses numeric context (1)');
 ok('a' <= '0', '<= uses numeric context (2)');
