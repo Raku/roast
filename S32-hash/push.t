@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 5;
 
 # L<S32::Containers/Hash/"Like hash assignment insofar">
 
@@ -8,6 +8,11 @@ my %ref1 = (a => 1, b => 2, c => 3);
 my %ref2 = (a => [1, 4, 5], b => 2, c => 3);
 
 {
+
+    my ($r, %x);
+    $r = %x.push: 'a' => 1;
+    is $r.WHAT, Hash, 'Hash.push returns hash';
+
     my %h;
     %h.push: 'b', 2, 'a', 1, 'c', 3;
     is_deeply %h, %ref1, 'basic Hash.push with alternating items';
