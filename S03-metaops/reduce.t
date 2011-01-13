@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 92;
+plan 93;
 
 =begin pod
 
@@ -236,6 +236,10 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     is B.new.n, 'bbbb', '[~] works in second class';
     is ([~] 1, 2, 5), '125', '[~] works outside class';
 }
+
+#?rakudo todo 'RT 82210'
+ok [+](1..10) + 0 == ([+] 1..10) + 0,
+   'a listop with immediate () is a function call (RT 82210)';
 
 done;
 # vim: ft=perl6
