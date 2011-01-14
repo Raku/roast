@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 47;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -93,8 +93,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is Bool.roll(*).[^10].elems, 10, 'Bool.roll(*) contains at least 10 elems';
 
 }
-
-isa_ok ('RT71462' ~~ Str), Bool;
 
 done;
 

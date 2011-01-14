@@ -16,7 +16,7 @@ plan 22;
 
 {
     my @b = <foo 123 bar 456 baz>;
-    lives_ok { @b.=grep({/<[a..z]>/})},
+    lives_ok { @b.=grep(/<[a..z]>/)},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
     is @b[1], 'bar', 'inplace grep [1]';
