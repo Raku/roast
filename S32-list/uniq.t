@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 =begin description
 
@@ -25,6 +25,10 @@ Not (yet?) in the spec, but implemented by (nearly?) all implementations.
   ok @array .= uniq,                 "inplace form of uniq works (1)";
   is      ~@array,  "a b c d e f", "inplace form of uniq works (2)";
 }
+
+is uniq('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
+    'a b c d e f',
+    'slurpy subroutine form of uniq works';
 
 # With a userspecified criterion
 #?rakudo skip "Not spec'd, and this seems unlikely to be how it will be spec'd"

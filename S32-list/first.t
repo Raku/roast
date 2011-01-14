@@ -3,16 +3,23 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 21;
+plan 23;
 
 my @list = (1 ... 10);
 
 {
-    my $result = first { ($^a % 2) }, @list;
+    my $result = first { ($^a % 2) }, |@list;
     ok($result ~~ Int, "first() returns an Int");
     is($result, 1, "returned value by first() is correct");
 }
 
+{
+    my $result = first { ($^a % 2) }, 1, 2, 3, 4, 5, 6, 7, 8;
+    ok($result ~~ Int, "first() returns an Int");
+    is($result, 1, "returned value by first() is correct");
+}
+
+#?rakudo skip 'RT 74344'
 {
     my $result = first({ ($^a % 2) }, :values(@list));
     ok($result ~~ Int, "first() returns an Int");
