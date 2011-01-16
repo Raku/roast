@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 47;
+plan 45;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -46,6 +46,8 @@ isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
 is(~Bool::True, 'Bool::True', 'Bool stringification (True)');
 is(~Bool::False, 'Bool::False', 'Bool stringification (False)');
+is Bool::True.Str, 'Bool::True', 'True.Str';
+is Bool::False.Str, 'Bool::False', 'False.Str';
 
 
 # numification - interaction with +
@@ -55,12 +57,7 @@ is(+Bool::True, '1', 'True numifies to 1');
 isa_ok(+Bool::True, Int, 'True numifies to an Int');
 is(+Bool::False, '0', 'False numifies to 0');
 isa_ok(+Bool::False, Int, 'False numifies to an Int');
-# stringification
-#?rakudo 2 todo '~Bool'
-is(~Bool::True, 'True', 'True stringifies to True');
-is(~Bool::False, 'False', 'False stringifies to False');
-is Bool::True.Str, 'Bool::True', 'True.Str';
-is Bool::False.Str, 'Bool::False', 'False.Str';
+
 
 # Arithmetic operations
 my $bool = Bool::False;
