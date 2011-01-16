@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 152;
+plan 153;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -559,6 +559,8 @@ Hello, World
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
     is qqx/echo $var/.chomp,  "world", 'qqx';
+    # RT #78874
+    is qx/echo world/.trans('wd' => 'WD'), "WorlD\n", "qx doesn't return a Parrot string";
 }
 
 done;
