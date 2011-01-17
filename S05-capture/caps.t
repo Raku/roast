@@ -41,10 +41,10 @@ is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple (
 is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
-#?rakudo 2 skip 'RT 75484 (fails randomly) (noauto)'
-is ca($/.caps), '0:a|wc:b|1:c|wc:d',
+#'RT 75484 (fails randomly) (noauto)'
+is ca($/.caps), '0:a|wc:b|0:c|wc:d',
                       'mixed named/positional flattening with quantifiers';
-is ca($/.chunks), '0:a|~: |wc:b|~: |1:c|~: |wc:d',
+is ca($/.chunks), '0:a|~: |wc:b|~: |0:c|~: |wc:d',
                       'mixed named/positional flattening with quantifiers';
 
 # .caps and .chunks on submatches
