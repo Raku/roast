@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 244;
+plan 246;
 
 
 # tests various assignment styles
@@ -145,6 +145,13 @@ plan 244;
     is(@a,'1 2 3',"'{\@a}' is '1 2 3'?:       \@a = 1 .. 3");
     is($s,'1',  "\$s is '1'?:       my (\$s,\@a) = 1 .. 3");
     is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
+}
+
+# RT #74302
+{
+    my ($a, %b) = "!", a => "1", b => "2", c => "3";
+    is $a, "!", "got scalar in (scalar,hash) = list";
+    is %b.keys.sort.join(", "), "a, b, c", "got hash in (scalar,hash) = list";
 }
 
 #?rakudo skip 'assigning to array slices'
