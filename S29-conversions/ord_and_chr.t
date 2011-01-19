@@ -151,7 +151,7 @@ is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 ok not defined(ord("")), 'ord("") returns an undefined value';
 
 # RT #65172
-#?rakudo skip 'RT 6512'
+#?rakudo skip 'RT 65172'
 {
     is  "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord,
         555,
