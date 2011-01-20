@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 22;
+plan 28;
 
 {
     my @a = (1, 2, 3);
@@ -71,6 +71,24 @@ is ~@b, "a b d e z", "inplace sort";
 
     @a.=sort;
     is @a, [1,2,3],            'worked: @a.=sort';
+}
+
+# RT #70676
+{
+   my $x = 5.5;
+   $x .= Int;
+   isa_ok $x, Int, '.= Int (type)';
+   is $x, 5, '.= Int (value)';
+
+   $x = 3;
+   $x .= Str;
+   isa_ok $x, Str, '.= Str (type)';
+   is $x, '3', '.= Str (value)';
+
+   $x = 15;
+   $x .= Bool;
+   isa_ok $x, Bool, '.= Bool (type)';
+   is $x, True, '.= Bool (value)';
 }
 
 # vim: ft=perl6
