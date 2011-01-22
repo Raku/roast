@@ -219,4 +219,11 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     isa_ok (1..$_), Range, '(..) works on Int .. Any';
 }
 
+# RT #82620
+#rakudo skip 'range leaking Parrot types'
+{
+    lives_ok {("a".."b").map({.trans(""=>"")}).perl},
+        "range doesn't leak Parrot types";
+}
+
 # # vim: ft=perl6
