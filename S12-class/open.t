@@ -37,7 +37,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 }
 
 # now try to extend "core" types
-
+# RT #75114
 {
     augment class Str {
         method mydouble {
@@ -48,6 +48,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
     is 'aBc'.mydouble, 'ABCabc', 'can extend Str';
 }
 
+# RT #75114
 {
     augment class Int {
         method triple { self * 3 }
