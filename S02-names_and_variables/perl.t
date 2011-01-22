@@ -131,7 +131,6 @@ my @tests = (
     lives_ok { %h<a> = [%h<a>] },
              'can assign list with new hash element to itself';
     lives_ok { %h<a>.perl }, 'can take .perl from hash element';
-    #?rakudo skip 'RT #64080'
     ok %h<a> !=== %h<a>[0], 'hoa does not refer to hash element';
 }
 
