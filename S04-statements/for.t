@@ -54,16 +54,10 @@ plan 65;
 }
 
 # ... with referential sub
-#?rakudo skip 'class accessing outer lexical'
 {
-    my $d = '';
-    augment class Int {
-        method some_meth_1 { 
-            $d = $d ~ self
-        } 
-    };
-    for 0 .. 5 { .some_meth_1 };
-    is($d, '012345', 'for 0 .. 5 { .some_sub } works');
+    my $d = "";
+    for -2 .. 2 { $d ~= .sign };
+    is($d, '-1-1011', 'for 0 .. 5 { .some_sub } works');
 }
 
 ## and now with parens around the range operator
