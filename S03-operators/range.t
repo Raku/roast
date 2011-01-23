@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 112;
+plan 113;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
