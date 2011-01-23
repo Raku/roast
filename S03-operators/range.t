@@ -126,6 +126,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 ##     that coerces its arguments to numeric context, or we can
 ##     remove these tests from the suite.
 # RT #58018
+# RT #76950
 {
     my @three = (1, 1, 1);
     my @one = 1;
