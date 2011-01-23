@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 246;
+plan 248;
 
 
 # tests various assignment styles
@@ -780,6 +780,18 @@ sub l () { 1, 2 };
    is $rt80614, 2, 'assignment to scalar via array item from array item';
    #?rakudo todo 'RT 80614'
    is @b[0], 2, 'assignment to array item from array item to scalar';
+}
+
+# RT #76734
+#?rakudo skip 'RT #76734'
+{
+    class A {};
+    my $x = ['a'];
+    multi infix:<=> (A $a, Str $value) { $x.push: $value; }
+    (A.new() = 'b');
+    is $x.join(','), 'a,b', 'New multi infix:<=> works';
+    $x = 'c';
+    is $x, 'c', '...without screwing up ordinary assignment';
 }
 
 # vim: ft=perl6
