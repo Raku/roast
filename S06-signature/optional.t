@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 14;
+plan 16;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -37,7 +37,12 @@ is opt_typed() , 'undef',  'can leave out optional typed param';
 
 # L<S06/Parameters and arguments/"required positional parameters must come
 # before those bound to optional positional">
-eval_dies_ok 'sub wrong ($a?, $b) {...}', 'options params before required ones are forbidden';
+eval_dies_ok 'sub wrong1 ($a?, $b) {...}', 'optional params before required ones are forbidden';
+# RT #76022
+{
+    eval_dies_ok 'sub wrong2 ($a = 1, $b) {...}', "...even if they're only optional by virtue of a default";
+    eval_dies_ok 'sub wrong3 ($a = 0, $b) {...}', '...and the default is 0';
+}
 
 sub foo_53814($w, $x?, :$y = 2) { $w~"|"~$x~"|"~$y };
 dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
