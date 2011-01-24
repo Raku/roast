@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 148;
+plan 149;
 
 =begin pod
 
@@ -219,6 +219,8 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     is ([^^] 5, 0, 0),  (5 ^^ 0 ^^ 0),  '[^^] mix 4';
     is ([^^] 0, 9, 0),  (0 ^^ 9 ^^ 0),  '[^^] mix 5';
     is ([^^] 0, 0, 17), (0 ^^ 0 ^^ 17), '[^^] mix 6';
+
+    nok ([^^] ()), 'reduce empty list ok';
 
     # test False / undefined things
     my $msg1 = 'reduce [^^] false variable test';
