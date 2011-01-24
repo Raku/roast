@@ -205,35 +205,35 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 # RT #65164 (TODO: implement [^^])
 #?rakudo skip 'implement [^^]'
 {
-    is [^^](0, 42), 42, '[^^] works (one of two true)';
-    is [^^](42, 0), 42, '[^^] works (one of two true)';
-    ok ! [^^](1, 42),   '[^^] works (two true)';
-    ok ! [^^](0, 0),    '[^^] works (two false)';
+    is ([^^] 0, 42), 42, '[^^] works (one of two true)';
+    is ([^^] 42, 0), 42, '[^^] works (one of two true)';
+    ok ! ([^^] 1, 42),   '[^^] works (two true)';
+    ok ! ([^^] 0, 0),    '[^^] works (two false)';
 
-    ok ! [^^](0, 0, 0), '[^^] works (three false)';
-    ok ! [^^](5, 9, 17), '[^^] works (three true)';
+    ok ! ([^^] 0, 0, 0), '[^^] works (three false)';
+    ok ! ([^^] 5, 9, 17), '[^^] works (three true)';
 
-    is [^^](5, 9, 0),  (5 ^^ 9 ^^ 0),  '[^^] mix 1';
-    is [^^](5, 0, 17), (5 ^^ 0 ^^ 17), '[^^] mix 2';
-    is [^^](0, 9, 17), (0 ^^ 9 ^^ 17), '[^^] mix 3';
-    is [^^](5, 0, 0),  (5 ^^ 0 ^^ 0),  '[^^] mix 4';
-    is [^^](0, 9, 0),  (0 ^^ 9 ^^ 0),  '[^^] mix 5';
-    is [^^](0, 0, 17), (0 ^^ 0 ^^ 17), '[^^] mix 6';
+    is ([^^] 5, 9, 0),  (5 ^^ 9 ^^ 0),  '[^^] mix 1';
+    is ([^^] 5, 0, 17), (5 ^^ 0 ^^ 17), '[^^] mix 2';
+    is ([^^] 0, 9, 17), (0 ^^ 9 ^^ 17), '[^^] mix 3';
+    is ([^^] 5, 0, 0),  (5 ^^ 0 ^^ 0),  '[^^] mix 4';
+    is ([^^] 0, 9, 0),  (0 ^^ 9 ^^ 0),  '[^^] mix 5';
+    is ([^^] 0, 0, 17), (0 ^^ 0 ^^ 17), '[^^] mix 6';
 
     # test False / undefined things
     my $msg1 = 'reduce [^^] false variable test';
     my $msg2 = 'infix ^^ false variable test';
     for (0, '0', '', Bool::False, Any, Mu, Nil) -> $undef {
-        ok [^^] ( $undef, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#1";
-        nok [^^] ( 1, 2, $undef, 3, $undef ), "|{$undef.perl}| $msg1 \#2";
-        nok [^^] ( $undef, $undef, 1, 5 ), "|{$undef.perl}| $msg1 \#3";
-        nok [^^] ( 1, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#4";
-        ok [^^] ( $undef, $undef, 2, $undef ), "|{$undef.perl}| $msg1 \#5";
-        nok [^^] ( $undef, $undef, $undef ), "|{$undef.perl}| $msg1 \#6";
-        nok [^^] ( $undef, $undef ), "|{$undef.perl}| $msg1 \#7";
-        ok [^^] ( $undef, 1 ), "|{$undef.perl}| $msg1 \#8";
-        ok [^^] ( 1, $undef ), "|{$undef.perl}| $msg1 \#9";
-        nok [^^] ( $undef ), "|{$undef.perl}| $msg1 \#10";
+        ok ( [^^]  $undef, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#1";
+        nok ( [^^]  1, 2, $undef, 3, $undef ), "|{$undef.perl}| $msg1 \#2";
+        nok ( [^^]  $undef, $undef, 1, 5 ), "|{$undef.perl}| $msg1 \#3";
+        nok ( [^^]  1, $undef, $undef, 5 ), "|{$undef.perl}| $msg1 \#4";
+        ok ( [^^]  $undef, $undef, 2, $undef ), "|{$undef.perl}| $msg1 \#5";
+        nok ( [^^]  $undef, $undef, $undef ), "|{$undef.perl}| $msg1 \#6";
+        nok ( [^^]  $undef, $undef ), "|{$undef.perl}| $msg1 \#7";
+        ok ( [^^]  $undef, 1 ), "|{$undef.perl}| $msg1 \#8";
+        ok ( [^^]  1, $undef ), "|{$undef.perl}| $msg1 \#9";
+        nok ( [^^]  $undef ), "|{$undef.perl}| $msg1 \#10";
         ok ( $undef ^^ $undef ^^ $undef ^^ 5 ), "|{$undef.perl}| $msg2 \#1";
         nok ( 1 ^^ 2 ^^ $undef ^^ 3 ^^ $undef ), "|{$undef.perl}| $msg2 \#2";
         nok ( $undef ^^ $undef ^^ 1 ^^ 5 ), "|{$undef.perl}| $msg2 \#3";
@@ -249,15 +249,15 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     $msg1 = 'reduce [^^] true numbery variable test';
     $msg2 = 'infix ^^ true numbery variable test';
     for (1, -147, pi, Bool::True) -> $def {
-        nok [^^] ( 0, 0, $def, 3, $def ), "|{$def.perl}| $msg1 \#1";
-        nok [^^] ( $def, $def, 0 ), "|{$def.perl}| $msg1 \#2";
-        nok [^^] ( 1, $def, Any, 5 ), "|{$def.perl}| $msg1 \#3";
-        ok [^^] ( $def, 0, 0, 0 ) == $def, "|{$def.perl}| $msg1 \#4";
-        ok [^^] ( Any, Any, Any, $def ) == $def, "|{$def.perl}| $msg1 \#5";
-        nok [^^] ( $def, $def ), "|{$def.perl}| $msg1 \#6";
-        ok [^^] ( $def, 0 ) == $def, "|{$def.perl}| $msg1 \#7";
-        ok [^^] ( 0, $def ) == $def, "|{$def.perl}| $msg1 \#8";
-        ok [^^] ( $def ), "|{$def.perl}| $msg1 \#9";
+        nok ( [^^] 0, 0, $def, 3, $def ), "|{$def.perl}| $msg1 \#1";
+        nok ( [^^] $def, $def, 0 ), "|{$def.perl}| $msg1 \#2";
+        nok ( [^^] 1, $def, Any, 5 ), "|{$def.perl}| $msg1 \#3";
+        ok ( [^^] $def, 0, 0, 0 ) == $def, "|{$def.perl}| $msg1 \#4";
+        ok ( [^^] Any, Any, Any, $def ) == $def, "|{$def.perl}| $msg1 \#5";
+        nok ( [^^] $def, $def ), "|{$def.perl}| $msg1 \#6";
+        ok ( [^^] $def, 0 ) == $def, "|{$def.perl}| $msg1 \#7";
+        ok ( [^^] 0, $def ) == $def, "|{$def.perl}| $msg1 \#8";
+        ok ( [^^] $def ), "|{$def.perl}| $msg1 \#9";
         nok ( 0 ^^ 0 ^^ $def ^^ 3 ^^ $def ), "|{$def.perl}| $msg2 \#1";
         nok ( $def ^^ $def ^^ 0 ), "|{$def.perl}| $msg2 \#2";
         nok ( 1 ^^ $def ^^ Any ^^ 5 ), "|{$def.perl}| $msg2 \#3";
@@ -272,16 +272,16 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     $msg1 = 'reduce [^^] true string variable test';
     $msg2 = 'infix ^^ true string variable test';
     for ('no', 'Bob', '10', 'False') -> $def {
-        nok [^^] ( $def, $def, $def, 'string' ), "|{$def.perl}| $msg1 \#1";
-        nok [^^] ( '', '', $def, 'str', $def ), "|{$def.perl}| $msg1 \#2";
-        nok [^^] ( $def, $def,'' ), "|{$def.perl}| $msg1 \#3";
-        nok [^^] ( 1, $def, Any, 5 ), "|{$def.perl}| $msg1 \#4";
-        ok [^^] ( $def, '', '', '' ) eq $def, "|{$def.perl}| $msg1 \#5";
-        ok [^^] ( Any, Any, Any, $def ) eq $def, "|{$def.perl}| $msg1 \#6";
-        nok [^^] ( $def, $def ), "|{$def.perl}| $msg1 \#7";
-        ok [^^] ( $def, '' ) eq $def, "|{$def.perl}| $msg1 \#8";
-        ok [^^] ( '', $def ) eq $def, "|{$def.perl}| $msg1 \#9";
-        ok [^^] ( $def ) eq $def, "|{$def.perl}| $msg1 \#10";
+        nok ( [^^] $def, $def, $def, 'string' ), "|{$def.perl}| $msg1 \#1";
+        nok ( [^^] '', '', $def, 'str', $def ), "|{$def.perl}| $msg1 \#2";
+        nok ( [^^] $def, $def,'' ), "|{$def.perl}| $msg1 \#3";
+        nok ( [^^] 1, $def, Any, 5 ), "|{$def.perl}| $msg1 \#4";
+        ok ( [^^] $def, '', '', '' ) eq $def, "|{$def.perl}| $msg1 \#5";
+        ok ( [^^] Any, Any, Any, $def ) eq $def, "|{$def.perl}| $msg1 \#6";
+        nok ( [^^] $def, $def ), "|{$def.perl}| $msg1 \#7";
+        ok ( [^^] $def, '' ) eq $def, "|{$def.perl}| $msg1 \#8";
+        ok ( [^^] '', $def ) eq $def, "|{$def.perl}| $msg1 \#9";
+        ok ( [^^] $def ) eq $def, "|{$def.perl}| $msg1 \#10";
         nok ( $def ^^ $def ^^ $def ^^ 'string' ), "|{$def.perl}| $msg2 \#1";
         nok ( '' ^^ '' ^^ $def ^^ 'str' ^^ $def ),"|{$def.perl}| $msg2 \#2";
         nok ( $def ^^ $def ^^'' ), "|{$def.perl}| $msg2 \#3";
