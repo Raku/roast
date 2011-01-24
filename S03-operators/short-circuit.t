@@ -133,13 +133,13 @@ plan 54;
 # RT #72826 infix ^^ return wrong types
 #?rakudo 14 skip 'test return type of infix ^^'
 {
-    is ( 7 ^^ 7 ).WHAT, 'Bool()', 'Bool()';
-    is ( 7 ^^ Mu ).WHAT, 'Int()', 'Int()';
-    is ( 0 ^^ ^7 ).WHAT, 'Range()', 'Range()';
-    is ( ^7 ^^ 0 ).WHAT, 'Range()', 'Range()';
-    is ( 7.5i ^^ Mu ).WHAT, 'Complex()', 'Complex()';
-    is ( Inf ^^ Mu ).WHAT, 'Num()', 'Num()';
-    is ( 'Inf' ^^ Mu ).WHAT, 'Str()', 'Str()';
+    isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
+    isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
+    isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
+    isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
+    isa_ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
+    isa_ok Inf ^^ Mu, Num, '^^ can return a Num';
+    isa_ok 'Inf' ^^ Mu, Str, '^^ can return a Str';
 
     my @a = (1,2,3);
     my @b = (4,5,6);
