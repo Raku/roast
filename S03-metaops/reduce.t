@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 149;
+plan 354;
 
 =begin pod
 
@@ -202,8 +202,7 @@ is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3
 is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
     'triangle reduce is lazy');
 
-# RT #65164 (TODO: implement [^^])
-#?rakudo skip 'implement [^^]'
+# RT #65164 implement [^^]
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -295,6 +294,12 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
         ok ( '' ^^ $def ) eq $def, "|{$def.perl}| $msg2 \#9";
     }
 
+    is (join ', ', [\^^] False, 0, 5, '', False, 16,    0,     Any,   "hello", False),
+       (join ', ',       False, 0, 5, 5,  5,     False, False, False, False,   False),
+       '[\^^]';
+    is (join ', ', [\xor] 'xyzzy', Int,     0.0,     '',      False,   'plugh', 4,     2,     'xyzzy'),
+       (join ', ',        'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', False,   False, False, False),
+       '[\xor]';
 }
 
 # RT #75234

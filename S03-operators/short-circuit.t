@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 54;
+plan 69;
 
 {
     my $x = 1;
@@ -92,6 +92,12 @@ plan 54;
     $x = 0;
     1 ^^ 2 ^^ ($x = 5);
     is($x, 0, "^^ operator short circuiting");
+
+    $x = '';
+    sub f($n, $s) { $x ~= $s; $n }
+    f(0, 'a') ^^ f(0, 'b') ^^ f(1, 'c') ^^ f(0, 'd') ^^
+        f(0, 'e') ^^ f(1, 'f') ^^ f(0, 'g') ^^ f(0, 'h');
+    is $x, 'abcdef', '^^ operator short circuiting exactly when needed';
 }
 
 {
@@ -100,6 +106,16 @@ plan 54;
     $x xor $y = 42;
 
     is($y, 42, "xor operator not short circuiting");
+
+    $x = 0;
+    1 xor 2 xor ($x = 5);
+    is($x, 0, "xor operator short circuiting");
+
+    $x = '';
+    sub f($n, $s) { $x ~= $s; $n }
+    f(0, 'a') xor f(0, 'b') xor f(1, 'c') xor f(0, 'd') xor
+        f(0, 'e') xor f(1, 'f') xor f(0, 'g') xor f(0, 'h');
+    is $x, 'abcdef', 'xor operator short circuiting exactly when needed';
 }
 
 {
@@ -115,23 +131,35 @@ plan 54;
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
-    #?rakudo skip '1 ^^ 42 should return False (or maybe Nil)'
-    ok((1 ^^ 42) === (?0), "^^  operator working (both true)");
-    #?rakudo skip '0 ^^ 0 should return False (or maybe Nil)'
-    ok((0 ^^ 0)  === (?0), "^^  operator working (both false)");
+    is(1 ^^ 42,     False, "^^  operator working (both true)");
+    is(0 ^^ 0,          0, "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
-    #?rakudo skip '1 ^^ 42 yields Mu?'
     ok(!(1 xor 42),        "xor operator working (both true)");
     ok(!(0 xor 0),         "xor operator working (both false)");
 }
 
+# L<S03/Tight or precedence/'if all arguments are false'>
+{
+    is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
+    is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
+    is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
+    is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
+    is 15 ^^ 0 ^^ 'quux', False, '^^ given two true values returns False (1)';
+    is 'a' ^^ 'b' ^^ 0, False, '^^ given two true values returns False (2)';
+
+    is (0 xor False xor ''), '', 'xor given all false values returns last (1)';
+    is (False xor '' xor 0), 0, 'xor given all false values returns last (2)';
+    is (False xor 42 xor ''), 42, 'xor given one true value returns it (1)';
+    is (0 xor Int xor 'plugh'), 'plugh', 'xor given one true value returns it (2)';
+    is (15 xor 0 xor 'quux'), False, 'xor given two true values returns False (1)';
+    is ('a' xor 'b' xor 0), False, 'xor given two true values returns False (2)';
+}
 
 # RT #73820 infix ^^ return wrong types
 # RT #72826 infix ^^ return wrong types
-#?rakudo 14 skip 'test return type of infix ^^'
 {
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';

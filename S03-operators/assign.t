@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 248;
+plan 268;
 
 
 # tests various assignment styles
@@ -241,6 +241,18 @@ my @p;
 
 {
     my $a;
+    @p = $a or= 3, 4;
+    is($a,3, "or= operator");
+    is(@p[0],3, "or= operator parses as item assignment 1");
+    is(@p[1],4, "or= operator parses as item assignment 2");
+    @p = $a or= 10, 11;
+    is($a,3, "... and second");
+    is(@p[0],3, "or= operator parses as item assignment 3");
+    is(@p[1],11, "or= operator parses as item assignment 4");
+}
+
+{
+    my $a;
     @p = $a //= 3, 4;
     is($a, 3, "//= operator");
     is(@p[0],3, "//= operator parses as item assignment 1");
@@ -273,6 +285,21 @@ my @p;
     is(@p[1],11, "&&= operator parses as item assignment 4");
     my $x = True; $x &&= False; 
     is($x, False, "&&= operator with True and False");
+}
+
+{
+    my $a = 3;
+    @p = $a and= 42, 43;
+    is($a, 42, "and= operator");
+    is(@p[0],42, "and= operator parses as item assignment 1");
+    is(@p[1],43, "and= operator parses as item assignment 2");
+    $a = 0;
+    @p = $a and= 10, 11;
+    is($a, 0, "... and second");
+    is(@p[0],0, "and= operator parses as item assignment 3");
+    is(@p[1],11, "and= operator parses as item assignment 4");
+    my $x = True; $x and= False;
+    is($x, False, "and= operator with True and False");
 }
 
 {
@@ -417,13 +444,29 @@ my @p;
     is(@p[1],'D', "~^= operator parses as item assignment 2");
 }
 
-#?rakudo skip "unknown reasons"
 {
-    my $x = 0;
+    my $x;
     @p = $x ^^= 42, 43;
     is($x, 42, '^^= operator');
     is(@p[0],42, "^^= operator parses as item assignment 1");
     is(@p[1],43, "^^= operator parses as item assignment 2");
+    $x ^^= 15;
+    is $x, False, '^^= with two true arguments yields False';
+    $x ^^= 'xyzzy';
+    is $x, 'xyzzy', "^^= doesn't permanently falsify scalars";
+}
+
+# RT #76820
+{
+    my $x;
+    @p = $x xor= 42, 43;
+    is($x, 42, 'xor= operator');
+    is(@p[0],42, "xor= operator parses as item assignment 1");
+    is(@p[1],43, "xor= operator parses as item assignment 2");
+    $x xor= 15;
+    is $x, False, 'xor= with two true arguments yields False';
+    $x xor= 'xyzzy';
+    is $x, 'xyzzy', "xor= doesn't permanently falsify scalars";
 }
 
 {

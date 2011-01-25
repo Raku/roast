@@ -54,11 +54,9 @@ is ([===] ()), Bool::True, "[===] () eq True";
 is ([!===] ()), Bool::True, "[!===] () eq True";
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
-#?rakudo 2 skip "[...] not implemented"
 is ([&&] ()), Bool::True, "[&&] () eq True";
-is ([||] ()), Bool::True, "[||] () eq True";
-# RT #65164 (TODO: implement [^^])
-#?rakudo 1 skip "[...] not implemented"
+is ([||] ()), Bool::False, "[||] () eq False";
+# RT #65164 implement [^^]
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
@@ -66,7 +64,7 @@ is ([Z] ()), [], "[Z] () eq []";
 
 is ([==] 3), Bool::True, 'unary [==]';
 is ([!=] 3), Bool::True, 'unary [!=]';
-#?rakudo 3 skip "[!==] not implemented"
+#?rakudo skip "[!==] not implemented"
 is ([!==] 3), Bool::True, 'unary [!==]';
 
 # vim: ft=perl6
