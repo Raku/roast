@@ -281,7 +281,7 @@ is $neg-pi.exp, (-3.14).exp, "-3.14.exp is correct";
 is $one-and-one-hundredth.exp(10.Rat), 1.01.exp(10), "1.01.exp(10) is correct";
 is 2.exp($neg-pi), 2.exp(-3.14), "2.exp(-3.14) is correct";
 is_approx $one-and-one-hundredth.exp(10i), 1.01.exp(10i), "1.01.exp(10i) is correct";
-is_approx 2i.exp($neg-pi), 2i.exp(-3.14), "2i.exp(-3.14) is correct";
+ok 2i.exp($neg-pi) ~~ NaN, "2i.exp(-3.14) is correct";
 
 {
     my @l = $neg-pi.roots(4);
