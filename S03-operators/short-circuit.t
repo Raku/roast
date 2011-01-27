@@ -171,6 +171,7 @@ sub accumtest($expect, $op) {
 }
 
 # L<S03/Tight or precedence/'if all arguments are false'>
+# RT #72826 infix ^^ return wrong types
 {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
@@ -185,11 +186,7 @@ sub accumtest($expect, $op) {
     is (0 xor Int xor 'plugh'), 'plugh', 'xor given one true value returns it (2)';
     is (15 xor 0 xor 'quux'), False, 'xor given two true values returns False (1)';
     is ('a' xor 'b' xor 0), False, 'xor given two true values returns False (2)';
-}
 
-# RT #73820 infix ^^ return wrong types
-# RT #72826 infix ^^ return wrong types
-{
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
