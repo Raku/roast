@@ -14,7 +14,16 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 69;
+plan 75;
+
+my $accum = '';
+sub f1($s)   { $accum ~= $s; 1 }
+sub f0($s)   { $accum ~= $s; 0 }
+sub fAny($s) { $accum ~= $s; Any }
+sub accumtest($expect, $op) {
+    is $accum, $expect, "$op operator short circuiting exactly when needed";
+    $accum = '';
+}
 
 {
     my $x = 1;
@@ -22,6 +31,9 @@ plan 69;
     $x == 1 || ($y = 42);
 
     is($y, 2, "|| operator short circuiting");
+
+    f0('a') || f0('b') || f1('c') || f0('d') || f1('e');
+    accumtest 'abc', '||';
 }
 
 {
@@ -30,6 +42,9 @@ plan 69;
     $x == 1 or $y = 42;
 
     is($y, 2, "'or' operator short circuiting");
+
+    f0('a') or f0('b') or f1('c') or f0('d') or f1('e');
+    accumtest 'abc', "'or'";
 }
 
 {
@@ -38,6 +53,9 @@ plan 69;
     $x != 1 && ($y = 42);
 
     is($y, 2, "&& operator short circuiting");
+
+    f1('a') && f1('b') && f1('c') && f0('d') && f1('e');
+    accumtest 'abcd', '&&';
 }
 
 {
@@ -46,6 +64,9 @@ plan 69;
     $x != 1 and $y = 42;
 
     is($y, 2, "'and' operator short circuiting");
+
+    f1('a') and f1('b') and f1('c') and f0('d') and f1('e');
+    accumtest 'abcd', "'and'";
 }
 
 {
@@ -54,15 +75,27 @@ plan 69;
     $x // ($y = 42);
 
     is($y, 2, "// operator short circuiting");
+
+    fAny('a') // fAny('b') // f0('c') // f1('d') // fAny('e');
+    accumtest 'abc', '//';
+
+    fAny('a') // f1('b') // f0('c');
+    accumtest 'ab', '//';
 }
 
-#?rakudo skip 'no inifx:<orelse> yet'
+#?rakudo 3 skip 'no inifx:<orelse> yet'
 {
     my $x = 1;
     my $y = 2;
     $x orelse $y = 42;
 
     is($y, 2, "'orelse' operator short circuiting");
+
+    fAny('a') orelse fAny('b') orelse f0('c') orelse f1('d') orelse fAny('e');
+    accumtest 'abc', "'orelse'";
+
+    fAny('a') orelse f1('b') orelse f0('c');
+    accumtest 'ab', "'orelse'";
 }
 
 {
@@ -93,11 +126,9 @@ plan 69;
     1 ^^ 2 ^^ ($x = 5);
     is($x, 0, "^^ operator short circuiting");
 
-    $x = '';
-    sub f($n, $s) { $x ~= $s; $n }
-    f(0, 'a') ^^ f(0, 'b') ^^ f(1, 'c') ^^ f(0, 'd') ^^
-        f(0, 'e') ^^ f(1, 'f') ^^ f(0, 'g') ^^ f(0, 'h');
-    is $x, 'abcdef', '^^ operator short circuiting exactly when needed';
+    f0('a') ^^ f0('b') ^^ f1('c') ^^ f0('d') ^^
+        f0('e') ^^ f1('f') ^^ f0('g') ^^ f0('h');
+    accumtest 'abcdef', '^^';
 }
 
 {
@@ -111,11 +142,9 @@ plan 69;
     1 xor 2 xor ($x = 5);
     is($x, 0, "xor operator short circuiting");
 
-    $x = '';
-    sub f($n, $s) { $x ~= $s; $n }
-    f(0, 'a') xor f(0, 'b') xor f(1, 'c') xor f(0, 'd') xor
-        f(0, 'e') xor f(1, 'f') xor f(0, 'g') xor f(0, 'h');
-    is $x, 'abcdef', 'xor operator short circuiting exactly when needed';
+    f0('a') xor f0('b') xor f1('c') xor f0('d') xor
+        f0('e') xor f1('f') xor f0('g') xor f0('h');
+    accumtest 'abcdef', 'xor';
 }
 
 {
