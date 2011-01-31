@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 268;
+plan 270;
 
 
 # tests various assignment styles
@@ -835,6 +835,21 @@ sub l () { 1, 2 };
     is $x.join(','), 'a,b', 'New multi infix:<=> works';
     $x = 'c';
     is $x, 'c', '...without screwing up ordinary assignment';
+}
+
+# RT #77142
+#?rakudo todo 'RT 77142'
+{
+    my $cc = 0;
+    sub called($ignored) {
+        $cc = 1;
+    };
+
+    dies_ok { called pi = 4 },
+        'correct precedence between sub call and assignment (1)';
+    is $cc, 0,
+        'correct precedence between sub call and assignment (2)';
+
 }
 
 # vim: ft=perl6
