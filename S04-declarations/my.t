@@ -249,8 +249,7 @@ my $z = 42;
 eval_lives_ok 'my (%h?)', 'my (%h?) lives';
 
 #RT 63588
-#?rakudo todo 'global my variables are not visible inside class declarations'
-eval_lives_ok 'my $x = 3; class A { has .$y = $x; }; say A.new.y', 
+eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; say A.new.y', 
         'global scoped variables are visible inside class definitions';
 
 #RT #72814
