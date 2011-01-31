@@ -106,7 +106,6 @@ sub accumtest($expect, $op) {
     is($y, 42, "// operator working");
 }
 
-#?rakudo skip 'no inifx:<orelse> yet'
 {
     my $x;      # should be Mu
     my $y = 2;
