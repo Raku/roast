@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 42;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -140,5 +140,23 @@ eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 }
 
 eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
+
+# check that inheriting from Array works
+{
+    class ArrayChild is Array {
+        method summary() { self.join(', ') }
+    }
+
+    my $a = ArrayChild.new;
+    $a.push('foo');
+    $a.push('bar');
+    is $a.join('|'), 'foo|bar', 'inheritance from Array';
+    is $a.summary, 'foo, bar', 'and ArrayChild methods work';
+
+    my @a := ArrayChild.new;
+    @a.push: 3, 5;
+    is @a.summary, '3, 5', 'new methods still work in @ variables';
+
+}
 
 # vim: ft=perl6
