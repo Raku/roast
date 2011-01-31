@@ -173,9 +173,9 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 {
     is 'hello-world'.split(/<.ws>/).join('|'), '|hello|-|world|',
             'zero-width delimiter (<.ws>)';
-    is 'hello-world'.split(/<.ws>/).join('|'), '|hello|-|world|',
+    is 'hello-world'.split(/<.wb>/).join('|'), '|hello|-|world|',
             'zero-width delimiter (<.wb>)';
-    is 'a-b-c'.split(/<.ws>/).join('|'), '|a|-|b|-|c|',
+    is 'a-b-c'.split(/<.wb>/).join('|'), '|a|-|b|-|c|',
             'zero-width delimiter (<.wb>) (2)';
 }
 
