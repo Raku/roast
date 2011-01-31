@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 36;
+plan 39;
 
 # split on an empty string
 
@@ -167,6 +167,16 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     is @a[1][1], "l", "Second capture worked";
     is @a[3][0], "o", "Third capture worked";
     is @a[3][1], " ", "Fourth capture worked";
+}
+
+# RT #63066
+{
+    is 'hello-world'.split(/<.ws>/).join('|'), '|hello|-|world|',
+            'zero-width delimiter (<.ws>)';
+    is 'hello-world'.split(/<.ws>/).join('|'), '|hello|-|world|',
+            'zero-width delimiter (<.wb>)';
+    is 'a-b-c'.split(/<.ws>/).join('|'), '|a|-|b|-|c|',
+            'zero-width delimiter (<.wb>) (2)';
 }
 
 done;
