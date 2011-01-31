@@ -381,7 +381,7 @@ FOO
 }
 
 #?rakudo skip 'Thinks statement not terminated properly'
-is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes' );
+is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
 
 # L<S02/Literals/"for user-defined quotes">
 # q:to
