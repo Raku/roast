@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 97;
 
 #L<S03/Autoincrement precedence>
 
@@ -123,7 +123,37 @@ is($b, -(++$a), 'est oder of predecrement in -(++$a)');
     is -2147483640 + -10, -2147483650;
 }
 
-{ 
+sub tryeq ($lhs, $rhs) {
+    ok($lhs == $rhs, "$lhs == $rhs");
+}
+
+
+#?DOES 1
+sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
+    my $todo = $todo1;  # TODO is rw
+    $todo = ' # TODO ' ~ $todo if $todo;
+    if ($lhs == $rhs) {
+        if ($todo) {
+            #&ok.nextwith($lhs==$rhs,$todo, :todo);
+            ok($lhs==$rhs,$todo, :todo);
+        } else {
+            #&ok.nextwith($lhs==$rhs,$todo);
+            ok($lhs==$rhs,$todo);
+        }
+    } else {
+        my $error = abs($lhs - $rhs);
+        $error   /= $lhs; # Syntax highlighting fix
+        if ($todo) {
+            #&ok.nextwith($error <1e-9,$todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
+            ok($error < 1e-9, $todo ~ " # " ~ $lhs ~ " is close to " ~ $rhs, :todo);
+        } else {
+            #&ok.nextwith($error <1e-9);
+            ok($error < 1e-9);
+        }
+    }
+}
+
+{
     tryeq 2147483648 - 0, 2147483648;
     tryeq -2147483648 - 0, -2147483648;
     tryeq 2000000000 - 4000000000, -2000000000;
