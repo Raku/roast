@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 27;
+plan 28;
 
 if !eval('("a" ~~ /a/)') {
   skip_rest "skipped tests - rules support appears to be missing";
@@ -64,11 +64,17 @@ ok "\x[10001]" ~~ /<[\x10000..\xEFFFF]>/, 'large \\x char spec';
 eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
     'reverse range in charset is lethal (RT 71702)' );
 
+# RT #64220
+ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
+
+# RT #69682
+{
+eval "/<[a-z]>/";
+ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
+    "STD error message for - as character range";
 }
 
-# RT #64220
-
-ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
+}
 
 done;
 
