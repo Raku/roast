@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 53;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -134,6 +134,15 @@ plan 48;
     is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
     is Any eqv Any, Bool::True, 'Any eqv Any';
     is Any eqv Mu, Bool::False, 'Any !eqv Mu';
+}
+
+# RT #75322 - Rakudo used to be confused when lists began with ()
+{
+    nok ((), "x") eqv ((), 9), 'list starting with () - 1';
+    nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';
+    nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';
+    nok ((), (), (), 1) eqv ((), 4), 'list starting with () - 1';
+    ok ((), ()) eqv ((), ()), '((), ())';
 }
 
 # vim: ft=perl6
