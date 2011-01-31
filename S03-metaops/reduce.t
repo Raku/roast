@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 354;
+plan 356;
 
 =begin pod
 
@@ -92,6 +92,12 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ~ ([\!=]  4, 5, 5).map({+$_}),   "1 1 0",   "[\\!=] works (2)";
     is (~ [\**]  1, 2, 3),   "3 8 1",   "[\\**] (right assoc) works (1)";
     is (~ [\**]  3, 2, 0),   "0 1 3",   "[\\**] (right assoc) works (2)";
+}
+
+# RT #76110
+{
+    is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
+    is ([+] [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
 {
