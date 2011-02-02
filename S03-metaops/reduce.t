@@ -103,7 +103,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
-   #?rakudo skip '[orelse]'
   is ([orelse] @array), 3, "[orelse] works";
 }
 
