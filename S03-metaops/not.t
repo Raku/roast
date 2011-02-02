@@ -48,21 +48,6 @@ isa_ok 4 !eqv 5, Bool, "4 !eqv 5 is Bool";
 is 4 !=:= 5, !(4 =:= 5), "4 !=:= 5";
 isa_ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 
-
-# L<S03/"is divisible by">
-{
-    ok 6 %% 3, '6 %% 3';
-    isa_ok 6 %% 3, Bool, '6 %% 3 isa Bool';
-    nok 6 %% 4, '6 %% 4';
-    isa_ok 6 %% 4, Bool, '6 %% 4 isa Bool';
-
-    is (1..10).grep({ $_ %% 3 }), <3 6 9>, '%% works with explicit closure';
-    is (1..10).grep( * %% 3 ), <3 6 9>, '%% works with whatever *';
-}
-
-
-
-
 done;
 
 # vim: ft=perl6
