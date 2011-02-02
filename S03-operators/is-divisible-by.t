@@ -15,7 +15,6 @@ plan 12;
     is (1..10).grep( * %% 3 ), <3 6 9>, '%% works with whatever *';
 }
 
-#?rakudo skip "!%% gettig confused with !%"
 {
     nok 6 !%% 3, '6 !%% 3';
     isa_ok 6 !%% 3, Bool, '6 !%% 3 isa Bool';
