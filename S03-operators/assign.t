@@ -313,8 +313,7 @@ my @p;
     @p = $x += 6, 7;
     is($x, 48, '+= operator');
     is(@p[0],48, "+= operator parses as item assignment 1");
-    #?rakudo todo "item assignment parsing"
-    is(@p[1],47, "+= operator parses as item assignment 2");
+    is(@p[1],7, "+= operator parses as item assignment 2");
 }
 
 {
@@ -330,8 +329,7 @@ my @p;
     @p = $x *= 3, 2;
     is($x, 12, '*= operator');
     is(@p[0],12, "*= operator parses as item assignment 1");
-    #?rakudo todo 'item assignment'
-    is(@p[1],12, "*= operator parses as item assignment 2");
+    is(@p[1],2, "*= operator parses as item assignment 2");
 }
 
 {
