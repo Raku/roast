@@ -83,6 +83,7 @@ sub accumtest($expect, $op) {
     accumtest 'ab', '//';
 }
 
+#?rakudo skip 'orelse NYI'
 {
     my $x = 1;
     my $y = 2;
@@ -105,6 +106,7 @@ sub accumtest($expect, $op) {
     is($y, 42, "// operator working");
 }
 
+#?rakudo skip 'orelse NYI'
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -153,6 +155,7 @@ sub accumtest($expect, $op) {
     is((0 or 42),      42, "or   operator working");
 
     is((Mu // 42),  42, "//   operator working"); #"
+    #?rakudo skip 'orelse NYI'
     is((Mu orelse 42), 42, "orelse  operator working");
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
