@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 270;
+plan 279;
 
 
 # tests various assignment styles
@@ -271,6 +271,31 @@ my @p;
     my $f //= 5;
     is $f, 5, '//= also works in declaration';
 }
+
+#?rakudo skip 'implement orelse'
+{
+    my $a;
+    @p = $a orelse= 3, 4;
+    is($a, 3, "orelse= operator");
+    is(@p[0],3, "orelse= operator parses as item assignment 1");
+    is(@p[1],4, "orelse= operator parses as item assignment 2");
+
+    @p = $a orelse= 10, 11;
+    is($a, 3, "... and second");
+    is(@p[0],3, "orelse= operator parses as item assignment 3");
+    is(@p[1],11, "orelse= operator parses as item assignment 4");
+
+    my %hash;
+    %hash<foo> orelse= hash();
+    #?rakudo todo 'isa and Hash'
+    isa_ok(%hash<foo>, Hash, "Verify orelse= autovivifies correctly");
+    %hash<bar> orelse= [];
+    isa_ok(%hash<bar>, Array, "Verify orelse= autovivifies correctly");
+
+    my $f orelse= 5;
+    is $f, 5, 'orelse= also works in declaration';
+}
+
 
 {
     my $a = 3;
