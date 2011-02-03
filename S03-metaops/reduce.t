@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 356;
+plan 358;
 
 =begin pod
 
@@ -103,6 +103,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
+  #?rakudo skip '[orelse]'
   is ([orelse] @array), 3, "[orelse] works";
 }
 
@@ -305,6 +306,20 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     is (join ', ', [\xor] 'xyzzy', Int,     0.0,     '',      False,   'plugh', 4,     2,     'xyzzy'),
        (join ', ',        'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', 'xyzzy', False,   False, False, False),
        '[\xor]';
+}
+
+# RT 57976 implement orelse
+{
+
+    #?rakudo skip '[orelse]'
+    is (join ', ', [\//] Any,    0, 1),
+       (join ', ',      'Any()', 0, 0),
+       '[\orelse]';
+    #?rakudo skip '[orelse]'
+    is (join ', ', [\orelse] Any,    0, 1),
+       (join ', ',          'Any()', 0, 0),
+       '[\orelse]';
+
 }
 
 # RT #75234
