@@ -2,11 +2,91 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 61;
 
 # L<S03/Changes to Perl 5 operators/flipflop operator is now done with>
 
 # XXX more tests for fff
+
+
+# test basic flip-flop operation
+{
+    sub test_ff($match_ff, @l) {
+        my $ret = '';
+        for @l {
+            $ret ~= $match_ff ?? $_ !! 'x';
+        }
+        return $ret;
+    }
+
+    is test_ff(/B/ ff /D/   , <A B C D E>), 'xBCDx', '/B/ ff /D/';
+    is test_ff(/B/ ^ff /D/  , <A B C D E>), 'xxCDx', '/B/ ^ff /D/';
+    is test_ff(/B/ ff^ /D/  , <A B C D E>), 'xBCxx', '/B/ ff^ /D/';
+    is test_ff(/B/ ^ff^ /D/ , <A B C D E>), 'xxCxx', '/B/ ^ff^ /D/';
+    is test_ff(/B/ fff /D/  , <A B C D E>), 'xBCDx', '/B/ fff /D/';
+    is test_ff(/B/ ^fff /D/ , <A B C D E>), 'xxCDx', '/B/ ^fff /D/';
+    is test_ff(/B/ fff^ /D/ , <A B C D E>), 'xBCxx', '/B/ fff^ /D/';
+    is test_ff(/B/ ^fff^ /D/, <A B C D E>), 'xxCxx', '/B/ ^fff^ /D/';
+
+    is test_ff(/B/ ff /B/   , <A B A B A>), 'xBxBx', '/B/ ff /B/';
+    is test_ff(/B/ ^ff /B/  , <A B A B A>), 'xxxxx', '/B/ ^ff /B/';
+    is test_ff(/B/ ff^ /B/  , <A B A B A>), 'xxxxx', '/B/ ff^ /B/';
+    is test_ff(/B/ ^ff^ /B/ , <A B A B A>), 'xxxxx', '/B/ ^ff^ /B/';
+    is test_ff(/B/ fff /B/  , <A B A B A>), 'xBABx', '/B/ fff /B/';
+    is test_ff(/B/ ^fff /B/ , <A B A B A>), 'xxABx', '/B/ ^fff /B/';
+    is test_ff(/B/ fff^ /B/ , <A B A B A>), 'xBAxx', '/B/ fff^ /B/';
+    is test_ff(/B/ ^fff^ /B/, <A B A B A>), 'xxAxx', '/B/ ^fff^ /B/';
+}
+
+
+# test flip-flop sequence management
+{
+    sub test_ff_cnt($match_ff, @l) {
+        my $ret = '';
+        for @l {
+            my $i;
+            $ret ~= (($i = ~$match_ff) ?? $_ !! 'x') ~ $i;
+        }
+        return $ret;
+    }
+
+    is test_ff_cnt(/B/ ff /D/   , <A B C D E>), 'xB1C2D3x', '/B/ ff /D/';
+    is test_ff_cnt(/B/ ^ff /D/  , <A B C D E>), 'xxC2D3x', '/B/ ^ff /D/';
+    is test_ff_cnt(/B/ ff^ /D/  , <A B C D E>), 'xB1C2xx', '/B/ ff^ /D/';
+    is test_ff_cnt(/B/ ^ff^ /D/ , <A B C D E>), 'xxC2xx', '/B/ ^ff^ /D/';
+    is test_ff_cnt(/B/ fff /D/  , <A B C D E>), 'xB1C2D3x', '/B/ fff /D/';
+    is test_ff_cnt(/B/ ^fff /D/ , <A B C D E>), 'xxC2D3x', '/B/ ^fff /D/';
+    is test_ff_cnt(/B/ fff^ /D/ , <A B C D E>), 'xB1C2xx', '/B/ fff^ /D/';
+    is test_ff_cnt(/B/ ^fff^ /D/, <A B C D E>), 'xxC2xx', '/B/ ^fff^ /D/';
+
+    is test_ff_cnt(/B/ ff /B/   , <A B A B A>), 'xB1xB1x', '/B/ ff /B/';
+    is test_ff_cnt(/B/ ^ff /B/  , <A B A B A>), 'xxxxx', '/B/ ^ff /B/';
+    is test_ff_cnt(/B/ ff^ /B/  , <A B A B A>), 'xxxxx', '/B/ ff^ /B/';
+    is test_ff_cnt(/B/ ^ff^ /B/ , <A B A B A>), 'xxxxx', '/B/ ^ff^ /B/';
+    is test_ff_cnt(/B/ fff /B/  , <A B A B A>), 'xB1A2B3x', '/B/ fff /B/';
+    is test_ff_cnt(/B/ ^fff /B/ , <A B A B A>), 'xxA2B3x', '/B/ ^fff /B/';
+    is test_ff_cnt(/B/ fff^ /B/ , <A B A B A>), 'xB1A2xx', '/B/ fff^ /B/';
+    is test_ff_cnt(/B/ ^fff^ /B/, <A B A B A>), 'xxA2xx', '/B/ ^fff^ /B/';
+}
+
+
+# make sure call to external sub uses the same ff each time
+{
+    sub check_ff($i) {
+        return $i ~~ (/B/ ff /D/) ?? $i !! 'x';
+    }
+
+    my $ret = "";
+    $ret ~= check_ff('A');
+    $ret ~= check_ff('B');
+    $ret ~= check_ff('C');
+    $ret ~= check_ff('D');
+    $ret ~= check_ff('E');
+    is $ret, 'xBCDx', 'calls from different locations use the same ff';
+}
+
+
+
 
 #?pugs 999 skip 'TODO: infix:<ff>'
 sub my_take (Int $n, &f) { (1..$n).map: { f() ?? $_ !! Nil } }
