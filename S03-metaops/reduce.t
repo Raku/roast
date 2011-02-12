@@ -103,7 +103,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
-  #?rakudo skip '[orelse]'
   is ([orelse] @array), 3, "[orelse] works";
 }
 
@@ -311,11 +310,9 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 # RT 57976 implement orelse
 {
 
-    #?rakudo skip '[orelse]'
     is (join ', ', [\//] Any,    0, 1),
        (join ', ',      'Any()', 0, 0),
        '[\orelse]';
-    #?rakudo skip '[orelse]'
     is (join ', ', [\orelse] Any,    0, 1),
        (join ', ',          'Any()', 0, 0),
        '[\orelse]';
