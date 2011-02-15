@@ -21,6 +21,7 @@ plan 7;
 
 # L<S09/Autovivification/But these bindings do autovivify:>
 #?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
+#?niecza skip 'is readonly syntax'
 {
     my %a;
     bar(%a<b><c>);
@@ -35,6 +36,7 @@ plan 7;
 }
 
 #?rakudo skip 'prefix:<\\>'
+#?niecza skip 'prefix:<\\>'
 {
     my %a;
     my $b = \%a<b><c>;
@@ -60,8 +62,8 @@ sub foo ($baz is rw) {    #OK not used
     # just some random subroutine.
 }
 
-sub bar ($baz is readonly) {    #OK not used
-    # readonly signature, should it autovivify?
-}
+# readonly signature, should it autovivify?
+#?niecza emit #
+sub bar ($baz is readonly) { } #OK not used
 
 # vim: ft=perl6
