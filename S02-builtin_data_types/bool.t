@@ -51,22 +51,26 @@ is Bool::False.Str, 'Bool::False', 'False.Str';
 
 
 # numification - interaction with +
+#?niecza 4 skip "Numeric et al"
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
-is(+Bool::True, '1', 'True numifies to 1');
 isa_ok(+Bool::True, Int, 'True numifies to an Int');
-is(+Bool::False, '0', 'False numifies to 0');
 isa_ok(+Bool::False, Int, 'False numifies to an Int');
+
+is(+Bool::True, '1', 'True numifies to 1');
+is(+Bool::False, '0', 'False numifies to 0');
 
 
 # Arithmetic operations
 my $bool = Bool::False;
+#?niecza 4 skip "Bool.succ and Bool.pred"
 is(++$bool, Bool::True, 'Increment of Bool::False produces Bool::True');
 is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
 is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
 is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #65514
+#?niecza skip "general but"
 {
     ok (0 but Bool::True), 'Bool::True works with "but"';
     is (0 but Bool::True), 0, 'Bool::True works with "but"';
@@ -75,11 +79,13 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 }
 
 #?rakudo skip 'RT 66576: .name method on bool values'
+#?niecza skip ".key"
 {
     is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
+#?niecza skip ".pick"
 {
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';
