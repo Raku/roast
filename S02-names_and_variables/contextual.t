@@ -39,6 +39,7 @@ my $o = CT.new;
     is CT.foo_priv, 'one', 'back (private class method)';
 }
 
+#?niecza skip 'notdef'
 ok foo().notdef, 'contextual $*VAR is undefined';
 
 {
@@ -57,6 +58,8 @@ ok foo().notdef, 'contextual $*VAR is undefined';
 # no idea if it actually makes sense to put contextuals inside a package, but
 # the lexical alias that's also created should work just fine:
 #
+# Notsomuch in niecza, as the "lexical alias" is only seen by the compiler...
+#?niecza 2 skip 'our $*a'
 {
     sub f { $*a };
     our $*a = 'h';
