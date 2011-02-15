@@ -32,6 +32,7 @@ plan 104;
 }
 
 # uninitialized array variables should work too...
+#?niecza skip "eval"
 {
     my @a;
     is eval(@a.perl).elems, 0, '@a.perl on uninitialized variable';
@@ -148,6 +149,7 @@ my @array2 = ("test", 1, Mu);
 
 #?pugs skip "multi-dim arrays not implemented"
 #?rakudo skip "multi-dim arrays"
+#?niecza skip "multi-dim arrays"
 {
 # declare a multidimension array
     eval_lives_ok('my @multidim[0..3; 0..1]', "multidimension array");
@@ -157,6 +159,7 @@ my @array2 = ("test", 1, Mu);
     ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array");
 }
 
+#?niecza skip "type constraints"
 #?rakudo skip "parametrization issues"
 {
     # declare the array with data type
@@ -173,6 +176,7 @@ my @array2 = ("test", 1, Mu);
     is @array12[*-1],'e', "indexing from the end [*-1]";
 
     # end index range
+    #?niecza skip "WhateverCode/.. interaction"
     is ~@array12[*-4 .. *-2], 'a b c', "end indices [*-4 .. *-2]";
 
     # end index as lvalue
@@ -182,6 +186,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?pugs skip "no whatever star yet"
+#?niecza skip "*/.. interaction"
 {
     my @array13 = ('a', 'b', 'c', 'd');
     # end index range as lvalue
@@ -215,6 +220,7 @@ my @array2 = ("test", 1, Mu);
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is ok (2)";
   dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
   #?rakudo skip "binding not yet fatal"
+  #?niecza skip "no binding of array elements"
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
@@ -225,6 +231,7 @@ my @array2 = ("test", 1, Mu);
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is ok (2)";
   dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
   #?rakudo skip "binding not yet fatal"
+  #?niecza skip "no binding of array elements"
   dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
 }
 
@@ -234,21 +241,25 @@ my @array2 = ("test", 1, Mu);
 
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
   #?rakudo todo '@arr[-1] returns failure, not dies'
+  #?niecza skip '@arr[-1] returns undef'
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is run-time error";
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
   #?rakudo skip "binding not yet fatal"
+  #?niecza skip "no array binding yet"
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
 
 # L<S09/Fixed-size arrays>
 
+#?niecza skip "Array shapes"
 {
     my @arr[*];
     @arr[42] = "foo";
     is(+@arr, 43, 'my @arr[*] autoextends like my @arr');
 }
 
+#?niecza skip "Array shapes"
 {
     my @arr[7] = <a b c d e f g>;
     is(@arr, [<a b c d e f g>], 'my @arr[num] can hold num things');
@@ -257,6 +268,7 @@ my @array2 = ("test", 1, Mu);
     dies_ok({@arr[7]}, 'accessing past num items in my @arr[num] dies');
 }
 
+#?niecza skip "Array shapes"
 {
     lives_ok({ my @arr\    [7]}, 'array with fixed size with unspace');
     eval_dies_ok('my @arr.[8]', 'array with dot form dies');
@@ -265,6 +277,7 @@ my @array2 = ("test", 1, Mu);
 
 # L<S09/Typed arrays>
 
+#?niecza skip "Type declarations"
 {
     my @arr of Int = 1, 2, 3, 4, 5;
     #?rakudo skip 'typed array recursion issue'
@@ -274,6 +287,7 @@ my @array2 = ("test", 1, Mu);
     dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
 }
 
+#?niecza skip "Type declarations"
 {
     my @arr[5] of Int = <1 2 3 4 5>;
     #?rakudo skip 'typed array recursion issue'
@@ -308,6 +322,7 @@ my @array2 = ("test", 1, Mu);
 # }
 
 #?rakudo skip 'no native type int yet'
+#?niecza skip "Type declarations"
 {
     my int @arr = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my Type @arr works');
@@ -316,6 +331,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?rakudo skip 'my Type @arr[num] parsefail'
+#?niecza skip "Type declarations"
 {
     my int @arr[5] = <1 2 3 4 5>;
     is(@arr, <1 2 3 4 5>, 'my Type @arr[num] works');
@@ -327,6 +343,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #73308
+#?niecza skip "Array.elems"
 {
     is [][].elems, 0, '[][] returns empty list/array';
 }
@@ -335,6 +352,7 @@ my @array2 = ("test", 1, Mu);
 # by current group understanding of #perl6, postcircumifx:<[ ]> is actually
 # defined in Any, so that .[0] is the identity operation for non-Positional
 # types
+#?niecza skip "Failure"
 {
     is 1[0], 1, '.[0] is identiity operation for scalars (Int)';
     is 'abc'[0], 'abc', '.[0] is identiity operation for scalars (Str)';
@@ -345,12 +363,14 @@ my @array2 = ("test", 1, Mu);
 
 #RT #77072
 
+#?niecza skip "Zen slices"
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
 }
 
 #Rt #73402
+#?niecza skip "Int"
 {
     my @a = <1 2 3>;
     isa_ok +@a, Int, "Numifying an Array yields an Int";
