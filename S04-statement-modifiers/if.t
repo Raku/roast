@@ -58,6 +58,7 @@ plan 11;
 	ok $ok, "condition in statement level respects context" 
 }
 
+#?niecza skip 'Nil issues'
 {
     my $x = (3 if 1);
     my $y = (3 if 0);
