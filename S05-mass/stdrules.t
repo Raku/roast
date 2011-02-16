@@ -16,11 +16,6 @@ be valid perl6.
 
 plan 183;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
 #?pugs emit force_todo(9,12,13,15,16);
 
 ok("abc1_2" ~~ m/^ <ident> $/, '<ident>');

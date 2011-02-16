@@ -20,11 +20,6 @@ Use rules from a grammar.
 
 =end pod
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
 my $content = '
     <tr>
     <td align="center" width="8%">8:30</td>

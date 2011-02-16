@@ -16,11 +16,6 @@ be valid perl6.
 
 plan 45;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
 #?pugs emit force_todo 1..12, 14..45;
 
 ok("  a b\tc" ~~ m/@<chars>=( \s+ \S+ )+/, 'Named simple array capture');

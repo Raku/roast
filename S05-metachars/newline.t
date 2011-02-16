@@ -12,10 +12,6 @@ plan 15;
 
 # L<S05/Changed metacharacters/"\n now matches a logical (platform independent) newline">
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
-
 ok("\n" ~~ m/\n/, '\n');
 
 ok("\o15\o12" ~~ m/\n/, 'CR/LF');
@@ -38,8 +34,6 @@ ok(!( "\x85" ~~ m/\N/ ), 'not NEL');
 ok(!( "\x2028" ~~ m/\N/ ), 'not LINE SEP');
 
 ok("abc" ~~ m/\N/, 'abc');
-
-}
 
 
 # vim: ft=perl6

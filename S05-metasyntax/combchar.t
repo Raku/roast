@@ -16,10 +16,6 @@ be valid perl6.
 
 plan 3;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
-
 my $unichar = "\c[GREEK CAPITAL LETTER ALPHA]";
 my $combchar = "\c[LATIN CAPITAL LETTER A]\c[COMBINING ACUTE ACCENT]";
 
@@ -27,8 +23,6 @@ my $combchar = "\c[LATIN CAPITAL LETTER A]\c[COMBINING ACUTE ACCENT]";
 ok("A" ~~ m/^<.>$/, 'ASCII');
 ok($combchar ~~ m/^<.>$/, 'Unicode combining');
 ok($unichar ~~ m/^<.>$/, 'Unicode');
-
-}
 
 
 # vim: ft=perl6
