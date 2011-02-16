@@ -15,6 +15,7 @@ plan 12;
     is $y, 5, '$y assigned in if\'s body';
 }
 
+#?niecza skip 'unless'
 {
     my $y;
     unless (my $x = 2) != 2 {
@@ -53,6 +54,7 @@ plan 12;
     is $y, 5, '$y assigned in for\'s body';
 }
 
+#?niecza skip 'loop'
 {
     my $y;
     loop (my $x = 2; $x < 10; $x++) {
