@@ -146,6 +146,7 @@ Check that C<next> works on the correct loop/block
     is($i, 2, '$i++ executed only twice, because next ')
 }
 
+#?niecza skip '%'
 {
     my $i = 0;
     my $j;
