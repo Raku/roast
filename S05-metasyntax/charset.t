@@ -14,10 +14,6 @@ be valid perl6.
 
 plan 28;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-} else {
-
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
 
@@ -72,8 +68,6 @@ ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 eval "/<[a-z]>/";
 ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
     "STD error message for - as character range";
-}
-
 }
 
 done;

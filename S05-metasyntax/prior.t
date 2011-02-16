@@ -18,11 +18,6 @@ plan 11;
 
 # so rule prior matches a constant substring
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-} 
-
 ok("A" !~~ m/<.prior>/, 'No prior successful match');
 
 ok("A" ~~ m/<[A..Z]>/, 'Successful match');

@@ -10,11 +10,6 @@ version 0.3 (12 Apr 2004), file t/lookaround.t.
 
 plan 10;
 
-if !eval('("a" ~~ /a/)') {
-  skip_rest "skipped tests - rules support appears to be missing";
-  exit;
-}
-
 #?pugs emit force_todo(1,4,9,10);
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/The special named assertions include:>
