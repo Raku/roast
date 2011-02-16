@@ -9,6 +9,7 @@ plan 5;
     ok  (4 ~~ '4'),         'string equality';
     ok !(4 !~~ '4'),        'negated string equality';
     #?rakudo skip 'smartmatching Mu against Str'
+    #?niecza skip 'Mu as argument'
     ok  (Mu ~~ ''),         'Mu ~~ ""';
 }
 
