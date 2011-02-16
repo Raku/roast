@@ -39,6 +39,7 @@ plan 18;
     is($a, 3 * 5 * 7 * 9, "post for array");
 }
 
+#?niecza skip 'Int'
 {
     my @a = (5, 7, 9);
     my $i = 5;
@@ -61,12 +62,14 @@ plan 18;
     is $a, "<hello>", 'iterating one variable element works';
 }
 
+#?niecza skip "closure for"
 {
     my $a = 0;
     { $a++ } for 1..3;
     is $a, 3, 'the closure was called';
 }
 
+#?niecza skip "closure for"
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;
@@ -74,6 +77,7 @@ plan 18;
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
+#?niecza skip 'writable $_'
 {
     my $i = 0;
     $_ = 10;
@@ -84,6 +88,7 @@ plan 18;
 
 # L<S04/The C<for> statement/When used as statement modifiers on implicit blocks>
 
+#?niecza skip 'writable $_'
 {
     $_ = 42;
     my @trace;

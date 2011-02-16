@@ -27,6 +27,7 @@ plan 5;
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
+#?niecza skip 'writable $_'
 {
     my $i = 0;
     $_ = 10;
