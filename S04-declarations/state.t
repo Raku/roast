@@ -65,6 +65,7 @@ plan 38;
 }
 
 # state with arrays.
+#?niecza skip "not working"
 {
     my @bar = 1,2,3;
     sub swatest {
@@ -78,6 +79,7 @@ plan 38;
 }
 
 # state with arrays.
+#?niecza skip "not working"
 {
     sub swainit_sub { 1,2,3 }
     sub swatest2 {
@@ -116,6 +118,7 @@ plan 38;
 # state will first {...}
 #?pugs eval "parse error"
 #?rakudo skip 'will first { ... }'
+#?niecza skip 'will first { ... }'
 {
     my ($a, $b);
     my $gen = {
@@ -131,6 +134,7 @@ plan 38;
 
 # Return of a reference to a state() var
 #?rakudo skip 'references'
+#?niecza skip '\\'
 {
     my $gen = {
         state $svar = 42;
@@ -149,6 +153,7 @@ plan 38;
 # L<http://groups.google.de/group/perl.perl6.language/msg/07aefb88f5fc8429>
 #?pugs todo 'anonymous state vars'
 #?rakudo skip 'references and anonymous state vars'
+#?niecza skip '\\'
 {
     # XXX -- currently this is parsed as \&state()
     my $gen = eval '{ try { \state } }';
@@ -179,6 +184,7 @@ plan 38;
 
 # state() inside regular expressions
 #?rakudo skip 'embedded closures in regexen'
+#?niecza skip ':Perl5'
 {
     my $str = "abc";
 
@@ -223,6 +229,7 @@ plan 38;
 }
 
 # state with multiple explicit calls to clone - a little bit subtle
+#?niecza skip "there is no Sub.clone"
 {
     my $i = 0;
     my $func = { state $x = $i++; $x };
@@ -233,6 +240,7 @@ plan 38;
 }
 
 # recursive state with list assignment initialization happens only first time
+#?niecza skip 'Int'
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -246,6 +254,7 @@ plan 38;
 
 # recursive state with [list] assignment initialization happens only first time
 #?rakudo skip '@$foo syntax'
+#?niecza skip 'Int'
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -257,7 +266,7 @@ plan 38;
     is $seensize, 11, "[list] assignment state in fib memoizes";
 }
 
-
+#?niecza skip 'subset'
 {
     # now we're just being plain evil:
     subset A of Int where { $_ < state $x++ };
