@@ -20,6 +20,7 @@ plan 26;
   is( +^0xdead +& 0xbeef, 0x2042,    'numeric bitwise +^ and +& together' );
                                      
   # string                           
+  #?niecza 6 skip 'string bitops'
   is( 'a' ~& 'A',         'A',       'string bitwise ~& of "a" and "A"' );
   is( 'a' ~| 'b',         'c',       'string bitwise ~| of "a" and "b"' );
   is( 'a' ~^ 'B',         '#',       'string bitwise ~^ of "a" and "B"' );
@@ -32,12 +33,14 @@ plan 26;
   my $bar = "z" x 75;
   my $zap = "A" x 75;
   
+  #?niecza 3 skip 'string bitops'
   is( $foo ~& $bar, '@' x 75,        'long string bitwise ~&, truncates' );
   is( $foo ~| $bar, '{' x 75 ~ $zap, 'long string bitwise ~|, no truncation' );
   is( $foo ~^ $bar, ';' x 75 ~ $zap, 'long string bitwise ~^, no truncation' );
 
   # "interesting" tests from a long time back...
   #?rakudo 2 skip 'bitwise string manipulation'
+  #?niecza 2 skip 'string bitops'
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );
 
@@ -46,7 +49,10 @@ plan 26;
   is( 32 +> 1,            16,     'shift one bit right' );
   is( 257 +< 7,           32896,  'shift seven bits left' );
   is( 33023 +> 7,         257,    'shift seven bits right' ); 
+}
 
+#?niecza skip ".Num"
+{
   # Tests to see if you really can do casts negative floats to unsigned properly
   my $neg1 = -1.0.Num;
   my $neg7 = -7.0.Num;
