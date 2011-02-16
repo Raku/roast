@@ -21,11 +21,13 @@ plan 29;
   is($y, 'Just Another', 'y is now bound to x');
 
   #?rakudo todo 'binding, =:='
+  #?niecza skip '=:='
   ok($y =:= $x, 'y is bound to x (we checked with the =:= identity op)');
 
   my $z = $x;
   is($z, 'Just Another', 'z is not bound to x');
 
+  #?niecza skip '=:='
   ok(!($z =:= $x), 'z is not bound to x (we checked with the =:= identity op)');
 
   $y = 'Perl Hacker';
@@ -39,6 +41,7 @@ plan 29;
 # Binding and $CALLER::
 #?rakudo skip 'is context, traits followed by binding'
 #XXX This can pass bogusly (was doing for Rakudo for a while).
+#?niecza skip 'CALLER::'
 {
   sub bar {
     return $CALLER::a eq $CALLER::b;
@@ -55,6 +58,7 @@ plan 29;
 
 # Binding to swap
 #?rakudo skip 'list binding'
+#?niecza skip 'list binding'
 {
   my $a = "a";
   my $b = "b";
@@ -69,6 +73,7 @@ plan 29;
 
 # More tests for binding a list
 #?rakudo skip 'list binding'
+#?niecza skip 'list binding'
 {
   my $a = "a";
   my $b = "b";
@@ -94,10 +99,12 @@ plan 29;
   $b($val);
   is $a, 42, "bound readonly sub param was bound correctly (1)";
   $val++;
+  #?niecza skip "difference of interpretation on ro binding"
   is $a, 43, "bound readonly sub param was bound correctly (2)";
 
   dies_ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
+  #?niecza skip "difference of interpretation on ro binding"
   is $a, 43,
     "bound readonly sub param remains readonly (2)";
   is $val, 43,
@@ -121,6 +128,7 @@ plan 29;
 
 # := actually takes subroutine parameter list
 #?rakudo todo 'List binding'
+#?niecza skip 'list binding'
 {
   my $a;
   eval '(:$a) := (:a<foo>)';
@@ -134,6 +142,7 @@ plan 29;
 
 # RT #77462
 # binding how has the same precedence as list assignment
+#?niecza skip 'nullary join'
 {
     my $x := 1, 2;
     is $x.join, '12', 'binding has same precdence as list assignment'
