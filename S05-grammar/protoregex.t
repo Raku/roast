@@ -5,9 +5,7 @@ plan 11;
 grammar Alts {
     token TOP { ^ <alt> $ };
 
-    # no idea what I have to put in the proto token, and if matters;
-    # the <...> is just cargo-culted from STD.pm
-    proto token alt { <...> }
+    proto token alt {*}
     token alt:sym<foo> { <sym> };
     token alt:sym<bar> { 'bar' };
     token alt:sym<baz> { 'argl' };
@@ -18,6 +16,7 @@ ok (my $match = Alts.parse('foo')), 'can parse with proto regexes (1)';
 is $match, 'foo', 'and matched the full string';
 is $match<alt>, 'foo', 'got the right name of the capture';
 
+#?niecza skip '.parse sets $/'
 is $/, 'foo', 'also works with $/';
 
 ok Alts.parse('bar'), 'can parse with second alternative';
