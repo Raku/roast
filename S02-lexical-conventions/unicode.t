@@ -82,7 +82,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 
 # Unicode placeholder variables
 #?mildew skip 'placeholders are NIY'
-#?niecza skip 'ucfirst is NIY'
 {
     is
         ~(< foostraße barstraße fakestraße >.map: { ucfirst $^straßenname }),
@@ -92,7 +91,6 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 
 # Unicode methods and attributes
 #?mildew skip 'classes are NIY'
-#?niecza skip 'ucfirst is NIY'
 {
     class A {
         has $!möp = 'pugs';

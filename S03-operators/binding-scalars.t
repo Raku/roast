@@ -142,7 +142,6 @@ plan 29;
 
 # RT #77462
 # binding how has the same precedence as list assignment
-#?niecza skip 'nullary join'
 {
     my $x := 1, 2;
     is $x.join, '12', 'binding has same precdence as list assignment'
