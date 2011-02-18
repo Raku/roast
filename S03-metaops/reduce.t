@@ -25,9 +25,11 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([*]  1,2,3),    (1*2*3), "[*] works");
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
+  #?niecza skip 'div'
   is(([div]  12,4,3),  (12 div 4 div 3), "[div] works");
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
+  #?niecza skip 'mod'
   is(([mod]  13,7,4), (13 mod 7 mod 4),  "[mod] works");
 
   is((~ [\+] @array), "5 2 9 9 10 1", "[\\+] works");
@@ -46,6 +48,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     nok ([>]  4, 2, 3, 1), "[>] works (2)";
     ok  ([==] 4, 4, 4),    "[==] works (1)";
     nok ([==] 4, 5, 4),    "[==] works (2)";
+    #?niecza 2 skip 'this is parsed as ![=], not good'
     ok  ([!=] 4, 5, 6),    "[!=] works (1)";
     nok ([!=] 4, 4, 4),    "[!=] works (2)";
 }
@@ -60,6 +63,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 #?rakudo skip "=:= NYI"
+#?niecza skip "=:= NYI"
 {
     my ($x, $y);
     ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
@@ -70,6 +74,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (    [=:=]  $y, $x, $y), '[=:=] after binding';
 }
 
+#?niecza skip "=== on value types NYI"
 {
     my $a = [1, 2];
     my $b = [1, 2];
@@ -88,6 +93,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ~ ([\>]  4, 2, 3, 1).map({+$_}), "1 1 0 0", "[\\>] works (2)";
     is ~ ([\==]  4, 4, 4).map({+$_}),   "1 1 1",   "[\\==] works (1)";
     is ~ ([\==]  4, 5, 4).map({+$_}),   "1 0 0",   "[\\==] works (2)";
+    #?niecza 2 skip 'this is parsed as ![=], not good'
     is ~ ([\!=]  4, 5, 6).map({+$_}),   "1 1 1",   "[\\!=] works (1)";
     is ~ ([\!=]  4, 5, 5).map({+$_}),   "1 1 0",   "[\\!=] works (2)";
     is (~ [\**]  1, 2, 3),   "3 8 1",   "[\\**] (right assoc) works (1)";
@@ -97,15 +103,18 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # RT #76110
 {
     is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
+    #?niecza skip 'unary [] does not context yet'
     is ([+] [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
+#?niecza skip 'Mu'
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
   is ([orelse] @array), 3, "[orelse] works";
 }
 
+#?niecza skip 'Mu'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   is ([||] @array), 3, "[||] works";
@@ -116,6 +125,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
+#?niecza skip 'Mu'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   my @array1 = (2, 3, 4);
@@ -150,6 +160,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (try {$list.value.value}), 3, "[=>] works (3)";
 }
 
+#?niecza skip 'huh?'
 {
     my @array = <5 -3 7 0 1 -9>;
     # according to http://irclog.perlgeek.de/perl6/2008-09-10#i_560910
@@ -161,6 +172,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t
+#?niecza 2 skip 'These are hyperop tests!'
 lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
@@ -168,7 +180,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 #?pugs todo 'bug'
 #?rakudo skip 'reduce of user defined op'
 {
-    sub infix:<more_than_plus>(Int $a, Int $b) { $a + $b + 1 }
+    sub infix:<more_than_plus>($a, $b) { $a + $b + 1 }
     is (try { [more_than_plus] 1, 2, 3 }), 8, "[...] reduce metaop works on user defined ops";
 }
 
@@ -188,6 +200,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # L<S03/"Reduction operators"/"Among the builtin operators, [+]() returns 0 and [*]() returns 1">
 
+#?niecza skip '[*] identity'
 is( ([*]()), 1, "[*]() returns 1");
 is( ([+]()), 0, "[+]() returns 0");
 
@@ -197,17 +210,21 @@ is( ~([\*] 42), "42", "[\*] 42 returns (42)");
 is( ([~] 'towel'), 'towel', "[~] 'towel' returns 'towel'");
 is( ([~] 'washcloth'), 'washcloth', "[~] 'washcloth' returns 'washcloth'");
 is( ([\~] 'towel'), 'towel', "[\~] 'towel' returns 'towel'");
+#?niecza skip 'Iterable'
 ok( ([\~] 'towel') ~~ Iterable, "[\~] 'towel' returns something Iterable");
 is( ([<] 42), Bool::True, "[<] 42 returns true");
 is( ~([\<] 42), ~True, "[\<] 42 returns '1'");
+#?niecza skip 'Iterable'
 ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
     'triangle reduce is lazy');
+#?niecza skip 'char ranges'
 is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
     'triangle reduce is lazy');
 
 # RT #65164 implement [^^]
+#?niecza skip '^^'
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -308,6 +325,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 }
 
 # RT 57976 implement orelse
+#?niecza skip 'huh?  these are macros'
 {
 
     is (join ', ', [\//] Any,    0, 1),
@@ -323,6 +341,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 # rakudo had a problem where once-used meta operators weren't installed
 # in a sufficiently global location, so using a meta operator in class once
 # makes it unusable further on
+#?niecza skip 'gather for'
 {
     class A {
         method m { return [~] gather for ^3 {take 'a'} }
@@ -336,6 +355,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 }
 
 #?rakudo todo 'RT 82210'
+#?niecza skip 'Range.Numeric'
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
    'a listop with immediate () is a function call (RT 82210)';
 
