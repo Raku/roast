@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 10;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
@@ -17,6 +17,7 @@ plan 8;
     my %a;
     my $b = so %a<b><c>:exists;
     is %a.keys.elems, 0, "exists doesn't autovivify.";
+    nok $b, '... and it returns the right value';
 }
 
 # L<S09/Autovivification/But these bindings do autovivify:>
@@ -31,6 +32,7 @@ plan 8;
     my %a;
     my $b := %a<b><c>;
     is %a.keys.elems, 1, 'binding autovivifies.';
+    nok defined($b), '... to an undefined value';
 }
 
 #?rakudo skip 'prefix:<\\>'
