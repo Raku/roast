@@ -45,6 +45,7 @@ is 4 !=== 5, !(4 === 5), "4 !=== 5";
 isa_ok 4 !=== 5, Bool, "4 !=== 5 is Bool";
 is 4 !eqv 5, !(4 eqv 5), "4 !eqv 5";
 isa_ok 4 !eqv 5, Bool, "4 !eqv 5 is Bool";
+#?niecza 2 skip '=:='
 is 4 !=:= 5, !(4 =:= 5), "4 !=:= 5";
 isa_ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 
