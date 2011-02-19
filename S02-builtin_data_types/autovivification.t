@@ -2,14 +2,14 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
-#?rakudo skip 'Undef to integer'
 {
     my %a;
     my $b = %a<b><c>;
     is %a.keys.elems, 0, "fetching doesn't autovivify.";
+    ok !defined($b), 'and the return value is not defined';
 }
 
 #?rakudo skip 'Undef to integer'
@@ -20,7 +20,6 @@ plan 7;
 }
 
 # L<S09/Autovivification/But these bindings do autovivify:>
-#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     bar(%a<b><c>);
@@ -49,7 +48,6 @@ plan 7;
     is %a.keys.elems, 1, 'in rw arguments autovivifies.';
 }
 
-#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     %a<b><c> = 1;
