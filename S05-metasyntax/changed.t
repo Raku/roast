@@ -30,10 +30,9 @@ plan 12;
 
 # The \A, \Z, and \z metacharacters are gone.
 {
-    my $str = "abc\ndef";
-    eval_dies_ok('$str ~~ /\A/', '\\A is gone');
-    eval_dies_ok('$str ~~ /\Z/', '\\Z is gone');
-    eval_dies_ok('$str ~~ /\z/', '\\z is gone');
+    eval_dies_ok('/\A/', '\\A is gone');
+    eval_dies_ok('/\Z/', '\\Z is gone');
+    eval_dies_ok('/\z/', '\\z is gone');
 }
 
 # vim: ft=perl6
