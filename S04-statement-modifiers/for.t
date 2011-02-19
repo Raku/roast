@@ -2,8 +2,6 @@ use v6;
 
 use Test;
 
-plan 18;
-
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
 # test the for statement modifier

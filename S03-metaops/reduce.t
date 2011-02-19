@@ -1,8 +1,6 @@
 use v6;
 use Test;
 
-plan 358;
-
 =begin pod
 
 =head1 DESCRIPTION
