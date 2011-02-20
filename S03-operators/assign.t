@@ -36,7 +36,6 @@ plan 279;
     is($x, 0, 'assignment operator called as function');
 }
 
-#?rakudo skip 'assigning to array slices'
 {
     # swap two elements in the same array 
     # (moved this from array.t)
@@ -46,7 +45,6 @@ plan 279;
     is(@a[1], 1, "slice assignment swapping two element in the same array");
 }
 
-#?rakudo skip 'assigning to array slices'
 {
     # swap two elements as slice, dwim slice from @b subscript
     
@@ -120,7 +118,6 @@ plan 279;
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
 
-#?rakudo skip 'assigning to *@'
 {
     # testing signature binding with skipped values via *@ in a signature
     my ($one, *@) = 1..4;
@@ -154,7 +151,6 @@ plan 279;
     is %b.keys.sort.join(", "), "a, b, c", "got hash in (scalar,hash) = list";
 }
 
-#?rakudo skip 'assigning to array slices'
 {
     my @a;
     @a[1, 2, 3] = 100, 200, 300;
@@ -170,7 +166,6 @@ plan 279;
     is(@b[2], 401, "... and third");
 }
 
-#?rakudo skip 'assigning to array slices'
 { 
     my @c;
     my @d;
@@ -272,7 +267,6 @@ my @p;
     is $f, 5, '//= also works in declaration';
 }
 
-#?rakudo skip 'implement orelse'
 {
     my $a;
     @p = $a orelse= 3, 4;
@@ -607,7 +601,6 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a) as list');
 }
 
-#?rakudo skip "Method 'elems' not found for invocant of class 'Integer'"
 {
     my $a;
     my @z = (($a, *) = l, l, l);
@@ -752,7 +745,6 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
-#?rakudo skip 'unknown'
 {
     my @a;
     my $b = 0;
