@@ -76,7 +76,6 @@ plan 20;
 }
 
 # RT #68358
-#?rakudo skip 'RT #68358'
 {
     my ($x);
     sub my($a) { $a + 17 }
