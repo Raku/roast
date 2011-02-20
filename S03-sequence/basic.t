@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 123;
+plan 124;
 
 # single-term sequence
 
@@ -235,6 +235,9 @@ is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type';
 
 # RT #75828
 eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
+
+# RT #73268
+is ~(1...^*).munch(10), '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
 
 done;
 
