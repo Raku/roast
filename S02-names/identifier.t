@@ -81,7 +81,7 @@ plan 20;
     my ($x);
     sub my($a) { $a + 17 }
     $x = 5;
-    is my($x), 23, 'call to sub named "my" works';
+    is my($x), 22, 'call to sub named "my" works';
 }
 
 # RT #77218
