@@ -2,17 +2,13 @@
 
 use Test;
 
-    plan 9;
+plan 8;
 
 =begin pod
 
 These are misc. sub argument errors.
 
 =end pod
-
-sub foo (*$x) { 1 }   #OK not used
-#?rakudo todo 'RT #61094'
-dies_ok  { foo(reverse(1,2)) }, 'slurpy args are now bounded (1)';
 
 sub bar (*@x) { 1 }   #OK not used
 lives_ok { bar(reverse(1,2)) }, 'slurpy args are not bounded (2)';  
