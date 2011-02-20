@@ -83,6 +83,12 @@ plan 20;
     is my($x), 22, 'call to sub named "my" works';
 }
 
+# RT #72898
+{
+    sub loop($a) { $a + 1 }
+    is loop(5), 6, 'sub named "loop" works';
+}
+
 # RT #77218
 # Rakudo had troubles with identifiers whos prefix is an alphanumeric infix
 # operator; for example 'sub order' would fail because 'order' begins with
