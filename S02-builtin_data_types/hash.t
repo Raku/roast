@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan 77;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -257,6 +257,13 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is %h{$/}, 'x', 'can use $/ as hash key';
     is %h{$0}, 'y', 'can use $0 as hash key';
 
+}
+
+# RT #61412
+{
+	my %hash;
+	%hash<foo> := 'bar';
+	is %hash<foo>, 'bar', 'binding hash values ok';
 }
 
 done;
