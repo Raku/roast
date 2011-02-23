@@ -116,7 +116,7 @@ plan 17;
             }
         }
     }
-    is $str, 'ABfoo', 'block including if structure and printing $/ OK';
+    is $str, 'ABfoo', 'block including if structure and printing $/ ok';
 }
 done;
 

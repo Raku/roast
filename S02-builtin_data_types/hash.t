@@ -261,9 +261,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #61412
 {
-	my %hash;
-	%hash<foo> := 'bar';
-	is %hash<foo>, 'bar', 'binding hash values ok';
+    my %hash;
+    %hash<foo> := 'bar';
+    is %hash<foo>, 'bar', 'binding hash values ok';
 }
 
 done;
