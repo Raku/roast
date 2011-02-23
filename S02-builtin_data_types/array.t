@@ -270,20 +270,35 @@ my @array2 = ("test", 1, Mu);
 }
 
 #RT #77072
-
 #?niecza skip "Zen slices"
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
 }
 
-#Rt #73402
+#RT #73402
 #?niecza skip "Int"
 {
     my @a = <1 2 3>;
     isa_ok +@a, Int, "Numifying an Array yields an Int";
 }
 
+#RT #75342
+{
+    my @a = 0, 1, 2;
+    for @a {
+        $_++ if $_;
+    }
+    is @a[*], <0 2 3>, "modifier form of 'if' within 'for' loop works";
+    
+    my @b = 0, 1, 2;
+    for @b {
+        if $_ {
+            $_++;
+        }
+    }
+    is @b[*], <0 2 3>, "non-modifier form of 'if' within 'for' loop also works"
+}
 done;
 
 # vim: ft=perl6
