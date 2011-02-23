@@ -254,4 +254,10 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
    '23',
    'longest token still holds, even between constant strings and regexes');
 
+# RT #83674
+{
+    lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); },
+        'trans works with Cool signature';
+}
+
 # vim: ft=perl6
