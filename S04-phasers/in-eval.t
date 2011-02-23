@@ -18,7 +18,7 @@ our $h;
     eval '$handle = { $h ~= "1"; START { $h ~= "F" }; $h ~= "2" }';
     ok $! !~~ Exception, 'eval START {...} works';
 
-    ok $h.notdef, 'START {...} has not run yet';
+    nok $h.defined, 'START {...} has not run yet';
     lives_ok { $handle() }, 'can run code with START block';
     is $h, '1F2', 'START {...} fired';
     lives_ok { $handle() }, 'can run code with START block again';
@@ -41,7 +41,7 @@ our $h;
 
     eval '$handle = { $h =~ "r"; INIT { $h ~= "I" }; $h ~= "R" }';
     ok $! !~~ Exception, 'eval INIT {...} works';
-    ok $h.notdef, 'INIT did not run at compile time';
+    nok $h.defined, 'INIT did not run at compile time';
     #?rakudo 4 todo 'Could not find non-existent sub INIT'
     lives_ok { $handle() }, 'can run code with INIT block';
     is $h, 'IrR', 'INIT {...} fires at run-time';
@@ -90,7 +90,7 @@ our $h;
     eval '$handle = { our $end ~= "1"; END { our $end ~= "E" }; our $end ~= "2" }';
     ok $! !~~ Exception, 'eval END {...} works';
 
-    ok $end.notdef, 'END {} has not run yet';
+    nok $end.defined, 'END {} has not run yet';
     lives_ok { $handle() }, 'can call code with END block';
     is $end, '12', 'END {} does not run at run time either';
 }

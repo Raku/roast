@@ -45,10 +45,10 @@ BEGIN {
 }
 
 is $hist, 'begin check init ', 'BEGIN {} runs only once';
-ok $var_at_begin.notdef, 'BEGIN {...} ran at compile time';
-ok $var_at_check.notdef, 'CHECK {...} ran at compile time';
-ok $var_at_init.notdef, 'INIT {...} ran at runtime, but ASAP';
-ok $var_at_enter.notdef, 'ENTER {...} at runtime, but before the mainline body';
+nok $var_at_begin.defined, 'BEGIN {...} ran at compile time';
+nok $var_at_check.defined, 'CHECK {...} ran at compile time';
+nok $var_at_init.defined, 'INIT {...} ran at runtime, but ASAP';
+nok $var_at_enter.defined, 'ENTER {...} at runtime, but before the mainline body';
 
 $eof_var = 29;
 

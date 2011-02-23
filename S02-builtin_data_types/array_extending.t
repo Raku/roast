@@ -81,8 +81,8 @@ plan 21;
     my @a;
     @a[2] = 6;
     is +@a, 3, '@a[2] = 6 ensures that @a has three items';
-    ok @a[0].notdef, '... and the first is not defined';
-    ok @a[1].notdef, '... and the second is not defined';
+    nok @a[0].defined, '... and the first is not defined';
+    nok @a[1].defined, '... and the second is not defined';
     is @a[2], 6,       '... and  the third is 6';
 }
 

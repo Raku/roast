@@ -19,7 +19,7 @@ plan 4;
         $a++;
         FIRST { $a_in_first = $a }
     }
-    ok $a_in_first.notdef, 'FIRST {} ran before the loop body';
+    nok $a_in_first.defined, 'FIRST {} ran before the loop body';
 }
 
 # L<S04/Phasers/can occur multiple times>

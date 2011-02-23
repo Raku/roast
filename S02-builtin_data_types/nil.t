@@ -35,7 +35,7 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
     is $calls, 2, 'return_nil() called twice';
 
     my $n = return_nil();
-    ok $n.notdef, 'variable holding nil is not defined';
+    nok $n.defined, 'variable holding nil is not defined';
 }
 
 {

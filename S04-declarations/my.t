@@ -224,7 +224,7 @@ my $z = 42;
 }
 
 {
-    ok declare_later().notdef,
+    nok declare_later().defined,
         'Can access variable returned from a named closure that is declared below the calling position';
     my $x;
     sub declare_later {

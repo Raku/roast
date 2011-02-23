@@ -43,7 +43,7 @@ plan 33;
     is(%hash<k1>.elems,  5, 'k1 has 5 elements');
     is(%hash<k1>[0],    11, 'first element in k1 is 11');
     is(%hash<k1>[*-1],  15, 'last element in k1 is 15');
-    ok(%hash<12>.notdef,  'nothing at key "12"');
+    nok(%hash<12>.defined,  'nothing at key "12"');
 }
 
 {
@@ -55,8 +55,8 @@ plan 33;
     is(%hash<k1>[*-1],  15, 'last element in k1 is 15');
     is(%hash<k2>[0],    21, 'first element in k1 is 21');
     is(%hash<k2>[*-1],  25, 'last element in k1 is 25');
-    ok(%hash<12>.notdef, 'nothing at key "12"');
-    ok(%hash<22>.notdef, 'nothing at key "22"');
+    nok(%hash<12>.defined, 'nothing at key "12"');
+    nok(%hash<22>.defined, 'nothing at key "22"');
 }
 
 {
