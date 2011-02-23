@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 57;
+plan 58;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -255,9 +255,6 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
    'longest token still holds, even between constant strings and regexes');
 
 # RT #83674
-{
-    lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); },
-        'trans works with Cool signature';
-}
+lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
 # vim: ft=perl6

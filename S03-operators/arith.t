@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 135;
+plan 136;
 
 my $five = abs(-5);
 
@@ -307,6 +307,9 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 {
     ok 1/7 / 1/7 == 1/49, 'no more Rat literals, infix:</> has normal left assoc';
 }
+
+# RT #73386
+eval_dies_ok '3 !+ 4',  'infix:<+> is not iffy enough';
 
 done;
 
