@@ -25,7 +25,7 @@ my $lvm = LValueMutator.new(:foo(3));
 # which in turns initializes the attributes directly
 #?rakudo todo 'OO (test needs review)'
 is($lvm.foo, 3, "constructor uses lvalue accessor method");
-ok($lvm.get_foo.notdef, "constructor doesn't simply set attributes");
+nok($lvm.get_foo.defined, "constructor doesn't simply set attributes");
 
 lives_ok { $lvm.get_foo = 6 }, "lvalue accessors seem to work";
 is($lvm.get_foo, 6, "lvalue accessors work");

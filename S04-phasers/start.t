@@ -26,7 +26,7 @@ plan 21;
     my $var;
     my $sub = sub ($x) { START { $var += $x } };
  
-    ok $var.notdef, 'START {...} has not run yet';
+    nok $var.defined, 'START {...} has not run yet';
 
     $sub(2);
     is $var, 2, 'START {} has executed';
@@ -86,7 +86,7 @@ for <first second> {
       $var;
     };
 
-    ok $was_in_start.notdef, 'START {} has not run yet';
+    nok $was_in_start.defined, 'START {} has not run yet';
     is $sub(), 23, 'START {} block set our variable (2)';
     is $sub(), 23, 'the returned value of START {} still there';
     is $was_in_start, 1, 'our START {} block was invoked exactly once';
@@ -98,7 +98,7 @@ for <first second> {
     my $was_in_start;
     my $sub = { START { $was_in_start++; Mu } };
 
-    ok $sub().notdef, 'START {} returned undefined';
+    nok $sub().defined, 'START {} returned undefined';
     $sub();
     $sub();
     is $was_in_start, 1,
