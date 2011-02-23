@@ -76,7 +76,6 @@ plan 9;
 }
 
 # RT #73400
-#?niecza skip '\\'
 {
   my $capture = \[1,2,3];
   my $count = 0;

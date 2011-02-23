@@ -39,7 +39,6 @@ my $o = CT.new;
     is CT.foo_priv, 'one', 'back (private class method)';
 }
 
-#?niecza skip 'notdef'
 ok foo().notdef, 'contextual $*VAR is undefined';
 
 {
