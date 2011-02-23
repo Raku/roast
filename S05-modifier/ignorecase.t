@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 =begin description
 
@@ -45,5 +45,8 @@ ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
+
+#RT #76750
+ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
