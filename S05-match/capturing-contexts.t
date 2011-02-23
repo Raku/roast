@@ -92,8 +92,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 # RT #66252
 {
     $_ = 'RT 66252';
-    /(R.)/;
-    #?rakudo 2 todo 'RT 66252'
+    m/(R.)/;
     isa_ok $/, 'Match', 'Match object in $/ after match in void context';
     is $/, 'RT', 'Matched as intended in void context';
 }
