@@ -284,12 +284,13 @@ my @array2 = ("test", 1, Mu);
 }
 
 #RT #75342
+#?niecza skip '$_ rw aliasing (?)'
 {
     my @a = 0, 1, 2;
     for @a {
         $_++ if $_;
     }
-    is @a[*], <0 2 3>, "modifier form of 'if' within 'for' loop works";
+    is ~@a, '0 2 3', "modifier form of 'if' within 'for' loop works";
     
     my @b = 0, 1, 2;
     for @b {
@@ -297,7 +298,7 @@ my @array2 = ("test", 1, Mu);
             $_++;
         }
     }
-    is @b[*], <0 2 3>, "non-modifier form of 'if' within 'for' loop also works"
+    is ~@b, '0 2 3', "non-modifier form of 'if' within 'for' loop also works"
 }
 done;
 
