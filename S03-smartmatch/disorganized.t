@@ -13,7 +13,7 @@ sub eval_elsewhere($code){ eval($code) }
 #L<S03/Smart matching/Any undef undefined not .defined>
 #?rakudo skip 'syntactic smar-matching'
 { 
-    ok("foo" ~~ defined, "foo is ~~ .defined");
+    ok("foo" ~~ .defined, "foo is ~~ .defined");
     nok "foo" !~~ .defined,   'not foo !~~ .defined';
     nok((Mu ~~ .defined), "Mu is not .defined");
 }
