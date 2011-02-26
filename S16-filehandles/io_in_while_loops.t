@@ -44,6 +44,6 @@ my $filename = 'tempfile_io_in_while_loop';
     $fh.close();
 }
 
-is(unlink($filename), 1, 'file has been removed');
+ok(unlink($filename), 'file has been removed');
 
 # vim: ft=perl6

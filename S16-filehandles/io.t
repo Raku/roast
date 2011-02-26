@@ -157,7 +157,7 @@ is(@lines10[2], "The End", 'lines($filename,3) worked in list context');
 }
 
 #now be sure to delete the file as well
-is(unlink($filename), 1, 'file has been removed');
+ok(unlink($filename), 'file has been removed');
 
 # new file for testing other types of open() calls
 

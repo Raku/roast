@@ -99,6 +99,6 @@ my $filename = 'tempfile_io_in_for_loop';
 # old: L<S16/"Filehandles, files, and directories"/"unlink">
 # L<S29/IO/unlink>
 
-is(unlink($filename), 1, 'file has been removed');
+ok(unlink($filename), 'file has been removed');
 
 # vim: ft=perl6
