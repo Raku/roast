@@ -2,20 +2,22 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 45;
 
 =begin pod
 
 C<=:=> is only for containers, not values
 
 ok(1 =:= 1, "int");
-ok(!(2 =:= 1), "int (neg)");
+nok(2 =:= 1, "int (neg)");
 ok("foo" =:= "foo", "str");
-ok(!("foo" =:= "foe"), "str (neg)");
+nok("foo" =:= "foe", "str (neg)");
+isa_ok 1 =:=1, Bool, '=:= returns Bool';
+isa_ok 2 =:=1, Bool, '=:= returns Bool';
 
-ok(("7" == 7), "sanity");
-ok(("7" eq 7), "sanity");
-ok(!("7" =:= 7), "identify checks type mismatch");
+ok("7" == 7, "sanity");
+ok("7" eq 7, "sanity");
+nok("7" =:= 7, "identify checks type mismatch");
 
 =end pod
 
