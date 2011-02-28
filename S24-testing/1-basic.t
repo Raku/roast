@@ -158,7 +158,7 @@ flunk('This test failed', :todo(1));
 ## skip
 
 skip('skip this test for now');
-skip(3, 'skip 3 more tests for now');
+skip('skip 3 more tests for now', 3);
 skip_rest('skipping the rest');
 
 1;

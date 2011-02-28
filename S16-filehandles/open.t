@@ -19,7 +19,7 @@ if $*OS eq "browser" {
 
 # deal with non-existent files
 {
-    skip(1, "open('nonexisting') => undefined is waiting on 'use fatal'");
+    skip("open('nonexisting') => undefined is waiting on 'use fatal'", 1);
 
     if 0 {
         ok(!defined(open("file_which_does_not_exist")), 'open() on non-existent file returns undefined');

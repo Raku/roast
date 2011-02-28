@@ -37,14 +37,14 @@ ok $*PROGRAM_NAME.IO ~~ :r,  "~~:r returns true on readable files";
 ok $*PROGRAM_NAME.IO ~~ :w,  "~~:w returns true on writable files";
 
 if $*OS eq any <MSWin32 mingw msys cygwin> {
-  skip 2, "win32 doesn't have ~~:x";
+  skip "win32 doesn't have ~~:x", 2;
 } else {
   if $*EXECUTABLE_NAME.IO ~~ :e {
     #?rakudo skip ':x'
     ok $*EXECUTABLE_NAME.IO ~~ :x, "~~:x returns true on executable files";
   }
   else {
-    skip 1, "'$*EXECUTABLE_NAME' is not present (interactive mode?)";
+    skip "'$*EXECUTABLE_NAME' is not present (interactive mode?)", 1;
   }
   #?rakudo skip ':x'
   ok 't'.IO ~~ :x,    "~~:x returns true on cwd()able directories";
@@ -82,7 +82,7 @@ ok "empty_file".IO ~~ :z,      "~~:z returns true for an empty file";
 unlink "empty_file";
 
 if $*OS eq any <MSWin32 mingw msys cygwin> {
-  skip 9, "~~:M/~~:C/~~:A not working on Win32 yet"
+  skip "~~:M/~~:C/~~:A not working on Win32 yet", 9
 }
 else {
     my $fn = 'test_file_filetest_t';
@@ -96,7 +96,7 @@ else {
     unlink $fn;
 
     if "README".IO !~~ :f {
-        skip 3, "no file README";
+        skip "no file README", 3;
     } else {
         #?rakudo 3 skip ':M, :C, :A'
         ok ("README".IO ~~ :M) > 0, "~~:M works on existing file";

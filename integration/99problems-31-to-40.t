@@ -214,7 +214,7 @@ plan 67;
     # number of logical inferences as a measure for efficiency. Try to calculate
     # phi(10090) as an example.
 
-    skip 1, 'No Benchmark module yet'
+    skip 'No Benchmark module yet', 1
 }
 
 {

@@ -51,7 +51,7 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
         ok $file.IO ~~ :!x, "not executable after 0";
     }
     else {
-        skip 3, ":r :w :x can accidentally work with root permission";
+        skip ":r :w :x can accidentally work with root permission", 3;
     }
     remove_file($file);
 }

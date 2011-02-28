@@ -136,7 +136,7 @@ plan 15;
     # 
     # Test your predicate in an appropriate way.
     
-    skip 1, "Test(s) not yet written: (**) Construct a complete binary tree";
+    skip "Test(s) not yet written: (**) Construct a complete binary tree", 1;
 }
 
 sub count($tree) {
@@ -288,7 +288,7 @@ sub count($tree) {
     # 
     # Which layout do you like most?
     
-    skip 1, "Test(s) not yet written: (***) Layout a binary tree (3)";
+    skip "Test(s) not yet written: (***) Layout a binary tree (3)", 1;
 }
 
 {
@@ -325,7 +325,7 @@ sub count($tree) {
     # For simplicity, suppose the information in the nodes is a single letter
     # and there are no spaces in the string.
     
-    skip 1, "Test(s) not yet written: (**) A string representation of binary trees";
+    skip "Test(s) not yet written: (**) A string representation of binary trees", 1;
 }
 
 {
@@ -352,7 +352,7 @@ sub count($tree) {
     # What happens if the same character appears in more than one node. Try for
     # instance pre-in-tree(aba,baa,T).
     
-    skip 1, "Test(s) not yet written: (**) Preorder and inorder sequences of binary trees";
+    skip "Test(s) not yet written: (**) Preorder and inorder sequences of binary trees", 1;
 }
 
 {
@@ -381,7 +381,7 @@ sub count($tree) {
     # 
     # T = t(a,[t(f,[t(g,[])]),t(c,[]),t(b,[t(d,[]),t(e,[])])])
     
-    skip 1, "Test(s) not yet written: (**) Dotstring representation of binary trees";
+    skip "Test(s) not yet written: (**) Dotstring representation of binary trees", 1;
 }
 
 {
@@ -398,7 +398,7 @@ sub count($tree) {
     # construct the Tree when the String is given. Work with atoms (instead of
     # strings). Make your predicate work in both directions.
     
-    skip 1, "Test(s) not yet written: (**) Tree construction from a node string";
+    skip "Test(s) not yet written: (**) Tree construction from a node string", 1;
 }
 
 # vim: ft=perl6

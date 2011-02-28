@@ -8,7 +8,7 @@ plan 7 * @inttypes;
 
 for @inttypes -> $type {
     unless eval("my $type \$var; 1") {
-        skip 7, "low-level data type $type not supported on this platform";
+        skip "low-level data type $type not supported on this platform", 7;
         next;
     }
 
