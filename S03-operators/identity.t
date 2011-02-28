@@ -4,22 +4,7 @@ use Test;
 
 plan 45;
 
-=begin pod
-
-C<=:=> is only for containers, not values
-
-ok(1 =:= 1, "int");
-nok(2 =:= 1, "int (neg)");
-ok("foo" =:= "foo", "str");
-nok("foo" =:= "foe", "str (neg)");
-isa_ok 1 =:=1, Bool, '=:= returns Bool';
-isa_ok 2 =:=1, Bool, '=:= returns Bool';
-
-ok("7" == 7, "sanity");
-ok("7" eq 7, "sanity");
-nok("7" =:= 7, "identify checks type mismatch");
-
-=end pod
+# C<=:=> is only for containers, not values
 
 #L<S03/Item assignment precedence/"There is also an identity test">
 
@@ -29,6 +14,8 @@ nok("7" =:= 7, "identify checks type mismatch");
   ok  ($foo =:= $foo), '$foo =:= $foo is true';
   ok  ($bar =:= $bar), '$bar =:= $bar is true';
   ok !($foo =:= $bar), '$foo =:= $bar is false';
+  ok ($foo =:= $foo) ~~ Bool, 'success returns a Bool';
+  ok ($foo =:= $bar) ~~ Bool, 'failure returns a Bool';
 }
 
 {
