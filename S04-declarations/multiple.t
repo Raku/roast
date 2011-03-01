@@ -9,6 +9,7 @@ plan 6;
 eval_lives_ok 'my $x; my $x', 
               'it is legal to declare my $x twice in the same scope.';
 
+#?niecza skip 'Not working'
 eval_lives_ok 'state $x; state $x', 
               'it is legal to declare state $x twice in the same scope.';
 
@@ -27,6 +28,7 @@ eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
 eval_dies_ok 'only sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
+#?niecza skip "MMD"
 eval_lives_ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
