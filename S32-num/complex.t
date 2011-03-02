@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 479;
+plan 481;
 
 # Basic tests functions specific to complex numbers.
 
@@ -118,6 +118,12 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
     is 3i ** "1", 3i ** 1, '3i ** "1"';
     is "1" ** 3i, 1 ** 3i, '"1" ** 3i';
     
+}
+
+# Conjugation
+{
+  is (2+3i).conjugate, 2-3i, 'conjugate 2+3i -> 2-3i';
+  is (5-4i).conjugate, 5+4i, 'conjugate 5-4i -> 5+4i';
 }
 
 done;

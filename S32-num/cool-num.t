@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 41;
+plan 43;
 
 =begin pod
 
@@ -18,6 +18,9 @@ class NotComplex is Cool {
 
 is "-17".abs, 17, '"-17".abs == 17';
 is NotComplex.new.abs, $magic.abs, 'NotComplex.new.abs == $magic.abs';
+
+is "3".conjugate, 3, '"3".conjugate == 3';
+is NotComplex.new.conjugate, $magic.conjugate, 'NotComplex.new.conjugate == $magic.conjugate';
 
 is_approx "3".exp, 3.exp, '"3".exp == 3.exp';
 is_approx NotComplex.new.exp, $magic.exp, 'NotComplex.new.exp == $magic.exp';
