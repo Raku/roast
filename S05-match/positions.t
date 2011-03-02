@@ -24,7 +24,7 @@ ok($/.from == 3,        'Match.from is 3');
 
 ok($str !~~ m/ Z .+ a /, 'No match');
 #?rakudo skip 'unspecced'
-ok($/.from.notdef,      'Match pos is undefined');
+nok($/.from.defined,      'Match pos is undefined');
 
 my regex Aa { A .* a }
 #?rakudo 3 skip 'lexical lookup of <Aa>'

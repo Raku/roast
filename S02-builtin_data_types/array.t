@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 104;
+plan 85;
 
 #L<S02/Mutable types/Array>
 
@@ -250,98 +250,6 @@ my @array2 = ("test", 1, Mu);
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
 
-# L<S09/Fixed-size arrays>
-
-#?niecza skip "Array shapes"
-{
-    my @arr[*];
-    @arr[42] = "foo";
-    is(+@arr, 43, 'my @arr[*] autoextends like my @arr');
-}
-
-#?niecza skip "Array shapes"
-{
-    my @arr[7] = <a b c d e f g>;
-    is(@arr, [<a b c d e f g>], 'my @arr[num] can hold num things');
-    #?rakudo 2 todo "no bounds checking"
-    dies_ok({push @arr, 'h'}, 'adding past num items in my @arr[num] dies');
-    dies_ok({@arr[7]}, 'accessing past num items in my @arr[num] dies');
-}
-
-#?niecza skip "Array shapes"
-{
-    lives_ok({ my @arr\    [7]}, 'array with fixed size with unspace');
-    eval_dies_ok('my @arr.[8]', 'array with dot form dies');
-    eval_dies_ok('my @arr\    .[8]', 'array with dot form and unspace dies');
-}
-
-# L<S09/Typed arrays>
-
-#?niecza skip "Type declarations"
-{
-    my @arr of Int = 1, 2, 3, 4, 5;
-    #?rakudo skip 'typed array recursion issue'
-    is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
-    #?rakudo 2 todo "parametrization issues"
-    dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
-}
-
-#?niecza skip "Type declarations"
-{
-    my @arr[5] of Int = <1 2 3 4 5>;
-    #?rakudo skip 'typed array recursion issue'
-    is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
-
-    #?rakudo todo "parametrization issues"
-    dies_ok({push @arr, 123}, 'boundary constraints on my @arr[num] of Type works');
-    pop @arr; # remove the last item to ensure the next ones are type constraints
-    #?rakudo 2 todo "parametrization issues"
-    dies_ok({push @arr, 's'}, 'type constraints on my @arr[num] of Type works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my @arr[num] of Type works (2)');
-}
-
-# syntax is currently reserved
-# #?rakudo skip 'my @arr(-->Type) parsefail'
-# {
-#     my @arr(-->Num) = <1 2.1 3.2>;
-#     is(@arr, <1 2.1 3.2>, 'my @arr[-->Type] works');
-# 
-#     lives_ok({push @arr, 4.3}, 'adding the proper type works');
-#     dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
-# }
-# 
-# #?rakudo skip 'my @arr[num-->Type] parsefail'
-# {
-#     my @arr[3](-->Num) = <1 2.1 3.2>;
-#     is(@arr, <1 2.1 3.2>, 'my @arr[num-->Type] works');
-# 
-#     dies_ok({push @arr, 4.3}, 'boundary constraints work on my @arr[num-->Type]');
-#     pop @arr; # remove the last item to ensure the next ones are type constraints
-#     dies_ok({push @arr, 'string'}, 'type constraints on my @arr[-->Type] works');
-# }
-
-#?rakudo skip 'no native type int yet'
-#?niecza skip "Type declarations"
-{
-    my int @arr = 1, 2, 3, 4, 5;
-    is(@arr, <1 2 3 4 5>, 'my Type @arr works');
-    dies_ok({push @arr, 's'}, 'type constraints on my Type @arr works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr works (2)');
-}
-
-#?rakudo skip 'my Type @arr[num] parsefail'
-#?niecza skip "Type declarations"
-{
-    my int @arr[5] = <1 2 3 4 5>;
-    is(@arr, <1 2 3 4 5>, 'my Type @arr[num] works');
-
-    dies_ok({push @arr, 123}, 'boundary constraints on my Type @arr[num] works');
-    pop @arr; # remove the last item to ensure the next ones are type constraints
-    dies_ok({push @arr, 's'}, 'type constraints on my Type @arr[num] works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr[num]  works (2)');
-}
-
 # RT #73308
 #?niecza skip "Array.elems"
 {
@@ -362,20 +270,36 @@ my @array2 = ("test", 1, Mu);
 }
 
 #RT #77072
-
 #?niecza skip "Zen slices"
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
 }
 
-#Rt #73402
+#RT #73402
 #?niecza skip "Int"
 {
     my @a = <1 2 3>;
     isa_ok +@a, Int, "Numifying an Array yields an Int";
 }
 
+#RT #75342
+#?niecza skip '$_ rw aliasing (?)'
+{
+    my @a = 0, 1, 2;
+    for @a {
+        $_++ if $_;
+    }
+    is ~@a, '0 2 3', "modifier form of 'if' within 'for' loop works";
+    
+    my @b = 0, 1, 2;
+    for @b {
+        if $_ {
+            $_++;
+        }
+    }
+    is ~@b, '0 2 3', "non-modifier form of 'if' within 'for' loop also works"
+}
 done;
 
 # vim: ft=perl6

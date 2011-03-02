@@ -11,7 +11,7 @@ loop statement tests
 
 =end kwid
 
-plan 12;
+plan 13;
 
 # basic loop
 
@@ -92,5 +92,9 @@ plan 12;
 
     is $rt65962, '4 5', 'loop with two variables in init works';
 }
+
+# RT #71466
+#?niecza skip ':$!to broken'
+eval_lives_ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair colon syntax in a loop refers to an attribute works');
 
 # vim: ft=perl6

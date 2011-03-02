@@ -19,7 +19,7 @@ is($a++, 0, 'Mu++ == 0');
 
 $a = Mu;
 #?rakudo skip 'unimpl Mu--'
-ok(notdef($a--), 'Mu-- is undefined');
+nok(defined($a--), 'Mu-- is undefined');
 
 $a = 'x';
 is($a++, 'x', 'magical ++ should not be numified');

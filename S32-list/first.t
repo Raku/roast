@@ -40,7 +40,7 @@ my @list = (1 ... 10);
 }
 
 {
-    ok(@list.first( { ($^a == 11) }).notdef, 'first returns undefined unsuccessful match');
+    nok(@list.first( { ($^a == 11) }).defined, 'first returns undefined unsuccessful match');
 }
 
 {

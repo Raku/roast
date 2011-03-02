@@ -108,7 +108,6 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
     is($flag, 2, "'my' variable within 'if' conditional");
 }
 
-#?niecza skip "eval_dies_ok unimplemented"
 {
     eval_dies_ok('if 1; 2', '"if" requires a block');
 }
@@ -163,7 +162,6 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 }
 
 
-#?niecza skip "eval_dies unimplemented"
 # L<S04/Statement parsing/keywords require whitespace>
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 

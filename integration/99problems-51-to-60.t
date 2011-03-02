@@ -208,7 +208,7 @@ plan 37;
     # solutions there are for a given number of nodes? What if the number is even?
     # Write an appropriate predicate.
 
-    skip 1, "Test(s) not yet written: (**) Generate-and-test paradigm";
+    skip "Test(s) not yet written: (**) Generate-and-test paradigm", 1;
 }
 
 {
@@ -298,7 +298,7 @@ plan 37;
     # 
     # Find out how many height-balanced trees exist for N = 15.
 
-    skip 1, "Test(s) not yet written: (**) Construct height-balanced binary trees with a given number of nodes";
+    skip "Test(s) not yet written: (**) Construct height-balanced binary trees with a given number of nodes", 1;
 }
 
 # vim: ft=perl6

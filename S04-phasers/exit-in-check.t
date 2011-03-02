@@ -9,14 +9,14 @@ $failed = 1;
 
 # When we end, we check if $failed is still 0. If yes, we've never reached runtime.
 END {
-  ok $failed.notdef,
+  nok $failed.defined,
       'exit() works in CHECK {} - $fail not yet initialized at END time';
 }
 
 CHECK {
   # Output the TAP header...
   plan 2;
-  ok $failed.notdef, '$failed not yet initialized in CHECK {}';
+  nok $failed.defined, '$failed not yet initialized in CHECK {}';
   # ...and exit, implicitly calling END.
   exit;
 }
@@ -46,7 +46,7 @@ END {
 CHECK {
   # Output the TAP header...
   plan 1;
-  ok $failed.notdef, 'exit() works in CHECK {}';
+  nok $failed.defined, 'exit() works in CHECK {}';
   # ...and exit, which does _not_ call END.
   exit;
 }

@@ -124,7 +124,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     is(eval('named_array2(1, :!y)'), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
     is(eval('named_array2(:y, 1, :!y)'), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
     
-    ok(eval('named_array2(:y, :y)').notdef, 'named and unnamed args - two named with same name');
+    nok(eval('named_array2(:y, :y)').defined, 'named and unnamed args - two named with same name');
 
     #?rakudo 4 todo "named arguments not fully up to spec"
     is(eval('named_array2(:y, (:x))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
@@ -161,7 +161,7 @@ sub formalize($text, :$case, :$justify) {
 {
 my ($text,$case,$justify)  = formalize('title', case=>'upper');
 is($text,'title', "text param was positional");
-ok($justify.notdef, "justification param was not given");
+nok($justify.defined, "justification param was not given");
 is($case, 'upper', "case param was named, and in justification param's position");
 }
 
@@ -169,7 +169,7 @@ is($case, 'upper', "case param was named, and in justification param's position"
 my ($text,$case,$justify)   = formalize('title', justify=>'left');
 is($text,'title', "text param was positional");
 is($justify, 'left', "justify param was named");
-ok($case.notdef, "case was not given at all");
+nok($case.defined, "case was not given at all");
 }
 
 {
@@ -193,7 +193,7 @@ my %fellowship = slurpee(hobbit => 'Frodo', wizard => 'Gandalf');
 is(%fellowship<hobbit>, 'Frodo', "hobbit arg was slurped");
 is(%fellowship<wizard>, 'Gandalf', "wizard arg was slurped");
 is(+%fellowship, 2, "exactly 2 arguments were slurped");
-ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
+nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 }
 
 {
@@ -203,7 +203,7 @@ ok(%fellowship<dwarf>.notdef, "dwarf arg was not given");
     is(+%rest, 2, "exactly 2 arguments were slurped");
     is(%rest<sky>, 'blue', "sky argument was slurped");
     is(%rest<fire>, 'red', "fire argument was slurped");
-    ok(%rest<grass>.notdef, "grass argument was NOT slurped");
+    nok(%rest<grass>.defined, "grass argument was NOT slurped");
 }
 
 {

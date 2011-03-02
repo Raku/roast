@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 17;
+plan 18;
 
 {
     # simple try
@@ -103,6 +103,21 @@ plan 17;
     is $catches, 1, 'CATCH does not catch exceptions thrown within it';
 }
 
+# RT #68728
+{
+    my $str = '';
+    try {
+        say abc;
+        CATCH {
+            $str ~= 'A';
+            if 'foo' ~~ /foo/ {
+                $str ~= 'B';
+                $str ~= $/;
+            }
+        }
+    }
+    is $str, 'ABfoo', 'block including if structure and printing $/ ok';
+}
 done;
 
 # vim: ft=perl6

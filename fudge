@@ -165,7 +165,7 @@ sub fudgeblock {
                 };
                 if ($FUDGE eq 'skip') {
                     s/^/# /mg;
-                    $_ = "skip($numtests, $ARGS);" . $_;
+                    $_ = "skip($ARGS, $numtests);" . $_;
                 }
                 elsif ($FUDGE eq 'try') {
                     chomp;
@@ -174,7 +174,7 @@ sub fudgeblock {
                 elsif ($FUDGE eq 'eval') {
                     chomp;
                     s/(['\\])/\\$1/g;
-                    $_ = "eval('$_') // skip($numtests, $ARGS);\n";
+                    $_ = "eval('$_') // skip($ARGS, $numtests);\n";
                 }
                 else {
                     warn "Don't know how to mark block for $FUDGE!\n";
@@ -208,14 +208,14 @@ sub fudgeblock {
                 $_ = "{ " . $_ . " }";
                 if ($FUDGE eq 'skip') {
                     s/^/# /mg;
-                    $_ = "skip($numtests,$ARGS); $_\n";
+                    $_ = "skip($ARGS, $numtests); $_\n";
                 }
                 elsif ($FUDGE eq 'try') {
                     $_ = "(try $_) // flunk($ARGS);\n";
                 }
                 elsif ($FUDGE eq 'eval') {
                     s/(['\\])/\\$1/g;
-                    $_ = "eval('$_') // skip($numtests,$ARGS);\n";
+                    $_ = "eval('$_') // skip($ARGS, $numtests);\n";
                 }
                 else {
                     warn "Don't know how to mark statement for $FUDGE!\n";

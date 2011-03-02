@@ -94,7 +94,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 }
 
 {
-  ok foo().notdef, "get variable not yet declared using a sub (1)";
+  nok foo().defined, "get variable not yet declared using a sub (1)";
   is foo(), 1, "get variable not yet declared using a sub (2)";
   is foo(), 2, "get variable not yet declared using a sub (3)";
 
@@ -103,7 +103,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 }
 
 {
-  ok bar().notdef, "runtime part of my not yet executed (1)";
+  nok bar().defined, "runtime part of my not yet executed (1)";
   is bar(), 1, "runtime part of my not yet executed (2)";
   is bar(), 2, "runtime part of my not yet executed (3)";
 
@@ -136,7 +136,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   my $a;
   sub rmbl { $a++ }
 
-  ok rmbl().notdef, "var captured by sub is the right var (1)";
+  nok rmbl().defined, "var captured by sub is the right var (1)";
   $a++;
   is rmbl(), 2, "var captured by sub is the right var (2)";
 }

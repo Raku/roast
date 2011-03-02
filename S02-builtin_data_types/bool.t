@@ -63,7 +63,6 @@ is(+Bool::False, '0', 'False numifies to 0');
 
 # Arithmetic operations
 my $bool = Bool::False;
-#?niecza 4 skip "Bool.succ and Bool.pred"
 is(++$bool, Bool::True, 'Increment of Bool::False produces Bool::True');
 is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
 is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');

@@ -37,7 +37,7 @@ is($anon_block(), 1, '{} <anon block> works');
     ok $! ~~ Exception, 'too many parameters';
 
     if $! !~~ Exception {
-        skip 2, q{tests don't work if previous test fails};
+        skip q{tests don't work if previous test fails}, 2;
     }
     else {
         my $errmsg = ~$!;

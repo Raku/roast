@@ -17,7 +17,7 @@ if $*OS eq "MSWin32" {
 # change to t subfolder and see if cwd is updated
 my $subdir = 't';
 if $subdir !~~ :d {
-    skip 7, "Directory, '$subdir', does not exist";
+    skip "Directory, '$subdir', does not exist", 7;
 }
 else {
     my $cwd = $*CWD;
@@ -38,7 +38,7 @@ else {
 
 my $no_subdir = 'lol does not exist';
 if $no_subdir ~~ :d {
-    skip 2, "subdir '$no_subdir' does exist, actually.";
+    skip "subdir '$no_subdir' does exist, actually.", 2;
 }
 else {
     lives_ok { chdir("$no_subdir") },

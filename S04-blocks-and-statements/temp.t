@@ -63,7 +63,7 @@ eval('
     is @array[1], 1, "temp() restored our array element";
 }
 "1 - delete this line when the parsefail eval() is removed";
-') or skip(2, "parsefail: temp \@array[1]");
+') or skip("parsefail: temp \@array[1]", 2);
 
 eval('
 {
@@ -75,7 +75,7 @@ eval('
   is %hash<b>, 2, "temp() restored our array element";
 }
 "1 - delete this line when the parsefail eval() is removed";
-') or skip(2, "parsefail: temp \%hash<b>");
+') or skip("parsefail: temp \%hash<b>", 2);
 
 eval('
 {
@@ -97,7 +97,7 @@ eval('
   is $struct[1]<key>[1], 1, "temp() restored our nested arrayref/hashref element";
 }
 "1 - delete this line when the parsefail eval() is removed";
-') or skip(2, "parsefail: temp \$struct[1]<key>[1]");
+') or skip("parsefail: temp \$struct[1]<key>[1]", 2);
 
 # Block TEMP{}
 # L<S06/Temporization/You can also modify the behaviour of temporized code structures>

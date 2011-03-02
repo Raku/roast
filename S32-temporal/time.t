@@ -97,9 +97,7 @@ ok($now > $beg && $now - $beg < 10, 'very basic time test');
 ok time + 10, "'time()' may drop its parentheses";
 
 #-- 4 --
-if $*OS eq "browser" {
-    skip 1, "Programs running in browsers don't have access to regular IO.";
-} else {
+{
     my ($beguser,$begsys);
     my ($nowuser,$nowsys);
 

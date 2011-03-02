@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 76;
+plan 78;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -258,6 +258,16 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     is %h{$0}, 'y', 'can use $0 as hash key';
 
 }
+
+# RT #61412
+{
+    my %hash;
+    %hash<foo> := 'bar';
+    is %hash<foo>, 'bar', 'binding hash value works';
+}
+
+# RT #75694
+eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
 
 done;
 

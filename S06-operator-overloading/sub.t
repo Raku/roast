@@ -227,7 +227,7 @@ Testing operator overloading subroutines
   if ($try) {
    is ~$obj, "hi", "our object was stringified correctly", :todo<feature>;
   } else {
-    skip 1, "Stringification failed";
+    skip "Stringification failed", 1;
   };
   #?pugs todo 'feature'
   is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly";

@@ -304,10 +304,10 @@ ok("\x[6358]\c[CHARACTER TABULATION]" ~~ m/<.isWhiteSpace>/, q{Match unanchored 
 ok("\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/^<.isAlphabetic>$/, q{Match (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
 ok(!( "\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/^<!isAlphabetic>.$/ ), q{Don't match negated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
 ok(!( "\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/^<-isAlphabetic>$/ ), q{Don't match inverted (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
-ok(!( "\x[0855]"  ~~ m/^<.isAlphabetic>$/ ), q{Don't match unrelated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
-ok("\x[0855]"  ~~ m/^<!isAlphabetic>.$/, q{Match unrelated negated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
-ok("\x[0855]"  ~~ m/^<-isAlphabetic>$/, q{Match unrelated inverted (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
-ok("\x[0855]\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/<.isAlphabetic>/, q{Match unanchored (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
+ok(!( "\x[297C]"  ~~ m/^<.isAlphabetic>$/ ), q{Don't match unrelated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
+ok("\x[297C]"  ~~ m/^<!isAlphabetic>.$/, q{Match unrelated negated (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
+ok("\x[297C]"  ~~ m/^<-isAlphabetic>$/, q{Match unrelated inverted (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
+ok("\x[297C]\c[DEVANAGARI SIGN CANDRABINDU]" ~~ m/<.isAlphabetic>/, q{Match unanchored (Lu + Ll + Lt + Lm + Lo + OtherAlphabetic)} );
 
 # Lowercase       # Ll + OtherLowercase
 

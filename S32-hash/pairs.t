@@ -19,7 +19,7 @@ Basic C<pairs> tests, see S32::Containers.
   ok((@pairs = @pairs.sort),    'Can sort list of pairs');
   is +@pairs, 3,                "pairs on hashes returned the correct number of elems";
   if +@pairs != 3 {
-    skip 6, "skipped tests which depend on a test which failed";
+    skip "skipped tests which depend on a test which failed", 6;
   } else {
     is @pairs[0].key,   "a",      "value of pair returned by hash.pairs was correct (1)";
     is @pairs[1].key,   "b",      "value of pair returned by hash.pairs was correct (2)";
@@ -37,7 +37,7 @@ Basic C<pairs> tests, see S32::Containers.
   ok((@pairs = $pair.pairs), "pairs on a pair");
   is +@pairs, 1,           "pairs on a pair returned one elem";
   if +@pairs != 1 {
-    skip 2, "skipped tests which depend on a test which failed";
+    skip "skipped tests which depend on a test which failed", 2;
   } else {
     is @pairs[0].key,   "a", "key of pair returned by pair.pairs";
     is @pairs[0].value,   1, "value of pair returned by pair.pairs";

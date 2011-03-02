@@ -20,7 +20,7 @@ sub positional { @_[0] }
 is &positional.signature, :(Mu *@_),
    'signature is :(Mu *@_) when none is specified and @_ is used';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
-ok positional().notdef, 'sub using positional param called with no params';
+nok positional().defined, 'sub using positional param called with no params';
 dies_ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 
@@ -29,7 +29,7 @@ sub named { %_<bravo> }
 is &named.signature, :(Mu *%_),
    'signature is :(Mu *%_) when none is specified and %_ is used';
 is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
-ok named().notdef, 'named param sub is callable with no params';
+nok named().defined, 'named param sub is callable with no params';
 dies_ok { named( 'zulu' ) }, 'named param sub dies with positional param';
 
 sub both { @_[1] ~ %_<delta> }

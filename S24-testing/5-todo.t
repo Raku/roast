@@ -25,5 +25,5 @@ if ($?COMPILER and $?COMPILER eq 'Pugs') {
     #warn ">>> $saved_val\n";
     ok !$saved_val, "todo() didn't set \$Test::todo_next_test to True";
 } else {
-    skip 9, 'no general tests';
+    skip 'no general tests', 9;
 }

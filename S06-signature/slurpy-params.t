@@ -139,7 +139,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag("Testing with named arguments (named param isn't required)");
     lives_ok { foo 1, x => 20, y => 300, 4000 },
       'Testing: `sub foo(:$n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
-    ok (foo1 1, x => 20, y => 300, 4000).notdef,
+    nok (foo1 1, x => 20, y => 300, 4000).defined,
       'Testing value for named argument';
     is (foo2 1, x => 20, y => 300, 4000), 320,
       'Testing value for slurpy *%h';

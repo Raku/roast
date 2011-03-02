@@ -162,7 +162,7 @@ fail fail fail
     # fail true fail
     # fail fail fail
 
-    skip 1, "Test(s) not yet written: (*) Truth tables for logical expressions (2).";
+    skip "Test(s) not yet written: (*) Truth tables for logical expressions (2).", 1;
 }
 
 {
@@ -184,7 +184,7 @@ fail fail fail
     # fail fail true true
     # fail fail fail true
     
-    skip 1, "Test(s) not yet written: (**) Truth tables for logical expressions (3).";
+    skip "Test(s) not yet written: (**) Truth tables for logical expressions (3).", 1;
 
 }
 

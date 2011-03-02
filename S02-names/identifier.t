@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S02/Names/An identifier is composed of an alphabetic character>
 
@@ -76,12 +76,17 @@ plan 20;
 }
 
 # RT #68358
-#?rakudo skip 'RT #68358'
 {
     my ($x);
     sub my($a) { $a + 17 }
     $x = 5;
-    is my($x), 23, 'call to sub named "my" works';
+    is my($x), 22, 'call to sub named "my" works';
+}
+
+# RT #72898
+{
+    sub loop($a) { $a + 1 }
+    is loop(5), 6, 'sub named "loop" works';
 }
 
 # RT #77218

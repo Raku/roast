@@ -124,7 +124,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], ' Callay', '! separator at end of string';
 }
 else {
-    skip 1, "OS '$*OS' shell support not confirmed";
+    skip "OS '$*OS' shell support not confirmed", 1;
 }
 
 

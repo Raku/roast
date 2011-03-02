@@ -166,7 +166,7 @@ is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y'), 2, '2nd my in
 my $z = 42;
 {
     my $z = $z;
-    ok( $z.notdef, 'my $z = $z; can not see the value of the outer $z');
+    nok( $z.defined, 'my $z = $z; can not see the value of the outer $z');
 }
 
 # interaction of my and eval
@@ -224,7 +224,7 @@ my $z = 42;
 }
 
 {
-    ok declare_later().notdef,
+    nok declare_later().defined,
         'Can access variable returned from a named closure that is declared below the calling position';
     my $x;
     sub declare_later {

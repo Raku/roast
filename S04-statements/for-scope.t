@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/The C<for> statement>
 
-plan 15;
+plan 16;
 
 # Implicit $_
 for 1, 2 {
@@ -45,6 +45,7 @@ for 1, 2 -> $_ {
     is(@inside.join, "123", "lexical array properly initialized, round $_, two explicit \$_s");
 }
 
+#?rakudo skip 'wrong redeclaration error, RT 84438'
 {
     sub respect(*@a) {
         my @b = ();
@@ -55,6 +56,7 @@ for 1, 2 -> $_ {
     is respect(1,2,3), 3, 'a for loop inside a sub loops over each of the elements';
     is respect([1,2,3]), 1, '... but only over one array ref';
     is respect( my @a = 1, 2, 3 ), 3, '...and when the array is declared in the argument list';
+    is @a.join(','), '1,2,3', 'and the array get the right values';
 }
 
 # vim: ft=perl6

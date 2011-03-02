@@ -46,6 +46,7 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     eval_dies_ok('do {return 5}', 'cannot return out of a do block');
 }
 
+#?niecza skip 'parcel stringification'
 {
     # In an ancient version of pugs the sub below didn't return anything
     sub list_return { return (42, 1) }

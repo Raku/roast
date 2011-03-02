@@ -153,7 +153,7 @@ class PairTest {
     dies_ok  { $t.c = 'foo' }, '... but only to lvaues attributes';
     is $t.a, 'foo', 'assignment worked';
     is $t.backend.a, 'foo', 'can also query that through the backend';
-    ok $t.c.notdef, 'died assignment had no effect';
+    nok $t.c.defined, 'died assignment had no effect';
 }
 
 # arrays, hashes
