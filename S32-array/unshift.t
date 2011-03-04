@@ -40,6 +40,7 @@ plan 61;
     is(@unshift[2], 2, 'we found the right element');
     is(@unshift[3], 1, 'we found the right element');
 
+#?niecza skip 'passing positionals by name'
 {
     unshift(:array(@unshift), 5);
     is(+@unshift, 5, 'we have 4 element in the array');
@@ -122,6 +123,7 @@ plan 61;
 }
 
 # testing some edge cases
+#?niecza skip 'series'
 {
     my @unshift = 0 ... 5;
     is(+@unshift, 6, 'starting length is 6');

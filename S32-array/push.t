@@ -34,6 +34,7 @@ plan 51;
     is(@push[3], 4, 'we found the right element');
 
 #?rakudo skip 'named args'
+#?niecza skip 'named args'
 {
     push(:array(@push), 5);
     is(+@push, 5, 'we have 5 elements in the array (with named arg)');
@@ -113,6 +114,7 @@ plan 51;
 }
 
 # testing some edge cases
+#?niecza skip 'series'
 {
     my @push = 0 ... 5;
     is(+@push, 6, 'starting length is 6');
@@ -140,6 +142,7 @@ plan 51;
 # }
 
 # nested arrayref
+#?niecza skip 'series'
 {
     my @push = ();
     push @push, [ 21 ... 25 ];

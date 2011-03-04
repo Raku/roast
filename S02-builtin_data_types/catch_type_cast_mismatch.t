@@ -16,6 +16,7 @@ my $ref = { val => 42 };
 #?rakudo todo 'Hash.isa(Hash)'
 isa_ok($ref, Hash);
 #?rakudo todo "die or fail?"
+#?niecza skip "questionable test"
 dies_ok { $ref[0] }, 'Hash !~~ Positional';
 
 {
