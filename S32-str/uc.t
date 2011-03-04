@@ -7,6 +7,7 @@ plan 20;
 # L<S32::Str/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
+#?niecza skip 'passing positional by name'
 is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
 {
@@ -16,6 +17,7 @@ is(uc(""), "", "empty string");
 }
 is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
+#?niecza skip 'assigning to RO-value (?)'
 {
     $_ = "Hello World";
     my $x = .uc;
@@ -37,6 +39,7 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 # Unicode 5.1.0 SpecialCasing.txt has 00DF -> 0053 0053
 # nothing maps to 1E9E, the new "capital sharp s"
 # so I think this is right -rhr
+#?niecza skip 'German language weirdness'
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {
@@ -49,6 +52,7 @@ is ~(0.lc),         ~0, '.lc on Int';
 is ~(0.lcfirst),    ~0, '.lcfirst on Int';
 
 #?DOES 4
+#?niecza skip 'but RoleName'
 {
     role A {
         has $.thing = 3;

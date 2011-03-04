@@ -49,6 +49,7 @@ my $pair = :key<value>;
 
 is $pair.value, 'value', "method on a named pair";
 
+#?niecza skip 'Parcel.Numeric'
 {
     augment class Parcel {
         method twice {

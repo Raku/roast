@@ -8,13 +8,16 @@ plan 13;
 
 is(lc("hello world"), "hello world", "lowercasing string which is already lowercase");
 is(lc("Hello World"), "hello world", "simple lc test");
+#?niecza skip 'passing positional by name'
 is(lc(:string("STATION")), "station", "lc works with named argument");
 is(lc(""), "", "empty string");
 is(lc("ÅÄÖ"), "åäö", "some finnish non-ascii chars");
 is(lc("ÄÖÜ"), "äöü", "lc of German Umlauts");
 is(lc("ÓÒÚÙ"), "óòúù", "accented chars");
+#?niecza skip 'Range stringification'
 is(lc('A'..'C'), "a b c", "lowercasing char-range");
 
+#?niecza skip 'RO error'
 {
     $_ = "Hello World";
     my $x = .lc;

@@ -27,20 +27,24 @@ plan 10;
 
     # RT #76234
     #?rakudo todo "RT 76234, Nil stringy interpolation"
+    #?niecza skip 'Nil stringification'
     is "{}", '', 'Interpolating an empty block is cool';
 }
 
-my $rt65538_in = qq[line { (1,2,3).min }
+#?niecza skip 'Parcel.max'
+{
+    my $rt65538_in = qq[line { (1,2,3).min }
 line 2
 line { (1,2,3).max } etc
 line 4
 ];
-my $rt65538_out = qq[line 1
+    my $rt65538_out = qq[line 1
 line 2
 line 3 etc
 line 4
 ];
-is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
+    is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
+}
 
 done;
 
