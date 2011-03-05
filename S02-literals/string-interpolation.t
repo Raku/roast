@@ -27,7 +27,6 @@ plan 10;
 
     # RT #76234
     #?rakudo todo "RT 76234, Nil stringy interpolation"
-    #?niecza skip 'Nil stringification'
     is "{}", '', 'Interpolating an empty block is cool';
 }
 
