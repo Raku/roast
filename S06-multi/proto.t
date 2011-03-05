@@ -29,7 +29,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 }
 
 # L<S03/"Reduction operators">
-#?rakudo skip 1
+#?rakudo skip 'operator protos'
 {
     proto prefix:<[+]> (*@args) {
         my $accum = 0;
