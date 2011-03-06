@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  11;
+plan  13;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -84,3 +84,19 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     },
     :args['-x', '23'],
     'short option with spacey value';
+
+# RT #71366
+is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
+    {
+        err     => /\-\-var/,
+        out     => '',
+    },
+    :args['param', '--var'],
+    'Non Bool option last with no value';
+
+is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
+    {
+        out     => "a: param, optional: Bool::True\n",
+    },
+    :args['param', '--var'],
+    'Bool option last with no value';
