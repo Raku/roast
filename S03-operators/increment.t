@@ -18,7 +18,6 @@ my $a = Mu;
 is($a++, 0, 'Mu++ == 0');
 
 $a = Mu;
-#?rakudo skip 'unimpl Mu--'
 nok(defined($a--), 'Mu-- is undefined');
 
 $a = 'x';
