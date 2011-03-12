@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 22;
 
 # L<S12/Methods/"For a call on your own private method">
 
@@ -104,6 +104,21 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
     }
     is RT73808.new.foo, 4,
         'Providing a list of attributes to a single "has" works';
+}
+
+# RT 81718
+{
+    class RT81718 {
+        has $.bughunt is rw;
+        sub bomb { "life is a $.bughunt" }
+        method meta_bomb { "the good " ~ bomb() }
+    }
+
+    my $rt81718 = RT81718.new();
+
+    dies_ok { $rt81718.bomb() }, 'no attribute access for sub';
+    #?rakudo todo 'RT81718'
+    dies_ok { $rt81718.meta_bomb() }, 'no attr access for sub from method';
 }
 
 # vim: ft=perl6
