@@ -12,6 +12,7 @@ sub PF_INET     { 2 } # constant PF_INET     = 2; # these should move into a fil
 sub SOCK_STREAM { 1 } # constant SOCK_STREAM = 1; # but what name and directory?
 sub TCP         { 6 } # constant TCP         = 6;
 my ( $test, $port, $server_or_client ) = @*ARGS;
+$port = $port.Int;
 my $host = '127.0.0.1';
 
 given $test {
@@ -19,9 +20,7 @@ given $test {
     when 2 { # test number 2 - echo protocol, RFC 862
         if $server_or_client eq 'server' {
             # warn "SERVER TEST=$test PORT=$port";
-            my $server = IO::Socket::INET.socket( PF_INET, SOCK_STREAM, TCP );
-            $server.bind( $host, $port.Int );
-            $server.listen(); # should accept max queue size parameter
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
             # warn "SERVER LISTENING";
             my $fd = open( 't/spec/S32-io/server-ready-flag', :w );
             $fd.close();
@@ -38,9 +37,8 @@ given $test {
             # warn "CLIENT TEST=$test PORT=$port";
             # avoid a race condition, where the client tries to
             # open() before the server gets to accept().
-            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(1) }
-            my $client = IO::Socket::INET.new;
-            $client.open( $host, $port.Int );
+            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(0.1) }
+            my $client = IO::Socket::INET.new(:$host, :$port);
             # warn "CLIENT OPENED";
             $client.send( [~] '0'..'9', 'a'..'z' );
             # warn "CLIENT SENT";
@@ -55,9 +53,7 @@ given $test {
     when 3 { # test number 3 - discard protocol, RFC 863
         if $server_or_client eq 'server' {
             # warn "SERVER TEST=$test PORT=$port";
-            my $server = IO::Socket::INET.socket( PF_INET, SOCK_STREAM, TCP );
-            $server.bind( $host, $port.Int );
-            $server.listen(); # should accept max queue size parameter
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
             # warn "SERVER LISTENING";
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
@@ -71,8 +67,7 @@ given $test {
             # avoid a race condition, where the client tries to
             # open() before the server gets to accept().
             sleep 1; # crude, sorry
-            my $client = IO::Socket::INET.new;
-            $client.open( $host, $port.Int );
+            my $client = IO::Socket::INET.new(:$host, :$port);
             # warn "CLIENT OPENED";
             $client.send( [~] '0'..'9', 'a'..'z' );
             # warn "CLIENT SENT";
@@ -86,9 +81,7 @@ given $test {
 
     when 4 { # test number 4 - recv with parameter
         if $server_or_client eq 'server' {
-            my $server = IO::Socket::INET.socket(PF_INET, SOCK_STREAM, TCP);
-            $server.bind($host, $port.Int);
-            $server.listen();
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
             my $fd = open( 't/spec/S32-io/server-ready-flag', :w );
             $fd.close();
             while my $client = $server.accept() {
@@ -99,9 +92,8 @@ given $test {
             }
         }
         else {
-            my $sock = IO::Socket::INET.new;
-            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(1) }
-            $sock.open($host, $port.Int);
+            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(0.1) }
+            my $sock = IO::Socket::INET.new(:$host, :$port);
             # Tests that if we do not receive all the data available
             # it is buffered correctly for when we do request it
             say $sock.recv(7); # 0123456
@@ -124,9 +116,7 @@ given $test {
 
     when 5 { # test number 5 - get()
         if $server_or_client eq 'server' {
-            my $server = IO::Socket::INET.socket(PF_INET, SOCK_STREAM, TCP);
-            $server.bind($host, $port.Int);
-            $server.listen();
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
             my $fd = open('t/spec/S32-io/server-ready-flag', :w);
             $fd.close();
             while my $client = $server.accept() {
@@ -142,9 +132,8 @@ given $test {
                 $client.close();
             }
         } else { # client
-            my $sock = IO::Socket::INET.new;
-            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(1) }
-            $sock.open($host, $port.Int);
+            until 't/spec/S32-io/server-ready-flag'.IO ~~ :e { sleep(0.1) }
+            my $sock = IO::Socket::INET.new(:$host, :$port);
             say $sock.get();
             say $sock.get();
             $sock.input-line-separator = "\r\n";

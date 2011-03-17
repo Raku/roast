@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 17;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -44,22 +44,13 @@ if $received ~~ $netstat_pat { @ports = $/.list; }  # development complete
 # sequentially search for the first unused port
 my $port = 1024;
 while $port < 65535 && $port==any(@ports) { $port++; }
-if $port > 65535 {
-    diag "no free port; abortin"; 
+if $port >= 65535 {
+    diag "no free port; aborting";
     skip_rest 'No port free - cannot test';
     exit 0;
 }
 diag "Testing on port $port";
 
-# test 1 creates a TCP socket but does not use it.
-# use Perl 5 style subs for constants until 'constant' works again
-sub PF_INET     { 2 } # constant PF_INET     = 2; # these should move into a file,
-sub SOCK_STREAM { 1 } # constant SOCK_STREAM = 1; # but what name and directory?
-sub TCP         { 6 } # constant TCP         = 6;
-my $server = IO::Socket::INET.socket( PF_INET, SOCK_STREAM, TCP );
-isa_ok $server, IO::Socket::INET;
-# Do not bind to this socket in the parent process, that would prevent a
-# child process from using it.
 
 if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
 
@@ -105,7 +96,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
     is $expected[$i++], 3, '... which is 3 bytes';
 
-    #?rakudo 7 skip
+    #?rakudo 7 skip 'NYI'
     # test 5 tests get()
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
