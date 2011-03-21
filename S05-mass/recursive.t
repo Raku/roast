@@ -13,7 +13,7 @@ plan 20;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)>
 
-my regex r { <?> | x <&r> }
+my regex r { <?> || x <&r> }
 
 ok "" ~~ /<&r>/, '"" ~~ /<r>/ matched';
 is $/, "", 'with ""';
