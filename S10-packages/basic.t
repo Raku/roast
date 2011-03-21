@@ -8,7 +8,7 @@ plan 53;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
-my regex likely_perl6_not_found_err {:i ^\N*<<not>>\N*<<[f[i|ou]nd|located?|access'ed'?]>>}
+my regex likely_perl6_not_found_err {:i ^\N*<<[can]?not>>\N*<<[f[i|ou]nd|located?|access'ed'?]>>}
 
 package Empty {}
 package AlsoEmpty::Nested {}
