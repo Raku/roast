@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
 
-plan 9;
+plan 10;
 
 # L<S32::IO/IO::Writeable::Encoded/"it is a compiler error">
 
@@ -42,5 +42,13 @@ is_run( 'say("")',
     ok "$!" ~~ /« say »/, 'error message is for "say"';
 }
 
+# RT #74822
+is_run( 'my %h=<a b c> Z 1,2,3; for %h { .say }',
+        {
+            status => 0,
+            out    => "a\t1\nb\t2\nc\t3\n",
+            err    => '',
+        },
+        'for %h { .say } (RT 74822)' );
 
 # vim: ft=perl6
