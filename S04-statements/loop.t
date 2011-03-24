@@ -11,7 +11,7 @@ loop statement tests
 
 =end kwid
 
-plan 13;
+plan 14;
 
 # basic loop
 
@@ -96,5 +96,9 @@ plan 13;
 # RT #71466
 #?niecza skip ':$!to broken'
 eval_lives_ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair colon syntax in a loop refers to an attribute works');
+
+# RT #63760
+eval_dies_ok 'loop { say "# RT63760"; last } while 1',
+             '"loop {} while" is a syntax error (RT 63760)';
 
 # vim: ft=perl6
