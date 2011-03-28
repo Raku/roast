@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 53;
+plan 54;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -18,7 +18,7 @@ my @array = (5,-3,7,0,1,-9); #NOTICE! The <> don't work like they should, rakudo
 
 # Tests for C<min>:
 is @array.min,  -9, "basic method form of min works";
-dies_ok {min(@array)}, 'min() requires comparison function';
+is min(@array), -9, 'min(list)'; 
 #?rakudo skip 'named args'
 is min(:by({$^a <=> $^b }), :values(@array)), -9, "basic subroutine form of min works with named args";
 
@@ -54,6 +54,8 @@ is max(:values(@array)), 7, "basic subroutine form of max works with named args"
 is (@array.max: { $^a <=> $^b }), 7,
   "method form of max with identity comparison block works";
 
+is max(@array), 7, 'sub form of max';
+
 #?rakudo skip "Range.max not fully implemented yet"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
   "method form of max on Ranges taking a comparision block works";
@@ -76,7 +78,7 @@ is ((1..10).max: { ($_-3) * ($_-5) }), 10,
 
 # Tests for C<minmax>:
 is @array.minmax,  -9..7, "basic method form of minmax works";
-dies_ok {minmax(@array)}, 'minmax() requires comparison function';
+is minmax(@array), -9..7,  'minmax(list)';
 #?rakudo skip 'named args'
 is minmax(:by({$^a <=> $^b }), :values(@array)), -9..7, "basic subroutine form of minmax works with named args";
 
