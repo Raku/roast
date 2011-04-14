@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -32,5 +32,13 @@ plan 7;
     is m2("x"), "d", 'if not an Int at all, fall back to Any candidate';
 }
 
+# RT #88562
+#?rakudo skip 'RT 88562'
+{
+    multi m3(0     ,     $       ) { 'a' };
+    multi m3(Int $n, Str $a = 'A') { 'b' };
+
+    is m3(2, 'A'), 'b', 'literal Int, anonymous parameters and default values mix';
+}
 
 # vim: ft=perl6
