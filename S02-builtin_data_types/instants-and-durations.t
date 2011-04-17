@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 12;
 
 # L<S02/Immutable types/'term now'>
 
@@ -17,16 +17,16 @@ isa_ok eval('now +300'), Instant, 'now is a term, not a function';
 # L<S02/Immutable types/'you may not add two instants'>
 
 {
-    my $t0 = now;
-    sleep 2;
-    my $t1 = now;
+    my $t0 = Instant.from-posix(1295002122);
+
+    my $t1 = Instant.from-posix(1303059935);
+
     my $d = $t1 - $t0;
 
     ok $t0 < $t1, 'later Instants are greater';
     dies_ok { $t0 + $t1 }, 'Instant + Instant is illegal';
     isa_ok $d, Duration, 'Instant - Instant ~~ Duration';
     ok $d ~~ Real, 'Durations are Real';
-    ok 1 < +$d < 3, 'Instant subtraction yields sane results';
     isa_ok $d + $t0, Instant, 'Instant + Duration ~~ Instant';
     isa_ok $d + $t0, Instant, 'Duration + Instant ~~ Instant';
     isa_ok $t0 - $d, Instant, 'Instant - Duration ~~ Instant';
