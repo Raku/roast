@@ -4,6 +4,8 @@ use Test;
 
 # L<S32::Str/Str/"=item indent">
 
+plan 59;
+
 # TODO: Rakudo doesn't have full support for constants, so we have to assume a
 # hardcoded 8 instead of $?TABSTOP for now.
 my $tab = 8;
@@ -131,5 +133,3 @@ is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).perl,
 is  " \t a\n \t b\n".indent(1).perl,
     " \t  a\n \t  b\n".perl,
     'Indentation should not be appended after a trailing \n';
-
-done;
