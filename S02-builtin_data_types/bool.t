@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan 47;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
