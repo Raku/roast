@@ -51,15 +51,17 @@ is Bool::False.Str, 'Bool::False', 'False.Str';
 
 
 # numification - interaction with +
-#?niecza 4 skip "Numeric et al"
+#?niecza 6 skip "Numeric et al"
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
 isa_ok(+Bool::True, Int, 'True numifies to an Int');
 isa_ok(+Bool::False, Int, 'False numifies to an Int');
 
+is(Bool::True.Int, '1', 'True Intifies to 1');
+is(Bool::False.Int, '0', 'False Intifies to 1');
+
 is(+Bool::True, '1', 'True numifies to 1');
 is(+Bool::False, '0', 'False numifies to 0');
-
 
 # Arithmetic operations
 my $bool = Bool::False;
