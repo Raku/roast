@@ -79,7 +79,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
 }
 
-#?rakudo skip 'RT 66576: .name method on bool values'
 {
     is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
