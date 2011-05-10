@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 92;
+plan 110;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -136,6 +136,28 @@ ok("a" lt "a\0", 'a lt a\0');
 ok("a" lt "a ", 'a lt a\x20');
 ok("a\0" gt "a", 'a\0 gt a');
 ok("a " gt "a", 'a\x20 gt a');
+
+# test NaN relational ops
+is(NaN == 1, Bool::False, 'NaN == 1');
+is(NaN <  1, Bool::False, 'NaN <  1');
+is(NaN <= 1, Bool::False, 'NaN <= 1');
+is(NaN >  1, Bool::False, 'NaN >  1');
+is(NaN >= 1, Bool::False, 'NaN >= 1');
+is(NaN != 1, Bool::True,  'NaN != 1');
+
+is(1 == NaN, Bool::False, '1 == NaN');
+is(1 <  NaN, Bool::False, '1 <  NaN');
+is(1 <= NaN, Bool::False, '1 <= NaN');
+is(1 >  NaN, Bool::False, '1 >  NaN');
+is(1 >= NaN, Bool::False, '1 >= NaN');
+is(1 != NaN, Bool::True,  '1 != NaN');
+
+is(NaN == NaN, Bool::False, 'NaN == NaN');
+is(NaN <  NaN, Bool::False, 'NaN <  NaN');
+is(NaN <= NaN, Bool::False, 'NaN <= NaN');
+is(NaN >  NaN, Bool::False, 'NaN >  NaN');
+is(NaN >= NaN, Bool::False, 'NaN >= NaN');
+is(NaN != NaN, Bool::True,  'NaN != NaN');
 
 done;
 
