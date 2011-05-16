@@ -33,12 +33,13 @@ plan 14;
     eval_dies_ok(q{ bar('kava') }, 'no multi variants callable outside of lexical scope');
 }
 
-# an inner multi with a signature matching an outer will conflict
+# an inner multi with a signature matching an outer will hide it
+#?rakudo skip 'longname shadowing'
 {
     my multi baz() { 1 }
     {
         my multi baz() { 2 }   #OK not used
-        dies_ok({ baz() }, 'inner multi conflicts with outer one');
+        lives_ok({ baz() }, 'inner multi conflicts with outer one');
     }
     is(baz(), 1, 'in outer scope, no inner multi, so no conflict');
 }
