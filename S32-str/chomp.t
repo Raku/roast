@@ -25,6 +25,7 @@ Basic tests for the chomp() builtin
     is($foo, 'foo', 'our variable is chomped correctly');
     $foo .= chomp;
     is($foo, 'foo', 'our variable is chomped again with no effect');
+    #?niecza skip 'calling positional args by name'
     #?rakudo skip "chomp with named argument"
     is(chomp(:string("station\n")), 'station', 'chomp works with a named argument');
 }

@@ -12,6 +12,7 @@ plan 13;
 my $str = "foo";
 is(chop($str), "fo", "o removed");
 #?rakudo skip 'calling positional args by name'
+#?niecza skip 'calling positional args by name'
 is(chop(:string($str)), "fo", "chop works with named arguments");
 is($str, "foo", "original string unchanged");
 
@@ -39,6 +40,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 =end more-discussion-needed
 
 #?rakudo skip "unspecced"
+#?niecza skip "unspecced"
 { # chop several things
     my ($a, $b) = ("bar", "gorch");
 #?pugs 3 todo ''
@@ -48,6 +50,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 };
 
 #?rakudo skip "unspecced"
+#?niecza skip "unspecced"
 { # chop elements of array
     my @array = ("fizz", "buzz");
     is(chop(@array), "z", "two chars removed second returned");
