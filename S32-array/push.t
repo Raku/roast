@@ -52,8 +52,10 @@ plan 51;
     my @push_result = @p.push( 'yo, check it' );
 
     is( +@p, 2, 'array received second element' );
+    #?niezca skip 'return value of push'
     ok( @push_result ~~ @p, 'modified array, returned' );
     is( ~@p, 'bughunt yo, check it', '~@p' );
+    #?niezca skip 'return value of push'
     is( ~@p.push('!'), 'bughunt yo, check it !', '~ on the push' );
 }
 
