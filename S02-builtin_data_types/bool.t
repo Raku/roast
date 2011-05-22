@@ -51,7 +51,7 @@ is Bool::False.Str, 'Bool::False', 'False.Str';
 
 
 # numification - interaction with +
-#?niecza 6 skip "Numeric et al"
+#?niecza 2 skip "Numeric"
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
 isa_ok(+Bool::True, Int, 'True numifies to an Int');

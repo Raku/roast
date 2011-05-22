@@ -34,7 +34,6 @@ plan 51;
     is(@push[3], 4, 'we found the right element');
 
 #?rakudo skip 'named args'
-#?niecza skip 'named args'
 {
     push(:array(@push), 5);
     is(+@push, 5, 'we have 5 elements in the array (with named arg)');

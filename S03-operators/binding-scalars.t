@@ -22,13 +22,11 @@ plan 29;
   is($y, 'Just Another', 'y is now bound to x');
 
   #?rakudo todo 'binding, =:='
-  #?niecza skip '=:='
   ok($y =:= $x, 'y is bound to x (we checked with the =:= identity op)');
 
   my $z = $x;
   is($z, 'Just Another', 'z is not bound to x');
 
-  #?niecza skip '=:='
   ok(!($z =:= $x), 'z is not bound to x (we checked with the =:= identity op)');
 
   $y = 'Perl Hacker';

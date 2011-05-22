@@ -51,7 +51,6 @@ plan 26;
   is( 33023 +> 7,         257,    'shift seven bits right' ); 
 }
 
-#?niecza skip ".Num"
 {
   # Tests to see if you really can do casts negative floats to unsigned properly
   my $neg1 = -1.0.Num;

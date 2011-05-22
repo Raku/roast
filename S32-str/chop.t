@@ -12,7 +12,6 @@ plan 13;
 my $str = "foo";
 is(chop($str), "fo", "o removed");
 #?rakudo skip 'calling positional args by name'
-#?niecza skip 'calling positional args by name'
 is(chop(:string($str)), "fo", "chop works with named arguments");
 is($str, "foo", "original string unchanged");
 

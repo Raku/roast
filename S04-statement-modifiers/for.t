@@ -37,7 +37,6 @@ use Test;
     is($a, 3 * 5 * 7 * 9, "post for array");
 }
 
-#?niecza skip 'Int'
 {
     my @a = (5, 7, 9);
     my $i = 5;
@@ -75,7 +74,6 @@ use Test;
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
-#?niecza skip 'writable $_'
 {
     my $i = 0;
     $_ = 10;
@@ -86,7 +84,6 @@ use Test;
 
 # L<S04/The C<for> statement/When used as statement modifiers on implicit blocks>
 
-#?niecza skip 'writable $_'
 {
     $_ = 42;
     my @trace;

@@ -277,14 +277,12 @@ my @array2 = ("test", 1, Mu);
 }
 
 #RT #73402
-#?niecza skip "Int"
 {
     my @a = <1 2 3>;
     isa_ok +@a, Int, "Numifying an Array yields an Int";
 }
 
 #RT #75342
-#?niecza skip '$_ rw aliasing (?)'
 {
     my @a = 0, 1, 2;
     for @a {

@@ -113,7 +113,7 @@ plan 17;
     is($count, 2, "gather is lazy");	
 }
 
-#?niecza skip '%'
+#?niecza skip 'take-rw'
 {
     my @list = gather {
         my $v = 1;
@@ -125,7 +125,7 @@ plan 17;
     is ~@list, "2 4 6 8 10", "gather with nested while";
 }
 
-#?niecza skip '%'
+#?niecza skip 'take-rw'
 {
     my @list = gather {
         loop (my $v = 1; $v <= 10; $v++)
@@ -144,7 +144,7 @@ plan 17;
         'take with multiple arguments .flat tens out';
 }
 
-#?niecza skip '%'
+#?niecza skip 'series'
 {
     my sub grep-div(@a, $n) {
         gather for @a {

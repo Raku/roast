@@ -7,7 +7,6 @@ plan 20;
 # L<S32::Str/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
-#?niecza skip 'passing positional by name'
 is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
 {
@@ -17,7 +16,6 @@ is(uc(""), "", "empty string");
 }
 is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 
-#?niecza skip 'assigning to RO-value (?)'
 {
     $_ = "Hello World";
     my $x = .uc;
