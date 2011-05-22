@@ -122,15 +122,15 @@ is(eval('foo\
 #?rakudo todo 'pod and unspace'
 is(eval('foo\
 =\
-=begin nested pod
+=begin nested_pod
 blah blah blah
-=end nested pod
+=end nested_pod
 begin comment
 blah blah blah
 =\
-=begin nested pod
+=begin nested_pod
 blah blah blah
-=end nested pod
+=end nested_pod
 end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
 #?rakudo skip '=for pod not implemented (in STD.pm)'

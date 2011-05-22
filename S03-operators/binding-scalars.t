@@ -2,13 +2,14 @@ use v6;
 
 use Test;
 
-=begin head1 Binding tests
+=begin head1
+Binding tests
 
 These tests are derived from the "Item assignment precedence" section of Synopsis 3
 
 # L<S03/Item assignment precedence/replaces the container itself  For instance>
 
-=end head1 Binding tests
+=end head1
 
 plan 29;
 

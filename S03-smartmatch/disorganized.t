@@ -48,14 +48,14 @@ sub eval_elsewhere($code){ eval($code) }
 
 # reviewed by moritz on 2009-07-07 up to here.
 
-=begin begin Explanation
+=begin Explanation
 
 You may be wondering what the heck is with all these try blocks.
 Prior to r12503, this test caused a horrible death of Pugs which
 magically went away when used inside an eval.  So the try blocks
 caught that case.
 
-=end begin Explanation
+=end Explanation
 
 {
     my $result = 0;
