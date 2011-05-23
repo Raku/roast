@@ -23,7 +23,7 @@ use v6;
 use Test;
 
 
-plan 12;
+plan 11;
 
 # For the moment I don't know how to handle the lack of Config.pm...
 # Sorry for ebcdic users!
@@ -35,7 +35,6 @@ is('Config.pm', 'available', 'Config.pm availability');
 # L<S32::Str/Str/quotemeta>
 
 is(quotemeta("HeLLo World-72_1"), "HeLLo\\ World\\-72_1", "simple quotemeta test");
-is(quotemeta(:string("fREW => fROOH represents encephelon welkin")), "frew\\ \\=\\>\\ frooh\\ represents\\ encephelon\\ welkin", "quotemeta works with named argument");
 is(quotemeta(""), "", "empty string");
 
 $_ = "HeLLo World-72_1";

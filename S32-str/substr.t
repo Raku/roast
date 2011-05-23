@@ -15,8 +15,6 @@ plan 126;
     is(substr($str, -1), "r", "last char");
     is(substr($str, -4, 2), "ob", "counted from the end");
     is(substr($str, 1, 2), "oo", "arbitrary middle");
-    #?rakudo skip 'calling positional params by name'
-    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, 2), "MA", "substr works with named argument");
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
     ok(!defined(substr($str, 20, 5)), "substr outside of string");
@@ -141,8 +139,6 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr($str, -1, l(1)), "r", "last char (substr(Int, StrLen)).");
     is(substr($str, -4, l(2)), "ob", "counted from the end (substr(Int, StrLen)).");
     is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
-    #?rakudo skip 'calling positional params by name'
-    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, l(2)), "MA", "substr works with named argument (substr(Int, StrLen)).");
     is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
     ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
     ok(!defined(substr($str, -100, l(5))), "... on the negative side (substr(Int, StrLen)).");

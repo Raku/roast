@@ -8,7 +8,7 @@ use Test;
 # this test really wants is_deeply()
 #  and got it, except for a couple of cases that fail because of Match objects
 #  being returned -- Aankhen
-plan 39;
+plan 37;
 
 # split on an empty string
 
@@ -24,15 +24,6 @@ my %ords = (
   9 => 'ninth',
 );
 
-#?rakudo skip 'named arguments to split()'
-is split(:input("fiSMBoC => fREW is Station's Most Bodacious Creation"), " ").join(','),
-   qw/fiSMBoC => fREW is Station's Most Bodacious Creation/.join(','),
-   q{split(:input(Str), " "};
-
-#?rakudo skip 'named arguments to split()'
-is split(:input("UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously"), /\s+/).join(','),
-   qw/UNIFICATIONS => Unions Normally Identified From Initial Characters; Aesthetically Tailored to Infer Other Notions Subconsciously/.join(','),
-   q{split(:input(Str), /\s+/};
 
 is split("", "forty-two").join(','),
    <f o r t y - t w o>.join(','),

@@ -3,10 +3,9 @@ use Test;
 
 # L<S32::Str/Str/"=item sameaccent">
 
-plan 8;
+plan 7;
 
 is(sameaccent('ABb', 'ƗƗƗ'), 'ȺɃƀ', 'sameaccent as a function works');
-is(sameaccent(:string('ABb'), 'ƗƗƗ'), 'ȺɃƀ', 'sameaccent works with named argument');
 
 # should this be an exception or a Failure instead?
 is(sameaccent('AF', 'ƗƗ'), 'ȺF', 'sameaccent without matching character silently fails');

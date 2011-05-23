@@ -9,7 +9,7 @@ Basic test for the samecase() builtin with a string (Str).
 
 =end pod
 
-plan 9;
+plan 8;
 
 # As a function
 is( samecase('Perl6', 'abcdE'), 'perl6', 'as a function');
@@ -18,8 +18,6 @@ is( samecase('Perl6', 'abcdE'), 'perl6', 'as a function');
 is( ''.samecase(''), '', 'empty string' );
 is( 'Hello World !'.samecase('AbCdEfGhIjKlMnOpQrStUvWxYz'), 'HeLlO WoRlD !', 'literal');
 
-#?rakudo skip 'calling positional params by name'
-is( samecase(:string( "fRUE => fRIOUX's Rectitude is Underpinned by Equivalence"), 'AbCdEfGhIjKlMnOpQrStUvWxYz'), "FrUe => FrIoUx's rEcTiTuDE is Underpinned by Equivalence", 'samecase works with a named argument');
 
 # On a variable
 my Str $a = 'Just another Perl6 hacker';

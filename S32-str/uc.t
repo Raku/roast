@@ -2,12 +2,11 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 19;
 
 # L<S32::Str/"Str"/=item uc>
 
 is(uc("Hello World"), "HELLO WORLD", "simple");
-is(uc(:string("station")), "STATION", "uc with named argument");
 is(uc(""), "", "empty string");
 {
     is(uc("åäö"), "ÅÄÖ", "some finnish non-ascii chars");
