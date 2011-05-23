@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 50;
+plan 48;
 
 # L<S32::Numeric/Numeric/"=item abs">
 
@@ -17,8 +17,6 @@ Basic tests for the abs() builtin
 for 0, 0 / 1, 0.0e0, 1, 50, 60.0e0, 99.99 {
     is(abs($_), $_, "got the right absolute value for $_");
     is(.abs, $_, 'got the right absolute value for $_='~$_);
-    #?rakudo skip 'named args'
-    is(abs(:x($_)), $_, "got the right absolute value for $_");
 
     unless $_ ~~ Int {
         ok(abs($_) ~~ $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");
@@ -29,8 +27,6 @@ for 0, 0 / 1, 0.0e0, 1, 50, 60.0e0, 99.99 {
 for -1, -50, -60.0e0, -9999 / 100 {
     is(abs($_), -$_, "got the right absolute value for $_");
     is(.abs, -$_, 'got the right absolute value for $_='~$_);
-    #?rakudo skip 'named args'
-    is(abs(:x($_)), -$_, "got the right absolute value for $_");
 
     unless $_ ~~ Int {
         ok(abs($_) ~~ $_.WHAT, "got the right data type (" ~ $_.WHAT ~ ") of absolute value for $_");

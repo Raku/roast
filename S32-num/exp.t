@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 83;
+plan 71;
 
 # L<S32::Numeric/Numeric/"=item exp">
 
@@ -14,24 +14,6 @@ Basic tests for the exp() builtin
 
 my $e_to_the_fifth = 5497075/37039;
 my $pi = 312689/99532;
-
-{
-    is_approx(exp(:exponent(5)), $e_to_the_fifth, 'got the exponent of 5');
-    is_approx(exp(:exponent(0)), 1, 'exp(:exponent(0)) == 1');
-
-    is_approx(exp(:exponent(1i*$pi)), -1, 'exp(:exponent(i $pi)) == -1');
-    is_approx(exp(:exponent(-1i*$pi)), -1, 'exp(:exponent(-i $pi)) == -1');
-
-    is_approx(exp(:exponent(5), :base(10)), 100000, 'got the base-10 exponent of 5');
-    is_approx(exp(:exponent(0), :base(10)), 1, 'exp(:exponent(0), :base(10)) == 1');
-
-    is_approx(exp(:exponent(1i*$pi), :base(2)), 2 ** (1i * pi), 'exp(:exponent(i pi), :base(2)) == 2 ** (i * pi)');
-    is_approx(exp(:base(1i*$pi), :exponent(2)), (1i * pi) ** 2, 'exp(:exponent(2), :base(i pi)) == (i * pi) ** 2');
-    is_approx(exp(:exponent(1i*$pi), :base(2.Rat)), 2 ** (1i * pi), 'exp(:exponent(i pi), :base(2)) == 2 ** (i * pi)');
-    is_approx(exp(:base(1i*$pi), :exponent(2.Rat)), (1i * pi) ** 2, 'exp(:exponent(2), :base(i pi)) == (i * pi) ** 2');
-    is_approx(exp(:exponent(1i*$pi), :base(2.Num)), 2 ** (1i * pi), 'exp(:exponent(i pi), :base(2)) == 2 ** (i * pi)');
-    is_approx(exp(:base(1i*$pi), :exponent(2.Num)), (1i * pi) ** 2, 'exp(:exponent(2), :base(i pi)) == (i * pi) ** 2');
-}
 
 {
     is_approx(5.exp, $e_to_the_fifth, '5.exp == e to the fifth');

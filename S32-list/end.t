@@ -9,7 +9,7 @@ use Test;
 Array .end tests
 =end docs
 
-plan 15;
+plan 14;
 
 # basic array .end tests
 
@@ -41,7 +41,6 @@ plan 15;
     is(end(@array), 42, 'index of last element is 42 after assignment');
 
     @array.pop;
-    is(end(:array(@array)), 41, 'index of last element is 41 after pop');
     is((end @array), 41, 'index of last element is 41 after pop');
 
     shift @array;

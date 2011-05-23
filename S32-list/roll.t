@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 23;
 
 =begin description
 
@@ -27,8 +27,6 @@ ok ~(@arr.roll(4)) eq 'z z z z', 'method roll with $num > +@values';
 #?pugs 2 todo 'feature'
 is roll(2, @arr), <z z>, 'sub roll with $num < +@values, implicit no-replace';
 is roll(4, @arr), <z z z z>, 'sub roll with $num > +@values';
-#?rakudo skip "Calling values by name fails hard"
-is roll(2, :values(@arr)), <z z>, 'sub roll with $num < +@values and named args';
 
 is <a b c d>.roll(*)[^10].elems, 10, 'roll(*) generates at least ten elements';
 

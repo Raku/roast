@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/List/"=item reverse">
 
-plan 22;
+plan 21;
 
 
 
@@ -19,11 +19,6 @@ my @a = reverse(1, 2, 3, 4);
 my @e = (4, 3, 2, 1);
 
 is(@a, @e, "list was reversed");
-#?rakudo skip 'named args'
-{
-    @a = reverse(:values(1, 2, 3, 4));
-    is(@a, @e, "list was reversed");
-}
 
 {
     my $a = reverse("foo");

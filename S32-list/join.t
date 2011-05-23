@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 35;
+plan 34;
 
 # L<S32::Containers/"List"/"=item join">
 
@@ -14,9 +14,6 @@ is(["a", "b", "c"].join("|"), "a|b|c", '[].join("|") works');
 my @list = ("a", "b", "c");
 
 is(@list.join("|"), "a|b|c", '@list.join("|") works');
-
-#?rakudo skip 'calling positional params by name'
-is(join("|", :values(@list)), "a|b|c", 'join("|", :values(@list)) works');
 
 my $joined2 = join("|", @list);
 is($joined2, "a|b|c", 'join("|", @list) works');

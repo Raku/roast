@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 27;
 
 =begin description
 
@@ -31,8 +31,6 @@ ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 #?pugs 2 todo 'feature'
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
-#?rakudo skip "Calling values by name fails hard"
-is pick(2, :values(@arr)), <z z>, 'sub pick with $num < +@values and named args';
 
 is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 

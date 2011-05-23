@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 54;
+plan 52;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -12,13 +12,6 @@ plan 54;
 
 
 my @list = (1 .. 5);
-
-#?rakudo skip "Named value argument NYI"
-{
-    my @result = map( { $_ * 2 }, :values(@list) );
-    is(+@result, 5, 'named :values: we got a list back');
-    is @result.join(', '), '2, 4, 6, 8, 10', 'got the values we expected';
-}
 
 {
     my @result = map { $_ * 2 }, @list;
