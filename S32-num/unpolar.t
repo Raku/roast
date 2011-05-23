@@ -14,13 +14,6 @@ my $pi = 312689/99532;
     is_approx(cis(3*$pi / 2),-1i,          "cis(3pi/2) == -i");
 }
 
-{
-    is_approx(cis(:angle(0)),        1 + 0i,       "cis(:angle(0))     == 1");
-    is_approx(cis(:angle($pi)),      -1 + 0i,      "cis(:angle(pi))    == -1");
-    is_approx(cis(:angle($pi / 2)),  1i,           "cis(:angle(pi/2))  == i");
-    is_approx(cis(:angle(3*$pi / 2)),-1i,          "cis(:angle(3pi/2)) == -i");
-}
-
 # Test that 1.unpolar == cis
 # L<S32::Numeric/Numeric/=item cis>
 # L<S32::Numeric/Numeric/=item unpolar>
@@ -53,17 +46,6 @@ my $pi = 312689/99532;
 }
 
 # L<S32::Numeric/Numeric/=item unpolar>
-{
-    # Basic tests for unpolar()
-    my $s = 2 * sqrt(2);
-
-    is_approx(unpolar(:mag(4), 0),         4,     "unpolar(:mag(4), 0)    == 4");
-    is_approx(unpolar(:mag(4), $pi/4),     $s + ($s)i ,"unpolar(:mag(4), pi/4) == 2+2i");
-    is_approx(unpolar(:mag(4), $pi/2),     4i,    "unpolar(:mag(4), pi/2) == 4i");
-    is_approx(unpolar(:mag(4), 3*$pi/4),   -$s + ($s)i,"unpolar(:mag(4), pi/4) == -2+2i");
-    is_approx(unpolar(:mag(4), $pi),       -4,    "unpolar(:mag(4), pi)   == -4");
-}
-
 {
     # Basic tests for unpolar()
     my $s = 2 * sqrt(2);

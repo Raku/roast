@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 35;
 
 # L<S32::Numeric/Real/"=item sign">
 
@@ -48,15 +48,6 @@ isa_ok(sign(Inf), Int, 'got correct type for +Inf');
 isa_ok(sign(-Inf), Int, 'got correct type for -Inf');
 is(sign(NaN),NaN, 'sign of NaN is NaN');
 
-{
-   is(sign(:x(0)), 0, 'got the right sign for 0');
-   is(sign(:x(-100)), -1, 'got the right sign for -100');
-   is(sign(:x(100)), 1, 'got the right sign for 100');
-   is(sign(:x(1.5)), 1, 'got the right sign for 1.5');
-   is(sign(:x(-1.5)), -1, 'got the right sign for -1.5');
-   is(sign(:x(1.5e-1)), 1, 'got the right sign for 1.5e-1');
-   is(sign(:x(-1.5e-1)), -1, 'got the right sign for -1.5e-1');
-}
 
 nok sign(Int).defined, 'sign(Int) is undefined';
 nok sign(3+4i).defined, 'sign(Complex) fails';

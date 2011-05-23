@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 41;
 
 # L<S32::Str/Str/=item comb>
 
@@ -22,15 +22,11 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "b", ),
     "comb on string with grapheme non-precomposed");
 
-#?pugs todo 'feature'
-is "abcd".comb(:limit(2)), <a b>, 'default matcher with supplied limit';
 
 #?pugs skip "todo: Str.comb"
 {
     my Str $hair = "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng";
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
-    #?rakudo skip 'calling positional args by name'
-    is comb(:input($hair), /\d+/), <3 3 4 3 0 3 3 1 1 1>, 'comb works with named argument for input';
     is $hair.comb(/\d+/, -10), (), 'negative limit returns no matches';
     is $hair.comb(/\d+/, 0), (), 'limit of 0 returns no matches';
     is $hair.comb(/\d+/, 1), <3>, 'limit of 1 returns 1 match';
@@ -104,7 +100,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 {
     is comb( /./ , "abcd"), <a b c d>, 'Subroutine form default limit';
     is comb(/./ , "abcd" , 2 ), <a b>, 'Subroutine form with supplied limit';
-    is comb(/./ , "abcd" , :limit(2)), <a b>, 'Subroutine form with supplied limit';
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng"), <3 3 4 3 0 3 3 1 1 1>, 'Subroutine form with no limit returns all matches';
     is comb(/\d+/ , "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng" , 2), <3 3>, 'Subroutine form with limit';
 }

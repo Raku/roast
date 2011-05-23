@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 34;
+plan 28;
 
 =begin pod
 
@@ -26,13 +26,6 @@ is_approx(log(42, 23),  1.192051192, 'log(42, 23)');
 # with non-Num
 is_approx(log("42", "23"),  1.192051192, 'log(42, 23) with strings');
 
-{
-   is_approx(log(:x(5)), $log_5, 'got the log of 5');
-   is_approx(log(:x(0.1)), $log_one_tenth, 'got the log of 0.1');
-   is_approx(log(:x(5), :base(10)), $log10_5, 'got the log10 of 5');
-   is_approx(log(:x(0.1), :base(10)), $log10_one_tenth, 'got the log10 of 0.1');
-}
-
 # L<S32::Numeric/Numeric/"=item log10">
 
 is_approx(log10(5), $log10_5, 'got the log10 of 5');
@@ -49,10 +42,6 @@ is( log10(Inf), Inf, 'log10(Inf) = Inf');
 is( log10(-Inf), NaN, 'log10(-Inf) = NaN');
 is( log10(NaN), NaN, 'log10(NaN) = NaN');
 
-{
-   is_approx(log10(:x(5)), $log10_5, 'got the log10 of 5');
-   is_approx(log10(:x(0.1)), $log10_one_tenth, 'got the log10 of 0.1');
-}
 
 # please add tests for complex numbers
 #

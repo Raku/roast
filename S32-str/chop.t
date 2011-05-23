@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item chop">
 
-plan 13;
+plan 12;
 
 #
 # Tests already covered by the specs
@@ -11,8 +11,6 @@ plan 13;
 
 my $str = "foo";
 is(chop($str), "fo", "o removed");
-#?rakudo skip 'calling positional args by name'
-is(chop(:string($str)), "fo", "chop works with named arguments");
 is($str, "foo", "original string unchanged");
 
 is($str.chop, "fo", "o removed");

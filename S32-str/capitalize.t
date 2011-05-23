@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 15;
 
 # L<S32::Str/Str/capitalize>
 
@@ -14,7 +14,6 @@ my $a = "";
 is capitalize($a),             "",               "capitalize empty string";
 $a = "puGS Is cOOl!";
 is capitalize($a),             "Pugs Is Cool!",  "capitalize string works";
-is capitalize(:string($a)),    "Pugs Is Cool!",  "capitalize string works with positional argument";
 is $a,                         "puGS Is cOOl!",  "original string not touched";
 is $a.capitalize,              "Pugs Is Cool!",  "capitalize string works";
 is $a,                         "puGS Is cOOl!",  "original string not touched";

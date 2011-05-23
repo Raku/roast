@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 148;
+plan 108;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -82,20 +82,6 @@ for %tests.keys.sort -> $type {
     }
 }
 
-for %tests.keys.sort -> $type {
-    my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
-    for @subtests -> $test {
-        my $code = "{$type}(:x({$test[0]}))";
-        my $res = eval($code);
-
-        if ($!) {
-            #?pugs todo 'feature'
-            flunk("failed to parse $code ($!)");
-        } else {
-            ok($res == $test[1], "$code == {$test[1]}");
-        }
-    }
-}
  
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!

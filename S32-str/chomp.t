@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 12;
 
 =begin pod
 
@@ -25,8 +25,6 @@ Basic tests for the chomp() builtin
     is($foo, 'foo', 'our variable is chomped correctly');
     $foo .= chomp;
     is($foo, 'foo', 'our variable is chomped again with no effect');
-    #?rakudo skip "chomp with named argument"
-    is(chomp(:string("station\n")), 'station', 'chomp works with a named argument');
 }
 
 {

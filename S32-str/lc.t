@@ -2,13 +2,12 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 12;
 
 # L<S32::Str/Str/lc>
 
 is(lc("hello world"), "hello world", "lowercasing string which is already lowercase");
 is(lc("Hello World"), "hello world", "simple lc test");
-is(lc(:string("STATION")), "station", "lc works with named argument");
 is(lc(""), "", "empty string");
 is(lc("ÅÄÖ"), "åäö", "some finnish non-ascii chars");
 is(lc("ÄÖÜ"), "äöü", "lc of German Umlauts");
