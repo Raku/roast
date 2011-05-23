@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # L<S32::Containers/"Array"/"end">
-plan 13;
+plan 12;
 
 {
   my @a;
@@ -50,10 +50,6 @@ plan 13;
 #?rakudo skip 'unspecced'
 {
   dies_ok { end(1,2,3,4) }, "end(1,2,3,4) should not work";
-}
-
-{
-  is end(:array(1,2,3,4)), 3, "end (1,2,3,4) should work with named argument";
 }
 
 {

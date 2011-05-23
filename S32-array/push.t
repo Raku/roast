@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 51;
+plan 49;
 
 # basic push tests
 {
@@ -32,13 +32,6 @@ plan 51;
     push(@push, 4);
     is(+@push, 4, 'we have 4 elements in the array');
     is(@push[3], 4, 'we found the right element');
-
-#?rakudo skip 'named args'
-{
-    push(:array(@push), 5);
-    is(+@push, 5, 'we have 5 elements in the array (with named arg)');
-    is(@push[4], 5, 'we found the right element (with named arg)');
-}
 }
 
 {

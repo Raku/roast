@@ -33,7 +33,7 @@ plan 33;
     is(+@pop, 1, 'we have 1 element in the array');
     
     {
-        $a = pop(:array(@pop));
+        $a = pop(@pop);
         is($a, -1, '@pop.pop works');
 
         is(+@pop, 0, 'we have no more element in the array');

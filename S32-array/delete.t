@@ -106,18 +106,6 @@ Basic C<delete> tests, see S32.
     lives_ok { map { 1 }, @array }, 'map @array lives after delete';
 }
 
-# As a function (THERE IS NO FUNCTION)
-# {
-#   my @array = <1 2 3 4>;
-#   is delete(@array, 1), 2, "simple functional(ish) delete returns value deleted";
-#   is ~@array, "1 Any()  3 4", "simple functional(ish) delete changes array";
-##?rakudo skip 'cannot parse named args'
-#   is delete(:array(@array), 2,), 3, "simple functional(ish) delete with named argument returns value deleted";
-##?rakudo skip 'cannot parse named args'
-#   is ~@array, "1  3 4", "simple functional(ish) delete with named argument changes array";
-#
-# }
-
 # TODO More exclusive bounds checks
 
 # TODO W/ multiple ranges

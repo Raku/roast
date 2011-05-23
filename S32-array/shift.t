@@ -9,7 +9,7 @@ Shift tests
 
 =end description
 
-plan 32;
+plan 31;
 
 {
 
@@ -33,8 +33,7 @@ plan 32;
 
     {
         is(+@shift, 1, 'we have 1 element in our array');
-        $a = shift(:array(@shift));
-        is($a, 5, 'shift(:array(@shift))');
+        $a = shift(@shift);
 
         is(+@shift, 0, 'we have no elements in our array');
         ok(!defined(shift(@shift)), 'after the array is exhausted it gives undefined');

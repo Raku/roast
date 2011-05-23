@@ -9,7 +9,7 @@ Unshift tests
 
 =end description
 
-plan 61;
+plan 55;
 
 # basic unshift tests
 
@@ -39,16 +39,6 @@ plan 61;
     is(@unshift[1], 3, 'we found the right element');
     is(@unshift[2], 2, 'we found the right element');
     is(@unshift[3], 1, 'we found the right element');
-
-{
-    unshift(:array(@unshift), 5);
-    is(+@unshift, 5, 'we have 4 element in the array');
-    is(@unshift[0], 5, 'we found the right element');
-    is(@unshift[1], 4, 'we found the right element');
-    is(@unshift[2], 3, 'we found the right element');
-    is(@unshift[3], 2, 'we found the right element');
-    is(@unshift[4], 1, 'we found the right element');
-}
 }
 
 # try other variations on calling unshift()

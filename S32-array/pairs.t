@@ -1,9 +1,8 @@
-# vim: filetype=perl6
 use v6;
 
 use Test;
 
-plan 18;
+plan 14;
 
 =begin description
 
@@ -17,19 +16,6 @@ Basic C<pairs> tests, see S32.
   my @array = <a>;
   my @pairs;
   ok((@pairs = pairs(@array)), "basic pairs on arrays with a function");
-  is +@pairs, 1,            "pairs on arrays returned the correct number of elems";
-  if +@pairs != 1 {
-    skip "skipped tests which depend on a test which failed", 2;
-  } else {
-    is @pairs[0].key,     0,  "key of pair returned by array.pairs was correct (1)";
-    is @pairs[0].value, "a",  "value of pair returned by array.pairs was correct (1)";
-  }
-}
-
-{
-  my @array = <a>;
-  my @pairs;
-  ok((@pairs = pairs(:array(@array))), "basic pairs on arrays with a function with named args");
   is +@pairs, 1,            "pairs on arrays returned the correct number of elems";
   if +@pairs != 1 {
     skip "skipped tests which depend on a test which failed", 2;
@@ -67,3 +53,5 @@ Basic C<pairs> tests, see S32.
     #?rakudo todo 'Apparently not rw yet?'
     is @array[1], 123, 'aliases returned by @array.pairs should be rw (2)';
 }
+
+# vim: filetype=perl6
