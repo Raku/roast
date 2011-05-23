@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 126;
+plan 124;
 
 # L<S32::Str/Str/=item substr>
 

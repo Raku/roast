@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 39;
 
 # L<S32::Numeric/Numeric/"=item abs">
 
