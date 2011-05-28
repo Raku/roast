@@ -396,37 +396,37 @@ my @e;
     my %r;
     %r = %a >>+<< %b;
     is +%r,   3,  'hash - >>+<< result has right number of keys (same keys)';
-    is %r<a>, 6,  'hash - correct result form >>+<< (same keys)';
-    is %r<b>, 8,  'hash - correct result form >>+<< (same keys)';
-    is %r<c>, 10, 'hash - correct result form >>+<< (same keys)';
+    is %r<a>, 6,  'hash - correct result from >>+<< (same keys)';
+    is %r<b>, 8,  'hash - correct result from >>+<< (same keys)';
+    is %r<c>, 10, 'hash - correct result from >>+<< (same keys)';
 
     %r = %a »+« %d;
     is +%r,   3, 'hash - »+« result has right number of keys (union test)';
-    is %r<a>, 6, 'hash - correct result form »+« (union test)';
-    is %r<b>, 8, 'hash - correct result form »+« (union test)';
-    is %r<c>, 3, 'hash - correct result form »+« (union test)';
+    is %r<a>, 6, 'hash - correct result from »+« (union test)';
+    is %r<b>, 8, 'hash - correct result from »+« (union test)';
+    is %r<c>, 3, 'hash - correct result from »+« (union test)';
 
     %r = %c >>+<< %b;
     is +%r,   3, 'hash - >>+<< result has right number of keys (union test)';
-    is %r<a>, 6, 'hash - correct result form >>+<< (union test)';
-    is %r<b>, 8, 'hash - correct result form >>+<< (union test)';
-    is %r<c>, 7, 'hash - correct result form >>+<< (union test)';
+    is %r<a>, 6, 'hash - correct result from >>+<< (union test)';
+    is %r<b>, 8, 'hash - correct result from >>+<< (union test)';
+    is %r<c>, 7, 'hash - correct result from >>+<< (union test)';
 
     %r = %a <<+>> %b;
     is +%r,   3,  'hash - <<+>> result has right number of keys (same keys)';
-    is %r<a>, 6,  'hash - correct result form <<+>> (same keys)';
-    is %r<b>, 8,  'hash - correct result form <<+>> (same keys)';
-    is %r<c>, 10, 'hash - correct result form <<+>> (same keys)';
+    is %r<a>, 6,  'hash - correct result from <<+>> (same keys)';
+    is %r<b>, 8,  'hash - correct result from <<+>> (same keys)';
+    is %r<c>, 10, 'hash - correct result from <<+>> (same keys)';
 
     %r = %a <<+>> %d;
     is +%r,   2, 'hash - <<+>> result has right number of keys (intersection test)';
-    is %r<a>, 6, 'hash - correct result form <<+>> (intersection test)';
-    is %r<b>, 8, 'hash - correct result form <<+>> (intersection test)';
+    is %r<a>, 6, 'hash - correct result from <<+>> (intersection test)';
+    is %r<b>, 8, 'hash - correct result from <<+>> (intersection test)';
 
     %r = %c <<+>> %b;
     is +%r,   2, 'hash - <<+>> result has right number of keys (intersection test)';
-    is %r<a>, 6, 'hash - correct result form <<+>> (intersection test)';
-    is %r<b>, 8, 'hash - correct result form <<+>> (intersection test)';
+    is %r<a>, 6, 'hash - correct result from <<+>> (intersection test)';
+    is %r<b>, 8, 'hash - correct result from <<+>> (intersection test)';
 
     %r = %a >>+>> %c;
     is +%r,   3, 'hash - >>+>> result has right number of keys';
