@@ -216,17 +216,18 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 
         (@r = (1, 4, 9))».++;
-        @e = (2, 5, 9);
+        @e = (2, 5, 10);
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 
         (@r = (1, 4, 9)).».++;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 
         (@r = (1, 4, 9))\  .»\  .++;
-        @e = (2, 5, 9);
+        @e = (2, 5, 10);
         is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
 
+#?niecza skip 'lexicals and eval'
 { # unary postfix again, but with a twist
         my @r;
         eval '@r = ("f", "oo", "bar")».chars';
@@ -359,6 +360,7 @@ my @e;
 =end todo_unspecced
 
 #?pugs todo 'hyper ops'
+#?niecza skip 'variables and eval'
 { # hyper dereferencing
     my @array = (
         { key => 'val' },
@@ -374,6 +376,7 @@ my @e;
 }
 
 #?pugs todo 'feature'
+#?niecza skip 'junctions'
 { # junction hyper -- regression?
     my @a = 1..3;
     my @b = 4..6;
@@ -477,6 +480,7 @@ my @e;
     is %a<c>, 3, 'hash - correct result from >>++';
 }
 
+#?niecza skip 'our sub'
 {
     our sub postfix:<!>($a) {
         [*] 1..$a;
@@ -528,6 +532,7 @@ my @e;
     is %r<c>, 3, 'hash - correct result from >>.abs';
 }
 
+#?niecza skip 'char range'
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
@@ -574,6 +579,7 @@ my @e;
     is @r[5], "4f", 'hash in array - correct result from <<~>>';
 }
 
+#?niecza skip "char range"
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
@@ -679,6 +685,7 @@ my @e;
 }
 
 # test non-UTF-8 input
+#?niecza skip 'nonsensical test'
 #?pugs skip 'eval(Buf)'
 #?rakudo skip 'eval(Buf)'
 #?DOES 1
@@ -725,6 +732,7 @@ my @e;
 # RT #77010
 
 #?rakudo skip 'RT 77010 - use hypers with local scoped user-defined operators'
+#?niecza skip 'variables and eval'
 {
     sub infix:<+++>($a, $b) { ($a + $b) div 2 };
     eval_lives_ok '10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
@@ -747,6 +755,7 @@ my @e;
 # RT #77876
 # L<S03/Hyper operators/'@array »+=»'>
 # Hyper assignment operators
+#?niecza skip 'fails horribly'
 {
     my @array = 3, 8, 2, 9, 3, 8;
     @r = @array »+=« (1, 2, 3, 4, 5, 6);
