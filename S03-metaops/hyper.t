@@ -296,7 +296,7 @@ my @e;
         @r = (1, 2, [3, 4]) >>+<< (4, 5, [6, 7]);
         my @e = (5, 7, [9, 11]);
         is(~@r, ~@e, "distribution for binary infix, same shape, ASCII");
-        is_deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparision");
+        is_deeply(@r, @e, "distribution for binary infix, same shape, ASCII, deep comparison");
 
         @r = (1, 2, [3, 4]) >>+>> (5, 6, 7);
         @e = (6, 8, [10, 11]);
