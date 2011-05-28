@@ -112,7 +112,7 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
     }
 
     is( B.new.z(1), 'b', 'initializer carries through' );
-    is( B.new.w, 10, 'initializer can be overriden by derived classes' );
+    is( B.new.w, 10, 'initializer can be overridden by derived classes' );
 }
 
 # test that you can inherit from a class with :: in the name.
@@ -131,7 +131,7 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
     is $o.abc, 'b', 'can access directly defined method';
 }
 
-# Make sure inheritnace from Mu works (got broken in Rakudo once).
+# Make sure inheritance from Mu works (got broken in Rakudo once).
 eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 {
     class DirectMu is Mu { };

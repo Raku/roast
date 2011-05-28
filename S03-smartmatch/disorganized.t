@@ -92,7 +92,7 @@ caught that case.
 
 ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 
-# need to test in eval() since class defintions happen at compile time,
+# need to test in eval() since class definitions happen at compile time,
 # ie before the plan is set up.
 eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT 62196)';

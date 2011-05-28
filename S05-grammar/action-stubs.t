@@ -62,7 +62,7 @@ is $action.calls, 'ab', '... and in the right order';
         }
         method c($/) {
             #die "don't come here";
-            # There's an implicity {*} at the end now
+            # There's an implicit {*} at the end now
         }
     }
 

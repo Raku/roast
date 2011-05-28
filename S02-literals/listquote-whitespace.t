@@ -53,7 +53,7 @@ for @separators -> $sep {
 
 for @nonseparators -> $sep {
   my $ex = @list.join($sep);
-  say "Seperator: '$sep'";
+  say "Separator: '$sep'";
   my $str = "<" ~$ex~ ">";
   my @res = eval $str;
   say @res.perl;

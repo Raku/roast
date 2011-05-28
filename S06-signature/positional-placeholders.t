@@ -38,7 +38,7 @@ eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclarat
     for 1, 2 {
         $tracker ~= $^a ~ $^a ~ '|';
     }
-    is $tracker, '11|22|', 'two occurences of $^a count as one param';
+    is $tracker, '11|22|', 'two occurrences of $^a count as one param';
 }
 
 # vim: syn=perl6

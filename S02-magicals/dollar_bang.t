@@ -17,7 +17,7 @@ ok defined($!), 'nonexisting sub in eval makes $! defined';
 eval 'nonexisting_subroutine()';
 ok $!, 'Calling a nonexisting subroutine sets $!';
 try { 1 };
-nok $!.defined, 'successfull try { } resets $!';
+nok $!.defined, 'successful try { } resets $!';
 
 try { 1.nonexisting_method; };
 ok $!.defined, 'Calling a nonexisting method defines $!';

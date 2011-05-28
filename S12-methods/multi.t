@@ -74,10 +74,10 @@ class Bar is Foo2 {
 is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #67024
-#?rakudo skip 'redefintion of non-multi method (RT #67024)'
+#?rakudo skip 'redefinition of non-multi method (RT #67024)'
 {
     eval 'class A { method a(){0}; method a($x){1} }';
-    ok  $!  ~~ Exception, 'redefintion of non-multi method (RT 67024)';
+    ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
 
