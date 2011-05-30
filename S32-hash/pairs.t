@@ -72,7 +72,8 @@ Basic C<pairs> tests, see S32::Containers.
 
 #?pugs todo 'bug'
 {
-    my $pair = (a => 42);
+    my $var = 42;
+    my $pair = (a => $var);
 
     lives_ok { for $pair.pairs -> $p {
         $p.value += 100;
