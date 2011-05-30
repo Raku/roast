@@ -8,8 +8,6 @@ use Test;
 
 =end pod
 
-plan 278;
-
 # L<S03/Hyper operators>
  # binary infix
 my @r;
@@ -361,6 +359,7 @@ my @e;
 
 #?pugs todo 'hyper ops'
 #?niecza skip 'variables and eval'
+#?DOES 2
 { # hyper dereferencing
     my @array = (
         { key => 'val' },
@@ -377,6 +376,7 @@ my @e;
 
 #?pugs todo 'feature'
 #?niecza skip 'junctions'
+#?DOES 4
 { # junction hyper -- regression?
     my @a = 1..3;
     my @b = 4..6;
@@ -481,6 +481,7 @@ my @e;
 }
 
 #?niecza skip 'our sub'
+#?DOES 4
 {
     our sub postfix:<!>($a) {
         [*] 1..$a;
@@ -533,6 +534,7 @@ my @e;
 }
 
 #?niecza skip 'char range'
+#?DOES 29
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
@@ -580,6 +582,7 @@ my @e;
 }
 
 #?niecza skip "char range"
+#?DOES 29
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
@@ -756,6 +759,7 @@ my @e;
 # L<S03/Hyper operators/'@array »+=»'>
 # Hyper assignment operators
 #?niecza skip 'fails horribly'
+#?DOES 6
 {
     my @array = 3, 8, 2, 9, 3, 8;
     @r = @array »+=« (1, 2, 3, 4, 5, 6);
