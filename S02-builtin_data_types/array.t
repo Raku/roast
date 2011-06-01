@@ -32,7 +32,6 @@ plan 85;
 }
 
 # uninitialized array variables should work too...
-#?niecza skip "eval"
 {
     my @a;
     is eval(@a.perl).elems, 0, '@a.perl on uninitialized variable';

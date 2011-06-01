@@ -225,7 +225,6 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
 
-#?niecza skip 'lexicals and eval'
 { # unary postfix again, but with a twist
         my @r;
         eval '@r = ("f", "oo", "bar")».chars';
@@ -358,7 +357,7 @@ my @e;
 =end todo_unspecced
 
 #?pugs todo 'hyper ops'
-#?niecza skip 'variables and eval'
+#?niecza skip 'does not work; recurses into hash'
 #?DOES 2
 { # hyper dereferencing
     my @array = (
@@ -533,7 +532,6 @@ my @e;
     is %r<c>, 3, 'hash - correct result from >>.abs';
 }
 
-#?niecza skip 'char range'
 #?DOES 29
 {
     my @a = (1, { a => 2, b => 3 }, 4);
@@ -581,7 +579,6 @@ my @e;
     is @r[5], "4f", 'hash in array - correct result from <<~>>';
 }
 
-#?niecza skip "char range"
 #?DOES 29
 {
     my @a = (1, { a => 2, b => 3 }, 4);
@@ -735,10 +732,9 @@ my @e;
 # RT #77010
 
 #?rakudo skip 'RT 77010 - use hypers with local scoped user-defined operators'
-#?niecza skip 'variables and eval'
 {
-    sub infix:<+++>($a, $b) { ($a + $b) div 2 };
-    eval_lives_ok '10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
+    # niecza doesn't propagate slangs into &eval yet
+    eval_lives_ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
 } 
 
 # RT #74530
