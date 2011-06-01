@@ -184,7 +184,6 @@ ok 21 ~~ 3..50,         '21 ~~ 3..50';
 nok 3 ~~ 11..50,        'not 3 ~~ 11..50';
 nok 21 ~~ 1..5,         'not 21 ~~ 1..5';
 
-#?niecza 10 skip 'alphabetic ranges'
 ok 'c' ~~ 'b'..'g',     "'c' ~~ 'b'..'g'";
 ok 'b' ~~ 'b'..'g',     "'b' ~~ 'b'..'g'";
 ok 'g' ~~ 'b'..'g',     "'g' ~~ 'b'..'g'";
@@ -192,13 +191,13 @@ nok 'a' ~~ 'b'..'g',    "not 'a' ~~ 'b'..'g'";
 nok 'h' ~~ 'b'..'g',    "not 'h' ~~ 'b'..'g'";
 nok 0 ~~ 'a'..'g',      "not 0 ~~ 'a'..'g'";
 
+#?niecza 4 skip 'alphabetic/* ranges'
 ok 'd' ~~ 'c'..*,       "'d' ~~ 'c'..*";
 nok 'b' ~~ 'c'..*,      "not 'b' ~~ 'c'..*";
 ok 'b' ~~ *..'c',       "'b' ~~ *..'c'";
 nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
 
 # RT#75526: [BUG] Some non-alphanumeric ranges don't work
-#?niecza skip 'alphabetic ranges'
 {
     ok ' ' ~~ ' '..' ', "' ' ~~ ' '..' '";
     ok ' ' ~~ ' '..'A', "' ' ~~ ' '..'A'";

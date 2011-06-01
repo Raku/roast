@@ -48,7 +48,6 @@ plan 9;
 #?mildew skip 1
 # L<S04/The C<for> statement/It is also possible to write>
 # while ... -> $x {...}
-#?niecza skip 'while -> $x'
 {
   my @array = 1..5;
   my $str = "";
@@ -59,7 +58,6 @@ plan 9;
 }
 
 #?mildew skip 1
-#?niecza skip 'while -> $x'
 {
   my @array = 0..5;
   my $str = "";

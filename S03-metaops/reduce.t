@@ -23,11 +23,9 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is(([*]  1,2,3),    (1*2*3), "[*] works");
   is(([-]  1,2,3),    (1-2-3), "[-] works");
   is(([/]  12,4,3),  (12/4/3), "[/] works");
-  #?niecza skip 'div'
   is(([div]  12,4,3),  (12 div 4 div 3), "[div] works");
   is(([**] 2,2,3),  (2**2**3), "[**] works");
   is(([%]  13,7,4), (13%7%4),  "[%] works");
-  #?niecza skip 'mod'
   is(([mod]  13,7,4), (13 mod 7 mod 4),  "[mod] works");
 
   is((~ [\+] @array), "5 2 9 9 10 1", "[\\+] works");
@@ -61,7 +59,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 #?rakudo skip "=:= NYI"
-#?niecza skip "=:= NYI"
+#?niecza skip "reduce/binding interaction issues"
 {
     my ($x, $y);
     ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
@@ -105,14 +103,14 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ([+] [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
-#?niecza skip 'Mu'
+#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 3, Mu, 5);
   is ([//]  @array), 3, "[//] works";
   is ([orelse] @array), 3, "[orelse] works";
 }
 
-#?niecza skip 'Mu'
+#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   is ([||] @array), 3, "[||] works";
@@ -123,7 +121,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
   is (~ [\||] 0, 0, 3, 4, 5), "0 0 3 3 3", "[\\||] works";
 }
 
-#?niecza skip 'Mu'
+#?niecza skip '[macro]'
 {
   my @array = (Mu, Mu, 0, 3, Mu, 5);
   my @array1 = (2, 3, 4);
@@ -217,7 +215,7 @@ ok( ([\<] 42) ~~ Iterable, "[\<] 42 returns something Iterable");
 
 is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800', 
     'triangle reduce is lazy');
-#?niecza skip 'char ranges'
+#?niecza skip 'Str cmp Inf'
 is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
     'triangle reduce is lazy');
 

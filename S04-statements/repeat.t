@@ -85,7 +85,6 @@ plan 16;
 
 # L<S04/The C<repeat> statement/"bind the result">
 #?rakudo skip 'point block on loop'
-#?niecza skip 'point block on loop'
 {
   my $x = 0; repeat until $x >= 10 -> $another_x {
       pass('repeat until with binding starts undefined') unless $another_x.defined;
