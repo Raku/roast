@@ -20,7 +20,7 @@ plan 10;
   # L<S02/Literals/In order to interpolate an entire hash>
   my %hash = { a=> 1, b => 2 };
   #?rakudo 2 skip 'zen hash slice'
-  #?niecza skip 'zen hash slice'
+  #?niecza 2 skip 'zen hash slice'
   is "%hash{}", "a\t1\nb\t2\n", 'interpolation with curly braces';
   is "%hash<>", "a\t1\nb\t2\n", 'interpolation with angle brackets';
   is "%hash", '%hash', 'no interpolation';
