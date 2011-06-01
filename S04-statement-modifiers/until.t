@@ -28,6 +28,7 @@ plan 4;
     is($a, "b, a, b, a", "post until");
 }
 
+#?niecza skip "char ranges"
 {
     my @a = 'a'..'e';
     my $a = 0;
