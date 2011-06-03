@@ -21,7 +21,7 @@ plan 83;
     # note that since the junction is not evaluated in boolean context,
     # it's not collapsed, and the auto-threading may not abort prematurely
     # when a result is found.
-    my $answer = is_it(any(1..2), any(7..9), any(0..6));
+    my Mu $answer = is_it(any(1..2), any(7..9), any(0..6));
     is($n, 42, "called lots of times :-)");
     ok( ?($answer eq "1 + 9 = 10"), "found right answer");
 }
@@ -34,7 +34,9 @@ plan 83;
         method test($x) { $!count++; return $x }
     }
 
-    my ($x, $r, $ok);
+    my $x;
+    my Mu $r;
+    my Mu $ok;
     $x = Foo.new;
     $r = $x.test(1|2);
     is($x.count, 2, 'method called right number of times');
@@ -48,6 +50,7 @@ plan 83;
     ok(?$ok,        'junction structure maintained');
 }
 
+#?niecza skip 'autothreading multisubs'
 {
     # Check auto-threding works right on multi-subs.
     my $calls_a = 0;
@@ -98,6 +101,7 @@ plan 83;
     is($calls_c, 1, 'non-junctional dispatch still works');
 }
 
+#?niecza skip 'autothreading + MMD'
 {
     # Check auto-threading with multi-methods. Basically a re-hash of the
     # above, but in a class.
@@ -136,7 +140,7 @@ plan 83;
     my $count = 0;
     my @got;
     sub nptest($a, :$b, :$c) { $count++; @got.push($a ~ $b ~ $c) }
-    my $r = nptest(1, c => 4|5, b => 2|3);
+    my Mu $r = nptest(1, c => 4|5, b => 2|3);
     is($count, 4,      'auto-threaded over named parameters to call sub enough times');
     @got .= sort;
     is(@got.elems, 4,  'got array of right size to check what was called');
@@ -146,6 +150,7 @@ plan 83;
     is(@got[3], '135', 'called with correct parameters');
 }
 
+#?niecza skip 'autothreading + MMD'
 {
     # Ensure named params in multi dispatch auto-thread.
     my $count_a = 0;
@@ -164,48 +169,46 @@ plan 83;
     is(@got[3], 'a13', 'called with correct parameters');
 }
 
-#?rakudo skip 'class attributes NYI'
 {
     # Auto-threading over an invocant.
+    my $cnt1 = 0;
     class JuncInvTest1 {
-        my $.cnt is rw = 0;
-        method a { $.cnt++; }
+        method a { $cnt1++; }
         has $.n;
         method d { 2 * $.n }
     }
+    my $cnt2 = 0;
     class JuncInvTest2 {
-        my $.cnt is rw = 0;
-        method a { $.cnt++; }
-        method b($x) { $.cnt++ }    #OK not used
+        method a { $cnt2++; }
+        method b($x) { $cnt2++ }    #OK not used
     }
 
-    my $x = JuncInvTest1.new | JuncInvTest1.new | JuncInvTest2.new;
+    my Mu $x = JuncInvTest1.new | JuncInvTest1.new | JuncInvTest2.new;
     $x.a;
-    is JuncInvTest1.cnt, 2, 'basic auto-threading over invocant works';
-    is JuncInvTest2.cnt, 1, 'basic auto-threading over invocant works';
+    is $cnt1, 2, 'basic auto-threading over invocant works';
+    is $cnt2, 1, 'basic auto-threading over invocant works';
 
-    JuncInvTest1.cnt = 0;
-    JuncInvTest2.cnt = 0;
+    $cnt1 = $cnt2 = 0;
     $x = JuncInvTest1.new | JuncInvTest2.new & JuncInvTest2.new;
     $x.a;
-    is JuncInvTest1.cnt, 1, 'auto-threading over invocant of nested junctions works';
-    is JuncInvTest2.cnt, 2, 'auto-threading over invocant of nested junctions works';
+    is $cnt1, 1, 'auto-threading over invocant of nested junctions works';
+    is $cnt2, 2, 'auto-threading over invocant of nested junctions works';
 
     $x = JuncInvTest1.new(n => 1) | JuncInvTest1.new(n => 2) & JuncInvTest1.new(n => 4);
-    my $r = $x.d;
+    my Mu $r = $x.d;
     my $ok = ?($r.perl.subst(/\D/, '', :g) eq '248' | '284' | '482' | '842');
     ok($ok, 'auto-threading over invocant produced correct junctional result');
 
-    JuncInvTest2.cnt = 0;
+    $cnt2 = 0;
     $x = JuncInvTest2.new | JuncInvTest2.new;
     $x.b('a' | 'b' | 'c');
-    is JuncInvTest2.cnt, 6, 'auto-threading over invocant and parameters works';
+    is $cnt2, 6, 'auto-threading over invocant and parameters works';
 }
 
 # test that various things autothread
 
 {
-    my $j = [1, 2] | 5;
+    my Mu $j = [1, 2] | 5;
 
     ok ?( +$j == 5 ), 'prefix:<+> autothreads (1)';
     ok ?( +$j == 2 ), 'prefix:<+> autothreads (2)';
@@ -229,14 +232,16 @@ plan 83;
 
 
 #?pugs skip 'autothreading over array indexing'
+#?niecza skip 'autothreading over array indexing'
 {
-    my $junc = 0|1|2;
+    my Mu $junc = 0|1|2;
     my @a = (0,1,2);
     my $bool = Bool::False;
     ok ?(@a[$junc] == $junc), 'can autothread over array indexes';
 }
 
-# Tests former autothreading junction example from Synopsis 09 
+# Tests former autothreading junction example from Synopsis 09
+#?niecza skip '&skip'
 {
     my $c = 0;
 
@@ -272,6 +277,7 @@ plan 83;
 # L<S02/Undefined types/"default block parameter type">
 
 # block parameters default to Mu, so test that they don't autothread:
+#?niecza skip 'NYI'
 {
     my $c = 0;
     for 1|2, 3|4, 5|6 -> $x {
@@ -287,6 +293,7 @@ plan 83;
 
 # used to be RT #75368
 # L<S03/Junctive operators/Use of negative operators with junctions>
+#?niecza skip 'broken'
 {
     my Mu $x = 'a' ne ('a'|'b'|'c');
     ok $x ~~ Bool, 'infix:<ne> collapses the junction (1)';
