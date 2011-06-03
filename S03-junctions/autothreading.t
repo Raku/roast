@@ -277,14 +277,16 @@ plan 83;
 # L<S02/Undefined types/"default block parameter type">
 
 # block parameters default to Mu, so test that they don't autothread:
-#?niecza skip 'NYI'
 {
     my $c = 0;
     for 1|2, 3|4, 5|6 -> $x {
         $c++;
     }
     is $c, 3, 'do not autothread over blocks by default';
-    $c = 0;
+}
+#?niecza skip 'interferes hard with inlining'
+{
+    my $c = 0;
     for 1|2, 3|4, 5|6 -> Any $x {
         $c++;
     }

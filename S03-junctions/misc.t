@@ -322,7 +322,6 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 }
 
 # used to be a rakudo regression (RT #60886)
-#?niecza skip 'Mu ~~ $x'
 ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 ## See also S03-junctions/autothreading.t
@@ -368,7 +367,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63686
-#?niecza skip 'Mu parameters in blocks'
 {
     lives_ok { try { for any(1,2) -> $x {}; } },
              'for loop over junction in try block';
