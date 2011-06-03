@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 103;
+plan 102;
 
 =begin pod
 
@@ -11,8 +11,8 @@ Misc. Junction tests
 =end pod
 
 #?rakudo 2 skip 'Null PMC access in get_integer() (RT #64184)'
-isa_ok any(6,7), junction;
-is any(6,7).WHAT, junction, 'junction.WHAT works';
+isa_ok any(6,7), Junction;
+is any(6,7).WHAT, Junction, 'junction.WHAT works';
 
 # avoid auto-threading on ok()
 sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
@@ -62,6 +62,7 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     jok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
     jok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
 
+    #?niecza 3 skip '==='
     ok(not(('a' eq ($b | $c | $a)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('b' eq ($a | $b | $c)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
     ok(not(('c' eq ($c | $a | $b)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false'); 
@@ -84,22 +85,22 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     my $b = '';
     my $c = '';
     
-    my $all_of_them = $a & $b & $c;
+    my Mu $all_of_them = $a & $b & $c;
     jok('' eq $all_of_them, 'junction variable of ($a & $b & $c) matches and empty string');
     
     $a = 'a';  
     
-    my $any_of_them = $b | $c | $a;
+    my Mu $any_of_them = $b | $c | $a;
     jok('a' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one "a"');  
     jok('' eq $any_of_them, 'junction variable of ($b | $c | $a) matches at least one empty string');
     
-    my $one_of_them = $b ^ $c ^ $a;
+    my Mu $one_of_them = $b ^ $c ^ $a;
     jok('a' eq $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at ~only~ one "a"');
     
     $b = 'a';
     
     {
-        my $one_of_them = $b ^ $c ^ $a;
+        my Mu $one_of_them = $b ^ $c ^ $a;
         jok('a' ne $one_of_them, 'junction variable of ($b ^ $c ^ $a) matches at more than one "a"');              
     }
     
@@ -107,14 +108,14 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     $c = 'c';
     
     {
-        my $one_of_them = $b ^ $c ^ $a;    
+        my Mu $one_of_them = $b ^ $c ^ $a;    
         jok('a' eq $one_of_them, 'junction of ($b ^ $c ^ $a) matches at ~only~ one "a"');
         jok('b' eq $one_of_them, 'junction of ($a ^ $b ^ $c) matches at ~only~ one "b"');
         jok('c' eq $one_of_them, 'junction of ($c ^ $a ^ $b) matches at ~only~ one "c"');  
     }
 
     {
-        my $any_of_them = $b | $c | $a;
+        my Mu $any_of_them = $b | $c | $a;
         jok('a' eq $any_of_them, 'junction of ($b | $c | $a) matches at least one "a"');
         jok('b' eq $any_of_them, 'junction of ($a | $b | $c) matches at least one "b"');
         jok('c' eq $any_of_them, 'junction of ($c | $a | $b) matches at least one "c"'); 
@@ -123,26 +124,21 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 }
 
 {
-    my $j = 1 | 2;
+    my Mu $j = 1 | 2;
     $j = 5;
     is($j, 5, 'reassignment of junction variable');
 }
 
 {
-    my $j;
-    my $k;
-    my $l;
+    my Mu $j;
+    my Mu $k;
 
     $j = 1|2;
     #?rakudo 3 todo 'lower case junction type'
-    is(~WHAT($j), 'junction()', 'basic junction type reference test');
+    is(~WHAT($j), 'Junction()', 'basic junction type reference test');
 
     $k=$j;
-    is(~WHAT($k), 'junction()', 'assignment preserves reference');
-
-    # XXX does this next one make any sense?
-    $l=\$j;
-    is(~WHAT($l), 'junction()', 'hard reference to junction');
+    is(~WHAT($k), 'Junction()', 'assignment preserves reference');
 }
 
 
@@ -162,8 +158,8 @@ sub j (Mu $j) { return $j.perl }
 
 {
     # L<S03/Junctive operators/They thread through operations>
-    my $got;
-    my $want;
+    my Mu $got;
+    my Mu $want;
     $got = ((1|2|3)+4);
     $want = (5|6|7);
     is( j($got), j($want), 'thread + returning junctive result');
@@ -195,6 +191,7 @@ sub j (Mu $j) { return $j.perl }
 }
 
 #?rakudo skip 'Junctions as subscripts'
+#?niecza skip 'Junctions as subscripts'
 {
     # L<S03/Junctive operators/Junctions work through subscripting>
     my $got;
@@ -242,8 +239,8 @@ These are implemented but still awaiting clarification on p6l.
 {
     my @subs = (sub {3}, sub {2});
 
-    my $got;
-    my $want;
+    my Mu $got;
+    my Mu $want;
 
     is(j(any(@subs)()), j(3|2), '.() on any() junction of subs');
 
@@ -325,51 +322,53 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 }
 
 # used to be a rakudo regression (RT #60886)
+#?niecza skip 'Mu ~~ $x'
 ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 ## See also S03-junctions/autothreading.t
 #?rakudo skip 'substr on junctions'
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
-  my $res = substr(any("abcd", "efgh"), 1, 2);
-  isa_ok $res, "junction";
+  my Mu $res = substr(any("abcd", "efgh"), 1, 2);
+  isa_ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc";
   ok $res eq "fg", "substr on junctions: fg";
 }
 
 #?rakudo skip 'substr on junctions'
 {
-  my $res = substr("abcd", 1|2, 2);
-  isa_ok $res, "junction";
+  my Mu $res = substr("abcd", 1|2, 2);
+  isa_ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc"; 
   ok $res eq "cd", "substr on junctions: cd";
 }
 
 #?rakudo skip 'substr on junctions'
 {
-  my $res = substr("abcd", 1, 1|2);
-  isa_ok $res, "junction";
+  my Mu $res = substr("abcd", 1, 1|2);
+  isa_ok $res, Junction;
   ok $res eq "bc", "substr on junctions: bc"; 
   ok $res eq "b", "substr on junctions: b"; 
 }
 
 #?rakudo skip 'index on junctions'
 {
-  my $res = index(any("abcd", "qwebdd"), "b");
-  isa_ok $res, "junction";
+  my Mu $res = index(any("abcd", "qwebdd"), "b");
+  isa_ok $res, Junction;
   ok $res == 1, "index on junctions: 1";
   ok $res == 3, "index on junctions: 3";
 }
 
 #?rakudo skip 'index on junctions'
 {
-  my $res = index("qwebdd", "b"|"w");
-  isa_ok $res, "junction";
+  my Mu $res = index("qwebdd", "b"|"w");
+  isa_ok $res, Junction;
   ok $res == 1, "index on junctions: 1";
   ok $res == 3, "index on junctions: 3";
 }
 
 # RT #63686
+#?niecza skip 'Mu parameters in blocks'
 {
     lives_ok { try { for any(1,2) -> $x {}; } },
              'for loop over junction in try block';
@@ -383,11 +382,12 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 # RT#67866: [BUG] [LHF] Error with stringifying .WHAT on any junctions
 #?rakudo skip 'lower case junction'
+#?niecza skip 'Impossible test: === takes Any'
 {
-    ok((WHAT any()) === junction, "test WHAT on empty any junction");
-    ok(any().WHAT === junction, "test WHAT on empty any junction");
-    ok((WHAT any(1,2)) === junction, "test WHAT on any junction");
-    ok(any(1,2).WHAT === junction, "test WHAT on any junction");
+    ok((WHAT any()) === Junction, "test WHAT on empty any junction");
+    ok(any().WHAT === Junction, "test WHAT on empty any junction");
+    ok((WHAT any(1,2)) === Junction, "test WHAT on any junction");
+    ok(any(1,2).WHAT === Junction, "test WHAT on any junction");
 }
 
 # Any list has junction methods
@@ -402,6 +402,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
+#?niecza skip 'junctional indexes'
 {
     my @a = "foo", "foot";
     ok @a[all(0,1)] ~~ /^foo/,
