@@ -232,7 +232,6 @@ plan 83;
 
 
 #?pugs skip 'autothreading over array indexing'
-#?niecza skip 'autothreading over array indexing'
 {
     my Mu $junc = 0|1|2;
     my @a = (0,1,2);
@@ -295,7 +294,6 @@ plan 83;
 
 # used to be RT #75368
 # L<S03/Junctive operators/Use of negative operators with junctions>
-#?niecza skip 'broken'
 {
     my Mu $x = 'a' ne ('a'|'b'|'c');
     ok $x ~~ Bool, 'infix:<ne> collapses the junction (1)';

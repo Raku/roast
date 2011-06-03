@@ -191,7 +191,6 @@ sub j (Mu $j) { return $j.perl }
 }
 
 #?rakudo skip 'Junctions as subscripts'
-#?niecza skip 'Junctions as subscripts'
 {
     # L<S03/Junctive operators/Junctions work through subscripting>
     my $got;
@@ -202,11 +201,11 @@ sub j (Mu $j) { return $j.perl }
 
     $got = ''; @foo = (0,1);
     $got ~= 'y' if try { @foo[any(1,2,3)] };
-    is($got, '', "junctions work through subscripting, 1 match");
+    is($got, 'y', "junctions work through subscripting, 1 match");
 
     $got = ''; @foo = (1,1,1);
     $got ~= 'y' if try { @foo[any(1,2,3)] };
-    is($got, '', "junctions work through subscripting, 3 matches");
+    is($got, 'y', "junctions work through subscripting, 3 matches");
 
 
     # L<S03/Junctive operators/Junctions are specifically unordered>
@@ -400,7 +399,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
-#?niecza skip 'junctional indexes'
 {
     my @a = "foo", "foot";
     ok @a[all(0,1)] ~~ /^foo/,
