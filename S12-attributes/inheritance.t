@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 6;
 
 # test relation between attributes and inheritance
 
@@ -28,10 +28,13 @@ eval_dies_ok 'class Artay61500 is Artie61500 { method bomb { return $!p } }',
 class Parent {
     has $!priv = 23;
     method get { $!priv };
+    has $.public is rw;
+    method report() { $!public }
 }
 
 class Child is Parent {
     has $!priv = 42;
+    has $.public is rw;
 }
 
 #?rakudo 2 todo 'RT 69260'
@@ -40,5 +43,11 @@ is Child.new().Parent::get(), 23,
 
 is Child.new().get(), 23,
    'private attributes do not leak from child to parent class (2)';
+
+my $child = Child.new();
+$child.public = 5;
+#?rakudo todo 'per-class storage location'
+nok $child.report.defined,
+    'If parent and child have an attribute of the same name, they do not share storage location';
 
 # vim: ft=perl6
