@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 123;
+plan 124;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -254,5 +254,7 @@ is(+(6..8), 3, 'numification');
     is ('b' .. 'y').roll("10").elems, 10, ".roll works Str arguments";
     is roll("10", 'b' .. 'y').elems, 10, "roll works Str arguments";
 }
+
+is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
 
 # vim:set ft=perl6
