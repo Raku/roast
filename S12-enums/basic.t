@@ -7,20 +7,21 @@ use Test;
 
 enum Day <Sun Mon Tue Wed Thu Fri Sat>;
 {
-    is Day::Sun, 0, 'First item of an enum is 0';
-    is Day::Sat, 6, 'Last item has the right value';
-    is Sun,      0, 'Values exported into namespace too.';
-    is Sat,      6, 'Values exported into namespace too.';
+    is 0 + Day::Sun, 0, 'First item of an enum is 0';
+    is 0 + Day::Sat, 6, 'Last item has the right value';
+    is 0 + Sun,      0, 'Values exported into namespace too.';
+    is 0 + Sat,      6, 'Values exported into namespace too.';
 }
 
 {
     # check that the values can be used for ordinary tasks, like
     # constructing ranges
     isa_ok (Mon..Wed), Range, 'Can construct ranges from Enum values';
-    is Mon + Tue, Wed, 'Can do arithmetics with Enum values';
+    ok Mon + Tue == Wed, 'Can do arithmetics with Enum values';
 }
 
 #?rakudo todo 'smart-matching against enums'
+#?niecza skip 'enummish but'
 {
     my $x = 'Today' but Day::Mon;
     ok $x.does(Day),      'Can test with .does() for enum type';
@@ -53,19 +54,19 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Day::Mon.WHAT, 'Day()',    '.WHAT on enum value stringifies to the enum name';
 }
 
-enum roman (i => 1,   v => 5,
-            x => 10,  l => 50,
-            c => 100, d => 500,
-            m => 1000);
 {
-	is v,      5,          'enum with parens works and non-0 starting point works';
-      is v.perl, 'roman::v', '.perl works on enum with parens';
-      is v.key,  'v',        '.key works on enum with parens';
+    enum roman (i => 1,   v => 5,
+                x => 10,  l => 50,
+                c => 100, d => 500,
+                m => 1000);
+    ok v == 5, 'enum with parens works and non-0 starting point works';
+    is v.perl, 'roman::v', '.perl works on enum with parens';
+    is v.key,  'v',        '.key works on enum with parens';
 }
 
 enum JustOne <Thing>;
 {
-    is JustOne::Thing, 0, 'Enum of one element works.';
+    ok JustOne::Thing == 0, 'Enum of one element works.';
 }
 
 lives_ok { enum Empty < > }, "empty enum can be constructed";
@@ -74,20 +75,22 @@ eval_lives_ok 'enum Empty2 ()', 'empty enum with () can be constructed';
 
 enum Color <white gray black>;
 my Color $c1 = Color::white;
-is($c1, 0, 'can assign enum value to typed variable with long name');
+ok($c1 == 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
-is($c1, 0, 'can assign enum value to typed variable with short name');
+ok($c1 == 0, 'can assign enum value to typed variable with short name');
 #?rakudo todo 'enum type checks'
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
 # conflict between subs and enums
 {
     my sub white { 'sub' };
-    is white, 0, 'short name of the enum without parenthesis is an enum';
+    ok white == 0, 'short name of the enum without parenthesis is an enum';
+    #?niecza skip 'nonworking'
     is white(), 'sub', 'short name with parenthesis is a sub';
 }
 
 # L<S12/Enumerations/"define a .pick method">
+#?niecza skip '.pick and .roll'
 {
     lives_ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
     isa_ok Color.pick, Color.pick.WHAT, 'Color.pick.isa';
@@ -101,7 +104,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 #?rakudo skip 'RT 71460: Null PMC access'
 {
     enum RT71460::Bug <rt71460 bug71460 ticket71460>;
-    is bug71460, 1, 'enum element of enum with double colons is in namespace';
+    ok bug71460 == 1, 'enum element of enum with double colons is in namespace';
 }
 
 done;
