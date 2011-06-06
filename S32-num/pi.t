@@ -21,9 +21,7 @@ is_approx(Num::pi, $PI, "Num::pi");
 
 is_approx(eval("pi"), $PI, "pi imported by default");
 
-is_approx(eval("3 + pi()"), $PI+3, "3+pi(), as a sub");
-
-is_approx(eval("pi() + 3"), $PI+3, "pi()+3, as a sub");
+eval_dies_ok("3 + pi()", "pi() is not a sub");
 
 is_approx(eval("3 + pi"), $PI+3, "3+pi, as a bareword");
 
