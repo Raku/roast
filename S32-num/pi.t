@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 5;
 
 # L<S32::Numeric/Numeric/"Numeric provides some constants">
 
