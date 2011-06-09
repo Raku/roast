@@ -12,12 +12,14 @@ plan 124;
     is(substr($str, 0, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 3, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 0, 1), "f", "first char");
+#?rakudo 2 skip 'whatever closure'
     is(substr($str, *-1), "r", "last char");
     is(substr($str, *-4, 2), "ob", "counted from the end");
     is(substr($str, 1, 2), "oo", "arbitrary middle");
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
     ok(!defined(substr($str, 20, 5)), "substr outside of string");
+#?rakudo 5 skip 'whatever closure'
     ok(!defined(substr($str, *-100, 10)), "... on the negative side");
 
     is(substr($str, 0, *-2), "foob", "from beginning, with negative length");
@@ -136,11 +138,13 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr($str, 0, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
     is(substr($str, 3, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
     is(substr($str, 0, l(1)), "f", "first char (substr(Int, StrLen)).");
+#?rakudo 2 skip 'whatever closure'
     is(substr($str, *-1, l(1)), "r", "last char (substr(Int, StrLen)).");
     is(substr($str, *-4, l(2)), "ob", "counted from the end (substr(Int, StrLen)).");
     is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
     is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
     ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
+#?rakudo 5 skip 'whatever closure'
     ok(!defined(substr($str, *-100, l(5))), "... on the negative side (substr(Int, StrLen)).");
 
     is(substr($str, 0, l(*-2)), "foob", "from beginning, with negative length (substr(Int, StrLen)).");
@@ -162,6 +166,7 @@ sub l (Int $a) {  my $l = $a; return $l }
     substr(:string($str), 2, l(1), "a");
     is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrLen)).");
 
+#?rakudo skip 'whatever closure'
     substr($str, *-1, l(1), "blah");
     is($str, "foibablah", "longer replacement expands string (substr(Int, StrLen)).");
 
