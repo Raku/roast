@@ -134,7 +134,7 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     my Mu $k;
 
     $j = 1|2;
-    #?rakudo 3 todo 'lower case junction type'
+    #?rakudo 2 todo 'lower case junction type'
     is(~WHAT($j), 'Junction()', 'basic junction type reference test');
 
     $k=$j;
