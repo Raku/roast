@@ -171,13 +171,13 @@ plan 83;
 
 {
     # Auto-threading over an invocant.
-    my $cnt1 = 0;
+    our $cnt1 = 0;
     class JuncInvTest1 {
         method a { $cnt1++; }
         has $.n;
         method d { 2 * $.n }
     }
-    my $cnt2 = 0;
+    our $cnt2 = 0;
     class JuncInvTest2 {
         method a { $cnt2++; }
         method b($x) { $cnt2++ }    #OK not used
