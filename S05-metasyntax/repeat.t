@@ -45,7 +45,7 @@ ok(!( "abcd"       ~~ m/'abc'**{2..*}/), 'Fail open range repetition using closu
 
 # It is illegal to return a list, so this easy mistake fails:
 eval_dies_ok('"foo" ~~ m/o{1,3}/', 'P5-style {1,3} range mistake is caught');
-eval_dies_ok('"foo" ~~ m/o{1,}/}',  'P5-style {1,} range mistake is caught');
+eval_dies_ok('"foo" ~~ m/o{1,}/',  'P5-style {1,} range mistake is caught');
 
 # A successful match of such a quantifier always ends "in the middle"
 is(~('foo,bar,baz,' ~~ m/[<alpha>+] ** ','/), 'foo,bar,baz', '** with a term worked');
