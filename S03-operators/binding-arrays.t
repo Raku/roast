@@ -27,6 +27,7 @@ plan 47;
   is $var,      "f", "basic binding of an array element (3)";
 }
 
+#?niecza skip 'delete'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -127,7 +128,7 @@ plan 47;
 
 #?rakudo skip 'lexically scoped subs'
 {
-  my sub foo (@args) { push @args, "new_value" }
+  my sub foo (*@args) { push @args, "new_value" }
 
   my @array  = <a b c>;
   my $var    = "d";
@@ -153,6 +154,7 @@ plan 47;
 }
 
 # Binding with .splice
+#?niecza skip 'splice'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -224,6 +226,7 @@ plan 47;
 }
 
 # RT #61566
+#?niecza skip 'Exception'
 {
     eval 'my @rt61566 := 1';
     #?rakudo todo 'Positional type check on array binding'
