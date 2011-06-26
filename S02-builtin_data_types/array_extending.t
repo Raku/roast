@@ -46,6 +46,7 @@ plan 21;
         'defined @array[$index_out_of_bounds] should not have altered @array';
 }
 
+#?rakudo skip 'whatever closure'
 {
     my @array   = <a b c d>;
     my $defined;
@@ -87,6 +88,7 @@ plan 21;
 }
 
 # RT #62948
+#?rakudo skip 'segfault'
 {
     my @a;
     @a[2] = 'b';
