@@ -22,17 +22,18 @@ is  $x.s,         'foo', '... and it set the attribute';
 
 nok $x.a,             'array attribute starts empty';
 is  $x.sa([1, 2]), 4, 'array attributive paramed method returns the right thing';
-#?rakudo todo 'list/item distinction'
 is  $x.a.join('|'), '1|2', 'array param set correctly';
 
 nok $x.h,             'hash attribute starts empty';
 is  $x.sh({ a=> 1, b => 2}), 5, 'hash attributive paramed method returns the right thing';
+#?rakudo skip 'hash slicing'
 is  $x.h<b a>.join('|'), '2|1', 'hash param set correctly';
 
 is  $x.ssa(1, 2), 14, 'slurpy array attributive paramed method returns the right thing';
 is  $x.a.join('|'), '1|2', 'slurpy array param set correctly';
 
 is  $x.ssh(a=> 1, b => 2), 15, 'slurpy hash attributive paramed method returns the right thing';
+#?rakudo skip 'hash slicing'
 is  $x.h<b a>.join('|'), '2|1', 'slurpy hash param set correctly';
 
 done;
