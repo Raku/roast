@@ -10,11 +10,10 @@ plan 2;
 is($?LINE, 10, '$?LINE works');
 
 # L<S02/Names/Which file am I in>
+# try to be robust for implementations that use Win32 file paths, or
+# absolute paths, or whatever
 #?rakudo skip '$?FILE not implemented'
-ok($?FILE eq ('t/spec/S02-magicals/file_line.t' | 't\\spec\\S02-magicals\\file_line.t'), '$?FILE works');
+ok($?FILE ~~ rx/'S02-magicals'<[\/\\]>'file_line.t'/, '$?FILE works');
 
-# NOTE:
-# above is a junction hack for Unix and Win32 file
-# paths until the FileSpec hack is working - Stevan
 
 # vim: ft=perl6
