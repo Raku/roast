@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 52;
+plan 46;
 
 # L<S03/Changes to Perl 5 operators/"imposes a numeric">
 
@@ -70,19 +70,6 @@ is(+(~(-Inf)), -Inf, "'-Inf' is -Inf");
     lives_ok { $x = "4" - 3 }, 'lives: Int $x = "4" - 3';
     isa_ok( $x, Int, 'Int $x = "4" - 3 creates an Int' );
     is( $x, 1, 'works: Int $x = "4" - 3' );
-}
-
-# TimToady says this should work, see http://irclog.perlgeek.de/perl6/2009-11-29#i_1780142
-{
-    my Num $x;
-
-    lives_ok { $x = +'2' }, 'can assign string "2" to Num variable';
-    isa_ok( $x, Num, 'assign string "2" to Num creates an Num' );
-    is( $x, 2, 'assign string "2" to Num variable works' );
-
-    lives_ok { $x = "4" - 3 }, 'lives: Num $x = "4" - 3';
-    isa_ok( $x, Num, 'Num $x = "4" - 3 creates an Num' );
-    is( $x, 1, 'works: Num $x = "4" - 3' );
 }
 
 # vim: ft=perl6
