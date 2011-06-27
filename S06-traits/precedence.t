@@ -13,7 +13,7 @@ Tests for precedence of self defined operators
 plan 10;
 
 do {
-    sub prefix:<!> (Num $x) is tighter(&infix:<**>) {
+    sub prefix:<!> (Int $x) is tighter(&infix:<**>) {
         return 3 * $x;
     }
 
@@ -21,7 +21,7 @@ do {
 }
 
 do {
-    sub prefix:<foo> (Num $x) is looser(&infix:<+>) {
+    sub prefix:<foo> (Int $x) is looser(&infix:<+>) {
         return 2 * $x;
     }
 
@@ -30,11 +30,11 @@ do {
 
 
 {
-    sub postfix:<!> (Num $x) is tighter(&infix:<**>) {
+    sub postfix:<!> (Int $x) is tighter(&infix:<**>) {
         return 2 * $x;
     }
 
-    is 2**1!, 2, "'is tighter' on postfix works";
+    is 3**1!, 9, "'is tighter' on postfix works";
 }
 
 
@@ -52,23 +52,23 @@ do {
         return $a / $b;
     }
 
-    is(4 div 2 * 3, 6, "'is equiv' works");
+    ok((4 div 2 * 3) == 6, "'is equiv' works");
 }
 
 # prefix/postfix precedence
 
 {
-    sub prefix:<'foo1'> (Num $x) {
+    sub prefix:<'foo1'> (Int $x) {
         return 2 * $x;
     }
 
-    sub postfix:<'bar1'> (Num $x) is looser(&prefix:<'foo1'>){
+    sub postfix:<'bar1'> (Int $x) is looser(&prefix:<'foo1'>){
         return 1 + $x;
     }
 
     is('foo1'3'bar1', 7, "Postifix declared looser than prefix");
 
-    sub postfix:<'bar2'> (Num $x) is tighter(&prefix:<'foo1'>){
+    sub postfix:<'bar2'> (Int $x) is tighter(&prefix:<'foo1'>){
         return 1 + $x;
     }
 
@@ -81,7 +81,7 @@ do {
     }
 
     is( -1!, -1 , "Should be parsed as '-(1!)'");
-    ok(not defined eval '4 !',  "Whitespace not allowed before user-defined postfix");
+    ok((not defined try eval '4 !'),  "Whitespace not allowed before user-defined postfix");
 }
 
 
