@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 43;
 
 # Real **
 is(0 ** 0,    1, "0 ** 0 ==  1");
@@ -55,6 +55,8 @@ is_approx(1i ** 3, -1i, "i ** 3 == -i");
 is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
+
+is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 #?DOES 4
 {
