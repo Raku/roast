@@ -31,7 +31,7 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
 
     $calls = 0;
     ok return_nil() ~~ Nil, 'return_nil() ~~ Nil';
-    is return_nil().WHAT, 'Nil()', 'return_nil().WHAT says Nil';
+    is return_nil().perl, 'Nil', 'return_nil().perl says Nil';
     is $calls, 2, 'return_nil() called twice';
 
     my $n = return_nil();
