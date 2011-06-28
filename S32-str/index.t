@@ -7,6 +7,7 @@ plan 37;
 
 # Type of return value
 #?rakudo 2 skip 'StrPos not implemented'
+#?niecza 2 skip 'StrPos'
 isa_ok('abc'.index('b'), StrPos);
 isa_ok('abc'.index('d'), StrPos);
 ok(!'abc'.index('d'), 'failure object from index() evaluates to false');

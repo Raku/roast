@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 124;
+plan 122;
 
 # L<S32::Str/Str/=item substr>
 
@@ -13,6 +13,7 @@ plan 124;
     is(substr($str, 3, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 0, 1), "f", "first char");
 #?rakudo 2 skip 'whatever closure'
+#?niecza 2 skip 'whatever closure'
     is(substr($str, *-1), "r", "last char");
     is(substr($str, *-4, 2), "ob", "counted from the end");
     is(substr($str, 1, 2), "oo", "arbitrary middle");
@@ -20,6 +21,7 @@ plan 124;
     is(substr($str, 3, 10), "bar", "length goes past end");
     ok(!defined(substr($str, 20, 5)), "substr outside of string");
 #?rakudo 5 skip 'whatever closure'
+#?niecza 5 skip 'whatever closure'
     ok(!defined(substr($str, *-100, 10)), "... on the negative side");
 
     is(substr($str, 0, *-2), "foob", "from beginning, with negative length");
@@ -32,14 +34,12 @@ plan 124;
 
 #?pugs skip 'more discussion needed'
 #?rakudo skip 'too many args'
+#?niecza skip '4-arg form NYI'
 { # replacement
     my $str = "foobar";
 
     substr($str, 2, 1, "i");
     is($str, "foibar", "fourth arg to substr replaced part");
-
-    substr(:string($str), 2, 1, "a");
-    is($str, "foabar", "substr with replacement works with named argument");
 
     substr($str, *-1, 1, "blah");
     is($str, "foibablah", "longer replacement expands string");
@@ -58,6 +58,7 @@ plan 124;
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
 #?rakudo skip "substr as lvalue NYI"
+#?niecza skip "references NYI"
 {
     my $str = "gorch ding";
 
@@ -139,12 +140,14 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr($str, 3, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
     is(substr($str, 0, l(1)), "f", "first char (substr(Int, StrLen)).");
 #?rakudo 2 skip 'whatever closure'
+#?niecza 2 skip 'whatever closure'
     is(substr($str, *-1, l(1)), "r", "last char (substr(Int, StrLen)).");
     is(substr($str, *-4, l(2)), "ob", "counted from the end (substr(Int, StrLen)).");
     is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
     is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
     ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
 #?rakudo 5 skip 'whatever closure'
+#?niecza 5 skip 'whatever closure'
     ok(!defined(substr($str, *-100, l(5))), "... on the negative side (substr(Int, StrLen)).");
 
     is(substr($str, 0, l(*-2)), "foob", "from beginning, with negative length (substr(Int, StrLen)).");
@@ -157,14 +160,12 @@ sub l (Int $a) {  my $l = $a; return $l }
 
 #?pugs skip 'more discussion needed'
 #?rakudo skip 'too many args'
+#?niecza skip '4-arg form'
 { # replacement
     my $str = "foobar";
 
     substr($str, 2, l(1), "i");
     is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrLen)).");
-
-    substr(:string($str), 2, l(1), "a");
-    is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrLen)).");
 
 #?rakudo skip 'whatever closure'
     substr($str, *-1, l(1), "blah");
@@ -184,6 +185,7 @@ sub l (Int $a) {  my $l = $a; return $l }
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
 #?rakudo skip "substr as lvalue NYI"
+#?niecza skip "scalarrefs NYI"
 {
     my $str = "gorch ding";
 
@@ -268,9 +270,10 @@ sub p (Int $a) {  my $p = $a; return $p }
     is(substr($str, 0, p(1)), "f", "first char (substr(Int, StrPos)).");
 
     is(substr($str, 1, p(3)), "oo", "arbitrary middle (substr(Int, StrPos)).");
-    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
+    is(substr("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy", 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
     is(substr($str, 3, p(6)), "bar", "length goes past end (substr(Int, StrPos)).");
     ok(!defined(substr($str, 20, p(5))), "substr outside of string (substr(Int, StrPos)).");
+    #?niecza skip 'Whatever closure'
     ok(!defined(substr($str, *-100, p(5))), "... on the negative side (substr(Int, StrPos)).");
 
     is($str, "foobar", "original string still not changed (substr(Int, StrPos)).");
@@ -278,12 +281,13 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 #?pugs skip 'more discussion needed'
 #?rakudo skip 'No support for StrPos'
+#?niecza skip '4-arg form'
 { # replacement
     my $str = "foobar";
     substr($str, 2, p(1), "i");
     is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrPos)).");
 
-    substr(:string($str), 2, p(1), "a");
+    substr($str, 2, p(1), "a");
     is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrPos)).");
 
     substr($str, *-1, p(1), "blah");
@@ -300,6 +304,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
 #?rakudo skip 'No support for StrPos'
+#?niecza skip 'scalarrefs NYI'
 {
     my $str = "gorch ding";
 
