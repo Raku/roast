@@ -43,6 +43,7 @@ plan 65;
 
 #?pugs eval 'todo: slice context'
 #?rakudo skip 'slice context'
+#?niecza skip 'slice context'
 {
     my $str;
     my @a = 1..3;
@@ -239,8 +240,8 @@ class TestClass{ has $.key is rw  };
 #?rakudo skip '[+] NYI'
 {
    my @array1 = (TestClass.new(:key<1>),TestClass.new());
-   
    my $i = 0;
+   for @array1 { .key //= ++$i }
    my $sum1 = [+] @array1.map: { $_.key };
    #?pugs todo 'bug'
    is( $sum1, 2, '.key //= ++$i for @array1;' );
@@ -364,12 +365,13 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 {
   #my $str = '';
-  eval_dies_ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception StopIteration'); 
+  eval_dies_ok('for 1..5 ->  $x, $y { $str ~= "$x$y" }', 'Should throw exception, no value for parameter $y');
   #is $str, "1234", "loop ran before throwing exception";
   #diag ">$str<";
 }
 
 #?rakudo skip 'optional variable in for loop (RT #63994)'
+#?niecza 2 skip 'NYI'
 {
   my $str = '';
   for 1..5 -> $x, $y? {
@@ -441,6 +443,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #62478
+#?niecza skip 'different interpretation of eval'
 {
     eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }');
     ok "$!" ~~ /C\-style/,   'mentions C-style';
@@ -449,6 +452,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #65212
+#?niecza skip 'different eval'
 {
     my $parsed = 0;
     eval '$parsed = 1; for (1..3)->$n { last }';
@@ -466,9 +470,11 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 {
     eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
+
+#?niecza skip 'different eval semantics'
 {
-eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!);
-ok $! ~~ / 'C-style' /, 'Sensible error message';
+    eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!);
+    ok $! ~~ / 'C-style' /, 'Sensible error message';
 }
 
 # RT #64886
