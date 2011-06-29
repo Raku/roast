@@ -56,6 +56,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
 # from apocalypse 4
 #?rakudo skip 'parsefail on each(... ; ...)'
+#?niecza skip 'each'
 {
     # simple example L<S04/"Switch statements" /You don't have to use an explicit default/>
     for each(("T", "E", 5) ; (10, 11, 5)) -> $digit, $expected {
@@ -111,6 +112,7 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 #?rakudo skip "Cannot assign to $_ in Rakudo"
+#?niecza skip "Dubious test"
 {
     my $foo = 1;
     given 1 {
