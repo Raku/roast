@@ -16,10 +16,12 @@ is "a  bc  d".words, <a bc d>, 'words on string with double spaces';
 is "a\tbc\td".words, <a bc d>, 'words on string with \t';
 is "a\nbc\nd".words, <a bc d>, 'words on string with \n';
 
+#?niecza skip 'charspec'
 is "a\c[NO-BREAK SPACE]bc d".words, <a bc d>, 'words on string with (U+00A0 NO-BREAK SPACE)';
 is "ä bc d".words, <ä bc d>, 'words on string with non-ASCII letter';
 
 #?rakudo 2 skip 'graphemes not implemented'
+#?niecza 2 skip 'charspec'
 is "a\c[COMBINING DIAERESIS] bc d".words, ("ä", "bc", "d"), 'words on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "bc", "d"),

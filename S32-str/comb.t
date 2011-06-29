@@ -17,6 +17,7 @@ is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
 is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
 
 #?rakudo 2 todo 'graphemes not implemented'
+#?niecza 2 skip 'charspec'
 is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "b", ),
@@ -53,12 +54,14 @@ is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
 
+#?niecza skip 'Positional'
 ok("forty-two".comb() ~~ Positional, '.comb() returns something Positional' );
 
 # comb a list
 
 #?pugs todo 'feature'
 #?rakudo skip "bad all around in Rakudo-ng"
+#?niecza skip ':Perl5'
 is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';
 
@@ -83,6 +86,7 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 }
 
 # RT #66340
+#?niecza skip 'Huh?'
 {
     my $expected_reason = rx/^'No applicable candidates '/;
 

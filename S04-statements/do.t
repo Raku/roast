@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 27;
 
 # L<S04/The do-once loop/"can't" put "statement modifier">
 # Note in accordance with STD, conditionals are OK, loops are not.
@@ -41,6 +41,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 	any branch, the return value is undefined in item context and () 
 	in list context.
 =end comment
+#?niecza skip 'Nil'
 {
 	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
@@ -90,6 +91,14 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
     };
     is $i, 1, "'next' works in 'do' block";
 }
+
+#?rakudo 3 skip "labels"
+is eval('my $i; A: do { $i++; last A; $i-- }; $i'), 1,
+    "'last' works with label";
+is eval('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
+    "'next' works with label";
+is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
+    "'redo' works with label";
 
 #?rakudo skip 'last not implemented'
 {

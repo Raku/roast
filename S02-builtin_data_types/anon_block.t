@@ -136,6 +136,7 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
     is (sub (&x) { &x() }).( &rt68116 ), 68116,
         'call via (sub (&x) { &x() }).( &s ) works for sub';
 
+    proto mone(|$) { * }
     multi mone { 'one' }
     is &mone(), 'one', 'check that mutli is callable via &';
     is { &^x() }.( &mone ), 'one',

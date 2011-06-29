@@ -88,7 +88,6 @@ plan 21;
 }
 
 # RT #62948
-#?rakudo skip 'segfault'
 {
     my @a;
     @a[2] = 'b';

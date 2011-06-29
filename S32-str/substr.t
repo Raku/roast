@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 124;
+plan 117;
 
 # L<S32::Str/Str/=item substr>
 
@@ -37,9 +37,6 @@ plan 124;
 
     substr($str, 2, 1, "i");
     is($str, "foibar", "fourth arg to substr replaced part");
-
-    substr(:string($str), 2, 1, "a");
-    is($str, "foabar", "substr with replacement works with named argument");
 
     substr($str, *-1, 1, "blah");
     is($str, "foibablah", "longer replacement expands string");
@@ -147,11 +144,6 @@ sub l (Int $a) {  my $l = $a; return $l }
 #?rakudo 5 skip 'whatever closure'
     ok(!defined(substr($str, *-100, l(5))), "... on the negative side (substr(Int, StrLen)).");
 
-    is(substr($str, 0, l(*-2)), "foob", "from beginning, with negative length (substr(Int, StrLen)).");
-    is(substr($str, 2, l(*-2)), "ob", "in middle, with negative length (substr(Int, StrLen)).");
-    is(substr($str, 3, l(*-3)), "", "negative length - gives empty string (substr(Int, StrLen)).");
-    is(substr($str, *-4, l(*-1)), "oba", "negative start and length (substr(Int, StrLen)).");
-
     is($str, "foobar", "original string still not changed (substr(Int, StrLen)).");
 };
 
@@ -163,18 +155,12 @@ sub l (Int $a) {  my $l = $a; return $l }
     substr($str, 2, l(1), "i");
     is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrLen)).");
 
-    substr(:string($str), 2, l(1), "a");
-    is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrLen)).");
-
 #?rakudo skip 'whatever closure'
     substr($str, *-1, l(1), "blah");
     is($str, "foibablah", "longer replacement expands string (substr(Int, StrLen)).");
 
     substr($str, 1, l(3), "");
     is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrLen)).");
-
-    substr($str, 1, l(*-1), "aye");
-    is($str, "fayeh", "replacement with negative length (substr(Int, StrLen)).");
 };
 
 # as lvalue, XXX: not sure this should work, as that'd be action at distance:
@@ -261,6 +247,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 #Substr with StrPos
 #?rakudo skip 'No support for StrPos'
+#?niecza skip 'StrPos tests broken'
 { # read only
     my $str = "foobar";
     is(substr($str, 0, p(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
@@ -268,7 +255,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is(substr($str, 0, p(1)), "f", "first char (substr(Int, StrPos)).");
 
     is(substr($str, 1, p(3)), "oo", "arbitrary middle (substr(Int, StrPos)).");
-    is(substr(:string("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy"), 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
+    is(substr("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy", 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
     is(substr($str, 3, p(6)), "bar", "length goes past end (substr(Int, StrPos)).");
     ok(!defined(substr($str, 20, p(5))), "substr outside of string (substr(Int, StrPos)).");
     ok(!defined(substr($str, *-100, p(5))), "... on the negative side (substr(Int, StrPos)).");
@@ -278,12 +265,13 @@ sub p (Int $a) {  my $p = $a; return $p }
 
 #?pugs skip 'more discussion needed'
 #?rakudo skip 'No support for StrPos'
+#?niecza skip 'StrPos tests broken'
 { # replacement
     my $str = "foobar";
     substr($str, 2, p(1), "i");
     is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrPos)).");
 
-    substr(:string($str), 2, p(1), "a");
+    substr($str, 2, p(1), "a");
     is($str, "foabar", "substr with replacement works with named argument (substr(Int, StrPos)).");
 
     substr($str, *-1, p(1), "blah");
@@ -300,6 +288,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
 #?rakudo skip 'No support for StrPos'
+#?niecza skip 'StrPos tests broken'
 {
     my $str = "gorch ding";
 
@@ -325,6 +314,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 };
 
 #?rakudo skip 'lvalue substr'
+#?niecza skip 'StrPos tests broken'
 { # as lvalue, should work
     my $str = "gorch ding";
 
@@ -333,6 +323,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 };
 
 #?rakudo skip 'No support for StrPos'
+#?niecza skip 'StrPos tests broken'
 { # as lvalue, using :=, should work
     my $str = "gorch ding";
 

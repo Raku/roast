@@ -29,6 +29,7 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";#
 
 #?rakudo 2 todo 'graphemes results wrong'
+#?niecza 2 skip 'charspec'
 is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize on string with grapheme precomposed';
 is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
@@ -38,11 +39,12 @@ is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
 is ~(0.capitalize), ~0, '.capitalize on Int';
 
 #?rakudo todo "Roles do not behave as this test expects yet"
+#?niecza skip "but"
 {
     role A {
         has $.thing = 3;
     }
-    my $str = "('Nothing much' but A).capitalize eq 'Nothing much'capitalize";
+    my $str = "('Nothing much' but A).capitalize eq 'Nothing much'.capitalize";
     ok eval($str), $str;
 }
 
