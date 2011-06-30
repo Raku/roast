@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 48;
 
 =begin pod
 
@@ -109,19 +109,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
         ok($b_two, "second iteration");
         ok($b_three, "third iteration");
         ok(!$panic,"should not fall into default in this case");
-}
-
-#?rakudo skip "Cannot assign to $_ in Rakudo"
-#?niecza skip "Dubious test"
-{
-    my $foo = 1;
-    given 1 {
-        $_ = 2;
-        when 2 { $foo = 2; }
-        when 1 { $foo = 3; }
-        default  { $foo = 4; }
-    }
-    is($foo, 2, 'Assign new value to $_ inside topicalizer');
 }
 
 {
