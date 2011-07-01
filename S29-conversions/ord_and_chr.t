@@ -121,7 +121,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 39+@maps*2;
+plan 38 + @maps*2;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -143,8 +143,6 @@ for 0...31 -> $code {
 is 'A'.ord, 65, "there's a .ord method";
 is 65.chr, 'A', "there's a .chr method";
 
-#?rakudo skip 'Broken in ng1'
-is ord('hello'), [104, 101, 108, 108, 111], 'ord works with longer strings';
 #?rakudo skip 'multi-arg variants of chr not in place yet'
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 
