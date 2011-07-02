@@ -38,7 +38,6 @@ is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
 # rest of the tests are moved from uc.t
 is ~(0.capitalize), ~0, '.capitalize on Int';
 
-#?rakudo todo "Roles do not behave as this test expects yet"
 #?niecza skip "but"
 {
     role A {

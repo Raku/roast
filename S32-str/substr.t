@@ -141,7 +141,7 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
     is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
     ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
-#?rakudo 5 skip 'whatever closure'
+#?rakudo skip 'whatever closure'
     ok(!defined(substr($str, *-100, l(5))), "... on the negative side (substr(Int, StrLen)).");
 
     is($str, "foobar", "original string still not changed (substr(Int, StrLen)).");

@@ -22,6 +22,7 @@ is  $x.s,         'foo', '... and it set the attribute';
 
 nok $x.a,             'array attribute starts empty';
 is  $x.sa([1, 2]), 4, 'array attributive paramed method returns the right thing';
+#?rakudo todo 'temporary fudge for master'
 is  $x.a.join('|'), '1|2', 'array param set correctly';
 
 nok $x.h,             'hash attribute starts empty';

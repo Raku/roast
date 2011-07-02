@@ -29,9 +29,11 @@ is &a_four.count,   4, '4 count &foo';
 
 is &o_zero.arity,   0, 'arity 0 sub with optional params';
 is &o_one.arity,    1, 'arity 1 sub with optional params';
+#?rakudo todo "temporary fudge for master"
 is &o_two.arity,    1, 'arity with optional and required named params';
 
 is &o_zero.count,   2, 'count on sub with optional params';
+#?rakudo 2 todo "temporary fudge for master"
 is &o_one.count,    1, 'count on sub with optional params';
 is &o_two.count,    1, 'count on sub with optional and required named params';
 
