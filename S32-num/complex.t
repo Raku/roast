@@ -7,6 +7,7 @@ plan 481;
 # Basic tests functions specific to complex numbers.
 
 isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
+#?rakudo 2 skip 'i'
 isa_ok(i, Complex, 'i creates a Complex number');
 ok i == 1i, 'i == 1i';
 
@@ -16,6 +17,7 @@ isa_ok(3\i, Complex, '$n\i form creates a Complex number');
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 
+#?rakudo 3 skip 'i'
 is_approx(i, 1i, 'standalone i works to generate a Complex number');
 is_approx(1 - i, 1 - 1i, 'standalone i works to generate a Complex number');
 is_approx(2i * i, -2, 'standalone i works times a Complex number');
@@ -27,7 +29,7 @@ is_approx(2i * i, -2, 'standalone i works times a Complex number');
 # Out> Complex(10,5)
 # etc
 is_approx (3+4i)/(2-1i), 2/5 + (11/5)i, 'Complex division';
-is_approx (3+4i)*(2-1i), 10+5i,         'Complex division';
+is_approx (3+4i)*(2-1i), 10+5i,         'Complex multiplication';
 is_approx (6+4i)/2,      3+2i,          'dividing Complex by a Real';
 is_approx 2/(3+1i),      3/5 -(1/5)i,   'dividing a Real by a Complex';
 is_approx 2 * (3+7i),    6+14i,         'Real * Complex';
