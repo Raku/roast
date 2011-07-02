@@ -24,7 +24,7 @@ plan 14;
     my @arr = <1 2 3 4>;
     
     ok(@arr.isa(Array), '... @arr is-a Array (invocant notation)');
-    #?rakudo skip "Array is now ~~ List"
+    #?rakudo todo "Array is now ~~ List"
     ok(@arr.isa(Seq), '... @arr is-also-a Seq (invocant notation)');
     
     # check a failing case
@@ -35,6 +35,7 @@ plan 14;
 { # invocant notation   
     my $arr_ref = <1 2 3 4>;
 
+    #?rakudo todo "Array is now ~~ List"
     ok($arr_ref.isa(Seq),   '... $arr is-also-a Seq (invocant notation)');
 
     # check a failing case
@@ -68,7 +69,6 @@ class Thing {};
 class Thing::something {};
 {
     my $thing = Thing::something.new();
-    #?rakudo todo 'RT 69999'
     ok($thing.isa("Thing::something"), '.isa string naming class with colons');
     ok($thing.isa(Thing::something), '.isa named class with colons');
 }
