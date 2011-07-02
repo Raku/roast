@@ -41,7 +41,6 @@ ok %hash.does(Associative), 'uninitialized %var does Associative';
 ok %hash.does(Associative), 'value in %var does Associative';
 
 
-#?rakudo todo "Pair does Associative"
 ok eval('Pair').does(Associative), "Pair does Associative";
 ok eval('Set').does(Associative), "Set does Associative";
 ok eval('Bag').does(Associative), "Bag does Associative";
