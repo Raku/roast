@@ -141,6 +141,7 @@ isa_ok(1 / 1, Rat);
     ok($a == 80000.0, 'trailing zeros compare correctly');
 }
 
+#?rakudo skip 'trailing zeros'
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
     isa_ok($a, Num);
@@ -155,9 +156,10 @@ isa_ok(1 / 1, Rat);
     is(+$a, 1.01, "1.01 numifies to 1.01");
 }
 
+#?rakudo todo 'smart numification'
 {
     my $a = "0d01.01";
-    isa_ok(+$a, "Num");
+    isa_ok(+$a, Rat);
     is(+$a, 1, "0d01.01 numifies to 1");
 }
 
@@ -171,13 +173,14 @@ isa_ok(1 / 1, Rat);
 
 #L<S02/Built-In Data Types/Num may support arbitrary-precision floating-point>
 
+#?rakudo todo 'smart numification'
 {
     my $a = "0d0101";
-    isa_ok(+$a, "Num");
+    isa_ok(+$a, Rat);
     is(+$a, 101, "0d0101 numifies to 101");
 }
 
-#?rakudo todo "No bignums yet"
+#?rakudo skip "No bignums yet"
 {
     my $a = 2 ** 65; # over the 64 bit limit too
     is($a, 36893488147419103232, "we have bignums, not weeny floats");
