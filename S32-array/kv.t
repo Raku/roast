@@ -62,6 +62,7 @@ is( 42.kv, [0, 42], "(42).kv works");
 }
 
 # RT #71086
+#?rakudo skip 'augment class...'
 {
     use MONKEY_TYPING;
     augment class Parcel {
