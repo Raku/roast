@@ -5,46 +5,46 @@ use Test;
 
 plan 12;
 
-# Tests for binding public and private instance and class attributes
+# Tests for binding instance and class attributes
+# note that only attributes themselves ($!foo) can be bound,
+# not accessors ($.foo)
 
-# Public instance attributes
 {
     my $var = 42;
-    class Klass1 { has $.x; method bind { $.x := $var } }
+    class Klass1 { has $.x; method bind { $!x := $var } }
 
     my $obj1 = Klass1.new;
-    try { $obj1.bind() };
+    lives_ok { $obj1.bind() }, 'attribute binding lives';
 
     #?pugs 3 todo 'bug'
-    is $obj1.x, 42, "binding public instance attribute (1)";
+    is $obj1.x, 42, 'binding $!x instance attribute (1)';
     $var = 23;
-    is $obj1.x, 23, "binding public instance attribute (2)";
-    $obj1.x = 19;
-    is $var,    19, "binding public instance attribute (3)";
+    is $obj1.x, 23, 'binding $!x instance attribute (2)';
 }
 
-# Private instance attributes
+#?rakudo skip 'binding to $x-style attributes'
 {
     my $var = 42;
     class Klass2 {
         has $x;
         method bind { $x := $var }
-        method get_x { try { $x } }
-        method set_x ($new_x) { try { $x = $new_x } }
+        method get_x { $x }
+        method set_x ($new_x) { $x = $new_x }
     }
 
     my $obj2 = Klass2.new;
-    try { $obj2.bind() };
+    $obj2.bind()
 
     #?pugs 3 todo 'bug'
-    is $obj2.get_x, 42, "binding private instance attribute (1)";
+    is $obj2.get_x, 42, 'binding $x instance attribute (1)';
     $var = 23;
-    is $obj2.get_x, 23, "binding private instance attribute (2)";
+    is $obj2.get_x, 23, 'binding $x instance attribute (2)';
     $obj2.set_x(19);
-    is $var,    19,     "binding private instance attribute (3)";
+    is $var,    19,     'binding $x instance attribute (3)';
 }
 
 # Public class attributes
+#?rakudo skip 'class attributes'
 {
     my $var = 42;
     class Klass3 { our $.x; method bind { $.x := $var } }
@@ -60,6 +60,7 @@ plan 12;
 }
 
 # Private class attributes
+#?rakudo skip 'class attributes'
 {
     my $var = 42;
     class Klass4 {
