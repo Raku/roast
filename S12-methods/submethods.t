@@ -42,10 +42,10 @@ Basic submethod tests. See L<S12/"Submethods">
 {
   class Baz         {
       has $.baz_blarb = 0;
-      has $.grtz_blarb = 0;
       submethod blarb() { $!baz_blarb++ } 
   }
   class Grtz is Baz {
+      has $.grtz_blarb = 0;
       submethod blarb() { $!grtz_blarb++ } 
   }
 
