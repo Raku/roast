@@ -55,7 +55,7 @@ Basic submethod tests. See L<S12/"Submethods">
 
   lives_ok { $baz.blarb },      'can call submethod on parent class';
   is $baz.baz_blarb,         1, "Baz's submethod blarb was called";
-  is $baz.grtz_blarb,        0, "Grtz's submethod blarb was not called";
+  is $grtz.grtz_blarb,       0, "Grtz's submethod blarb was not called";
 
   lives_ok { $grtz.blarb },     'can call submethod on child class';
   is $grtz.baz_blarb,        0, "Baz's submethod blarb was not called";
@@ -102,15 +102,14 @@ Basic submethod tests. See L<S12/"Submethods">
 };
 
 # BUILD with signatures that don't map directly to attributes
-#?rakudo skip 'BUILD'
 {
   class ClassC
   {
     has $.double_value;
 
-    submethod BUILD ( $value = 1 )
+    submethod BUILD ( :$value = 1 )
     {
-      $.double_value = $value * 2;
+      $!double_value = $value * 2;
     }
   }
 
