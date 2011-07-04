@@ -121,18 +121,12 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 38 + @maps*2;
+plan 38 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
   is ord($char), $code, "ord() works for $descr";
   is chr($code), $char, "chr() works for $descr";
-}
-
-for @maps -> $char, $code {
-   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
-   is ord(:string($char)), $code, "ord() works for $descr with named args";
-   is chr(:graph($code)), $char, "chr() works for $descr with named args";
 }
 
 for 0...31 -> $code {
@@ -146,7 +140,8 @@ is 65.chr, 'A', "there's a .chr method";
 #?rakudo skip 'multi-arg variants of chr not in place yet'
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 
-ok not defined(ord("")), 'ord("") returns an undefined value';
+#?rakudo skip 'ord of empty string'
+ok !defined(ord("")), 'ord("") returns an undefined value';
 
 # RT #65172
 #?rakudo skip 'RT 65172'
