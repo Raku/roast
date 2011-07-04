@@ -54,7 +54,6 @@ use Test;
     ok $ok, "declaring a constant in terms of another constant works";
 }
 
-#?rakudo skip 'RT 66636: package-scoped constant'
 {
     package ConstantTest {
         constant yak = 'shaving';
@@ -62,7 +61,6 @@ use Test;
     is ConstantTest::yak, 'shaving', 'constant is "our"-scoped';
 }
 
-#?rakudo skip 'RT 66636: package-scoped constant'
 {
     package ConstantTest2 {
         our constant yak = 'shaving';

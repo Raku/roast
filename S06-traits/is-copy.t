@@ -74,7 +74,6 @@ plan 19;
 }
 
 # RT #76804
-#?rakudo skip 'RT 76804'
 {
     sub f($arg is copy) {
         my $other;

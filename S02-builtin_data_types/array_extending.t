@@ -46,7 +46,6 @@ plan 21;
         'defined @array[$index_out_of_bounds] should not have altered @array';
 }
 
-#?rakudo skip 'whatever closure'
 {
     my @array   = <a b c d>;
     my $defined;
@@ -96,7 +95,6 @@ plan 21;
     @b = (6, @a);
     is +@b, 4, 'assigning list with extended array to an array';
     my $s = @a.join(':');
-    #?rakudo skip 'Stringy vs Str concatenation'
     is $s, '::b', 'join on extended array';
     my $n = + @a.grep({ $_ eq 'b'});
     is $n, 1, 'grep on extended array';
