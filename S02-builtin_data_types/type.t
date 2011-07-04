@@ -36,6 +36,7 @@ my Str $bar;
 
 my $baz of Int;
 {
+    #?rakudo todo 'of'
     dies_ok({$baz = 'xyz'},      'of Int restricts to integers');
     is(($baz = 42),       42,    'of Int is an integer');
 }
@@ -46,7 +47,7 @@ my $baz of Int;
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
-    eval_lives_ok('my num $alpha = 1',    'Has native type num');
+    eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
     eval_dies_ok('my num $alpha = Nil', 'native num type cannot be undefined');
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }
