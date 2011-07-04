@@ -35,6 +35,7 @@ use Test;
     eval_dies_ok 'foo2 == 42', 'constants are lexically scoped';
 }
 
+#?rakudo skip 'constants as type constraints'
 {
     constant foo3 = 42;
     lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
@@ -42,6 +43,7 @@ use Test;
     dies_ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
 }
 
+#?rakudo skip 'non-literal constants'
 {
     my $ok;
 
@@ -87,6 +89,7 @@ use Test;
     ok $ok, "declaring a constant in terms of COMPILING constant works";
 }
 
+#?rakudo skip 'constant hashes'
 {
     my $ok;
 
@@ -108,6 +111,7 @@ use Test;
     ok $ok, "declaring a constant in terms of COMPILING hash constant works";
 }
 
+#?rakudo skip 'array constants'
 {
     my $ok;
 
@@ -129,6 +133,7 @@ use Test;
     ok $ok, "declaring a constant in terms of COMPILING hash constant works";
 }
 
+#?rakudo skip 'typed constants'
 {
     my $ok;
 
@@ -229,7 +234,6 @@ use Test;
     is $x, 64522, 'constant after += has not changed';
 
     sub con { 64522 }
-    #?rakudo todo '++constant_returning_sub()'
     dies_ok { ++con }, "constant-returning sub won't increment";
     is con, 64522, 'constant-returning sub after ++ has not changed';
 }
