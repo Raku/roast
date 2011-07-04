@@ -38,7 +38,6 @@ is &both.signature, :(Mu *@_, Mu *%_),
    'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used';
 is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
    'can call sub with both named and positional params used';
-#?rakudo todo 'undef Stringy'
 is both(), '',
    'sub using both named and position params works with no params';
 
