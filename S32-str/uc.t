@@ -50,6 +50,7 @@ is ~(0.lcfirst),    ~0, '.lcfirst on Int';
 
 #?DOES 4
 #?niecza skip 'but RoleName'
+#?rakudo skip 'but RoleName'
 {
     role A {
         has $.thing = 3;
