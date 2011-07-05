@@ -11,7 +11,7 @@ my @p1 = (1=>'a');
 my @p2 = 1=>'a', 1=>'b';
 my @p3 = 1=>'a', 42;
 
-sub catWhat (*@a) { [~] map -> $v { WHAT($v) }, @a; }
+sub catWhat (*@a) { [~] map -> $v { WHAT($v).gist }, @a; }
 
 is catWhat(@p1), 'Pair()', 'array of single Pair holds a Pair';
 is catWhat(@p2), 'Pair()Pair()', 'array of Pairs holds Pairs';
