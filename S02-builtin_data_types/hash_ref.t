@@ -25,7 +25,6 @@ plan 32;
 # basic hash creation w/ comma separated key/values
 {
     my $hash = hash("1st", 1);
-    #?rakudo todo 'isa Hash'
     isa_ok $hash, Hash;
     is $hash{"1st"}, 1, 'comma separated key/value hash creation works';
     is $hash<1st>,   1, 'unquoted <key> fetching works';
@@ -33,7 +32,6 @@ plan 32;
 
 {
     my $hash = hash("1st", 1, "2nd", 2);
-    #?rakudo todo 'isa Hash'
     isa_ok $hash, Hash;
     is $hash{"1st"}, 1,
       'comma separated key/value hash creation works with more than 1st pair';
@@ -44,7 +42,6 @@ plan 32;
 # hash slicing
 {
     my $hash = {'1st' => 1, '2nd' => 2, '3rd' => 3};
-    #?rakudo todo 'isa Hash'
     isa_ok $hash, Hash;
 
     my @slice1 = $hash{"1st", "3rd"};
@@ -70,7 +67,6 @@ plan 32;
 
 # hashref assignment using {}
 # L<S06/Anonymous hashes vs blocks/So you may use sub or hash or pair to disambiguate:>
-#?rakudo todo 'isa Hash'
 {
     my $hash_a = { a => 1, b => 2 };
     isa_ok $hash_a, "Hash";
@@ -80,6 +76,7 @@ plan 32;
     isa_ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
     isa_ok $hash_d, "Hash";
+    #?rakudo todo 'isa hash'
     my $hash_e = { pair "a", 1, "b", 2 };
     isa_ok $hash_e, "Hash";
 }
