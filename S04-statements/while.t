@@ -58,6 +58,7 @@ plan 9;
 }
 
 #?mildew skip 1
+#?rakudo todo 'bug'
 {
   my @array = 0..5;
   my $str = "";
