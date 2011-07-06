@@ -45,6 +45,7 @@ plan 53;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
 }
 
+#?rakudo skip 'backslashes'
 {
   my $a = \3;
   my $b = \3;
