@@ -92,6 +92,7 @@ is(+(6..8), 3, 'numification');
 # simple .to, .from
 {
     my $r = 1 .. 5;
+    #?rakudo 2 skip 'Range .from/.to still specced?'
     is($r.from, 1, 'range.from');
     is($r.to,   5, 'range.to');
 
@@ -103,6 +104,7 @@ is(+(6..8), 3, 'numification');
 # uneven ranges
 {
     my $r = 1 .. 4.5;
+    #?rakudo 2 skip 'Range .from/.to still specced?'
     is($r.from, 1, 'uneven range.from');
     is($r.to, 4.5, 'uneven range.to');
 
@@ -115,6 +117,7 @@ is(+(6..8), 3, 'numification');
 {
     my $inf = -Inf..Inf;
 
+    #?rakudo 2 skip 'Range .from/.to still specced?'
     is($inf.from, -Inf, 'bottom end of -Inf..Inf is -Inf (1)');
     is($inf.to, Inf, 'top end of -Inf..Inf is Inf (1)');
 
