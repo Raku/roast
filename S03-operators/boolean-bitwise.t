@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 31;
+plan 43;
 
 { # L<S03/Changes to Perl 5 operators/ "?| is a logical OR">
   # work with pure Bool's
@@ -21,8 +21,14 @@ plan 31;
   ok( ?(0    ?| 72   == True),  '?| works');
   ok( ?(42   ?| 42   == True),  '?| works');
   ok( ?(42   ?| 41   == True),  '?| works');
-  
+
+  ok( ?(infix:<?|>(True) == True), '?| works with one argument');
+  ok( ?(infix:<?|>() == False), '?| works with no arguments');
+
   isa_ok (42 ?| 41), Bool, '?| yields a Bool';
+  isa_ok infix:<?|>(True), Bool, '?| with one argument yields a Bool';
+  isa_ok infix:<?|>(), Bool, '?| with no arguments yields a Bool';
+
 }
 
 { # L<S03/Changes to Perl 5 operators/ "?& is a logical AND">
@@ -38,8 +44,13 @@ plan 31;
   ok( ?(3  ?& 12     == True),  '?& works');
   ok( ?(3  ?& 13     == True),  '?& works');
   ok( ?(13 ?& 3      == True),  '?& works');
-  
+
+  ok( ?(infix:<?&>(False) == False), '?& works with one argument');
+  ok( ?(infix:<?&>() == True), '?& works with no arguments');
+
   isa_ok (42 ?& 41), Bool, '?& yields a Bool';
+  isa_ok infix:<?&>(True), Bool, '?& with one argument yields a Bool';
+  isa_ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
 }
 
 { ## L<S03/Changes to Perl 5 operators/ "?^ is a logical XOR">
@@ -55,5 +66,10 @@ plan 31;
   ok( ?(42   ?^ 42   == False), '?^ works');
   ok( ?(42   ?^ 41   == False),  '?^ works');
   
+  ok( ?(infix:<?^>(True) == True), '?^ works with one argument');
+  ok( ?(infix:<?^>() == False), '?^ works with no arguments');
+
   isa_ok (42 ?^ 41), Bool, '?^ yields a Bool';
+  isa_ok infix:<?^>(True), Bool, '?^ with one argument yields a Bool';
+  isa_ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
