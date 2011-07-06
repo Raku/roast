@@ -9,7 +9,7 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan 27;
+plan 29;
 
 # Indexing lists
 {
@@ -160,6 +160,15 @@ plan 27;
     $rt66304 = ( 11, $x, 22 );
     dies_ok { $rt66304[1] = 'rw' }, 'variable List element is immutable';
     is $x, 44, 'variable not changed via assignment to list element';
+}
+
+# nom regression bug
+{
+    my $x = List.new('bacon');
+    my $y = $x.Str;
+    my $z = $x.Str;
+    is $y, 'bacon', '3rd-party reification of List doesn't duplicate rest'
+    is $z, 'bacon', '3rd-party reification of List doesn't duplicate rest'
 }
 
 done;
