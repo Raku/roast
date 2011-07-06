@@ -56,9 +56,11 @@ is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
+#?rakudo skip 'i'
 is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 #?DOES 4
+#?rakudo skip 'Complex.roots'
 {
     for (8i).roots(4) -> $z {
         is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
@@ -76,6 +78,7 @@ is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 
 # Rat ** a large number
 ok(1.015 ** 200 !~~ NaN, "1.015 ** 200 is not NaN");
+#?rakudo todo 'big numbers'
 is_approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
 
 done;
