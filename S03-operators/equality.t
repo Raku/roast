@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 32;
 
 # adapted from t/operators/eq.t and t/operators/cond.t
 # relational ops are in relational.t
@@ -38,6 +38,11 @@ ok(2 == 2,         "== true");
 ok(!(2 == 3),      "== false");
 ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
+
+ok infix:<==>(False), "== with one argument is correct";
+ok  infix:<==>(),     "== with no arguments is correct";
+ok infix:<!=>(False), "!= with one argument is correct";
+ok  infix:<!=>(),     "!= with no arguments is correct";
 
 #L<S03/Negated relational operators>
 ok(2 !== 3,         "!== true");
