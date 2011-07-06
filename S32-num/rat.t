@@ -135,11 +135,14 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 #?rakudo todo "NaN.Rat == NaN"
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
+#?rakudo skip "Infinite Rat"
+{
 is Inf.Rat, Inf, "Inf.Rat == Inf";
 is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
 # RT #74648
 isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
+}
 
 # Quick test of some basic mixed type math
 
