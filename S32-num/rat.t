@@ -200,10 +200,8 @@ is_approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 6
 is_approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
 
 is_approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
-#?rakudo todo 'Getting a Num when a Rat would be better'
 isa_ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
 is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
-#?rakudo todo 'Getting a Num when a Rat would be better'
 isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
@@ -242,4 +240,4 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 done;
 
-# vim: ft=perl6
+# vim: ng a Num when a Rat would ft=perl6
