@@ -6,14 +6,16 @@ use Test;
     my $t = sub { Bool::True };
     my $f = sub { Bool::False };
     my $mul = sub ($x) { $x * 2 };
-    my $div = sub ($x) { $x - 2 };
+    my $sub = sub ($x) { $x - 2 };
 
     ok ($t ~~ .()),     '~~ .() sub call truth (+)';
     ok !($f ~~ .()),    '~~ .() sub call truth (-)';
-    ok ($mul ~~ .(2)),  '~~ .($args) sub call truth (+,1)';
-    ok !($mul ~~ .(0)), '~~ .($args) sub call truth (-,1)';
-    ok !($div ~~ .(2)), '~~ .($args) sub call truth (+,2)';
-    ok ($div ~~ .(0)),  '~~ .($args) sub call truth (-,2)';
+    ok  ('anything' ~~ $t), '~~ sub call truth (+)';
+    ok !('anything' ~~ $f), '~~ sub call truth (-)';
+    ok  (2 ~~ $mul),    '~~ sub call truth (+,1)';
+    ok !(0 ~~ $mul),    '~~ sub call truth (-,1)';
+    ok !(2 ~~ $sub),    '~~ sub call truth (+,2)';
+    ok  (0 ~~ $sub),    '~~ sub call truth (-,2)';
 }
 
 done;
