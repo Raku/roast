@@ -22,15 +22,16 @@ plan 10;
 {
     # interpolating into double quotes results in a Str
     my $a = 3;
+    #?rakudo todo 'type of interpolation literal'
     ok "$a" ~~ Str, '"$a" results in a Str';
     ok "{3}" ~~ Str, '"{3}" results in a Str';
 
     # RT #76234
-    #?rakudo todo "RT 76234, Nil stringy interpolation"
     is "{}", '', 'Interpolating an empty block is cool';
 }
 
 #?niecza skip 'Parcel.max'
+#?rakudo skip 'Parcel.max'
 {
     my $rt65538_in = qq[line { (1,2,3).min }
 line 2

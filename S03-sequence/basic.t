@@ -94,6 +94,7 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric sequenc
 
 is (False, &prefix:<!> ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
+#?rakudo skip 'loops'
 is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
 is (False, { !$_ } ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
@@ -133,9 +134,11 @@ is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
 
 
 # RT #75698
+#?rakudo skip 'junctions'
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
+#?rakudo todo 'mysterious'
 isa_ok (1...()), Failure,
     'empty list on right side of sequence operator does not cause infinite loop';
 
