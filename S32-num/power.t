@@ -60,7 +60,6 @@ is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 #?DOES 4
-#?rakudo skip 'Complex.roots'
 {
     for (8i).roots(4) -> $z {
         is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
