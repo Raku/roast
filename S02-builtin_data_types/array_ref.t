@@ -7,6 +7,7 @@ plan 45;
 # array_ref of strings
 
 my $array_ref1 = ("foo", "bar", "baz");
+#?rakudo todo 'Seq'
 isa_ok($array_ref1, Seq);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
