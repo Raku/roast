@@ -141,7 +141,6 @@ isa_ok(1 / 1, Rat);
     ok($a == 80000.0, 'trailing zeros compare correctly');
 }
 
-#?rakudo skip 'trailing zeros'
 {
     my $a = 1.0000000000000000000000000000000000000000000000000000000000000000000e1;
     isa_ok($a, Num);

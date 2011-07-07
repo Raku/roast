@@ -12,7 +12,6 @@ class CoercionTest {
 
 my $o = CoercionTest.new();
 
-#?rakudo skip 'Stringy'
 #?niecza skip 'Stringy'
 is ~$o, 'foo', 'method Stringy takes care of correct stringification';
 ok +$o == 1.2, 'method Numeric takes care of correct numification';

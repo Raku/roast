@@ -259,7 +259,6 @@ use Test;
              'assign constant its own value from expression';
 }
 
-#?rakudo skip 'RT 69967'
 {
     constant C = 6;
     class A {

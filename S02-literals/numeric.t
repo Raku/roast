@@ -28,7 +28,6 @@ ok 1+1i ~~ Numeric, '1+1i is Numeric';
 nok 1+1i ~~ Real, '1+1i is not Real';
 
 # RT #74640
-#?rakudo skip 'long digit strings in nom'
 is_approx 3.14159265358979323846264338327950288419716939937510e0,
           3.141592, 'very long Num literals';
 

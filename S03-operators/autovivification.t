@@ -113,7 +113,6 @@ plan 23;
     is $x, 5, '*= autovivifies with correct neutral element (without type constraint)';
 }
 
-#?rakudo skip 'Hash element autoviv'
 {
     my Int %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (with Int proto on hash items)';
