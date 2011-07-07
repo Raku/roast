@@ -87,13 +87,11 @@ my $undefined;
 my @odd_list1 = (1, $undefined, 2, $undefined, 3);
 
 my $joined2e = join(':', @odd_list1);
-#?rakudo todo "Mu in list is not handled properly by join"
 is($joined2e, "1::2::3", 'join(":", @odd_list1) works');
 
 my @odd_list2 = (1, Mu, 2, Mu, 3);
 
 my $joined2f = join(':', @odd_list2);
-#?rakudo todo "Mu in list is not handled properly by join"
 is($joined2f, "1::2::3", 'join(":", @odd_list2) works');
 
 # should these even be tests ???

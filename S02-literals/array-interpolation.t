@@ -27,7 +27,6 @@ plan 12;
 
   is ~@array, "a b c d e f g h",
     "arrays with embedded array references stringify correctly (1)";
-  #?rakudo todo 'array stringification'
   is "@array[]", "a b c d e f g h", "arrays with embedded array references stringify correctly (2)";
 }
 
