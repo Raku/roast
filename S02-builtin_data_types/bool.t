@@ -72,6 +72,7 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #65514
 #?niecza skip "general but"
+#?rakudo skip 'but'
 {
     ok (0 but Bool::True), 'Bool::True works with "but"';
     is (0 but Bool::True), 0, 'Bool::True works with "but"';
@@ -79,12 +80,14 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
 }
 
+#?rakudo skip 'key'
 {
     is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
 #?niecza skip ".pick"
+#?rakudo skip ".pick"
 {
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';
