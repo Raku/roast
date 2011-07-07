@@ -154,6 +154,7 @@ lives_ok { (1 ... 5).perl }, 'Can take .perl of sequence';
 is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
     'eval($sequence.perl) reproduces result list';
 
+#?rakudo todo 'Z~'
 is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {
@@ -196,6 +197,7 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two sequen
 {
     my @a = 1, 2, 4 ... 64;
     is @a.elems, 7, "1, 2, 4 ... 64 generates a sequence with seven elements...";
+    #?rakudo todo 'types'
     is @a.grep(Int).elems, @a.elems, "... all of which are Ints";
 }
 
@@ -216,6 +218,7 @@ is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
     '1, +* works for sequence';
 
 # RT #75768
+#?rakudo todo 'RT 75768'
 is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
 
 {
@@ -225,11 +228,13 @@ is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
     is (1, 2 ...^ *>5), (1,2,3,4,5), "exclusive sequence with code on the rhs";
 }
 
+#?rakudo todo 'sequence + last'
 is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in the last item of lhs";
 
 {
 	is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
 	my @fib := (0, 1, *+* ... * );
+    #?rakudo todo '@fib ... 8'
 	is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
