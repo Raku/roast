@@ -30,6 +30,7 @@ is ([~^] ()), '', "[~^] () eq ''";
 is ([&] ()).perl, all().perl, "[&] () eq all()";
 is ([|] ()).perl, any().perl, "[|] () eq any()";
 is ([^] ()).perl, one().perl, "[^] () eq one()";
+#?rakudo 16 skip 'reduce chained ops'
 is ([!==] ()), Bool::True, "[!==] () eq True";
 is ([==] ()), Bool::True, "[==] () eq True";
 is ([<] ()), Bool::True, "[<] () eq True";
@@ -49,7 +50,7 @@ is ([ge] ()), Bool::True, "[ge] () eq True";
 #?rakudo 2 skip '=!= NYI'
 is ([=:=] ()), Bool::True, "[=:=] () eq True";
 is ([!=:=] ()), Bool::True, "[!=:=] () eq True";
-#?rakudo skip '=== still in PIR'
+#?rakudo 4 skip 'reducing chained ops'
 is ([===] ()), Bool::True, "[===] () eq True";
 is ([!===] ()), Bool::True, "[!===] () eq True";
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
@@ -57,14 +58,16 @@ is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::False, "[||] () eq False";
 # RT #65164 implement [^^]
+#?rakudo skip '[^^]'
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
+#?rakudo skip '[Z]'
 is ([Z] ()), [], "[Z] () eq []";
 
+#?rakudo 3 skip 'reducing chained ops'
 is ([==] 3), Bool::True, 'unary [==]';
 is ([!=] 3), Bool::True, 'unary [!=]';
-#?rakudo skip "[!==] not implemented"
 is ([!==] 3), Bool::True, 'unary [!==]';
 
 # vim: ft=perl6
