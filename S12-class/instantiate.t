@@ -12,8 +12,8 @@ ok(defined($foo1), 'instantiated a class');
 
 # Instantiation with initializing attributes.
 class Foo2 {
-    has $!a;
-    has $!b;
+    has $.a;
+    has $.b;
     method check {
         $!a + $!b
     }
