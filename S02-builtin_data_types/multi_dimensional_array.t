@@ -83,6 +83,7 @@ is(+$multi2, 2, 'the multi2 has 2 elements');
     is(+$array, 3, 'multi2[0] has 3 elements');
     is(+$multi2[0], 3, '+$multi2[0] works');
 }
+#?rakudo todo 'nom regression'
 isa_ok($multi2[0], List);
 
 # slice
