@@ -22,6 +22,7 @@ plan 13;
     is 'RT71462' ~~ Int,      False, '~~ Int returns a Bool (1)';
     is 5         ~~ Int,      True,  '~~ Int returns a Bool (2)';
     is 'RT71462' ~~ Set,      False, '~~ Set returns a Bool (1)';
+    #?rakudo skip 'set'
     is set(1, 3) ~~ Set,      True,  '~~ Set returns a Bool (2)';
     is 'RT71462' ~~ Numeric,  False, '~~ Numeric returns a Bool (1)';
     is 5         ~~ Numeric,  True,  '~~ Numeric returns a Bool (2)';
