@@ -147,7 +147,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
 }
 
 ok "foo" ~~ *, 'thing ~~ * is true';
-#?rakudo todo 'nom regression'
 ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
 
 done();

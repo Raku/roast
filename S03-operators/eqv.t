@@ -93,7 +93,6 @@ plan 53;
 {
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
-  #?rakudo todo 'nom regression'
   ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
