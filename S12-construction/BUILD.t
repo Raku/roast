@@ -83,21 +83,21 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
 }
 
 # RT #67888
+#?rakudo skip 'RT #67888'
 {
-my $counter = 0;
+    my $counter = 0;
 
-class TestCompiler is Perl6::Compiler {
-    submethod BUILD {
-        $counter++;
+    class TestCompiler is Perl6::Compiler {
+        submethod BUILD {
+            $counter++;
+        }
     }
+
+    TestCompiler.new;
+    is $counter, 1, "testing BUILD in compiler subclass";
 }
 
-TestCompiler.new;
-#?rakudo todo 'RT #67888'
-is $counter, 1, "testing BUILD in compiler subclass";
-}
-
-#?rakudo todo 'method BUILD should warn'
+#?rakudo skip 'method BUILD should warn'
 {
     BEGIN { @*INC.push: 't/spec/packages' }
     use Test::Util;
