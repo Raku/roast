@@ -24,8 +24,7 @@ is OwnConstr.in_own, 0,                   "own constructor was not called";
 
 ok OwnConstr.own ~~ OwnConstr, "own construction instantiated its class";
 is OwnConstr.own.x, 42,        "attribute was set from our constructor";
-#?rakudo todo 'unknown'
-is OwnConstr.in_own, 1,            "own constructor was actually called";
+is OwnConstr.in_own, 2,        "own constructor was actually called";
 
 
 # L<"http://www.mail-archive.com/perl6-language@perl.org/msg20241.html">
@@ -73,6 +72,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 
     my $o = $f(<a b>);
     isa_ok $o, SeqAttr, 'Created SeqAttr object';
+    #?rakudo todo 'Seq'
     isa_ok $o.x, Seq, '...with a Seq attribute';
     is ($o.x)[0], 'a', '...with the right first element';
     is ($o.x)[1], 'b', '...and the right second element.';
@@ -89,6 +89,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 }
 
 # RT #76476
+#?rakudo skip 'RT 76476, augment'
 {
     use MONKEY_TYPING;
     class MonkeyNew { has $.x is rw };
@@ -97,7 +98,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
             self.bless(*, :x('called'));
         }
     };
-    #?rakudo todo 'RT 76476'
     is MonkeyNew.new().x, 'called', 'monkey-typed .new() method is called';
 }
 
