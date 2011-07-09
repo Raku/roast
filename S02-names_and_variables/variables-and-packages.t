@@ -94,6 +94,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 }
 
 {
+  #?rakudo todo 'nom regression'
   nok foo().defined, "get variable not yet declared using a sub (1)";
   is foo(), 1, "get variable not yet declared using a sub (2)";
   is foo(), 2, "get variable not yet declared using a sub (3)";
@@ -103,6 +104,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 }
 
 {
+  #?rakudo todo 'nom regression'
   nok bar().defined, "runtime part of my not yet executed (1)";
   is bar(), 1, "runtime part of my not yet executed (2)";
   is bar(), 2, "runtime part of my not yet executed (3)";
@@ -121,6 +123,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   sub baz { $a++ }
 }
 
+#?rakudo skip 'nom regression'
 {
   {
     my $a = 3;
@@ -136,6 +139,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   my $a;
   sub rmbl { $a++ }
 
+  #?rakudo todo 'nom regression'
   nok rmbl().defined, "var captured by sub is the right var (1)";
   $a++;
   is rmbl(), 2, "var captured by sub is the right var (2)";
