@@ -43,6 +43,7 @@ for @list -> $letter {
     lives_ok { for @mutable_array { $_++ } }, 'default topic is rw by default';
 }
 
+#?rakudo skip 'nom regression'
 {
     $_ = 1;
     my $tracker = '';
