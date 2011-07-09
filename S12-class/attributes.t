@@ -39,6 +39,7 @@ class ManyTest {
     has ($a, $b);
     has ($.c, $.d);
     has ($!e, $!f);
+    submethod BUILD(:$!a, :$!b, :$!c, :$!d, :$!e, :$!f) { }
     method t1 {
         $a + $b
     }
