@@ -5,6 +5,7 @@ plan 3;
 
 #L<S06/Operator overloading>
 
+#?rakudo todo 'nom regression'
 {
     ok eval(q[
         sub postfix:<§> ($x) {
@@ -14,6 +15,7 @@ plan 3;
     ]) == 6, 'Can define postfix operator';
 }
 
+#?rakudo todo 'nom regression'
 {
     ok eval(q[
         sub postfix:<!>($arg) {
