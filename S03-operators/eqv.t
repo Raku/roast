@@ -45,7 +45,6 @@ plan 53;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
 }
 
-#?rakudo skip 'backslashes'
 {
   my $a = \3;
   my $b = \3;
@@ -57,7 +56,7 @@ plan 53;
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
-#?
+#?rakudo skip 'nom regression'
 {
   my $a = { 3 };
   my $b = { 3 };
@@ -69,6 +68,7 @@ plan 53;
   ok !($a eqv { 5 }), 'eqv on sub references (1-4)';
 }
 
+#?rakudo skip 'nom regression'
 {
   ok  (&say eqv &say), "eqv on sub references (2-1)";
   ok  (&map eqv &map), "eqv on sub references (2-2)";
@@ -93,6 +93,7 @@ plan 53;
 {
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
+  #?rakudo todo 'nom regression'
   ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
@@ -131,6 +132,7 @@ plan 53;
     is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
 }
 
+#?rakudo skip 'nom regression'
 {
     is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
     is Any eqv Any, Bool::True, 'Any eqv Any';

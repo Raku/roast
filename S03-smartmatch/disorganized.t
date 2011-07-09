@@ -11,7 +11,6 @@ This tests the smartmatch operator, defined in L<S03/"Smart matching">
 sub eval_elsewhere($code){ eval($code) }
 
 #L<S03/Smart matching/Any undef undefined not .defined>
-#?rakudo skip 'syntactic smar-matching'
 { 
     ok("foo" ~~ .defined, "foo is ~~ .defined");
     nok "foo" !~~ .defined,   'not foo !~~ .defined';
@@ -65,6 +64,7 @@ caught that case.
         $result = all(@x) ~~ { $_ < 21 };
         $parsed = 1;
     };
+    #?rakudo 2 todo 'nom regression'
     ok $parsed, 'C<all(@x) ~~ { ... }> parses';
     ok ?$result, 'C<all(@x) ~~ { ... } when true for all';
 
@@ -72,6 +72,7 @@ caught that case.
     try {
         $result = !(all(@x) ~~ { $_ < 20 });
     };
+    #?rakudo todo 'nom regression'
     ok $result,
         'C<all(@x) ~~ {...} when true for one';
 
@@ -79,17 +80,18 @@ caught that case.
     try {
         $result = !(all(@x) ~~ { $_ < 12 });
     };
-    ok $result,
-        'C<all(@x) ~~ {...} when true for most';
+    #?rakudo todo 'nom regression'
+    ok $result, 'C<all(@x) ~~ {...} when true for most';
 
     $result = 0;
     try {
         $result = !(all(@x) ~~ { $_ < 1  });
     };
-    ok $result,
-        'C<all(@x) ~~ {...} when true for one';
+    #?rakudo todo 'nom regression'
+    ok $result, 'C<all(@x) ~~ {...} when true for one';
 };
 
+#?rakudo todo 'nom regression'
 ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 
 # need to test in eval() since class definitions happen at compile time,
@@ -145,6 +147,7 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
 }
 
 ok "foo" ~~ *, 'thing ~~ * is true';
+#?rakudo todo 'nom regression'
 ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
 
 done();

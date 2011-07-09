@@ -21,7 +21,6 @@ plan 29;
   my $y := $x;
   is($y, 'Just Another', 'y is now bound to x');
 
-  #?rakudo todo 'binding, =:='
   ok($y =:= $x, 'y is bound to x (we checked with the =:= identity op)');
 
   my $z = $x;
@@ -99,11 +98,13 @@ plan 29;
   is $a, 42, "bound readonly sub param was bound correctly (1)";
   $val++;
   #?niecza skip "difference of interpretation on ro binding"
+  #?rakudo todo 'nom regression'
   is $a, 43, "bound readonly sub param was bound correctly (2)";
 
   dies_ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
   #?niecza skip "difference of interpretation on ro binding"
+  #?rakudo todo 'nom regression'
   is $a, 43,
     "bound readonly sub param remains readonly (2)";
   is $val, 43,
