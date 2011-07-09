@@ -56,7 +56,6 @@ plan 53;
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
-#?rakudo skip 'nom regression'
 {
   my $a = { 3 };
   my $b = { 3 };
@@ -68,7 +67,6 @@ plan 53;
   ok !($a eqv { 5 }), 'eqv on sub references (1-4)';
 }
 
-#?rakudo skip 'nom regression'
 {
   ok  (&say eqv &say), "eqv on sub references (2-1)";
   ok  (&map eqv &map), "eqv on sub references (2-2)";
@@ -131,7 +129,6 @@ plan 53;
     is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
 }
 
-#?rakudo skip 'nom regression'
 {
     is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
     is Any eqv Any, Bool::True, 'Any eqv Any';
