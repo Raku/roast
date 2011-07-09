@@ -67,8 +67,10 @@ ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 # junctive and
 
+#?rakudo skip 'nom regression'
 ok(  ?(   (1 & 2 | 3) ==3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
+#?rakudo skip 'nom regression'
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
 ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
@@ -80,11 +82,13 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
     eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
+#?rakudo skip 'nom regression'
 {
     my Mu $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
     ok(!($a == 1), 'junctive or binds more tightly then abs (1)');
 }
 
+#?rakudo skip 'nom regression'
 {
     my Mu $b = ((abs -1) ^ -1); # -> (1 ^ -1)
     ok($b == 1, "this is true because only one is == 1");
@@ -212,6 +216,7 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     'list associativity only works between identical operators';
 
+#?rakudo skip 'nom regression'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
     # Needs careful following of STD to get it right. :-)

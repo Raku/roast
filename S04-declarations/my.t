@@ -22,7 +22,6 @@ plan 68;
 {
     my $ret = 42;
     lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
-    #?rakudo todo 'scoping bug'
     is $ret, "",                      'my() variable is visible (2)';
 }
 
@@ -199,7 +198,7 @@ my $z = 42;
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
-    #?rakudo skip 'infinite loop? (noauto)'
+    #?rakudo todo 'fails'
     eval_lives_ok 'my $a;do { 1/0; my $x; CATCH { $a = $x.defined } }';
 
     {
@@ -211,7 +210,7 @@ my $z = 42;
 
     {
         my $a;
-        #?rakudo skip 'infinite loop? (noauto)'
+        #?rakudo todo 'fails'
         eval_lives_ok 'do { 1/0;my Int $x;CATCH { $a = ?($x ~~ Int) } }';
         #?rakudo todo 'previous test skipped'
         ok $a, 'unreached declaration in effect at block start';
@@ -233,8 +232,8 @@ my $z = 42;
 }
 
 # used to be RT #76366, #76466
+#?rakudo skip 'nom regression'
 {
-    #?rakudo skip 'RT 76466'
     nok access_lexical_a().defined,
         'can call our-sub that accesses a lexical before the block was run';
     {

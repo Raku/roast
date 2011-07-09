@@ -13,10 +13,10 @@ Verify that autoincrement/autodecrement work properly.
 
 =end description
 
-#?rakudo skip 'unimpl Mu++'
 my $a = Mu;
 is($a++, 0, 'Mu++ == 0');
 
+#?rakudo todo 'nom regression'
 $a = Mu;
 nok(defined($a--), 'Mu-- is undefined');
 

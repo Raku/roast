@@ -21,26 +21,35 @@ isa_ok(+'1.9e3', Num, "+'1.9e3' is a Num");
 is(+'Inf', Inf, "+'Inf' is Inf");
 is(+'Info', 0, "+'Info' is 0");
 is(+'-Inf', -Inf, "+'-Inf' is -Inf");
+#?rakudo todo 'nom regression'
 is(+'-Info', 0, "+'-Info' is 0");
 is(+'NaN', NaN, "+'NaN' is NaN");
 is(+'NaNa', 0, "+'NaNa' is 0");
 
 {
     # XXX Not sure whether the following tests are correct
+    #?rakudo todo 'nom regression'
     is(+'Inf ',      Inf, "numification of strings with whitspace (1)");
     is(+'Inf o',       0, "numification of strings with whitspace (2)");
+    #?rakudo todo 'nom regression'
     is(+'NaN ',      NaN, "numification of strings with whitspace (3)");
     is(+'NaN a',       0, "numification of strings with whitspace (4)");
+    #?rakudo todo 'nom regression'
     is(+"Inf\t",     Inf, "numification of strings with whitspace (5)");
     is(+"Inf\to",      0, "numification of strings with whitspace (6)");
+    #?rakudo todo 'nom regression'
     is(+"NaN\t",     NaN, "numification of strings with whitspace (7)");
     is(+"NaN\ta",      0, "numification of strings with whitspace (8)");
+    #?rakudo todo 'nom regression'
     is(+"Inf\n",     Inf, "numification of strings with whitspace (9)");
     is(+"Inf\no",      0, "numification of strings with whitspace (10)");
+    #?rakudo todo 'nom regression'
     is(+"NaN\n",     NaN, "numification of strings with whitspace (11)");
     is(+"NaN\na",      0, "numification of strings with whitspace (12)");
+    #?rakudo todo 'nom regression'
     is(+"Inf\n\t ",  Inf, "numification of strings with whitspace (13)");
     is(+"Inf\n\t o",   0, "numification of strings with whitspace (14)");
+    #?rakudo todo 'nom regression'
     is(+"NaN\n\t ",  NaN, "numification of strings with whitspace (15)");
     is(+"NaN\n\t a",   0, "numification of strings with whitspace (16)");
     is(+"3 ",          3, "numification of strings with whitspace (17)");
