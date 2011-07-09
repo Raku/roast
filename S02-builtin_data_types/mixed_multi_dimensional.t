@@ -48,13 +48,11 @@ Some deeper tests were already added.
     isa_ok(@array, Array);
 
     my %hash = ('key', 'value', 'key1', 'value1');
-    #?rakudo todo 'isa hash'
     isa_ok(%hash, Hash);
     is(+%hash.keys, 2, 'our hash has two keys');
 
     @array[0] = %hash;
     is(+@array, 1, 'the array has one value in it');
-    #?rakudo todo 'isa hash'
     isa_ok(@array[0], Hash);
     is(@array[0]{"key"}, 'value', 'got the right value for key');
     is(@array[0]<key1>, 'value1', 'got the right value1 for key1');
@@ -98,7 +96,6 @@ Some deeper tests were already added.
 # UNSPECCED
 { # Hash of Arrays
     my %hash;
-    #?rakudo todo 'isa hash'
     isa_ok(%hash, Hash);
 
     %hash<key> = [ 1, 2, 3 ];
@@ -129,7 +126,6 @@ Some deeper tests were already added.
 { # Hash of Array-refs
   # UNSPECCED
     my %hash;
-    #?rakudo todo 'isa hash'
     isa_ok(%hash, Hash);
 
     my @array = ( 1, 2, 3 );
@@ -166,7 +162,9 @@ Some deeper tests were already added.
   my $a0 = [ \%h ,'extra' ];
   my $a1 = [ \%h ];
   my $a2 = [ $hr ];
+  #?rakudo todo 'nom regression'
   is($a0.elems,2,'hash references should not get decomposed');
+  #?rakudo todo 'nom regression'
   is($a1.elems,1,'hash references should not get decomposed');
   is($a2.elems,1,'hash references should not get decomposed');
 }
@@ -176,6 +174,7 @@ Some deeper tests were already added.
     isa_ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
 }
 
+#?rakudo 18 skip 'nom regression'
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;

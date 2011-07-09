@@ -44,6 +44,7 @@ plan 84;
  isa_ok($namcu,Bit);
 }
 
+#?rakudo skip 'Regex not implemented'
 {
  my Regex $morna;
  isa_ok($morna, Regex);
@@ -233,11 +234,13 @@ plan 84;
  isa_ok($pare,Blob  );
 }
 
+#?rakudo skip 'Instant not implemented'
 {
  my Instant $paci;
  isa_ok($paci,Instant  );
 }
 
+#?rakudo skip 'Duration not implemented'
 {
  my Duration $pavo;
  isa_ok($pavo,Duration  );
@@ -323,6 +326,7 @@ plan 84;
  isa_ok($remu,Macro  );
 }
 
+#?rakudo skip 'Match not implemented'
 {
  my Match $rexa;
  isa_ok($rexa,Match  );
@@ -346,11 +350,13 @@ plan 84;
  isa_ok($reso,Class  );
 }
 
+#?rakudo skip 'Role not implemented'
 {
  my Role $cino;
  isa_ok($cino, Role );
 }
 
+#?rakudo skip 'Gramamar not implemented'
 {
  my Grammar $cire;
  isa_ok($cire,Grammar  );
@@ -380,6 +386,7 @@ plan 84;
   isa_ok($mapti, Matcher);
 }
 
+#?rakudo skip 'Proxy isa not implemented'
 {
   my Proxy $krati;
   isa_ok($krati, Proxy);
@@ -436,6 +443,7 @@ plan 84;
   ok($kansa ~~ Associative,'Associative exists');
 }
 
+#?rakudo skip 'Abstraction not implemented'
 {
   my Abstraction $sucta;
   ok($sucta ~~ Abstraction,'Abstraction exists');
