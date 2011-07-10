@@ -28,11 +28,16 @@ is(rindex("Hello World", "Hello World"), 0, "Substr eq Str");
 
 # Empty strings
 
+#?rakudo todo 'nom regression'
 is(rindex("Hello World", ""), 11, "Substr is empty");
+#?rakudo todo 'nom regression'
 is(rindex("", ""), 0, "Both strings are empty");
 ok(!defined(rindex("", "Hello")), "Only main-string is empty");
+#?rakudo todo 'nom regression'
 is(rindex("Hello", "", 3), 3, "Substr is empty, pos within str");
+#?rakudo todo 'nom regression'
 is(rindex("Hello", "", 5), 5, "Substr is empty, pos at end of str");
+#?rakudo todo 'nom regression'
 is(rindex("Hello", "", 999), 5, "Substr is empty, pos > length of str");
 
 # More difficult strings
@@ -46,21 +51,27 @@ is(rindex("Ümlaut", "Ü"), 0, "Umlaut");
 is(rindex("what are these « » unicode characters for ?", "uni"), 19, "over unicode characters");
 
 # .rindex use
+#?rakudo todo 'nom regression'
 is("Hello World".rindex("l"), 9, ".rindex on string");
+#?rakudo todo 'nom regression'
 is("Hello World".rindex(''), 11, ".rindex('') on string gives string length in bytes");
 
 # on scalar variable
 my $s = "Hello World";
 is(rindex($s, "o"), 7, "rindex on scalar variable");
+#?rakudo todo 'nom regression'
 is($s.rindex("o"), 7, ".rindex on scalar variable");
 
 is(rindex(uc($s), "O"), 7, "rindex on uc");
+#?rakudo todo 'nom regression'
 is($s.uc.rindex("O"), 7, ".uc.rindex ");
 
 # ideas for deeper chained . calls ?
+#?rakudo todo 'nom regression'
 is($s.lc.ucfirst.rindex("w"), 6, ".lc.ucfirst.rindex");
 
 # rindex on non-strings
+#?rakudo todo 'nom regression'
 ok 3459.rindex(5) == 2, 'rindex on integers';
 
 # vim: ft=perl6

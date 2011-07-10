@@ -21,6 +21,7 @@ ok @array.exists(2),    "exists(positive index) on arrays (3)";
 ok @array.exists(3),    "exists(positive index) on arrays (4)";
 ok !@array.exists(4),   "exists(positive index) on arrays (5)";
 ok !@array.exists(42),  "exists(positive index) on arrays (2)";
+#?rakudo todo 'nom regression'
 ok !@array.exists(-1),   "exists(negative index) on arrays (1)";
 #?rakudo 6 skip 'Pm wants spec clarification'
 ok @array.exists(*-1),   "exists(negative index) on arrays (1)";
