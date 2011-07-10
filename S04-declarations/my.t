@@ -198,7 +198,6 @@ my $z = 42;
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
-    #?rakudo todo 'fails'
     eval_lives_ok 'my $a;do { 1/0; my $x; CATCH { $a = $x.defined } }';
 
     {
