@@ -77,6 +77,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 {
+    #?rakudo todo 'error on pick :replace'
     dies_ok({ [1,2,3].pick(4, :replace) }, 'error on deprecated :replace');
 }
 

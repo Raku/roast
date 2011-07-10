@@ -80,13 +80,11 @@ plan 84;
  isa_ok($porsi, Array);
 }
 
-#?rakudo skip 'RT #68726: Could not build C3 linearization: ambiguous hierarchy'
 {
  my Hash $brodi;
  isa_ok($brodi, Hash);
 }
 
-#?rakudo skip 'Buf NYI'
 {
  my Buf $nacpoi;
  isa_ok($nacpoi, Buf);
@@ -212,7 +210,6 @@ plan 84;
  isa_ok($bi,Range  );
 }
 
-#?rakudo skip 'Bag not implemented'
 {
  my Bag $so;
  isa_ok($so,Bag  );
@@ -246,7 +243,6 @@ plan 84;
  isa_ok($pavo,Duration  );
 }
 
-#?rakudo skip 'KeyHash not implemented'
 {
  my KeyHash $pamu;
  isa_ok($pamu,KeyHash  );
@@ -525,13 +521,11 @@ plan 84;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
-#?rakudo skip 'Array of Foo not yet implemented'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
-#?rakudo skip 'Array of Foo not yet implemented'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');

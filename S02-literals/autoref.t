@@ -50,6 +50,7 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = \%hash;
 
+    #?rakudo todo 'backslashes, captures'
     is ~$ref.values.sort, "1 2 3", '$hashref = \%hash works (1)';
     is +$ref.values,            3, '$hashref = \%hash works (2)';
 }
@@ -168,6 +169,7 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => \%hash);
 
+    #?rakudo todo 'backslashes, captures'
     is ~$pair.value.values.sort, "1 2 3", '(key => \%hash) works (1)';
     is +$pair.value.values,            3, '(key => \%hash) works (2)';
 }
@@ -204,6 +206,7 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(\%hash));
 
+    #?rakudo todo 'backslashes, captures'
     is ~$pair.value.values.sort, "1 2 3", '(:key(\%hash)) works (1)';
     is +$pair.value.values,            3, '(:key(\%hash)) works (2)';
 }

@@ -134,7 +134,6 @@ is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
 
 
 # RT #75698
-#?rakudo skip 'junctions'
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
