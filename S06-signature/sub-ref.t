@@ -4,7 +4,7 @@ use Test;
 
 # L<S02/"Built-In Data Types"> 
 
-plan 35;
+plan 34;
 
 =begin description
 
@@ -76,7 +76,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(42),      142,    "calling an anonymous sub with a positional param";
-    is $foo.(x => 42), 142,    "calling an anonymous sub with a positional param addressed by name";
     dies_ok { $foo.() }, 
         "calling an anonymous sub expecting a param without a param dies";
     dies_ok { $foo.(42, 5) },
