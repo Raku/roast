@@ -191,7 +191,6 @@ my $z = 42;
 # &variables don't need to be pre-declared
 # (but they need to exist by CHECK)
 {
-    #?rakudo todo '&-sigiled variables'
     eval_lives_ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
     eval_dies_ok '&x()', '&x() dies when empty';
 }
