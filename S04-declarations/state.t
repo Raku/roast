@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 40;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -134,7 +134,6 @@ plan 38;
 
 # Return of a reference to a state() var
 #?rakudo skip 'references'
-#?niecza skip '\\'
 {
     my $gen = {
         state $svar = 42;
@@ -151,13 +150,11 @@ plan 38;
 
 # Anonymous state vars
 # L<http://groups.google.de/group/perl.perl6.language/msg/07aefb88f5fc8429>
+# fudged a bit on syntax
 #?pugs todo 'anonymous state vars'
 #?rakudo skip 'references and anonymous state vars'
-#?niecza skip '\\'
 {
-    # XXX -- currently this is parsed as \&state()
-    my $gen = eval '{ try { \state } }';
-    $gen //= sub { my $x; \$x };
+    my $gen = sub { \(state $ ) };
 
     my $svar_ref = $gen();               # $svar == 0
     try { $$svar_ref++; $$svar_ref++ };  # $svar == 2
@@ -165,6 +162,8 @@ plan 38;
     $svar_ref = $gen();               # $svar == 2
     is try { $$svar_ref }, 2, "anonymous state() vars";
 }
+
+eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 
 # L<http://www.nntp.perl.org/group/perl.perl6.language/20888>
 # ("Re: Declaration and definition of state() vars" from Larry)
@@ -296,5 +295,8 @@ sub bughunt1 { (state $svar) }    #OK not used
     is @tracker.join('|'), '1|1|1',
         'state var in anonymous closure in loop is not shared';
 }
+
+# niecza regression: state not working at top level
+eval_lives_ok 'state $x; $x', 'state outside control structure';
 
 # vim: ft=perl6
