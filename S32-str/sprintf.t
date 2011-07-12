@@ -60,6 +60,9 @@ is sprintf('%s', -NaN),             NaN,    'sprintf %s handles NaN';
 is sprintf('%s', Inf),              Inf,    'sprintf %s handles Inf';
 is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 
+#?rakudo skip "%\d$ doesn't work in master (as of 2010-07)"
+is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $';
+
 # RT #74610
 dies_ok {sprintf "%s"}, 'missing sprintf string argument';
 
