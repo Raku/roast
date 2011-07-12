@@ -198,6 +198,7 @@ plan 279;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
+#?rakudo skip "splice() not implemented in class 'Mu'"
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
@@ -209,6 +210,7 @@ plan 279;
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
+#?rakudo skip "splice() not implemented in class 'Mu'"
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);
@@ -258,7 +260,6 @@ my @p;
     is(@p[1],11, "//= operator parses as item assignment 4");
     my %hash;
     %hash<foo> //= hash();
-    #?rakudo todo 'autoviv'
     isa_ok(%hash<foo>, Hash, "Verify //= autovivifies correctly");
     %hash<bar> //= [];
     isa_ok(%hash<bar>, Array, "Verify //= autovivifies correctly");
@@ -281,7 +282,6 @@ my @p;
 
     my %hash;
     %hash<foo> orelse= hash();
-    #?rakudo todo 'isa and Hash'
     isa_ok(%hash<foo>, Hash, "Verify orelse= autovivifies correctly");
     %hash<bar> orelse= [];
     isa_ok(%hash<bar>, Array, "Verify orelse= autovivifies correctly");
@@ -391,6 +391,7 @@ my @p;
     is(@p[1],4, "x= operator parses as item assignment 2");
 }
 
+#?rakudo skip "splice() not implemented in class 'Mu'"
 {
     my @x = ( 'a', 'z' );
     @p = @x xx= 3, 4;
@@ -461,6 +462,7 @@ my @p;
     is(@p[1],'D', "~^= operator parses as item assignment 2");
 }
 
+#?rakudo skip 'segfault'
 {
     my $x;
     @p = $x ^^= 42, 43;
@@ -474,6 +476,7 @@ my @p;
 }
 
 # RT #76820
+#?rakudo skip 'segfault'
 {
     my $x;
     @p = $x xor= 42, 43;
@@ -585,6 +588,7 @@ sub l () { 1, 2 };
     is(@z.elems,      3,    'lhs treats $Foo::c as scalar (2)');
 }
 
+#?rakudo skip 'Cannot assign to a non-container'
 {
     my @a;
     my @z = ($(@a[0]) = l, l);
@@ -596,6 +600,7 @@ sub l () { 1, 2 };
 {
     my $a;
     my @z = (($a) = l, l, l);
+    #?rakudo todo 'item/list assignment'
     is($a.elems, 6, 'lhs treats ($a) as list');
     #?rakudo todo 'item/list assignment'
     is(@z.elems, 6, 'lhs treats ($a) as list');
@@ -699,6 +704,7 @@ sub l () { 1, 2 };
 }
 
 
+#?rakudo skip 'segfault'
 {
     my @a;
     my @b = (0,0);
@@ -745,6 +751,7 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
+#?rakudo skip 'Cannot assign to a non-container'
 {
     my @a;
     my $b = 0;
@@ -778,6 +785,7 @@ sub l () { 1, 2 };
     ok %part1  eqv %both, ',= works for hashes (hash modified)';
 }
 
+#?rakudo skip 'subst'
 {
     my $s = 'abc';
     $s .= subst('b','d');
@@ -803,10 +811,12 @@ sub l () { 1, 2 };
 
     $x = 1;
     $x max= 2;
+    #?rakudo todo 'max='
     is $x, 2, 'max= worked (positive)';
 
     $x = 3;
     $x max= 2;
+    #?rakudo todo 'max='
     is $x, 3, 'max= worked (negative)';
 }
 
@@ -853,7 +863,6 @@ sub l () { 1, 2 };
 }
 
 # RT #77142
-#?rakudo todo 'RT 77142'
 {
     my $cc = 0;
     sub called($ignored) {
@@ -862,6 +871,7 @@ sub l () { 1, 2 };
 
     dies_ok { called pi = 4 },
         'correct precedence between sub call and assignment (1)';
+    #?rakudo todo 'RT 77142'
     is $cc, 0,
         'correct precedence between sub call and assignment (2)';
 
