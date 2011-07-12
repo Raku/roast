@@ -119,7 +119,7 @@ plan 40;
 {
     my ($a, $b);
     my $gen = {
-        state $svar will start { 42 };
+        state $svar will start { $_ = 42 };
         -> { $svar++ };
     }
     $a = $gen();    # $svar == 42
