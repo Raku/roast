@@ -262,7 +262,6 @@ lives_ok({ foo_hash_ref()<foo> },
 # return should desugar to &?ROUTINE.leave, where &?ROUTINE is lexically scoped
 #    to mean the current "official" subroutine or method.
 
-#?rakudo todo 'tie return() to lexical scope'
 {
   sub userdefinedcontrol3 (&block) { block(); return 36 }
   sub userdefinedcontrol2 (&block) { userdefinedcontrol3(&block); return 24 }
@@ -291,7 +290,6 @@ class Foo {
 }
 
 #?pugs 3 todo 'return(), blocks and methods'
-#?rakudo 3 todo 'tie return() to lexical scope'
 is Foo.new.officialmeth(), 42,
     "return correctly from official method only";
 is Foo.new.officialsubmeth(), 43,
@@ -300,6 +298,7 @@ is Foo::official(), 44,
     "return correctly from official sub only";
 
 # RT #75118
+#?rakudo skip 'RT 75118'
 {
     sub named() {
         return 1, 2, :c(3);
@@ -313,7 +312,7 @@ is Foo::official(), 44,
 # RT #61732
 {
     sub rt61732_c { 1; CATCH {} }
-    #?rakudo skip 'RT #61732'
+    #?rakudo skip 'RT 61732'
     is rt61732_c(), 1, 'sub with empty catch block returns value before block';
 }
 
@@ -325,6 +324,7 @@ is Foo::official(), 44,
 # RT #63912
 {
     sub rt63912 { return 1, 2; }
+    #?rakudo todo 'RT 63912'
     lives_ok { rt63912() }, 'can call sub that returns two things (no parens)';
 }
 
