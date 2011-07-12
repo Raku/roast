@@ -581,7 +581,6 @@ sub l () { 1, 2 };
     }
 }
 
-#?rakudo skip 'Autovivify full qualified name'
 {
     my @z = ($Foo::c = l, l);
     is($Foo::c.elems, 2,    'lhs treats $Foo::c as scalar (1)');
@@ -704,7 +703,6 @@ sub l () { 1, 2 };
 }
 
 
-#?rakudo skip 'segfault'
 {
     my @a;
     my @b = (0,0);
