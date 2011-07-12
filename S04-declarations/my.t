@@ -22,6 +22,7 @@ plan 68;
 {
     my $ret = 42;
     lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
+    #?niecza skip 'Any()Any()'
     is $ret, "",                      'my() variable is visible (2)';
 }
 
@@ -188,9 +189,10 @@ my $z = 42;
 }
 
 # &variables don't need to be pre-declared
+# (but they need to exist by CHECK)
 {
     #?rakudo todo '&-sigiled variables'
-    eval_lives_ok '&x; 1', '&x does not need to be pre-declared';
+    eval_lives_ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
     eval_dies_ok '&x()', '&x() dies when empty';
 }
 
@@ -198,10 +200,12 @@ my $z = 42;
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
+    #?niecza skip 'CATCH'
     eval_lives_ok 'my $a;do { 1/0; my $x; CATCH { $a = $x.defined } }';
 
     {
         #?rakudo 2 todo 'OUTER and SETTING'
+        #?niecza 2 skip 'OUTER and SETTING'
         ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
         ok eval('not SETTING:<$x>.defined'), 'SETTING::<$x>';
         my $x;
@@ -209,6 +213,7 @@ my $z = 42;
 
     {
         my $a;
+        #?niecza 2 skip 'CATCH'
         #?rakudo todo 'fails'
         eval_lives_ok 'do { 1/0;my Int $x;CATCH { $a = ?($x ~~ Int) } }';
         #?rakudo todo 'previous test skipped'
@@ -231,15 +236,16 @@ my $z = 42;
 }
 
 # used to be RT #76366, #76466
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression, OUR::'
 {
-    nok access_lexical_a().defined,
+    nok OUR::access_lexical_a().defined,
         'can call our-sub that accesses a lexical before the block was run';
     {
         my $a = 42;
         our sub access_lexical_a() { $a }
     }
-    is  access_lexical_a(), 42,
+    #?niecza skip 'NYI'
+    is  OUR::access_lexical_a(), 42,
         'can call our-sub that accesses a lexical after the block was run';
 
 }
@@ -254,6 +260,7 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; say A.new.y',
 
 {
     #?rakudo skip 'RT 72814' 
+    #?niecza skip 'a not predeclared'
     lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }
 

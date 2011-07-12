@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 153;
+plan 152;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -145,6 +145,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # L<S02/Literals/using the \qq>
 #?rakudo skip 'q[..] with variations'
+#?niecza skip 'backslash q'
 { # \qq[] constructs interpolate in q[]
     my ( @q1, @q2, @q3, @q4 ) = ();
     @q1 = q[$foo \qq[$bar]];
@@ -164,12 +165,12 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q4[0], '$foo $bar', "and interpolates correctly");
 }
 
-{ # quote with \0 as delimiters L<news:20050101220112.GF25432@plum.flirble.org>
-    my @q = ();
-    eval "\@q = (q\0foo bar\0)";
-    is(+@q, 1, "single quote with \\0 delims are parsed ok");
-    is(@q[0], "foo bar", "and return correct value");
-};
+# quote with \0 as delimiters, forbidden by STD
+# but see L<news:20050101220112.GF25432@plum.flirble.org>
+#?rakudo skip 'retriage'
+{
+    eval_dies_ok "(q\0foo bar\0)";
+}
 
 { # traditional quote word
     my @q = ();
@@ -329,8 +330,6 @@ FOO
 { # Q L<S02/Literals/No escapes at all>
     my @q = ();
 
-    my $backslash = "\\";
-
     @q = (Q/foo\\bar$foo/);
 
     is(+@q, 1, "Q// is singular");
@@ -358,6 +357,7 @@ FOO
 };
 
 #?rakudo skip '\c97 etc'
+#?niecza skip 'charspec'
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');
@@ -403,11 +403,11 @@ Hello, World
 
 # Q
 {
-    my $s1 = "hello";
+    my $s1 = "hello"; #OK not used
     my $t1 = Q /$s1, world/;
     is $t1, '$s1, world', "Testing for Q operator.";
 
-    my $s2 = "你好";
+    my $s2 = "你好"; #OK not used
     my $t2 = Q /$s2, 世界/;
     is $t2, '$s2, 世界', "Testing for Q operator. (utf8)";
 }
@@ -426,6 +426,7 @@ Hello, World
 
 # q:x
 #?rakudo skip 'q:x'
+#?niecza skip 'q:x'
 {
     my $result = %*VM.perl ~~ /MSWIN32/ ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
@@ -433,24 +434,28 @@ Hello, World
 # utf8
 
 #?rakudo skip 'q:x'
+#?niecza skip 'q:x'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
 #?rakudo skip 'qq:x'
+#?niecza skip ':x'
 {
     my $world = 'world';
     is qq:x/echo hello $world/, "hello world\n", 'Testing qq:x operator';
 }
 
 #?rakudo skip 'q:x assigned to array'
+#?niecza skip ':x'
 {
     my @two_lines = q:x/echo hello ; echo world/;
     is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
 }
 
 #?rakudo skip 'q:x assigned to array'
+#?niecza skip ':x'
 {
     my $hello = 'howdy';
     my @two_lines = qq:x/echo $hello ; echo world/;
@@ -471,6 +476,7 @@ Hello, World
 
 # q:f
 #?rakudo skip 'quoting adverbs'
+#?niecza skip '& escape'
 {
     my sub f { "hello" };
     my $t = q:f /&f(), world/;
@@ -491,6 +497,7 @@ Hello, World
 
 # q:a
 #?rakudo skip 'quoting adverbs'
+#?niecza skip 'zen slices'
 {
     my @t = qw/a b c/;
     my $s = q:a /@t[]/;
@@ -511,15 +518,17 @@ Hello, World
 
 # multiple quoting modes
 #?rakudo skip 'quoting adverbs'
+#?niecza skip 'zen slices'
 {
     my $s = 'string';
     my @a = <arr1 arr2>;
-    my %h = (foo => 'bar');
+    my %h = (foo => 'bar'); #OK not used
     is(q:s:a'$s@a[]%h', $s ~ @a ~ '%h', 'multiple modifiers interpolate only what is expected');
 }
 
 # shorthands:
 #?rakudo skip 'quoting adverbs'
+#?niecza skip '& escape, zen slices'
 {
     my $alpha = 'foo';
     my $beta  = 'bar';
@@ -555,6 +564,7 @@ Hello, World
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
 
+#?niecza skip 'qx'
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';

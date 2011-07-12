@@ -266,7 +266,6 @@ plan 38;
     is $seensize, 11, "[list] assignment state in fib memoizes";
 }
 
-#?niecza skip 'subset'
 {
     # now we're just being plain evil:
     subset A of Int where { $_ < state $x++ };
