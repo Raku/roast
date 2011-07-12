@@ -65,7 +65,6 @@ plan 40;
 }
 
 # state with arrays.
-#?niecza skip "not working"
 {
     my @bar = 1,2,3;
     sub swatest {
@@ -79,7 +78,6 @@ plan 40;
 }
 
 # state with arrays.
-#?niecza skip "not working"
 {
     sub swainit_sub { 1,2,3 }
     sub swatest2 {
@@ -115,21 +113,20 @@ plan 40;
     is $rhs_calls, 1, 'RHS of state $x = ... only called once';
 }
 
-# state will first {...}
+# state will start {...}
 #?pugs eval "parse error"
-#?rakudo skip 'will first { ... }'
-#?niecza skip 'will first { ... }'
+#?rakudo skip 'will start { ... }'
 {
     my ($a, $b);
     my $gen = {
-        state $svar will first { 42 };
+        state $svar will start { 42 };
         -> { $svar++ };
     }
     $a = $gen();    # $svar == 42
     $a(); $a();     # $svar == 44
     $b = $gen()();  # $svar == 44
 
-    is $b, 44, 'state will first {...} works';
+    is $b, 44, 'state will start {...} works';
 }
 
 # Return of a reference to a state() var
@@ -239,7 +236,6 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 # recursive state with list assignment initialization happens only first time
-#?niecza skip 'Int'
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -248,12 +244,11 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 	    @seen[$n] //= fib($n-1) + fib($n-2);
     }
     is fib(10), 55, "fib 10 works";
-    is $seensize, 11, "list assignment state in fib memoizes";
+    is $seensize, 10, "list assignment state in fib memoizes";
 }
 
 # recursive state with [list] assignment initialization happens only first time
 #?rakudo skip '@$foo syntax'
-#?niecza skip 'Int'
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -262,7 +257,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 	    $seen[$n] //= fib($n-1) + fib($n-2);
     }
     is fib(10), 55, "fib 2 works";
-    is $seensize, 11, "[list] assignment state in fib memoizes";
+    is $seensize, 10, "[list] assignment state in fib memoizes";
 }
 
 {
