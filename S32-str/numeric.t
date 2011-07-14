@@ -18,6 +18,7 @@ sub f($str) {
     ok !(+$str).defined, "+$str fails";
 }
 
+f     '';
 check '123',        Int,    123;
 check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
