@@ -60,6 +60,7 @@ plan 43;
   ok( ?(True ?^False == True),  '?^ works with Bools');
   ok( ?(True ?^True  == False), '?^ works with Bools');
 
+  #?rakudo skip 'segmentation fault'
   ok( ?(''   ?^''    == False), '?^ works');
   ok( ?(Any  ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^ Any  == True),  '?^ works');
