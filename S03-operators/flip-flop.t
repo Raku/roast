@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 # L<S03/Changes to Perl 5 operators/flipflop operator is now done with>
 
@@ -43,6 +43,8 @@ plan 37;
     is test_ff({/B/ ^fff /B/ }, <A B A B A>), 'xxABx', '/B/ ^fff /B/, lhs == rhs';
     is test_ff({/B/ fff^ /B/ }, <A B A B A>), 'xBAxx', '/B/ fff^ /B/, lhs == rhs';
     is test_ff({/B/ ^fff^ /B/}, <A B A B A>), 'xxAxx', '/B/ ^fff^ /B/, lhs == rhs';
+
+    is test_ff({/B/ ff *     }, <A B C D E>), 'xBCDE', '/B/ ff *';
 }
 
 
@@ -96,6 +98,17 @@ plan 37;
     is $ret, 'xBCDx', 'calls from different locations use the same ff';
 }
 
+# From the same thread, making sure that clones get different states
+{
+    my $ret = "";
+    for 0,1 {
+        sub check_ff($_) { (/B/ ff /D/) ?? $_ !! 'x' }
+        $ret ~= check_ff('A');
+        $ret ~= check_ff('B');
+        $ret ~= check_ff('C');
+    }
+    is $ret, 'xBCxBC', 'different clones of the sub get different ff'
+}
 
 # make sure {lhs,rhs} isn't evaluated when state is {true,false}
 {
