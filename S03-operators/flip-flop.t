@@ -19,7 +19,7 @@ plan 39;
 {
 
     sub test_ff($code, @a) {
-        my $ret;
+        my $ret = '';
         for @a {
             $ret ~= $code.($_) ?? $_ !! 'x';
         }
@@ -119,10 +119,7 @@ plan 39;
         my $lhs_run = 0;
         my $rhs_run = 0;
 
-        my $lhs_code = {$lhs_run++; $lhs};
-        my $rhs_code = {$rhs_run++; $rhs};
-
-        for @a { $code.($lhs_code, $rhs_code); }
+        for @a { $code.({$lhs_run++; ?$lhs}, {$rhs_run++; ?$rhs}); }
 
         return [$lhs_run, $rhs_run];
     }
