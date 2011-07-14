@@ -99,6 +99,11 @@ check  '-1-2\i',                Complex,       -1-2i;
 check  '-1.0-2.0\i',            Complex,       -1-2i;
 check  '-1.0e0-2.0e0\i',        Complex,       -1-2i;
 check  '-1.0e0_0-2.0e0_0\i',    Complex,       -1-2i;
+check  '3+Inf\i',               Complex,     3+Inf\i;
+check  'Inf+2e2i',              Complex,    Inf+200i;
+f      '3+Infi';
+f      '3+3i+4i';
+f      '3+3+4i';
 
 # TODO: Complex with radix
 
