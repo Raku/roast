@@ -19,17 +19,22 @@ sub f($str) {
 }
 
 check '123',        Int,    123;
+check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
 check '-123',       Int,   -123;
 f     'a+123';
 f     '123foo';
 f     '123+';
+f     '1__2';
+f     '123_';
 
 check '0b111',      Int,      7;
+check '0b1_1_1',    Int,      7;
 check '+0b111',     Int,      7;
 check '-0b111',     Int,     -7;
 f     '0b112';
 f     '0b';
+f     '0b_1';
 check '0o77',       Int,     63;
 check '+0o77',      Int,     63;
 check '-0o77',      Int,    -63;
@@ -45,10 +50,14 @@ f     '0xag';
 f     '0xaf-';
 
 check ':10<42>',    Int,     42;
+check '-:10<42>',   Int,    -42;
+check '-:1_0<4_2>', Int,    -42;
 check ':36<aZ>',    Int,    395;
 check ':2<11>',     Int,      3;
 f     ':2<2>';
 f     ':37<8>';
+f     ':10<8_>';
+f     ':10<_8>';
 f     ':18<>';
 f     ':10<8';
 
@@ -60,15 +69,22 @@ check '+123.0',     Rat,    123;
 check '123e0',      Num,    123;
 check '-123e0',     Num,   -123;
 check '+123e0',     Num,    123;
+check '+123.0e0',   Num,    123;
+check '+123.0_1e2', Num,  12301;
+check '+123.0_1e0_2', Num,  12301;
 check '123e-0',     Num,    123;
 check '-123e+0',    Num,   -123;
 check '123E0',      Num,    123;
+check '1_2_3E0_0',  Num,    123;
 check '-123E0',     Num,   -123;
 check '+123E0',     Num,    123;
 check '123E-0',     Num,    123;
 check '-123E+0',    Num,   -123;
+check '-123E+0_1',  Num,  -1230;
 check '1230E-1',    Num,    123;
 check '-12E+1',     Num,   -120;
+f      '120e';
+f      '120e2_';
 
 
 done;
