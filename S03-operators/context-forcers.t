@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 96;
+plan 93;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
