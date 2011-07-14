@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 187;
+plan 130;
 
 # L<S02/Literals/":10<42>">
 
@@ -196,42 +196,6 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
     is :100[10,10],      1010, "Adverbial form of base 100 integer works";
     is :100[10,'.',10], 10.10, "Adverbial form of base 100 fraction works";
-}
-
-# tests for the _valid_ string interpretations of radix notations
-{
-    is +"1234.567", 1234.567, "standard decimal (radix 10) fractions";
-    is +"1.234e3", 1234, "basic exponential form works (1)";
-    is +"1.234E3", 1234, "basic exponential form works (2)";
-}
-
-{
-    is +":2<0101>", 5, "radix 2 notation works";
-    is +":32<2q>", 90, "radix 32 notation works";
-    is +":100<1e>", 114, "high order radix (limited alphabet) works";
-    is +":1_0<14_56>", 1456, "underscore separators works";
-    is +":10<123.456>", 123.456, "base 10 decimal notation works";
-    is +":2<1.111>", 1.875, "base 2 decimal notation works";
-
-    for 2..36 {
-        is +":{$_}<11>", $_ + 1, "stringified form of base $_ works";
-    }
-}
-
-# tests for _invalid_ string interpretations of radix notations
-{
-    is +":2.4<01>", 0, "fractional radix parsefail works";
-    is +":10<12f>", 0, "invalid alphabet parsefail works";
-    is +":1b<10>", 0, "invalid radix alphabet parsefail works";
-    is +":10<>", 0, "missing radix conversion number parsefail works";
-    is +":_2<01>", 0, "underscore separator misuse parsefail works (1)";
-    is +":2<_01>", 0, "underscore separator misuse parsefail works (2)";
-    is +":2<01_>", 0, "underscore separator misuse parsefail works (3)";
-    is +":_2_<_0_1_>_", 0, "underscore separator misuse parsefail works (4)";
-    is +":2<1.3>", 0, "invalid radix conversion alphabet parsefail works";
-    is +"0b1.1e10", 1, "0b1.1e10 parses as 0b1";
-    is +":2<10dlk", 0, "missing closing angle bracket";
-    is +":2lks01>", 0, "completely invalid radix notation";
 }
 
 # What follows are tests that were moved here from t/syntax/numbers/misc.t
