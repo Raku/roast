@@ -266,6 +266,21 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 
 }
 
+{
+    my $a = 0;
+    my $b = 0;
+    $a //= ($b = 1);
+    is $a, 0, 'basic //=';
+    is $b, 0, '//= short-circuits';
+
+    $a = 1;
+    $b = 0;
+    $a ||= ($b = 2);
+    is $a, 1, 'basic ||=';
+    is $b, 0, '||= short-circuits';
+
+}
+
 done;
 
 # vim: ft=perl6
