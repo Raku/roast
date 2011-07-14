@@ -50,9 +50,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   is +(3i),       3i, "+ context forcer works (4)";
   # jnthn and pmichaud believe the next test is incorrect
   # is +Mu,          0, "+ context forcer works (8)";
-  is +"Inf",     Inf, "+ context forcer works (9)";
-  is +"-Inf",   -Inf, "+ context forcer works (10)";
-  is +"NaN",     NaN, "+ context forcer works (11)";
   is +(?0),        0, "+ context forcer works (13)";
   is +(?3),        1, "+ context forcer works (14)";
 }

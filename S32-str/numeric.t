@@ -20,6 +20,7 @@ sub f($str) {
 
 check '',           Int,      0;
 check '123',        Int,    123;
+check ' 123',       Int,    123;
 check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
 check '-123',       Int,   -123;
@@ -109,6 +110,10 @@ f      '120e2_';
 
 # TODO: Nums with radix
 
+is +"Inf",  'Inf',  'Inf';
+is +"+Inf", 'Inf',  '+Inf';
+is +"-Inf", '-Inf', '-Inf';
+is +"NaN",  'NaN',  'NaN';
 
 check  '1+2i',                  Complex,        1+2i;
 check  '-1-2i',                 Complex,       -1-2i;
