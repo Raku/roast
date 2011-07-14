@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/Built-In Data Types/Perl intrinsically supports big integers>
 
-plan 66;
+plan 64;
 
 #?rakudo todo "Num.perl doesn't report the decimal part if it is 0 (RT 69869)"
 isa_ok( eval(1.Num.perl), Num, 'eval 1.Num.perl is Num' );
@@ -149,12 +149,6 @@ isa_ok(1 / 1, Rat);
 
 #L<S02/Built-In Data Types/Num may support arbitrary-precision floating-point>
 
-{
-    my $a = "1.01";
-    isa_ok(+$a, "Num");
-    is(+$a, 1.01, "1.01 numifies to 1.01");
-}
-
 #?rakudo todo 'smart numification'
 {
     my $a = "0d01.01";
@@ -175,7 +169,7 @@ isa_ok(1 / 1, Rat);
 #?rakudo todo 'smart numification'
 {
     my $a = "0d0101";
-    isa_ok(+$a, Rat);
+    isa_ok(+$a, Int);
     is(+$a, 101, "0d0101 numifies to 101");
 }
 
