@@ -65,6 +65,10 @@ check '123.',       Rat,    123;
 check '123.0',      Rat,    123;
 check '-123.0',     Rat,    123;
 check '+123.0',     Rat,    123;
+check '+1_2_3.0_0', Rat,    123;
+check '-:10<4_2.3_5>', Rat, 42.35;
+check '-:8<4_2.3_5>',  Rat, 34.453125;
+
 
 check '123e0',      Num,    123;
 check '-123e0',     Num,   -123;
@@ -86,6 +90,17 @@ check '-12E+1',     Num,   -120;
 f      '120e';
 f      '120e2_';
 
+# TODO: Nums with radix
+
+
+check  '1+2i',                  Complex,        1+2i;
+check  '-1-2i',                 Complex,       -1-2i;
+check  '-1-2\i',                Complex,       -1-2i;
+check  '-1.0-2.0\i',            Complex,       -1-2i;
+check  '-1.0e0-2.0e0\i',        Complex,       -1-2i;
+check  '-1.0e0_0-2.0e0_0\i',    Complex,       -1-2i;
+
+# TODO: Complex with radix
 
 done;
 
