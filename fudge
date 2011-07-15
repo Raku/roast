@@ -187,7 +187,8 @@ sub fudgeblock {
         else {
             if ($FUDGE eq 'todo') {
                 $DOES = 0;  # XXX ignore?
-                $PENDING -= s/^(\s*)/${1}todo($ARGS); / if /^\s*$IS/;
+                my $does = join '|', keys %DOES;
+                $PENDING -= s/^(\s*)/${1}todo($ARGS); / if /^\s*(?:$IS|$does)\b/;
             }
             else {
                 while ($_ !~ /;[ \t]*(#.*)?$/) {
@@ -204,8 +205,9 @@ sub fudgeblock {
                     $numtests = $DOES;
                 }
                 else {
-                    next unless /^\s*$IS/;
-                    $numtests = 1;
+                    my $does = join '|', keys %DOES;
+                    next unless /^\s*($IS|$does)/;
+                    $numtests = $DOES{$1} // 1;
                 }
                 $PENDING--;
                 $_ = "{ " . $_ . " }";
