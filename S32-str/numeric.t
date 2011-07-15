@@ -30,6 +30,7 @@ f     '123foo';
 f     '123+';
 f     '1__2';
 f     '123_';
+f     '123 and stuff';
 
 check '0b111',      Int,      7;
 check '0b1_1_1',    Int,      7;
