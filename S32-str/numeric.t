@@ -74,14 +74,19 @@ check '123.0',      Rat,    123;
 check '-123.0',     Rat,    -123;
 check '+123.0',     Rat,    123;
 check '+1_2_3.0_0', Rat,    123;
+check '3/2',        Rat,    1.5;
+check '+3/2',       Rat,    1.5;
+check '-3/2',       Rat,    -1.5;
+f     '-3/-2';
+f     '3/-2';
+f     '+3/-2';
+f     '3.0/2';
+f     '3/2.0';
 
-#?rakudo skip ":radix<> and num/den"
+#?rakudo skip ":radix<>"
 {
     check '-:10<4_2.3_5>', Rat, 42.35;
     check '-:8<4_2.3_5>',  Rat, 34.453125;
-    check '3/2',           Rat, 1.5;
-    check '+3/2',          Rat, 1.5;
-    check '-3/2',          Rat, -1.5;
 
 # from S02-literals/radix.t
     f ":2.4<01>";
