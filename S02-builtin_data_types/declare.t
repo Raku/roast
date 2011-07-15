@@ -44,7 +44,6 @@ plan 84;
  isa_ok($namcu,Bit);
 }
 
-#?rakudo skip 'Regex not implemented'
 {
  my Regex $morna;
  isa_ok($morna, Regex);
@@ -322,7 +321,6 @@ plan 84;
  isa_ok($remu,Macro  );
 }
 
-#?rakudo skip 'Match not implemented'
 {
  my Match $rexa;
  isa_ok($rexa,Match  );
@@ -352,7 +350,6 @@ plan 84;
  isa_ok($cino, Role );
 }
 
-#?rakudo skip 'Gramamar not implemented'
 {
  my Grammar $cire;
  isa_ok($cire,Grammar  );

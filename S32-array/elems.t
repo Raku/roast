@@ -50,7 +50,6 @@ plan 11;
   is (elems (1,2,3,4)), 4, "elems (1,2,3,4) should work";
 }
 
-#?rakudo skip 'elems on Array ref'
 {
   is (elems [1,2,3,4]), 4, "elems [1,2,3,4] should work";
 }

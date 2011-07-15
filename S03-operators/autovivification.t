@@ -123,7 +123,6 @@ plan 23;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (without proto on hash items)';
 }
 
-#?rakudo skip "Any.match not yet defined (Any vs Cool)"
 {
     my @empty;
     is +@empty, 0, 'Sanity: empty array, @empty, has 0 elements'; 
