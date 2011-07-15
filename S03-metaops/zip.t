@@ -40,7 +40,7 @@ is (2, 10, * Z 3, 4, 5, *).munch(10),
 is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip-concat extends right argument ending with *';
 }
 
-#?rakudo 2 skip 'nom regression'
+#?rakudo skip 'nom regression'
 {
 is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends left argument ending with *';
 is (2, 10, * Z* 3, 4, 5, *).munch(5),
