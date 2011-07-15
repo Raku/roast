@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 136;
+plan 135;
 
 my $five = abs(-5);
 
@@ -173,9 +173,6 @@ is  13 mod  4, 1,  '13 mod 4';
 is -13 mod  4, 3,  '-13 mod 4';
 is  13 mod -4, -3, '13 mod -4';
 is -13 mod -4, -1, '-13 mod -4';
-
-# The example for sloppy divide, rigged to avoid the peephole optimiser.
-is_approx "20." / "5.", 4;
 
 tryeq 2.5 / 2, 1.25;
 tryeq 3.5 / -2, -1.75;
