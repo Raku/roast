@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 89;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -76,25 +76,21 @@ sub eval_elsewhere($code){ eval($code) }
 # numeric (+) context
 {
     my $a = '2 is my favorite number';
-    isa_ok(+$a, Num, 'it is forced into a Num');
-    is(+$a, 2, 'forced into numeric context');
+    isa_ok(+$a, Failure, 'trailing chars cause failure');
 
+    #?rakudo todo "should fail but doesn't yet"
     my $b = 'Did you know that, 2 is my favorite number';
-    isa_ok(+$b, Num, 'it is forced into a Num');
-    is(+$b, 0, 'non numbers forced into numeric context are 0');
+    isa_ok(+$b, Failure, 'it is forced into a Num');
 }
 
 # L<S03/Symbolic unary precedence/"prefix:<->">
+#?rakudo skip 'failure modes of Str.Numeric'
 {
     my $a = '2 is my favorite number';
-    ok(-$a ~~ Numeric, 'it is forced into a Num');
-    is(-$a, -2, 'forced into numeric context');
+    isa_ok(-$a, Failure, 'trailing chars cause failure');
 
     my $b = 'Did you know that, 2 is my favorite number';
-    ok(-$b ~~ Numeric, 'it is forced into a Num');
-
-    # doubly-negated because -0 === 0 isn't neccessarily true
-    is(-(-$b), 0, 'non numbers forced into numeric context are 0');
+    ok(-$b, Failure, 'it is forced into a Num');
 }
 
 # L<S02/Context/string "~">
