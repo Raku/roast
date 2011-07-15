@@ -196,7 +196,6 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two sequen
 {
     my @a = 1, 2, 4 ... 64;
     is @a.elems, 7, "1, 2, 4 ... 64 generates a sequence with seven elements...";
-    #?rakudo todo 'types'
     is @a.grep(Int).elems, @a.elems, "... all of which are Ints";
 }
 
