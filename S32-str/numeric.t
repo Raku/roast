@@ -25,6 +25,7 @@ check '0000123',    Int,    123;
 check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
 check '-123',       Int,   -123;
+#?rakudo emit # Str.Numeric non-numeric fail
 f     'a+123';
 f     '123foo';
 f     '123+';
@@ -44,7 +45,7 @@ check '+0o77',      Int,     63;
 check '-0o77',      Int,    -63;
 f     '0o8';
 check '0d123',      Int,    123;
-check '-0d123',     Int,    123;
+check '-0d123',     Int,    -123;
 f     '0da';
 check '0x123',      Int,    291;
 check '-0x123',     Int,   -291;
@@ -53,28 +54,35 @@ check '-0xA0',      Int,   -160;
 f     '0xag';
 f     '0xaf-';
 
-check ':10<42>',    Int,     42;
-check '-:10<42>',   Int,    -42;
-check '-:1_0<4_2>', Int,    -42;
-check ':36<aZ>',    Int,    395;
-check ':2<11>',     Int,      3;
-f     ':2<2>';
-f     ':37<8>';
-f     ':10<8_>';
-f     ':10<_8>';
-f     ':18<>';
-f     ':10<8';
+#?rakudo skip ":radix<...>"
+{
+    check ':10<42>',    Int,     42;
+    check '-:10<42>',   Int,    -42;
+    check '-:1_0<4_2>', Int,    -42;
+    check ':36<aZ>',    Int,    395;
+    check ':2<11>',     Int,      3;
+    f     ':2<2>';
+    f     ':37<8>';
+    f     ':10<8_>';
+    f     ':10<_8>';
+    f     ':18<>';
+    f     ':10<8';
+}
 
-check '123.',       Rat,    123;
+f     '123.';
 check '123.0',      Rat,    123;
 check '-123.0',     Rat,    123;
 check '+123.0',     Rat,    123;
 check '+1_2_3.0_0', Rat,    123;
-check '-:10<4_2.3_5>', Rat, 42.35;
-check '-:8<4_2.3_5>',  Rat, 34.453125;
-check '3/2',           Rat, 1.5;
-check '+3/2',          Rat, 1.5;
-check '-3/2',          Rat, -1.5;
+
+#?rakudo skip ":radix<> and num/den"
+{
+    check '-:10<4_2.3_5>', Rat, 42.35;
+    check '-:8<4_2.3_5>',  Rat, 34.453125;
+    check '3/2',           Rat, 1.5;
+    check '+3/2',          Rat, 1.5;
+    check '-3/2',          Rat, -1.5;
+}
 
 # from S02-literals/radix.t
 f ":2.4<01>";
@@ -120,17 +128,20 @@ is +"+Inf", 'Inf',  '+Inf';
 is +"-Inf", '-Inf', '-Inf';
 is +"NaN",  'NaN',  'NaN';
 
-check  '1+2i',                  Complex,        1+2i;
-check  '-1-2i',                 Complex,       -1-2i;
-check  '-1-2\i',                Complex,       -1-2i;
-check  '-1.0-2.0\i',            Complex,       -1-2i;
-check  '-1.0e0-2.0e0\i',        Complex,       -1-2i;
-check  '-1.0e0_0-2.0e0_0\i',    Complex,       -1-2i;
-check  '3+Inf\i',               Complex,     3+Inf\i;
-check  'Inf+2e2i',              Complex,    Inf+200i;
-f      '3+Infi';
-f      '3+3i+4i';
-f      '3+3+4i';
+#?rakudo skip "complex Str.Numeric"
+{
+    check  '1+2i',                  Complex,        1+2i;
+    check  '-1-2i',                 Complex,       -1-2i;
+    check  '-1-2\i',                Complex,       -1-2i;
+    check  '-1.0-2.0\i',            Complex,       -1-2i;
+    check  '-1.0e0-2.0e0\i',        Complex,       -1-2i;
+    check  '-1.0e0_0-2.0e0_0\i',    Complex,       -1-2i;
+    check  '3+Inf\i',               Complex,     3+Inf\i;
+    check  'Inf+2e2i',              Complex,    Inf+200i;
+    f      '3+Infi';
+    f      '3+3i+4i';
+    f      '3+3+4i';
+}
 
 # TODO: Complex with radix
 
