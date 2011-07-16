@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 71;
+plan 72;
 
 # L<S32::Numeric/Numeric/"=item exp">
 
@@ -42,6 +42,7 @@ is(exp(-Inf), 0, 'exp(-Inf) == 0');
 is(exp(NaN), NaN, 'exp(NaN) == NaN');
 is_approx(exp(log(100)),100, 'e^(log(100))=100');
 
+is_approx((1i*$pi).exp, -1, '(i $pi).exp == -1');
 is_approx(exp(1i*$pi), -1, 'exp(i $pi) == -1');
 is_approx(exp(-1i*$pi), -1, 'exp(-i $pi) == -1');
 
