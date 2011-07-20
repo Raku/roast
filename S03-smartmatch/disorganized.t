@@ -64,7 +64,6 @@ caught that case.
         $result = all(@x) ~~ { $_ < 21 };
         $parsed = 1;
     };
-    #?rakudo 2 todo 'nom regression'
     ok $parsed, 'C<all(@x) ~~ { ... }> parses';
     ok ?$result, 'C<all(@x) ~~ { ... } when true for all';
 
@@ -72,7 +71,6 @@ caught that case.
     try {
         $result = !(all(@x) ~~ { $_ < 20 });
     };
-    #?rakudo todo 'nom regression'
     ok $result,
         'C<all(@x) ~~ {...} when true for one';
 
@@ -80,14 +78,12 @@ caught that case.
     try {
         $result = !(all(@x) ~~ { $_ < 12 });
     };
-    #?rakudo todo 'nom regression'
     ok $result, 'C<all(@x) ~~ {...} when true for most';
 
     $result = 0;
     try {
         $result = !(all(@x) ~~ { $_ < 1  });
     };
-    #?rakudo todo 'nom regression'
     ok $result, 'C<all(@x) ~~ {...} when true for one';
 };
 

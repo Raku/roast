@@ -63,7 +63,7 @@ plan 67;
     # Yet, it should be possible to define it even for commutative rings
     # other than Integers, so we use a multi sub.
     
-    our multi sub gcd(Int $a, Int $b){
+    multi sub gcd(Int $a, Int $b){
         return $a if $b == 0;
         return gcd($b,$a % $b);
     }
@@ -82,7 +82,7 @@ plan 67;
     # * (coprime 35 64)
     # T
 
-    sub coprime(Int $a, Int $b) { gcd($a,$b) == 1}
+    sub coprime(Int $a, Int $b) { $a gcd $b == 1}
     ok  coprime(35,64), "We should be able to tell that 35 and 64 are coprime";
     ok  coprime(64,35), ".. and viceversa";
     ok !coprime(13,39), ".. but 13 and 39 are not";
@@ -90,7 +90,7 @@ plan 67;
 
 {
     sub totient_phi(Int $num) {
-        +grep({gcd($_,$num) == 1}, 1 .. $num);
+        +grep({$_ gcd $num == 1}, 1 .. $num);
     }
 
     # TODO: s/my/constant/
