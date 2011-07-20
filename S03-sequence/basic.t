@@ -94,7 +94,6 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric sequenc
 
 is (False, &prefix:<!> ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
-#?rakudo skip 'loops'
 is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
 is (False, { !$_ } ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
