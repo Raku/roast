@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 36;
 
 # See L<http://www.nntp.perl.org/group/perl.perl6.language/22858> --
 # previously, "my $a; say $::("a")" died (you had to s/my/our/). Now, it was
@@ -14,6 +14,10 @@ plan 22;
   my $b_var = "a_var";
 
   is $::($b_var), 42, 'basic symbolic scalar dereferentiation works';
+  lives_ok { $::($b_var) = 23 }, 'can use $::(...) as lvalue';
+  is $a_var, 23, 'and the assignment worked';
+  $::($b_var) = 'a', 'b', 'c';
+  is $a_var, 'a', '... and it is item assignment';
 }
 
 {
@@ -21,6 +25,10 @@ plan 22;
   my $b_var = "a_var";
 
   is @::($b_var)[1], "b", 'basic symbolic array dereferentiation works';
+  @::($b_var) = ('X', 'Y', 'Z');
+  is @a_var.join(' '), 'X Y Z', 'can assign to symbolic deref';
+  @::($b_var) = 'u', 'v', 'w';
+  is @a_var.join(' '), 'u v w', '... and it is list assignment when the sigil is @';
 }
 
 {
@@ -36,6 +44,35 @@ plan 22;
 
   is &::($b_var)(), 42, 'basic symbolic code dereferentiation works';
 }
+
+my $outer = 'outside';
+{
+    my $inner = 'inside';
+
+    ok ::('Int') === Int,    'can look up a type object with ::()';
+    is ::('$inner'), $inner, 'can look up lexical from same block';
+    is ::('$outer'), $outer, 'can look up lexical from outer block';
+
+    lives_ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
+    is $outer, 'new', 'and the assignment worked';
+    sub c { 'sub c' };
+    is ::('&c').(), 'sub c', 'can look up lexical sub';
+
+    is ::('e'), e,  'Can look up numerical constants';
+}
+
+{
+    package Outer {
+        class Inner { }
+    }
+
+    class A::B { };
+
+    is ::('Outer::Inner').perl, Outer::Inner.perl, 'can look up name with :: (1)';
+    #?rakudo skip 'A::B lookup'
+    is ::('A::B').perl, A::B.perl, 'can look up name with :: (1)';
+}
+
 
 #?rakudo skip 'NYI'
 {
