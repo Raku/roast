@@ -56,8 +56,6 @@ for @nonseparators -> $sep {
   say "Separator: '$sep'";
   my $str = "<" ~$ex~ ">";
   my @res = eval $str;
-  say @res.perl;
-  say $sep.PARROT;
 
   my $vis = sprintf "%02x", ord $sep;
   say "alive";
