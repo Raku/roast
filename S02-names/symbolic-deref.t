@@ -37,6 +37,7 @@ plan 22;
   is &::($b_var)(), 42, 'basic symbolic code dereferentiation works';
 }
 
+#?rakudo skip 'NYI'
 {
   $pugs::is::cool = 42;
   my $cool = "cool";
@@ -47,6 +48,7 @@ plan 22;
   eval_dies_ok('$::($pugsis)cool', '$::($foo)bar is illegal');
 }
 
+#?rakudo skip 'NYI'
 {
   my $result;
 
@@ -66,6 +68,7 @@ plan 22;
 }
 
 # Symbolic dereferentiation of globals
+#?rakudo skip 'NYI'
 {
   sub GLOBAL::a_global_sub () { 42 }
   is &::("*::a_global_sub")(), 42,
@@ -77,6 +80,7 @@ plan 22;
 }
 
 # Symbolic dereferentiation of globals *without the star*
+#?rakudo skip 'NYI'
 {
   cmp_ok $::("*IN"), &infix:<===>, $*IN,
     "symbolic dereferentiation of globals works (3)";
@@ -98,11 +102,13 @@ plan 22;
 }
 
 # Symbolic dereferentiation of type vars
+#?rakudo skip 'NYI'
 {
   cmp_ok ::Array, &infix:<===>, ::("Array"),
     "symbolic dereferentiation of type vars works (1)";
 }
 
+#?rakudo skip 'NYI'
 {
   class A::B::C {};
   my $ok = ::A::B::C === ::A::("B")::C;
@@ -112,6 +118,7 @@ plan 22;
 # Symbolic dereferentiation syntax should work with $?SPECIAL etc. too.
 # Note: I'm not 100% sure this is legal syntax. If it turns out it isn't, we'll
 # have to s/ok/dies_ok/.
+#?rakudo skip 'NYI'
 {
   try { this_will_die_and_therefore_set_dollar_exclamation_mark };
   ok $::("!"),    "symbolic dereferentiation works with special chars (1)";
