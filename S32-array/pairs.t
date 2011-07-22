@@ -46,6 +46,7 @@ Basic C<pairs> tests, see S32.
 {
     my @array = (17, 23, 42);
 
+    #?rakudo todo 'Apparently not rw yet?'
     lives_ok { for @array.pairs -> $pair {
         $pair.value += 100;
     } }, 'aliases returned by @array.pairs should be rw (1)';
