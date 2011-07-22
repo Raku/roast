@@ -94,6 +94,7 @@ is(@a, @e, "list was reversed");
 }
 
 # RT #77914
+#?rakudo todo "RT 77914"
 {
     is (<a b>, <c d>).reverse.join, 'dcba', '.reverse flattens parcels';
 }
