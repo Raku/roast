@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 5;
+plan 4;
 
 # L<S32::Numeric/Numeric/"Numeric provides some constants">
 
@@ -15,9 +15,6 @@ Basic tests for builtin Num::pi
 
 # See also: L<"http://theory.cs.iitm.ernet.in/~arvindn/pi/"> :)
 my $PI = 3.14159265358979323846264338327950288419716939937510e0;
-
-#?rakudo 6 skip 'module Num not implemented (and the spec has changed)'
-is_approx(Num::pi, $PI, "Num::pi");
 
 is_approx(eval("pi"), $PI, "pi imported by default");
 

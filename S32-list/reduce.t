@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 16;
+plan 13;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -21,12 +21,6 @@ plan 16;
 
 
   is((reduce { $^a + $^b }, 0, @array), $sum, "basic reduce works (1)");
-#?rakudo skip 'named args'
-  is((reduce { $^a + $^b }, 0, :values(@array)), $sum, "basic reduce works (2)");
-#?rakudo skip 'closure as non-final argument'
-  is((reduce { $^a + $^b }: 100, @array), 100 + $sum, "basic reduce works (3)");
-#?rakudo skip 'method fallback to sub unimpl'
-  is(({ $^a * $^b }.reduce: 1,2,3,4,5), 120, "basic reduce works (4)");
 }
 
 # Reduce with n-ary functions
@@ -34,7 +28,7 @@ plan 16;
   my @array  = <1 2 3 4 5 6 7 8>, Any;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Any;
 
-  #?rakudo todo 'n-ary reduce'
+  #?rakudo skip 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
@@ -54,7 +48,6 @@ plan 16;
     $hash.{$key};
   }
   is((reduce(&foo, $hash, <a b c>)), 42, 'reduce(&foo) (foo ~~ .{}) works three levels deep');
-  #?rakudo 3 todo 'unknown'
   isa_ok(@reftypes[0], Hash, "first application of reduced hash subscript passed in a Hash");
   isa_ok(@reftypes[1], Hash, "second application of reduced hash subscript passed in a Hash");
   isa_ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
