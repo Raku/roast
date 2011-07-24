@@ -4,18 +4,23 @@ Add any requested tests or other updates to this file. Please organize them
 by synopsis (when applicable) or put them in the OVERALL section at the top
 if they apply to the test suite in general.
 
+NOTE that references to a t/ directory are for the t/ directory in the mu
+repository found here:  https://github.com/perl6/mu
+
 Please also read t/deprecated-syntax.pod for common mistakes in the test
 suite, and clear them when you update tests.
 
 When you are adding entries here, please put something like this in the
 commit message:
-[t/TASKS]: Added more tasks for S02.
+
+[TODO]: Added more tasks for S02.
+
 This way, people working on the test suite can easily spot these commits
 in #perl6.
 
 OVERALL
 * Add smartlinks to tests without them
-* Continue moving tests from t/ to t/spec/ if you find some of which you are
+* Continue moving tests from t/ to roast if you find some of which you are
   convinced that they still conform to the current spec (or of course if you
   updated them).  For notes on what's involved in this,
   see http://perlmonks.org/?node_id=773415
@@ -37,7 +42,7 @@ the spec (newest first)
 * (r28196, r28197) Stubbed classes
 * (r28188) [S04] clarify semantics of break for masak++
 * (r27503) filetest methods
-* (r27106,r27365,r27366) utf8/utf16 etc buffer types (t/spec/S32-str/encode.t)
+* (r27106,r27365,r27366) utf8/utf16 etc buffer types (S32-str/encode.t)
 * (r27324,r27331) 'use' semantics
 * (r27313) dispatch (named args, narrowness)
 * (r27312) ambiguous authority and 'use'
@@ -57,7 +62,7 @@ S03
 * tests for cmp() and eqv() methods of objects
 * tests for feeds using IO objects
 * more bitwise tests, for :signed and :unsigned, and uncomment the tests in
-  t/spec/S03-operators/bit.t
+  S03-operators/bit.t
 * the tests in S03-junctions should somehow specially arrange for
   access to the private method !eigenstates
 
@@ -106,7 +111,7 @@ IO
   :o :R :W :X :O :l :p :S :b :c :t :u :g :k :T :B
 
 SINGLE TESTS
-* t/spec/S04-closure-traits/pre-post.t has an up-to-date TODO list that needs
+* S04-closure-traits/pre-post.t has an up-to-date TODO list that needs
   implementing
 * Tests for old_regex_mods and C++ constructor detection errors as per STD
 
