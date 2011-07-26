@@ -283,15 +283,15 @@ class TestClass{ has $.key is rw  };
 
 {
     my $a = '';
-    for 1..3, 4..6 { $a ~= $_.WHAT };
+    for 1..3, 4..6 { $a ~= $_.WHAT.gist };
     is($a, 'Int()Int()Int()Int()Int()Int()', 'List context');
 
     $a = '';
-    for [1..3, 4..6] { $a ~= $_.WHAT };
+    for [1..3, 4..6] { $a ~= $_.WHAT.gist };
     is($a, 'Array()', 'List context');
 
     $a = '';
-    for [1..3], [4..6] { $a ~= $_.WHAT };
+    for [1..3], [4..6] { $a ~= $_.WHAT.gist };
     is($a, 'Array()Array()', 'List context');
 }
 
