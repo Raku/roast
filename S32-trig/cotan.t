@@ -10,23 +10,22 @@ use TrigTestSupport;
 
 # cotan tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num(Radians))) < 1e-6;
-    my $desired-result = cos($angle.num(Radians)) / sin($angle.num(Radians));
+    next if abs(sin($angle.num())) < 1e-6;
+    my $desired-result = cos($angle.num()) / sin($angle.num());
 
     # Num.cotan tests -- very thorough
-    is_approx($angle.num(Radians).cotan, $desired-result, 
-              "Num.cotan - {$angle.num(Radians)}");
+    is_approx($angle.num().cotan, $desired-result, 
+              "Num.cotan - {$angle.num()}");
 
     # Complex.cotan tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { cos($_) / sin($_) }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { cos($_) / sin($_) }($zp2);
     
     is_approx($zp0.cotan, $sz0, "Complex.cotan - $zp0");
@@ -44,11 +43,11 @@ is_approx(cotan(:x((-0.523598775603156).Num)), -1.73205080754945, "cotan(:x(Num)
 # Rat tests
 is_approx((0.523598775603156).Rat(1e-9).cotan, 1.73205080754945, "Rat.cotan - 0.523598775603156");
 is_approx(cotan((0.785398163404734).Rat(1e-9)), 0.999999999985428, "cotan(Rat) - 0.785398163404734");
-is_approx(cotan(:x((1.57079632680947).Rat(1e-9))), -1.45718380104701e-11, "cotan(:x(Rat)) - 1.57079632680947");
+is_approx(cotan(:x((1.57079632680947).Rat(1e-9))), -1.45716159658652e-11, "cotan(:x(Rat)) - 1.57079632680947");
 
 # Complex tests
-is_approx(cotan((2.35619449019234 + 2i).Complex), -0.0366189934737451 - 0.999329299740667i, "cotan(Complex) - 2.35619449019234 + 2i");
-is_approx(cotan(:x((3.92699081698724 + 2i).Complex)), 0.036618993473589 - 0.999329299736401i, "cotan(:x(Complex)) - 3.92699081698724 + 2i");
+is_approx(cotan((2.3561944902142 + 2i).Complex), -0.0366189934737451 - 0.999329299740667i, "cotan(Complex) - 2.3561944902142 + 2i");
+is_approx(cotan(:x((3.92699081702367 + 2i).Complex)), 0.036618993473589 - 0.999329299736401i, "cotan(:x(Complex)) - 3.92699081702367 + 2i");
 
 # Str tests
 is_approx((4.7123889804284).Str.cotan, -4.37150699422006e-11, "Str.cotan - 4.7123889804284");
@@ -70,9 +69,9 @@ is_approx(cotan(:x((6.80678408284103).Str)), 1.7320508073163, "cotan(:x(Str)) - 
         }
     }
 
-    is_approx(NotComplex.new(10.2101761241668 + 2i).cotan, 0.0366189934734326 - 0.999329299732135i, "NotComplex.cotan - 10.2101761241668 + 2i");
-    is_approx(cotan(NotComplex.new(-3.92699081698724 + 2i)), -0.036618993473589 - 0.999329299736401i, "cotan(NotComplex) - -3.92699081698724 + 2i");
-    is_approx(cotan(:x(NotComplex.new(-0.523598775598299 + 2i))), -0.0323044569586672 - 1.01796777743797i, "cotan(:x(NotComplex)) - -0.523598775598299 + 2i");
+    is_approx(NotComplex.new(10.2101761242615 + 2i).cotan, 0.0366189934734326 - 0.999329299732135i, "NotComplex.cotan - 10.2101761242615 + 2i");
+    is_approx(cotan(NotComplex.new(-3.92699081702367 + 2i)), -0.036618993473589 - 0.999329299736401i, "cotan(NotComplex) - -3.92699081702367 + 2i");
+    is_approx(cotan(:x(NotComplex.new(-0.523598775603156 + 2i))), -0.0323044569586672 - 1.01796777743797i, "cotan(:x(NotComplex)) - -0.523598775603156 + 2i");
 }
 
 {
@@ -92,7 +91,7 @@ is_approx(cotan(:x((6.80678408284103).Str)), 1.7320508073163, "cotan(:x(Str)) - 
 
     is_approx(DifferentReal.new(0.523598775603156).cotan, 1.73205080754945, "DifferentReal.cotan - 0.523598775603156");
     is_approx(cotan(DifferentReal.new(0.785398163404734)), 0.999999999985428, "cotan(DifferentReal) - 0.785398163404734");
-    is_approx(cotan(:x(DifferentReal.new(1.57079632680947))), -1.45718380104701e-11, "cotan(:x(DifferentReal)) - 1.57079632680947");
+    is_approx(cotan(:x(DifferentReal.new(1.57079632680947))), -1.45716159658652e-11, "cotan(:x(DifferentReal)) - 1.57079632680947");
 }
 
 
@@ -100,19 +99,19 @@ is_approx(cotan(:x((6.80678408284103).Str)), 1.7320508073163, "cotan(:x(Str)) - 
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num(Radians))) < 1e-6;
-    my $desired-result = cos($angle.num(Radians)) / sin($angle.num(Radians));
+    next if abs(sin($angle.num())) < 1e-6;
+    my $desired-result = cos($angle.num()) / sin($angle.num());
 
     # Num.acotan tests -- thorough
     is_approx($desired-result.Num.acotan.cotan, $desired-result, 
-              "Num.acotan - {$angle.num(Radians)}");
+              "Num.acotan - {$angle.num()}");
     
     # Num.acotan(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cotan(acotan($z)), $z, 
-                  "acotan(Complex) - {$angle.num(Radians)}");
+                  "acotan(Complex) - {$angle.num()}");
         is_approx($z.acotan.cotan, $z, 
-                  "Complex.acotan - {$angle.num(Radians)}");
+                  "Complex.acotan - {$angle.num()}");
     }
 }
         

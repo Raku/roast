@@ -29,12 +29,12 @@ sub Type($num, $type) {
 }
 
 sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radians") {
-    my $input_angle = $angle.num($base.eval);
+    my $input_angle = $angle.num();
     my $desired-result = eval($desired-result-rule);
     given $type {
         when "Complex" | "NotComplex" { 
-            $input_angle = $angle.complex(2, $base.eval);  
-            $desired-result = ($angle.num(Radians) + 2i)."$fun"();
+            $input_angle = $angle.num + 2i;  
+            $desired-result = ($angle.num() + 2i)."$fun"();
         }
     }
 
@@ -46,12 +46,12 @@ sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radian
 }
 
 sub InverseTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radians") {
-    my $input_angle = $angle.num($base.eval);
+    my $input_angle = $angle.num();
     my $desired-result = eval($desired-result-rule);
     given $type {
         when "Complex" | "NotComplex" { 
-            $input_angle = ($angle.num(Radians) + 2i)."$fun"($base.eval);
-            $desired-result = ($angle.num(Radians) + 2i);
+            $input_angle = ($angle.num() + 2i)."$fun"($base.eval);
+            $desired-result = ($angle.num() + 2i);
         }
     }
 
@@ -79,7 +79,7 @@ sub grep-and-repeat(@a, $skip-rule) {
     gather loop {
         for @a -> $a {
             if $skip-rule {
-                take $a unless $skip-rule.subst('$angle', $a.num(Radians)).eval;
+                take $a unless $skip-rule.subst('$angle', $a.num()).eval;
             } else {
                 take $a;
             }
@@ -127,12 +127,11 @@ class TrigFunction
     }
 
     method dump_forward_tests($file) {
-         my $setup_block = $skip ?? "next if " ~ $.skip.subst('$angle', '$angle.num(Radians)') ~ ";" !! "";
+         my $setup_block = $skip ?? "next if " ~ $.skip.subst('$angle', '$angle.num()') ~ ";" !! "";
 
         my $code = q[
             # $.function_name tests
 
-            my $base_list = (TrigTest::official_bases() xx *).flat;
             my $iter_count = 0;
             for $.angle_and_results_name -> $angle
             {
@@ -140,15 +139,15 @@ class TrigFunction
                 my $desired-result = $.desired-result-code;
 
                 # Num.$.function_name tests -- very thorough
-                is_approx($angle.num(Radians).$.function_name, $desired-result, 
-                          "Num.$.function_name - {$angle.num(Radians)}");
+                is_approx($angle.num().$.function_name, $desired-result, 
+                          "Num.$.function_name - {$angle.num()}");
 
                 # Complex.$.function_name tests -- also very thorough
-                my Complex $zp0 = $angle.complex(0.0, Radians);
+                my Complex $zp0 = $angle.num + 0.0i;
                 my Complex $sz0 = $desired-result + 0i;
-                my Complex $zp1 = $angle.complex(1.0, Radians);
+                my Complex $zp1 = $angle.num + 1.0i;
                 my Complex $sz1 = $.complex_check($zp1);
-                my Complex $zp2 = $angle.complex(2.0, Radians);
+                my Complex $zp2 = $angle.num + 2.0i;
                 my Complex $sz2 = $.complex_check($zp2);
                 
                 is_approx($zp0.$.function_name, $sz0, "Complex.$.function_name - $zp0");
@@ -235,7 +234,7 @@ class TrigFunction
     }
     
     method dump_inverse_tests($file) {
-        my $setup_block = $skip ?? "next if " ~ $.skip.subst('$angle', '$angle.num(Radians)') ~ ";" !! "";
+        my $setup_block = $skip ?? "next if " ~ $.skip.subst('$angle', '$angle.num()') ~ ";" !! "";
 
         my $code = q[
             # $.inverted_function_name tests
@@ -247,14 +246,14 @@ class TrigFunction
 
                 # Num.$.inverted_function_name tests -- thorough
                 is_approx($desired-result.Num.$.inverted_function_name.$.function_name, $desired-result, 
-                          "Num.$.inverted_function_name - {$angle.num(Radians)}");
+                          "Num.$.inverted_function_name - {$angle.num()}");
                 
                 # Num.$.inverted_function_name(Complex) tests -- thorough
                 for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
                     is_approx($.function_name($.inverted_function_name($z)), $z, 
-                              "$.inverted_function_name(Complex) - {$angle.num(Radians)}");
+                              "$.inverted_function_name(Complex) - {$angle.num()}");
                     is_approx($z.$.inverted_function_name.$.function_name, $z, 
-                              "Complex.$.inverted_function_name - {$angle.num(Radians)}");
+                              "Complex.$.inverted_function_name - {$angle.num()}");
                 }
             }
         ];
@@ -273,7 +272,7 @@ class TrigFunction
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
         my $base_list = (<Radians Degrees Gradians Circles> xx *).flat;
         my $angle_list = grep-and-repeat(notgrep($.angle_and_results_name.eval, 
-                                                 {0 < $_.num(Radians) < pi / 2}), $.skip);
+                                                 {0 < $_.num() < pi / 2}), $.skip);
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;
         for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
@@ -379,14 +378,14 @@ $file.say: q[
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(cos($angle.num(Radians))) < 1e-6;     
-	my $desired-result = sin($angle.num(Radians)) / cos($angle.num(Radians));
+    next if abs(cos($angle.num())) < 1e-6;     
+	my $desired-result = sin($angle.num()) / cos($angle.num());
 
     # Num.atan2 tests
     is_approx($desired-result.Num.atan2.tan, $desired-result, 
-              "Num.atan2() - {$angle.num(Radians)}");
+              "Num.atan2() - {$angle.num()}");
     is_approx($desired-result.Num.atan2(1.Num).tan, $desired-result, 
-              "Num.atan2(1.Num) - {$angle.num(Radians)}");
+              "Num.atan2(1.Num) - {$angle.num()}");
 }
 
 # check that the proper quadrant is returned

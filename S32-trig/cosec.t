@@ -10,23 +10,22 @@ use TrigTestSupport;
 
 # cosec tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num(Radians))) < 1e-6;
-    my $desired-result = 1.0 / sin($angle.num(Radians));
+    next if abs(sin($angle.num())) < 1e-6;
+    my $desired-result = 1.0 / sin($angle.num());
 
     # Num.cosec tests -- very thorough
-    is_approx($angle.num(Radians).cosec, $desired-result, 
-              "Num.cosec - {$angle.num(Radians)}");
+    is_approx($angle.num().cosec, $desired-result, 
+              "Num.cosec - {$angle.num()}");
 
     # Complex.cosec tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { 1.0 / sin($_) }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { 1.0 / sin($_) }($zp2);
     
     is_approx($zp0.cosec, $sz0, "Complex.cosec - $zp0");
@@ -47,8 +46,8 @@ is_approx(cosec((0.785398163404734).Rat(1e-9)), 1.41421356236279, "cosec(Rat) - 
 is_approx(cosec(:x((1.57079632680947).Rat(1e-9))), 1, "cosec(:x(Rat)) - 1.57079632680947");
 
 # Complex tests
-is_approx(cosec((2.35619449019234 + 2i).Complex), 0.194833118732865 + 0.187824499978879i, "cosec(Complex) - 2.35619449019234 + 2i");
-is_approx(cosec(:x((3.92699081698724 + 2i).Complex)), -0.194833118743389 + 0.187824499967129i, "cosec(:x(Complex)) - 3.92699081698724 + 2i");
+is_approx(cosec((2.3561944902142 + 2i).Complex), 0.194833118732865 + 0.187824499978879i, "cosec(Complex) - 2.3561944902142 + 2i");
+is_approx(cosec(:x((3.92699081702367 + 2i).Complex)), -0.194833118743389 + 0.187824499967129i, "cosec(:x(Complex)) - 3.92699081702367 + 2i");
 
 # Str tests
 is_approx((4.7123889804284).Str.cosec, -1, "Str.cosec - 4.7123889804284");
@@ -70,9 +69,9 @@ is_approx(cosec(:x((6.80678408284103).Str)), 1.99999999978126, "cosec(:x(Str)) -
         }
     }
 
-    is_approx(NotComplex.new(10.2101761241668 + 2i).cosec, -0.194833118753914 + 0.18782449995538i, "NotComplex.cosec - 10.2101761241668 + 2i");
-    is_approx(cosec(NotComplex.new(-3.92699081698724 + 2i)), 0.194833118743389 + 0.187824499967129i, "cosec(NotComplex) - -3.92699081698724 + 2i");
-    is_approx(cosec(:x(NotComplex.new(-0.523598775598299 + 2i))), -0.140337325258517 - 0.234327511878805i, "cosec(:x(NotComplex)) - -0.523598775598299 + 2i");
+    is_approx(NotComplex.new(10.2101761242615 + 2i).cosec, -0.194833118753914 + 0.18782449995538i, "NotComplex.cosec - 10.2101761242615 + 2i");
+    is_approx(cosec(NotComplex.new(-3.92699081702367 + 2i)), 0.194833118743389 + 0.187824499967129i, "cosec(NotComplex) - -3.92699081702367 + 2i");
+    is_approx(cosec(:x(NotComplex.new(-0.523598775603156 + 2i))), -0.140337325258517 - 0.234327511878805i, "cosec(:x(NotComplex)) - -0.523598775603156 + 2i");
 }
 
 {
@@ -100,19 +99,19 @@ is_approx(cosec(:x((6.80678408284103).Str)), 1.99999999978126, "cosec(:x(Str)) -
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num(Radians))) < 1e-6;
-    my $desired-result = 1.0 / sin($angle.num(Radians));
+    next if abs(sin($angle.num())) < 1e-6;
+    my $desired-result = 1.0 / sin($angle.num());
 
     # Num.acosec tests -- thorough
     is_approx($desired-result.Num.acosec.cosec, $desired-result, 
-              "Num.acosec - {$angle.num(Radians)}");
+              "Num.acosec - {$angle.num()}");
     
     # Num.acosec(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cosec(acosec($z)), $z, 
-                  "acosec(Complex) - {$angle.num(Radians)}");
+                  "acosec(Complex) - {$angle.num()}");
         is_approx($z.acosec.cosec, $z, 
-                  "Complex.acosec - {$angle.num(Radians)}");
+                  "Complex.acosec - {$angle.num()}");
     }
 }
         

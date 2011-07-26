@@ -10,7 +10,6 @@ use TrigTestSupport;
 
 # cosh tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::coshes() -> $angle
 {
@@ -18,15 +17,15 @@ for TrigTest::coshes() -> $angle
     my $desired-result = $angle.result;
 
     # Num.cosh tests -- very thorough
-    is_approx($angle.num(Radians).cosh, $desired-result, 
-              "Num.cosh - {$angle.num(Radians)}");
+    is_approx($angle.num().cosh, $desired-result, 
+              "Num.cosh - {$angle.num()}");
 
     # Complex.cosh tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { (exp($_) + exp(-$_)) / 2 }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { (exp($_) + exp(-$_)) / 2 }($zp2);
     
     is_approx($zp0.cosh, $sz0, "Complex.cosh - $zp0");
@@ -47,8 +46,8 @@ is_approx(cosh((0).Rat(1e-9)), 1, "cosh(Rat) - 0");
 is_approx(cosh(:x((0.523598775603156).Rat(1e-9))), 1.14023832107909, "cosh(:x(Rat)) - 0.523598775603156");
 
 # Complex tests
-is_approx(cosh((0.785398163397448 + 2i).Complex), -0.551231882156447 + 0.789880270046195i, "cosh(Complex) - 0.785398163397448 + 2i");
-is_approx(cosh(:x((1.5707963267949 + 2i).Complex)), -1.04418668623968 + 2.09256517025804i, "cosh(:x(Complex)) - 1.5707963267949 + 2i");
+is_approx(cosh((0.785398163404734 + 2i).Complex), -0.551231882156447 + 0.789880270046195i, "cosh(Complex) - 0.785398163404734 + 2i");
+is_approx(cosh(:x((1.57079632680947 + 2i).Complex)), -1.04418668623968 + 2.09256517025804i, "cosh(:x(Complex)) - 1.57079632680947 + 2i");
 
 # Str tests
 is_approx((2.3561944902142).Str.cosh, 5.32275214963423, "Str.cosh - 2.3561944902142");
@@ -70,9 +69,9 @@ is_approx(cosh(:x((3.92699081702367).Str)), 25.3868611932849, "cosh(:x(Str)) - 3
         }
     }
 
-    is_approx(NotComplex.new(4.71238898038469 + 2i).cosh, -23.1641398700872 + 50.6064005308964i, "NotComplex.cosh - 4.71238898038469 + 2i");
-    is_approx(cosh(NotComplex.new(5.49778714378214 + 2i)), -50.8021984580908 + 111.001104449219i, "cosh(NotComplex) - 5.49778714378214 + 2i");
-    is_approx(cosh(:x(NotComplex.new(6.28318530717959 + 2i))), -111.421967793699 + 243.459743211402i, "cosh(:x(NotComplex)) - 6.28318530717959 + 2i");
+    is_approx(NotComplex.new(4.7123889804284 + 2i).cosh, -23.1641398700872 + 50.6064005308964i, "NotComplex.cosh - 4.7123889804284 + 2i");
+    is_approx(cosh(NotComplex.new(5.49778714383314 + 2i)), -50.8021984580908 + 111.001104449219i, "cosh(NotComplex) - 5.49778714383314 + 2i");
+    is_approx(cosh(:x(NotComplex.new(6.28318530723787 + 2i))), -111.421967793698 + 243.459743211402i, "cosh(:x(NotComplex)) - 6.28318530723787 + 2i");
 }
 
 {
@@ -105,14 +104,14 @@ for TrigTest::coshes() -> $angle
 
     # Num.acosh tests -- thorough
     is_approx($desired-result.Num.acosh.cosh, $desired-result, 
-              "Num.acosh - {$angle.num(Radians)}");
+              "Num.acosh - {$angle.num()}");
     
     # Num.acosh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cosh(acosh($z)), $z, 
-                  "acosh(Complex) - {$angle.num(Radians)}");
+                  "acosh(Complex) - {$angle.num()}");
         is_approx($z.acosh.cosh, $z, 
-                  "Complex.acosh - {$angle.num(Radians)}");
+                  "Complex.acosh - {$angle.num()}");
     }
 }
         

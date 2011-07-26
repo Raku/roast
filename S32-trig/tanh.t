@@ -10,23 +10,22 @@ use TrigTestSupport;
 
 # tanh tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(cosh($angle.num(Radians))) < 1e-6;
-    my $desired-result = sinh($angle.num(Radians)) / cosh($angle.num(Radians));
+    next if abs(cosh($angle.num())) < 1e-6;
+    my $desired-result = sinh($angle.num()) / cosh($angle.num());
 
     # Num.tanh tests -- very thorough
-    is_approx($angle.num(Radians).tanh, $desired-result, 
-              "Num.tanh - {$angle.num(Radians)}");
+    is_approx($angle.num().tanh, $desired-result, 
+              "Num.tanh - {$angle.num()}");
 
     # Complex.tanh tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { sinh($_) / cosh($_) }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { sinh($_) / cosh($_) }($zp2);
     
     is_approx($zp0.tanh, $sz0, "Complex.tanh - $zp0");
@@ -47,8 +46,8 @@ is_approx(tanh((0).Rat(1e-9)), 0, "tanh(Rat) - 0");
 is_approx(tanh(:x((0.523598775603156).Rat(1e-9))), 0.480472778160188, "tanh(:x(Rat)) - 0.523598775603156");
 
 # Complex tests
-is_approx(tanh((0.785398163397448 + 2i).Complex), 1.24023479948939 - 0.407862181685885i, "tanh(Complex) - 0.785398163397448 + 2i");
-is_approx(tanh(:x((1.5707963267949 + 2i).Complex)), 1.05580658455051 - 0.0691882492979496i, "tanh(:x(Complex)) - 1.5707963267949 + 2i");
+is_approx(tanh((0.785398163404734 + 2i).Complex), 1.24023479948939 - 0.407862181685885i, "tanh(Complex) - 0.785398163404734 + 2i");
+is_approx(tanh(:x((1.57079632680947 + 2i).Complex)), 1.05580658455051 - 0.0691882492979498i, "tanh(:x(Complex)) - 1.57079632680947 + 2i");
 
 # Str tests
 is_approx((2.3561944902142).Str.tanh, 0.98219338000801, "Str.tanh - 2.3561944902142");
@@ -70,9 +69,9 @@ is_approx(tanh(:x((3.92699081702367).Str)), 0.999223894878698, "tanh(:x(Str)) - 
         }
     }
 
-    is_approx(NotComplex.new(4.71238898038469 + 2i).tanh, 1.00010549555372 - 0.0001221600793053i, "NotComplex.tanh - 4.71238898038469 + 2i");
-    is_approx(tanh(NotComplex.new(5.49778714378214 + 2i)), 1.00002193068325 - 2.53924635030599e-05i, "tanh(NotComplex) - 5.49778714378214 + 2i");
-    is_approx(tanh(:x(NotComplex.new(6.28318530717959 + 2i))), 1.00000455895463 - 5.27848285809168e-06i, "tanh(:x(NotComplex)) - 6.28318530717959 + 2i");
+    is_approx(NotComplex.new(4.7123889804284 + 2i).tanh, 1.00010549555372 - 0.0001221600793053i, "NotComplex.tanh - 4.7123889804284 + 2i");
+    is_approx(tanh(NotComplex.new(5.49778714383314 + 2i)), 1.00002193068325 - 2.53924635030599e-05i, "tanh(NotComplex) - 5.49778714383314 + 2i");
+    is_approx(tanh(:x(NotComplex.new(6.28318530723787 + 2i))), 1.00000455895463 - 5.27848285809169e-06i, "tanh(:x(NotComplex)) - 6.28318530723787 + 2i");
 }
 
 {
@@ -100,19 +99,19 @@ is_approx(tanh(:x((3.92699081702367).Str)), 0.999223894878698, "tanh(:x(Str)) - 
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(cosh($angle.num(Radians))) < 1e-6;
-    my $desired-result = sinh($angle.num(Radians)) / cosh($angle.num(Radians));
+    next if abs(cosh($angle.num())) < 1e-6;
+    my $desired-result = sinh($angle.num()) / cosh($angle.num());
 
     # Num.atanh tests -- thorough
     is_approx($desired-result.Num.atanh.tanh, $desired-result, 
-              "Num.atanh - {$angle.num(Radians)}");
+              "Num.atanh - {$angle.num()}");
     
     # Num.atanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(tanh(atanh($z)), $z, 
-                  "atanh(Complex) - {$angle.num(Radians)}");
+                  "atanh(Complex) - {$angle.num()}");
         is_approx($z.atanh.tanh, $z, 
-                  "Complex.atanh - {$angle.num(Radians)}");
+                  "Complex.atanh - {$angle.num()}");
     }
 }
         

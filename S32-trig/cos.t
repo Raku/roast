@@ -10,7 +10,6 @@ use TrigTestSupport;
 
 # cos tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::cosines() -> $angle
 {
@@ -18,15 +17,15 @@ for TrigTest::cosines() -> $angle
     my $desired-result = $angle.result;
 
     # Num.cos tests -- very thorough
-    is_approx($angle.num(Radians).cos, $desired-result, 
-              "Num.cos - {$angle.num(Radians)}");
+    is_approx($angle.num().cos, $desired-result, 
+              "Num.cos - {$angle.num()}");
 
     # Complex.cos tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp2);
     
     is_approx($zp0.cos, $sz0, "Complex.cos - $zp0");
@@ -47,7 +46,7 @@ is_approx(cos((-1.57079632680947).Rat(1e-9)), 0, "cos(Rat) - -1.57079632680947")
 is_approx(cos(:x((-1.04719755120631).Rat(1e-9))), 0.5, "cos(:x(Rat)) - -1.04719755120631");
 
 # Complex tests
-is_approx(cos((-0.785398163397448 + 2i).Complex), 2.66027408529666 + 2.56457758882432i, "cos(Complex) - -0.785398163397448 + 2i");
+is_approx(cos((-0.785398163404734 + 2i).Complex), 2.66027408529666 + 2.56457758882432i, "cos(Complex) - -0.785398163404734 + 2i");
 is_approx(cos(:x((0 + 2i).Complex)), 3.76219569108363 + -0i, "cos(:x(Complex)) - 0 + 2i");
 
 # Str tests
@@ -70,9 +69,9 @@ is_approx(cos(:x((2.3561944902142).Str)), -0.707106781186548, "cos(:x(Str)) - 2.
         }
     }
 
-    is_approx(NotComplex.new(3.14159265358979 + 2i).cos, -3.76219569108363 + 1.05700044699469e-10i, "NotComplex.cos - 3.14159265358979 + 2i");
-    is_approx(cos(NotComplex.new(3.92699081698724 + 2i)), -2.66027408521913 + 2.56457758889906i, "cos(NotComplex) - 3.92699081698724 + 2i");
-    is_approx(cos(:x(NotComplex.new(4.71238898038469 + 2i))), 1.64464647771967e-10 + 3.62686040784702i, "cos(:x(NotComplex)) - 4.71238898038469 + 2i");
+    is_approx(NotComplex.new(3.14159265361894 + 2i).cos, -3.76219569108363 + 1.05698434049896e-10i, "NotComplex.cos - 3.14159265361894 + 2i");
+    is_approx(cos(NotComplex.new(3.92699081702367 + 2i)), -2.66027408521913 + 2.56457758889906i, "cos(NotComplex) - 3.92699081702367 + 2i");
+    is_approx(cos(:x(NotComplex.new(4.7123889804284 + 2i))), 1.64464647771967e-10 + 3.62686040784702i, "cos(:x(NotComplex)) - 4.7123889804284 + 2i");
 }
 
 {
@@ -105,14 +104,14 @@ for TrigTest::cosines() -> $angle
 
     # Num.acos tests -- thorough
     is_approx($desired-result.Num.acos.cos, $desired-result, 
-              "Num.acos - {$angle.num(Radians)}");
+              "Num.acos - {$angle.num()}");
     
     # Num.acos(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cos(acos($z)), $z, 
-                  "acos(Complex) - {$angle.num(Radians)}");
+                  "acos(Complex) - {$angle.num()}");
         is_approx($z.acos.cos, $z, 
-                  "Complex.acos - {$angle.num(Radians)}");
+                  "Complex.acos - {$angle.num()}");
     }
 }
         
@@ -126,8 +125,8 @@ is_approx(acos((0.707106781186548).Rat(1e-9)), 0.785398163404734, "acos(Rat) - 0
 is_approx(acos(:x((0.707106781186548).Rat(1e-9))), 0.785398163404734, "acos(:x(Rat)) - 0.785398163404734");
 
 # Complex tests
-is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740853542 - 1.49709293866352i, "acos(Complex) - 1.22945740853542 - 1.49709293866352i");
-is_approx(acos(:x((0.785398163404734 + 2i).Complex)), 1.22945740853542 - 1.49709293866352i, "acos(:x(Complex)) - 1.22945740853542 - 1.49709293866352i");
+is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740853541 - 1.49709293866352i, "acos(Complex) - 1.22945740853541 - 1.49709293866352i");
+is_approx(acos(:x((0.785398163404734 + 2i).Complex)), 1.22945740853541 - 1.49709293866352i, "acos(:x(Complex)) - 1.22945740853541 - 1.49709293866352i");
 
 # Str tests
 is_approx(((0.707106781186548).Str).acos, 0.785398163404734, "Str.acos - 0.785398163404734");
@@ -135,9 +134,9 @@ is_approx(acos((0.707106781186548).Str), 0.785398163404734, "acos(Str) - 0.78539
 is_approx(acos(:x((0.707106781186548).Str)), 0.785398163404734, "acos(:x(Str)) - 0.785398163404734");
 
 # NotComplex tests
-is_approx((NotComplex.new(0.785398163404734 + 2i)).acos, 1.22945740853542 - 1.49709293866352i, "NotComplex.acos - 1.22945740853542 - 1.49709293866352i");
-is_approx(acos(NotComplex.new(0.785398163404734 + 2i)), 1.22945740853542 - 1.49709293866352i, "acos(NotComplex) - 1.22945740853542 - 1.49709293866352i");
-is_approx(acos(:x(NotComplex.new(0.785398163404734 + 2i))), 1.22945740853542 - 1.49709293866352i, "acos(:x(NotComplex)) - 1.22945740853542 - 1.49709293866352i");
+is_approx((NotComplex.new(0.785398163404734 + 2i)).acos, 1.22945740853541 - 1.49709293866352i, "NotComplex.acos - 1.22945740853541 - 1.49709293866352i");
+is_approx(acos(NotComplex.new(0.785398163404734 + 2i)), 1.22945740853541 - 1.49709293866352i, "acos(NotComplex) - 1.22945740853541 - 1.49709293866352i");
+is_approx(acos(:x(NotComplex.new(0.785398163404734 + 2i))), 1.22945740853541 - 1.49709293866352i, "acos(:x(NotComplex)) - 1.22945740853541 - 1.49709293866352i");
 
 # DifferentReal tests
 is_approx((DifferentReal.new(0.707106781186548)).acos, 0.785398163404734, "DifferentReal.acos - 0.785398163404734");

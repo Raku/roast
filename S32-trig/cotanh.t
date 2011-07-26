@@ -10,23 +10,22 @@ use TrigTestSupport;
 
 # cotanh tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sinh($angle.num(Radians))) < 1e-6;
-    my $desired-result = cosh($angle.num(Radians)) / sinh($angle.num(Radians));
+    next if abs(sinh($angle.num())) < 1e-6;
+    my $desired-result = cosh($angle.num()) / sinh($angle.num());
 
     # Num.cotanh tests -- very thorough
-    is_approx($angle.num(Radians).cotanh, $desired-result, 
-              "Num.cotanh - {$angle.num(Radians)}");
+    is_approx($angle.num().cotanh, $desired-result, 
+              "Num.cotanh - {$angle.num()}");
 
     # Complex.cotanh tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { cosh($_) / sinh ($_) }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { cosh($_) / sinh ($_) }($zp2);
     
     is_approx($zp0.cotanh, $sz0, "Complex.cotanh - $zp0");
@@ -47,8 +46,8 @@ is_approx(cotanh((0.523598775603156).Rat(1e-9)), 2.08128336391745, "cotanh(Rat) 
 is_approx(cotanh(:x((0.785398163404734).Rat(1e-9))), 1.52486861881241, "cotanh(:x(Rat)) - 0.785398163404734");
 
 # Complex tests
-is_approx(cotanh((1.5707963267949 + 2i).Complex), 0.94309321587152 + 0.0618020094643596i, "cotanh(Complex) - 1.5707963267949 + 2i");
-is_approx(cotanh(:x((2.35619449019234 + 2i).Complex)), 0.988233985768855 + 0.0134382542728859i, "cotanh(:x(Complex)) - 2.35619449019234 + 2i");
+is_approx(cotanh((1.57079632680947 + 2i).Complex), 0.94309321587152 + 0.0618020094643598i, "cotanh(Complex) - 1.57079632680947 + 2i");
+is_approx(cotanh(:x((2.3561944902142 + 2i).Complex)), 0.988233985768855 + 0.0134382542728859i, "cotanh(:x(Complex)) - 2.3561944902142 + 2i");
 
 # Str tests
 is_approx((3.14159265361894).Str.cotanh, 1.0037418731971, "Str.cotanh - 3.14159265361894");
@@ -70,9 +69,9 @@ is_approx(cotanh(:x((4.7123889804284).Str)), 1.000161412061, "cotanh(:x(Str)) - 
         }
     }
 
-    is_approx(NotComplex.new(5.49778714378214 + 2i).cotanh, 0.999978069152959 + 2.53913497751775e-05i, "NotComplex.cotanh - 5.49778714378214 + 2i");
-    is_approx(cotanh(NotComplex.new(6.28318530717959 + 2i)), 0.999995441038292 + 5.278434729546e-06i, "cotanh(NotComplex) - 6.28318530717959 + 2i");
-    is_approx(cotanh(:x(NotComplex.new(6.80678408277788 + 2i))), 0.999998400170843 + 1.85231277868836e-06i, "cotanh(:x(NotComplex)) - 6.80678408277788 + 2i");
+    is_approx(NotComplex.new(5.49778714383314 + 2i).cotanh, 0.999978069152959 + 2.53913497751775e-05i, "NotComplex.cotanh - 5.49778714383314 + 2i");
+    is_approx(cotanh(NotComplex.new(6.28318530723787 + 2i)), 0.999995441038292 + 5.27843472954601e-06i, "cotanh(NotComplex) - 6.28318530723787 + 2i");
+    is_approx(cotanh(:x(NotComplex.new(6.80678408284103 + 2i))), 0.999998400170843 + 1.85231277868836e-06i, "cotanh(:x(NotComplex)) - 6.80678408284103 + 2i");
 }
 
 {
@@ -100,19 +99,19 @@ is_approx(cotanh(:x((4.7123889804284).Str)), 1.000161412061, "cotanh(:x(Str)) - 
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sinh($angle.num(Radians))) < 1e-6;
-    my $desired-result = cosh($angle.num(Radians)) / sinh($angle.num(Radians));
+    next if abs(sinh($angle.num())) < 1e-6;
+    my $desired-result = cosh($angle.num()) / sinh($angle.num());
 
     # Num.acotanh tests -- thorough
     is_approx($desired-result.Num.acotanh.cotanh, $desired-result, 
-              "Num.acotanh - {$angle.num(Radians)}");
+              "Num.acotanh - {$angle.num()}");
     
     # Num.acotanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cotanh(acotanh($z)), $z, 
-                  "acotanh(Complex) - {$angle.num(Radians)}");
+                  "acotanh(Complex) - {$angle.num()}");
         is_approx($z.acotanh.cotanh, $z, 
-                  "Complex.acotanh - {$angle.num(Radians)}");
+                  "Complex.acotanh - {$angle.num()}");
     }
 }
         

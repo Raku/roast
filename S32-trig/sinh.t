@@ -10,7 +10,6 @@ use TrigTestSupport;
 
 # sinh tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::sinhes() -> $angle
 {
@@ -18,15 +17,15 @@ for TrigTest::sinhes() -> $angle
     my $desired-result = $angle.result;
 
     # Num.sinh tests -- very thorough
-    is_approx($angle.num(Radians).sinh, $desired-result, 
-              "Num.sinh - {$angle.num(Radians)}");
+    is_approx($angle.num().sinh, $desired-result, 
+              "Num.sinh - {$angle.num()}");
 
     # Complex.sinh tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { (exp($_) - exp(-$_)) / 2 }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { (exp($_) - exp(-$_)) / 2 }($zp2);
     
     is_approx($zp0.sinh, $sz0, "Complex.sinh - $zp0");
@@ -38,7 +37,7 @@ is(sinh(Inf), Inf, "sinh(Inf) -");
 is(sinh(-Inf), -Inf, "sinh(-Inf) -");
         
 # Num tests
-is_approx(sinh((-6.28318530723787).Num), -267.744894056623, "sinh(Num) - -6.28318530723787");
+is_approx(sinh((-6.28318530723787).Num), -267.744894056622, "sinh(Num) - -6.28318530723787");
 is_approx(sinh(:x((-3.92699081702367).Num)), -25.367158320299, "sinh(:x(Num)) - -3.92699081702367");
 
 # Rat tests
@@ -47,8 +46,8 @@ is_approx(sinh((0).Rat(1e-9)), 0, "sinh(Rat) - 0");
 is_approx(sinh(:x((0.523598775603156).Rat(1e-9))), 0.547853473893578, "sinh(:x(Rat)) - 0.523598775603156");
 
 # Complex tests
-is_approx(sinh((0.785398163397448 + 2i).Complex), -0.361494672626784 + 1.20446363641251i, "sinh(Complex) - 0.785398163397448 + 2i");
-is_approx(sinh(:x((1.5707963267949 + 2i).Complex)), -0.957678258159808 + 2.28158953412064i, "sinh(:x(Complex)) - 1.5707963267949 + 2i");
+is_approx(sinh((0.785398163404734 + 2i).Complex), -0.361494672626784 + 1.20446363641251i, "sinh(Complex) - 0.785398163404734 + 2i");
+is_approx(sinh(:x((1.57079632680947 + 2i).Complex)), -0.957678258159807 + 2.28158953412064i, "sinh(:x(Complex)) - 1.57079632680947 + 2i");
 
 # Str tests
 is_approx((2.3561944902142).Str.sinh, 5.22797192479415, "Str.sinh - 2.3561944902142");
@@ -70,9 +69,9 @@ is_approx(sinh(:x((3.92699081702367).Str)), 25.367158320299, "sinh(:x(Str)) - 3.
         }
     }
 
-    is_approx(NotComplex.new(4.71238898038469 + 2i).sinh, -23.1604015019471 + 50.614569014306i, "NotComplex.sinh - 4.71238898038469 + 2i");
-    is_approx(sinh(NotComplex.new(5.49778714378214 + 2i)), -50.8004939935201 + 111.004828772251i, "sinh(NotComplex) - 5.49778714378214 + 2i");
-    is_approx(sinh(:x(NotComplex.new(6.28318530717959 + 2i))), -111.421190663313 + 243.461441272272i, "sinh(:x(NotComplex)) - 6.28318530717959 + 2i");
+    is_approx(NotComplex.new(4.7123889804284 + 2i).sinh, -23.1604015019471 + 50.614569014306i, "NotComplex.sinh - 4.7123889804284 + 2i");
+    is_approx(sinh(NotComplex.new(5.49778714383314 + 2i)), -50.8004939935201 + 111.004828772251i, "sinh(NotComplex) - 5.49778714383314 + 2i");
+    is_approx(sinh(:x(NotComplex.new(6.28318530723787 + 2i))), -111.421190663313 + 243.461441272272i, "sinh(:x(NotComplex)) - 6.28318530723787 + 2i");
 }
 
 {
@@ -91,7 +90,7 @@ is_approx(sinh(:x((3.92699081702367).Str)), 25.367158320299, "sinh(:x(Str)) - 3.
     }            
 
     is_approx(DifferentReal.new(6.80678408284103).sinh, 451.978981887799, "DifferentReal.sinh - 6.80678408284103");
-    is_approx(sinh(DifferentReal.new(-6.28318530723787)), -267.744894056623, "sinh(DifferentReal) - -6.28318530723787");
+    is_approx(sinh(DifferentReal.new(-6.28318530723787)), -267.744894056622, "sinh(DifferentReal) - -6.28318530723787");
     is_approx(sinh(:x(DifferentReal.new(-3.92699081702367))), -25.367158320299, "sinh(:x(DifferentReal)) - -3.92699081702367");
 }
 
@@ -105,14 +104,14 @@ for TrigTest::sinhes() -> $angle
 
     # Num.asinh tests -- thorough
     is_approx($desired-result.Num.asinh.sinh, $desired-result, 
-              "Num.asinh - {$angle.num(Radians)}");
+              "Num.asinh - {$angle.num()}");
     
     # Num.asinh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(sinh(asinh($z)), $z, 
-                  "asinh(Complex) - {$angle.num(Radians)}");
+                  "asinh(Complex) - {$angle.num()}");
         is_approx($z.asinh.sinh, $z, 
-                  "Complex.asinh - {$angle.num(Radians)}");
+                  "Complex.asinh - {$angle.num()}");
     }
 }
         

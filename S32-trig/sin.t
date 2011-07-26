@@ -10,7 +10,6 @@ use TrigTestSupport;
 
 # sin tests
 
-my $base_list = (TrigTest::official_bases() xx *).flat;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
@@ -18,15 +17,15 @@ for TrigTest::sines() -> $angle
     my $desired-result = $angle.result;
 
     # Num.sin tests -- very thorough
-    is_approx($angle.num(Radians).sin, $desired-result, 
-              "Num.sin - {$angle.num(Radians)}");
+    is_approx($angle.num().sin, $desired-result, 
+              "Num.sin - {$angle.num()}");
 
     # Complex.sin tests -- also very thorough
-    my Complex $zp0 = $angle.complex(0.0, Radians);
+    my Complex $zp0 = $angle.num + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.complex(1.0, Radians);
+    my Complex $zp1 = $angle.num + 1.0i;
     my Complex $sz1 = { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }($zp1);
-    my Complex $zp2 = $angle.complex(2.0, Radians);
+    my Complex $zp2 = $angle.num + 2.0i;
     my Complex $sz2 = { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }($zp2);
     
     is_approx($zp0.sin, $sz0, "Complex.sin - $zp0");
@@ -47,8 +46,8 @@ is_approx(sin((0).Rat(1e-9)), 0, "sin(Rat) - 0");
 is_approx(sin(:x((0.523598775603156).Rat(1e-9))), 0.5, "sin(:x(Rat)) - 0.523598775603156");
 
 # Complex tests
-is_approx(sin((0.785398163397448 + 2i).Complex), 2.66027408533543 + 2.56457758878695i, "sin(Complex) - 0.785398163397448 + 2i");
-is_approx(sin(:x((1.5707963267949 + 2i).Complex)), 3.76219569108363 - 5.28500223497344e-11i, "sin(:x(Complex)) - 1.5707963267949 + 2i");
+is_approx(sin((0.785398163404734 + 2i).Complex), 2.66027408533543 + 2.56457758878695i, "sin(Complex) - 0.785398163404734 + 2i");
+is_approx(sin(:x((1.57079632680947 + 2i).Complex)), 3.76219569108363 - 5.28492170249481e-11i, "sin(:x(Complex)) - 1.57079632680947 + 2i");
 
 # Str tests
 is_approx((2.3561944902142).Str.sin, 0.707106781186548, "Str.sin - 2.3561944902142");
@@ -70,9 +69,9 @@ is_approx(sin(:x((3.92699081702367).Str)), -0.707106781186548, "sin(:x(Str)) - 3
         }
     }
 
-    is_approx(NotComplex.new(4.71238898038469 + 2i).sin, -3.76219569108363 + 1.58548456399631e-10i, "NotComplex.sin - 4.71238898038469 + 2i");
-    is_approx(sin(NotComplex.new(5.49778714378214 + 2i)), -2.66027408518037 + 2.56457758893643i, "sin(NotComplex) - 5.49778714378214 + 2i");
-    is_approx(sin(:x(NotComplex.new(6.28318530717959 + 2i))), 2.19288424696638e-10 + 3.62686040784702i, "sin(:x(NotComplex)) - 6.28318530717959 + 2i");
+    is_approx(NotComplex.new(4.7123889804284 + 2i).sin, -3.76219569108363 + 1.58548456399631e-10i, "NotComplex.sin - 4.7123889804284 + 2i");
+    is_approx(sin(NotComplex.new(5.49778714383314 + 2i)), -2.66027408518037 + 2.56457758893643i, "sin(NotComplex) - 5.49778714383314 + 2i");
+    is_approx(sin(:x(NotComplex.new(6.28318530723787 + 2i))), 2.19285083195614e-10 + 3.62686040784702i, "sin(:x(NotComplex)) - 6.28318530723787 + 2i");
 }
 
 {
@@ -105,14 +104,14 @@ for TrigTest::sines() -> $angle
 
     # Num.asin tests -- thorough
     is_approx($desired-result.Num.asin.sin, $desired-result, 
-              "Num.asin - {$angle.num(Radians)}");
+              "Num.asin - {$angle.num()}");
     
     # Num.asin(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(sin(asin($z)), $z, 
-                  "asin(Complex) - {$angle.num(Radians)}");
+                  "asin(Complex) - {$angle.num()}");
         is_approx($z.asin.sin, $z, 
-                  "Complex.asin - {$angle.num(Radians)}");
+                  "Complex.asin - {$angle.num()}");
     }
 }
         
@@ -126,7 +125,7 @@ is_approx(asin((0.707106781186548).Rat(1e-9)), 0.785398163404734, "asin(Rat) - 0
 is_approx(asin(:x((0.5).Rat(1e-9))), 0.523598775603156, "asin(:x(Rat)) - 0.523598775603156");
 
 # Complex tests
-is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259481 + 1.49709293866352i, "asin(Complex) - 0.341338918259481 + 1.49709293866352i");
+is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
 is_approx(asin(:x((0.523598775603156 + 2i).Complex)), 0.231190695652916 + 1.46781890096429i, "asin(:x(Complex)) - 0.231190695652916 + 1.46781890096429i");
 
 # Str tests
@@ -136,7 +135,7 @@ is_approx(asin(:x((0.707106781186548).Str)), 0.785398163404734, "asin(:x(Str)) -
 
 # NotComplex tests
 is_approx((NotComplex.new(0.523598775603156 + 2i)).asin, 0.231190695652916 + 1.46781890096429i, "NotComplex.asin - 0.231190695652916 + 1.46781890096429i");
-is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259481 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259481 + 1.49709293866352i");
+is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
 is_approx(asin(:x(NotComplex.new(0.523598775603156 + 2i))), 0.231190695652916 + 1.46781890096429i, "asin(:x(NotComplex)) - 0.231190695652916 + 1.46781890096429i");
 
 # DifferentReal tests

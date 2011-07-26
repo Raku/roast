@@ -17,7 +17,7 @@ End
 Function: tan
 loop_over: TrigTest::sines()
 skip: abs(cos($angle)) < 1e-6
-desired_result: sin($angle.num(Radians)) / cos($angle.num(Radians))
+desired_result: sin($angle.num()) / cos($angle.num())
 end-setup
 complex_check: { sin($_) / cos($_) }
 End
@@ -25,7 +25,7 @@ End
 Function: sec
 loop_over: TrigTest::cosines()
 skip: abs(cos($angle)) < 1e-6
-desired_result: 1.0 / cos($angle.num(Radians))
+desired_result: 1.0 / cos($angle.num())
 end-setup
 rational_inverse_tests: (-3/2, -2/2, 2/2, 3/2)
 complex_check: { 1.0 / cos($_) }
@@ -34,7 +34,7 @@ End
 Function: cosec
 loop_over: TrigTest::sines()
 skip: abs(sin($angle)) < 1e-6
-desired_result: 1.0 / sin($angle.num(Radians))
+desired_result: 1.0 / sin($angle.num())
 end-setup
 rational_inverse_tests: (-3/2, -2/2, 2/2, 3/2)
 complex_check: { 1.0 / sin($_) }
@@ -43,7 +43,7 @@ End
 Function: cotan
 loop_over: TrigTest::sines()
 skip: abs(sin($angle)) < 1e-6
-desired_result: cos($angle.num(Radians)) / sin($angle.num(Radians))
+desired_result: cos($angle.num()) / sin($angle.num())
 end-setup
 complex_check: { cos($_) / sin($_) }
 End
@@ -70,7 +70,7 @@ End
 Function: tanh
 loop_over: TrigTest::sines()
 skip: abs(cosh($angle)) < 1e-6
-desired_result: sinh($angle.num(Radians)) / cosh($angle.num(Radians))
+desired_result: sinh($angle.num()) / cosh($angle.num())
 end-setup
 rational_inverse_tests: (-2/2, -1/2, 0/1, 1/2)
 complex_check: { sinh($_) / cosh($_) }
@@ -81,7 +81,7 @@ End
 Function: sech
 loop_over: TrigTest::cosines()
 skip: abs(cosh($angle)) < 1e-6
-desired_result: 1.0 / cosh($angle.num(Radians))
+desired_result: 1.0 / cosh($angle.num())
 end-setup
 rational_inverse_tests: (1/4, 1/2, 3/4, 2/2)
 complex_check: { 1.0 / cosh($_) }
@@ -92,7 +92,7 @@ End
 Function: cosech
 loop_over: TrigTest::sines()
 skip: abs(sinh($angle)) < 1e-6
-desired_result: 1.0 / sinh($angle.num(Radians))
+desired_result: 1.0 / sinh($angle.num())
 end-setup
 complex_check: { 1.0 / sinh($_) }
 plus_inf: 0
@@ -102,7 +102,7 @@ End
 Function: cotanh
 loop_over: TrigTest::sines()
 skip: abs(sinh($angle)) < 1e-6
-desired_result: cosh($angle.num(Radians)) / sinh($angle.num(Radians))
+desired_result: cosh($angle.num()) / sinh($angle.num())
 end-setup
 rational_inverse_tests: (-4/2, -3/2, 3/2, 4/2)
 complex_check: { cosh($_) / sinh ($_) }
