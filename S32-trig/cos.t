@@ -55,15 +55,45 @@ is_approx((0.785398163404734).Str.cos, 0.707106781186548, "Str.cos - 0.785398163
 is_approx(cos((1.57079632680947).Str), 0, "cos(Str) - 1.57079632680947");
 is_approx(cos(:x((2.3561944902142).Str)), -0.707106781186548, "cos(:x(Str)) - 2.3561944902142");
 
-# NotComplex tests
-is_approx(NotComplex.new(3.14159265358979 + 2i).cos, -3.76219569108363 + 1.05700044699469e-10i, "NotComplex.cos - 3.14159265358979 + 2i");
-is_approx(cos(NotComplex.new(3.92699081698724 + 2i)), -2.66027408521913 + 2.56457758889906i, "cos(NotComplex) - 3.92699081698724 + 2i");
-is_approx(cos(:x(NotComplex.new(4.71238898038469 + 2i))), 1.64464647771967e-10 + 3.62686040784702i, "cos(:x(NotComplex)) - 4.71238898038469 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(5.23598775603156).cos, 0.5, "DifferentReal.cos - 5.23598775603156");
-is_approx(cos(DifferentReal.new(8.63937979745208)), -0.707106781186548, "cos(DifferentReal) - 8.63937979745208");
-is_approx(cos(:x(DifferentReal.new(10.9955742876663))), 0, "cos(:x(DifferentReal)) - 10.9955742876663");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(3.14159265358979 + 2i).cos, -3.76219569108363 + 1.05700044699469e-10i, "NotComplex.cos - 3.14159265358979 + 2i");
+    is_approx(cos(NotComplex.new(3.92699081698724 + 2i)), -2.66027408521913 + 2.56457758889906i, "cos(NotComplex) - 3.92699081698724 + 2i");
+    is_approx(cos(:x(NotComplex.new(4.71238898038469 + 2i))), 1.64464647771967e-10 + 3.62686040784702i, "cos(:x(NotComplex)) - 4.71238898038469 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(5.23598775603156).cos, 0.5, "DifferentReal.cos - 5.23598775603156");
+    is_approx(cos(DifferentReal.new(8.63937979745208)), -0.707106781186548, "cos(DifferentReal) - 8.63937979745208");
+    is_approx(cos(:x(DifferentReal.new(10.9955742876663))), 0, "cos(:x(DifferentReal)) - 10.9955742876663");
+}
 
 
 # acos tests

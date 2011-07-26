@@ -55,15 +55,45 @@ is_approx((2.3561944902142).Str.sin, 0.707106781186548, "Str.sin - 2.35619449021
 is_approx(sin((3.14159265361894).Str), 0, "sin(Str) - 3.14159265361894");
 is_approx(sin(:x((3.92699081702367).Str)), -0.707106781186548, "sin(:x(Str)) - 3.92699081702367");
 
-# NotComplex tests
-is_approx(NotComplex.new(4.71238898038469 + 2i).sin, -3.76219569108363 + 1.58548456399631e-10i, "NotComplex.sin - 4.71238898038469 + 2i");
-is_approx(sin(NotComplex.new(5.49778714378214 + 2i)), -2.66027408518037 + 2.56457758893643i, "sin(NotComplex) - 5.49778714378214 + 2i");
-is_approx(sin(:x(NotComplex.new(6.28318530717959 + 2i))), 2.19288424696638e-10 + 3.62686040784702i, "sin(:x(NotComplex)) - 6.28318530717959 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(6.80678408284103).sin, 0.5, "DifferentReal.sin - 6.80678408284103");
-is_approx(sin(DifferentReal.new(10.2101761242615)), -0.707106781186548, "sin(DifferentReal) - 10.2101761242615");
-is_approx(sin(:x(DifferentReal.new(12.5663706144757))), 0, "sin(:x(DifferentReal)) - 12.5663706144757");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(4.71238898038469 + 2i).sin, -3.76219569108363 + 1.58548456399631e-10i, "NotComplex.sin - 4.71238898038469 + 2i");
+    is_approx(sin(NotComplex.new(5.49778714378214 + 2i)), -2.66027408518037 + 2.56457758893643i, "sin(NotComplex) - 5.49778714378214 + 2i");
+    is_approx(sin(:x(NotComplex.new(6.28318530717959 + 2i))), 2.19288424696638e-10 + 3.62686040784702i, "sin(:x(NotComplex)) - 6.28318530717959 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(6.80678408284103).sin, 0.5, "DifferentReal.sin - 6.80678408284103");
+    is_approx(sin(DifferentReal.new(10.2101761242615)), -0.707106781186548, "sin(DifferentReal) - 10.2101761242615");
+    is_approx(sin(:x(DifferentReal.new(12.5663706144757))), 0, "sin(:x(DifferentReal)) - 12.5663706144757");
+}
 
 
 # asin tests

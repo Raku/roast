@@ -177,15 +177,58 @@ class TrigFunction
         my $angle_list = grep-and-repeat($.angle_and_results_name.eval, $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
-            $file.say: "# $type tests";
+            my $indent = "";
+            if $type eq "NotComplex" || $type eq "DifferentReal" {
+                $file.say: '{';
+                $indent = "    ";
+            }
+            
+            $file.say: "$indent\# $type tests";
+            
+            if $type eq "NotComplex" {
+                $file.say: q[
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+];
+            }
+            
+            if $type eq "DifferentReal" {
+                $file.say: q[
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+];
+            }
+            
             unless $type eq "Num" || $type eq "Complex" {
-                $file.say: ForwardTest('is_approx($typed-angle.$fun, $desired-result, "$type.$fun - $angle");', 
+                $file.say: ForwardTest($indent ~ 'is_approx($typed-angle.$fun, $desired-result, "$type.$fun - $angle");', 
                                         $angle_list.shift, $fun, $type, $.desired-result-code);
             }
-            $file.say: ForwardTest('is_approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");', 
+            $file.say: ForwardTest($indent ~ 'is_approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");', 
                                     $angle_list.shift, $fun, $type, $.desired-result-code);
-            $file.say: ForwardTest('is_approx($fun(:x($typed-angle)), $desired-result, "$fun(:x($type)) - $angle");', 
+            $file.say: ForwardTest($indent ~ 'is_approx($fun(:x($typed-angle)), $desired-result, "$fun(:x($type)) - $angle");', 
                                     $angle_list.shift, $fun, $type, $.desired-result-code);
+            
+            if $type eq "NotComplex" || $type eq "DifferentReal" {
+                $file.say: '}';
+            }
             
             $file.say: "";
         }

@@ -55,15 +55,45 @@ is_approx((2.3561944902142).Str.cosh, 5.32275214963423, "Str.cosh - 2.3561944902
 is_approx(cosh((3.14159265361894).Str), 11.5919532758581, "cosh(Str) - 3.14159265361894");
 is_approx(cosh(:x((3.92699081702367).Str)), 25.3868611932849, "cosh(:x(Str)) - 3.92699081702367");
 
-# NotComplex tests
-is_approx(NotComplex.new(4.71238898038469 + 2i).cosh, -23.1641398700872 + 50.6064005308964i, "NotComplex.cosh - 4.71238898038469 + 2i");
-is_approx(cosh(NotComplex.new(5.49778714378214 + 2i)), -50.8021984580908 + 111.001104449219i, "cosh(NotComplex) - 5.49778714378214 + 2i");
-is_approx(cosh(:x(NotComplex.new(6.28318530717959 + 2i))), -111.421967793699 + 243.459743211402i, "cosh(:x(NotComplex)) - 6.28318530717959 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(6.80678408284103).cosh, 451.980088132576, "DifferentReal.cosh - 6.80678408284103");
-is_approx(cosh(DifferentReal.new(-6.28318530723787)), 267.746761499354, "cosh(DifferentReal) - -6.28318530723787");
-is_approx(cosh(:x(DifferentReal.new(-3.92699081702367))), 25.3868611932849, "cosh(:x(DifferentReal)) - -3.92699081702367");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(4.71238898038469 + 2i).cosh, -23.1641398700872 + 50.6064005308964i, "NotComplex.cosh - 4.71238898038469 + 2i");
+    is_approx(cosh(NotComplex.new(5.49778714378214 + 2i)), -50.8021984580908 + 111.001104449219i, "cosh(NotComplex) - 5.49778714378214 + 2i");
+    is_approx(cosh(:x(NotComplex.new(6.28318530717959 + 2i))), -111.421967793699 + 243.459743211402i, "cosh(:x(NotComplex)) - 6.28318530717959 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(6.80678408284103).cosh, 451.980088132576, "DifferentReal.cosh - 6.80678408284103");
+    is_approx(cosh(DifferentReal.new(-6.28318530723787)), 267.746761499354, "cosh(DifferentReal) - -6.28318530723787");
+    is_approx(cosh(:x(DifferentReal.new(-3.92699081702367))), 25.3868611932849, "cosh(:x(DifferentReal)) - -3.92699081702367");
+}
 
 
 # acosh tests

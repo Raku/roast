@@ -55,15 +55,45 @@ is_approx((3.14159265361894).Str.tan, 2.91436760209403e-11, "Str.tan - 3.1415926
 is_approx(tan((3.92699081702367).Str), 1.00000000007286, "tan(Str) - 3.92699081702367");
 is_approx(tan(:x((5.49778714383314).Str)), -0.999999999897998, "tan(:x(Str)) - 5.49778714383314");
 
-# NotComplex tests
-is_approx(NotComplex.new(6.28318530717959 + 2i).tan, 4.11804950026564e-12 + 0.964027580075817i, "NotComplex.tan - 6.28318530717959 + 2i");
-is_approx(tan(NotComplex.new(6.80678408277788 + 2i)), 0.0311427701629906 + 0.9813610723904i, "tan(NotComplex) - 6.80678408277788 + 2i");
-is_approx(tan(:x(NotComplex.new(10.2101761241668 + 2i))), 0.0366189934739407 + 0.999329299745999i, "tan(:x(NotComplex)) - 10.2101761241668 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(12.5663706144757).tan, 1.16574704083761e-10, "DifferentReal.tan - 12.5663706144757");
-is_approx(tan(DifferentReal.new(-6.28318530723787)), -5.82873520418806e-11, "tan(DifferentReal) - -6.28318530723787");
-is_approx(tan(:x(DifferentReal.new(-3.92699081702367))), -1.00000000007286, "tan(:x(DifferentReal)) - -3.92699081702367");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(6.28318530717959 + 2i).tan, 4.11804950026564e-12 + 0.964027580075817i, "NotComplex.tan - 6.28318530717959 + 2i");
+    is_approx(tan(NotComplex.new(6.80678408277788 + 2i)), 0.0311427701629906 + 0.9813610723904i, "tan(NotComplex) - 6.80678408277788 + 2i");
+    is_approx(tan(:x(NotComplex.new(10.2101761241668 + 2i))), 0.0366189934739407 + 0.999329299745999i, "tan(:x(NotComplex)) - 10.2101761241668 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(12.5663706144757).tan, 1.16574704083761e-10, "DifferentReal.tan - 12.5663706144757");
+    is_approx(tan(DifferentReal.new(-6.28318530723787)), -5.82873520418806e-11, "tan(DifferentReal) - -6.28318530723787");
+    is_approx(tan(:x(DifferentReal.new(-3.92699081702367))), -1.00000000007286, "tan(:x(DifferentReal)) - -3.92699081702367");
+}
 
 
 # atan tests

@@ -73,27 +73,3 @@ class TrigTest {
         (Radians, Degrees, Gradians, Circles);
     }
 }
-
-class NotComplex is Cool {
-    has $.value;
-    
-    multi method new(Complex $value is copy) {
-        self.bless(*, :$value);
-    }
-    
-    multi method Numeric() {
-        self.value;
-    }
-}
-
-class DifferentReal is Real {
-    has $.value;
-    
-    multi method new($value is copy) {
-        self.bless(*, :$value);
-    }
-    
-    multi method Bridge() {
-        self.value;
-    }
-}

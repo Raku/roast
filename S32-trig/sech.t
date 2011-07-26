@@ -55,15 +55,45 @@ is_approx((0.785398163404734).Str.sech, 0.754939708710524, "Str.sech - 0.7853981
 is_approx(sech((1.57079632680947).Str), 0.39853681533306, "sech(Str) - 1.57079632680947");
 is_approx(sech(:x((2.3561944902142).Str)), 0.187872734233684, "sech(:x(Str)) - 2.3561944902142");
 
-# NotComplex tests
-is_approx(NotComplex.new(3.14159265358979 + 2i).sech, -0.0361218942926504 - 0.0786335422219264i, "NotComplex.sech - 3.14159265358979 + 2i");
-is_approx(sech(NotComplex.new(3.92699081698724 + 2i)), -0.016413269655411 - 0.035835814522277i, "sech(NotComplex) - 3.92699081698724 + 2i");
-is_approx(sech(:x(NotComplex.new(4.71238898038469 + 2i))), -0.00747812852392195 - 0.0163373718784962i, "sech(:x(NotComplex)) - 4.71238898038469 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(5.23598775603156).sech, 0.0106428295621644, "DifferentReal.sech - 5.23598775603156");
-is_approx(sech(DifferentReal.new(8.63937979745208)), 0.000353993272864057, "sech(DifferentReal) - 8.63937979745208");
-is_approx(sech(:x(DifferentReal.new(10.9955742876663))), 3.3551563035587e-05, "sech(:x(DifferentReal)) - 10.9955742876663");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(3.14159265358979 + 2i).sech, -0.0361218942926504 - 0.0786335422219264i, "NotComplex.sech - 3.14159265358979 + 2i");
+    is_approx(sech(NotComplex.new(3.92699081698724 + 2i)), -0.016413269655411 - 0.035835814522277i, "sech(NotComplex) - 3.92699081698724 + 2i");
+    is_approx(sech(:x(NotComplex.new(4.71238898038469 + 2i))), -0.00747812852392195 - 0.0163373718784962i, "sech(:x(NotComplex)) - 4.71238898038469 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(5.23598775603156).sech, 0.0106428295621644, "DifferentReal.sech - 5.23598775603156");
+    is_approx(sech(DifferentReal.new(8.63937979745208)), 0.000353993272864057, "sech(DifferentReal) - 8.63937979745208");
+    is_approx(sech(:x(DifferentReal.new(10.9955742876663))), 3.3551563035587e-05, "sech(:x(DifferentReal)) - 10.9955742876663");
+}
 
 
 # asech tests

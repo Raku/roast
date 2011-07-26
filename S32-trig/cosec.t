@@ -55,15 +55,45 @@ is_approx((4.7123889804284).Str.cosec, -1, "Str.cosec - 4.7123889804284");
 is_approx(cosec((5.49778714383314).Str), -1.41421356244522, "cosec(Str) - 5.49778714383314");
 is_approx(cosec(:x((6.80678408284103).Str)), 1.99999999978126, "cosec(:x(Str)) - 6.80678408284103");
 
-# NotComplex tests
-is_approx(NotComplex.new(10.2101761241668 + 2i).cosec, -0.194833118753914 + 0.18782449995538i, "NotComplex.cosec - 10.2101761241668 + 2i");
-is_approx(cosec(NotComplex.new(-3.92699081698724 + 2i)), 0.194833118743389 + 0.187824499967129i, "cosec(NotComplex) - -3.92699081698724 + 2i");
-is_approx(cosec(:x(NotComplex.new(-0.523598775598299 + 2i))), -0.140337325258517 - 0.234327511878805i, "cosec(:x(NotComplex)) - -0.523598775598299 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(0.523598775603156).cosec, 1.99999999998317, "DifferentReal.cosec - 0.523598775603156");
-is_approx(cosec(DifferentReal.new(0.785398163404734)), 1.41421356236279, "cosec(DifferentReal) - 0.785398163404734");
-is_approx(cosec(:x(DifferentReal.new(1.57079632680947))), 1, "cosec(:x(DifferentReal)) - 1.57079632680947");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(10.2101761241668 + 2i).cosec, -0.194833118753914 + 0.18782449995538i, "NotComplex.cosec - 10.2101761241668 + 2i");
+    is_approx(cosec(NotComplex.new(-3.92699081698724 + 2i)), 0.194833118743389 + 0.187824499967129i, "cosec(NotComplex) - -3.92699081698724 + 2i");
+    is_approx(cosec(:x(NotComplex.new(-0.523598775598299 + 2i))), -0.140337325258517 - 0.234327511878805i, "cosec(:x(NotComplex)) - -0.523598775598299 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(0.523598775603156).cosec, 1.99999999998317, "DifferentReal.cosec - 0.523598775603156");
+    is_approx(cosec(DifferentReal.new(0.785398163404734)), 1.41421356236279, "cosec(DifferentReal) - 0.785398163404734");
+    is_approx(cosec(:x(DifferentReal.new(1.57079632680947))), 1, "cosec(:x(DifferentReal)) - 1.57079632680947");
+}
 
 
 # acosec tests

@@ -55,15 +55,45 @@ is_approx((3.14159265361894).Str.sec, -1, "Str.sec - 3.14159265361894");
 is_approx(sec((3.92699081702367).Str), -1.41421356242461, "sec(Str) - 3.92699081702367");
 is_approx(sec(:x((5.23598775603156).Str)), 1.99999999983174, "sec(:x(Str)) - 5.23598775603156");
 
-# NotComplex tests
-is_approx(NotComplex.new(8.63937979737193 + 2i).sec, -0.194833118751283 + 0.187824499958317i, "NotComplex.sec - 8.63937979737193 + 2i");
-is_approx(sec(NotComplex.new(-5.49778714378214 + 2i)), 0.19483311874602 + 0.187824499964192i, "sec(NotComplex) - -5.49778714378214 + 2i");
-is_approx(sec(:x(NotComplex.new(-2.0943951023932 + 2i))), -0.140337325261927 - 0.234327511876613i, "sec(:x(NotComplex)) - -2.0943951023932 + 2i");
+{
+    # NotComplex tests
 
-# DifferentReal tests
-is_approx(DifferentReal.new(-1.04719755120631).sec, 2.00000000003365, "DifferentReal.sec - -1.04719755120631");
-is_approx(sec(DifferentReal.new(-0.785398163404734)), 1.4142135623834, "sec(DifferentReal) - -0.785398163404734");
-is_approx(sec(:x(DifferentReal.new(0))), 1, "sec(:x(DifferentReal)) - 0");
+    class NotComplex is Cool {
+        has $.value;
+
+        multi method new(Complex $value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Numeric() {
+            self.value;
+        }
+    }
+
+    is_approx(NotComplex.new(8.63937979737193 + 2i).sec, -0.194833118751283 + 0.187824499958317i, "NotComplex.sec - 8.63937979737193 + 2i");
+    is_approx(sec(NotComplex.new(-5.49778714378214 + 2i)), 0.19483311874602 + 0.187824499964192i, "sec(NotComplex) - -5.49778714378214 + 2i");
+    is_approx(sec(:x(NotComplex.new(-2.0943951023932 + 2i))), -0.140337325261927 - 0.234327511876613i, "sec(:x(NotComplex)) - -2.0943951023932 + 2i");
+}
+
+{
+    # DifferentReal tests
+
+    class DifferentReal is Real {
+        has $.value;
+
+        multi method new($value is copy) {
+            self.bless(*, :$value);
+        }
+
+        multi method Bridge() {
+            self.value;
+        }
+    }            
+
+    is_approx(DifferentReal.new(-1.04719755120631).sec, 2.00000000003365, "DifferentReal.sec - -1.04719755120631");
+    is_approx(sec(DifferentReal.new(-0.785398163404734)), 1.4142135623834, "sec(DifferentReal) - -0.785398163404734");
+    is_approx(sec(:x(DifferentReal.new(0))), 1, "sec(:x(DifferentReal)) - 0");
+}
 
 
 # asec tests
