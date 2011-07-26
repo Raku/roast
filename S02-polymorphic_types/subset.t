@@ -48,15 +48,12 @@ dies_ok { my Digit $x = 3.1 },
 # RT #67818
 {
     subset Subhash of Hash;
-    #?rakudo todo 'RT #67818'
     lives_ok { my Subhash $a = {} },
              'can create subset of hash';
 
     subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
-    #?rakudo todo 'RT #67818'
     lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
-    #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
     dies_ok { my Person $p = { :first<Charlie>, :last<Delta> } },
             'subset of hash with where enforces where clause';
 
@@ -81,10 +78,12 @@ dies_ok { my Digit $x = 3.1 },
     dies_ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
 
+    #?rakudo todo 'Seq not implemented in nom'
     subset Subseq of Seq;
     lives_ok { my Subseq $tsil = <a b c>.Seq },
              'can create subset of Seq';
 
+    #?rakudo todo 'Seq not yet implemented in nom'
     subset FewOdds of Seq where { 2 > .grep: { $_ % 2 } }
     lives_ok { my FewOdds $fe = <78 99 24 36>.Seq },
              'can create subset of Seq with where';
@@ -128,7 +127,6 @@ dies_ok { my Digit $x = 3.1 },
     try { $rt67256 = -42 }
 
     ok  $!  ~~ Exception, 'subset of Int enforces where clause';
-    #?rakudo todo 'RT #67256'
     ok "$!" ~~ / RT67256 /, 'error for bad assignment mentions subset';
 }
 
@@ -143,13 +141,11 @@ dies_ok { my Digit $x = 3.1 },
 
 # RT #74234
 {
-    #?rakudo todo 'RT 74234'
     eval_lives_ok 'subset A of Mu; my A $x = 23;',
         'subset A of Mu + type check and assignment works';
 }
 
 # RT #77356
-#?rakudo skip 'RT 77356'
 {
     sub limit() { 0 }
     subset aboveLexLimit of Int where { $_ > limit() };
@@ -157,7 +153,7 @@ dies_ok { my Digit $x = 3.1 },
     nok -1 ~~ aboveLexLimit, 'can use subset that depends on lexical sub (2)';
 }
 
-#?rakudo skip 'RT 77356'
+# RT # 77356
 {
     my $limit = 0;
     subset aboveLexVarLimit of Int where { $_ > $limit };
@@ -166,7 +162,6 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 subset Bug::RT80930 of Int where { $_ %% 2 };
-#?rakudo todo 'RT 80930'
 lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 
