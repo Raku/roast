@@ -478,6 +478,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #64886
+#?rakudo skip "Nom doesn't feature lazily for looping over a range yet?"
 {
     my $a = 0;
     for (1..10000000000) {
