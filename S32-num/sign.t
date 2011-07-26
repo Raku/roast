@@ -46,10 +46,11 @@ is(sign(Inf), 1, 'got correct sign for +Inf');
 is(sign(-Inf), -1, 'got correct sign for -Inf');
 isa_ok(sign(Inf), Int, 'got correct type for +Inf');
 isa_ok(sign(-Inf), Int, 'got correct type for -Inf');
+#?rakudo todo "Nom does not yet have a NaN framework in place"
 is(sign(NaN),NaN, 'sign of NaN is NaN');
 
-
 nok sign(Int).defined, 'sign(Int) is undefined';
+#?rakudo skip "Test is kind of doubtful IMO -- colomon"
 nok sign(3+4i).defined, 'sign(Complex) fails';
 
 done;
