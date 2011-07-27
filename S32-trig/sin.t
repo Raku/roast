@@ -87,8 +87,10 @@ for @sines -> $angle
     is_approx($zp2.sin, $sz2, "Complex.sin - $zp2");
 }
 
-is(sin(Inf), NaN, "sin(Inf) -");
-is(sin(-Inf), NaN, "sin(-Inf) -");
+{
+    is(sin(Inf), NaN, "sin(Inf) -");
+    is(sin(-Inf), NaN, "sin(-Inf) -");
+}
         
 {
     # Num tests

@@ -87,8 +87,10 @@ for @sines -> $angle
     is_approx($zp2.cotanh, $sz2, "Complex.cotanh - $zp2");
 }
 
-is(cotanh(Inf), 1, "cotanh(Inf) -");
-is(cotanh(-Inf), -1, "cotanh(-Inf) -");
+{
+    is(cotanh(Inf), 1, "cotanh(Inf) -");
+    is(cotanh(-Inf), -1, "cotanh(-Inf) -");
+}
         
 {
     # Num tests

@@ -87,8 +87,10 @@ for @cosines -> $angle
     is_approx($zp2.cos, $sz2, "Complex.cos - $zp2");
 }
 
-is(cos(Inf), NaN, "cos(Inf) -");
-is(cos(-Inf), NaN, "cos(-Inf) -");
+{
+    is(cos(Inf), NaN, "cos(Inf) -");
+    is(cos(-Inf), NaN, "cos(-Inf) -");
+}
         
 {
     # Num tests

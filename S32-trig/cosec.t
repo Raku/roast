@@ -87,8 +87,10 @@ for @sines -> $angle
     is_approx($zp2.cosec, $sz2, "Complex.cosec - $zp2");
 }
 
-is(cosec(Inf), NaN, "cosec(Inf) -");
-is(cosec(-Inf), NaN, "cosec(-Inf) -");
+{
+    is(cosec(Inf), NaN, "cosec(Inf) -");
+    is(cosec(-Inf), NaN, "cosec(-Inf) -");
+}
         
 {
     # Num tests

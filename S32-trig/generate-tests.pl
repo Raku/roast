@@ -57,7 +57,7 @@ sub Type($num, $type) {
     $typed-num;
 }
 
-sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radians") {
+sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule) {
     my $input_angle = $angle.key();
     my $desired-result = eval($desired-result-rule);
     given $type {
@@ -70,16 +70,16 @@ sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radian
     my $typed-angle = Type($input_angle, $type);
     my $typed-result = Type($desired-result, $type);
 
-    Substitute($str, :$fun, :$type, :angle($input_angle), :$typed-angle, :$base, 
+    Substitute($str, :$fun, :$type, :angle($input_angle), :$typed-angle,
                :$desired-result, :$typed-result);
 }
 
-sub InverseTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radians") {
+sub InverseTest($str, $angle, $fun, $type, $desired-result-rule) {
     my $input_angle = $angle.key();
     my $desired-result = eval($desired-result-rule);
     given $type {
         when "Complex" | "NotComplex" { 
-            $input_angle = ($angle.key() + 2i)."$fun"($base.eval);
+            $input_angle = ($angle.key() + 2i)."$fun"();
             $desired-result = ($angle.key() + 2i);
         }
     }
@@ -87,21 +87,21 @@ sub InverseTest($str, $angle, $fun, $type, $desired-result-rule, $base = "Radian
     my $typed-angle = Type($input_angle, $type);
     my $typed-result = Type($desired-result, $type);
 
-    Substitute($str, :$fun, :$type, :angle($input_angle), :$typed-angle, :$base, 
+    Substitute($str, :$fun, :$type, :angle($input_angle), :$typed-angle,
                :$desired-result, :$typed-result);
 }
 
-multi sub Atan2Test($str, Real $value, $type1, $base = "Radians") {
-    my $desired-result = $value.atan2(1, $base.eval);
+multi sub Atan2Test($str, Real $value, $type1) {
+    my $desired-result = $value.atan2(1);
     my $type1-value = Type($value, $type1);
-    Substitute($str, :$type1, :$base, :$desired-result, :$type1-value);
+    Substitute($str, :$type1, :$desired-result, :$type1-value);
 }
 
-multi sub Atan2Test($str, Real $value1, Real $value2, $type1, $type2, $base = "Radians") {
-    my $desired-result = $value1.atan2($value2, $base.eval);
+multi sub Atan2Test($str, Real $value1, Real $value2, $type1, $type2) {
+    my $desired-result = $value1.atan2($value2);
     my $type1-value = Type($value1, $type1);
     my $type2-value = Type($value2, $type2);
-    Substitute($str, :$type1, :$type2, :$base, :$desired-result, :$type1-value, :$type2-value);
+    Substitute($str, :$type1, :$type2, :$desired-result, :$type1-value, :$type2-value);
 }
 
 sub grep-and-repeat(@a, $skip-rule) {
@@ -184,8 +184,10 @@ class TrigFunction
                 is_approx($zp2.$.function_name, $sz2, "Complex.$.function_name - $zp2");
             }
             
-            is($.function_name(Inf), $.plus_inf, "$.function_name(Inf) -");
-            is($.function_name(-Inf), $.minus_inf, "$.function_name(-Inf) -");
+            {
+                is($.function_name(Inf), $.plus_inf, "$.function_name(Inf) -");
+                is($.function_name(-Inf), $.minus_inf, "$.function_name(-Inf) -");
+            }
         ];
         $code.=subst: '$.function_name', $.function_name, :g;
         $code.=subst: '$.inverted_function_name', $.inverted_function_name, :g;
@@ -201,7 +203,6 @@ class TrigFunction
         $file.say: $code;
         
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
-        my $base_list = (<Radians> xx *).flat;
         my $angle_list = grep-and-repeat(eval($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
@@ -259,7 +260,6 @@ class TrigFunction
         $file.say: $code;
         
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
-        my $base_list = (<Radians Degrees Gradians Circles> xx *).flat;
         my $angle_list = grep-and-repeat(notgrep(eval($.angle_and_results_name), 
                                                  {0 < $_.key() < pi / 2}), $.skip);
         my $fun = $.function_name;
@@ -439,7 +439,6 @@ is_approx(atan2(4, -4), 3 * pi / 4, "atan2(4, -4) is 3pi / 4");
 is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
 ];
 
-my $base_list = (<Radians> xx *).flat;
 my @values = (-100, -10, -1, -.1, .1, 1, 10, 100);
 
 sub filter-type(@values is copy, $type) {
