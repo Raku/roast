@@ -691,6 +691,7 @@ sub l () { 1, 2 };
     is(@z[2], 1,    q/lhs treats %a{'x','y','z'} as list/);
 }
 
+#?rakudo skip 'segfault'
 {
     my %a;
     my @z = (%a{'x'..'z'} = l, l);
