@@ -3,7 +3,7 @@ use Test;
 
 # note that Nil is not actually a type, but just an empty parcel
 
-plan 15;
+plan 17;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -43,6 +43,12 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
     $x++ for Nil;
     is $x, 0, '$Statement for Nil; does zero iterations';
 }
+
+# RT 93980
+isa_ok (my $rt93980 = Nil), 'Any', 'Nil assigned to scalar produces an Any';
+
+#?rakudo skip 'RT 93980'
+isa_ok (my Str $str93980 = Nil), 'Str';
 
 done;
 
