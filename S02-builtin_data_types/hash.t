@@ -260,6 +260,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # RT #61412
+#?rakudo skip 'binding hash values - RT 61412'
 {
     my %hash;
     %hash<foo> := 'bar';
