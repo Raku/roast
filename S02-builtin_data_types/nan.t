@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -44,5 +44,8 @@ ok NaN + 1i ~~ (NaN)i, "NaN + 1i ~~ (NaN)i";
 
 #?rakudo todo 'nom regression'
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
+
+#?rakudo skip 'RT 83446'
+ok (my Int $rt83446 = NaN) ~~ NaN, 'NaN fits in Int';
 
 # vim: ft=perl6
