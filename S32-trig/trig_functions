@@ -1,21 +1,21 @@
 # Simple file to control trig test creation.
 
 Function: sin
-loop_over: TrigTest::sines()
+loop_over: @sines
 desired_result: $angle.value
 end-setup
 complex_check: { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }
 End
 
 Function: cos
-loop_over: TrigTest::cosines()
+loop_over: @cosines
 desired_result: $angle.value
 end-setup
 complex_check: { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }
 End
 
 Function: tan
-loop_over: TrigTest::sines()
+loop_over: @sines
 skip: abs(cos($angle)) < 1e-6
 desired_result: sin($angle.key()) / cos($angle.key())
 end-setup
@@ -23,7 +23,7 @@ complex_check: { sin($_) / cos($_) }
 End
 
 Function: sec
-loop_over: TrigTest::cosines()
+loop_over: @cosines
 skip: abs(cos($angle)) < 1e-6
 desired_result: 1.0 / cos($angle.key())
 end-setup
@@ -32,7 +32,7 @@ complex_check: { 1.0 / cos($_) }
 End
 
 Function: cosec
-loop_over: TrigTest::sines()
+loop_over: @sines
 skip: abs(sin($angle)) < 1e-6
 desired_result: 1.0 / sin($angle.key())
 end-setup
@@ -41,7 +41,7 @@ complex_check: { 1.0 / sin($_) }
 End
 
 Function: cotan
-loop_over: TrigTest::sines()
+loop_over: @sines
 skip: abs(sin($angle)) < 1e-6
 desired_result: cos($angle.key()) / sin($angle.key())
 end-setup
@@ -49,7 +49,7 @@ complex_check: { cos($_) / sin($_) }
 End
 
 Function: sinh
-loop_over: TrigTest::sinhes()
+loop_over: @sinhes
 desired_result: $angle.value
 end-setup
 complex_check: { (exp($_) - exp(-$_)) / 2 }
@@ -58,7 +58,7 @@ minus_inf: -Inf
 End
 
 Function: cosh
-loop_over: TrigTest::coshes()
+loop_over: @coshes
 desired_result: $angle.value
 end-setup
 rational_inverse_tests: (2/2, 3/2, 4/2, 5/2)
@@ -68,7 +68,7 @@ minus_inf: Inf
 End
 
 Function: tanh
-loop_over: TrigTest::sines()
+loop_over: @sines
 skip: abs(cosh($angle)) < 1e-6
 desired_result: sinh($angle.key()) / cosh($angle.key())
 end-setup
@@ -79,7 +79,7 @@ minus_inf: -1
 End
 
 Function: sech
-loop_over: TrigTest::cosines()
+loop_over: @cosines
 skip: abs(cosh($angle)) < 1e-6
 desired_result: 1.0 / cosh($angle.key())
 end-setup
@@ -90,7 +90,7 @@ minus_inf: 0
 End
 
 Function: cosech
-loop_over: TrigTest::sines()
+loop_over: @sines
 skip: abs(sinh($angle)) < 1e-6
 desired_result: 1.0 / sinh($angle.key())
 end-setup
@@ -100,7 +100,7 @@ minus_inf: "-0"
 End
 
 Function: cotanh
-loop_over: TrigTest::sines()
+loop_over: @sines
 skip: abs(sinh($angle)) < 1e-6
 desired_result: cosh($angle.key()) / sinh($angle.key())
 end-setup

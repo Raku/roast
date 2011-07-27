@@ -4,14 +4,44 @@
 
 use v6;
 use Test;
-BEGIN { @*INC.push("t/spec/packages/") };
-use TrigTestSupport;
+
+sub degrees-to-radians($x) {
+    $x * (312689/99532) / 180;
+}
+
+my @sines = (
+    degrees-to-radians(-360) => 0,
+    degrees-to-radians(135 - 360) => 1/2*sqrt(2),
+    degrees-to-radians(330 - 360) => -0.5,
+    degrees-to-radians(0) => 0,
+    degrees-to-radians(30) => 0.5,
+    degrees-to-radians(45) => 1/2*sqrt(2),
+    degrees-to-radians(90) => 1,
+    degrees-to-radians(135) => 1/2*sqrt(2),
+    degrees-to-radians(180) => 0,
+    degrees-to-radians(225) => -1/2*sqrt(2),
+    degrees-to-radians(270) => -1,
+    degrees-to-radians(315) => -1/2*sqrt(2),
+    degrees-to-radians(360) => 0,
+    degrees-to-radians(30 + 360) => 0.5,
+    degrees-to-radians(225 + 360) => -1/2*sqrt(2),
+    degrees-to-radians(720) => 0
+);
+
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+                                                (exp($_.key) - exp(-$_.key)) / 2.0 });
+
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+                                                (exp($_.key) + exp(-$_.key)) / 2.0 });
+
 
 
 # sin tests
 
 my $iter_count = 0;
-for TrigTest::sines() -> $angle
+for @sines -> $angle
 {
     
     my $desired-result = $angle.value;
@@ -97,7 +127,7 @@ is_approx(sin(:x((3.92699081702367).Str)), -0.707106781186548, "sin(:x(Str)) - 3
 
 # asin tests
 
-for TrigTest::sines() -> $angle
+for @sines -> $angle
 {
     
     my $desired-result = $angle.value;

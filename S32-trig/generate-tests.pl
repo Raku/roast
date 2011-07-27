@@ -1,6 +1,35 @@
 use v6;
-BEGIN { @*INC.push("../packages/") };
-use TrigTestSupport;
+
+sub degrees-to-radians($x) {
+    $x * (312689/99532) / 180;
+}
+
+my @sines = (
+    degrees-to-radians(-360) => 0,
+    degrees-to-radians(135 - 360) => 1/2*sqrt(2),
+    degrees-to-radians(330 - 360) => -0.5,
+    degrees-to-radians(0) => 0,
+    degrees-to-radians(30) => 0.5,
+    degrees-to-radians(45) => 1/2*sqrt(2),
+    degrees-to-radians(90) => 1,
+    degrees-to-radians(135) => 1/2*sqrt(2),
+    degrees-to-radians(180) => 0,
+    degrees-to-radians(225) => -1/2*sqrt(2),
+    degrees-to-radians(270) => -1,
+    degrees-to-radians(315) => -1/2*sqrt(2),
+    degrees-to-radians(360) => 0,
+    degrees-to-radians(30 + 360) => 0.5,
+    degrees-to-radians(225 + 360) => -1/2*sqrt(2),
+    degrees-to-radians(720) => 0
+);
+
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+                                                (exp($_.key) - exp(-$_.key)) / 2.0 });
+
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+                                                (exp($_.key) + exp(-$_.key)) / 2.0 });
 
 my $functions_file = "trig_functions";
 
@@ -173,7 +202,7 @@ class TrigFunction
         
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
         my $base_list = (<Radians> xx *).flat;
-        my $angle_list = grep-and-repeat($.angle_and_results_name.eval, $.skip);
+        my $angle_list = grep-and-repeat(eval($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
             my $indent = "";
@@ -271,7 +300,7 @@ class TrigFunction
         
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
         my $base_list = (<Radians Degrees Gradians Circles> xx *).flat;
-        my $angle_list = grep-and-repeat(notgrep($.angle_and_results_name.eval, 
+        my $angle_list = grep-and-repeat(notgrep(eval($.angle_and_results_name), 
                                                  {0 < $_.key() < pi / 2}), $.skip);
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;
@@ -303,8 +332,38 @@ sub OpenAndStartOutputFile($output_file)
 
 use v6;
 use Test;
-BEGIN { @*INC.push("t/spec/packages/") };
-use TrigTestSupport;
+
+sub degrees-to-radians($x) {
+    $x * (312689/99532) / 180;
+}
+
+my @sines = (
+    degrees-to-radians(-360) => 0,
+    degrees-to-radians(135 - 360) => 1/2*sqrt(2),
+    degrees-to-radians(330 - 360) => -0.5,
+    degrees-to-radians(0) => 0,
+    degrees-to-radians(30) => 0.5,
+    degrees-to-radians(45) => 1/2*sqrt(2),
+    degrees-to-radians(90) => 1,
+    degrees-to-radians(135) => 1/2*sqrt(2),
+    degrees-to-radians(180) => 0,
+    degrees-to-radians(225) => -1/2*sqrt(2),
+    degrees-to-radians(270) => -1,
+    degrees-to-radians(315) => -1/2*sqrt(2),
+    degrees-to-radians(360) => 0,
+    degrees-to-radians(30 + 360) => 0.5,
+    degrees-to-radians(225 + 360) => -1/2*sqrt(2),
+    degrees-to-radians(720) => 0
+);
+
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+                                                (exp($_.key) - exp(-$_.key)) / 2.0 });
+
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+                                                (exp($_.key) + exp(-$_.key)) / 2.0 });
+
 ';
     
     return $file;
