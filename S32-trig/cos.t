@@ -14,18 +14,18 @@ my $iter_count = 0;
 for TrigTest::cosines() -> $angle
 {
     
-    my $desired-result = $angle.result;
+    my $desired-result = $angle.value;
 
     # Num.cos tests -- very thorough
-    is_approx($angle.num().cos, $desired-result, 
-              "Num.cos - {$angle.num()}");
+    is_approx($angle.key().cos, $desired-result, 
+              "Num.cos - {$angle.key()}");
 
     # Complex.cos tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { (exp($_ * 1i) + exp(-$_ * 1i)) / 2 }($zp2);
     
     is_approx($zp0.cos, $sz0, "Complex.cos - $zp0");
@@ -100,18 +100,18 @@ is_approx(cos(:x((2.3561944902142).Str)), -0.707106781186548, "cos(:x(Str)) - 2.
 for TrigTest::cosines() -> $angle
 {
     
-    my $desired-result = $angle.result;
+    my $desired-result = $angle.value;
 
     # Num.acos tests -- thorough
     is_approx($desired-result.Num.acos.cos, $desired-result, 
-              "Num.acos - {$angle.num()}");
+              "Num.acos - {$angle.key()}");
     
     # Num.acos(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cos(acos($z)), $z, 
-                  "acos(Complex) - {$angle.num()}");
+                  "acos(Complex) - {$angle.key()}");
         is_approx($z.acos.cos, $z, 
-                  "Complex.acos - {$angle.num()}");
+                  "Complex.acos - {$angle.key()}");
     }
 }
         

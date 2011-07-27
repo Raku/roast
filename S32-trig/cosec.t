@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / sin($angle.num());
+    next if abs(sin($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / sin($angle.key());
 
     # Num.cosec tests -- very thorough
-    is_approx($angle.num().cosec, $desired-result, 
-              "Num.cosec - {$angle.num()}");
+    is_approx($angle.key().cosec, $desired-result, 
+              "Num.cosec - {$angle.key()}");
 
     # Complex.cosec tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { 1.0 / sin($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { 1.0 / sin($_) }($zp2);
     
     is_approx($zp0.cosec, $sz0, "Complex.cosec - $zp0");
@@ -99,19 +99,19 @@ is_approx(cosec(:x((6.80678408284103).Str)), 1.99999999978126, "cosec(:x(Str)) -
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / sin($angle.num());
+    next if abs(sin($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / sin($angle.key());
 
     # Num.acosec tests -- thorough
     is_approx($desired-result.Num.acosec.cosec, $desired-result, 
-              "Num.acosec - {$angle.num()}");
+              "Num.acosec - {$angle.key()}");
     
     # Num.acosec(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cosec(acosec($z)), $z, 
-                  "acosec(Complex) - {$angle.num()}");
+                  "acosec(Complex) - {$angle.key()}");
         is_approx($z.acosec.cosec, $z, 
-                  "Complex.acosec - {$angle.num()}");
+                  "Complex.acosec - {$angle.key()}");
     }
 }
         

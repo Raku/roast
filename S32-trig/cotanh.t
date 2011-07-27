@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sinh($angle.num())) < 1e-6;
-    my $desired-result = cosh($angle.num()) / sinh($angle.num());
+    next if abs(sinh($angle.key())) < 1e-6;
+    my $desired-result = cosh($angle.key()) / sinh($angle.key());
 
     # Num.cotanh tests -- very thorough
-    is_approx($angle.num().cotanh, $desired-result, 
-              "Num.cotanh - {$angle.num()}");
+    is_approx($angle.key().cotanh, $desired-result, 
+              "Num.cotanh - {$angle.key()}");
 
     # Complex.cotanh tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { cosh($_) / sinh ($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { cosh($_) / sinh ($_) }($zp2);
     
     is_approx($zp0.cotanh, $sz0, "Complex.cotanh - $zp0");
@@ -99,19 +99,19 @@ is_approx(cotanh(:x((4.7123889804284).Str)), 1.000161412061, "cotanh(:x(Str)) - 
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sinh($angle.num())) < 1e-6;
-    my $desired-result = cosh($angle.num()) / sinh($angle.num());
+    next if abs(sinh($angle.key())) < 1e-6;
+    my $desired-result = cosh($angle.key()) / sinh($angle.key());
 
     # Num.acotanh tests -- thorough
     is_approx($desired-result.Num.acotanh.cotanh, $desired-result, 
-              "Num.acotanh - {$angle.num()}");
+              "Num.acotanh - {$angle.key()}");
     
     # Num.acotanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cotanh(acotanh($z)), $z, 
-                  "acotanh(Complex) - {$angle.num()}");
+                  "acotanh(Complex) - {$angle.key()}");
         is_approx($z.acotanh.cotanh, $z, 
-                  "Complex.acotanh - {$angle.num()}");
+                  "Complex.acotanh - {$angle.key()}");
     }
 }
         

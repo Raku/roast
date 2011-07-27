@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num())) < 1e-6;
-    my $desired-result = cos($angle.num()) / sin($angle.num());
+    next if abs(sin($angle.key())) < 1e-6;
+    my $desired-result = cos($angle.key()) / sin($angle.key());
 
     # Num.cotan tests -- very thorough
-    is_approx($angle.num().cotan, $desired-result, 
-              "Num.cotan - {$angle.num()}");
+    is_approx($angle.key().cotan, $desired-result, 
+              "Num.cotan - {$angle.key()}");
 
     # Complex.cotan tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { cos($_) / sin($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { cos($_) / sin($_) }($zp2);
     
     is_approx($zp0.cotan, $sz0, "Complex.cotan - $zp0");
@@ -99,19 +99,19 @@ is_approx(cotan(:x((6.80678408284103).Str)), 1.7320508073163, "cotan(:x(Str)) - 
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sin($angle.num())) < 1e-6;
-    my $desired-result = cos($angle.num()) / sin($angle.num());
+    next if abs(sin($angle.key())) < 1e-6;
+    my $desired-result = cos($angle.key()) / sin($angle.key());
 
     # Num.acotan tests -- thorough
     is_approx($desired-result.Num.acotan.cotan, $desired-result, 
-              "Num.acotan - {$angle.num()}");
+              "Num.acotan - {$angle.key()}");
     
     # Num.acotan(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cotan(acotan($z)), $z, 
-                  "acotan(Complex) - {$angle.num()}");
+                  "acotan(Complex) - {$angle.key()}");
         is_approx($z.acotan.cotan, $z, 
-                  "Complex.acotan - {$angle.num()}");
+                  "Complex.acotan - {$angle.key()}");
     }
 }
         

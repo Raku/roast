@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::cosines() -> $angle
 {
-    next if abs(cosh($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / cosh($angle.num());
+    next if abs(cosh($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / cosh($angle.key());
 
     # Num.sech tests -- very thorough
-    is_approx($angle.num().sech, $desired-result, 
-              "Num.sech - {$angle.num()}");
+    is_approx($angle.key().sech, $desired-result, 
+              "Num.sech - {$angle.key()}");
 
     # Complex.sech tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { 1.0 / cosh($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { 1.0 / cosh($_) }($zp2);
     
     is_approx($zp0.sech, $sz0, "Complex.sech - $zp0");
@@ -99,19 +99,19 @@ is_approx(sech(:x((2.3561944902142).Str)), 0.187872734233684, "sech(:x(Str)) - 2
 
 for TrigTest::cosines() -> $angle
 {
-    next if abs(cosh($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / cosh($angle.num());
+    next if abs(cosh($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / cosh($angle.key());
 
     # Num.asech tests -- thorough
     is_approx($desired-result.Num.asech.sech, $desired-result, 
-              "Num.asech - {$angle.num()}");
+              "Num.asech - {$angle.key()}");
     
     # Num.asech(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(sech(asech($z)), $z, 
-                  "asech(Complex) - {$angle.num()}");
+                  "asech(Complex) - {$angle.key()}");
         is_approx($z.asech.sech, $z, 
-                  "Complex.asech - {$angle.num()}");
+                  "Complex.asech - {$angle.key()}");
     }
 }
         

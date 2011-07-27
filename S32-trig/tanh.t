@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(cosh($angle.num())) < 1e-6;
-    my $desired-result = sinh($angle.num()) / cosh($angle.num());
+    next if abs(cosh($angle.key())) < 1e-6;
+    my $desired-result = sinh($angle.key()) / cosh($angle.key());
 
     # Num.tanh tests -- very thorough
-    is_approx($angle.num().tanh, $desired-result, 
-              "Num.tanh - {$angle.num()}");
+    is_approx($angle.key().tanh, $desired-result, 
+              "Num.tanh - {$angle.key()}");
 
     # Complex.tanh tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { sinh($_) / cosh($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { sinh($_) / cosh($_) }($zp2);
     
     is_approx($zp0.tanh, $sz0, "Complex.tanh - $zp0");
@@ -99,19 +99,19 @@ is_approx(tanh(:x((3.92699081702367).Str)), 0.999223894878698, "tanh(:x(Str)) - 
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(cosh($angle.num())) < 1e-6;
-    my $desired-result = sinh($angle.num()) / cosh($angle.num());
+    next if abs(cosh($angle.key())) < 1e-6;
+    my $desired-result = sinh($angle.key()) / cosh($angle.key());
 
     # Num.atanh tests -- thorough
     is_approx($desired-result.Num.atanh.tanh, $desired-result, 
-              "Num.atanh - {$angle.num()}");
+              "Num.atanh - {$angle.key()}");
     
     # Num.atanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(tanh(atanh($z)), $z, 
-                  "atanh(Complex) - {$angle.num()}");
+                  "atanh(Complex) - {$angle.key()}");
         is_approx($z.atanh.tanh, $z, 
-                  "Complex.atanh - {$angle.num()}");
+                  "Complex.atanh - {$angle.key()}");
     }
 }
         

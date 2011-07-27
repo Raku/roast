@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::cosines() -> $angle
 {
-    next if abs(cos($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / cos($angle.num());
+    next if abs(cos($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / cos($angle.key());
 
     # Num.sec tests -- very thorough
-    is_approx($angle.num().sec, $desired-result, 
-              "Num.sec - {$angle.num()}");
+    is_approx($angle.key().sec, $desired-result, 
+              "Num.sec - {$angle.key()}");
 
     # Complex.sec tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { 1.0 / cos($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { 1.0 / cos($_) }($zp2);
     
     is_approx($zp0.sec, $sz0, "Complex.sec - $zp0");
@@ -99,19 +99,19 @@ is_approx(sec(:x((5.23598775603156).Str)), 1.99999999983174, "sec(:x(Str)) - 5.2
 
 for TrigTest::cosines() -> $angle
 {
-    next if abs(cos($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / cos($angle.num());
+    next if abs(cos($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / cos($angle.key());
 
     # Num.asec tests -- thorough
     is_approx($desired-result.Num.asec.sec, $desired-result, 
-              "Num.asec - {$angle.num()}");
+              "Num.asec - {$angle.key()}");
     
     # Num.asec(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(sec(asec($z)), $z, 
-                  "asec(Complex) - {$angle.num()}");
+                  "asec(Complex) - {$angle.key()}");
         is_approx($z.asec.sec, $z, 
-                  "Complex.asec - {$angle.num()}");
+                  "Complex.asec - {$angle.key()}");
     }
 }
         

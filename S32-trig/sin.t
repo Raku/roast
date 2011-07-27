@@ -14,18 +14,18 @@ my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
     
-    my $desired-result = $angle.result;
+    my $desired-result = $angle.value;
 
     # Num.sin tests -- very thorough
-    is_approx($angle.num().sin, $desired-result, 
-              "Num.sin - {$angle.num()}");
+    is_approx($angle.key().sin, $desired-result, 
+              "Num.sin - {$angle.key()}");
 
     # Complex.sin tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { (exp($_ * 1i) - exp(-$_ * 1i)) / 2i }($zp2);
     
     is_approx($zp0.sin, $sz0, "Complex.sin - $zp0");
@@ -100,18 +100,18 @@ is_approx(sin(:x((3.92699081702367).Str)), -0.707106781186548, "sin(:x(Str)) - 3
 for TrigTest::sines() -> $angle
 {
     
-    my $desired-result = $angle.result;
+    my $desired-result = $angle.value;
 
     # Num.asin tests -- thorough
     is_approx($desired-result.Num.asin.sin, $desired-result, 
-              "Num.asin - {$angle.num()}");
+              "Num.asin - {$angle.key()}");
     
     # Num.asin(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(sin(asin($z)), $z, 
-                  "asin(Complex) - {$angle.num()}");
+                  "asin(Complex) - {$angle.key()}");
         is_approx($z.asin.sin, $z, 
-                  "Complex.asin - {$angle.num()}");
+                  "Complex.asin - {$angle.key()}");
     }
 }
         

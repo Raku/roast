@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(sinh($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / sinh($angle.num());
+    next if abs(sinh($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / sinh($angle.key());
 
     # Num.cosech tests -- very thorough
-    is_approx($angle.num().cosech, $desired-result, 
-              "Num.cosech - {$angle.num()}");
+    is_approx($angle.key().cosech, $desired-result, 
+              "Num.cosech - {$angle.key()}");
 
     # Complex.cosech tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { 1.0 / sinh($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { 1.0 / sinh($_) }($zp2);
     
     is_approx($zp0.cosech, $sz0, "Complex.cosech - $zp0");
@@ -99,19 +99,19 @@ is_approx(cosech(:x((4.7123889804284).Str)), 0.0179680320529917, "cosech(:x(Str)
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(sinh($angle.num())) < 1e-6;
-    my $desired-result = 1.0 / sinh($angle.num());
+    next if abs(sinh($angle.key())) < 1e-6;
+    my $desired-result = 1.0 / sinh($angle.key());
 
     # Num.acosech tests -- thorough
     is_approx($desired-result.Num.acosech.cosech, $desired-result, 
-              "Num.acosech - {$angle.num()}");
+              "Num.acosech - {$angle.key()}");
     
     # Num.acosech(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(cosech(acosech($z)), $z, 
-                  "acosech(Complex) - {$angle.num()}");
+                  "acosech(Complex) - {$angle.key()}");
         is_approx($z.acosech.cosech, $z, 
-                  "Complex.acosech - {$angle.num()}");
+                  "Complex.acosech - {$angle.key()}");
     }
 }
         

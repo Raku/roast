@@ -13,19 +13,19 @@ use TrigTestSupport;
 my $iter_count = 0;
 for TrigTest::sines() -> $angle
 {
-    next if abs(cos($angle.num())) < 1e-6;
-    my $desired-result = sin($angle.num()) / cos($angle.num());
+    next if abs(cos($angle.key())) < 1e-6;
+    my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.tan tests -- very thorough
-    is_approx($angle.num().tan, $desired-result, 
-              "Num.tan - {$angle.num()}");
+    is_approx($angle.key().tan, $desired-result, 
+              "Num.tan - {$angle.key()}");
 
     # Complex.tan tests -- also very thorough
-    my Complex $zp0 = $angle.num + 0.0i;
+    my Complex $zp0 = $angle.key + 0.0i;
     my Complex $sz0 = $desired-result + 0i;
-    my Complex $zp1 = $angle.num + 1.0i;
+    my Complex $zp1 = $angle.key + 1.0i;
     my Complex $sz1 = { sin($_) / cos($_) }($zp1);
-    my Complex $zp2 = $angle.num + 2.0i;
+    my Complex $zp2 = $angle.key + 2.0i;
     my Complex $sz2 = { sin($_) / cos($_) }($zp2);
     
     is_approx($zp0.tan, $sz0, "Complex.tan - $zp0");
@@ -99,19 +99,19 @@ is_approx(tan(:x((5.49778714383314).Str)), -0.999999999897998, "tan(:x(Str)) - 5
 
 for TrigTest::sines() -> $angle
 {
-    next if abs(cos($angle.num())) < 1e-6;
-    my $desired-result = sin($angle.num()) / cos($angle.num());
+    next if abs(cos($angle.key())) < 1e-6;
+    my $desired-result = sin($angle.key()) / cos($angle.key());
 
     # Num.atan tests -- thorough
     is_approx($desired-result.Num.atan.tan, $desired-result, 
-              "Num.atan - {$angle.num()}");
+              "Num.atan - {$angle.key()}");
     
     # Num.atan(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
         is_approx(tan(atan($z)), $z, 
-                  "atan(Complex) - {$angle.num()}");
+                  "atan(Complex) - {$angle.key()}");
         is_approx($z.atan.tan, $z, 
-                  "Complex.atan - {$angle.num()}");
+                  "Complex.atan - {$angle.key()}");
     }
 }
         
