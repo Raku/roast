@@ -153,33 +153,45 @@ for @sines -> $angle
     }
 }
         
-# Num tests
-is_approx(asin((0.5).Num), 0.523598775603156, "asin(Num) - 0.523598775603156");
-is_approx(asin(:x((0.707106781186548).Num)), 0.785398163404734, "asin(:x(Num)) - 0.785398163404734");
+{
+    # Num tests
+    is_approx(asin((0.5).Num), 0.523598775603156, "asin(Num) - 0.523598775603156");
+    is_approx(asin(:x((0.707106781186548).Num)), 0.785398163404734, "asin(:x(Num)) - 0.785398163404734");
+}
 
-# Rat tests
-is_approx(((0.5).Rat(1e-9)).asin, 0.523598775603156, "Rat.asin - 0.523598775603156");
-is_approx(asin((0.707106781186548).Rat(1e-9)), 0.785398163404734, "asin(Rat) - 0.785398163404734");
-is_approx(asin(:x((0.5).Rat(1e-9))), 0.523598775603156, "asin(:x(Rat)) - 0.523598775603156");
+{
+    # Rat tests
+    is_approx(((0.5).Rat(1e-9)).asin, 0.523598775603156, "Rat.asin - 0.523598775603156");
+    is_approx(asin((0.707106781186548).Rat(1e-9)), 0.785398163404734, "asin(Rat) - 0.785398163404734");
+    is_approx(asin(:x((0.5).Rat(1e-9))), 0.523598775603156, "asin(:x(Rat)) - 0.523598775603156");
+}
 
-# Complex tests
-is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
-is_approx(asin(:x((0.523598775603156 + 2i).Complex)), 0.231190695652916 + 1.46781890096429i, "asin(:x(Complex)) - 0.231190695652916 + 1.46781890096429i");
+{
+    # Complex tests
+    is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
+    is_approx(asin(:x((0.523598775603156 + 2i).Complex)), 0.231190695652916 + 1.46781890096429i, "asin(:x(Complex)) - 0.231190695652916 + 1.46781890096429i");
+}
 
-# Str tests
-is_approx(((0.707106781186548).Str).asin, 0.785398163404734, "Str.asin - 0.785398163404734");
-is_approx(asin((0.5).Str), 0.523598775603156, "asin(Str) - 0.523598775603156");
-is_approx(asin(:x((0.707106781186548).Str)), 0.785398163404734, "asin(:x(Str)) - 0.785398163404734");
+{
+    # Str tests
+    is_approx(((0.707106781186548).Str).asin, 0.785398163404734, "Str.asin - 0.785398163404734");
+    is_approx(asin((0.5).Str), 0.523598775603156, "asin(Str) - 0.523598775603156");
+    is_approx(asin(:x((0.707106781186548).Str)), 0.785398163404734, "asin(:x(Str)) - 0.785398163404734");
+}
 
-# NotComplex tests
-is_approx((NotComplex.new(0.523598775603156 + 2i)).asin, 0.231190695652916 + 1.46781890096429i, "NotComplex.asin - 0.231190695652916 + 1.46781890096429i");
-is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
-is_approx(asin(:x(NotComplex.new(0.523598775603156 + 2i))), 0.231190695652916 + 1.46781890096429i, "asin(:x(NotComplex)) - 0.231190695652916 + 1.46781890096429i");
+{
+    # NotComplex tests
+    is_approx((NotComplex.new(0.523598775603156 + 2i)).asin, 0.231190695652916 + 1.46781890096429i, "NotComplex.asin - 0.231190695652916 + 1.46781890096429i");
+    is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
+    is_approx(asin(:x(NotComplex.new(0.523598775603156 + 2i))), 0.231190695652916 + 1.46781890096429i, "asin(:x(NotComplex)) - 0.231190695652916 + 1.46781890096429i");
+}
 
-# DifferentReal tests
-is_approx((DifferentReal.new(0.707106781186548)).asin, 0.785398163404734, "DifferentReal.asin - 0.785398163404734");
-is_approx(asin(DifferentReal.new(0.5)), 0.523598775603156, "asin(DifferentReal) - 0.523598775603156");
-is_approx(asin(:x(DifferentReal.new(0.707106781186548))), 0.785398163404734, "asin(:x(DifferentReal)) - 0.785398163404734");
+{
+    # DifferentReal tests
+    is_approx((DifferentReal.new(0.707106781186548)).asin, 0.785398163404734, "DifferentReal.asin - 0.785398163404734");
+    is_approx(asin(DifferentReal.new(0.5)), 0.523598775603156, "asin(DifferentReal) - 0.523598775603156");
+    is_approx(asin(:x(DifferentReal.new(0.707106781186548))), 0.785398163404734, "asin(:x(DifferentReal)) - 0.785398163404734");
+}
 
 done;
 

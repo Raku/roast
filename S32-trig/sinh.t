@@ -153,33 +153,45 @@ for @sinhes -> $angle
     }
 }
         
-# Num tests
-is_approx(asinh((0.547853473893578).Num), 0.523598775603156, "asinh(Num) - 0.523598775603156");
-is_approx(asinh(:x((0.86867096149566).Num)), 0.785398163404734, "asinh(:x(Num)) - 0.785398163404734");
+{
+    # Num tests
+    is_approx(asinh((0.547853473893578).Num), 0.523598775603156, "asinh(Num) - 0.523598775603156");
+    is_approx(asinh(:x((0.86867096149566).Num)), 0.785398163404734, "asinh(:x(Num)) - 0.785398163404734");
+}
 
-# Rat tests
-is_approx(((0.547853473893578).Rat(1e-9)).asinh, 0.523598775603156, "Rat.asinh - 0.523598775603156");
-is_approx(asinh((0.86867096149566).Rat(1e-9)), 0.785398163404734, "asinh(Rat) - 0.785398163404734");
-is_approx(asinh(:x((0.547853473893578).Rat(1e-9))), 0.523598775603156, "asinh(:x(Rat)) - 0.523598775603156");
+{
+    # Rat tests
+    is_approx(((0.547853473893578).Rat(1e-9)).asinh, 0.523598775603156, "Rat.asinh - 0.523598775603156");
+    is_approx(asinh((0.86867096149566).Rat(1e-9)), 0.785398163404734, "asinh(Rat) - 0.785398163404734");
+    is_approx(asinh(:x((0.547853473893578).Rat(1e-9))), 0.523598775603156, "asinh(:x(Rat)) - 0.523598775603156");
+}
 
-# Complex tests
-is_approx(asinh((0.785398163404734 + 2i).Complex), 1.41841325789332 + 1.15495109689711i, "asinh(Complex) - 1.41841325789332 + 1.15495109689711i");
-is_approx(asinh(:x((0.523598775603156 + 2i).Complex)), 1.365827718396 + 1.28093108055158i, "asinh(:x(Complex)) - 1.365827718396 + 1.28093108055158i");
+{
+    # Complex tests
+    is_approx(asinh((0.785398163404734 + 2i).Complex), 1.41841325789332 + 1.15495109689711i, "asinh(Complex) - 1.41841325789332 + 1.15495109689711i");
+    is_approx(asinh(:x((0.523598775603156 + 2i).Complex)), 1.365827718396 + 1.28093108055158i, "asinh(:x(Complex)) - 1.365827718396 + 1.28093108055158i");
+}
 
-# Str tests
-is_approx(((0.86867096149566).Str).asinh, 0.785398163404734, "Str.asinh - 0.785398163404734");
-is_approx(asinh((0.547853473893578).Str), 0.523598775603156, "asinh(Str) - 0.523598775603156");
-is_approx(asinh(:x((0.86867096149566).Str)), 0.785398163404734, "asinh(:x(Str)) - 0.785398163404734");
+{
+    # Str tests
+    is_approx(((0.86867096149566).Str).asinh, 0.785398163404734, "Str.asinh - 0.785398163404734");
+    is_approx(asinh((0.547853473893578).Str), 0.523598775603156, "asinh(Str) - 0.523598775603156");
+    is_approx(asinh(:x((0.86867096149566).Str)), 0.785398163404734, "asinh(:x(Str)) - 0.785398163404734");
+}
 
-# NotComplex tests
-is_approx((NotComplex.new(0.523598775603156 + 2i)).asinh, 1.365827718396 + 1.28093108055158i, "NotComplex.asinh - 1.365827718396 + 1.28093108055158i");
-is_approx(asinh(NotComplex.new(0.785398163404734 + 2i)), 1.41841325789332 + 1.15495109689711i, "asinh(NotComplex) - 1.41841325789332 + 1.15495109689711i");
-is_approx(asinh(:x(NotComplex.new(0.523598775603156 + 2i))), 1.365827718396 + 1.28093108055158i, "asinh(:x(NotComplex)) - 1.365827718396 + 1.28093108055158i");
+{
+    # NotComplex tests
+    is_approx((NotComplex.new(0.523598775603156 + 2i)).asinh, 1.365827718396 + 1.28093108055158i, "NotComplex.asinh - 1.365827718396 + 1.28093108055158i");
+    is_approx(asinh(NotComplex.new(0.785398163404734 + 2i)), 1.41841325789332 + 1.15495109689711i, "asinh(NotComplex) - 1.41841325789332 + 1.15495109689711i");
+    is_approx(asinh(:x(NotComplex.new(0.523598775603156 + 2i))), 1.365827718396 + 1.28093108055158i, "asinh(:x(NotComplex)) - 1.365827718396 + 1.28093108055158i");
+}
 
-# DifferentReal tests
-is_approx((DifferentReal.new(0.86867096149566)).asinh, 0.785398163404734, "DifferentReal.asinh - 0.785398163404734");
-is_approx(asinh(DifferentReal.new(0.547853473893578)), 0.523598775603156, "asinh(DifferentReal) - 0.523598775603156");
-is_approx(asinh(:x(DifferentReal.new(0.86867096149566))), 0.785398163404734, "asinh(:x(DifferentReal)) - 0.785398163404734");
+{
+    # DifferentReal tests
+    is_approx((DifferentReal.new(0.86867096149566)).asinh, 0.785398163404734, "DifferentReal.asinh - 0.785398163404734");
+    is_approx(asinh(DifferentReal.new(0.547853473893578)), 0.523598775603156, "asinh(DifferentReal) - 0.523598775603156");
+    is_approx(asinh(:x(DifferentReal.new(0.86867096149566))), 0.785398163404734, "asinh(:x(DifferentReal)) - 0.785398163404734");
+}
 
 done;
 

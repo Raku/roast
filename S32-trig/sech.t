@@ -153,33 +153,45 @@ for @cosines -> $angle
     }
 }
         
-# Num tests
-is_approx(asech((0.754939708710524).Num), 0.785398163404734, "asech(Num) - 0.785398163404734");
-is_approx(asech(:x((0.754939708710524).Num)), 0.785398163404734, "asech(:x(Num)) - 0.785398163404734");
+{
+    # Num tests
+    is_approx(asech((0.754939708710524).Num), 0.785398163404734, "asech(Num) - 0.785398163404734");
+    is_approx(asech(:x((0.754939708710524).Num)), 0.785398163404734, "asech(:x(Num)) - 0.785398163404734");
+}
 
-# Rat tests
-is_approx(((0.754939708710524).Rat(1e-9)).asech, 0.785398163404734, "Rat.asech - 0.785398163404734");
-is_approx(asech((0.754939708710524).Rat(1e-9)), 0.785398163404734, "asech(Rat) - 0.785398163404734");
-is_approx(asech(:x((0.754939708710524).Rat(1e-9))), 0.785398163404734, "asech(:x(Rat)) - 0.785398163404734");
+{
+    # Rat tests
+    is_approx(((0.754939708710524).Rat(1e-9)).asech, 0.785398163404734, "Rat.asech - 0.785398163404734");
+    is_approx(asech((0.754939708710524).Rat(1e-9)), 0.785398163404734, "asech(Rat) - 0.785398163404734");
+    is_approx(asech(:x((0.754939708710524).Rat(1e-9))), 0.785398163404734, "asech(:x(Rat)) - 0.785398163404734");
+}
 
-# Complex tests
-is_approx(asech((0.785398163404734 + 2i).Complex), 0.425586400480703 - 1.41436665336946i, "asech(Complex) - 0.425586400480703 - 1.41436665336946i");
-is_approx(asech(:x((0.785398163404734 + 2i).Complex)), 0.425586400480703 - 1.41436665336946i, "asech(:x(Complex)) - 0.425586400480703 - 1.41436665336946i");
+{
+    # Complex tests
+    is_approx(asech((0.785398163404734 + 2i).Complex), 0.425586400480703 - 1.41436665336946i, "asech(Complex) - 0.425586400480703 - 1.41436665336946i");
+    is_approx(asech(:x((0.785398163404734 + 2i).Complex)), 0.425586400480703 - 1.41436665336946i, "asech(:x(Complex)) - 0.425586400480703 - 1.41436665336946i");
+}
 
-# Str tests
-is_approx(((0.754939708710524).Str).asech, 0.785398163404734, "Str.asech - 0.785398163404734");
-is_approx(asech((0.754939708710524).Str), 0.785398163404734, "asech(Str) - 0.785398163404734");
-is_approx(asech(:x((0.754939708710524).Str)), 0.785398163404734, "asech(:x(Str)) - 0.785398163404734");
+{
+    # Str tests
+    is_approx(((0.754939708710524).Str).asech, 0.785398163404734, "Str.asech - 0.785398163404734");
+    is_approx(asech((0.754939708710524).Str), 0.785398163404734, "asech(Str) - 0.785398163404734");
+    is_approx(asech(:x((0.754939708710524).Str)), 0.785398163404734, "asech(:x(Str)) - 0.785398163404734");
+}
 
-# NotComplex tests
-is_approx((NotComplex.new(0.785398163404734 + 2i)).asech, 0.425586400480703 - 1.41436665336946i, "NotComplex.asech - 0.425586400480703 - 1.41436665336946i");
-is_approx(asech(NotComplex.new(0.785398163404734 + 2i)), 0.425586400480703 - 1.41436665336946i, "asech(NotComplex) - 0.425586400480703 - 1.41436665336946i");
-is_approx(asech(:x(NotComplex.new(0.785398163404734 + 2i))), 0.425586400480703 - 1.41436665336946i, "asech(:x(NotComplex)) - 0.425586400480703 - 1.41436665336946i");
+{
+    # NotComplex tests
+    is_approx((NotComplex.new(0.785398163404734 + 2i)).asech, 0.425586400480703 - 1.41436665336946i, "NotComplex.asech - 0.425586400480703 - 1.41436665336946i");
+    is_approx(asech(NotComplex.new(0.785398163404734 + 2i)), 0.425586400480703 - 1.41436665336946i, "asech(NotComplex) - 0.425586400480703 - 1.41436665336946i");
+    is_approx(asech(:x(NotComplex.new(0.785398163404734 + 2i))), 0.425586400480703 - 1.41436665336946i, "asech(:x(NotComplex)) - 0.425586400480703 - 1.41436665336946i");
+}
 
-# DifferentReal tests
-is_approx((DifferentReal.new(0.754939708710524)).asech, 0.785398163404734, "DifferentReal.asech - 0.785398163404734");
-is_approx(asech(DifferentReal.new(0.754939708710524)), 0.785398163404734, "asech(DifferentReal) - 0.785398163404734");
-is_approx(asech(:x(DifferentReal.new(0.754939708710524))), 0.785398163404734, "asech(:x(DifferentReal)) - 0.785398163404734");
+{
+    # DifferentReal tests
+    is_approx((DifferentReal.new(0.754939708710524)).asech, 0.785398163404734, "DifferentReal.asech - 0.785398163404734");
+    is_approx(asech(DifferentReal.new(0.754939708710524)), 0.785398163404734, "asech(DifferentReal) - 0.785398163404734");
+    is_approx(asech(:x(DifferentReal.new(0.754939708710524))), 0.785398163404734, "asech(:x(DifferentReal)) - 0.785398163404734");
+}
 
 done;
 

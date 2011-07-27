@@ -153,33 +153,45 @@ for @cosines -> $angle
     }
 }
         
-# Num tests
-is_approx(acos((0.707106781186548).Num), 0.785398163404734, "acos(Num) - 0.785398163404734");
-is_approx(acos(:x((0.707106781186548).Num)), 0.785398163404734, "acos(:x(Num)) - 0.785398163404734");
+{
+    # Num tests
+    is_approx(acos((0.707106781186548).Num), 0.785398163404734, "acos(Num) - 0.785398163404734");
+    is_approx(acos(:x((0.707106781186548).Num)), 0.785398163404734, "acos(:x(Num)) - 0.785398163404734");
+}
 
-# Rat tests
-is_approx(((0.707106781186548).Rat(1e-9)).acos, 0.785398163404734, "Rat.acos - 0.785398163404734");
-is_approx(acos((0.707106781186548).Rat(1e-9)), 0.785398163404734, "acos(Rat) - 0.785398163404734");
-is_approx(acos(:x((0.707106781186548).Rat(1e-9))), 0.785398163404734, "acos(:x(Rat)) - 0.785398163404734");
+{
+    # Rat tests
+    is_approx(((0.707106781186548).Rat(1e-9)).acos, 0.785398163404734, "Rat.acos - 0.785398163404734");
+    is_approx(acos((0.707106781186548).Rat(1e-9)), 0.785398163404734, "acos(Rat) - 0.785398163404734");
+    is_approx(acos(:x((0.707106781186548).Rat(1e-9))), 0.785398163404734, "acos(:x(Rat)) - 0.785398163404734");
+}
 
-# Complex tests
-is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740853541 - 1.49709293866352i, "acos(Complex) - 1.22945740853541 - 1.49709293866352i");
-is_approx(acos(:x((0.785398163404734 + 2i).Complex)), 1.22945740853541 - 1.49709293866352i, "acos(:x(Complex)) - 1.22945740853541 - 1.49709293866352i");
+{
+    # Complex tests
+    is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740853541 - 1.49709293866352i, "acos(Complex) - 1.22945740853541 - 1.49709293866352i");
+    is_approx(acos(:x((0.785398163404734 + 2i).Complex)), 1.22945740853541 - 1.49709293866352i, "acos(:x(Complex)) - 1.22945740853541 - 1.49709293866352i");
+}
 
-# Str tests
-is_approx(((0.707106781186548).Str).acos, 0.785398163404734, "Str.acos - 0.785398163404734");
-is_approx(acos((0.707106781186548).Str), 0.785398163404734, "acos(Str) - 0.785398163404734");
-is_approx(acos(:x((0.707106781186548).Str)), 0.785398163404734, "acos(:x(Str)) - 0.785398163404734");
+{
+    # Str tests
+    is_approx(((0.707106781186548).Str).acos, 0.785398163404734, "Str.acos - 0.785398163404734");
+    is_approx(acos((0.707106781186548).Str), 0.785398163404734, "acos(Str) - 0.785398163404734");
+    is_approx(acos(:x((0.707106781186548).Str)), 0.785398163404734, "acos(:x(Str)) - 0.785398163404734");
+}
 
-# NotComplex tests
-is_approx((NotComplex.new(0.785398163404734 + 2i)).acos, 1.22945740853541 - 1.49709293866352i, "NotComplex.acos - 1.22945740853541 - 1.49709293866352i");
-is_approx(acos(NotComplex.new(0.785398163404734 + 2i)), 1.22945740853541 - 1.49709293866352i, "acos(NotComplex) - 1.22945740853541 - 1.49709293866352i");
-is_approx(acos(:x(NotComplex.new(0.785398163404734 + 2i))), 1.22945740853541 - 1.49709293866352i, "acos(:x(NotComplex)) - 1.22945740853541 - 1.49709293866352i");
+{
+    # NotComplex tests
+    is_approx((NotComplex.new(0.785398163404734 + 2i)).acos, 1.22945740853541 - 1.49709293866352i, "NotComplex.acos - 1.22945740853541 - 1.49709293866352i");
+    is_approx(acos(NotComplex.new(0.785398163404734 + 2i)), 1.22945740853541 - 1.49709293866352i, "acos(NotComplex) - 1.22945740853541 - 1.49709293866352i");
+    is_approx(acos(:x(NotComplex.new(0.785398163404734 + 2i))), 1.22945740853541 - 1.49709293866352i, "acos(:x(NotComplex)) - 1.22945740853541 - 1.49709293866352i");
+}
 
-# DifferentReal tests
-is_approx((DifferentReal.new(0.707106781186548)).acos, 0.785398163404734, "DifferentReal.acos - 0.785398163404734");
-is_approx(acos(DifferentReal.new(0.707106781186548)), 0.785398163404734, "acos(DifferentReal) - 0.785398163404734");
-is_approx(acos(:x(DifferentReal.new(0.707106781186548))), 0.785398163404734, "acos(:x(DifferentReal)) - 0.785398163404734");
+{
+    # DifferentReal tests
+    is_approx((DifferentReal.new(0.707106781186548)).acos, 0.785398163404734, "DifferentReal.acos - 0.785398163404734");
+    is_approx(acos(DifferentReal.new(0.707106781186548)), 0.785398163404734, "acos(DifferentReal) - 0.785398163404734");
+    is_approx(acos(:x(DifferentReal.new(0.707106781186548))), 0.785398163404734, "acos(:x(DifferentReal)) - 0.785398163404734");
+}
 
 done;
 
