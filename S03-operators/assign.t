@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 279;
+plan 283;
 
 
 # tests various assignment styles
@@ -874,6 +874,33 @@ sub l () { 1, 2 };
     is $cc, 0,
         'correct precedence between sub call and assignment (2)';
 
+}
+
+# RT 77586
+{
+    my %bughunt = 1 => "foo", 2 => "bar", 3 => "foo";
+    my %correct = grep { .value ne "bar" }, %bughunt.pairs;
+    %bughunt    = grep { .value ne "bar" }, %bughunt.pairs;
+    #?rakudo todo 'RT 77586'
+    is %bughunt, %correct,
+       'Assign to hash with the same hash on rhs (RT 77586)';
+}
+
+# RT 93972
+#?rakudo skip 'RT 93972'
+{
+    my $rt93972 = 1, 2, 3;
+    $rt93972 = $rt93972.grep({1});
+    is $rt93972, [1],
+       'Assign to array with the same array on rhs (RT 93972)';
+}
+
+{
+    my @bughunt = 1, 2, 3;
+    @bughunt = @bughunt.grep({1});
+    #?rakudo todo 'RT 93972'
+    is @bughunt, [1],
+       'Assign to array with the same array on rhs (RT 93972)';
 }
 
 # vim: ft=perl6
