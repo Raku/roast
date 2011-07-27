@@ -36,6 +36,30 @@ my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
 my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
+class NotComplex is Cool {
+    has $.value;
+
+    multi method new(Complex $value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Numeric() {
+        self.value;
+    }
+}
+
+class DifferentReal is Real {
+    has $.value;
+
+    multi method new($value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Bridge() {
+        self.value;
+    }
+}            
+
 
 
 # tanh tests
@@ -66,39 +90,34 @@ for @sines -> $angle
 is(tanh(Inf), 1, "tanh(Inf) -");
 is(tanh(-Inf), -1, "tanh(-Inf) -");
         
-# Num tests
-is_approx(tanh((-6.28318530723787).Num), -0.999993025339611, "tanh(Num) - -6.28318530723787");
-is_approx(tanh(:x((-3.92699081702367).Num)), -0.999223894878698, "tanh(:x(Num)) - -3.92699081702367");
+{
+    # Num tests
+    is_approx(tanh((-6.28318530723787).Num), -0.999993025339611, "tanh(Num) - -6.28318530723787");
+    is_approx(tanh(:x((-3.92699081702367).Num)), -0.999223894878698, "tanh(:x(Num)) - -3.92699081702367");
+}
 
-# Rat tests
-is_approx((-0.523598775603156).Rat(1e-9).tanh, -0.480472778160188, "Rat.tanh - -0.523598775603156");
-is_approx(tanh((0).Rat(1e-9)), 0, "tanh(Rat) - 0");
-is_approx(tanh(:x((0.523598775603156).Rat(1e-9))), 0.480472778160188, "tanh(:x(Rat)) - 0.523598775603156");
+{
+    # Rat tests
+    is_approx((-0.523598775603156).Rat(1e-9).tanh, -0.480472778160188, "Rat.tanh - -0.523598775603156");
+    is_approx(tanh((0).Rat(1e-9)), 0, "tanh(Rat) - 0");
+    is_approx(tanh(:x((0.523598775603156).Rat(1e-9))), 0.480472778160188, "tanh(:x(Rat)) - 0.523598775603156");
+}
 
-# Complex tests
-is_approx(tanh((0.785398163404734 + 2i).Complex), 1.24023479948939 - 0.407862181685885i, "tanh(Complex) - 0.785398163404734 + 2i");
-is_approx(tanh(:x((1.57079632680947 + 2i).Complex)), 1.05580658455051 - 0.0691882492979498i, "tanh(:x(Complex)) - 1.57079632680947 + 2i");
+{
+    # Complex tests
+    is_approx(tanh((0.785398163404734 + 2i).Complex), 1.24023479948939 - 0.407862181685885i, "tanh(Complex) - 0.785398163404734 + 2i");
+    is_approx(tanh(:x((1.57079632680947 + 2i).Complex)), 1.05580658455051 - 0.0691882492979498i, "tanh(:x(Complex)) - 1.57079632680947 + 2i");
+}
 
-# Str tests
-is_approx((2.3561944902142).Str.tanh, 0.98219338000801, "Str.tanh - 2.3561944902142");
-is_approx(tanh((3.14159265361894).Str), 0.996272076220967, "tanh(Str) - 3.14159265361894");
-is_approx(tanh(:x((3.92699081702367).Str)), 0.999223894878698, "tanh(:x(Str)) - 3.92699081702367");
+{
+    # Str tests
+    is_approx((2.3561944902142).Str.tanh, 0.98219338000801, "Str.tanh - 2.3561944902142");
+    is_approx(tanh((3.14159265361894).Str), 0.996272076220967, "tanh(Str) - 3.14159265361894");
+    is_approx(tanh(:x((3.92699081702367).Str)), 0.999223894878698, "tanh(:x(Str)) - 3.92699081702367");
+}
 
 {
     # NotComplex tests
-
-    class NotComplex is Cool {
-        has $.value;
-
-        multi method new(Complex $value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Numeric() {
-            self.value;
-        }
-    }
-
     is_approx(NotComplex.new(4.7123889804284 + 2i).tanh, 1.00010549555372 - 0.0001221600793053i, "NotComplex.tanh - 4.7123889804284 + 2i");
     is_approx(tanh(NotComplex.new(5.49778714383314 + 2i)), 1.00002193068325 - 2.53924635030599e-05i, "tanh(NotComplex) - 5.49778714383314 + 2i");
     is_approx(tanh(:x(NotComplex.new(6.28318530723787 + 2i))), 1.00000455895463 - 5.27848285809169e-06i, "tanh(:x(NotComplex)) - 6.28318530723787 + 2i");
@@ -106,19 +125,6 @@ is_approx(tanh(:x((3.92699081702367).Str)), 0.999223894878698, "tanh(:x(Str)) - 
 
 {
     # DifferentReal tests
-
-    class DifferentReal is Real {
-        has $.value;
-
-        multi method new($value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Bridge() {
-            self.value;
-        }
-    }            
-
     is_approx(DifferentReal.new(6.80678408284103).tanh, 0.999997552447981, "DifferentReal.tanh - 6.80678408284103");
     is_approx(tanh(DifferentReal.new(10.2101761242615)), 0.999999997292405, "tanh(DifferentReal) - 10.2101761242615");
     is_approx(tanh(:x(DifferentReal.new(12.5663706144757))), 0.999999999975677, "tanh(:x(DifferentReal)) - 12.5663706144757");

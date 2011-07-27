@@ -36,6 +36,30 @@ my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
 my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
+class NotComplex is Cool {
+    has $.value;
+
+    multi method new(Complex $value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Numeric() {
+        self.value;
+    }
+}
+
+class DifferentReal is Real {
+    has $.value;
+
+    multi method new($value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Bridge() {
+        self.value;
+    }
+}            
+
 
 
 # cotanh tests
@@ -66,39 +90,34 @@ for @sines -> $angle
 is(cotanh(Inf), 1, "cotanh(Inf) -");
 is(cotanh(-Inf), -1, "cotanh(-Inf) -");
         
-# Num tests
-is_approx(cotanh((-6.28318530723787).Num), -1.00000697470903, "cotanh(Num) - -6.28318530723787");
-is_approx(cotanh(:x((-3.92699081702367).Num)), -1.0007767079283, "cotanh(:x(Num)) - -3.92699081702367");
+{
+    # Num tests
+    is_approx(cotanh((-6.28318530723787).Num), -1.00000697470903, "cotanh(Num) - -6.28318530723787");
+    is_approx(cotanh(:x((-3.92699081702367).Num)), -1.0007767079283, "cotanh(:x(Num)) - -3.92699081702367");
+}
 
-# Rat tests
-is_approx((-0.523598775603156).Rat(1e-9).cotanh, -2.08128336391745, "Rat.cotanh - -0.523598775603156");
-is_approx(cotanh((0.523598775603156).Rat(1e-9)), 2.08128336391745, "cotanh(Rat) - 0.523598775603156");
-is_approx(cotanh(:x((0.785398163404734).Rat(1e-9))), 1.52486861881241, "cotanh(:x(Rat)) - 0.785398163404734");
+{
+    # Rat tests
+    is_approx((-0.523598775603156).Rat(1e-9).cotanh, -2.08128336391745, "Rat.cotanh - -0.523598775603156");
+    is_approx(cotanh((0.523598775603156).Rat(1e-9)), 2.08128336391745, "cotanh(Rat) - 0.523598775603156");
+    is_approx(cotanh(:x((0.785398163404734).Rat(1e-9))), 1.52486861881241, "cotanh(:x(Rat)) - 0.785398163404734");
+}
 
-# Complex tests
-is_approx(cotanh((1.57079632680947 + 2i).Complex), 0.94309321587152 + 0.0618020094643598i, "cotanh(Complex) - 1.57079632680947 + 2i");
-is_approx(cotanh(:x((2.3561944902142 + 2i).Complex)), 0.988233985768855 + 0.0134382542728859i, "cotanh(:x(Complex)) - 2.3561944902142 + 2i");
+{
+    # Complex tests
+    is_approx(cotanh((1.57079632680947 + 2i).Complex), 0.94309321587152 + 0.0618020094643598i, "cotanh(Complex) - 1.57079632680947 + 2i");
+    is_approx(cotanh(:x((2.3561944902142 + 2i).Complex)), 0.988233985768855 + 0.0134382542728859i, "cotanh(:x(Complex)) - 2.3561944902142 + 2i");
+}
 
-# Str tests
-is_approx((3.14159265361894).Str.cotanh, 1.0037418731971, "Str.cotanh - 3.14159265361894");
-is_approx(cotanh((3.92699081702367).Str), 1.0007767079283, "cotanh(Str) - 3.92699081702367");
-is_approx(cotanh(:x((4.7123889804284).Str)), 1.000161412061, "cotanh(:x(Str)) - 4.7123889804284");
+{
+    # Str tests
+    is_approx((3.14159265361894).Str.cotanh, 1.0037418731971, "Str.cotanh - 3.14159265361894");
+    is_approx(cotanh((3.92699081702367).Str), 1.0007767079283, "cotanh(Str) - 3.92699081702367");
+    is_approx(cotanh(:x((4.7123889804284).Str)), 1.000161412061, "cotanh(:x(Str)) - 4.7123889804284");
+}
 
 {
     # NotComplex tests
-
-    class NotComplex is Cool {
-        has $.value;
-
-        multi method new(Complex $value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Numeric() {
-            self.value;
-        }
-    }
-
     is_approx(NotComplex.new(5.49778714383314 + 2i).cotanh, 0.999978069152959 + 2.53913497751775e-05i, "NotComplex.cotanh - 5.49778714383314 + 2i");
     is_approx(cotanh(NotComplex.new(6.28318530723787 + 2i)), 0.999995441038292 + 5.27843472954601e-06i, "cotanh(NotComplex) - 6.28318530723787 + 2i");
     is_approx(cotanh(:x(NotComplex.new(6.80678408284103 + 2i))), 0.999998400170843 + 1.85231277868836e-06i, "cotanh(:x(NotComplex)) - 6.80678408284103 + 2i");
@@ -106,19 +125,6 @@ is_approx(cotanh(:x((4.7123889804284).Str)), 1.000161412061, "cotanh(:x(Str)) - 
 
 {
     # DifferentReal tests
-
-    class DifferentReal is Real {
-        has $.value;
-
-        multi method new($value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Bridge() {
-            self.value;
-        }
-    }            
-
     is_approx(DifferentReal.new(10.2101761242615).cotanh, 1.00000000270759, "DifferentReal.cotanh - 10.2101761242615");
     is_approx(cotanh(DifferentReal.new(12.5663706144757)), 1.00000000002432, "cotanh(DifferentReal) - 12.5663706144757");
     is_approx(cotanh(:x(DifferentReal.new(-6.28318530723787))), -1.00000697470903, "cotanh(:x(DifferentReal)) - -6.28318530723787");

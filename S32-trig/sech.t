@@ -36,6 +36,30 @@ my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
 my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
+class NotComplex is Cool {
+    has $.value;
+
+    multi method new(Complex $value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Numeric() {
+        self.value;
+    }
+}
+
+class DifferentReal is Real {
+    has $.value;
+
+    multi method new($value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Bridge() {
+        self.value;
+    }
+}            
+
 
 
 # sech tests
@@ -66,39 +90,34 @@ for @cosines -> $angle
 is(sech(Inf), 0, "sech(Inf) -");
 is(sech(-Inf), 0, "sech(-Inf) -");
         
-# Num tests
-is_approx(sech((-7.85398163404734).Num), 0.000776406290791195, "sech(Num) - -7.85398163404734");
-is_approx(sech(:x((-5.49778714383314).Num)), 0.00819151235926221, "sech(:x(Num)) - -5.49778714383314");
+{
+    # Num tests
+    is_approx(sech((-7.85398163404734).Num), 0.000776406290791195, "sech(Num) - -7.85398163404734");
+    is_approx(sech(:x((-5.49778714383314).Num)), 0.00819151235926221, "sech(:x(Num)) - -5.49778714383314");
+}
 
-# Rat tests
-is_approx((-2.09439510241262).Rat(1e-9).sech, 0.242610328725292, "Rat.sech - -2.09439510241262");
-is_approx(sech((-1.57079632680947).Rat(1e-9)), 0.398536815333061, "sech(Rat) - -1.57079632680947");
-is_approx(sech(:x((-1.04719755120631).Rat(1e-9))), 0.624887966291348, "sech(:x(Rat)) - -1.04719755120631");
+{
+    # Rat tests
+    is_approx((-2.09439510241262).Rat(1e-9).sech, 0.242610328725292, "Rat.sech - -2.09439510241262");
+    is_approx(sech((-1.57079632680947).Rat(1e-9)), 0.398536815333061, "sech(Rat) - -1.57079632680947");
+    is_approx(sech(:x((-1.04719755120631).Rat(1e-9))), 0.624887966291348, "sech(:x(Rat)) - -1.04719755120631");
+}
 
-# Complex tests
-is_approx(sech((-0.785398163404734 + 2i).Complex), -0.594148775843208 + 0.851377452397526i, "sech(Complex) - -0.785398163404734 + 2i");
-is_approx(sech(:x((0 + 2i).Complex)), -2.40299796172238 + -0i, "sech(:x(Complex)) - 0 + 2i");
+{
+    # Complex tests
+    is_approx(sech((-0.785398163404734 + 2i).Complex), -0.594148775843208 + 0.851377452397526i, "sech(Complex) - -0.785398163404734 + 2i");
+    is_approx(sech(:x((0 + 2i).Complex)), -2.40299796172238 + -0i, "sech(:x(Complex)) - 0 + 2i");
+}
 
-# Str tests
-is_approx((0.785398163404734).Str.sech, 0.754939708710524, "Str.sech - 0.785398163404734");
-is_approx(sech((1.57079632680947).Str), 0.398536815333061, "sech(Str) - 1.57079632680947");
-is_approx(sech(:x((2.3561944902142).Str)), 0.187872734233684, "sech(:x(Str)) - 2.3561944902142");
+{
+    # Str tests
+    is_approx((0.785398163404734).Str.sech, 0.754939708710524, "Str.sech - 0.785398163404734");
+    is_approx(sech((1.57079632680947).Str), 0.398536815333061, "sech(Str) - 1.57079632680947");
+    is_approx(sech(:x((2.3561944902142).Str)), 0.187872734233684, "sech(:x(Str)) - 2.3561944902142");
+}
 
 {
     # NotComplex tests
-
-    class NotComplex is Cool {
-        has $.value;
-
-        multi method new(Complex $value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Numeric() {
-            self.value;
-        }
-    }
-
     is_approx(NotComplex.new(3.14159265361894 + 2i).sech, -0.0361218942926504 - 0.0786335422219265i, "NotComplex.sech - 3.14159265361894 + 2i");
     is_approx(sech(NotComplex.new(3.92699081702367 + 2i)), -0.016413269655411 - 0.035835814522277i, "sech(NotComplex) - 3.92699081702367 + 2i");
     is_approx(sech(:x(NotComplex.new(4.7123889804284 + 2i))), -0.00747812852392195 - 0.0163373718784962i, "sech(:x(NotComplex)) - 4.7123889804284 + 2i");
@@ -106,19 +125,6 @@ is_approx(sech(:x((2.3561944902142).Str)), 0.187872734233684, "sech(:x(Str)) - 2
 
 {
     # DifferentReal tests
-
-    class DifferentReal is Real {
-        has $.value;
-
-        multi method new($value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Bridge() {
-            self.value;
-        }
-    }            
-
     is_approx(DifferentReal.new(5.23598775603156).sech, 0.0106428295621644, "DifferentReal.sech - 5.23598775603156");
     is_approx(sech(DifferentReal.new(8.63937979745208)), 0.000353993272864057, "sech(DifferentReal) - 8.63937979745208");
     is_approx(sech(:x(DifferentReal.new(10.9955742876663))), 3.3551563035587e-05, "sech(:x(DifferentReal)) - 10.9955742876663");

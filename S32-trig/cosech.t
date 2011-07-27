@@ -36,6 +36,30 @@ my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
 my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
+class NotComplex is Cool {
+    has $.value;
+
+    multi method new(Complex $value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Numeric() {
+        self.value;
+    }
+}
+
+class DifferentReal is Real {
+    has $.value;
+
+    multi method new($value is copy) {
+        self.bless(*, :$value);
+    }
+
+    multi method Bridge() {
+        self.value;
+    }
+}            
+
 
 
 # cosech tests
@@ -66,39 +90,34 @@ for @sines -> $angle
 is(cosech(Inf), 0, "cosech(Inf) -");
 is(cosech(-Inf), "-0", "cosech(-Inf) -");
         
-# Num tests
-is_approx(cosech((-6.28318530723787).Num), -0.00373489848806798, "cosech(Num) - -6.28318530723787");
-is_approx(cosech(:x((-3.92699081702367).Num)), -0.0394210493494572, "cosech(:x(Num)) - -3.92699081702367");
+{
+    # Num tests
+    is_approx(cosech((-6.28318530723787).Num), -0.00373489848806798, "cosech(Num) - -6.28318530723787");
+    is_approx(cosech(:x((-3.92699081702367).Num)), -0.0394210493494572, "cosech(:x(Num)) - -3.92699081702367");
+}
 
-# Rat tests
-is_approx((-0.523598775603156).Rat(1e-9).cosech, -1.8253055746695, "Rat.cosech - -0.523598775603156");
-is_approx(cosech((0.523598775603156).Rat(1e-9)), 1.8253055746695, "cosech(Rat) - 0.523598775603156");
-is_approx(cosech(:x((0.785398163404734).Rat(1e-9))), 1.15118387090806, "cosech(:x(Rat)) - 0.785398163404734");
+{
+    # Rat tests
+    is_approx((-0.523598775603156).Rat(1e-9).cosech, -1.8253055746695, "Rat.cosech - -0.523598775603156");
+    is_approx(cosech((0.523598775603156).Rat(1e-9)), 1.8253055746695, "cosech(Rat) - 0.523598775603156");
+    is_approx(cosech(:x((0.785398163404734).Rat(1e-9))), 1.15118387090806, "cosech(:x(Rat)) - 0.785398163404734");
+}
 
-# Complex tests
-is_approx(cosech((1.57079632680947 + 2i).Complex), -0.156411854193272 - 0.372638353746799i, "cosech(Complex) - 1.57079632680947 + 2i");
-is_approx(cosech(:x((2.3561944902142 + 2i).Complex)), -0.0772627459225851 - 0.171882832059526i, "cosech(:x(Complex)) - 2.3561944902142 + 2i");
+{
+    # Complex tests
+    is_approx(cosech((1.57079632680947 + 2i).Complex), -0.156411854193272 - 0.372638353746799i, "cosech(Complex) - 1.57079632680947 + 2i");
+    is_approx(cosech(:x((2.3561944902142 + 2i).Complex)), -0.0772627459225851 - 0.171882832059526i, "cosech(:x(Complex)) - 2.3561944902142 + 2i");
+}
 
-# Str tests
-is_approx((3.14159265361894).Str.cosech, 0.086589537527514, "Str.cosech - 3.14159265361894");
-is_approx(cosech((3.92699081702367).Str), 0.0394210493494572, "cosech(Str) - 3.92699081702367");
-is_approx(cosech(:x((4.7123889804284).Str)), 0.0179680320529917, "cosech(:x(Str)) - 4.7123889804284");
+{
+    # Str tests
+    is_approx((3.14159265361894).Str.cosech, 0.086589537527514, "Str.cosech - 3.14159265361894");
+    is_approx(cosech((3.92699081702367).Str), 0.0394210493494572, "cosech(Str) - 3.92699081702367");
+    is_approx(cosech(:x((4.7123889804284).Str)), 0.0179680320529917, "cosech(:x(Str)) - 4.7123889804284");
+}
 
 {
     # NotComplex tests
-
-    class NotComplex is Cool {
-        has $.value;
-
-        multi method new(Complex $value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Numeric() {
-            self.value;
-        }
-    }
-
     is_approx(NotComplex.new(5.49778714383314 + 2i).cosech, -0.00340879719539436 - 0.00744860766594804i, "NotComplex.cosech - 5.49778714383314 + 2i");
     is_approx(cosech(NotComplex.new(6.28318530723787 + 2i)), -0.00155424826436473 - 0.00339611810181237i, "cosech(NotComplex) - 6.28318530723787 + 2i");
     is_approx(cosech(:x(NotComplex.new(6.80678408284103 + 2i))), -0.000920717929196107 - 0.00201181030212346i, "cosech(:x(NotComplex)) - 6.80678408284103 + 2i");
@@ -106,19 +125,6 @@ is_approx(cosech(:x((4.7123889804284).Str)), 0.0179680320529917, "cosech(:x(Str)
 
 {
     # DifferentReal tests
-
-    class DifferentReal is Real {
-        has $.value;
-
-        multi method new($value is copy) {
-            self.bless(*, :$value);
-        }
-
-        multi method Bridge() {
-            self.value;
-        }
-    }            
-
     is_approx(DifferentReal.new(10.2101761242615).cosech, 7.35879739979009e-05, "DifferentReal.cosech - 10.2101761242615");
     is_approx(cosech(DifferentReal.new(12.5663706144757)), 6.97468471168976e-06, "cosech(DifferentReal) - 12.5663706144757");
     is_approx(cosech(:x(DifferentReal.new(-6.28318530723787))), -0.00373489848806798, "cosech(:x(DifferentReal)) - -6.28318530723787");
