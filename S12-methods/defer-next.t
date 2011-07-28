@@ -53,7 +53,7 @@ class BarNextSame is Foo {
 
 class BarNextWithEmpty is Foo {
     multi method doit() {$.tracker ~= 'bar,'; nextwith(); $.tracker ~= 'ret1,'}
-    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(); $.tracker ~= 'ret2,'}   #OK not used
+    multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith($num); $.tracker ~= 'ret2,'}   #OK not used
 }
 {
     my $o = BarNextWithEmpty.new;
@@ -63,18 +63,18 @@ class BarNextWithEmpty is Foo {
     $o.clear;
     is($o.show, '', 'sanity test for clearing');
     $o.doit(5);
-    is($o.show, 'barint,foo,', 'nextwith() multimethod/inheritance test');
+    is($o.show, 'barint,fooint,', 'nextwith() multimethod/inheritance test');
 }
 
 class BarNextWithInt is Foo {
-    multi method doit() {$.tracker ~= 'bar,'; nextwith(42); $.tracker ~= 'ret1,'}
+    multi method doit() {$.tracker ~= 'bar,'; nextwith(); $.tracker ~= 'ret1,'}
     multi method doit(Int $num) {$.tracker ~= 'barint,'; nextwith(42); $.tracker ~= 'ret2,'}   #OK not used
 }
 {
     my $o = BarNextWithInt.new;
     $o.clear;
     $o.doit;
-    is($o.show, 'bar,fooint,', 'nextwith(42) inheritance test');
+    is($o.show, 'bar,foo,', 'nextwith(42) inheritance test');
     $o.clear;
     is($o.show, '', 'sanity test for clearing');
     $o.doit(5);
