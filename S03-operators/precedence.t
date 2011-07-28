@@ -67,10 +67,8 @@ ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 # junctive and
 
-#?rakudo skip 'nom regression'
 ok(  ?(   (1 & 2 | 3) ==3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
-#?rakudo skip 'nom regression'
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
 ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
@@ -82,13 +80,11 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
     eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
-#?rakudo skip 'nom regression'
 {
     my Mu $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
     ok(!($a == 1), 'junctive or binds more tightly then abs (1)');
 }
 
-#?rakudo skip 'nom regression'
 {
     my Mu $b = ((abs -1) ^ -1); # -> (1 ^ -1)
     ok($b == 1, "this is true because only one is == 1");

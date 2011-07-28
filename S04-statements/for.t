@@ -199,7 +199,6 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
-#?rakudo skip "is rw NYI"
 {
     my @array_v = (0..2);
     my @v = (1..3);
@@ -208,7 +207,6 @@ my @elems = <a b c d e>;
 }
 
 #?pugs eval 'todo'
-#?rakudo skip "is rw NYI"
 {
     my @array_kv = (0..2);
     my @kv = (1..3);
@@ -399,7 +397,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $res, " 4 10 18", "Z -ed for loop";
 }
 
-#?rakudo skip "Z only works with 2 arrays at the moment"
 {
   my @a = <1 2 3>;
   my $str = '';

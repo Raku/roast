@@ -176,7 +176,6 @@ sub accumtest($expect, $op) {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
     is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
-    #?rakudo skip 'segmentation fault'
     is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
     #?rakudo skip 'segmentation fault'
     is 15 ^^ 0 ^^ 'quux', False, '^^ given two true values returns False (1)';
@@ -209,7 +208,6 @@ sub accumtest($expect, $op) {
     is (@c ^^ @a), '1 2 3', 'Array ^^ true returns true array';
     #?rakudo skip 'segmentation fault'
     ok (@a ^^ @b) == (), 'Array ^^ true returns empty list';
-    #?rakudo skip 'segmentation fault'
     ok (@c ^^ @d) == (), 'Array ^^ true returns empty list';
     #?rakudo skip 'segmentation fault'
     is (@a ^^ ()), '1 2 3', 'True array ^^ empty list returns array';

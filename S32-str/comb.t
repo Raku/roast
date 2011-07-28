@@ -51,7 +51,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
 }
 
 #?pugs todo 'feature'
-#?rakudo skip '.comb with limit'
 is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
@@ -69,7 +68,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 # needed: comb a filehandle
 
-#?rakudo skip 'nom'
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/);
     is @l.join('|'), 'a23|c58', 'basic comb-without-matches sanity';
@@ -77,7 +75,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     isa_ok(@l[1], Str, 'second item is a Str');
 }
 
-#?rakudo skip 'nom'
 {
     my @l = 'a23 b c58'.comb(/\w(\d+)/, :match);
     is @l.join('|'), 'a23|c58', 'basic comb-with-matches sanity';
@@ -91,7 +88,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 
 # RT #66340
 #?niecza skip 'Huh?'
-#?rakudo skip 'nom'
 {
     my $expected_reason = rx/^'No applicable candidates '/;
 

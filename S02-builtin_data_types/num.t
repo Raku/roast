@@ -162,7 +162,6 @@ isa_ok(1 / 1, Rat);
     is(+$a, 101, "0d0101 numifies to 101");
 }
 
-#?rakudo skip "No bignums yet"
 {
     my $a = 2 ** 65; # over the 64 bit limit too
     is($a, 36893488147419103232, "we have bignums, not weeny floats");

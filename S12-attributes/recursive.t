@@ -45,7 +45,6 @@ Test attributes with recursively typed attributes
 }
 
 #L<S12/Methods/current lexically-determined class ::?CLASS>
-#?rakudo skip '::?CLASS'
 {
     class C {
         has ::?CLASS $.attr is rw;
