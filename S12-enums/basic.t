@@ -20,7 +20,7 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     ok Mon + Tue == Wed, 'Can do arithmetics with Enum values';
 }
 
-#?rakudo todo 'smart-matching against enums'
+#?rakudo skip 'but'
 #?niecza skip 'enummish but'
 {
     my $x = 'Today' but Day::Mon;
@@ -78,7 +78,6 @@ my Color $c1 = Color::white;
 ok($c1 == 0, 'can assign enum value to typed variable with long name');
 my Color $c2 = white;
 ok($c1 == 0, 'can assign enum value to typed variable with short name');
-#?rakudo todo 'enum type checks'
 dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
 # conflict between subs and enums
@@ -97,7 +96,6 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
     ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),
             '.pick on enums';
-    #?rakudo todo 'enum + .pick'
     ok Color.pick(2) == 2, '.pick(2) on enums';
 }
 
