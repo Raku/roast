@@ -30,14 +30,16 @@ is(baz(42), "one", "multi with parameter list");
 # ints means they are tied candidates as one isn't narrower than the other.
 # (Note Int is narrower than Num - any two types where one is narrower than
 # the other will do it, though.)
-multi foo(Int $a, Num $b) { 1 }    #OK not used
-multi foo(Num $a, Int $b) { 2 }    #OK not used
-multi bar(Int $a;; Num $b) { 1 }    #OK not used
-multi bar(Num $a;; Int $b) { 2 }    #OK not used
+class T { }
+class S is T { }
+multi foo(S $a, T $b) { 1 }    #OK not used
+multi foo(T $a, S $b) { 2 }    #OK not used
+multi bar(S $a;; T $b) { 1 }    #OK not used
+multi bar(T $a;; S $b) { 2 }    #OK not used
 my $lived = 0;
-try { foo(1,1); $lived = 1 }
+try { foo(S,S); $lived = 1 }
 is($lived, 0, "dispatch tied as expected");
-is(bar(1,1), 1, "not tied as only first type in the dispatch");
+is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # not allowed to declare anonymous routines with only, multi or proto.
 eval_dies_ok 'only sub {}', 'anonymous only sub is an error';
