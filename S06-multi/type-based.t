@@ -12,7 +12,7 @@ multi foo (Int $bar)   { "Int "  ~ $bar  }
 multi foo (Str $bar)   { "Str "  ~ $bar  }
 multi foo (Rat $bar)   { "Rat "  ~ $bar  }
 multi foo (Bool $bar)  { "Bool " ~ $bar  }
-multi foo (Regex $bar) { "Regex " ~ WHAT( $bar ) } # since Rule's don't stringify
+multi foo (Regex $bar) { "Regex " ~ gist(WHAT( $bar )) } # since Rule's don't stringify
 multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (@bar) { "Positional " ~ join(', ', @bar) }
 multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
@@ -51,7 +51,7 @@ is declared_wo_sub(42),   1, "omitting 'sub' when declaring 'multi sub's works (
 is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (2)";
 
 # Test for slurpy MMDs
-proto mmd {}  # L<S06/"Routine modifiers">
+proto mmd(*@) {}  # L<S06/"Routine modifiers">
 multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }   #OK not used
 
