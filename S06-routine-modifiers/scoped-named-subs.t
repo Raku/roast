@@ -25,14 +25,19 @@ eval_dies_ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NO
     our Str sub ourNamedStr() { return 'string' };
     is ourNamedStr(), 'string', 'package-scoped named sub() return Str';
 }
-is ourNamedStr(), 'string', 'Correct : package-scoped named sub ourNamedStr() should BE available in the whole package';
-
+{
+    our &ourNamedStr;
+    is ourNamedStr(), 'string', 'Correct : package-scoped named sub ourNamedStr() should BE available in the whole package';
+}
 
 {
     our Int sub ourNamedInt() { return 55 };
     is ourNamedInt(), 55, 'package-scoped named sub() return Int';
 }
-is ourNamedInt(), 55, 'Correct : package-scoped named sub ourNamedInt() should BE available in the whole package';
+{
+    our &ourNamedInt;
+    is ourNamedInt(), 55, 'Correct : package-scoped named sub ourNamedInt() should BE available in the whole package';
+}
 
 eval_dies_ok
     'my Num List sub f () { return ("A") }; f()',
