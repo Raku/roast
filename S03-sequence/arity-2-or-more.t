@@ -13,6 +13,7 @@ is (1, 1, &[+] ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, u
 is (0, 1, { $^a + $^b } ... *).[^7].join(', '), '0, 1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 0 1 seeds';
 is (1, 1, 2, -> $a, $b { $a + $b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 4 seeds';
+#?rakudo skip 'unknown'
 is (0, 1, 1, 2, 3, { $^a + $^b } ... *).[^7].join(', '), '0, 1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 5 seeds';
 
 # some tests which exactly hit a limit
@@ -21,6 +22,7 @@ is (1, 1, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacc
 is (1, 1, 2, -> $a, $b { $a + $b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 4 seeds';
 # adapted from http://www.perlmonks.org/?node_id=772778
+#?rakudo 2 skip '&[%]'
 is (42, 24, &[%] ... 0)[*-2], 6, 'arity-2 GCD';
 is (42, 24, &[%] ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
 is (42, 24, * % * ... 0)[*-2], 6, 'arity-2 GCD';

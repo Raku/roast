@@ -30,6 +30,7 @@ is($foo2.check(), 42, 'initializing attributes in new');
 
     eval 'NoSuch::Subclass.new()';
     ok  $!  ~~ Exception, 'death to instantiating nonexistent::class';
+    #?rakudo todo 'error reporting'
     ok "$!" ~~ / 'NoSuch::Subclass' /,
        'error for "NoSuch::Subclass.new()" mentions NoSuch::Subclass';
 }
@@ -42,7 +43,6 @@ is($foo2.check(), 42, 'initializing attributes in new');
     class Foo { };
     my $x = 'Foo';
     my $y = $x.new;
-    #?rakudo todo 'instantiating from class name string unexpectedly creates a class object'
     is($y.WHAT, Str, "instantiating from class name string creates a Str object");
 }
 
