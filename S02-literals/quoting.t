@@ -92,6 +92,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     my @q;
     sub q { @_ }
     @q = q($foo,$bar);
+    #?rakudo todo 'q() as sub call'
     is(+@q, 2, 'q() is always sub call');
 };
 
@@ -560,6 +561,7 @@ Hello, World
     isa_ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
     isa_ok rx:s{foo}, Regex, 'rx:i{...}';
     isa_ok rx:sigspace{foo}, Regex, 'rx:i{...}';
+    #?rakudo 2 todo 'unknown adverbs'
     eval_dies_ok 'rx:unknown{foo}', 'rx:unknown dies';
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
@@ -570,6 +572,7 @@ Hello, World
     is  qx/echo world/.chomp, "world", 'qx';
     is qqx/echo $var/.chomp,  "world", 'qqx';
     # RT #78874
+    #?rakudo skip 'trans'
     is qx/echo world/.trans('wd' => 'WD'), "WorlD\n", "qx doesn't return a Parrot string";
 }
 
