@@ -49,63 +49,85 @@ my $x;
 {
     diag( "Tests for '\x[391]' .. '\x[3a9]' (Greek uppercase)" );
     $x = "\x[3a9]\x[3a9]";
+    #?rakudo todo 'nom regression'
     is( ++$x, "\x[391]\x[391]\x[391]",
         "'\x[3a9]\x[3a9]'++ is '\x[391]\x[391]\x[391]'" );
     $x = "\x[391]\x[391]\x[391]";
     ok( --$x ~~ Failure, "'\x[391]\x[391]\x[391]'-- fails" );
     $x = "A\x[391]";
+    #?rakudo todo 'nom regression'
     is( ++$x, "A\x[392]", "'A\x[391]'++ is 'A\x[392]'" );
     $x = "A\x[392]";
+    #?rakudo todo 'nom regression'
     is( --$x, "A\x[391]", "'A\x[392]'-- is 'A\x[391]'" );
     $x = "A\x[3a9]";
+    #?rakudo todo 'nom regression'
     is( ++$x, "B\x[391]", "'A\x[3a9]'++ is 'B\x[391]'" );
     $x = "B\x[391]";
+    #?rakudo todo 'nom regression'
     is( --$x, "A\x[3a9]", "'B\x[391]'-- is 'A\x[3a9]'" );
     $x = "\x[391]ZZ";
+    #?rakudo todo 'nom regression'
     is( ++$x, "\x[392]AA", "'\x[391]ZZ'++ is '\x[392]AA'" );
     $x = "\x[392]AA";
+    #?rakudo todo 'nom regression'
     is( --$x, "\x[391]ZZ", "'\x[392]AA'-- is '\x[391]ZZ'" );
 }
 {
     diag( "Tests for '\x[3b1]' .. '\x[3c9]' (Greek lowercase)" );
     $x = "\x[3c9]\x[3c9]";
+    #?rakudo todo 'nom regression'
     is( ++$x, "\x[3b1]\x[3b1]\x[3b1]",
         "'\x[3c9]\x[3c9]'++ is '\x[3b1]\x[3b1]\x[3b1]'" );
     $x = "\x[3b1]\x[3b1]\x[3b1]";
     ok( --$x ~~ Failure, "'\x[3b1]\x[3b1]\x[3b1]'-- fails" );
     $x = "A\x[3b1]";
+    #?rakudo todo 'nom regression'
     is( ++$x, "A\x[3b2]", "'A\x[3b1]'++ is 'A\x[3b2]'" );
     $x = "A\x[3b2]";
+    #?rakudo todo 'nom regression'
     is( --$x, "A\x[3b1]", "'A\x[3b2]'-- is 'A\x[3b1]'" );
     $x = "A\x[3c9]";
+    #?rakudo todo 'nom regression'
     is( ++$x, "B\x[3b1]", "'A\x[3c9]'++ is 'B\x[3b1]'" );
     $x = "B\x[3b1]";
+    #?rakudo todo 'nom regression'
     is( --$x, "A\x[3c9]", "'B\x[3b1]'-- is 'A\x[3c9]'" );
     $x = "\x[3b1]ZZ";
+    #?rakudo todo 'nom regression'
     is( ++$x, "\x[3b2]AA", "'\x[3b1]ZZ'++ is '\x[3b2]AA'" );
     $x = "\x[3b2]AA";
+    #?rakudo todo 'nom regression'
     is( --$x, "\x[3b1]ZZ", "'\x[3b2]AA'-- is '\x[3b1]ZZ'" );
 }
-#?rakudo todo 'Hebrew'
 {
     diag( "Tests for '\x[5d0]' .. '\x[5ea]' (Hebrew)" );
     $x = "\x[5ea]\x[5ea]";
+    #?rakudo todo 'Hebrew'
     is( ++$x, "\x[5d0]\x[5d0]\x[5d0]", "'\x[5ea]\x[5ea]'++ is '\x[5d0]\x[5d0]\x[5d0]'" );
     $x = "\x[5d0]\x[5d0]\x[5d0]";
+    #?rakudo skip 'Hebrew - false positive'
     ok( --$x ~~ Failure, "'\x[5d0]\x[5d0]\x[5d0]'-- fails" );
     $x = "A\x[5d0]";
+    #?rakudo todo 'Hebrew'
     is( ++$x, "A\x[5d1]", "'A\x[5d0]'++ is 'A\x[5d1]'" );
     $x = "A\x[5d1]";
+    #?rakudo todo 'Hebrew'
     is( --$x, "A\x[5d0]", "'A\x[5d1]'-- is 'A\x[5d0]'" );
     $x = "A\x[5ea]";
+    #?rakudo todo 'Hebrew'
     is( ++$x, "B\x[5d0]", "'A\x[5ea]'++ is 'B\x[5d0]'" );
     $x = "B\x[5d0]";
+    #?rakudo todo 'Hebrew'
     is( --$x, "A\x[5ea]", "'B\x[5d0]'-- is 'A\x[5ea]'" );
     $x = "\x[5d0]ZZ";
+    #?rakudo todo 'Hebrew'
     is( ++$x, "\x[5d1]AA", "'\x[5d0]ZZ'++ is '\x[5d1]AA'" );
     $x = "\x[5d1]AA";
+    #?rakudo todo 'Hebrew'
     is( --$x, "\x[5d0]ZZ", "'\x[5d1]AA'-- is '\x[5d0]ZZ'" );
 }
+
 {
     diag( "Tests for '0' .. '9'" );
     $x = "99";

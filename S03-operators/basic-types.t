@@ -60,6 +60,7 @@ my $int = 0;
 isa_ok($int, Int, 'it is an Int type');
 
 my $num = '';
+#?rakudo todo 'nom regression'
 ok(+$num ~~ Num, 'it is an Num type');
 
 my $float = 0.5e0;

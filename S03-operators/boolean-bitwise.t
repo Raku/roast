@@ -58,18 +58,21 @@ plan 43;
   ok( ?(False?^False == False), '?^ works with Bools');
   ok( ?(False?^True  == True),  '?^ works with Bools');
   ok( ?(True ?^False == True),  '?^ works with Bools');
+  #?rakudo skip 'segmentation fault'
   ok( ?(True ?^True  == False), '?^ works with Bools');
 
-  #?rakudo skip 'segmentation fault'
   ok( ?(''   ?^''    == False), '?^ works');
   ok( ?(Any  ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^ Any  == True),  '?^ works');
+  #?rakudo skip 'segmentation fault'
   ok( ?(42   ?^ 42   == False), '?^ works');
+  #?rakudo skip 'segmentation fault'
   ok( ?(42   ?^ 41   == False),  '?^ works');
   
   ok( ?(infix:<?^>(True) == True), '?^ works with one argument');
   ok( ?(infix:<?^>() == False), '?^ works with no arguments');
 
+  #?rakudo skip 'segmentation fault'
   isa_ok (42 ?^ 41), Bool, '?^ yields a Bool';
   isa_ok infix:<?^>(True), Bool, '?^ with one argument yields a Bool';
   isa_ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';

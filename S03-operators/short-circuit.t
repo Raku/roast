@@ -14,7 +14,7 @@ it is closely related to || and && and //.
 
 # test cases by Andrew Savige
 
-plan 75;
+plan 79;
 
 my $accum = '';
 sub f1($s)   { $accum ~= $s; 1 }
@@ -158,12 +158,14 @@ sub accumtest($expect, $op) {
 
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
+    #?rakudo skip 'segmentation fault'
     is(1 ^^ 42,     False, "^^  operator working (both true)");
     is(0 ^^ 0,          0, "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
+    #?rakudo skip 'segmentation fault'
     ok(!(1 xor 42),        "xor operator working (both true)");
     ok(!(0 xor 0),         "xor operator working (both false)");
 }
@@ -174,17 +176,23 @@ sub accumtest($expect, $op) {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
     is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
+    #?rakudo skip 'segmentation fault'
     is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
+    #?rakudo skip 'segmentation fault'
     is 15 ^^ 0 ^^ 'quux', False, '^^ given two true values returns False (1)';
+    #?rakudo skip 'segmentation fault'
     is 'a' ^^ 'b' ^^ 0, False, '^^ given two true values returns False (2)';
 
     is (0 xor False xor ''), '', 'xor given all false values returns last (1)';
     is (False xor '' xor 0), 0, 'xor given all false values returns last (2)';
     is (False xor 42 xor ''), 42, 'xor given one true value returns it (1)';
     is (0 xor Int xor 'plugh'), 'plugh', 'xor given one true value returns it (2)';
+    #?rakudo skip 'segmentation fault'
     is (15 xor 0 xor 'quux'), False, 'xor given two true values returns False (1)';
+    #?rakudo skip 'segmentation fault'
     is ('a' xor 'b' xor 0), False, 'xor given two true values returns False (2)';
 
+    #?rakudo skip 'segmentation fault'
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
@@ -199,9 +207,13 @@ sub accumtest($expect, $op) {
 
     is (@a ^^ @c), '1 2 3', 'Array ^^ true returns true array';
     is (@c ^^ @a), '1 2 3', 'Array ^^ true returns true array';
+    #?rakudo skip 'segmentation fault'
     ok (@a ^^ @b) == (), 'Array ^^ true returns empty list';
+    #?rakudo skip 'segmentation fault'
     ok (@c ^^ @d) == (), 'Array ^^ true returns empty list';
+    #?rakudo skip 'segmentation fault'
     is (@a ^^ ()), '1 2 3', 'True array ^^ empty list returns array';
+    #?rakudo skip 'segmentation fault'
     is (() ^^ @a), '1 2 3', 'Empty list ^^ true array returns array';
     ok (() ^^ @c) == (), 'Empty list ^^ empty array returns ()';
 }
@@ -224,7 +236,6 @@ sub accumtest($expect, $op) {
 {
     my $x = 0;
     my $y = 0;
-    #?rakudo todo 'chained comparison order of evaluations'
     ok(($x++ < ++$y < ++$y), "chained comparison (truth - 1)");
     # expect x=1, y=2
     is($y, 2, "chained comparison short-circuit: not re-evaluating middle");
@@ -271,12 +282,14 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     my $b = 0;
     $a //= ($b = 1);
     is $a, 0, 'basic //=';
+    #?rakudo todo 'nom regression'
     is $b, 0, '//= short-circuits';
 
     $a = 1;
     $b = 0;
     $a ||= ($b = 2);
     is $a, 1, 'basic ||=';
+    #?rakudo todo 'nom regression'
     is $b, 0, '||= short-circuits';
 
 }

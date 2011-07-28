@@ -16,9 +16,11 @@ plan 10;
 # RT #63882
 {
     enum A <a b c>;
+    #?rakudo todo 'nom regression'
     is c, 2, 'c is 2 from enum';
     eval 'sub c { "sub c" }';
     ok  $!  !~~ Exception, 'can define sub c in eval after c defined in enum';
+    #?rakudo todo 'nom regression'
     is c, 2, 'c is still 2 from enum';
     #?rakudo skip 'OUR::subname() does not work'
     is OUR::c(), 'sub c', 'sub c called with OUR:: works';
