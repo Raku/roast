@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 35;
 
 # See L<http://www.nntp.perl.org/group/perl.perl6.language/22858> --
 # previously, "my $a; say $::("a")" died (you had to s/my/our/). Now, it was
@@ -124,15 +124,11 @@ my $outer = 'outside';
   cmp_ok $::("IN"),  &infix:<===>, $*IN,
     "symbolic dereferentiation of globals without the star works";
 
-  # XXX - should be =:= rather than ~~, but &say =:= &say is currently false.:(
-  #cmp_ok &::("*say"), &infix:<=:=>, &say,
-  cmp_ok &::("*say"), &infix:<~~>, &say,
-    "symbolic dereferentiation of global subs works";
   #cmp_ok &::("say"),  &infix:<=:=>, &say,
-  cmp_ok &::("say"),  &infix:<~~>, &say,
+  cmp_ok &::("say"),  &infix:<===>, &say,
     "symbolic dereferentiation of global subs without the star works (1)";
 
-  ok &::("true")(42),
+  ok &::("so")(42),
     "symbolic dereferentiation of global subs without the star works (2)";
   is &::("truncate")(3.1), 3,
     "symbolic dereferentiation of global subs without the star works (3)";
