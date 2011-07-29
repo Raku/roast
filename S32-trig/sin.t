@@ -95,41 +95,35 @@ for @sines -> $angle
 {
     # Num tests
     is_approx(sin((-6.28318530723787).Num), 0, "sin(Num) - -6.28318530723787");
-    is_approx(sin(:x((-3.92699081702367).Num)), 0.707106781186548, "sin(:x(Num)) - -3.92699081702367");
 }
 
 {
     # Rat tests
-    is_approx((-0.523598775603156).Rat(1e-9).sin, -0.5, "Rat.sin - -0.523598775603156");
-    is_approx(sin((0).Rat(1e-9)), 0, "sin(Rat) - 0");
-    is_approx(sin(:x((0.523598775603156).Rat(1e-9))), 0.5, "sin(:x(Rat)) - 0.523598775603156");
+    is_approx((-3.92699081702367).Rat(1e-9).sin, 0.707106781186548, "Rat.sin - -3.92699081702367");
+    is_approx(sin((-0.523598775603156).Rat(1e-9)), -0.5, "sin(Rat) - -0.523598775603156");
 }
 
 {
     # Complex tests
-    is_approx(sin((0.785398163404734 + 2i).Complex), 2.66027408533543 + 2.56457758878695i, "sin(Complex) - 0.785398163404734 + 2i");
-    is_approx(sin(:x((1.57079632680947 + 2i).Complex)), 3.76219569108363 - 5.28492170249481e-11i, "sin(:x(Complex)) - 1.57079632680947 + 2i");
+    is_approx(sin((0 + 2i).Complex), 0 + 3.62686040784702i, "sin(Complex) - 0 + 2i");
 }
 
 {
     # Str tests
-    is_approx((2.3561944902142).Str.sin, 0.707106781186548, "Str.sin - 2.3561944902142");
-    is_approx(sin((3.14159265361894).Str), 0, "sin(Str) - 3.14159265361894");
-    is_approx(sin(:x((3.92699081702367).Str)), -0.707106781186548, "sin(:x(Str)) - 3.92699081702367");
+    is_approx((0.523598775603156).Str.sin, 0.5, "Str.sin - 0.523598775603156");
+    is_approx(sin((0.785398163404734).Str), 0.707106781186548, "sin(Str) - 0.785398163404734");
 }
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(4.7123889804284 + 2i).sin, -3.76219569108363 + 1.58548456399631e-10i, "NotComplex.sin - 4.7123889804284 + 2i");
-    is_approx(sin(NotComplex.new(5.49778714383314 + 2i)), -2.66027408518037 + 2.56457758893643i, "sin(NotComplex) - 5.49778714383314 + 2i");
-    is_approx(sin(:x(NotComplex.new(6.28318530723787 + 2i))), 2.19285083195614e-10 + 3.62686040784702i, "sin(:x(NotComplex)) - 6.28318530723787 + 2i");
+    is_approx(NotComplex.new(1.57079632680947 + 2i).sin, 3.76219569108363 - 5.28492170249481e-11i, "NotComplex.sin - 1.57079632680947 + 2i");
+    is_approx(sin(NotComplex.new(2.3561944902142 + 2i)), 2.6602740852579 - 2.56457758886169i, "sin(NotComplex) - 2.3561944902142 + 2i");
 }
 
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(6.80678408284103).sin, 0.5, "DifferentReal.sin - 6.80678408284103");
-    is_approx(sin(DifferentReal.new(10.2101761242615)), -0.707106781186548, "sin(DifferentReal) - 10.2101761242615");
-    is_approx(sin(:x(DifferentReal.new(12.5663706144757))), 0, "sin(:x(DifferentReal)) - 12.5663706144757");
+    is_approx(DifferentReal.new(3.14159265361894).sin, 0, "DifferentReal.sin - 3.14159265361894");
+    is_approx(sin(DifferentReal.new(3.92699081702367)), -0.707106781186548, "sin(DifferentReal) - 3.92699081702367");
 }
 
 
@@ -156,41 +150,35 @@ for @sines -> $angle
 {
     # Num tests
     is_approx(asin((0.5).Num), 0.523598775603156, "asin(Num) - 0.523598775603156");
-    is_approx(asin(:x((0.707106781186548).Num)), 0.785398163404734, "asin(:x(Num)) - 0.785398163404734");
 }
 
 {
     # Rat tests
-    is_approx(((0.5).Rat(1e-9)).asin, 0.523598775603156, "Rat.asin - 0.523598775603156");
-    is_approx(asin((0.707106781186548).Rat(1e-9)), 0.785398163404734, "asin(Rat) - 0.785398163404734");
-    is_approx(asin(:x((0.5).Rat(1e-9))), 0.523598775603156, "asin(:x(Rat)) - 0.523598775603156");
+    is_approx(((0.707106781186548).Rat(1e-9)).asin, 0.785398163404734, "Rat.asin - 0.785398163404734");
+    is_approx(asin((0.5).Rat(1e-9)), 0.523598775603156, "asin(Rat) - 0.523598775603156");
 }
 
 {
     # Complex tests
     is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
-    is_approx(asin(:x((0.523598775603156 + 2i).Complex)), 0.231190695652916 + 1.46781890096429i, "asin(:x(Complex)) - 0.231190695652916 + 1.46781890096429i");
 }
 
 {
     # Str tests
-    is_approx(((0.707106781186548).Str).asin, 0.785398163404734, "Str.asin - 0.785398163404734");
-    is_approx(asin((0.5).Str), 0.523598775603156, "asin(Str) - 0.523598775603156");
-    is_approx(asin(:x((0.707106781186548).Str)), 0.785398163404734, "asin(:x(Str)) - 0.785398163404734");
+    is_approx(((0.5).Str).asin, 0.523598775603156, "Str.asin - 0.523598775603156");
+    is_approx(asin((0.707106781186548).Str), 0.785398163404734, "asin(Str) - 0.785398163404734");
 }
 
 {
     # NotComplex tests
     is_approx((NotComplex.new(0.523598775603156 + 2i)).asin, 0.231190695652916 + 1.46781890096429i, "NotComplex.asin - 0.231190695652916 + 1.46781890096429i");
     is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
-    is_approx(asin(:x(NotComplex.new(0.523598775603156 + 2i))), 0.231190695652916 + 1.46781890096429i, "asin(:x(NotComplex)) - 0.231190695652916 + 1.46781890096429i");
 }
 
 {
     # DifferentReal tests
-    is_approx((DifferentReal.new(0.707106781186548)).asin, 0.785398163404734, "DifferentReal.asin - 0.785398163404734");
-    is_approx(asin(DifferentReal.new(0.5)), 0.523598775603156, "asin(DifferentReal) - 0.523598775603156");
-    is_approx(asin(:x(DifferentReal.new(0.707106781186548))), 0.785398163404734, "asin(:x(DifferentReal)) - 0.785398163404734");
+    is_approx((DifferentReal.new(0.5)).asin, 0.523598775603156, "DifferentReal.asin - 0.523598775603156");
+    is_approx(asin(DifferentReal.new(0.707106781186548)), 0.785398163404734, "asin(DifferentReal) - 0.785398163404734");
 }
 
 done;

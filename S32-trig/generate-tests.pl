@@ -215,8 +215,6 @@ class TrigFunction
             }
             $file.say: ForwardTest('    is_approx($fun($typed-angle), $desired-result, "$fun($type) - $angle");', 
                                     $angle_list.shift, $fun, $type, $.desired-result-code);
-            $file.say: ForwardTest('    is_approx($fun(:x($typed-angle)), $desired-result, "$fun(:x($type)) - $angle");', 
-                                    $angle_list.shift, $fun, $type, $.desired-result-code);
             
             $file.say: '}';
             $file.say: "";
@@ -275,8 +273,6 @@ class TrigFunction
             $file.say: InverseTest('    is_approx($fun($typed-result), $angle, "$fun($type) - $angle");', 
                                     $angle_list.shift, $inv, $type, $.desired-result-code);
 
-            $file.say: InverseTest('    is_approx($fun(:x($typed-result)), $angle, "$fun(:x($type)) - $angle");', 
-                                    $angle_list.shift, $inv, $type, $.desired-result-code);
 
             $file.say: "}";
             $file.say: "";
@@ -464,8 +460,6 @@ for <Num Rat Int Str DifferentReal> -> $type1 {
     $file.say: Atan2Test('    is_approx(atan2($type1-value), $desired-result, "atan2($type1)");', 
                          filter-type(@values, $type1).pick, $type1);
 
-    $file.say: Atan2Test('    is_approx(atan2(:y($type1-value)), $desired-result, "atan2(:y($type1))");', 
-                         filter-type(@values, $type1).pick, $type1);
     $file.say: "}";
     $file.say: "";
     
@@ -476,8 +470,6 @@ for <Num Rat Int Str DifferentReal> -> $type1 {
         $file.say: Atan2Test('    is_approx($type1-value.atan2($type2-value), $desired-result, "$type1.atan2($type2)");', 
                              filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
         $file.say: Atan2Test('    is_approx(atan2($type1-value, $type2-value), $desired-result, "atan2($type1, $type2)");', 
-                             filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
-        $file.say: Atan2Test('    is_approx(atan2(:y($type1-value), :x($type2-value)), $desired-result, "atan2(:y($type1), :x($type2))");', 
                              filter-type(@values, $type1).pick, filter-type(@values, $type2).pick, $type1, $type2);
         $file.say: "}";
         $file.say: "";
