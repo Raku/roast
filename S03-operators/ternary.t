@@ -55,6 +55,7 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, Bool::True, "a statement with both ??!! and :: in it did compile") ;
 }
 
+#?rakudo skip 'custom operators'
 {
     # Defining an N! postfix (for factorial) causes a misparse on ternary op
     proto postfix:<!>($n) {
