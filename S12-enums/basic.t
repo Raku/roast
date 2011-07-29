@@ -50,7 +50,6 @@ enum Day <Sun Mon Tue Wed Thu Fri Sat>;
     is Day::Mon.key,  'Mon',      '.key on long form of Enum value';
     is Mon.key,       'Mon',      '.key on short form of Enum value';
 
-    #?rakudo todo 'enum + .WHAT'
     is Day::Mon.WHAT.gist, 'Day()',    '.WHAT.gist on enum value stringifies to the enum name';
 }
 
