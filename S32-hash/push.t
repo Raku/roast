@@ -11,7 +11,7 @@ my %ref2 = (a => [1, 4, 5], b => 2, c => 3);
 
     my ($r, %x);
     $r = %x.push: 'a' => 1;
-    is $r.WHAT, Hash, 'Hash.push returns hash';
+    is $r.WHAT.gist, Hash.gist, 'Hash.push returns hash';
 
     my %h;
     %h.push: 'b', 2, 'a', 1, 'c', 3;

@@ -47,11 +47,11 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 # RT #68482
 {
     my %rt68482 = 1 => 3;
-    is %rt68482.delete(1).WHAT, 3.WHAT, '.delete.WHAT is the element';
+    is %rt68482.delete(1).WHAT.gist, 3.WHAT.gist, '.delete.WHAT is the element';
 
     %rt68482 = 1 => 3;
     my $rt68482 = %rt68482.delete(1);
-    is $rt68482.WHAT, 3.WHAT, '.WHAT of stored .delete is the element';
+    is $rt68482.WHAT.gist, 3.WHAT.gist, '.WHAT of stored .delete is the element';
 }
 
 done;

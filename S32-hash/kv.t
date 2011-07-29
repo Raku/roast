@@ -54,7 +54,7 @@ Basic C<kv> tests, see S32::Containers.
 #?DOES 2
 sub test1{
     my $pair = boo=>'baz'; 
-    my $type = $pair.WHAT;
+    my $type = $pair.WHAT.gist;
     for $pair.kv -> $key, $value {
         is($key, 'boo', "test1: $type \$pair got the right \$key");
         is($value, 'baz', "test1: $type \$pair got the right \$value");
@@ -65,7 +65,7 @@ test1;
 #?DOES 2
 sub test2{
     my %pair = boo=>'baz'; 
-    my $type = %pair.WHAT;
+    my $type = %pair.WHAT.gist;
     my $elems= +%pair;
     for %pair.kv -> $key, $value {
         is($key, 'boo', "test2: $elems elem $type \%pair got the right \$key");
@@ -78,15 +78,15 @@ my %hash  = ('foo' => 'baz');
 #?DOES 2
 sub test3 (%h){
   for %h.kv -> $key, $value {
-        is($key, 'foo', "test3:  from {+%h}-elem {%h.WHAT} \%h got the right \$key");
-        is($value, 'baz', "test3: from {+%h}-elem {%h.WHAT} \%h got the right \$value");
+        is($key, 'foo', "test3:  from {+%h}-elem {%h.WHAT.gist} \%h got the right \$key");
+        is($value, 'baz', "test3: from {+%h}-elem {%h.WHAT.gist} \%h got the right \$value");
   }
 }
 test3 %hash;
 
 sub test4 (%h){
     for 0..%h.kv.end -> $idx {
-        is(%h.kv[$idx], %hash.kv[$idx], "test4: elem $idx of {%h.kv.elems}-elem {%h.kv.WHAT} \%hash.kv correctly accessed");
+        is(%h.kv[$idx], %hash.kv[$idx], "test4: elem $idx of {%h.kv.elems}-elem {%h.kv.WHAT.gist} \%hash.kv correctly accessed");
     }
 }
 #?DOES 2   # ???
@@ -94,8 +94,8 @@ test4 %hash;
 
 # sanity
 for %hash.kv -> $key, $value {
-    is($key, 'foo', "for(): from {+%hash}-elem {%hash.WHAT} \%hash got the right \$key");
-    is($value, 'baz', "for(): from {+%hash}-elem {%hash.WHAT} \%hash got the right \$value");
+    is($key, 'foo', "for(): from {+%hash}-elem {%hash.WHAT.gist} \%hash got the right \$key");
+    is($value, 'baz', "for(): from {+%hash}-elem {%hash.WHAT.gist} \%hash got the right \$value");
 }
 
 # The things returned by .kv should be aliases

@@ -37,7 +37,7 @@ class Laptop does BatteryPower does SocketPower {
 }
 
 my Laptop $l ;
-is $l.WHAT , 'Laptop()' , 'If we resolve the conflict we can create laptops';
+is $l.WHAT.gist , 'Laptop()' , 'If we resolve the conflict we can create laptops';
 
 role Cup[::Contents] { }
 role Glass[::Contents] { }

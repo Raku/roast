@@ -153,11 +153,11 @@ is(%hash10<1>, 2, "assignment of pointy qw to hash");
 
 sub test1 {
     my %sane = hash ('a'=>'b');
-    is(~%sane.WHAT,Hash,'%sane is a Hash');
+    is(%sane.WHAT.gist,Hash.gist,'%sane is a Hash');
 }
 
 sub test2 (%hash) {
-    is(~%hash.WHAT,Hash,'%hash is a Hash');
+    is(%hash.WHAT.gist,Hash.gist,'%hash is a Hash');
 }
 
 my %h = hash (a => 'b');

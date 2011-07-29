@@ -12,7 +12,7 @@ Misc. Junction tests
 
 #?rakudo 2 skip 'Null PMC access in get_integer() (RT #64184)'
 isa_ok any(6,7), Junction;
-is any(6,7).WHAT, Junction, 'junction.WHAT works';
+is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
 
 # avoid auto-threading on ok()
 sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
@@ -135,10 +135,10 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
     $j = 1|2;
     #?rakudo 2 todo 'lower case junction type'
-    is(~WHAT($j), 'Junction()', 'basic junction type reference test');
+    is(WHAT($j).gist, 'Junction()', 'basic junction type reference test');
 
     $k=$j;
-    is(~WHAT($k), 'Junction()', 'assignment preserves reference');
+    is(WHAT($k).gist, 'Junction()', 'assignment preserves reference');
 }
 
 

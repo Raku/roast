@@ -12,7 +12,7 @@ my $t1 = $c1.new();
 ok(defined($t1),     'instantiated the class');
 ok($t1 ~~ $c1,       'isa check works');
 #?rakudo todo 'Anonymous class stringification (?)'
-is(~$c1.WHAT(), '()',  '.WHAT stringifies to ()');
+is($c1.WHAT().gist, '()',  '.WHAT.gist stringifies to ()');
 
 # Anonymous classes with methods.
 my $c2 = class { method foo { 42 }; method bar { 28 } };

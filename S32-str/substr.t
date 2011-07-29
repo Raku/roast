@@ -63,7 +63,7 @@ plan 117;
 
     {
         my $r = \substr($str, 0, 5);
-        ok(~WHAT($r), '$r is a reference');
+        ok(WHAT($r).gist, '$r is a reference');
         is($$r, "gloop", '$r referent is eq to the substring');
 
         #?pugs todo 'scalarrefs are not handled correctly'
@@ -179,7 +179,7 @@ sub l (Int $a) {  my $l = $a; return $l }
 
     {
         my $r = \substr($str, 0, l(5));
-        ok(~WHAT($r), '$r is a reference (substr(Int, StrLen)).');
+        ok(WHAT($r).gist, '$r is a reference (substr(Int, StrLen)).');
         is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
 
     #?pugs todo 'scalarrefs are not handled correctly'
@@ -296,7 +296,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
 
     my $r = \substr($str, 0, p(5));
-    ok(~WHAT($r), '$r is a reference (substr(Int, StrPos)).');
+    ok(WHAT($r).gist, '$r is a reference (substr(Int, StrPos)).');
     is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrPos)).');
 
 #?pugs todo 'scalarrefs are not handled correctly'

@@ -82,9 +82,9 @@ is +@methods, 4, ':tree gives us right number of elements';
 ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
    @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
    'first two methods from class D itself';
-is @methods[2].WHAT, Array, 'third item is an array';
+is @methods[2].WHAT.gist, Array.gist, 'third item is an array';
 is +@methods[2], 2, 'nested array for B had right number of elements';
-is @methods[3].WHAT, Array, 'forth item is an array';
+is @methods[3].WHAT.gist, Array.gist, 'forth item is an array';
 is +@methods[3], 1, 'nested array for C had right number of elements';
 is @methods[2], B.^methods(:tree), 'nested tree for B is correct';
 is @methods[3], C.^methods(:tree), 'nested tree for C is correct';

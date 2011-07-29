@@ -119,10 +119,10 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     #?rakudo todo 'CATCH'
     ok(!$lived, "did not live past uncaught throw");
     ok(!$naughty, "did not get caught by wrong handler");
-    ok(~WHAT($!), '$! is an object');
+    ok(WHAT($!).gist, '$! is an object');
     #?pugs skip 'bug'
     #?rakudo todo 'Exception types'
-    is(WHAT($!), Dandy, ".. of the right class");
+    is(WHAT($!).gist, Dandy.gist, ".. of the right class");
 };
 
 #?rakudo skip 'llops'

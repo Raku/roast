@@ -45,7 +45,7 @@ sub chain { B.try_it_caller_B(@_) }
 # basic tests of caller object
 #?niecza skip "NYI"
 {
-    chain({ WHAT caller() },     "Control::Caller", "caller object type");
+    chain({ WHAT(caller()).gist }, "Control::Caller()", "caller object type");
     chain({ caller().package }, "Main", "caller package");
     chain({ caller().file },    $?FILE, "caller filename");
     chain({ caller().line },    "32", "caller line");

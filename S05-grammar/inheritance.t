@@ -58,7 +58,7 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 
 }
 
-is(Grammar.WHAT,"Grammar()", "Grammar.WHAT = Grammar()");
+is(Grammar.WHAT.gist,"Grammar()", "Grammar.WHAT.gist = Grammar()");
 
 done;
 

@@ -226,7 +226,7 @@ ok 16/5 eqv 16/5, 'infix:<eqv> works with rats';
 
 # RT #72870
 #?rakudo todo 'RT 72870'
-is .88888888888.WHAT, 'Rat()', 'WHAT works on Rat created from 11 digit decimal fraction';
+is .88888888888.WHAT.gist, 'Rat()', 'WHAT works on Rat created from 11 digit decimal fraction';
 
 # RT #74624
 {

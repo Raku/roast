@@ -64,7 +64,7 @@ my @tests = (
         my $s = (~$obj).subst(/\n/, '␤');
         ok eval($obj.perl) eq $obj,
             "($s.perl()).perl returned something whose eval()ed stringification is unchanged";
-        is ~WHAT(eval($obj.perl)), ~$obj.WHAT,
+        is WHAT(eval($obj.perl)).gist, $obj.WHAT.gist,
             "($s.perl()).perl returned something whose eval()ed .WHAT is unchanged";
     }
 }
@@ -143,8 +143,8 @@ my @tests = (
 
 # RT #69869
 {
-    is 1.0.WHAT, Rat, '1.0 is Rat';
-    is eval( 1.0.perl ).WHAT, Rat, "1.0 perl'd and eval'd is Rat";
+    is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
+    is eval( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and eval'd is Rat";
 }
 
 

@@ -35,7 +35,7 @@ my @tests = (
         my $s = (~$obj).subst(/\n/, '␤');
         ok eval($obj.perl) eq $obj,
             "($s.perl()).perl returned something whose eval()ed stringification is unchanged";
-        is ~(eval($obj.perl).WHAT), ~$obj.WHAT,
+        is (eval($obj.perl).WHAT).gist, $obj.WHAT.gist,
             "($s.perl()).perl returned something whose eval()ed .WHAT is unchanged";
     }
 }

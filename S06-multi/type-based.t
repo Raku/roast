@@ -87,7 +87,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     is wins(Paper.new,   Scissor.new), -1, 'fallback if there is a ::T variant';
 
     multi wins2(Scissor $x, Paper   $y) { 1 }   #OK not used
-    multi wins2($x, $y where { $x.WHAT eq $y.WHAT }) { 0 }
+    multi wins2($x, $y where { $x.WHAT.gist eq $y.WHAT.gist }) { 0 }
     multi wins2($x, $y)                { -1 }   #OK not used
     is wins2(Scissor.new, Paper.new),   1,  'Basic sanity 2';
     is wins2(Paper.new,   Paper.new),   0,  'multi dispatch with faked generics';

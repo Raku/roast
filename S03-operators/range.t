@@ -156,9 +156,9 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     lives_ok { $range = $start..$end },
              'can make range from numeric string vars';
     is $range.min, $start, 'range starts at start';
-    is $range.min.WHAT, "Str()", 'range start is a string';
+    is $range.min.WHAT.gist, "Str()", 'range start is a string';
     is $range.max,   $end, 'range ends at end';
-    is $range.max.WHAT, "Str()", 'range end is a string';
+    is $range.max.WHAT.gist, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
@@ -196,9 +196,9 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = ~$0..~$1 },
              'can make range from match vars with string context forced';
     is $range.min, 1, 'range starts at one';
-    is $range.min.WHAT, "Str()", 'range start is a string';
+    is $range.min.WHAT.gist, "Str()", 'range start is a string';
     is $range.max,   3, 'range ends at three';
-    is $range.max.WHAT, "Str()", 'range end is a string';
+    is $range.max.WHAT.gist, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }

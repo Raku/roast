@@ -9,7 +9,7 @@ plan 124;
 
 my $r = 1..5;
 isa_ok $r, Range, 'Type';
-is $r.WHAT, Range, 'Type';
+is $r.WHAT.gist, Range.gist, 'Type';
 is $r.perl, '1..5', 'canonical representation';
 
 # XXX unspecced: exact value of Range.perl

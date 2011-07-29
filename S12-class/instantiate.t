@@ -43,7 +43,7 @@ is($foo2.check(), 42, 'initializing attributes in new');
     class Foo { };
     my $x = 'Foo';
     my $y = $x.new;
-    is($y.WHAT, Str, "instantiating from class name string creates a Str object");
+    is($y.WHAT.gist, Str.gist, "instantiating from class name string creates a Str object");
 }
 
 # vim: ft=perl6
