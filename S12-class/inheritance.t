@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 36;
 
 # L<S12/Classes/An "isa" is just a trait that happens to be another class>
 
@@ -58,22 +58,10 @@ dies_ok { $foo_bar.Unrelated::something() },
 # See thread "Quick OO .isa question" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22220">
 
-# XXX are these still conforming to S12?
 ok  Foo::Bar.isa(Foo),      "subclass.isa(superclass) is true";
 ok  Foo::Bar.isa(Foo::Bar), "subclass.isa(same_subclass) is true";
-#?pugs todo "feature"
-ok !Foo::Bar.does(::CLASS),   "subclass.does(CLASS) is false";
-ok !Foo::Bar.isa(::CLASS),    "subclass.isa(CLASS) is false";
 ok Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is true";
 ok Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is true";
-#?pugs todo "bug"
-#?rakudo 2 skip 'no Class class'
-ok !Foo::Bar.HOW.isa(Foo::Bar, Class),    "subclass.HOW.isa(Class) is false";
-ok !Foo::Bar.HOW.does(Foo::Bar, Class),   "subclass.HOW.does(Class) is false";
-#?rakudo 2 skip '::CLASS is NYI'
-ok !Foo::Bar.HOW.isa(Foo::Bar, ::CLASS),  "subclass.HOW.isa(CLASS) is false";
-#?pugs todo "feature"
-ok  Foo::Bar.HOW.does(Foo::Bar, ::CLASS),  "subclass.HOW.does(CLASS) is true";
 
 {
     my $test = '$obj.$meth is canonical (audreyt says)';
