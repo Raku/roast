@@ -260,6 +260,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
     is $seensize, 10, "[list] assignment state in fib memoizes";
 }
 
+#?rakudo skip 'parse error'
 {
     # now we're just being plain evil:
     subset A of Int where { $_ < state $x++ };
@@ -280,6 +281,7 @@ sub bughunt1 { (state $svar) }    #OK not used
        'a state variable in parens works with a state variable with //= init';
 }
 
+#?rakudo skip 'parse error'
 {
     # http://irclog.perlgeek.de/perl6/2010-04-27#i_2269848
     my @tracker;
