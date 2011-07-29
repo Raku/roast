@@ -37,11 +37,11 @@ ok(%hash4.does(Hash), '%hash4 does Hash');
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
-is( (map { .WHAT } , {"a"=> 1 , "b"=>2}).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
+is( (map { .WHAT.gist } , {"a"=> 1 , "b"=>2}).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
 my $does_not_flatten= {"a"=> 1 , "b"=>2};
-is( (map { .WHAT } , $does_not_flatten).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
+is( (map { .WHAT.gist } , $does_not_flatten).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
 my %flattens= ("a"=> 1 , "b"=>2);
-is( (map { .WHAT } , %flattens).join(' ') , 'Pair() Pair()' , 'Flattening Hashes become Pairs when passed to map');
+is( (map { .WHAT.gist } , %flattens).join(' ') , 'Pair() Pair()' , 'Flattening Hashes become Pairs when passed to map');
 
 # hash slicing
 
@@ -144,7 +144,7 @@ is($key, 1, '%hash.kv gave us our key');
 is($val, 2, '%hash.kv gave us our val');
 
 %hash9{2} = 3;
-ok(~%hash9 ~~ m{^(1\t2\s+2\t3|2\t3\s+1\t2)\s*$}, "hash can stringify");
+ok(~%hash9 ~~ /^(1\t2\s+2\t3|2\t3\s+1\t2)\s*$/, "hash can stringify");
 
 my %hash10 = <1 2>;
 is(%hash10<1>, 2, "assignment of pointy qw to hash");
@@ -237,6 +237,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # RT #58372
 # By collective knowledge of #perl6 and @larry, .{ } is actually defined in
 # Any
+#?rakudo skip 'RT 58372'
 {
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
