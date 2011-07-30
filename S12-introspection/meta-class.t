@@ -34,7 +34,6 @@ lives_ok { 4.HOW.HOW }, 'Can access meta class of meta class';
 
 # L<S12/Introspection/Class traits may include:>
 
-#?rakudo skip '.name'
 is Foo.^name(), 'Foo', '... the name() property is Foo';
 #?rakudo skip '.version, version number parsing'
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
