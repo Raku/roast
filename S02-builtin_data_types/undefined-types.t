@@ -30,26 +30,25 @@ plan 23;
     is $i, 8, '... block executed';
 }
 
-#?rakudo skip 'Stringy'
 {
     my $obj;
     my Int $int;
 
-    is ~$obj, '', 'prefix:<~> on type object gives empty string (Mu)';
+    is ~$obj, '', 'prefix:<~> on type object gives empty string (Any)';
     is ~$int, '', 'prefix:<~> on type object gives empty string (Int)';
-    is $obj.Stringy, '', '.Stringy on type object gives empty string (Mu)';
+    is $obj.Stringy, '', '.Stringy on type object gives empty string (Any)';
     is $int.Stringy, '', '.Stringy on type object gives empty string (Int)';
 
-    ok (~$obj) ~~ Stringy, 'prefix:<~> returns a Stringy (Mu)';
+    ok (~$obj) ~~ Stringy, 'prefix:<~> returns a Stringy (Any)';
     ok (~$int) ~~ Stringy, 'prefix:<~> returns a Stringy (Int)';
 
-    ok $obj.Stringy ~~ Stringy, '.Stringy returns a Stringy (Mu)';
+    ok $obj.Stringy ~~ Stringy, '.Stringy returns a Stringy (Any)';
     ok $int.Stringy ~~ Stringy, '.Stringy returns a Stringy (Int)';
 
-    is $obj.Str, 'Mu()', '.Str on type object gives Mu()';
-    is $int.Str, 'Int()',    '.Str on type object gives Int()';
+    is $obj.gist, 'Any()', '.gist on type object gives Any()';
+    is $int.gist, 'Int()', '.gist on type object gives Int()';
 
-    is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Mu)';
+    is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Any)';
     is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
 }
 
