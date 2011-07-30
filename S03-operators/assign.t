@@ -810,12 +810,10 @@ sub l () { 1, 2 };
 
     $x = 1;
     $x max= 2;
-    #?rakudo todo 'max='
     is $x, 2, 'max= worked (positive)';
 
     $x = 3;
     $x max= 2;
-    #?rakudo todo 'max='
     is $x, 3, 'max= worked (negative)';
 }
 
