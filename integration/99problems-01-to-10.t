@@ -115,7 +115,6 @@ plan 22;
         'We should be able to flatten lists by func';
 }
 
-#?rakudo skip 'state variables'
 {
     # P08 (**) Eliminate consecutive duplicates of list elements.
     # 

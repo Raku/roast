@@ -324,7 +324,6 @@ is Foo::official(), 44,
 # RT #63912
 {
     sub rt63912 { return 1, 2; }
-    #?rakudo todo 'RT 63912'
     lives_ok { rt63912() }, 'can call sub that returns two things (no parens)';
 }
 

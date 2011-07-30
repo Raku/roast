@@ -137,7 +137,6 @@ plan 17;
     is ~@list, "2 4 6 8 10", "gather with nested loop";
 }
 
-#?rakudo skip 'nom regression'
 {
     is (gather { take 1, 2, 3; take 4, 5, 6; }).elems, 2,
         'take with multiple arguments produces one item each';

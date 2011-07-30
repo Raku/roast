@@ -5,7 +5,6 @@ use Test;
 plan 37;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
-#?rakudo 9 skip 'names of pseudo packages should be reserved'
 ok !eval('module MY; 1'), 'MY is an out of scope name';
 ok !eval('module OUR; 1'), 'OUR is an out of scope name';
 ok !eval('module GLOBAL; 1'), 'GLOBAL is an out of scope name';

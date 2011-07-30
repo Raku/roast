@@ -209,7 +209,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     my $t = TestIt.new;
     given $t { when TestIt { $passed = 1;} };
     is($passed, 1,'when Type {}');
-#?rakudo skip ".isa(TestIt) goes kaboom"
 {
     $passed = 0;
     given $t { when .isa(TestIt) { $passed = 1;}};
