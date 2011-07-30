@@ -47,7 +47,6 @@ is(gcd(1147, 1271), 31, 'gcd 1');
 is(gcd(1908, 2016),  36, 'gcd 2');
 ok(factorial(10) == 3628800, 'simple factorial');
 is(factorial(factorial(3)), 720, 'nested factorial');
-#?rakudo skip 'TODO: &?ROUTINE'
 is(fibonacci(10), 89, 'recursion via &?ROUTINE');
 
 # ok(fibonacci(fibonacci(7)) == 17711);
