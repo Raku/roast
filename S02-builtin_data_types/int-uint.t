@@ -4,13 +4,14 @@ use Test;
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>
 
 my @inttypes = map {"int$_", "uint$_"}, <1 2 4 8 16 32 64>;
-plan 7 * @inttypes;
+plan 8 * @inttypes;
 
 for @inttypes -> $type {
-    unless eval("my $type \$var; 1") {
-        skip "low-level data type $type not supported on this platform", 7;
-        next;
-    }
+    eval_lives_ok "my $type \$var; 1", "Type $type lives"
+        or do {
+            skip "low-level data type $type not supported on this platform", 7;
+            next;
+        }
 
     my $maxval; my $minval;
     my $len = +$type; # get the numeric value
