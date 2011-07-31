@@ -167,7 +167,6 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     is $tracker, 5, ' ... and got right result';
 }
 
-#?rakudo skip 'RT 73892'
 {
     my $tracker = '';
     sub track(:$x) {
@@ -179,7 +178,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
             track(|%_);
         }
     }
-    lives_ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method (implicit)';
+    lives_ok { ImplicitPercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method (implicit)';
     is $tracker, 5, ' ... and got right result (implicit)';
 }
 
