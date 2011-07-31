@@ -116,7 +116,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         $lived = 1;
     ';
 
-    #?rakudo todo 'CATCH'
     ok(!$lived, "did not live past uncaught throw");
     ok(!$naughty, "did not get caught by wrong handler");
     ok(WHAT($!).gist, '$! is an object');
