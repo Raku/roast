@@ -74,6 +74,7 @@ plan 18;
 }
 
 # Arglists are first-class objects
+#?rakudo todo '|$arg'
 {
     my $capture;
     sub foo7 (|$args) { $capture = $args }
