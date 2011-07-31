@@ -71,7 +71,6 @@ is(@a[0].index("l"), 2, ".index on array element");
 
 # index on junctions, maybe this should be moved to t/junctions/ ?
 
-#?rakudo skip "junction autothreading"
 {
     my $j = ("Hello"|"World");
     ok(index($j, "l") == 2, "index on junction");

@@ -67,7 +67,6 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 }
 
 # test that xx actually creates independent items
-#?rakudo skip 'nom regression'
 #?DOES 4
 {
     my @a = 'a' xx 3;

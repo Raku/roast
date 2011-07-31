@@ -31,7 +31,6 @@ plan 10;
 }
 
 #?niecza skip 'Parcel.max'
-#?rakudo skip 'Parcel.max'
 {
     my $rt65538_in = qq[line { (1,2,3).min }
 line 2
