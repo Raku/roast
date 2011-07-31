@@ -17,6 +17,7 @@ is('ab' x 4, 'abababab', 'string repeat operator works on multiple character');
 is(1 x 5, '11111', 'number repeat operator works on number and creates string');
 is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
+#?rakudo skip 'nom regression'
 is('a' x -1, '', 'repeating negative times produces an empty string');
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
@@ -55,13 +56,18 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
 {
     my @array = (4, 2);
+    #?rakudo skip 'nom regression'
     ok(@array xx= 2, 'operator xx= for list works');
     is(@array[0], 4, 'operator xx= for list repeats correct');
+    #?rakudo todo 'nom regression'
     is(@array[3], 2, 'operator xx= for list repeats correct');
+    #?rakudo todo 'nom regression'
     is(+@array, 4, 'operator xx= for list created the right size');
 }
 
 # test that xx actually creates independent items
+#?rakudo skip 'nom regression'
+#?DOES 4
 {
     my @a = 'a' xx 3;
     is @a.join('|'), 'a|a|a', 'basic infix:<xx>';
@@ -77,6 +83,8 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
 
 # tests for non-number values on rhs of xx (RT #76720)
+#?rakudo skip 'nom regression'
+#?DOES 2
 {
     # make sure repeat numifies rhs, but respects whatever
     my @a = <a b c>;

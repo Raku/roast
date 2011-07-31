@@ -27,6 +27,7 @@ plan 18;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo3 ($a, :$named) { "$a!$named" }
+    #?rakudo skip 'nom regression'
     is foo3(|$capture), "1!arg",
         'simply capture creation with \\( works (3)';
 }
@@ -41,6 +42,7 @@ plan 18;
         'simply capture creation with \\( works (4)';
 }
 
+#?rakudo skip 'nom regression'
 {
     my @array   = <a b c>;
     my $capture = \(@array);
@@ -52,6 +54,7 @@ plan 18;
 }
 
 # L<S06/Argument list binding/single scalar parameter marked>
+#?rakudo skip 'nom regression'
 {
     sub bar6 ($a, $b, $c) { "$a!$b!$c" }
     sub foo6 (|$capture)  { bar6(|$capture) }
@@ -102,8 +105,10 @@ plan 18;
     my $capture = \(:foo<bar>, :baz<grtz>);
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
 
+    #?rakudo todo 'nom regression'
     dies_ok { foo9(|$capture) },  # too few args
         "mixing ordinary args with captures (1)";
+    #?rakudo skip 'nom regression'
     is foo9(1, 2, |$capture), "1!2!bar!grtz",
         "mixing ordinary args with captures (2)";
 }

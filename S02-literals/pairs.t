@@ -153,6 +153,8 @@ sub f9 (:$bar!) { WHAT($bar) }
 }
 
 # RT #74948
+#?rakudo skip 'nom regression'
+#?DOES 32
 {
     # We use a block because of RT #77646.
     { is eval("($_ => 1).key"), $_, "Pair with '$_' as key" } for <

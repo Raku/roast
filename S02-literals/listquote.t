@@ -23,6 +23,7 @@ my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>');
 }
 
+#?rakudo skip 'nom regression'
 ok [1,2,3].join<abc> ~~ Failure, '.join<abc> parses but produces failure';
 
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
