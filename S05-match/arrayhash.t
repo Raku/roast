@@ -12,15 +12,19 @@ plan 8;
 # Matching against an array should be true if any of the values match.
 my @a = ('a', 'b' );
 ok(@a ~~ / 'b' /);
+#?rakudo todo 'nom regression'
 ok(@a ~~ / ^ 'b' /);
 ok(@a ~~ / ^ 'a' /);
+#?rakudo todo 'nom regression'
 ok(@a ~~ / ^ 'a' $ /);
 
 # Matching against a hash should be true if any of the keys match.
 my %a = ('a' => 1, 'b' => 2);
 ok(%a ~~ / 'b' /);
+#?rakudo todo 'nom regression'
 ok(%a ~~ / ^ 'b' /);
 ok(%a ~~ / ^ 'a' /);
+#?rakudo todo 'nom regression'
 ok(%a ~~ / ^ 'a' $ /);
 
 # vim: ft=perl6

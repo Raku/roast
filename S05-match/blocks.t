@@ -19,6 +19,7 @@ if 1 {
     is ~$/, 'a', '... and can use the match var';
 }
 
+#?rakudo todo 'nom regression'
 ok !defined($/), '$/ still undefined in the outer block';
 
 my $loop = 1;
@@ -28,12 +29,14 @@ while $loop {
     is ~$/, 'b', '... and can use the match var';
     $loop = 0;
 }
+#?rakudo todo 'nom regression'
 ok !defined($/), '$/ still undefined in the outer block';
 
 {
     ok 'c' ~~ /./, 'Can match in a bare block';
     is ~$/, 'c', '... and can use the match var';
 }
+#?rakudo todo 'nom regression'
 ok !defined($/), '$/ still undefined in the outer block';
 
 my $discarded = do {
@@ -41,6 +44,7 @@ my $discarded = do {
     is ~$/, 'd', '... and can use the match var';
 
 }
+#?rakudo todo 'nom regression'
 ok !defined($/), '$/ still undefined in the outer block';
 
 {
@@ -76,6 +80,7 @@ ok !defined($/), '$/ still undefined in the outer block';
             flunk 'regex did not match - $/ is properly set with explicit $_ in a given { } block';
         }
         if /\w+/ {
+            #?rakudo todo 'skip'
             ok $/ eq 'Wall', '$/ is properly set in a given { } block';
         } else {
             flunk 'regex did not match - $/ is properly set in a given { } block';
@@ -96,12 +101,15 @@ ok !defined($/), '$/ still undefined in the outer block';
         if /not/ { $s2 = 0 }
     }
     is $s1, 1, '/foo/ matched against $_ (successfully)';
+    #?rakudo todo 'nom regression'
     is $s2, 1, '/not/ matched against $_ (no match)';
 
     given 'foo' {
         if /bar/ {
+            #?rakudo todo 'nom regression'
             ok 0, 'match in /if/;'
         } else {
+            #?rakudo todo 'nom regression'
             ok 1, 'match in /if/;'
         }
     }

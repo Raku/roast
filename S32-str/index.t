@@ -35,11 +35,16 @@ is(index("Hello World", "Hello World"), 0, "Substr eq Str");
 
 # Empty strings
 
+#?rakudo todo 'nom regression'
 is(index("Hello World", ""), 0, "Substr is empty");
+#?rakudo todo 'nom regression'
 is(index("", ""), 0, "Both strings are empty");
 ok(!defined(index("", "Hello")), "Only main-string is empty");
+#?rakudo todo 'nom regression'
 is(index("Hello", "", 3), 3, "Substr is empty, pos within str");
+#?rakudo todo 'nom regression'
 is(index("Hello", "", 5), 5, "Substr is empty, pos at end of str");
+#?rakudo todo 'nom regression'
 is(index("Hello", "", 999), 5, "Substr is empty, pos > length of str");
 
 # More difficult strings

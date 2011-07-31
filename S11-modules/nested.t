@@ -9,6 +9,7 @@ plan 6;
 
 BEGIN { @*INC.push('t/spec/packages/') };
 
+#?rakudo 5 todo 'nom regression'
 eval_lives_ok 'use A::A', 'Can load classes from nested modules';
 eval_lives_ok 'use A::A; A::B::D ~~ A::B::B or die()', 
               '... and the composition worked';

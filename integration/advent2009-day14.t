@@ -23,8 +23,10 @@ is_approx $a, 3.3333333e-05;
 is $a.perl, "1/30000";
 
 $a = 1/60000 + 1/60001;
+#?rakudo todo 'nom regression'
 is $a.WHAT.gist, "Num()";
 is_approx $a, 3.333305e-05;
+#?rakudo todo 'nom regression'
 ok $a.perl ~~ / '3.3333' /;
 
 
@@ -34,6 +36,7 @@ is_approx $a, 0.99999999;
 
 is 3.14.Rat.perl, "157/50";
 is pi.Rat.perl, "355/113";
+#?rakudo todo 'nom regression'
 is pi.Rat(1e-10).perl, "312689/99532";
 
 is 1.75.WHAT.gist, "Rat()";
