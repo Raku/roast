@@ -55,7 +55,6 @@ plan 18;
 # **resume after the return**, effectively running the tests twice.
 # (Therefore I moved the tests to the end, so not all tests are rerun).
 
-#?rakudo todo "try catches return exception"
 {
     my $was_in_foo = 0;
     sub foo {
@@ -104,6 +103,7 @@ plan 18;
 }
 
 # RT #68728
+#?rakudo skip 'RT 68728'
 {
     my $str = '';
     try {
