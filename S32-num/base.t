@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 10;
 
 is  0.base(8),  '0',        '0.base(something)';
 is 42.base(10), '42',       '42.base(10)';
@@ -11,4 +11,7 @@ is 35.base(36), 'Z',        '35.base(36)';
 is 36.base(36), '10',       '36.base(36)';
 is (-12).base(16), '-C',    '(-12).base(16)';
 
-# TODO: tests for .base on non-integers
+is (3.25).base(16), '3.4',  '(3.25).base(16)';
+is (10.5).base(2), '1010.1', '(10.5).base(2)';
+is (-3.5).base(16) '-3.8', '(-3.5).base(16)';
+#TODO more non-integer tests?
