@@ -103,7 +103,6 @@ plan 18;
 }
 
 # RT #68728
-#?rakudo skip 'RT 68728'
 {
     my $str = '';
     try {
