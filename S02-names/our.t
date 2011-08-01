@@ -15,11 +15,9 @@ plan 10;
 # RT #63882
 {
     my enum A <a b c>;
-    #?rakudo todo 'nom regression'
     is +c, 2, 'c is 2 from enum';
     eval_lives_ok 'our sub c { "sub c" }',
         'can define my sub c in eval after c defined in enum';
-    #?rakudo todo 'nom regression'
     is +c, 2, 'c is still 2 from enum';
     #?rakudo skip 'OUR::subname() does not work'
     is OUR::c(), 'sub c', 'sub c called with OUR:: works';
@@ -28,7 +26,6 @@ plan 10;
 # RT #69460
 {
     our $rt69460 = 1;
-    #?rakudo todo 'RT 69460'
     eval_lives_ok 'class RT69460 { $GLOBAL::rt69460++ }',
                   'can compile a class that modifies our variable';
     #?rakudo skip 'RT 69460'

@@ -691,7 +691,6 @@ sub l () { 1, 2 };
     is(@z[2], 1,    q/lhs treats %a{'x','y','z'} as list/);
 }
 
-#?rakudo skip 'segfault'
 {
     my %a;
     my @z = (%a{'x'..'z'} = l, l);
@@ -772,7 +771,6 @@ sub l () { 1, 2 };
 }
 
 # RT #63642
-#?rakudo skip 'no applicable methods (,=)'
 {
     my %part1 = a => 'b';
     my %part2 = d => 'c';
@@ -884,7 +882,6 @@ sub l () { 1, 2 };
 }
 
 # RT 93972
-#?rakudo skip 'RT 93972'
 {
     my $rt93972 = 1, 2, 3;
     $rt93972 = $rt93972.grep({1});

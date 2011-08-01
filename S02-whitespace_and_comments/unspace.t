@@ -82,7 +82,6 @@ is((foo\
 blah blah blah
 =end comment
     .lc), 'a', 'unspace with pod =begin/=end comment');
-#?rakudo skip '=for pod not implemented (in STD.pm)'
 {
 is((foo\
 =for comment

@@ -37,12 +37,10 @@ plan 18;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo4 ($a, $pair) { "$a!$pair" }
-    #?rakudo skip 'should this pair not become positional?'
     is foo4(|$capture), "1!positional\tpair",
         'simply capture creation with \\( works (4)';
 }
 
-#?rakudo skip 'nom regression'
 {
     my @array   = <a b c>;
     my $capture = \(@array);

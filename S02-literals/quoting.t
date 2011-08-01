@@ -561,7 +561,6 @@ Hello, World
     isa_ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
     isa_ok rx:s{foo}, Regex, 'rx:i{...}';
     isa_ok rx:sigspace{foo}, Regex, 'rx:i{...}';
-    #?rakudo 2 todo 'unknown adverbs'
     eval_dies_ok 'rx:unknown{foo}', 'rx:unknown dies';
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
