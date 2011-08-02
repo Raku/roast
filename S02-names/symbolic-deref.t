@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 34;
 
 # See L<http://www.nntp.perl.org/group/perl.perl6.language/22858> --
 # previously, "my $a; say $::("a")" died (you had to s/my/our/). Now, it was
@@ -32,14 +32,14 @@ plan 35;
 }
 
 {
-  my %a_var = (a => 42);
+  my %a_var = (a => 42); #OK not used
   my $b_var = "a_var";
 
   is %::($b_var)<a>, 42, 'basic symbolic hash dereferentiation works';
 }
 
 {
-  my &a_var := { 42 };
+  my &a_var := { 42 }; #OK not used
   my $b_var = "a_var";
 
   is &::($b_var)(), 42, 'basic symbolic code dereferentiation works';
@@ -55,7 +55,7 @@ my $outer = 'outside';
 
     lives_ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
     is $outer, 'new', 'and the assignment worked';
-    sub c { 'sub c' };
+    sub c { 'sub c' }; #OK not used
     is ::('&c').(), 'sub c', 'can look up lexical sub';
 
     is ::('e'), e,  'Can look up numerical constants';
@@ -90,7 +90,7 @@ my $outer = 'outside';
   my $result;
 
   try {
-    my $a_var is context = 42;
+    my $a_var is dynamic = 42; #OK not used
     my $sub   = sub { $::("CALLER")::("a_var") };
     $result = $sub();
   };
@@ -100,38 +100,36 @@ my $outer = 'outside';
 
 # Symbolic dereferentiation of Unicode vars (test primarily aimed at PIL2JS)
 {
-  my $äöü = 42;
+  my $äöü = 42; #OK not used
   is $::("äöü"), 42, "symbolic dereferentiation of Unicode vars works";
 }
 
-# Symbolic dereferentiation of globals
+# The &::*::foo tests were removed as a result of
+# http://irclog.perlgeek.de/perl6/2011-07-30#i_4189700
+
 #?rakudo skip 'NYI'
 {
   sub GLOBAL::a_global_sub () { 42 }
-  is &::("*::a_global_sub")(), 42,
+  is ::("&*a_global_sub")(), 42,
     "symbolic dereferentiation of globals works (1)";
 
-  $*a_global_var = 42;
-  is $::("*::a_global_var"),   42,
+  my $*a_global_var = 42;
+  is ::('$*a_global_var'),   42,
     "symbolic dereferentiation of globals works (2)";
 }
 
 # Symbolic dereferentiation of globals *without the star*
 #?rakudo skip 'NYI'
 {
-  cmp_ok $::("*IN"), &infix:<===>, $*IN,
+  cmp_ok ::('$*IN'), &infix:<===>, $*IN,
     "symbolic dereferentiation of globals works (3)";
-  cmp_ok $::("IN"),  &infix:<===>, $*IN,
-    "symbolic dereferentiation of globals without the star works";
 
-  #cmp_ok &::("say"),  &infix:<=:=>, &say,
   cmp_ok &::("say"),  &infix:<===>, &say,
-    "symbolic dereferentiation of global subs without the star works (1)";
-
+    "symbolic dereferentiation of CORE subs works (1)";
   ok &::("so")(42),
-    "symbolic dereferentiation of global subs without the star works (2)";
+    "symbolic dereferentiation of CORE subs works (2)";
   is &::("truncate")(3.1), 3,
-    "symbolic dereferentiation of global subs without the star works (3)";
+    "symbolic dereferentiation of CORE subs works (3)";
 }
 
 # Symbolic dereferentiation of type vars
@@ -153,10 +151,10 @@ my $outer = 'outside';
 # have to s/ok/dies_ok/.
 #?rakudo skip 'NYI'
 {
-  try { this_will_die_and_therefore_set_dollar_exclamation_mark };
+  try { die 'to set $!' };
   ok $::("!"),    "symbolic dereferentiation works with special chars (1)";
 #  ok $::!,        "symbolic dereferentiation works with special chars (2)";
-  ok %::("*ENV"), "symbolic dereferentiation works with special chars (3)";
+  ok ::("%*ENV"), "symbolic dereferentiation works with special chars (3)";
 #  ok %::*ENV,     "symbolic dereferentiation works with special chars (4)";
 }
 
