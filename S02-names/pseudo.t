@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 58;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -23,8 +23,8 @@ plan 18;
 
     {
         ::<$x> := $y;
-        $y--;
-        is $x, 0, 'Can bind via root';
+        $y = 1.5;
+        is $x, 1.5, 'Can bind via root';
     }
 
     # XXX Where else should rooty access look?
@@ -82,15 +82,15 @@ plan 18;
         ok MY::.{'A1'}.^can('pies'), 'MY::.{classname} works from inner scope';
 
         my class A2 {
-            our $spies = 15;
+            method spies { 15 }
         }
     }
 
     dies_ok { eval 'MY::A2' }, 'Cannot use MY::A2 directly from outer scope';
-    dies_ok { MY::.{'A2'} }, 'Cannot use MY::.{"A2"} from outer scope';
+    dies_ok { MY::.{'A2'}.spies }, 'Cannot use MY::.{"A2"} from outer scope';
 
     sub callee { MY::.{'$*k'} }
-    sub callee2($f) { MY::.{'$*k'} := $f }
+    sub callee2($f is rw) { MY::.{'$*k'} := $f }
     # slightly dubious, but a straightforward extrapolation from the behavior
     # of CALLER::<$*k> and OUTER::<$*k>
     {
@@ -121,9 +121,59 @@ plan 18;
         is MY::.{'$r'}, 21, 'MY::.{} can access state names';
         is $MY::r, 21, '$MY:: can access state names';
     }
+
+    my $my = 'MY';
+    my $l = 22;
+    is ::($my)::('$l'), 22, 'Can access MY itself indirectly ::()';
+    is ::.<MY>.WHO.<$l>, 22, 'Can access MY itself indirectly via ::';
 }
 
 # OUR
+
+{
+    {
+        our $x30 = 31;
+        our $x32 = 33;
+        our $x34 = 35;
+    }
+    my $x = 39;
+
+    is $OUR::x30, 31, 'basic OUR:: testing';
+    $OUR::x30 := $x;
+    ok $OUR::x30 =:= $x, 'can bind through OUR::';
+    is OUR::.<$x32>, 33, 'basic OUR::.{} works';
+    OUR::.<$x32> := $x;
+    ok $OUR::x32 =:= $x, 'can bind through OUR::.{}';
+
+    my $our = 'OUR';
+    is ::($our)::('$x34'), 35, 'OUR works when indirectly accessed';
+
+    our package A36 { # for explicitness
+        { our $x37 = 38; }
+        ok !defined($OUR::x30), '$OUR:: does not find GLOBAL';
+        is $OUR::x37, 38, '$OUR:: does find current package';
+        ok !defined(OUR::.<$x30>), 'OUR::.{} does not find GLOBAL';
+        is OUR::.{'$x37'}, 38, 'OUR::.{} does find current package';
+        ok !defined(::($our)::('$x34')), '::("OUR") does not find GLOBAL';
+        is ::($our)::('$x37'), 38, '::("OUR") does find current package';
+    }
+
+    is $OUR::A36::x37, 38, '$OUR:: syntax can indirect through a package';
+    is ::($our)::('A36')::('$x37'), 38, '::("OUR") can also indirect';
+
+    $OUR::A40::x = 41;
+    is OUR::A40.WHO.<$x>, 41, '$OUR:: can autovivify packages (reference)';
+    $OUR::A41::x := 42;
+    is OUR::A41.WHO.<$x>, 42, '$OUR:: can autovivify packages (binding)';
+    $::($our)::A42::x = 43;
+    is ::($our)::A42.WHO.<$x>, 43, '::("OUR") can autovivify packages (r)';
+    $::($our)::A43::x := 44;
+    is ::($our)::A43.WHO.<$x>, 44, '::("OUR") can autovivify packages (b)';
+
+    ::($our)::A44 := class { our $x = 41; };
+    is $::($our)::A44::x, 41, '::("OUR") can follow aliased packages';
+}
+
 # CORE
 # GLOBAL
 # PROCESS
