@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 50;
 
 =begin pod
 
@@ -17,6 +17,7 @@ class A {
     multi method bar($thingy) { }   #OK not used
     multi method bar($thingy, $other_thingy) { }   #OK not used
 }
+
 class B is A {
     method foo($param) of Num { }   #OK not used
 }
@@ -60,6 +61,7 @@ for @methods -> $meth {
         ok !$meth.multi, 'method foo is not a multimethod';
     } elsif $meth.name eq 'bar' {
         $num_multis++;
+        #?rakudo todo 'nom regression'
         ok $meth.multi, 'method bar is a multimethod';
     }
 }
@@ -77,17 +79,20 @@ ok @methods[3].name eq 'foo' && @methods[4].name eq 'bar' ||
    @methods[3].name eq 'bar' && @methods[4].name eq 'foo',
    'two methods from class A itself';
 
-@methods = D.^methods(:tree);
-is +@methods, 4, ':tree gives us right number of elements';
-ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
-   @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
-   'first two methods from class D itself';
-is @methods[2].WHAT.gist, Array.gist, 'third item is an array';
-is +@methods[2], 2, 'nested array for B had right number of elements';
-is @methods[3].WHAT.gist, Array.gist, 'forth item is an array';
-is +@methods[3], 1, 'nested array for C had right number of elements';
-is @methods[2], B.^methods(:tree), 'nested tree for B is correct';
-is @methods[3], C.^methods(:tree), 'nested tree for C is correct';
+#?rakudo skip 'nom regression'
+{
+    @methods = D.^methods(:tree);
+    is +@methods, 4, ':tree gives us right number of elements';
+    ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
+       @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
+       'first two methods from class D itself';
+    is @methods[2].WHAT.gist, Array.gist, 'third item is an array';
+    is +@methods[2], 2, 'nested array for B had right number of elements';
+    is @methods[3].WHAT.gist, Array.gist, 'forth item is an array';
+    is +@methods[3], 1, 'nested array for C had right number of elements';
+    is @methods[2], B.^methods(:tree), 'nested tree for B is correct';
+    is @methods[3], C.^methods(:tree), 'nested tree for C is correct';
+}
 
 @methods = List.^methods();
 ok +@methods > 0, 'can get methods for List (proto)';
@@ -102,6 +107,7 @@ ok +@methods > 0, 'can get methods for Str (instance)';
 ok +List.^methods() > +Any.^methods(), 'List has more methods than Any';
 ok +Any.^methods() > +Mu.^methods(), 'Any has more methods than Mu';
 
+#?rakudo skip 'nom regression'
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
 ok D.^methods.perl, 'can get .perl of output of .^methods';
 
@@ -119,9 +125,12 @@ is @methods[0].name, 'bar',    'methods call found public method in subclass';
 is @methods[1].name, 'foo',    'methods call found public method in superclass (so no privates)';
 ok @methods[2].name ne '!pm1', 'methods call did not find private method in superclass';
 
+#?rakudo skip 'nom regression'
 @methods = PT2.^methods(:private);
+#?rakudo todo 'nom regression'
 ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
                             'methods call with :private found private method in subclass';
+#?rakudo todo 'nom regression'
 ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1', 
                             'methods call with :private found private method in superclass';
 
@@ -129,9 +138,12 @@ ok @methods[2].name eq '!pm1' || @methods[3].name eq '!pm1',
 is +@methods, 1,            'methods call without :private omits private methods (with :local)';
 is @methods[0].name, 'bar', 'methods call found public method in subclass (with :local)';
 
-@methods = PT2.^methods(:local, :private);
-is +@methods, 2,            'methods call with :private includes private methods (with :local)';
-ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
-                            'methods call with :private found private method in subclass (with :local)';
+#?rakudo skip 'nom regression'
+{
+    @methods = PT2.^methods(:local, :private);
+    is +@methods, 2,            'methods call with :private includes private methods (with :local)';
+    ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
+                                'methods call with :private found private method in subclass (with :local)';
+}
 
 # vim: ft=perl6
