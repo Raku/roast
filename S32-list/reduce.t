@@ -44,7 +44,7 @@ plan 13;
   my $hash = {a => {b => {c => 42}}};
   my @reftypes;
   sub foo (Hash $hash, Str $key) {
-    push @reftypes, $hash.WHAT.gist;
+    push @reftypes, $hash.WHAT;
     $hash.{$key};
   }
   is((reduce(&foo, $hash, <a b c>)), 42, 'reduce(&foo) (foo ~~ .{}) works three levels deep');
