@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 58;
+plan 77;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -110,7 +110,7 @@ plan 58;
     ok $a18 =:= $x, '$MY:: binding works on our-aliases';
 
     my constant $?q = 20;
-    is $?MY::q, 20, '$?MY:: can be used on constants';
+    is $?MY::q, 20, '$?MY:: can be used on constants';  #OK
     is MY::.{'$?q'}, 20, 'MY::.{} can be used on constants';
 
     ok MY::{'&say'} === &say, 'MY::.{} can find CORE names';
@@ -123,7 +123,7 @@ plan 58;
     }
 
     my $my = 'MY';
-    my $l = 22;
+    my $l = 22; #OK
     is ::($my)::('$l'), 22, 'Can access MY itself indirectly ::()';
     is ::.<MY>.WHO.<$l>, 22, 'Can access MY itself indirectly via ::';
 }
@@ -175,6 +175,40 @@ plan 58;
 }
 
 # CORE
+{
+    my $real = &not;
+    my $core = "CORE";
+    ok &CORE::not === $real, '&CORE:: works';
+    ok CORE::.<&not> === $real, 'CORE::.{} works';
+    ok ::($core)::('&not') === $real, '::("CORE") works';
+
+    {
+        sub not($x) { $x } #OK
+        ok &CORE::not === $real, '&CORE:: works when shadowed';
+        ok CORE::.<&not> === $real, 'CORE::.{} works when shadowed';
+        ok &::($core)::not === $real, '::("CORE") works when shadowed';
+
+        ok eval('&CORE::not') === $real, '&CORE:: is not &SETTING::';
+        ok eval('CORE::.<&not>') === $real, 'CORE::.{} is not SETTING::';
+        ok eval('&::($core)::not') === $real, '::("CORE") is not SETTING';
+    }
+
+    sub f1() { }; sub f2() { }; sub f3() { }
+    lives_ok { &CORE::none := &f1 }, '&CORE:: binding lives';
+    ok &none =:= &f1, '... and works';
+    lives_ok { CORE::.<&none> := &f2 }, 'CORE::.{} binding lives';
+    ok &none =:= &f2, '... and works';
+    lives_ok { &::($core)::none := &f3 }, '::("CORE") binding lives';
+    ok &none =:= &f3, '... and works';
+
+    # in niecza v8, dynamic variables go through a separate code path.
+    # make sure accessing it in CORE works
+    lives_ok { $CORE::_ := 50 }, 'Binding to $CORE::_ lives';
+    is $CORE::_, 50, 'Accessing $CORE::_ works';
+    lives_ok { $::($core)::_ := 51 }, 'Binding to $::("CORE")::_ lives';
+    is $::($core)::_, 51, 'Accessing $::("CORE")::_ works';
+}
+
 # GLOBAL
 # PROCESS
 # COMPILING
