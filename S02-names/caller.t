@@ -9,7 +9,7 @@ plan 18;
   my $sub = sub { $CALLER::a };
 
   {
-    my $a = 3;
+    my $a is dynamic = 3;
     is $sub(), 3, 'basic $CALLER:: works';
   }
 }
@@ -84,6 +84,7 @@ plan 18;
   }
 
   my $abs = 23;
+  #?niecza skip 'strictness'
   dies_ok { bar() },
     'vars not declared "is dynamic" are not accessible via $CALLER::';
 }
@@ -115,9 +116,10 @@ plan 18;
   is $_, 43,             '$_ is implicitly rw (2)';
 }
 
+#?niecza 2 skip 'pending confirmation'
 {
   my sub modify { $CALLER::foo++ }
-  my $foo is dynamic = 42;
+  my $*foo is dynamic = 42;
   #?pugs 2 todo 'bug'
   lives_ok { modify() },
       '"is dynamic" vars declared "is rw" are rw when accessed with $CALLER:: (1)';
