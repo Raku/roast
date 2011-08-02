@@ -116,10 +116,9 @@ plan 18;
   is $_, 43,             '$_ is implicitly rw (2)';
 }
 
-#?niecza 2 skip 'pending confirmation'
 {
   my sub modify { $CALLER::foo++ }
-  my $*foo is dynamic = 42;
+  my $foo is dynamic = 42;
   #?pugs 2 todo 'bug'
   lives_ok { modify() },
       '"is dynamic" vars declared "is rw" are rw when accessed with $CALLER:: (1)';
@@ -128,10 +127,10 @@ plan 18;
 }
 
 {
-  my sub get_foo { try { $*foo } }
+  my sub get_foo { try { $DYNAMIC::foo } }
   my $foo is dynamic = 42;
 
-  is get_foo(), 42, '$* is short for $CONTEXT::';
+  is get_foo(), 42, '$DYNAMIC:: searches call stack';
 }
 
 # Rebinding caller's variables -- legal?
