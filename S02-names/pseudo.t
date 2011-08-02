@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 77;
+plan 107;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -209,10 +209,85 @@ plan 77;
     is $::($core)::_, 51, 'Accessing $::("CORE")::_ works';
 }
 
-# GLOBAL
-# PROCESS
-# COMPILING
+# GLOBAL - functionality is very similar to OUR
+{
+    { our $x60 = 60; }
+    package A61 {
+        is $GLOBAL::x60, 60, '$GLOBAL:: works';
+        is ::("GLOBAL")::('$x60'), 60, '::("GLOBAL") works';
+        is GLOBAL::.<$x60>, 60, 'GLOBAL::.{} works';
+    }
+    ok !defined(&GLOBAL::say), 'GLOBAL:: does not find CORE symbols';
+}
+
+# PROCESS - similar to GLOBAL and OUR
+{
+    package A71 {
+        ok $PROCESS::IN === $*IN, '$PROCESS:: works';
+        ok PROCESS::.<$IN> === $*IN, 'PROCESS::.{} works';
+        ok $::("PROCESS")::IN === $*IN, '::("PROCESS") works';
+    }
+}
+
+# COMPILING - not testable without BEGIN
+
 # DYNAMIC
+{
+    my $dyn = "DYNAMIC";
+
+    {
+        my $*x80 = 82;
+        my $y; my $z;
+        is $*DYNAMIC::x80, 82, '$DYNAMIC:: works';
+        is DYNAMIC::.<$*x80>, 82, 'DYNAMIC::.{} works';
+        is ::($dyn)::('$*x80'), 82, '::("DYNAMIC") works';
+
+        $*DYNAMIC::x80 := $y;
+        ok $*x80 =:= $y, 'Can bind through $DYNAMIC::';
+        ::($dyn)::('$*x80') := $z;
+        ok $*x80 =:= $z, 'Can bind through ::("DYNAMIC")';
+
+        ok !defined($*DYNAMIC::x82), 'Unfound dynamics are undefined';
+        ok !defined(::($dyn)::('$*x82')), 'Unfound with ::("DYNAMIC")';
+    }
+
+    {
+        my $x83 is dynamic = 83; #OK
+        my $*x84 = 84; #OK
+
+        is $DYNAMIC::x83, 83, 'DYNAMIC on non-$* vars works';
+        is $::($dyn)::x83, 83, '::("DYNAMIC") on non-$* vars works';
+
+        ok !defined($DYNAMIC::x84), 'DYNAMIC $x does not find $*x';
+        ok !defined($::($dyn)::x84), '::("DYNAMIC") $x does not find $*x';
+        ok !defined($*DYNAMIC::x83), 'DYNAMIC $*x does not find $x';
+        ok !defined(::($dyn)::('$*x83')), '::("DYNAMIC") $x does not find $*x';
+    }
+
+    sub docall($f) { my $*x80 = 80; my $x81 is dynamic = 81; $f() } #OK
+
+    {
+        is docall({ $DYNAMIC::x81 }), 81, 'DYNAMIC:: searches callers';
+        is docall({ $::($dyn)::x81 }), 81, '::("DYNAMIC") searches callers';
+        my ($fun1, $fun2) = do {
+            my $x81 is dynamic = 85;
+            { $DYNAMIC::x81 }, { $::($dyn)::x81 }
+        };
+        ok !defined($fun1()), 'DYNAMIC:: does not search outers';
+        ok !defined($fun2()), '::("DYNAMIC") does not search outers';
+
+        $GLOBAL::x86 = 86;
+        ok !defined($DYNAMIC::x86), 'DYNAMIC:: without twigil ignores GLOBAL';
+        ok !defined($::($dyn)::x86), '"DYNAMIC" without twigil ignores GLOBAL';
+        is $*DYNAMIC::x86, 86, 'DYNAMIC:: with * searches GLOBAL';
+        is ::($dyn)::('$*x86'), 86, '::("DYNAMIC") with * searches GLOBAL';
+
+        ok DYNAMIC::<$*IN> === $PROCESS::IN,
+            'DYNAMIC:: with * searches PROCESS';
+        ok ::($dyn)::('$*IN') === $PROCESS::IN,
+            '::("DYNAMIC") with * searches PROCESS';
+    }
+}
 
 # CALLER
 # OUTER
