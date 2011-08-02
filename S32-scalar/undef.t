@@ -23,7 +23,7 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan 88;
+plan 87;
 
 our $GLOBAL;
 
@@ -301,37 +301,6 @@ Perl6-specific tests
 # - packages
 # - symtable hash
 # - autoloading itself
-
-#?pugs skip 'parsefail'
-#?rakudo skip 'parsefail'
-flunk('FIXME: parsefail');
-# {
-#    package AutoMechanic {
-#        AUTOSCALAR    { \my $_scalar }
-#        AUTOARRAY     { \my @_array }
-#        AUTOHASH      { \my %_hash }
-#        AUTOSUB       { { "code" } }
-#        AUTOMETH      { { "code" } }
-# 
-#        AUTOSCALARDEF { %::«{'$' ~ $_}» = "autoscalardef" }
-#        AUTOARRAYDEF  { %::«{'@' ~ $_}» = "autoarraydef".split("") }
-#        AUTOHASHDEF   { %::«{'%' ~ $_}» = <autohashdef yes> }
-#        AUTOSUBDEF    { %::«{'&' ~ $_}» = { "autosubdef" } }
-#        AUTOMETHDEF   { %::«{'&' ~ $_}» = { "automethdef" } }
-#    }
-# 
-#    is(WHAT $AutoMechanic::scalar0,    "Scalar", "autoload - scalar");
-#    is(WHAT @AutoMechanic::array0,     "Array",  "autoload - array");
-#    is(WHAT %AutoMechanic::hash,       "Hash",   "autoload - hash");
-#    is(WHAT &AutoMechanic::sub0,       "Code",   "autoload - sub");
-#    is(WHAT AutoMechanic.can("meth0"), "Code",   "autoload - meth");
-# 
-#    is($AutoMechanic::scalar, "autoscalardef",            "autoloaddef - scalar");
-#    is(~@AutoMechanic::ary,   ~("autoarraydef".split(""), "autoloaddef - array");
-#    is(~%AutoMechanic::hash,  ~<autohashdef yes>,         "autoloaddef - hash");
-#    is(&AutoMechanic::sub.(), "autosubdef",               "autoloaddef - sub");
-#    is(AutoMechanic.meth(),   "automethdef",              "autoloaddef - method");
-# }
 
 # Extra tests added due to apparent bugs
 is((Any) + 1, 1, 'Any + 1');
