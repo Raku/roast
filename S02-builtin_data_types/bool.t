@@ -44,7 +44,6 @@ ok(!Bool::False, 'False works');
 # tests Bool stringification - interaction with ~
 isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
-#?rakudo 4 todo 'using older spec'
 is(~Bool::True, 'True', 'Bool stringification (True)');
 is(~Bool::False, 'False', 'Bool stringification (False)');
 is Bool::True.Str, 'True', 'True.Str';
@@ -83,14 +82,12 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
 }
 
-#?rakudo skip 'key'
 {
     is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
 #?niecza skip ".pick"
-#?rakudo skip ".pick"
 {
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';
