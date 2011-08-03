@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 107;
+plan 128;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -270,7 +270,7 @@ plan 107;
         is docall({ $DYNAMIC::x81 }), 81, 'DYNAMIC:: searches callers';
         is docall({ $::($dyn)::x81 }), 81, '::("DYNAMIC") searches callers';
         my ($fun1, $fun2) = do {
-            my $x81 is dynamic = 85;
+            my $x81 is dynamic = 85; #OK
             { $DYNAMIC::x81 }, { $::($dyn)::x81 }
         };
         ok !defined($fun1()), 'DYNAMIC:: does not search outers';
@@ -289,8 +289,67 @@ plan 107;
     }
 }
 
-# CALLER
+# CALLER - assumes MY:: has taken care of most access testing
+{
+    sub f1($f) { my $x is dynamic = 90; $f() } #OK
+    sub f2($f) { my $x is dynamic = 91; f1($f) } #OK
+    my $caller = 'CALLER';
+
+    is f1({ $CALLER::x }), 90, '$CALLER:: works';
+    is f1({ CALLER::.<$x> }), 90, 'CALLER::.{} works';
+    is f1({ $::($caller)::x }), 90, '::("CALLER") works';
+
+    is f2({ $CALLER::CALLER::x }), 91, 'CALLER::CALLER:: works';
+    is f2({ $::($caller)::($caller)::x }), 91, 'indirect CALLER::CALLER works';
+
+    my $*foo = 92;
+    is f2({ CALLER::<$*foo> }), 92, 'CALLER::<$*foo> works';
+    is f2({ ::($caller)::('$*foo') }), 92, '::("CALLER")::<$*foo> works';
+
+    my $y = 93; #OK
+    if 1 {
+        is $CALLER::y, 93, 'CALLER:: works in inline blocks';
+        is $::($caller)::y, 93, '::("CALLER") works in inline blocks';
+    }
+}
+
 # OUTER
+{
+    sub f1($f) { my $x is dynamic = 100; $f() } #OK
+    sub f2($f) { my $*x = 101; $f() } #OK
+    my $outer = 'OUTER';
+
+    my $x = 102; #OK
+    my $y = 103; #OK
+    {
+        my $x = 104; #OK
+        is $OUTER::x, 102, '$OUTER:: works';
+        is OUTER::.<$x>, 102, 'OUTER::.{} works';
+        is $::($outer)::x, 102, '::("OUTER") works';
+
+        {
+            my $x = 105; #OK
+            my $y = 106; #OK
+            is $OUTER::y, 103, '$OUTER:: keeps going until match';
+            is $::($outer)::y, 103, '::("OUTER") keeps going until match';
+
+            is $OUTER::OUTER::x, 102, '$OUTER::OUTER:: works';
+            is $::($outer)::($outer)::x, 102, '::("OUTER")::("OUTER") works';
+        }
+
+        is f1({ $OUTER::x }), 104, 'OUTER:: is not CALLER::';
+        is f1({ $::($outer)::x }), 104, '::("OUTER") is not CALLER::';
+
+        {
+            is f1({ $CALLER::OUTER::x }), 102, 'CALLER::OUTER:: works';
+        }
+    }
+
+    my $*x = 107;
+    is f2({ OUTER::<$*x> }), 107, 'OUTER::<$*x> works';
+    is f2({ ::($outer)::('$*x') }), 107, '::("OUTER")::<$*x> works';
+}
+
 # UNIT
 # SETTING
 # PARENT
