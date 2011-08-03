@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 117;
+plan 97;
 
 # L<S02/Mutable types/A single key-to-value association>
 # basic Pair
@@ -270,50 +270,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   is $pair.value,          "VAL",   "setting .value actually changes the value";
   is $val,                 "val",   "setting .value does not change the original var";
 }
-
-{
-  my ($key, $val) = <key val>;
-  my $pair        = ($key => $val);
-
-  #?pugs 2 todo 'bug'
-  lives_ok { $pair.key := "KEY" }, "binding .key does not die";
-  is $pair.key,           "KEY",   "binding .key actually changes the key";
-  is $key,                "key",   "binding .key does not change the original var";
-  dies_ok { $pair.key = 42 },      "the .key was really bound";  # (can't modify constant)
-
-  #?pugs 2 todo 'bug'
-  lives_ok { $pair.value := "VAL" }, "binding .value does not die";
-  is $pair.value,           "VAL",   "binding .value actually changes the value";
-  is $val,                  "val",   "binding .value does not change the original var";
-  dies_ok { $pair.value = 42 },      "the .value was really bound";  # (can't modify constant)
-}
-
-{
-  my ($key, $val) = <key val>;
-  my $pair        = (abc => "def");
-
-  #?pugs 2 todo 'bug'
-  lives_ok { $pair.key := $key }, "binding .key does not die";
-  is $pair.key,           "key",  "binding .key actually changes the key";
-  $key = "KEY";
-  is $key,                "KEY",  "binding .key to a var works (1)";
-  #?pugs 5 todo 'bug'
-  is $pair.key,           "KEY",  "binding .key to a var works (2)";
-  $pair.key = "new";
-  is $key,                "new",  "binding .key to a var works (3)";
-  is $pair.key,           "new",  "binding .key to a var works (4)";
-
-  lives_ok { $pair.value := $val }, "binding .value does not die";
-  is $pair.value,           "val",  "binding .value actually changes the value";
-  $val = "VAL";
-  is $val,                  "VAL",  "binding .value to a var works (1)";
-  #?pugs 3 todo 'bug'
-  is $pair.value,           "VAL",  "binding .value to a var works (2)";
-  $pair.value = "new";
-  is $val,                  "new",  "binding .value to a var works (3)";
-  is $pair.value,           "new",  "binding .value to a var works (4)";
-}
-
 
 ##  These tests really belong in a different test file -- probably
 ##  something in S06.  --pmichaud
