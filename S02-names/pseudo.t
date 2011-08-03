@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 128;
+plan 140;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -351,7 +351,33 @@ plan 128;
 }
 
 # UNIT
+my $x110 = 110; #OK
+{
+    my $x110 = 111; #OK
+    my $unit = "UNIT";
+    is $UNIT::x110, 110, '$UNIT:: works';
+    is $::($unit)::x110, 110, '::("UNIT") works';
+    is eval('my $x110 = 112; $UNIT::x110'), 112, '$UNIT:: finds eval heads';
+    is eval('my $x110 = 112; $::($unit)::x110 #OK'), 112, '::("UNIT") finds eval heads';
+    my $f = eval('my $x110 is dynamic = 113; -> $fn { my $x110 is dynamic = 114; $fn(); } #OK');
+    is $f({ $CALLER::UNIT::x110 }), 113, 'CALLER::UNIT works';
+    is $f({ $CALLER::($unit)::x110 }), 113, 'CALLER::UNIT works (indirect)';
+}
+
 # SETTING
-# PARENT
+{
+    sub not($x) { $x } #OK
+    my $setting = 'SETTING';
+    ok &SETTING::not(False), 'SETTING:: works';
+    ok &::($setting)::not.(False), '::("SETTING") works';
+
+    ok eval('&SETTING::not(True)'), 'SETTING finds eval context';
+    ok eval('&::($setting)::not(True)'), '::("SETTING") finds eval context';
+    my $f = eval('-> $fn { $fn(); }');
+    ok $f({ &CALLER::SETTING::not(True) }), 'CALLER::SETTING works';
+    ok $f({ &CALLER::($setting)::not(True) }), 'CALLER::SETTING works (ind)';
+}
+
+# PARENT - NYI in any compiler
 
 # vim: ft=perl6
