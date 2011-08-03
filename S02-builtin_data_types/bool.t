@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 47;
+plan 49;
 
 #L<S12/Enumerations/"Two built-in enumerations are">
 
@@ -44,10 +44,13 @@ ok(!Bool::False, 'False works');
 # tests Bool stringification - interaction with ~
 isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
-is(~Bool::True, 'Bool::True', 'Bool stringification (True)');
-is(~Bool::False, 'Bool::False', 'Bool stringification (False)');
-is Bool::True.Str, 'Bool::True', 'True.Str';
-is Bool::False.Str, 'Bool::False', 'False.Str';
+#?rakudo 4 todo 'using older spec'
+is(~Bool::True, 'True', 'Bool stringification (True)');
+is(~Bool::False, 'False', 'Bool stringification (False)');
+is Bool::True.Str, 'True', 'True.Str';
+is Bool::False.Str, 'False', 'False.Str';
+is Bool::True.gist, 'Bool::True', 'True.gist';
+is Bool::False.gist, 'Bool::False', 'False.gist';
 
 
 # numification - interaction with +
