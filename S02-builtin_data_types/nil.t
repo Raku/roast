@@ -1,9 +1,9 @@
 use v6;
 use Test;
 
-# note that Nil is not actually a type, but just an empty parcel
+# Nil may be a type now.  Required?
 
-plan 17;
+plan 29;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -21,8 +21,8 @@ ok rt74448()            ~~ Nil, 'eval of empty string is Nil';
 
 nok Nil.defined, 'Nil is not defined';
 ok  ().defined,  '() is defined';
-nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined';
-ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
+nok (my $x = Nil).defined, 'assigning Nil to scalar leaves it undefined'; #OK
+ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel'; #OK
 
 # RT #63894
 {
@@ -45,10 +45,48 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel';
 }
 
 # RT 93980
-isa_ok (my $rt93980 = Nil), 'Any', 'Nil assigned to scalar produces an Any';
+ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
 
 #?rakudo skip 'RT 93980'
-isa_ok (my Str $str93980 = Nil), 'Str';
+ok (my Str $str93980 = Nil) === Str; #OK
+
+#?rakudo 2 skip 'triage'
+is Nil.gist, 'Nil', 'Nil.gist eq "Nil"';
+ok !Nil.new.defined, 'Nil.new is not defined';
+
+#?rakudo skip 'triage'
+{
+    subset MyInt of Int where True;
+    my MyInt $x = 5;
+
+    lives_ok { $x = Nil }, 'can assign Nil to subsets';
+    ok $x === Int, 'assigns to base-type object';
+}
+
+#?rakudo skip 'triage'
+{
+    my $z := Nil;
+    ok $z ~~ Nil, 'can bind to Nil';
+}
+
+#?rakudo skip 'triage'
+{
+    sub f1($x) { } #OK
+    dies_ok { f1(Nil) }, 'param: dies for mandatory';
+
+    sub f2(Int $x?) { $x }
+    my $z;
+    lives_ok { $z = f2(Nil) }, 'param: lives for optional';
+    ok $z === Int, '... set to type object';
+
+    sub f3($x = 123) { $x }
+    lives_ok { $z = f3(Nil) }, 'param: lives for with-default';
+    is $z, 123, '... set to default';
+
+    sub f4($x = Nil) { $x }
+    ok f4() ~~ Nil, 'can use Nil as a default (natural)';
+    ok f4(Nil) ~~ Nil, 'can use Nil as a default (nil-triggered)';
+}
 
 done;
 
