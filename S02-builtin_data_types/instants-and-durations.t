@@ -30,6 +30,7 @@ isa_ok eval('now +300'), Instant, 'now is a term, not a function';
     isa_ok $d + $t0, Instant, 'Instant + Duration ~~ Instant';
     isa_ok $d + $t0, Instant, 'Duration + Instant ~~ Instant';
     isa_ok $t0 - $d, Instant, 'Instant - Duration ~~ Instant';
+    #?rakuo todo 'nom regression'
     is $t0 + ($t1 - $t0), $t1, 'Instant A + (Instant B - Instant A) == Instant B';
 }
 
