@@ -14,12 +14,13 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 74;
+plan 75;
 
 # === on values
 {
   ok  (1 === 1), "=== on values (1)";
   ok  (0 === 0), "=== on values (2)";
+  ok  (1 + 1 === 2), '=== on non-literal values';
   ok !(0 === 1), "=== on values (3)";
   isa_ok (1 === 1), Bool, "=== on values (4)";
   ok  ("abc" === "abc"), "=== on values(abc)";
