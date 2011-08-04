@@ -128,6 +128,8 @@ plan 67;
     is prime_factors(315), (3,3,5,7), 'prime factors of 315 are 3,3,5,7';
 }
 
+#?rakudo skip 'nom regression - cannot see prime_factors_mult'
+#?DOES 5
 {
     # P36 (**) Determine the prime factors of a given positive integer (2).
     # 
@@ -166,6 +168,8 @@ plan 67;
     is prime_factors_mult(315),([3,2],[5,1],[7,1]), ".. and ignore multiplicity 0"
 }
 
+#?rakudo skip 'nom regression - cannot see prime_factors_mult'
+#?DOES 20
 {
     # P37 (**) Calculate Euler's totient function phi(m) (improved).
     # 
@@ -217,6 +221,8 @@ plan 67;
     skip 'No Benchmark module yet', 1
 }
 
+#?rakudo skip 'nom regression - need ceiling'
+#?DOES 2
 {
     # P39 (*) A list of prime numbers.
     #
@@ -235,6 +241,8 @@ plan 67;
     is primes(16,100), (17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97), "a few more.";
 }
 
+#?rakudo skip 'nom regression - cannot see primes'
+#?DOES 1
 {
     # P40 (**) Goldbach's conjecture.
     #

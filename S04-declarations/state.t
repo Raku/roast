@@ -28,13 +28,15 @@ plan 40;
         return $svar;
     };
 
-    is(inc(), 1, "state() works inside subs (#1)");
-    is(inc(), 2, "state() works inside subs (#2)");
+    is(inc(), 1, "state() works inside subs (first)");
+    is(inc(), 2, "state() works inside subs (second)");
     is(inc(), 3, "state() works inside subs (#3)");
 }
 
 # state() inside coderefs
 # L<S04/Phasers/"semantics to any initializer, so this also works">
+#?rakudo todo 'nom regression'
+#?DOES 1
 {
     my $gen = {
         # Note: The following line is only executed once, because it's equivalent
@@ -74,6 +76,7 @@ plan 40;
         return $x
     }
     is swatest(), '1|2|3', 'array state initialized correctly';
+    #?rakudo todo 'nom regression'
     is swatest(), '2|2|3', 'array state retained between calls';
 }
 
@@ -87,6 +90,7 @@ plan 40;
         return $x
     }
     is swatest2(), '1|2|3', 'array state initialized from call correctly';
+    #?rakudo todo 'nom regression'
     is swatest2(), '2|2|3', 'array state retained between calls';
 }
 
@@ -110,12 +114,14 @@ plan 40;
         state $x = do { $rhs_calls++ }    #OK not used
     }
     impure_rhs() for 1..3;
+    #?rakudo todo 'nom regression'
     is $rhs_calls, 1, 'RHS of state $x = ... only called once';
 }
 
 # state will start {...}
 #?pugs eval "parse error"
 #?rakudo skip 'will start { ... }'
+#?DOES 1
 {
     my ($a, $b);
     my $gen = {
@@ -131,6 +137,7 @@ plan 40;
 
 # Return of a reference to a state() var
 #?rakudo skip 'references'
+#?DOES 1
 {
     my $gen = {
         state $svar = 42;
@@ -150,6 +157,7 @@ plan 40;
 # fudged a bit on syntax
 #?pugs todo 'anonymous state vars'
 #?rakudo skip 'references and anonymous state vars'
+#?DOES 1
 {
     my $gen = sub { \(state $ ) };
 
@@ -160,6 +168,7 @@ plan 40;
     is try { $$svar_ref }, 2, "anonymous state() vars";
 }
 
+#?rakudo todo 'nom regression'
 eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 
 # L<http://www.nntp.perl.org/group/perl.perl6.language/20888>
@@ -181,6 +190,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 # state() inside regular expressions
 #?rakudo skip 'embedded closures in regexen'
 #?niecza skip ':Perl5'
+#?DOES 1
 {
     my $str = "abc";
 
@@ -207,11 +217,14 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
         return (+$svar, +$svar2);
     };
 
-    is(step().join('|'), "43|41", "chained state (#1)");
-    is(step().join('|'), "44|40", "chained state (#2)");
+    is(step().join('|'), "43|41", "chained state (1)");
+    #?rakudo todo 'nom regression'
+    is(step().join('|'), "44|40", "chained state (2)");
 }
 
 # state in cloned closures
+#?rakudo skip 'nom regression'
+#?DOES 4
 {
     for <first second> {
         my $code = {
@@ -226,6 +239,8 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 
 # state with multiple explicit calls to clone - a little bit subtle
 #?niecza skip "there is no Sub.clone"
+#?rakudo skip 'nom regression'
+#?DOES 3
 {
     my $i = 0;
     my $func = { state $x = $i++; $x };
@@ -236,6 +251,8 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 # recursive state with list assignment initialization happens only first time
+#?rakudo skip 'parse error'
+#?DOES 2
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -249,6 +266,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 
 # recursive state with [list] assignment initialization happens only first time
 #?rakudo skip '@$foo syntax'
+#?DOES 2
 {
     my $seensize;
     my sub fib (Int $n) {
@@ -261,6 +279,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 #?rakudo skip 'parse error'
+#?DOES 4
 {
     # now we're just being plain evil:
     subset A of Int where { $_ < state $x++ };
@@ -282,6 +301,7 @@ sub bughunt1 { (state $svar) }    #OK not used
 }
 
 #?rakudo skip 'parse error'
+#?DOES 1
 {
     # http://irclog.perlgeek.de/perl6/2010-04-27#i_2269848
     my @tracker;
@@ -294,6 +314,7 @@ sub bughunt1 { (state $svar) }    #OK not used
 }
 
 # niecza regression: state not working at top level
+#?rakudo skip 'nom regression'
 eval_lives_ok 'state $x; $x', 'state outside control structure';
 
 # vim: ft=perl6

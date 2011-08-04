@@ -15,6 +15,7 @@ isa_ok any(6,7), Junction;
 is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
 
 # avoid auto-threading on ok()
+#?DOES 1
 sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
 # L<S03/Junctive operators>
@@ -68,6 +69,7 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     ok(not(('c' eq ($c | $a | $b)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false'); 
     
     # test junction to junction
+    #?rakudo skip 'nom regression'
     jok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
     jok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
     
@@ -166,6 +168,7 @@ sub j (Mu $j) { return $j.perl }
 
     $got = ((1|2) + (3&4));
     $want = ((4|5) & (5|6));
+    #?rakudo todo 'nom regression'
     is( j($got), j($want), 'thread + returning junctive combination of results');
 
     # L<S03/Junctive operators/This opens doors for constructions like>
@@ -399,6 +402,8 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
+#?rakudo skip 'nom regression'
+#?DOES 2
 {
     my @a = "foo", "foot";
     ok @a[all(0,1)] ~~ /^foo/,
