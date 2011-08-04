@@ -67,6 +67,7 @@ for %*ENV.kv -> $k,$v {
   next if $k eq any <SHLVL _ OLDPWD PS1>;
   if (%child_env{$k} !~~ $v) {
     if (! $err) {
+      #?rakudo todo 'nom regression'
       flunk("Environment gets propagated to child.");
       $err++;
     };
