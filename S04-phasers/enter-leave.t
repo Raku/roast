@@ -55,10 +55,10 @@ plan 19;
 # L<S04/Phasers/ENTER "repeats on loop blocks">
 {
     my $str;
-    for 1..2 {
+    for 1..2 -> $x {
         $str ~= ',';
-        ENTER { $str ~= "E$_" }
-        LEAVE { $str ~= "L$_ " }
+        ENTER { $str ~= "E$x" }
+        LEAVE { $str ~= "L$x " }
     }
     is $str, 'E1,L1 E2,L2 ', 'ENTER/LEAVE repeats on loop blocks';
 }
@@ -80,6 +80,7 @@ plan 19;
 }
 
 # normal closure:
+#?niecza skip 'leave'
 {
     is eval(q{
         my $a;
@@ -103,6 +104,7 @@ plan 19;
     is $str, '(x)', 'die calls LEAVE blocks';
 }
 
+#?niecza 2 skip 'dubious'
 {
     my $str;
     try {
@@ -115,9 +117,9 @@ plan 19;
 {
     my $str;
     {
-        LEAVE { $str ~= (defined $! ?? 'yes' !! 'no') }
+        LEAVE { $str ~= (defined($!) ?? 'yes' !! 'no') }
         try { die 'foo' }
-        $str ~= (defined $! ?? 'aye' !! 'nay');
+        $str ~= (defined($!) ?? 'aye' !! 'nay');
     }
     is $str, 'ayeno', '$! not set in LEAVE if exception not thrown';
 }
@@ -171,6 +173,7 @@ plan 19;
     is $str, '1', 'die aborts ENTER queue';
 }
 
+#?niecza skip '@!'
 {
     my $str;
     try {

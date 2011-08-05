@@ -11,7 +11,7 @@ use Test;
 
 plan 25;
 
-sub foo(Num $i) {
+sub foo(Int $i) {
     PRE {
         $i < 5
     }
@@ -33,7 +33,7 @@ dies_ok { bar(10) }, 'Violated POST throws (catchable) exception';
 
 # multiple PREs und POSTs
 
-sub baz (Num $i) {
+sub baz (Int $i) {
 	PRE {
 		$i > 0
 	}
@@ -48,7 +48,7 @@ dies_ok  { baz(-1)}, 'sub with two PREs fails when first is violated';
 dies_ok  { baz(42)}, 'sub with two PREs fails when second is violated';
 
 
-sub qox (Num $i) {
+sub qox (Int $i) {
 	return 1;
 	POST {
 		$i > 0
@@ -65,7 +65,7 @@ dies_ok( { qox(123)}, "sub with two POSTs fails if second POST is violated");
 # inheritance
 
 class PRE_Parent {
-    method test(Num $i) {
+    method test(Int $i) {
         PRE {
             $i < 23
         }
@@ -74,7 +74,7 @@ class PRE_Parent {
 }
 
 class PRE_Child is PRE_Parent {
-    method test(Num $i){
+    method test(Int $i){
         PRE {
             $i > 0;
         }
@@ -86,11 +86,12 @@ my $foo = PRE_Child.new;
 
 lives_ok { $foo.test(5)    }, 'PRE in methods compiles and runs';
 dies_ok  { $foo.test(-42)  }, 'PRE in child throws';
+#?niecza skip 'PRE inheritance'
 dies_ok  { $foo.test(78)   }, 'PRE in parent throws';
 
 
 class POST_Parent {
-    method test(Num $i) {
+    method test(Int $i) {
         return 1;
         POST {
             $i > 23
@@ -99,7 +100,7 @@ class POST_Parent {
 }
 
 class POST_Child is POST_Parent {
-    method test(Num $i){
+    method test(Int $i){
         return 1;
         POST {
             $i < -23
@@ -108,12 +109,13 @@ class POST_Child is POST_Parent {
 }
 my $mp = POST_Child.new;
 
+#?niecza 2 skip 'unspecced'
 lives_ok  { $mp.test(-42) }, "It's enough if we satisfy one of the POST blocks (Child)";
 lives_ok  { $mp.test(42)  }, "It's enough if we satisfy one of the POST blocks (Parent)";
 dies_ok   { $mp.test(12) }, 'Violating poth POST blocks throws an error';
 
 class Another {
-    method test(Num $x) {
+    method test(Int $x) {
         return 3 * $x;
         POST {
             $_ > 4
@@ -162,6 +164,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, '(', 'failing PRE runs nothing else';
 }
 
+#?niecza skip 'I think POST runs LIFO by spec?'
 {
     my $str;
     try {
@@ -174,6 +177,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
 }
 
+#?niecza skip 'unspecced'
 {
     my $str;
     try {
@@ -183,6 +187,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     ok $str ~~ /foo/, 'POST runs on exception, with correct $!';
 }
 
+#?niecza skip 'unspecced'
 {
     my $str;
     try {
@@ -193,6 +198,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
 
+#?niecza skip 'unspecced'
 {
     try {
         POST { 0 }
