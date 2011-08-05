@@ -33,7 +33,7 @@ plan 57;
 
     is ~$ref, "a b c", '$arrayref = \@array works (1)';
     # Explicit referentiation of arrays in assignment
-    is +$ref,       3, '$arrayref = \@array works (2)';
+    is +$ref,       1, '$arrayref = \@array works (2)';
 }
 
 # Implicit referentiation of hashes in assignment
@@ -50,9 +50,8 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = \%hash;
 
-    #?rakudo todo 'backslashes, captures'
-    is ~$ref.values.sort, "1 2 3", '$hashref = \%hash works (1)';
-    is +$ref.values,            3, '$hashref = \%hash works (2)';
+    is ~$ref[0].values.sort, "1 2 3", '$hashref = \%hash works (1)';
+    is +$ref[0].values,      3,       '$hashref = \%hash works (2)';
 }
 
 # Implicit referentiation of arrays in assignment to an array element
@@ -74,7 +73,7 @@ plan 57;
 
     is ~@other, " a b c", '@other[$idx] = \@array works (1)';
     is +@other,        2, '@other[$idx] = \@array works (2)';
-    is +@other[1],     3, '@other[$idx] = \@array works (3)';
+    is +@other[1],     1, '@other[$idx] = \@array works (3)';
 }
 
 # Implicit referentiation of hashes in assignment to an array element
@@ -94,7 +93,7 @@ plan 57;
     @other[1] = \%hash;
 
     is +@other,    2, '@other[$idx] = \%hash works (1)';
-    is +@other[1], 3, '@other[$idx] = \%hash works (2)';
+    is +@other[1], 1, '@other[$idx] = \%hash works (2)';
 }
 
 # Implicit referentiation of arrays in assignment to a hash element
@@ -114,7 +113,7 @@ plan 57;
     %other<a> = \@array;
 
     is +%other,    1, '%other[$key] = \@array works (1)';
-    is +%other<a>, 3, '%other[$key] = \@array works (2)';
+    is +%other<a>, 1, '%other[$key] = \@array works (2)';
 }
 
 # Implicit referentiation of hashes in assignment to a hash element
@@ -134,7 +133,7 @@ plan 57;
     %other<a> = \%hash;
 
     is +%other,    1, '%other[$key] = \%hash works (1)';
-    is +%other<a>, 3, '%other[$key] = \%hash works (2)';
+    is +%other<a>, 1, '%other[$key] = \%hash works (2)';
 }
 
 # Implicit referentiation of arrays in pair creation with key => ...
@@ -152,7 +151,7 @@ plan 57;
     my $pair  = (key => \@array);
 
     is ~$pair.value, "a b c", '(key => \@array) works (1)';
-    is +$pair.value,       3, '(key => \@array) works (2)';
+    is +$pair.value,       1, '(key => \@array) works (2)';
 }
 
 # Implicit referentiation of hashes in pair creation with key => ...
@@ -169,9 +168,8 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => \%hash);
 
-    #?rakudo todo 'backslashes, captures'
-    is ~$pair.value.values.sort, "1 2 3", '(key => \%hash) works (1)';
-    is +$pair.value.values,            3, '(key => \%hash) works (2)';
+    is ~$pair.value.[0].values.sort, "1 2 3", '(key => \%hash) works (1)';
+    is +$pair.value.[0].values,            3, '(key => \%hash) works (2)';
 }
 
 # Implicit referentiation of arrays in pair creation with :key(...)
@@ -189,7 +187,7 @@ plan 57;
     my $pair  = (:key(\@array));
 
     is ~$pair.value, "a b c", '(:key(\@array)) works (1)';
-    is +$pair.value,       3, '(:key(\@array)) works (2)';
+    is +$pair.value,       1, '(:key(\@array)) works (2)';
 }
 
 # Implicit referentiation of hashes in pair creation with :key(...)
@@ -207,8 +205,8 @@ plan 57;
     my $pair = (:key(\%hash));
 
     #?rakudo todo 'backslashes, captures'
-    is ~$pair.value.values.sort, "1 2 3", '(:key(\%hash)) works (1)';
-    is +$pair.value.values,            3, '(:key(\%hash)) works (2)';
+    is ~$pair.value.[0].values.sort, "1 2 3", '(:key(\%hash)) works (1)';
+    is +$pair.value.[0].values,            3, '(:key(\%hash)) works (2)';
 }
 
 # Implicit referentiation of array literals in pair creation with key => ...
