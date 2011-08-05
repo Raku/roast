@@ -20,7 +20,7 @@ dies_ok { bar [1,2] }, 'fixed length array unpacking too short';
 dies_ok { bar [1,2,3,4] }, 'fixed length array unpacking too long';
 
 sub baz([$x, $y?, $z?]) {
-    return "$x|$y|$z";
+    return "$x|$y.gist()|$z.gist()";
 }
 
 dies_ok { baz( [] ) } , 'unpack optional scalars; required scalar missing';
@@ -43,7 +43,7 @@ is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
     sub fsort-only([$p?,*@r]) {
         return fsort-only(@r.grep( {$_ <= $p} )),$p,fsort-only(@r.grep( {$_ > $p} )) if $p || @r;
     }
-    sub fsort-multi([$p?,*@r]) {
+    multi fsort-multi([$p?,*@r]) {
         return fsort-multi(@r.grep( {$_ <= $p} )),$p,fsort-multi(@r.grep( {$_ > $p} )) if $p || @r;
     }
 
