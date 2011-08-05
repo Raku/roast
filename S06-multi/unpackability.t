@@ -21,7 +21,7 @@ is foo(@c), "three", "multi dispatch on array packed with three elements";
 is foo(@d), "four", "multi dispatch on array packed with four elements";
 is foo(1,2,3,4), "four", "multi dispatch on slurpy packed with four elements";
 
-multi sub bar ([$a,$b?])        { return "$a|$b" }
+multi sub bar ([$a,$b?])        { return "$a|$b.gist()" }
 multi sub bar (*[$a,$b,$c?])     { return "$a+$b+$c" }
 
 is bar(@a), "1|Any()", "multi dispatch on array packed with one required element + no optional";
