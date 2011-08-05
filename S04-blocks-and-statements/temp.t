@@ -8,7 +8,7 @@ plan 31;
 {
   my $a = 42;
   {
-    is(eval('temp $a = 23; $a'), 23, "temp() changed the variable (1)");
+    is((temp $a = 23; $a), 23, "temp() changed the variable (1)");
   }
   is $a, 42, "temp() restored the variable (1)";
 }
@@ -19,7 +19,7 @@ plan 31;
   my $a     = 42;
   my $get_a = { $a };
   {
-    is(eval('temp $a = 23; $a'),       23, "temp() changed the variable (2-1)");
+    is((temp $a = 23; $a),       23, "temp() changed the variable (2-1)");
     is $get_a(), 23, "temp() changed the variable (2-2)";
   }
   is $a, 42, "temp() restored the variable (2)";
@@ -30,14 +30,14 @@ plan 31;
   my $a     = 42;
   my $get_a = { $a };
   {
-    ok(eval('temp $a = 23; $a =:= $get_a()'), "temp() shouldn't change the variable containers");
+    ok((temp $a = 23; $a =:= $get_a()), "temp() shouldn't change the variable containers");
   }
 }
 
 {
   our $pkgvar = 42;
   {
-    is(eval(q/temp $pkgvar = 'not 42'; $pkgvar/), 'not 42', "temp() changed the package variable (3-1)");
+    is((temp $pkgvar = 'not 42'; $pkgvar), 'not 42', "temp() changed the package variable (3-1)");
   }
   is $pkgvar, 42, "temp() restored the package variable (3-2)";
 }
@@ -47,7 +47,7 @@ plan 31;
 {
   my $a = 42;
   try {
-    is(eval('temp $a = 23; $a'), 23, "temp() changed the variable in a try block");
+    is((temp $a = 23; $a), 23, "temp() changed the variable in a try block");
     die 57;
   };
   is $a, 42, "temp() restored the variable, the block was exited using an exception";
@@ -65,7 +65,6 @@ eval('
 "1 - delete this line when the parsefail eval() is removed";
 ') or skip("parsefail: temp \@array[1]", 2);
 
-eval('
 {
   my %hash = (:a(1), :b(2), :c(3));
   {
@@ -74,10 +73,7 @@ eval('
   }
   is %hash<b>, 2, "temp() restored our array element";
 }
-"1 - delete this line when the parsefail eval() is removed";
-') or skip("parsefail: temp \%hash<b>", 2);
 
-eval('
 {
   my $struct = [
     "doesnt_matter",
@@ -94,14 +90,13 @@ eval('
     temp $struct[1]<key>[1] = 23;
     is $struct[1]<key>[1], 23, "temp() changed our nested arrayref/hashref element";
   }
-  is $struct[1]<key>[1], 1, "temp() restored our nested arrayref/hashref element";
+  is $struct[1]<key>[1], 42, "temp() restored our nested arrayref/hashref element";
 }
-"1 - delete this line when the parsefail eval() is removed";
-') or skip("parsefail: temp \$struct[1]<key>[1]", 2);
 
 # Block TEMP{}
 # L<S06/Temporization/You can also modify the behaviour of temporized code structures>
 # (Test is more or less directly from S06.)
+#?niecza 2 skip 'spec clarification needed'
 {
   my $next    = 0;
 
@@ -146,6 +141,7 @@ eval('
 # Following are OO tests, but I think they fit better in var/temp.t than in
 # oo/.
 # L<S06/Temporization/temp invokes its argument's .TEMP method.>
+#?niecza 2 skip 'needs clarification on correct behavior'
 {
   my $was_in_own_temp_handler = 0;
 
@@ -161,7 +157,7 @@ eval('
   is $was_in_own_temp_handler, 0, ".TEMP method wasn't yet executed";
 
   {
-    is(eval('temp $a; $was_in_own_temp_handler'), 1, ".TEMP method was executed on temporization");
+    is((temp $a; $was_in_own_temp_handler), 1, ".TEMP method was executed on temporization");
   }
   is $was_in_own_temp_handler, 2, ".TEMP method was executed on restoration";
 }

@@ -11,7 +11,7 @@ plan 11;
 {
   my $a = 42;
   {
-    is(eval('let $a = 23; $a'), 23, "let() changed the variable (1)");
+    is((let $a = 23; $a), 23, "let() changed the variable (1)");
     1;
   }
   is $a, 23, "let() should not restore the variable, as our block exited succesfully (1)";
@@ -22,7 +22,7 @@ plan 11;
 {
   my $a = 42;
   {
-    is(eval('let $a = 23; $a'), 23, "let() changed the variable (1)");
+    is((let $a = 23; $a), 23, "let() changed the variable (1)");
     Mu;
   }
   is $a, 42, "let() should restore the variable, as our block failed";
@@ -34,7 +34,7 @@ plan 11;
   my $a     = 42;
   my $get_a = { $a };
   {
-    is(eval('let $a = 23; $a'),       23, "let() changed the variable (2-1)");
+    is((let $a = 23; $a),       23, "let() changed the variable (2-1)");
     is $get_a(), 23, "let() changed the variable (2-2)";
     1;
   }
@@ -46,7 +46,7 @@ plan 11;
 {
   my $a = 42;
   try {
-    is(eval('let $a = 23; $a'), 23, "let() changed the variable in a try block");
+    is((let $a = 23; $a), 23, "let() changed the variable in a try block");
     die 57;
   };
   is $a, 42, "let() restored the variable, the block was exited using an exception";
@@ -55,7 +55,7 @@ plan 11;
 {
   my @array = (0, 1, 2);
   {
-    is(eval('let @array[1] = 42; @array[1]'), 42, "let() changed our array element");
+    is((let @array[1] = 42; @array[1]), 42, "let() changed our array element");
     Mu;
   }
   is @array[1], 1, "let() restored our array element";
