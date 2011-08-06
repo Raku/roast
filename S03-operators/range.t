@@ -218,7 +218,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 # RT #68788
 {
     $_ = Any; # unsetting $_ to reproduce bug literally
-    #?rakudo todo 'lives_ok and warnings'
     lives_ok {(1..$_)}, '(1..$_) lives';
     isa_ok (1..$_), Range, '(..) works on Int .. Any';
 }
