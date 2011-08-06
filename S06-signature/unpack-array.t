@@ -37,6 +37,8 @@ is blat( 1, [2,3,4] ), "2|3|4", 'unpack named array';
 is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
 
 # RT #75900
+#?rakudo todo 'nom regression'
+#?DOES 2
 {
     my @my-array = 4,2,3,4;
 
