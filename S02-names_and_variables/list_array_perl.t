@@ -51,20 +51,19 @@ my @tests = (
         ".perl worked correctly on a recursive arrayref";
 }
 
-#?rakudo skip "nom regression: 'Could not find sub &METAOP_HYPER_PREFIX'"
 {
     # test bug in .perl on result of hyperoperator
     # first the trivial case without hyperop
     my @foo = ([-1, -2], -3);
-    is @foo.perl, '[[-1, -2], -3]', ".perl on a nested list";
+    is @foo.item.perl, '[[-1, -2], -3]', ".perl on a nested list";
 
     my @hyp = -« ([1, 2], 3);
     # what it currently (r16460) gives
     #?pugs 2 todo 'bug'
-    isnt @hyp.perl, '[(-1, -2), -3]', "strange inner parens from .perl on result of hyperop";
+    isnt @hyp.item.perl, '[(-1, -2), -3]', "strange inner parens from .perl on result of hyperop";
 
     # what it should give
-    is @hyp.perl, '[[-1, -2], -3]', ".perl on a nested list result of hyper operator";
+    is @hyp.item.perl, '[[-1, -2], -3]', ".perl on a nested list result of hyper operator";
 }
 
 {
