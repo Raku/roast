@@ -8,7 +8,7 @@ plan 20;
 # hash left/right
 {
     #?DOES 2
-    my sub traverse_hash (%top ($left, $right, *%), $desc?) {
+    my sub traverse_hash (%top (:$left, :$right, *%), $desc?) {
         is($left,  %top<left>,  "left value is correct: $desc");
         is($right, %top<right>, "right value is correct: $desc");
     }
@@ -24,7 +24,7 @@ plan 20;
 
 {
     #?DOES 2
-    my sub traverse_hash (%top ($east, $west, *%), $desc?) {
+    my sub traverse_hash (%top (:$east, :$west, *%), $desc?) {
         is($east, %top<east>, "east value is correct: $desc");
         is($west, %top<west>, "west value is correct: $desc");
     }
@@ -47,7 +47,7 @@ plan 20;
     }
 
     #?DOES 2
-    my sub traverse_obj (BinTree $top ($left, $right), $desc?) {
+    my sub traverse_obj (BinTree $top (:$left, :$right), $desc?) {
         is($left,  $top.left,  "left object value is correct: $desc");
         is($right, $top.right, "right object value is correct: $desc");
     }
