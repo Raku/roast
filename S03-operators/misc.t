@@ -55,7 +55,6 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 is(2 || 3, 2, "|| returns first true value");
 ok(!(defined( 0 || Mu)), "|| returns last false value of list?");
 
-#?rakudo skip "state NYI"
 {
     (my @s)[0] //= 5;
     is @s[0], 5, '(my @s)[0] //= something works';
@@ -89,6 +88,7 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 }
 
 # L<S03/Hyper operators/hyper operator distributes over them as lists>
+#?rakudo skip "nom regression: 'Could not find sub &METAOP_HYPER'"
 {
     my @rv;
     @rv = (1,2,3,4) >>+<< (1,2,3,4);
@@ -96,6 +96,7 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 }
 
 # L<S03/Traversing arrays in parallel/"but a short list may always be extended arbitrarily">
+#?rakudo todo "nom regression"
 {
     is (1, 2, * Z <a b c d>).join('|'),
        '1|a|2|b|2|c|2|d',

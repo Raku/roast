@@ -97,7 +97,7 @@ plan 55;
 }
 
 # now for the unshift() on an uninitialized array issue
-
+#?rakudo skip "nom regression: shift_pmc() not implemented in class 'Mu'"
 {
     my @unshift;
 
@@ -139,22 +139,23 @@ plan 55;
 
 # RT #69548
 {
-    {
-        my $x = 1;
-        my @a = ();
-        unshift @a, $x;
-        ++$x;
+     my $x = 1;
+     my @a = ();
+     unshift @a, $x;
+     ++$x;
 
-        is @a[0], 1, 'New element created by unshift(@a, $x) isn\'t affected by changes to $x';
-    }
-    {
-        my $x = 1;
-        my @a = ();
-        unshift @a, $x;
-        ++@a[0];
+     is @a[0], 1, 'New element created by unshift(@a, $x) isn\'t affected by changes to $x';
+}
 
-        is $x, 1, '$x isn\'t affected by changes to new element created by unshift(@a, $x)';
-    }
+# RT #69548
+#?rakudo skip "nom regression: Cannot assign to a readonly variable or a value"
+{
+    my $x = 1;
+    my @a = ();
+    unshift @a, $x;
+    ++@a[0];
+
+    is $x, 1, '$x isn\'t affected by changes to new element created by unshift(@a, $x)';
 }
 
 # vim: ft=perl6

@@ -31,14 +31,14 @@ Some deeper tests were already added.
     is(+@array, 1, 'the array has one value in it');
 
     isa_ok(@array[0], Pair);
-    #?rakudo skip "get_pmc_keyed() not implemented in class 'Perl6Pair'"
+    #?rakudo skip "Method 'at_key' not found for invocant of class 'Pair'"
     is(@array[0]<key>, 'value', 'got the right pair value');
 
     @array[1] = ('key1' => 'value1'); # assign it inline
     is(+@array, 2, 'the array has two values in it');
     isa_ok(@array[1], Pair);
 
-    #?rakudo skip "get_pmc_keyed() not implemented in class 'Perl6Pair'"
+    #?rakudo skip "Method 'at_key' not found for invocant of class 'Pair'"
     is(@array[1]<key1>, 'value1', 'got the right pair value');
 }
 
@@ -162,9 +162,7 @@ Some deeper tests were already added.
   my $a0 = [ \%h ,'extra' ];
   my $a1 = [ \%h ];
   my $a2 = [ $hr ];
-  #?rakudo todo 'nom regression'
   is($a0.elems,2,'hash references should not get decomposed');
-  #?rakudo todo 'nom regression'
   is($a1.elems,1,'hash references should not get decomposed');
   is($a2.elems,1,'hash references should not get decomposed');
 }
@@ -174,7 +172,7 @@ Some deeper tests were already added.
     isa_ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
 }
 
-#?rakudo 18 skip 'nom regression'
+#?rakudo 18 skip "nom regression: 'Cannot assign to a non-container'"
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;

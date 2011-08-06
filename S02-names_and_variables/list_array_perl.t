@@ -51,6 +51,7 @@ my @tests = (
         ".perl worked correctly on a recursive arrayref";
 }
 
+#?rakudo skip "nom regression: 'Could not find sub &METAOP_HYPER_PREFIX'"
 {
     # test bug in .perl on result of hyperoperator
     # first the trivial case without hyperop

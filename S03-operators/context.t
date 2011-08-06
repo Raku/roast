@@ -33,7 +33,7 @@ use Test;
 
 # L<S03/List prefix precedence/The item contextualizer>
 # L<S02/Lists/To force a non-flattening item context>
-
+#?rakudo skip "nom regression: 'Could not find sub &item'"
 {
     my $a = 3;
     my $b = 2;

@@ -204,7 +204,6 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(\%hash));
 
-    #?rakudo todo 'backslashes, captures'
     is ~$pair.value.[0].values.sort, "1 2 3", '(:key(\%hash)) works (1)';
     is +$pair.value.[0].values,            3, '(:key(\%hash)) works (2)';
 }

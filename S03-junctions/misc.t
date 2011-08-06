@@ -10,9 +10,11 @@ Misc. Junction tests
 
 =end pod
 
-#?rakudo 2 skip 'Null PMC access in get_integer() (RT #64184)'
-isa_ok any(6,7), Junction;
-is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
+# RT #64184
+{
+    isa_ok any(6,7), Junction;
+    is any(6,7).WHAT.gist, Junction.gist, 'junction.WHAT works';
+}
 
 # avoid auto-threading on ok()
 #?DOES 1
