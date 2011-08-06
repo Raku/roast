@@ -59,7 +59,6 @@ Basic C<pairs> tests, see S32::Containers.
     "pairs() on 1-elem hash, 2-depth joined" );
 }
 
-#?rakudo todo "Rakudo seems to make a copy rather than a reference"
 {
     my %hash = (:a(1), :b(2), :c(3));
 
@@ -67,11 +66,11 @@ Basic C<pairs> tests, see S32::Containers.
         $pair.value += 100;
     } }, 'aliases returned by %hash.pairs should be rw (1)';
 
+    #?rakudo todo "Rakudo seems to make a copy rather than a reference"
     is %hash<b>, 102, 'aliases returned by %hash.pairs should be rw (2)';
 }
 
 #?pugs todo 'bug'
-#?rakudo todo "Rakudo seems to make a copy rather than a reference"
 {
     my $var = 42;
     my $pair = (a => $var);
