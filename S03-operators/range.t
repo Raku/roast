@@ -26,7 +26,7 @@ is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
-
+#?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'." 
 is ~(' '..' '), ' ',    'all-whitespace range works';
 
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
@@ -131,6 +131,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my @three = (1, 1, 1);
     my @one = 1;
 
+    #?rakudo 2 skip "nom regression: Method 'succ' not found for invocant of class 'Array'"
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
     is ~(@one ^.. 3)    , "2 3"  , "lower exclusive limit is in scalar context";
     is ~(3 ^.. @one)    , ""     , "lower exclusive limit is in scalar context";
@@ -144,6 +145,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 {
     is (0..3).map({$_ * 2}).join('|'),      '0|2|4|6', '.map works on ranges';
     is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
+    #?rakudo skip "nom regression: Method 'first' not found for invocant of class 'Range'"
     is (1..3).first({ $_ % 2 == 0}),        2,         '.first works on ranges';
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
 }
@@ -160,6 +162,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.max,   $end, 'range ends at end';
     is $range.max.WHAT.gist, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
+    #?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'."
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
  
@@ -169,8 +172,8 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
              'can make range from match vars';
     is $range.min, 1, 'range starts at one';
-    is $range.max,   3, 'range ends at three';
-    #?rakudo 2 skip 'range stringification'
+    is $range.max, 3, 'range ends at three';
+    #?rakudo 2 skip "range stringification: Method 'succ' not found for invocant of class 'Match'"
     lives_ok { "$range" }, 'can stringify range';
     is ~$range, "1 2 3", 'range is correct';
 }
@@ -179,7 +182,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa_ok $0..$1, Range, '$0..$1 constructs a Range';
-    #?rakudo skip 'range with match object endpoints'
+    #?rakudo skip "range with match object endpoints: Method 'succ' not found for invocant of class 'Match'"
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
 {
@@ -221,7 +224,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # RT #82620
-#?rakudo skip 'range leaking Parrot types'
+#?rakudo todo "range leaking Parrot types: Method 'trans' not found for invocant of class 'Str'"
 {
     lives_ok {("a".."b").map({.trans(""=>"")}).perl},
         "range doesn't leak Parrot types";
