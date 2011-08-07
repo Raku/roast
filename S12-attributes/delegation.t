@@ -181,7 +181,7 @@ class PairTest {
 }
 
 {
-    class TypePseudoHash { has %!data handles Associative }
+    class TypePseudoHash { has %!data handles Hash }
     my $h = TypePseudoHash.new;
     $h<a> = 'c';
     $h<b> = 'd';
