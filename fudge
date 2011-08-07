@@ -207,7 +207,7 @@ sub fudgeblock {
                 else {
                     my $does = join '|', keys %DOES;
                     next unless /^\s*($IS|$does)/;
-                    $numtests = $DOES{$1} // 1;
+                    $numtests = defined $DOES{$1}? $DOES{$1} : 1;
                 }
                 $PENDING--;
                 $_ = "{ " . $_ . " }";
