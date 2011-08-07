@@ -167,8 +167,8 @@ plan 29;
     my $x = List.new('bacon');
     my $y = $x.Str;
     my $z = $x.Str;
-    is $y, 'bacon', '3rd-party reification of List doesn't duplicate rest'
-    is $z, 'bacon', '3rd-party reification of List doesn't duplicate rest'
+    is $y, 'bacon', "3rd-party reification of List doesn't duplicate rest";
+    is $z, 'bacon', "3rd-party reification of List doesn't duplicate rest";
 }
 
 done;
