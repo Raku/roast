@@ -4,22 +4,24 @@ use Test;
 
 # Tests for this testing code may be in the pugs repo under t/03-test-util/
 
+proto sub is_run(|$) is export(:DEFAULT) { * }
+
 # No input, no test name
-multi sub is_run( Str $code, %expected, :@args ) is export(:DEFAULT) {
+multi sub is_run( Str $code, %expected, :@args ) {
     return is_run( $code, '', %expected, '', :@args );
 }
 
 # Has input, but not a test name
-multi sub is_run( Str $code, Str $input, %expected, :@args ) is export(:DEFAULT) {
+multi sub is_run( Str $code, Str $input, %expected, :@args ) {
     return is_run( $code, $input, %expected, '', :@args );
 }
 
 # No input, named
-multi sub is_run( Str $code, %expected, Str $name, :@args ) is export(:DEFAULT) {
+multi sub is_run( Str $code, %expected, Str $name, :@args ) {
     return is_run( $code, '', %expected, $name, :@args );
 }
 
-multi sub is_run( Str $code, Str $input, %expected, Str $name, :@args ) is export(:DEFAULT) {
+multi sub is_run( Str $code, Str $input, %expected, Str $name, :@args ) {
     my %got = get_out( $code, $input, :@args );
 
     # The test may have executed, but if so, the results couldn't be collected.
