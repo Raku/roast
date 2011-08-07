@@ -17,9 +17,6 @@ my $OUT = shift;
 if (!$OUT and $IN) {
     ($OUT = $IN) =~ s/\.t$/.$ME/ or $OUT .= ".$ME";
 }
-unless (-e $IN) {
-    die "$0: No such test file '$IN'\n";
-}
 unless ($ME and $IN and $OUT) {
 
     die <<"USAGE";
@@ -59,6 +56,9 @@ Usage: $0 [options] implname testfilename [fudgedtestfilename]
 
 
 USAGE
+}
+unless (-e $IN) {
+    die "$0: No such test file '$IN'\n";
 }
 
 if (-e $OUT) {
