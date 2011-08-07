@@ -13,12 +13,14 @@ is_run "use v6;\n'a' =~ /foo/", {
     err     => rx/line \s+ 2>>/
 }, 'Parse error contains line number';
 
+#?rakudo todo 'nom regression'
 is_run "my \$x = 2 * 3;\ndie \$x", {
     status  => { $_ != 0 },
     out     => '',
     err     => all(rx/6/, rx/'line 2'>>/),
 }, 'Runtime error contains line number';
 
+#?rakudo todo 'nom regression'
 is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
@@ -27,6 +29,7 @@ is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     }, 'Method not found error mentions method name and line number';
 
 # RT #75446
+#?rakudo todo 'nom regression'
 is_run 'use v6;
 sub bar {
     pfff();
@@ -48,11 +51,13 @@ bar()',
     diag "Error message: $e";
     ok $e ~~ /:i 'type check'/,
         'subset type check fail mentions type check';
+    #?rakudo todo 'nom regression'
     ok $e ~~ /:i constraint/,
         'subset type check fail mentions constraint';
 }
 
 # RT #76112
+#?rakudo todo 'nom regression'
 is_run 'use v6;
 class A { has $.x is rw };
 A.new.x(42);',

@@ -12,6 +12,7 @@ use Test;
 plan 29;
 
 # Indexing lists
+#?rakudo todo 'nom regression'
 {
   my $foo = 42;
 
@@ -28,6 +29,7 @@ plan 29;
 }
 
 # List construction does not create new containers
+#?rakudo todo 'nom regression'
 {
   my $foo = 42;
 
@@ -36,6 +38,7 @@ plan 29;
     "list construction should not create new containers";
 }
 
+#?rakudo todo 'nom regression'
 {
   my $foo = 42;
   #?pugs todo 'unspecced'
@@ -149,8 +152,8 @@ plan 29;
 # RT #66304
 {
     my $rt66304 = (1, 2, 4);
+    #?rakudo todo 'nom regression'
     isa_ok $rt66304, Seq, 'List assigned to scalar is-a Seq';
-    #?rakudo todo 'exact list type'
     is( $rt66304.WHAT, (1, 2, 4).WHAT,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';

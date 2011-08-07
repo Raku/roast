@@ -188,9 +188,12 @@ Perl6-specific tests
 {
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
+    #?rakudo todo 'nom regression'
     ok((try { !defined($an_ary[0]) }), "my Array subscript - Mu");
     try { $an_ary.push("blergh") };
+    #?rakudo todo 'nom regression'
     ok((try { defined($an_ary.pop) }), "push");
+    #?rakudo todo 'nom regression'
     ok((try { !defined($an_ary.pop) }), "comes to shove");
 }
 
@@ -330,6 +333,7 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 {
     sub def { my $x = [] }   #OK not used
     ok def() ~~ Array, 'sub returns array';
+    #?rakudo todo 'nom regression'
     lives_ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';
 

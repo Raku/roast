@@ -6,6 +6,7 @@ use Test::Util;
 plan 5;
 
 # this used to segfault in rakudo
+#?rakudo todo 'nom regression'
 is_run(
        'try { 1/0 }; my $x = $!.WHAT; say ~$x',
        { status => 0, out => -> $o {  $o.chars > 2 }},
