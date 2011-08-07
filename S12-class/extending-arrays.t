@@ -28,7 +28,6 @@ ok $arrayref.test_method, "arrayref in a variable";
 
 my %named_hash;
 
-#?rakudo 4 skip "Hash extension issues"
 ok %named_hash.test_method, "Uninitialized hash";
 %named_hash = (Foo => "bar");
 
