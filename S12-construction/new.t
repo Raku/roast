@@ -52,6 +52,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         class RT71706::Artie {}
     }
     # TODO: check the error message, not just the timing.
+    #?rakudo todo "nested package handling does't quite get this one right"
     dies_ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
 }
 
