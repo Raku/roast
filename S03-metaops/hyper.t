@@ -108,7 +108,6 @@ my @e;
         is(~@r, ~@e, "auto dimension upgrade on lhs ASCII notation");
 }
 
-#?rakudo skip 'one-sided upgrade'
 { # extension
         @r = (1,2,3,4) >>~>> <A B C D E>;
         @e = <1A 2B 3C 4D>;
@@ -151,7 +150,6 @@ my @e;
         is(~@r, ~@e, "scalar element extension on lhs ASCII notation");
 };
 
-#?rakudo skip 'one-sided upgrade'
 { # dimension upgrade - unicode
         @r = (1,2,3,4) »~» <A B C D E>;
         @e = <1A 2B 3C 4D>;
@@ -205,7 +203,14 @@ my @e;
         is(~@r, ~@e, "method call on integer list elements (ASCII)");
 }
 
-#?rakudo skip '@array»++'
+{
+        my (@r, @e);
+        (@r = (1, 4, 9))»++;
+        @e = (2, 5, 10);
+        is(~@r, ~@e, "operator call on integer list elements");
+}
+
+#?rakudo skip 'dotted postfix'
 {
         my (@r, @e);
         (@r = (1, 4, 9))»++;
@@ -466,14 +471,12 @@ my @e;
     is %r<b>, 1, 'hash - correct result from --<<';
     is %r<c>, 2, 'hash - correct result from --<<';
     is +%a,   3, 'hash - --<< result has right number of keys';
-    #?rakudo 3 todo 'hashes + hyper ops'
     is %a<a>, 0, 'hash - correct result from --<<';
     is %a<b>, 1, 'hash - correct result from --<<';
     is %a<c>, 2, 'hash - correct result from --<<';
     
     %r = %a>>++;
     is +%r,   3, 'hash - >>++ result has right number of keys';
-    #?rakudo 3 todo 'hashes + hyper ops'
     is %r<a>, 0, 'hash - correct result from >>++';
     is %r<b>, 1, 'hash - correct result from >>++';
     is %r<c>, 2, 'hash - correct result from >>++';
@@ -484,7 +487,7 @@ my @e;
 }
 
 #?niecza skip 'our sub'
-#?rakudo skip 'user-defined ops'
+#?rakudo skip 'nom regression: user-defined ops'
 #?DOES 4
 {
     our sub postfix:<!>($a) {
@@ -537,8 +540,6 @@ my @e;
     is %r<c>, 3, 'hash - correct result from >>.abs';
 }
 
-#?DOES 29
-#?rakudo skip 'nom regression, "Default constructor only takes named arguments"'
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
@@ -585,8 +586,6 @@ my @e;
     is @r[5], "4f", 'hash in array - correct result from <<~>>';
 }
 
-#?DOES 29
-#?rakudo skip 'nom regression, "Default constructor only takes named arguments"'
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @b = <a b c>;
@@ -633,7 +632,6 @@ my @e;
     is @r[5], "4f", 'hash in array - correct result from «~»';
 }
 
-#?rakudo skip 'nom regression, "Default constructor only takes named arguments"'
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @r = -<<@a;
@@ -663,7 +661,6 @@ my @e;
     is @a[2], 4, 'hash in array - correct result from ++<<';
 }
 
-#?rakudo skip 'nom regression'
 {
     my @a = (1, { a => 2, b => 3 }, 4);
     my @r = -«@a;
@@ -712,7 +709,7 @@ my @e;
 }
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
-#?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression - whatever extension'
 {
     @r = <A B C D E> »~» (1, 2, 3, *);
     @e = <A1 B2 C3 D3 E3>;
@@ -754,7 +751,6 @@ my @e;
 
 # RT #77800
 # Parsing hyper-subtraction
-#?rakudo skip 'nom regression'
 {
     is ((9, 8) <<-<< (1, 2, 3, 4)), (8, 6, 6, 4), '<<-<<';
     is ((9, 8, 10, 12) >>->> (1, 2)), (8, 6, 9, 10), '>>->>';
@@ -766,8 +762,7 @@ my @e;
 # L<S03/Hyper operators/'@array »+=»'>
 # Hyper assignment operators
 #?niecza skip 'fails horribly'
-#?rakudo skip 'nom regression'
-#?DOES 6
+#?rakudo skip 'nom regression -- cannot assign to readonly'
 {
     my @array = 3, 8, 2, 9, 3, 8;
     @r = @array »+=« (1, 2, 3, 4, 5, 6);
