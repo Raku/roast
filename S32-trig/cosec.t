@@ -140,10 +140,8 @@ for @sines -> $angle
     
     # Num.acosec(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(cosec(acosec($z)), $z, 
-                  "acosec(Complex) - {$angle.key()}");
         is_approx($z.acosec.cosec, $z, 
-                  "Complex.acosec - {$angle.key()}");
+                  "Complex.acosec - $z");
     }
 }
         

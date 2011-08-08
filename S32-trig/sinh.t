@@ -140,10 +140,8 @@ for @sinhes -> $angle
     
     # Num.asinh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(sinh(asinh($z)), $z, 
-                  "asinh(Complex) - {$angle.key()}");
         is_approx($z.asinh.sinh, $z, 
-                  "Complex.asinh - {$angle.key()}");
+                  "Complex.asinh - $z");
     }
 }
         

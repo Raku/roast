@@ -140,10 +140,8 @@ for @coshes -> $angle
     
     # Num.acosh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(cosh(acosh($z)), $z, 
-                  "acosh(Complex) - {$angle.key()}");
         is_approx($z.acosh.cosh, $z, 
-                  "Complex.acosh - {$angle.key()}");
+                  "Complex.acosh - $z");
     }
 }
         

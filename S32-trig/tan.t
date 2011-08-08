@@ -116,8 +116,8 @@ for @sines -> $angle
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(2.3561944902142 + 2i).tan, -0.0366189934736278 + 0.999329299737467i, "NotComplex.tan - 2.3561944902142 + 2i");
-    is_approx(tan(NotComplex.new(3.14159265361894 + 2i)), 2.05899337486383e-12 + 0.964027580075817i, "tan(NotComplex) - 3.14159265361894 + 2i");
+    is_approx(NotComplex.new(2.3561944902142 + 2i).tan, -0.0366189934736279 + 0.999329299737467i, "NotComplex.tan - 2.3561944902142 + 2i");
+    is_approx(tan(NotComplex.new(3.14159265361894 + 2i)), 2.05899337486384e-12 + 0.964027580075817i, "tan(NotComplex) - 3.14159265361894 + 2i");
 }
 
 {
@@ -140,10 +140,8 @@ for @sines -> $angle
     
     # Num.atan(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(tan(atan($z)), $z, 
-                  "atan(Complex) - {$angle.key()}");
         is_approx($z.atan.tan, $z, 
-                  "Complex.atan - {$angle.key()}");
+                  "Complex.atan - $z");
     }
 }
         

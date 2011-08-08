@@ -140,10 +140,8 @@ for @sines -> $angle
     
     # Num.asin(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(sin(asin($z)), $z, 
-                  "asin(Complex) - {$angle.key()}");
         is_approx($z.asin.sin, $z, 
-                  "Complex.asin - {$angle.key()}");
+                  "Complex.asin - $z");
     }
 }
         

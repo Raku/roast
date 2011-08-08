@@ -140,10 +140,8 @@ for @sines -> $angle
     
     # Num.acotanh(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(cotanh(acotanh($z)), $z, 
-                  "acotanh(Complex) - {$angle.key()}");
         is_approx($z.acotanh.cotanh, $z, 
-                  "Complex.acotanh - {$angle.key()}");
+                  "Complex.acotanh - $z");
     }
 }
         

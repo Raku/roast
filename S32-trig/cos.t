@@ -140,10 +140,8 @@ for @cosines -> $angle
     
     # Num.acos(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(cos(acos($z)), $z, 
-                  "acos(Complex) - {$angle.key()}");
         is_approx($z.acos.cos, $z, 
-                  "Complex.acos - {$angle.key()}");
+                  "Complex.acos - $z");
     }
 }
         

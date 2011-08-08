@@ -116,8 +116,8 @@ for @sines -> $angle
 
 {
     # NotComplex tests
-    is_approx(NotComplex.new(3.92699081702367 + 2i).cotan, 0.0366189934735888 - 0.999329299736401i, "NotComplex.cotan - 3.92699081702367 + 2i");
-    is_approx(cotan(NotComplex.new(4.7123889804284 + 2i)), -3.08850574993024e-12 - 0.964027580075817i, "cotan(NotComplex) - 4.7123889804284 + 2i");
+    is_approx(NotComplex.new(3.92699081702367 + 2i).cotan, 0.036618993473589 - 0.999329299736401i, "NotComplex.cotan - 3.92699081702367 + 2i");
+    is_approx(cotan(NotComplex.new(4.7123889804284 + 2i)), -3.08850574993026e-12 - 0.964027580075817i, "cotan(NotComplex) - 4.7123889804284 + 2i");
 }
 
 {
@@ -140,10 +140,8 @@ for @sines -> $angle
     
     # Num.acotan(Complex) tests -- thorough
     for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-        is_approx(cotan(acotan($z)), $z, 
-                  "acotan(Complex) - {$angle.key()}");
         is_approx($z.acotan.cotan, $z, 
-                  "Complex.acotan - {$angle.key()}");
+                  "Complex.acotan - $z");
     }
 }
         
