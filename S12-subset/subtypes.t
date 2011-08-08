@@ -12,14 +12,14 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 # L<S12/"Types and Subtypes">
 
 my $abs = '
-our multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
-our multi sub my_abs (Int $n where { $^n <  0 }){ -$n }
+multi sub my_abs (Int $n where { $^n >= 0 }){ $n }
+multi sub my_abs (Int $n where { $^n <  0 }){ -$n }
 ';
 
 ok(eval("$abs; 1"), "we can compile subtype declarations");
 
-is(eval("my_abs(3)"), 3, "and we can use them, too");
-is(eval("my_abs(-5)"), 5, "and they actually work");
+is(eval("$abs; my_abs(3)"), 3, "and we can use them, too");
+is(eval("$abs; my_abs(-5)"), 5, "and they actually work");
 
 # another nice example
 {
@@ -31,44 +31,40 @@ is(eval("my_abs(-5)"), 5, "and they actually work");
 # Basic subtype creation
 
 {
-    subset Num::Odd of Num where { $^num % 2 == 1 };
-    #?rakudo 2 todo 'subsets and eval (?)'
-    is eval('my Num::Odd $a = 3'), 3, "3 is an odd num";
+    subset Int::Odd of Int where { $^num % 2 == 1 };
+    is eval('my Int::Odd $a = 3'), 3, "3 is an odd num";
     # The eval inside the eval is/will be necessary to hider our smarty
     # compiler's compile-time from bailing.
     # (Actually, if the compiler is *really* smarty, it will notice our eval trick,
     # too :))
-    is eval('my Num::Odd $b = 3; try { $b = eval "4" }; $b'), 3,
-      "objects of Num::Odd don't get even";
+    is eval('my Int::Odd $b = 3; try { $b = eval "4" }; $b'), 3,
+      "objects of Int::Odd don't get even";
 
     # Subtypes should be undefined.
-    nok Num::Odd.defined, 'subtypes are undefined';
+    nok Int::Odd.defined, 'subtypes are undefined';
 
     # Subs with arguments of a subtype
-    sub only_accepts_odds(Num::Odd $odd) { $odd + 1 }
+    sub only_accepts_odds(Int::Odd $odd) { $odd + 1 }
     is only_accepts_odds(3), 4, "calling sub worked";
     dies_ok { only_accepts_odds(4) },  "calling sub did not work";
 
-    # Normal Ints automatically morphed to Num::Odd
-    sub is_num_odd(Num::Odd $odd) { $odd ~~ Num::Odd },
-    ok is_num_odd(3), "Int accepted by Num::Odd";
+    # Can smartmatch too
+    sub is_num_odd(Int::Odd $odd) { $odd ~~ Int::Odd },
+    ok is_num_odd(3), "Int accepted by Int::Odd";
 }
 
 # The same, but lexically
 {
-    my subset Num::Even of Num where { $^num % 2 == 0 }
-    ok my Num::Even $c = 6;
-    ok $c ~~ Num::Even, "our var is a Num::Even";
+    my subset Int::Even of Int where { $^num % 2 == 0 }
+    ok my Int::Even $c = 6;
+    ok $c ~~ Int::Even, "our var is a Int::Even";
     try { $c = eval 7 }
-    is $c, 6, "setting a Num::Even to an odd value dies";
-    #?rakudo todo 'lexical subtypes'
-    ok eval('!try { my Num::Even $d }'),
+    is $c, 6, "setting a Int::Even to an odd value dies";
+    ok eval('!try { my Int::Even $d }'),
         "lexically declared subtype went out of scope";
-
 }
 
 # Following code is evil, but should work:
-#?rakudo skip 'scoping bug'
 {
   my Int $multiple_of;
   subset Num::Multiple of Int where { $^num % $multiple_of == 0 }
@@ -174,9 +170,8 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 
     my subset Teeny of Int where { $^n < 10 }
     class T { has Teeny $.teeny }
-    #?rakudo 2 todo 'RT 65700'
-    dies_ok { T.new( small => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
-    lives_ok { T.new( small => 2 ) }, 'my subset type enforced as attribute in new() (2)';
+    dies_ok { T.new( teeny => 20 ) }, 'my subset type is enforced as attribute in new() (1)';
+    lives_ok { T.new( teeny => 2 ) }, 'my subset type enforced as attribute in new() (2)';
 }
 
 # RT #78318
@@ -185,7 +180,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     subset Bug  of Int where { @*rt78318.push( 'bug' ) };
     subset Hunt of Bug where { @*rt78318.push( 'hunt' ) };
     78318 ~~ Hunt;
-    #?rakudo todo 'RT 78318'
     is @*rt78318, <bug hunt>, 'code called when subtype built on subtype';
 }
 
@@ -204,7 +198,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is $*call1, 1, 'level one subset checked (should fail)';
     is $*call2, 0, 'level two subset not checked';
 
-    #?rakudo 3 todo 'RT 78322'
     $*call1 = 0;$*call2 = 0;
     nok 22 ~~ Bughunt, 'overall subset check is false';
     is $*call1, 1, 'level one subset checked (should fail)';
@@ -217,7 +210,6 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 
     $*call1 = 0;$*call2 = 0;
     ok 78322 ~~ Bughunt, 'overall subset check is true';
-    #?rakudo 2 todo 'RT 78322'
     is $*call1, 1, 'level one subset checked (should succeed)';
     is $*call2, 1, 'level two subset checked (should succeed)';
 }
