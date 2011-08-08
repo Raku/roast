@@ -43,18 +43,16 @@ This test tests the C<WHAT> builtin.
     }
     my $o = Foo.new;
     is($o."WHAT"(), 'Bar', '."WHAT" calls the method instead of the macro');
-    #?rakudo todo '.WHAT not (easily overridable)'
     is($o.WHAT.gist,   'Foo()', '.WHAT still works as intended');
-    my $meth = "WHAT";
-    #?rakudo skip 'indirect method calls'
+    my $meth = method () { 'Bar' };
     is($o.$meth,  'Bar', '.$meth calls the method instead of the macro');
 }
 
 # these used to be Rakudo regressions, RT #62006
 {
     # proto as a term
-    lives_ok {  Match }, 'proto as a term lives';
-    lives_ok { +Match }, 'numification of proto lives';
+    lives_ok {  Match }, 'type object as a term lives';
+    lives_ok { +Match }, 'numification of type object lives';
     isa_ok ("bac" ~~ /a/).WHAT, Match, '.WHAT on a Match works';
     is +("bac" ~~ /a/).WHAT.gist, 0, 'numification of .WHAT of a Match works';
 }
