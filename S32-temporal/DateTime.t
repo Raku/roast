@@ -8,7 +8,7 @@ my $orwell = DateTime.new(year => 1984);
 sub dt(*%args) { DateTime.new(year => 1984, |%args) }
 sub dtc(*%args) { $orwell.clone(|%args) }
 
-sub ymd($year, $month, $day) { dt :$year, :$month, :$day }
+sub ymd($year, $month, $day) { DateTime.new: :$year, :$month, :$day }
 sub ymdc($year, $month, $day) { dtc :$year, :$month, :$day }
 
 sub ds(Str $s) { DateTime.new($s) }
@@ -464,5 +464,3 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 }
 
 done;
-
-# vim: ft=perl6
