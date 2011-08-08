@@ -762,7 +762,6 @@ my @e;
 # L<S03/Hyper operators/'@array »+=»'>
 # Hyper assignment operators
 #?niecza skip 'fails horribly'
-#?rakudo skip 'nom regression -- cannot assign to readonly'
 {
     my @array = 3, 8, 2, 9, 3, 8;
     @r = @array »+=« (1, 2, 3, 4, 5, 6);
