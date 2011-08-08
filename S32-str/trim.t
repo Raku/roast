@@ -147,6 +147,7 @@ Basic tests for the trim() builtin
     is($foo, "\n foo", 'our variable can be trimmed multiple times');
 }
 
+#?rakudo skip 'Cool.trim NYI'
 {
     ok ' ab ' ~~ /.*/, 'regex sanity';
     is $/.trim, 'ab', 'Match.trim';
