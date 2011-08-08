@@ -4,7 +4,6 @@ plan 8;
 # L<S03/"Junctive and (all) precedence"/"infix:<&>">
 
 ok ?(1 S& 2),         "basic infix:<S&>";
-#?rakudo skip "multiple S& NYI"
 ok ?(1 S& 2 S& 3), "basic infix:<S&> (multiple S&'s)";
 #?rakudo todo 'nom regression'
 ok !(0 S& 1),         "S& has and-semantics (first term 0)";

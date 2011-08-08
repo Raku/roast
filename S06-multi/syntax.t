@@ -81,7 +81,6 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     multi rt68234(:$key!) { 'with key' };    #OK not used
     multi rt68234(*%_)    { 'unknown' };    #OK not used
     is rt68234(:key), 'with key', 'can find multi method with key';
-    #?rakudo skip 'RT #68234'
     is rt68234(:unknown), 'unknown', 'can find multi method with slurpy';
 }
 

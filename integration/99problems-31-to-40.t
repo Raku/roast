@@ -128,7 +128,6 @@ plan 67;
     is prime_factors(315), (3,3,5,7), 'prime factors of 315 are 3,3,5,7';
 }
 
-#?rakudo skip 'nom regression - cannot see prime_factors_mult'
 #?DOES 5
 {
     # P36 (**) Determine the prime factors of a given positive integer (2).

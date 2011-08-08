@@ -39,7 +39,6 @@ plan 26;
   is( $foo ~^ $bar, ';' x 75 ~ $zap, 'long string bitwise ~^, no truncation' );
 
   # "interesting" tests from a long time back...
-  #?rakudo 2 skip 'bitwise string manipulation'
   #?niecza 2 skip 'string bitops'
   is( "ok \xFF\xFF\n" ~& "ok 19\n", "ok 19\n", 'stringwise ~&, arbitrary string' );
   is( "ok 20\n" ~| "ok \0\0\n", "ok 20\n",     'stringwise ~|, arbitrary string' );

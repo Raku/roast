@@ -165,7 +165,6 @@ sub accumtest($expect, $op) {
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
-    #?rakudo skip 'segmentation fault'
     ok(!(1 xor 42),        "xor operator working (both true)");
     ok(!(0 xor 0),         "xor operator working (both false)");
 }
@@ -206,12 +205,9 @@ sub accumtest($expect, $op) {
 
     is (@a ^^ @c), '1 2 3', 'Array ^^ true returns true array';
     is (@c ^^ @a), '1 2 3', 'Array ^^ true returns true array';
-    #?rakudo skip 'segmentation fault'
     ok (@a ^^ @b) == (), 'Array ^^ true returns empty list';
     ok (@c ^^ @d) == (), 'Array ^^ true returns empty list';
-    #?rakudo skip 'segmentation fault'
     is (@a ^^ ()), '1 2 3', 'True array ^^ empty list returns array';
-    #?rakudo skip 'segmentation fault'
     is (() ^^ @a), '1 2 3', 'Empty list ^^ true array returns array';
     ok (() ^^ @c) == (), 'Empty list ^^ empty array returns ()';
 }

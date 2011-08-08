@@ -89,7 +89,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 }
 
 # RT #76476
-#?rakudo skip 'RT 76476, augment'
 {
     use MONKEY_TYPING;
     class MonkeyNew { has $.x is rw };

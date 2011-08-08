@@ -782,7 +782,6 @@ sub l () { 1, 2 };
     ok %part1  eqv %both, ',= works for hashes (hash modified)';
 }
 
-#?rakudo skip 'subst'
 {
     my $s = 'abc';
     $s .= subst('b','d');

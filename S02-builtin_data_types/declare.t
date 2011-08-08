@@ -230,13 +230,11 @@ plan 84;
  isa_ok($pare,Blob  );
 }
 
-#?rakudo skip 'Instant not implemented'
 {
  my Instant $paci;
  isa_ok($paci,Instant  );
 }
 
-#?rakudo skip 'Duration not implemented'
 {
  my Duration $pavo;
  isa_ok($pavo,Duration  );

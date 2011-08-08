@@ -33,7 +33,6 @@ plan 8;
 }
 
 # RT #88562
-#?rakudo skip 'RT 88562'
 {
     multi m3(0     ,     $       ) { 'a' };
     multi m3(Int $n, Str $a = 'A') { 'b' };

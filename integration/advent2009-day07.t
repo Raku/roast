@@ -61,7 +61,6 @@ for @array.kv -> $index, $item { $a ~= "$index $item " };
 is $a, '0 a 1 b 2 c 3 d ', '.kv, multiple topics';
 
 
-#?rakudo skip "can't string together Z's"
 {
     my @one   = <11 12 13>;
     my @two   = <21 22 23>;

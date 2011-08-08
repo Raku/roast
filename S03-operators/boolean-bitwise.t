@@ -58,15 +58,12 @@ plan 43;
   ok( ?(False?^False == False), '?^ works with Bools');
   ok( ?(False?^True  == True),  '?^ works with Bools');
   ok( ?(True ?^False == True),  '?^ works with Bools');
-  #?rakudo skip 'segmentation fault'
   ok( ?(True ?^True  == False), '?^ works with Bools');
 
   ok( ?(''   ?^''    == False), '?^ works');
   ok( ?(Any  ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^ Any  == True),  '?^ works');
-  #?rakudo skip 'segmentation fault'
   ok( ?(42   ?^ 42   == False), '?^ works');
-  #?rakudo skip 'segmentation fault'
   ok( ?(42   ?^ 41   == False),  '?^ works');
   
   ok( ?(infix:<?^>(True) == True), '?^ works with one argument');

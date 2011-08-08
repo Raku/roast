@@ -258,7 +258,6 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; say A.new.y',
 #RT #72814
 
 {
-    #?rakudo skip 'RT 72814' 
     #?niecza skip 'a not predeclared'
     lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used
 }

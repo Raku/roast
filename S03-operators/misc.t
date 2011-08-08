@@ -88,7 +88,6 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 }
 
 # L<S03/Hyper operators/hyper operator distributes over them as lists>
-#?rakudo skip "nom regression: 'Could not find sub &METAOP_HYPER'"
 {
     my @rv;
     @rv = (1,2,3,4) >>+<< (1,2,3,4);

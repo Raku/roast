@@ -59,7 +59,6 @@ plan 33;
     nok(%hash<22>.defined, 'nothing at key "22"');
 }
 
-#?rakudo skip 'dubious use of backslash for creating "references"'
 {
     my @a;
     push @a, 1;

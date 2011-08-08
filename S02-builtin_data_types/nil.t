@@ -51,7 +51,6 @@ ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
 #?rakudo skip 'RT 93980'
 ok (my Str $str93980 = Nil) === Str; #OK
 
-#?rakudo 2 skip 'triage'
 is Nil.gist, 'Nil', 'Nil.gist eq "Nil"';
 ok !Nil.new.defined, 'Nil.new is not defined';
 
@@ -64,7 +63,6 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok $x === Int, 'assigns to base-type object';
 }
 
-#?rakudo skip 'triage'
 {
     my $z := Nil;
     ok $z ~~ Nil, 'can bind to Nil';

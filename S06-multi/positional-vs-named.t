@@ -30,7 +30,6 @@ is( earth(her => 3, him => 2, me => 1), 'me 1 him 2 her 3', 'named her named him
 
 is( earth('b', you => 4),      'pos b you 4',       'pos, named you');
 is( earth('c', her => 3),      'pos c her 3',       'pos, named her');
-#?rakudo skip 'No applicable candidates found '
 is( earth('d', 'e'),           'pos d pos e',       'pos, pos');
 is( earth('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 
@@ -59,7 +58,6 @@ is( wind(her => 3, him => 2, me => 1), 'me 1 him 2 her 3', 'named her named him 
 
 is( wind('b', you => 4),      'pos b you 4',       'pos, named you');
 is( wind('c', her => 3),      'pos c her 3',       'pos, named her');
-#?rakudo skip 'No applicable candidates found '
 is( wind('d', 'e'),           'pos d pos e',       'pos, pos');
 is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 

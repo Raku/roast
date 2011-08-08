@@ -195,7 +195,6 @@ sub j (Mu $j) { return $j.perl }
     is($note, "Low roll", '| junction threading ==');
 }
 
-#?rakudo skip 'Junctions as subscripts'
 {
     # L<S03/Junctive operators/Junctions work through subscripting>
     my $got;
@@ -329,7 +328,6 @@ ok(!(?(1&0) != ?(1&&0)), 'boolean context');
 ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 ## See also S03-junctions/autothreading.t
-#?rakudo skip 'substr on junctions'
 {
   is substr("abcd", 1, 2), "bc", "simple substr";
   my Mu $res = substr(any("abcd", "efgh"), 1, 2);
@@ -338,7 +336,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
   ok $res eq "fg", "substr on junctions: fg";
 }
 
-#?rakudo skip 'substr on junctions'
 {
   my Mu $res = substr("abcd", 1|2, 2);
   isa_ok $res, Junction;
@@ -346,7 +343,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
   ok $res eq "cd", "substr on junctions: cd";
 }
 
-#?rakudo skip 'substr on junctions'
 {
   my Mu $res = substr("abcd", 1, 1|2);
   isa_ok $res, Junction;
@@ -354,7 +350,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
   ok $res eq "b", "substr on junctions: b"; 
 }
 
-#?rakudo skip 'index on junctions'
 {
   my Mu $res = index(any("abcd", "qwebdd"), "b");
   isa_ok $res, Junction;
@@ -362,7 +357,6 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
   ok $res == 3, "index on junctions: 3";
 }
 
-#?rakudo skip 'index on junctions'
 {
   my Mu $res = index("qwebdd", "b"|"w");
   isa_ok $res, Junction;

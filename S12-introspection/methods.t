@@ -107,7 +107,6 @@ ok +@methods > 0, 'can get methods for Str (instance)';
 ok +List.^methods() > +Any.^methods(), 'List has more methods than Any';
 ok +Any.^methods() > +Mu.^methods(), 'Any has more methods than Mu';
 
-#?rakudo skip 'nom regression'
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
 ok D.^methods.perl, 'can get .perl of output of .^methods';
 

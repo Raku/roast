@@ -58,7 +58,6 @@ is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::False, "[||] () eq False";
 # RT #65164 implement [^^]
-#?rakudo skip '[^^]'
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";

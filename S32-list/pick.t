@@ -82,7 +82,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 # enums + pick
-#?rakudo skip 'enums'
 {
     is Bool.pick(*).elems, 2, 'Bool.pick works';
 
