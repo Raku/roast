@@ -238,10 +238,8 @@ class TrigFunction
                 
                 # Num.$.inverted_function_name(Complex) tests -- thorough
                 for ($desired-result + 0i, $desired-result + .5i, $desired-result + 2i) -> $z {
-                    is_approx($.function_name($.inverted_function_name($z)), $z, 
-                              "$.inverted_function_name(Complex) - {$angle.key()}");
                     is_approx($z.$.inverted_function_name.$.function_name, $z, 
-                              "Complex.$.inverted_function_name - {$angle.key()}");
+                              "Complex.$.inverted_function_name - $z");
                 }
             }
         ];
