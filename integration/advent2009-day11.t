@@ -33,7 +33,6 @@ is $bob.name, 'Bob', 'dog walker has a name';
 is $bob.dog_name, 'Fido', 'dog name can be accessed by delegation';
 
 # RT 75180
-#?rakudo todo 'nom regression'
 is Dog.^methods(:local).map({.name}).sort.join('|'),
     'bark|name', 'can introspect Dog';
 
