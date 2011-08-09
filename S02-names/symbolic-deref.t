@@ -69,7 +69,6 @@ my $outer = 'outside';
     class A::B { };
 
     is ::('Outer::Inner').perl, Outer::Inner.perl, 'can look up name with :: (1)';
-    #?rakudo skip 'A::B lookup'
     is ::('A::B').perl, A::B.perl, 'can look up name with :: (1)';
 }
 
