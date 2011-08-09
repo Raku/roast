@@ -38,8 +38,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     #?rakudo skip ':x(*)'
     is 'a b c d'.subst(/\w/, 'x', :x(*)),   'x x x x', '.subst and :x(*)';
 
+    #?rakudo todo ':x(0..1)'
     is 'a b c d'.subst(/\w/, 'x', :x(0..1)), 'x b c d', '.subst and :x(0..1)';
     is 'a b c d'.subst(/\w/, 'x', :x(1..3)), 'x x x d', '.subst and :x(0..3)';
+    #?rakudo todo ':x(3..5)'
     is 'a b c d'.subst(/\w/, 'x', :x(3..5)), 'x x x x', '.subst and :x(3..5)';
     is 'a b c d'.subst(/\w/, 'x', :x(5..6)), 'a b c d', '.subst and :x(5..6)';
     is 'a b c d'.subst(/\w/, 'x', :x(3..2)), 'a b c d', '.subst and :x(3..2)';
@@ -55,14 +57,17 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     #?rakudo skip ':x(*)'
     is 'a a a a'.subst('a', 'x', :x(*)),   'x x x x', '.subst (str pattern) and :x(*)';
 
+    #?rakudo todo ':x(0..1)'
     is 'a a a a'.subst('a', 'x', :x(0..1)), 'x a a a', '.subst (str pattern) and :x(0..1)';
     is 'a a a a'.subst('a', 'x', :x(1..3)), 'x x x a', '.subst (str pattern) and :x(0..3)';
+    #?rakudo todo ':x(3..5)'
     is 'a a a a'.subst('a', 'x', :x(3..5)), 'x x x x', '.subst (str pattern) and :x(3..5)';
     is 'a a a a'.subst('a', 'x', :x(5..6)), 'a a a a', '.subst (str pattern) and :x(5..6)';
     is 'a a a a'.subst('a', 'x', :x(3..2)), 'a a a a', '.subst (str pattern) and :x(3..2)';
 }
 
 
+#?rakudo skip ':nth'
 {
     is 'a b c d'.subst(/\w/, 'x', :nth(0)), 'a b c d', '.subst and :nth(0)';
     is 'a b c d'.subst(/\w/, 'x', :nth(1)), 'x b c d', '.subst and :nth(1)';
@@ -80,6 +85,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a a a a'.subst('a', 'x', :nth(5)), 'a a a a', '.subst (str pattern) and :nth(5)';
 }
 
+#?rakudo skip ':nth NYI'
 {
     # combining :g and :nth:
     #?rakudo 2 todo 'RT #61130 -- are these tests actually wrong?'
@@ -88,6 +94,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d'.subst(/\w/, 'x', :nth(3), :g), 'a b x d', '.subst and :g, :nth(3)';
 }
 
+#?rakudo skip ':nth NYI'
 {
     # combining :nth with :x
     is 'a b c d e f g h'.subst(/\w/, 'x', :nth(1,2,3,4), :x(3)),
@@ -159,6 +166,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :g';
 
     # :c and :nth(3, 4)
+    #?rakudo 3 skip ':nth NYI'
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
        'a b x x e f g h',
        '.subst with :c(0) and :nth(3, 4)';
@@ -172,6 +180,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :nth(3, 4)';
 }
 
+#?rakudo skip 's///'
 {
     my $s = "ZBC";
     my @a = ("A", 'ZBC');
@@ -192,6 +201,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
+#?rakudo skip 's///'
 {
     $_ = "a\nb\tc d";
     ok ss/a b c d/w x y z/, 'successful substitution returns True';
@@ -201,6 +211,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
+#?rakudo skip 's///'
 {
     my $a = 'abc';
     ok $a ~~ s[b] = 'de', 's[...] = ... returns true on success';
@@ -212,12 +223,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $a, 'abc', 'failed substitutions leaves string unchanged';
 }
 
+#?rakudo skip 's///'
 {
     eval_dies_ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
     eval_dies_ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
 }
 
 # note that when a literal is passed to 'given', $_ is bound read-only
+#?rakudo skip 's///'
 {
     given my $x = 'abc' {
         ok (s[b] = 'de'), 's[...] = ... returns true on success';
@@ -230,13 +243,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
+#?rakudo skip 's///'
 {
     my $x = 'foobar';
     ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
     is $x, 'fuubar', 'and the substition worked';
 }
 
-    #?rakudo 3 skip '$/ on RHS'
+#?rakudo skip 's///'
 {
     given 'a b c' {
         s[\w] = uc($/);
@@ -253,12 +267,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
+#?rakudo skip 's///'
 {
     my $x = 'ABCD';
     $x ~~ s:x(2)/<.alpha>/x/;
     is $x, 'xxCD', 's:x(2)';
 }
 
+#?rakudo skip 's///'
 {
     my $x = 'ooooo';
     ok $x ~~ s:1st/./X/,    's:1st return value';
@@ -286,6 +302,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $x,  'ooooo',        's:nth(6) no side effect';
 }
 
+#?rakudo skip 's///'
 {
     my $x = 'ooooo';
     $x ~~ s:x(2):nth(1,3)/o/A/;
@@ -322,6 +339,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #69044
+#?rakudo skip 's///'
 {
     sub s { 'sub s' }
     $_ = "foo";
@@ -337,8 +355,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     is 'The foo and the bar'.subst('the', 'that', :samecase), 'The foo and that bar', '.substr and :samecase (1)';
     is 'The foo and the bar'.subst('the', 'That', :samecase), 'The foo and that bar', '.substr and :samecase (2)';
+    #?rakudo todo 'samecase'
     is 'The foo and the bar'.subst(/:i the/, 'that', :samecase), 'That foo and the bar', '.substr (string pattern) and :    samecase (1)';
     is 'The foo and the bar'.subst(/:i The/, 'That', :samecase), 'That foo and the bar', '.substr (string pattern) and :    samecase (2)';
+    #?rakudo 5 todo 'samecase'
     is 'The foo and the bar'.subst(/:i the/, 'that', :g, :samecase), 'That foo and that bar', '.substr (string pattern)     and :g and :samecase (1)';
     is 'The foo and the bar'.subst(/:i The/, 'That', :g, :samecase), 'That foo and that bar', '.substr (string pattern)     and :g and :samecase (2)';
 
@@ -347,6 +367,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
+#?rakudo skip 's///'
 {
     $_ = 'foObar';
     s:ii/oo/au/;
