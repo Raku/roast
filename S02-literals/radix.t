@@ -1,8 +1,6 @@
 use v6;
 use Test;
 
-plan 130;
-
 # L<S02/Literals/":10<42>">
 #?rakudo skip 'nom regression'
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -223,5 +221,7 @@ eval_dies_ok ':10<3a>', ':10<3a> is illegal';
 for 2..36 {
     is eval(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
 }
+
+done;
 
 # vim: ft=perl6
