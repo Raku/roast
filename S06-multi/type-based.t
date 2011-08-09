@@ -52,11 +52,11 @@ is declared_wo_sub(42),   1, "omitting 'sub' when declaring 'multi sub's works (
 is declared_wo_sub("42"), 2, "omitting 'sub' when declaring 'multi sub's works (2)";
 
 # Test for slurpy MMDs
-proto mmd(*@) {}  # L<S06/"Routine modifiers">
+# L<S06/"Routine modifiers">
+proto mmd(*@) {*}
 multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }   #OK not used
 
-#?rakudo 3 todo 'narrowness of slurpies'
 is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
