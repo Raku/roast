@@ -53,6 +53,7 @@ plan 28;
 
 # List.rotate should also work
 
+#?rakudo skip 'Parcel.rotate'
 {
     is ~<a b c d e>.rotate, 'b c d e a', 'List.rotate';
 }
