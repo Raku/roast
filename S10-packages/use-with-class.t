@@ -11,7 +11,9 @@ plan 8;
 
 use t::spec::packages::UseTest;
 
-eval_lives_ok 'Stupid::Class.new()', 'can instantiate object of "imported" class';
+#?rakudo todo "Could not find symbol 'Stupid::&Class'"
+ok eval('Stupid::Class.new()'), 'can instantiate object of "imported" class';
+diag $! if $!;
 
 {
     my $o = Stupid::Class.new(attrib => 'a');
