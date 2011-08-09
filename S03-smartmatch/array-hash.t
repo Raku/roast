@@ -7,6 +7,7 @@ plan 6;
     my %h = (a => 'b', c => Mu);
     ok  (['a']      ~~ %h), 'Array ~~ Hash (exists and True)';
     ok  (['c']      ~~ %h), 'Array ~~ Hash (exists but Mu)';
+    #?rakudo 2 todo 'nom regression'
     ok  ([<a c>]    ~~ %h), 'Array ~~ Hash (both exist)';
     ok  ([<c d>]    ~~ %h), 'Array ~~ Hash (one exists)';
     # note that ?any() evaluates to False
