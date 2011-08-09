@@ -78,6 +78,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok  ([===] 1, 1, 1, 1),      '[===] with literals';
     ok  ([===] $a, $a, $a),      '[===] with vars (positive)';
     nok ([===] $a, $a, [1, 2]),  '[===] with vars (negative)';
+    #?rakudo 2 skip '[!===]'
     ok  ([!===] $a, $b, $a),     '[!===] basic sanity (positive)';
     nok ([!===] $a, $b, $b),     '[!===] basic sanity (negative)';
 }
@@ -163,6 +164,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     # [,] returns a scalar (holding an Array)
     my $count = 0;
     $count++ for [,] @array;
+    #?rakudo todo 'item context'
     is $count, 1, '[,] returns a single Array';
     ok ([,] @array) ~~ Positional, '[,] returns something Positional';
 }
@@ -170,6 +172,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # Following two tests taken verbatim from former t/operators/reduce.t
 #?niecza 2 skip 'These are hyperop tests!'
 lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
+#?rakudo todo 'reduced hyper op'
 lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
@@ -221,6 +224,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 
 # RT #65164 implement [^^]
 #?niecza skip '^^'
+#?rakudo skip '[^^]'
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -228,6 +232,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     ok ! ([^^] 0, 0),    '[^^] works (two false)';
 
     ok ! ([^^] 0, 0, 0), '[^^] works (three false)';
+    #?rakudo 2 todo '[^^]'
     ok ! ([^^] 5, 9, 17), '[^^] works (three true)';
 
     is ([^^] 5, 9, 0),  (5 ^^ 9 ^^ 0),  '[^^] mix 1';
@@ -322,6 +327,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 
 # RT 57976 implement orelse
 #?niecza skip 'huh?  these are macros'
+#?rakudo skip 'orelse'
 {
 
     is (join ', ', [\//] Any,    0, 1),
