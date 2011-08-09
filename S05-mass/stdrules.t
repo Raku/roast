@@ -160,6 +160,7 @@ ok("=\x[7F]" ~~ m/<+cntrl>/, q{Match unanchored cntrl as charset} );
 
 # graph
 
+#?rakudo 14 skip '<.graph>'
 ok("V" ~~ m/^<.graph>$/, q{Match graph as subrule});
 ok(!( "V" ~~ m/^<!graph>.$/ ), q{Don't match negated graph as subrule} );
 ok(!( "V" ~~ m/^<-graph>$/ ), q{Don't match inverted graph as subrule} );
@@ -196,6 +197,7 @@ ok("\x[1E]a" ~~ m/<+lower>/, q{Match unanchored lower as charset} );
 
 # print
 
+#?rakudo 14 skip '<.print>'
 ok("M" ~~ m/^<.print>$/, q{Match print as subrule});
 ok(!( "M" ~~ m/^<!print>.$/ ), q{Don't match negated print as subrule} );
 ok(!( "M" ~~ m/^<-print>$/ ), q{Don't match inverted print as subrule} );
@@ -287,6 +289,7 @@ ok("}0" ~~ m/<+xdigit>/, q{Match unanchored xdigit as charset} );
 
 # L<S05/Predefined Subrules/always returns false>
 
+#?rakudo 2 skip '<!>'
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';
 
