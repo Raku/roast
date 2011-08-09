@@ -40,6 +40,7 @@ is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub')
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
 
 is foo(Inf), 'Inf', 'dispatched to the Inf sub';
+#?rakudo skip 'NaN'
 is foo(NaN), 'NaN', 'dispatched to the NaN sub';
 
 # You're allowed to omit the "sub" when declaring a multi sub.
@@ -55,6 +56,7 @@ proto mmd(*@) {}  # L<S06/"Routine modifiers">
 multi mmd () { 1 }
 multi mmd (*$x, *@xs) { 2 }   #OK not used
 
+#?rakudo 3 todo 'narrowness of slurpies'
 is(mmd(), 1, 'Slurpy MMD to nullary');
 is(mmd(1,2,3), 2, 'Slurpy MMD to listop via args');
 is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
@@ -72,6 +74,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 }
 
+#?rakudo skip '::T and multi dispatch'
 {
 
     class Scissor { }
@@ -107,6 +110,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 
+#?rakudo skip 'scoping(?) in constraints'
 {
     multi m($x,$y where { $x==$y }) { 0 }
     multi m($x,$y) { 1 }   #OK not used
@@ -163,6 +167,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 # make sure that multi sub dispatch also works if the sub is defined
 # in a class (was a Rakudo regression, RT #65674)
 
+#?rakudo skip 'our sub in class'
 {
     class A {
         our multi sub a(Int $x) { 'Int ' ~ $x }
@@ -174,6 +179,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     dies_ok { A::a([4, 5]) }, 'multis in classes (3)';
 }
 
+#?rakudo skip 'constraints'
 {
     multi x(@a, @b where { @a.elems == @b.elems }) { 1 }
     multi x(@a, @b)                                { 2 }   #OK not used
