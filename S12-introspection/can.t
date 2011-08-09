@@ -34,9 +34,9 @@ ok Dog.can("bark"),            "method can on custom class gives correct result 
 ok !Dog.can("w00f"),           "method can on custom class gives correct result if method not found (on proto)";
 
 my $meth = $dog.can("bark");
-is $meth($dog), "bow", "the result for can is an invokable, giving us the sub (on instance)";
+is $meth[0]($dog), "bow", "the result for can contains an invokable, giving us the sub (on instance)";
 $meth = Dog.can("bark");
-is $meth(Dog), "bow",  "the result for can is an invokable, giving us the sub (on proto)";
+is $meth[0](Dog), "bow",  "the result for can contains an invokable, giving us the sub (on proto)";
 
 {
     my $iters = 0;
@@ -67,7 +67,6 @@ class Puppy is Dog {
 }
 my $pup = Puppy.new();
 
-#?rakudo todo '.can returning lists'
 {
     my $iters = 0;
     my $found = "";
@@ -79,7 +78,6 @@ my $pup = Puppy.new();
     is $found, "yapbow", "subclass got right methods called (on instance)";
 }
 
-#?rakudo todo '.can returning lists'
 {
     my $iters = 0;
     my $found = "";
