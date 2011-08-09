@@ -21,10 +21,8 @@ multi sub mmd(Int  $x) { 'Odd'  }   #OK not used
 is mmd(3), 'Odd' , 'MMD with subset type multi works';
 is mmd(4), 'Even', 'subset multi is narrower than the general type';
 
-
-proto foo ($any) { ":)" }   #OK not used
 multi foo ($foo where { $_ eq "foo"}) { $foo }
 is foo("foo"), "foo", "when we have a single candidate with a constraint, it's enforced";
-is foo("bar"), ":)",  "proto called when single constraint causes failed dispatch";
+dies_ok { foo("bar") }, "value that doesn't meet single constraint causes failed dispatch";
 
 # vim: ft=perl6
