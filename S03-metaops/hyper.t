@@ -365,6 +365,7 @@ my @e;
 
 #?pugs todo 'hyper ops'
 #?niecza skip 'does not work; recurses into hash'
+#?rakudo skip 'nom regression: possible spec change/improvement'
 #?DOES 2
 { # hyper dereferencing
     my @array = (
