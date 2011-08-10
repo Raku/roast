@@ -194,11 +194,10 @@ eval ' @%(a => <b>)<a> ';
 ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
 
 # test for RT #62730
-#?rakudo todo 'RT #62730'
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
-#?rakudo skip 'RT 71022: infinite loop (noauto)'
+#?DOES 1
 {
     my %rt71022;
     %rt71022<bughunt> = %rt71022<bughunt>;
@@ -238,6 +237,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # By collective knowledge of #perl6 and @larry, .{ } is actually defined in
 # Any
 #?rakudo skip 'RT 58372'
+#?DOES 3
 {
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
@@ -262,6 +262,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #61412
 #?rakudo skip 'binding hash values - RT 61412'
+#?DOES 1
 {
     my %hash;
     %hash<foo> := 'bar';
