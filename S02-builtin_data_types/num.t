@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-#L<S02/The Num and Rat Types/Perl 6 intrinsically supports big integers>
+#L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
 plan 62;
 
@@ -34,7 +34,7 @@ is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
     is($a, "-1", '-1 stringification works');
 }
 
-#L<S02/The Num and Rat Types/Rat supports extended precision rational arithmetic>
+#L<S02/The C<Num> and C<Rat> Types/Rat supports extended precision rational arithmetic>
 {
     my $a = 1 / 1;
     isa_ok($a, Rat);
@@ -101,7 +101,7 @@ is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
     is($a, "10010", '10.01e3 stringification works');
 }
 
-#L<S02/The Num and Rat Types/Perl 6 intrinsically supports big integers>
+#L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
 {
     my $a = 0b100; "$a";
@@ -130,7 +130,7 @@ is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
     my $a = -1; "$a";
     ok($a + 1 == 0, 'basic addition with negative numbers works'); # parsing bug
 }
-#L<S02/The Num and Rat Types/Rat supports extended precision rational arithmetic>
+#L<S02/The C<Num> and C<Rat> Types/Rat supports extended precision rational arithmetic>
 
 isa_ok(1 / 1, Rat);
 
@@ -146,7 +146,7 @@ isa_ok(1 / 1, Rat);
     ok($a == 10.0, 'trailing zeros compare correctly');
 }
 
-#L<S02/The Num and Rat Types/Perl 6 intrinsically supports big integers>
+#L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
 {
     my $a = "1.01";
@@ -154,7 +154,7 @@ isa_ok(1 / 1, Rat);
     is($a.Int, 1, "1.01 intifies to 1");
 }
 
-#L<S02/The Num and Rat Types/may be bound to an arbitrary>
+#L<S02/The C<Num> and C<Rat> Types/may be bound to an arbitrary>
 
 {
     my $a = "0d0101";

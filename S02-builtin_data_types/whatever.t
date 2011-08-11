@@ -148,7 +148,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     }
 }
 
-# L<S02/The .assuming Method/This is only for operators that are not
+# L<S02/The C<.assuming> Method/This is only for operators that are not
 # Whatever-aware.>
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };
