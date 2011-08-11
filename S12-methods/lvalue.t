@@ -3,7 +3,7 @@ use Test;
 
 plan 16;
 
-# L<S12/Methods/may be declared as lvalues with is rw.>
+# L<S12/Lvalue methods/may be declared as lvalues with is rw.>
 
 class T {
     has $.a;

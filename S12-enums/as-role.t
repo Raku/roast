@@ -3,7 +3,7 @@ use Test;
 
 plan 9;
 
-#L<S12/Enumerations/they may be used to name a desired property>
+#L<S12/Anonymous Mixin Roles using C<but> or C<does>/they may be used to name a desired property>
 
 enum Maybe <No Yes Dunno>;
 class Bar            { }

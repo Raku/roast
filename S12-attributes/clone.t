@@ -4,7 +4,7 @@ use Test;
 
 plan 12;
 
-# L<S12/Construction and Initialization/You can clone an object, changing some of the attributes:>
+# L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
     has $.attr; 
     method set_attr ($attr) { $.attr = $attr; }

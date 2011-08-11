@@ -8,8 +8,8 @@ Class Attributes
 
 =end pod
 
-#L<S12/Attributes/"Class attributes are declared">
-#L<S12/Class methods/metaclass method always delegated>
+#L<S12/Class attributes/"Class attributes are declared">
+#L<S12/Class methods/Such a metaclass method is always delegated>
 
 plan 28;
 

@@ -3,7 +3,7 @@ use Test;
 
 plan 6;
 
-# L<S12/Multisubs and Multimethods/"only candidates marked with the default
+# L<S12/Candidate Tiebreaking/"only candidates marked with the default
 # trait">
 
 class Something {

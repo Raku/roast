@@ -4,7 +4,7 @@ use Test;
 
 plan 36;
 
-# L<S12/Classes/An "isa" is just a trait that happens to be another class>
+# L<S12/Single inheritance/An "isa" is just a trait that happens to be another class>
 
 class Foo {
     has $.bar is rw;

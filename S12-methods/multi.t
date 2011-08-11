@@ -5,7 +5,7 @@ use Test;
 plan 33;
 
 # L<S12/"Multisubs and Multimethods">
-# L<S12/"Multi dispatch">
+# L<S12/"Trusts">
 
 class Foo {
     multi method bar() {

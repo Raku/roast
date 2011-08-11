@@ -3,7 +3,7 @@ use Test;
 
 plan 9;
 
-# L<S12/Methods/"Private methods are declared using">
+# L<S12/Private methods/"Private methods are declared using">
 
 class A {
     method !private {

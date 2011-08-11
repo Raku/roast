@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S12/Methods/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
+# L<S12/Method calls/"Indirect object notation now requires a colon after the invocant, even if there are no arguments">
 
 plan 33;
 
@@ -46,7 +46,7 @@ class T2
 }
 
 
-# L<S12/Methods/"There are several forms of indirection for the method name">
+# L<S12/Fancy method calls/"There are several forms of indirection for the method name">
 
 {
     class A {
@@ -65,7 +65,7 @@ class T2
     is $o.$meth, 'abcbcd',   'calling method with $object.$methodref';
 }
 
-# L<S12/Methods/"$obj.@candidates(1,2,3)">
+# L<S12/Fancy method calls/"$obj.@candidates(1,2,3)">
 #?rakudo skip '.@foo not yet working'
 {
     class T3 {

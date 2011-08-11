@@ -3,7 +3,7 @@ use Test;
 
 plan 8;
 
-# L<S12/Construction and Initialization/The default BUILD and BUILDALL>
+# L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
 
 class Parent {

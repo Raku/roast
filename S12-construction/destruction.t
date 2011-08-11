@@ -4,7 +4,7 @@ use Test;
 
 plan 6;
 
-# L<S12/"Construction and Initialization"/"DESTROY and DESTROYALL work the
+# L<S12/"Semantics of C<bless>"/"DESTROY and DESTROYALL work the
 # same way, only in reverse">
 
 my $in_destructor = 0;

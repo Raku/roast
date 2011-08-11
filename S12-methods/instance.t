@@ -10,7 +10,7 @@ Very basic instance method tests from L<S12/"Methods">
 
 =end pod
 
-# L<S12/"Methods" /"either the dot notation or indirect object notation:">
+# L<S12/"Method calls" /"either the dot notation or indirect object notation:">
 class Foo {
   method doit ($a, $b, $c) { $a + $b + $c }
   method noargs () { 42 }

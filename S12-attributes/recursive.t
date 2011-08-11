@@ -28,7 +28,7 @@ Test attributes with recursively typed attributes
     ok $b.attr.attr === $b, "Cycles resolve correctly";
 }
 
-#L<S12/Attributes/"Class attributes are declared">
+#L<S12/Class attributes/"Class attributes are declared">
 #?rakudo skip 'class attributes NYI'
 {
     class B {
@@ -44,7 +44,7 @@ Test attributes with recursively typed attributes
     
 }
 
-#L<S12/Methods/current lexically-determined class ::?CLASS>
+#L<S12/Invocants/current lexically-determined class ::?CLASS>
 {
     class C {
         has ::?CLASS $.attr is rw;

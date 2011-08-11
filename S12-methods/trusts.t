@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 # Referencing various parts of Synopsis 12.
-# L<S12/Multi dispatch/"if that other class has indicated that it trusts the
+# L<S12/Trusts/"if that other class has indicated that it trusts the
 # class">
 
 plan 15;

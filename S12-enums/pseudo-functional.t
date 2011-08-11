@@ -3,7 +3,7 @@ use Test;
 
 plan 13;
 
-# L<S12/Enumerations/enumeration supplies the type name as a coercion>
+# L<S12/Anonymous Mixin Roles using C<but> or C<does>/enumeration supplies the type name as a coercion>
 
 enum day <<:Sun(1) Mon Tue Wed Thu Fri Sat>>;
 

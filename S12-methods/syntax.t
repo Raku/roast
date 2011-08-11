@@ -3,7 +3,7 @@ use Test;
 
 plan 11;
 
-# L<S12/Methods/"no space between the method name and the left parenthesis">
+# L<S12/Fancy method calls/"no space between the method name and the left parenthesis">
 
 class A {
     multi method doit () { 'empty' };
@@ -26,7 +26,7 @@ is (.doit(1): 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit(1, 2): 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 
-# L<S12/Methods/"if any term in a list is a bare closure">
+# L<S12/Fancy method calls/"if any term in a list is a bare closure">
 #?rakudo skip 'adverbial closures'
 is (1..8).grep: { $_ % 2 }.map: { $_ - 1}.join('|'), '0|2|4|6', 
    'adverbial closure has right precedence and associativity';

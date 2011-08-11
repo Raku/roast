@@ -4,7 +4,7 @@ use Test;
 
 plan 22;
 
-# L<S12/Methods/"For a call on your own private method">
+# L<S12/Fancy method calls/"For a call on your own private method">
 
 class Counter {
     has $!x;

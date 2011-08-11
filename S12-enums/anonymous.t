@@ -4,7 +4,7 @@ plan 7;
 
 # Tests for anonymous enumerations.
 
-# L<S12/Enumerations/An anonymous enum just makes sure each string turns into a pair>
+# L<S12/Anonymous Enumerations/An anonymous enum just makes sure each string turns into a pair>
 
 my $e = enum < ook! ook. ook? >;
 is $e.keys.elems, 3, 'anonymous enum created correct sized hash';
