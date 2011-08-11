@@ -86,7 +86,7 @@ is("x  \c[ 65, 66, 67 ]  x", "x  ABC  x",  "\\c[] allows multiple chars with whi
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
 is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
 
-# L<S12/Methods/Within an interpolation, the double-quoted form>
+# L<S12/Fancy method calls/Within an interpolation, the double-quoted form>
 {
     class InterpolationTest {
         method f { 'int' }

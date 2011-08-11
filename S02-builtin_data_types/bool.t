@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 49;
 
-#L<S12/Enumerations/"Two built-in enumerations are">
+#L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
 # tests True and False are Bool's
 isa_ok(Bool::True, Bool);
