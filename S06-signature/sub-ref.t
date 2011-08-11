@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S02/"Built-In Data Types"> 
+# L<S02/"Built-In Data Types"/Perl 6> 
 
 plan 34;
 

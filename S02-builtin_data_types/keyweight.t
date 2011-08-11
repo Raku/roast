@@ -4,6 +4,7 @@ plan 8;
 
 #?rakudo emit class FatRat { method new($x, $y) { Rat.new($x, $y) } }; # FatRat NYI, so we fake it with Rat
 
+# the below smartlink is broken; KeyWeight apparently is no longer specced
 # L<S02/Mutable types/KeyWeight>
 
 {

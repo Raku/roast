@@ -6,7 +6,7 @@ use Test;
 
 plan 46;
 
-# L<S02/"Whitespace and Comments"/"Embedded comments"
+# L<S02/"Embedded comments"/"Embedded comments"
 #  "#" plus any bracket>
 {
 
@@ -58,7 +58,7 @@ plan 46;
     is(610 #`﴾ paci ﴿   +987, 1597, 'embedded comment with #`﴾﴿');
 }
 
-# L<S02/"Whitespace and Comments"/"no space" between "#" and bracket>
+# L<S02/"Embedded Comments"/"no space" between "#" and bracket>
 {
 
     ok !eval("3 * #` (invalid comment) 2"), "no space allowed between '#`' and '('";
@@ -68,7 +68,7 @@ plan 46;
 
 }
 
-# L<S02/"Whitespace and Comments"/"closed by" "same number of"
+# L<S02/"User-selected Brackets"/"closed by" "same number of"
 #   "closing brackets">
 {
 
@@ -84,7 +84,7 @@ plan 46;
     is(6 * #`<< > >> 6, 36, '#`<< > >>');
 }
 
-# L<S02/"Whitespace and Comments"/"Brackets may be nested">
+# L<S02/"Embedded Comments"/"Brackets may be nested">
 #?rakudo skip 'nested brackets'
 {
     is 3, #`(
@@ -124,7 +124,7 @@ plan 46;
         'single line comment cannot correctly nested within multiline';
 }
 
-# L<S02/"Whitespace and Comments"/"Counting of nested brackets"
+# L<S02/"User-selected Brackets"/"Counting of nested brackets"
 #   "applies only to" "pairs of brackets of the same length">
 #?rakudo skip 'nested parens and braces'
 {
@@ -147,14 +147,14 @@ plan 46;
         '#+bracket at start of line is an error';
 }
 
-# L<S02/Whitespace and Comments/"comment may not contain an unspace">
+# L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 {
     my $a;
     ok !eval '$a = #`\  (comment) 32', "comments can't contain unspace";
     ok !$a.defined, '$a remains undefined';
 }
 
-# L<S02/Whitespace and Comments/"# may not be used as" 
+# L<S02/Single-line Comments/"# may not be used as" 
 #   delimiter quoting>
 {
     my $a;
@@ -166,13 +166,13 @@ plan 46;
     ok !$a.defined, "``#'' can't be used as quote delimiters";
 }
 
-# L<S02/Whitespace and Comments/"single-line comments"
+# L<S02/Single-line Comments/"single-line comments"
 {
     # ticket http://rt.perl.org/rt3/Ticket/Display.html?id=70752
     eval_lives_ok "#=======\n#=======\nuse v6;", "pragma use after single line comments";
 }
 
-# L<S02/"Whitespace and Comments"/POD sections may be>
+# L<S02/Multiline Comments/POD sections may be>
 =begin oppsFIXME
 {
 # needs to be wrapped in eval so it can be properly isolated
@@ -191,7 +191,7 @@ a "=cut".
     is $a, 'bar', '=begin comment without =cut works';
 }
 
-# L<S02/Whitespace and Comments/"single paragraph comments"
+# L<S02/Multiline Comments/"single paragraph comments"
 #   =for comment>
 
 {

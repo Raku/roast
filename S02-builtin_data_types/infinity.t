@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 13;
 
-# L<S02/"Built-In Data Types" /Perl 6 should by default make standard IEEE floating point concepts visible>
+# L<S02/"Infinity and NaN" /Perl 6 by default makes standard IEEE floating point concepts visible>
 
 {
     my $x = Inf;

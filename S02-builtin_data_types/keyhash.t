@@ -7,7 +7,7 @@ sub showkh($h) {
     $h.keys.sort.map({ $^k ~ ':' ~ $h{$^k} }).join(' ')
 }
 
-# L<S02/Mutable types/"A KeyHash differs from a normal Hash">
+# L<S02/Mutable types/"The KeyHash role differs from a normal Associative hash">
 
 # untyped KeyHash
 {

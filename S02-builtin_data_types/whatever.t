@@ -3,7 +3,7 @@ use Test;
 
 plan 73;
 
-# L<S02/Built-In Data Types/"The * character as a standalone term captures the notion of">
+# L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
 
 {
@@ -16,7 +16,7 @@ plan 73;
     ok *.WHAT === Whatever, '*.WHAT does not autocurry';
 }
 
-# L<S02/Built-In Data Types/"Most of the built-in numeric operators">
+# L<S02/Currying of Unary and Binary Operators/"Most of the built-in numeric operators">
 
 my $x = *-1;
 lives_ok { $x.WHAT }, '(*-1).WHAT lives';
@@ -87,7 +87,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is @x1.join('|'), '1|2|3|4', '+* in hash slice (RT 67450)';
 }
 
-# L<S02/Built-In Data Types/are internally curried into closures of one or two
+# L<S02/Currying of Unary and Binary Operators/are internally curried into closures of one or two
 # arguments>
 {
     my $c = * * *;
@@ -123,7 +123,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     ok not $rt68714(Any), '*.defined works (false)';
 }
 
-# L<S02/Built-In Data Types/skip first two elements>
+# L<S02/The Whatever Object/skip first two elements>
 {
     # TODO: find out if this allowed for item assignment, or for list
     # assignment only
@@ -135,7 +135,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 
-# L<S02/Built-In Data Types/This rewrite happens after variables are looked up
+# L<S02/Currying of Unary and Binary Operators/This rewrite happens after variables are looked up
 # in their lexical scope>
 
 {
@@ -148,7 +148,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     }
 }
 
-# L<S02/Built-In Data Types/This is only for operators that are not
+# L<S02/The .assuming Method/This is only for operators that are not
 # Whatever-aware.>
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };

@@ -6,7 +6,7 @@ use Test;
 
 plan 84;
 
-# L<S02/"Built-In Data Types"/"Built-in object types start with an uppercase letter">
+# L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
 # immutable types (e.g. Int, Num, Complex, Rat, Str, Bit, Regex, Set, Block, List)
 

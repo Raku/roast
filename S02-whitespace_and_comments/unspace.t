@@ -6,7 +6,7 @@ use Test;
 
 plan 75;
 
-# L<S02/"Whitespace and Comments"/This is known as the "unspace">
+# L<S02/"Unspaces"/This is known as the "unspace">
 
 
 ok(4\       .sqrt == 2, 'unspace with numbers');
@@ -209,7 +209,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is((xyzzy { @^x }\ : 1, 2, 3), (1, 2, 3), 'unspace then colon following arg block');
 }
 
-# L<S02/"Whitespace and Comments"/"natural conflict between postfix operators and infix operators">
+# L<S02/"Optional Whitespace and Exclusions"/"natural conflict between postfix operators and infix operators">
 #This creates syntactic ambiguity between
 # ($n) ++ ($m)
 # ($n++) $m
@@ -270,11 +270,11 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n\ .++, 1, 'postfix unspace');
     is($n, 2, 'check $n');
 
-    # L<S02/"Lexical Conventions"/"U+301D codepoint has two closing alternatives">
+    # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
     is((foo\#`〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
     eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
-    # L<S02/"Whitespace and Comments"/".123">
+    # L<S02/"Implicit Topical Method Calls"/".123">
     # .123 is equal to 0.123
 
     is ( .123), 0.123, ' .123 is equal to 0.123';

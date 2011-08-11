@@ -107,13 +107,13 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     is f(ä => 3), 3, 'non-ASCII named arguments';
 }
 
-# L<S02/Lexical Conventions/Perl can count Unicode line and paragraph separators>
+# L<S02/Unicode Semantics/Perl can count Unicode line and paragraph separators>
 
 #?rakudo: todo 'PS does not work to separate lines'
 #?niecza skip 'PS does not work to separate lines'
 eval_lives_ok "\{ 1 \} \x2029 \{ 1 \}", "Unicode 2029 can terminate lines";
 
-# L<S02/Lexical Conventions/If a character is already used>
+# L<S02/Bracketing Characters/If a character is already used>
 
 eval_lives_ok "q\x298d test \x298e", "Unicode open-298d maps to close-298e";
 eval_lives_ok "q\x301d test \x301e", "Unicode open-301d maps to close-301e";

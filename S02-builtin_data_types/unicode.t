@@ -3,7 +3,7 @@ use v6;
 use Test;
 plan 17;
 
-#L<S02/"Built-In Data Types"/".bytes, .codes or .graphs">
+#L<S02/"Methods on Arrays"/".bytes, .codes or .graphs">
 
 # LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT
 my Str $u = "\x[0041,0300]";
@@ -26,7 +26,7 @@ is $u.chars, 1, '.chars defaults to .graphs';
     is $rt65170.chars, 1, '.chars defaults to .graphs (3)';
 }
 
-#L<S02/"Built-In Data Types"/"coerce to the proper units">
+#L<S02/"Units of Position Arguments"/"coerce to the proper units">
     $u = "\x[41,
             E1,
             41, 0300,

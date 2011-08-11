@@ -64,7 +64,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     dies_ok { %s = a => True, b => True }, "Can't assign to a %var implemented by Set";
 }
 
-# L<S02/Hyper operators/'unordered type'>
+# L<S03/Hyper operators/'unordered type'>
 
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';

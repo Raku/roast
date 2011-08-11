@@ -4,7 +4,7 @@ use Test;
 
 plan 52;
 
-# L<S02/"Lexical Conventions"/"Unicode horizontal whitespace">
+# L<S02/"Unicode Semantics"/"Unicode horizontal whitespace">
 
 is(eval('
 my	@x	=	<a	b	c>;	sub	y	(@z)	{	@z[1]	};	y(@x)
@@ -131,7 +131,7 @@ multi foo($x) { $x }
 
 $_ = 'b';
 
-# L<S02/"Lexical Conventions"/"Unicode horizontal whitespace">
+# L<S02/"Unicode Semantics"/"Unicode horizontal whitespace">
 is(eval('foo\	.lc'), 'a', 'long dot with CHARACTER TABULATION');
 is(eval('foo\
 .lc'), 'a', 'long dot with LINE FEED (LF)');

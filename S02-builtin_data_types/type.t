@@ -7,7 +7,7 @@ Basic tests about variables having built-in types assigned
 
 =end description
 
-# L<S02/"Built-In Data Types"/"A variable's type is a constraint indicating what sorts">
+# L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
 plan 55;
 
@@ -41,7 +41,7 @@ my $baz of Int;
     is(($baz = 42),       42,    'of Int is an integer');
 }
 
-# L<S02/Built-In Data Types/Variables with native types do not support undefinedness>
+# L<S02/Variables Containing Undefined Values/Variables with native types do not support undefinedness>
 #?rakudo skip 'native types (causes false positives if marked with todo)'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
