@@ -87,7 +87,7 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     is white(), 'sub', 'short name with parenthesis is a sub';
 }
 
-# L<S12/The .pick Method/"define a .pick method">
+# L<S12/The C<.pick> Method/"define a .pick method">
 #?niecza skip '.pick and .roll'
 {
     lives_ok { my Color $k = Color.pick }, 'Color.pick assigns to Color var';
