@@ -180,7 +180,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :nth(3, 4)';
 }
 
-#?rakudo skip 's///'
 {
     my $s = "ZBC";
     my @a = ("A", 'ZBC');
@@ -211,7 +210,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #L<S05/Substitution/As with Perl 5, a bracketing form is also supported>
-#?rakudo skip 's///'
 {
     my $a = 'abc';
     ok $a ~~ s[b] = 'de', 's[...] = ... returns true on success';
@@ -223,14 +221,12 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $a, 'abc', 'failed substitutions leaves string unchanged';
 }
 
-#?rakudo skip 's///'
 {
     eval_dies_ok '$_ = "a"; s:unkonwn/a/b/', 's/// dies on unknown adverb';
     eval_dies_ok '$_ = "a"; s:overlap/a/b/', ':overlap does not make sense on s///';
 }
 
 # note that when a literal is passed to 'given', $_ is bound read-only
-#?rakudo skip 's///'
 {
     given my $x = 'abc' {
         ok (s[b] = 'de'), 's[...] = ... returns true on success';
@@ -243,7 +239,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
-#?rakudo skip 's///'
 {
     my $x = 'foobar';
     ok ($x ~~ s:g[o] = 'u'), 's:g[..] = returns True';
@@ -267,7 +262,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
 }
 
-#?rakudo skip 's///'
 {
     my $x = 'ABCD';
     $x ~~ s:x(2)/<.alpha>/x/;
@@ -343,10 +337,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     sub s { 'sub s' }
     $_ = "foo";
-    #?rakudo skip 'RT 69044'
     ok s,foo,bar, , 'bare s is always substititution';
     is s(), 'sub s', 'can call sub s as "s()"';
-    #?rakudo skip 's () = RHS'
     $_ = "foo";
     ok s (foo) = 'bar', 'bare s is substitution before whitespace then parens';
 }
