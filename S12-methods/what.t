@@ -61,6 +61,7 @@ This test tests the C<WHAT> builtin.
 ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
 
 # RT #69915
+#?rakudo skip 'nom regression'
 {
     sub rt69915f( $a, $b ) { return WHAT($a).gist ~ '~' ~ WHAT($b).gist }
     sub rt69915m( $a, $b ) { return $a.WHAT.gist  ~ '~' ~ $b.WHAT.gist }

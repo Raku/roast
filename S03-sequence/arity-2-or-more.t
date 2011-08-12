@@ -13,7 +13,6 @@ is (1, 1, &[+] ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, u
 is (0, 1, { $^a + $^b } ... *).[^7].join(', '), '0, 1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 0 1 seeds';
 is (1, 1, 2, -> $a, $b { $a + $b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 4 seeds';
-#?rakudo skip 'unknown'
 is (0, 1, 1, 2, 3, { $^a + $^b } ... *).[^7].join(', '), '0, 1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 5 seeds';
 
 # some tests which exactly hit a limit
@@ -22,8 +21,8 @@ is (1, 1, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacc
 is (1, 1, 2, -> $a, $b { $a + $b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 4 seeds';
 # adapted from http://www.perlmonks.org/?node_id=772778
-#?rakudo 2 skip '&[%]'
 is (42, 24, &[%] ... 0)[*-2], 6, 'arity-2 GCD';
+#####?rakudo skip '&[%]'
 is (42, 24, &[%] ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
 is (42, 24, * % * ... 0)[*-2], 6, 'arity-2 GCD';
 is (42, 24, * % * ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
@@ -35,7 +34,7 @@ is (1, 1, 2, -> $a, $b { $a + $b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13
 is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 4 seeds';
 
 # sequence with slurpy functions
-
+#?rakudo skip 'nom regression'
 {
     sub nextprime( *@prev_primes ) {
 	my $current = @prev_primes[*-1];
@@ -44,6 +43,7 @@ is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'a
     }
     is (2, &nextprime ... 13).join(' '), '2 3 5 7 11 13', 'slurpy prime generator';
 }
+#?rakudo skip 'nom regression'
 is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slurpy factorial generator';
 
 done;

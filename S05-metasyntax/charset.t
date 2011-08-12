@@ -56,14 +56,16 @@ ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 #?rakudo skip 'large \\x char spec in regex (RT #67122) (noauto)'
 ok "\x[10001]" ~~ /<[\x10000..\xEFFFF]>/, 'large \\x char spec';
 
-#?rakudo todo 'RT 71702: lethal reverse range in charset'
+#?rakudo skip 'RT 71702: lethal reverse range in charset'
 eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
     'reverse range in charset is lethal (RT 71702)' );
 
 # RT #64220
+#?rakudo skip 'nom regression'
 ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 
 # RT #69682
+#?rakudo skip 'nom regression'
 {
 eval "/<[a-z]>/";
 ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
