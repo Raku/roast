@@ -99,6 +99,7 @@ should be equivalent to
 
 =end pod
 
+#?rakudo skip 'splice() not implemented in class Mu'
 {
   my @expected = ("foo","bar");
   @expected = map { substr($_,1,1) }, @expected;

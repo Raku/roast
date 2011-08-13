@@ -121,6 +121,7 @@ plan 117;
     is(substr("hello foo bar", 6, 3), "foo", "substr on literal string");
     is("hello foo bar".substr(6, 3), "foo", ".substr on literal string");
     is("hello foo bar".substr(6, 3).uc, "FOO", ".substr.uc on literal string");
+    #?rakudo skip '.capitalize'
     is("hello foo bar and baz".substr(6, 10).capitalize, "Foo Bar An", ".substr.capitalize on literal string");
     is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string");
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
@@ -238,6 +239,7 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr("hello foo bar", 6, l(3)), "foo", "substr on literal string (substr(Int, StrLen)).");
     is("hello foo bar".substr(6, l(3)), "foo", ".substr on literal string (substr(Int, StrLen)).");
     is("hello foo bar".substr(6, l(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrLen)).");
+    #?rakudo skip '.capitalize'
     is("hello foo bar and baz".substr(6, l(10)).capitalize, "Foo Bar An", ".substr.capitalize on literal string (substr(Int, StrLen)).");
     is("hello »« foo".substr(6, l(2)), "»«", ".substr on unicode string (substr(Int, StrLen)).");
     is("שיעבוד כבר".substr(4, l(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrLen)).");
@@ -353,6 +355,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is(substr("hello foo bar", 6, p(3)), "foo", "substr on literal string (substr(Int, StrPos)).");
     is("hello foo bar".substr(6, p(3)), "foo", ".substr on literal string (substr(Int, StrPos)).");
     is("hello foo bar".substr(6, p(3)).uc, "FOO", ".substr.uc on literal string (substr(Int, StrPos)).");
+    #?rakudo skip '.capitalize'
     is("hello foo bar and baz".substr(6, p(10)).capitalize, "Foo Bar An", ".substr.capitalize on literal string (substr(Int, StrPos)).");
     is("hello »« foo".substr(6, p(2)), "»«", ".substr on unicode string (substr(Int, StrPos)).");
     is("שיעבוד כבר".substr(4, p(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrPos)).");
