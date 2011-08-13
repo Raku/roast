@@ -74,7 +74,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 }
 
-#?rakudo skip '::T and multi dispatch'
 {
 
     class Scissor { }
@@ -109,8 +108,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 }
 
-
-#?rakudo skip 'scoping(?) in constraints'
 {
     multi m($x,$y where { $x==$y }) { 0 }
     multi m($x,$y) { 1 }   #OK not used
@@ -179,13 +176,14 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     dies_ok { A::a([4, 5]) }, 'multis in classes (3)';
 }
 
-#?rakudo skip 'constraints'
 {
     multi x(@a, @b where { @a.elems == @b.elems }) { 1 }
     multi x(@a, @b)                                { 2 }   #OK not used
     is x([1,2],[3,4]), 1, 'where-clause that uses multiple params (1)';
     is x([1],[2,3,4]), 2, 'where-clause that uses multiple params (1)'; 
+}
 
+{
     multi y(::T $x, T $y) { 1 }   #OK not used
     multi y($x, $y)       { 2 }   #OK not used
     is y(1, 2), 1, 'generics in multis (+)';
