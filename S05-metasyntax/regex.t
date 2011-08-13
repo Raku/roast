@@ -3,9 +3,6 @@ use Test;
 
 plan 26;
 
-# L<S05/Regexes constitute a first-class language, rather than just being
-# strings>
-
 eval_dies_ok('qr/foo/', 'qr// is gone');
 
 isa_ok(rx/oo/, Regex);

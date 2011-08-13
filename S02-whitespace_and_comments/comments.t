@@ -6,7 +6,7 @@ use Test;
 
 plan 46;
 
-# L<S02/"Embedded comments"/"Embedded comments"
+# L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
 {
 
@@ -166,7 +166,7 @@ plan 46;
     ok !$a.defined, "``#'' can't be used as quote delimiters";
 }
 
-# L<S02/Single-line Comments/"single-line comments"
+# L<S02/Single-line Comments/"single-line comments">
 {
     # ticket http://rt.perl.org/rt3/Ticket/Display.html?id=70752
     eval_lives_ok "#=======\n#=======\nuse v6;", "pragma use after single line comments";
