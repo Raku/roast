@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S02/Literals/As with Perl 5 array interpolation>
+# L<S02/Arrays/As with Perl 5 array interpolation>
 # See L<http://www.nntp.perl.org/group/perl.perl6.language/23224>:
 #   In a private conversation with Larry this afternoon, he said that by
 #   default "$foo" and ~$foo and $foo.as(Str) all give the same result

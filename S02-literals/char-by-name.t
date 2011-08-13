@@ -6,8 +6,7 @@ plan 10;
 
 # XXX [TODO] more tests in other Unicode charset.
 
-# L<S02/Literals/interpolate Unicode "by name" using "\c"
-#   and "square brackets">
+# L<S02/Unicode codepoints>
 
 is "\c[LEFT CORNER BRACKET]", "「", '\c[LEFT CORNER BRACKET]';
 is "\c[RIGHT WHITE CORNER BRACKET]", "』", '\c[RIGHT WHITE CORNER BRACKET]';
@@ -21,7 +20,7 @@ is("\c[LINE FEED]", "\c10", '\c[LINE FEED] works');
 #?rakudo skip '\c[LF] not valid'
 is("\c[LF]", "\c10", '\c[LF] works');
 
-# L<S02/Literals/"Multiple codepoints constituting a single character">
+# L<S02/Unicode codepoints/"Multiple codepoints constituting a single character">
 #?pugs 2 todo 'List of characters in \c[...]'
 is "\c[LATIN CAPITAL LETTER A, LATIN CAPITAL LETTER B]", 'AB', 'two letters in \c[]';
 is "\c[LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT]", "\x[0041,0300]", 'letter and combining char in \c[]';

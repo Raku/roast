@@ -2,16 +2,9 @@ use v6;
 
 use Test;
 
-=begin kwid
-
-This file tests the circumfix:«< >» quoting constructs
-
-=end kwid
-
 plan 23;
 
-# L<S02/"Literals">
-# L<S03/"Chained comparisons">
+# L<S02/Quoting forms>
 
 my $s = join 'a', <x y z>;
 is($s, "xayaz", 'list context <list>');

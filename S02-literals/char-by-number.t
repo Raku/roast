@@ -4,12 +4,7 @@ use Test;
 
 plan 42;
 
-=begin kwid
-
-<S02/Literals/"Characters indexed by" hex numbers
-              "\x123" "\x[123]" "\x[41,42,43]">
-
-=end kwid
+# L<S02/Radix interpolation>
 
 is("\x20", ' ', '\x20 normal space');
 is("\xa0", ' ', '\xa0 non-breaking space');
@@ -25,9 +20,6 @@ is("\x[41,42,43]", 'ABC', '\x[list]');
 is("\x[4f60,597d]", '你好', '\x[a,b]');
 is("\x41,42,43", 'A,42,43', '\xlist not valid');
 
-# <S02/Literals/"Characters indexed by" octal numbers"
-#  with "\o">
-
 is("\o40", ' ', '\o40 normal space');
 is("\o240", ' ', '\o240 non-breaking space');
 
@@ -41,9 +33,6 @@ eval_dies_ok('"\o [6211]"', 'broken "\o [6211]"');
 is("\o[101,102,103]", 'ABC', '\o[list]');
 is("\o[47540,54575]", '你好', '\o[a,b]');
 is("\o101,102,103", 'A,102,103', '\olist not valid');
-
-# <S02/Literals/"Characters indexed by" decimal numbers"
-#  with "\c">
 
 is("\c32", ' ', '\c32 normal space');
 is("\c160", ' ', '\c160 non-breaking space');
@@ -59,7 +48,8 @@ is("\c[65,66,67]", 'ABC', '\c[list]');
 is("\c[20320,22909]", '你好', '\c[a,b]');
 is("\c65,66,67", 'A,66,67', '\clist not valid');
 
-# L<S02/Literals/"\123 form" is illegal>
+# L<S02/Radix interpolation/"\123 form">
+
 {
     eval_dies_ok q{"\123"}, '"\123" form is no longer valid Perl 6';
     eval_dies_ok q{"\10"}, '"\10" form is no longer valid Perl 6';
@@ -69,8 +59,6 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
     is "\040", "\x[0]40", '\0stuff is actually valid';
 }
 
-# L<S02/Literals/"Only \0 remains" "only if"
-#   "next character" not in "'0'..'7'">
 {
     is "\08", chr(0) ~ '8', 'next char of \0 is 8 (> 7)';
     is "\0fff", chr(0) ~ 'fff', 'next char of \0 is `f`';
