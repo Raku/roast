@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 24;
+plan 26;
 
 # check the subroutine with the closest matching signature is called
 #
@@ -60,6 +60,15 @@ is( wind('b', you => 4),      'pos b you 4',       'pos, named you');
 is( wind('c', her => 3),      'pos c her 3',       'pos, named her');
 is( wind('d', 'e'),           'pos d pos e',       'pos, pos');
 is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
+
+#?rakudo skip 'slurpy and named interaction'
+{
+    # a nom bug
+    multi catch(*@all            ) { 1 }
+    multi catch(*@all, :$really! ) { 2 }
+    is catch(0, 5),           1, 'slurpy and named interact well (1)';
+    is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
+}
 
 
 # vim: ft=perl6
