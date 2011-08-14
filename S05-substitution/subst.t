@@ -200,7 +200,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
-#?rakudo skip 's///'
 {
     $_ = "a\nb\tc d";
     ok ss/a b c d/w x y z/, 'successful substitution returns True';
