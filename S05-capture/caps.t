@@ -26,6 +26,7 @@ is ca($/.chunks),   '0:a b c d', '$/.chunks is one item for (.*)';
 
 my token wc { \w };
 
+#?rakudo 3 skip 'NYI'
 ok 'a b c' ~~ /:s <wc=&wc> (\w) <wc=&wc> /, 'regex matches';
 is ca($/.caps), 'wc:a|0:b|wc:c', 'named and positional captures mix correctly';
 is ca($/.chunks), 'wc:a|~: |0:b|~: |wc:c',
@@ -40,6 +41,7 @@ ok 'a b c' ~~ /[ (\S) \s ] ** 2 (\S)/, 'regex matches';
 is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple ()';
 is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
+#?rakudo 3 skip '<wc=&wc>'
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
 #'RT 75484 (fails randomly) (noauto)'
 is ca($/.caps), '0:a|wc:b|0:c|wc:d',
