@@ -220,7 +220,6 @@ plan 67;
     skip 'No Benchmark module yet', 1
 }
 
-#?rakudo skip 'nom regression - need ceiling'
 #?DOES 2
 {
     # P39 (*) A list of prime numbers.

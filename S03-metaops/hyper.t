@@ -531,7 +531,6 @@ my @e;
     is %r<c>, 8, 'hash - correct result from <<**>>';
 }
 
-#?rakudo skip '>>. NYI on hashes'
 {
     my %a = a => 1, b => -2, c => 3;
     my %r = %a>>.abs;

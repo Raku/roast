@@ -2,7 +2,6 @@ use v6;
 use Test;
 
 # L<S02/Literals/":10<42>">
-#?rakudo skip 'nom regression'
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
 is( :10<1>,   1, 'got the correct int value from decimal 1' );
 is( :10<2>, 0d2, 'got the correct int value from decimal 2' );

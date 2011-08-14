@@ -59,7 +59,6 @@ my @list = (1 .. 5);
         'got the values we expect';
 }
 
-#?rakudo skip '{; $_ => 1} should be block'
 {
     my @list = 1 .. 5;
     is +(map {;$_ => 1 }, @list), 5,
