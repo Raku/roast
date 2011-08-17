@@ -20,6 +20,7 @@ is($test, "abcde", "repeated call to p5chop removes last character");
 
 my @t = <abc def gih>;
 
+#?rakudo 2 skip 'p5chop(@list)'
 is(p5chop(@t), 'h', 'p5chop(@list) returns the last removed char');
 is(@t, [<ab de gi>], 'p5chop(@list) removes the last char of each string');
 
@@ -30,6 +31,7 @@ is(p5chop($test), 'c', 'p5chop on literal string');
 # my $undef_var;
 # p5chop($undef_var)
 
+#?rakudo skip 'p5chop(@list)'
 {
 	my @empty_array;
 	my $r = p5chop(@empty_array);
