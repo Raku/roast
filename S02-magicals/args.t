@@ -12,7 +12,7 @@ BEGIN { @*INC.push: 't/spec/packages' }
 
 use Test::Util;
 
-is_run 'print @*ARGS.join(", ")', :args[1, 2, "foo"],
+is_run 'print @*ARGS.join(q[, ])', :args[1, 2, "foo"],
     {
         out => '1, 2, foo',
         err => '',
