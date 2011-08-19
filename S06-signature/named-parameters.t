@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 98;
+plan 95;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -11,16 +11,10 @@ plan 98;
         return $x;
     }
     is a(3), 3, 'Can pass positional arguments';
-    eval_dies_ok('a(g=>7)', 'Dies on passing superfluous arguments');
+    nok eval('a(g=>7)'), 'Dies on passing superfluous arguments';
 }
 
 {
-    sub b($x) {
-        return $x;
-    }
-
-    is b(:x(3)), 3, 'Can pass positional parameters as named ones';
-
     sub c(:$w=4){
         return $w;
     } 
@@ -48,14 +42,10 @@ plan 98;
 
     is A.new.colonpair_private, 8, 'colonpair with a privare variable';
     is B.new.colonpair_public, 12, 'colonpair with a public variable';
+    #?rakudo skip 'nom regression'
     is colonpair_positional(:g<10>), 15, 'colonpair with a positional variable';
 }
 
-# L<S06/Named parameters>
-
-sub simple_pos_param($x) { $x }
-is simple_pos_param(x => 3), 3, "positional param may be addressed by name (1)";
-is simple_pos_param(:x(3)),  3, "positional param may be addressed by name (2)";
 
 # L<S06/Named parameters/marked by a prefix>
 sub simple_pos_params (:$x) { $x }
@@ -212,7 +202,7 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
         $ref = $refin;
     }
     my $aref = [0];
-    setref(refin => $aref);
+    setref($aref);
     $aref[0]++;
     is($aref[0], 1, "aref actually implemented");
     is($ref[0], 1, "ref is the same as aref");
@@ -255,6 +245,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #68524
+#?rakudo skip 'RT 68524'
 {
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.perl ~~ m/\!/,
@@ -262,6 +253,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #69516
+#?rakudo skip 'RT 69516'
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
     ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
@@ -269,6 +261,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # L<S06/Named parameters/Bindings happen in declaration order>
+#?rakudo skip 'where constraints'
 {
     my $t = '';
     sub order_test($a where { $t ~= 'a' },   #OK not used
