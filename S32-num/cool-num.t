@@ -61,6 +61,7 @@ is_approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt'
 is_approx "17"i, 17i, '"17"i == 17i';
 is_approx (NotComplex.new)i, $magic\i, '(NotComplex.new)i == $magic\i';
 
+#?rakudo 4 skip 'angle conversion'
 is_approx "17".to-radians(Degrees), 17.to-radians(Degrees),
           '"17".to-radians(Degrees) == 17.to-radians(Degrees)';
 is_approx NotComplex.new.to-radians(Gradians), $magic.to-radians(Gradians),
@@ -71,8 +72,9 @@ is_approx "17".from-radians(Degrees), 17.from-radians(Degrees),
 is_approx NotComplex.new.from-radians(Gradians), $magic.from-radians(Gradians),
           'NotComplex.new.from-radians(Gradians) == $magic.from-radians(Gradians)';
 
-is_approx "17.25".floor, 17.25.floor, '"17.25".floar == 17.25.floor';
-is_approx "17.25".ceiling, 17.25.ceiling, '"17.25".floar == 17.25.ceiling';
+is_approx "17.25".floor, 17.25.floor, '"17.25".floor == 17.25.floor';
+is_approx "17.25".ceiling, 17.25.ceiling, '"17.25".ceiling == 17.25.ceiling';
+#?rakudo 2 skip 'round'
 is_approx "17.25".round, 17.25.round, '"17.25".floar == 17.25.round';
 is_approx "17.25".round("0.1"), 17.25.round(0.1), '"17.25".floar("0.1") == 17.25.round(0.1)';
 is_approx "17.25".truncate, 17.25.truncate, '"17.25".floar == 17.25.truncate';

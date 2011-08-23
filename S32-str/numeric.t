@@ -54,7 +54,6 @@ check '-0xA0',      Int,   -160;
 f     '0xag';
 f     '0xaf-';
 
-#?rakudo skip ":radix<...>"
 {
     check ':10<42>',    Int,     42;
     check '-:10<42>',   Int,    -42;
@@ -62,6 +61,7 @@ f     '0xaf-';
     check ':36<aZ>',    Int,    395;
     check ':2<11>',     Int,      3;
     f     ':2<2>';
+    #?rakudo skip 'NYI'
     f     ':37<8>';
     f     ':10<8_>';
     f     ':10<_8>';

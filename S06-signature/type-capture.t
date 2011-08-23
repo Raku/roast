@@ -30,6 +30,7 @@ sub declare_cap_type(::T $x) {   #OK not used
     my T $y = 4.2;   #OK not used
     1
 }
+#?rakudo skip 'nom regression'
 ok(declare_cap_type(3.3), 'can use captured type in declaration');
 $ok = 1;
 try {

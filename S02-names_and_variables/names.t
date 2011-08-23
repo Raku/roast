@@ -77,20 +77,19 @@ plan 138;
 # Subroutines with keywords for names (may need to be called with
 # parentheses).
 {
-     {
-        eval_lives_ok "sub $^kw \{}; {$^kw}();",
-            "sub named \"$^kw\" called with parentheses";
-        eval_lives_ok "sub {$^kw}-rest \{}; {$^kw}-rest;",
-            "sub whose name starts with \"$^kw-\"";
-        eval_lives_ok "sub {$^kw}'rest \{}; {$^kw}'rest;",
-            "sub whose name starts with \"$^kw'\"";
-    } for <
+    for <
         foo package module class role grammar my our state let
         temp has augment anon supersede sub method submethod
         macro multi proto only regex token rule constant enum
         subset if unless while repeat for foreach loop given
-        when default
-    >;
+        when default > -> $kw {
+        eval_lives_ok "sub $kw \{}; {$kw}();",
+            "sub named \"$kw\" called with parentheses";
+        eval_lives_ok "sub {$kw}-rest \{}; {$kw}-rest;",
+            "sub whose name starts with \"$kw-\"";
+        eval_lives_ok "sub {$kw}'rest \{}; {$kw}'rest;",
+            "sub whose name starts with \"$kw'\"";
+    }
 }
 
 # RT #69752

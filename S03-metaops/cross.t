@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 26;
+plan 25;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -45,15 +45,6 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
     my @result = <a b> X~ <1 2>;
     is @result, <a1 a2 b1 b2>,
         'cross-concat produces expected result';
-}
-
-# L<S03/Cross operators/desugars to something like>
-#?rakudo todo "Not at all clear if this test is correct or not"
-{
-    my @result = [~]«( <a b> X, <1 2> );
-    #?pugs todo 'feature'
-    is @result, <a1 a2 b1 b2>,
-        'X, works with hyperconcat';
 }
 
 # L<S03/Cross operators/list concatenating form when used like this>
