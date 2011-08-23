@@ -6,7 +6,7 @@ use Test;
 
 plan 1;
 
-# L<S02/Literals/"The double-underscore forms are going away:">
+# L<S02/Double-underscore forms/"The double-underscore forms are going away:">
 
 ok 1, "Before the =END Block";
 

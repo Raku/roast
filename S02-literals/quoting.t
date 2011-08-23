@@ -54,7 +54,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     ok Q{\\}.chars == 2,            'Q{..} do not interpolate backslashes';
 }
 
-# L<S02/Literals/":q" ":single" "Interpolate \\, \q and \'">
+# L<S02/Adverbs on quotes/":q" ":single" "Interpolate \\, \q and \'">
 {
     my @q = ();
     @q = (q/$foo $bar/);
@@ -69,7 +69,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], '$foo $bar', 'and did not interpolate either');
 };
 
-# L<S02/Literals/That is () have no special significance>
+# L<S02/Delimiters of quoting forms/That is () have no special significance>
 # non interpolating single quotes with nested parens
 {
     my @q = ();
@@ -78,7 +78,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], '$foo $bar', 'and nests parens appropriately');
 };
 
-# L<S02/Literals/That is () have no special significance>
+# L<S02/Delimiters of quoting forms/That is () have no special significance>
 #?rakudo skip 'quoting with q (..)'
 { # non interpolating single quotes with nested parens
     my @q = ();
@@ -87,7 +87,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], ' ($foo $bar)', 'and nests parens appropriately');
 };
 
-# L<S02/Literals/Which is mandatory for parens>
+# L<S02/Delimiters of quoting forms/Which is mandatory for parens>
 { # q() is bad
     my @q;
     sub q { @_ }
@@ -96,7 +96,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(+@q, 2, 'q() is always sub call');
 };
 
-# L<S02/Literals/:q>
+# L<S02/C<Q> forms/:q>
 #?rakudo skip 'Q:q adverbs'
 { # adverb variation
     my @q = ();
@@ -120,7 +120,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], '$foo $bar', 'and nests brackets appropriately');
 };
 
-# L<S02/Literals/qq:>
+# L<S02/C<Q> forms/qq:>
 { # interpolating quotes
     my @q = ();
         @q = qq/$foo $bar/;
@@ -135,7 +135,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], "FOO BAR", '"" interpolates');
 };
 
-# L<S02/Literals/:qq>
+# L<S02/C<Q> forms/:qq>
 #?rakudo skip 'Q:qq adverbs'
 { # adverb variation
     my @q = ();
@@ -144,7 +144,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], "FOO BAR", "blah blah interp");
 };
 
-# L<S02/Literals/using the \qq>
+# L<S02/Interpolating into a single-quoted string/using the \qq>
 #?rakudo skip 'q[..] with variations'
 #?niecza skip 'backslash q'
 { # \qq[] constructs interpolate in q[]
@@ -181,7 +181,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', "...");
 };
 
-# L<S02/Literals/quote operator now has a bracketed form>
+# L<S02/Quoting forms/quote operator now has a bracketed form>
 { # angle brackets
     my @q = ();
     @q = <$foo $bar>;
@@ -209,7 +209,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 #?rakudo skip 'q:w'
 { # whitespace sep aration does not break quote constructor
-  # L<S02/Literals/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
+  # L<S02/Whitespace before adverbs/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
     my @q = ();
     @q = (q :w /$foo $bar/);
     is(+@q, 2, "q :w // is the same as q:w//");
@@ -220,7 +220,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 #?rakudo skip 'quoting with adverbs'
 { # qq:w,Interpolating quote constructor with words adverb
-  # L<S02/Literals/"Split result on words (no quote protection)">
+  # L<S02/Adverbs on quotes/"Split result on words (no quote protection)">
     my (@q1, @q2) = ();
     @q1 = qq:w/$foo "gorch $bar"/;
     @q2 = qq:words/$foo "gorch $bar"/;
@@ -234,7 +234,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 #?rakudo skip 'quoting with adverbs'
 { # qq:ww, interpolating L<S02/Literals/double angles do interpolate>
-  # L<S02/Literals/"implicit split" "shell-like fashion">
+  # L<S02/Forcing item context/"implicit split" "shell-like fashion">
     my (@q1, @q2, @q3, @q4) = ();
     @q1 = qq:ww/$foo "gorch $bar"/;
     @q2 = «$foo "gorch $bar"»; # french
@@ -249,7 +249,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q1, 'FOO gorch BAR', "explicit quote word interpolates");
     is(~@q2, 'FOO gorch BAR', "output is the same as french");
 
-    # L<S02/Literals/"the built-in «...» quoter automatically does interpolation equivalent to qq:ww/.../">
+    # L<S02/Adverbs on quotes/"the built-in «...» quoter automatically does interpolation equivalent to qq:ww/.../">
     is(~@q3, 'FOO gorch BAR', ", texas quotes");
     is(~@q4, 'FOO gorch BAR', ", and long form");
 };
@@ -263,14 +263,14 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 #?rakudo skip '«...»'
 {
-    #L<S02/Literals/"relationship" "single quotes" "double angles">
+    #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
     # Pugs was having trouble with this.  Fixed in r12785.
     my ($x, $y) = <a b>;
     ok(«$x $y» === <a b>, "«$x $y» interpolation works correctly");
 };
 
 
-# L<S02/Literals/respects quotes in a shell-like fashion>
+# L<S02/Forcing item context/respects quotes in a shell-like fashion>
 #?rakudo skip '«...»'
 { # qw, interpolating, shell quoting
     my (@q1, @q2) = ();
@@ -287,7 +287,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');
 };
 
-# L<S02/Literals/Heredocs are no longer written>
+# L<S02/Heredocs/Heredocs are no longer written>
 #?rakudo skip 'quoting with adverbs'
 { # qq:to
     my @q = ();
@@ -303,7 +303,7 @@ FOO
     is(@q[0], "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
 };
 
-# L<S02/Literals/Heredocs allow optional whitespace>
+# L<S02/Optional whitespace/Heredocs allow optional whitespace>
 #?rakudo skip 'quoting with adverbs'
 { # q:to indented
     my @q = ();
@@ -337,7 +337,7 @@ FOO
     is(@q[0], "foo\\\\bar\$foo", "special chars are meaningless"); # double quoting is to be more explicit
 };
 
-# L<S02/Literals/"Pair" notation is also recognized inside>
+# L<S02/Forcing item context/"Pair" notation is also recognized inside>
 {
   # <<:Pair>>
     my @q = <<:p(1)>>;
@@ -384,7 +384,7 @@ FOO
 #?rakudo skip 'Thinks statement not terminated properly'
 is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
 
-# L<S02/Literals/"for user-defined quotes">
+# L<S02/Adverbs on quotes/"for user-defined quotes">
 # q:to
 #?rakudo skip 'quoting with adverbs'
 {
@@ -464,7 +464,7 @@ Hello, World
 }
 
 
-# L<S02/Literals/"Interpolate % vars">
+# L<S02/Adverbs on quotes/"Interpolate % vars">
 # q:h
 #?rakudo skip 'quoting adverbs'
 {
@@ -548,7 +548,7 @@ Hello, World
     is(Qc[{1+1}], 2, 'Qc');
 }
 
-# L<S02/Literals/All other quoting forms (including standard single quotes)>
+# L<S02/Backslashing/All other quoting forms (including standard single quotes)>
 {
     is('test\\', "test\\", "backslashes at end of single quoted string");
     is 'a\\b\''.chars, 4, 'backslash and single quote';

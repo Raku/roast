@@ -43,7 +43,7 @@ is("$number {my $number=2} $number", '1 2 1', 'original number still available a
 is("&func. () is where I live", '&func. () is where I live', '"&func. ()" should not interpolate');
 is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should interpolate');
 
-# L<S02/Literals/"In order to interpolate the result of a method call">
+# L<S02/Method calls/"In order to interpolate the result of a method call">
 is("$world.chars()", '5', 'method calls with parens should interpolate');
 is("$world.chars", 'World.chars', 'method calls without parens should not interpolate');
 is("$world.flip.chars()", '5', 'cascade of argumentless methods, last ending in paren');
@@ -75,7 +75,7 @@ is('$world \qq[@list[]] %hash{}', '$world 1 2 %hash{}', "interpolate quoting con
 
 is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
 
-# L<S02/Literals/separating the numbers with comma:>
+# L<S02/Radix interpolation/separating the numbers with comma:>
 is("x  \x[41,42,43]  x",     "x  ABC  x",  "\\x[] allows multiple chars (1)");
 is("x  \x[41,42,00043]  x",  "x  ABC  x",  "\\x[] allows multiple chars (2)");   #OK not indicate octal
 is("x  \x[ 41, 42, 43 ]  x", "x  ABC  x",  "\\x[] allows multiple chars with white space");

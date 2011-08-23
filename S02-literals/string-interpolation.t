@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 10;
 
-# L<S02/Literals/"A bare closure also interpolates in double-quotish context.">
+# L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
 {
     # The code of the closure takes a reference to the number 1, discards it

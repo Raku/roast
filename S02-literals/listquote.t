@@ -61,12 +61,12 @@ is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
     is(%foo<blah>, %e<blah>, "Hashes with embedded newlines in the list (3)");
 }
 
-# L<S02/Literals/"The degenerate case <> is disallowed">
+# L<S02/Forcing item context/"The degenerate case <> is disallowed">
 
 eval_dies_ok '<>', 'bare <> is disallowed';
 eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
 
-# L<S02/Literals/"is autopromoted into">
+# L<S02/Quoting forms/"is autopromoted into">
 #?rakudo skip 'List to Capture auto-promotion'
 {
     my $c = <a b c>;
@@ -76,7 +76,7 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
 
 #?rakudo skip 'magic type of <...> contents'
 {
-    # L<S02/Literals/For any item in the list that appears to be numeric>
+    # L<S02/Forcing item context/For any item in the list that appears to be numeric>
     my @a = <foo 3 4.5 5.60 1.2e1>;
     is ~@a, 'foo 3 4.5 5.60 1.2e1',
        '<...> numeric literals stringify correctly';

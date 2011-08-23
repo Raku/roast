@@ -6,7 +6,7 @@ plan 5;
 
 # See "=begin DATA" at the end of file.
 
-# L<S02/Literals/filehandle "named as" %=POD{'DATA'}>
+# L<S02/Double-underscore forms/filehandle, "named as" %=POD{'DATA'}>
 {
     ok %=POD{'DATA'}, '=begin DATA works and %=POD<DATA> defined';
 
@@ -14,7 +14,7 @@ plan 5;
     is($line, "hello, world!", q/%=POD{'DATA'} can be read/);
 }
 
-# L<S02/Literals/"pod stream" "as a scalar" via $=DATA>
+# L<S02/Double-underscore forms/Pod stream as a scalar>
 {
     # XXX isn't the iterator exhausted already, since it's been used
     # previously?
@@ -22,7 +22,7 @@ plan 5;
     is($line, "hello, world!", q/$=DATA contains the right string/);
 }
 
-# L<S02/Literals/"pod stream" "as an array" via @=DATA>
+# L<S02/Double-underscore forms/"Pod stream" "as an array" via @=DATA>
 {
     is @=DATA.elems, 1, '@=DATA contains a single elem';
     is @=DATA[0], "hello, world!\n", '@=DATA[0] contains the right value';

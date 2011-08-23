@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S02/Literals/"There is now a generalized adverbial form of Pair">
+# L<S02/Adverbial Pair forms/"There is now a generalized adverbial form of Pair">
 
 # See thread "Demagicalizing pair" on p6l started by Luke Palmer,
 # L<"http://article.gmane.org/gmane.comp.lang.perl.perl6.language/4778/"> and

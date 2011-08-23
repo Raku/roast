@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S02/Literals/":10<42>">
+# L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
 is( :10<1>,   1, 'got the correct int value from decimal 1' );
 is( :10<2>, 0d2, 'got the correct int value from decimal 2' );
@@ -12,7 +12,7 @@ is(     42,   0d42, '42 and 0d42 are the same'      );
 is( :10<42>,    42, ':10<42> and 42 are the same'   );
 is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 
-# L<S02/Literals/"Think of these as setting the default radix">
+# L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
 #?rakudo skip ':base()'
@@ -27,7 +27,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 
 
 # L<S29/Conversions/"prefix:<:16>">
-# L<S02/Literals/":16<DEAD_BEEF>">
+# L<S02/General radices/":16<DEAD_BEEF>">
 
 # 0 - 9 is the same int
 is(:16<0>, 0, 'got the correct int value from hex 0');
@@ -74,12 +74,12 @@ is(:16<fF>, 255, 'got the correct int value from (mixed case) hex fF');
 # some random mad up hex strings (these values are checked against perl5)
 is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D';
 
-# L<S02/Literals/"interpret leading 0b or 0d as hex digits">
+# L<S02/Conversion functions/"interpret leading 0b or 0d as hex digits">
 #?rakudo 2 skip ':base()'
 is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
-# L<S02/Literals/"Think of these as setting the default radix">
+# L<S02/Conversion functions/"Think of these as setting the default radix">
 #?rakudo skip ':base()'
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
@@ -88,7 +88,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
     is(:16('0o377'),    0o377, ":16('0o255') converts from octal");
 }
 
-# L<S02/Literals/"which will be interpreted as they would outside the string">
+# L<S02/Exponentials/"which will be interpreted as they would outside the string">
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
 #?pugs todo 'feature'
@@ -98,12 +98,12 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 }
 
 
-# L<S02/Literals/"Any radix may include a fractional part">
+# L<S02/General radices/"Any radix may include a fractional part">
 
 is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
 
 
-# L<S02/Literals/":8<177777>">
+# L<S02/General radices/":8<177777>">
 # L<S29/Conversions/"prefix:<:8>">
 
 # 0 - 7 is the same int
@@ -133,7 +133,7 @@ is(:8<400>,     256, 'got the correct int value from oct 400');
 is(:8<177777>, 65535, 'got the correct int value from oct 177777');
 is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 
-# L<S02/Literals/"Think of these as setting the default radix">
+# L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
 #?pugs todo 'feature'
@@ -159,7 +159,7 @@ is(
     'got the correct int value from bin 11111111111111111111111111111111');
 
 
-# L<S02/Literals/"Think of these as setting the default radix">
+# L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
 #?pugs todo 'feature'
@@ -171,15 +171,15 @@ is(
     is(:2('0d37'),    0d37, ':2<0d37> converts from decimal');
 }
 
-# L<S02/Literals/"not clear whether the exponentiator should be 10 or the radix">
+# L<S02/Exponentials/"not clear whether the exponentiator should be 10 or the radix">
 eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
 
-# L<S02/Literals/"and this makes it explicit">
+# L<S02/Exponentials/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
 
-# L<S02/Literals/"So we write those as">
+# L<S02/Exponentials/"So we write those as">
 # these should be the same values as the previous tests
 #?pugs todo 'feature'
 {
@@ -189,7 +189,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 }
 
 # Tests for the :x[ <list> ] notations
-# L<S02/Literals/"Alternately you can use a list of digits in decimal">
+# L<S02/General radices/"Alternately you can use a list of digits in decimal">
 #?rakudo skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );

@@ -3,7 +3,7 @@ use Test;
 
 plan 4;
 
-#L<S02/Literals/"Characters indexed by hex numbers">
+#L<S02/Radix interpolation/"Characters indexed by hex numbers">
 {
     my %unicode = (
 	    'a'  => "\x61",

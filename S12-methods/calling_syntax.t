@@ -10,7 +10,7 @@ Test for
 
 =end description
 
-# L<S02/Literals/"$x.foo;">
+# L<S02/Bare identifiers/"$x.foo;">
 
 class Foo {
     method foo {

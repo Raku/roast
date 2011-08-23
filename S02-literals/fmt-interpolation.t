@@ -12,7 +12,7 @@ These tests exercise a bug found at least in r16241 of Pugs
 
 plan 11;
 
-# L<S02/Literals/Bare scalar variables>
+# L<S02/Interpolation rules/Bare scalar variables>
 
 my $x = 'A';
 my $y;
