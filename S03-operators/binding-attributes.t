@@ -33,7 +33,7 @@ plan 12;
     }
 
     my $obj2 = Klass2.new;
-    $obj2.bind()
+    $obj2.bind();
 
     #?pugs 3 todo 'bug'
     is $obj2.get_x, 42, 'binding $x instance attribute (1)';
