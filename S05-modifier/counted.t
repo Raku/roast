@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 174;
+plan 160;
 
 # L<S05/Modifiers/If the number is followed by an>
 
@@ -53,8 +53,9 @@ for (1..6) -> $N {
 }
 
 # more interesting variations of :nth(...)
+#?niecza skip 'm:g'
 {
-    ok($data ~~ m:nth(2,3)/(fo+)/, 'nth(list) is ok');
+    ok($data ~~ m:nth(2,3):global/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
 }
 
@@ -191,11 +192,11 @@ is($try, $data, 'No change to data for 7th');
 ok($data ~~ m:3rd/ f [\d|\w+]/, 'Match 3rd f[\d|\w+]');
 is($/, 'fooo', 'Matched value for 3rd f[\d|\w+]');
 
-ok($data ~~ m:3rd/ <?ident> /, 'Match 3rd <?ident>');
-is($/, 'o', 'Matched value for 3th <?ident>');
+ok($data ~~ m:3rd/ <ident> /, 'Match 3rd <ident>');
+is($/, 'o', 'Matched value for 3th <ident>');
 
-ok($data ~~ m:3rd/ « <?ident> /, 'Match 3rd « <?ident>');
-is($/, 'foo', 'Matched value for 3th « <?ident>');
+ok($data ~~ m:3rd/ « <ident> /, 'Match 3rd « <ident>');
+is($/, 'foo', 'Matched value for 3th « <ident>');
 
 
 $data = "f fo foo fooo foooo fooooo foooooo";
@@ -208,6 +209,7 @@ $sub6 = "f bar bar bar bar bar bar";
 
 # :x(N)...
 
+#?niecza 17 skip 'm:g'
 ok($data ~~ m:x(0)/fo+/, 'No match x(0)');
 is($/, '', 'Matched value for x(0)');
 
@@ -236,13 +238,19 @@ ok(!( $data ~~ m:x(7)/fo+/ ), 'no match x(7)');
 
 # :x($N)...
 
-for (1..6) -> $N {
-    ok($data ~~ m:x($N)/fo+/, "Match x(\$N) for \$N == $N" );
-    is($/, 'f'~'o' x $N, "Matched value for $N" );
+#?niecza skip 'm:g'
+#?DOES 12
+{
+    for (1..6) -> $N {
+        ok($data ~~ m:x($N)/fo+/, "Match x(\$N) for \$N == $N" );
+        is($/, 'f'~'o' x $N, "Matched value for $N" );
+    }
 }
+#?DOES 1
 
 # :Nx...
 
+#?niecza 13 skip 'm:g'
 ok($data ~~ m:1x/fo+/, 'Match 1x');
 is($/, 'fo', 'Matched value for 1x');
 
@@ -296,47 +304,7 @@ ok(!( $data ~~ m:7x/fo+/ ), 'No match 7x');
 
     $try = $data;
     ok($try ~~ s:7x{fo+}=q{bar}, 'substitute 7x');
-    is($try, $sub6, 'substituted 7x correctly');
+    is($try, $data, 'substituted 7x correctly');
 }
-
-
-# Global Nth
-
-$data  = "f fo foo fooo foooo fooooo foooooo";
-my $gsub1 = "f bar bar bar bar bar bar";
-my $gsub2 = "f fo bar fooo bar fooooo bar";
-my $gsub3 = "f fo foo bar foooo fooooo bar";
-my $gsub4 = "f fo foo fooo bar fooooo foooooo";
-my $gsub5 = "f fo foo fooo foooo bar foooooo";
-my $gsub6 = "f fo foo fooo foooo fooooo bar";
-
-$try = $data;
-ok($try ~~ s:g:1st{fo+}=q{bar}, 'Global :1st match');
-is($try, $gsub1, 'substituted :g:1st correctly');
-
-$try = $data;
-ok($try ~~ s:g:2nd{fo+}=q{bar}, 'Global :2nd match');
-is($try, $gsub2, 'substituted :g:2nd correctly');
-
-$try = $data;
-ok($try ~~ s:g:3rd{fo+}=q{bar}, 'Global :3rd match');
-is($try, $gsub3, 'substituted :g:3rd correctly');
-
-$try = $data;
-ok($try ~~ s:g:4th{fo+}=q{bar}, 'Global :4th match');
-is($try, $gsub4, 'substituted :g:4th correctly');
-
-$try = $data;
-ok($try ~~ s:g:5th{fo+}=q{bar}, 'Global :5th match');
-is($try, $gsub5, 'substituted :g:5th correctly');
-
-$try = $data;
-ok($try ~~ s:g:6th{fo+}=q{bar}, 'Global :6th match');
-is($try, $gsub6, 'substituted :g:6th correctly');
-
-$try = $data;
-ok(!( $try ~~ s:g:7th{fo+}=q{bar} ), 'Global :7th match');
-is($try, $data, 'substituted :g:7th correctly');
-
 
 # vim: ft=perl6
