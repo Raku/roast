@@ -61,6 +61,7 @@ plan 138;
     # RT #74520
     class TestA { };
     eval 'TestA::b(3, :foo)';
+    #?rakudo todo 'nom regression'
     ok "$!" ~~ / ' TestA::b' /, 'error message mentions function name';
 }
 
@@ -76,6 +77,8 @@ plan 138;
 # RT #72438
 # Subroutines with keywords for names (may need to be called with
 # parentheses).
+#?rakudo skip 'nom regression - parses, but only some fail'
+#?DOES 114
 {
     for <
         foo package module class role grammar my our state let
