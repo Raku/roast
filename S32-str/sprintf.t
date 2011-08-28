@@ -68,6 +68,7 @@ is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $'
 # RT #74610
 dies_ok {sprintf "%s"}, 'missing sprintf string argument';
 
+#?niecza skip '%C format'
 #?rakudo skip 'RT #60672'
 {
 my $fmtd;
