@@ -22,7 +22,6 @@ plan 68;
 {
     my $ret = 42;
     lives_ok { $ret = (my $x) ~ $x }, 'my() variable is visible (1)';
-    #?niecza skip 'Any()Any()'
     is $ret, "",                      'my() variable is visible (2)';
 }
 
@@ -47,14 +46,14 @@ eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
   is(do {1; my $a = 3; $a}, 3, 'do{1; my $a = 3; $a} works');
 }
 
-eval_lives_ok 'my $x = my $y = 0;', '"my $x = my $y = 0" parses';
+eval_lives_ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
 
 #?rakudo skip 'fatal redeclarations'
 {
     my $test = "value should still be set for arg, even if there's a later my";
     sub foo2 (*%p) {
         is(%p<a>, 'b', $test);
-        my %p;
+        my %p; #OK
     }
     foo2(a => 'b');
 }
@@ -93,7 +92,7 @@ is($d, 1, '$d has not changed');
 is( eval('
 my $d = 1;
 { 
-    my $d = 3 
+    my $d = 3 #OK not used
 }
 $d;
 '), 1, '$d is available, and the outer value has not changed' );
@@ -118,10 +117,10 @@ $d;
 
 # check my as simultaneous lvalue and rvalue
 
-is(eval('my $e1 = my $e2 = 42'), 42, 'can parse squinting my value');
-is(eval('my $e1 = my $e2 = 42; $e1'), 42, 'can capture squinting my value');
-is(eval('my $e1 = my $e2 = 42; $e2'), 42, 'can set squinting my variable');
-is(eval('my $x = 1, my $y = 2; $y'), 2, 'precedence of my wrt = and ,');
+is(eval('my $e1 = my $e2 = 42 #OK'), 42, 'can parse squinting my value');
+is(eval('my $e1 = my $e2 = 42; $e1 #OK'), 42, 'can capture squinting my value');
+is(eval('my $e1 = my $e2 = 42; $e2 #OK'), 42, 'can set squinting my variable');
+is(eval('my $x = 1, my $y = 2; $y #OK'), 2, 'precedence of my wrt = and ,');
 
 # test that my (@array, @otherarray) correctly declares
 # and initializes both arrays
@@ -148,10 +147,10 @@ is(eval('if my $x = 1 { 0 } else { 0 }; $x'), 1, 'my in if cond seen after');
 
 # check proper scoping of my in loop initializer
 
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $x; last }; $result'), 1, '1st my in loop cond seen from body');
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $y; last }; $result'), 2, '2nd my in loop cond seen from body');
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $x'), 1, '1st my in loop cond seen after');
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y'), 2, '2nd my in loop cond seen after');
+is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $x; last }; $result #OK'), 1, '1st my in loop cond seen from body');
+is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $y; last }; $result #OK'), 2, '2nd my in loop cond seen from body');
+is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $x #OK'), 1, '1st my in loop cond seen after');
+is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd my in loop cond seen after');
 
 
 # check that declaring lexical twice is noop
@@ -159,11 +158,11 @@ is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y'), 2, '2nd my in
 {
     my $f;
     $f = 5;
-    my $f;
+    my $f; #OK
     is($f, 5, "two lexicals declared in scope is noop");
 }
 
-my $z = 42;
+my $z = 42; #OK not used
 {
     my $z = $z;
     nok( $z.defined, 'my $z = $z; can not see the value of the outer $z');
@@ -176,7 +175,7 @@ my $z = 42;
     sub eval_elsewhere($str) {
         eval $str;
     }
-    my $x = 4;
+    my $x = 4; #OK not used
     is eval_elsewhere('$x + 1'), 5, 
        'eval() knows the pad where it is launched from';
 
@@ -185,7 +184,7 @@ my $z = 42;
 
     # don't remove this line, or eval() will complain about 
     # $y not being declared
-    my $y = 4;
+    my $y = 4; #OK not used
 }
 
 # &variables don't need to be pre-declared
@@ -199,28 +198,26 @@ my $z = 42;
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
-    #?niecza skip 'CATCH'
-    eval_lives_ok 'my $a;do { 1/0; my $x; CATCH { $a = $x.defined } }';
+    eval_lives_ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
         #?rakudo 2 todo 'OUTER and SETTING'
-        #?niecza 2 skip 'OUTER and SETTING'
         ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
-        ok eval('not SETTING:<$x>.defined'), 'SETTING::<$x>';
-        my $x;
+        ok eval('not SETTING::<$x>.defined'), 'SETTING::<$x>';
+        my $x; #OK not used
     }
 
     {
         my $a;
-        #?niecza 2 skip 'CATCH'
+        #?niecza 2 skip 'still fails?'
         #?rakudo todo 'fails'
-        eval_lives_ok 'do { 1/0;my Int $x;CATCH { $a = ?($x ~~ Int) } }';
+        eval_lives_ok 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }';
         #?rakudo todo 'previous test skipped'
         ok $a, 'unreached declaration in effect at block start';
     }
 
     # XXX As I write this, this does not die right.  more testing needed.
-    dies_ok { my Int $x = "abc" }, 'type error';
+    dies_ok { my Int $x = "abc" }, 'type error'; #OK
     #?rakudo todo 'type error not caught'
     dies_ok { eval '$x = "abc"'; my Int $x; }, 'also a type error';
 }
@@ -249,7 +246,7 @@ my $z = 42;
 
 }
 
-eval_lives_ok 'my (%h?)', 'my (%h?) lives';
+eval_lives_ok 'my (%h?) #OK', 'my (%h?) lives';
 
 #RT 63588
 eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; say A.new.y', 
