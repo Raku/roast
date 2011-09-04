@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 18;
 
 # L<S32::Numeric/Real/"=item sqrt">
 
@@ -27,7 +27,6 @@ is(sqrt(NaN), NaN, 'sqrt(NaN) is NaN');
 is(sqrt(Inf), Inf, 'sqrt(Inf) is Inf');
 is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
 
-is(sqrt(-0/1), -0.0e0, 'sqrt preserves sign of Rat zero');
 is(sqrt(-0.0e0), -0.0e0, 'sqrt preserves sign of Num zero');
 
 # The spec specifies a branch cut in the complex plane of -pi <= theta <= pi
