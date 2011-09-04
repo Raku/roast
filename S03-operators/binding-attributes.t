@@ -22,7 +22,6 @@ plan 12;
     is $obj1.x, 23, 'binding $!x instance attribute (2)';
 }
 
-#?rakudo skip 'binding to $x-style attributes'
 {
     my $var = 42;
     class Klass2 {

@@ -15,7 +15,6 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?rakudo skip ':base()'
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
 #?pugs 4 todo "unimpl"
@@ -80,7 +79,6 @@ is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Conversion functions/"Think of these as setting the default radix">
-#?rakudo skip ':base()'
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
 #?pugs 2 todo 'feature'
@@ -163,7 +161,6 @@ is(
 # setting the default radix
 
 #?pugs todo 'feature'
-#?rakudo skip ':base()'
 {
     is(:2('0b1110'),  0d14, ':2<0b1110> stays binary');
     is(:2('0x20'),    0d32, ':2<0x20> converts from hexadecimal');

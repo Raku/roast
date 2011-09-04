@@ -37,7 +37,6 @@ plan 29;
 
 
 # Binding and $CALLER::
-#?rakudo skip 'is context, traits followed by binding'
 #XXX This can pass bogusly (was doing for Rakudo for a while).
 #?niecza skip 'CALLER::'
 {
