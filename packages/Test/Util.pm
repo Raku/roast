@@ -96,7 +96,7 @@ sub get_out( Str $code, Str $input?, :@args) is export {
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
 #        diag("Command line: $cmd");
-        %out<status> = run( $cmd );
+        %out<status> = shell( $cmd );
         %out<out> = slurp "$fnbase.out";
         %out<err> = slurp "$fnbase.err";
 
