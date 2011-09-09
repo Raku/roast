@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 41;
 
 =begin pod
 
@@ -86,9 +86,6 @@ caught that case.
     };
     ok $result, 'C<all(@x) ~~ {...} when true for one';
 };
-
-#?rakudo todo 'nom regression'
-ok NaN ~~ NaN, 'NaN ~~ NaN is True';
 
 # need to test in eval() since class definitions happen at compile time,
 # ie before the plan is set up.
