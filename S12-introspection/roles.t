@@ -32,12 +32,14 @@ is +@roles,   3,  'with no args returned list with correct number of roles';
 is @roles[0], R3, 'first role in list was correct';
 ok (@roles[1] ~~ R1 && @roles[2] ~~ R2 || @roles[1] ~~ R2 && @roles[2] ~~ R1),
                   'second and third roles in list were correct';
-
+#?rakudo skip '.^roles(:tree)'
+{
 @roles = C2.^roles(:tree);
 is +@roles,   2,       ':tree returned list with correct number of elements';
 is @roles[0], R3,      'first element in the list is the role done in base class';
 ok @roles[1] ~~ Array, 'second element in list is an array';
 ok @roles[1][0] ~~ R1 && @roles[1][1] ~~ R2 || @roles[1][0] ~~ R2 && @roles[1][1] ~~ R1,
                        'nested array contains roles of parent class';
+}
 
 # vim: ft=perl6
