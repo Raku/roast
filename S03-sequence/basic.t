@@ -152,7 +152,7 @@ lives_ok { (1 ... 5).perl }, 'Can take .perl of sequence';
 is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
     'eval($sequence.perl) reproduces result list';
 
-#?rakudo todo 'Z~'
+# RT 98790
 is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {
@@ -214,8 +214,7 @@ is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two sequen
 is (1, +* ... *).[^5].join('|'), (1 xx 5).join('|'),
     '1, +* works for sequence';
 
-# RT #75768
-#?rakudo todo 'RT 75768'
+# RT #75768, RT #98790
 is ~(1...10)[2...4], '3 4 5', 'can index sequence with sequence';
 
 {
@@ -231,7 +230,7 @@ is (1, 2 , {last if $_>=5; $_+1} ... *), (1,2,3,4,5), "sequence that lasts in th
 {
 	is (1..* ... 5), (1, 2, 3, 4, 5), '1..* ... 5';
 	my @fib := (0, 1, *+* ... * );
-    #?rakudo todo '@fib ... 8'
+        # RT #98790
 	is (@fib ... 8), (0 , 1, 1, 2 , 3, 5, 8), '@fib ... 8';
 }
 
