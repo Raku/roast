@@ -38,11 +38,9 @@ plan 11;
 
 {
     my @Fibonacci := 0, 1, * + * ... *;
-    #?rakudo todo 'nom regression'
     is (@Fibonacci ...^ * > 10000).join(" "),
        "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765",
        "Fibonacci bounded after the fact is correct";
-    #?rakudo skip 'nom regression'
     is @Fibonacci[30], 832040, 'And @Fibonacci is still unbounded';
 }
 
