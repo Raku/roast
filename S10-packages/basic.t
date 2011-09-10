@@ -101,15 +101,11 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 
 #?rakudo todo 'ticket based on class(es) not package; RT #65022'
 {
-    eval_lives_ok '{
-        package C1Home { class Baz {} };
-        package C2Home { class Baz {} }
-    }', 'two different packages should be two different Baz';
+    eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
+        'two different packages should be two different Baz';
 
-    eval_lives_ok '{
-        package E1Home { enum EHomeE <a> };
-        package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} }
-    }', 'two different packages should be two different EHomeE';        
+    eval_lives_ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
+        'two different packages should be two different EHomeE';        
 }
 
 # making test below todo causes trouble right now ...
