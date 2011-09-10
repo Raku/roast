@@ -28,7 +28,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
         'autovivification(?) for nested packages'
 }
 
-#RT #65404'
+# RT #65404
 {
     lives_ok {Empty.perl ne "tbd"}, 'test for working .perl method'
 }
