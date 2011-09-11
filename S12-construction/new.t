@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 class Parent {
     has $.x;
@@ -71,6 +71,30 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     lives_ok { $x = NewFromMu.new('j', 'k') }, 'can delegate to self.Mu::new';
     is $x.x, 'j', '... got the right attribute (1)';
     is $x.y, 'k', '... got the right attribute (2)';
+}
+
+# RT #68756
+{
+
+    class RT68756 {
+        has $.a1;
+        has $.a2;
+
+        multi method new(Int $number, Str $color) {
+            self.bless(*, :a1($number), :a2($color));
+        }
+    }
+
+
+    my RT68756 $foo .= new(2, "geegaw");
+    is_deeply [ $foo.a1, $foo.a2 ],
+        [2, "geegaw"],
+        'multi-constructor class alternate (positional) constructor';
+
+    my RT68756 $bar .= new(:a1(3), :a2<yoohoo>);
+    is_deeply [ $bar.a1, $bar.a2 ],
+        [3, "yoohoo"],
+        'multi-constructor class alternate default named constructor';
 }
 
 done;
