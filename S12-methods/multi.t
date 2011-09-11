@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -215,8 +215,12 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     };
 
     my $a = A.new;
+    
     is $a.foo("oh hai"), "oh hai",
-        '$.foo attribute generates multi method';
+        'foo() method works when $.foo attribute is present';
+
+    dies_ok { $a.foo }, 
+        '$.foo attribute has no accessor when foo() method is present';
 }
 
 done;
