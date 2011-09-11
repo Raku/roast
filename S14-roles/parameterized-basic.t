@@ -62,8 +62,8 @@ role TypeSelection[::T] {
     method x { 4 }
 }
 class TS_1 does TypeSelection["OH HAI"] { }
-class TS_2 does TypeSelection[NarrownessTestB.new] { }
-class TS_3 does TypeSelection[NarrownessTestA.new] { }
+class TS_2 does TypeSelection[NarrownessTestB] { }
+class TS_3 does TypeSelection[NarrownessTestA] { }
 class TS_4 does TypeSelection[Pair] { }
 is(TS_1.new.x, 1, 'type-based selection of role');
 is(TS_2.new.x, 3, 'type-based selection of role (narrowness test)');
@@ -97,7 +97,7 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
 # Use of parameters as type constraints.
 {
     role TypeParams[::T] {
-        method x(T $x) { return "got a " ~ T ~ " it was $x" }
+        method x(T $x) { return "got a " ~ T.gist() ~ " it was $x" }
     }
     class TTP_1 does TypeParams[Int] { }
     class TTP_2 does TypeParams[Str] { }
@@ -139,8 +139,8 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     role MD_generics[$a, $b] {
         method what { 'different type' }
     }
-    class CSame does MD_generics[[], []] { }
-    class CDiff does MD_generics[4,  {}] { }
+    class CSame does MD_generics[Array, Array] { }
+    class CDiff does MD_generics[Int, Hash] { }
 
     is CSame.new.what, 'same type',
        'MD with generics at class composition time (1)';
