@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 34;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -203,6 +203,20 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         'error message for failed dispatch contains method name';
     ok $error ~~ /<< 'WorkingTie' >>/,
         'error message for failed dispatch contains invocant type';
+}
+
+# RT #68996
+{
+    class A {
+        has $.foo = "bar";
+        multi method foo(Str $test) {
+            return $test;
+        }
+    };
+
+    my $a = A.new;
+    is $a.foo("oh hai"), "oh hai",
+        '$.foo attribute generates multi method';
 }
 
 done;
