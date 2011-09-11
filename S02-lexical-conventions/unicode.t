@@ -72,7 +72,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 }
 
 # Unicode parameters
-#?rakudo skip "Unicode not allowed for named parameter yet?"
+# RT #69959
 {
     my sub abc (:$äöü) { 1000 + $äöü }
 
