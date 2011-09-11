@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 81;
+plan 82;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -218,6 +218,14 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 }
 
 unlink($filename);
+
+$out = open($filename, :w);
+$out.say("Hello World");
+$out.say("Foo Bar Baz");
+$out.say("The End");
+$out.close;
+
+lives_ok { my $line = $filename.IO.get; }, "can read lines without explicitly opening IO";
 
 done;
 
