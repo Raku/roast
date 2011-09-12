@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 34;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -36,8 +36,7 @@ is($foo.bar(), 'Foo.bar() called with no args', '... multi-method dispatched on 
 is($foo.bar("Hello"), 'Foo.bar() called with Str : Hello', '... multi-method dispatched on Str');
 
 is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on Int');
-my $num = '4';
-is($foo.bar(+$num), 'Foo.bar() called with Numeric : 4', '... multi-method dispatched on Numeric');
+is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
 #?rakudo todo 'RT #66006'
 eval '$foo.baz()';
@@ -51,10 +50,9 @@ role R2 {
 }
 eval_dies_ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
 class C does R1 does R2 {
-    proto method foo() { "proto" }
+    proto method foo() { * }
 }
 my $obj = C.new;
-is($obj.foo(),  'proto', 'proto caused methods from roles to be composed without conflict');
 #?rakudo 2 skip 'proto does not promote to multi'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 is($obj.foo('a','b'), 2, 'method composed into multi from role called');
