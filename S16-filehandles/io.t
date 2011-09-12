@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 82;
+plan 83;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -225,7 +225,10 @@ $out.say("Foo Bar Baz");
 $out.say("The End");
 $out.close;
 
-lives_ok { my $line = $filename.IO.get; }, "can read lines without explicitly opening IO";
+my $line;
+lives_ok { $line = $filename.IO.get; }, "can read lines without explicitly opening IO";
+is $line, 'Hello World', 'got the right line from .IO.get';
+unlink($filename);
 
 done;
 
