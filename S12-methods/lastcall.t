@@ -9,7 +9,7 @@ plan 6;
 class Foo {
     # $.tracker is used to determine the order of calls.
     has $.tracker is rw;
-    method doit($foo) { $.tracker ~= 'foo,' }   #OK not used
+    multi method doit($foo) { $.tracker ~= 'foo,' }   #OK not used
     method show  {$.tracker}
     method clear {$.tracker = ''}
 }
