@@ -29,7 +29,6 @@ plan 21;
 }
 
 # L<S02/"Names and Variables"/"hash value" "formats for both key and value">
-#?rakudo skip 'nom regression'
 #?DOES 1
 {
     my $hash = {
@@ -67,7 +66,6 @@ is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
 }
 
 # Test defaults on $comma
-#?rakudo skip 'nom regression'
 #?DOES 2
 {
     is([1..3].fmt("%d"), "1 2 3", 'default $comma for array');
@@ -85,7 +83,6 @@ is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
 }
 
 # .fmt without arguments
-#?rakudo skip 'nom regression'
 #?DOES 5
 {
     is (1).fmt(), '1', 'scalar .fmt without $fmt';
