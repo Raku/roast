@@ -47,7 +47,6 @@ is (1..3).fmt('%02d', '/'), '01/02/03', 'Range.fmt';
 is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
 
 # L<S02/"Names and Variables"/"list of pairs" "formats for both key and value">
-#?rakudo skip ".fmt on list of pairs (?)"
 #?DOES 4
 {
     # a single pair:
@@ -61,6 +60,7 @@ is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
     # list of pair:
     @pairs = (a => 1.3, b => 2.4);
     is @pairs.fmt("%s:%d", "_"), "a:1_b:2", "fmt() works with lists of pairs";
+    #?rakudo todo '%f'
     is @pairs.fmt("(%s => %f)", ""), "(a => 1.3)(b => 2.4)",
         "fmt() works with lists of pairs";
 }
