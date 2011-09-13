@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 21;
 
 # L<S02/"Names and Variables"/"formatted representation"
 #   of "any scalar value" ".fmt('%03d')">
@@ -16,7 +16,6 @@ plan 19;
 # L<S02/"Names and Variables"/"format an array value"
 #   "supply a second argument">
 {
-    #?rakudo skip 'nom regression'
     is (1.3,2.4,3).fmt("%d", "_"), "1_2_3", "fmt() works with plain lists";
     my @list = 'a'..'c';
     is @list.fmt('<%s>', ':'), '<a>:<b>:<c>', 'fmt() works with @ array';
@@ -44,6 +43,9 @@ plan 19;
         flunk "fmt() fails to work with hashes";
     }
 }
+
+is (1..3).fmt('%02d', '/'), '01/02/03', 'Range.fmt';
+is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
 
 # L<S02/"Names and Variables"/"list of pairs" "formats for both key and value">
 #?rakudo skip ".fmt on list of pairs (?)"
