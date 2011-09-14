@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -219,6 +219,11 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
     dies_ok { $a.foo }, 
         '$.foo attribute has no accessor when foo() method is present';
+}
+
+# RT #57788
+{
+    eval_dies_ok 'class A { method m() { }; method m() { } }';
 }
 
 done;
