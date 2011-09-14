@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 17;
 
 # Test for proto definitions
 class A { }
@@ -76,6 +76,11 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
 
 
+}
+
+# RT #68242
+{
+    eval_dies_ok 'proto foo($bar) {}; proto foo($baz, $quux) {}';
 }
 
 done;
