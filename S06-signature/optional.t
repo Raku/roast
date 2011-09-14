@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 16;
+plan 20;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -70,6 +70,16 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
 eval_dies_ok( 'sub rt66822($opt?, $req) { "$opt, $req" }',
               "Can't put required parameter after optional parameters" );
 
+# Niecza bug#49
+sub opt_array1(@x?) { @x.elems }
+sub opt_array2(@x? is copy) { @x.elems }
+sub opt_hash1(%x?) { %x.keys.elems }
+sub opt_hash2(%x? is copy) { %x.keys.elems }
+is opt_array1(), 0, "optional array not passed is empty";
+is opt_array2(), 0, "optional array not passed is empty (copy)";
+is opt_hash1(),  0, "optional hash not passed is empty";
+is opt_hash2(),  0, "optional hash not passed is empty (copy)";
+
 done;
-        
+
 # vim: ft=perl6
