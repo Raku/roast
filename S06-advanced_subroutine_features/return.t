@@ -341,8 +341,7 @@ is Foo::official(), 44,
     sub bar61126($code) { $code() }; sub foo61126 { bar61126 { return 1 }; return 2; };
     is foo61126, 1;
 
-    #?rakudo todo 'rt 61126'
-    sub baz61126 { map { return 1 }, 1; return 2 };
+    sub baz61126 { eager map { return 1 }, 1; return 2 };
     is baz61126, 1;
 
 }
