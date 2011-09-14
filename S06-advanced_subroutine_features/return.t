@@ -15,7 +15,7 @@ See also t/blocks/return.t, which overlaps in scope.
 # reference for the spec for 'return', but I couldn't find
 # one either. 
 
-plan 77;
+plan 79;
 
 # These test the returning of values from a subroutine.
 # We test each data-type with 4 different styles of return.
@@ -334,6 +334,17 @@ is Foo::official(), 44,
     }
     lives_ok {my $c = RT72836.new},
         'can use value returned from empty routine';
+}
+
+# RT #61126
+{
+    sub bar61126($code) { $code() }; sub foo61126 { bar61126 { return 1 }; return 2; };
+    is foo61126, 1;
+
+    #?rakudo todo 'rt 61126'
+    sub baz61126 { map { return 1 }, 1; return 2 };
+    is baz61126, 1;
+
 }
 
 # vim: ft=perl6
