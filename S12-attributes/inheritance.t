@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 6;
+plan 7;
 
 # test relation between attributes and inheritance
 
@@ -46,5 +46,10 @@ my $child = Child.new();
 $child.public = 5;
 nok $child.report.defined,
     'If parent and child have an attribute of the same name, they do not share storage location';
+
+# RT #61500
+{
+    eval_dies_ok 'class A { has $!foo = 7 }; class B is A { method x { say $!foo } }; B.new.x', 'rt 61500';
+}
 
 # vim: ft=perl6
