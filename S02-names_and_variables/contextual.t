@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 23;
 
 # L<S02/Names/"for the identifier of the variable">
 
@@ -69,6 +69,12 @@ nok foo().defined, 'contextual $*VAR is undefined';
     sub f { %*a };
     our %*a =  a => 'h';
     is f().keys, 'a', 'our %*a';
+}
+
+#RT #63226
+{
+    package Foo { our sub run() { return @*INC } };
+    ok Foo::run().chars > 0;
 }
 
 # vim: ft=perl6
