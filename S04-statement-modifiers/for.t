@@ -100,6 +100,14 @@ use Test;
 
 eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not allowed';
 
+# RT #66606
+{
+    my $x = 1 for ^3;
+    is $x, 1;
+    (my @a).push: $_ for ^3;
+    is @a.join(','), '0,1,2';
+}
+
 done;
 
 # vim: ft=perl6
