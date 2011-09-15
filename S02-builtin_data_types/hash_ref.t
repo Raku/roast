@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 31;
 
 # basic lvalue assignment
 #?rakudo skip 'hash autovivification'
@@ -76,9 +76,6 @@ plan 32;
     isa_ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
     isa_ok $hash_d, "Hash";
-    #?rakudo todo 'isa hash'
-    my $hash_e = { pair "a", 1, "b", 2 };
-    isa_ok $hash_e, "Hash";
 }
 
 # infinity HoHoHoH...
