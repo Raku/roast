@@ -106,7 +106,7 @@ plan 18;
 {
     my $str = '';
     try {
-        say abc;
+        ().abc;
         CATCH {
             $str ~= 'A';
             if 'foo' ~~ /foo/ {
