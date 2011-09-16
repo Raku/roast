@@ -25,7 +25,6 @@ is_run 'use v6; warn("OH NOEZ"); say "alive"',
     },
     'warn() with arguments; line number';
 
-#?rakudo todo 'try and warn'
 is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,

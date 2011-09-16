@@ -21,7 +21,6 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 }
 
 # fairly directly from RT #61662
-#?rakudo todo 'nom regression'
 {
     $_ = "a";
     my $mat_tern_y = /a/ ?? "yes" !! "no";
@@ -31,7 +30,6 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 }
 
 # Note for RT - change to $_ ~~ /oo/ to fudge ok
-#?rakudo todo 'nom regression'
 {
     $_ = "foo";
     my $mat_tern = /oo/ ?? "yes" !! "no"; 
