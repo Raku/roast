@@ -9,7 +9,9 @@ Basic tests for the ord() and chr() built-in.
 =end pod
 
 # L<S29/Conversions/ord>
+# L<S29/Conversions/ords>
 # L<S29/Conversions/chr>
+# L<S29/Conversions/chrs>
 
 # What is the best way to test 0 through 31??
 my @maps = (
@@ -121,7 +123,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 38 + @maps;
+plan 46 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -134,8 +136,18 @@ for 0...31 -> $code {
   is ord($char), $code, "ord(chr($code)) is $code";
 }
 
+is ords('ABCDEFGHIJK'), '65 66 67 68 69 70 71 72 73 74 75', "ords() works as expected";
+is chrs(65..75), 'ABCDEFGHIJK', "chrs() method works as expected";
+is chrs(ords('ABCDEFGHIJK')), 'ABCDEFGHIJK', "chrs(ords()) round-trips correctly";
+is ords(chrs(65..75)), '65 66 67 68 69 70 71 72 73 74 75', "ords(chrs()) round-trips correctly";
+
 is 'A'.ord, 65, "there's a .ord method";
 is 65.chr, 'A', "there's a .chr method";
+
+is ('ABCDEFGHIJK').ords, '65 66 67 68 69 70 71 72 73 74 75', "there's a .ords method";
+is (65..75).chrs, 'ABCDEFGHIJK', "there's a .chrs method";
+is ('ABCDEFGHIJK').ords.chrs, 'ABCDEFGHIJK', "ords > chrs round-trips correctly";
+is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-trips correctly";
 
 #?rakudo skip 'multi-arg variants of chr not in place yet'
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
