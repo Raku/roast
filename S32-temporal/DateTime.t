@@ -97,7 +97,7 @@ dies_ok  { dt minute => -1 }, 'DateTime rejects minute -1';
 lives_ok { dt minute => 59 }, 'DateTime accepts minute 59';
 lives_ok { dtc minute => 59 }, 'DateTime accepts minute 59 (clone)';
 lives_ok { ds '1999-01-01T00:59:22' }, 'DateTime accepts minute 59 (ISO)';
-lives_ok { dt date => Date.new(1999, 1, 1), minute => 59 }, 'DateTime accepts minute 59 (with Date)';
+lives_ok { DateTime.new: date => Date.new(1999, 1, 1), minute => 59 }, 'DateTime accepts minute 59 (with Date)';
 dies_ok  { dt minute => 60 }, 'DateTime rejects minute 60';
 dies_ok  { dtc minute => 60 }, 'DateTime rejects minute 60 (clone)';
 dies_ok  { ds '1999-01-01T00:60:22' }, 'DateTime rejects minute 60 (ISO)';
