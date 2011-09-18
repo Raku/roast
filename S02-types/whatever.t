@@ -45,7 +45,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 # check that more complex expressions work:
 
-#?rakudo skip 'rekursive currying and method calls'
 {
     my $code = *.uc eq 'FOO';
     ok $code ~~ Callable, '"*.uc eq $str" produces a Callable object';
@@ -54,7 +53,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 }
 
 # RT #64566
-#?rakudo skip 'RT #64566'
 {
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
@@ -113,7 +111,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $c(3, 0, -10), 3, 'that can work with three different arguments';
 }
 
-#?rakudo skip 'RT 65482'
 is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 {
@@ -186,7 +183,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # chains of methods
-#?rakudo skip 'method chains'
 {
     my $x = *.uc.flip;
     ok $x ~~ Callable, 'we get a Callable from chained methods with *';
@@ -228,7 +224,6 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
     dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
-    #?rakudo skip '&infix:<R+>'
     dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
