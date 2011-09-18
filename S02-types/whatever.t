@@ -45,6 +45,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 # check that more complex expressions work:
 
+#?rakudo skip 'rekursive currying and method calls'
 {
     my $code = *.uc eq 'FOO';
     ok $code ~~ Callable, '"*.uc eq $str" produces a Callable object';
@@ -67,6 +68,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $t, 'ababa', '$_ % * works';
 }
 
+#?rakudo skip 'sort'
 {
     my $x = +*;
     isa_ok $x, Code, '+* is of type Code';
@@ -127,6 +129,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 {
     # TODO: find out if this allowed for item assignment, or for list
     # assignment only
+    #?rakudo todo '* as dummy'
     eval_lives_ok ' * = 5 ', 'can dummy-asign to *';
 
     my $x;
@@ -150,6 +153,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 # L<S02/The C<.assuming> Method/This is only for operators that are not
 # Whatever-aware.>
+#?rakudo skip 'user defined ops'
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };
     isa_ok * quack 5, Code,
@@ -182,6 +186,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # chains of methods
+#?rakudo skip 'method chains'
 {
     my $x = *.uc.flip;
     ok $x ~~ Callable, 'we get a Callable from chained methods with *';
@@ -213,13 +218,17 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     nok $f(2), 'Whatever-currying !< (2)';
     ok $f(3), 'Whatever-currying !< (3)';
     ok $f(4), 'Whatever-currying !< (4)';
+}
 
-    $f = 5 R- *;
+#?rakudo skip 'currying plus meta ops'
+{
+    my $f = 5 R- *;
     isa_ok $f, Code, 'Whatever-currying with R- (1)';
     is $f(7), 2, 'Whatever-currying with R- (2)';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
     dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    #?rakudo skip '&infix:<R+>'
     dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
@@ -228,7 +237,6 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     my $rt79166 = *;
     isa_ok $rt79166, Whatever, 'assignment of whatever still works';
     $rt79166 = 'RT 79166';
-    #?rakudo todo 'RT 79166'
     is $rt79166, 'RT 79166', 'assignment to variable with whatever in it';
 }
 
