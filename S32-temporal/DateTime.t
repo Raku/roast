@@ -5,7 +5,7 @@ plan 173;
 
 my $orwell = DateTime.new(year => 1984);
 
-sub dt(*%args) { DateTime.new(year => 1984, |%args) }
+sub dt(*%args) { DateTime.new(|{year => 1984, %args}) }
 sub dtc(*%args) { $orwell.clone(|%args) }
 
 sub ymd($year, $month, $day) { DateTime.new: :$year, :$month, :$day }
