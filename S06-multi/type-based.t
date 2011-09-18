@@ -40,7 +40,6 @@ is(foo(%hash), 'Associative bar, baz, foo', 'dispatched to the Associative sub')
 is(foo($*ERR), 'IO', 'dispatched to the IO sub');
 
 is foo(Inf), 'Inf', 'dispatched to the Inf sub';
-#?rakudo skip 'NaN'
 is foo(NaN), 'NaN', 'dispatched to the NaN sub';
 
 # You're allowed to omit the "sub" when declaring a multi sub.

@@ -67,7 +67,6 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     ok 'mmm, pasta' ~~ m/<food>/, 'named rule outside of a grammar works';
 }
 
-#?rakudo skip 'smart-matching against undefined values'
 ok Any !~~ / 'RT #67234' /, 'match against undefined does not match';
 
 eval_dies_ok q['x' ~~ m/RT (#)67612 /], 'commented capture end = parse error';
