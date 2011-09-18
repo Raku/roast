@@ -378,7 +378,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 
     $dt = dt(year => 2005, month => 1, day => 3,
              hour => 2, minute => 22, second => 4,
-             timezone => 13).in-timezone(timezone => -529402);
+             timezone => 13).in-timezone(-529402);
       # A difference from UTC of 6 days, 3 hours, 3 minutes, and
       # 22 seconds.
     is show-dt($dt), '29 18 23 27 12 2004 1', 'DateTime.in-timezone (big rollover)';    
