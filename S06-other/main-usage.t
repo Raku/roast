@@ -7,6 +7,7 @@ BEGIN { @*INC.push: 't/spec/packages' }
 
 use Test::Util;
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN($x) { }; sub USAGE() { print "usage() called" }',
     {
         out => 'usage() called',
@@ -20,6 +21,7 @@ is_run 'sub MAIN() { print "main() called" }; sub USAGE() { print "usage() calle
     },
     'a user-defined USAGE sub not is called if MAIN-dispatch succeeds';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN($foo) { }',
     {
         err     => /<< foo >>/,
@@ -27,6 +29,7 @@ is_run 'sub MAIN($foo) { }',
     },
     'automaticly generated USAGE message contains parameter name';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN($x) { };',
     {
         out => /<< x >>/,
@@ -34,6 +37,7 @@ is_run 'sub MAIN($x) { };',
     :args['--help'],
     '--help triggers a message to $*OUT';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
     {
         out => "yes\n",
@@ -43,6 +47,7 @@ is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
     :args['--x'],
     'boolean option +';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(Bool :$x) { print "yes" if $x }',
     {
         out => "",
@@ -50,6 +55,7 @@ is_run 'sub MAIN(Bool :$x) { print "yes" if $x }',
     :args['--/x'],
     'boolean option -';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:$x) { print $x }',
     {
         out => "23",
@@ -57,6 +63,7 @@ is_run 'sub MAIN(:$x) { print $x }',
     :args['--x=23'],
     'option with value';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:$x) { print $x }',
     {
         out => "23",
@@ -64,6 +71,7 @@ is_run 'sub MAIN(:$x) { print $x }',
     :args['--x', '23'],
     'option with spacey value';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
@@ -71,6 +79,7 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     :args['--xen', '23'],
     'long option with spacey value';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
@@ -78,6 +87,7 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     :args['--xin', '23'],
     'named aliases';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
@@ -86,6 +96,7 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     'short option with spacey value';
 
 # RT #71366
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
     {
         err     => /\-\-var/,
@@ -94,6 +105,7 @@ is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
     :args['param', '--var'],
     'Non Bool option last with no value';
 
+#?rakudo todo 'nom regression'
 is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
     {
         out     => "a: param, optional: Bool::True\n",

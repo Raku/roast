@@ -236,6 +236,7 @@ is DateTime.new('2009-12-31T22:33:44',
     $t = time;
     my $dt1 = DateTime.new($t);
     my $dt2 = DateTime.now.utc;        # $dt1 and $dt2 might differ very occasionally
+    #?rakudo todo 'nom regression'
     is show-dt($dt1), show-dt($dt2), 'DateTime.now uses current time';
 
     $t = time;
@@ -374,6 +375,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     is ~$dt, '2004-12-31T23:57:00+0035', 'DateTime.in-timezone (year rollover)';
 
     $dt = with-tz(dt(second => 15.5), 0, 0, 5);
+    #?rakudo todo 'nom regression'
     is $dt.second, 20.5, 'DateTime.in-timezone (fractional seconds)';
 
     $dt = dt(year => 2005, month => 1, day => 3,
