@@ -19,7 +19,7 @@ sub dtpi($year, $month, $day, $hour, $minute, $second) {
     DateTime.new(:$year, :$month, :$day, :$hour, :$minute, :$second).Instant
 }
 
-sub dti(*%args) { DateTime.new(year => 1984, |%args).Instant }
+sub dti(*%args) { DateTime.new(|{year => 1984, %args}).Instant }
 
 sub dsi($s) { DateTime.new($s).Instant }
 
