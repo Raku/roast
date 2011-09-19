@@ -10,7 +10,7 @@ Please consider this test suite to be the result
 of an ongoing negotiation: since many of these tests are inspired
 by seeing how the various prototype implementations are screwed up
 (or even more likely, how the design of Perl 6 is screwed up), this
-test suite should be considered a work in progress till one or more
+test suite should be considered a work in progress until one or more
 of the implementations gets close to passing the entire test suite,
 at which point we will freeze version 6.0 of the test suite, and any
 implementation that passes it can then call itself Perl 6.
