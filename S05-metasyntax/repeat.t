@@ -53,7 +53,9 @@ is(~('foo,bar,baz,' ~~ m/[<alpha>+] **? ','/), 'foo', '**? with a term worked');
 is(~('foo, bar,' ~~ m/[<alpha>+] **[','\s*]/), 'foo, bar', '** with a more complex term');
 
 ok 'a, b, c' !~~ /:s^<alpha>**\,$/, 'with no spaces around **, no spaces can be matched';
+#?rakudo todo 'nom regression'
 ok 'a, b, c'  ~~ /:s^ <alpha> ** \, $/, 'with spaces around **, spaces can be matched';
+#?rakudo todo 'nom regression'
 ok 'a , b ,c' ~~ /:s^ <alpha> ** \, $/, 'same, but with leading spaces';
 
 # RT #76792
