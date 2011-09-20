@@ -47,11 +47,11 @@ plan 65;
 {
     my $str;
     my @a = 1..3;
-    my @b = 5..6;
+    my @b = 4..6;
     for zip(@a; @b) -> $x, $y {
         $str ~= "($x $y)";
     }
-    is $str, "(1 5)(2 4)(3 6)", 'for zip(@a; @b) -> $x, $y works';
+    is $str, "(1 4)(2 5)(3 6)", 'for zip(@a; @b) -> $x, $y works';
 }
 
 # ... with referential sub
