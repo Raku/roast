@@ -49,7 +49,6 @@ try {
 ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
 
 # RT #70011
-#?rakudo skip 'nom regression'
 {
     undefine $!;
     try { die('goodbye'); }
