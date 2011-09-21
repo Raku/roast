@@ -59,12 +59,16 @@ is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
 is max(:by({ $^a <=> $^b }), @array), 7,
   "subroutine form of max with identity comparison block works";
 
+#?rakudo todo 'nom regression'
 is (@array.max: { abs $^a <=> abs $^b }), -9,
   "method form of max taking a comparison block works";
+#?rakudo todo 'nom regression'
 is max(:by({ abs $^a <=> abs $^b }), @array), -9,
   "subroutine form of max taking a comparison block works";
+#?rakudo todo 'nom regression'
 is (@array.max: { $^a.abs }), -9,
   "method form of max taking a modifier block works";
+#?rakudo todo 'nom regression'
 is max(:by({ $^a.abs }), @array), -9,
   "subroutine form of max taking a modifier block works";
 
@@ -94,6 +98,7 @@ is minmax(:by({ $^a.abs }), @array), 0..-9,
 is ((-10..9).minmax: { abs $^a <=> abs $^b }), 0..-10,
   "method form of minmax on Ranges taking a comparison block works";
 
+#?rakudo todo 'nom regression'
 is ((1..10).minmax: { ($_-3) * ($_-5) }), 4..10,
   "method form of minmax taking an arity-1 comparison block works";
 
@@ -112,13 +117,18 @@ is min(:by({$^a <=> $^b}), 1,2,3),  1, "subroutine form of min with literals wor
 
 # Try to read numbers from a file
 @array = lines("t/spec/S32-list/numbers.data");
+#?rakudo todo 'nom regression'
 is @array.max, 5, "max of strings read from a file works";
+#?rakudo todo 'nom regression'
 is @array.min, -1, "min of strings read from a file works";
 
 # Same, but numifying the numbers first
-@array = map { +$_ }, @array;
-is @array.max, 28, "max of strings read from a file works";
-is @array.min, -80, "min of strings read from a file works";
+#?rakudo skip 'nom regression'
+{
+    @array = map { +$_ }, @array;
+    is @array.max, 28, "max of strings read from a file works";
+    is @array.min, -80, "min of strings read from a file works";
+}
 
 is (1, Inf).max, Inf,"Inf is greater than 1";
 is (-1, -Inf).min, -Inf,"-Inf is less than -1";

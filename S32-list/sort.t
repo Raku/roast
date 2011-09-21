@@ -35,6 +35,7 @@ plan 35;
     is(@s, @e, 'array of numbers was sorted (using invocant form)');
 }
 
+#?rakudo skip 'nom regression'
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -69,6 +70,7 @@ plan 35;
     is(@s, @e, '... with explicit spaceship (using invocant form)');
 }
 
+#?rakudo skip 'nom regression'
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (45, 6, 3, 2, 1);
@@ -109,6 +111,7 @@ plan 35;
     is(@s, @e, 'array of strings was sorted (using invocant form)');
 }
 
+#?rakudo skip 'nom regression'
 {
     my @a = <daa boo gaa aaa>;
     my @e = <aaa boo daa gaa>;
@@ -117,6 +120,7 @@ plan 35;
     is(@s, @e, '... with explicit cmp');
 }
 
+#?rakudo skip 'nom regression'
 {
     my @a = <daa boo gaa aaa>;
     my @e = <aaa boo daa gaa>;
@@ -126,6 +130,7 @@ plan 35;
 }
 
 
+#?rakudo skip 'nom regression'
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
@@ -134,6 +139,7 @@ plan 35;
     is(@s, @e, '... sort keys by string value');
 }
 
+#?rakudo skip 'nom regression'
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
@@ -142,6 +148,7 @@ plan 35;
     is(@s, @e, '... sort keys by string value (using invocant form)');
 }
 
+#?rakudo skip 'nom regression'
 {
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
@@ -225,6 +232,7 @@ plan 35;
 
     my @sorted;
 
+    #?rakudo todo 'nom regression'
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 
@@ -240,6 +248,7 @@ plan 35;
         $a.x <=> $b.x;
     }
 
+    #?rakudo todo 'nom regression'
     lives_ok {
         @sorted = (
             RT71258_2.new(x => 2),
@@ -248,6 +257,7 @@ plan 35;
         ).sort
     }, 'sorting stringified class instance with custom cmp';
 
+    #?rakudo todo 'nom regression'
     is ~@sorted, '1 2 3',
         'checking sort order with custom cmp';
 }
