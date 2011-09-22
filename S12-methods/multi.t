@@ -193,12 +193,12 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 }
 
 {
-    class A {
+    class B {
         multi method foo() { }
         multi method bar() { }
     }
 
-    lives_ok { A.new.foo() },
+    lives_ok { B.new.foo() },
         'multis with different names but same signatures are not ambiguous';
 }
 
