@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 31;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -76,39 +76,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     eval 'class A { method a(){0}; method a($x){1} }';
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
-}
-
-{
-    role R3 {
-        has @.order;
-        multi method b() { @.order.push( 'role' ) }
-    }
-    class C3 does R3 {
-        multi method b() { @.order.push( 'class' ); nextsame }
-    }
-
-    my $c = C3.new;
-    lives_ok { $c.b }, 'can call multi-method from class with role';
-
-    is $c.order, <class role>, 'call order is correct for class and role'
-}
-
-{
-    role R4 {
-        has @.order;
-        multi method b() { @.order.push( 'role'   ); nextsame }
-    }
-    class P4 {
-        method b() {       @.order.push( 'parent' ) }
-    }
-    class C4 is P4 does R4 {
-        multi method b() { @.order.push( 'class'  ); nextsame }
-    }
-    my $c = C4.new;
-    lives_ok { $c.b }, 'call multi-method from class with parent and role';
-
-    is $c.order, <class role parent>,
-       'call order is correct for class, role, parent'
 }
 
 # RT 69192
