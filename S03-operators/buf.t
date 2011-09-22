@@ -5,6 +5,7 @@ plan 7;
 
 ok (~^"foo".encode eqv Buf.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
+#?rakudo 6 todo 'nom regression'
 ok ("foo".encode ~& "bar".encode eqv "bab".encode), 'infix:<~&>';
 ok ("ber".encode ~| "baz".encode eqv "bez".encode), 'infix:<~|>';
 ok ("foo".encode ~^ "bar".encode eqv Buf.new(4, 14, 29)), 'infix:<~^>';
