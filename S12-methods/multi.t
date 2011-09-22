@@ -50,7 +50,7 @@ role R2 {
 }
 eval_dies_ok 'class X does R1 does R2 { }', 'sanity: get composition conflict error';
 class C does R1 does R2 {
-    proto method foo() { * }
+    proto method foo(|$) { * }
 }
 my $obj = C.new;
 #?rakudo 2 skip 'proto does not promote to multi'
