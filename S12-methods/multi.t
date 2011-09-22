@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 # L<S12/"Multisubs and Multimethods">
 # L<S12/"Trusts">
@@ -190,6 +190,16 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # RT #57788
 {
     eval_dies_ok 'class A { method m() { }; method m() { } }';
+}
+
+{
+    class A {
+        multi method foo() { }
+        multi method bar() { }
+    }
+
+    lives_ok { A.new.foo() },
+        'multis with different names but same signatures are not ambiguous';
 }
 
 done;
