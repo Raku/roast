@@ -79,6 +79,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 }
 
 # RT 69192
+#?rakudo skip 'unknown bug'
 {
     role R5 {
         multi method rt69192()       { push @.order, 'empty' }
