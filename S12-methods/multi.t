@@ -138,7 +138,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     is @candies.elems, 3, 'got three candidates for multi method';
 
     ok @candies[0] ~~ Method, 'candidate 0 is a method';
-    #?rakudo 2 todo 'wrong type for some candidates'
     ok @candies[1] ~~ Method, 'candidate 1 is a method';
     ok @candies[2] ~~ Method, 'candidate 2 is a method';
 }
@@ -149,7 +148,6 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
         multi method has_tie(Int $y) { 'tie2' };   #OK not used
     }
 
-    #?rakudo todo 'ambiguous dispatch should die'
     dies_ok { BrokenTie.has_tie( 42 ) }, 'call to tied method dies';
 
     class WorkingTie is BrokenTie {
