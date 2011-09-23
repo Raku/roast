@@ -200,7 +200,6 @@ ok($fh9.close, 'file closed okay (9)');
 ok(unlink($filename), 'file has been removed');
 nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 
-#?rakudo skip 'binary IO, encode, Buf'
 {
     my $binary_out_fh = open($filename, :w, :bin);
     isa_ok($binary_out_fh, IO);
@@ -208,7 +207,6 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     ok($binary_out_fh.close(), "file closed OK");
 }
 
-#?rakudo skip 'binary IO, encode, Buf'
 {
     my $binary_in_fh = open($filename, :r, :bin);
     isa_ok($binary_in_fh, IO);
