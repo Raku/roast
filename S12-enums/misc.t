@@ -35,6 +35,18 @@ use Test;
 
 }
 
+# L<S12/Miscellaneous Rules>
+# see also: RT #63650
+{
+    enum Maybe <OK FAIL>;
+    sub OK { 'sub OK' };
+    is OK,    'OK',     'enum key wins in case of conflict';
+    is +OK,   0,        'enum key wins in case of conflict (numeric)';
+    is OK(),  'sub OK', 'but () is still a function call';
+    is FAIL,  'FAIL',   'non-conflicting enum key';
+    is +FAIL, 1,        'non-conflicting enum key (numeric)';
+}
+
 done;
 
 # vim: ft=perl6
