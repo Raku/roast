@@ -127,6 +127,7 @@ class TrigFunction
     has $.complex_check;
     has $.plus_inf;
     has $.minus_inf;
+    has $.inf_fudge;
     
     multi method new(Str $function_name is copy, 
                      Str $inverted_function_name is copy;
@@ -146,7 +147,8 @@ class TrigFunction
                    :$desired-result-code,
                    :$complex_check,
                    :$plus_inf,
-                   :$minus_inf);
+                   :$minus_inf,
+                   :inf_fudge($function_name ~~ /h/ ?? '#?niecza skip "Inf results wrong"' !! ''));
     }
 
     my sub notgrep(@a, Mu $condition) {
@@ -184,6 +186,7 @@ class TrigFunction
                 is_approx($zp2.$.function_name, $sz2, "Complex.$.function_name - $zp2");
             }
             
+            $.inf_fudge
             {
                 is($.function_name(Inf), $.plus_inf, "$.function_name(Inf) -");
                 is($.function_name(-Inf), $.minus_inf, "$.function_name(-Inf) -");
@@ -198,6 +201,7 @@ class TrigFunction
         $code.=subst: '$.rational_inverse_tests', $.rational_inverse_tests, :g;
         $code.=subst: '$.plus_inf', $.plus_inf, :g;
         $code.=subst: '$.minus_inf', $.minus_inf, :g;
+        $code.=subst: '$.inf_fudge', $.inf_fudge, :g;
         $code.=subst: / ^^ ' ' ** 12 /, '', :g;
 
         $file.say: $code;
@@ -206,6 +210,11 @@ class TrigFunction
         my $angle_list = grep-and-repeat(eval($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
+            given $type {
+                when "Str" { $file.say: '#?niecza skip "Str math NYI"' }
+                when "DifferentReal" { $file.say: '#?niecza skip "DifferentReal math NY working"' }
+            }
+            
             $file.say: '{';
             $file.say: "    \# $type tests";
             
@@ -261,6 +270,11 @@ class TrigFunction
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;
         for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
+            given $type {
+                when "Str" { $file.say: '#?niecza skip "Str math NYI"' }
+                when "DifferentReal" { $file.say: '#?niecza skip "DifferentReal math NY working"' }
+            }
+            
             $file.say: '{';
             $file.say: "    # $type tests";
             unless $type eq "Num" || $type eq "Complex" {
