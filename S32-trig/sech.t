@@ -87,6 +87,7 @@ for @cosines -> $angle
     is_approx($zp2.sech, $sz2, "Complex.sech - $zp2");
 }
 
+#?niecza skip "Inf results wrong"
 {
     is(sech(Inf), 0, "sech(Inf) -");
     is(sech(-Inf), 0, "sech(-Inf) -");
@@ -108,6 +109,7 @@ for @cosines -> $angle
     is_approx(sech((-1.57079632680947 + 2i).Complex), -0.190922860876022 + 0.382612165180854i, "sech(Complex) - -1.57079632680947 + 2i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((-1.04719755120631).Str.sech, 0.624887966291348, "Str.sech - -1.04719755120631");
@@ -120,6 +122,7 @@ for @cosines -> $angle
     is_approx(sech(NotComplex.new(0.785398163404734 + 2i)), -0.594148775843208 - 0.851377452397526i, "sech(NotComplex) - 0.785398163404734 + 2i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(1.57079632680947).sech, 0.398536815333061, "DifferentReal.sech - 1.57079632680947");
@@ -161,6 +164,7 @@ for @cosines -> $angle
     is_approx(asech((0.785398163404734 + 2i).Complex), 0.425586400480703 - 1.41436665336946i, "asech(Complex) - 0.425586400480703 - 1.41436665336946i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.754939708710524).Str).asech, 0.785398163404734, "Str.asech - 0.785398163404734");
@@ -173,6 +177,7 @@ for @cosines -> $angle
     is_approx(asech(NotComplex.new(0.785398163404734 + 2i)), 0.425586400480703 - 1.41436665336946i, "asech(NotComplex) - 0.425586400480703 - 1.41436665336946i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(0.754939708710524)).asech, 0.785398163404734, "DifferentReal.asech - 0.785398163404734");

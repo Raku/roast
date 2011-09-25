@@ -87,6 +87,7 @@ for @sines -> $angle
     is_approx($zp2.cotan, $sz2, "Complex.cotan - $zp2");
 }
 
+
 {
     is(cotan(Inf), NaN, "cotan(Inf) -");
     is(cotan(-Inf), NaN, "cotan(-Inf) -");
@@ -108,6 +109,7 @@ for @sines -> $angle
     is_approx(cotan((0.785398163404734 + 2i).Complex), 0.0366189934736669 - 0.999329299738534i, "cotan(Complex) - 0.785398163404734 + 2i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((1.57079632680947).Str.cotan, -1.45716159658652e-11, "Str.cotan - 1.57079632680947");
@@ -120,6 +122,7 @@ for @sines -> $angle
     is_approx(cotan(NotComplex.new(4.7123889804284 + 2i)), -3.08850574993026e-12 - 0.964027580075817i, "cotan(NotComplex) - 4.7123889804284 + 2i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(5.49778714383314).cotan, -1.000000000102, "DifferentReal.cotan - 5.49778714383314");
@@ -161,6 +164,7 @@ for @sines -> $angle
     is_approx(acotan((0.785398163404734 + 2i).Complex), 0.204860490024916 - 0.445759203696597i, "acotan(Complex) - 0.204860490024916 - 0.445759203696597i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((1.73205080754945).Str).acotan, 0.523598775603156, "Str.acotan - 0.523598775603156");
@@ -173,6 +177,7 @@ for @sines -> $angle
     is_approx(acotan(NotComplex.new(0.785398163404734 + 2i)), 0.204860490024916 - 0.445759203696597i, "acotan(NotComplex) - 0.204860490024916 - 0.445759203696597i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(1.73205080754945)).acotan, 0.523598775603156, "DifferentReal.acotan - 0.523598775603156");

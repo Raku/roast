@@ -87,6 +87,7 @@ for @sinhes -> $angle
     is_approx($zp2.sinh, $sz2, "Complex.sinh - $zp2");
 }
 
+#?niecza skip "Inf results wrong"
 {
     is(sinh(Inf), Inf, "sinh(Inf) -");
     is(sinh(-Inf), -Inf, "sinh(-Inf) -");
@@ -108,6 +109,7 @@ for @sinhes -> $angle
     is_approx(sinh((0 + 2i).Complex), -0 + 0.909297426825682i, "sinh(Complex) - 0 + 2i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.sinh, 0.547853473893578, "Str.sinh - 0.523598775603156");
@@ -120,6 +122,7 @@ for @sinhes -> $angle
     is_approx(sinh(NotComplex.new(2.3561944902142 + 2i)), -2.17560397806036 + 4.83996483329327i, "sinh(NotComplex) - 2.3561944902142 + 2i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.14159265361894).sinh, 11.5487393575956, "DifferentReal.sinh - 3.14159265361894");
@@ -161,6 +164,7 @@ for @sinhes -> $angle
     is_approx(asinh((0.785398163404734 + 2i).Complex), 1.41841325789332 + 1.15495109689711i, "asinh(Complex) - 1.41841325789332 + 1.15495109689711i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.547853473893578).Str).asinh, 0.523598775603156, "Str.asinh - 0.523598775603156");
@@ -173,6 +177,7 @@ for @sinhes -> $angle
     is_approx(asinh(NotComplex.new(0.785398163404734 + 2i)), 1.41841325789332 + 1.15495109689711i, "asinh(NotComplex) - 1.41841325789332 + 1.15495109689711i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(0.547853473893578)).asinh, 0.523598775603156, "DifferentReal.asinh - 0.523598775603156");

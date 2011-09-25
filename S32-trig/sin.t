@@ -87,6 +87,7 @@ for @sines -> $angle
     is_approx($zp2.sin, $sz2, "Complex.sin - $zp2");
 }
 
+
 {
     is(sin(Inf), NaN, "sin(Inf) -");
     is(sin(-Inf), NaN, "sin(-Inf) -");
@@ -108,6 +109,7 @@ for @sines -> $angle
     is_approx(sin((0 + 2i).Complex), 0 + 3.62686040784702i, "sin(Complex) - 0 + 2i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.sin, 0.5, "Str.sin - 0.523598775603156");
@@ -120,6 +122,7 @@ for @sines -> $angle
     is_approx(sin(NotComplex.new(2.3561944902142 + 2i)), 2.6602740852579 - 2.56457758886169i, "sin(NotComplex) - 2.3561944902142 + 2i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.14159265361894).sin, 0, "DifferentReal.sin - 3.14159265361894");
@@ -161,6 +164,7 @@ for @sines -> $angle
     is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.5).Str).asin, 0.523598775603156, "Str.asin - 0.523598775603156");
@@ -173,6 +177,7 @@ for @sines -> $angle
     is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(0.5)).asin, 0.523598775603156, "DifferentReal.asin - 0.523598775603156");

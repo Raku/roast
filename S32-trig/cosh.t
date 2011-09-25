@@ -87,6 +87,7 @@ for @coshes -> $angle
     is_approx($zp2.cosh, $sz2, "Complex.cosh - $zp2");
 }
 
+#?niecza skip "Inf results wrong"
 {
     is(cosh(Inf), Inf, "cosh(Inf) -");
     is(cosh(-Inf), Inf, "cosh(-Inf) -");
@@ -108,6 +109,7 @@ for @coshes -> $angle
     is_approx(cosh((0 + 2i).Complex), -0.416146836547142 + 0i, "cosh(Complex) - 0 + 2i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.cosh, 1.14023832107909, "Str.cosh - 0.523598775603156");
@@ -120,6 +122,7 @@ for @coshes -> $angle
     is_approx(cosh(NotComplex.new(2.3561944902142 + 2i)), -2.21504646879479 + 4.75378141873222i, "cosh(NotComplex) - 2.3561944902142 + 2i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.14159265361894).cosh, 11.5919532758581, "DifferentReal.cosh - 3.14159265361894");
@@ -161,6 +164,7 @@ for @coshes -> $angle
     is_approx(acosh((0.785398163404734 + 2i).Complex), 1.49709293866352 + 1.22945740853541i, "acosh(Complex) - 1.49709293866352 + 1.22945740853541i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((1.14023832107909).Str).acosh, 0.523598775603156, "Str.acosh - 0.523598775603156");
@@ -173,6 +177,7 @@ for @coshes -> $angle
     is_approx(acosh(NotComplex.new(0.785398163404734 + 2i)), 1.49709293866352 + 1.22945740853541i, "acosh(NotComplex) - 1.49709293866352 + 1.22945740853541i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(1.14023832107909)).acosh, 0.523598775603156, "DifferentReal.acosh - 0.523598775603156");

@@ -87,6 +87,7 @@ for @cosines -> $angle
     is_approx($zp2.cos, $sz2, "Complex.cos - $zp2");
 }
 
+
 {
     is(cos(Inf), NaN, "cos(Inf) -");
     is(cos(-Inf), NaN, "cos(-Inf) -");
@@ -108,6 +109,7 @@ for @cosines -> $angle
     is_approx(cos((-1.57079632680947 + 2i).Complex), -5.48212707989036e-11 + 3.62686040784702i, "cos(Complex) - -1.57079632680947 + 2i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((-1.04719755120631).Str.cos, 0.5, "Str.cos - -1.04719755120631");
@@ -120,6 +122,7 @@ for @cosines -> $angle
     is_approx(cos(NotComplex.new(0.785398163404734 + 2i)), 2.66027408529666 - 2.56457758882432i, "cos(NotComplex) - 0.785398163404734 + 2i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(1.57079632680947).cos, 0, "DifferentReal.cos - 1.57079632680947");
@@ -161,6 +164,7 @@ for @cosines -> $angle
     is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740853541 - 1.49709293866352i, "acos(Complex) - 1.22945740853541 - 1.49709293866352i");
 }
 
+#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.707106781186548).Str).acos, 0.785398163404734, "Str.acos - 0.785398163404734");
@@ -173,6 +177,7 @@ for @cosines -> $angle
     is_approx(acos(NotComplex.new(0.785398163404734 + 2i)), 1.22945740853541 - 1.49709293866352i, "acos(NotComplex) - 1.22945740853541 - 1.49709293866352i");
 }
 
+#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(0.707106781186548)).acos, 0.785398163404734, "DifferentReal.acos - 0.785398163404734");
