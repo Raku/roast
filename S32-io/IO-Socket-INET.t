@@ -65,7 +65,6 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
-    #?rakudo todo 'Test fails fairly consistently on at least darwin'
     is $received, $expected, "echo server and client";
 
     # test 3 does discard protocol - Internet RFC 863
@@ -96,7 +95,6 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
     is $expected[$i++], 3, '... which is 3 bytes';
 
-    #?rakudo 7 skip 'NYI'
     # test 5 tests get()
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
@@ -108,6 +106,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], "'Twas brillig, and the slithy toves",
         'get() with default separator';
     is $expected[$i++], 'Did gyre and gimble in the wabe;', 'default separator';
+    #?rakudo 5 todo 'nom regression'
     is $expected[$i++], 'All mimsy were the borogoves,', '\r\n separator';
     is $expected[$i++], 'And the mome raths outgrabe', '. as a separator';
     is $expected[$i++], 'O frabjous day', '! separator not at end of string';
