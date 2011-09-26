@@ -15,19 +15,19 @@ my ( @ports, $netstat_cmd, $netstat_pat, $received, $expected );
 given $*OS {
     when 'linux' {
         $netstat_cmd = "netstat --tcp --all --numeric";
-        $netstat_pat = regex { State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
+        $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
     }
     when 'darwin' {
         $netstat_cmd = "netstat -f inet -p tcp -a -n";
-        $netstat_pat = regex { [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
+        $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
     }
     when 'solaris' {
         $netstat_cmd = "netstat -an -P tcp -f inet";
-        $netstat_pat = regex { [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ }; # same as darwin
+        $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ }; # same as darwin
     }
     when 'MSWin32' {
         $netstat_cmd = "netstat -n";
-        $netstat_pat = regex { State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ }; # same as linux
+        $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ }; # same as linux
     }
     default {
         skip_rest('Operating system not yet supported');
