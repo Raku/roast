@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 50;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -126,5 +126,13 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
 }
 
 dies_ok { a_zero( 'hello', 'world' ) }, 'no matching sub signature';
+
+{
+    my proto sub a($, $?) { * }
+    my multi sub a($)     { 1 }
+    my multi sub a($, $)  { 2 }
+    is &a.count, 2, '&multi.count';
+    is &a.arity, 1, '&multi.arity';
+}
 
 # vim: ft=perl6
