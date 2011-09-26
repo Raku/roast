@@ -56,6 +56,7 @@ plan 29;
     "using lists as lvalues works";
 }
 
+#?niecza skip 'TODO'
 {
   my $foo = 42;
 
@@ -100,6 +101,7 @@ plan 29;
 
 # Lists as lvalues to swap, this time we use binding instead of assignment
 #?rakudo skip 'list binding'
+#?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 42;
   my $bar = 23;
@@ -114,6 +116,7 @@ plan 29;
 }
 
 #?rakudo skip 'list binding'
+#?niecza skip 'Cannot use bind operator with this LHS'
 {
   my $foo = 1;
   my $bar = 2;
@@ -125,6 +128,7 @@ plan 29;
 }
 
 #?rakudo skip 'auto-dereferencing of captures (?)'
+#?niecza skip 'Cannot use value like Capture as a number'
 {
   my @array    = (1,2,3);
   my $arrayref = \@array;
@@ -133,6 +137,7 @@ plan 29;
   is +$arrayref[1], 2, '\@array creates an arrayref (2)';
 }
 
+#?niecza skip 'Unable to resolve method rt62836 in class Parcel'
 {
     sub List::rt62836 { 62836 }
 
@@ -150,6 +155,7 @@ plan 29;
 }
 
 # RT #66304
+#?niecza skip 'Undeclared name: "Seq"'
 {
     my $rt66304 = (1, 2, 4);
     #?rakudo todo 'nom regression'
@@ -166,6 +172,7 @@ plan 29;
 }
 
 # nom regression bug
+#?niecza skip 'Excess arguments to CORE List.new'
 {
     my $x = List.new('bacon');
     my $y = $x.Str;
