@@ -42,27 +42,25 @@ class C is B {
 
     $c.cnt = 0;
     $c.?"$foo"();
+    #?rakudo skip 'interaction of calling sets with dyanmic method names'
     is $c.cnt, 1, '.? with dynamic method name';
 
     $c.cnt = 0;
     $c.*"$foo"();
+    #?rakudo skip 'interaction of calling sets with dyanmic method names'
     is $c.cnt, 7, '.* with dynamic method name';
 
     $c.cnt = 0;
+    #?rakudo emit #
     $c.+"$foo"();
+    #?rakudo skip 'interaction of calling sets with dyanmic method names'
     is $c.cnt, 7, '.+ with dynamic method name';
 
-    $lived = 0;
-    try { $c."?foo"(); $lived = 1; }
-    is $lived, 0, '? at start of dynamic name does not imply .?';
+    dies_ok { $c."?foo"() }, '? at start of dynamic name does not imply .?';
 
-    $lived = 0;
-    try { $c."+foo"(); $lived = 1; }
-    is $lived, 0, '+ at start of dynamic name does not imply .+';
+    dies_ok { $c."+foo"() }, '+ at start of dynamic name does not imply .+';
 
-    $lived = 0;
-    try { $c."*foo"(); $lived = 1; }
-    is $lived, 0, '* at start of dynamic name does not imply .*';
+    dies_ok { $c."*foo"() }, '* at start of dynamic name does not imply .*';
 }
 
 
@@ -78,6 +76,7 @@ class E is D {
     multi method foo($x) { $.cnt++ }   #OK not used
 }
 
+#?rakudo skip 'ambiguous dispatch'
 {
     my $e = E.new();
 
