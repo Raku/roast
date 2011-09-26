@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 34;
 
 =begin pod
 
@@ -58,6 +58,7 @@ is 3 R/ 9 + 5, 8, 'R/ gets precedence of /';
 is 4 R- 5 R/ 10, -2, "Rop gets the precedence of op";
 is (9 R... 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
-done;
+# RT #93350
+eval_dies_ok '("a" R~ "b") = 1', 'Cannot assign to return value of R~';
 
 # vim: ft=perl6
