@@ -80,10 +80,10 @@ plan 33;
 # testing some error cases
 {
     my @pop = 1 .. 5;
-    dies_ok({ pop()         }, 'pop() requires arguments');
-    dies_ok({ pop(@pop, 10) }, 'pop() should not allow extra arguments');
-    dies_ok({ @pop.pop(10)  }, 'pop() should not allow extra arguments');
-    dies_ok({ 42.pop        }, '.pop should not work on scalars');
+    eval_dies_ok('pop',        'pop() requires arguments');
+    eval_dies_ok('42.pop'    , '.pop should not work on scalars');
+    nok eval('pop(@pop, 10)'), 'pop() should not allow extra arguments';
+    nok eval('@pop.pop(10)') , 'pop() should not allow extra arguments';
 }
 
 # Pop with Inf arrays (waiting on answers from perl6-compiler email)

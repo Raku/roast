@@ -57,6 +57,6 @@ is  3.end, 0,  'Scalars look like wrapped in a single-item list';
 
 # test some errors
 {
-    dies_ok { end() }, '... end() dies without an argument';
+    eval_dies_ok ' end() ', '... end() dies without an argument';
 }
 #vim: ft=perl6
