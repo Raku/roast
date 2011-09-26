@@ -8,12 +8,13 @@ Tests for can.
 
 =end pod
 
-plan 22;
+plan 23;
 
 # L<S12/"Introspection"/Unlike in Perl 5 where .can returns a single Code object>
 
 lives_ok { Str.can("split") },   "method can on built-in Str works";
 ok "foo".can("split"),           "methd can on built-in Str gives correct result if method found";
+ok "foo".can("split") ~~ Positional, '.can returns  something Positional';
 ok !"foo".can("hazcheezburger"), "methd can on built-in Str gives correct result if method not found";
 ok "bar".^can("split"),          "calling ^can also works";
 ok "x".HOW.can("x", "split"),    "and also through the HOW";
