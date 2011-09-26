@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 18;
+plan 19;
 
 ok eval('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -45,6 +45,11 @@ is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip-concat extends right argument
 is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends left argument ending with *';
 is (2, 10, * Z* 3, 4, 5, *).munch(5),
     (6, 40, 50, 50, 50), 'zip-product extends two arguments ending with *';
+}
+
+{
+    is join(',', [Z+] [1, 2], [20, 10], [100, 200]),
+       '121,212', '[Z+] with three arrays';
 }
 
 done;
