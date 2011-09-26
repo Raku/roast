@@ -19,6 +19,7 @@ is (1..^5).perl, '1..^5', ".perl ..^";
 is (1^..^5).perl, '1^..^5', ".perl ^..^";
 
 my @r = $r;
+#?niecza skip 'TODO'
 is @r, [1, 2, 3, 4, 5], 'got the right array';
 
 # Range of Str
@@ -28,14 +29,18 @@ isa_ok $r, Range;
 # XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 @r = $r;
+#?niecza skip 'TODO'
 is @r, [< a b c >], 'got the right array';
 
 # Stationary ranges
 is (1..1).perl, '1..1', "stationary num .perl ..";
+#?niecza skip 'TODO'
 is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
+#?niecza skip 'TODO'
 is ('a'..'a'), [< a >], 'got the right array';
 
+#?niecza skip 'Unable to resolve method reverse in class Range'
 {
     my $x = 0;
     $x++ for (1..4).reverse;
@@ -70,7 +75,7 @@ ok('x' !~~ 'a'..'c', 'str not in range');
 ok(('aa'..'zz').ACCEPTS('ax'), 'str in range');
 ok(('a'..'zz').ACCEPTS('ax'), 'str in range');
 
-
+#?niecza 4 skip 'Cannot use value like Range as a number'
 is(+(6..6), 1, 'numification');
 is(+(6^..6), 0, 'numification');
 is(+(6..^6), 0, 'numification');
@@ -128,12 +133,14 @@ is(+(6..8), 3, 'numification');
 }
 
 # infinite ranges using Whatever
+#?niecza skip 'Undeclared name: "Failure"'
 {
     my $inf = *..*;
     ok($inf ~~ Failure, "*..* is illegal");
 }
 
 # ranges constructed from parameters, from RT#63002.
+#?niecza skip 'TODO'
 {
     sub foo($a) { ~($a .. 5) };
     is(foo(5), '5', 'range constructed from parameter OK');
@@ -152,6 +159,7 @@ is(+(6..8), 3, 'numification');
     is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');
 }
 
+#?niecza skip 'Undeclared routine "pick"'
 {
     my @b = pick(*, 1..100);
     is @b.elems, 100, "pick(*, 1..100) returns the correct number of elements";
@@ -179,6 +187,7 @@ is(+(6..8), 3, 'numification');
     is pick("25", 1..100).elems, 25, "pick works Str arguments";
 }
 
+#?niecza skip 'Undeclared routine "pick"'
 {
     my @b = pick(*, 'b' .. 'y');
     is @b.elems, 24, "pick(*, 'b' .. 'y') returns the correct number of elements";
@@ -206,6 +215,7 @@ is(+(6..8), 3, 'numification');
     is pick("10", 'b' .. 'y').elems, 10, "pick works Str arguments";
 }
 
+#?niecza skip 'Undeclared routine "roll"'
 {
     my @b = roll(100, 1..100);
     is @b.elems, 100, "roll(100, 1..100) returns the correct number of elements";
@@ -232,6 +242,7 @@ is(+(6..8), 3, 'numification');
     is roll("25", 1..100).elems, 25, "roll works Str arguments";
 }
 
+#?niecza skip 'Undeclared routine "roll"'
 {
     my @b = roll(100, 'b' .. 'y');
     is @b.elems, 100, "roll(100, 'b' .. 'y') returns the correct number of elements";
