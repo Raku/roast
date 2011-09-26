@@ -1,19 +1,19 @@
 use v6;
 use Test;
-plan 17;
+plan 16;
 
 # Test for proto definitions
 class A { }
 class B { }
-class C is A is B { }
-proto foo($x) { 1 }
-multi foo(A $x) { 2 }    #OK not used
-multi foo(B $x) { 3 }    #OK not used
+proto foo($x) { * }
+multi foo(A $x) { 2 }
+multi foo(B $x) { 3 }
+multi foo($x)   { 1 }
 is(foo(A.new), 2, 'dispatch on class worked');
 is(foo(B.new), 3, 'dispatch on class worked');
-is(foo(C.new), 1, 'ambiguous dispatch fell back to proto');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 
+#?rakudo skip 'todo'
 {
     # Test that proto makes all further subs in the scope also be multi.
     proto bar() { "proto" }
@@ -41,6 +41,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 }
 
 # more similar tests
+#?rakudo skip 'custom ops'
 {
     proto prefix:<moose> ($arg) { $arg + 1 }
     is (moose 3), 4, "proto definition of prefix:<moose> works";
@@ -50,7 +51,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     is (elk 3), 4, "multi definition of prefix:<elk> works";
 }
 
-#?rakudo todo 'RT #68242'
 eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     'attempt to define two proto subs with the same name dies';
 
