@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 20;
 
 ok (~^"foo".encode eqv Buf.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -29,3 +29,6 @@ nok $b lt $a,    'lt -';
  ok $b gt $a,    'gt +';
 nok $b gt $b,    'gt -';
 nok $a gt $b,    'gt -';
+is  $a cmp $a, 0, 'cmp (same)';
+is  $a cmp $b,-1, 'cmp (smaller)';
+is  $b cmp $a, 1, 'cmp (larger)';

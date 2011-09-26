@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 38;
+plan 39;
 
 =begin description
 
@@ -17,8 +17,12 @@ subset Even of Int where { $_ % 2 == 0 };
     is $x, 2, 'Can assign value to a type variable with subset';
 };
 
-eval_dies_ok  'my Even $x = 3',
+
+nok eval('my Even $x = 3'),
               "Can't assign value that violates type constraint via subset";
+
+# RT # 69518'
+nok eval('Even.new'), 'Cannot instantiate a subtype';
 
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';

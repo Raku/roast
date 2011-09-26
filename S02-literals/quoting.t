@@ -92,7 +92,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     my @q;
     sub q { @_ }
     @q = q($foo,$bar);
-    #?rakudo todo 'q() as sub call'
     is(+@q, 2, 'q() is always sub call');
 };
 
