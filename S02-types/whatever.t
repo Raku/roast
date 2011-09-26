@@ -28,7 +28,9 @@ ok *.abs ~~ Code, '*.abs is of type Code';
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 isa_ok 1..*, Range, '1..* is a Range, not a Code';
+#?niecza skip 'TODO'
 isa_ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
+#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Range'
 isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
 {
@@ -53,6 +55,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 }
 
 # RT #64566
+#?niecza skip 'hangs'
 {
     my @a = 1 .. 4;
     is @a[1..*], 2..4, '@a[1..*] skips first element, stops at last';
@@ -73,9 +76,11 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
     # following is what we expect +* to do
     my @list = <1 10 2 3>;
+    #?niecza skip 'Use of uninitialized value in string context'
     is sort(-> $key {+$key}, @list), [1,2,3,10], '-> $key {+$key} generates closure to numify';
 
     # and here are two actual applications of +*
+    #?niecza skip 'Use of uninitialized value in string context'
     is sort($x, @list), [1,2,3,10], '+* generates closure to numify';
     is @list.sort($x), [1,2,3,10], '+* generates closure to numify';
 
@@ -103,6 +108,7 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $c(0, -10, 3), 3, 'that can work with three different arguments';
 }
 
+#?niecza skip 'hangs'
 {
     my $c = * + * * *;
     ok $c ~~ Code, '* + * * * generated a closure';
@@ -111,9 +117,11 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $c(3, 0, -10), 3, 'that can work with three different arguments';
 }
 
+#?niecza skip 'hangs'
 is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 {
+    #?niecza skip 'Nominal type check failed in binding'
     is (1, Mu, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';
 
     my $rt68714 = *.defined;
@@ -123,6 +131,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # L<S02/The Whatever Object/skip first two elements>
+#?niecza skip 'Writing to readonly scalar'
 {
     # TODO: find out if this allowed for item assignment, or for list
     # assignment only
@@ -138,6 +147,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # L<S02/Currying of Unary and Binary Operators/This rewrite happens after variables are looked up
 # in their lexical scope>
 
+#?niecza skip 'TODO'
 {
     my $x = 3;
     {
@@ -196,6 +206,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # RT #69362
+#?niecza skip 'Unable to resolve method signature in class WhateverCode'
 {
     my $x = *.uc;
     my $y = * + 3;
@@ -224,6 +235,7 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     is $f(0), -5, 'Whatever-currying with R- (3)';
 
     dies_ok { &infix:<+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
+    #?niecza skip 'Undeclared routine'
     dies_ok { &infix:<R+>(*, 42) }, '&infix:<+>(*, 42) doesn\'t make a closure';
 }
 
