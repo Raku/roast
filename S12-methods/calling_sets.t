@@ -1,5 +1,5 @@
 use Test;
-plan 31;
+plan 32;
 
 # L<S12/"Calling sets of methods">
 
@@ -176,5 +176,7 @@ is MMT2.new.?foo("lol"), 42, '.? when initial multi does not match will find nex
     my @list =  MMT1.new.?nonexistent();
     is +@list, 0, '.?nonexisent() returns Nil';
 }
+
+eval_dies_ok '1.*WHAT', '.WHAT is a macro and cannoted be .*ed';
 
 # vim: ft=perl6
