@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 =begin pod
 
@@ -27,6 +27,7 @@ is +@roles,   2,  ':local returned list with correct number of roles';
 ok (@roles[0] ~~ R1 && @roles[1] ~~ R2 || @roles[0] ~~ R2 && @roles[1] ~~ R1),
                   'roles in list were correct';
 
+ok C2.^roles ~~ Positional, '.^roles returns something Positional';
 @roles = C2.^roles();
 is +@roles,   3,  'with no args returned list with correct number of roles';
 is @roles[0], R3, 'first role in list was correct';
