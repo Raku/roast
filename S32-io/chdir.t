@@ -16,7 +16,7 @@ if $*OS eq "MSWin32" {
 
 # change to t subfolder and see if cwd is updated
 my $subdir = 't';
-if $subdir !~~ :d {
+if $subdir.IO !~~ :d {
     skip "Directory, '$subdir', does not exist", 7;
 }
 else {
