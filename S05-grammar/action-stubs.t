@@ -8,8 +8,8 @@ plan 18;
 
 grammar A::Test::Grammar {
     rule  TOP { <a> <b> }
-    token a   { 'a' \w+ {*} }
-    token b   { 'b' \w+ {*} }
+    token a   { 'a' \w+ }
+    token b   { 'b' \w+ }
 }
 
 class An::Action1 {
@@ -38,9 +38,9 @@ is $action.calls, 'ab', '... and in the right order';
 
 {
     grammar Grammar::More::Test {
-        rule TOP { <a> <b><c> {*} }
-        token a { \d+ {*} }
-        token b { \w+ {*} }
+        rule TOP { <a> <b><c>  }
+        token a { \d+  }
+        token b { \w+  }
         token c { '' }      # no action stub
     }
     class Grammar::More::Test::Actions {
@@ -77,8 +77,8 @@ is $action.calls, 'ab', '... and in the right order';
 # used to be a Rakudo regression, RT #64104
 {
     grammar Math {
-        token TOP { ^ <value> $ {*} }
-        token value { \d+ {*} }
+        token TOP { ^ <value> $  }
+        token value { \d+ }
     }
     class Actions {
         method value($/) { make 1..$/};
