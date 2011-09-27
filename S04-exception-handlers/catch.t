@@ -38,6 +38,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
             die 'blah';
         }
     };
+    #?rakudo todo 'unknown'
     lives_ok { $f(1) }, 'if block with CATCH {default {}} ignores exceptions...';
     dies_ok { $f(0) }, "...but the CATCH doesn't affect exceptions thrown in an attached else";
 }
@@ -56,7 +57,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
     my ($not_died, $caught);
     {
-        die Naughty("error");
+        die Naughty.new("error");
 
         $not_died = 1;
 
