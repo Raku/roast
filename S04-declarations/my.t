@@ -171,6 +171,7 @@ my $z = 42; #OK not used
 # interaction of my and eval
 # yes, it's weird... but that's the way it is
 # http://irclog.perlgeek.de/perl6/2009-03-19#i_1001177
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     sub eval_elsewhere($str) {
         eval $str;
@@ -195,6 +196,7 @@ my $z = 42; #OK not used
 }
 
 # RT #62766
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 

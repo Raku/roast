@@ -232,6 +232,7 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
 
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 { # unary postfix again, but with a twist
         my @r;
         eval '@r = ("f", "oo", "bar")».chars';

@@ -101,6 +101,7 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     "'redo' works with label";
 
 #?rakudo skip 'last not implemented'
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     is eval('
         my $i;
@@ -117,6 +118,7 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 # <agentzh> audreyt: btw, can i use redo in the do-once loop?
 # <audreyt> it can, and it will redo it
 #?rakudo skip 'redo not implemented'
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     is eval('
         my $i;

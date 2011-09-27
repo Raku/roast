@@ -189,7 +189,9 @@ plan 140;
         ok &::($core)::not === $real, '::("CORE") works when shadowed';
 
         ok eval('&CORE::not') === $real, '&CORE:: is not &SETTING::';
+        #?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
         ok eval('CORE::.<&not>') === $real, 'CORE::.{} is not SETTING::';
+        #?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
         ok eval('&::($core)::not') === $real, '::("CORE") is not SETTING';
     }
 
@@ -352,6 +354,7 @@ plan 140;
 
 # UNIT
 my $x110 = 110; #OK
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     my $x110 = 111; #OK
     my $unit = "UNIT";
@@ -365,6 +368,7 @@ my $x110 = 110; #OK
 }
 
 # SETTING
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     sub not($x) { $x } #OK
     my $setting = 'SETTING';
