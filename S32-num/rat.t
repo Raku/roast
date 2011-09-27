@@ -238,4 +238,4 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 done;
 
-# vim: ng a Num when a Rat would ft=perl6
+# vim: ft=perl6
