@@ -12,7 +12,7 @@ ok 1, "Before the =END Block";
 
 =begin END
 
-ok 2, "After the end block";
+flunk "After the end block";
 
 
 # vim: ft=perl6
