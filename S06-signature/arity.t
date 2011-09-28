@@ -125,8 +125,10 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
        '... also when passed to a sub first';
 }
 
+#?niecza skip 'Excess arguments to MAIN a_zero'
 nok eval("a_zero( 'hello', 'world' )"), 'no matching sub signature';
 
+#?niecza skip 'Unable to resolve method count in class Code'
 {
     my proto sub a($, $?) { * }
     my multi sub a($)     { 1 }

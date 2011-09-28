@@ -26,10 +26,13 @@ plan 14;
         }
 
         is(bar(), 1, 'in outer scope, can call the multi that is in scope');
+        #?niecza skip 'No matching candidates to dispatch for &bar'
         nok eval("bar('pivo')"), 'multi variant from inner scope not callable in outer';
     }
 
+    #?niecza skip 'Undeclared routine: bar'
     nok eval(q{ bar() }),       'no multi variants callable outside of lexical scope';
+    #?niecza skip 'Undeclared routine: bar'
     nok eval(q{ bar('kava')}) , 'no multi variants callable outside of lexical scope';
 }
 
@@ -46,12 +49,14 @@ plan 14;
 
 # lexical multi can add to package multi if no outer lexical ones
 multi waz() { 1 }
+#?niecza skip 'No matching candidates to dispatch for &waz'
 {
     my multi waz($x) { 2 }   #OK not used
     is(waz(),       1, 'got multi from package');
     is(waz('slon'), 2, 'lexical multi also callable');
 }
 is(waz(), 1,             'multi from package still callable outside the inner scope...');
+#?niecza skip 'No matching candidates to dispatch for &waz'
 nok eval("waz('vtak')"), '...but lexical multi no longer callable';
 
 # vim: ft=perl6 :
