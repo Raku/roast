@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 #L<S06/Placeholder variables/>
 
@@ -39,6 +39,13 @@ eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclarat
         $tracker ~= $^a ~ $^a ~ '|';
     }
     is $tracker, '11|22|', 'two occurrences of $^a count as one param';
+}
+
+# RT #99734
+{
+    sub rt99734 { "$^c is $^a and $^b" };
+    is rt99734("cake", "tasty", "so on"), 'so on is cake and tasty',
+       'RT #99734';
 }
 
 # vim: syn=perl6
