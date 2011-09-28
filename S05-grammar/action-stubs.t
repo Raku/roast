@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 15;
 
 # L<S05/Grammars/"and optionally pass an action object">
 
@@ -124,25 +124,6 @@ is $action.calls, 'ab', '... and in the right order';
     ok $x, 'Trivial grammar parsed';
     is $x.ast[0], 1, 'make(Parcel) (1)';
     is $x.ast[1], 2, 'make(Parcel) (2)';
-}
-
-# &make with multiple arguments.
-{
-    grammar Grammar::AlsoTrivial {
-        token TOP { a }
-    };
-
-    class Grammar::AlsoTrivial::A {
-       method TOP($/) { make 1, 2 }
-    };
-
-    my $x = Grammar::AlsoTrivial.parse: 'a',
-        actions => Grammar::AlsoTrivial::A.new;
-    ok $x, 'Trivial grammar parsed';
-
-    my ($a, $b) = @($x.ast);
-    is $a, 1, 'Multi-argument &make (1)';
-    is $b, 2, 'Multi-argument &make (2)';
 }
 
 # vim: ft=perl6
