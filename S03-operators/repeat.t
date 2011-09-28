@@ -17,7 +17,6 @@ is('ab' x 4, 'abababab', 'string repeat operator works on multiple character');
 is(1 x 5, '11111', 'number repeat operator works on number and creates string');
 is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
-#?rakudo skip 'nom regression'
 is('a' x -1, '', 'repeating negative times produces an empty string');
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">

@@ -42,7 +42,6 @@ plan 65;
 }
 
 #?pugs eval 'todo: slice context'
-#?rakudo skip 'slice context'
 #?niecza skip 'slice context'
 {
     my $str;

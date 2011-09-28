@@ -120,7 +120,6 @@ plan 35;
     is(@s, @e, '... with explicit cmp');
 }
 
-#?rakudo skip 'nom regression'
 {
     my @a = <daa boo gaa aaa>;
     my @e = <aaa boo daa gaa>;
@@ -139,7 +138,6 @@ plan 35;
     is(@s, @e, '... sort keys by string value');
 }
 
-#?rakudo skip 'nom regression'
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);

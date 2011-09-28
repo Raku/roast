@@ -61,7 +61,6 @@ eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
     'reverse range in charset is lethal (RT 71702)' );
 
 # RT #64220
-#?rakudo skip 'nom regression'
 ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 
 # RT #69682
