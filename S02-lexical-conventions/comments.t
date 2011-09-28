@@ -59,6 +59,7 @@ plan 46;
 }
 
 # L<S02/"Embedded Comments"/"no space" between "#" and bracket>
+#?niecza skip 'Opening bracket is required for #` comment'
 {
 
     ok !eval("3 * #` (invalid comment) 2"), "no space allowed between '#`' and '('";
@@ -99,6 +100,7 @@ plan 46;
 # I am not sure if this is speced somewhere:
 # comments can be nested
 #?rakudo skip 'nested brackets'
+#?niecza skip 'Possible runaway string'
 {
     is 3, #`(
             comment
@@ -140,6 +142,7 @@ plan 46;
 
 # L<S02/"Literals"/"# at beginning of line is always a line-end comment">
 {
+    #?niecza skip 'TODO'
     eval_dies_ok "#<this is a comment\n'abc'",
         '#+bracket at start of line is an error';
 
@@ -148,6 +151,7 @@ plan 46;
 }
 
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
+#?niecza skip 'Excess arguments to CORE eval'
 {
     my $a;
     ok !eval '$a = #`\  (comment) 32', "comments can't contain unspace";
@@ -156,6 +160,7 @@ plan 46;
 
 # L<S02/Single-line Comments/"# may not be used as" 
 #   delimiter quoting>
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     my $a;
     ok eval('$a = q{ 32 }'), 'sanity check';
@@ -167,6 +172,7 @@ plan 46;
 }
 
 # L<S02/Single-line Comments/"single-line comments">
+#?niecza skip 'TODO'
 {
     # ticket http://rt.perl.org/rt3/Ticket/Display.html?id=70752
     eval_lives_ok "#=======\n#=======\nuse v6;", "pragma use after single line comments";

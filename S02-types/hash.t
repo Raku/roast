@@ -60,6 +60,7 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
     is(@slice2[1], 1, '%hash<> slice was successful');
 }
 
+#?niecza skip 'TODO'
 {
     my @slice3 = %hash5<>.sort;
     is(+@slice3, 3, 'empty slice got all hash values');
@@ -173,7 +174,6 @@ test2 %h;
 # 20060604: Now that defaulting works the other way around, hashes resume
 # the bias-to-the-right behaviour, consistent with Perl 5.
 #
-#?DOES 4
 
 my %dupl = (a => 1, b => 2, a => 3);
 is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
@@ -190,14 +190,17 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
     is $i, 4, "for %hash works";
 }
 
-eval ' @%(a => <b>)<a> ';
-ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
+#?niecza skip 'Non-declarative sigil is missing its name'
+{
+    eval ' @%(a => <b>)<a> ';
+    ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
+}
 
 # test for RT #62730
+#?niecza skip 'TODO'
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
-#?DOES 1
 {
     my %rt71022;
     %rt71022<bughunt> = %rt71022<bughunt>;
@@ -237,7 +240,6 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # By collective knowledge of #perl6 and @larry, .{ } is actually defined in
 # Any
 #?rakudo skip 'RT 58372'
-#?DOES 3
 {
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
@@ -246,6 +248,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # Zen slices work on hashes too
+#?niecza skip 'Use of uninitialized value in string context'
 {
     my %h = { a => 1, b => 2, c => 3};
     is %h{*}.join('|'), %h.values.join('|'), '{*} zen slice';

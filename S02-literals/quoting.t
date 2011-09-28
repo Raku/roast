@@ -232,6 +232,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 #?rakudo skip 'quoting with adverbs'
+#?niecza skip 'TODO'
 { # qq:ww, interpolating L<S02/Literals/double angles do interpolate>
   # L<S02/Forcing item context/"implicit split" "shell-like fashion">
     my (@q1, @q2, @q3, @q4) = ();
@@ -261,6 +262,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 }
 
 #?rakudo skip '«...»'
+#?niecza skip 'TODO'
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
     # Pugs was having trouble with this.  Fixed in r12785.
@@ -281,6 +283,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q1[3], "BAR", '$bar was interpolated');
 
     @q2 = «$foo "$gorch" '$bar'»;
+    #?niecza 3 skip 'TODO'
     is(+@q2, 3, "3 elementes in sub quoted «» list");
     is(@q2[1], $gorch, 'second element is both parts of $gorch, interpolated');
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');
@@ -341,18 +344,22 @@ FOO
   # <<:Pair>>
     my @q = <<:p(1)>>;
     #?rakudo 2 todo '<< :pair(1) >> (RT 65304)'
+    #?niecza skip 'TODO'
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - simple");
 
     @q = <<:p(1) junk>>;
+    #?niecza skip 'TODO'
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - with some junk");
     is(@q[1], 'junk', "pair inside <<>>-quotes - junk preserved");
 
     @q = <<:def>>;
     #?rakudo 2 todo '<< :pair(1) >>'
+    #?niecza skip 'TODO'
     is(@q[0].perl, (def => 1).perl, ":pair in <<>>-quotes with no explicit value");
 
     @q = "(eval failed)";
     try { eval '@q = <<:p<moose>>>;' };
+    #?niecza skip 'TODO'
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");
 };
 
@@ -466,6 +473,7 @@ Hello, World
 # L<S02/Adverbs on quotes/"Interpolate % vars">
 # q:h
 #?rakudo skip 'quoting adverbs'
+#?niecza skip 'TODO'
 {
     # Pugs can't parse q:h currently.
     my %t = (a => "perl", b => "rocks");

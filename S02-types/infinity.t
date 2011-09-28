@@ -8,12 +8,14 @@ plan 13;
     my $x = Inf;
 
     ok( $x == Inf  , 'numeric equal');
+    #?niecza skip 'TODO'
     ok( $x eq 'Inf', 'string equal');
 }
 
 {
     my $x = -Inf;
     ok( $x == -Inf,   'negative numeric equal' );
+    #?niecza skip 'TODO'
     ok( $x eq '-Inf', 'negative string equal' );
 }
 
@@ -21,6 +23,7 @@ plan 13;
 {
     my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
+    #?niecza skip 'TODO'
     ok( $x eq 'Inf', 'int string equal' );
 }
 
@@ -28,6 +31,7 @@ plan 13;
 {
     my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
+    #?niecza skip 'TODO'
     ok( $x eq '-Inf', 'int string equal' );
 }
 
@@ -41,11 +45,13 @@ plan 13;
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 #?rakudo 3 todo 'Int conversion of NaN and Inf'
+#?niecza 3 skip 'TODO'
 ok NaN.Int === NaN,         'Inf.Int === Int';
 ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
 
 # RT #70730
+#?niecza skip 'TODO'
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
 }
