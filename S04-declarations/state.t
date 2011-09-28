@@ -314,7 +314,6 @@ sub bughunt1 { (state $svar) }    #OK not used
 }
 
 # niecza regression: state not working at top level
-#?rakudo skip 'nom regression'
 eval_lives_ok 'state $x; $x', 'state outside control structure';
 
 # vim: ft=perl6
