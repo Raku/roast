@@ -39,9 +39,13 @@ ok(!(2 == 3),      "== false");
 ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
 
+#?niecza skip 'No value for parameter $r in CORE infix:<==>'
 ok infix:<==>(False), "== with one argument is correct";
+#?niecza skip 'No value for parameter $l in CORE infix:<==>'
 ok  infix:<==>(),     "== with no arguments is correct";
+#?niecza skip 'No value for parameter $r in CORE infix:<!=>'
 ok infix:<!=>(False), "!= with one argument is correct";
+#?niecza skip 'No value for parameter $l in CORE infix:<!=>'
 ok  infix:<!=>(),     "!= with no arguments is correct";
 
 #L<S03/Negated relational operators>

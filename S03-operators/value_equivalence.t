@@ -20,6 +20,7 @@ plan 75;
 {
   ok  (1 === 1), "=== on values (1)";
   ok  (0 === 0), "=== on values (2)";
+  #?niecza skip 'TODO'
   ok  (1 + 1 === 2), '=== on non-literal values';
   ok !(0 === 1), "=== on values (3)";
   isa_ok (1 === 1), Bool, "=== on values (4)";
@@ -28,13 +29,16 @@ plan 75;
   isa_ok ("abc" === "abc"), Bool, "=== on values (abc)";
   ok !(1 === 1.0), "=== on values (1 === 1.0)";
   ok !(1 === "1"), '=== on values (1 === "1")';
+  #?niecza skip 'Nominal type check failed in binding $l in CORE infix:<===>'
   ok (Mu === Mu), '=== on values (Mu === Mu)';
+  #?niecza skip 'Nominal type check failed in binding $l in CORE infix:<===>'
   isa_ok (Mu === Mu), Bool, '=== on values (Mu === Mu)';
 }
 
 # more value tests
 {
   #?rakudo todo "=== broken on Rat"
+  #?niecza skip 'TODO'
   ok 1/2 === 1/2,                "=== on Rats";
   ok 1/2 !=== 3/2,               "!=== on Rats";
   isa_ok 1/2 === 1/2, Bool,      "=== on Rats yields Bool";
@@ -72,7 +76,9 @@ plan 75;
   my @b = (1,2,3);
 
   #?rakudo 2 todo "=== doesn't work on array references yet"
+  #?niecza skip 'TODO'
   ok  (\@a === \@a), "=== on array references (1)";
+  #?niecza skip 'TODO'
   ok  (\@b === \@b), "=== on array references (2)";
   ok !(\@a === \@b), "=== on array references (3)";
   isa_ok (\@a === \@a), Bool, "=== on array references (4)";
@@ -113,6 +119,7 @@ plan 75;
   ok  ($a === $a), "=== on scalar references (2-1)";
   ok  ($b === $b), "=== on scalar references (2-2)";
   #?rakudo todo "=== fail"
+  #?niecza skip 'TODO'
   ok  ($a === $b), "=== on scalar references (2-3)";
   isa_ok ($a === $a), Bool, "=== on scalar references (2-4)";
 }

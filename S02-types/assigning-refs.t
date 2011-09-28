@@ -38,6 +38,7 @@ plan 18;
 
   #?pugs todo 'non-flattening hash refs'
   #?rakudo todo 'non-flattening hash refs'
+  #?niecza skip 'TODO'
   is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
 }
 
@@ -47,6 +48,7 @@ plan 18;
 
   #?rakudo todo 'non-flattening hash refs'
   #?pugs todo 'non-flattening hash refs'
+  #?niecza skip 'TODO'
   is +%hash, 0, '%hash = ($hashref) does not flatten the hashref';
 }
 
@@ -56,6 +58,7 @@ plan 18;
 
   #?rakudo todo 'non-flattening hash refs'
   #?pugs todo 'non-flattening hash refs'
+  #?niecza skip 'TODO'
   is +%hash, 0, '%hash = $hashref does not flatten the hashref';
 }
 

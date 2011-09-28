@@ -17,6 +17,7 @@ ok( so(so 42), "so(so 42) is true");
 ok(not so(so 0), "so(so 0) is false");
 
 ok(so Bool::True, "'Bool::True' is true");
+#?niecza skip 'TODO'
 ok Bool.so === False, 'Bool.so returns false';
 ok(so True, "'True' is true");
 

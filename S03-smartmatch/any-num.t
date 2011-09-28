@@ -16,7 +16,9 @@ plan 18;
 
     # yes, this warns, but it should still be true
     #?rakudo 2 skip "Mu ~~ Num doesn't work yet"
+    #?niecza skip 'Nominal type check failed for #1'
     ok  (Mu ~~ 0),              'Mu ~~ 0';
+    #?niecza skip 'Nominal type check failed for #1'
     ok !(Mu ~~ 2.3),            'Mu ~~ $other_number';
 
     ok  (3+0i  ~~ 3),           'Complex ~~ Int (+)';

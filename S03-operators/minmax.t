@@ -19,13 +19,16 @@ This test min/max functions in their operator form. To see them tested in their 
 {    
     is 1 min 2, 1, 'can ye handle that?';
     is 1 max 2, 2, 'how about this?';
+    #?niecza skip 'Excess arguments to CORE infix:<min>'
     is 1 min 2 min 3, 1, 'ooh! 3 numbers! More difficult';
+    #?niecza skip 'Excess arguments to CORE infix:<max>'
     is 1 max 2 max 3, 3, 'again! 3 numbers!';
     #?rakudo 2 todo "max/min non-associative NYI"
     eval_dies_ok q{1 min 2 max 3}, 'No! No left-associativeness!';
     eval_dies_ok q{1 max 2 min 3}, 'This is also not OK';
 }
 
+#?niecza skip 'System.FormatException: Unknown char: f'
 {
     is "foo" min +Inf, "foo";
     is "foo" min -Inf, -Inf;
@@ -34,6 +37,7 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 #testing the minmax operator
+#?niecza skip 'minmax NYI'
 {
     my @a = 1,2,3,4;
     my @b = 9,8,7,1;
@@ -54,13 +58,16 @@ This test min/max functions in their operator form. To see them tested in their 
     #what `makes sense' and `probably will be anyway' :) --lue
     my @a = 1, 2, 3;
     isnt @a min 4, 1, 'NYS';
+    #?niecza skip 'TODO'
     isnt @a max 4, 4, 'NYS';
 }
 
 # RT #61836
 # RT #77868
 {
+    #?niecza skip 'TODO'
     is 2 min Any, 2, '2 min Any';
+    #?niecza skip 'TODO'
     is Any min 2, 2, 'Any min 2';
     is 2 max Any, 2, '2 max Any';
     is Any max 2, 2, 'Any max 2';

@@ -29,6 +29,7 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 
 # L<S03/List infix precedence/and a list of arrays in>
 #?rakudo skip ".slice for iterators NYI"
+#?niecza skip 'Unable to resolve method slice in class List'
 {
     my @result = gather for (1..3 X 'A'..'B').slice -> $na {
         take $na.join(':');
@@ -68,6 +69,7 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 # L<S03/Cross operators/any existing non-mutating infix operator>
 is (1,2 X* 3,4), (3,4,6,8), 'cross-product works';
 
+#?niecza skip 'TODO'
 is (1,2 Xcmp 3,2,0), (-1, -1, 1, -1, 0, 1), 'Xcmp works';
 
 # L<S03/Cross operators/underlying operator non-associating>

@@ -20,6 +20,7 @@ Some deeper tests were already added.
 =end description
 
 # UNSPECCED
+#?niecza skip 'Cannot use hash access on an object of type Pair'
 { # Array of Pairs
     my @array;
     isa_ok(@array, Array);
@@ -202,9 +203,12 @@ Some deeper tests were already added.
     isa_ok(@array[1]<two>[0], Hash);
     #?pugs 3 todo 'bug'
     #?rakudo todo 'isa hash'
+    #?niecza skip 'TODO'
     isa_ok(@array[1]<two>[0]<f>, Hash);
     #?rakudo 2 todo 'unknown'
+    #?niecza skip 'TODO'
     is(+@array[1]<two>[0], 2, "two keys at level 4");
+    #?niecza skip 'Use of uninitialized value in string context'
     is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }
 

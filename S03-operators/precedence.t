@@ -150,6 +150,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
     is(@d, [1 .. 4], "to complicate things further, it dwims");
 }
 
+#?niecza skip 'Bogus term'
 {
     my @b;
     eval('@b = ((1, 3) Z (2, 4))');
@@ -158,6 +159,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 # list prefix
 
+#?niecza skip 'Undeclared name: "Z"'
 {
     my $c;
     eval('$c = any 1, 2, Z 3, 4');
@@ -213,6 +215,7 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     'list associativity only works between identical operators';
 
 #?rakudo skip 'nom regression'
+#?niecza skip 'assigning to readonly value'
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
     # Needs careful following of STD to get it right. :-)

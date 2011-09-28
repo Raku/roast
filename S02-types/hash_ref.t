@@ -69,17 +69,22 @@ plan 31;
 # L<S06/Anonymous hashes vs blocks/So you may use sub or hash or pair to disambiguate:>
 {
     my $hash_a = { a => 1, b => 2 };
+    #?niecza skip 'TODO'
     isa_ok $hash_a, "Hash";
     my $hash_b = { a => 1, "b", 2 };
+    #?niecza skip 'TODO'
     isa_ok $hash_b, "Hash";
     my $hash_c = hash('a', 1, "b", 2);
+    #?niecza skip 'TODO'
     isa_ok $hash_c, "Hash";
     my $hash_d = hash 'a', 1, "b", 2;
+    #?niecza skip 'TODO'
     isa_ok $hash_d, "Hash";
 }
 
 # infinity HoHoHoH...
 #?rakudo skip 'isa Hash'
+#?niecza skip 'Cannot use hash access on an object of type Capture'
 {
     my %hash = (val => 42);
     %hash<ref> = \%hash;

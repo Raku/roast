@@ -31,8 +31,10 @@ plan 57;
     my @array = <a b c>;
     my $ref   = \@array;
 
+    #?niecza skip 'TODO'
     is ~$ref, "a b c", '$arrayref = \@array works (1)';
     # Explicit referentiation of arrays in assignment
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +$ref,       1, '$arrayref = \@array works (2)';
 }
 
@@ -71,8 +73,10 @@ plan 57;
     my @other;
     @other[1] = \@array;
 
+    #?niecza skip 'TODO'
     is ~@other, " a b c", '@other[$idx] = \@array works (1)';
     is +@other,        2, '@other[$idx] = \@array works (2)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +@other[1],     1, '@other[$idx] = \@array works (3)';
 }
 
@@ -93,6 +97,7 @@ plan 57;
     @other[1] = \%hash;
 
     is +@other,    2, '@other[$idx] = \%hash works (1)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +@other[1], 1, '@other[$idx] = \%hash works (2)';
 }
 
@@ -113,6 +118,7 @@ plan 57;
     %other<a> = \@array;
 
     is +%other,    1, '%other[$key] = \@array works (1)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +%other<a>, 1, '%other[$key] = \@array works (2)';
 }
 
@@ -123,6 +129,7 @@ plan 57;
     %other<a> = %hash;
 
     is +%other,    1, '%other[$key] = %hash works (1)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +%other<a>, 3, '%other[$key] = %hash works (2)';
 }
 
@@ -133,6 +140,7 @@ plan 57;
     %other<a> = \%hash;
 
     is +%other,    1, '%other[$key] = \%hash works (1)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +%other<a>, 1, '%other[$key] = \%hash works (2)';
 }
 
@@ -150,7 +158,9 @@ plan 57;
     my @array = <a b c>;
     my $pair  = (key => \@array);
 
+    #?niecza skip 'TODO'
     is ~$pair.value, "a b c", '(key => \@array) works (1)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +$pair.value,       1, '(key => \@array) works (2)';
 }
 
@@ -186,7 +196,9 @@ plan 57;
     my @array = <a b c>;
     my $pair  = (:key(\@array));
 
+    #?niecza skip 'TODO'
     is ~$pair.value, "a b c", '(:key(\@array)) works (1)';
+    #?niecza skip 'Cannot use value like Capture as a Number'
     is +$pair.value,       1, '(:key(\@array)) works (2)';
 }
 

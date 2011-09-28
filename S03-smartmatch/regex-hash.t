@@ -6,7 +6,9 @@ plan 4;
 {
     my %h = (moep => 'foo', bar => 'baz');
     #?rakudo 2 todo 'nom regression'
+    #?niecza skip 'TODO'
     ok  (/oep/ ~~ %h),      'Regex ~~ Hash (+,1)';
+    #?niecza skip 'TODO'
     ok  (/bar/ ~~ %h),      'Regex ~~ Hash (+,2)';
     ok !(/ugh/ ~~ %h),      'Regex ~~ Hash (-,1)';
     ok !(/foo/ ~~ %h),      'Regex ~~ Hash (-,value)';

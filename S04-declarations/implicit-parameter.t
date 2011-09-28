@@ -40,7 +40,9 @@ plan 18;
     dies_ok({ (-> { $_ }).(42) },         'Even when we use $_>');
     
     #?rakudo 2 todo 'pointy blocks and $_'
+    #?niecza skip 'TODO'
     is((-> { $_ }).(),      'Ack!',       '$_ is lexical here');
+    #?niecza skip 'TODO'
     is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters (?)');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');
 
@@ -49,6 +51,7 @@ plan 18;
     is(-> { }.arity, 0,                 '->{} is arity 0, again');
 }
 
+#?niecza skip 'TODO'
 {
     eval_dies_ok('sub { $^foo }.(42)',  'Placeholders not allowed in sub()');
 }

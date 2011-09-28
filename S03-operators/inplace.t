@@ -16,10 +16,13 @@ plan 28;
 
 {
     my @b = <foo 123 bar 456 baz>;
+    #?niecza skip 'TODO'
     lives_ok { @b.=grep(/<[a..z]>/)},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
+    #?niecza skip 'TODO'
     is @b[1], 'bar', 'inplace grep [1]';
+    #?niecza skip 'TODO'
     is @b[2], 'baz', 'inplace grep [2]';
 }
 
@@ -64,9 +67,11 @@ is ~@b, "a b d e z", "inplace sort";
     my @a_orig = @a;
 
     my @b = @a.sort: {1};
+    #?niecza skip 'TODO'
     is @b, @a_orig,            'worked: @a.sort: {1}';
 
     @a.=sort: {1};
+    #?niecza skip 'TODO'
     is @a, @a_orig,            'worked: @a.=sort: {1}';
 
     @a.=sort;

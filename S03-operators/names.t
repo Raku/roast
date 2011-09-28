@@ -10,5 +10,7 @@ is  infix:<->(3, 8), -5, 'Can refer to  infix:<->';
 
 is &infix:<cmp>(3, 4), -1, 'Can refer to &infix:<cmp>';
 
+#?niecza skip 'TODO'
 ok ~&infix:<+> ~~ /infix/, 'String value of &infix:<+> contains "infix"';
+#?niecza skip 'TODO'
 ok ~&infix:<+> ~~ /\+/, 'String value of &infix:<+> contains "+"';

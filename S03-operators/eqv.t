@@ -34,6 +34,7 @@ plan 53;
 }
 
 #?rakudo skip 'binding NYI'
+#?niecza skip 'Cannot use value like Capture as a number'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
@@ -45,6 +46,7 @@ plan 53;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
 }
 
+#?niecza skip 'Cannot use value like Capture as a number'
 {
   my $a = \3;
   my $b = \3;
@@ -56,6 +58,7 @@ plan 53;
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
+#?niecza skip 'Cannot use value like Block as a number'
 {
   my $a = { 3 };
   my $b = { 3 };
@@ -67,12 +70,14 @@ plan 53;
   ok !($a eqv { 5 }), 'eqv on sub references (1-4)';
 }
 
+#?niecza skip 'Cannot use value like Sub as a number'
 {
   ok  (&say eqv &say), "eqv on sub references (2-1)";
   ok  (&map eqv &map), "eqv on sub references (2-2)";
   ok !(&say eqv &map), "eqv on sub references (2-3)";
 }
 
+#?niecza skip 'Cannot use value like Capture as a number'
 {
   my $num = 3; my $a   = \$num;
   my $b   = \$num;
@@ -83,12 +88,14 @@ plan 53;
 }
 
 {
+  #?niecza skip 'TODO'
   ok !([1,2,3] eqv [4,5,6]), "eqv on anonymous array references (1)";
   ok ([1,2,3] eqv [1,2,3]), "eqv on anonymous array references (2)";
   ok ([]      eqv []),      "eqv on anonymous array references (3)";
 }
 
 {
+  #?niecza skip 'TODO'
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
   ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
@@ -96,6 +103,7 @@ plan 53;
 }
 
 #?rakudo skip 'captures'
+#?niecza skip 'Cannot use value like Capture as a number'
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
@@ -130,13 +138,16 @@ plan 53;
 }
 
 {
+    #?niecza skip 'Nominal type check failed in binding $a in CORE infix:<eqv>'
     is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
     is Any eqv Any, Bool::True, 'Any eqv Any';
+    #?niecza skip 'Nominal type check failed in binding $b in CORE infix:<eqv>'
     is Any eqv Mu, Bool::False, 'Any !eqv Mu';
 }
 
 # RT #75322 - Rakudo used to be confused when lists began with ()
 {
+   #?niecza skip 'TODO'
     nok ((), "x") eqv ((), 9), 'list starting with () - 1';
     nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';
     nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';

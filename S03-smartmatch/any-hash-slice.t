@@ -9,18 +9,23 @@ use Test;
     sub notautoquoted_c { 'c' };
 
     #?rakudo todo 'nom regression'
+    #?niecza skip 'TODO'
     ok  (%h ~~ .{'c'}),     '%hash ~~ .{true"}';
     ok !(%h ~~ .{'b'}),     '%hash ~~ .{false"}';
     #?rakudo todo 'nom regression'
+    #?niecza skip 'TODO'
     ok  (%h ~~ .{<c d>}),   '%hash ~~ .{<true values>}';
     ok !(%h ~~ .{<c d a>}), '%hash ~~ .{<not all true>}';
     ok !(%h ~~ .{notautoquoted_a}), '~~. {notautoquoted_a}';
     #?rakudo todo 'nom regression'
+    #?niecza skip 'TODO'
     ok  (%h ~~ .{notautoquoted_c}), '~~. {notautoquoted_c}';
     #?rakudo todo 'nom regression'
+    #?niecza skip 'TODO'
     ok  (%h ~~ .<c>),     '%hash ~~ .<true"}';
     ok !(%h ~~ .<b>),     '%hash ~~ .<false"}';
     #?rakudo todo 'nom regression'
+    #?niecza skip 'TODO'
     ok  (%h ~~ .<c d>),   '%hash ~~ .<true values>';
     ok !(%h ~~ .<c d a>), '%hash ~~ .<not all true>';
     ok !(%h ~~ .<c d f>), '%hash ~~ .<not all exist>';
