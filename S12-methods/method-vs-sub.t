@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 4;
+plan 5;
 
 #L<S12/Method call vs. Subroutine call>
 
@@ -25,6 +25,15 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
 
     ok( { "foo" => &RT69610::rt69610 }.<foo>( RT69610.new ) ~~ RT69610,
         "Can return from method called from a hash lookup (RT 69610)" );
+}
+
+# RT #92192
+{
+    my @a;
+    my $n;
+    for 1..5 -> $i { @a.push(anon method foo { $n++ }) };
+    .($_) for @a;
+    is $n, 5, 'RT #92192';
 }
 
 done;
