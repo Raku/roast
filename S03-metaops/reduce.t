@@ -361,5 +361,11 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
    'a listop with immediate () is a function call (RT 82210)';
 
+# RT #99942
+{
+    sub rt99942 { [+] @_ };
+    is rt99942(1, 42), 43, 'RT #99942'
+}
+
 done;
 # vim: ft=perl6
