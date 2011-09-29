@@ -42,18 +42,14 @@ class C is B {
 
     $c.cnt = 0;
     $c.?"$foo"();
-    #?rakudo skip 'interaction of calling sets with dyanmic method names'
     is $c.cnt, 1, '.? with dynamic method name';
 
     $c.cnt = 0;
     $c.*"$foo"();
-    #?rakudo skip 'interaction of calling sets with dyanmic method names'
     is $c.cnt, 7, '.* with dynamic method name';
 
     $c.cnt = 0;
-    #?rakudo emit #
     $c.+"$foo"();
-    #?rakudo skip 'interaction of calling sets with dyanmic method names'
     is $c.cnt, 7, '.+ with dynamic method name';
 
     dies_ok { $c."?foo"() }, '? at start of dynamic name does not imply .?';
