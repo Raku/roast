@@ -7,13 +7,18 @@ use Test;
     my $rw_call = 0;
     multi sub uno_mas( Int $ro       ) { $ro_call++; return 1 + $ro }
     multi sub uno_mas( Int $rw is rw ) { $rw_call++; return ++$rw }
-    
+
+    #?niecza skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas(42), 43, 'multi works with constant';
+    #?niecza skip 'TODO'
     is $ro_call, 1, 'read-only multi was called';
 
     my $x = 99;
+    #?niecza skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas( $x ), 100, 'multi works with variable';
+    #?niecza skip 'TODO'
     is $x, 100, 'variable was modified';
+    #?niecza skip 'TODO'
     is $rw_call, 1, 'read-write multi was called';
 }
 

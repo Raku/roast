@@ -44,9 +44,11 @@ eval_dies_ok
     'Return of list with wrong type dies';
 
 #?rakudo 2 todo 'RT 65128'
+#?niecza skip 'TODO'
 eval_lives_ok
     'my Num List sub f () { return () }; f()',
     'return of empty list should live';
+#?niecza skip 'Multiple prefix constraints not yet supported'
 is eval('my Num List sub f () { return () }; (f(), "a")'), ['a'],
     'return of empty list should be empty list';
 

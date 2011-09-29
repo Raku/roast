@@ -8,30 +8,48 @@ plan 113;
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
 # 3..2 must *not* produce "3 2".  Use reverse to get a reversed range. -lwall
-
+#?niecza skip 'TODO'
 is ~(3..6), "3 4 5 6", "(..) works on numbers (1)";
+#?niecza skip 'TODO'
 is ~(3..3), "3",       "(..) works on numbers (2)";
+#?niecza skip 'TODO'
 is ~(3..2), "",        "(..) works on auto-rev numbers (3)";
+#?niecza skip 'TODO'
 is ~(8..11), "8 9 10 11",   "(..) works on carried numbers (3)";
 
+#?niecza skip 'TODO'
 is ~("a".."c"), "a b c", "(..) works on chars (1)";
+#?niecza skip 'TODO'
 is ~("a".."a"), "a",     "(..) works on chars (2)";
+#?niecza skip 'TODO'
 is ~("b".."a"), "",      "(..) works on chars (3)";
+#?niecza skip 'TODO'
 is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) works on char range ending in z";
+#?niecza skip 'TODO'
 is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
+#?niecza skip 'TODO'
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 
 #?rakudo 4 skip 'Spec under design here'
+#?niecza skip 'TODO'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
+#?niecza skip 'TODO'
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
+#?niecza skip 'TODO'
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
+#?niecza skip 'TODO'
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 #?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'." 
+#?niecza skip 'TODO'
 is ~(' '..' '), ' ',    'all-whitespace range works';
 
+#?niecza skip 'TODO'
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
+#?niecza skip 'TODO'
 is ~(5..9-5), "",        "(..) has correct precedence (2)";
+#?niecza skip 'TODO'
 is ~(2+1..6), "3 4 5 6", "(..) has correct precedence (3)";
+#?niecza skip 'TODO'
 is ~(2+5..6), "",        "(..) has correct precedence (4)";
 
 # Test the three exclusive range operators:
@@ -65,12 +83,15 @@ is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator";
 
 # Test the unary ^ operator
+#?niecza skip 'TODO'
 is ~(^5), "0 1 2 3 4", "unary ^num produces the range 0..^num";
 is [^1],   [0],        "unary ^ on the boundary ^1 works";
 is [^0],   [],         "unary ^0 produces null range";
 is [^-1],  [],         "unary ^-1 produces null range";
 is [^0.1], [0],        "unary ^0.1 produces the range 0..^x where 0 < x < 1";
+#?niecza skip 'System.FormatException: Unknown char: a'
 is [^'a'], [],         "unary ^'a' produces null range";
+#?niecza skip 'TODO'
 is ~(^"5"), "0 1 2 3 4", 'unary ^"num" produces the range 0..^num';
 
 {
@@ -90,6 +111,7 @@ is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
 # two ranges
 is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 
+#?niecza skip 'TODO'
 {
     # Test with floats
     # 2006-12-05:
@@ -127,6 +149,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 ##     remove these tests from the suite.
 # RT #58018
 # RT #76950
+#?niecza skip 'TODO'
 {
     my @three = (1, 1, 1);
     my @one = 1;
@@ -146,6 +169,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is (0..3).map({$_ * 2}).join('|'),      '0|2|4|6', '.map works on ranges';
     is (0..3).grep({$_ == 1|3}).join('|'),  '1|3',     '.grep works on ranges';
     is (1..3).first({ $_ % 2 == 0}),        2,         '.first works on ranges';
+    #?niecza skip 'Unable to resolve method reduce in class Range'
     is (1..3).reduce({ $^a + $^b}),         6,         '.reduce works on ranges';
 }
 
@@ -162,6 +186,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.max.WHAT.gist, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
     #?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'."
+    #?niecza skip 'TODO'
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
  
@@ -174,6 +199,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.max, 3, 'range ends at three';
     #?rakudo 2 skip "range stringification: Method 'succ' not found for invocant of class 'Match'"
     lives_ok { "$range" }, 'can stringify range';
+    #?niecza skip 'TODO'
     is ~$range, "1 2 3", 'range is correct';
 }
 # and another set, just for the lulz
@@ -182,6 +208,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa_ok $0..$1, Range, '$0..$1 constructs a Range';
     #?rakudo skip "range with match object endpoints: Method 'succ' not found for invocant of class 'Match'"
+    #?niecza skip 'cannot increment a value of type Match'
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
 {
@@ -191,6 +218,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.min, 1, 'range starts at one';
     is $range.max,   3, 'range ends at three';
     lives_ok { "$range" }, 'can stringify range';
+    #?niecza skip 'TODO'
     is ~$range, "1 2 3", 'range is correct';
 }
 {
@@ -202,6 +230,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.max,   3, 'range ends at three';
     is $range.max.WHAT.gist, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
+    #?niecza skip 'TODO'
     is ~$range, "1 2 3", 'range is correct';
 }
 
@@ -209,6 +238,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 # List as implicitly numeric:>
 
 #?rakudo todo 'forbid Ranges and Lists as Range endpoints'
+#?niecza skip 'TODO'
 {
     ok !defined(try { 0 .. ^10 }), '0 .. ^10 is illegal';
     ok !defined(try { 0 .. (0, 1, 2) }), '0 .. List is illegal';
@@ -223,6 +253,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 
 # RT #82620
 #?rakudo todo "range leaking Parrot types: Method 'trans' not found for invocant of class 'Str'"
+#?niecza skip 'TODO'
 {
     lives_ok {("a".."b").map({.trans(""=>"")}).perl},
         "range doesn't leak Parrot types";

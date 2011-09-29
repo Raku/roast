@@ -16,6 +16,7 @@ ok '(a)d'  !~~ m/<&t1>/, '~ and constant atoms (wrong content)';
 # this shouldn't throw an exception. See here:
 # http://irclog.perlgeek.de/perl6/2009-01-08#i_816425
 #?rakudo skip 'should not throw exceptions'
+#?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 
 {
@@ -29,9 +30,13 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(a(a))' ~~ m/^ <&recursive> $/, 'recursive "(a(a))"';
     ok '(()())' ~~ m/^ <&recursive> $/, 'recursive "(()())"';
     #?rakudo 4 skip 'should not throw exceptions'
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '('     !~~ m/^ <&recursive> $/, '"(" is not matched';
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '(()'   !~~ m/^ <&recursive> $/, '"(()" is not matched';
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '())'   !~~ m/^ <&recursive> $/, '"())" is not matched';
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok 'a()'   !~~ m/^ <&recursive> $/, '"a()" is not matched';
 }
 
@@ -45,13 +50,17 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(a(a))' ~~ m/^ <&m1> $/, 'mutually recursive "(a(a))"';
     ok '(()())' ~~ m/^ <&m1> $/, 'mutually recursive "(()())"';
     #?rakudo 3 skip 'exceptions from regexes'
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '('     !~~ m/^ <&m1> $/, '"(" is not matched';
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '(()'   !~~ m/^ <&m1> $/, '"(()" is not matched';
+    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '())'   !~~ m/^ <&m1> $/, '"())" is not matched';
     ok 'a()'   !~~ m/^ <&m1> $/, '"a()" is not matched';
 }
 
 #?rakudo skip 'backtracking into ~'
+#?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_a { ['a' ~ 'a' <&even_a> ]? };
     ok 'aaaa' ~~ m/^ <&even_a> $ /, 'backtracking into tilde rule (1)';
@@ -59,6 +68,7 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
 }
 
 #?rakudo skip 'backtracking to find ~ goal'
+#?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
 {
     my regex even_b { 'a' ~ 'a' <&even_b>? };
     ok 'aaaa' ~~ m/^ <&even_b> /, 'tilde regex backtracks to find its goal';

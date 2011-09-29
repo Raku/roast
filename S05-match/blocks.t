@@ -20,6 +20,7 @@ if 1 {
 }
 
 #?rakudo todo 'nom regression'
+#?niecza skip 'TODO'
 ok !defined($/), '$/ still undefined in the outer block';
 
 my $loop = 1;
@@ -30,6 +31,7 @@ while $loop {
     $loop = 0;
 }
 #?rakudo todo 'nom regression'
+#?niecza skip 'TODO'
 ok !defined($/), '$/ still undefined in the outer block';
 
 {
@@ -37,6 +39,7 @@ ok !defined($/), '$/ still undefined in the outer block';
     is ~$/, 'c', '... and can use the match var';
 }
 #?rakudo todo 'nom regression'
+#?niecza skip 'TODO'
 ok !defined($/), '$/ still undefined in the outer block';
 
 my $discarded = do {
@@ -45,6 +48,7 @@ my $discarded = do {
 
 }
 #?rakudo todo 'nom regression'
+#?niecza skip 'TODO'
 ok !defined($/), '$/ still undefined in the outer block';
 
 {
@@ -59,6 +63,7 @@ ok !defined($/), '$/ still undefined in the outer block';
     ok $count, 'Can match in the condition of a while loop';
     is $match, 'b', '... and can use $/ in the block';
     #?rakudo todo 'Assignment to matched string affects earlier match objects'
+    #?niecza skip 'TODO'
     is "$/",   'b', '... and can use $/ outside the block';
 }
 
@@ -80,6 +85,7 @@ ok !defined($/), '$/ still undefined in the outer block';
             flunk 'regex did not match - $/ is properly set with explicit $_ in a given { } block';
         }
         if /\w+/ {
+            #?niecza skip 'TODO'
             is $/, 'Wall', '$/ is properly set in a given { } block';
         } else {
             flunk 'regex did not match - $/ is properly set in a given { } block';

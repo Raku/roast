@@ -19,12 +19,16 @@ plan 8;
 
   is( foo(make_array()), ::Array, "2-elem array arg, sub-returned, invoked inline" );
 
+  #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
   is( foo(hash()), ::Hash, "anon-def empty hash arg defined inline" );
 
+  #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
   is( foo({'a'=>'b'}), ::Hash, "anon-def 1-elem hash arg defined inline" );
 
+  #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
   is( foo({'a'=>'b','c'=>'d'}), ::Hash, "anon-def 2-elem hash arg defined inline" );
 
+  #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
   is( foo(make_hash()), ::Hash, "2-elem hash arg, sub-returned, invoked inline" );
 }
 

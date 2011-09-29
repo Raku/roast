@@ -24,6 +24,7 @@ plan 12;
 }
 
 #?rakudo skip 'assignment to match variables (dubious)'
+#?niecza skip 'assigning to readonly value'
 {
     ok("abc" ~~ m/a(bc){$<caught> = $0}/, 'Inner match');
     is(~$/<caught>, "bc", 'Inner caught');
@@ -35,6 +36,7 @@ ok("abc" ~~ m/a(bc){$caught = $0}/, 'Outer match');
 is($caught, "bc", 'Outer caught');
 
 #?rakudo skip 'assignment to match variables (dubious)'
+#?niecza skip 'assigning to readonly value'
 {
     ok("abc" ~~ m/a(bc){$0 = uc $0}/, 'Numeric match');
     is($/, "abc", 'Numeric matched');
@@ -44,6 +46,7 @@ is($caught, "bc", 'Outer caught');
 #?rakudo skip 'make() inside closure'
 {
     ok("abc" ~~ m/a(bc){make uc $0}/ , 'Zero match');
+    #?niecza skip 'TODO'
     is($($/), "BC", 'Zero matched');
     is(~$0, "bc", 'One matched');
 }

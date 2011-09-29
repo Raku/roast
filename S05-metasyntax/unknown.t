@@ -18,6 +18,7 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 # used to be a pugs bug
 
 #?rakudo skip 'calling <foo> from outer scopes'
+#?niecza skip 'Unable to resolve method foo in class Cursor'
 {
     my rule foo { \{ };
     ok '{'  ~~ /<foo>/, '\\{ in a rule (+)';
@@ -25,6 +26,7 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 }
 
 # RT #74832
+#?niecza skip 'Quantifier quantifies nothing'
 {
     nok eval('/ a+ + /'), 'Cannot parse regex a+ +';
     #?rakudo todo 'RT 74832'

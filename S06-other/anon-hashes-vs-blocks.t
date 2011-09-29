@@ -41,9 +41,13 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 {
     ok {; a => 1 } ~~ Block, '{; ... } is a Block';
     ok {  a => 1 } ~~ Hash,  '{ a => 1} is a Hash';
+    #?niecza skip 'No value in ANON available for parameter $a'
     ok { $^a => $^b } ~~ Block, 'placeholders force it to be a block';
+    #?niecza skip 'No value in ANON available for parameter $a'
     ok { $^a => 'b' } ~~ Block, '... as a key';
+    #?niecza skip 'No value in ANON available for parameter $x'
     ok { a => $^x }   ~~ Block, '... as a value';
+    #?niecza skip 'No value in ANON available for parameter $x'
     ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
     ok {;} ~~ Block, '{;} is a Block';
 }
