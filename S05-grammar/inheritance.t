@@ -54,6 +54,7 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 {
     class A { };
     grammar B is A { };
+    #?rakudo todo 'automatic Grammar superclass'
     isa_ok B, Grammar, 'A grammar isa Grammar, even if inherting from a class';
 
 }
