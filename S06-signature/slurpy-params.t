@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 67;
+plan 58;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -72,51 +72,11 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 =end pod
 
-
-{
-    # Positional with slurpy *%h and slurpy *@a
-    my sub foo($n, *%h, *@a) { };   #OK not used
-    my sub foo1($n, *%h, *@a) { $n }   #OK not used
-    my sub foo2($n, *%h, *@a) { %h<x> + %h<y> + %h<n> }   #OK not used
-    my sub foo3($n, *%h, *@a) { [+] @a }   #OK not used
-
-## all pairs will be slurped into hash, except the key which has the same name
-## as positional parameter
-    diag('Testing with positional arguments');
-    lives_ok { foo 1, x => 20, y => 300, 4000 },
-    'Testing: `sub foo($n, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000`';
-    is (foo1 1, x => 20, y => 300, 4000), 1,
-    'Testing the value for positional';
-    is (foo2 1, x => 20, y => 300, 4000), 320,
-    'Testing the value for slurpy *%h';
-    is (foo3 1, x => 20, y => 300, 4000), 4000,
-    'Testing the value for slurpy *@a';
-
-    # XXX should this really die?
-    #?rakudo todo 'positional params can be accessed as named ones'
-    dies_ok { foo 1, n => 20, y => 300, 4000 },
-    'Testing: `sub foo($n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000`';
-
-## We *can* pass positional arguments as a 'named' pair with slurpy *%h.
-## Only *remaining* pairs are slurped into the *%h
-# Note: with slurpy *@a, you can pass positional params, But will be slurped into *@a
-    diag('Testing without positional arguments');
-    lives_ok { foo n => 20, y => 300, 4000 },
-    'Testing: `sub foo($n, *%h, *@a){ }; foo n => 20, y => 300, 4000`';
-    is (foo1 n => 20, y => 300, 4000), 20,
-    'Testing the value for positional';
-    is (foo2 n => 20, y => 300, 4000), 300,
-    'Testing the value for slurpy *%h';
-    is (foo3 n => 20, y => 300, 4000), 4000,
-    'Testing the value for slurpy *@a';
-}
-
-
 {
     my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
     #?pugs todo 'bug'
-    dies_ok { foo 1, n => 20, y => 300 },
+    lives_ok { foo 1, n => 20, y => 300 },
         'Testing: `sub foo($n, *%h) { }; foo 1, n => 20, y => 300`';
 }
 
@@ -223,17 +183,16 @@ These tests are the testing for "List parameters" section of Synopsis 06
 }
 
 # RT #64814
+#?rakudo skip 'types on slurpy params'
 {
     sub slurp_any( Any *@a ) { @a[0] }
     is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
 
     sub slurp_int( Int *@a ) { @a[0] }
-    #?rakudo todo 'regression introduced by 41bc84f00d (RT 69622)'
     dies_ok { slurp_int( 'foo' ) }, 'dies: call (Int *@a) sub with string';
     is slurp_int( 27.Int ), 27, 'call to sub with (Int *@a) works';
 
     sub slurp_of_int( *@a of Int ) { @a[0] }
-    #?rakudo todo 'RT #64814'
     dies_ok { slurp_of_int( 'foo' ) }, 'dies: call (*@a of Int) with string';
     is slurp_of_int( 99.Int ), 99, 'call to (*@a of Int) sub works';
 
@@ -246,14 +205,11 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
     my $x = X64814.new;
     my $y = Y64814.new;
-    #?rakudo skip 'RT #64814'
     is $y.x_array( $x ), 4, 'call to method with typed array sig works';
     is $y.of_x( $x ),    3, 'call to method with "slurp of" sig works';
     is $y.x_slurp( $x ), 2, 'call to method with typed slurpy sig works';
     dies_ok { $y.x_array( 23 ) }, 'die calling method with typed array sig';
-    #?rakudo todo 'RT #64814'
     dies_ok { $y.of_x( 17 ) }, 'dies calling method with "slurp of" sig';
-    #?rakudo todo 'regression introduced by 41bc84f00d (RT 69622)'
     dies_ok { $y.x_slurp( 35 ) }, 'dies calling method with typed slurpy sig';
 }
 
@@ -272,6 +228,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 ##  Note:  I've listed these as though they succeed, but it's possible
 ##  that the parameter binding should fail outright.  --pmichaud
+#?rakudo skip 'types on slurpy params'
 {
     my $count = 0;
     sub slurp_any_thread(Any *@a) { $count++; }   #OK not used
@@ -288,6 +245,7 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
              "Can't put required parameter after variadic parameters";
 
 # used to be RT #69424
+#?rakudo skip 'types on slurpy params'
 {
     sub typed-slurpy(Int *@a) { 5 }   #OK not used
     my Int @b;
