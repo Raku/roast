@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 21;
 
 ok (~^"foo".encode eqv Buf.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -32,3 +32,5 @@ nok $a gt $b,    'gt -';
 is  $a cmp $a, 0, 'cmp (same)';
 is  $a cmp $b,-1, 'cmp (smaller)';
 is  $b cmp $a, 1, 'cmp (larger)';
+
+is_deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
