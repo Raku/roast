@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 39;
+plan 41;
 
 =begin description
 
@@ -167,6 +167,13 @@ dies_ok { my Digit $x = 3.1 },
 
 subset Bug::RT80930 of Int where { $_ %% 2 };
 lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
+
+# RT #95500
+{
+    subset SomeStr of Str where any <foo bar>;
+     ok 'foo' ~~ SomeStr, 'subset ... where any(...) (+)';
+    nok 'fox' ~~ SomeStr, 'subset ... where any(...) (-)';
+}
 
 
 # vim: ft=perl6
