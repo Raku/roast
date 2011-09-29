@@ -21,7 +21,7 @@ my $executed = 0;
 
 #?rakudo todo 'nom regression'
 ok !('a' ~~ 'b' S& { $executed = 1; True }), 'and semantics';
-#?niecza skip 'TODO'
+#?niecza todo
 ok !$executed,                            'short-circuit';
 
 # vim: ft=perl6

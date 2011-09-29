@@ -10,15 +10,15 @@ use Test;
 
     #?niecza skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas(42), 43, 'multi works with constant';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is $ro_call, 1, 'read-only multi was called';
 
     my $x = 99;
     #?niecza skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas( $x ), 100, 'multi works with variable';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is $x, 100, 'variable was modified';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is $rw_call, 1, 'read-write multi was called';
 }
 

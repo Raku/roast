@@ -28,7 +28,7 @@ ok *.abs ~~ Code, '*.abs is of type Code';
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 isa_ok 1..*, Range, '1..* is a Range, not a Code';
-#?niecza skip 'TODO'
+#?niecza todo
 isa_ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Range'
 isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
@@ -147,7 +147,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # L<S02/Currying of Unary and Binary Operators/This rewrite happens after variables are looked up
 # in their lexical scope>
 
-#?niecza skip 'TODO'
+#?niecza todo
 {
     my $x = 3;
     {

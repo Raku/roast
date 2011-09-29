@@ -23,13 +23,13 @@ plan 64;
     #?niecza skip 'Cannot use value like Pair as a number'
     is +(@array[0,1]:p), 2,
         ":p on an array returned a two-elem array";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(@array[0,1]:p), "0\ta 1\tB",
         ":p on an array returned a two-elem array consisting of the correct pairs";
 
     #?niecza skip 'Cannot use value like Pair as a number'
     is +(@array[42,23]:p),  0, ":p on an array weeded out non-existing entries (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(@array[42,23]:p), "", ":p on an array weeded out non-existing entries (2)";
 }
 
@@ -46,16 +46,16 @@ plan 64;
     is @array[0], "a",
         ":kv on an array returns lvalues (like normal subscripts do as well)";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(@array[0,1]:kv), 4,
         ":kv on an array returned a four-elem array";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(@array[0,1]:kv), "0 a 1 B",
         ":kv on an array returned the correct four-elem array";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(@array[42,23]:kv),  0, ":kv on an array weeded out non-existing entries (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(@array[42,23]:kv), "", ":kv on an array weeded out non-existing entries (2)";
 }
 
@@ -63,7 +63,7 @@ plan 64;
 {
     my @array = <A B>;
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(@array[0]:k), 1,
         ":k on an array returned an one-elem array";
     is ~(@array[0]:k), "0",
@@ -74,9 +74,9 @@ plan 64;
     is ~(@array[0,1]:k), "0 1",
         ":k on an array returned the correct two-elem array";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(@array[42,23]:k),  0, ":k on an array weeded out non-existing entries (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(@array[42,23]:k), "", ":k on an array weeded out non-existing entries (2)";
 }
 
@@ -91,9 +91,9 @@ plan 64;
     is ~(@array[0]:v), "A",
         ":v on an array returned the correct one-elem array";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     lives_ok {@array[0]:v = "a"}, 'can assign to @array[0]:v';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is @array[0], "a",
         ":v on an array returns lvalues (like normal subscripts do as well)";
 
@@ -127,13 +127,13 @@ plan 64;
     #?niecza skip 'Cannot use value like Pair as a number'
     is +(%hash<0 1>:p), 2,
         ":p on a hash returned a two-elem array";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(%hash<0 1>:p), "0\ta 1\tB",
         ":p on a hash returned a two-elem array consisting of the correct pairs";
 
     #?niecza skip 'Cannot use value like Pair as a number'
     is +(%hash<42 23>:p),  0, ":p on a hash weeded out non-existing entries (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(%hash<42 23>:p), "", ":p on a hash weeded out non-existing entries (2)";
 }
 
@@ -150,16 +150,16 @@ plan 64;
     is %hash<0>, "a",
         ":kv on a hash returns lvalues (like normal subscripts do as well)";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(%hash<0 1>:kv), 4,
         ":kv on a hash returned a four-elem array";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(%hash<0 1>:kv), "0 a 1 B",
         ":kv on a hash returned the correct four-elem array";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(%hash<42 23>:kv),  0, ":kv on a hash weeded out non-existing entries (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(%hash<42 23>:kv), "", ":kv on a hash weeded out non-existing entries (2)";
 }
 
@@ -167,7 +167,7 @@ plan 64;
 {
     my %hash = (0 => "A", 1 => "B");
 
-    #?niecza skip 'TODO'   
+    #?niecza todo   
     is +(%hash<0>:k), 1,
         ":k on a hash returned an one-elem array";
     is ~(%hash<0>:k), "0",
@@ -178,9 +178,9 @@ plan 64;
     is ~(%hash<0 1>:k), "0 1",
         ":k on a hash returned the correct two-elem array";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(%hash<42 23>:k),  0, ":k on a hash weeded out non-existing entries (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(%hash<42 23>:k), "", ":k on a hash weeded out non-existing entries (2)";
 }
 
@@ -195,9 +195,9 @@ plan 64;
     is ~(%hash<0>:v), "A",
         ":v on a hash returned the correct one-elem array";
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     lives_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is %hash<0>, "a",
         ":v on a hash returns lvalues (like normal subscripts do as well)";
 
@@ -219,10 +219,10 @@ plan 64;
 {
     my @array = (42, Mu, 23);
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(@array[0,1,2]:kv), 6,
         "undefined but existing entries should not be weeded out (1)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(@array[0,1,2]:kv), "0 42 1  2 23",
         "undefined but existing entries should not be weeded out (2)";
 }
@@ -230,10 +230,10 @@ plan 64;
 {
     my %hash = (0 => 42, 1 => Mu, 2 => 23);
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is +(%hash<0 1 2>:kv), 6,
         "undefined but existing entries should not be weeded out (3)";
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~(%hash<0 1 2>:kv), "0 42 1  2 23",
         "undefined but existing entries should not be weeded out (4)";
 }

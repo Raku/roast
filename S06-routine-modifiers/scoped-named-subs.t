@@ -44,7 +44,7 @@ eval_dies_ok
     'Return of list with wrong type dies';
 
 #?rakudo 2 todo 'RT 65128'
-#?niecza skip 'TODO'
+#?niecza todo
 eval_lives_ok
     'my Num List sub f () { return () }; f()',
     'return of empty list should live';

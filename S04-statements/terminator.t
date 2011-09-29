@@ -43,7 +43,7 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     ';
 
     #?pugs todo 'parsing'
-    #?niecza skip 'TODO'
+    #?niecza todo
     is($z[0], 3, 'auto-curly doesn\'t apply unless we\'re at top level');
 }
 
@@ -57,7 +57,7 @@ eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
 
 # RT #79964
 #?rakudo todo 'RT #79964'
-#?niecza skip 'TODO'
+#?niecza todo
 eval_lives_ok "my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
 
 # vim: ft=perl6

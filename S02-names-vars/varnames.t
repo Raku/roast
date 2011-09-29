@@ -6,15 +6,15 @@ plan 8;
 
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 
-#?niecza skip 'TODO'
+#?niecza todo
 eval_dies_ok 'my $!', '$! can not be declared again';
-#?niecza skip 'TODO'
+#?niecza todo
 eval_dies_ok 'my $/', 'nor can $/';
 
 #?rakudo 2 todo 'proto on variable declarations'
-#?niecza skip 'TODO'
+#?niecza todo
 eval_lives_ok 'my proto $!', '$! can be declared again if proto is used though';
-#?niecza skip 'TODO'
+#?niecza todo
 eval_lives_ok 'my proto $/', 'as can $/';
 
 eval_dies_ok 'my $f!ao = "beh";', "normal varnames can't have ! in their name";

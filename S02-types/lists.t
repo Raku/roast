@@ -56,7 +56,7 @@ plan 29;
     "using lists as lvalues works";
 }
 
-#?niecza skip 'TODO'
+#?niecza todo
 {
   my $foo = 42;
 

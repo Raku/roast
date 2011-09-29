@@ -33,25 +33,25 @@ ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
 #?pugs 6 todo 'feature'
-#?niecza skip 'TODO'
+#?niecza todo
 ok('a' ~~ m/$aref[0]/, 'Array ref 0');
-#?niecza skip 'TODO'
+#?niecza todo
 ok('a' ~~ m/$aref.[0]/, 'Array ref dot 0');
-#?niecza skip 'TODO'
+#?niecza todo
 ok('a' ~~ m/@var[0]/, 'Array 0');
 
-#?niecza skip 'TODO'
+#?niecza todo
 ok('1' ~~ m/$href.{'a'}/, 'Hash ref dot A');
-#?niecza skip 'TODO'
+#?niecza todo
 ok('1' ~~ m/$href{'a'}/, 'Hash ref A');
-#?niecza skip 'TODO'
+#?niecza todo
 ok('1' ~~ m/%var{'a'}/, 'Hash A');
 
-#?niecza skip 'TODO'
+#?niecza todo
 ok('1' ~~ m/$href.<a>/, 'Hash ref dot A');
-#?niecza skip 'TODO'
+#?niecza todo
 ok('1' ~~ m/$href<a>/, 'Hash ref A');
-#?niecza skip 'TODO'
+#?niecza todo
 ok('1' ~~ m/%var<a>/, 'Hash A');
 
 ok(!( 'a' ~~ m/$aref[1]/ ), 'Array ref 1');
@@ -68,7 +68,7 @@ ok(!( '1' ~~ m/%var<b>/ ), 'Hash B');
 # However, if $var contains a Regex object, instead of attempting to convert it to a string, it is called as a subrule
 # A simple test for this
 my $rx = rx/foo/;
-#?niecza skip 'TODO'
+#?niecza todo
 ok('foobar' ~~ /$rx bar/,  'regex object in a regex');
 ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 
@@ -77,18 +77,18 @@ ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 # L<S05/Variable (non-)interpolation/An interpolated array:>
 
 #?pugs 3 todo 'feature'
-#?niecza skip 'TODO'
+#?niecza todo
 ok("a" ~~ m/@var/, 'Simple array interpolation (a)');
-#?niecza skip 'TODO'
+#?niecza todo
 ok("b" ~~ m/@var/, 'Simple array interpolation (b)');
-#?niecza skip 'TODO'
+#?niecza todo
 ok("c" ~~ m/@var/, 'Simple array interpolation (c)');
 ok(!( "d" ~~ m/@var/ ), 'Simple array interpolation (d)');
 #?pugs 2 todo 'feature'
-#?niecza skip 'TODO'
+#?niecza todo
 ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 
-#?niecza skip 'TODO'
+#?niecza todo
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 

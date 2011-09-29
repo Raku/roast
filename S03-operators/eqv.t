@@ -88,14 +88,14 @@ plan 53;
 }
 
 {
-  #?niecza skip 'TODO'
+  #?niecza todo
   ok !([1,2,3] eqv [4,5,6]), "eqv on anonymous array references (1)";
   ok ([1,2,3] eqv [1,2,3]), "eqv on anonymous array references (2)";
   ok ([]      eqv []),      "eqv on anonymous array references (3)";
 }
 
 {
-  #?niecza skip 'TODO'
+  #?niecza todo
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
   ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
@@ -147,7 +147,7 @@ plan 53;
 
 # RT #75322 - Rakudo used to be confused when lists began with ()
 {
-   #?niecza skip 'TODO'
+   #?niecza todo
     nok ((), "x") eqv ((), 9), 'list starting with () - 1';
     nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';
     nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';

@@ -30,13 +30,13 @@ plan 9;
     @x ::= @y;
     is @x.join('|'), 'd|e', '::= on arrays';
     #?rakudo 4 todo '::= on arrays'
-    #?niecza skip 'TODO'
+    #?niecza todo
     dies_ok { @x := <3 4 foo> }, '... make RO';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is @x.join('|'), 'd|e', 'value unchanged';
-    #?niecza skip 'TODO'
+    #?niecza todo
     lives_ok { @x[2] = 'k' }, 'can still assign to items of RO array';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is @x.join(''), 'd|e|k', 'assignment relly worked';
 }
 

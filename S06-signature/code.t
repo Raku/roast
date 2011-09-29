@@ -22,18 +22,18 @@ tester(sub ($x) { $collector = 3 * $x });
 ok $collector == 12, 'same with anonymous sub';
 
 sub tester2(&my_sub) { 1 }    #OK not used
-#?niecza skip 'TODO'
+#?niecza todo
 dies_ok {tester2(42)}, "can't pass thing that doesn't do Callable";
 
 sub not_returns_a_sub { 3 };
-#?niecza skip 'TODO'
+#?niecza todo
 dies_ok {tester2(not_returns_a_sub)}, 
         "can't pass thing that doesn't do Callable";
 
 is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
 
 # RT #68578
-#?niecza skip 'TODO'
+#?niecza todo
 {
     sub rt68578( Callable &x ) {}   #OK not used
     dies_ok { rt68578({ 'block' }) },
@@ -46,7 +46,7 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
     sub foo(&foo = &foo) {
         $tracker = &foo
     };
-    #?niecza skip 'TODO'
+    #?niecza todo
     lives_ok { foo },
         'can call a sub with a code object defaulting to something of its own name';
     ok !$tracker.defined, 'the inner &foo is undefined (scoping)';

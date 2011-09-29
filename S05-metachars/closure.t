@@ -46,7 +46,7 @@ is($caught, "bc", 'Outer caught');
 #?rakudo skip 'make() inside closure'
 {
     ok("abc" ~~ m/a(bc){make uc $0}/ , 'Zero match');
-    #?niecza skip 'TODO'
+    #?niecza todo
     is($($/), "BC", 'Zero matched');
     is(~$0, "bc", 'One matched');
 }

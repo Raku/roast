@@ -58,16 +58,16 @@ This test min/max functions in their operator form. To see them tested in their 
     #what `makes sense' and `probably will be anyway' :) --lue
     my @a = 1, 2, 3;
     isnt @a min 4, 1, 'NYS';
-    #?niecza skip 'TODO'
+    #?niecza todo
     isnt @a max 4, 4, 'NYS';
 }
 
 # RT #61836
 # RT #77868
 {
-    #?niecza skip 'TODO'
+    #?niecza todo
     is 2 min Any, 2, '2 min Any';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is Any min 2, 2, 'Any min 2';
     is 2 max Any, 2, '2 max Any';
     is Any max 2, 2, 'Any max 2';

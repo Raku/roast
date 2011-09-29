@@ -69,7 +69,7 @@ ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
 # L<S03/Cross operators/any existing non-mutating infix operator>
 is (1,2 X* 3,4), (3,4,6,8), 'cross-product works';
 
-#?niecza skip 'TODO'
+#?niecza todo
 is (1,2 Xcmp 3,2,0), (-1, -1, 1, -1, 0, 1), 'Xcmp works';
 
 # L<S03/Cross operators/underlying operator non-associating>

@@ -8,14 +8,14 @@ plan 13;
     my $x = Inf;
 
     ok( $x == Inf  , 'numeric equal');
-    #?niecza skip 'TODO'
+    #?niecza todo
     ok( $x eq 'Inf', 'string equal');
 }
 
 {
     my $x = -Inf;
     ok( $x == -Inf,   'negative numeric equal' );
-    #?niecza skip 'TODO'
+    #?niecza todo
     ok( $x eq '-Inf', 'negative string equal' );
 }
 
@@ -23,7 +23,7 @@ plan 13;
 {
     my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
-    #?niecza skip 'TODO'
+    #?niecza todo
     ok( $x eq 'Inf', 'int string equal' );
 }
 
@@ -31,7 +31,7 @@ plan 13;
 {
     my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
-    #?niecza skip 'TODO'
+    #?niecza todo
     ok( $x eq '-Inf', 'int string equal' );
 }
 
@@ -51,7 +51,7 @@ ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
 
 # RT #70730
-#?niecza skip 'TODO'
+#?niecza todo
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
 }

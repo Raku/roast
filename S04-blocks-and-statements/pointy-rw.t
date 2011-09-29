@@ -45,12 +45,12 @@ plan 10;
 
 {
     my $pair = (a => 42);
-    #?niecza skip 'TODO'
+    #?niecza todo
     lives_ok {
         for $pair.value -> $v is rw { $v += 1 }
     }, 'aliases returned by $pair.values should be rw (1)';
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is $pair.value, 43, 'aliases returned by $pair.values should be rw (2)';
 }
 

@@ -60,7 +60,7 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
     is(@slice2[1], 1, '%hash<> slice was successful');
 }
 
-#?niecza skip 'TODO'
+#?niecza todo
 {
     my @slice3 = %hash5<>.sort;
     is(+@slice3, 3, 'empty slice got all hash values');
@@ -197,7 +197,7 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 }
 
 # test for RT #62730
-#?niecza skip 'TODO'
+#?niecza todo
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022

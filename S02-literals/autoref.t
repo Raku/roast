@@ -31,7 +31,7 @@ plan 57;
     my @array = <a b c>;
     my $ref   = \@array;
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~$ref, "a b c", '$arrayref = \@array works (1)';
     # Explicit referentiation of arrays in assignment
     #?niecza skip 'Cannot use value like Capture as a Number'
@@ -73,7 +73,7 @@ plan 57;
     my @other;
     @other[1] = \@array;
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~@other, " a b c", '@other[$idx] = \@array works (1)';
     is +@other,        2, '@other[$idx] = \@array works (2)';
     #?niecza skip 'Cannot use value like Capture as a Number'
@@ -158,7 +158,7 @@ plan 57;
     my @array = <a b c>;
     my $pair  = (key => \@array);
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~$pair.value, "a b c", '(key => \@array) works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
     is +$pair.value,       1, '(key => \@array) works (2)';
@@ -196,7 +196,7 @@ plan 57;
     my @array = <a b c>;
     my $pair  = (:key(\@array));
 
-    #?niecza skip 'TODO'
+    #?niecza todo
     is ~$pair.value, "a b c", '(:key(\@array)) works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
     is +$pair.value,       1, '(:key(\@array)) works (2)';

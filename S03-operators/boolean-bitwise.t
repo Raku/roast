@@ -73,7 +73,7 @@ plan 43;
   ok( ?(Any  ?^ 1    == True),  '?^ works');
   ok( ?(-1   ?^ Any  == True),  '?^ works');
   ok( ?(42   ?^ 42   == False), '?^ works');
-  #?niecza skip 'TODO'
+  #?niecza todo
   ok( ?(42   ?^ 41   == False),  '?^ works');
  
   #?niecza skip 'No value for parameter $b in CORE infix:<?^>'

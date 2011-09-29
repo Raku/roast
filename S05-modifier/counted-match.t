@@ -51,7 +51,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 # more interesting variations of :nth(...)
 #?rakudo todo 'nom regression'
-#?niecza skip 'TODO - but one hangs'
+#?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 3)).list;
     is +@match, 2, 'nth(list) is ok';
@@ -85,7 +85,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 # test that non-monotonic items in :nth lists are ignored
 #?rakudo todo 'nom regression'
-#?niecza skip 'TODO'
+#?niecza todo
 {
     is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
         'ac, ae', 'non-monotonic items in :nth are ignored';

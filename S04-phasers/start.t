@@ -88,7 +88,7 @@ for <first second> {
 
     nok $was_in_start.defined, 'START {} has not run yet';
     is $sub(), 23, 'START {} block set our variable (2)';
-    #?niecza skip 'TODO'
+    #?niecza todo
     is $sub(), 23, 'the returned value of START {} still there';
     is $was_in_start, 1, 'our START {} block was invoked exactly once';
 }

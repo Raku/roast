@@ -37,15 +37,15 @@ ok "hello" !~~ m:i/<&mixedcase>/, "no match with :i if matched by subrule";
 ok "hello"  ~~ m:i/Hello/,       "match with :i (direct)";
 
 ok "hello" !~~ m:ignorecase/<&mixedcase>/,  "no match with :ignorecase + subrule";
-#?niecza skip 'TODO'
+#?niecza todo
 ok "hello" !~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
 #?rakudo 2 todo 'ignorecase and SS/&szlig;'
-#?niecza skip 'TODO'
+#?niecza todo
 ok('ß' ~~ m:i/SS/, "ß matches SS with :ignorecase");
-#?niecza skip 'TODO'
+#?niecza todo
 ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 

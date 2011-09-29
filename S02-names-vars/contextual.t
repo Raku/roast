@@ -72,7 +72,7 @@ nok foo().defined, 'contextual $*VAR is undefined';
 }
 
 #RT #63226
-#?niecza skip 'TODO'
+#?niecza todo
 {
     package Foo { our sub run() { return @*INC } };
     ok Foo::run().chars > 0;
