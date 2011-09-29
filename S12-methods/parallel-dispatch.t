@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 35;
 
 # L<S12/"Parallel dispatch"/"Any of the method call forms may be turned into a hyperoperator">
 # syn r14547
@@ -113,16 +113,8 @@ class Bar is Foo {
 
 # test postcircumfix parallel dispatch
 {
-    is (([1, 2], [7, 8])>>[1]).join(' '), '2 8',
-        '>>[1]';
-    is (([1, 2], [7, 8])>>.[1]).join(' '), '2 8',
-        '>>.[1]';
-    is (({ a => 3, b => 5}, {a => 6})>>{'a'}).join('|'),
-        '3|6', '>>{"a"}';
-    is (({ a => 3, b => 5}, {a => 6})>><a>).join('|'),
-        '3|6', '>><a>';
-    is (({ a => 3, b => 5}, {a => 6})>>.<a>).join('|'),
-        '3|6', '>>.<a>';
+    is (a => 1, a => 2)>>.<a>, '1 2',
+        '>>.<a>';
 }
 
 {
