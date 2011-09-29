@@ -8,6 +8,7 @@ plan 39;
 # syn r14547
 
 class Foo {
+    trusts GLOBAL;
     has $.count is rw;
     method doit {$.count++}
     method !priv {$.count++}
@@ -24,9 +25,9 @@ class Bar is Foo {
     is(@o.map({.count}), (6..11), 'parallel dispatch using » works');
     @o>>.doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using >> works');
-    @o»!priv;
+    @o»!Foo::priv;
     is(@o.map({.count}), (8..13), 'parallel dispatch to a private using »! works');
-    @o>>!priv;
+    @o>>!Foo::priv;
     is(@o.map({.count}), (9..14), 'parallel dispatch to a private using >>! works');
 }
 
