@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 28;
+plan 30;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
