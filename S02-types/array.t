@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 85;
+plan 87;
 
 #L<S02/Mutable types/Array>
 
@@ -296,6 +296,15 @@ my @array2 = ("test", 1, Mu);
         }
     }
     is ~@b, '0 2 3', "non-modifier form of 'if' within 'for' loop also works"
+}
+
+# RT #95850
+# Array.hash used to eat up the array in some early version of rakudo/nom
+{
+    my @a = a => 1, b => 2;
+    my %h = @a.hash;
+    is %h.elems, 2, 'Array.hash created a sensible hash';
+    is @a.elems, 2, '... and did not consume itself in the process';
 }
 done;
 
