@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 23;
+plan 24;
 
 # L<S14/Run-time Mixins/>
 
@@ -103,6 +103,11 @@ is $y.test,     42,         'method from other role was OK too';
     class NoFoo { };
     is (NoFoo.new does ProvidesFoo).^methods(:local)>>.name, 'foo',
         'mixin with "does" lists method during introspection';
+}
+
+# RT #99986
+{
+    lives_ok { 3/2 but role { } }, 'can mix into a Rat';
 }
 
 # vim: syn=perl6
