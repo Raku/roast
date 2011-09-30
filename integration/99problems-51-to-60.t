@@ -24,9 +24,9 @@ plan 37;
       return +$obj==3 and istree($obj[1]) and istree($obj[2]);
     }
         
-    ok istree(Mu), "We tell that an empty tree is a tree";
-    ok istree(['a',Mu,Mu]), ".. and a one-level tree is a tree";
-    ok istree(['a',Mu,['c',Mu,Mu]]), ".. and n-level trees";
+    ok istree(Any), "We tell that an empty tree is a tree";
+    ok istree(['a',Any,Any]), ".. and a one-level tree is a tree";
+    ok istree(['a',Any,['c',Any,Any]]), ".. and n-level trees";
     ok !istree([]), ".. and fail with empty lists";
     ok !istree(<a b>),".. or other malformed trees";
 }
@@ -53,7 +53,7 @@ plan 37;
     # etc......No
 
     sub cbal-tree(Int $n) {
-        return Mu               if $n == 0;
+        return Any if $n == 0;
         gather {
             if $n % 2 == 1 {
                 my $k = ($n - 1) div 2;
@@ -79,16 +79,16 @@ plan 37;
     }
 
     is cbal-tree(1),
-       (['x', Mu, Mu],),
+       (['x', Any, Any],),
        'built a balanced binary tree with 1 item';
 
     is cbal-tree(2), 
-       (['x', ['x', Mu, Mu], Mu],
-        ['x', Mu,               ['x', Mu, Mu]],),
+       (['x', ['x', Any, Any], Any],
+        ['x', Any,               ['x', Any, Any]],),
        'built a balanced binary tree with 2 items';
 
     is cbal-tree(3),
-       (['x', ['x', Mu, Mu], ['x', Mu, Mu]],),
+       (['x', ['x', Any, Any], ['x', Any, Any]],),
        'built a balanced binary tree with 3 items';
 
     is +cbal-tree(4), 4, 'built the right number of balanced trees with 4 items';
