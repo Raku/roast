@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 53;
+plan 55;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -220,5 +220,10 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 #RT 80856
 eval_dies_ok 'module RT80856 is not_RT80856 {}',
              'die if module "is" a nonexistent';
+
+{
+    isa_ok Int.WHO, Stash, 'SomeType.WHO is a Stash';
+    is Int.WHO.WHAT.gist, 'Stash()', 'and Stash correctly .gist-ifies';
+}
 
 # vim: ft=perl6
