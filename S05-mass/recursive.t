@@ -29,12 +29,16 @@ is $/.to, 0, 'to 0';
 #?pugs emit exit;
 
 ok "x" ~~ /<&r>$/, '"x" ~~ /<r>$/ matched';
+#?rakudo todo 'nom regression'
 is $/, "x", 'with "x"';
+#?rakudo todo 'nom regression'
 is $/.from, 0, 'from 0';
 is $/.to, 1, 'to 1';
 
 ok "xx" ~~ /<&r>$/, '"xx" ~~ /<r>$/ matched';
+#?rakudo todo 'nom regression'
 is $/, "xx", 'with "xx"';
+#?rakudo todo 'nom regression'
 is $/.from, 0, 'from 0';
 is $/.to, 2, 'to 2';
 
@@ -43,7 +47,9 @@ is $/.to, 2, 'to 2';
 my regex r2 { <?> | <&r2> x }
 
 ok "x" ~~ /<&r2>$/, '"x" ~~ /<r2>$/ matched';
+#?rakudo todo 'nom regression'
 is $/, "x", 'with "x"';
+#?rakudo todo 'nom regression'
 is $/.from, 0, 'from 0';
 is $/.to, 1, 'to 1';
 

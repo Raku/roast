@@ -59,7 +59,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 }
 
 {
-    #?rakudo todo 'WHO'
     lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
     #?rakudo skip 'ticket based only on class... RT #60446'
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
@@ -99,7 +98,7 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     ok "$!" ~~ / RT64828p /, 'error message mentions the undefined package';
 }
 
-#?rakudo todo 'ticket based on class(es) not package; RT #65022'
+#RT #65022
 {
     eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
         'two different packages should be two different Baz';
@@ -170,7 +169,6 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
                  'sub redefined in module dies';
     eval_dies_ok q[grammar B { token b { 'b' }; token b { 'b' } };],
                  'token redefined in grammar dies';
-    #?rakudo todo 'RT 68290, redinition of method in class should die'
     eval_dies_ok q[class C { method c { say "c" }; method c { say "c" } }],
                  'method redefined in class dies';
 }
@@ -180,11 +178,15 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     #?rakudo todo 'RT #64688'
     eval_lives_ok 'class RT64688_c1 { use Test }', 'use in class block';
     eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
+    #?rakudo todo 'nom regression'
     eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
+    #?rakudo todo 'nom regression'
     eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
     eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
+    #?rakudo todo 'nom regression'
     eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
     eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
+    #?rakudo todo 'nom regression'
     eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
@@ -215,7 +217,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
         'package Foo; is indicator for Perl 5 code';
 }
 
-#?rakudo todo 'RT 80856'
+#RT 80856
 eval_dies_ok 'module RT80856 is not_RT80856 {}',
              'die if module "is" a nonexistent';
 

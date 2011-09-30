@@ -12,6 +12,7 @@ my regex t1 {
 
 ok 'c(ab)d' ~~ m/<&t1>/, 'Can work with ~ and constant atoms (match)';
 ok 'ab)d'  !~~ m/<&t1>/, '~ and constant atoms (missing opening bracket)';
+#?rakudo todo 'nom regression'
 ok '(a)d'  !~~ m/<&t1>/, '~ and constant atoms (wrong content)';
 # this shouldn't throw an exception. See here:
 # http://irclog.perlgeek.de/perl6/2009-01-08#i_816425
@@ -24,6 +25,7 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
         '(' ~ ')' [ 'a'* <&recursive>* ]
     };
 
+    #?rakudo 5 todo 'nom regression'
     ok '()'     ~~ m/^ <&recursive> $/, 'recursive "()"';
     ok '(a)'    ~~ m/^ <&recursive> $/, 'recursive "(a)"';
     ok '(aa)'   ~~ m/^ <&recursive> $/, 'recursive "(aa)"';
@@ -44,6 +46,7 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     my regex m1 { '(' ~ ')' <&m2> };
     my regex m2 { a* <&m1>*       };
 
+    #?rakudo 5 todo 'nom regression'
     ok '()'     ~~ m/^ <&m1> $/, 'mutually recursive "()"';
     ok '(a)'    ~~ m/^ <&m1> $/, 'mutually recursive "(a)"';
     ok '(aa)'   ~~ m/^ <&m1> $/, 'mutually recursive "(aa)"';
