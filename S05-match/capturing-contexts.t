@@ -52,7 +52,7 @@ plan 36;
     "foo" ~~ /f<o=&o>+/;
 
     is ~$<o>, 'o o', 'match list stringifies like a normal list';
-    isa_ok $<o>, List;
+    ok $<o> ~~ Positional, '... and it is Positional';
     # I don't know what difference 'isa' makes, but it does.
     # Note that calling .WHAT (as in the original ticket) does not have
     # the same effect.
@@ -66,6 +66,7 @@ plan 36;
     is $/[0][1], 'b', 'match element [0][1] from /(.)+/';
 
     my @match = @( 'ab' ~~ /(.)+/ );
+    #?rakudo 2 todo 'nom regression'
     is @match[0][0], 'a', 'match element [0][0] from /(.)+/ coerced';
     is @match[0][1], 'b', 'match element [0][1] from /(.)+/ coerced';
 }
@@ -105,6 +106,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 }
 
 # RT #71362
+#?rakudo skip 'binding to $/'
 {
     $/ := 'foobar';
     is $0, 'foobar', '$0 works like $/[0], even for non-Match objects';
@@ -116,6 +118,7 @@ is_run( q{'aa' ~~ /(.)$1/},
     $/ = Any;
     lives_ok { $0 },
         '$0 accessible when $/ is undefined';
+    #?rakudo todo 'RT 72956'
     ok $0 === Any,
         '$0 is Any when $/ is undefined';
     nok $0.defined, '$0 is undefined';
@@ -126,11 +129,13 @@ is_run( q{'aa' ~~ /(.)$1/},
     ok 'abc' ~~ /(.)+/, 'regex sanity';
     my $x = 0;
     $x++ for $/.list;
+    #?rakudo todo 'nom regression'
     is $x, 1, '$/.list does not flatten quantified subcaptures';
 
     ok 'abc' ~~ /(.)**2 (.)/, 'regex sanity';
     $x = 0;
     $x++ for $/.list;
+    #?rakudo todo 'nom regression'
     is $x, 2, '$/.list does not flattens subcaptures';
 }
 

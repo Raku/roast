@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 41;
+plan 42;
 
 =begin description
 
@@ -175,5 +175,13 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
     nok 'fox' ~~ SomeStr, 'subset ... where any(...) (-)';
 }
 
+
+# RT #65308
+{
+    subset FooStr of Str where /^foo/;
+    multi method uc(FooStr $self:) { return "OH HAI" };
+    is "foo".uc, 'FOO', 'multi method with subset invocants do not magically find their way into the method dispatch';
+
+}
 
 # vim: ft=perl6
