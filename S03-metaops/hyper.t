@@ -786,6 +786,10 @@ my @e;
     is "$a, $b, $c", $e, '»~=» changes each scalar';
 }
 
+# RT #83510
+is ((1, 2) >>[+]<< (100, 200)).join(','), '101,202',
+    '>>[+]<< works';
+
 done;
 
 # vim: ft=perl6
