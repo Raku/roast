@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -38,6 +38,12 @@ plan 8;
     multi m3(Int $n, Str $a = 'A') { 'b' };
 
     is m3(2, 'A'), 'b', 'literal Int, anonymous parameters and default values mix';
+}
+
+{
+    multi sub foo(0, $)               { 'B' };
+    multi sub foo(Int $n, Str $a="A") { $a };
+    is foo(2,"A"), 'A', 'Literals and optionals mix';
 }
 
 # vim: ft=perl6
