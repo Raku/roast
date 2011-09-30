@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 131;
+plan 134;
 
 =begin pod
 
@@ -103,14 +103,13 @@ class Foo1 { has $.bar; };
     }, "setting a public rw attribute";
     is($foo.tail, "a", "getting a public rw attribute");
     
-    #?rakudo 2 todo 'oo'
     lives_ok { $foo.set_legs(1,2,3) }, "setting a public ro attribute (1)";
     is($foo.legs.[1], 2, "getting a public ro attribute (1)");
     
+    #?rakudo 2 todo 'ro on list attributes'
     dies_ok {
         $foo.legs = (4,5,6);
     }, "setting a public ro attribute (2)";
-    #?rakudo todo 'oo'
     is($foo.legs.[1], 2, "getting a public ro attribute (2)");
     
     lives_ok { $foo.inc_brain(); }, "modifiying a private attribute (1)";
@@ -130,7 +129,7 @@ class Foo1 { has $.bar; };
         has $.baz is rw;
         has $!hidden;
 
-        submethod BUILD($.bar, $.baz, $!hidden) {}
+        submethod BUILD(:$!bar, :$!baz, :$!hidden) {}
         method get_hidden() { $!hidden }
     }
 
@@ -150,7 +149,7 @@ class Foo1 { has $.bar; };
         has $.baz is rw;
         has $!hidden;
 
-        submethod BUILD ($!hidden, $.bar = 10, $.baz?) {
+        submethod BUILD (:$!hidden, :$!bar = 10, :$!baz?) {
             $.baz = 5;
         }
         method get_hidden() { $!hidden }
@@ -170,7 +169,7 @@ class Foo1 { has $.bar; };
         has $.bar is rw;
         has $.baz is rw;
 
-        submethod BUILD ($.bar = 10, $.baz?) {
+        submethod BUILD (:$!bar = 10, :$!baz?) {
             $!baz = 9;
             return;
         }
@@ -203,8 +202,8 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         has $.bar is rw;
         has $.baz;
 
-        submethod BUILD ($.bar = 5, $baz = 10 ) {
-            $!baz = 2 * $baz;
+        submethod BUILD (:$!bar = 5, :$!baz = 10 ) {
+            $!baz = 2 * $!baz;
         }
     }
 
@@ -295,6 +294,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 }
 
+#?rakudo skip 'self closure'
 {
     class ClosureWithself {
         has $.cl = { self.foo }
@@ -313,9 +313,11 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $b.y, 2, 'attribute cloned';
     $b.x = 3;
     is $b.x, 3, 'changed attribute on clone...';
+    #?rakudo 2 todo 'clone'
     is $a.x, 1, '...and original not affected';
     my $c = $a.clone(x => 42);
     is $c.x, 42, 'clone with parameters...';
+    #?rakudo todo 'clone'
     is $a.x, 1, '...leaves original intact...';
     is $c.y, 2, '...and copies what we did not change.';
 }
@@ -364,6 +366,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     # see Larry's reply to 
     # http://groups.google.com/group/perl.perl6.language/browse_thread/thread/2bc6dfd8492b87a4/9189d19e30198ebe?pli=1
     # on why these should fail.
+    #?rakudo 2 todo 'ro array/hash with accessor'
     dies_ok { $x.set_array1 }, 'can not assign to @.array attribute';
     dies_ok { $x.set_hash1 },  'can not assign to %.hash attribute';
     lives_ok { $x.set_array2 }, 'can assign to @!array attribute';
@@ -390,7 +393,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         has TA1 $!a;
         method foo { $!a === TA1 }
     }
-    #?rakudo todo 'Attribute type init'
     ok(TA2.new.foo, '=== works on typed attribute initialized with proto-object');
 }
 
@@ -433,6 +435,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 # test typed attributes
 # TODO: same checks on private attributes
+#?rakudo skip 'typed array/hash'
 {
     class TypedAttrib {
         has Int @.a is rw;
@@ -584,6 +587,22 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     }
     is AttribLex.new.outer, 42, 'Can use outer lexicals in attribut initialization';
     is AttribLex.new.inner, 23, 'Can use lexicals in attribut initialization';
+}
+
+# RT #85502
+{
+    class AttribListAssign {
+        has $.a;
+        has $.b;
+        method doit {
+            ($!a, $!b) = <post office>;
+        }
+    }
+    my $x = AttribListAssign.new;
+    $x.doit;
+    is $x.a, 'post', 'list assignment to attributes (1)';
+    isa_ok $x.a, Str, 'list assignment to attributes (type)';
+    is $x.b, 'office', 'list assignment to attributes (2)';
 
 }
 
