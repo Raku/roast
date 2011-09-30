@@ -283,7 +283,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q1[3], "BAR", '$bar was interpolated');
 
     @q2 = «$foo "$gorch" '$bar'»;
-    #?niecza 3 skip 'TODO'
+    #?niecza 3 todo
     is(+@q2, 3, "3 elementes in sub quoted «» list");
     is(@q2[1], $gorch, 'second element is both parts of $gorch, interpolated');
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');

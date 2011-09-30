@@ -45,7 +45,7 @@ plan 13;
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 #?rakudo 3 todo 'Int conversion of NaN and Inf'
-#?niecza 3 skip 'TODO'
+#?niecza 3 todo
 ok NaN.Int === NaN,         'Inf.Int === Int';
 ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';

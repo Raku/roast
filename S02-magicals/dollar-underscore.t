@@ -17,6 +17,7 @@ my @list = ('a');
 for @list -> $letter { is( $letter , 'a', 'can bind to variable in pointy') }
 
 #?rakudo skip 'for() with nullary block'
+#?niecza skip 'infinite loop' 
 {
     # Do pointy subs send along an implicit param? No!
     for @list -> {
@@ -61,11 +62,13 @@ for @list -> $letter {
      # Inner subs get a new $_, not the OUTER::<$_>
      $_ = 1;
      sub foo {
+         #?niecza todo
          ok !defined($_), '$_ starts undefined';
          $_ = 2;
          is $_, 2,  'now $_ is 2';
      }
      foo();
+     #?niecza todo
      is $_, 1, 'outer $_ is unchanged'
 }
 
