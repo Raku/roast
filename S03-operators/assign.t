@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 282;
+plan 283;
 
 
 # tests various assignment styles
@@ -886,6 +886,9 @@ sub l () { 1, 2 };
     $rt93972 = $rt93972.grep({1});
     is $rt93972, [1],
        'Assign to array with the same array on rhs (RT 93972)';
+    $rt93972 = (1, 2, 3);
+    $rt93972 = $rt93972.grep({1});
+    is $rt93972.join(','), '1,2,3', 'same with Parcel';
 }
 
 #?rakudo skip 'RT 93972'
