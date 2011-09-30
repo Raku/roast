@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 87;
+plan 88;
 
 #L<S02/Mutable types/Array>
 
@@ -305,6 +305,13 @@ my @array2 = ("test", 1, Mu);
     my %h = @a.hash;
     is %h.elems, 2, 'Array.hash created a sensible hash';
     is @a.elems, 2, '... and did not consume itself in the process';
+}
+
+# RT #79270
+{
+    my @a = <a b c>;
+    @a[0 ..^ *-1] >>~=>> "x";
+    is @a.join(','), 'ax,bx,c', '0..^ *-1 works as an array index';
 }
 done;
 
