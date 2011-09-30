@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 20;
+plan 21;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -80,6 +80,8 @@ is opt_array2(), 0, "optional array not passed is empty (copy)";
 is opt_hash1(),  0, "optional hash not passed is empty";
 is opt_hash2(),  0, "optional hash not passed is empty (copy)";
 
-done;
+# RT #71110
+eval_dies_ok 'sub opt($a = 1, $b) { }',
+    'Cannot put required parameter after optional parameters';
 
 # vim: ft=perl6
