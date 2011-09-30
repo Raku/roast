@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 75;
+plan 77;
 
 # === on values
 {
@@ -182,6 +182,9 @@ plan 75;
   ok  (1 !=== 1.0), "!=== on values (1 !=== 1.0)";
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
+
+nok     1|2 === 1,  '=== does not autothread (1)';
+isa_ok  1|2 === 1, Bool,  '=== does not autothread (2)';
 
 done;
 
