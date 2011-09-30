@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 73;
+plan 74;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -245,6 +245,12 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     isa_ok $rt79166, Whatever, 'assignment of whatever still works';
     $rt79166 = 'RT 79166';
     is $rt79166, 'RT 79166', 'assignment to variable with whatever in it';
+}
+
+# RT #81448
+{
+    sub f($x) { $x x 2 };
+    is *.&f.('a'), 'aa', '*.&sub curries';
 }
 
 done;
