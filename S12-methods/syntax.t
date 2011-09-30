@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S12/Fancy method calls/"no space between the method name and the left parenthesis">
 
@@ -39,6 +39,14 @@ class B {
 }
 
 is B.new.b, 5, '$.a can accept arguments';
+
+# RT #69350
+# test that you can't manipulate methods by writinig to the symbol table
+{
+    class Manip { method a { 1} };
+    &Manip::a = sub ($:) { 2 };
+    is Manip.new.a, 1, 'Writing to a symbol table does not alter methods';
+}
 
 
 # vim: ft=perl6
