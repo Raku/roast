@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 138;
+plan 139;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -112,5 +112,11 @@ lives_ok {
     eval 'class A { has $.a};  my $a = A.new();';
     eval 'class A { has $.a};  my $a = A.new();';
 }, 'can redefine a class in eval multiple times without permanent damange';
+
+# RT #83874
+{
+    class Class { };
+    ok Class.new ~~ Class, 'can call a class Class';
+}
 
 # vim: ft=perl6
