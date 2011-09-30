@@ -139,7 +139,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
     #?pugs todo 'bug'
-    #?rakudo todo ''
     dies_ok { foo 1, x => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';
 }
