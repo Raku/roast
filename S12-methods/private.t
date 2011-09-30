@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # L<S12/Private methods/"Private methods are declared using">
 
@@ -15,6 +15,7 @@ class A {
 }
 
 is A.new().public, 12, 'Can call private method from within the class';
+nok eval('A.new!private'), 'Can not call private method from outside';
 
 # indirect call syntax for public and private methods
 
