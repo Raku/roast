@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 =begin pod
 
@@ -205,6 +205,18 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
         }
     }
     dies_ok { InvocantTypeCheck.new.x() }, 'Invocant type is checked';
+}
+
+# RT #83902
+{
+    my $tracker;
+    class A {
+        method foo { my $a = 42;
+            method bar { $tracker = $a }
+        }
+    };
+    given A.new { .foo; .bar }
+    is $tracker, 42, 'nested methods work';
 }
 
 # vim: ft=perl6
