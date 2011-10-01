@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 37;
 
 =begin pod
 
@@ -217,6 +217,17 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     };
     given A.new { .foo; .bar }
     is $tracker, 42, 'nested methods work';
+}
+
+# RT #74490
+{
+    my $tracker;
+    class HasMethod {
+        $tracker = method foo() { };
+    }
+    isa_ok $tracker, Method,
+        'a named method definition inside a class returns a Method';
+    is $tracker.name, 'foo', '... and that method knows its name';
 }
 
 # vim: ft=perl6
