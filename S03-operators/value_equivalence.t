@@ -183,8 +183,8 @@ plan 77;
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
 
-nok     1|2 === 1,  '=== does not autothread (1)';
-isa_ok  1|2 === 1, Bool,  '=== does not autothread (2)';
+ok     1|2 === 1,  '=== does autothread (1)';
+isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
 
 done;
 
