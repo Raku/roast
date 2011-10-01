@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 134;
+plan 135;
 
 =begin pod
 
@@ -603,6 +603,14 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $x.a, 'post', 'list assignment to attributes (1)';
     isa_ok $x.a, Str, 'list assignment to attributes (type)';
     is $x.b, 'office', 'list assignment to attributes (2)';
+
+}
+
+# RT #68498
+{
+    class Foo { has $.bar = "baz"; submethod BUILD {} }
+    is Foo.new.bar, 'baz',
+        'presence of BUILD does not prevent assignment of default values';
 
 }
 
