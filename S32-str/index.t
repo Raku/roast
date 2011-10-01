@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item index">
 
-plan 37;
+plan 38;
 
 # Type of return value
 #?rakudo 2 skip 'StrPos not implemented'
@@ -86,5 +86,8 @@ ok 1234.index(3) == 2, '.index on non-strings (here: Int)';
     is $s.substr($s.index('0')), '023', 'Str.index("0") works';
     is $s.substr($s.index(0)),   '023', 'Str.index(0) works';
 }
+
+# RT #73122
+is index("uuúuúuùù", "úuù"), 4, 'index works for non-ascii';
 
 # vim: ft=perl6
