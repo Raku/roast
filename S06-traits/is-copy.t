@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 20;
+plan 21;
 
 {
   sub foo($a is copy) {
@@ -88,6 +88,15 @@ plan 20;
 {
     sub g(%hash? is copy) { };
     lives_ok { g() }, 'can call a sub with an optional "is copy" hash param';
+}
+
+# RT #75302
+{
+    sub h($x is copy) {
+        $x = 'abc';
+        $x
+    }
+    is h(*), 'abc', 'can re-assign to "is copy" parameter that held a Whatever';
 }
 
 
