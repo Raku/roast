@@ -214,6 +214,14 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is $*call2, 1, 'level two subset checked (should succeed)';
 }
 
+# RT #75718
+{
+    roles R { };
+    subset S of R;
+    nok 1 ~~ S, 'subsets of roles (1)';
+     ok R ~~ S, 'subsets of roles (2)';
+}
+
 done;
 
 # vim: ft=perl6

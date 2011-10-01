@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 21;
+plan 23;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -83,5 +83,14 @@ is opt_hash2(),  0, "optional hash not passed is empty (copy)";
 # RT #71110
 eval_dies_ok 'sub opt($a = 1, $b) { }',
     'Cannot put required parameter after optional parameters';
+
+# RT #74758
+{
+    sub opt-type1(Int $x?) { $x };
+    ok opt-type1() === Int,
+        'optional param with type constraints gets the right value';
+    sub opt-type2(Int $x = 'str') { };
+    nok eval('opt-type2()'), 'default values are type-checked';
+}
 
 # vim: ft=perl6
