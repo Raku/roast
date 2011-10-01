@@ -15,6 +15,14 @@ use Test;
 }
 
 {
+    # RT #69522
+    sub foo { "OH NOES" };
+    constant foo = 5;
+    is foo,   5,         'bare constant wins against sub of the same name';
+    is foo(), 'OH NOES', '... but parens always indicate a sub call';
+}
+
+{
     my $ok;
 
     constant $bar = 42;
