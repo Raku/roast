@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 11;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -43,6 +43,11 @@ line 3 etc
 line 4
 ];
     is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
+}
+
+#?rakudo skip 'RT #73144'
+{
+    is 'something'.new, '', '"string literal".new just creates an empty string';
 }
 
 done;
