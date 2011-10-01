@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -21,6 +21,14 @@ use MONKEY_TYPING;
     is($o.b, 'called Foo.b', 'added method call works');
 
     ok(!eval('augment class NonExistent { }'), 'augment on non-existent class dies');
+}
+
+# RT #76104
+{
+    augment class Hash {
+        method foo() { self.keys };
+    }
+    is { a => 1 }.foo, 'a', 'can augment Hash';
 }
 
 # RT #66694
