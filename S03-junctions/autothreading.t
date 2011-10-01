@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 83;
+plan 84;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -304,6 +304,13 @@ plan 83;
     ok $y ~~ Bool, 'infix:<!eq> collapses the junction (1)';
     ok $y !~~ Junction, 'infix:<!eq> collapses the junction (2)';
     nok $y, '... and the result is False';
+}
+
+# RT #69863
+# autothreading over named-only params
+{
+    sub foo(Int :$n) { $n }
+    ok foo(n => 1|2) ~~ Junction, 'named-only params autothread correctly';
 }
 
 # vim: ft=perl6
