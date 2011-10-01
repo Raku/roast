@@ -216,7 +216,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 
 # RT #75718
 {
-    roles R { };
+    role R { };
     subset S of R;
     nok 1 ~~ S, 'subsets of roles (1)';
      ok R ~~ S, 'subsets of roles (2)';
