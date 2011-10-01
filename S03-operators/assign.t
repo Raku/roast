@@ -825,10 +825,9 @@ sub l () { 1, 2 };
 }
 
 # RT #75950
-#?rakudo skip 'RT 75950'
 {
     my $x;
-    lives_ok { ($x) = grep 5, 1..1_000_000 },
+    lives_ok { ($x,) = grep 5, 1..1_000_000 },
             'Can grep lazily through a very long range';
     is $x, 5, '... with correct result';
 }
