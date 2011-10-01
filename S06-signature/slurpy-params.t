@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/List parameters/Slurpy parameters>
 
-plan 58;
+plan 57;
 
 sub xelems(*@args) { @args.elems }
 sub xjoin(*@args)  { @args.join('|') }
@@ -251,13 +251,6 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
     is typed-slurpy(@b), 5, 'can fill typed slurpy with typed array';
 }
 
-
-# RT #74344
-#?rakudo skip 'RT 74344'
-{
-    sub slurpy-by-name(*@var) { @var.join('|') }
-    is slurpy-by-name(:var<a v g>), 'a|v|g', 'Can call slurpy param by name';
-}
 
 # RT #61772
 {
