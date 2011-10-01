@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 25;
+plan 26;
 
 # L<S14/Roles/"Roles may be composed into a class at compile time">
 
@@ -118,6 +118,16 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     ok $! ~~ /RT72856B/, 'colliding role mentioned in error (2)';
 }
 
-done;
+# RT #74078
+{
+    role UsesSettingSub {
+        method doit() {
+            uc 'a';
+        }
+    }
+    class ClassUsesSettingSub does UsesSettingSub { };
+    is ClassUsesSettingSub.new.doit, 'A',
+        'can use a sub from the setting in a method composed from a role';
+}
 
 # vim: syn=perl6
