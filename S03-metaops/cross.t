@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 25;
+plan 26;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -102,5 +102,9 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
 is (1 X* 3,4), (3, 4), 'cross-product works with scalar left side';
 is (1, 2 X* 3), (3, 6), 'cross-product works with scalar right side';
 is (1 X* 3), (3), 'cross-product works with scalar both sides';
+
+is (<a b> X <c d> X < e f>).join(','),
+    'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
+    'cross works with three lists';
 
 # vim: ft=perl6
