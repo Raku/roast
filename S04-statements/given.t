@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 49;
 
 =begin pod
 
@@ -296,5 +296,13 @@ Tests the given block, as defined in L<S04/"Switch statements">
     is $x, 42, 'given tests 1-arg subs for truth';
 }
 
+# statement-modifying 'when'
+{
+    my $tracker = 1;
+    given 1 {
+        $tracker++ when 1;
+    }
+    is $tracker, 2, 'statement-modifying when';
+}
 
 # vim: ft=perl6
