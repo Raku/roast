@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 26;
+plan 27;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -106,5 +106,8 @@ is (1 X* 3), (3), 'cross-product works with scalar both sides';
 is (<a b> X <c d> X < e f>).join(','),
     'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
     'cross works with three lists';
+
+#?rakudo todo 'RT 74072'
+is ([1,2] X~ <a b>), '1 2a1 2b', '[] does not flatten';
 
 # vim: ft=perl6
