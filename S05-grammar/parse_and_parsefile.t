@@ -43,7 +43,6 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
 # RT #71062
 {
     grammar Integer { rule TOP { x } };
-    #?rakudo todo 'RT 71062: dies calling grammar named "Integer"'
     lives_ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
 }
 
