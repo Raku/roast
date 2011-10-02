@@ -178,7 +178,6 @@ plan 74;
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
 
-#?rakudo todo 'autothreading of ==='
 ok     1|2 === 1,  '=== does autothread (1)';
 isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
 
