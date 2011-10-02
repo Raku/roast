@@ -214,12 +214,15 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     is $*call2, 1, 'level two subset checked (should succeed)';
 }
 
-# RT #75718
 {
     role R { };
     subset S of R;
+    # RT #75718
     nok 1 ~~ S, 'subsets of roles (1)';
      ok R ~~ S, 'subsets of roles (2)';
+
+    ok (R ~~ S) ~~ Bool, 'smart-matching a subset returns a Bool (1)';
+    ok (S ~~ R) ~~ Bool, 'smart-matching a subset returns a Bool (2)';
 }
 
 done;
