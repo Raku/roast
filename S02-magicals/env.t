@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 # L<S28/Named variables>
-plan 14;
+plan 16;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -137,6 +137,13 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
     my $x = eval "%ENV";
     ok !$x.defined, '%ENV not visible by after lexical import scope';
     1;
+}
+
+# RT #78256
+{
+    nok %*ENV<NOSUCHENVVAR>.defined, 'non-existing vars are undefined';
+    nok %*ENV.exists('NOSUCHENVVAR'), 'non-existing vars do not exist';
+
 }
 
 # vim: ft=perl6
