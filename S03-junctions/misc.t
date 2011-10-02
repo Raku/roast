@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 102;
+plan 99;
 
 =begin pod
 
@@ -65,10 +65,6 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
     jok('b' eq ($a | $b | $c), 'junction of ($a | $b | $c) matches at least one "b"');
     jok('c' eq ($c | $a | $b), 'junction of ($c | $a | $b) matches at least one "c"'); 
 
-    #?niecza 3 skip '==='
-    ok(not(('a' eq ($b | $c | $a)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
-    ok(not(('b' eq ($a | $b | $c)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false');
-    ok(not(('c' eq ($c | $a | $b)) === Bool::False), 'junctional comparison doesn not mistakenly return both true and false'); 
     
     # test junction to junction
     #?rakudo skip 'nom regression'
