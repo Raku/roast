@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 88;
+plan 89;
 
 #L<S02/Mutable types/Array>
 
@@ -202,6 +202,11 @@ my @array2 = ("test", 1, Mu);
         "hat trick:
         assign to a end-indexed slice array from array
         lvalue in assignment is then lvalue to end-indexed slice as rvalue";
+}
+
+# RT #76676
+{
+    is ~<a b>.[^10], 'a b', 'Range subscript as rvalues clip to existing elems';
 }
 
 # This test may seem overly simplistic, but it was actually a bug in PIL2JS, so
