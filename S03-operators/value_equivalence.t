@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 77;
+plan 74;
 
 # === on values
 {
@@ -29,10 +29,6 @@ plan 77;
   isa_ok ("abc" === "abc"), Bool, "=== on values (abc)";
   ok !(1 === 1.0), "=== on values (1 === 1.0)";
   ok !(1 === "1"), '=== on values (1 === "1")';
-  #?niecza skip 'Nominal type check failed in binding $l in CORE infix:<===>'
-  ok (Mu === Mu), '=== on values (Mu === Mu)';
-  #?niecza skip 'Nominal type check failed in binding $l in CORE infix:<===>'
-  isa_ok (Mu === Mu), Bool, '=== on values (Mu === Mu)';
 }
 
 # more value tests
@@ -140,7 +136,6 @@ plan 77;
 {
   ok !(\3 === \4),          "=== on anonymous scalar references (1)";
   ok !(\3 === \3),          "=== on anonymous scalar references (2)";
-  ok !(\Mu === \Mu),        "=== on anonymous scalar references (3)";
   isa_ok (\3 === \4), Bool, "=== on anonymous scalar references (4)";
 }
 
@@ -183,6 +178,7 @@ plan 77;
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
 
+#?rakudo todo 'autothreading of ==='
 ok     1|2 === 1,  '=== does autothread (1)';
 isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
 
