@@ -23,7 +23,7 @@ sub dti(*%args) { DateTime.new(|{year => 1984, %args}).Instant }
 
 sub dsi($s) { DateTime.new($s).Instant }
 
-sub diff(%early = (), *%late) { + do dti(|%late) - dti(|%early) }
+sub diff(%early, *%late) { + do dti(|%late) - dti(|%early) }
 
 sub days($n) { $n * 24 * 60 * 60 }
 
