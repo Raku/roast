@@ -23,13 +23,12 @@ perl6-specific tests.
 #   
 #   Larry
 
-plan 87;
+plan 86;
 
 our $GLOBAL;
 
 # L<S32::Basics/Mu/=item defined>
 
-ok(Mu === Mu, "Mu is equal to Mu");
 ok(!defined(Mu), "Mu is not defined");
 
 {

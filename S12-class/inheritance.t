@@ -124,7 +124,7 @@ eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 {
     class DirectMu is Mu { };
     ok DirectMu !~~ Any, 'class inheriting from Mu is not Any';
-    ok !( any(DirectMu.^parents) === Any), 'and Any does not appear in the list of parents either';
+    ok !( any(DirectMu.^parents).gist eq 'Any()'), 'and Any does not appear in the list of parents either';
 }
 
 eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
