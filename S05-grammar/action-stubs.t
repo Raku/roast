@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S05/Grammars/"and optionally pass an action object">
 
@@ -104,9 +104,13 @@ is $action.calls, 'ab', '... and in the right order';
         }
     }
 
-    #?niecza todo
+    #?niecza 2 todo
     is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions.new)).ast, 123,
         'Can call Str.subst in an action method without any trouble';
+    # RT #78510
+    isa_ok ActionsTestGrammar.parse('a', :actions(
+        class { method TOP($/) { make { a => 1 } } }
+    )).ast, Hash, 'Can make() a Hash';
 }
 
 # Test for a Rakudo bug revealed by 5ce8fcfe5 that (given the
