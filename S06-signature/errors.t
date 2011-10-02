@@ -19,8 +19,8 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
 # RT #64344
 {
-    sub empty_sig() { return }
-    dies_ok { empty_sig( 'RT #64344' ) },
+    sub empty_sig() { return };
+    nok eval('empty_sig("RT #64344")'),
             'argument passed to sub with empty signature';
 }
 

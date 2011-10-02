@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 36;
 
 =begin pod
 
@@ -58,11 +58,8 @@ is($foo.noargs(), 42, "... parentheses after method");
     # This test could use peer review to make sure it complies with the spec.
     class Zoo {
         method a () { my %s; %s.b }
-        method c () { my %s; b(%s) }
-        method b () { 1 }
     }
     dies_ok( { Zoo.new.a }, "can't call current object methods on lexical data structures");
-    dies_ok( { Zoo.new.c }, "meth(%h) is not a valid method call syntax");
 }
 # doesn't match, but defines "b"
 sub b() { die "oops" }

@@ -58,7 +58,7 @@ is(eval("$abs; my_abs(-5)"), 5, "and they actually work");
     my subset Int::Even of Int where { $^num % 2 == 0 }
     ok my Int::Even $c = 6;
     ok $c ~~ Int::Even, "our var is a Int::Even";
-    try { $c = eval 7 }
+    try { $c = 7 }
     is $c, 6, "setting a Int::Even to an odd value dies";
     ok eval('!try { my Int::Even $d }'),
         "lexically declared subtype went out of scope";

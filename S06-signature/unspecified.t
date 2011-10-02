@@ -10,9 +10,9 @@ sub simple { 'simple' }
 #?rakudo skip 'siglist'
 is &simple.signature, :(), 'signature is :() when none is specified';
 is simple(), 'simple', 'can call sub with no signature specified';
-dies_ok { simple( :golf<hotel> ) },
+nok eval('simple( :golf<hotel> )'),
         'sub with no signature dies when given a named argument';
-dies_ok { simple( 'india' ) },
+nok eval("simple( 'india' )"),
         'sub with no signature dies when given positional argument';
 
 sub positional { @_[0] }
