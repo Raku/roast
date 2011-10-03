@@ -225,6 +225,12 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     ok (S ~~ R) ~~ Bool, 'smart-matching a subset returns a Bool (2)';
 }
 
+
+# RT #89708
+{
+    subset Many::Parts of Str;
+    ok 'a' ~~ Many::Parts, 'subset names with many parts work';
+}
 done;
 
 # vim: ft=perl6
