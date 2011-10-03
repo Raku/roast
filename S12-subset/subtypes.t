@@ -231,6 +231,12 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     subset Many::Parts of Str;
     ok 'a' ~~ Many::Parts, 'subset names with many parts work';
 }
+
+{
+    subset Int::Positive of Int where { $_ > 0 };
+    sub f(Int::Positive $a) { $a * $a };
+    nok eval('f(-2)'), 'Cannot violate Int::Positive constraint';
+}
 done;
 
 # vim: ft=perl6
