@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 29;
+plan 30;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -18,6 +18,7 @@ is(1 x 5, '11111', 'number repeat operator works on number and creates string');
 is('' x 6, '', 'repeating an empty string creates an empty string');
 is('a' x 0, '', 'repeating zero times produces an empty string');
 is('a' x -1, '', 'repeating negative times produces an empty string');
+is 'a' x 2.2, 'aa', 'repeating with a fractional number coerces to Int';
 
 #L<S03/Changes to Perl 5 operators/"and xx (which creates a list of repetitions of a list or item)">
 my @foo = 'x' xx 10;
