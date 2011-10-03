@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 8;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -36,6 +36,15 @@ eval_dies_ok q[
     class MethodClash { method foo() { 3 } };
     augment class MethodClash { method foo() { 3 } };
 ], 'cannot override a method by monkey-typing';
+
+# RT #76600
+eval_lives_ok q[
+    use MONKEY_TYPING;
+    role Bar { has $.counter; }
+    class Pub does Bar { has $.saloon; }
+    augment class Pub { method snug() { } }
+], 'augmenting a class which has a role composed works';
+
 
 #?rakudo skip 'supersede'
 {
