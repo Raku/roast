@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 {
     my $capture = \(1,2,3);
@@ -109,6 +109,13 @@ plan 18;
     #?rakudo skip 'nom regression'
     is foo9(1, 2, |$capture), "1!2!bar!grtz",
         "mixing ordinary args with captures (2)";
+}
+
+{
+    # RT #78496
+    my $c = ('OH' => 'HAI').Capture;
+    is $c<key>,   'OH',  '.<key> of Pair.Capture';
+    is $c<value>, 'HAI', '.<value> of Pair.Capture';
 }
 
 # vim: ft=perl6
