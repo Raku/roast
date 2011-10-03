@@ -19,7 +19,6 @@ package Simple {
     our $forty_two = 42;
 }
 
-#?rakudo skip 'nested packages'
 is Simple::Bar.new.baz, 'hi', 'class test';
 
 #?rakudo skip 'ticket uses role; RT #62900'
@@ -65,7 +64,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
         'WHO implementation with longname';
 }
 
-#?rakudo skip 'role in package'
 eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 

@@ -32,14 +32,12 @@ Some deeper tests were already added.
     is(+@array, 1, 'the array has one value in it');
 
     isa_ok(@array[0], Pair);
-    #?rakudo skip "Method 'at_key' not found for invocant of class 'Pair'"
     is(@array[0]<key>, 'value', 'got the right pair value');
 
     @array[1] = ('key1' => 'value1'); # assign it inline
     is(+@array, 2, 'the array has two values in it');
     isa_ok(@array[1], Pair);
 
-    #?rakudo skip "Method 'at_key' not found for invocant of class 'Pair'"
     is(@array[1]<key1>, 'value1', 'got the right pair value');
 }
 

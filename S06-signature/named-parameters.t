@@ -132,7 +132,6 @@ sub mandatory (:$param!) {
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
 eval_dies_ok('mandatory()',  "not specifying a mandatory parameter fails");
 
-#?rakudo skip 'Cannot apply trait required to parameters yet'
 {
     sub mandatory_by_trait (:$param is required) {
         return $param;
