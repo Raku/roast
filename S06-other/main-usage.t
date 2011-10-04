@@ -7,7 +7,6 @@ BEGIN { @*INC.push: 't/spec/packages' }
 
 use Test::Util;
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN($x) { }; sub USAGE() { print "usage() called" }',
     {
         out => 'usage() called',
@@ -21,7 +20,6 @@ is_run 'sub MAIN() { print "main() called" }; sub USAGE() { print "usage() calle
     },
     'a user-defined USAGE sub not is called if MAIN-dispatch succeeds';
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN($foo) { }',
     {
         err     => /<< foo >>/,
@@ -29,7 +27,6 @@ is_run 'sub MAIN($foo) { }',
     },
     'automaticly generated USAGE message contains parameter name';
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN($x) { };',
     {
         out => /<< x >>/,
@@ -37,7 +34,6 @@ is_run 'sub MAIN($x) { };',
     :args['--help'],
     '--help triggers a message to $*OUT';
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
     {
         out => "yes\n",
@@ -47,7 +43,6 @@ is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
     :args['--x'],
     'boolean option +';
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN(Bool :$x) { print "yes" if $x }',
     {
         out => "",
@@ -55,7 +50,6 @@ is_run 'sub MAIN(Bool :$x) { print "yes" if $x }',
     :args['--/x'],
     'boolean option -';
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN(:$x) { print $x }',
     {
         out => "23",
