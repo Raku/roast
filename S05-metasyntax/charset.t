@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 28;
+plan 29;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -72,6 +72,9 @@ eval "/<[a-z]>/";
 ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
     "STD error message for - as character range";
 }
+
+ok 'ab' ~~ /^(.*) b/,
+    'Quantifiers in capture groups work (RT 100650)';
 
 done;
 
