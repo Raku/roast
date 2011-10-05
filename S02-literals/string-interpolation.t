@@ -46,6 +46,7 @@ line 4
 }
 
 #?rakudo skip 'RT #73144'
+#?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 {
     is 'something'.new, '', '"string literal".new just creates an empty string';
 }

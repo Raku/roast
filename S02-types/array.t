@@ -205,6 +205,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #76676
+#?niecza todo
 {
     is ~<a b>.[^10], 'a b', 'Range subscript as rvalues clip to existing elems';
 }
@@ -313,6 +314,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #79270
+#?niecza todo
 {
     my @a = <a b c>;
     @a[0 ..^ *-1] >>~=>> "x";

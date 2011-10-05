@@ -108,6 +108,7 @@ is (<a b> X <c d> X < e f>).join(','),
     'cross works with three lists';
 
 #?rakudo todo 'RT 74072'
+#?niecza todo
 is ([1,2] X~ <a b>), '1 2a1 2b', '[] does not flatten';
 
 # vim: ft=perl6

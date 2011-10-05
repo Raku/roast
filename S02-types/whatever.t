@@ -147,11 +147,11 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 # L<S02/Currying of Unary and Binary Operators/This rewrite happens after variables are looked up
 # in their lexical scope>
 
-#?niecza todo
 {
     my $x = 3;
     {
         #?rakudo todo '* and lexicals'
+        #?niecza todo
         is (* + (my $x = 5)).(8), 40,
             'can use a declaration in Whatever-curried expression';
         is $x, 5, 'and it did not get promoted into its own scope';

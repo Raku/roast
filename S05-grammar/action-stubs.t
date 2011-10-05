@@ -104,7 +104,7 @@ is $action.calls, 'ab', '... and in the right order';
         }
     }
 
-    #?niecza 2 todo
+    #?niecza todo
     is ActionsTestGrammar.parse("ab\ncd", :actions(TestActions.new)).ast, 123,
         'Can call Str.subst in an action method without any trouble';
     # RT #78510

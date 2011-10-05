@@ -112,13 +112,13 @@ is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
 # two ranges
 is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 
-#?niecza todo
 {
     # Test with floats
     # 2006-12-05:
     # 16:16 <TimToady> ~(1.9 ^..^ 4.9) should produce 2.9, 3.9
     # 16:17 <pmichaud> and ~(1.9 ^..^ 4.5) would produce the same?
     # 16:17 <TimToady> yes
+    #?niecza 16 todo
     is ~(1.1 .. 4) , "1.1 2.1 3.1", "range with float .min";
     is ~(1.9 .. 4) , "1.9 2.9 3.9", "range with float .min";
     is ~(1.1 ^.. 4), "2.1 3.1"    , "bottom exclusive range of float";
