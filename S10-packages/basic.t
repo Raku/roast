@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 55;
+plan 56;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -223,5 +223,12 @@ eval_dies_ok 'module RT80856 is not_RT80856 {}',
     isa_ok Int.WHO, Stash, 'SomeType.WHO is a Stash';
     is Int.WHO.WHAT.gist, 'Stash()', 'and Stash correctly .gist-ifies';
 }
+
+
+# RT #98856
+eval_lives_ok q[
+    package NewFoo { }
+    class   NewFoo { }
+], 'can re-declare a class over a package of the same name';
 
 # vim: ft=perl6
