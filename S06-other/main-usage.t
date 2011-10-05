@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  13;
+plan  14;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -106,3 +106,10 @@ is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
     },
     :args['param', '--var'],
     'Bool option last with no value';
+
+is_run 'sub MAIN( $a = nosuchsub()) { }; sub USAGE { say 42 }',
+    {
+        out => '',
+        err => /nosuchsub/,
+    },
+    'if the MAIN dispatch results in an error, that error should be printed, not USAGE';

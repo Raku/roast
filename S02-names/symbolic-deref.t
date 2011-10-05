@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 35;
 
 # See L<http://www.nntp.perl.org/group/perl.perl6.language/22858> --
 # previously, "my $a; say $::("a")" died (you had to s/my/our/). Now, it was
@@ -163,5 +163,7 @@ my $outer = 'outside';
 
   is $::("symderef_test_var"), 42, "symbolic dereferentiation works with package vars";
 }
+
+eval_dies_ok ' ::().Str ', 'Cannot look up empty name';
 
 # vim: ft=perl6
