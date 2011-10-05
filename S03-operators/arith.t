@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 135;
+plan 136;
 
 my $five = abs(-5);
 
@@ -309,6 +309,9 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 
 # RT #73386
 eval_dies_ok '3 !+ 4',  'infix:<+> is not iffy enough';
+
+# RT #100768
+eval_lives_ok '-Inf', '-Inf warns (and yields 0) but does not give an error';
 
 done;
 
