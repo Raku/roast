@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 19;
+plan 20;
 
 ok eval('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -52,6 +52,9 @@ is (2, 10, * Z* 3, 4, 5, *).munch(5),
        '121,212', '[Z+] with three arrays';
 }
 
-done;
+# RT #75818
+{
+    isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
+}
 
 # vim: ft=perl6
