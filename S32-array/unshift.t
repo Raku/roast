@@ -112,7 +112,6 @@ plan 55;
 }
 
 # testing some edge cases
-#?niecza skip 'series'
 {
     my @unshift = 0 ... 5;
     is(+@unshift, 6, 'starting length is 6');
