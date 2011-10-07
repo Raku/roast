@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 34;
+plan 36;
 
 # L<S05/Match objects/When used as a hash>
 
@@ -77,6 +77,12 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
     nok 'abc' !~~ /<alpha>(.)/, 'unsuccessful non-match';
     is $0,       'b', 'failed !~~ still makes $0 available';
     is $<alpha>, 'a', 'failed !~~ still makes $<foo> available';
+}
+
+# RT #96424 
+{
+    ok '0' ~~ /<alpha>|<digit>/, 'regex matches';
+    is $<alpha>.Str, '', 'Can call methods on captures from unsuccessful matches';
 }
 
 # vim: ft=perl6
