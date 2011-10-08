@@ -153,38 +153,40 @@ ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
 
 
 # Substitutions...
+#?rakudo skip 's{} = ...'
+{
+    my $try = $data;
+    ok(!( $try ~~ s:0th{fo+}=q{bar} ), "Can't substitute 0th" );
+    is($try, $data, 'No change to data for 0th');
 
-my $try = $data;
-ok(!( $try ~~ s:0th{fo+}=q{bar} ), "Can't substitute 0th" );
-is($try, $data, 'No change to data for 0th');
+    $try = $data;
+    ok($try ~~ s:1st{fo+}=q{bar}, 'substitute 1st');
+    is($try, $sub1, 'substituted 1st correctly');
 
-$try = $data;
-ok($try ~~ s:1st{fo+}=q{bar}, 'substitute 1st');
-is($try, $sub1, 'substituted 1st correctly');
+    $try = $data;
+    ok($try ~~ s:2nd{fo+}=q{bar}, 'substitute 2nd');
+    is($try, $sub2, 'substituted 2nd correctly');
 
-$try = $data;
-ok($try ~~ s:2nd{fo+}=q{bar}, 'substitute 2nd');
-is($try, $sub2, 'substituted 2nd correctly');
+    $try = $data;
+    ok($try ~~ s:3rd{fo+}=q{bar}, 'substitute 3rd');
+    is($try, $sub3, 'substituted 3rd correctly');
 
-$try = $data;
-ok($try ~~ s:3rd{fo+}=q{bar}, 'substitute 3rd');
-is($try, $sub3, 'substituted 3rd correctly');
+    $try = $data;
+    ok($try ~~ s:4th{fo+}=q{bar}, 'substitute 4th');
+    is($try, $sub4, 'substituted 4th correctly');
 
-$try = $data;
-ok($try ~~ s:4th{fo+}=q{bar}, 'substitute 4th');
-is($try, $sub4, 'substituted 4th correctly');
+    $try = $data;
+    ok($try ~~ s:5th{fo+}=q{bar}, 'substitute 5th');
+    is($try, $sub5, 'substituted 5th correctly');
 
-$try = $data;
-ok($try ~~ s:5th{fo+}=q{bar}, 'substitute 5th');
-is($try, $sub5, 'substituted 5th correctly');
+    $try = $data;
+    ok($try ~~ s:6th{fo+}=q{bar}, 'substitute 6th');
+    is($try, $sub6, 'substituted 6th correctly');
 
-$try = $data;
-ok($try ~~ s:6th{fo+}=q{bar}, 'substitute 6th');
-is($try, $sub6, 'substituted 6th correctly');
-
-$try = $data;
-ok(!( $try ~~ s:7th{fo+}=q{bar} ), "Can't substitute 7th" );
-is($try, $data, 'No change to data for 7th');
+    $try = $data;
+    ok(!( $try ~~ s:7th{fo+}=q{bar} ), "Can't substitute 7th" );
+    is($try, $data, 'No change to data for 7th');
+}
 
 
 # Other patterns...
@@ -273,6 +275,7 @@ ok(!( $data ~~ m:7x/fo+/ ), 'No match 7x');
 
 # Substitutions...
 
+#?rakudo skip 's{} = ...'
 {
     my $try = $data;
     ok(!( $try ~~ s:0x{fo+}=q{bar} ), "Can't substitute 0x" );

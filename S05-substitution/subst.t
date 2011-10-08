@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 127;
+plan 128;
 
 # L<S05/Substitution/>
 
@@ -244,21 +244,18 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $x, 'fuubar', 'and the substition worked';
 }
 
-#?rakudo skip 's///'
 {
-    given 'a b c' {
-        s[\w] = uc($/);
-        is $_, 'A b c', 'can use $/ on the RHS';
-    }
-    given 'a b c' {
-        s[(\w)] = uc($0);
-        is $_, 'A b c', 'can use $0 on the RHS';
-    }
+    $_ = 'a b c';
+    s[\w] = uc($/);
+    is $_, 'A b c', 'can use $/ on the RHS';
 
-    given 'a b c' {
-        s:g[ (\w) ] = $0 x 2;
-        is $_, 'aa bb cc', 's:g[...] and captures work together well';
-    }
+    $_ = 'a b c';
+    s[(\w)] = uc($0);
+    is $_, 'A b c', 'can use $0 on the RHS';
+
+    $_ = 'a b c';
+    s:g[ (\w) ] = $0 x 2;
+    is $_, 'aa bb cc', 's:g[...] and captures work together well';
 }
 
 {
@@ -358,7 +355,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
-#?rakudo skip 's///'
+#?rakudo todo 'samecase, :ii'
 {
     $_ = 'foObar';
     s:ii/oo/au/;
@@ -385,6 +382,10 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
         ':i(1) is OK';
 }
 
-done;
+{
+    $_ = 'foo';
+    s/f(.)/b$0/;
+    is $_, 'boo', 'can use $0 in RHS of s///';
+}
 
 # vim: ft=perl6
