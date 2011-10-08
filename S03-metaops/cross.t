@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 27;
+plan 28;
 
 # L<S03/List infix precedence/the cross operator>
 ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -110,5 +110,9 @@ is (<a b> X <c d> X < e f>).join(','),
 #?rakudo todo 'RT 74072'
 #?niecza todo
 is ([1,2] X~ <a b>), '1 2a1 2b', '[] does not flatten';
+
+# RT #73396
+is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
+    'Nested X works';
 
 # vim: ft=perl6
