@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 38;
 
 =begin pod
 
@@ -148,8 +148,7 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
     is $tracker, 'bla', 'can call a sub of the same name as the current method';
 }
 
-# usage of *%_ in in methods
-
+# usage of *%_ in in methods, RT #73892
 {
     my $tracker = '';
     sub track(:$x) {
@@ -159,9 +158,15 @@ is AnonInvocant.new().me, AnonInvocant, 'a typed $: as invocant is OK';
         method t(*%_) {
             track(|%_);
         }
+        method implicit {
+            track(|%_);
+        }
     }
     lives_ok { PercentUnderscore.new.t(:x(5)) }, 'can use %_ in a method';
     is $tracker, 5, ' ... and got right result';
+    lives_ok { PercentUnderscore.new.implicit(:x(42)) },
+                    'can use implicit %_ in a method';
+    is $tracker, 42, '... and got he right result';
 }
 
 {
