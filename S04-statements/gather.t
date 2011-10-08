@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -156,6 +156,19 @@ plan 17;
     
     my @evens := grep-div((1...*), 2);
     is ~grep-div(@evens, 3).munch(16), ~grep-div((1...100), 6), "Nested identical gathers";
+}
+
+# RT #77036
+{
+    class E {
+        has $.n is rw;
+        has $.v;
+        method Str() {~self.v }
+    };
+    my E $x .= new(:v(1));
+    $x.n = E.new(:v(2));
+    is (gather { my $i = $x; while $i.defined { take $i; $i = $i.n } }).join("|"), '1|2', 'Elements in gather/take stringify correctly';
+
 }
 
 
