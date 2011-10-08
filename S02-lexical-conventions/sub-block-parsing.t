@@ -20,6 +20,7 @@ ok(sub { 42 }(), 'sub {...} works'); # TODO: clarify
 #?rakudo skip 'confused near "(sub{ 42 }"'
 ok(sub{ 42 }(),  'sub{...} works'); # TODO: clarify
 
+#?rakudo todo 'unknown'
 eval_dies_ok q[
     sub x { die }
     x();
