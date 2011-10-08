@@ -20,9 +20,11 @@ use Test;
     is $a, 42, "binding the variable now works";
 
     #?pugs todo 'feature'
+    #?rakudo todo 'todo'
     dies_ok { $a := 17 }, "but binding it again does not work";
 }
 
+#?rakudo skip 'segfault'
 {
     my $a is readonly;
     ok !(try { VAR($a).defined }), ".VAR returns undefined on an uninitialized var declared with 'is readonly'";
@@ -43,6 +45,7 @@ use Test;
 {
     my ($rt65900 is readonly) = 5;
     is $rt65900, 5, 'my ($x is readonly) can take assignment';
+    #?rakudo 2 todo 'todo'
     dies_ok { $rt65900 = 'ro' }, 'dies on assignment to readonly variable';
 
     dies_ok { (my $rt65900 is readonly) = 5 },
