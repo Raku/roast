@@ -33,7 +33,8 @@ plan 11;
     nok try { eval('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
-    nok try { eval('ph(3)') }, 'an Int is not a Hash';
+    #?niecza todo 'sigil-implied types'
+    dies_ok { eval('ph(3)') }, 'an Int is not a Hash';
 }
 
 # this used to be a rakudobug, RT #62172
