@@ -45,7 +45,6 @@ line 4
     is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
 }
 
-#?rakudo skip 'RT #73144'
 #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 {
     is 'something'.new, '', '"string literal".new just creates an empty string';

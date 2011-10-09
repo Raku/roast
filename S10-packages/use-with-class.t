@@ -11,7 +11,6 @@ plan 8;
 
 use t::spec::packages::UseTest;
 
-#?rakudo skip "Could not find symbol 'Stupid::&Class'"
 ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 
 {

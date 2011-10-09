@@ -21,7 +21,6 @@ package Simple {
 
 is Simple::Bar.new.baz, 'hi', 'class test';
 
-#?rakudo skip 'ticket uses role; RT 62900'
 {
     is AlsoEmpty.gist, 'AlsoEmpty()',
         'autovivification(?) for nested packages'
