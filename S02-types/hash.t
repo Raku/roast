@@ -190,10 +190,9 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
     is $i, 4, "for %hash works";
 }
 
-#?niecza skip 'Non-declarative sigil is missing its name'
 {
-    eval ' @%(a => <b>)<a> ';
-    ok( $!, "doesn't really make sense, but shouldn't segfault, either ($!)");
+    nok try { eval ' @%(a => <b>)<a>' },
+     "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
 
 # test for RT #62730

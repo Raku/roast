@@ -14,10 +14,7 @@ class Counter {
 }
 
 my $c = Counter.new();
-try {
-    $c.x
-}
-ok($!, 'no public accessor for private attribute');
+dies_ok { $c.x }, 'no public accessor for private attribute';
 $c.init();
 is($c.get(), 41, 'can assign and get from within the class');
 $c.inc();

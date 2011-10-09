@@ -5,25 +5,21 @@ plan 3;
 
 #L<S06/Operator overloading>
 
-#?rakudo todo 'nom regression'
+#?rakudo skip 'custom operators'
 {
-    ok eval(q[
-        sub postfix:<§> ($x) {
-            $x * 2;
-        };
-        3§;
-    ]) == 6, 'Can define postfix operator';
+    sub postfix:<§> ($x) {
+        $x * 2;
+    };
+    is 3§, 6, 'Can define postfix operator';
 }
 
-#?rakudo todo 'nom regression'
+#?rakudo skip 'custom operators'
 {
-    ok eval(q[
-        sub postfix:<!>($arg) {
-            if ($arg == 0) { 1;}
-            else { ($arg-1)! * $arg;}
-        };
-        5!
-    ]) == 120, 'Can define recursive postfix operator';
+    sub postfix:<!>($arg) {
+        if ($arg == 0) { 1;}
+        else { ($arg-1)! * $arg;}
+    };
+    is 5!, 120, 'Can define recursive postfix operator';
 }
 
 {

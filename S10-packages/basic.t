@@ -21,9 +21,9 @@ package Simple {
 
 is Simple::Bar.new.baz, 'hi', 'class test';
 
-#?rakudo skip 'ticket uses role; RT #62900'
+#?rakudo skip 'ticket uses role; RT 62900'
 {
-    is  eval('~AlsoEmpty'), 'AlsoEmpty()',
+    is AlsoEmpty.gist, 'AlsoEmpty()',
         'autovivification(?) for nested packages'
 }
 
@@ -47,7 +47,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 #?rakudo todo 'RT #63826'
 {
     enum SimpleB <a>; # useful for fudging success
-    is eval('Simple::B::a'), 0, 'enum in package'
+    is Simple::B::a.Numeric, 0, 'enum in package'
 }
 
 # more sophisticated variants of test exist elsewhere - but seems basic ...
@@ -75,23 +75,23 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 {
     my $x;
 
-    eval '$x = RT64828g; grammar RT64828g {}';
+    try {  eval '$x = RT64828g; grammar RT64828g {}' };
     ok  $!  ~~ Exception, 'reference to grammar before definition dies';
     ok "$!" ~~ / RT64828g /, 'error message mentions the undefined grammar';
 
-    eval '$x = RT64828m; module RT64828m {}';
+    try { eval '$x = RT64828m; module RT64828m {}' };
     ok  $!  ~~ Exception, 'reference to module before definition dies';
     ok "$!" ~~ / RT64828m /, 'error message mentions the undefined module';
 
-    eval '$x = RT64828r; role RT64828r {}';
+    try { eval '$x = RT64828r; role RT64828r {}' };
     ok  $!  ~~ Exception, 'reference to role before definition dies';
     ok "$!" ~~ / RT64828r /, 'error message mentions the undefined role';
 
-    eval '$x = RT64828c; class RT64828c {}';
+    try { eval '$x = RT64828c; class RT64828c {}' };
     ok  $!  ~~ Exception, 'reference to class before definition dies';
     ok "$!" ~~ / RT64828c /, 'error message mentions the undefined class';
 
-    eval '$x = RT64828p; package RT64828p {}';
+    try { eval '$x = RT64828p; package RT64828p {}' };
     ok  $!  ~~ Exception, 'reference to package before definition dies';
     ok "$!" ~~ / RT64828p /, 'error message mentions the undefined package';
 }
@@ -136,11 +136,11 @@ our $outer_package = 19;
 
 # change tests to match likely error (top of file) when they pass (RT 64204)
 {
-    eval 'my $x = ::P';
+    try { eval 'my $x = ::P' };
     ok  ~$! !~~ /<&fairly_conclusive_platform_error>/, 
         'simple package case that should not blow platform';
 
-    eval 'A::B';
+    try { eval 'A::B' };
     ok  ~$! ~~ /<&likely_perl6_not_found_err>/,
         'another simple package case that should not blow platform';
 }

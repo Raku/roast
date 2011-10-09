@@ -233,22 +233,23 @@ my @e;
 };
 
 #?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
+#?rakudo skip 'postfix forms'
 { # unary postfix again, but with a twist
         my @r;
-        eval '@r = ("f", "oo", "bar")».chars';
+        @r = ("f", "oo", "bar")».chars;
         my @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements");
 
-        eval '@r = ("f", "oo", "bar").».chars';
+        @r = ("f", "oo", "bar").».chars;
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (Same thing, dot form)");
 
 
-        eval '@r = ("f", "oo", "bar")>>.chars';
+        @r = ("f", "oo", "bar")>>.chars;
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (ASCII)");
 
-        eval '@r = ("f", "oo", "bar").>>.chars';
+        @r = ("f", "oo", "bar").>>.chars;
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (ASCII, Same thing, dot form)");
 

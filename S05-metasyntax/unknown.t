@@ -26,9 +26,8 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 }
 
 # RT #74832
-#?niecza skip 'Quantifier quantifies nothing'
 {
-    nok eval('/ a+ + /'), 'Cannot parse regex a+ +';
+    nok try {eval('/ a+ + /')}, 'Cannot parse regex a+ +';
     #?rakudo todo 'RT 74832'
     ok "$!" ~~ /:i quantif/, 'error message mentions quantif{y,ier}';
 }

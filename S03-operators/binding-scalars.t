@@ -126,15 +126,15 @@ plan 29;
 }
 
 # := actually takes subroutine parameter list
-#?rakudo todo 'List binding'
+#?rakudo skip 'List binding'
 #?niecza skip 'list binding'
 {
   my $a;
-  eval '(:$a) := (:a<foo>)';
+  (:$a) := (:a<foo>);
   #?pugs todo
   is($a, "foo", "bound keyword");
   my @tail;
-  eval '($a, *@tail) := (1, 2, 3)';
+  ($a, *@tail) := (1, 2, 3);
   #?pugs todo
   ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
 }

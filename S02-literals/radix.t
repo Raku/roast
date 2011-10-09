@@ -181,8 +181,8 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 #?pugs todo 'feature'
 {
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
-    #?rakudo todo "Really?!"
-    is( eval('2«1.1*:2<10>**:2<10>»'),    6, 'Powers of two in <<>> works');
+    #?rakudo skip "Really?!"
+    is( 2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations

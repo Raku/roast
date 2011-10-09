@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 139;
+plan 140;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -60,7 +60,8 @@ plan 139;
             'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
-    eval 'TestA::b(3, :foo)';
+    nok try { eval 'TestA::b(3, :foo)'},
+        'calling non-existing function in foreign class dies';;
     #?rakudo todo 'nom regression'
     ok "$!" ~~ / ' TestA::b' /, 'error message mentions function name';
 }
@@ -97,7 +98,7 @@ plan 139;
 
 # RT #69752
 {
-    eval 'Module.new';
+    try { eval 'Module.new' };
     ok "$!" ~~ / 'Module' /,
         'error message mentions name not recognized, no maximum recursion depth exceeded';
 }

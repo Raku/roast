@@ -143,7 +143,7 @@ plan 29;
 
     dies_ok { <1 2 3>.rt62836 },
             'call to user-declared sub in List:: class dies';
-    eval '<1 2 3>.rt62836';
+    try { eval '<1 2 3>.rt62836' };
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
     diag $!;

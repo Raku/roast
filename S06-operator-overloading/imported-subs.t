@@ -12,15 +12,15 @@ BEGIN { @*INC.push: 't/spec/packages' };
     # note that eval_dies_ok executes in the context of
     # Test.pm, and Test.pm doesn't import or lift the operators
 
-    #?rakudo todo 'nom regression'
+    #?rakudo skip 'nom regression'
     ok eval('5!'), 'postfix:<!> was exported...';
-    #?rakudo todo 'nom regression'
+    #?rakudo skip 'nom regression'
     ok eval('5! == 120 or die'), '... and it works';
     eval_dies_ok '5!', 'Test.pm does not import the operators';
 
-    #?rakudo todo 'nom regression'
+    #?rakudo skip 'nom regression'
     ok eval('"a" yadayada "b"'), 'infix:<yadayada> was exported';
-    #?rakudo todo 'nom regression'
+    #?rakudo skip 'nom regression'
     ok eval('"a" yadayada "b" eq "a..b" or die'), '... and it works';
     #?rakudo todo "op= form doesn't work for imported operators?"
     ok eval('my $a = "a"; $a yadayada= "b"; $a eq "a..b" or die'), '... and yadayada= works too';
@@ -46,7 +46,7 @@ BEGIN { @*INC.push: 't/spec/packages' };
     
     is 4 + 2, 6, "Normal infix:<+> still works";
 
-    nok eval('3 notthere 4'), 'not-exported operator was not imported';
+    nok try { eval('3 notthere 4') }, 'not-exported operator was not imported';
 }
 
 eval_dies_ok '5!', 'import of operators is lexical';

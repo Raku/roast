@@ -146,14 +146,14 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 #?pugs todo 'list infix and assignment'
 {
     my @d;
-    ok eval('@d = 1,3 Z 2,4'), "list infix tighter than list assignment, looser t than comma";
+    ok (@d = 1,3 Z 2,4), "list infix tighter than list assignment, looser t than comma";
     is(@d, [1 .. 4], "to complicate things further, it dwims");
 }
 
 #?niecza skip 'Bogus term'
 {
     my @b;
-    eval('@b = ((1, 3) Z (2, 4))');
+    @b = ((1, 3) Z (2, 4));
     is(@b, [1 .. 4], "parens work around this");
 };
 
@@ -161,9 +161,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 #?niecza skip 'Undeclared name: "Z"'
 {
-    my $c;
-    eval('$c = any 1, 2, Z 3, 4');
-    #?rakudo skip 'unknown error'
+    my $c = any 1, 2 Z 3, 4;
     ok($c == 3, "any is less tight than comma and Z");
 }
 

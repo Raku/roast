@@ -162,7 +162,7 @@ use Test;
 # Following tests test whether the constants are actually constant.
 #?pugs todo 'feature'
 {
-    my $ok;
+    my $ok = 0;
 
     constant grtz = 42;
     $ok++ if grtz == 42;
@@ -171,6 +171,7 @@ use Test;
     $ok++ if $!;
     $ok++ if grtz == 42;
 
+    #?rakudo todo 'unknown'
     is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
@@ -191,7 +192,7 @@ use Test;
 
 #?pugs todo 'feature'
 {
-    my $ok;
+    my $ok = 0;
 
     constant wobble = 42;
     $ok++ if wobble == 42;
@@ -200,6 +201,7 @@ use Test;
     $ok++ if $!;
     $ok++ if wobble == 42;
 
+    #?rakudo todo 'unknown'
     is $ok, 3, "a constant declared using 'constant' is actually constant (3)";
 }
 

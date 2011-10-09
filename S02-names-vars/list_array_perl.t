@@ -98,6 +98,7 @@ my @tests = (
 }
 
 # RT #65988
+#?rakudo skip 'RT 65988'
 {
     my $rt65988 = (\(1,2), \(3,4));
     #?rakudo todo 'RT 65988 (bogus test?)'

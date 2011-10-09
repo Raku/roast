@@ -34,6 +34,7 @@ use Test;
     ok (try { VAR($a).defined }), ".VAR returns defined now";
 }
 
+#?rakudo skip 'VAR'
 {
     my $a = 3;
 

@@ -21,6 +21,6 @@ sub t2(Rat $x as Int) {
     is($x,           2,       'object bound was coerced to the right value');
 }
 t2(7/3);
-nok eval("t2('omg hedgehog!')"), 'Type checks still enforced';
+nok try { eval("t2('omg hedgehog!')") }, 'Type checks still enforced';
 
 # vim: ft=perl6

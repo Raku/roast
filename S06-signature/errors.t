@@ -21,14 +21,14 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 #?niecza skip 'Excess arguments to MAIN empty_sig, used 0 of 1 positionals'
 {
     sub empty_sig() { return };
-    nok eval('empty_sig("RT #64344")'),
+    nok try { eval('empty_sig("RT #64344")') },
             'argument passed to sub with empty signature';
 }
 
 # RT #71478
 #?niecza skip 'Excess arguments to MAIN_3 foo, used 1 of 2 positionals'
 {
-    my $success = eval 'sub foo(%h) { %h }; foo(1, 2); 1';
+    my $success = try { eval 'sub foo(%h) { %h }; foo(1, 2); 1' };
     my $error   = "$!";
     nok $success,
         "Passing two arguments to a function expecting one hash is an error";

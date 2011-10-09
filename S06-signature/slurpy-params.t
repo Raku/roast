@@ -18,7 +18,7 @@ sub mixed($pos1, *@slurp) { "|$pos1|" ~ @slurp.join('!') }
 
 is mixed(1),           '|1|',    'Positional and slurp params';
 is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
-nok eval(' mixed()'),            'at least one arg required';
+nok try {eval(' mixed()')},      'at least one arg required';
 
 #?rakudo skip 'types on slurpy params'
 {

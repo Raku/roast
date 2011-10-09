@@ -79,8 +79,8 @@ plan 31;
     my @shift = 1 .. 5;
     eval_dies_ok('shift() ', 'shift() requires arguments');
     eval_dies_ok('42.shift', '.shift should not work on scalars');
-    nok(eval('shift(@shift, 10)'), 'shift() should not allow extra arguments');
-    nok(eval(' @shift.shift(10)'), 'shift() should not allow extra arguments');
+    nok(try { eval('shift(@shift, 10)') }, 'shift() should not allow extra arguments');
+    nok(try { eval(' @shift.shift(10)') }, 'shift() should not allow extra arguments');
 }
 
 # Push with Inf arrays (waiting on answers to perl6-compiler email)

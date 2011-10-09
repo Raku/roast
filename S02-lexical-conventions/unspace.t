@@ -33,19 +33,18 @@ is((:foo\ ("bar")), ('foo' => "bar"), 'unspace with adverb');
 
 is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
 
-my @array = 1,2,3;
+#?rakudo skip 'unimplemented postfix forms'
+{
+    my @array = 1,2,3;
 
-eval "
     @array\    .>>++;
     @array>>\    .++;
     @array\ .>>\ .++;
     @array\     .»++;
     @array»\     .++;
     @array\ .»\  .++;
-";
-#?pugs todo 'unimpl'
-#?rakudo todo 'unimpl'
-is( ~@array, "7 8 9", 'unspace with postfix hyperops');
+    is( ~@array, "7 8 9", 'unspace with postfix hyperops');
+}
 
 
 #Test the "unspace" and unspace syntax
@@ -98,7 +97,7 @@ is(eval('foo\
 #unspace is allowed after a pod = ... which means pod is
 #syntactically recursive, i.e. you can put pod comments
 #inside pod directives recursively!
-#?rakudo todo 'pod and unspace'
+#?rakudo skip 'pod and unspace'
 is(eval('foo\
 =\ begin comment
 blah blah blah
@@ -114,11 +113,11 @@ blah
 
     .lc'), 'a', 'unspace with pod =for comment w/ pod unspace');
 }
-#?rakudo todo 'pod and unspace'
+#?rakudo skip 'pod and unspace'
 is(eval('foo\
 =\ comment blah blah blah
     .lc'), 'a', 'unspace with pod =comment w/ pod unspace');
-#?rakudo todo 'pod and unspace'
+#?rakudo skip 'pod and unspace'
 is(eval('foo\
 =\
 =begin nested_pod

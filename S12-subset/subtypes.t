@@ -235,14 +235,14 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     subset Int::Positive of Int where { $_ > 0 };
     sub f(Int::Positive $a) { $a * $a };
-    nok eval('f(-2)'), 'Cannot violate Int::Positive constraint';
+    nok try { eval('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
 # RT #71820
 {
     subset Interesting of Int where * > 10;
     class AI { has Interesting $.x };
-    eval 'AI.new(x => 2)';
+    try { eval 'AI.new(x => 2)' };
     ok $!.Str ~~ /Interesting/, 'error message mentions subset name';
 
 }

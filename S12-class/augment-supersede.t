@@ -20,7 +20,8 @@ use MONKEY_TYPING;
     is($o.a, 'called Foo.a', 'basic method call works');
     is($o.b, 'called Foo.b', 'added method call works');
 
-    ok(!eval('augment class NonExistent { }'), 'augment on non-existent class dies');
+    nok try { eval('augment class NonExistent { }') },
+        'augment on non-existent class dies';
 }
 
 # RT #76104

@@ -203,7 +203,7 @@ my $z = 42; #OK not used
     eval_lives_ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
-        #?rakudo 2 todo 'OUTER and SETTING'
+        #?rakudo 2 skip 'OUTER and SETTING'
         ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
         ok eval('not SETTING::<$x>.defined'), 'SETTING::<$x>';
         my $x; #OK not used
@@ -220,7 +220,6 @@ my $z = 42; #OK not used
 
     # XXX As I write this, this does not die right.  more testing needed.
     dies_ok { my Int $x = "abc" }, 'type error'; #OK
-    #?rakudo todo 'type error not caught'
     dies_ok { eval '$x = "abc"'; my Int $x; }, 'also a type error';
 }
 

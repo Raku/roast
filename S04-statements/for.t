@@ -441,7 +441,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #62478
 #?niecza skip 'different interpretation of eval'
 {
-    eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }');
+    try { eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
     ok "$!" ~~ /C\-style/,   'mentions C-style';
     ok "$!" ~~ /for/,        'mentions for';
     ok "$!" ~~ /loop/,       'mentions loop';
@@ -451,7 +451,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 #?niecza skip 'different eval'
 {
     my $parsed = 0;
-    eval '$parsed = 1; for (1..3)->$n { last }';
+    try { eval '$parsed = 1; for (1..3)->$n { last }' };
     ok ! $parsed, 'for (1..3)->$n   fails to parse';
 }
 
@@ -469,7 +469,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 #?niecza skip 'different eval semantics'
 {
-    eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!);
+    try { eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!) };
     ok $! ~~ / 'C-style' /, 'Sensible error message';
 }
 

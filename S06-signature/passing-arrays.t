@@ -30,12 +30,10 @@ plan 11;
     sub pa(@a) { @a.WHAT; }
     my @b = 2, 3;
     isa_ok pa(@b), Array, 'basic array type sanity';
-    #?niecza skip 'sigil-implied type constraint (?)'
-    nok eval('pa(3)'), 'non-slurpy array does not take a single Int';
+    nok try { eval('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
-    #?niecza skip 'sigil-implied type constraint (?)'
-    nok eval('ph(3)'), 'an Int is not a Hash';
+    nok try { eval('ph(3)') }, 'an Int is not a Hash';
 }
 
 # this used to be a rakudobug, RT #62172

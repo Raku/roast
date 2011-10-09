@@ -134,8 +134,8 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 # Importation must be lexical
 #?pugs todo 'bug'
 {
-    my $x = eval "%ENV";
-    ok !$x.defined, '%ENV not visible by after lexical import scope';
+    try { eval "%ENV" };
+    ok $!.defined, '%ENV not visible by after lexical import scope';
     1;
 }
 

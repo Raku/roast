@@ -80,7 +80,7 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 # RT #64668
 {
-    eval '"RT #64668" ~~ /<nosuchrule>/';
+    try { eval '"RT #64668" ~~ /<nosuchrule>/' };
     ok  $!  ~~ Exception, 'use of missing named rule dies';
     ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
 }

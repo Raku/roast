@@ -15,18 +15,18 @@ instead. Similar for C<!~>.
 #L<S03/Chaining binary precedence/"To catch">
 
 my $str = 'foo';
-eval '$str =~ m/bar/;';
+try { eval '$str =~ m/bar/;' };
 ok  $!  ~~ Exception, 'caught "=~" braino';
 ok "$!" ~~ /'~~'/, 'error for "=~" usage mentions "~~"';
 
-eval '$str !~ m/bar/;';
+try { eval '$str !~ m/bar/;' };
 ok  $!  ~~ Exception, 'caught "!~" braino';
 ok "$!" ~~ /'!~~'/, 'error for "!~" usage mentions "!~~"';
 
 # RT #76878
+#?rakudo skip 'RT 76878'
 {
     my $x = 2;
-    #?rakudo 4 todo 'RT 76878'
     is eval('"$x =~ b"'), '2 =~ b', '=~ allowed in double quotes';
     is eval('"$x !~ b"'), '2 !~ b', '!~ allowed in double quotes';
     is eval('"$x << b"'), '2 << b', '<< allowed in double quotes';

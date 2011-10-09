@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 16;
 
 =begin desc
 
@@ -12,31 +12,27 @@ This test tests the C<$!> builtin.
 
 # L<S04/"Exceptions"/A bare die/fail takes $! as the default argument>
 
-eval 'nonexisting_subroutine()';
-ok defined($!), 'nonexisting sub in eval makes $! defined';
-eval 'nonexisting_subroutine()';
-ok $!, 'Calling a nonexisting subroutine sets $!';
+try { die "foo" };
+ok defined($!), 'error in try makes $! defined';
 try { 1 };
 nok $!.defined, 'successful try { } resets $!';
 
 try { 1.nonexisting_method; };
 ok $!.defined, 'Calling a nonexisting method defines $!';
-try { 1.nonexisting_method; };
-ok $!, 'Calling a nonexisting smethod sets $!';
 
 my $called;
 sub foo(Str $s) { return $called++ };    #OK not used
 my @a;
-try { foo(@a,@a) };
-ok $!, 'Calling a subroutine with a nonmatching signature sets $!';
+try { eval 'foo(@a,@a)' };
+ok $!.defined, 'Calling a subroutine with a nonmatching signature sets $!';
 ok !$called, 'The subroutine also was not called';
 
 try { 1 div 0 };
-ok $!, 'Dividing one by zero sets $!';
+ok $!.defined, 'Dividing one by zero sets $!';
 
 sub incr ( $a is rw ) { $a++ };
 try { incr(19) };
-ok $!, 'Modifying a constant sets $!';
+ok $!.defined, 'Modifying a constant sets $!';
 
 try {
     try {
@@ -59,9 +55,10 @@ ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
     # - also tested more generically above.
     # So no need to test the value of #! again here.
     #is $!, 'goodbye', '$! has correct value after try';
+    #?rakudo skip 'spec change pending (?)'
     ok ($!), '$! as boolean works (true)';
 
-    eval q[ die('farewell'); ];
+    try { eval q[ die('farewell'); ] };
     ok defined($!.perl), '$! has working Perl 6 object methods after eval';
     ok ($!.WHAT ~~ Exception), '$! is Exception object after eval';
     # Although S29-context/die.t tests $! being set after die, it's not

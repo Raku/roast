@@ -103,7 +103,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     class Dandy is Exception {};
 
     my ($naughty, $lived);
-    eval '
         {
             die Dandy("error");
 
@@ -114,8 +113,8 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
             }
         };
         $lived = 1;
-    ';
 
+    #?rakudo todo 'smart matching in CATCH'
     ok(!$lived, "did not live past uncaught throw");
     ok(!$naughty, "did not get caught by wrong handler");
     ok(WHAT($!).gist, '$! is an object');
@@ -124,7 +123,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     is(WHAT($!).gist, Dandy.gist, ".. of the right class");
 };
 
-#?rakudo skip 'llops'
+#?rakudo skip 'loops'
 {
     my $s = '';
     die 3;

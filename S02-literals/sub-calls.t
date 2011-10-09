@@ -7,9 +7,6 @@ plan 20;
 # TODO: *really* need a better smartlink
 # L<S02/Bare identifiers/"If the unrecognized subroutine name">
 
-# Since these are all parsing tests, they should use eval to ensure all tests
-# can run even if something is broken.  (Unless things are VERY broken.)
-
 #?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
 #?pugs emit   skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
 #?pugs emit   exit;
@@ -31,12 +28,12 @@ plan 20;
     ok eval(q/&foo.(1);  /), 'call with one arg, has dot and parens';
     ok eval(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
     #?pugs todo 'unspecced'
-    nok eval(q/foo'bar'; /), 'call with one arg, has no space and no parens';
+    nok try { eval(q/foo'bar'; /) }, 'call with one arg, has no space and no parens';
 
     ok eval(q/foo 1, 2; /), 'call with two args, no parens';
     ok eval(q/foo(1, 2);/), 'call with two args, has parens';
 
-    #?rakudo todo 'should parse as a routine foo:bar'
+    #?rakudo skip 'should parse as a routine foo:bar'
     ok eval(q/foo:bar;  /), 'call with adverb after no space';
     ok eval(q/foo :bar; /), 'call with adverb after space';
 
@@ -51,7 +48,7 @@ plan 20;
     sub succ($x) { $x + 1 }
 
     is(eval(q/succ  (1+2) * 30;/),  91, "parens after space aren't call-parens");
-    ok(!eval(q/succ .(1+2) * 30;/), 'parsed as method call on $_');
+    nok(try {eval(q/succ .(1+2) * 30;/) }, 'parsed as method call on $_');
 }
 {
     sub first() { "first" }

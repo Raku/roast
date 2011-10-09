@@ -39,7 +39,7 @@ is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
 #?rakudo todo 'RT #66006'
-eval '$foo.baz()';
+try { eval '$foo.baz()' };
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
 role R1 {
@@ -73,7 +73,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #67024
 {
-    eval 'class A { method a(){0}; method a($x){1} }';
+    try { eval 'class A { method a(){0}; method a($x){1} }' };
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }

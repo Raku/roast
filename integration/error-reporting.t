@@ -46,7 +46,7 @@ bar()',
 {
     subset Even of Int where { $_ %% 2 };
     sub f(Even $x) { $x };
-    eval 'f(3)';
+    try { eval 'f(3)' };
     my $e = "$!";
     diag "Error message: $e";
     ok $e ~~ /:i 'type check'/,

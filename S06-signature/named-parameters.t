@@ -11,7 +11,7 @@ plan 95;
         return $x;
     }
     is a(3), 3, 'Can pass positional arguments';
-    nok eval('a(g=>7)'), 'Dies on passing superfluous arguments';
+    nok try { eval('a(g=>7)') }, 'Dies on passing superfluous arguments';
 }
 
 {
@@ -90,37 +90,36 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
    "When we explicitly specify, we get our value");
 
 # L<S06/Named arguments/multiple same-named arguments>
-#?rakudo todo 'multiple same-named arguments NYI'
+#?rakudo skip 'multiple same-named arguments NYI'
 {
     sub named_array(:@x) { +«@x }
 
-    is(eval('named_array(:x)'), (1), 'named array taking one named arg');
-    is(eval('named_array(:x, :!x)'), (1, 0), 'named array taking two named args');
-    is(eval('named_array(:x(1), :x(2), :x(3))'), (1, 2, 3), 'named array taking three named args');
+    is(named_array(:x), (1), 'named array taking one named arg');
+    is(named_array(:x, :!x), (1, 0), 'named array taking two named args');
+    is(named_array(:x(1), :x(2), :x(3)), (1, 2, 3), 'named array taking three named args');
 }
 
 # L<S06/Named arguments/Pairs intended as positional arguments>
+#?rakudo skip 'multiple same-named arguments NYI'
 {
     sub named_array2(@x, :@y) { (+«@x, 42, +«@y) }
     # +«(:x) is (0, 1)
 
-    #?rakudo 8 todo "named arguments not fully up to spec"
-    is(eval('named_array2(:!x, :y)'), (0, 42, 1), 'named and unnamed args - two named');
-    is(eval('named_array2(:!x, y => 1)'), (0, 42, 1), 'named and unnamed args - two named - fatarrow');
-    is(eval('named_array2(:y, :!x)'), (0, 42, 1), 'named and unnamed args - two named - backwards');
-    is(eval('named_array2(:y, (:x))'), (0, 1, 42, 1), 'named and unnamed args - one named, one pair');
-    is(eval('named_array2(1, 2)'), (1, 42), 'named and unnamed args - two unnamed');
-    is(eval('named_array2(:!y, 1)'), (1, 42, 0), 'named and unnamed args - one named, one pos');
-    is(eval('named_array2(1, :!y)'), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
-    is(eval('named_array2(:y, 1, :!y)'), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
+    is(named_array2(:!x, :y), (0, 42, 1), 'named and unnamed args - two named');
+    is(named_array2(:!x, y => 1), (0, 42, 1), 'named and unnamed args - two named - fatarrow');
+    is(named_array2(:y, :!x), (0, 42, 1), 'named and unnamed args - two named - backwards');
+    is(named_array2(:y, (:x)), (0, 1, 42, 1), 'named and unnamed args - one named, one pair');
+    is(named_array2(1, 2), (1, 42), 'named and unnamed args - two unnamed');
+    is(named_array2(:!y, 1), (1, 42, 0), 'named and unnamed args - one named, one pos');
+    is(named_array2(1, :!y), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
+    is(named_array2(:y, 1, :!y), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
     
-    nok(eval('named_array2(:y, :y)').defined, 'named and unnamed args - two named with same name');
+    nok(try { eval 'named_array2(:y, :y)'}.defined, 'named and unnamed args - two named with same name');
 
-    #?rakudo 4 todo "named arguments not fully up to spec"
-    is(eval('named_array2(:y, (:x))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
-    is(eval('named_array2(:y, (:y))'), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair of same name');
-    is(eval('named_array2(:y, :z)'), (0, 1, 42, 1), 'named and unnamed args - passing pair of unrelated name');
-    is(eval('named_array2(:y, "x" => 1)'), (0, 1, 42, 1), 'named and unnamed args - passing pair with quoted fatarrow');
+    is(named_array2(:y, (:x)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
+    is(named_array2(:y, (:y)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair of same name');
+    is(named_array2(:y, :z), (0, 1, 42, 1), 'named and unnamed args - passing pair of unrelated name');
+    is(named_array2(:y, "x" => 1), (0, 1, 42, 1), 'named and unnamed args - passing pair with quoted fatarrow');
 }
 
 # L<S06/Named parameters/They are marked by a prefix>

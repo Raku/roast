@@ -123,7 +123,7 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
     is ~$dt, '31/12/1999 59s4m18h', 'DateTime.new(Instant) with time zone and formatter';
 }
 
-#?rakudo todo 'nom regression'
+#?rakudo skip 'nom regression'
 {
     my $i = dtpi 1988, 11, 22,   18, 42, 15.9;
     is $i.perl.eval, $i, 'Round-tripping Instant.perl';
