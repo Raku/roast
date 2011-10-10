@@ -43,7 +43,6 @@ eval_dies_ok
     'my Num List sub f () { return ("A") }; f()',
     'Return of list with wrong type dies';
 
-#?rakudo 2 todo 'RT 65128'
 #?niecza todo
 eval_lives_ok
     'my List sub f () { return () }; f()',

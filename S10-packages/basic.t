@@ -43,7 +43,6 @@ is Simple::Bar.new.baz, 'hi', 'class test';
                  'Non-existent method with package';
 }
 
-#?rakudo todo 'RT #63826'
 {
     enum SimpleB <a>; # useful for fudging success
     is Simple::B::a.Numeric, 0, 'enum in package'
