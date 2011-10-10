@@ -72,9 +72,8 @@ plan 36;
 }
 
 # RT #64948
-#?rakudo skip 'RT 64948'
 {
-    ok %( 'foo' ~~ /<alpha> oo/ ){ 'alpha' }:exists,
+    ok %( 'foo' ~~ /<alpha> oo/ ).exists('alpha'),
        'Match coerced to Hash says match exists';
 }
 
