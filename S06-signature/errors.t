@@ -21,7 +21,7 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 #?niecza skip 'Excess arguments to MAIN empty_sig, used 0 of 1 positionals'
 {
     sub empty_sig() { return };
-    nok try { eval('empty_sig("RT #64344")') },
+    dies_ok { eval('empty_sig("RT #64344")') },
             'argument passed to sub with empty signature';
 }
 

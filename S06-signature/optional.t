@@ -91,7 +91,7 @@ eval_dies_ok 'sub opt($a = 1, $b) { }',
     ok opt-type1() === Int,
         'optional param with type constraints gets the right value';
     sub opt-type2(Int $x = 'str') { };
-    nok try { eval('opt-type2()') }, 'default values are type-checked';
+    dies_ok { eval('opt-type2()') }, 'default values are type-checked';
 }
 
 # vim: ft=perl6

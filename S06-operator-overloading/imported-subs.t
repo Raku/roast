@@ -46,7 +46,7 @@ BEGIN { @*INC.push: 't/spec/packages' };
     
     is 4 + 2, 6, "Normal infix:<+> still works";
 
-    nok try { eval('3 notthere 4') }, 'not-exported operator was not imported';
+    dies_ok { eval('3 notthere 4') }, 'not-exported operator was not imported';
 }
 
 eval_dies_ok '5!', 'import of operators is lexical';

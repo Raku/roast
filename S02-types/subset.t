@@ -18,11 +18,11 @@ subset Even of Int where { $_ % 2 == 0 };
 };
 
 
-nok try { eval('my Even $x = 3') },
+dies_ok { eval('my Even $x = 3') },
               "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
-nok try { eval('Even.new') }, 'Cannot instantiate a subtype';
+dies_ok { eval('Even.new') }, 'Cannot instantiate a subtype';
 
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';

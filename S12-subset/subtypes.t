@@ -235,7 +235,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     subset Int::Positive of Int where { $_ > 0 };
     sub f(Int::Positive $a) { $a * $a };
-    nok try { eval('f(-2)') }, 'Cannot violate Int::Positive constraint';
+    dies_ok { eval('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
 # RT #71820

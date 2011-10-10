@@ -60,7 +60,7 @@ plan 140;
             'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
-    nok try { eval 'TestA::b(3, :foo)'},
+    dies_ok { eval 'TestA::b(3, :foo)'},
         'calling non-existing function in foreign class dies';;
     #?rakudo todo 'nom regression'
     ok "$!" ~~ / ' TestA::b' /, 'error message mentions function name';

@@ -26,11 +26,11 @@ plan 14;
         }
 
         is(bar(), 1, 'in outer scope, can call the multi that is in scope');
-        nok try { eval("bar('pivo')") }, 'multi variant from inner scope not callable in outer';
+        dies_ok { eval("bar('pivo')") }, 'multi variant from inner scope not callable in outer';
     }
 
-    nok try { eval q{ bar() }},    'no multi variants callable outside of lexical scope';
-    nok try { eval q{ bar('kava')} }, 'no multi variants callable outside of lexical scope';
+    dies_ok { eval q{ bar() }},    'no multi variants callable outside of lexical scope';
+    dies_ok { eval q{ bar('kava')} }, 'no multi variants callable outside of lexical scope';
 }
 
 # an inner multi with a signature matching an outer will hide it
@@ -54,6 +54,6 @@ multi waz() { 1 }
 }
 is(waz(), 1,             'multi from package still callable outside the inner scope...');
 #?niecza skip 'No matching candidates to dispatch for &waz'
-nok try { eval("waz('vtak')") }, '...but lexical multi no longer callable';
+dies_ok { eval("waz('vtak')") }, '...but lexical multi no longer callable';
 
 # vim: ft=perl6 :

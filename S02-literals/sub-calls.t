@@ -28,7 +28,7 @@ plan 20;
     ok eval(q/&foo.(1);  /), 'call with one arg, has dot and parens';
     ok eval(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
     #?pugs todo 'unspecced'
-    nok try { eval(q/foo'bar'; /) }, 'call with one arg, has no space and no parens';
+    dies_ok { eval(q/foo'bar'; /) }, 'call with one arg, has no space and no parens';
 
     ok eval(q/foo 1, 2; /), 'call with two args, no parens';
     ok eval(q/foo(1, 2);/), 'call with two args, has parens';

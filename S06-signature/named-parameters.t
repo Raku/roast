@@ -11,7 +11,7 @@ plan 95;
         return $x;
     }
     is a(3), 3, 'Can pass positional arguments';
-    nok try { eval('a(g=>7)') }, 'Dies on passing superfluous arguments';
+    dies_ok { eval('a(g=>7)') }, 'Dies on passing superfluous arguments';
 }
 
 {
