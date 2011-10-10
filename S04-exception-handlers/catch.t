@@ -149,7 +149,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
     is rt63430().perl, 63430.perl, 'can call rt63430() and examine the result';
     is rt63430(), 63430, 'CATCH does not intercept return from bare block';
-    #?rakudo skip 'invalid since other calls were skipped (noauto)'
     is $catches, 0, 'CATCH block never invoked';
 };
 
