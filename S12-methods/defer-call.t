@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -82,6 +82,15 @@ class BarCallWithInt is Foo {
     is($o.show, '', 'sanity test for clearing');
     $o.doit(5);
     is($o.show, 'barint,fooint,ret2,', 'callwith(42) multimethod/inheritance test');
+}
+
+# RT #69756
+{
+    multi sub f(0) { };
+    multi sub f($n) {
+        callwith($n - 1);
+    }
+    lives_ok { f(3) }, 'can recurse several levels with callwith()';
 }
 
 # vim: ft=perl6
