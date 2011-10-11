@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 44;
 
 =begin description
 
@@ -182,6 +182,19 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
     multi method uc(FooStr $self:) { return "OH HAI" };
     is "foo".uc, 'FOO', 'multi method with subset invocants do not magically find their way into the method dispatch';
 
+}
+
+# RT #73344
+my $a = 1;
+{
+    my $a = 3;
+    sub producer {
+        my $a = 2;
+        sub bar($x where $a ) { $x }
+    }
+    my &bar := producer();
+    lives_ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
+    dies_ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
 }
 
 # vim: ft=perl6
