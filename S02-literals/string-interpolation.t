@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 12;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -48,8 +48,7 @@ line 4
 #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 {
     is 'something'.new, '', '"string literal".new just creates an empty string';
+    is +''.new, 0, '... and that strinig works normally';
 }
-
-done;
 
 # vim: ft=perl6
