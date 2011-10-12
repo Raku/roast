@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 3;
 
 {
     class A      {
@@ -20,4 +20,15 @@ plan 2;
     #?niecza skip '.^mro'
     is $x.^mro.gist, 'F() D() B() E() C() A() Any() Mu()',
        '.^mro';
+}
+
+{
+    # from http://192.220.96.201/dylan/linearization-oopsla96.html
+    class grid { };
+    class horizontal is grid { };
+    class vertical   is grid { }
+    class hv is horizontal is vertical   { }
+    class vh is vertical   is horizontal { }
+    dies_ok { eval 'class confused is vh is hv { }' },
+        'Cannot do multi inheritance that causes inconsistent MRO';
 }
