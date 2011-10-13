@@ -483,16 +483,19 @@ ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 #
 ## lookarounds
 #### <before .d> a.		abacad		/mob: <ad @ 4>/			lookahead <before>
+#?rakudo skip 'before'
 ok ('abacad' ~~ /<before .d> a./) && matchcheck($/, q/mob: <ad @ 4>/), 'lookahead <before>';
 
 #### <before c> ....		abacad		n				lookahead <before>
+#?rakudo skip 'before'
 ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
 
 #### <before> .		abcd		n				null <before>
-#?rakudo todo 'forbid empty <before>'
+#?rakudo skip 'before'
 eval_dies_ok "'abcd' !~~ /<before> ./", 'null <before>';
 
 #### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
+#?rakudo skip 'before'
 ok ('aabaaa' ~~ /<!before ..b> aa/) && matchcheck($/, q/mob: <aa @ 3>/), 'negated lookahead';
 
 #### <after a>b		ab		y				lookbehind <after>
@@ -573,18 +576,23 @@ eval_dies_ok '/a[b}/', 'mismatched close';
 
 
 #### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
+#?rakudo skip 'before'
 ok ('abacad' ~~ /c <before .d>/) && matchcheck($/, q/mob: <c @ 3>/), 'one character and lookahead <before>';
 
 #### .* <before .d>		abacad		/mob: <abac @ 0>/			multiple characters and lookahead <before>
+#?rakudo skip 'before'
 ok ('abacad' ~~ /.* <before .d>/) && matchcheck($/, q/mob: <abac @ 0>/), 'multiple characters and lookahead <before>';
 
 #### .* <before .\<>		abaca<d		/mob: <abac @ 0>/			multiple characters and lookahead <before> with a \'<\'
+#?rakudo skip 'before'
 ok ('abaca<d' ~~ /.* <before .\<>/) && matchcheck($/, q/mob: <abac @ 0>/), 'multiple characters and lookahead <before> with a \'<\'';
 
 #### .* <before \<>		aba<ca<d		/mob: <aba<ca @ 0>/		greedy any character and lookahead <before> with a \'<\'
+#?rakudo skip 'before'
 ok ('aba<ca<d' ~~ /.* <before \<>/) && matchcheck($/, q/mob: <aba<ca @ 0>/), 'greedy any character and lookahead <before> with a \'<\'';
 
 #### .*? <before \<>		aba<ca<d		/mob: <aba @ 0>/		non-greedy any character and lookahead <before> with a \'<\'
+#?rakudo skip 'before'
 ok ('aba<ca<d' ~~ /.*? <before \<>/) && matchcheck($/, q/mob: <aba @ 0>/), 'non-greedy any character and lookahead <before> with a \'<\'';
 
 
