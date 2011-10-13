@@ -19,9 +19,12 @@ L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e
 my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
 
-my $junc = (1|2|3);
 #?rakudo skip 'dubious: pick on Junctions (unspecced?)'
-ok ?(1|2|3 == $junc.pick), "pick works on junctions";
+#?niecza skip 'dubious: pick on Junctions (unspecced?)'
+{
+    my $junc = (1|2|3);
+    ok ?(1|2|3 == $junc.pick), "pick works on junctions";
+}
 
 my @arr = <z z z>;
 
@@ -32,8 +35,10 @@ ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
 
+#?niecza skip "pick(*) NYI"
 is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 
+#?niecza skip "pick(*) NYI"
 {
   my @items = <1 2 3 4>;
   my @shuffled_items_10;
@@ -45,6 +50,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 {
     # Test that List.pick doesn't flatten array refs
     ok ?([[1, 2], [3, 4]].pick.join('|') eq any('1|2', '3|4')), '[[1,2],[3,4]].pick does not flatten';
+    #?niecza skip "pick(*) NYI"
     ok ?(~([[1, 2], [3, 4]].pick(*)) eq '1 2 3 4' | '3 4 1 2'), '[[1,2],[3,4]].pick(*) does not flatten';
 }
 
@@ -53,12 +59,17 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
        '.pick() returns something can be used as single scalar';
 }
 
+#?niecza skip "pick(*) NYI"
 {
     my @a = 1..100;
     my @b = pick(*, @a);
     is @b.elems, 100, "pick(*, @a) returns the correct number of elements";
     is ~@b.sort, ~(1..100), "pick(*, @a) returns the correct elements";
     is ~@b.grep(Int).elems, 100, "pick(*, @a) returns Ints (if @a is Ints)";
+}
+
+{
+    my @a = 1..100;
 
     isa_ok @a.pick, Int, "picking a single element from an array of Ints produces an Int";
     ok @a.pick ~~ 1..100, "picking a single element from an array of Ints produces one of them";
@@ -82,6 +93,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 # enums + pick
+#?niecza skip "pick(*) NYI"
 {
     is Bool.pick(*).elems, 2, 'Bool.pick works';
 
