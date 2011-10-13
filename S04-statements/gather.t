@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 20;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -169,6 +169,23 @@ plan 18;
     $x.n = E.new(:v(2));
     is (gather { my $i = $x; while $i.defined { take $i; $i = $i.n } }).join("|"), '1|2', 'Elements in gather/take stringify correctly';
 
+}
+
+# RT #78026, RT #77302
+{
+    sub foo {
+        my @a = (1,2,3,4,5);
+        gather {
+            my $val ;
+            while @a {
+                $val = @a.shift();
+                take $val;
+            }
+        }
+    };
+    is foo().join, '12345', 'decontainerization happens (1)';
+    is (<a b c d e> Zxx 0,1,0,1,0).Str, 'b d',
+        'decontainerization happens (2)';
 }
 
 
