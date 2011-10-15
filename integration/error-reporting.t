@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -29,7 +29,6 @@ is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     }, 'Method not found error mentions method name and line number';
 
 # RT #75446
-#?rakudo todo 'nom regression'
 is_run 'use v6;
 sub bar {
     pfff();
@@ -41,6 +40,14 @@ bar()',
         out     => '',
         err     => all(rx/pfff/, rx/'line 3'>>/),
     }, 'got the right line number for nonexisting sub inside another sub';
+
+is_run 'say 42; nosuchsub()',
+    {
+        status  => { $_ != 0 },
+        out     => '',
+        err     => rx/nosuchsub/,
+    },
+    'non-existing subroutine is caught before run time';
 
 # RT #74348
 {
