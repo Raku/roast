@@ -104,7 +104,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
     my ($naughty, $lived);
         {
-            die Dandy("error");
+            die Dandy.new();
 
             CATCH {
                 when Naughty {
