@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 7;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -80,21 +80,6 @@ is $obj.gather, 'Parent(a): (7) | Child(a, b): (7, 5)',
 
     my $c = RT63900_C.new();
     is $c.counter<BUILD>, 1, 'BUILD called once';
-}
-
-# RT #67888
-#?rakudo skip 'RT #67888'
-{
-    my $counter = 0;
-
-    class TestCompiler is Perl6::Compiler {
-        submethod BUILD {
-            $counter++;
-        }
-    }
-
-    TestCompiler.new;
-    is $counter, 1, "testing BUILD in compiler subclass";
 }
 
 #?rakudo skip 'method BUILD should warn'
