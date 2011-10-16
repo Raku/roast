@@ -33,4 +33,4 @@ is $x, 23, '$x successfully modified';
 
 done();
 
-# vim: ft=perl6 number
+# vim: ft=perl6
