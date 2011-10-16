@@ -8,6 +8,7 @@ my &p5_void := eval(
             $::got_void = 1;
         }
 }',:lang<perl5>);
+
 p5_void(:context<void>);
 is(eval(:lang<perl5>,'$::got_void'),1,":contex<void> sets void context");
 p5_void(:context<scalar>);
@@ -46,6 +47,10 @@ p5_list(:context<scalar>);
 is(eval(:lang<perl5>,'$::got_list'),0,":contex<scalar> dosn't set list context");
 p5_list(:context<void>);
 is(eval(:lang<perl5>,'$::got_list'),0,":contex<void> dosn't sets list context");
+
+my &p5_list_of_values := eval('sub {return (1,2,3,4)}',:lang<perl5>);
+ok(p5_list_of_values(:context<void>) ~~ Nil,"a p5 sub called in void context returns a Nil");
+
 done;
 
 # vim: ft=perl6
