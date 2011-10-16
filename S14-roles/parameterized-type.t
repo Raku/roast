@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 26;
 
 =begin pod
 
@@ -61,6 +61,23 @@ dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints insid
 
 # RT #72694
 eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
+
+# RT #68136
+{
+    role TreeNode[::T] does Positional {
+        has TreeNode[T] @!children handles 'postcircumfix:<[ ]>';
+        has T $.data is rw;
+    };
+    my $tree = TreeNode[Int].new;
+    $tree.data = 3;
+    $tree[0] = TreeNode[Int].new;
+    $tree[1] = TreeNode[Int].new;
+    $tree[0].data = 1;
+    $tree[1].data = 4;
+    is ($tree.data, $tree[0,1]>>.data).join(','), '3,1,4',
+        'parameterized role doing non-parameterized role';
+
+}
 
 #?pugs emit =end SKIP
 
