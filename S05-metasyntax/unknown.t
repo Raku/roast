@@ -29,6 +29,7 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 {
     dies_ok {eval('/ a+ + /')}, 'Cannot parse regex a+ +';
     #?rakudo todo 'RT 74832'
+    #?niecza todo
     ok "$!" ~~ /:i quantif/, 'error message mentions quantif{y,ier}';
 }
 

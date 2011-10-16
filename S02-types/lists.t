@@ -56,10 +56,10 @@ plan 29;
     "using lists as lvalues works";
 }
 
-#?niecza todo
 {
   my $foo = 42;
 
+  #?niecza todo
   lives_ok { ($foo, *) = (23, 24) },
     "using lists with embedded Whatevers as lvalues works (1)";
   ok $foo == 23,
