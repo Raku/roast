@@ -312,7 +312,7 @@ is Foo::official(), 44,
 # RT #61732
 {
     sub rt61732_c { 1; CATCH {} }
-    #?rakudo skip 'RT 61732'
+    #?rakudo todo 'RT 61732'
     is rt61732_c(), 1, 'sub with empty catch block returns value before block';
 }
 
