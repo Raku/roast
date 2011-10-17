@@ -461,6 +461,10 @@ sub filter-type(@values is copy, $type) {
 }
 
 for <Num Rat Int Str DifferentReal> -> $type1 {
+    if $type1 eq "DifferentReal" {
+        $file.say: "#?niecza skip 'DifferentReal math NYI'";
+    }
+    
     $file.say: "\{";
     $file.say: "    # $type1 tests";
     
@@ -476,6 +480,11 @@ for <Num Rat Int Str DifferentReal> -> $type1 {
     $file.say: "";
     
     for <Num Rat Int Str DifferentReal> -> $type2 {
+        if $type1 eq "Str" || $type2 eq "Str" {
+            $file.say: "#?niecza skip 'Str math NYI'";
+        } elsif $type1 eq "DifferentReal" || $type2 eq "DifferentReal" {
+            $file.say: "#?niecza skip 'DifferentReal math NYI'";
+        }
         $file.say: '{';
         $file.say: "    # $type1 vs $type2 tests";
         
