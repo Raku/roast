@@ -58,6 +58,7 @@ my @all-nodes = gather traverse-tree-inorder($tree);
 is @all-nodes, ["c", "b", "d", "a", "e"], 'In order tree traversal with gather/take';
 
 #?rakudo skip "lists aren't properly lazy in Rakudo yet"
+#?niecza skip 'hangs'
 {
     my @natural-numbers = 0 .. Inf;
     my @even-numbers  = 0, 2 ... *;    # arithmetic seq

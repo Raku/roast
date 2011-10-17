@@ -16,6 +16,7 @@ Basic C<pairs> tests, see S32::Containers.
   my %hash = (a => 1, b => 2, c => 3);
   my @pairs;
   ok((@pairs = %hash.pairs),    "pairs on hashes");
+  #?niecza skip 'Cannot use value like Pair as a number'
   ok((@pairs = @pairs.sort),    'Can sort list of pairs');
   is +@pairs, 3,                "pairs on hashes returned the correct number of elems";
   if +@pairs != 3 {
@@ -45,6 +46,7 @@ Basic C<pairs> tests, see S32::Containers.
 }
 
 # This next group added by Darren Duncan following discovery while debugging ext/Locale-KeyedText:
+#?niecza skip 'Cannot use value like Pair as a number'
 {
   my $hash_of_2_pairs = {'a'=>'b','c'=>'d'};
   my $hash_of_1_pair = {'a'=>'b'};

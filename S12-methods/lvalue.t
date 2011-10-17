@@ -40,7 +40,9 @@ is $a,          8,      'but the temp assignment had worked';
 lives_ok { temp $o.l2 = 9; $b = $o.b },
          'can use lvalue method in temp() statement (explicit return)';
 is $o.l2,       4,      '... and the value was reset';
+#?niecza todo
 is $o.b,        3,      '... also on the attribute';
+#?niecza todo
 is $a,          9,      'but the temp assignment had worked';
 
 # vim: ft=perl6

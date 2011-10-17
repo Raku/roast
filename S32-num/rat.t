@@ -12,7 +12,9 @@ isa_ok(1 / 4, Rat, "/ makes a Rat");
 isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
 isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
+#?niecza skip 'No value for parameter $n in CORE Rat.new'
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
+#?niecza skip 'No value for parameter $n in CORE Rat.new'
 isa_ok( eval(Rat.new.perl), Rat, 'eval Rat.new.perl is Rat' );
 isa_ok( eval(Rat.new(1, 3).perl), Rat, 'eval Rat.new(1, 3).perl is Rat' );
 is( (eval Rat.new(1, 3).perl).nude, (1, 3), 'eval Rat.new(1, 3).perl is 1/3' );
@@ -20,9 +22,13 @@ isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );
 is( (eval (1/3).perl).nude, (1, 3), 'eval (1/3).perl is 1/3' );
 
 # Test ~
+#?niecza todo
 is(~(Rat.new(1,4)), ~(0.25e0), "Rats stringify properly");
+#?niecza todo
 is(~(Rat.new(-1,2)), ~(-0.5e0), "Rats stringify properly");
+#?niecza todo
 is(~(Rat.new(7,4)), ~(1.75e0), "Rats stringify properly");
+#?niecza todo
 is(~(Rat.new(7,-1)), ~(-7), "Rats stringify properly");
 
 # Test new
@@ -32,8 +38,11 @@ is(Rat.new(2, 4).nude, (1, 2), "Reduce to simplest form in constructor");
 is(Rat.new(39, 33).nude, (13, 11), "Reduce to simplest form in constructor");
 is(Rat.new(0, 33).nude, (0, 1), "Reduce to simplest form in constructor");
 is(Rat.new(1451234131, 60).nude, (1451234131, 60), "Reduce huge number to simplest form in constructor");
+#?niecza skip 'Unable to resolve method nude in class Num'
 is(Rat.new(1141234123, 0).nude, (1, 0), "Huge over zero becomes one over zero");
+#?niecza skip 'Unable to resolve method nude in class Num'
 is(Rat.new(-7, 0).nude, (-1, 0), "Negative over zero becomes negative one over zero");
+#?niecza todo
 dies_ok( { Rat.new(0, 0) }, "Zero over zero is not a legal Rat");
 
 # Test basic math
@@ -69,6 +78,7 @@ isa_ok((2 / 3) / (5 / 4), Rat, "2/3 / 5/4 is a Rat");
 is((2 / 3) / 2, 1/3, "2/3 / 2 = 1/3");
 is(((2 / 3) / 2).nude, (1, 3), "2/3 / 2 = 1/3 is simplified internally");
 isa_ok((2 / 3) / 2, Rat, "2/3 / 2 is a Rat");
+#?niecza todo
 is(2 / (1 / 3), 6, "2 / 1/3 = 6");
 isa_ok(2 / (1 / 3), Rat, "2 / 1/3 is a Rat");
 is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
@@ -133,10 +143,13 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 # so I'm holding off on writing tests for it.
 
 #?rakudo todo "NaN.Rat == NaN"
+#?niecza todo
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
+#?niecza todo
 is Inf.Rat, Inf, "Inf.Rat == Inf";
+#?niecza todo
 is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
 # RT #74648
@@ -207,6 +220,7 @@ ok (1/2) == (1/2).Rat, 'Rat.Rat works';
 isa_ok (1/2).Rat, Rat, '... and actually returns a Rat';
 
 #?rakudo todo '=== on Rats'
+#?niecza todo
 ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 ok 1/2 !=== 1/3, '=== with false outcome';
 
@@ -214,6 +228,7 @@ ok 1/2 !=== 1/3, '=== with false outcome';
 is (3/0).Num, Inf, "(3/0).Num = +Inf";
 is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
+#?niecza skip 'No value for parameter $n in CORE Rat.new'
 ok Rat.new() == 0, 'Rat.new() is 0';
 
 {

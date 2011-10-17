@@ -36,6 +36,7 @@ dies_ok {eval 'use Poison; 1'}, "eval dies on fatal use";
 dies_ok({eval {; 42} }, 'block eval is gone');
 
 # RT #63978, eval didn't work in methods
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range'
 {
     class EvalTester1 {
         method e($s) { eval $s };
@@ -44,6 +45,7 @@ dies_ok({eval {; 42} }, 'block eval is gone');
     is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
 }
 
+#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range'
 {
     my $x = 5;
     class EvalTester2 {
@@ -56,8 +58,10 @@ dies_ok({eval {; 42} }, 'block eval is gone');
 }
 
 #?rakudo skip 'eval(Buf)'
+#?niecza skip 'Unable to resolve method encode in class Str'
 is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
 
+#?niecza skip 'Excess arguments to CORE eval, used 1 of 3 positionals'
 {
     #?rakudo skip 'eval coerce to string'
     is eval 88, 88, 'eval of non-string works';

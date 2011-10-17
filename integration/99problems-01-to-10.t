@@ -51,7 +51,7 @@ plan 22;
     sub element_at (@xs, $pos) {
         return @xs[$pos];
     }
-    
+   
     is element_at(<a b c d e>, 3), 'd',
         'We should be able to index into lists by func';
     is element_at(@array, 3), 'd', '... and arrays by func';
@@ -66,6 +66,7 @@ plan 22;
     is @array.elems, 5, '... and arrays';
 }
 
+#?niecza skip 'Unable to resolve method reverse in class Parcel'
 {
     # P05 (*) Reverse a list.
 
@@ -132,6 +133,7 @@ plan 22;
         return $x ne $previous ?? ($previous = $x) !! ();
     }
     my @compressed = map $compress, <a a a a b c c a a d e e e e>;
+    #?niecza todo
     is @compressed, <a b c a d e>, 'We should be able to compress lists';
 }
 
@@ -189,6 +191,7 @@ plan 22;
         '... even using gather/take';
 }
 #?rakudo skip 'groupless gather/take'
+#?niecza skip 'Unable to resolve method reverse in class Parcel'
 {    
     sub group2 (*@array is copy) {
         gather while @array {

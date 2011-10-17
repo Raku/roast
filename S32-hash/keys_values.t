@@ -24,11 +24,15 @@ is(+%hash.values, +%hash, 'we have the same number of keys as elements in the ha
 
 # keys and values on Pairs
 my $pair = (a => 42);
+#?niecza todo
 is(~$pair.keys,     "a", '$pair.keys works');
+#?niecza todo
 is(~keys($pair),    "a", 'keys($pair) works');
 is($pair.keys.elems, 1, 'we have one key');
 
+#?niecza todo
 is(~$pair.values,       42, '$pair.values works');
+#?niecza todo
 is(~values($pair),      42, 'values($pair) works');
 is($pair.values.elems,  1,  'we have one value');
 

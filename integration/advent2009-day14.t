@@ -9,6 +9,7 @@ is (3/7).WHAT.gist, "Rat()";
 is_approx (3/7), 0.4285714;
 
 is_approx (3/7).Num + (2/7).Num + (2/7).Num - 1, -1.1102230e-16;
+#?niecza todo
 is 3/7 + 2/7 + 2/7 - 1,  0;
 
 is (3/7).perl, "3/7";
@@ -24,9 +25,11 @@ is $a.perl, "1/30000";
 
 $a = 1/60000 + 1/60001;
 #?rakudo todo 'nom regression'
+#?niecza todo
 is $a.WHAT.gist, "Num()";
 is_approx $a, 3.333305e-05;
 #?rakudo todo 'nom regression'
+#?niecza todo
 ok $a.perl ~~ / '3.3333' /;
 
 

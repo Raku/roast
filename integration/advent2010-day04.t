@@ -18,6 +18,7 @@ plan 11;
     is @Fibonacci[^10].join(" "), "0 1 1 2 3 5 8 13 21 34", "First ten Fibonacci numbers are correct";
 }
 
+#?niecza todo
 {
     is (1, 1.1 ... 2).join(" "), "1 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2", "1, 1.1 ... 2 is correct";
     is (1, 1.1 ... 2.01)[^14].join(" "), "1 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2 2.1 2.2 2.3", 

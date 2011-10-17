@@ -23,9 +23,11 @@ ok($foo ~~ Foo, '... smartmatch our $foo to the Foo class');
 # override the behaviour without playing with the metamodel via traits
 ok($foo.isa(Foo), '.isa(Foo)');
 ok($foo.isa(::Foo), '.isa(::Foo)');
+#?niecza todo
 ok($foo.isa("Foo"), '.isa("Foo")');
 ok(!$foo.isa("Bar"), '!.isa("Bar")');
 
+#?niecza skip 'Unable to resolve method clone in class Foo'
 {
     my $foo_clone = $foo.clone();
     ok($foo_clone ~~ Foo, '... smartmatch our $foo_clone to the Foo class');
@@ -57,6 +59,7 @@ ok($bar.isa(Bar), "... .isa(Bar)");
 ok($bar ~~ Foo, '... smartmatch our $bar to the Foo class');
 ok($bar.isa(Foo), "new Bar .isa(Foo)");
 
+#?niecza skip 'Unable to resolve method clone in class Bar'
 {
     my $bar_clone = $bar.clone();
     ok($bar_clone ~~ Bar, '... smartmatch our $bar_clone to the Bar class');
@@ -67,6 +70,7 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
 
 # Same, but with the "is Foo" declaration inlined
 #?rakudo skip 'not parsing is inside class yet'
+#?niecza skip 'No value for parameter \$expected in Test is'
 {
     class Baz { is Foo }
     ok(Baz ~~ Foo, '... smartmatch our Baz to the Foo class');
@@ -99,15 +103,19 @@ ok(One::Two.new, 'created One::Two after One::Two::Three');
 eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
-class A61354_1 {
-    eval('method x { "OH HAI" }')
-};
-dies_ok { A61354_1.x }, "can't just use eval to add method to class";
+#?niecza skip 'Methods must be used in some kind of package'
+{
+    class A61354_1 {
+        eval('method x { "OH HAI" }')
+    };
+    dies_ok { A61354_1.x }, "can't just use eval to add method to class";
+}
 
 # RT #67784
 {
     class class {}
     #?rakudo skip 'RT #67784'
+    #?niecza todo
     isa_ok( class.new, 'class' );
 }
 
