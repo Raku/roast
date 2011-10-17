@@ -326,8 +326,7 @@ ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 #### <-[d..b]>		bbccdd		/parse error/	illegal character range
 ok ('bbccdd' ~~ /<-[d..b]>/) && matchcheck($/, q/parse error/), 'illegal character range';
 
-#### <[-]>			ab-def		/parse error/	unescaped hyphen
-eval_dies_ok '/<[-]>/', 'unescaped hyphen';
+ok '-' ~~ /<[-]>/, 'unescaped hyphen is fine on its own';
 
 #### <[\-]>			ab-def		y	escaped hyphen
 ok 'ab-def' ~~ /<[\-]>/, 'escaped hyphen';
