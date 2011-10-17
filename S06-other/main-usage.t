@@ -90,7 +90,6 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     'short option with spacey value';
 
 # RT #71366
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
     {
         err     => /\-\-var/,
