@@ -87,181 +87,198 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
 
 {
     # Num tests
-    is_approx(atan2((-0.1).Num), -0.099668652491162, "atan2(Num)");
+    is_approx(atan2((-100).Num), -1.56079666010823, "atan2(Num)");
 }
 
 {
     # Num vs Num tests
-    is_approx((-0.1).Num.atan2((-0.1).Num), -2.35619449019234, "Num.atan2(Num)");
-    is_approx(atan2((1).Num, (-10).Num), 3.04192400109863, "atan2(Num, Num)");
+    is_approx((0.1).Num.atan2((-1).Num), 3.04192400109863, "Num.atan2(Num)");
+    is_approx(atan2((10).Num, (1).Num), 1.47112767430373, "atan2(Num, Num)");
 }
 
 {
     # Num vs Rat tests
-    is_approx((-100).Num.atan2((100).Rat(1e-9)), -0.785398163397448, "Num.atan2(Rat)");
-    is_approx(atan2((-1).Num, (0.1).Rat(1e-9)), -1.47112767430373, "atan2(Num, Rat)");
+    is_approx((-10).Num.atan2((10).Rat(1e-9)), -0.785398163397448, "Num.atan2(Rat)");
+    is_approx(atan2((-100).Num, (0.1).Rat(1e-9)), -1.56979632712823, "atan2(Num, Rat)");
 }
 
 {
     # Num vs Int tests
-    is_approx((-100).Num.atan2((-1).Int), -1.58079599348156, "Num.atan2(Int)");
-    is_approx(atan2((100).Num, (-100).Int), 2.35619449019234, "atan2(Num, Int)");
+    is_approx((-0.1).Num.atan2((-1).Int), -3.04192400109863, "Num.atan2(Int)");
+    is_approx(atan2((0.1).Num, (-100).Int), 3.14059265392313, "atan2(Num, Int)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Num vs Str tests
-    is_approx((100).Num.atan2((-0.1).Str), 1.57179632646156, "Num.atan2(Str)");
-    is_approx(atan2((10).Num, (-100).Str), 3.04192400109863, "atan2(Num, Str)");
+    is_approx((-100).Num.atan2((-1).Str), -1.58079599348156, "Num.atan2(Str)");
+    is_approx(atan2((1).Num, (-100).Str), 3.13159298690313, "atan2(Num, Str)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # Num vs DifferentReal tests
-    is_approx((0.1).Num.atan2(DifferentReal.new(-0.1)), 2.35619449019234, "Num.atan2(DifferentReal)");
-    is_approx(atan2((1).Num, DifferentReal.new(-0.1)), 1.67046497928606, "atan2(Num, DifferentReal)");
+    is_approx((-10).Num.atan2(DifferentReal.new(-1)), -1.67046497928606, "Num.atan2(DifferentReal)");
+    is_approx(atan2((-100).Num, DifferentReal.new(100)), -0.785398163397448, "atan2(Num, DifferentReal)");
 }
 
 {
     # Rat tests
-    is_approx((1).Rat(1e-9).atan2, 0.785398163397448, "Rat.atan2");
-    is_approx(atan2((-0.1).Rat(1e-9)), -0.099668652491162, "atan2(Rat)");
+    is_approx((-1).Rat(1e-9).atan2, -0.785398163397448, "Rat.atan2");
+    is_approx(atan2((-1).Rat(1e-9)), -0.785398163397448, "atan2(Rat)");
 }
 
 {
     # Rat vs Num tests
-    is_approx((1).Rat(1e-9).atan2((0.1).Num), 1.47112767430373, "Rat.atan2(Num)");
-    is_approx(atan2((0.1).Rat(1e-9), (-100).Num), 3.14059265392313, "atan2(Rat, Num)");
+    is_approx((-100).Rat(1e-9).atan2((10).Num), -1.47112767430373, "Rat.atan2(Num)");
+    is_approx(atan2((-100).Rat(1e-9), (-1).Num), -1.58079599348156, "atan2(Rat, Num)");
 }
 
 {
     # Rat vs Rat tests
-    is_approx((100).Rat(1e-9).atan2((100).Rat(1e-9)), 0.785398163397448, "Rat.atan2(Rat)");
-    is_approx(atan2((-1).Rat(1e-9), (-0.1).Rat(1e-9)), -1.67046497928606, "atan2(Rat, Rat)");
+    is_approx((-10).Rat(1e-9).atan2((-0.1).Rat(1e-9)), -1.58079599348156, "Rat.atan2(Rat)");
+    is_approx(atan2((10).Rat(1e-9), (100).Rat(1e-9)), 0.099668652491162, "atan2(Rat, Rat)");
 }
 
 {
     # Rat vs Int tests
-    is_approx((-100).Rat(1e-9).atan2((10).Int), -1.47112767430373, "Rat.atan2(Int)");
-    is_approx(atan2((-100).Rat(1e-9), (10).Int), -1.47112767430373, "atan2(Rat, Int)");
+    is_approx((-100).Rat(1e-9).atan2((-1).Int), -1.58079599348156, "Rat.atan2(Int)");
+    is_approx(atan2((-0.1).Rat(1e-9), (100).Int), -0.000999999666666867, "atan2(Rat, Int)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Rat vs Str tests
-    is_approx((10).Rat(1e-9).atan2((1).Str), 1.47112767430373, "Rat.atan2(Str)");
-    is_approx(atan2((-100).Rat(1e-9), (0.1).Str), -1.56979632712823, "atan2(Rat, Str)");
+    is_approx((-100).Rat(1e-9).atan2((10).Str), -1.47112767430373, "Rat.atan2(Str)");
+    is_approx(atan2((-10).Rat(1e-9), (10).Str), -0.785398163397448, "atan2(Rat, Str)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # Rat vs DifferentReal tests
-    is_approx((-10).Rat(1e-9).atan2(DifferentReal.new(-100)), -3.04192400109863, "Rat.atan2(DifferentReal)");
-    is_approx(atan2((1).Rat(1e-9), DifferentReal.new(0.1)), 1.47112767430373, "atan2(Rat, DifferentReal)");
+    is_approx((0.1).Rat(1e-9).atan2(DifferentReal.new(-10)), 3.13159298690313, "Rat.atan2(DifferentReal)");
+    is_approx(atan2((-10).Rat(1e-9), DifferentReal.new(-0.1)), -1.58079599348156, "atan2(Rat, DifferentReal)");
 }
 
 {
     # Int tests
-    is_approx((100).Int.atan2, 1.56079666010823, "Int.atan2");
-    is_approx(atan2((10).Int), 1.47112767430373, "atan2(Int)");
+    is_approx((-100).Int.atan2, -1.56079666010823, "Int.atan2");
+    is_approx(atan2((100).Int), 1.56079666010823, "atan2(Int)");
 }
 
 {
     # Int vs Num tests
-    is_approx((10).Int.atan2((1).Num), 1.47112767430373, "Int.atan2(Num)");
-    is_approx(atan2((10).Int, (-1).Num), 1.67046497928606, "atan2(Int, Num)");
+    is_approx((-10).Int.atan2((-100).Num), -3.04192400109863, "Int.atan2(Num)");
+    is_approx(atan2((-100).Int, (100).Num), -0.785398163397448, "atan2(Int, Num)");
 }
 
 {
     # Int vs Rat tests
-    is_approx((10).Int.atan2((10).Rat(1e-9)), 0.785398163397448, "Int.atan2(Rat)");
-    is_approx(atan2((-10).Int, (1).Rat(1e-9)), -1.47112767430373, "atan2(Int, Rat)");
+    is_approx((1).Int.atan2((10).Rat(1e-9)), 0.099668652491162, "Int.atan2(Rat)");
+    is_approx(atan2((100).Int, (1).Rat(1e-9)), 1.56079666010823, "atan2(Int, Rat)");
 }
 
 {
     # Int vs Int tests
-    is_approx((10).Int.atan2((-10).Int), 2.35619449019234, "Int.atan2(Int)");
+    is_approx((100).Int.atan2((10).Int), 1.47112767430373, "Int.atan2(Int)");
     is_approx(atan2((1).Int, (-100).Int), 3.13159298690313, "atan2(Int, Int)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Int vs Str tests
-    is_approx((-10).Int.atan2((100).Str), -0.099668652491162, "Int.atan2(Str)");
-    is_approx(atan2((100).Int, (100).Str), 0.785398163397448, "atan2(Int, Str)");
+    is_approx((-1).Int.atan2((100).Str), -0.00999966668666524, "Int.atan2(Str)");
+    is_approx(atan2((100).Int, (0.1).Str), 1.56979632712823, "atan2(Int, Str)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # Int vs DifferentReal tests
-    is_approx((1).Int.atan2(DifferentReal.new(1)), 0.785398163397448, "Int.atan2(DifferentReal)");
-    is_approx(atan2((-100).Int, DifferentReal.new(0.1)), -1.56979632712823, "atan2(Int, DifferentReal)");
+    is_approx((1).Int.atan2(DifferentReal.new(-10)), 3.04192400109863, "Int.atan2(DifferentReal)");
+    is_approx(atan2((-1).Int, DifferentReal.new(10)), -0.099668652491162, "atan2(Int, DifferentReal)");
 }
 
 {
     # Str tests
-    is_approx((100).Str.atan2, 1.56079666010823, "Str.atan2");
-    is_approx(atan2((0.1).Str), 0.099668652491162, "atan2(Str)");
+    is_approx((-100).Str.atan2, -1.56079666010823, "Str.atan2");
+    is_approx(atan2((1).Str), 0.785398163397448, "atan2(Str)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Str vs Num tests
-    is_approx((10).Str.atan2((1).Num), 1.47112767430373, "Str.atan2(Num)");
-    is_approx(atan2((-100).Str, (1).Num), -1.56079666010823, "atan2(Str, Num)");
+    is_approx((-100).Str.atan2((0.1).Num), -1.56979632712823, "Str.atan2(Num)");
+    is_approx(atan2((-100).Str, (-1).Num), -1.58079599348156, "atan2(Str, Num)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Str vs Rat tests
-    is_approx((-10).Str.atan2((-0.1).Rat(1e-9)), -1.58079599348156, "Str.atan2(Rat)");
-    is_approx(atan2((100).Str, (1).Rat(1e-9)), 1.56079666010823, "atan2(Str, Rat)");
+    is_approx((-1).Str.atan2((0.1).Rat(1e-9)), -1.47112767430373, "Str.atan2(Rat)");
+    is_approx(atan2((-100).Str, (-10).Rat(1e-9)), -1.67046497928606, "atan2(Str, Rat)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Str vs Int tests
-    is_approx((-0.1).Str.atan2((1).Int), -0.099668652491162, "Str.atan2(Int)");
-    is_approx(atan2((-1).Str, (100).Int), -0.00999966668666524, "atan2(Str, Int)");
+    is_approx((10).Str.atan2((-100).Int), 3.04192400109863, "Str.atan2(Int)");
+    is_approx(atan2((-0.1).Str, (100).Int), -0.000999999666666867, "atan2(Str, Int)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Str vs Str tests
-    is_approx((-1).Str.atan2((0.1).Str), -1.47112767430373, "Str.atan2(Str)");
-    is_approx(atan2((0.1).Str, (-0.1).Str), 2.35619449019234, "atan2(Str, Str)");
+    is_approx((100).Str.atan2((1).Str), 1.56079666010823, "Str.atan2(Str)");
+    is_approx(atan2((10).Str, (-100).Str), 3.04192400109863, "atan2(Str, Str)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # Str vs DifferentReal tests
-    is_approx((-100).Str.atan2(DifferentReal.new(-10)), -1.67046497928606, "Str.atan2(DifferentReal)");
-    is_approx(atan2((100).Str, DifferentReal.new(-10)), 1.67046497928606, "atan2(Str, DifferentReal)");
+    is_approx((-1).Str.atan2(DifferentReal.new(-0.1)), -1.67046497928606, "Str.atan2(DifferentReal)");
+    is_approx(atan2((-1).Str, DifferentReal.new(0.1)), -1.47112767430373, "atan2(Str, DifferentReal)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # DifferentReal tests
-    is_approx(DifferentReal.new(1).atan2, 0.785398163397448, "DifferentReal.atan2");
-    is_approx(atan2(DifferentReal.new(-1)), -0.785398163397448, "atan2(DifferentReal)");
+    is_approx(DifferentReal.new(0.1).atan2, 0.099668652491162, "DifferentReal.atan2");
+    is_approx(atan2(DifferentReal.new(-10)), -1.47112767430373, "atan2(DifferentReal)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # DifferentReal vs Num tests
-    is_approx(DifferentReal.new(-1).atan2((0.1).Num), -1.47112767430373, "DifferentReal.atan2(Num)");
-    is_approx(atan2(DifferentReal.new(-10), (100).Num), -0.099668652491162, "atan2(DifferentReal, Num)");
+    is_approx(DifferentReal.new(-1).atan2((-100).Num), -3.13159298690313, "DifferentReal.atan2(Num)");
+    is_approx(atan2(DifferentReal.new(10), (100).Num), 0.099668652491162, "atan2(DifferentReal, Num)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # DifferentReal vs Rat tests
-    is_approx(DifferentReal.new(-100).atan2((-10).Rat(1e-9)), -1.67046497928606, "DifferentReal.atan2(Rat)");
-    is_approx(atan2(DifferentReal.new(-100), (1).Rat(1e-9)), -1.56079666010823, "atan2(DifferentReal, Rat)");
+    is_approx(DifferentReal.new(-0.1).atan2((-1).Rat(1e-9)), -3.04192400109863, "DifferentReal.atan2(Rat)");
+    is_approx(atan2(DifferentReal.new(0.1), (10).Rat(1e-9)), 0.00999966668666524, "atan2(DifferentReal, Rat)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # DifferentReal vs Int tests
-    is_approx(DifferentReal.new(-1).atan2((10).Int), -0.099668652491162, "DifferentReal.atan2(Int)");
-    is_approx(atan2(DifferentReal.new(-1), (-100).Int), -3.13159298690313, "atan2(DifferentReal, Int)");
+    is_approx(DifferentReal.new(1).atan2((1).Int), 0.785398163397448, "DifferentReal.atan2(Int)");
+    is_approx(atan2(DifferentReal.new(1), (1).Int), 0.785398163397448, "atan2(DifferentReal, Int)");
 }
 
+#?niecza skip 'Str math NYI'
 {
     # DifferentReal vs Str tests
-    is_approx(DifferentReal.new(1).atan2((1).Str), 0.785398163397448, "DifferentReal.atan2(Str)");
-    is_approx(atan2(DifferentReal.new(-1), (-0.1).Str), -1.67046497928606, "atan2(DifferentReal, Str)");
+    is_approx(DifferentReal.new(-100).atan2((100).Str), -0.785398163397448, "DifferentReal.atan2(Str)");
+    is_approx(atan2(DifferentReal.new(-0.1), (10).Str), -0.00999966668666524, "atan2(DifferentReal, Str)");
 }
 
+#?niecza skip 'DifferentReal math NYI'
 {
     # DifferentReal vs DifferentReal tests
-    is_approx(DifferentReal.new(-100).atan2(DifferentReal.new(-100)), -2.35619449019234, "DifferentReal.atan2(DifferentReal)");
-    is_approx(atan2(DifferentReal.new(10), DifferentReal.new(1)), 1.47112767430373, "atan2(DifferentReal, DifferentReal)");
+    is_approx(DifferentReal.new(100).atan2(DifferentReal.new(-0.1)), 1.57179632646156, "DifferentReal.atan2(DifferentReal)");
+    is_approx(atan2(DifferentReal.new(-100), DifferentReal.new(10)), -1.47112767430373, "atan2(DifferentReal, DifferentReal)");
 }
 
 done;
