@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 128;
+plan 129;
 
 # L<S05/Substitution/>
 
@@ -386,6 +386,15 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     $_ = 'foo';
     s/f(.)/b$0/;
     is $_, 'boo', 'can use $0 in RHS of s///';
+}
+
+# RT #76664
+{
+    class SubstInsideMethod {
+        method ro($_ ) { s/c// }
+    }
+    
+    dies_ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
 }
 
 # vim: ft=perl6
