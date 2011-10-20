@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 2;
+plan 4;
 
 {
     my $tracker = '';
@@ -18,4 +18,12 @@ plan 2;
         $tracker ~= $x;
     }
     is $tracker, '42', 'unpacking attribute of custom class';
+}
+
+{
+    multi f((Int :$value, *%)) { "Int $value" }
+    multi f((Str :$value, *%)) { "Str $value" }
+    is f('a' =>  3 ), 'Int 3', 'typed Pair unpackaing (Int)';
+    is f('a' => 'x'), 'Str x', 'typed Pair unpackaing (Str)';
+
 }
