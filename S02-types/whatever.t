@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 75;
+plan 77;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -255,6 +255,10 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     is *.&f.('a'), 'aa', '*.&sub curries';
 }
 
-done;
+# RT #77000
+{
+    isa_ok *[0], WhateverCode, '*[0] curries';
+    is *[0]([1, 2, 3]), 1, '... it works';
+}
 
 # vim: ft=perl6
