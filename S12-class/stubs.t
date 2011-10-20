@@ -13,6 +13,7 @@ eval_lives_ok q[ module StubC { ... }; module StubC { sub foo { } }; ],
               'Can stub a module, and later on declare it';
 
 #?niecza skip 'broken in nom-derived stub model'
+#?rakudo todo 'nom regression'
 eval_lives_ok q[ package StubD { ... }; class StubD { method foo { } }; ],
               'Can stub a package, and later on implement it as a method';
 
@@ -20,6 +21,7 @@ eval_lives_ok q[ package StubD { ... }; class StubD { method foo { } }; ],
 
 lives_ok { sub {...} }, 'not execued stub code is fine';
 dies_ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
+#?rakudo todo 'nom regression'
 dies_ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 # vim: ft=perl6

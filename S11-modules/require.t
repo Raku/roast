@@ -11,7 +11,6 @@ lives_ok { require Fancy::Utilities; },
 is Fancy::Utilities::lolgreet('me'),
    'O HAI ME', 'can call our-sub from required module';
 
-#?rakudo todo 'write a simpler test'
 lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
 
 # vim: ft=perl6
