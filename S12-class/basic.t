@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 =begin pod
 
@@ -131,4 +131,10 @@ eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
 # RT 65022
 eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
+
+# RT #76270
+{
+    my $x = class Named { };
+    isa_ok $x, Named, 'named class declaration returns the class object';
+}
 # vim: ft=perl6
