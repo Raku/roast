@@ -3,7 +3,7 @@ use Test;
 
 # L<S06/Optional parameters/>
 
-plan 23;
+plan 24;
 
 sub opt1($p?) { defined($p) ?? $p !! 'undef'; }
 
@@ -92,6 +92,15 @@ eval_dies_ok 'sub opt($a = 1, $b) { }',
         'optional param with type constraints gets the right value';
     sub opt-type2(Int $x = 'str') { };
     dies_ok { eval('opt-type2()') }, 'default values are type-checked';
+}
+
+# RT # 76728
+{
+    sub opt-hash(%h?) {
+        %h<a> = 'b';
+        %h
+    }
+    is opt-hash().keys, 'a', 'can assign to optional parameter';
 }
 
 # vim: ft=perl6
