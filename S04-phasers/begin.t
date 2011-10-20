@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # the boundary between run time and compile time is hard to implement right.
 # Some of those tests might look trivial, but nearly all of them are based
@@ -48,4 +48,19 @@ plan 8;
     my $code;
     BEGIN { $code = sub { 'returnvalue' } }
     is $code(), 'returnvalue', 'Can execute an anonymous sub return from BEGIN';
+}
+
+{
+    my $tracker = '';
+    try {
+        eval q[
+            BEGIN { $tracker = "begin" }
+            $tracker = "run";
+            # syntax error (two terms in a row):
+            1 1
+        ];
+    }
+    is $tracker, 'begin',
+        'BEGIN block was executed before a parse error happened later in the file';
+
 }
