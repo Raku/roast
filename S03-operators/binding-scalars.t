@@ -11,7 +11,7 @@ These tests are derived from the "Item assignment precedence" section of Synopsi
 
 =end head1
 
-plan 29;
+plan 30;
 
 # Basic scalar binding tests
 {
@@ -144,6 +144,13 @@ plan 29;
 {
     my $x := 1, 2;
     is $x.join, '12', 'binding has same precdence as list assignment'
+}
+
+# RT #76508
+{
+    my $a := 2;
+    $a := $a;
+    is $a, 2, 'can bind variable to itself (no-oop)';
 }
 
 # vim: ft=perl6
