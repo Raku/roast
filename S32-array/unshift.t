@@ -9,7 +9,7 @@ Unshift tests
 
 =end description
 
-plan 55;
+plan 56;
 
 # basic unshift tests
 
@@ -155,6 +155,12 @@ plan 55;
     ++@a[0];
 
     is $x, 1, '$x isn\'t affected by changes to new element created by unshift(@a, $x)';
+}
+
+{
+    my @a = <b c>;
+    @a.unshift(0);
+    is @a.join(','), '0,b,c', 'can unshift an element that boolifies to False';
 }
 
 # vim: ft=perl6
