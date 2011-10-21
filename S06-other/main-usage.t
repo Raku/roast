@@ -7,6 +7,9 @@ BEGIN { @*INC.push: 't/spec/packages' }
 
 use Test::Util;
 
+
+# Basic functionality
+
 is_run 'sub MAIN($x) { }; sub USAGE() { print "USAGE() called" }',
     {
         out => 'USAGE() called',
