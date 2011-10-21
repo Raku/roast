@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 117;
+plan 118;
 
 # L<S32::Str/Str/=item substr>
 
@@ -356,6 +356,8 @@ sub p (Int $a) {  my $p = $a; return $p }
     is("hello »« foo".substr(6, p(2)), "»«", ".substr on unicode string (substr(Int, StrPos)).");
     is("שיעבוד כבר".substr(4, p(4)), "וד כ", ".substr on Hebrew text (substr(Int, StrPos)).");
 }
+
+eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 
 # vim: ft=perl6
