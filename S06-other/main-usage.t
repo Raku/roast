@@ -87,7 +87,6 @@ is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
     :args['param', '--var'],
     'Non Bool option last with no value';
 
-#?rakudo todo 'nom regression'
 is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
     {
         out     => "a: param, optional: True\n",
