@@ -45,6 +45,7 @@ ok !defined(%*ENV<PUGS_ROCKS>), "there's still no env variable 'PUGS_ROCKS'";
 
 my ($redir,$squo) = (">", "'");
 
+# RT #77906 - can we modify the ENV?
 my $expected = 'Hello from subprocess';
 %*ENV<PUGS_ROCKS> = $expected;
 # Note that the "?" preceding the "(" is necessary, because we need a Bool,
