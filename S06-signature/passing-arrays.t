@@ -34,6 +34,7 @@ plan 11;
     dies_ok { eval('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
+    #?niecza todo
     dies_ok { eval('ph(3)') }, 'an Int is not a Hash';
 }
 

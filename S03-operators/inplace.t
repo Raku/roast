@@ -18,13 +18,10 @@ plan 28;
 #?rakudo todo 'nom regression'
 {
     my @b = <foo 123 bar 456 baz>;
-    #?niecza todo
     lives_ok { @b.=grep(/<[a..z]>/)},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
-    #?niecza todo
     is @b[1], 'bar', 'inplace grep [1]';
-    #?niecza todo
     is @b[2], 'baz', 'inplace grep [2]';
 }
 
