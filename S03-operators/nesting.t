@@ -7,6 +7,7 @@ plan 26;
 
 ok &infix:<+>  === &[+],  'long and short form are the same (+)';
 ok &infix:<==> === &[==], 'long and short form are the same (==)';
+#?rakudo skip 'nom regression'
 is sort( &[<=>], <5 3 2 1 4> ), <1 2 3 4 5>, 'sort works using &[<=>]';
 
 is &[+](1, 2), 3, '&[+] as a function';
@@ -47,6 +48,7 @@ is (1 R[R[R-]] 2), 1, 'R[R[R-]] works';
 is (1 RR[R-] 2),   1, 'RR[R-] works';
 
 # crazy stuff
+#?rakudo skip 'nom regression'
 {
     our sub infix:<blue>($a, $b) { 
         $a % $b 

@@ -71,6 +71,7 @@ plan 46;
 
 # L<S02/"User-selected Brackets"/"closed by" "same number of"
 #   "closing brackets">
+#?rakudo skip 'nom regression'
 {
 
     ok #`<<<

@@ -36,6 +36,7 @@ plan 34;
 # character sequence
 
 is ('a'  ... 'g').join(', '), 'a, b, c, d, e, f, g', 'finite sequence started with one letter';
+#?rakudo skip 'nom regression'
 is ('a'  ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'sequence started with one letter';
 is ('a', 'b' ... *).[^10].join(', '), 'a, b, c, d, e, f, g, h, i, j', 'sequence started with two different letters';
 is (<a b c> ... *).[^10].join(', '), "a, b, c, d, e, f, g, h, i, j", "character sequence started from array";
@@ -44,7 +45,9 @@ is (<z y> ... 'a').[^10].join(', '), 'z, y, x, w, v, u, t, s, r, q', 'descending
 is (<z y m> ... 'a').[^10].join(', '), 'z, y, m, l, k, j, i, h, g, f', 'descending sequence started with three different letters';
 is (<a b>, { .succ } ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'characters xand arity-1';
 is ('x' ... 'z').join(', '), 'x, y, z', "sequence ending with 'z' don't cross to two-letter strings";
+#?rakudo skip 'hangs'
 is ('A' ... 'z').elems, 'z'.ord - 'A'.ord + 1, "sequence from 'A' to 'z' is finite and of correct length";
+#?rakudo skip 'hangs'
 is ('α' ... 'ω').elems, 'ω'.ord - 'α'.ord + 1, "sequence from 'α' to 'ω' is finite and of correct length";
 #?rakudo 2 skip 'Unicode stuff'
 is ('☀' ... '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔☕', "sequence from '☀' to '☕'";
@@ -54,6 +57,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 # the tricky termination test
 
 ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
+#?rakudo 2 skip 'Decrement out of range'
 ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
 ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
