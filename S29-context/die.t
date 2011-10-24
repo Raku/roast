@@ -13,6 +13,7 @@ Tests for the die() builtin
 =end pod
 
 {
+    #?rakudo todo 'nom regression'
     ok( !defined( try { die "foo"; 1; } ), 'die in try cuts off execution');
     my $error = $!;
     is($error, 'foo', 'got $! correctly');
@@ -45,7 +46,7 @@ is ({ try { if 1 { die } else { die } }; 42 }()), 42, "die in if";
 my sub die_in_return () { return die };
 is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
 
-#?rakudo todo 'RT #67374'
+#?rakudo skip 'RT #67374'
 {
     eval 'die "bughunt"';
     my $error = "$!";
