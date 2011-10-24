@@ -14,11 +14,8 @@ Tests C<CATCH> blocks.
 
 # L<S04/"Exception handlers"/If you define a CATCH block within the try, it replaces the default CATCH>
 
-#?rakudo 2 todo 'empty CATCH block'
 dies_ok { die 'blah'; CATCH {} }, 'Empty CATCH rethrows exception';
 dies_ok { try {die 'blah'; CATCH {}} }, 'CATCH in try overrides default exception handling';
-
-
 
 # L<S04/"Exception handlers"/any block can function as a try block if you put a CATCH block within it>
 
@@ -69,7 +66,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
     ok(!$not_died, "did not live after death");
     #?pugs 1 todo
-    #?rakudo todo 'smart matching against exception'
     ok($caught, "caught exception of class Naughty");
 };
 
@@ -80,7 +76,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
     my ($other, $naughty);
     {
-        die Naughty::Specific("error");
+        die Naughty::Specific.new();
 
         CATCH {
             when Naughty::Other {
@@ -103,6 +99,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     class Dandy is Exception {};
 
     my ($naughty, $lived);
+    try {
         {
             die Dandy.new();
 
@@ -113,26 +110,26 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
             }
         };
         $lived = 1;
-
-    #?rakudo todo 'smart matching in CATCH'
+    }
+    
     ok(!$lived, "did not live past uncaught throw");
     ok(!$naughty, "did not get caught by wrong handler");
     ok(WHAT($!).gist, '$! is an object');
     #?pugs skip 'bug'
-    #?rakudo todo 'Exception types'
     is(WHAT($!).gist, Dandy.gist, ".. of the right class");
 };
 
-#?rakudo skip 'loops'
 {
     my $s = '';
-    die 3;
-    CATCH {
-        when 1 {$s ~= 'a';}
-        when 2 {$s ~= 'b';}
-        when 3 {$s ~= 'c';}
-        when 4 {$s ~= 'd';}
-        default {$s ~= 'z';}
+    {
+        die 3;
+        CATCH {
+            when 1 {$s ~= 'a';}
+            when 2 {$s ~= 'b';}
+            when 3 {$s ~= 'c';}
+            when 4 {$s ~= 'd';}
+            default {$s ~= 'z';}
+        }
     }
 
     is $s, 'c', 'Caught number';
@@ -165,7 +162,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
         };
     }
 
-    #?rakudo 2 todo 'CATCH block catching its own exceptions (RT #64262)'
     is $catches, 1, "CATCH doesn't catch exceptions thrown in its own lexical scope";
 
     $catches = 0;
