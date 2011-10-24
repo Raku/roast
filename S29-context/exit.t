@@ -16,7 +16,6 @@ is_run 'say 3; exit 5; say 5',
     { out => "3\n", err => "", status => 5 },
     'exit 5; works';
 
-#?rakudo todo 'try { } catches exit'
 is_run 'say 3; try { exit 5 }; say 5',
     { out => "3\n", err => "", status => 5 },
     'try-block does not catch exit exceptions';
