@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 84;
+plan 85;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -311,6 +311,12 @@ plan 84;
 {
     sub foo(Int :$n) { $n }
     ok foo(n => 1|2) ~~ Junction, 'named-only params autothread correctly';
+}
+
+# test that junctions doen't flatten ranges
+# RT #76422
+{
+    ok ((1..42) | (8..35)).max == 42, 'infix | does not flatten ranges';
 }
 
 # vim: ft=perl6
