@@ -90,7 +90,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 
     ok(!$other, "did not catch sibling error class");
     #?pugs 1 todo
-    #?rakudo todo 'smart matching against exception'
     ok($naughty, "caught superclass");
 };
 
