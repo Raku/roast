@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S12/Private methods/"Private methods are declared using">
 
@@ -78,6 +78,18 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
     is $b.public2, 18, 'can call role shared private methods';
     #?rakudo todo 'role private methods - spec?'
     dies_ok { $b.public3() }, 'can not call role privaate methods scoped with my';
+}
+
+# RT #101964
+{
+    class RT101964 {
+        has @!c;
+        method foo { self!bar(@!c) }
+        method !bar(@r) {
+            'OH HAI';
+        }
+    }
+    is RT101964.new.foo, 'OH HAI', 'can pass private array attribute to private method param';
 }
 
 # vim: syn=perl6
