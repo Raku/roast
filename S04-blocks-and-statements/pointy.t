@@ -46,8 +46,8 @@ my $s = -> {
 };
 try { $s.() };
 #?pugs todo 'feature'
-#?rakudo 2 todo 'pointy blocks and last/redo'
 ok(!defined($!), 'pointy with block control exceptions');
+#?rakudo todo 'pointy blocks and last/redo'
 is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
