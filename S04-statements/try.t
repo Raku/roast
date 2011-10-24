@@ -108,10 +108,12 @@ plan 18;
     try {
         ().abc;
         CATCH {
-            $str ~= 'A';
-            if 'foo' ~~ /foo/ {
-                $str ~= 'B';
-                $str ~= $/;
+            default {
+                $str ~= 'A';
+                if 'foo' ~~ /foo/ {
+                    $str ~= 'B';
+                    $str ~= $/;
+                }
             }
         }
     }
