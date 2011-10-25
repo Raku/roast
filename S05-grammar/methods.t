@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 5;
 
 grammar WithMethod {
     rule TOP { 'lorem' | <.panic> }
@@ -21,4 +21,9 @@ grammar WithOuterLex {
 WithOuterLex.parse('xxx');
 is $x, 42, 'regex in a grammar can see outer lexicals';
 
-done;
+grammar WithAttrib {
+    has Str $.sep;
+}
+# RT #73680
+is WithAttrib.new(sep => ',').sep, ',', 'attributes work in grammars too';
+isa_ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
