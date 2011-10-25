@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 17;
 
 {
     my int $x;
@@ -46,6 +46,19 @@ plan 15;
     is $int * $Int, 12, 'can do math with mixed native/boxed ints';
     is_approx $num * $Num, 30e0, 'can do math with mixed native/boxed nums';
     is $str ~ $Str, '78', 'can concatenate native and boxed strings';
+}
+
+{
+    # these tests are a bit pointless, since is() already shows that boxing
+    # works. Still doesn't hurt to test it with explicit type constraints
+    sub g(Int $x) { $x * 2 }
+    my int $i = 21;
+    is g($i), 42, 'routine-entry int autoboxing';
+
+    sub h(int $x) { $x div 2 }
+    my Int $I = 84;
+    #?rakudo skip 'Cannot unbox argument to $x'
+    is h($I), 42, 'routine-entry Int autounboxing';
 }
 
 # vim: ft=perl6
