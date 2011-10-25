@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 49;
+plan 51;
 
 =begin pod
 
@@ -304,5 +304,9 @@ Tests the given block, as defined in L<S04/"Switch statements">
     }
     is $tracker, 2, 'statement-modifying when';
 }
+
+# RT #78234
+eval_lives_ok 'given 3 { sub a() { } }', 'can define a sub inside a given';
+eval_lives_ok 'sub a() { } given 3',     'can define a sub inside a statement-modifying given';
 
 # vim: ft=perl6
