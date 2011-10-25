@@ -35,7 +35,6 @@ plan 40;
 
 # state() inside coderefs
 # L<S04/Phasers/"semantics to any initializer, so this also works">
-#?rakudo todo 'nom regression'
 #?DOES 1
 {
     my $gen = {
@@ -114,7 +113,6 @@ plan 40;
         state $x = do { $rhs_calls++ }    #OK not used
     }
     impure_rhs() for 1..3;
-    #?rakudo todo 'nom regression'
     is $rhs_calls, 1, 'RHS of state $x = ... only called once';
 }
 
@@ -218,12 +216,10 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
     };
 
     is(step().join('|'), "43|41", "chained state (1)");
-    #?rakudo todo 'nom regression'
     is(step().join('|'), "44|40", "chained state (2)");
 }
 
 # state in cloned closures
-#?rakudo skip 'nom regression'
 #?DOES 4
 {
     for <first second> {
@@ -239,7 +235,6 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 
 # state with multiple explicit calls to clone - a little bit subtle
 #?niecza skip "there is no Sub.clone"
-#?rakudo skip 'nom regression'
 #?DOES 3
 {
     my $i = 0;
