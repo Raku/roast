@@ -57,7 +57,6 @@ plan 17;
 
     sub h(int $x) { $x div 2 }
     my Int $I = 84;
-    #?rakudo skip 'Cannot unbox argument to $x'
     is h($I), 42, 'routine-entry Int autounboxing';
 }
 
