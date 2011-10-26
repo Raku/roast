@@ -60,7 +60,6 @@ plan 22;
     is h($I), 42, 'routine-entry Int autounboxing';
 }
 
-#?rakudo skip 'RT #102244'
 {
     my int $x = 2;
     is $x.gist, 2, 'can call method on a native int';
