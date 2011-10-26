@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 22;
 
 {
     my int $x;
@@ -69,7 +69,9 @@ plan 21;
 }
 
 # methods on native type objects
+# RT #102256
 {
+    isa_ok int, Mu, 'int ~~ Mu';
     is num.gist, 'num()', 'num.gist';
     nok str.defined, 'str.defined';
 }
