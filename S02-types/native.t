@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 21;
 
 {
     my int $x;
@@ -62,9 +62,16 @@ plan 18;
 
 #?rakudo skip 'RT #102244'
 {
-    my int $x;
+    my int $x = 2;
+    is $x.gist, 2, 'can call method on a native int';
     my $gist = ($x = 3).gist;
     is $gist, 3, 'Can call a method on the result of assignment to int-typed var';
+}
+
+# methods on native type objects
+{
+    is num.gist, 'num()', 'num.gist';
+    nok str.defined, 'str.defined';
 }
 
 # vim: ft=perl6
