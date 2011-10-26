@@ -42,16 +42,19 @@ is_approx( (eval (1+0i).perl), 1, 'eval (1+0i).perl is 1' );
 isa_ok( eval((3i).perl), Complex, 'eval (3i).perl is Complex' );
 is_approx( (eval (3i).perl), 3i, 'eval (3i).perl is 3i' );
 
-ok (1+0i).Real ~~ Real, "(1+0i).Real is a Real";
-is (1+0i).Real, 1, "(1+0i).Real is 1";
-isa_ok (1.2+0i).Int, Int, "(1.2+0i).Int is an Int";
-is (1.2+0i).Int, 1, "(1.2+0i).Int is 1";
-isa_ok (1.2.sin+0i).Rat, Rat, "(1.2.sin+0i).Rat is an Rat";
-is_approx (1.2.sin+0i).Rat, 1.2.sin, "(1.2.sin+0i).Rat is 1.2.sin";
-isa_ok (1.2+0i).Num, Num, "(1.2+0i).Num is an Num";
-is_approx (1.2+0i).Num, 1.2, "(1.2+0i).Num is 1.2";
-isa_ok (1.2+1i).Complex, Complex, "(1.2+1i).Complex is an Complex";
-is_approx (1.2+1i).Complex, 1.2+1i, "(1.2+1i).Complex is 1.2+1i";
+#?niecza skip "NYI"
+{
+    ok (1+0i).Real ~~ Real, "(1+0i).Real is a Real";
+    is (1+0i).Real, 1, "(1+0i).Real is 1";
+    isa_ok (1.2+0i).Int, Int, "(1.2+0i).Int is an Int";
+    is (1.2+0i).Int, 1, "(1.2+0i).Int is 1";
+    isa_ok (1.2.sin+0i).Rat, Rat, "(1.2.sin+0i).Rat is an Rat";
+    is_approx (1.2.sin+0i).Rat, 1.2.sin, "(1.2.sin+0i).Rat is 1.2.sin";
+    isa_ok (1.2+0i).Num, Num, "(1.2+0i).Num is an Num";
+    is_approx (1.2+0i).Num, 1.2, "(1.2+0i).Num is 1.2";
+    isa_ok (1.2+1i).Complex, Complex, "(1.2+1i).Complex is an Complex";
+    is_approx (1.2+1i).Complex, 1.2+1i, "(1.2+1i).Complex is 1.2+1i";
+}
 
 # MUST: test .Str
 
