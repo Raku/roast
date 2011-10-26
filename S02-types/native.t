@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 {
     my int $x;
@@ -58,6 +58,13 @@ plan 17;
     sub h(int $x) { $x div 2 }
     my Int $I = 84;
     is h($I), 42, 'routine-entry Int autounboxing';
+}
+
+#?rakudo skip 'RT #102244'
+{
+    my int $x;
+    my $gist = ($x = 3).gist;
+    is $gist, 3, 'Can call a method on the result of assignment to int-typed var';
 }
 
 # vim: ft=perl6
