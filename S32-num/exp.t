@@ -49,8 +49,8 @@ is_approx(exp(-1i*$pi), -1, 'exp(-i $pi) == -1');
 
 is_approx(exp(5, 2), 32, 'got 32');
 is_approx(exp(0, 2), 1, 'exp(0, 2) == 1');
-#?niecza todo "niecza says Infinitey when we're looking for Inf"
 is_approx(exp(-1, 2),  1/2, '1/2 is correct');
+#?niecza todo "niecza says Infinitey when we're looking for Inf"
 is(exp(Inf, 2), 'Inf', 'exp(Inf) == Inf');
 is(exp(-Inf, 2), 0, 'exp(-Inf) == 0');
 is(exp(NaN, 2), NaN, 'exp(NaN) == NaN');
