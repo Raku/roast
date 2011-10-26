@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 22;
 
 class Parent {
     has $.x;
@@ -95,6 +95,16 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     is_deeply [ $bar.a1, $bar.a2 ],
         [3, "yoohoo"],
         'multi-constructor class alternate default named constructor';
+}
+
+# RT #68558
+{
+    class RT68558 {
+        has $.foo;
+        method new($foo) { nextwith(:$foo) }
+    }
+    is RT68558.new('x').foo, 'x', 'Can call nextwith in .new';
+
 }
 
 done;
