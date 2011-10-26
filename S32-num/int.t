@@ -77,10 +77,12 @@ ok 42.Bool, "42.Bool is true";
 isa_ok 42.Bool, Bool, "42.Bool is Bool";
 
 is('-1.999'.Int, -1, "int('-1.999') is -1");
+#?niecza 3 skip "0x, 0d, and 0o NYI"
 is('0x123'.Int, 0x123, "int('0x123') is 0x123");
 is('0d456'.Int, 0d456, "int('0d456') is 0d456");
 #?rakudo 2 skip "trailing characters produce failures"
 is('0o678'.Int, 0o67, "int('0o678') is 0o67");
+#?niecza skip "trailing d produces a failure"
 is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 
 {
@@ -93,9 +95,9 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
     # Check the defaulting to $_
 
     for 0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6, -1, -50, -60.0, -99.99 {
-        my $int = __int($_);
+        my $int = __int($_.Num);
         is(.Int, $int, "integral value for $_ is $int");
-        isa_ok(.Int, "Int");
+        isa_ok(.Int, Int);
     }
 }
 
@@ -104,6 +106,7 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
 #?rakudo 3 todo 'Inf and NaN NYI for Int'
+#?niecza 3 todo 'Inf and NaN NYI for Int'
 is((Inf).Int,    Inf, "int Inf is Inf");
 is((-Inf).Int,  -Inf, "int -Inf is -Inf");
 is((NaN).Int,    NaN, "int NaN is NaN");
