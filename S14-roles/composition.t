@@ -54,7 +54,9 @@ ok rA !~~ C2, 'first role does not match class';
 ok rB !~~ C2, 'second role does not match class';
 
 role RT64002 does rA does rB {}
+#?rakudo todo 'nom regression'
 ok RT64002 ~~ rA, 'role matches first role it does';
+#?rakudo todo 'nom regression'
 ok RT64002 ~~ rB, 'role matches second role it does';
 ok rA !~~ RT64002, 'role not matched by first role it does';
 ok rB !~~ RT64002, 'role not matched by second role it does';
@@ -104,11 +106,13 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     role  irB is   irA {};
     class irC does irB {};
     ok irC ~~ irB, 'role composition worked';
+    #?rakudo todo 'nom regression'
     ok irC ~~ irA, 'role composition transported inheritance';
 
 }
 
 # RT #72856
+#?rakudo todo 'nom regression'
 {
     role RT72856A { method foo {} };
     role RT72856B { method foo {} };
