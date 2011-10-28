@@ -20,10 +20,8 @@ plan 64;
     is @array[0], "a",
         ":p on an array returns lvalues (like normal subscripts do as well)";
 
-    #?niecza skip 'Cannot use value like Pair as a number'
     is +(@array[0,1]:p), 2,
         ":p on an array returned a two-elem array";
-    #?niecza todo
     is ~(@array[0,1]:p), "0\ta 1\tB",
         ":p on an array returned a two-elem array consisting of the correct pairs";
 
@@ -49,7 +47,6 @@ plan 64;
     #?niecza todo
     is +(@array[0,1]:kv), 4,
         ":kv on an array returned a four-elem array";
-    #?niecza todo
     is ~(@array[0,1]:kv), "0 a 1 B",
         ":kv on an array returned the correct four-elem array";
 
@@ -124,10 +121,8 @@ plan 64;
     is %hash<0>, "a",
         ":p on a hash returns lvalues (like normal subscripts do as well)";
 
-    #?niecza skip 'Cannot use value like Pair as a number'
     is +(%hash<0 1>:p), 2,
         ":p on a hash returned a two-elem array";
-    #?niecza todo
     is ~(%hash<0 1>:p), "0\ta 1\tB",
         ":p on a hash returned a two-elem array consisting of the correct pairs";
 
@@ -153,7 +148,6 @@ plan 64;
     #?niecza todo
     is +(%hash<0 1>:kv), 4,
         ":kv on a hash returned a four-elem array";
-    #?niecza todo
     is ~(%hash<0 1>:kv), "0 a 1 B",
         ":kv on a hash returned the correct four-elem array";
 
@@ -222,7 +216,6 @@ plan 64;
     #?niecza todo
     is +(@array[0,1,2]:kv), 6,
         "undefined but existing entries should not be weeded out (1)";
-    #?niecza todo
     is ~(@array[0,1,2]:kv), "0 42 1  2 23",
         "undefined but existing entries should not be weeded out (2)";
 }
@@ -233,7 +226,6 @@ plan 64;
     #?niecza todo
     is +(%hash<0 1 2>:kv), 6,
         "undefined but existing entries should not be weeded out (3)";
-    #?niecza todo
     is ~(%hash<0 1 2>:kv), "0 42 1  2 23",
         "undefined but existing entries should not be weeded out (4)";
 }
