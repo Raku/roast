@@ -15,6 +15,7 @@ is (<a b> Z~ <1 2>), <a1 b2>, 'zip-concat produces expected result';
 
 is (1,2 Z* 3,4), (3,8), 'zip-product works';
 
+#?niecza todo
 is (1,2 Zcmp 3,2,0), (-1, 0), 'zip-cmp works';
 
 # tests for laziness
@@ -30,23 +31,28 @@ is (1 Z* 3), (3), 'zip-product works with scalar both sides';
 
 #?rakudo todo 'nom regression'
 {
+#?niecza todo
 is (<a b c d> Z 'x', 'z', *), <a x b z c z d z>, 'non-meta zip extends right argument ending with *';
+#?niecza todo
 is (1, 2, 3, * Z 10, 20, 30, 40, 50),
     (1, 10, 2, 20, 3, 30, 3, 40, 3, 50), 'non-meta zip extends left argument ending with *';
+#?niecza skip 'Unable to resolve method munch in class List'
 is (2, 10, * Z 3, 4, 5, *).munch(10),
     (2, 3, 10, 4, 10, 5, 10, 5, 10, 5),
     'non-meta zip extends two arguments ending with *';
-
+#?niecza todo
 is (<a b c d> Z~ 'x', 'z', *), <ax bz cz dz>, 'zip-concat extends right argument ending with *';
 }
 
 #?rakudo skip 'nom regression'
+#?niecza skip 'Cannot use value like Whatever as a number'
 {
 is (1, 2, 3, * Z+ 10, 20, 30, 40, 50), (11, 22, 33, 43, 53), 'zip-plus extends left argument ending with *';
 is (2, 10, * Z* 3, 4, 5, *).munch(5),
     (6, 40, 50, 50, 50), 'zip-product extends two arguments ending with *';
 }
 
+#?niecza todo
 {
     is join(',', [Z+] [1, 2], [20, 10], [100, 200]),
        '121,212', '[Z+] with three arrays';

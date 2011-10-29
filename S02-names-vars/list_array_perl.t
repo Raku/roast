@@ -47,6 +47,7 @@ my @tests = (
     is $foo[1][1][1][0], 42, "basic recursive arrayref";
 
     #?pugs skip 'hanging test'
+    #?niecza skip 'hanging test'
     is ~$foo.perl.eval, ~$foo,
         ".perl worked correctly on a recursive arrayref";
 }
@@ -77,6 +78,7 @@ my @tests = (
     my @list = (1, 2);
     push @list, eval (3, 4).perl;
     #?rakudo skip "List.perl bug"
+    #?niecza todo
     is +@list, 3, 'eval(@list.perl) gives a list, not an array ref';
 }
 

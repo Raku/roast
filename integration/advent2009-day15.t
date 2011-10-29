@@ -30,5 +30,8 @@ for <A 2 3 4 5 6 7 8 9 T J Q K> -> $rank
   }
 }
 
-@deck .= pick(*);
-is @deck.elems, 4 * 13, 'Shuffled card deck';
+#?niecza skip 'Cannot use value like Whatever as a number'
+{
+    @deck .= pick(*);
+    is @deck.elems, 4 * 13, 'Shuffled card deck';
+}

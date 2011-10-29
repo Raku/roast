@@ -44,26 +44,29 @@ ok $non-existent-file.IO ~~ :!f, 'Is not a normal file';
 isa_ok $non-existent-file.IO ~~ :!f, Bool, '~~ :!f returns Bool';
 
 ##is empty
-nok $zero-length-file.IO.s, 'Is empty';
-#?rakudo todo 'nom regression'
-isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
-ok $zero-length-file.IO ~~ :!s, 'Is empty';
-isa_ok $zero-length-file.IO ~~ :!s, Bool, '~~ :!s returns Bool';
-ok $existing-file.IO.s, 'Is not';
-#?rakudo todo 'nom regression'
-isa_ok $existing-file.IO.s, Int, '.s returns Int';
-ok $existing-file.IO ~~ :s, 'Is not';
-isa_ok $existing-file.IO ~~ :s, Bool, '~~ :s returns Bool';
+#?niecza skip 'Unable to resolve method s in class IO'
+{
+    nok $zero-length-file.IO.s, 'Is empty';
+    #?rakudo todo 'nom regression'
+    isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
+    ok $zero-length-file.IO ~~ :!s, 'Is empty';
+    isa_ok $zero-length-file.IO ~~ :!s, Bool, '~~ :!s returns Bool';
+    ok $existing-file.IO.s, 'Is not';
+    #?rakudo todo 'nom regression'
+    isa_ok $existing-file.IO.s, Int, '.s returns Int';
+    ok $existing-file.IO ~~ :s, 'Is not';
+    isa_ok $existing-file.IO ~~ :s, Bool, '~~ :s returns Bool';
 
-##file size
-#?rakudo todo 'nom regression'
-is $zero-length-file.IO.s, 0, 'No size';
-#?rakudo todo 'nom regression'
-isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
-#?rakudo todo 'nom regression'
-is $existing-file.IO.s, 11, 'size of file';
-#?rakudo todo 'nom regression'
-isa_ok $existing-file.IO.s, Int, '.s returns Int';
+    ##file size
+    #?rakudo todo 'nom regression'
+    is $zero-length-file.IO.s, 0, 'No size';
+    #?rakudo todo 'nom regression'
+    isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
+    #?rakudo todo 'nom regression'
+    is $existing-file.IO.s, 11, 'size of file';
+    #?rakudo todo 'nom regression'
+    isa_ok $existing-file.IO.s, Int, '.s returns Int';
+}
 
 # clean up
 ok unlink($existing-file), 'file has been removed';

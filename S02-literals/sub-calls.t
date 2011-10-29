@@ -34,6 +34,7 @@ plan 20;
     ok eval(q/foo(1, 2);/), 'call with two args, has parens';
 
     #?rakudo skip 'should parse as a routine foo:bar'
+    #?niecza skip 'Undeclared routine "foo:bar"'
     ok eval(q/foo:bar;  /), 'call with adverb after no space';
     ok eval(q/foo :bar; /), 'call with adverb after space';
 

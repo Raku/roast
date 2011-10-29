@@ -14,6 +14,7 @@ plan 13;
 }
 
 # Test with exact limit
+#?niecza skip 'Unable to resolve method munch in class List'
 {
     my @rolls = ({ (1..2).pick } ... 2).munch(100);
     ok +@rolls > 0, 'the sequence had at least one element...';
@@ -24,6 +25,7 @@ plan 13;
 }
 
 # Test with limit between possible values
+#?niecza skip 'Unable to resolve method munch in class List'
 {
     my @rolls = ({ (1..2).pick } ... 1.5).munch(100);
     ok +@rolls == 100, 'the sequence is infinite...';
@@ -31,6 +33,7 @@ plan 13;
 }
 
 # Test with limit that cannot be hit
+#?niecza skip 'Unable to resolve method munch in class List'
 {
     my @rolls = ({ (1..6).pick } ... 7).munch(40);
     is +@rolls, 40, 'Got the number of rolls we asked for';
