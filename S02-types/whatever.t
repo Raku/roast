@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 77;
+plan 80;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -259,6 +259,16 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
 {
     isa_ok *[0], WhateverCode, '*[0] curries';
     is *[0]([1, 2, 3]), 1, '... it works';
+}
+
+# RT #102466
+
+{
+    my $chained = 1 < * < 3;
+     ok $chained(2), 'Chained comparison (1)';
+    #?rakudo 2 todo 'RT 102466'
+    nok $chained(1), 'Chained comparison (2)';
+    nok $chained(3), 'Chained comparison (3)';
 }
 
 # vim: ft=perl6
