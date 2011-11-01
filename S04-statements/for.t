@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan 65;
+plan 66;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -483,6 +483,11 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     }
     is $a, 1, 'for on Range with huge max value is lazy and enters block';
 }
+
+# RT #60780
+lives_ok {
+    for 1 .. 5 -> $x, $y? { }
+}, 'Iteration variables do not need to add up if one is optional';
 
 done;
 
