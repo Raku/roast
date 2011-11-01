@@ -4,7 +4,7 @@ use v6;
 
 # doesn't use Test.pm and plan() intentionally
 
-say "1..7";
+say "1..8";
 
 # Tests for say
 {
@@ -29,6 +29,12 @@ say "1..7";
 
 $*OUT.say('ok 6 - $*OUT.say(...)');
 
-'ok 7 - Mu.print'.print;
+"ok 7 - Mu.print\n".print;
+
+grammar A {
+    token TOP { .+ };
+}
+
+A.parse("ok 8 - Match.print\n").print;
 
 # vim: ft=perl6
