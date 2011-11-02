@@ -109,14 +109,18 @@ sub indirect_slurpy_context( *@got ) { @got };
 
 # splice4 gets "CxtItem _" or "CxtArray _" instead of "CxtSlurpy _"
 my @tmp = (1..10);
-@a = splice @tmp, 5, 3;
-@a = indirect_slurpy_context( @a );
-@tmp = (1..10);
-@b = indirect_slurpy_context( splice @tmp, 5, 3 );
-is( @b, @a, "Calling splice with immediate and indirect context returns consistent results");
-is( @a, [6,7,8], "Explicit call/assignment gives the expected results");
-is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
+#?rakudo skip "infinite recursion bug"
+{
+    @a = splice @tmp, 5, 3;
+    @a = indirect_slurpy_context( @a );
+    @tmp = (1..10);
+    @b = indirect_slurpy_context( splice @tmp, 5, 3 );
+    is( @b, @a, "Calling splice with immediate and indirect context returns consistent results");
+    is( @a, [6,7,8], "Explicit call/assignment gives the expected results");
+    is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
+}
 
+#?rakudo skip "item() NYI"
 {
     @tmp = (1..10);
     @a = item splice @tmp, 5, 3;
