@@ -7,7 +7,6 @@ plan 69;
 # lexically scoped declarations are visible"> 
 {
 
-    #?rakudo todo 'lexicals bug; RT #61838'
     eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
     is(eval('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
@@ -93,7 +92,7 @@ is( eval('
 my $d = 1;
 { 
     my $d = 3 #OK not used
-}
+};
 $d;
 '), 1, '$d is available, and the outer value has not changed' );
 
