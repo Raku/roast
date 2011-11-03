@@ -15,6 +15,7 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
+#?niecza skip ":radix() NYI"
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
 #?pugs 4 todo "unimpl"
@@ -75,10 +76,12 @@ is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D'
 
 # L<S02/Conversion functions/"interpret leading 0b or 0d as hex digits">
 #?rakudo 2 skip ':base()'
+#?niecza 2 skip ":radix() NYI"
 is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Conversion functions/"Think of these as setting the default radix">
+#?niecza skip ":radix() NYI"
 {
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
 #?pugs 2 todo 'feature'
@@ -90,11 +93,11 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
 #?pugs todo 'feature'
+#?niecza todo "base and radix NYI"
 {
     is(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
 }
-
 
 # L<S02/General radices/"Any radix may include a fractional part">
 
@@ -136,6 +139,7 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 
 #?pugs todo 'feature'
 #?rakudo skip "Some question of what this form should actually do"
+#?niecza skip ":radix() NYI"
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');
     is(:8('0x20'),    0o32, ':8(0x20) converts from decimal');
@@ -161,6 +165,7 @@ is(
 # setting the default radix
 
 #?pugs todo 'feature'
+#?niecza skip ":radix() NYI"
 {
     is(:2('0b1110'),  0d14, ':2<0b1110> stays binary');
     is(:2('0x20'),    0d32, ':2<0x20> converts from hexadecimal');
@@ -173,6 +178,7 @@ eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
 
 # L<S02/Exponentials/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
+#?niecza 2 todo "Returning fraction instead of straight int"
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
 
@@ -180,14 +186,17 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # these should be the same values as the previous tests
 #?pugs todo 'feature'
 {
+    #?niecza todo "base and radix NYI"
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     #?rakudo skip "Really?!"
+    #?niecza skip "WTF?"
     is( 2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
 # Tests for the :x[ <list> ] notations
 # L<S02/General radices/"Alternately you can use a list of digits in decimal">
 #?rakudo skip ":radix[] NYI"
+#?niecza skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
