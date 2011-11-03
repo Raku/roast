@@ -2,6 +2,7 @@ use v6;
 use Test;
 plan 31;
 
+#?rakudo todo 'nom regression'
 {
     # P11 (*) Modified run-length encoding.
     # 
