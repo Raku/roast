@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 23;
 
 {
     my int $x;
@@ -73,6 +73,15 @@ plan 22;
     isa_ok int, Mu, 'int ~~ Mu';
     is num.gist, 'num()', 'num.gist';
     nok str.defined, 'str.defined';
+}
+
+{
+    sub slurpy(*@a) {
+        @a.join(' ');
+    }
+    my int $i = 42;
+    my str $s = 'roads';
+    is slurpy($i, $s), '42 roads', 'can bind native vars to slurpy arrays';
 }
 
 # vim: ft=perl6
