@@ -22,12 +22,9 @@ is_approx(42.sqrt * sqrt(42), 42, 'got the square root of 42');
 is_approx(1/42.sqrt * sqrt(1/42), 1/42, 'got the square root of 1/42');
 is_approx(1e2.sqrt, 10, 'got square root of 1e2');
 
-#?niecza todo
 is(sqrt(-1), NaN, 'sqrt(-1) is NaN');
-#?niecza todo
 is(sqrt(NaN), NaN, 'sqrt(NaN) is NaN');
 is(sqrt(Inf), Inf, 'sqrt(Inf) is Inf');
-#?niecza todo
 is(sqrt(-Inf), NaN, 'sqrt(-Inf) is NaN');
 
 is(sqrt(-0.0e0), -0.0e0, 'sqrt preserves sign of Num zero');
