@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 41;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -310,5 +310,16 @@ sub bughunt1 { (state $svar) }    #OK not used
 
 # niecza regression: state not working at top level
 eval_lives_ok 'state $x; $x', 'state outside control structure';
+
+#?rakudo todo 'initialization happens only on first call(?)'
+{
+    sub f($x) {
+        return if $x;
+        state $y = 5;
+        $y;
+    }
+    f(1);
+    is f(0), 5, 'initialization not reached on first run of the functions';
+}
 
 # vim: ft=perl6
