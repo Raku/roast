@@ -5,7 +5,7 @@ use Test;
 
 plan 10;
 
-dies_ok { chdir() }, 'Cannot call chdir without an argument';
+eval_dies_ok ' chdir() ', 'Cannot call chdir without an argument';
 
 ### Although you can use Unix style folder separator / to set folders, what's returned
 ### is in the native style, such as \ for windows
