@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan 66;
+plan 67;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -309,6 +309,20 @@ class TestClass{ has $.key is rw  };
     f(2);
 
     is $gather, '21....1....1....', 'Can mix recursion and for';
+}
+
+# another variation
+{
+    my $t = '';
+    my $c;
+    sub r($x) {
+        my $h = $c++;
+        r $x-1 if $x;
+        for 1 { $t ~= $h };
+    };
+    r 3;
+    #?rakudo todo 'RT 103332'
+    is $t, '3210', 'can mix recursion and for (RT 103332)';
 }
 
 # grep and sort in for - these were pugs bugs once, so let's
