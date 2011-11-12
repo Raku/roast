@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 24;
+plan 25;
 
 # L<S14/Run-time Mixins/>
 
@@ -108,6 +108,11 @@ is $y.test,     42,         'method from other role was OK too';
 # RT #99986
 {
     lives_ok { 3/2 but role { } }, 'can mix into a Rat';
+}
+
+# RT #77184
+{
+    lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
 }
 
 # vim: syn=perl6
