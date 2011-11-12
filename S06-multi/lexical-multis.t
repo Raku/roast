@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 15;
 
 # basic test that multi is lexical
 {
@@ -55,5 +55,10 @@ multi waz() { 1 }
 is(waz(), 1,             'multi from package still callable outside the inner scope...');
 #?niecza skip 'No matching candidates to dispatch for &waz'
 dies_ok { eval("waz('vtak')") }, '...but lexical multi no longer callable';
+
+# RT #78208
+{
+    dies_ok { multi foo() { }; multi foo($x) { }; +&foo }, 'RT #78208'
+}
 
 # vim: ft=perl6 :
