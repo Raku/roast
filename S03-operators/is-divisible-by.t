@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S03/"is divisible by">
 {
@@ -23,6 +23,11 @@ plan 12;
 
     is (1..10).grep({ $_ !%% 3 }), <1 2 4 5 7 8 10>, '%% works with explicit closure';
     is (1..10).grep( * !%% 3 ), <1 2 4 5 7 8 10>, '%% works with whatever *';
+}
+
+# RT #76170
+{
+    eval_dies_ok "say 9 !% 3", 'RT #76170'
 }
 
 
