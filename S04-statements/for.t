@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan 67;
+plan 68;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -509,7 +509,5 @@ lives_ok {
     for 1, 2, 3 { sub foo {}; $a++ }
     is $a, 3, 'RT #78232';
 }
-
-done;
 
 # vim: ft=perl6
