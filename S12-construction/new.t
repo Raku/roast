@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 23;
 
 class Parent {
     has $.x;
@@ -105,6 +105,11 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     }
     is RT68558.new('x').foo, 'x', 'Can call nextwith in .new';
 
+}
+
+# RT #100780
+{
+    dies_ok { X.new }, 'RT #100780'
 }
 
 done;
