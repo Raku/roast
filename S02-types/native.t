@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 25;
 
 {
     my int $x;
@@ -82,6 +82,14 @@ plan 23;
     my int $i = 42;
     my str $s = 'roads';
     is slurpy($i, $s), '42 roads', 'can bind native vars to slurpy arrays';
+}
+
+# RT #101450
+{
+    my int $x;
+    my num $y;
+    is $x, 0, '#101450';
+    is $y, NaN, '#101450';
 }
 
 # vim: ft=perl6
