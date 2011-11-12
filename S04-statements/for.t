@@ -503,6 +503,13 @@ lives_ok {
     for 1 .. 5 -> $x, $y? { }
 }, 'Iteration variables do not need to add up if one is optional';
 
+# RT #78232
+{
+    my $a = 0;
+    for 1, 2, 3 { sub foo {}; $a++ }
+    is $a, 3, 'RT #78232';
+}
+
 done;
 
 # vim: ft=perl6
