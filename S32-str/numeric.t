@@ -147,6 +147,11 @@ is +"NaN",  'NaN',  'NaN';
 
 # TODO: Complex with radix
 
+# RT #100778
+{
+    is +Str.new, 0, 'RT #100778'
+}
+
 done;
 
 # vim: ft=perl6 
