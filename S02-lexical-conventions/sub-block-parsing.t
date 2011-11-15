@@ -12,7 +12,7 @@ use Test;
 #   module{...}
 #   class{...}
 
-plan 4;
+plan 5;
 
 #?rakudo skip 'confused near "(sub { 42 "'
 ok(sub { 42 }(), 'sub {...} works'); # TODO: clarify
@@ -30,6 +30,11 @@ eval_dies_ok q[
     sub x { die };
     x();
 ], 'block parsing works with semicolon';
+
+# RT #85844
+{
+    eval_dies_ok 'sub foo;', 'RT #85844'
+}
 
 done;
 
