@@ -321,7 +321,6 @@ class TestClass{ has $.key is rw  };
         for 1 { $t ~= $h };
     };
     r 3;
-    #?rakudo todo 'RT 103332'
     is $t, '3210', 'can mix recursion and for (RT 103332)';
 }
 
