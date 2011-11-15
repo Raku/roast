@@ -292,9 +292,8 @@ dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with
 dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
 # This is a rakudo regression wrt bignum:
-#?rakudo skip 'bigint'
 {
-    my $f = 1; $f *= $_ for 2..25; say $f;
+    my $f = 1; $f *= $_ for 2..25;
     ok $f == 15511210043330985984000000, 
        'Can calcualte 25! without loss of precision';
     ok 2**65 == 36893488147419103232,
