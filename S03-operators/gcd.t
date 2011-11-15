@@ -29,7 +29,6 @@ is ([gcd] 25..26), 1, '[gcd] Range works';
     isa_ok 10.1e0 gcd 5.3e0, Int, "and the result is an Int";
 }
 
-#?rakudo skip "big ints NYI"
 {
     is 123123123123123123123123123 gcd 3, 3, "gcd handles big Int and small Int";
     is 123123123123123123123123123 gcd 2, 1, "gcd handles big Int and small Int";

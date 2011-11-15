@@ -25,7 +25,6 @@ is ([lcm] 1..3), 6, '[lcm] Range works';
     isa_ok 10.1e0 lcm 5.3e0, Int, "and the result is an Int";
 }
 
-#?rakudo skip "big ints NYI"
 {
     is 123123123123123123123123123 lcm 3, 123123123123123123123123123, "lcm handles big Int and small Int";
     is 123123123123123123123123123 lcm 2, 246246246246246246246246246, "lcm handles big Int and small Int";
