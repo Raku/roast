@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 25;
+plan 27;
 
 # L<S14/Run-time Mixins/>
 
@@ -113,6 +113,13 @@ is $y.test,     42,         'method from other role was OK too';
 # RT #77184
 {
     lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
+}
+
+# RT #100782
+{
+    my $a = 0 but True;
+    is +$a, 0, 'RT #100782 1/2';
+    is ?$a, Bool::True, 'RT #100782 2/2';
 }
 
 # vim: syn=perl6
