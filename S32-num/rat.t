@@ -142,7 +142,7 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 # wisdom of allowing math with zero denominator Rats,
 # so I'm holding off on writing tests for it.
 
-#?rakudo todo "NaN.Rat == NaN"
+#?rakudo skip "NaN.Rat == NaN"
 #?niecza todo
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
@@ -153,6 +153,7 @@ is Inf.Rat, Inf, "Inf.Rat == Inf";
 is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
 # RT #74648
+#?rakudo skip 'RT 74648'
 isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
 }
 
