@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -59,6 +59,14 @@ eval_lives_ok q[
     my $o = Bar.new;
     eval_dies_ok('$o.c', 'overridden method is gone completely');
     is($o.d, 'called Bar.d', 'new method is present instead');
+}
+
+# RT #75432
+{
+    lives_ok {
+        class A { multi method a() { }};
+        augment class A { multi method a() { } }
+    }, 'RT #75432'
 }
 
 # vim: ft=perl6
