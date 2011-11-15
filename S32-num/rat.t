@@ -148,8 +148,10 @@ is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
 #?niecza todo
+#?rakudo todo "Inf.Rat"
 is Inf.Rat, Inf, "Inf.Rat == Inf";
 #?niecza todo
+#?rakudo todo "Inf.Rat"
 is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
 # RT #74648
