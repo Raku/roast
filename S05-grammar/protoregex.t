@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 19;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -52,6 +52,14 @@ grammar LTM {
     token cclass2:sym<a> { <[0..9]> '.' <[0..9]> }
     token cclass2:sym<b> { <[0..9]> }
     
+    proto token cclass3 { * }
+    token cclass3:sym<a> { \d\d }
+    token cclass3:sym<b> { 1 }
+    
+    proto token cclass4 { * }
+    token cclass4:sym<a> { '.' }
+    token cclass4:sym<b> { \W\W }
+    
     proto token quant1  { * }
     token quant1:sym<a> { ab? }
     token quant1:sym<b> { a }
@@ -69,6 +77,8 @@ grammar LTM {
 is ~LTM.parse('foobar', :rule('lit')),  'foobar', 'LTM picks longest literal';
 is ~LTM.parse('1.2', :rule('cclass1')), '1.2',    'LTM picks longest with char classes';
 is ~LTM.parse('1.2', :rule('cclass2')), '1.2',    '...and it not just luck with ordering';
+is ~LTM.parse('11', :rule('cclass3')),  '11',     'LTM works with things like \d';
+is ~LTM.parse('..', :rule('cclass4')),  '..',     '...and negated ones like \W';
 is ~LTM.parse('ab', :rule('quant1')),   'ab',     'LTM and ? quantifier';
 is ~LTM.parse('abbb', :rule('quant2')), 'abbb',   'LTM, ? and + quantifiers';
 is ~LTM.parse('aaaa', :rule('quant3')), 'aaaa',   'LTM and * quantifier';
