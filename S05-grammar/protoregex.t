@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 17;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -51,10 +51,26 @@ grammar LTM {
     proto token cclass2  { * }
     token cclass2:sym<a> { <[0..9]> '.' <[0..9]> }
     token cclass2:sym<b> { <[0..9]> }
+    
+    proto token quant1  { * }
+    token quant1:sym<a> { ab? }
+    token quant1:sym<b> { a }
+    
+    proto token quant2  { * }
+    token quant2:sym<a> { a }
+    token quant2:sym<c> { ab+ }
+    token quant2:sym<b> { ab? }
+    
+    proto token quant3  { * }
+    token quant3:sym<a> { aaa }
+    token quant3:sym<b> { a* }
 }
 
 is ~LTM.parse('foobar', :rule('lit')),  'foobar', 'LTM picks longest literal';
 is ~LTM.parse('1.2', :rule('cclass1')), '1.2',    'LTM picks longest with char classes';
 is ~LTM.parse('1.2', :rule('cclass2')), '1.2',    '...and it not just luck with ordering';
+is ~LTM.parse('ab', :rule('quant1')),   'ab',     'LTM and ? quantifier';
+is ~LTM.parse('abbb', :rule('quant2')), 'abbb',   'LTM, ? and + quantifiers';
+is ~LTM.parse('aaaa', :rule('quant3')), 'aaaa',   'LTM and * quantifier';
 
 # vim: ft=perl6
