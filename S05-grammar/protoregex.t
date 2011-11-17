@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 14;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -37,5 +37,24 @@ ok ($match = Alts.parse('argl', :actions(SomeActions.new))),
     'can parse with action methods';
 is $match<alt>.ast, 'bazbaz', 'action method got called, make() worked';
 
+
+grammar LTM {
+    proto token lit       { * }
+    token lit:sym<foo>    { 'foo' }
+    token lit:sym<foobar> { 'foobar' }
+    token lit:sym<foob>   { 'foob' }
+    
+    proto token cclass1  { * }
+    token cclass1:sym<a> { <[0..9]> }
+    token cclass1:sym<b> { <[0..9]> '.' <[0..9]> }
+    
+    proto token cclass2  { * }
+    token cclass2:sym<a> { <[0..9]> '.' <[0..9]> }
+    token cclass2:sym<b> { <[0..9]> }
+}
+
+is ~LTM.parse('foobar', :rule('lit')),  'foobar', 'LTM picks longest literal';
+is ~LTM.parse('1.2', :rule('cclass1')), '1.2',    'LTM picks longest with char classes';
+is ~LTM.parse('1.2', :rule('cclass2')), '1.2',    '...and it not just luck with ordering';
 
 # vim: ft=perl6
