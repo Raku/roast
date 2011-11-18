@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 19;
+plan 25;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -72,6 +72,33 @@ grammar LTM {
     proto token quant3  { * }
     token quant3:sym<a> { aaa }
     token quant3:sym<b> { a* }
+    
+    proto token declok { <*> }
+    token declok:sym<a> {
+        :my $x := 42;
+        .+
+    }
+    token declok:sym<b> { aa }
+
+    proto token cap1 { <*> }
+    token cap1:sym<a> { (.+) }
+    token cap1:sym<b> { aa }
+
+    proto token cap2 { <*> }
+    token cap2:sym<a> { $<x>=[.+] }
+    token cap2:sym<b> { aa }
+
+    proto token ass1 { <*> }
+    token ass1:sym<a> { a <?{ 1 }> .+ }
+    token ass1:sym<b> { aa }
+
+    proto token ass2 { <*> }
+    token ass2:sym<a> { a <!{ 0 }> .+ }
+    token ass2:sym<b> { aa }
+    
+    proto token block { <*> }
+    token block:sym<a> { a {} .+ }
+    token block:sym<b> { aa }
 }
 
 is ~LTM.parse('foobar', :rule('lit')),  'foobar', 'LTM picks longest literal';
@@ -82,5 +109,11 @@ is ~LTM.parse('..', :rule('cclass4')),  '..',     '...and negated ones like \W';
 is ~LTM.parse('ab', :rule('quant1')),   'ab',     'LTM and ? quantifier';
 is ~LTM.parse('abbb', :rule('quant2')), 'abbb',   'LTM, ? and + quantifiers';
 is ~LTM.parse('aaaa', :rule('quant3')), 'aaaa',   'LTM and * quantifier';
+is ~LTM.parse('aaa', :rule('declok')),  'aaa',    ':my declarations do not terminate LTM';
+is ~LTM.parse('aaa', :rule('cap1')),    'aaa',    'Positional captures do not terminate LTM';
+is ~LTM.parse('aaa', :rule('cap2')),    'aaa',    'Named captures do not terminate LTM';
+is ~LTM.parse('aaa', :rule('ass1')),    'aaa',    '<?{...}> does not terminate LTM';
+is ~LTM.parse('aaa', :rule('ass2')),    'aaa',    '<!{...}> does not terminate LTM';
+is ~LTM.parse('aaa', :rule('block')),   'aa',     'However, code blocks do terminate LTM';
 
 # vim: ft=perl6
