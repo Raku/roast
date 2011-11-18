@@ -29,7 +29,7 @@ Testing named capture variables nested inside each other. This doesn't appear to
 #?rakudo todo '$alias = <other>'
 {
   my $not_really_a_mammal;
-  my regex fishy2 { $not_really_a_mammal = (.*)shark };
+  my regex fishy2 { $<not_really_a_mammal> = (.*)shark };
   "whaleshark" ~~ m/<fishy2>/;
   is($/<fishy2><not_really_a_mammal>, "whale", "named rule named capture");
   is($<fishy2><not_really_a_mammal>, "whale", "named rule named capture with abbreviated variable");
