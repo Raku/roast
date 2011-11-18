@@ -19,7 +19,7 @@ ok($str ~~ m{a(b+)c}, 'Matched 1');
 ok($/, 'Saved 1');
 is($/, $str, 'Grabbed all 1');
 #?niecza todo
-is($/[0], substr($str,1,-1), 'Correctly captured 1');
+is($/[0], substr($str,1,*-1), 'Correctly captured 1');
 
 ok($str ~~ m{a[b+]c}, 'Matched 2');
 ok($/, 'Saved 2');
