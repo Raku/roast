@@ -14,8 +14,7 @@ plan 10;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/The special named assertions include:>
 
-regex bc { b?c }
-
+#?rakudo 4 skip 'after NYI'
 ok("a cdef" ~~ m/<after a <.ws> c> def/, 'Lookbehind');
 ok(!( "acdef" ~~ m/<after a <.ws> c> def/ ), 'Lookbehind failure');
 ok(!( "a cdef" ~~ m/<!after a <.ws> c> def/ ), 'Negative lookbehind failure');
