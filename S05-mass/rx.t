@@ -322,9 +322,8 @@ ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
 #### <-[b..d]>		bbccdd		n	negated character range
 ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 
-# todo :pge<reversed character range>
-#### <-[d..b]>		bbccdd		/parse error/	illegal character range
-ok ('bbccdd' ~~ /<-[d..b]>/) && matchcheck($/, q/parse error/), 'illegal character range';
+#### <-[d..b]>		dies
+eval_dies_ok '/<-[d..b]>/', 'illegal character range';
 
 ok '-' ~~ /<[-]>/, 'unescaped hyphen is fine on its own';
 
