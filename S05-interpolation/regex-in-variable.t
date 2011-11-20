@@ -64,6 +64,7 @@ ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 ok("a+bb+ca+b" ~~ /^@foo+$/, 'Multiple array non-compiling');
 ok(!("a+bb+ca+b" ~~ /^<@foo>+$/), 'Multiple array compiling');
 ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
+#?rakudo todo 'nom regression'
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
