@@ -213,7 +213,6 @@ plan 31;
         'We should be able to drop list elements using list comprehension';
 }
 
-#?rakudo skip 'array slices'
 {
     # P17 (*) Split a list into two parts; the length of the first part is given.
     # 

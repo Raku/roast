@@ -147,7 +147,6 @@ plan 56;
 }
 
 # RT #69548
-#?rakudo skip "nom regression: Cannot assign to a readonly variable or a value"
 {
     my $x = 1;
     my @a = ();

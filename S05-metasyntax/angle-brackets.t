@@ -176,7 +176,6 @@ character classes), and those are referenced at the correct spot.
 
 # A leading { indicates code that produces a regex to be
 # interpolated into the pattern at that point as a subrule:
-#?rakudo skip 'null PMC'
 {
     ok('abcdef' ~~ /<{'<al' ~ 'pha>'}>/, 'code interpolation');
 }
@@ -223,7 +222,6 @@ character classes), and those are referenced at the correct spot.
 {
     ok('1./:"{}=-' ~~ /^[<!alpha> .]+$/, '<!alpha> matches non-letter characters');
     ok(!('abcdef'   ~~ /<!alpha>./), '<!alpha> does not match letter characters');
-    #?rakudo 2 skip 'no before'
     is(+('.2 1' ~~ /<!before 2> \d/), 1, '<!before>');
     is +$/.caps, 0, '<!before 2> does not capture';
 }

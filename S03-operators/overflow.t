@@ -77,7 +77,6 @@ $b = -$a;
 $b= $b - 1;
 is($b, -(++$a), 'est oder of predecrement in -(++$a)');
 
-#?rakudo skip "Big number issues with div"
 {
     is(0x80000000 div 1, 0x80000000, "0x80000000 div 1 == 0x80000000");
     is(0x80000000 div -1, -0x80000000, "0x80000000 div -1 == -0x80000000");
