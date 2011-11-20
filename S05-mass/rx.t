@@ -479,79 +479,63 @@ ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 #
 ## lookarounds
 #### <before .d> a.		abacad		/mob: <ad @ 4>/			lookahead <before>
-#?rakudo skip 'before'
 ok ('abacad' ~~ /<before .d> a./) && matchcheck($/, q/mob: <ad @ 4>/), 'lookahead <before>';
 
 #### <before c> ....		abacad		n				lookahead <before>
-#?rakudo skip 'before'
 ok 'abacad' !~~ /<before c> ..../, 'lookahead <before>';
 
 #### <before> .		abcd		n				null <before>
-#?rakudo skip 'before'
 eval_dies_ok "'abcd' !~~ /<before> ./", 'null <before>';
 
 #### <!before ..b> aa	aabaaa		/mob: <aa @ 3>/			negated lookahead
-#?rakudo skip 'before'
 ok ('aabaaa' ~~ /<!before ..b> aa/) && matchcheck($/, q/mob: <aa @ 3>/), 'negated lookahead';
 
 #### <after a>b		ab		y				lookbehind <after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
 ok 'ab' ~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		cb		n				lookbehind <after>
-#?rakudo skip 'NYI'
 ok 'cb' !~~ /<after a>b/, 'lookbehind <after>';
 
 #### <after a>b		b		n				lookbehind <after>
-#?rakudo skip 'NYI'
 ok 'b' !~~ /<after a>b/, 'lookbehind <after>';
 
 #### <!after c>b		ab		y				lookbehind <!after>
-#?rakudo skip 'NYI'
 #?pugs todo 'feature'
 ok 'ab' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		cb		n				lookbehind <!after>
-#?rakudo skip 'NYI'
 ok 'cb' !~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after c>b		b		y				lookbehind <!after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
 ok 'b' ~~ /<!after c>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>>b	dbcb		n				lookbehind <!after>
-#?rakudo skip 'NYI'
 ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 
 #### <!after <[cd]>><[ab]>	dbaacb		y				lookbehind <!after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
 ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
 
 #### <!after c|d>b		dbcb		n				lookbehind <!after>
-#?rakudo skip 'NYI'
 ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
 
 #### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
 ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 
 #### <!after cd><[ab]>	cbaccb		y				lookbehind <!after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
 ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 
 #### $ <after ^a>		a		y				lookbehind <after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
+#?rakudo todo 'anchors and after'
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 #?pugs todo 'feature'
-#?rakudo skip 'NYI'
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading + may also">
