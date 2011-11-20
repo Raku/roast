@@ -64,10 +64,9 @@ eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
 ok 'b' ~~ /<[. .. b]>/, 'weird char class matches at least its end point';
 
 # RT #69682
-#?rakudo skip 'nom regression'
 #?niecza skip 'Unsupported use of - as character range; in Perl 6 please use ..'
 {
-eval "/<[a-z]>/";
+try { eval "/<[a-z]>/"; }
 ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
     "STD error message for - as character range";
 }
