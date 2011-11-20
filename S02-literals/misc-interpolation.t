@@ -58,7 +58,6 @@ is('$world @list[] %hash{} &func()', '$world @list[] %hash{} &func()', 'single q
 # Corner-cases
 is("Hello $world!", "Hello World!", "! is not a part of var names");
 sub list_count (*@args) { +@args }
-#?rakudo todo 'nom regression'
 is(list_count("@list[]"), 1, 'quoted interpolation gets string context');
 is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure interpolation");
 

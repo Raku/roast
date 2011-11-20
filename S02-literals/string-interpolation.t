@@ -22,7 +22,6 @@ plan 12;
 {
     # interpolating into double quotes results in a Str
     my $a = 3;
-    #?rakudo todo 'type of interpolation literal'
     ok "$a" ~~ Str, '"$a" results in a Str';
     ok "{3}" ~~ Str, '"{3}" results in a Str';
 
