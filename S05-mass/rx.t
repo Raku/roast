@@ -555,23 +555,18 @@ eval_dies_ok '/a[b}/', 'mismatched close';
 
 
 #### c <before .d>		abacad		/mob: <c @ 3>/				one character and lookahead <before>
-#?rakudo skip 'before'
 ok ('abacad' ~~ /c <before .d>/) && matchcheck($/, q/mob: <c @ 3>/), 'one character and lookahead <before>';
 
 #### .* <before .d>		abacad		/mob: <abac @ 0>/			multiple characters and lookahead <before>
-#?rakudo skip 'before'
 ok ('abacad' ~~ /.* <before .d>/) && matchcheck($/, q/mob: <abac @ 0>/), 'multiple characters and lookahead <before>';
 
 #### .* <before .\<>		abaca<d		/mob: <abac @ 0>/			multiple characters and lookahead <before> with a \'<\'
-#?rakudo skip 'before'
 ok ('abaca<d' ~~ /.* <before .\<>/) && matchcheck($/, q/mob: <abac @ 0>/), 'multiple characters and lookahead <before> with a \'<\'';
 
 #### .* <before \<>		aba<ca<d		/mob: <aba<ca @ 0>/		greedy any character and lookahead <before> with a \'<\'
-#?rakudo skip 'before'
 ok ('aba<ca<d' ~~ /.* <before \<>/) && matchcheck($/, q/mob: <aba<ca @ 0>/), 'greedy any character and lookahead <before> with a \'<\'';
 
 #### .*? <before \<>		aba<ca<d		/mob: <aba @ 0>/		non-greedy any character and lookahead <before> with a \'<\'
-#?rakudo skip 'before'
 ok ('aba<ca<d' ~~ /.*? <before \<>/) && matchcheck($/, q/mob: <aba @ 0>/), 'non-greedy any character and lookahead <before> with a \'<\'';
 
 
@@ -828,38 +823,30 @@ eval_dies_ok '/|/', 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?pugs todo 'feature'
-#?rakudo skip '& NYI'
 ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..d]> & <[d..e]>	c		n	conjunction (&)
-#?rakudo skip '& NYI'
 ok 'c' !~~ /<[a..d]> & <[d..e]>/, 'conjunction (&)';
 
 #### <[a..b]> & <[b..e]>	c		n	conjunction (&)
-#?rakudo skip '& NYI'
 ok 'c' !~~ /<[a..b]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..b]> & <[d..e]>	c		n	conjunction (&)
-#?rakudo skip '& NYI'
 ok 'c' !~~ /<[a..b]> & <[d..e]>/, 'conjunction (&)';
 
 #### <[a..d]>+ & <[b..e]>+	bcd		y	conjunction (&)
-#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..d]>+ & <[b..e]>+/, 'conjunction (&)';
 
 #### ^ [ <[a..d]>+ & <[b..e]>+ ] $	bcd		y	conjunction (&)
-#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /^ [ <[a..d]>+ & <[b..e]>+ ] $/, 'conjunction (&)';
 
 #### <[a..c]>+ & <[b..e]>+	bcd		y	conjunction (&)
-#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..c]>+ & <[b..e]>+/, 'conjunction (&)';
 
 #### <[a..d]>+ & <[c..e]>+	bcd		y	conjunction (&)
-#?rakudo skip '& NYI'
 #?pugs todo 'feature'
 ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 
