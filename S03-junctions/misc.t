@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 101;
 
 =begin pod
 
@@ -407,6 +407,16 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     );
     ok %h{all(0,1)} ~~ /^foo/,
         'junction can be used to index Hash';
+}
+# stringy tests
+{
+   my class Foo {
+      multi method gist(Foo:D:) { "gisted"; }
+      multi method perl(Foo:D:) { "perled"; }
+      multi method Str(Foo:D:) { "Stred"; }
+   }
+   is any(Foo.new).perl, 'any(perled)', 'any(Foo.new).perl';
+   is any(Foo.new).gist, 'any(gisted)', 'any(Foo.new).gist';
 }
 
 done();
