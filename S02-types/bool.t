@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 49;
+plan 51;
 
 #L<S12/Built-in Enumerations/"Two built-in enumerations are">
 
@@ -50,7 +50,8 @@ is Bool::True.Str, 'True', 'True.Str';
 is Bool::False.Str, 'False', 'False.Str';
 is Bool::True.gist, 'Bool::True', 'True.gist';
 is Bool::False.gist, 'Bool::False', 'False.gist';
-
+is Bool::True.perl, 'Bool::True', 'True.perl';
+is Bool::False.perl, 'Bool::False', 'False.perl';
 
 # numification - interaction with +
 #?niecza 2 skip "Numeric"
