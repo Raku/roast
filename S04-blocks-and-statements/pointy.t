@@ -44,9 +44,7 @@ my $s = -> {
     $n++;
     redo if $n < 10;
 };
-try { $s.() };
-#?pugs todo 'feature'
-ok(!defined($!), 'pointy with block control exceptions');
+dies_ok $s, 'pointy with block control exceptions';
 #?rakudo todo 'pointy blocks and last/redo'
 is $n, 10, "pointy control exceptions ran";
 

@@ -132,7 +132,6 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 }
 
 # L<S04/The do-once loop/"bare block is not a do-once">
-#?rakudo todo 'next/last/redo handling without handlers'
 {
     eval_dies_ok 'my $i; { $i++; next; $i--; }',
         "bare block can't take 'next'";
