@@ -49,7 +49,6 @@ my $wrapped = &foo.wrap(&wrapper);
 
 foo();
 
-#?rakudo 2 todo 'unknown'
 is @log.join('|'), 'wrapper before|foo|wrapper after', 'logged the correct events';
 
 @log = ();
@@ -59,7 +58,6 @@ foo();
 
 is(+@log, 4, "four events");
 is(@log[0], "wrapper2", "additional wrapping takes effect");
-#?rakudo 2 todo 'unknown'
 is(@log[1], "wrapper before", "... on top of initial wrapping");
 
 @log = ();
@@ -84,10 +82,8 @@ $wrapped = &foo.wrap(&wrapper);
 $doublywrapped = &foo.wrap(&other_wrapper);
 &foo.unwrap($wrapped);
 foo();
-#?rakudo todo 'unknown'
 is(+@log, 2, "out of order unwrapping gave right number of results");
 is(@log[0], "wrapper2", "got execpted value from remaining wrapper");
-#?rakudo todo 'unknown'
 is(@log[1], "foo", "got execpted value from original sub");
 
 dies_ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
@@ -121,6 +117,7 @@ sub levelwrap($n) {
 is( levelwrap( 1 ), 1, "Sanity test." );
 is( levelwrap( 2 ), 2, "Sanity test." );
 
+#?rakudo todo 'callwith'
 lives_ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
