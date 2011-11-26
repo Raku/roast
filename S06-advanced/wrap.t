@@ -122,7 +122,6 @@ lives_ok { &levelwrap.callwith( 1 )},
     "Check that functions have a 'callwith' that works. ";
 
 #?DOES 20
-#?rakudo skip 'multi-level wrapping'
 {
     for (1..10) -> $num {
         lives_ok {
@@ -166,11 +165,10 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
 
-#?rakudo skip 'RT 70267: call to nextsame with nowhere to go'
+#?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
 # RT #66658
-#?rakudo skip 'RT #66658  .wrap fails with closure/for/map changes'
 {
     sub meet(  $person ) { return "meet $person"  }
     sub greet( $person ) { return "greet $person" }
