@@ -11,7 +11,7 @@ use Test;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 64;
+plan 66;
 
 my @log;
 
@@ -189,6 +189,14 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     ok ! $wrapped.defined, 'wrapper test variable is undefined';
     is meet('masak'), 'meet masak', 'wrapped meet() works';
     is $wrapped, 'meet', 'wrapper sees lexical from time of wrap (meet)';
+}
+
+{
+    sub foo() { 1 }
+    my $h = &foo.wrap(-> { 1 + callsame });
+    is foo(), 2, 'wrap worked (sanity)';
+    $h.restore();
+    is foo(), 1, 'could unwrap by calling .restore on the handle';
 }
 
 done;
