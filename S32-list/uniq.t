@@ -22,7 +22,6 @@ Not (yet?) in the spec, but implemented by (nearly?) all implementations.
   is ~@array, "a b b c d e b b b b f b",  "basic sanity";
   is ~@array.uniq,  "a b c d e f", "method form of uniq works";
   is ~uniq(@array), "a b c d e f", "subroutine form of uniq works";
-  #?rakudo 2 skip "Inplace method calls don't work(!?!), regression"
   ok @array .= uniq,                 "inplace form of uniq works (1)";
   is      ~@array,  "a b c d e f", "inplace form of uniq works (2)";
 }

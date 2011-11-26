@@ -198,7 +198,6 @@ plan 283;
     is($s, $t, 'chained $ = % = list assignment');
 }
 
-#?rakudo skip "splice() not implemented in class 'Mu'"
 {
     # (@b, @a) = (@a, @b) assignment
     my (@a, @b);
@@ -210,7 +209,6 @@ plan 283;
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
-#?rakudo skip "splice() not implemented in class 'Mu'"
 {
     # (@b, @a) = @a, @b assignment
     my (@a, @b);
@@ -391,7 +389,6 @@ my @p;
     is(@p[1],4, "x= operator parses as item assignment 2");
 }
 
-#?rakudo skip "splice() not implemented in class 'Mu'"
 {
     my @x = ( 'a', 'z' );
     @p = @x xx= 3, 4;
@@ -462,7 +459,6 @@ my @p;
     is(@p[1],'D', "~^= operator parses as item assignment 2");
 }
 
-#?rakudo skip 'segfault'
 {
     my $x;
     @p = $x ^^= 42, 43;
@@ -470,13 +466,13 @@ my @p;
     is(@p[0],42, "^^= operator parses as item assignment 1");
     is(@p[1],43, "^^= operator parses as item assignment 2");
     $x ^^= 15;
+    #?rakudo todo 'unknown'
     is $x, False, '^^= with two true arguments yields False';
     $x ^^= 'xyzzy';
     is $x, 'xyzzy', "^^= doesn't permanently falsify scalars";
 }
 
 # RT #76820
-#?rakudo skip 'segfault'
 {
     my $x;
     @p = $x xor= 42, 43;
@@ -484,6 +480,7 @@ my @p;
     is(@p[0],42, "xor= operator parses as item assignment 1");
     is(@p[1],43, "xor= operator parses as item assignment 2");
     $x xor= 15;
+    #?rakudo todo 'unknown'
     is $x, False, 'xor= with two true arguments yields False';
     $x xor= 'xyzzy';
     is $x, 'xyzzy', "xor= doesn't permanently falsify scalars";
@@ -890,10 +887,9 @@ sub l () { 1, 2 };
     is $rt93972.join(','), '1,2,3', 'same with Parcel';
 }
 
-#?rakudo skip 'RT 93972'
 {
     my @bughunt = 1, 2, 3;
-    @bughunt = @bughunt.grep({1});
+    @bughunt = @bughunt.grep(1);
     is @bughunt, [1],
        'Assign to array with the same array on rhs (RT 93972)';
 }
