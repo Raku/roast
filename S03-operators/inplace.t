@@ -6,7 +6,6 @@ use Test;
 
 plan 28;
 
-#?rakudo todo 'nom regression'
 {
     my @a = (1, 2, 3);
     lives_ok({@a .= map: { $_ + 1 }}, '.= runs with block');
@@ -15,7 +14,6 @@ plan 28;
     is(@a[2], 4, 'inplace map [2]');
 }
 
-#?rakudo todo 'nom regression'
 {
     my @b = <foo 123 bar 456 baz>;
     lives_ok { @b.=grep(/<[a..z]>/)},
