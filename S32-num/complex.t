@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 481;
+plan 482;
 
 # Basic tests functions specific to complex numbers.
 
@@ -16,6 +16,8 @@ isa_ok(3\i, Complex, '$n\i form creates a Complex number');
 
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
+
+dies_ok { (2 + 3i) > (2 + 2i) }, '> comparison of complex numbers dies';
 
 #?rakudo 3 skip 'i'
 is_approx(i, 1i, 'standalone i works to generate a Complex number');
