@@ -109,7 +109,6 @@ sub indirect_slurpy_context( *@got ) { @got };
 
 # splice4 gets "CxtItem _" or "CxtArray _" instead of "CxtSlurpy _"
 my @tmp = (1..10);
-#?rakudo skip "infinite recursion bug"
 {
     @a = splice @tmp, 5, 3;
     @a = indirect_slurpy_context( @a );

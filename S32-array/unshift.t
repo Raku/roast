@@ -97,7 +97,6 @@ plan 56;
 }
 
 # now for the unshift() on an uninitialized array issue
-#?rakudo skip "nom regression: shift_pmc() not implemented in class 'Mu'"
 {
     my @unshift;
 

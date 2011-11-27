@@ -54,7 +54,6 @@ plan 15;
     ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
 }
     
-#?rakudo skip 'state vars'
 {
     my $compress = sub ($x) {
         state $previous;

@@ -57,7 +57,6 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
 {
     my @array = (4, 2);
-    #?rakudo skip 'nom regression'
     ok(@array xx= 2, 'operator xx= for list works');
     is(@array[0], 4, 'operator xx= for list repeats correct');
     #?rakudo todo 'nom regression'
