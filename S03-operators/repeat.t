@@ -59,9 +59,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     my @array = (4, 2);
     ok(@array xx= 2, 'operator xx= for list works');
     is(@array[0], 4, 'operator xx= for list repeats correct');
-    #?rakudo todo 'nom regression'
     is(@array[3], 2, 'operator xx= for list repeats correct');
-    #?rakudo todo 'nom regression'
     is(+@array, 4, 'operator xx= for list created the right size');
 }
 
