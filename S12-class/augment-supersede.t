@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 10;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -22,6 +22,13 @@ use MONKEY_TYPING;
 
     dies_ok { eval('augment class NonExistent { }') },
         'augment on non-existent class dies';
+}
+
+# RT #74910
+{
+    my class LexFoo { };
+    augment class LexFoo { method b { 'called LexFoo.b' } };
+    is LexFoo.b, 'called LexFoo.b', 'can augment lexical class';
 }
 
 # RT #76104
