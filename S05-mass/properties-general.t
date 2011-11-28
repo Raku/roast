@@ -178,7 +178,7 @@ ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<-:M>$/ ), q{Don't match inverted <M> (
 ok(!( "\x[D0AA]"  ~~ m/^<:M>$/ ), q{Don't match unrelated <M> (Mark)} );
 ok("\x[D0AA]"  ~~ m/^<:!M>$/, q{Match unrelated negated <M> (Mark)} );
 ok("\x[D0AA]"  ~~ m/^<-:M>$/, q{Match unrelated inverted <M> (Mark)} );
-ok("\x[D0AA]\c[COMBINING GRAVE ACCENT]" ~~ m/<M>/, q{Match unanchored <M> (Mark)} );
+ok("\x[D0AA]\c[COMBINING GRAVE ACCENT]" ~~ m/<:M>/, q{Match unanchored <M> (Mark)} );
 
 ok("\c[COMBINING GRAVE ACCENT]" ~~ m/^<:Mark>$/, q{Match <:Mark>} );
 ok(!( "\c[COMBINING GRAVE ACCENT]" ~~ m/^<:!Mark>$/ ), q{Don't match negated <Mark>} );
@@ -264,7 +264,7 @@ ok(!( "\c[SUPERSCRIPT ZERO]" ~~ m/^<-:N>$/ ), q{Don't match inverted <N> (Number
 ok(!( "\c[LATIN LETTER SMALL CAPITAL E]"  ~~ m/^<:N>$/ ), q{Don't match unrelated <N> (Number)} );
 ok("\c[LATIN LETTER SMALL CAPITAL E]"  ~~ m/^<:!N>$/, q{Match unrelated negated <N> (Number)} );
 ok("\c[LATIN LETTER SMALL CAPITAL E]"  ~~ m/^<-:N>$/, q{Match unrelated inverted <N> (Number)} );
-ok("\c[LATIN LETTER SMALL CAPITAL E]\c[SUPERSCRIPT ZERO]" ~~ m/<N>/, q{Match unanchored <N> (Number)} );
+ok("\c[LATIN LETTER SMALL CAPITAL E]\c[SUPERSCRIPT ZERO]" ~~ m/<:N>/, q{Match unanchored <N> (Number)} );
 
 ok("\c[DIGIT ZERO]" ~~ m/^<:Number>$/, q{Match <:Number>} );
 ok(!( "\c[DIGIT ZERO]" ~~ m/^<:!Number>$/ ), q{Don't match negated <Number>} );
@@ -355,7 +355,7 @@ ok(!( "\c[EXCLAMATION MARK]" ~~ m/^<-:P>$/ ), q{Don't match inverted <P> (Punctu
 ok(!( "\x[A918]"  ~~ m/^<:P>$/ ), q{Don't match unrelated <P> (Punctuation)} );
 ok("\x[A918]"  ~~ m/^<:!P>$/, q{Match unrelated negated <P> (Punctuation)} );
 ok("\x[A918]"  ~~ m/^<-:P>$/, q{Match unrelated inverted <P> (Punctuation)} );
-ok("\x[A918]\c[EXCLAMATION MARK]" ~~ m/<P>/, q{Match unanchored <P> (Punctuation)} );
+ok("\x[A918]\c[EXCLAMATION MARK]" ~~ m/<:P>/, q{Match unanchored <P> (Punctuation)} );
 
 ok("\c[EXCLAMATION MARK]" ~~ m/^<:Punctuation>$/, q{Match <:Punctuation>} );
 ok(!( "\c[EXCLAMATION MARK]" ~~ m/^<:!Punctuation>$/ ), q{Don't match negated <Punctuation>} );
@@ -532,7 +532,7 @@ ok(!( "\c[YI RADICAL QOT]" ~~ m/^<-:S>$/ ), q{Don't match inverted <S> (Symbol)}
 ok(!( "\x[8839]"  ~~ m/^<:S>$/ ), q{Don't match unrelated <S> (Symbol)} );
 ok("\x[8839]"  ~~ m/^<:!S>$/, q{Match unrelated negated <S> (Symbol)} );
 ok("\x[8839]"  ~~ m/^<-:S>$/, q{Match unrelated inverted <S> (Symbol)} );
-ok("\x[8839]\c[YI RADICAL QOT]" ~~ m/<S>/, q{Match unanchored <S> (Symbol)} );
+ok("\x[8839]\c[YI RADICAL QOT]" ~~ m/<:S>/, q{Match unanchored <S> (Symbol)} );
 
 ok("\c[HEXAGRAM FOR THE CREATIVE HEAVEN]" ~~ m/^<:Symbol>$/, q{Match <:Symbol>} );
 ok(!( "\c[HEXAGRAM FOR THE CREATIVE HEAVEN]" ~~ m/^<:!Symbol>$/ ), q{Don't match negated <Symbol>} );
@@ -645,7 +645,7 @@ ok(!( "\c[IDEOGRAPHIC SPACE]" ~~ m/^<-:Z>$/ ), q{Don't match inverted <Z> (Separ
 ok(!( "\x[2C08]"  ~~ m/^<:Z>$/ ), q{Don't match unrelated <Z> (Separator)} );
 ok("\x[2C08]"  ~~ m/^<:!Z>$/, q{Match unrelated negated <Z> (Separator)} );
 ok("\x[2C08]"  ~~ m/^<-:Z>$/, q{Match unrelated inverted <Z> (Separator)} );
-ok("\x[2C08]\c[IDEOGRAPHIC SPACE]" ~~ m/<Z>/, q{Match unanchored <Z> (Separator)} );
+ok("\x[2C08]\c[IDEOGRAPHIC SPACE]" ~~ m/<:Z>/, q{Match unanchored <Z> (Separator)} );
 
 ok("\c[SPACE]" ~~ m/^<:Separator>$/, q{Match <:Separator>} );
 ok(!( "\c[SPACE]" ~~ m/^<:!Separator>$/ ), q{Don't match negated <Separator>} );
@@ -744,7 +744,7 @@ ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
 #?rakudo skip "Uninvestigated nqp-rx regression"
-ok("\x[6A3F]\x[9FC4]" ~~ m/<C>/, q{Match unanchored <C> (Other)} );
+ok("\x[6A3F]\x[9FC4]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 ok("\x[A679]" ~~ m/^<:Other>$/, q{Match <:Other>} );
 ok(!( "\x[A679]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
