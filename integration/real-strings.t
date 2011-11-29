@@ -64,7 +64,6 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 # RT #67852
 {
     lives_ok { 'normal'.trans() }, 'can .trans() on normal string';
-    #?rakudo todo 'RT 67852'
     lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
 }
 
@@ -85,7 +84,6 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 {
     my $contents = slurp 't/spec/integration/real-strings.t';
-    #?rakudo todo ".slurp doesn't return a Str at the moment"
     lives_ok {$contents.trans(['t'] => ['T']) }, 
        'Still works with strings returned from slurp() (lives)';
 }
