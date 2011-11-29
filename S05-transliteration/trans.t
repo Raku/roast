@@ -97,7 +97,7 @@ is("I\xcaJ".trans('I..J' => 'i..j'), "i\xcaj");
 is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 
 # should these be combined?
-#?rakudo todo 'disambiguate ranges'
+#?rakudo skip 'disambiguate ranges'
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
     'ambiguous ranges combined');
 
@@ -112,6 +112,7 @@ is($b.trans('..A..H..' => '__a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     'leading, trailing ranges interpreted as string');
 
 # added as a consequence of RT #76720
+#?rakudo skip 'RT 76720'
 is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete
