@@ -185,6 +185,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.min.WHAT.gist, "Str()", 'range start is a string';
     is $range.max,   $end, 'range ends at end';
     is $range.max.WHAT.gist, "Str()", 'range end is a string';
+    #?rakudo todo "RT #105014"
     lives_ok { "$range" }, 'can stringify range';
     #?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'."
     #?niecza todo
