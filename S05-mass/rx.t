@@ -1494,7 +1494,6 @@ ok 'ab c d ef' !~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 ok 'a b c def' ~~ /:s(1) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s b c [:!s d e f ]	a b c def	y	sigspace, lexical repetition (:s)
-#?rakudo skip 'parse error'
 ok 'a b c def' ~~ /:s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(1) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
@@ -1502,7 +1501,6 @@ ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s
 
 # todo :pge<feature>
 #### :!s b c [:s d e f ]	a b c def	n	sigspace, lexical repetition (:s)
-#?rakudo skip 'parse error'
 ok 'a b c def' !~~ /:!s b c [:s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(0) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
@@ -1510,7 +1508,6 @@ ok 'a b c def' !~~ /:s(0) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s
 
 # todo :pge<feature>
 #### :!s b c [:!s d e f ]	a b c def	n	sigspace, lexical repetition (:s)
-#?rakudo skip 'parse error'
 ok 'a b c def' !~~ /:!s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s ab 				ab		y	sigspace, trailing ws

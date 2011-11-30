@@ -578,7 +578,6 @@ Hello, World
     is  qx/echo world/.chomp, "world", 'qx';
     is qqx/echo $var/.chomp,  "world", 'qqx';
     # RT #78874
-    #?rakudo skip 'trans'
     is qx/echo world/.trans('wd' => 'WD'), "WorlD\n", "qx doesn't return a Parrot string";
 }
 
