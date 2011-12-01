@@ -106,7 +106,6 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], "'Twas brillig, and the slithy toves",
         'get() with default separator';
     is $expected[$i++], 'Did gyre and gimble in the wabe;', 'default separator';
-    #?rakudo 5 todo 'nom regression'
     is $expected[$i++], 'All mimsy were the borogoves,', '\r\n separator';
     is $expected[$i++], 'And the mome raths outgrabe', '. as a separator';
     is $expected[$i++], 'O frabjous day', '! separator not at end of string';
