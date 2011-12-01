@@ -36,7 +36,7 @@ is (@array.min: { abs $^a }), 0,
 is min(:by({ $^a.abs }), @array), 0,
   "subroutine form of min taking a comparison block works";
 
-#?rakudo 2 skip "Range.min not fully implemented yet"
+#?rakudo 2 skip "Range.min not fully implemented yet (RT #105118)"
 is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
   "method form of min on Ranges taking a comparison block works";
 
@@ -52,7 +52,7 @@ is (@array.max: { $^a <=> $^b }), 7,
 
 is max(@array), 7, 'sub form of max';
 
-#?rakudo skip "Range.max not fully implemented yet"
+#?rakudo skip "Range.max not fully implemented yet (RT #105118)"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
   "method form of max on Ranges taking a comparison block works";
 
@@ -72,7 +72,7 @@ is (@array.max: { $^a.abs }), -9,
 is max(:by({ $^a.abs }), @array), -9,
   "subroutine form of max taking a modifier block works";
 
-#?rakudo skip "Range.max not fully implemented yet"
+#?rakudo skip "Range.max not fully implemented yet (RT #105118)"
 is ((1..10).max: { ($_-3) * ($_-5) }), 10,
   "method form of max taking an arity-1 comparison block works";
 

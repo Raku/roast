@@ -256,7 +256,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 
     is(:8<37777777777>, 0xffff_ffff, 'got the correct int value from oct 3777777777');
     is +":16<DeAdBeEf>", 0xDEADBEEF, "radix 16 notation works";
-    #?rakudo todo 'nom regression'
+    #?rakudo todo 'RT #105116'
     is +":16<dead_beef.face>", 0xDEADBEEF + 0xFACE / 65536.0, "fractional base 16 works";
     
     is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
