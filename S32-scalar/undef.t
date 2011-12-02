@@ -198,13 +198,13 @@ Perl6-specific tests
 {
     my Hash $a_hash;
 
-    ok(!defined($a_hash), "my Hash");
-    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - Mu");
-    ok((try { !defined($a_hash<blergh>) }), "my Hash subscript - Mu, no autovivification happened");
+    nok(defined($a_hash), "my Hash");
+    nok(defined($a_hash<blergh>), "my Hash subscript - Mu");
+    nok(defined($a_hash<blergh>), "my Hash subscript - Mu, no autovivification happened");
 
     $a_hash<blergh> = 1;
     ok(defined($a_hash.delete('blergh')), "delete");
-    ok(!defined($a_hash.delete("blergh")), " - once only");
+    nok(defined($a_hash.delete("blergh")), " - once only");
 }
 
 
