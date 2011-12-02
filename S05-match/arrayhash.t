@@ -12,11 +12,9 @@ plan 8;
 # Matching against an array should be true if any of the values match.
 my @a = ('a', 'b' );
 ok(@a ~~ / 'b' /);
-#?rakudo todo 'nom regression'
 #?niecza todo
 ok(@a ~~ / ^ 'b' /);
 ok(@a ~~ / ^ 'a' /);
-#?rakudo todo 'nom regression'
 #?niecza todo
 ok(@a ~~ / ^ 'a' $ /);
 

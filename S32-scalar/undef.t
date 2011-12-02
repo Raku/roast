@@ -184,16 +184,14 @@ Perl6-specific tests
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 
+#?rakudo skip 'autovivification'
 {
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
-    #?rakudo todo 'nom regression'
-    ok((try { !defined($an_ary[0]) }), "my Array subscript - Mu");
-    try { $an_ary.push("blergh") };
-    #?rakudo todo 'nom regression'
-    ok((try { defined($an_ary.pop) }), "push");
-    #?rakudo todo 'nom regression'
-    ok((try { !defined($an_ary.pop) }), "comes to shove");
+    nok( defined($an_ary[0]) , "my Array subscript - Mu");
+    $an_ary.push("blergh");
+    ok(defined($an_ary.pop), "push");
+    nok(defined($an_ary.pop), "comes to shove");
 }
 
 #?rakudo skip 'Autovivify hashes'
