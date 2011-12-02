@@ -216,7 +216,8 @@ fail fail fail
     is gray(2), <00 01 11 10>;
     is gray(3), <000 001 011 010 110 111 101 100>;
 }
-#?rakudo skip 'state variables'
+
+#?rakudo skip 'Shaped variable declarations'
 {    
     sub gray2($n) {
         return ('',) if $n == 0;
