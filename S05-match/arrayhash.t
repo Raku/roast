@@ -21,11 +21,9 @@ ok(@a ~~ / ^ 'a' $ /);
 # Matching against a hash should be true if any of the keys match.
 my %a = ('a' => 1, 'b' => 2);
 ok(%a ~~ / 'b' /);
-#?rakudo todo 'nom regression'
 #?niecza todo
 ok(%a ~~ / ^ 'b' /);
 ok(%a ~~ / ^ 'a' /);
-#?rakudo todo 'nom regression'
 #?niecza todo
 ok(%a ~~ / ^ 'a' $ /);
 
