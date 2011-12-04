@@ -11,7 +11,6 @@ plan 18;
 {
     my Int %h;
     ok %h.of === Int, 'my Int %h declares a Hash of Int';
-    #?rakudo 4 todo "bug when initializing typed hashes (RT #73412)"
     lives_ok { %h = (a => 3, b => 7) }, 'can assign Ints to an Hash of Int';
     lives_ok { %h<foo> = 8           }, 'can assign Int to hash slot';
     lives_ok { %h{'c', 'd' } = (3, 4) }, 'can assign to slice of typed hash';
@@ -23,11 +22,8 @@ plan 18;
     is %h.pairs.sort.join, %g.pairs.sort.join, 
                         '... and the hashes are the same afterwards';
 
-    #?rakudo todo "bug when initializing typed hashes (RT #73412)"
     lives_ok { my Int %s = :a(3) }, 'can initialize typed hash';
-    #?rakudo emit #
     my Str %s = :a<b>;
-    #?rakudo 5 skip "depends on non-working code (RT #73412)"
     dies_ok { %h = %s }, "Can't assign Str hash to Int hash";
     dies_ok { %h = :a<b> }, "Can't assign literal Str hash to Int hash";
     dies_ok { %h<a> = 'foo' }, "Can't assign to hash item";
@@ -36,12 +32,12 @@ plan 18;
 }
 
 {
-    #?rakudo todo "bug when initializing typed hashes (RT #73412)"
     lives_ok { my %s of Int = :a(3) }, 'can initialize typed hash (of Int)';
+    #?rakudo todo "of trait on vars"
     dies_ok { my %s of Int = :a("3") }, 'initialization of typed hash type checked (of Int)';
     my %s of Str;
-    #?rakudo todo "bug when initializing typed hashes (RT #73412)"
     lives_ok { %s<a> = 'b' }, "Can assign to typed hash element (of Int)";
+    #?rakudo todo "of trait on vars"
     dies_ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 }
 
