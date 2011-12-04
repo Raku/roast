@@ -27,7 +27,6 @@ plan 10;
   try { $sub(); $was_after_sub++ };
 
   is $was_after_fail, 0, "fail() causes our sub to return (2)";
-  #?rakudo todo 'nom regression'
   is $was_after_sub,  0, "fail() causes our try to die";
 }
 

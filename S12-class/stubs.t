@@ -21,7 +21,6 @@ eval_lives_ok q[ package StubD { ... }; class StubD { method foo { } }; ],
 
 lives_ok { sub {...} }, 'not execued stub code is fine';
 dies_ok { (sub {...}).() ~ '' }, 'execued stub code goes BOOM when used';
-#?rakudo todo 'nom regression'
 dies_ok { use fatal; (sub { ... }).() }, 'exeucted stub code goes BOOM under fatal';
 
 # vim: ft=perl6
