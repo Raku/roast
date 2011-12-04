@@ -205,7 +205,7 @@ a "=cut".
     is eval(q{
         my $var = 1;
 
-=for comment TimToady is here!
+=comment TimToady is here!
 
         32;
     }), 32, '=for comment works';
@@ -215,7 +215,7 @@ a "=cut".
     is eval(q{
         my $var = 1;
 
-=for comment TimToady and audreyt
+=comment TimToady and audreyt
 are both here, yay!
 
         17;
