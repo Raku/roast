@@ -146,7 +146,7 @@ plan 20;
 }
 
 #?niecza skip 'series'
-#?rakudo skip 'nom regression (needs %%)'
+#?rakudo skip 'nom regression (loops)'
 {
     my sub grep-div(@a, $n) {
         gather for @a {
