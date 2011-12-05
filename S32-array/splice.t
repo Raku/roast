@@ -119,7 +119,6 @@ my @tmp = (1..10);
     is( @b, [6,7,8], "Implicit context gives the expected results"); # this is due to the method-fallback bug
 }
 
-#?rakudo skip "item() NYI"
 {
     @tmp = (1..10);
     @a = item splice @tmp, 5, 3;
