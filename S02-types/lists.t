@@ -12,7 +12,9 @@ use Test;
 plan 29;
 
 # Indexing lists
-#?rakudo todo 'nom regression'
+
+# RT #105368
+#?rakudo todo "Can't assign to a variable in a list"
 {
   my $foo = 42;
 
