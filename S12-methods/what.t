@@ -57,14 +57,12 @@ This test tests the C<WHAT> builtin.
     is +("bac" ~~ /a/).WHAT.gist, 0, 'numification of .WHAT of a Match works';
 }
 
-#?rakudo skip 'nom regression'
-ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
+ok &infix:<+>.WHAT ~~ Sub, '.WHAT of built-in infix op is Multi (RT 66928)';
 
 # RT #69915
-#?rakudo skip 'nom regression'
 {
-    sub rt69915f( $a, $b ) { return WHAT($a).gist ~ '~' ~ WHAT($b).gist }
-    sub rt69915m( $a, $b ) { return $a.WHAT.gist  ~ '~' ~ $b.WHAT.gist }
+    sub rt69915f($b, :$a! ) { return WHAT($a).gist ~ '~' ~ WHAT($b).gist }
+    sub rt69915m( $b, :$a! ) { return $a.WHAT.gist  ~ '~' ~ $b.WHAT.gist }
 
     is rt69915m( a => 42, 23 ), 'Int()~Int()', 'WHAT method on ints';
 
@@ -75,11 +73,11 @@ ok &infix:<+>.WHAT ~~ Multi, '.WHAT of built-in infix op is Multi (RT 66928)';
     is rt69915m( :a, 23 ), 'Bool()~Int()', 'WHAT method on bool and int';
 
     sub wm($x) { return $x.WHAT.gist }
-    sub rt69915wm( $a, $b ) { return wm($a) ~ '~' ~ wm($b) }
+    sub rt69915wm( $b, :$a ) { return wm($a) ~ '~' ~ wm($b) }
     is rt69915wm( a => 42, 23 ), 'Int()~Int()', 'WHAT method on ints via func';
     
     sub wf($x) { return WHAT($x).gist }
-    sub rt69915wf( $a, $b ) { return wf($a) ~ '~' ~ wf($b) }
+    sub rt69915wf( $b, :$a ) { return wf($a) ~ '~' ~ wf($b) }
     is rt69915wf( a => 42, 23 ), 'Int()~Int()', 'WHAT func on ints via func';
 }
 
