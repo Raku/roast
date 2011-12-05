@@ -33,7 +33,6 @@ ok !('non_existing_dir'.IO ~~ :d ),
 ok $*PROGRAM_NAME.IO ~~ :f,  "~~:f returns true on files";
 ok $*PROGRAM_NAME.IO ~~ :e,  "~~:e returns true on files";
 ok 't'.IO ~~ :e,             "~~:e returns true on directories";
-#?rakudo 2 skip ':r, :w'
 ok $*PROGRAM_NAME.IO ~~ :r,  "~~:r returns true on readable files";
 ok $*PROGRAM_NAME.IO ~~ :w,  "~~:w returns true on writable files";
 
@@ -52,24 +51,22 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
 }
 
 nok "t".IO ~~ :f, "~~:f returns false on directories";
-#?rakudo skip ':r'
 ok "t".IO ~~ :r,  "~~:r returns true on a readable directory";
 
 ok 'doesnotexist'.IO !~~ :d, "~~:d returns false on non-existent directories";
-#?rakudo 3 skip 'rwx'
 ok 'doesnotexist'.IO !~~ :r, "~~:r returns false on non-existent directories";
 ok 'doesnotexist'.IO !~~ :w, "~~:w returns false on non-existent directories";
 ok 'doesnotexist'.IO !~~ :x, "~~:x returns false on non-existent directories";
 ok 'doesnotexist'.IO !~~ :f, "~~:f returns false on non-existent directories";
 
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
-#?rakudo 3 skip 'rwx'
 ok not 'doesnotexist.t'.IO ~~ :r, "~~:r returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :w, "~~:w returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
 #?niecza skip ".s NYI"
+#?rakudo todo ".s doesn't seem to work - maybe Win32 specific though?"
 ok($*PROGRAM_NAME.IO.s > 42,   "~~:s returns size on existent files");
 
 nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
