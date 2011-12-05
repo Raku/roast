@@ -80,7 +80,6 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
 
 # tests for non-number values on rhs of xx (RT #76720)
-#?rakudo skip 'nom regression'
 #?DOES 2
 {
     # make sure repeat numifies rhs, but respects whatever
