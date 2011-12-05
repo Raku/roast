@@ -78,7 +78,6 @@ plan 140;
 # RT #72438
 # Subroutines with keywords for names (may need to be called with
 # parentheses).
-#?rakudo skip 'nom regression - parses, but only some fail'
 #?DOES 114
 {
     for <
