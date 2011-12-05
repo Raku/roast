@@ -254,7 +254,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # RT #82620
-#?rakudo todo "range leaking Parrot types: Method 'trans' not found for invocant of class 'Str'"
 #?niecza todo
 {
     lives_ok {("a".."b").map({.trans(""=>"")}).perl},
