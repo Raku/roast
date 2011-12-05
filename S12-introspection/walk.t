@@ -91,14 +91,14 @@ sub cand_order(@cands, $instance) {
 # :include
 {
     my $x = E.new;
-    my @cands = $x.WALK(:name<m>, :include({ ~$^c ~~ regex { <[CDE]> } }));
+    my @cands = $x.WALK(:name<m>, :include({ $^c.gist ~~ regex { <[CDE]> } }));
     is cand_order(@cands, $x), 'ECD', ':include works';
 }
 
 # :include and :omit
 {
     my $x = E.new;
-    my @cands = $x.WALK(:name<m>, :include({ ~$^c ~~ regex { <[CDE]> } }), :omit({ .^can('n') }));
+    my @cands = $x.WALK(:name<m>, :include({ $^c.gist ~~ regex { <[CDE]> } }), :omit({ .^can('n') }));
     is cand_order(@cands, $x), 'D', ':include and :omit together work';
 }
 
