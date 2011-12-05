@@ -71,7 +71,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $t, 'ababa', '$_ % * works';
 }
 
-#?rakudo skip 'sort'
 {
     my $x = +*;
     isa_ok $x, Code, '+* is of type Code';
