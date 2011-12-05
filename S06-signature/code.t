@@ -23,11 +23,11 @@ ok $collector == 12, 'same with anonymous sub';
 
 sub tester2(&my_sub) { 1 }    #OK not used
 #?niecza todo
-dies_ok {tester2(42)}, "can't pass thing that doesn't do Callable";
+dies_ok {eval 'tester2(42)' }, "can't pass thing that doesn't do Callable";
 
 sub not_returns_a_sub { 3 };
 #?niecza todo
-dies_ok {tester2(not_returns_a_sub)}, 
+dies_ok { eval 'tester2(not_returns_a_sub)' }, 
         "can't pass thing that doesn't do Callable";
 
 is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
@@ -47,6 +47,7 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
         $tracker = &foo
     };
     #?niecza todo
+    #?rakudo todo 'RT 67932'
     lives_ok { foo },
         'can call a sub with a code object defaulting to something of its own name';
     ok !$tracker.defined, 'the inner &foo is undefined (scoping)';
