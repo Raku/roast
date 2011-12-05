@@ -53,10 +53,9 @@ sub modify(C1 @arr) {
 dies_ok({ eval 'modify(@x)' }, 'type constraints enforced properly');
 
 # Use of parametric subtyping for assignment.
-my Num @a;
+my Numeric @a;
 my Int @b = 1,2;
 lives_ok({ @a = @b }, 'assignment worked as expected');
-#?rakudo skip 'weird error'
 is(@a[0], 1,          'assignment worked as expected');
 
 # vim: ft=perl6
