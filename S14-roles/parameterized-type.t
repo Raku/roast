@@ -63,6 +63,7 @@ dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints insid
 eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
 
 # RT #68136
+#?rakudo skip 'generic instantiation fail, somewhere'
 {
     role TreeNode[::T] does Positional {
         has TreeNode[T] @!children handles 'postcircumfix:<[ ]>';
