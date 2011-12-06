@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 124;
+plan 125;
 
 # single-term sequence
 
@@ -242,6 +242,9 @@ eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
 
 # RT #73268
 is ~(1...^*).munch(10), '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
+
+# RT #76046
+is (1, 1, &[+] ... *).munch(10), '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...> series';
 
 done;
 
