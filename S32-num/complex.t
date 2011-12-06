@@ -17,6 +17,7 @@ isa_ok(3\i, Complex, '$n\i form creates a Complex number');
 is_approx((2i)i, -2, 'postfix:<i> works on an imaginary number');
 is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 
+#?niecza todo '#79'
 dies_ok { (2 + 3i) > (2 + 2i) }, '> comparison of complex numbers dies';
 
 #?rakudo 3 skip 'i'
