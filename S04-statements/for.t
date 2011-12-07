@@ -312,6 +312,7 @@ class TestClass{ has $.key is rw  };
 }
 
 # another variation
+#?niecza todo '#81'
 {
     my $t = '';
     my $c;
