@@ -7,12 +7,11 @@ BEGIN { @*INC.push('t/spec/packages') };
 
 use Test::Util;
 
-#?rakudo todo 'nom regression'
 is_run 'use v6; warn; say "alive"',
     {
         status => 0,
         out => rx/alive/,
-        err => /:i warning/,
+        err => /:i Warning/,
     },
     'warn() without arguments';
 
