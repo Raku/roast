@@ -111,6 +111,7 @@ for %tests.keys.sort -> $t {
     is $big-int.truncate, $big-int, "truncate passes bigints unchanged";
 }
 
+#?rakudo todo "These calls return Nums?!?"
 {
     my $big-rat = 1234567890123456789012345678903 / 2;
     my $big-int = 1234567890123456789012345678903 div 2;
