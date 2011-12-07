@@ -106,7 +106,6 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
 #?pugs 3 todo 'bug'
 #?rakudo 3 todo 'Inf and NaN NYI for Int'
-#?niecza 3 todo 'Inf and NaN NYI for Int'
 is((Inf).Int,    Inf, "int Inf is Inf");
 is((-Inf).Int,  -Inf, "int -Inf is -Inf");
 is((NaN).Int,    NaN, "int NaN is NaN");

@@ -156,6 +156,7 @@ is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
 # RT #74648
 #?rakudo skip 'RT 74648'
+#?niecza todo
 isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
 }
 
