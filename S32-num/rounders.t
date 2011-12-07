@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 108;
+plan 120;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -101,6 +101,33 @@ for %tests.keys.sort -> $type {
 for %tests.keys.sort -> $t {
     isa_ok eval("{$t}(1.1)"), Int, "rounder $t returns an Int";
 
+}
+
+{
+    my $big-int = 1234567890123456789012345678903;
+    is $big-int.floor, $big-int, "floor passes bigints unchanged";
+    is $big-int.ceiling, $big-int, "ceiling passes bigints unchanged";
+    is $big-int.round, $big-int, "round passes bigints unchanged";
+    is $big-int.truncate, $big-int, "truncate passes bigints unchanged";
+}
+
+{
+    my $big-rat = 1234567890123456789012345678903 / 2;
+    my $big-int = 1234567890123456789012345678903 div 2;
+    is $big-rat.floor, $big-int, "floor handles Rats properly";
+    is $big-rat.ceiling, $big-int + 1, "ceiling handles Rats properly";
+    is $big-rat.round, $big-int + 1, "round handles Rats properly";
+    is $big-rat.truncate, $big-int, "truncate handles Rats properly";
+}
+
+#?rakudo skip "FatRat NYI"
+{
+    my $big-rat = FatRat.new(1234567890123456789012345678903, 2);
+    my $big-int = 1234567890123456789012345678903 div 2;
+    is $big-rat.floor, $big-int, "floor handles FatRats properly";
+    is $big-rat.ceiling, $big-int + 1, "ceiling handles FatRats properly";
+    is $big-rat.round, $big-int + 1, "round handles FatRats properly";
+    is $big-rat.truncate, $big-int, "truncate handles FatRats properly";
 }
 
 done;
