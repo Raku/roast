@@ -408,7 +408,9 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
     ok %h{all(0,1)} ~~ /^foo/,
         'junction can be used to index Hash';
 }
+
 # stringy tests
+#?niecza skip '#82'
 {
    my class Foo {
       multi method gist(Foo:D:) { "gisted"; }
