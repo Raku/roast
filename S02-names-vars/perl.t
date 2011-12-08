@@ -1,15 +1,11 @@
 use v6;
 use Test;
-plan 78;
-
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 my @tests = (
     # Basic scalar values
     42, 42/10, 4.2, 
-    #?rakudo emit # sqrt(2) is a Num which we cannot currently .perl / eval
     sqrt(2),
-    #?rakudo emit # 3e5 is converted to a Str when re-evaled
     3e5,
     Inf, -Inf, NaN,
 
@@ -135,6 +131,7 @@ my @tests = (
 }
 
 # RT #67790
+#?rakudo skip 'RT 67790'
 {
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
