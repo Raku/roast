@@ -1242,15 +1242,12 @@ ok 'ab0cdef' !~~ /a\D+f/, 'not digit';
 ok 'abcdef' ~~ /:i bcd/, 'ignorecase (:i)';
 
 #### :i bcd			aBcdef	y	ignorecase (:i)
-#?rakudo todo 'nom regression'
 ok 'aBcdef' ~~ /:i bcd/, 'ignorecase (:i)';
 
 #### :i bcd			abCdef	y	ignorecase (:i)
-#?rakudo todo 'nom regression'
 ok 'abCdef' ~~ /:i bcd/, 'ignorecase (:i)';
 
 #### :i bcd			abcDef	y	ignorecase (:i)
-#?rakudo todo 'nom regression'
 ok 'abcDef' ~~ /:i bcd/, 'ignorecase (:i)';
 
 #### :i bcd			abc-ef	n	ignorecase (:i)
@@ -1260,7 +1257,6 @@ ok 'abc-ef' !~~ /:i bcd/, 'ignorecase (:i)';
 ok 'abcdef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
 #### :ignorecase bcd		aBCDef	y	ignorecase (:ignorecase)
-#?rakudo todo 'nom regression'
 ok 'aBCDef' ~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
 #### :ignorecase bcd		abc-ef	n	ignorecase (:ignorecase)
@@ -1279,7 +1275,6 @@ ok 'abcdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		abCdef	y	ignorecase, repetition (:i(1))
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'abCdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		aBxDef	n	ignorecase, repetition (:i(1))
@@ -1298,12 +1293,10 @@ ok 'abcdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
 #### :1i bcd			abCdef	y	ignorecase, repetition (:1i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'abCdef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
 #### :1i bcd			aBCDef	y	ignorecase, repetition (:1i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'aBCDef' ~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 
 #### :1i bcd			aBxDef	n	ignorecase, repetition (:1i)
@@ -1313,15 +1306,12 @@ ok 'aBxDef' !~~ /:1i bcd/, 'ignorecase, repetition (:1i)';
 ok 'abcdef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### ab [:i cd ] ef		abCdef	y	ignorecase, lexical (:i)
-#?rakudo todo 'nom regression'
 ok 'abCdef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### ab [:i cd ] ef		abcDef	y	ignorecase, lexical (:i)
-#?rakudo todo 'nom regression'
 ok 'abcDef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### ab [:i cd ] ef		abCDef	y	ignorecase, lexical (:i)
-#?rakudo todo 'nom regression'
 ok 'abCDef' ~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### ab [:i cd ] ef		aBCDef	n	ignorecase, lexical (:i)
@@ -1331,25 +1321,20 @@ ok 'aBCDef' !~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 ok 'abCDEf' !~~ /ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i cd ] ef	abCDef	y	ignorecase, lexical (:i)
-#?rakudo todo 'nom regression'
 ok 'abCDef' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i cd ] ef	AbCDeF	y	ignorecase, lexical (:i)
-#?rakudo todo 'nom regression'
 ok 'AbCDeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i cd ] ef	AbcdeF	y	ignorecase, lexical (:i)
-#?rakudo todo 'nom regression'
 ok 'AbcdeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEf		y	ignorecase, lexical (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'AbCdEf' ~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeff	y	ignorecase, lexical (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'AabbCcddEeff' ~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEF		n	ignorecase, lexical (:i)
@@ -1360,21 +1345,17 @@ ok 'AabbCcddEeFf' !~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ]
 
 #### :i ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'AbcdeF' ~~ /:i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i ab [:!i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
-#?rakudo skip 'parse error'
 ok 'AbcdeF' ~~ /:i ab [:!i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i ab [:0i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'AbcdeF' ~~ /:i ab [:0i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	abCDef	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'abCDef' ~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbCDeF	n	ignorecase, lexical repetition (:i)
@@ -1392,12 +1373,10 @@ ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'AbCdeF' ~~ /:i(1) ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'AbcdeF' ~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcDeF	n	ignorecase, lexical repetition (:i)
@@ -1405,12 +1384,10 @@ ok 'AbcDeF' !~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)'
 
 #### :i(2) ab [:i(999) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :1i ab [:i(1) cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
@@ -1418,11 +1395,9 @@ ok 'abcDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :2i ab [:999i cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'ABCDEF' ~~ /:2i ab [:999i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### ab [:ignorecase cd ] ef		abCDef	y	ignorecase, lexical (:ignorecase)
-#?rakudo todo 'nom regression'
 ok 'abCDef' ~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
 #### ab [:ignorecase cd ] ef		aBCDef	n	ignorecase, lexical (:ignorecase)
@@ -1430,7 +1405,6 @@ ok 'aBCDef' !~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
 #### :1ignorecase ab [:ignorecase(1) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:ignorecase)
 #?pugs todo 'feature'
-#?rakudo todo 'nom regression'
 ok 'ABCDEF' ~~ /:1ignorecase ab [:ignorecase(1) cd ] ef/, 'ignorecase, lexical repetition (:ignorecase)';
 
 #### :s bcd			a bcdef		y	sigspace (:s)

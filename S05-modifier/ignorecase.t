@@ -17,7 +17,6 @@ Note that the meaning of C<:i> does B<not> descend into subrules.
 # tests for inline modifiers
 # L<S05/Modifiers/and Unicode-level modifiers can be>
 
-#?rakudo todo 'nom regression'
 ok("abcDEFghi" ~~ m/abc (:i def) ghi/, 'Match');
 ok(!( "abcDEFGHI" ~~ m/abc (:i def) ghi/ ), 'Mismatch');
 
@@ -35,13 +34,11 @@ ok "hello" !~~ m/<&mixedcase>/, "do not match lowercase (subrule)";
 ok "hello" !~~ m/Hello/,       "do not match lowercase (direct)";
 
 ok "hello" !~~ m:i/<&mixedcase>/, "no match with :i if matched by subrule";
-#?rakudo todo 'nom regression'
 ok "hello"  ~~ m:i/Hello/,       "match with :i (direct)";
 
 ok "hello" !~~ m:ignorecase/<&mixedcase>/,  "no match with :ignorecase + subrule";
 #?niecza todo
 ok "hello" !~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
-#?rakudo todo 'nom regression'
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 
 # The German ß (&szlig;) maps to uppercase SS:
@@ -53,7 +50,6 @@ ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 
 #RT #76750
-#?rakudo todo 'nom regression'
 ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

@@ -58,7 +58,6 @@ is_run 'say 42; nosuchsub()',
     diag "Error message: $e";
     ok $e ~~ /:i 'type check'/,
         'subset type check fail mentions type check';
-    #?rakudo todo 'nom regression'
     ok $e ~~ /:i constraint/,
         'subset type check fail mentions constraint';
 }

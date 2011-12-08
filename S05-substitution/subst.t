@@ -343,10 +343,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     is 'The foo and the bar'.subst('the', 'that', :samecase), 'The foo and that bar', '.substr and :samecase (1)';
     is 'The foo and the bar'.subst('the', 'That', :samecase), 'The foo and that bar', '.substr and :samecase (2)';
-    #?rakudo todo 'samecase'
     is 'The foo and the bar'.subst(/:i the/, 'that', :samecase), 'That foo and the bar', '.substr (string pattern) and :    samecase (1)';
     is 'The foo and the bar'.subst(/:i The/, 'That', :samecase), 'That foo and the bar', '.substr (string pattern) and :    samecase (2)';
-    #?rakudo 5 todo 'samecase'
     is 'The foo and the bar'.subst(/:i the/, 'that', :g, :samecase), 'That foo and that bar', '.substr (string pattern)     and :g and :samecase (1)';
     is 'The foo and the bar'.subst(/:i The/, 'That', :g, :samecase), 'That foo and that bar', '.substr (string pattern)     and :g and :samecase (2)';
 
