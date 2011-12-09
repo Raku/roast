@@ -289,6 +289,7 @@ Testing operator overloading subroutines
     ok !(A.new(v => 2) == A.new(v => 3)), 'infix:<==> on A objects works (-)';
 }
 
+#?rakudo skip 'circumfix:<< >>'
 {
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
     is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works'
@@ -299,6 +300,7 @@ Testing operator overloading subroutines
     multi sub infix:<+=> (Int $a is rw, Int $b) { $a -= $b }
     my $frew = 10;
     $frew += 5;
+    #?rakudo todo 'meta ops'
     is $frew, 5, 'infix redefinition of += works';
 }
 
@@ -378,7 +380,7 @@ Testing operator overloading subroutines
        'very specific infix:<,>';
     #?rakudo todo 'RT 65638'
     is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
-    #?rakudo todo 'mixed overloaded operators of different arities'
+    #?rakudo skip 'mixed overloaded operators of different arities'
     is eval('sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }

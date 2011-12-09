@@ -29,6 +29,7 @@ sub j(*@i) {
     is j(@l>>.named),    '0 0 1', '... one named';
 }
 
+#?rakudo skip 'is ref'
 {
     sub b(:x($a)! is rw, :$y is ref, :$z is copy) { };   #OK not used
     my @l = &b.signature.params;

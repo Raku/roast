@@ -58,6 +58,9 @@ multi sub infix:<dot>(Vector $a, Vector $b) { [+]($a.coords >>*<< $b.coords); }
     is($v3.coords[1], $v1.coords[1] - $v2.coords[1], 'Subtraction correct for @coords[1]');
     is($v3.coords[2], $v1.coords[2] - $v2.coords[2], 'Subtraction correct for @coords[2]');
     ok($v1.abs > 5, "$v1.abs is of appropriate size");
+    # XXX how should is_approx know about the operators that work on
+    # type Vector? they don't lift &abs and &infix:<-> into their scope
+    #?rakudo 4 skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'"
     is_approx($v1.abs, sqrt([+] (@a1 <<*>> @a1)), "v1.abs returns correct value");
 
     is_approx($v1, $v1, "v1 is approximately equal to itself");
@@ -70,6 +73,7 @@ my Vector $v1 = Vector.new(-1/2, 2, 34);
 my Vector $v2 = Vector.new(1.0, 1/5, 0.3);
 
 # basic operations
+#?rakudo skip 'wrong infix:<-> (???)'
 is_approx($v1 + $v2, Vector.new(0.5, 2.2, 34.3), "Addition correct");
 #?rakudo 5 skip "Non-dwimmy hyperoperator cannot be used on arrays of different sizes or dimensions bug"
 is_approx(-$v1, Vector.new(1/2, -2, -34), "Negation correct");
