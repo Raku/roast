@@ -490,7 +490,6 @@ my @e;
 }
 
 #?niecza skip 'our sub'
-#?rakudo skip 'nom regression: user-defined ops'
 #?DOES 4
 {
     our sub postfix:<!>($a) {

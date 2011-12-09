@@ -112,7 +112,6 @@ is($b.trans('..A..H..' => '__a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     'leading, trailing ranges interpreted as string');
 
 # added as a consequence of RT #76720
-#?rakudo skip 'RT 76720'
 is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete

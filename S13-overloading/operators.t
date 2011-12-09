@@ -5,7 +5,6 @@ plan 3;
 
 #L<S06/Operator overloading>
 
-#?rakudo skip 'custom operators'
 {
     sub postfix:<§> ($x) {
         $x * 2;
@@ -13,7 +12,6 @@ plan 3;
     is 3§, 6, 'Can define postfix operator';
 }
 
-#?rakudo skip 'custom operators'
 {
     sub postfix:<!>($arg) {
         if ($arg == 0) { 1;}

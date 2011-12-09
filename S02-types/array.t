@@ -159,7 +159,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?niecza skip "type constraints"
-#?rakudo skip "parametrization issues"
 {
     # declare the array with data type
     my Int @array;

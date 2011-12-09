@@ -134,7 +134,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 # multi dispatch on typed containers
-#?rakudo skip 'typed array and hash containers are NYI'
 {
     multi f4 (Int @a )  { 'Array of Int' }   #OK not used
     multi f4 (Str @a )  { 'Array of Str' }   #OK not used

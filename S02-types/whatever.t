@@ -161,7 +161,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 # L<S02/The C<.assuming> Method/This is only for operators that are not
 # Whatever-aware.>
-#?rakudo skip 'user defined ops'
 {
     multi sub infix:<quack>($x, $y) { "$x|$y" };
     isa_ok * quack 5, Code,

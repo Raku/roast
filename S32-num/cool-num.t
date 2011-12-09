@@ -74,7 +74,6 @@ is_approx NotComplex.new.from-radians(Gradians), $magic.from-radians(Gradians),
 
 is_approx "17.25".floor, 17.25.floor, '"17.25".floor == 17.25.floor';
 is_approx "17.25".ceiling, 17.25.ceiling, '"17.25".ceiling == 17.25.ceiling';
-#?rakudo 2 skip 'round'
 is_approx "17.25".round, 17.25.round, '"17.25".floar == 17.25.round';
 is_approx "17.25".round("0.1"), 17.25.round(0.1), '"17.25".floar("0.1") == 17.25.round(0.1)';
 is_approx "17.25".truncate, 17.25.truncate, '"17.25".floar == 17.25.truncate';

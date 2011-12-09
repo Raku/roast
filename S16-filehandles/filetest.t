@@ -40,13 +40,11 @@ if $*OS eq any <MSWin32 mingw msys cygwin> {
   skip "win32 doesn't have ~~:x", 2;
 } else {
   if $*EXECUTABLE_NAME.IO ~~ :e {
-    #?rakudo skip ':x'
     ok $*EXECUTABLE_NAME.IO ~~ :x, "~~:x returns true on executable files";
   }
   else {
     skip "'$*EXECUTABLE_NAME' is not present (interactive mode?)", 1;
   }
-  #?rakudo skip ':x'
   ok 't'.IO ~~ :x,    "~~:x returns true on cwd()able directories";
 }
 

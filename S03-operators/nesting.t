@@ -48,7 +48,6 @@ is (1 R[R[R-]] 2), 1, 'R[R[R-]] works';
 is (1 RR[R-] 2),   1, 'RR[R-] works';
 
 # crazy stuff
-#?rakudo skip 'nom regression'
 {
     our sub infix:<blue>($a, $b) { 
         $a % $b 
