@@ -103,6 +103,14 @@ for @examples -> $z {
     is (1 + 2i).im, 2, 'Complex.im works';
 }
 
+#?niecza todo "Not handling edge cases well"
+#?rakudo todo "Not handling edge cases well"
+{
+    is_approx 0i ** 2, 0, "Complex 0 ** Int works";
+    is_approx 0i ** 2.5, 0, "Complex 0 ** Rat works";
+    is_approx 0i ** (2 + 0i), 0, "Complex 0 ** Complex works";
+}
+
 # used to be RT #68848
 {
     is_approx exp(3.0 * log(1i)), -1.83697e-16-1i,
