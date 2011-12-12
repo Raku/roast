@@ -179,14 +179,12 @@ plan 35;
 
     {
         my @s = @a.sort: { .[0] };
-        say @s.perl;
 
         ok ([<] @s.map({.[1]})), 'sort with arity 1 closure is stable';
     }
 
     {
         my @s = @a.sort: { $^a.[0] <=> $^b.[0] };
-        say @s.perl;
 
         ok ([<] @s.map({.[1]})), 'sort with arity 2 closure is stable';
     }
