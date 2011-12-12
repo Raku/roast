@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 482;
+plan 485;
 
 # Basic tests functions specific to complex numbers.
 
@@ -103,7 +103,6 @@ for @examples -> $z {
     is (1 + 2i).im, 2, 'Complex.im works';
 }
 
-#?niecza todo "Not handling edge cases well"
 #?rakudo todo "Not handling edge cases well"
 {
     is_approx 0i ** 2, 0, "Complex 0 ** Int works";
