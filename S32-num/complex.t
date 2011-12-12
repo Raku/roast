@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 485;
+plan 486;
 
 # Basic tests functions specific to complex numbers.
 
@@ -107,6 +107,7 @@ for @examples -> $z {
     is_approx 0i ** 2, 0, "Complex 0 ** Int works";
     is_approx 0i ** 2.5, 0, "Complex 0 ** Rat works";
     is_approx 0i ** (2 + 0i), 0, "Complex 0 ** Complex works";
+    is_approx 0 ** (2 + 0i), 0, "Real 0 ** Complex works";
 }
 
 # used to be RT #68848
