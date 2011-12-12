@@ -103,7 +103,6 @@ for @examples -> $z {
     is (1 + 2i).im, 2, 'Complex.im works';
 }
 
-#?rakudo todo "Not handling edge cases well"
 {
     is_approx 0i ** 2, 0, "Complex 0 ** Int works";
     is_approx 0i ** 2.5, 0, "Complex 0 ** Rat works";
