@@ -10,22 +10,20 @@ use Test::Util;
 is_run "use v6;\n'a' =~ /foo/", {
     status  => { $_ != 0 },
     out     => '',
-    err     => rx/line \s+ 2>>/
+    err     => rx/<<2>>/
 }, 'Parse error contains line number';
 
-#?rakudo todo 'nom regression'
 is_run "my \$x = 2 * 3;\ndie \$x", {
     status  => { $_ != 0 },
     out     => '',
-    err     => all(rx/6/, rx/'line 2'>>/),
+    err     => all(rx/6/, rx/<<2>>/),
 }, 'Runtime error contains line number';
 
-#?rakudo todo 'nom regression'
 is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
         out     => /Hello\r?\n/,
-        err     => all(rx/my_non_existent_method_6R5/, rx/:i 'line 4'/),
+        err     => all(rx/my_non_existent_method_6R5/, rx/<<4>>/),
     }, 'Method not found error mentions method name and line number';
 
 # RT #75446
@@ -38,7 +36,7 @@ bar()',
     {
         status => { $_ != 0 },
         out     => '',
-        err     => all(rx/pfff/, rx/'line 3'>>/),
+        err     => all(rx/<<pfff>>/, rx/<<3>>/),
     }, 'got the right line number for nonexisting sub inside another sub';
 
 is_run 'say 42; nosuchsub()',
@@ -63,14 +61,13 @@ is_run 'say 42; nosuchsub()',
 }
 
 # RT #76112
-#?rakudo todo 'nom regression'
 is_run 'use v6;
 class A { has $.x is rw };
 A.new.x(42);',
     {
         status => { $_ != 0 },
         out     => '',
-        err     => rx/'line 3'>>/,
+        err     => rx/<<3>>/,
     }, 'got the right line number for accessors';
 
 # RT #80982
