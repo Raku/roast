@@ -198,7 +198,6 @@ ok($data ~~ m:3rd/ <ident> /, 'Match 3rd <ident>');
 is($/, 'o', 'Matched value for 3th <ident>');
 
 ok($data ~~ m:3rd/ « <ident> /, 'Match 3rd « <ident>');
-#?niecza todo '#85'
 is($/, 'foo', 'Matched value for 3th « <ident>');
 
 
