@@ -14,7 +14,6 @@ is_run $x,  :args['-e', 'print q[Moin]'],
     },
     '-e print $something works';
 
-#?rakudo todo 'nom regression'
 is_run $x,  :args['-e', "print q[\c[LATIN SMALL LETTER A WITH DOT ABOVE]]"],
     {
         out     => "\c[LATIN SMALL LETTER A WITH DOT ABOVE]",
@@ -23,8 +22,7 @@ is_run $x,  :args['-e', "print q[\c[LATIN SMALL LETTER A WITH DOT ABOVE]]"],
     },
     '-e print $something works with non-ASCII string literals';
 
-#?rakudo todo 'nom regression'
-    is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
+is_run $x,  :args['-e', 'print <1 2> »+« <1 1>'],
     {
         out     => "23",
         err     => '',
