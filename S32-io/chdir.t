@@ -23,7 +23,7 @@ else {
     my $cwd = $*CWD;
     ok chdir("$*CWD/$subdir"), 'chdir gave a true value';
     isnt $*CWD, $cwd, 'Directory has changed';
-    is $*CWD, "$cwd{$sep}$subdir",
+    is $*CWD, "$cwd$sep$subdir",
        "Current directory is '$subdir' subfolder (absolute)";
 
     # relative change back up.
@@ -32,17 +32,18 @@ else {
 
     # relative change to t
     ok chdir( "$subdir" ), 'chdir gave a true value';
-    is $*CWD, "$cwd{$sep}$subdir",
+    is $*CWD, "$cwd$sep$subdir",
        "Current directory is '$subdir' subfolder (relative)";
 }
 
 my $no_subdir = 'lol does not exist';
-if $no_subdir ~~ :d {
+if $no_subdir.IO ~~ :d {
     skip "subdir '$no_subdir' does exist, actually.", 2;
 }
 else {
     lives_ok { chdir("$no_subdir") },
              'chdir to a non-existent does not by default throw an exception';
+    #?rakudo todo 'nom regression'
     ok !chdir("$no_subdir"),
        'change to non-existent directory gives a false value';
 }
