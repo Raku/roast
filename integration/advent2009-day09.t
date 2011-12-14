@@ -2,7 +2,7 @@
 
 use v6;
 use Test;
-plan 18;
+plan 17;
 
 sub sum {
     [+] @_ ;
@@ -57,7 +57,6 @@ is grade_essay("How to eat a Fish", 0), 0, 'P6 auto unpacking/verification';
 ok (entreat()), 'Default values for parameters works';
 is (xml_tag("hi")), "hihi>", 'Default values using previously supplied arguments';
 nok deactivate("Rakudo Quality Fission"), 'optional parameters';
-is (drawline(:x1(1),:y2(4),:x2(2),:y1(3))), (1,2,3,4), 'Passing named parameters';
 dies_ok {drawline2(1,2,3,4)}, 'Must be named';
 ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
 #the required & must-be named (:$var!) test not here, its opposite is 1 up
@@ -71,7 +70,7 @@ is $t, 4, 'Set a parameter to "is rw", and then you can modify';
 up1_3($t);
 is $t, 4, '"is copy" leaves original alone"';
 my @te = <a b c>;
-dies_ok {namen(@te)}, 'Autoflattening doesnt exist';
+dies_ok {eval 'namen(@te)' }, 'Autoflattening doesnt exist';
 is (namen(|@te)), ('a','b','c'), "Put a | in front of the variable, and you're ok!";
 
 is <734043054508967647390469416144647854399310>.comb(/.**7/).join('|') , '7340430|5450896|7647390|4694161|4464785|4399310' , 'Test one liner at end of post (part1)';
