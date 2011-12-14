@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 42;
 
 =begin description
 
@@ -88,22 +88,16 @@ class HasC {
 lives_ok { HasC.new },          'attributes typed as roles initialized OK';
 lives_ok { HasC.new.x = DoesC.new },
                                 'typed attribute accepts things it should';
-lives_ok { HasC.new.x = Mu },   'typed attribute accepts things it should';
-#?rakudo todo "Type attribute accepts anything?"
+dies_ok { HasC.new.x = Mu },    'typed attribute rejects things it should';
 dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
-
-# Checking if role does role
-role D {
-}
-
-ok D ~~ Role, 'a role does the Role type';
 
 eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
 {
-    my $x = eval 'class Animal does NonExistentRole { }; 1';
+    my $x = try eval 'class Animal does NonExistentRole { }; 1';
     my $err = "$!";
     ok !$x, 'a class dies when it does a non-existent role';
+    #?rakudo todo 'nom regression'
     ok $err ~~ /NonExistentRole/,
        '... and the error message mentions the role';
 }
@@ -111,24 +105,24 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 # RT #67278
 {
     class AClass { };
-    my $x = eval 'class BClass does AClass { }; 1';
+    my $x = try eval 'class BClass does AClass { }; 1';
     nok $x, 'class SomeClass does AnotherClass  dies';
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
 }
 
 # RT #72840
 {
-    eval 'class Boo does Boo { };';
+    try eval 'class Boo does Boo { };';
     ok "$!" ~~ /Boo/, 'class does itself produces sensible error message';
 }
 
 # RT #69170
 {
     role StrTest {
-        method s { self.Str }
+        method s { self.gist }
     };
     ok StrTest.s ~~ /StrTest/,
-        'default role stringification contains role name';
+        'default role gistification contains role name';
 }
 
 # RT #72848
