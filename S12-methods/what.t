@@ -52,7 +52,6 @@ This test tests the C<WHAT> builtin.
 {
     # proto as a term
     lives_ok {  Match }, 'type object as a term lives';
-    #?niecza todo '#84'
     lives_ok { +Match }, 'numification of type object lives';
     isa_ok ("bac" ~~ /a/).WHAT, Match, '.WHAT on a Match works';
     #?niecza skip '#84: System.FormatException: Unknown char: M'
