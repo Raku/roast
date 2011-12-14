@@ -19,11 +19,9 @@ plan 12;
 
     my @e = (0 .. 5);
 
-    #?rakudo emit #
     my @z; @z = zip(@a; @b);
     my @x; @x = (@a Z @b);
 
-    #?rakudo skip 'zip() and semilists'
     is(~@z, ~@e, "simple zip");
     is(~@x, ~@e, "also with Z char");
 };
@@ -35,15 +33,14 @@ plan 12;
 
     my @e = (0 .. 5);
 
-    #?rakudo emit #
     my @z; @z = zip(@a; @b; @c);
     my @x; @x = (@a Z @b Z @c);
 
-    #?rakudo skip 'zip() and semilists'
     is(~@z, ~@e, "zip of 3 arrays");
     is(~@x, ~@e, "also with Z char");
 };
 
+#?rakudo skip 'Seq'
 {
     my @a = (0, 4);
     my @b = (2, 6);
@@ -73,7 +70,7 @@ plan 12;
     is(@z, @e, "zip uses length of shortest");
 }
 
-#?rakudo todo 'lvalue zip'
+#?rakudo skip 'lvalue zip'
 {
     my @a;
     my @b;
