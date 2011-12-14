@@ -39,64 +39,64 @@ is $match<alt>.ast, 'bazbaz', 'action method got called, make() worked';
 
 
 grammar LTM {
-    proto token lit       { * }
+    proto token lit       {*}
     token lit:sym<foo>    { 'foo' }
     token lit:sym<foobar> { 'foobar' }
     token lit:sym<foob>   { 'foob' }
     
-    proto token cclass1  { * }
+    proto token cclass1  {*}
     token cclass1:sym<a> { <[0..9]> }
     token cclass1:sym<b> { <[0..9]> '.' <[0..9]> }
     
-    proto token cclass2  { * }
+    proto token cclass2  {*}
     token cclass2:sym<a> { <[0..9]> '.' <[0..9]> }
     token cclass2:sym<b> { <[0..9]> }
     
-    proto token cclass3 { * }
+    proto token cclass3 {*}
     token cclass3:sym<a> { \d\d }
     token cclass3:sym<b> { 1 }
     
-    proto token cclass4 { * }
+    proto token cclass4 {*}
     token cclass4:sym<a> { '.' }
     token cclass4:sym<b> { \W\W }
     
-    proto token quant1  { * }
+    proto token quant1  {*}
     token quant1:sym<a> { ab? }
     token quant1:sym<b> { a }
     
-    proto token quant2  { * }
+    proto token quant2  {*}
     token quant2:sym<a> { a }
     token quant2:sym<c> { ab+ }
     token quant2:sym<b> { ab? }
     
-    proto token quant3  { * }
+    proto token quant3  {*}
     token quant3:sym<a> { aaa }
     token quant3:sym<b> { a* }
     
-    proto token declok { <*> }
+    proto token declok {*}
     token declok:sym<a> {
         :my $x := 42;
         .+
     }
     token declok:sym<b> { aa }
 
-    proto token cap1 { <*> }
+    proto token cap1 {*}
     token cap1:sym<a> { (.+) }
     token cap1:sym<b> { aa }
 
-    proto token cap2 { <*> }
+    proto token cap2 {*}
     token cap2:sym<a> { $<x>=[.+] }
     token cap2:sym<b> { aa }
 
-    proto token ass1 { <*> }
+    proto token ass1 {*}
     token ass1:sym<a> { a <?{ 1 }> .+ }
     token ass1:sym<b> { aa }
 
-    proto token ass2 { <*> }
+    proto token ass2 {*}
     token ass2:sym<a> { a <!{ 0 }> .+ }
     token ass2:sym<b> { aa }
     
-    proto token block { <*> }
+    proto token block {*}
     token block:sym<a> { a {} .+ }
     token block:sym<b> { aa }
 }
