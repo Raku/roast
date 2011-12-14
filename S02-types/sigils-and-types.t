@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 
-plan 29;
+plan 28;
 
 my $scalar;
 ok $scalar.WHAT === Any, 'unitialized $var does Mu';
@@ -48,8 +48,6 @@ ok eval('KeyHash').does(Associative), "KeyHash does Associative";
 #?rakudo todo "Capture does Associative"
 ok eval('Capture').does(Associative), "Capture does Associative";
 
-#?rakudo skip 'Abstraction'
-ok Class.does(Abstraction), 'a class is an Abstraction';
 
 sub foo {}
 ok &foo.does(Callable), 'a Sub does Callable';

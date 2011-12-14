@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 84;
+plan 79;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -324,30 +324,6 @@ plan 84;
  isa_ok($rexa,Match  );
 }
 
-#?rakudo skip 'Package not implemented'
-{
- my Package $reze;
- isa_ok($reze,Package  );
-}
-
-#?rakudo skip 'Module not yet implemented'
-{
- my Module $rebi;
- isa_ok($rebi,Module  );
-}
-
-#?rakudo skip 'Class not implemented'
-{
- my Class $reso;
- isa_ok($reso,Class  );
-}
-
-#?rakudo skip 'Role not implemented'
-{
- my Role $cino;
- isa_ok($cino, Role );
-}
-
 {
  my Grammar $cire;
  isa_ok($cire,Grammar  );
@@ -421,7 +397,7 @@ plan 84;
   isa_ok($gy,Grapheme );
 }
 
-# Positional Associative Abstraction Ordering Ordered
+# Positional Associative Ordering Ordered
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
 {
@@ -432,12 +408,6 @@ plan 84;
 {
   my Associative $kansa;
   ok($kansa ~~ Associative,'Associative exists');
-}
-
-#?rakudo skip 'Abstraction not implemented'
-{
-  my Abstraction $sucta;
-  ok($sucta ~~ Abstraction,'Abstraction exists');
 }
 
 #?rakudo skip 'Ordering not implemented'
