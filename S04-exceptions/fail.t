@@ -44,7 +44,6 @@ plan 10;
     sub rt70229 { return fail() }
     my $rt70229 = rt70229();
     ok $rt70229 ~~ Failure, 'got a Failure';
-    #?rakudo skip 'nom regression'
     dies_ok { ~$rt70229 }, 'attempt to stringify Failure dies';
 }
 
