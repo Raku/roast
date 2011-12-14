@@ -18,6 +18,7 @@ is (1, 3 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with two 
 is (1, 0 ... -3).join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive sequence with two items on the LHS';
 is (1, 3, 5 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with three items on the LHS';
 is (1, 3, 9 ... 81).join(', '), '1, 3, 9, 27, 81', 'simple multiplicative sequence with three items on the LHS';
+#?niecza todo 'Int-valued Rats written as N/1'
 is (81, 27, 9 ... 1).join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative sequence with three items on the LHS';
 is (1, { $_ + 2 } ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and block closure on the LHS';
 is (1, *+2 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and * closure on the LHS';
@@ -36,20 +37,21 @@ is (1 ... 5, 'xyzzy', 'plugh').join(', '), '1, 2, 3, 4, 5, xyzzy, plugh', 'simpl
 
 # infinite sequence that go past their limit
 {
-is (1 ... 5.5).munch(6).join(', '), '1, 2, 3, 4, 5, 6', 'simple sequence with one item on the LHS';
-is (1 ... -3.5).munch(6).join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing sequence with one item on the LHS';
-is (1, 3 ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with two items on the LHS';
-is (1, 0 ... -3.5).munch(6).join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing additive sequence with two items on the LHS';
-is (1, 3, 5 ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with three items on the LHS';
-is (1, 3, 9 ... 100).munch(6).join(', '), '1, 3, 9, 27, 81, 243', 'simple multiplicative sequence with three items on the LHS';
-is (81, 27, 9 ... 8/9).munch(6), (81, 27, 9, 3, 1, 1/3), 'decreasing multiplicative sequence with three items on the LHS';
-is (1, { $_ + 2 } ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and block closure on the LHS';
-is (1, *+2 ... 10).munch(6).join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and * closure on the LHS';
-is (1, { $_ - 2 } ... -8).munch(6).join(', '), '1, -1, -3, -5, -7, -9', 'simple sequence with one item and closure on the LHS';
-is (1, 3, 5, { $_ + 2 } ... 14).munch(8).join(', '), '1, 3, 5, 7, 9, 11, 13, 15', 'simple sequence with three items and block closure on the LHS';
+is (1 ... 5.5).[^6].join(', '), '1, 2, 3, 4, 5, 6', 'simple sequence with one item on the LHS';
+is (1 ... -3.5).[^6].join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing sequence with one item on the LHS';
+is (1, 3 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with two items on the LHS';
+is (1, 0 ... -3.5).[^6].join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing additive sequence with two items on the LHS';
+is (1, 3, 5 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with three items on the LHS';
+is (1, 3, 9 ... 100).[^6].join(', '), '1, 3, 9, 27, 81, 243', 'simple multiplicative sequence with three items on the LHS';
+#?niecza todo 'Int-valued Rats written as N/1'
+is (81, 27, 9 ... 8/9).[^6], (81, 27, 9, 3, 1, 1/3), 'decreasing multiplicative sequence with three items on the LHS';
+is (1, { $_ + 2 } ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and block closure on the LHS';
+is (1, *+2 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and * closure on the LHS';
+is (1, { $_ - 2 } ... -8).[^6].join(', '), '1, -1, -3, -5, -7, -9', 'simple sequence with one item and closure on the LHS';
+is (1, 3, 5, { $_ + 2 } ... 14).[^8].join(', '), '1, 3, 5, 7, 9, 11, 13, 15', 'simple sequence with three items and block closure on the LHS';
 
-is (1, { 1 / ((1 / $_) + 1) } ... 11/60).munch(6).map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5, 1/6', 'tricky sequence with one item and closure on the LHS';
-is (1, { -$_ } ... 0).munch(4).join(', '), '1, -1, 1, -1', 'simple alternating sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... 11/60).[^6].map({.perl}).join(', '), '1, 1/2, 1/3, 1/4, 1/5, 1/6', 'tricky sequence with one item and closure on the LHS';
+is (1, { -$_ } ... 0).[^4].join(', '), '1, -1, 1, -1', 'simple alternating sequence with one item and closure on the LHS';
 
 is (1 ... 5.5, 6, 7).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple sequence with two further terms on the RHS';
 is (1 ... 5.5, 4, 3).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple sequence with two extra terms on the RHS';
@@ -63,6 +65,7 @@ is (1, 0 ... *).[^5].join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive
 is (1, 3, 5 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with three items on the LHS';
 is (8, 7, 6 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'simple decreasing additive sequence with three items on the LHS';
 is (1, 3, 9 ... *).[^5].join(', '), '1, 3, 9, 27, 81', 'simple multiplicative sequence with three items on the LHS';
+#?niecza todo 'Int-valued Rats written as N/1'
 is (81, 27, 9 ... *).[^5].join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative sequence with three items on the LHS';
 is (1, { $_ + 2 } ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and block closure on the LHS';
 is (1, *+2 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and * closure on the LHS';
@@ -94,6 +97,7 @@ is (4, 2, 1, 2, 4 ... 16).join(', '), '4, 2, 1, 2, 4, 8, 16', 'geometric sequenc
 
 is (False, &prefix:<!> ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, &prefix:<!> ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
+#?niecza skip '&[] NYI'
 is (1,2,&[+] ... 8).join(', ') , "1, 2, 3, 5, 8" , "Using &[+] works";
 is (False, { !$_ } ... *).[^6].join(', '), (False, True, False, True, False, True).join(', '), "alternating False and True";
 is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and True is always Bool";
@@ -109,7 +113,7 @@ is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 1/2, 1/3,
 
 # L<S03/List infix precedence/'limit value is on the "wrong"'>
 {
-is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
+is (1, 2 ... 0).[^3], (1,2,3), 'No more: limit value is on the wrong side';
 }
 
 # L<S03/List infix precedence/excludes the limit if it happens to match exactly>
@@ -117,15 +121,16 @@ is (1, 2 ... 0).munch(3), (1,2,3), 'No more: limit value is on the wrong side';
 {
     is (1 ...^ 5).join(', '), '1, 2, 3, 4', 'exclusive sequence';
     is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing sequence';
-    is (1 ...^ 5.5).munch(6).join(', '), '1, 2, 3, 4, 5, 6', "exclusive sequence that couldn't hit its limit anyway";
+    is (1 ...^ 5.5).[^6].join(', '), '1, 2, 3, 4, 5, 6', "exclusive sequence that couldn't hit its limit anyway";
     is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric sequence';
-    is (81, 27, 9 ...^ 2).munch(5).join(', '), '81, 27, 9, 3, 1', "exclusive decreasing geometric sequence that couldn't hit its limit anyway";
+    #?niecza todo 'Int-valued Rats written as N/1'
+    is (81, 27, 9 ...^ 2).[^5].join(', '), '81, 27, 9, 3, 1', "exclusive decreasing geometric sequence that couldn't hit its limit anyway";
     is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric sequence';
-    is (2, -4, 8 ...^ -32).munch(6).join(', '), '2, -4, 8, -16, 32, -64', 'exclusive alternating geometric sequence (not an exact match)';
+    is (2, -4, 8 ...^ -32).[^6].join(', '), '2, -4, 8, -16, 32, -64', 'exclusive alternating geometric sequence (not an exact match)';
     is (1, { $_ + 2 } ...^ 9).join(', '), '1, 3, 5, 7', 'exclusive sequence with closure';
     is (1 ...^ 1), (), 'empty exclusive sequence';
     is (1, 1 ...^ 1), (), 'empty exclusive constant sequence';
-    is (1, 2 ...^ 0).munch(3), (1, 2, 3), 'empty exclusive arithmetic sequence';
+    is (1, 2 ...^ 0).[^3], (1, 2, 3), 'empty exclusive arithmetic sequence';
     is (1, 2 ...^ 0, 'xyzzy', 'plugh').[^3].join(', '), '1, 2, 3', 'exclusive sequence empty but for extra items';
     is ~(1 ...^ 0), '1', 'singleton exclusive sequence';
     is (4...^5).join(', '), '4', '4...^5 should parse as 4 ...^ 5 and not 4 ... ^5';
@@ -137,6 +142,7 @@ ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
 #?rakudo todo 'mysterious'
+#?niecza skip 'Failure NYI'
 isa_ok (1...()), Failure,
     'empty list on right side of sequence operator does not cause infinite loop';
 
@@ -153,23 +159,24 @@ is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
     'eval($sequence.perl) reproduces result list';
 
 # RT 98790
-is ~((1 ... *) Z~ ('a' ... 'z')).munch(5), "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
+#?niecza skip "Internal error in exception dispatch: Catching frame has no caller?iter_flatten"
+is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";
 
 {
-    is (1, 2, 4 ... 3).munch(4), (1, 2, 4, 8), "sequence that does not hit the limit";
+    is (1, 2, 4 ... 3).[^4], (1, 2, 4, 8), "sequence that does not hit the limit";
     is (1, 2, 4 ... 2), (1, 2), "sequence that aborts during LHS";
 
-    is (1, 2, 4 ... 1.5).munch(4), (1,2,4,8), "sequence that does not hit the limit";
+    is (1, 2, 4 ... 1.5).[^4], (1,2,4,8), "sequence that does not hit the limit";
     is (1, 2, 4 ... 1), (1), "sequence that aborts during LHS";
 
     is ~(1, -2, 4 ... 1), '1', 'geometric sequence with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 2).munch(4), '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 3).munch(4), '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
-    is ~(1, -2, 4 ... 25).munch(10), '1 -2 4 -8 16 -32 64 -128 256 -512', 'geometric sequence with sign-change and non-matching end point';
+    is ~(1, -2, 4 ... 2).[^4], '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 3).[^4], '1 -2 4 -8', 'geometric sequence with smaller RHS and sign change';
+    is ~(1, -2, 4 ... 25).[^10], '1 -2 4 -8 16 -32 64 -128 256 -512', 'geometric sequence with sign-change and non-matching end point';
 
     is (1, 2, 4, 5, 6 ... 2), (1, 2), "sequence that aborts during LHS, before actual calculations kick in";
 
-    is (1, 2, 4, 5, 6 ... 3).munch(6), (1,2,4,5,6,7), "sequence that aborts during LHS, before actual calculations kick in";
+    is (1, 2, 4, 5, 6 ... 3).[^6], (1,2,4,5,6,7), "sequence that aborts during LHS, before actual calculations kick in";
 }
 
 # tests for the types returned
@@ -241,10 +248,11 @@ is (32,16,8 ...^ Rat), (32,16,8) , 'stop on a matching type';
 eval_dies_ok '1, 2, 3, ... 5', 'comma before sequence operator is caught';
 
 # RT #73268
-is ~(1...^*).munch(10), '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
+is ~(1...^*).[^10], '1 2 3 4 5 6 7 8 9 10', 'RT #73268';
 
 # RT #76046
-is (1, 1, &[+] ... *).munch(10), '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...> series';
+#?niecza skip '&[] NYI'
+is (1, 1, &[+] ... *).[^10], '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...> series';
 
 done;
 
