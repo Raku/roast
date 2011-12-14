@@ -11,10 +11,10 @@ class LValueMutator {
     has Int $.foo;
     has Int $!bar;
 
-    method foo returns Int is rw {
+    method foo is rw {
         return $!bar;
     }
-    method get_foo returns Int is rw {
+    method get_foo is rw {
         return $.foo;
     }
 }
@@ -33,7 +33,7 @@ is($lvm.get_foo, 6, "lvalue accessors work");
 lives_ok { $lvm.foo = 5 }, "lvalue accessors work still";
 is($lvm.foo, 5, "mutator seems to work");
 
-our Int $count = 0;
+our $count = 0;
 
 class MagicVal {
     has Int $.constant;
@@ -74,20 +74,20 @@ is($count, 2, "mutator was called");
 
 # test interface tentatively not entirely disapproved of by
 # all(@Larry) at L<"http://xrl.us/gnxp">
-class MagicSub {
-    has Int $.constant;
-    has Int $.varies is rw;
-
-    method varies returns Int is rw {
-        return Proxy.new( 
-                :FETCH{ $.varies += 2 },
-                :STORE{ $.varies = $^v + 1 }
-        );
-    }
-}
-
 #?rakudo skip 'class Proxy'
 {
+    class MagicSub {
+        has Int $.constant;
+        has Int $.varies is rw;
+
+        method varies returns Int is rw {
+            return Proxy.new( 
+                    :FETCH{ $.varies += 2 },
+                    :STORE{ $.varies = $^v + 1 }
+            );
+        }
+    }
+
     my $mv = MagicVal.new(:constant(6), :varies(6));
 
     is($mv.constant, 6, "normal attribute");
