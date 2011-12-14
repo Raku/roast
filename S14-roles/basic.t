@@ -135,6 +135,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 lives_ok {0 but True}, '0 but True has applicable candidate';
 
 # RT #67768
+#?rakudo skip 'RT 67768'
 {
     lives_ok { role List { method foo { 67768 } } },
         'can declare a role with a name already assigned to a class';
