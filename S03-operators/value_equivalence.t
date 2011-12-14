@@ -33,7 +33,6 @@ plan 74;
 
 # more value tests
 {
-  #?rakudo todo "=== broken on Rat"
   #?niecza todo
   ok 1/2 === 1/2,                "=== on Rats";
   ok 1/2 !=== 3/2,               "!=== on Rats";
