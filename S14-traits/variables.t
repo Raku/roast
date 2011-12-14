@@ -6,13 +6,13 @@ plan 5;
 # L<S14/Traits/>
 
 my @var_names;
-multi trait_mod:<is>(ContainerDeclarand $a, :$noted!) {
-    push @var_names, $a.name;
+multi trait_mod:<is>($a, :$noted!) {
+    push @var_names, $a.VAR.name;
 }
 
 role doc { has $.doc is rw }
-multi trait_mod:<is>(ContainerDeclarand $a, doc, $arg) {
-    $a.container.VAR does doc($arg);
+multi trait_mod:<is>($a, $arg, :$doc!) {
+    $a.container.VAR does doc.new(doc => $arg);
 }
 
 
