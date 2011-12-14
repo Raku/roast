@@ -53,7 +53,7 @@ is(sign(NaN),NaN, 'sign of NaN is NaN');
 #?niecza todo
 nok sign(Int).defined, 'sign(Int) is undefined';
 #?rakudo skip "Test is kind of doubtful IMO -- colomon"
-#?niecza todo
+#?niecza skip '#90'
 nok sign(3+4i).defined, 'sign(Complex) fails';
 
 done;

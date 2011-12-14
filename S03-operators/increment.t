@@ -14,10 +14,10 @@ Verify that autoincrement/autodecrement work properly.
 =end description
 
 my $a = Mu;
-#?niecza todo
 is($a++, 0, 'Mu++ == 0');
 
 #?rakudo todo 'nom regression'
+#?niecza todo '#88'
 $a = Mu;
 nok(defined($a--), 'Mu-- is undefined');
 
