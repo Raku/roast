@@ -46,6 +46,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 # L<S03/Operator precedence>
 tryeq  13 %  4, 1;
 tryeq -13 %  4, 3;
+#?niecza todo "negative divisor"
 tryeq  13 % -4, -3;
 tryeq -13 % -4, -1;
 
@@ -88,6 +89,7 @@ tryeq 2147483647 - 0, 2147483647;
 tryeq 0 - -2147483647, 2147483647;
 
 # No warnings should appear;
+#?niecza skip "undefine NYI"
 {
     my $a;
     $a += 1;
@@ -109,6 +111,7 @@ tryeq 0 - -2147483647, 2147483647;
     tryeq $a, -4294967297;
 }
 
+#?niecza skip "undefine NYI"
 {
     my $s;
     $s -= 1;
@@ -163,6 +166,7 @@ tryeq -28 div -2, 14;
 is(9 div 4, 2, "9 div 4 == 2");
 #?rakudo 2 todo 'negative div'
 is(-9 div 4, -3, "-9 div 4 == -3");
+#?niecza todo "negative divisor"
 is(9 div -4, -3, "9 div -4 == -3");
 is(-9 div -4, 2, "-9 div -4 == 2");
 
@@ -171,6 +175,7 @@ is(-9 div -4, 2, "-9 div -4 == 2");
 is  13 mod  4, 1,  '13 mod 4';
 #?rakudo 2 todo 'negative mod'
 is -13 mod  4, 3,  '-13 mod 4';
+#?niecza todo "negative divisor"
 is  13 mod -4, -3, '13 mod -4';
 is -13 mod -4, -1, '-13 mod -4';
 
@@ -233,6 +238,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 {
     is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
+    #?niecza todo "No agreement over correct behavior here -- above web page not helpful!"
     is 1**Inf, 1;
 }
 
