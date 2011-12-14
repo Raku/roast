@@ -101,6 +101,7 @@ plan 283;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
+#?niecza skip "skipping assignment with skipped values via * in lvalue"
 {
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
@@ -419,6 +420,7 @@ my @p;
     is(@p[1],123, "+|= operator parses as item assignment 2");
 }
 
+#?niecza skip "Buffer bitops NYI"
 {
     my $x = "z";
     @p = $x ~&= "I", "J";
@@ -427,6 +429,7 @@ my @p;
     is(@p[1],'J', "~&= operator parses as item assignment 2");
 }
 
+#?niecza skip "Buffer bitops NYI"
 {
     my $x = "z";
     @p = $x ~|= "I", "J";
@@ -451,6 +454,7 @@ my @p;
     is(@p[1],4, "+^= operator parses as item assignment 2");
 }
 
+#?niecza skip "Buffer bitops NYI"
 {
     my $x = "z";
     @p = $x ~^= "C", "D";
@@ -459,6 +463,7 @@ my @p;
     is(@p[1],'D', "~^= operator parses as item assignment 2");
 }
 
+#?niecza skip "No ^^ yet"
 {
     my $x;
     @p = $x ^^= 42, 43;
@@ -473,6 +478,7 @@ my @p;
 }
 
 # RT #76820
+#?niecza skip "No xor yet"
 {
     my $x;
     @p = $x xor= 42, 43;
@@ -533,6 +539,7 @@ my @p;
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
 #?pugs eval 'parsefail'
 #?rakudo skip "unknown reasons"
+#?niecza skip "Buffer bitops NYI"
 {
     my $x = "a";
     @p = $x ~<= 8, 9;
@@ -543,6 +550,7 @@ my @p;
 
 #?pugs eval 'parsefail'
 #?rakudo skip "unknown reasons"
+#?niecza skip "Buffer bitops NYI"
 {
     my $x = "aa";
     @p = $x ~>= 8, 9;
@@ -602,6 +610,7 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a) as list');
 }
 
+#?niecza skip 'assigning to ($a, *)'
 {
     my $a;
     my @z = (($a, *) = l, l, l);
@@ -611,6 +620,7 @@ sub l () { 1, 2 };
 }
 
 #?rakudo skip '@$a'
+#?niecza skip 'Unable to resolve method LISTSTORE in class List'
 {
     my $a;
     my @z = (@$a = l, l, l);
@@ -619,6 +629,7 @@ sub l () { 1, 2 };
 }
 
 #?rakudo skip '$a[] autovivification (unspecced?)'
+#?niecza skip '$a[] autovivification (unspecced?)'
 {
     my $a;
     $a[] = l, l, l;
@@ -842,6 +853,7 @@ sub l () { 1, 2 };
 
 # RT #76734
 #?rakudo skip 'RT #76734'
+#?niecza skip "Overloading infix:<=> fails"
 {
     class A {};
     my $x = ['a'];
