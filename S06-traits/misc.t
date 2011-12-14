@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 19;
 
 =begin description
 
@@ -40,7 +40,6 @@ eval_dies_ok 'sub mods_param_constant ($x is readonly) { $x++; };
               'can\'t modify constant parameter, constant by default';
 
 sub mods_param_rw ($x is rw) { $x++; }
-#?rakudo todo "'is rw' can't modify constants"
 dies_ok  { mods_param_rw(1) }, 'can\'t modify constant even if we claim it\'s rw';
 sub mods_param_rw_does_nothing ($x is rw) { $x; }
 lives_ok { mods_param_rw_does_nothing(1) }, 'is rw with non-lvalue should autovivify';
@@ -74,6 +73,7 @@ lives_ok { boom(42) }, "can modify a copy";
 
 
 # with <-> we should still obey readonly traits
+#?rakudo skip '<-> (rw lamda)'
 {
     my $anon1 = <-> $a is readonly, $b { $b++ };
     my $anon2 = <-> $a is readonly, $b { $a++ };
@@ -84,19 +84,13 @@ lives_ok { boom(42) }, "can modify a copy";
     is($x, 2,                   '<-> does not override explicit traints (sanity)');
 }
 
-# is context
-# Doesn't even compile, which is lucky, because I don't understand it well
-# enough to write an actual test...
-ok(eval('sub my_format (*@data is context(Item)) { }; 1'), "is context - compile check");
 
-# To do - check that is context actually works
-
-#?rakudo todo 'RT 60966'
 {
-    eval 'sub oh_noes( $gack is nonesuch ) { }';
+    try { eval 'my $gack; sub oh_noes( $gack is nonesuch ) { }' };
 
     ok  $!  ~~ Exception,  "Can't use an unknown trait";
     ok "$!" ~~ /trait/,    'error message mentions trait';
+    #?rakudo todo 'RT 60966'
     ok "$!" ~~ /nonesuch/, 'error message mentions the name of the trait';
 }
 
