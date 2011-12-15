@@ -1321,6 +1321,7 @@ ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 ok 'abcdef' ~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :0i bcd			abCdef	n	ignorecase, repetition (:0i)
+#?niecza todo ""
 ok 'abCdef' !~~ /:0i bcd/, 'ignorecase, repetition (:0i)';
 
 #### :1i bcd			abcdef	y	ignorecase, repetition (:1i)
@@ -1400,9 +1401,11 @@ ok 'AbcdeF' ~~ /:i ab [:0i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'abCDef' ~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbCDeF	n	ignorecase, lexical repetition (:i)
+#?niecza todo ""
 ok 'AbCDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
+#?niecza todo ""
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:i(0) cd ] ef	abcdef	y	ignorecase, lexical repetition (:i)
@@ -1411,6 +1414,7 @@ ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 ok 'abcdef' ~~ /:0i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
+#?niecza todo ""
 ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
@@ -1438,6 +1442,7 @@ ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)
 ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
+#?niecza todo ""
 ok 'abcDeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :2i ab [:999i cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
@@ -1565,10 +1570,12 @@ ok 'foo - bar' !~~ /foo '-'? bar/, 'basic non-match';
 
 #### :s foo '-'? bar			foo\n \t- \t\t\nbar	y	basic ws match
 #?pugs todo 'feature'
+#?niecza todo ""
 ok "foo\n \t- \t\t\nbar" ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s foo '-'? bar			foo - bar	y	basic ws match
 #?pugs todo 'feature'
+#?niecza todo ""
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s foo '-'? bar			foo   bar	y	basic ws match \s+ \s*
@@ -1581,6 +1588,7 @@ ok 'foo  -bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
 
 #### :s foo '-'? bar			foo-  bar	y	basic ws match \s* \s+
 #?pugs todo 'feature'
+#?niecza todo ""
 ok 'foo-  bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s+';
 
 #### :s foo '-'? bar			foo-bar		y	basic ws match \s* \s*
@@ -1597,6 +1605,7 @@ ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
 #?pugs todo 'feature'
+#?niecza todo ""
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s<?wb>foo '-'? bar		foo - bar	y	basic ws match with boundary modifier separation
@@ -1607,6 +1616,7 @@ ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
 #?pugs todo 'feature'
 #?rakudo skip ':: NYI'
+#?niecza todo ""
 ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
 
 #### :s::(\w+) ':=' (\S+)		dog := spot	/mob 0: <dog @ 0>/	sigspace and capture together
@@ -1624,6 +1634,7 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
+#?niecza todo ""
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
 
@@ -2417,18 +2428,21 @@ eval_dies_ok '/\X[/', 'unterminated \X[..]';
 eval_dies_ok '/* abc/', 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
+#?niecza todo ""
 eval_dies_ok '/  * abc/', 'bare * after ws';
 
 #### [*|a]		abcdef		/Quantifier follows nothing/	bare * after [
 eval_dies_ok '/[*|a]/', 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
+#?niecza todo ""
 eval_dies_ok '/[ *|a]/', 'bare * after [+sp';
 
 #### [a|*]		abcdef		/Quantifier follows nothing/	bare * after |
 eval_dies_ok '/[a|*]/', 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
+#?niecza todo ""
 eval_dies_ok '/[a| *]/', 'bare * after |+sp';
 
 
@@ -2436,18 +2450,21 @@ eval_dies_ok '/[a| *]/', 'bare * after |+sp';
 eval_dies_ok '/+ abc/', 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
+#?niecza todo ""
 eval_dies_ok '/  + abc/', 'bare + after ws';
 
 #### [+|a]		abcdef		/Quantifier follows nothing/	bare + after [
 eval_dies_ok '/[+|a]/', 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
+#?niecza todo ""
 eval_dies_ok '/[ +|a]/', 'bare + after [+sp';
 
 #### [a|+]		abcdef		/Quantifier follows nothing/	bare + after |
 eval_dies_ok '/[a|+]/', 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
+#?niecza todo ""
 eval_dies_ok '/[a| +]/', 'bare + after |+sp';
 
 
@@ -2455,18 +2472,21 @@ eval_dies_ok '/[a| +]/', 'bare + after |+sp';
 eval_dies_ok '/? abc/', 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
+#?niecza todo ""
 eval_dies_ok '/  ? abc/', 'bare ? after ws';
 
 #### [?|a]		abcdef		/Quantifier follows nothing/	bare ? after [
 eval_dies_ok '/[?|a]/', 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
+#?niecza todo ""
 eval_dies_ok '/[ ?|a]/', 'bare ? after [+sp';
 
 #### [a|?]		abcdef		/Quantifier follows nothing/	bare ? after |
 eval_dies_ok '/[a|?]/', 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
+#?niecza todo ""
 eval_dies_ok '/[a| ?]/', 'bare ? after |+sp';
 
 # L<S05/Nothing is illegal/"The empty pattern is now illegal">
