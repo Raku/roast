@@ -19,7 +19,6 @@ is (1..^5).perl, '1..^5', ".perl ..^";
 is (1^..^5).perl, '1^..^5', ".perl ^..^";
 
 my @r = $r;
-#?niecza todo
 is @r, [1, 2, 3, 4, 5], 'got the right array';
 
 # Range of Str
@@ -29,15 +28,12 @@ isa_ok $r, Range;
 # XXX unspecced: exact value of Range.perl
 is $r.perl, '"a".."c"', 'canonical representation';
 @r = $r;
-#?niecza todo
 is @r, [< a b c >], 'got the right array';
 
 # Stationary ranges
 is (1..1).perl, '1..1', "stationary num .perl ..";
-#?niecza todo
 is (1..1), [1,], 'got the right array';
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
-#?niecza todo
 is ('a'..'a'), [< a >], 'got the right array';
 
 #?niecza skip 'Unable to resolve method reverse in class Range'
@@ -140,7 +136,6 @@ is(+(6..8), 3, 'numification');
 }
 
 # ranges constructed from parameters, from RT#63002.
-#?niecza todo
 {
     sub foo($a) { ~($a .. 5) };
     is(foo(5), '5', 'range constructed from parameter OK');
