@@ -317,6 +317,7 @@ ok 'abcdef' ~~ /<-[b..d]>/, 'negated character range';
 
 #### <- [b..d]>		abcdef		y	negated allows ws
 #?pugs todo 'feature'
+#?niecza skip "space between - and [ ] is a problem?"
 ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
 
 #### <-[b..d]>		bbccdd		n	negated character range
@@ -519,10 +520,12 @@ ok 'dbcb' !~~ /<!after <[cd]>>b/, 'lookbehind <!after>';
 ok 'dbaacb' ~~ /<!after <[cd]>><[ab]>/, 'lookbehind <!after>';
 
 #### <!after c|d>b		dbcb		n				lookbehind <!after>
+#?niecza skip "Unsuppored elements in after list"
 ok 'dbcb' !~~ /<!after c|d>b/, 'lookbehind <!after>';
 
 #### <!after c|d><[ab]>	dbaacb		y				lookbehind <!after>
 #?pugs todo 'feature'
+#?niecza skip "Unsuppored elements in after list"
 ok 'dbaacb' ~~ /<!after c|d><[ab]>/, 'lookbehind <!after>';
 
 #### <!after cd><[ab]>	cbaccb		y				lookbehind <!after>
@@ -532,10 +535,12 @@ ok 'cbaccb' ~~ /<!after cd><[ab]>/, 'lookbehind <!after>';
 #### $ <after ^a>		a		y				lookbehind <after>
 #?pugs todo 'feature'
 #?rakudo todo 'anchors and after'
+#?niecza skip "Unsuppored elements in after list"
 ok 'a' ~~ /$ <after ^a>/, 'lookbehind <after>';
 
 #### <after x+>y		axxbxxyc	y				lookbehind <after>
 #?pugs todo 'feature'
+#?niecza skip "Unsuppored elements in after list"
 ok 'axxbxxyc' ~~ /<after x+>y/, 'lookbehind <after>';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading + may also">
@@ -1264,20 +1269,25 @@ ok 'abc-ef' !~~ /:ignorecase bcd/, 'ignorecase (:ignorecase)';
 
 #### :i(0) bcd		abcdef	y	ignorecase, repetition (:i(0))
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abcdef' ~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(0) bcd		abCdef	n	ignorecase, repetition (:i(0))
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abCdef' !~~ /:i(0) bcd/, 'ignorecase, repetition (:i(0))';
 
 #### :i(1) bcd		abcdef	y	ignorecase, repetition (:i(1))
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abcdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		abCdef	y	ignorecase, repetition (:i(1))
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abCdef' ~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :i(1) bcd		aBxDef	n	ignorecase, repetition (:i(1))
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'aBxDef' !~~ /:i(1) bcd/, 'ignorecase, repetition (:i(1))';
 
 #### :0i bcd			abcdef	y	ignorecase, repetition (:0i)
@@ -1331,20 +1341,25 @@ ok 'AbcdeF' ~~ /:i ab [:i cd ] ef/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEf		y	ignorecase, lexical (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbCdEf' ~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeff	y	ignorecase, lexical (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AabbCcddEeff' ~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]		AbCdEF		n	ignorecase, lexical (:i)
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbCdEF' !~~ /:i a [:i(0) b [:i(1) c [:0i d [:1i e [:i(0) f ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]	AabbCcddEeFf	n	ignorecase, lexical (:i)
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AabbCcddEeFf' !~~ /:i aa [:i(0) bb [:i(1) cc [:0i dd [:1i ee [:i(0) ff ] ] ] ] ]/, 'ignorecase, lexical (:i)';
 
 #### :i ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbcdeF' ~~ /:i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i ab [:!i cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
@@ -1366,6 +1381,7 @@ ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:i(0) cd ] ef	abcdef	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'abcdef' ~~ /:0i ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef	AbcdeF	n	ignorecase, lexical repetition (:i)
@@ -1373,21 +1389,26 @@ ok 'AbcdeF' !~~ /:0i ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:1i cd ] ef	AbCdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbCdeF' ~~ /:i(1) ab [:1i cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcdeF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbcdeF' ~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(1) ab [:i(0) cd ] ef	AbcDeF	n	ignorecase, lexical repetition (:i)
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'AbcDeF' !~~ /:i(1) ab [:i(0) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :i(2) ab [:i(999) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'ABCDEF' ~~ /:i(2) ab [:i(999) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :1i ab [:i(1) cd ] ef		ABCDEF	y	ignorecase, lexical repetition (:i)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'ABCDEF' ~~ /:1i ab [:i(1) cd ] ef/, 'ignorecase, lexical repetition (:i)';
 
 #### :0i ab [:1i cd ] ef		abcDeF	n	ignorecase, lexical repetition (:i)
@@ -1405,6 +1426,7 @@ ok 'aBCDef' !~~ /ab [:ignorecase cd ] ef/, 'ignorecase, lexical (:ignorecase)';
 
 #### :1ignorecase ab [:ignorecase(1) cd ] ef	ABCDEF	y	ignorecase, lexical repetition (:ignorecase)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'ABCDEF' ~~ /:1ignorecase ab [:ignorecase(1) cd ] ef/, 'ignorecase, lexical repetition (:ignorecase)';
 
 #### :s bcd			a bcdef		y	sigspace (:s)
@@ -1465,12 +1487,14 @@ ok 'ab c d ef' !~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
 #### :s(1) b c [:s(0) d e f ]	a b c def	y	sigspace, lexical repetition (:s)
 #?pugs todo 'feature'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'a b c def' ~~ /:s(1) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s b c [:!s d e f ]	a b c def	y	sigspace, lexical repetition (:s)
 ok 'a b c def' ~~ /:s b c [:!s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(1) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 # todo :pge<feature>
@@ -1478,6 +1502,7 @@ ok 'a b c def' !~~ /:s(0) b c [:s(1) d e f ]/, 'sigspace, lexical repetition (:s
 ok 'a b c def' !~~ /:!s b c [:s d e f ]/, 'sigspace, lexical repetition (:s)';
 
 #### :s(0) b c [:s(0) d e f ]	a b c def	n	sigspace, lexical repetition (:s)
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'a b c def' !~~ /:s(0) b c [:s(0) d e f ]/, 'sigspace, lexical repetition (:s)';
 
 # todo :pge<feature>
@@ -1541,6 +1566,7 @@ ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 
 #### :s()foo '-'? bar		foo - bar	n	basic ws match
 #?rakudo skip ':s()'
+#?niecza skip "Action method mod_arg not yet implemented"
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
