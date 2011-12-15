@@ -34,10 +34,12 @@ ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 
 #### [ if :: not | ify ]	verify		n	inside a group
 #?rakudo skip ':: NYI'
+#?niecza todo ':: issues'
 ok 'verify' !~~ /[ if :: not | ify ]/, 'inside a group';
 
 ####   if :: not | ify	verify		n	the default all group
 #?rakudo skip ':: NYI'
+#?niecza todo ':: issues'
 ok 'verify' !~~ /  if :: not | ify/, 'the default all group';
 
 #### [ if :  not | ify ]	verify		y	simple backtrack still works
@@ -55,6 +57,7 @@ ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
 
 #### [ when ::: ever ] | whence	whence	n	full backtrack failure
 #?rakudo skip '::: NYI'
+#?niecza todo '::: issue'
 ok 'whence' !~~ /[ when ::: ever ] | whence/, 'full backtrack failure';
 
 #### ab::cd | gh::ij		xyabghij	y	group cut at top
@@ -64,6 +67,7 @@ ok 'xyabghij' ~~ /ab::cd | gh::ij/, 'group cut at top';
 
 #### ab:::cd | gh:::ij	xyabghij	n	rule cut at top
 #?rakudo skip ':: NYI'
+#?niecza todo '::: issue'
 ok 'xyabghij' !~~ /ab:::cd | gh:::ij/, 'rule cut at top';
 
 #### [ab::cd | gh::ij]	xyabghij	y	group cut in group
@@ -73,18 +77,22 @@ ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 
 #### [ab:::cd | gh:::ij]	xyabghij	n	rule cut in group
 #?rakudo skip '::: NYI'
+#?niecza todo '::: issue'
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
 #?rakudo todo 'nom regression'
+#?niecza todo ''
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
 #### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
+#?niecza todo ''
 ok 'xyzabcde' !~~ /( ab | abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
 #?pugs todo 'feature'
 #?rakudo skip '<commit> not implemented'
+#?niecza todo ''
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
 #L<S05/Modifiers/"The new :ratchet modifier">
@@ -324,6 +332,7 @@ ok 'abcdef' ~~ /<- [b..d]>/, 'negated allows ws';
 ok 'bbccdd' !~~ /<-[b..d]>/, 'negated character range';
 
 #### <-[d..b]>		dies
+#?niecza todo ""
 eval_dies_ok '/<-[d..b]>/', 'illegal character range';
 
 ok '-' ~~ /<[-]>/, 'unescaped hyphen is fine on its own';
@@ -411,6 +420,7 @@ ok 'ab\'>cd' ~~ /'ab\'>cd'/, 'literal match with quote';
 
 #### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
 #?rakudo todo 'nom regression'
+#?niecza todo ''
 ok 'ab\x5cyz' ~~ /'ab\\yz'/, 'literal match with backslash';
 
 #### 'ab"cd'			ab"cd		y	literal match with quote
@@ -419,6 +429,7 @@ ok 'ab"cd' ~~ /'ab"cd'/, 'literal match with quote';
 #### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
 #?pugs todo 'feature'
 #?rakudo todo 'todo'
+#?niecza todo ''
 ok 'ab\x5cyz' ~~ /'ab\\yz'/, 'literal match with backslash';
 
 #### "... --- ..."		... --- ...	y	literal match (\")
@@ -443,6 +454,7 @@ ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 #### "ab\\cd"		ab\x5ccd	y	literal match with backslash
 #?pugs todo 'feature'
 #?rakudo todo 'unknown'
+#?niecza todo ''
 ok "ab\x5ccd" ~~ /"ab\\cd"/, 'literal match with backslash';
 
 #### (ab)x"$0"		abxab		y	literal match with interpolation
@@ -828,6 +840,7 @@ eval_dies_ok '/|/', 'alternation (|) - literal must be escaped';
 
 #### <[a..d]> & <[b..e]>	c		y	conjunction (&)
 #?pugs todo 'feature'
+#?niecza todo ''
 ok 'c' ~~ /<[a..d]> & <[b..e]>/, 'conjunction (&)';
 
 #### <[a..d]> & <[d..e]>	c		n	conjunction (&)
@@ -860,6 +873,7 @@ eval_dies_ok '/b&/', 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg illegal
 #?rakudo todo 'infix:<S&>'
+#?niecza todo ''
 eval_dies_ok '/&b/', 'conjunction (&) - null left arg illegal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
@@ -1117,6 +1131,8 @@ ok 'abcdef' !~~ /a \x[0021]+ f/, 'hex (\x[])';
 #### b \x[0021] c		abc!def		n	hex (\x[])
 ok 'abc!def' !~~ /b \x[0021] c/, 'hex (\x[])';
 
+#?niecza 2 todo ""
+
 #### \X0021			a		y	not hex (\X)
 ok 'a' ~~ /\X0021/, 'not hex (\X)';
 
@@ -1125,6 +1141,8 @@ ok 'abc' ~~ /a \X0021 c/, 'not hex (\X)';
 
 #### \X0021			''		n	not hex (\X)
 ok '' !~~ /\X0021/, 'not hex (\X)';
+
+#?niecza 5 todo ""
 
 #### c \X0021 d		abc!def		n	not hex (\X)
 ok 'abc!def' !~~ /c \X0021 d/, 'not hex (\X)';
@@ -1143,6 +1161,8 @@ ok 'abc' ~~ /a \X[0021] c/, 'not hex (\X[])';
 
 #### \X[0021]		''		n	not hex (\X[])
 ok '' !~~ /\X[0021]/, 'not hex (\X[])';
+
+#?niecza 3 todo ""
 
 #### c \X[0021] d		abc!def		n	not hex (\X[])
 ok 'abc!def' !~~ /c \X[0021] d/, 'not hex (\X[])';
@@ -1181,6 +1201,8 @@ ok 'abcdef' !~~ /a \o[41]+ f/, 'octal (\o[])';
 #### b \o[41] c		abc!def		n	octal (\o[])
 ok 'abc!def' !~~ /b \o[41] c/, 'octal (\o[])';
 
+#?niecza 2 todo ""
+
 #### \O41			a		y	not octal (\O)
 ok 'a' ~~ /\O41/, 'not octal (\O)';
 
@@ -1189,6 +1211,8 @@ ok 'abc' ~~ /a \O41 c/, 'not octal (\O)';
 
 #### \O41			''		n	not octal (\O)
 ok '' !~~ /\O41/, 'not octal (\O)';
+
+#?niecza 5 todo ""
 
 #### c \O41 d		abc!def		n	not octal (\O)
 ok 'abc!def' !~~ /c \O41 d/, 'not octal (\O)';
@@ -1207,6 +1231,8 @@ ok 'abc' ~~ /a \O[41] c/, 'not octal (\O[])';
 
 #### \O[41]			''		n	not octal (\O[])
 ok '' !~~ /\O[41]/, 'not octal (\O[])';
+
+#?niecza 3 todo ""
 
 #### c \O[41] d		abc!def		n	not octal (\O[])
 ok 'abc!def' !~~ /c \O[41] d/, 'not octal (\O[])';
@@ -1575,6 +1601,7 @@ ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s<?wb>foo '-'? bar		foo - bar	y	basic ws match with boundary modifier separation
 #?pugs todo 'feature'
+#?niecza skip "Unable to resolve method wb in class Cursor"
 ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier separation';
 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
@@ -1593,6 +1620,7 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 
 #### :perl5 \A.*? bcd\Q$\E..\z	a bcd$ef	y	perl5 syntax (:perl5)
 #?pugs todo 'feature'
 #?rakudo skip 'parse error'
+#?niecza skip 'Autoloading NYI'
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
@@ -2157,6 +2185,7 @@ ok ('2+3 ab2' ~~ /<ident>/) && matchcheck($/, q/mob<ident>: <ab2 @ 4>/), 'captur
 
 #### <name>			ab::cd::x3::42	/mob<name>: <ab::cd::x3 @ 0>/	capturing builtin <name>
 #?rakudo skip 'regex <name>'
+#?niecza skip "Unable to resolve method name in class Cursor"
 ok ('ab::cd::x3::42' ~~ /<name>/) && matchcheck($/, q/mob<name>: <ab::cd::x3 @ 0>/), 'capturing builtin <name>';
 
 
@@ -2165,8 +2194,10 @@ ok '2+3 ab2' ~~ /<.ident>/, 'non-capturing builtin <.ident>';
 
 #### <.name>			ab::cd::x3::42	y	non-capturing builtin <.name>
 #?rakudo skip 'regex <name>'
+#?niecza skip "Unable to resolve method name in class Cursor"
 ok 'ab::cd::x3::42' ~~ /<.name>/, 'non-capturing builtin <.name>';
 
+#?niecza 12 skip "Unable to resolve method wb in class Cursor"
 
 #### <?wb>def		abc\ndef\n-==\nghi	y	word boundary \W\w
 ok "abc\ndef\n-==\ngh" ~~ /<?wb>def/, 'word boundary \W\w';
@@ -2206,6 +2237,7 @@ ok "abc\ndef\n-==\nghi" ~~ /a<!wb>/, '\w\w nonword boundary';
 #### \-<!wb>			abc\ndef\n-==\nghi	y	\W\W nonword boundary
 ok "abc\ndef\n-==\nghi" ~~ /\-<!wb>/, '\W\W nonword boundary';
 
+#?niecza 3 skip "Unable to resolve method upper in class Cursor"
 
 #### <upper>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<upper>: <A @ 45>/		<upper>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<upper>/) && matchcheck($/, q/mob<upper>: <A @ 45>/), '<upper>';
@@ -2215,6 +2247,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 
 #### <+upper>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJ @ 45>/	<+upper>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>+/) && matchcheck($/, q/mob: <ABCDEFGHIJ @ 45>/), '<+upper>+';
+
+#?niecza 3 skip "Unable to resolve method lower in class Cursor"
 
 #### <lower>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lower>: <a @ 55>/		<lower>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lower>/) && matchcheck($/, q/mob<lower>: <a @ 55>/), '<lower>';
@@ -2234,6 +2268,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 #### <+alpha>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJabcdefghij @ 45>/	<+alpha>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>+/) && matchcheck($/, q/mob: <ABCDEFGHIJabcdefghij @ 45>/), '<+alpha>+';
 
+#?niecza 3 skip "Unable to resolve method digit in class Cursor"
+
 #### <digit>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<digit>: <0 @ 35>/		<digit>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<digit>/) && matchcheck($/, q/mob<digit>: <0 @ 35>/), '<digit>';
 
@@ -2242,6 +2278,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 
 #### <+digit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789 @ 35>/	<+digit>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>+/) && matchcheck($/, q/mob: <0123456789 @ 35>/), '<+digit>+';
+
+#?niecza 3 skip "Unable to resolve method xdigit in class Cursor"
 
 #### <xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<xdigit>: <0 @ 35>/		<xdigit>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<xdigit>/) && matchcheck($/, q/mob<xdigit>: <0 @ 35>/), '<xdigit>';
@@ -2252,6 +2290,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 #### <+xdigit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEF @ 35>/	<+xdigit>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>+/) && matchcheck($/, q/mob: <0123456789ABCDEF @ 35>/), '<+xdigit>+';
 
+#?niecza 3 skip "Unable to resolve method space in class Cursor"
+
 #### <space>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<space>: <\t @ 0>/		<space>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<space>/) && matchcheck($/, q/mob<space>: <\t @ 0>/), '<space>';
 
@@ -2261,6 +2301,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 #### <+space>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r  @ 0>/		<+space>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>+/) && matchcheck($/, q/mob: <\t\n\r  @ 0>/), '<+space>+';
 
+#?niecza 3 skip "Unable to resolve method blank in class Cursor"
+
 #### <blank>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<blank>: <\t @ 0>/		<blank>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<blank>/) && matchcheck($/, q/mob<blank>: <\t @ 0>/), '<blank>';
 
@@ -2269,6 +2311,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 
 #### <+blank>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/) && matchcheck($/, q/mob: <\t @ 0>/), '<+blank>+';
+
+#?niecza 3 skip "Unable to resolve method cntrl in class Cursor"
 
 #### <cntrl>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<cntrl>: <\t @ 0>/		<cntrl>
 #?rakudo todo '<cntrl>'
@@ -2282,6 +2326,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 #?rakudo todo '<cntrl>'
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>+/) && matchcheck($/, q/mob: <\t\n\r @ 0>/), '<+cntrl>+';
 
+#?niecza 3 skip "Unable to resolve method punct in class Cursor"
+
 #### <punct>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<punct>: <! @ 4>/		<punct>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<punct>/) && matchcheck($/, q/mob<punct>: <! @ 4>/), '<punct>';
 
@@ -2290,6 +2336,8 @@ ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /
 
 #### <+punct>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <!"#$%&/		<+punct>+
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>+/) && matchcheck($/, q/mob: <!"#$%&/), '<+punct>+';
+
+#?niecza 4 skip "Unable to resolve method alnum in class Cursor"
 
 #### <alnum>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alnum>: <0 @ 35>/		<alnum>
 ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alnum>/) && matchcheck($/, q/mob<alnum>: <0 @ 35>/), '<alnum>';
@@ -2307,6 +2355,7 @@ ok 'ident_1' ~~ /<+alnum+[_]>/, 'union of character classes';
 ok 'aaa-bbb' ~~ /<+[ab]+[\-]>+/, 'enumerated character classes';
 
 #### <+  [ a  b ]+[\-]>+		aaa-bbb		y	whitespace is ignored within square brackets and after the initial +
+#?niecza skip "+  [ ] fails"
 ok 'aaa-bbb' ~~ /<+  [ a  b ]+[\-]>+/, 'whitespace is ignored within square brackets and after the initial +';
 
 #### <+[ab]+[\-]>+	-ab-				y	enumerated character classes variant
@@ -2325,21 +2374,27 @@ ok 'ccdd' ~~ /<-[ab]+[cd]>+/, 'enumerated character classes variant';
 ok 'caad' !~~ /^<-[ab]+[cd]>+$/, 'enumerated character classes variant';
 
 #### <-  [ a  b ]+[cd]>+	ccdd			y	whitespace is ignored within square brackets and after the initial -
+#?niecza skip "+  [ ] fails"
 ok 'ccdd' ~~ /<-  [ a  b ]+[cd]>+/, 'whitespace is ignored within square brackets and after the initial -';
 
 #### ^<-upper>dent	ident_1				y	inverted character class
+#?niecza skip "Unable to resolve method upper in class Cursor"
 ok 'ident_1' ~~ /^<-upper>dent/, 'inverted character class';
 
 #### ^<-upper>dent	Ident_1				n	inverted character class
+#?niecza skip "Unable to resolve method upper in class Cursor"
 ok 'Ident_1' !~~ /^<-upper>dent/, 'inverted character class';
 
 #### <+alpha-[Jj]>+	abc				y	character class with no j
+#?niecza skip "Unable to resolve method alpha in class Cursor"
 ok 'abc' ~~ /<+alpha-[Jj]>+/, 'character class with no j';
 
 #### <+ alpha - [ Jj ]>	abc			y	character class with no j with ws
+#?niecza skip "Unable to resolve method alpha in class Cursor"
 ok 'abc' ~~ /<+ alpha - [ Jj ]>/, 'character class with no j with ws';
 
 #### ^<+alpha-[Jj]>+$	aJc			n	character class with no j fail
+#?niecza skip "Unable to resolve method alpha in class Cursor"
 ok 'aJc' !~~ /^<+alpha-[Jj]>+$/, 'character class with no j fail';
 
 
