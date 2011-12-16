@@ -5,6 +5,9 @@ use Test;
 # Referencing various parts of Synopsis 12.
 # L<S12/Trusts/"if that other class has indicated that it trusts the
 # class">
+#
+# XXX tests attribute access with method syntax, which is probably
+# wrong. Needs spec clarification.
 
 plan 15;
 
