@@ -1,7 +1,6 @@
 use v6;
 use Test;
 
-#?DOES 3
 sub throws_like($code, $ex_type, *%matcher) {
     if $code ~~ Callable {
         $code()
@@ -13,9 +12,14 @@ sub throws_like($code, $ex_type, *%matcher) {
     CATCH {
         default {
             ok 1, 'code died';
-            ok $_.WHAT === $ex_type , "right exception type ({$ex_type.^name})";
-            for %matcher.kv -> $k, $v {
-                ok $_."$k"() ~~ $v, " .$k matches $v";
+            my $type_ok = $_.WHAT === $ex_type;
+            ok $type_ok , "right exception type ({$ex_type.^name})";
+            if $type_ok {
+                for %matcher.kv -> $k, $v {
+                    ok $_."$k"() ~~ $v, " .$k matches $v";
+                }
+            } else {
+                skip 'wrong exception type', %matcher.elems;
             }
         }
     }
@@ -26,5 +30,8 @@ throws_like 'class Foo { $!bar }', X::Attribute::Undeclared,
             name => '$!bar', package-name => 'Foo';
 throws_like 'sub f() { $^x }', X::Signature::Placeholder,
             line => 1;
+
+#?rakudo skip 'parsing of $& and other p5 variables'
+throws_like '$&', X::Obsolete, old => '$@ variable', new => '$/ or $()';
 
 done;
