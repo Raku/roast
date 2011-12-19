@@ -71,7 +71,6 @@ ok('x' !~~ 'a'..'c', 'str not in range');
 ok(('aa'..'zz').ACCEPTS('ax'), 'str in range');
 ok(('a'..'zz').ACCEPTS('ax'), 'str in range');
 
-#?niecza 4 skip 'Cannot use value like Range as a number'
 is(+(6..6), 1, 'numification');
 is(+(6^..6), 0, 'numification');
 is(+(6..^6), 0, 'numification');
