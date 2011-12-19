@@ -22,17 +22,18 @@ plan 10;
 #L<S05/"Variable (non-)interpolation"/"An interpolated array:">
 
 #?rakudo todo 'sequential alternation NYI'
-#?niecza todo
 {
     my $str = 'x' x 7;
     my @list = <x xx xxxx>;
 
     ok $str ~~ m/ ||@list /;
+    #?niecza todo
     is ~$/,  'x',  'first ||@list alternative matches';
 
     @list = <xx x xxxx>;
 
     ok $str ~~ m/ ||@list /;
+    #?niecza todo
     is ~$/,  'xx', 'first ||@list alternative matches';
 }
 
