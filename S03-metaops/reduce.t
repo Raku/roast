@@ -356,7 +356,6 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 }
 
 #?rakudo todo 'RT 82210'
-#?niecza skip 'Range.Numeric'
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
    'a listop with immediate () is a function call (RT 82210)';
 
