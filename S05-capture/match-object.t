@@ -17,13 +17,12 @@ is $/.to,             4,        '.to';
 is $/.prematch,    'ab',        '.prematch';
 #?niecza skip 'Unable to resolve method postmatch in class Match'
 is $/.postmatch,   'de',        '.postmatch';
-#?niecza todo
 is $/.list.elems,     0,        '.list (empty)';
 is $/.hash.elems,     0,        '.hash (empty)';
+#?niecza todo
 is $/.keys.elems,     0,        '.keys (empty)';
 #?niecza todo
 is $/.values.elems,   0,        '.values (empty)';
-#?niecza todo
 is $/.pairs.elems,    0,        '.pairs (empty)';
 #?niecza todo
 is $/.kv.elems,       0,        '.kv (empty)';
