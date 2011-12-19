@@ -44,14 +44,14 @@ ok('a' ~~ m/@var[0]/, 'Array 0');
 ok('1' ~~ m/$href.{'a'}/, 'Hash ref dot A');
 #?niecza todo
 ok('1' ~~ m/$href{'a'}/, 'Hash ref A');
-#?niecza todo
+#?niecza skip 'Only $ and @ variables may be used in regexes for now'
 ok('1' ~~ m/%var{'a'}/, 'Hash A');
 
 #?niecza todo
 ok('1' ~~ m/$href.<a>/, 'Hash ref dot A');
 #?niecza todo
 ok('1' ~~ m/$href<a>/, 'Hash ref A');
-#?niecza todo
+#?niecza skip 'Only $ and @ variables may be used in regexes for now'
 ok('1' ~~ m/%var<a>/, 'Hash A');
 
 ok(!( 'a' ~~ m/$aref[1]/ ), 'Array ref 1');
@@ -59,9 +59,11 @@ ok(!( 'a' ~~ m/$aref.[1]/ ), 'Array ref dot 1');
 ok(!( 'a' ~~ m/@var[1]/ ), 'Array 1');
 ok(!( '1' ~~ m/$href.{'b'}/ ), 'Hash ref dot B');
 ok(!( '1' ~~ m/$href{'b'}/ ), 'Hash ref B');
+#?niecza skip 'Only $ and @ variables may be used in regexes for now'
 ok(!( '1' ~~ m/%var{'b'}/ ), 'Hash B');
 ok(!( '1' ~~ m/$href.<b>/ ), 'Hash ref dot B');
 ok(!( '1' ~~ m/$href<b>/ ), 'Hash ref B');
+#?niecza skip 'Only $ and @ variables may be used in regexes for now'
 ok(!( '1' ~~ m/%var<b>/ ), 'Hash B');
 
 # REGEXES
