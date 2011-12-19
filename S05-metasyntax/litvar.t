@@ -70,7 +70,6 @@ ok(!( '1' ~~ m/%var<b>/ ), 'Hash B');
 # However, if $var contains a Regex object, instead of attempting to convert it to a string, it is called as a subrule
 # A simple test for this
 my $rx = rx/foo/;
-#?niecza todo
 ok('foobar' ~~ /$rx bar/,  'regex object in a regex');
 ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 
@@ -79,18 +78,13 @@ ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 # L<S05/Variable (non-)interpolation/An interpolated array:>
 
 #?pugs 3 todo 'feature'
-#?niecza todo
 ok("a" ~~ m/@var/, 'Simple array interpolation (a)');
-#?niecza todo
 ok("b" ~~ m/@var/, 'Simple array interpolation (b)');
-#?niecza todo
 ok("c" ~~ m/@var/, 'Simple array interpolation (c)');
 ok(!( "d" ~~ m/@var/ ), 'Simple array interpolation (d)');
 #?pugs 2 todo 'feature'
-#?niecza todo
 ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 
-#?niecza todo
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
