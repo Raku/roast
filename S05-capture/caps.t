@@ -13,6 +13,7 @@ sub ca(@x) {
 }
 
 ok 'a b c d' ~~ /(.*)/, 'basic sanity';
+#?niecza 2 skip "Positional NYI"
 ok $/.caps ~~ Positional, '$/.caps returns something Positional';
 #?rakudo todo 'return type of .chunks'
 isa_ok $/.chunks ~~ Positional, '$/.chunks returns something Positional';
