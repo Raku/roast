@@ -174,6 +174,7 @@ plan 283;
     is(@c[1], 100, "assigned correct value from list to slice-in-list");
     is(@c[2], 200, "... and second");
 #?pugs 3 todo 'feature'
+#?niecza 3 todo 'feature'
     is(@c[3], 300, "... and third");
     is(@d[0], 400, "... and fourth");
     is(@d[1], 500, "... and fifth");
@@ -235,6 +236,7 @@ my @p;
     is(@p[1],11, "||= operator parses as item assignment 4");
 }
 
+#?niecza todo
 {
     my $a;
     @p = $a or= 3, 4;
@@ -270,11 +272,13 @@ my @p;
 {
     my $a;
     @p = $a orelse= 3, 4;
+    #?niecza 3 todo
     is($a, 3, "orelse= operator");
     is(@p[0],3, "orelse= operator parses as item assignment 1");
     is(@p[1],4, "orelse= operator parses as item assignment 2");
 
     @p = $a orelse= 10, 11;
+    #?niecza 3 todo
     is($a, 3, "... and second");
     is(@p[0],3, "orelse= operator parses as item assignment 3");
     is(@p[1],11, "orelse= operator parses as item assignment 4");
@@ -308,6 +312,7 @@ my @p;
 {
     my $a = 3;
     @p = $a and= 42, 43;
+    #?niecza 3 todo
     is($a, 42, "and= operator");
     is(@p[0],42, "and= operator parses as item assignment 1");
     is(@p[1],43, "and= operator parses as item assignment 2");
@@ -315,6 +320,7 @@ my @p;
     @p = $a and= 10, 11;
     is($a, 0, "... and second");
     is(@p[0],0, "and= operator parses as item assignment 3");
+    #?niecza todo
     is(@p[1],11, "and= operator parses as item assignment 4");
     my $x = True; $x and= False;
     is($x, False, "and= operator with True and False");
@@ -598,9 +604,11 @@ sub l () { 1, 2 };
     my @z = ($(@a[0]) = l, l);
     is(@a[0].elems, 2, 'lhs treats $(@a[0]) as scalar (1)');
     #?rakudo todo 'item assignment'
+    #?niecza todo
     is(@z.elems,    2, 'lhs treats $(@a[0]) as scalar (2)');
 }
 
+#?niecza todo
 {
     my $a;
     my @z = (($a) = l, l, l);
@@ -649,6 +657,7 @@ sub l () { 1, 2 };
     my @a;
     my @z = (@a[0] = l, l);
     #?rakudo todo 'list assignment to scalar'
+    #?niecza todo
     is(@a[0].elems, 1,  'lhs treats @a[0] as one-item list');
     is(@z.elems,    1,  'lhs treats @a[0] as one-item list');
     ok(!defined(@a[1]), 'lhs treats @a[0] as one-item list');
@@ -666,6 +675,7 @@ sub l () { 1, 2 };
     my %a;
     my @z = (%a<x> = l, l);
     #?rakudo 2 todo 'list assignment to scalar'
+    #?niecza 2 todo
     is(%a{"x"}.elems, 1, 'lhs treats %a<x> as one-item list');
     is(@z[0].elems,   1, 'lhs treats %a<x> as one-item list');
     ok(!defined(@z[1]),  'lhs treats %a<x> as one-item list');
@@ -683,6 +693,7 @@ sub l () { 1, 2 };
     my %a;
     my @z = (%a{'x'} = l, l);
     #?rakudo 2 todo 'list assignment to scalar'
+    #?niecza 2 todo
     is(%a{"x"}, 1,        q/lhs treats %a{'x'} as list/);
     is(~@z[0], '1',       q/lhs treats %a{'x'} as list/);
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
@@ -717,6 +728,7 @@ sub l () { 1, 2 };
     my $c = 1;
     my @z = (@a[@b[$c]] = l, l);
     #?rakudo 3 todo 'list assignment, autovivification (?)'
+    #?niecza 3 todo
     is(~@a,    '1', 'lhs treats @a[@b[$c]] as list');
     is(~@z[0], '1', 'lhs treats @a[@b[$c]] as list');
     is(!defined(@z[1]), 'lhs treats @a[@b[$c]] as list');
@@ -729,6 +741,7 @@ sub l () { 1, 2 };
     my @z = (@a[@b[$c,]] = l, l);
     is(~@a,     '1',    'lhs treats @a[@b[$c,]] as list');
     #?rakudo todo 'list assignment'
+    #?niecza todo
     is(~@z[0],  '2',    'lhs treats @a[@b[$c,]] as list');
     ok(!defined(@z[1]), 'lhs treats @a[@b[$c,]] as list');
 }
@@ -739,9 +752,11 @@ sub l () { 1, 2 };
     my $b = 0;
     my sub foo { \@a }
     my @z = (foo()[$b] = l, l);
+    #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b] as list');
     #?rakudo todo 'list assignment'
     is(@z[0].elems, 1,  'lhs treats foo()[$b] as list');
+    #?niecza todo
     ok(!defined(@z[1]), 'lhs treats foo()[$b] as list');
 }
 
@@ -751,9 +766,11 @@ sub l () { 1, 2 };
     my $b = 0;
     my sub foo { \@a }
     my @z = (foo()[$b,] = l, l);
+    #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b,] as list');
     #?rakudo todo 'list assignment'
     is(@z[0].elems, 1,  'lhs treats foo()[$b,] as list');
+    #?niecza todo
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
@@ -764,6 +781,7 @@ sub l () { 1, 2 };
     my @z = ($(@a[$b]) = l, l);
     is(@a.elems,    1, 'lhs treats $(@a[$b]) as item (1)');
     #?rakudo 2 todo 'item assignment'
+    #?niecza 2 todo
     is(@a[0].elems, 1, 'lhs treats $(@a[$b]) as item (2)');
     is(@z[1].elems, 3, 'lhs treats $(@a[$b]) as item (3)');
 }
