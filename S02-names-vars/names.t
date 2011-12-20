@@ -10,6 +10,7 @@ plan 140;
 # syn r14552
 
 #?rakudo skip 'package variable autovivification'
+#?niecza skip 'Undeclared name: Terrain::'
 {
     my $mountain = 'Hill';
     $Terrain::mountain  = 108;
@@ -28,13 +29,16 @@ plan 140;
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
 #?rakudo 4 skip '::{ } package lookup NYI'
+    #?niecza todo
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
+    #?niecza todo
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
 
 #?rakudo skip '::{ } package lookup NYI'
+#?niecza skip 'Postconstraints, and shapes on variable declarators NYI'
 {
     my $::<!@#$> =  2.22;
     is($::{'!@#$'}, 2.22, 'variable lookup using $::{\'symbols\'}');
@@ -63,6 +67,7 @@ plan 140;
     dies_ok { eval 'TestA::b(3, :foo)'},
         'calling non-existing function in foreign class dies';;
     #?rakudo todo 'nom regression'
+    #?niecza todo
     ok "$!" ~~ / ' TestA::b' /, 'error message mentions function name';
 }
 
@@ -107,6 +112,7 @@ plan 140;
 eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
 
 # RT #58488 
+#?niecza todo
 lives_ok {
     eval 'class A { has $.a};  my $a = A.new();';
     eval 'class A { has $.a};  my $a = A.new();';
