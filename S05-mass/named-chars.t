@@ -125,6 +125,7 @@ ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/ ), 'Negative charcla
 #?rakudo skip 'negative char class in enumerated list'
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/, 'Negative charclass named NEXT LINE (NEL) match');
 #?rakudo 7 skip '\c[LF] not valid charname'
+#?niecza 15 skip 'Unrecognized character name LF'
 ok("abc\c[LF]def" ~~ m/\c[LF]/, 'Unanchored named LF');
 ok("abc\c[LF]def" ~~ m/^ abc \c[LF] def $/, 'Anchored LF');
 ok("abc\c[LF]\c[NEXT LINE (NEL)]def" ~~ m/\c[LF, NEXT LINE (NEL)]/, 'Multiple LF, NEXT LINE (NEL)');
@@ -147,6 +148,7 @@ ok("\c[FF]\c[LF]" ~~ m/<[\c[FF,LF]]>/, 'Charclass multiple FF,LF');
 ok(!( "\c[FF]\c[LF]" ~~ m/^ <-[\c[FF,LF]]>/ ), 'Negative charclass FF,LF');
 
 #?rakudo 2 skip 'FF as char name'
+#?niecza 24 skip "more control characters"
 ok(!( "\c[FF]" ~~ m/^ \C[FF]/ ), 'Negative named FF nomatch');
 ok("\c[LF]" ~~ m/^ \C[FF]/, 'Negative named FF match');
 #?rakudo skip 'negative char class in enumerated list'
@@ -186,6 +188,7 @@ ok("abc\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]def" ~~ m/\x[fd55
 ok("abc\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]def" ~~ m/\o[176525]/, 'Unanchored \o[176525]');
 ok("abc\x[fd55]def" ~~ m/^ abc \c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM] def $/, 'Anchored ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 #?rakudo 3 skip '\c[NEL] not valid charname'
+#?niecza 3 skip '\c[NEL] not valid charname'
 ok("abc\x[fd55]\c[NEL]def" ~~ m/\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]/, 'Multiple ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
 ok("\x[fd55]\c[NEL]" ~~ m/<[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]]>/, 'Charclass multiple ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
 #?rakudo skip 'escapes in char classes'
@@ -193,10 +196,12 @@ ok(!( "\x[fd55]\c[NEL]" ~~ m/^ <-[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INI
 #?rakudo 2 todo '\C escape'
 ok(!( "\x[fd55]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/ ), 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
 #?rakudo skip '\c[NEL] not valid charname'
+#?niecza skip '\c[NEL] not valid charname'
 ok("\c[NEL]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/, 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM match');
 #?rakudo skip 'negative char class in enumerated list'
 ok(!( "\x[fd55]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/ ), 'Negative charclass named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
 #?rakudo skip 'negative char class in enumerated list'
+#?niecza skip '\c[NEL] not valid charname'
 ok("\c[NEL]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/, 'Negative charclass named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM match');
 
 ok(!( "\x[fd55]" ~~ m/^ \X[FD55]/ ), 'Negative hex \X[FD55] nomatch');
