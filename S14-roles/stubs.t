@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -20,3 +20,7 @@ dies_ok  { eval 'class E does WithStub does ProvidesStub1 does ProvidesStub2 { }
 lives_ok { eval 'class F does WithStub does ProvidesStub1 does ProvidesStub2 {
     method a() { 4 } }' },
         'composing stub and 2 implementations allows custom implementation';
+
+class ProvidesA { method a() { 5 } };
+lives_ok { eval 'class ChildA is ProvidesA does WithStub { }' },
+        'stubbed method can come from parent class too';
