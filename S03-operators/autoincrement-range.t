@@ -13,6 +13,7 @@ my $x;
     $x = "ZZ";
     is( ++$x, "AAA", "'ZZ'++ is 'AAA'" );
     $x = "AAA";
+    #?niecza skip "Failure NYI"
     ok( --$x ~~ Failure, "'AAA'-- fails" );
     $x = "0A";
     is( ++$x, "0B", "'0A'++ is '0B'" );
@@ -32,6 +33,7 @@ my $x;
     $x = "zz";
     is( ++$x, "aaa", "'zz'++ is 'aaa'" );
     $x = "aaa";
+    #?niecza skip "Failure NYI"
     ok( --$x ~~ Failure, "'aaa'-- fails" );
     $x = "0a";
     is( ++$x, "0b", "'0a'++ is '0b'" );
@@ -53,6 +55,7 @@ my $x;
     is( ++$x, "\x[391]\x[391]\x[391]",
         "'\x[3a9]\x[3a9]'++ is '\x[391]\x[391]\x[391]'" );
     $x = "\x[391]\x[391]\x[391]";
+    #?niecza skip "Failure NYI"
     ok( --$x ~~ Failure, "'\x[391]\x[391]\x[391]'-- fails" );
     $x = "A\x[391]";
     #?rakudo todo 'nom regression'
@@ -80,6 +83,7 @@ my $x;
     is( ++$x, "\x[3b1]\x[3b1]\x[3b1]",
         "'\x[3c9]\x[3c9]'++ is '\x[3b1]\x[3b1]\x[3b1]'" );
     $x = "\x[3b1]\x[3b1]\x[3b1]";
+    #?niecza skip "Failure NYI"
     ok( --$x ~~ Failure, "'\x[3b1]\x[3b1]\x[3b1]'-- fails" );
     $x = "A\x[3b1]";
     #?rakudo todo 'nom regression'
@@ -104,27 +108,35 @@ my $x;
     diag( "Tests for '\x[5d0]' .. '\x[5ea]' (Hebrew)" );
     $x = "\x[5ea]\x[5ea]";
     #?rakudo todo 'Hebrew'
+    #?niecza todo 'Hebrew'
     is( ++$x, "\x[5d0]\x[5d0]\x[5d0]", "'\x[5ea]\x[5ea]'++ is '\x[5d0]\x[5d0]\x[5d0]'" );
     $x = "\x[5d0]\x[5d0]\x[5d0]";
     #?rakudo skip 'Hebrew - false positive'
+    #?niecza skip "Failure NYI"
     ok( --$x ~~ Failure, "'\x[5d0]\x[5d0]\x[5d0]'-- fails" );
     $x = "A\x[5d0]";
     #?rakudo todo 'Hebrew'
+    #?niecza todo 'Hebrew'
     is( ++$x, "A\x[5d1]", "'A\x[5d0]'++ is 'A\x[5d1]'" );
     $x = "A\x[5d1]";
     #?rakudo todo 'Hebrew'
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[5d0]", "'A\x[5d1]'-- is 'A\x[5d0]'" );
     $x = "A\x[5ea]";
     #?rakudo todo 'Hebrew'
+    #?niecza todo 'Hebrew'
     is( ++$x, "B\x[5d0]", "'A\x[5ea]'++ is 'B\x[5d0]'" );
     $x = "B\x[5d0]";
     #?rakudo todo 'Hebrew'
+    #?niecza todo 'Hebrew'
     is( --$x, "A\x[5ea]", "'B\x[5d0]'-- is 'A\x[5ea]'" );
     $x = "\x[5d0]ZZ";
     #?rakudo todo 'Hebrew'
+    #?niecza skip "Magical string decrement underflowed"
     is( ++$x, "\x[5d1]AA", "'\x[5d0]ZZ'++ is '\x[5d1]AA'" );
     $x = "\x[5d1]AA";
     #?rakudo todo 'Hebrew'
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[5d0]ZZ", "'\x[5d1]AA'-- is '\x[5d0]ZZ'" );
 }
 
@@ -151,6 +163,7 @@ my $x;
 {
     diag( "Tests for '\x[660]' .. '\x[669]' (Arabic-Indic)" );
     $x = "\x[669]\x[669]";
+    #?niecza 3 todo "Arabic-Indic NYI"
     is( ++$x, "\x[661]\x[660]\x[660]",
         "'\x[669]\x[669]'++ is '\x[661]\x[660]\x[660]'" );
     $x = "\x[661]\x[660]\x[660]";
@@ -159,20 +172,24 @@ my $x;
     $x = "A\x[660]";
     is( ++$x, "A\x[661]", "'A\x[660]'++ is 'A\x[661]'" );
     $x = "A\x[661]";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[660]", "'A\x[661]'-- is 'A\x[660]'" );
     $x = "A\x[669]";
+    #?niecza 3 todo "Arabic-Indic NYI"
     is( ++$x, "B\x[660]", "'A\x[669]'++ is 'B\x[660]'" );
     $x = "B\x[660]";
     is( --$x, "A\x[669]", "'B\x[660]'-- is 'A\x[669]'" );
     $x = "\x[660]ZZ";
     is( ++$x, "\x[661]AA", "'\x[660]ZZ'++ is '\x[661]AA'" );
     $x = "\x[661]AA";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[660]ZZ", "'\x[661]AA'-- is '\x[660]ZZ'" );
 }
 #?rakudo todo 'Devangari'
 {
     diag( "Tests for '\x[966]' .. '\x[96f]' (Devangari)" );
     $x = "\x[96f]\x[96f]";
+    #?niecza 3 todo "Devangari NYI"
     is( ++$x, "\x[967]\x[966]\x[966]",
         "'\x[96f]\x[96f]'++ is '\x[967]\x[966]\x[966]'" );
     $x = "\x[967]\x[966]\x[966]";
@@ -181,20 +198,24 @@ my $x;
     $x = "A\x[966]";
     is( ++$x, "A\x[967]", "'A\x[966]'++ is 'A\x[967]'" );
     $x = "A\x[967]";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[966]", "'A\x[967]'-- is 'A\x[966]'" );
     $x = "A\x[96f]";
+    #?niecza 3 todo "Devangari NYI"
     is( ++$x, "B\x[966]", "'A\x[96f]'++ is 'B\x[966]'" );
     $x = "B\x[966]";
     is( --$x, "A\x[96f]", "'B\x[966]'-- is 'A\x[96f]'" );
     $x = "\x[966]ZZ";
     is( ++$x, "\x[967]AA", "'\x[966]ZZ'++ is '\x[967]AA'" );
     $x = "\x[967]AA";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[966]ZZ", "'\x[967]AA'-- is '\x[966]ZZ'" );
 }
 #?rakudo todo 'Bengali'
 {
     diag( "Tests for '\x[9e6]' .. '\x[9ef]' (Bengali)" );
     $x = "\x[9ef]\x[9ef]";
+    #?niecza 3 todo "Bengali NYI"
     is( ++$x, "\x[9e7]\x[9e6]\x[9e6]",
         "'\x[9ef]\x[9ef]'++ is '\x[9e7]\x[9e6]\x[9e6]'" );
     $x = "\x[9e7]\x[9e6]\x[9e6]";
@@ -203,20 +224,24 @@ my $x;
     $x = "A\x[9e6]";
     is( ++$x, "A\x[9e7]", "'A\x[9e6]'++ is 'A\x[9e7]'" );
     $x = "A\x[9e7]";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[9e6]", "'A\x[9e7]'-- is 'A\x[9e6]'" );
     $x = "A\x[9ef]";
+    #?niecza 3 todo "Bengali NYI"
     is( ++$x, "B\x[9e6]", "'A\x[9ef]'++ is 'B\x[9e6]'" );
     $x = "B\x[9e6]";
     is( --$x, "A\x[9ef]", "'B\x[9e6]'-- is 'A\x[9ef]'" );
     $x = "\x[9e6]ZZ";
     is( ++$x, "\x[9e7]AA", "'\x[9e6]ZZ'++ is '\x[9e7]AA'" );
     $x = "\x[9e7]AA";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[9e6]ZZ", "'\x[9e7]AA'-- is '\x[9e6]ZZ'" );
 }
 #?rakudo todo 'Gurmukhi'
 {
     diag( "Tests for '\x[a66]' .. '\x[a6f]' (Gurmukhi)" );
     $x = "\x[a6f]\x[a6f]";
+    #?niecza 3 todo "Gurmukhi NYI"
     is( ++$x, "\x[a67]\x[a66]\x[a66]",
         "'\x[a6f]\x[a6f]'++ is '\x[a67]\x[a66]\x[a66]'" );
     $x = "\x[a67]\x[a66]\x[a66]";
@@ -225,20 +250,24 @@ my $x;
     $x = "A\x[a66]";
     is( ++$x, "A\x[a67]", "'A\x[a66]'++ is 'A\x[a67]'" );
     $x = "A\x[a67]";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[a66]", "'A\x[a67]'-- is 'A\x[a66]'" );
     $x = "A\x[a6f]";
+    #?niecza 3 todo "Gurmukhi NYI"
     is( ++$x, "B\x[a66]", "'A\x[a6f]'++ is 'B\x[a66]'" );
     $x = "B\x[a66]";
     is( --$x, "A\x[a6f]", "'B\x[a66]'-- is 'A\x[a6f]'" );
     $x = "\x[a66]ZZ";
     is( ++$x, "\x[a67]AA", "'\x[a66]ZZ'++ is '\x[a67]AA'" );
     $x = "\x[a67]AA";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[a66]ZZ", "'\x[a67]AA'-- is '\x[a66]ZZ'" );
 }
 #?rakudo todo 'Gujarati'
 {
     diag( "Tests for '\x[ae6]' .. '\x[aef]' (Gujarati)" );
     $x = "\x[aef]\x[aef]";
+    #?niecza 3 todo "Gujarati NYI"
     is( ++$x, "\x[ae7]\x[ae6]\x[ae6]",
         "'\x[aef]\x[aef]'++ is '\x[ae7]\x[ae6]\x[ae6]'" );
     $x = "\x[ae7]\x[ae6]\x[ae6]";
@@ -247,20 +276,24 @@ my $x;
     $x = "A\x[ae6]";
     is( ++$x, "A\x[ae7]", "'A\x[ae6]'++ is 'A\x[ae7]'" );
     $x = "A\x[ae7]";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[ae6]", "'A\x[ae7]'-- is 'A\x[ae6]'" );
     $x = "A\x[aef]";
+    #?niecza 3 todo "Gujarati NYI"
     is( ++$x, "B\x[ae6]", "'A\x[aef]'++ is 'B\x[ae6]'" );
     $x = "B\x[ae6]";
     is( --$x, "A\x[aef]", "'B\x[ae6]'-- is 'A\x[aef]'" );
     $x = "\x[ae6]ZZ";
     is( ++$x, "\x[ae7]AA", "'\x[ae6]ZZ'++ is '\x[ae7]AA'" );
     $x = "\x[ae7]AA";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[ae6]ZZ", "'\x[ae7]AA'-- is '\x[ae6]ZZ'" );
 }
 #?rakudo todo 'Oriya'
 {
     diag( "Tests for '\x[b66]' .. '\x[b6f]' (Oriya)" );
     $x = "\x[b6f]\x[b6f]";
+    #?niecza 3 todo "Oriya NYI"
     is( ++$x, "\x[b67]\x[b66]\x[b66]",
         "'\x[b6f]\x[b6f]'++ is '\x[b67]\x[b66]\x[b66]'" );
     $x = "\x[b67]\x[b66]\x[b66]";
@@ -269,14 +302,17 @@ my $x;
     $x = "A\x[b66]";
     is( ++$x, "A\x[b67]", "'A\x[b66]'++ is 'A\x[b67]'" );
     $x = "A\x[b67]";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "A\x[b66]", "'A\x[b67]'-- is 'A\x[b66]'" );
     $x = "A\x[b6f]";
+    #?niecza 3 todo "Oriya NYI"
     is( ++$x, "B\x[b66]", "'A\x[b6f]'++ is 'B\x[b66]'" );
     $x = "B\x[b66]";
     is( --$x, "A\x[b6f]", "'B\x[b66]'-- is 'A\x[b6f]'" );
     $x = "\x[b66]ZZ";
     is( ++$x, "\x[b67]AA", "'\x[b66]ZZ'++ is '\x[b67]AA'" );
     $x = "\x[b67]AA";
+    #?niecza skip "Magical string decrement underflowed"
     is( --$x, "\x[b66]ZZ", "'\x[b67]AA'-- is '\x[b66]ZZ'" );
 }
 
