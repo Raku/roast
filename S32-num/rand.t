@@ -67,6 +67,7 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 #?rakudo skip 'Test is too slow'
+#?niecza skip 'Test is too slow'
 # Similar code under Perl 5 runs in < 15s.
 {
     srand;
