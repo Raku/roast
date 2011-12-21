@@ -36,6 +36,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a b c d'.subst(/\w/, 'x', :x(4)),   'x x x x', '.subst and :x(4)';
     is 'a b c d'.subst(/\w/, 'x', :x(5)),   'a b c d', '.subst and :x(5)';
     #?rakudo skip ':x(*)'
+    #?niecza skip ':x(*)'
     is 'a b c d'.subst(/\w/, 'x', :x(*)),   'x x x x', '.subst and :x(*)';
 
     #?rakudo todo ':x(0..1)'
@@ -55,6 +56,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a a a a'.subst('a', 'x', :x(4)),   'x x x x', '.subst (str pattern) and :x(4)';
     is 'a a a a'.subst('a', 'x', :x(5)),   'a a a a', '.subst (str pattern) and :x(5)';
     #?rakudo skip ':x(*)'
+    #?niecza skip ':x(*)'
     is 'a a a a'.subst('a', 'x', :x(*)),   'x x x x', '.subst (str pattern) and :x(*)';
 
     #?rakudo todo ':x(0..1)'
@@ -89,6 +91,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     # combining :g and :nth:
     #?rakudo 2 todo 'RT #61130 -- are these tests actually wrong?'
+    #?niecza 2 todo "Proper mixing of :nth and :g NYI"
     is 'a b c d'.subst(/\w/, 'x', :nth(1), :g), 'x x x x', '.subst and :g, :nth(1)';
     is 'a b c d'.subst(/\w/, 'x', :nth(2), :g), 'a x c x', '.subst and :g, :nth(2)';
     is 'a b c d'.subst(/\w/, 'x', :nth(3), :g), 'a b x d', '.subst and :g, :nth(3)';
@@ -125,6 +128,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :p(2)';
        
     # :p and :g
+    #?niecza todo 
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(0), :g),
        'x x x x x x x x',
        '.subst with :p(0) and :g';
@@ -133,6 +137,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        'a b c d e f g h',
        '.subst with :p(1) and :g';
 
+    #?niecza todo 
     is 'a b c d e f g h'.subst(/\w/, 'x', :p(2), :g),
        'a x x x x x x x',
        '.subst with :p(2) and :g';
@@ -167,6 +172,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
     # :c and :nth(3, 4)
     #?rakudo 3 skip ':nth NYI'
+    #?niecza 3 todo ":nth(3, 4) NYI"
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
        'a b x x e f g h',
        '.subst with :c(0) and :nth(3, 4)';
@@ -192,14 +198,18 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     s:global/abc/$s/;
     is($_, q{Wow I know my ZBC's}, 'Scalar substitution');
 
+#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
+{
     s:g/BC/@a[]/;
     is($_, q{Wow I know my ZA ZBC's}, 'List substitution');
+}
 
     dies_ok { 'abc' ~~ s/b/g/ },
             "can't modify string literal (only variables)";
 }
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
+#?niecza skip "Action method quote:ss not yet implemented"
 {
     $_ = "a\nb\tc d";
     ok ss/a b c d/w x y z/, 'successful substitution returns True';
@@ -305,6 +315,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 #L<S05/Substitution/Any scalar assignment operator may be used>
 #?rakudo skip 's[...] op= RHS'
+#?niecza skip 's[...] op= RHS'
 {
     given 'a 2 3' {
         ok (s[\d] += 5), 's[...] += 5 returns True';
@@ -317,6 +328,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #?rakudo skip 's:g[...] ='
+#?niecza skip 's:g[...] ='
 {
     multi sub infix:<fromplus>(Match $a, Int $b) {
         $a.from + $b
@@ -340,6 +352,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # Test for :samecase
+#?niecza skip ":samecase NYI"
 {
     is 'The foo and the bar'.subst('the', 'that', :samecase), 'The foo and that bar', '.substr and :samecase (1)';
     is 'The foo and the bar'.subst('the', 'That', :samecase), 'The foo and that bar', '.substr and :samecase (2)';
@@ -354,6 +367,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 #?rakudo todo 'samecase, :ii'
+#?niecza skip "Regex modifiers ii and samecase NYI"
 {
     $_ = 'foObar';
     s:ii/oo/au/;
@@ -366,6 +380,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #66816
+#?niecza todo
 {
     my $str = "a\nbc\nd";
     is $str.subst(/^^/, '# ', :g), "# a\n# bc\n# d",
@@ -373,6 +388,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 {
+    #?niecza todo "Niecza works when it shouldn't?"
     eval_dies_ok q[ $_ = "abc"; my $i = 1; s:i($i)/a/b/ ],
         'Value of :i must be known at compile time';
     #?rakudo todo 'be smarter about constant detection'

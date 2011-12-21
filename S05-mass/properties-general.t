@@ -21,7 +21,7 @@ plan 594;
 
 # L           Letter
 
-
+#?niecza 7 skip "L does not exist as a UCD table"
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
