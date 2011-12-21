@@ -65,11 +65,11 @@ is ~@b, "a b d e z", "inplace sort";
     my @a_orig = @a;
 
     my @b = @a.sort: {1};
-    #?niecza todo
+    #?niecza todo "sort is not a stable sort on all platforms"
     is @b, @a_orig,            'worked: @a.sort: {1}';
 
     @a.=sort: {1};
-    #?niecza todo
+    #?niecza todo "sort is not a stable sort on all platforms"
     is @a, @a_orig,            'worked: @a.=sort: {1}';
 
     @a.=sort;
