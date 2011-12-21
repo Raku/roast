@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 15;
 
 =begin description
 
@@ -17,8 +17,8 @@ Testing lvalue-returning subroutines
   my $var1 = 1;
   my $var2 = 2;
 
-  my $lastvar = sub () is rw { return $var2      };
-  my $prevvar = sub () is rw { return $lastvar() };
+  my $lastvar = sub () is rw { $var2      };
+  my $prevvar = sub () is rw { $lastvar() };
 
   $lastvar() = 3;
   is $var2, 3, "lvalue subroutine references work (simple)";
@@ -29,7 +29,7 @@ Testing lvalue-returning subroutines
 
 {
   my $var = 42;
-  my $notlvalue = sub () { return $var };
+  my $notlvalue = sub () { $var };
 
   #?pugs 2 todo 'bug'
   dies_ok { $notlvalue() = 23 },
@@ -38,25 +38,23 @@ Testing lvalue-returning subroutines
     "assigning to non-rw subrefs shouldn't modify the original variable";
 }
 
-{
   my $var1 = 1;
   my $var2 = 2;
 
-  sub lastvar is rw { return $var2; }
-  sub prevvar is rw { return lastvar(); }
+  sub lastvar is rw { $var2; }
+  sub prevvar is rw { lastvar(); }
 
   lastvar() = 3;
   is($var2, 3, "lvalue subroutines work (simple)");
 
   prevvar() = 4;
   is($var2, 4, "lvalue subroutines work (nested)");
-}
 
 {
   my $var = 42;
 
   # S6 says that lvalue subroutines are marked out by 'is rw'
-  sub notlvalue { return $var; } # without rw
+  sub notlvalue { $var; } # without rw
 
   dies_ok { notlvalue() = 5 },
     "assigning to non-rw subs should die";
@@ -66,19 +64,18 @@ Testing lvalue-returning subroutines
 
 my $val2; # XXX prevent parsefail below, not sure what test wants
 
-sub check ($passwd) { return $passwd eq "fish"; };
+sub check ($passwd) { $passwd eq "fish"; };
 
 sub checklastval ($passwd) is rw {
-    my $proxy is Proxy(
-    FETCH => sub ($self) {   #OK not used
-            return lastval();
-         },
-    STORE => sub ($self, $val) {   #OK not used
-            die "wrong password" unless check($passwd);
-            lastval() = $val;
-         }
-    );
-    return $proxy;
+    Proxy.new(
+        FETCH => sub ($self) {   #OK not used
+                lastvar();
+            },
+        STORE => sub ($self, $val) {   #OK not used
+                die "wrong password" unless check($passwd);
+                lastvar() = $val;
+            }
+        );
 };
 
 my $errors;
@@ -86,15 +83,16 @@ dies_ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
 
 # Above test may well die for the wrong reason, if the Proxy stuff didn't
 # parse OK, it will complain that it couldn't find the desired subroutine
+#?rakudo 3 skip 'maximum recursion depth exceeded'
 is((try { checklastval("fish") = 12; $val2 }), 12, 'proxy lvalue subroutine STORE works');
 my $resultval = checklastval("fish");
 is($resultval, 12, 'proxy lvalue subroutine FETCH works');
 
 my $realvar = "foo";
 sub proxyvar ($prefix) is rw {
-    return Proxy.new(
-        FETCH => { $prefix ~ lc($realvar) },
-        STORE => { lc($realvar = $^val) },
+    Proxy.new(
+        FETCH => method ()     { $prefix ~ lc($realvar) },
+        STORE => method ($val) { lc($realvar = $val) },
     );
 }
 is proxyvar("PRE"), 'PREfoo', 'proxy lvalue subroutine FETCH works';
@@ -108,7 +106,7 @@ is proxyvar("PRE"), 'PREfoo', 'proxy lvalue subroutine FETCH works';
 #       say $nonproxy = 40;
 #   
 #   should do.
-is (proxyvar("PRE") = "BAR"), 'BAR',
+is (proxyvar("PRE") = "BAR"), 'PREbar',
     'proxy lvalue subroutine STORE works and returns the correct value';
 #?pugs todo 'feature'
 is $realvar, 'BAR', 'variable was modified';
