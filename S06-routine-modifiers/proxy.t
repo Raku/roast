@@ -23,9 +23,9 @@ my $was_inside = 0;
 
 sub lvalue_test1() is rw {
   $was_inside++;
-  return new Proxy:
-    FETCH => { 100 + $foo },
-    STORE => { $foo = $^new - 100 };
+  return Proxy.new:
+    FETCH => method () { 100 + $foo },
+    STORE => method ($new) { $foo = $new - 100 };
 };
 
 {
@@ -49,24 +49,21 @@ $was_inside = 0;
 
 sub lvalue_test2() is rw {
   $was_inside++;
-  return new Proxy:
-    FETCH => { 10 + $foo },
-    STORE => { $foo = $^new - 100 };
+  return Proxy.new:
+    FETCH => method ()     { 10 + $foo },
+    STORE => method ($new) { $foo = $new - 100 };
 };
 
 {
     is $foo, 4,        "basic sanity (3)";
     is $was_inside, 0, "basic sanity (4)";
 
-    skip_rest 'XXX - lvalue vars not available - incoherent test results';
-    exit;
 
     is lvalue_test2(),               14, "getting var through Proxy (4)";
     # No todo_is here to avoid unexpected succeeds
     is      $was_inside,              1, "lvalue_test2() was called (4)";
 
-    is (lvalue_test2() = 106),     166, "setting var through Proxy returns new
-        value of the var";
+    is (lvalue_test2() = 106),      16, "setting var through Proxy returns new value of the var";
     is      $was_inside,              2, "lvalue_test2() was called (5)";
     is      $foo,                     6, "var was correctly set (2)";
 
