@@ -224,7 +224,6 @@ my @array2 = ("test", 1, Mu);
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is ok (2)";
   dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
   #?rakudo skip "binding not yet fatal"
-  #?niecza skip "no binding of array elements"
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
@@ -235,7 +234,6 @@ my @array2 = ("test", 1, Mu);
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is ok (2)";
   dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
   #?rakudo skip "binding not yet fatal"
-  #?niecza skip "no binding of array elements"
   dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
 }
 
@@ -250,7 +248,6 @@ my @array2 = ("test", 1, Mu);
                                    "through a variable is run-time error";
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
   #?rakudo skip "binding not yet fatal"
-  #?niecza skip "no array binding yet"
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
 

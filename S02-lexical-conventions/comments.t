@@ -161,7 +161,6 @@ plan 46;
 
 # L<S02/Single-line Comments/"# may not be used as" 
 #   delimiter quoting>
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     my $a;
     ok eval('$a = q{ 32 }'), 'sanity check';

@@ -46,7 +46,6 @@ eval_dies_ok
 eval_lives_ok
     'my List sub f () { return () }; f()',
     'return of empty list should live';
-#?niecza skip 'Multiple prefix constraints not yet supported'
 is eval('my List sub f () { return () }; (f(), "a")'), ['a'],
     'return of empty list should be empty list';
 

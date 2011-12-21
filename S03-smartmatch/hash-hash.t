@@ -20,7 +20,6 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => Mu, "baz" => Mu );
     #?rakudo todo 'nom regression'
     #?niecza todo
     ok eval_elsewhere('(%hash1 ~~ %hash2)'), "hash keys identical";
-    #?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
     ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";
 }
 

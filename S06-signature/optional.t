@@ -85,7 +85,6 @@ eval_dies_ok 'sub opt($a = 1, $b) { }',
     'Cannot put required parameter after optional parameters';
 
 # RT #74758
-#?niecza skip 'Nominal type check failed in binding Int $x = "str"'
 {
     sub opt-type1(Int $x?) { $x };
     ok opt-type1() === Int,

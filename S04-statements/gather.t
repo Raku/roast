@@ -92,7 +92,6 @@ plan 20;
 }
 
 # gather statement prefix
-#?niecza skip "gather for"
 {
     my @out = gather for 1..5 {
         take $_;
@@ -114,7 +113,6 @@ plan 20;
     is($count, 2, "gather is lazy");	
 }
 
-#?niecza skip 'take-rw'
 {
     my @list = gather {
         my $v = 1;
@@ -126,7 +124,6 @@ plan 20;
     is ~@list, "2 4 6 8 10", "gather with nested while";
 }
 
-#?niecza skip 'take-rw'
 {
     my @list = gather {
         loop (my $v = 1; $v <= 10; $v++)

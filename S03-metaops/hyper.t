@@ -232,7 +232,6 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
 
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 #?rakudo skip 'postfix forms'
 { # unary postfix again, but with a twist
         my @r;
@@ -489,7 +488,6 @@ my @e;
     is %a<c>, 3, 'hash - correct result from >>++';
 }
 
-#?niecza skip 'our sub'
 #?DOES 4
 {
     our sub postfix:<!>($a) {
@@ -762,7 +760,6 @@ my @e;
 # RT #77876
 # L<S03/Hyper operators/'@array »+=»'>
 # Hyper assignment operators
-#?niecza skip 'fails horribly'
 {
     my @array = 3, 8, 2, 9, 3, 8;
     @r = @array »+=« (1, 2, 3, 4, 5, 6);

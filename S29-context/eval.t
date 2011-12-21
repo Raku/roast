@@ -36,7 +36,6 @@ dies_ok {eval 'use Poison; 1'}, "eval dies on fatal use";
 dies_ok({eval {; 42} }, 'block eval is gone');
 
 # RT #63978, eval didn't work in methods
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range'
 {
     class EvalTester1 {
         method e($s) { eval $s };
@@ -45,7 +44,6 @@ dies_ok({eval {; 42} }, 'block eval is gone');
     is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
 }
 
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range'
 {
     my $x = 5;
     class EvalTester2 {

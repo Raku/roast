@@ -109,7 +109,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
     is $c(0, -10, 3), 3, 'that can work with three different arguments';
 }
 
-#?niecza skip 'hangs'
 {
     my $c = * + * * *;
     ok $c ~~ Code, '* + * * * generated a closure';

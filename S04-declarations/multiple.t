@@ -9,7 +9,6 @@ plan 6;
 eval_lives_ok 'my $x; my $x', 
               'it is legal to declare my $x twice in the same scope.';
 
-#?niecza skip 'Not working'
 #?rakudo todo 'nom regression'
 eval_lives_ok 'state $x; state $x', 
               'it is legal to declare state $x twice in the same scope.';

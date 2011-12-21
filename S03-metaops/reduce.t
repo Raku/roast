@@ -59,7 +59,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 #?rakudo skip "=:= NYI"
-#?niecza skip "reduce/binding interaction issues"
 {
     my ($x, $y);
     ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
@@ -70,7 +69,6 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (    [=:=]  $y, $x, $y), '[=:=] after binding';
 }
 
-#?niecza skip "=== on value types NYI"
 {
     my $a = [1, 2];
     my $b = [1, 2];
@@ -342,7 +340,6 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 # rakudo had a problem where once-used meta operators weren't installed
 # in a sufficiently global location, so using a meta operator in class once
 # makes it unusable further on
-#?niecza skip 'gather for'
 {
     class A {
         method m { return [~] gather for ^3 {take 'a'} }

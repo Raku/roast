@@ -129,7 +129,6 @@ plan 57;
     %other<a> = %hash;
 
     is +%other,    1, '%other[$key] = %hash works (1)';
-    #?niecza skip 'Cannot use value like Capture as a Number'
     is +%other<a>, 3, '%other[$key] = %hash works (2)';
 }
 

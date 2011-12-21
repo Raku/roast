@@ -23,7 +23,6 @@ my regex once {<&abc>}
 ok("abcabcabcabcd" ~~ m/<&once>/, 'Once match');
 ok($/, 'Once matched');
 is(~$/, "abc", 'Once matched');
-#?niecza skip 'auto $0 confuses this'
 ok(@($/) == 0, 'Once no array capture');
 ok(%($/).keys == 0, 'Once no hash capture');
 
@@ -33,7 +32,6 @@ my regex rep {<&abc>**{4}}
 ok("abcabcabcabcd" ~~ m/<&rep>/, 'Rep match');
 ok($/, 'Rep matched');
 is(~$/, "abcabcabcabc", 'Rep matched');
-#?niecza skip 'auto $0 confuses this'
 ok(@($/) == 0, 'Rep no array capture');
 ok(%($/).keys == 0, 'Rep no hash capture');
 
@@ -46,7 +44,6 @@ is(~$/, "abc", 'Cap zero matched');
 is(~$/<cap>, "abc", 'Cap captured');
 
 is(~$/<cap><abc>, "abc", 'Cap abc captured');
-#?niecza skip 'auto $0 confuses this'
 ok(@($/) == 0, 'Cap no array capture');
 ok(%($/).keys == 1, 'Cap hash capture');
 
@@ -60,7 +57,6 @@ is(~$/<repcap><abc>[0], "abc", 'Repcap abc zero captured');
 is(~$/<repcap><abc>[1], "abc", 'Repcap abc one captured');
 is(~$/<repcap><abc>[2], "abc", 'Repcap abc two captured');
 is(~$/<repcap><abc>[3], "abc", 'Repcap abc three captured');
-#?niecza skip 'auto $0 confuses this'
 ok(@($/) == 0, 'Repcap no array capture');
 
 

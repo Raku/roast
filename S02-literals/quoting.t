@@ -145,7 +145,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # L<S02/Interpolating into a single-quoted string/using the \qq>
 #?rakudo skip 'q[..] with variations'
-#?niecza skip 'backslash q'
 { # \qq[] constructs interpolate in q[]
     my ( @q1, @q2, @q3, @q4 ) = ();
     @q1 = q[$foo \qq[$bar]];
@@ -364,7 +363,6 @@ FOO
 };
 
 #?rakudo skip '\c97 etc'
-#?niecza skip 'charspec'
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');

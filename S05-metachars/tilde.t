@@ -36,7 +36,6 @@ ok 'x(ab'  !~~ m/<&t1>/,  '~ and constant atoms (missing closing bracket)';
     ok '(()'   !~~ m/^ <&recursive> $/, '"(()" is not matched';
     #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok '())'   !~~ m/^ <&recursive> $/, '"())" is not matched';
-    #?niecza skip 'Unable to resolve method FAILGOAL in class Cursor'
     ok 'a()'   !~~ m/^ <&recursive> $/, '"a()" is not matched';
 }
 

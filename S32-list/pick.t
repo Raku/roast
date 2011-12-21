@@ -35,10 +35,8 @@ ok ~(@arr.pick(4)) eq 'z z z', 'method pick with $num > +@values';
 is pick(2, @arr), <z z>, 'sub pick with $num < +@values, implicit no-replace';
 is pick(4, @arr), <z z z>, 'sub pick with $num > +@values';
 
-#?niecza skip "pick(*) NYI"
 is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in the array (but maybe not in order)';
 
-#?niecza skip "pick(*) NYI"
 {
   my @items = <1 2 3 4>;
   my @shuffled_items_10;
@@ -50,7 +48,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 {
     # Test that List.pick doesn't flatten array refs
     ok ?([[1, 2], [3, 4]].pick.join('|') eq any('1|2', '3|4')), '[[1,2],[3,4]].pick does not flatten';
-    #?niecza skip "pick(*) NYI"
     ok ?(~([[1, 2], [3, 4]].pick(*)) eq '1 2 3 4' | '3 4 1 2'), '[[1,2],[3,4]].pick(*) does not flatten';
 }
 
@@ -59,7 +56,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
        '.pick() returns something can be used as single scalar';
 }
 
-#?niecza skip "pick(*) NYI"
 {
     my @a = 1..100;
     my @b = pick(*, @a);

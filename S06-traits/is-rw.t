@@ -17,7 +17,6 @@ plan 7;
   is foo($bar), 19, "calling a sub with an is rw param";
   is $bar,      42, "sub changed our variable";
   # RT #74830
-  #?niecza skip 'Binding $a is rw in MAIN foo, cannot bind read-only value to is rw parameter'
   dies_ok { eval('foo(28)') }, 'is rw requires a variable';
 }
 

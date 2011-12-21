@@ -54,7 +54,6 @@ is Bool::True.perl, 'Bool::True', 'True.perl';
 is Bool::False.perl, 'Bool::False', 'False.perl';
 
 # numification - interaction with +
-#?niecza 2 skip "Numeric"
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
 isa_ok(+Bool::True, Int, 'True numifies to an Int');

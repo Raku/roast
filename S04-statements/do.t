@@ -41,7 +41,6 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 	any branch, the return value is undefined in item context and () 
 	in list context.
 =end comment
-#?niecza skip 'Nil'
 {
 	my $x = do if 0 { 1 } elsif 0 { 2 };
 	ok !$x.defined, 'when if does not execute any branch, return undefined';
@@ -101,7 +100,6 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     "'redo' works with label";
 
 #?rakudo skip 'last not implemented'
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     is eval('
         my $i;
@@ -118,7 +116,6 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 # <agentzh> audreyt: btw, can i use redo in the do-once loop?
 # <audreyt> it can, and it will redo it
 #?rakudo skip 'redo not implemented'
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     is eval('
         my $i;

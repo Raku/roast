@@ -42,7 +42,6 @@ is(NaN ** NaN, NaN, "NaN**NaN=NaN");
 is(Inf ** NaN, NaN, "Inf**NaN=NaN");
 is(NaN ** Inf, NaN, "NaN**Inf=NaN");
 
-#?niecza 2 skip 'exp'
 is_approx(exp(1) ** 0.5,  exp(0.5), "e **  .5 ==   exp(.5)");
 is_approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
 
@@ -71,7 +70,6 @@ is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 #?DOES 1
 
 # Real ** Complex
-#?niecza skip 'exp'
 {
     is_approx(exp(1) ** (pi * 1i), -1, "e ** pi i = -1");
 }

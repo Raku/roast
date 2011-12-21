@@ -170,7 +170,6 @@ my $z = 42; #OK not used
 # interaction of my and eval
 # yes, it's weird... but that's the way it is
 # http://irclog.perlgeek.de/perl6/2009-03-19#i_1001177
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     sub eval_elsewhere($str) {
         eval $str;
@@ -195,7 +194,6 @@ my $z = 42; #OK not used
 }
 
 # RT #62766
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
@@ -210,8 +208,8 @@ my $z = 42; #OK not used
 
     {
         my $a;
-        #?niecza 2 skip 'still fails?'
         #?rakudo todo 'fails'
+        #?niecza 2 skip 'still fails?'
         eval_lives_ok 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }';
         #?rakudo todo 'previous test skipped'
         ok $a, 'unreached declaration in effect at block start';

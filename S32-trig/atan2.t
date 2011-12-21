@@ -108,7 +108,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((0.1).Num, (-100).Int), 3.14059265392313, "atan2(Num, Int)");
 }
 
-#?niecza skip 'Str math NYI'
 {
     # Num vs Str tests
     is_approx((-100).Num.atan2((-1).Str), -1.58079599348156, "Num.atan2(Str)");
@@ -146,7 +145,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((-0.1).Rat(1e-9), (100).Int), -0.000999999666666867, "atan2(Rat, Int)");
 }
 
-#?niecza skip 'Str math NYI'
 {
     # Rat vs Str tests
     is_approx((-100).Rat(1e-9).atan2((10).Str), -1.47112767430373, "Rat.atan2(Str)");
@@ -204,14 +202,12 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((1).Str), 0.785398163397448, "atan2(Str)");
 }
 
-#?niecza skip 'Str math NYI'
 {
     # Str vs Num tests
     is_approx((-100).Str.atan2((0.1).Num), -1.56979632712823, "Str.atan2(Num)");
     is_approx(atan2((-100).Str, (-1).Num), -1.58079599348156, "atan2(Str, Num)");
 }
 
-#?niecza skip 'Str math NYI'
 {
     # Str vs Rat tests
     is_approx((-1).Str.atan2((0.1).Rat(1e-9)), -1.47112767430373, "Str.atan2(Rat)");
@@ -225,7 +221,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((-0.1).Str, (100).Int), -0.000999999666666867, "atan2(Str, Int)");
 }
 
-#?niecza skip 'Str math NYI'
 {
     # Str vs Str tests
     is_approx((100).Str.atan2((1).Str), 1.56079666010823, "Str.atan2(Str)");

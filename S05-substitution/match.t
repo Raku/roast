@@ -13,7 +13,6 @@ is $str,  'hello',          '.. it does not do side effect';
 ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 
 #?DOES 6
-#?niecza skip 'System.IndexOutOfRangeException: Array index is out of range.'
 {
     for ('a'..'f') {
         my $r = eval("rx/$_/");

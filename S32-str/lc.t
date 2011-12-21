@@ -12,7 +12,6 @@ is(lc(""), "", "empty string");
 is(lc("ÅÄÖ"), "åäö", "some finnish non-ascii chars");
 is(lc("ÄÖÜ"), "äöü", "lc of German Umlauts");
 is(lc("ÓÒÚÙ"), "óòúù", "accented chars");
-#?niecza skip 'Range stringification'
 is(lc('A'..'C'), "a b c", "lowercasing char-range");
 
 {

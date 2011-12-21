@@ -29,7 +29,6 @@ nok($/.from.defined,      'Match pos is undefined');
 
 my regex Aa { A .* a }
 #?rakudo 3 skip 'lexical lookup of <Aa>'
-#?niecza skip 'Unable to resolve method Aa in class Cursor'
 ok($str ~~ m/ .*? <Aa> /, 'Subrule match from 3');
 #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 ok($/.from == 0,          'Full match pos is 0');

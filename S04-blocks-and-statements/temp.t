@@ -141,7 +141,6 @@ eval('
 # Following are OO tests, but I think they fit better in var/temp.t than in
 # oo/.
 # L<S06/Temporization/temp invokes its argument's .TEMP method.>
-#?niecza 2 skip 'needs clarification on correct behavior'
 {
   my $was_in_own_temp_handler = 0;
 

@@ -452,7 +452,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #62478
-#?niecza skip 'different interpretation of eval'
 {
     try { eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
     ok "$!" ~~ /C\-style/,   'mentions C-style';
@@ -461,7 +460,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #65212
-#?niecza skip 'different eval'
 {
     my $parsed = 0;
     try { eval '$parsed = 1; for (1..3)->$n { last }' };
@@ -480,7 +478,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 
-#?niecza skip 'different eval semantics'
 {
     try { eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!) };
     ok $! ~~ / 'C-style' /, 'Sensible error message';

@@ -8,9 +8,7 @@ use Test;
     multi sub uno_mas( Int $ro       ) { $ro_call++; return 1 + $ro }
     multi sub uno_mas( Int $rw is rw ) { $rw_call++; return ++$rw }
 
-    #?niecza skip 'Ambiguous dispatch for &uno_mas'
     is uno_mas(42), 43, 'multi works with constant';
-    #?niecza todo
     is $ro_call, 1, 'read-only multi was called';
 
     my $x = 99;

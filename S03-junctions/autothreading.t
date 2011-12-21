@@ -240,7 +240,6 @@ plan 85;
 }
 
 # Tests former autothreading junction example from Synopsis 09
-#?niecza skip '&skip'
 {
     my $c = 0;
 

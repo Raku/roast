@@ -58,7 +58,6 @@ nok foo().defined, 'contextual $*VAR is undefined';
 # the lexical alias that's also created should work just fine:
 #
 # Notsomuch in niecza, as the "lexical alias" is only seen by the compiler...
-#?niecza 2 skip 'our $*a'
 {
     sub f { $*a };
     our $*a = 'h';

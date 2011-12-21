@@ -18,7 +18,6 @@ eval_dies_ok 'sub quuux ($?VERSION) { ... }',
 eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
 # RT #64344
-#?niecza skip 'Excess arguments to MAIN empty_sig, used 0 of 1 positionals'
 {
     sub empty_sig() { return };
     dies_ok { eval('empty_sig("RT #64344")') },
