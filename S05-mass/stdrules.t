@@ -14,7 +14,7 @@ be valid perl6.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
 
-plan 183;
+plan 186;
 
 #?pugs emit force_todo(9,12,13,15,16);
 
@@ -324,5 +324,10 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 #?rakudo 2 skip '<!>'
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';
+
+#?niecza 3 skip '<at>'
+ ok 'abc' ~~ /^<at(0)>/, 'basic <at>';
+nok 'abc' ~~ /^<at(1)>/, '^<at(1) fails';
+ ok 'abc' ~~ /<at(1)>/, '<at(1) searches until it matches';
 
 # vim: ft=perl6
