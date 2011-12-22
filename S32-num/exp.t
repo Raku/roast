@@ -37,7 +37,7 @@ my $pi = 312689/99532;
 is_approx(exp(5), $e_to_the_fifth, 'got the exponential of 5');
 is_approx(exp(0), 1, 'exp(0) == 1');
 is_approx(exp(-1),  0.3678794, '1/e is correct');
-#?niecza todo "niecza says Infinitey when we're looking for Inf"
+#?niecza todo "niecza says Infinity when we're looking for Inf"
 is(exp(Inf), 'Inf', 'exp(Inf) == Inf');
 is(exp(-Inf), 0, 'exp(-Inf) == 0');
 is(exp(NaN), NaN, 'exp(NaN) == NaN');
@@ -50,7 +50,7 @@ is_approx(exp(-1i*$pi), -1, 'exp(-i $pi) == -1');
 is_approx(exp(5, 2), 32, 'got 32');
 is_approx(exp(0, 2), 1, 'exp(0, 2) == 1');
 is_approx(exp(-1, 2),  1/2, '1/2 is correct');
-#?niecza todo "niecza says Infinitey when we're looking for Inf"
+#?niecza todo "niecza says Infinity when we're looking for Inf"
 is(exp(Inf, 2), 'Inf', 'exp(Inf) == Inf');
 is(exp(-Inf, 2), 0, 'exp(-Inf) == 0');
 is(exp(NaN, 2), NaN, 'exp(NaN) == NaN');
