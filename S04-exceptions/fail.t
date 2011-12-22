@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
 
 # L<S04/Exceptions/The fail function>
 
@@ -53,6 +53,13 @@ plan 10;
     my $rt77946 = rt77946();
     isa_ok ?$rt77946, Bool, '?Failure returns a Bool';
     isa_ok $rt77946.defined, Bool, 'Failure.defined returns a Bool';
+}
+
+# RT #106832
+{
+    my $f = (sub { fail('foo') }).();
+    is $f.exception, 'foo', 'can extract exception from Failure';
+    isa_ok $f.exception, Exception, '... and it is an Exception';
 }
 
 done;
