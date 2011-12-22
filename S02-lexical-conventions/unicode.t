@@ -21,7 +21,7 @@ is (do {my $møøse = 2; sub såck ($x) { $x }; såck($møøse)}), 2,
     "møøse bites kan be preti nasti";
 
 # french
-lives_ok {my $un_variable_français; sub blâ {}; 1}, "french declaration"; #OK not used
+lives_ok {my $une_variable_française; sub blâ {}; 1}, "french declaration"; #OK not used
 is (do {my $frénch = 2; sub bléch ($x) { $x }; bléch($frénch)}), 2, "evaluation";
 
 # Some Chinese Characters
