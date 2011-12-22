@@ -66,6 +66,7 @@ sub f2 (:$a!) { WHAT($a) }
     isa_ok f2(:a(42)),      Int, "':a(42)' is a named";
     isa_ok f2(:a),          Bool,"':a' is a named";
 
+    #?niecza skip "Action method escape:sym<&> not yet implemented"
     isa_ok(&f2.(:a),        Bool, "in '&f2.(:a)', ':a' is a named");
     isa_ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
     isa_ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
@@ -110,6 +111,7 @@ sub f5 ($a) { WHAT($a) }
     isa_ok f5(@array_of_pairs), Array,
         'an array of pairs is not treated magically...';
     #?rakudo skip 'prefix:<|>'
+    #?niecza todo
     isa_ok f5(|@array_of_pairs), Array, '...and |@array isn\'t either';
 }
 
@@ -121,6 +123,7 @@ sub f6 ($a) { WHAT($a) }
     ok (f6(%hash_of_pairs)).does(Hash), 'a hash is not treated magically...';
     #?pugs todo '[,]'
     #?rakudo skip 'reduce meta op'
+    #?niecza todo
     isa_ok f6([,] %hash_of_pairs), Str,  '...but [,] %hash is';
 }
 
@@ -155,13 +158,14 @@ sub f9 (:$bar!) { WHAT($bar) }
 # RT #74948
 #?DOES 32
 {
-    # We use a block because of RT #77646.
-    { is eval("($_ => 1).key"), $_, "Pair with '$_' as key" } for <
+    for <
         self rand time now YOU_ARE_HERE package module class role
         grammar my our state let temp has augment anon supersede
         sub method submethod macro multi proto only regex token
         rule constant enum subset
-    >;
+    > { 
+        is eval("($_ => 1).key"), $_, "Pair with '$_' as key" 
+    }
 }
 
 # vim: ft=perl6
