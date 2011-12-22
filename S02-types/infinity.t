@@ -8,14 +8,12 @@ plan 13;
     my $x = Inf;
 
     ok( $x == Inf  , 'numeric equal');
-    #?niecza todo
     ok( $x eq 'Inf', 'string equal');
 }
 
 {
     my $x = -Inf;
     ok( $x == -Inf,   'negative numeric equal' );
-    #?niecza todo
     ok( $x eq '-Inf', 'negative string equal' );
 }
 
@@ -23,7 +21,6 @@ plan 13;
 {
     my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
-    #?niecza todo
     ok( $x eq 'Inf', 'int string equal' );
 }
 
@@ -31,7 +28,6 @@ plan 13;
 {
     my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
-    #?niecza todo
     ok( $x eq '-Inf', 'int string equal' );
 }
 
