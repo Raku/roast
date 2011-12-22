@@ -95,6 +95,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     sub named_array(:@x) { +«@x }
 
     is(named_array(:x), (1), 'named array taking one named arg');
+    #?niecza 2 todo 
     is(named_array(:x, :!x), (1, 0), 'named array taking two named args');
     is(named_array(:x(1), :x(2), :x(3)), (1, 2, 3), 'named array taking three named args');
 }
@@ -108,17 +109,23 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     is(named_array2(:!x, :y), (0, 42, 1), 'named and unnamed args - two named');
     is(named_array2(:!x, y => 1), (0, 42, 1), 'named and unnamed args - two named - fatarrow');
     is(named_array2(:y, :!x), (0, 42, 1), 'named and unnamed args - two named - backwards');
+    #?niecza skip "Cannot use value like Pair as a number"
     is(named_array2(:y, (:x)), (0, 1, 42, 1), 'named and unnamed args - one named, one pair');
+    #?niecza skip "Excess arguments to named_array2, used 1 of 2 positionals"
     is(named_array2(1, 2), (1, 42), 'named and unnamed args - two unnamed');
     is(named_array2(:!y, 1), (1, 42, 0), 'named and unnamed args - one named, one pos');
     is(named_array2(1, :!y), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
+    #?niecza todo
     is(named_array2(:y, 1, :!y), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
     
     nok(try { eval 'named_array2(:y, :y)'}.defined, 'named and unnamed args - two named with same name');
 
+    #?niecza 2 skip "Cannot use value like Pair as a number"
     is(named_array2(:y, (:x)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
     is(named_array2(:y, (:y)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair of same name');
+    #?niecza skip "No value for parameter @x in named_array2"
     is(named_array2(:y, :z), (0, 1, 42, 1), 'named and unnamed args - passing pair of unrelated name');
+    #?niecza skip "Cannot use value like Pair as a number"
     is(named_array2(:y, "x" => 1), (0, 1, 42, 1), 'named and unnamed args - passing pair with quoted fatarrow');
 }
 
@@ -131,6 +138,7 @@ sub mandatory (:$param!) {
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
 eval_dies_ok('mandatory()',  "not specifying a mandatory parameter fails");
 
+#?niecza skip "Unhandled trait required"
 {
     sub mandatory_by_trait (:$param is required) {
         return $param;
@@ -222,6 +230,7 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 
 # L<S06/Parameters and arguments/"A signature containing a name collision">
 
+#?niecza 4 todo "sub params with the same name"
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
 #?rakudo 3 todo 'sub params with the same name'
@@ -244,6 +253,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 # RT #68524
 #?rakudo skip 'RT 68524'
+#?niecza skip "Unable to resolve method signature in class Sub"
 {
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.perl ~~ m/\!/,
@@ -252,6 +262,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 # RT #69516
 #?rakudo skip 'RT 69516'
+#?niecza skip "Unable to resolve method signature in class Sub"
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
     ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
@@ -260,6 +271,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 # L<S06/Named parameters/Bindings happen in declaration order>
 #?rakudo skip 'where constraints'
+#?niecza skip "Action method post_constraint not yet implemented"
 {
     my $t = '';
     sub order_test($a where { $t ~= 'a' },   #OK not used
@@ -274,6 +286,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 # RT #67558
 {
+    #?niecza todo "Renaming a parameter to an existing positional should fail"
     eval_dies_ok q[sub a(:$x, :foo($x) = $x) { $x }],
         'Cannot rename a parameter to an already existing positional';
     sub a(:$x, :foo($y) = $x) { $y };
@@ -300,6 +313,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
     dies_ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
 }
 
+#?niecza skip "Abbreviated named parameter must have a name"
 {
     sub named_empty(:$) {
         42
