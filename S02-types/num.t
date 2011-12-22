@@ -157,7 +157,7 @@ isa_ok(1 / 1, Rat);
 #?niecza skip 'System.FormatException: Unknown char: d'
 {
     my $a = "1.01";
-    isa_ok($a.Int, "Int");
+    isa_ok($a.Int, Int);
     is($a.Int, 1, "1.01 intifies to 1");
 }
 
