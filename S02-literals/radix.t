@@ -94,14 +94,13 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # bases. Maybe I've misread the paragraph -- brian
 #?pugs todo 'feature'
 {
-    is(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
+    is_approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
 }
 
 # L<S02/General radices/"Any radix may include a fractional part">
 
-#?niecza todo "Got Num, expected Rat"
-is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
+is_approx(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
 
 
 # L<S02/General radices/":8<177777>">
