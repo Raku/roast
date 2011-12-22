@@ -114,6 +114,7 @@ sub accumtest($expect, $op) {
     is($y, 42, "'orelse' operator working");
 }
 
+#?niecza skip "^^ NYI"
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -130,6 +131,7 @@ sub accumtest($expect, $op) {
     accumtest 'abcdef', '^^';
 }
 
+#?niecza skip "xor NYI"
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -156,6 +158,7 @@ sub accumtest($expect, $op) {
     is((Mu // 42),  42, "//   operator working"); #"
     is((Mu orelse 42), 42, "orelse  operator working");
 
+    #?niecza 10 skip "^^ xor NYI"
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
     #?rakudo skip 'segmentation fault'
@@ -171,6 +174,7 @@ sub accumtest($expect, $op) {
 
 # L<S03/Tight or precedence/'if all arguments are false'>
 # RT #72826 infix ^^ return wrong types
+#?niecza skip "^^ NYI"
 {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
@@ -230,6 +234,7 @@ sub accumtest($expect, $op) {
 {
     my $x = 0;
     my $y = 0;
+    #?niecza todo
     ok(($x++ < ++$y < ++$y), "chained comparison (truth - 1)");
     # expect x=1, y=2
     is($y, 2, "chained comparison short-circuit: not re-evaluating middle");
@@ -265,6 +270,7 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 {
     my $x;
     $x &&= 5;
+    #?niecza todo
     is $x, 5, '&&= on a fresh variable works';
     my $y ||= 'moin';
     is $y, 'moin', '||= on a fresh variable works';
