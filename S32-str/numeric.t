@@ -15,7 +15,9 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 
 #?DOES 1
 sub f($str) {
-    ok !(+$str).defined, "+$str fails";
+    my $num = 0; # defined
+    try { $num = +$str }
+    ok !$num.defined, "+$str fails";
 }
 
 check '',           Int,      0;
@@ -25,7 +27,9 @@ check '0000123',    Int,    123;
 check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
 check '-123',       Int,   -123;
+check '3433683820292512484657849089281', Int, 3**64;
 #?rakudo emit # Str.Numeric non-numeric fail
+#?niecza 6 todo 'Failure'
 f     'a+123';
 f     '123foo';
 f     '123+';
@@ -33,24 +37,29 @@ f     '1__2';
 f     '123_';
 f     '123 and stuff';
 
+
 check '0b111',      Int,      7;
 check '0b1_1_1',    Int,      7;
 check '+0b111',     Int,      7;
 check '-0b111',     Int,     -7;
+#?niecza 3 todo 'Failure'
 f     '0b112';
 f     '0b';
 f     '0b_1';
 check '0o77',       Int,     63;
 check '+0o77',      Int,     63;
 check '-0o77',      Int,    -63;
+#?niecza todo 'Failure'
 f     '0o8';
 check '0d123',      Int,    123;
 check '-0d123',     Int,    -123;
+#?niecza todo 'Failure'
 f     '0da';
 check '0x123',      Int,    291;
 check '-0x123',     Int,   -291;
 check '0xa0',       Int,    160;
 check '-0xA0',      Int,   -160;
+#?niecza 2 todo 'Failure'
 f     '0xag';
 f     '0xaf-';
 
@@ -60,6 +69,7 @@ f     '0xaf-';
     check '-:1_0<4_2>', Int,    -42;
     check ':36<aZ>',    Int,    395;
     check ':2<11>',     Int,      3;
+    #?niecza 6 todo 'Failure'
     f     ':2<2>';
     #?rakudo skip 'NYI'
     f     ':37<8>';
@@ -69,6 +79,7 @@ f     '0xaf-';
     f     ':10<8';
 }
 
+#?niecza todo 'Failure'
 f     '123.';
 check '123.0',      Rat,    123;
 check '-123.0',     Rat,    -123;
@@ -77,6 +88,7 @@ check '+1_2_3.0_0', Rat,    123;
 check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
+#?niecza 5 todo 'Failure'
 f     '-3/-2';
 f     '3/-2';
 f     '+3/-2';
@@ -85,10 +97,11 @@ f     '3/2.0';
 
 #?rakudo skip ":radix<>"
 {
-    check '-:10<4_2.3_5>', Rat, 42.35;
-    check '-:8<4_2.3_5>',  Rat, 34.453125;
+    check '-:10<4_2.3_5>', Rat, -42.35;
+    check '-:8<4_2.3_5>',  Rat, -34.453125;
 
 # from S02-literals/radix.t
+#?niecza 12 todo 'Failure'
     f ":2.4<01>";
     f ":10<12f>";
     f ":1b<10>";
@@ -120,6 +133,7 @@ check '-123E+0',    Num,   -123;
 check '-123E+0_1',  Num,  -1230;
 check '1230E-1',    Num,    123;
 check '-12E+1',     Num,   -120;
+#?niecza 2 todo 'Failure'
 f      '120e';
 f      '120e2_';
 
@@ -140,6 +154,7 @@ is +"NaN",  'NaN',  'NaN';
     check  '-1.0e0_0-2.0e0_0\i',    Complex,       -1-2i;
     check  '3+Inf\i',               Complex,     3+Inf\i;
     check  'Inf+2e2i',              Complex,    Inf+200i;
+#?niecza 3 todo 'Failure'
     f      '3+Infi';
     f      '3+3i+4i';
     f      '3+3+4i';
