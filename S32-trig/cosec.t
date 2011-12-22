@@ -109,7 +109,6 @@ for @sines -> $angle
     is_approx(cosec((0.785398163404734 + 2i).Complex), 0.194833118738127 - 0.187824499973004i, "cosec(Complex) - 0.785398163404734 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((1.57079632680947).Str.cosec, 1, "Str.cosec - 1.57079632680947");
@@ -164,7 +163,6 @@ for @sines -> $angle
     is_approx(acosec((0.785398163404734 + 2i).Complex), 0.156429673425433 - 0.425586400480703i, "acosec(Complex) - 0.156429673425433 - 0.425586400480703i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((1.99999999998317).Str).acosec, 0.523598775603156, "Str.acosec - 0.523598775603156");

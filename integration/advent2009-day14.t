@@ -9,7 +9,6 @@ is (3/7).WHAT.gist, "Rat()";
 is_approx (3/7), 0.4285714;
 
 is_approx (3/7).Num + (2/7).Num + (2/7).Num - 1, -1.1102230e-16;
-#?niecza todo
 is 3/7 + 2/7 + 2/7 - 1,  0;
 
 is (3/7).perl, "3/7";

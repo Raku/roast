@@ -17,7 +17,7 @@ is "a\nb".comb, ('a', "\n", 'b'), 'comb on string with \n';
 is "äbcd".comb, <ä b c d>, 'comb on string with non-ASCII letter';
 
 #?rakudo 2 todo 'graphemes not implemented'
-#?niecza 2 skip 'charspec'
+#?niecza 2 todo 'charspec'
 is "a\c[COMBINING DIAERESIS]b".comb, ("ä", "b",), 'comb on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     ("a\c[COMBINING DOT BELOW, COMBINING DOT ABOVE]", "b", ),

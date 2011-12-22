@@ -109,7 +109,6 @@ for @cosines -> $angle
     is_approx(cos((-1.57079632680947 + 2i).Complex), -5.48212707989036e-11 + 3.62686040784702i, "cos(Complex) - -1.57079632680947 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((-1.04719755120631).Str.cos, 0.5, "Str.cos - -1.04719755120631");
@@ -164,7 +163,6 @@ for @cosines -> $angle
     is_approx(acos((0.785398163404734 + 2i).Complex), 1.22945740853541 - 1.49709293866352i, "acos(Complex) - 1.22945740853541 - 1.49709293866352i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.707106781186548).Str).acos, 0.785398163404734, "Str.acos - 0.785398163404734");

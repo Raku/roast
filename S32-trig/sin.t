@@ -109,7 +109,6 @@ for @sines -> $angle
     is_approx(sin((0 + 2i).Complex), 0 + 3.62686040784702i, "sin(Complex) - 0 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.sin, 0.5, "Str.sin - 0.523598775603156");
@@ -164,7 +163,6 @@ for @sines -> $angle
     is_approx(asin((0.785398163404734 + 2i).Complex), 0.341338918259482 + 1.49709293866352i, "asin(Complex) - 0.341338918259482 + 1.49709293866352i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.5).Str).asin, 0.523598775603156, "Str.asin - 0.523598775603156");

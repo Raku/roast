@@ -84,7 +84,7 @@ plan 18;
   }
 
   my $abs = 23;
-  #?niecza skip 'strictness'
+  #?niecza todo 'strictness'
   dies_ok { bar() },
     'vars not declared "is dynamic" are not accessible via $CALLER::';
 }

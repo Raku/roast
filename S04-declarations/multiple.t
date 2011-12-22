@@ -28,7 +28,7 @@ eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
 eval_dies_ok 'only sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 
-#?niecza skip "MMD"
+#?niecza todo "MMD"
 #?rakudo todo 'nom regression'
 eval_lives_ok 'proto foo {1; }; sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';

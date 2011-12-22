@@ -18,7 +18,6 @@ is (1, 3 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with two 
 is (1, 0 ... -3).join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive sequence with two items on the LHS';
 is (1, 3, 5 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with three items on the LHS';
 is (1, 3, 9 ... 81).join(', '), '1, 3, 9, 27, 81', 'simple multiplicative sequence with three items on the LHS';
-#?niecza todo 'Int-valued Rats written as N/1'
 is (81, 27, 9 ... 1).join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative sequence with three items on the LHS';
 is (1, { $_ + 2 } ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and block closure on the LHS';
 is (1, *+2 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and * closure on the LHS';
@@ -43,7 +42,6 @@ is (1, 3 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence
 is (1, 0 ... -3.5).[^6].join(', '), '1, 0, -1, -2, -3, -4', 'simple decreasing additive sequence with two items on the LHS';
 is (1, 3, 5 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple additive sequence with three items on the LHS';
 is (1, 3, 9 ... 100).[^6].join(', '), '1, 3, 9, 27, 81, 243', 'simple multiplicative sequence with three items on the LHS';
-#?niecza todo 'Int-valued Rats written as N/1'
 is (81, 27, 9 ... 8/9).[^6], (81, 27, 9, 3, 1, 1/3), 'decreasing multiplicative sequence with three items on the LHS';
 is (1, { $_ + 2 } ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and block closure on the LHS';
 is (1, *+2 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with one item and * closure on the LHS';
@@ -65,7 +63,6 @@ is (1, 0 ... *).[^5].join(', '), '1, 0, -1, -2, -3', 'simple decreasing additive
 is (1, 3, 5 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple additive sequence with three items on the LHS';
 is (8, 7, 6 ... *).[^5].join(', '), '8, 7, 6, 5, 4', 'simple decreasing additive sequence with three items on the LHS';
 is (1, 3, 9 ... *).[^5].join(', '), '1, 3, 9, 27, 81', 'simple multiplicative sequence with three items on the LHS';
-#?niecza todo 'Int-valued Rats written as N/1'
 is (81, 27, 9 ... *).[^5].join(', '), '81, 27, 9, 3, 1', 'decreasing multiplicative sequence with three items on the LHS';
 is (1, { $_ + 2 } ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and block closure on the LHS';
 is (1, *+2 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item and * closure on the LHS';
@@ -123,7 +120,6 @@ is (1, 2 ... 0).[^3], (1,2,3), 'No more: limit value is on the wrong side';
     is (1 ...^ -3).join(', '), '1, 0, -1, -2', 'exclusive decreasing sequence';
     is (1 ...^ 5.5).[^6].join(', '), '1, 2, 3, 4, 5, 6', "exclusive sequence that couldn't hit its limit anyway";
     is (1, 3, 9 ...^ 81).join(', '), '1, 3, 9, 27', 'exclusive geometric sequence';
-    #?niecza todo 'Int-valued Rats written as N/1'
     is (81, 27, 9 ...^ 2).[^5].join(', '), '81, 27, 9, 3, 1', "exclusive decreasing geometric sequence that couldn't hit its limit anyway";
     is (2, -4, 8 ...^ 32).join(', '), '2, -4, 8, -16', 'exclusive alternating geometric sequence';
     is (2, -4, 8 ...^ -32).[^6].join(', '), '2, -4, 8, -16, 32, -64', 'exclusive alternating geometric sequence (not an exact match)';

@@ -109,7 +109,6 @@ for @sines -> $angle
     is_approx(cotan((0.785398163404734 + 2i).Complex), 0.0366189934736669 - 0.999329299738534i, "cotan(Complex) - 0.785398163404734 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((1.57079632680947).Str.cotan, -1.45716159658652e-11, "Str.cotan - 1.57079632680947");
@@ -164,7 +163,6 @@ for @sines -> $angle
     is_approx(acotan((0.785398163404734 + 2i).Complex), 0.204860490024916 - 0.445759203696597i, "acotan(Complex) - 0.204860490024916 - 0.445759203696597i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((1.73205080754945).Str).acotan, 0.523598775603156, "Str.acotan - 0.523598775603156");

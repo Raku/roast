@@ -191,9 +191,9 @@ nok 'a' ~~ 'b'..'g',    "not 'a' ~~ 'b'..'g'";
 nok 'h' ~~ 'b'..'g',    "not 'h' ~~ 'b'..'g'";
 nok 0 ~~ 'a'..'g',      "not 0 ~~ 'a'..'g'";
 
-#?niecza 4 skip 'alphabetic/* ranges'
 ok 'd' ~~ 'c'..*,       "'d' ~~ 'c'..*";
 nok 'b' ~~ 'c'..*,      "not 'b' ~~ 'c'..*";
+#?niecza todo 'alphabetic/* ranges'
 ok 'b' ~~ *..'c',       "'b' ~~ *..'c'";
 nok 'd' ~~ *..'c',      "not 'd' ~~ *..'c'";
 

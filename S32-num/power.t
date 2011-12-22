@@ -14,7 +14,6 @@ is(4 ** 2,   16, "4 **  2 == 16");
 
 is(4 ** 0.5,  2, "4 ** .5 ==  2");
 is(4 ** (1/2), 2, "4 ** (1/2) == 2 ");
-#?niecza skip 'Rat.Str'
 is(4 ** (-1/2), 0.5, "4 ** (-1/2) == 1/2 ");
 is((-2) ** 2, 4, "-2 ** 2 = 4");
 
@@ -30,7 +29,7 @@ is(0 ** NaN, NaN, "0**NaN=NaN");
 
 # Not at all sure the next three cases are correct!
 
-#?niecza 2 skip 'complex NaN stringy'
+#?niecza 2 todo 'complex NaN stringy'
 #?rakudo skip 'NaN**1i should be NaN'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
 #?rakudo skip '1i**NaN should be NaN'
@@ -78,9 +77,9 @@ is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 
 # Rat ** a large number
-#?niecza 2 skip 'does not work'
 ok(1.015 ** 200 !~~ NaN, "1.015 ** 200 is not NaN");
 #?rakudo todo 'big numbers'
+#?niecza todo 'generates NaN'
 is_approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
 
 done;

@@ -89,7 +89,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 # enums + pick
-#?niecza skip "pick(*) NYI"
+#?niecza todo "pick(*) NYI"
 {
     is Bool.pick(*).elems, 2, 'Bool.pick works';
 

@@ -173,7 +173,7 @@ plan 19;
     is $str, '1', 'die aborts ENTER queue';
 }
 
-#?niecza skip '@!'
+#?niecza todo '@!'
 {
     my $str;
     try {

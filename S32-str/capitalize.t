@@ -29,7 +29,7 @@ is "ab cD Ef".capitalize,      "Ab Cd Ef",       "works on ordinary string";
 is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII chars";#
 
 #?rakudo 2 todo 'graphemes results wrong'
-#?niecza 2 skip 'charspec'
+#?niecza 2 todo 'charspec'
 is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize on string with grapheme precomposed';
 is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",

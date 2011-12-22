@@ -36,7 +36,7 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 # Unicode 5.1.0 SpecialCasing.txt has 00DF -> 0053 0053
 # nothing maps to 1E9E, the new "capital sharp s"
 # so I think this is right -rhr
-#?niecza skip 'German language weirdness'
+#?niecza todo 'German language weirdness'
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {

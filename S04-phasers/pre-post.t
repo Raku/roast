@@ -86,7 +86,7 @@ my $foo = PRE_Child.new;
 
 lives_ok { $foo.test(5)    }, 'PRE in methods compiles and runs';
 dies_ok  { $foo.test(-42)  }, 'PRE in child throws';
-#?niecza skip 'PRE inheritance'
+#?niecza todo 'PRE inheritance'
 dies_ok  { $foo.test(78)   }, 'PRE in parent throws';
 
 
@@ -164,7 +164,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, '(', 'failing PRE runs nothing else';
 }
 
-#?niecza skip 'I think POST runs LIFO by spec?'
+#?niecza todo 'I think POST runs LIFO by spec?'
 {
     my $str;
     try {

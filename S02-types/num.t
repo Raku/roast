@@ -40,35 +40,30 @@ is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
 {
     my $a = 1 / 1;
     isa_ok($a, Rat);
-    #?niecza todo
     is(~$a, "1", '1/1 stringification works');
 }
 
 {
     my $a = -1.0;
     isa_ok($a, Rat);
-    #?niecza todo
     is($a, "-1", '-1 stringification works');
 }
 
 {
     my $a = 0.1;
     isa_ok($a, Rat);
-    #?niecza todo
     is($a, "0.1", '0.1 stringification works');
 }
 
 {
     my $a = -0.1; "$a";
     isa_ok($a, Rat);
-    #?niecza todo
     is($a, "-0.1", '-0.1 stringification works');
 }
 
 {
     my $a = 10.01; "$a";
     isa_ok($a, Rat);
-    #?niecza todo
     is($a, "10.01", '10.01 stringification works');
 }
 
@@ -154,7 +149,6 @@ isa_ok(1 / 1, Rat);
 }
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
-#?niecza skip 'System.FormatException: Unknown char: d'
 {
     my $a = "1.01";
     isa_ok($a.Int, Int);

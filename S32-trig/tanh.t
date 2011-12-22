@@ -87,7 +87,7 @@ for @sines -> $angle
     is_approx($zp2.tanh, $sz2, "Complex.tanh - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
+#?niecza todo "Inf results wrong"
 {
     is(tanh(Inf), 1, "tanh(Inf) -");
     is(tanh(-Inf), -1, "tanh(-Inf) -");
@@ -109,7 +109,6 @@ for @sines -> $angle
     is_approx(tanh((0 + 2i).Complex), -0 - 2.18503986326152i, "tanh(Complex) - 0 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.tanh, 0.480472778160188, "Str.tanh - 0.523598775603156");
@@ -164,7 +163,6 @@ for @sines -> $angle
     is_approx(atanh((0.785398163404734 + 2i).Complex), 0.143655432578432 + 1.15296697280152i, "atanh(Complex) - 0.143655432578432 + 1.15296697280152i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.480472778160188).Str).atanh, 0.523598775603156, "Str.atanh - 0.523598775603156");

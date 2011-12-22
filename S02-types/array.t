@@ -158,11 +158,11 @@ my @array2 = ("test", 1, Mu);
     ok(eval('@array11[2,0] = 12'), "push the value to a multidimension array");
 }
 
-#?niecza skip "type constraints"
 {
     # declare the array with data type
     my Int @array;
     lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
+    #?niecza todo "type constraints"
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
 
@@ -243,7 +243,7 @@ my @array2 = ("test", 1, Mu);
 
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
   #?rakudo todo '@arr[-1] returns failure, not dies'
-  #?niecza skip '@arr[-1] returns undef'
+  #?niecza todo '@arr[-1] returns undef'
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is run-time error";
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";

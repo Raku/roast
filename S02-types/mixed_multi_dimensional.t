@@ -206,7 +206,7 @@ Some deeper tests were already added.
     #?rakudo 2 todo 'unknown'
     #?niecza todo
     is(+@array[1]<two>[0], 2, "two keys at level 4");
-    #?niecza skip 'Use of uninitialized value in string context'
+    #?niecza todo 'Use of uninitialized value in string context'
     is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }
 

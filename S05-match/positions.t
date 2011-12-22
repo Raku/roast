@@ -30,9 +30,7 @@ nok($/.from.defined,      'Match pos is undefined');
 my regex Aa { A .* a }
 #?rakudo 3 skip 'lexical lookup of <Aa>'
 ok($str ~~ m/ .*? <Aa> /, 'Subrule match from 3');
-#?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 ok($/.from == 0,          'Full match pos is 0');
-#?niecza skip 'Unable to resolve method from in class Any'
 ok($/<Aa>.from == 3,      'Subrule match pos is 3');
 
 

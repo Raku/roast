@@ -25,12 +25,12 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 }
 
 # RT #71478
-#?niecza skip 'Excess arguments to MAIN_3 foo, used 1 of 2 positionals'
 {
     my $success = try { eval 'sub foo(%h) { %h }; foo(1, 2); 1' };
     my $error   = "$!";
     nok $success,
         "Passing two arguments to a function expecting one hash is an error";
+    #?niecza 3 todo 'error message content'
     ok $error ~~ / '%h' /,   '... error message mentions parameter';
     ok $error ~~ /:i 'type' /, '... error message mentions "type"';
     ok $error ~~ / Associative /, '... error message mentions "Associative"';

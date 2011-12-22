@@ -87,7 +87,7 @@ for @coshes -> $angle
     is_approx($zp2.cosh, $sz2, "Complex.cosh - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
+#?niecza todo "Inf results wrong"
 {
     is(cosh(Inf), Inf, "cosh(Inf) -");
     is(cosh(-Inf), Inf, "cosh(-Inf) -");
@@ -109,7 +109,6 @@ for @coshes -> $angle
     is_approx(cosh((0 + 2i).Complex), -0.416146836547142 + 0i, "cosh(Complex) - 0 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.cosh, 1.14023832107909, "Str.cosh - 0.523598775603156");
@@ -164,7 +163,6 @@ for @coshes -> $angle
     is_approx(acosh((0.785398163404734 + 2i).Complex), 1.49709293866352 + 1.22945740853541i, "acosh(Complex) - 1.49709293866352 + 1.22945740853541i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((1.14023832107909).Str).acosh, 0.523598775603156, "Str.acosh - 0.523598775603156");

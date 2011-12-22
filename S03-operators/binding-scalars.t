@@ -96,13 +96,13 @@ plan 30;
   $b($val);
   is $a, 42, "bound readonly sub param was bound correctly (1)";
   $val++;
-  #?niecza skip "difference of interpretation on ro binding"
+  #?niecza todo "difference of interpretation on ro binding"
   #?rakudo todo 'nom regression'
   is $a, 43, "bound readonly sub param was bound correctly (2)";
 
   dies_ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
-  #?niecza skip "difference of interpretation on ro binding"
+  #?niecza todo "difference of interpretation on ro binding"
   #?rakudo todo 'nom regression'
   is $a, 43,
     "bound readonly sub param remains readonly (2)";

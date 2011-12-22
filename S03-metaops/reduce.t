@@ -88,7 +88,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     is ~ ([\>]  4, 2, 3, 1).map({+$_}), "1 1 0 0", "[\\>] works (2)";
     is ~ ([\==]  4, 4, 4).map({+$_}),   "1 1 1",   "[\\==] works (1)";
     is ~ ([\==]  4, 5, 4).map({+$_}),   "1 0 0",   "[\\==] works (2)";
-    #?niecza 2 skip 'this is parsed as ![=], not good'
+    #?niecza 2 todo 'this is parsed as ![=], not good'
     is ~ ([\!=]  4, 5, 6).map({+$_}),   "1 1 1",   "[\\!=] works (1)";
     is ~ ([\!=]  4, 5, 5).map({+$_}),   "1 1 0",   "[\\!=] works (2)";
     is (~ [\**]  1, 2, 3),   "3 8 1",   "[\\**] (right assoc) works (1)";
@@ -98,7 +98,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 # RT #76110
 {
     is ~([\+] [\+] 1 xx 5), '1 3 6 10 15', 'two nested [\+]';
-    #?niecza skip 'unary [] does not context yet'
+    #?niecza todo 'unary [] does not context yet'
     is ([+] [1, 2, 3, 4]), 4,  '[+] does not flatten []-arrays';
 }
 
@@ -168,9 +168,9 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 }
 
 # Following two tests taken verbatim from former t/operators/reduce.t
-#?niecza 2 skip 'These are hyperop tests!'
 lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
 #?rakudo todo 'reduced hyper op'
+#?niecza todo 'These are hyperop tests!'
 lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # Check that user defined infix ops work with [...], too.
@@ -196,7 +196,7 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # L<S03/"Reduction operators"/"Among the builtin operators, [+]() returns 0 and [*]() returns 1">
 
-#?niecza skip '[*] identity'
+#?niecza todo '[*] identity'
 is( ([*]()), 1, "[*]() returns 1");
 is( ([+]()), 0, "[+]() returns 0");
 

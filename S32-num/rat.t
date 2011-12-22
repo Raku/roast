@@ -22,13 +22,9 @@ isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );
 is( (eval (1/3).perl).nude, (1, 3), 'eval (1/3).perl is 1/3' );
 
 # Test ~
-#?niecza todo
 is(~(Rat.new(1,4)), ~(0.25e0), "Rats stringify properly");
-#?niecza todo
 is(~(Rat.new(-1,2)), ~(-0.5e0), "Rats stringify properly");
-#?niecza todo
 is(~(Rat.new(7,4)), ~(1.75e0), "Rats stringify properly");
-#?niecza todo
 is(~(Rat.new(7,-1)), ~(-7), "Rats stringify properly");
 
 # Test new
@@ -78,7 +74,6 @@ isa_ok((2 / 3) / (5 / 4), Rat, "2/3 / 5/4 is a Rat");
 is((2 / 3) / 2, 1/3, "2/3 / 2 = 1/3");
 is(((2 / 3) / 2).nude, (1, 3), "2/3 / 2 = 1/3 is simplified internally");
 isa_ok((2 / 3) / 2, Rat, "2/3 / 2 is a Rat");
-#?niecza todo
 is(2 / (1 / 3), 6, "2 / 1/3 = 6");
 isa_ok(2 / (1 / 3), Rat, "2 / 1/3 is a Rat");
 is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
@@ -147,10 +142,8 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
-#?niecza todo
 #?rakudo todo "Inf.Rat"
 is Inf.Rat, Inf, "Inf.Rat == Inf";
-#?niecza todo
 #?rakudo todo "Inf.Rat"
 is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 

@@ -109,7 +109,6 @@ for @sines -> $angle
     is_approx(tan((0 + 2i).Complex), 0 + 0.964027580075817i, "tan(Complex) - 0 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.523598775603156).Str.tan, 0.577350269196102, "Str.tan - 0.523598775603156");
@@ -164,7 +163,6 @@ for @sines -> $angle
     is_approx(atan((0.785398163404734 + 2i).Complex), 1.36593583676998 + 0.445759203696597i, "atan(Complex) - 1.36593583676998 + 0.445759203696597i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((0.577350269196102).Str).atan, 0.523598775603156, "Str.atan - 0.523598775603156");

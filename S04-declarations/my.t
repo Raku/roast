@@ -209,7 +209,7 @@ my $z = 42; #OK not used
     {
         my $a;
         #?rakudo todo 'fails'
-        #?niecza 2 skip 'still fails?'
+        #?niecza 2 todo 'still fails?'
         eval_lives_ok 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }';
         #?rakudo todo 'previous test skipped'
         ok $a, 'unreached declaration in effect at block start';
@@ -238,7 +238,7 @@ my $z = 42; #OK not used
         my $a = 42;
         our sub access_lexical_a() { $a }
     }
-    #?niecza skip 'NYI'
+    #?niecza todo 'NYI'
     is  OUR::access_lexical_a(), 42,
         'can call our-sub that accesses a lexical after the block was run';
 

@@ -25,7 +25,7 @@ plan 64;
     is ~(@array[0,1]:p), "0\ta 1\tB",
         ":p on an array returned a two-elem array consisting of the correct pairs";
 
-    #?niecza skip 'Cannot use value like Pair as a number'
+    #?niecza todo 'Cannot use value like Pair as a number'
     is +(@array[42,23]:p),  0, ":p on an array weeded out non-existing entries (1)";
     #?niecza todo
     is ~(@array[42,23]:p), "", ":p on an array weeded out non-existing entries (2)";
@@ -126,7 +126,7 @@ plan 64;
     is ~(%hash<0 1>:p), "0\ta 1\tB",
         ":p on a hash returned a two-elem array consisting of the correct pairs";
 
-    #?niecza skip 'Cannot use value like Pair as a number'
+    #?niecza todo 'Cannot use value like Pair as a number'
     is +(%hash<42 23>:p),  0, ":p on a hash weeded out non-existing entries (1)";
     #?niecza todo
     is ~(%hash<42 23>:p), "", ":p on a hash weeded out non-existing entries (2)";

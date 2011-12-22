@@ -87,7 +87,7 @@ for @sines -> $angle
     is_approx($zp2.cosech, $sz2, "Complex.cosech - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
+#?niecza todo "Inf results wrong"
 {
     is(cosech(Inf), 0, "cosech(Inf) -");
     is(cosech(-Inf), "-0", "cosech(-Inf) -");
@@ -109,7 +109,6 @@ for @sines -> $angle
     is_approx(cosech((0.523598775603156 + 2i).Complex), -0.202302149262384 - 0.920006877922264i, "cosech(Complex) - 0.523598775603156 + 2i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx((0.785398163404734).Str.cosech, 1.15118387090806, "Str.cosech - 0.785398163404734");
@@ -164,7 +163,6 @@ for @sines -> $angle
     is_approx(acosech((0.785398163404734 + 2i).Complex), 0.186914543518615 - 0.439776333846415i, "acosech(Complex) - 0.186914543518615 - 0.439776333846415i");
 }
 
-#?niecza skip "Str math NYI"
 {
     # Str tests
     is_approx(((1.8253055746695).Str).acosech, 0.523598775603156, "Str.acosech - 0.523598775603156");
