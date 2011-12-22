@@ -93,7 +93,6 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
 #?pugs todo 'feature'
-#?niecza todo "base and radix NYI"
 {
     is(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
@@ -101,6 +100,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/General radices/"Any radix may include a fractional part">
 
+#?niecza todo "Got Num, expected Rat"
 is(:16<dead_beef.face>,  0xDEAD_BEEF + 0xFACE / 65536.0, 'Fractional base 16 works' );
 
 
@@ -178,7 +178,6 @@ eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
 
 # L<S02/Exponentials/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
-#?niecza 2 todo "Returning fraction instead of straight int"
 is( :2<1.1> *  2 ** 10,                  1536, 'binary number to power of 2'  );
 is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiation' );
 
@@ -186,7 +185,6 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # these should be the same values as the previous tests
 #?pugs todo 'feature'
 {
-    #?niecza todo "base and radix NYI"
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     #?rakudo skip "Really?!"
     #?niecza skip "WTF?"
@@ -220,6 +218,7 @@ dies_ok { 2.foo  },    "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
+#?niecza 2 todo
 eval_dies_ok ':2<2>',   ':2<2> is illegal';
 eval_dies_ok ':10<3a>', ':10<3a> is illegal';
 
