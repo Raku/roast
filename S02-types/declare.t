@@ -23,6 +23,7 @@ plan 79;
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
 #?rakudo skip 'Complex not type converted properly during assignment from Num'
+#?niecza skip 'Complex not type converted properly during assignment from Rat'
 {
  my Complex $namcu =1.3;
  isa_ok($namcu,Complex);
@@ -39,6 +40,7 @@ plan 79;
 }
 
 #?rakudo skip 'Bit not implemented'
+#?niecza skip 'Bit not implemented'
 {
  my Bit $namcu =1;
  isa_ok($namcu,Bit);
@@ -49,6 +51,7 @@ plan 79;
  isa_ok($morna, Regex);
 }
 
+#?niecza skip "Set NYI"
 {
  my Set $selcmima;
  isa_ok($selcmima, Set);
@@ -84,6 +87,7 @@ plan 79;
  isa_ok($brodi, Hash);
 }
 
+#?niecza skip "Buf NYI"
 {
  my Buf $nacpoi;
  isa_ok($nacpoi, Buf);
@@ -95,6 +99,7 @@ plan 79;
 }
 
 #?rakudo skip 'No Module type yet'
+#?niecza skip 'No Module type yet'
 {
  my Module $brodu;
  isa_ok($brodu, Module);
@@ -118,12 +123,14 @@ plan 79;
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
 #?rakudo skip 'int not implemented'
+#?niecza skip 'int not implemented'
 {
  my int $namcu =2;
  isa_ok($namcu,int);
 }
 
 #?rakudo skip 'num not implemented'
+#?niecza skip 'num not implemented'
 {
  my num $namcu =1.1;
  isa_ok($namcu,num);
@@ -132,24 +139,29 @@ plan 79;
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
 #?rakudo skip 'complex not implemented'
+#?niecza skip 'complex not implemented'
 {
  my complex $namcu =1.3;
  isa_ok($namcu,complex);
 }
 
 #?rakudo skip 'rat not implemented'
+#?niecza skip 'rat not implemented'
+
 {
  my rat $namcu = 7 / 4;
  isa_ok($namcu,rat);
 }
 
 #?rakudo skip 'bit not implemented'
+#?niecza skip 'bit not implemented'
 {
  my bit $namcu =1;
  isa_ok($namcu,bit);
 }
 
 #?rakudo skip 'buf not implemented'
+#?niecza skip 'buf not implemented'
 {
  my buf $nacpoi;
  isa_ok($nacpoi, buf);
@@ -161,12 +173,14 @@ plan 79;
 # Submethod Macro Match Package Module Class Role Grammar Any
 
 #?rakudo skip 'junction not implemented'
+#?niecza skip 'junction not implemented'
 {
  my junction $sor;
  isa_ok($sor, junction);
 }
 
 #?rakudo skip 'StrPos not implemented'
+#?niecza skip 'StrPos not implemented'
 {
  my StrPos $pa;
  isa_ok($pa,StrPos  );
@@ -174,6 +188,7 @@ plan 79;
 
 
 #?rakudo skip 'StrLen not implemented'
+#?niecza skip 'StrLen not implemented'
 {
  my StrLen $re;
  isa_ok($re,StrLen  );
@@ -194,11 +209,13 @@ plan 79;
  ok($mu ~~ Mu  );
 }
 
+#?niecza skip 'Failure not implemented'
 {
  my Failure $xa;
  isa_ok($xa,Failure  );
 }
 
+#?niecza skip 'Exception not implemented'
 {
  my Exception $ze;
  isa_ok($ze,Exception  );
@@ -209,11 +226,13 @@ plan 79;
  isa_ok($bi,Range  );
 }
 
+#?niecza skip 'Bag not implemented'
 {
  my Bag $so;
  isa_ok($so,Bag  );
 }
 
+#?niecza skip 'Signature not implemented'
 {
  my Signature $pano;
  isa_ok($pano,Signature  );
@@ -225,6 +244,7 @@ plan 79;
 }
 
 #?rakudo skip 'Blob not implemented'
+#?niecza skip 'Blob not implemented'
 {
  my Blob $pare;
  isa_ok($pare,Blob  );
@@ -235,23 +255,27 @@ plan 79;
  isa_ok($paci,Instant  );
 }
 
+#?niecza skip 'Duration not implemented'
 {
  my Duration $pavo;
  isa_ok($pavo,Duration  );
 }
 
+#?niecza skip 'KeyHash not implemented'
 {
  my KeyHash $pamu;
  isa_ok($pamu,KeyHash  );
 }
 
 #?rakudo skip 'KeySet not implemented'
+#?niecza skip 'KeySet not implemented'
 {
  my KeySet $paxa;
  isa_ok($paxa,KeySet  );
 }
 
 #?rakudo skip 'KeyBag not implemented'
+#?niecza skip 'KeyBag not implemented'
 {
  my KeyBag $paze;
  isa_ok($paze,KeyBag  );
@@ -314,6 +338,7 @@ plan 79;
 }
 
 #?rakudo skip 'Macro not implemented'
+#?niecza skip 'Macro not implemented'
 {
  my Macro $remu;
  isa_ok($remu,Macro  );
@@ -342,18 +367,21 @@ plan 79;
 }
 
 #?rakudo skip 'Order NYI'
+#?niecza skip 'Order not implemented'
 {
  my Order $karbi;
  isa_ok($karbi, Order);
 }
 
 #?rakudo skip 'Matcher isa not implemented'
+#?niecza skip 'Matcher not implemented'
 {
   my Matcher $mapti;
   isa_ok($mapti, Matcher);
 }
 
 #?rakudo skip 'Proxy isa not implemented'
+#?niecza skip 'Proxy not implemented'
 {
   my Proxy $krati;
   isa_ok($krati, Proxy);
@@ -362,36 +390,42 @@ plan 79;
 # CharLingua Byte Char AnyChar 
 
 #?rakudo skip 'Char not implemented'
+#?niecza skip 'Char not implemented'
 {
   my Char $pav;
   isa_ok($pav, Char);
 }
 
 #?rakudo skip 'Byte not implemented'
+#?niecza skip 'Byte not implemented'
 {
   my Byte $biv;
   isa_ok($biv, Byte);
 }
 
 #?rakudo skip 'AnyChar not implemented'
+#?niecza skip 'AnyChar not implemented'
 {
   my AnyChar $lerfu;
   isa_ok($lerfu, AnyChar);
 }
 
 #?rakudo skip 'CharLingua not implemented'
+#?niecza skip 'CharLingua not implemented'
 {
   my CharLingua  $lerfu;
   isa_ok($lerfu, CharLingua );
 }
 
 #?rakudo skip 'Codepoint not implemented'
+#?niecza skip 'Codepoint not implemented'
 {
   my Codepoint $cypy;
   isa_ok($cypy,Codepoint );
 }
 
 #?rakudo skip 'Grapheme not implemented'
+#?niecza skip 'Grapheme not implemented'
 {
   my Grapheme $gy;
   isa_ok($gy,Grapheme );
@@ -400,23 +434,27 @@ plan 79;
 # Positional Associative Ordering Ordered
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
+#?niecza skip 'Positional not implemented'
 {
   my Positional $mokca;
   ok($mokca ~~ Positional,'Positional exists');
 }
 
+#?niecza skip 'Associative not implemented'
 {
   my Associative $kansa;
   ok($kansa ~~ Associative,'Associative exists');
 }
 
 #?rakudo skip 'Ordering not implemented'
+#?niecza skip 'Ordering not implemented'
 {
   my Ordering $foo;
   isa_ok($foo,Ordering);
 }
 
 #?rakudo skip 'KeyExtractor not implemented'
+#?niecza skip 'KeyExtractor not implemented'
 {
   my KeyExtractor $ckiku;
   isa_ok($ckiku, KeyExtractor);
@@ -425,18 +463,21 @@ plan 79;
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
 #?rakudo skip 'Comparator not implemented'
+#?niecza skip 'Comparator not implemented'
 {
   my Comparator $bar;
   isa_ok($bar,Comparator);
 }
 
 #?rakudo skip 'OrderingPair not implemented'
+#?niecza skip 'OrderingPair not implemented'
 {
   my OrderingPair $foop;
   isa_ok($foop,OrderingPair);
 }
 
 #?rakudo skip 'HyperWhatever not implemented'
+#?niecza skip 'HyperWhatever not implemented'
 {
   my HyperWhatever $baz;
   isa_ok($baz,HyperWhatever);
@@ -445,18 +486,21 @@ plan 79;
 # utf8 utf16 utf32
 
 #?rakudo skip 'utf8  not implemented'
+#?niecza skip 'utf8 not implemented'
 {
   my utf8 $ubi;
   isa_ok($ubi,utf8);
 }
 
 #?rakudo skip 'utf16  not implemented'
+#?niecza skip 'utf16 not implemented'
 {
   my utf16 $upaxa;
   isa_ok($upaxa,utf16);
 }
 
 #?rakudo skip 'utf32  not implemented'
+#?niecza skip 'utf32 not implemented'
 {
   my utf32 $ucire;
   isa_ok($ucire,utf32);
@@ -473,6 +517,7 @@ plan 79;
 # buf8 buf16 buf32 buf64 
 
 #?rakudo skip 'num16  not implemented'
+#?niecza skip 'num16 not implemented'
 {
   my num16 $namcupaxa;
   isa_ok($namcupaxa,num16);
