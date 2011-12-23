@@ -145,6 +145,9 @@ for my $tfile (@tfiles) {
         elsif (/^ok +(\d+) - (.*)$/) {
             $pass++; $testnumber = $1; $test_comment = $2;
         }
+        elsif (/^ok +(\d+)$/) {
+            $pass++; $testnumber = $1; $test_comment = "";
+        }
     }
     my $test = $pass + $fail + $todo + $skip;
     if ($plan > $test) {
