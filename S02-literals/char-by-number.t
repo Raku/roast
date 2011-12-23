@@ -65,6 +65,7 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
 }
 
 #?rakudo todo 'Detecting malformed escape sequences NYI'
+#?niecza todo 'Detecting malformed escape sequences NYI'
 {
     eval_dies_ok q{"\00"}, 'next char of \0 is 0';
     eval_dies_ok q{"\01"}, 'next char of \0 is 1';
