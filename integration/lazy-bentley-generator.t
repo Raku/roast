@@ -1,5 +1,7 @@
 use Test;
 
+plan 1;
+
 sub bentley_clever($seed) {
     constant $mod = 1_000_000_000;
 
