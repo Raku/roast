@@ -1131,8 +1131,6 @@ ok 'abcdef' !~~ /a \x[0021]+ f/, 'hex (\x[])';
 #### b \x[0021] c		abc!def		n	hex (\x[])
 ok 'abc!def' !~~ /b \x[0021] c/, 'hex (\x[])';
 
-#?niecza 2 todo ""
-
 #### \X0021			a		y	not hex (\X)
 ok 'a' ~~ /\X0021/, 'not hex (\X)';
 
@@ -1141,8 +1139,6 @@ ok 'abc' ~~ /a \X0021 c/, 'not hex (\X)';
 
 #### \X0021			''		n	not hex (\X)
 ok '' !~~ /\X0021/, 'not hex (\X)';
-
-#?niecza 5 todo ""
 
 #### c \X0021 d		abc!def		n	not hex (\X)
 ok 'abc!def' !~~ /c \X0021 d/, 'not hex (\X)';
@@ -1161,8 +1157,6 @@ ok 'abc' ~~ /a \X[0021] c/, 'not hex (\X[])';
 
 #### \X[0021]		''		n	not hex (\X[])
 ok '' !~~ /\X[0021]/, 'not hex (\X[])';
-
-#?niecza 3 todo ""
 
 #### c \X[0021] d		abc!def		n	not hex (\X[])
 ok 'abc!def' !~~ /c \X[0021] d/, 'not hex (\X[])';
@@ -1201,8 +1195,6 @@ ok 'abcdef' !~~ /a \o[41]+ f/, 'octal (\o[])';
 #### b \o[41] c		abc!def		n	octal (\o[])
 ok 'abc!def' !~~ /b \o[41] c/, 'octal (\o[])';
 
-#?niecza 2 todo ""
-
 #### \O41			a		y	not octal (\O)
 ok 'a' ~~ /\O41/, 'not octal (\O)';
 
@@ -1211,8 +1203,6 @@ ok 'abc' ~~ /a \O41 c/, 'not octal (\O)';
 
 #### \O41			''		n	not octal (\O)
 ok '' !~~ /\O41/, 'not octal (\O)';
-
-#?niecza 5 todo ""
 
 #### c \O41 d		abc!def		n	not octal (\O)
 ok 'abc!def' !~~ /c \O41 d/, 'not octal (\O)';
@@ -1231,8 +1221,6 @@ ok 'abc' ~~ /a \O[41] c/, 'not octal (\O[])';
 
 #### \O[41]			''		n	not octal (\O[])
 ok '' !~~ /\O[41]/, 'not octal (\O[])';
-
-#?niecza 3 todo ""
 
 #### c \O[41] d		abc!def		n	not octal (\O[])
 ok 'abc!def' !~~ /c \O[41] d/, 'not octal (\O[])';
