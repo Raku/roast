@@ -24,7 +24,7 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
     }
     is RT69378.new.Str, 'working', 'call to .Str works';
 
-    class RT69378str is Str {
+    class RT69378str is Cool {
         has $.a = 'RT #69378';
         method Str() { $.a }
     }
@@ -35,6 +35,7 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
 is 1.Str.Str, "1", ".Str can be called on Str";
 is "hello".Str, "hello", ".Str can be called on Str";
 
+#?niecza skip "this test makes not much sense"
 {
     # Not sure how to set the derived Str portion to a value, but that would be an
     # additional useful test here.
