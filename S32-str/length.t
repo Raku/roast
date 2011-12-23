@@ -14,7 +14,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 =end pod
 
-plan 59;
+plan 46;
 
 eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
@@ -22,17 +22,21 @@ eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
 # L<S32::Str/Str/=item bytes>
 
-#?rakudo 3 skip '.bytes not implemented'
-is("".bytes,         0, "empty string");
-is("moose".bytes,    5, "moose");
-my $x = Nil;
-dies_ok { $x.bytes }, "undefined.bytes fail()s";
+# .bytes is under-specified and considered doubtful. 
+# I am commenting out the .bytes tests in this file.
+# See http://irclog.perlgeek.de/perl6/2011-12-23#i_4870398
+#                                          --colomon
+# is("".bytes,         0, "empty string");
+# is("moose".bytes,    5, "moose");
+# my $x = Nil;
+# dies_ok { $x.bytes }, "undefined.bytes fail()s";
 # See thread "undef.chars" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22595">
 
 # L<S32::Str/Str/=item chars>
 
 # Precedence tests
+#?niecza 2 skip '"abcdef" > 4 makes niecza unhappy'
 ok (chars "abcdef" > 4),     "chars() has the right precedence (1)";
 is (chars("abcdef" > 4)), 0, "chars() has the right precedence (2)";
 
@@ -66,9 +70,10 @@ my @data = (
 # L<S32::Str/Str/=item graphs>
 
 for @data -> $string, $bytes, $codes, $graphs, $chars {
-    is($string.bytes, $bytes, "'{$string}'.bytes");
+    # is($string.bytes, $bytes, "'{$string}'.bytes");
     is($string.chars, $chars, "'{$string}'.chars");
     is($string.codes, $codes, "'{$string}'.codes");
+    #?niecza skip ".graphs NYI"
     is($string.graphs, $graphs, "'{$string}'.graphs");
 }
 
@@ -76,12 +81,14 @@ for @data -> $string, $bytes, $codes, $graphs, $chars {
 # UTF-16 based implementation might make
 
 is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
+#?niecza skip ".graphs NYI"
 is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 
 # test graphemes without a precomposed character in Unicode 5
 #?rakudo 1 skip '.codes not implemented'
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
 #?rakudo 1 skip '.graphs not implemented'
+#?niecza skip ".graphs NYI"
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".graphs, 1, '.graphs on grapheme without precomposite';
 
 
