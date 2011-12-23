@@ -9,11 +9,9 @@ version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 XXX needs more clarification on the case of the rules, 
 ie letter vs. Letter vs isLetter
 
-Some notes regarding specific unicode codepoints chosen below
-(based on Unicode 5.1):
-
-   U+9FC4 : just beyond the CJK Unified Ideographs block
-   U+137D : just beyond the Ethiopic block
+U+FFFE and U+FFFF are guaranteed noncharacters.  A previous version of
+this test file used nonguaranteed noncharacters, which were assigned in
+Unicode 5.2.
 
 =end pod
 
@@ -21,24 +19,23 @@ plan 594;
 
 # L           Letter
 
-#?niecza 7 skip "L does not exist as a UCD table"
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
 #?rakudo 3 skip 'ICU version dependent :('
-ok(!( "\x[9FC4]"  ~~ m/^<:L>$/ ), q{Don't match unrelated <L> (Letter)} );
-ok("\x[9FC4]"  ~~ m/^<:!L>$/, q{Match unrelated negated <L> (Letter)} );
-ok("\x[9FC4]"  ~~ m/^<-:L>$/, q{Match unrelated inverted <L> (Letter)} );
-ok("\x[9FC4]\x[846D]" ~~ m/<:L>/, q{Match unanchored <:L> (Letter)} );
+ok(!( "\x[FFFE]"  ~~ m/^<:L>$/ ), q{Don't match unrelated <L> (Letter)} );
+ok("\x[FFFE]"  ~~ m/^<:!L>$/, q{Match unrelated negated <L> (Letter)} );
+ok("\x[FFFE]"  ~~ m/^<-:L>$/, q{Match unrelated inverted <L> (Letter)} );
+ok("\x[FFFE]\x[846D]" ~~ m/<:L>/, q{Match unanchored <:L> (Letter)} );
 
 ok("\x[6DF7]" ~~ m/^<:Letter>$/, q{Match <:Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<:!Letter>$/ ), q{Don't match negated <Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<-:Letter>$/ ), q{Don't match inverted <Letter>} );
 #?rakudo 3 skip 'ICU version dependent :('
-ok(!( "\x[9FC4]"  ~~ m/^<:Letter>$/ ), q{Don't match unrelated <Letter>} );
-ok("\x[9FC4]"  ~~ m/^<:!Letter>$/, q{Match unrelated negated <Letter>} );
-ok("\x[9FC4]"  ~~ m/^<-:Letter>$/, q{Match unrelated inverted <Letter>} );
-ok("\x[9FC4]\x[6DF7]" ~~ m/<:Letter>/, q{Match unanchored <Letter>} );
+ok(!( "\x[FFFE]"  ~~ m/^<:Letter>$/ ), q{Don't match unrelated <Letter>} );
+ok("\x[FFFE]"  ~~ m/^<:!Letter>$/, q{Match unrelated negated <Letter>} );
+ok("\x[FFFE]"  ~~ m/^<-:Letter>$/, q{Match unrelated inverted <Letter>} );
+ok("\x[FFFE]\x[6DF7]" ~~ m/<:Letter>/, q{Match unanchored <Letter>} );
 
 # Lu          UppercaseLetter
 
@@ -148,15 +145,16 @@ ok("\c[LATIN SMALL LETTER TURNED DELTA]\c[LATIN SMALL LETTER TURNED DELTA]\c[LAT
 ok("\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:OtherLetter>$/, q{Match <:OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:!OtherLetter>$/ ), q{Don't match negated <OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<-:OtherLetter>$/ ), q{Don't match inverted <OtherLetter>} );
-ok(!( "\x[137D]"  ~~ m/^<:OtherLetter>$/ ), q{Don't match unrelated <OtherLetter>} );
-ok("\x[137D]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>} );
-ok("\x[137D]"  ~~ m/^<-:OtherLetter>$/, q{Match unrelated inverted <OtherLetter>} );
-ok("\x[137D]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanchored <OtherLetter>} );
+ok(!( "\x[FFFF]"  ~~ m/^<:OtherLetter>$/ ), q{Don't match unrelated <OtherLetter>} );
+ok("\x[FFFF]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>} );
+ok("\x[FFFF]"  ~~ m/^<-:OtherLetter>$/, q{Match unrelated inverted <OtherLetter>} );
+ok("\x[FFFF]\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/<:OtherLetter>/, q{Match unanchored <OtherLetter>} );
 
 # Lr             # Alias for "Ll", "Lu", and "Lt".
 
 
 #?rakudo 10 skip "No [Lr] property defined"
+#?niecza 10 skip "No [Lr] property defined"
 ok("\c[LATIN CAPITAL LETTER A]" ~~ m/^<:Lr>$/, q{Match (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<:!Lr>$/ ), q{Don't match negated (Alias for "Ll", "Lu", and "Lt".)} );
 ok(!( "\c[LATIN CAPITAL LETTER A]" ~~ m/^<-:Lr>$/ ), q{Don't match inverted (Alias for "Ll", "Lu", and "Lt".)} );
@@ -569,7 +567,6 @@ ok("\x[98FF]\c[COMBINING GRAVE ACCENT]\c[PLUS SIGN]" ~~ m/<:MathSymbol>/, q{Matc
 
 # Sc          CurrencySymbol
 
-
 ok("\c[DOLLAR SIGN]" ~~ m/^<:Sc>$/, q{Match <:Sc> (CurrencySymbol)} );
 ok(!( "\c[DOLLAR SIGN]" ~~ m/^<:!Sc>$/ ), q{Don't match negated <Sc> (CurrencySymbol)} );
 ok(!( "\c[DOLLAR SIGN]" ~~ m/^<-:Sc>$/ ), q{Don't match inverted <Sc> (CurrencySymbol)} );
@@ -737,14 +734,14 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 
 
 #?rakudo 3 skip "Uninvestigated nqp-rx regression"
-ok("\x[9FC4]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
-ok(!( "\x[9FC4]" ~~ m/^<:!C>$/ ), q{Don't match negated <C> (Other)} );
-ok(!( "\x[9FC4]" ~~ m/^<-:C>$/ ), q{Don't match inverted <C> (Other)} );
+ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
+ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <C> (Other)} );
+ok(!( "\x[FFFE]" ~~ m/^<-:C>$/ ), q{Don't match inverted <C> (Other)} );
 ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
 #?rakudo skip "Uninvestigated nqp-rx regression"
-ok("\x[6A3F]\x[9FC4]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
+ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 ok("\x[A679]" ~~ m/^<:Other>$/, q{Match <:Other>} );
 ok(!( "\x[A679]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
@@ -788,11 +785,11 @@ ok(!( "\c[SOFT HYPHEN]" ~~ m/^<-:Cf>$/ ), q{Don't match inverted <Cf> (Format)} 
 ok(!( "\x[77B8]"  ~~ m/^<:Cf>$/ ), q{Don't match unrelated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<:!Cf>$/, q{Match unrelated negated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<-:Cf>$/, q{Match unrelated inverted <Cf> (Format)} );
-ok(!( "\x[9FC4]" ~~ m/^<:Cf>$/ ), q{Don't match related <Cf> (Format)} );
-ok("\x[9FC4]" ~~ m/^<:!Cf>$/, q{Match related negated <Cf> (Format)} );
-ok("\x[9FC4]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
+ok(!( "\x[FFFE]" ~~ m/^<:Cf>$/ ), q{Don't match related <Cf> (Format)} );
+ok("\x[FFFE]" ~~ m/^<:!Cf>$/, q{Match related negated <Cf> (Format)} );
+ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
 #?rakudo skip "Malformed UTF-8 string"
-ok("\x[77B8]\x[9FC4]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
+ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
 
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:Format>$/, q{Match <:Format>} );
 ok(!( "\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:!Format>$/ ), q{Don't match negated <Format>} );
