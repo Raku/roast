@@ -150,6 +150,7 @@ is ('ABCDEFGHIJK').ords.chrs, 'ABCDEFGHIJK', "ords > chrs round-trips correctly"
 is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-trips correctly";
 
 #?rakudo skip 'multi-arg variants of chr not in place yet'
+#?niecza skip "multi-arg variants of chr not in place yet"
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
 
 #?rakudo skip 'ord of empty string'
@@ -157,6 +158,7 @@ ok !defined(ord("")), 'ord("") returns an undefined value';
 
 # RT #65172
 #?rakudo skip 'RT 65172'
+#?niecza todo
 {
     is  "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord,
         555,
