@@ -15,6 +15,7 @@ plan 670;
 
 # InAlphabeticPresentationForms
 
+#?niecza 3 skip "InAlphabeticPresentationForms does not exist as a UCD table"
 ok(!( "\x[531A]"  ~~ m/^<:InAlphabeticPresentationForms>$/ ), q{Don't match unrelated <InAlphabeticPresentationForms>} );
 ok("\x[531A]"  ~~ m/^<:!InAlphabeticPresentationForms>$/, q{Match unrelated negated <InAlphabeticPresentationForms>} );
 ok("\x[531A]"  ~~ m/^<-:InAlphabeticPresentationForms>$/, q{Match unrelated inverted <InAlphabeticPresentationForms>} );

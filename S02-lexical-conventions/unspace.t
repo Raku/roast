@@ -75,6 +75,7 @@ is((foo\ # comment
     .lc), 'a', 'unspace with end-of-line comment');
 is((:foo\ <bar>), (:foo<bar>), 'unspace in colonpair');
 #?rakudo skip 'unimplemented'
+#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Str'
 is((foo\ .\ ("x")), 'x', 'unspace is allowed both before and after method .');
 is((foo\
 =begin comment
@@ -198,6 +199,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 }
 
 #?rakudo skip 'indirect method calls'
+#?niecza skip "Invocant handling is NYI"
 {
     augment class Code{
         method xyzzy(Code $x: *@y) { $x.(@y) }
@@ -270,6 +272,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n, 2, 'check $n');
 
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
+    #?niecza skip 'Unable to resolve method id in class Str'
     is((foo\#`〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
     eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
