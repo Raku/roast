@@ -168,6 +168,7 @@ plan 67;
 }
 
 #?rakudo skip 'nom regression - cannot see prime_factors_mult'
+#?niecza skip 'cannot see prime_factors_mult'
 #?DOES 20
 {
     # P37 (**) Calculate Euler's totient function phi(m) (improved).
@@ -240,6 +241,7 @@ plan 67;
 }
 
 #?rakudo skip 'nom regression - cannot see primes'
+#?niecza skip 'cannot see primes'
 #?DOES 1
 {
     # P40 (**) Goldbach's conjecture.
