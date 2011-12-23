@@ -79,7 +79,6 @@ is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 # Rat ** a large number
 ok(1.015 ** 200 !~~ NaN, "1.015 ** 200 is not NaN");
 #?rakudo todo 'big numbers'
-#?niecza todo 'generates NaN'
 is_approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
 
 done;
