@@ -22,7 +22,7 @@ plan 594;
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
-#?rakudo 3 skip 'ICU version dependent :('
+#?rakudo 4 skip 'ICU version dependent :('
 ok(!( "\x[FFFE]"  ~~ m/^<:L>$/ ), q{Don't match unrelated <L> (Letter)} );
 ok("\x[FFFE]"  ~~ m/^<:!L>$/, q{Match unrelated negated <L> (Letter)} );
 ok("\x[FFFE]"  ~~ m/^<-:L>$/, q{Match unrelated inverted <L> (Letter)} );
@@ -31,7 +31,7 @@ ok("\x[FFFE]\x[846D]" ~~ m/<:L>/, q{Match unanchored <:L> (Letter)} );
 ok("\x[6DF7]" ~~ m/^<:Letter>$/, q{Match <:Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<:!Letter>$/ ), q{Don't match negated <Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<-:Letter>$/ ), q{Don't match inverted <Letter>} );
-#?rakudo 3 skip 'ICU version dependent :('
+#?rakudo 4 skip 'ICU version dependent :('
 ok(!( "\x[FFFE]"  ~~ m/^<:Letter>$/ ), q{Don't match unrelated <Letter>} );
 ok("\x[FFFE]"  ~~ m/^<:!Letter>$/, q{Match unrelated negated <Letter>} );
 ok("\x[FFFE]"  ~~ m/^<-:Letter>$/, q{Match unrelated inverted <Letter>} );
@@ -145,6 +145,7 @@ ok("\c[LATIN SMALL LETTER TURNED DELTA]\c[LATIN SMALL LETTER TURNED DELTA]\c[LAT
 ok("\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:OtherLetter>$/, q{Match <:OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:!OtherLetter>$/ ), q{Don't match negated <OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<-:OtherLetter>$/ ), q{Don't match inverted <OtherLetter>} );
+#?rakudo 4 skip '\x[FFFF]'
 ok(!( "\x[FFFF]"  ~~ m/^<:OtherLetter>$/ ), q{Don't match unrelated <OtherLetter>} );
 ok("\x[FFFF]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>} );
 ok("\x[FFFF]"  ~~ m/^<-:OtherLetter>$/, q{Match unrelated inverted <OtherLetter>} );
@@ -785,6 +786,7 @@ ok(!( "\c[SOFT HYPHEN]" ~~ m/^<-:Cf>$/ ), q{Don't match inverted <Cf> (Format)} 
 ok(!( "\x[77B8]"  ~~ m/^<:Cf>$/ ), q{Don't match unrelated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<:!Cf>$/, q{Match unrelated negated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<-:Cf>$/, q{Match unrelated inverted <Cf> (Format)} );
+#?rakudo 3 skip '\x[FFFE]'
 ok(!( "\x[FFFE]" ~~ m/^<:Cf>$/ ), q{Don't match related <Cf> (Format)} );
 ok("\x[FFFE]" ~~ m/^<:!Cf>$/, q{Match related negated <Cf> (Format)} );
 ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
