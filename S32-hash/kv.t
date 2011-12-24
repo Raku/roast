@@ -15,6 +15,7 @@ Basic C<kv> tests, see S32::Containers.
     my %hash = (a => 1, b => 2, c => 3, d => 4);
     my @kv = %hash.kv;
     is(+@kv, 8, '%hash.kv returns the correct number of elems');
+    #?niecza todo 'wrong sort order'
     is(~@kv.sort, "1 2 3 4 a b c d",  '%hash.kv has no inner list');
 }
 
@@ -22,6 +23,7 @@ Basic C<kv> tests, see S32::Containers.
     my %hash = (a => 1, b => 2, c => 3, d => 4);
     my @kv = kv(%hash);
     is(+@kv, 8, 'kv(%hash) returns the correct number of elems');
+    #?niecza todo 'wrong sort order'
     is(~@kv.sort, "1 2 3 4 a b c d",  'kv(%hash) has no inner list');
 }
 
@@ -34,6 +36,7 @@ Basic C<kv> tests, see S32::Containers.
     is(~@kv, "a 1", '$pair.kv inner list matched expectation');
 }
 
+#?niecza todo 'kv()'
 {
     my $sub  = sub (Hash $hash) { $hash.kv };
     my %hash = (a => 1, b => 2);
@@ -41,6 +44,7 @@ Basic C<kv> tests, see S32::Containers.
     is ~$sub(%hash).sort, "1 2 a b", ".kv works with constant hash references";
 }
 
+#?niecza todo '%$hash'
 {
     # "%$hash" is not idiomatic Perl, but should work nevertheless.
     my $sub  = sub (Hash $hash) { %$hash.kv };
@@ -89,7 +93,8 @@ sub test4 (%h){
         is(%h.kv[$idx], %hash.kv[$idx], "test4: elem $idx of {%h.kv.elems}-elem {%h.kv.WHAT.gist} \%hash.kv correctly accessed");
     }
 }
-#?DOES 2   # ???
+#?DOES 2
+#?niecza skip '.end NYI'
 test4 %hash;
 
 # sanity
@@ -127,11 +132,13 @@ for %hash.kv -> $key, $value {
     my $pair = (a => 42);
 
     #?pugs todo 'feature'
+    #?niecza todo 'aliases should be rw'
     lives_ok { for $pair.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by $pair.kv should be rw (1)';
 
     #?pugs todo 'feature'
+    #?niecza todo 'aliases should be rw'
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
 }
 
