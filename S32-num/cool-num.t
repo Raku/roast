@@ -20,6 +20,7 @@ is "-17".abs, 17, '"-17".abs == 17';
 is NotComplex.new.abs, $magic.abs, 'NotComplex.new.abs == $magic.abs';
 
 is "3".conjugate, 3, '"3".conjugate == 3';
+#?niecza todo
 is NotComplex.new.conjugate, $magic.conjugate, 'NotComplex.new.conjugate == $magic.conjugate';
 
 is_approx "3".exp, 3.exp, '"3".exp == 3.exp';
@@ -42,6 +43,8 @@ is_approx NotComplex.new.log10, $magic.log10, 'NotComplex.new.log10 == $magic.lo
 is_approx "17".sqrt, 17.sqrt, '"17".sqrt == 17.sqrt';
 is_approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt';
 
+#?niecza skip 'roots NYI'
+#?DOES 8
 {
     my @found-roots = "17".roots("4");
     my @ideal-roots = 17.roots(4);
@@ -58,10 +61,17 @@ is_approx NotComplex.new.sqrt, $magic.sqrt, 'NotComplex.new.sqrt == $magic.sqrt'
     }
 }
 
+#?niecza skip 'coercion would discard nonzero imaginary part'
+#?DOES 2
+{
 is_approx "17"i, 17i, '"17"i == 17i';
 is_approx (NotComplex.new)i, $magic\i, '(NotComplex.new)i == $magic\i';
+}
 
-#?rakudo 4 skip 'angle conversion'
+#?rakudo skip 'angle conversion'
+#?niecza skip 'angle conversion'
+#?DOES 4
+{
 is_approx "17".to-radians(Degrees), 17.to-radians(Degrees),
           '"17".to-radians(Degrees) == 17.to-radians(Degrees)';
 is_approx NotComplex.new.to-radians(Gradians), $magic.to-radians(Gradians),
@@ -71,6 +81,7 @@ is_approx "17".from-radians(Degrees), 17.from-radians(Degrees),
           '"17".from-radians(Degrees) == 17.from-radians(Degrees)';
 is_approx NotComplex.new.from-radians(Gradians), $magic.from-radians(Gradians),
           'NotComplex.new.from-radians(Gradians) == $magic.from-radians(Gradians)';
+}
 
 is_approx "17.25".floor, 17.25.floor, '"17.25".floor == 17.25.floor';
 is_approx "17.25".ceiling, 17.25.ceiling, '"17.25".ceiling == 17.25.ceiling';

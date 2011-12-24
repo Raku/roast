@@ -57,6 +57,7 @@ plan 31;
 
     is(+@shift, 0, 'we have no elements in our array');
     ok(!defined(shift(@shift)), 'again, the array is exhausted and we get undefined');
+    #?niecza skip 'undeclared name Failure'
     ok( shift(@shift) ~~ Failure, 'again, Failure from shifting empty array' );
 }
 
@@ -64,6 +65,7 @@ plan 31;
 {
     is([1, 2, 3].shift, 1, 'this will return 1');
     ok(!defined([].shift), 'this will return undefined');
+    #?niecza skip 'undeclared name Failure'
     ok( [].shift ~~ Failure, 'shift of empty array is Failure' );
 }
 
@@ -71,6 +73,7 @@ plan 31;
 {
     my @shift;
     ok(!defined(shift(@shift)), 'shift on an empty array returns undefined');
+    #?niecza skip 'undeclared name Failure'
     ok( shift(@shift) ~~ Failure, 'shift on empty array is Failure');
 }
 
