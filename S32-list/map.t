@@ -20,6 +20,7 @@ my @list = (1 .. 5);
 }
 
 #?rakudo skip "adverbial block"
+#?niecza skip 'No value for parameter $func in Any.map'
 {
     my @result = @list.map():{ $_ * 2 };
     is(+@result, 5, 'adverbial block: we got a list back');
@@ -33,6 +34,7 @@ my @list = (1 .. 5);
 }
 
 #?rakudo skip "closure as non-final argument"
+#?niecza skip "Invocant handling is NYI"
 {
     my @result = map { $_ * 2 }: @list;
     is(+@result, 5, 'we got a list back');
@@ -74,8 +76,10 @@ my @list = (1 .. 5);
 #?rakudo skip "adverbial block; RT #53804"
 {
   is ~(1,2,3,4).map({ $^a + $^b             }), "3 7", "map() works with 2-ary functions";
+  #?niecza skip 'No value for parameter $b in ANON'
   is ~(1,2,3,4).map({ $^a + $^b + $^c       }), "6 4", "map() works with 3-ary functions";
   is ~(1,2,3,4).map({ $^a + $^b + $^c + $^d }), "10",  "map() works with 4-ary functions";
+  #?niecza skip 'No value for parameter $e in ANON'
   is ~(1,2,3,4).map({ $^a+$^b+$^c+$^d+$^e   }), "10",  "map() works with 5-ary functions";
 }
 
@@ -233,6 +237,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     my $x = :a<5>;
     is $x.map({ .key, .value + 1}), ('a', 6), 'map on pair works (comma)';
     #?rakudo skip 'Method "key" not found for invocant of class "Int"'
+    #?niecza skip 'Unable to resolve method key in class Int'
     is $x.map({ .key => .value + 1}), ('a' => 6), 'map on pair works (=>)';
 }
 
