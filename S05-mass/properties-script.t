@@ -15,7 +15,7 @@ plan 361;
 
 # BidiL       # Left-to-Right
 
-## #?rakudo 35 skip 'Bidi* not recognized'
+#?rakudo 35 skip 'Unicode properties with arguments'
 ok("\c[YI SYLLABLE IT]" ~~ m/^<:bc<L>>$/, q{Match (Left-to-Right)} );
 ok(!( "\c[YI SYLLABLE IT]" ~~ m/^<!:bc<L>>.$/ ), q{Don't match negated (Left-to-Right)} );
 ok(!( "\c[YI SYLLABLE IT]" ~~ m/^<-:bc<L>>$/ ), q{Don't match inverted (Left-to-Right)} );
