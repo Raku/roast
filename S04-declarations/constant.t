@@ -10,27 +10,25 @@ use Test;
 {
     constant foo = 42;
 
-    #?niecza todo "Errr... what?!?!"
     ok foo == 42, "declaring a sigilless constant using 'constant' works";
     dies_ok { foo = 3 }, "can't reassign to a sigil-less constant";
 }
 
 {
     # RT #69522
-    sub foo { "OH NOES" };
-    constant foo = 5;
-    is foo,   5,         'bare constant wins against sub of the same name';
+    sub foo0 { "OH NOES" };
+    constant foo0 = 5;
+    is foo0,   5,         'bare constant wins against sub of the same name';
     #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Int'
-    is foo(), 'OH NOES', '... but parens always indicate a sub call';
+    is foo0(), 'OH NOES', '... but parens always indicate a sub call';
 }
 
 {
     my $ok;
 
-    constant $bar = 42;
-    #?niecza todo "Errr... what?!?!"
-    ok $bar == 42, "declaring a constant with a sigil using 'constant' works";
-    dies_ok { $bar = 2 }, "Can't reassign to a sigiled constant";
+    constant $bar0 = 42;
+    ok $bar0 == 42, "declaring a constant with a sigil using 'constant' works";
+    dies_ok { $bar0 = 2 }, "Can't reassign to a sigiled constant";
 }
 
 # RT #69740
