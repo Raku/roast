@@ -10,6 +10,7 @@ use Test;
 {
     constant foo = 42;
 
+    #?niecza todo "Errr... what?!?!"
     ok foo == 42, "declaring a sigilless constant using 'constant' works";
     dies_ok { foo = 3 }, "can't reassign to a sigil-less constant";
 }
@@ -19,6 +20,7 @@ use Test;
     sub foo { "OH NOES" };
     constant foo = 5;
     is foo,   5,         'bare constant wins against sub of the same name';
+    #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Int'
     is foo(), 'OH NOES', '... but parens always indicate a sub call';
 }
 
@@ -26,6 +28,7 @@ use Test;
     my $ok;
 
     constant $bar = 42;
+    #?niecza todo "Errr... what?!?!"
     ok $bar == 42, "declaring a constant with a sigil using 'constant' works";
     dies_ok { $bar = 2 }, "Can't reassign to a sigiled constant";
 }
@@ -44,6 +47,7 @@ use Test;
 }
 
 #?rakudo skip 'constants as type constraints'
+#?niecza skip 'Lexical foo3 is not a package (?)'
 {
     constant foo3 = 42;
     lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
@@ -77,6 +81,7 @@ use Test;
 }
 
 #?rakudo skip "probably can't parse yet"
+#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Any'
 {
     package ConstantTest3 {
         my constant yak = 'shaving';
@@ -85,6 +90,7 @@ use Test;
 }
 
 #?rakudo skip 'COMPILING'
+#?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
 
@@ -107,6 +113,7 @@ use Test;
 }
 
 #?rakudo skip 'COMPILING'
+#?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
 
@@ -129,6 +136,7 @@ use Test;
 }
 
 #?rakudo skip 'COMPILING'
+#?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
 
@@ -232,6 +240,7 @@ use Test;
     $ok++ if timecheck == 23;
 
     #?pugs todo 'feature'
+    #?niecza todo
     ok $ok, "the initializing values for constants are evaluated at compile-time";
 }
 
