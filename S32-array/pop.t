@@ -38,6 +38,7 @@ plan 33;
 
         is(+@pop, 0, 'we have no more element in the array');
         ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
+        #?niecza skip 'undeclared name Failure'
         ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
     }
 }
@@ -59,6 +60,7 @@ plan 33;
 
     is(+@pop, 0, 'we have no more element in the array');
     ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
+    #?niecza skip 'undeclared name Failure'
     ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
 }
 
@@ -66,14 +68,15 @@ plan 33;
 {
     is([1, 2, 3].pop, 3, 'this will return 3');
     ok(!defined([].pop), 'this will return undefined');
+    #?niecza skip 'undeclared name Failure'
     ok( [].pop ~~ Failure, '[].pop is a Failure' );
 }
 
 # some edge cases
-
 {
     my @pop;
     ok(!defined(@pop.pop()), 'pop on an un-initialized array returns undefined');
+    #?niecza skip 'undeclared name Failure'
     ok( @pop.pop() ~~ Failure, 'pop off uninitialized array is a Failure' );
 }
 
