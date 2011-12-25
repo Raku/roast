@@ -53,6 +53,7 @@ plan 14;
     is(end(@array), 42, 'index of last element is 42 after push');
 }
 
+#?niecza skip 'Unable to resolve method end in class Int'
 is  3.end, 0,  'Scalars look like wrapped in a single-item list';
 
 # test some errors
