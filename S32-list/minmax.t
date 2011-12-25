@@ -37,6 +37,7 @@ is min(:by({ $^a.abs }), @array), 0,
   "subroutine form of min taking a comparison block works";
 
 #?rakudo 2 skip "Range.min not fully implemented yet (RT #105118)"
+#?niecza 2 skip "Range.min not fully implemented yet"
 is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
   "method form of min on Ranges taking a comparison block works";
 
@@ -53,6 +54,7 @@ is (@array.max: { $^a <=> $^b }), 7,
 is max(@array), 7, 'sub form of max';
 
 #?rakudo skip "Range.max not fully implemented yet (RT #105118)"
+#?niecza 2 skip "Range.max not fully implemented yet"
 is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
   "method form of max on Ranges taking a comparison block works";
 
@@ -73,6 +75,7 @@ is max(:by({ $^a.abs }), @array), -9,
   "subroutine form of max taking a modifier block works";
 
 #?rakudo skip "Range.max not fully implemented yet (RT #105118)"
+#?niecza skip "Range.min not fully implemented yet"
 is ((1..10).max: { ($_-3) * ($_-5) }), 10,
   "method form of max taking an arity-1 comparison block works";
 
@@ -104,32 +107,40 @@ is ((1..10).minmax: { ($_-3) * ($_-5) }), 4..10,
 
 # Error cases:
 #?pugs 2 todo 'bug'
+#?niecza 2 skip "Unable to resolve method min/max in class Int"
 is 42.min, 42, ".min should work on scalars";
 is 42.max, 42, ".max should work on scalars";
+#?niecza 2 skip "Unable to resolve method min/max in class Parcel"
 is (42,).min, 42, ".min should work on one-elem arrays";
 is (42,).max, 42, ".max should work on one-elem arrays";
 
 # Tests with literals:
+#?niecza 2 skip "Unable to resolve method min/max in class Parcel"
 is (1,2,3).max, 3, "method form of max with literals works";
 is (1,2,3).min, 1, "method form of min with literals works";
 is max(:by({$^a <=> $^b}), 1,2,3),  3, "subroutine form of max with literals works";
 is min(:by({$^a <=> $^b}), 1,2,3),  1, "subroutine form of min with literals works";
 
 # Try to read numbers from a file
-@array = lines("t/spec/S32-list/numbers.data");
-#?rakudo todo 'nom regression'
-is @array.max, 5, "max of strings read from a file works";
-#?rakudo todo 'nom regression'
-is @array.min, -1, "min of strings read from a file works";
-
-# Same, but numifying the numbers first
-#?rakudo skip 'nom regression'
 {
-    @array = map { +$_ }, @array;
-    is @array.max, 28, "max of strings read from a file works";
-    is @array.min, -80, "min of strings read from a file works";
+    my $fh = open "t/spec/S32-list/numbers.data";
+    @array = $fh.lines();
+    #?rakudo todo 'nom regression'
+    is @array.max, 5, "max of strings read from a file works";
+    #?rakudo todo 'nom regression'
+    is @array.min, -1, "min of strings read from a file works";
+
+    # Same, but numifying the numbers first
+    #?rakudo skip 'nom regression'
+    {
+        @array = map { +$_ }, @array;
+        is @array.max, 28, "max of strings read from a file works";
+        is @array.min, -80, "min of strings read from a file works";
+    }
+
 }
 
+#?niecza 4 skip 'Unable to resolve method max in class Parcel'
 is (1, Inf).max, Inf,"Inf is greater than 1";
 is (-1, -Inf).min, -Inf,"-Inf is less than -1";
 is (-Inf, Inf).min, -Inf,"-Inf is less than Inf";
@@ -150,6 +161,7 @@ is (-Inf, Inf).max, Inf,"Inf is greater than -Inf";
 #is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 #is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 
+#?niecza 4 skip "Excess arguments to infix:<min>"
 is ([min] (5,10,-15,20)), -15, 'reduce min int';
 is ([max] (5,10,-15,20)), 20, 'reduce max int';
 
