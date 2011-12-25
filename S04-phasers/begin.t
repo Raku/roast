@@ -9,7 +9,6 @@ plan 9;
 # compilers.
 
 #?rakudo skip "Method 'returns' not found for invocant of class 'Undef'"
-#?niecza todo
 {
     is (BEGIN { "foo" }), "foo", 'Can use BEGIN <block> as an expression';
     is (BEGIN  "foo" ), "foo", 'Can use BEGIN <expr> as an expression';
@@ -61,7 +60,6 @@ plan 9;
             1 1
         ];
     }
-    #?niecza todo
     is $tracker, 'begin',
         'BEGIN block was executed before a parse error happened later in the file';
 
