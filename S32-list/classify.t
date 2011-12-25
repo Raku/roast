@@ -11,7 +11,7 @@ plan 16;
     ok @results[0] ~~ Pair, 'got Pairs back from classify';
     is +@results, 2,  'got two values back from classify';
 
-    @results = @results.sort;
+    @results = @results.sort({ .key });
     is @results[0].key, 'even', 'got correct "first" key';
     is @results[1].key, 'odd',  'got correct "second" key';
 
@@ -21,6 +21,7 @@ plan 16;
 
 #?pugs todo 'feature'
 #?rakudo skip 'binding'
+#?niecza skip 'Cannot use bind operator with this LHS'
 { 
     my   @list = (1, 2, 3, 4);
     my (@even,@odd);
@@ -42,6 +43,7 @@ plan 16;
 }
 
 # .classify should work on non-arrays
+#?niecza todo "Not sure what these should do"
 {
   lives_ok { 42.classify: { $_ } },      "method form of classify should not work on numbers";
   lives_ok { "str".classify: { $_ } },   "method form of classify should not work on strings";
