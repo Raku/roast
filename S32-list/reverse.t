@@ -64,8 +64,10 @@ is(@a, @e, "list was reversed");
 {
     my @a = "foo";
     my @b = @a.reverse;
+    #?niecza skip "Iterable NYI"
     isa_ok(@b, Iterable);
     my $b = @a.reverse;
+    #?niecza skip "Iterable NYI"
     isa_ok($b, Iterable);
     is(@b[0], "foo", 'our list is reversed properly');
     is($b, "foo", 'in scalar context it is still a list');
@@ -77,8 +79,10 @@ is(@a, @e, "list was reversed");
 {
     my @a = ("foo", "bar");
     my @b = @a.reverse;
+    #?niecza skip "Iterable NYI"
     isa_ok(@b, Iterable);
     my $b = @a.reverse;
+    #?niecza skip "Iterable NYI"
     isa_ok($b, Iterable);
     is(@b[0], "bar", 'our array is reversed');
     is(@b[1], "foo", 'our array is reversed');
@@ -95,6 +99,7 @@ is(@a, @e, "list was reversed");
 
 # RT #77914
 #?rakudo todo "RT 77914"
+#?niecza skip 'Unable to resolve method reverse in class Parcel'
 {
     is (<a b>, <c d>).reverse.join, 'dcba', '.reverse flattens parcels';
 }
