@@ -60,6 +60,9 @@ for @nonseparators -> $sep {
   #?rakudo emit if $sep eq "\xa0" {
   #?rakudo emit      todo('\xa0 should not be a separator for list quotes');
   #?rakudo emit };
+  #?niecza emit if $sep eq "\xa0" {
+  #?niecza emit      todo('\xa0 should not be a separator for list quotes');
+  #?niecza emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
 
