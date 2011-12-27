@@ -54,8 +54,7 @@ This test tests the C<WHAT> builtin.
     lives_ok {  Match }, 'type object as a term lives';
     lives_ok { +Match }, 'numification of type object lives';
     isa_ok ("bac" ~~ /a/).WHAT, Match, '.WHAT on a Match works';
-    #?niecza skip '#84: System.FormatException: Unknown char: M'
-    is +("bac" ~~ /a/).WHAT.gist, 0, 'numification of .WHAT of a Match works';
+    is +("bac" ~~ /a/).WHAT, 0, 'numification of .WHAT of a Match works';
 }
 
 ok &infix:<+>.WHAT ~~ Sub, '.WHAT of built-in infix op is Multi (RT 66928)';
