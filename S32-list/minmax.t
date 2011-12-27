@@ -122,16 +122,14 @@ is max(:by({$^a <=> $^b}), 1,2,3),  3, "subroutine form of max with literals wor
 is min(:by({$^a <=> $^b}), 1,2,3),  1, "subroutine form of min with literals works";
 
 # Try to read numbers from a file
+#?rakudo skip 'nom regression'
 {
     my $fh = open "t/spec/S32-list/numbers.data";
     @array = $fh.lines();
-    #?rakudo todo 'nom regression'
     is @array.max, 5, "max of strings read from a file works";
-    #?rakudo todo 'nom regression'
     is @array.min, -1, "min of strings read from a file works";
 
     # Same, but numifying the numbers first
-    #?rakudo skip 'nom regression'
     {
         @array = map { +$_ }, @array;
         is @array.max, 28, "max of strings read from a file works";
