@@ -11,7 +11,7 @@ version 0.3 (12 Apr 2004), file t/named_chars.t.
 
 =end pod
 
-plan 419;
+plan 431; 
 
 #?pugs emit force_todo(148,149,158,160); 
 
@@ -545,5 +545,33 @@ ok("\x[ff6e]" ~~ m/^ \X[A42D]/, 'Negative hex \X[A42D] match');
 ok("\x[ff6e]" ~~ m/^ <[\X[A42D]]>/, 'Negative charclass hex \X[A42D] match');
  
 
+# names special cases (see http://www.unicode.org/reports/tr18/#Name_Properties) "... that require special-casing ..."
+
+ok("\x[0F68]" ~~ m/\c[TIBETAN LETTER A]/, 'match named TIBETAN LETTER A');
+ok("\x[0F60]" ~~ m/\c[TIBETAN LETTER -A]/, 'match named TIBETAN LETTER -A');
+ok(!("\c[TIBETAN LETTER A]" ~~ m/\c[TIBETAN LETTER -A]/), 'nomatch named TIBETAN LETTER A versus -A');
+ok(!("\c[TIBETAN LETTER -A]" ~~ m/\c[TIBETAN LETTER A]/), 'nomatch named TIBETAN LETTER -A versus A');
+
+ok("\x[0FB8]" ~~ m/\c[TIBETAN SUBJOINED LETTER A]/, 'match named TIBETAN SUBJOINED LETTER A');
+ok("\x[0FB0]" ~~ m/\c[TIBETAN SUBJOINED LETTER -A]/, 'match named TIBETAN SUBJOINED LETTER -A');
+ok(!("\c[TIBETAN SUBJOINED LETTER A]" ~~ m/\c[TIBETAN SUBJOINED LETTER -A]/), 'nomatch named TIBETAN SUBJOINED LETTER A versus -A');
+ok(!("\c[TIBETAN SUBJOINED LETTER -A]" ~~ m/\c[TIBETAN SUBJOINED LETTER A]/), 'nomatch named TIBETAN SUBJOINED LETTER -A versus A');
+
+ok("\x[116C]" ~~ m/\c[HANGUL JUNGSEONG OE]/, 'match named HANGUL JUNGSEONG OE');
+ok("\x[1180]" ~~ m/\c[HANGUL JUNGSEONG O-E]/, 'match named HANGUL JUNGSEONG O-E');
+ok(!("\c[HANGUL JUNGSEONG OE]" ~~ m/\c[HANGUL JUNGSEONG O-E]/), 'nomatch named HANGUL JUNGSEONG OE versus O-E');
+ok(!("\c[HANGUL JUNGSEONG O-E]" ~~ m/\c[HANGUL JUNGSEONG OE]/), 'nomatch named HANGUL JUNGSEONG O-E versus OE');
+
+# TODO: name aliases (see http://www.unicode.org/reports/tr18/#Name_Properties)
+# for U+0009 the implementation could accept the official name CHARACTER TABULATION, and also the aliases HORIZONTAL TABULATION, HT, and TAB
+# XXX should Perl-5 aliases be supported as a minimum?
+# XXX should there be something like "use warning 'deprecated'"?
+
+# TODO: named sequences (see http://www.unicode.org/reports/tr18/#Name_Properties)
+
+# TODO: loose match, disregarding case, spaces and hyphen (see http://www.unicode.org/reports/tr18/#Name_Properties)
+
+# TODO: global prefix like "LATIN LETTER" (see http://www.unicode.org/reports/tr18/#Name_Properties)
+# XXX should this be supported?
 
 # vim: ft=perl6
