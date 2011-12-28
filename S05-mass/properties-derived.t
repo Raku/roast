@@ -436,5 +436,25 @@ ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<-:Common>$/, q{Match related inverted (C
 #?niecza todo
 ok("\c[KANNADA SIGN ANUSVARA]\c[KHMER VOWEL INHERENT AQ]\x[0C7E]" ~~ m/<:Common>/, q{Match unanchored (Codepoint not explicitly assigned to a script)} );
 
+# TODO: missing properties which are broken up to Perl 5.10 e.g.
+# Grapheme_Base
+# Grapheme_Extend
+# Grapheme_Cluster_Break=CN
+# Grapheme_Cluster_Break=Control
+# Grapheme_Cluster_Break=CR
+# Grapheme_Cluster_Break=EX
+# Grapheme_Cluster_Break=Extend
+# Grapheme_Cluster_Break=L
+# Grapheme_Cluster_Break=LF
+# Grapheme_Cluster_Break=LV
+# Grapheme_Cluster_Break=LVT
+# Grapheme_Cluster_Break=Other
+# Grapheme_Cluster_Break=PP
+# Grapheme_Cluster_Break=Prepend
+# Grapheme_Cluster_Break=SM
+# Grapheme_Cluster_Break=SpacingMark
+# Grapheme_Cluster_Break=T
+# Grapheme_Cluster_Break=V
+# Grapheme_Cluster_Break=XX
 
 # vim: ft=perl6
