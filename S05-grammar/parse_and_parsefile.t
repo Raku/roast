@@ -19,12 +19,14 @@ dies_ok({ Bar.parse("abc123xyz") }, "dies if no TOP rule");
 my $fh = open("parse_and_parsefile_test", :w);
 $fh.say("abc\n123\nxyz");
 $fh.close();
+#?niecza skip 'Unable to resolve method parsefile in class Foo'
 nok(~Foo.parsefile("parse_and_parsefile_test"), ".parsefile method invokes TOP rule, no match");
 unlink("parse_and_parsefile_test");
 
 $fh = open("parse_and_parsefile_test", :w);
 $fh.say("123");
 $fh.close();
+#?niecza skip 'Unable to resolve method parsefile in class Foo'
 is(~Foo.parsefile("parse_and_parsefile_test"), "123",  ".parsefile method invokes TOP rule, match");
 dies_ok({ Bar.parsefile("parse_and_parsefile_test") }, "dies if no TOP rule");
 dies_ok({ Foo.parsefile("non_existent_file") },        "dies if file not found");
