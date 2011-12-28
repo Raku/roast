@@ -574,4 +574,14 @@ ok(!("\c[HANGUL JUNGSEONG O-E]" ~~ m/\c[HANGUL JUNGSEONG OE]/), 'nomatch named H
 # TODO: global prefix like "LATIN LETTER" (see http://www.unicode.org/reports/tr18/#Name_Properties)
 # XXX should this be supported?
 
+# TODO: border values
+# \x[0000], \x[007F], \x[0080], \x[00FF],
+# \x[FFFF], \x[00010000], \x[0010FFFF], 
+# \x[00110000], ... \x[FFFFFFFF] XXX should do what?
+
+# TODO: Grapheme
+# XXX The character name of a grapheme is a list of NFC-names?
+
+# TODO: no-names (like <control>) , invalid names, deprecated names
+
 # vim: ft=perl6
