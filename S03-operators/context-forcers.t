@@ -74,6 +74,7 @@ sub eval_elsewhere($code){ eval($code) }
 
 # L<S02/Context/numeric "+">
 # numeric (+) context
+#?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';
     isa_ok(+$a, Failure, 'trailing chars cause failure');
@@ -85,6 +86,7 @@ sub eval_elsewhere($code){ eval($code) }
 
 # L<S03/Symbolic unary precedence/"prefix:<->">
 #?rakudo skip 'failure modes of Str.Numeric'
+#?niecza skip "Failure NYI"
 {
     my $a = '2 is my favorite number';
     isa_ok(-$a, Failure, 'trailing chars cause failure');
@@ -98,14 +100,17 @@ sub eval_elsewhere($code){ eval($code) }
 # string context
 {
     my $a = 10.500000;
+    #?niecza skip "Stringy NYI"
     ok(~$a ~~ Stringy, 'it is forced into a Str');
     is(~$a, '10.5', 'forced into string context');
 
     my $b = -100;
+    #?niecza skip "Stringy NYI"
     ok(~$b ~~ Stringy, 'it is forced into a Str');
     is(~$b, '-100', 'forced into string context');
 
     my $c = -100.1010;
+    #?niecza skip "Stringy NYI"
     ok(~$c ~~ Stringy, 'it is forced into a Str');
     is(~$c, '-100.101', 'forced into string context');
 }
@@ -132,6 +137,7 @@ sub eval_elsewhere($code){ eval($code) }
 }
 
 #?rakudo skip 'is context'
+#?niecza skip 'Trait context not available on variables'
 {
     my $arrayref is context = list(1,2,3);
     my $boo is context = 37;
@@ -159,6 +165,7 @@ sub eval_elsewhere($code){ eval($code) }
 
 }
 #?rakudo skip 'is context'
+#?niecza skip 'Trait context not available on variables'
 {
     my $arrayref is context = list(1,2,3);
 
@@ -173,23 +180,27 @@ sub eval_elsewhere($code){ eval($code) }
 {
     my $x = [0, 100, 280, 33, 400, 5665];
 
-    is (@($x)[1], 100, '@$x works');
+    is @($x)[1], 100, '@$x works';
 
-    is (@($x)[3]+50, 83, '@$x works inside a larger expression');
+    is @($x)[3]+50, 83, '@$x works inside a larger expression';
 
     my $y = [601, 700, 888];
 
     my @total = (@$x, @$y);
 
-    is (@total[0], 0, "total[0] is 0");
-    is (@total[1], 100, "total[1] is 100");
-    is (@total[6], 601, "total[1] is 100");
-    is (@total[8], 888, "total[1] is 100");
+    is @total[0], 0, "total[0] is 0";
+    is @total[1], 100, "total[1] is 100";
+    is @total[6], 601, "total[6] is 601";
+    is @total[8], 888, "total[8] is 888";
 }
 
+#?niecza skip 'Unmatched key in Hash.LISTSTORE'
 {
     ok %() ~~ Hash, '%() returns a Hash';
     is +%(), 0, '%() is an empty Hash';
+}
+
+{
     my $x = %(a => 3, b => 5);
     is $x<a>, 3, 'hash constructor worked (1)';
     is $x<b>, 5, 'hash constructor worked (1)';
