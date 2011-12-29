@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan 68;
+plan 69;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -504,6 +504,14 @@ lives_ok {
     my $a = 0;
     for 1, 2, 3 { sub foo {}; $a++ }
     is $a, 3, 'RT #78232';
+}
+
+# http://irclog.perlgeek.de/perl6/2011-12-29#i_4892285
+# (Niecza bug)
+{
+    my $x = 0;
+    for 1 .. 2 -> $a, $b { $x = $b } #OK not used
+    is $x, 2, 'Lazy lists interact properly with multi-element for loops';
 }
 
 # vim: ft=perl6
