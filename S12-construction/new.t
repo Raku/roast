@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 24;
 
 class Parent {
     has $.x;
@@ -110,6 +110,15 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 # RT #100780
 {
     dies_ok { X.new }, 'RT #100780'
+}
+
+# RT #74300
+{
+    class RT74300 {
+        has $.foo;
+        multi method new($) {}
+    }
+    is RT74300.new(:foo<bar>).foo, 'bar', 'multi method($) does not break attribute initialization';
 }
 
 done;
