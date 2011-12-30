@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 64;
+plan 65;
 
 =begin pod
 
@@ -38,6 +38,7 @@ Testing operator overloading subroutines
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
+#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:['Z'] ($thing) { return "ROUGHLY$thing"; };
 
@@ -46,18 +47,21 @@ Testing operator overloading subroutines
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
+#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:["∓"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2213 MINUS-OR-PLUS SIGN)';
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
+#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:["\x[2213]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \x[2213] MINUS-OR-PLUS SIGN)';
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
+#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:["\c[MINUS-OR-PLUS SIGN]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \c[MINUS-OR-PLUS SIGN])';
@@ -114,6 +118,7 @@ Testing operator overloading subroutines
 }
 
 #?rakudo skip 'macros'
+#?niecza skip 'Unhandled exception: Malformed block at (eval) line 1'
 {
     my $var = 0;
     #?pugs 2 todo 'feature'
@@ -151,6 +156,7 @@ Testing operator overloading subroutines
 # Overloading by setting the appropriate code variable using symbolic
 # dereferentiation
 #?rakudo skip '&::'
+#?niecza skip 'Cannot use hash access on an object of type Array'
 {
   my &infix:<times>;
   BEGIN {
@@ -168,11 +174,13 @@ Testing operator overloading subroutines
   my &infix:<z> := { $^a + $^b };
   is &infix:<z>(2, 3), 5, "accessing a userdefined operator using its subroutine name";
 
+  #?niecza skip 'Undeclared routine'
   is ~(&infix:<»+«>([1,2,3],[4,5,6])), "5 7 9", "accessing a hyperoperator using its subroutine name";
 }
 
 # Overriding infix:<;>
 #?rakudo skip 'infix:<;>'
+#?niecza todo
 {
     my proto infix:<;> ($a, $b) { $a + $b }
     is (3 ; 2), 5  # XXX correct?
@@ -223,63 +231,62 @@ Testing operator overloading subroutines
 
   my $obj;
   lives_ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";
-  my $try = lives_ok { ~$obj }, "our object was stringified correctly";
-  if ($try) {
-   is ~$obj, "hi", "our object was stringified correctly", :todo<feature>;
-  } else {
-    skip "Stringification failed", 1;
-  };
+  my $try = lives_ok { ~$obj }, "our object can be stringified";
+  #?niecza todo
+  is ~$obj, "hi", "our object was stringified correctly";
   #?pugs todo 'feature'
+  #?niecza skip 'Two terms in a row'
   is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
 #?rakudo skip 'lexical operators'
 {
-	my sub infix:<Z> ($a, $b) {
-		$a ** $b;
-	}
-	is (2 Z 1 Z 2), 4, "default Left-associative works.";
+  my sub infix:<Z> ($a, $b) {
+      $a ** $b;
+  }
+  is (2 Z 1 Z 2), 4, "default Left-associative works.";
 }
 
 #?rakudo skip 'lexical operators'
 {
-	my sub infix:<Z> is assoc('left') ($a, $b) {
-		$a ** $b;
-	}
+  my sub infix:<Z> is assoc('left') ($a, $b) {
+      $a ** $b;
+  }
 
-	is (2 Z 1 Z 2), 4, "Left-associative works.";
+  is (2 Z 1 Z 2), 4, "Left-associative works.";
 }
 
 #?rakudo skip 'lexical operators'
 {
-	my sub infix:<Z> is assoc('right') ($a, $b) {
-		$a ** $b;
-	}
+  my sub infix:<Z> is assoc('right') ($a, $b) {
+      $a ** $b;
+  }
 
-	is (2 Z 1 Z 2), 2, "Right-associative works.";
+  is (2 Z 1 Z 2), 2, "Right-associative works.";
 }
 
 #?rakudo skip 'lexical operators'
 {
-	my sub infix:<Z> is assoc('chain') ($a, $b) {
-		$a eq $b;
-	}
+  my sub infix:<Z> is assoc('chain') ($a, $b) {
+      $a eq $b;
+  }
 
 
-	is (1 Z 1 Z 1), Bool::True, "Chain-associative works.";
-	is (1 Z 1 Z 2), Bool::False, "Chain-associative works.";
+  is (1 Z 1 Z 1), Bool::True, "Chain-associative works.";
+  is (1 Z 1 Z 2), Bool::False, "Chain-associative works.";
 }
 
 #?rakudo skip 'assoc("non")'
 {
-	sub infix:<our_non_assoc_infix> is assoc('non') ($a, $b) {
-		$a ** $b;
-	}
-	is (2 our_non_assoc_infix 3), (2 ** 3), "Non-associative works for just tow operands.";
-	is ((2 our_non_assoc_infix 2) our_non_assoc_infix 3), (2 ** 2) ** 3, "Non-associative works when used with parens.";
-	eval_dies_ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
+  sub infix:<our_non_assoc_infix> is assoc('non') ($a, $b) {
+      $a ** $b;
+  }
+  is (2 our_non_assoc_infix 3), (2 ** 3), "Non-associative works for just tow operands.";
+  is ((2 our_non_assoc_infix 2) our_non_assoc_infix 3), (2 ** 2) ** 3, "Non-associative works when used with parens.";
+  eval_dies_ok '2 our_non_assoc_infix 3 our_non_assoc_infix 4', "Non-associative should not parsed when used chainly.";
 }
 
+#?niecza skip "roles NYI"
 {
     role A { has $.v }
     multi sub infix:<==>(A $a, A $b) { $a.v == $b.v }
@@ -303,6 +310,7 @@ Testing operator overloading subroutines
     is $frew, 5, 'infix redefinition of += works';
 }
 
+#?niecza skip 'No matching candidates to dispatch for &infix:<+>'
 {
     class MMDTestType {
         has $.a is rw;
@@ -319,6 +327,7 @@ Testing operator overloading subroutines
 
 # test that multis with other arity don't interfere with existing ones
 # used to be RT #65640
+#?niecza skip 'No matching candidates to dispatch for &infix:<+>'
 {
     multi sub infix:<+>() { 42 };
     ok 5 + 5 == 10, "New multis don't disturb old ones";
@@ -326,6 +335,7 @@ Testing operator overloading subroutines
 
 # taken from S06-operator-overloading/method.t
 #?rakudo skip 'unknown errors'
+#?niecza skip 'lots o errors'
 {
     class Bar {
         has $.bar is rw;
@@ -375,11 +385,14 @@ Testing operator overloading subroutines
 # RT #65638
 {
     is eval('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
+    #?niecza skip 'Action method post_constraint not yet implemented'
     is eval('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
     #?rakudo todo 'RT 65638'
+    #?niecza todo
     is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
     #?rakudo skip 'mixed overloaded operators of different arities'
+    #?niecza skip 'Excess arguments to infix:<+>'
     is eval('sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
@@ -402,6 +415,7 @@ Testing operator overloading subroutines
 }
 
 # RT #74104
+#?niecza skip 'No matching candidates to dispatch for &infix:<+>'
 {
     class RT74104 {}
     multi sub infix:<+>(RT74104 $, RT74104 $) { -1 }

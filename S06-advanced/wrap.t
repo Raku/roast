@@ -169,6 +169,7 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
 # RT #66658
+#?niecza skip "undefined undefined"
 {
     sub meet(  $person ) { return "meet $person"  }
     sub greet( $person ) { return "greet $person" }
