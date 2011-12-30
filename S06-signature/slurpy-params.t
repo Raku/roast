@@ -21,6 +21,7 @@ is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
 dies_ok {eval(' mixed()')},      'at least one arg required';
 
 #?rakudo skip 'types on slurpy params'
+#?niecza skip 'Nominal type check failed in binding Int *@args in x_typed_join; got List, needed Int'
 {
     sub x_typed_join(Int *@args){ @args.join('|') }
     is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
@@ -43,7 +44,7 @@ is first_arg_copy(1, 2, 3), '1',  'can grab first item of a slurpy array (is cop
         return @m;
     }
     #?pugs todo 'bug'
-    is_deeply(func(5), [], "Shift from an array function argument works");
+    is func(5).elems, 0, "Shift from an array function argument works";
 }
 
 
@@ -72,6 +73,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 
 =end pod
 
+#?niecza todo
 {
     my sub foo ($n, *%h) { };   #OK not used
     ## NOTE: *NOT* sub foo ($n, *%h, *@a)
@@ -133,6 +135,7 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
 }
 
 #### "trait" version
+#?niecza skip 'Unhandled trait required'
 {
     my sub foo(:$n is required, *%h, *@a) { };   #OK not used
     diag('Testing with named arguments (named param is required) (trait version)');
@@ -155,6 +158,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 # L<S06/List parameters/Slurpy scalar parameters capture what would otherwise be the first elements of the variadic array:>
 
+#?niecza todo '*$f slurps everything up'
 {
     sub first(*$f, *$s, *@r) { return $f };   #OK not used
     sub second(*$f, *$s, *@r) { return $s };   #OK not used
@@ -183,6 +187,7 @@ These tests are the testing for "List parameters" section of Synopsis 06
 
 # RT #64814
 #?rakudo skip 'types on slurpy params'
+#?niecza skip 'Unhandled trait of'
 {
     sub slurp_any( Any *@a ) { @a[0] }
     is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
@@ -245,6 +250,7 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
 
 # used to be RT #69424
 #?rakudo skip 'types on slurpy params'
+#?niecza skip 'Nominal type check failed in binding Int *@a in typed-slurpy; got List, needed Int'
 {
     sub typed-slurpy(Int *@a) { 5 }   #OK not used
     my Int @b;
