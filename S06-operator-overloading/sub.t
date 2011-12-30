@@ -231,7 +231,7 @@ Testing operator overloading subroutines
 
   my $obj;
   lives_ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";
-  my $try = lives_ok { ~$obj }, "our object can be stringified";
+  lives_ok { ~$obj }, "our object can be stringified";
   #?niecza todo
   is ~$obj, "hi", "our object was stringified correctly";
   #?pugs todo 'feature'
