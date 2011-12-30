@@ -26,8 +26,8 @@ nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
 is  $/.Str,          '',        'false match stringifies to empty string';
 
-#?rakudo 3 eval 'Non-declarative sigil is missing its name at line 1, near "$\x{a2} }/\n"'
 my $c;
+#?rakudo 3 skip 'Non-declarative sigil is missing its name at line 1, near "$\x{a2} }/\n"'
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
 is $c.WHAT.gist, Cursor.gist,   'got right type';
 ok defined($c.pos),             '.pos';
