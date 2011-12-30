@@ -7,7 +7,6 @@ plan 5;
 
 {
     my %h = a => 'b', c => 'd';
-    #?niecza todo
     isa_ok %h.invert, List, 'Hash.invert returns a List';
     #?niecza skip 'Cannot use value like Pair as a number'
     is_deeply %h.invert.sort, (b => 'a', d => 'c'), 'simple Hash.invert works';
