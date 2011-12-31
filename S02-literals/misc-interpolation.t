@@ -21,14 +21,18 @@ sub func_w_args($x,$y) { return "[$x][$y]" }
 
 # Double quotes
 is("Hello $world", 'Hello World', 'double quoted string interpolation works');
+#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is("@list[]\ 3 4", '1 2 3 4', 'double quoted list interpolation works');
 is("@list 3 4", '@list 3 4', 'array without empty square brackets does not interpolate');
 #?rakudo skip 'zen hash slice'
+#?niecza skip 'No value for parameter \$index in postcircumfix:<{ }>'
 is("%hash{}", "1\t2\n", 'hash interpolation works');
 is("%hash", '%hash', 'hash interpolation does not work if not followed by {}');
+#?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("Wont you take me to &func()", 'Wont you take me to func-y town', 'closure interpolation');
 is("2 + 2 = { 2+2 }", '2 + 2 = 4', 'double quoted closure interpolation works');
 
+#?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("&func() is where I live", 'func-y town is where I live', "make sure function interpolation doesn't eat all trailing whitespace");
 is("$number {$number}", '1 1', 'number inside and outside closure works');
 is("$number {my $number=2}", '1 2', 'local version of number in closure works');
@@ -41,6 +45,7 @@ is("$number {my $number=2} $number", '1 2 1', 'original number still available a
 
 # L<S02/Names and Variables/form of each subscript>
 is("&func. () is where I live", '&func. () is where I live', '"&func. ()" should not interpolate');
+#?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should interpolate');
 
 # L<S02/Method calls/"In order to interpolate the result of a method call">
@@ -58,7 +63,9 @@ is('$world @list[] %hash{} &func()', '$world @list[] %hash{} &func()', 'single q
 # Corner-cases
 is("Hello $world!", "Hello World!", "! is not a part of var names");
 sub list_count (*@args) { +@args }
+#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is(list_count("@list[]"), 1, 'quoted interpolation gets string context');
+#?niecza todo 'apparently curly brace delimiters DO interfere with closure interpolation'
 is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure interpolation");
 
 # Quoting constructs
@@ -68,8 +75,10 @@ is(Q"abc\\d\\'\/", Q"abc\\d\\'\/", "raw quotation works");
 is(q"abc\\d\"\'\/", Q|abc\d"\'\/|, "single quotation works"); #"
 is(qq"abc\\d\"\'\/", Q|abc\d"'/|, "double quotation works"); #"
 #?rakudo 3 skip 'qa qb and array/hash interpolation'
+#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");
+#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is('$world \qq[@list[]] %hash{}', '$world 1 2 %hash{}', "interpolate quoting constructs in ''");
 
 is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
