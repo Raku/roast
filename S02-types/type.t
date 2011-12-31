@@ -34,8 +34,9 @@ my Str $bar;
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
-my $baz of Int;
+#?niecza skip 'Trait of not available on variables'
 {
+    my $baz of Int;
     #?rakudo todo 'of'
     dies_ok({$baz = 'xyz'},      'of Int restricts to integers');
     is(($baz = 42),       42,    'of Int is an integer');
@@ -43,6 +44,7 @@ my $baz of Int;
 
 # L<S02/Variables Containing Undefined Values/Variables with native types do not support undefinedness>
 #?rakudo skip 'native types (causes false positives if marked with todo)'
+#?niecza skip 'native types'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
@@ -85,14 +87,18 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     my sub returntype4 (Bool $pass --> Str) { return $pass ?? 'ok' !! -1}
 
     is(returntype1(Bool::True), 'ok', 'good return value works (returns)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype1(Bool::False) }, 'bad return value dies (returns)');
     is(returntype2(Bool::True), 42, 'good return value works (of)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype2(Bool::False) }, 'bad return value dies (of)');
 
     is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
@@ -105,18 +111,23 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     my sub returntype4 (Bool $pass --> Str) { $pass ?? 'ok' !! -1}
 
     is(returntype1(Bool::True), 'ok', 'good implicit return value works (returns)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype1(Bool::False) }, 'bad implicit return value dies (returns)');
     is(returntype2(Bool::True), 42, 'good implicit return value works (of)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype2(Bool::False) }, 'bad implicit return value dies (of)');
 
     is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
+    #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
 }
 
 #?rakudo skip '"as" return type coercion'
+#?niecza skip 'Action method trait_mod:as not yet implemented'
 {
     # the following two are the same type of behavior
     # S02: "It is possible for the of type to disagree with the as type"
@@ -147,7 +158,9 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     ok Array ~~ List, 'Array is a kind of List';
     ok List !~~ Array, 'A Seq is not an Array';
+    #?niecza skip 'Expecting a term'
     ok Seq ~~ Positional, 'A Seq does Positional';
+    #?niecza skip 'Expecting a term'
     ok Array ~~ Positional, 'Array does Positional too';
 }
 
