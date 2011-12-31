@@ -102,8 +102,12 @@ sub has_approx($n, @list) {
 {
     my @l = roots(NaN, 1);
     ok(@l.elems == 1, 'roots(NaN, 1) returns 1 element');
+<<<<<<< Updated upstream
     #?niecza todo '#97 - NaN ~~ NaN'
     ok(@l[0] ~~ NaN, 'roots(NaN,1) returns NaN');
+=======
+    ok(@l[0] ~~ 'NaN', 'roots(NaN,1) returns NaN');
+>>>>>>> Stashed changes
 }
 {
     my @l = roots(Inf, 1);
