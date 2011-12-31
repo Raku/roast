@@ -42,7 +42,6 @@ is(+@foo5, 0, 'repeating negative times produces an empty list');
 
 my @foo_2d = [1, 2] xx 2; # should create 2d
 #?pugs todo 'bug'
-#?rakudo todo 'over-flattening'
 is(@foo_2d[1], [1, 2], 'can create 2d arrays'); # creates a flat 1d array
 # Wrong/unsure: \(1, 2) does not create a ref to the array/list (1,2), but
 # returns a list containing two references, i.e. (\1, \2).
