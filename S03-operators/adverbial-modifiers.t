@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 42;
 
 # L<S03/Invocant marker/"will apply the :xxx adverb">
 sub prefix:<blub> (Str $foo, Int :$times = 1) {
@@ -51,154 +51,89 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
   $v = :foo(0);
   is ~$v, ~$e, ':foo(0)';
 
-  $e = (foo => 1);
+  $e = (foo => Bool::True);
   $v = :foo;
   is ~$v, ~$e, ':foo';
 }
 
+# Exercise various mixes of "fiddle", parens "()",
+# and adverbs with "X' and without "x" an argument.
+sub violin($x) { 
+    if $x ~~ Bool {
+        $x ?? "1" !! "0";
+    } else {
+        $x;
+    }
+}
+sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
+
+#?niecza skip 'Multi colonpair syntax not yet understood'
 {
-  # Exercise various mixes of "f", parens "()",
-  # and adverbs with "X' and without "x" an argument.
+  # fiddle(XY) fiddle(YX) fiddle(xY) fiddle(Xy)
 
-  my sub f(:$x,:$y){$x~$y}
-  my $v;
+  is fiddle(:x("a"):y("b")), "ab", 'fiddle(:x("a"):y("b"))';
+  is fiddle(:y("b"):x("a")), "ab", 'fiddle(:y("b"):x("a"))';
+  is fiddle(:x:y("b")), "1b", 'fiddle(:x:y("b"))';
+  is fiddle(:x("a"):y), "a1", 'fiddle(:x("a"):y)';
+}
 
-  # f(XY) f(YX) f(xY) f(Xy)
+{
+  # fiddle(X)Y fiddle(Y)X fiddle(x)Y fiddle(X)y fiddle(x)y
 
-  $v = f(:x("a"):y("b"));
-  is $v, "ab", 'f(:x("a"):y("b"))';
+  is fiddle(:x("a")):y("b"), "ab", 'fiddle(:x("a")):y("b")';
+  is fiddle(:y("b")):x("a"), "ab", 'fiddle(:y("b")):x("a")';
+  is fiddle(:x):y("b"), "1b", 'fiddle(:x("a")):y("b")';
+  is fiddle(:x("a")):y, "a1", 'fiddle(:x("a")):y';
+  is fiddle(:x):y, "11", 'fiddle(:x):y';
+}
 
-  $v = f(:y("b"):x("a"));
-  is $v, "ab", 'f(:y("b"):x("a"))';
+{
+  # fiddle()XY fiddle()YX fiddle()xY fiddle()Xy  fiddle()xy
 
-  $v = f(:x:y("b"));
-  is $v, "1b", 'f(:x:y("b"))';
+  is fiddle():x("a"):y("b"), "ab", 'fiddle():x("a"):y("b")';
+  is fiddle():y("b"):x("a"), "ab", 'fiddle():y("b"):x("a")';
+  is fiddle():x:y("b"), "1b", 'fiddle():x:y("b")';
+  is fiddle():x("a"):y, "a1", 'fiddle():x("a"):y';
+  is fiddle():x:y, "11", 'fiddle():x:y';
+}
 
-  $v = f(:x("a"):y);
-  is $v, "a1", 'f(:x("a"):y)';
-
-  # fXY() fxY() fXy()
-
-#  $v = f:x("a"):y("b")();
-#  is $v, "ab", 'f:x("a"):y("b")()';
-
-#  $v = f:x:y("b")();
-#  is $v, "1b", 'f:x:y("b")()';
-
-#  $v = f:x("a"):y ();
-#  is $v, "a1", 'f:x("a"):y ()';
-
-  # fX(Y) fY(X) fx(Y) fX(y)
-
-#  $v = f:x("a")(:y("b"));
-#  is $v, "ab", 'f:x("a")(:y("b"))';
-
-#  $v = f:y("b")(:x("a"));
-#  is $v, "ab", 'f:y("b")(:x("a"))';
-
-#  $v = f:x (:y("b"));
-#  is $v, "1b", 'f:x (:y("b"))';
-
-#  $v = f:x("a")(:y);
-#  is $v, "a1", 'f:x("a")(:y)';
-
-  # fXY fxY fXy
-
-  $v = f:x("a"):y("b");
-  is $v, "ab", 'f:x("a"):y("b")';
-
-  $v = f:x:y("b");
-  is $v, "1b", 'f:x:y("b")';
-
-  $v = f:x("a"):y;
-  is $v, "a1", 'f:x("a"):y';
-
-  # f(X)Y f(Y)X f(x)Y f(X)y f(x)y
-
-  $v = f(:x("a")):y("b");
-  is $v, "ab", 'f(:x("a")):y("b")';
-
-  $v = f(:y("b")):x("a");
-  is $v, "ab", 'f(:y("b")):x("a")';
-
-  $v = f(:x):y("b");
-  is $v, "1b", 'f(:x("a")):y("b")';
-
-  $v = f(:x("a")):y;
-  is $v, "a1", 'f(:x("a")):y';
-
-  $v = f(:x):y;
-  is $v, "11", 'f(:x):y';
-
-  # f()XY f()YX f()xY f()Xy  f()xy
-
-  $v = f():x("a"):y("b");
-  is $v, "ab", 'f():x("a"):y("b")';
-
-  $v = f():y("b"):x("a");
-  is $v, "ab", 'f():y("b"):x("a")';
-
-  $v = f():x:y("b");
-  is $v, "1b", 'f():x:y("b")';
-
-  $v = f():x("a"):y;
-  is $v, "a1", 'f():x("a"):y';
-
-  $v = f():x:y;
-  is $v, "11", 'f():x:y';
-
-  # fX()Y fY()X fx()y
-
-#  $v = f:x("a")():y("b");
-#  is $v, "ab", 'f:x("a")():y("b")';
-
-#  $v = f:y("b")():x("a");
-#  is $v, "ab", 'f:y("b")():x("a")';
-
-#  $v = f:x ():y;
-#  is $v, "11", 'f:x ():y';
-
+{
   # f_X(Y) f_X_Y() f_X_Y_() f_XY_() f_XY() fXY ()
 
-  # $v = f :x("a")(:y("b"));
-  # is $v, "ab", 'f :x("a")(:y("b"))';
+  # $v = fiddle :x("a")(:y("b"));
+  # is $v, "ab", 'fiddle :x("a")(:y("b"))';
   # Since the demagicalizing of pairs, this test shouldn't and doesn't work any
   # longer.
 
 #  $v = 'eval failed';
-#  eval '$v = f :x("a") :y("b")()';
+#  eval '$v = fiddle :x("a") :y("b")()';
 #  #?pugs todo 'bug'
-#  is $v, "ab", 'f :x("a") :y("b")()';
+#  is $v, "ab", 'fiddle :x("a") :y("b")()';
 
 #  $v = 'eval failed';
-#  eval '$v = f :x("a") :y("b") ()';
+#  eval '$v = fiddle :x("a") :y("b") ()';
 #  #?pugs todo 'bug'
-#  is $v, "ab", 'f :x("a") :y("b") ()';
+#  is $v, "ab", 'fiddle :x("a") :y("b") ()';
 
 #  $v = 'eval failed';
-#  eval '$v = f :x("a"):y("b") ()';
+#  eval '$v = fiddle :x("a"):y("b") ()';
 #  #?pugs todo 'bug'
-#  is $v, "ab", 'f :x("a"):y("b") ()';
+#  is $v, "ab", 'fiddle :x("a"):y("b") ()';
 
 #  $v = 'eval failed';
-#  eval '$v = f :x("a"):y("b")()';
+#  eval '$v = fiddle :x("a"):y("b")()';
 #  #?pugs todo 'bug'
-#  is $v, "ab", 'f :x("a"):y("b")()';
+#  is $v, "ab", 'fiddle :x("a"):y("b")()';
 
-#  $v = f:x("a"):y("b") ();
-#  is $v, "ab", 'f:x("a"):y("b") ()';
-
-  # 
-
-  # more tests....
-
+#  $v = fiddle:x("a"):y("b") ();
+#  is $v, "ab", 'fiddle:x("a"):y("b") ()';
 }
 
 {
   # Exercise mixes of adverbs and positional arguments.
 
   my $v;
-  my sub f($s,:$x) {$x~$s}
+  my sub f($s,:$x) { violin($x) ~ violin($s) }
   my sub g($s1,$s2,:$x) {$s1~$x~$s2}
   my sub h(*@a) {@a.perl}
   my sub i(*%h) {%h.perl}
@@ -206,45 +141,16 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
 
   # f(X s) f(Xs) f(s X) f(sX) f(xs) f(sx)
 
-  $v = f(:x("a"), "b");
-  is $v, "ab", 'f(:x("a") "b")';
+  is f(:x("a"), "b"), "ab", 'f(:x("a") "b")';
+  is f(:x("a"),"b"), "ab", 'f(:x("a")"b")';
+  is f("b", :x("a")), "ab", 'f("b" :x("a"))';
+  is f("b",:x("a")), "ab", 'f("b":x("a"))';
+  is f(:x, "b"), "1b", 'f(:x "b")';
+  is f("b", :x), "1b", 'f("b" :x)';
 
-  $v = f(:x("a"),"b");
-  is $v, "ab", 'f(:x("a")"b")';
+  # f(s)X
 
-  $v = f("b", :x("a"));
-  is $v, "ab", 'f("b" :x("a"))';
-
-  $v = f("b",:x("a"));
-  is $v, "ab", 'f("b":x("a"))';
-
-  $v = f(:x, "b");
-  is $v, "1b", 'f(:x "b")';
-
-  $v = f("b", :x);
-  is $v, "1b", 'f("b" :x)';
-
-  # fX(s) f(s)X
-
-#  $v = f:x("a")("b");
-#  is $v, "ab", 'f:x("a")("b")';
-
-  $v = f("b"):x("a");
-  is $v, "ab", 'f("b"):x("a")';
-
-  # fX s  fXs  fx s
-
-  $v = 'eval failed';
-  eval '$v = f:x("a") "b"';
-  is $v, "ab", 'f:x("a") "b"';
-
-  $v = 'eval failed';
-  eval '$v = f:x("a")"b"';
-  is $v, "ab", 'f:x("a")"b"';
-
-  $v = 'eval failed';
-  eval '$v = f:x "b"';
-  is $v, "1b", 'f:x "b"';
+  is f("b"):x("a"), "ab", 'f("b"):x("a")';
 
   # fs X  fsX  fs x  fsx
 
@@ -260,42 +166,37 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
 #  $v = f "b":x;
 #  is $v, "1b", 'f "b":x';
 
-  { # adverbs as pairs
-
-    my sub f1($s,:$x){$s.perl~$x}
-
-    $v = f1(\:bar :x("b"));
-    is $v, '("bar" => Bool::True)b', 'f1(\:bar :x("b"))';
-
-    my sub f2(Pair $p){$p.perl}
-
-    $v = f2((:bar));
-    is $v, '("bar" => Bool::True)', 'f2((:bar))';
-
-    my sub f3(Pair $p1, Pair $p2){$p1.perl~" - "~$p2.perl}
-
-    $v = f3((:bar),(:hee(3)));
-    is $v, '("bar" => Bool::True) - ("hee" => 3)', 'f3((:bar),(:hee(3)))';
-  
-  }
-
   # add more tests...
 
 }
+
+#?niecza skip 'Multi colonpair syntax not yet understood'
+{ # adverbs as pairs
+
+  my sub f1($s,:$x){$s.perl~$x}
+  is f1(\:bar :x("b")), '("bar" => Bool::True)b', 'f1(\:bar :x("b"))';
+}
+
+{
+  # adverbs as pairs, cont.
+  my sub f2(Pair $p){$p.perl}
+  is f2((:bar)), ("bar" => Bool::True).perl, 'f2((:bar))';
+
+  my sub f3(Pair $p1, Pair $p2){$p1.perl~" - "~$p2.perl}
+  is f3((:bar),(:hee(3))), "{(bar => Bool::True).perl} - {(hee => 3).perl}", 'f3((:bar),(:hee(3)))';
+}
+
 
 {
   # Exercise adverbs on operators.
 
   sub prefix:<zpre>($a,:$x){join(",",$a,$x)}
-
   is (zpre 4 :x(5)), '4,5', '(zpre 4 :x(5))';
 
   sub postfix:<zpost>($a,:$x){join(",",$a,$x)}
-
   is (4zpost :x(5)), '4,5', '(4 zpost :x(5))';
 
   sub infix:<zin>($a,$b,:$x){join(",",$a,$b,$x)}
-
   is (3 zin 4 :x(5)), '3,4,5', '(3 zin 4 :x(5))';
 
 }
