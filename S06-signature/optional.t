@@ -49,7 +49,6 @@ dies_ok {foo_53814(1,Mu,'something_extra',:y(3))},
       'die on too many parameters (was once bug RT 53814)';
 
 
-#?rakudo todo 'RT 54804'
 {
 
     # old test is bogus, nullterm only allowed at the end of a list
