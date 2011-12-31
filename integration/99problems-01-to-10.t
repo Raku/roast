@@ -167,7 +167,7 @@ plan 22;
     
     #?rakudo todo 'unknown'
     is pack(<a a a a b c c a a d e e e e>).join('+'),
-        '<a a a a+b+c c+a a+d+e e e e',
+        'a a a a+b+c c+a a+d+e e e e',
         'We should be able to pack lists';
     
     # From Larry, http://perlmonks.org/?node_id=590147
@@ -186,8 +186,8 @@ plan 22;
             }
         }
     }
-    is group(<a a a a b c c a a d e e e e>),
-        [ [<a a a a>], [<b>], [<c c>], [<a a>], [<d>], [<e e e e>] ],
+    is group(<a a a a b c c a a d e e e e>).join('+'),
+        'a a a a+b+c c+a a+d+e e e e',
         '... even using gather/take';
 }
 #?rakudo skip 'groupless gather/take'
