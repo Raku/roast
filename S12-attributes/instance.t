@@ -488,12 +488,12 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     ok $o.h.of === Int, 'hash attribute is typed';
     lives_ok {$o.h = { a => 1, b => 2 } }, 'assign to typed hash attrib';
     lives_ok {$o.h<c> = 3},                'insertion into typed hash attrib';
-    #?niecza 4 todo
     lives_ok {$o.h.push: (d => 4) },       'pushing onto typed hash attrib';
 
     is_deeply $o.h<a b c d>, (1, 2, 3, 4),   '... all of them worked';
 
     #?rakudo 5 todo 'typed hash'
+    #?niecza 3 todo
     dies_ok  {$o.h = { :a<b> }  },         'Type enforced (hash, assignment)';
     dies_ok  {$o.h<a> = 'b'  },            'Type enforced (hash, insertion)';
     dies_ok  {$o.h.push: (g => 'f') },     'Type enforced (hash, push)';
