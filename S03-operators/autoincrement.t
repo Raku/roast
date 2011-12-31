@@ -111,6 +111,7 @@ is(%z{0},           $base, '%z{0}');
     is( --$x, "zr", "'zs'-- is 'zr'" );
 }
 
+#?niecza skip "Failure NYI"
 {
     my $foo;
 
