@@ -166,8 +166,8 @@ plan 22;
     }
     
     #?rakudo todo 'unknown'
-    is pack(<a a a a b c c a a d e e e e>),
-        [ [<a a a a>], [<b>], [<c c>], [<a a>], [<d>], [<e e e e>] ],
+    is pack(<a a a a b c c a a d e e e e>).join('+'),
+        '<a a a a+b+c c+a a+d+e e e e',
         'We should be able to pack lists';
     
     # From Larry, http://perlmonks.org/?node_id=590147
@@ -203,8 +203,8 @@ plan 22;
             ];
         }
     }
-    is group2(<a a a a b c c a a d e e e e>),
-        [ [<a a a a>], [<b>], [<c c>], [<a a>], [<d>], [<e e e e>] ],
+    is group2(<a a a a b c c a a d e e e e>).join('+'),
+        'a a a a+b+c c+a a+d+e e e e',
         '... even using blockless gather/take';
     
 }
@@ -242,8 +242,8 @@ plan 22;
     }
     
     #?rakudo todo 'unknown'
-    is encode(<a a a a b c c a a d e e e e>),
-        [ [<4 a>], [<1 b>], [<2 c>], [<2 a>], [<1 d>], [<4 e>] ],
+    is encode(<a a a a b c c a a d e e e e>).join('+'),
+        '4 a+1 b+2 c+2 a+1 d+4 e',
         'We should be able to run-length encode lists';
 }
 
