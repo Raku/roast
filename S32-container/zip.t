@@ -50,14 +50,11 @@ plan 12;
     my $todo = 'Seq(Seq(0,2),1), Seq(Seq(0,2),1), Seq(Mu,5), Seq(Mu,7)';
     my @e = eval $todo;
 
-    #?rakudo emit #
     my @z; @z = zip(zip(@a; @b); @c);
     my @x; @x = ((@a Z @b) Z @c);
 
 #?pugs 2 todo 'needs Seq'
-    #?rakudo skip 'zip() and semilists'
     is(~@z, ~@e, "zip of zipped arrays with other array");
-    #?rakudo skip 'test broken?'
     is(~@x, ~@e, "also as Z");
 };
 

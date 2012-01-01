@@ -176,7 +176,6 @@ sub eval_elsewhere($code){ eval($code) }
 # int context
 # tested in t/spec/S32-num/int.t
 
-#?rakudo skip 'TODO: @(), list assignment'
 {
     my $x = [0, 100, 280, 33, 400, 5665];
 

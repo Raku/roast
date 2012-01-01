@@ -71,7 +71,6 @@ plan 79;
 # mutable (container) types, such as Scalar, Array, Hash, Buf, Routine, Module
 # Buf nacpoi
 
-#?rakudo skip 'Scalar not implemented'
 {
  my Scalar $brode;
  isa_ok($brode, Scalar);
@@ -380,7 +379,6 @@ plan 79;
   isa_ok($mapti, Matcher);
 }
 
-#?rakudo skip 'Proxy isa not implemented'
 #?niecza skip 'Proxy not implemented'
 {
   my Proxy $krati;
