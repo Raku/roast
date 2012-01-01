@@ -44,8 +44,11 @@ plan 16;
         $init_val = INIT { $hist ~= 'I' };
     }
 
+    #?niecza todo 'block returns no value'
     is $init(), 'BCI', 'INIT {} runs only once';
+    #?niecza todo 'block returns no value'
     is $init_val, 'BCI', 'INIT {} as rval is its ret val';
+    #?niecza todo 'block returns no value'
     is $init(), 'BCI', 'INIT {} runs only once';
 
     # Test CHECK {} as rval:
@@ -55,8 +58,11 @@ plan 16;
         $check_val = CHECK { $hist ~= 'C' };
     }
 
+    #?niecza todo 'block returns no value'
     is $check(), 'BC', 'CHECK {} runs only once';
+    #?niecza todo 'block returns no value'
     is $check_val, 'BC', 'CHECK {} as rval is its ret val';
+    #?niecza todo 'block returns no value'
     is $check(), 'BC', 'CHECK {} runs only once';
 
     # Test BEGIN {} as rval:
@@ -66,12 +72,15 @@ plan 16;
         $begin_val = BEGIN { $hist ~= 'B' };
     }
 
+    #?niecza todo 'block returns no value'
     is $begin(), 'B', 'BEGIN {} runs only once';
+    #?niecza todo 'block returns no value'
     is $begin_val, 'B', 'BEGIN {} as rval is its ret val';
+    #?niecza todo 'block returns no value'
     is $begin(), 'B', 'BEGIN {} runs only once';
 
     # Test END {} as rval:
-
+    #?niecza skip 'Excess arguments to eval, used 1 of 2 positionals'
     ok !eval 'my $end_val = END { 3 }', "END {} can't be used as a rvalue";
 }
 

@@ -39,7 +39,9 @@ plan 11;
     my $handle = { my $retval = INIT { $str ~= 'I' } };
 
     is $str, 'I', 'our INIT {...} block already gets called';
+    #?niecza todo "no value"
     is $handle(), 'I', 'our INIT {...} block returned the correct var (1)';
+    #?niecza todo "no value"
     is $handle(), 'I', 'our INIT {...} block returned the correct var (2)';
     is $str, 'I', 'our rvalue INIT {...} block was executed exactly once';
 }
