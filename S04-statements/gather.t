@@ -84,7 +84,6 @@ plan 20;
 }
 
 # take on array-ref
-#?rakudo todo 'nom regression'
 {
   my @list  = gather { take [1,2,3]; take [4,5,6];};
   my @list2 = ([1,2,3],[4,5,6]);

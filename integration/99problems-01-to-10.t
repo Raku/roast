@@ -241,7 +241,6 @@ plan 22;
         return @encoded;
     }
     
-    #?rakudo todo 'unknown'
     is encode(<a a a a b c c a a d e e e e>).join('+'),
         '4 a+1 b+2 c+2 a+1 d+4 e',
         'We should be able to run-length encode lists';
