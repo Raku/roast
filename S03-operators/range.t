@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 114;
+plan 118;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -227,6 +227,19 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     $_ = Any; # unsetting $_ to reproduce bug literally
     lives_ok {(1..$_)}, '(1..$_) lives';
     isa_ok (1..$_), Range, '(..) works on Int .. Any';
+}
+
+{
+    my $range = 1 .. '10';
+    is +$range, 10, "1 .. '10' has ten elements in it";
+    is +$range.grep(Numeric), 10, "and they are all numbers";
+}
+
+{
+    my @array = 1 .. 10;
+    my $range = 1 .. @array;
+    is +$range, 10, "1 .. @array has ten elements in it";
+    is +$range.grep(Numeric), 10, "and they are all numbers";
 }
 
 # RT #82620
