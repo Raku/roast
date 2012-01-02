@@ -6,6 +6,7 @@ plan 34;
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
 #?rakudo skip 'loops'
+#?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Alternating {
         has Int $.val;
@@ -56,14 +57,19 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 # # L<S03/List infix precedence/doesn't terminate with a simple>
 # the tricky termination test
 
-ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
-#?rakudo 2 skip 'Decrement out of range'
-ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
-ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
+#?niecza skip 'munch not implemented'
+{
+    ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
+    #?rakudo 2 skip 'Decrement out of range'
+    ok ('ZZ' ... 'A').munch(1000).elems < 1000, "'ZZ' ... 'A' does not go on forever";
+    ok ('Z' ... 'AA').munch(1000).elems < 1000, "'Z' ... 'AA' does not go on forever";
+}
+
 is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
 
 # be sure the test works as specced even for user classes
 #?rakudo skip 'lifting comparison ops'
+#?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Periodic {
         has Int $.val;
