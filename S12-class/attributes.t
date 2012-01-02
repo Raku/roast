@@ -20,41 +20,44 @@ is($c.get(), 41, 'can assign and get from within the class');
 $c.inc();
 is($c.get(), 42, 'can auto-increment an attribute');
 
+#?niecza skip 'Variable $x is not predeclared'
+{
+    class WithAlias {
+        has $x;
+        method set($a) { $x = $a }
+        method get { $!x }
+    }
 
-class WithAlias {
-    has $x;
-    method set($a) { $x = $a }
-    method get { $!x }
+    my $wa = WithAlias.new();
+    $wa.set(99);
+    is($wa.get, 99, 'has with no twigil creates alias');
 }
 
-my $wa = WithAlias.new();
-$wa.set(99);
-is($wa.get, 99, 'has with no twigil creates alias');
+#?niecza skip 'Unhandled parameter twigil !'
+{
+    class ManyTest {
+        has ($a, $b);
+        has ($.c, $.d);
+        has ($!e, $!f);
+        submethod BUILD(:$!a, :$!b, :$!c, :$!d, :$!e, :$!f) { }
+        method t1 {
+            $a + $b
+        }
+        method t2 {
+            $!a + $!b
+        }
+        method t3 {
+            $!e + $!f
+        }
+    }
 
-
-class ManyTest {
-    has ($a, $b);
-    has ($.c, $.d);
-    has ($!e, $!f);
-    submethod BUILD(:$!a, :$!b, :$!c, :$!d, :$!e, :$!f) { }
-    method t1 {
-        $a + $b
-    }
-    method t2 {
-        $!a + $!b
-    }
-    method t3 {
-        $!e + $!f
-    }
+    my $m = ManyTest.new(a => 1, b => 2, c => 3, d => 4, e => 5, f => 6);
+    is($m.c, 3, 'list attribute declaration of publics works');
+    is($m.d, 4, 'list attribute declaration of publics works');
+    is($m.t1, 3, 'list attribute declaration of alias works');
+    is($m.t2, 3, 'list attribute declaration of alias works');
+    is($m.t3, 11, 'list attribute declaration of privates works');
 }
-
-my $m = ManyTest.new(a => 1, b => 2, c => 3, d => 4, e => 5, f => 6);
-is($m.c, 3, 'list attribute declaration of publics works');
-is($m.d, 4, 'list attribute declaration of publics works');
-is($m.t1, 3, 'list attribute declaration of alias works');
-is($m.t2, 3, 'list attribute declaration of alias works');
-is($m.t3, 11, 'list attribute declaration of privates works');
-
 
 class Foo {
     has %.bar is rw;
@@ -90,6 +93,7 @@ $bar.bar[2] = 300;
 is($bar.bar[2], 300,       'array attribute initialized/works');
 
 # RT #73808
+#?niecza skip 'Unhandled parameter twigil !'
 {
     class RT73808 {
         has ($!a, $!b);
@@ -104,6 +108,7 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
 }
 
 # RT 81718
+#?niecza skip 'Poorly designed test?  Niecza rejects the code at compile time...'
 {
     class RT81718 {
         has $.bughunt is rw;
