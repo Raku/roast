@@ -28,7 +28,7 @@ ok *.abs ~~ Code, '*.abs is of type Code';
 isa_ok *.abs, WhateverCode, '... WhateverCode, more specifically';
 
 isa_ok 1..*, Range, '1..* is a Range, not a Code';
-#?niecza todo
+#?niecza skip 'Cannot use value like WhateverCode as a number'
 isa_ok 1..*-1, WhateverCode, '1..*-1 is a WhateverCode';
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Range'
 isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';

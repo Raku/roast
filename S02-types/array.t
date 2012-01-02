@@ -310,7 +310,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #79270
-#?niecza todo
+#?niecza skip 'Cannot use value like WhateverCode as a number'
 {
     my @a = <a b c>;
     @a[0 ..^ *-1] >>~=>> "x";

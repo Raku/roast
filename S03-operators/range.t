@@ -230,7 +230,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # RT #82620
-#?niecza todo
+#?niecza skip 'trans NYI'
 {
     lives_ok {("a".."b").map({.trans(""=>"")}).perl},
         "range doesn't leak Parrot types";
