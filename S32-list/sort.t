@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 35;
+plan 33;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -21,10 +21,13 @@ plan 35;
 }
 
 {
-    my @a = (1.1,2,NaN,-3.05,0.1,Inf,42,-1e-07,-Inf).sort;
-    my @e = (NaN,-Inf,-3.05,-1e-07,0.1,1.1,2,42,Inf);
+    # This test used to have NaN in it, but that is nonsensical.
+    #                                          --colomon
+    
+    my @a = (1.1,2,-3.05,0.1,Inf,42,-1e-07,-Inf).sort;
+    my @e = (-Inf,-3.05,-1e-07,0.1,1.1,2,42,Inf);
     my @s = sort @a;
-    is(@s, @e, 'array of mixed numbers including Inf/NaN');
+    is(@s, @e, 'array of mixed numbers including Inf');
 }
 
 {
@@ -44,6 +47,7 @@ plan 35;
 }
 
 #?rakudo skip "closure as non-final argument"
+#?niecza skip 'Invocant handling is NYI'
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -53,6 +57,7 @@ plan 35;
 }
 
 #?rakudo skip "method fallback to sub unimpl"
+#?niecza skip 'err, what?'
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -190,14 +195,14 @@ plan 35;
     }
 }
 
-# .sort shouldn't work on non-arrays
+# .sort shouldn't work on non-Positionals ... unless it should?
 ##  XXX pmichaud, 2008-07-01:  .sort should work on non-list values
 #?rakudo skip 'test errors, adverbial block'
 {
 #?pugs 2 todo 'bug'
-    dies_ok { 42.sort: { 0 } },   "method form of sort should not work on numbers";
-    dies_ok { "str".sort :{ 0 } },"method form of sort should not work on strings";
-    is ~(42,).sort: { 0 }, "42",  "method form of sort should work on arrays";
+    dies_ok { 42.sort },   "method form of sort should not work on numbers";
+    dies_ok { "str".sort },"method form of sort should not work on strings";
+    is ~(42,).sort, "42",  "method form of sort should work on parcels";
 }
 
 # RT #67010
@@ -209,10 +214,12 @@ plan 35;
 
 # RT #68112
 #?rakudo skip "determine behavior of 0-arity methods passed to sort"
+#?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used
     lives_ok { (1..10).sort(&foo) },
         'sort accepts 0-arity method';
+    # errr... is there even supposed to be a rand sub?
     lives_ok { (1..10).sort(&rand) },
         'sort accepts rand method';
 }
@@ -235,22 +242,28 @@ plan 35;
         method Str { $.x }
     };
 
-    multi sub cmp(RT71258_2 $a, RT71258_2 $b) {
-        $a.x <=> $b.x;
-    }
+    # Following tests removed because you cannot 
+    # affect the behavior of sort by defining 
+    # sub cmp.  As far as I understand things, you
+    # couldn't even affect it by defined 
+    # a new sub infix:<cmp>. --colomon
 
-    #?rakudo todo 'nom regression'
-    lives_ok {
-        @sorted = (
-            RT71258_2.new(x => 2),
-            RT71258_2.new(x => 3),
-            RT71258_2.new(x => 1)
-        ).sort
-    }, 'sorting stringified class instance with custom cmp';
-
-    #?rakudo todo 'nom regression'
-    is ~@sorted, '1 2 3',
-        'checking sort order with custom cmp';
+    # multi sub cmp(RT71258_2 $a, RT71258_2 $b) {
+    #     $a.x <=> $b.x;
+    # }
+    # 
+    # #?rakudo todo 'nom regression'
+    # lives_ok {
+    #     @sorted = (
+    #         RT71258_2.new(x => 2),
+    #         RT71258_2.new(x => 3),
+    #         RT71258_2.new(x => 1)
+    #     ).sort
+    # }, 'sorting stringified class instance with custom cmp';
+    # 
+    # #?rakudo todo 'nom regression'
+    # is ~@sorted, '1 2 3',
+    #     'checking sort order with custom cmp';
 }
 
 # vim: ft=perl6
