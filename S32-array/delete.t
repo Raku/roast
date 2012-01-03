@@ -11,30 +11,34 @@ Basic C<delete> tests, see S32.
 
 # L<S32::Containers/"Array"/=item delete>
 
+sub make-string(@a) {
+    ~@a.map({ $_ // "Any()" });
+}
+
 # W/ positive indices:
 {
   my @array = <a b c d>;
   is ~@array, "a b c d", "basic sanity (1)";
   is ~@array.delete(2), "c",
     "deletion of an array element returned the right thing";
-  is ~@array, "a b Any() d", "deletion of an array element";
+  is make-string(@array), "a b Any() d", "deletion of an array element";
 
   is ~@array.delete(0, 3), "a d",
     "deletion of array elements returned the right things";
-  is ~@array, "Any() b", "deletion of array elements (1)";
+  is make-string(@array), "Any() b", "deletion of array elements (1)";
   is +@array, 2,     "deletion of array elements (2)";
 }
 
 # W/ negative indices:
 {
   my @array = <a b c d>;
-  is ~@array.delete(-2), "c",
+  is ~@array.delete(*-2), "c",
     "deletion of array element accessed by an negative index returned the right thing";
   # @array is now ("a", "b", Any, "d") ==> double spaces
-  is ~@array, "a b Any() d", "deletion of an array element accessed by an negative index (1)";
+  is make-string(@array), "a b Any() d", "deletion of an array element accessed by an negative index (1)";
   is +@array,        4, "deletion of an array element accessed by an negative index (2)";
 
-  is ~@array.delete(-1), "d",
+  is ~@array.delete(*-1), "d",
     "deletion of last array element returned the right thing";
   # @array is now ("a", "b")
   is ~@array, "a b", "deletion of last array element (1)";
@@ -44,19 +48,20 @@ Basic C<delete> tests, see S32.
 # W/ multiple positive and negative indices:
 {
   my @array = <a b c d e f>;
-  is ~@array.delete(2, -3, -1), "c d f",
+  is ~@array.delete(2, *-3, *-1), "c d f",
     "deletion of array elements accessed by positive and negative indices returned right things";
   # @array is now ("a", "b", Any, Any, "e") ==> double spaces
-  is ~@array, "a b Any() Any() e",
+  is make-string(@array), "a b Any() Any() e",
     "deletion of array elements accessed by positive and negative indices (1)";
   is +@array, 5,
     "deletion of array elements accessed by positive and negative indices (2)";
 }
 
 # Results taken from Perl 5
+#?niecza todo "Not sure if this test is correct or not"
 {
   my @array = <a b c>;
-  is ~@array.delete(2, -1), "c b",
+  is ~@array.delete(2, *-1), "c b",
     "deletion of the same array element accessed by different indices returned right things";
   is ~@array, "a",
     "deletion of the same array element accessed by different indices (1)";
@@ -79,7 +84,7 @@ Basic C<delete> tests, see S32.
   is ~@array.delete(2..4), "c d e",
     "deletion of array elements accessed by a range of positives indices returned right things";
   # @array is now ("a", "b", Any, Any, Any, "f") ==> 4 spaces
-  is ~@array, "a b Any() Any() Any() f",
+  is make-string(@array), "a b Any() Any() Any() f",
     "deletion of array elements accessed by a range of positive indices (1)";
   is +@array, 6,
     "deletion of array elements accessed by a range of positive indices (2)";
@@ -90,7 +95,7 @@ Basic C<delete> tests, see S32.
   is ~@array.delete(2^..4), "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
   # @array is now ("a", "b", "c", Any, Any, "f") ==> 4 spaces
-  is ~@array, "a b c Any() Any() f",
+  is make-string(@array), "a b c Any() Any() f",
     "deletion of array elements accessed by a range of positive indices (3)";
   is +@array, 6,
     "deletion of array elements accessed by a range of positive indices (4)";
