@@ -117,9 +117,9 @@ plan 37;
     
     # in Rakudo you can't pass a Mu to where an Array is expected,
     # so we add multis for explicit undefined values
-    multi sub mirror(Any:U $a, Any:U $b) { return True;  }   #OK not used
-    multi sub mirror(Any:U $a, @b)       { return False; }   #OK not used
-    multi sub mirror(@a,       Any:U $b) { return False; }   #OK not used
+    multi sub mirror(Mu:U $a, Mu:U $b) { return True;  }   #OK not used
+    multi sub mirror(Mu:U $a, @b)      { return False; }   #OK not used
+    multi sub mirror(@a,      Mu:U $b) { return False; }   #OK not used
 
     multi sub mirror(@first, @second) {
         if (@first|@second == (Mu,)) {
@@ -189,6 +189,7 @@ plan 37;
         return $tree;
     }
 
+    #?niecza todo
     is construct(3, 2, 5, 7, 1), 
        [3, [2, [1, Mu, Mu], Mu], [5, Mu, [7, Mu, Mu]]],
        'Can construct a binary search tree';
@@ -229,7 +230,7 @@ plan 37;
     # T = t(x, t(x, t(x, nil, nil), t(x, nil, nil)), t(x, t(x, nil, nil), nil)) ;
     # etc......No
 
-    sub heights($x) {
+    sub heights(Mu $x) {
         return 0 unless $x.defined;
         gather {
             for heights($x[1]) { take 1 + $_ };
