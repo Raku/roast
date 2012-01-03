@@ -176,6 +176,7 @@ plan 33;
 
 }
 
+#?niecza todo "Niecza's sort is not stable"
 {
     is (<P e r l 6>.sort: { 0; }).join, 'Perl6',
     'sort with arity 0 closure is stable';
@@ -195,13 +196,12 @@ plan 33;
     }
 }
 
-# .sort shouldn't work on non-Positionals ... unless it should?
 ##  XXX pmichaud, 2008-07-01:  .sort should work on non-list values
 #?rakudo skip 'test errors, adverbial block'
 {
 #?pugs 2 todo 'bug'
-    dies_ok { 42.sort },   "method form of sort should not work on numbers";
-    dies_ok { "str".sort },"method form of sort should not work on strings";
+    is ~42.sort, "42", "method form of sort should work on numbers";
+    is ~"str".sort, "str", "method form of sort should work on strings";
     is ~(42,).sort, "42",  "method form of sort should work on parcels";
 }
 
@@ -231,6 +231,7 @@ plan 33;
     my @sorted;
 
     #?rakudo todo 'nom regression'
+    #?niecza todo 'Is this test actually testing for correct behavior?'
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 
