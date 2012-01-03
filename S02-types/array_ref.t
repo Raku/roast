@@ -8,6 +8,7 @@ plan 45;
 
 my $array_ref1 = ("foo", "bar", "baz");
 #?rakudo todo 'Seq'
+#?niecza skip 'Seq NYI'
 isa_ok($array_ref1, Seq);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');
