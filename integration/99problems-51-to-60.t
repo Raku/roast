@@ -173,8 +173,8 @@ plan 37;
     # No
 
     sub add-to-tree($tree, $node) {
-        if $tree ~~ Mu {
-            return [$node, Mu, Mu] 
+        if not $tree.defined {
+            return [$node, Any, Any] 
         } elsif $node <= $tree[0] {
             return [$tree[0], add-to-tree($tree[1], $node), $tree[2]];
         } else {
@@ -191,7 +191,7 @@ plan 37;
 
     #?niecza todo
     is construct(3, 2, 5, 7, 1), 
-       [3, [2, [1, Mu, Mu], Mu], [5, Mu, [7, Mu, Mu]]],
+       [3, [2, [1, Any, Any], Any], [5, Any, [7, Any, Any]]],
        'Can construct a binary search tree';
 }
 
