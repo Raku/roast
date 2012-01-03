@@ -189,7 +189,6 @@ plan 37;
         return $tree;
     }
 
-    #?niecza todo
     is construct(3, 2, 5, 7, 1), 
        [3, [2, [1, Any, Any], Any], [5, Any, [7, Any, Any]]],
        'Can construct a binary search tree';
