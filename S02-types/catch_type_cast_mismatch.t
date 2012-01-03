@@ -15,7 +15,7 @@ plan 10;
 my $ref = { val => 42 };
 isa_ok($ref, Hash);
 #?rakudo todo "die or fail?"
-#?niecza skip "questionable test"
+#?niecza todo "questionable test"
 dies_ok { $ref[0] }, 'Hash !~~ Positional';
 
 {

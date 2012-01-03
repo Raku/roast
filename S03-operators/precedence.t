@@ -150,7 +150,6 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
     is(@d, [1 .. 4], "to complicate things further, it dwims");
 }
 
-#?niecza skip 'Bogus term'
 {
     my @b;
     @b = ((1, 3) Z (2, 4));

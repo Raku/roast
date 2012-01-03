@@ -44,7 +44,6 @@ line 4
     is $rt65538_in, $rt65538_out, 'interpolation does not trim newlines';
 }
 
-#?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 {
     is 'something'.new, '', '"string literal".new just creates an empty string';
     is +''.new, 0, '... and that strinig works normally';

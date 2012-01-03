@@ -156,7 +156,6 @@ isa_ok(1 / 1, Rat);
 }
 
 #L<S02/The C<Num> and C<Rat> Types/may be bound to an arbitrary>
-#?niecza skip 'System.FormatException: Unknown char: d'
 {
     my $a = "0d0101";
     isa_ok(+$a, Int);

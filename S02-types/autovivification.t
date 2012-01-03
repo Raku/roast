@@ -36,7 +36,7 @@ plan 10;
 }
 
 #?rakudo skip 'prefix:<\\>'
-#?niecza skip 'disagree; captures should be context neutral'
+#?niecza todo 'disagree; captures should be context neutral'
 {
     my %a;
     my $b = \%a<b><c>;

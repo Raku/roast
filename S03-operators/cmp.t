@@ -36,7 +36,6 @@ plan 18;
 }
 
 # cmp on Pair
-#?niecza skip 'Cannot use value like Pair as a number'
 {
     is (:a<5> cmp :a<5>), 0,  "cmp on Pair (1)";
     is (:a<5> cmp :b<5>), -1, "cmp on Pair (2)";
@@ -45,6 +44,7 @@ plan 18;
     is (:a<5> cmp :a<6>), -1, "cmp on Pair (5)";
 
     my $cmp5 = { :$^q cmp :q<5> };
+    #?niecza todo 'cmp on Pair from local variable'
     is $cmp5(5), 0, "cmp on Pair from local variable"
 }
 

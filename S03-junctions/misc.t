@@ -410,7 +410,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # stringy tests
-#?niecza skip '#82'
+#?niecza todo '#82'
 {
    my class Foo {
       multi method gist(Foo:D:) { "gisted"; }

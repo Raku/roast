@@ -86,7 +86,7 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
-#?niecza skip ".pick"
+#?niecza skip 'rolling Bool generates Any, not True/False'
 {
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';

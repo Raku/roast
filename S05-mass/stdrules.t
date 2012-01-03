@@ -55,7 +55,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # space
 
-#?niecza skip 'Unable to resolve method space in class Cursor'
 {
     ok("\x[9]" ~~ m/^<.space>$/, q{Match space as subrule});
     ok(!( "\x[9]" ~~ m/^<!space>.$/ ), q{Don't match negated space as subrule} );
@@ -76,7 +75,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # digit
 
-#?niecza skip 'Unable to resolve method digit in class Cursor'
 {
     ok("0" ~~ m/^<.digit>$/, q{Match digit as subrule});
     ok(!( "0" ~~ m/^<!digit>.$/ ), q{Don't match negated digit as subrule} );
@@ -97,7 +95,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # alnum
 
-#?niecza skip 'Unable to resolve method alnum in class Cursor'
 {
     ok("n" ~~ m/^<.alnum>$/, q{Match alnum as subrule});
     ok(!( "n" ~~ m/^<!alnum>.$/ ), q{Don't match negated alnum as subrule} );
@@ -132,7 +129,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 # ok("+" ~~ m/<+ascii>/, q{Match unanchored ascii as charset});
 
 # blank
-#?niecza skip 'Unable to resolve method blank in class Cursor'
 {
     ok("\x[9]" ~~ m/^<.blank>$/, q{Match blank as subrule});
     ok(!( "\x[9]" ~~ m/^<!blank>.$/ ), q{Don't match negated blank as subrule} );
@@ -153,7 +149,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # cntrl
 
-#?niecza skip 'Unable to resolve method cntrl in class Cursor'
 {
     ok("\x[7F]" ~~ m/^<.cntrl>$/, q{Match cntrl as subrule});
     ok(!( "\x[7F]" ~~ m/^<!cntrl>.$/ ), q{Don't match negated cntrl as subrule} );
@@ -174,7 +169,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # graph
 
-#?niecza skip 'Unable to resolve method cntrl in class Cursor'
 #?rakudo skip '<.graph>'
 {
     ok("V" ~~ m/^<.graph>$/, q{Match graph as subrule});
@@ -196,7 +190,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # lower
 
-#?niecza skip 'Unable to resolve method lower in class Cursor'
 {
     ok("a" ~~ m/^<.lower>$/, q{Match lower as subrule});
     ok(!( "a" ~~ m/^<!lower>.$/ ), q{Don't match negated lower as subrule} );
@@ -217,7 +210,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # print
 
-#?niecza skip 'Unable to resolve method lower in class Cursor'
 #?rakudo skip '<.print>'
 {
     ok("M" ~~ m/^<.print>$/, q{Match print as subrule});
@@ -239,7 +231,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # punct
 
-#?niecza skip 'Unable to resolve method punct in class Cursor'
 {
     ok("[" ~~ m/^<.punct>$/, q{Match punct as subrule});
     ok(!( "[" ~~ m/^<!punct>.$/ ), q{Don't match negated punct as subrule} );
@@ -260,7 +251,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # upper
 
-#?niecza skip 'Unable to resolve method upper in class Cursor'
 {
     ok("A" ~~ m/^<.upper>$/, q{Match upper as subrule});
     ok(!( "A" ~~ m/^<!upper>.$/ ), q{Don't match negated upper as subrule} );
@@ -300,7 +290,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # xdigit
 
-#?niecza skip 'Unable to resolve method xdigit in class Cursor'
 {
     ok("0" ~~ m/^<.xdigit>$/, q{Match xdigit as subrule});
     ok(!( "0" ~~ m/^<!xdigit>.$/ ), q{Don't match negated xdigit as subrule} );

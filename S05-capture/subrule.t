@@ -77,9 +77,7 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
 
 # RT #96424 
 {
-    #?niecza skip 'Unable to resolve method digit in class Cursor'
     ok '0' ~~ /<alpha>|<digit>/, 'regex matches';
-    #?niecza todo
     is $<alpha>.Str, '', 'Can call methods on captures from unsuccessful matches';
 }
 
