@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 31;
+plan 25;
 
 {
     # P11 (*) Modified run-length encoding.
@@ -57,7 +57,6 @@ plan 31;
 }
 
 #?rakudo skip 'parse error'
-#?DOES 8
 {
     # P13 (**) Run-length encoding of a list (direct solution).
     # 
@@ -129,14 +128,20 @@ plan 31;
         return $packed;
     }
     
-    for &encode_direct, &encode_direct2 -> $ed {
-    is $ed(()),'', 'We should be able to encode_direct an empty list';
-    is $ed(<a>), 'a', '.. or a one-element iist';
-    is $ed(<a a>), '2a', '.. or a n-ary list with always same element';
-    is $ed(<a a a a b c c a a d e e e e>),
+    is encode_direct(()),'', 'We should be able to encode_direct an empty list';
+    #?niecza todo
+    is encode_direct(<a>), 'a', '.. or a one-element iist';
+    #?niecza todo
+    is encode_direct(<a a>), '2a', '.. or a n-ary list with always same element';
+    is encode_direct(<a a a a b c c a a d e e e e>),
         '4ab2c2ad4e',
         '.. or a generic list'; 
-    }
+    is encode_direct2(()),'', 'We should be able to encode_direct2 an empty list';
+    is encode_direct2(<a>), 'a', '.. or a one-element iist';
+    is encode_direct2(<a a>), '2a', '.. or a n-ary list with always same element';
+    is encode_direct2(<a a a a b c c a a d e e e e>),
+        '4ab2c2ad4e',
+        '.. or a generic list'; 
 }
 
 #?rakudo skip 'Null PMC access in isa()'
@@ -149,7 +154,11 @@ plan 31;
     
     is map({ $_ xx 2 }, <a b c c d>), <a a b b c c c c d d>,
         'We should be able to duplicate the elements of a list';
-    
+}
+
+#?rakudo skip 'Null PMC access in isa()'
+#?niecza skip 'Feed ops NYI'
+{    
     my @result = eval '<a b c c d> ==> map { $_ xx 2 }';
     #?pugs todo 'feed ops'
     is @result, <a a b b c c c c d d>,
@@ -201,6 +210,7 @@ plan 31;
         return (@list[$_] if ($_+1) % $nth) for ^@list;
     }
     #?rakudo skip 'infinite loop'
+    #?niecza todo
     is drop4(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using (statement if) for';
     
@@ -208,10 +218,12 @@ plan 31;
         return @list[$_] if ($_+1) % $nth for ^@list;
     }
     #?rakudo skip 'infinite loop'
+    #?niecza todo
     is drop5(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using list comprehension';
 }
 
+#?niecza skip 'Unable to resolve method splice in class Array'
 {
     # P17 (*) Split a list into two parts; the length of the first part is given.
     # 
@@ -273,6 +285,7 @@ plan 31;
         '... and backwards';
 }
 
+#?niecza skip 'Unable to resolve method splice in class Array'
 {
     # P20 (*) Remove the K'th element from a list.
     # 
