@@ -15,7 +15,6 @@ Basic C<kv> tests, see S32::Containers.
     my %hash = (a => 1, b => 2, c => 3, d => 4);
     my @kv = %hash.kv;
     is(+@kv, 8, '%hash.kv returns the correct number of elems');
-    #?niecza todo 'wrong sort order'
     is(~@kv.sort, "1 2 3 4 a b c d",  '%hash.kv has no inner list');
 }
 
@@ -23,7 +22,6 @@ Basic C<kv> tests, see S32::Containers.
     my %hash = (a => 1, b => 2, c => 3, d => 4);
     my @kv = kv(%hash);
     is(+@kv, 8, 'kv(%hash) returns the correct number of elems');
-    #?niecza todo 'wrong sort order'
     is(~@kv.sort, "1 2 3 4 a b c d",  'kv(%hash) has no inner list');
 }
 
@@ -36,7 +34,6 @@ Basic C<kv> tests, see S32::Containers.
     is(~@kv, "a 1", '$pair.kv inner list matched expectation');
 }
 
-#?niecza todo 'kv()'
 {
     my $sub  = sub (Hash $hash) { $hash.kv };
     my %hash = (a => 1, b => 2);
@@ -44,7 +41,6 @@ Basic C<kv> tests, see S32::Containers.
     is ~$sub(%hash).sort, "1 2 a b", ".kv works with constant hash references";
 }
 
-#?niecza todo '%$hash'
 {
     # "%$hash" is not idiomatic Perl, but should work nevertheless.
     my $sub  = sub (Hash $hash) { %$hash.kv };
