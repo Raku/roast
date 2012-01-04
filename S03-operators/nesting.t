@@ -5,11 +5,15 @@ plan 26;
 
 # L<S03/Meta operators/Nesting of metaoperators/Any infix function may be referred to as a noun either by the normal long form or a short form>
 
+#?niecza skip 'undeclared name [+]'
 ok &infix:<+>  === &[+],  'long and short form are the same (+)';
+#?niecza skip 'undeclared name [==]'
 ok &infix:<==> === &[==], 'long and short form are the same (==)';
 #?rakudo skip 'nom regression'
+#?niecza skip 'undeclared name [<=>]'
 is sort( &[<=>], <5 3 2 1 4> ), <1 2 3 4 5>, 'sort works using &[<=>]';
 
+#?niecza skip 'undeclared name [+]'
 is &[+](1, 2), 3, '&[+] as a function';
 is 1 [+] 2, 3, '[+] as an infix';
 
@@ -35,7 +39,7 @@ is (9 R[...] 1, 3), (1, 3, 5, 7, 9), "Rop gets list_infix precedence correctly";
 
 is (<a b> Z[~] <1 2>), <a1 b2>, 'zip-concat produces expected result';
 is (1,2 [Z*] 3,4), (3,8), 'zip-product works';
-is (1,2 [Z[cmp]] 3,2,0), (-1, 0), 'zip-cmp works';
+is (1,2 [Z[cmp]] 3,2,0).map(*.sign), (-1, 0), 'zip-cmp works';
 
 # reduce
 
