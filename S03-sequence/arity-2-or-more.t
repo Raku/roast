@@ -9,6 +9,7 @@ plan 19;
 
 is (1, 1, { $^a + $^b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci';
 is (1, 1, &infix:<+> ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, using "&infix:<+>"';
+#?niecza skip "Undeclared names: '[+]'"
 is (1, 1, &[+] ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, using "&[+]"';
 is (0, 1, { $^a + $^b } ... *).[^7].join(', '), '0, 1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 0 1 seeds';
 is (1, 1, 2, -> $a, $b { $a + $b } ... *).[^6].join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
@@ -21,8 +22,10 @@ is (1, 1, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacc
 is (1, 1, 2, -> $a, $b { $a + $b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 3 seeds';
 is (1, 1, 2, 3, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fibonacci, 4 seeds';
 # adapted from http://www.perlmonks.org/?node_id=772778
+#?niecza skip "Undeclared names: '[%]'"
 is (42, 24, &[%] ... 0)[*-2], 6, 'arity-2 GCD';
 #####?rakudo skip '&[%]'
+#?niecza skip "Undeclared names: '[%]'"
 is (42, 24, &[%] ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
 is (42, 24, * % * ... 0)[*-2], 6, 'arity-2 GCD';
 is (42, 24, * % * ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
