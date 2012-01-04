@@ -24,8 +24,10 @@ is(
    'ord of $x is 65',
    'normal scalar variable builtin call as a method'
 );
+#?niecza todo 'fmt and scalar interpolation live'
 lives_ok(sub { $y = "ord of \$x is $x.ord.fmt('%d')" },
    'fmt and scalar interpolation live');
+#?niecza todo 'no output'
 is($y, 'ord of $x is 65', 'fmt and scalar interpolation behave well');
 
 is("\$x is {$x}", '$x is A', 'normal scalar variable interpolation');
@@ -34,8 +36,10 @@ is(
    'ord of $x is 65',
    'normal scalar variable builtin call as a method'
 );
+#?niecza todo 'fmt and code interpolation live'
 lives_ok(sub { $y = "hex-formatted ord of \$x is {$x.ord().fmt('%x')}" },
    'fmt and code interpolation live');
+#?niecza todo 'fmt and code interpolation behave well'
 is(
    $y,
    'hex-formatted ord of $x is 41',
@@ -43,6 +47,8 @@ is(
 );
 
 # These tests actually exercise what's a bug in eval() IMHO -- polettix
+#?niecza skip 'Unable to resolve method fmt in class Int'
+{
 my $z;
 my $expected = 'hex-formatted ord of $x is 41';
 is(
@@ -58,6 +64,7 @@ is(
 );
 ok($z, 'eval was *really* ok');
 is($y, $expected, 'fmt and code interpolation behave well');
+}
 
 
 # vim: ft=perl6
