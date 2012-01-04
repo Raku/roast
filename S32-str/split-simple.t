@@ -38,6 +38,7 @@ split_test 'abcb'.split(/b/),   ('a', 'c', ''), 'trailing matches leave an empty
 
 # Limit tests
 #?DOES 4
+#?niecza skip '0 or negative does not return empty list'
 {
 split_test 'theXbigXbang'.split(/X/, -1), (), 'Negative limit returns empty List';
 split_test @('theXbigXbang'.split(/X/, 0)),  (), 'Zero limit returns empty List';
@@ -55,6 +56,9 @@ split_test(
     'Limit larger than number of split values doesn\'t return extranuous elements'
 );
 
+#?DOES 4
+#?niecza skip 'niecza has empty value at beginning of list'
+{
 split_test
     'abcdefg'.split('', 3),
     <a b cdefg>,
@@ -65,6 +69,7 @@ split_test
     'abc'.split('', 3),
     <a b c>,
     'split into characters respects limit (2)';
+}
 
 # zero-width assertions shouldn't loop
 # with additional spaces
@@ -79,7 +84,9 @@ split_test 'ab34d5z'.split(/<.before \d>/), <ab 3 4d 5z>, 'split with zero-width
 # As per Larry, ''.split('') is the empty list
 # http://www.nntp.perl.org/group/perl.perl6.language/2008/09/msg29730.html
 
+#?niecza todo 'returning 2 element list'
 ok (''.split('')).elems == 0, q{''.split('') returns empty list};
+#?niecza todo 'returning 2 element list'
 ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 
 # split with :all should return capture
