@@ -121,11 +121,12 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 #?pugs todo 'bug'
 {
     my $x = eval "%ENV";
-    ok $! ~~ m:P5/Undeclared/, '%ENV not visible by default';
+    ok $! ~~ m/Undeclared/, '%ENV not visible by default';
 }
 
 # following doesn't parse yet
 #?rakudo skip 'import keyword'
+#?niecza skip 'Action method statement_control:import not yet implemented'
 {
     # It must be importable
     import PROCESS <%ENV>;
