@@ -22,6 +22,7 @@ class T1
 
     is( $o.a(), 'test', "The indirect object notation call without argument 1" );
 #?rakudo skip 'unimpl parse error near $o:'
+    #?niecza skip 'Invocant handling is NYI'
     is( (a $o:), 'test', "The indirect object notation call without arguments 2" );
 }
 
@@ -40,6 +41,7 @@ class T2
     my $seed = 1000.rand;
     is( $o.a( $seed ), $seed, "The indirect object notation call with argument 1" );
 #?rakudo skip 'unimpl parse error near $o:'
+    #?niecza skip 'Invocant handling is NYI'
     is( (a $o: $seed), $seed, "The indirect object notation call with arguments 2" );
     my $name = 'a';
     eval_dies_ok('$name $o: $seed', 'Indirect object notation and indirect method calls cannot be combined');
@@ -67,6 +69,7 @@ class T2
 
 # L<S12/Fancy method calls/"$obj.@candidates(1,2,3)">
 #?rakudo skip '.@foo not yet working'
+#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Array'
 {
     class T3 {
         has $.x;
@@ -98,6 +101,7 @@ class T2
 dies_ok { 23."nonexistingmethod"() }, "Can't call nonexisting method";   #OK use of quotes
 
 #?rakudo skip '.*, .+ and .? with @foo'
+#?niecza skip 'Two definitions found for symbol ::GLOBAL::T4::&m, etc'
 {
     class T4 {
         has $.called = 0;
