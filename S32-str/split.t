@@ -24,7 +24,7 @@ my %ords = (
   9 => 'ninth',
 );
 
-
+#?niecza todo "split on empty string has leading empty elements"
 is split("", "forty-two").join(','),
    <f o r t y - t w o>.join(','),
    q{split "", Str};
@@ -53,17 +53,20 @@ is split($delimiter, "Perl6::Pugs::Test").join(','),
 
 # split with a reg-exp
 #?rakudo skip 'rx:Perl5'
+#?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {,}, "split,me").join(','),
    qw/split me/.join(','),
    q/split rx:Perl5 {,}, Str/;
 
 # split on multiple space characters
 #?rakudo skip 'rx:Perl5'
+#?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars").join(','),
    qw/Hello World Goodbye Mars/.join(','),
    q/split rx:Perl5 {\s+}, Str/;
 
 #?rakudo skip 'FixedIntegerArray: index out of bounds!'
+#?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {(\s+)}, "Hello test", :all).join(','),
    ('Hello', ("Hello test" ~~ rx:Perl5 {(\s+)}), 'test').join(','),
    q/split rx:Perl5 {(\s+)}, Str/;
@@ -73,12 +76,14 @@ is "to be || ! to be".split(' ').join(','),
    q/Str.split(' ')/;
 
 #?rakudo skip 'rx:Perl5'
+#?niecza skip 'rx:Perl5'
 is "this will be split".split(rx:Perl5 { }).join(','),
    <this will be split>.join(','),
    q/Str.split(rx:Perl5 { })/;
 
 # split on multiple space characters
 #?rakudo skip 'rx:Perl5'
+#?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars", 3).join(','),
    ( <Hello World>, "Goodbye   Mars" ).join(','),
    q/split rx:Perl5 {\s+}, Str, limit/;
@@ -88,6 +93,7 @@ is split(" ", "Hello World    Goodbye   Mars", 3).join(','),
    q/split " ", Str, limit/;
 
 #?rakudo skip 'rx:Perl5'
+#?niecza skip 'rx:Perl5'
 is "Hello World    Goodbye   Mars".split(rx:Perl5 {\s+}, 3).join(','),
    ( <Hello World>, "Goodbye   Mars" ).join(','),
    q/Str.split(rx:Perl5 {\s+}, limit)/;
@@ -96,6 +102,7 @@ is "Hello World    Goodbye   Mars".split(" ", 3).join(','),
    ( <Hello World>, "   Goodbye   Mars" ).join(','),
    q/Str.split(" ", limit)/;
 
+#?niecza todo 'initial empty element'
 is "Word".split("", 3).join(','), <W o rd>.join(','),
    q/Str.split("", limit)/;
 
@@ -104,6 +111,7 @@ is "Word".split("", 3).join(','), <W o rd>.join(','),
 dies_ok {"  abc  def  ".split()}, q/Str.split() disallowed/;
 
 # This one returns an empty list
+#?niecza todo '2 element list'
 is  "".split('').elems, 0, q/"".split()/;
 
 # ... yet this one does not (different to p5).
@@ -115,12 +123,14 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
    q{"a.b".split(/\./)};
 
 #?rakudo skip 'loops on zero-width match'
+#?niecza skip 'Unable to resolve method null in class Cursor'
 {
     is "abcd".split(/<null>/).join(','), <a b c d>.join(','),
        q{"abcd".split(/<null>/)};()
 }
 
 #?rakudo skip 'Null PMC access in invoke()'
+#?niecza skip 'Unable to resolve method null in class Cursor'
 {
   ' ' ~~ /(\s)/;
 
@@ -135,8 +145,10 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 # RT #63066
 #?rakudo skip 'RT #63066 loops forever'
 {
+    #?niecza todo 'has initial empty element'
     is 'hello-world'.split(/<ws>/).join(','), <hello - world>.join(','),
        q{'hello-world'.split(/<ws>/)};
+    #?niecza skip 'Unable to resolve method wb in class Cursor'
     is 'hello-world'.split(/<wb>/).join(','), <hello - world>.join(','),
        q{'hello-world'.split(/<wb>/)};
 }
@@ -164,8 +176,10 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 {
     is 'hello-world'.split(/<.ws>/).join('|'), '|hello|-|world|',
             'zero-width delimiter (<.ws>)';
+    #?niecza skip 'Unable to resolve method wb in class Cursor'
     is 'hello-world'.split(/<.wb>/).join('|'), '|hello|-|world|',
             'zero-width delimiter (<.wb>)';
+    #?niecza skip 'Unable to resolve method wb in class Cursor'
     is 'a-b-c'.split(/<.wb>/).join('|'), '|a|-|b|-|c|',
             'zero-width delimiter (<.wb>) (2)';
 }
