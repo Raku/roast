@@ -21,12 +21,14 @@ package Simple {
 
 is Simple::Bar.new.baz, 'hi', 'class test';
 
+#?niecza skip 'AlsoEmpty undeclared (ie no autovivification, I guess)'
 {
     is AlsoEmpty.gist, 'AlsoEmpty()',
         'autovivification(?) for nested packages'
 }
 
 # RT #65404
+#?niecza todo
 {
     lives_ok {Empty.perl ne "tbd"}, 'test for working .perl method'
 }
@@ -50,6 +52,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 # more sophisticated variants of test exist elsewhere - but seems basic ...
 #?rakudo skip 'RT #59484'
+#?niecza skip 'Unable to find lexical $?PACKAGE in pkg'
 {
     is  eval('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
         'Simp2', 'access to $?PACKAGE variable'
@@ -58,18 +61,22 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 {
     lives_ok {Simple::Bar.new.WHO}, 'some WHO implementation';
     #?rakudo skip 'ticket based only on class... RT #60446'
+    #?niecza todo
     is ~(Simple::Bar.new.WHO), 'Simple::Bar',
         'WHO implementation with longname';
 }
 
+#?niecza todo
 eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 
+#?niecza todo
 {
     eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
 }
 
+#?niecza skip 'Exception not defined'
 {
     my $x;
 
@@ -99,6 +106,7 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
         'two different packages should be two different Baz';
 
+    #?niecza todo
     eval_lives_ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
         'two different packages should be two different EHomeE';        
 }
@@ -110,6 +118,7 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 }
 
 #?rakudo todo 'RT #64606'
+#?niecza todo
 {
     eval_lives_ok 'package DoMap {my @a = map { $_ }, (1, 2, 3)}}',
         'map in package';
@@ -139,6 +148,7 @@ our $outer_package = 19;
         'simple package case that should not blow platform';
 
     try { eval 'A::B' };
+    #?niecza todo
     ok  ~$! ~~ /<&likely_perl6_not_found_err>/,
         'another simple package case that should not blow platform';
 }
@@ -172,6 +182,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 {
     eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
     #?rakudo todo 'RT #64688'
+    #?niecza todo
     eval_lives_ok 'class RT64688_c1 { use Test }', 'use in class block';
     eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
     #?rakudo todo 'nom regression'
@@ -186,6 +197,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
+#?niecza skip 'Export tags NYI'
 {
     @*INC.unshift: 't/spec/packages';
     eval_lives_ok 'use LoadFromInsideAModule',
@@ -201,6 +213,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 }
 
 # also checks RT #73740
+#?niecza skip 'Unable to locate module PM6 in @path'
 {
     eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
     is eval('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
@@ -224,6 +237,7 @@ eval_dies_ok 'module RT80856 is not_RT80856 {}',
 
 
 # RT #98856
+#?niecza todo
 eval_lives_ok q[
     package NewFoo { }
     class   NewFoo { }
