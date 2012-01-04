@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 136;
+plan 140;
 
 my $five = abs(-5);
 
@@ -46,9 +46,13 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 # L<S03/Operator precedence>
 tryeq  13 %  4, 1;
 tryeq -13 %  4, 3;
-#?niecza todo "negative divisor"
 tryeq  13 % -4, -3;
 tryeq -13 % -4, -1;
+
+tryeq  13.0 %  4.0, 1;
+tryeq -13.0 %  4.0, 3;
+tryeq  13.0 % -4.0, -3;
+tryeq -13.0 % -4.0, -1;
 
 {
     tryeq 5 % 2.5, 0;
@@ -166,7 +170,6 @@ tryeq -28 div -2, 14;
 is(9 div 4, 2, "9 div 4 == 2");
 #?rakudo 2 todo 'negative div'
 is(-9 div 4, -3, "-9 div 4 == -3");
-#?niecza todo "negative divisor"
 is(9 div -4, -3, "9 div -4 == -3");
 is(-9 div -4, 2, "-9 div -4 == 2");
 
@@ -175,7 +178,6 @@ is(-9 div -4, 2, "-9 div -4 == 2");
 is  13 mod  4, 1,  '13 mod 4';
 #?rakudo 2 todo 'negative mod'
 is -13 mod  4, 3,  '-13 mod 4';
-#?niecza todo "negative divisor"
 is  13 mod -4, -3, '13 mod -4';
 is -13 mod -4, -1, '-13 mod -4';
 

@@ -11,10 +11,12 @@ is($a.WHAT.gist, Any.gist, 'empty scalar is Any');
 
 my @a;
 ok(@a ~~ Array, 'it is an Array type');
+#?niecza skip 'Positional NYI'
 ok @a ~~ Positional, 'An Array does Positional';
 
 my %a;
 ok(%a ~~ Hash, 'it is an Hash type');
+#?niecza skip 'Associative NYI'
 ok %a ~~ Associative, 'A Hash does Associative';
 
 # WHAT() on reference types
