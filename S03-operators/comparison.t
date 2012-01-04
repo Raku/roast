@@ -16,6 +16,7 @@ is(+Order::Decrease,  1, 'Order::Decrease numifies to 1');
 is(1 <=> 1, Order::Same,     '1 <=> 1 is same');
 is(1 <=> 2, Order::Increase, '1 <=> 2 is increase');
 is(2 <=> 1, Order::Decrease, '2 <=> 1 is decrease');
+#?niecza skip 'Cannot parse number: a'
 is('a' <=> '1', Order::Increase, '<=> is in numeric context');
 
 is 0 <=> -1,   Order::Decrease, '0 <=> -1 is increase';
@@ -53,14 +54,14 @@ is("a\0" cmp "a", Order::Decrease, 'a\0 cmp a is decrease');
 # compare numerically with non-numeric
 {
     class Blue { 
-        method Numeric() { 3 + 5i; }
+        method Numeric() { 3; }
     } 
     my $a = Blue.new;
 
-    ok +$a == 3 + 5i, '+$a == 3 + 5i (just checking)';
-    ok $a == 3 + 5i, '$a == 3 + 5i';
-    ok $a != 3 + 4i, '$a != 3 + 4i';
-    nok $a != 3 + 5i, 'not true that $a != 3 + 5i';
+    ok +$a == 3, '+$a == 3 (just checking)';
+    ok $a == 3, '$a == 3';
+    ok $a != 4, '$a != 4';
+    nok $a != 3, 'not true that $a != 3';
     
     lives_ok { $a < 5 }, '$a < 5 lives okay';
     lives_ok { $a <= 5 }, '$a <= 5 lives okay';
