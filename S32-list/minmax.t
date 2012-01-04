@@ -153,7 +153,6 @@ is (-Inf, Inf).max, Inf,"Inf is greater than -Inf";
 #is (0, NaN).max, NaN,    "max(0,NaN)=NaN";
 #is (Inf, NaN).max, NaN,    "max(Inf,NaN)=NaN";
 
-#?niecza 4 skip "Excess arguments to infix:<min>"
 is ([min] (5,10,-15,20)), -15, 'reduce min int';
 is ([max] (5,10,-15,20)), 20, 'reduce max int';
 

@@ -19,16 +19,13 @@ This test min/max functions in their operator form. To see them tested in their 
 {    
     is 1 min 2, 1, 'can ye handle that?';
     is 1 max 2, 2, 'how about this?';
-    #?niecza skip 'Excess arguments to CORE infix:<min>'
     is 1 min 2 min 3, 1, 'ooh! 3 numbers! More difficult';
-    #?niecza skip 'Excess arguments to CORE infix:<max>'
     is 1 max 2 max 3, 3, 'again! 3 numbers!';
     #?rakudo 2 todo "max/min non-associative NYI"
     eval_dies_ok q{1 min 2 max 3}, 'No! No left-associativeness!';
     eval_dies_ok q{1 max 2 min 3}, 'This is also not OK';
 }
 
-#?niecza skip 'System.FormatException: Unknown char: f'
 {
     is "foo" min +Inf, "foo";
     is "foo" min -Inf, -Inf;
@@ -53,12 +50,12 @@ This test min/max functions in their operator form. To see them tested in their 
 
 #array vs. scalar
 #?rakudo todo "Annoying test that we haven't done the obvious yet unspecced, fails because we have indeed done the obvious"
+#?niecza todo
 {
     #NYS- Not Yet Specced. C<isnt>'d only so those sneaky programmers can't get away with coding
     #what `makes sense' and `probably will be anyway' :) --lue
     my @a = 1, 2, 3;
     isnt @a min 4, 1, 'NYS';
-    #?niecza todo
     isnt @a max 4, 4, 'NYS';
 }
 
