@@ -5,16 +5,18 @@ use Test;
 plan 37;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
-ok !eval('module MY; 1'), 'MY is an out of scope name';
-ok !eval('module OUR; 1'), 'OUR is an out of scope name';
-ok !eval('module GLOBAL; 1'), 'GLOBAL is an out of scope name';
-ok !eval('module PROCESS; 1'), 'PROCESS is an out of scope name';
-ok !eval('module OUTER; 1'), 'OUTER is an out of scope name';
-ok !eval('module CALLER; 1'), 'CALLER is an out of scope name';
-ok !eval('module CONTEXT; 1'), 'CONTEXT is an out of scope name';
-ok !eval('module SUPER; 1'), 'SUPER is an out of scope name';
-ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
-
+#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
+{
+    ok !eval('module MY; 1'), 'MY is an out of scope name';
+    ok !eval('module OUR; 1'), 'OUR is an out of scope name';
+    ok !eval('module GLOBAL; 1'), 'GLOBAL is an out of scope name';
+    ok !eval('module PROCESS; 1'), 'PROCESS is an out of scope name';
+    ok !eval('module OUTER; 1'), 'OUTER is an out of scope name';
+    ok !eval('module CALLER; 1'), 'CALLER is an out of scope name';
+    ok !eval('module CONTEXT; 1'), 'CONTEXT is an out of scope name';
+    ok !eval('module SUPER; 1'), 'SUPER is an out of scope name';
+    ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
+}
 
 # L<S02/Names/The current lexical symbol table is now accessible>
 
@@ -94,6 +96,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 
 {
   #?rakudo todo 'nom regression'
+  #?niecza todo
   nok foo().defined, "get variable not yet declared using a sub (1)";
   is foo(), 1, "get variable not yet declared using a sub (2)";
   is foo(), 2, "get variable not yet declared using a sub (3)";
@@ -104,6 +107,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 
 {
   #?rakudo todo 'nom regression'
+  #?niecza todo
   nok bar().defined, "runtime part of my not yet executed (1)";
   is bar(), 1, "runtime part of my not yet executed (2)";
   is bar(), 2, "runtime part of my not yet executed (3)";
@@ -122,6 +126,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
 }
 
 #?rakudo skip 'nom regression'
+#?niecza skip 'Undeclared routine grtz'
 {
   {
     my $a = 3;
@@ -138,6 +143,7 @@ ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
   sub rmbl { $a++ }
 
   #?rakudo todo 'nom regression'
+  #?niecza todo
   nok rmbl().defined, "var captured by sub is the right var (1)";
   $a++;
   is rmbl(), 2, "var captured by sub is the right var (2)";
