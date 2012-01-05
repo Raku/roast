@@ -24,6 +24,7 @@ for ("abcdef") {
 #?rakudo skip "s:pos/// NYI"
 {
     $_ = "foofoofoo foofoofoo";
+    my $/;
     ok(s:global:pos/foo/FOO/, 'Globally contiguous substitution');
     #?niecza todo
     is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
@@ -32,6 +33,7 @@ for ("abcdef") {
 #?niecza skip ':i'
 {
     my $str = "abcabcabc";
+    my $/;
     ok($str ~~ m:p/abc/, 'Continued match');
 
     ok($/.to == 3, 'Continued match pos');
