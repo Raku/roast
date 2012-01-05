@@ -34,7 +34,6 @@ This test min/max functions in their operator form. To see them tested in their 
 }
 
 #testing the minmax operator
-#?niecza skip 'minmax NYI'
 {
     my @a = 1,2,3,4;
     my @b = 9,8,7,1;
