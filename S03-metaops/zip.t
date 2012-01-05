@@ -15,7 +15,6 @@ is (<a b> Z~ <1 2>), <a1 b2>, 'zip-concat produces expected result';
 
 is (1,2 Z* 3,4), (3,8), 'zip-product works';
 
-#?niecza todo
 is (1,2 Zcmp 3,2,0), (-1, 0), 'zip-cmp works';
 
 # tests for laziness

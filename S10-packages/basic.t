@@ -66,11 +66,9 @@ is Simple::Bar.new.baz, 'hi', 'class test';
         'WHO implementation with longname';
 }
 
-#?niecza todo
 eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 
-#?niecza todo
 {
     eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
@@ -106,7 +104,6 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
         'two different packages should be two different Baz';
 
-    #?niecza todo
     eval_lives_ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
         'two different packages should be two different EHomeE';        
 }

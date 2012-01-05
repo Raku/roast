@@ -29,6 +29,7 @@ for 1..4 -> $i {
 
 for 1..4 -> $i {
     for (' ', "\x[2000]") -> $prefix {
+        #?niecza skip 'Unable to resolve method fmt in class Int'
         is  ($prefix ~ 'quack').indent($i).perl,
             ($prefix x ($i + 1) ~ 'quack').perl,
             "Same space - .indent($i) prefix={$prefix.ord.fmt('"\\x[%x]"')}";
@@ -41,6 +42,7 @@ is  "\tquack".indent($tab),
 
 for 1..$tab -> $i {
     for (' ', "\t", "\x[2000]") -> $prefix {
+        #?niecza skip 'Unable to resolve method fmt in class Int'
         is  ($prefix ~ ' ' ~ 'quack').indent($i).perl,
             ($prefix ~ ' ' ~ (' ' x $i) ~ 'quack').perl,
             "Mixed space - .indent($i) prefix={$prefix.ord.fmt('"\\x[%x]"')}";
@@ -64,12 +66,12 @@ is  '   quack'.indent(-4),
 
 # TODO: need a better way of detecting warn() calls, also need a test that it
 # should only warn once per .indent call
+#?niecza todo 'Excess outdent test for warning'
 given 'Excess outdent test for warning' -> $test {
-    '   quack'.indent(-4);
+'   quack'.indent(-4);
     flunk $test;
     CATCH { pass $test; }
 }
-
 
 # Whatever-star
 
@@ -121,11 +123,11 @@ is  "\tquack\nmeow".indent($tab),
 
 
 # Misc
-
 is  "\ta\n b".indent(0),
     "\ta\n b",
     '.indent(0) should be a no-op';
 
+#?niecza skip "weird scalar input"
 is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).perl,
     "\ta\n b".indent(True).indent('0x10').indent('blah').indent(*).perl,
     '.indent accepts weird scalar input and coerces it to Int when necessary';
