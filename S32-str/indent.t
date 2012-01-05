@@ -29,7 +29,6 @@ for 1..4 -> $i {
 
 for 1..4 -> $i {
     for (' ', "\x[2000]") -> $prefix {
-        #?niecza skip 'Unable to resolve method fmt in class Int'
         is  ($prefix ~ 'quack').indent($i).perl,
             ($prefix x ($i + 1) ~ 'quack').perl,
             "Same space - .indent($i) prefix={$prefix.ord.fmt('"\\x[%x]"')}";
@@ -42,7 +41,6 @@ is  "\tquack".indent($tab),
 
 for 1..$tab -> $i {
     for (' ', "\t", "\x[2000]") -> $prefix {
-        #?niecza skip 'Unable to resolve method fmt in class Int'
         is  ($prefix ~ ' ' ~ 'quack').indent($i).perl,
             ($prefix ~ ' ' ~ (' ' x $i) ~ 'quack').perl,
             "Mixed space - .indent($i) prefix={$prefix.ord.fmt('"\\x[%x]"')}";
