@@ -86,6 +86,7 @@ class Y is X {
 is(Z.new.j(), 'X', 'inherited method dispatch works');
 is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
 
+#?niecza skip 'No value for parameter $i in A.y'
 {
     class A {
       has @.x = <a b c>;
@@ -124,6 +125,7 @@ eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 {
     class DirectMu is Mu { };
     ok DirectMu !~~ Any, 'class inheriting from Mu is not Any';
+    #?niecza skip 'Unable to resolve method parents in class ClassHOW'
     ok !( any(DirectMu.^parents).gist eq 'Any()'), 'and Any does not appear in the list of parents either';
 }
 
