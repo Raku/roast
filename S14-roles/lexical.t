@@ -23,7 +23,7 @@ eval_dies_ok  '{ my class R3 {}; R3; }; R3',
         method catwalk() { 'ooh pretty!' }
     }
     #?rakudo todo 'role stringification (?)'
-    is Model.Str, 'Model()',            'lexical role type object stringifies OK';
+    is Model.gist, 'Model()',            'lexical role type object stringifies OK';
     is Model.catwalk, 'ooh pretty!', 'can pun lexical role';
 
     my class SuperModel does Model {
