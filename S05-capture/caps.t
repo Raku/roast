@@ -27,31 +27,23 @@ is ca($/.chunks),   '0:a b c d', '$/.chunks is one item for (.*)';
 my token wc { \w };
 
 ok 'a b c' ~~ /:s <wc=&wc> (\w) <wc=&wc> /, 'regex matches';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.caps), 'wc:a|0:b|wc:c', 'named and positional captures mix correctly';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.chunks), 'wc:a|~: |0:b|~: |wc:c',
                   'named and positional captures mix correctly (chunks)';
 
 ok 'a b c d' ~~ /[(\w) \s*]+/, 'regex matches';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.caps), '0:a|0:b|0:c|0:d', '[(\w)* \s*]+ flattens (...)* for .caps';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.chunks), '0:a|~: |0:b|~: |0:c|~: |0:d',
                 '[(\w)* \s*]+ flattens (...)* for .chunks';
 
 ok 'a b c' ~~ /[ (\S) \s ] ** 2 (\S)/, 'regex matches';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.caps), '0:a|0:b|1:c', '.caps distinguishes quantified () and multiple ()';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.chunks), '0:a|~: |0:b|~: |1:c', '.chunks distinguishes quantified () and multiple ()';
 
 ok 'a b c d' ~~ /:s [(\w) <wc=&wc> ]+/, 'regex matches';
 #'RT 75484 (fails randomly) (noauto)'
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.caps), '0:a|wc:b|0:c|wc:d',
                       'mixed named/positional flattening with quantifiers';
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 is ca($/.chunks), '0:a|~: |wc:b|~: |0:c|~: |wc:d',
                       'mixed named/positional flattening with quantifiers';
 
