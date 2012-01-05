@@ -432,13 +432,11 @@ plan 79;
 # Positional Associative Ordering Ordered
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
-#?niecza skip 'Positional not implemented'
 {
   my Positional $mokca;
   ok($mokca ~~ Positional,'Positional exists');
 }
 
-#?niecza skip 'Associative not implemented'
 {
   my Associative $kansa;
   ok($kansa ~~ Associative,'Associative exists');
