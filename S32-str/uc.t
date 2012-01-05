@@ -49,7 +49,7 @@ is ~(0.lc),         ~0, '.lc on Int';
 is ~(0.lcfirst),    ~0, '.lcfirst on Int';
 
 #?DOES 4
-#?niecza skip 'but RoleName'
+#?niecza todo 'but RoleName'
 #?rakudo skip 'but RoleName'
 {
     role A {

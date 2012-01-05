@@ -104,7 +104,7 @@ plan 19;
     is $str, '(x)', 'die calls LEAVE blocks';
 }
 
-#?niecza 2 skip 'dubious'
+#?niecza 2 skip 'dubious: noauto'
 {
     my $str;
     try {

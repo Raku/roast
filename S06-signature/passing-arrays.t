@@ -30,11 +30,9 @@ plan 11;
     sub pa(@a) { @a.WHAT; }
     my @b = 2, 3;
     isa_ok pa(@b), Array, 'basic array type sanity';
-    #?niecza todo
     dies_ok { eval('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
-    #?niecza todo
     dies_ok { eval('ph(3)') }, 'an Int is not a Hash';
 }
 

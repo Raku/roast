@@ -35,7 +35,7 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
 is 1.Str.Str, "1", ".Str can be called on Str";
 is "hello".Str, "hello", ".Str can be called on Str";
 
-#?niecza skip "this test makes not much sense"
+#?niecza skip "this test makes not much sense: noauto"
 {
     # Not sure how to set the derived Str portion to a value, but that would be an
     # additional useful test here.

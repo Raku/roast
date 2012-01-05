@@ -24,7 +24,6 @@ plan 10;
 {
     sub typed(:i(:%j)) { %j.keys.[0] };
     is typed(i => { a => 1 }), 'a', 'typed renames -- sanity';
-    #?niecza 2 todo 'sigil-based type constraints'
     dies_ok { eval 'typed(:j)' }, 'type constraint on var';
     dies_ok { eval 'typed(:i)' }, 'type constraint on var propagates to alias';
 }

@@ -55,7 +55,6 @@ is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
 
-#?niecza skip 'Positional'
 ok("forty-two".comb() ~~ Positional, '.comb() returns something Positional' );
 
 # comb a list

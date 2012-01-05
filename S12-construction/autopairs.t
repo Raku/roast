@@ -13,7 +13,6 @@ plan 4;
     eval_lives_ok('my $a; class Tb { has $.a }; my Tb $Tb .= new(:$a )',
             'class instantiation with autopair, spaces');
     #?rakudo 2 todo 'nom regression'
-    #?niecza 2 todo
     eval_lives_ok('my $a; role Tc { has $.a }; my Tc $c .= new(:$a)',
             'role instantiation with autopair, no spaces');
     eval_lives_ok('my $a; role Td { has $.a }; my Td $c .= new(:$a )',

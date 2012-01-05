@@ -30,7 +30,6 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
     my $error   = "$!";
     nok $success,
         "Passing two arguments to a function expecting one hash is an error";
-    #?niecza 3 todo 'error message content'
     ok $error ~~ / '%h' /,   '... error message mentions parameter';
     ok $error ~~ /:i 'type' /, '... error message mentions "type"';
     ok $error ~~ / Associative /, '... error message mentions "Associative"';

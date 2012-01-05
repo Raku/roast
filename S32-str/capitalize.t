@@ -38,7 +38,7 @@ is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
 # rest of the tests are moved from uc.t
 is ~(0.capitalize), ~0, '.capitalize on Int';
 
-#?niecza skip "but"
+#?niecza todo "but"
 {
     role A {
         has $.thing = 3;
