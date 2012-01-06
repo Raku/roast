@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 9;
+plan 12;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -44,6 +44,16 @@ plan 9;
     multi sub foo(0, $)               { 'B' };
     multi sub foo(Int $n, Str $a="A") { $a };
     is foo(2,"A"), 'A', 'Literals and optionals mix';
+}
+
+# not quite a multi, but also value based
+# RT #107348
+
+{
+    sub f(True) { 'a' }
+    is f(True), 'a', 'can call a sub f(True)  with True as argument';
+    is f(False), 'a', 'works with False too, since False ~~ True';
+    dies_ok { eval 'f(1)' }, 'type constraint is still Bool';
 }
 
 # vim: ft=perl6
