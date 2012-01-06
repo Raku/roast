@@ -34,7 +34,6 @@ my $val2;
 lives_ok {
    $val2 = $d.get_attr()
 }, '... getting attr from cloned value';
-#?rakudo todo 'nom regression'
 is($val2, 42, '... cloned object has proper attr value');
 
 # Test to cover RT#62828, which exposed a bad interaction between while loops
@@ -47,7 +46,6 @@ is($val2, 42, '... cloned object has proper attr value');
         is($a.b, 0, 'sanity before clone');
         my $x = $a.clone( :b($a.b + 1) );
         is($a.b, 0, 'clone did not change value in original object');
-        #?rakudo todo 'nom regression'
         is($x.b, 1, 'however, in the clone it was changed');
         last;
     }
