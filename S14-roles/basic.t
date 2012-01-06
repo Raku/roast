@@ -76,6 +76,7 @@ role C { }
 class DoesC does C { }
 lives_ok { my C $x; },          'can use role as a type constraint on a variable';
 #?rakudo todo 'Cannot assign Mu to variable with role constraint -- bug or feature?'
+#?niecza todo 'Cannot assign Mu to variable with role constraint -- bug or feature? noauto'
 lives_ok { my C $x = Mu },      'can assign undefined';
 dies_ok { my C $x = 42 },       'type-check enforced';
 dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
@@ -131,11 +132,11 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 # RT #67768
 #?rakudo skip 'RT 67768'
 {
-    lives_ok { role List { method foo { 67768 } } },
+    eval_lives_ok 'role List { method foo { 67768 } }',
         'can declare a role with a name already assigned to a class';
-    lives_ok { class C67768 does List { } },
+    eval_lives_ok 'class C67768 does OUR::List { }',
         'can use a role with a name already assigned to a class';
-    is C67768.new.foo, 67768,
+    is ::OUR::C67768.new.foo, 67768,
         'can call method from a role with a name already assigned to a class';
 }
 
