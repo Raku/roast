@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 15;
 
 # L<S29/Context/"=item eval">
 
@@ -69,5 +69,12 @@ is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
     is eval $number, $number, 'eval of non-string variable works';
 }
 
+# RT #77646
+{
+    my $x = 0;
+    eval '$x++' for 1..4;
+    is $x, 4, 'can execute the same eval multiple times, without surrounding block';
+
+}
 
 # vim: ft=perl6
