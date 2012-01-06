@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -74,6 +74,22 @@ eval_lives_ok q[
         class A { multi method a() { }};
         augment class A { multi method a() { } }
     }, 'RT #75432'
+}
+
+# RT #71456
+# some integers produces from ranges didn't have 
+# methods that augment added. Weird.
+
+{
+    augment class Int {
+        method prime { True };
+    }
+    my $primes = 0;
+    lives_ok {
+        for 1..5 {
+            $primes++ if .prime;
+        }
+    }, 'integers produced from ranges have augmented methods';
 }
 
 # vim: ft=perl6
