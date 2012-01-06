@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 #L<S03/Autoincrement precedence>
 
@@ -113,5 +113,9 @@ is($moo, 0, "var was not touched");
     $x = Bool::True;
     is $x.pred, Bool::False, '.succ on False works';
 }
+
+# RT #74912
+eval_dies_ok 'my $x = 0; ++++$x',
+    'can not double-increment, because the return value is not a container';
 
 # vim: ft=perl6
