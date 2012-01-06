@@ -73,7 +73,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
 is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #65514
-#?niecza skip "general but"
 {
     ok (0 but Bool::True), 'Bool::True works with "but"';
     is (0 but Bool::True), 0, 'Bool::True works with "but"';
@@ -86,7 +85,6 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
-#?niecza skip 'rolling Bool generates Any, not True/False'
 {
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';

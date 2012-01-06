@@ -29,7 +29,6 @@ for ("abcdef") {
     is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
 }
 
-#?niecza skip ':i'
 {
     my $str = "abcabcabc";
     my $/;

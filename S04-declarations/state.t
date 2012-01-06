@@ -234,13 +234,13 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 # state with multiple explicit calls to clone - a little bit subtle
-#?niecza skip "there is no Sub.clone"
 #?DOES 3
 {
     my $i = 0;
     my $func = { state $x = $i++; $x };
     my ($a, $b) = $func.clone, $func.clone; 
     is $a(), 0, 'state was initialized correctly for clone 1';
+    #?niecza todo 'state was initialized correctly for clone 2'
     is $b(), 1, 'state was initialized correctly for clone 2';
     is $a(), 0, 'state between clones is independent';
 }

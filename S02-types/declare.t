@@ -231,7 +231,6 @@ plan 79;
  isa_ok($so,Bag  );
 }
 
-#?niecza skip 'Signature not implemented'
 {
  my Signature $pano;
  isa_ok($pano,Signature  );
@@ -366,7 +365,6 @@ plan 79;
 }
 
 #?rakudo skip 'Order NYI'
-#?niecza skip 'Order not implemented'
 {
  my Order $karbi;
  isa_ok($karbi, Order);
