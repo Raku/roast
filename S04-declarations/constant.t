@@ -290,6 +290,13 @@ use Test;
     is A.new.z, 6, 'Can use outer constants in a class';
 }
 
+# RT #66650
+{
+    enum F::B <c d e>;
+    my constant G = F::B;
+    ok F::B::c == G::c, 'can use "constant" to alias an enum';
+}
+
 done;
 
 # vim: ft=perl6
