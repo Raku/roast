@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 4;
 
 {
     class A      {
@@ -32,3 +32,11 @@ plan 3;
     dies_ok { eval 'class confused is vh is hv { }' },
         'Cannot do multi inheritance that causes inconsistent MRO';
 }
+
+# RT #77274
+eval_lives_ok q[
+    class GrandParent { };
+    class Parent is GrandParent { };
+    class Me is Parent is GrandParent { };
+    Me.new;
+], 'a class can inherit both from its parent and then from its grand parent';
