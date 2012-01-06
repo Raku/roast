@@ -22,7 +22,7 @@ eval_dies_ok  '{ my class R3 {}; R3; }; R3',
     my role Model {
         method catwalk() { 'ooh pretty!' }
     }
-    #?rakudo todo 'role stringification (?)'
+
     is Model.gist, 'Model()',            'lexical role type object stringifies OK';
     is Model.catwalk, 'ooh pretty!', 'can pun lexical role';
 

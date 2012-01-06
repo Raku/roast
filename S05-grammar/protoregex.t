@@ -16,7 +16,6 @@ ok (my $match = Alts.parse('foo')), 'can parse with proto regexes (1)';
 is $match, 'foo', 'and matched the full string';
 is $match<alt>, 'foo', 'got the right name of the capture';
 
-#?rakudo todo '$/ not populated by .parse method'
 is $/, 'foo', 'also works with $/';
 
 ok Alts.parse('bar'), 'can parse with second alternative';

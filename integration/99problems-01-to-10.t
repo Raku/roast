@@ -165,7 +165,6 @@ plan 22;
         return @packed;
     }
     
-    #?rakudo todo 'unknown'
     is pack(<a a a a b c c a a d e e e e>).join('+'),
         'a a a a+b+c c+a a+d+e e e e',
         'We should be able to pack lists';

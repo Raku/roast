@@ -44,7 +44,6 @@ is_run 'sub MAIN($bar) { }',
     :args['--help'],
     '--help option sends auto-generated USAGE message to $*OUT';
 
-#?rakudo todo 'RT #105018'
 is_run 'sub MAIN(Bool :$x) { say "yes" if $x }',
     {
         out => "yes\n",
