@@ -89,12 +89,11 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 # enums + pick
-#?niecza todo "pick(*) NYI"
 {
-    is Bool.pick(*).elems, 2, 'Bool.pick works';
+    is Bool.pick(*).grep(Bool).elems, 2, 'Bool.pick works';
 
     enum A <b c d>;
-    is A.pick(*).elems, 3, 'RandomEnum.pick works';
+    is A.pick(*).grep(A).elems, 3, 'RandomEnum.pick works';
 }
 
 # vim: ft=perl6

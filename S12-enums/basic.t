@@ -94,7 +94,6 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
 
     ok ?(Color.pick == any(Color::white, Color::gray, Color::black)),
             '.pick on enums';
-    #?niecza todo 'picking multiple elements from an enum'
     ok Color.pick(2) == 2, '.pick(2) on enums';
 }
 

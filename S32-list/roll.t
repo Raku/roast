@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 25;
 
 =begin description
 
@@ -71,5 +71,14 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
     is @a.roll("25").elems, 25, ".roll works Str arguments";
     is roll("25", @a).elems, 25, "roll works Str arguments";
 }
+
+# enums + roll
+{
+    is Bool.roll(3).grep(Bool).elems, 3, 'Bool.roll works';
+
+    enum A <b c d>;
+    is A.roll(4).grep(A).elems, 4, 'RandomEnum.roll works';
+}
+
 
 # vim: ft=perl6
