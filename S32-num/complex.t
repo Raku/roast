@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 486;
+plan 487;
 
 # Basic tests functions specific to complex numbers.
 
@@ -141,6 +141,8 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
   is (5-4i).conjugate, 5+4i, 'conjugate 5-4i -> 5+4i';
 }
 
+dies_ok { (1 + 2i) < (2 + 4i) },
+    'Cannot arithmetically compare Complex numbers';
 done;
 
 # vim: ft=perl6
