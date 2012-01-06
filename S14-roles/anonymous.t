@@ -38,6 +38,7 @@ plan 13;
   is $a, 3, "basic sanity";
   lives_ok {$a does role_generator("hi")}, "role generating function mixin";
   is $a, 3, "still basic sanity";
+  #?niecza todo 'roles are run once and only capture the protopad'
   is $a.cool, "hi", "role generating function gave us an attribute";
 }
 
