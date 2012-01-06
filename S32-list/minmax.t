@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 57;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -158,6 +158,22 @@ is ([max] (5,10,-15,20)), 20, 'reduce max int';
 
 is ([min] (5.1,10.3,-15.7,20.9)), -15.7, 'reduce min numeric';
 is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
+
+{
+    my @strings = <Inspiring bold John Barleycorn!
+                   What dangers thou canst make us scorn!
+                   Wi' tippenny, we fear nae evil;
+                   Wi' usquabae, we'll face the devil!>;
+
+    is @strings.min, "Barleycorn!", 'Default .min works on array of strings';
+    is @strings.min(-> $a, $b { $a.chars <=> $b.chars || $a leg $b }), "us", '.min works with explicit comparator';
+    is ([min] @strings), "Barleycorn!", '[min] works on array of strings';
+
+    is @strings.max, "we'll", 'Default .max works on array of strings';
+    is @strings.max(-> $a, $b { $a.chars <=> $b.chars || $a leg $b }), "Barleycorn!", 
+       '.max works with explicit comparator';
+    is ([max] @strings), "we'll", '[max] works on array of strings';
+}
 
 done;
 

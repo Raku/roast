@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 25;
 
 # L<S03/Tight or precedence/Minimum and maximum>
 # L<S03/Tight or precedence/"any value of any type may be compared with +Inf
@@ -24,6 +24,8 @@ This test min/max functions in their operator form. To see them tested in their 
     #?rakudo 2 todo "max/min non-associative NYI"
     eval_dies_ok q{1 min 2 max 3}, 'No! No left-associativeness!';
     eval_dies_ok q{1 max 2 min 3}, 'This is also not OK';
+    is "alpha" min "beta", "alpha", 'min works for strings, too';
+    is "alpha" max "beta", "beta", 'max works for strings, too';
 }
 
 {
@@ -45,6 +47,12 @@ This test min/max functions in their operator form. To see them tested in their 
     @b = 4,7,5,6;
     is((@a minmax @b), 1..9, 'minmax works when both are on left array');
     is((@b minmax @a), 1..9, 'minmax works when both are on right array');
+}
+
+{
+    my @a = <Inspiring bold John Barleycorn!>;
+    my @b = <What dangers thou canst make us scorn!>;
+    is (@a minmax @b).perl, ("Barleycorn!".."us").perl, 'minmax works for strings, too';
 }
 
 #array vs. scalar
