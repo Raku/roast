@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 58;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -173,6 +173,14 @@ is ([max] (5.4,10.7,-15.2,20.8)), 20.8, 'reduce max numeric';
     is @strings.max(-> $a, $b { $a.chars <=> $b.chars || $a leg $b }), "Barleycorn!", 
        '.max works with explicit comparator';
     is ([max] @strings), "we'll", '[max] works on array of strings';
+}
+
+# RT #103178
+{
+    class A { has $.d };
+    is (A.new(d => 5), A.new(d => 1), A.new(d => 10)).min(*.d).d,
+        1, 'can use non-numbers with .min and unary closures';
+
 }
 
 done;
