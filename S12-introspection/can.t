@@ -8,7 +8,7 @@ Tests for can.
 
 =end pod
 
-plan 23;
+plan 24;
 
 # L<S12/"Introspection"/Unlike in Perl 5 where .can returns a single Code object>
 
@@ -96,5 +96,8 @@ my $pup = Puppy.new();
     is $iters, 2,        "subclass had right number of methods found (on proto)";
     is $found, "yapbow", "subclass got right methods called (on proto)";
 }
+
+# RT #76584
+ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
 
 # vim: ft=perl6
