@@ -291,6 +291,7 @@ use Test;
 }
 
 # RT #66650
+#?niecza skip "Undeclared name: 'G::c'"
 {
     enum F::B <c d e>;
     my constant G = F::B;

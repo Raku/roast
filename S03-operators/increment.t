@@ -115,6 +115,7 @@ is($moo, 0, "var was not touched");
 }
 
 # RT #74912
+#?niecza todo 'Works fine in niecza...'
 eval_dies_ok 'my $x = 0; ++++$x',
     'can not double-increment, because the return value is not a container';
 

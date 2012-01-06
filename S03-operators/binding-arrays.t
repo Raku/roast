@@ -239,6 +239,7 @@ plan 47;
 }
 
 # RT #61566
+#?niecza todo
 {
     eval_dies_ok 'my @rt61566 := 1', 'can only bind Positional stuff to @a';
     # TODO: check that the error is the right one

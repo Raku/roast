@@ -98,6 +98,7 @@ my $pup = Puppy.new();
 }
 
 # RT #76584
+#?niecza todo
 ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
 
 # vim: ft=perl6
