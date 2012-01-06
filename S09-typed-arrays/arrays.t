@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 57;
+plan 58;
 
 # L<S09/Typed arrays/>
 
@@ -12,14 +12,13 @@ plan 57;
     lives_ok { @x = 1..3    }, 'can assign range of the right type';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type';
     lives_ok { @x.unshift: 3}, 'can unshift values of the right type';
-    #?rakudo todo "readonly slices"
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array';
-    #?rakudo skip "dies with Parrot error"
     is @x.unshift(2), [2, 2, 3], 'can unshift from typed array';
 }
 
+#?rakudo skip 'of Int'
 {
     my @x of Int;
     ok @x.of === Int, '@x.of of typed array (my @x of Int)';
@@ -27,7 +26,6 @@ plan 57;
     lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
     lives_ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
-    #?rakudo todo "readonly slices"
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
@@ -45,7 +43,6 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
     lives_ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
-    #?rakudo todo "readonly slices"
     lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
@@ -55,7 +52,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
 {
     my Array @x;
-    #?rakudo 4 todo "no parametrization"
+    #?rakudo 5 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
@@ -68,7 +65,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
 {
     my @x of Array;
-    #?rakudo 4 todo "no parametrization"
+    #?rakudo 5 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
@@ -95,12 +92,11 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     my Int @a = 1, 2, 3;
     my Int @b;
     lives_ok { @b = @a }, 'can assign typed array to typed array';
-    #?rakudo todo 'Array methods should return typed arrays'
     ok @a.values.of === Int, '@a.values is typed (1)';
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
 
+    #?rakudo 2 skip 'initialization'
     my Str @c = <foo bar baz>;
-    #?rakudo todo 'Array methods should return typed arrays'
     ok @c.keys.of === Str, '@array.keys is typed with Int';
 }
 
@@ -118,7 +114,6 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         'type check Positional of Int allows correctly typed array to be returned explicitly';
     lives_ok { ret_pos_2() },
         'type check Positional of Int allows correctly typed array to be returned implicitly';
-    #?rakudo 4 todo "no parametrization"
     dies_ok { ret_pos_3() },
         'type check Positional of Int prevents untyped array to be returned explicitly';
     dies_ok { ret_pos_4() },
@@ -127,6 +122,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         'type check Positional of Int prevents incorrectly typed array to be returned explicitly';
     dies_ok { ret_pos_6() },
         'type check Positional of Int prevents incorrectly typed array to be returned implicitly';
+    #?rakudo 2 todo "no parametrization"
     lives_ok { ret_pos_7() },
         'type check Positional of Num allows subtyped Int array to be returned explicitly';
     lives_ok { ret_pos_8() },
@@ -134,6 +130,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 }
 
 # RT #69482
+#?rakudo skip 'type on our-variables'
 {
     our Int @a1;
     our @a2;
