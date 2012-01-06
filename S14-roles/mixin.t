@@ -11,7 +11,9 @@ my $x = C1.new();
 $x does R1;
 is $x.test,     42,         'method from a role can be mixed in';
 is $x.?test,    42,         '.? form of call works on a mixed-in role';
+#?niecza skip 'NYI dottyop form .+'
 is $x.+test,    42,         '.+ form of call works on a mixed-in role';
+#?niecza skip 'NYI dottyop form .*'
 is $x.*test,    42,         '.* form of call works on a mixed-in role';
 
 
@@ -42,6 +44,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 
 #?rakudo skip 'sub form of mixins'
+#?niecza skip 'Cannot compose a type of category class (Any)'
 {
     role Answer { has $.answer is rw }
     my $x = 0;
@@ -51,6 +54,7 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 #?rakudo skip 'sub form of mixins'
+#?niecza skip 'Cannot compose a type of category class (Any)'
 {
     my $x = 0;
     role A { has $.a is rw }
@@ -63,6 +67,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 
 #?rakudo skip 'mixin at the point of declaration is compile time'
+#?niecza skip 'Trait does not available on variables'
 {
     my @array does R1;
     is @array.test, 42,         'mixing in a role at the point of declaration works';
@@ -75,6 +80,7 @@ is $y.test,     42,         'method from other role was OK too';
 # L<S14/Run-time Mixins/"but only if the role supplies exactly one attribute">
 
 #?rakudo skip 'sub form of mixin'
+#?niecza skip 'Cannot compose a type of category class (Any)'
 {
     role R4a {
         # no attribute here
@@ -98,6 +104,7 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 # RT #69654
+#?niecza skip 'Unable to resolve method methods in class ClassHOW'
 {
     role ProvidesFoo { method foo { } }
     class NoFoo { };
@@ -111,6 +118,7 @@ is $y.test,     42,         'method from other role was OK too';
 }
 
 # RT #77184
+#?niecza skip 'Twigil ! is only valid on attribute definitions'
 {
     lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
 }
