@@ -9,6 +9,8 @@ plan 47;
 # Binding of array elements.
 # See thread "Binding of array elements" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22915">
+
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -27,6 +29,7 @@ plan 47;
   is $var,      "f", "basic binding of an array element (3)";
 }
 
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -50,6 +53,7 @@ plan 47;
   is @array[1], "g",  "binding of array elements works with .delete (5)";
 }
 
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -70,6 +74,7 @@ plan 47;
   is @array[1], "g", "binding of array elements works with resetting the array (5)";
 }
 
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -91,6 +96,7 @@ plan 47;
   is @array[1], "g",   "binding of array elements works with rebinding the array (5)";
 }
 
+#?rakudo skip 'array element binding'
 {
   my sub foo (@arr) { @arr[1] = "new_value" }
 
@@ -103,6 +109,7 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a sub expecting an array behaves correctly (2)";
 }
 
+#?rakudo skip 'array element binding'
 {
   my sub foo (Array $arr) { $arr[1] = "new_value" }
 
@@ -115,6 +122,7 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a sub expecting an arrayref behaves correctly (2)";
 }
 
+#?rakudo skip 'array element binding'
 {
   my sub foo (@args) { @args[1] = "new_value" }
 
@@ -141,6 +149,7 @@ plan 47;
 }
 
 # Binding of not yet existing elements should autovivify
+#?rakudo skip 'array element binding'
 {
   my @array;
   my $var    = "d";
@@ -156,6 +165,7 @@ plan 47;
 
 # Binding with .splice
 #?niecza skip 'splice'
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -177,6 +187,7 @@ plan 47;
 }
 
 # Assignment (not binding) creates new containers
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -194,6 +205,7 @@ plan 47;
 }
 
 # Binding does not create new containers
+#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -227,11 +239,8 @@ plan 47;
 }
 
 # RT #61566
-#?niecza skip 'Exception'
 {
-    eval 'my @rt61566 := 1';
-    #?rakudo todo 'Positional type check on array binding'
-    ok $! ~~ Exception, "Can't bind Int to array";
+    eval_dies_ok 'my @rt61566 := 1', 'can only bind Positional stuff to @a';
     # TODO: check that the error is the right one
     # <pmichaud> you should get a "Int does not do Positional role"
     #            exception or something like that.
