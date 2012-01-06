@@ -39,11 +39,12 @@ role WithAttr {
     is $obj.y, 123, "role attributes initialized in constructor";
 }
 
-role ParaRole[$x] {
-    method get_x { $x }
-}
-
+#?niecza skip 'No value for parameter $x in role-ParaRole'
 {
+    role ParaRole[$x] {
+        method get_x { $x }
+    }
+
     my $obj = ParaRole[42].new;
     my $obj2 = ParaRole[100].new;
 
@@ -56,11 +57,14 @@ role ParaRole[$x] {
     is $obj2.get_x, 100, "instantiated object has method with correct associated role parameter";
 }
 
-role ParaRole2Args[$x, $y] {
-    method x { $x + $y }
-}
+#?niecza skip 'No value for parameter $x in role-ParaRole2Args'
+{
+    role ParaRole2Args[$x, $y] {
+        method x { $x + $y }
+    }
 
-is ParaRole2Args[4, 5].new.x, 9, 'instantiating a parametric role with two arguments works';
+    is ParaRole2Args[4, 5].new.x, 9, 'instantiating a parametric role with two arguments works';
+}
 
 # Can also pun a role and inherit from the punned class.
 {
