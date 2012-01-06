@@ -144,7 +144,6 @@ plan 25;
         '.. or a generic list'; 
 }
 
-#?rakudo skip 'Null PMC access in isa()'
 {
     # P14 (*) Duplicate the elements of a list.
     # 
@@ -156,7 +155,6 @@ plan 25;
         'We should be able to duplicate the elements of a list';
 }
 
-#?rakudo skip 'Null PMC access in isa()'
 #?niecza skip 'Feed ops NYI'
 {    
     my @result = eval '<a b c c d> ==> map { $_ xx 2 }';

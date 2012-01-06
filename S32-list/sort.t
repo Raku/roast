@@ -197,7 +197,6 @@ plan 33;
 }
 
 ##  XXX pmichaud, 2008-07-01:  .sort should work on non-list values
-#?rakudo skip 'test errors, adverbial block'
 {
 #?pugs 2 todo 'bug'
     is ~42.sort, "42", "method form of sort should work on numbers";

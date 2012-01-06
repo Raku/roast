@@ -247,7 +247,6 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #68524
-#?rakudo skip 'RT 68524'
 #?niecza skip "Unable to resolve method signature in class Sub"
 {
     sub rt68524( :$a! ) {}
@@ -256,7 +255,6 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #69516
-#?rakudo skip 'RT 69516'
 #?niecza skip "Unable to resolve method signature in class Sub"
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }

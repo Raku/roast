@@ -119,7 +119,7 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
     my $rt81718 = RT81718.new();
 
     dies_ok { $rt81718.bomb() }, 'no attribute access for sub';
-    #?rakudo skip 'RT81718 (false positive in nom)'
+    #?rakudo skip 'RT81718 (false positive in nom) (noauto)'
     dies_ok { $rt81718.meta_bomb() }, 'no attr access for sub from method';
 }
 
