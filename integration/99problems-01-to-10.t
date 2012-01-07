@@ -156,11 +156,11 @@ plan 22;
     # ((A A A A) (B) (C C) (A A) (D) (E E E E))
     
     sub pack (*@array is copy) returns Array {
-        my (@list, @packed);
+        my @packed;
         while @array {
+            my @list;
             @list.push(@array.shift) while !@list || @list[0] eq @array[0];
             @packed.push([@list]);
-            @list = ();
         }
         return @packed;
     }
