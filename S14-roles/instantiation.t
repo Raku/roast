@@ -39,7 +39,6 @@ role WithAttr {
     is $obj.y, 123, "role attributes initialized in constructor";
 }
 
-#?niecza skip 'No value for parameter $x in role-ParaRole'
 {
     role ParaRole[$x] {
         method get_x { $x }
@@ -57,7 +56,6 @@ role WithAttr {
     is $obj2.get_x, 100, "instantiated object has method with correct associated role parameter";
 }
 
-#?niecza skip 'No value for parameter $x in role-ParaRole2Args'
 {
     role ParaRole2Args[$x, $y] {
         method x { $x + $y }

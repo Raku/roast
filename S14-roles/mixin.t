@@ -44,7 +44,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 
 #?rakudo skip 'sub form of mixins'
-#?niecza skip 'Cannot compose a type of category class (Any)'
+#?niecza skip 'sub form of mixins'
 {
     role Answer { has $.answer is rw }
     my $x = 0;
@@ -80,7 +80,7 @@ is $y.test,     42,         'method from other role was OK too';
 # L<S14/Run-time Mixins/"but only if the role supplies exactly one attribute">
 
 #?rakudo skip 'sub form of mixin'
-#?niecza skip 'Cannot compose a type of category class (Any)'
+#?niecza skip 'sub form of mixin'
 {
     role R4a {
         # no attribute here
