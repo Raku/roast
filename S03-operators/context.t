@@ -43,10 +43,12 @@ use Test;
     is(item($a),  $a, 'item($a) is just $a');
     is($($a),     $a, '$($a) is just $a');
 
+    #?niecza 3 skip 'Undeclared name Seq'
     isa_ok((item $a, $b).WHAT, Seq, '(item $a, $b) makes a Seq');
     isa_ok(item($a, $b).WHAT,  Seq, 'item $a, $b makes a Seq');
     isa_ok($($a, $b).WHAT,     Seq, '$ $a, $b makes a Seq');
     my @array = ($a, $b);
+    #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
 }
 
