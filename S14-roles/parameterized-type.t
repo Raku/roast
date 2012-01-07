@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 27;
 
 =begin pod
 
@@ -78,6 +78,15 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     is ($tree.data, $tree[0,1]>>.data).join(','), '3,1,4',
         'parameterized role doing non-parameterized role';
 
+}
+
+# RT #68134
+{
+    role P[$x] { }
+    # ::T only makes sense in a signature here, not in
+    # an argument list.
+    dies_ok { eval 'class MyClass does P[::T] { }' },
+        'can not use ::T in role application';
 }
 
 #?pugs emit =end SKIP
