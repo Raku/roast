@@ -290,12 +290,15 @@ use Test;
     is A.new.z, 6, 'Can use outer constants in a class';
 }
 
-# RT #66650
 #?niecza skip "Undeclared name: 'G::c'"
 {
     enum F::B <c d e>;
     my constant G = F::B;
+    # RT #66650
     ok F::B::c == G::c, 'can use "constant" to alias an enum';
+    my constant Yak = F::B::c;
+    # RT #66636
+    ok Yak === F::B::c, 'can use "constant" to alias an enum value';
 }
 
 done;
