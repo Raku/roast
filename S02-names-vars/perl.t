@@ -4,20 +4,28 @@ use Test;
 
 my @tests = (
     # Basic scalar values
-    42, 42/10, 4.2, 
+    42, 
+    #?niecza emit # Rat.perl.eval doesn't work properly
+    42/10, 
+    #?niecza emit # Rat.perl.eval doesn't work properly
+    4.2, 
     sqrt(2),
     3e5,
     Inf, -Inf, NaN,
 
     "a string", "", "\0", "\t", "\n", "\r\n", "\o7",
+    #?niecza emit # Bogus statement
     '{', # "\d123",	# XXX there is no \d escape!!!
     '}',
+    #?niecza emit # Variable $a is not predeclared
     '$a @string %with &sigils()',
 
     ?1, ?0,
     #?rakudo emit # Mu eq Mu is an error now
+    #?niecza emit # Dunno what's wrong with this one
     Mu,
     #?rakudo emit # parse error
+    #?niecza emit # Autoloading NYI
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
@@ -72,6 +80,7 @@ my @tests = (
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
     #?pugs skip 'hanging test'
+    #?niecza skip 'hanging test'
     is ~$foo.perl.eval, ~$foo,
         ".perl worked correctly on a recursive hashref";
 }
@@ -86,6 +95,7 @@ my @tests = (
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
     #?pugs skip 'hanging test'
+    #?niecza skip 'hanging test'
     is ~$foo.perl.eval, ~$foo,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
@@ -97,6 +107,7 @@ my @tests = (
 
 
 # RT #61918
+#?niecza todo
 {
     class RT61918 {
         has $.inst is rw;
@@ -135,12 +146,14 @@ my @tests = (
 {
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
+    #?niecza skip '>>>Stub code executed'
     ok eval(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }
 
 # RT #69869
 {
     is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
+    #?niecza todo 'Rat.perl.eval currently not working'
     is eval( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and eval'd is Rat";
 }
 
