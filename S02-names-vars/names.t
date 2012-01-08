@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 140;
+plan 141;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -55,6 +55,9 @@ plan 140;
     }
     is A::_b(), 'sub A::_b', 'A::_b() call works';
 }
+
+# RT #77750
+eval_dies_ok '::.^methods', ':: is not a valid package';
 
 # RT #63646
 {
