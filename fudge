@@ -105,21 +105,26 @@ sub fudgeblock {
             $DOES = $1;
             next;
         }
-        if (/^\s*\#\? (\S+?)[:\s] \s* (.*)/x and $1 eq $ME) {
-            $REALLY_FUDGED = 1;
-            $ARGS = $2;
-            if ($ARGS =~ s/^emit\s*//) {
-                $_ = $ARGS;
+        if (/^\s*\#\? (\S+?)[:\s] \s* ((\S*).*)/x) {
+            if ($1 eq $ME) {
+                $REALLY_FUDGED = 1;
+                $ARGS = $2;
+                if ($ARGS =~ s/^emit\s*//) {
+                    $_ = $ARGS;
+                    next;
+                }
+                if ($ARGS =~ s/^(\d+)\s*//) {
+                    $PENDING = $1;
+                }
+                else {
+                    $PENDING = 1;
+                }
+                $ARGS =~ s/^(\w+)\s*//;
+                $FUDGE = $1;
+            } elsif ($3 eq 'emit') {
+                $_ = '';
                 next;
             }
-            if ($ARGS =~ s/^(\d+)\s*//) {
-                $PENDING = $1;
-            }
-            else {
-                $PENDING = 1;
-            }
-            $ARGS =~ s/^(\w+)\s*//;
-            $FUDGE = $1;
         }
 
         next if /^\s*#/;
