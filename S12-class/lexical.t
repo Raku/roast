@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 =begin pod
 
@@ -40,6 +40,22 @@ eval_dies_ok  '{ my class B {}; B.new; }; B.new',
     ok $ltapint ~~ WeissBier,                      'can smart-match against parent class too';
     is $ltapint.describe, 'tastes like sweetcorn', 'can call overridden method';
     is $ltapint.name, 'Baltika 7',                 'can call inherited method that accesses inherited attribute';
+}
+
+# RT #69316
+{
+    class Forest {
+        class Frog {
+            method speak { "ribbit ribbit" }
+        };
+        has Frog $.frog;
+        method new() {
+            my Frog $frog .=  new;
+            self.bless(*, :$frog);
+        };
+    }
+    is Forest.new.frog.speak, 'ribbit ribbit',
+        'can construct objects of inner class in outer constructor';
 }
 
 # vim: ft=perl6
