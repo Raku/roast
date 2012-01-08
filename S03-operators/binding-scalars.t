@@ -11,7 +11,7 @@ These tests are derived from the "Item assignment precedence" section of Synopsi
 
 =end head1
 
-plan 30;
+plan 31;
 
 # Basic scalar binding tests
 {
@@ -34,6 +34,9 @@ plan 30;
 
   is($z, 'Just Another', 'z is still "Just Another" because it was not bound to x');
 }
+
+# RT #77594
+eval_dies_ok '0 := 1', 'cannot bind to a literal';
 
 
 # Binding and $CALLER::
