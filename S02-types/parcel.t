@@ -23,6 +23,7 @@ is (5, 7, 8).Array.elems, 3, '.Array contains the right number of elements';
 is ?(), False, 'empty Parcel is False';
 is ?(1,2,3), True, 'non-empty Parcel is True';
 
+#?niecza todo 'Issue #102'
 lives_ok { <5 7 8>[] }, 'can zen slice a Parcel';
 
 # vim: ft=perl6
