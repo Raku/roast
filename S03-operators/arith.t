@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 140;
+plan 142;
 
 my $five = abs(-5);
 
@@ -58,6 +58,10 @@ tryeq -13.0 % -4.0, -1;
     tryeq 5 % 2.5, 0;
     tryeq 2.5 % 1, .5;
 }
+
+# RT #107492
+ok 9 % (-9) == 0,    'modulo with negative divisor (1)';
+ok (-9) % (-9) == 0, 'modulo with negative divisor (2)';
 
 
 my $limit = 1e6;
