@@ -15,10 +15,7 @@ I/O tests
 
 plan 83;
 
-#?pugs emit if $*OS eq "browser" {
-#?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
-#?pugs emit   exit;
-#?pugs emit }
+#?pugs emit if $*OS eq "browser" { skip_rest "Programs running in browsers don't have access to regular IO."; exit; }
 
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }

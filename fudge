@@ -109,6 +109,7 @@ sub fudgeblock {
             $REALLY_FUDGED = 1;
             $ARGS = $2;
             if ($ARGS =~ s/^emit\s*//) {
+                $_ = <> while m/^\s*\#\?/;
                 $_ = $ARGS;
                 next;
             }

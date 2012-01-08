@@ -11,6 +11,7 @@ Tests for using parameterized roles as types, plus the of keyword.
 =end pod
 
 #?pugs emit skip_rest('parameterized roles'); exit;
+
 #?pugs emit =begin SKIP
 
 # L<S14/Parametric Roles>

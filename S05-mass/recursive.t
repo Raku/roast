@@ -25,8 +25,7 @@ is $/, "", 'with ""';
 is $/.from, 0, 'from 0';
 is $/.to, 0, 'to 0';
 
-#?pugs emit skip_rest 'infinite loop in PCR - XXX fix this before release!';
-#?pugs emit exit;
+#?pugs emit skip_rest 'infinite loop in PCR - XXX fix this before release!'; exit;
 
 ok "x" ~~ /<&r>$/, '"x" ~~ /<r>$/ matched';
 #?rakudo todo 'nom regression'
