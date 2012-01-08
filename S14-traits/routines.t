@@ -40,7 +40,6 @@ use Test;
     is &lolcat.description, 'missing description!', 'named trait handler applied other role without argument';
 }
 
-#?rakudo skip 'RT 69893'
 {
     my $recorder = '';
     multi trait_mod:<is>(Routine $c, :$woowoo!) {

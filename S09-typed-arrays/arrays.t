@@ -1,13 +1,15 @@
 use v6;
 use Test;
 
-plan 58;
+plan 59;
 
 # L<S09/Typed arrays/>
 
 {
     my Int @x;
     ok @x.of === Int, '@x.of of typed array (my Int @x)';
+    # RT #77748
+    ok @x.WHAT.gist ~~ /Array/, '.WHAT.gist of the type object makes sense';
     lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type';
     lives_ok { @x = 1..3    }, 'can assign range of the right type';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type';
