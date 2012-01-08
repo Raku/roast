@@ -7,7 +7,10 @@ plan 20;
 # TODO: *really* need a better smartlink
 # L<S02/Bare identifiers/"If the unrecognized subroutine name">
 
-#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" { skip_rest "PIL2JS and PIL-Run do not support eval() yet."; exit; }
+#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
+#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit   exit;
+#?pugs emit }
 
 # These tests are for parse-fails:
 # (They check that the parser doesn't abort, but they might still parse

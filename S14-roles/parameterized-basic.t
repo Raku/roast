@@ -11,7 +11,6 @@ Basic parameterized role tests, see L<S14/Roles>
 =end pod
 
 #?pugs emit skip_rest('parameterized roles'); exit;
-
 #?pugs emit =begin SKIP
 
 # L<S14/Run-time Mixins/may be parameterized>

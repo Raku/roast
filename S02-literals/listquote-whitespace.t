@@ -32,7 +32,10 @@ character and thus should B<not> break the list.
 
 =end kwid
 
-#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" { skip_rest "PIL2JS and PIL-Run do not support eval() yet."; exit; }
+#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
+#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit   exit;
+#?pugs emit }
 
 my @list = <a b c d>;
 my @separators = ("\t","\r","\n"," ");
@@ -54,8 +57,12 @@ for @nonseparators -> $sep {
   my @res = eval $str;
 
   my $vis = sprintf "%02x", ord $sep;
-  #?rakudo emit if $sep eq "\xa0" { todo('\xa0 should not be a separator for list quotes'); };
-  #?niecza emit if $sep eq "\xa0" { todo('\xa0 should not be a separator for list quotes'); };
+  #?rakudo emit if $sep eq "\xa0" {
+  #?rakudo emit      todo('\xa0 should not be a separator for list quotes');
+  #?rakudo emit };
+  #?niecza emit if $sep eq "\xa0" {
+  #?niecza emit      todo('\xa0 should not be a separator for list quotes');
+  #?niecza emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
 

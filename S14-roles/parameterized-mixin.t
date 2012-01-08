@@ -13,7 +13,6 @@ Might need some more review and love --moritz
 =end pod
 
 #?pugs emit skip_rest('parameterized roles'); exit;
-
 #?pugs emit =begin SKIP
 
 # L<S14/Run-time Mixins/may be parameterized>

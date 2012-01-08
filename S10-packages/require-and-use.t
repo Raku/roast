@@ -7,7 +7,10 @@ use Test;
 plan 18;
 #?pugs emit force_todo 1,2,4,5,7,9,11;
 
-#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" { skip_rest "PIL2JS and PIL-Run do not support eval() yet."; exit; }
+#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
+#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit   exit;
+#?pugs emit }
 
 my @tests = (
   "t::spec::packages::RequireAndUse1", { $^a == 42 },

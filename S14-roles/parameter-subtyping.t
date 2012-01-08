@@ -5,7 +5,6 @@ use Test;
 plan 22;
 
 #?pugs emit skip_rest('parameterized roles'); exit;
-
 #?pugs emit =begin SKIP
 
 # L<S14/Parametric Subtyping>
