@@ -28,6 +28,7 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
 
 # used to be RT #55962
 
+#?niecza todo 'Suspect test'
 {
     my @foo = 'AB'.split('');
     @foo[0]++;
@@ -64,6 +65,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 # RT #67852
 {
     lives_ok { 'normal'.trans() }, 'can .trans() on normal string';
+    #?niecza todo 'Buffer bitops NYI' 
     lives_ok { ('bit' ~& 'wise').trans() }, 'can .trans() on bitwise result';
 }
 
