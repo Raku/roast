@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 59;
 
 =begin pod
 
@@ -18,14 +18,23 @@ class D is B is C { }
 my @parents;
 
 @parents = A.^parents(:all);
-is +@parents, 2, 'right number of parents in list of all, from type-object';
+is +@parents, 2, 'right number of parents in list of all, from type-object, with :all';
 ok @parents[0].WHAT =:= Any, 'first parent is Any';
 ok @parents[1].WHAT =:= Mu, 'second parent is Mu';
 
 @parents = A.new.^parents(:all);
-is +@parents, 2, 'right number of parents in list of all, from instance';
+is +@parents, 2, 'right number of parents in list of all, from instance, with :all';
 ok @parents[0].WHAT =:= Any, 'first parent is Any';
 ok @parents[1].WHAT =:= Mu, 'second parent is Mu';
+
+@parents = A.^parents();
+is +@parents, 0, 'right number of parents in default list, from type-object';
+@parents = A.^parents(:excl);
+is +@parents, 0, 'right number of parents in default list, from type-object, explicit :excl';
+@parents = A.new.^parents();
+is +@parents, 0, 'right number of parents in default list, from instance';
+@parents = A.new.^parents(:excl);
+is +@parents, 0, 'right number of parents in default list, from instance, explicit :excl';
 
 @parents = D.^parents(:all);
 is +@parents, 5, 'right number of parents in list of all, from type-object, multiple inheritance';
@@ -35,6 +44,12 @@ ok @parents[2].WHAT =:= A, 'third parent is A';
 ok @parents[3].WHAT =:= Any, 'forth parent is Any';
 ok @parents[4].WHAT =:= Mu, 'fifth parent is Mu';
 
+@parents = D.^parents();
+is +@parents, 3, 'right number of parents in default list, from type-object, multiple inheritance';
+ok @parents[0].WHAT =:= B, 'first parent is B';
+ok @parents[1].WHAT =:= C, 'second parent is C';
+ok @parents[2].WHAT =:= A, 'third parent is A';
+
 @parents = D.new.^parents(:all);
 is +@parents, 5, 'right number of parents in list of all, from instance, multiple inheritance';
 ok @parents[0].WHAT =:= B, 'first parent is B';
@@ -42,6 +57,12 @@ ok @parents[1].WHAT =:= C, 'second parent is C';
 ok @parents[2].WHAT =:= A, 'third parent is A';
 ok @parents[3].WHAT =:= Any, 'forth parent is Any';
 ok @parents[4].WHAT =:= Mu, 'fifth parent is Mu';
+
+@parents = D.new.^parents(:excl);
+is +@parents, 3, 'right number of parents in list with explicit :excl, from instance, multiple inheritance';
+ok @parents[0].WHAT =:= B, 'first parent is B';
+ok @parents[1].WHAT =:= C, 'second parent is C';
+ok @parents[2].WHAT =:= A, 'third parent is A';
 
 @parents = B.^parents(:local);
 is +@parents, 1, 'right number of parents in list, from type-object, :local';
