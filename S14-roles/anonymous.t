@@ -36,6 +36,7 @@ plan 13;
 
   my $a = 3;
   is $a, 3, "basic sanity";
+  #?niecza todo 'This is being misinterpreted as an initial value'
   lives_ok {$a does role_generator("hi")}, "role generating function mixin";
   is $a, 3, "still basic sanity";
   #?niecza todo 'roles are run once and only capture the protopad'
