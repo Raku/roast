@@ -61,15 +61,7 @@ unless (-e $IN) {
     die "$0: No such test file '$IN'\n";
 }
 
-if (-e $OUT) {
-    if (-M $IN >= -M $OUT and -M $0 >= -M $OUT) {
-        print "$OUT\n";     # unchanged, so no need to refudge
-        exit(0);
-    }
-    else {
-        unlink $OUT;        # old fudged version, may or may not regenerate...
-    }
-}
+unlink $OUT;        # old fudged version, may or may not regenerate...
 
 my $REALLY_FUDGED = 0;
 my $OUTPUT = "";
