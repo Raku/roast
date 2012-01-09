@@ -40,41 +40,40 @@ is +@methods, 0, 'class C has no local methods (instance)';
 is +@methods, 1, 'class B has one local methods (proto)';
 is @methods[0].name(), 'foo', 'method name can be found';
 ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
-is @methods[0].returns, Num, 'method returns a Num (from .returns)';
-is @methods[0].of, Num, 'method returns a Num (from .of)';
-ok !@methods[0].multi, 'method is not a multimethod';
+is @methods[0].returns.gist, Num.gist, 'method returns a Num (from .returns)';
+is @methods[0].of.gist, Num.gist, 'method returns a Num (from .of)';
+ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
 
 @methods = B.new().^methods(:local);
 is +@methods, 1, 'class B has one local methods (instance)';
 is @methods[0].name(), 'foo', 'method name can be found';
 ok @methods[0].signature.perl ~~ /'$param'/, 'method signature contains $param';
-is @methods[0].returns, Num, 'method returns a Num (from .returns)';
-is @methods[0].of, Num, 'method returns a Num (from .of)';
-ok !@methods[0].multi, 'method is not a multimethod';
+is @methods[0].returns.gist, Num.gist, 'method returns a Num (from .returns)';
+is @methods[0].of.gist, Num.gist, 'method returns a Num (from .of)';
+ok !@methods[0].is_dispatcher, 'method is not a dispatcher';
 
 @methods = A.^methods(:local);
 is +@methods, 2, 'class A has two local methods (one only + one multi with two variants)';
-my ($num_multis, $num_onlys);
+my ($num_dispatchers, $num_onlys);
 for @methods -> $meth {
     if $meth.name eq 'foo' {
         $num_onlys++;
-        ok !$meth.multi, 'method foo is not a multimethod';
+        ok !$meth.is_dispatcher, 'method foo is not a dispatcher';
     } elsif $meth.name eq 'bar' {
-        $num_multis++;
-        #?rakudo todo 'nom regression'
-        ok $meth.multi, 'method bar is a multimethod';
+        $num_dispatchers++;
+        ok $meth.is_dispatcher, 'method bar is a dispatcher';
     }
 }
 is $num_onlys, 1, 'class A has one only method';
-is $num_multis, 1, 'class A has one multi methods';
+is $num_dispatchers, 1, 'class A has one dispatcher method';
 
 @methods = D.^methods();
-ok +@methods > 5, 'got all methods in hierarchy plus more from Any/Mu';
+ok +@methods == 5, 'got all methods in hierarchy but NOT those from Any/Mu';
 ok @methods[0].name eq 'foo' && @methods[1].name eq 'bar' ||
    @methods[0].name eq 'bar' && @methods[1].name eq 'foo',
    'first two methods from class D itself';
 is @methods[2].name, 'foo', 'method from B has correct name';
-is @methods[2].of, Num, 'method from B has correct return type';
+is @methods[2].of.gist, Num.gist, 'method from B has correct return type';
 ok @methods[3].name eq 'foo' && @methods[4].name eq 'bar' ||
    @methods[3].name eq 'bar' && @methods[4].name eq 'foo',
    'two methods from class A itself';
@@ -104,8 +103,8 @@ ok +@methods > 0, 'can get methods for Str (proto)';
 @methods = "i can haz test pass?".^methods();
 ok +@methods > 0, 'can get methods for Str (instance)';
 
-ok +List.^methods() > +Any.^methods(), 'List has more methods than Any';
-ok +Any.^methods() > +Mu.^methods(), 'Any has more methods than Mu';
+ok +List.^methods(:all) > +Any.^methods(:all), 'List has more methods than Any';
+ok +Any.^methods(:all) > +Mu.^methods(), 'Any has more methods than Mu';
 
 ok +(D.^methods>>.name) > 0, 'can get names of methods in and out of our own classes';
 ok D.^methods.perl, 'can get .perl of output of .^methods';
@@ -119,7 +118,7 @@ class PT2 is PT1 {
     method bar() { }
 }
 
-@methods = PT2.^methods();
+@methods = PT2.^methods(:all); # (all since we want at least one more)
 is @methods[0].name, 'bar',    'methods call found public method in subclass';
 is @methods[1].name, 'foo',    'methods call found public method in superclass (so no privates)';
 ok @methods[2].name ne '!pm1', 'methods call did not find private method in superclass';
