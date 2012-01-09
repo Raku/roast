@@ -12,10 +12,8 @@ isa_ok( eval(0.Num.perl), Num, 'eval 0.Num.perl is Num' );
 is_approx( eval(0.Num.perl), 0, 'eval 0.Num.perl is 0' );
 isa_ok( eval((-1).Num.perl), Num, 'eval -1.Num.perl is Num' );
 is_approx( eval((-1).Num.perl), -1, 'eval -1.Num.perl is -1' );
-#?rakudo todo "Num.perl generates a Rat"
 isa_ok( eval(1.1.Num.perl), Num, 'eval 1.1.Num.perl is Num' );
 is_approx( eval(1.1.perl), 1.1, 'eval 1.1.Num.perl is 1.1' );
-#?rakudo todo "Num.perl generates a Rat"
 isa_ok( eval((-1.1).Num.perl), Num, 'eval -1.1.Num.perl is Num' );
 is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
 isa_ok( eval(1e100.Num.perl), Num, 'eval 1e100.Num.perl is Num' );

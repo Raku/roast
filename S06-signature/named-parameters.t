@@ -228,7 +228,7 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 #?niecza 4 todo "sub params with the same name"
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
-#?rakudo 3 todo 'sub params with the same name'
+#?rakudo 2 todo 'sub params with the same name'
 eval_dies_ok 'sub svn28865( $a, :a($b) ) {}',
              'sub params with the same name via renaming';
 eval_dies_ok 'sub svn28865( $a, :a(@b) ) {}',

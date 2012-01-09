@@ -320,12 +320,10 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $b.y, 2, 'attribute cloned';
     $b.x = 3;
     is $b.x, 3, 'changed attribute on clone...';
-    #?rakudo 2 todo 'clone'
     #?niecza todo "original not affected"
     is $a.x, 1, '...and original not affected';
     my $c = $a.clone(x => 42);
     is $c.x, 42, 'clone with parameters...';
-    #?rakudo todo 'clone'
     #?niecza todo "original not affected"
     is $a.x, 1, '...leaves original intact...';
     is $c.y, 2, '...and copies what we did not change.';
