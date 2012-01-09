@@ -153,7 +153,6 @@ is(+(6..8), 3, 'numification');
     is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');
 }
 
-#?niecza skip 'Undeclared routine "pick"'
 {
     my @b = pick(*, 1..100);
     is @b.elems, 100, "pick(*, 1..100) returns the correct number of elements";
@@ -181,7 +180,6 @@ is(+(6..8), 3, 'numification');
     is pick("25", 1..100).elems, 25, "pick works Str arguments";
 }
 
-#?niecza skip 'Undeclared routine "pick"'
 {
     my @b = pick(*, 'b' .. 'y');
     is @b.elems, 24, "pick(*, 'b' .. 'y') returns the correct number of elements";
@@ -209,7 +207,6 @@ is(+(6..8), 3, 'numification');
     is pick("10", 'b' .. 'y').elems, 10, "pick works Str arguments";
 }
 
-#?niecza skip 'Undeclared routine "roll"'
 {
     my @b = roll(100, 1..100);
     is @b.elems, 100, "roll(100, 1..100) returns the correct number of elements";
@@ -236,7 +233,6 @@ is(+(6..8), 3, 'numification');
     is roll("25", 1..100).elems, 25, "roll works Str arguments";
 }
 
-#?niecza skip 'Undeclared routine "roll"'
 {
     my @b = roll(100, 'b' .. 'y');
     is @b.elems, 100, "roll(100, 'b' .. 'y') returns the correct number of elements";

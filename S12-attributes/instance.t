@@ -312,7 +312,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 
 # Tests for clone.
-#?niecza skip "Unable to resolve method clone in class CloneTest"
 {
     class CloneTest { has $.x is rw; has $.y is rw; }
     my $a = CloneTest.new(x => 1, y => 2);
@@ -322,10 +321,12 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     $b.x = 3;
     is $b.x, 3, 'changed attribute on clone...';
     #?rakudo 2 todo 'clone'
+    #?niecza todo "original not affected"
     is $a.x, 1, '...and original not affected';
     my $c = $a.clone(x => 42);
     is $c.x, 42, 'clone with parameters...';
     #?rakudo todo 'clone'
+    #?niecza todo "original not affected"
     is $a.x, 1, '...leaves original intact...';
     is $c.y, 2, '...and copies what we did not change.';
 }

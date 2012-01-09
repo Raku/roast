@@ -381,7 +381,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 #?rakudo skip 'optional variable in for loop (RT #63994)'
-#?niecza 2 skip 'NYI'
+#?niecza 2 todo 'NYI'
 {
   my $str = '';
   for 1..5 -> $x, $y? {

@@ -29,7 +29,6 @@ plan 12;
     is "{}", '', 'Interpolating an empty block is cool';
 }
 
-#?niecza skip 'Parcel.max'
 {
     my $rt65538_in = qq[line { (1,2,3).min }
 line 2

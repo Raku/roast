@@ -77,11 +77,9 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 
     # following is what we expect +* to do
     my @list = <1 10 2 3>;
-    #?niecza skip 'Use of uninitialized value in string context'
     is sort(-> $key {+$key}, @list), [1,2,3,10], '-> $key {+$key} generates closure to numify';
 
     # and here are two actual applications of +*
-    #?niecza skip 'Use of uninitialized value in string context'
     is sort($x, @list), [1,2,3,10], '+* generates closure to numify';
     is @list.sort($x), [1,2,3,10], '+* generates closure to numify';
 

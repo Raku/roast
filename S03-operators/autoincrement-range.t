@@ -132,7 +132,7 @@ my $x;
     is( --$x, "A\x[5ea]", "'B\x[5d0]'-- is 'A\x[5ea]'" );
     $x = "\x[5d0]ZZ";
     #?rakudo todo 'Hebrew'
-    #?niecza skip "Magical string decrement underflowed"
+    #?niecza todo "Magical string decrement underflowed"
     is( ++$x, "\x[5d1]AA", "'\x[5d0]ZZ'++ is '\x[5d1]AA'" );
     $x = "\x[5d1]AA";
     #?rakudo todo 'Hebrew'

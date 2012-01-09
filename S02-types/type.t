@@ -44,7 +44,7 @@ my Str $bar;
 
 # L<S02/Variables Containing Undefined Values/Variables with native types do not support undefinedness>
 #?rakudo skip 'native types (causes false positives if marked with todo)'
-#?niecza skip 'native types'
+#?niecza skip 'native types (noauto)'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
@@ -160,7 +160,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     ok List !~~ Array, 'A Seq is not an Array';
     #?niecza skip 'Expecting a term'
     ok Seq ~~ Positional, 'A Seq does Positional';
-    #?niecza skip 'Expecting a term'
     ok Array ~~ Positional, 'Array does Positional too';
 }
 

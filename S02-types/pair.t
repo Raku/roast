@@ -280,7 +280,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 ##  something in S06.  --pmichaud
 # L<S06/Named arguments/In other words :$when is shorthand for :when($when)>
 #
-#?niecza skip "eqv NYI for Pair"
 {
     my $item = 'bar';
     my $pair = (:$item);

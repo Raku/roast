@@ -264,7 +264,6 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 # L<S06/Named parameters/Bindings happen in declaration order>
 #?rakudo skip 'where constraints'
-#?niecza skip "Action method post_constraint not yet implemented"
 {
     my $t = '';
     sub order_test($a where { $t ~= 'a' },   #OK not used

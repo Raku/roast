@@ -310,7 +310,6 @@ Testing operator overloading subroutines
     is $frew, 5, 'infix redefinition of += works';
 }
 
-#?niecza skip 'No matching candidates to dispatch for &infix:<+>'
 {
     class MMDTestType {
         has $.a is rw;
@@ -385,7 +384,6 @@ Testing operator overloading subroutines
 # RT #65638
 {
     is eval('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
-    #?niecza skip 'Action method post_constraint not yet implemented'
     is eval('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
     #?rakudo todo 'RT 65638'

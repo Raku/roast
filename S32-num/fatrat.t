@@ -10,7 +10,6 @@ plan 252;
 isa_ok(FatRat.new(1,4), FatRat, "FatRat.new makes a FatRat");
 isa_ok( (1/4).FatRat, FatRat, "cast of Rat makes a FatRat");
 isa_ok( 1.Int.FatRat, FatRat, "cast of Int makes a FatRat");
-#?niecza todo
 isa_ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
 
 isa_ok(1 / 4, Rat, "/ makes a Rat");

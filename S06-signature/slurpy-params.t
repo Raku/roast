@@ -21,11 +21,11 @@ is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
 dies_ok {eval(' mixed()')},      'at least one arg required';
 
 #?rakudo skip 'types on slurpy params'
-#?niecza skip 'Nominal type check failed in binding Int *@args in x_typed_join; got List, needed Int'
 {
     sub x_typed_join(Int *@args){ @args.join('|') }
     is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
     is x_typed_join(1, 2, 5),     '1|2|5',  'Basic slurpy params with types 2';
+    #?niecza todo 'Types on slurpy params are checked'
     dies_ok { x_typed_join(3, 'x') }, 'Types on slurpy params are checked';
 }
 
@@ -250,7 +250,6 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
 
 # used to be RT #69424
 #?rakudo skip 'types on slurpy params'
-#?niecza skip 'Nominal type check failed in binding Int *@a in typed-slurpy; got List, needed Int'
 {
     sub typed-slurpy(Int *@a) { 5 }   #OK not used
     my Int @b;
