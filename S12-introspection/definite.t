@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 4;
+plan 6;
 
 =begin pod
 
@@ -19,3 +19,9 @@ my $x;
 is $x.DEFINITE, False,  ".DEFINITE on undeclared variable";
 $x = 'OMG THAT KANGAROO IS ON FIRE!!!11!';
 is $x.DEFINITE, True,   ".DEFINITE on variable with value";
+
+class C {
+    method DEFINITE() { True }
+}
+is C.DEFINITE,     False, "Class declaring DEFINITE method doesn't influence .DEFINITE macro";
+is C."DEFINITE"(), True,  "Quoting lets us call the method, however";
