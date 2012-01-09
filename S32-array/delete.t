@@ -59,6 +59,7 @@ sub make-string(@a) {
 
 # Results taken from Perl 5
 #?niecza todo "Not sure if this test is correct or not"
+#?rakudo todo "Not sure if this test is correct or not"
 {
   my @array = <a b c>;
   is ~@array.delete(2, *-1), "c b",
