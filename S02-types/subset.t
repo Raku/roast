@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 44;
+plan 42;
 
 =begin description
 
@@ -116,18 +116,6 @@ dies_ok { my Digit $x = 3.1 },
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
     dies_ok { $text = 'oops' }, 'subset of Str where pattern enforces pattern';
-}
-
-#?rakudo skip 'adding braces breaks subset?'
-#?niecza skip 'Unable to resolve method hints in class Any'
-{
-    subset Naht of Str where { /^[isnt|arent|amnot|aint]$/ };
-    my Naht $text;
-    $text = 'amnot';
-    is $text, 'amnot',
-       'assignment to subset of Str where pattern in braces worked';
-    dies_ok { $text = 'oops' },
-            'subset of Str where pattern in braces enforces pattern';
 }
 
 # RT #67256
