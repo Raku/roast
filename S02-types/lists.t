@@ -129,7 +129,7 @@ plan 29;
     "using lists as lvalues in a binding operation to swap three variables works";
 }
 
-#?rakudo skip 'auto-dereferencing of captures (?)'
+#?rakudo todo 'auto-dereferencing of captures (?)'
 #?niecza skip 'Cannot use value like Capture as a number'
 {
   my @array    = (1,2,3);

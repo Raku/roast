@@ -52,7 +52,6 @@ plan 20;
 }
 
 # L<S06/Argument list binding/single scalar parameter marked>
-#?rakudo skip 'nom regression'
 {
     sub bar6 ($a, $b, $c) { "$a!$b!$c" }
     sub foo6 (|$capture)  { bar6(|$capture) }
@@ -64,9 +63,11 @@ plan 20;
         'capture creation with \\$ works (2)';
     dies_ok { foo6(1,2) },      # too few args
         'capture creation with \\$ works (3)';
-    is try { foo6(a => 1, b => 2, c => 3) }, "1!2!3",
     #?pugs 2 todo "feature"
+    #?rakudo todo 'nom regression'
+    is try { foo6(a => 1, b => 2, c => 3) }, "1!2!3",
         'capture creation with \\$ works (4)';
+    #?rakudo todo 'nom regression'
     is try { foo6(1, b => 2, c => 3) }, "1!2!3",
         'capture creation with \\$ works (5)';
 }

@@ -121,14 +121,14 @@ plan 79;
 
 # Non-object (native) types are lowercase: int, num, complex, rat, buf, bit.
 
-#?rakudo skip 'int not implemented'
+#?rakudo todo 'int not implemented'
 #?niecza skip 'int not implemented'
 {
  my int $namcu =2;
  isa_ok($namcu,int);
 }
 
-#?rakudo skip 'num not implemented'
+#?rakudo todo 'num not implemented'
 #?niecza skip 'num not implemented'
 {
  my num $namcu =1.1;
