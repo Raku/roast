@@ -26,10 +26,12 @@ ok $scalar ~~ Any, 'value contained in a $var does Mu';
 }
 
 ok eval('List').does(Positional), "List does Positional";
+#?niecza skip 'Undeclared name Seq'
 ok eval('Seq').does(Positional), "Seq does Positional";
 ok eval('Array').does(Positional), "Array does Positional";
 ok eval('Range').does(Positional), "Range does Positional";
 ok eval('Parcel').does(Positional), "Parcel does Positional";
+#?niecza skip 'Undeclared name Buf'
 ok eval('Buf').does(Positional), "Buf does Positional";
 #?rakudo todo "Capture does Positional"
 ok eval('Capture').does(Positional), "Capture does Positional";
@@ -40,10 +42,13 @@ ok %hash.does(Associative), 'uninitialized %var does Associative';
 %hash = {};
 ok %hash.does(Associative), 'value in %var does Associative';
 
-
+#?niecza todo
 ok eval('Pair').does(Associative), "Pair does Associative";
+#?niecza skip 'Undeclared name Set'
 ok eval('Set').does(Associative), "Set does Associative";
+#?niecza skip 'Undeclared name Bag'
 ok eval('Bag').does(Associative), "Bag does Associative";
+#?niecza skip 'Undeclared name KeyHash'
 ok eval('KeyHash').does(Associative), "KeyHash does Associative";
 #?rakudo todo "Capture does Associative"
 ok eval('Capture').does(Associative), "Capture does Associative";
@@ -52,6 +57,7 @@ ok eval('Capture').does(Associative), "Capture does Associative";
 sub foo {}
 ok &foo.does(Callable), 'a Sub does Callable';
 #?rakudo skip 'method outside class - fix test?'
+#?niecza skip 'Methods must be used in some kind of package'
 {
     method meth {}
     ok &meth.does(Callable), 'a Method does Callable';
@@ -64,6 +70,7 @@ ok &pro.does(Callable), 'a proto does Callable';
 
 # &token, &rule return a Method?
 #?rakudo skip 'token/rule outside of class and grammar; macro'
+#?niecza skip 'Methods must be used in some kind of package'
 {
     token bar {<?>}
     #?pugs todo 'feature'
