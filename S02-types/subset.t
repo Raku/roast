@@ -22,6 +22,7 @@ dies_ok { eval('my Even $x = 3') },
               "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
+#?niecza todo
 dies_ok { eval('Even.new') }, 'Cannot instantiate a subtype';
 
 {
@@ -56,6 +57,7 @@ dies_ok { my Digit $x = 3.1 },
              'can create subset of hash';
 
     subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
+    #?niecza todo
     lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
     dies_ok { my Person $p = { :first<Charlie>, :last<Delta> } },
@@ -81,11 +83,15 @@ dies_ok { my Digit $x = 3.1 },
              'can create subset of Pair with where';
     dies_ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
+}
 
+#?niecza skip 'Seq NYI'
+{
     #?rakudo todo 'Seq not implemented in nom'
     subset Subseq of Seq;
     lives_ok { my Subseq $tsil = <a b c>.Seq },
              'can create subset of Seq';
+
 
     #?rakudo todo 'Seq not yet implemented in nom'
     subset FewOdds of Seq where { 2 > .grep: { $_ % 2 } }
@@ -113,6 +119,7 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 #?rakudo skip 'adding braces breaks subset?'
+#?niecza skip 'Unable to resolve method hints in class Any'
 {
     subset Naht of Str where { /^[isnt|arent|amnot|aint]$/ };
     my Naht $text;
@@ -124,6 +131,7 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 # RT #67256
+#?niecza skip "Exception NYI"
 {
     subset RT67256 of Int where { $^i > 0 }
     my RT67256 $rt67256;
@@ -177,6 +185,7 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 
 # RT #65308
+#?niecza skip 'Methods must be used in some kind of package'
 {
     subset FooStr of Str where /^foo/;
     multi method uc(FooStr $self:) { return "OH HAI" };
