@@ -29,6 +29,7 @@ plan 13;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Any;
 
   #?rakudo skip 'n-ary reduce'
+  #?niecza skip 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }
 
@@ -54,7 +55,7 @@ plan 13;
 }
 
 #?rakudo todo 'Reduce of one element list. See #61610'
-is( (1).list.reduce({$^a * $^b}), 0, "Reduce of one element list produces correct result");
+is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
 
 eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
 
