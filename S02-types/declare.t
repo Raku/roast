@@ -525,11 +525,13 @@ plan 79;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
+#?niecza skip 'Coercive declarations NYI'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
+#?niecza skip 'Coercive declarations NYI'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');
