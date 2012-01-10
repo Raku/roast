@@ -32,6 +32,7 @@ sub gen_hash {
 
     my $b = %h1<b>;
     #?rakudo skip 'unspecced'
+    #?niecza skip 'Invocant handling is NYI'
     is (exists %h1: 'a'), True, "Test existence for single key. (Indirect notation)";
     is (%h1.exists('a')), True, "Test existence for single key. (method call)";
 };
