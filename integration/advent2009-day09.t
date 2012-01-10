@@ -76,7 +76,6 @@ dies_ok {eval 'namen(@te)' }, 'Autoflattening doesnt exist';
 is (namen(|@te)), ('a','b','c'), "Put a | in front of the variable, and you're ok!";
 
 is <734043054508967647390469416144647854399310>.comb(/.**7/).join('|') , '7340430|5450896|7647390|4694161|4464785|4399310' , 'Test one liner at end of post (part1)';
-#?niecza skip 'Unable to resolve method trans in class Str'
 {
 	is '7340430'.fmt("%b").trans("01" => " #") , '###           ##   ### ' , 'Test one liner at end of post (part2)';
 }

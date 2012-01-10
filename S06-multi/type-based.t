@@ -7,7 +7,6 @@ plan 51;
 #L<S06/"Longname parameters">
 #L<S12/"Multisubs and Multimethods">
 
-#?niecza emit # foo (5) NYI
 multi foo (5)          { "Constant"  }
 multi foo (Int $bar)   { "Int "  ~ $bar  }
 multi foo (Str $bar)   { "Str "  ~ $bar  }
@@ -18,12 +17,11 @@ multi foo (Sub $bar)   { "Sub " ~ $bar() }
 multi foo (@bar) { "Positional " ~ join(', ', @bar) }
 multi foo (%bar)  { "Associative " ~ join(', ', %bar.keys.sort) }
 multi foo (IO $fh)     { "IO" }   #OK not used
-#?niecza emit # foo (5) NYI
+#?niecza emit # foo (Inf) NYI
 multi foo (Inf)        { "Inf" }
 #?niecza emit # foo (5) NYI
 multi foo (NaN)        { "NaN" }
 
-#?niecza todo
 is foo(5), 'Constant', 'dispatched to the constant sub';
 
 is(foo(2), 'Int 2', 'dispatched to the Int sub');
