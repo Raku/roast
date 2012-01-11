@@ -119,7 +119,6 @@ if (! $err) {
 ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env var";
 
 # %ENV must not be imported by default
-#?rakudo skip 'set_pmc() not implemented in class Exception'
 #?pugs todo 'bug'
 eval_dies_ok("%ENV", '%ENV not visible by default');
 
