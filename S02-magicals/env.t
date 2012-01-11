@@ -69,6 +69,7 @@ for %*ENV.kv -> $k,$v {
   if (%child_env{$k} !~~ $v) {
     if (! $err) {
       #?rakudo todo 'nom regression'
+      #?niecza todo 'Environment gets propagated to child.'
       flunk("Environment gets propagated to child.");
       $err++;
     };
@@ -101,6 +102,7 @@ for %*ENV.kv -> $k,$v {
   next if $k eq any <SHLVL _ OLDPWD PS1>;
   if (%child_env{$k} !~~ $v) {
     if (! $err) {
+      #?niecza todo 'Environment gets propagated to child.'
       flunk("Environment gets propagated to child.");
       $err++;
     };
@@ -119,10 +121,7 @@ ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env
 # %ENV must not be imported by default
 #?rakudo skip 'set_pmc() not implemented in class Exception'
 #?pugs todo 'bug'
-{
-    my $x = eval "%ENV";
-    ok $! ~~ m/Undeclared/, '%ENV not visible by default';
-}
+eval_dies_ok("%ENV", '%ENV not visible by default');
 
 # following doesn't parse yet
 #?rakudo skip 'import keyword'
