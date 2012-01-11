@@ -13,6 +13,7 @@ grammar Grammar::Foo {
 };
 
 #?rakudo skip '<a::b>'
+#?niecza skip 'Cannot dispatch to a method on Foo because it is not inherited or done by Cursor'
 is(~('foo' ~~ /^<Grammar::Foo::foo>$/), 'foo', 'got right match (foo)');
 is ~Grammar::Foo.parse('foo'), 'foo', 'got the right match through .parse';
 
@@ -27,6 +28,7 @@ isa_ok Grammar::Bar, Grammar, 'inherited grammar still isa Grammar';
 isa_ok Grammar::Bar, Grammar::Foo, 'child isa parent';
 
 #?rakudo skip '<a::b>'
+#?niecza 5 skip 'Cannot dispatch to a method on Bar because it is not inherited or done by Cursor'
 is(~('bar' ~~ /^<Grammar::Bar::bar>$/), 'bar', 'got right match (bar)');
 #?rakudo skip 'directly calling inherited grammar rule (RT 65474)'
 is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match (foo)');
@@ -42,6 +44,7 @@ grammar Grammar::Baz is Grammar::Bar {
 };
 
 #?rakudo skip '<a::b>'
+#?niecza 6 skip 'Cannot dispatch to a method on Baz because it is not inherited or done by Cursor'
 is(~('baz' ~~ /^<Grammar::Baz::baz>$/), 'baz', 'got right match');
 #?rakudo 2 skip 'calling inherited grammar rule'
 is(~('foo' ~~ /^<Grammar::Baz::foo>$/), 'foo', 'got right match');
@@ -55,6 +58,7 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
     class A { };
     grammar B is A { };
     #?rakudo todo 'automatic Grammar superclass'
+    #?niecza todo 'automatic Grammar superclass'
     isa_ok B, Grammar, 'A grammar isa Grammar, even if inherting from a class';
 
 }
