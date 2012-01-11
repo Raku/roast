@@ -3,12 +3,17 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 8;
+plan 12;
 
 # sequence with a limit function of arity 2
 
+#?niecza 2 skip 'Cannot use value like WhateverCode as a number'
 is (8,*/2 ... abs(*-*) < 2).join(', '), '8, 4, 2, 1', 'arity-2 convergence limit';
 is (8,*/2 ...^ abs(*-*) < 2).join(', '), '8, 4, 2', 'arity-2 excluded convergence limit';
+
+# rephrase to make Niecza happy
+is (8,*/2 ... (*-*).abs < 2).join(', '), '8, 4, 2, 1', 'arity-2 convergence limit';
+is (8,*/2 ...^ (*-*).abs < 2).join(', '), '8, 4, 2', 'arity-2 excluded convergence limit';
 
 # sequence with a limit function of arity 3
 
@@ -26,8 +31,13 @@ is (8,*/2 ...^ abs(*-*) < 2).join(', '), '8, 4, 2', 'arity-2 excluded convergenc
 
 # limit functions that limit sequence exactly at arity limit
 
+#?niecza 2 skip 'Cannot use value like WhateverCode as a number'
 is (2, 1, 0.5 ... abs(*-*) < 2).join(', '), '2, 1', 'ASAP arity-2 convergence limit';
 is (2, 1, 0.5 ...^ abs(*-*) < 2).join(', '), '2', 'ASAP arity-2 excluded convergence limit';
+
+# rephrase to make Niecza happy
+is (2, 1, 0.5 ... (*-*).abs < 2).join(', '), '2, 1', 'ASAP arity-2 convergence limit';
+is (2, 1, 0.5 ...^ (*-*).abs < 2).join(', '), '2', 'ASAP arity-2 excluded convergence limit';
 
 # limit function that accepts any number of args
 
