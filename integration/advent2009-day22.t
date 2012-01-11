@@ -31,6 +31,7 @@ multi sub infix:<==>(PieceOfString $lhs, PieceOfString $rhs --> Bool) {
 }
 
 my $d = PieceOfString.new(:length(6));
+#?niecza skip 'No candidates for dispatch to &infix:<==>'
 ok $b == $d, "override equality";
 
 # XXX This pragma was NOT used in the advent calendar.
