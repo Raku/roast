@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 31;
 
 # L<S05/Grammars/"Like classes, grammars can inherit">
 
@@ -15,7 +15,8 @@ grammar Grammar::Foo {
 #?rakudo skip '<a::b>'
 #?niecza skip 'Cannot dispatch to a method on Foo because it is not inherited or done by Cursor'
 is(~('foo' ~~ /^<Grammar::Foo::foo>$/), 'foo', 'got right match (foo)');
-is ~Grammar::Foo.parse('foo'), 'foo', 'got the right match through .parse';
+ok Grammar::Foo.parse('foo'), 'got the right match through .parse TOP';
+ok Grammar::Foo.parse('foo', :rule<foo>), 'got the right match through .parse foo';
 
 grammar Grammar::Bar is Grammar::Foo {
     token TOP { <any> };
@@ -28,15 +29,21 @@ isa_ok Grammar::Bar, Grammar, 'inherited grammar still isa Grammar';
 isa_ok Grammar::Bar, Grammar::Foo, 'child isa parent';
 
 #?rakudo skip '<a::b>'
-#?niecza 5 skip 'Cannot dispatch to a method on Bar because it is not inherited or done by Cursor'
+#?niecza 4 skip 'Cannot dispatch to a method on Bar because it is not inherited or done by Cursor'
 is(~('bar' ~~ /^<Grammar::Bar::bar>$/), 'bar', 'got right match (bar)');
 #?rakudo skip 'directly calling inherited grammar rule (RT 65474)'
 is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match (foo)');
-#?rakudo skip 'RT 77350'
-ok Grammar::Bar.parse('foo'), 'can parse foo through .parsed and inhertied subrule';
 #?rakudo 2 skip '<a::b>'
 is(~('foo' ~~ /^<Grammar::Bar::any>$/), 'foo', 'got right match (any)');
 is(~('bar' ~~ /^<Grammar::Bar::any>$/), 'bar', 'got right match (any)');
+
+#?rakudo skip 'RT 77350'
+ok Grammar::Bar.parse('foo'), 'can parse foo through .parsed and inhertied subrule';
+ok Grammar::Bar.parse('bar', :rule<bar>), 'got right match (bar)';
+ok Grammar::Bar.parse('foo', :rule<foo>), 'got right match (for)';
+ok Grammar::Bar.parse('bar', :rule<any>), 'got right match (any)';
+ok Grammar::Bar.parse('foo', :rule<any>), 'got right match (any)';
+nok Grammar::Bar.parse('boo', :rule<any>), 'No match for bad input (any)';
 
 grammar Grammar::Baz is Grammar::Bar {
     token baz { 'baz' };
@@ -53,6 +60,14 @@ is(~('bar' ~~ /^<Grammar::Baz::bar>$/), 'bar', 'got right match');
 is(~('foo' ~~ /^<Grammar::Baz::any>$/), 'foo', 'got right match');
 is(~('bar' ~~ /^<Grammar::Baz::any>$/), 'bar', 'got right match');
 is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
+
+ok Grammar::Baz.parse('baz', :rule<baz>), 'got right match (baz)';
+ok Grammar::Baz.parse('foo', :rule<foo>), 'got right match (foo)';
+ok Grammar::Baz.parse('bar', :rule<bar>), 'got right match (bar)';
+ok Grammar::Baz.parse('baz', :rule<any>), 'got right match (any)';
+ok Grammar::Baz.parse('foo', :rule<any>), 'got right match (any)';
+ok Grammar::Baz.parse('bar', :rule<any>), 'got right match (any)';
+nok Grammar::Baz.parse('boo', :rule<any>), 'No match for bad input (any)';
 
 {
     class A { };
