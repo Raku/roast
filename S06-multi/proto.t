@@ -14,6 +14,7 @@ is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 
 #?rakudo skip 'todo'
+#?niecza skip "Illegal redeclaration of routine 'bar'"
 {
     # Test that proto makes all further subs in the scope also be multi.
     proto bar() { "proto" }
@@ -37,6 +38,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
         return $accum * 2; # * 2 is intentional here
     }
 
+    #?niecza todo
     is ([+] 1,2,3), 12, "[+] overloaded by proto definition";
 }
 
@@ -45,7 +47,11 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 {
     proto prefix:<moose> ($arg) { $arg + 1 }
     is (moose 3), 4, "proto definition of prefix:<moose> works";
+}
 
+#?rakudo skip 'custom ops'
+#?niecza skip '>>>Stub code executed'
+{
     proto prefix:<elk> ($arg) {...}
     multi prefix:<elk> ($arg) { $arg + 1 }
     is (elk 3), 4, "multi definition of prefix:<elk> works";
