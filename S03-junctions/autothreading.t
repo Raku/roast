@@ -50,7 +50,6 @@ plan 85;
     ok(?$ok,        'junction structure maintained');
 }
 
-#?niecza skip 'autothreading multisubs'
 {
     # Check auto-threding works right on multi-subs.
     my $calls_a = 0;
@@ -101,7 +100,6 @@ plan 85;
     is($calls_c, 1, 'non-junctional dispatch still works');
 }
 
-#?niecza skip 'autothreading + MMD'
 {
     # Check auto-threading with multi-methods. Basically a re-hash of the
     # above, but in a class.
@@ -150,7 +148,6 @@ plan 85;
     is(@got[3], '135', 'called with correct parameters');
 }
 
-#?niecza skip 'autothreading + MMD'
 {
     # Ensure named params in multi dispatch auto-thread.
     my $count_a = 0;
