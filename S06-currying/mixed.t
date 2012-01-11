@@ -31,15 +31,20 @@ is((&foo.assuming(x => 1))(2), foo(1, 2), "same thing, but the other way around"
 
 is((&foo.assuming(:x(1)))(2), foo(1, 2), "curried sub, use colon style");
 
+#?niecza skip 'Multi colonpair syntax not yet understood'
 is((&foo.assuming(:x(1) :y(2)))(), foo(1, 2), "same thing, but more colon");
 
+#?niecza skip 'Unable to resolve method assuming:x<XXX> in class Sub'
 is((&foo.assuming:x(1))(2), foo(1, 2), "curried sub, another colon style");
 
+#?niecza skip 'Unable to resolve method assuming:x<XXX> in class Sub'
 is((&foo.assuming:x(1):y(2))(), foo(1, 2), "same thing, but more pre colon");
 
+#?niecza todo
 ok(!(try { &foo.assuming(f => 3) }), "can't curry nonexistent named param");
 
 # L<S06/Currying/The result of a use statement>
+#?niecza todo
 eval_lives_ok q'
     (use t::packages::Test) // {}).assuming(arg1 => "foo");
     die "not working" unless
