@@ -46,7 +46,7 @@ ok(!(try { &foo.assuming(f => 3) }), "can't curry nonexistent named param");
 # L<S06/Currying/The result of a use statement>
 #?niecza todo
 eval_lives_ok q'
-    (use t::packages::Test) // {}).assuming(arg1 => "foo");
+    (use t::packages::PackageTest) // {}).assuming(arg1 => "foo");
     die "not working" unless
         dummy_sub_with_params(arg2 => "bar") } eq "[foo] [bar]",
 ', "(use ...).assuming works";
