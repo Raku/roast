@@ -11,7 +11,7 @@ plan 15;
     #  % count_leaves(T,N) :- the binary tree T has N leaves
     
     # only 'C' and 'D' are leaves
-    my $tree = ['A', ['B', ['C', Mu, Mu], ['D', Mu, Mu]], Mu];
+    my $tree = ['A', ['B', ['C', Any, Any], ['D', Any, Any]], Any];
     
     sub count_leaves($tree){
         return 0 unless defined($tree);
@@ -34,7 +34,7 @@ plan 15;
     # the spec does not specify if the tree should be flattened in pre/infix or
     # postfix order, let's just assue prefix or infix
 
-    my $tree = ['A', ['B', ['C', Mu, Mu], ['D', Mu, Mu]], Mu];
+    my $tree = ['A', ['B', ['C', Any, Any], ['D', Any, Any]], Any];
     
     my @expected = ('C', 'D');
     
@@ -55,7 +55,7 @@ plan 15;
     #
     #    % internals(T,S) :- S is the list of internal nodes of the binary tree T.
      
-    my $tree = ['A', ['B', ['C', Mu, Mu], ['D', Mu, Mu]], ['E', Mu, Mu]];
+    my $tree = ['A', ['B', ['C', Any, Any], ['D', Any, Any]], ['E', Any, Any]];
     
     my @expected = ('A', 'B');
     
@@ -173,23 +173,23 @@ sub count($tree) {
     # 
     # Test your predicate in an appropriate way.
      
-    my $tree = ['n', ['k', ['c', ['a', Mu, Mu], ['h', ['g', ['e', Mu, Mu], Mu], Mu]], ['m', Mu, Mu]], ['u', ['p', Mu, ['s', ['q', Mu, Mu]], Mu], Mu]];
+    my $tree = ['n', ['k', ['c', ['a', Any, Any], ['h', ['g', ['e', Any, Any], Any], Any]], ['m', Any, Any]], ['u', ['p', Any, ['s', ['q', Any, Any]], Any], Any]];
       
     my $expected = ['n', 8, 1, 
             ['k', 6, 2, 
                 ['c', 2, 3, 
-                    ['a', 1, 4,  Mu, Mu], 
+                    ['a', 1, 4,  Any, Any], 
                     ['h', 5, 4,  
                         ['g', 4, 5, 
-                            ['e', 3, 6, Mu, Mu], Mu], Mu]], 
-                ['m', 7, 3, Mu, Mu]], 
+                            ['e', 3, 6, Any, Any], Any], Any]], 
+                ['m', 7, 3, Any, Any]], 
             ['u', 12, 2, 
-                ['p', 9, 3, Mu, 
+                ['p', 9, 3, Any, 
                     ['s', 11, 4,
-                        ['q', 10, 5, Mu, Mu]], Mu], Mu]];
+                        ['q', 10, 5, Any, Any]], Any], Any]];
     
     sub align($tree, $prev_x, $prev_y, $lr){
-        return Mu unless defined($tree);
+        return Any unless defined($tree);
         my $y = $prev_y + 1;
         my $x = 0;
         if $lr eq "l" {
@@ -237,23 +237,23 @@ sub count($tree) {
     # 
     # Test your predicate in an appropriate way.
      
-    my $tree = ['n', ['k', ['c', ['a', Mu, Mu], ['h', ['g', ['e', Mu, Mu], Mu], Mu]], ['m', Mu, Mu]], ['u', ['p', Mu, ['s', ['q', Mu, Mu]], Mu], Mu]];
+    my $tree = ['n', ['k', ['c', ['a', Any, Any], ['h', ['g', ['e', Any, Any], Any], Any]], ['m', Any, Any]], ['u', ['p', Any, ['s', ['q', Any, Any]], Any], Any]];
       
     my $expected = ['n', 8, 1, 
             ['k', 6, 2, 
                 ['c', 2, 3, 
-                    ['a', 1, 4,  Mu, Mu], 
+                    ['a', 1, 4,  Any, Any], 
                     ['h', 5, 4,  
                         ['g', 4, 5, 
-                            ['e', 3, 6, Mu, Mu], Mu], Mu]], 
-                ['m', 7, 3, Mu, Mu]], 
+                            ['e', 3, 6, Any, Any], Any], Any]], 
+                ['m', 7, 3, Any, Any]], 
             ['u', 12, 2, 
-                ['p', 9, 3, Mu, 
+                ['p', 9, 3, Any, 
                     ['s', 11, 4,
-                        ['q', 10, 5, Mu, Mu]], Mu], Mu]];
+                        ['q', 10, 5, Any, Any]], Any], Any]];
     
     sub align2($tree, $prev_x, $prev_y, $lr){
-        return Mu unless defined($tree);
+        return Any unless defined($tree);
         my $y = $prev_y + 1;
         my $x = 0;
         if $lr eq "l" {
@@ -307,7 +307,7 @@ sub count($tree) {
     # predicates in a single predicate tree-string/2 which can be used in
     # both directions.
     
-    my $tree = ['a', ['b', ['d'], ['e']], ['c', Mu, ['f', ['g']]]]; 
+    my $tree = ['a', ['b', ['d'], ['e']], ['c', Any, ['f', ['g']]]]; 
     my $expected = "a(b(d,e),c(,f(g,)))";
     
     sub stringify($tree) {
