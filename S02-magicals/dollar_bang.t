@@ -15,6 +15,7 @@ This test tests the C<$!> builtin.
 try { die "foo" };
 ok defined($!), 'error in try makes $! defined';
 try { 1 };
+#?niecza todo
 nok $!.defined, 'successful try { } resets $!';
 
 try { 1.nonexisting_method; };
@@ -42,9 +43,11 @@ try {
     die; # use the default argument
 }
 #?rakudo todo 'stringification of $!'
+#?niecza todo
 ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
 
 # RT #70011
+#?niecza skip 'undefine and Exception NYI'
 {
     undefine $!;
     try { die('goodbye'); }
