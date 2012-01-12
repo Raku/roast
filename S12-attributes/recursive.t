@@ -22,7 +22,7 @@ Test attributes with recursively typed attributes
         $a .= new();
         $b .= new(:attr($a));
     }, 'Can instantiate class with recursively-typed attribute';
-    isa_ok $a, 'A', 'Sanity check, $a is of type A';
+    isa_ok $a, A, 'Sanity check, $a is of type A';
     ok $b.attr === $a, "Recursively-typed attribute stores correctly";
     lives_ok { $a.attr = $b; }, "Cycles are fine";
     ok $b.attr.attr === $b, "Cycles resolve correctly";
@@ -45,6 +45,7 @@ Test attributes with recursively typed attributes
 }
 
 #L<S12/Invocants/current lexically-determined class ::?CLASS>
+#?niecza skip 'A type must be provided ???'
 {
     class C {
         has ::?CLASS $.attr is rw;
