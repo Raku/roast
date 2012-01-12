@@ -217,7 +217,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 # ($n) (++$m)
 # ($n) + (+$m)
 
-#?rakudo skip 'defining new operators'
 {
     my $n = 1;
     my $m = 2;
@@ -231,12 +230,14 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     #'$n ++$m' should be infix:<++>
     #no, really: http://irclog.perlgeek.de/perl6/2007-05-09#id_l328
     $n = 1; $m = 2;
+    #?rakudo todo 'operaor disambiguation'
     is(eval('$n ++$m'), 42, '$n ++$m with infix:<++> is $n ++ $m');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
 
     #'$n ++ $m' should be infix:<++>
     $n = 1; $m = 2;
+    #?rakudo todo 'operaor disambiguation'
     is(eval('$n ++ $m'), 42, 'postfix requires no space w/ infix ambiguity');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
@@ -251,6 +252,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     #Unspace inside operator splits it
     $n = 1; $m = 2;
+    #?rakudo skip 'parse error'
     is(($n+\ +$m), 3, 'unspace inside operator splits it');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
@@ -260,7 +262,9 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n, 1, 'check $n');
 
     $n = 1;
+    #?rakudo skip 'dotty postfix'
     is($n.++, 1, 'postfix dot');
+    #?rakudo skip 'test dependency'
     is($n, 2, 'check $n');
 
     $n = 1;
@@ -268,11 +272,14 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n, 2, 'check $n');
 
     $n = 1;
+    #?rakudo skip 'unspace + dotty postfix'
     is($n\ .++, 1, 'postfix unspace');
+    #?rakudo skip 'test dependency'
     is($n, 2, 'check $n');
 
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
     #?niecza skip 'Unable to resolve method id in class Str'
+    #?rakudo skip 'unspace + dotty postfix'
     is((foo\#`〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
     eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
