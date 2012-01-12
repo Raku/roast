@@ -23,7 +23,7 @@ is equivalent to:
 
 =end description
 
-plan 41;
+plan 35;
 
 my (@a,@b,@res);
 
@@ -134,23 +134,5 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 
 #?pugs todo 'bug'
 dies_ok({ 42.splice }, '.splice should not work on scalars');
-
-#?rakudo skip "splice is no longer spec'd as taking non-Int offset or size"
-{
-    @tmp = (1..5);
-    @a = splice @tmp, 1.3, 2;
-    is( @a, [2,3], "splice with non-int offset floors it (1)");
-    is( @tmp, [1,4,5], "splice with non-int offset floors it (2)");
-
-    @tmp = (1..5);
-    @a = splice @tmp, 1.3;
-    is( @a, [2,3,4,5], "splice with non-int offset floors it (no size, 1)");
-    is( @tmp, [1], "splice with non-int offset floors it (no size, 2)");
-
-    @tmp = (1..5);
-    @a = splice @tmp, 2, 1.3;
-    is( @a, [3], "splice with non-int size floors it (1)");
-    is( @tmp, [1,2,4,5], "splice with non-int size floors it (2)");
-}
 
 # vim: ft=perl6
