@@ -22,23 +22,28 @@ is .doit\ (),   'empty',        'method call with unspace';
 is (.doit: 1, 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit: 1, 2, 3, 4), 'a:1|b:2!3!4',  'list op with colon, slurpy';
 #?rakudo 3 skip 'switch-from-paren-to-listop form'
+#?niecza 3 skip 'Interaction between semiargs and args is not understood'
 is (.doit(1): 2, 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit(1, 2): 3),    'a:1|b:2!3',    'list op with colon';
 is (.doit\  (1, 2): 3), 'a:1|b:2!3',    'list op with colon, unspace';
 
 # L<S12/Fancy method calls/"if any term in a list is a bare closure">
 #?rakudo skip 'adverbial closures'
+#?niecza skip 'Excess arguments to Any.map, used 2 of 4 positionals'
 is (1..8).grep: { $_ % 2 }.map: { $_ - 1}.join('|'), '0|2|4|6', 
    'adverbial closure has right precedence and associativity';
 
 # Used to be Rakudo RT #61988, $.foo form didn't accept arguments
 
-class B {
-    method a ($a, $b) { $a + $b }
-    method b { $.a(2, 3) }
-}
+#?niecza skip 'No value for parameter $a in B.a'
+{
+    class B {
+        method a ($a, $b) { $a + $b }
+        method b { $.a(2, 3) }
+    }
 
-is B.new.b, 5, '$.a can accept arguments';
+    is B.new.b, 5, '$.a can accept arguments';
+}
 
 # RT #69350
 # test that you can't manipulate methods by writinig to the symbol table
