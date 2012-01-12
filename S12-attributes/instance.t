@@ -564,7 +564,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 # Binding an attribute (was RT #64850)
-#?niecza skip 'Cannot use bind operator with this LHS'
 {
     class RT64850 {
         has $.x;

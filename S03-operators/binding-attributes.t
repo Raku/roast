@@ -22,6 +22,7 @@ plan 12;
     is $obj1.x, 23, 'binding $!x instance attribute (2)';
 }
 
+#?niecza skip 'twigilless attributes'
 {
     my $var = 42;
     class Klass2 {
@@ -44,6 +45,7 @@ plan 12;
 
 # Public class attributes
 #?rakudo skip 'class attributes'
+#?niecza skip 'class attributes'
 {
     my $var = 42;
     class Klass3 { our $.x; method bind { $.x := $var } }
@@ -60,6 +62,7 @@ plan 12;
 
 # Private class attributes
 #?rakudo skip 'class attributes'
+#?niecza skip 'class attributes'
 {
     my $var = 42;
     class Klass4 {
