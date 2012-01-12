@@ -40,7 +40,8 @@ is(~('bar' ~~ /^<Grammar::Bar::any>$/), 'bar', 'got right match (any)');
 #?rakudo skip 'RT 77350'
 ok Grammar::Bar.parse('foo'), 'can parse foo through .parsed and inhertied subrule';
 ok Grammar::Bar.parse('bar', :rule<bar>), 'got right match (bar)';
-ok Grammar::Bar.parse('foo', :rule<foo>), 'got right match (for)';
+ok Grammar::Bar.parse('foo', :rule<foo>), 'got right match (foo)';
+#?rakudo 3 skip 'error'
 ok Grammar::Bar.parse('bar', :rule<any>), 'got right match (any)';
 ok Grammar::Bar.parse('foo', :rule<any>), 'got right match (any)';
 nok Grammar::Bar.parse('boo', :rule<any>), 'No match for bad input (any)';
@@ -50,12 +51,10 @@ grammar Grammar::Baz is Grammar::Bar {
     token any { <foo> | <bar> | <baz> };
 };
 
-#?rakudo skip '<a::b>'
+#?rakudo 6 skip '<a::b>'
 #?niecza 6 skip 'Cannot dispatch to a method on Baz because it is not inherited or done by Cursor'
 is(~('baz' ~~ /^<Grammar::Baz::baz>$/), 'baz', 'got right match');
-#?rakudo 2 skip 'calling inherited grammar rule'
 is(~('foo' ~~ /^<Grammar::Baz::foo>$/), 'foo', 'got right match');
-#?rakudo 4 skip '<a::b>'
 is(~('bar' ~~ /^<Grammar::Baz::bar>$/), 'bar', 'got right match');
 is(~('foo' ~~ /^<Grammar::Baz::any>$/), 'foo', 'got right match');
 is(~('bar' ~~ /^<Grammar::Baz::any>$/), 'bar', 'got right match');
@@ -64,6 +63,7 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 ok Grammar::Baz.parse('baz', :rule<baz>), 'got right match (baz)';
 ok Grammar::Baz.parse('foo', :rule<foo>), 'got right match (foo)';
 ok Grammar::Baz.parse('bar', :rule<bar>), 'got right match (bar)';
+#?rakudo 3 skip 'error'
 ok Grammar::Baz.parse('baz', :rule<any>), 'got right match (any)';
 ok Grammar::Baz.parse('foo', :rule<any>), 'got right match (any)';
 ok Grammar::Baz.parse('bar', :rule<any>), 'got right match (any)';
