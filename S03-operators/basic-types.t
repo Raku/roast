@@ -46,7 +46,7 @@ my $s2 = {};
 ok($s2 ~~ Hash, 'it is a Hash type (bare block)');
 
 # L<S06/"Placeholder variables">
-my $s2a = { $^a };
+my $s2a = { $^aaa };
 isa_ok($s2a, Block, 'it is a Parametric type (bare block with placeholder parameters)');
 
 {
@@ -60,8 +60,7 @@ my $int = 0;
 isa_ok($int, Int, 'it is an Int type');
 
 my $num = '';
-#?rakudo todo 'nom regression'
-ok(+$num ~~ Num, 'it is an Num type');
+ok(+$num ~~ Real, 'it is an Real type');
 
 my $float = 0.5e0;
 isa_ok($float, Num, 'it is an Num type');
