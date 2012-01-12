@@ -45,10 +45,9 @@ plan 12;
 
 # Public class attributes
 #?rakudo skip 'class attributes'
-#?niecza skip 'class attributes'
 {
     my $var = 42;
-    class Klass3 { our $.x; method bind { $.x := $var } }
+    class Klass3 { our $.x; method bind { $!x := $var } }
 
     try { Klass3.bind() };
 
@@ -62,7 +61,6 @@ plan 12;
 
 # Private class attributes
 #?rakudo skip 'class attributes'
-#?niecza skip 'class attributes'
 {
     my $var = 42;
     class Klass4 {
