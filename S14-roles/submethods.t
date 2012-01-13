@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 1;
+plan 4;
 
 =begin pod
 
@@ -27,5 +27,20 @@ class MyClass does AddBuild {}
 
 my $class = MyClass.new();
 ok( $class.did_build, 'Class that does role should do submethods of role' );
+
+
+role WithSM {
+    submethod ouch() { 'the pain' }
+    submethod conf() { 'FAIL' }
+}
+
+class Parent does WithSM {
+    submethod conf() { 'correct' }
+}
+class Child is Parent { }
+
+is Parent.ouch(), 'the pain', 'submethod composes ok...';
+is Parent.conf(), 'correct',  'submethod in class wins';
+dies_ok { Child.ouch() },     'composed submethod acts like one';
 
 # vim: ft=perl6
