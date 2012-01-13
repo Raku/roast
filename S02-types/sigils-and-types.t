@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 
-plan 28;
+plan 29;
 
 my $scalar;
 ok $scalar.WHAT === Any, 'unitialized $var does Mu';
@@ -91,6 +91,13 @@ ok &pro.does(Callable), 'a proto does Callable';
     dies_ok { &a = &b }, 'cannot just assign &b to &a';
     is a(), 'a', 'and the correct function is still in place';
 
+}
+
+# RT #74654
+{
+    sub f() { '42' };
+    my $x = &f;
+    is &$x(), '42', 'can use &$x() for invoking';
 }
 
 # vim: ft=perl6
