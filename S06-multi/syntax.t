@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -146,6 +146,10 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     is $x('moep'), '42moep', 'and that candidate works';
     dies_ok { $x(23) }, '... and does not contain the full multiness';
 }
+
+multi with_cap($a) { $a }
+multi with_cap($a,$b,|$cap) { return with_cap($a + $b, |$cap) }
+is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
 done;
 
