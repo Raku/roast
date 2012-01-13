@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 4;
 
 #L<S06/Operator overloading>
 
@@ -28,6 +28,21 @@ plan 3;
     };
 
     is A.new<foo bar>, <foo bar>, 'defining postcircumfix:<{ }> works';
+}
+
+# overloaded invoke
+# RT #76330
+# (even though the ticket title claims it, the actual problem was not related
+# to monkey typing/augmenting at all)
+
+{
+    class B {
+        has $.x;
+        method postcircumfix:<( )>($y) {
+            $.x ~ $y;
+        }
+    }
+    is B.new(x => 'a').('b'), 'ab', 'can overload invoke';
 }
 
 # vim: ft=perl6
