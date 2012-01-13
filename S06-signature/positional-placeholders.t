@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 #L<S06/Placeholder variables/>
 
@@ -44,7 +44,15 @@ eval_dies_ok ' {my $foo; $^foo;}(1) ', 'my $foo; $^foo; is an illegal redeclarat
 {
     sub rt99734 { "$^c is $^a and $^b" };
     is rt99734("cake", "tasty", "so on"), 'so on is cake and tasty',
-       'RT #99734';
+       'RT 99734';
+}
+
+# RT #73688
+{
+    sub inner(*@a) { @a.join(', ') };
+    sub outer { &^c($^a, $^b)  };
+    is outer('x', 'y', &inner), 'x, y',
+        'can have invocable placeholder with arguments';
 }
 
 # vim: syn=perl6
