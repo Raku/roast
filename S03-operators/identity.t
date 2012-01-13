@@ -25,7 +25,6 @@ plan 45;
   ok !($f =:= &say),   '$subref1 =:= $subref2 is false';
 }
 
-#?rakudo skip 'binding'
 {
   my ($a, $b, $c, $d);
 
@@ -51,7 +50,6 @@ plan 45;
 }
 
 # Rebinding of array elements - unspecced!
-#?rakudo skip 'unspecced'
 {
   my @a = (1,2,3);
   my @b = (1,2,3);
@@ -76,7 +74,6 @@ plan 45;
   ok  $test($foo), "binding of scalar subparam retains =:= (1)";
   ok !$test($bar), "binding of scalar subparam retains =:= (2)";
   $bar := $foo;
-  #?rakudo skip 'binding'
   ok  $test($bar), "binding of scalar subparam retains =:= (3)";
 }
 
@@ -87,7 +84,6 @@ plan 45;
   ok  $test($foo), "binding of scalar subparam marked is rw retains =:= (1)";
   ok !$test($bar), "binding of scalar subparam marked is rw retains =:= (2)";
   $bar := $foo;
-  #?rakudo skip 'binding'
   ok  $test($bar), "binding of scalar subparam marked is rw retains =:= (3)";
 }
 
@@ -102,7 +98,7 @@ plan 45;
   ok !$test($bar), "binding of slurpy array subparam retains =:= (2)";
   $bar := $foo;
   #?pugs todo 'unspecced'
-  #?rakudo skip 'unspecced'
+  #?rakudo todo 'unspecced'
   ok  $test($bar), "binding of slurpy array subparam retains =:= (3)";
 }
 
@@ -123,7 +119,7 @@ plan 45;
 
 class TestObj { has $!a }
 
-#?rakudo skip 'binding'
+
 {
   my $foo = ::TestObj.new(:a<3>);
   my $bar = ::TestObj.new(:a<3>);
