@@ -49,7 +49,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
     is (moose 3), 4, "proto definition of prefix:<moose> works";
 }
 
-#?rakudo skip 'custom ops'
 #?niecza skip '>>>Stub code executed'
 {
     proto prefix:<elk> ($arg) {...}
