@@ -119,7 +119,6 @@ isa_ok (1..*-1)(10), Range, '(1..*-1)(10) is a Range';
 is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 
 {
-    #?niecza skip 'Nominal type check failed in binding'
     is (1, Mu, 2, 3).grep(*.defined), <1 2 3>, '*.defined works in grep';
 
     my $rt68714 = *.defined;
@@ -129,7 +128,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # L<S02/The Whatever Object/skip first two elements>
-#?niecza skip 'Writing to readonly scalar'
 {
     # TODO: find out if this allowed for item assignment, or for list
     # assignment only
@@ -149,8 +147,7 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
     my $x = 3;
     {
         #?rakudo todo '* and lexicals'
-        #?niecza todo
-        is (* + (my $x = 5)).(8), 40,
+        is (* + (my $x = 5)).(8), 13,
             'can use a declaration in Whatever-curried expression';
         is $x, 5, 'and it did not get promoted into its own scope';
     }
