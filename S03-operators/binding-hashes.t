@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Item assignment precedence>
 
-plan 37;
+plan 38;
 
 # Binding of hash elements.
 # See thread "Binding of array elements" on p6l started by Ingo Blechschmidt:
@@ -179,5 +179,8 @@ plan 37;
   is ~$hashref.values.sort, "a c", 'binding %hash := $hashref works (2)';
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
+
+eval_dies_ok 'my %h = a => 1, b => 2; %h<a b> := (4, 5)',
+    'Cannot bind to hash slices';
 
 # vim: ft=perl6
