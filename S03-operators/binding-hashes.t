@@ -180,6 +180,7 @@ plan 38;
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
 
+#?niecza todo
 eval_dies_ok 'my %h = a => 1, b => 2; %h<a b> := (4, 5)',
     'Cannot bind to hash slices';
 
