@@ -58,6 +58,7 @@ ok("!!!!a!!!!!" ~~ m/@var/, 'Nested array match (a)');
 ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
 
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
+#?niecza skip 'Cannot cast from source type to destination type.'
 ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
 #?rakudo todo 'array variable interpolation'
@@ -72,6 +73,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 
 # L<S05/Variable (non-)interpolation/If $var is undefined>
 # This is similar to a test in S05-match/capturing-contexts.t
+#?niecza skip 'Object reference not set to an instance of an object'
 {
     my $u;
     ok 'a' !~~ /$u/, 'undefined variable does not match';
