@@ -149,6 +149,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 multi with_cap($a) { $a }
 multi with_cap($a,$b,|$cap) { return with_cap($a + $b, |$cap) }
+#?niecza skip 'hangs'
 is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
 done;
