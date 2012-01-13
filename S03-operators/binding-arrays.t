@@ -10,7 +10,6 @@ plan 47;
 # See thread "Binding of array elements" on p6l started by Ingo Blechschmidt:
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22915">
 
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -29,7 +28,6 @@ plan 47;
   is $var,      "f", "basic binding of an array element (3)";
 }
 
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -53,7 +51,6 @@ plan 47;
   is @array[1], "g",  "binding of array elements works with .delete (5)";
 }
 
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -74,7 +71,6 @@ plan 47;
   is @array[1], "g", "binding of array elements works with resetting the array (5)";
 }
 
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -149,7 +145,6 @@ plan 47;
 }
 
 # Binding of not yet existing elements should autovivify
-#?rakudo skip 'array element binding'
 {
   my @array;
   my $var    = "d";
