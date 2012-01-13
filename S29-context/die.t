@@ -47,6 +47,7 @@ my sub die_in_return () { return die };
 is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
 
 #?rakudo skip 'RT #67374'
+#?niecza skip 'test needs rewriting, eval does not catch exceptions'
 {
     eval 'die "bughunt"';
     my $error = "$!";
@@ -54,6 +55,7 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
     is "$!", $error, 'die with no argument uses $!';
 }
 
+#?niecza skip 'Object reference not set to an instance of an object'
 is_run( 'die "first line"',
         { status => sub { 0 != $^a },
           out    => '',
@@ -61,6 +63,7 @@ is_run( 'die "first line"',
         },
         'die with no output' );
 
+#?niecza skip 'Object reference not set to an instance of an object'
 is_run( 'say "hello"; die "Nos morituri te salutant!\n"',
         { status => sub { 0 != $^a },
           out    => "hello\n",
