@@ -39,6 +39,7 @@ is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
 #?rakudo todo 'RT #66006'
+#?niecza todo 'This test is pretty dubious IMO'
 try { eval '$foo.baz()' };
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
@@ -54,6 +55,7 @@ class C does R1 does R2 {
 }
 my $obj = C.new;
 #?rakudo 2 skip 'proto does not promote to multi'
+#?niecza 2 skip 'No candidates for dispatch to C.foo'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
 is($obj.foo('a','b'), 2, 'method composed into multi from role called');
 
@@ -74,12 +76,14 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 # RT #67024
 {
     try { eval 'class A { method a(){0}; method a($x){1} }' };
+    #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
 
 # RT 69192
 #?rakudo skip 'unknown bug'
+#?niecza skip 'NYI dottyop form .*'
 {
     role R5 {
         multi method rt69192()       { push @.order, 'empty' }
