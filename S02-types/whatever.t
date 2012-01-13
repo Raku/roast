@@ -146,7 +146,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 {
     my $x = 3;
     {
-        #?rakudo todo '* and lexicals'
         is (* + (my $x = 5)).(8), 13,
             'can use a declaration in Whatever-curried expression';
         is $x, 5, 'and it did not get promoted into its own scope';

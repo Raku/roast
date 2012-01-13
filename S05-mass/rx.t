@@ -1,6 +1,6 @@
 use Test;
 
-plan 724;
+plan 725;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -2476,6 +2476,11 @@ eval_dies_ok '/  /', 'ws null pattern';
 #?rakudo todo 'RT 70606'
 eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
 
-done;
+# RT #70007
+# undefined captures should fail to match
+# note the use of $1 (and not $0)
+#?niecza todo 'undefined capture'
+nok 'aa' ~~ /(.)$1/, 'undefined captures do not match';
 
+done;
 # vim: ft=perl6 sw=4 expandtab

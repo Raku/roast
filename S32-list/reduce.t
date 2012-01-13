@@ -54,7 +54,6 @@ plan 13;
   isa_ok(@reftypes[2], Hash, "third application of reduced hash subscript passed in a Hash");
 }
 
-#?rakudo todo 'Reduce of one element list. See #61610'
 is( (1).list.reduce({$^a * $^b}), 1, "Reduce of one element list produces correct result");
 
 eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper arity calculation');
