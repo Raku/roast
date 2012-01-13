@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 51;
+plan 52;
 
 # type based dispatching
 #
@@ -196,6 +196,14 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
     multi y($x, $y)       { 2 }   #OK not used
     is y(1, 2), 1, 'generics in multis (+)';
     is y(1, 2.5), 2, 'generics in multis (-)';
+}
+
+#?niecza skip 'no native types yet'
+{
+    # This once wrongly reported a multi-dispatch circularity.
+    multi rt107638(int $a) { 'ok' }
+    multi rt107638(Str $a where 1) { }
+    ok rt107638(1), 'native types and where clauses do not cause spurious circularities';
 }
 
 done;
