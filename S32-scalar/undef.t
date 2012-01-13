@@ -39,8 +39,10 @@ ok(!defined(Mu), "Mu is not defined");
 
     $a += 1;
     ok(defined($a), "initialized var is defined");
+    #?niecza emit skip("is_run not working",1); goto "SKIP";
     is_run( 'my $a; $a += 1', { err => '', out => '', status => 0 },
             'increment of undefined variable does not warn' );
+    #?niecza emit SKIP:
 
     undefine $a;
     ok(!defined($a), "undefine($a) does");
@@ -87,12 +89,15 @@ ok(!defined(Mu), "Mu is not defined");
     undefine(@ary);
 #?pugs todo 'bug'
 #?rakudo todo 'definedness of array'
+#?niecza todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
     #?rakudo emit #
+    #?niecza emit #
     undefine(%hash);
 #?pugs todo 'bug'
 #?rakudo todo 'definedness of hash'
+#?niecza todo 'definedness of hash'
     ok(!defined(%hash), "undefine hash");
 
     @ary = (1);
@@ -102,6 +107,7 @@ ok(!defined(Mu), "Mu is not defined");
 }
 
 #?rakudo skip 'access to &your_sub'
+#?niecza skip 'huh?'
 {
     sub a_sub { "møøse" }
 
@@ -162,6 +168,7 @@ Perl6-specific tests
 =end pod
 
 #?rakudo skip 'fun with undefine'
+#?niecza skip 'fun with undefine'
 {
     # aggregate references
 
@@ -185,6 +192,7 @@ Perl6-specific tests
 }
 
 #?rakudo skip 'autovivification'
+#?niecza skip 'push does not vivify'
 {
     my Array $an_ary;
     ok(!defined($an_ary), "my Array");
@@ -214,7 +222,7 @@ Perl6-specific tests
 
     ok(!defined($spot), "Unelaborated mutt");
     $spot .= new;
-    ok(defined $spot, " - now real");
+    ok(defined($spot), " - now real");
 }
 
 # rules
@@ -224,6 +232,7 @@ Perl6-specific tests
 
 # - unmatched alternative should bind to undef
 #?rakudo skip 'null PMC access in type()'
+#?niecza skip 'unspeclike use of %MY::'
 #?DOES 10
 {
     my ($num, $alpha);
@@ -315,9 +324,11 @@ is((Any) * (Any), 0, 'Any * Any');
 # should be false.  (At time of writing, @(Mu,) is true.)
 #?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
 #?rakudo 2 skip 'todo: lists, defined, truthness'
+#?niecza 2 skip 'huh?'
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
+#?niecza todo 'dubious'
 lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 
 {
@@ -328,14 +339,14 @@ lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
 }
 
 {
-    sub def { my $x = [] }   #OK not used
+    sub def is rw { my $x = [] }   #OK not used
     ok def() ~~ Array, 'sub returns array';
     #?rakudo todo 'nom regression'
     lives_ok { undefine def }, 'attempt to undefine returned array lives';
     ok def() ~~ Array, 'sub still returns array';
 
     dies_ok { undefine &def }, 'attempt to undefine sub dies';
-    ok defined &def, 'attempt to undefine sub fails';
+    ok defined(&def), 'attempt to undefine sub fails';
     ok def() ~~ Array, 'can still call sub after attempt to undefine it';
 }
 
