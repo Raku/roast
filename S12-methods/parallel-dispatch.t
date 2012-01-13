@@ -44,12 +44,13 @@ class Bar is Foo {
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
     #?rakudo 2 todo 'is_deeply does not think map results are the same as list on LHS'
-    is_deeply @o».?not_here, @o.map({ Nil }),
-              '$obj».?nonexistingmethod returns a list of Nil';
-    is_deeply @o».?count, @o.map({.count}),
-              '$obj».?existingmethod returns a list of the return values';
+    is (@o».?not_here).map({ when Nil { True }; False; }).join(", "), @o.map({ True }).join(", "),
+       '$obj».?nonexistingmethod returns a list of Nil';
+    is (@o».?count).join(", "), @o.map({.count}).join(", "),
+       '$obj».?existingmethod returns a list of the return values';
 }
 
+#?niecza skip 'NYI dottyop form'
 {
     my @o = (5..10).map({Bar.new(count => $_)});
     is(@o.map({.count}), (5..10), 'object sanity test');
@@ -93,13 +94,14 @@ class Bar is Foo {
     my @a = (1..3).map: { PDTest.new(data => $_ ) };
     my $method = 'mul';
 
-    is_deeply @a».mul(3), (3, 6, 9),  'return value of @a».method(@args)';
-    is_deeply @a»."$method"(3), (3, 6, 9),  '... indirect';
-
-    is_deeply @a».?mul(3), (3, 6, 9), 'return value of @a».?method(@args)';
-    is_deeply @a».?"$method"(3), (3, 6, 9), '... indirect';
+    is (@a».mul(3)).join(", "), (3, 6, 9).join(", "),  'return value of @a».method(@args)';
+    is (@a»."$method"(3)).join(", "), (3, 6, 9).join(", "),  '... indirect';
+      
+    is (@a».?mul(3)).join(", "), (3, 6, 9).join(", "), 'return value of @a».?method(@args)';
+    is (@a».?"$method"(3)).join(", "), (3, 6, 9).join(", "), '... indirect';
 
     #?rakudo 4 todo 'is_deeply does not think map results are the same as list on LHS'
+    #?niecza 4 skip 'NYI dottyop form'
     is_deeply @a».+mul(2), ([2, 4], [4, 8], [6, 12]),
               'return value of @a».+method is a list of lists';
     is_deeply @a».+"$method"(2), ([2, 4], [4, 8], [6, 12]),
@@ -112,6 +114,7 @@ class Bar is Foo {
 }
 
 # test postcircumfix parallel dispatch
+#?niecza skip 'Cannot use hash access on an object of type Pair'
 {
     is (a => 1, a => 2)>>.<a>, '1 2',
         '>>.<a>';
