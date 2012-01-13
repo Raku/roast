@@ -59,14 +59,13 @@ dies_ok({eval {; 42} }, 'block eval is gone');
 #?niecza skip 'Unable to resolve method encode in class Str'
 is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
 
-#?niecza skip 'Excess arguments to CORE eval, used 1 of 3 positionals'
 {
     #?rakudo skip 'eval coerce to string'
-    is eval 88, 88, 'eval of non-string works';
+    is eval(88), 88, 'eval of non-string works';
 
     my $number = 2;
     #?rakudo skip 'eval coerce to string'
-    is eval $number, $number, 'eval of non-string variable works';
+    is eval($number), $number, 'eval of non-string variable works';
 }
 
 # RT #77646
