@@ -60,6 +60,7 @@ plan 46;
 
 # L<S02/"Embedded Comments"/"no space" between "#" and bracket>
 #?niecza skip 'Opening bracket is required for #` comment'
+#?rakudo skip 'Whitespace character is not allowed as a delimiter'
 {
 
     ok !eval("3 * #` (invalid comment) 2"), "no space allowed between '#`' and '('";
@@ -143,6 +144,7 @@ plan 46;
 
 # L<S02/"Literals"/"# at beginning of line is always a line-end comment">
 {
+    #?rakudo skip 'fails'
     #?niecza todo
     eval_dies_ok "#<this is a comment\n'abc'",
         '#+bracket at start of line is an error';
@@ -153,6 +155,7 @@ plan 46;
 
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
+#?rakudo skip 'Too many positional parameters passed'
 {
     my $a;
     ok !eval '$a = #`\  (comment) 32', "comments can't contain unspace";
