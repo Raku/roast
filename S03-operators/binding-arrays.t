@@ -39,7 +39,7 @@ plan 47;
   @array.delete(1);
   # $var unchanged, but assigning to $var doesn't modify @array any
   # longer; similarily, changing @array[1] doesn't modify $var now
-  #?rakudo 3 todo 'array binding, delete'
+  #?rakudo todo 'array binding, delete'
   #?niecza todo 'array binding, delete'
   is $var,    "e",    "binding of array elements works with .delete (2)";
   is ~@array, "a  c", "binding of array elements works with .delete (3)";
@@ -47,6 +47,7 @@ plan 47;
   $var      = "f";
   @array[1] = "g";
   #?niecza todo 'array binding, delete'
+  #?rakudo todo 'array binding, delete'
   is $var,      "f",  "binding of array elements works with .delete (4)";
   is @array[1], "g",  "binding of array elements works with .delete (5)";
 }
@@ -92,7 +93,6 @@ plan 47;
   is @array[1], "g",   "binding of array elements works with rebinding the array (5)";
 }
 
-#?rakudo skip 'array element binding'
 {
   my sub foo (@arr) { @arr[1] = "new_value" }
 
@@ -105,7 +105,6 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a sub expecting an array behaves correctly (2)";
 }
 
-#?rakudo skip 'array element binding'
 {
   my sub foo (Array $arr) { $arr[1] = "new_value" }
 
@@ -118,7 +117,6 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a sub expecting an arrayref behaves correctly (2)";
 }
 
-#?rakudo skip 'array element binding'
 {
   my sub foo (@args) { @args[1] = "new_value" }
 
@@ -131,7 +129,6 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a slurpying sub behaves correctly (2)";
 }
 
-#?rakudo skip 'lexically scoped subs'
 {
   my sub foo (*@args) { push @args, "new_value" }
 
@@ -160,7 +157,6 @@ plan 47;
 
 # Binding with .splice
 #?niecza skip 'splice'
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -182,7 +178,6 @@ plan 47;
 }
 
 # Assignment (not binding) creates new containers
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -200,7 +195,6 @@ plan 47;
 }
 
 # Binding does not create new containers
-#?rakudo skip 'array element binding'
 {
   my @array  = <a b c>;
   my $var    = "d";
