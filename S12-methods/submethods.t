@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 27;
 
 =begin pod
 
@@ -12,10 +12,8 @@ Basic submethod tests. See L<S12/"Submethods">
 # L<S12/Submethods>
 {
 
-  lives_ok {
-    class Foo        { has $.foo_build; submethod BUILD() { $!foo_build++ } }
-    class Bar is Foo { has $.bar_build; submethod BUILD() { $!bar_build++ } }
-  }, "class definitions were parsed/run/compiled";
+  class Foo        { has $.foo_build; submethod BUILD() { $!foo_build++ } }
+  class Bar is Foo { has $.bar_build; submethod BUILD() { $!bar_build++ } }
 
   my $a;
   lives_ok {$a = Foo.new()},    "Foo.new() worked (1)";
@@ -70,6 +68,7 @@ Basic submethod tests. See L<S12/"Submethods">
 # See thread "Roles and BUILD" on p6l
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/21277">
 #?rakudo skip 'outer lexicals in roles'
+#?niecza todo
 {
   my $was_in_a1_build = 0;
   my $was_in_a2_build = 0;
@@ -97,6 +96,7 @@ Basic submethod tests. See L<S12/"Submethods">
 
   $B does (RoleB1, RoleB2);
   #?pugs 2 todo 'feature'
+  #?niecza 2 todo
   is $was_in_b1_build, 1, "roles' BUILD submethods were called now (1)";
   is $was_in_b2_build, 1, "roles' BUILD submethods were called now (2)";
 };
