@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 69;
+plan 71;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -271,5 +271,14 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; say A.new.y',
 #?rakudo todo 'RT 76452'
 eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
               'can declare a variable inside a sub call';
+
+# RT #77112
+# check that the presence of routines is checked before run time 
+{
+    my $bad = 0;
+    dies_ok { eval '$bad = 1; no_such_routine()' },
+        'dies on undeclared routines';
+    nok $bad, '... and it does so before run time';
+}
 
 # vim: ft=perl6
