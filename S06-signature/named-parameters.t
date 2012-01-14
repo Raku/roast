@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 95;
+plan 93;
 
 # L<S06/Required parameters/"Passing a named argument that cannot be bound to
 # a normal subroutine is also a fatal error.">
@@ -131,7 +131,7 @@ sub mandatory (:$param!) {
 }
 
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
-eval_dies_ok('mandatory()',  "not specifying a mandatory parameter fails");
+dies_ok {eval 'mandatory()' },  "not specifying a mandatory parameter fails";
 
 #?niecza skip "Unhandled trait required"
 {
@@ -225,14 +225,9 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 
 # L<S06/Parameters and arguments/"A signature containing a name collision">
 
-#?niecza 4 todo "sub params with the same name"
+#?niecza 2 todo "sub params with the same name"
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
-#?rakudo 2 todo 'sub params with the same name'
-eval_dies_ok 'sub svn28865( $a, :a($b) ) {}',
-             'sub params with the same name via renaming';
-eval_dies_ok 'sub svn28865( $a, :a(@b) ) {}',
-             'sub params with same name via renaming and different types';
 eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
              'sub params with the same name and different types';
 
