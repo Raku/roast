@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 97;
+plan 98;
 
 #L<S03/Autoincrement precedence>
 
@@ -261,6 +261,12 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     is( :2<1.1> * 10 ** 10,        15_000_000_000, 'binary number to power of 10' );
     is( :2<1.1*10**10>,        15_000_000_000, 'Power of ten in <> works');
     
+}
+
+# RT #77016
+{
+    ok 1 / 10000000000000000000000000000000 < 1/1000,
+        'can construct Rat (or similar) with big denominator';
 }
 
 
