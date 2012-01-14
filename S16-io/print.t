@@ -24,7 +24,7 @@ print "1..12\n";
 }
 
 {
-    "ok 5 - method form of print\n".print;
+   "ok 5 - method form of print\n".print;
 }
 
 {
@@ -37,9 +37,11 @@ print "1..12\n";
 # FILEHANDLE.print(LIST)
 #  FILEHANDLE.print: LIST
 #  same holds for say, even though it is not (yet?) explicitly mentioned
- 
+
 {
+    #?niecza emit #
     print $*OUT: 'ok 7 - print with $*OUT: as filehandle' ~ "\n";
+    #?niecza emit print "not ok 7 # TODO\nnot ok 8 # TODO" #
     say $*OUT: 'ok 8 - say with $*OUT: as filehandle';
 }
 
