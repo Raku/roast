@@ -57,6 +57,7 @@ is $x.in_Something, 'ab', 'basic OO sanity';
 }
 
 #?rakudo skip "Soft area of spec"
+#?niecza skip 'Seq NYI'
 {
     augment class Seq {
         method first-and-last {
