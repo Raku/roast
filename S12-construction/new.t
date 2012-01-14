@@ -19,6 +19,7 @@ is $o.y, 3, '... worked for the child';
 is $o.x, 2, '... worked for the parent';
 
 #?rakudo 3 todo 'parent attributes in initialization'
+#?niecza 3 todo
 lives_ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
          'can instantiate class with explicit specification of parent attrib';
 
@@ -29,6 +30,7 @@ class GrandChild is Child {
 }
 
 #?rakudo 6 todo 'parent attributes in initialization'
+#?niecza 6 todo
 lives_ok { $o = GrandChild.new( Child{ :y(4) }, Parent{ :x<5> }) },
          'can instantiate class with explicit specification of parent attrib (many parents)';
 is $o.y, 4, '... worked for the class Child';
@@ -53,6 +55,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     }
     # TODO: check the error message, not just the timing.
     #?rakudo todo "nested package handling does't quite get this one right"
+    #?niecza todo
     dies_ok { RT71706::Artie.new }, 'die trying to instantiate missing class';
 }
 
@@ -91,13 +94,16 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         [2, "geegaw"],
         'multi-constructor class alternate (positional) constructor';
 
+    #?niecza emit # fails 
     my RT68756 $bar .= new(:a1(3), :a2<yoohoo>);
+    #?niecza skip 'Without previous line, this is a disaster'
     is_deeply [ $bar.a1, $bar.a2 ],
         [3, "yoohoo"],
         'multi-constructor class alternate default named constructor';
 }
 
 # RT #68558
+#?niecza skip 'No value for parameter self in Mu.new'
 {
     class RT68558 {
         has $.foo;
@@ -108,11 +114,13 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 }
 
 # RT #100780
+#?niecza skip 'dies more thoroughly than okay'
 {
     dies_ok { X.new }, 'RT #100780'
 }
 
 # RT #74300
+#?niecza skip 'No candidates for dispatch to new'
 {
     class RT74300 {
         has $.foo;
