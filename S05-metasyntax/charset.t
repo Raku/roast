@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 29;
+plan 31;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -73,6 +73,11 @@ ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
 #?rakudo todo 'RT 100650'
 ok 'ab' ~~ /^(.*) b/,
     'Quantifiers in capture groups work (RT 100650)';
+
+# RT #74012
+# backslashed characters in char classes
+ok '[]\\' ~~ /^ <[ \[ .. \] ]>+ $ /, 'backslashed chars in char classes';
+nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
 
 done;
 
