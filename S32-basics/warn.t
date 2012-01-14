@@ -1,11 +1,30 @@
 use v6;
 use Test;
 
-plan 4;
+plan 6;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
 use Test::Util;
+
+{
+    # RT #69520
+    my $alive = 0;
+    try {
+        warn "# It's OK to see this warning during a test run";
+        $alive = 1;
+    }
+    ok $alive, 'try blocks do not catch exceptions'
+}
+
+{
+    my $caught = 0;
+    {
+        CONTROL { default { $caught = 1 } };
+        warn "# You shouldn't see this warning";
+    }
+    ok $caught, 'CONTROL catches exceptions'
+}
 
 is_run 'use v6; warn; say "alive"',
     {
