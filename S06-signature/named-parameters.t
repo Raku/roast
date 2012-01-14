@@ -21,7 +21,7 @@ plan 95;
     is c(w => 3), 3, 'Named argument passes an integer, not a Pair';
     my $w = 5;
     is c(:$w), 5, 'can use :$x colonpair syntax to call named arg';
-    eval_dies_ok 'my $y; c(:$y)', 'colonpair with wrong variable name dies';
+    dies_ok {eval('my $y; c(:$y)')}, 'colonpair with wrong variable name dies';
 }
 
 {
