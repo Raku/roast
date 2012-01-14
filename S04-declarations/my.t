@@ -247,7 +247,7 @@ my $z = 42; #OK not used
 eval_lives_ok 'my (%h?) #OK', 'my (%h?) lives';
 
 #RT 63588
-eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; say A.new.y', 
+eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
 #RT #72814
