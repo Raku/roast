@@ -29,8 +29,8 @@ nok $b lt $a,    'lt -';
  ok $b gt $a,    'gt +';
 nok $b gt $b,    'gt -';
 nok $a gt $b,    'gt -';
-is  $a cmp $a, 0, 'cmp (same)';
-is  $a cmp $b,-1, 'cmp (smaller)';
-is  $b cmp $a, 1, 'cmp (larger)';
+is  $a cmp $a, Order::Same, 'cmp (same)';
+is  $a cmp $b, Order::Increase, 'cmp (smaller)';
+is  $b cmp $a, Order::Decrease, 'cmp (larger)';
 
 is_deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
