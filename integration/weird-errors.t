@@ -18,6 +18,7 @@ is_run(
        'Can say $!.WHAT in a CATCH block',
 );
 
+#?niecza todo
 is_run(
        '[].WHAT.say',
        { status => 0, out => "Array()\n"},
@@ -25,6 +26,7 @@ is_run(
 );
 
 # RT #70922
+#?niecza todo "Frustating -- seems to fail because of other warnings"
 is_run(
     'class A { method postcircumfix:<{ }>() {} }; my &r = {;}; if 0 { if 0 { my $a } }',
     { status => 0, out => '', err => ''},
@@ -34,5 +36,6 @@ is_run(
 eval_dies_ok 'time(1, 2, 3)', 'time() with arguments dies';
 
 # RT #76996
+#?niecza todo
 lives_ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
