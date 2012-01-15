@@ -63,6 +63,7 @@ is("a\0" cmp "a", Order::Decrease, 'a\0 cmp a is decrease');
     ok $a != 4, '$a != 4';
     nok $a != 3, 'not true that $a != 3';
     
+    #?rakudo 4 todo 'nom regression'
     lives_ok { $a < 5 }, '$a < 5 lives okay';
     lives_ok { $a <= 5 }, '$a <= 5 lives okay';
     lives_ok { $a > 5 }, '$a > 5 lives okay';
