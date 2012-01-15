@@ -55,19 +55,17 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
     is "$!", $error, 'die with no argument uses $!';
 }
 
-#?niecza skip 'Object reference not set to an instance of an object'
 is_run( 'die "first line"',
         { status => sub { 0 != $^a },
           out    => '',
-          err    => rx/^'first line'/,
+          err    => rx/'first line'/,
         },
         'die with no output' );
 
-#?niecza skip 'Object reference not set to an instance of an object'
 is_run( 'say "hello"; die "Nos morituri te salutant!\n"',
         { status => sub { 0 != $^a },
           out    => "hello\n",
-          err    => rx/^'Nos morituri te salutant!' \n/,
+          err    => rx/'Nos morituri te salutant!' \n/,
         },
         'say something and die' );
 
