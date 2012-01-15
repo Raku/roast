@@ -116,6 +116,7 @@ is $y.test,     42,         'method from other role was OK too';
 
 # RT #77184
 #?niecza skip 'Twigil ! is only valid on attribute definitions'
+#?rakudo skip 'Twigil ! is only valid on attribute definitions'
 {
     lives_ok { role A { my $!foo; }; role B { my $!foo; }; class C does A does B {} }, 'RT #77184'
 }
