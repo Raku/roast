@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 27;
+plan 23;
 
 class Foo {
     our $.bar = 23;
@@ -41,17 +41,6 @@ lives_ok { $test4 = Quux.new() },
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';
 my $test5 = 0;
 dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in subclass; we do not magically ignore it';
-#?rakudo 4 todo 'class attributes'
-my $test6 = 0;
-#?niecza 2 todo 'insane - unspecced?'
-lives_ok { $test6 = Quux.^bar}, 'class attribute accessible via ^name';
-is $test6, 23, 'class attribute via ^name really works';
-my $test7 = 0;
-#?pugs 2 todo 'feature'
-#?niecza 2 todo 'insane - unspecced?'
-lives_ok {$test7 = $test4.^bar},
-    'class attribute accessible via ^name called on instance';
-is $test7, 23, 'class attribute via $obj.^name really works';
 
 # L<S12/Class methods/"you can associate a method with the current
 # metaclass instance">
