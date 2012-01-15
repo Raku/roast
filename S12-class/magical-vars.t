@@ -36,7 +36,7 @@ class SimpleClass does Bar {}
   my $foo_obj = Foo.new;
   my $class   = $foo_obj.get_class_normal;
   my $package = $foo_obj.get_package_normal;
-  is( $package, Foo, '$?PACKAGE should be the package name' );
+  is( $package.gist, Foo.gist, '$?PACKAGE should be the package name' );
 
   ok( $class ~~ Foo, 'the thing returned by $?CLASS in our class smartmatches against our class' );
   my $forty_two;
@@ -58,10 +58,10 @@ class SimpleClass does Bar {}
   my $package = $bar.get_package_normal;
 
   #?pugs todo 'oo'
-  is( $package, SimpleClass, '$?PACKAGE should be the package name');
+  is( $package.gist, Bar.gist, '$?PACKAGE should be the role package name - it is not generic like $?CLASS');
 
   #?pugs todo 'bug'
-  is $class ~~ ::SimpleClass, 'the thing returned by $?CLASS in our role smartmatches against our class';
+  ok $class ~~ ::SimpleClass, 'the thing returned by $?CLASS in our role smartmatches against our class';
   my $forty_two;
   lives_ok { my $obj = $class.new; $forty_two = $obj.dummy },
     'the class returned by $?CLASS in our role way really our class (1)';
@@ -79,7 +79,7 @@ class SimpleClass does Bar {}
   my $bar  = SimpleClass.new;
   my $role = $bar.get_role_normal;
 
-  ok $role ~~ 'Bar', 'the returned by $?ROLE smartmatches against our role';
+  ok $role ~~ Bar, 'the returned by $?ROLE smartmatches against our role';
 }
 
 # Now the same with type vars
