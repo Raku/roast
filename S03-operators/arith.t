@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 142;
+plan 143;
 
 my $five = abs(-5);
 
@@ -323,6 +323,14 @@ eval_dies_ok '3 !+ 4',  'infix:<+> is not iffy enough';
 
 # RT #100768
 eval_lives_ok '-Inf', '-Inf warns (and yields 0) but does not give an error';
+
+# RT #108052
+{
+    my role orig-string[$o] { method Str() { $o.Str } };
+    my $a = 7 but orig-string['7'];
+    is ($a - 3).Str, '4',
+        'infix:<-> produces a proper Int, even if some of the types invovled have mixins';
+}
 
 done;
 
