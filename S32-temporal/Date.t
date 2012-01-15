@@ -105,14 +105,14 @@ sub d($x) { Date.new($x); }
     ok  $b >  $a, '> (+)';
     nok $a >  $b, '> (-)';
 
-    is $a cmp $a,  0, 'cmp ( 0)';
-    is $a cmp $b, -1, 'cmp (-1)';
-    is $c cmp $a,  1, 'cmp (+1)';
+    is $a cmp $a, Order::Same,     'cmp ( 0)';
+    is $a cmp $b, Order::Increase, 'cmp (-1)';
+    is $c cmp $a, Order::Decrease, 'cmp (+1)';
 
 
-    is $a <=> $a,  0, '<=> ( 0)';
-    is $a <=> $b, -1, '<=> (-1)';
-    is $c <=> $a,  1, '<=> (+1)';
+    is $a <=> $a, Order::Same,     '<=> ( 0)';
+    is $a <=> $b, Order::Increase, '<=> (-1)';
+    is $c <=> $a, Order::Decrease, '<=> (+1)';
 }
 
 done;
