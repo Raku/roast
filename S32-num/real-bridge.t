@@ -41,10 +41,10 @@ ok $one ~~ Real, "Fixed2 sanity test";
 ok $one-and-one-hundredth ~~ Real, "Fixed2 sanity test";
 ok $neg-pi ~~ Real, "Fixed2 sanity test";
 
-is $zero.succ, 1, "0.succ works";
-is $neg-pi.succ, -2.14, "(-3.14).succ works";
-is $zero.pred, -1, "0.pred works";
-is $neg-pi.pred, -4.14, "(-3.14).pred works";
+is_approx $zero.succ, 1, "0.succ works";
+is_approx $neg-pi.succ, -2.14, "(-3.14).succ works";
+is_approx $zero.pred, -1, "0.pred works";
+is_approx $neg-pi.pred, -4.14, "(-3.14).pred works";
 
 {
     my $i = $zero.Bool;
