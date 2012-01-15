@@ -12,22 +12,27 @@ be valid perl6.
 
 =end pod
 
-plan 4;
+plan 6;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/A leading & interpolates>
 
-regex abc { a b c } 
+my regex abc { a b c }
 
 my $var = "";
 ok("aaabccc" ~~ m/aa <{ $var ?? $var !! rx{abc} }> cc/, 'Rule block second');
 
-$var = rx/<.abc>/;
+$var = rx/<&abc>/;
 ok("aaabccc" ~~ m/aa <{ $var ?? $var !! rx{<.null>} }> cc/, 'Rule block first');
 
 $var = rx/xyz/;
+#?rakudo todo 'dunno'
 ok("aaabccc" !~~ m/aa <{ $var ?? $var !! rx{abc} }> cc/, 'Rule block fail');
 
-$var = rx/<.abc>/;
+$var = rx/<&abc>/;
 ok("aaabccc" ~~ m/aa <{ $var ?? $var !! rx{abc} }> cc/, 'Rule block interp');
+
+# RT #102860
+ok 'abc' ~~ /<{ '.+' }>/, 'interpolating string with meta characters';
+is $/.Str, 'abc', '... gives the right match';
 
 # vim: ft=perl6
