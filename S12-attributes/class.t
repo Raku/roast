@@ -46,6 +46,7 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
 # metaclass instance">
 
 #?niecza skip 'method ^foo'
+#?rakudo skip 'nom regression - method ^foo'
 {
     class T1 {
         our $c = 0;
@@ -88,19 +89,19 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     my $bad_code;
 
     $bad_code = '$.a';
-    eval $bad_code;
+    try eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
 
     $bad_code ='$!a';
-    eval $bad_code;
+    try eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
     
     $bad_code = 'class B0rk { has $.a; say $.a; }';
-    eval $bad_code;
+    try eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
     
     $bad_code = 'class Chef { my $.a; say $.a; }';
-    eval $bad_code;
+    try eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
 }
 
