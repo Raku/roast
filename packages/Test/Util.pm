@@ -91,8 +91,7 @@ sub get_out( Str $code, Str $input?, :@args) is export {
         $clobber( "$fnbase.code", $code ) if defined $code;
 
         my $perl6 = $*EXECUTABLE_NAME;
-
-        my $cmd = "$perl6 ";
+        my $cmd = $perl6 ~~ m:i/niecza/ ?? "mono $perl6 " !! "$perl6 ";
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
 #        diag("Command line: $cmd");
