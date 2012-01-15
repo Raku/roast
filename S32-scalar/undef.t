@@ -39,10 +39,9 @@ ok(!defined(Mu), "Mu is not defined");
 
     $a += 1;
     ok(defined($a), "initialized var is defined");
-    #?niecza emit skip("is_run not working",1); goto "SKIP";
+    #?niecza todo
     is_run( 'my $a; $a += 1', { err => '', out => '', status => 0 },
             'increment of undefined variable does not warn' );
-    #?niecza emit SKIP:
 
     undefine $a;
     ok(!defined($a), "undefine($a) does");
