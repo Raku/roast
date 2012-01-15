@@ -93,7 +93,7 @@ plan 8;
 }
 
 #?rakudo skip 'method BUILD should warn'
-#?niecza skip "is_run doesn't work yet"
+#?niecza todo
 {
     BEGIN { @*INC.push: 't/spec/packages' }
     use Test::Util;
