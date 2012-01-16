@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -81,5 +81,13 @@ is_run 'say 0080982',
         out => "80982\n",
         err => rx/ octal /,
     }, 'use of leading zero causes warning about octal';
+
+# RT #76986
+is_run 'my $ = 2; my $ = 3; say q[alive]',
+    {
+        status  => 0,
+        err     => '',
+        out     => "alive\n",
+    }, 'multiple anonymous variables do not warn or err out';
 
 # vim: ft=perl6
