@@ -9,6 +9,7 @@ sub Complex_str_test($value, $str_nucleus) {
     is ~$value, $str_nucleus, "~<$str_nucleus>";
     is $value.Str, $str_nucleus, "<$str_nucleus>.Str";
     is $value.gist, $str_nucleus, "<$str_nucleus>.gist";
+    #?rakudo todo 'Complex.perl'
     is $value.perl, "<$str_nucleus>", "<$str_nucleus>.perl";
 }
 
@@ -47,6 +48,7 @@ sub Rat_str_test($value, $str_nucleus) {
     is ~$value, ~$value.Num, "~<$str_nucleus>";
     is $value.Str, ~$value.Num, "<$str_nucleus>.Str";
     is $value.gist, ~$value.Num, "<$str_nucleus>.gist";
+    #?rakudo todo 'Rat.perl'
     is $value.perl, "<$str_nucleus>", "<$str_nucleus>.perl";
 }
 
