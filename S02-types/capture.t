@@ -27,11 +27,11 @@ plan 20;
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo3 ($a, :$named) { "$a!$named" }
-    #?rakudo skip 'nom regression'
     is foo3(|$capture), "1!arg",
         'simply capture creation with \\( works (3)';
 }
 
+#?rakudo skip 'nom regression'
 {
     my $capture = \(1, 'positional' => "pair");
 
@@ -104,10 +104,8 @@ plan 20;
     my $capture = \(:foo<bar>, :baz<grtz>);
     sub foo9 ($a,$b, :$foo, :$baz) { "$a!$b!$foo!$baz" }
 
-    #?rakudo todo 'nom regression'
     dies_ok { foo9(|$capture) },  # too few args
         "mixing ordinary args with captures (1)";
-    #?rakudo skip 'nom regression'
     is foo9(1, 2, |$capture), "1!2!bar!grtz",
         "mixing ordinary args with captures (2)";
 }
