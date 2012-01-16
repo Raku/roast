@@ -34,6 +34,7 @@ Basic C<kv> tests, see S32::Containers.
     is(~@kv, "a 1", '$pair.kv inner list matched expectation');
 }
 
+#?rakudo todo 'make kv() return a flat list, or fix test (or .sort)'
 {
     my $sub  = sub (Hash $hash) { $hash.kv };
     my %hash = (a => 1, b => 2);
@@ -41,6 +42,7 @@ Basic C<kv> tests, see S32::Containers.
     is ~$sub(%hash).sort, "1 2 a b", ".kv works with constant hash references";
 }
 
+#?rakudo todo 'make kv() return a flat list, or fix test (or .sort)'
 {
     # "%$hash" is not idiomatic Perl, but should work nevertheless.
     my $sub  = sub (Hash $hash) { %$hash.kv };
@@ -91,6 +93,7 @@ sub test4 (%h){
 }
 #?DOES 2
 #?niecza skip '.end NYI'
+#?rakudo skip 'dubious'
 test4 %hash;
 
 # sanity
@@ -109,6 +112,7 @@ for %hash.kv -> $key, $value {
     } }, 'aliases returned by %hash.kv should be rw (1)';
 
     #?pugs todo 'feature'
+    #?rakudo todo 'rw-kv'
     is %hash<b>, 102, 'aliases returned by %hash.kv should be rw (2)';
 }
 

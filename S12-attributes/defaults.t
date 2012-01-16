@@ -23,8 +23,7 @@ sub get_a_code {
 
 my $set_by_code_attr;
 
-class Foo {...}
-eval 'class Foo {
+class Foo {
     has $.num  = get_a_num();
     has $.str  = { get_a_str() };
     has $.code = { get_a_code() };
@@ -37,7 +36,7 @@ eval 'class Foo {
     has $.self_in_code = { self.echo };
 
     method echo { "echo" }
-}';
+};
 
 {
     is $got_a_num, 1, "default should be called at compile-time";
