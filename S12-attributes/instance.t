@@ -124,7 +124,6 @@ class Foo1 { has $.bar; };
 
 # L<S12/Semantics of C<bless>/If you name an attribute as a parameter, that attribute is initialized directly, so>
 
-#?niecza skip "Unhandled parameter twigil !"
 {
     class Foo6 {
         has $.bar is rw;
@@ -145,7 +144,6 @@ class Foo1 { has $.bar; };
 
 # check that doing something in submethod BUILD works
 
-#?niecza skip "Unhandled parameter twigil !"
 {
     class Foo6a {
         has $.bar is rw;
@@ -153,7 +151,7 @@ class Foo1 { has $.bar; };
         has $!hidden;
 
         submethod BUILD (:$!hidden, :$!bar = 10, :$!baz?) {
-            $.baz = 5;
+            $!baz = 5;
         }
         method get_hidden() { $!hidden }
     }
@@ -167,7 +165,6 @@ class Foo1 { has $.bar; };
 }
 
 # check that assignment in submethod BUILD works with a bare return, too
-#?niecza skip "Unhandled parameter twigil !"
 {
     class Foo6b {
         has $.bar is rw;
@@ -201,7 +198,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 }
 
 # check that doing something in submethod BUILD works
-#?niecza skip "Unhandled parameter twigil !"
 {
     class Foo7 {
         has $.bar is rw;
@@ -246,15 +242,14 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 # check mixture of positional/named args to BUILD
 
-#?niecza skip 'Virtual call $.a may not be used on partially constructed object'
 {
     class Foo9 {
         has $.a;
         has $.b;
         
         submethod BUILD($foo, :$bar) {
-            $.a = $foo;
-            $.b = $bar;
+            $!a = $foo;
+            $!b = $bar;
         }
     }
 
@@ -544,8 +539,8 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         has $.s is rw;
         has B $.b is rw;
         submethod BUILD {
-            $.b = B.new;
-            $.s = $.b.t(1, 2, 3);
+            $!b = B.new;
+            $!s = $!b.t(1, 2, 3);
         }
     }
 

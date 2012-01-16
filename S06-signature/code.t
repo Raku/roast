@@ -22,11 +22,9 @@ tester(sub ($x) { $collector = 3 * $x });
 ok $collector == 12, 'same with anonymous sub';
 
 sub tester2(&my_sub) { 1 }    #OK not used
-#?niecza todo
 dies_ok {eval 'tester2(42)' }, "can't pass thing that doesn't do Callable";
 
 sub not_returns_a_sub { 3 };
-#?niecza todo
 dies_ok { eval 'tester2(not_returns_a_sub)' }, 
         "can't pass thing that doesn't do Callable";
 
