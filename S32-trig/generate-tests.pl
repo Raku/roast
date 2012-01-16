@@ -1,5 +1,7 @@
 use v6;
 
+my Str $skip;
+
 sub degrees-to-radians($x) {
     $x * (312689/99532) / 180;
 }
@@ -163,7 +165,6 @@ class TrigFunction
         my $code = q[
             # $.function_name tests
 
-            my $iter_count = 0;
             for $.angle_and_results_name -> $angle
             {
                 $.setup_block
@@ -209,10 +210,9 @@ class TrigFunction
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
         my $angle_list = grep-and-repeat(eval($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
-        for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
+        for <Num Rat Complex Str NotComplex DifferentReal FatRat> -> $type {
             given $type {
-                when "Str" { $file.say: '#?niecza skip "Str math NYI"' }
-                when "DifferentReal" { $file.say: '#?niecza skip "DifferentReal math NY working"' }
+                when "FatRat" { $file.say: '#?rakudo skip "FatRat math NYI"' }
             }
             
             $file.say: '{';
@@ -269,10 +269,9 @@ class TrigFunction
                                                  {0 < $_.key() < pi / 2}), $.skip);
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;
-        for <Num Rat Complex Str NotComplex DifferentReal> -> $type {
+        for <Num Rat Complex Str NotComplex DifferentReal FatRat> -> $type {
             given $type {
-                when "Str" { $file.say: '#?niecza skip "Str math NYI"' }
-                when "DifferentReal" { $file.say: '#?niecza skip "DifferentReal math NY working"' }
+                when "FatRat" { $file.say: '#?rakudo skip "FatRat math NYI"' }
             }
             
             $file.say: '{';
@@ -326,12 +325,12 @@ my @sines = (
     degrees-to-radians(720) => 0
 );
 
-my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value }); #OK
 
-my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) - exp(-$_.key)) / 2.0 });
 
-my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
 class NotComplex is Cool {
@@ -354,7 +353,7 @@ class DifferentReal is Real {
     }
 
     multi method Bridge() {
-        self.value;
+        self.value.Num;
     }
 }            
 
@@ -383,7 +382,6 @@ my Str $inverted_function_name;
 my Str $angle_and_results_name;
 my Str $rational_inverse_tests;
 my Str $desired-result-code;
-my Str $skip;
 my Str $complex_check;
 my Str $plus_inf;
 my Str $minus_inf;
@@ -460,9 +458,9 @@ sub filter-type(@values is copy, $type) {
     @values;
 }
 
-for <Num Rat Int Str DifferentReal> -> $type1 {
-    if $type1 eq "DifferentReal" {
-        $file.say: "#?niecza skip 'DifferentReal math NYI'";
+for <Num Rat Int Str DifferentReal FatRat> -> $type1 {
+    if $type1 eq "FatRat" {
+        $file.say: "#?rakudo skip 'FatRat math NYI'";
     }
     
     $file.say: "\{";
@@ -479,11 +477,9 @@ for <Num Rat Int Str DifferentReal> -> $type1 {
     $file.say: "}";
     $file.say: "";
     
-    for <Num Rat Int Str DifferentReal> -> $type2 {
-        if $type1 eq "Str" || $type2 eq "Str" {
-            $file.say: "#?niecza skip 'Str math NYI'";
-        } elsif $type1 eq "DifferentReal" || $type2 eq "DifferentReal" {
-            $file.say: "#?niecza skip 'DifferentReal math NYI'";
+    for <Num Rat Int Str DifferentReal FatRat> -> $type2 {
+        if $type1 eq "FatRat" || $type2 eq "FatRat" {
+            $file.say: "#?rakudo skip 'FatRat math NYI'";
         }
         $file.say: '{';
         $file.say: "    # $type1 vs $type2 tests";
