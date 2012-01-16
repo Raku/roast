@@ -57,6 +57,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     $c( 2, 3, 4, 5 );
 
     #?rakudo 2 todo 'RT 63974'
+    #?niecza 2 todo
     is $topic, 2, '$_ got right value for code ref';
     is @topic_array, ( 3, 4, 5 ), '@_ got right value in code ref';
 }
@@ -85,6 +86,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 # Confirmed by p6l, see thread "Anonymous macros?" by Ingo Blechschmidt
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/21825">
 #?rakudo skip 'macros, compile time binding'
+#?niecza skip 'macros NYI'
 {
     # We do all this in a eval() not because the code doesn't parse,
     # but because it's safer to only call macro references at compile-time.
