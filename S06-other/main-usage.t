@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  17;
+plan  18;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -140,3 +140,8 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     },
     :args['-x', '23'],
     'short option with spacey value';
+
+is_run 'subset Command of Str where "run";
+multi MAIN(Command $c) { print 1 },
+multi MAIN()           { print 2 }',
+{ out => "2" };
