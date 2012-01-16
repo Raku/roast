@@ -12,7 +12,7 @@ multi sub postfix:<!>(Int $n) {
 is 3!, 6, 'factorial operator';
 
 class PieceOfString {
-    has Int $.length;
+    has $.length;
 }
 
 ## This example seems odd. Why is it passing 2 args to :length in the .new call?
