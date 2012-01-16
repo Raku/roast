@@ -50,6 +50,7 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
 }
 
 # we'll just check that this syntax is valid for now
+#?niecza todo 'invalid syntax'
 {
     eval_lives_ok('token foo {bar}', 'token foo {...} is valid');
     eval_lives_ok('regex baz {qux}', 'regex foo {...} is valid');
@@ -79,12 +80,14 @@ isa_ok rx/\;/, Regex,       'escaped ";" in rx// works';
 ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 # RT #64668
+#?niecza skip 'Exception NYI'
 {
     try { eval '"RT #64668" ~~ /<nosuchrule>/' };
     ok  $!  ~~ Exception, 'use of missing named rule dies';
     ok "$!" ~~ /nosuchrule/, 'error message mentions the missing rule';
 }
 
+#?niecza todo 'invalid syntax'
 eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
 
 # vim: ft=perl6
