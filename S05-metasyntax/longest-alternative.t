@@ -22,6 +22,7 @@ my $str = 'a' x 7;
 
 # now test with different order in the regex - it shouldn't matter at all
 
+#?niecza skip 'Regex modifier g not yet implemented'
 {
     ok $str ~~ m:g/aa|a|aaaa/, 'basic sanity with |, different order';
     is ~$/, 'aaaa', 'Longest alternative wins 1, different order';
@@ -58,15 +59,18 @@ my $str = 'a' x 7;
     my token word { \w+ };
     my token indirect_abb { <ab> 'b' }
 
+    #?niecza todo 'LTM - literals in tokens'
     ok ('abb' ~~ /<&ab> | <&abb> /) && ~$/ eq 'abb',
        'LTM - literals in tokens';
 
+    #?niecza todo 'LTM - literals in nested tokens'
     ok ('abb' ~~ /<&ab> | <&indirect_abb> /) && $/ eq 'abb',
        'LTM - literals in nested torkens';
 
     ok ('abb' ~~ /'ab' | \w+ / && $/) eq 'abb',
        'LTM - longer quantified charclass wins against shorter literal';
 
+    #?niecza todo 'LTM - longer quantified atom wins against shorter literal (subrules)'
     ok ('abb' ~~ /<&ab> | <&a_word> /) && $/ eq 'abb',
        'LTM - longer quantified atom wins against shorter literal (subrules)';
 
@@ -81,11 +85,13 @@ my $str = 'a' x 7;
     }
     my token foo2 { \w+ }
 
+    #?niecza todo 'LTM only participated up to the LTM stopper :::'
     ok ('aaab---' ~~ /<&foo1> | <foo2=&foo2> /) && $<foo2>,
        'LTM only participated up to the LTM stopper :::';
 }
 
 # LTM stopper by implicit <.ws>
+#?niecza todo 'implicit <.ws> stops LTM'
 {
     my rule  ltm_ws1 {\w+ '-'+}
     my token ltm_ws2 {\w+ '-'}
