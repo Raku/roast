@@ -8,6 +8,7 @@ plan 36;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
+#?niecza skip 'match returns match object'
 {
   my $match = 'abd' ~~ m/ (a) (b) c || (\w) b d /;
   isa_ok( $match, 'Match', 'Match object returned');
@@ -37,6 +38,7 @@ plan 36;
 
 # RT 62530
 #?rakudo skip 'augment'
+#?niecza skip 'rule declaration outside of grammar'
 {
   augment class Match { method keys () {return %(self).keys }; };
   rule a {H};
@@ -78,8 +80,10 @@ plan 36;
 }
 
 # This is similar to a test in S05-interpolation/regex-in-variable.t
+#?niecza todo 'match with non-existent capture does not match'
 nok 'aa' ~~ /(.)$1/, 'match with non-existent capture does not match';
 #?rakudo todo 'RT 70007'
+#?niecza todo 'eek'
 is_run( q{'aa' ~~ /(.)$1/},
         {
             status => 0,
@@ -92,6 +96,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 {
     $_ = 'RT 66252';
     m/(R.)/;
+    #?niecza todo 'Match object in $/ after match in void context'
     isa_ok $/, 'Match', 'Match object in $/ after match in void context';
     is $/, 'RT', 'Matched as intended in void context';
 }
@@ -112,6 +117,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 }
 
 # RT #72956
+#?niecza skip 'Unsupported use of $/ variable as input record separator'
 {
     $/ = Any;
     lives_ok { $0 },
