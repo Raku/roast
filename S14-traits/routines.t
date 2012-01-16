@@ -1,19 +1,18 @@
 use v6;
 use Test;
 
+plan(10);
 
 # L<S14/Traits/>
-
-#?rakudo skip 'role(attrib) initialization'
 {
     role description {
         has $.description is rw;
     }
 
-    multi trait_mod:<is>(Routine $code, $arg, :$description! {
+    multi trait_mod:<is>(Routine $code, description, $arg) {
         $code does description($arg);
     }
-    multi trait_mod:<is>(Routine $code, :$description!) {
+    multi trait_mod:<is>(Routine $code, description) {
         $code does description("missing description!");
     }
     multi trait_mod:<is>(Routine $code, $arg, :$described!) {
@@ -49,6 +48,7 @@ use Test;
     }
     sub foo is woowoo { };
     lives_ok &foo, 'Can call subroutine that was wrapped by a trait';
+    #?rakudo todo 'trait mod / .wrap interaction'
     is $recorder, 'wrap', 'and the wrapper has been called once';
 }
 
