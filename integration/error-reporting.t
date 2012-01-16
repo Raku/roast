@@ -83,6 +83,7 @@ is_run 'say 0080982',
     }, 'use of leading zero causes warning about octal';
 
 # RT #76986
+#?niecza todo
 is_run 'my $ = 2; my $ = 3; say q[alive]',
     {
         status  => 0,
