@@ -33,6 +33,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 #?rakudo skip 'RT #64464'
+#?niecza skip 'regex declaration outside of grammar'
 {
     regex with-dash { '-' }
     ok '-'  ~~ /<with-dash>/, 'can call regexes which dashes (positive)';
@@ -45,6 +46,7 @@ character classes), and those are referenced at the correct spot.
 
 # so if the first character is a left parenthesis, it really is a call
 #?rakudo skip '<test()> not implemented'
+#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
     my sub test (Int $a = 1) {$pass += $a}
@@ -53,6 +55,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 #?rakudo skip '<test()> not implemented'
+#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
     my sub test (Int $a) {$pass += $a}
@@ -83,6 +86,7 @@ character classes), and those are referenced at the correct spot.
 # If the first character after the identifier is whitespace, the subsequent
 # text (following any whitespace) is passed as a regex
 #?rakudo skip 'angle quotes in regexes'
+#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $is_regex = 0;
     my sub test ($a) {$is_regex++ if $a ~~ Regex}
@@ -98,6 +102,7 @@ character classes), and those are referenced at the correct spot.
 # If the first character is a colon followed by whitespace the
 # rest of the text is taken as a list of arguments to the method
 #?rakudo skip 'colon arguments not implemented'
+#?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $called_ok = 0;
     my sub test ($a, $b) {$called_ok++ if $a && $b}
@@ -123,6 +128,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the dot is not followed by an identifier, it is parsed as
 # a "dotty" postfix of some type, such as an indirect method call
+#?niecza todo '<.$foo> syntax placeholder'
 {
     # placeholder test for <.$foo>
     lives_ok({
@@ -141,12 +147,15 @@ character classes), and those are referenced at the correct spot.
     ok('qwer' ~~ /<$str>/, '<$whatever> subrule (String, 1)');
 
     # The assertion is not captured.
+    #?niecza todo 'the assertion is not captured'
     is('abar' ~~ /a<$rule>/, 'a', '<$whatever> subrule (Regex, 2)');
+    #?niecza todo 'the assertion is not captured'
     is('qwer' ~~ /<$str>r/, 'r', '<$whatever> subrule (String, 2)');
 }
 
 # A leading :: indicates a symbolic indirect subrule
 #?rakudo skip 'indirect subrule call not implemented'
+#?niecza skip 'Indirect method calls NYI'
 {
     my $name = 'alpha';
     ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');
@@ -166,6 +175,7 @@ character classes), and those are referenced at the correct spot.
 # A leading % matches like a bare hash except that
 # a string value is always treated as a subrule
 #?rakudo skip '<%hash> not implemented'
+#?niecza skip 'Sigil % is not allowed for regex assertions'
 {
     my %first = {'<alpha>' => '', 'b' => '', 'c' => ''};
     ok('aeiou' ~~ /<%first>/, 'strings are treated as a subrule in <%foo>');
@@ -182,6 +192,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading & interpolates the return value of a subroutine call as a regex.
 #?rakudo skip '<&foo()> not implemented'
+#?niecza skip 'Anonymous submatch returned a Str instead of a Cursor, violating the submatch protocol'
 {
     my sub foo {return '<alpha>'}
     ok('abcdef' ~~ /<&foo()>/, 'subroutine call interpolation');
@@ -198,6 +209,7 @@ character classes), and those are referenced at the correct spot.
     is($counter, 1, 'code inside string was executed');
 
     'def' ~~ /<$subrule>/;
+    #?niecza todo "string value was cached"
     is($counter, 1, 'string value was cached');
 }
 
@@ -205,6 +217,7 @@ character classes), and those are referenced at the correct spot.
 #?rakudo skip '<?{...}> and <!{...}> not implemented'
 {
     ok('192' ~~ /(\d**1..3) <?{$0 < 256}>/, '<?{...}> works');
+    #?niecza todo '<?{...}>'
     ok(!('992' ~~ /(\d**1..3) <?{$0 < 256}>/), '<?{...}> works');
     ok(!('192' ~~ /(\d**1..3) <!{$0 < 256}>/), '<!{...}> works');
     ok('992' ~~ /(\d**1..3) <!{$0 < 256}>/, '<!{...}> works');
@@ -234,6 +247,7 @@ character classes), and those are referenced at the correct spot.
 # The <...>, <???>, and <!!!> special tokens have the same "not-defined-yet"
 # meanings within regexes that the bare elipses have in ordinary code
 #?rakudo skip '..., !!! and ??? in regexes'
+#?niecza skip 'Action method assertion:sym<???> not yet implemented'
 {
     eval_dies_ok('"foo" ~~ /<...>/', '<...> dies in regex match');
     # XXX: Should be warns_ok, but we don't have that yet
@@ -244,6 +258,7 @@ character classes), and those are referenced at the correct spot.
 # A leading * indicates that the following pattern allows a partial match.
 # It always succeeds after matching as many characters as possible.
 #?rakudo skip '<*literal>'
+#?niecza skip 'Action method assertion:sym<*> not yet implemented'
 {
     is(''    ~~ /^ <*xyz> $ /, '',    'partial match (0)');
     is('x'   ~~ /^ <*xyz> $ /, 'x',   'partial match (1a)');
@@ -262,6 +277,7 @@ character classes), and those are referenced at the correct spot.
 # A leading ~~ indicates a recursive call back into some or all of the
 # current rule. An optional argument indicates which subpattern to re-use
 #?rakudo skip '<~~ ... >'
+#?niecza skip 'Action method assertion:sym<~~>'
 {
     ok('1.2.' ~~ /\d+\. <~~>/, 'recursive regex using whole pattern');
     ok('foodbard' ~~ /(foo|bar) d <~~0>/, 'recursive regex with partial pattern');
@@ -276,6 +292,7 @@ character classes), and those are referenced at the correct spot.
     is('foo123bar' ~~ /foo <(\d+)> bar/, 123, '<(...)> pair');
     is('foo456bar' ~~ /foo <(\d+ bar/, '456bar', '<( match');
     is('foo789bar' ~~ /foo \d+)> bar/, 'foo789', ')> match');
+    #?niecza todo 'non-matching <(...)>'
     ok(!('foo123')  ~~ /foo <(\d+)> bar/, 'non-matching <(...)>');
 }
 
