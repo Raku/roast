@@ -20,7 +20,6 @@ is($c.get(), 41, 'can assign and get from within the class');
 $c.inc();
 is($c.get(), 42, 'can auto-increment an attribute');
 
-#?niecza skip 'Variable $x is not predeclared'
 {
     class WithAlias {
         has $x;
