@@ -13,7 +13,7 @@ BEGIN { @*INC.unshift('t/spec/packages/'); }
 use  Foo;
 my $test1;
 
-ok $test1 = ::Foo, "::Foo is a valid class literal";
+ok ($test1 = ::Foo) ~~ Foo, "::Foo is a valid class literal";
 
 # Test removed per L<"http://www.nntp.perl.org/group/perl.perl6.language/22220">
 # Foo.isa(Class) is false.
