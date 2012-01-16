@@ -223,7 +223,6 @@ my @array2 = ("test", 1, Mu);
   lives_ok { @arr[*-1] },  "readonly accessing [*-1] of an empty array is ok (1)";
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is ok (2)";
   dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
-  #?rakudo skip "binding not yet fatal"
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
@@ -233,7 +232,6 @@ my @array2 = ("test", 1, Mu);
   lives_ok { @arr[*-2] },  "readonly accessing [*-2] of an one-elem array is ok (1)";
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is ok (2)";
   dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
-  #?rakudo skip "binding not yet fatal"
   dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
 }
 

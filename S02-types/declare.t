@@ -364,7 +364,6 @@ plan 79;
  isa_ok($jetfu, Bool);
 }
 
-#?rakudo skip 'Order NYI'
 {
  my Order $karbi;
  isa_ok($karbi, Order);

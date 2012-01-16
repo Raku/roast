@@ -22,7 +22,6 @@ plan 15;
     is(count_leaves($tree), 2, "count_leaves works");
 }
 
-#?rakudo skip 'return() with multiple argumets'
 {
     # P61A (*) Collect the leaves of a binary tree in a list
     # 
