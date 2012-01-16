@@ -41,7 +41,7 @@ class T3 {
 }
 
 my $x = T3.new;
-ok $x ~ T3, 'class with traits applied to attributes by role instantiated ok';
+ok $x ~~ T3, 'class with traits applied to attributes by role instantiated ok';
 is $x.dog.VAR.doc, 'barks', 'trait applied to scalar attribute correctly';
 is $x.birds.doc,   'tweet', 'trait applied to array attribute correctly';
 is $x.cows.doc,    'moooo', 'trait applied to hash attribute correctly';
