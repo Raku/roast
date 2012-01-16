@@ -2,103 +2,108 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 34;
 
 # L<S12/Attribute default values/The value on the right is evaluated at object build time>
 
-my $got_a_num;  sub get_a_num  { $got_a_num++;  42 }
-my $got_a_str;  sub get_a_str  { $got_a_str++;  "Pugs" }
+my $got_a_num = 0;  sub get_a_num  { $got_a_num++;  42 }
+my $got_a_str = 0;  sub get_a_str  { $got_a_str++;  "Pugs" }
 
-my $got_a_code;
-my $was_in_closure;
-sub get_a_code {
-    $got_a_code++;
-    return {
-        $was_in_closure++;
-        42;
-    };
-}
-
-# L<S12/Attribute default values/the attribute being initialized>
-
-my $set_by_code_attr;
-
-class Foo {
-    has $.num  = get_a_num();
-    has $.str  = { get_a_str() };
-    has $.code = { get_a_code() };
-
-    has $.set_by_code = {
-        $set_by_code_attr := $_;
-        42;
+# Everything on the RHS of the = is implicitly a closure.
+# Providing a closure means the attribute is a closure!
+{
+    $got_a_num = 0;
+    $got_a_str = 0;
+    
+    class Spaceship {
+        has $.num  = get_a_num();
+        has $.str  = { get_a_str() };
     };
 
-    has $.self_in_code = { self.echo };
+    is $got_a_num, 0, "default should not be called at compile-time";
+    is $got_a_str, 0, "default should not be called at compile-time";
+    
+    my Spaceship $spaceship .= new;
+    
+    is $got_a_num, 1, "default should be called only once in construction";
+    is $spaceship.num,  42, "attribute default worked";
+    is $got_a_num, 1, "default should be called only once";
 
-    method echo { "echo" }
-};
+    is $got_a_str, 0, "default should not have been called yet";
+    ok $spaceship.str ~~ Callable, "attribute default is a closure";
+    is $got_a_str, 0, "default should not have been called yet";
+    is $spaceship.str()(), "Pugs", "attribute can be called";
+    is $got_a_str, 1, "and now get_a_str has run";
 
-{
-    is $got_a_num, 1, "default should be called at compile-time";
-    my Foo $foo .= new;
-    is $got_a_num, 1, "default should be called only once, at compile-time (1)";
-    is $foo.num,  42, "attribute default worked";
-    is $got_a_num, 1, "default should be called only once, at compile-time (2)";
+    my Spaceship $spaceship2 .= new;
+    
+    is $got_a_num, 2, "construction of second object also only calls default closure once";
+    is $spaceship2.num,  42, "attribute default worked";
+    is $got_a_num, 2, "default should be called only once";
+
+    is $got_a_str, 1, "construction of second object still doesn't call closure";
+    is $spaceship2.str.(), "Pugs", "attribute default worked, even called the other way";
+    is $got_a_str, 2, "get_a_str now called twice";
 }
 
 {
-    $got_a_str = 0;  # reset
+    $got_a_num = 0;
+    $got_a_str = 0;
+    
+    class Starship {
+        has $.num  = get_a_num();
+        has $.str  = { get_a_str() };
+    };
 
-    {
-        my Foo $foo .= new;
-        is $got_a_str,            1, "using a coderef as a default value delays execution";
-        is try { $foo.str }, "Pugs", "attribute default worked";
-    }
+    is $got_a_num, 0, "default should not be called at compile-time";
+    is $got_a_str, 0, "default should not be called at compile-time";
+    
+    my Starship $starship .= new(num => 10);
+    
+    is $got_a_num, 0, "default should not be called if value provide";
+    is $starship.num,  10, "attribute default worked";
+    is $got_a_num, 0, "default should still not be called";
 
-    {
-        my Foo $foo .= new;
-        is $got_a_str,            2, "using a coderef as a default value delays execution";
-        is try { $foo.str }, "Pugs", "attribute default worked";
-    }
+    is $got_a_str, 0, "default should not have been called yet";
+    ok $starship.str ~~ Callable, "attribute default is a closure";
+    is $got_a_str, 0, "default should not have been called yet";
+    is $starship.str()(), "Pugs", "attribute can be called";
+    is $got_a_str, 1, "and now get_a_str has run";
+
+    my Starship $starship2 .= new(str => "Niecza");
+    
+    is $got_a_num, 1, "construction of second object only calls default closure once";
+    is $starship2.num,  42, "attribute default worked";
+    is $got_a_num, 1, "default should be called only once";
+
+    is $got_a_str, 1, "construction of second object still doesn't call closure";
+    is $starship2.str, "Niecza", "attribute default was not used";
+    is $got_a_str, 1, "get_a_str now called twice";
 }
 
+#?niecza skip "'self' used where no object is available"
 {
-    $got_a_code = 0;  # reset
+    class Towel {
+        has $.self_in_code = { self.echo };
 
-    {
-        my Foo $foo .= new;
-        is $got_a_code,     1, "using a coderef as a default value delays execution";
-        is $was_in_closure, 0, "sub-coderef not yet executed";
-        try { $foo.code };
-        is $was_in_closure, 0, "sub-coderef still not executed";
-    }
+        method echo { "echo" }
+    };
 
-    {
-        my Foo $foo .= new;
-        is $got_a_code,          2, "using a coderef as a default value delays execution";
-        is $was_in_closure,      0, "sub-coderef not yet executed";
-        is try { $foo.code() }, 42, "sub-coderef execution works";
-        is $was_in_closure,      1, "sub-coderef still not executed";
-    }
+    my Towel $towel .= new;
+
+    is $towel.self_in_code()(), "echo", "self is the object being initialized";
 }
 
+#?niecza skip "'self' used where no object is available"
 {
-    my Foo $foo .= new;
+    class Cake {
+        has $.a = "echo";
+        has $.self_in_code = self.a;
+    };
 
-    is try { $foo.set_by_code }, 42, '$_ is the attribute being initialized (1)';
-    is $set_by_code_attr,        42, '$_ is the attribute being initialized (2)';
+    my Cake $cake .= new;
 
-    lives_ok { $set_by_code_attr++ },
-        '$_ is the attribute being initialized (3)';
-
-    is try { $foo.set_by_code }, 43, '$_ is the attribute being initialized (4)';
-    is $set_by_code_attr,        43, '$_ is the attribute being initialized (5)';
-}
-
-{
-    my Foo $foo .= new;
-
-    is try { $foo.self_in_code }, "echo", "self is the object being initialized";
+    is $cake.self_in_code, "echo", "self is the object being initialized";
 }
 
 # vim: ft=perl6
