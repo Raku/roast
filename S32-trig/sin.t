@@ -28,12 +28,12 @@ my @sines = (
     degrees-to-radians(720) => 0
 );
 
-my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value }); #OK
 
-my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) - exp(-$_.key)) / 2.0 });
 
-my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
 class NotComplex is Cool {
@@ -56,7 +56,7 @@ class DifferentReal is Real {
     }
 
     multi method Bridge() {
-        self.value;
+        self.value.Num;
     }
 }            
 
@@ -64,7 +64,6 @@ class DifferentReal is Real {
 
 # sin tests
 
-my $iter_count = 0;
 for @sines -> $angle
 {
     
@@ -121,11 +120,17 @@ for @sines -> $angle
     is_approx(sin(NotComplex.new(2.3561944902142 + 2i)), 2.6602740852579 - 2.56457758886169i, "sin(NotComplex) - 2.3561944902142 + 2i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.14159265361894).sin, 0, "DifferentReal.sin - 3.14159265361894");
     is_approx(sin(DifferentReal.new(3.92699081702367)), -0.707106781186548, "sin(DifferentReal) - 3.92699081702367");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx((4.7123889804284).FatRat.sin, -1, "FatRat.sin - 4.7123889804284");
+    is_approx(sin((5.49778714383314).FatRat), -0.707106781186548, "sin(FatRat) - 5.49778714383314");
 }
 
 
@@ -175,11 +180,17 @@ for @sines -> $angle
     is_approx(asin(NotComplex.new(0.785398163404734 + 2i)), 0.341338918259482 + 1.49709293866352i, "asin(NotComplex) - 0.341338918259482 + 1.49709293866352i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(0.5)).asin, 0.523598775603156, "DifferentReal.asin - 0.523598775603156");
     is_approx(asin(DifferentReal.new(0.707106781186548)), 0.785398163404734, "asin(DifferentReal) - 0.785398163404734");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx(((0.5).FatRat).asin, 0.523598775603156, "FatRat.asin - 0.523598775603156");
+    is_approx(asin((0.707106781186548).FatRat), 0.785398163404734, "asin(FatRat) - 0.785398163404734");
 }
 
 done;

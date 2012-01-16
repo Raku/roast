@@ -28,12 +28,12 @@ my @sines = (
     degrees-to-radians(720) => 0
 );
 
-my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value }); #OK
 
-my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) - exp(-$_.key)) / 2.0 });
 
-my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
 class NotComplex is Cool {
@@ -56,7 +56,7 @@ class DifferentReal is Real {
     }
 
     multi method Bridge() {
-        self.value;
+        self.value.Num;
     }
 }            
 
@@ -64,7 +64,6 @@ class DifferentReal is Real {
 
 # tanh tests
 
-my $iter_count = 0;
 for @sines -> $angle
 {
     next if abs(cosh($angle.key())) < 1e-6;
@@ -87,7 +86,7 @@ for @sines -> $angle
     is_approx($zp2.tanh, $sz2, "Complex.tanh - $zp2");
 }
 
-#?niecza todo "Inf results wrong"
+#?niecza skip "Inf results wrong"
 {
     is(tanh(Inf), 1, "tanh(Inf) -");
     is(tanh(-Inf), -1, "tanh(-Inf) -");
@@ -106,7 +105,7 @@ for @sines -> $angle
 
 {
     # Complex tests
-    is_approx(tanh((0 + 2i).Complex), -0 - 2.18503986326152i, "tanh(Complex) - 0 + 2i");
+    is_approx(tanh((0 + 2i).Complex), 0 - 2.18503986326152i, "tanh(Complex) - 0 + 2i");
 }
 
 {
@@ -121,11 +120,17 @@ for @sines -> $angle
     is_approx(tanh(NotComplex.new(2.3561944902142 + 2i)), 1.01171902215521 - 0.0137576097040009i, "tanh(NotComplex) - 2.3561944902142 + 2i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.14159265361894).tanh, 0.996272076220967, "DifferentReal.tanh - 3.14159265361894");
     is_approx(tanh(DifferentReal.new(3.92699081702367)), 0.999223894878698, "tanh(DifferentReal) - 3.92699081702367");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx((4.7123889804284).FatRat.tanh, 0.999838613988647, "FatRat.tanh - 4.7123889804284");
+    is_approx(tanh((5.49778714383314).FatRat), 0.999966448999799, "tanh(FatRat) - 5.49778714383314");
 }
 
 
@@ -175,11 +180,17 @@ for @sines -> $angle
     is_approx(atanh(NotComplex.new(0.785398163404734 + 2i)), 0.143655432578432 + 1.15296697280152i, "atanh(NotComplex) - 0.143655432578432 + 1.15296697280152i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(0.480472778160188)).atanh, 0.523598775603156, "DifferentReal.atanh - 0.523598775603156");
     is_approx(atanh(DifferentReal.new(0.655794202636825)), 0.785398163404734, "atanh(DifferentReal) - 0.785398163404734");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx(((0.480472778160188).FatRat).atanh, 0.523598775603156, "FatRat.atanh - 0.523598775603156");
+    is_approx(atanh((0.655794202636825).FatRat), 0.785398163404734, "atanh(FatRat) - 0.785398163404734");
 }
 
 done;

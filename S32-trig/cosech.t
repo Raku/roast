@@ -28,12 +28,12 @@ my @sines = (
     degrees-to-radians(720) => 0
 );
 
-my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value }); #OK
 
-my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) - exp(-$_.key)) / 2.0 });
 
-my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
 class NotComplex is Cool {
@@ -56,7 +56,7 @@ class DifferentReal is Real {
     }
 
     multi method Bridge() {
-        self.value;
+        self.value.Num;
     }
 }            
 
@@ -64,7 +64,6 @@ class DifferentReal is Real {
 
 # cosech tests
 
-my $iter_count = 0;
 for @sines -> $angle
 {
     next if abs(sinh($angle.key())) < 1e-6;
@@ -87,7 +86,7 @@ for @sines -> $angle
     is_approx($zp2.cosech, $sz2, "Complex.cosech - $zp2");
 }
 
-#?niecza todo "Inf results wrong"
+#?niecza skip "Inf results wrong"
 {
     is(cosech(Inf), 0, "cosech(Inf) -");
     is(cosech(-Inf), "-0", "cosech(-Inf) -");
@@ -121,11 +120,17 @@ for @sines -> $angle
     is_approx(cosech(NotComplex.new(3.14159265361894 + 2i)), -0.0358119530230833 - 0.078543348553443i, "cosech(NotComplex) - 3.14159265361894 + 2i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.92699081702367).cosech, 0.0394210493494572, "DifferentReal.cosech - 3.92699081702367");
     is_approx(cosech(DifferentReal.new(4.7123889804284)), 0.0179680320529917, "cosech(DifferentReal) - 4.7123889804284");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx((5.49778714383314).FatRat.cosech, 0.00819178720191627, "FatRat.cosech - 5.49778714383314");
+    is_approx(cosech((6.28318530723787).FatRat), 0.00373489848806798, "cosech(FatRat) - 6.28318530723787");
 }
 
 
@@ -175,11 +180,17 @@ for @sines -> $angle
     is_approx(acosech(NotComplex.new(0.785398163404734 + 2i)), 0.186914543518615 - 0.439776333846415i, "acosech(NotComplex) - 0.186914543518615 - 0.439776333846415i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(1.8253055746695)).acosech, 0.523598775603156, "DifferentReal.acosech - 0.523598775603156");
     is_approx(acosech(DifferentReal.new(1.15118387090806)), 0.785398163404734, "acosech(DifferentReal) - 0.785398163404734");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx(((1.8253055746695).FatRat).acosech, 0.523598775603156, "FatRat.acosech - 0.523598775603156");
+    is_approx(acosech((1.15118387090806).FatRat), 0.785398163404734, "acosech(FatRat) - 0.785398163404734");
 }
 
 done;

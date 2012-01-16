@@ -28,12 +28,12 @@ my @sines = (
     degrees-to-radians(720) => 0
 );
 
-my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value });
+my @cosines = @sines.map({; $_.key - degrees-to-radians(90) => $_.value }); #OK
 
-my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @sinhes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) - exp(-$_.key)) / 2.0 });
 
-my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key =>
+my @coshes = @sines.grep({ $_.key < degrees-to-radians(500) }).map({; $_.key => #OK
                                                 (exp($_.key) + exp(-$_.key)) / 2.0 });
 
 class NotComplex is Cool {
@@ -56,7 +56,7 @@ class DifferentReal is Real {
     }
 
     multi method Bridge() {
-        self.value;
+        self.value.Num;
     }
 }            
 
@@ -64,7 +64,6 @@ class DifferentReal is Real {
 
 # sec tests
 
-my $iter_count = 0;
 for @cosines -> $angle
 {
     next if abs(cos($angle.key())) < 1e-6;
@@ -121,11 +120,17 @@ for @cosines -> $angle
     is_approx(sec(NotComplex.new(3.14159265361894 + 2i)), -0.26580222883408 - 7.46768155131297e-12i, "sec(NotComplex) - 3.14159265361894 + 2i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx(DifferentReal.new(3.92699081702367).sec, -1.41421356242461, "DifferentReal.sec - 3.92699081702367");
     is_approx(sec(DifferentReal.new(5.23598775603156)), 1.99999999983174, "sec(DifferentReal) - 5.23598775603156");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx((8.63937979745208).FatRat.sec, -1.41421356225975, "FatRat.sec - 8.63937979745208");
+    is_approx(sec((-5.49778714383314).FatRat), 1.41421356230097, "sec(FatRat) - -5.49778714383314");
 }
 
 
@@ -160,7 +165,7 @@ for @cosines -> $angle
 
 {
     # Complex tests
-    is_approx(asec((0.785398163404734 + 2i).Complex), 1.41436665336946 + 0.425586400480703i, "asec(Complex) - 1.41436665336946 + 0.425586400480703i");
+    is_approx(asec((0.785398163404734 + 2i).Complex), 1.41436665157457 + 0.425586400480703i, "asec(Complex) - 1.41436665157457 + 0.425586400480703i");
 }
 
 {
@@ -171,15 +176,21 @@ for @cosines -> $angle
 
 {
     # NotComplex tests
-    is_approx((NotComplex.new(0.785398163404734 + 2i)).asec, 1.41436665336946 + 0.425586400480703i, "NotComplex.asec - 1.41436665336946 + 0.425586400480703i");
-    is_approx(asec(NotComplex.new(0.785398163404734 + 2i)), 1.41436665336946 + 0.425586400480703i, "asec(NotComplex) - 1.41436665336946 + 0.425586400480703i");
+    is_approx((NotComplex.new(0.785398163404734 + 2i)).asec, 1.41436665157457 + 0.425586400480703i, "NotComplex.asec - 1.41436665157457 + 0.425586400480703i");
+    is_approx(asec(NotComplex.new(0.785398163404734 + 2i)), 1.41436665157457 + 0.425586400480703i, "asec(NotComplex) - 1.41436665157457 + 0.425586400480703i");
 }
 
-#?niecza skip "DifferentReal math NY working"
 {
     # DifferentReal tests
     is_approx((DifferentReal.new(1.4142135623834)).asec, 0.785398163404734, "DifferentReal.asec - 0.785398163404734");
     is_approx(asec(DifferentReal.new(1.4142135623834)), 0.785398163404734, "asec(DifferentReal) - 0.785398163404734");
+}
+
+#?rakudo skip "FatRat math NYI"
+{
+    # FatRat tests
+    is_approx(((1.4142135623834).FatRat).asec, 0.785398163404734, "FatRat.asec - 0.785398163404734");
+    is_approx(asec((1.4142135623834).FatRat), 0.785398163404734, "asec(FatRat) - 0.785398163404734");
 }
 
 done;
