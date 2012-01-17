@@ -32,7 +32,6 @@ plan 12;
 
 my $caught = "oops!";
 ok("abc" ~~ m/a(bc){$caught = $0}/, 'Outer match');
-#?rakudo todo 'nom regression'
 is($caught, "bc", 'Outer caught');
 
 #?rakudo skip 'assignment to match variables (dubious)'

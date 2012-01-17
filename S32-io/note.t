@@ -22,7 +22,6 @@ is_run( 'note "multiple", " ", "params"',
         },
         'note multiple parameters' );
 
-#?rakudo todo 'nom regression'
 is_run( 'my @a = ("array", "of", "params"); note @a',
         {
             status => 0,

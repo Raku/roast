@@ -32,7 +32,7 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
         "Passing two arguments to a function expecting one hash is an error";
     ok $error ~~ / '%h' /,   '... error message mentions parameter';
     ok $error ~~ /:i 'type' /, '... error message mentions "type"';
-    ok $error ~~ / Associative /, '... error message mentions "Associative"';
+    ok $error ~~ / Associative | \% /, '... error message mentions "Associative" or the % sigil';
 }
 
 # vim: ft=perl6

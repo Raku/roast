@@ -97,7 +97,6 @@ eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
 class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
-#?rakudo todo 'eval and GLOBAL issue'
 eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 

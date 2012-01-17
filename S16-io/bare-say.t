@@ -30,6 +30,7 @@ is_run( 'say("")',
         'say("")' );
 
 # RT #61494
+#?rakudo todo 'bare say'
 {
     eval_dies_ok('say for 1', 'say for 1  is an error');
     eval_dies_ok('say  for 1', 'say  for 1  is an error');
