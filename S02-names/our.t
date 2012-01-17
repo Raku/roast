@@ -30,7 +30,6 @@ plan 10;
                   'can compile a class that modifies our variable';
     #?rakudo skip 'RT 69460'
     ok ::OUR::RT69460.new ~~ ::OUR::RT69460, 'can instantiate class that modifies our variable';
-    #?rakudo todo 'RT 69460'
     is $rt69460, 2, 'class can modify our variable';
 }
 
