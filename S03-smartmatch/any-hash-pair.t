@@ -9,7 +9,6 @@ plan 7;
     ok !(%a ~~ b => 'ugh'),         '%hash ~~ Pair (Str, -)';
     ok  (%a ~~ a => 1.0),           '%hash ~~ Pair (Num, +)';
     ok  (%a ~~ :b<foo>),            '%hash ~~ Colonpair';
-    #?niecza skip 'Nominal type check failed in binding anon_8 in MAIN C3_ANON'
     ok  (%a ~~ c => !*.defined),    '%hash ~~ Pair (!*.defined, Mu)';
     ok  (%a ~~ d => !*.defined),    '%hash ~~ Pair (!*.defined, Nil)';
     ok !(%a ~~ a => 'foo'),         '%hash ~~ Pair (key and val not paired)';

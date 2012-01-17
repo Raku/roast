@@ -101,7 +101,6 @@ plan 283;
 }
 
 #?pugs skip "skipping assignment with skipped values via * in lvalue"
-#?niecza skip "skipping assignment with skipped values via * in lvalue"
 {
     # testing list assignments with skipped values
      my ($one, $two, $three, $four);
@@ -618,12 +617,12 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a) as list');
 }
 
-#?niecza skip 'assigning to ($a, *)'
 {
     my $a;
     my @z = (($a, *) = l, l, l);
     is($a.elems, 1, 'lhs treats ($a, *) as list (1)');
     #?rakudo todo 'list assignment with ($var, *)'
+    #?niecza todo 'assigning to ($a, *)'
     is(@z.elems, 6, 'lhs treats ($a, *) as list (2)');
 }
 

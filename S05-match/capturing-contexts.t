@@ -8,10 +8,11 @@ plan 36;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
-#?niecza skip 'match returns match object'
 {
   my $match = 'abd' ~~ m/ (a) (b) c || (\w) b d /;
+  #?niecza todo 'match returns match object'
   isa_ok( $match, 'Match', 'Match object returned');
+  #?niecza todo 'match returns match object'
   isa_ok( $/, 'Match', 'Match object assigned to $/');
   ok( $/ === $match, 'Same match objects');
 }

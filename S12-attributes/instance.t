@@ -522,7 +522,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is CodeAttr3.new.f, 'OH HAI', '&!m = method { ... } and self.&!m() work';
 }
 
-#?niecza skip "Action method trait_mod:does not yet implemented"
 {
     # from t/oo/class_inclusion_with_inherited_class.t
     # used to be a pugs regression

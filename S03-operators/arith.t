@@ -97,7 +97,6 @@ tryeq 2147483647 - 0, 2147483647;
 tryeq 0 - -2147483647, 2147483647;
 
 # No warnings should appear;
-#?niecza skip "undefine NYI"
 {
     my $a;
     $a += 1;
@@ -119,7 +118,6 @@ tryeq 0 - -2147483647, 2147483647;
     tryeq $a, -4294967297;
 }
 
-#?niecza skip "undefine NYI"
 {
     my $s;
     $s -= 1;
