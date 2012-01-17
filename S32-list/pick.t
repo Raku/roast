@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 37;
 
 =begin description
 
@@ -121,5 +121,9 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (both exclusive)';
     ok (so 1 < all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
+
+is (1..^2).pick, 1, 'pick on 1-elem range';
+
+ok ('a'..'z').pick ~~ /\w/, 'Range.pick on non-Int range';
 
 # vim: ft=perl6
