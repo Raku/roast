@@ -32,7 +32,7 @@ my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of f
 
   ok $fn.IO ~~ :e,   "open() created a tempfile";
   ok(unlink($fn), "unlink() returned true");
-  #?rakudo skip 'implicit closure of file handle at scope exit not implemented (FAILS ON WINDOWS)'
+  #?rakudo skip 'implicit closure of file handle at scope exit not implemented (FAILS ON WINDOWS) (noauto)'
   ok $fn.IO !~~ :e,  "unlink() actually deleted the tempfile";
 }
 
