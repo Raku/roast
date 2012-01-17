@@ -8,7 +8,6 @@ plan 5;
 
 "4" ~~ / (\d) { make $0.sqrt } Remainder /;
 nok($/, 'No match');
-#?rakudo todo '.ast of failed match (questionable)'
 #?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
 is($/.ast , 2);
 
