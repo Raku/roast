@@ -41,7 +41,7 @@ use Test;
     {
         constant foo2 = 42;
     }
-    eval_dies_ok 'foo2 == 42', 'constants are lexically scoped';
+    eval_lives_ok 'foo2 == 42', 'constants are our scoped';
 }
 
 #?rakudo skip 'constants as type constraints'
@@ -78,7 +78,7 @@ use Test;
     is ConstantTest2::yak, 'shaving', 'constant can be explicitly "our"-scoped';
 }
 
-#?rakudo skip "probably can't parse yet"
+#?rakudo todo "probably can't parse yet"
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Any'
 {
     package ConstantTest3 {
