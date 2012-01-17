@@ -214,7 +214,6 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading ?{ or !{ indicates a code assertion
-#?rakudo skip '<?{...}> and <!{...}> not implemented'
 {
     ok('192' ~~ /(\d**1..3) <?{$0 < 256}>/, '<?{...}> works');
     #?niecza todo '<?{...}>'
