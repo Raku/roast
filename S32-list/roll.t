@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 33;
 
 =begin description
 
@@ -80,5 +80,27 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
     is A.roll(4).grep(A).elems, 4, 'RandomEnum.roll works';
 }
 
+# ranges + roll
+{
+    my @matches = (1..1_000_000).roll(20);
+    is @matches.elems, 20, 'right number of elements from Range.roll';
+    ok (so 1 <= all(@matches) <= 1_000_000), 'all the elems are in range';
+}
+
+{
+    my @matches = (1^..1_000_000).roll(20);
+    is @matches.elems, 20, 'right number of elements from Range.roll (min exclusive)';
+    ok (so 1 < all(@matches) <= 1_000_000), 'all the elems are in range';
+}
+{
+    my @matches = (1..^1_000_000).roll(20);
+    is @matches.elems, 20, 'right number of elements from Range.roll (max exclusive)';
+    ok (so 1 <= all(@matches) < 1_000_000), 'all the elems are in range';
+}
+{
+    my @matches = (1^..^1_000_000).roll(20);
+    is @matches.elems, 20, 'right number of elements from Range.roll (both exclusive)';
+    ok (so 1 < all(@matches) < 1_000_000), 'all the elems are in range';
+}
 
 # vim: ft=perl6

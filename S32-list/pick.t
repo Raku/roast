@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 35;
 
 =begin description
 
@@ -94,6 +94,32 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 
     enum A <b c d>;
     is A.pick(*).grep(A).elems, 3, 'RandomEnum.pick works';
+}
+
+# ranges + pick
+{
+    my %seen;
+    %seen{$_} = 1 for (1..1_000_000).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
+    ok (so 1 <= all(%seen.keys) <= 1_000_000), '... and all the elements are in range';
+}
+{
+    my %seen;
+    %seen{$_} = 1 for (1^..1_000_000).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems (lower exclusive)';
+    ok (so 1 < all(%seen.keys) <= 1_000_000), '... and all the elements are in range';
+}
+{
+    my %seen;
+    %seen{$_} = 1 for (1..^1_000_000).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems (upper exclusive)';
+    ok (so 1 <= all(%seen.keys) < 1_000_000), '... and all the elements are in range';
+}
+{
+    my %seen;
+    %seen{$_} = 1 for (1^..^1_000_000).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems (both exclusive)';
+    ok (so 1 < all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
 
 # vim: ft=perl6
