@@ -36,11 +36,11 @@ use Test;
     eval_dies_ok 'constant ($a, $b) = (3, 4)', 'constant no longer takes list';
 }
 
-
 {
     {
         constant foo2 = 42;
     }
+    #?niecza todo
     eval_lives_ok 'foo2 == 42', 'constants are our scoped';
 }
 
