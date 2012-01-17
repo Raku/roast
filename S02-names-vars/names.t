@@ -115,12 +115,11 @@ eval_dies_ok '::.^methods', ':: is not a valid package';
 eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
 
 # RT #58488 
-#?niecza todo
-lives_ok {
+dies_ok {
     eval 'class A { has $.a};  my $a = A.new();';
     eval 'class A { has $.a};  my $a = A.new();';
     eval 'class A { has $.a};  my $a = A.new();';
-}, 'can redefine a class in eval multiple times without permanent damange';
+}, 'can *not* redefine a class in eval -- classes are package scoped';
 
 # RT #83874
 {
