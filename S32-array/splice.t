@@ -5,35 +5,17 @@ use Test;
 
 =begin description
 
-This test tests the C<splice> builtin, see S32 and Perl 5's perlfunc.
-
-Ported from the equivalent Perl 5 test.
-
-This test includes a test for the single argument form of
-C<splice>. Depending on whether the single argument form
-of C<splice> should survive or not, this test should be dropped.
-
-  my @a = (1..10);
-  splice @a;
-
-is equivalent to:
-
-  my @a = (1..10);
-  @a = ();
+This test tests the C<splice> builtin
 
 =end description
 
-plan 35;
+plan 37;
 
 my (@a,@b,@res);
 
-# Somehow, this doesn't propagate array context
-# to splice(). The intermediate array in the calls
-# should be removed later
-
 #?DOES 2
 sub splice_ok (@got, @ref, @exp, @exp_ref, Str $comment) {
-  is "[{~@got}]", "[{~@exp}]", "$comment - results match";
+  is @got, @exp, "$comment - results match";
   is @ref, @exp_ref, "$comment - array got modified in-place";
 };
 
@@ -41,14 +23,14 @@ sub splice_ok (@got, @ref, @exp, @exp_ref, Str $comment) {
 @b = splice(@a,+@a,0,11,12);
 
 is( @b, [], "push-via-splice result works" );
-is( @a, ([1..12]), "push-via-splice modification works");
+is( @a, [1..12], "push-via-splice modification works");
 
 {
     my @a = (1..10);
     my @b = splice(@a,+@a,0,11,12);
 
     is( @b, [], "push-via-splice result works" );
-    is( @a, ([1..12]), "push-via-splice modification works");
+    is( @a, [1..12], "push-via-splice modification works");
 }
 
 @a  = ('red', 'green', 'blue');
@@ -72,11 +54,11 @@ splice_ok splice(@a,0,1), @a, [1], [2..12], "Simple 3-arg splice";
 splice_ok @res, @a, [9,10], [1..8], "2-arg positive indices work";
 
 @a = (1..10);
-@res = splice(@a,-2,2);
+@res = splice(@a,*-2,2);
 splice_ok @res, @a, [9,10], [1..8], "3-arg negative indices work";
 
 @a = (1..10);
-@res = splice(@a,-2);
+@res = splice(@a,*-2);
 splice_ok @res, @a, [9,10], [1..8], "2-arg negative indices work";
 
 # to be converted into more descriptive tests
@@ -89,19 +71,19 @@ splice_ok splice(@a,0,0,0,1), @a, [], [0..10], "Prepending values works";
 splice_ok splice(@a,5,1,5), @a, [5], [0..11], "Replacing an element with itself";
 
 @a = (0..11);
-splice_ok splice(@a, +@a, 0, 12, 13), @a, [], [0..13], "Appending a array";
+splice_ok splice(@a, +@a, 0, 12, 13), @a, [], [0..13], "Appending an array";
 
 {
     @a = (0..13);
-    @res = splice(@a, -@a, +@a, 1, 2, 3);
+    @res = splice(@a, *-@a, +@a, 1, 2, 3);
     splice_ok @res, @a, [0..13], [1..3], "Replacing the array contents from right end";
 }
 
 @a = (1, 2, 3);
-splice_ok splice(@a, 1, -1, 7, 7), @a, [2], [1,7,7,3], "Replacing a array into the middle";
+splice_ok splice(@a, 1, *-1, 7, 7), @a, [2], [1,7,7,3], "Replacing a array into the middle";
 
 @a = (1,7,7,3);
-splice_ok splice(@a,-3,-2,2), @a, [7], [1,2,7,3], "Replacing negative count of elements";
+splice_ok splice(@a,*-3,*-2,2), @a, [7], [1,2,7,3], "Replacing negative count of elements";
 
 # Test the identity of calls to splice:
 sub indirect_slurpy_context( *@got ) { @got };
@@ -134,5 +116,9 @@ is +@a, 0, '... empty arrays are not fatal anymore';
 
 #?pugs todo 'bug'
 dies_ok({ 42.splice }, '.splice should not work on scalars');
+
+@a = (1..10);
+dies_ok({splice(@a,-2)}, "negative offset dies");
+dies_ok({splice(@a,2,-2)}, "negative size dies");
 
 # vim: ft=perl6
