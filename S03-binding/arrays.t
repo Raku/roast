@@ -156,7 +156,6 @@ plan 47;
 }
 
 # Binding with .splice
-#?niecza skip 'splice'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -168,6 +167,7 @@ plan 47;
   splice @array, 1, 1, ();
   # $var unchanged, but assigning to $var doesn't modify @array any
   # longer; similarily, changing @array[1] doesn't modify $var now
+  #?niecza todo "binding of array elements works with splice (2)"
   is $var,    "e",    "binding of array elements works with splice (2)";
   is ~@array, "a c",  "binding of array elements works with splice (3)";
 

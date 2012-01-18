@@ -221,7 +221,7 @@ plan 25;
         'We should be able to drop list elements using list comprehension';
 }
 
-#?niecza skip 'Unable to resolve method splice in class Array'
+#?niecza todo "Get Capture, not array"
 {
     # P17 (*) Split a list into two parts; the length of the first part is given.
     # 
@@ -283,7 +283,6 @@ plan 25;
         '... and backwards';
 }
 
-#?niecza skip 'Unable to resolve method splice in class Array'
 {
     # P20 (*) Remove the K'th element from a list.
     # 
