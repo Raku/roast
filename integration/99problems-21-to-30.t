@@ -46,11 +46,13 @@ plan 15;
     # of course the following is wrong, but it also confuses test output!
     #ok all(@rand) ~~ none(@letters), '... and they should be in the letters';
     #?rakudo todo 'unknown'
+    #?niecza todo 'unknown'
     ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
     
     @rand = <a b c d e f g h>.pick(3);
     is @rand.elems, 3, 'pick() should return the correct number of items';
     #?rakudo todo 'unknown'
+    #?niecza todo 'unknown'
     ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
 }
     
@@ -85,6 +87,7 @@ plan 15;
     my @numbers = lotto(6, 49);
     is @numbers.elems, 6, 'lotto() should return the correct number of numbers';
     #?rakudo todo 'unknown'
+    #?niecza todo 'unknown'
     ok ?(all(@numbers) ~~ any(1..49)), '... and they should be in the correct range';
     my %unique = map { ($_ => 1) }, @numbers;
     diag %unique.perl;
@@ -132,6 +135,7 @@ sub combination($n, @xs) {
 }
 
 #?rakudo skip 'elements() not implemented in class Range'
+#?niecza skip 'hangs'
 {
     
     is combination(3, (1..5)),
@@ -148,6 +152,7 @@ sub combination($n, @xs) {
 }
 
 #?rakudo skip 'depedendency on combination() from previous section'
+#?niecza skip 'hangs'
 {
     # P27 (**) Group the elements of a set into disjoint subsets.
     # 
@@ -233,6 +238,7 @@ sub combination($n, @xs) {
     my @expected= [<o>],[<d e>],[<d e>],[<m n>],[<a b c>],[<f g h>],[<i j k l>];
     
     my @sorted=@input.sort: { +$_ };
+    #?niecza todo 'sort order incorrect.'
     is @expected, 
        @sorted,
        "We should be able to sort a list of lists according to length of sublists";
@@ -242,6 +248,7 @@ sub combination($n, @xs) {
 }
 
 #?rakudo skip 'autovivification'
+#?niecza skip 'Unable to resolve method push in class Any'
 {
     my @input= [<a b c>],[<d e>],[<f g h>],[<d e>],[<i j k l>],[<m n>],[<o>];
     my @expected= [<o>],[<i j k l>],[<a b c>],[<f g h>],[<d e>],[<d e>],[<m n>];
@@ -257,6 +264,5 @@ sub combination($n, @xs) {
     my @sorted= %grouped.values.sort: {+$^a <=> +$^b};
     is @expected,@sorted, "..or according to frequency of length of sublists" 
 }
-
 
 # vim: ft=perl6
