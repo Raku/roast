@@ -102,7 +102,7 @@ plan 21;
     my $n = + @a.grep({ $_ eq 'b'});
     is $n, 1, 'grep on extended array';
     @a[1] = 'c'; # cmp doesn't handle Mu cmp Mu yet
-    #?niecza todo 'Use of uninitialized value in string context'
+    #?niecza todo 'min on list with undefined el ignores it'
     is @a.min(), 'b', 'min on list with undefined el ignores it';
 }
 

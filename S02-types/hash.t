@@ -247,7 +247,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # Zen slices work on hashes too
-#?niecza todo 'Use of uninitialized value in string context'
+#?niecza todo 'zen slice'
 {
     my %h = { a => 1, b => 2, c => 3};
     is %h{*}.join('|'), %h.values.join('|'), '{*} zen slice';
