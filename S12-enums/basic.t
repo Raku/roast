@@ -68,8 +68,10 @@ enum JustOne <Thing>;
     ok JustOne::Thing == 0, 'Enum of one element works.';
 }
 
+#?niecza skip "Enum must have at least one value"
 lives_ok { enum Empty < > }, "empty enum can be constructed";
 
+#?niecza todo "Enum must have at least one value"
 eval_lives_ok 'enum Empty2 ()', 'empty enum with () can be constructed';
 
 enum Color <white gray black>;
