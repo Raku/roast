@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 57;
+plan 58;
 
 # construction
 {
@@ -114,5 +114,7 @@ sub d($x) { Date.new($x); }
     is $a <=> $b, Order::Increase, '<=> (-1)';
     is $c <=> $a, Order::Decrease, '<=> (+1)';
 }
+
+ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartch Date objects';
 
 done;
