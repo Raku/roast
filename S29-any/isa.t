@@ -25,6 +25,7 @@ plan 14;
     
     ok(@arr.isa(Array), '... @arr is-a Array (invocant notation)');
     #?rakudo todo "Array is now ~~ List"
+    #?niecza skip 'Seq NYI'
     ok(@arr.isa(Seq), '... @arr is-also-a Seq (invocant notation)');
     
     # check a failing case
@@ -36,6 +37,7 @@ plan 14;
     my $arr_ref = <1 2 3 4>;
 
     #?rakudo todo "Array is now ~~ List"
+    #?niecza skip 'Seq NYI'
     ok($arr_ref.isa(Seq),   '... $arr is-also-a Seq (invocant notation)');
 
     # check a failing case
@@ -63,12 +65,14 @@ plan 14;
 class Thing {};
 {
     my $thing = Thing.new();
+    #?niecza todo 'stringy .isa not specced'
     ok($thing.isa("Thing"), '.isa string naming class with no colon');
     ok($thing.isa(Thing), '.isa named class');
 }
 class Thing::something {};
 {
     my $thing = Thing::something.new();
+    #?niecza todo 'stringy .isa not specced'
     ok($thing.isa("Thing::something"), '.isa string naming class with colons');
     ok($thing.isa(Thing::something), '.isa named class with colons');
 }
