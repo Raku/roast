@@ -75,7 +75,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #67024
 {
-    try { eval 'class A { method a(){0}; method a($x){1} }' };
+    try { eval 'class RT67024 { method a(){0}; method a($x){1} }' };
     #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
@@ -193,7 +193,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #57788
 {
-    eval_dies_ok 'class A { method m() { }; method m() { } }';
+    eval_dies_ok 'class RT57788 { method m() { }; method m() { } }';
 }
 
 {
