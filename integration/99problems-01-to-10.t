@@ -143,6 +143,7 @@ plan 22;
     multi compress2 ($x, $y, *@xs) { $x xx ($x !=== $y), compress2($y, |@xs) }
     
     my @x = <a a a a b c c a a d e e e e>;
+    #?niecza todo 'WHICH'
     is compress2(|@x), <a b c a d e>, '... even with multi subs';
 }
 

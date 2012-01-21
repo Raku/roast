@@ -16,7 +16,6 @@ isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
 isa_ok( eval(Rat.new.perl), Rat, 'eval Rat.new.perl is Rat' );
-#?niecza 4 todo 'Rat.perl.eval messed up right now'
 isa_ok( eval(Rat.new(1, 3).perl), Rat, 'eval Rat.new(1, 3).perl is Rat' );
 is( (eval Rat.new(1, 3).perl), 1/3, 'eval Rat.new(1, 3).perl is 1/3' );
 isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );

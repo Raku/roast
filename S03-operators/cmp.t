@@ -44,7 +44,6 @@ plan 18;
     is (:a<5> cmp :a<6>), Order::Increase, "cmp on Pair (5)";
 
     my $cmp5 = { :$^q cmp :q<5> };
-    #?niecza todo 'cmp on Pair from local variable'
     is $cmp5(5), Order::Same, "cmp on Pair from local variable"
 }
 

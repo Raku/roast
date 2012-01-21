@@ -76,7 +76,6 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
     is ~@a, 'foo 3 4.5 5.60 1.2e1',
        '<...> numeric literals stringify correctly';
     isa_ok @a[0], Str, '<foo ...> is a Str';
-    #?niecza 3 todo 'type DWIM in list quotes'
     isa_ok @a[1], Int, '< ... 3 ...> is an Int';
     isa_ok @a[2], Rat, '< ... 4.5 ...> is a Rat';
     isa_ok @a[4], Num, '< ... 1.2e1 ...> is a Num';

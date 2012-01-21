@@ -153,7 +153,6 @@ my @tests = (
 # RT #69869
 {
     is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
-    #?niecza todo 'Rat.perl.eval currently not working'
     is eval( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and eval'd is Rat";
 }
 
