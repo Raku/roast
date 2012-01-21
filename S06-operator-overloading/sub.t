@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 65;
+plan 66;
 
 =begin pod
 
@@ -298,8 +298,10 @@ Testing operator overloading subroutines
 
 {
     sub circumfix:<<` `>>(*@args) { @args.join('-') }
-    is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works'
+    is `3, 4, "f"`, '3-4-f', 'slurpy circumfix:<<...>> works';
 
+    sub circumfix:<⌊ ⌋>($e) { $e.floor }
+    is ⌊pi⌋, 3, 'circumfix with non-Latin1 bracketing characters';
 }
 
 {
