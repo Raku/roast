@@ -26,7 +26,6 @@ ok Inventory.parse('1234 3 red This is a description') , "Standard line parsed o
 is ($<product>,$<quantity>,$<color>,$<description>) , ('1234' ,'3','red','This is a description') , "Result OK";
 
 ok Inventory.parse('1234 3 This is a description (red)') , "Color in description";
-#?rakudo todo 'unknown capturing bug'
 is ($<product>,$<quantity>,$<color>,$<description>) , ('1234' ,'3','red','This is a description') , "Result OK";
 
 

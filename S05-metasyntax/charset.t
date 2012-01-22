@@ -70,7 +70,6 @@ ok ~$! ~~ / 'Unsupported use of - as character range; in Perl 6 please use ..'/,
     "STD error message for - as character range";
 }
 
-#?rakudo todo 'RT 100650'
 ok 'ab' ~~ /^(.*) b/,
     'Quantifiers in capture groups work (RT 100650)';
 
