@@ -167,7 +167,6 @@ plan 67;
     is prime_factors_mult(315),([3,2],[5,1],[7,1]), ".. and ignore multiplicity 0"
 }
 
-#?niecza skip 'cannot see prime_factors_mult'
 #?DOES 20
 {
     # P37 (**) Calculate Euler's totient function phi(m) (improved).
@@ -241,7 +240,6 @@ plan 67;
     is primes(16,100), (17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97), "a few more.";
 }
 
-#?niecza skip 'cannot see primes'
 #?DOES 1
 {
     # P40 (**) Goldbach's conjecture.
