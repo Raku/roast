@@ -37,6 +37,8 @@ throws_like '$&', X::Obsolete, old => '$@ variable', new => '$/ or $()';
 throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
 throws_like 'class { $^x }', X::Placeholder::Block, placeholder => '$^x';
-throws_like 'my @a; my @a',  X::Redeclaration,      symbol      => '@a';
+throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
+throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
+throws_like 'CATCH { }; CATCH { }', X::Phaser::Once, block => 'CATCH';
 
 done;
