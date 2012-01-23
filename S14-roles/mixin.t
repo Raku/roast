@@ -87,11 +87,11 @@ is $y.test,     42,         'method from other role was OK too';
         has $.y;
     }
 
-    dies_ok { my $x = 4; $x does R4a(3) },
+    dies_ok { my $x = {}; $x does R4a(3) },
             '"does role(param)" does not work without attribute';
-    lives_ok { my $x = 4; $x does R4b(3) },
+    lives_ok { my $x = {}; $x does R4b(3) },
             '"does role(param)" does work with one attribute';
-    dies_ok { my $x = 4; $x does R4c(3) },
+    dies_ok { my $x = {}; $x does R4c(3) },
             '"does role(param)" does not work with two attributes';
     is ([] does R4b("foo")).x, 'foo',
        'can mix R4b into an Array, and access the attribute';
