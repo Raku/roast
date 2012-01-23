@@ -34,7 +34,7 @@ nok Foo.defined,                'role type objects are undefined';
 }
 
 # Mixing a Role into a Mu using imperative C<does>
-my $baz = 3;
+my $baz = { };
 ok defined($baz does Foo),      'mixing in our Foo role into $baz worked';
 #?pugs skip 3 'feature'
 ok $baz.HOW.does($baz, Foo),    '.HOW.does said our $baz now does Foo';
