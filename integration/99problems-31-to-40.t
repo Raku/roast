@@ -167,7 +167,6 @@ plan 67;
     is prime_factors_mult(315),([3,2],[5,1],[7,1]), ".. and ignore multiplicity 0"
 }
 
-#?rakudo skip 'nom regression - cannot see prime_factors_mult'
 #?niecza skip 'cannot see prime_factors_mult'
 #?DOES 20
 {
@@ -189,7 +188,9 @@ plan 67;
     #  phi(prime**m)=prime**(m-1)*(prime-1)
     # and
     #  some_number=some_prime**n * some_other_prime**m * ....
-     
+    
+    our &prime_factors_mult;
+    
     sub phi($n) {
       my $result=1;
       
@@ -240,7 +241,6 @@ plan 67;
     is primes(16,100), (17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97), "a few more.";
 }
 
-#?rakudo skip 'nom regression - cannot see primes'
 #?niecza skip 'cannot see primes'
 #?DOES 1
 {
@@ -256,6 +256,8 @@ plan 67;
     # Example:
     # * (goldbach 28)
     # (5 23)
+    
+    our &primes;
     
     sub goldbach($n) {
         my @p = primes(1, $n-1);
