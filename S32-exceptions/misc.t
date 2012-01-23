@@ -34,7 +34,8 @@ throws_like 'sub f() { $^x }', X::Signature::Placeholder,
 #?rakudo skip 'parsing of $& and other p5 variables'
 throws_like '$&', X::Obsolete, old => '$@ variable', new => '$/ or $()';
 
-throws_like 'do { $^x }', X::Placeholder::Block;
-throws_like 'class { $^x }', X::Placeholder::Block;
+throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
+throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
+throws_like 'class { $^x }', X::Placeholder::Block, placeholder => '$^x';
 
 done;
