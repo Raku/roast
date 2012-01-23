@@ -39,8 +39,8 @@ is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
 #?rakudo todo 'RT 66006'
-#?niecza todo 'This test is pretty dubious IMO'
 try { eval '$foo.baz()' };
+#?niecza todo 'This test is pretty dubious IMO'
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
 role R1 {
@@ -55,8 +55,9 @@ class C does R1 does R2 {
 }
 my $obj = C.new;
 #?rakudo 2 skip 'proto does not promote to multi'
-#?niecza 2 skip 'No candidates for dispatch to C.foo'
+#?niecza skip 'No candidates for dispatch to C.foo'
 is($obj.foo('a'),     1, 'method composed into multi from role called');
+#?niecza skip 'No candidates for dispatch to C.foo'
 is($obj.foo('a','b'), 2, 'method composed into multi from role called');
 
 
@@ -78,6 +79,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     try { eval 'class RT67024 { method a(){0}; method a($x){1} }' };
     #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
+    #?niecza todo 'depends on previous test'
     ok "$!" ~~ /multi/, 'error message mentions multi-ness';
 }
 
@@ -116,6 +118,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
     }
 }
 
+#?niecza skip 'ambiguous'
 {
     role RoleS {
         multi method d( Str $x ) { 'string' }   #OK not used
