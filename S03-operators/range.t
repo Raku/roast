@@ -26,7 +26,6 @@ is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
-#?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'." 
 is ~(' '..' '), ' ',    'all-whitespace range works';
 
 is ~(3..9-3), "3 4 5 6", "(..) has correct precedence (1)";
@@ -164,7 +163,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.max,   $end, 'range ends at end';
     is $range.max.WHAT.gist, "Str()", 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
-    #?rakudo skip "nom regression: No applicable candidates found to dispatch to for 'Numeric'."
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
  
