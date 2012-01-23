@@ -37,5 +37,6 @@ throws_like '$&', X::Obsolete, old => '$@ variable', new => '$/ or $()';
 throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
 throws_like 'class { $^x }', X::Placeholder::Block, placeholder => '$^x';
+throws_like 'my @a; my @a',  X::Redeclaration,      symbol      => '@a';
 
 done;
