@@ -56,7 +56,6 @@ plan 25;
     
 }
 
-#?rakudo skip 'parse error'
 {
     # P13 (**) Run-length encoding of a list (direct solution).
     # 
@@ -125,13 +124,15 @@ plan 25;
           }
           @array.shift;
         }
-        return $packed;
+        return $packed // '';
     }
     
     is encode_direct(()),'', 'We should be able to encode_direct an empty list';
     #?niecza todo
+    #?rakudo todo 'unknon'
     is encode_direct(<a>), 'a', '.. or a one-element iist';
     #?niecza todo
+    #?rakudo todo 'unknon'
     is encode_direct(<a a>), '2a', '.. or a n-ary list with always same element';
     is encode_direct(<a a a a b c c a a d e e e e>),
         '4ab2c2ad4e',
@@ -207,7 +208,7 @@ plan 25;
     sub drop4(@list, Int $nth) {
         return (@list[$_] if ($_+1) % $nth) for ^@list;
     }
-    #?rakudo skip 'infinite loop'
+    #?rakudo todo 'unknown'
     #?niecza todo
     is drop4(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using (statement if) for';
@@ -215,7 +216,7 @@ plan 25;
     sub drop5(@list, Int $nth) {
         return @list[$_] if ($_+1) % $nth for ^@list;
     }
-    #?rakudo skip 'infinite loop'
+    #?rakudo todo 'unknown'
     #?niecza todo
     is drop5(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using list comprehension';
