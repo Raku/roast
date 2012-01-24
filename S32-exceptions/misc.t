@@ -16,9 +16,18 @@ sub throws_like($code, $ex_type, *%matcher) {
             ok $type_ok , "right exception type ({$ex_type.^name})";
             if $type_ok {
                 for %matcher.kv -> $k, $v {
-                    ok $_."$k"() ~~ $v, " .$k matches $v";
+                    my $got = $_."$k"();
+                    my $ok = $got ~~ $v,;
+                    ok $ok, ".$k matches $v";
+                    unless $ok {
+                        diag "Got:      $got\n"
+                            ~"Expected: $v";
+
+                    }
                 }
             } else {
+                diag "Got:      {$_.WHAT.gist}\n"
+                    ~"Expected: {$ex_type.gist}";
                 skip 'wrong exception type', %matcher.elems;
             }
         }
@@ -37,6 +46,20 @@ throws_like '$&', X::Obsolete, old => '$@ variable', new => '$/ or $()';
 throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
 throws_like 'class { $^x }', X::Placeholder::Block, placeholder => '$^x';
+throws_like '$^x',           X::Placeholder::Mainline, placeholder => '$^x';
+throws_like 'sub f(*@a = 2) { }', X::Parameter::Default, how => 'slurpy';
+throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required';
+throws_like 'sub f(:$x! = 3) { }', X::Parameter::Default, how => 'required';
+throws_like 'sub f($:x) { }',  X::Parameter::Placeholder,
+        parameter => '$:x',
+        right     => ':$x';
+throws_like 'sub f($?x) { }',  X::Parameter::Twigil,
+        parameter => '$?x',
+        twigil    => '?';
+throws_like 'sub (Int Str $x) { }', X::Parameter::TypeConstraint;
+
+
+
 throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'CATCH { }; CATCH { }', X::Phaser::Once, block => 'CATCH';
