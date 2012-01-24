@@ -5,19 +5,18 @@ use Test;
 my @tests = (
     # Basic scalar values
     42, 
-    #?niecza emit # Rat.perl.eval doesn't work properly
     42/10, 
-    #?niecza emit # Rat.perl.eval doesn't work properly
     4.2, 
     sqrt(2),
     3e5,
     Inf, -Inf, NaN,
 
-    "a string", "", "\0", "\t", "\n", "\r\n", "\o7",
-    #?niecza emit # Bogus statement
+    "a string", "", "\0", "\t", "\n", 
+    #?niecza emit # converts to a signal newline, I think
+    "\r\n", 
+    "\o7",
     '{', # "\d123",	# XXX there is no \d escape!!!
     '}',
-    #?niecza emit # Variable $a is not predeclared
     '$a @string %with &sigils()',
 
     ?1, ?0,
