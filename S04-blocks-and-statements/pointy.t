@@ -55,7 +55,7 @@ my $str = '';
 sub outer {  
     my $s = -> { 
         #?rakudo skip '&?ROUTINE'
-        #?niecza skip 'Unable to resolve method name in class Sub'
+        #?niecza todo 'Unable to resolve method name in class Sub'
         is(&?ROUTINE.name, '&Main::outer', 'pointy still sees outer\'s &?ROUTINE'); 
 
         $str ~= 'inner'; 

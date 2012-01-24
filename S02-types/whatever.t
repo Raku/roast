@@ -199,7 +199,6 @@ is (0,0,0,0,0,0) >>+>> ((1,2) xx *), <1 2 1 2 1 2>, 'xx * works';
 }
 
 # RT #69362
-#?niecza skip 'Unable to resolve method signature in class WhateverCode'
 {
     my $x = *.uc;
     my $y = * + 3;

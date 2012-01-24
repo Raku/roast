@@ -38,7 +38,6 @@ Testing operator overloading subroutines
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
-#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:['Z'] ($thing) { return "ROUGHLY$thing"; };
 
@@ -47,21 +46,18 @@ Testing operator overloading subroutines
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
-#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:["∓"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, U+2213 MINUS-OR-PLUS SIGN)';
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
-#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:["\x[2213]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \x[2213] MINUS-OR-PLUS SIGN)';
 }
 
 #?rakudo skip 'prefix:[] form not implemented'
-#?niecza skip 'prefix:[] form not implemented'
 {
     sub prefix:["\c[MINUS-OR-PLUS SIGN]"] ($thing) { return "AROUND$thing"; };
     is ∓ "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, \c[MINUS-OR-PLUS SIGN])';

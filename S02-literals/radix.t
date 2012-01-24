@@ -135,7 +135,7 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 
 #?pugs todo 'feature'
 #?rakudo skip "Some question of what this form should actually do"
-#?niecza skip ":radix() NYI"
+#?niecza todo ":radix() NYI"
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');
     is(:8('0x20'),    0o32, ':8(0x20) converts from decimal');

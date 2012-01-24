@@ -103,7 +103,6 @@ is $o.x, 5, '... worked for the class Parent (other order)';
 }
 
 # RT #68558
-#?niecza skip 'No value for parameter self in Mu.new'
 {
     class RT68558 {
         has $.foo;

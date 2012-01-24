@@ -116,7 +116,6 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
 }
 
 # used to be a bug in Rakudo, RT #63744
-#?niecza skip 'Code.signature'
 {
     sub indirect-count(Code $c) { +$c.signature.params; }
     my $tester = -> $a, $b, $c? { ... };   #OK not used

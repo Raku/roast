@@ -246,7 +246,6 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 }
 
 #overflow tests from radix.t
-#?niecza skip 'general radix notation'
 {
     # some random mad up hex strings (these values are checked against perl5)
     is :16("FFACD5FE"), 4289517054, 'got the correct int value from hex FFACD5FE';

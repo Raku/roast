@@ -140,7 +140,6 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     multi sub koala(Int $x) { 42 * $x };
 
     my $x = multi sub koala(Str $x) { 42 ~ $x }
-    #?niecza skip 'Unable to resolve method candidates in class Sub'
     is $x.candidates.elems,
         1, 'multi sub declaration returns just the current candidate';
     is $x('moep'), '42moep', 'and that candidate works';

@@ -242,7 +242,6 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #68524
-#?niecza skip "Unable to resolve method signature in class Sub"
 {
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.perl ~~ m/\!/,
@@ -250,7 +249,6 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #69516
-#?niecza skip "Unable to resolve method signature in class Sub"
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
     ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
