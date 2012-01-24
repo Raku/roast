@@ -2,16 +2,19 @@ use v6;
 use Test;
 
 sub throws_like($code, $ex_type, *%matcher) {
+    my $msg;
     if $code ~~ Callable {
+        $msg = 'code dies';
         $code()
     } else {
+        $msg = "'$code' died";
         eval $code;
     }
-    ok 0, 'code died';
+    ok 0, $msg;
     skip 'Code did not die, can not check exception', 1 + %matcher.elems;
     CATCH {
         default {
-            ok 1, 'code died';
+            ok 1, $msg;
             my $type_ok = $_.WHAT === $ex_type;
             ok $type_ok , "right exception type ({$ex_type.^name})";
             if $type_ok {
