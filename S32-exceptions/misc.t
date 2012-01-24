@@ -67,4 +67,14 @@ throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'CATCH { }; CATCH { }', X::Phaser::Once, block => 'CATCH';
 
+throws_like 'class A { my @a; @a!List::foo() }',
+    X::Method::Private::Permission,
+    method          => 'foo',
+    calling-package => 'A',
+    source-package  => 'List';
+
+throws_like '1!foo()',
+    X::Method::Private::Qualified,
+    method          => 'foo';
+
 done;
