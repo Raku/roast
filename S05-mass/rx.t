@@ -420,7 +420,6 @@ ok '...---...' !~~ /'... --- ...'/, 'literal match (\\\')';
 ok 'ab\'>cd' ~~ /'ab\'>cd'/, 'literal match with quote';
 
 #### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
-#?niecza todo ''
 ok "ab\x5cyz" ~~ /'ab\\yz'/, 'literal match with backslash';
 
 #### 'ab"cd'			ab"cd		y	literal match with quote
@@ -428,7 +427,6 @@ ok 'ab"cd' ~~ /'ab"cd'/, 'literal match with quote';
 
 #### 'ab\\yz'		ab\x5cyz	y	literal match with backslash
 #?pugs todo 'feature'
-#?niecza todo ''
 ok "ab\x5cyz" ~~ /'ab\\yz'/, 'literal match with backslash';
 
 #### "... --- ..."		... --- ...	y	literal match (\")
