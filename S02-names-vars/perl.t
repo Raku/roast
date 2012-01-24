@@ -12,7 +12,6 @@ my @tests = (
     Inf, -Inf, NaN,
 
     "a string", "", "\0", "\t", "\n", 
-    #?niecza emit # converts to a signal newline, I think
     "\r\n", 
     "\o7",
     '{', # "\d123",	# XXX there is no \d escape!!!
