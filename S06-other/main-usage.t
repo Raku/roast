@@ -102,6 +102,7 @@ is_run 'sub MAIN($a, Bool :$var) { say "a: $a, optional: $var"; }',
 # (discussion starts at http://irclog.perlgeek.de/perl6/2011-10-17#i_4578353 )
 
 #?rakudo todo 'nom regression'
+#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:$x) { print $x }',
     {
         out => "23",
@@ -110,6 +111,7 @@ is_run 'sub MAIN(:$x) { print $x }',
     'option with spacey value';
 
 #?rakudo todo 'nom regression'
+#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
@@ -118,6 +120,7 @@ is_run 'sub MAIN(:xen(:$x)) { print $x }',
     'long option with spacey value';
 
 #?rakudo todo 'nom regression'
+#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
@@ -126,6 +129,7 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     'named alias (inner name) with spacey value';
 
 #?rakudo todo 'nom regression'
+#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     {
         out => "23",
@@ -134,6 +138,7 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     'named alias (outer name) with spacey value';
 
 #?rakudo todo 'nom regression'
+#?niecza todo 'copied nom regression'
 is_run 'sub MAIN(:xen(:$x)) { print $x }',
     {
         out => "23",
