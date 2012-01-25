@@ -31,6 +31,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = set 2, 'a', False;
     my @ks = $s.keys;
+    #?niecza 3 todo
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -38,6 +39,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 # RT #77760
+#?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %h = set <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Set has been assigned remains a hash';
@@ -65,7 +67,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 # L<S03/Hyper operators/'unordered type'>
-
+#?niecza skip "Hypers not yet Set compatible"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';
