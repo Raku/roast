@@ -33,12 +33,14 @@ sub showkv($x) {
 {
     my $b = bag 'a', False, 2, 'a', False, False;
     my @ks = $b.keys;
+    #?niecza 2 todo
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $b{2, 'a', False}.sort.join(' '), '1 2 3', 'All keys have the right values';
 }
 
+#?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %h = bag <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Bag has been assigned remains a hash';
