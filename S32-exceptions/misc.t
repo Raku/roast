@@ -77,4 +77,7 @@ throws_like '1!foo()',
     X::Method::Private::Qualified,
     method          => 'foo';
 
+throws_like 'sub f() { }; f() := 2', X::Bind::WrongLHS;
+throws_like 'my int $x := 2', X::Bind::NativeType;
+
 done;
