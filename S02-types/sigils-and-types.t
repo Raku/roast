@@ -44,9 +44,7 @@ ok %hash.does(Associative), 'value in %var does Associative';
 
 #?niecza todo
 ok eval('Pair').does(Associative), "Pair does Associative";
-#?niecza skip 'Undeclared name Set'
 ok eval('Set').does(Associative), "Set does Associative";
-#?niecza skip 'Undeclared name Bag'
 ok eval('Bag').does(Associative), "Bag does Associative";
 #?niecza skip 'Undeclared name KeyHash'
 ok eval('KeyHash').does(Associative), "KeyHash does Associative";

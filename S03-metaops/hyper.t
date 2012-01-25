@@ -383,7 +383,6 @@ my @e;
 }
 
 #?pugs todo 'feature'
-#?niecza skip 'junctions'
 #?DOES 4
 { # junction hyper -- regression?
     my @a = 1..3;
