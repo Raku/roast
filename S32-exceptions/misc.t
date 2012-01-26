@@ -59,13 +59,18 @@ throws_like 'sub f($:x) { }',  X::Parameter::Placeholder,
 throws_like 'sub f($?x) { }',  X::Parameter::Twigil,
         parameter => '$?x',
         twigil    => '?';
-throws_like 'sub (Int Str $x) { }', X::Parameter::TypeConstraint;
+throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
 
 
 
+# some of these redeclaration errors take different code
+# paths in rakudo, so we over-test a bit to catch them all,
+# even if the tests look rather boring;
 throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
-throws_like 'CATCH { }; CATCH { }', X::Phaser::Once, block => 'CATCH';
+throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
+throws_like 'my class B { }; my subset B { }', X::Redeclaration, symbol => 'B';
+throws_like 'CATCH { }; CATCH { }', X::Phaser::Multiple, block => 'CATCH';
 
 throws_like 'class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
@@ -74,7 +79,7 @@ throws_like 'class A { my @a; @a!List::foo() }',
     source-package  => 'List';
 
 throws_like '1!foo()',
-    X::Method::Private::Qualified,
+    X::Method::Private::Unqualified,
     method          => 'foo';
 
 throws_like 'sub f() { }; f() := 2', X::Bind::WrongLHS;
@@ -89,6 +94,6 @@ throws_like 'foreach (1..10) { }', X::Obsolete,
 throws_like 'undef', X::Obsolete,
     old         => rx/<<undef>>/;
 
-throws_like 'my $a::::b', X::Syntax::Name::NotNull;
+throws_like 'my $a::::b', X::Syntax::Name::Null;
 
 done;
