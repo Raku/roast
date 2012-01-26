@@ -51,7 +51,6 @@ plan 79;
  isa_ok($morna, Regex);
 }
 
-#?niecza skip "Set NYI"
 {
  my Set $selcmima;
  isa_ok($selcmima, Set);
@@ -225,7 +224,6 @@ plan 79;
  isa_ok($bi,Range  );
 }
 
-#?niecza skip 'Bag not implemented'
 {
  my Bag $so;
  isa_ok($so,Bag  );

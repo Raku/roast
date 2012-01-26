@@ -80,4 +80,13 @@ throws_like '1!foo()',
 throws_like 'sub f() { }; f() := 2', X::Bind::WrongLHS;
 throws_like 'my int $x := 2', X::Bind::NativeType;
 
+throws_like 'for (1; 1; 1) { }', X::Obsolete,
+    old         => rx/<<for>>/,
+    replacement => rx/<<loop>>/;
+throws_like 'foreach (1..10) { }', X::Obsolete,
+    old         => "'foreach'",
+    replacement => "'for'";
+throws_like 'undef', X::Obsolete,
+    old         => rx/<<undef>>/;
+
 done;
