@@ -2,7 +2,7 @@
 
 use Test;
 
-plan 8;
+plan 9;
 
 =begin pod
 
@@ -34,5 +34,9 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
     ok $error ~~ /:i 'type' /, '... error message mentions "type"';
     ok $error ~~ / Associative | \% /, '... error message mentions "Associative" or the % sigil';
 }
+
+# RT #109064
+eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
+    'named parameter of undeclared attribute dies';
 
 # vim: ft=perl6
