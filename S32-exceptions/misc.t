@@ -89,4 +89,6 @@ throws_like 'foreach (1..10) { }', X::Obsolete,
 throws_like 'undef', X::Obsolete,
     old         => rx/<<undef>>/;
 
+throws_like 'my $a::::b', X::Syntax::Name::NotNull;
+
 done;
