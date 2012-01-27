@@ -31,11 +31,10 @@ ok("A" ~~ m/<.prior>/, 'Still prior successful match');
 ok("A" ~~ m/<.prior>/, 'And still prior successful match');
 
 ok("BA" ~~ m/B <.prior>/, 'Nested prior successful match');
-# now the prior match is "BA"
-ok("A" !~~ m/B <.prior>/, 'Nested prior successful non-match');
 is ~$/, 'BA', 'matched all we wanted';
 
+# now the prior match is "BA"
+ok("A" !~~ m/B <.prior>/, 'Nested prior successful non-match');
 ok( 'A' !~~ m/<.prior>/, 'prior target updated');
-
 
 # vim: ft=perl6
