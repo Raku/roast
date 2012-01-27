@@ -81,7 +81,6 @@ eval_dies_ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
 
 # RT #63466
 {
-    #?rakudo todo 'RT #63466'
     eval_dies_ok q{ 'x' ~~ / <No::Such::Rule> / },
             'match against No::Such::Rule dies';
 }
