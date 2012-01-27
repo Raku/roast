@@ -56,7 +56,6 @@ plan 6;
 
 # macro defined as an operator, and used as one
 
-#?rakudo skip 'new macro operator'
 {
     macro infix:<comet>($rhs, $lhs) {
         quasi { "comet!" }
