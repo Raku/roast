@@ -26,7 +26,7 @@ grammar A {
     rule TOP {\d+};
 };
 
-regex b {\d+};
+my regex b {\d+};
 
 isa_ok(A.WHAT, A, 'regex defined in separate namespace from grammar');
 

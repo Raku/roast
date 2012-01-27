@@ -55,19 +55,21 @@ is(~$0[1], "d", 'Nested $3');
 
 # L<S05/Backslash reform/Backreferences>
 
-#?rakudo 3 skip 'Null PMC access in get_string()'
-ok("bookkeeper" ~~ m/(((\w)$0[0][0])+)/, 'Backreference');
+ok("bookkeeper" ~~ m/(((\w)$0)+)/, 'Backreference');
 is(~$0, 'ookkee', 'Captured');
+#?rakudo todo 'really? :-)'
 is(~$0[0], 'ee', 'Captured');
 
 # L<S05/Accessing captured subrules/The hash entries>
 
-regex single { o | k | e };
+my regex single { o | k | e };
 
+#?rakudo 3 todo 'dubious test'
 ok("bookkeeper" ~~ m/<single> ($<single>)/, 'Named backref');
 is(~$/<single>, 'o', 'Named capture');
 is(~$0, 'o', 'Backref capture');
 
+#?rakudo 3 todo 'dubious test'
 ok("bookkeeper" ~~ m/(<.single>) ($0)/, 'Positional backref');
 is(~$0, 'o', 'Named capture');
 is(~$1, 'o', 'Backref capture');
@@ -110,6 +112,7 @@ my regex name { <.English::name> | <.French::name> | <.Russian::name> }
 ok("john" ~~ m/<name>/, 'English metaname');
 is(~$/, "john", 'Metaname match is john');
 ok(~$/ ne "jean", "Metaname match isn't jean");
+#?rakudo todo 'unknown'
 is(~$/<name>, "john", 'Metaname is john');
 
 
