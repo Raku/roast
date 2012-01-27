@@ -57,7 +57,6 @@ dies_ok { my Digit $x = 3.1 },
              'can create subset of hash';
 
     subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
-    #?niecza todo
     lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
     dies_ok { my Person $p = { :first<Charlie>, :last<Delta> } },

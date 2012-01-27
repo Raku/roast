@@ -41,13 +41,11 @@ plan 13;
 
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 #?rakudo 3 todo 'Int conversion of NaN and Inf'
-#?niecza 3 todo
 ok NaN.Int === NaN,         'Inf.Int === Int';
 ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
 
 # RT #70730
-#?niecza todo
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
 }
