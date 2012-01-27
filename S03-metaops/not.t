@@ -51,7 +51,7 @@ isa_ok 4 !=:= 5, Bool, "4 !=:= 5 is Bool";
 # Tests based on http://irclog.perlgeek.de/perl6/2012-01-24#i_5045770
 # and the next few minutes of log.  --colomon
 
-#?rakudo todo
+#?rakudo todo 'unknown'
 eval_dies_ok '"a" !!eq "a"', 'Doubled prefix:<!> is illegal';
 ok "a" ![!eq] "a", '![!eq] is legal and works (1)';
 nok "a" ![!eq] "b", '![!eq] is legal and works (2)';
