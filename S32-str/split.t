@@ -129,7 +129,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
        q{"abcd".split(/<null>/)};()
 }
 
-#?rakudo skip 'Null PMC access in invoke()'
 #?niecza skip 'Unable to resolve method null in class Cursor'
 {
   ' ' ~~ /(\s)/;
