@@ -175,7 +175,6 @@ isa_ok (1/2).FatRat, FatRat, '... and actually returns a FatRat';
 ok (1/2R) == (1/2R).FatRat, 'FatRat.FatRat works';
 isa_ok (1/2R).FatRat, FatRat, '... and actually returns a FatRat';
 
-#?niecza todo
 ok 1/2R === 1/2R, 'FatRats are value types, so 1/2R === 1/2R';
 ok 1/2R !=== 1/3R, '=== with false outcome';
 

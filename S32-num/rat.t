@@ -216,7 +216,6 @@ isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
 isa_ok (1/2).Rat, Rat, '... and actually returns a Rat';
 
-#?niecza todo
 ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 ok 1/2 !=== 1/3, '=== with false outcome';
 

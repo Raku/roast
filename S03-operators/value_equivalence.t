@@ -20,7 +20,6 @@ plan 74;
 {
   ok  (1 === 1), "=== on values (1)";
   ok  (0 === 0), "=== on values (2)";
-  #?niecza todo
   ok  (1 + 1 === 2), '=== on non-literal values';
   ok !(0 === 1), "=== on values (3)";
   isa_ok (1 === 1), Bool, "=== on values (4)";
@@ -33,7 +32,6 @@ plan 74;
 
 # more value tests
 {
-  #?niecza todo
   ok 1/2 === 1/2,                "=== on Rats";
   ok 1/2 !=== 3/2,               "!=== on Rats";
   isa_ok 1/2 === 1/2, Bool,      "=== on Rats yields Bool";
@@ -177,7 +175,6 @@ plan 74;
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
 
-#?niecza todo '=== on value types'
 ok     1|2 === 1,  '=== does autothread (1)';
 isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
 
