@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 26;
+plan 28;
 
 grammar Other {
     regex abc { a (<.bee>) c }
@@ -57,9 +57,9 @@ ok($0 ne "def", '.def $0');
 
 # Test rederivation and polymorphism...
 
-ok('abc' ~~ m/^ (<Yet::Another::abc>) $/, '<Yet::Another::abc>');
-is(~$/, "abc", 'abc $/');
-is(~$0, "abc", 'abc $0');
+ok('aBc' ~~ m/^ (<Yet::Another::abc>) $/, '<Yet::Another::abc>');
+is(~$/, "aBc", 'abc $/');
+is(~$0, "aBc", 'abc $0');
 
 ok('abc' !~~ m/ (<Yet::Another::bee>) /, 'abc <Yet::Another::bee>');
 ok('aBc' ~~ m/ (<Yet::Another::bee>) /, 'aBc <Yet::Another::bee>');
@@ -82,7 +82,7 @@ eval_dies_ok q{ 'abc' ~~ m/ (<Another.sea>) /  }, '<Another.sea>';
 # RT #63466
 {
     #?rakudo todo 'RT #63466'
-    dies_ok { 'x' ~~ / <No::Such::Rule> / },
+    eval_dies_ok q{ 'x' ~~ / <No::Such::Rule> / },
             'match against No::Such::Rule dies';
 }
 
