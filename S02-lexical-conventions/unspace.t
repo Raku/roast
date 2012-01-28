@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 75;
+plan 76;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -289,5 +289,8 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is ( .123), 0.123, ' .123 is equal to 0.123';
     is (.123), 0.123, '.123 is equal to 0.123';
 }
+
+# Was a nasty niecza bug
+is 5.Str\.Str, "5", 'unspaced postfix after method call not misparsed';
 
 # vim: ft=perl6
