@@ -95,5 +95,10 @@ throws_like 'undef', X::Obsolete,
     old         => rx/<<undef>>/;
 
 throws_like 'my $a::::b', X::Syntax::Name::Null;
+throws_like 'unless 1 { } else { }', X::Syntax::UnlessElse;
+throws_like 'for my $x (1, 2, 3) { }', X::Syntax::P5;
+throws_like ':!foo(3)', X::Syntax::NegatedPair;
+throws_like 'my $0', X::Syntax::Variable::Numeric;
+throws_like 'my $<a>', X::Syntax::Variable::Match;
 
 done;
