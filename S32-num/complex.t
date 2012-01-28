@@ -137,8 +137,8 @@ is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
 
 # Conjugation
 {
-  is (2+3i).conjugate, 2-3i, 'conjugate 2+3i -> 2-3i';
-  is (5-4i).conjugate, 5+4i, 'conjugate 5-4i -> 5+4i';
+  is (2+3i).conj, 2-3i, 'conj 2+3i -> 2-3i';
+  is (5-4i).conj, 5+4i, 'conj 5-4i -> 5+4i';
 }
 
 dies_ok { (1 + 2i) < (2 + 4i) },

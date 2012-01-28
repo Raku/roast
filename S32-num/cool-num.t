@@ -18,9 +18,9 @@ class NotComplex is Cool {
 is "-17".abs, 17, '"-17".abs == 17';
 is NotComplex.new.abs, $magic.abs, 'NotComplex.new.abs == $magic.abs';
 
-is "3".conjugate, 3, '"3".conjugate == 3';
+is "3".conj, 3, '"3".conj == 3';
 #?niecza todo
-is NotComplex.new.conjugate, $magic.conjugate, 'NotComplex.new.conjugate == $magic.conjugate';
+is NotComplex.new.conj, $magic.conj, 'NotComplex.new.conj == $magic.conj';
 
 is_approx "3".exp, 3.exp, '"3".exp == 3.exp';
 is_approx NotComplex.new.exp, $magic.exp, 'NotComplex.new.exp == $magic.exp';
