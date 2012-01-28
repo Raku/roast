@@ -100,5 +100,18 @@ throws_like 'for my $x (1, 2, 3) { }', X::Syntax::P5;
 throws_like ':!foo(3)', X::Syntax::NegatedPair;
 throws_like 'my $0', X::Syntax::Variable::Numeric;
 throws_like 'my $<a>', X::Syntax::Variable::Match;
+throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
+throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
+throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
+
+throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
+    misplaced   => 'required',
+    after       => 'optional';
+throws_like 'sub f(*@a, $b) { }', X::Parameter::WrongOrder,
+    misplaced   => 'required',
+    after       => 'variadic';
+throws_like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
+    misplaced   => 'optional positional',
+    after       => 'variadic';
 
 done;
