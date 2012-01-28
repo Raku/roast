@@ -44,7 +44,7 @@ check that multi-jointed namespaces work with grammars
 grammar Foo::Bar {
     token foo { foo }
 }
-is("foo" ~~ &Foo::Bar::foo, 'foo', 'regex in a namespace callable');
+ok("foo" ~~ &Foo::Bar::foo, 'regex in a namespace callable');
 
 grammar Grammar::Deep { token foo { 'foo' }; }
 grammar GrammarShallow { token TOP { <Grammar::Deep::foo> 'bar' }; }
