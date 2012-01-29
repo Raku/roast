@@ -113,7 +113,7 @@ is ~LTM.parse('aaa', :rule('cap1')),    'aaa',    'Positional captures do not te
 is ~LTM.parse('aaa', :rule('cap2')),    'aaa',    'Named captures do not terminate LTM';
 is ~LTM.parse('aaa', :rule('ass1')),    'aaa',    '<?{...}> does not terminate LTM';
 is ~LTM.parse('aaa', :rule('ass2')),    'aaa',    '<!{...}> does not terminate LTM';
-#?niecza todo '#89'
+#?niecza skip '#89'
 is ~LTM.parse('aaa', :rule('block')),   'aa',     'However, code blocks do terminate LTM';
 
 # vim: ft=perl6
