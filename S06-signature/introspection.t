@@ -28,6 +28,7 @@ sub j(*@i) {
     is j(@l>>.named),    '0 0 1', '... one named';
 }
 
+#?niecza skip "Unhandled trait rwt"
 {
     sub b(:x($a)! is rw, :$y is parcel, :$z is copy) { };   #OK not used
     my @l = &b.signature.params;
@@ -47,6 +48,7 @@ sub j(*@i) {
 {
     sub d(*@pos, *%named) { };   #OK not used
     my @l = &d.signature.params;
+    #?niecza todo
     is j(@l>>.named),    '0 1', '.named for slurpies';
     is j(@l>>.slurpy),   '1 1', '.slurpy';
     is ~(@l>>.name),     '@pos %named', '.name for slurpies';
@@ -59,6 +61,7 @@ sub j(*@i) {
     is ~&d.signature.params.[0].name, '$a',    '... and .name still works';
 }
 
+#?niecza skip "Parameter separator ;  NYI"
 {
     sub e($x = 3; $y = { 2 + $x }) { };   #OK not used
     my @l = &e.signature.params>>.default;
@@ -69,6 +72,7 @@ sub j(*@i) {
     is @l[1].().(), 5, 'closure as default value captured outer default value';
 }
 
+#?niecza skip "Unable to resolve method constraints in class Parameter"
 {
     sub f(Int $x where { $_ % 2 == 0 }) { };   #OK not used
     my $p = &f.signature.params[0];
@@ -84,11 +88,13 @@ sub j(*@i) {
 }
 
 # RT #70720
+#?niecza skip "Action method fakesignature not yet implemented"
 {
     is :(3).params[0].constraints, 3, ':(3) contains the 3';
     ok :(3).params[0].type === Int,   ':(3) has a parameter of type Int';
 }
 
+#?niecza skip "GLOBAL::T does not name any package"
 {
     sub h(::T $x, T $y) { };   #OK not used
     my @l = &h.signature.params;
@@ -99,11 +105,13 @@ sub j(*@i) {
 {
     sub i(%h($a, $b)) { };   #OK not used
     my $s = &i.signature.perl;
+    #?niecza 2 todo
     ok $s ~~ /'$a' >> /, '.perl on a nested signature contains variables of the subsignature (1)';
     ok $s ~~ /'$b' >> /, '.perl on a nested signature contains variables of the subsignature (2)';
 
 }
 
+#?niecza skip "Action method fakesignature not yet implemented"
 {
     my $x;
     ok :(|$x).params[0].capture, 'prefix | makes .capture true';
@@ -114,6 +122,7 @@ sub j(*@i) {
 }
 
 # RT #69492
+#?niecza skip "Abbreviated named parameter must have a name"
 {
     sub foo(:$) {};
     ok &foo.signature.perl ~~ / ':' /, '.perl of a signature with anonymous named parameter';
