@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 101;
+plan 102;
 
 =begin pod
 
@@ -420,6 +420,9 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
    is any(Foo.new).perl, 'any(perled)', 'any(Foo.new).perl';
    is any(Foo.new).gist, 'any(gisted)', 'any(Foo.new).gist';
 }
+
+# RT #109188
+ok { a => 1} ~~ List|Hash, 'Can construct junction with List type object';
 
 done();
 
