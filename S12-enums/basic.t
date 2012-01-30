@@ -104,6 +104,14 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     ok bug71460 == 1, 'enum element of enum with double colons is in namespace';
 }
 
+# RT #77982
+{
+    enum T1 <a b c>;
+    enum T2 <d e f>;
+    is T1.enums.keys.sort.join('|'), 'a|b|c', 'enum keys (1)';
+    is T2.enums.keys.sort.join('|'), 'd|e|f', 'enum keys (2)';
+}
+
 done;
 
 # vim: ft=perl6
