@@ -1,6 +1,7 @@
 use v6;
 use Test;
 
+#?DOES 1
 sub throws_like($code, $ex_type, *%matcher) {
     my $msg;
     if $code ~~ Callable {
@@ -113,5 +114,13 @@ throws_like 'sub f(*@a, $b) { }', X::Parameter::WrongOrder,
 throws_like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
     misplaced   => 'optional positional',
     after       => 'variadic';
+
+#?rakudo skip 'parsing regression'
+throws_like '#`', X::Syntax::Comment::Embedded;
+#?rakudo skip 'parsing regression'
+throws_like '=begin', X::Syntax::Pod::BeginWithoutIdentifier;
+
+throws_like '@', X::Syntax::SigilWithoutName;
+throws_like '1∞', X::Syntax::Confused;
 
 done;
