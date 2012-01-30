@@ -37,10 +37,10 @@ ok %*ENV<PATH> ne "42",
 
 # Similarily, I don't think creating a new entry in %vars should affect the
 # environment:
-diag '%*ENV<PUGS_ROCKS>=' ~ %*ENV<PUGS_ROCKS>;
+diag '%*ENV<PUGS_ROCKS>=' ~ (%*ENV<PUGS_ROCKS> // "");
 ok !defined(%*ENV<PUGS_ROCKS>), "there's no env variable 'PUGS_ROCKS'";
 %vars<PUGS_ROCKS> = "42";
-diag '%*ENV<PUGS_ROCKS>=' ~ %*ENV<PUGS_ROCKS>;
+diag '%*ENV<PUGS_ROCKS>=' ~ (%*ENV<PUGS_ROCKS> // "");
 ok !defined(%*ENV<PUGS_ROCKS>), "there's still no env variable 'PUGS_ROCKS'";
 
 my ($redir,$squo) = (">", "'");
@@ -66,7 +66,8 @@ my $err = 0;
 for %*ENV.kv -> $k,$v {
   # Ignore env vars which bash and maybe other shells set automatically.
   next if $k eq any <SHLVL _ OLDPWD PS1>;
-  if (%child_env{$k} !~~ $v) {
+  my $child_v = %child_env{$k} // "";
+  if $child_v !~~ $v {
     if (! $err) {
       #?rakudo todo 'nom regression'
       #?niecza todo 'Environment gets propagated to child.'
@@ -74,7 +75,7 @@ for %*ENV.kv -> $k,$v {
       $err++;
     };
     diag "Expected: $k=$v";
-    diag "Got:      $k=%child_env{$k}";
+    diag "Got:      $k=$child_v";
   } else {
     # diag "$k=$v";
   };
@@ -100,14 +101,15 @@ $err = 0;
 for %*ENV.kv -> $k,$v {
   # Ignore env vars which bash and maybe other shells set automatically.
   next if $k eq any <SHLVL _ OLDPWD PS1>;
-  if (%child_env{$k} !~~ $v) {
+  my $child_v = %child_env{$k} // "";
+  if $child_v !~~ $v {
     if (! $err) {
       #?niecza todo 'Environment gets propagated to child.'
       flunk("Environment gets propagated to child.");
       $err++;
     };
     diag "Expected: $k=$v";
-    diag "Got:      $k=%child_env{$k}";
+    diag "Got:      $k=$child_v";
   } else {
     # diag "$k=$v";
   };
