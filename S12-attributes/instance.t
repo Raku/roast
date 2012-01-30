@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 135;
+plan 136;
 
 =begin pod
 
@@ -624,6 +624,10 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         'presence of BUILD does not prevent assignment of default values';
 
 }
+
+# RT #108670
+eval_dies_ok 'my class AccessorClash { has @.a; has &.a }',
+    'cannot have two attributes with same accessor name';
 
 done();
 
