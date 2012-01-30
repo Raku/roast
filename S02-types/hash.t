@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 79;
+plan 80;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -277,6 +277,13 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 {
     eval_lives_ok 'my $rt = { grammar => 5 }',
                   "can have a bareword 'grammar' as a hash key";
+}
+
+# RT #77922
+{
+    my $h = Hash.new(a => 3);
+    $h<a> = 5;
+    is $h<a>, 5, 'can normally modify items created from Hash.new';
 }
 
 done;
