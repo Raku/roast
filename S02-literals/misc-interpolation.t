@@ -10,7 +10,7 @@ These tests derived from comments in L<http://use.perl.org/~autrijus/journal/233
 
 =end pod
 
-plan 43;
+plan 44;
 
 my $world = "World";
 my $number = 1;
@@ -108,6 +108,13 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
     is "|$x."f"()|", '|int|',    #OK use of quotes
        'interpolation of indirect method calls (same quotes)';
     eval_dies_ok q["|$x."f "()"], '... but whitespaces are not allowed';
+}
+
+# RT # 104594
+# rakudo had some trouble with lexicals from inside interpolated blocks
+{
+    sub t($p) { t $p-1 if $p-1 > 0; return "{$p}" };
+    is t(3), 3, 'variables interpoalted into blocks and recursion interact nicely';
 }
 
 # vim: ft=perl6
