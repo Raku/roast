@@ -32,14 +32,12 @@ character classes), and those are referenced at the correct spot.
     is('1a2b3c' ~~ /<alpha>/, 'a', 'capturing grammatical assertion (2)');
 }
 
-#?rakudo skip 'RT #64464'
-#?niecza skip 'regex declaration outside of grammar'
 {
-    regex with-dash { '-' }
+    my regex with-dash { '-' }
     ok '-'  ~~ /<with-dash>/, 'can call regexes which dashes (positive)';
     ok '|' !~~ /<with-dash>/, 'can call regexes which dashes (negative)';
 
-    regex with'hyphen { a }
+    my regex with'hyphen { a }
     ok 'a'  ~~ /<with'hyphen>/, 'can call regex with hypen (positive)';
     ok 'b' !~~ /<with'hyphen>/, 'can call regex with hypen (negative)';
 }
