@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 53;
 
 =begin pod
 
@@ -42,15 +42,19 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
 {
     my $foo;
+    my $match;
     given "foo" {
         when "foo" {
             when /^f/ {
-                $foo = 1
+                $foo = 1;
+                $match = $/;
             }
         }
     }
 
     ok($foo, "foo was found in nested when");
+    # RT #99912
+    ok $match, 'regex in when-clause set match object';
 };
 
 
