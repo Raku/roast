@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 31;
+plan 34;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -77,6 +77,13 @@ ok 'ab' ~~ /^(.*) b/,
 # backslashed characters in char classes
 ok '[]\\' ~~ /^ <[ \[ .. \] ]>+ $ /, 'backslashed chars in char classes';
 nok '^'   ~~ /  <[ \[ .. \] ]>    /, '... does not match outside its range';
+
+# RT #89470
+{
+    nok  '' ~~ / <[a..z]-[x]> /, 'Can match empty string against char class';
+    nok 'x' ~~ / <[a..z]-[x]> /, 'char excluded from class';
+     ok 'z' ~~ / <[a..z]-[x]> /, '... but others are fine';
+}
 
 done;
 
