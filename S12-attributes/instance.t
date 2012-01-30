@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 136;
+plan 137;
 
 =begin pod
 
@@ -628,6 +628,10 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 # RT #108670
 eval_dies_ok 'my class AccessorClash { has @.a; has &.a }',
     'cannot have two attributes with same accessor name';
+# RT #74274
+eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
+    my $method = method { return $!a }; $a.$method()],
+    'cannot sneak in access to private attribute through the backdoor';
 
 done();
 
