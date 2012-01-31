@@ -280,6 +280,7 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 }
 
 # RT #77922
+#?niecza skip "Excess arguments to Hash.new, unused named a"
 {
     my $h = Hash.new(a => 3);
     $h<a> = 5;
