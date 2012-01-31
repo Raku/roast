@@ -101,8 +101,8 @@ plan 22;
 
 # RT #82810
 {
-    sub i(@a is copy) { @a ||= -1, -1, +1, +1; @a.join(',') }
-    is i([1, 2, 3, 4]), '1,2,3,4', 'can use ||= on "is copy" array';
+    sub j(@a is copy) { @a ||= -1, -1, +1, +1; @a.join(',') }
+    is j([1, 2, 3, 4]), '1,2,3,4', 'can use ||= on "is copy" array';
 }
 
 
