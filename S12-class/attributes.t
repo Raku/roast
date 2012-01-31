@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 21;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -107,19 +107,12 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
 }
 
 # RT 81718
-#?niecza skip 'Poorly designed test?  Niecza rejects the code at compile time...'
-{
+eval_dies_ok q[
     class RT81718 {
         has $.bughunt is rw;
         sub bomb { "life is a $.bughunt" }
         method meta_bomb { "the good " ~ bomb() }
     }
-
-    my $rt81718 = RT81718.new();
-
-    dies_ok { $rt81718.bomb() }, 'no attribute access for sub';
-    #?rakudo skip 'RT81718 (false positive in nom) (noauto)'
-    dies_ok { $rt81718.meta_bomb() }, 'no attr access for sub from method';
-}
+], 'no attr access for sub inside class';
 
 # vim: ft=perl6

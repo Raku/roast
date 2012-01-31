@@ -502,7 +502,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     class AttrInitTest {
         has $.a = 1;
         has $.b = 2;
-        has $.c = $.a + $.b;
+        has $.c = $!a + $!b;
     }
     is AttrInitTest.new.c, 3,         'Can initialize one attribute based on another (1)';
     is AttrInitTest.new(a => 2).c, 4, 'Can initialize one attribute based on another (2)';

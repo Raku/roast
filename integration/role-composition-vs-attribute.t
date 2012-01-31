@@ -16,7 +16,7 @@ class S does B
                 $.t.x;
         }
         submethod BUILD(*@_)
-        { $.t = T.new }
+        { $!t = T.new }
 }
 
 # uncomment below after the bug is fixed. As below line will cause infinite loop;
