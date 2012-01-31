@@ -17,7 +17,6 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 
 # used to be a pugs bug
 
-#?rakudo skip 'calling <foo> from outer scopes'
 {
     my rule foo { \{ };
     ok '{'  ~~ /<foo>/, '\\{ in a rule (+)';

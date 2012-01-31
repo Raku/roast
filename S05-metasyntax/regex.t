@@ -56,7 +56,6 @@ lives_ok { my Regex $x = rx/foo/ }, 'Can store regexes in typed variables';
     eval_lives_ok('regex baz {qux}', 'regex foo {...} is valid');
 }
 
-#?rakudo skip 'lexical lookup of regexes'
 {
     my regex alien { ET };
     my token archaeologist { Indiana };
