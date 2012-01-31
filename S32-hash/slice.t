@@ -48,7 +48,7 @@ plan 29;
 
 #?pugs todo 'feature'
 #?rakudo skip 'binding on hash elements unimplemented'
-#?niecza skip 'Writing to readonly scalar'
+#?niecza todo 'Writing to readonly scalar'
 {
     my %hash = :a(1), :b(2), :c(3), :d(4);
     my @slice := %hash<b c>;

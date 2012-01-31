@@ -102,15 +102,12 @@ is ((1..10).minmax: { ($_-3) * ($_-5) }), 4..10,
 
 # Error cases:
 #?pugs 2 todo 'bug'
-#?niecza 2 skip "Unable to resolve method min/max in class Int"
 is 42.min, 42, ".min should work on scalars";
 is 42.max, 42, ".max should work on scalars";
-#?niecza 2 skip "Unable to resolve method min/max in class Parcel"
 is (42,).min, 42, ".min should work on one-elem arrays";
 is (42,).max, 42, ".max should work on one-elem arrays";
 
 # Tests with literals:
-#?niecza 2 skip "Unable to resolve method min/max in class Parcel"
 is (1,2,3).max, 3, "method form of max with literals works";
 is (1,2,3).min, 1, "method form of min with literals works";
 is max(:by({$^a <=> $^b}), 1,2,3),  3, "subroutine form of max with literals works";
@@ -132,7 +129,6 @@ is min(:by({$^a <=> $^b}), 1,2,3),  1, "subroutine form of min with literals wor
 
 }
 
-#?niecza 4 skip 'Unable to resolve method max in class Parcel'
 is (1, Inf).max, Inf,"Inf is greater than 1";
 is (-1, -Inf).min, -Inf,"-Inf is less than -1";
 is (-Inf, Inf).min, -Inf,"-Inf is less than Inf";

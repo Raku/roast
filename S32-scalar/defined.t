@@ -49,7 +49,6 @@ ok(defined($foo), 'variable $foo is now defined (as string "b")');
 $foo = 0;
 ok(defined($foo), 'variable $foo is now defined (as numeric literal 0)');
 
-#?niecza skip 'Undeclared routine'
 {
     undefine($foo);
     ok(!defined($foo), 'undefine $foo works');
@@ -93,7 +92,6 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
     $foo = 0;
     ok($foo.defined, 'variable $foo is now defined (as numeric literal 0)');
 
-#?niecza skip 'Undeclared routine'
 {
     undefine($foo);
     ok(!$foo.defined, 'undefine $foo works');

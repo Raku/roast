@@ -86,7 +86,7 @@ for @sines -> $angle
     is_approx($zp2.cosech, $sz2, "Complex.cosech - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
+#?niecza todo "Inf results wrong"
 {
     is(cosech(Inf), 0, "cosech(Inf) -");
     is(cosech(-Inf), "-0", "cosech(-Inf) -");

@@ -323,7 +323,7 @@ is((Any) * (Any), 0, 'Any * Any');
 # should be false.  (At time of writing, @(Mu,) is true.)
 #?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
 #?rakudo 2 skip 'todo: lists, defined, truthness'
-#?niecza 2 skip 'huh?'
+#?niecza 2 todo 'huh?'
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 

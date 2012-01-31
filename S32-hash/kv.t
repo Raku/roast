@@ -92,7 +92,6 @@ sub test4 (%h){
     }
 }
 #?DOES 2
-#?niecza skip '.end NYI'
 #?rakudo skip 'dubious'
 test4 %hash;
 

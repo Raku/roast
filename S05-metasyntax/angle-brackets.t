@@ -153,7 +153,6 @@ character classes), and those are referenced at the correct spot.
 
 # A leading :: indicates a symbolic indirect subrule
 #?rakudo skip 'indirect subrule call not implemented'
-#?niecza skip 'Indirect method calls NYI'
 {
     my $name = 'alpha';
     ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');

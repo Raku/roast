@@ -86,7 +86,7 @@ for @sines -> $angle
     is_approx($zp2.tanh, $sz2, "Complex.tanh - $zp2");
 }
 
-#?niecza skip "Inf results wrong"
+#?niecza todo "Inf results wrong"
 {
     is(tanh(Inf), 1, "tanh(Inf) -");
     is(tanh(-Inf), -1, "tanh(-Inf) -");
