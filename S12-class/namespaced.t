@@ -50,7 +50,9 @@ class C {
 }
 {
     ok(C::D ~~ Grammar,            'C::D is a grammar');
+    #?niecza skip 'Cannot dispatch to a method on D because it is not inherited or done by Cursor'
     ok('aaa' ~~ /<C::D::test>/,    'could call rule in nested grammar');
+    #?niecza skip 'Cannot dispatch to a method on D because it is not inherited or done by Cursor'
     ok(!('bbb' ~~ /<C::D::test>/), 'rule in nested grammar behaves correctly');
 }
 

@@ -48,6 +48,7 @@ ok("foo" ~~ &Foo::Bar::foo, 'regex in a namespace callable');
 
 grammar Grammar::Deep { token foo { 'foo' }; }
 grammar GrammarShallow { token TOP { <Grammar::Deep::foo> 'bar' }; }
+#?niecza skip 'Cannot dispatch to a method on GrammarShallow because it is not inherited or done by Cursor'
 ok('foobar' ~~ /<GrammarShallow::TOP>/, 'regex can call regex in nested namespace');
 
 # vim: ft=perl6
