@@ -11,7 +11,7 @@ use Test;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 66;
+plan 67;
 
 my @log;
 
@@ -198,6 +198,22 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     is foo(), 2, 'wrap worked (sanity)';
     $h.restore();
     is foo(), 1, 'could unwrap by calling .restore on the handle';
+}
+
+# RT #69312
+{
+    my @t = gather {
+        sub triangle { take '=' x 3; }
+        for reverse ^3 -> $n {
+            &triangle.wrap({
+                take '=' x $n;
+                callsame;
+                take '=' x $n;
+            });
+        }
+        triangle();
+    }
+    is @t.join("\n"), "\n=\n==\n===\n==\n=\n", 'multiple wrappings in a loop';
 }
 
 done;
