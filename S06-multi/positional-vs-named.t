@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 27;
 
 # check the subroutine with the closest matching signature is called
 #
@@ -68,6 +68,14 @@ is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
     multi catch(*@all, :$really! ) { 2 }
     is catch(0, 5),           1, 'slurpy and named interact well (1)';
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
+}
+
+# RT #78738
+{
+    multi zero()       { 'no args' };
+    multi zero(:$foo!) { 'named'   };
+    is zero(), 'no args',
+        'presence of mandatory named multi does not corrupt calling a nullary'
 }
 
 
