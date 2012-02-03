@@ -525,7 +525,7 @@ lives_ok {
 # more list comprehension
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
-    is ~@s, '4 9 16 25', 'Can use statement-modifying "for" in list comprehension';
+    is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';
 }
 
 # vim: ft=perl6
