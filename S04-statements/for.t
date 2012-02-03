@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan 70;
+plan 71;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -519,6 +519,13 @@ lives_ok {
 {
     sub f() { for ^1 { } };
     is ~f(), '', 'empty for-loop returns empty list';
+}
+
+# RT #74060
+# more list comprehension
+{
+    my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
+    is ~@s, '4 9 16 25', 'Can use statement-modifying "for" in list comprehension';
 }
 
 # vim: ft=perl6
