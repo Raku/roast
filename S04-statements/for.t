@@ -13,7 +13,7 @@ for statement as possible
 
 =end description
 
-plan 69;
+plan 70;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -512,6 +512,13 @@ lives_ok {
     my $x = 0;
     for 1 .. 2 -> $a, $b { $x = $b } #OK not used
     is $x, 2, 'Lazy lists interact properly with multi-element for loops';
+}
+
+# RT #71270
+# list comprehension
+{
+    sub f() { for ^1 { } };
+    is ~f(), '', 'empty for-loop returns empty list';
 }
 
 # vim: ft=perl6
