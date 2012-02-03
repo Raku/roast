@@ -310,7 +310,6 @@ ok("\x07A" ~~ m/<+alpha>/, q{Match unanchored alpha as charset});
 
 # L<S05/Predefined Subrules/always returns false>
 
-#?rakudo 2 skip '<!>'
 ok 'abc' !~~ /a <!>/, '<!> fails';
 ok '' !~~ /<!>/, '<!> fails (empty string)';
 
