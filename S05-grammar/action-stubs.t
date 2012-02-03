@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S05/Grammars/"and optionally pass an action object">
 
@@ -128,6 +128,13 @@ is $action.calls, 'ab', '... and in the right order';
     ok $x, 'Trivial grammar parsed';
     is $x.ast[0], 1, 'make(Parcel) (1)';
     is $x.ast[1], 2, 'make(Parcel) (2)';
+
+    class MethodMake {
+        method TOP($m) { $m.make('x') }
+    }
+    #?niecza skip 'Match.make'
+    is Grammar::Trivial.parse('a', actions => MethodMake).ast,
+        'x', 'can use Match.make';
 }
 
 # vim: ft=perl6
