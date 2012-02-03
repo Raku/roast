@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -24,6 +24,16 @@ use Test::Util;
         warn "# You shouldn't see this warning";
     }
     ok $caught, 'CONTROL catches exceptions'
+}
+
+# RT #73768
+{
+    my $caught = 0;
+    {
+        CONTROL { default { $caught = 1 } };
+        ~Any
+    }
+    ok $caught, 'Stringifying Any warns';
 }
 
 #?niecza todo
