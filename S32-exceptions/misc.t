@@ -51,6 +51,8 @@ throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
 throws_like 'class { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like '$^x',           X::Placeholder::Mainline, placeholder => '$^x';
+# RT #73502
+throws_like '@_',            X::Placeholder::Mainline, placeholder => '@_';
 throws_like 'sub f(*@a = 2) { }', X::Parameter::Default, how => 'slurpy';
 throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required';
 throws_like 'sub f(:$x! = 3) { }', X::Parameter::Default, how => 'required';
