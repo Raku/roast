@@ -292,12 +292,12 @@ All uses of a zero modulus or divisor should 'die', and the
 my $x;
 
 #?rakudo 2 todo 'modulo by zero'
-dies_ok( { say 3 % 0 }, 'Modulo zero dies and is catchable');
+eval_dies_ok('say 3 % 0', 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
 #?rakudo todo 'die or fail?'
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
-dies_ok( { say 3 div 0 }, 'Division by zero dies and is catchable');
+eval_dies_ok('say 3 div 0', 'Division by zero dies and is catchable');
 dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
 dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
