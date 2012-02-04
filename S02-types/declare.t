@@ -374,7 +374,6 @@ plan 79;
   isa_ok($mapti, Matcher);
 }
 
-#?niecza skip 'Proxy not implemented'
 {
   my Proxy $krati;
   isa_ok($krati, Proxy);

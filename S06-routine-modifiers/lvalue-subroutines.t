@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 14;
 
 =begin description
 
@@ -32,6 +32,7 @@ Testing lvalue-returning subroutines
   my $notlvalue = sub () { $var };
 
   #?pugs 2 todo 'bug'
+  #?niecza 2 todo 'rw checking'
   dies_ok { $notlvalue() = 23 },
     "assigning to non-rw subrefs should die";
   is $var, 42,
@@ -56,13 +57,12 @@ Testing lvalue-returning subroutines
   # S6 says that lvalue subroutines are marked out by 'is rw'
   sub notlvalue { $var; } # without rw
 
+  #?niecza 2 todo 'rw checking'
   dies_ok { notlvalue() = 5 },
     "assigning to non-rw subs should die";
   is $var, 42,
     "assigning to non-rw subs shouldn't modify the original variable";
 }
-
-my $val2; # XXX prevent parsefail below, not sure what test wants
 
 sub check ($passwd) { $passwd eq "fish"; };
 
@@ -84,7 +84,7 @@ dies_ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
 # Above test may well die for the wrong reason, if the Proxy stuff didn't
 # parse OK, it will complain that it couldn't find the desired subroutine
 #?rakudo 3 skip 'maximum recursion depth exceeded'
-is((try { checklastval("fish") = 12; $val2 }), 12, 'proxy lvalue subroutine STORE works');
+is((try { checklastval("fish") = 12 }), 12, 'proxy lvalue subroutine STORE works');
 my $resultval = checklastval("fish");
 is($resultval, 12, 'proxy lvalue subroutine FETCH works');
 
