@@ -107,6 +107,7 @@ is($bar.bar[2], 300,       'array attribute initialized/works');
 }
 
 # RT 81718
+#?rakudo todo 'RT 81718'
 eval_dies_ok q[
     class RT81718 {
         has $.bughunt is rw;
