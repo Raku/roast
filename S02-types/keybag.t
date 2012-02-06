@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 69;
+plan 90;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -19,9 +19,21 @@ sub showkv($x) {
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 
     is $b<a>, 5, 'Single-key subscript (existing element)';
+    isa_ok $b<a>, Int, 'Single-key subscript yields an Int';
     is $b<santa>, 0, 'Single-key subscript (nonexistent element)';
+    isa_ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
     ok $b.exists('a'), '.exists with existing element';
     nok $b.exists('santa'), '.exists with nonexistent element';
+
+    is $b.values.elems, 3, "Values returns the correct number of values";
+    is ([+] $b.values), 8, "Values returns the correct sum";
+    ok ?$b, "Bool returns True if there is something in the KeyBag";
+    nok ?KeyBag.new(), "Bool returns False if there is nothing in the KeyBag";
+    
+    my $hash;
+    lives_ok { $hash = $b.hash }, ".hash doesn't die";
+    isa_ok $hash, Hash, "...and it returned a Hash";
+    is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
     dies_ok { $b.keys = <c d> }, "Can't assign to .keys";
     dies_ok { $b.values = 3, 4 }, "Can't assign to .values";
@@ -37,6 +49,10 @@ sub showkv($x) {
     is $b<a>, 42, "... and assignment takes effect";
     lives_ok { $b<brady> = 12 }, "Can assign to a new element";
     is $b<brady>, 12, "... and assignment takes effect";
+    lives_ok { $b<spiderman> = 0 }, "Can assign zero to a nonexistent element";
+    nok $b.exists("spiderman"), "... and that didn't create the element";
+    lives_ok { $b<brady> = 0 }, "Can assign zero to a existing element";
+    nok $b.exists("brady"), "... and it goes away";
     
     lives_ok { $b<a>++ }, "Can ++ an existing element";
     is $b<a>, 43, "... and the increment happens";
@@ -69,29 +85,52 @@ sub showkv($x) {
 }
 
 {
-    my $b = bag set <foo bar foo bar baz foo>;
-    isa_ok $b, Bag, '&bag given a Set produces a Bag';
+    my $b = KeyBag.new(set <foo bar foo bar baz foo>);
+    isa_ok $b, KeyBag, '&KeyBag.new given a Set produces a KeyBag';
     is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+}
+
+{
+    my $b = KeyBag.new(KeySet.new(set <foo bar foo bar baz foo>));
+    isa_ok $b, KeyBag, '&KeyBag.new given a KeySet produces a KeyBag';
+    is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+}
+
+{
+    my $b = KeyBag.new(bag set <foo bar foo bar baz foo>);
+    isa_ok $b, KeyBag, '&KeyBag.new given a Bag produces a KeyBag';
+    is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+}
+
+{
+    my $b = KeyBag.new(set <foo bar foo bar baz foo>);
+    $b<bar> += 2;
+    my $c = KeyBag.new($b);
+    isa_ok $c, KeyBag, '&KeyBag.new given a KeyBag produces a KeyBag';
+    is showkv($c), 'bar:3 baz:1 foo:1', '... with the right elements';
+    $c<manning> = 10;
+    is showkv($c), 'bar:3 baz:1 foo:1 manning:10', 'Creating a new element works';
+    is showkv($b), 'bar:3 baz:1 foo:1', '... and does not affect the original KeyBag';
 }
 
 # L<S02/Names and Variables/'C<%x> may be bound to'>
 
 {
-    my %b := bag <a b c b>;
-    isa_ok %b, Bag, 'A Bag bound to a %var is a Bag';
+    my %b := KeyBag.new("a", "b", "c", "b");
+    isa_ok %b, KeyBag, 'A KeyBag bound to a %var is a KeyBag';
     is showkv(%b), 'a:1 b:2 c:1', '...with the right elements';
 
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    dies_ok { %b<a> = 1 }, "Can't assign to an element (Bags are immutable)";
-    dies_ok { %b = bag <a b> }, "Can't assign to a %var implemented by Bag";
+    lives_ok { %b<a> = 4 }, "Assign to an element";
+    is %b<a>, 4, "... and gets the correct value";
 }
 
-# L<S32::Containers/Bag/pick>
+# L<S32::Containers/KeyBag/pick>
 
 {
-    my $b = bag <a b b>;
+    my $b = KeyBag.new("a", "b", "b");
 
     my @a = $b.pick: *;
     is +@a, 3, '.pick(*) returns the right number of items';
@@ -99,10 +138,10 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
-# L<S32::Containers/Bag/roll>
+# L<S32::Containers/KeyBag/roll>
 
 {
-    my $b = bag <a b b>;
+    my $b = KeyBag.new("a", "b", "b");
 
     my @a = $b.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
