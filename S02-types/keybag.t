@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 90;
+plan 134;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -85,6 +85,12 @@ sub showkv($x) {
 }
 
 {
+    my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42 }.hash);
+    isa_ok $b, KeyBag, '&KeyBag.new given a Hash produces a KeyBag';
+    is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
+}
+
+{
     my $b = KeyBag.new(set <foo bar foo bar baz foo>);
     isa_ok $b, KeyBag, '&KeyBag.new given a Set produces a KeyBag';
     is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
@@ -113,6 +119,56 @@ sub showkv($x) {
     is showkv($b), 'bar:3 baz:1 foo:1', '... and does not affect the original KeyBag';
 }
 
+{
+    my $b = KeyBag.new(set <foo bar foo bar baz foo>);
+
+    isa_ok $b.list.elems, 3, ".list returns 3 things";
+    is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
+    is $b.list.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+
+    isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
+    is $b.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
+    is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+
+    is $b.grep(Pair).elems, 3, ".iterator yields three Pairs";
+    is $b.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+    is $b.grep({True}).elems, 3, "... and nothing else";
+}
+
+{
+    my $b = KeyBag.new({ foo => 10000000000, bar => 17, baz => 42 });
+    my $s;
+    my $c;
+    lives_ok { $s = $b.perl }, ".perl lives";
+    isa_ok $s, Str, "... and produces a string";
+    ok $s.chars < 1000, "... of reasonable length";
+    lives_ok { $c = eval $s }, ".perl.eval lives";
+    isa_ok $c, KeyBag, "... and produces a KeyBag";
+    is showkv($c), showkv($b), "... and it has the correct values";
+}
+
+{
+    my $b = KeyBag.new({ foo => 10000000000, bar => 17, baz => 42 });
+    my $s;
+    lives_ok { $s = $b.Str }, ".Str lives";
+    isa_ok $s, Str, "... and produces a string";
+    ok $s.chars < 1000, "... of reasonable length";
+    ok $s ~~ /foo/, "... which mentions foo";
+    ok $s ~~ /bar/, "... which mentions bar";
+    ok $s ~~ /baz/, "... which mentions baz";
+}
+
+{
+    my $b = KeyBag.new({ foo => 10000000000, bar => 17, baz => 42 });
+    my $s;
+    lives_ok { $s = $b.gist }, ".gist lives";
+    isa_ok $s, Str, "... and produces a string";
+    ok $s.chars < 1000, "... of reasonable length";
+    ok $s ~~ /foo/, "... which mentions foo";
+    ok $s ~~ /bar/, "... which mentions bar";
+    ok $s ~~ /baz/, "... which mentions baz";
+}
+
 # L<S02/Names and Variables/'C<%x> may be bound to'>
 
 {
@@ -127,26 +183,65 @@ sub showkv($x) {
     is %b<a>, 4, "... and gets the correct value";
 }
 
-# L<S32::Containers/KeyBag/pick>
-
-{
-    my $b = KeyBag.new("a", "b", "b");
-
-    my @a = $b.pick: *;
-    is +@a, 3, '.pick(*) returns the right number of items';
-    is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
-    is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
-}
-
 # L<S32::Containers/KeyBag/roll>
 
 {
     my $b = KeyBag.new("a", "b", "b");
 
+    my $a = $b.roll;
+    ok $a eq "a" || $a eq "b", "We got one of the two choices";
+
+    my @a = $b.roll(2);
+    is +@a, 2, '.roll(2) returns the right number of items';
+    is @a.grep(* eq 'a').elems + @a.grep(* eq 'b').elems, 2, '.roll(2) returned "a"s and "b"s';
+
     my @a = $b.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
+}
+
+{
+    my $b = KeyBag.new({"a" => 100000000000, "b" => 1});
+
+    my $a = $b.roll;
+    ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
+
+    my @a = $b.roll: 100;
+    is +@a, 100, '.roll(100) returns 100 items';
+    ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
+    ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
+}
+
+# L<S32::Containers/KeyBag/pick>
+
+{
+    my $b = KeyBag.new("a", "b", "b");
+
+    my $a = $b.pick;
+    ok $a eq "a" || $a eq "b", "We got one of the two choices";
+
+    my @a = $b.pick(2);
+    is +@a, 2, '.pick(2) returns the right number of items';
+    ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
+    is @a.grep(* eq 'b').elems, 2 - @a.grep(* eq 'a').elems, '.pick(2) and the rest are "b"';
+
+    @a = $b.pick: *;
+    is +@a, 3, '.pick(*) returns the right number of items';
+    is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
+    is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
+}
+
+{
+    my $b = KeyBag.new({"a" => 100000000000, "b" => 1});
+
+    my $a = $b.pick;
+    ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
+
+    my @a = $b.pick: 100;
+    is +@a, 100, '.pick(100) returns 100 items';
+    ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
+    ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
 }
 
 #?niecza skip "Trait name not available on variables"
