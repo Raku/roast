@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 36;
 
 =begin description
 
@@ -14,6 +14,9 @@ This test tests the C<roll> builtin. See S32::Containers#roll.
 
 my @array = <a b c d>;
 ok ?(@array.roll eq any <a b c d>), "roll works on arrays";
+
+#?niecza todo '.roll on empty list'
+ok ().roll === Nil, '.roll on the empty list is Nil';
 
 my $junc = (1|2|3);
 #?rakudo skip 'dubious: roll on Junctions (unspecced?)'
