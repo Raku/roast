@@ -105,6 +105,7 @@ throws_like 'my $0', X::Syntax::Variable::Numeric;
 throws_like 'my $<a>', X::Syntax::Variable::Match;
 throws_like 'my class A { my $!foo }', X::Syntax::Variable::Twigil, twigil => '!', scope => 'my';
 throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
+throws_like '@a', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
 
