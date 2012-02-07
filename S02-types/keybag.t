@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 134;
+plan 140;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -85,7 +85,25 @@ sub showkv($x) {
 }
 
 {
+    my $b = KeyBag.new(<a b o p a p o o>);
+    isa_ok $b, KeyBag, '&KeyBag.new given an array of strings produces a KeyBag';
+    is showkv($b), 'a:2 b:1 o:3 p:2', '...with the right elements';
+}
+
+{
+    my $b = KeyBag.new([ foo => 10, bar => 17, baz => 42 ]);
+    isa_ok $b, KeyBag, '&KeyBag.new given an array of pairs produces a KeyBag';
+    is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
+}
+
+{
     my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42 }.hash);
+    isa_ok $b, KeyBag, '&KeyBag.new given a Hash produces a KeyBag';
+    is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
+}
+
+{
+    my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42 });
     isa_ok $b, KeyBag, '&KeyBag.new given a Hash produces a KeyBag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }
