@@ -120,19 +120,21 @@ sub showkv($x) {
 }
 
 {
-    my $b = KeyBag.new(set <foo bar foo bar baz foo>);
+    my $b = KeyBag.new({ foo => 10, bar => 1, baz => 2});
 
+    # .list is just the keys, as per TimToady: 
+    # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa_ok $b.list.elems, 3, ".list returns 3 things";
-    is $b.list.grep(Pair).elems, 3, "... all of which are Pairs";
-    is $b.list.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+    is $b.list.grep(Str).elems, 3, "... all of which are Str";
 
     isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
     is $b.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+    is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
 
-    is $b.grep(Pair).elems, 3, ".iterator yields three Pairs";
-    is $b.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
-    is $b.grep({True}).elems, 3, "... and nothing else";
+    is $b.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
+    is $b.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+    is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
 {
