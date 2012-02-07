@@ -18,7 +18,7 @@ L<"http://groups.google.com/group/perl.perl6.language/tree/browse_frm/thread/24e
 
 my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
-#?niecza todo '().pick === Nil'
+#?niecza skip '().pick === Nil'
 ok ().pick === Nil, '.pick on the empty list is Nil';
 
 #?rakudo skip 'dubious: pick on Junctions (unspecced?)'
