@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 26;
+plan 27;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -67,6 +67,12 @@ plan 26;
   is( 48 + 0 +< 8, 48 + (0 +< 8), 'RT 77232 precedence of +>' );
   is( 2 ** 3 +< 3, (2 ** 3) +< 3, 'RT 77232 precedence of +<' );
   is( 2 ** 5 +> 2, (2 ** 5) +> 2, 'RT 77232 precedence of +>' );
+}
+
+# RT #109740
+{
+    my ($x, $y) = (2**30, 1);
+    is +^$x +& $y, 1, 'large-ish bit ops';
 }
 
 
