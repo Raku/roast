@@ -78,13 +78,12 @@ use Test;
     is ConstantTest2::yak, 'shaving', 'constant can be explicitly "our"-scoped';
 }
 
-#?rakudo todo "probably can't parse yet"
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Any'
 {
     package ConstantTest3 {
         my constant yak = 'shaving';
     }
-    ok !ConstantTest3::yak.defined, 'constant can be explicitly "my"-scoped';
+    dies_ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
 }
 
 #?rakudo skip 'COMPILING'
