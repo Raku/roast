@@ -38,8 +38,8 @@ sub showkv($x) {
     dies_ok { $b.keys = <c d> }, "Can't assign to .keys";
     dies_ok { $b.values = 3, 4 }, "Can't assign to .values";
 
-    is ([+] $b<a b>), 6, 'Multiple-element access';
-    is ([+] $b<a santa b easterbunny>), 6, 'Multiple-element access (with nonexistent elements)';
+    is ~$b<a b>, "5 1", 'Multiple-element access';
+    is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
     is $b.elems, 8, '.elems gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
