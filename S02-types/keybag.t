@@ -38,7 +38,6 @@ sub showkv($x) {
     dies_ok { $b.keys = <c d> }, "Can't assign to .keys";
     dies_ok { $b.values = 3, 4 }, "Can't assign to .values";
 
-    #?niecza 2 todo
     is ([+] $b<a b>), 6, 'Multiple-element access';
     is ([+] $b<a santa b easterbunny>), 6, 'Multiple-element access (with nonexistent elements)';
 
@@ -73,7 +72,6 @@ sub showkv($x) {
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
-    #?niecza todo
     is $b{2, 'a', False}.sort.join(' '), '1 2 3', 'All keys have the right values';
 }
 

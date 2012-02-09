@@ -24,7 +24,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     dies_ok { $s.keys = <c d> }, "Can't assign to .keys";
     dies_ok { $s.values = <True False> }, "Can't assign to .values";
 
-    #?niecza 2 todo 'multiple-element access NYI'
     is ($s<a b>).grep(?*).elems, 2, 'Multiple-element access';
     is ($s<a santa b easterbunny>).grep(?*).elems, 2, 'Multiple-element access (with nonexistent elements)';
 
