@@ -352,7 +352,6 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
     is ([~] 1, 2, 5), '125', '[~] works outside class';
 }
 
-#?rakudo todo 'RT 82210'
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
    'a listop with immediate () is a function call (RT 82210)';
 
