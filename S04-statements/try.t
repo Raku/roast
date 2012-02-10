@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 18;
+plan 21;
 
 {
     # simple try
@@ -117,6 +117,18 @@ plan 18;
         }
     }
     is $str, 'ABfoo', 'block including if structure and printing $/ ok';
+}
+
+#?niecza skip 'new exception stuff'
+{
+    class MyPayload {
+        method Str() { 'something exceptional' }
+    };
+    my $p = MyPayload.new;
+    try die $p;
+    isa_ok $!, X::AdHoc, 'die($non-exception) creates an X::AdHoc';
+    ok $!.payload === $p, '$!.payload is the argument to &die';
+    is $!.Str, 'something exceptional', '$!.Str uses the payload';
 }
 done;
 
