@@ -268,7 +268,6 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
 }
 
 # RT #76452
-#?rakudo todo 'RT 76452'
 eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
               'can declare a variable inside a sub call';
 

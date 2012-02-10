@@ -890,7 +890,6 @@ sub l () { 1, 2 };
 
     dies_ok { called pi = 4 },
         'correct precedence between sub call and assignment (1)';
-    #?rakudo todo 'RT 77142'
     is $cc, 0,
         'correct precedence between sub call and assignment (2)';
 
