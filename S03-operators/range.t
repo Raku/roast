@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 118;
+plan 120;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -242,6 +242,20 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 {
     lives_ok {("a".."b").map({.trans(""=>"")}).perl},
         "range doesn't leak Parrot types";
+}
+
+{
+    my $big = 2 ** 130;
+    my $count = 0;
+    ++$count for $big .. $big + 2;
+    is $count, 3, 'can iterate over big Int range';
+}
+
+# RT #110350
+{
+    for 1e0 .. 1e0 {
+        isa_ok $_, Num, 'Range of nums produces a Num';
+    }
 }
 
 # # vim: ft=perl6
