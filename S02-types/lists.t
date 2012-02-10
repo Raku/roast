@@ -9,12 +9,11 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan 29;
+plan 27;
 
 # Indexing lists
 
 # RT #105368
-#?rakudo todo "Can't assign to a variable in a list"
 {
   my $foo = 42;
 
@@ -31,7 +30,6 @@ plan 29;
 }
 
 # List construction does not create new containers
-#?rakudo todo 'nom regression'
 {
   my $foo = 42;
 
@@ -40,7 +38,6 @@ plan 29;
     "list construction should not create new containers";
 }
 
-#?rakudo todo 'nom regression'
 {
   my $foo = 42;
   #?pugs todo 'unspecced'
@@ -140,19 +137,18 @@ plan 29;
 
 #?niecza skip 'Unable to resolve method rt62836 in class Parcel'
 {
-    sub List::rt62836 { 62836 }
+    sub Parcel::rt62836 { 62836 }
 
     dies_ok { <1 2 3>.rt62836 },
-            'call to user-declared sub in List:: class dies';
+            'call to user-declared sub in Parcel:: class dies';
     try { eval '<1 2 3>.rt62836' };
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
     diag $!;
     ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
 
-    augment class List { method rt62836_x { 62836 } };
-    #?rakudo skip 'unskip when "augment" works'
-    is <1 2 3>.rt62836_x, 62836, 'call user-declared method in List:: class';
+    augment class Parcel { method rt62836_x { 62836 } };
+    is <1 2 3>.rt62836_x, 62836, 'call user-declared method in Parcel:: class';
 }
 
 # RT #66304
@@ -165,11 +161,6 @@ plan 29;
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';
     is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';
-
-    my $x = 44;
-    $rt66304 = ( 11, $x, 22 );
-    dies_ok { $rt66304[1] = 'rw' }, 'variable List element is immutable';
-    is $x, 44, 'variable not changed via assignment to list element';
 }
 
 # nom regression bug
