@@ -439,7 +439,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 # test typed attributes
 # TODO: same checks on private attributes
-#?rakudo skip 'typed array/hash'
 {
     class TypedAttrib {
         has Int @.a is rw;
@@ -456,7 +455,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.pac, 0, 'typed private array attribute is empty';
     is $o.phc, 0, 'typed private hash attribute is empty';
 
-    #?rakudo todo 'typed arrays'
     #?niecza skip "Unable to resolve method of in class Array"
     ok $o.a.of === Int, 'array attribute is typed';
     lives_ok { $o.a = (2, 3) }, 'Can assign to typed drw-array-attrib';
@@ -465,10 +463,11 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.a.join('|'), '2|3|4|5', 
         '... all of the above actually worked (not only lived)';
 
-    #?rakudo 4 todo 'typed arrays'
     #?niecza 4 todo 'typed arrays'
+    #?rakudo 1 todo 'typed array assignment'
     dies_ok { $o.a = <foo bar> }, 'type enforced on array attrib (assignment)';
     dies_ok { $o.a[2] = $*IN   }, 'type enforced on array attrib (item assignment)';
+    #?rakudo 1 todo 'typed array push'
     dies_ok { $o.a.push: [2, 3]}, 'type enforced on array attrib (push)';
     dies_ok { $o.a[42]<foo> = 3}, 'no autovivification (typed array)';
 
@@ -477,7 +476,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $o.a.join('|'), '2|3|4|5', 
         '... all of the above actually did nothing (not just died)';
 
-    #?rakudo todo 'typed hash'
     #?niecza skip "Unable to resolve method of in class Hash"
     ok $o.h.of === Int, 'hash attribute is typed';
     lives_ok {$o.h = { a => 1, b => 2 } }, 'assign to typed hash attrib';
@@ -486,13 +484,13 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
     is_deeply $o.h<a b c d>, (1, 2, 3, 4),   '... all of them worked';
 
-    #?rakudo 5 todo 'typed hash'
     #?niecza 3 todo
     dies_ok  {$o.h = { :a<b> }  },         'Type enforced (hash, assignment)';
     dies_ok  {$o.h<a> = 'b'  },            'Type enforced (hash, insertion)';
     dies_ok  {$o.h.push: (g => 'f') },     'Type enforced (hash, push)';
     #?niecza 2 todo
     dies_ok  {$o.h<blubb><bla> = 3 },      'No autovivification (typed hash)';
+    #?rakudo skip 'is_deeply explodes'
     is_deeply $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
 }
 
@@ -568,6 +566,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is $a.x, 42, 'binding to an attribute works';
 }
 
+#?rakudo skip 'dubious test - the initializer becomes a submethod here, implying a scope'
 {
     class InitializationThunk {
         has $.foo = my $x = 5;
