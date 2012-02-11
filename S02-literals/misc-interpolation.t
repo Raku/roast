@@ -24,9 +24,8 @@ is("Hello $world", 'Hello World', 'double quoted string interpolation works');
 #?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is("@list[]\ 3 4", '1 2 3 4', 'double quoted list interpolation works');
 is("@list 3 4", '@list 3 4', 'array without empty square brackets does not interpolate');
-#?rakudo skip 'zen hash slice'
 #?niecza skip 'No value for parameter \$index in postcircumfix:<{ }>'
-is("%hash{}", "1\t2\n", 'hash interpolation works');
+is("%hash{}", "1\t2", 'hash interpolation works');
 is("%hash", '%hash', 'hash interpolation does not work if not followed by {}');
 #?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("Wont you take me to &func()", 'Wont you take me to func-y town', 'closure interpolation');

@@ -19,10 +19,9 @@ plan 10;
 {
   # L<S02/Arrays/In order to interpolate an entire hash>
   my %hash = { b => 2 };
-  #?rakudo 2 skip 'zen hash slice'
   #?niecza 2 skip 'zen hash slice'
-  is "%hash{}", "b\t2\n", 'interpolation with curly braces';
-  is "%hash<>", "b\t2\n", 'interpolation with angle brackets';
+  is "%hash{}", "b\t2", 'interpolation with curly braces';
+  is "%hash<>", "b\t2", 'interpolation with angle brackets';
   is "%hash", '%hash', 'no interpolation';
 }
 
