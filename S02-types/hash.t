@@ -62,11 +62,11 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
 
 #?niecza todo
 {
-    my @slice3 = %hash5<>.sort;
-    is(+@slice3, 3, 'empty slice got all hash values');
-    is(@slice3[0], 1, 'empty slice got all hash values');
-    is(@slice3[1], 2, 'empty slice got all hash values');
-    is(@slice3[2], 3, 'empty slice got all hash values');
+    my @slice3 = %hash5<>.sort(*.value);
+    is(+@slice3, 3, 'empty slice got all hash pairs');
+    is(@slice3[0], "one" => 1, 'empty slice got all hash pairs');
+    is(@slice3[1], "two" => 2, 'empty slice got all hash pairs');
+    is(@slice3[2], "three" =>  3, 'empty slice got all hash pairs');
 }
 
 # slice assignment
