@@ -33,7 +33,6 @@ use Test;
 
 # L<S03/List prefix precedence/The item contextualizer>
 # L<S02/Lists/To force a non-flattening item context>
-#?rakudo skip "nom regression: 'Could not find sub &item'"
 {
     my $a = 3;
     my $b = 2;
@@ -44,6 +43,7 @@ use Test;
     is($($a),     $a, '$($a) is just $a');
 
     #?niecza 3 skip 'Undeclared name Seq'
+    #?rakudo 3 todo 'Seq'
     isa_ok((item $a, $b).WHAT, Seq, '(item $a, $b) makes a Seq');
     isa_ok(item($a, $b).WHAT,  Seq, 'item $a, $b makes a Seq');
     isa_ok($($a, $b).WHAT,     Seq, '$ $a, $b makes a Seq');
