@@ -39,7 +39,7 @@ sub throws_like($code, $ex_type, *%matcher) {
 }
 
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';
-throws_like 'class Foo { $!bar }', X::Attribute::Undeclared,
+throws_like 'my class Foo { method a() { $!bar } }', X::Attribute::Undeclared,
             name => '$!bar', package-name => 'Foo';
 throws_like 'sub f() { $^x }', X::Signature::Placeholder,
             line => 1;
