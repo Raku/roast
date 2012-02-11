@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 90;
+plan 93;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -37,6 +37,13 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     is $s.elems, 3, '.elems gives number of keys';
     is +$s, 3, '+$set gives number of keys';
+}
+
+{
+    my $s = set <a b foo>;
+    is $s<a>:exists, True, ':exists with existing element';
+    is $s<santa>:exists, False, ':exists with nonexistent element';
+    dies_ok { $s<a>:delete }, ':delete does not work on set';
 }
 
 {

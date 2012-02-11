@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 108;
+plan 112;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
@@ -65,6 +65,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a foo', '-- on an item removes it';
     lives_ok { $s<bar>-- }, 'can -- an item';
     is showset($s), 'a foo', '... but only if they were there to start with';
+}
+
+{
+    my $s = KeySet.new(<a b foo>);
+    is $s<a>:exists, True, ':exists with existing element';
+    is $s<santa>:exists, False, ':exists with nonexistent element';
+    is $s<a>:delete, True, ':delete returns current value on set';
+    is showset($s), 'b foo', '...and actually deletes';
 }
 
 {

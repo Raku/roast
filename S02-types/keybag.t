@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 140;
+plan 144;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -63,6 +63,14 @@ sub showkv($x) {
     nok $b.exists("carter"), "... and it goes away";
     lives_ok { $b<farve>-- }, "Can -- an element that doesn't exist";
     nok $b.exists("farve"), "... and everything is still okay";
+}
+
+{
+    my $s = KeyBag.new(<a a b foo>);
+    is $s<a>:exists, True, ':exists with existing element';
+    is $s<santa>:exists, False, ':exists with nonexistent element';
+    is $s<a>:delete, 2, ':delete works on KeyBag';
+    is showkv($s), 'b:1 foo:1', '...and actually deletes';
 }
 
 {

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 103;
+plan 106;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$^k} }).join(' ')
@@ -41,6 +41,13 @@ sub showkv($x) {
 
     is $b.elems, 8, '.elems gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
+}
+
+{
+    my $s = bag <a a b foo>;
+    is $s<a>:exists, True, ':exists with existing element';
+    is $s<santa>:exists, False, ':exists with nonexistent element';
+    dies_ok { $s<a>:delete }, ':delete does not work on bag';
 }
 
 {
