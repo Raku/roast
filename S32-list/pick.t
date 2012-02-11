@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 37;
 
 =begin description
 
@@ -20,13 +20,6 @@ my @array = <a b c d>;
 ok ?(@array.pick eq any <a b c d>), "pick works on arrays";
 #?niecza skip '().pick === Nil'
 ok ().pick === Nil, '.pick on the empty list is Nil';
-
-#?rakudo skip 'dubious: pick on Junctions (unspecced?)'
-#?niecza skip 'dubious: pick on Junctions (unspecced?)'
-{
-    my $junc = (1|2|3);
-    ok ?(1|2|3 == $junc.pick), "pick works on junctions";
-}
 
 my @arr = <z z z>;
 

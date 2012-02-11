@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 35;
 
 =begin description
 
@@ -17,10 +17,6 @@ ok ?(@array.roll eq any <a b c d>), "roll works on arrays";
 
 #?niecza skip '.roll on empty list'
 ok ().roll === Nil, '.roll on the empty list is Nil';
-
-my $junc = (1|2|3);
-#?rakudo skip 'dubious: roll on Junctions (unspecced?)'
-ok ?(1|2|3 == $junc.roll), "roll works on junctions";
 
 my @arr = <z z z>;
 
