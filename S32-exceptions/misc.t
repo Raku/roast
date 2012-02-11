@@ -131,4 +131,6 @@ throws_like '1∞', X::Syntax::Confused;
 throws_like 'm:i(@*ARGS[0])/foo/', X::Value::Dynamic;
 throws_like 'my enum Foo (:x(@*ARGS[0]))', X::Value::Dynamic;
 
+throws_like 'self', X::Syntax::Self::WithoutObject;
+
 done;

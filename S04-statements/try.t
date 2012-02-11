@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 21;
+plan 23;
 
 {
     # simple try
@@ -129,6 +129,13 @@ plan 21;
     isa_ok $!, X::AdHoc, 'die($non-exception) creates an X::AdHoc';
     ok $!.payload === $p, '$!.payload is the argument to &die';
     is $!.Str, 'something exceptional', '$!.Str uses the payload';
+
+    class MyEx is Exception {
+        has $.s;
+    }
+    try MyEx.new(s => 'bar').throw;
+    isa_ok $!, MyEx, 'Can throw subtypes of Exception and get them back';
+    is $!.s, 'bar', '... and got the right object back';
 }
 done;
 
