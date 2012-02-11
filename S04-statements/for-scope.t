@@ -45,7 +45,6 @@ for 1, 2 -> $_ {
     is(@inside.join, "123", "lexical array properly initialized, round $_, two explicit \$_s");
 }
 
-#?rakudo skip 'wrong redeclaration error, RT 84438'
 {
     sub respect(*@a) {
         my @b = ();

@@ -85,7 +85,6 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
 # :(    --moritz
 
 # RT #76452
-#?rakudo skip 'RT 76452'
 {
     sub f($x) { $x[0] };
     is f(my @x = (1, 2, 3)), 1, 'function call with assignment to list';

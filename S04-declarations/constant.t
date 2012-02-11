@@ -144,7 +144,6 @@ use Test;
     ok $ok, "declaring a constant in terms of COMPILING hash constant works";
 }
 
-#?rakudo skip 'typed constants'
 {
     my $ok;
 

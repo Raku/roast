@@ -295,7 +295,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
 
 }
 
-#?rakudo skip 'self closure'
 #?niecza skip 'self closure'
 {
     class ClosureWithself {
