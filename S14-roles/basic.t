@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 41;
 
 =begin description
 
@@ -75,9 +75,6 @@ eval_dies_ok q{ $baz ~~ Baz },        'smartmatch against non-existent type dies
 role C { }
 class DoesC does C { }
 lives_ok { my C $x; },          'can use role as a type constraint on a variable';
-#?rakudo todo 'Cannot assign Mu to variable with role constraint -- bug or feature?'
-#?niecza todo 'Cannot assign Mu to variable with role constraint -- bug or feature? noauto'
-lives_ok { my C $x = Mu },      'can assign undefined';
 dies_ok { my C $x = 42 },       'type-check enforced';
 dies_ok { my C $x; $x = 42 },   'type-check enforced in future assignments too';
 lives_ok {my C $x = DoesC.new },'type-check passes for class doing role';
