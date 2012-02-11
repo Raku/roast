@@ -18,15 +18,12 @@ L<S29/Any/=item isa/>
 
 =end kwid 
 
-plan 14;
+plan 10;
 
 { # invocant notation  
     my @arr = <1 2 3 4>;
     
     ok(@arr.isa(Array), '... @arr is-a Array (invocant notation)');
-    #?rakudo todo "Array is now ~~ List"
-    #?niecza skip 'Seq NYI'
-    ok(@arr.isa(Seq), '... @arr is-also-a Seq (invocant notation)');
     
     # check a failing case
     ok(!@arr.isa(Hash), '... @arr is-not-a Hash (invocant notation)');
@@ -36,12 +33,8 @@ plan 14;
 { # invocant notation   
     my $arr_ref = <1 2 3 4>;
 
-    #?rakudo todo "Array is now ~~ List"
-    #?niecza skip 'Seq NYI'
-    ok($arr_ref.isa(Seq),   '... $arr is-also-a Seq (invocant notation)');
-
     # check a failing case
-    ok(!$arr_ref.isa(Hash), '... $arr is-not-a Hash (invocant notation)');      
+    nok($arr_ref.isa(Hash), '... $arr is-not-a Hash (invocant notation)');      
 }
 
 # check error cases
@@ -65,15 +58,11 @@ plan 14;
 class Thing {};
 {
     my $thing = Thing.new();
-    #?niecza todo 'stringy .isa not specced'
-    ok($thing.isa("Thing"), '.isa string naming class with no colon');
     ok($thing.isa(Thing), '.isa named class');
 }
 class Thing::something {};
 {
     my $thing = Thing::something.new();
-    #?niecza todo 'stringy .isa not specced'
-    ok($thing.isa("Thing::something"), '.isa string naming class with colons');
     ok($thing.isa(Thing::something), '.isa named class with colons');
 }
 
