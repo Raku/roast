@@ -123,14 +123,13 @@ plan 15;
 
 sub combination($n, @xs) {
     if $n > @xs {
-	()
+        ()
     } elsif $n == 0 {
-	([])
+        ([])
     } elsif $n == @xs {
-	[@xs]
+        [@xs]
     } else {
-	((map { [@xs[0],$_] },combination($n-1,@xs[1..*])),
-	 combination($n,@xs[1..*]))
+        (map { [@xs[0],$_] },combination($n-1,@xs[1..*])), combination($n,@xs[1..*])
     }
 }
 
