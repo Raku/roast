@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 50;
+plan 88;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -79,6 +79,49 @@ isa_ok ($kb ∪ $kb), Set, "... and it's actually a Set";
 
 is showset($s ∪ $ks), showset(set <I'm afraid it is isn't your day>), "Set union with KeySet works";
 isa_ok ($s ∪ $ks), Set, "... and it's actually a Set";
+is showset($s ∪ $b), showset(set($s, $b)), "Set union with Bag works";
+isa_ok ($s ∪ $b), Set, "... and it's actually a Set";
+is showset($s ∪ $kb), showset(set($s, $kb)), "Set union with KeyBag works";
+isa_ok ($s ∪ $kb), Set, "... and it's actually a Set";
+is showset($ks ∪ <blue green>), showset(set <I'm afraid it is blue green>), "KeySet union with array of strings works";
+isa_ok ($ks ∪ <blue green>), Set, "... and it's actually a Set";
 
+is showset($s (|) $ks), showset(set <I'm afraid it is isn't your day>), "Set union with KeySet works (texas)";
+isa_ok ($s (|) $ks), Set, "... and it's actually a Set (texas)";
+is showset($s (|) $b), showset(set($s, $b)), "Set union with Bag works (texas)";
+isa_ok ($s (|) $b), Set, "... and it's actually a Set (texas)";
+is showset($s (|) $kb), showset(set($s, $kb)), "Set union with KeyBag works (texas)";
+isa_ok ($s (|) $kb), Set, "... and it's actually a Set (texas)";
+is showset($ks (|) <blue green>), showset(set <I'm afraid it is blue green>), "KeySet union with array of strings works (texas)";
+isa_ok ($ks (|) <blue green>), Set, "... and it's actually a Set (texas)";
+
+# Intersection
+
+is showset($s ∩ $s), showset($s), "Set intersection with itself yields self";
+isa_ok ($s ∩ $s), Set, "... and it's actually a Set";
+is showset($ks ∩ $ks), showset($ks), "KeySet intersection with itself yields self (as Set)";
+isa_ok ($ks ∩ $ks), Set, "... and it's actually a Set";
+is showset($b ∩ $b), showset($b), "Bag intersection with itself yields self (as Set)";
+isa_ok ($b ∩ $b), Set, "... and it's actually a Set";
+is showset($kb ∩ $kb), showset($kb), "KeyBag intersection with itself yields self (as Set)";
+isa_ok ($kb ∩ $kb), Set, "... and it's actually a Set";
+
+is showset($s ∩ $ks), showset(set <I'm afraid it>), "Set intersection with KeySet works";
+isa_ok ($s ∩ $ks), Set, "... and it's actually a Set";
+is showset($s ∩ $b), showset(∅), "Set intersection with Bag works";
+isa_ok ($s ∩ $b), Set, "... and it's actually a Set";
+is showset($s ∩ $kb), showset(set <your>), "Set intersection with KeyBag works";
+isa_ok ($s ∩ $kb), Set, "... and it's actually a Set";
+is showset($kb ∩ <glad green bread>), showset(set <glad bread>), "KeyBag intersection with array of strings works";
+isa_ok ($kb ∩ <glad green bread>), Set, "... and it's actually a Set";
+
+is showset($s (&) $ks), showset(set <I'm afraid it>), "Set intersection with KeySet works (texas)";
+isa_ok ($s (&) $ks), Set, "... and it's actually a Set (texas)";
+is showset($s (&) $b), showset(∅), "Set intersection with Bag works (texas)";
+isa_ok ($s (&) $b), Set, "... and it's actually a Set (texas)";
+is showset($s (&) $kb), showset(set <your>), "Set intersection with KeyBag works (texas)";
+isa_ok ($s (&) $kb), Set, "... and it's actually a Set (texas)";
+is showset($kb (&) <glad green bread>), showset(set <glad bread>), "KeyBag intersection with array of strings works (texas)";
+isa_ok ($kb (&) <glad green bread>), Set, "... and it's actually a Set (texas)";
 
 # vim: ft=perl6
