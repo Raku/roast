@@ -126,7 +126,6 @@ for @sines -> $angle
     is_approx(tan(DifferentReal.new(5.49778714383314)), -0.999999999897998, "tan(DifferentReal) - 5.49778714383314");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx((6.28318530723787).FatRat.tan, 5.82864638634609e-11, "FatRat.tan - 6.28318530723787");
@@ -186,7 +185,6 @@ for @sines -> $angle
     is_approx(atan(DifferentReal.new(1.00000000001457)), 0.785398163404734, "atan(DifferentReal) - 0.785398163404734");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx(((0.577350269196102).FatRat).atan, 0.523598775603156, "FatRat.atan - 0.523598775603156");

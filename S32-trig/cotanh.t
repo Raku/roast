@@ -126,7 +126,6 @@ for @sines -> $angle
     is_approx(cotanh(DifferentReal.new(4.7123889804284)), 1.000161412061, "cotanh(DifferentReal) - 4.7123889804284");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx((5.49778714383314).FatRat.cotanh, 1.00003355212591, "FatRat.cotanh - 5.49778714383314");
@@ -186,7 +185,6 @@ for @sines -> $angle
     is_approx(acotanh(DifferentReal.new(1.52486861881241)), 0.785398163404734, "acotanh(DifferentReal) - 0.785398163404734");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx(((2.08128336391745).FatRat).acotanh, 0.523598775603156, "FatRat.acotanh - 0.523598775603156");

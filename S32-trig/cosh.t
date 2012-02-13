@@ -126,7 +126,6 @@ for @coshes -> $angle
     is_approx(cosh(DifferentReal.new(3.92699081702367)), 25.3868611932849, "cosh(DifferentReal) - 3.92699081702367");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx((4.7123889804284).FatRat.cosh, 55.6633808928716, "FatRat.cosh - 4.7123889804284");
@@ -186,7 +185,6 @@ for @coshes -> $angle
     is_approx(acosh(DifferentReal.new(1.32460908925833)), 0.785398163404734, "acosh(DifferentReal) - 0.785398163404734");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx(((1.14023832107909).FatRat).acosh, 0.523598775603156, "FatRat.acosh - 0.523598775603156");

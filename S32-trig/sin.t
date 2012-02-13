@@ -126,7 +126,6 @@ for @sines -> $angle
     is_approx(sin(DifferentReal.new(3.92699081702367)), -0.707106781186548, "sin(DifferentReal) - 3.92699081702367");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx((4.7123889804284).FatRat.sin, -1, "FatRat.sin - 4.7123889804284");
@@ -186,7 +185,6 @@ for @sines -> $angle
     is_approx(asin(DifferentReal.new(0.707106781186548)), 0.785398163404734, "asin(DifferentReal) - 0.785398163404734");
 }
 
-#?rakudo skip "FatRat math NYI"
 {
     # FatRat tests
     is_approx(((0.5).FatRat).asin, 0.523598775603156, "FatRat.asin - 0.523598775603156");

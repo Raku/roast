@@ -299,7 +299,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2(DifferentReal.new(0.1), (-100).FatRat), 3.14059265392313, "atan2(DifferentReal, FatRat)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat tests
     is_approx((0.1).FatRat.atan2, 0.099668652491162, "FatRat.atan2");
