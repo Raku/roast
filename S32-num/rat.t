@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 804;
+plan 817;
 
 # Basic test functions specific to rational numbers.
 
@@ -245,6 +245,33 @@ is .88888888888.WHAT.gist, 'Rat()', 'WHAT works on Rat created from 11 digit dec
 
 isa_ok (2/3) ** 3, Rat, "Rat raised to a positive Int power is a Rat";
 is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
+
+# the spec says that Rat denominators can't grow larger than a uint64,
+# and arithmetic operations need to spill over to Num
+{
+    # taken from http://www.perlmonks.org/?node_id=952765
+    my $s = 0;
+    for 1..1000 {
+        $s += 1/$_**2
+    };
+    is_approx $s, 1.64393456668156, 'can sum up 1/$_**2 in a loop';
+    isa_ok $s, Num, 'and we had an overflow to Num';
+    my $bigish = 2 ** 34;
+    my $bigish_n = $bigish.Num;
+    # TODO: not just check the type of the results, but also the numeric value
+    isa_ok (1/$bigish) * (1/$bigish),       Num, 'multiplication overflows to Num';
+    is_approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
+    isa_ok (1/$bigish) ** 2,                Num, 'exponentation overflows to Num';
+    is_approx (1/$bigish) ** 2, (1/$bigish_n) ** 2, '... right result';
+    is_approx (1/$bigish) * (1/$bigish), (1/$bigish_n) * (1/$bigish_n), '... right result';
+    isa_ok (1/$bigish) + (1 / ($bigish+1)), Num, 'addition overflows to Num';
+    is_approx (1/$bigish) + (1/($bigish+1)), (1/$bigish_n) + (1/($bigish_n+1)), '... right result';
+    isa_ok (1/$bigish) - (1 / ($bigish+1)), Num, 'subtraction overflows to Num';
+    is_approx (1/$bigish) - (1/($bigish+1)), (1/$bigish_n) - (1/($bigish_n+1)), '... right result';
+    isa_ok (1/$bigish) / (($bigish+1)/3),   Num, 'division overflows to Num';
+    is_approx (1/$bigish) / (($bigish+1)/3), (1/$bigish_n) / (($bigish_n+1)/3), '... right result';
+
+}
 
 done;
 
