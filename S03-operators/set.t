@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 88;
+plan 164;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -123,5 +123,120 @@ is showset($s (&) $kb), showset(set <your>), "Set intersection with KeyBag works
 isa_ok ($s (&) $kb), Set, "... and it's actually a Set (texas)";
 is showset($kb (&) <glad green bread>), showset(set <glad bread>), "KeyBag intersection with array of strings works (texas)";
 isa_ok ($kb (&) <glad green bread>), Set, "... and it's actually a Set (texas)";
+
+# set subtraction
+
+is showset($s (-) $s), showset(∅), "Set subtracted from Set is correct";
+isa_ok ($s (-) $s), Set, "... and it's actually a Set";
+
+is showset($s (-) $ks), showset(set <isn't your day>), "KeySet subtracted from Set is correct";
+isa_ok ($s (-) $ks), Set, "... and it's actually a Set";
+is showset($ks (-) $s), showset(set <is>), "Set subtracted from KeySet is correct";
+isa_ok ($ks (-) $s), Set, "... and it's actually a Set";
+
+is showset($b (-) $s), showset($b), "Set subtracted from Bag is correct";
+isa_ok ($b (-) $s), Set, "... and it's actually a Set";
+is showset($s (-) $b), showset($s), "Bag subtracted from Set is correct";
+isa_ok ($s (-) $b), Set, "... and it's actually a Set";
+
+is showset($s (-) $kb), showset(set <I'm afraid it isn't day>), "KeyBag subtracted from Set is correct";
+isa_ok ($s (-) $kb), Set, "... and it's actually a Set";
+is showset($kb (-) $s), showset(set <Come, take bread with joy, and wine with a glad heart>), "Set subtracted from KeyBag is correct";
+isa_ok ($kb (-) $s), Set, "... and it's actually a Set";
+
+# symmetric difference
+
+is showset($s (^) $s), showset(∅), "Set symmetric difference with Set is correct";
+isa_ok ($s (^) $s), Set, "... and it's actually a Set";
+
+is showset($s (^) $ks), showset(set <is isn't your day>), "KeySet symmetric difference with Set is correct";
+isa_ok ($s (^) $ks), Set, "... and it's actually a Set";
+is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with KeySet is correct";
+isa_ok ($ks (^) $s), Set, "... and it's actually a Set";
+
+is showset($s (^) $b), showset(set($s, $b)), "Bag symmetric difference with Set is correct";
+isa_ok ($s (^) $b), Set, "... and it's actually a Set";
+is showset($b (^) $s), showset(set($s, $b)), "Set symmetric difference with Bag is correct";
+isa_ok ($b (^) $s), Set, "... and it's actually a Set";
+
+is showset($s (^) $kb), showset(set($s, $kb) (-) set <your>), "KeyBag subtracted from Set is correct";
+isa_ok ($s (^) $kb), Set, "... and it's actually a Set";
+is showset($kb (^) $s), showset(set($s, $kb) (-) set <your>), "Set subtracted from KeyBag is correct";
+isa_ok ($kb (^) $s), Set, "... and it's actually a Set";
+
+# is subset of
+
+ok <your day> ⊆ $s, "'Your day' is subset of Set";
+ok $s ⊆ $s, "Set is subset of itself";
+ok $s ⊆ <I'm afraid it isn't your day old chum>, "Set is subset of string";
+
+ok ($ks (-) set <is>) ⊆ $ks, "Set is subset of KeySet";
+ok $ks ⊆ $ks, "KeySet is subset of itself";
+ok $ks ⊆ <I'm afraid it is my day>, "KeySet is subset of string";
+
+nok $s ⊆ $b, "Set is not a subset of Bag";
+ok $b ⊆ $b, "Bag is subset of itself";
+nok $b ⊆ $s, "Bag is not a subset of Set";
+
+nok $s ⊆ $kb, "Set is not a subset of KeyBag";
+ok $kb ⊆ $kb, "KeyBag is subset of itself";
+nok $kb ⊆ $s, "KeyBag is not a subset of Set";
+
+ok <your day> (<=) $s, "'Your day' is subset of Set";
+ok $s (<=) $s, "Set is subset of itself";
+ok $s (<=) <I'm afraid it isn't your day old chum>, "Set is subset of string";
+
+ok ($ks (-) set <is>) (<=) $ks, "Set is subset of KeySet (texas)";
+ok $ks (<=) $ks, "KeySet is subset of itself (texas)";
+ok $ks (<=) <I'm afraid it is my day>, "KeySet is subset of string (texas)";
+
+nok $s (<=) $b, "Set is not a subset of Bag (texas)";
+ok $b (<=) $b, "Bag is subset of itself (texas)";
+nok $b (<=) $s, "Bag is not a subset of Set (texas)";
+
+nok $s (<=) $kb, "Set is not a subset of KeyBag (texas)";
+ok $kb (<=) $kb, "KeyBag is subset of itself (texas)";
+nok $kb (<=) $s, "KeyBag is not a subset of Set (texas)";
+
+# is not a subset of
+
+nok <your day> ⊈ $s, "'Your day' is subset of Set";
+nok $s ⊈ $s, "Set is subset of itself";
+nok $s ⊈ <I'm afraid it isn't your day old chum>, "Set is subset of string";
+
+nok ($ks (-) set <is>) ⊈ $ks, "Set is subset of KeySet";
+nok $ks ⊈ $ks, "KeySet is subset of itself";
+nok $ks ⊈ <I'm afraid it is my day>, "KeySet is subset of string";
+
+ok $s ⊈ $b, "Set is not a subset of Bag";
+nok $b ⊈ $b, "Bag is subset of itself";
+ok $b ⊈ $s, "Bag is not a subset of Set";
+
+ok $s ⊈ $kb, "Set is not a subset of KeyBag";
+nok $kb ⊈ $kb, "KeyBag is subset of itself";
+ok $kb ⊈ $s, "KeyBag is not a subset of Set";
+
+nok <your day> !(<=) $s, "'Your day' is subset of Set (texas)";
+nok $s !(<=) $s, "Set is subset of itself (texas)";
+nok $s !(<=) <I'm afraid it isn't your day old chum>, "Set is subset of string (texas)";
+
+nok ($ks (-) set <is>) !(<=) $ks, "Set is subset of KeySet (texas)";
+nok $ks !(<=) $ks, "KeySet is subset of itself (texas)";
+nok $ks !(<=) <I'm afraid it is my day>, "KeySet is subset of string (texas)";
+
+ok $s !(<=) $b, "Set is not a subset of Bag (texas)";
+nok $b !(<=) $b, "Bag is subset of itself (texas)";
+ok $b !(<=) $s, "Bag is not a subset of Set (texas)";
+
+ok $s !(<=) $kb, "Set is not a subset of KeyBag (texas)";
+nok $kb !(<=) $kb, "KeyBag is subset of itself (texas)";
+ok $kb !(<=) $s, "KeyBag is not a subset of Set (texas)";
+
+# my $s = set <I'm afraid it isn't your day>;
+# my $ks = KeySet.new(<I'm afraid it is>); # Tom Stoppard
+# my $b = bag <Whoever remains for long here in this earthly life will enjoy and endure more than enough>; # Seamus Heaney
+# my $kb = KeyBag.new(<Come, take your bread with joy, and your wine with a glad heart>); # Ecclesiastes 9:7
+
+
 
 # vim: ft=perl6
