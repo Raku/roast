@@ -130,7 +130,7 @@ plan 79;
 #?rakudo todo 'num not implemented'
 #?niecza skip 'num not implemented'
 {
- my num $namcu =1.1;
+ my num $namcu =1.1e0;
  isa_ok($namcu,num);
 }
 
