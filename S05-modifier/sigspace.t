@@ -16,7 +16,6 @@ plan 11;
 ok(!( "abc  def" ~~ m/abc  def/ ), 'Literal space nonmatch' );
 ok(   "abcdef"   ~~ m/abc  def/, 'Nonspace match' );
 ok(   "abc  def" ~~ m:s/abc  def/, 'Word space match' );
-#?rakudo 2 todo 'unknown'
 ok(   "abc\ndef" ~~ m:sigspace/abc  def/, 'Word newline match' );
 ok(!( "abcdef"   ~~ m:sigspace/abc  def/ ), 'Word nonspace nonmatch' );
 ok(   "abc  def" ~~ m:sigspace/abc <.ws> def/, 'Word explicit space match');
