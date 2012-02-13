@@ -211,10 +211,6 @@ class TrigFunction
         my $angle_list = grep-and-repeat(eval($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal FatRat> -> $type {
-            given $type {
-                when "FatRat" { $file.say: '#?rakudo skip "FatRat math NYI"' }
-            }
-            
             $file.say: '{';
             $file.say: "    \# $type tests";
             
@@ -270,10 +266,6 @@ class TrigFunction
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;
         for <Num Rat Complex Str NotComplex DifferentReal FatRat> -> $type {
-            given $type {
-                when "FatRat" { $file.say: '#?rakudo skip "FatRat math NYI"' }
-            }
-            
             $file.say: '{';
             $file.say: "    # $type tests";
             unless $type eq "Num" || $type eq "Complex" {
@@ -459,10 +451,6 @@ sub filter-type(@values is copy, $type) {
 }
 
 for <Num Rat Int Str DifferentReal FatRat> -> $type1 {
-    if $type1 eq "FatRat" {
-        $file.say: "#?rakudo skip 'FatRat math NYI'";
-    }
-    
     $file.say: "\{";
     $file.say: "    # $type1 tests";
     
@@ -478,9 +466,6 @@ for <Num Rat Int Str DifferentReal FatRat> -> $type1 {
     $file.say: "";
     
     for <Num Rat Int Str DifferentReal FatRat> -> $type2 {
-        if $type1 eq "FatRat" || $type2 eq "FatRat" {
-            $file.say: "#?rakudo skip 'FatRat math NYI'";
-        }
         $file.say: '{';
         $file.say: "    # $type1 vs $type2 tests";
         

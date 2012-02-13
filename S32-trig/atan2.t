@@ -120,7 +120,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((100).Num, DifferentReal.new(-100)), 2.35619449019234, "atan2(Num, DifferentReal)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # Num vs FatRat tests
     is_approx((-100).Num.atan2((10).FatRat), -1.47112767430373, "Num.atan2(FatRat)");
@@ -163,7 +162,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((0.1).Rat(1e-9), DifferentReal.new(1)), 0.099668652491162, "atan2(Rat, DifferentReal)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # Rat vs FatRat tests
     is_approx((-0.1).Rat(1e-9).atan2((1).FatRat), -0.099668652491162, "Rat.atan2(FatRat)");
@@ -206,7 +204,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((1).Int, DifferentReal.new(10)), 0.099668652491162, "atan2(Int, DifferentReal)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # Int vs FatRat tests
     is_approx((-1).Int.atan2((-100).FatRat), -3.13159298690313, "Int.atan2(FatRat)");
@@ -249,7 +246,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((0.1).Str, DifferentReal.new(1)), 0.099668652491162, "atan2(Str, DifferentReal)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # Str vs FatRat tests
     is_approx((10).Str.atan2((-100).FatRat), 3.04192400109863, "Str.atan2(FatRat)");
@@ -292,7 +288,6 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2(DifferentReal.new(1), DifferentReal.new(-100)), 3.13159298690313, "atan2(DifferentReal, DifferentReal)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # DifferentReal vs FatRat tests
     is_approx(DifferentReal.new(1).atan2((100).FatRat), 0.00999966668666524, "DifferentReal.atan2(FatRat)");
@@ -305,42 +300,36 @@ is_approx(atan2(-4, -4), -3 * pi / 4, "atan2(-4, -4) is -3pi / 4");
     is_approx(atan2((-0.1).FatRat), -0.099668652491162, "atan2(FatRat)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat vs Num tests
     is_approx((1).FatRat.atan2((10).Num), 0.099668652491162, "FatRat.atan2(Num)");
     is_approx(atan2((0.1).FatRat, (0.1).Num), 0.785398163397448, "atan2(FatRat, Num)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat vs Rat tests
     is_approx((10).FatRat.atan2((-0.1).Rat(1e-9)), 1.58079599348156, "FatRat.atan2(Rat)");
     is_approx(atan2((0.1).FatRat, (1).Rat(1e-9)), 0.099668652491162, "atan2(FatRat, Rat)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat vs Int tests
     is_approx((10).FatRat.atan2((1).Int), 1.47112767430373, "FatRat.atan2(Int)");
     is_approx(atan2((-100).FatRat, (100).Int), -0.785398163397448, "atan2(FatRat, Int)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat vs Str tests
     is_approx((100).FatRat.atan2((100).Str), 0.785398163397448, "FatRat.atan2(Str)");
     is_approx(atan2((-0.1).FatRat, (100).Str), -0.000999999666666867, "atan2(FatRat, Str)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat vs DifferentReal tests
     is_approx((100).FatRat.atan2(DifferentReal.new(-10)), 1.67046497928606, "FatRat.atan2(DifferentReal)");
     is_approx(atan2((-10).FatRat, DifferentReal.new(-0.1)), -1.58079599348156, "atan2(FatRat, DifferentReal)");
 }
 
-#?rakudo skip 'FatRat math NYI'
 {
     # FatRat vs FatRat tests
     is_approx((0.1).FatRat.atan2((-1).FatRat), 3.04192400109863, "FatRat.atan2(FatRat)");
