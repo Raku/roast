@@ -178,6 +178,7 @@ isa_ok (1/2R).FatRat, FatRat, '... and actually returns a FatRat';
 ok 1/2R === 1/2R, 'FatRats are value types, so 1/2R === 1/2R';
 ok 1/2R !=== 1/3R, '=== with false outcome';
 
+#?rakudo skip 'FatRat arith + type objects'
 {
     my FatRat $a;
     $a += 0.1 for ^10;
@@ -187,6 +188,7 @@ ok 1/2R !=== 1/3R, '=== with false outcome';
 
 ok 16/5R eqv 16/5R, 'infix:<eqv> works with FatRats';
 
+#?rakudo todo 'unknown'
 isa_ok .88888888888R.WHAT.gist, 'FatRat()', 'WHAT works on FatRat created from 11 digit decimal fraction';
 
 {
