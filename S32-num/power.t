@@ -76,8 +76,8 @@ is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 is_approx((4 + 0i) ** (2 + 0i), 4 ** 2, "(4+0i) ** (2+0i) == 16");
 
 # Rat ** a large number
+#?rakudo 2 todo 'big numbers division'
 ok(1.015 ** 200 !~~ NaN, "1.015 ** 200 is not NaN");
-#?rakudo todo 'big numbers'
 is_approx(1.015 ** 200, 19.6430286394751, "1.015 ** 200 == 19.6430286394751");
 
 done;
