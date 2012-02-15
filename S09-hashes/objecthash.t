@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 20;
+plan 24;
 
 {
     class A { method Str() { 'foo' } };
@@ -41,4 +41,10 @@ plan 20;
     is %h.elems,               3,         'updated .elems';
     dies_ok  { %h{ 3 } := 3 }, 'binding key type check failure';
     dies_ok  { %h{0.2} := 'a' }, 'binding value type check failure';
+    #?rakudo todo '%h.push on typed hashes'
+    dies_ok  { %h.push: 0.5 => 2 },
+             'Hash.push fails when the resulting array conflicts with the type check';
+    lives_ok { %h.push: 0.9 => 3 }, 'Hash.push without array creation is OK';
+    dies_ok  { %h.push: 1 => 3 },   'Hash.push key type check failure';
+    dies_ok  { %h.push: 1.1 => 0.2 }, 'Hash.push value type check failure';
 }
