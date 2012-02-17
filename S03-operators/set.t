@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 212;
+plan 308;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -300,11 +300,140 @@ ok $s !(<) $kb, "Set is not a proper subset of KeyBag (texas)";
 ok $kb !(<) $kb, "KeyBag is not proper subset of itself (texas)";
 ok $kb !(<) $s, "KeyBag is not a proper subset of Set (texas)";
 
-# my $s = set <I'm afraid it isn't your day>;
-# my $ks = KeySet.new(<I'm afraid it is>); # Tom Stoppard
-# my $b = bag <Whoever remains for long here in this earthly life will enjoy and endure more than enough>; # Seamus Heaney
-# my $kb = KeyBag.new(<Come, take your bread with joy, and your wine with a glad heart>); # Ecclesiastes 9:7
+# is superset of
 
+ok <your day> R⊇ $s, "'Your day' is reversed superset of Set";
+ok $s R⊇ $s, "Set is reversed superset of itself";
+ok $s R⊇ <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
 
+ok ($ks (-) set <is>) R⊇ $ks, "Set is reversed superset of KeySet";
+ok $ks R⊇ $ks, "KeySet is reversed superset of itself";
+ok $ks R⊇ <I'm afraid it is my day>, "KeySet is reversed superset of string";
+
+nok $s R⊇ $b, "Set is not a reversed superset of Bag";
+ok $b R⊇ $b, "Bag is reversed superset of itself";
+nok $b R⊇ $s, "Bag is not a reversed superset of Set";
+
+nok $s R⊇ $kb, "Set is not a reversed superset of KeyBag";
+ok $kb R⊇ $kb, "KeyBag is reversed superset of itself";
+nok $kb R⊇ $s, "KeyBag is not a reversed superset of Set";
+
+ok <your day> R(>=) $s, "'Your day' is reversed superset of Set";
+ok $s R(>=) $s, "Set is reversed superset of itself";
+ok $s R(>=) <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
+
+ok ($ks (-) set <is>) R(>=) $ks, "Set is reversed superset of KeySet (texas)";
+ok $ks R(>=) $ks, "KeySet is reversed superset of itself (texas)";
+ok $ks R(>=) <I'm afraid it is my day>, "KeySet is reversed superset of string (texas)";
+
+nok $s R(>=) $b, "Set is not a reversed superset of Bag (texas)";
+ok $b R(>=) $b, "Bag is reversed superset of itself (texas)";
+nok $b R(>=) $s, "Bag is not a reversed superset of Set (texas)";
+
+nok $s R(>=) $kb, "Set is not a reversed superset of KeyBag (texas)";
+ok $kb R(>=) $kb, "KeyBag is reversed superset of itself (texas)";
+nok $kb R(>=) $s, "KeyBag is not a reversed superset of Set (texas)";
+
+# is not a superset of
+
+nok <your day> R⊉ $s, "'Your day' is reversed superset of Set";
+nok $s R⊉ $s, "Set is reversed superset of itself";
+nok $s R⊉ <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
+
+nok ($ks (-) set <is>) R⊉ $ks, "Set is reversed superset of KeySet";
+nok $ks R⊉ $ks, "KeySet is reversed superset of itself";
+nok $ks R⊉ <I'm afraid it is my day>, "KeySet is reversed superset of string";
+
+ok $s R⊉ $b, "Set is not a reversed superset of Bag";
+nok $b R⊉ $b, "Bag is reversed superset of itself";
+ok $b R⊉ $s, "Bag is not a reversed superset of Set";
+
+ok $s R⊉ $kb, "Set is not a reversed superset of KeyBag";
+nok $kb R⊉ $kb, "KeyBag is reversed superset of itself";
+ok $kb R⊉ $s, "KeyBag is not a reversed superset of Set";
+
+nok <your day> !R(>=) $s, "'Your day' is reversed superset of Set (texas)";
+nok $s !R(>=) $s, "Set is reversed superset of itself (texas)";
+nok $s !R(>=) <I'm afraid it isn't your day old chum>, "Set is reversed superset of string (texas)";
+
+nok ($ks (-) set <is>) !R(>=) $ks, "Set is reversed superset of KeySet (texas)";
+nok $ks !R(>=) $ks, "KeySet is reversed superset of itself (texas)";
+nok $ks !R(>=) <I'm afraid it is my day>, "KeySet is reversed superset of string (texas)";
+
+ok $s !R(>=) $b, "Set is not a reversed superset of Bag (texas)";
+nok $b !R(>=) $b, "Bag is reversed superset of itself (texas)";
+ok $b !R(>=) $s, "Bag is not a reversed superset of Set (texas)";
+
+ok $s !R(>=) $kb, "Set is not a reversed superset of KeyBag (texas)";
+nok $kb !R(>=) $kb, "KeyBag is reversed superset of itself (texas)";
+ok $kb !R(>=) $s, "KeyBag is not a reversed superset of Set (texas)";
+
+# is proper superset of
+
+ok <your day> R⊃ $s, "'Your day' is reversed proper superset of Set";
+nok $s R⊃ $s, "Set is not reversed proper superset of itself";
+ok $s R⊃ <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
+
+ok ($ks (-) set <is>) R⊃ $ks, "Set is reversed proper superset of KeySet";
+nok $ks R⊃ $ks, "KeySet is not reversed proper superset of itself";
+ok $ks R⊃ <I'm afraid it is my day>, "KeySet is reversed proper superset of string";
+
+nok $s R⊃ $b, "Set is not a reversed proper superset of Bag";
+nok $b R⊃ $b, "Bag is not reversed proper superset of itself";
+nok $b R⊃ $s, "Bag is not a reversed proper superset of Set";
+
+nok $s R⊃ $kb, "Set is not a reversed proper superset of KeyBag";
+nok $kb R⊃ $kb, "KeyBag is not reversed proper superset of itself";
+nok $kb R⊃ $s, "KeyBag is not a reversed proper superset of Set";
+
+ok <your day> R(>) $s, "'Your day' is reversed proper superset of Set";
+nok $s R(>) $s, "Set is not reversed proper superset of itself";
+ok $s R(>) <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
+
+ok ($ks (-) set <is>) R(>) $ks, "Set is reversed proper superset of KeySet (texas)";
+nok $ks R(>) $ks, "KeySet is not reversed proper superset of itself (texas)";
+ok $ks R(>) <I'm afraid it is my day>, "KeySet is reversed proper superset of string (texas)";
+
+nok $s R(>) $b, "Set is not a reversed proper superset of Bag (texas)";
+nok $b R(>) $b, "Bag is not reversed proper superset of itself (texas)";
+nok $b R(>) $s, "Bag is not a reversed proper superset of Set (texas)";
+
+nok $s R(>) $kb, "Set is not a reversed proper superset of KeyBag (texas)";
+nok $kb R(>) $kb, "KeyBag is not reversed proper superset of itself (texas)";
+nok $kb R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
+
+# is not a proper superset of
+
+nok <your day> R⊅ $s, "'Your day' is reversed proper superset of Set";
+ok $s R⊅ $s, "Set is not reversed proper superset of itself";
+nok $s R⊅ <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
+
+nok ($ks (-) set <is>) R⊅ $ks, "Set is reversed proper superset of KeySet";
+ok $ks R⊅ $ks, "KeySet is not reversed proper superset of itself";
+nok $ks R⊅ <I'm afraid it is my day>, "KeySet is reversed proper superset of string";
+
+ok $s R⊅ $b, "Set is not a reversed proper superset of Bag";
+ok $b R⊅ $b, "Bag is not reversed proper superset of itself";
+ok $b R⊅ $s, "Bag is not a reversed proper superset of Set";
+
+ok $s R⊅ $kb, "Set is not a reversed proper superset of KeyBag";
+ok $kb R⊅ $kb, "KeyBag is not reversed proper superset of itself";
+ok $kb R⊅ $s, "KeyBag is not a reversed proper superset of Set";
+
+nok <your day> !R(>) $s, "'Your day' is reversed proper superset of Set (texas)";
+ok $s !R(>) $s, "Set is not reversed proper superset of itself (texas)";
+nok $s !R(>) <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string (texas)";
+
+nok ($ks (-) set <is>) !R(>) $ks, "Set is reversed proper superset of KeySet (texas)";
+ok $ks !R(>) $ks, "KeySet is not reversed proper superset of itself (texas)";
+nok $ks !R(>) <I'm afraid it is my day>, "KeySet is reversed proper superset of string (texas)";
+
+ok $s !R(>) $b, "Set is not a reversed proper superset of Bag (texas)";
+ok $b !R(>) $b, "Bag is not reversed proper superset of itself (texas)";
+ok $b !R(>) $s, "Bag is not a reversed proper superset of Set (texas)";
+
+ok $s !R(>) $kb, "Set is not a reversed proper superset of KeyBag (texas)";
+ok $kb !R(>) $kb, "KeyBag is not reversed proper superset of itself (texas)";
+ok $kb !R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
 
 # vim: ft=perl6
