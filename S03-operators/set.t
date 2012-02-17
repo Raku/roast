@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 164;
+plan 212;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -231,6 +231,74 @@ ok $b !(<=) $s, "Bag is not a subset of Set (texas)";
 ok $s !(<=) $kb, "Set is not a subset of KeyBag (texas)";
 nok $kb !(<=) $kb, "KeyBag is subset of itself (texas)";
 ok $kb !(<=) $s, "KeyBag is not a subset of Set (texas)";
+
+# is proper subset of
+
+ok <your day> ⊂ $s, "'Your day' is proper subset of Set";
+nok $s ⊂ $s, "Set is not proper subset of itself";
+ok $s ⊂ <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
+
+ok ($ks (-) set <is>) ⊂ $ks, "Set is proper subset of KeySet";
+nok $ks ⊂ $ks, "KeySet is not proper subset of itself";
+ok $ks ⊂ <I'm afraid it is my day>, "KeySet is proper subset of string";
+
+nok $s ⊂ $b, "Set is not a proper subset of Bag";
+nok $b ⊂ $b, "Bag is not proper subset of itself";
+nok $b ⊂ $s, "Bag is not a proper subset of Set";
+
+nok $s ⊂ $kb, "Set is not a proper subset of KeyBag";
+nok $kb ⊂ $kb, "KeyBag is not proper subset of itself";
+nok $kb ⊂ $s, "KeyBag is not a proper subset of Set";
+
+ok <your day> (<) $s, "'Your day' is proper subset of Set";
+nok $s (<) $s, "Set is not proper subset of itself";
+ok $s (<) <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
+
+ok ($ks (-) set <is>) (<) $ks, "Set is proper subset of KeySet (texas)";
+nok $ks (<) $ks, "KeySet is not proper subset of itself (texas)";
+ok $ks (<) <I'm afraid it is my day>, "KeySet is proper subset of string (texas)";
+
+nok $s (<) $b, "Set is not a proper subset of Bag (texas)";
+nok $b (<) $b, "Bag is not proper subset of itself (texas)";
+nok $b (<) $s, "Bag is not a proper subset of Set (texas)";
+
+nok $s (<) $kb, "Set is not a proper subset of KeyBag (texas)";
+nok $kb (<) $kb, "KeyBag is not proper subset of itself (texas)";
+nok $kb (<) $s, "KeyBag is not a proper subset of Set (texas)";
+
+# is not a proper subset of
+
+nok <your day> ⊄ $s, "'Your day' is proper subset of Set";
+ok $s ⊄ $s, "Set is not proper subset of itself";
+nok $s ⊄ <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
+
+nok ($ks (-) set <is>) ⊄ $ks, "Set is proper subset of KeySet";
+ok $ks ⊄ $ks, "KeySet is not proper subset of itself";
+nok $ks ⊄ <I'm afraid it is my day>, "KeySet is proper subset of string";
+
+ok $s ⊄ $b, "Set is not a proper subset of Bag";
+ok $b ⊄ $b, "Bag is not proper subset of itself";
+ok $b ⊄ $s, "Bag is not a proper subset of Set";
+
+ok $s ⊄ $kb, "Set is not a proper subset of KeyBag";
+ok $kb ⊄ $kb, "KeyBag is not proper subset of itself";
+ok $kb ⊄ $s, "KeyBag is not a proper subset of Set";
+
+nok <your day> !(<) $s, "'Your day' is proper subset of Set (texas)";
+ok $s !(<) $s, "Set is not proper subset of itself (texas)";
+nok $s !(<) <I'm afraid it isn't your day old chum>, "Set is proper subset of string (texas)";
+
+nok ($ks (-) set <is>) !(<) $ks, "Set is proper subset of KeySet (texas)";
+ok $ks !(<) $ks, "KeySet is not proper subset of itself (texas)";
+nok $ks !(<) <I'm afraid it is my day>, "KeySet is proper subset of string (texas)";
+
+ok $s !(<) $b, "Set is not a proper subset of Bag (texas)";
+ok $b !(<) $b, "Bag is not proper subset of itself (texas)";
+ok $b !(<) $s, "Bag is not a proper subset of Set (texas)";
+
+ok $s !(<) $kb, "Set is not a proper subset of KeyBag (texas)";
+ok $kb !(<) $kb, "KeyBag is not proper subset of itself (texas)";
+ok $kb !(<) $s, "KeyBag is not a proper subset of Set (texas)";
 
 # my $s = set <I'm afraid it isn't your day>;
 # my $ks = KeySet.new(<I'm afraid it is>); # Tom Stoppard
