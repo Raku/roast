@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 89;
+plan 91;
 
 #L<S02/Mutable types/Array>
 
@@ -314,6 +314,13 @@ my @array2 = ("test", 1, Mu);
     @a[0 ..^ *-1] >>~=>> "x";
     is @a.join(','), 'ax,bx,c', '0..^ *-1 works as an array index';
 }
+
+#?niecza skip 'coercion syntax'
+{
+    is Array(1,2,3).WHAT.gist, 'Array()', 'Array(...) makes an Array';
+    ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
+}
+
 done;
 
 # vim: ft=perl6
