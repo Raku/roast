@@ -36,7 +36,6 @@ plan 18;
   my %hash;
   try { %hash = ($hashref,) };
 
-  #?pugs todo 'non-flattening hash refs'
   #?rakudo todo 'non-flattening hash refs'
   #?niecza todo
   is +%hash, 0, '%hash = ($hashref,) does not flatten the hashref';
