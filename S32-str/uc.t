@@ -37,6 +37,7 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 # nothing maps to 1E9E, the new "capital sharp s"
 # so I think this is right -rhr
 #?niecza todo 'German language weirdness'
+#?pugs todo
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {
@@ -50,6 +51,7 @@ is ~(0.lcfirst),    ~0, '.lcfirst on Int';
 
 #?DOES 4
 #?rakudo skip 'but RoleName'
+#?pugs todo
 {
     role A {
         has $.thing = 3;

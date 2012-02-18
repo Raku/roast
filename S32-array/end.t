@@ -23,12 +23,14 @@ plan 12;
 #?rakudo skip 'unspecced'
 {
   my $a;
+  #?pugs todo
   dies_ok { $a.end }, ".end does not work on arbitrary scalars (1)";
 }
 
 #?rakudo skip 'unspecced'
 {
   my $a = 42;
+  #?pugs todo
   dies_ok { $a.end }, ".end does not work on arbitrary scalars (2)";
 }
 

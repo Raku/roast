@@ -18,7 +18,9 @@ is(~sort(keys(%hash)), "a b c d", 'keys(%hash) on hashes');
 is(+%hash.keys, +%hash, 'we have the same number of keys as elements in the hash');
 
 # L<S32::Containers/"Hash"/=item values>
+#?pugs todo
 is(~%hash.values.sort, "1 2 3 4", '%hash.values works');
+#?pugs todo
 is(~sort(values(%hash)), "1 2 3 4", 'values(%hash) works');
 is(+%hash.values, +%hash, 'we have the same number of keys as elements in the hash');
 

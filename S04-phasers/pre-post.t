@@ -28,6 +28,7 @@ sub bar(Int $i) {
 lives_ok { foo(2) }, 'sub with PRE  compiles and runs';
 lives_ok { bar(3) }, 'sub with POST compiles and runs';
 
+#?pugs todo
 dies_ok { foo(10) }, 'Violated PRE  throws (catchable) exception';
 dies_ok { bar(10) }, 'Violated POST throws (catchable) exception';
 
@@ -44,7 +45,9 @@ sub baz (Int $i) {
 }
 lives_ok { baz(2) }, 'sub with two PREs compiles and runs';
 
+#?pugs todo
 dies_ok  { baz(-1)}, 'sub with two PREs fails when first is violated';
+#?pugs todo
 dies_ok  { baz(42)}, 'sub with two PREs fails when second is violated';
 
 
@@ -59,6 +62,7 @@ sub qox (Int $i) {
 }
 
 lives_ok({ qox(23) }, "sub with two POSTs compiles and runs");
+#?pugs todo
 dies_ok( { qox(-1) }, "sub with two POSTs fails if first POST is violated");
 dies_ok( { qox(123)}, "sub with two POSTs fails if second POST is violated");
 
@@ -84,6 +88,7 @@ class PRE_Child is PRE_Parent {
 
 my $foo = PRE_Child.new;
 
+#?pugs todo
 lives_ok { $foo.test(5)    }, 'PRE in methods compiles and runs';
 dies_ok  { $foo.test(-42)  }, 'PRE in child throws';
 #?niecza todo 'PRE inheritance'
@@ -111,6 +116,7 @@ my $mp = POST_Child.new;
 
 #?niecza 2 skip 'unspecced'
 lives_ok  { $mp.test(-42) }, "It's enough if we satisfy one of the POST blocks (Child)";
+#?pugs todo
 lives_ok  { $mp.test(42)  }, "It's enough if we satisfy one of the POST blocks (Parent)";
 dies_ok   { $mp.test(12) }, 'Violating poth POST blocks throws an error';
 
@@ -124,6 +130,7 @@ class Another {
 }
 
 my $pt = Another.new;
+#?pugs todo
 lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
 dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 
@@ -134,6 +141,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST { $str ~= ')'; 1 }
         $str ~= 'x';
     }
+    #?pugs todo
     is $str, '(x)', 'PRE and POST run on ordinary blocks';
 }
 
@@ -146,6 +154,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         PRE   { $str ~= '('; 1 }
         $str ~= 'x';
     }
+    #?pugs todo
     is $str, '([x])', 'PRE/POST run outside ENTER/LEAVE';
 }
 
@@ -161,6 +170,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
             POST    { $str ~= ')'; 1 }
         }
     }
+    #?pugs todo
     is $str, '(', 'failing PRE runs nothing else';
 }
 
@@ -174,6 +184,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
             POST  { $str ~= 'z'; 1 }
         }
     }
+    #?pugs todo
     is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
 }
 
@@ -184,6 +195,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST { $str ~= $! // '<undef>'; 1 }
         die 'foo';
     }
+    #?pugs todo
     ok $str ~~ /foo/, 'POST runs on exception, with correct $!';
 }
 
@@ -195,6 +207,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         try { die 'foo' }
         $str ~= (defined $! ?? 'aye' !! 'nay');
     }
+    #?pugs todo
     is $str, 'ayeno', 'POST has undefined $! on no exception';
 }
 
@@ -204,6 +217,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST { 0 }
         die 'foo';
     }
+    #?pugs todo
     ok $! ~~ /foo/, 'failing POST on exception doesn\'t replace $!';
     # XXX
     # is $!.pending.[-1], 'a POST exception', 'does push onto $!.pending';

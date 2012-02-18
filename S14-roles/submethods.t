@@ -41,6 +41,7 @@ class Child is Parent { }
 
 is Parent.ouch(), 'the pain', 'submethod composes ok...';
 is Parent.conf(), 'correct',  'submethod in class wins';
+#?pugs todo
 dies_ok { Child.ouch() },     'composed submethod acts like one';
 
 # vim: ft=perl6

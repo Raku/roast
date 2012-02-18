@@ -30,7 +30,9 @@ is capitalize("äöü abcä"), "Äöü Abcä", "capitalize() works on non-ASCII 
 
 #?rakudo 2 todo 'graphemes results wrong'
 #?niecza 2 todo 'charspec'
+#?pugs todo
 is capitalize("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'capitalize on string with grapheme precomposed';
+#?pugs todo
 is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
     "capitalize on string with grapheme without precomposed";
@@ -38,6 +40,7 @@ is capitalize("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
 # rest of the tests are moved from uc.t
 is ~(0.capitalize), ~0, '.capitalize on Int';
 
+#?pugs todo
 {
     role A {
         has $.thing = 3;

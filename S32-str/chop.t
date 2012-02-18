@@ -40,9 +40,11 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 #?niecza skip "unspecced"
 { # chop several things
     my ($a, $b) = ("bar", "gorch");
-#?pugs 3 todo ''
+    #?pugs skip "todo"
     is(chop($a, $b), "h", "two chars removed, second returned");
+    #?pugs skip "todo"
     is($a, "ba", "first string");
+    #?pugs skip "todo"
     is($b, "gorc", "second string");
 };
 
@@ -50,9 +52,11 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 #?niecza skip "unspecced"
 { # chop elements of array
     my @array = ("fizz", "buzz");
+    #?pugs todo
     is(chop(@array), "z", "two chars removed second returned");
-#?pugs 2 todo 'unspecced'
+    #?pugs todo
     is(@array[0], "fiz", "first elem");
+    #?pugs todo
     is(@array[1], "buz", "second elem");
 };
 

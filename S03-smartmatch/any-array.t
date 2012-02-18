@@ -13,10 +13,12 @@ plan 6;
 
     #?rakudo todo 'nom regression'
     #?niecza todo
+    #?pugs todo
     ok  ($o ~~ [1, 2, 4]),      'Any ~~ Array (basic, +)';
     ok !($o ~~ [1, 5, 4]),      'Any ~~ Array (basic, -)';
     #?rakudo todo 'nom regression'
     #?niecza todo
+    #?pugs todo
     ok  ($o ~~ [1, *]),         'Any ~~ Array (dwim, +)';
     ok !($o ~~ [8, *]),         'Any ~~ Array (dwim, -)';
     ok  (1  ~~ [1]),            'Any ~~ Array (Int, +)';

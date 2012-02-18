@@ -16,6 +16,7 @@ my $ref = { val => 42 };
 isa_ok($ref, Hash);
 #?rakudo todo "die or fail?"
 #?niecza todo "questionable test"
+#?pugs todo
 dies_ok { $ref[0] }, 'Hash !~~ Positional';
 
 {

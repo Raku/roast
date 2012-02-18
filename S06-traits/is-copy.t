@@ -70,6 +70,7 @@ plan 22;
     }
 
     my $a = [1, 2, 3];
+    #?pugs todo
     is t($a), 3, 'passing [1,2,3] to @a is copy does results in three array items';
 }
 
@@ -102,6 +103,7 @@ plan 22;
 # RT #82810
 {
     sub j(@a is copy) { @a ||= -1, -1, +1, +1; @a.join(',') }
+    #?pugs todo
     is j([1, 2, 3, 4]), '1,2,3,4', 'can use ||= on "is copy" array';
 }
 

@@ -62,6 +62,7 @@ my $str ~= 'o';  # Note that this is different from  "my $str = 'o';".
 {
     INIT { $str ~= 'i' }
 }
+#?pugs todo
 is $str, 'io', 'INIT {} always runs before the mainline code runs';
 
 # L<S04/Phasers/INIT "runs once for all copies of" "cloned closure">

@@ -13,9 +13,11 @@ is(callerunderscore(), "-foo-", 'CALLER:: $_ set once');
 $_ = "bar";
 is(callerunderscore(), "-bar-", 'CALLER:: $_ set twice');
 for ("quux") {
+    #?pugs todo
     is(callerunderscore(), '-quux-', 'CALLER:: $_ set by for');
 }
 given 'hirgel' {
+    #?pugs todo
     is callerunderscore, '-hirgel-', '$CALLER::_ set by given';
 }
 is(callerunderscore(), '-bar-', 'CALLER:: $_ reset after for');

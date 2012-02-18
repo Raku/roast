@@ -23,6 +23,7 @@ BEGIN { @*INC.push: 't/spec/packages' };
     #?rakudo skip 'nom regression'
     ok eval('"a" yadayada "b" eq "a..b" or die'), '... and it works';
     #?rakudo todo "op= form doesn't work for imported operators?"
+    #?pugs todo
     ok eval('my $a = "a"; $a yadayada= "b"; $a eq "a..b" or die'), '... and yadayada= works too';
 
     #?rakudo todo 'nom regression'
@@ -33,6 +34,7 @@ BEGIN { @*INC.push: 't/spec/packages' };
     #?rakudo todo 'nom regression'
     ok eval('3 ± 4'), 'infix:<±> was exported';
     #?rakudo todo 'nom regression'
+    #?pugs todo
     ok eval('(3 ± 4).isa(Range) or die'), '... and it works';
 
     #?rakudo todo 'nom regression'
@@ -41,11 +43,13 @@ BEGIN { @*INC.push: 't/spec/packages' };
     is eval("(NotANumber.new(:number(4)) + NotANumber.new(:number(-1))).number"), 3, "multi infix:<+> was exported and is visible";
     
     #?rakudo 2 todo "op= form doesn't work for imported operators?"
+    #?pugs todo
     is eval('my $a = NotANumber.new(:number(4)); $a NAN+= NotANumber.new(:number(-1)); $a.number;'), 3, "NAN+= works too";
     is eval('my $a = NotANumber.new(:number(4)); $a += NotANumber.new(:number(-1)); $a.number;'), 3, "+= works too";
     
     is 4 + 2, 6, "Normal infix:<+> still works";
 
+    #?pugs todo
     dies_ok { eval('3 notthere 4') }, 'not-exported operator was not imported';
 }
 
