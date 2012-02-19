@@ -58,11 +58,6 @@ isa_ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊎ $kb), "blood:2 love:4", "Bag addition with itself yields twice self";
 isa_ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
 
-# my $s = set <blood love>;
-# my $ks = KeySet.new(<blood rhetoric>);
-# my $b = bag { blood => 2, rhetoric => 1, love => 2 };
-# my $kb = KeyBag.new({ blood => 1, love => 2 });
-
 is showkv($s ⊎ $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / KeySet) works";
 isa_ok ($s ⊎ $ks), Bag, "... and it's actually a Bag";
 is showkv($s ⊎ $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works";
@@ -80,6 +75,5 @@ is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (KeySet / Bag)
 isa_ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag) works (texas)";
 isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
-
 
 # vim: ft=perl6
