@@ -39,6 +39,7 @@ plan 38;
   # $var unchanged, but assigning to $var doesn't modify @hash any
   # longer; similarily, changing @hash[1] doesn't modify $var now
   is $var,   "e",               "binding of hash elements works with .delete (2)";
+  #?pugs todo
   is ~%hash.values.sort, "x z", "binding of hash elements works with .delete (3)";
 
   $var     = "f";
@@ -80,6 +81,7 @@ plan 38;
   # $var unchanged, but assigning to $var doesn't modify @hash any
   # longer; similarily, changing @hash[1] doesn't modify $var now
   is $var,    "e",  "binding of hash elements works with rebinding the hash (2)";
+  #?pugs todo
   is ~%hash.values.sort, "q s u",
     "binding of hash elements works with rebinding the hash (3)";
 
@@ -98,6 +100,7 @@ plan 38;
 
   foo %hash;
   is $var,    "new_value",     "passing a hash to a sub expecting a hash behaves correctly (1)";
+  #?pugs todo
   is ~%hash.values.sort, "new_value x z",
     "passing a hash to a sub expecting a hash behaves correctly (2)";
 }
@@ -112,6 +115,7 @@ plan 38;
   foo %hash;
   is $var, "new_value",
     "passing a hash to a sub expecting a hashref behaves correctly (1)";
+  #?pugs todo
   is ~%hash.values.sort, "new_value x z",
     "passing a hash to a sub expecting a hashref behaves correctly (2)";
 }
@@ -143,7 +147,9 @@ plan 38;
   $var         = "f";
   # %hash<b> and $var are now "f", but %new_hash is unchanged.
   is $var,                   "f",     "hash assignment creates new containers (2)";
+  #?pugs todo
   is ~%hash\   .values.sort, "f x z", "hash assignment creates new containers (3)";
+  #?pugs todo
   is ~%new_hash.values.sort, "e x z", "hash assignment creates new containers (4)";
 }
 
@@ -160,7 +166,9 @@ plan 38;
   $var          = "f";
   # %hash<b> and $var are now "f", but %new_hash is unchanged.
   is $var,        "f",                "hash binding does not create new containers (2)";
+  #?pugs todo
   is ~%hash\   .values.sort, "f x z", "hash binding does not create new containers (3)";
+  #?pugs todo
   is ~%new_hash.values.sort, "f x z", "hash binding does not create new containers (4)";
 }
 
@@ -180,6 +188,7 @@ plan 38;
   is ~%hash\  .values.sort, "a c", 'binding %hash := $hashref works (3)';
 }
 
+#?pugs todo
 eval_dies_ok 'my %h = a => 1, b => 2; %h<a b> := (4, 5)',
     'Cannot bind to hash slices';
 

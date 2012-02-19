@@ -47,7 +47,9 @@ is(Test3::pkg, ::Test3::, 'eval\'ed package $?PACKAGE');
 cmp_ok(Test3::pkg, &infix:<===>, ::Test3::, 'eval\'ed package type object');
 
 # this one came from t/packages/Test.pm
+#?pugs todo
 is(t::spec::packages::PackageTest::ns, "t::packages::PackageTest", "loaded package");
+#?pugs todo
 cmp_ok(t::spec::packages::PackageTest::pkg, &infix:<===>, ::t::packages::PackageTest::, 'loaded package $?PACKAGE object');
 my $x;
 lives_ok { $x = test_export() }, "export was imported successfully";

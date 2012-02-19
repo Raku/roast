@@ -22,6 +22,7 @@ plan 11;
 
 #?rakudo skip 'unspecced'
 #?niecza todo
+#?pugs todo
 {
   my $a;
   dies_ok { $a.elems }, ".elems does not work on arbitrary scalars (1)";

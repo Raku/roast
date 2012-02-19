@@ -22,6 +22,7 @@ my $bar = sub { return &?ROUTINE.name };
 is($bar(), '<anon>', 'got the right routine name (anon-block)');
 
 my $baz = try { &?ROUTINE.name };
+#?pugs todo
 ok(not(defined $baz), '&?ROUTINE.name not defined outside of a routine');
 
 # vim: ft=perl6

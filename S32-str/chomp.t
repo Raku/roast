@@ -68,26 +68,33 @@ Basic tests for the chomp() builtin
     chomp($foo);
     is($foo, "foo\r", 'our variable was not yet chomped');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped again with no effect');
 }
 
 {
     my $foo = "foo\r\r";
     $foo .= chomp;
+    #?pugs todo
     is($foo, "foo\r", 'our variable is chomped correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped again correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped again with no effect');
 }
 
 {
     my $foo = "foo\rbar\r";
     $foo .= chomp;
+    #?pugs todo
     is($foo, "foo\rbar", 'our variable is chomped correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, "foo\rbar", 'our variable is chomped again with no effect');
 }
 
@@ -101,9 +108,11 @@ Basic tests for the chomp() builtin
     my $foo = "foo\r\r";
     my $chomped = $foo.chomp;
     is($foo, "foo\r\r", ".chomp has no effect on the original string");
+    #?pugs todo
     is($chomped, "foo\r", ".chomp returns correctly chomped value");
 
     $chomped = $chomped.chomp;
+    #?pugs todo
     is($chomped, "foo", ".chomp returns correctly chomped value again");
 }
 
@@ -113,26 +122,33 @@ Basic tests for the chomp() builtin
     chomp($foo);
     is($foo, "foo\r\n", 'our variable was not yet chomped');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped again with no effect');
 }
 
 {
     my $foo = "foo\r\n\r\n";
     $foo .= chomp;
+    #?pugs todo
     is($foo, "foo\r\n", 'our variable is chomped correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped again correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, 'foo', 'our variable is chomped again with no effect');
 }
 
 {
     my $foo = "foo\r\nbar\r\n";
     $foo .= chomp;
+    #?pugs todo
     is($foo, "foo\r\nbar", 'our variable is chomped correctly');
     $foo .= chomp;
+    #?pugs todo
     is($foo, "foo\r\nbar", 'our variable is chomped again with no effect');
 }
 
@@ -146,9 +162,11 @@ Basic tests for the chomp() builtin
     my $foo = "foo\r\n\r\n";
     my $chomped = $foo.chomp;
     is($foo, "foo\r\n\r\n", ".chomp has no effect on the original string");
+    #?pugs todo
     is($chomped, "foo\r\n", ".chomp returns correctly chomped value");
 
     $chomped = $chomped.chomp;
+    #?pugs todo
     is($chomped, "foo", ".chomp returns correctly chomped value again");
 }
 
@@ -162,6 +180,7 @@ Basic tests for the chomp() builtin
     is($chomped, "", ".chomp works on string with just a newline");
 
     $chomped = $bar.chomp;
+    #?pugs todo
     is($chomped, "", ".chomp works on string with just a carriage return");
 
     $chomped = $baz.chomp;
