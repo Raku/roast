@@ -74,19 +74,19 @@ sub showkv($x) {
 }
 
 {
-    my $b = bag [ foo => 10, bar => 17, baz => 42 ];
+    my $b = bag [ foo => 10, bar => 17, baz => 42, santa => 0 ];
     isa_ok $b, Bag, '&Bag.new given an array of pairs produces a Bag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }
 
 {
-    my $b = bag { foo => 10, bar => 17, baz => 42 }.hash;
+    my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }
 
 {
-    my $b = bag { foo => 10, bar => 17, baz => 42 };
+    my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 };
     isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }

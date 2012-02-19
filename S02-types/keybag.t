@@ -97,19 +97,19 @@ sub showkv($x) {
 }
 
 {
-    my $b = KeyBag.new([ foo => 10, bar => 17, baz => 42 ]);
+    my $b = KeyBag.new([ foo => 10, bar => 17, baz => 42, santa => 0 ]);
     isa_ok $b, KeyBag, '&KeyBag.new given an array of pairs produces a KeyBag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }
 
 {
-    my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42 }.hash);
+    my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa_ok $b, KeyBag, '&KeyBag.new given a Hash produces a KeyBag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }
 
 {
-    my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42 });
+    my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
     isa_ok $b, KeyBag, '&KeyBag.new given a Hash produces a KeyBag';
     is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
 }
