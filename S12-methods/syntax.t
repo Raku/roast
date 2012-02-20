@@ -35,7 +35,6 @@ is (1..8).grep: { $_ % 2 }.map: { $_ - 1}.join('|'), '0|2|4|6',
 
 # Used to be Rakudo RT #61988, $.foo form didn't accept arguments
 
-#?niecza skip 'No value for parameter $a in B.a'
 {
     class B {
         method a ($a, $b) { $a + $b }

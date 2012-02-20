@@ -37,7 +37,6 @@ ok "hello" !~~ m:i/<&mixedcase>/, "no match with :i if matched by subrule";
 ok "hello"  ~~ m:i/Hello/,       "match with :i (direct)";
 
 ok "hello" !~~ m:ignorecase/<&mixedcase>/,  "no match with :ignorecase + subrule";
-#?niecza todo
 ok "hello"  ~~ m:ignorecase/Hello/,        "match with :ignorecase (direct)";
 ok('Δ' ~~ m:i/δ/, ':i with greek chars');
 

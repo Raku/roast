@@ -78,7 +78,6 @@ use Test;
     is ConstantTest2::yak, 'shaving', 'constant can be explicitly "our"-scoped';
 }
 
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Any'
 {
     package ConstantTest3 {
         my constant yak = 'shaving';

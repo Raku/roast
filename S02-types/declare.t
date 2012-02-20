@@ -264,14 +264,12 @@ plan 79;
 }
 
 #?rakudo skip 'KeySet not implemented'
-#?niecza skip 'KeySet not implemented'
 {
  my KeySet $paxa;
  isa_ok($paxa,KeySet  );
 }
 
 #?rakudo skip 'KeyBag not implemented'
-#?niecza skip 'KeyBag not implemented'
 {
  my KeyBag $paze;
  isa_ok($paze,KeyBag  );

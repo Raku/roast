@@ -86,7 +86,6 @@ class Y is X {
 is(Z.new.j(), 'X', 'inherited method dispatch works');
 is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
 
-#?niecza skip 'No value for parameter $i in A.y'
 {
     class A {
       has @.x = <a b c>;

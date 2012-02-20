@@ -135,7 +135,6 @@ plan 27;
   is +$arrayref[1], 2, '\@array creates an arrayref (2)';
 }
 
-#?niecza skip 'Unable to resolve method rt62836 in class Parcel'
 {
     sub Parcel::rt62836 { 62836 }
 
@@ -143,6 +142,7 @@ plan 27;
             'call to user-declared sub in Parcel:: class dies';
     try { eval '<1 2 3>.rt62836' };
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
+    #?niecza todo 'error message says "not found"'
     ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
     diag $!;
     ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
