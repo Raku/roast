@@ -45,6 +45,7 @@ plan 13;
         NEXT { $str ~= 'n'; }
         LAST { $str ~= 'l'; }
     }
+    #?pugs todo
     is $str, 'nnl', 'NEXT are LAST blocks may not be exclusive';
 }
 
@@ -70,6 +71,7 @@ plan 13;
             leave if $_ > 3;
         }
     }
+    #?pugs todo
     is $str, '123', "leave didn't trigger NEXT \{}";
 }
 
@@ -103,6 +105,7 @@ plan 13;
         NEXT { $str ~= 'n' }
         LEAVE { $str ~= 'l' }
     }
+    #?pugs todo
     is $str, 'nlnl', 'NEXT {} ran before LEAVE {} (1)';
 }
 
@@ -113,6 +116,7 @@ plan 13;
         LEAVE { $str ~= 'l' }
         NEXT { $str ~= 'n' }
     }
+    #?pugs todo
     is $str, 'nlnl', 'NEXT {} ran before LEAVE {} (2)';
 }
 
@@ -129,6 +133,7 @@ plan 13;
         NEXT { $str ~= $n } # this gets run first (LIFO)
         last if $i++ > 100; # recursion prevension
     }
+    #?pugs todo
     is $str, '01234', 'NEXT {} ran in reversed order';
 }
 
@@ -147,6 +152,7 @@ plan 13;
         NEXT { $str ~= $_; }
     }
 
+    #?pugs todo
     is($str, '01234', 'NEXT {} works in for loop');
 }
 

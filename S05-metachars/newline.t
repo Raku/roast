@@ -12,13 +12,20 @@ plan 15;
 
 # L<S05/Changed metacharacters/"\n now matches a logical (platform independent) newline">
 
+#?pugs todo
 ok("\n" ~~ m/\n/, '\n');
 
+#?pugs todo
 ok("\o15\o12" ~~ m/\n/, 'CR/LF');
+#?pugs todo
 ok("\o12" ~~ m/\n/, 'LF');
+#?pugs todo
 ok("a\o12" ~~ m/\n/, 'aLF');
+#?pugs todo
 ok("\o15" ~~ m/\n/, 'CR');
+#?pugs todo
 ok("\x85" ~~ m/\n/, 'NEL');
+#?pugs todo
 #?rakudo todo 'Unicode'
 ok("\x2028" ~~ m/\n/, 'LINE SEP');
 
@@ -33,6 +40,7 @@ ok(!( "\x85" ~~ m/\N/ ), 'not NEL');
 #?rakudo todo 'Unicode'
 ok(!( "\x2028" ~~ m/\N/ ), 'not LINE SEP');
 
+#?pugs todo
 ok("abc" ~~ m/\N/, 'abc');
 
 

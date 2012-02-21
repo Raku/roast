@@ -36,7 +36,9 @@ for (1..2) -> $rep {
     for (@$/) {
         ok( %expected{$_}, "Matched '$_' ($rep)" );
         ok( %position{$_} == $_.pos, "At correct position of '$_' ($rep)" );
+        #?rakudo emit #
         %expected{$_} :delete;
+        #?rakudo emit %expected.delete($_)
     }
     ok(%expected.keys == 0, "No matches missed ($rep)" );
 }
@@ -49,7 +51,7 @@ ok($str ~~ m:ex:i/ a (.+) a /, 'Capturing every-way match');
 ok(@$/ == @expected, 'Correct number of capturing matches');
 my %expected; %expected{map {$_[1]}, @expected} = (1) x @expected;
 
-for (@$/) {
+for @($/) {
     ok( %expected{$_}, "Capture matched '$_'" );
     ok( $_[1] = substr($_[0],1,-1), "Captured within '$_'" );
     %expected{$_} :delete;
