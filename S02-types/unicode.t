@@ -17,6 +17,7 @@ is "foo\r\nbar".graphs, 7, 'CRLF is 1 graph';
 is $u.chars, 1, '.chars defaults to .graphs';
 
 # RT #65170
+#?pugs todo
 {
     my $rt65170;
 

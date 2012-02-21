@@ -48,10 +48,13 @@ ok('1' ~~ m/$href{'a'}/, 'Hash ref A');
 ok('1' ~~ m/%var{'a'}/, 'Hash A');
 
 #?niecza todo
+#?pugs todo
 ok('1' ~~ m/$href.<a>/, 'Hash ref dot A');
 #?niecza todo
+#?pugs todo
 ok('1' ~~ m/$href<a>/, 'Hash ref A');
 #?niecza skip 'Only $ and @ variables may be used in regexes for now'
+#?pugs todo
 ok('1' ~~ m/%var<a>/, 'Hash A');
 
 ok(!( 'a' ~~ m/$aref[1]/ ), 'Array ref 1');
@@ -70,6 +73,7 @@ ok(!( '1' ~~ m/%var<b>/ ), 'Hash B');
 # However, if $var contains a Regex object, instead of attempting to convert it to a string, it is called as a subrule
 # A simple test for this
 my $rx = rx/foo/;
+#?pugs todo
 ok('foobar' ~~ /$rx bar/,  'regex object in a regex');
 ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 
