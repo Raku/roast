@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 37;
 
 =begin description
 
@@ -80,26 +80,31 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 }
 
 # ranges + roll
-#?niecza skip "Too slow"
+{
+    ok 1 <= (1..1_000_000).roll() <= 1_000_000, 'no argument roll works';
+    
+    my @matches := (1..1_000_000).roll(*);
+    ok (so 1 <= all(@matches[^100]) <= 1_000_000), 'the first 100 elems are in range';
+}
+
 {
     my @matches = (1..1_000_000).roll(20);
     is @matches.elems, 20, 'right number of elements from Range.roll';
     ok (so 1 <= all(@matches) <= 1_000_000), 'all the elems are in range';
 }
 
-#?niecza skip "Too slow"
 {
     my @matches = (1^..1_000_000).roll(20);
     is @matches.elems, 20, 'right number of elements from Range.roll (min exclusive)';
     ok (so 1 < all(@matches) <= 1_000_000), 'all the elems are in range';
 }
-#?niecza skip "Too slow"
+
 {
     my @matches = (1..^1_000_000).roll(20);
     is @matches.elems, 20, 'right number of elements from Range.roll (max exclusive)';
     ok (so 1 <= all(@matches) < 1_000_000), 'all the elems are in range';
 }
-#?niecza skip "Too slow"
+
 {
     my @matches = (1^..^1_000_000).roll(20);
     is @matches.elems, 20, 'right number of elements from Range.roll (both exclusive)';

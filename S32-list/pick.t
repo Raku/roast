@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 44;
 
 =begin description
 
@@ -92,28 +92,52 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 # ranges + pick
-#?niecza skip "Too slow"
+{
+    my %seen;
+    %seen{$_} = 1 for (1..100).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
+    ok (so 1 <= all(%seen.keys) <= 100), '... and all the elements are in range';
+}
+
+{
+    my %seen;
+    %seen{$_} = 1 for (1..300).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
+    ok (so 1 <= all(%seen.keys) <= 300), '... and all the elements are in range';
+}
+
+{
+    my %seen;
+    %seen{$_} = 1 for (1..50).pick(*);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
+    ok (so 1 <= all(%seen.keys) <= 50), '... and all the elements are in range';
+}
+
+{
+    ok 1 <= (1..50).pick <= 50, 'Range.pick() works';
+}
+
 {
     my %seen;
     %seen{$_} = 1 for (1..1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
     ok (so 1 <= all(%seen.keys) <= 1_000_000), '... and all the elements are in range';
 }
-#?niecza skip "Too slow"
+
 {
     my %seen;
     %seen{$_} = 1 for (1^..1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (lower exclusive)';
     ok (so 1 < all(%seen.keys) <= 1_000_000), '... and all the elements are in range';
 }
-#?niecza skip "Too slow"
+
 {
     my %seen;
     %seen{$_} = 1 for (1..^1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (upper exclusive)';
     ok (so 1 <= all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
-#?niecza skip "Too slow"
+
 {
     my %seen;
     %seen{$_} = 1 for (1^..^1_000_000).pick(50);
