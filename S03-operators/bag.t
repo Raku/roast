@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 76;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$^k} }).join(' ')
@@ -17,6 +17,44 @@ my $s = set <blood love>;
 my $ks = KeySet.new(<blood rhetoric>);
 my $b = bag { blood => 2, rhetoric => 1, love => 2 };
 my $kb = KeyBag.new({ blood => 1, love => 2 });
+
+# Bag Union
+
+is showkv($b ∪ $b), showkv($b), "Bag union with itself yields self";
+isa_ok ($b ∪ $b), Bag, "... and it's actually a Bag";
+is showkv($kb ∪ $kb), showkv($kb), "KeyBag union with itself yields (as Bag)";
+isa_ok ($kb ∪ $kb), Bag, "... and it's actually a Bag";
+
+is showkv($s ∪ $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works";
+isa_ok ($s ∪ $b), Bag, "... and it's actually a Bag";
+is showkv($s ∪ $kb), "blood:1 love:2", "Set union with KeyBag works";
+isa_ok ($s ∪ $kb), Bag, "... and it's actually a Bag";
+
+is showkv($s (|) $b), "blood:2 love:2 rhetoric:1", "Set union with Bag works (texas)";
+isa_ok ($s (|) $b), Bag, "... and it's actually a Bag";
+is showkv($s (|) $kb), "blood:1 love:2", "Set union with KeyBag works (texas)";
+isa_ok ($s (|) $kb), Bag, "... and it's actually a Bag";
+
+# Bag Intersection
+
+is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
+isa_ok ($b ∩ $b), Bag, "... and it's actually a Bag";
+is showkv($kb ∩ $kb), showkv($kb), "KeyBag intersection with itself yields self (as Bag)";
+isa_ok ($kb ∩ $kb), Bag, "... and it's actually a Bag";
+
+is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
+isa_ok ($s ∩ $b), Bag, "... and it's actually a Bag";
+is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with KeyBag works";
+isa_ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
+is showkv($kb ∩ <glad green blood>), "blood:1", "KeyBag intersection with array of strings works";
+isa_ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
+
+is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)";
+isa_ok ($s (&) $b), Bag, "... and it's actually a Bag";
+is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with KeyBag works (texas)";
+isa_ok ($s (&) $kb), Bag, "... and it's actually a Bag";
+is showkv($kb (&) <glad green blood>), "blood:1", "KeyBag intersection with array of strings works (texas)";
+isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
