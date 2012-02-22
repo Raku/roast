@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 10;
+plan 11;
 
 # Just to avoid tedium, the macros in this file are
 # named after Santa's reindeers.
@@ -103,4 +103,10 @@ plan 10;
 
     ok blitzen("onwards") ~~ AST,
         "lexical lookup from quasi to macro params works";
+}
+
+#?rakudo skip 'segfaults'
+{
+    macro id($param) { $param };
+    is id('x'), 'x', 'macro can return its param';
 }
