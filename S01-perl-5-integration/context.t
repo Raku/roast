@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 10;
 my &p5_void := eval(
     'sub {
         if (defined(wantarray)) {
@@ -15,7 +16,6 @@ p5_void(:context<scalar>);
 is(eval(:lang<perl5>,'$::got_void'),0,":contex<scalar> dosn't set void context");
 p5_void(:context<list>);
 is(eval(:lang<perl5>,'$::got_void'),0,":contex<list> dosn't sets void context");
-done;
 
 my &p5_scalar := eval(
     'sub {
@@ -31,7 +31,6 @@ p5_scalar(:context<void>);
 is(eval(:lang<perl5>,'$::got_scalar'),0,":contex<void> dosn't set scalar context");
 p5_scalar(:context<list>);
 is(eval(:lang<perl5>,'$::got_scalar'),0,":contex<list> dosn't sets scalar context");
-done;
 
 my &p5_list := eval(
     'sub {
@@ -51,6 +50,5 @@ is(eval(:lang<perl5>,'$::got_list'),0,":contex<void> dosn't sets list context");
 my &p5_list_of_values := eval('sub {return (1,2,3,4)}',:lang<perl5>);
 ok(p5_list_of_values(:context<void>) ~~ Nil,"a p5 sub called in void context returns a Nil");
 
-done;
 
 # vim: ft=perl6
