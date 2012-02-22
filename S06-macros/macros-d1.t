@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 6;
+plan 9;
 
 # Just to avoid tedium, the macros in this file are
 # named after Santa's reindeers.
@@ -72,4 +72,35 @@ plan 6;
 
     my $result = "grasshopper" + "motor oil";
     is $result, "chickpeas", "can shadow an existing operator";
+}
+
+{
+    macro cupid {
+        my $a = "I'm cupid!";
+
+        quasi { $a }
+    }
+
+    my $result = cupid;
+    is $result, "I'm cupid!", "lexical lookup from quasi to macro works";
+}
+
+{
+    my $counter = 0;
+
+    macro donner {
+        quasi { ++$counter }
+    }
+
+    is donner, 1, "lexical lookup from quasi to outside macro works";
+    is donner, 2, "...twice";
+}
+
+{
+    macro blitzen($param) {
+        quasi { $param x 3 }
+    }
+
+    is blitzen("ho!"), "ho!ho!ho!",
+        "lexical lookup from quasi to macro params works";
 }
