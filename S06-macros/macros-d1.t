@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 9;
+plan 10;
 
 # Just to avoid tedium, the macros in this file are
 # named after Santa's reindeers.
@@ -98,9 +98,10 @@ plan 9;
 
 {
     macro blitzen($param) {
-        quasi { $param x 3 }
+        quasi { $param }
     }
 
-    is blitzen("ho!"), "ho!ho!ho!",
+    my $result = blitzen("ho ho ho");
+    is $result, "ho ho ho",
         "lexical lookup from quasi to macro params works";
 }
