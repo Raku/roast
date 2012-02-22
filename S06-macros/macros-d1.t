@@ -101,7 +101,6 @@ plan 10;
         quasi { $param }
     }
 
-    my $result = blitzen("ho ho ho");
-    is $result, "ho ho ho",
+    ok blitzen("onwards") ~~ AST,
         "lexical lookup from quasi to macro params works";
 }
