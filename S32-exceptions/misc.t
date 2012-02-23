@@ -26,12 +26,12 @@ sub throws_like($code, $ex_type, *%matcher) {
                     unless $ok {
                         diag "Got:      $got\n"
                             ~"Expected: $v";
-
                     }
                 }
             } else {
                 diag "Got:      {$_.WHAT.gist}\n"
                     ~"Expected: {$ex_type.gist}";
+                diag "Exception message: $_.message()";
                 skip 'wrong exception type', %matcher.elems;
             }
         }
@@ -76,7 +76,7 @@ throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
 throws_like 'my class B { }; my subset B { }', X::Redeclaration, symbol => 'B';
 throws_like 'CATCH { }; CATCH { }', X::Phaser::Multiple, block => 'CATCH';
 
-throws_like 'class A { my @a; @a!List::foo() }',
+throws_like 'my class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
     method          => 'foo',
     calling-package => 'A',
@@ -134,5 +134,8 @@ throws_like 'my enum Foo (:x(@*ARGS[0]))', X::Value::Dynamic;
 throws_like 'self', X::Syntax::Self::WithoutObject;
 throws_like 'class { has $.x = $.y }', X::Syntax::VirtualCall, call => '$.y';
 throws_like '$.a', X::Syntax::NoSelf, variable => '$.a';
+
+throws_like 'has $.x', X::Attribute::NoPackage;
+throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'module';
 
 done;
