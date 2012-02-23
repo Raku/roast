@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 128;
+
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
 is( :10<1>,   1, 'got the correct int value from decimal 1' );
@@ -178,11 +180,12 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
 # L<S02/Exponentials/"So we write those as">
 # these should be the same values as the previous tests
-#?pugs todo 'feature'
 {
+    #?pugs todo "todo"
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     #?rakudo skip "Really?!"
     #?niecza skip "WTF?"
+    #?pugs skip "todo"
     is( 2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
@@ -190,6 +193,7 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # L<S02/General radices/"Alternately you can use a list of digits in decimal">
 #?rakudo skip ":radix[] NYI"
 #?niecza skip ":radix[] NYI"
+#?pugs skip "todo"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
@@ -214,13 +218,14 @@ dies_ok { 2.foo  },    "2.foo  parses as method call";
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
 #?niecza 2 todo
+#?pugs todo "todo"
 eval_dies_ok ':2<2>',   ':2<2> is illegal';
+#?pugs todo "todo"
 eval_dies_ok ':10<3a>', ':10<3a> is illegal';
 
 for 2..36 {
+    #?pugs skip "todo"
     is eval(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
 }
-
-done;
 
 # vim: ft=perl6
