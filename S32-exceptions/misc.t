@@ -141,5 +141,8 @@ throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'm
 throws_like 'has sub a() { }', X::Sub::Scope, scope => 'has';
 throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
+throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
+
+throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
 
 done;
