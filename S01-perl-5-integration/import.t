@@ -14,9 +14,9 @@ unless (try { eval("1", :lang<perl5>) }) {
     exit;
 }
 
-eval q[
+eval_lives_ok(q[
 use Text::Wrap:from<perl5> 'wrap';
 is(wrap('foo', 'bar', 'baz'), 'foobaz', "import p5 module");
-] or die $!.perl;
+],"parse :from<perl5> syntax");
 
 # vim: ft=perl6
