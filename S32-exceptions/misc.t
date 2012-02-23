@@ -138,4 +138,8 @@ throws_like '$.a', X::Syntax::NoSelf, variable => '$.a';
 throws_like 'has $.x', X::Attribute::NoPackage;
 throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'module';
 
+throws_like 'has sub a() { }', X::Sub::Scope, scope => 'has';
+throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
+throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
+
 done;
