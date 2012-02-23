@@ -193,12 +193,15 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # L<S02/General radices/"Alternately you can use a list of digits in decimal">
 #?rakudo skip ":radix[] NYI"
 #?niecza skip ":radix[] NYI"
-#?pugs skip "todo"
 {
+    #?pugs skip "todo"
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
+    #?pugs skip "todo"
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
 
+    #?pugs skip "todo"
     is :100[10,10],      1010, "Adverbial form of base 100 integer works";
+    #?pugs skip "todo"
     is :100[10,'.',10], 10.10, "Adverbial form of base 100 fraction works";
 }
 
