@@ -144,6 +144,9 @@ throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
 throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
 throws_like 'use MONKEY_TYPING; augment class { }', X::Anon::Augment, package-type => 'class';
+throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
+    package-type => 'class',
+    package => 'NoSuchClass';
 
 throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
 
