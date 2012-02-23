@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 128;
+plan 131;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
