@@ -7,7 +7,7 @@ if $*OS eq "browser" {
   exit;
 }
 
-my $root = "mkdir-t-testfile-" ~ 1000000.rand.Int;
+my $root = "mkdir-t-testfile-" ~ 1000000.rand.floor;
 
 say $root;
 
