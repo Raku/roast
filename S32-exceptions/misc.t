@@ -103,6 +103,7 @@ throws_like 'unless 1 { } else { }', X::Syntax::UnlessElse;
 throws_like 'for my $x (1, 2, 3) { }', X::Syntax::P5;
 throws_like ':!foo(3)', X::Syntax::NegatedPair;
 throws_like 'my $0', X::Syntax::Variable::Numeric;
+throws_like 'my sub f($0) { }', X::Syntax::Variable::Numeric, what => 'parameter';
 throws_like 'my $<a>', X::Syntax::Variable::Match;
 throws_like 'my class A { my $!foo }', X::Syntax::Variable::Twigil, twigil => '!', scope => 'my';
 throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
