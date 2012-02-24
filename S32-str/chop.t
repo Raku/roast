@@ -42,9 +42,9 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
     my ($a, $b) = ("bar", "gorch");
     #?pugs skip "todo"
     is(chop($a, $b), "h", "two chars removed, second returned");
-    #?pugs skip "todo"
+    #?pugs todo "todo"
     is($a, "ba", "first string");
-    #?pugs skip "todo"
+    #?pugs todo "todo"
     is($b, "gorc", "second string");
 };
 

@@ -156,7 +156,6 @@ ok(is_dt({ my $str = localtime() }()), 'localtime(), scalar context');
 
     if ($localyday && $yday) {
         my $day_diff = $localyday - $yday;
-        #?pugs todo
         ok($day_diff == 0    ||
             $day_diff == 1    ||
             $day_diff == -1   ||

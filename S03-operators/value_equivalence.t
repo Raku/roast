@@ -179,7 +179,6 @@ plan 74;
 
 #?pugs skip "this test alters # of run tests?"
 ok     1|2 === 1,  '=== does autothread (1)';
-#?pugs skip "this test alters # of run tests?"
 isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
 
 done;

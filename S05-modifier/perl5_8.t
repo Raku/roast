@@ -101,9 +101,7 @@ is(("a0-za" ~~ rx:P5/([\d-z]+)/ && $0), "0-z", 're_tests 1155/1 (1359)');
 is(("a0- z" ~~ rx:P5/([\d-\s]+)/ && $0), "0- ", 're_tests 1157/1 (1361)');
 #?pugs skip "PCRE hard parsefail"
 is(("za-9z" ~~ rx:P5/([a-[:digit:]]+)/ && $0), "a-9", 're_tests 1159/1 (1363)');
-#?pugs skip "PCRE hard parsefail"
 is(("=0-z=" ~~ rx:P5/([[:digit:]-z]+)/ && $0), "0-z", 're_tests 1160/1 (1364)');
-#?pugs skip "PCRE hard parsefail"
 is(("=0-z=" ~~ rx:P5/([[:digit:]-[:alpha:]]+)/ && $0), "0-z", 're_tests 1161/1 (1365)');
 ok((not ("aaaXbX" ~~ rx:P5/\GX.*X/)), 're_tests 1162  (1366)');
 is(("3.1415926" ~~ rx:P5/(\d+\.\d+)/ && $0), "3.1415926", 're_tests 1163/1 (1367)');
