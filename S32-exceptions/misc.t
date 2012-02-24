@@ -129,6 +129,8 @@ throws_like '=begin', X::Syntax::Pod::BeginWithoutIdentifier;
 throws_like '@', X::Syntax::SigilWithoutName;
 throws_like '1∞', X::Syntax::Confused;
 throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
+throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
+throws_like 'my &a()', X::Syntax::Reserved, instead  => /':()'/;
 
 throws_like 'm:i(@*ARGS[0])/foo/', X::Value::Dynamic;
 throws_like 'my enum Foo (:x(@*ARGS[0]))', X::Value::Dynamic;
