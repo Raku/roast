@@ -152,5 +152,6 @@ throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSu
     package => 'NoSuchClass';
 
 throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
+throws_like 'rx:g/a/',   X::Syntax::Regex::Adverb, adverb => 'g', construct => 'rx';
 
 done;
