@@ -32,6 +32,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   iis ?(?"3"),  True,  "? context forcer works (13)";
   iis ?(?"0"),  False, "? context forcer works (14)";
 
+  #?pugs skip 'Mu'
   iis ?Mu,      False, "? context forcer works (15)";
 }
 { # L<S02/"Names and Variables" /In boolean contexts/>
@@ -61,6 +62,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
   #?rakudo skip '~Mu'
+  #?pugs skip 'Mu'
   is ~Mu,         "", "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";
@@ -68,6 +70,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"3e5",   "3e5", "~ context forcer works (10)";
 }
 
+#?pugs skip 'Str'
 ok 4.Str ~~ Str, 'Int.Str returns a Str';
 
 sub eval_elsewhere($code){ eval($code) }
@@ -75,6 +78,7 @@ sub eval_elsewhere($code){ eval($code) }
 # L<S02/Context/numeric "+">
 # numeric (+) context
 #?niecza skip "Failure NYI"
+#?pugs skip 'Failure'
 {
     my $a = '2 is my favorite number';
     isa_ok(+$a, Failure, 'trailing chars cause failure');
@@ -87,6 +91,7 @@ sub eval_elsewhere($code){ eval($code) }
 # L<S03/Symbolic unary precedence/"prefix:<->">
 #?rakudo skip 'failure modes of Str.Numeric'
 #?niecza skip "Failure NYI"
+#?pugs skip 'Failure'
 {
     my $a = '2 is my favorite number';
     isa_ok(-$a, Failure, 'trailing chars cause failure');
@@ -98,6 +103,7 @@ sub eval_elsewhere($code){ eval($code) }
 # L<S02/Context/string "~">
 # L<S03/Changes to Perl 5 operators/Unary ~ string context>
 # string context
+#?pugs skip 'Stringy'
 {
     my $a = 10.500000;
     #?niecza skip "Stringy NYI"
@@ -199,6 +205,7 @@ sub eval_elsewhere($code){ eval($code) }
     is +%(), 0, '%() is an empty Hash';
 }
 
+#?pugs skip 'Cannot cast into a Hash'
 {
     my $x = %(a => 3, b => 5);
     is $x<a>, 3, 'hash constructor worked (1)';
@@ -211,22 +218,30 @@ sub eval_elsewhere($code){ eval($code) }
 
 # ^$x is the range 0 .. ($x -1)
 {
+    #?pugs todo
     ok   0 ~~ ^10, '0 is in ^10';
+    #?pugs todo
     ok   9 ~~ ^10, '9 is in ^10';
+    #?pugs todo
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
+    #?pugs skip 'Range'
     isa_ok ^10, Range;
 
     # now the same for ^@array, in which case prefix:<^>
     # imposes numeric context
 
     my @a = <one two three four five six seven eight nine ten>;
+    #?pugs todo
     ok   0 ~~ ^@a, '0 is in ^10';
+    #?pugs todo
     ok   9 ~~ ^@a, '9 is in ^10';
+    #?pugs todo
     ok 9.9 ~~ ^@a, '9.99 is in ^10';
     ok  10 !~~ ^@a, '10 is not in ^10';
     is (^@a).elems, 10, '^10 has 10 elems';
+    #?pugs skip 'Range'
     isa_ok ^@a, Range;
 }
 

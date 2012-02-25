@@ -29,7 +29,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Routine);
     isa_ok($foo, Sub);
     is $foo.(), 42,                 "basic invocation of an anonymous sub";
-    dies_ok { $foo.(23) }, "invocation of an parameterless anonymous sub with a parameter dies";
+    dies_ok { $foo.(23) }, "invocation of a parameterless anonymous sub with a parameter dies";
 }
 
 {
@@ -37,7 +37,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Code);
     isa_ok($foo, Block);
     is $foo.(), 42,                 "basic invocation of a pointy block";
-    dies_ok { $foo.(23) },  "invocation of an parameterless pointy block with a parameter dies";
+    dies_ok { $foo.(23) },  "invocation of a parameterless pointy block with a parameter dies";
 }
 
 {
@@ -45,10 +45,11 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     isa_ok($foo, Code);
     isa_ok($foo, Block);
     is $foo.(42), 142,              "basic invocation of a pointy block with a param";
-    dies_ok { $foo.() }, "invocation of an parameterized block expecting a param without a param dies";
+    dies_ok { $foo.() }, "invocation of a parameterized block expecting a param without a param dies";
 }
 
 # RT #63974
+#?pugs skip 'No compatible multi variant found: "$c"'
 {
     my $topic = 'topic unchanged';
     my @topic_array = <topic array unchanged>;

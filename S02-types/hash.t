@@ -37,10 +37,13 @@ ok(%hash4.does(Hash), '%hash4 does Hash');
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
+#?pugs skip 'gist'
 is( (map { .WHAT.gist } , {"a"=> 1 , "b"=>2}).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
 my $does_not_flatten= {"a"=> 1 , "b"=>2};
+#?pugs skip 'gist'
 is( (map { .WHAT.gist } , $does_not_flatten).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
 my %flattens= ("a"=> 1 , "b"=>2);
+#?pugs skip 'gist'
 is( (map { .WHAT.gist } , %flattens).join(' ') , 'Pair() Pair()' , 'Flattening Hashes become Pairs when passed to map');
 
 # hash slicing
@@ -61,6 +64,7 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
 }
 
 #?niecza todo
+#?pugs skip '.value'
 {
     my @slice3 = %hash5<>.sort(*.value);
     is(+@slice3, 3, 'empty slice got all hash pairs');
@@ -108,12 +112,14 @@ ok(%hash7.does(Hash), '%hash7 does Hash');
 
 my @values1 = (values %hash7).sort;
 is(+@values1, 3, 'got the right number of values');
+#?pugs 3 todo
 is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
 is(@values1[2], 3, 'got the right values');
 
 @values1 = %hash7.values.sort;
 is(+@values1, 3, 'got the right number of values');
+#?pugs 3 todo
 is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
 is(@values1[2], 3, 'got the right values');
@@ -145,6 +151,7 @@ is($key, 1, '%hash.kv gave us our key');
 is($val, 2, '%hash.kv gave us our val');
 
 %hash9{2} = 3;
+#?pugs todo
 ok(~%hash9 ~~ /^(1\t2\s+2\t3|2\t3\s+1\t2)\s*$/, "hash can stringify");
 
 my %hash10 = <1 2>;
@@ -154,10 +161,12 @@ is(%hash10<1>, 2, "assignment of pointy qw to hash");
 
 sub test1 {
     my %sane = hash ('a'=>'b');
+    #?pugs skip '.gist'
     is(%sane.WHAT.gist,Hash.gist,'%sane is a Hash');
 }
 
 sub test2 (%hash) {
+    #?pugs skip '.gist'
     is(%hash.WHAT.gist,Hash.gist,'%hash is a Hash');
 }
 
@@ -190,6 +199,8 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
     is $i, 4, "for %hash works";
 }
 
+
+#?pugs todo
 {
     dies_ok { eval ' @%(a => <b>)<a>' },
      "doesn't really make sense, but shouldn't segfault, either ($!)";
@@ -197,6 +208,7 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 # test for RT #62730
 #?niecza todo
+#?pugs todo
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
@@ -248,12 +260,14 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # Zen slices work on hashes too
 #?niecza todo 'zen slice'
+#?pugs todo
 {
     my %h = { a => 1, b => 2, c => 3};
     is %h{*}.join('|'), %h.values.join('|'), '{*} zen slice';
 }
 
 # RT #75868
+#?pugs todo
 {
     my %h = (ab => 'x', 'a' => 'y');
     'abc' ~~ /^(.)./;
@@ -263,7 +277,6 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # RT #61412
-#?DOES 1
 {
     my %hash;
     %hash<foo> := 'bar';
@@ -271,9 +284,11 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # RT #75694
+#?pugs skip 'eval_lives_ok'
 eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
 
 # RT #99854
+#?pugs skip 'eval_lives_ok'
 {
     eval_lives_ok 'my $rt = { grammar => 5 }',
                   "can have a bareword 'grammar' as a hash key";
