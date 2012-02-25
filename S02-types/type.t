@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
-plan 55;
+plan 51;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -124,20 +124,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
-}
-
-#?rakudo skip '"as" return type coercion'
-#?niecza skip 'Action method trait_mod:as not yet implemented'
-{
-    # the following two are the same type of behavior
-    # S02: "It is possible for the of type to disagree with the as type"
-    my Rat sub returntype4 ($pass)     as Num {$pass ?? 11 / 10 !! 1}
-    my sub returntype5 ($pass --> Rat) as Num {$pass ?? 11 /  5 !! 2}
-
-    is(returntype4(True), 1.1, 'good return value works (my Type sub as OtherType)');
-    eval_dies_ok('returntype4(False)', 'bad return value dies (my Type sub as OtherType)');
-    is(returntype5(True), 2.2, 'good return value works (--> Type as OtherType)');
-    eval_dies_ok('returntype5(False)', 'bad return value dies (--> Type as OtherType)');
 }
 
 {
