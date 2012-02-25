@@ -245,9 +245,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 {
     my $x = :a<5>;
     is $x.map({ .key, .value + 1}), ('a', 6), 'map on pair works (comma)';
-    #?rakudo skip 'Method "key" not found for invocant of class "Int"'
-    #?niecza skip 'Unable to resolve method key in class Int'
-    is $x.map({ .key => .value + 1}), ('a' => 6), 'map on pair works (=>)';
+    is $x.map({ ; .key => .value + 1}), ('a' => 6), 'map on pair works (=>)';
 }
 
 # vim: ft=perl6
