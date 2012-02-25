@@ -61,14 +61,16 @@ plan 23;
 #?rakudo skip 'RT 61844'
 #?niecza skip 'hangs'
 {
+    #?pugs skip 'eval_lives_ok'
     eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
     is eval('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
 
 # RT #63014
+#?pugs skip 'No such subroutine: "&Positional"'
 {
     my @array = <1 2 3>;
-    isa_ok @array, Array;
+    isa_ok @array, Array
     ok @array[0..1] ~~ Positional;
 
     ok @array[0..0] ~~ Positional, 'slice with one element is a list';
