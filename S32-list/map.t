@@ -84,7 +84,6 @@ my @list = (1 .. 5);
 }
 
 {
-  #?pugs 2 todo 'bug'
   is(42.map({$_}),    42,       "method form of map works on numbers");
   is('str'.map({$_}), 'str',    "method form of map works on strings");
 }
@@ -110,6 +109,7 @@ should be equivalent to
 }
 
 
+#?pugs skip 'unimpl'
 {
   my @a = (1, 2, 3);
   # XXX is hash { ... } legal?
@@ -117,7 +117,6 @@ should be equivalent to
   is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
-#?pugs todo 'unimpl'
   is(+@c, 3, "should be 3 elements (3 hashrefs)");
 }
 
@@ -126,8 +125,10 @@ should be equivalent to
 
 {
   my @array = <a b c d>;
+  #?pugs todo
   is ~(try { @array.map: { $_ ~= "c"; $_ ~ "d" } }), "acd bcd ccd dcd",
     'mutating $_ in map works (1)';
+  #?pugs todo
   is ~@array, "ac bc cc dc",
     'mutating $_ in map works (2)';
 }
@@ -161,15 +162,16 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 4, "map works with the map body returning an empty arrayref";
 }
 
-#?pugs todo 'bug'
 {
   my @array  = <a b c d>;
   my $empty  = [];
   my @result = map { $empty }, @array;
 
+  #?pugs todo 'bug'
   is +@result, 4, "map works with the map body returning an empty arrayref variable";
 }
 
+#?pugs skip 'Mu'
 {
   my @array  = <a b c d>;
   my @result = map { Mu }, @array;
@@ -177,6 +179,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 4, "map works with the map body returning undefined";
 }
 
+#?pugs skip 'Mu'
 {
   my @array  = <a b c d>;
   my $undef  = Mu;
@@ -215,6 +218,8 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # .thing inside map blocks should still default to $_
 # used to be a pugs regression
+#?pugs skip '.Int'
+#?DOES 6
 {
     is ~((1,2,3).map: { $_.Int }), "1 2 3", "dependency for following test (1)";
     $_ = 4; is .Int, 4,                   "dependency for following test (2)";
@@ -225,6 +230,8 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
 }
 
+#?pugs skip 'unimpl'
+#?DOES 2
 {
     is (1..4).map({ next if $_ % 2; 2 * $_ }).join('|'), 
        '4|8', 'next in map works';
@@ -233,6 +240,8 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # RT #62332
+#?pugs skip 'unimpl'
+#?DOES 2
 {
     my $x = :a<5>;
     is $x.map({ .key, .value + 1}), ('a', 6), 'map on pair works (comma)';
