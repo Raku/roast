@@ -58,7 +58,7 @@ is $glass.WHAT.perl , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine
 is $valuable.WHAT.perl , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
 
 #?rakudo skip 'parse error'
-lives_ok 'role DeliveryCalculation[::Calculator] {has $.mass;method calculate($destination) {my $calc = Calculator.new(:$!mass);}}' , "Refering to $.mass and $!mass";
+lives_ok 'role DeliveryCalculation[::Calculator] {has $.mass;method calculate($destination) {my $calc = Calculator.new(:$!mass);}}' , 'Refering to $.mass and $!mass';
 
 #TODO: When rakudo can pass the previous test we can add full tests for the role.
 #~ role DeliveryCalculation[::Calculator] {
