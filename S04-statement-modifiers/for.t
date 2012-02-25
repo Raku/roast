@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+plan 20;
+
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
 # test the for statement modifier
@@ -107,7 +109,5 @@ eval_dies_ok '1 for <a b> for <c d>;', 'double statement-modifying for is not al
     (my @a).push: $_ for ^3;
     is @a.join(','), '0,1,2';
 }
-
-done;
 
 # vim: ft=perl6
