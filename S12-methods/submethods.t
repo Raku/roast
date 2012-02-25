@@ -83,6 +83,8 @@ Basic submethod tests. See L<S12/"Submethods">
 }
 
 #?rakudo skip 'roles and submethods'
+#?pugs skip 'does'
+#?DOES 4
 {
   my $was_in_b1_build = 0;
   my $was_in_b2_build = 0;
@@ -95,7 +97,6 @@ Basic submethod tests. See L<S12/"Submethods">
   is $was_in_b2_build, 0, "roles' BUILD submethods were not yet called (2)";
 
   $B does (RoleB1, RoleB2);
-  #?pugs 2 todo 'feature'
   #?niecza 2 todo
   is $was_in_b1_build, 1, "roles' BUILD submethods were called now (1)";
   is $was_in_b2_build, 1, "roles' BUILD submethods were called now (2)";
