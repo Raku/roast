@@ -152,7 +152,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 {
     my @b;
-    @b = ((1, 3) Z (2, 4));
+    @b = ((1, 3) Z (2, 4));
     is(@b, [1 .. 4], "parens work around this");
 };
 
