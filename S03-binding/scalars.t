@@ -133,11 +133,11 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 #?niecza skip 'list binding'
 {
   my $a;
-  (:$a) := (:a<foo>);
+  :(:$a) := (:a<foo>);
   #?pugs todo
   is($a, "foo", "bound keyword");
   my @tail;
-  ($a, *@tail) := (1, 2, 3);
+  :($a, *@tail) := (1, 2, 3);
   #?pugs todo
   ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
 }
