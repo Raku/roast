@@ -41,6 +41,7 @@ plan 53;
 
   ok  (\@a eqv \@a), "eqv on array references (1)";
   ok  (\@b eqv \@b), "eqv on array references (2)";
+  #?pugs todo
   ok !(\@a eqv \@b), "eqv on array references (3)";
   @a := @b;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
@@ -55,6 +56,7 @@ plan 53;
   ok ($b eqv $b), "eqv on scalar references (1-2)";
   ok ($a eqv $b), "eqv on scalar references (1-3)";
   #?rakudo skip 'infix:<!eqv>'
+  #?pugs todo
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
@@ -99,17 +101,20 @@ plan 53;
 {
   #?niecza todo
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
+  #?pugs todo
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
+  #?pugs todo
   ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
 
 #?rakudo skip 'captures'
 #?niecza skip 'Cannot use value like Capture as a number'
+#?pugs skip "Mu"
+#?DOES 3
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
-  #?pugs 2 todo 'bug'
   ok !(\3 eqv \3),         "eqv on anonymous scalar references (2)";
   ok !(\Mu eqv \Mu), "eqv on anonymous scalar references (3)";
 }
@@ -139,6 +144,8 @@ plan 53;
     is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
 }
 
+#?pugs skip "Mu"
+#?DOES 3
 {
     #?niecza skip 'Nominal type check failed in binding $a in CORE infix:<eqv>'
     is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
@@ -149,7 +156,7 @@ plan 53;
 
 # RT #75322 - Rakudo used to be confused when lists began with ()
 {
-   #?niecza todo
+    #?niecza todo
     nok ((), "x") eqv ((), 9), 'list starting with () - 1';
     nok ((), (), 1) eqv ((), 9), 'list starting with () - 1';
     nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';

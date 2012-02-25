@@ -131,19 +131,19 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 # := actually takes subroutine parameter list
 #?rakudo skip 'List binding'
 #?niecza skip 'list binding'
+#?pugs skip 'Cannot bind this as lhs'
 {
   my $a;
   :(:$a) := (:a<foo>);
-  #?pugs todo
   is($a, "foo", "bound keyword");
   my @tail;
   :($a, *@tail) := (1, 2, 3);
-  #?pugs todo
   ok($a == 1 && ~@tail eq '2 3', 'bound slurpy');
 }
 
 # RT #77462
 # binding how has the same precedence as list assignment
+#?pugs todo
 {
     my $x := 1, 2;
     is $x.join, '12', 'binding has same precdence as list assignment'

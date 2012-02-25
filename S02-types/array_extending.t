@@ -52,6 +52,7 @@ plan 21;
     my $defined;
     try { $defined = defined @array[*-5]; }
 
+    #?pugs todo
     ok !$defined,
         'defined @array[$negative_index_out_of_bounds] should be false';
     is +@array, 4,
@@ -103,6 +104,7 @@ plan 21;
     is $n, 1, 'grep on extended array';
     @a[1] = 'c'; # cmp doesn't handle Mu cmp Mu yet
     #?niecza todo 'min on list with undefined el ignores it'
+    #?pugs todo
     is @a.min(), 'b', 'min on list with undefined el ignores it';
 }
 

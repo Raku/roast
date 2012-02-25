@@ -71,7 +71,6 @@ plan 18;
   }
 
   $_ = 23;
-  #?pugs todo 'bug'
   is bar(), 42, '$_ is implicitly declared "is dynamic" (2)';
 }
 
@@ -85,6 +84,7 @@ plan 18;
 
   my $abs = 23;
   #?niecza todo 'strictness'
+  #?pugs todo
   dies_ok { bar() },
     'vars not declared "is dynamic" are not accessible via $CALLER::';
 }
@@ -113,13 +113,13 @@ plan 18;
   my sub modify { $CALLER::_++ }
   $_ = 42;
   lives_ok { modify() }, '$_ is implicitly rw (1)';
+  #?pugs todo 
   is $_, 43,             '$_ is implicitly rw (2)';
 }
 
 {
   my sub modify { $CALLER::foo++ }
   my $foo is dynamic = 42;
-  #?pugs 2 todo 'bug'
   lives_ok { modify() },
       '"is dynamic" vars declared "is rw" are rw when accessed with $CALLER:: (1)';
   is $foo, 43,
@@ -130,6 +130,7 @@ plan 18;
   my sub get_foo { try { $DYNAMIC::foo } }
   my $foo is dynamic = 42;
 
+  #?pugs todo
   is get_foo(), 42, '$DYNAMIC:: searches call stack';
 }
 
@@ -139,11 +140,9 @@ plan 18;
   my sub rebind_foo { $CALLER::foo := $other_var }
   my $foo is dynamic = 42;
 
-  #?pugs 2 todo 'bug'
   lives_ok { rebind_foo() }, 'rebinding $CALLER:: variables works (1)';
   is $foo, 23,               'rebinding $CALLER:: variables works (2)';
   $other_var++;
-  #?pugs todo 'bug'
   is $foo, 24,               'rebinding $CALLER:: variables works (3)';
 }
 

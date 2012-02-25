@@ -345,6 +345,7 @@ is Foo::official(), 44,
 #?niecza skip "eager NYI"
 {
     sub bar61126($code) { $code() }; sub foo61126 { bar61126 { return 1 }; return 2; };
+    #?pugs todo
     is foo61126, 1;
 
     sub baz61126 { eager map { return 1 }, 1; return 2 };
