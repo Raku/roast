@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 24;
 
 # Really really really minimal s:P5//// and m:P5 tests. Please add more!!
 
@@ -40,11 +40,11 @@ my $bad = "1   ";
 $bad ~~ s:Perl5:g/\s*//;
 is($bad, "1", 'Zero width replace works with :g');
 
+#?pugs skip 'temp'
 {
 	my $r;
 	temp $_ = 'heaao';
 	s:Perl5 /aa/ll/ && ($r = $_);
-        #?pugs todo 'bug'
 	is $r, 'hello', 's/// in boolean context properly defaults to $_';
 }
 
@@ -57,8 +57,11 @@ is($vals, 2, 'returned two values in the match');
 
 # return all the strings we matched
 my @vals = "hello world" ~~ m:P5:g/(\w+)/;
+#?pugs todo
 is(+@vals, 2, 'returned two values in the match');
+#?pugs todo
 is(@vals[0], 'hello', 'returned correct first value in the match');
+#?pugs todo
 is(@vals[1], 'world', 'returned correct second value in the match');
 
 
@@ -79,6 +82,7 @@ so it looks like a pugs-pcre interface bug.
 
 {
     "a" ~~ m:Perl5/a|(b)/;
+    #?pugs todo
     nok($0.defined, 'An unmatched capture should be undefined.');
     my $str = "http://foo.bar/";
     ok(($str ~~ m:Perl5 {http{0,1}}));

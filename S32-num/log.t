@@ -20,6 +20,7 @@ is_approx(log(5), $log_5, 'got the log of 5');
 is_approx(log(0.1), $log_one_tenth, 'got the log of 0.1');
 
 # with given base:
+#?pugs 3 skip 'No compatible multi variant found: "&log"'
 is_approx(log(8, 2), 3, 'log(8, 2) is 3'); 
 is_approx(log(42, 23),  1.192051192, 'log(42, 23)');
 
@@ -49,24 +50,20 @@ is( log10(NaN), NaN, 'log10(NaN) = NaN');
 # I use 1i instead of i since I don't know if a bare i will be supported
 
 # log(exp(i pi)) = i pi log(exp(1)) = i pi
-#?pugs 2 todo 'feature'
 is_approx(log(-1 + 0i,), 0 + 1i * $pi, "got the log of -1");
 is_approx(log10(-1 + 0i), 0 + 1i * $pi / log(10), "got the log10 of -1");
 
 # log(exp(1+i pi)) = 1 + i pi
-#?pugs 2 todo 'feature'
 is_approx(log(-exp(1) + 0i), 1 + 1i * $pi, "got the log of -e");
 is_approx(log10(-10 + 0i), 1 + 1i * $pi / log(10), "got the log10 of -10");
 is_approx(log10(10), 1.0, 'log10(10)=1');
 
-#?pugs todo 'feature'
 is_approx(log((1+1i) / sqrt(2)), 0 + 1i * $pi / 4, "got log of exp(i pi/4)");
 is_approx(log(1i), 1i * $pi / 2, "got the log of i (complex unit)");
 
 is_approx(log10(1i), 1i * $pi / (2*log(10)), 'got the log10 of i');
 is_approx(log10((1+1i) / sqrt(2)), 0 + 1i * $pi / (4*log(10)), "got log10 of exp(i pi/4)");
 
-#?pugs todo 'feature'
 is_approx(log(-1i), -0.5i * $pi , "got the log of -i (complex unit)");
 is_approx(log10(-1i), -0.5i * $pi / log(10), "got the log10 of -i (complex unit)");
 

@@ -48,6 +48,7 @@ plan 9;
 #?mildew skip 1
 # L<S04/The C<for> statement/It is also possible to write>
 # while ... -> $x {...}
+#?pugs skip 'Cannot bind to non-existing variable: "$x"'
 {
   my @array = 1..5;
   my $str = "";
@@ -58,6 +59,7 @@ plan 9;
 }
 
 #?mildew skip 1
+#?pugs skip "Cannot 'pop' scalar"
 {
   my @array = 0..5;
   my $str = "";
@@ -69,6 +71,7 @@ plan 9;
 
 #?mildew skip 1
 # L<S04/Statement parsing/keywords require whitespace>
+#?pugs todo
 {
     eval_dies_ok('my $i = 1; while($i < 5) { $i++; }',
         'keyword needs at least one whitespace after it');

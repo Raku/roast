@@ -74,16 +74,18 @@ plan 12;
     is(@b, [2, 4], "second half of the lvalue zip");
 }
 
+#?pugs todo
 {
     my @a = (1..3, 5) Z (6..8, 10);
     is @a.join(', '), "1, 6, 2, 7, 3, 8, 5, 10", 'infix:<Z> imposes list context';
 }
 
 # mix arrays and ranges
-
+#?pugs todo
 is ('a'..'c' Z 1, 2, 3).join(','), 'a,1,b,2,c,3',
     'can mix arrays and ranges for infix:<Z>';
 
+#?pugs todo
 is ("a".."c" Z "?", "a".."b").join('|'), 'a|?|b|a|c|b',
     'can mix arrays and ranges for infix:<Z>';
 

@@ -11,8 +11,10 @@ plan 8;
   macro dollar_foo { $was_in_macro = 1; '$COMPILING::foo' }
   is $was_in_macro, 1, "string returning macro was called at compile time";
   my $foo = 42;
+  #?pugs todo
   is dollar_foo, $foo, "simple string returning macro (1)";
   dollar_foo() = 23;
+  #?pugs todo
   is $foo, 23, "simple string returning macro (2)";
 }
 

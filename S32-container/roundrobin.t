@@ -32,10 +32,10 @@ ok(roundrobin({'a'=>1,'b'=>2,'c'=>3}) eqv ('a'=>1,'b'=>2,'c'=>3),
 ok(roundrobin((); 1; 2..4; [5..7]; {'a'=>1,'b'=>2})
     eqv (1, 2, 5, 'a'=>1, 3, 6, 'b'=>2, 4, 7), 'basic roundrobin');
 
-#?pugs todo 'feature'
+#?pugs skip 'Named argument found where no matched parameter expected'
 ok(roundrobin(:shortest, 1; 1..2; 1..3) eqv (1), 'roundrobin :shortest');
 
-#?pugs todo 'these tests depend on lazy roundrobin'
+#?pugs todo
 flunk('roundrobin :finite');
 
 =begin lazy_roundrobin

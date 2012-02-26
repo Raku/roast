@@ -22,6 +22,7 @@ is(@a, @e, "list was reversed");
 
 {
     my $a = reverse("foo");
+    #?pugs todo
     is($a, "foo", "string was not reversed; that's what flip() is for");
 
     @a = reverse "foo", "bar";
@@ -65,9 +66,11 @@ is(@a, @e, "list was reversed");
     my @a = "foo";
     my @b = @a.reverse;
     #?niecza skip "Iterable NYI"
+    #?pugs skip "Iterable NYI"
     isa_ok(@b, Iterable);
     my $b = @a.reverse;
     #?niecza skip "Iterable NYI"
+    #?pugs skip "Iterable NYI"
     isa_ok($b, Iterable);
     is(@b[0], "foo", 'our list is reversed properly');
     is($b, "foo", 'in scalar context it is still a list');
@@ -80,9 +83,11 @@ is(@a, @e, "list was reversed");
     my @a = ("foo", "bar");
     my @b = @a.reverse;
     #?niecza skip "Iterable NYI"
+    #?pugs skip "Iterable NYI"
     isa_ok(@b, Iterable);
     my $b = @a.reverse;
     #?niecza skip "Iterable NYI"
+    #?pugs skip "Iterable NYI"
     isa_ok($b, Iterable);
     is(@b[0], "bar", 'our array is reversed');
     is(@b[1], "foo", 'our array is reversed');
