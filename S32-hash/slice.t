@@ -31,6 +31,7 @@ plan 29;
 }
 
 #?niecza skip 'Excess arguments to CORE List.new, used 1 of 3 positionals'
+#?pugs skip 'Must only use named arguments to new() constructor'
 {   my %hash;
 
     %hash{(1,2)} = "one", "two";
@@ -49,6 +50,7 @@ plan 29;
 #?pugs todo 'feature'
 #?rakudo skip 'binding on hash elements unimplemented'
 #?niecza todo 'Writing to readonly scalar'
+#?pugs skip "Can't modify constant item: VNum Infinity"
 {
     my %hash = :a(1), :b(2), :c(3), :d(4);
     my @slice := %hash<b c>;

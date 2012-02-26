@@ -50,6 +50,7 @@ is("abcde".trans( ('a..e' => 'A'..'E') ), "ABCDE",
 is("ABCDE".trans( (['A' .. 'E'] => "a..e") ), "abcde",
 	   "Using array reference on one side and string range on the other");
 
+#?pugs todo
 is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&lt;', '&gt;', '&amp;'] =>
     [' ',      '<',    '>',    '&'     ])),
     " <>&","The array version can map one characters to one-or-more characters");
@@ -59,6 +60,7 @@ is(" <>&".trans( ([' ',      '<',    '>',    '&'    ] =>
                   "&nbsp;&lt;&gt;&amp;",
     "The array version can map one-or-more characters to one-or-more characters");
     
+#?pugs todo
 is("&nbsp;&lt;&gt;&amp;".trans( (['&nbsp;', '&nbsp;&lt;', '&lt;', '&gt;', '&amp;'] =>
                                  [' ',      'AB',         '<',    '>',    '&'    ])),
                                 "AB>&",
@@ -73,6 +75,7 @@ is("Whfg nabgure Crey unpxre".trans('a..z' => 'n..za..m', 'A..Z' => 'N..ZA..M'),
     "Multiple ranges interpreted in string");
 
 # Per S05 changes
+#?pugs todo
 {
 is("Whfg nabgure Crey unpxre".trans(' a..z' => '_n..za..m', 'A..Z' => 'N..ZA..M'),
     "Just_another_Perl_hacker",
@@ -99,9 +102,11 @@ is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 # should these be combined?
 #?rakudo skip 'disambiguate ranges'
 #?niecza todo
+#?pugs todo
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
     'ambiguous ranges combined');
 
+#?pugs todo
 is($b.trans('..H..Z' => '__h..z'),
     'ABCDEFGhijklmnopqrstuvwxyz',
     'leading ranges interpreted as string');
@@ -109,67 +114,83 @@ is($b.trans('..H..Z' => '__h..z'),
 is($b.trans('A..H..' => 'a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     'trailing ranges interpreted as string');
 
+#?pugs todo
 is($b.trans('..A..H..' => '__a..h__'), 'abcdefghIJKLMNOPQRSTUVWXYZ',
     'leading, trailing ranges interpreted as string');
 
 # added as a consequence of RT #76720
+#?pugs todo
 is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete
 
 #?rakudo 2 skip 'flags'
 #?niecza 2 skip 'trans flags NYI'
+#?pugs todo
 is('bookkeeper'.trans(:s, 'a..z' => 'a..z'), 'bokeper',
     ':s flag (squash)');
 
+#?pugs todo
 is('bookkeeper'.trans(:d, 'ok' => ''), 'beeper',
     ':d flag (delete)');
     
+#?pugs todo
 is('ABC123DEF456GHI'.trans('A..Z' => 'x'), 'xxx123xxx456xxx',
     'no flags');
 
 #?rakudo 4 skip 'flags'
 #?niecza 4 skip 'trans flags NYI'
+#?pugs todo
 is('ABC123DEF456GHI'.trans(:c, 'A..Z' => 'x'),'ABCxxxDEFxxxGHI',
     '... with :c');
 
+#?pugs todo
 is('ABC111DEF222GHI'.trans(:s, '0..9' => 'x'),'ABCxDEFxGHI',
     '... with :s');
 
+#?pugs todo
 is('ABC111DEF222GHI'.trans(:c, :s, 'A..Z' => 'x'),'ABCxDEFxGHI',
     '... with :s and :c');
 
+#?pugs todo
 is('ABC111DEF222GHI'.trans(:c, :d, 'A..Z' => ''),'ABCDEFGHI',
     '... with :d and :c');
 
+#?pugs todo
 is('Good&Plenty'.trans('len' => 'x'), 'Good&Pxxxty',
     'no flags');
 
 #?rakudo 5 skip 'flags'
 #?niecza 5 skip 'trans flags NYI'
+#?pugs todo
 is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',
     'squashing depends on replacement repeat, not searchlist repeat');
 
+#?pugs todo
 is('Good&Plenty'.trans(:s, 'len' => 't'), 'Good&Ptty',
     'squashing depends on replacement repeat, not searchlist repeat');
 
 # also checks that :c uses the first element in array (or first char in string)
+#?pugs todo
 is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???',      'AB',     '>',    '&'    ])),
     '&nbsp;????????????&gt;&amp;',
     'array, many-to-many transliteration, complement');
 
 # fence-post issue with complement
+#?pugs todo
 is("&nbsp;&lt;&gt;&amp;".trans(:c, (['&nbsp;', '&gt;'] =>
     ['???',      'AB'])),
     '&nbsp;????????????&gt;???????????????',
     'fence-post issue (make sure to replace end bits as well)');
-    
+   
+#?pugs todo 
 is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     ['???'])),
     '&nbsp;???&gt;&amp;',
     '... and now complement and squash');
 
+#?pugs skip 'Not a keyed value: VRule'
 {
 # remove vowel and character after
     is('abcdefghij'.trans(/<[aeiou]> \w/ => ''), 'cdgh', 'basic regex works');
@@ -193,6 +214,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 
 #?rakudo skip 'closures and regexes'
 #?niecza skip 'closures and regexes'
+#?pugs skip 'Not a keyed value: VRule'
 {
     # closures and regexes!
     is(
@@ -214,6 +236,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 #?rakudo skip 'tr///, feed operator not implemented'
 #?niecza skip 'Action method quote:tr not yet implemented'
 {
+    #?pugs todo
     is(eval('"abc".trans(<== "a" => "A")'), "Abc",
         "you're allowed to leave off the (...) named arg parens when you use <==");
 
@@ -245,16 +268,20 @@ eval_dies_ok('$_ = "axbycz"; y/abc/def/', 'y/// does not exist any longer');
         'trans on subst output lives';
 }
 
+#?pugs todo
 is('aaaaabbbbb'.trans(['aaa', 'aa', 'bb', 'bbb'] => ['1', '2', '3', '4']),
    '1243',
    'longest constant token preferred, regardless of declaration order');
-
+  
+#?pugs skip 'Not a keyed value: VRule'
 is('foobar'.trans(/\w+/ => 'correct', /foo/ => 'RONG'), 'correct',
    'longest regex token preferred, regardless of declaration order');
 
+#?pugs skip 'Not a keyed value: VRule'
 is('aaaa'.trans(/a/ => '1', /\w/ => '2', /./ => '3'), '1111',
    'in case of a tie between regex lengths, prefer the first one');
 
+#?pugs todo
 is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
                    ['1',  '2',   '3',   '4'   ]),
    '23',
@@ -262,6 +289,7 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
 
 # RT #83674
 #?niecza todo 'Not sure what is supposed to be going on here'
+#?pugs todo
 lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
 # vim: ft=perl6

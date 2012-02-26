@@ -6,6 +6,7 @@ plan 21;
 
 # L<S04/"Phasers"/START "runs separately for each clone">
 #?rakudo todo '$_ inside START has some issues, it seems'
+#?pugs todo
 {
     is(eval(q{{
         my $str;
@@ -32,6 +33,7 @@ plan 21;
     is $var, 2, 'START {} has executed';
 
     $sub(3);
+    #?pugs todo
     is $var, 2, "START {} only runs once for each clone";
 }
 
@@ -41,6 +43,7 @@ plan 21;
     {
         START { $str ~= 'i' }
     }
+    #?pugs todo
     is $str, 'oi', 'START {} runs when we first try to use a block';
 }
 
@@ -57,7 +60,9 @@ for <first second> {
     };
 	
     is $sub(), ':oIi', "START block set \$str to 3     ($_ time)";
+    #?pugs todo
     is $sub(), ':o', "START wasn't invoked again (1-1) ($_ time)";
+    #?pugs todo
     is $sub(), ':o', "START wasn't invoked again (1-2) ($_ time)";
 }
 
@@ -73,7 +78,9 @@ for <first second> {
     };
 
     $sub(); $sub();
+    #?pugs todo
     is $ran, 1, "START block ran exactly once ($_ time)";
+    #?pugs todo
     is $str, 'banana', "START block modified the correct variable ($_ time)";
 }
 
@@ -90,11 +97,13 @@ for <first second> {
     is $sub(), 23, 'START {} block set our variable (2)';
     #?niecza todo
     is $sub(), 23, 'the returned value of START {} still there';
+    #?pugs todo
     is $was_in_start, 1, 'our START {} block was invoked exactly once';
 }
 
 # Test that START {} blocks are executed only once even if they return undefined
 # (the first implementation ran them twice instead).
+#?pugs skip 'No such subroutine: "&Mu"'
 {
     my $was_in_start;
     my $sub = { START { $was_in_start++; Mu } };

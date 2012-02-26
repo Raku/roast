@@ -52,6 +52,7 @@ lives_ok { $fud = $foo_bar.getme.fud }, 'chained method dispatch on altered meth
 is($fud, "Foo::Bar::fud", "returned value is correct");
 
 is $foo_bar.Foo::baz, 'Foo::baz', '$obj.Class::method syntax works';
+#?pugs todo
 dies_ok { $foo_bar.Unrelated::something() },
     'Cannot call unrelated method with $obj.Class::method syntax';
 
@@ -60,9 +61,12 @@ dies_ok { $foo_bar.Unrelated::something() },
 
 ok  Foo::Bar.isa(Foo),      "subclass.isa(superclass) is true";
 ok  Foo::Bar.isa(Foo::Bar), "subclass.isa(same_subclass) is true";
+#?pugs skip 'No compatible multi variant found: "&isa"'
 ok Foo::Bar.HOW.isa(Foo::Bar, Foo),      "subclass.HOW.isa(superclass) is true";
+#?pugs skip 'No compatible multi variant found: "&isa"'
 ok Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is true";
 
+#?pugs todo
 {
     my $test = '$obj.$meth is canonical (audreyt says)';
     class Abc {
@@ -120,17 +124,21 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 }
 
 # Make sure inheritance from Mu works (got broken in Rakudo once).
+#?pugs skip 'eval_lives_ok'
 eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 {
     class DirectMu is Mu { };
     ok DirectMu !~~ Any, 'class inheriting from Mu is not Any';
     #?niecza skip 'Unable to resolve method parents in class ClassHOW'
+    #?pugs skip 'No such method in class Class: "&parents"'
     ok !( any(DirectMu.^parents).gist eq 'Any()'), 'and Any does not appear in the list of parents either';
 }
 
+#?pugs todo
 eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
 
 # check that inheriting from Array works
+#?pugs skip "Can't modify constant item: VUndef"
 {
     class ArrayChild is Array {
         method summary() { self.join(', ') }

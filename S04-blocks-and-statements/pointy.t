@@ -47,6 +47,7 @@ my $s = -> {
 dies_ok $s, 'pointy with block control exceptions';
 #?rakudo todo 'pointy blocks and last/redo'
 #?niecza todo
+#?pugs todo
 is $n, 10, "pointy control exceptions ran";
 
 # L<S06/""Pointy blocks""/will return from the innermost enclosing sub or method>
@@ -78,6 +79,7 @@ is $str, 'inner', 'return in pointy returns from enclosing sub';
 
 # -> { $^a, $^b } is illegal; you can't mix real sigs with placeholders,
 # and the -> introduces a sig of ().  TimToady #perl6 2008-May-24
+#?pugs todo
 eval_dies_ok(q{{ -> { $^a, $^b } }}, '-> { $^a, $^b } is illegal');
 
 # RT #61034
@@ -92,6 +94,7 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 
 #?rakudo skip 'Could not find non-existent sub junction'
 #?niecza skip 'Could not find non-existent sub junction'
+#?pugs skip 'No such subroutine: "&junction'
 {
     my @a = any(3, 4);
     my $ok = 0;

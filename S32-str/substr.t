@@ -12,17 +12,23 @@ plan 118;
     is(substr($str, 0, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 3, 0), '', 'Empty string with 0 as thrid arg');
     is(substr($str, 0, 1), "f", "first char");
+    #?pugs todo
     is(substr($str, *-1), "r", "last char");
+    #?pugs todo
     is(substr($str, *-4, 2), "ob", "counted from the end");
     is(substr($str, 1, 2), "oo", "arbitrary middle");
     is(substr($str, 3), "bar", "length omitted");
     is(substr($str, 3, 10), "bar", "length goes past end");
     ok(!defined(substr($str, 20, 5)), "substr outside of string");
+    #?pugs todo
     ok(!defined(substr($str, *-100, 10)), "... on the negative side");
 
+    #?pugs todo
     is(substr($str, 0, *-2), "foob", "from beginning, with negative length");
+    #?pugs todo
     is(substr($str, 2, *-2), "ob", "in middle, with negative length");
     is(substr($str, 3, *-3), "", "negative length - gives empty string");
+    #?pugs todo
     is(substr($str, *-4, *-1), "oba", "start from the end and negative length");
 
     is($str, "foobar", "original string still not changed");
@@ -61,6 +67,7 @@ plan 118;
 
     {
         my $r = \substr($str, 0, 5);
+        #?pugs skip '.gist'
         ok(WHAT($r).gist, '$r is a reference');
         is($$r, "gloop", '$r referent is eq to the substring');
 
@@ -73,7 +80,9 @@ plan 118;
         my $o = \substr($str, 3, 2);
         is($$o, "ng", "other ref to other lvalue");
         $$r = "foo";
+        #?pugs todo
         is($str, "foo ding", "lvalue ref size varies but still works");
+        #?pugs todo
         is($$o, " d", "other lvalue wiggled around");
     }
 
@@ -133,11 +142,14 @@ sub l (Int $a) {  my $l = $a; return $l }
     is(substr($str, 0, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
     is(substr($str, 3, l(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrLen)).');
     is(substr($str, 0, l(1)), "f", "first char (substr(Int, StrLen)).");
+    #?pugs todo
     is(substr($str, *-1, l(1)), "r", "last char (substr(Int, StrLen)).");
+    #?pugs todo
     is(substr($str, *-4, l(2)), "ob", "counted from the end (substr(Int, StrLen)).");
     is(substr($str, 1, l(2)), "oo", "arbitrary middle (substr(Int, StrLen)).");
     is(substr($str, 3, l(6)), "bar", "length goes past end (substr(Int, StrLen)).");
     ok(!defined(substr($str, 20, l(5))), "substr outside of string (substr(Int, StrLen)).");
+    #?pugs todo
     ok(!defined(substr($str, *-100, l(5))), "... on the negative side (substr(Int, StrLen)).");
 
     is($str, "foobar", "original string still not changed (substr(Int, StrLen)).");
@@ -174,6 +186,7 @@ sub l (Int $a) {  my $l = $a; return $l }
 
     {
         my $r = \substr($str, 0, l(5));
+        #?pugs skip '.gist'
         ok(WHAT($r).gist, '$r is a reference (substr(Int, StrLen)).');
         is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
 
@@ -186,7 +199,9 @@ sub l (Int $a) {  my $l = $a; return $l }
         my $o = \substr($str, 3, l(2));
         is($$o, "ng", "other ref to other lvalue (substr(Int, StrLen)).");
         $$r = "foo";
+        #?pugs todo
         is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
+        #?pugs todo
         is($$o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
     }
 
@@ -246,13 +261,16 @@ sub p (Int $a) {  my $p = $a; return $p }
 { # read only
     my $str = "foobar";
     is(substr($str, 0, p(0)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
+    #?pugs todo
     is(substr($str, 3, p(3)), '', 'Empty string with 0 as thrid arg (substr(Int, StrPos)).');
     is(substr($str, 0, p(1)), "f", "first char (substr(Int, StrPos)).");
 
+    #?pugs todo
     is(substr($str, 1, p(3)), "oo", "arbitrary middle (substr(Int, StrPos)).");
     is(substr("IMAGINATIVE => Insane Mimicries of Amazingly Gorgeous, Incomplete Networks, Axiomatic Theorems, and Immortally Vivacious Ecstasy", 1, p(2)), "MA", "substr works with named argument (substr(Int, StrPos)).");
     is(substr($str, 3, p(6)), "bar", "length goes past end (substr(Int, StrPos)).");
     ok(!defined(substr($str, 20, p(5))), "substr outside of string (substr(Int, StrPos)).");
+    #?pugs todo
     ok(!defined(substr($str, *-100, p(5))), "... on the negative side (substr(Int, StrPos)).");
 
     is($str, "foobar", "original string still not changed (substr(Int, StrPos)).");
@@ -291,6 +309,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
 
     my $r = \substr($str, 0, p(5));
+    #?pugs skip '.gist'
     ok(WHAT($r).gist, '$r is a reference (substr(Int, StrPos)).');
     is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrPos)).');
 
@@ -303,7 +322,9 @@ sub p (Int $a) {  my $p = $a; return $p }
     my $o = \substr($str, 3, p(2));
     is($$o, "ng", "other ref to other lvalue (substr(Int, StrPos)).");
     $$r = "foo";
+    #?pugs todo
     is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrPos)).");
+    #?pugs todo
     is($$o, " d", "other lvalue wiggled around (substr(Int, StrPos)).");
 
 };
@@ -354,6 +375,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 }
 
 #?niecza todo
+#?pugs todo
 eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # vim: ft=perl6

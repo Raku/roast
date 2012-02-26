@@ -52,7 +52,9 @@ Some deeper tests were already added.
 
     @array[0] = %hash;
     is(+@array, 1, 'the array has one value in it');
+    #?pugs todo
     isa_ok(@array[0], Hash);
+    #?pugs 2 skip 'Cannot cast into a Hash'
     is(@array[0]{"key"}, 'value', 'got the right value for key');
     is(@array[0]<key1>, 'value1', 'got the right value1 for key1');
 }
@@ -199,14 +201,15 @@ Some deeper tests were already added.
     @array[2]<two>[0]<f><other> = 5;
     #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0], Hash);
-    #?pugs 3 todo 'bug'
     #?rakudo todo 'isa hash'
     #?niecza todo
+    #?pugs todo
     isa_ok(@array[1]<two>[0]<f>, Hash);
     #?rakudo 2 todo 'unknown'
     #?niecza todo
     is(+@array[1]<two>[0], 2, "two keys at level 4");
     #?niecza todo 'more keys at level 4'
+    #?pugs todo
     is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }
 

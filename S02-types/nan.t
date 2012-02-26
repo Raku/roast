@@ -22,19 +22,27 @@ is Inf**0   , 1, "Inf**0 is 1, _not_ NaN";
 
 ok NaN ~~ NaN, 'NaN is a NaN';
 nok 4 ~~ NaN, '4 is not a NaN';
+#?pugs skip '.Num'
 nok 4.Num ~~ NaN, "4.Num is not a NaN";
 
 isa_ok NaN + 1i, Complex, "NaN + 1i is a Complex number";
+#?pugs todo
 ok NaN + 1i ~~ NaN, "NaN + 1i ~~ NaN";
+#?pugs todo
 ok NaN ~~ NaN + 1i, "NaN ~~ NaN + 1i";
 
 isa_ok (NaN)i, Complex, "(NaN)i is a Complex number";
+#?pugs todo
 ok (NaN)i ~~ NaN, "(NaN)i ~~ NaN";
+#?pugs todo
 ok NaN ~~ (NaN)i, "NaN ~~ (NaN)i";
 
+#?pugs todo
 ok (NaN)i ~~ NaN + 1i, "(NaN)i ~~ NaN + 1i";
+#?pugs todo
 ok NaN + 1i ~~ (NaN)i, "NaN + 1i ~~ (NaN)i";
 
+#?pugs todo
 ok truncate(NaN) ~~ NaN, 'truncate(NaN) ~~ NaN';
 
 #?rakudo skip 'RT 83446'

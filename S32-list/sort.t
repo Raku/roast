@@ -38,6 +38,7 @@ plan 33;
     is(@s, @e, 'array of numbers was sorted (using invocant form)');
 }
 
+#?pugs todo
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -48,6 +49,7 @@ plan 33;
 
 #?rakudo skip "closure as non-final argument"
 #?niecza skip 'Invocant handling is NYI'
+#?pugs todo
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -58,6 +60,7 @@ plan 33;
 
 #?rakudo skip "method fallback to sub unimpl"
 #?niecza skip 'err, what?'
+#?pugs todo
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -66,6 +69,7 @@ plan 33;
     is(@s, @e, '... with closure as direct invocant');
 }
 
+#?pugs todo
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (1, 2, 3, 6, 45);
@@ -74,6 +78,7 @@ plan 33;
     is(@s, @e, '... with explicit spaceship (using invocant form)');
 }
 
+#?pugs todo
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (45, 6, 3, 2, 1);
@@ -82,6 +87,7 @@ plan 33;
     is(@s, @e, '... reverse sort with explicit spaceship');
 }
 
+#?pugs todo
 {
     my @a = (2, 45, 6, 1, 3);
     my @e = (45, 6, 3, 2, 1);
@@ -114,6 +120,7 @@ plan 33;
     is(@s, @e, 'array of strings was sorted (using invocant form)');
 }
 
+#?pugs todo
 {
     my @a = <daa boo gaa aaa>;
     my @e = <aaa boo daa gaa>;
@@ -122,6 +129,7 @@ plan 33;
     is(@s, @e, '... with explicit cmp');
 }
 
+#?pugs todo
 {
     my @a = <daa boo gaa aaa>;
     my @e = <aaa boo daa gaa>;
@@ -131,6 +139,7 @@ plan 33;
 }
 
 
+#?pugs todo
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
@@ -139,6 +148,7 @@ plan 33;
     is(@s, @e, '... sort keys by string value');
 }
 
+#?pugs todo
 {
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
@@ -147,6 +157,7 @@ plan 33;
     is(@s, @e, '... sort keys by string value (using invocant form)');
 }
 
+#?pugs todo
 {
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
@@ -155,6 +166,7 @@ plan 33;
     is(@s, @e, '... sort keys by numeric value');
 }
 
+#?pugs todo
 {
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
@@ -164,6 +176,7 @@ plan 33;
 }
 
 
+#?pugs skip '.key'
 {
     my %map = (p => 1, e => 2, r => 3, l => 4);
 
@@ -173,10 +186,11 @@ plan 33;
     my @s = %map.sort: { .value };
     isa_ok(@s[0], Pair, '%hash.sort returns a List of Pairs');
     is (@s.map: { .key }).join, 'perl', 'sort with unary sub'
-
 }
 
+
 #?niecza todo "Niecza's sort is not stable"
+#?pugs skip 'Cannot cast into Array: VRef'
 {
     is (<P e r l 6>.sort: { 0; }).join, 'Perl6',
     'sort with arity 0 closure is stable';
@@ -198,13 +212,13 @@ plan 33;
 
 ##  XXX pmichaud, 2008-07-01:  .sort should work on non-list values
 {
-#?pugs 2 todo 'bug'
     is ~42.sort, "42", "method form of sort should work on numbers";
     is ~"str".sort, "str", "method form of sort should work on strings";
     is ~(42,).sort, "42",  "method form of sort should work on parcels";
 }
 
 # RT #67010
+#?pugs todo
 {
     my @list = 1, 2, Code;
     lives_ok { @list.sort: { $^a cmp $^b } },
@@ -234,6 +248,7 @@ plan 33;
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 
+    #?pugs skip '.WHERE'
     ok ([<] @sorted.map({.WHERE})),
         'checking sort order by class memory address';
 
