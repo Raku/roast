@@ -26,7 +26,6 @@ my $o = Thing.new;
 eval_dies_ok('$o .whatever(5)', 'whitespace is not allowed before . before method');
 eval_dies_ok('$o. whatever(5)', 'whitespace is not allowed after . before method');
 
-#?pugs skip "missing eval_lives_ok"
 eval_lives_ok 'my @rt80330; [+] @rt80330', 'a [+] with whitespace works';
 eval_dies_ok  'my @rt80330; [+]@rt80330', 'a [+] without whitespace dies';
 

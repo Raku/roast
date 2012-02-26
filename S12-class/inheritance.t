@@ -124,7 +124,6 @@ is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with sa
 }
 
 # Make sure inheritance from Mu works (got broken in Rakudo once).
-#?pugs skip 'eval_lives_ok'
 eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
 {
     class DirectMu is Mu { };

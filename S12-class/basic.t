@@ -100,7 +100,6 @@ class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 #?pugs todo
 eval_dies_ok 'class One::Two { }', 'cannot redeclare an existing class';
-#?pugs skip 'eval_lives_ok'
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
 #?pugs todo
@@ -130,7 +129,6 @@ eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
             'self is not writable';
 
 # RT 65022
-#?pugs skip 'eval_lives_ok'
 eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
 

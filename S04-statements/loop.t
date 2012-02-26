@@ -94,7 +94,6 @@ plan 14;
 }
 
 # RT #71466
-#?pugs skip 'eval_lives_ok'
 eval_lives_ok('class A { has $!to; method x { loop { (:$!to); } } };', 'pair colon syntax in a loop refers to an attribute works');
 
 # RT #63760

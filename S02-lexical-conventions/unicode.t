@@ -109,18 +109,20 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 # L<S02/Unicode Semantics/Perl can count Unicode line and paragraph separators>
 
 #?rakudo: todo 'PS does not work to separate lines'
-#?pugs skip "eval_lives_ok"
+#?pugs todo
 eval_lives_ok "\{ 1 \} \x2029 \{ 1 \}", "Unicode 2029 can terminate lines";
 
 # L<S02/Bracketing Characters/If a character is already used>
 
-#?pugs 6 skip "eval_lives_ok"
 eval_lives_ok "q\x298d test \x298e", "Unicode open-298d maps to close-298e";
 eval_lives_ok "q\x301d test \x301e", "Unicode open-301d maps to close-301e";
 eval_dies_ok "q\x301d test \x301f", "Unicode open-301d does not map to close-301f";
 #?rakudo: 3 todo 'Alternate open/close not working yet'
+#?pugs 6 skip "eval_lives_ok"
 eval_lives_ok "q\x2018 test \x2019", "Unicode open-2018 maps to to close-2019";
+#?pugs 6 skip "eval_lives_ok"
 eval_lives_ok "q\x201a test \x2019", "Unicode open-201a maps to to close-2019";
+#?pugs todo
 eval_lives_ok "q\x2018 \x201a test \x2019", "Alternative open-brakets treat their other alternates as non-special";
 
 # vim: ft=perl6 fileencoding=utf-8
