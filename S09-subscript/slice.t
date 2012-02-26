@@ -69,7 +69,7 @@ plan 23;
 #?pugs skip 'No such subroutine: "&Positional"'
 {
     my @array = <1 2 3>;
-    isa_ok @array, Array
+    isa_ok @array, Array;
     ok @array[0..1] ~~ Positional;
 
     ok @array[0..0] ~~ Positional, 'slice with one element is a list';
