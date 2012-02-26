@@ -155,4 +155,7 @@ throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
 throws_like 'rx:g/a/',   X::Syntax::Regex::Adverb, adverb => 'g', construct => 'rx';
 throws_like 'my sub f($x, $y:) { }', X::Syntax::Signature::InvocantMarker;
 
+throws_like 'Date.new("2012-02-30")', X::OutOfRange,
+    range => Range, message => rx/<<1\.\.29>>/;
+
 done;
