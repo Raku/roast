@@ -153,5 +153,6 @@ throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSu
 
 throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
 throws_like 'rx:g/a/',   X::Syntax::Regex::Adverb, adverb => 'g', construct => 'rx';
+throws_like 'my sub f($x, $y:) { }', X::Syntax::Signature::InvocantMarker;
 
 done;
