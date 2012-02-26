@@ -147,10 +147,8 @@ plan 53;
 #?pugs skip "Mu"
 #?DOES 3
 {
-    #?niecza skip 'Nominal type check failed in binding $a in CORE infix:<eqv>'
     is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
     is Any eqv Any, Bool::True, 'Any eqv Any';
-    #?niecza skip 'Nominal type check failed in binding $b in CORE infix:<eqv>'
     is Any eqv Mu, Bool::False, 'Any !eqv Mu';
 }
 
