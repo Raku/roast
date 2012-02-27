@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 12;
+
 # L<S06/"Parameter traits"/"=item is readonly">
 # should be moved with other subroutine tests?
 
@@ -30,7 +32,6 @@ use Test;
     ok !(try { VAR($a).defined }), ".VAR returns undefined on an uninitialized var declared with 'is readonly'";
 
     $a := 42;
-    #?pugs todo 'feature'
     ok (try { VAR($a).defined }), ".VAR returns defined now";
 }
 
@@ -38,7 +39,6 @@ use Test;
 {
     my $a = 3;
 
-    #?pugs todo 'feature'
     ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true";
 }
 
@@ -47,12 +47,11 @@ use Test;
     my ($rt65900 is readonly) = 5;
     is $rt65900, 5, 'my ($x is readonly) can take assignment';
     #?rakudo 2 todo 'todo'
+    #?pugs 2 todo
     dies_ok { $rt65900 = 'ro' }, 'dies on assignment to readonly variable';
 
     dies_ok { (my $rt65900 is readonly) = 5 },
         'dies on assignment to (my $x is readonly)';
 }
-
-done;
 
 # vim: ft=perl6

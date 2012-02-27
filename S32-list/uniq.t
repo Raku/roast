@@ -32,6 +32,7 @@ is uniq('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
 
 # With a userspecified criterion
 #?rakudo skip "Not spec'd, and this seems unlikely to be how it will be spec'd"
+#?pugs todo
 {
   my @array = <a b A c b d>;
   # Semantics w/o junctions
@@ -51,6 +52,7 @@ is uniq('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
 }
 
 # http://irclog.perlgeek.de/perl6/2009-10-31#i_1669037
+#?pugs todo
 {
     my $range = [1..4];
     my @array = $range, $range.WHICH;

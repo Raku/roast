@@ -25,6 +25,7 @@ my $japh    = { "Just another $_ hacker" };
 my $japh2   = -> $name { "Just another $name hacker" };
 my $id      = eval('sub { Id->new($_[0]) }', :lang<perl5>);
 
+#?pugs 2 todo
 is($id($japh).identity('Pugs'), 'Just another Pugs hacker', "Closure roundtrips");
 is($id($japh2).identity('Pugs'), 'Just another Pugs hacker', "Closure roundtrips");
 
@@ -38,6 +39,7 @@ my %hash = (foo => 'bar', hate => 'software');
 }
 
 #?niecza skip 'VAR undeclared'
+#?pugs todo
 {
     is_deeply([%hash.keys].sort, [$keys_p5(VAR %hash)].sort);
 }

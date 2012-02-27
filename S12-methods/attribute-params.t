@@ -26,12 +26,14 @@ is  $x.a.join('|'), '1|2', 'array param set correctly';
 
 nok $x.h,             'hash attribute starts empty';
 is  $x.sh({ a=> 1, b => 2}), 5, 'hash attributive paramed method returns the right thing';
+#?pugs skip 'Cannot cast into Hash'
 is  $x.h<b a>.join('|'), '2|1', 'hash param set correctly';
 
 is  $x.ssa(1, 2), 14, 'slurpy array attributive paramed method returns the right thing';
 is  $x.a.join('|'), '1|2', 'slurpy array param set correctly';
 
 is  $x.ssh(a=> 1, b => 2), 15, 'slurpy hash attributive paramed method returns the right thing';
+#?pugs skip 'Cannot cast into Hash'
 is  $x.h<b a>.join('|'), '2|1', 'slurpy hash param set correctly';
 
 done;

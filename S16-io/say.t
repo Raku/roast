@@ -45,9 +45,12 @@ grammar A {
 }
 
 #?niecza emit if 0 {
+#?pugs   emit if 0 {
 A.parse("ok 8 - Match.print\n").print;
 #?niecza emit }
+#?pugs   emit }
 
 #?niecza emit say 'ok 8 - #SKIP method .print not found in Match';
+#?pugs   emit say 'ok 8 - #SKIP method .print not found in Match';
 
 # vim: ft=perl6

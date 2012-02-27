@@ -35,7 +35,6 @@ plan 13;
 
 
 {
-#?pugs 2 todo 'bug'
   is( 42.reduce( {$^a+$^b} ), 42,  "method form of reduce works on numbers");
   is( 'str'.reduce( {$^a+$^b} ), 'str', "method form of reduce works on strings");
   is ((42,).reduce: { $^a + $^b }), 42,      "method form of reduce should work on arrays";

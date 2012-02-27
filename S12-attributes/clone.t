@@ -38,6 +38,7 @@ is($val2, 42, '... cloned object has proper attr value');
 
 # Test to cover RT#62828, which exposed a bad interaction between while loops
 # and cloning.
+#?pugs skip "Cannot 'shift' scalar"
 {
     class A {
         has $.b;

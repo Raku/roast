@@ -2,6 +2,7 @@ use v6;
 
 use Test;
 
+plan 29;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -12,8 +13,10 @@ use Test;
 
     # I'm not sure that smart matching is the best operation for comparison here
     # There might be a more specific way to check that prevents false matching
+    #?pugs todo
     isa_ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
     isa_ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
+    #?pugs todo
     isa_ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
 
     # These are all no-ops but still need to work correctly
@@ -37,6 +40,7 @@ use Test;
     my $a = 3;
     my $b = 2;
 
+    #?pugs skip 'gist'
     is((item $a).WHAT.gist, $a.WHAT.gist, '(item $a).WHAT matches $a.WHAT');
     is((item $a), $a, 'item $a is just $a');
     is(item($a),  $a, 'item($a) is just $a');
@@ -44,6 +48,7 @@ use Test;
 
     #?niecza 3 skip 'Undeclared name Seq'
     #?rakudo 3 todo 'Seq'
+    #?pugs 3 skip 'Seq'
     isa_ok((item $a, $b).WHAT, Seq, '(item $a, $b) makes a Seq');
     isa_ok(item($a, $b).WHAT,  Seq, 'item $a, $b makes a Seq');
     isa_ok($($a, $b).WHAT,     Seq, '$ $a, $b makes a Seq');
@@ -58,6 +63,7 @@ use Test;
     # with eq. eqv does guarantee the order.
     # also, we assign to a hash since rakudo does not recognize
     # {} as a hash constructor and () does not make a hash
+    #?pugs 3 todo
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
@@ -82,7 +88,5 @@ eval_dies_ok('$', 'Anonymous $ variable outside of declaration');
 eval_dies_ok('@', 'Anonymous @ variable outside of declaration');
 eval_dies_ok('%', 'Anonymous % variable outside of declaration');
 eval_dies_ok('&', 'Anonymous & variable outside of declaration');
-
-done;
 
 # vim: ft=perl6
