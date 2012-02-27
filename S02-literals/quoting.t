@@ -570,7 +570,6 @@ Hello, World
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
 
-#?niecza skip 'qx'
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
