@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 52;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -145,11 +145,14 @@ plan 53;
 }
 
 #?pugs skip "Mu"
-#?DOES 3
+#?DOES 1
 {
-    is Mu eqv Mu, Bool::True, 'Mu eqv Mu';
     is Any eqv Any, Bool::True, 'Any eqv Any';
-    is Any eqv Mu, Bool::False, 'Any !eqv Mu';
+}
+
+#?rakudo todo
+{
+    ok 'a' eqv any <a b c>, "eqv autothreads correctly";
 }
 
 # RT #75322 - Rakudo used to be confused when lists began with ()
