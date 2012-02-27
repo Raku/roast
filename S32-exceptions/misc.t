@@ -158,4 +158,6 @@ throws_like 'my sub f($x, $y:) { }', X::Syntax::Signature::InvocantMarker;
 throws_like 'Date.new("2012-02-30")', X::OutOfRange,
     range => Range, message => rx/<<1\.\.29>>/;
 
+throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
+
 done;
