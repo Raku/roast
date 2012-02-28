@@ -150,7 +150,6 @@ plan 52;
     is Any eqv Any, Bool::True, 'Any eqv Any';
 }
 
-#?rakudo todo 'eqv autothreading'
 {
     ok 'a' eqv any <a b c>, "eqv autothreads correctly";
 }
