@@ -160,5 +160,6 @@ throws_like 'Date.new("2012-02-30")', X::OutOfRange,
 
 throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
 throws_like 'Mu.new(1)', X::Constructor::Positional;
+throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 
 done;
