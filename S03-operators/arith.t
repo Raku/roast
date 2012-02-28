@@ -95,7 +95,6 @@ tryeq 15 - 15, 0;
 
 tryeq 2147483647 - 0, 2147483647;
 tryeq 0 - -2147483647, 2147483647;
-
 # No warnings should appear;
 {
     my $a;
@@ -163,12 +162,13 @@ tryeq 1.2, " 1.2";
 tryeq -1.2, " -1.2";
 
 # divide
-
+#?pugs 4 skip 'div'
 tryeq 28 div 14, 2;
 tryeq 28 div -7, -4;
 tryeq -28 div 4, -7;
 tryeq -28 div -2, 14;
 
+#?pugs 4 skip 'div'
 is(9 div 4, 2, "9 div 4 == 2");
 #?rakudo 2 todo 'negative div'
 is(-9 div 4, -3, "-9 div 4 == -3");
@@ -176,7 +176,7 @@ is(9 div -4, -3, "9 div -4 == -3");
 is(-9 div -4, 2, "-9 div -4 == 2");
 
 # modulo
-
+#?pugs 4 skip 'mod'
 is  13 mod  4, 1,  '13 mod 4';
 #?rakudo 2 todo 'negative mod'
 is -13 mod  4, 3,  '-13 mod 4';
@@ -202,8 +202,10 @@ isnt 2**3**4, 4096, "** is right associative";
 is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
 
 {
+    #?pugs todo
     is_approx(-1, (0 + 1i)**2, "i^2 == -1");
 
+    #?pugs todo
     is_approx(-1, (0.7071067811865476 + -0.7071067811865475i)**4, "sqrt(-i)**4 ==-1" );
     is_approx(1i, (-1+0i)**0.5, '(-1+0i)**0.5 == i ');
 }
@@ -221,6 +223,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is Inf*-100, -Inf;
     is Inf / -100, -Inf;
     is 100 / Inf, 0;
+    #?pugs todo
     is Inf**100, Inf;
     is Inf*0, NaN;
     is Inf - Inf, NaN;
@@ -230,15 +233,19 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is Inf**0, 1;
     is 0**0, 1;
     is 0**Inf, 0;
+}
 
+#?pugs skip 'slow'
+{
     my $inf1 = 100**Inf;
     is $inf1, Inf, "100**Inf";
     my $inf2 = Inf**Inf;
     is $inf2, Inf, "Inf**Inf";
-
 }
+
 # See L<"http://mathworld.wolfram.com/Indeterminate.html">
 # for why these three values are defined like they are.
+#?pugs skip 'slow!'
 {
     is 0.9**Inf, 0,   "0.9**Inf converges towards 0";
     is 1.1**Inf, Inf, "1.1**Inf diverges towards Inf";
@@ -246,9 +253,7 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is 1**Inf, 1;
 }
 
-##?pugs todo
-#flunk("1**Inf is platform-specific -- it's 1 on OSX and NaN elsewhere");
-
+#?pugs skip 'slow'
 {
     # NaN
     is NaN, NaN;
@@ -297,11 +302,15 @@ dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/V
 #?rakudo todo 'die or fail?'
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
+#?pugs skip 'div'
 eval_dies_ok('say 3 div 0', 'Division by zero dies and is catchable');
+#?pugs skip 'div'
 dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
+#?pugs skip 'div'
 dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
 # This is a rakudo regression wrt bignum:
+#?pugs skip 'slow'
 {
     my $f = 1; $f *= $_ for 2..25;
     ok $f == 15511210043330985984000000, 
@@ -323,6 +332,7 @@ eval_dies_ok '3 !+ 4',  'infix:<+> is not iffy enough';
 eval_lives_ok '-Inf', '-Inf warns (and yields 0) but does not give an error';
 
 # RT #108052
+#?pugs skip '-string'
 {
     my role orig-string[$o] { method Str() { $o.Str } };
     my $a = 7 but orig-string['7'];

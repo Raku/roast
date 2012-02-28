@@ -23,13 +23,16 @@ plan 283;
 {
     my $x = 1;
     &infix:<=>.($x, 0);
+    #?pugs todo
     is($x, 0, 'assignment operator called as function');
     my Int $y;
     lives_ok { &infix:<=>($y, 3) }, 'assignment as function with types (1)';
+    #?pugs todo
     dies_ok  { &infix:<=>($y, 'foo') }, 'assignment as function with types (2)';
 
 }
 
+#?pugs todo
 {
     my $x = 1;
     infix:<=>($x, 0);
@@ -118,6 +121,7 @@ plan 283;
      ok(!defined($c), 'list assignment (*, @, $c) = @ works');
 }
 
+#?pugs skip 'NYI'
 {
     # testing signature binding with skipped values via *@ in a signature
     my ($one, *@) = 1..4;
@@ -141,6 +145,7 @@ plan 283;
     is($c,3,"'\$c' is '3'?: (\$,\$,\$) = 1 .. 3"); 
     is(@a,'1 2 3',"'{\@a}' is '1 2 3'?:       \@a = 1 .. 3");
     is($s,'1',  "\$s is '1'?:       my (\$s,\@a) = 1 .. 3");
+    #?pugs todo
     is(@b,'2 3',"'{\@b}' is '2 3'?: my (\$s,\@a) = 1 .. 3"); 
 }
 
@@ -148,6 +153,7 @@ plan 283;
 {
     my ($a, %b) = "!", a => "1", b => "2", c => "3";
     is $a, "!", "got scalar in (scalar,hash) = list";
+    #?pugs todo
     is %b.keys.sort.join(", "), "a, b, c", "got hash in (scalar,hash) = list";
 }
 
@@ -161,7 +167,9 @@ plan 283;
 
     my @b;
     (@b[2, 1, 0]) = 401, 201, 1;
+    #?pugs todo
     is(@b[0], 1, "assigned correct value from list to unsorted sliced array");
+    #?pugs todo
     is(@b[1], 201, "... and second");
     is(@b[2], 401, "... and third");
 }
@@ -171,9 +179,10 @@ plan 283;
     my @d;
     (@c[1, 2], @c[3], @d) = 100, 200, 300, 400, 500;
     is(@c[1], 100, "assigned correct value from list to slice-in-list");
+    #?pugs todo
     is(@c[2], 200, "... and second");
-#?pugs 3 todo 'feature'
-#?niecza 3 todo 'feature'
+    #?pugs 3 todo 'feature'
+    #?niecza 3 todo 'feature'
     is(@c[3], 300, "... and third");
     is(@d[0], 400, "... and fourth");
     is(@d[1], 500, "... and fifth");
@@ -205,8 +214,10 @@ plan 283;
     @a = 1;
     @b = 2;
     (@b, @a) = (@a, @b);
+    #?pugs todo
     ok(!defined(@a[0]), '(@b, @a) = (@a, @b) assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = (@a, @b) assignment \@b[0]');
+    #?pugs todo
     is(@b[1], 2,     '(@b, @a) = (@a, @b) assignment \@b[1]');
 }
 
@@ -216,8 +227,10 @@ plan 283;
     @a = (1);
     @b = (2);
     (@b, @a) = @a, @b;
+    #?pugs todo
     ok(!defined(@a[0]), '(@b, @a) = @a, @b assignment \@a[0] == undefined');
     is(@b[0], 1,     '(@b, @a) = @a, @b assignment \@b[0]');
+    #?pugs todo
     is(@b[1], 2,     '(@b, @a) = @a, @b assignment \@b[1]');
 }
 
@@ -236,6 +249,7 @@ my @p;
 }
 
 #?niecza todo
+#?pugs todo
 {
     my $a;
     @p = $a or= 3, 4;
@@ -268,6 +282,7 @@ my @p;
     is $f, 5, '//= also works in declaration';
 }
 
+#?pugs skip 'Cannot cast from VList [] to Handle'
 {
     my $a;
     @p = $a orelse= 3, 4;
@@ -308,6 +323,7 @@ my @p;
     is($x, False, "&&= operator with True and False");
 }
 
+#?pugs skip 'Cannot cast from VInt 42 to Handle'
 {
     my $a = 3;
     @p = $a and= 42, 43;
@@ -355,6 +371,7 @@ my @p;
     is(@p[1],2, "*= operator parses as item assignment 2");
 }
 
+#?pugs skip 'div='
 {
     my $x = 6;
     @p = $x div= 3, 4;
@@ -484,6 +501,7 @@ my @p;
 
 # RT #76820
 #?niecza skip "No xor yet"
+#?pugs skip 'Cannot cast from VInt 42 to Handle'
 {
     my $x;
     @p = $x xor= 42, 43;
@@ -586,6 +604,7 @@ sub l () { 1, 2 };
     package Foo {
 	our $b;
 	my @z = ($::('Foo::b') = l(), l());
+        #?pugs todo
 	is($b.elems, 2,    q/lhs treats $::('Foo::b') as scalar (1)/);
 	is(@z.elems, 3,    q/lhs treats $::('Foo::b') as scalar (2)/);
     }
@@ -604,6 +623,7 @@ sub l () { 1, 2 };
     is(@a[0].elems, 2, 'lhs treats $(@a[0]) as scalar (1)');
     #?rakudo todo 'item assignment'
     #?niecza todo
+    #?pugs todo
     is(@z.elems,    2, 'lhs treats $(@a[0]) as scalar (2)');
 }
 
@@ -612,11 +632,14 @@ sub l () { 1, 2 };
     my $a;
     my @z = (($a) = l, l, l);
     #?rakudo todo 'item/list assignment'
+    #?pugs todo
     is($a.elems, 6, 'lhs treats ($a) as list');
     #?rakudo todo 'item/list assignment'
+    #?pugs todo
     is(@z.elems, 6, 'lhs treats ($a) as list');
 }
 
+#?pugs skip "Can't modify constant item: VNum Infinity"
 {
     my $a;
     my @z = (($a, *) = l, l, l);
@@ -637,6 +660,7 @@ sub l () { 1, 2 };
 
 #?rakudo skip '$a[] autovivification (unspecced?)'
 #?niecza skip '$a[] autovivification (unspecced?)'
+#?pugs todo
 {
     my $a;
     $a[] = l, l, l;
@@ -657,6 +681,7 @@ sub l () { 1, 2 };
     my @z = (@a[0] = l, l);
     #?rakudo todo 'list assignment to scalar'
     #?niecza todo
+    #?pugs todo
     is(@a[0].elems, 1,  'lhs treats @a[0] as one-item list');
     is(@z.elems,    1,  'lhs treats @a[0] as one-item list');
     ok(!defined(@a[1]), 'lhs treats @a[0] as one-item list');
@@ -675,6 +700,7 @@ sub l () { 1, 2 };
     my @z = (%a<x> = l, l);
     #?rakudo 2 todo 'list assignment to scalar'
     #?niecza 2 todo
+    #?pugs   2 todo
     is(%a{"x"}.elems, 1, 'lhs treats %a<x> as one-item list');
     is(@z[0].elems,   1, 'lhs treats %a<x> as one-item list');
     ok(!defined(@z[1]),  'lhs treats %a<x> as one-item list');
@@ -693,6 +719,7 @@ sub l () { 1, 2 };
     my @z = (%a{'x'} = l, l);
     #?rakudo 2 todo 'list assignment to scalar'
     #?niecza 2 todo
+    #?pugs   2 todo
     is(%a{"x"}, 1,        q/lhs treats %a{'x'} as list/);
     is(~@z[0], '1',       q/lhs treats %a{'x'} as list/);
     ok(!defined(@z[1]),   q/lhs treats %a{'x'} as list/);
@@ -728,6 +755,7 @@ sub l () { 1, 2 };
     my @z = (@a[@b[$c]] = l, l);
     #?rakudo 3 todo 'list assignment, autovivification (?)'
     #?niecza 3 todo
+    #?pugs   3 todo
     is(~@a,    '1', 'lhs treats @a[@b[$c]] as list');
     is(~@z[0], '1', 'lhs treats @a[@b[$c]] as list');
     is(!defined(@z[1]), 'lhs treats @a[@b[$c]] as list');
@@ -741,6 +769,7 @@ sub l () { 1, 2 };
     is(~@a,     '1',    'lhs treats @a[@b[$c,]] as list');
     #?rakudo todo 'list assignment'
     #?niecza todo
+    #?pugs todo
     is(~@z[0],  '2',    'lhs treats @a[@b[$c,]] as list');
     ok(!defined(@z[1]), 'lhs treats @a[@b[$c,]] as list');
 }
@@ -754,6 +783,7 @@ sub l () { 1, 2 };
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b] as list');
     #?rakudo todo 'list assignment'
+    #?pugs todo
     is(@z[0].elems, 1,  'lhs treats foo()[$b] as list');
     #?niecza todo
     ok(!defined(@z[1]), 'lhs treats foo()[$b] as list');
@@ -781,6 +811,7 @@ sub l () { 1, 2 };
     is(@a.elems,    1, 'lhs treats $(@a[$b]) as item (1)');
     #?rakudo 2 todo 'item assignment'
     #?niecza 2 todo
+    #?pugs   2 todo
     is(@a[0].elems, 1, 'lhs treats $(@a[$b]) as item (2)');
     is(@z[1].elems, 3, 'lhs treats $(@a[$b]) as item (3)');
 }
@@ -789,6 +820,7 @@ sub l () { 1, 2 };
 
 # L<S03/Assignment operators/",=">
 #?rakudo skip ',='
+#?pugs skip 'Cannot cast from VInt 3 to Handle'
 {
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
@@ -796,6 +828,7 @@ sub l () { 1, 2 };
 }
 
 # RT #63642
+#?pugs skip 'Cannot cast from VList to Handle'
 {
     my %part1 = a => 'b';
     my %part2 = d => 'c';
@@ -807,6 +840,7 @@ sub l () { 1, 2 };
     ok %part1  eqv %both, ',= works for hashes (hash modified)';
 }
 
+#?pugs todo
 {
     my $s = 'abc';
     $s .= subst('b','d');
@@ -821,6 +855,7 @@ sub l () { 1, 2 };
     is %h<x>, 'adc', '.= on hash keyed values';
 }
 
+#?pugs skip 'min='
 {
     my $x = 3;
     $x min= 2;
@@ -850,6 +885,7 @@ sub l () { 1, 2 };
 }
 
 # RT #75950
+#?pugs skip 'Stack space overflow'
 {
     my $x;
     lives_ok { ($x,) = grep 5, 1..1_000_000 },
@@ -878,6 +914,7 @@ sub l () { 1, 2 };
     (A.new() = 'b');
     is $x.join(','), 'a,b', 'New multi infix:<=> works';
     $x = 'c';
+    #?pugs todo
     is $x, 'c', '...without screwing up ordinary assignment';
 }
 
@@ -888,6 +925,7 @@ sub l () { 1, 2 };
         $cc = 1;
     };
 
+    #?pugs todo
     dies_ok { called pi = 4 },
         'correct precedence between sub call and assignment (1)';
     is $cc, 0,
@@ -915,6 +953,7 @@ sub l () { 1, 2 };
     is $rt93972.join(','), '1,2,3', 'same with Parcel';
 }
 
+#?pugs skip 'Cannot cast from VList to VCode'
 {
     my @bughunt = 1, 2, 3;
     @bughunt = @bughunt.grep(1);
