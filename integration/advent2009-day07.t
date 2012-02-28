@@ -27,10 +27,12 @@ is $a, 'abcd', '$_ is default topic, variable list';
 # @array.map: *.say;
 #?rakudo skip "No candidates found to invoke"
 #?niecza skip 'Excess arguments to CORE Any.map, used 2 of 4 positionals'
+#?pugs skip 'No compatible multi variant found: "&is"'
 {
 	is @array.map: *.Int , (1, 2, 3, 4) , 'Testing map form';
 }
 # @array>>.say;
+#?pugs skip 'No such method in class Array: "&>>Str"'
 is @array».Str , <a b c d> , 'Testing hyperoperator form';
 
 
@@ -47,6 +49,7 @@ my @array2 = <21 22 23>;
 
 $a = '';
 for @array1 Z @array2 -> $one, $two { $a ~= "$one $two " };
+#?pugs todo
 is $a, '11 21 12 22 13 23 ', 'zip with multiple topics';
 
 $a = '';
@@ -61,7 +64,7 @@ $a = '';
 for @array.kv -> $index, $item { $a ~= "$index $item " };
 is $a, '0 a 1 b 2 c 3 d ', '.kv, multiple topics';
 
-
+#?pugs todo
 {
     my @one   = <11 12 13>;
     my @two   = <21 22 23>;

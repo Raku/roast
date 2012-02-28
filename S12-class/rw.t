@@ -30,6 +30,7 @@ class Bar is rw {
     is $bar.readwrite_attr, 1,
         "'is rw' on the class declaration applies to all attributes (2)";
 
+    #?pugs todo
     dies_ok { $bar.but_not_this = 42 },
         "'is readonly' on a specific attribute can overrule the is rw on the class (1)";
     is $bar.but_not_this, 42,

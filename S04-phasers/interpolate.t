@@ -24,6 +24,7 @@ END {
     is $hist, 'BCISE', 'interpolated END {...} executed';
 }
 
+#?pugs todo
 nok "{ END { $hist ~= 'E' } }".defined,
     'END {...} not yet executed';
 

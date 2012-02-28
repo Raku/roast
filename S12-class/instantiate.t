@@ -22,6 +22,7 @@ my $foo2 = Foo2.new(:a(39), :b(3));
 is($foo2.check(), 42, 'initializing attributes in new');
 
 # RT #62732
+#?pugs skip   'Exception NYI'
 {
     try { eval 'NoSuchClass.new()' };
     #?niecza skip 'Exception NYI'
@@ -41,7 +42,7 @@ is($foo2.check(), 42, 'initializing attributes in new');
 # RT 65224
 
 #instantiation from class name unexpectedly creates a class object instead of Str object
-
+#?pugs skip 'gist'
 {
     class Foo { };
     my $x = 'Foo';

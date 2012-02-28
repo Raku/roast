@@ -15,8 +15,10 @@ plan 19;
         $str ~= "$x,$y";
     }
     foo(3,4);
+    #?pugs todo
     is $str, '(3,4)';
     foo(-1,2);
+    #?pugs todo
     is $str, '(3,4)(-1,2)';
 }
 
@@ -29,12 +31,15 @@ plan 19;
         ENTER { $str ~= "(" }
     }
     foo(7,-8);
+    #?pugs todo
     is $str, '(7,-8)';
     foo(5,0);
+    #?pugs todo
     is $str, '(7,-8)(5,0)';
 }
 
 # multiple ENTER and LEAVE blocks
+#?pugs todo
 {
     my $str;
     {
@@ -53,6 +58,7 @@ plan 19;
 }
 
 # L<S04/Phasers/ENTER "repeats on loop blocks">
+#?pugs todo
 {
     my $str;
     for 1..2 -> $x {
@@ -82,6 +88,7 @@ plan 19;
 # normal closure:
 #?niecza skip 'leave'
 {
+    #?pugs todo
     is eval(q{
         my $a;
         {
@@ -93,6 +100,7 @@ plan 19;
     }), 1, 'leave triggers LEAVE {}';
 }
 
+#?pugs todo
 {
     my $str;
     try {
@@ -105,6 +113,7 @@ plan 19;
 }
 
 #?niecza 2 skip 'dubious: noauto'
+#?pugs todo
 {
     my $str;
     try {
@@ -114,6 +123,7 @@ plan 19;
     ok $str ~~ /foo/, '$! set in LEAVE if exception thrown';
 }
 
+#?pugs todo
 {
     my $str;
     {
@@ -150,6 +160,7 @@ plan 19;
     is $str, '(x)', 'die in LEAVE caught by try';
 }
 
+#?pugs todo
 {
     my $str;
     try {
@@ -164,6 +175,7 @@ plan 19;
     is $str, '([])', 'die in ENTER calls LEAVE';
 }
 
+#?pugs todo
 {
     my $str;
     try {
@@ -174,6 +186,7 @@ plan 19;
 }
 
 #?niecza todo '@!'
+#?pugs todo
 {
     my $str;
     try {

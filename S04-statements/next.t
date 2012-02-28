@@ -55,6 +55,7 @@ plan 12;
 }
 
 #?rakudo skip 'next BLOCK'
+#?pugs skip 'next BLOCK'
 {
     my $tracker="err"; 
     $tracker = 0; DONE: for 1..2 { next DONE; $tracker++;};
@@ -74,6 +75,7 @@ plan 12;
 }
 
 #?rakudo skip 'next LOOP'
+#?pugs skip 'next LOOP'
 {
     my $tracker="err"; 
     $tracker = 0; 

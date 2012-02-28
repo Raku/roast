@@ -21,6 +21,7 @@ plan 4;
     is($a, 55, "post until");
 }
 
+#?pugs skip "cannot shift scalar"
 {
     my @a = ('a', 'b', 'a');
     my $a = 'b';
@@ -28,6 +29,7 @@ plan 4;
     is($a, "b, a, b, a", "post until");
 }
 
+#?pugs skip "cannot shift scalar"
 {
     my @a = 'a'..'e';
     my $a = 0;

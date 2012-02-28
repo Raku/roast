@@ -39,6 +39,7 @@ plan 7;
   is $foo<a>[0], 1, 'lvalue $var<>[] works';
 }
 
+#?pugs skip "Can't modify constant item: VInt 0"
 {
   my %foo = (a => [0]);
   %foo<a>[0]++;

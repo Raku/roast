@@ -18,6 +18,7 @@ plan 21;
     my $x = 'abc'.split(/b/).[0];
     lives_ok {$x.trans(['a'] => ['b']) }, 
        'Still works with strings returned from split() (lives)';
+    #?pugs todo
     is $x.trans(['a'] => ['b']), 'b',
        'Still works with strings returned from split() (result)';
     $x = 'abc'.split('b').[0];
@@ -35,8 +36,10 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
     is ~@foo, 'B B', 'Str.split(Str) works with postfix:<++>';
 }
 
+#?pugs skip 'Str'
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 
+#?pugs 2 skip 'flip'
 is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';
@@ -46,7 +49,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 
 # http://rt.perl.org/rt3/Ticket/Display.html?id=66596
 # .subst within a multi sub didn't work
-
+#?pugs todo
 {
     multi substtest (Str $d) {
         $d.subst(/o/, 'a')
@@ -70,6 +73,7 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
 }
 
 # RT #75456 hilarity
+#?pugs todo
 {
     ok ('1 ' ~~ /.+/) && $/ eq '1 ', 'matching sanity';
     ok +$/ == 1, 'numification of match objects with trailing whitespaces';

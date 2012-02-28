@@ -37,6 +37,7 @@ is eval('my $a is cool; $a.is_cool'), 42,  'our var "inherited" an attribute';
 my $b;
 class B is cool {}
 ok(::B.HOW, 'mixing in our role into a class via "is" worked');
+#?pugs todo
 is $was_in_class_sub, 1, 'trait_auxiliary:is was called on class';
 $b = B.new;
 ok($b, 'creating an instance worked');

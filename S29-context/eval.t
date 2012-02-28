@@ -26,13 +26,17 @@ my $foo = 1234;
 is(eval('$foo'), $foo, 'simple eval using variable defined outside');
 
 # traps die?
+#?pugs todo
 dies_ok {eval('die; 1')}, "eval does not trap die";
 
+#?pugs todo
 dies_ok {eval '1 1)'}, "eval throws on syntax error";
 
+#?pugs todo
 dies_ok {eval 'use Poison; 1'}, "eval dies on fatal use";
 
 # L<S04/Exception handlers/Perl 6's eval function only evaluates strings, not blocks.>
+#?pugs todo
 dies_ok({eval {; 42} }, 'block eval is gone');
 
 # RT #63978, eval didn't work in methods
@@ -57,6 +61,7 @@ dies_ok({eval {; 42} }, 'block eval is gone');
 
 #?rakudo skip 'eval(Buf)'
 #?niecza skip 'Unable to resolve method encode in class Str'
+#?pugs skip 'encode'
 is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
 
 {

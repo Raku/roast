@@ -12,6 +12,7 @@ plan 8;
     my @test = gather { for 1 .. 5 { $counter++; take $_ } };
     is(@test[0], 1, 'iterator works as expected');
     #?rakudo todo "Array assignment is not lazy -- is this test wrong?"
+    #?pugs todo
     is($counter, 1, 'iterator was lazy and only ran the block once');
 }
 
@@ -34,6 +35,7 @@ plan 8;
 # L<S02/Lists/A variant of eager is the hyper list operator>
 # Hyper
 #?rakudo skip 'hyper prefix NYI'
+#?pugs skip   'hyper prefix NYI'
 {
     my $counter = 0;
     my @test = hyper gather { for 1 .. 5 { $counter++; take $_; } };

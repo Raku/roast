@@ -6,6 +6,7 @@ plan 5;
 
 # L<S04/"Phasers"/CHECK "at compile time" ALAP>
 # CHECK {...} block in "void" context
+#?pugs todo
 {
     my $str = '';
     BEGIN { $str ~= "begin1 "; }
@@ -15,6 +16,7 @@ plan 5;
     is $str, "begin1 begin2 check ", "check blocks run after begin blocks";
 }
 
+#?pugs todo
 {
     my $str = '';
     CHECK { $str ~= "check1 "; }
@@ -31,6 +33,7 @@ plan 5;
 
     is $handle(), 'C', 'our CHECK {...} block returned the correct var (1)';
     is $handle(), 'C', 'our CHECK {...} block returned the correct var (2)';
+    #?pugs todo
     is $str, 'C', 'our rvalue CHECK {...} block was executed exactly once';
 }
 

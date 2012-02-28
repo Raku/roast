@@ -20,6 +20,7 @@ plan 5;
     is($a, 6, "post given");
 }
 
+#?pugs skip "Can't modify constant item"
 {
     my $a = '';
     $a = $_ given 'a';
@@ -27,6 +28,7 @@ plan 5;
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
+#?pugs skip "Can't modify constant item"
 {
     my $i = 0;
     $_ = 10;

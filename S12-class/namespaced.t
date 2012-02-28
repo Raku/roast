@@ -36,6 +36,7 @@ class A {
     is(A.new.x,    1,   'called correct method on class A');
     is(A.new.y,    'a', 'could access attribute in class A');
     is(A.new.z,    'a', 'method access correct attribute in class A');
+    #?pugs 5 skip 'No such subroutine: &A::B'
     ok(A::B.new,        'could instantiate nested class');
     is(A::B.new.x, 2,   'called correct method on class A::B');
     is(A::B.new.y, 'b', 'could access attribute in class A::B');
@@ -48,6 +49,7 @@ class C {
         rule test { a+ }
     }
 }
+#?pugs skip 'No such subroutine: &C::D'
 {
     ok(C::D ~~ Grammar,            'C::D is a grammar');
     #?niecza skip 'Cannot dispatch to a method on D because it is not inherited or done by Cursor'
