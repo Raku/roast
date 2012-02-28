@@ -86,14 +86,19 @@ ok @parents[1].WHAT =:= C, 'second parent is C';
 is +@parents, 2,         'with :tree, D has two immediate parents (on proto)';
 ok @parents[0] ~~ Array, ':tree gives back nested arrays for each parent (on proto)';
 ok @parents[1] ~~ Array, ':tree gives back nested arrays for each parent (on proto)';
-ok @parents eqv [[B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]],
-                         ':tree gives back the expected data structure (on proto)';
+sub walk(Mu $a) {
+    $a ~~ Positional
+        ?? '(' ~ $a.map(&walk).join(', ') ~ ')'
+        !! $a.gist;
+}
+is walk(@parents), walk( [[B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]]),
+            ':tree gives back the expected data structure (on proto)';
 
 @parents = D.new.^parents(:tree);
 is +@parents, 2,         'with :tree, D has two immediate parents (on instance)';
 ok @parents[0] ~~ Array, ':tree gives back nested arrays for each parent (on instance)';
 ok @parents[1] ~~ Array, ':tree gives back nested arrays for each parent (on instance)';
-ok @parents eqv [[B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]],
+is walk(@parents),  walk([[B, [A, [Any, [Mu]]]], [C, [A, [Any, [Mu]]]]]),
                          ':tree gives back the expected data structure (on instance)';
 
 
