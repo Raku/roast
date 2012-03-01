@@ -8,7 +8,7 @@ plan 5;
 # CHECK {...} block in "void" context
 #?pugs todo
 {
-    my $str = '';
+    my $str;
     BEGIN { $str ~= "begin1 "; }
     CHECK { $str ~= "check "; }
     BEGIN { $str ~= "begin2 "; }
@@ -18,7 +18,7 @@ plan 5;
 
 #?pugs todo
 {
-    my $str = '';
+    my $str;
     CHECK { $str ~= "check1 "; }
     BEGIN { $str ~= "begin "; }
     CHECK { $str ~= "check2 "; }
@@ -28,7 +28,7 @@ plan 5;
 
 # CHECK {...} blocks as rvalues
 {
-    my $str = '';
+    my $str;
     my $handle = { my $retval = CHECK { $str ~= 'C' } };
 
     is $handle(), 'C', 'our CHECK {...} block returned the correct var (1)';
