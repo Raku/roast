@@ -41,15 +41,16 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = set <a b foo>;
-    is $s<a>:exists, True, ':exists with existing element';
-    is $s<santa>:exists, False, ':exists with nonexistent element';
-    dies_ok { $s<a>:delete }, ':delete does not work on set';
+    is $s.exists(<a>), True, ':exists with existing element';
+    is $s.exists(<santa>), False, ':exists with nonexistent element';
+    dies_ok { $s.delete(<a>) }, ':delete does not work on set';
 }
 
 {
     my $s = set 2, 'a', False;
     my @ks = $s.keys;
     #?niecza 3 todo
+    #?rakudo 3 todo ''
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -58,6 +59,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # RT #77760
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
+#?rakudo skip "Odd number of elements found where hash expected"
 {
     my %h = set <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Set has been assigned remains a hash';
@@ -132,7 +134,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = set <foo bar baz>;
-    my $s;
     lives_ok { $s = $s.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -142,7 +143,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = set <foo bar baz>;
-    my $s;
     lives_ok { $s = $s.gist }, ".gist lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -166,6 +166,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S03/Hyper operators/'unordered type'>
 #?niecza skip "Hypers not yet Set compatible"
+#?rakudo skip "Hypers not yet Set compatible"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';
@@ -193,7 +194,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 2, '.roll(2) returned "a"s, "b"s, and "c"s';
 
-    my @a = $s.roll: 100;
+    @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
 }

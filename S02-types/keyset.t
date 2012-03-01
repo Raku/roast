@@ -67,6 +67,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a foo', '... but only if they were there to start with';
 }
 
+#?rakudo skip ':exists and :delete NYI'
 {
     my $s = KeySet.new(<a b foo>);
     is $s<a>:exists, True, ':exists with existing element';
@@ -164,7 +165,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = KeySet.new(<foo bar baz>);
-    my $s;
     lives_ok { $s = $s.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -174,7 +174,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = KeySet.new(<foo bar baz>);
-    my $s;
     lives_ok { $s = $s.gist }, ".gist lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -207,7 +206,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 2, '.roll(2) returned "a"s, "b"s, and "c"s';
 
-    my @a = $s.roll: 100;
+    @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
 }
@@ -239,23 +238,32 @@ sub showset($s) { $s.keys.sort.join(' ') }
 #?niecza skip "is KeySet doesn't work yet"
 {
     my %h is KeySet = a => True, b => False, c => True;
+    #?rakudo todo 'todo'
     is +%h.elems, 2, 'Inititalization worked';
 
     lives_ok { %h<c> = False }, 'can set an item to False';
+    #?rakudo todo 'todo'
     is %h.elems, 1, '... and an item is gone';
+    #?rakudo todo 'todo'
     is ~%h.keys, 'a', '... and the right one is gone';
 
     %h<c>++;
+    #?rakudo todo 'todo'
     is %h.keys.sort.join, 'ac', '++ on an item reinstates it';
     %h<c>++;
+    #?rakudo todo 'todo'
     is %h.keys.sort.join, 'ac', '++ on an existing item does nothing';
 
     %h<a>--;
+    #?rakudo todo 'todo'
     is ~%h.keys, 'c', '-- removes items';
     %h<b>--;
+    #?rakudo todo 'todo'
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
+    #?rakudo todo 'todo'
     lives_ok { %h = set <Q P R> }, 'Assigning a Set to a KeySet';
+    #?rakudo todo 'todo'
     is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 

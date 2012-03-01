@@ -43,6 +43,7 @@ sub showkv($x) {
     is +$b, 8, '+$bag gives sum of values';
 }
 
+#?rakudo skip ':exists and :delete NYI'
 {
     my $s = bag <a a b foo>;
     is $s<a>:exists, True, ':exists with existing element';
@@ -54,6 +55,7 @@ sub showkv($x) {
     my $b = bag 'a', False, 2, 'a', False, False;
     my @ks = $b.keys;
     #?niecza 2 todo
+    #?rakudo 2 todo ''
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -204,7 +206,7 @@ sub showkv($x) {
     is +@a, 2, '.roll(2) returns the right number of items';
     is @a.grep(* eq 'a').elems + @a.grep(* eq 'b').elems, 2, '.roll(2) returned "a"s and "b"s';
 
-    my @a = $b.roll: 100;
+    @a = $b.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
