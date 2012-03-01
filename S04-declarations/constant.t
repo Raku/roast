@@ -53,7 +53,6 @@ use Test;
     dies_ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';
 }
 
-#?rakudo skip 'non-literal constants'
 {
     my $ok;
 
@@ -97,7 +96,6 @@ use Test;
     ok $ok, "declaring a constant in terms of COMPILING constant works";
 }
 
-#?rakudo skip 'constant hashes'
 {
     my $ok;
 
@@ -120,7 +118,6 @@ use Test;
     ok $ok, "declaring a constant in terms of COMPILING hash constant works";
 }
 
-#?rakudo skip 'array constants'
 {
     my $ok;
 
@@ -225,7 +222,6 @@ use Test;
 
 # L<S04/The Relationship of Blocks and Declarations/The initializing
 # expression is evaluated at BEGIN time.>
-#?rakudo skip 'BEGIN and outer lexicals'
 {
     my $ok;
 
