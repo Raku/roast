@@ -18,10 +18,12 @@ plan 91;
     # also: 78284
     my $i = 0;
     $i++ for (1, 2, 3).item;
+    #?pugs todo
     is $i, 1, 'for (1, 2, 3).item does one iteration';
 
     $i = 0;
     $i++ for $(1, 2, 3);
+    #?pugs todo
     is $i, 1, 'for $(1, 2, 3) does one iteration';
 }
 
@@ -32,6 +34,7 @@ plan 91;
 }
 
 # uninitialized array variables should work too...
+#?pugs todo
 {
     my @a;
     is eval(@a.perl).elems, 0, '@a.perl on uninitialized variable';
@@ -52,7 +55,11 @@ is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notati
 
 
 # array with strings, numbers and undef
+#?pugs emit my @array2;
+#?pugs emit #
 my @array2 = ("test", 1, Mu);
+
+#?pugs skip "Mu"
 {
     isa_ok(@array2, Array);
 
@@ -67,10 +74,12 @@ my @array2 = ("test", 1, Mu);
     my @array3 = (@array1, @array2);
     isa_ok(@array3, Array);
 
+    #?pugs todo
     is(+@array3, 6, 'the array3 has 6 elements');
     is(@array3[0], 'foo', 'got the right value at array3 index 0');
     is(@array3[1], 'bar', 'got the right value at array3 index 1');
     is(@array3[2], 'baz', 'got the right value at array3 index 2');
+    #?pugs 2 todo
     is(@array3[3], 'test', 'got the right value at array3 index 3');
     is(@array3[4], 1,      'got the right value at array3 index 4');
     ok(!@array3[5].defined,'got the right value at array3 index 5');
@@ -83,6 +92,7 @@ my @array2 = ("test", 1, Mu);
 
     is(+@array4, 3, 'the array4 has 3 elements');
     ok(!defined(@array4[0]), 'got the right value at array4 index 0');
+    #?pugs 2 todo
     is(@array4[1], 1,      'got the right value at array4 index 1');
     is(@array4[2], 'test', 'got the right value at array4 index 2');
 }
@@ -94,6 +104,7 @@ my @array2 = ("test", 1, Mu);
 
     is(+@array5, 6, 'the array5 has 6 elements');
     ok(!defined(@array5[0]),  'got the right value at array5 index 0');
+    #?pugs 2 todo
     is(@array5[1], 1,      'got the right value at array5 index 1');
     is(@array5[2], 'test', 'got the right value at array5 index 2');
     is(@array5[3], 'baz',  'got the right value at array5 index 3');
@@ -163,6 +174,7 @@ my @array2 = ("test", 1, Mu);
     my Int @array;
     lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
     #?niecza todo "type constraints"
+    #?pugs todo
     dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
 }
 
@@ -205,6 +217,7 @@ my @array2 = ("test", 1, Mu);
 
 # RT #76676
 #?niecza todo
+#?pugs todo
 {
     is ~<a b>.[^10], 'a b', 'Range subscript as rvalues clip to existing elems';
 }
@@ -242,10 +255,13 @@ my @array2 = ("test", 1, Mu);
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
   #?rakudo todo '@arr[-1] returns failure, not dies'
   #?niecza todo '@arr[-1] returns undef'
+  #?pugs todo
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is run-time error";
+  #?pugs todo
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
   #?rakudo skip "binding not yet fatal"
+  #?pugs todo
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
 
@@ -260,6 +276,7 @@ my @array2 = ("test", 1, Mu);
 # defined in Any, so that .[0] is the identity operation for non-Positional
 # types
 #?niecza skip "Failure"
+#?pugs   skip "Failure"
 {
     is 1[0], 1, '.[0] is identiity operation for scalars (Int)';
     is 'abc'[0], 'abc', '.[0] is identiity operation for scalars (Str)';
@@ -270,6 +287,7 @@ my @array2 = ("test", 1, Mu);
 
 #RT #77072
 #?niecza skip "Zen slices"
+#?pugs todo
 {
     my @a = <1 2 3>;
     is @a[*], <1 2 3> , 'using * to access all array elements works';
@@ -300,6 +318,7 @@ my @array2 = ("test", 1, Mu);
 
 # RT #95850
 # Array.hash used to eat up the array in some early version of rakudo/nom
+#?pugs skip '.hash'
 {
     my @a = a => 1, b => 2;
     my %h = @a.hash;
@@ -309,6 +328,7 @@ my @array2 = ("test", 1, Mu);
 
 # RT #79270
 #?niecza skip 'Cannot use value like WhateverCode as a number'
+#?pugs skip 'parsefail'
 {
     my @a = <a b c>;
     @a[0 ..^ *-1] >>~=>> "x";
@@ -316,6 +336,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?niecza skip 'coercion syntax'
+#?pugs skip "Array"
 {
     is Array(1,2,3).WHAT.gist, 'Array()', 'Array(...) makes an Array';
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
