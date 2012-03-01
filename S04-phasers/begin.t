@@ -8,7 +8,6 @@ plan 9;
 # on things that at one point or another failed in even rather advanced
 # compilers.
 
-#?rakudo skip "Method 'returns' not found for invocant of class 'Undef'"
 {
     is (BEGIN { "foo" }), "foo", 'Can use BEGIN <block> as an expression';
     is (BEGIN  "foo" ), "foo", 'Can use BEGIN <expr> as an expression';
