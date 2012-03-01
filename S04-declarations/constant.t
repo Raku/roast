@@ -294,6 +294,11 @@ use Test;
     ok Yak === F::B::c, 'can use "constant" to alias an enum value';
 }
 
+{
+    constant fib := 0, 1, *+* ... *;
+    is fib[100], 354224848179261915075, 'can have a constant using a sequence and index it';
+}
+
 done;
 
 # vim: ft=perl6
