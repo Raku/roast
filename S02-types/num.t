@@ -6,6 +6,7 @@ use Test;
 
 plan 64;
 
+#?pugs 7 skip '.Num'
 isa_ok( eval(1.Num.perl), Num, 'eval 1.Num.perl is Num' );
 is_approx( eval(1.Num.perl), 1, 'eval 1.Num.perl is 1' );
 isa_ok( eval(0.Num.perl), Num, 'eval 0.Num.perl is Num' );
@@ -14,8 +15,10 @@ isa_ok( eval((-1).Num.perl), Num, 'eval -1.Num.perl is Num' );
 is_approx( eval((-1).Num.perl), -1, 'eval -1.Num.perl is -1' );
 isa_ok( eval(1.1.Num.perl), Num, 'eval 1.1.Num.perl is Num' );
 is_approx( eval(1.1.perl), 1.1, 'eval 1.1.Num.perl is 1.1' );
+#?pugs skip '.Num'
 isa_ok( eval((-1.1).Num.perl), Num, 'eval -1.1.Num.perl is Num' );
 is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
+#?pugs 2 skip '.Num'
 isa_ok( eval(1e100.Num.perl), Num, 'eval 1e100.Num.perl is Num' );
 is_approx( eval(1e100.Num.perl), 1e100, 'eval 1e100.Num.perl is 1' );
 
@@ -144,6 +147,7 @@ isa_ok(1 / 1, Rat);
 }
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
+#?pugs skip '.Int'
 {
     my $a = "1.01";
     isa_ok($a.Int, Int);
@@ -153,6 +157,7 @@ isa_ok(1 / 1, Rat);
 #L<S02/The C<Num> and C<Rat> Types/may be bound to an arbitrary>
 {
     my $a = "0d0101";
+    #?pugs todo
     isa_ok(+$a, Int);
     is(+$a, 101, "0d0101 numifies to 101");
 }
