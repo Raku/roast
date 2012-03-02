@@ -27,7 +27,6 @@ my @tests = (
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
-    #?rakudo emit # ng can't parse references yet
     \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \Mu,
 
     (a => 1),
