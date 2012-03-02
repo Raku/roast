@@ -42,6 +42,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     ok q{$x}.chars == 2,            'q{..} do not interpolate scalars';
 }
 
+#?pugs skip 'parsefail'
 {
     is Q{\n},        '\n',          'Q{..} do not interpolate \n';
     ok Q{\n}.chars == 2,            'Q{..} do not interpolate \n';
@@ -50,6 +51,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is Q {\\},       '\\\\',        'Q {..} quoting';
 }
 
+#?pugs skip 'parsefail'
 {
     ok Q{\\}.chars == 2,            'Q{..} do not interpolate backslashes';
 }
@@ -97,6 +99,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # L<S02/C<Q> forms/:q>
 #?rakudo skip 'Q:q adverbs'
+#?pugs skip 'parsefail'
 { # adverb variation
     my @q = ();
     @q = (Q:q/$foo $bar/);
@@ -136,6 +139,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # L<S02/C<Q> forms/:qq>
 #?rakudo skip 'Q:qq adverbs'
+#?pugs skip 'parsefail'
 { # adverb variation
     my @q = ();
     @q = Q:qq/$foo $bar/;
@@ -167,6 +171,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 # quote with \0 as delimiters, forbidden by STD
 # but see L<news:20050101220112.GF25432@plum.flirble.org>
 #?rakudo skip 'retriage'
+#?pugs todo
 {
     eval_dies_ok "(q\0foo bar\0)";
 }
@@ -329,6 +334,7 @@ FOO
         is(@q[0], "yoink\\n\nsplort\\n\n", "backslashes");
 }
 
+#?pugs skip 'parsefail'
 { # Q L<S02/Literals/No escapes at all>
     my @q = ();
 
@@ -344,21 +350,25 @@ FOO
     my @q = <<:p(1)>>;
     #?rakudo 2 todo '<< :pair(1) >> (RT 65304)'
     #?niecza todo
+    #?pugs todo
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - simple");
 
     @q = <<:p(1) junk>>;
     #?niecza todo
+    #?pugs todo
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - with some junk");
     is(@q[1], 'junk', "pair inside <<>>-quotes - junk preserved");
 
     @q = <<:def>>;
     #?rakudo 2 todo '<< :pair(1) >>'
     #?niecza todo
+    #?pugs todo
     is(@q[0].perl, (def => 1).perl, ":pair in <<>>-quotes with no explicit value");
 
     @q = "(eval failed)";
     try { eval '@q = <<:p<moose>>>;' };
     #?niecza todo
+    #?pugs todo
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");
 };
 
@@ -407,6 +417,7 @@ Hello, World
 }
 
 # Q
+#?pugs skip 'Q'
 {
     my $s1 = "hello"; #OK not used
     my $t1 = Q /$s1, world/;
@@ -419,6 +430,7 @@ Hello, World
 
 # q:b
 #?rakudo skip 'quoting adverbs'
+#?pugs skip 'parsefail'
 {
     my $t = q:b /\n\n\n/;
     is $t, "\n\n\n", "Testing for q:b operator.";
@@ -454,6 +466,7 @@ Hello, World
 
 #?rakudo skip 'q:x assigned to array'
 #?niecza skip ':x'
+#?pugs todo
 {
     my @two_lines = q:x/echo hello ; echo world/;
     is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
@@ -461,6 +474,7 @@ Hello, World
 
 #?rakudo skip 'q:x assigned to array'
 #?niecza skip ':x'
+#?pugs todo
 {
     my $hello = 'howdy';
     my @two_lines = qq:x/echo $hello ; echo world/;
@@ -535,6 +549,7 @@ Hello, World
 # shorthands:
 #?rakudo skip 'quoting adverbs'
 #?niecza skip '& escape, zen slices'
+#?pugs skip 'parsefail'
 {
     my $alpha = 'foo';
     my $beta  = 'bar';
@@ -566,13 +581,16 @@ Hello, World
     isa_ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
     isa_ok rx:s{foo}, Regex, 'rx:i{...}';
     isa_ok rx:sigspace{foo}, Regex, 'rx:i{...}';
+    #?pugs todo
     eval_dies_ok 'rx:unknown{foo}', 'rx:unknown dies';
+    #?pugs todo
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
 
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
+    #?pugs skip 'multi ok'
     is qqx/echo $var/.chomp,  "world", 'qqx';
     # RT #78874
     is qx/echo world/.trans('wd' => 'WD'), "WorlD\n", "qx doesn't return a Parrot string";

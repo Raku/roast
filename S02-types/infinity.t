@@ -21,6 +21,7 @@ plan 13;
 {
     my $x = Inf.Int;
     ok( $x == Inf,   'int numeric equal' );
+    #?pugs todo
     ok( $x eq 'Inf', 'int string equal' );
 }
 
@@ -28,6 +29,7 @@ plan 13;
 {
     my $x = ( -Inf ).Int;
     ok( $x == -Inf,   'int numeric equal' );
+    #?pugs todo
     ok( $x eq '-Inf', 'int string equal' );
 }
 
@@ -39,6 +41,7 @@ plan 13;
 #     Inf  eq  Inf   # same as
 #     ~Inf eq ~Inf   # true
 
+#?pugs 4 todo
 ok truncate(Inf) ~~ Inf,    'truncate(Inf) ~~ Inf';
 #?rakudo 3 todo 'Int conversion of NaN and Inf'
 ok NaN.Int === NaN,         'Inf.Int === Int';
@@ -46,6 +49,7 @@ ok Inf.Int === Inf,         'Inf.Int === Int';
 ok (-Inf).Int === (-Inf),   'Inf.Int === Int';
 
 # RT #70730
+#?pugs skip 'parsefail'
 {
     ok ( rand * Inf ) === Inf, 'multiply rand by Inf without maximum recursion depth exceeded';
 }

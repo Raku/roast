@@ -22,6 +22,7 @@ eval_lives_ok 'state $x; state $x',
 }
 
 # this is not exactly S04 material
+#?pugs todo
 eval_dies_ok 'sub foo {1; }; sub foo($x) {1; };',
              'multiple declarations need multi or proto';
 

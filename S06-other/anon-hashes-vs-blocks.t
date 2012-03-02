@@ -33,6 +33,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     %hash<bar> //= hash;
     my $h_ref;
     $h_ref  //= hash();
+    #?pugs 3 skip 'gist'
     is(%hash<foo>.WHAT.gist, ::Hash.gist, "Parses as two items");
     is(%hash<bar>.WHAT.gist, ::Hash.gist, "Parens do not help");
     is($h_ref.WHAT.gist,     ::Hash.gist, "It is not limited to hash values");
@@ -41,6 +42,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 {
     ok {; a => 1 } ~~ Block, '{; ... } is a Block';
     ok {  a => 1 } ~~ Hash,  '{ a => 1} is a Hash';
+    #?pugs 4 skip "Missing required parameters"
     ok { $^a => $^b } ~~ Block, 'placeholders force it to be a block';
     ok { $^a => 'b' } ~~ Block, '... as a key';
     ok { a => $^x }   ~~ Block, '... as a value';

@@ -13,6 +13,7 @@ eval_lives_ok 'my $x = 3; END { $a = $x * $x };',
               'and those from eval as well';
 
 #?niecza todo
+#?pugs todo
 is $a, 9, 'and they really worked';
 
 # vim: ft=perl6
