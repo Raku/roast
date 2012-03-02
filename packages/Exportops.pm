@@ -9,7 +9,7 @@ sub infix:<±>($a, $b)        is export(:DEFAULT) { $a - $b .. $a + $b }
 
 # exported multi
 
-class NotANumber {
+class NotANumber is export {
     has $.number;
 }
 
