@@ -123,8 +123,8 @@ throws_like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
 
 #?rakudo skip 'parsing regression'
 throws_like '#`', X::Syntax::Comment::Embedded;
-#?rakudo skip 'parsing regression'
-throws_like '=begin', X::Syntax::Pod::BeginWithoutIdentifier;
+# RT #71814
+throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/eval/;
 
 throws_like '@', X::Syntax::SigilWithoutName;
 throws_like '1∞', X::Syntax::Confused;
