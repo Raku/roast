@@ -171,7 +171,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';
     is showset(-« set(3, 9, -4)), '-9 -3 4', '-« Set';
-    #?rakudo skip 'Hyper-method calls on Sets NYI'
     is showset(set(<b e g k z>)».pred), 'a d f j y', 'Set».pred';
 
     dies_ok { set(1, 2) »+« set(3, 4) }, 'Set »+« Set is illegal';

@@ -269,7 +269,6 @@ plan 79;
  isa_ok($paxa,KeySet  );
 }
 
-#?rakudo skip 'KeyBag not implemented'
 {
  my KeyBag $paze;
  isa_ok($paze,KeyBag  );

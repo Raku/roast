@@ -15,7 +15,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # :nth(N)...
 
 {
-    #?rakudo todo 'nom regression'
     nok $data.match(/fo+/, :nth(0)), 'No match nth(0)';
 
     my $match = $data.match(/fo+/, :nth(1));
@@ -24,20 +23,16 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
     $match = $data.match(/fo+/, :nth(2));
     ok $match, 'Match :nth(2)';
-    #?rakudo todo 'nom regression'
     is ~$match, 'foo', 'Matched value for :nth(2)';
 
     $match = $data.match(/fo+/, :nth(3));
     ok $match, 'Match :nth(3)';
-    #?rakudo todo 'nom regression'
     is ~$match, 'fooo', 'Matched value for :nth(3)';
 
     $match = $data.match(/fo+/, :nth(6));
     ok $match, 'Match :nth(6)';
-    #?rakudo todo 'nom regression'
     is ~$match, 'foooooo', 'Matched value for :nth(6)';
 
-    #?rakudo todo 'nom regression'
     nok $data.match(/fo+/, :nth(7)), 'No match nth(7)';
 }
 
@@ -68,14 +63,12 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 #?niecza skip 'Excess arguments to CORE Cool.match'
 {
-    #?rakudo todo 'nom regression'
     is 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2)).join('|'),
         'ab|id', ':x and :nth';
 
     nok 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5,7,9), :x(6)).join('|'),
         ':x and :nth (not matching)';
 
-    #?rakudo todo 'nom regression'
     is 'abcdefg'.match(/.*/, :nth(2,4,6,7), :x(2..3), :overlap).join('|'),
         'bcdefg|defg|fg', ':x and :nth and :overlap';
 
@@ -84,7 +77,6 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 }
 
 # test that non-monotonic items in :nth lists are ignored
-#?rakudo todo 'nom regression'
 #?niecza todo
 {
     is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),

@@ -23,7 +23,6 @@ plan 13;
     is 5         ~~ Int,      True,  '~~ Int returns a Bool (2)';
     #?pugs 2 skip 'Set'
     is 'RT71462' ~~ Set,      False, '~~ Set returns a Bool (1)';
-    #?rakudo skip 'set'
     is set(1, 3) ~~ Set,      True,  '~~ Set returns a Bool (2)';
     #?pugs 2 skip 'Numeric'
     is 'RT71462' ~~ Numeric,  False, '~~ Numeric returns a Bool (1)';
