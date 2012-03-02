@@ -162,4 +162,7 @@ throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
 throws_like 'Mu.new(1)', X::Constructor::Positional;
 throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 
+# TOOD: might be X::Syntax::Malformed too...
+throws_like 'sub foo;', X::Syntax::Missing, what => 'block';
+
 done;
