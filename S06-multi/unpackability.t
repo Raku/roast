@@ -34,7 +34,6 @@ is bar(1,2,3), "1+2+3", "multi dispatch on slurpy packed with two required eleme
     multi sub a([]) { 2 ~ [] }
     my @t = 1,2;
 
-    #?rakudo todo 'RT 76486'
     is a([]), '2',    'Multi-dispatch descends into sub signatures (1)';
     is a(@t), '11 2', 'Multi-dispatch descends into sub signatures (2)';
 
