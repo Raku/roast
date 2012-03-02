@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 3;
+plan 4;
 
 # no need to do that compile time, sine require() really is run time
 @*INC.push: 't/spec/packages';
@@ -12,5 +12,11 @@ is Fancy::Utilities::lolgreet('me'),
    'O HAI ME', 'can call our-sub from required module';
 
 lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
+
+{
+    require 'Fancy::Utilities';
+    is ::('Fancy::Utilities')::('&lolgreet')('tester'), "O HAI TESTER",
+       'can call subroutines in a module by name';
+}
 
 # vim: ft=perl6
