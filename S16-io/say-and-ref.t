@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' }
 use Test::Util;
 
-plan 2;
+plan 3;
 
 
 is_run q{my $a = [1, 2, 3]; say   $a},
@@ -19,5 +19,11 @@ is_run q{my $a = [1, 2, 3]; print  $a},
         err     => '',
         status  => 0,
     }, 'Can print array ref';
+
+# RT #80186
+is_run q{IO.say},
+    {
+        out => "IO()\n";
+    }, 'Can do IO.say';
 
 # vim: ft=perl6
