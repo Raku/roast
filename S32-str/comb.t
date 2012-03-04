@@ -88,7 +88,7 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
 # RT #66340
 #?niecza skip 'Huh?'
 {
-    my $expected_reason = rx/^'No applicable candidates '/;
+    my $expected_reason = rx:s/none of these signatures match/;
 
     try { 'RT 66340'.comb( 1 ) };
     ok $! ~~ Exception, '.comb(1) dies';
@@ -101,7 +101,6 @@ is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
     ok "$!" ~~ $expected_reason, '.comb({...}) dies for the expected reason';
 }
 
-#?rakudo skip 'nom'
 {
     is comb( /./ , "abcd"), <a b c d>, 'Subroutine form default limit';
     is comb(/./ , "abcd" , 2 ), <a b>, 'Subroutine form with supplied limit';
