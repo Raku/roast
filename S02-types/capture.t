@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 {
     my $capture = \(1,2,3);
@@ -116,5 +116,8 @@ plan 20;
     is $c<key>,   'OH',  '.<key> of Pair.Capture';
     is $c<value>, 'HAI', '.<value> of Pair.Capture';
 }
+
+# RT #89766
+nok (defined  \()[0]), '\()[0] is not defined';
 
 # vim: ft=perl6
