@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 37;
 
 # L<S12/Single inheritance/An "isa" is just a trait that happens to be another class>
 
@@ -91,14 +91,14 @@ is(Z.new.j(), 'X', 'inherited method dispatch works');
 is(Y.new.k(), 'X', 'inherited method dispatch works inside another class with same-named method');
 
 {
-    class A {
+    my class A {
       has @.x = <a b c>;
       has $.w = 9;
 
       method y($i) { return @.x[$i]; }
     }
 
-    class B is A {
+    my class B is A {
       has $.w = 10;
       method z($i) { return $.y($i); }
     }
@@ -153,6 +153,22 @@ eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
     @a.push: 3, 5;
     is @a.summary, '3, 5', 'new methods still work in @ variables';
 
+}
+
+# RT #82814
+{
+    my class A {
+        method new { self.bless(*) }
+    };
+    my class B is A {
+        has $.c is rw;
+        method new {
+            my $obj = callsame;
+            $obj.c = 42;
+            return $obj
+        }
+    }
+    is B.new.c, 42, 'nextsame in constructor works';
 }
 
 # vim: ft=perl6
