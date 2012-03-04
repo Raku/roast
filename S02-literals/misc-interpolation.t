@@ -37,6 +37,7 @@ is("$number {$number}", '1 1', 'number inside and outside closure works');
 is("$number {my $number=2}", '1 2', 'local version of number in closure works');
 is("$number {my $number=2} $number", '1 2 1', 'original number still available after local version in closure: works' );
 
+#?pugs skip '?'
 {
     is "$(my $x = 2) $x", '2 2', 'Variable should interpolate and still be available in the outer scope.';
     is("$(my $y = 2)" ~ $y, '22', 'Variable should interpolate and still be available in the outer scope.');
@@ -50,6 +51,7 @@ is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should inte
 # L<S02/Method calls/"In order to interpolate the result of a method call">
 is("$world.chars()", '5', 'method calls with parens should interpolate');
 is("$world.chars", 'World.chars', 'method calls without parens should not interpolate');
+#?pugs skip '.flip'
 is("$world.flip.chars()", '5', 'cascade of argumentless methods, last ending in paren');
 is("$world.substr(0,1)", 'W', 'method calls with parens and args should interpolate');
 
@@ -70,11 +72,13 @@ is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure i
 # Quoting constructs
 # The next test will always succeed, but if there's a bug it probably
 # won't compile.
+#?pugs 3 skip 'parsefail'
 is(Q"abc\\d\\'\/", Q"abc\\d\\'\/", "raw quotation works");
 is(q"abc\\d\"\'\/", Q|abc\d"\'\/|, "single quotation works"); #"
 is(qq"abc\\d\"\'\/", Q|abc\d"'/|, "double quotation works"); #"
 #?rakudo 3 skip 'qa qb and array/hash interpolation'
 #?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
+#?pugs skip 'parsefail'
 is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");
 #?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
@@ -85,15 +89,18 @@ is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
 # L<S02/Radix interpolation/separating the numbers with comma:>
 is("x  \x[41,42,43]  x",     "x  ABC  x",  "\\x[] allows multiple chars (1)");
 is("x  \x[41,42,00043]  x",  "x  ABC  x",  "\\x[] allows multiple chars (2)");   #OK not indicate octal
+#?pugs todo
 is("x  \x[ 41, 42, 43 ]  x", "x  ABC  x",  "\\x[] allows multiple chars with white space");
 is("x  \c[65,66,67]  x",     "x  ABC  x",  "\\c[] allows multiple chars (1)");
 is("x  \c[65,66,000067]  x", "x  ABC  x",  "\\c[] allows multiple chars (2)");   #OK not indicate octal
+#?pugs todo
 is("x  \c[ 65, 66, 67 ]  x", "x  ABC  x",  "\\c[] allows multiple chars with white space");
 
 is("x  \x[41,42,43]]  x",    "x  ABC]  x", "\\x[] should not eat following ]s");
 is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
 
 # L<S12/Fancy method calls/Within an interpolation, the double-quoted form>
+#?pugs skip 'parsefail'
 {
     class InterpolationTest {
         method f { 'int' }

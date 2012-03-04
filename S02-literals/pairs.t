@@ -27,6 +27,7 @@ plan 79;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
+#?pugs skip 'gist'
 {
     is f1n(a => 42), 'Int()', "'a => 42' is a named";
     is f1n(:a(42)),  'Int()', "':a(42)' is a named";
@@ -71,6 +72,7 @@ sub f2 (:$a!) { WHAT($a) }
     isa_ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
     isa_ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
 
+    #?pugs 7 skip 'Missing required parameters'
     dies_ok { f2("a"   => 42) }, "'\"a\" => 42' is a pair";
     dies_ok { f2(("a") => 42) }, "'(\"a\") => 42' is a pair";
     dies_ok { f2((a   => 42)) }, "'(a => 42)' is a pair";
@@ -79,6 +81,7 @@ sub f2 (:$a!) { WHAT($a) }
     dies_ok { f2((:a))        }, "'(:a)' is a pair";
     dies_ok { &f2.((:a))       }, 'in \'&f2.((:a))\', \'(:a)\' is a pair';
 
+    #?pugs 4 skip 'Missing required parameters'
     dies_ok { $f2((:a))       }, "in '\$f2((:a))', '(:a)' is a pair";
     dies_ok { $f2.((:a))      }, "in '\$f2.((:a))', '(:a)' is a pair";
     dies_ok { $f2(((:a)))     }, "in '\$f2(((:a)))', '(:a)' is a pair";
@@ -90,7 +93,7 @@ sub f3 ($a) { WHAT($a) }
     my $pair = (a => 42);
 
     isa_ok f3($pair),  Pair, 'a $pair is not treated magically...';
-    #?pugs todo '[,]'
+    ##?pugs todo '[,]'
     #?rakudo skip 'prefix:<|>'
     isa_ok f3(|$pair), Int,    '...but |$pair is';
 }
@@ -128,6 +131,7 @@ sub f6 ($a) { WHAT($a) }
 }
 
 sub f7 (:$bar!) { WHAT($bar) }
+#?pugs skip 'Missing required parameter'
 {
     my $bar = 'bar';
 
@@ -136,6 +140,7 @@ sub f7 (:$bar!) { WHAT($bar) }
 }
 
 sub f8 (:$bar!) { WHAT($bar) }
+#?pugs skip 'Missing required parameter'
 {
     my @array = <bar>;
 
@@ -144,6 +149,7 @@ sub f8 (:$bar!) { WHAT($bar) }
 }
 
 sub f9 (:$bar!) { WHAT($bar) }
+#?pugs skip 'Missing required parameter'
 {
     my $arrayref = <bar>;
 
@@ -151,6 +157,7 @@ sub f9 (:$bar!) { WHAT($bar) }
         "variables cannot be keys of syntactical pairs (3)";
 }
 
+#?pugs todo
 {
     is (a => 3).elems, 1, 'Pair.elems';
 }

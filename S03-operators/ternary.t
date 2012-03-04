@@ -21,6 +21,7 @@ my $str3 = "bbb";
 }
 
 is(($str2 eq $str1 ?? 8 * 8 !! 9 * 9), 64, "?? !! in parenthesis");
+#?pugs skip 'div'
 is(($str2 eq $str3 ?? 8 + 8 !! 9 div 9), 1, "?? !! in parenthesis");
 
 is(1 ?? 2 ?? 3 !! 4 !! 5 ?? 6 !! 7, 3, "nested ?? !!");

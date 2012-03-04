@@ -23,6 +23,7 @@ sub factorial (Int $n) {
 
 is factorial(0), 1, "closing over params of outer subs (0)";
 is factorial(1), 1, "closing over params of outer subs (1)";
+#?pugs 2 todo
 is factorial(2), 2, "closing over params of outer subs (2)";
 is factorial(3), 6, "closing over params of outer subs (3)";
 

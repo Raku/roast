@@ -13,6 +13,7 @@ is("\x[20]", ' ', '\x[20] normal space');
 is("\x[a0]", chr(0xa0), '\x[a0] non-breaking space');
 is("\x[263a]", '☺', '\x[263a] wide hex character (SMILEY)');
 is("\x[6211]", '我', '\x[597d] wide hex character (Chinese char)');
+#?pugs 2 todo
 eval_dies_ok('"\x[6211"', 'broken "\x[6211"');
 eval_dies_ok('"\x [6211]"', 'broken "\x [6211]"');
 
@@ -27,6 +28,7 @@ is("\o[40]", ' ', '\o[40] normal space');
 is("\o[240]", chr(160), '\o[240] non-breaking space');
 is("\o[23072]", '☺', '\o[23072] wide hex character (SMILEY)');
 is("\o[61021]", '我', '\o[61021] wide hex character (Chinese char)');
+#?pugs 2 todo
 eval_dies_ok('"\o[6211"', 'broken "\o[6211"');
 eval_dies_ok('"\o [6211]"', 'broken "\o [6211]"');
 
@@ -41,6 +43,7 @@ is("\c[32]", ' ', '\c[32] normal space');
 is("\c[160]", chr(160), '\c[240] non-breaking space');
 is("\c[9786]", '☺', '\c[9786] wide hex character (SMILEY)');
 is("\c[25105]", '我', '\c[25105] wide hex character (Chinese char)');
+#?pugs 2 todo
 eval_dies_ok('"\c[6211"', 'broken "\c[6211"');
 eval_dies_ok('"\c [6211]"', 'broken "\c [6211]"');
 
@@ -55,6 +58,7 @@ is("\c65,66,67", 'A,66,67', '\clist not valid');
     eval_dies_ok q{"\10"}, '"\10" form is no longer valid Perl 6';
 }
 
+#?pugs skip '\040'
 {
     is "\040", "\x[0]40", '\0stuff is actually valid';
 }

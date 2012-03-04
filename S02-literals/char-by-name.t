@@ -8,6 +8,7 @@ plan 10;
 
 # L<S02/Unicode codepoints>
 
+#?pugs 4 todo
 is "\c[LEFT CORNER BRACKET]", "「", '\c[LEFT CORNER BRACKET]';
 is "\c[RIGHT WHITE CORNER BRACKET]", "』", '\c[RIGHT WHITE CORNER BRACKET]';
 is "\c[FULLWIDTH RIGHT PARENTHESIS]", "）", '\c[FULLWIDTH RIGHT PARENTHESIS]';
@@ -26,6 +27,7 @@ is("\c[LF]", "\c10", '\c[LF] works');
 is "\c[LATIN CAPITAL LETTER A, LATIN CAPITAL LETTER B]", 'AB', 'two letters in \c[]';
 is "\c[LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT]", "\x[0041,0300]", 'letter and combining char in \c[]';
 
+#?pugs todo
 ok "\c[LATIN SMALL LETTER A WITH DIAERESIS,COMBINING CEDILLA]" ~~ /\w/,
    'RT 64918 (some strings throw "Malformed UTF-8 string" errors';
 

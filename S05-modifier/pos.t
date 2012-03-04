@@ -16,8 +16,10 @@ plan 40;
 
 for ("abcdef") {
     ok(m:pos/abc/, "Matched 1: '$/'" );
+    #?pugs todo
     is($/.to, 3, 'Interim position correct');
     ok(m:pos/ghi|def/, "Matched 2: '$/'" );
+    #?pugs todo
     is($/.to, 6, 'Final position correct');
 }
 
@@ -26,9 +28,11 @@ for ("abcdef") {
     $_ = "foofoofoo foofoofoo";
     my $/;
     ok(s:global:pos/foo/FOO/, 'Globally contiguous substitution');
+    #?pugs todo
     is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
 }
 
+#?pugs todo
 {
     my $str = "abcabcabc";
     my $/;
@@ -51,7 +55,9 @@ for ("abcdef") {
 {
     my $str = "abcabcabc";
     my @x = $str ~~ m:i:g:p/abc/;
+    #?pugs todo
     is("@x", "abc abc abc", 'Insensitive repeated continued match');
+    #?pugs todo
     ok($/.to == 9, 'Insensitive repeated continued match pos');
 
     ok ($str !~~ m:i:p/abc/, 'no more match, string exhausted');
@@ -59,6 +65,7 @@ for ("abcdef") {
 
 #?rakudo skip "m:p:i:g// NYI"
 #?niecza skip ':i'
+#?pugs todo
 {
     my $str = "abcabcabc";
     my @x = ?($str ~~ m:p:i:g/abc/);
@@ -66,6 +73,7 @@ for ("abcdef") {
     is($/.to,  3, 'Insensitive scalar repeated continued match pos');
 }
 
+#?pugs skip 'Cannot parse regex'
 {
    my $str = "abcabcabc";
    my $match = $str.match(/abc/, :p(0));
@@ -91,22 +99,34 @@ for ("abcdef") {
 {
    my $str = "abcabcabc";
    my $match = $str.match(/abc/, :pos(0));
+   #?pugs skip 'coercion'
    ok $match.Bool, "Match anchored to 0";
    is $match.from, 0, "and the match is in the correct position";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(1)).Bool, "No match anchored to 1";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(2)).Bool, "No match anchored to 2";
 
    $match = $str.match(/abc/, :pos(3));
+   #?pugs skip 'coercion'
    ok $match.Bool, "Match anchored to 3";
+   #?pugs todo
    is $match.from, 3, "and the match is in the correct position";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(4)).Bool, "No match anchored to 4";
    
    $match = $str.match(/abc/, :pos(6));
+   #?pugs skip 'coercion'
    ok $match.Bool, "Match anchored to 6";
+   #?pugs todo
    is $match.from, 6, "and the match is in the correct position";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(7)).Bool, "No match anchored to 7";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(8)).Bool, "No match anchored to 8";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(9)).Bool, "No match anchored to 9";
+   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(10)).Bool, "No match anchored to 10";
 }
 
