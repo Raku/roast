@@ -294,6 +294,7 @@ use Test;
     ok Yak === F::B::c, 'can use "constant" to alias an enum value';
 }
 
+#?niecza skip "Cannot use bind operator with this LHS"
 {
     constant fib := 0, 1, *+* ... *;
     is fib[100], 354224848179261915075, 'can have a constant using a sequence and index it';
