@@ -8,7 +8,7 @@ Repeat operators for strings and lists
 
 =end description
 
-plan 30;
+plan 31;
 
 #L<S03/Changes to Perl 5 operators/"x (which concatenates repetitions of a string to produce a single string">
 
@@ -88,6 +88,14 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     my @b = <a b c> Z (1 xx *);
     #?pugs todo
     is(@b.join('|'), 'a|1|b|1|c|1', 'xx understands Whatevers');
+}
+
+# RT #101446
+# xxx now thunks the LHS
+{
+    my @a = ['a'] xx 3;
+    @a[0][0] = 'b';
+    is @a[1][0], 'a', 'xx thunks the LHS';
 }
 
 
