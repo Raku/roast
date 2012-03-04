@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S12/Semantics of C<bless>/The default BUILD and BUILDALL>
 
@@ -101,6 +101,12 @@ plan 8;
         'class Foo { method BUILD() { ... } }',
         { out => '', err => /BUILD/ & /submethod/ },
         'method BUILD produces a compile-time warning';
+}
+
+# RT #95340
+{
+    class C { has %!p; submethod BUILD(:%!p) {} };
+    lives_ok { C.new }, 'can call BUILD without providing a value for a !-twigiled named parameter';
 }
 
 # vim: ft=perl6
