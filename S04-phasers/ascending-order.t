@@ -51,7 +51,7 @@ END {
 }
 
 #?niecza todo 'niecza has "enter", also'
-is $hist, 'begin check init start ', 'BEGIN {} runs only once';
+is $hist, 'begin check init enter start ', 'BEGIN {} runs only once';
 nok $var_at_begin.defined, 'BEGIN {...} ran at compile time';
 nok $var_at_check.defined, 'CHECK {...} ran at compile time';
 nok $var_at_init.defined, 'INIT {...} ran at runtime, but ASAP';
