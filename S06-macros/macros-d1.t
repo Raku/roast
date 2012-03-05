@@ -105,7 +105,6 @@ plan 11;
         "lexical lookup from quasi to macro params works";
 }
 
-#?rakudo skip 'segfaults'
 {
     macro id($param) { $param };
     is id('x'), 'x', 'macro can return its param';
