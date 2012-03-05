@@ -5,7 +5,6 @@ use Test;
 plan 21;
 
 # L<S04/"Phasers"/START "runs separately for each clone">
-#?rakudo todo '$_ inside START has some issues, it seems'
 #?pugs todo
 {
     is(eval(q{{
