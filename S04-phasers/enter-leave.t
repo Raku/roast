@@ -87,6 +87,7 @@ plan 19;
 
 # normal closure:
 #?niecza skip 'leave'
+#?rakudo skip 'some syntax error whlie parsing'
 {
     #?pugs todo
     is eval(q{
@@ -131,6 +132,7 @@ plan 19;
         try { die 'foo' }
         $str ~= (defined($!) ?? 'aye' !! 'nay');
     }
+    #?rakudo todo 'is this spec? why would LEAVE not see outer $!? fossil?'
     is $str, 'ayeno', '$! not set in LEAVE if exception not thrown';
 }
 
