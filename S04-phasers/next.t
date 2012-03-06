@@ -63,6 +63,7 @@ plan 13;
     is $str, '123', "die didn't trigger NEXT \{}";
 }
 
+#?rakudo skip 'leave NYI'
 {
     my $str = '';
     try {
@@ -99,6 +100,7 @@ plan 13;
 
 # L<S04/Phasers/NEXT "before any LEAVE">
 
+#?rakudo todo 'NEXT/LEAVE ordering'
 {
     my $str = '';
     for 1..2 {
@@ -110,6 +112,7 @@ plan 13;
 }
 
 # reversed order
+#?rakudo todo 'NEXT/LEAVE ordering'
 {
     my $str = '';
     for 1..2 {
@@ -124,6 +127,7 @@ plan 13;
 
 # L<http://groups.google.com/group/perl.perl6.language/msg/07370316d32890dd>
 
+#?rakudo todo 'NEXT with while'
 {
     my $str = '';
     my $n = 0;
@@ -137,6 +141,7 @@ plan 13;
     is $str, '01234', 'NEXT {} ran in reversed order';
 }
 
+#?rakudo todo 'NEXT with loop'
 {
     my $str = '';
     loop (my $n = 0; $n < 5; ++$n) {
