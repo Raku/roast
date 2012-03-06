@@ -24,7 +24,6 @@ ok ($bar ~~ Foo),               'smartmatch said our $bar does Foo';
 nok Foo.defined,                'role type objects are undefined';
 
 # Can also write does inside the class.
-#?rakudo skip 'also'
 {
     role Foo2 { method x { 42 } }
     class Bar2 { also does Foo2; }
