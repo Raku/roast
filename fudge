@@ -10,17 +10,51 @@ while( $_ = $ARGV[0], /^-/ ) {
     $OPTS{$_} = $_;
 }
 
-my $ME = shift;
-my $IN = shift;
-my $OUT = shift;
+my $ME;  # implementation
+my $IN;  # test file
+my $OUT; # fudged file
+
+if (-f ".spec_config") {
+    open my $cf, "<", ".spec_config";
+    while (<$cf>) {
+        if (m/^\bname\b\s*=\s*(\w+)/) {
+           $ME = $1;
+        }
+    }
+}
+
+if (@ARGV == 3) {
+    # impl test fudged
+    $ME = shift;
+    $IN = shift;
+    $OUT = shift;
+} elsif (@ARGV == 1) {
+    # test
+    $IN = shift; 
+} elsif (@ARGV == 2) {
+    my $arg = shift;
+    if ($arg ~~ m/\.t$/) {
+        # test fudged
+        $IN = $arg;
+        $OUT = shift;
+    } else {
+        # impl test
+        $ME = $arg;
+        $IN = shift; 
+    }
+}
 
 if (!$OUT and $IN) {
     ($OUT = $IN) =~ s/\.t$/.$ME/ or $OUT .= ".$ME";
 }
+
 unless ($ME and $IN and $OUT) {
 
     die <<"USAGE";
-Usage: $0 [options] implname testfilename [fudgedtestfilename]
+Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
+
+    implname, if not specified on the command line, is pulled from the
+        .spec_config file in your compiler's directory.
 
     Options:
     --keep-exit-code
@@ -53,7 +87,6 @@ Usage: $0 [options] implname testfilename [fudgedtestfilename]
     implname is the lc name of your implementation, e.g. pugs or rakudo
     num is the number of statements or blocks to preprocess, defaults to 1
     count is how many tests the following construct counts as
-
 
 USAGE
 }
