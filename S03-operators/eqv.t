@@ -111,7 +111,6 @@ plan 52;
 #?rakudo skip 'captures'
 #?niecza skip 'Cannot use value like Capture as a number'
 #?pugs skip "Mu"
-#?DOES 3
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
@@ -144,12 +143,12 @@ plan 52;
     is(0 eqv 1, Bool::False, 'eqv returns Bool::False when false');
 }
 
-#?pugs skip "Mu"
-#?DOES 1
 {
+    #?pugs skip "Mu"
     is Any eqv Any, Bool::True, 'Any eqv Any';
 }
 
+#?pugs skip "autothreaded?"
 {
     ok 'a' eqv any <a b c>, "eqv autothreads correctly";
 }

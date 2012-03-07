@@ -92,6 +92,7 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
 
 # RT #101446
 # xxx now thunks the LHS
+#?pugs skip 'xx thunks the LHS'
 {
     my @a = ['a'] xx 3;
     @a[0][0] = 'b';
