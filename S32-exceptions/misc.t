@@ -172,4 +172,6 @@ throws_like 'sub foo;', X::Syntax::Missing, what => 'block';
 throws_like 'constant foo;', X::Syntax::Missing, what => /initializer/;
 throws_like 'constant * = 3;', X::Syntax::Missing, what => /constant/;
 
+throws_like 'class A {...}; grammar B { ... }', X::Package::Stubbed, packages => <A B>;
+
 done;
