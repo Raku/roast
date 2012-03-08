@@ -532,7 +532,6 @@ my @p;
     is(@p[1], 25, "?&= operator parses as item assignment 2");
 }
 
-#?pugs eval 'parsefail'
 {
     my $x = 0;
     @p = $x ?^= 42, 43;

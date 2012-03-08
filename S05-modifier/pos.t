@@ -10,8 +10,6 @@ version 0.3 (12 Apr 2004), file t/continue.t.
 
 plan 40;
 
-#?pugs emit force_todo(1,2,3,4,6);
-
 # L<S05/Modifiers/causes the pattern to try to match only at>
 
 for ("abcdef") {
@@ -99,34 +97,27 @@ for ("abcdef") {
 {
    my $str = "abcabcabc";
    my $match = $str.match(/abc/, :pos(0));
-   #?pugs skip 'coercion'
+   #?pugs todo
    ok $match.Bool, "Match anchored to 0";
    is $match.from, 0, "and the match is in the correct position";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(1)).Bool, "No match anchored to 1";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(2)).Bool, "No match anchored to 2";
 
    $match = $str.match(/abc/, :pos(3));
-   #?pugs skip 'coercion'
+   #?pugs todo
    ok $match.Bool, "Match anchored to 3";
    #?pugs todo
    is $match.from, 3, "and the match is in the correct position";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(4)).Bool, "No match anchored to 4";
    
    $match = $str.match(/abc/, :pos(6));
-   #?pugs skip 'coercion'
+   #?pugs todo
    ok $match.Bool, "Match anchored to 6";
    #?pugs todo
    is $match.from, 6, "and the match is in the correct position";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(7)).Bool, "No match anchored to 7";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(8)).Bool, "No match anchored to 8";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(9)).Bool, "No match anchored to 9";
-   #?pugs skip 'coercion'
    nok $str.match(/abc/, :pos(10)).Bool, "No match anchored to 10";
 }
 

@@ -16,10 +16,8 @@ $a = Bool::False;
 isa_ok($a, Bool);
 
 # tests that Bool.Bool works
-#?pugs 2 skip "Bool"
 isa_ok (Bool::True).Bool, Bool, "Bool.Bool is a Bool";
 isa_ok (Bool::False).Bool, Bool, "Bool.Bool is a Bool";
-#?pugs 2 skip "coercion"
 is (Bool::True).Bool, Bool::True, "Bool.Bool works for True";
 is (Bool::False).Bool, Bool::False, "Bool.Bool works for False";
 
@@ -50,7 +48,7 @@ isa_ok(~Bool::False, Str);
 #?pugs 2 todo "stringification"
 is(~Bool::True, 'True', 'Bool stringification (True)');
 is(~Bool::False, 'False', 'Bool stringification (False)');
-#?pugs 2 skip "coercion"
+#?pugs 2 skip '.Str'
 is Bool::True.Str, 'True', 'True.Str';
 is Bool::False.Str, 'False', 'False.Str';
 #?pugs 2 skip "gist"
@@ -63,11 +61,10 @@ is Bool::False.perl, 'Bool::False', 'False.perl';
 #?pugs 2 skip "Numeric"
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
-#?pugs 2 skip "Int"
+#?pugs 2 todo "Int"
 isa_ok(+Bool::True, Int, 'True numifies to an Int');
 isa_ok(+Bool::False, Int, 'False numifies to an Int');
 
-#?pugs 2 skip "coercion"
 is(Bool::True.Int, '1', 'True Intifies to 1');
 is(Bool::False.Int, '0', 'False Intifies to 1');
 
@@ -79,7 +76,7 @@ my $bool = Bool::False;
 is(++$bool, Bool::True, 'Increment of Bool::False produces Bool::True');
 #?pugs todo
 is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
-#?pugs skip 'Cannot cast from VBool True to VCode'
+#?pugs todo 'Cannot cast from VBool True to VCode'
 is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
 #?pugs todo
 is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');

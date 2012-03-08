@@ -163,7 +163,6 @@ Hm, Hash::pair? Never heard of that.  --iblech
 
 sub test4 (%h){
     for %h.pair -> $pair {
-        #?pugs todo 'bug'
         isa_ok($pair,Pair);
         is($pair.key, 'foo', 'sub test4: access by unspecced "pair" got the right $pair.key');
         is($pair.value, 'bar', 'sub test4: access by unspecced "pair" got the right $pair.value');

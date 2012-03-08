@@ -144,7 +144,6 @@ plan 52;
 }
 
 {
-    #?pugs skip "Mu"
     is Any eqv Any, Bool::True, 'Any eqv Any';
 }
 

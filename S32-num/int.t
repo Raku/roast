@@ -69,7 +69,6 @@ isa_ok ?1, Bool, "?1 is Bool";
 ok ?42, "?42 is true";
 isa_ok ?42, Bool, "?42 is Bool";
 
-#?pugs 6 skip '.Bool'
 nok 0.Bool, "0.Bool is false";
 isa_ok 0.Bool, Bool, "0.Bool is Bool";
 ok 1.Bool, "1.Bool is true";

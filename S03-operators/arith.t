@@ -253,7 +253,6 @@ is 2 ** 2 ** 3, 256, 'infix:<**> is right associative';
     is 1**Inf, 1;
 }
 
-#?pugs skip 'slow'
 {
     # NaN
     is NaN, NaN;
@@ -302,7 +301,6 @@ dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/V
 #?rakudo todo 'die or fail?'
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
-#?pugs skip 'div'
 eval_dies_ok('say 3 div 0', 'Division by zero dies and is catchable');
 #?pugs skip 'div'
 dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with VInt div VRat variables');
@@ -310,7 +308,6 @@ dies_ok( { $x = 0; say 3 div $x; }, 'Division by zero dies and is catchable with
 dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable with VRef variables');
 
 # This is a rakudo regression wrt bignum:
-#?pugs skip 'slow'
 {
     my $f = 1; $f *= $_ for 2..25;
     ok $f == 15511210043330985984000000, 
