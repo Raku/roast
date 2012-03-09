@@ -322,4 +322,15 @@ eval_lives_ok 'state $x; $x', 'state outside control structure';
     is f(0), 5, 'initialization not reached on first run of the functions';
 }
 
+#?rakudo todo 'state vars in list assignment'
+{
+    sub r {
+        state ($a, $b) = (5, 42);
+        $a++; $b--;
+        "$a $b"
+    }
+    r();
+    is r(), '7 40', 'state vars and list assignment mixes';
+}
+
 # vim: ft=perl6
