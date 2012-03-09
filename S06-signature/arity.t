@@ -21,20 +21,24 @@ is &a_two.arity,    2, '2 arity &sub';
 is &a_three.arity,  3, '3 arity &sub';
 is &a_four.arity,   4, '4 arity &foo';
 
+#?pugs 5 skip '.count'
 is &a_zero.count,   0, '0 count &sub';
 is &a_one.count,    1, '1 count &sub';
 is &a_two.count,    2, '2 count &sub';
 is &a_three.count,  3, '3 count &sub';
 is &a_four.count,   4, '4 count &foo';
 
+#?pugs 3 todo
 is &o_zero.arity,   0, 'arity 0 sub with optional params';
 is &o_one.arity,    1, 'arity 1 sub with optional params';
 is &o_two.arity,    1, 'arity with optional and required named params';
 
+#?pugs 3 skip '.count'
 is &o_zero.count,   2, 'count on sub with optional params';
 is &o_one.count,    1, 'count on sub with optional params';
 is &o_two.count,    1, 'count on sub with optional and required named params';
 
+#?pugs skip 'parsefail'
 {
     sub b_zero  ()           { };
     sub b_one   ($)          { };
@@ -58,6 +62,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
 {
     is ({ $^a         }.arity), 1,
         "block with one placeholder var has .arity == 1";
+    #?pugs 4 skip "is multi"
     is (-> $a { $a         }.arity), 1,
         "pointy block with one placeholder var has .arity == 1";
     is { $^a,$^b     }.arity, 2,
@@ -68,7 +73,8 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
         "block with three placeholder vars has .arity == 3";
     is (-> $a, $b, $c { $a,$b,$c }).arity, 3,
         "pointy block with three placeholder vars has .arity == 3";
-
+    
+    #?pugs 6 skip ".count"
     is ({ $^a         }.count), 1,
         "block with one placeholder var has .count == 1";
     is (-> $a { $a         }.count), 1,
@@ -83,6 +89,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
         "pointy block with three placeholder vars has .count == 3";
 }
 
+#?pugs skip "is multi"
 {
     is { my $k; $^a         }.arity, 1,   #OK not used
         "additional my() vars don't influence .arity calculation (1-1)";
@@ -99,6 +106,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
         "additional my() vars don't influence .count calculation (1-3)";
 }
 
+#?pugs skip 'is multi' 
 {
     is { $^a;         my $k }.arity, 1,   #OK not used
         "additional my() vars don't influence .arity calculation (2-1)";
@@ -116,6 +124,7 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
 }
 
 # used to be a bug in Rakudo, RT #63744
+#?pugs skip 'parsefail'
 {
     sub indirect-count(Code $c) { +$c.signature.params; }
     my $tester = -> $a, $b, $c? { ... };   #OK not used
@@ -124,8 +133,10 @@ is &o_two.count,    1, 'count on sub with optional and required named params';
        '... also when passed to a sub first';
 }
 
+#?pugs todo
 dies_ok { eval("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
 
+#?pugs skip 'parsefail'
 {
     my proto sub a($, $?) { * }
     my multi sub a($)     { 1 }

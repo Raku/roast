@@ -44,8 +44,10 @@ plan 49;
     my @push_result = @p.push( 'yo, check it' );
 
     is( +@p, 2, 'array received second element' );
+    #?pugs todo
     ok( @push_result ~~ @p, 'modified array, returned' );
     is( ~@p, 'bughunt yo, check it', '~@p' );
+    #?pugs todo
     is( ~@p.push('!'), 'bughunt yo, check it !', '~ on the push' );
 }
 
@@ -106,6 +108,7 @@ plan 49;
 }
 
 # testing some edge cases
+#?pugs skip '...'
 {
     my @push = 0 ... 5;
     is(+@push, 6, 'starting length is 6');
@@ -133,6 +136,7 @@ plan 49;
 # }
 
 # nested arrayref
+#?pugs skip '...'
 {
     my @push = ();
     push @push, [ 21 ... 25 ];

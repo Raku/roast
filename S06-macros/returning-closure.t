@@ -18,6 +18,7 @@ plan 4;
 
   is $in_macro,           1, "macro was executed during compile time";
   ok !$in_macro_clos,        "macro closure was not executed during compile time";
+  #?pugs todo
   is returns_a_closure, 145, "closure returning macro";
   is $in_macro_clos,      1, "macro closure was executed during runtime";
 }

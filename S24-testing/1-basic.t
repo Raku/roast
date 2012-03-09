@@ -112,11 +112,12 @@ cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :desc('... testing gt on two
 ## use_ok
 
 use lib <ext/Test>; # Hack if we're run from make smoke
+#?pugs todo
 use_ok('t::use_ok_test');
 
 # Need to do a test loading a package that is not there,
 # and see that the load fails. Gracefully. :)
-#use_ok('Non::Existent::Package', :todo(1));
+use_ok('Non::Existent::Package', :todo(1));
 
 ## dies_ok
 

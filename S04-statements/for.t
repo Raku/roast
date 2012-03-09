@@ -1,5 +1,6 @@
 use v6;
 
+#?pugs emit #
 use MONKEY_TYPING;
 
 use Test;
@@ -41,7 +42,7 @@ plan 71;
     is($b, '012345', 'for 0 .. 5 -> {} works');
 }
 
-#?pugs eval 'todo: slice context'
+#?pugs todo 'slice context'
 #?niecza skip 'slice context'
 {
     my $str;
@@ -89,6 +90,7 @@ plan 71;
     $_ = "GLOBAL VALUE";
     is( .lc, "inner value", "Implicit default topic is seen by lc()" )
         for "INNER VALUE";
+    #?pugs todo
     is($_,"GLOBAL VALUE","After the loop the implicit topic gets restored");
 }
 
@@ -163,6 +165,7 @@ my @elems = <a b c d e>;
 
 # "for @a -> $var" is ro by default.
 #?rakudo skip "<-> is confusing the parser, I think"
+#?pugs skip 'parsefail'
 {
     my @a = <1 2 3 4>;
 
@@ -197,7 +200,7 @@ my @elems = <a b c d e>;
     is(@array_t, @t, 'for @array -> $val is rw { $val++ }');
 }
 
-#?pugs eval 'todo'
+#?pugs skip "Can't modify const item"
 {
     my @array_v = (0..2);
     my @v = (1..3);
@@ -205,7 +208,7 @@ my @elems = <a b c d e>;
     is(@array_v, @v, 'for @array.values -> $val is rw { $val++ }');
 }
 
-#?pugs eval 'todo'
+#?pugs skip "Can't modify const item"
 {
     my @array_kv = (0..2);
     my @kv = (1..3);
@@ -213,8 +216,8 @@ my @elems = <a b c d e>;
     is(@array_kv, @kv, 'for @array.kv -> $key, $val is rw { $val++ }');
 }
 
-#?pugs eval 'todo'
 #?rakudo skip "is rw NYI"
+#?pugs skip "Can't modify const item"
 {
     my %hash_v = ( a => 1, b => 2, c => 3 );
     my %v = ( a => 2, b => 3, c => 4 );
@@ -222,8 +225,8 @@ my @elems = <a b c d e>;
     is(%hash_v, %v, 'for %hash.values -> $val is rw { $val++ }');
 }
 
-#?pugs eval 'todo'
 #?rakudo skip "is rw NYI"
+#?pugs todo
 {
     my %hash_kv = ( a => 1, b => 2, c => 3 );
     my %kv = ( a => 2, b => 3, c => 4 );
@@ -240,7 +243,6 @@ class TestClass{ has $.key is rw  };
    my $i = 0;
    for @array1 { .key //= ++$i }
    my $sum1 = [+] @array1.map: { $_.key };
-   #?pugs todo 'bug'
    is( $sum1, 2, '.key //= ++$i for @array1;' );
 
 }
@@ -278,6 +280,7 @@ class TestClass{ has $.key is rw  };
 
 # list context
 
+#?pugs skip '.gist'
 {
     my $a = '';
     for 1..3, 4..6 { $a ~= $_.WHAT.gist };
@@ -398,7 +401,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $str, " 2 12 35", 'default values in for-loops';
 }
 
-
+#?pugs todo
 {
   my @a = <1 2 3>;
   my @b = <4 5 6>;
@@ -409,6 +412,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $res, " 4 10 18", "Z -ed for loop";
 }
 
+#?pugs todo
 {
   my @a = <1 2 3>;
   my $str = '';
@@ -452,6 +456,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #62478
+#?pugs todo
 {
     try { eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
     ok "$!" ~~ /C\-style/,   'mentions C-style';
@@ -460,6 +465,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #65212
+#?pugs todo
 {
     my $parsed = 0;
     try { eval '$parsed = 1; for (1..3)->$n { last }' };
@@ -469,7 +475,9 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #71268
 {
     sub rt71268 { for ^1 {} }
+    #?pugs todo
     lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
+    #?pugs skip 'Cannot cast from VList to VCode'
     ok rt71268() ~~ (), 'result of "for ^1 {}" is ()';
 }
 
@@ -478,6 +486,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 
+#?pugs todo
 {
     try { eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!) };
     ok $! ~~ / 'C-style' /, 'Sensible error message';
@@ -516,6 +525,7 @@ lives_ok {
 
 # RT #71270
 # list comprehension
+#?pugs skip 'Cannot cast from VList to VCode'
 {
     sub f() { for ^1 { } };
     is ~f(), '', 'empty for-loop returns empty list';
@@ -524,6 +534,7 @@ lives_ok {
 # RT #74060
 # more list comprehension
 #?niecza todo
+#?pugs skip 'parsefail'
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
     is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';

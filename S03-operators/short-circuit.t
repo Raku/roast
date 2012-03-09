@@ -115,6 +115,7 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "^^ NYI"
+#?pugs skip '^^ short circuit'
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -132,6 +133,7 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "xor NYI"
+#?pugs skip "xor shortcircuit"
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -155,6 +157,7 @@ sub accumtest($expect, $op) {
     is(0 || 42,        42, "||   operator working");
     is((0 or 42),      42, "or   operator working");
 
+    #?pugs 2 skip 'Mu'
     is((Mu // 42),  42, "//   operator working"); #"
     is((Mu orelse 42), 42, "orelse  operator working");
 
@@ -163,7 +166,9 @@ sub accumtest($expect, $op) {
     is(42 ^^ 0,        42, "^^  operator working (one true)");
     #?rakudo skip 'segmentation fault'
     is(1 ^^ 42,     False, "^^  operator working (both true)");
+    #?pugs todo
     is(0 ^^ 0,          0, "^^  operator working (both false)");
+    #?pugs 6 skip 'xor'
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
@@ -177,6 +182,7 @@ sub accumtest($expect, $op) {
 #?niecza skip "^^ NYI"
 {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
+    #?pugs todo
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
     is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
     is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
@@ -185,6 +191,7 @@ sub accumtest($expect, $op) {
     #?rakudo skip 'segmentation fault'
     is 'a' ^^ 'b' ^^ 0, False, '^^ given two true values returns False (2)';
 
+    #?pugs 6 skip 'xor'
     is (0 xor False xor ''), '', 'xor given all false values returns last (1)';
     is (False xor '' xor 0), 0, 'xor given all false values returns last (2)';
     is (False xor 42 xor ''), 42, 'xor given one true value returns it (1)';
@@ -196,9 +203,12 @@ sub accumtest($expect, $op) {
 
     #?rakudo skip 'segmentation fault'
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
+    #?pugs skip 'Mu'
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
+    #?pugs 2 skip 'Range'
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
     isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
+    #?pugs 3 skip 'Mu'
     isa_ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
     isa_ok Inf ^^ Mu, Num, '^^ can return a Num';
     isa_ok 'Inf' ^^ Mu, Str, '^^ can return a Str';
@@ -271,6 +281,7 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     my $x;
     $x &&= 5;
     #?niecza todo
+    #?pugs todo
     is $x, 5, '&&= on a fresh variable works';
     my $y ||= 'moin';
     is $y, 'moin', '||= on a fresh variable works';

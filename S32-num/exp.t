@@ -24,11 +24,12 @@ my $pi = 312689/99532;
     is_approx((1i*$pi).exp, -1, '(i pi).exp == -1');
     is_approx((-1i*$pi).exp, -1, '(-i pi).exp == -1');
 
+    #?pugs 7 todo
     is_approx(5.exp(2), 32, '5.exp(2) == 32');
     is_approx(5.Rat.exp(2), 32, '5.Rat.exp == 32');
     is_approx(5.Num.exp(2), 32, '5.Num.exp == 32');
     is_approx(0.exp(2), 1, '0.exp(2) == 1');
-
+ 
     is_approx((1i*$pi).exp(2), 2 ** (1i*$pi), '(i pi).exp(2) == 2 ** (1i*$pi)');
     is_approx((-1i*$pi).exp(2), 2 ** (-1i*$pi), '(-i pi).exp(2) == 2 ** (-1i*$pi)');
     is_approx(2.exp(1i*$pi), (1i*$pi) ** 2, '(2).exp(i pi) == (1i*$pi) ** 2');
@@ -46,19 +47,24 @@ is_approx((1i*$pi).exp, -1, '(i $pi).exp == -1');
 is_approx(exp(1i*$pi), -1, 'exp(i $pi) == -1');
 is_approx(exp(-1i*$pi), -1, 'exp(-i $pi) == -1');
 
+#?pugs 3 todo
 is_approx(exp(5, 2), 32, 'got 32');
 is_approx(exp(0, 2), 1, 'exp(0, 2) == 1');
 is_approx(exp(-1, 2),  1/2, '1/2 is correct');
 is(exp(Inf, 2), Inf, 'exp(Inf) == Inf');
+#?pugs todo
 is(exp(-Inf, 2), 0, 'exp(-Inf) == 0');
 is(exp(NaN, 2), NaN, 'exp(NaN) == NaN');
+#?pugs skip 'log multi'
 is_approx(exp(log(100, 2), 2),100, 'e^(log(100, 2), 2)=100');
 
+#?pugs 2 todo
 is_approx(exp(1i*$pi, 2), 2 ** (1i*$pi), 'exp(i $pi, 2) == 2 ** (1i*$pi)');
 is_approx(exp(-1i*$pi, 2), 2 ** (-1i*$pi), 'exp(-i $pi, 2) == 2 ** (-1i*$pi)');
 
+##?pugs skip '..'
 {
-    for 1 ... 20 {
+    for 1 .. 20 {
 	    my $arg = 2.0 * $pi / $_;
 	    is_approx(exp(1i * $arg), cos($arg) + 1i * sin($arg), 'ex$pi == cos + i sin No. ' ~ $_);
 	    is_approx(exp(1i * $arg) * exp(-1i * $arg), 1, 'exp(ix) * exp(-ix) == 1 No. ' ~ $_);
