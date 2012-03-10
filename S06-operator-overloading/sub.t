@@ -135,7 +135,7 @@ Testing operator overloading subroutines
     multi postfix:<!> (Str $x) { return($x.uc ~ "!!!") }
 
     is(10!, 3628800, "factorial postfix operator");
-    is("boobies"!, "BOOBIES!!!", "correct overloaded method called");
+    is("bumbershoot"!, "BUMBERSHOOT!!!", "correct overloaded method called");
 }
 
 # Overloading by setting the appropriate code variable
