@@ -19,6 +19,7 @@ multi sub bar($a) { "one" }    #OK not used
 #?niecza skip 'No candidates for dispatch to &bar'
 is(bar(), "empty", "multi sub with no signature");
 #?niecza skip 'Ambiguous dispatch for &bar'
+#?pugs todo 
 is(bar(42), "one", "multi sub with parameter list");
 
 # multi without a routine type
@@ -27,6 +28,7 @@ multi baz($a) { "one" }    #OK not used
 #?niecza skip 'No candidates for dispatch to &baz'
 is(baz(), "empty", "multi with no signature");
 #?niecza skip 'Ambiguous dispatch for &baz'
+#?pugs todo 
 is(baz(42), "one", "multi with parameter list");
 
 # multi without a routine type with signature
@@ -48,8 +50,10 @@ multi bar(S $a;; T $b) { 1 }    #OK not used
 multi bar(T $a;; S $b) { 2 }    #OK not used
 my $lived = 0;
 try { foo(S,S); $lived = 1 }
+#?pugs todo 
 is($lived, 0, "dispatch tied as expected");
 #?niecza skip 'Ambiguous dispatch for &bar'
+#?pugs skip 'missing invocant'
 is(bar(S,S), 1, "not tied as only first type in the dispatch");
 
 # not allowed to declare anonymous routines with only, multi or proto.
@@ -68,9 +72,12 @@ eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error'
 
 #?rakudo skip 'Multi typename...maybe deprecated?'
 #?niecza skip 'Undeclared name Multi'
+#?pugs   skip 'Undeclared name Multi'
 ok(&foo ~~ Multi, 'a multi does Multi');
+#?pugs skip 'Callable'
 ok(&foo ~~ Callable, 'a multi does Callable');
 #?niecza todo
+#?pugs skip 'parsefail'
 ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # note - example in ticket [perl #58948] a bit more elaborate
@@ -78,6 +85,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     multi sub max($a, $b, $c) {return 9}    #OK not used
 
     lives_ok { max(1, 2, 3) }, 'use multi method to override builtin lives';
+    #?pugs todo
     is eval('max(1, 2, 3)'), 9, 'use multi method to override builtin';
 }
 
@@ -96,7 +104,9 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 {
     multi rt68234(:$key!) { 'with key' };    #OK not used
     multi rt68234(*%_)    { 'unknown' };    #OK not used
+    #?pugs todo
     is rt68234(:key), 'with key', 'can find multi method with key';
+    #?pugs skip 'Named argument found where no matched parameter expected'
     is rt68234(:unknown), 'unknown', 'can find multi method with slurpy';
 }
 
@@ -104,11 +114,13 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 {
     multi rt68158() { 1 }
     multi rt68158(*@x) { 2 }    #OK not used
+    #?pugs todo
     is rt68158(),  1, 'non-slurpy wins over slurpy';
     is rt68158(9), 2, 'slurpy called when non-slurpy can not bind';
 }
 
 # RT #64922
+#?pugs todo
 {
     multi rt64922($x, %h?) { 1 }    #OK not used
     multi rt64922(@x) { 2 }    #OK not used
@@ -126,6 +138,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 # We had a bug where the multiness leaked into a sub, so we got errors
 # about anonymous methods not being allowed to be multi.
+#?pugs skip 'parsefail'
 {
     multi sub kangaroo() { return method () { self * 2 } }
     my $m = kangaroo();
@@ -136,6 +149,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 # RT #75136
 # a multi declaration should only return the current candidate, not the whole
 # set of candidates.
+#?pugs skip 'parsefail'
 {
     multi sub koala(Int $x) { 42 * $x };
 
@@ -148,6 +162,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
 multi with_cap($a) { $a }
 multi with_cap($a,$b,|$cap) { return with_cap($a + $b, |$cap) }
+#?pugs skip 'with_cap not found'
 is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
 done;
