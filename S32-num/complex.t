@@ -7,7 +7,6 @@ plan 487;
 # Basic tests functions specific to complex numbers.
 
 isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
-#?rakudo 2 skip 'i'
 #?pugs   2 skip 'i'
 isa_ok(i, Complex, 'i creates a Complex number');
 ok i == 1i, 'i == 1i';
@@ -24,7 +23,6 @@ is_approx((2i + 3)i, -2 + 3i, 'postfix:<i> works on a Complex number');
 #?pugs todo
 eval_dies_ok '(2 + 3i) > (2 + 2i)', '> comparison of complex numbers dies';
 
-#?rakudo 3 skip 'i'
 #?pugs   3 skip 'i'
 is_approx(i, 1i, 'standalone i works to generate a Complex number');
 is_approx(1 - i, 1 - 1i, 'standalone i works to generate a Complex number');

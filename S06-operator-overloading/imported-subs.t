@@ -12,15 +12,11 @@ BEGIN { @*INC.push: 't/spec/packages' };
     # note that eval_dies_ok executes in the context of
     # Test.pm, and Test.pm doesn't import or lift the operators
 
-    #?rakudo skip 'nom regression'
     ok eval('5!'), 'postfix:<!> was exported...';
-    #?rakudo skip 'nom regression'
     ok eval('5! == 120 or die'), '... and it works';
     eval_dies_ok '5!', 'Test.pm does not import the operators';
 
-    #?rakudo skip 'nom regression'
     ok eval('"a" yadayada "b"'), 'infix:<yadayada> was exported';
-    #?rakudo skip 'nom regression'
     ok eval('"a" yadayada "b" eq "a..b" or die'), '... and it works';
     #?pugs todo
     ok eval('my $a = "a"; $a yadayada= "b"; $a eq "a..b" or die'), '... and yadayada= works too';
