@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
