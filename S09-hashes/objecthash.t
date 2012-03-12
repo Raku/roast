@@ -52,6 +52,5 @@ plan 25;
 {
     my %h{Any};
     %h = 1, 2;
-    #?rakudo todo 'list assignment + object hashes'
     ok %h.keys[0] === 1, 'list assignment + object hashes';
 }
