@@ -148,6 +148,7 @@ throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'm
 
 throws_like 'has sub a() { }', X::Declaration::Scope, scope => 'has', declaration => 'sub';
 throws_like 'has package a { }', X::Declaration::Scope, scope => 'has', declaration => 'package';
+throws_like 'our multi a() { }', X::Declaration::Scope::Multi, scope => 'our';
 throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
 throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
