@@ -13,17 +13,20 @@ Verify that autoincrement/autodecrement work properly.
 
 =end description
 
-my $a = Mu;
-is($a++, 0, 'Mu++ == 0');
+#?pugs skip 'Mu'
+{
+    my $a = Mu;
+    is($a++, 0, 'Mu++ == 0');
 
-#?rakudo todo 'nom regression'
-#?niecza todo '#88'
-$a = Mu;
-nok(defined($a--), 'Mu-- is undefined');
+    #?rakudo todo 'nom regression'
+    #?niecza todo '#88'
+    $a = Mu;
+    nok(defined($a--), 'Mu-- is undefined');
 
-$a = 'x';
-is($a++, 'x', 'magical ++ should not be numified');
-isa_ok($a, "Str", "it isa Str");
+    $a = 'x';
+    is($a++, 'x', 'magical ++ should not be numified');
+    isa_ok($a, "Str", "it isa Str");
+}
 
 my %a = ('a' => 1);
 %a{"a"}++;
@@ -106,11 +109,14 @@ is($moo, 0, "var was not touched");
     my $x = Bool::False;
     is ++$x, Bool::True, '++ on False works';
     $x = Bool::False;
+    #?pugs skip '.succ'
     is $x.succ, Bool::True, '.succ on False works';
 
     $x = Bool::True;
+    #?pugs todo
     is --$x, Bool::False, '-- on True works';
     $x = Bool::True;
+    #?pugs skip '.pred'
     is $x.pred, Bool::False, '.succ on False works';
 }
 

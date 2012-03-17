@@ -11,6 +11,7 @@ plan 93;
         return $x;
     }
     is a(3), 3, 'Can pass positional arguments';
+    #?pugs skip 'Named argument found where no matched parameter expected'
     dies_ok { eval('a(g=>7)') }, 'Dies on passing superfluous arguments';
 }
 
@@ -21,6 +22,7 @@ plan 93;
     is c(w => 3), 3, 'Named argument passes an integer, not a Pair';
     my $w = 5;
     is c(:$w), 5, 'can use :$x colonpair syntax to call named arg';
+    #?pugs skip 'Named argument found where no matched parameter expected'
     dies_ok {eval('my $y; c(:$y)')}, 'colonpair with wrong variable name dies';
 }
 
@@ -43,6 +45,7 @@ plan 93;
     is A.new.colonpair_private, 8, 'colonpair with a privare variable';
     is B.new.colonpair_public, 12, 'colonpair with a public variable';
     #?rakudo skip 'nom regression'
+    #?pugs skip 'Named argument found where no matched parameter expected'
     is colonpair_positional(:g<10>), 15, 'colonpair with a positional variable';
 }
 
@@ -79,19 +82,27 @@ is(foo2( :x(10), :y(10) ), 20, "naming named params x & y adverb-style also work
 is(foo2( x => 10, :y(10) ), 20, "mixing fat-comma and adverb naming styles also works for named params (foo2)");
 is(foo2( :x(10), y => 10 ), 20, "mixing adverb and fat-comma naming styles also works for named params (foo2)");
 
+#?pugs emit # dies with Undeclared variable on the $x here.
+
+#?pugs emit #
 sub assign_based_on_named_positional ($x, :$y = $x) { $y } 
 
-
+#?pugs skip "depends on previous sub"
 is(assign_based_on_named_positional(5), 5, "When we don't explicitly specify, we get the original value");
+#?pugs skip "depends on previous sub"
 is(assign_based_on_named_positional(5, y => 2), 2, "When we explicitly specify, we get our value");
+#?pugs skip "depends on previous sub"
 is(assign_based_on_named_positional('y'=>2), ('y'=>2), "When we explicitly specify, we get our value");
+#?pugs emit #
 my $var = "y";
+#?pugs skip "depends on previous sub"
 is(assign_based_on_named_positional($var => 2), ("y"=>2),
    "When we explicitly specify, we get our value");
 
 # L<S06/Named arguments/multiple same-named arguments>
 #?rakudo skip 'multiple same-named arguments NYI'
-#?niecza skip 'multiple same-named arguments NYI'
+#?niecza skip 'multiple same-named arguments NYI' 
+#?pugs   skip 'multiple same-named arguments NYI'
 {
     sub named_array(:@x) { +«@x }
 
@@ -103,8 +114,9 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
 # L<S06/Named arguments/Pairs intended as positional arguments>
 #?rakudo skip 'multiple same-named arguments NYI'
 #?niecza skip 'multiple same-named arguments NYI'
+#?pugs skip 'unexpected =>'
 {
-    sub named_array2(@x, :@y) { (+«@x, 42, +«@y) }
+    sub named_array2(@x, :y) { (+«@x, 42, +«@y) }
     # +«(:x) is (0, 1)
 
     is(named_array2(:!x, :y), (0, 42, 1), 'named and unnamed args - two named');
@@ -131,6 +143,7 @@ sub mandatory (:$param!) {
 }
 
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
+#?pugs todo
 dies_ok {eval 'mandatory()' },  "not specifying a mandatory parameter fails";
 
 #?niecza skip "Unhandled trait required"
@@ -191,7 +204,9 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
     sub named_and_slurp(:$grass, *%rest) { return($grass, %rest) }
     my ($grass, %rest) = named_and_slurp(sky => 'blue', grass => 'green', fire => 'red');
     is($grass, 'green', "explicit named arg received despite slurpy hash");
+    #?pugs todo
     is(+%rest, 2, "exactly 2 arguments were slurped");
+    #?pugs todo
     is(%rest<sky>, 'blue', "sky argument was slurped");
     is(%rest<fire>, 'red', "fire argument was slurped");
     nok(%rest<grass>.defined, "grass argument was NOT slurped");
@@ -213,9 +228,11 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
     sub typed_named(Int :$x) { 1 }
     is(typed_named(:x(42)), 1,      'typed named parameters work...');
     is(typed_named(),       1,      '...when value not supplied also...');
+    #?pugs todo
     dies_ok({ typed_named("BBQ") }, 'and the type check is enforced');
 }
 
+#?pugs skip 'parsefail'
 {
     sub renames(:y($x)) { $x }
     is(renames(:y(42)),  42, 'renaming of parameters works');
@@ -226,8 +243,10 @@ nok(%fellowship<dwarf>.defined, "dwarf arg was not given");
 # L<S06/Parameters and arguments/"A signature containing a name collision">
 
 #?niecza 2 todo "sub params with the same name"
+#?pugs todo
 eval_dies_ok 'sub rt68086( $a, $a ) { }', 'two sub params with the same name';
 
+#?pugs todo
 eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
              'sub params with the same name and different types';
 
@@ -242,6 +261,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #68524
+#?pugs todo
 {
     sub rt68524( :$a! ) {}
     ok( &rt68524.signature.perl ~~ m/\!/,
@@ -249,6 +269,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #69516
+#?pugs skip 'parsefail'
 {
     sub rt69516( :f($foo) ) { "You passed '$foo' as 'f'" }
     ok( &rt69516.signature.perl ~~ m/ ':f(' \s* '$foo' \s* ')' /,
@@ -257,6 +278,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 # L<S06/Named parameters/Bindings happen in declaration order>
 #?rakudo skip 'where constraints'
+#?pugs skip 'parsefail'
 {
     my $t = '';
     sub order_test($a where { $t ~= 'a' },   #OK not used
@@ -270,6 +292,7 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 }
 
 # RT #67558
+#?pugs skip 'parsefail'
 {
     #?niecza todo "Renaming a parameter to an existing positional should fail"
     eval_dies_ok q[sub a(:$x, :foo($x) = $x) { $x }],
@@ -293,12 +316,14 @@ eval_dies_ok 'sub svn28865( :$a, :@a ) {}',
 
 }
 
+#?pugs todo
 {
     sub quoted_named(:$x = 5) { $x };
     dies_ok { quoted_named( "x" => 5 ) }, 'quoted pair key => positional parameter';
 }
 
 #?niecza skip "Abbreviated named parameter must have a name"
+#?pugs skip 'parsefail'
 {
     sub named_empty(:$) {
         42

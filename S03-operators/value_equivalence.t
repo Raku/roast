@@ -14,7 +14,7 @@ false, and C<[1,2] eqv [1,2]> returns true.
 
 # L<S03/"Chaining binary precedence" /Value identity>
 
-plan 74;
+plan 75;
 
 # === on values
 {
@@ -180,6 +180,20 @@ plan 74;
 #?pugs skip "this test alters # of run tests?"
 ok     1|2 === 1,  '=== does autothread (1)';
 isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
+
+#?pugs skip 'roles'
+{
+    my $a = do {
+        my role A { };
+        1 but A;
+    };
+    my $b = do {
+        my role A { };
+        1 but A;
+    };
+    #?rakudo todo '.WHICH based on type names'
+    nok $a === $b, 'two lexical roles come out as different when compared with ===';
+}
 
 done;
 

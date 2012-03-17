@@ -218,7 +218,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # .thing inside map blocks should still default to $_
 # used to be a pugs regression
-#?pugs skip '.Int'
 #?DOES 6
 {
     is ~((1,2,3).map: { $_.Int }), "1 2 3", "dependency for following test (1)";

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -320,6 +320,17 @@ eval_lives_ok 'state $x; $x', 'state outside control structure';
     }
     f(1);
     is f(0), 5, 'initialization not reached on first run of the functions';
+}
+
+#?rakudo todo 'state vars in list assignment'
+{
+    sub r {
+        state ($a, $b) = (5, 42);
+        $a++; $b--;
+        "$a $b"
+    }
+    r();
+    is r(), '7 40', 'state vars and list assignment mixes';
 }
 
 # vim: ft=perl6

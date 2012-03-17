@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 25;
 
 {
     class A { method Str() { 'foo' } };
@@ -47,4 +47,10 @@ plan 24;
     lives_ok { %h.push: 0.9 => 3 }, 'Hash.push without array creation is OK';
     dies_ok  { %h.push: 1 => 3 },   'Hash.push key type check failure';
     dies_ok  { %h.push: 1.1 => 0.2 }, 'Hash.push value type check failure';
+}
+
+{
+    my %h{Any};
+    %h = 1, 2;
+    ok %h.keys[0] === 1, 'list assignment + object hashes';
 }

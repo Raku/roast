@@ -27,7 +27,6 @@ plan 28;
 }
 
 #?rakudo skip "Method '' not found for invocant of class 'Str'"
-#?pugs skip 'Int'
 {
     my $a=3.14;
     $a .= Int;

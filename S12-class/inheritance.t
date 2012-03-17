@@ -156,6 +156,7 @@ eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
 }
 
 # RT #82814
+#?pugs skip 'callsame'
 {
     my class A {
         method new { self.bless(*) }

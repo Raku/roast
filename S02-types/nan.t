@@ -22,7 +22,6 @@ is Inf**0   , 1, "Inf**0 is 1, _not_ NaN";
 
 ok NaN ~~ NaN, 'NaN is a NaN';
 nok 4 ~~ NaN, '4 is not a NaN';
-#?pugs skip '.Num'
 nok 4.Num ~~ NaN, "4.Num is not a NaN";
 
 isa_ok NaN + 1i, Complex, "NaN + 1i is a Complex number";

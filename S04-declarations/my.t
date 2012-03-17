@@ -24,6 +24,7 @@ plan 71;
     is $ret, "",                      'my() variable is visible (2)';
 }
 
+#?pugs skip "Can't modify constant item: VStr"
 {
     sub answer { 42 }
     my &fortytwo = &answer;
@@ -48,6 +49,7 @@ eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 eval_lives_ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
 
 #?rakudo skip 'fatal redeclarations'
+#?pugs skip 'parsefail'
 {
     my $test = "value should still be set for arg, even if there's a later my";
     sub foo2 (*%p) {
@@ -189,6 +191,7 @@ my $z = 42; #OK not used
 # &variables don't need to be pre-declared
 # (but they need to exist by CHECK)
 {
+    #?pugs todo
     eval_lives_ok '&x; 1; sub x {}', '&x does not need to be pre-declared';
     eval_dies_ok '&x()', '&x() dies when empty';
 }
@@ -197,11 +200,14 @@ my $z = 42; #OK not used
 {
     eval_lives_ok 'my $a;my $x if 0;$a = $x', 'my $x if 0';
 
+    #?pugs todo
     eval_lives_ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
         #?rakudo 2 skip 'OUTER and SETTING'
+        #?pugs todo
         ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
+        #?pugs todo
         ok eval('not SETTING::<$x>.defined'), 'SETTING::<$x>';
         my $x; #OK not used
     }
@@ -210,13 +216,17 @@ my $z = 42; #OK not used
         my $a;
         #?rakudo todo 'fails'
         #?niecza 2 todo 'still fails?'
+        #?pugs todo
         eval_lives_ok 'do { die "foo";my Int $x;CATCH { default { $a = ?($x ~~ Int) } } }';
         #?rakudo todo 'previous test skipped'
+        #?pugs todo
         ok $a, 'unreached declaration in effect at block start';
     }
 
     # XXX As I write this, this does not die right.  more testing needed.
+    #?pugs todo
     dies_ok { my Int $x = "abc" }, 'type error'; #OK
+    #?pugs todo
     dies_ok { eval '$x = "abc"'; my Int $x; }, 'also a type error';
 }
 
@@ -231,6 +241,7 @@ my $z = 42; #OK not used
 
 # used to be RT #76366, #76466
 #?rakudo skip 'nom regression, OUR::'
+#?pugs skip 'No such subroutine: "&OUR::access_lexical_a"'
 {
     nok OUR::access_lexical_a().defined,
         'can call our-sub that accesses a lexical before the block was run';
@@ -247,6 +258,7 @@ my $z = 42; #OK not used
 eval_lives_ok 'my (%h?) #OK', 'my (%h?) lives';
 
 #RT 63588
+#?pugs todo
 eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
@@ -258,6 +270,7 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
 }
 
 # RT #72946
+#?pugs skip 'parsefail'
 {
     is ( my $ = 'foo' ), 'foo',
         'declaration of anonymous Scalar';
@@ -273,6 +286,7 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 
 # RT #77112
 # check that the presence of routines is checked before run time 
+#?pugs todo
 {
     my $bad = 0;
     dies_ok { eval '$bad = 1; no_such_routine()' },

@@ -146,7 +146,9 @@ throws_like '$.a', X::Syntax::NoSelf, variable => '$.a';
 throws_like 'has $.x', X::Attribute::NoPackage;
 throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'module';
 
-throws_like 'has sub a() { }', X::Sub::Scope, scope => 'has';
+throws_like 'has sub a() { }', X::Declaration::Scope, scope => 'has', declaration => 'sub';
+throws_like 'has package a { }', X::Declaration::Scope, scope => 'has', declaration => 'package';
+throws_like 'our multi a() { }', X::Declaration::Scope::Multi, scope => 'our';
 throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
 throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
@@ -170,5 +172,7 @@ throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 throws_like 'sub foo;', X::Syntax::Missing, what => 'block';
 throws_like 'constant foo;', X::Syntax::Missing, what => /initializer/;
 throws_like 'constant * = 3;', X::Syntax::Missing, what => /constant/;
+
+throws_like 'class A {...}; grammar B { ... }', X::Package::Stubbed, packages => <A B>;
 
 done;

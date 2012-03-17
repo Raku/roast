@@ -10,7 +10,6 @@ plan 817;
 #?pugs skip 'Must only use named arguments to new() constructor'
 isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
 isa_ok(1 / 4, Rat, "/ makes a Rat");
-#?pugs 2 skip '.Coercion'
 isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
 isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 
@@ -111,8 +110,6 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 # Give the arithmetical operators a workout
 
-#?pugs skip '.Coercion'
-#?DOES 678
 {
     for 1/2, 2/3, -1/4, 4/5, 2/7, 65/8 -> $a {
         for -7, -1, 0, 1, 2, 5, 7, 42 -> $b {
@@ -158,21 +155,20 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
 #?rakudo skip "NaN.Rat == NaN"
 #?niecza todo
-#?pugs skip '.Coercion'
+#?pugs todo 'NaN.Rat'
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
     #?rakudo todo "Inf.Rat"
-    #?pugs skip '.Coercion'
+    #?pugs todo 'Inf.Rat'
     is Inf.Rat, Inf, "Inf.Rat == Inf";
     #?rakudo todo "Inf.Rat"
-    #?pugs skip '.Coercion'
+    #?pugs todo 'Inf.Rat'
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
     #?rakudo skip 'RT 74648'
     #?niecza todo
-    #?pugs skip '.Coercion'
     isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
 }
 
@@ -203,17 +199,12 @@ is( exp(1).Rat(1e-4), Rat.new(193, 71), "Num to Rat with epsilon 1e-4");
 is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
     "Num to Rat with epsilon of Rat");
 
-#?pugs skip '.Coercion'
 is (5/4).Int,       1, 'Rat.Int';
 is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
 
-#?pugs skip '.Coercion'
 is_approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";
-#?pugs skip '.Coercion'
 is_approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424/61731 - 832/61731 works";
-#?pugs skip '.Coercion'
 is_approx 424/61731 + 833/123462, 424.Num / 61731.Num + 833.Num / 123462.Num, "424/61731 + 833/123462 works";
-#?pugs skip '.Coercion'
 is_approx 424/61731 - 833/123462, 424.Num / 61731.Num - 833.Num / 123462.Num, "424/61731 - 833/123462 works";
 
 isa_ok 424/61731 + 832/61731, Rat, "424/61731 + 832/61731 is a Rat";
@@ -221,41 +212,27 @@ isa_ok 424/61731 - 832/61731, Rat, "424/61731 - 832/61731 is a Rat";
 isa_ok 424/61731 + 833/123462, Rat, "424/61731 + 833/123462 is a Rat";
 isa_ok 424/61731 - 833/123462, Rat, "424/61731 - 833/123462 is a Rat";
 
-#?pugs skip '195'
 is_approx 61731 + 832/61731, 61731.Num + 832.Num / 61731.Num, "61731 + 832/61731 works";
-#?pugs skip '196'
 is_approx 832/61731 + 61731, 61731.Num + 832.Num / 61731.Num, "832/61731 + 61731 works";
-#?pugs skip '197'
 is_approx 61731 - 832/61731, 61731.Num - 832.Num / 61731.Num, "61731 - 832/61731 works";
-#?pugs skip '198'
 is_approx 832/61731 - 61731, 832.Num / 61731.Num - 61731.Num, "832/61731 - 61731 works";
 
-#?pugs skip '200'
 is_approx 424/61731 + 832/61733, 424.Num / 61731.Num + 832.Num / 61733.Num, "424/61731 + 832/61733 works";
-#?pugs skip '201'
 is_approx 424/61731 - 832/61733, 424.Num / 61731.Num - 832.Num / 61733.Num, "424/61731 - 832/61733 works";
 
-#?pugs skip '203'
 is_approx (424/61731) * (832/61731), (424.Num / 61731.Num) * (832.Num / 61731.Num), "424/61731 * 832/61731 works";
-#?pugs skip '204'
 is_approx (424/61731) / (61731/832), (424.Num / 61731.Num) / (61731.Num / 832.Num), "424/61731 / 61731/832 works";
 
-#?pugs skip '206'
 is_approx 61731 * (61731/832), 61731.Num * (61731.Num / 832.Num), "61731 * 61731/832 works";
-#?pugs skip '207'
 is_approx (61731/832) * 61731, 61731.Num * (61731.Num / 832.Num), "61731/832 * 61731 works";
-#?pugs skip '208'
 is_approx (832/61731) / 61731, (832.Num / 61731.Num) / 61731.Num, "832/61731 / 61731 works";
-#?pugs skip '209'
 is_approx 61731 / (832/61731), 61731.Num / (832.Num / 61731.Num), "61731 / 832/61731 works";
 
-#?pugs 3 skip '.Coercion'
 is_approx (424/61731) * (61731/61733), (424.Num / 61731.Num) * (61731.Num / 61733.Num), "424/61731 * 61731/61733 works";
 isa_ok (424/61731) * (61731/61733), Rat, "424/61731 * 61731/61733 is a Rat";
 is_approx (424/61731) / (61733/61731), (424.Num / 61731.Num) / (61733.Num / 61731.Num), "424/61731 / 61733/61731 works";
 isa_ok (424/61731) / (61733/61731), Rat, "424/61731 / 61733/61731 is a Rat";
 
-#?pugs 2 skip '.Coercion'
 ok (1/2) == (1/2).Rat, 'Rat.Rat works';
 isa_ok (1/2).Rat, Rat, '... and actually returns a Rat';
 
@@ -263,7 +240,7 @@ ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 ok 1/2 !=== 1/3, '=== with false outcome';
 
 # http://irclog.perlgeek.de/perl6/2010-02-24#i_2027452
-#?pugs 2 skip '.Coercion'
+#?pugs 2 skip 'Illegal division by zero'
 is (3/0).Num, Inf, "(3/0).Num = +Inf";
 is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
@@ -294,8 +271,6 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 # the spec says that Rat denominators can't grow larger than a uint64,
 # and arithmetic operations need to spill over to Num
-#?pugs skip '.Coercion'
-#?DOES 13
 {
     # taken from http://www.perlmonks.org/?node_id=952765
     my $s = 0;

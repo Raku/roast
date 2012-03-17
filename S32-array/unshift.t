@@ -111,6 +111,7 @@ plan 56;
 }
 
 # testing some edge cases
+#?pugs skip '...'
 {
     my @unshift = 0 ... 5;
     is(+@unshift, 6, 'starting length is 6');

@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 23;
+plan 24;
 
 {
     # simple try
@@ -136,6 +136,14 @@ plan 23;
     try MyEx.new(s => 'bar').throw;
     isa_ok $!, MyEx, 'Can throw subtypes of Exception and get them back';
     is $!.s, 'bar', '... and got the right object back';
+}
+
+# RT #111704
+#?rakudo todo 'RT 111704'
+{
+    my $x = 0;
+    try { $x = $_ } given '42';
+    is $x, '42', 'try block in statement-modifying contextualizer';
 }
 done;
 

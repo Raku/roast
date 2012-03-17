@@ -9,7 +9,6 @@ isa_ok ?'hello', Bool, "?'hello' is Bool";
 nok ?'0', "?'0' is false";
 isa_ok ?'0', Bool, "?'0' is Bool";
 
-#?pugs 6 skip 'Bool'
 nok ''.Bool, "''.Bool is false";
 isa_ok ''.Bool, Bool, "''.Bool is Bool";
 ok 'hello'.Bool, "'hello'.Bool is true";

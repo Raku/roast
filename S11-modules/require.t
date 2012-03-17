@@ -13,6 +13,7 @@ is Fancy::Utilities::lolgreet('me'),
 
 lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
 
+#?pugs skip 'Must only use named arguments to new() constructor'
 {
     require 'Fancy::Utilities';
     is ::('Fancy::Utilities')::('&lolgreet')('tester'), "O HAI TESTER",

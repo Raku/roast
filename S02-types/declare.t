@@ -330,7 +330,6 @@ plan 79;
  isa_ok($revo, Submethod );
 }
 
-#?rakudo skip 'Macro not implemented'
 #?niecza skip 'Macro not implemented'
 {
  my Macro $remu;

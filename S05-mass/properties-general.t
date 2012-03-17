@@ -1069,6 +1069,7 @@ ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 #?pugs todo
+#?niecza 3 todo "Tests are wrong by latest Unicode standard"
 ok("\x[A679]" ~~ m/^<:Other>$/, q{Match <:Other>} );
 ok(!( "\x[A679]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
 ok(!( "\x[A679]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
@@ -1078,6 +1079,7 @@ ok("\x[AC00]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 #?pugs todo
 ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
 #?pugs todo
+#?niecza todo "Test is wrong by latest Unicode standard"
 ok("\x[AC00]\x[A679]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
 
 # Cc          Control
@@ -1140,6 +1142,7 @@ ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
 ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
 
 #?pugs todo
+#?niecza 3 todo "Tests are wrong by latest Unicode standard"
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:Format>$/, q{Match <:Format>} );
 ok(!( "\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:!Format>$/ ), q{Don't match negated <Format>} );
 ok(!( "\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<-:Format>$/ ), q{Don't match inverted <Format>} );
@@ -1149,6 +1152,7 @@ ok("\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<:!Format>$/, q{Match unrelated negated
 #?pugs todo
 ok("\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<-:Format>$/, q{Match unrelated inverted <Format>} );
 #?pugs todo
+#?niecza todo "Test is wrong by latest Unicode standard"
 ok("\c[DEVANAGARI VOWEL SIGN AU]\c[KHMER VOWEL INHERENT AQ]" ~~ m/<:Format>/, q{Match unanchored <Format>} );
 
 

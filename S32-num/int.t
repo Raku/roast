@@ -24,14 +24,12 @@ is( eval(0.perl), 0, 'eval 0.perl is 0' );
 isa_ok( eval((-0).perl), Int, 'eval -0.perl is Int' );
 is( eval((-0).perl), -0, 'eval -0.perl is 0' );
 
-#?pugs 5 skip '.Int'
 is((-1).Int, -1, "(-1).Int is -1");
 is(0.Int, 0, "0.Int is 0");
 is(1.Int, 1, "1.Int is 1");
 is(3.14159265.Int, 3, "3.14159265.Int is 3");
 is((-3.14159265).Int, -3, "(-3.14159265).Int is -3");
 
-#?pugs 6 skip '.Int'
 is(0.999.Int,   0, "0.999.Int is 0");
 is(0.51.Int,    0, "0.51.Int is 0");
 is(0.5.Int,     0, "0.5.Int is 0");
@@ -39,7 +37,6 @@ is(0.49.Int,    0, "0.49.Int is 0");
 is(0.1.Int,     0, "0.1.Int is 0");
 isa_ok(0.1.Int, Int, '0.1.Int returns an Int');
 
-#?pugs 6 skip '.Int'
 is((-0.999).Int, 0, "(-0.999).Int is 0");
 is((-0.51).Int,  0, "(-0.51).Int is 0");
 is((-0.5).Int,   0, "(-0.5).Int is 0");
@@ -47,21 +44,18 @@ is((-0.49).Int,  0, "(-0.49).Int is 0");
 is((-0.1).Int,   0, "(-0.1).Int is 0");
 isa_ok((-0.1).Int, Int, 'int(-0.1) returns an Int');
 
-#?pugs 5 skip '.Int'
 is(1.999.Int, 1, "int(1.999) is 1");
 is(1.51.Int,  1, "int(1.51) is 1");
 is(1.5.Int,   1, "int(1.5) is 1");
 is(1.49.Int,  1, "int(1.49) is 1");
 is(1.1.Int,   1, "int(1.1) is 1");
 
-#?pugs 5 skip '.Int'
 is((-1.999).Int, -1, "int(-1.999) is -1");
 is((-1.51).Int, -1, "int(-1.51) is -1");
 is((-1.5).Int, -1, "int(-1.5) is -1");
 is((-1.49).Int, -1, "int(-1.49) is -1");
 is((-1.1).Int, -1, "int(-1.1) is -1");
 
-#?pugs 4 skip '.Int, .Num'
 is(1.999.Num.Int, 1, "int(1.999.Num) is 1");
 is(1.1.Num.Int,   1, "int(1.1.Num) is 1");
 
@@ -75,7 +69,6 @@ isa_ok ?1, Bool, "?1 is Bool";
 ok ?42, "?42 is true";
 isa_ok ?42, Bool, "?42 is Bool";
 
-#?pugs 6 skip '.Bool'
 nok 0.Bool, "0.Bool is false";
 isa_ok 0.Bool, Bool, "0.Bool is Bool";
 ok 1.Bool, "1.Bool is true";
@@ -83,7 +76,6 @@ isa_ok 1.Bool, Bool, "1.Bool is Bool";
 ok 42.Bool, "42.Bool is true";
 isa_ok 42.Bool, Bool, "42.Bool is Bool";
 
-#?pugs 5 skip '.Int'
 is('-1.999'.Int, -1, "int('-1.999') is -1");
 #?niecza 3 skip "0x, 0d, and 0o NYI"
 is('0x123'.Int, 0x123, "int('0x123') is 0x123");
@@ -93,7 +85,6 @@ is('0o678'.Int, 0o67, "int('0o678') is 0o67");
 #?niecza skip "trailing d produces a failure"
 is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 
-#?pugs skip '.Int, .Num'
 #?DOES 24
 {
     sub __int( $s ) {
@@ -106,6 +97,7 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 
     for 0, 0.0, 1, 50, 60.0, 99.99, 0.4, 0.6, -1, -50, -60.0, -99.99 {
         my $int = __int($_.Num);
+        #?pugs skip ".Int"
         is(.Int, $int, "integral value for $_ is $int");
         isa_ok(.Int, Int);
     }
@@ -113,11 +105,9 @@ is('3e4d5'.Int, 3e4, "int('3e4d5') is 3e4");
 
 #?DOES 1
 # Special values
-#?pugs skip '.Int'
 is((1.9e3).Int, 1900, "int 1.9e3 is 1900");
-#?pugs 3 todo 'bug'
-#?rakudo 3 todo 'Inf and NaN NYI for Int'
-#?pugs 3 skip '.Int'
+#?rakudo 3 todo 'Inf and NaN NYI for Int' 
+#?pugs   3 todo 'Inf and NaN NYI for Int'
 is((Inf).Int,    Inf, "int Inf is Inf");
 is((-Inf).Int,  -Inf, "int -Inf is -Inf");
 is((NaN).Int,    NaN, "int NaN is NaN");
