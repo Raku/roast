@@ -5,9 +5,6 @@ use Test;
 #
 # L<S04/Phasers/"assert precondition at every block ">
 # L<S06/Subroutine traits/PRE/POST>
-#
-# TODO: 
-#  * Multiple inheritance + PRE/POST blocks
 
 plan 19;
 
