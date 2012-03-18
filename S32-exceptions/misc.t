@@ -175,4 +175,7 @@ throws_like 'constant * = 3;', X::Syntax::Missing, what => /constant/;
 
 throws_like 'class A {...}; grammar B { ... }', X::Package::Stubbed, packages => <A B>;
 
+throws_like 'my sub a { PRE 0  }; a()', X::Phaser::PrePost, phaser => 'PRE', condition => /0/;
+throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', condition => /0/;
+
 done;

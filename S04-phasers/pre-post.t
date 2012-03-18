@@ -9,7 +9,7 @@ use Test;
 # TODO: 
 #  * Multiple inheritance + PRE/POST blocks
 
-plan 25;
+plan 19;
 
 sub foo(Int $i) {
     PRE {
@@ -66,59 +66,6 @@ lives_ok({ qox(23) }, "sub with two POSTs compiles and runs");
 dies_ok( { qox(-1) }, "sub with two POSTs fails if first POST is violated");
 dies_ok( { qox(123)}, "sub with two POSTs fails if second POST is violated");
 
-# inheritance
-
-class PRE_Parent {
-    method test(Int $i) {
-        PRE {
-            $i < 23
-        }
-        return 1;
-    }
-}
-
-class PRE_Child is PRE_Parent {
-    method test(Int $i){
-        PRE {
-            $i > 0;
-        }
-        return 1;
-    }
-}
-
-my $foo = PRE_Child.new;
-
-#?pugs todo
-lives_ok { $foo.test(5)    }, 'PRE in methods compiles and runs';
-dies_ok  { $foo.test(-42)  }, 'PRE in child throws';
-#?niecza todo 'PRE inheritance'
-dies_ok  { $foo.test(78)   }, 'PRE in parent throws';
-
-
-class POST_Parent {
-    method test(Int $i) {
-        return 1;
-        POST {
-            $i > 23
-        }
-    }
-}
-
-class POST_Child is POST_Parent {
-    method test(Int $i){
-        return 1;
-        POST {
-            $i < -23
-        }
-    }
-}
-my $mp = POST_Child.new;
-
-#?niecza 2 skip 'unspecced'
-lives_ok  { $mp.test(-42) }, "It's enough if we satisfy one of the POST blocks (Child)";
-#?pugs todo
-lives_ok  { $mp.test(42)  }, "It's enough if we satisfy one of the POST blocks (Parent)";
-dies_ok   { $mp.test(12) }, 'Violating poth POST blocks throws an error';
 
 class Another {
     method test(Int $x) {
@@ -131,6 +78,7 @@ class Another {
 
 my $pt = Another.new;
 #?pugs todo
+#?rakudo todo 'POST gets return value as $_'
 lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
 dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 
@@ -171,6 +119,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         }
     }
     #?pugs todo
+    #?rakudo todo 'aborting of failed phasers'
     is $str, '(', 'failing PRE runs nothing else';
 }
 
@@ -185,9 +134,11 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         }
     }
     #?pugs todo
+    #?rakudo todo 'aborting of failed phasers'
     is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
 }
 
+#?rakudo 3 todo 'POST and exceptions'
 #?niecza skip 'unspecced'
 {
     my $str;
