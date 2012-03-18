@@ -75,7 +75,6 @@ class Another {
 
 my $pt = Another.new;
 #?pugs todo
-#?rakudo todo 'POST gets return value as $_'
 lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
 dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 
