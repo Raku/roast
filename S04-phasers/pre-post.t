@@ -124,13 +124,12 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     my $str;
     try {
         {
+            POST  { $str ~= 'z'; 1 }
             POST  { $str ~= 'x'; 0 }
             LEAVE { $str ~= 'y' }
-            POST  { $str ~= 'z'; 1 }
         }
     }
     #?pugs todo
-    #?rakudo todo 'aborting of failed phasers'
     is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
 }
 
