@@ -115,7 +115,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         }
     }
     #?pugs todo
-    #?rakudo todo 'aborting of failed phasers'
     is $str, '(', 'failing PRE runs nothing else';
 }
 
