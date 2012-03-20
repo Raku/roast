@@ -6,7 +6,7 @@ use Test;
 # L<S04/Phasers/"assert precondition at every block ">
 # L<S06/Subroutine traits/PRE/POST>
 
-plan 19;
+plan 22;
 
 sub foo(Int $i) {
     PRE {
@@ -166,6 +166,17 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     ok $! ~~ /foo/, 'failing POST on exception doesn\'t replace $!';
     # XXX
     # is $!.pending.[-1], 'a POST exception', 'does push onto $!.pending';
+}
+
+{
+    my sub blockless($x) {
+        PRE $x >= 0;
+        POST $_ == 4;
+        return $x;
+    }
+    lives_ok { blockless(4) }, 'blockless PRE/POST (+)';
+    dies_ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
+    dies_ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
 }
 
 # vim: ft=perl6
