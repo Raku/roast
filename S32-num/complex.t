@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 487;
+plan 488;
 
 # Basic tests functions specific to complex numbers.
 
@@ -10,6 +10,7 @@ isa_ok(1 + 2i, Complex, 'postfix:<i> creates a Complex number');
 #?pugs   2 skip 'i'
 isa_ok(i, Complex, 'i creates a Complex number');
 ok i == 1i, 'i == 1i';
+ok 1 != 1i, '!= and complex numbers';
 
 isa_ok((3)i, Complex, '($n)i form creates a Complex number');
 #?pugs skip 'parsefail'
