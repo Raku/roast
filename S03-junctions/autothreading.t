@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 85;
+plan 87;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -300,6 +300,10 @@ plan 85;
     ok $y ~~ Bool, 'infix:<!eq> collapses the junction (1)';
     ok $y !~~ Junction, 'infix:<!eq> collapses the junction (2)';
     nok $y, '... and the result is False';
+
+    my Mu $z = any(1, 2, 3);
+    ok  4 != $z, '!= autothreads like not == (1)';
+    nok 3 != $z, '!= autothreads like not == (2)';
 }
 
 # RT #69863
