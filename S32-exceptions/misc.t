@@ -178,4 +178,7 @@ throws_like 'class A {...}; grammar B { ... }', X::Package::Stubbed, packages =>
 throws_like 'my sub a { PRE 0  }; a()', X::Phaser::PrePost, phaser => 'PRE', condition => /0/;
 throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', condition => /0/;
 
+throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
+            reason => /trailing/;
+
 done;
