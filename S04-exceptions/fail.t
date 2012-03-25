@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S04/Exceptions/The fail function>
 
@@ -60,6 +60,12 @@ plan 12;
     my $f = (sub { fail('foo') }).();
     is $f.exception, 'foo', 'can extract exception from Failure';
     isa_ok $f.exception, Exception, '... and it is an Exception';
+}
+
+{
+    class AnEx is Exception { };
+    my $f = (sub f { fail AnEx.new }).();
+    isa_ok $f.exception, AnEx, 'can fail() typed exceptions';
 }
 
 done;
