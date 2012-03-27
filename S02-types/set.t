@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 93;
+plan 91;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -136,9 +136,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <foo bar baz>;
     lives_ok { $s = $s.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
-    ok $s ~~ /foo/, "... which mentions foo";
-    ok $s ~~ /bar/, "... which mentions bar";
-    ok $s ~~ /baz/, "... which mentions baz";
+    is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
 {
