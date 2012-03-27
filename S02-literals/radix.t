@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 131;
+plan 132;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -216,11 +216,11 @@ dies_ok { 2.foo  },    "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
-#?niecza 2 todo
-#?pugs todo "todo"
+#?niecza 3 todo
+#?pugs 3 todo "todo"
 eval_dies_ok ':2<2>',   ':2<2> is illegal';
-#?pugs todo "todo"
 eval_dies_ok ':10<3a>', ':10<3a> is illegal';
+eval_dies_ok ':0<0>', ':0<...> is illegal';
 
 for 2..36 {
     #?pugs skip "todo"
