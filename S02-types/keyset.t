@@ -164,7 +164,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    my $s = set <foo bar baz>;
+    my $s = KeySet.new(<foo bar baz>);
     lives_ok { $s = $s.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";

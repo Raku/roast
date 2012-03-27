@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 106;
+plan 103;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$^k} }).join(' ')
@@ -162,14 +162,11 @@ sub showkv($x) {
 }
 
 {
-    my $b = bag { foo => 10000000000, bar => 17, baz => 42 };
+    my $b = bag { foo => 2, bar => 3, baz => 1 };
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
-    ok $s.chars < 1000, "... of reasonable length";
-    ok $s ~~ /foo/, "... which mentions foo";
-    ok $s ~~ /bar/, "... which mentions bar";
-    ok $s ~~ /baz/, "... which mentions baz";
+    is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
 {
