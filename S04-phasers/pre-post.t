@@ -118,7 +118,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, '(', 'failing PRE runs nothing else';
 }
 
-#?niecza todo 'I think POST runs LIFO by spec?'
 {
     my $str;
     try {

@@ -44,7 +44,6 @@ BEGIN {
     $var_at_begin = $var;
 }
 
-#?niecza todo 'niecza has "enter", also'
 #?pugs todo
 is $hist, 'begin check init enter ', 'BEGIN {} runs only once';
 nok $var_at_begin.defined, 'BEGIN {...} ran at compile time';

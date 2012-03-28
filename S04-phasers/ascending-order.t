@@ -50,7 +50,6 @@ END {
     is $eof_var, 29, '$eof_var gets assigned at END time';
 }
 
-#?niecza todo 'niecza has "enter", also'
 #?pugs todo
 is $hist, 'begin check init enter start ', 'BEGIN {} runs only once';
 nok $var_at_begin.defined, 'BEGIN {...} ran at compile time';
