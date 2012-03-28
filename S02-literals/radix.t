@@ -216,7 +216,6 @@ dies_ok { 2.foo  },    "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
-#?niecza 3 todo
 #?pugs 3 todo "todo"
 eval_dies_ok ':2<2>',   ':2<2> is illegal';
 eval_dies_ok ':10<3a>', ':10<3a> is illegal';
