@@ -93,6 +93,9 @@ throws_like '1!foo()',
 
 throws_like 'sub f() { }; f() := 2', X::Bind::WrongLHS;
 throws_like 'my int $x := 2', X::Bind::NativeType;
+throws_like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, what => 'array';
+throws_like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, what => 'hash';
+
 
 throws_like 'for (1; 1; 1) { }', X::Obsolete,
     old         => rx/<<for>>/,
@@ -115,6 +118,12 @@ throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
 throws_like '@a', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
+throws_like 'my $foo does &Int', X::Does::TypeObject;
+throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
+throws_like 'role R { }; 99 but R("wrong");', X::Role::Initialization;
+throws_like 'role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
+throws_like 'role R { }; 99 does R("wrong");', X::Role::Initialization;
+throws_like 'role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Initialization;
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
