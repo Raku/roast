@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 43;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -67,18 +67,5 @@ is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $'
 
 # RT #74610
 dies_ok {sprintf "%s"}, 'missing sprintf string argument';
-
-#?niecza skip '%C format'
-#?rakudo skip 'RT #60672'
-{
-my $fmtd;
-eval q/$fmtd =
-    sprintf "%d%C is %d digits long",
-        1234,
-        sub ($s, @args is rw) { @args[2] = $s.elems },
-        0;
-/;
-is $fmtd, '1234 is 4 digits long', 'Implementation of S29 sprintf %C format'
-}
 
 # vim: ft=perl6
