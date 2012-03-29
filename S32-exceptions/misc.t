@@ -115,6 +115,8 @@ throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
 throws_like '@a', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
+throws_like 'my $foo does &Int', X::Does::TypeObject;
+throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
