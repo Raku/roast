@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # L<S13/Type Casting/"whose name is a declared type, it is taken as a coercion
 # to that type">
@@ -30,8 +30,10 @@ ok +$o == 1.2, 'method Numeric takes care of correct numification';
     }
     is RT69378str.new.a, 'RT #69378', 'call to RT69378str.new properly initializes $.a';
     is RT69378str.new.Str, 'RT #69378', 'call to .Str works on "class is Str"';
-    #?niecza skip 'coercion syntax'
+    #?niecza 2 skip 'coercion syntax'
     is Str(RT69378str.new), 'RT #69378', 'Str(...) coercion syntax calls our .Str too';
+    # RT #72834
+    ok Int() == 0, 'Int()';
 }
 
 is 1.Str.Str, "1", ".Str can be called on Str";
