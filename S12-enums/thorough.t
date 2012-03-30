@@ -15,10 +15,8 @@ Enum tests from L<S12/Enumerations>
 # L<S12/Enumerations/keys are specified as a parenthesized list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
-ok day ne "", 'enum itself stringififes';
-#?rakudo skip 'regression'
-#?niecza todo
-ok day.WHAT, 'enum.WHAT returned a value';
+is day.gist, 'day()', 'enum itself stringififes';
+ok day.WHAT === day,  'enum.WHAT returned a value';
 ok day.perl, 'enum.perl returned a value';
 
 sub test_stuff($x) {
@@ -36,14 +34,12 @@ sub test_stuff($x) {
   ok $x.does(Tue),         ".does worked correctly ($x-1)";
   #?niecza skip 'No candidates for dispatch to infix:<does>'
   ok $x.does(day),         ".does worked correctly ($x-2)";
-  #?rakudo skip 'EnumValue($x)'
-  ok Tue($x),              "Tue() worked correctly ($x)";
   ok $x.Tue,               ".Tue() worked correctly ($x)";
-  #?rakudo skip 'unknown bug'
-  ok $x.Tue.WHAT,          '$obj.Tue.WHAT returns a true valuee';
+  ok $x.Tue.WHAT === day,  '$obj.Tue.WHAT returns the proper type object';
   ok $x.Tue.perl,          '$obj.Tue.perl returns a true valuee';
 }
 
+#?rakudo skip 'NYI'
 {
   my $x = 1;
   is $x, 1, "basic sanity (1)";
@@ -92,12 +88,11 @@ sub test_stuff($x) {
 ok True.perl ~~/^ 'Bool::True'/, 'True.perl';
 ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 
+#?rakudo skip 'enum name as type constraint'
 {
     enum Negation << :isnt<isnt> :arent<arent> :amnot<amnot> :aint<aint> >>;
     my Negation $foo;
-    #?rakudo todo 'Null PMC Access in invoke()'
     lives_ok { $foo = Negation::isnt }, 'simple assignment from enum';
-    #?rakudo skip 'Null PMC Access in invoke()'
     is $foo, Negation::isnt, 'assignment from enum works';
 }
 
@@ -110,7 +105,6 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 # RT #65658
 {
     enum RT65658 <Todo Bug Feature Ticket>;
-    #?rakudo 2 skip 'RT 65658'
     is RT65658(2), RT65658::Feature, 'can index enum by number';
     is RT65658((Todo + 3.2).Int), RT65658::Ticket, 'enum and math and index';
 }
