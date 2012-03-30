@@ -1,14 +1,13 @@
 use v6;
 use Test;
 
-plan 16;
+plan 15;
 
 # L<S11/"Compile-time Importation"/>
 
 {
     use t::spec::packages::S11-modules::Foo;
 
-    ok( &t::spec::packages::S11-modules::Foo::foo, 'Foo::foo is defined' );
     ok( &foo, 'Foo::foo is defined (explicitly :DEFAULT)' );
     is( foo(), 'Foo::foo', 'Foo::foo is the sub we expect' );
 
@@ -26,13 +25,12 @@ plan 16;
     is( waz(), 'Foo::waz', 'Foo::waz is the sub we expect' );
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );
 
-    dies_ok { qux() }, 'qux() not imported';
-    dies_ok { gaz() }, 'gaz() not imported';
+    #?rakudo 2 todo 'importing stuff'
+    dies_ok { eval 'qux()' }, 'qux() not imported';
+    dies_ok { eval 'gaz()' }, 'gaz() not imported';
 }
 
-#?rakudo todo 'Importation is currently not lexical'
-ok( ! &foo,
-    'Foo::foo is undefined in outer scope' );
+ok( ! &foo, 'Foo::foo is undefined in outer scope' );
 
 {
     BEGIN { @*INC.push('t/spec/packages') };
