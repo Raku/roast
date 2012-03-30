@@ -192,4 +192,17 @@ throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', co
 throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
             reason => /trailing/;
 
+# RT #58558
+throws_like '!!! 42', X::AdHoc, payload => 42;
+throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
+{
+    my $c = 0;
+    try {
+        ??? 42;
+        CONTROL { default { $c++ } }
+    }
+    is $c, 1, '??? with argument warns';
+}
+
+
 done;
