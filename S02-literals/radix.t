@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 132;
+plan 133;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -82,6 +82,7 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 {
+    is :16('0d10'),      0xd10, ':16("0d..") is hex, not decimal';
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
 #?pugs 2 todo 'feature'
     is(:16('0x20'),      0x20, ":16('0x20') stays hexadecimal");
