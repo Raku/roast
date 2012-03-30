@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 64;
+plan 65;
 
 isa_ok( eval(1.Num.perl), Num, 'eval 1.Num.perl is Num' );
 is_approx( eval(1.Num.perl), 1, 'eval 1.Num.perl is 1' );
@@ -173,5 +173,8 @@ is(4_2.0_1, 42.01,  'single underscores are ok');
 
 is 0_1, 1, "0_1 is parsed as 0d1";
 is +^1, -2, '+^1 == -2 as promised';
+
+# RT #73238
+ok 0xFFFFFFFFFFFFFFFF > 1, '0xFFFFFFFFFFFFFFFF is not -1';
 
 # vim: ft=perl6
