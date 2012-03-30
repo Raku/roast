@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 83;
+plan 84;
 
 #?pugs emit if $*OS eq "browser" {
 #?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -257,6 +257,17 @@ $out.close;
     is $line, 'Hello World', 'got the right line from .IO.get';
 }
 unlink($filename);
+
+# RT #112130
+{
+    $out = open($filename, :w);
+    $out.print('blarg');
+    $out.close;
+    my $in = open($filename);
+    is $in.lines.join, 'blarg', 'can use .lines on a file without trailing newline';
+    $in.close;
+    unlink $filename;
+}
 
 done;
 
