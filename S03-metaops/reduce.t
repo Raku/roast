@@ -354,6 +354,8 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 
 ok [+](1..10) + 0 == ([+] 1..10) + 0,
    'a listop with immediate () is a function call (RT 82210)';
+# RT #76758
+ok [+](1, 2, 3) / 2 == 3, '[+] is a normal listop';
 
 # RT #99942
 {
