@@ -533,7 +533,6 @@ lives_ok {
 
 # RT #74060
 # more list comprehension
-#?niecza todo
 #?pugs skip 'parsefail'
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
