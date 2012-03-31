@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 54;
+plan 56;
 
 # L<S32::Basics/Mu/=item defined>
 
@@ -134,5 +134,9 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
 my %a = (a => 1);
 ok defined(%a{"a"}),        "defined on a hash with parens (1)";
 ok !defined(%a{"b"}),       "defined on a hash with parens (2)";
+
+# RT #76448
+ok defined('a' => 5) ~~ Bool, 'defined is a listop, not a prefix op';
+ok &defined, '&defined is available';
 
 # vim: ft=perl6
