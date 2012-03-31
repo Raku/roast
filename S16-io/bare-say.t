@@ -41,7 +41,7 @@ is_run( 'say("")',
 is_run( 'my %h=<a b c> Z 1,2,3; for %h { .say }',
         {
             status => 0,
-            out    => "a\t1\nb\t2\nc\t3\n",
+            out    => "\"a\" => 1\n\"b\" => 2\n\"c\" => 3\n",
             err    => '',
         },
         'for %h { .say } (RT 74822)' );
