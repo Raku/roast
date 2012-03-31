@@ -204,5 +204,6 @@ throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
     is $c, 1, '??? with argument warns';
 }
 
+throws_like 'die "foo"', X::AdHoc, backtrace => Backtrace;
 
 done;
