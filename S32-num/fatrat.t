@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 252;
+plan 253;
 
 # Basic test functions specific to FatRats.
 
@@ -198,6 +198,8 @@ isa_ok .88888888888R.WHAT.gist, 'FatRat()', 'WHAT works on FatRat created from 1
 
 isa_ok (2/3R) ** 3, FatRat, "FatRat raised to a positive Int power is a FatRat";
 is (2/3R) ** 3, 8/27, "FatRat raised to a positive Int power gets correct answer";
+
+nok (1 - 0.5.FatRat ** 128) == 1, 'infix:<==> does not go through Num';
 
 done;
 
