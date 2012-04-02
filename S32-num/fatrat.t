@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 253;
+plan 274;
 
 # Basic test functions specific to FatRats.
 
@@ -199,7 +199,34 @@ isa_ok .88888888888R.WHAT.gist, 'FatRat()', 'WHAT works on FatRat created from 1
 isa_ok (2/3R) ** 3, FatRat, "FatRat raised to a positive Int power is a FatRat";
 is (2/3R) ** 3, 8/27, "FatRat raised to a positive Int power gets correct answer";
 
-nok (1 - 0.5.FatRat ** 128) == 1, 'infix:<==> does not go through Num';
+
+{
+    my $epsilon = 0.5.FatRat ** 128;
+    nok 1 - $epsilon == 1,   'infix:<==>(FatRat, Int) does not go through Num';
+    nok 1 - $epsilon == 1.0, 'infix:<==>(FatRat, Rat) does not go through Num';
+    ok  1 - $epsilon == 1 - $epsilon, 'infix:<==>(FatRat, FatRat) can return True too';
+    ok  1 - $epsilon  < 1,   'FatRat < Int (+)';
+    nok 1 + $epsilon  < 1,   'FatRat < Int (-)';
+    ok  1 - $epsilon  < 1.0, 'FatRat < Rat (+)';
+    nok 1 + $epsilon  < 1.0, 'FatRat < Rat (-)';
+    ok  1 + $epsilon  > 1,   'FatRat > Int (+)';
+    nok 1 - $epsilon  > 1.0, 'FatRat > Rat (+)';
+    ok  1 + $epsilon  > 1.0, 'FatRat > Rat (+)';
+    nok 1 - $epsilon  > 1,   'FatRat > Int (+)';
+    ok  1 - $epsilon <= 1,   'FatRat <= Int (+)';
+    nok 1 + $epsilon <= 1,   'FatRat <= Int (-)';
+    ok  1 - $epsilon <= 1.0, 'FatRat <= Rat (+)';
+    nok 1 + $epsilon <= 1.0, 'FatRat <= Rat (-)';
+    ok  1 + $epsilon >= 1,   'FatRat >= Int (+)';
+    nok 1 - $epsilon >= 1.0, 'FatRat >= Rat (+)';
+    ok  1 + $epsilon >= 1.0, 'FatRat >= Rat (+)';
+    nok 1 - $epsilon >= 1,   'FatRat >= Int (+)';
+
+    is 1 + $epsilon <=> 1 + $epsilon, Order::Same,     '<=> Same';
+    is 1 + $epsilon <=> 1,            Order::Decrease, '<=> Decrease';
+    is 1 - $epsilon <=> 1,            Order::Increase, '<=> Increase';
+
+}
 
 done;
 
