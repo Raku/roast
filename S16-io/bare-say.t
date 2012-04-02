@@ -37,7 +37,6 @@ is_run( 'say("")',
 }
 
 # RT #74822
-#?rakudo todo 'RT #61494'
 is_run( 'my %h=<a b c> Z 1,2,3; for %h { .say }',
         {
             status => 0,

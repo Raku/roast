@@ -180,6 +180,7 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
+    #?rakudo todo 'KeyBag stringification'
     is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
