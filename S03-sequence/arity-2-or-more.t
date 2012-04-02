@@ -37,7 +37,6 @@ is (1, 1, 2, -> $a, $b { $a + $b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13
 is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'arity-2 Fibonacci, 4 seeds';
 
 # sequence with slurpy functions
-#?rakudo skip 'nom regression'
 {
     sub nextprime( *@prev_primes ) {
 	my $current = @prev_primes[*-1];
@@ -46,7 +45,6 @@ is (1, 1, 2, 3, { $^a + $^b } ... 9).[^7].join(', '), '1, 1, 2, 3, 5, 8, 13', 'a
     }
     is (2, &nextprime ... 13).join(' '), '2 3 5 7 11 13', 'slurpy prime generator';
 }
-#?rakudo skip 'nom regression'
 is (1, 2, sub {[*] @_[*-1], @_ + 1} ... 720).join(' '), '1 2 6 24 120 720', 'slurpy factorial generator';
 
 done;

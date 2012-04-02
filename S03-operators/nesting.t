@@ -9,7 +9,6 @@ plan 26;
 ok &infix:<+>  === &[+],  'long and short form are the same (+)';
 #?niecza skip 'undeclared name [==]'
 ok &infix:<==> === &[==], 'long and short form are the same (==)';
-#?rakudo skip 'nom regression'
 #?niecza skip 'undeclared name [<=>]'
 is sort( &[<=>], <5 3 2 1 4> ), <1 2 3 4 5>, 'sort works using &[<=>]';
 

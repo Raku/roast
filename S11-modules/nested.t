@@ -20,7 +20,6 @@ eval_lives_ok 'use A; A.new()', 'RT 62162';
 eval_lives_ok 'use RoleA',
               'can use multiple "Role $name" statements (in multiple files) RT 67976';
 
-#?rakudo skip 'stubbed roles'
 {
     use RoleA;
     role RoleB {...}

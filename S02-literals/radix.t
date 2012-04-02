@@ -76,7 +76,6 @@ is(:16<fF>, 255, 'got the correct int value from (mixed case) hex fF');
 is :16<2_F_A_C_E_D>,  0x2FACED, 'got the correct int value from hex 2_F_A_C_E_D';
 
 # L<S02/Conversion functions/"interpret leading 0b or 0d as hex digits">
-#?rakudo 2 skip ':base()'
 is(:16('0b1110'), 0xB1110, ":16('0b1110') uses b as hex digit"  );
 is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 
