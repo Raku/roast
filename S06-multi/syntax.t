@@ -111,10 +111,10 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 }
 
 # RT #68158
+#?pugs skip 'todo flipflops the first test response'
 {
     multi rt68158() { 1 }
     multi rt68158(*@x) { 2 }    #OK not used
-    #?pugs todo
     is rt68158(),  1, 'non-slurpy wins over slurpy';
     is rt68158(9), 2, 'slurpy called when non-slurpy can not bind';
 }

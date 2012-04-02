@@ -173,6 +173,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         POST $_ == 4;
         return $x;
     }
+    #?pugs todo
     lives_ok { blockless(4) }, 'blockless PRE/POST (+)';
     dies_ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
     dies_ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
