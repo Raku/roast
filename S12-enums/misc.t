@@ -46,6 +46,8 @@ use Test;
     is OK(),  'sub OK', 'but () is still a function call';
     is FAIL,  'FAIL',   'non-conflicting enum key';
     is +FAIL, 1,        'non-conflicting enum key (numeric)';
+    # RT #112202
+    lives_ok { OK.^methods }, 'can call .^methods on an enum';
 }
 
 done;
