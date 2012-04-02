@@ -7,7 +7,7 @@ use Test;
 Tests for Synopsis 3
 =end kwid
 
-plan 43;
+plan 45;
 
 { # L<S03/Changes to Perl 5 operators/ "?| is a logical OR">
   # work with pure Bool's
@@ -99,3 +99,6 @@ plan 43;
   #?pugs skip 'No compatible multi variant found: "&infix:?^"'
   isa_ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
+
+ok (?^5) === False, 'prefix ?^ (+)';
+ok (?^0) === True,  'prefix ?^ (-)';
