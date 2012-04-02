@@ -4,7 +4,7 @@ my $r;
 
 =for foo
 
-$r = $=POD[0];
+$r = $=pod[0];
 isa_ok $r, Pod::Block, 'returns a Pod6 Block';
 isa_ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.name, 'foo', 'name is ok';
@@ -13,7 +13,7 @@ is $r.content, [], 'no content, all right';
 =for foo
 some text
 
-$r = $=POD[1];
+$r = $=pod[1];
 isa_ok $r.content[0], Pod::Block::Para;
 is $r.content[0].content, "some text", 'the content is all right';
 
@@ -21,7 +21,7 @@ is $r.content[0].content, "some text", 'the content is all right';
 some
 spaced   text
 
-$r = $=POD[2];
+$r = $=pod[2];
 is $r.content[0].content,
    "some spaced text", 'additional whitespace removed  from the content';
 =begin pod
@@ -35,7 +35,7 @@ Inside got
 Outside blocks
 =end pod
 
-$r = $=POD[3];
+$r = $=pod[3];
 isa_ok $r.content[0], Pod::Block;
 is $r.content[0].content[0].content, "Inside got",
    'paragraph block content ok, 1/2';
@@ -61,7 +61,7 @@ four, another delimited one
 =end four
 =end pod
 
-$r = $=POD[4];
+$r = $=pod[4];
 is $r.content[0].content[0].content,
    "one, delimited block", "mixed blocks, 1";
 is $r.content[1].content[0].content,
@@ -91,7 +91,7 @@ Which, as we all know...
     Turn into Jelly Beans!
 =end foo
 
-$r = $=POD[5];
+$r = $=pod[5];
 isa_ok $r, Pod::Block;
 is $r.content.elems, 5, '5 sub-nodes in foo';
 is $r.name, 'foo';

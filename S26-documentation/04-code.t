@@ -9,7 +9,7 @@ This ordinary paragraph introduces a code block:
     $which.is_specified(:by<indenting>);
 =end pod
 
-$r = $=POD[0];
+$r = $=pod[0];
 is $r.content[0].content, 'This ordinary paragraph introduces a code block:';
 isa_ok $r.content[1], Pod::Block::Code;
 is $r.content[1].content.Str, q[$this = 1 * code('block');
@@ -31,7 +31,7 @@ But this is just a text. Again
 
 =end pod
 
-$r = $=POD[1];
+$r = $=pod[1];
 is $r.content.elems, 5;
 is $r.content[0].content, 'This is an ordinary paragraph';
 isa_ok $r.content[1], Pod::Block::Code;
@@ -51,7 +51,7 @@ Tests for the feed operators
     
 =end pod
 
-$r = $=POD[2];
+$r = $=pod[2];
 is $r.content[0].content, 'Tests for the feed operators';
 isa_ok $r.content[1], Pod::Block::Code;
 is $r.content[1].content, "==> and <==";
@@ -67,7 +67,7 @@ Fun comes
   or better: maybe it'll break!
 =end pod
 
-$r = $=POD[3];
+$r = $=pod[3];
 is $r.content.elems, 4;
 is $r.content[0].content, 'Fun comes';
 isa_ok $r.content[1], Pod::Block::Code;
@@ -89,7 +89,7 @@ This is Pod too. Specifically, this is a simple C<para> block
 
 =end pod
 
-$r = $=POD[4];
+$r = $=pod[4];
 is $r.content.elems, 3;
 isa_ok $r.content[0], Pod::Block;
 is $r.content[0].content[0].content, 'A heading';
@@ -124,7 +124,7 @@ is $r.content[2].content,
     =end item
 =end pod
 
-$r = $=POD[5];
+$r = $=pod[5];
 is $r.content.elems, 6;
 isa_ok $r.content[0], Pod::Block::Code;
 is $r.content[0].content, 'this is code';
@@ -153,5 +153,5 @@ is $r.content[5].content[0].content, 'and this is!';
     =end code
 =end code
 
-$r = $=POD[6];
+$r = $=pod[6];
 isa_ok $r, Pod::Block::Code;

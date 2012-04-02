@@ -5,7 +5,7 @@ my $r;
 =begin foo
 =end foo
 
-$r = $=POD[0];
+$r = $=pod[0];
 isa_ok $r, Pod::Block, 'returns a Pod Block';
 isa_ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.name, 'foo', 'name is ok';
@@ -15,7 +15,7 @@ is $r.content, [], 'no content, all right';
 some text
 =end foo
 
-$r = $=POD[1];
+$r = $=pod[1];
 isa_ok $r.content[0], Pod::Block::Para;
 is $r.content[0].content, "some text", 'the content is all right';
 is $r.name, 'foo', 'name is ok';
@@ -25,7 +25,7 @@ some
 spaced   text
 =end foo
 
-$r = $=POD[2];
+$r = $=pod[2];
 is $r.name, 'foo', 'name is ok';
 is $r.content[0].content,
    "some spaced text", 'additional whitespace removed from the content';
@@ -36,7 +36,7 @@ paragraph one
 paragraph
 two
 =end foo
-$r = $=POD[3];
+$r = $=pod[3];
 is $r.name, 'foo', 'name is ok';
 isa_ok $r.content[0], Pod::Block::Para;
 isa_ok $r.content[1], Pod::Block::Para;
@@ -49,7 +49,7 @@ is $r.content[1].content, "paragraph two", 'paragraphs ok, 2/2';
     =end somethingelse
 =end something
 
-$r = $=POD[4];
+$r = $=pod[4];
 is $r.name, 'something', 'parent name ok';
 isa_ok $r.content[0], Pod::Block, "nested blocks work";
 isa_ok $r.content[0].content[0], Pod::Block::Para, "nested blocks work";
@@ -76,7 +76,7 @@ Which, as we all know...
     =end bar
 =end foo
 
-$r = $=POD[5];
+$r = $=pod[5];
 isa_ok $r, Pod::Block;
 is $r.content.elems, 5, '5 sub-nodes in foo';
 is $r.content[0].content,
@@ -101,7 +101,7 @@ between these two paragraphs
 
 =end pod
 
-$r = $=POD[6];
+$r = $=pod[6];
 isa_ok $r, Pod::Block;
 is $r.content[0].content, 'someone accidentally left a space',
    'accidental space, 1/2';
@@ -117,7 +117,7 @@ bla bla
 foo
 =end kwid
 
-$r = $=POD[7];
+$r = $=pod[7];
 is $r.content[0].content, '= DESCRIPTION bla bla';
 isa_ok $r.content[1], Pod::Block::Para;
 is $r.content[1].content, 'foo';
@@ -129,7 +129,7 @@ XXX: chop(%has)   should return a  hash  of chopped strings?
 
 =end more-discussion-needed
 
-$r = $=POD[8];
+$r = $=pod[8];
 isa_ok $r, Pod::Block;
 
 =begin pod
@@ -151,7 +151,7 @@ isa_ok $r, Pod::Block;
         previous directive
 =end pod
 
-$r = $=POD[9];
+$r = $=pod[9];
 isa_ok $r.content[0], Pod::Heading;
 isa_ok $r.content[1], Pod::Block::Para;
 isa_ok $r.content[2], Pod::Block::Para;

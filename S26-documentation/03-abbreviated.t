@@ -4,20 +4,20 @@ my $r;
 
 =foo
 
-$r = $=POD[0];
+$r = $=pod[0];
 isa_ok $r, Pod::Block, 'returns a Pod6 Block';
 isa_ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.content, [], 'no content, all right';
 
 =foo some text
 
-$r = $=POD[1];
+$r = $=pod[1];
 is $r.content[0].content, "some text", 'the content is all right';
 
 =foo some text
 and some more
 
-$r = $=POD[2];
+$r = $=pod[2];
 is $r.content[0].content, "some text and some more", 'the content is all right';
 
 =begin pod
@@ -31,7 +31,7 @@ bidden
 Outside blocks
 =end pod
 
-$r = $=POD[3];
+$r = $=pod[3];
 isa_ok $r.content[0], Pod::Block;
 is $r.content[0].content[0].content, "Inside got",
    'paragraph block content ok, 1/2';
@@ -58,7 +58,7 @@ is $r.content[2].content, "Outside blocks",
     =head1 And just for the sake of having a working =head1 :)
 =end pod
 
-$r = $=POD[4];
+$r = $=pod[4];
 is $r.content[0].content[0].content,
    "one, delimited block", "mixed blocks, 1";
 is $r.content[1].content[0].content,
@@ -88,7 +88,7 @@ Which, as we all know...
           Beans!
 =end foo
 
-$r = $=POD[5];
+$r = $=pod[5];
 isa_ok $r, Pod::Block;
 is $r.content.elems, 5, '5 sub-nodes in foo';
 is $r.content[0].content,
@@ -112,7 +112,7 @@ is $r.content[4].content[0].content, "Turn into Jelly Beans!",
     Subroutines 33
     Everything else 57
 
-$r = $=POD[6];
+$r = $=pod[6];
 isa_ok $r, Pod::Block;
 is $r.content.elems, 1;
 is $r.content[0].content,
@@ -121,7 +121,7 @@ is $r.content[0].content,
 =head3
 Heading level 3
 
-$r = $=POD[7];
+$r = $=pod[7];
 isa_ok $r, Pod::Block;
 isa_ok $r, Pod::Heading;
 is $r.level, '3';

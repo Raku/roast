@@ -9,7 +9,7 @@ my $r;
         The Bowler      Carol Pinnsler    Haunted bowling ball
 =end table
 
-$r = $=POD[0];
+$r = $=pod[0];
 isa_ok $r, Pod::Block::Table;
 is $r.content.elems, 4;
 is $r.content[0].join('|'),
@@ -27,7 +27,7 @@ is $r.content[3].join('|'),
     Subroutines         33
     Everything else     57
 
-$r = $=POD[1];
+$r = $=pod[1];
 is $r.content.elems, 4;
 is $r.content[0].join('|'), "Constants|1";
 is $r.content[1].join('|'), "Variables|10";
@@ -39,7 +39,7 @@ is $r.content[3].join('|'), "Everything else|57";
     horse    | horses
     elephant | elephants
 
-$r = $=POD[2];
+$r = $=pod[2];
 is $r.content.elems, 3;
 is $r.content[0].join('|'), "mouse|mice";
 is $r.content[1].join('|'), "horse|horses";
@@ -52,7 +52,7 @@ is $r.content[2].join('|'), "elephant|elephants";
     Human  +   2  +   Pizza
     Shark  +   0  +    Fish
 
-$r = $=POD[3];
+$r = $=pod[3];
 is $r.headers.join('|'), "Animal|Legs|Eats";
 is $r.content.elems, 3;
 is $r.content[0].join('|'), "Zebra|4|Cookies";
@@ -65,7 +65,7 @@ is $r.content[2].join('|'), "Shark|0|Fish";
         ==============|=================|================================
         The Shoveller | Eddie Stevens   | King Arthur's singing shovel
 
-$r = $=POD[4];
+$r = $=pod[4];
 is $r.headers.join('|'), "Superhero|Secret Identity|Superpower";
 is $r.content.elems, 1;
 is $r.content[0].join('|'),
@@ -88,7 +88,7 @@ is $r.content[0].join('|'),
 
 =end table
 
-$r = $=POD[5];
+$r = $=pod[5];
 is $r.headers.join('|'), "Superhero|Secret Identity|Superpower";
 is $r.content.elems, 4;
 is $r.content[0].join('|'),
@@ -107,7 +107,7 @@ is $r.content[3].join('|'),
    ---+---+---
       |   | X
 
-$r = $=POD[6];
+$r = $=pod[6];
 is $r.content.elems, 3;
 is $r.content[0].join(','), 'X,O,';
 is $r.content[1].join(','), ',X,O';
@@ -120,7 +120,7 @@ is $r.content[2].join(','), ',,X';
    ===========
             X 
 
-$r = $=POD[7];
+$r = $=pod[7];
 is $r.content.elems, 3;
 is $r.content[0].join(','), 'X,O,';
 is $r.content[1].join(','), ',X,O';
@@ -133,5 +133,5 @@ bar
 
 =end table
 
-$r = $=POD[8];
+$r = $=pod[8];
 is $r.content.elems, 2;

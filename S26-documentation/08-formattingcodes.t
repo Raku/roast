@@ -4,7 +4,7 @@ my $r;
 =pod
 B<I am a formatting code>
 
-$r = $=POD[0].content[0].content[1];
+$r = $=pod[0].content[0].content[1];
 isa_ok $r, Pod::FormattingCode;
 is $r.type, 'B';
 is $r.content[0], 'I am a formatting code';
@@ -12,7 +12,7 @@ is $r.content[0], 'I am a formatting code';
 =pod
 The basic C<ln> command is: C<ln> B<R<source_file> R<target_file>>
 
-$r = $=POD[1].content[0].content;
+$r = $=pod[1].content[0].content;
 is $r[0], 'The basic ';
 isa_ok $r[1], Pod::FormattingCode;
 is $r[1].type, 'C';
@@ -38,7 +38,7 @@ is $r[3].content, 'target_file';
 L<C<b>|a>
 L<C<b>|a>
 
-$r = $=POD[2].content[0].content;
+$r = $=pod[2].content[0].content;
 for $r[1], $r[3] -> $link {
     is $link.type, 'L';
     is $link.content[0], '';
@@ -57,7 +57,7 @@ This is Pod too. Specifically, this is a simple C<para> block
 
 =end pod
 
-$r = $=POD[3];
+$r = $=pod[3];
 is $r.content.elems, 3;
 isa_ok $r.content[0], Pod::Block;
 is $r.content[0].content[0].content, 'A heading';
@@ -73,7 +73,7 @@ is $r.content[2].content,
 
 =pod V<C<boo> B<bar> asd>
 
-$r = $=POD[4];
+$r = $=pod[4];
 is $r.content[0].content, 'C<boo> B<bar> asd';
 
 done;

@@ -6,12 +6,12 @@ plan 5;
 
 # See "=begin DATA" at the end of file.
 
-# L<S02/Double-underscore forms/filehandle, "named as" %=POD{'DATA'}>
+# L<S02/Double-underscore forms/filehandle, "named as" %=pod{'DATA'}>
 {
-    ok %=POD{'DATA'}, '=begin DATA works and %=POD<DATA> defined';
+    ok %=pod{'DATA'}, '=begin DATA works and %=pod<DATA> defined';
 
-    my $line = get %=POD<DATA>;
-    is($line, "hello, world!", q/%=POD{'DATA'} can be read/);
+    my $line = get %=pod<DATA>;
+    is($line, "hello, world!", q/%=pod{'DATA'} can be read/);
 }
 
 # L<S02/Double-underscore forms/Pod stream as a scalar>
