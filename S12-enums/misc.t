@@ -47,6 +47,7 @@ use Test;
     is FAIL,  'FAIL',   'non-conflicting enum key';
     is +FAIL, 1,        'non-conflicting enum key (numeric)';
     # RT #112202
+    #?niecza todo
     lives_ok { OK.^methods }, 'can call .^methods on an enum';
 }
 
