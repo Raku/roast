@@ -22,7 +22,7 @@ sub throws_like($code, $ex_type, *%matcher) {
                 for %matcher.kv -> $k, $v {
                     my $got = $_."$k"();
                     my $ok = $got ~~ $v,;
-                    ok $ok, ".$k matches $v";
+                    ok $ok, ".$k matches {$v.defined ?? $v !! $v.gist}";
                     unless $ok {
                         diag "Got:      $got\n"
                             ~"Expected: $v";
