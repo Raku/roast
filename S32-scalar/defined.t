@@ -10,8 +10,7 @@ Tests for the defined() builtin
 
 =end pod
 
-
-
+#?pugs skip 'Mu'
 ok(!defined(Mu), 'Mu is not defined');
 ok(!defined(Int), 'Int is not defined');
 ok(!defined(Num), 'Num is not defined');
@@ -34,13 +33,17 @@ ok(defined($foo), 'variable $foo is now defined (as numeric literal 1)');
 $foo = "";
 ok(defined($foo), 'variable $foo is now defined (as a empty string)');
 
+#?pugs emit #
 $foo = Nil;
+#?pugs skip "Nil"
 ok(!defined($foo), 'variable $foo is now undefined again');
 
 $foo = "a";
 ok(defined($foo), 'variable $foo is now defined (as string "a")');
 
+#?pugs emit #
 $foo = Mu;
+#?pugs skip 'Mu'
 ok(!defined($foo), 'variable $foo is now undefined again');
 
 $foo = "b";
@@ -62,7 +65,9 @@ ok(defined(@bax), 'unassigned variable @bax is defined');
 @bax = 3, 4, 5;
 ok(defined(@bax), 'unassigned variable @bax is defined');
 
+#?pugs emit #
 @bax = Nil;
+#?pugs skip 'Nil'
 ok(defined(@bax), 'variable @bax is defined after assigning Nil');
 
 # try the invocant syntax
@@ -77,13 +82,17 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
     $foo = "";
     ok($foo.defined, 'variable $foo is now defined (as a empty string)');
 
+    #?pugs emit #
     $foo = Nil;
+    #?pugs skip 'Nil'
     ok(!$foo.defined, 'variable $foo is now undefined again');
 
     $foo = "a";
     ok($foo.defined, 'variable $foo is now defined (as string "a")');
 
+    #?pugs emit #
     $foo = Mu;
+    #?pugs skip 'Mu'
     ok(!$foo.defined, 'variable $foo is now undefined again');
 
     $foo = "b";
@@ -100,6 +109,7 @@ ok(defined(@bax), 'variable @bax is defined after assigning Nil');
 
 # RT #81352
 # Ensure that we always get Bools
+#?pugs skip "isa_ok"
 {
     isa_ok defined(Mu), Bool, 'defined(Mu) returns a Bool';
     isa_ok Mu.defined, Bool, 'Mu.defined returns a Bool';
