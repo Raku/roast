@@ -9,7 +9,7 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan 27;
+plan 28;
 
 # Indexing lists
 
@@ -172,6 +172,10 @@ plan 27;
     is $y, 'bacon', "3rd-party reification of List doesn't duplicate rest";
     is $z, 'bacon', "3rd-party reification of List doesn't duplicate rest";
 }
+
+# RT #112216
+#?niecza skip 'loops'
+is 'foo'[2..*].elems, 0, 'can range-index a Str with infinite range';
 
 done;
 
