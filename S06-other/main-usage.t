@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  18;
+plan  19;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -150,3 +150,12 @@ is_run 'subset Command of Str where "run";
 multi MAIN(Command $c) { print 1 },
 multi MAIN()           { print 2 }',
 { out => "2" };
+
+
+# RT #92986
+is_run 'multi MAIN($) { print q[Any] }; multi MAIN(Str) { print q[Str] }',
+    :args['foo'],
+    {
+        out => 'Str',
+    },
+    'best multi matches (not just first one)';
