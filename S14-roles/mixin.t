@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 28;
 
 # L<S14/Run-time Mixins/>
 
@@ -123,6 +123,12 @@ is $y.test,     42,         'method from other role was OK too';
     my $a = 0 but True;
     is +$a, 0, 'RT #100782 1/2';
     is ?$a, Bool::True, 'RT #100782 2/2';
+}
+
+# RT #79866
+{
+    my $x = 42 but role { method postcircumfix:<( )>($arg) { self * $arg[0] } };
+    is $x(13), 546, 'can mix a &.() method into an Int';
 }
 
 # vim: syn=perl6
