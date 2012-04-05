@@ -78,7 +78,6 @@ my Str $bar;
 dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 # L<S02/Return types/a return type can be specified before or after the name>
-#?rakudo skip 'return type checking'
 {
     # Check with explicit return.
     my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
@@ -95,10 +94,12 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
+    #?rakudo todo 'prefix type form of return value checking NYI'
     dies_ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
+    #?rakudo todo '--> type form of return value checking NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
