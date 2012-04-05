@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 28;
+plan 29;
 
 # L<S14/Run-time Mixins/>
 
@@ -130,5 +130,9 @@ is $y.test,     42,         'method from other role was OK too';
     my $x = 42 but role { method postcircumfix:<( )>($arg) { self * $arg[0] } };
     is $x(13), 546, 'can mix a &.() method into an Int';
 }
+
+# RT #79868
+is (class { } but role { method answer() { 42 } }).answer, 42,
+    'can mix a role into a type object';
 
 # vim: syn=perl6
