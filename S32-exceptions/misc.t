@@ -207,5 +207,6 @@ throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
 }
 
 throws_like 'die "foo"', X::AdHoc, backtrace => Backtrace;
+throws_like 'use fatal; ~(1, 2, 6 ... 10)', X::Sequence::Deduction;
 
 done;
