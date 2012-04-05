@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 53;
+plan 51;
 
 =begin pod
 
@@ -56,30 +56,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     # RT #99912
     ok $match, 'regex in when-clause set match object';
 };
-
-
-# from apocalypse 4
-#?rakudo skip 'parsefail on each(... ; ...)'
-#?niecza skip 'each'
-{
-    # simple example L<S04/"Switch statements" /You don't have to use an explicit default/>
-    for each(("T", "E", 5) ; (10, 11, 5)) -> $digit, $expected {
-        my $result_a = do given $digit {
-            when "T" { 10 }
-            when "E" { 11 }
-            $digit
-        };
-
-        my $result_b = do given $digit {
-            when "T" { 10 }
-            when "E" { 11 }
-            default  { $digit }
-        };
-
-        is($result_a, $expected, "result of $digit using implicit default {} is $expected");
-        is($result_b, $expected, "result of $digit using explicit default {} is $expected");
-    }
-}
 
 {
     # interleaved code L<S04/"Switch statements" /which may or may not be a when statement/>
