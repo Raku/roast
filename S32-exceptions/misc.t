@@ -118,6 +118,7 @@ throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
 throws_like '@a', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
+throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
 throws_like 'my $foo does &Int', X::Does::TypeObject;
 throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
 throws_like 'role R { }; 99 but R("wrong");', X::Role::Initialization;
