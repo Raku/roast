@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 50;
+plan 52;
 
 # L<S06/Required parameters/method:>
 sub a_zero  ()           { };
@@ -144,5 +144,9 @@ dies_ok { eval("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
     is &a.count, 2, '&multi.count';
     is &a.arity, 1, '&multi.arity';
 }
+
+# RT #111646
+is (-> *@a { }).count, Inf, 'slurpy positional causes infinite count';
+is (-> *%a { }).count, 0,   'slurpy named causes no count change';
 
 # vim: ft=perl6
