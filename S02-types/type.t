@@ -35,6 +35,7 @@ my Str $bar;
 }
 
 #?niecza skip 'Trait of not available on variables'
+#?pugs skip 'parsefail'
 {
     my $baz of Int;
     #?rakudo todo 'of'
@@ -48,9 +49,11 @@ my Str $bar;
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
+    #?pugs todo
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
     eval_dies_ok('my num $alpha = Nil', 'native num type cannot be undefined');
+    #?pugs todo
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }
 
@@ -75,9 +78,11 @@ my Str $bar;
 }
 
 # Num does not accept Int (used to, then spec changed)
+#?pugs todo
 dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 # L<S02/Return types/a return type can be specified before or after the name>
+#?pugs skip 'parsefail'
 {
     # Check with explicit return.
     my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
@@ -104,6 +109,7 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 }
 
 #?rakudo skip 'return type checking'
+#?pugs skip 'parsefail'
 {
     # Check with implicit return.
     my sub returntype1 (Bool $pass) returns Str { $pass ?? 'ok' !! -1}
@@ -136,16 +142,19 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 {
     # TODO: many more of these are possible
+    #?pugs 3 skip "Mu"
     ok Any ~~ Mu, 'Any ~~ Mu';
     ok Mu !~~ Any, 'Mu !~~ Any';
     ok Mu !~~ Int, 'Mu !~~ Int';
 
+    #?pugs 2 skip "Numeric"
     ok Int ~~ Numeric, 'Int !~~ Numeric';
     ok Numeric !~~ Int, 'Numeric !~~ Int';
 
     ok Array ~~ List, 'Array is a kind of List';
     ok List !~~ Array, 'A Seq is not an Array';
     #?niecza skip 'Expecting a term'
+    #?pugs 2 skip "Positional"
     ok Seq ~~ Positional, 'A Seq does Positional';
     ok Array ~~ Positional, 'Array does Positional too';
 }

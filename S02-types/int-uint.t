@@ -25,6 +25,7 @@ for @inttypes -> $type {
 
     is(eval("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
     is(eval("my $type \$var = $minval"), $minval, "$type can be $minval");
+    #?pugs 5 todo
     eval_dies_ok("my $type \$var = {$maxval+1}", "$type cannot be {$maxval+1}");
     eval_dies_ok("my $type \$var = {$minval-1}", "$type cannot be {$minval-1}");
     eval_dies_ok("my $type \$var = 'foo'", "$type cannot be a string");

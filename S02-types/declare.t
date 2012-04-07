@@ -41,6 +41,7 @@ plan 79;
 
 #?rakudo skip 'Bit not implemented'
 #?niecza skip 'Bit not implemented'
+#?pugs todo
 {
  my Bit $namcu =1;
  isa_ok($namcu,Bit);
@@ -51,6 +52,7 @@ plan 79;
  isa_ok($morna, Regex);
 }
 
+#?pugs skip 'Set'
 {
  my Set $selcmima;
  isa_ok($selcmima, Set);
@@ -86,6 +88,7 @@ plan 79;
 }
 
 #?niecza skip "Buf NYI"
+#?pugs skip 'Buf'
 {
  my Buf $nacpoi;
  isa_ok($nacpoi, Buf);
@@ -106,12 +109,14 @@ plan 79;
 
 # non-instantiable Roles such as Callable, Failure, and Integral
 
+#?pugs skip 'Callable'
 {
  my Callable $fancu ;
  ok($fancu ~~ Callable);
 }
 
 #?rakudo skip 'Integral not implemented'
+#?pugs skip 'Integral'
 {
  my Integral $foo;
  ok($foo ~~ Integral);
@@ -122,6 +127,7 @@ plan 79;
 
 #?rakudo todo 'int not implemented'
 #?niecza skip 'int not implemented'
+#?pugs skip 'parsefail'
 {
  my int $namcu =2;
  isa_ok($namcu,int);
@@ -129,6 +135,7 @@ plan 79;
 
 #?rakudo todo 'num not implemented'
 #?niecza skip 'num not implemented'
+#?pugs skip 'num'
 {
  my num $namcu =1.1e0;
  isa_ok($namcu,num);
@@ -138,6 +145,7 @@ plan 79;
 
 #?rakudo skip 'complex not implemented'
 #?niecza skip 'complex not implemented'
+#?pugs skip 'complex'
 {
  my complex $namcu =1.3;
  isa_ok($namcu,complex);
@@ -145,6 +153,7 @@ plan 79;
 
 #?rakudo skip 'rat not implemented'
 #?niecza skip 'rat not implemented'
+#?pugs skip 'rat'
 
 {
  my rat $namcu = 7 / 4;
@@ -153,6 +162,7 @@ plan 79;
 
 #?rakudo skip 'bit not implemented'
 #?niecza skip 'bit not implemented'
+#?pugs skip 'bit'
 {
  my bit $namcu =1;
  isa_ok($namcu,bit);
@@ -160,6 +170,7 @@ plan 79;
 
 #?rakudo skip 'buf not implemented'
 #?niecza skip 'buf not implemented'
+#?pugs skip 'buf'
 {
  my buf $nacpoi;
  isa_ok($nacpoi, buf);
@@ -172,6 +183,7 @@ plan 79;
 
 #?rakudo skip 'junction not implemented'
 #?niecza skip 'junction not implemented'
+#?pugs skip 'junction'
 {
  my junction $sor;
  isa_ok($sor, junction);
@@ -179,6 +191,7 @@ plan 79;
 
 #?rakudo skip 'StrPos not implemented'
 #?niecza skip 'StrPos not implemented'
+#?pugs skip 'StrPos'
 {
  my StrPos $pa;
  isa_ok($pa,StrPos  );
@@ -187,43 +200,51 @@ plan 79;
 
 #?rakudo skip 'StrLen not implemented'
 #?niecza skip 'StrLen not implemented'
+#?pugs skip 'StrLen'
 {
  my StrLen $re;
  isa_ok($re,StrLen  );
 }
 
+#?pugs skip 'Nil'
 {
  my Nil $ci;
  ok($ci ~~ Nil);
 }
 
+#?pugs skip 'Whatever'
 {
  my Whatever $vo;
  isa_ok($vo,Whatever  );
 }
 
+#?pugs skip 'Mu'
 {
  my Mu $mu;
  ok($mu ~~ Mu  );
 }
 
 #?niecza skip 'Failure not implemented'
+#?pugs skip 'Failure'
 {
  my Failure $xa;
  isa_ok($xa,Failure  );
 }
 
 #?niecza skip 'Exception not implemented'
+#?pugs skip 'Exception'
 {
  my Exception $ze;
  isa_ok($ze,Exception  );
 }
 
+#?pugs skip 'Range'
 {
  my Range $bi;
  isa_ok($bi,Range  );
 }
 
+#?pugs skip 'Bag'
 {
  my Bag $so;
  isa_ok($so,Bag  );
@@ -241,34 +262,40 @@ plan 79;
 
 #?rakudo skip 'Blob not implemented'
 #?niecza skip 'Blob not implemented'
+#?pugs skip 'Blob'
 {
  my Blob $pare;
  isa_ok($pare,Blob  );
 }
 
+#?pugs skip 'Instant'
 {
  my Instant $paci;
  isa_ok($paci,Instant  );
 }
 
 #?niecza skip 'Duration not implemented'
+#?pugs skip 'Duration'
 {
  my Duration $pavo;
  isa_ok($pavo,Duration  );
 }
 
 #?niecza skip 'KeyHash not implemented'
+#?pugs skip 'KeyHash'
 {
  my KeyHash $pamu;
  isa_ok($pamu,KeyHash  );
 }
 
 #?rakudo skip 'KeySet not implemented'
+#?pugs skip 'KeySet'
 {
  my KeySet $paxa;
  isa_ok($paxa,KeySet  );
 }
 
+#?pugs skip 'KeyBag'
 {
  my KeyBag $paze;
  isa_ok($paze,KeyBag  );
@@ -279,6 +306,7 @@ plan 79;
  isa_ok($pabi,Pair  );
 }
 
+#?pugs skip 'EnumMap'
 {
  my EnumMap $paso;
  isa_ok($paso,EnumMap  );
@@ -358,6 +386,7 @@ plan 79;
  isa_ok($jetfu, Bool);
 }
 
+#?pugs skip 'Order'
 {
  my Order $karbi;
  isa_ok($karbi, Order);
@@ -365,6 +394,7 @@ plan 79;
 
 #?rakudo skip 'Matcher isa not implemented'
 #?niecza skip 'Matcher not implemented'
+#?pugs skip 'Matcher'
 {
   my Matcher $mapti;
   isa_ok($mapti, Matcher);
@@ -379,6 +409,7 @@ plan 79;
 
 #?rakudo skip 'Char not implemented'
 #?niecza skip 'Char not implemented'
+#?pugs skip 'Char'
 {
   my Char $pav;
   isa_ok($pav, Char);
@@ -386,6 +417,7 @@ plan 79;
 
 #?rakudo skip 'Byte not implemented'
 #?niecza skip 'Byte not implemented'
+#?pugs skip 'Byte'
 {
   my Byte $biv;
   isa_ok($biv, Byte);
@@ -393,6 +425,7 @@ plan 79;
 
 #?rakudo skip 'AnyChar not implemented'
 #?niecza skip 'AnyChar not implemented'
+#?pugs skip 'AnyChar'
 {
   my AnyChar $lerfu;
   isa_ok($lerfu, AnyChar);
@@ -400,6 +433,7 @@ plan 79;
 
 #?rakudo skip 'CharLingua not implemented'
 #?niecza skip 'CharLingua not implemented'
+#?pugs skip 'CharLingua'
 {
   my CharLingua  $lerfu;
   isa_ok($lerfu, CharLingua );
@@ -407,6 +441,7 @@ plan 79;
 
 #?rakudo skip 'Codepoint not implemented'
 #?niecza skip 'Codepoint not implemented'
+#?pugs skip 'Codepoint'
 {
   my Codepoint $cypy;
   isa_ok($cypy,Codepoint );
@@ -414,6 +449,7 @@ plan 79;
 
 #?rakudo skip 'Grapheme not implemented'
 #?niecza skip 'Grapheme not implemented'
+#?pugs skip 'Grapheme'
 {
   my Grapheme $gy;
   isa_ok($gy,Grapheme );
@@ -422,11 +458,13 @@ plan 79;
 # Positional Associative Ordering Ordered
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
+#?pugs skip 'Positional'
 {
   my Positional $mokca;
   ok($mokca ~~ Positional,'Positional exists');
 }
 
+#?pugs skip 'Associative'
 {
   my Associative $kansa;
   ok($kansa ~~ Associative,'Associative exists');
@@ -434,6 +472,7 @@ plan 79;
 
 #?rakudo skip 'Ordering not implemented'
 #?niecza skip 'Ordering not implemented'
+#?pugs skip 'Ordering'
 {
   my Ordering $foo;
   isa_ok($foo,Ordering);
@@ -441,6 +480,7 @@ plan 79;
 
 #?rakudo skip 'KeyExtractor not implemented'
 #?niecza skip 'KeyExtractor not implemented'
+#?pugs skip 'KeyExtractor'
 {
   my KeyExtractor $ckiku;
   isa_ok($ckiku, KeyExtractor);
@@ -450,6 +490,7 @@ plan 79;
 
 #?rakudo skip 'Comparator not implemented'
 #?niecza skip 'Comparator not implemented'
+#?pugs skip 'Comparator'
 {
   my Comparator $bar;
   isa_ok($bar,Comparator);
@@ -457,6 +498,7 @@ plan 79;
 
 #?rakudo skip 'OrderingPair not implemented'
 #?niecza skip 'OrderingPair not implemented'
+#?pugs skip 'OrderingPair'
 {
   my OrderingPair $foop;
   isa_ok($foop,OrderingPair);
@@ -464,6 +506,7 @@ plan 79;
 
 #?rakudo skip 'HyperWhatever not implemented'
 #?niecza skip 'HyperWhatever not implemented'
+#?pugs skip 'HyperWhatever'
 {
   my HyperWhatever $baz;
   isa_ok($baz,HyperWhatever);
@@ -473,6 +516,7 @@ plan 79;
 
 #?rakudo skip 'utf8  not implemented'
 #?niecza skip 'utf8 not implemented'
+#?pugs skip 'utf8'
 {
   my utf8 $ubi;
   isa_ok($ubi,utf8);
@@ -480,6 +524,7 @@ plan 79;
 
 #?rakudo skip 'utf16  not implemented'
 #?niecza skip 'utf16 not implemented'
+#?pugs skip 'utf16'
 {
   my utf16 $upaxa;
   isa_ok($upaxa,utf16);
@@ -487,6 +532,7 @@ plan 79;
 
 #?rakudo skip 'utf32  not implemented'
 #?niecza skip 'utf32 not implemented'
+#?pugs skip 'utf32'
 {
   my utf32 $ucire;
   isa_ok($ucire,utf32);
@@ -504,6 +550,7 @@ plan 79;
 
 #?rakudo skip 'num16  not implemented'
 #?niecza skip 'num16 not implemented'
+#?pugs skip 'num16'
 {
   my num16 $namcupaxa;
   isa_ok($namcupaxa,num16);
@@ -518,12 +565,14 @@ plan 79;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
 #?niecza skip 'Coercive declarations NYI'
+#?pugs skip 'parsefail'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
 #?niecza skip 'Coercive declarations NYI'
+#?pugs skip 'parsefail'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');
