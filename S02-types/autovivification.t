@@ -8,11 +8,13 @@ plan 10;
 {
     my %a;
     my $b = %a<b><c>;
+    #?pugs todo
     is %a.keys.elems, 0, "fetching doesn't autovivify.";
     ok !defined($b), 'and the return value is not defined';
 }
 
 #?rakudo skip 'Undef to integer'
+#?pugs skip 'so'
 {
     my %a;
     my $b = so %a<b><c>:exists;
@@ -21,6 +23,7 @@ plan 10;
 }
 
 # L<S09/Autovivification/But these bindings do autovivify:>
+#?pugs todo
 {
     my %a;
     bar(%a<b><c>);

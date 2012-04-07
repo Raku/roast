@@ -1,5 +1,6 @@
 use v6;
 
+#?pugs emit #
 use MONKEY_TYPING;
 
 use Test;
@@ -57,7 +58,8 @@ plan 28;
 
 {
   my $foo = 42;
-
+  
+  #?pugs todo
   lives_ok { ($foo, *) = (23, 24) },
     "using lists with embedded Whatevers as lvalues works (1)";
   ok $foo == 23,
@@ -70,6 +72,7 @@ plan 28;
   my $bar = 43;
 
   try { ($foo, 42, $bar, 19)[0, 2] = (23, 24) };
+  #?pugs todo
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
@@ -141,18 +144,22 @@ plan 28;
     dies_ok { <1 2 3>.rt62836 },
             'call to user-declared sub in Parcel:: class dies';
     try { eval '<1 2 3>.rt62836' };
+    #?pugs 3 todo
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     #?niecza todo 'error message says "not found"'
     ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
     diag $!;
     ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
 
+    #?pugs emit #
     augment class Parcel { method rt62836_x { 62836 } };
+    #?pugs skip "augment"
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in Parcel:: class';
 }
 
 # RT #66304
 #?niecza skip 'Undeclared name: "Seq"'
+#?pugs skip 'Seq'
 {
     my $rt66304 = (1, 2, 4);
     #?rakudo todo 'nom regression'
@@ -165,6 +172,7 @@ plan 28;
 
 # nom regression bug
 #?niecza skip 'Excess arguments to CORE List.new'
+#?pugs skip 'Must only use named arguments to new() constructor'
 {
     my $x = List.new('bacon');
     my $y = $x.Str;
