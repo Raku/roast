@@ -5,6 +5,7 @@ use Test;
 plan 4;
 
 # L<S04/Phasers/FIRST "at loop initialization time">
+#?pugs todo
 {
     my $str = '';
     for 1..2 {
@@ -23,6 +24,7 @@ plan 4;
 }
 
 # L<S04/Phasers/can occur multiple times>
+#?pugs todo
 {
     my $str = '';
     for 1..2 {
@@ -34,6 +36,7 @@ plan 4;
 }
 
 # L<S04/Phasers/FIRST "at loop initialization time" "before any ENTER">
+#?pugs todo
 {
     my $str = '';
     for 1..2 {

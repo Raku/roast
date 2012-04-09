@@ -20,17 +20,23 @@ plan 11;
 
 ok("A" !~~ m/<.prior>/, 'No prior successful match');
 
+#?pugs todo
 ok("A" ~~ m/<[A..Z]>/, 'Successful match');
 
+#?pugs todo
 ok("ABC" ~~ m/<.prior>/, 'Prior successful match');
 ok("B" !~~ m/<.prior>/, 'Prior successful non-match');
 
 ok("C" !~~ m/B/,  'Unsuccessful match');
 
+#?pugs todo
 ok("A" ~~ m/<.prior>/, 'Still prior successful match');
+#?pugs todo
 ok("A" ~~ m/<.prior>/, 'And still prior successful match');
 
+#?pugs todo
 ok("BA" ~~ m/B <.prior>/, 'Nested prior successful match');
+#?pugs todo
 is ~$/, 'BA', 'matched all we wanted';
 
 # now the prior match is "BA"

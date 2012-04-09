@@ -53,6 +53,7 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 
 # L<S03/Tight or precedence/short-circuit inclusive-or>
 is(2 || 3, 2, "|| returns first true value");
+#?pugs skip 'Mu'
 ok(!(defined( 0 || Mu)), "|| returns last false value of list?");
 
 {
@@ -66,9 +67,12 @@ is(2 ?| 3, True, "boolean or (?|) returns True or False");
 is(0 ?| Any, False, "boolean or (?|) returns True or False");
 
 # L<S03/Junctive operators/They thread through operations>
+#?pugs skip 'autothread'
 ok(?((all((4|5|6) + 3) == one(7|8|9))), "all elements in junction are incremented");
+#?pugs skip 'autothread'
 ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 
+#?pugs skip 'autothread'
 {
     ok( ?(7 > any(4..12)), "any test against scalar" );
 
@@ -97,6 +101,7 @@ ok(?((any(1..6) == one(1|2|3|4|5|6))), "any elements will match via junction");
 # L<S03/Traversing arrays in parallel/"but a short list may always be extended arbitrarily">
 #?rakudo todo "nom regression"
 #?niecza todo
+#?pugs todo
 {
     is (1, 2, * Z <a b c d>).join('|'),
        '1|a|2|b|2|c|2|d',

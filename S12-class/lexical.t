@@ -17,6 +17,7 @@ eval_lives_ok '{ my class B {} }; { my class B {} }',
               'declare classes with the same name in two scopes.';
 eval_lives_ok '{ my class B {}; B.new; }',
               'can instantiate lexical class';
+#?pugs todo
 eval_dies_ok  '{ my class B {}; B.new; }; B.new',
               'scope is correctly restricted';
 
@@ -29,6 +30,7 @@ eval_dies_ok  '{ my class B {}; B.new; }; B.new',
     ok $pint ~~ WeissBier,                    'can smart-match against lexical class';
     is $pint.name, 'Erdinger',                'attribute in lexical class works';
     is $pint.describe, 'outstanding flavour', 'method call on lexical class works';
+    #?pugs skip 'gist'
     is WeissBier.gist, 'WeissBier()',         'lexical type object stringifies correct';
 
     my class LessThanAmazingWeissBier is WeissBier {
@@ -43,6 +45,7 @@ eval_dies_ok  '{ my class B {}; B.new; }; B.new',
 }
 
 # RT #69316
+#?pugs skip 'bless'
 {
     class Forest {
         class Frog {
