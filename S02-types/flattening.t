@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 33;
+plan 37;
 
 {
     my @array = 11 .. 15;
@@ -88,6 +88,17 @@ plan 33;
     is(@a.elems, 5, 'Array flattened');
     push @a, %foo;
     is(@a.elems, 5, 'Hash flattened');
+}
+
+# RT #112362
+{
+    my @a = <a b c d e f>;
+    is @a[[3, 4], 0,], 'c a', '[] in array slice numifies (1)';
+    is @a[[3, 4]],     'c',    '[] in array slice numifies (2)';
+
+    my %h = a => 1, b => 2, 'a b' => 3;
+    is %h{<a b>}, '1 2', 'hash slicing sanity';
+    is %h{[<a b>]}, '3', 'hash slicing stringifies []';
 }
 
 # vim: ft=perl6
