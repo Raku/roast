@@ -205,7 +205,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     is($passed, 1,'when Type {}');
 }
 
-#?pugs skip "so NYI"
 {
     # given + true
     # L<S04/"Switch statements" /"is exactly equivalent to">

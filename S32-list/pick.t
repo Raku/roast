@@ -108,7 +108,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1..100).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
-    #?pugs skip "so"
     ok (so 1 <= all(%seen.keys) <= 100), '... and all the elements are in range';
 }
 
@@ -116,7 +115,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1..300).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
-    #?pugs skip "so"
     ok (so 1 <= all(%seen.keys) <= 300), '... and all the elements are in range';
 }
 
@@ -124,7 +122,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1..50).pick(*);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
-    #?pugs skip "so"
     ok (so 1 <= all(%seen.keys) <= 50), '... and all the elements are in range';
 }
 
@@ -136,7 +133,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1..1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems';
-    #?pugs skip "so"
     ok (so 1 <= all(%seen.keys) <= 1_000_000), '... and all the elements are in range';
 }
 
@@ -144,7 +140,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1^..1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (lower exclusive)';
-    #?pugs skip "so"
     ok (so 1 < all(%seen.keys) <= 1_000_000), '... and all the elements are in range';
 }
 
@@ -152,7 +147,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1..^1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (upper exclusive)';
-    #?pugs skip "so"
     ok (so 1 <= all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
 
@@ -160,7 +154,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     my %seen;
     %seen{$_} = 1 for (1^..^1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (both exclusive)';
-    #?pugs skip "so"
     ok (so 1 < all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
 

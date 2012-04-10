@@ -14,7 +14,7 @@ plan 10;
 }
 
 #?rakudo skip 'Undef to integer'
-#?pugs skip 'so'
+#?pugs skip ':exists'
 {
     my %a;
     my $b = so %a<b><c>:exists;
