@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 11;
+plan 12;
 
 # Just to avoid tedium, the macros in this file are
 # named after Santa's reindeers.
@@ -111,4 +111,10 @@ plan 11;
 {
     macro id($param) { $param };
     is id('x'), 'x', 'macro can return its param';
+}
+
+#?rakudo skip 'Null PMC access'
+{
+    macro funny_nil { quasi { {;}() } }
+    is funny_nil(), Nil, 'Nil from an empty block turns into no code';
 }
