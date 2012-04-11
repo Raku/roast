@@ -48,7 +48,6 @@ ok !defined(%hash{"a"}), "deleted hash elements are really deleted";
 }
 
 # RT #68482
-#?pugs skip '.gist'
 {
     my %rt68482 = 1 => 3;
     is %rt68482.delete(1).WHAT.gist, 3.WHAT.gist, '.delete.WHAT is the element';

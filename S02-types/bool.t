@@ -51,7 +51,7 @@ is(~Bool::False, 'False', 'Bool stringification (False)');
 #?pugs 2 skip '.Str'
 is Bool::True.Str, 'True', 'True.Str';
 is Bool::False.Str, 'False', 'False.Str';
-#?pugs 2 skip "gist"
+#?pugs 2 todo '.gist'
 is Bool::True.gist, 'True', 'True.gist';
 is Bool::False.gist, 'False', 'False.gist';
 is Bool::True.perl, 'Bool::True', 'True.perl';

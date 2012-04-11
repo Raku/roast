@@ -257,8 +257,7 @@ ok Rat.new() == 0, 'Rat.new() is 0';
 ok 16/5 eqv 16/5, 'infix:<eqv> works with rats';
 
 # RT #72870
-#?pugs skip '.gist'
-is .88888888888.WHAT.gist, 'Rat()', 'WHAT works on Rat created from 11 digit decimal fraction';
+is .88888888888.WHAT.gist, Rat.gist, 'WHAT works on Rat created from 11 digit decimal fraction';
 
 # RT #74624
 {

@@ -33,7 +33,6 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     %hash<bar> //= hash;
     my $h_ref;
     $h_ref  //= hash();
-    #?pugs 3 skip 'gist'
     is(%hash<foo>.WHAT.gist, ::Hash.gist, "Parses as two items");
     is(%hash<bar>.WHAT.gist, ::Hash.gist, "Parens do not help");
     is($h_ref.WHAT.gist,     ::Hash.gist, "It is not limited to hash values");

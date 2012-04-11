@@ -42,7 +42,6 @@ is($foo2.check(), 42, 'initializing attributes in new');
 # RT 65224
 
 #instantiation from class name unexpectedly creates a class object instead of Str object
-#?pugs skip 'gist'
 {
     class Foo { };
     my $x = 'Foo';

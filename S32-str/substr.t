@@ -67,7 +67,6 @@ plan 118;
 
     {
         my $r = \substr($str, 0, 5);
-        #?pugs skip '.gist'
         ok(WHAT($r).gist, '$r is a reference');
         is($$r, "gloop", '$r referent is eq to the substring');
 
@@ -186,7 +185,6 @@ sub l (Int $a) {  my $l = $a; return $l }
 
     {
         my $r = \substr($str, 0, l(5));
-        #?pugs skip '.gist'
         ok(WHAT($r).gist, '$r is a reference (substr(Int, StrLen)).');
         is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
 
@@ -309,7 +307,6 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
 
     my $r = \substr($str, 0, p(5));
-    #?pugs skip '.gist'
     ok(WHAT($r).gist, '$r is a reference (substr(Int, StrPos)).');
     is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrPos)).');
 

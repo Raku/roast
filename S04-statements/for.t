@@ -280,19 +280,20 @@ class TestClass{ has $.key is rw  };
 
 # list context
 
-#?pugs skip '.gist'
 {
     my $a = '';
-    for 1..3, 4..6 { $a ~= $_.WHAT.gist };
-    is($a, 'Int()Int()Int()Int()Int()Int()', 'List context');
+    my $b = '';
+    for 1..3, 4..6 { $a ~= $_.WHAT.gist ; $b ~= Int.gist };
+    is($a, $b, 'List context');
 
     $a = '';
     for [1..3, 4..6] { $a ~= $_.WHAT.gist };
-    is($a, 'Array()', 'List context');
+    is($a, Array.gist, 'List context');
 
     $a = '';
-    for [1..3], [4..6] { $a ~= $_.WHAT.gist };
-    is($a, 'Array()Array()', 'List context');
+    $b = '';
+    for [1..3], [4..6] { $a ~= $_.WHAT.gist ; $b ~= Array.gist };
+    is($a, $b, 'List context');
 }
 
 {

@@ -169,12 +169,12 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
              'can make range from numeric string vars';
     #?pugs todo
     is $range.min, $start, 'range starts at start';
-    #?pugs skip ".gist"
-    is $range.min.WHAT.gist, "Str()", 'range start is a string';
+    #?pugs todo "wrong type"
+    is $range.min.WHAT.gist, Str.gist, 'range start is a string';
     #?pugs todo
     is $range.max,   $end, 'range ends at end';
-    #?pugs skip ".gist"
-    is $range.max.WHAT.gist, "Str()", 'range end is a string';
+    #?pugs todo "wrong type"
+    is $range.max.WHAT.gist, Str.gist, 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
     #?pugs todo
     is ~$range, "100.B 101.B 102.B", 'range is correct';
@@ -225,12 +225,12 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
              'can make range from match vars with string context forced';
     #?pugs todo
     is $range.min, 1, 'range starts at one';
-    #?pugs skip 'gist'
-    is $range.min.WHAT.gist, "Str()", 'range start is a string';
+    #?pugs todo 'wrong type'
+    is $range.min.WHAT.gist, Str.gist, 'range start is a string';
     #?pugs todo
     is $range.max,   3, 'range ends at three';
-    #?pugs skip 'gist'
-    is $range.max.WHAT.gist, "Str()", 'range end is a string';
+    #?pugs todo 'wrong type'
+    is $range.max.WHAT.gist, Str.gist, 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
     #?pugs todo
     is ~$range, "1 2 3", 'range is correct';

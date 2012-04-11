@@ -8,9 +8,8 @@ plan 124;
 # L<S02/Immutable types/A pair of Ordered endpoints>
 
 my $r = 1..5;
-#?pugs skip 'Range'
+#?pugs 2 skip 'Range'
 isa_ok $r, Range, 'Type';
-#?pugs skip 'gist'
 is $r.WHAT.gist, Range.gist, 'Type';
 #?pugs todo
 is $r.perl, '1..5', 'canonical representation';

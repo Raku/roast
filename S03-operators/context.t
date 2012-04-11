@@ -40,7 +40,6 @@ plan 29;
     my $a = 3;
     my $b = 2;
 
-    #?pugs skip 'gist'
     is((item $a).WHAT.gist, $a.WHAT.gist, '(item $a).WHAT matches $a.WHAT');
     is((item $a), $a, 'item $a is just $a');
     is(item($a),  $a, 'item($a) is just $a');

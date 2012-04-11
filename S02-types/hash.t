@@ -37,14 +37,11 @@ ok(%hash4.does(Hash), '%hash4 does Hash');
 %hash4 = ("key" => "value");
 is(%hash4{"key"}, 'value', '(key => value) separated key/value has creation works');
 
-#?pugs skip 'gist'
-is( (map { .WHAT.gist } , {"a"=> 1 , "b"=>2}).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
+is( (map { .WHAT.gist } , {"a"=> 1 , "b"=>2}).join(' ') , Hash.gist , 'Non flattening Hashes do not become Pairs when passed to map');
 my $does_not_flatten= {"a"=> 1 , "b"=>2};
-#?pugs skip 'gist'
-is( (map { .WHAT.gist } , $does_not_flatten).join(' ') , 'Hash()' , 'Non flattening Hashes do not become Pairs when passed to map');
+is( (map { .WHAT.gist } , $does_not_flatten).join(' ') , Hash.gist , 'Non flattening Hashes do not become Pairs when passed to map');
 my %flattens= ("a"=> 1 , "b"=>2);
-#?pugs skip 'gist'
-is( (map { .WHAT.gist } , %flattens).join(' ') , 'Pair() Pair()' , 'Flattening Hashes become Pairs when passed to map');
+is( (map { .WHAT.gist } , %flattens).join(' ') , Pair.gist ~ ' ' ~ Pair.gist, 'Flattening Hashes become Pairs when passed to map');
 
 # hash slicing
 
@@ -161,12 +158,10 @@ is(%hash10<1>, 2, "assignment of pointy qw to hash");
 
 sub test1 {
     my %sane = hash ('a'=>'b');
-    #?pugs skip '.gist'
     is(%sane.WHAT.gist,Hash.gist,'%sane is a Hash');
 }
 
 sub test2 (%hash) {
-    #?pugs skip '.gist'
     is(%hash.WHAT.gist,Hash.gist,'%hash is a Hash');
 }
 

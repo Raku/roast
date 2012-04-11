@@ -27,23 +27,22 @@ plan 79;
 
 sub f1n (:$a) { $a.WHAT.gist }
 sub f1p ( $a) { $a.WHAT.gist }
-#?pugs skip 'gist'
 {
-    is f1n(a => 42), 'Int()', "'a => 42' is a named";
-    is f1n(:a(42)),  'Int()', "':a(42)' is a named";
+    is f1n(a => 42), Int.gist, "'a => 42' is a named";
+    is f1n(:a(42)),  Int.gist, "':a(42)' is a named";
 
-    is f1n(:a),      'Bool()',  "':a' is a named";
-    is f1n(:!a),     'Bool()',  "':!a' is also named";
+    is f1n(:a),      Bool.gist,  "':a' is a named";
+    is f1n(:!a),     Bool.gist,  "':!a' is also named";
 
-    is f1p("a"   => 42), 'Pair()', "'\"a\" => 42' is a pair";
-    is f1p(("a") => 42), 'Pair()', "'(\"a\") => 42' is a pair";
-    is f1p((a   => 42)), 'Pair()', "'(a => 42)' is a pair";
-    is f1p(("a" => 42)), 'Pair()', "'(\"a\" => 42)' is a pair";
-    is f1p((:a(42)),  ), 'Pair()', "'(:a(42))' is a pair";
-    is f1p((:a),      ), 'Pair()',  "'(:a)' is a pair";
-    is f1p((:!a),     ), 'Pair()',  "'(:a)' is also a pair";
-    is f1n(:a[1, 2, 3]), 'Array()', ':a[...] constructs an Array value';
-    is f1n(:a{b => 3}),  'Hash()', ':a{...} constructs a Hash value';
+    is f1p("a"   => 42), Pair.gist, "'\"a\" => 42' is a pair";
+    is f1p(("a") => 42), Pair.gist, "'(\"a\") => 42' is a pair";
+    is f1p((a   => 42)), Pair.gist, "'(a => 42)' is a pair";
+    is f1p(("a" => 42)), Pair.gist, "'(\"a\" => 42)' is a pair";
+    is f1p((:a(42)),  ), Pair.gist, "'(:a(42))' is a pair";
+    is f1p((:a),      ), Pair.gist,  "'(:a)' is a pair";
+    is f1p((:!a),     ), Pair.gist,  "'(:a)' is also a pair";
+    is f1n(:a[1, 2, 3]), Array.gist, ':a[...] constructs an Array value';
+    is f1n(:a{b => 3}),  Hash.gist, ':a{...} constructs a Hash value';
 }
 
 {
