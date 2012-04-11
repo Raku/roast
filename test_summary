@@ -50,7 +50,7 @@ while (<$fh>) {
 }
 close $fh or die $!;
 
-# Fudge any Rakudo specific tests by running the fudgeall script
+# Fudge any implementation specific tests by running the fudgeall script
 {
     my $cmd = join ' ', $^X, 't/spec/fudgeall', $implementation, @tfiles;
     # Fudgeall prints the name of each test script, but changes the name
@@ -515,7 +515,7 @@ After running all the tests listed, the harness prints a set of
 subtotals per Synopsis.
 
 If you set the REV environment variable (with the first 7 characters of
-a Rakudo commit id), the harness prints an additional set of grand
+a git commit id), the harness prints an additional set of grand
 totals suitable for adding to F<docs/spectest_progress.csv>.
 
 =head1 SIMPLE RELATIVE BENCHMARKING
