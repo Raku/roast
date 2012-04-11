@@ -20,8 +20,10 @@ is((-2) ** 2, 4, "-2 ** 2 = 4");
 #?niecza todo '#87'
 is(1 ** Inf, 1, '1**Inf=1');
 is(0 ** Inf, 0, '0**Inf=0');
+#?pugs 2 todo
 is(Inf ** 2, Inf, 'Inf**2 = Inf');
 is((-Inf) ** 3, -Inf, '(-Inf)**3 = -Inf');
+#?pugs skip 'hangs'
 is(Inf ** Inf, Inf, 'Inf**Inf = Inf');
 is(NaN ** 2, NaN, "NaN propagates with integer powers");
 is(NaN ** 3.14, NaN, "NaN propagates with numeric powers");
@@ -47,19 +49,27 @@ is_approx(exp(1) ** 2.5,  exp(2.5), "e ** 2.5 ==  exp(2.5)");
 # Complex ** Real
 # These work by accident even if you don't have Complex **
 is_approx((4 + 0i) ** 2, 4 ** 2, "(4+0i) ** 2 == 16");
+#?pugs todo
 is_approx(1i ** 4, 1, "i ** 4 == 1");
 is_approx((4 + 0i) ** .5, 2, "(4+0i) ** .5 == 2");
 
+#?pugs todo
 is_approx(1i ** 2, -1, "i ** 2 == -1");
+#?pugs todo
 is_approx(1i ** 3, -1i, "i ** 3 == -i");
+#?pugs todo
 is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
+#?pugs todo
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
+#?pugs todo
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
 #?rakudo skip 'i'
+#?pugs skip 'i'
 is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 #?DOES 4
+#?pugs skip '.roots'
 {
     for (8i).roots(4) -> $z {
         is_approx($z ** 4, 8i, "quartic root of 8i ** 4 = 8i");
@@ -68,6 +78,7 @@ is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 #?DOES 1
 
 # Real ** Complex
+#?pugs todo
 {
     is_approx(exp(1) ** (pi * 1i), -1, "e ** pi i = -1");
 }

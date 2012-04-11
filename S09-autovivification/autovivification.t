@@ -8,7 +8,6 @@ plan 42;
 {
   my %hash;
   %hash<a>;
-  #?pugs todo: 'perl #61882'
   ok !%hash.exists('a'), 'just mentioning a hash value should not autovivify it';
 }
 
@@ -65,6 +64,7 @@ plan 42;
 
 #?rakudo skip 'autoviv with push/unshift'
 #?niecza skip 'Unable to resolve method push in class Any'
+#?pugs todo
 {
   my %hash;
 
@@ -83,10 +83,10 @@ plan 42;
   $hashref<key> = 23;
   is $hashref<key>,  23, "hash element assignment worked";
   #?niecza skip 'No value for parameter \$other in CORE Any.isa'
+  #?pugs skip 'isa multi variant'
   ok $hashref.isa !~~ Hash, "uninitialized variable was autovivified to a hash (1)";
 }
 
-#?pugs todo: 'The lives_ok items are failing'
 {
   my $hashref;
   ok $hashref !~~ Hash, "uninitialized variable is not a Hash (2)";
@@ -96,14 +96,15 @@ plan 42;
 #    ... value extraction does not autovivify.
   lives_ok { my $elem = $hashref<key> },
     "accessing a not existing hash element of an uninitialized variable works";
+  #?pugs todo
   ok $hashref !~~ Hash, "uninitialized variable is not autovivified to a hash (2)";
 
   my $hashref2;
   lives_ok { my $elem2 = $hashref2<key2><a><b><c><d><e><f> },
     "accessing a not existing hash element of an uninitialized variable works (2)";
+  #?pugs 2 todo
   ok $hashref2 !~~ Hash, "uninitialized variable is not autovivified to a hash (3)";
   ok $hashref2<key2><a><b><c><d><e> !~~ Hash, "uninitialized variable is not autovivified to a hash (4)";
-  
 }
 
 {
@@ -140,11 +141,13 @@ plan 42;
 #    ... value extraction does not autovivify.
   lives_ok { my $elem = $arrayref[42] },
     "accessing a not existing array element of an uninitialized variable works";
+  #?pugs todo
   ok !$arrayref.isa(Array), "uninitialized variable was not autovivified to an array (2)";
 
   my $arrayref2;
   lives_ok { my $elem = $arrayref2[1][2][3][4][5][6] },
     "accessing a not existing array element of an uninitialized variable works";
+  #?pugs 2 todo
   ok !$arrayref2.isa(Array), "uninitialized variable was not autovivified to an array (3)";
   ok !$arrayref2[1][2][3][4][5].isa(Array), "uninitialized variable was not autovivified to an array (4)";
 }
