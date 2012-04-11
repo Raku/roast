@@ -21,9 +21,7 @@ is($array_ref1.[0], 'foo', 'got the right value at array_ref1 index 0 using the 
 
 # array_ref with strings, numbers and undef
 
-#?pugs emit #
 my $array_ref2 = [ "test", 1, Mu ];
-#?pugs 5 skip 'Mu'
 isa_ok($array_ref2, Array);
 is(+$array_ref2, 3, 'the array_ref2 has 3 elements');
 is($array_ref2[0], 'test', 'got the right value at array_ref2 index 0');
@@ -36,12 +34,9 @@ ok(!$array_ref2[2].defined,'got the right value at array_ref2 index 2');
 # the [] creation must be forced here, because $array_ref<n> = is
 # not seen as array_ref context, because it's not
 
-#?pugs emit # needs array_ref2 
 my $array_ref4 = [ $array_ref2[2, 1, 0] ];
-#?pugs skip 'Mu'
 isa_ok($array_ref4, Array);
 
-#?pugs skip 'Mu'
 {
     is(+$array_ref4, 3, 'the array_ref4 has 3 elements');
     ok(!$array_ref4[0].defined, 'got the right value at array_ref4 index 0');
@@ -51,12 +46,9 @@ isa_ok($array_ref4, Array);
 
 # create new array_ref with 2 array_ref slices
 
-#?pugs emit # need array_ref2, skipped above
 my $array_ref5 = [ $array_ref2[2, 1, 0], $array_ref1[2, 1, 0] ];
-#?pugs skip 'Mu'
 isa_ok($array_ref5, Array);
 
-#?pugs skip 'Mu'
 {
     is(+$array_ref5, 6, 'the array_ref5 has 6 elements');
     ok(!$array_ref5[0].defined, 'got the right value at array_ref5 index 0');
@@ -122,7 +114,6 @@ is     $array9[1][1][1][0], 42, "recursive array access (3)";
 #   list is in some kind of brackets, of course).
 #my $array11;
 #eval '$array11 = [ "a","b","c"; "d","e","f" ]';
-##?pugs 3 todo
 #is +$array11,      2, "AoA created using ';' contains correct number of elems";
 #is +$array11[0],   3, "AoA's subarray created using ';' contains correct number of elems";
 #is $array11[1][1], "e", "AoA created using ';' contains correct elem";

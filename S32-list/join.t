@@ -106,12 +106,10 @@ my $joined2e = join(':', @odd_list1);
 #?pugs todo
 is($joined2e, "1::2::3", 'join(":", @odd_list1) works');
 
-#?pugs emit # Mu
 my @odd_list2 = (1, Mu, 2, Mu, 3);
 
-#?pugs emit # Mu
 my $joined2f = join(':', @odd_list2);
-#?pugs skip 'Mu'
+#?pugs todo
 is($joined2f, "1::2::3", 'join(":", @odd_list2) works');
 
 # should these even be tests ???

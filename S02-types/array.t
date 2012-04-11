@@ -59,10 +59,10 @@ is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notati
 #?pugs emit #
 my @array2 = ("test", 1, Mu);
 
-#?pugs skip "Mu"
 {
     isa_ok(@array2, Array);
 
+    #?pugs 3 todo
     is(+@array2, 3, 'the array2 has 3 elements');
     is(@array2[0], 'test', 'got the right value at array2 index 0');
     is(@array2[1], 1,      'got the right value at array2 index 1');
@@ -74,7 +74,6 @@ my @array2 = ("test", 1, Mu);
     my @array3 = (@array1, @array2);
     isa_ok(@array3, Array);
 
-    #?pugs todo
     is(+@array3, 6, 'the array3 has 6 elements');
     is(@array3[0], 'foo', 'got the right value at array3 index 0');
     is(@array3[1], 'bar', 'got the right value at array3 index 1');
@@ -276,12 +275,13 @@ my @array2 = ("test", 1, Mu);
 # defined in Any, so that .[0] is the identity operation for non-Positional
 # types
 #?niecza skip "Failure"
-#?pugs   skip "Failure"
 {
-    is 1[0], 1, '.[0] is identiity operation for scalars (Int)';
-    is 'abc'[0], 'abc', '.[0] is identiity operation for scalars (Str)';
+    is 1[0], 1, '.[0] is identity operation for scalars (Int)';
+    is 'abc'[0], 'abc', '.[0] is identity operation for scalars (Str)';
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
+    #?pugs skip "Failure"
     isa_ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
+    #?pugs todo
     dies_ok { Mu.[0] }, 'but Mu has no .[]';
 }
 

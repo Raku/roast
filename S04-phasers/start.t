@@ -102,7 +102,6 @@ for <first second> {
 
 # Test that START {} blocks are executed only once even if they return undefined
 # (the first implementation ran them twice instead).
-#?pugs skip 'No such subroutine: "&Mu"'
 {
     my $was_in_start;
     my $sub = { START { $was_in_start++; Mu } };
@@ -110,6 +109,7 @@ for <first second> {
     nok $sub().defined, 'START {} returned undefined';
     $sub();
     $sub();
+    #?pugs todo
     is $was_in_start, 1,
         'our START { ...; Mu } block was invoked exactly once';
 }

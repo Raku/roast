@@ -12,6 +12,7 @@ plan 25;
     is  %h{$a}, 'blubb', 'Any-typed hash access (+)';
     #?pugs todo
     nok %h{A.new},       'and the hash really uses ===-semantics';
+    #?pugs todo
     dies_ok { %h{Mu.new} = 3 }, 'Any-typed hash does not like Mu keys';
     #?pugs todo
     ok %h.keys[0] === $a, 'returned key is correct';

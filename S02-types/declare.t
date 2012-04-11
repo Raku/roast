@@ -218,7 +218,6 @@ plan 79;
  isa_ok($vo,Whatever  );
 }
 
-#?pugs skip 'Mu'
 {
  my Mu $mu;
  ok($mu ~~ Mu  );

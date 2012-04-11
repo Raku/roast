@@ -250,6 +250,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
+    #?pugs todo
     dies_ok { Mu.{'a'} }, 'no .{ } in Mu';
 }
 

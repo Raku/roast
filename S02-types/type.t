@@ -25,11 +25,13 @@ my Str $bar;
 {
     #?pugs 1 todo
     dies_ok({$foo = 'xyz'},      'Int restricts to integers');
+    #?pugs todo
     dies_ok { $foo = Mu },       'Int does not accept Mu';
     is(($foo = 42),       42,    'Int is an integer');
 
     #?pugs 1 todo
     dies_ok({$bar = 42},         'Str restricts to strings');
+    #?pugs todo
     dies_ok { $bar = Mu },       'Str does not accept Mu';
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
@@ -142,7 +144,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 {
     # TODO: many more of these are possible
-    #?pugs 3 skip "Mu"
     ok Any ~~ Mu, 'Any ~~ Mu';
     ok Mu !~~ Any, 'Mu !~~ Any';
     ok Mu !~~ Int, 'Mu !~~ Int';
