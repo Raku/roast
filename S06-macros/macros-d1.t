@@ -114,6 +114,7 @@ plan 12;
 }
 
 #?rakudo skip 'Null PMC access'
+#?pugs skip 'Nil'
 {
     macro funny_nil { quasi { {;}() } }
     is funny_nil(), Nil, 'Nil from an empty block turns into no code';

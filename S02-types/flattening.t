@@ -91,6 +91,7 @@ plan 37;
 }
 
 # RT #112362
+#?pugs skip 'parsefail'
 {
     my @a = <a b c d e f>;
     is @a[[3, 4], 0,], 'c a', '[] in array slice numifies (1)';
