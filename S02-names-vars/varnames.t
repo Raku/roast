@@ -7,8 +7,10 @@ plan 8;
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 
 #?niecza todo
+#?pugs todo
 eval_dies_ok 'my $!', '$! can not be declared again';
 #?niecza todo
+#?pugs todo
 eval_dies_ok 'my $/', 'nor can $/';
 
 #?rakudo 2 todo 'proto on variable declarations'
@@ -21,6 +23,7 @@ eval_dies_ok 'my $f!ao = "beh";', "normal varnames can't have ! in their name";
 eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their names either";
 
 #?rakudo skip 'binding to $/ (questionable?)'
+#?pugs skip "Can't modify constant item: VObject"
 {
     class MyMatch {
         method postcircumfix:<[ ]>($x) {

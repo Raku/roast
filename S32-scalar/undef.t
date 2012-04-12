@@ -1,6 +1,8 @@
 use v6;
 use Test;
+#?pugs emit #
 BEGIN { @*INC.push('t/spec/packages/') };
+#?pugs emit #
 use Test::Util;
 
 =begin pod
@@ -40,6 +42,7 @@ ok(!defined(Mu), "Mu is not defined");
     $a += 1;
     ok(defined($a), "initialized var is defined");
     #?niecza todo
+    #?pugs skip 'is_run'
     is_run( 'my $a; $a += 1', { err => '', out => '', status => 0 },
             'increment of undefined variable does not warn' );
 
@@ -141,6 +144,7 @@ ok(!defined(Mu), "Mu is not defined");
 # XXX shouldn't that be * instead of undef?
 # yes, this chunk should move to a different file --Larry
 
+#?pugs skip "Can't modify constant item: VNum Infinity"
 {
     my $interesting;
     (*, *, $interesting) = (1,2,3);
@@ -177,16 +181,20 @@ Perl6-specific tests
     ok(defined($ary_r), "array reference");
 
     undefine @ary;
+    #?pugs todo
     ok(!+$ary_r, "undefine array referent");
 
+    #?pugs todo
     is(+$ary_r, 0, "dangling array reference");
 
     my %hash = (1, 2, 3, 4);
     my $hash_r = %hash;
+    #?pugs todo
     isa_ok($hash_r, "Hash");
     ok(defined($hash_r), "hash reference");
     undefine %hash;
     ok(defined($hash_r), "undefine hash referent:");
+    #?pugs todo
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 

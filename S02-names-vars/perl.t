@@ -2,11 +2,14 @@ use v6;
 use Test;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
+#?pugs emit plan 78;
+
 my @tests = (
     # Basic scalar values
     42, 
     42/10, 
     4.2, 
+    #?pugs emit #
     sqrt(2),
     3e5,
     Inf, -Inf, NaN,
@@ -24,35 +27,41 @@ my @tests = (
     Mu,
     #?rakudo emit # parse error
     #?niecza emit # Autoloading NYI
+    #?pugs emit #
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
     \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \Mu,
 
+    #?pugs emit #
     (a => 1),
+    #?pugs emit #
     :b(2),
 
     # References to aggregates
+    #?pugs emit #
     {},           # empty hash
+    #?pugs emit #
     { a => 42 },  # only one elem
+    #?pugs emit #
     { :a(1), :b(2), :c(3) },
 
     # Nested things
+    #?pugs emit #
     { a => [1,2,3] },  # only one elem
+    #?pugs emit #
     { a => [1,2,3], b => [4,5,6] },
+    #?pugs emit #
     [ { :a(1) }, { :b(2), :c(3) } ],
 
     # a Parcel
     <a b c>
 );
 
-#?pugs emit force_todo 8, 45..50, 94, 96;
-
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
 #?pugs emit   skip_rest "eval() not yet implemented in $?PUGS_BACKEND.";
 #?pugs emit   exit;
 #?pugs emit }
-
 
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 # Quoting S02 (emphasis added):
@@ -125,7 +134,7 @@ my @tests = (
     ok $t1_new ne $t1_init, 'changing object changes .perl output';
 
     # TODO: more tests that show eval($t1_init) has the same guts as $t1.
-    
+    #?pugs todo
     ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .perl output';
 }
 
@@ -144,6 +153,7 @@ my @tests = (
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     #?niecza skip '>>>Stub code executed'
+    #?pugs todo
     ok eval(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }
 

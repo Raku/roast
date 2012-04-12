@@ -113,6 +113,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 }
 
 # L<S04/"Conditional statements"/The value of the conditional expression may be optionally bound to a closure parameter>
+#?pugs skip 'Cannot bind to non-existing variable: "$a"'
 {
     my ($got, $a_val, $b_val);
     my sub testa { $a_val };
@@ -162,6 +163,7 @@ if (Mu) { flunk('if (Mu) {} failed'); } else { pass('if (Mu) {} works'); }
 
 
 # L<S04/Statement parsing/keywords require whitespace>
+#?pugs todo
 eval_dies_ok('if($x > 1) {}','keyword needs at least one whitespace after it');
 
 # RT #76174

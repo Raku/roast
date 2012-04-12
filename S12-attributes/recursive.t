@@ -35,10 +35,12 @@ Test attributes with recursively typed attributes
     };
     
     my B $a;
+    #?pugs todo
     lives_ok {
         $a .= new();
         B.attr = $a;
     }, "Can instantiate class with recursively-typed class lexical";
+    #?pugs skip 'Undeclared variable'
     ok B.attr === $a, "Recursively-typed class lexical stores correctly";
     
 }
