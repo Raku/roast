@@ -7,12 +7,15 @@ plan 10;
 
 {
     eval_lives_ok 'our sub eval_born { 5 }', 'can define a sub in eval';
+    #?pugs todo
     eval_dies_ok 'eval_born()', 'call to eval-born sub outside eval dies';
     #?rakudo skip 'Null PMC access in invoke()'
+    #?pugs skip 'OUR NYI'
     is OUR::eval_born(), 5, 'call to eval-born our sub via OUR works';
 }
 
 # RT #63882
+#?pugs skip "Unexpected: 'A'"
 {
     my enum A <a b c>;
     is +c, 2, 'c is 2 from enum';
@@ -30,6 +33,7 @@ plan 10;
                   'can compile a class that modifies our variable';
     #?rakudo skip 'RT 69460'
     ok ::OUR::RT69460.new ~~ ::OUR::RT69460, 'can instantiate class that modifies our variable';
+    #?pugs todo
     is $rt69460, 2, 'class can modify our variable';
 }
 

@@ -33,6 +33,7 @@ plan 21;
 }
 
 # RT #64656
+#?pugs skip 'extra space found after &is() ...'
 {
     my sub do-check { 'do-check' }
     is do-check(), 'do-check', 'can call do-check()';
@@ -44,6 +45,7 @@ plan 21;
     is if'a(5), 5, "if'a is a valid sub name";
 }
 
+#?pugs skip 'parsefail'
 {
     my sub sub-check { 'sub-check' }
     is sub-check(), 'sub-check', 'can call sub-check';
@@ -54,28 +56,33 @@ plan 21;
     is method-check(), 'method-check', 'can call method-check';
 }
 
+#?pugs skip "no such subroutine: '&check'"
 {
     my sub last-check { 'last-check' }
     is last-check(), 'last-check', 'can call last-check';
 }
 
+#?pugs skip "no such subroutine: '&check'"
 {
     my sub next-check { 'next-check' }
     is next-check(), 'next-check', 'can call next-check';
 }
 
+#?pugs skip "no such subroutine: '&check'"
 {
     my sub redo-check { 'redo-check' }
     is redo-check(), 'redo-check', 'can call redo-check';
 }
 
 # RT #65804
+#?pugs skip 'parsefail'
 {
     sub sub($foo) { $foo }
     is sub('RT #65804'), 'RT #65804', 'sub named "sub" works';
 }
 
 # RT #68358
+#?pugs todo
 {
     my ($x);
     sub my($a) { $a + 17 }
@@ -93,6 +100,7 @@ plan 21;
 # Rakudo had troubles with identifiers whos prefix is an alphanumeric infix
 # operator; for example 'sub order' would fail because 'order' begins with
 # 'or'
+#?pugs skip 'parsefail'
 {
     my $res;
     sub order-beer($what) { $res = "a $what please!" };
