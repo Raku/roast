@@ -2,20 +2,19 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 36;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
 #?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
 {
-    ok !eval('module MY; 1'), 'MY is an out of scope name';
-    ok !eval('module OUR; 1'), 'OUR is an out of scope name';
-    ok !eval('module GLOBAL; 1'), 'GLOBAL is an out of scope name';
-    ok !eval('module PROCESS; 1'), 'PROCESS is an out of scope name';
-    ok !eval('module OUTER; 1'), 'OUTER is an out of scope name';
-    ok !eval('module CALLER; 1'), 'CALLER is an out of scope name';
-    ok !eval('module CONTEXT; 1'), 'CONTEXT is an out of scope name';
-    ok !eval('module SUPER; 1'), 'SUPER is an out of scope name';
-    ok !eval('module COMPILING; 1'), 'COMPILING is an out of scope name';
+    eval_dies_ok 'module MY;', 'MY is an out of scope name';
+    eval_dies_ok 'module OUR;', 'OUR is an out of scope name';
+    eval_dies_ok 'module GLOBAL;', 'GLOBAL is an out of scope name';
+    eval_dies_ok 'module PROCESS;', 'PROCESS is an out of scope name';
+    eval_dies_ok 'module OUTER;', 'OUTER is an out of scope name';
+    eval_dies_ok 'module CALLER;', 'CALLER is an out of scope name';
+    eval_dies_ok 'module DYNAMIC;', 'DYNAMIC is an out of scope name';
+    eval_dies_ok 'module COMPILING;', 'COMPILING is an out of scope name';
 }
 
 # L<S02/Names/The current lexical symbol table is now accessible>
