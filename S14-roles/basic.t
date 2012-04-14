@@ -91,9 +91,11 @@ dies_ok { HasC.new.x = 42 },    'typed attribute rejects things it should';
 eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
 {
-    my $x = try eval 'class Animal does NonExistentRole { }; 1';
+    dies_ok { eval 'class Animal does NonExistentRole { }; 1' },
+	    'a class dies when it does a non-existent role';
+
+    try { eval 'class Animal does NonExistentRole { }; 1' };
     my $err = "$!";
-    ok !$x, 'a class dies when it does a non-existent role';
     #?rakudo todo 'nom regression'
     ok $err ~~ /NonExistentRole/,
        '... and the error message mentions the role';
@@ -102,8 +104,9 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 # RT #67278
 {
     class AClass { };
+    dies_ok { eval 'class BClass does AClass { }; 1' },
+	    'class SomeClass does AnotherClass  dies';
     my $x = try eval 'class BClass does AClass { }; 1';
-    nok $x, 'class SomeClass does AnotherClass  dies';
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
 }
 

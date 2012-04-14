@@ -28,10 +28,11 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 
 # RT #71478
 {
-    my $success = try { eval 'sub foo(%h) { %h }; foo(1, 2); 1' };
-    my $error   = "$!";
-    nok $success,
+    dies_ok { eval 'sub foo(%h) { %h }; foo(1, 2); 1' },
         "Passing two arguments to a function expecting one hash is an error";
+
+    try { eval 'sub foo(%h) { %h }; foo(1, 2); 1' };
+    my $error   = "$!";
     #?pugs todo
     ok $error ~~ / '%h' /,   '... error message mentions parameter';
     #?pugs todo
