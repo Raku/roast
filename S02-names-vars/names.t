@@ -28,11 +28,12 @@ plan 141;
 {
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
-#?rakudo 4 skip '::{ } package lookup NYI'
     #?niecza todo
+    #?rakudo skip 'this kind of lookup NYI'
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
     #?niecza todo
+    #?rakudo skip 'this kind of lookup NYI'
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');
 }
@@ -57,6 +58,7 @@ plan 141;
 }
 
 # RT #77750
+#?rakudo todo 'dubious test - otherwise why is ::<$foo> allowed?'
 eval_dies_ok '::.^methods', ':: is not a valid package';
 
 # RT #63646
