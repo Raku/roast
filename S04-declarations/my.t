@@ -204,9 +204,9 @@ my $z = 42; #OK not used
     eval_lives_ok 'my $a;do { die "foo"; my $x; CATCH { default { $a = $x.defined } } }';
 
     {
-        #?rakudo 2 skip 'OUTER and SETTING'
         #?pugs todo
         ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
+        #?rakudo skip 'SETTING'
         #?pugs todo
         ok eval('not SETTING::<$x>.defined'), 'SETTING::<$x>';
         my $x; #OK not used

@@ -20,7 +20,6 @@ plan 36;
 # L<S02/Names/The current lexical symbol table is now accessible>
 
 # XXX -- dunno why test test fails, but the next outer test works. --iblech
-#?rakudo skip 'OUTER::'
 { my $a = 1; {
    my $a=2; {
       my $a=3;
@@ -29,7 +28,6 @@ plan 36;
       is($OUTER::OUTER::a, 1, 'get $OUTER::OUTER::a');
 }}}
 
-#?rakudo skip 'OUTER::'
 {
   my $a = 1;
   is $a, 1, 'get regular $a (1)';
