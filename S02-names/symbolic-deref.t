@@ -88,7 +88,6 @@ my $outer = 'outside';
   eval_dies_ok('$::($pugsis)cool', '$::($foo)bar is illegal');
 }
 
-#?rakudo skip 'NYI'
 {
   my $result;
 
