@@ -78,7 +78,7 @@ throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'sub a { }; multi sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
-throws_like 'my class B { }; my subset B { }', X::Redeclaration, symbol => 'B';
+throws_like 'my class B { }; my subset B of Any;', X::Redeclaration, symbol => 'B';
 throws_like 'CATCH { }; CATCH { }', X::Phaser::Multiple, block => 'CATCH';
 
 throws_like 'my class A { my @a; @a!List::foo() }',
@@ -167,6 +167,8 @@ throws_like 'use MONKEY_TYPING; augment class { }', X::Anon::Augment, package-ty
 throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
     package-type => 'class',
     package => 'NoSuchClass';
+throws_like 'use MONKEY_TYPING; augment class No::Such::Class { }', X::Augment::NoSuchType,
+    package => 'No::Such::Class';
 
 throws_like ':45<abcd>', X::Syntax::Number::RadixOutOfRange, radix => 45;
 throws_like ':0<0>', X::Syntax::Number::RadixOutOfRange, message => rx/0/;
