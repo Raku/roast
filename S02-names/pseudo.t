@@ -10,6 +10,7 @@ plan 140;
 # L<S02/Names>
 
 # (root)
+#?rakudo skip 'the binding in here is NYI'
 {
     my $x = 1; #OK
     my $y = 2; #OK
@@ -32,6 +33,7 @@ plan 140;
 }
 
 # MY
+#?rakudo skip 'various issues, skipping all for now'
 {
     my $x = 10; #OK
     my $y = 11; #OK
@@ -165,16 +167,24 @@ plan 140;
     is OUR::A40.WHO.<$x>, 41, '$OUR:: can autovivify packages (reference)';
     $OUR::A41::x := 42;
     is OUR::A41.WHO.<$x>, 42, '$OUR:: can autovivify packages (binding)';
+    #?rakudo emit #
     $::($our)::A42::x = 43;
+    #?rakudo skip 'interpolation and auto-viv NYI'
     is ::($our)::A42.WHO.<$x>, 43, '::("OUR") can autovivify packages (r)';
+    
+    #?rakudo emit #
     $::($our)::A43::x := 44;
+    #?rakudo skip 'binding and interpolation together NYI'
     is ::($our)::A43.WHO.<$x>, 44, '::("OUR") can autovivify packages (b)';
 
+    #?rakudo emit #
     ::($our)::A44 := class { our $x = 41; };
+    #?rakudo skip 'binding and interpolation together NYI'
     is $::($our)::A44::x, 41, '::("OUR") can follow aliased packages';
 }
 
 # CORE
+#?rakudo skip 'CORE NYI'
 {
     my $real = &not;
     my $core = "CORE";
@@ -214,6 +224,7 @@ plan 140;
     { our $x60 = 60; }
     package A61 {
         is $GLOBAL::x60, 60, '$GLOBAL:: works';
+        #?rakudo todo 'GLOBAL and interpolation'
         is ::("GLOBAL")::('$x60'), 60, '::("GLOBAL") works';
         is GLOBAL::.<$x60>, 60, 'GLOBAL::.{} works';
     }
@@ -232,6 +243,7 @@ plan 140;
 # COMPILING - not testable without BEGIN
 
 # DYNAMIC
+#?rakudo skip 'various issues to resolve'
 {
     my $dyn = "DYNAMIC";
 
@@ -303,6 +315,7 @@ plan 140;
     is f2({ $::($caller)::($caller)::x }), 91, 'indirect CALLER::CALLER works';
 
     my $*foo = 92;
+    #?rakudo 2 todo 'not entirely sure these make sense...'
     is f2({ CALLER::<$*foo> }), 92, 'CALLER::<$*foo> works';
     is f2({ ::($caller)::('$*foo') }), 92, '::("CALLER")::<$*foo> works';
 
@@ -330,6 +343,7 @@ plan 140;
         {
             my $x = 105; #OK
             my $y = 106; #OK
+            #?rakudo 2 todo 'these tests disagree with STD'
             is $OUTER::y, 103, '$OUTER:: keeps going until match';
             is $::($outer)::y, 103, '::("OUTER") keeps going until match';
 
@@ -352,6 +366,7 @@ plan 140;
 
 # UNIT
 my $x110 = 110; #OK
+#?rakudo skip 'UNIT NYI'
 {
     my $x110 = 111; #OK
     my $unit = "UNIT";
@@ -365,6 +380,7 @@ my $x110 = 110; #OK
 }
 
 # SETTING
+#?rakudo skip 'SETTING NYI'
 {
     sub not($x) { $x } #OK
     my $setting = 'SETTING';
