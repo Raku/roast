@@ -58,7 +58,6 @@ ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
     # - also tested more generically above.
     # So no need to test the value of #! again here.
     #is $!, 'goodbye', '$! has correct value after try';
-    #?rakudo skip 'spec change pending (?)'
     ok ($!), '$! as boolean works (true)';
 
     try { eval q[ die('farewell'); ] };

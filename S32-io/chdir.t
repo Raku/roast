@@ -43,7 +43,6 @@ if $no_subdir.IO ~~ :d {
 else {
     lives_ok { chdir("$no_subdir") },
              'chdir to a non-existent does not by default throw an exception';
-    #?rakudo todo 'nom regression'
     ok !chdir("$no_subdir"),
        'change to non-existent directory gives a false value';
 }

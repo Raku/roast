@@ -171,7 +171,6 @@ use Test;
     $ok++ if $!;
     $ok++ if grtz == 42;
 
-    #?rakudo todo 'unknown'
     is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
@@ -201,7 +200,6 @@ use Test;
     $ok++ if $!;
     $ok++ if wobble == 42;
 
-    #?rakudo todo 'unknown'
     is $ok, 3, "a constant declared using 'constant' is actually constant (3)";
 }
 

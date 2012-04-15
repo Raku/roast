@@ -57,7 +57,6 @@ is uniq('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
     my $range = [1..4];
     my @array = $range, $range.WHICH;
     is @array.elems, 2, ".uniq does not use naive WHICH (1)";
-    #?rakudo todo "awaiting better .uniq implementation"
     is @array.uniq.elems, 2, ".uniq does not use naive WHICH (2)";
 }
 
