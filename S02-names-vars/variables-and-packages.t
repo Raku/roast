@@ -13,6 +13,7 @@ plan 36;
     eval_dies_ok 'module PROCESS;', 'PROCESS is an out of scope name';
     eval_dies_ok 'module OUTER;', 'OUTER is an out of scope name';
     eval_dies_ok 'module CALLER;', 'CALLER is an out of scope name';
+    #?pugs todo
     eval_dies_ok 'module DYNAMIC;', 'DYNAMIC is an out of scope name';
     eval_dies_ok 'module COMPILING;', 'COMPILING is an out of scope name';
 }
