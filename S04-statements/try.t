@@ -6,6 +6,7 @@ use Test;
 
 plan 24;
 
+#?pugs todo
 {
     # simple try
     my $lived = Mu;
@@ -87,7 +88,7 @@ plan 24;
     is argcount( try { 17 }, 23, 99 ), 3, 'try gets a block, nothing more';
 }
 
-
+#?pugs todo
 {
     my $catches = 0;
     try {
@@ -102,6 +103,7 @@ plan 24;
 }
 
 # RT #68728
+#?pugs todo
 {
     my $str = '';
     try {
@@ -120,6 +122,7 @@ plan 24;
 }
 
 #?niecza skip 'new exception stuff'
+#?pugs skip '{obj:MyPayload}'
 {
     class MyPayload {
         method Str() { 'something exceptional' }
@@ -140,6 +143,7 @@ plan 24;
 
 # RT #111704
 #?rakudo todo 'RT 111704'
+#?pugs skip 'Missing required parameters: $_'
 {
     my $x = 0;
     try { $x = $_ } given '42';

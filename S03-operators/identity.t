@@ -133,6 +133,7 @@ class TestObj { has $!a }
 
 #?rakudo todo 'misuse of =:='
 #?niecza skip 'Failure NYI'
+#?pugs   skip 'Failure NYI'
 {
     ok (Mu =:= Mu) ~~ Failure, 'misuse of =:= is failure (Mu)';
     ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';
