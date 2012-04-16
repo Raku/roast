@@ -366,7 +366,6 @@ plan 140;
 
 # UNIT
 my $x110 = 110; #OK
-#?rakudo skip 'UNIT NYI'
 {
     my $x110 = 111; #OK
     my $unit = "UNIT";
