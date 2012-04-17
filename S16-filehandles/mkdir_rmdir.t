@@ -21,6 +21,7 @@ ok mkdir("$root/green"), "mkdir $root/green returns true";
 ok "$root/green".IO ~~ :e, "$root/green now exists";
 ok "$root/green".IO ~~ :d, "... and is a directory";
 
+#?rakudo skip 'deviation from spec because we do not have sink yet'
 nok rmdir($root), "Get false when we try to rmdir a directory with something in it";
 ok $root.IO ~~ :e, "$root still exists";
 
