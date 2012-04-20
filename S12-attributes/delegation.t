@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 66;
+plan 65;
 
 =begin desc
 
@@ -197,13 +197,15 @@ class PairTest {
     is $h.Str, ~{a => 5}, 'delegation of .Str and .push to hash';
 }
 
-{
-    class TypePseudoHash { has %!data handles Hash }
-    my $h = TypePseudoHash.new;
-    $h<a> = 'c';
-    $h<b> = 'd';
-    is $h<a b>.join('|'), 'c|d', 'can do handles + type object (1)';
-}
+# This test cannot work; autoviv requires Hash-like methods in
+# Any, which means that the 'handles Hash' fallback never occurs.
+#{
+#    class TypePseudoHash { has %!data handles Hash }
+#    my $h = TypePseudoHash.new;
+#    $h<a> = 'c';
+#    $h<b> = 'd';
+#    is $h<a b>.join('|'), 'c|d', 'can do handles + type object (1)';
+#}
 
 #?pugs skip "Can't modify constant item: VUndef"
 {

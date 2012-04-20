@@ -22,7 +22,7 @@ dies_ok { $ref[0] }, 'Hash !~~ Positional';
 {
     $ref = [ 42 ];
     isa_ok($ref, Array);
-    dies_ok( { $ref<0> }, 'Accessing an array as a hash dies');
+    ok( $ref<0> ~~ Failure, 'Accessing an array as a hash fails');
 }
 
 # Also test that scalars give up their container types - this time a
