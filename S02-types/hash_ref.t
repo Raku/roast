@@ -5,7 +5,6 @@ use Test;
 plan 31;
 
 # basic lvalue assignment
-#?rakudo skip 'hash autovivification'
 {
     my $hash;
     isa_ok $hash, Any;
@@ -83,14 +82,13 @@ plan 31;
 }
 
 # infinity HoHoHoH...
-#?rakudo skip 'isa Hash'
 #?niecza skip 'Cannot use hash access on an object of type Capture'
 {
     my %hash = (val => 42);
-    %hash<ref> = \%hash;
-    isa_ok %hash,           "Hash";
-    isa_ok %hash<ref>,      "Hash";
-    isa_ok %hash<ref><ref>, "Hash";
+    %hash<ref> = %hash;
+    isa_ok %hash,           Hash;
+    isa_ok %hash<ref>,      Hash;
+    isa_ok %hash<ref><ref>, Hash;
     is %hash<ref><val>,      42, "access to infinite HoHoHoH... (1)";
     is %hash<ref><ref><val>, 42, "access to infinite HoHoHoH... (2)";
 }
