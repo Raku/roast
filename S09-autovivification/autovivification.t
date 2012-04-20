@@ -25,7 +25,6 @@ plan 42;
 
   %hash<key><innerkey> = 17;
   is %hash<key><innerkey>, 17, "autovivification of a hash element to a hashref worked";
-  #?rakudo todo 'isa and Hash'
   isa_ok %hash<key>, Hash, 'Inner hash item is really a Hash';
 }
 
@@ -189,7 +188,6 @@ lives_ok {
   # this is ok, as you don't have to predeclare globally qualified variables
 }, "using an undeclared globaly qualified code variable in void context is ok";
 
-#?rakudo todo 'Null PMC Access'
 dies_ok {
   &New::Package::foo();
 }, "...but invoking undeclared globally qualifed code variable should die";
