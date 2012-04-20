@@ -17,7 +17,7 @@ my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>');
 }
 
-dies_ok {[1,2,3].join<abc>}, '.join<abc> parses but dies';
+ok( [1,2,3].join<abc> ~~ Failure , '.join<abc> parses and fails');
 
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
 #?rakudo todo 'unknown errors'
