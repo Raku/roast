@@ -123,7 +123,6 @@ is_run( q{'aa' ~~ /(.)$1/},
     $/ = Any;
     lives_ok { $0 },
         '$0 accessible when $/ is undefined';
-    #?rakudo todo 'RT 72956'
     ok $0 === Any,
         '$0 is Any when $/ is undefined';
     nok $0.defined, '$0 is undefined';
