@@ -243,12 +243,12 @@ plan 33;
 
     my @sorted;
 
-    #?rakudo todo 'nom regression'
     #?niecza todo 'Is this test actually testing for correct behavior?'
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
 
     #?pugs skip '.WHERE'
+    #?rakudo todo 'Huh?  What is this test doing?'
     ok ([<] @sorted.map({.WHERE})),
         'checking sort order by class memory address';
 
