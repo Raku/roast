@@ -75,7 +75,6 @@ plan 42;
         return $x
     }
     is swatest(), '1|2|3', 'array state initialized correctly';
-    #?rakudo todo 'nom regression'
     is swatest(), '2|2|3', 'array state retained between calls';
 }
 
@@ -89,7 +88,6 @@ plan 42;
         return $x
     }
     is swatest2(), '1|2|3', 'array state initialized from call correctly';
-    #?rakudo todo 'nom regression'
     is swatest2(), '2|2|3', 'array state retained between calls';
 }
 
@@ -240,7 +238,6 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
     my $func = { state $x = $i++; $x };
     my ($a, $b) = $func.clone, $func.clone; 
     is $a(), 0, 'state was initialized correctly for clone 1';
-    #?niecza todo 'state was initialized correctly for clone 2'
     is $b(), 1, 'state was initialized correctly for clone 2';
     is $a(), 0, 'state between clones is independent';
 }
@@ -322,7 +319,6 @@ eval_lives_ok 'state $x; $x', 'state outside control structure';
     is f(0), 5, 'initialization not reached on first run of the functions';
 }
 
-#?rakudo todo 'state vars in list assignment'
 {
     sub r {
         state ($a, $b) = (5, 42);
