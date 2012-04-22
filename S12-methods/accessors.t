@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 8;
 
 class A {
     has @.a;
@@ -40,3 +40,21 @@ is $a.test-scalar-a, 1, '$.a contextualizes as item (1)';
 is $a.test-list-b,   4, '@.a contextualizes as (flat) list (2)';
 is $a.test-scalar-b, 1, '$.a contextualizes as item (2)';
 is $a.test-hash-a,   2, '%.a contextualizes as hash';
+
+# RT #78678
+{
+    class Parent {
+        has $.x is rw;
+        method parent-x() { $!x };
+    }
+    class Child is Parent {
+        has $.x is rw;
+        method child-x() { $!x };
+    }
+    my $o = Child.new(x => 42);
+    $o.Parent::x = 5;
+    is $o.parent-x, 5, 'parent attribute is separate from child attribute of the same name (parent)';
+    is $o.child-x, 42, 'parent attribute is separate from child attribute of the same name (child)';
+    is $o.x, 42, '.accessor returns that of the child';
+
+}
