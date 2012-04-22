@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 29;
+plan 30;
 
 # L<S14/Run-time Mixins/>
 
@@ -134,5 +134,8 @@ is $y.test,     42,         'method from other role was OK too';
 # RT #79868
 is (class { } but role { method answer() { 42 } }).answer, 42,
     'can mix a role into a type object';
+
+# RT #101022
+lives_ok {(True but role {}).gist}, 'can mix into True';
 
 # vim: syn=perl6

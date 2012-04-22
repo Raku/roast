@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 32;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -87,5 +87,23 @@ eval_dies_ok('$', 'Anonymous $ variable outside of declaration');
 eval_dies_ok('@', 'Anonymous @ variable outside of declaration');
 eval_dies_ok('%', 'Anonymous % variable outside of declaration');
 eval_dies_ok('&', 'Anonymous & variable outside of declaration');
+
+# RT #76320
+{
+    my $h = <a b c d>;
+    is ~%$h.keys.sort, 'a c', '%$var coercion';
+    
+    my $c = 0;
+    $c++ for @$h;
+    is $c, 4, '@$var coercion';
+}
+
+#?rakudo skip '$@var syntax'
+{
+    my @a = <a b c d>;
+    my $c = 0;
+    $c++ for $@a;
+    is $c, 1, '$@var itemization'
+}
 
 # vim: ft=perl6

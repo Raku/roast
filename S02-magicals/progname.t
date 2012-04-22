@@ -10,7 +10,6 @@ if $*OS eq "browser" {
   exit;
 }
 
-#?rakudo skip 'No PROCESS yet'
 ok(PROCESS::<$PROGRAM_NAME> ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname'.'\w+$/, "progname var matches test file path");
 ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname'.'\w+$/, "progname var accessible as context var");
 
