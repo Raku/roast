@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 133;
+plan 134;
 
 # L<S02/General radices/":10<42>">
 is( :10<0>,   0, 'got the correct int value from decimal 0' );
@@ -24,6 +24,9 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     is(:10('0x20'),   0x20, ":10('0x20') overrides default decimal");
     is(:10('0o377'),  0o377, ":10('0o255') overrides default decimal");
     is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
+
+    # RT #107756
+    dies_ok { :10(42) }, ':10() really wants a string, not a number';
 }
 
 
