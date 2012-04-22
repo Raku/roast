@@ -12,9 +12,7 @@ it is closely related to || and && and //.
 
 =end description
 
-# test cases by Andrew Savige
-
-plan 79;
+plan 80;
 
 my $accum = '';
 sub f1($s)   { $accum ~= $s; 1 }
@@ -303,6 +301,13 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     #?rakudo todo 'nom regression'
     is $b, 0, '||= short-circuits';
 
+}
+
+# RT #90158
+{
+    my @a = 1;
+    @a ||= ();
+    is ~@a, '1', '||= works with array on the LHS';
 }
 
 done;
