@@ -19,13 +19,14 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
-#?pugs 4 todo "unimpl"
+    #?pugs 4 todo "unimpl"
     is(:10('0b1110'), 0b1110, ":10('0b1110') overrides default decimal");
     is(:10('0x20'),   0x20, ":10('0x20') overrides default decimal");
     is(:10('0o377'),  0o377, ":10('0o255') overrides default decimal");
     is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
 
     # RT #107756
+    #?pugs todo
     dies_ok { :10(42) }, ':10() really wants a string, not a number';
 }
 

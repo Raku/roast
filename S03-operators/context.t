@@ -89,6 +89,7 @@ eval_dies_ok('%', 'Anonymous % variable outside of declaration');
 eval_dies_ok('&', 'Anonymous & variable outside of declaration');
 
 # RT #76320
+#?pugs skip 'Cannot cast into Hash: VRef'
 {
     my $h = <a b c d>;
     is ~%$h.keys.sort, 'a c', '%$var coercion';
@@ -99,6 +100,7 @@ eval_dies_ok('&', 'Anonymous & variable outside of declaration');
 }
 
 #?rakudo skip '$@var syntax'
+#?pugs todo
 {
     my @a = <a b c d>;
     my $c = 0;

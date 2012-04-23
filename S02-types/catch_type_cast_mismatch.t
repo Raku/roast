@@ -22,6 +22,7 @@ dies_ok { $ref[0] }, 'Hash !~~ Positional';
 {
     $ref = [ 42 ];
     isa_ok($ref, Array);
+    #?pugs skip 'Cannot cast into Hash: VRef'
     ok( $ref<0> ~~ Failure, 'Accessing an array as a hash fails');
 }
 

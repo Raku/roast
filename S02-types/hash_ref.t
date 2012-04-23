@@ -87,7 +87,9 @@ plan 31;
     my %hash = (val => 42);
     %hash<ref> = %hash;
     isa_ok %hash,           Hash;
+    #?pugs todo
     isa_ok %hash<ref>,      Hash;
+    #?pugs 3 skip 'Cannot cast into Hash: VRef'
     isa_ok %hash<ref><ref>, Hash;
     is %hash<ref><val>,      42, "access to infinite HoHoHoH... (1)";
     is %hash<ref><ref><val>, 42, "access to infinite HoHoHoH... (2)";

@@ -57,7 +57,6 @@ class SimpleClass does Bar {}
   my $class = $bar.get_class_normal;
   my $package = $bar.get_package_normal;
 
-  #?pugs todo 'oo'
   is( $package.gist, Bar.gist, '$?PACKAGE should be the role package name - it is not generic like $?CLASS');
 
   #?pugs todo 'bug'
