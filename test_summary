@@ -16,6 +16,10 @@
 ##  If supplied, C<testlist> identifies an alternate list of tests
 ##  to use (e.g., t/localtest.data).
 
+##  Rakudo Note:
+##    Using this script with rakudo requires setting the PERL6LIB env var
+##    to point to its lib directory so we can find Test.pm
+
 use strict;
 use warnings;
 use Time::Local;
