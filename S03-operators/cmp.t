@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 22;
 
 # cmp on scalar values
 {
@@ -44,7 +44,12 @@ plan 18;
     is (:a<5> cmp :a<6>), Order::Increase, "cmp on Pair (5)";
 
     my $cmp5 = { :$^q cmp :q<5> };
-    is $cmp5(5), Order::Same, "cmp on Pair from local variable"
+    is $cmp5(5), Order::Same, "cmp on Pair from local variable";
+
+    is (:a<5> cmp  Inf), Order::Increase, "cmp on Pair/Inf";
+    is (:a<5> cmp -Inf), Order::Decrease, "cmp on Pair/-Inf";
+    is ( Inf cmp :a<5>), Order::Decrease, "cmp on Inf/Pair";
+    is (-Inf cmp :a<5>), Order::Increase, "cmp on -Inf/Pair";
 }
 
 # vim: ft=perl6
