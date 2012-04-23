@@ -101,6 +101,7 @@ eval_dies_ok('&', 'Anonymous & variable outside of declaration');
 
 #?rakudo skip '$@var syntax'
 #?pugs todo
+#?niecza skip "Invalid hard reference syntax"
 {
     my @a = <a b c d>;
     my $c = 0;
