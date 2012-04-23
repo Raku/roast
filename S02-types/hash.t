@@ -245,7 +245,6 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 # RT #58372
 # By collective knowledge of #perl6 and @larry, .{ } is actually defined in
 # Any
-#?rakudo skip 'RT 58372'
 {
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';

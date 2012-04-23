@@ -198,7 +198,6 @@ Perl6-specific tests
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 
-#?rakudo skip 'autovivification'
 #?niecza skip 'push does not vivify'
 {
     my Array $an_ary;
@@ -209,7 +208,6 @@ Perl6-specific tests
     nok(defined($an_ary.pop), "comes to shove");
 }
 
-#?rakudo skip 'Autovivify hashes'
 {
     my Hash $a_hash;
 

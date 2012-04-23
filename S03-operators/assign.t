@@ -615,7 +615,6 @@ sub l () { 1, 2 };
     is(@z.elems,      3,    'lhs treats $Foo::c as scalar (2)');
 }
 
-#?rakudo skip 'Cannot assign to a non-container'
 {
     my @a;
     my @z = ($(@a[0]) = l, l);
@@ -802,7 +801,6 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats foo()[$b,] as list');
 }
 
-#?rakudo skip 'Cannot assign to a non-container'
 {
     my @a;
     my $b = 0;

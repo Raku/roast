@@ -77,7 +77,6 @@ my $outer = 'outside';
 }
 
 
-#?rakudo skip 'NYI'
 {
   $pugs::is::cool = 42;
   my $cool = "cool";
@@ -145,7 +144,6 @@ my $outer = 'outside';
     "symbolic dereferentiation of type vars works (1)";
 }
 
-#?rakudo skip 'NYI'
 {
   class A::B::C {};
   my $ok = ::A::B::C === ::A::("B")::C;

@@ -206,7 +206,6 @@ my $z = 42; #OK not used
     {
         #?pugs todo
         ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
-        #?rakudo skip 'SETTING'
         #?pugs todo
         ok eval('not SETTING::<$x>.defined'), 'SETTING::<$x>';
         my $x; #OK not used

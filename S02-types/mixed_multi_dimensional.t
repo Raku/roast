@@ -173,7 +173,6 @@ Some deeper tests were already added.
     isa_ok($h<a>.WHAT, Array, "array nested in hashref in one declaration");
 }
 
-#?rakudo 18 skip "nom regression: 'Cannot assign to a non-container'"
 { # structures deeper than 2 levels
     my @array;
     @array[0][0][0][0][0] = 5;
