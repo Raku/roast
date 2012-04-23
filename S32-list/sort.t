@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 33;
+plan 32;
 
 # L<S32::Containers/"List"/"=item sort">
 
@@ -246,11 +246,6 @@ plan 33;
     #?niecza todo 'Is this test actually testing for correct behavior?'
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
-
-    #?pugs skip '.WHERE'
-    #?rakudo todo 'Huh?  What is this test doing?'
-    ok ([<] @sorted.map({.WHERE})),
-        'checking sort order by class memory address';
 
     class RT71258_2 {
         has $.x;
