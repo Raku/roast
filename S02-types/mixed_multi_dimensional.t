@@ -185,20 +185,16 @@ Some deeper tests were already added.
 
     @array[1]<two>[0]<four>[0]<six> = 6;
     isa_ok(@array, Array);
-    #?rakudo todo 'isa hash'
     isa_ok(@array[1], Hash);
     isa_ok(@array[1]<two>, Array);
-    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0], Hash);
     is(+@array[1]<two>[0], 1, "one key at level 4");
     isa_ok(@array[1]<two>[0]<four>, Array);
-    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0]<four>[0], Hash);
     is(@array[1]<two>[0]<four>[0]<six>, 6, "6 level deep mixed structure");
 
 
     @array[2]<two>[0]<f><other> = 5;
-    #?rakudo todo 'isa hash'
     isa_ok(@array[1]<two>[0], Hash);
     #?rakudo todo 'isa hash'
     #?niecza todo
