@@ -94,7 +94,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
     dies_ok { eval 'class Animal does NonExistentRole { }; 1' },
 	    'a class dies when it does a non-existent role';
 
-    try { eval 'class Animal does NonExistentRole { }; 1' };
+    try { eval 'class AnotherAnimal does NonExistentRole { }; 1' };
     my $err = "$!";
     #?rakudo todo 'nom regression'
     ok $err ~~ /NonExistentRole/,
@@ -106,7 +106,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
     class AClass { };
     dies_ok { eval 'class BClass does AClass { }; 1' },
 	    'class SomeClass does AnotherClass  dies';
-    my $x = try eval 'class BClass does AClass { }; 1';
+    my $x = try eval 'class CClass does AClass { }; 1';
     ok "$!" ~~ /AClass/, 'Error message mentions the offending non-role';
 }
 
