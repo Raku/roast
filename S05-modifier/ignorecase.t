@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 =begin description
 
@@ -50,5 +50,12 @@ ok('SS' ~~ m:i/ß/, "SS matches ß with :ignorecase");
 
 #RT #76750
 ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
+
+# RT #76500
+{
+    my $matcher = 'aA';
+    nok 'aa' ~~ /   $matcher/, 'interpolation: no match without :i';
+     ok 'aa' ~~ /:i $matcher/, 'interpolation: match with :i';
+}
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
