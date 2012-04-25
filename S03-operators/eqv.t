@@ -110,10 +110,10 @@ plan 52;
 
 #?rakudo skip 'captures'
 #?niecza skip 'Cannot use value like Capture as a number'
-#?pugs skip "Mu"
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
+  #?pugs 2 todo
   ok !(\3 eqv \3),         "eqv on anonymous scalar references (2)";
   ok !(\Mu eqv \Mu), "eqv on anonymous scalar references (3)";
 }

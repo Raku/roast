@@ -155,7 +155,6 @@ sub accumtest($expect, $op) {
     is(0 || 42,        42, "||   operator working");
     is((0 or 42),      42, "or   operator working");
 
-    #?pugs 2 skip 'Mu'
     is((Mu // 42),  42, "//   operator working"); #"
     is((Mu orelse 42), 42, "orelse  operator working");
 
@@ -166,7 +165,6 @@ sub accumtest($expect, $op) {
     is(1 ^^ 42,     False, "^^  operator working (both true)");
     #?pugs todo
     is(0 ^^ 0,          0, "^^  operator working (both false)");
-    #?pugs 6 skip 'xor'
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
     is((0 xor 42),     42, "xor operator working (one true)");
@@ -201,7 +199,6 @@ sub accumtest($expect, $op) {
 
     #?rakudo skip 'segmentation fault'
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
-    #?pugs skip 'Mu'
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
     #?pugs 2 skip 'Range'
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';

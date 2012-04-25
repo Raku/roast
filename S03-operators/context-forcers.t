@@ -32,7 +32,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   iis ?(?"3"),  True,  "? context forcer works (13)";
   iis ?(?"0"),  False, "? context forcer works (14)";
 
-  #?pugs skip 'Mu'
   iis ?Mu,      False, "? context forcer works (15)";
 }
 { # L<S02/"Names and Variables" /In boolean contexts/>
@@ -62,7 +61,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
   #?rakudo skip '~Mu'
-  #?pugs skip 'Mu'
+  #?pugs todo 'Mu'
   is ~Mu,         "", "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";

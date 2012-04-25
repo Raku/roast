@@ -130,7 +130,6 @@ my $outer = 'outside';
 
   cmp_ok &::("say"),  &infix:<===>, &say,
     "symbolic dereferentiation of CORE subs works (1)";
-  #?pugs skip "todo"
   ok &::("so")(42),
     "symbolic dereferentiation of CORE subs works (2)";
   is &::("truncate")(3.1), 3,

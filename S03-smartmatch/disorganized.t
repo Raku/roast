@@ -15,7 +15,6 @@ sub eval_elsewhere($code){ eval($code) }
     ok("foo" ~~ .defined, "foo is ~~ .defined");
     #?pugs todo
     nok "foo" !~~ .defined,   'not foo !~~ .defined';
-    #?pugs skip 'Mu'
     nok((Mu ~~ .defined), "Mu is not .defined");
 }
 

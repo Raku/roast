@@ -13,7 +13,6 @@ Verify that autoincrement/autodecrement work properly.
 
 =end description
 
-#?pugs skip 'Mu'
 {
     my $a = Mu;
     is($a++, 0, 'Mu++ == 0');

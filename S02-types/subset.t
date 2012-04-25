@@ -37,7 +37,6 @@ dies_ok { eval('Even.new') }, 'Cannot instantiate a subtype';
 #?pugs emit #
 subset Digit of Int where ^10;
 
-#?pugs skip 'needs previous emit'
 {
     my Digit $x = 3;
     is  $x,     3,  "Can assign to var with 'subset' type constraint";
@@ -178,7 +177,6 @@ dies_ok { my Digit $x = 3.1 },
 
 #?pugs emit #
 subset Bug::RT80930 of Int where { $_ %% 2 };
-#?pugs skip 'needs previous emit'
 lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #95500

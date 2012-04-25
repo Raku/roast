@@ -53,7 +53,6 @@ is("text " ~ "stitching", "text stitching", 'concatenation with ~ operator');
 
 # L<S03/Tight or precedence/short-circuit inclusive-or>
 is(2 || 3, 2, "|| returns first true value");
-#?pugs skip 'Mu'
 ok(!(defined( 0 || Mu)), "|| returns last false value of list?");
 
 {

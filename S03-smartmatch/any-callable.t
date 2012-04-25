@@ -13,7 +13,6 @@ plan 6;
 }
 
 #L<S03/"Smart matching"/Any Callable:() simple closure truth>
-#?pugs skip 'Mu'
 {
     sub uhuh { 1 }
     sub nuhuh { Mu }

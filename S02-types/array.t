@@ -55,14 +55,11 @@ is(@array1.[0], 'foo', 'got the right value at array1 index 0 using the . notati
 
 
 # array with strings, numbers and undef
-#?pugs emit my @array2;
-#?pugs emit #
 my @array2 = ("test", 1, Mu);
 
 {
     isa_ok(@array2, Array);
 
-    #?pugs 3 todo
     is(+@array2, 3, 'the array2 has 3 elements');
     is(@array2[0], 'test', 'got the right value at array2 index 0');
     is(@array2[1], 1,      'got the right value at array2 index 1');
@@ -78,7 +75,6 @@ my @array2 = ("test", 1, Mu);
     is(@array3[0], 'foo', 'got the right value at array3 index 0');
     is(@array3[1], 'bar', 'got the right value at array3 index 1');
     is(@array3[2], 'baz', 'got the right value at array3 index 2');
-    #?pugs 2 todo
     is(@array3[3], 'test', 'got the right value at array3 index 3');
     is(@array3[4], 1,      'got the right value at array3 index 4');
     ok(!@array3[5].defined,'got the right value at array3 index 5');
@@ -91,7 +87,6 @@ my @array2 = ("test", 1, Mu);
 
     is(+@array4, 3, 'the array4 has 3 elements');
     ok(!defined(@array4[0]), 'got the right value at array4 index 0');
-    #?pugs 2 todo
     is(@array4[1], 1,      'got the right value at array4 index 1');
     is(@array4[2], 'test', 'got the right value at array4 index 2');
 }
@@ -103,7 +98,6 @@ my @array2 = ("test", 1, Mu);
 
     is(+@array5, 6, 'the array5 has 6 elements');
     ok(!defined(@array5[0]),  'got the right value at array5 index 0');
-    #?pugs 2 todo
     is(@array5[1], 1,      'got the right value at array5 index 1');
     is(@array5[2], 'test', 'got the right value at array5 index 2');
     is(@array5[3], 'baz',  'got the right value at array5 index 3');
@@ -156,7 +150,7 @@ my @array2 = ("test", 1, Mu);
     is(+@array10, 3, "trailing commas make correct array");
 }
 
-#?pugs skip "multi-dim arrays not implemented"
+#?pugs todo "multi-dim arrays not implemented"
 #?rakudo skip "multi-dim arrays"
 #?niecza skip "multi-dim arrays"
 {
@@ -229,19 +223,19 @@ my @array2 = ("test", 1, Mu);
   is @arr[0], "new value", "modifying of array contents (constants) works";
 }
 
-#?pugs skip "no whatever star yet"
 {
   my @arr;
   lives_ok { @arr[*-1] },  "readonly accessing [*-1] of an empty array is ok (1)";
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is ok (2)";
+  #?pugs 2 todo
   dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
 }
 
-#?pugs skip "no whatever star yet"
 {
   my @arr = (23);
   lives_ok { @arr[*-2] },  "readonly accessing [*-2] of an one-elem array is ok (1)";
+  #?pugs 3 todo
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is ok (2)";
   dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
   dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
