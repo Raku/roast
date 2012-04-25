@@ -25,7 +25,7 @@ sub postfix:<!!!> (Int $n) { $n < 2 ?? 1 !! $n * &?ROUTINE($n - 1) }
 my $result3 = 3!!!;
 is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' );
 
-#?rakudo skip 'is this spec?'
+#?rakudo todo 'is this spec?'
 {
     my $baz = try { &?ROUTINE };
     ok(defined($baz), '&?ROUTINE is defined for the MAIN routine');

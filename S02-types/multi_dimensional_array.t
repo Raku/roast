@@ -56,7 +56,7 @@ isa_ok($multi1[1], List);
 # multi-dimensional array slices
 # L<S09/"Subscript and slice notation"/index value to each slice>
 
-#?rakudo 3 skip 'Null PMC access in find_method()'
+#?rakudo 3 todo 'Null PMC access in find_method()'
 #?pugs 3 todo 'multi-dimensional indexing'
 is(eval('$multi1[1;0]'), 'foo', 'got the right value at multi1 index 1,0');
 is(eval('$multi1[1;1]'), 'bar', 'got the right value at multi1 index 1,1');
@@ -88,7 +88,7 @@ isa_ok($multi2[0], List);
 
 # slice
 
-#?rakudo 3 skip 'Null PMC access in find_method()'
+#?rakudo 3 todo 'Null PMC access in find_method()'
 #?pugs 3 todo ''
 is(eval('$multi2[0;0]'), 1, 'got the right value at multi2 index 0,0');
 is(eval('$multi2[0;1]'), 2, 'got the right value at multi2 index 0,1');
@@ -110,7 +110,7 @@ isa_ok($multi2[1], List);
 
 # slice
 
-#?rakudo 3 skip 'Null PMC access in find_method()'
+#?rakudo 3 todo 'Null PMC access in find_method()'
 #?pugs 3 todo ''
 is(eval('$multi2[1;0]'), 4, 'got the right value at multi2 index 1,0');
 is(eval('$multi2[1;1]'), 5, 'got the right value at multi2 index 1,1');

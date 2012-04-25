@@ -170,7 +170,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 # quote with \0 as delimiters, forbidden by STD
 # but see L<news:20050101220112.GF25432@plum.flirble.org>
-#?rakudo skip 'retriage'
+#?rakudo todo 'retriage'
 #?pugs todo
 {
     eval_dies_ok "(q\0foo bar\0)";

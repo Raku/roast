@@ -110,7 +110,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
-#?rakudo skip 'return type checking'
 #?pugs skip 'parsefail'
 {
     # Check with implicit return.
@@ -128,10 +127,12 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
+    #?rakudo todo 'NYI'
     dies_ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
+    #?rakudo todo 'NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
 }
 

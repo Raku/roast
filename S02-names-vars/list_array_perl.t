@@ -77,7 +77,7 @@ my @tests = (
 
     my @list = (1, 2);
     push @list, eval (3, 4).perl;
-    #?rakudo skip "List.perl bug"
+    #?rakudo todo "List.perl bug"
     #?niecza todo
     is +@list, 3, 'eval(@list.perl) gives a list, not an array ref';
 }

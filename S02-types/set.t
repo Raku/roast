@@ -59,11 +59,12 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # RT #77760
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
-#?rakudo skip "Odd number of elements found where hash expected"
 {
     my %h = set <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Set has been assigned remains a hash';
+    #?rakudo todo "got ao"
     is %h.keys.sort.join, 'abop', '...with the right keys';
+    #?rakudo todo "got bp"
     is %h.values, (True, True, True, True), '...and values all True';
 }
 
@@ -164,7 +165,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S03/Hyper operators/'unordered type'>
 #?niecza skip "Hypers not yet Set compatible"
-#?rakudo skip "Hypers not yet Set compatible"
+#?rakudo todo "Hypers not yet Set compatible"
 {
     is showset(set(1, 2, 3) »+» 6), '7 8 9', 'Set »+» Int';
     is showset("a" «~« set(<pple bbot rmadillo>)), 'abbot apple armadillo', 'Str «~« Set';

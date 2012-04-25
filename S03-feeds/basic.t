@@ -135,7 +135,7 @@ plan 19;
 }
 
 # stacked feeds
-#?rakudo skip '* feeds'
+#?rakudo todo '* feeds'
 {
     ('a' .. 'd'; 0 .. 3) ==> my @data;
     is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');

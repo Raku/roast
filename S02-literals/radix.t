@@ -140,7 +140,7 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # setting the default radix
 
 #?pugs todo 'feature'
-#?rakudo skip "Some question of what this form should actually do"
+#?rakudo todo "Some question of what this form should actually do"
 #?niecza todo ":radix() NYI"
 {
     is(:8('0b1110'),  0o14, ':8(0b1110) converts from decimal');

@@ -152,12 +152,12 @@ my $outer = 'outside';
 # Symbolic dereferentiation syntax should work with $?SPECIAL etc. too.
 # Note: I'm not 100% sure this is legal syntax. If it turns out it isn't, we'll
 # have to s/ok/dies_ok/.
-#?rakudo skip 'NYI'
 {
   try { die 'to set $!' };
   ok $::("!"),    "symbolic dereferentiation works with special chars (1)";
 #  ok $::!,        "symbolic dereferentiation works with special chars (2)";
   #?pugs skip 'todo'
+  #?rakudo todo 'NYI'
   ok ::("%*ENV"), "symbolic dereferentiation works with special chars (3)";
 #  ok %::*ENV,     "symbolic dereferentiation works with special chars (4)";
 }

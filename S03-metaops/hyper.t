@@ -707,7 +707,7 @@ my @e;
 }
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
-#?rakudo skip 'nom regression - whatever extension'
+#?rakudo todo 'nom regression - whatever extension'
 {
     @r = <A B C D E> »~» (1, 2, 3, *);
     @e = <A1 B2 C3 D3 E3>;
@@ -736,7 +736,7 @@ my @e;
 
 # RT #77010
 
-#?rakudo skip 'RT 77010 - use hypers with local scoped user-defined operators'
+#?rakudo todo 'RT 77010 - use hypers with local scoped user-defined operators'
 {
     # niecza doesn't propagate slangs into &eval yet
     eval_lives_ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';

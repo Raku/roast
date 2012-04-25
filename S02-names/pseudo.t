@@ -169,17 +169,17 @@ plan 140;
     is OUR::A41.WHO.<$x>, 42, '$OUR:: can autovivify packages (binding)';
     #?rakudo emit #
     $::($our)::A42::x = 43;
-    #?rakudo skip 'interpolation and auto-viv NYI'
+    #?rakudo todo 'interpolation and auto-viv NYI'
     is ::($our)::A42.WHO.<$x>, 43, '::("OUR") can autovivify packages (r)';
     
     #?rakudo emit #
     $::($our)::A43::x := 44;
-    #?rakudo skip 'binding and interpolation together NYI'
+    #?rakudo todo 'binding and interpolation together NYI'
     is ::($our)::A43.WHO.<$x>, 44, '::("OUR") can autovivify packages (b)';
 
     #?rakudo emit #
     ::($our)::A44 := class { our $x = 41; };
-    #?rakudo skip 'binding and interpolation together NYI'
+    #?rakudo todo 'binding and interpolation together NYI'
     is $::($our)::A44::x, 41, '::("OUR") can follow aliased packages';
 }
 

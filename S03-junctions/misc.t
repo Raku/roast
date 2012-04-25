@@ -67,7 +67,7 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
     
     # test junction to junction
-    #?rakudo skip 'nom regression'
+    #?rakudo todo 'nom regression'
     jok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
     jok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
     

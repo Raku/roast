@@ -112,7 +112,7 @@ sub f5 ($a) { WHAT($a) }
 
     isa_ok f5(@array_of_pairs), Array,
         'an array of pairs is not treated magically...';
-    #?rakudo skip 'prefix:<|>'
+    #?rakudo todo 'prefix:<|>'
     #?niecza todo
     isa_ok f5(|@array_of_pairs), Array, '...and |@array isn\'t either';
 }
@@ -124,7 +124,7 @@ sub f6 ($a) { WHAT($a) }
 
     ok (f6(%hash_of_pairs)).does(Hash), 'a hash is not treated magically...';
     #?pugs todo '[,]'
-    #?rakudo skip 'reduce meta op'
+    #?rakudo todo 'reduce meta op'
     #?niecza todo
     isa_ok f6([,] %hash_of_pairs), Str,  '...but [,] %hash is';
 }

@@ -54,7 +54,7 @@ ok (my Str $str93980 = Nil) === Str; #OK
 is Nil.gist, 'Nil', 'Nil.gist eq "Nil"';
 ok !Nil.new.defined, 'Nil.new is not defined';
 
-#?rakudo skip 'triage'
+#?rakudo todo 'triage'
 {
     subset MyInt of Int where True;
     my MyInt $x = 5;
@@ -68,18 +68,21 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok $z ~~ Nil, 'can bind to Nil';
 }
 
-#?rakudo skip 'triage'
 {
     sub f1($x) { } #OK
+    #?rakudo todo 'triage'
     dies_ok { f1(Nil) }, 'param: dies for mandatory';
 
     sub f2(Int $x?) { $x }
     my $z;
+    #?rakudo todo 'triage'
     lives_ok { $z = f2(Nil) }, 'param: lives for optional';
+    #?rakudo todo 'triage'
     ok $z === Int, '... set to type object';
 
     sub f3($x = 123) { $x }
     lives_ok { $z = f3(Nil) }, 'param: lives for with-default';
+    #?rakudo todo 'triage'
     is $z, 123, '... set to default';
 
     sub f4($x = Nil) { $x }

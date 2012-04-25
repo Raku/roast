@@ -38,7 +38,7 @@ plan 10;
     nok defined($b), '... to an undefined value';
 }
 
-#?rakudo skip 'prefix:<\\>'
+#?rakudo todo 'prefix:<\\>'
 #?niecza todo 'disagree; captures should be context neutral'
 {
     my %a;
@@ -46,7 +46,7 @@ plan 10;
     is %a.keys.elems, 1, 'capturing autovivifies.';
 }
 
-#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
+#?rakudo todo 'get_pmc_keyed() not implemented in class Undef'
 {
     my %a;
     foo(%a<b><c>);
