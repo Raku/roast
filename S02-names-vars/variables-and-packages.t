@@ -5,7 +5,7 @@ use Test;
 plan 36;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
-#?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'
+#?niecza todo 'System.NullReferenceException: Object reference not set to an instance of an object'
 {
     eval_dies_ok 'module MY;', 'MY is an out of scope name';
     eval_dies_ok 'module OUR;', 'OUR is an out of scope name';

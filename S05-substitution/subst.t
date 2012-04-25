@@ -182,7 +182,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     s:global/abc/$s/;
     is($_, q{Wow I know my ZBC's}, 'Scalar substitution');
 
-#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 {
     s:g/BC/@a[]/;
     is($_, q{Wow I know my ZA ZBC's}, 'List substitution');

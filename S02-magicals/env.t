@@ -104,7 +104,6 @@ for %*ENV.kv -> $k,$v {
   my $child_v = %child_env{$k} // "";
   if $child_v !~~ $v {
     if (! $err) {
-      #?niecza todo 'Environment gets propagated to child.'
       flunk("Environment gets propagated to child.");
       $err++;
     };

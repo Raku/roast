@@ -16,9 +16,7 @@ plan 12;
 
   is ~@array, "a b c d",
     "arrays whose elements don't contain whitespace stringify correctly (1)";
-  #?niecza skip 'No value for parameter $index in CORE postcircumfix:<[ ]>'
   is "@array[]", "a b c d", "arrays whose elements don't contain whitespace stringify correctly (2)";
-  #?niecza skip 'No value for parameter $index in CORE postcircumfix:<[ ]>'
   is "@array.[]", "a b c d", '@array.[] interpolates';
   is "@array", "@array", '@array (without brackets) doesnt interpolate';
 }
@@ -29,7 +27,6 @@ plan 12;
 
   is ~@array, "a b c d e f g h",
     "arrays with embedded array references stringify correctly (1)";
-  #?niecza skip 'No value for parameter $index in CORE postcircumfix:<[ ]>'
   is "@array[]", "a b c d e f g h", "arrays with embedded array references stringify correctly (2)";
 }
 
@@ -38,7 +35,6 @@ plan 12;
 
   is ~@array, "a b  c",
     "array whose elements do contain whitespace stringify correctly (1-1)";
-  #?niecza skip 'No value for parameter $index in CORE postcircumfix:<[ ]>'
   is "@array[]", "a b  c", "array whose elements do contain whitespace stringify correctly (1-2)";
 }
 
@@ -47,7 +43,6 @@ plan 12;
 
   is ~@array, "a\t b  c",
     "array whose elements do contain whitespace stringify correctly (2-1)";
-  #?niecza skip 'No value for parameter $index in CORE postcircumfix:<[ ]>'
   is "@array[]", "a\t b  c", "array whose elements do contain whitespace stringify correctly (2-2)";
 }
 
@@ -56,7 +51,6 @@ plan 12;
 
   is ~@array, "a\t  b  c",
     "array whose elements do contain whitespace stringify correctly (3-1)";
-  #?niecza skip 'No value for parameter $index in CORE postcircumfix:<[ ]>'
   is "@array[]", "a\t  b  c", "array whose elements do contain whitespace stringify correctly (3-2)";
 }
 

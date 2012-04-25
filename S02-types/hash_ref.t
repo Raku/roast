@@ -82,7 +82,6 @@ plan 31;
 }
 
 # infinity HoHoHoH...
-#?niecza skip 'Cannot use hash access on an object of type Capture'
 {
     my %hash = (val => 42);
     %hash<ref> = %hash;

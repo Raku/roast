@@ -259,7 +259,6 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #73308
-#?niecza skip "Array.elems"
 {
     is [][].elems, 0, '[][] returns empty list/array';
 }

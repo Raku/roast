@@ -443,7 +443,6 @@ Hello, World
 
 # q:x
 #?rakudo skip 'q:x'
-#?niecza skip 'q:x'
 {
     my $result = %*VM.perl ~~ /MSWIN32/ ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
@@ -451,21 +450,19 @@ Hello, World
 # utf8
 
 #?rakudo skip 'q:x'
-#?niecza skip 'q:x'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
 #?rakudo skip 'qq:x'
-#?niecza skip ':x'
 {
     my $world = 'world';
     is qq:x/echo hello $world/, "hello world\n", 'Testing qq:x operator';
 }
 
 #?rakudo skip 'q:x assigned to array'
-#?niecza skip ':x'
+#?niecza todo ':x'
 #?pugs todo
 {
     my @two_lines = q:x/echo hello ; echo world/;
@@ -473,7 +470,7 @@ Hello, World
 }
 
 #?rakudo skip 'q:x assigned to array'
-#?niecza skip ':x'
+#?niecza todo ':x'
 #?pugs todo
 {
     my $hello = 'howdy';
@@ -517,7 +514,6 @@ Hello, World
 
 # q:a
 #?rakudo skip 'quoting adverbs'
-#?niecza skip 'zen slices'
 {
     my @t = qw/a b c/;
     my $s = q:a /@t[]/;
@@ -538,7 +534,6 @@ Hello, World
 
 # multiple quoting modes
 #?rakudo skip 'quoting adverbs'
-#?niecza skip 'zen slices'
 {
     my $s = 'string';
     my @a = <arr1 arr2>;

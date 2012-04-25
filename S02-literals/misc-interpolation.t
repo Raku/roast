@@ -21,10 +21,9 @@ sub func_w_args($x,$y) { return "[$x][$y]" }
 
 # Double quotes
 is("Hello $world", 'Hello World', 'double quoted string interpolation works');
-#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is("@list[]\ 3 4", '1 2 3 4', 'double quoted list interpolation works');
 is("@list 3 4", '@list 3 4', 'array without empty square brackets does not interpolate');
-#?niecza skip 'No value for parameter \$index in postcircumfix:<{ }>'
+#?niecza todo 'No value for parameter \$index in postcircumfix:<{ }>'
 is("%hash{}", "1\t2", 'hash interpolation works');
 is("%hash", '%hash', 'hash interpolation does not work if not followed by {}');
 #?niecza skip 'Action method escape:sym<&> not yet implemented'
@@ -64,7 +63,6 @@ is('$world @list[] %hash{} &func()', '$world @list[] %hash{} &func()', 'single q
 # Corner-cases
 is("Hello $world!", "Hello World!", "! is not a part of var names");
 sub list_count (*@args) { +@args }
-#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is(list_count("@list[]"), 1, 'quoted interpolation gets string context');
 #?niecza todo 'apparently curly brace delimiters DO interfere with closure interpolation'
 is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure interpolation");
@@ -77,11 +75,9 @@ is(Q"abc\\d\\'\/", Q"abc\\d\\'\/", "raw quotation works");
 is(q"abc\\d\"\'\/", Q|abc\d"\'\/|, "single quotation works"); #"
 is(qq"abc\\d\"\'\/", Q|abc\d"'/|, "double quotation works"); #"
 #?rakudo 3 skip 'qa qb and array/hash interpolation'
-#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 #?pugs skip 'parsefail'
 is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");
-#?niecza skip 'No value for parameter \$index in postcircumfix:<[ ]>'
 is('$world \qq[@list[]] %hash{}', '$world 1 2 %hash{}', "interpolate quoting constructs in ''");
 
 is(" \c[111] \c[107] ", ' o k ', "\\c[] respects whitespaces around it");
