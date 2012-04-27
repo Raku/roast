@@ -55,6 +55,7 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 {
     my $matcher = 'aA';
     nok 'aa' ~~ /   $matcher/, 'interpolation: no match without :i';
+    #?niecza todo
      ok 'aa' ~~ /:i $matcher/, 'interpolation: match with :i';
 }
 
