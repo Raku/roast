@@ -33,7 +33,7 @@ if (@ARGV == 3) {
     $IN = shift; 
 } elsif (@ARGV == 2) {
     my $arg = shift;
-    if ($arg ~~ m/\.t$/) {
+    if ($arg =~ /\.t$/) {
         # test fudged
         $IN = $arg;
         $OUT = shift;
