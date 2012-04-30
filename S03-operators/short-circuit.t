@@ -12,7 +12,7 @@ it is closely related to || and && and //.
 
 =end description
 
-plan 80;
+plan 82;
 
 my $accum = '';
 sub f1($s)   { $accum ~= $s; 1 }
@@ -81,7 +81,6 @@ sub accumtest($expect, $op) {
     accumtest 'ab', '//';
 }
 
-#?rakudo skip 'orelse NYI'
 {
     my $x = 1;
     my $y = 2;
@@ -161,7 +160,7 @@ sub accumtest($expect, $op) {
     #?niecza 10 skip "^^ xor NYI"
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
-    #?rakudo skip 'segmentation fault'
+    #?rakudo todo 'wrong return type'
     is(1 ^^ 42,     False, "^^  operator working (both true)");
     #?pugs todo
     is(0 ^^ 0,          0, "^^  operator working (both false)");
@@ -182,9 +181,9 @@ sub accumtest($expect, $op) {
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
     is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
     is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
-    #?rakudo skip 'segmentation fault'
+    #?rakudo todo 'wrong return type'
     is 15 ^^ 0 ^^ 'quux', False, '^^ given two true values returns False (1)';
-    #?rakudo skip 'segmentation fault'
+    #?rakudo todo 'wrong return type'
     is 'a' ^^ 'b' ^^ 0, False, '^^ given two true values returns False (2)';
 
     #?pugs 6 skip 'xor'
@@ -192,12 +191,12 @@ sub accumtest($expect, $op) {
     is (False xor '' xor 0), 0, 'xor given all false values returns last (2)';
     is (False xor 42 xor ''), 42, 'xor given one true value returns it (1)';
     is (0 xor Int xor 'plugh'), 'plugh', 'xor given one true value returns it (2)';
-    #?rakudo skip 'segmentation fault'
+    #?rakudo todo 'wrong return type'
     is (15 xor 0 xor 'quux'), False, 'xor given two true values returns False (1)';
-    #?rakudo skip 'segmentation fault'
+    #?rakudo todo 'wrong return type'
     is ('a' xor 'b' xor 0), False, 'xor given two true values returns False (2)';
 
-    #?rakudo skip 'segmentation fault'
+    #?rakudo todo 'wrong return type'
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
     #?pugs 2 skip 'Range'
