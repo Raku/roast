@@ -277,7 +277,7 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     $x &&= 5;
     #?niecza todo
     #?pugs todo
-    is $x, 5, '&&= on a fresh variable works';
+    ok !defined($x), '&&= on a fresh variable works';
     my $y ||= 'moin';
     is $y, 'moin', '||= on a fresh variable works';
 
@@ -288,14 +288,12 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     my $b = 0;
     $a //= ($b = 1);
     is $a, 0, 'basic //=';
-    #?rakudo todo 'nom regression'
     is $b, 0, '//= short-circuits';
 
     $a = 1;
     $b = 0;
     $a ||= ($b = 2);
     is $a, 1, 'basic ||=';
-    #?rakudo todo 'nom regression'
     is $b, 0, '||= short-circuits';
 
 }
