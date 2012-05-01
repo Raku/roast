@@ -18,6 +18,8 @@ my $accum = '';
 sub f1($s)   { $accum ~= $s; 1 }
 sub f0($s)   { $accum ~= $s; 0 }
 sub fAny($s) { $accum ~= $s; Any }
+
+#?DOES 1
 sub accumtest($expect, $op) {
     is $accum, $expect, "$op operator short circuiting exactly when needed";
     $accum = '';
@@ -274,7 +276,6 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 {
     my $x;
     $x &&= 5;
-    #?niecza todo
     #?pugs todo
     ok !defined($x), '&&= on a fresh variable works';
     my $y ||= 'moin';
