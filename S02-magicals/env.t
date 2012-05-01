@@ -3,8 +3,10 @@ use v6;
 # Tests for magic variables
 
 use Test;
+BEGIN @*INC.push: 't/spec/packages/';
+use Test::Util;
 # L<S28/Named variables>
-plan 16;
+plan 14;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -38,6 +40,7 @@ ok %*ENV<PATH> ne "42",
 # Similarily, I don't think creating a new entry in %vars should affect the
 # environment:
 diag '%*ENV<PUGS_ROCKS>=' ~ (%*ENV<PUGS_ROCKS> // "");
+#?rakudo 2 todo '%*ENV<notthere> should be undefined'
 ok !defined(%*ENV<PUGS_ROCKS>), "there's no env variable 'PUGS_ROCKS'";
 %vars<PUGS_ROCKS> = "42";
 diag '%*ENV<PUGS_ROCKS>=' ~ (%*ENV<PUGS_ROCKS> // "");
@@ -52,70 +55,8 @@ my $expected = 'Hello from subprocess';
 # not a junction of Bools.
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
-my $tempfile = "temp-ex-output." ~ $*PID ~ "." ~ 1000.rand;
-
-my $command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
-diag $command;
-shell $command;
-
-my $child_env = slurp $tempfile;
-my %child_env = eval $child_env;
-unlink $tempfile;
-
-my $err = 0;
-for %*ENV.kv -> $k,$v {
-  # Ignore env vars which bash and maybe other shells set automatically.
-  next if $k eq any <SHLVL _ OLDPWD PS1>;
-  my $child_v = %child_env{$k} // "";
-  if $child_v !~~ $v {
-    if (! $err) {
-      #?rakudo todo 'nom regression'
-      #?niecza todo 'Environment gets propagated to child.'
-      flunk("Environment gets propagated to child.");
-      $err++;
-    };
-    diag "Expected: $k=$v";
-    diag "Got:      $k=$child_v";
-  } else {
-    # diag "$k=$v";
-  };
-};
-if (! $err) {
-  ok(1,"Environment gets propagated to child.");
-};
-
 %*ENV.delete('PUGS_ROCKS');
 ok(!%*ENV.exists('PUGS_ROCKS'), 'We can remove keys from %*ENV');
-
-$command = qq!$*EXECUTABLE_NAME -e "\%*ENV.perl.say" $redir $tempfile!;
-diag $command;
-shell $command;
-
-$child_env = slurp $tempfile;
-%child_env = eval $child_env;
-unlink $tempfile;
-
-ok(!%child_env.exists('PUGS_ROCKS'), 'The child did not see %*ENV<PUGS_ROCKS>');
-
-$err = 0;
-for %*ENV.kv -> $k,$v {
-  # Ignore env vars which bash and maybe other shells set automatically.
-  next if $k eq any <SHLVL _ OLDPWD PS1>;
-  my $child_v = %child_env{$k} // "";
-  if $child_v !~~ $v {
-    if (! $err) {
-      flunk("Environment gets propagated to child.");
-      $err++;
-    };
-    diag "Expected: $k=$v";
-    diag "Got:      $k=$child_v";
-  } else {
-    # diag "$k=$v";
-  };
-};
-if (! $err) {
-  ok(1,"Environment gets propagated to child.");
-};
 
 ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env var";
 
@@ -142,9 +83,21 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 
 # RT #78256
 {
+    #?rakudo todo 'Proxy-related regression'
     nok %*ENV<NOSUCHENVVAR>.defined, 'non-existing vars are undefined';
     nok %*ENV.exists('NOSUCHENVVAR'), 'non-existing vars do not exist';
 
+}
+
+{
+    %*ENV<abc> = 'def';
+    is_run 'print %*ENV<abc>',
+    {
+        status  => 0,
+        out     => 'def',
+        err     => '',
+    },
+    'ENV members persist to child processes';
 }
 
 # vim: ft=perl6
