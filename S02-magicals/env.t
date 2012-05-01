@@ -40,7 +40,6 @@ ok %*ENV<PATH> ne "42",
 # Similarily, I don't think creating a new entry in %vars should affect the
 # environment:
 diag '%*ENV<PUGS_ROCKS>=' ~ (%*ENV<PUGS_ROCKS> // "");
-#?rakudo 2 todo '%*ENV<notthere> should be undefined'
 ok !defined(%*ENV<PUGS_ROCKS>), "there's no env variable 'PUGS_ROCKS'";
 %vars<PUGS_ROCKS> = "42";
 diag '%*ENV<PUGS_ROCKS>=' ~ (%*ENV<PUGS_ROCKS> // "");
@@ -83,7 +82,6 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 
 # RT #78256
 {
-    #?rakudo todo 'Proxy-related regression'
     nok %*ENV<NOSUCHENVVAR>.defined, 'non-existing vars are undefined';
     nok %*ENV.exists('NOSUCHENVVAR'), 'non-existing vars do not exist';
 
