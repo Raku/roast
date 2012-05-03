@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -87,5 +87,17 @@ is_run 'my $ = 2; my $ = 3; say q[alive]',
         err     => '',
         out     => "alive\n",
     }, 'multiple anonymous variables do not warn or err out';
+
+# RT #112724
+#?niecza todo
+is_run 'sub mysub {
+        + Any # trigger an uninitialized warning
+    };
+    mysub()',
+    {
+        status  => 0,
+        err     => /<<2>>/ & /<<mysub>>/,
+        out     => '',
+    }, 'warning reports correct line number and subroutine';
 
 # vim: ft=perl6
