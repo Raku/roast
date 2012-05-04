@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 28;
 
 =begin pod
 
@@ -87,6 +87,13 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     # an argument list.
     dies_ok { eval 'class MyClass does P[::T] { }' },
         'can not use ::T in role application';
+}
+
+# RT #101426
+{
+    my role R[::T = my role Q[::S = role { method baz { "OH HAI" } }] { method bar { S.baz } }] { method foo { T.bar } };
+    is R.new.foo, 'OH HAI', 'can use a parameterized role as a default value of a parameterized role';
+
 }
 
 #?pugs emit =end SKIP
