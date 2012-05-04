@@ -244,7 +244,6 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 # recursive state with list assignment initialization happens only first time
-#?rakudo skip 'parse error'
 #?DOES 2
 {
     my $seensize;
@@ -258,7 +257,6 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 # recursive state with [list] assignment initialization happens only first time
-#?rakudo skip '@$foo syntax'
 #?DOES 2
 {
     my $seensize;
