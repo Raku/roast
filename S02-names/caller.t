@@ -85,6 +85,7 @@ plan 18;
   my $abs = 23;
   #?niecza todo 'strictness'
   #?pugs todo
+  #?rakudo todo 'strictness'
   dies_ok { bar() },
     'vars not declared "is dynamic" are not accessible via $CALLER::';
 }
@@ -117,6 +118,7 @@ plan 18;
   is $_, 43,             '$_ is implicitly rw (2)';
 }
 
+#?rakudo todo 'CALLER + rw'
 {
   my sub modify { $CALLER::foo++ }
   my $foo is dynamic = 42;
@@ -135,6 +137,7 @@ plan 18;
 }
 
 # Rebinding caller's variables -- legal?
+#?rakudo todo 'binding + CALLER'
 {
   my $other_var = 23;
   my sub rebind_foo { $CALLER::foo := $other_var }
