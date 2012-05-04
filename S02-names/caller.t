@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 15;
 
 {
   my $a is dynamic = 9;
@@ -80,13 +80,14 @@ plan 18;
   my sub bar {
     my $abc = 42;	#OK not used
     foo();
+    'success'
   }
 
   my $abs = 23;
   #?niecza todo 'strictness'
   #?pugs todo
   #?rakudo todo 'strictness'
-  dies_ok { bar() },
+  nok (try bar()) eq 'success',
     'vars not declared "is dynamic" are not accessible via $CALLER::';
 }
 
@@ -105,25 +106,23 @@ plan 18;
 }
 
 {
-  my sub modify { $CALLER::foo++ }
+  my sub modify { $CALLER::foo++; 'success' }
   my $foo is dynamic ::= 42;
-  dies_ok { modify() }, '"::=" vars are ro when accessed with $CALLER::';
+  nok (try modify()) eq 'success', '"::=" vars are ro when accessed with $CALLER::';
 }
 
 {
   my sub modify { $CALLER::_++ }
   $_ = 42;
-  lives_ok { modify() }, '$_ is implicitly rw (1)';
+  modify();
   #?pugs todo 
   is $_, 43,             '$_ is implicitly rw (2)';
 }
 
-#?rakudo todo 'CALLER + rw'
 {
   my sub modify { $CALLER::foo++ }
   my $foo is dynamic = 42;
-  lives_ok { modify() },
-      '"is dynamic" vars declared "is rw" are rw when accessed with $CALLER:: (1)';
+  modify();
   is $foo, 43,
       '"is dynamic" vars declared "is rw" are rw when accessed with $CALLER:: (2)';
 }
@@ -137,13 +136,12 @@ plan 18;
 }
 
 # Rebinding caller's variables -- legal?
-#?rakudo todo 'binding + CALLER'
 {
   my $other_var = 23;
   my sub rebind_foo { $CALLER::foo := $other_var }
   my $foo is dynamic = 42;
 
-  lives_ok { rebind_foo() }, 'rebinding $CALLER:: variables works (1)';
+  rebind_foo();
   is $foo, 23,               'rebinding $CALLER:: variables works (2)';
   $other_var++;
   is $foo, 24,               'rebinding $CALLER:: variables works (3)';
