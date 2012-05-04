@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 90;
+plan 103;
 
 # L<S05/Modifiers/If the number is followed by an>
 
@@ -128,6 +128,29 @@ ok($data ~~ m:6rd/fo+/, 'Match 6rd');
 is($/, 'foooooo', 'Matched value for 6rd');
 
 ok(!( $data ~~ m:7rd/fo+/ ), 'No match 7rd');
+
+
+# :Nth...
+
+ok($data ~~ m:1th/fo+/, 'Match 1th');
+is($/, 'fo', 'Matched value for 1th');
+
+ok($data ~~ m:2th/fo+/, 'Match 2th');
+is($/, 'foo', 'Matched value for 2th');
+
+ok($data ~~ m:3th/fo+/, 'Match 3th');
+is($/, 'fooo', 'Matched value for 3th');
+
+ok($data ~~ m:4th/fo+/, 'Match 4th');
+is($/, 'foooo', 'Matched value for 4th');
+
+ok($data ~~ m:5th/fo+/, 'Match 5th');
+is($/, 'fooooo', 'Matched value for 5th');
+
+ok($data ~~ m:6th/fo+/, 'Match 6th');
+is($/, 'foooooo', 'Matched value for 6th');
+
+ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
 
 
 # Substitutions...
