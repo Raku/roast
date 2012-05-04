@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 160;
+plan 90;
 
 # L<S05/Modifiers/If the number is followed by an>
 
@@ -54,6 +54,7 @@ for (1..6) -> $N {
 
 # more interesting variations of :nth(...)
 #?niecza skip 'm:g'
+#?rakudo todo 'unknown'
 {
     ok($data ~~ m:nth(2,3):global/(fo+)/, 'nth(list) is ok');
     is(@(), <foo fooo>, 'nth(list) matched correctly');
@@ -129,29 +130,6 @@ is($/, 'foooooo', 'Matched value for 6rd');
 ok(!( $data ~~ m:7rd/fo+/ ), 'No match 7rd');
 
 
-# :Nth...
-
-ok($data ~~ m:1th/fo+/, 'Match 1th');
-is($/, 'fo', 'Matched value for 1th');
-
-ok($data ~~ m:2th/fo+/, 'Match 2th');
-is($/, 'foo', 'Matched value for 2th');
-
-ok($data ~~ m:3th/fo+/, 'Match 3th');
-is($/, 'fooo', 'Matched value for 3th');
-
-ok($data ~~ m:4th/fo+/, 'Match 4th');
-is($/, 'foooo', 'Matched value for 4th');
-
-ok($data ~~ m:5th/fo+/, 'Match 5th');
-is($/, 'fooooo', 'Matched value for 5th');
-
-ok($data ~~ m:6th/fo+/, 'Match 6th');
-is($/, 'foooooo', 'Matched value for 6th');
-
-ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
-
-
 # Substitutions...
 #?rakudo skip 's{} = ...'
 {
@@ -195,7 +173,7 @@ ok($data ~~ m:3rd/ f [\d|\w+]/, 'Match 3rd f[\d|\w+]');
 is($/, 'fooo', 'Matched value for 3rd f[\d|\w+]');
 
 ok($data ~~ m:3rd/ <ident> /, 'Match 3rd <ident>');
-is($/, 'o', 'Matched value for 3th <ident>');
+is($/, 'foo', 'Matched value for 3th <ident>');
 
 ok($data ~~ m:3rd/ « <ident> /, 'Match 3rd « <ident>');
 is($/, 'foo', 'Matched value for 3th « <ident>');
@@ -209,71 +187,10 @@ $sub4 = "f bar bar bar bar fooooo foooooo";
 $sub5 = "f bar bar bar bar bar foooooo";
 $sub6 = "f bar bar bar bar bar bar";
 
-# :x(N)...
-
-#?niecza 17 skip 'm:g'
-ok($data ~~ m:x(0)/fo+/, 'No match x(0)');
-is($/, '', 'Matched value for x(0)');
-
-ok($data ~~ m:x(1)/fo+/, 'Match x(1)');
-is($/, 'fo', 'Matched value for x(1)');
-
-ok($data ~~ m:x(2)/fo+/, 'Match x(2)');
-is($/, 'foo', 'Matched value for x(2)');
-
-ok($data ~~ m:x(2)/fo+ <?ws>/, 'Match x(2) with <?ws>');
-is($/, 'foo ', 'Matched value for x(2) with <?ws>');
-
-ok($data ~~ m:x(3)/fo+/, 'Match x(3)');
-is($/, 'fooo', 'Matched value for x(3)');
-
-ok($data ~~ m:x(4)/fo+/, 'Match x(4)');
-is($/, 'foooo', 'Matched value for x(4)');
-
-ok($data ~~ m:x(5)/fo+/, 'Match x(5)');
-is($/, 'fooooo', 'Matched value for x(5)');
-
-ok($data ~~ m:x(6)/fo+/, 'Match x(6)');
-is($/, 'foooooo', 'Matched value for x(6)');
-
-ok(!( $data ~~ m:x(7)/fo+/ ), 'no match x(7)');
-
-# :x($N)...
-
-#?niecza skip 'm:g'
-#?DOES 12
-{
-    for (1..6) -> $N {
-        ok($data ~~ m:x($N)/fo+/, "Match x(\$N) for \$N == $N" );
-        is($/, 'f'~'o' x $N, "Matched value for $N" );
-    }
-}
 #?DOES 1
 
 # :Nx...
 
-#?niecza 13 skip 'm:g'
-ok($data ~~ m:1x/fo+/, 'Match 1x');
-is($/, 'fo', 'Matched value for 1x');
-
-ok($data ~~ m:2x/fo+/, 'Match 2x');
-is($/, 'foo', 'Matched value for 2x');
-
-ok($data ~~ m:3x/fo+/, 'Match 3x');
-is($/, 'fooo', 'Matched value for 3x');
-
-ok($data ~~ m:4x/fo+/, 'Match 4x');
-is($/, 'foooo', 'Matched value for 4x');
-
-ok($data ~~ m:5x/fo+/, 'Match 5x');
-is($/, 'fooooo', 'Matched value for 5x');
-
-ok($data ~~ m:6x/fo+/, 'Match 6x');
-is($/, 'foooooo', 'Matched value for 6x');
-
-ok(!( $data ~~ m:7x/fo+/ ), 'No match 7x');
-
-# Substitutions...
 
 #?rakudo skip 's{} = ...'
 {
