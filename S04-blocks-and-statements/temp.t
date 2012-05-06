@@ -97,6 +97,7 @@ eval('
 # L<S06/Temporization/You can also modify the behaviour of temporized code structures>
 # (Test is more or less directly from S06.)
 #?niecza 2 skip 'spec clarification needed'
+#?rakudo 2 skip 'TEMP phasers NYI'
 {
   my $next    = 0;
 
