@@ -9,13 +9,15 @@ Perl6::Rules, version 0.3 (12 Apr 2004), file t/word.t.
 
 =end pod
 
-plan 11;
+plan 12;
 
 ok(!( "abc  def" ~~ m/abc  def/ ), 'Literal space nonmatch' );
 #?pugs todo
 ok(   "abcdef"   ~~ m/abc  def/, 'Nonspace match' );
 #?pugs todo
 ok(   "abc  def" ~~ m:s/abc  def/, 'Word space match' );
+#?pugs todo
+ok(   'abc  def' ~~ ms/abc def/, 'word space match with ms//');
 #?pugs todo
 ok(   "abc\ndef" ~~ m:sigspace/abc  def/, 'Word newline match' );
 ok(!( "abcdef"   ~~ m:sigspace/abc  def/ ), 'Word nonspace nonmatch' );
