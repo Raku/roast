@@ -9,19 +9,15 @@ role description {
     has $.description is rw;
 }
 
-multi trait_mod:<is>(Class $c, description, $arg) {
-    $c does description($arg);
+multi trait_mod:<is>(Mu:U $c, description, $arg) {
+    $c.HOW does description($arg);
 }
-multi trait_mod:<is>(Class $c, description) {
-    $c does description("missing description!");
+multi trait_mod:<is>(Mu:U $c, description) {
+    $c.HOW does description("missing description!");
 }
-multi trait_mod:<is>(Class $c, $arg, :$described!) {
-    $c does description($arg);
+multi trait_mod:<is>(Mu:U $c, :$described!) {
+    $c.HOW does description($described ~~ Str ?? $described !! "missing description");
 }
-multi trait_mod:<is>(Class $c, :$described!) {
-    $c does description("missing description!");
-}
-
 
 class Monkey is description('eats bananas, awesome') { }
 class Walrus is description { }
