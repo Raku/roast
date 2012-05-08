@@ -6,7 +6,7 @@ use Test;
 plan 2;
 
 # L<S02/Names/Which line am I at>
-is($?LINE, 10, '$?LINE works');
+is($?LINE, 9, '$?LINE works');
 
 # L<S02/Names/Which file am I in>
 # try to be robust for implementations that use Win32 file paths, or
