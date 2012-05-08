@@ -11,7 +11,7 @@ plan 39;
 {
     $_ = "1";
     ok (1 ff 1), 'flip-flop operator implemented';
-    #?rakudo skip 'fff'
+    
     ok (1 fff 1), 'fff operator implemented';
 }
 
@@ -31,7 +31,7 @@ plan 39;
     is test_ff({/B/ ^ff /D/  }, <A B C D E>), 'xxCDx', '/B/ ^ff /D/, lhs != rhs';
     is test_ff({/B/ ff^ /D/  }, <A B C D E>), 'xBCxx', '/B/ ff^ /D/, lhs != rhs';
     is test_ff({/B/ ^ff^ /D/ }, <A B C D E>), 'xxCxx', '/B/ ^ff^ /D/, lhs != rhs';
-    #?rakudo 4 skip 'fff'
+    
     is test_ff({/B/ fff /D/  }, <A B C D E>), 'xBCDx', '/B/ fff /D/, lhs != rhs';
     is test_ff({/B/ ^fff /D/ }, <A B C D E>), 'xxCDx', '/B/ ^fff /D/, lhs != rhs';
     is test_ff({/B/ fff^ /D/ }, <A B C D E>), 'xBCxx', '/B/ fff^ /D/, lhs != rhs';
@@ -41,7 +41,7 @@ plan 39;
     is test_ff({/B/ ^ff /B/  }, <A B A B A>), 'xxxxx', '/B/ ^ff /B/, lhs == rhs';
     is test_ff({/B/ ff^ /B/  }, <A B A B A>), 'xxxxx', '/B/ ff^ /B/, lhs == rhs';
     is test_ff({/B/ ^ff^ /B/ }, <A B A B A>), 'xxxxx', '/B/ ^ff^ /B/, lhs == rhs';
-    #?rakudo 4 skip 'fff'
+    
     is test_ff({/B/ fff /B/  }, <A B A B A>), 'xBABx', '/B/ fff /B/, lhs == rhs';
     is test_ff({/B/ ^fff /B/ }, <A B A B A>), 'xxABx', '/B/ ^fff /B/, lhs == rhs';
     is test_ff({/B/ fff^ /B/ }, <A B A B A>), 'xBAxx', '/B/ fff^ /B/, lhs == rhs';
@@ -66,7 +66,7 @@ plan 39;
     is test_ff_cnt({/B/ ^ff /D/  }, <A B C D E>), 'xxC2D3x', '/B/ ^ff /D/, seq #s, lhs != rhs';
     is test_ff_cnt({/B/ ff^ /D/  }, <A B C D E>), 'xB1C2xx', '/B/ ff^ /D/, seq #s, lhs != rhs';
     is test_ff_cnt({/B/ ^ff^ /D/ }, <A B C D E>), 'xxC2xx', '/B/ ^ff^ /D/, seq #s, lhs != rhs';
-    #?rakudo 4 skip 'fff'
+    
     is test_ff_cnt({/B/ fff /D/  }, <A B C D E>), 'xB1C2D3x', '/B/ fff /D/, seq #s, lhs != rhs';
     is test_ff_cnt({/B/ ^fff /D/ }, <A B C D E>), 'xxC2D3x', '/B/ ^fff /D/, seq #s, lhs != rhs';
     is test_ff_cnt({/B/ fff^ /D/ }, <A B C D E>), 'xB1C2xx', '/B/ fff^ /D/, seq #s, lhs != rhs';
@@ -76,7 +76,7 @@ plan 39;
     is test_ff_cnt({/B/ ^ff /B/  }, <A B A B A>), 'xxxxx', '/B/ ^ff /B/, seq #s, lhs == rhs';
     is test_ff_cnt({/B/ ff^ /B/  }, <A B A B A>), 'xxxxx', '/B/ ff^ /B/, seq #s, lhs == rhs';
     is test_ff_cnt({/B/ ^ff^ /B/ }, <A B A B A>), 'xxxxx', '/B/ ^ff^ /B/, seq #s, lhs == rhs';
-    #?rakudo 4 skip 'fff'
+    
     is test_ff_cnt({/B/ fff /B/  }, <A B A B A>), 'xB1A2B3x', '/B/ fff /B/, seq #s, lhs == rhs';
     is test_ff_cnt({/B/ ^fff /B/ }, <A B A B A>), 'xxA2B3x', '/B/ ^fff /B/, seq #s, lhs == rhs';
     is test_ff_cnt({/B/ fff^ /B/ }, <A B A B A>), 'xB1A2xx', '/B/ fff^ /B/, seq #s, lhs == rhs';
@@ -116,6 +116,7 @@ plan 39;
 }
 
 # make sure {lhs,rhs} isn't evaluated when state is {true,false}
+#?rakudo skip 'dubious scoping?'
 {
 
     # keep track of # of times lhs and rhs are eval'd by adding
@@ -132,7 +133,7 @@ plan 39;
     is_deeply ff_eval({@_[0]() ff @_[1]()}, /B/, /B/, <A B A B A>),
         [5, 2], "count lhs & rhs evals for ff";
 
-    #?rakudo skip 'fff'
+    
     is_deeply ff_eval({@_[0]() fff @_[1]()}, /B/, /B/, <A B A B A>),
         [3, 2], "count lhs & rhs evals for fff";
 }
