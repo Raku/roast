@@ -9,16 +9,16 @@ plan(10);
         has $.description is rw;
     }
 
-    multi trait_mod:<is>(Routine $code, description, $arg) {
-        $code does description($arg);
+    multi trait_mod:<is>(Routine $code, description,  $arg) {
+        $code does description($arg)
     }
     multi trait_mod:<is>(Routine $code, description) {
-        $code does description("missing description!");
+        $code does description('missing description!')
     }
-    multi trait_mod:<is>(Routine $code, $arg, :$described!) {
-        $code does description($arg);
+    multi trait_mod:<is>(Routine $code, Str :$described!) {
+        $code does description($described);
     }
-    multi trait_mod:<is>(Routine $code, :$described!) {
+    multi trait_mod:<is>(Routine $code, Bool :$described!) {
         $code does description("missing description!");
     }
 

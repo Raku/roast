@@ -25,7 +25,6 @@ plan 15;
     is( waz(), 'Foo::waz', 'Foo::waz is the sub we expect' );
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );
 
-    #?rakudo 2 todo 'importing stuff'
     dies_ok { eval 'qux()' }, 'qux() not imported';
     dies_ok { eval 'gaz()' }, 'gaz() not imported';
 }
