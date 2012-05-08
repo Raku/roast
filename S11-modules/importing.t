@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 15;
+plan 16;
 
 # L<S11/"Compile-time Importation"/>
 
@@ -43,5 +43,8 @@ ok( ! &foo, 'Foo::foo is undefined in outer scope' );
              "can instantiate class that's loaded from inside another class";
 
 }
+
+eval_dies_ok 'use t::spec::packages::S11-modules::Foo :NoSucTag;',
+             'die while trying to import a non-existent export tag';
 
 # vim: ft=perl6
