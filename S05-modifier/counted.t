@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 103;
+plan 118;
 
 # L<S05/Modifiers/If the number is followed by an>
 
