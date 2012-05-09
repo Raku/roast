@@ -72,8 +72,10 @@ Rat_str_test 0/2, '0/1';
 # 1/1 is a Rat too!
 Rat_str_test 1/1, '1/1';
 # Return as-if normalized
+#?rakudo skip 'formatting precision'
 Rat_str_test 13/39, '1/3';
 # Bignum sanity
+#?rakudo skip 'formatting precision'
 Rat_str_test (4.5 ** 60), '1797010299914431210413179829509605039731475627537851106401/1152921504606846976';
 
 #?pugs skip '.gist'
