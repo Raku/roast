@@ -33,10 +33,8 @@ ok 'zabc def'   ~~  m/:s'abc' def/, 'inline :s implies <.ws> immediately (+)';
 
 # L<S05/Modifiers/The :s modifier is considered sufficiently important>
 
-#?rakudo 2 skip 'mm'
-#?niecza 2 skip 'Action method quote:mm not yet implemented'
 #?pugs todo
-ok 'abc def' ~~ mm/c d/, 'mm// works, implies :s (+)';
-ok 'abcdef' !~~ mm/c d/, 'mm// works, implies :s (-)';
+ok 'abc def' ~~ ms/c d/, 'ms// works, implies :s (+)';
+ok 'abcdef' !~~ ms/c d/, 'ms// works, implies :s (-)';
 
 # vim: ft=perl6
