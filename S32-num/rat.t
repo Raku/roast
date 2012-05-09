@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 817;
+plan 818;
 
 # Basic test functions specific to rational numbers.
 
@@ -294,6 +294,9 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
     is_approx (1/$bigish) / (($bigish+1)/3), (1/$bigish_n) / (($bigish_n+1)/3), '... right result';
 
 }
+
+#RT #112822
+ok 241025348275725.3352.Str   ~~ /241025348275725\.33/, 'stringification of bigish Rats';
 
 done;
 
