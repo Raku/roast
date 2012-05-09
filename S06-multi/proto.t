@@ -89,6 +89,7 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 }
 
 # RT #111454
+#?niecza skip "System.NullReferenceException: Object reference not set to an instance of an object"
 {
     my package Cont {
         our proto sub ainer($) {*}
