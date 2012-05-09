@@ -210,11 +210,6 @@ $sub4 = "f bar bar bar bar fooooo foooooo";
 $sub5 = "f bar bar bar bar bar foooooo";
 $sub6 = "f bar bar bar bar bar bar";
 
-#?DOES 1
-
-# :Nx...
-
-
 #?rakudo skip 's{} = ...'
 {
     my $try = $data;
