@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item rindex">
 
-plan 32;
+plan 33;
 
 # Simple - with just a single char
 
@@ -66,5 +66,8 @@ is($s.lc.ucfirst.rindex("w"), 6, ".lc.ucfirst.rindex");
 
 # rindex on non-strings
 ok 3459.rindex(5) == 2, 'rindex on integers';
+
+# RT #112818
+is "\x261b perl \x261a".rindex('e'), 3, 'rindex with non-latin-1 strings';
 
 # vim: ft=perl6
