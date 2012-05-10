@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
 
 # L<S04/Phasers/KEEP "at every successful block exit">
 # L<S04/Phasers/UNDO "at every unsuccessful block exit">
@@ -67,6 +67,19 @@ plan 10;
         UNDO { $str ~= 'U2 ' }
     }
     is $str, 'U2 U1 ', '2 UNDO blocks triggered';
+}
+
+{
+    my $kept   = 0;
+    my $undone = 0;
+    sub f() {
+        KEEP $kept   = 1;
+        UNDO $undone = 1;
+        fail 'foo';
+    }
+    my $sink = f; #OK
+    nok $kept,   'fail() does not trigger KEEP';
+    ok  $undone, 'fail() triggers UNDO';
 }
 
 # vim: ft=perl6

@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S04/The Relationship of Blocks and Declarations/There is also a let function>
 # L<S04/Definition of Success>
@@ -59,6 +59,16 @@ plan 11;
     Mu;
   }
   is @array[1], 1, "let() restored our array element";
+}
+
+{
+    my $x = 5;
+    sub f() {
+        let $x = 10;
+        fail 'foo';
+    }
+    my $sink = f(); #OK
+    is $x, 5, 'fail() resets let variables';
 }
 
 # vim: ft=perl6
