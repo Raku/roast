@@ -140,7 +140,6 @@ for @examples -> $z {
     is_approx iPower(1i, 3.0), -1.83697e-16-1i, 'same as wrapped as sub';
 }
 
-#?rakudo skip 'e'
 #?pugs   skip 'e'
 is_approx e.log(1i), -2i / pi, "log e base i == -2i / pi";
 
