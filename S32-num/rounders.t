@@ -115,7 +115,6 @@ for %tests.keys.sort -> $t {
     my $big-rat = 1234567890123456789012345678903 / 2;
     my $big-int = 1234567890123456789012345678903 div 2;
     is $big-rat.floor, $big-int, "floor handles Rats properly";
-    #?rakudo todo 'Rat.ceiling'
     is $big-rat.ceiling, $big-int + 1, "ceiling handles Rats properly";
     is $big-rat.round, $big-int + 1, "round handles Rats properly";
     is $big-rat.truncate, $big-int, "truncate handles Rats properly";
@@ -125,7 +124,6 @@ for %tests.keys.sort -> $t {
     my $big-rat = FatRat.new(1234567890123456789012345678903, 2);
     my $big-int = 1234567890123456789012345678903 div 2;
     is $big-rat.floor, $big-int, "floor handles FatRats properly";
-    #?rakudo todo 'FatRat.ceiling'
     is $big-rat.ceiling, $big-int + 1, "ceiling handles FatRats properly";
     is $big-rat.round, $big-int + 1, "round handles FatRats properly";
     is $big-rat.truncate, $big-int, "truncate handles FatRats properly";
