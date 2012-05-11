@@ -295,11 +295,9 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 }
 
-#?rakudo skip 'no norm on rakudo, I guess'
 is Rat.new(9,33).norm.nude, (3, 11), ".norm exists and doesn't hurt matters";
 
 isa_ok 241025348275725.3352, Rat, "241025348275725.3352 is a Rat";
-#?rakudo skip 'no norm on rakudo, I guess'
 is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yields correct Rat";
 
 #RT #112822
