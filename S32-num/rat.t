@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 818;
+plan 821;
 
 # Basic test functions specific to rational numbers.
 
@@ -295,8 +295,13 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 }
 
+is Rat.new(9,33).norm.nude, (3, 11), ".norm exists and doesn't hurt matters";
+
+isa_ok 241025348275725.3352, Rat, "241025348275725.3352 is a Rat";
+is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yields correct Rat";
+
 #RT #112822
-ok 241025348275725.3352.Str   ~~ /241025348275725\.33/, 'stringification of bigish Rats';
+is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish Rats';
 
 done;
 
