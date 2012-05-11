@@ -137,18 +137,16 @@ character classes), and those are referenced at the correct spot.
 
 # A leading $ indicates an indirect subrule. The variable must contain
 # either a Regex object, or a string to be compiled as the regex.
-#?rakudo skip 'indirect subrule call not implemented'
 {
     my $rule = rx/bar/;
     my $str  = 'qwe';
     ok('bar' ~~ /<$rule>/, '<$whatever> subrule (Regex, 1)');
     ok('qwer' ~~ /<$str>/, '<$whatever> subrule (String, 1)');
 
-    # The assertion is not captured.
     #?niecza todo 'the assertion is not captured'
-    is('abar' ~~ /a<$rule>/, 'a', '<$whatever> subrule (Regex, 2)');
+    is('abar' ~~ /a<$rule>/, 'abar', '<$whatever> subrule (Regex, 2)');
     #?niecza todo 'the assertion is not captured'
-    is('qwer' ~~ /<$str>r/, 'r', '<$whatever> subrule (String, 2)');
+    is('qwer' ~~ /<$str>r/, 'qwer', '<$whatever> subrule (String, 2)');
 }
 
 # A leading :: indicates a symbolic indirect subrule
