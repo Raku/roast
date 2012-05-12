@@ -281,13 +281,12 @@ character classes), and those are referenced at the correct spot.
 
 # A <( token indicates the start of a result capture,
 # while the corresponding )> token indicates its endpoint
-#?rakudo skip '<( and )>'
 {
     is('foo123bar' ~~ /foo <(\d+)> bar/, 123, '<(...)> pair');
     is('foo456bar' ~~ /foo <(\d+ bar/, '456bar', '<( match');
     is('foo789bar' ~~ /foo \d+)> bar/, 'foo789', ')> match');
     #?niecza todo 'non-matching <(...)>'
-    ok(!('foo123')  ~~ /foo <(\d+)> bar/, 'non-matching <(...)>');
+    ok(!('foo123' ~~ /foo <(\d+)> bar/), 'non-matching <(...)>');
 }
 
 # A « or << token indicates a left word boundary.
