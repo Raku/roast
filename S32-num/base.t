@@ -1,9 +1,11 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 is  0.base(8),  '0',        '0.base(something)';
+# RT #112872
+is  0.base(2),  '0',        '0.base(2)';
 is 42.base(10), '42',       '42.base(10)';
 is 42.base(16), '2A',       '42.base(16)';
 is 42.base(2) , '101010',   '42.base(2)';
