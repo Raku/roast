@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 11;
 
 # L<S12/Anonymous Mixin Roles using C<but> or C<does>/enumeration supplies the type name as a coercion>
 
@@ -18,9 +18,7 @@ is day(Tue), day(3), 'day(Tue) same as day(3)';
 
 my $x = 'Today' but day(Tue);
 
-ok $x ~~ day,      'day(Tue) is a day';
-ok $x ~~ Tue,      'day(Tue) is Tue';
-ok $x.does(Tue),   'day(Tue).does(Tue)';
+ok $x.day ~~ day,  'day(Tue).day is a day';
 ok $x.day == Tue,  'day(Tue) == Tue';
 ok day($x) == Tue, 'day(day(Tue)) == Tue';
 ok $x.Tue,         'day(Tue).Tue';
