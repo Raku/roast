@@ -7,7 +7,6 @@ is v1.*.3,  'v1.*.3',  'version literal stringification with * round-trips';
 ok  v1.2.3 eqv v1.2.3, 'eqv works on version literals (+)';
 nok v5.2.3 eqv v1.2.3, 'eqv works on version literals (-)';
 nok v1.2+  eqv v1.2,   '+ makes a difference in eqv';
-#?rakudo todo 'NYI'
 ok  v1.2   === v1.2,   'version literals are value types';
 nok v1.2   === v1.3,   '=== (-)';
 ok  v1.2   ~~  v1.2,   'smart-matching (same)';
