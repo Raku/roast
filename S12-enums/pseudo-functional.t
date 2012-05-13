@@ -20,7 +20,7 @@ my $x = 'Today' but day(Tue);
 
 ok $x.day ~~ day,  'day(Tue).day is a day';
 ok $x.day == Tue,  'day(Tue) == Tue';
-ok day($x) == Tue, 'day(day(Tue)) == Tue';
+lives_ok { day($x) }, 'day($x) lives';
 ok $x.Tue,         'day(Tue).Tue';
 
 ok $x.day != Wed, 'day(Tue) != Wed';
