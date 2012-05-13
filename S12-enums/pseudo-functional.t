@@ -5,7 +5,7 @@ plan 13;
 
 # L<S12/Anonymous Mixin Roles using C<but> or C<does>/enumeration supplies the type name as a coercion>
 
-enum day <<:Sun(1) Mon Tue Wed Thu Fri Sat>>;
+enum day (:Sun(1), 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
 
 is day(Tue), day(3), 'day(Tue) same as day(3)';
 
