@@ -7,6 +7,7 @@ is v1.*.3,  'v1.*.3',  'version literal stringification with * round-trips';
 ok  v1.2.3 eqv v1.2.3, 'eqv works on version literals (+)';
 nok v5.2.3 eqv v1.2.3, 'eqv works on version literals (-)';
 nok v1.2+  eqv v1.2,   '+ makes a difference in eqv';
+#?rakudo todo 'NYI'
 ok  v1.2   === v1.2,   'version literals are value types';
 nok v1.2   === v1.3,   '=== (-)';
 ok  v1.2   ~~  v1.2,   'smart-matching (same)';
@@ -18,7 +19,7 @@ ok  v1.2   ~~  v1.2+,  'smart-matching and plus (+2)';
 ok  v5     ~~  v1.2+,  '+ scopes to the whole version, not just the last chunk';
 ok  v5.2.3 ~~  v5.2.*, '* wildcard (1+)';
 ok  v5.2   ~~  v5.2.*, '* wildcard (2+)';
-ok  v5.2.3 ~~  v5.3.*, '* wildcard (-)';
+nok v5.2.3 ~~  v5.3.*, '* wildcard (-)';
 nok v1.2   ~~  v1.3+,  'smart-matching and plus (-)';
 ok  v1.2.3 ~~  v1,     'smart-matching only cares about the length of the LHS';
 nok v1.2.3 ~~  v2,     '... but it can still fail';
