@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 16;
 
 # L<S29/Context/"=item eval">
 
@@ -79,6 +79,12 @@ is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
     eval '$x++' for 1..4;
     is $x, 4, 'can execute the same eval multiple times, without surrounding block';
 
+}
+
+# RT 112472
+{
+    try eval(:lang<rt112472>, '1');
+    ok "$!" ~~ / 'rt112472' /, 'eval in bogus language mentions the language';
 }
 
 # vim: ft=perl6
