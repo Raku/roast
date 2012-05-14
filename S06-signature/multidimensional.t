@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 5;
 
 # L<S06/"Multidimensional argument list binding">
 
@@ -25,12 +25,5 @@ sub get_multidim_arglist (**@AoA) { @AoA }
     is +@AoA,          1, "multidim arglist binding with only one array (1)";
     is ~@AoA[0], "a b c", "multidim arglist binding with only one array (2)";
 }
-
-{
-    # XXX is this correct?
-    dies_ok { get_multidim_arglist(1,2,3) },
-        "three scalars are not compatible with a sub expecting a multidim arglist";
-}
-
 
 # vim: ft=perl6
