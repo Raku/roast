@@ -154,7 +154,6 @@ plan 44;
 
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
-#?rakudo skip 'Too many positional parameters passed'
 {
     eval_dies_ok '$a = #`\  (comment) 32', "comments can't contain unspace";
 }
