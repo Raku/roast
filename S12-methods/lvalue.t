@@ -9,11 +9,11 @@ class T {
     has $.a;
     has $.b;
     method l1 is rw { 
-        return $.a;
+        return-rw $!a;
     }
 
     method l2 is rw { 
-        $.b;
+        $!b;
     }
 }
 
@@ -45,9 +45,9 @@ lives_ok { temp $o.l2 = 9; $b = $o.b },
 is $o.l2,       4,      '... and the value was reset';
 #?niecza todo
 #?pugs todo
-is $o.b,        3,      '... also on the attribute';
+is $o.b,        4,      '... also on the attribute';
 #?niecza todo
 #?pugs todo
-is $a,          9,      'but the temp assignment had worked';
+is $b,          9,      'but the temp assignment had worked';
 
 # vim: ft=perl6
