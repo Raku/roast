@@ -1,6 +1,6 @@
 use Test;
 
-plan 725;
+plan 728;
 
 ### for now
 sub matchcheck(*@a) { 1 }
@@ -2529,6 +2529,15 @@ ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
 #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
 #?pugs todo 
 ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
+
+# RT 112450
+{
+    ok 'foooo' ~~ /^ f o ** 4 $/, 'RT 112450 sanity';
+    my $rt112450 = 4;
+    #?rakudo todo 'RT 112450'
+    ok 'foooo' ~~ /^ f o **  $rt112450  $/, 'RT 112450 interpolation';
+    ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT 112450 closure interpolation';
+}
 
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
 #?pugs todo 
