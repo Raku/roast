@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 32;
+plan 33;
 
 =begin pod
 
@@ -103,6 +103,14 @@ ok 1.1 == 11/10, 'decimal == the equivalent rational';
     nok &AccessMethods::b.defined, '"has" methods are hidden';
     lives_ok {&AccessMethods::c.defined and die "foo"}, 'non-existent method access lives (and returns undef)';
 
+}
+
+# RT 112364
+{
+    class RT112364 {
+        our sub xyz() { 'xyz' }
+    };
+    ok RT112364::.WHAT ~~ Stash, 'RT 112364';
 }
 
 done;
