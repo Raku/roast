@@ -26,7 +26,7 @@ We really need the stat() function in order to test this.
 
 =end pod
 
-plan 20;
+plan 19;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -98,8 +98,5 @@ sub remove_file ($file) {
 
 ok(try { "nonesuch".IO ~~ :!e }, "~~:!e syntax works");
 
-eval q{
-    ok(try { "nonesuch".IO.:!e }, ".:!e syntax works");
-};
 
 # vim: ft=perl6
