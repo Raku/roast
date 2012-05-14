@@ -105,11 +105,12 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
 }
 
 # RT 112868
-#?rakudo todo 'RT 112868'
 {
-    my @rt112868 = 'abc'.split('');
-    is @rt112868.elems, 4, q<Right element count for .split('')>;
-    is @rt112868.join('|'), '|a|b|c', q<values match for .split('')>;
+    my $rt112868 = 'splitting on empty';
+    ok $rt112868.split('').elems > 0, q<.split('') does something>;
+    #?rakudo todo 'RT 112868'
+    is $rt112868.split(''), $rt112868.split(/''/),
+       q<.split('') does the same thing as .split(/''/) (RT 112868)>;
 }
 
 done;
