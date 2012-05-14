@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 44;
 
 # L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
@@ -20,7 +20,7 @@ plan 46;
         Parens works also
     ) 1, 'multiline embedded comment with #`()';
 
-    ok eval("2 * 3\n #`<<<\n comment>>>"), "multiline comment with <<<";
+    eval_lives_ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
 
     my $var = #`{ foo bar } 32;
     is $var, 32, 'embedded comment with #`{}';
@@ -60,13 +60,12 @@ plan 46;
 
 # L<S02/"Embedded Comments"/"no space" between "#" and bracket>
 #?niecza skip 'Opening bracket is required for #` comment'
-#?rakudo skip 'Whitespace character is not allowed as a delimiter'
 {
 
-    ok !eval("3 * #` (invalid comment) 2"), "no space allowed between '#`' and '('";
-    ok !eval("3 * #`\t[invalid comment] 2"), "no tab allowed between '#`' and '['";
-    ok !eval("3 * #`  \{invalid comment\} 2"), "no spaces allowed between '#`' and '\{'";
-    ok !eval("3 * #`\n<invalid comment> 2"), "no spaces allowed between '#`' and '<'";
+    eval_dies_ok "3 * #` (invalid comment) 2", "no space allowed between '#`' and '('";
+    eval_dies_ok "3 * #`\t[invalid comment] 2", "no tab allowed between '#`' and '['";
+    eval_dies_ok "3 * #`  \{invalid comment\} 2", "no spaces allowed between '#`' and '\{'";
+    eval_dies_ok "3 * #`\n<invalid comment> 2", "no spaces allowed between '#`' and '<'";
 
 }
 
@@ -124,7 +123,7 @@ plan 46;
     # comment() before seeing that I meant #`{ comment within this string.
 
 #?pugs todo 'bug'
-    ok eval(" #`<<\n comment\n # >>\n >> 3"),
+    eva_lives_ok " #`<<\n comment\n # >>\n >> 3",
         'single line comment cannot correctly nested within multiline';
 }
 
@@ -157,16 +156,14 @@ plan 46;
 #?niecza skip 'Excess arguments to CORE eval'
 #?rakudo skip 'Too many positional parameters passed'
 {
-    my $a;
-    ok !eval '$a = #`\  (comment) 32', "comments can't contain unspace";
-    ok !$a.defined, '$a remains undefined';
+    eval_dies_ok '$a = #`\  (comment) 32', "comments can't contain unspace";
 }
 
 # L<S02/Single-line Comments/"# may not be used as" 
 #   delimiter quoting>
 {
     my $a;
-    ok eval('$a = q{ 32 }'), 'sanity check';
+    lives_ok { eval('$a = q{ 32 }') }, 'sanity check';
     is $a, ' 32 ', 'sanity check';
 
     $a = Nil;

@@ -21,7 +21,7 @@ is roundrobin(1).join, '1', 'roundrobin scalar identity';
 
 is(roundrobin(1..3).Str,  (1..3).Str, 'roundrobin list identity');
 
-#?rakudo todo 'over-flattening
+#?rakudo todo 'over-flattening'
 is(roundrobin([1..3]).elems, 1, 'roundrobin does not flatten array items');
 
 
