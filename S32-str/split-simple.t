@@ -2,7 +2,7 @@ use v6;
 use Test;
 
 # L<S32::Str/Str/"=item split">
-plan 47;
+plan 49;
 
 =begin description
 
@@ -102,6 +102,14 @@ ok (split('', '')).elems == 0, q{''.split('') returns empty list};
     is @split.elems, 5, 'split() with :all and trailing delimiter (count)';
     is @split.join('|'), 'a|4|b|5|',
        'split(:all) and trailing delimiter (values)';
+}
+
+# RT 112868
+#?rakudo todo 'RT 112868'
+{
+    my @rt112868 = 'abc'.split('');
+    is @rt112868.elems, 4, q<Right element count for .split('')>;
+    is @rt112868.join('|'), '|a|b|c', q<values match for .split('')>;
 }
 
 done;
