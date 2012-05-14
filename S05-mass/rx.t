@@ -1,6 +1,6 @@
 use Test;
 
-plan 728;
+plan 732;
 
 ### for now
 sub matchcheck(*@a) { 1 }
@@ -2537,6 +2537,19 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
     #?rakudo todo 'RT 112450'
     ok 'foooo' ~~ /^ f o **  $rt112450  $/, 'RT 112450 interpolation';
     ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT 112450 closure interpolation';
+}
+
+# RT 112454
+{
+    my $rt112454 = 3;
+    my $ten_x = 'x' x 10;
+
+    ok $ten_x ~~ / x ** 3 /, 'RT 112454 match sanity';
+    is $/.Str, 'x' x 3, 'RT 112454 quantifier sanity';
+
+    ok $ten_x ~~ / x ** {$rt112454} /, 'Simple match (RT 112454)';
+    #?rakudo todo 'RT 112454'
+    is $/.Str, 'x' x $rt112454, '** quantifier with braces (RT 112454)'
 }
 
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
