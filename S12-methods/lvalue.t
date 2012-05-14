@@ -43,10 +43,8 @@ is $a,          8,      'but the temp assignment had worked';
 lives_ok { temp $o.l2 = 9; $b = $o.b },
          'can use lvalue method in temp() statement (explicit return)';
 is $o.l2,       4,      '... and the value was reset';
-#?niecza todo
 #?pugs todo
 is $o.b,        4,      '... also on the attribute';
-#?niecza todo
 #?pugs todo
 is $b,          9,      'but the temp assignment had worked';
 
