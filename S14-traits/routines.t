@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan(10);
+plan 11;
 
 # L<S14/Traits/>
 {
@@ -50,6 +50,18 @@ plan(10);
     lives_ok &foo, 'Can call subroutine that was wrapped by a trait';
     #?rakudo todo 'trait mod / .wrap interaction'
     is $recorder, 'wrap', 'and the wrapper has been called once';
+}
+
+# RT 112664
+{
+    multi trait_mod:<is>($m, :$a!) {
+	multi y(|$) { my $x = $m }
+	$m.wrap(&y)
+    }
+    sub rt112664 is a {}
+
+    lives_ok { rt112664 },
+    '[BUG] multi without proto gets wrong lexical lookup chain (RT 112664)';
 }
 
 done();
