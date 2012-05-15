@@ -270,10 +270,10 @@ character classes), and those are referenced at the correct spot.
 
 # A leading ~~ indicates a recursive call back into some or all of the
 # current rule. An optional argument indicates which subpattern to re-use
-#?rakudo skip '<~~ ... >'
 #?niecza skip 'Action method assertion:sym<~~>'
 {
-    ok('1.2.' ~~ /\d+\. <~~>/, 'recursive regex using whole pattern');
+    ok('1.2.' ~~ /\d+\. <~~> | <?>/, 'recursive regex using whole pattern');
+    #?rakudo skip '<~~ ... >'
     ok('foodbard' ~~ /(foo|bar) d <~~0>/, 'recursive regex with partial pattern');
 }
 
