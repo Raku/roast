@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 118;
+plan 86;
 
 # L<S32::Str/Str/=item substr>
 
@@ -50,74 +50,6 @@ plan 118;
 
     substr($str, 1, *-1, "aye");
     is($str, "fayeh", "replacement with negative length");
-};
-
-# as lvalue, XXX: not sure this should work, as that'd be action at distance:
-#   my $substr = \substr($str, ...);
-#   ...;
-#   some_func $substr; # manipulates $substr
-#   # $str altered!
-# But one could think that's the wanted behaviour, so I leave the test in.
-#?rakudo skip "substr as lvalue NYI"
-{
-    my $str = "gorch ding";
-
-    substr($str, 0, 5) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string");
-
-    {
-        my $r = \substr($str, 0, 5);
-        ok(WHAT($r).gist, '$r is a reference');
-        is($$r, "gloop", '$r referent is eq to the substring');
-
-        #?pugs todo 'scalarrefs are not handled correctly'
-        $$r = "boing";
-        is($str, "boing ding", "assignment to reference modifies original");
-        is($$r, "boing", '$r is consistent');
-
-        #?pugs todo 'scalarrefs are not handled correctly'
-        my $o = \substr($str, 3, 2);
-        is($$o, "ng", "other ref to other lvalue");
-        $$r = "foo";
-        #?pugs todo
-        is($str, "foo ding", "lvalue ref size varies but still works");
-        #?pugs todo
-        is($$o, " d", "other lvalue wiggled around");
-    }
-
-}
-
-#?rakudo skip 'substr as lvalue NYI'
-{ # as lvalue, should work
-    my $str = "gorch ding";
-
-    substr($str, 0, 5) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string");
-};
-
-#?rakudo skip "substr as lvalue NYI"
-{ # as lvalue, using :=, should work
-    #?rakudo 3 todo 'exception'
-    my $str = "gorch ding";
-
-    substr($str, 0, 5) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string");
-
-    my $r := substr($str, 0, 5);
-    is($r, "gloop", 'bound $r is eq to the substring');
-
-    $r = "boing";
-    is($str, "boing ding", "assignment to bound var modifies original");
-    #?pugs todo 'bug'
-    is($r, "boing", 'bound $r is consistent');
-
-    my $o := substr($str, 3, 2);
-    #?rakudo 3 todo ' substr lvalue binding'
-    is($o, "ng", "other bound var to other lvalue");
-    $r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works");
-    #?pugs todo 'bug'
-    is($o, " d", "other lvalue wiggled around");
 };
 
 { # misc
@@ -169,74 +101,6 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrLen)).");
 };
 
-# as lvalue, XXX: not sure this should work, as that'd be action at distance:
-#   my $substr = \substr($str, ...);
-#   ...;
-#   some_func $substr; # manipulates $substr
-#   # $str altered!
-# But one could think that's the wanted behaviour, so I leave the test in.
-#?rakudo skip "substr as lvalue NYI"
-{
-    my $str = "gorch ding";
-
-    substr($str, 0, l(5)) = "gloop";
-#?rakudo todo "substr as lvalue"
-    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
-
-    {
-        my $r = \substr($str, 0, l(5));
-        ok(WHAT($r).gist, '$r is a reference (substr(Int, StrLen)).');
-        is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrLen)).');
-
-    #?pugs todo 'scalarrefs are not handled correctly'
-        $$r = "boing";
-        is($str, "boing ding", "assignment to reference modifies original (substr(Int, StrLen)).");
-        is($$r, "boing", '$r is consistent (substr(Int, StrLen)).');
-
-    #?pugs todo 'scalarrefs are not handled correctly'
-        my $o = \substr($str, 3, l(2));
-        is($$o, "ng", "other ref to other lvalue (substr(Int, StrLen)).");
-        $$r = "foo";
-        #?pugs todo
-        is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
-        #?pugs todo
-        is($$o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
-    }
-
-}
-
-#?rakudo skip 'substr as lvalue NYI'
-{ # as lvalue, should work
-    my $str = "gorch ding";
-
-    substr($str, 0, l(5)) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
-};
-
-#?rakudo skip 'substr as lvalue NYI'
-{ # as lvalue, using :=, should work
-    #?rakudo 3 todo 'substr as lvalue NYI'
-    my $str = "gorch ding";
-
-    substr($str, 0, l(5)) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrLen)).");
-
-    my $r := substr($str, 0, l(5));
-    is($r, "gloop", 'bound $r is eq to the substring (substr(Int, StrLen)).');
-
-    $r = "boing";
-    is($str, "boing ding", "assignment to bound var modifies original (substr(Int, StrLen)).");
-    #?pugs todo 'bug'
-    is($r, "boing", 'bound $r is consistent (substr(Int, StrLen)).');
-
-    my $o := substr($str, 3, l(2));
-    #?rakudo 3 todo ' substr lvalue binding'
-    is($o, "ng", "other bound var to other lvalue (substr(Int, StrLen)).");
-    $r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrLen)).");
-    #?pugs todo 'bug'
-    is($o, " d", "other lvalue wiggled around (substr(Int, StrLen)).");
-};
 
 { # misc
     my $str = "hello foo and bar";
