@@ -64,7 +64,6 @@ is  '   quack'.indent(-4),
 
 # TODO: need a better way of detecting warn() calls, also need a test that it
 # should only warn once per .indent call
-#?niecza todo 'Excess outdent test for warning'
 given 'Excess outdent test for warning' -> $test {
 '   quack'.indent(-4);
     flunk $test;
