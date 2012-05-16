@@ -47,7 +47,7 @@ is(~$/<cap><abc>, "abc", 'Cap abc captured');
 ok(@($/) == 0, 'Cap no array capture');
 ok(%($/).keys == 1, 'Cap hash capture');
 
-my regex repcap {<abc=&abc>**{4}}
+my regex repcap {<abc=&abc>**4}
 
 ok("abcabcabcabcd" ~~ m/<repcap=&repcap>/, 'Repcap match');
 ok($/, 'Repcap matched');
@@ -60,7 +60,7 @@ is(~$/<repcap><abc>[3], "abc", 'Repcap abc three captured');
 ok(@($/) == 0, 'Repcap no array capture');
 
 
-my regex caprep {(<&abc>**{4})}
+my regex caprep {(<&abc>**4)}
 
 ok("abcabcabcabcd" ~~ m/<caprep=&caprep>/, 'Caprep match');
 ok($/, 'Caprep matched');

@@ -9,7 +9,7 @@ plan 12;
 {
   my $was_in_lazy;
 
-  my $var := lazy { $was_in_lazy++; 42 };
+  my $var := LAZY { $was_in_lazy++; 42 };
 
   ok !$was_in_lazy,     'our lazy block wasn\'t yet executed (1)';
 
@@ -23,7 +23,7 @@ plan 12;
 # dies_ok/lives_ok tests:
 {
   my $was_in_lazy;
-  my $lazy := lazy { $was_in_lazy++; 42 };
+  my $lazy := LAZY { $was_in_lazy++; 42 };
   lives_ok { $lazy = 23 }, "reassigning our var containing a lazy worked (1)";
   is $lazy, 23,            "reassigning our var containing a lazy worked (2)";
   ok !$was_in_lazy,        "reassigning our var containing a lazy worked (3)";
@@ -31,7 +31,7 @@ plan 12;
 
 {
   my $was_in_lazy;
-  my $lazy := lazy { $was_in_lazy++; 42 };
+  my $lazy := LAZY { $was_in_lazy++; 42 };
   lives_ok { $lazy := 23 }, "rebinding our var containing a lazy worked (1)";
   is $lazy, 23,             "rebinding our var containing a lazy worked (2)";
   ok !$was_in_lazy,         "rebinding our var containing a lazy worked (3)";
@@ -39,7 +39,7 @@ plan 12;
 
 #?rakudo todo 'why ever not?'
 {
-  dies_ok { (lazy { 42 }) = 23 },
+  dies_ok { (LAZY { 42 }) = 23 },
     "directly assigning to a lazy var does not work";
 }
 
