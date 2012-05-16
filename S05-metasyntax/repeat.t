@@ -25,8 +25,8 @@ ok("abcabcabcabcd" ~~ m/'abc'**4/, 'Fixed exact repetition');
 is $/, 'abc' x 4, '...with the correct capture';
 ok(!("abcabcabcabcd" ~~ m/'abc'**5/), 'Fail fixed exact repetition');
 #?pugs todo force_todo
+#?rakudo 2 skip 'closure repetition'
 ok("abcabcabcabcd"    ~~ m/'abc'**{4}/, 'Fixed exact repetition using closure');
-#?rakudo todo 'closure repetition'
 ok(!( "abcabcabcabcd" ~~ m/'abc'**{5}/ ), 'Fail fixed exact repetition using closure');
 
 # Closed range repetition
@@ -34,8 +34,8 @@ ok(!( "abcabcabcabcd" ~~ m/'abc'**{5}/ ), 'Fail fixed exact repetition using clo
 ok("abcabcabcabcd" ~~ m/'abc'**2..4/, 'Fixed range repetition');
 ok(!( "abc"        ~~ m/'abc'**2..4/ ), 'Fail fixed range repetition');
 #?pugs todo force_todo
+#?rakudo 2 skip 'closure repetition'
 ok("abcabcabcabcd" ~~ m/'abc'**{2..4}/, 'Fixed range repetition using closure');
-#?rakudo todo 'closure repetition'
 ok(!( "abc"        ~~ m/'abc'**{2..4}/ ), 'Fail fixed range repetition using closure');
 
 # Open range repetition
@@ -43,8 +43,8 @@ ok(!( "abc"        ~~ m/'abc'**{2..4}/ ), 'Fail fixed range repetition using clo
 ok("abcabcabcabcd" ~~ m/'abc'**2..*/, 'Open range repetition');
 ok(!( "abcd"       ~~ m/'abc'**2..*/ ), 'Fail open range repetition');
 #?pugs todo force_todo
+#?rakudo 2 skip 'closure repetition'
 ok("abcabcabcabcd" ~~ m/'abc'**{2..*}/, 'Open range repetition using closure');
-#?rakudo todo 'closure repetition'
 ok(!( "abcd"       ~~ m/'abc'**{2..*}/), 'Fail open range repetition using closure');
 
 # It is illegal to return a list, so this easy mistake fails:

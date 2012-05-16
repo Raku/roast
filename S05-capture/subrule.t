@@ -27,7 +27,7 @@ ok(@($/) == 0, 'Once no array capture');
 ok(%($/).keys == 0, 'Once no hash capture');
 
 
-my regex rep {<&abc>**{4}}
+my regex rep {<&abc>**4}
 
 ok("abcabcabcabcd" ~~ m/<&rep>/, 'Rep match');
 ok($/, 'Rep matched');
