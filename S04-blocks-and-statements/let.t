@@ -61,6 +61,7 @@ plan 12;
   is @array[1], 1, "let() restored our array element";
 }
 
+#?niecza skip "'fail' used at line 68"
 {
     my $x = 5;
     sub f() {

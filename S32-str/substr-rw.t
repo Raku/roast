@@ -17,12 +17,14 @@ sub l (Int $a) {  my $l = $a; return $l }
         #?pugs todo 'scalarrefs are not handled correctly'
         $r = "boing";
         #?rakudo todo 'NYI'
+        #?niecza todo
         is($str, "boing ding", "assignment to reference modifies original");
         is($r, "boing", '$r is consistent');
 
         #?pugs todo 'scalarrefs are not handled correctly'
         my $o = substr-rw($str, 3, 2);
         #?rakudo 3 todo 'NYI'
+        #?niecza 3 todo
         is($o, "ng", "other ref to other lvalue");
         $r = "foo";
         #?pugs todo
@@ -61,6 +63,7 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "foo ding", "lvalue ref size varies but still works");
     #?pugs todo 'bug'
     #?rakudo todo 'NYI'
+    #?niecza todo 'NYI'
     is($o, " d", "other lvalue wiggled around");
 };
 
@@ -89,6 +92,7 @@ sub l (Int $a) {  my $l = $a; return $l }
         #?pugs todo
         is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, StrLen)).");
         #?pugs todo
+        #?niecza todo
         is($$o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
     }
 
@@ -122,6 +126,7 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, StrLen)).");
     #?pugs todo 'bug'
     #?rakudo todo 'NYI'
+    #?niecza todo 'NYI'
     is($o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
 };
 
