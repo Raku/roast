@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 120;
+plan 119;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -76,8 +76,6 @@ is [^1],   [0],        "unary ^ on the boundary ^1 works";
 is [^0],   [],         "unary ^0 produces null range";
 is [^-1],  [],         "unary ^-1 produces null range";
 is [^0.1], [0],        "unary ^0.1 produces the range 0..^x where 0 < x < 1";
-#?niecza skip 'System.FormatException: Unknown char: a'
-is [^'a'], [],         "unary ^'a' produces null range";
 is ~(^"5"), "0 1 2 3 4", 'unary ^"num" produces the range 0..^num';
 
 {

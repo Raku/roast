@@ -32,7 +32,7 @@ is( abs(-Inf), Inf, 'absolute value of -Inf is Inf');
 
 is( abs("-10"), 10, 'absolute value of "-10" is 10');
 
-#?rakudo todo "abs(70596).WHAT parsing as abs(70596.WHAT)"
+#?rakudo skip "abs(70596).WHAT parsing as abs(70596.WHAT)"
 is( abs(70596).WHAT.gist, 70596.abs.WHAT.gist, 'abs(x).WHAT parses as x.abs.WHAT' );
 
 done;
