@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 10;
 
 =begin pod
 
@@ -36,19 +36,29 @@ Testing named capture variables nested inside each other. This doesn't appear to
 
 #L<S05/Subrule captures>
 
-#?rakudo skip '$<alias> = <other>'
+#?rakudo skip 'assigning to match object'
 {
   my regex number {
-    [ $<numeral> = <roman_numeral>  { $<notation> = 'roman' }
-    | $<numeral> = <arabic_numeral> { $<notation> = 'arabic' }
+    [ $<numeral> = <&roman_numeral>  { $<notation> = 'roman' }
+    | $<numeral> = <&arabic_numeral> { $<notation> = 'arabic' }
     ]
   };
-  regex roman_numeral  { I | II | III | IV };
-  regex arabic_numeral { 1 |  2 |  3  |  4 };
+  my regex roman_numeral  { I | II | III | IV };
+  my regex arabic_numeral { 1 |  2 |  3  |  4 };
   2 ~~ m/<number>/;
   is($/<number><numeral>, '2', 'binding subrule to new alias');
   is($/<number><notation>, 'roman', 'binding to alias as side-effect');
 }
 
+# RT #111286
+{
+    my grammar G {
+        token TOP { <a>? $<b>='b' }
+        token a { a }
+    }
+    ok G.parse('ab'), 'grammar sanity';
+    is $/.keys.map(~*).sort.join(', '), 'a, b', 'right keys in top level match';
+    is $<b>.elems, 0, '$<b> has no captures';
+}
 
 # vim: ft=perl6
