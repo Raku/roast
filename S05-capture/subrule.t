@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 38;
+plan 44;
 
 # L<S05/Match objects/When used as a hash>
 
@@ -86,6 +86,25 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
     ok 'abc' ~~ /<alpha> { $tracker = $<alpha> } /, 'sanity';
     is $tracker.Str, 'a',
         'can use $/ and subrule capture in embeeded code block';
+}
+
+# RT #107254
+{
+    grammar G {
+        rule TOP { ^ <w1> <w2>? <w3>? $ }
+        token w1 { \w+ }
+        token w2 { \w+ }
+        token w3 { \w+ }
+    }
+    ok G.parse('one two three'), 'basic grammar sanity';
+    is $/, 'one two three', 'matched the whole string';
+    is $<w1 w2 w3>.map({ "[$_]" }).join(' '), '[one] [two] [three]',
+        'right sub captures';
+
+    ok G.parse('one two'), 'basic grammar sanity part two';
+    is $<w1>, 'one', 'got the right sub caputre for ordinary subrule';
+    is $<w2>, 'two', 'got the right sub capture for quantified subrule';
+
 }
 
 # vim: ft=perl6
