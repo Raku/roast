@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 44;
+plan 46;
 
 # L<S05/Match objects/When used as a hash>
 
@@ -104,7 +104,16 @@ is(~$/<caprep>[0], "abcabcabcabc", 'Caprep abc one captured');
     ok G.parse('one two'), 'basic grammar sanity part two';
     is $<w1>, 'one', 'got the right sub caputre for ordinary subrule';
     is $<w2>, 'two', 'got the right sub capture for quantified subrule';
+}
 
+# RT #112148
+{
+    my grammar H {
+        token TOP { ^[ '?' <digit> ]? [ '#' <digit> ]? $ };
+    }
+    my $m = H.parse('?5');
+    ok $m, 'basic grammar sanity (grammar H)';
+    is $m<digit>, '5', 'correct capture for quantified <digit>';
 }
 
 # vim: ft=perl6
