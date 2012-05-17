@@ -10,7 +10,7 @@ use Test;
 # for this test. See
 # L<"http://www.nntp.perl.org/group/perl.perl6.language/22924">
 
-plan 28;
+plan 27;
 
 # Indexing lists
 
@@ -146,9 +146,6 @@ plan 28;
     try { eval '<1 2 3>.rt62836' };
     #?pugs 3 todo
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
-    #?niecza todo 'error message says "not found"'
-    ok "$!" ~~ /not \s+ found/, 'error message says "not found"';
-    diag $!;
     ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
 
     #?pugs emit #
