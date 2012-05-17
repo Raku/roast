@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 24;
 
 # N.B.:  relational ops are in relational.t
 
@@ -11,8 +11,6 @@ plan 25;
 is(1 <=> 1, Order::Same,      '1 <=> 1 is same');
 is(1 <=> 2, Order::Increase,     '1 <=> 2 is increase');
 is(2 <=> 1, Order::Decrease,      '2 <=> 1 is decrease');
-#?niecza skip 'System.FormatException: Unknown char: a'
-is('a' <=> '1', Order::Increase, '<=> is in numeric context');
 
 is 0 <=> -1, Order::Decrease,  '0 <=> -1 is increase';
 is -1 <=> 0, Order::Increase, '-1 <=> 0 is decrease';

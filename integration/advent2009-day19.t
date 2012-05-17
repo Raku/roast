@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 6;
 
 my @x = <a b c d e>;
 #?pugs todo
@@ -22,8 +22,6 @@ is @x.pick(*).elems, @x.elems, 'pick(*)';
     is (@x.map: *.succ), ["b", "c", "d", "e", "f"], '*.succ with map';
 
     my @list = 1, 5, 'a', 10, 6;
-    #?niecza skip "cannot sort strings numerically"
     #?pugs 2 todo
-    is (@list.sort: +*), ["a", 1, 5, 6, 10], '+* used to sort numerically';
     is (@list.sort: ~*), [1, 10, 5, 6, "a"], '~* used to sort as list of strings';
 }
