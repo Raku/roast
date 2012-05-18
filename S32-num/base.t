@@ -14,11 +14,10 @@ is 36.base(36), '10',       '36.base(36)';
 is (-12).base(16), '-C',    '(-12).base(16)';
 
 # RT 112900
+#?niecza 4 skip "Rat.base NYI"
 is (1/10000000000).base(3),
    '0.0000000000000000000010',   # is the trailing zero correct?
    '(1/10000000000).base(3) (RT 112900)';
-
-#?niecza 3 skip 'Real.base NYI'
 is (3.25).base(16), '3.4',  '(3.25).base(16)';
 is (10.5).base(2), '1010.1', '(10.5).base(2)';
 is (-3.5).base(16), '-3.8', '(-3.5).base(16)';
