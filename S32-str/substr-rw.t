@@ -63,7 +63,6 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "foo ding", "lvalue ref size varies but still works");
     #?pugs todo 'bug'
     #?rakudo todo 'NYI'
-    #?niecza todo 'NYI'
     is($o, " d", "other lvalue wiggled around");
 };
 
@@ -92,7 +91,6 @@ sub l (Int $a) {  my $l = $a; return $l }
         #?pugs todo
         is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, StrLen)).");
         #?pugs todo
-        #?niecza todo
         is($$o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
     }
 
@@ -126,7 +124,6 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "foo ding", "lvalue ref size varies but still works (substr-rw(Int, StrLen)).");
     #?pugs todo 'bug'
     #?rakudo todo 'NYI'
-    #?niecza todo 'NYI'
     is($o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
 };
 

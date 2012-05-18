@@ -69,6 +69,7 @@ plan 12;
     is $str, 'U2 U1 ', '2 UNDO blocks triggered';
 }
 
+#?niecza skip "fail NYI"
 {
     my $kept   = 0;
     my $undone = 0;
