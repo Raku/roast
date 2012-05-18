@@ -132,14 +132,12 @@ is(%z{0},           $base, '%z{0}');
     my $foo;
 
     $foo = "\x[3a1]";
-    #?rakudo todo 'weird ranges'
     #?pugs todo 'weird ranges'
     is( ++$foo, "\x[3a3]", 'there is no \\x[3a2]' );
 }
 
 {
     my $foo = "K\x[3c9]";
-    #?rakudo todo 'weird ranges'
     #?pugs todo 'weird ranges'
     is( ++$foo, "L\x[3b1]", "increment 'K\x[3c9]'" );
 }

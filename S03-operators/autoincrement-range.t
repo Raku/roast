@@ -59,7 +59,6 @@ my $x;
 {
     diag( "Tests for '\x[391]' .. '\x[3a9]' (Greek uppercase)" );
     $x = "\x[3a9]\x[3a9]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( ++$x, "\x[391]\x[391]\x[391]",
         "'\x[3a9]\x[3a9]'++ is '\x[391]\x[391]\x[391]'" );
@@ -68,32 +67,25 @@ my $x;
     #?pugs skip "Failure NYI"
     ok( --$x ~~ Failure, "'\x[391]\x[391]\x[391]'-- fails" );
     $x = "A\x[391]";
-    #?rakudo todo 'nom regression'
     is( ++$x, "A\x[392]", "'A\x[391]'++ is 'A\x[392]'" );
     $x = "A\x[392]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( --$x, "A\x[391]", "'A\x[392]'-- is 'A\x[391]'" );
     $x = "A\x[3a9]";
     #?pugs todo
-    #?rakudo todo 'nom regression'
     is( ++$x, "B\x[391]", "'A\x[3a9]'++ is 'B\x[391]'" );
     $x = "B\x[391]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( --$x, "A\x[3a9]", "'B\x[391]'-- is 'A\x[3a9]'" );
     $x = "\x[391]ZZ";
-    #?rakudo todo 'nom regression'
     is( ++$x, "\x[392]AA", "'\x[391]ZZ'++ is '\x[392]AA'" );
     $x = "\x[392]AA";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( --$x, "\x[391]ZZ", "'\x[392]AA'-- is '\x[391]ZZ'" );
 }
 {
     diag( "Tests for '\x[3b1]' .. '\x[3c9]' (Greek lowercase)" );
     $x = "\x[3c9]\x[3c9]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( ++$x, "\x[3b1]\x[3b1]\x[3b1]",
         "'\x[3c9]\x[3c9]'++ is '\x[3b1]\x[3b1]\x[3b1]'" );
@@ -102,65 +94,51 @@ my $x;
     #?pugs skip "Failure NYI"
     ok( --$x ~~ Failure, "'\x[3b1]\x[3b1]\x[3b1]'-- fails" );
     $x = "A\x[3b1]";
-    #?rakudo todo 'nom regression'
     is( ++$x, "A\x[3b2]", "'A\x[3b1]'++ is 'A\x[3b2]'" );
     $x = "A\x[3b2]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( --$x, "A\x[3b1]", "'A\x[3b2]'-- is 'A\x[3b1]'" );
     $x = "A\x[3c9]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( ++$x, "B\x[3b1]", "'A\x[3c9]'++ is 'B\x[3b1]'" );
     $x = "B\x[3b1]";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( --$x, "A\x[3c9]", "'B\x[3b1]'-- is 'A\x[3c9]'" );
     $x = "\x[3b1]ZZ";
-    #?rakudo todo 'nom regression'
     is( ++$x, "\x[3b2]AA", "'\x[3b1]ZZ'++ is '\x[3b2]AA'" );
     $x = "\x[3b2]AA";
-    #?rakudo todo 'nom regression'
     #?pugs todo
     is( --$x, "\x[3b1]ZZ", "'\x[3b2]AA'-- is '\x[3b1]ZZ'" );
 }
 {
     diag( "Tests for '\x[5d0]' .. '\x[5ea]' (Hebrew)" );
     $x = "\x[5ea]\x[5ea]";
-    #?rakudo todo 'Hebrew'
     #?niecza todo 'Hebrew'
     #?pugs todo
     is( ++$x, "\x[5d0]\x[5d0]\x[5d0]", "'\x[5ea]\x[5ea]'++ is '\x[5d0]\x[5d0]\x[5d0]'" );
     $x = "\x[5d0]\x[5d0]\x[5d0]";
-    #?rakudo skip 'Hebrew - false positive'
     #?niecza skip "Failure NYI"
     #?pugs skip "Failure NYI"
     ok( --$x ~~ Failure, "'\x[5d0]\x[5d0]\x[5d0]'-- fails" );
     $x = "A\x[5d0]";
-    #?rakudo todo 'Hebrew'
     #?niecza todo 'Hebrew'
     is( ++$x, "A\x[5d1]", "'A\x[5d0]'++ is 'A\x[5d1]'" );
     $x = "A\x[5d1]";
-    #?rakudo todo 'Hebrew'
     #?niecza skip "Magical string decrement underflowed"
     #?pugs todo
     is( --$x, "A\x[5d0]", "'A\x[5d1]'-- is 'A\x[5d0]'" );
     $x = "A\x[5ea]";
-    #?rakudo todo 'Hebrew'
     #?niecza todo 'Hebrew'
     #?pugs todo
     is( ++$x, "B\x[5d0]", "'A\x[5ea]'++ is 'B\x[5d0]'" );
     $x = "B\x[5d0]";
-    #?rakudo todo 'Hebrew'
     #?niecza todo 'Hebrew'
     #?pugs todo
     is( --$x, "A\x[5ea]", "'B\x[5d0]'-- is 'A\x[5ea]'" );
     $x = "\x[5d0]ZZ";
-    #?rakudo todo 'Hebrew'
     #?niecza todo "Magical string decrement underflowed"
     is( ++$x, "\x[5d1]AA", "'\x[5d0]ZZ'++ is '\x[5d1]AA'" );
     $x = "\x[5d1]AA";
-    #?rakudo todo 'Hebrew'
     #?niecza skip "Magical string decrement underflowed"
     #?pugs todo
     is( --$x, "\x[5d0]ZZ", "'\x[5d1]AA'-- is '\x[5d0]ZZ'" );
@@ -189,7 +167,6 @@ my $x;
     #?pugs todo
     is( --$x, "0ZZ", "'1AA'-- is '0ZZ'" );
 }
-#?rakudo todo 'Arabic-Indic'
 {
     diag( "Tests for '\x[660]' .. '\x[669]' (Arabic-Indic)" );
     $x = "\x[669]\x[669]";
@@ -221,7 +198,6 @@ my $x;
     #?pugs todo
     is( --$x, "\x[660]ZZ", "'\x[661]AA'-- is '\x[660]ZZ'" );
 }
-#?rakudo todo 'Devangari'
 {
     diag( "Tests for '\x[966]' .. '\x[96f]' (Devangari)" );
     $x = "\x[96f]\x[96f]";
@@ -253,7 +229,6 @@ my $x;
     #?pugs todo
     is( --$x, "\x[966]ZZ", "'\x[967]AA'-- is '\x[966]ZZ'" );
 }
-#?rakudo todo 'Bengali'
 {
     diag( "Tests for '\x[9e6]' .. '\x[9ef]' (Bengali)" );
     $x = "\x[9ef]\x[9ef]";
@@ -285,7 +260,6 @@ my $x;
     #?pugs todo
     is( --$x, "\x[9e6]ZZ", "'\x[9e7]AA'-- is '\x[9e6]ZZ'" );
 }
-#?rakudo todo 'Gurmukhi'
 {
     diag( "Tests for '\x[a66]' .. '\x[a6f]' (Gurmukhi)" );
     $x = "\x[a6f]\x[a6f]";
@@ -317,7 +291,6 @@ my $x;
     #?pugs todo
     is( --$x, "\x[a66]ZZ", "'\x[a67]AA'-- is '\x[a66]ZZ'" );
 }
-#?rakudo todo 'Gujarati'
 {
     diag( "Tests for '\x[ae6]' .. '\x[aef]' (Gujarati)" );
     $x = "\x[aef]\x[aef]";
@@ -349,7 +322,6 @@ my $x;
     #?pugs todo
     is( --$x, "\x[ae6]ZZ", "'\x[ae7]AA'-- is '\x[ae6]ZZ'" );
 }
-#?rakudo todo 'Oriya'
 {
     diag( "Tests for '\x[b66]' .. '\x[b6f]' (Oriya)" );
     $x = "\x[b6f]\x[b6f]";
