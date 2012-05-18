@@ -143,9 +143,7 @@ character classes), and those are referenced at the correct spot.
     ok('bar' ~~ /<$rule>/, '<$whatever> subrule (Regex, 1)');
     ok('qwer' ~~ /<$str>/, '<$whatever> subrule (String, 1)');
 
-    #?niecza todo 'the assertion is not captured'
     is('abar' ~~ /a<$rule>/, 'abar', '<$whatever> subrule (Regex, 2)');
-    #?niecza todo 'the assertion is not captured'
     is('qwer' ~~ /<$str>r/, 'qwer', '<$whatever> subrule (String, 2)');
 }
 
@@ -285,7 +283,6 @@ character classes), and those are referenced at the correct spot.
     is('foo123bar' ~~ /foo <(\d+)> bar/, 123, '<(...)> pair');
     is('foo456bar' ~~ /foo <(\d+ bar/, '456bar', '<( match');
     is('foo789bar' ~~ /foo \d+)> bar/, 'foo789', ')> match');
-    #?niecza todo 'non-matching <(...)>'
     ok(!('foo123' ~~ /foo <(\d+)> bar/), 'non-matching <(...)>');
 }
 

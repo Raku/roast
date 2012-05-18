@@ -82,6 +82,7 @@ is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
 }
 
 # RT 112472
+#?niecza todo "No :lang argument yet..."
 {
     try eval(:lang<rt112472>, '1');
     ok "$!" ~~ / 'rt112472' /, 'eval in bogus language mentions the language';
