@@ -2,7 +2,7 @@ use v6;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan 15;
+plan 16;
 
 # L<S29/Context/=item die>
 
@@ -46,13 +46,14 @@ is ({ try { if 1 { die } else { die } }; 42 }()), 42, "die in if";
 my sub die_in_return () { return die };
 is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
 
-#?rakudo skip 'RT #67374'
 #?niecza skip 'test needs rewriting, eval does not catch exceptions'
 {
-    eval 'die "bughunt"';
-    my $error = "$!";
+    my $msg = 'RT 67374';
+    try { die $msg };
+    is "$!", $msg, 'die with argument sets $!';
     try { die };
-    is "$!", $error, 'die with no argument uses $!';
+    #?rakudo todo 'RT #67374'
+    is "$!", $msg, 'die with no argument uses $!';
 }
 
 is_run( 'die "first line"',
