@@ -14,7 +14,7 @@ for statement as possible
 
 =end description
 
-plan 71;
+plan 73;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -537,6 +537,22 @@ lives_ok {
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
     is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';
+}
+
+# RT 113026
+#?rakudo todo 'RT 113026 array iterator does not track a growing array'
+{
+    my @rt113026 = 1 .. 10;
+    my $iter = 0;
+    for @rt113026 -> $n {
+	$iter++;
+	if $iter % 2 {
+	    @rt113026.push: $n;
+	}
+    }
+    is $iter, 20, 'iterating over an expanding list';
+    is @rt113026, <1 2 3 4 5 6 7 8 9 10 1 3 5 7 9 1 5 9 5 5>,
+       'array expanded in for loop is expanded';
 }
 
 # vim: ft=perl6
