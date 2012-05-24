@@ -1,7 +1,7 @@
 use v6;
 use Test;
-
-plan 34;
+ 
+plan 35;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
@@ -91,6 +91,8 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
     is ($f(0) ...^ 2).join(' '), 'P0 P1', 'exclusive increasing not-quite-periodic sequence';
     is ($f(2) ...^ 0).join(' '), 'P2 P1', 'exclusive decreasing not-quite-periodic sequence';
 }
+
+is ('1a', '1b' ... '1e').Str, '1a 1b 1c 1d 1e', 'sequence with strings that starts with a digit but cannot convert to numbers';
 
 done;
 
