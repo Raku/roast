@@ -29,7 +29,6 @@ check '+123',       Int,    123;
 check '-123',       Int,   -123;
 check '3433683820292512484657849089281', Int, 3**64;
 #?niecza 6 todo 'Failure'
-#?rakudo emit # Str.Numeric non-numeric fail
 f     'a+123';
 f     '123foo';
 f     '123+';
@@ -42,10 +41,11 @@ check '0b111',      Int,      7;
 check '0b1_1_1',    Int,      7;
 check '+0b111',     Int,      7;
 check '-0b111',     Int,     -7;
-#?niecza 3 todo 'Failure'
+# the spec is silent about this one, but rakudo and niecza agree
+check '0b_1',       Int,      1;
+#?niecza 2 todo 'Failure'
 f     '0b112';
 f     '0b';
-f     '0b_1';
 check '0o77',       Int,     63;
 check '+0o77',      Int,     63;
 check '-0o77',      Int,    -63;
@@ -89,13 +89,13 @@ check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
 #?niecza 5 todo 'Failure'
+#?rakudo 5 todo 'Failure'
 f     '-3/-2';
 f     '3/-2';
 f     '+3/-2';
 f     '3.0/2';
 f     '3/2.0';
 
-#?rakudo skip ":radix<>"
 {
     check '-:10<4_2.3_5>', Rat, -42.35;
     check '-:8<4_2.3_5>',  Rat, -34.453125;

@@ -138,7 +138,7 @@ is (1, 2 ... 0).[^3], (1,2,3), 'No more: limit value is on the wrong side';
 ok ?(one((-5 ... ^5).flat) == 0), '-5 ... ^5 produces just one zero';
 
 # RT #75316
-#?rakudo todo 'mysterious'
+#?rakudo skip 'mysterious'
 #?niecza skip 'Failure NYI'
 isa_ok (1...()), Failure,
     'empty list on right side of sequence operator does not cause infinite loop';

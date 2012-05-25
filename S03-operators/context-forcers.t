@@ -82,7 +82,6 @@ sub eval_elsewhere($code){ eval($code) }
     my $a = '2 is my favorite number';
     isa_ok(+$a, Failure, 'trailing chars cause failure');
 
-    #?rakudo todo "should fail but doesn't yet"
     my $b = 'Did you know that, 2 is my favorite number';
     isa_ok(+$b, Failure, 'it is forced into a Num');
 }
