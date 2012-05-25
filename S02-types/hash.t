@@ -254,7 +254,6 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # Zen slices work on hashes too
-#?niecza todo 'zen slice'
 #?pugs todo
 {
     my %h = { a => 1, b => 2, c => 3};

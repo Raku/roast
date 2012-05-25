@@ -19,7 +19,6 @@ is (() ... *)[^3].perl, '((), (), ())', 'Nil sequence';
 # L<S03/List infix precedence/interleave unrelated sequences>
 # multiple return values
 
-#?niecza 5 todo
 is (1, 1, { $^a + 1, $^b * 2 } ... *)[^12].join(' '), '1 1 2 2 3 4 4 8 5 16 6 32', 'sequence of two interleaved sequences';
 is (1, 1, 1, { $^a + 1, $^b * 2, $^c - 1 } ... *)[^18].join(' '), '1 1 1 2 2 0 3 4 -1 4 8 -2 5 16 -3 6 32 -4', 'sequence of three interleaved sequences';
 is (1, { $^n + 1 xx $^n + 1 } ... *)[^10].join(' '), '1 2 2 3 3 3 4 4 4 4', 'sequence with list-returning block';
@@ -86,7 +85,6 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.char
 #     '0 1 2 3',
 #     'chained sequence with an empty subsequence';
 
-#?niecza todo
 {
     my @rt80574 := -> { 'zero', 'one' } ... *;
     #?rakudo todo 'RT 80574'
