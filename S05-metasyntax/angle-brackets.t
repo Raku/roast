@@ -208,11 +208,11 @@ character classes), and those are referenced at the correct spot.
 
 # A leading ?{ or !{ indicates a code assertion
 {
-    ok('192' ~~ /(\d**1..3) <?{$0 < 256}>/, '<?{...}> works');
+    ok('192' ~~ /(\d**3) <?{$0 < 256}>/, '<?{...}> works');
     #?niecza todo '<?{...}>'
-    ok(!('992' ~~ /(\d**1..3) <?{$0 < 256}>/), '<?{...}> works');
-    ok(!('192' ~~ /(\d**1..3) <!{$0 < 256}>/), '<!{...}> works');
-    ok('992' ~~ /(\d**1..3) <!{$0 < 256}>/, '<!{...}> works');
+    ok(!('992' ~~ /(\d**3) <?{$0 < 256}>/), '<?{...}> works');
+    ok(!('192' ~~ /(\d**3) <!{$0 < 256}>/), '<!{...}> works');
+    ok('992' ~~ /(\d**3) <!{$0 < 256}>/, '<!{...}> works');
 }
 
 # A leading [ indicates an enumerated character class
