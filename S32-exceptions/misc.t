@@ -227,6 +227,11 @@ throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
 
 throws_like '1.foo', X::Method::NotFound, method => 'foo', typename => 'Int';
+throws_like 'my class NC { }; NC.new does NC', X::Mixin::NonComposable,
+            :target(*.defined), :rolish(*.^name eq 'NC');
+throws_like 'my class NC { }; NC.new but  NC', X::Mixin::NonComposable,
+            :target(*.defined), :rolish(*.^name eq 'NC');
+
 
 
 done;
