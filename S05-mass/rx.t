@@ -1774,12 +1774,10 @@ ok 'foobar' ~~ /foo '-'? bar/, 'basic match';
 ok 'foo - bar' !~~ /foo '-'? bar/, 'basic non-match';
 
 #### :s foo '-'? bar			foo\n \t- \t\t\nbar	y	basic ws match
-#?niecza todo ""
 #?pugs todo 
 ok "foo\n \t- \t\t\nbar" ~~ /:s foo '-'? bar/, 'basic ws match';
 
 #### :s foo '-'? bar			foo - bar	y	basic ws match
-#?niecza todo ""
 #?pugs todo 
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
@@ -1792,7 +1790,6 @@ ok 'foo   bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
 ok 'foo  -bar' ~~ /:s foo '-'? bar/, 'basic ws match \s+ \s*';
 
 #### :s foo '-'? bar			foo-  bar	y	basic ws match \s* \s+
-#?niecza todo ""
 #?pugs todo 
 ok 'foo-  bar' ~~ /:s foo '-'? bar/, 'basic ws match \s* \s+';
 
@@ -1809,7 +1806,6 @@ ok 'foobar' !~~ /:s foo '-'? bar/, 'basic ws non-match';
 ok 'foo - bar' !~~ /:s()foo '-'? bar/, 'basic ws match';
 
 #### :s[]foo '-'? bar		foo - bar	y	basic ws match
-#?niecza todo ""
 #?pugs todo 
 ok 'foo - bar' ~~ /:s foo '-'? bar/, 'basic ws match';
 
@@ -1820,7 +1816,6 @@ ok 'foo - bar' ~~ /:s<?wb>foo '-'? bar/, 'basic ws match with boundary modifier 
 
 #### :s::foo '-'? bar			foo - bar	y	basic ws match with backtrack no-op modifier separation
 #?rakudo skip ':: NYI'
-#?niecza todo ""
 #?pugs todo 
 ok 'foo - bar' ~~ /:s::foo '-'? bar/, 'basic ws match with backtrack no-op modifier separation';
 
@@ -1840,7 +1835,6 @@ ok ('dog := spot' ~~ /:s::(\w+) ':=' (\S+)/) && matchcheck($/, q/mob 1: <spot @ 
 ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
-#?niecza todo ""
 #?pugs todo 
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
