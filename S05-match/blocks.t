@@ -85,7 +85,6 @@ ok !defined($/), '$/ still undefined in the outer block';
             flunk 'regex did not match - $/ is properly set with explicit $_ in a given { } block';
         }
         if /\w+/ {
-            #?niecza todo
             is $/, 'Wall', '$/ is properly set in a given { } block';
         } else {
             flunk 'regex did not match - $/ is properly set in a given { } block';
