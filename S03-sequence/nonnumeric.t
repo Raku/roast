@@ -14,10 +14,10 @@ plan 35;
         method succ { Alternating.new(val => -($.val + 1)) }
         method pred { Alternating.new(val => -($.val - 1)) }
     }
-    our multi infix:<cmp> (Alternating $x, Alternating $y) { abs($x.val) cmp abs($y.val) }
-    our multi infix:<cmp> (Alternating $x, Int $n)         { abs($x.val) cmp abs($n) }
-    our multi infix:<eqv> (Alternating $x, Alternating $y) { abs($x.val) eqv abs($y.val) }
-    our multi infix:<eqv> (Alternating $x, Int $n)         { abs($x.val) eqv abs($n) }
+    multi infix:<cmp> (Alternating $x, Alternating $y) { abs($x.val) cmp abs($y.val) }
+    multi infix:<cmp> (Alternating $x, Int $n)         { abs($x.val) cmp abs($n) }
+    multi infix:<eqv> (Alternating $x, Alternating $y) { abs($x.val) eqv abs($y.val) }
+    multi infix:<eqv> (Alternating $x, Int $n)         { abs($x.val) eqv abs($n) }
     my $f = { Alternating.new(val => $^v) };
 
     is ($f(0) ... $f(4)).join(' '), 'A0 A-1 A2 A-3 A4', 'finite increasing sequence with user class (1)';
@@ -37,7 +37,6 @@ plan 35;
 # character sequence
 
 is ('a'  ... 'g').join(', '), 'a, b, c, d, e, f, g', 'finite sequence started with one letter';
-#?rakudo skip 'nom regression'
 is ('a'  ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'sequence started with one letter';
 is ('a', 'b' ... *).[^10].join(', '), 'a, b, c, d, e, f, g, h, i, j', 'sequence started with two different letters';
 is (<a b c> ... *).[^10].join(', '), "a, b, c, d, e, f, g, h, i, j", "character sequence started from array";
@@ -77,10 +76,10 @@ is ('A' ...^ 'ZZ')[*-1], 'ZY', "'A' ...^ 'ZZ' omits last element";
         method succ { Periodic.new(val => ($.val >= 2 ?? 0 !! $.val + 1)) }
         method pred { Periodic.new(val => ($.val <= 0 ?? 2 !! $.val - 1)) }
     }
-    our multi infix:<cmp> (Periodic $x, Periodic $y) { $x.val cmp $y.val }
-    our multi infix:<cmp> (Periodic $x, Int $n)      { $x.val cmp $n }
-    our multi infix:<eqv> (Periodic $x, Periodic $y) { $x.val eqv $y.val }
-    our multi infix:<eqv> (Periodic $x, Int $n)      { $x.val eqv $n }
+    multi infix:<cmp> (Periodic $x, Periodic $y) { $x.val cmp $y.val }
+    multi infix:<cmp> (Periodic $x, Int $n)      { $x.val cmp $n }
+    multi infix:<eqv> (Periodic $x, Periodic $y) { $x.val eqv $y.val }
+    multi infix:<eqv> (Periodic $x, Int $n)      { $x.val eqv $n }
     my $f = { Periodic.new(val => $^v) };
     
     is ($f(0) ... 5)[^7].join(' '), 'P0 P1 P2 P0 P1 P2 P0', 'increasing periodic sequence';
