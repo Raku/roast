@@ -75,7 +75,7 @@ is($b, ((-$a)-1), "same thing with predecremenet");
 $a = 2147483648;
 $b = -$a;
 $b= $b - 1;
-is($b, -(++$a), 'est oder of predecrement in -(++$a)');
+is($b, -(++$a), 'test oder of predecrement in -(++$a)');
 
 {
     is(0x80000000 div 1, 0x80000000, "0x80000000 div 1 == 0x80000000");
@@ -247,7 +247,7 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 
 #overflow tests from radix.t
 {
-    # some random mad up hex strings (these values are checked against perl5)
+    # some random made up hex strings (these values are checked against perl5)
     is :16("FFACD5FE"), 4289517054, 'got the correct int value from hex FFACD5FE';
     is :16("AAA4872D"), 2862909229, 'got the correct int value from hex AAA4872D';
     is :16<DEAD_BEEF>,  0xDEADBEEF, 'got the correct int value from hex DEAD_BEEF';
