@@ -92,7 +92,6 @@ plan 52;
 }
 
 {
-  #?niecza todo
   nok ([1,2,3] eqv [4,5,6]), "eqv on anonymous array references (1)";
   ok ([1,2,3] eqv [1,2,3]), "eqv on anonymous array references (2)";
   ok ([]      eqv []),      "eqv on anonymous array references (3)";

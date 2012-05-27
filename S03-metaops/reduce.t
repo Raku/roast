@@ -196,7 +196,6 @@ lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
 # L<S03/"Reduction operators"/"Among the builtin operators, [+]() returns 0 and [*]() returns 1">
 
-#?niecza todo '[*] identity'
 is( ([*]()), 1, "[*]() returns 1");
 is( ([+]()), 0, "[+]() returns 0");
 
