@@ -9,7 +9,6 @@ sub fac(Int $n) {
 use Test;
 plan 6;
 
-#?niecza todo
 is fac(0), 1,  'fac(0) works';
 is fac(1), 1,  'fac(1) works';
 is fac(2), 2,  'fac(2) works';

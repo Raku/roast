@@ -89,7 +89,6 @@ is_run 'my $ = 2; my $ = 3; say q[alive]',
     }, 'multiple anonymous variables do not warn or err out';
 
 # RT #112724
-#?niecza todo
 is_run 'sub mysub {
         + Any # trigger an uninitialized warning
     };
