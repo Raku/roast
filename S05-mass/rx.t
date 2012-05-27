@@ -2553,6 +2553,7 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
     ok 'foooo' ~~ /^ f o ** 4 $/, 'RT 112450 sanity';
     my $rt112450 = 4;
     #?rakudo 2 skip 'RT 112450'
+    #?niecza 2 skip 'Dubious test, http://irclog.perlgeek.de/perl6/2012-05-27#i_5643089'
     ok 'foooo' ~~ /^ f o **  $rt112450  $/, 'RT 112450 interpolation';
     ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT 112450 closure interpolation';
 }
