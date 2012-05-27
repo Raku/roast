@@ -198,6 +198,9 @@ throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', co
 throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
             reason => /trailing/;
 
+throws_like '1.foo',  X::Method::NotFound, method => 'foo', typename => 'Int';
+throws_like '1.+foo', X::Method::NotFound, method => 'foo', typename => 'Int';
+
 # RT #58558
 throws_like '!!! 42', X::AdHoc, payload => 42;
 throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
@@ -217,5 +220,6 @@ throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
 
 throws_like '1.foo', X::Method::NotFound, method => 'foo', typename => 'Int';
+
 
 done;
