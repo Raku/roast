@@ -91,10 +91,12 @@ throws_like '1!foo()',
     X::Method::Private::Unqualified,
     method          => 'foo';
 
-throws_like 'sub f() { }; f() := 2', X::Bind::WrongLHS;
+throws_like 'sub f() { }; f() := 2', X::Bind::Comp;
 throws_like 'my int $x := 2', X::Bind::NativeType;
-throws_like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, what => 'array';
-throws_like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, what => 'hash';
+throws_like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, type => Array;
+throws_like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, type => Hash;
+throws_like 'my @a; @a[0, 1] := (2, 3)', X::Bind::Slice, type => Array;
+throws_like 'my %a; %a<a b> := (2, 3)', X::Bind::Slice, type => Hash;
 
 
 throws_like 'for (1; 1; 1) { }', X::Obsolete,
