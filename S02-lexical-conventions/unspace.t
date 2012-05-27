@@ -230,14 +230,12 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     #'$n ++$m' should be infix:<++>
     #no, really: http://irclog.perlgeek.de/perl6/2007-05-09#id_l328
     $n = 1; $m = 2;
-    #?rakudo todo 'operaor disambiguation'
     is(eval('$n ++$m'), 42, '$n ++$m with infix:<++> is $n ++ $m');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
 
     #'$n ++ $m' should be infix:<++>
     $n = 1; $m = 2;
-    #?rakudo todo 'operaor disambiguation'
     is(eval('$n ++ $m'), 42, 'postfix requires no space w/ infix ambiguity');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');

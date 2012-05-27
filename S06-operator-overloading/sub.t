@@ -304,7 +304,6 @@ Testing operator overloading subroutines
     multi sub infix:<+=> (Int $a is rw, Int $b) { $a -= $b }
     my $frew = 10;
     $frew += 5;
-    #?rakudo todo 'meta ops'
     is $frew, 5, 'infix redefinition of += works';
 }
 
