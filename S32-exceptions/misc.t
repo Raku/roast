@@ -207,6 +207,10 @@ throws_like 'my class Priv { method x { self!foo } }; Priv.x',
                       method    => '!foo',
                       typename  => 'Priv',
                       private   => { $_ === True };
+throws_like '1.List::join', X::Method::InvalidQualifier,
+            method         => 'join',
+            invocant       => 1,
+            qualifier-type => List;
 
 # RT #58558
 throws_like '!!! 42', X::AdHoc, payload => 42;
@@ -232,6 +236,12 @@ throws_like 'my class NC { }; NC.new does NC', X::Mixin::NonComposable,
 throws_like 'my class NC { }; NC.new but  NC', X::Mixin::NonComposable,
             :target(*.defined), :rolish(*.^name eq 'NC');
 
+throws_like 'last', X::ControlFlow,
+            illegal => 'last', enclosing => 'loop construct';
+throws_like 'next', X::ControlFlow,
+            illegal => 'next', enclosing => 'loop construct';
+throws_like 'redo', X::ControlFlow,
+            illegal => 'redo', enclosing => 'loop construct';
 
 
 done;
