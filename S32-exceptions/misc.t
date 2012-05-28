@@ -247,4 +247,7 @@ throws_like 'redo', X::ControlFlow,
 
 throws_like 'my package A { }; my class B is A { }', X::Inheritance::Unsupported;
 
+throws_like 'my module Expo { sub f is export { }; { sub f is export { } } }',
+                X::Export::NameClash, symbol => '&f';
+
 done;
