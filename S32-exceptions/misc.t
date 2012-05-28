@@ -245,5 +245,6 @@ throws_like 'next', X::ControlFlow,
 throws_like 'redo', X::ControlFlow,
             illegal => 'redo', enclosing => 'loop construct';
 
+throws_like 'my package A { }; my class B is A { }', X::Inheritance::Unsupported;
 
 done;
