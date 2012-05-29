@@ -127,6 +127,8 @@ throws_like '@a', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
+# RT #83992
+throws_like 'my @a = 1, => 2', X::Syntax::InfixInTermPosition, infix => '=>';
 throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
 throws_like 'my $foo does &Int', X::Does::TypeObject;
 throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
