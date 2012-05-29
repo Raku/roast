@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
@@ -66,5 +66,12 @@ sub foo ($baz is rw) {    #OK not used
 
 # readonly signature, should it autovivify?
 sub bar ($baz is readonly) { } #OK not used
+
+# RT #77038
+{
+    my %h;
+    push %h<a>, 4, 2;
+    is %h<a>.join, '42', 'can autovivify in sub form of push';
+}
 
 # vim: ft=perl6
