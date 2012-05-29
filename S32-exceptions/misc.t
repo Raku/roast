@@ -263,4 +263,6 @@ throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
 throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
             left-elems => 2, right-elems => 1;
 
+throws_like 'my sub f() { gather { return } }; ~f()', X::ControlFlow::Return;
+
 done;
