@@ -68,6 +68,7 @@ sub foo ($baz is rw) {    #OK not used
 sub bar ($baz is readonly) { } #OK not used
 
 # RT #77038
+#?niecza skip "Unable to resolve method push in type Any"
 {
     my %h;
     push %h<a>, 4, 2;
