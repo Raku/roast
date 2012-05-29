@@ -78,6 +78,8 @@ throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
 # even if the tests look rather boring;
 throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
+# RT #78370
+throws_like 'my &a; sub a { }', X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'sub a { }; multi sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
 throws_like 'my class B { }; my subset B of Any;', X::Redeclaration, symbol => 'B';
