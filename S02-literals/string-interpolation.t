@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 12;
+plan 13;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -48,6 +48,12 @@ line 4
     is 'something'.new, '', '"string literal".new just creates an empty string';
     #?pugs skip 'Cannot cast from VObject'
     is +''.new, 0, '... and that strinig works normally';
+}
+
+# RT #79568
+{
+    my $w = 'work';
+    is "this should $w\</a>", 'this should work</a>', 'backslash after scalar';
 }
 
 # vim: ft=perl6
