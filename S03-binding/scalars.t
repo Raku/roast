@@ -11,7 +11,7 @@ These tests are derived from the "Item assignment precedence" section of Synopsi
 
 =end head1
 
-plan 32;
+plan 33;
 
 # Basic scalar binding tests
 {
@@ -162,6 +162,14 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
     sub f($y) { $x := 5 }
     f($x);
     is $x, 5, 'interaction between signature binding and ordinary binding';
+}
+
+# RT #87034
+{
+    my $x = 1;
+    my $y := $x;
+    $x := 3;
+    is $y, 1, 'rebinding';
 }
 
 # vim: ft=perl6
