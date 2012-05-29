@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 17;
 
 # Is there a better reference for the spec for how return return works? 
 # There is "return function" but that's a more advanced feature.
@@ -51,6 +51,21 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
     sub list_return { return (42, 1) }
     my $bar = ~list_return();
     is($bar, '42 1', 'Should not return empty string');
+}
+
+# RT #81962
+{
+    my $tracker = '';
+    my &r = &return;
+    sub f {
+        my &return := -> $v {
+            $tracker ~= 'LOL';
+            &r($v * 2);
+        };
+        return(21);
+    }
+    is f(), 42, 'proxied return produces the correct value';
+    is $tracker, 'LOL', 'proxied return produced the right side effect';
 }
 
 # vim: ft=perl6
