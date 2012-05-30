@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 37;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
 #?niecza todo 'System.NullReferenceException: Object reference not set to an instance of an object'
@@ -148,6 +148,19 @@ plan 36;
   nok rmbl().defined, "var captured by sub is the right var (1)";
   $a++;
   is rmbl(), 2, "var captured by sub is the right var (2)";
+}
+
+{
+  #?rakudo todo 'does not fail (Note: also see RT #63596 - used to Null PMC)'
+  eval_dies_ok(q/
+    sub s($i is copy) {
+        my @array;
+        for 1..3 {
+            @array.push($i);
+            my $i = 1 + $i;
+        }
+    };
+    s(9);/, "can't redeclare something with an implicit outer binding");
 }
 
 # vim: ft=perl6
