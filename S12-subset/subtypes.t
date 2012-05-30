@@ -272,6 +272,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 # RT #79160
 {
     my Str subset MyStr;
+    #?rakudo todo 'RT 79160'
     ok MyStr ~~ Str, 'my str subset MyStr creates basically a type alias (1)';
     ok 'foo' ~~ MyStr, 'my str subset MyStr creates basically a type alias (2)';
     #?rakudo todo 'RT 79160'
