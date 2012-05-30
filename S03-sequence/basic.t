@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 125;
+plan 126;
 
 # single-term sequence
 
