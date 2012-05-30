@@ -398,10 +398,10 @@ my @p;
 
 # RT #64818
 {
-    my $parsed = 0;
-    eval_dies_ok q{$parsed = 1; my $foo = 'foo'; $foo R~= 'foo';},
-                 'use of R~= operator dies';
-    nok $parsed, 'use of R~= is a parse error';
+    eval_dies_ok q{my $foo = 'foo'; $foo R~= 'foo';},
+                 'use of R~= operator on a non-container dies';
+    my ($x, $y) = <a b>; $x R~= $y;
+    is("$x $y", "a ba", "R~= operator works");
 }
 
 {
