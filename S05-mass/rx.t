@@ -2845,7 +2845,6 @@ eval_dies_ok '/\X[/', 'unterminated \X[..]';
 eval_dies_ok '/* abc/', 'bare * at start';
 
 ####   * abc		abcdef		/Quantifier follows nothing/	bare * after ws
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/  * abc/', 'bare * after ws';
 
@@ -2854,7 +2853,6 @@ eval_dies_ok '/  * abc/', 'bare * after ws';
 eval_dies_ok '/[*|a]/', 'bare * after [';
 
 #### [ *|a]		abcdef		/Quantifier follows nothing/	bare * after [+sp
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/[ *|a]/', 'bare * after [+sp';
 
@@ -2863,7 +2861,6 @@ eval_dies_ok '/[ *|a]/', 'bare * after [+sp';
 eval_dies_ok '/[a|*]/', 'bare * after |';
 
 #### [a| *]		abcdef		/Quantifier follows nothing/	bare * after |+sp
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/[a| *]/', 'bare * after |+sp';
 
@@ -2873,7 +2870,6 @@ eval_dies_ok '/[a| *]/', 'bare * after |+sp';
 eval_dies_ok '/+ abc/', 'bare + at start';
 
 ####   + abc		abcdef		/Quantifier follows nothing/	bare + after ws
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/  + abc/', 'bare + after ws';
 
@@ -2882,7 +2878,6 @@ eval_dies_ok '/  + abc/', 'bare + after ws';
 eval_dies_ok '/[+|a]/', 'bare + after [';
 
 #### [ +|a]		abcdef		/Quantifier follows nothing/	bare + after [+sp
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/[ +|a]/', 'bare + after [+sp';
 
@@ -2891,7 +2886,6 @@ eval_dies_ok '/[ +|a]/', 'bare + after [+sp';
 eval_dies_ok '/[a|+]/', 'bare + after |';
 
 #### [a| +]		abcdef		/Quantifier follows nothing/	bare + after |+sp
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/[a| +]/', 'bare + after |+sp';
 
@@ -2901,7 +2895,6 @@ eval_dies_ok '/[a| +]/', 'bare + after |+sp';
 eval_dies_ok '/? abc/', 'bare ? at start';
 
 ####   ? abc		abcdef		/Quantifier follows nothing/	bare ? after ws
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/  ? abc/', 'bare ? after ws';
 
@@ -2910,7 +2903,6 @@ eval_dies_ok '/  ? abc/', 'bare ? after ws';
 eval_dies_ok '/[?|a]/', 'bare ? after [';
 
 #### [ ?|a]		abcdef		/Quantifier follows nothing/	bare ? after [+sp
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/[ ?|a]/', 'bare ? after [+sp';
 
@@ -2919,7 +2911,6 @@ eval_dies_ok '/[ ?|a]/', 'bare ? after [+sp';
 eval_dies_ok '/[a|?]/', 'bare ? after |';
 
 #### [a| ?]		abcdef		/Quantifier follows nothing/	bare ? after |+sp
-#?niecza todo ""
 #?pugs todo 
 eval_dies_ok '/[a| ?]/', 'bare ? after |+sp';
 

@@ -78,6 +78,9 @@ throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
 # even if the tests look rather boring;
 throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
+# RT #78370
+#?rakudo skip 'RT 78370'
+throws_like 'my &a; multi a { }', X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'sub a { }; multi sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
 throws_like 'my class B { }; my subset B of Any;', X::Redeclaration, symbol => 'B';
@@ -124,6 +127,8 @@ throws_like '@a', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
+# RT #83992
+throws_like 'my @a = 1, => 2', X::Syntax::InfixInTermPosition, infix => '=>';
 throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
 throws_like 'my $foo does &Int', X::Does::TypeObject;
 throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
@@ -257,5 +262,7 @@ throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
 
 throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
             left-elems => 2, right-elems => 1;
+
+throws_like 'my sub f() { gather { return } }; ~f()', X::ControlFlow::Return;
 
 done;
