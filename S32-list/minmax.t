@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 58;
+plan 59;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -22,6 +22,9 @@ is min(@array), -9, 'min(list)';
 
 is (@array.min: { $^a <=> $^b }), -9,
   "method form of min with identity comparison block works";
+
+is (@array.min:{ $^a <=> $^b }), -9,
+  "adverbial block form of min with identity comparison block works (RT #53804)";
 
 is min(:by({ $^a <=> $^b }), @array), -9,
   "subroutine form of min with identity comparison block works";
