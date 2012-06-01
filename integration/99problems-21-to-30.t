@@ -135,11 +135,10 @@ sub combination($n, @xs) {
     } elsif $n == @xs {
         [@xs]
     } else {
-        (map { [@xs[0],$_] },combination($n-1,@xs[1..*])), combination($n,@xs[1..*])
+        (map { [@xs[0],$_.list] },combination($n-1,@xs[1..*])), combination($n,@xs[1..*])
     }
 }
 
-#?rakudo skip 'elements() not implemented in class Range'
 #?niecza skip 'hangs'
 {
     
@@ -156,7 +155,6 @@ sub combination($n, @xs) {
      [3, 4, 5]), "combinations work.";
 }
 
-#?rakudo skip 'depedendency on combination() from previous section'
 #?niecza skip 'hangs'
 #?pugs todo
 {

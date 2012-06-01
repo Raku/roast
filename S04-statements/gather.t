@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -141,7 +141,6 @@ plan 20;
         'take with multiple arguments .flat tens out';
 }
 
-#?niecza skip 'series'
 #?rakudo skip 'nom regression (loops)'
 {
     my sub grep-div(@a, $n) {
@@ -151,7 +150,7 @@ plan 20;
     }
     
     my @evens := grep-div((1...*), 2);
-    is ~grep-div(@evens, 3).munch(16), ~grep-div((1...100), 6), "Nested identical gathers";
+    is ~grep-div(@evens, 3)[^16], ~grep-div((1...100), 6), "Nested identical gathers";
 }
 
 # RT #77036
@@ -184,5 +183,16 @@ plan 20;
         'decontainerization happens (2)';
 }
 
+# Method form of take
+{
+  my @outer = gather {
+    my @l = (1, 2, 3);
+    5.take;
+    @l.take;
+    5.take;
+  };
+
+  is ~@outer, "5 1 2 3 5", "method form of take works.";
+}
 
 # vim: ft=perl6
