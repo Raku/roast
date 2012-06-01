@@ -162,5 +162,24 @@ eval('
   is $was_in_own_temp_handler, 2, ".TEMP method was executed on restoration";
 }
 
+{
+  my $depth = 0;
+  my $c = 1;
+  sub a {
+    ++temp $c;
+    a() if ++$depth < 3;
+  }
+  a();
+  is $c, 1, 'recursive nested temps are restored properly';
+}
+
+{
+  my $a=1;
+  {
+    temp $a=2;
+    temp $a=3;
+  }
+  is $a, 1, 'multiple temps in the same scope are restored properly';
+}
 
 # vim: ft=perl6
