@@ -141,7 +141,6 @@ plan 21;
         'take with multiple arguments .flat tens out';
 }
 
-#?niecza skip 'series'
 #?rakudo skip 'nom regression (loops)'
 {
     my sub grep-div(@a, $n) {
@@ -151,7 +150,7 @@ plan 21;
     }
     
     my @evens := grep-div((1...*), 2);
-    is ~grep-div(@evens, 3).munch(16), ~grep-div((1...100), 6), "Nested identical gathers";
+    is ~grep-div(@evens, 3)[^16], ~grep-div((1...100), 6), "Nested identical gathers";
 }
 
 # RT #77036
