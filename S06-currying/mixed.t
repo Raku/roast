@@ -14,7 +14,7 @@ Tests curried subs as defined by
 
 # L<S06/Currying>
 
-plan 13;
+plan 14;
 
 sub foo ($x?, $y?, $z = 'd') {
     "x=$x y=$y z=$z";
@@ -75,4 +75,12 @@ is( try { &__hyper.assuming(op => &infix:<+>)(@x, @x) },
 is( try { &__hyper.assuming(op => &infix:<+>)(a => @x, b => @x) },
     (2,4,46), 'currying functions with named array arguments' );
 
+{
+  # tests RT #70890
+  my $out = "";
+  my sub foo($a, $b) { $a-1; $out~='\o/'; $b == 42 };
+  subset FortyTwo of Int where &foo.assuming(0);
+  $out ~= 42 ~~ FortyTwo;
+  is $out, '\o/True', 'where interaction with .assuming';
+}
 # vim: ft=perl6
