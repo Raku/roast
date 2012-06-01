@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -184,5 +184,16 @@ plan 20;
         'decontainerization happens (2)';
 }
 
+# Method form of take
+{
+  my @outer = gather {
+    my @l = (1, 2, 3);
+    5.take;
+    @l.take;
+    5.take;
+  };
+
+  is ~@outer, "5 1 2 3 5", "method form of take works.";
+}
 
 # vim: ft=perl6
