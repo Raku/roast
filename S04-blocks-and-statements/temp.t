@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 33;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
