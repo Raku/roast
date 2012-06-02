@@ -106,6 +106,11 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     is RT65658((Todo + 3.2).Int), RT65658::Ticket, 'enum and math and index';
 }
 
+# RT #71196
+{
+    eval_lives_ok 'enum X <A B C> is export', 'marking enum export does not die';
+}
+
 done;
 
 # vim: ft=perl6
