@@ -2935,7 +2935,7 @@ nok 'aa' ~~ /(.)$1/, 'undefined captures do not match';
 
 # RT #71702
 #?niecza todo 'allows them'
-eval_dies_ok 'say "foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
+eval_dies_ok '"foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
 
 done;
 # vim: ft=perl6 sw=4 expandtab
