@@ -1,6 +1,6 @@
 use Test;
 
-plan 732;
+plan 733;
 
 ### for now
 sub matchcheck(*@a) { 1 }
@@ -2932,6 +2932,10 @@ eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
 # note the use of $1 (and not $0)
 #?niecza todo 'undefined capture'
 nok 'aa' ~~ /(.)$1/, 'undefined captures do not match';
+
+# RT #71702
+#?niecza todo 'allows them'
+eval_dies_ok 'say "foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
 
 done;
 # vim: ft=perl6 sw=4 expandtab
