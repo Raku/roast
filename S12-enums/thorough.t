@@ -108,6 +108,7 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 
 # RT #71196
 {
+    #?niecza skip 'Two terms in a row'
     eval_lives_ok 'enum X <A B C> is export', 'marking enum export does not die';
 }
 
