@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 37;
 
 =begin pod
 
@@ -138,4 +138,12 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
     my $x = class Named { };
     isa_ok $x, Named, 'named class declaration returns the class object';
 }
+
+# RT #72916
+{
+    #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
+    eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',
+          'add_method returns a Method object';
+}
+
 # vim: ft=perl6
