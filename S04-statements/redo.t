@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 # L<S04/"Loop statements"/redo>
-plan 10;
+plan 11;
 
 {
     my $i = 0;
@@ -107,6 +107,11 @@ plan 10;
     if $i > 0 { redo }
     }
     is($sum, 220, "test redo with while");
+}
+
+{
+    # RT #72442
+    eval_dies_ok '{redo}', 'redo without loop construct dies';
 }
 
 # vim: ft=perl6
