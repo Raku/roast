@@ -212,6 +212,7 @@ throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo
             reason => /trailing/;
 throws_like '"a".match(:x([1, 2, 3]), /a/)', X::Str::Match::x, got => Array;
 throws_like '"a".trans([Any.new] => [Any.new])', X::Str::Trans::IllegalKey, key => Any;
+throws_like '"a".trans(rx/a/)', X::Str::Trans::InvalidArg, got => Regex;
 
 throws_like '1.foo',  X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like '1.+foo', X::Method::NotFound, method => 'foo', typename => 'Int';
