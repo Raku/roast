@@ -16,7 +16,7 @@ sub throws_like($code, $ex_type, *%matcher) {
     CATCH {
         default {
             ok 1, $msg;
-            my $type_ok = $_.WHAT === $ex_type;
+            my $type_ok = $_ ~~ $ex_type;
             ok $type_ok , "right exception type ({$ex_type.^name})";
             if $type_ok {
                 for %matcher.kv -> $k, $v {
@@ -96,7 +96,8 @@ throws_like '1!foo()',
     X::Method::Private::Unqualified,
     method          => 'foo';
 
-throws_like 'sub f() { }; f() := 2', X::Bind::Comp;
+throws_like 'sub f() { }; f() := 2', X::Bind;
+throws_like 'OUTER := 5', X::Bind, target => /OUTER/;
 throws_like 'my int $x := 2', X::Bind::NativeType;
 throws_like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, type => Array;
 throws_like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, type => Hash;
