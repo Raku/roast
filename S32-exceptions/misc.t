@@ -266,4 +266,12 @@ throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
 
 throws_like 'my sub f() { gather { return } }; ~f()', X::ControlFlow::Return;
 
+throws_like 'DateTime.new("2012/04")', X::Temporal::InvalidFormat,
+            invalid-str => '2012/04',
+            target      => 'DateTime';
+
+throws_like 'Date.new("2012/04")', X::Temporal::InvalidFormat,
+            invalid-str => '2012/04',
+            target      => 'Date';
+
 done;
