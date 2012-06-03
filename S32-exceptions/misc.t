@@ -41,6 +41,7 @@ sub throws_like($code, $ex_type, *%matcher) {
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
 throws_like 'pack("B",  1)',       X::Buf::Pack, directive => 'B';
 throws_like 'Buf.new.unpack("B")', X::Buf::Pack, directive => 'B';
+throws_like 'pack "A1", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
 throws_like 'my class Foo { method a() { $!bar } }', X::Attribute::Undeclared,
             name => '$!bar', package-name => 'Foo';
 throws_like 'sub f() { $^x }', X::Signature::Placeholder,
