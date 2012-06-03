@@ -283,4 +283,6 @@ throws_like 'eval("foo", :lang<no-such-language>)',
            X::Eval::NoSuchLang,
            lang => 'no-such-language';
 
+throws_like 'DateTime.now.truncated-to(:foo)', X::Temporal::Truncation;
+throws_like 'Date.today.truncated-to(:foo)', X::Temporal::Truncation;
 done;
