@@ -210,6 +210,7 @@ throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', co
 
 throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
             reason => /trailing/;
+throws_like '"a".match(:x([1, 2, 3]), /a/)', X::Str::Match::x, got => Array;
 
 throws_like '1.foo',  X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like '1.+foo', X::Method::NotFound, method => 'foo', typename => 'Int';
