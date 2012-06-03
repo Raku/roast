@@ -239,6 +239,7 @@ throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
 throws_like 'die "foo"', X::AdHoc, backtrace => Backtrace;
 throws_like 'use fatal; ~(1, 2, 6 ... 10)', X::Sequence::Deduction;
 
+throws_like 'class B does Int { }', X::Composition::NotComposable, target-name => 'B', composer => Int;
 throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str;
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
 
