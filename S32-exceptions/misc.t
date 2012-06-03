@@ -279,4 +279,8 @@ throws_like 'Date.new("2012/04")', X::Temporal::InvalidFormat,
             invalid-str => '2012/04',
             target      => 'Date';
 
+throws_like 'eval("foo", :lang<no-such-language>)',
+           X::Eval::NoSuchLang,
+           lang => 'no-such-language';
+
 done;
