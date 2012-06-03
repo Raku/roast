@@ -189,6 +189,8 @@ throws_like 'my sub f($x, $y:) { }', X::Syntax::Signature::InvocantMarker;
 
 throws_like 'Date.new("2012-02-30")', X::OutOfRange,
     range => Range, message => rx/<<1\.\.29>>/;
+throws_like 'DateTime.new(year => 2012, month => 5, day => 22, hour => 18, minute => 3, second => 60)',
+            X::OutOfRange, comment => /'leap second'/;
 throws_like 'use fatal; "foo"[2]', X::OutOfRange, what => rx:i/index/, range => 0..0, got => 2;
 
 throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
