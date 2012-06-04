@@ -287,6 +287,7 @@ throws_like 'eval("foo", :lang<no-such-language>)',
 
 throws_like 'DateTime.now.truncated-to(:foo)', X::Temporal::Truncation;
 throws_like 'Date.today.truncated-to(:foo)', X::Temporal::Truncation;
+throws_like 'DateTime.new("1998-12-31T23:59:60+0200", :timezone<Z>)', X::DateTime::TimezoneClash;
 
 throws_like 'Set(Any.new)', X::Set::Coerce;
 
