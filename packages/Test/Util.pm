@@ -114,6 +114,43 @@ sub get_out( Str $code, Str $input?, :@args) is export {
     return %out;
 }
 
+
+sub throws_like($code, $ex_type, *%matcher) is export {
+    my $msg;
+    if $code ~~ Callable {
+        $msg = 'code dies';
+        $code()
+    } else {
+        $msg = "'$code' died";
+        eval $code;
+    }
+    ok 0, $msg;
+    skip 'Code did not die, can not check exception', 1 + %matcher.elems;
+    CATCH {
+        default {
+            ok 1, $msg;
+            my $type_ok = $_ ~~ $ex_type;
+            ok $type_ok , "right exception type ({$ex_type.^name})";
+            if $type_ok {
+                for %matcher.kv -> $k, $v {
+                    my $got = $_."$k"();
+                    my $ok = $got ~~ $v,;
+                    ok $ok, ".$k matches {$v.defined ?? $v !! $v.gist}";
+                    unless $ok {
+                        diag "Got:      $got\n"
+                            ~"Expected: $v";
+                    }
+                }
+            } else {
+                diag "Got:      {$_.WHAT.gist}\n"
+                    ~"Expected: {$ex_type.gist}";
+                diag "Exception message: $_.message()";
+                skip 'wrong exception type', %matcher.elems;
+            }
+        }
+    }
+}
+
 =begin pod
 
 =head1 NAME
@@ -136,6 +173,20 @@ This module is for test code that would be useful
 across Perl 6 implementations.
 
 =head1 FUNCTIONS
+
+=head2 throws_like($code, Mu $expected_type, *%matchers)
+
+If C<$code> is C<Callable>, calls it, otherwise C<eval>s it,
+and expects it thrown an exception.
+
+If an exception is thrown, it is compared to C<$expected_type>.
+
+Then for each key in C<%matchers>, a method of that name is called
+on the resulting exception, and its return value smart-matched against
+the value.
+
+Each step is counted as a separate test; if one of the first two fails,
+the rest of the tests are skipped.
 
 =head2 is_run( Str $code, Str $input?, %wanted, Str $name? )
 
