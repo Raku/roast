@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 142;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -104,6 +104,9 @@ eval_dies_ok '::.^methods', ':: is not a valid package';
             "sub whose name starts with \"$kw'\"";
     }
 }
+
+# RT #77006
+isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #69752
 {
