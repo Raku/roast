@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -98,5 +98,14 @@ is_run 'sub mysub {
         err     => /<<2>>/ & /<<mysub>>/,
         out     => '',
     }, 'warning reports correct line number and subroutine';
+
+# RT #77736
+is_run 'die "foo"; END { say "end run" }',
+    {
+        status => * != 0,
+        err    => rx/foo/,
+        out    => "end run\n",
+    },
+    'END phasers are run after die()';
 
 # vim: ft=perl6
