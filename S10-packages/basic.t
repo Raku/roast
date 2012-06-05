@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 56;
+plan 57;
 
 my regex fairly_conclusive_platform_error {:i ^\N*<<Null?>>}
 
@@ -239,5 +239,14 @@ eval_lives_ok q[
     package NewFoo { }
     class   NewFoo { }
 ], 'can re-declare a class over a package of the same name';
+
+# RT #73328
+eval_dies_ok q[
+    my package A {
+        package B;
+        1+1;
+    }
+], 'Too late for semicolon form';
+
 
 # vim: ft=perl6
