@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 23;
+plan 24;
 
 {   my @array = (3,7,9,11);
 
@@ -76,6 +76,14 @@ plan 23;
     my $zero = 0;
     ok @array[$zero..$zero] ~~ Positional,
            'slice with one element specified by variables';
+}
+
+# RT #108508
+{
+    my @a1 = 1,2,3,4, 5;
+    my @a2 = @a1[2 ..^ @a1];
+    my @a3 = @a2[1..^ @a2];
+    is @a3.join('|'), '4|5', 'can use 1..^@a for subscripting';
 }
 
 # vim: ft=perl6
