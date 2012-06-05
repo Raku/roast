@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 17;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 
@@ -101,6 +101,17 @@ plan 16;
 {
   my $x = 0; repeat until 1 { $x++; redo if $x < 10 };
   is($x, 10, 'redo works in repeat until {}');
+}
+
+# RT #69178
+{
+    my $b = 1;
+    my $tracker;
+    repeat while $b < 10 {
+        $tracker = $^a;
+        $b++;
+    }
+    ok $tracker === True, 'placeholders and "repeat while" mix';
 }
 
 # vim: ft=perl6
