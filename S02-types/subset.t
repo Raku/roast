@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 42;
+plan 45;
 
 =begin description
 
@@ -209,6 +209,14 @@ my $a = 1;
     my &bar := producer();
     lives_ok { bar(2) }, 'where-constraint picks up the right lexical (+)';
     dies_ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
+}
+
+{
+    #RT #113434
+    my subset MI of Int;
+    ok MI ~~ Mu,   'subset conforms to Mu';
+    ok MI ~~ Int,  'subset conforms to base type';
+    nok Mu  ~~ MI, 'Mu does not conform to subset';
 }
 
 # vim: ft=perl6
