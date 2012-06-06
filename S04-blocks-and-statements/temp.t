@@ -170,6 +170,7 @@ eval('
     a() if ++$depth < 3;
   }
   a();
+  #?rakudo todo 'temp and recursion'
   is $c, 1, 'recursive nested temps are restored properly';
 }
 
