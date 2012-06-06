@@ -210,6 +210,8 @@ throws_like 'use fatal; ~(1, 2, 6 ... 10)', X::Sequence::Deduction;
 throws_like 'class B does Int { }', X::Composition::NotComposable, target-name => 'B', composer => Int;
 throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str;
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
+throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
+            expected => Int, symbol => '$x';
 
 throws_like '1.foo', X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like 'my class NC { }; NC.new does NC', X::Mixin::NonComposable,
