@@ -6,7 +6,6 @@ plan 5;
 eval_lives_ok 'my $x = 3; END { $x * $x }',
               'outer lexicals are visible in END { ... } blocks';
 
-#?rakudo todo 'RT 112408'
 eval_lives_ok 'my %rt112408 = END => "parsing clash with block-less END"',
 	      'Can use END as a bareword hash key (RT 112408)';
 
