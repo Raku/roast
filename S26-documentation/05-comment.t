@@ -21,9 +21,10 @@ This file is deliberately specified in Perl 6 Pod format
 
 $r = $=pod[1];
 isa_ok $r, Pod::Block::Comment;
-is $r.content.elems, 1;
+is $r.content.elems, 1, 'one-line comment: number of elements';;
 is $r.content[0],
-   "This file is deliberately specified in Perl 6 Pod format\n";
+   "This file is deliberately specified in Perl 6 Pod format\n",
+   'one-line comment: contents';
 
 # this happens to break hilighting in some editors,
 # so I put it at the end
