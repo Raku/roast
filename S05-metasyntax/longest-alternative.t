@@ -24,18 +24,19 @@ my $str = 'a' x 7;
 
 #?niecza skip 'Regex modifier g not yet implemented'
 {
-    ok $str ~~ m:g/aa|a|aaaa/, 'basic sanity with |, different order';
+    ok $str ~~ m:c/aa|a|aaaa/, 'basic sanity with |, different order';
     is ~$/, 'aaaa', 'Longest alternative wins 1, different order';
 
-    ok $str ~~ m:g/aa|a|aaaa/, 'Second match still works, different order';
+    ok $str ~~ m:c/aa|a|aaaa/, 'Second match still works, different order';
     is ~$/, 'aa',   'Longest alternative wins 2, different order';
 
-    ok $str ~~ m:g/aa|a|aaaa/, 'Third match still works, different order';
+    ok $str ~~ m:c/aa|a|aaaa/, 'Third match still works, different order';
     is ~$/, 'a',    'Only one alternative left, different order';
 
-    ok $str !~~ m:g/aa|a|aaaa/, 'No fourth match, different order';
+    ok $str !~~ m:c/aa|a|aaaa/, 'No fourth match, different order';
 }
 
+#?rakudo skip 'interpolating arrays'
 {
     my @list = <a aa aaaa>;
     ok $str ~~ m/ @list /, 'basic sanity with interpolated arrays';
@@ -60,10 +61,12 @@ my $str = 'a' x 7;
     my token indirect_abb { <ab> 'b' }
 
     #?niecza todo 'LTM - literals in tokens'
+    #?rakudo todo 'LTM - literals in tokens'
     ok ('abb' ~~ /<&ab> | <&abb> /) && ~$/ eq 'abb',
        'LTM - literals in tokens';
 
     #?niecza todo 'LTM - literals in nested tokens'
+    #?rakudo todo 'LTM - literals in tokens'
     ok ('abb' ~~ /<&ab> | <&indirect_abb> /) && $/ eq 'abb',
        'LTM - literals in nested torkens';
 
@@ -71,12 +74,16 @@ my $str = 'a' x 7;
        'LTM - longer quantified charclass wins against shorter literal';
 
     #?niecza todo 'LTM - longer quantified atom wins against shorter literal (subrules)'
+    #?rakudo todo 'LTM - longer quantified atom wins against shorter literal (subrules)'
     ok ('abb' ~~ /<&ab> | <&a_word> /) && $/ eq 'abb',
        'LTM - longer quantified atom wins against shorter literal (subrules)';
 
     ok ('abb' ~~ / <abb=&abb> | <&word> /) && $<abb>,
        'LTM - literal wins tie against \w*';
+}
 
+#?rakudo skip ':::'
+{
     # with LTM stoppers
     my token foo1 { 
         a+
@@ -92,6 +99,7 @@ my $str = 'a' x 7;
 
 # LTM stopper by implicit <.ws>
 #?niecza todo 'implicit <.ws> stops LTM'
+#?rakudo todo 'implicit <.ws> stops LTM'
 {
     my rule  ltm_ws1 {\w+ '-'+}
     my token ltm_ws2 {\w+ '-'}
