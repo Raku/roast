@@ -19,7 +19,6 @@ character classes), and those are referenced at the correct spot.
 
 # the first character is whitespace
 {
-    #?rakudo 2 skip '< list > not implemented in regex'
     is('aaaaa' ~~ /< a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (space)');
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
