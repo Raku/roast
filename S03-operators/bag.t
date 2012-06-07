@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 76;
+plan 84;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$^k} }).join(' ')
@@ -113,5 +113,25 @@ is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (KeySet / Bag)
 isa_ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag) works (texas)";
 isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
+
+# msubset
+
+#?rakudo skip "No msubset yet"
+{
+    ok $kb ≼ $b, "Our keybag is a msubset of our bag";
+    nok $b ≼ $kb, "Our keybag is not a msubset of our bag";
+    ok $b ≼ $b, "Our bag is a msubset of itself";
+    ok $kb ≼ $kb, "Our keybag is a msubset of itself";
+}
+
+# msuperset
+
+#?rakudo skip "No msuperset yet"
+{
+    nok $kb ≽ $b, "Our keybag is not a msuperset of our bag";
+    ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
+    ok $b ≽ $b, "Our bag is a msuperset of itself";
+    ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
+}
 
 # vim: ft=perl6
