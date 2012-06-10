@@ -11,6 +11,9 @@ module Fancy::Utilities {
  sub lolrequest($item) is export(:lolcat) {
   return "I CAN HAZ A {uc $item}?";
  }
+ sub allgreet() is export {
+     'hi all';
+ }
  multi sub greet(Str $who) { return "Good morning, $who!" }
  multi sub greet() { return "Hi!" }
 }
