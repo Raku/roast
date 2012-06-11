@@ -37,7 +37,6 @@ plan 11;
 
     is Cfoo(), 'sub C::Cfoo',
        'import imports things implicitly from named module';
-    #?rakudo skip 'unknown bug'
     is Cbar(), 'sub C::Cbar',
        'import imports more things implicitly from named module';
 }
