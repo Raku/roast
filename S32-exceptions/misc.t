@@ -239,13 +239,10 @@ throws_like 'my package A { }; my class B is A { }', X::Inheritance::Unsupported
 throws_like 'my module Expo { sub f is export { }; { sub f is export { } } }',
                 X::Export::NameClash, symbol => '&f';
 
-#?rakudo skip 'segfaults'
+# RT #113408
 throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
             left-elems => 2, right-elems => 1,
             operator => { .name eq 'infix:<+>' };
-
-throws_like '<a b> »+« <c>', X::HyperOp::NonDWIM,
-            left-elems => 2, right-elems => 1;
 
 throws_like 'my sub f() { gather { return } }; ~f()', X::ControlFlow::Return;
 
