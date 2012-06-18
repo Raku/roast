@@ -14,7 +14,6 @@ is (1, (2, (3, 4))).tree(2).[1].flat.elems, 2,
 is ~((1, 2), (3, 4)).tree(*.join('|')), '1|2 3|4',
     'WhateverCode form, depth 1';
 
-
-#?rakudo skip 'multiple Whatever-closures'
+#?rakudo skip 'Any.tree(*@list) NYI'
 is (1, ((2, 3),  (4, 5))).tree(*.join('|'), *.join('+')).join('-'),
     '1-2|3+4|5', '.tree with multiple Whatever-closures';
