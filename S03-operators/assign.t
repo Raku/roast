@@ -629,7 +629,6 @@ sub l () { 1, 2 };
 {
     my $a;
     my @z = (($a) = l, l, l);
-    #?rakudo todo 'item/list assignment'
     #?pugs todo
     is($a.elems, 6, 'lhs treats ($a) as list');
     #?rakudo todo 'item/list assignment'

@@ -178,19 +178,14 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 {
     eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
-    #?rakudo todo 'RT #64688'
     #?niecza todo
-    eval_lives_ok 'class RT64688_c1 { use Test }', 'use in class block';
+    eval_lives_ok 'class RT64688_d1 { use Test }', 'use in class block';
     eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
-    #?rakudo todo 'nom regression'
     eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';
-    #?rakudo todo 'nom regression'
     eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
     eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
-    #?rakudo todo 'nom regression'
     eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
     eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
-    #?rakudo todo 'nom regression'
     eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }
 
