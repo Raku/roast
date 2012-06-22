@@ -9,7 +9,6 @@ plan 6;
     ok  (['a']      ~~ %h), 'Array ~~ Hash (exists and True)';
     #?niecza todo
     ok  (['c']      ~~ %h), 'Array ~~ Hash (exists but Mu)';
-    #?rakudo 2 todo 'nom regression'
     #?niecza todo
     ok  ([<a c>]    ~~ %h), 'Array ~~ Hash (both exist)';
     #?niecza todo
