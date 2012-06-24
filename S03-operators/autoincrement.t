@@ -4,7 +4,7 @@ use Test;
 # Tests for auto-increment and auto-decrement operators
 # originally from Perl 5, by way of t/operators/auto.t
 
-plan 54;
+plan 78;
 
 #L<S03/Autoincrement precedence>
 
@@ -207,5 +207,76 @@ is(%z{0},           $base, '%z{0}');
 
 # RT #63644
 eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
+
+# RT #113816 - autoincrement of bools
+{
+    my Bool $x; 
+    my $y;
+
+    #postincrement tests
+    $x = Bool;
+    $y = $x++;
+    is $y, False, "Bool postincrement returns Bool";
+    is $x, True, "Bool postincrement sets True";
+
+    $x = False;
+    $y = $x++;
+    is $y, False, "False postincrement returns False";
+    is $x, True, "False postincrement sets True";
+
+    $x = True;
+    $y = $x++;
+    is $y, True, "True postincrement returns True";
+    is $x, True, "True postincrement sets True";
+
+    #postdecrement tests
+    $x = Bool;
+    $y = $x--;
+    is $y, False, "Bool postdecrement returns Bool";
+    is $x, False, "Bool postdecrement sets False";
+
+    $x = False;
+    $y = $x--;
+    is $y, False, "False postdecrement returns False";
+    is $x, False, "False postdecrement sets False";
+
+    $x = True;
+    $y = $x--;
+    is $y, True, "True postdecrement returns True";
+    is $x, False, "True postdecrement sets False";
+
+    #preincrement tests
+    $x = Bool;
+    $y = ++$x;
+    is $y, True, "Bool preincrement returns True";
+    is $x, True, "Bool postincrement sets True";
+
+    $x = False;
+    $y = ++$x;
+    is $y, True, "False preincrement returns True";
+    is $x, True, "False postincrement sets True";
+
+    $x = True;
+    $y = ++$x;
+    is $y, True, "True preincrement returns True";
+    is $x, True, "True postincrement sets True";
+    
+    #predecrement tests
+    $x = Bool;
+    $y = --$x;
+    is $y, False, "Bool predecrement returns False";
+    is $x, False, "Bool postdecrement sets False";
+
+    $x = False;
+    $y = --$x;
+    is $y, False, "False predecrement returns False";
+    is $x, False, "False postdecrement sets False";
+
+    $x = True;
+    $y = --$x;
+    is $y, False, "True predecrement returns False";
+    is $x, False, "True postdecrement sets False";
+};
+
 
 # vim: ft=perl6
