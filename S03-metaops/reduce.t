@@ -226,7 +226,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
 # RT #65164 implement [^^]
 #?niecza skip '^^'
-#?rakudo skip '[^^]'
 {
     is ([^^] 0, 42), 42, '[^^] works (one of two true)';
     is ([^^] 42, 0), 42, '[^^] works (one of two true)';
@@ -234,7 +233,6 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     ok ! ([^^] 0, 0),    '[^^] works (two false)';
 
     ok ! ([^^] 0, 0, 0), '[^^] works (three false)';
-    #?rakudo 2 todo '[^^]'
     ok ! ([^^] 5, 9, 17), '[^^] works (three true)';
 
     is ([^^] 5, 9, 0),  (5 ^^ 9 ^^ 0),  '[^^] mix 1';
@@ -318,7 +316,11 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
         ok ( $def ^^ '' ) eq $def, "|{$def.perl}| $msg2 \#8";
         ok ( '' ^^ $def ) eq $def, "|{$def.perl}| $msg2 \#9";
     }
+}
 
+#?rakudo skip 'triangle [\^^] and [\xor]'
+#?niecza skip '^^'
+{
     is (join ', ', [\^^] False, 0, 5, '', False, 16,    0,     Any,   "hello", False),
        (join ', ',       False, 0, 5, 5,  5,     False, False, False, False,   False),
        '[\^^]';
