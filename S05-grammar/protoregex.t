@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 25;
+plan 26;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -8,7 +8,8 @@ grammar Alts {
     proto token alt {*}
     token alt:sym<foo> { <sym> };
     token alt:sym<bar> { 'bar' };
-    token alt:sym<baz> { 'argl' };
+    token alt:sym«baz» { 'argl' };    # RT #113590
+    token alt:sym«=>»  { <sym> };     # RT #113590
 }
 
 ok (my $match = Alts.parse('foo')), 'can parse with proto regexes (1)';
@@ -24,6 +25,9 @@ ok Alts.parse('argl'), 'can parse third second alternative';
 ok !Alts.parse('baz'), 'does not match sym of third alternative';
 ok !Alts.parse('aldkfj'), 'does not match completely unrelated string';
 ok !Alts.parse(''), 'does not match empty string';
+
+# RT #113590
+ok Alts.parse('=>'), 'can parse symbol inside double-angles';
 
 
 class SomeActions {
