@@ -218,6 +218,12 @@ is( ([\*] 1..*).[^10].join(', '), '1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3
 is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, hgfedcba',
     'triangle reduce is lazy');
 
+is( ([max]()), -Inf, '[max]() returns -Inf');
+is( ([min]()),  Inf, '[min]() returns -Inf');
+
+is( ([max] Any, Any, 2), 2, '[max] Any, Any, 2 returns 2');
+is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
+
 # RT #65164 implement [^^]
 #?niecza skip '^^'
 #?rakudo skip '[^^]'
