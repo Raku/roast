@@ -136,6 +136,10 @@ my @tests = (
     # TODO: more tests that show eval($t1_init) has the same guts as $t1.
     #?pugs todo
     ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .perl output';
+
+    # RT #62002 -- validity of default .perl
+    my $t2_init = eval($t1_init).perl;
+    is $t1_init, $t2_init, '.perl on user-defined type roundtrips okay';
 }
 
 # RT #64080
