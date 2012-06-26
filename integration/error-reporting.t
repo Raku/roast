@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -107,5 +107,17 @@ is_run 'die "foo"; END { say "end run" }',
         out    => "end run\n",
     },
     'END phasers are run after die()';
+
+# RT #113848
+
+{
+    try eval '          # line 1
+        use v6;         # line 2
+        (1 + 2) = 3;    # line 3
+        ';
+
+    ok ?( $!.backtrace.any.line == 3),
+        'correct line number reported for assignment to non-variable';
+}
 
 # vim: ft=perl6
