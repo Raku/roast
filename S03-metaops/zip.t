@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 20;
+plan 23;
 
 ok eval('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -58,8 +58,15 @@ is (2, 10, * Z* 3, 4, 5, *).munch(5),
 }
 
 # RT #75818
+isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
+
+# RT #113800  - multiple Z operators work with list associative
 {
-    isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
+    my $l = (1,2,3 Z, 4,5,6 Z, 7,8,9);
+    is $l.[0].lol.elems, 3, 'Z, retains list associativity';
+    is $l.[1].lol.elems, 3, 'Z, retains list associativity';
+    is $l.[2].lol.elems, 3, 'Z, retains list associativity';
 }
+    
 
 # vim: ft=perl6
