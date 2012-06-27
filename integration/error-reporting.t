@@ -116,6 +116,7 @@ is_run 'die "foo"; END { say "end run" }',
         (1 + 2) = 3;    # line 3
         ';
 
+    #?niecza skip "Unable to resolve method backtrace in type Str"
     ok ?( $!.backtrace.any.line == 3),
         'correct line number reported for assignment to non-variable';
 }

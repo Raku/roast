@@ -113,7 +113,7 @@ my @tests = (
 
 
 # RT #61918
-#?niecza todo
+#?niecza skip ">>>Stub code executed"
 {
     class RT61918 {
         has $.inst is rw;

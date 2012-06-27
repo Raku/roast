@@ -221,6 +221,7 @@ is( ([\R~] 'a'..*).[^8].join(', '), 'a, ba, cba, dcba, edcba, fedcba, gfedcba, h
 is( ([max]()), -Inf, '[max]() returns -Inf');
 is( ([min]()),  Inf, '[min]() returns -Inf');
 
+#?niecza 2 todo ""
 is( ([max] Any, Any, 2), 2, '[max] Any, Any, 2 returns 2');
 is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
