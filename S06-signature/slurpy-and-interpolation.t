@@ -39,6 +39,7 @@ dies_ok {
 }
 
 # RT #113804
+#?niecza skip "Unable to resolve method Capture in type Range"
 is join('|', |(1..5)), '1|2|3|4|5', 'can interpolate ranges into arglists';
 
 # vim: ft=perl6
