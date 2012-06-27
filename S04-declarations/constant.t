@@ -298,6 +298,12 @@ use Test;
     is fib[100], 354224848179261915075, 'can have a constant using a sequence and index it';
 }
 
+# RT #112116
+{
+    constant %escapes = (^128).map({; chr($_) => sprintf '%%%02X', $_ }).hash;
+    is %escapes<e>, '%65', 'constant hashes constructed by map';
+}
+
 done;
 
 # vim: ft=perl6
