@@ -390,8 +390,7 @@ Testing operator overloading subroutines
     #?niecza todo
     is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
     #?rakudo skip 'mixed overloaded operators of different arities'
-    #?niecza skip 'Excess arguments to infix:<+>'
-    is eval('sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
+    is eval('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
 
@@ -405,7 +404,7 @@ Testing operator overloading subroutines
 
 #?rakudo skip 'not yet implemented'
 {
-    our multi sub infix:<bar>($a, $b) {$a + $b};
+    our sub infix:<bar>($a, $b) {$a + $b};
 
     my $x bar=6;
     is $x, 6, 'bar= works for custom operators';
