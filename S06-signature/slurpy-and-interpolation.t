@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S03/Argument List Interpolating/"interpolate">
 
@@ -37,5 +37,8 @@ dies_ok {
             'Can interpolate hashes into slurpy named parameters';
     is eval(f2(:a(4))).<a>, 4,  '... with a sane return value';
 }
+
+# RT #113804
+is join('|', |(1..5)), '1|2|3|4|5', 'can interpolate ranges into arglists';
 
 # vim: ft=perl6
