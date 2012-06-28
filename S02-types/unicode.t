@@ -1,13 +1,12 @@
 use v6;
 
 use Test;
-plan 17;
+plan 16;
 
 #L<S02/"Methods on Arrays"/".bytes, .codes or .graphs">
 
 # LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT
 my Str $u = "\x[0041,0300]";
-is $u.bytes, 3, 'combining À is three bytes as utf8';
 is $u.codes, 2, 'combining À is two codes';
 is $u.graphs, 1, 'combining À is one graph';
 is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';

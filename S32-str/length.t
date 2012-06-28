@@ -20,19 +20,6 @@ eval_dies_ok('"moose".length', 'Str.length properly not implemented');
 
 # string literals, for sanity
 
-# L<S32::Str/Str/=item bytes>
-
-# .bytes is under-specified and considered doubtful. 
-# I am commenting out the .bytes tests in this file.
-# See http://irclog.perlgeek.de/perl6/2011-12-23#i_4870398
-#                                          --colomon
-# is("".bytes,         0, "empty string");
-# is("moose".bytes,    5, "moose");
-# my $x = Nil;
-# dies_ok { $x.bytes }, "undefined.bytes fail()s";
-# See thread "undef.chars" on p6l started by Ingo Blechschmidt:
-# L<"http://www.nntp.perl.org/group/perl.perl6.language/22595">
-
 # L<S32::Str/Str/=item chars>
 
 # Precedence tests
@@ -64,13 +51,11 @@ my @data = (
 );
 #:map { my %hash; %hash<string bytes codes graphs> = $_; \%hash };
 
-# L<S32::Str/Str/=item bytes>
 # L<S32::Str/Str/=item chars>
 # L<S32::Str/Str/=item codes>
 # L<S32::Str/Str/=item graphs>
 
 for @data -> $string, $bytes, $codes, $graphs, $chars {
-    # is($string.bytes, $bytes, "'{$string}'.bytes");
     is($string.chars, $chars, "'{$string}'.chars");
     is($string.codes, $codes, "'{$string}'.codes");
     #?niecza skip ".graphs NYI"
