@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 =begin pod
 
@@ -42,5 +42,12 @@ is      $was_in_general_shake,  2, "conflict resolution works (2-2)";
 is      $was_in_sentry_shake,   1, "conflict resolution works (2-3)";
 #?rakudo todo 'nom regression'
 is      $was_in_pet_shake,      1, "conflict resolution works (2-4)";
+
+# RT #111664
+eval_dies_ok q[
+    role R1 { method !foo() { 1 }}
+    role R2 { method !foo() { 2 } }
+    class A does R1 does R2 { }
+    ], 'private roles can cause conflicts too';
 
 # vim: ft=perl6
