@@ -419,10 +419,10 @@ Testing operator overloading subroutines
     is 2+2, 4, 'overloading an operator does not hide other candidates';
 }
 
-# RT #11418
+# RT #111418
 {
     sub infix:<*+>($a, $b) { $a * $b + $b }
-    is 2 *+ 5, 15, 'longest operator wins (RT 11418)';
+    is 2 *+ 5, 15, 'longest operator wins (RT 111418)';
 }
 
 done;
