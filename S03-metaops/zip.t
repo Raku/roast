@@ -61,6 +61,7 @@ is (2, 10, * Z* 3, 4, 5, *).munch(5),
 isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
 
 # RT #113800  - multiple Z operators work with list associative
+#?niecza skip "Unable to resolve method lol in type Parcel"
 {
     my $l = (1,2,3 Z, 4,5,6 Z, 7,8,9);
     is $l.[0].lol.elems, 3, 'Z, retains list associativity';
