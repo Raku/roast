@@ -178,7 +178,6 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 {
     eval_lives_ok 'class RT64688_c1;use Test', 'use after class line';
-    #?niecza todo
     eval_lives_ok 'class RT64688_d1 { use Test }', 'use in class block';
     eval_lives_ok 'module RT64688_m1;use Test', 'use after module line';
     eval_lives_ok 'module RT64688_m2 { use Test }', 'use in module block';

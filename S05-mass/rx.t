@@ -91,7 +91,6 @@ ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
 #### ( ab | abc ): de	xyzabcde	n	no backtrack into subpattern
-#?niecza todo ''
 ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
