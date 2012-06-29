@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 49;
+plan 50;
 
 # basic push tests
 {
@@ -165,6 +165,13 @@ plan 49;
 
         is $x, 1, '$x isn\'t affected by changes to new element created by push(@a, $x)';
     }
+}
+
+# RT #109476
+{
+    my %h = ( <foo> => []);
+    push %h<foo>, my $foo = 'bar';
+    is %h<foo>, 'bar', 'pushing assignment to array-in-hash';
 }
 
 
