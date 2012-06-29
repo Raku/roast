@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 24;
+plan 25;
 
 class Parent {
     has $.x;
@@ -74,6 +74,17 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     lives_ok { $x = NewFromMu.new('j', 'k') }, 'can delegate to self.Mu::new';
     is $x.x, 'j', '... got the right attribute (1)';
     is $x.y, 'k', '... got the right attribute (2)';
+}
+
+{
+    my class MultiNewFromMu {
+        has $.x;
+        multi method new($x) {
+            self.new(:$x);
+        }
+    }
+    is MultiNewFromMu.new('wirklich!').x, 'wirklich!',
+       'Mu.new is a multi method';
 }
 
 # RT #68756
