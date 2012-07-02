@@ -76,6 +76,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
     is $x.y, 'k', '... got the right attribute (2)';
 }
 
+#?niecza skip "Cannot call new; none of these signatures match"
 {
     my class MultiNewFromMu {
         has $.x;
