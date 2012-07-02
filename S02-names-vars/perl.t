@@ -20,6 +20,7 @@ my @tests = (
     '{', # "\d123",	# XXX there is no \d escape!!!
     '}',
     '$a @string %with &sigils()',
+    'שלום',
 
     ?1, ?0,
     #?rakudo emit # Mu eq Mu is an error now
