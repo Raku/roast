@@ -1,8 +1,10 @@
 use v6;
 
 use Test;
+BEGIN { @*INC.push('t/spec/packages') };
+use Test::Util;
 
-plan 112;
+plan 114;
 
 =begin pod
 
@@ -103,7 +105,7 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 # RT #113968
-eval_dies_ok('rand()', 'rand() should produce a parse error');
-eval_dies_ok('rand(3)', 'rand($n) should produce a parse error');
+throws_like 'rand()', X::Obsolete;
+throws_like 'rand(3)', X::Obsolete;
 
 # vim: ft=perl6
