@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 110;
+plan 112;
 
 =begin pod
 
@@ -101,5 +101,9 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 
     ok( $badness < 0.15, 'rand is pretty random' );
 }
+
+# RT #113968
+eval_dies_ok('rand()', 'rand() should produce a parse error');
+eval_dies_ok('rand(3)', 'rand($n) should produce a parse error');
 
 # vim: ft=perl6
