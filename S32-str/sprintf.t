@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 51;
+plan 119;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -23,7 +23,10 @@ is sprintf("%03b",7),             '111',    '0 padding, longer string';
 is sprintf("%b %b",3,3),          '11 11',  'two args %b';
 
 is sprintf('%c', 97),             'a',      '%c test';
-is sprintf('%s', 'string'),       'string', '%s test';
+
+is sprintf('%s', 'string'),        'string', '%s test';
+is sprintf('%10s', 'string'),  '    string', '%s right-justified';
+is sprintf('%-10s', 'string'), 'string    ', '%s left-justified';
 
 is sprintf('%d', 12),             '12',     'simple %d';
 is sprintf('%d', -22),            '-22',    'negative %d';
@@ -31,6 +34,10 @@ is sprintf('%04d', 32),           '0032',   '0-padded %d';
 is sprintf('%04d', -42),          '-042',   '0-padded negative %d';
 is sprintf('%i', -22),            '-22',    'negative %i';
 is sprintf('%04i', -42),          '-042',   '0-padded negative %i';
+is sprintf('%4d', 32),            '  32',   'space-padded %d';
+is sprintf('%4d', -42),           ' -42',   'space-padded negative %d';
+is sprintf('%4i', -42),           ' -42',   'space-padded negative %i';
+is sprintf('%-4i', -42),          '-42 ',   'left-justified negative %i';
 
 is sprintf('%u', 12),             '12',     'simple %u';
 is sprintf('%u', 22.01),          '22',     'decimal %u';
@@ -50,15 +57,133 @@ is sprintf('%03x', 42.6),         '02a',    '0-padded decimal %x';
 is sprintf('%X', 12),             'C',      'simple %X';
 is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 
-is sprintf('%5.2f', 3.1415),    ' 3.14',    'padded %f';
-is sprintf('%5.2F', 3.1415),    ' 3.14',    'padded %F';
-is sprintf('%5.2g', 3.1415),    ' 3.14',    'padded %g';
-is sprintf('%5.2G', 3.1415),    ' 3.14',    'padded %G';
-ok sprintf('%5.2e', 3.1415) ~~ /"3.14e+" "0"{2..3}/, 'padded %e';
-ok sprintf('%5.2E', 3.1415) ~~ /"3.14E+" "0"{2..3}/, 'padded %E';
+#?rakudo todo "sprintf does not handle bigints yet"
+{
+    is sprintf('%d', 453973694165307953197296969697410619233826),
+        "453973694165307953197296969697410619233826",
+        '%d works for big ints';
+    is sprintf('%d', -453973694165307953197296969697410619233826),
+        "-453973694165307953197296969697410619233826",
+        '%d works for negative big ints';
+    is sprintf('%b', 453973694165307953197296969697410619233826),
+        "1010011011000011011110110010010011111011100010110000111011001101110011001010011001110100101011101101011001111110001010100110101011000100010",
+        '%b works for big ints';
+    is sprintf('%b', -453973694165307953197296969697410619233826),
+        "-1010011011000011011110110010010011111011100010110000111011001101110011001010011001110100101011101101011001111110001010100110101011000100010",
+        '%b works for negative big ints';
+    is sprintf('%o', 453973694165307953197296969697410619233826),
+        "12330336622373426073156312316453553176124653042",
+        '%o works for big ints';
+    is sprintf('%o', -453973694165307953197296969697410619233826),
+        "-12330336622373426073156312316453553176124653042",
+        '%o works for negative big ints';
+    is sprintf('%x', 453973694165307953197296969697410619233826),
+        "5361bd927dc58766e6533a576b3f1535622",
+        '%x works for big ints';
+    is sprintf('%x', -453973694165307953197296969697410619233826),
+        "-5361bd927dc58766e6533a576b3f1535622",
+        '%x works for negative big ints';
+    is sprintf('%X', 453973694165307953197296969697410619233826),
+        "5361BD927DC58766E6533A576B3F1535622",
+        '%X works for big ints';
+    is sprintf('%X', -453973694165307953197296969697410619233826),
+        "-5361BD927DC58766E6533A576B3F1535622",
+        '%X works for negative big ints';
+}
 
-ok sprintf('%5.2g', 3.1415e30) ~~ /"3.14e+" "0"? "30"/, 'padded %g';
-ok sprintf('%5.2G', 3.1415e30) ~~ /"3.14E+" "0"? "30"/, 'padded %G';
+#?rakudo todo "sprintf does not handle big Rats yet"
+{
+    is sprintf('%d', 453973694165307953197296969697410619233826 + .1),
+        "453973694165307953197296969697410619233826",
+        '%d works for big Rats';
+    is sprintf('%d', -453973694165307953197296969697410619233826 - .1),
+        "-453973694165307953197296969697410619233826",
+        '%d works for negative big Rats';
+    is sprintf('%b', 453973694165307953197296969697410619233826 + .1),
+        "1010011011000011011110110010010011111011100010110000111011001101110011001010011001110100101011101101011001111110001010100110101011000100010",
+        '%b works for big Rats';
+    is sprintf('%b', -453973694165307953197296969697410619233826 - .1),
+        "-1010011011000011011110110010010011111011100010110000111011001101110011001010011001110100101011101101011001111110001010100110101011000100010",
+        '%b works for negative big Rats';
+    is sprintf('%o', 453973694165307953197296969697410619233826 + .1),
+        "12330336622373426073156312316453553176124653042",
+        '%o works for big Rats';
+    is sprintf('%o', -453973694165307953197296969697410619233826 - .1),
+        "-12330336622373426073156312316453553176124653042",
+        '%o works for negative big Rats';
+    is sprintf('%x', 453973694165307953197296969697410619233826 + .1),
+        "5361bd927dc58766e6533a576b3f1535622",
+        '%x works for big Rats';
+    is sprintf('%x', -453973694165307953197296969697410619233826 - .1),
+        "-5361bd927dc58766e6533a576b3f1535622",
+        '%x works for negative big Rats';
+    is sprintf('%X', 453973694165307953197296969697410619233826 + .1),
+        "5361BD927DC58766E6533A576B3F1535622",
+        '%X works for big Rats';
+    is sprintf('%X', -453973694165307953197296969697410619233826 - .1),
+        "-5361BD927DC58766E6533A576B3F1535622",
+        '%X works for negative big Rats';
+}
+
+is sprintf('%5.2f', 3.1415),    ' 3.14',    '5.2 %f';
+is sprintf('%5.2F', 3.1415),    ' 3.14',    '5.2 %F';
+is sprintf('%5.2g', 3.1415),    ' 3.14',    '5.2 %g';
+is sprintf('%5.2G', 3.1415),    ' 3.14',    '5.2 %G';
+
+ok sprintf('%5.2e', 3.1415)     ~~ /^ "3.14e+" "0"? "00" $/, '5.2 %e';
+ok sprintf('%5.2E', 3.1415)     ~~ /^ "3.14E+" "0"? "00" $/, '5.2 %E';
+ok sprintf('%5.2g', 3.1415e30)  ~~ /^ "3.14e+" "0"? "30" $/, '5.2 %g';
+ok sprintf('%5.2G', 3.1415e30)  ~~ /^ "3.14E+" "0"? "30" $/, '5.2 %G';
+ok sprintf('%5.2g', 3.1415e-30) ~~ /^ "3.14e-" "0"? "30" $/, '5.2 %g';
+ok sprintf('%5.2G', 3.1415e-30) ~~ /^ "3.14E-" "0"? "30" $/, '5.2 %G';
+
+is sprintf('%20.2f', 3.1415),    '                3.14',    '20.2 %f';
+is sprintf('%20.2F', 3.1415),    '                3.14',    '20.2 %F';
+is sprintf('%20.2g', 3.1415),    '                3.14',    '20.2 %g';
+is sprintf('%20.2G', 3.1415),    '                3.14',    '20.2 %G';
+
+ok sprintf('%20.2e', 3.1415)      eq '           3.14e+000' | '            3.14e+00', '20.2 %e';
+ok sprintf('%20.2E', 3.1415)      eq '           3.14E+000' | '            3.14E+00', '20.2 %E';
+ok sprintf('%20.2g', 3.1415e30)   eq '           3.14e+030' | '            3.14e+30', '20.2 %g';
+ok sprintf('%20.2G', 3.1415e30)   eq '           3.14E+030' | '            3.14e+30', '20.2 %G';
+ok sprintf('%20.2g', 3.1415e-30)  eq '           3.14e-030' | '            3.14e-30', '20.2 %g';
+ok sprintf('%20.2G', 3.1415e-30)  eq '           3.14E-030' | '            3.14e-30', '20.2 %G';
+
+is sprintf('%20.2f', -3.1415),    '               -3.14',    'negative 20.2 %f';
+is sprintf('%20.2F', -3.1415),    '               -3.14',    'negative 20.2 %F';
+is sprintf('%20.2g', -3.1415),    '               -3.14',    'negative 20.2 %g';
+is sprintf('%20.2G', -3.1415),    '               -3.14',    'negative 20.2 %G';
+
+ok sprintf('%20.2e', -3.1415)     eq '          -3.14e+000' | '           -3.14e+00', 'negative 20.2 %e';
+ok sprintf('%20.2E', -3.1415)     eq '          -3.14E+000' | '           -3.14E+00', 'negative 20.2 %E';
+ok sprintf('%20.2g', -3.1415e30)  eq '          -3.14e+030' | '           -3.14e+30', 'negative 20.2 %g';
+ok sprintf('%20.2G', -3.1415e30)  eq '          -3.14E+030' | '           -3.14e+30', 'negative 20.2 %G';
+ok sprintf('%20.2g', -3.1415e-30) eq '          -3.14e-030' | '           -3.14e-30', 'negative 20.2 %g';
+ok sprintf('%20.2G', -3.1415e-30) eq '          -3.14E-030' | '           -3.14e-30', 'negative 20.2 %G';
+
+is sprintf('%020.2f', 3.1415),    '00000000000000003.14',    '020.2 %f';
+is sprintf('%020.2F', 3.1415),    '00000000000000003.14',    '020.2 %F';
+is sprintf('%020.2g', 3.1415),    '00000000000000003.14',    '020.2 %g';
+is sprintf('%020.2G', 3.1415),    '00000000000000003.14',    '020.2 %G';
+
+ok sprintf('%020.2e', 3.1415)     eq '000000000003.14e+000' | '0000000000003.14e+00', '020.2 %e';
+ok sprintf('%020.2E', 3.1415)     eq '000000000003.14E+000' | '0000000000003.14E+00', '020.2 %E';
+ok sprintf('%020.2g', 3.1415e30)  eq '000000000003.14e+030' | '0000000000003.14e+30', '020.2 %g';
+ok sprintf('%020.2G', 3.1415e30)  eq '000000000003.14E+030' | '0000000000003.14e+30', '020.2 %G';
+ok sprintf('%020.2g', 3.1415e-30) eq '000000000003.14e-030' | '0000000000003.14e-30', '020.2 %g';
+ok sprintf('%020.2G', 3.1415e-30) eq '000000000003.14E-030' | '0000000000003.14e-30', '020.2 %G';
+
+is sprintf('%020.2f', -3.1415),    '-0000000000000003.14',    'negative 020.2 %f';
+is sprintf('%020.2F', -3.1415),    '-0000000000000003.14',    'negative 020.2 %F';
+is sprintf('%020.2g', -3.1415),    '-0000000000000003.14',    'negative 020.2 %g';
+is sprintf('%020.2G', -3.1415),    '-0000000000000003.14',    'negative 020.2 %G';
+
+ok sprintf('%020.2e', -3.1415)     eq '-00000000003.14e+000' | '-000000000003.14e+00', 'negative 020.2 %e';
+ok sprintf('%020.2E', -3.1415)     eq '-00000000003.14E+000' | '-000000000003.14E+00', 'negative 020.2 %E';
+ok sprintf('%020.2g', -3.1415e30)  eq '-00000000003.14e+030' | '-000000000003.14e+30', 'negative 020.2 %g';
+ok sprintf('%020.2G', -3.1415e30)  eq '-00000000003.14E+030' | '-000000000003.14e+30', 'negative 020.2 %G';
+ok sprintf('%020.2g', -3.1415e-30) eq '-00000000003.14e-030' | '-000000000003.14e-30', 'negative 020.2 %g';
+ok sprintf('%020.2G', -3.1415e-30) eq '-00000000003.14E-030' | '-000000000003.14e-30', 'negative 020.2 %G';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
@@ -72,7 +197,7 @@ is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 
 #?rakudo skip "doesn't work in master (as of 2010-07)"
 {
-is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $';
+    is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $';
 }
 
 # RT #74610
