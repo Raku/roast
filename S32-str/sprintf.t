@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 51;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -49,6 +49,16 @@ is sprintf('%03x', 42.6),         '02a',    '0-padded decimal %x';
 # tests for %X
 is sprintf('%X', 12),             'C',      'simple %X';
 is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
+
+is sprintf('%5.2f', 3.1415),    ' 3.14',    'padded %f';
+is sprintf('%5.2F', 3.1415),    ' 3.14',    'padded %F';
+is sprintf('%5.2g', 3.1415),    ' 3.14',    'padded %g';
+is sprintf('%5.2G', 3.1415),    ' 3.14',    'padded %G';
+ok sprintf('%5.2e', 3.1415) ~~ /"3.14e+" "0"{2..3}/, 'padded %e';
+ok sprintf('%5.2E', 3.1415) ~~ /"3.14E+" "0"{2..3}/, 'padded %E';
+
+ok sprintf('%5.2g', 3.1415e30) ~~ /"3.14e+" "0"? "30"/, 'padded %g';
+ok sprintf('%5.2G', 3.1415e30) ~~ /"3.14E+" "0"? "30"/, 'padded %G';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
