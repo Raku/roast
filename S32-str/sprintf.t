@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 124;
+plan 125;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -49,6 +49,7 @@ is sprintf('%o', 22.01),          '26',     'decimal %o';
 is sprintf('%03o', 32),           '040',    '0-padded %o';
 is sprintf('%03o', 42.6),         '052',    '0-padded decimal %o';
 
+is sprintf('%x', 0),              '0',      'simple %x';
 is sprintf('%x', 12),             'c',      'simple %x';
 is sprintf('%x', 22.01),          '16',     'decimal %x';
 is sprintf('%03x', 32),           '020',    '0-padded %x';
