@@ -64,7 +64,6 @@ ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
 #?niecza skip ".s NYI"
-#?rakudo todo ".s doesn't seem to work - maybe Win32 specific though?"
 ok($*PROGRAM_NAME.IO.s > 42,   "~~:s returns size on existent files");
 
 nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
