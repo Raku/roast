@@ -105,7 +105,11 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 # RT #113968
-throws_like 'rand()', X::Obsolete;
-throws_like 'rand(3)', X::Obsolete;
+#?niecza skip "Unable to resolve method postcircumfix:<( )> in type Any"
+#?DOES 4
+{
+    throws_like 'rand()', X::Obsolete;
+    throws_like 'rand(3)', X::Obsolete;
+}
 
 # vim: ft=perl6
