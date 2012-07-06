@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 119;
+plan 124;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -189,6 +189,12 @@ ok sprintf('%020.2g', -3.1415e30)  eq '-000000000003.1e+030' | '-0000000000003.1
 ok sprintf('%020.2G', -3.1415e30)  eq '-000000000003.1E+030' | '-0000000000003.1E+30', 'negative 020.2 %G';
 ok sprintf('%020.2g', -3.1415e-30) eq '-000000000003.1e-030' | '-0000000000003.1e-30', 'negative 020.2 %g';
 ok sprintf('%020.2G', -3.1415e-30) eq '-000000000003.1E-030' | '-0000000000003.1E-30', 'negative 020.2 %G';
+
+is sprintf('%e', 2.718281828459), sprintf('%.6e', 2.718281828459), '%e defaults to .6';
+is sprintf('%E', 2.718281828459), sprintf('%.6E', 2.718281828459), '%E defaults to .6';
+is sprintf('%f', 2.718281828459), sprintf('%.6f', 2.718281828459), '%f defaults to .6';
+is sprintf('%g', 2.718281828459), sprintf('%.6g', 2.718281828459), '%g defaults to .6';
+is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults to .6';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
