@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 48;
+plan 52;
 
 # L<S06/Signature Introspection>
 
@@ -126,6 +126,15 @@ sub j(*@i) {
 {
     sub foo(:$) {};
     ok &foo.signature.perl ~~ / ':' /, '.perl of a signature with anonymous named parameter';
+}
+
+# Capture param introspection
+{
+    sub xyz(|$c) {};
+    is &xyz.signature.params[0].name,       '$c' , '.name of |$c is "$c"';
+    is &xyz.signature.params[0].positional, False, '.positional on Capture param is False';
+    is &xyz.signature.params[0].capture,    True , '.capture on Capture param is True';
+    is &xyz.signature.params[0].named,      False, '.named on Capture param is True';
 }
 
 done;
