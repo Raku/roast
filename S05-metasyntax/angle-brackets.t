@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 76;
+plan 79;
 
 =begin pod
 
@@ -282,6 +282,10 @@ character classes), and those are referenced at the correct spot.
     is('foo456bar' ~~ /foo <(\d+ bar/, '456bar', '<( match');
     is('foo789bar' ~~ /foo \d+)> bar/, 'foo789', ')> match');
     ok(!('foo123' ~~ /foo <(\d+)> bar/), 'non-matching <(...)>');
+
+    is('foo123bar' ~~ /foo <( bar || ....../, 'foo123', '<( in backtracking');
+    is('foo123bar' ~~ /foo <( 123 <( bar/, 'bar', 'multiple <(');
+    is('foo123bar' ~~ /foo <( 123 [ <( xyz ]?/, '123', 'multiple <( backtracking');
 }
 
 # A « or << token indicates a left word boundary.
