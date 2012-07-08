@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 104;
+plan 116;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -149,6 +149,23 @@ is(NaN <= NaN, Bool::False, 'NaN <= NaN');
 is(NaN >  NaN, Bool::False, 'NaN >  NaN');
 is(NaN >= NaN, Bool::False, 'NaN >= NaN');
 is(NaN != NaN, Bool::True,  'NaN != NaN');
+
+# regression test for rakudo failure 2012-07-08 (pmichaud)
+# Int,Rat comparisons
+is(7 == 2.4, False, 'Int == Rat');
+is(7 != 2.4, True , 'Int != Rat');
+is(7 <  2.4, False, 'Int <  Rat');
+is(7 <= 2.4, False, 'Int <= Rat');
+is(7 >  2.4, True , 'Int >  Rat');
+is(7 >= 2.4, True , 'Int >= Rat');
+
+# Rat,Int comparisons
+is(2.4 == 7, False, 'Rat == Int');
+is(2.4 != 7, True , 'Rat != Int');
+is(2.4 <  7, True , 'Rat <  Int');
+is(2.4 <= 7, True , 'Rat <= Int');
+is(2.4 >  7, False, 'Rat >  Int');
+is(2.4 >= 7, False, 'Rat >= Int');
 
 done;
 
