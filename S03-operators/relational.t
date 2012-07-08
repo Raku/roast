@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 116;
+plan 118;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -158,6 +158,7 @@ is(7 <  2.4, False, 'Int <  Rat');
 is(7 <= 2.4, False, 'Int <= Rat');
 is(7 >  2.4, True , 'Int >  Rat');
 is(7 >= 2.4, True , 'Int >= Rat');
+is(7 <=> 2.4, Order::Decrease, 'Int <=> Rat');
 
 # Rat,Int comparisons
 is(2.4 == 7, False, 'Rat == Int');
@@ -166,6 +167,7 @@ is(2.4 <  7, True , 'Rat <  Int');
 is(2.4 <= 7, True , 'Rat <= Int');
 is(2.4 >  7, False, 'Rat >  Int');
 is(2.4 >= 7, False, 'Rat >= Int');
+is(2.4 <=> 7, Order::Increase, 'Rat <=> Int');
 
 done;
 
