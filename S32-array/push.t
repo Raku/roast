@@ -168,6 +168,7 @@ plan 50;
 }
 
 # RT #109476
+#?pugs skip 'Odd number of elements'
 {
     my %h = ( <foo> => []);
     push %h<foo>, my $foo = 'bar';

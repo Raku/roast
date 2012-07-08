@@ -216,33 +216,40 @@ eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
     #postincrement tests
     $x = Bool;
     $y = $x++;
+    #?pugs todo
     is $y, False, "Bool postincrement returns Bool";
     is $x, True, "Bool postincrement sets True";
 
     $x = False;
     $y = $x++;
+    #?pugs todo
     is $y, False, "False postincrement returns False";
     is $x, True, "False postincrement sets True";
 
     $x = True;
     $y = $x++;
     is $y, True, "True postincrement returns True";
+    #?pugs todo
     is $x, True, "True postincrement sets True";
 
     #postdecrement tests
     $x = Bool;
     $y = $x--;
+    #?pugs todo
     is $y, False, "Bool postdecrement returns Bool";
+    #?pugs todo
     is $x, False, "Bool postdecrement sets False";
 
     $x = False;
     $y = $x--;
     is $y, False, "False postdecrement returns False";
+    #?pugs todo
     is $x, False, "False postdecrement sets False";
 
     $x = True;
     $y = $x--;
     is $y, True, "True postdecrement returns True";
+    #?pugs todo
     is $x, False, "True postdecrement sets False";
 
     #preincrement tests
@@ -258,23 +265,31 @@ eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
 
     $x = True;
     $y = ++$x;
+    #?pugs todo
     is $y, True, "True preincrement returns True";
+    #?pugs todo
     is $x, True, "True postincrement sets True";
     
     #predecrement tests
     $x = Bool;
     $y = --$x;
+    #?pugs todo
     is $y, False, "Bool predecrement returns False";
+    #?pugs todo
     is $x, False, "Bool postdecrement sets False";
 
     $x = False;
     $y = --$x;
+    #?pugs todo
     is $y, False, "False predecrement returns False";
+    #?pugs todo
     is $x, False, "False postdecrement sets False";
 
     $x = True;
     $y = --$x;
+    #?pugs todo
     is $y, False, "True predecrement returns False";
+    #?pugs todo
     is $x, False, "True postdecrement sets False";
 };
 

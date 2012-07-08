@@ -20,6 +20,7 @@ lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
        'can call subroutines in a module by name';
 }
 
+#?pugs skip 'NYI'
 {
     require Fancy::Utilities <&allgreet>;
     is allgreet(), 'hi all', 'require with import list';

@@ -140,6 +140,7 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
 }
 
 # RT #72916
+#?pugs todo
 {
     #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
     eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',

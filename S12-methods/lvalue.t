@@ -31,21 +31,16 @@ is $o.l2,       4,      '... and the assignment worked';
 is $o.b,        4,      '...also to the attribute';
 
 my ($a, $b);
-#?pugs todo
 lives_ok { temp $o.l1 = 8; $a = $o.a },
          'can use lvalue method in temp() statement (explicit return)';
 is $o.l1,       3,      '... and the value was reset';
 is $o.a,        3,      '... also on the attribute';
-#?pugs todo
 is $a,          8,      'but the temp assignment had worked';
 
-#?pugs todo
 lives_ok { temp $o.l2 = 9; $b = $o.b },
          'can use lvalue method in temp() statement (explicit return)';
 is $o.l2,       4,      '... and the value was reset';
-#?pugs todo
 is $o.b,        4,      '... also on the attribute';
-#?pugs todo
 is $b,          9,      'but the temp assignment had worked';
 
 # vim: ft=perl6

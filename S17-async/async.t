@@ -56,8 +56,9 @@ ok eval q{threads[2].detach},'detach a thread';
 ok !@threads[2].join,'could not join a detached thread';
 
 # L<S17/"Thread methods"/"=item suspend">
-#?pugs todo 'unimpl'
+#?pugs skip 'unimpl'
 @threads[3] = async { ok do_something_very_important(),'another thread' };
+#?pugs todo 'unimpl'
 ok eval q{@threads[3].suspend},' send him back to a waiting room..';
 
 # L<S17/"Thread methods"/"=item resume">

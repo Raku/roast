@@ -397,6 +397,7 @@ my @p;
 }
 
 # RT #64818
+#?pugs skip 'R~= NYI'
 {
     eval_dies_ok q{my $foo = 'foo'; $foo R~= 'foo';},
                  'use of R~= operator on a non-container dies';

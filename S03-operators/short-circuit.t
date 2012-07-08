@@ -276,7 +276,6 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
 {
     my $x;
     $x &&= 5;
-    #?pugs todo
     ok !defined($x), '&&= on a fresh variable works';
     my $y ||= 'moin';
     is $y, 'moin', '||= on a fresh variable works';

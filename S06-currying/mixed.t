@@ -75,6 +75,7 @@ is( try { &__hyper.assuming(op => &infix:<+>)(@x, @x) },
 is( try { &__hyper.assuming(op => &infix:<+>)(a => @x, b => @x) },
     (2,4,46), 'currying functions with named array arguments' );
 
+#?pugs skip 'No such subroutine: "&FortyTwo"'
 {
   # tests RT #70890
   my $out = "";

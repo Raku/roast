@@ -23,7 +23,6 @@ BEGIN {
 
     use Fancy::Utilities :shortgreet, :lolgreet;
     is lolgreet('Tene'), 'O HAI TENE', 'Explicitly importing symbols by name works';
-    #?pugs todo
     nok nicegreet('Jnthn'), 'Good morning, Jnthn!', 'Cannot use a sub not explicitly imported';
 }
 
@@ -31,12 +30,10 @@ BEGIN {
     eval_lives_ok 'use Fancy::Utilities :ALL;', 'Can import everything marked for export using :ALL';
 
     use Fancy::Utilities :ALL;
-    #?pugs todo
     is lolrequest("Cake"), 'I CAN HAZ A CAKE?', 'Can use a sub marked as exported and imported via :ALL';
 }
 
 #?rakudo skip "Multi subs aren't imported by default in current Rakudo - is this to spec?"
-#?pugs skip 'no such subroutine, greet'
 {
     use Fancy::Utilities;
     is greet(), 'Hi!', "Multi subs are imported by default - is this to spec?";

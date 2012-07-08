@@ -74,6 +74,7 @@ plan 15;
   is bar(), 42, '$_ is implicitly declared "is dynamic" (2)';
 }
 
+#?pugs skip 'Cannot cast from VStr "success" to VCode (VCode)'
 {
   # ...but other vars are not
   my sub foo { my $abc = 17; $CALLER::abc }	#OK not used
@@ -85,7 +86,6 @@ plan 15;
 
   my $abs = 23;
   #?niecza todo 'strictness'
-  #?pugs todo
   #?rakudo todo 'strictness'
   nok (try bar()) eq 'success',
     'vars not declared "is dynamic" are not accessible via $CALLER::';
@@ -105,6 +105,7 @@ plan 15;
   is $foo, 43, '"is dynamic" vars are rw in the creating scope (2)';
 }
 
+#?pugs skip "Can't modify constant item: VInt 42"
 {
   my sub modify { $CALLER::foo++; 'success' }
   my $foo is dynamic ::= 42;
@@ -115,7 +116,6 @@ plan 15;
   my sub modify { $CALLER::_++ }
   $_ = 42;
   modify();
-  #?pugs todo 
   is $_, 43,             '$_ is implicitly rw (2)';
 }
 

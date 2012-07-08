@@ -542,6 +542,7 @@ lives_ok {
 # RT 113026
 #?rakudo todo 'RT 113026 array iterator does not track a growing array'
 #?niecza todo 'array iterator does not track a growing array'
+#?pugs todo
 {
     my @rt113026 = 1 .. 10;
     my $iter = 0;

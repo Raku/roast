@@ -2541,6 +2541,7 @@ ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
 ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 
 # RT 112450
+#?pugs todo 'RT 112450'
 {
     ok 'foooo' ~~ /^ f o ** 4 $/, 'RT 112450 sanity';
     my $rt112450 = 4;
@@ -2551,6 +2552,7 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 }
 
 # RT 112454
+#?pugs skip 'RT 112454'
 {
     my $rt112454 = 3;
     my $ten_x = 'x' x 10;
@@ -2934,6 +2936,7 @@ nok 'aa' ~~ /(.)$1/, 'undefined captures do not match';
 
 # RT #71702
 #?niecza todo 'allows them'
+#?pugs todo 'allows them'
 eval_dies_ok '"foo" ~~ /<[d..b]>? foo/', 'no reversed char ranges';
 
 done;

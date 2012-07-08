@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
-#?pugs emit plan 78;
+#?pugs emit plan 87;
 
 my @tests = (
     # Basic scalar values
@@ -115,6 +115,7 @@ my @tests = (
 
 # RT #61918
 #?niecza skip ">>>Stub code executed"
+#?pugs   skip ">>>Stub code executed"
 {
     class RT61918 {
         has $.inst is rw;
@@ -171,6 +172,7 @@ my @tests = (
 
 # RT #67948
 #?DOES 6
+#?pugs skip '&ITEM not found'
 {
     my @a;
     ([0, 0], [1, 1]).grep({@a.push: .perl; 1}).eager;

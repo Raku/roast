@@ -211,6 +211,7 @@ my $a = 1;
     dies_ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
 }
 
+#?pugs skip 'MI not found'
 {
     #RT #113434
     my subset MI of Int;

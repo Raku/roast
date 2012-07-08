@@ -28,6 +28,7 @@ plan 28;
 
   is ($foo, "does_not_matter")[*-2], 42,
     "indexing lists by a negative index works correctly";
+  #?pugs todo 'bug'
   eval_dies_ok(q/my @a = <one two>; @a[-1] = 'zero'; @a.perl/,
  	"indexing lists by a negative index without the * dies");
 }
