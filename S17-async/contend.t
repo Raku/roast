@@ -31,6 +31,7 @@ is  +@thr, 2, 'one thousand threads';
 
 for @thr { .join(); }; # all threads back
 
+#?pugs skip 'race condition hits about 50% of the time'
 ok $counter < 1000, 'the race condition strikes' or diag($counter);
 
 
