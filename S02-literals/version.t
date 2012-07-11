@@ -25,6 +25,8 @@ nok v1.2.3 ~~  v2,     '... but it can still fail';
 is  v1.2  cmp  v1.2,   Same,     'cmp: Same';
 is  v1.2  cmp  v3.2,   Increase, 'cmp: Increase';
 is  v1.2  cmp  v0.2,   Decrease, 'cmp: Decrease';
+#?rakudo fudge "NYI"
+is  v1.2  cmp  v1.10,  Increase, "cmp isn't Stringy-based";
 
 done;
 
