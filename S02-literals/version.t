@@ -25,7 +25,6 @@ nok v1.2.3 ~~  v2,     '... but it can still fail';
 is  v1.2   cmp  v1.2,   Same,     'cmp: Same';
 is  v1.2   cmp  v3.2,   Increase, 'cmp: Increase';
 is  v1.2   cmp  v0.2,   Decrease, 'cmp: Decrease';
-#?rakudo todo "NYI"
 is  v1.2   cmp  v1.10,  Increase, "cmp isn't Stringy-based";
 #?rakudo 3 todo "trailing zeroes fail"
 ok  v1.2   eqv  v1.2.0, 'trailing zeroes are equivalent';
