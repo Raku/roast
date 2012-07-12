@@ -1,9 +1,9 @@
 use v6;
 use Test;
 
-is v1.2.3, 'v1.2.3', 'version literal stringification round-trips';
-is v1.2.3+, 'v1.2.3+', 'version literal stringification with + round-trips';
-is v1.*.3,  'v1.*.3',  'version literal stringification with * round-trips';
+is v1.2.3, '1.2.3', 'version literal stringification';
+is v1.2.3+, '1.2.3+', 'version literal stringification';
+is v1.*.3,  '1.*.3',  'version literal stringification';
 ok  v1.2.3 eqv v1.2.3, 'eqv works on version literals (+)';
 nok v5.2.3 eqv v1.2.3, 'eqv works on version literals (-)';
 nok v1.2+  eqv v1.2,   '+ makes a difference in eqv';
