@@ -264,4 +264,7 @@ throws_like 'DateTime.new("1998-12-31T23:59:60+0200", :timezone<Z>)', X::DateTim
 
 throws_like 'Set(Any.new)', X::Set::Coerce;
 
+throws_like 'use fatal; (1+2i).Num',  X::Numeric::Real, target => Num;
+throws_like 'use fatal; (1+2i).Real', X::Numeric::Real, target => Real;
+
 done;
