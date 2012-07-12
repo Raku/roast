@@ -93,12 +93,13 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     my Int @a = 1, 2, 3;
     my Int @b;
     lives_ok { @b = @a }, 'can assign typed array to typed array';
-    ok @a.values.of === Int, '@a.values is typed (1)';
+    #?rakudo skip 'need parameterized Lists'
+    ok @a.values.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
 
     #?rakudo 2 skip 'initialization'
     my Str @c = <foo bar baz>;
-    ok @c.keys.of === Str, '@array.keys is typed with Int';
+    ok @c.keys.of.WHICH eqv Str.WHICH, '@array.keys is typed with Int';
 }
 
 # test that we can have parametric array return types
