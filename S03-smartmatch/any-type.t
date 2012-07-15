@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 15;
 
 #L<S03/Smart matching/type membership>
 { 
@@ -30,6 +30,13 @@ plan 13;
     #?pugs 2 skip 'Callable'
     is &say      ~~ Callable, True,  '~~ Callable returns a Bool (1)';
     is 5         ~~ Callable, False, '~~ Callable returns a Bool (2)';
+}
+
+# RT 76610
+{
+    module M { };
+    lives_ok { 42 ~~ M }, '~~ module lives';
+    ok not $/, '42 is not a module';
 }
 
 done;
