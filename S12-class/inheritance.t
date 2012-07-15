@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 # L<S12/Single inheritance/An "isa" is just a trait that happens to be another class>
 
@@ -170,6 +170,15 @@ eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
         }
     }
     is B.new.c, 42, 'nextsame in constructor works';
+}
+
+# RT 75376
+{
+    my class RT75376::A { };
+    lives_ok { our class RT75376::B is RT75376::A { } },
+        'our-scoped class can inherit from my-scoped class';
+    ok (RT75376::B.^mro[0] ~~ RT75376::B and RT75376::B.^mro[1] ~~ RT75376::A),
+        'our-scoped class inherited from my-scoped class has proper inheritance hierarchy';
 }
 
 # vim: ft=perl6
