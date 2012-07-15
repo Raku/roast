@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 # L<S05/Simplified lexical parsing of patterns/not all non-identifier glyphs are currently meaningful as metasyntax>
 
@@ -29,6 +29,13 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
     #?rakudo todo 'RT 74832'
     #?niecza todo
     ok "$!" ~~ /:i quantif/, 'error message mentions quantif{y,ier}';
+}
+
+# RT 77110
+{
+    try { eval '$_ = "0"; s/-/1/;' };
+    ok "$!" ~~ /'Unrecognized regex metacharacter -'/,
+        'unescaped "-" is not valid regular expression metasyntax';
 }
 
 # vim: ft=perl6
