@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 86;
+plan 87;
 
 # L<S32::Str/Str/=item substr>
 
@@ -239,4 +239,8 @@ sub p (Int $a) {  my $p = $a; return $p }
 #?pugs todo
 eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
+# RT 76682
+{
+    is "foo".substr(4), Failure, 'substr with start beyond end of string is Failure'
+}
 # vim: ft=perl6
