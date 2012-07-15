@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 9;
+plan 10;
 
 # it doesn't seem to be explicit in S06, but {next,call}{same,with}
 # work with multi subs too, not just with methods
@@ -49,3 +49,9 @@ plan 9;
     lives_ok &e, "It's ok to call nextsame in the last/only candidate";
 }
 
+# RT 76328
+{
+    try { nextsame };
+    ok "$!" ~~ /'nextsame is not in the dynamic scope of a dispatcher'/,
+        'nextsame in main block dies due to lack of dispatcher';
+}
