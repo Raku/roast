@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan 36;
+plan 38;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -141,6 +141,14 @@ is_run( q{'aa' ~~ /(.)$1/},
     $x++ for $/.list;
     #?rakudo todo 'nom regression'
     is $x, 2, '$/.list does not flattens subcaptures';
+}
+
+# RT 74180
+{
+    my $s;
+    try { $s = eval '"foo" ~~ /(foo)/; "$0a"' };
+    ok not $!, 'alphabetic characters can follow digits in $0 variable in interpolation';
+    is $s, 'fooa', 'alphabetic characters follows $0 interpolated value';
 }
 
 done;
