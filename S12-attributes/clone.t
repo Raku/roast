@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 14;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -50,6 +50,17 @@ is($val2, 42, '... cloned object has proper attr value');
         is($x.b, 1, 'however, in the clone it was changed');
         last;
     }
+}
+
+# RT 88254
+{
+    my ($p, $q);
+    $p = 'a' ~~ /$<foo>='a'/;
+    
+    # previously it was timeout on Rakudo
+    lives_ok { $q = $p.clone }, 'Match object can be cloned';
+    
+    is ~$q{'foo'}, 'a', 'cloned Match object retained named capture value';
 }
 
 # vim: ft=perl6
