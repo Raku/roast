@@ -278,6 +278,13 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     #?rakudo todo 'RT 79160'
     ok 2    !~~ MyStr, 'Ints are not in there';
 }
+
+# RT 72948
+{
+    try { eval 'sub foo($x where { $x == $y }, $y) { }' };
+    ok "$!" ~~ /'$y is not declared'/, 'subset in signature cannot use non-predeclared variable';
+}
+
 done;
 
 # vim: ft=perl6
