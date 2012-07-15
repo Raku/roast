@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S14/Traits/>
 {
@@ -62,6 +62,13 @@ plan 11;
 
     lives_ok { rt112664 },
     '[BUG] multi without proto gets wrong lexical lookup chain (RT 112664)';
+}
+
+# RT 74092
+{
+    try { eval 'sub yulia is krassivaya { }' };
+    ok "$!" ~~ /'trait_mod:<is>'/,
+        'declaration of a sub with an unknown trait mentions trait_mod:<is> in dispatch error';
 }
 
 done();
