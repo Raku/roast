@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 53;
+plan 54;
 
 
 # terms
@@ -234,6 +234,13 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     is($r, False, 'sanity 3 != 3');
     foo 3 !=3;
     is($r, False, 'ensure 3 !=3 gives same result as 3 != 3');
+}
+
+# RT 73266
+{
+    try { eval "say and die 3" };
+    ok "$!" ~~ m:i/undefined <ws> routine .* \&and/,
+        'and after say is not interpreted as infix:<and>';
 }
 
 # vim: ft=perl6
