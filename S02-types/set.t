@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 91;
+plan 93;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -219,6 +219,16 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
+}
+
+# RT 107022
+{
+    is_deeply [ ( set ( set <a b c> ), <c> ).list ], [ 'a', 'b', 'c' ],
+        'set inside set does not duplicate elements';
+    
+    my $s = set <a b c>;
+    is_deeply [ ( set $s, <c> ).list ], [ 'a', 'b', 'c' ],
+        'variable of Set type inside set does not duplicate elements';
 }
 
 # vim: ft=perl6
