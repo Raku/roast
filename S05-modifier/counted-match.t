@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/counted.t.
 
 =end pod
 
-plan 21;
+plan 22;
 
 my $data = "f fo foo fooo foooo fooooo foooooo";
 
@@ -81,6 +81,11 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 {
     is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
         'ac, ae', 'non-monotonic items in :nth are ignored';
+}
+
+# RT 77408
+{
+    dies_ok { "a" ~~ m:nth(Mu)/a/ }, ':nth does not accept Mu param';
 }
 
 done;
