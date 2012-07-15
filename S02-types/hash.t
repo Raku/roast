@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 80;
+plan 81;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -294,6 +294,11 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     my $h = Hash.new(a => 3);
     $h<a> = 5;
     is $h<a>, 5, 'can normally modify items created from Hash.new';
+}
+
+# RT 77598
+{
+    is {}[-1], Failure, 'array-indexing a hash with a negative index is Failure';
 }
 
 done;
