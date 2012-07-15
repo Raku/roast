@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 22;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -114,5 +114,11 @@ eval_dies_ok q[
         method meta_bomb { "the good " ~ bomb() }
     }
 ], 'no attr access for sub inside class';
+
+# RT 74850
+{
+    try { eval 'class A {}; class B { has A $.foo .= new }' };
+    ok "$!" ~~ /'Cannot use .= to initialize an attribute'/, 'class attribute cannot be initialized using .=';
+}
 
 # vim: ft=perl6
