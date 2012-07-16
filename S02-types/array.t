@@ -337,6 +337,7 @@ my @array2 = ("test", 1, Mu);
 
 # RT 73184
 #?niecza skip "Seems like this is an inappropriate Rakudo-specific test"
+#?pugs skip 'Stack space overflow'
 {
     my @a = 0..*;
     try { @a[ Inf ] = 3 };

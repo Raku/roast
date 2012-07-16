@@ -237,6 +237,7 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
 }
 
 # RT 73266
+#?pugs todo
 {
     try { eval "say and die 3" };
     ok "$!" ~~ m:i/undefined <ws> routine .* \&and/,
