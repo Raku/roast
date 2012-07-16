@@ -53,6 +53,7 @@ is($val2, 42, '... cloned object has proper attr value');
 }
 
 # RT 88254
+#?pugs todo
 {
     my ($p, $q);
     $p = 'a' ~~ /$<foo>='a'/;

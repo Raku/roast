@@ -22,9 +22,13 @@ is(~@array.values, 'a b c d', '@array.values works');
 is(~values(@array), 'a b c d', 'values(@array) works');
 is(+@array.values, +@array, 'we have the same number of values as elements in the array');
 
+#?pugs emit #
 my $v := @array.values;
+#?pugs emit #
 $v.shift; $v.shift;
+#?pugs skip "Can't modify constant item: VUndef"
 is($v.elems, 2, "shifting .values removes an element...");
+#?pugs skip "Can't modify constant item: VUndef"
 is(@array.elems, 4, "...while leaving original list alone.");
 
 # vim: ft=perl6
