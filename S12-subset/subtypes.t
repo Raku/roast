@@ -280,6 +280,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 }
 
 # RT 72948
+#?niecza skip "Can't test the failure this way"
 {
     try { eval 'sub foo($x where { $x == $y }, $y) { }' };
     ok "$!" ~~ /'$y is not declared'/, 'subset in signature cannot use non-predeclared variable';

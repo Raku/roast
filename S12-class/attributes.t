@@ -116,6 +116,7 @@ eval_dies_ok q[
 ], 'no attr access for sub inside class';
 
 # RT 74850
+#?niecza skip "Can't test the failure this way"
 {
     try { eval 'class A {}; class B { has A $.foo .= new }' };
     ok "$!" ~~ /'Cannot use .= to initialize an attribute'/, 'class attribute cannot be initialized using .=';
