@@ -238,11 +238,9 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
 
 # RT 73266
 #?pugs todo
-#?niecza todo "Niecza handles the issue okay, but not the test for it"
 {
-    try { eval "say and die 3" };
-    ok "$!" ~~ m:i/undefined <ws> routine .* \&and/,
-        'and after say is not interpreted as infix:<and>';
+    try { eval 'say and die 73266' };
+    ok ~$! !~~ '73266', 'and after say is not interpreted as infix:<and>';
 }
 
 # vim: ft=perl6
