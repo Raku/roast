@@ -52,6 +52,7 @@ plan 10;
 # RT 76328
 {
     try { nextsame };
-    ok "$!" ~~ /'nextsame is not in the dynamic scope of a dispatcher'/,
-        'nextsame in main block dies due to lack of dispatcher';
+    isa_ok $!, X::NoDispatcher, 'nextsame in main block dies due to lack of dispatcher';
 }
+
+done;
