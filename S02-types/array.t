@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 91;
 
 #L<S02/Mutable types/Array>
 
@@ -333,17 +333,6 @@ my @array2 = ("test", 1, Mu);
 {
     is Array(1,2,3).WHAT.gist, 'Array()', 'Array(...) makes an Array';
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
-}
-
-# RT 73184
-#?niecza skip "Seems like this is an inappropriate Rakudo-specific test"
-#?pugs skip 'Stack space overflow'
-{
-    my @a = 0..*;
-    try { @a[ Inf ] = 3 };
-    ok "$!" ~~ /'type cannot unbox to a native integer'/, 'cannot use Inf index to assign element in infinite array';
-    try { @a[ Inf ].say };
-    ok "$!" ~~ /'type cannot unbox to a native integer'/, 'cannot use Inf index to access element in infinite array';
 }
 
 done;
