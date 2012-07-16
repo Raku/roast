@@ -116,10 +116,12 @@ eval_dies_ok q[
 ], 'no attr access for sub inside class';
 
 # RT 74850
-#?niecza skip "Can't test the failure this way"
+#?niecza skip "Unhandled exception: Unable to resolve method ctxzyg in type Method"
+#?rakudo skip "Cannot use .= to initialize an attribute"
 {
-    try { eval 'class A {}; class B { has A $.foo .= new }' };
-    ok "$!" ~~ /'Cannot use .= to initialize an attribute'/, 'class attribute cannot be initialized using .=';
+    class A { };
+    class B { has A $.foo .= new };
+    isa_ok B.new.foo, A, 'class attribute can be initialized using .=';
 }
 
 # vim: ft=perl6
