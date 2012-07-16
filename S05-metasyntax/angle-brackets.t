@@ -284,6 +284,7 @@ character classes), and those are referenced at the correct spot.
     ok(!('foo123' ~~ /foo <(\d+)> bar/), 'non-matching <(...)>');
 
     is('foo123bar' ~~ /foo <( bar || ....../, 'foo123', '<( in backtracking');
+    #?niecza todo
     is('foo123bar' ~~ /foo <( 123 <( bar/, 'bar', 'multiple <(');
     is('foo123bar' ~~ /foo <( 123 [ <( xyz ]?/, '123', 'multiple <( backtracking');
 }

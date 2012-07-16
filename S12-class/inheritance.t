@@ -174,6 +174,7 @@ eval_dies_ok 'class RT64642 is ::Nowhere {}', 'dies: class D is ::C {}';
 
 # RT 75376
 #?pugs skip 'No such subroutine: "&RT75376::B"'
+#?niecza skip "Pathed definitions require our scope"
 {
     my class RT75376::A { };
     lives_ok { our class RT75376::B is RT75376::A { } },

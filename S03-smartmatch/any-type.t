@@ -35,6 +35,7 @@ plan 15;
 # RT 76610
 {
     module M { };
+    #?niecza todo "Unable to resolve method ACCEPTS in type M"
     lives_ok { 42 ~~ M }, '~~ module lives';
     ok not $/, '42 is not a module';
 }

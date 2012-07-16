@@ -241,6 +241,7 @@ eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # RT 76682
 #?pugs skip 'Failure NYI'
+#?niecza skip "'Failure' used at line 244"
 {
     is "foo".substr(4), Failure, 'substr with start beyond end of string is Failure'
 }

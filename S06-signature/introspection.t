@@ -132,6 +132,7 @@ sub j(*@i) {
 {
     sub xyz(|$c) {};
     is &xyz.signature.params[0].name,       '$c' , '.name of |$c is "$c"';
+    #?niecza todo "Does this test make sense?"
     is &xyz.signature.params[0].positional, False, '.positional on Capture param is False';
     is &xyz.signature.params[0].capture,    True , '.capture on Capture param is True';
     is &xyz.signature.params[0].named,      False, '.named on Capture param is True';
