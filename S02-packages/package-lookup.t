@@ -1,14 +1,15 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S02/Package lookup/>
 
 class A {
-    my $x;
+    my $x = 10;
     method x { $A::x = 5; return $A::x; }
     our sub foo() { 'I am foo' };
+    method lexical() { $x }
 }
 
 isa_ok A::, Stash, 'Typename:: is a Stash';
@@ -16,8 +17,10 @@ ok A::<&foo>, 'can access a subroutine in the stash';
 ok A:: === A.WHO, 'A::  returns the same as A.WHO';
 
 # RT 74412
-lives_ok { A.new.x ~~ 5 or die },
-    'can access a variable in a class package through its long name from class method';
+my $a = A.new;
+is $a.x, 5,
+    'can autovivify an our-variable in a class package through its long name from class method';
+is $a.lexical, 10, 'but a lexical of the same name is independent';
 
 # RT 75632
 lives_ok { my $A::y = 6; $A::y ~~ 6 or die },
