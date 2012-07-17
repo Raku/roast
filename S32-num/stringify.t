@@ -83,7 +83,6 @@ is Rat.gist, 'Rat()', 'Rat.gist';
 #?pugs todo
 is Rat.perl, 'Rat', 'Rat.perl';
 lives_ok { ~Rat }, '~Rat does not die';
-#?pugs todo
 lives_ok { Rat.Str }, 'Rat.Str does not die';
 
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
