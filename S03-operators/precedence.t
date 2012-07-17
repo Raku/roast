@@ -237,7 +237,6 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
 }
 
 # RT 73266
-#?pugs todo
 {
     try { eval 'say and die 73266' };
     ok ~$! !~~ '73266', 'and after say is not interpreted as infix:<and>';
