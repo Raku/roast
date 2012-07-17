@@ -34,6 +34,8 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
  DOUBLE PRIME QUOTATION MARK(U+301D/U+301E)';
 }
 
+#?pugs skip 'hangs'
+#?DOES 63
 {
     my %ps_pe = (
             '(' => ')', '[' => ']', '{' => '}', '༺' => '༻', '༼' => '༽',

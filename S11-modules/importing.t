@@ -21,16 +21,21 @@ plan 16;
     is( bop(), 'Foo::bop', 'Foo::bop is the sub we expect' );
 
     multi waz($x) { 'Foo::wazhere' }   #OK not used
+    #?pugs skip 'Cannot cast from VUndef to VCode'
     ok( &waz, 'Foo::waz multi is defined (implicitly :DEFAULT)' );
     is( waz(), 'Foo::waz', 'Foo::waz is the sub we expect' );
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );
 
+    #?pugs todo
     dies_ok { eval 'qux()' }, 'qux() not imported';
+    #?pugs todo
     dies_ok { eval 'gaz()' }, 'gaz() not imported';
 }
 
+#?pugs skip 'Undeclared variable'
 ok( ! &foo, 'Foo::foo is undefined in outer scope' );
 
+#?pugs todo
 {
     BEGIN { @*INC.push('t/spec/packages') };
     class TestImportInClass {
@@ -44,6 +49,7 @@ ok( ! &foo, 'Foo::foo is undefined in outer scope' );
 
 }
 
+#?pugs todo
 eval_dies_ok 'use t::spec::packages::S11-modules::Foo :NoSucTag;',
              'die while trying to import a non-existent export tag';
 

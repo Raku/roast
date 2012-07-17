@@ -15,6 +15,7 @@ Tests for lexical roles delcared with 'my role'
 eval_lives_ok 'my role R1 {}', 'my role parses OK';
 eval_lives_ok '{ my role R2 {} }; { my role R2 {} }',
               'declare roles with the same name in two scopes.';
+#?pugs todo
 eval_dies_ok  '{ my class R3 {}; R3; }; R3',
               'scope is correctly restricted';
 
@@ -23,6 +24,7 @@ eval_dies_ok  '{ my class R3 {}; R3; }; R3',
         method catwalk() { 'ooh pretty!' }
     }
 
+    #?pugs todo
     is Model.gist, 'Model()',            'lexical role type object stringifies OK';
     is Model.catwalk, 'ooh pretty!', 'can pun lexical role';
 
