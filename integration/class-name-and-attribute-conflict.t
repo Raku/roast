@@ -75,7 +75,6 @@ plan 3;
         method update { $var -= $.a; }
     };
     a.new( a => 10 ).update;
-    #?pugs todo 'bug'
     is $var, 90, "Testing suite 1.";
 }
 
@@ -97,14 +96,12 @@ plan 3;
         submethod BUILD { _a.new( _a => $._a ).update; };
     };
 
-    #?pugs emit #
     _b.new( _a => 20 );
-    #?pugs todo 'bug'
     is $var, 80, "Testing suite 2.";
 }
 
 
-
+#?pugs skip 'No such method in class Ac: "&update"'
 {
     my $var = 100;
     # XXX This definition *does* have an effect. This $var *is* captured.
@@ -123,9 +120,7 @@ plan 3;
         submethod BUILD { Ab.new( Aa => $.Ab ); }
     };
 
-    #?pugs emit #
     Ac.new( Ab => 30 ).update;
-    #?pugs todo 'bug'
     is $var, 70, "Testing suite 3.";
 }
 
