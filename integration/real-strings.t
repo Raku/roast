@@ -36,7 +36,7 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
     is ~@foo, 'B B', 'Str.split(Str) works with postfix:<++>';
 }
 
-#?pugs skip 'Str'
+#?pugs todo 'Str'
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 
 #?pugs 2 skip 'flip'

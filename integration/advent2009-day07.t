@@ -32,7 +32,6 @@ is $a, 'abcd', '$_ is default topic, variable list';
 	is @array.map: *.Int , (1, 2, 3, 4) , 'Testing map form';
 }
 # @array>>.say;
-#?pugs skip 'No such method in class Array: "&>>Str"'
 is @array».Str , <a b c d> , 'Testing hyperoperator form';
 
 
