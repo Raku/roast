@@ -6,6 +6,7 @@ use Test;
 plan 13;
 
 # As a function :
+#?pugs skip 'sub NYI'
 is( flip('Pugs'), 'sguP', "as a function");
 
 # As a method :
@@ -27,12 +28,14 @@ is( 'ä€»«'.flip,   '«»€ä', "some unicode characters" );
 
 #?niecza 2 todo 'graphemes not implemented'
 #?rakudo 2 skip 'graphemes not implemented'
+#?pugs   2 skip 'graphemes not implemented'
 is( "a\c[COMBINING DIAERESIS]b".flip, 'bä', "grapheme precomposed" );
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".flip,
     "ba\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]",
     "grapheme without precomposed");
 
 is 234.flip, '432', '.flip on non-string';
+#?pugs skip 'sub NYI'
 is flip(123), '321', 'flip() on non-strings';
 {
     my $x = 'abc';
