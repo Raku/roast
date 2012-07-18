@@ -17,7 +17,9 @@ Basic tests for the trim() builtin
 
 {
     my $foo = "foo  \n";
+    #?pugs emit #
     trim($foo);
+    #?pugs skip 'sub NYI'
     is($foo, "foo  \n", 'our variable was not yet trimmed');
     $foo .= trim;
     is($foo, 'foo', 'our variable is trimmed correctly');
@@ -67,10 +69,11 @@ Basic tests for the trim() builtin
 # trim-leading
 #
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "   foo  \n";
+    #?pugs emit #
     trim-leading($foo);
+    #?pugs skip 'sub NYI'
     is($foo, "   foo  \n", 'trim-leading does not trim a variable in-place');
     $foo .= trim-leading;
     is($foo, "foo  \n", 'trim-leading works correctly');
@@ -79,7 +82,6 @@ Basic tests for the trim() builtin
     is($foo, "foo   \t\t  \t \n", 'our variable is trimmed again with no effect');
 }
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     is(''.trim-leading, '', 'trim-leading on an empty string gives an empty string');
     is(' '.trim-leading, '', 'trim-leading on an one-space string gives an empty string');
@@ -87,7 +89,6 @@ Basic tests for the trim() builtin
     is('  '.trim-leading, '', 'trim-leading on a two-space string gives an empty string');
 }
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = " foo bar ";
     $foo .= trim-leading;
@@ -96,7 +97,6 @@ Basic tests for the trim() builtin
     is($foo, "foo bar ", 'our variable is trimmed again with no effect');
 }
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "\n foo\n ";
     $foo .= trim-leading;
@@ -109,10 +109,11 @@ Basic tests for the trim() builtin
 # trim-trailing
 #
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "   foo  \n";
+    #?pugs emit #
     trim-trailing($foo);
+    #?pugs skip 'sub NYI'
     is($foo, "   foo  \n", 'trim-trailing does not trim a variable in-place');
     $foo .= trim-trailing;
     is($foo, "   foo", 'trim-trailing works correctly');
@@ -121,7 +122,6 @@ Basic tests for the trim() builtin
     is($foo, "\t   \t  \tfoo", 'our variable is trimmed again with no effect');
 }
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     is(''.trim-trailing, '', 'trim-trailing on an empty string gives an empty string');
     is(' '.trim-trailing, '', 'trim-trailing on an one-space string gives an empty string');
@@ -129,7 +129,6 @@ Basic tests for the trim() builtin
     is('  '.trim-trailing, '', 'trim-trailing on a two-space string gives an empty string');
 }
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = " foo bar ";
     $foo .= trim-trailing;
@@ -138,7 +137,6 @@ Basic tests for the trim() builtin
     is($foo, " foo bar", 'our variable is trimmed again with no effect');
 }
 
-#?pugs todo 'waiting for patch to be accepted'
 {
     my $foo = "\n foo\n ";
     $foo .= trim-trailing;
@@ -147,6 +145,7 @@ Basic tests for the trim() builtin
     is($foo, "\n foo", 'our variable can be trimmed multiple times');
 }
 
+#?pugs todo
 {
     ok ' ab ' ~~ /.*/, 'regex sanity';
     is $/.trim, 'ab', 'Match.trim';
