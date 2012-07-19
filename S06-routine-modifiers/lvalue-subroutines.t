@@ -78,7 +78,7 @@ sub checklastval ($passwd) is rw {
         );
 };
 
-my $errors;
+#?rakudo skip 'segfaults, probably due to [RT #114134]'
 dies_ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
 
 # Above test may well die for the wrong reason, if the Proxy stuff didn't
