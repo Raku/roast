@@ -51,7 +51,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 
 #?niecza skip '>>>Stub code executed'
 {
-    proto prefix:<elk> ($arg) {...}
+    proto prefix:<elk> ($arg) { * }
     multi prefix:<elk> ($arg) { $arg + 1 }
     is (elk 3), 4, "multi definition of prefix:<elk> works";
 }
