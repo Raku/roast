@@ -53,7 +53,6 @@ is(2 - 2 / 2, 1 / 1, "/ binds tighter than binary -");
 # additive
 
 is(1 ~ 2 * 3, 16, "~ binds looser than *");
-#?pugs skip 'autothread'
 ok(?((1 ~ 2 & 12) == 12), "but tighter than &");
 #?pugs skip 'autothread'
 ok(?((2 + 2 | 4 - 1) == 4), "and + binds tighter than |");
@@ -80,13 +79,13 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 # junctive or
 
 #?rakudo todo 'non-associativeness of infix:<^> and |'
-#?pugs skip 'autothread, Mu'
+#?pugs todo 'autothread, Mu'
 { # test that | and ^ are on the same level but parsefail
     eval_dies_ok 'my Mu $a = (1 | 2 ^ 3)', '| and ^ may not associate';
     eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
-#?pugs skip 'autothread, Mu'
+#?pugs todo 'autothread, Mu'
 {
     my Mu $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
     ok(!($a == 1), 'junctive or binds more tightly then abs (1)');
@@ -167,7 +166,7 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 
 # list prefix
 
-#?pugs skip 'authothread'
+#?pugs todo 'authothread'
 {
     my $c = any 1, 2 Z 3, 4;
     ok($c == 3, "any is less tight than comma and Z");
@@ -202,7 +201,7 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 # http://irclog.perlgeek.de/perl6/2009-07-14#i_1316200
 #
 # so uc(False) stringifies False to 'FALSE', and uc('0') is false. Phew.
-#?pugs skip 'Bool.Str'
+#?pugs todo 'Bool.Str'
 is (uc "a" eq "A"), uc(False.Str), "uc has the correct precedence in comparison to eq";
 
 # L<S03/Named unary precedence/my $i = int $x;   # ILLEGAL>

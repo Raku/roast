@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
-#?pugs emit plan 87;
+#?pugs emit plan 83;
 
 my @tests = (
     # Basic scalar values
@@ -25,6 +25,7 @@ my @tests = (
     ?1, ?0,
     #?rakudo emit # Mu eq Mu is an error now
     #?niecza emit # Dunno what's wrong with this one
+    #?pugs emit #
     Mu,
     #?rakudo emit # parse error
     #?niecza emit # Autoloading NYI
@@ -32,7 +33,10 @@ my @tests = (
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
-    \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, \Mu,
+    \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, 
+
+    #?pugs emit #
+    \Mu,
 
     #?pugs emit #
     (a => 1),

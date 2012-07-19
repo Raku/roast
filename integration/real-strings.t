@@ -39,7 +39,6 @@ dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returne
 #?pugs todo 'Str'
 ok 1.Str ~~ / ^ 1 $ /, 'RT 66366; 1.Str is a "good" Str';
 
-#?pugs 2 skip 'flip'
 is "helo".flip().trans("aeiou" => "AEIOU"), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".flip.trans(("aeiou" => "AEIOU")), 'OlEh', '.flip.trans (RT 66300)';
 is "helo".lc.trans(("aeiou" => "AEIOU")),   'hElO', '.flip.trans (RT 66300)';

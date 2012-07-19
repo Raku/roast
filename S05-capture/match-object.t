@@ -12,7 +12,7 @@ is $/.WHAT.gist, Match.gist,    'got right type';
 #?pugs todo
 ok $/.Bool,                     '.Bool';
 ok $/.defined,                  '.defined';
-#?pugs skip 'Match.Str'
+#?pugs todo 'Match.Str'
 is $/.Str,         '12',        '.Str';
 #?pugs todo
 is $/.from,           2,        '.from';
@@ -37,7 +37,6 @@ is $/.kv.elems,       0,        '.kv (empty)';
 
 nok 'abde' ~~ /\d/,             'no match';
 nok $/.Bool,                    'failed match is False';
-#?pugs skip 'Match.Str'
 is  $/.Str,          '',        'false match stringifies to empty string';
 
 my $c;

@@ -62,6 +62,7 @@ my @a = <b c d>;
     is(@o[2], "d", $test);
 }
 
+#?pugs skip 'todo'
 {
     my $test = q{ (\@a) received as arrayref };
     my $o = $p5_dumper(\@a);
@@ -69,6 +70,7 @@ my @a = <b c d>;
     is($o[2], "d", $test);
 }
 
+#?pugs skip 'todo'
 {
     my $test = q{ (VAR @a) received as arrayref };
     my $o = $p5_dumper(VAR @a);
@@ -90,6 +92,7 @@ my $s = 'str';
    is($$o, $s, $test);
 }
 
+#?pugs skip 'todo'
 {
    my $test = q{ (VAR $s) received as scalarref };
    my $o = $p5_dumper(VAR $s);

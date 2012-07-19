@@ -83,7 +83,6 @@ is ~@b, "a b d e z", "inplace sort";
 }
 
 # RT #70676
-#?pugs skip 'Int'
 {
    my $x = 5.5;
    $x .= Int;

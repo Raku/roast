@@ -297,7 +297,7 @@ eval_lives_ok 'given 3 { sub a() { } }', 'can define a sub inside a given';
 #?pugs todo
 eval_lives_ok 'sub a() { } given 3',     'can define a sub inside a statement-modifying given';
 
-#?pugs skip 'ok variant?'
+#?pugs todo 'ok variant?'
 {
     my $capture-is-correct = False;
     given "Hello" { 

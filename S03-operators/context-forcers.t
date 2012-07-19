@@ -69,7 +69,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"3e5",   "3e5", "~ context forcer works (10)";
 }
 
-#?pugs skip 'Str'
 ok 4.Str ~~ Str, 'Int.Str returns a Str';
 
 sub eval_elsewhere($code){ eval($code) }

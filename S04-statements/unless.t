@@ -38,7 +38,6 @@ my $x = 'test';
     ok($found, 'unless 1 is not executed');
 }
 
-#?pugs skip 'Mu'
 {
     my $found = 0;
     unless Mu { $found = 1; }

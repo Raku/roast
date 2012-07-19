@@ -114,7 +114,7 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "^^ NYI"
-#?pugs skip '^^ short circuit'
+#?pugs todo '^^ short circuit'
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -132,7 +132,7 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "xor NYI"
-#?pugs skip "xor shortcircuit"
+#?pugs todo "xor shortcircuit"
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -204,7 +204,6 @@ sub accumtest($expect, $op) {
     #?pugs 2 skip 'Range'
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
     isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
-    #?pugs 3 skip 'Mu'
     isa_ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
     isa_ok Inf ^^ Mu, Num, '^^ can return a Num';
     isa_ok 'Inf' ^^ Mu, Str, '^^ can return a Str';

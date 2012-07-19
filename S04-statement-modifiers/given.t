@@ -20,7 +20,6 @@ plan 5;
     is($a, 6, "post given");
 }
 
-#?pugs skip "Can't modify constant item"
 {
     my $a = '';
     $a = $_ given 'a';

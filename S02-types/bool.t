@@ -48,7 +48,7 @@ isa_ok(~Bool::False, Str);
 #?pugs 2 todo "stringification"
 is(~Bool::True, 'True', 'Bool stringification (True)');
 is(~Bool::False, 'False', 'Bool stringification (False)');
-#?pugs 2 skip '.Str'
+#?pugs 2 todo '.Str'
 is Bool::True.Str, 'True', 'True.Str';
 is Bool::False.Str, 'False', 'False.Str';
 #?pugs 2 todo '.gist'

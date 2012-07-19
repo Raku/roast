@@ -50,7 +50,6 @@ is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should inte
 # L<S02/Method calls/"In order to interpolate the result of a method call">
 is("$world.chars()", '5', 'method calls with parens should interpolate');
 is("$world.chars", 'World.chars', 'method calls without parens should not interpolate');
-#?pugs skip '.flip'
 is("$world.flip.chars()", '5', 'cascade of argumentless methods, last ending in paren');
 is("$world.substr(0,1)", 'W', 'method calls with parens and args should interpolate');
 
