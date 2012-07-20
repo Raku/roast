@@ -14,7 +14,7 @@ be valid perl6.
 
 plan 6;
 
-# L<S05/Extensible metasyntax (C<< <...> >>)/A leading & interpolates>
+# L<S05/Extensible metasyntax (C<< <...> >>)/unambiguously calls a routine instead>
 
 my regex abc { a b c }
 

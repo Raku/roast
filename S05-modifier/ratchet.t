@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-#L<S05/Modifiers/"The new :ratchet modifier">
+#L<S05/Modifiers/"The new :r or :ratchet modifier">
 # for other tests see
 # t/spec/S05-mass/rx.t
 

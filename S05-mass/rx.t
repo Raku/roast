@@ -34,7 +34,7 @@ ok 'abc' !~~ /\d+:/, 'cut on character class shortcut';
 #?pugs todo 
 ok 'verify' ~~ /[ if    not | ify ]/, 'control';
 
-# L<S05/Backtracking control/"Backtracking over a double colon">
+# L<S05/Backtracking control/"Evaluating a double colon">
 
 #### [ if :: not | ify ]	verify		n	inside a group
 #?rakudo skip ':: NYI'
@@ -55,7 +55,7 @@ ok 'verify' ~~ /[ if :  not | ify ]/, 'simple backtrack still works';
 #?pugs todo 
 ok 'verify' ~~ /[ if :: not | ify ] | verify/, 'rule continues';
 
-# L<S05/Backtracking control/"Backtracking over a triple colon">
+# L<S05/Backtracking control/"Evaluating a triple colon">
 #### [ when     ever ] | whence	whence	y	full backtrack failure
 #?pugs todo 
 ok 'whence' ~~ /[ when     ever ] | whence/, 'full backtrack failure';
@@ -98,7 +98,7 @@ ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 #?niecza todo ''
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 
-#L<S05/Modifiers/"The new :ratchet modifier">
+#L<S05/Modifiers/"The new :r or :ratchet modifier">
 
 #### :ratchet a* a		bazaar		n	ratchet modifier
 ok 'bazaar' !~~ /:ratchet a* a/, 'ratchet modifier';

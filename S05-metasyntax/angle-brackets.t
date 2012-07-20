@@ -116,9 +116,7 @@ character classes), and those are referenced at the correct spot.
     eval_dies_ok('"foo" ~~ /<test:>/', 'no other characters are allowed (:)');
 }
 
-# L<S05/Extensible metasyntax (C<< <...> >>)/A leading . causes a named assertion not to capture what it matches>
-# XXX "section ``Extensible metasyntax (<...>)'' not found in S05." - how to
-# reference that section?
+# L<S05/Extensible metasyntax (C<< <...> >>)/explicitly calls a method as a subrule>
 {
     is('blorg' ~~ /<.alpha>/, 'b', 'leading . prevents capturing');
 }

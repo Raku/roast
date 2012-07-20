@@ -4,7 +4,7 @@ use Test;
 
 plan 17;
 
-# L<S05/Grammars/"and optionally pass an action object">
+# L<S05/Grammars/optionally pass an actions object>
 
 grammar A::Test::Grammar {
     rule  TOP { <a> <b> }
