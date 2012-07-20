@@ -29,9 +29,9 @@ is (@array.min:{ $^a <=> $^b }), -9,
 is min(:by({ $^a <=> $^b }), @array), -9,
   "subroutine form of min with identity comparison block works";
 
-is (@array.min: { abs $^a <=> abs $^b }), 0,
+is (@array.min: { abs($^a) <=> abs($^b) }), 0,
   "method form of min taking a comparison block works";
-is min(:by({ abs $^a <=> abs $^b }), @array), 0,
+is min(:by({ abs($^a) <=> abs($^b) }), @array), 0,
   "subroutine form of min taking a comparison block works";
 
 is (@array.min: { abs $^a }), 0,
@@ -41,7 +41,7 @@ is min(:by({ $^a.abs }), @array), 0,
 
 #?rakudo 2 skip "Range.min not fully implemented yet (RT #105118)"
 #?niecza 2 skip "Range.min not fully implemented yet"
-is ((-10..10).min: { abs $^a <=> abs $^b }), 0,
+is ((-10..10).min: { abs($^a) <=> abs($^b) }), 0,
   "method form of min on Ranges taking a comparison block works";
 
 is ((1..10).min: { ($_-3) * ($_-5) }), 4,
@@ -58,15 +58,15 @@ is max(@array), 7, 'sub form of max';
 
 #?rakudo skip "Range.max not fully implemented yet (RT #105118)"
 #?niecza 2 skip "Range.max not fully implemented yet"
-is ((-10..9).max: { abs $^a <=> abs $^b }), -10,
+is ((-10..9).max: { abs($^a) <=> abs $^b }), -10,
   "method form of max on Ranges taking a comparison block works";
 
 is max(:by({ $^a <=> $^b }), @array), 7,
   "subroutine form of max with identity comparison block works";
 
-is (@array.max: { abs $^a <=> abs $^b }), -9,
+is (@array.max: { $^a.abs <=> $^b.abs }), -9,
   "method form of max taking a comparison block works";
-is max(:by({ abs $^a <=> abs $^b }), @array), -9,
+is max(:by({ $^a.abs <=> $^b.abs }), @array), -9,
   "subroutine form of max taking a comparison block works";
 is (@array.max: { $^a.abs }), -9,
   "method form of max taking a modifier block works";
@@ -88,16 +88,16 @@ is (@array.minmax: { $^a <=> $^b }), -9..7,
 is minmax(:by({ $^a <=> $^b }), @array), -9..7,
   "subroutine form of minmax with identity comparison block works";
 
-is (@array.minmax: { abs $^a <=> abs $^b }), 0..-9,
+is (@array.minmax: { $^a.abs <=> $^b.abs }), 0..-9,
   "method form of minmax taking a comparison block works";
-is minmax(:by({ abs $^a <=> abs $^b }), @array), 0..-9,
+is minmax(:by({ $^a.abs  <=> $^b.abs }), @array), 0..-9,
   "subroutine form of minmax taking a comparison block works";
 is (@array.minmax: { abs $^a }), 0..-9,
   "method form of minmax taking a comparison block works";
 is minmax(:by({ $^a.abs }), @array), 0..-9,
   "subroutine form of minmax taking a comparison block works";
 
-is ((-10..9).minmax: { abs $^a <=> abs $^b }), 0..-10,
+is ((-10..9).minmax: { $^a.abs <=> $^b.abs }), 0..-10,
   "method form of minmax on Ranges taking a comparison block works";
 
 is ((1..10).minmax: { ($_-3) * ($_-5) }), 4..10,
