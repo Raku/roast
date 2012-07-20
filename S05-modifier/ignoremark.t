@@ -25,5 +25,6 @@ ok('å' ~~ m:m/a/, 'Ignoremark: a matches å');
 ok('ƌ' ~~ m:m/d/, 'Ignoremark: d matches ƌ');
 ok('å' ~~ m:m/ä/, 'Both pattern and string may contain accents');
 ok('a' ~~ m:m/ä/, 'Pattern may contain accents');
+ok('ä' ~~ m:ignoremark/a/, 'Ignoremark: spelling out :ignoremark also works');
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
