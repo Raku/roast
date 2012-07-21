@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 54;
+plan 52;
 
 
 # terms
@@ -85,11 +85,6 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
     eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
-#?pugs todo 'autothread, Mu'
-{
-    my Mu $a = (abs -1 ^ -1); # read as abs(-1 ^ -1) -> (1^1)
-    ok(!($a == 1), 'junctive or binds more tightly then abs (1)');
-}
 
 #?pugs skip 'Mu'
 {
@@ -99,10 +94,6 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 
 # named unary
 
-is((abs -1 .. 3), (1 .. 3), "abs binds tighter than ..");
-#is((rand 3 <=> 5), -1, "rand binds tighter than <=>");   # XXX rand N is obsolete
-
-# structural
 
 ok(0 < 2 <=> 1 < 2, "0 < 2 <=> 1 < 2 means 0 < 1 < 2");
 
