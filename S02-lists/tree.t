@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 8;
+plan 9;
 
 is (1, 2, (3, 4)).tree.elems, 3, 'basic sanity (1)';
 is (1, 2, (3, 4)).tree.join('|'), '1|2|3 4', 'basic sanity (2)';
@@ -17,3 +17,9 @@ is ~((1, 2), (3, 4)).tree(*.join('|')), '1|2 3|4',
 #?rakudo skip 'Any.tree(*@list) NYI'
 is (1, ((2, 3),  (4, 5))).tree(*.join('|'), *.join('+')).join('-'),
     '1-2|3+4|5', '.tree with multiple Whatever-closures';
+
+{
+    my $t = '';
+    $t ~= "|$_" for (<a b c> Z <X Y Z>).tree;
+    is $t, "|a X|b Y|c Z", '(parcel of parcels).tree';
+}
