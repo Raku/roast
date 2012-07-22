@@ -72,7 +72,7 @@ ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
 
 #?pugs todo
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
-#?niecza skip 'Cannot cast from source type to destination type.'|
+#?niecza skip 'Cannot cast from source type to destination type.'
 ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
 #?rakudo todo 'array variable interpolation'
