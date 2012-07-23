@@ -114,7 +114,7 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "^^ NYI"
-#?pugs todo '^^ short circuit'
+#?pugs skip '^^ short circuit'
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -132,7 +132,7 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "xor NYI"
-#?pugs todo "xor shortcircuit"
+#?pugs skip "xor shortcircuit"
 {
     my $x;      # should be Mu
     my $y = 2;
