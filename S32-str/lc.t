@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S32::Str/Str/lc>
 
@@ -28,5 +28,12 @@ is(lc('A'..'C'), "a b c", "lowercasing char-range");
 }
 
 is("ÁÉÍÖÜÓŰŐÚ".lc, "áéíöüóűőú", ".lc on Hungarian vowels");
+
+# https://en.wikipedia.org/wiki/Title_case#Special_cases
+# "The Greek letter Σ has two different lowercase forms: "ς" in word-final
+# position and "σ" elsewhere."
+
+#?niecza todo 'advanced Unicode wizardry'
+is 'ΣΣΣ'.lc, 'σσς', 'lower-casing of greek Sigma respects word-final special case';
 
 # vim: ft=perl6
