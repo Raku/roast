@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 6;
+plan 7;
 
 # L<S32::Str/Str/ucfirst>
 
@@ -12,6 +12,7 @@ is tc("üüüü"),        "Üüüü",        "umlaut";
 is tc("óóóó"),        "Óóóó",        "accented chars";
 is tc('ßß'),          'Ssß',         'sharp s => Ss';
 is 'abc'.tc,          'Abc',         'method form of title case';
+is 'aBcD'.tc,         'ABcD',        'tc only modifies first character';
 
 
 # vim: ft=perl6
