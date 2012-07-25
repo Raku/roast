@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 16;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -90,10 +90,9 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', 'remaining 26 were buffered';
     # Multibyte characters
     is $expected[$i++], chr(0xbeef), "received {chr 0xbeef}";
-    is $expected[$i++], 3, '... which is 3 bytes';
-    is $expected[$i++], 2, 'received 2 bytes of a 3 byte unicode character';
+    is $expected[$i++], 1, '... which is 1 character';
+    is $expected[$i++], 1, 'received another character';
     is $expected[$i++], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
-    is $expected[$i++], 3, '... which is 3 bytes';
 
     # test 5 tests get()
     if $is-win {
