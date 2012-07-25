@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 87;
+plan 90;
 
 # L<S32::Str/Str/=item substr>
 
@@ -62,6 +62,13 @@ plan 87;
     is("hello foo bar and baz".substr(6, 10).capitalize, "Foo Bar An", ".substr.capitalize on literal string");
     is("hello »« foo".substr(6, 2), "»«", ".substr on unicode string");
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
+}
+
+{ # codepoints greater than 0xFFFF
+    my $str = (0x10426, 0x10427).chrs;
+    is $str.codes, 2, "Sanity check string";
+    is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
+    is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
 }
 
 sub l (Int $a) {  my $l = $a; return $l }
