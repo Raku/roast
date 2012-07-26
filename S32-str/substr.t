@@ -64,6 +64,7 @@ plan 90;
     is("שיעבוד כבר".substr(4, 4), "וד כ", ".substr on Hebrew text");
 }
 
+#?pugs skip 'chrs'
 { # codepoints greater than 0xFFFF
     my $str = (0x10426, 0x10427).chrs;
     is $str.codes, 2, "Sanity check string";

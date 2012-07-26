@@ -49,6 +49,7 @@ my $i = "UPPERCASE"; $i .= tc;
 is($f, "LOWERCASE", "inplace uc");
 is($g, "uppercase", "inplace lc");
 is($h, "Lowercase", "inplace tc");
+#?pugs todo
 is($i, "uPPERCASE", "inplace lcfirst");
 
 # L<S12/"Mutating methods">
