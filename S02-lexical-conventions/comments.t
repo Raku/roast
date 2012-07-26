@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 50;
 
 # L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
@@ -71,15 +71,18 @@ plan 44;
 
 # L<S02/"User-selected Brackets"/"closed by" "same number of"
 #   "closing brackets">
-#?rakudo skip 'nom regression'
 {
 
     ok #`<<<
         Or this <also> works...
     >>> 1, '#`<<<...>>>';
 
-    my $var = \#`((( comment ))) 12;
-    is $var, 12, '#`(((...)))';
+    #?rakudo skip 'nom regression'
+    eval_lives_ok( q{{
+        my $var = \#`((( comment ))) 12;
+        is $var, 12, '#`(((...)))';
+    }}, 'Unspaced bracketed comment throws no error' );
+
 
     is(5 * #`<< < >> 5, 25, '#`<< < >>');
 
@@ -178,11 +181,10 @@ plan 44;
 }
 
 # L<S02/Multiline Comments/POD sections may be>
-=begin oppsFIXME
-{
-# needs to be wrapped in eval so it can be properly isolated
-    my $a = eval q{
-        my $var = 1;
+eval_lives_ok( q{{
+
+my $outerVal = eval(
+    q{my $var = 1;
 
 =begin comment
 
@@ -191,35 +193,40 @@ a "=cut".
 
 =end comment
 
-        "bar";
-    };
-    is $a, 'bar', '=begin comment without =cut works';
-}
+        "bar";}
+);
+is $outerVal, "bar", '=begin comment without =cut parses to whitespace in code';
 
-# L<S02/Multiline Comments/"single paragraph comments"
-#   =for comment>
+}}, '=begin comment without =cut eval throws no error' );
 
-{
-    is eval(q{
-        my $var = 1;
+
+# L<S02/Multiline Comments/"single paragraph comments">
+eval_lives_ok( q{{
+
+my $outerVal = eval(
+    q{10 +
 
 =comment TimToady is here!
 
-        32;
-    }), 32, '=for comment works';
-}
+    1;}
+);
+is $outerVal, 11, 'Single paragraph Pod parses to whitespace in code';
 
-{
-    is eval(q{
-        my $var = 1;
+}}, 'Single paragraph Pod eval throws no error' );
+
+
+eval_lives_ok( q{{
+
+my $outerVal = eval(
+    q{20 +
 
 =comment TimToady and audreyt
 are both here, yay!
 
-        17;
-    }), 17, '=for comment works';
-}
+    2;}
+);
+is $outerVal, 22, 'Single paragraph Pod, multiple lines parses to whitespace in code';
 
-=end oppsFIXME
+}}, 'Single paragraph Pod, multiple lines eval throws no error' );
 
 # vim: ft=perl6
