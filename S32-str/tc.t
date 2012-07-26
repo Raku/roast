@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 9;
 
 # L<S32::Str/Str/ucfirst>
 
@@ -17,6 +17,7 @@ is tc('ǉ'),           'ǈ',           'lj => Lj (in one character)';
 is 'abc'.tc,          'Abc',         'method form of title case';
 #?rakudo todo 'leaving the rest alone'
 is 'aBcD'.tc,         'ABcD',        'tc only modifies first character';
+is "\x1044E\x10427".tc, "\x10426\x10427", 'tc works on codepoints greater than 0xffff';
 
 
 # vim: ft=perl6
