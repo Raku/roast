@@ -11,17 +11,17 @@ plan 23;
 # L<S10/Packages/A bare>
 {
     package Test1 {
-        sub ns  { "Test1" }
-        sub pkg { $?PACKAGE }
-        sub test1_export is export { "export yourself!" }
+        our sub ns  { "Test1" }
+        our sub pkg { $?PACKAGE }
+        our sub test1_export is export { "export yourself!" }
     }
     package Test2 {
-        sub ns { "Test2" }
-        sub pkg { $?PACKAGE }
+        our sub ns { "Test2" }
+        our sub pkg { $?PACKAGE }
         our $scalar = 42;
     }
     package Test3 {
-        sub pkg { $?PACKAGE }
+        our sub pkg { $?PACKAGE }
     }
 }
 
@@ -36,7 +36,7 @@ is($?PACKAGE, "Main", 'The Main $?PACKAGE was not broken by any declarations');
 # block level
 is(Test1::ns, "Test1", "block-level package declarations");
 cmp_ok(Test1::pkg, &infix:<===>, ::Test1::, 'block-level $?PACKAGE var');
-dies_ok { test1_export() }, "export was not imported implicitly";
+dies_ok { eval 'test1_export' }, "export was not imported implicitly";
 
 # declared packages
 is(Test2::ns, "Test2", "declared package");
