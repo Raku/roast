@@ -31,6 +31,7 @@ use t::spec::packages::PackageTest;
 
 # sanity test
 # L<S10/Packages/package for Perl>
+#?pugs todo "currently appends ()"
 is($?PACKAGE, "Main", 'The Main $?PACKAGE was not broken by any declarations');
 
 # block level
