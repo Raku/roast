@@ -44,11 +44,11 @@ plan 28;
 
 my $f = "lowercase"; $f .= uc;
 my $g = "UPPERCASE"; $g .= lc;
-my $h = "lowercase"; $h .= ucfirst;
-my $i = "UPPERCASE"; $i .= lcfirst;
+my $h = "lowercase"; $h .= tc;
+my $i = "UPPERCASE"; $i .= tc;
 is($f, "LOWERCASE", "inplace uc");
 is($g, "uppercase", "inplace lc");
-is($h, "Lowercase", "inplace ucfist");
+is($h, "Lowercase", "inplace tc");
 is($i, "uPPERCASE", "inplace lcfirst");
 
 # L<S12/"Mutating methods">

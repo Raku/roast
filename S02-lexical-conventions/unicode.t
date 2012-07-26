@@ -83,7 +83,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 #?mildew skip 'placeholders are NIY'
 {
     is
-        ~(< foostraße barstraße fakestraße >.map: { ucfirst $^straßenname }),
+        ~(< foostraße barstraße fakestraße >.map: { tc $^straßenname }),
         "Foostraße Barstraße Fakestraße",
         "Unicode placeholder variables";
 }
@@ -94,7 +94,7 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
     class A {
         has $!möp = 'pugs';
         method äöü {
-            $!möp.ucfirst();
+            $!möp.tc();
         }
     }
     is A.new().äöü(), "Pugs", "Unicode methods and attributes";

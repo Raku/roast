@@ -62,7 +62,7 @@ is(rindex(uc($s), "O"), 7, "rindex on uc");
 is($s.uc.rindex("O"), 7, ".uc.rindex ");
 
 # ideas for deeper chained . calls ?
-is($s.lc.ucfirst.rindex("w"), 6, ".lc.ucfirst.rindex");
+is($s.lc.tc.rindex("w"), 6, ".lc.tc.rindex");
 
 # rindex on non-strings
 ok 3459.rindex(5) == 2, 'rindex on integers';

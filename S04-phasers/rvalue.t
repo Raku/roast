@@ -14,10 +14,10 @@ plan 16;
     is $x, 8, 'BEGIN block as expression';
 
     # test that built-ins are available within a BEGIN block:
-    my $y = BEGIN { ucfirst 'moin' };
+    my $y = BEGIN { tc 'moin' };
     is $y, 'Moin', 'can access built-in functions in BEGIN blocks';
 
-    my $z = BEGIN { 'moin'.ucfirst };
+    my $z = BEGIN { 'moin'.tc };
     is $z, 'Moin', 'can access built-in methods in BEGIN blocks';
 }
 
@@ -27,10 +27,10 @@ plan 16;
     is $x, 8, 'BEGIN statement prefix as expression';
 
     # test that built-ins are available within a BEGIN block:
-    my $y = BEGIN ucfirst 'moin';
+    my $y = BEGIN tc 'moin';
     is $y, 'Moin', 'can access built-in functions in BEGIN statement prefix';
 
-    my $z = BEGIN 'moin'.ucfirst;
+    my $z = BEGIN 'moin'.tc;
     is $z, 'Moin', 'can access built-in methods in BEGIN statement prefix';
 }
 
