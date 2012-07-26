@@ -144,17 +144,6 @@ plan 50;
     }} 'cat', 'embedded comments with nested/unmatched bracket chars';
 }
 
-# L<S02/"Literals"/"# at beginning of line is always a line-end comment">
-{
-    #?rakudo skip 'fails'
-    #?niecza todo
-    eval_dies_ok "#<this is a comment\n'abc'",
-        '#+bracket at start of line is an error';
-
-    eval_dies_ok "2 * 3\n#<\n comment>",
-        '#+bracket at start of line is an error';
-}
-
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
 {
