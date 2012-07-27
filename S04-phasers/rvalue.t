@@ -14,11 +14,11 @@ plan 16;
     is $x, 8, 'BEGIN block as expression';
 
     # test that built-ins are available within a BEGIN block:
-    my $y = BEGIN { tc 'moin' };
-    is $y, 'Moin', 'can access built-in functions in BEGIN blocks';
+    my $y = BEGIN { uc 'moin' };
+    is $y, 'MOIN', 'can access built-in functions in BEGIN blocks';
 
-    my $z = BEGIN { 'moin'.tc };
-    is $z, 'Moin', 'can access built-in methods in BEGIN blocks';
+    my $z = BEGIN { 'moin'.uc };
+    is $z, 'MOIN', 'can access built-in methods in BEGIN blocks';
 }
 
 #?pugs skip 'No such subroutine: "&BEGIN"'
@@ -27,11 +27,11 @@ plan 16;
     is $x, 8, 'BEGIN statement prefix as expression';
 
     # test that built-ins are available within a BEGIN block:
-    my $y = BEGIN tc 'moin';
-    is $y, 'Moin', 'can access built-in functions in BEGIN statement prefix';
+    my $y = BEGIN uc 'moin';
+    is $y, 'MOIN', 'can access built-in functions in BEGIN statement prefix';
 
-    my $z = BEGIN 'moin'.tc;
-    is $z, 'Moin', 'can access built-in methods in BEGIN statement prefix';
+    my $z = BEGIN 'moin'.uc;
+    is $z, 'MOIN', 'can access built-in methods in BEGIN statement prefix';
 }
 
 #?rakudo skip 'lexicals in phasers'
