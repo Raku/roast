@@ -131,7 +131,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, 'yx', 'failing POST runs LEAVE but not more POSTs';
 }
 
-#?rakudo 3 todo 'POST and exceptions'
 #?niecza skip 'unspecced'
 {
     my $str;
@@ -144,6 +143,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 }
 
 #?niecza skip 'unspecced'
+#?rakudo 2 todo 'POST and exceptions'
 {
     my $str;
     try {
