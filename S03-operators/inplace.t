@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/Assignment operators/A op= B>
 
-plan 28;
+plan 27;
 
 {
     my @a = (1, 2, 3);
@@ -44,13 +44,12 @@ plan 28;
 
 my $f = "lowercase"; $f .= uc;
 my $g = "UPPERCASE"; $g .= lc;
+#?rakudo emit #
 my $h = "lowercase"; $h .= tc;
-my $i = "UPPERCASE"; $i .= tc;
 is($f, "LOWERCASE", "inplace uc");
 is($g, "uppercase", "inplace lc");
+#?rakudo skip 'tc'
 is($h, "Lowercase", "inplace tc");
-#?pugs todo
-is($i, "uPPERCASE", "inplace lcfirst");
 
 # L<S12/"Mutating methods">
 my @b = <z a b d e>;
