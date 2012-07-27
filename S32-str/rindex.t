@@ -62,6 +62,7 @@ is(rindex(uc($s), "O"), 7, "rindex on uc");
 is($s.uc.rindex("O"), 7, ".uc.rindex ");
 
 # ideas for deeper chained . calls ?
+#?rakudo skip 'tc'
 is($s.lc.tc.rindex("w"), 6, ".lc.tc.rindex");
 
 # rindex on non-strings

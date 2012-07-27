@@ -4,8 +4,6 @@ use v6;
 
 use Test;
 
-plan 50;
-
 # L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
 {
@@ -76,14 +74,17 @@ plan 50;
     ok #`<<<
         Or this <also> works...
     >>> 1, '#`<<<...>>>';
+}
 
-    #?rakudo skip 'nom regression'
+#?rakudo skip 'nom regression'
+{
     eval_lives_ok( q{{
         my $var = \#`((( comment ))) 12;
         is $var, 12, '#`(((...)))';
     }}, 'Unspaced bracketed comment throws no error' );
+}
 
-
+{
     is(5 * #`<< < >> 5, 25, '#`<< < >>');
 
     is(6 * #`<< > >> 6, 36, '#`<< > >>');
@@ -217,5 +218,7 @@ are both here, yay!
 is $outerVal, 22, 'Single paragraph Pod, multiple lines parses to whitespace in code';
 
 }}, 'Single paragraph Pod, multiple lines eval throws no error' );
+
+done;
 
 # vim: ft=perl6
