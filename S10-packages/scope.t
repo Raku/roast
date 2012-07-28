@@ -37,6 +37,7 @@ is($?PACKAGE, "Main", 'The Main $?PACKAGE was not broken by any declarations');
 # block level
 is(Test1::ns, "Test1", "block-level package declarations");
 cmp_ok(Test1::pkg, &infix:<===>, ::Test1::, 'block-level $?PACKAGE var');
+#?pugs todo
 dies_ok { eval 'test1_export' }, "export was not imported implicitly";
 
 # declared packages
