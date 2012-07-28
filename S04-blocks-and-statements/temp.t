@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 36;
 
 # L<S04/The Relationship of Blocks and Declarations/function has been renamed>
 {
@@ -183,7 +183,6 @@ eval('
   is $a, 1, 'multiple temps in the same scope are restored properly';
 }
 
-#?rakudo 4 skip 'recursive temp NYI'
 {
   my $value = 0;
 
@@ -199,13 +198,16 @@ eval('
       }
   }
 
-  is($value, 0);
+  is($value, 0, 'sanity');
   non-recursive();
-  is($value, 0);
+  is($value, 0, 'non-recursive function properly resets value');
 
-  is($value, 0);
+  # recover if the previous test failed
+  $value = 0;
+
   recursive(10);
-  is($value, 0);
+  #?rakudo todo 'temp + recursion'
+  is($value, 0, 'recursive function properly resets value');
 }
 
 # vim: ft=perl6
