@@ -113,7 +113,6 @@ plan 12;
     is id('x'), 'x', 'macro can return its param';
 }
 
-#?rakudo skip 'Null PMC access'
 #?pugs skip 'Nil'
 {
     macro funny_nil { quasi { {;}() } }

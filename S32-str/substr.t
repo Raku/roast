@@ -67,7 +67,6 @@ plan 90;
 #?pugs skip 'chrs'
 { # codepoints greater than 0xFFFF
     my $str = (0x10426, 0x10427).list.chrs;
-    #?rakudo skip 'Str.codes'
     is $str.codes, 2, "Sanity check string";
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";

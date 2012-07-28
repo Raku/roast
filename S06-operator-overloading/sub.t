@@ -389,7 +389,6 @@ Testing operator overloading subroutines
     #?rakudo todo 'RT 65638'
     #?niecza todo
     is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
-    #?rakudo skip 'mixed overloaded operators of different arities'
     is eval('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
     is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
