@@ -127,7 +127,6 @@ throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
 throws_like 'my &a()', X::Syntax::Reserved, instead  => /':()'/;
 
 throws_like 'm:i(@*ARGS[0])/foo/', X::Value::Dynamic;
-throws_like 'my enum Foo (:x(@*ARGS[0]))', X::Value::Dynamic;
 
 throws_like 'self', X::Syntax::Self::WithoutObject;
 throws_like 'class { has $.x = $.y }', X::Syntax::VirtualCall, call => '$.y';
