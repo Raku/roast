@@ -106,7 +106,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
-    #?rakudo todo '--> type form of return value checking NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
@@ -132,7 +131,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');
     #?niecza todo 'retrun value type checking NYI'
-    #?rakudo todo 'NYI'
     dies_ok({ returntype4(Bool::False) }, 'bad implicit return value dies (-->)');
 }
 
