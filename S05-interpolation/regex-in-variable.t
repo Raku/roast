@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 30;
+plan 33;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -109,6 +109,21 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
             },
             'interpolating undefined into a regex warns'
           );
+}
+
+#?rakudo 3 skip 'instance member interpolation'
+{
+    my class InterpolationTest {
+        has $!pattern = 'a+b';
+
+        method run {
+            ok('aaab' ~~ / $!pattern /, 'Interpolation of instance member');
+            ok('aaab' ~~ / <$!pattern> /, 'Interpolation of instance member');
+            ok('aaab' ~~ / "$!pattern" /, 'Interpolation of instance member');
+        }
+    }
+
+    InterpolationTest.new.run;
 }
 
 # vim: ft=perl6
