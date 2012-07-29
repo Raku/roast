@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 29;
+plan 30;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -44,6 +44,8 @@ ok("aaaaab" ~~ m/<{$foo}>/, 'Rulish scalar match 4');
 #?pugs todo
 ok("aaaaab" ~~ m/<$foo>/,   'Rulish scalar match 5');
 ok(!("aaaaab" ~~ m/$foo/),  'Rulish scalar match 6');
+#?rakudo todo 'double quote interpolation'
+ok('aaaaab' ~~ m/"$foo"/, 'Rulish scalar match 7');
 
 # RT #61960
 #?pugs todo
