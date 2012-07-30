@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  19;
+plan  20;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -159,3 +159,10 @@ is_run 'multi MAIN($) { print q[Any] }; multi MAIN(Str) { print q[Str] }',
         out => 'Str',
     },
     'best multi matches (not just first one)';
+
+is_run 'sub MAIN() { print 42 }', :args['--foo'],
+    {
+        out => '',
+        err => rx:i/usage/,
+    },
+    'superfluous options trigger usage message';
