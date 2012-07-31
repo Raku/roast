@@ -4,7 +4,7 @@ use Test;
 plan 59;
 
 sub showkh($h) {
-    $h.keys.sort.map({ $^k ~ ':' ~ $h{$^k} }).join(' ')
+    $h.keys.sort.map({ $^k ~ ':' ~ $h{$k} }).join(' ')
 }
 
 # L<S02/Mutable types/"The KeyHash role differs from a normal Associative hash">

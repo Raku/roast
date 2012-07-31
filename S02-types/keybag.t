@@ -8,7 +8,7 @@ plan 141;
 # A KeyBag is a KeyHash of UInt, i.e. the values are positive Int
 
 sub showkv($x) {
-    $x.keys.sort.map({ $^k ~ ':' ~ $x{$^k} }).join(' ')
+    $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
 }
 
 # L<S02/Immutable types/'the bag listop'>
@@ -327,7 +327,7 @@ sub showkv($x) {
 {
     my %h is KeyBag;
     lives_ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a KeyBag';
-    is %h.keys.sort.map({ $^k ~ ':' ~ %h{$^k} }).join(' '),
+    is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
         'a:1 b:2 c:2 d:1', '... works as expected';
 }
 

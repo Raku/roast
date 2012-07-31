@@ -4,7 +4,7 @@ use Test;
 plan 84;
 
 sub showkv($x) {
-    $x.keys.sort.map({ $^k ~ ':' ~ $x{$^k} }).join(' ')
+    $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
 }
 
 # "We're more of the love, blood, and rhetoric school. Well, we can do you blood
