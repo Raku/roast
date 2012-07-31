@@ -52,6 +52,9 @@ throws_like 'sub a { }; multi sub a { }',X::Redeclaration, symbol => 'a', what =
 throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
 throws_like 'my class B { }; my subset B of Any;', X::Redeclaration, symbol => 'B';
 throws_like 'CATCH { }; CATCH { }', X::Phaser::Multiple, block => 'CATCH';
+# multiple return types
+throws_like 'sub f(--> List) returns Str { }', X::Redeclaration;
+throws_like 'my Int sub f(--> Str) { }', X::Redeclaration;
 
 throws_like 'my class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
