@@ -101,7 +101,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype3(Bool::True), True, 'good return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
-    #?rakudo todo 'prefix type form of return value checking NYI'
     dies_ok({ returntype3(Bool::False) }, 'bad return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good return value works (-->)');
@@ -126,7 +125,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
     is(returntype3(Bool::True), True, 'good implicit return value works (my Type sub)');
     #?niecza todo 'retrun value type checking NYI'
-    #?rakudo todo 'NYI'
     dies_ok({ returntype3(Bool::False) }, 'bad implicit return value dies (my Type sub)');
 
     is(returntype4(Bool::True), 'ok', 'good implicit return value works (-->)');

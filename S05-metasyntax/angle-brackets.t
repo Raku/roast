@@ -153,9 +153,9 @@ character classes), and those are referenced at the correct spot.
 
 # A leading @ matches like a bare array except that each element is
 # treated as a subrule (string or Regex object) rather than as a literal
+#?rakudo skip 'TODO: array interpolation into regexes'
 {
     my @first = <a b c .**4>;
-    #?rakudo todo 'nom regression'
     ok('dddd' ~~ /<@first>/, 'strings are treated as a subrule in <@foo>');
 
     my @second = rx/\.**2/, rx/'.**2'/;
