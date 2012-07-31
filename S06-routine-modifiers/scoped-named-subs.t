@@ -46,10 +46,10 @@ eval_dies_ok
     'Return of list with wrong type dies';
 
 eval_lives_ok
-    'my List sub f () { return () }; f()',
-    'return of empty list should live';
-is eval('my List sub f () { return () }; (f(), "a")'), ['a'],
-    'return of empty list should be empty list';
+    'my Parcel sub f () { return () }; f()',
+    'return of empty Parcel should live';
+is eval('my Parcel sub f () { return () }; (f(), "a")'), ['a'],
+    'return of empty Parcel should be empty Parcel';
 
 eval_dies_ok
     'my Num List sub f () { ("A") }; f()',
