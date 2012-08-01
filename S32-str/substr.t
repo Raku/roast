@@ -65,6 +65,7 @@ plan 90;
 }
 
 #?pugs skip 'chrs'
+#?niecza todo "substr bug"
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
     is $str.codes, 2, "Sanity check string";
