@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 ## If this test file is fudged, then MAIN never executes because 
 ## the fudge script introduces an C<exit(1)> into the mainline.
@@ -21,5 +21,9 @@ sub MAIN($a, $b, *@c) {
 @*ARGS = <a b c d e>;
 
 ok( @*ARGS == 5, '@*ARGS has correct elements');
+
+# RT #114354
+@*INC.push: 't/spec/packages/';
+lives_ok { require HasMain }, 'MAIN in a module did not get executed';
 
 # vim: ft=perl6
