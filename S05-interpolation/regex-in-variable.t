@@ -46,6 +46,7 @@ ok("aaaaab" ~~ m/<$foo>/,   'Rulish scalar match 5');
 ok(!("aaaaab" ~~ m/$foo/),  'Rulish scalar match 6');
 #?rakudo todo 'double quote interpolation'
 #?niecza todo
+#?pugs todo
 ok('aaaaab' ~~ m/"$foo"/, 'Rulish scalar match 7');
 
 # RT #61960
@@ -114,6 +115,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 
 #?rakudo 3 skip 'instance member interpolation'
 #?niecza skip "Representation P6cursor does not support attributes"
+#?pugs todo
 {
     my class InterpolationTest {
         has $!pattern = 'a+b';
