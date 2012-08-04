@@ -1,6 +1,7 @@
 use v6;
 
 use Test;
+use soft;
 
 # L<S06/Wrapping>
 
