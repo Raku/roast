@@ -134,6 +134,8 @@ throws_like 'm:i(@*ARGS[0])/foo/', X::Value::Dynamic;
 throws_like 'self', X::Syntax::Self::WithoutObject;
 throws_like 'class { has $.x = $.y }', X::Syntax::VirtualCall, call => '$.y';
 throws_like '$.a', X::Syntax::NoSelf, variable => '$.a';
+# RT #59118
+throws_like 'my class B0Rk { $.a }',  X::Syntax::NoSelf, variable => '$.a';
 
 throws_like 'has $.x', X::Attribute::NoPackage;
 throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'module';
