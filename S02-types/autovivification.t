@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
@@ -75,6 +75,14 @@ sub bar ($baz is readonly) { } #OK not used
     is %h<a>.join, '42', 'can autovivify in sub form of push';
     unshift %h<b>, 5, 3;
     is %h<b>.join, '53', 'can autovivify in sub form of unshift';
+}
+
+# RT #77048
+{
+    my Array $a;
+    $a[0] = '4';
+    $a[1] = '2';
+    is $a.join, '42', 'Can autovivify Array-typed scalar';
 }
 
 # vim: ft=perl6
