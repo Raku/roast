@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 32;
 
 # L<S14/Run-time Mixins/>
 
@@ -137,5 +137,20 @@ is (class { } but role { method answer() { 42 } }).answer, 42,
 
 # RT #101022
 lives_ok {(True but role {}).gist}, 'can mix into True';
+
+# RT #73990
+{
+    my $tracker = '';
+    for 1..3 {
+        $tracker ~= 'before';
+        1 but last;
+        $tracker ~= 'after';
+    }
+    is $tracker, 'before', '"1 but last" does the same as "last"';
+
+    sub f() { role { method answer { 42 } } };
+    is (1 but f).answer, 42, '<literal> but <zero-arg call> works';
+
+}
 
 # vim: syn=perl6
