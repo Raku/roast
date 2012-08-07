@@ -11,7 +11,7 @@ L<"http://groups.google.com/groups?selm=420DB295.3000902%40conway.org">
 
 =end description
 
-plan 13;
+plan 14;
 
 # L<S32::Containers/List/=item reduce>
 
@@ -60,6 +60,13 @@ eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
 {
     is( ((1..10).list.reduce: &infix:<+>), 55, '.reduce: &infix:<+> works' );
     is( ((1..4).list.reduce: &infix:<*>), 24, '.reduce: &infix:<*> works' );
+}
+
+# RT #66352
+{
+    multi a (Str $a, Str $b) { [+$a, +$b] };
+    multi a (Array $a,$b where "+") { [+] @($a) };
+    is ("1", "2", "+").reduce(&a), 3, 'reduce and multi subs';
 }
 
 done;
