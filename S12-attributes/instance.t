@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 137;
+plan 138;
 
 =begin pod
 
@@ -660,6 +660,17 @@ eval_dies_ok 'my class AccessorClash { has @.a; has &.a }',
 eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
     my $method = method { return $!a }; $a.$method()],
     'cannot sneak in access to private attribute through the backdoor';
+
+# RT #74636
+{
+    my class HasArray {
+        has @.a;
+    }
+    my %h = a => <a b c>;
+    my $c = 0;
+    ++$c for HasArray.new(a => %h<a>).a;
+    is $c, 3, 'Correct flattening behavior for array attributes';
+}
 
 done();
 
