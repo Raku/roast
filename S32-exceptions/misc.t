@@ -170,6 +170,8 @@ throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 
 # TOOD: might be X::Syntax::Malformed too...
 throws_like 'sub foo;', X::Syntax::Missing, what => 'block';
+# RT #75776
+throws_like 'my $d; my class A {method x { $d }}; for () { sub }', X::Syntax::Missing, what => 'block';
 throws_like 'constant foo;', X::Syntax::Missing, what => /initializer/;
 throws_like 'constant * = 3;', X::Syntax::Missing, what => /constant/;
 
