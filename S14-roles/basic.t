@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 =begin description
 
@@ -138,6 +138,10 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
     is ::OUR::C67768.new.foo, 67768,
         'can call method from a role with a name already assigned to a class';
 }
+
+# RT #114380
+eval_lives_ok q[my role R { our $.r }; my class C does R {}],
+    'Can have "our $.r" in a role (RT 114380)';
 
 done;
 
