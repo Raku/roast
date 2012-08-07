@@ -222,7 +222,6 @@ throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
 throws_like 'sub f() { }; f() = 3', X::Assignment::RO;
 throws_like '1.0 = 3', X::Assignment::RO;
 # RT #113534
-#?rakudo 3 skip '113534'
 throws_like '120 = 3', X::Assignment::RO;
 throws_like '1e0 = 3', X::Assignment::RO;
 throws_like '"a" = 3', X::Assignment::RO;
