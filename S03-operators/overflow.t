@@ -194,7 +194,6 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
 
 # check with 0xFFFF and 0xFFFF
 {
-	#?rakudo 25 skip 'fails on 32bit'
     is 65535 * 65535, 4294836225;
     is 65535 * -65535, -4294836225;
     is -65535 * 65535, -4294836225;
@@ -233,14 +232,11 @@ sub tryeq_sloppy ($lhs, $rhs, $todo1 = '') {
     is 65536 * 32768, 0x80000000;
     is 65536 * -32768, -0x80000000;
     is -65536 * 32768, -0x80000000;
-    #?rakudo skip 'fails on 32bit'
     is -65536 * -32768, 0x80000000;
     
-    #?rakudo skip 'fails on 32bit'
     is 32768 * 65536, 0x80000000;
     is 32768 * -65536, -0x80000000;
     is -32768 * 65536, -0x80000000;
-    #?rakudo skip 'fails on 32bit'
     is -32768 * -65536, 0x80000000;
 }
 
