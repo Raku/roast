@@ -4,7 +4,7 @@ use Test;
 
 # L<S06/Anonymous hashes vs blocks>
 
-plan 15;
+plan 17;
 
 my $hash = {
    '1' => { '2' => 3, '4' => 5 },
@@ -47,6 +47,13 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok { a => $^x }   ~~ Block, '... as a value';
     ok { b => 3, a => $^x, 4 => 5 }   ~~ Block, '... somewhere deep inside';
     ok {;} ~~ Block, '{;} is a Block';
+}
+
+{
+    my @foo = <a b>;
+    my %hash = map { (state $counter)++ => $_ }, @foo;
+    is %hash<0>, 'a', 'state variable declaration certainly makes it a block (1)';
+    is %hash<1>, 'b', 'state variable declaration certainly makes it a block (2)';
 }
 
 done;
