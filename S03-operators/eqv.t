@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 53;
+plan 54;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -164,6 +164,7 @@ plan 53;
 # Nieczabug #142
 {
     nok 4 eqv 4.0, "Values should be eqv only if they are the same type";
+    nok 4 eqv '4', 'Str vs. Int';
 }
 
 # vim: ft=perl6
