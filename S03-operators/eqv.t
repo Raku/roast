@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 52;
+plan 53;
 
 # L<S03/Comparison semantics/Binary eqv tests equality much like === does>
 # L<S32::Basics/Any/"=item eqv">
@@ -159,6 +159,11 @@ plan 52;
     nok ((), (), (), 1) eqv ((), (), ""), 'list starting with () - 1';
     nok ((), (), (), 1) eqv ((), 4), 'list starting with () - 1';
     ok ((), ()) eqv ((), ()), '((), ())';
+}
+
+# Nieczabug #142
+{
+    nok 4 eqv 4.0, "Values should be eqv only if they are the same type";
 }
 
 # vim: ft=perl6
