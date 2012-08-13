@@ -65,10 +65,10 @@ plan 90;
 }
 
 #?pugs skip 'chrs'
-#?niecza todo "substr bug"
 { # codepoints greater than 0xFFFF
     my $str = join '', 0x10426.chr, 0x10427.chr;
     is $str.codes, 2, "Sanity check string";
+    #?niecza 2 todo "substr bug"
     is substr($str, 0, 1), 0x10426.chr, "Taking first char of Deseret string";
     is substr($str, 1, 1), 0x10427.chr, "Taking second char of Deseret string";
 }
