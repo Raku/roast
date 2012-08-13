@@ -139,6 +139,7 @@ is (class { } but role { method answer() { 42 } }).answer, 42,
 lives_ok {(True but role {}).gist}, 'can mix into True';
 
 # RT #73990
+#?niecza skip "Can only provide exactly one initial value to a mixin"
 {
     my $tracker = '';
     for 1..3 {

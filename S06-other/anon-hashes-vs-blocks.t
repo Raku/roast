@@ -49,6 +49,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
     ok {;} ~~ Block, '{;} is a Block';
 }
 
+#?niecza skip "Thinks the block is a hash"
 {
     my @foo = <a b>;
     my %hash = map { (state $counter)++ => $_ }, @foo;
