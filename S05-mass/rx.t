@@ -525,12 +525,10 @@ ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 ok "ab\x5ccd" ~~ /"ab\\cd"/, 'literal match with backslash';
 
 #### (ab)x"$0"		abxab		y	literal match with interpolation
-#?rakudo todo 'unknown'
 #?pugs todo 
 ok 'abxab' ~~ /(ab)x"$0"/, 'literal match with interpolation';
 
 #### (ab)"x$0"		abxab		y	literal match with interpolation
-#?rakudo todo 'unknown'
 #?pugs todo 
 ok 'abxab' ~~ /(ab)"x$0"/, 'literal match with interpolation';
 
