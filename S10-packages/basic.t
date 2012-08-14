@@ -199,7 +199,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     # RT #65738
     use Foo;
     use OverrideTest;
-    is test_ucfirst('moin'), 'Moin',
+    is test_tc('moin'), 'Moin',
         'overrides from one module do not affect a module that is loaded later on';
 }
 

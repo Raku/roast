@@ -1,5 +1,5 @@
 module OverrideTest {
-    sub test_ucfirst($y) is export(:DEFAULT) {
-        ucfirst($y);
+    sub test_tc($y) is export(:DEFAULT) {
+        tc($y);
     }
 }
