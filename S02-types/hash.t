@@ -300,7 +300,7 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 #?pugs skip 'No compatible multi variant found: "&is"'
 #?niecza skip "Unsupported use of [-1] subscript to access from end of array"
 {
-    is {}[-1], Failure, 'array-indexing a hash with a negative index is Failure';
+    is {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
 }
 
 done;
