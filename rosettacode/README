@@ -1,0 +1,8 @@
+Contains tests from rosettacode.org
+
+The intent is to make it easy to initially pull down sample code from
+Rosetta (which typically emits output to $*OUT), and have to manually
+update only the expected output.
+
+Future updates from rosettacode should be able to be pulled down
+automatically.
