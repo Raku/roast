@@ -9,7 +9,8 @@ throws_like 'pack("B",  1)',       X::Buf::Pack, directive => 'B';
 throws_like 'Buf.new.unpack("B")', X::Buf::Pack, directive => 'B';
 throws_like 'pack "A1", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
 throws_like 'my class Foo { method a() { $!bar } }', X::Attribute::Undeclared,
-            name => '$!bar', package-name => 'Foo';
+            symbol => '$!bar', package-name => 'Foo', package-kind => 'class',
+            what => 'attribute';
 throws_like 'sub f() { $^x }', X::Signature::Placeholder,
             line => 1;
 
@@ -27,8 +28,8 @@ throws_like '@_',            X::Placeholder::Mainline, placeholder => '@_';
 throws_like '"foo".{ say $^a }', X::Placeholder::Mainline;
 
 
-throws_like 'sub f(*@a = 2) { }', X::Parameter::Default, how => 'slurpy';
-throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required';
+throws_like 'sub f(*@ = 2) { }', X::Parameter::Default, how => 'slurpy', parameter => *.not;
+throws_like 'sub f($x! = 3) { }', X::Parameter::Default, how => 'required', parameter => '$x';
 throws_like 'sub f(:$x! = 3) { }', X::Parameter::Default, how => 'required';
 throws_like 'sub f($:x) { }',  X::Parameter::Placeholder,
         parameter => '$:x',
@@ -138,7 +139,7 @@ throws_like '$.a', X::Syntax::NoSelf, variable => '$.a';
 throws_like 'my class B0Rk { $.a }',  X::Syntax::NoSelf, variable => '$.a';
 
 throws_like 'has $.x', X::Attribute::NoPackage;
-throws_like 'my module A { has $.x }', X::Attribute::Package, package-type => 'module';
+throws_like 'my module A { has $.x }', X::Attribute::Package, package-kind => 'module';
 
 throws_like 'has sub a() { }', X::Declaration::Scope, scope => 'has', declaration => 'sub';
 throws_like 'has package a { }', X::Declaration::Scope, scope => 'has', declaration => 'package';
@@ -146,9 +147,9 @@ throws_like 'our multi a() { }', X::Declaration::Scope::Multi, scope => 'our';
 throws_like 'multi sub () { }', X::Anon::Multi, multiness => 'multi';
 throws_like 'proto sub () { }', X::Anon::Multi, multiness => 'proto';
 throws_like 'class { multi method () { }}', X::Anon::Multi, routine-type => 'method';
-throws_like 'use MONKEY_TYPING; augment class { }', X::Anon::Augment, package-type => 'class';
+throws_like 'use MONKEY_TYPING; augment class { }', X::Anon::Augment, package-kind => 'class';
 throws_like 'use MONKEY_TYPING; augment class NoSuchClass { }', X::Augment::NoSuchType,
-    package-type => 'class',
+    package-kind => 'class',
     package => 'NoSuchClass';
 throws_like 'use MONKEY_TYPING; augment class No::Such::Class { }', X::Augment::NoSuchType,
     package => 'No::Such::Class';
