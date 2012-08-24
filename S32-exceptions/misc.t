@@ -12,7 +12,9 @@ throws_like 'my class Foo { method a() { $!bar } }', X::Attribute::Undeclared,
             symbol => '$!bar', package-name => 'Foo', package-kind => 'class',
             what => 'attribute';
 throws_like 'sub f() { $^x }', X::Signature::Placeholder,
-            line => 1;
+            line => 1,
+            placeholder => '$^x',
+            ;
 
 #?rakudo skip 'parsing of $& and other p5 variables'
 throws_like '$&', X::Obsolete, old => '$@ variable', replacement => '$, rx/<<rx>>// or $()';
@@ -69,7 +71,7 @@ throws_like '1!foo()',
 
 throws_like 'sub f() { }; f() := 2', X::Bind;
 throws_like 'OUTER := 5', X::Bind, target => /OUTER/;
-throws_like 'my int $x := 2', X::Bind::NativeType;
+throws_like 'my int $x := 2', X::Bind::NativeType, name => '$x';
 throws_like 'my @a; @a[] := <foo bar baz>', X::Bind::ZenSlice, type => Array;
 throws_like 'my %a; %a{} := foo=>1, bar=>2, baz=>3', X::Bind::ZenSlice, type => Hash;
 throws_like 'my @a; @a[0, 1] := (2, 3)', X::Bind::Slice, type => Array;
