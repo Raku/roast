@@ -230,9 +230,9 @@ throws_like '1e0 = 3', X::Assignment::RO;
 throws_like '"a" = 3', X::Assignment::RO;
 
 throws_like '1.foo', X::Method::NotFound, method => 'foo', typename => 'Int';
-throws_like 'my class NC { }; NC.new does NC', X::Mixin::NonComposable,
+throws_like 'my class NC { }; NC.new does NC', X::Mixin::NotComposable,
             :target(*.defined), :rolish(*.^name eq 'NC');
-throws_like 'my class NC { }; NC.new but  NC', X::Mixin::NonComposable,
+throws_like 'my class NC { }; NC.new but  NC', X::Mixin::NotComposable,
             :target(*.defined), :rolish(*.^name eq 'NC');
 
 throws_like 'last', X::ControlFlow,
