@@ -66,10 +66,8 @@ plan 5;
 
 #?rakudo todo 'no type checking on unquote results'
 { # unquotes must evaluate to ASTs
-    macro bohm() {
-        my $q = "certainly not an AST";
-        quasi { {{{$q}}} }
-    }
-
-    eval_dies_ok('bohm', 'unquote must provide an AST');
+    eval_dies_ok(
+        'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
+        'unquote must provide an AST'
+    );
 }
