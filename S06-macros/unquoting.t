@@ -1,7 +1,10 @@
 use v6;
 
+use lib 't/spec/packages';
+use Test::Util;
+
 use Test;
-plan 5;
+plan 9;
 
 # editorial note:
 # macros in this file have been named after 20th-century physicists.
@@ -40,7 +43,6 @@ plan 5;
     is einstein(), 4, "can build ASTs incrementally";
 }
 
-#?rakudo todo 'something gets wrongly bound here'
 { # building an AST incrementally in a for loop
     macro podolsky() {
         my $q = quasi { 2 };
@@ -48,10 +50,10 @@ plan 5;
         $q;
     }
 
+    #?rakudo todo 'something gets wrongly bound here'
     is podolsky(), 4, "can build ASTs in a for loop";
 }
 
-#?rakudo todo 'unquotes get the wrong lexical context'
 { # using the mainline context from an unquote
     macro rosen($code) {
         my $paradox = "this shouldn't happen";
@@ -61,13 +63,15 @@ plan 5;
     }
 
     my $paradox = "EPR";
+    #?rakudo todo 'unquotes get the wrong lexical context'
     is rosen(sub { $paradox }), "EPR", "unquotes retain their lexical context";
 }
 
-#?rakudo todo 'no type checking on unquote results'
 { # unquotes must evaluate to ASTs
-    eval_dies_ok(
-        'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
-        'unquote must provide an AST'
-    );
+    #?does 5
+    throws_like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
+                X::TypeCheck::MacroUnquote,
+                got      => Str,
+                expected => AST,
+                line     => 1;
 }
