@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 26;
 
 ok (~^"foo".encode eqv Buf.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
@@ -32,6 +32,8 @@ nok $a gt $b,    'gt -';
 is  $a cmp $a, Order::Same, 'cmp (same)';
 is  $a cmp $b, Order::Increase, 'cmp (smaller)';
 is  $b cmp $a, Order::Decrease, 'cmp (larger)';
+
+ok $a ~ $b eq Buf.new(1, 2, 3, 1, 2, 3, 4), '~ and eq work on bufs';
 
 is_deeply Buf.new(1, 2, 3) ~ Buf.new(4, 5), Buf.new(1, 2, 3, 4, 5), '~ concatenates';
 nok Buf.new(), 'empty Buf is false';
