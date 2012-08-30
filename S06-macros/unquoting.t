@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test::Util;
 
 use Test;
-plan 9;
+plan 10;
 
 # editorial note:
 # macros in this file have been named after 20th-century physicists.
