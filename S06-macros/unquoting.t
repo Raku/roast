@@ -70,8 +70,9 @@ plan 9;
 { # unquotes must evaluate to ASTs
     #?does 5
     throws_like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
-                X::TypeCheck::MacroUnquote,
+                X::TypeCheck::Splice,
                 got      => Str,
                 expected => AST,
+                action   => 'unquote evaluation',
                 line     => 1;
 }
