@@ -21,7 +21,8 @@ sub show-dt($dt) {
 }
 
 # An independent calculation to cross check the Temporal algorithms.
-sub test-gmtime( Int $t is copy ) {
+multi sub test-gmtime( Num $t ) { test-gmtime( $t.Int ) }
+multi sub test-gmtime( Int $t is copy ) {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday);
     $sec  = $t % 60; $t div= 60; # $t is now epoch minutes
     $min  = $t % 60; $t div= 60; # $t is now epoch hours
@@ -50,7 +51,7 @@ sub test-gmtime( Int $t is copy ) {
 # L<S32::Temporal/C<time>>
 # --------------------------------------------------------------------
 
-isa_ok time, Int, 'time returns an Int';
+isa_ok time, Num, 'time returns a Num';
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/immutable>
@@ -270,7 +271,7 @@ is DateTime.new('2009-12-31T22:33:44',
     $dt = dt
         year => @t[5], month => @t[4], day => @t[3],
         hour => @t[2], minute => @t[1], second => @t[0];
-    is $dt.posix, $t, "at $dt, POSIX is {$dt.posix}";
+    is $dt.posix, $t.Int, "at $dt, POSIX is {$dt.posix}";
 }
 
 # --------------------------------------------------------------------
