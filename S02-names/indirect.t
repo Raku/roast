@@ -14,7 +14,6 @@ plan 4;
         'and it reports the right name';
 }
 
-#?rakudo skip 'indirect subname NYI'
 {
     my constant name = 'a';
     sub ::(name) ($x) { $x + 38 }
