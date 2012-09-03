@@ -60,7 +60,7 @@ ok &foo.does(Callable), 'a Sub does Callable';
     method meth {}
     ok &meth.does(Callable), 'a Method does Callable';
 }
-proto mul(|$) {*}
+proto mul(|) {*}
 multi mul {}
 ok &mul.does(Callable), 'a multi does Callable';
 proto pro {}

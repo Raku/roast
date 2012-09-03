@@ -54,7 +54,7 @@ plan 21;
 # L<S06/Argument list binding/single scalar parameter marked>
 {
     sub bar6 ($a, $b, $c) { "$a!$b!$c" }
-    sub foo6 (|$capture)  { bar6(|$capture) }
+    sub foo6 (|capture)  { bar6(|capture) }
 
     #?pugs todo "feature"
     is foo6(1,2,3), "1!2!3",
@@ -75,7 +75,7 @@ plan 21;
 # Arglists are first-class objects
 {
     my $capture;
-    sub foo7 (|$args) { $capture = $args }
+    sub foo7 (|args) { $capture = args }
 
     lives_ok { foo7(1,2,3,4) }, "captures are first-class objects (1)";
     #?pugs todo "feature"

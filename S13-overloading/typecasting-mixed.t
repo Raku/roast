@@ -8,7 +8,7 @@ plan 14;
 
 {
     class TypeCastMixed {
-        method &.( |$capture ) {return 'pretending to be a sub'}   #OK not used
+        method &.( |capture ) {return 'pretending to be a sub'}   #OK not used
         method postcircumfix:<[ ]> (**@slice) {return 'pretending to be an array'}   #OK not used
         method %.{ **@slice } {return 'pretending to be a hash'}   #OK not used
     }

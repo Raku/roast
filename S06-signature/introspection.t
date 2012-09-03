@@ -114,11 +114,11 @@ sub j(*@i) {
 #?niecza skip "Action method fakesignature not yet implemented"
 {
     my $x;
-    ok :(|$x).params[0].capture, 'prefix | makes .capture true';
-    ok :(|$x).perl  ~~ / '|' /,  'prefix | appears in .perl output';
+    ok :(|x).params[0].capture, 'prefix | makes .capture true';
+    ok :(|x).perl  ~~ / '|' /,  'prefix | appears in .perl output';
 
-    ok :(\$x).params[0].parcel, 'prefix \\ makes .parcel true';
-    ok :(\$x).perl ~~ / '\\' /, 'prefix \\ appears in .perl output';
+    ok :(\x).params[0].parcel, 'prefix \\ makes .parcel true';
+    ok :(\x).perl ~~ / '\\' /, 'prefix \\ appears in .perl output';
 }
 
 # RT #69492
@@ -130,8 +130,8 @@ sub j(*@i) {
 
 # Capture param introspection
 {
-    sub xyz(|$c) {};
-    is &xyz.signature.params[0].name,       '$c' , '.name of |$c is "$c"';
+    sub xyz(|c) {};
+    is &xyz.signature.params[0].name,       'c' , '.name of |c is "c"';
     #?niecza todo "Does this test make sense?"
     is &xyz.signature.params[0].positional, False, '.positional on Capture param is False';
     is &xyz.signature.params[0].capture,    True , '.capture on Capture param is True';
