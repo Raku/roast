@@ -144,7 +144,7 @@ plan 32;
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
 
-    my @s = sort { %a{$^a} cmp %a{$^b} }, %a.keys;
+    my @s = sort -> $a, $b { %a{$a} cmp %a{$b} }, %a.keys;
     is(@s, @e, '... sort keys by string value');
 }
 
@@ -153,7 +153,7 @@ plan 32;
     my %a = (4 => 'a', 1 => 'b', 2 => 'c', 5 => 'd', 3 => 'e');
     my @e = (4, 1, 2, 5, 3);
 
-    my @s = %a.keys.sort: { %a{$^a} cmp %a{$^b} };
+    my @s = %a.keys.sort: -> $a, $b { %a{$a} cmp %a{$b} };
     is(@s, @e, '... sort keys by string value (using invocant form)');
 }
 
@@ -162,7 +162,7 @@ plan 32;
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
 
-    my @s = sort { %a{$^a} <=> %a{$^b} }, %a.keys;
+    my @s = sort -> $a, $b { %a{$a} <=> %a{$b} }, %a.keys;
     is(@s, @e, '... sort keys by numeric value');
 }
 
@@ -171,7 +171,7 @@ plan 32;
     my %a = ('a' => 4, 'b' => 1, 'c' => 2, 'd' => 5, 'e' => 3);
     my @e = <b c e a d>;
 
-    my @s = %a.keys.sort: { %a{$^a} <=> %a{$^b} };
+    my @s = %a.keys.sort: -> $a, $b { %a{$a} <=> %a{$b} };
     is(@s, @e, '... sort keys by numeric value (using invocant form)');
 }
 
