@@ -55,7 +55,7 @@ plan 12;
 # RT 112664
 {
     multi trait_mod:<is>($m, :$a!) {
-	multi y(|) { my $x = $m }
+	multi y(|) { my $x = $m }   #OK not used
 	$m.wrap(&y)
     }
     sub rt112664 is a {}

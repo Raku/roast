@@ -3,7 +3,7 @@ use Test;
 plan 733;
 
 ### for now
-sub matchcheck(*@a) { 1 }
+sub matchcheck(*@) { 1 }
 
 # L<S05/Backtracking control/"To force the preceding atom to do no
 # backtracking">

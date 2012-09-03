@@ -147,7 +147,7 @@ dies_ok { eval("a_zero( 'hello', 'world' )") }, 'no matching sub signature';
 
 # RT #111646
 #?pugs 2 skip '.count'
-is (-> *@a { }).count, Inf, 'slurpy positional causes infinite count';
-is (-> *%a { }).count, 0,   'slurpy named causes no count change';
+is (-> *@a { }).count, Inf, 'slurpy positional causes infinite count';  #OK not used
+is (-> *%a { }).count, 0,   'slurpy named causes no count change';      #OK not used
 
 # vim: ft=perl6

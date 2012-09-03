@@ -907,7 +907,7 @@ sub l () { 1, 2 };
 {
     class A {};
     my $x = ['a'];
-    multi infix:<=> (A $a, Str $value) { $x.push: $value; }
+    multi infix:<=> (A $a, Str $value) { $x.push: $value; }  #OK not used
     (A.new() = 'b');
     is $x.join(','), 'a,b', 'New multi infix:<=> works';
     $x = 'c';
@@ -918,7 +918,7 @@ sub l () { 1, 2 };
 # RT #77142
 {
     my $cc = 0;
-    sub called($ignored) {
+    sub called($ignored) {  #OK not used
         $cc = 1;
     };
 

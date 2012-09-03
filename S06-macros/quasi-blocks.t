@@ -57,7 +57,7 @@ plan 12;
 # macro defined as an operator, and used as one
 
 {
-    macro infix:<comet>($rhs, $lhs) {
+    macro infix:<comet>($rhs, $lhs) {   #OK not used
         quasi { "comet!" }
     }
 

@@ -192,7 +192,7 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 #?niecza skip 'Methods must be used in some kind of package'
 {
     subset FooStr of Str where /^foo/;
-    multi method uc(FooStr $self:) { return "OH HAI" };
+    my multi method uc(FooStr $self:) { return "OH HAI" }; #OK not used
     is "foo".uc, 'FOO', 'multi method with subset invocants do not magically find their way into the method dispatch';
 
 }
@@ -204,7 +204,7 @@ my $a = 1;
     my $a = 3;
     sub producer {
         my $a = 2;
-        sub bar($x where $a ) { $x }
+        sub bar($x where $a ) { $x }  #OK not used
     }
     my &bar := producer();
     lives_ok { bar(2) }, 'where-constraint picks up the right lexical (+)';

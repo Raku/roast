@@ -94,7 +94,7 @@ Testing operator overloading subroutines
 }
 
 {
-    sub infix:«_<_ »($one, $two) { return 42 }
+    sub infix:«_<_ »($one, $two) { return 42 }   #OK not used
     is 3 _<_ 5, 42, "frenchquoted infix sub";
 }
 
@@ -218,12 +218,13 @@ Testing operator overloading subroutines
     class MyClass {
       method prefix:<~> is export { "hi" }
       method prefix:<+> is export { 42   }
-      method infix:<as>($self, OtherClass $to) is export {
+      method infix:<as>($self: OtherClass $to) is export {   #OK not used
         my $obj = $to.new;
         $obj.x = 23;
         return $obj;
       }
     }
+    import MyClass;  # should import that sub forms of the exports
 
   my $obj;
   lives_ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";

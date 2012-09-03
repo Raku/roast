@@ -56,7 +56,7 @@ dies_ok { eval("waz('vtak')") }, '...but lexical multi no longer callable';
 
 # RT #78208
 {
-    dies_ok { multi foo() { }; multi foo($x) { }; +&foo }, 'RT #78208'
+    dies_ok { multi foo() { }; multi foo($x) { }; +&foo }, 'RT #78208';   #OK not used
 }
 
 # vim: ft=perl6 :

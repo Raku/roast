@@ -65,7 +65,7 @@ plan 13;
 
 {
     class AnEx is Exception { };
-    my $f = (sub f { fail AnEx.new }).();
+    my $f = (sub f { fail AnEx.new }).();  #OK not used
     isa_ok $f.exception, AnEx, 'can fail() typed exceptions';
 }
 

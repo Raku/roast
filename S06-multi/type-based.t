@@ -205,8 +205,8 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 #?niecza skip 'no native types yet'
 {
     # This once wrongly reported a multi-dispatch circularity.
-    multi rt107638(int $a) { 'ok' }
-    multi rt107638(Str $a where 1) { }
+    multi rt107638(int $a) { 'ok' }      #OK not used
+    multi rt107638(Str $a where 1) { }   #OK not used
     ok rt107638(1), 'native types and where clauses do not cause spurious circularities';
 }
 

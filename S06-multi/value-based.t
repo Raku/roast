@@ -35,14 +35,14 @@ plan 12;
 # RT #88562
 {
     multi m3(0     ,     $       ) { 'a' };
-    multi m3(Int $n, Str $a = 'A') { 'b' };
+    multi m3(Int $n, Str $a = 'A') { 'b' };  #OK not used
 
     is m3(2, 'A'), 'b', 'literal Int, anonymous parameters and default values mix';
 }
 
 {
     multi sub foo(0, $)               { 'B' };
-    multi sub foo(Int $n, Str $a="A") { $a };
+    multi sub foo(Int $n, Str $a="A") { $a };  #OK not used
     is foo(2,"A"), 'A', 'Literals and optionals mix';
 }
 

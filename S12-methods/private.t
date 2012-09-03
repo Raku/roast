@@ -86,7 +86,7 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
     class RT101964 {
         has @!c;
         method foo { self!bar(@!c) }
-        method !bar(@r) {
+        method !bar(@r) {  #OK not used
             'OH HAI';
         }
     }

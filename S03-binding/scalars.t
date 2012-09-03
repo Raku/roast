@@ -159,7 +159,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 # RT #89484
 {
     my $x = 5;
-    sub f($y) { $x := 5 }
+    sub f($y) { $x := 5 }	#OK not used
     f($x);
     is $x, 5, 'interaction between signature binding and ordinary binding';
 }

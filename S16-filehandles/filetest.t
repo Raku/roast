@@ -112,7 +112,7 @@ unlink "empty_file";
 
 # potential parsing difficulties (pugs)
 {
-    sub f($x) { return 8; }
+    sub f($) { return 8; }
 
     is(f($*PROGRAM_NAME), 8, "f(...) works");
     is(-f($*PROGRAM_NAME), -8, "- f(...) does not call the ~~:f filetest");

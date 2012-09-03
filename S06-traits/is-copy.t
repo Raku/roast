@@ -87,7 +87,7 @@ plan 22;
 
 # RT #74454
 {
-    sub g(%hash? is copy) { };
+    sub g(%hash? is copy) { };  #OK not used
     lives_ok { g() }, 'can call a sub with an optional "is copy" hash param';
 }
 

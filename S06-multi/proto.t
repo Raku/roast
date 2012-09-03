@@ -5,10 +5,10 @@ plan 17;
 # Test for proto definitions
 class A { }
 class B { }
-proto foo($x) { * }
-multi foo(A $x) { 2 }
-multi foo(B $x) { 3 }
-multi foo($x)   { 1 }
+proto foo($x) { * }    #OK not used
+multi foo(A $x) { 2 }  #OK not used
+multi foo(B $x) { 3 }  #OK not used
+multi foo($x)   { 1 }  #OK not used
 is(foo(A.new), 2, 'dispatch on class worked');
 is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');

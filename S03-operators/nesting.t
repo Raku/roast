@@ -14,7 +14,7 @@ is sort( &[<=>], <5 3 2 1 4> ), <1 2 3 4 5>, 'sort works using &[<=>]';
 
 #?niecza skip 'undeclared name [+]'
 is &[+](1, 2), 3, '&[+] as a function';
-is 1 [+] 2, 3, '[+] as an infix';
+is 1 [+] 2, 3, '[+] as an infix';   #OK Useless
 
 # test nesting with Rop -- tests stolen from reverse.t and nested in various ways
 

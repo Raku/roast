@@ -24,4 +24,4 @@ class C {
     method DEFINITE() { True }
 }
 is C.DEFINITE,     False, "Class declaring DEFINITE method doesn't influence .DEFINITE macro";
-is C."DEFINITE"(), True,  "Quoting lets us call the method, however";
+is C."DEFINITE"(), True,  "Quoting lets us call the method, however";  #OK Useless

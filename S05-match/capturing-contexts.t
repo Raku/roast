@@ -42,8 +42,8 @@ plan 38;
 #?niecza skip 'rule declaration outside of grammar'
 {
   augment class Match { method keys () {return %(self).keys }; };
-  rule a {H};
-  "Hello" ~~ /<a>/;
+  my rule a {H};
+  "Hello" ~~ /<a=&a>/;
   is $/.keys, 'a', 'get rule result';
   my $x = $/;
   is $x.keys, 'a', 'match copy should be same as match';
@@ -118,9 +118,8 @@ is_run( q{'aa' ~~ /(.)$1/},
 }
 
 # RT #72956
-#?niecza skip 'Unsupported use of $/ variable as input record separator'
 {
-    $/ = Any;
+    $/ := Any;
     lives_ok { $0 },
         '$0 accessible when $/ is undefined';
     ok $0 === Any,

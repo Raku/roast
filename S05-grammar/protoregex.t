@@ -78,7 +78,7 @@ grammar LTM {
     
     proto token declok {*}
     token declok:sym<a> {
-        :my $x := 42;
+        :my $x := 42;           #OK not used
         .+
     }
     token declok:sym<b> { aa }
