@@ -118,6 +118,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 }
 
 # RT #72956
+#?rakudo skip 'binding to $/'
 {
     $/ := Any;
     lives_ok { $0 },
