@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 13;
 
 # L<S11/Importing without loading>
 
@@ -10,11 +10,15 @@ plan 11;
     module A {
         sub Afoo() is export { 'sub A::Afoo' };
         sub Abar()           { 'sub A::Abar' };
+        constant pub is export = 42;
+        constant priv          = 23;
     }
     import A;
 
     is Afoo(), 'sub A::Afoo', 'import imports things marked as "is export"';
     dies_ok {eval(q{ Abar() })}, "doesn't import non-exported routines";
+    is pub, 42, 'can import constants';
+    dies_ok { eval 'priv' }, 'cannot access non-exported constants';
 }
 
 #?rakudo skip 'import plus inline module'
