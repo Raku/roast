@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 18;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 
@@ -114,6 +114,16 @@ plan 17;
         $b++;
     }
     ok $tracker === True, 'placeholders and "repeat while" mix';
+}
+
+# RT #114836
+{
+    lives_ok {
+        my $condition;
+        repeat {
+            $condition = False;
+        } while $condition;
+    }, 'can share variable between loop body and condition';
 }
 
 # vim: ft=perl6
