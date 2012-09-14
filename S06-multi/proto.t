@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 23;
 
 # Test for proto definitions
 class A { }
@@ -96,6 +96,32 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
         multi sub ainer($a) { 2 * $a };
     }
     is Cont::ainer(21), 42, 'our proto can be accessed from the ouside';
+}
+
+{
+    my proto f($) {
+        2 * {*} + 5
+    }
+    multi f(Str) { 1 }
+    multi f(Int) { 3 }
+
+    is f('a'), 7, 'can use {*} in an expression in a proto (1)';
+    is f(1),  11, 'can use {*} in an expression in a proto (2)';
+
+    # RT #114882
+    my $called_with = '';
+    proto cached($a) {
+        state %cache;
+        %cache{$a} //= {*}
+    }
+    multi cached($a) {
+        $called_with ~= $a;
+        $a x 2;
+    }
+    is cached('a'), 'aa', 'caching proto (1)';
+    is cached('b'), 'bb', 'caching proto (2)';
+    is cached('a'), 'aa', 'caching proto (3)';
+    is $called_with, 'ab', 'cached value did not cause extra call';
 }
 
 done;
