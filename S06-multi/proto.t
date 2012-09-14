@@ -98,6 +98,7 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     is Cont::ainer(21), 42, 'our proto can be accessed from the ouside';
 }
 
+#?niecza skip 'Unhandled exception: Cannot use value like Block as a number'
 {
     my proto f($) {
         2 * {*} + 5

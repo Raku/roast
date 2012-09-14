@@ -210,6 +210,7 @@ Testing operator overloading subroutines
 
 # here is one that co-erces a MyClass into a Str and a Num.
 #?rakudo skip 'prefix:<~> method'
+#?niecza skip 'import NYI'
 {
     class OtherClass {
       has $.x is rw;
@@ -229,10 +230,8 @@ Testing operator overloading subroutines
   my $obj;
   lives_ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";
   lives_ok { ~$obj }, "our object can be stringified";
-  #?niecza todo
   is ~$obj, "hi", "our object was stringified correctly";
   #?pugs todo 'feature'
-  #?niecza skip 'Two terms in a row'
   is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
