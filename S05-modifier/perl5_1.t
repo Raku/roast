@@ -111,11 +111,9 @@ ok(("1" ~~ rx:P5/\d/), 're_tests 155  (185)');
 ok((not ("-" ~~ rx:P5/\d/)), 're_tests 157  (187)');
 ok((not ("1" ~~ rx:P5/\D/)), 're_tests 159  (189)');
 ok(("-" ~~ rx:P5/\D/), 're_tests 161  (191)');
-#?rakudo skip 'character classes in enumerated lists unimpl'
 ok(("a" ~~ rx:P5/[\w]/), 're_tests 163  (193)');
 ok((not ("-" ~~ rx:P5/[\w]/)), 're_tests 165  (195)');
 ok((not ("a" ~~ rx:P5/[\W]/)), 're_tests 167  (197)');
-#?rakudo skip 'character classes in enumerated lists unimpl'
 ok(("-" ~~ rx:P5/[\W]/), 're_tests 169  (199)');
 
 # vim: ft=perl6
