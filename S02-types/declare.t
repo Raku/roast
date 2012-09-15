@@ -287,7 +287,6 @@ plan 79;
  isa_ok($pamu,KeyHash  );
 }
 
-#?rakudo skip 'KeySet not implemented'
 #?pugs skip 'KeySet'
 {
  my KeySet $paxa;
