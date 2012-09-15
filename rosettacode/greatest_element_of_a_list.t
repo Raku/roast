@@ -34,4 +34,4 @@ my
 ";
 
 $*OUT = $oldOUT;
-is($output, $expected, "Greatest element of a list");
+is($output.subst("\r", '', :g), $expected.subst("\r", '', :g), "Greatest element of a list");
