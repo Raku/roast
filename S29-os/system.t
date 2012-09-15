@@ -11,13 +11,9 @@ if $*OS eq "browser" {
   exit;
 }
 
-my $pugs = ($*OS eq any(<MSWin32 mingw msys cygwin>))
-         ?? 'pugs.exe'
-         !! $*EXECUTABLE_NAME;
-
 my $res;
 
-$res = run($pugs,'-e1');
+$res = run($*EXECUTABLE_NAME,'-e1');
 ok($res,"run() to an existing program does not die (and returns something true)");
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
