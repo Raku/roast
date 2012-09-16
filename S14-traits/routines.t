@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S14/Traits/>
 {
@@ -69,6 +69,14 @@ plan 12;
     try { eval 'sub yulia is krassivaya { }' };
     ok "$!" ~~ /'trait_mod:<is>'/,
         'declaration of a sub with an unknown trait mentions trait_mod:<is> in dispatch error';
+}
+
+{
+    multi trait_mod:<is>(Routine $r, :$trait_that_wraps!) {
+        $r.wrap(-> |c { 2 * callsame; })
+    }
+    sub wrappee($a, $b) is trait_that_wraps { 42 };
+    is wrappee(1, 2), 84, 'wrapping a routine at compile time makes it soft';
 }
 
 done();
