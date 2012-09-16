@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 23;
+plan 25;
 
 # Test for proto definitions
 class A { }
@@ -123,6 +123,14 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
     is cached('b'), 'bb', 'caching proto (2)';
     is cached('a'), 'aa', 'caching proto (3)';
     is $called_with, 'ab', 'cached value did not cause extra call';
+
+    proto maybe($a) {
+        $a > 0 ?? {*} !! 0;
+    }
+    multi maybe($a) { $a };
+
+    is maybe(8),  8, 'sanity';
+    is maybe(-5), 0, "It's ok not to dispatch to the multis";
 }
 
 done;
