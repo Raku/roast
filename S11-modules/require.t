@@ -1,10 +1,13 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 # no need to do that compile time, sine require() really is run time
 @*INC.push: 't/spec/packages';
+
+# Next line is for final test.
+GLOBAL::<$x> = 'still here';
 
 lives_ok { require Fancy::Utilities; },
          'can load Fancy::Utilities at run time';
@@ -25,5 +28,7 @@ lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
     require Fancy::Utilities <&allgreet>;
     is allgreet(), 'hi all', 'require with import list';
 }
+
+is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # vim: ft=perl6
