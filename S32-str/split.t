@@ -52,14 +52,12 @@ is split($delimiter, "Perl6::Pugs::Test").join(','),
    q{split $delimiter, Str};
 
 # split with a reg-exp
-#?rakudo skip 'rx:Perl5'
 #?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {,}, "split,me").join(','),
    qw/split me/.join(','),
    q/split rx:Perl5 {,}, Str/;
 
 # split on multiple space characters
-#?rakudo skip 'rx:Perl5'
 #?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars").join(','),
    qw/Hello World Goodbye Mars/.join(','),
@@ -82,7 +80,6 @@ is "this will be split".split(rx:Perl5 { }).join(','),
    q/Str.split(rx:Perl5 { })/;
 
 # split on multiple space characters
-#?rakudo skip 'rx:Perl5'
 #?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars", 3).join(','),
    ( <Hello World>, "Goodbye   Mars" ).join(','),
@@ -92,7 +89,6 @@ is split(" ", "Hello World    Goodbye   Mars", 3).join(','),
    ( <Hello World>, "   Goodbye   Mars" ).join(','),
    q/split " ", Str, limit/;
 
-#?rakudo skip 'rx:Perl5'
 #?niecza skip 'rx:Perl5'
 is "Hello World    Goodbye   Mars".split(rx:Perl5 {\s+}, 3).join(','),
    ( <Hello World>, "Goodbye   Mars" ).join(','),

@@ -38,7 +38,6 @@ plan 38;
 }
 
 # RT 62530
-#?rakudo skip 'augment'
 #?niecza skip 'rule declaration outside of grammar'
 {
   augment class Match { method keys () {return %(self).keys }; };
