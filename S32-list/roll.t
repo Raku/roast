@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 39;
 
 =begin description
 
@@ -110,6 +110,13 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
     is @matches.elems, 20, 'right number of elements from Range.roll (both exclusive)';
     ok (so 1 < all(@matches) < 1_000_000), 'all the elems are in range';
 }
+
+{
+    my @matches = (1..(10**1000)).roll(20);
+    is @matches.elems, 20, 'right number of elements from Range.roll, huge range';
+    ok (so 1 <= all(@matches) <= 10**1000), 'all the elems are in range';
+}
+
 
 is (1..^2).roll, 1, '1-elem Range roll';
 ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';

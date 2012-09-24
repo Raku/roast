@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 46;
 
 =begin description
 
@@ -155,6 +155,13 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     %seen{$_} = 1 for (1^..^1_000_000).pick(50);
     is %seen.keys.elems, 50, 'Range.pick produces uniq elems (both exclusive)';
     ok (so 1 < all(%seen.keys) < 1_000_000), '... and all the elements are in range';
+}
+
+{
+    my %seen;
+    %seen{$_} = 1 for (1 .. (10**1000) ).pick(50);
+    is %seen.keys.elems, 50, 'Range.pick produces uniq elems in huge range';
+    ok (so 1 <= all(%seen.keys) <= 10**1000), '... and all the elements are in range';
 }
 
 is (1..^2).pick, 1, 'pick on 1-elem range';
