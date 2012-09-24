@@ -157,6 +157,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     ok (so 1 < all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
 
+#?rakudo skip '.pick on huge integer ranges'
 {
     my %seen;
     %seen{$_} = 1 for (1 .. (10**1000) ).pick(50);
