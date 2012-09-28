@@ -10,10 +10,8 @@ plan 12;
 #L<S02/Names and Variables/"A signature object">
 
 {
-    my $a;
     ok :($a) ~~ Signature, ':($a) create a Signature object';
-    :($a) := 3;
-    #?rakudo 2 todo 'signature binding'
+    my ($a) := \3;
     is $a, 3, 'can bind to one-element signature';
     dies_ok { $a++ }, 'cannot increment an Int';
 
@@ -21,25 +19,20 @@ plan 12;
     ok $b.WHAT === Signature, '.WHAT on :() is Signature';
 }
 
-
-#?rakudo 2 todo 'signature binding'
 {
-    my ($x, $y, $z);
-    :($x,$y,$z) := (1,2,3);
+    my ($x,$y,$z) := (1,2,3);
     is("$x $y $z", "1 2 3", "siglist bindings works");
 }
 
 # Same, but more complex
 {
-    my ($x, @y, @rest);
-    :($x,@y,*@rest) := (42,[13,17],5,6,7);
+    my ($x,@y,*@rest) := (42,[13,17],5,6,7);
     #?pugs todo 'feature'
     is("$x!{@y}!{@rest}", "42!13 17!5 6 7", "complex siglist bindings works (1)");
 }
 
 {
-    my ($x);
-    :($x?) := ();
+    my ($x?) := ();
     ok(!$x.defined, "complex siglist bindings works (2)");
 }
 
