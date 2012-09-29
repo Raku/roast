@@ -195,13 +195,14 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 
 # Tests for the :x[ <list> ] notations
 # L<S02/General radices/"Alternately you can use a list of digits in decimal">
-#?rakudo skip ":radix[] NYI"
 #?niecza skip ":radix[] NYI"
 {
     is( :60[12,34,56],     12 * 3600 + 34 * 60 + 56, 'List of numbers works' );
+    #?rakudo skip ":radix[] with dot NYI"
     is( :100[3,'.',14,16],     3.1416,         'Decimal point in list works' );
 
     is :100[10,10],      1010, "Adverbial form of base 100 integer works";
+    #?rakudo skip ":radix[] with dot NYI"
     is :100[10,'.',10], 10.10, "Adverbial form of base 100 fraction works";
 }
 
