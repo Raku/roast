@@ -32,6 +32,7 @@ vtest Order::Same,
       1.2.1._.1.0.0.0.0.0 >;
 
 # Still more from S03
+# Tests with Greek letters fail without ICU
 my @sorted = <
    1.2.0.999
     1.2.1_01
