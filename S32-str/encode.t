@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 14;
 
 
 # L<S32::Containers/Buf>
@@ -27,5 +27,7 @@ is Buf.new(246).decode('ISO-8859-1'), 'ö', 'decoding a Buf with Latin-1';
 #?rakudo todo 'stringy'
 ok Buf ~~ Stringy, 'Buf does Stringy';
 ok Buf ~~ Positional, 'Buf does Positional';
+
+is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of codepoints';
 
 # vim: ft=perl6
