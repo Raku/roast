@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 52;
+plan 53;
 
 
 # terms
@@ -154,6 +154,9 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
     @b = ((1, 3) Z (2, 4));
     is(@b, [1 .. 4], "parens work around this");
 };
+
+#?rakudo todo 'RT #77848'
+eval_dies_ok('4 X+> 1...2', 'X+> must not associate with ...');
 
 # list prefix
 
