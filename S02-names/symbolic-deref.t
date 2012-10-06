@@ -73,6 +73,7 @@ my $outer = 'outside';
 
     #?pugs 2 skip 'No such subroutine'
     is ::('Outer::Inner').perl, Outer::Inner.perl, 'can look up name with :: (1)';
+    #?niecza skip "Object reference not set to an instance of an object"
     is ::('A::B').perl, A::B.perl, 'can look up name with :: (1)';
 }
 
@@ -82,6 +83,7 @@ my $outer = 'outside';
   my $cool = "cool";
   my $pugsis = 'pugs::is';
 
+  #?niecza 2 skip "Object reference not set to an instance of an object"
   is $::("pugs")::is::($cool), 42, 'not so basic symbolic dereferentiation works';
   is $::($pugsis)::($cool),    42, 'symbolic derefertiation with multiple packages in one variable works';
   eval_dies_ok('$::($pugsis)cool', '$::($foo)bar is illegal');
@@ -138,11 +140,13 @@ my $outer = 'outside';
 
 # Symbolic dereferentiation of type vars
 #?rakudo skip 'NYI'
+#?niecza skip "Object reference not set to an instance of an object"
 {
   cmp_ok ::Array, &infix:<===>, ::("Array"),
     "symbolic dereferentiation of type vars works (1)";
 }
 
+#?niecza skip "Object reference not set to an instance of an object"
 {
   class A::B::C {};
   my $ok = ::A::B::C === ::A::("B")::C;
