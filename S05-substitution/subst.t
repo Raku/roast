@@ -347,7 +347,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'The foo and the bar'.subst(/:i the/, {$str++}, :g, :samecase), 'Thau foo and thav bar', '.substr and :g and :samecase, worked with block replacement';
 }
 
-#?rakudo todo 'samecase, :ii'
 #?niecza skip "Regex modifiers ii and samecase NYI"
 {
     $_ = 'foObar';
