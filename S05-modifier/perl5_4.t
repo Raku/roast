@@ -94,11 +94,13 @@ is(~("REFFGZ" ~~ rx:P5/(?i)(bc+d$|ef*g.|h?i(j|k))/ && $1), "", 're_tests 565/2 (
 is(~("A" ~~ rx:P5/(?i)((((((((((a))))))))))/ && $00), "A", 're_tests 567/10 (747)');
 is(~("AA" ~~ rx:P5/(?i)((((((((((a))))))))))\10/ && $/), "AA", 're_tests 569/0 (749)');
 ok((not ("AA" ~~ rx:P5/(?i)((((((((((a))))))))))$bang/)), 're_tests 571  (751)');
+#?rakudo todo "variable interpolation"
 is(~("A!" ~~ rx:P5/(?i)((((((((((a))))))))))$bang/ && $/), "A!", 're_tests 572/0 (752)');
 is(~("A" ~~ rx:P5/(?i)(((((((((a)))))))))/ && $/), "A", 're_tests 573/0 (753)');
 is(~("A" ~~ rx:P5/(?i)(?:(?:(?:(?:(?:(?:(?:(?:(?:(a))))))))))/ && $0), "A", 're_tests 575/1 (755)');
 is(~("C" ~~ rx:P5/(?i)(?:(?:(?:(?:(?:(?:(?:(?:(?:(a|b|c))))))))))/ && $0), "C", 're_tests 577/1 (757)');
 ok((not ("UH-UH" ~~ rx:P5/(?i)multiple words of text/)), 're_tests 579  (759)');
+#?rakudo todo "whitespace semantics"
 is(~("MULTIPLE WORDS, YEAH" ~~ rx:P5/(?i)multiple words/ && $/), "MULTIPLE WORDS", 're_tests 581/0 (761)');
 is(~("ABCDE" ~~ rx:P5/(?i)(.*)c(.*)/ && $/), "ABCDE", 're_tests 583/0 (763)');
 is(~("ABCDE" ~~ rx:P5/(?i)(.*)c(.*)/ && $0), "AB", 're_tests 583/1 (764)');
