@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 18;
 
 #?pugs emit skip_rest("unimpl");
 #?kp6 emit skip_rest("unimpl");
@@ -25,7 +25,7 @@ my @tests = (
 
 for @tests -> $t {
     my $test_str = $t[0];
-    $test_str ~~ s:ii/ .* /$t[1]/;
+    $test_str ~~ s:i:ii/ .* /$t[1]/;
     is $test_str, $t[2], ":ii modifier: {$t[0]} ~~ s:ii/.*/{$t[1]}/ => {$t[2]}";
 }
 
@@ -45,11 +45,17 @@ my @smart_tests = (
 
 for @smart_tests -> $t {
     my $test_str = $t[0];
-    $test_str ~~ s:ii:sigspace/.*/$t[1]/;
+    $test_str ~~ s:i:ii:sigspace/.*/$t[1]/;
     # some of these tests actuall pass in Rakudo, so skipping them to avoid
     # too many passing TODOs
-    #?rakudo skip 's:ii:sigspace'
-    is $test_str, $t[2], ":ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
+    #?rakudo skip 'some NYI'
+    is $test_str, $t[2], ":i:ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
+}
+
+{
+    $_ = 'Abc';
+    s:ii/ab/xy/;
+    is $_, 'Xyc', ':ii implies :i';
 }
 
 done;
