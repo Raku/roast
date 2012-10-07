@@ -100,7 +100,6 @@ is(~("A" ~~ rx:P5/(?i)(((((((((a)))))))))/ && $/), "A", 're_tests 573/0 (753)');
 is(~("A" ~~ rx:P5/(?i)(?:(?:(?:(?:(?:(?:(?:(?:(?:(a))))))))))/ && $0), "A", 're_tests 575/1 (755)');
 is(~("C" ~~ rx:P5/(?i)(?:(?:(?:(?:(?:(?:(?:(?:(?:(a|b|c))))))))))/ && $0), "C", 're_tests 577/1 (757)');
 ok((not ("UH-UH" ~~ rx:P5/(?i)multiple words of text/)), 're_tests 579  (759)');
-#?rakudo todo "whitespace semantics"
 is(~("MULTIPLE WORDS, YEAH" ~~ rx:P5/(?i)multiple words/ && $/), "MULTIPLE WORDS", 're_tests 581/0 (761)');
 is(~("ABCDE" ~~ rx:P5/(?i)(.*)c(.*)/ && $/), "ABCDE", 're_tests 583/0 (763)');
 is(~("ABCDE" ~~ rx:P5/(?i)(.*)c(.*)/ && $0), "AB", 're_tests 583/1 (764)');

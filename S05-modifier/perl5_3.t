@@ -34,7 +34,6 @@ ok((not ("aa" ~~ rx:P5/((((((((((a))))))))))$bang/)), 're_tests 329  (427)');
 is(("a!" ~~ rx:P5/((((((((((a))))))))))$bang/ && $/), "a!", 're_tests 330/0 (428)');
 is(("a" ~~ rx:P5/(((((((((a)))))))))/ && $/), "a", 're_tests 331/0 (429)');
 ok((not ("uh-uh" ~~ rx:P5/multiple words of text/)), 're_tests 333  (431)');
-#?rakudo todo "whitespace semantics"
 is(("multiple words, yeah" ~~ rx:P5/multiple words/ && $/), "multiple words", 're_tests 335/0 (433)');
 is(("abcde" ~~ rx:P5/(.*)c(.*)/ && $/), "abcde", 're_tests 337/0 (435)');
 is(("abcde" ~~ rx:P5/(.*)c(.*)/ && $0), "ab", 're_tests 337/1 (436)');
