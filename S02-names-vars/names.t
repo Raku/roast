@@ -28,11 +28,11 @@ plan 142;
 {
     my $bear = 2.16;
     is($bear,       2.16, 'simple variable lookup');
-    #?niecza todo
+    #?niecza skip 'Object reference not set to an instance of an object'
     #?rakudo skip 'this kind of lookup NYI'
     is($::{'bear'}, 2.16, 'variable lookup using $::{\'foo\'}');
     is(::{'$bear'}, 2.16, 'variable lookup using ::{\'$foo\'}');
-    #?niecza todo
+    #?niecza skip 'Object reference not set to an instance of an object'
     #?rakudo skip 'this kind of lookup NYI'
     is($::<bear>,   2.16, 'variable lookup using $::<foo>');
     is(::<$bear>,   2.16, 'variable lookup using ::<$foo>');

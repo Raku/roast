@@ -34,7 +34,6 @@ ok((not ("aa" ~~ rx:P5/((((((((((a))))))))))$bang/)), 're_tests 329  (427)');
 is(("a!" ~~ rx:P5/((((((((((a))))))))))$bang/ && $/), "a!", 're_tests 330/0 (428)');
 is(("a" ~~ rx:P5/(((((((((a)))))))))/ && $/), "a", 're_tests 331/0 (429)');
 ok((not ("uh-uh" ~~ rx:P5/multiple words of text/)), 're_tests 333  (431)');
-#?rakudo 4 todo "backtracking issue?"
 is(("multiple words, yeah" ~~ rx:P5/multiple words/ && $/), "multiple words", 're_tests 335/0 (433)');
 is(("abcde" ~~ rx:P5/(.*)c(.*)/ && $/), "abcde", 're_tests 337/0 (435)');
 is(("abcde" ~~ rx:P5/(.*)c(.*)/ && $0), "ab", 're_tests 337/1 (436)');
@@ -42,7 +41,6 @@ is(("abcde" ~~ rx:P5/(.*)c(.*)/ && $1), "de", 're_tests 337/2 (437)');
 ok((not ("ab" ~~ rx:P5/[k]/)), 're_tests 339  (441)');
 is(("ac" ~~ rx:P5/a[-]?c/ && $/), "ac", 're_tests 341/0 (443)');
 is(("abcabc" ~~ rx:P5/(abc)\1/ && $0), "abc", 're_tests 343/1 (445)');
-#?rakudo todo "backtracking issue?"
 is(("abcabc" ~~ rx:P5/([a-c]*)\1/ && $0), "abc", 're_tests 345/1 (447)');
 ok(("a" ~~ rx:P5/(a)|\1/), 're_tests 347  (449)');
 ok((not ("x" ~~ rx:P5/(a)|\1/)), 're_tests 349  (451)');
@@ -93,10 +91,8 @@ is(("AXC" ~~ rx:P5/(?i)a.c/ && $/), "AXC", 're_tests 429/0 (539)');
 is(("AXYZC" ~~ rx:P5/(?i)a.*?c/ && $/), "AXYZC", 're_tests 431/0 (541)');
 ok((not ("AXYZD" ~~ rx:P5/(?i)a.*c/)), 're_tests 433  (543)');
 ok((not ("ABC" ~~ rx:P5/(?i)a[bc]d/)), 're_tests 435  (545)');
-#?rakudo todo "(?i) and charclasses"
 is(("ABD" ~~ rx:P5/(?i)a[bc]d/ && $/), "ABD", 're_tests 437/0 (547)');
 ok((not ("ABD" ~~ rx:P5/(?i)a[b-d]e/)), 're_tests 439  (549)');
-#?rakudo 2 todo "(?i) and charclasses"
 is(("ACE" ~~ rx:P5/(?i)a[b-d]e/ && $/), "ACE", 're_tests 441/0 (551)');
 is(("AAC" ~~ rx:P5/(?i)a[b-d]/ && $/), "AC", 're_tests 443/0 (553)');
 is(("A-" ~~ rx:P5/(?i)a[-b]/ && $/), "A-", 're_tests 445/0 (555)');
@@ -104,7 +100,6 @@ is(("A-" ~~ rx:P5/(?i)a[b-]/ && $/), "A-", 're_tests 447/0 (557)');
 is(("A]" ~~ rx:P5/(?i)a]/ && $/), "A]", 're_tests 449/0 (559)');
 is(("A]B" ~~ rx:P5/(?i)a[]]b/ && $/), "A]B", 're_tests 451/0 (561)');
 is(("AED" ~~ rx:P5/(?i)a[^bc]d/ && $/), "AED", 're_tests 453/0 (563)');
-#?rakudo todo "(?i) and charclasses"
 ok((not ("ABD" ~~ rx:P5/(?i)a[^bc]d/)), 're_tests 455  (565)');
 is(("ADC" ~~ rx:P5/(?i)a[^-b]c/ && $/), "ADC", 're_tests 457/0 (567)');
 ok((not ("A-C" ~~ rx:P5/(?i)a[^-b]c/)), 're_tests 459  (569)');
@@ -112,7 +107,6 @@ ok((not ("A]C" ~~ rx:P5/(?i)a[^]b]c/)), 're_tests 461  (571)');
 is(("ADC" ~~ rx:P5/(?i)a[^]b]c/ && $/), "ADC", 're_tests 463/0 (573)');
 is(("ABC" ~~ rx:P5/(?i)ab|cd/ && $/), "AB", 're_tests 465/0 (575)');
 is(("ABCD" ~~ rx:P5/(?i)ab|cd/ && $/), "AB", 're_tests 467/0 (577)');
-#?rakudo todo "() scanning bug"
 is(("DEF" ~~ rx:P5/(?i)()ef/ && $/), "EF", 're_tests 469/0 (579)');
 is(("DEF" ~~ rx:P5/(?i)()ef/ && $0), "", 're_tests 469/1 (580)');
 ok((not ("B" ~~ rx:P5/(?i)$b/)), 're_tests 471  (583)');

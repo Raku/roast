@@ -25,10 +25,8 @@ ok((not ("1" ~~ rx:P5/[\D]/)), 're_tests 183  (213)');
 ok(("-" ~~ rx:P5/[\D]/), 're_tests 185  (215)');
 is(("abc" ~~ rx:P5/ab|cd/ && $/), "ab", 're_tests 187/0 (217)');
 is(("abcd" ~~ rx:P5/ab|cd/ && $/), "ab", 're_tests 189/0 (219)');
-#?rakudo todo "initial () busts scanning"
 is(("def" ~~ rx:P5/()ef/ && $/), "ef", 're_tests 191/0 (221)');
 is(("def" ~~ rx:P5/()ef/ && $0), "", 're_tests 191/1 (222)');
-#?rakudo 2 todo "initial () busts scanning"
 is(("def" ~~ rx:P5/()ef/ && $/.from), 1, 're_tests 193/0 (225)');
 is(("def" ~~ rx:P5/()ef/ && $/[0].from), 1, 're_tests 195/1 (227)');
 ok((not ("b" ~~ rx:P5/$b/)), 're_tests 197  (229)');
@@ -67,7 +65,6 @@ ok((not ("" ~~ rx:P5/abc/)), 're_tests 235  (289)');
 is(("" ~~ rx:P5/a*/ && $/), "", 're_tests 237/0 (291)');
 is(("abbbcd" ~~ rx:P5/([abc])*d/ && $/), "abbbcd", 're_tests 239/0 (293)');
 is(("abbbcd" ~~ rx:P5/([abc])*d/ && $0), "c", 're_tests 239/1 (294)');
-#?rakudo 2 todo "(...) scanning bug"
 is(("abcd" ~~ rx:P5/([abc])*bcd/ && $/), "abcd", 're_tests 241/0 (297)');
 is(("abcd" ~~ rx:P5/([abc])*bcd/ && $0), "a", 're_tests 241/1 (298)');
 is(("e" ~~ rx:P5/a|b|c|d|e/ && $/), "e", 're_tests 243/0 (301)');
@@ -78,14 +75,11 @@ is(("ef" ~~ rx:P5/(a|b|c|d|e)f/ && $/[0].from), 0, 're_tests 249/1 (309)');
 is(("abcdefg" ~~ rx:P5/abcd*efg/ && $/), "abcdefg", 're_tests 251/0 (311)');
 is(("xabyabbbz" ~~ rx:P5/ab*/ && $/), "ab", 're_tests 253/0 (313)');
 is(("xayabbbz" ~~ rx:P5/ab*/ && $/), "a", 're_tests 255/0 (315)');
-#?rakudo 2 todo "(...) scanning bug"
 is(("abcde" ~~ rx:P5/(ab|cd)e/ && $/), "cde", 're_tests 257/0 (317)');
 is(("abcde" ~~ rx:P5/(ab|cd)e/ && $0), "cd", 're_tests 257/1 (318)');
 is(("hij" ~~ rx:P5/[abhgefdc]ij/ && $/), "hij", 're_tests 259/0 (321)');
-#?rakudo todo "(...) scanning bug"
 is(("abcdef" ~~ rx:P5/(abc|)ef/ && $/), "ef", 're_tests 261/0 (323)');
 is(("abcdef" ~~ rx:P5/(abc|)ef/ && $0), "", 're_tests 261/1 (324)');
-#?rakudo 4 todo "(...) scanning bug"
 is(("abcd" ~~ rx:P5/(a|b)c*d/ && $/), "bcd", 're_tests 263/0 (327)');
 is(("abcd" ~~ rx:P5/(a|b)c*d/ && $0), "b", 're_tests 263/1 (328)');
 is(("abc" ~~ rx:P5/(ab|ab*)bc/ && $/), "abc", 're_tests 265/0 (331)');
@@ -101,7 +95,6 @@ is(("abcd" ~~ rx:P5/a([bc]*)(c*d)/ && $/[1].from), 3, 're_tests 275/2 (349)');
 is(("abcd" ~~ rx:P5/a([bc]+)(c*d)/ && $/), "abcd", 're_tests 277/0 (351)');
 is(("abcd" ~~ rx:P5/a([bc]+)(c*d)/ && $0), "bc", 're_tests 277/1 (352)');
 is(("abcd" ~~ rx:P5/a([bc]+)(c*d)/ && $1), "d", 're_tests 277/2 (353)');
-#?rakudo 6 todo "unknown"
 is(("abcd" ~~ rx:P5/a([bc]*)(c+d)/ && $/), "abcd", 're_tests 279/0 (357)');
 is(("abcd" ~~ rx:P5/a([bc]*)(c+d)/ && $0), "b", 're_tests 279/1 (358)');
 is(("abcd" ~~ rx:P5/a([bc]*)(c+d)/ && $1), "cd", 're_tests 279/2 (359)');
@@ -120,7 +113,6 @@ is(("abcd" ~~ rx:P5/((a)(b)c)(d)/ && $/[1].from), 0, 're_tests 301/2 (385)');
 is(("abcd" ~~ rx:P5/((a)(b)c)(d)/ && $/[2].from), 1, 're_tests 303/3 (387)');
 is(("abcd" ~~ rx:P5/((a)(b)c)(d)/ && $/[3].from), 3, 're_tests 305/4 (389)');
 is(("alpha" ~~ rx:P5/[a-zA-Z_][a-zA-Z0-9_]*/ && $/), "alpha", 're_tests 307/0 (391)');
-#?rakudo todo "unknown"
 is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $/), "bh", 're_tests 309/0 (393)');
 is(("abh" ~~ rx:P5/^a(bc+|b[eh])g|.h$/ && $0), "", 're_tests 309/1 (394)');
 is(("effgz" ~~ rx:P5/(bc+d$|ef*g.|h?i(j|k))/ && $/), "effgz", 're_tests 311/0 (397)');
