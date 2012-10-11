@@ -106,10 +106,10 @@ throws_like 'my @a = 1, => 2', X::Syntax::InfixInTermPosition, infix => '=>';
 throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
 throws_like 'my $foo does &Int', X::Does::TypeObject;
 throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
-throws_like 'role R { }; 99 but R("wrong");', X::Role::Initialization;
-throws_like 'role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
-throws_like 'role R { }; 99 does R("wrong");', X::Role::Initialization;
-throws_like 'role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Initialization;
+throws_like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
+throws_like 'my role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
+throws_like 'my role R { }; 99 does R("wrong");', X::Role::Initialization;
+throws_like 'my role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Initialization;
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
@@ -216,7 +216,7 @@ throws_like 'use fatal; ... 42', X::AdHoc, payload => 42;
 throws_like 'die "foo"', X::AdHoc, backtrace => Backtrace;
 throws_like 'use fatal; ~(1, 2, 6 ... 10)', X::Sequence::Deduction;
 
-throws_like 'class B does Int { }', X::Composition::NotComposable, target-name => 'B', composer => Int;
+throws_like 'my class B does Int { }', X::Composition::NotComposable, target-name => 'B', composer => Int;
 throws_like 'my Str $x := 3', X::TypeCheck::Binding, got => Int, expected => Str;
 throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, expected => Str;
 throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
