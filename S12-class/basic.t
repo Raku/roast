@@ -103,6 +103,7 @@ dies_ok { eval 'class One::Two { }' }, 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
 #?pugs todo
+#?niecza skip "Methods must be used in some kind of package"
 {
     class A61354_1 {
         eval('method x { "OH HAI" }')
