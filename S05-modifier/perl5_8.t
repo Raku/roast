@@ -17,7 +17,6 @@ my $b = 'x';
 my $backspace = "\b";
 my $bang = '!';
 
-#?rakudo 9 skip '(?m) not implemented'
 ok((not ("abb\nb\n" ~~ rx:P5/(?m)abb\Z/)), 're_tests 1049  (1253)');
 ok((not ("abb\nb\n" ~~ rx:P5/(?m)abb\z/)), 're_tests 1050  (1254)');
 is(("abb\nb\n" ~~ rx:P5/(?m)abb$/ && $/.from), 0, 're_tests 1051/0 (1255)');
@@ -103,6 +102,7 @@ is(("a0- z" ~~ rx:P5/([\d-\s]+)/ && $0), "0- ", 're_tests 1157/1 (1361)');
 is(("za-9z" ~~ rx:P5/([a-[:digit:]]+)/ && $0), "a-9", 're_tests 1159/1 (1363)');
 is(("=0-z=" ~~ rx:P5/([[:digit:]-z]+)/ && $0), "0-z", 're_tests 1160/1 (1364)');
 is(("=0-z=" ~~ rx:P5/([[:digit:]-[:alpha:]]+)/ && $0), "0-z", 're_tests 1161/1 (1365)');
+#?rakudo skip '\G'
 ok((not ("aaaXbX" ~~ rx:P5/\GX.*X/)), 're_tests 1162  (1366)');
 is(("3.1415926" ~~ rx:P5/(\d+\.\d+)/ && $0), "3.1415926", 're_tests 1163/1 (1367)');
 is(("have a web browser" ~~ rx:P5/(\ba.{0,10}br)/ && $0), "a web br", 're_tests 1165/1 (1369)');
@@ -131,9 +131,7 @@ is(("aaa,b,c,d" ~~ rx:P5/^([^,]{1,},){0,3}d/ && $0), "c,", 're_tests 1204/1 (140
 is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){3}d/ && $0), "c,", 're_tests 1206/1 (1410)');
 is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){3,}d/ && $0), "c,", 're_tests 1208/1 (1412)');
 is(("aaa,b,c,d" ~~ rx:P5/^([^,]{0,3},){0,3}d/ && $0), "c,", 're_tests 1210/1 (1414)');
-#?rakudo skip '(?i) not implemented'
 ok(("" ~~ rx:P5/(?i)/), 're_tests 1212  (1416)');
-#?rakudo skip '(?m) not implemented'
 ok(("a\nxb\n" ~~ rx:P5/(?m)(?!\A)x/), 're_tests 1214  (1418)');
 
 # vim: ft=perl6
