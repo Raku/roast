@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item pack">
 
-plan 3;
+plan 6;
 
 {
     my $buf = pack('H*', "414243");
@@ -29,6 +29,21 @@ plan 3;
                0x12, 0x34, 0x12, 0x34, 0x56, 0x78,
                0x34, 0x12, 0x78, 0x56, 0x34, 0x12],
               "C S L n N v V work";
+}
+
+{
+  my $buf = pack('x');
+  is_deeply $buf.contents, [0x00], 'x by itself works';
+}
+
+{
+  my $buf = pack('x4');
+  is_deeply $buf.contents, [0x00, 0x00, 0x00, 0x00], 'x with amount works';
+}
+
+{
+  my $buf = pack('x*');
+  is_deeply $buf.contents, [], 'x* works (as in it does nothing.)';
 }
 
 # vim: ft=perl6
