@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 8;
+plan 9;
 
 role WithStub { method a() { ... } };
 role ProvidesStub1 { method a() { 1 } };
@@ -28,3 +28,6 @@ lives_ok { eval 'class ChildA is ProvidesA does WithStub { }' },
         'stubbed method can come from parent class too';
 
 lives_ok { eval 'class RT115212 does WithStub { has $.a }' }, 'stubbed method can come from accessor';
+
+class HasA { has $.a }
+lives_ok { eval 'class RT115212Child is HasA does WithStub { }' }, 'stubbed method can come from accessor in parent class';
