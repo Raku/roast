@@ -27,5 +27,4 @@ class ProvidesA { method a() { 5 } };
 lives_ok { eval 'class ChildA is ProvidesA does WithStub { }' },
         'stubbed method can come from parent class too';
 
-#?rakudo todo 'RT #115212'
 lives_ok { eval 'class RT115212 does WithStub { has $.a }' }, 'stubbed method can come from accessor';
