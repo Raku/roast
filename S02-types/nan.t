@@ -54,6 +54,6 @@ is NaN.perl, 'NaN', 'NaN perlification ok';
 #RT 83622
 #?rakudo todo 'RT 83622'
 #?pugs todo
-ok NaN===NaN, "NaN value identity"
+ok NaN===NaN, "NaN value identity";
 
 # vim: ft=perl6
