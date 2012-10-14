@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # Undeterminate Math results
 # see L<"http://mathworld.wolfram.com/Indeterminate.html">
@@ -50,5 +50,10 @@ ok (my Int $rt83446 = NaN) ~~ NaN, 'NaN fits in Int';
 
 #RT 103500
 is NaN.perl, 'NaN', 'NaN perlification ok';
+
+#RT 83622
+#?rakudo todo 'RT 83622'
+#?pugs todo
+ok NaN===NaN, "NaN value identity"
 
 # vim: ft=perl6
