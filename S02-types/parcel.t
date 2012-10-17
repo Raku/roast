@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 15;
 
 isa_ok (5, 7, 8), Parcel, '(5, 7, 8) is Parcel';
 is +(5, 7, 8), 3, 'prefix:<+> on a Parcel';
@@ -24,5 +24,8 @@ is ?(), False, 'empty Parcel is False';
 is ?(1,2,3), True, 'non-empty Parcel is True';
 
 lives_ok { <5 7 8>[] }, 'can zen slice a Parcel';
+
+# RT #115282
+is (;).elems, 0, '(;) parses, and is empty';
 
 # vim: ft=perl6
