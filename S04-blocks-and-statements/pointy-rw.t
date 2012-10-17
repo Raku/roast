@@ -20,17 +20,17 @@ plan 10;
         for %h.values -> $v is rw { $v += 1 }
     }, 'aliases returned by %hash.values should be rw (1)';
 
-    #?rakudo skip 'rw Hash.values'
+    #?rakudo todo 'rw Hash.values'
     is %h<3>, 5, 'aliases returned by %hash.values should be rw (2)';
 }
 
-#?rakudo skip '<-> (rw lanbmda) parsing'
 {
     my %h = 1..4;
     lives_ok {
         for %h.values <-> $v { $v += 1 }
     }, 'aliases returned by %hash.values should be rw (<->) (1)';
 
+    #?rakudo todo 'rw Hash.values'
     is %h<3>, 5, 'aliases returned by %hash.values should be rw (<->) (2)';
 }
 

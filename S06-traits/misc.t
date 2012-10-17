@@ -73,13 +73,13 @@ lives_ok { boom(42) }, "can modify a copy";
 
 
 # with <-> we should still obey readonly traits
-#?rakudo skip '<-> (rw lamda)'
 {
     my $anon1 = <-> $a is readonly, $b { $b++ };
     my $anon2 = <-> $a is readonly, $b { $a++ };
     my $x = 1;
     $anon1($x, $x);
     is($x, 2,                   '<-> does not override explicit traints (sanity)');
+    #?rakudo 2 todo 'is readonly does not override'
     dies_ok({ $anon2($x, $x) }, '<-> does not override explicit traints');
     is($x, 2,                   '<-> does not override explicit traints (sanity)');
 }
