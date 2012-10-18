@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 16;
+plan 17;
 
 # L<S29/Context/"=item eval">
 
@@ -88,5 +88,10 @@ is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
     try eval(:lang<rt112472>, '1');
     ok "$!" ~~ / 'rt112472' /, 'eval in bogus language mentions the language';
 }
+
+# RT 115344
+my $rt115344 = 115344;
+#?niecza skip 'method form of eval does not see outer lexicals'
+is('$rt115344'.eval, $rt115344, 'method form of eval sees outer lexicals');
 
 # vim: ft=perl6
