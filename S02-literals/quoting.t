@@ -27,11 +27,9 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 }
 
 {
-    #?rakudo skip 'nested curlies in q{...}'
     is q{ { foo } }, ' { foo } ',   'Can nest curlies in q{ .. }';
     is q{{ab}},      'ab',          'Unnested single curlies in q{{...}}';
     is q{{ fo} }},   ' fo} ',       'Unnested single curlies in q{{...}}';
-    #?rakudo skip 'nested double curlies in q{{...}}'
     is q{{ {{ } }} }}, ' {{ } }} ', 'Can nest double curlies in q{{...}}';
 }
 
@@ -81,7 +79,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Delimiters of quoting forms/That is () have no special significance>
-#?rakudo skip 'quoting with q (..)'
 { # non interpolating single quotes with nested parens
     my @q = ();
     @q = (q ( ($foo $bar)));
@@ -107,7 +104,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[0], '$foo $bar', "and again, non interpolating");
 };
 
-#?rakudo skip 'nested bracket quotes'
 { # nested brackets
     my @q = ();
     @q = (q[ [$foo $bar]]);
@@ -395,7 +391,6 @@ FOO
     is($hi, "hi", 'q<<hi>> is "hi"');
 }
 
-#?rakudo skip 'Thinks statement not terminated properly'
 is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
 
 # L<S02/Adverbs on quotes/"for user-defined quotes">
