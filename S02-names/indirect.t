@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 6;
 
 {
     my constant name = 'TestName';
@@ -19,4 +19,17 @@ plan 4;
     sub ::(name) ($x) { $x + 38 }
     is a(4), 42, 'indirect sub name works';
     is &a.name, 'a', 'and the sub knows its name';
+}
+
+{
+    class A {
+        method ::('indirect') {
+            42
+        }
+        method ::('with space') {
+            23
+        }
+    }
+    is A.indirect,       42, 'can declare method with indirect name';
+    is A."with space"(), 23, 'can declare indirect method name with space';
 }
