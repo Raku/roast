@@ -15,7 +15,6 @@ my $b = 'x';
 my $backspace = "\b";
 my $bang = '!';
 
-#?rakudo skip '(?m) not recognized'
 is(("b\naa" ~~ rx:P5/(?m)aa$/ && $/.from), 2, 're_tests 913/0 (1117)');
 ok((not ("ac\nb\n" ~~ rx:P5/aa\Z/)), 're_tests 914  (1118)');
 ok((not ("ac\nb\n" ~~ rx:P5/aa\z/)), 're_tests 916  (1120)');
@@ -56,16 +55,12 @@ ok((not ("b\nca" ~~ rx:P5/(?m)aa$/)), 're_tests 961  (1165)');
 ok((not ("ab\nb\n" ~~ rx:P5/ab\Z/)), 're_tests 962  (1166)');
 ok((not ("ab\nb\n" ~~ rx:P5/ab\z/)), 're_tests 964  (1168)');
 ok((not ("ab\nb\n" ~~ rx:P5/ab$/)), 're_tests 966  (1170)');
-#?rakudo skip 'trailing newline not matched'
 is(("b\nab\n" ~~ rx:P5/ab\Z/ && $/.from), 2, 're_tests 967/0 (1171)');
 ok((not ("b\nab\n" ~~ rx:P5/ab\z/)), 're_tests 969  (1173)');
-#?rakudo skip 'trailing newline not matched'
 is(("b\nab\n" ~~ rx:P5/ab$/ && $/.from), 2, 're_tests 971/0 (1175)');
-#?rakudo 2 skip 'unknown failure'
 is(("b\nab" ~~ rx:P5/ab\Z/ && $/.from), 2, 're_tests 972/0 (1176)');
 is(("b\nab" ~~ rx:P5/ab\z/ && $/.from), 2, 're_tests 974/0 (1178)');
 is(("b\nab" ~~ rx:P5/ab$/ && $/.from), 2, 're_tests 976/0 (1180)');
-#?rakudo 9 skip '(?m) not recognized'
 ok((not ("ab\nb\n" ~~ rx:P5/(?m)ab\Z/)), 're_tests 977  (1181)');
 ok((not ("ab\nb\n" ~~ rx:P5/(?m)ab\z/)), 're_tests 978  (1182)');
 is(("ab\nb\n" ~~ rx:P5/(?m)ab$/ && $/.from), 0, 're_tests 979/0 (1183)');
@@ -114,7 +109,6 @@ ok((not ("b\nca" ~~ rx:P5/(?m)ab$/)), 're_tests 1033  (1237)');
 ok((not ("abb\nb\n" ~~ rx:P5/abb\Z/)), 're_tests 1034  (1238)');
 ok((not ("abb\nb\n" ~~ rx:P5/abb\z/)), 're_tests 1036  (1240)');
 ok((not ("abb\nb\n" ~~ rx:P5/abb$/)), 're_tests 1038  (1242)');
-#?rakudo 5 skip 'trailing newline not matched'
 is(("b\nabb\n" ~~ rx:P5/abb\Z/ && $/.from), 2, 're_tests 1039/0 (1243)');
 ok((not ("b\nabb\n" ~~ rx:P5/abb\z/)), 're_tests 1041  (1245)');
 is(("b\nabb\n" ~~ rx:P5/abb$/ && $/.from), 2, 're_tests 1043/0 (1247)');

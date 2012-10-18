@@ -63,7 +63,6 @@ is split(rx:Perl5 {\s+}, "Hello World    Goodbye   Mars").join(','),
    qw/Hello World Goodbye Mars/.join(','),
    q/split rx:Perl5 {\s+}, Str/;
 
-#?rakudo skip 'FixedIntegerArray: index out of bounds!'
 #?niecza skip 'rx:Perl5'
 is split(rx:Perl5 {(\s+)}, "Hello test", :all).join(','),
    ('Hello', ("Hello test" ~~ rx:Perl5 {(\s+)}), 'test').join(','),
@@ -73,7 +72,6 @@ is "to be || ! to be".split(' ').join(','),
    <to be || ! to be>.join(','),
    q/Str.split(' ')/;
 
-#?rakudo skip 'rx:Perl5'
 #?niecza skip 'rx:Perl5'
 is "this will be split".split(rx:Perl5 { }).join(','),
    <this will be split>.join(','),

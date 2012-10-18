@@ -67,7 +67,6 @@ ok((not ("x" ~~ rx:P5/a*abc?xyz+pqr{3}ab{2,}xy{4,5}pq{0,6}AB{0,}zz/)), 're_tests
 #?rakudo skip '(?>...) not implemented'
 is(("_I(round(xs * sz),1)" ~~ rx:P5/round\(((?>[^()]+))\)/ && $0), "xs * sz", 're_tests 1110/1 (1314)');
 ok(("foo.bart" ~~ rx:P5/foo.bart/), 're_tests 1112  (1316)');
-#?rakudo skip '(?m) not implemented'
 ok(("abcd\ndxxx" ~~ rx:P5/(?m)^d[x][x][x]/), 're_tests 1114  (1318)');
 #?rakudo 18 skip 'expensive quantifier'
 #?pugs todo "pugs regression"
@@ -107,11 +106,9 @@ ok((not ("aaaXbX" ~~ rx:P5/\GX.*X/)), 're_tests 1162  (1366)');
 is(("3.1415926" ~~ rx:P5/(\d+\.\d+)/ && $0), "3.1415926", 're_tests 1163/1 (1367)');
 is(("have a web browser" ~~ rx:P5/(\ba.{0,10}br)/ && $0), "a web br", 're_tests 1165/1 (1369)');
 ok((not ("Changes" ~~ rx:P5/(?i)\.c(pp|xx|c)?$/)), 're_tests 1167  (1371)');
-#?rakudo 2 skip '(?i) not implemented'
 ok(("IO.c" ~~ rx:P5/(?i)\.c(pp|xx|c)?$/), 're_tests 1169  (1373)');
 is(("IO.c" ~~ rx:P5/(?i)(\.c(pp|xx|c)?$)/ && $0), ".c", 're_tests 1171/1 (1375)');
 ok((not ("C:/" ~~ rx:P5/^([a-z]:)/)), 're_tests 1173  (1377)');
-#?rakudo skip '(?m) not implemented'
 ok(("\nx aa" ~~ rx:P5/(?m)^\S\s+aa$/), 're_tests 1175  (1379)');
 ok(("ab" ~~ rx:P5/(^|a)b/), 're_tests 1176  (1380)');
 ok((not ("abcab" ~~ rx:P5/(\w)?(abc)\1b/)), 're_tests 1178  (1382)');

@@ -59,7 +59,6 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
      ok 'aa' ~~ /:i $matcher/, 'interpolation: match with :i';
 }
 
-#?rakudo todo 'ignorecase + LTM'
 ok 'a' ~~ /:i A|B /, ':i and LTM sanity';
 
 # vim: syn=perl6 sw=4 ts=4 expandtab

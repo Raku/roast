@@ -33,11 +33,9 @@ is(~('foo' ~~ /^<Grammar::Bar::foo>$/), 'foo', 'got right match (foo)');
 is(~('foo' ~~ /^<Grammar::Bar::any>$/), 'foo', 'got right match (any)');
 is(~('bar' ~~ /^<Grammar::Bar::any>$/), 'bar', 'got right match (any)');
 
-#?rakudo skip 'RT 77350'
 ok Grammar::Bar.parse('foo'), 'can parse foo through .parsed and inhertied subrule';
 ok Grammar::Bar.parse('bar', :rule<bar>), 'got right match (bar)';
 ok Grammar::Bar.parse('foo', :rule<foo>), 'got right match (foo)';
-#?rakudo 3 skip 'error'
 ok Grammar::Bar.parse('bar', :rule<any>), 'got right match (any)';
 ok Grammar::Bar.parse('foo', :rule<any>), 'got right match (any)';
 nok Grammar::Bar.parse('boo', :rule<any>), 'No match for bad input (any)';
@@ -58,7 +56,6 @@ is(~('baz' ~~ /^<Grammar::Baz::any>$/), 'baz', 'got right match');
 ok Grammar::Baz.parse('baz', :rule<baz>), 'got right match (baz)';
 ok Grammar::Baz.parse('foo', :rule<foo>), 'got right match (foo)';
 ok Grammar::Baz.parse('bar', :rule<bar>), 'got right match (bar)';
-#?rakudo 3 skip 'error'
 ok Grammar::Baz.parse('baz', :rule<any>), 'got right match (any)';
 ok Grammar::Baz.parse('foo', :rule<any>), 'got right match (any)';
 ok Grammar::Baz.parse('bar', :rule<any>), 'got right match (any)';

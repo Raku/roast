@@ -91,7 +91,6 @@ use Test;
 }
 
 # L<S02/"Embedded Comments"/"Brackets may be nested">
-#?rakudo skip 'nested brackets'
 {
     is 3, #`(
         (Nested parens) works also
@@ -133,7 +132,6 @@ use Test;
 
 # L<S02/"User-selected Brackets"/"Counting of nested brackets"
 #   "applies only to" "pairs of brackets of the same length">
-#?rakudo skip 'nested parens and braces'
 {
     is -1 #`<<<
         Even <this> <<< also >>> works...
