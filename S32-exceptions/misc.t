@@ -58,6 +58,8 @@ throws_like 'CATCH { }; CATCH { }', X::Phaser::Multiple, block => 'CATCH';
 # multiple return types
 throws_like 'sub f(--> List) returns Str { }', X::Redeclaration;
 throws_like 'my Int sub f(--> Str) { }', X::Redeclaration;
+# RT #115356
+throws_like 'class F { }; role F { }', X::Redeclaration, symbol => 'F';
 
 throws_like 'my class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
