@@ -60,5 +60,6 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 }
 
 ok 'a' ~~ /:i A|B /, ':i and LTM sanity';
+ok 'a' ~~ /:i < A B > /, ':i and quote words';
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
