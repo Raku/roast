@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 6;
+plan 7;
 
 # this used to segfault in rakudo
 is_run(
@@ -37,4 +37,7 @@ eval_dies_ok 'time(1, 2, 3)', 'time() with arguments dies';
 # RT #76996
 #?niecza todo
 lives_ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
+
+# RT #76946
+lives_ok { Any .= (); CATCH { when X::AdHoc {1} } }, 'Typed, non-internal exception';
 
