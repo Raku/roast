@@ -254,7 +254,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q4, 'FOO gorch BAR', ", and long form");
 };
 
-#?rakudo skip 'RT 65654'
 {
     my $rt65654 = 'two words';
     is «a $rt65654 z».elems,   4, 'interpolate variable with spaces (French)';
@@ -272,7 +271,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 
 # L<S02/Forcing item context/respects quotes in a shell-like fashion>
-#?rakudo skip '«...»'
 { # qw, interpolating, shell quoting
     my (@q1, @q2) = ();
     my $gorch = "foo bar";
@@ -344,7 +342,6 @@ FOO
 {
   # <<:Pair>>
     my @q = <<:p(1)>>;
-    #?rakudo 2 todo '<< :pair(1) >> (RT 65304)'
     #?niecza todo
     #?pugs todo
     is(@q[0].perl, (:p(1)).perl, "pair inside <<>>-quotes - simple");
@@ -356,10 +353,9 @@ FOO
     is(@q[1], 'junk', "pair inside <<>>-quotes - junk preserved");
 
     @q = <<:def>>;
-    #?rakudo 2 todo '<< :pair(1) >>'
     #?niecza todo
     #?pugs todo
-    is(@q[0].perl, (def => 1).perl, ":pair in <<>>-quotes with no explicit value");
+    is(@q[0].perl, (:def).perl, ":pair in <<>>-quotes with no explicit value");
 
     @q = "(eval failed)";
     try { eval '@q = <<:p<moose>>>;' };
@@ -583,7 +579,7 @@ Hello, World
     #?pugs skip 'multi ok'
     is qqx/echo $var/.chomp,  "world", 'qqx';
     # RT #78874
-    is qx/echo world/.trans('wd' => 'WD'), "WorlD\n", "qx doesn't return a Parrot string";
+    is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
 }
 
 done;
