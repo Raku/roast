@@ -81,7 +81,7 @@ do {
     }
 
     is( -1!, -1 , "Should be parsed as '-(1!)'");
-    ok((not defined try eval '4 !'),  "Whitespace not allowed before user-defined postfix");
+    dies_ok( { eval '4 !' },  "Whitespace not allowed before user-defined postfix");
 }
 
 
