@@ -16,7 +16,7 @@ do {
     sub prefix:<!> (Int $x) is tighter(&infix:<**>) {
         return 3 * $x;
     }
-
+    #?rakudo todo 'changing precedence of already declared op'
     is !1**2, 9, "'is tighter' on prefix works";
 }
 
