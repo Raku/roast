@@ -209,7 +209,6 @@ Testing operator overloading subroutines
 # defining other conversions that may happen?
 
 # here is one that co-erces a MyClass into a Str and a Num.
-#?rakudo skip 'prefix:<~> method'
 #?niecza skip 'import NYI'
 {
     class OtherClass {

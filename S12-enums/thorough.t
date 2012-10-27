@@ -85,7 +85,6 @@ sub test_stuff($x) {
 ok True.perl ~~/^ 'Bool::True'/, 'True.perl';
 ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
 
-#?rakudo skip 'enum name as type constraint'
 {
     enum Negation << :isnt<isnt> :arent<arent> :amnot<amnot> :aint<aint> >>;
     my Negation $foo;
