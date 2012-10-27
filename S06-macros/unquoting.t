@@ -50,7 +50,6 @@ plan 10;
         $q;
     }
 
-    #?rakudo todo 'something gets wrongly bound here'
     is podolsky(), 4, "can build ASTs in a for loop";
 }
 
