@@ -95,7 +95,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/C<Q> forms/:q>
-#?rakudo skip 'Q:q adverbs'
 #?pugs skip 'parsefail'
 { # adverb variation
     my @q = ();
@@ -134,7 +133,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/C<Q> forms/:qq>
-#?rakudo skip 'Q:qq adverbs'
 #?pugs skip 'parsefail'
 { # adverb variation
     my @q = ();
@@ -285,7 +283,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Heredocs/Heredocs are no longer written>
-#?rakudo skip 'quoting with adverbs'
 { # qq:to
     my @q = ();
 
@@ -297,11 +294,10 @@ $foo
 FOO
 
     is(+@q, 1, "q:to// is singular");
-    is(@q[0], "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
+    is(@q[0].subst(/\r/, '', :g), "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
 };
 
 # L<S02/Optional whitespace/Heredocs allow optional whitespace>
-#?rakudo skip 'quoting with adverbs'
 { # q:to indented
     my @q = ();
 
@@ -311,10 +307,9 @@ FOO
         FOO
 
     is(+@q, 1, "q:to// is singular, also when indented");
-    is(@q[0], "blah blah\n\$foo\n", "indentation stripped");
+    is(@q[0].subst(/\r/, '', :g), "blah blah\n\$foo\n", "indentation stripped");
 };
 
-#?rakudo skip 'heredocs'
 { # q:heredoc backslash bug
         my @q = q:heredoc/FOO/
 yoink\n
@@ -322,7 +317,7 @@ splort\\n
 FOO
 ;
         is(+@q, 1, "q:heredoc// is singular");
-        is(@q[0], "yoink\\n\nsplort\\n\n", "backslashes");
+        is(@q[0].subst(/\r/, '', :g), "yoink\\n\nsplort\\n\n", "backslashes");
 }
 
 #?pugs skip 'parsefail'
@@ -388,20 +383,19 @@ is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
 
 # L<S02/Adverbs on quotes/"for user-defined quotes">
 # q:to
-#?rakudo skip 'quoting with adverbs'
 {
     my $t;
     $t = q:to /STREAM/;
 Hello, World
 STREAM
 
-    is $t, "Hello, World\n", "Testing for q:to operator.";
+    is $t.subst(/\r/, '', :g), "Hello, World\n", "Testing for q:to operator.";
 
 $t = q:to /结束/;
 Hello, World
 结束
 
-    is $t, "Hello, World\n", "Testing for q:to operator. (utf8)";
+    is $t.subst(/\r/, '', :g), "Hello, World\n", "Testing for q:to operator. (utf8)";
 }
 
 # Q
