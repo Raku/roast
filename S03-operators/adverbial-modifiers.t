@@ -68,6 +68,7 @@ sub violin($x) {
 sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 
 #?niecza skip 'Multi colonpair syntax not yet understood'
+#?rakudo todo 'Multi colonpair syntax not yet understood'
 {
   # fiddle(XY) fiddle(YX) fiddle(xY) fiddle(Xy)
 
@@ -171,6 +172,7 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 }
 
 #?niecza skip 'Multi colonpair syntax not yet understood'
+#?rakudo todo 'Multi colonpair syntax not yet understood'
 { # adverbs as pairs
 
   my sub f1($s,:$x){$s.perl~$x}
