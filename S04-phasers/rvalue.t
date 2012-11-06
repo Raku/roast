@@ -72,11 +72,8 @@ plan 16;
         $begin_val = BEGIN { $hist ~= 'B'; 'B' };
     }
 
-    #?niecza todo 'block returns no value'
     is $begin(), 'B', 'BEGIN {} runs only once';
-    #?niecza todo 'block returns no value'
     is $begin_val, 'B', 'BEGIN {} as rval is its ret val';
-    #?niecza todo 'block returns no value'
     is $begin(), 'B', 'BEGIN {} runs only once';
 
     # Test END {} as rval:
