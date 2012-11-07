@@ -43,7 +43,6 @@ sub showkv($x) {
     is +$b, 8, '+$bag gives sum of values';
 }
 
-#?rakudo skip ':exists and :delete NYI'
 {
     my $s = bag <a a b foo>;
     is $s<a>:exists, True, ':exists with existing element';

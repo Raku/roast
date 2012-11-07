@@ -35,7 +35,6 @@ sub gen_hash {
     #?niecza skip 'Invocant handling is NYI'
     is (exists %h1: 'a'), True, "Test existence for single key. (Indirect notation)";
     is (%h1.exists('a')), True, "Test existence for single key. (method call)";
-    #?rakudo 2 skip 'NYI as far as I know'
     is (%h1{'a'}:exists), True, "Test existence for single key. (adverb)";
     is (%h1<a>:exists), True, "Test existence for single key. (adverb 2)";
 };
