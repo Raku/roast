@@ -481,7 +481,6 @@ Hello, World
 }
 
 # q:c
-#?rakudo skip 'quoting adverbs'
 {
     my sub f { "hello" };
     my $t = q:c /{f}, world/;
