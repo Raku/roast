@@ -162,10 +162,10 @@ plan 64;
     my %hash = (0 => "A", 1 => "B");
 
     #?niecza todo   
-    is +(%hash<0>:k), 1,
-        ":k on a hash returned an one-elem array";
+    ok %hash<0>:k ~~ Str,
+        ":k on a hash returned the correct key type";
     is ~(%hash<0>:k), "0",
-        ":k on a hash returned the correct one-elem array";
+        ":k on a hash returned the correct key name";
 
     is +(%hash<0 1>:k), 2,
         ":k on a hash returned a tow-elem array";
@@ -183,11 +183,11 @@ plan 64;
     my %hash = (0 => "A", 1 => "B");
 
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
-    is +(%hash<0>:v), 1,
-        ":v on a hash returned an one-elem array";
+    ok %hash<0> ~~ Str,
+        ":v on a hash returns the correct type of value";
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
     is ~(%hash<0>:v), "A",
-        ":v on a hash returned the correct one-elem array";
+        ":v on a hash returned the correct value";
 
     #?niecza todo
     lives_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
