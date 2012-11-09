@@ -235,7 +235,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     @q3 = <<$foo "gorch $bar">>; # texas
     @q4 = qq:quotewords/$foo "gorch $bar"/; # long
 
-    #?rakudo 4 todo 'some ww issue'
     is(+@q1, 2, 'qq:ww// correct number of elements');
     is(+@q2, 2, 'french double angle');
     is(+@q3, 2, 'texas double angle');
