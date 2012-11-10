@@ -428,7 +428,6 @@ Hello, World
 }
 # utf8
 
-#?rakudo skip 'q:x'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";

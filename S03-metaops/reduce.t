@@ -319,7 +319,7 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
     }
 }
 
-#?rakudo skip 'triangle [\^^] and [\xor]'
+#?rakudo todo 'triangle [\^^] and [\xor]'
 #?niecza skip '^^'
 {
     is (join ', ', [\^^] False, 0, 5, '', False, 16,    0,     Any,   "hello", False),
@@ -332,7 +332,7 @@ is( ([min] Any, Any, 2), 2, '[min] Any, Any, 2 returns 2');
 
 # RT 57976 implement orelse
 #?niecza skip 'huh?  these are macros'
-#?rakudo skip 'orelse'
+#?rakudo todo 'orelse'
 {
 
     is (join ', ', [\//] Any,    0, 1),

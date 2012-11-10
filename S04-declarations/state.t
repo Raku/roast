@@ -116,7 +116,7 @@ plan 42;
 
 # state will start {...}
 #?pugs eval "parse error"
-#?rakudo skip 'will start { ... }'
+#?rakudo todo 'will start { ... }'
 #?DOES 1
 {
     my ($a, $b);
@@ -152,7 +152,7 @@ plan 42;
 # L<http://groups.google.de/group/perl.perl6.language/msg/07aefb88f5fc8429>
 # fudged a bit on syntax
 #?pugs todo 'anonymous state vars'
-#?rakudo skip 'references and anonymous state vars'
+#?rakudo todo 'references and anonymous state vars'
 #?DOES 1
 {
     my $gen = sub { \(state $ ) };
@@ -184,7 +184,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
 }
 
 # state() inside regular expressions
-#?rakudo skip 'embedded closures in regexen'
+#?rakudo todo 'embedded closures in regexen'
 #?niecza skip ':Perl5'
 #?DOES 1
 {

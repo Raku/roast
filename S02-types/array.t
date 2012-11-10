@@ -253,7 +253,7 @@ my @array2 = ("test", 1, Mu);
                                    "through a variable is run-time error";
   #?pugs todo
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
-  #?rakudo skip "binding not yet fatal"
+  #?rakudo todo "binding not yet fatal"
   #?pugs todo
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }

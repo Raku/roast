@@ -72,7 +72,6 @@ is(qq{a{chr 98}c}, 'a{chr 98}c', "curly brace delimiters interfere with closure 
 is(Q"abc\\d\\'\/", Q"abc\\d\\'\/", "raw quotation works");
 is(q"abc\\d\"\'\/", Q|abc\d"\'\/|, "single quotation works"); #"
 is(qq"abc\\d\"\'\/", Q|abc\d"'/|, "double quotation works"); #"
-#?rakudo 3 skip 'qa qb and array/hash interpolation'
 #?pugs skip 'parsefail'
 is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");

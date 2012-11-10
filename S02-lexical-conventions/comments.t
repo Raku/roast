@@ -76,7 +76,7 @@ use Test;
     >>> 1, '#`<<<...>>>';
 }
 
-#?rakudo skip 'nom regression'
+#?rakudo todo 'nom regression'
 {
     eval_lives_ok( q{{
         my $var = \#`((( comment ))) 12;
