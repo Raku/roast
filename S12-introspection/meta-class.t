@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 =begin pod
 
@@ -42,5 +42,11 @@ is Foo.^layout, P6opaque, '^.layout';
 
 # RT #115208
 eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
+
+# RT #114130
+{
+    try eval 'Any.HOW(Foo)';
+    isa_ok $!, X::Syntax::Argument::MOPMacro, "Passing arguments to HOW throws an exception";
+}
 
 # vim: ft=perl6
