@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 19;
 
 =begin description
 
@@ -61,5 +61,11 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 
 ok 'a' ~~ /:i A|B /, ':i and LTM sanity';
 ok 'a' ~~ /:i < A B > /, ':i and quote words';
+
+# RT #114692
+{
+    try eval '"ABC" ~~ /:iabc/';
+    ok $!, "need whitespace after modifier";
+}
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
