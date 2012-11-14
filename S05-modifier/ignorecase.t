@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 =begin description
 
@@ -61,6 +61,12 @@ ok('a' ~~ m/:i 'A'/, ':i descends into quotes');
 
 ok 'a' ~~ /:i A|B /, ':i and LTM sanity';
 ok 'a' ~~ /:i < A B > /, ':i and quote words';
+
+#RT #114362
+{
+    ok "BLAR" ~~ /:ignorecase [blar | blubb]/, ":ignorecase works with |";
+    ok "BluBb" ~~ /:ignorecase [blar || blubb]/, ":ignorecase works with |";
+}
 
 # RT #114692
 {
