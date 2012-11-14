@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 19;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 
@@ -126,4 +126,10 @@ plan 18;
     }, 'can share variable between loop body and condition';
 }
 
+# RT #114432
+{
+    try eval 'repeat { "but I myself" }';
+    ok (~$! ~~ /'"repeat" is missing its "while" or "until"'/),
+        "can't repeat alone";
+}
 # vim: ft=perl6
