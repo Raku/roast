@@ -562,6 +562,7 @@ plan 79;
 # my Hash:of(Array:of(Recipe)) %book;
 # my Hash of Array of Recipe %book; my %book of Hash of Array of Recipe
 
+#RT #75896
 #?niecza skip 'Coercive declarations NYI'
 #?pugs skip 'parsefail'
 {
