@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 140;
+plan 142;
 
 # I'm not convinced this is in the right place
 # Some parts of this testing (i.e. WHO) seem a bit more S10ish -sorear
@@ -238,6 +238,14 @@ plan 140;
         ok PROCESS::.<$IN> === $*IN, 'PROCESS::.{} works';
         ok $::("PROCESS")::IN === $*IN, '::("PROCESS") works';
     }
+}
+
+#RT #89706
+{
+    $PROCESS::PROGRAM_NAME = "otter";
+    is $*PROGRAM_NAME, "otter", 'existing $* assignable via PROCESS';
+    $PROCESS::SOME_OTHER_VAR = "else";
+    is $*SOME_OTHER_VAR, "else", 'new $* assignable via PROCESS';
 }
 
 # COMPILING - not testable without BEGIN
