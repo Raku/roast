@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2;
+plan 3;
 
 # TODO: this should be $?OS, but that's not yet supported under Rakudo
 if $*OS eq "browser" {
@@ -17,5 +17,7 @@ ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname
 # above is a junction hack for Unix and Win32 file
 # paths until the FileSpec hack is working - Stevan
 # changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
+
+lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable'
 
 # vim: ft=perl6
