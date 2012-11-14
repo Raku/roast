@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 14;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -54,6 +54,11 @@ line 4
 {
     my $w = 'work';
     is "this should $w\</a>", 'this should work</a>', 'backslash after scalar';
+}
+
+# RT #115508
+{
+    is ord("\a"), 7, "alarm"
 }
 
 # vim: ft=perl6
