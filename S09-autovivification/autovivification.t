@@ -58,20 +58,19 @@ plan 42;
   is ~@array, "  1 2 3", "autovivification of an array element to an array by &push";
 }
 
-#?rakudo skip 'autoviv with push/unshift'
+#RT #84000
 #?niecza skip 'Unable to resolve method push in class Any'
 #?pugs todo
 {
   my %hash;
 
   push %hash<key>, 1,2,3;
-  is ~%hash, "key\t1 2 3\n", "autovivification of an hash element to an array by &push";
+  is ~%hash, "key\t1 2 3", "autovivification of an hash element to an array by &push";
 }
 
 # Simple hash autovivification
 # Actually, that first test passes, but I can't figure out how to skip just
 # the next two.
-#?rakudo skip "Error Msg: get_pmc_keyed() not implemented in class 'Undef'"
 {
   my $hashref;
   ok $hashref !~~ Hash, "uninitialized variable is not a Hash (1)";
@@ -80,6 +79,7 @@ plan 42;
   is $hashref<key>,  23, "hash element assignment worked";
   #?niecza skip 'No value for parameter \$other in CORE Any.isa'
   #?pugs skip 'isa multi variant'
+  #?rakudo skip 'isa multi variant'
   ok $hashref.isa !~~ Hash, "uninitialized variable was autovivified to a hash (1)";
 }
 
