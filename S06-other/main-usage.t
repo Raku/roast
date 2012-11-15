@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan  20;
+plan  22;
 
 BEGIN { @*INC.push: 't/spec/packages' }
 
@@ -166,3 +166,18 @@ is_run 'sub MAIN() { print 42 }', :args['--foo'],
         err => rx:i/usage/,
     },
     'superfluous options trigger usage message';
+
+# RT #115744
+is_run 'sub MAIN($arg) { print $arg }',
+    {
+        out => "--23"
+    },
+    :args['--', '--23'],
+    'Stopping option processing';
+
+is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
+    {
+        out => 'True-option'
+    },
+    :args['--bool', '--', '-option'],
+    'Boolean argument with --';
