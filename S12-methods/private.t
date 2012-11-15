@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S12/Private methods/"Private methods are declared using">
 

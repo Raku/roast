@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 25;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
