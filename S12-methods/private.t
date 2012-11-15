@@ -93,4 +93,7 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
     is RT101964.new.foo, 'OH HAI', 'can pass private array attribute to private method param';
 }
 
+#RT #115308
+throws_like '$_!X::a', X::Method::Private::Permission;
+
 # vim: syn=perl6
