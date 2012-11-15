@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 # TODO: move to S02?
 # L<S02/Generic types/>
@@ -39,4 +39,6 @@ try {
 }
 ok($ok, 'can use captured type in declaration');
 
+#RT #114216
+eval_lives_ok q':(::T $x)', "No error on type capture";
 # vim: ft=perl6
