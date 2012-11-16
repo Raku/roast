@@ -18,6 +18,8 @@ use Test;
         Parens works also
     ) 1, 'multiline embedded comment with #`()';
 
+    eval_lives_ok "#`( foo )", "comment as first and only statement";
+
     eval_lives_ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
 
     my $var = #`{ foo bar } 32;
