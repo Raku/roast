@@ -127,6 +127,7 @@ plan 19;
 }
 
 # RT #114432
+#?niecza todo
 {
     try eval 'repeat { "but I myself" }';
     ok (~$! ~~ /'"repeat" is missing its "while" or "until"'/),

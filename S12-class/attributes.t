@@ -133,7 +133,7 @@ eval_dies_ok q[
 }
 
 #RT #114234
-#?niecza skip "$b declared but not used. FIXME later."
+#?niecza skip '$b declared but not used. FIXME later.'
 {
     eval_lives_ok q{
         class A { state $b; }
