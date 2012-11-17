@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 152;
+plan 153;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -294,6 +294,19 @@ FOO
 
     is(+@q, 1, "q:to// is singular");
     is(@q[0].subst(/\r/, '', :g), "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
+};
+
+{ # qq:to
+    my @q = ();
+
+    @q = qq:to/FOO/;
+        blah
+        $bar
+        blah
+        $foo
+        FOO
+
+    is(@q[0].subst(/\r/, '', :g), "blah\nBAR\nblah\nFOO\n", "here doc interpolating with indentation");
 };
 
 # L<S02/Optional whitespace/Heredocs allow optional whitespace>
