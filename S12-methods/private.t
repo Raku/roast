@@ -1,7 +1,9 @@
 use v6;
 use Test;
+BEGIN { @*INC.push('t/spec/packages/') };
+use Test::Util;
 
-plan 12;
+plan 13;
 
 # L<S12/Private methods/"Private methods are declared using">
 
