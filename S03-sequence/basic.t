@@ -3,7 +3,7 @@ use Test;
 
 # L<S03/List infix precedence/"the sequence operator">
 
-plan 126;
+plan 129;
 
 # single-term sequence
 
@@ -253,6 +253,13 @@ is (1, 1, &[+] ... *).[^10], '1 1 2 3 5 8 13 21 34 55', 'use &[+] on infix:<...>
 # see http://irclog.perlgeek.de/perl6/2012-05-30#i_5659147 ff.
 # previously rakudo said Not enough positional parameters passed; got 3 but expected 4
 is ((1,1,2,4,8)[^4], *+*+*+* ... *)[4], 8, 'WhateverCode with arity > 3 gets enough arguments';
+
+#RT #75674
+{
+    is (4 ... ^5), <4 3 2 1 0 1 2 3 4>, "RT #75674";
+    is (4 ... 0,1,2,3,4), <4 3 2 1 0 1 2 3 4>, "RT #75674";
+    is (-5 ... ^5), <-5 -4 -3 -2 -1 0 1 2 3 4>, "RT #75674";
+}
 
 done;
 

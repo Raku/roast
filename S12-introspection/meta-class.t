@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 12;
 
 =begin pod
 
@@ -39,5 +39,14 @@ is Foo.^name(), 'Foo', '... the name() property is Foo';
 is Foo.^version(), v0.0.1, '... the version() property is 0.0.1';
 #?rakudo skip '.layout'
 is Foo.^layout, P6opaque, '^.layout';
+
+# RT #115208
+eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
+
+# RT #114130
+{
+    try eval 'Any.HOW(Foo)';
+    isa_ok $!, X::Syntax::Argument::MOPMacro, "Passing arguments to HOW throws an exception";
+}
 
 # vim: ft=perl6

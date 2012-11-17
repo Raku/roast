@@ -95,7 +95,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/C<Q> forms/:q>
-#?rakudo skip 'Q:q adverbs'
 #?pugs skip 'parsefail'
 { # adverb variation
     my @q = ();
@@ -134,7 +133,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/C<Q> forms/:qq>
-#?rakudo skip 'Q:qq adverbs'
 #?pugs skip 'parsefail'
 { # adverb variation
     my @q = ();
@@ -144,7 +142,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Interpolating into a single-quoted string/using the \qq>
-#?rakudo skip 'q[..] with variations'
+
 { # \qq[] constructs interpolate in q[]
     my ( @q1, @q2, @q3, @q4 ) = ();
     @q1 = q[$foo \qq[$bar]];
@@ -197,7 +195,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', '...');
 };
 
-#?rakudo skip 'q:w'
+
 { # adverb variation
     my @q = ();
     @q = (q:w/$foo $bar/);
@@ -206,7 +204,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', "...");
 };
 
-#?rakudo skip 'q:w'
 { # whitespace sep aration does not break quote constructor
   # L<S02/Whitespace before adverbs/Whitespace is allowed between the "q" and its adverb: q :w /.../.>
     my @q = ();
@@ -216,8 +213,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q[1], '$bar', "...");
 };
 
-
-#?rakudo skip 'quoting with adverbs'
 { # qq:w,Interpolating quote constructor with words adverb
   # L<S02/Adverbs on quotes/"Split result on words (no quote protection)">
     my (@q1, @q2) = ();
@@ -231,7 +226,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(~@q2, 'FOO "gorch BAR"', "long form output is the same as the short");
 };
 
-#?rakudo skip 'quoting with adverbs'
 #?niecza todo
 { # qq:ww, interpolating L<S02/Literals/double angles do interpolate>
   # L<S02/Forcing item context/"implicit split" "shell-like fashion">
@@ -260,7 +254,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is <<a $rt65654 z>>.elems, 4, 'interpolate variable with spaces (Texas)';
 }
 
-#?rakudo skip '«...»'
+#?rakudo todo '«...»'
 #?niecza todo
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
@@ -288,7 +282,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 };
 
 # L<S02/Heredocs/Heredocs are no longer written>
-#?rakudo skip 'quoting with adverbs'
 { # qq:to
     my @q = ();
 
@@ -300,11 +293,10 @@ $foo
 FOO
 
     is(+@q, 1, "q:to// is singular");
-    is(@q[0], "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
+    is(@q[0].subst(/\r/, '', :g), "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
 };
 
 # L<S02/Optional whitespace/Heredocs allow optional whitespace>
-#?rakudo skip 'quoting with adverbs'
 { # q:to indented
     my @q = ();
 
@@ -314,10 +306,9 @@ FOO
         FOO
 
     is(+@q, 1, "q:to// is singular, also when indented");
-    is(@q[0], "blah blah\n\$foo\n", "indentation stripped");
+    is(@q[0].subst(/\r/, '', :g), "blah blah\n\$foo\n", "indentation stripped");
 };
 
-#?rakudo skip 'heredocs'
 { # q:heredoc backslash bug
         my @q = q:heredoc/FOO/
 yoink\n
@@ -325,7 +316,7 @@ splort\\n
 FOO
 ;
         is(+@q, 1, "q:heredoc// is singular");
-        is(@q[0], "yoink\\n\nsplort\\n\n", "backslashes");
+        is(@q[0].subst(/\r/, '', :g), "yoink\\n\nsplort\\n\n", "backslashes");
 }
 
 #?pugs skip 'parsefail'
@@ -364,7 +355,6 @@ FOO
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");
 };
 
-#?rakudo skip '\c97 etc'
 { # weird char escape sequences
     is("\c97", "a", '\c97 is "a"');
     is("\c102oo", "foo", '\c102 is "f", works next to other letters');
@@ -376,7 +366,8 @@ FOO
 
     is("\x41", "A", 'hex interpolation - \x41 is "A"');
     is("\o101", "A", 'octal interpolation - \o101 is also "A"' );
-
+    
+    #?rakudo 3 skip '\c@ etc'
     is("\c@", "\0", 'Unicode code point "@" converts correctly to "\0"');
     is("\cA", chr(1), 'Unicode "A" is #1!');
     is("\cZ", chr(26), 'Unicode "Z" is chr 26 (or \c26)');
@@ -391,20 +382,19 @@ is( q<< <<woot>> >>, ' <<woot>> ', 'nested <<texas>> quotes (RT #66888)' );
 
 # L<S02/Adverbs on quotes/"for user-defined quotes">
 # q:to
-#?rakudo skip 'quoting with adverbs'
 {
     my $t;
     $t = q:to /STREAM/;
 Hello, World
 STREAM
 
-    is $t, "Hello, World\n", "Testing for q:to operator.";
+    is $t.subst(/\r/, '', :g), "Hello, World\n", "Testing for q:to operator.";
 
 $t = q:to /结束/;
 Hello, World
 结束
 
-    is $t, "Hello, World\n", "Testing for q:to operator. (utf8)";
+    is $t.subst(/\r/, '', :g), "Hello, World\n", "Testing for q:to operator. (utf8)";
 }
 
 # Q
@@ -420,7 +410,6 @@ Hello, World
 }
 
 # q:b
-#?rakudo skip 'quoting adverbs'
 #?pugs skip 'parsefail'
 {
     my $t = q:b /\n\n\n/;
@@ -433,26 +422,23 @@ Hello, World
 }
 
 # q:x
-#?rakudo skip 'q:x'
 {
-    my $result = %*VM.perl ~~ /MSWIN32/ ?? "hello\r\n" !! "hello\n";
+    my $result = $*OS ~~ /:i win32/ ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
 
-#?rakudo skip 'q:x'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
-#?rakudo skip 'qq:x'
 {
     my $world = 'world';
-    is qq:x/echo hello $world/, "hello world\n", 'Testing qq:x operator';
+    ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
-#?rakudo skip 'q:x assigned to array'
+#?rakudo todo 'q:x assigned to array'
 #?niecza todo ':x'
 #?pugs todo
 {
@@ -460,7 +446,7 @@ Hello, World
     is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
 }
 
-#?rakudo skip 'q:x assigned to array'
+#?rakudo todo 'q:x assigned to array'
 #?niecza todo ':x'
 #?pugs todo
 {
@@ -472,7 +458,6 @@ Hello, World
 
 # L<S02/Adverbs on quotes/"Interpolate % vars">
 # q:h
-#?rakudo skip 'quoting adverbs'
 #?niecza todo
 {
     # Pugs can't parse q:h currently.
@@ -483,7 +468,6 @@ Hello, World
 }
 
 # q:f
-#?rakudo skip 'quoting adverbs'
 #?niecza skip '& escape'
 {
     my sub f { "hello" };
@@ -496,7 +480,6 @@ Hello, World
 }
 
 # q:c
-#?rakudo skip 'quoting adverbs'
 {
     my sub f { "hello" };
     my $t = q:c /{f}, world/;
@@ -504,7 +487,6 @@ Hello, World
 }
 
 # q:a
-#?rakudo skip 'quoting adverbs'
 {
     my @t = qw/a b c/;
     my $s = q:a /@t[]/;
@@ -512,7 +494,6 @@ Hello, World
 }
 
 # q:s
-#?rakudo skip 'quoting adverbs'
 {
     my $s = "someone is laughing";
     my $t = q:s /$s/;
@@ -524,7 +505,6 @@ Hello, World
 }
 
 # multiple quoting modes
-#?rakudo skip 'quoting adverbs'
 {
     my $s = 'string';
     my @a = <arr1 arr2>;

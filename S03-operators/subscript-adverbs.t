@@ -61,13 +61,13 @@ plan 64;
     my @array = <A B>;
 
     #?niecza todo
-    is +(@array[0]:k), 1,
-        ":k on an array returned an one-elem array";
+    ok @array[0]:k ~~ Int,
+        ":k on an array returned an integer index";
     is ~(@array[0]:k), "0",
-        ":k on an array returned the correct one-elem array";
+        ":k on an array returned the correct index";
 
     is +(@array[0,1]:k), 2,
-        ":k on an array returned a tow-elem array";
+        ":k on an array returned a two-elem array";
     is ~(@array[0,1]:k), "0 1",
         ":k on an array returned the correct two-elem array";
 
@@ -82,11 +82,11 @@ plan 64;
     my @array = <A B>;
 
     #?niecza skip 'Excess arguments to KERNEL Array.postcircumfix:<[ ]>, unused named v'
-    is +(@array[0]:v), 1,
-        ":v on an array returned an one-elem array";
+    ok @array[0]:v ~~ Str,
+        ":v on an array returned the right type of value";
     #?niecza skip 'Excess arguments to KERNEL Array.postcircumfix:<[ ]>, unused named v'
     is ~(@array[0]:v), "A",
-        ":v on an array returned the correct one-elem array";
+        ":v on an array returned the correct value";
 
     #?niecza todo
     lives_ok {@array[0]:v = "a"}, 'can assign to @array[0]:v';
@@ -162,10 +162,10 @@ plan 64;
     my %hash = (0 => "A", 1 => "B");
 
     #?niecza todo   
-    is +(%hash<0>:k), 1,
-        ":k on a hash returned an one-elem array";
+    ok %hash<0>:k ~~ Str,
+        ":k on a hash returned the correct key type";
     is ~(%hash<0>:k), "0",
-        ":k on a hash returned the correct one-elem array";
+        ":k on a hash returned the correct key name";
 
     is +(%hash<0 1>:k), 2,
         ":k on a hash returned a tow-elem array";
@@ -183,11 +183,11 @@ plan 64;
     my %hash = (0 => "A", 1 => "B");
 
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
-    is +(%hash<0>:v), 1,
-        ":v on a hash returned an one-elem array";
+    ok %hash<0> ~~ Str,
+        ":v on a hash returns the correct type of value";
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
     is ~(%hash<0>:v), "A",
-        ":v on a hash returned the correct one-elem array";
+        ":v on a hash returned the correct value";
 
     #?niecza todo
     lives_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';

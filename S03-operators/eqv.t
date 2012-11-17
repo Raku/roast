@@ -98,7 +98,6 @@ plan 54;
 }
 
 {
-  #?niecza todo
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
   #?pugs todo
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";

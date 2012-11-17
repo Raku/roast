@@ -277,4 +277,11 @@ throws_like 'Set(Any.new)', X::Set::Coerce;
 throws_like 'use fatal; (1+2i).Num',  X::Numeric::Real, target => Num;
 throws_like 'use fatal; (1+2i).Real', X::Numeric::Real, target => Real;
 
+#RT #114134
+{
+throws_like 'class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")', X::TypeCheck::Binding;
+
+dies_ok {eval(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";
+}
+
 done;

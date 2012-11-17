@@ -18,7 +18,6 @@ sub gen_hash {
     is %h1<b>:delete, $b, "Test for delete single key.";
 }
 
-#?rakudo todo 'Slices'
 {
     my %h1 = gen_hash;
     my @cde = %h1<c d e>;

@@ -63,8 +63,7 @@ is('$world @list[] %hash{} &func()', '$world @list[] %hash{} &func()', 'single q
 is("Hello $world!", "Hello World!", "! is not a part of var names");
 sub list_count (*@args) { +@args }
 is(list_count("@list[]"), 1, 'quoted interpolation gets string context');
-#?niecza todo 'apparently curly brace delimiters DO interfere with closure interpolation'
-is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure interpolation");
+is(qq{a{chr 98}c}, 'a{chr 98}c', "curly brace delimiters interfere with closure interpolation");
 
 # Quoting constructs
 # The next test will always succeed, but if there's a bug it probably
@@ -73,7 +72,6 @@ is(qq{a{chr 98}c}, 'abc', "curly brace delimiters don't interfere with closure i
 is(Q"abc\\d\\'\/", Q"abc\\d\\'\/", "raw quotation works");
 is(q"abc\\d\"\'\/", Q|abc\d"\'\/|, "single quotation works"); #"
 is(qq"abc\\d\"\'\/", Q|abc\d"'/|, "double quotation works"); #"
-#?rakudo 3 skip 'qa qb and array/hash interpolation'
 #?pugs skip 'parsefail'
 is(qa"$world @list[] %hash{}", Q"$world 1 2 %hash{}", "only interpolate array");
 is(qb"$world \\\"\n\t", "\$world \\\"\n\t", "only interpolate backslash");

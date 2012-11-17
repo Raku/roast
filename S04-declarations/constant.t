@@ -84,7 +84,7 @@ use Test;
     dies_ok { ConstantTest3::yak }, 'constant can be explicitly "my"-scoped';
 }
 
-#?rakudo skip 'COMPILING'
+#?rakudo todo 'COMPILING'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -106,7 +106,7 @@ use Test;
     ok $ok, "declaring a constant in terms of hash constant works";
 }
 
-#?rakudo skip 'COMPILING'
+#?rakudo todo 'COMPILING'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;
@@ -128,7 +128,7 @@ use Test;
     ok $ok, "declaring a constant in terms of array constant works";
 }
 
-#?rakudo skip 'COMPILING'
+#?rakudo todo 'COMPILING'
 #?niecza skip 'Cannot use COMPILING outside BEGIN scope'
 {
     my $ok;

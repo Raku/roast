@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 25;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -124,4 +124,19 @@ eval_dies_ok q[
     isa_ok B.new.foo, A, 'class attribute can be initialized using .=';
 }
 
+#RT #115280
+{
+    eval_lives_ok '(class A { has $.x }).new.x.HOW',
+        "HOW on attributes lives, custom class";
+    eval_lives_ok '(1/2).numerator.HOW',
+        "HOW on attributes lives, builtin";
+}
+
+#RT #114234
+#?niecza skip '$b declared but not used. FIXME later.'
+{
+    eval_lives_ok q{
+        class A { state $b; }
+    }, "No segfault on state variables";
+}
 # vim: ft=perl6

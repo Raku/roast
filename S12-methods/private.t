@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S12/Private methods/"Private methods are declared using">
 
@@ -92,5 +92,9 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
     }
     is RT101964.new.foo, 'OH HAI', 'can pass private array attribute to private method param';
 }
+
+#RT #115308
+#?niecza skip "throws_like NYI"
+throws_like '$_!X::a', X::Method::Private::Permission;
 
 # vim: syn=perl6

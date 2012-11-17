@@ -21,7 +21,6 @@ eval_lives_ok(';my $x = 2;{my $x = 2;;};', 'extra terminators');
 eval_dies_ok('{my $x = 2;', 'open closure');
 eval_dies_ok('my $x = ', 'incomplete expression');
 
-#?rakudo skip 'parsing do { ... } + 1'
 {
     my $x = do {
         10
@@ -34,6 +33,7 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     }
     + 1;
 
+    #?rakudo todo "??"
     is($y, 10, "}\\n + 1 are two statements");
 
     my $z = [];

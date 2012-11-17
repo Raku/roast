@@ -18,6 +18,9 @@ use Test;
         Parens works also
     ) 1, 'multiline embedded comment with #`()';
 
+    # RT #115762
+    eval_lives_ok "#`( foo )", "comment as first and only statement";
+
     eval_lives_ok "2 * 3\n #`<<<\n comment>>>", "multiline comment with <<<";
 
     my $var = #`{ foo bar } 32;
@@ -76,7 +79,7 @@ use Test;
     >>> 1, '#`<<<...>>>';
 }
 
-#?rakudo skip 'nom regression'
+#?rakudo todo 'nom regression'
 {
     eval_lives_ok( q{{
         my $var = \#`((( comment ))) 12;
@@ -103,7 +106,6 @@ use Test;
 
 # I am not sure if this is speced somewhere:
 # comments can be nested
-#?rakudo skip 'nested brackets'
 #?niecza skip 'Possible runaway string'
 {
     is 3, #`(
@@ -126,6 +128,7 @@ use Test;
     # comment() before seeing that I meant #`{ comment within this string.
 
 #?pugs todo 'bug'
+#?rakudo skip 'NYI'
     eval_lives_ok " #`<<\n comment\n # >>\n >> 3",
         'single line comment cannot correctly nested within multiline';
 }

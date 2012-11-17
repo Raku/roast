@@ -65,11 +65,11 @@ sub showkv($x) {
     nok $b.exists("farve"), "... and everything is still okay";
 }
 
-#?rakudo skip ':exists and :delete NYI'
 {
     my $s = KeyBag.new(<a a b foo>);
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
+    #?rakudo 2 skip ':delete NYI'
     is $s<a>:delete, 2, ':delete works on KeyBag';
     is showkv($s), 'b:1 foo:1', '...and actually deletes';
 }

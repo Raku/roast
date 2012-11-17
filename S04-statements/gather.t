@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 22;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -193,6 +193,13 @@ plan 21;
   };
 
   is ~@outer, "5 1 2 3 5", "method form of take works.";
+}
+
+# RT #115598
+{
+    my $x;
+    my @a = gather { $x = take 3; };
+    is $x, 3, "return value of take" 
 }
 
 # vim: ft=perl6

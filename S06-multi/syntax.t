@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 41;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -164,6 +164,19 @@ multi with_cap($a) { $a }
 multi with_cap($a,$b,|cap) { return with_cap($a + $b, |cap) }
 #?pugs skip 'with_cap not found'
 is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
+
+#RT #114886 - order of declaration matters
+{
+    multi sub fizzbuzz(Int $ where * %% 15) { 'FizzBuzz' };
+    multi sub fizzbuzz(Int $ where * %% 5) { 'Buzz' };
+    multi sub fizzbuzz(Int $ where * %% 3) { 'Fizz' };
+    multi sub fizzbuzz(Int $number) { $number };
+    is
+        (1,3,5,15).map(&fizzbuzz).join(" "),
+        <1 Fizz Buzz FizzBuzz>,
+        "ordered multi subs";
+}
+
 
 done;
 

@@ -2,7 +2,7 @@
 
 use Test;
 
-plan 9;
+plan 10;
 
 =begin pod
 
@@ -45,5 +45,12 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 # RT #109064
 eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
     'named parameter of undeclared attribute dies';
+
+# RT #72082
+{
+    try { eval 'sub rt72082(@a, $b) {}; rt72082(5)' };
+    my $error = ~$!;
+    ok $error ~~ / 'will never work' .* 'Expected' .* '(@a, $b)' /
+}
 
 # vim: ft=perl6

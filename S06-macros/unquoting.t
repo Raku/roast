@@ -62,7 +62,6 @@ plan 10;
     }
 
     my $paradox = "EPR";
-    #?rakudo todo 'unquotes get the wrong lexical context'
     is rosen(sub { $paradox }), "EPR", "unquotes retain their lexical context";
 }
 

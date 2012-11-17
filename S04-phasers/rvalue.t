@@ -34,7 +34,6 @@ plan 16;
     is $z, 'MOIN', 'can access built-in methods in BEGIN statement prefix';
 }
 
-#?rakudo skip 'lexicals in phasers'
 {
     my $hist = '';
 
@@ -70,19 +69,16 @@ plan 16;
 
     my $begin_val;
     my $begin = {
-        $begin_val = BEGIN { $hist ~= 'B' };
+        $begin_val = BEGIN { $hist ~= 'B'; 'B' };
     }
 
-    #?niecza todo 'block returns no value'
     is $begin(), 'B', 'BEGIN {} runs only once';
-    #?niecza todo 'block returns no value'
     is $begin_val, 'B', 'BEGIN {} as rval is its ret val';
-    #?niecza todo 'block returns no value'
     is $begin(), 'B', 'BEGIN {} runs only once';
 
     # Test END {} as rval:
     #?niecza skip 'Excess arguments to eval, used 1 of 2 positionals'
-    ok !eval 'my $end_val = END { 3 }', "END {} can't be used as a rvalue";
+    ok !eval('my $end_val = END { 3 }'), "END {} can't be used as a rvalue";
 }
 
 # vim: ft=perl6
