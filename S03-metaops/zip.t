@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 23;
+plan 24;
 
 ok eval('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -68,6 +68,8 @@ isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
     is $l.[1].lol.elems, 3, 'Z, retains list associativity';
     is $l.[2].lol.elems, 3, 'Z, retains list associativity';
 }
-    
+
+# RT #73948
+is (1, 2 Z, 3, 4).join('|'), '1|3|2|4', 'Z, flattens in list context';
 
 # vim: ft=perl6
