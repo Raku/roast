@@ -168,6 +168,7 @@ is_run 'sub MAIN() { print 42 }', :args['--foo'],
     'superfluous options trigger usage message';
 
 # RT #115744
+#?rakudo todo 'RT 115744'
 is_run 'sub MAIN($arg) { print $arg }',
     {
         out => "--23"
@@ -175,6 +176,7 @@ is_run 'sub MAIN($arg) { print $arg }',
     :args['--', '--23'],
     'Stopping option processing';
 
+#?rakudo todo 'RT 115744'
 is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     {
         out => 'True-option'
