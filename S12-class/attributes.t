@@ -136,7 +136,7 @@ eval_dies_ok q[
 #?niecza skip '$b declared but not used. FIXME later.'
 {
     eval_lives_ok q{
-        class A { state $b; }
+        my class A { state $b; }
     }, "No segfault on state variables";
 }
 # vim: ft=perl6
