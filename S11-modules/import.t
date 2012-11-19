@@ -17,6 +17,7 @@ plan 13;
 
     is Afoo(), 'sub A::Afoo', 'import imports things marked as "is export"';
     dies_ok {eval(q{ Abar() })}, "doesn't import non-exported routines";
+    # RT #114246
     is pub, 42, 'can import constants';
     dies_ok { eval 'priv' }, 'cannot access non-exported constants';
 }
