@@ -126,7 +126,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     my $a = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     my $c = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
-    ok ($a leg $b || $b leg $c), 'different results due to random random-number seed';
+    ok ($a ne $b || $b ne $c), 'different results due to random random-number seed';
 }
 
 # vim: ft=perl6
