@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 =begin description
 
@@ -120,5 +120,13 @@ is (0, 1).roll(*).[^10].elems, 10, '.roll(*) returns at least ten elements';
 
 is (1..^2).roll, 1, '1-elem Range roll';
 ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
+
+# RT 89972
+{
+    my $a = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
+    my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
+    my $c = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
+    ok ($a leg $b || $b leg $c), 'different results due to random random-number seed';
+}
 
 # vim: ft=perl6
