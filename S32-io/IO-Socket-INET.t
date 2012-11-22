@@ -89,10 +89,14 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], '789', 'received next 3 characters';
     is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', 'remaining 26 were buffered';
     # Multibyte characters
-    is $expected[$i++], chr(0xbeef), "received {chr 0xbeef}";
+    #?rakudo skip 'RT 115862'
+    is $expected[$i], chr(0xbeef), "received {chr 0xbeef}";
+    $i++;
     is $expected[$i++], 1, '... which is 1 character';
     is $expected[$i++], 1, 'received another character';
-    is $expected[$i++], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
+    #?rakudo skip 'RT 115862'
+    is $expected[$i], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
+    $i++;
 
     # test 5 tests get()
     if $is-win {
