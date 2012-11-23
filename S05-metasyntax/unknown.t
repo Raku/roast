@@ -31,7 +31,7 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
     ok "$!" ~~ /:i quantif/, 'error message mentions quantif{y,ier}';
 }
 
-# RT 77110
+# RT #77110, #77386
 {
     try { eval '$_ = "0"; s/-/1/;' };
     ok "$!" ~~ /'Unrecognized regex metacharacter -'/,
