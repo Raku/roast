@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 13;
 
 # L<S05/Simplified lexical parsing of patterns/not all non-identifier glyphs are currently meaningful as metasyntax>
 
@@ -33,9 +33,9 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 
 # RT #77110, #77386
 {
-    try { eval '$_ = "0"; s/-/1/;' };
-    ok "$!" ~~ /'Unrecognized regex metacharacter -'/,
-        'unescaped "-" is not valid regular expression metasyntax';
+    BEGIN { @*INC.push('t/spec/packages/') };
+    use Test::Util;
+    throws_like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';
 }
 
 # vim: ft=perl6
