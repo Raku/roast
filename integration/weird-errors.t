@@ -29,7 +29,8 @@ is_run(
 
 # RT #70922
 is_run(
-    'class A { method postcircumfix:<{ }>() {} }; my &r = {;}; if 0 { if 0 { my $a } }',
+    'class A { method postcircumfix:<{ }>() {} }; my &r = {;}; if 0 { if 0 { my $a #OK not used' ~
+     "\n" ~ '} }',
     { status => 0, out => '', err => ''},
     'presence of postcircumfix does not lead to redeclaration warnings',
 );
