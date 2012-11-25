@@ -23,6 +23,7 @@ throws_like 'qr/a/', X::Obsolete, old => rx/<<qr>>/, replacement => rx/<<rx>>/;
 throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
 throws_like 'class { $^x }', X::Placeholder::Block, placeholder => '$^x';
+# RT #76956
 throws_like '$^x',           X::Placeholder::Mainline, placeholder => '$^x';
 # RT #73502
 throws_like '@_',            X::Placeholder::Mainline, placeholder => '@_';
