@@ -88,6 +88,10 @@ throws_like 'foreach (1..10) { }', X::Obsolete,
     replacement => "'for'";
 throws_like 'undef', X::Obsolete,
     old         => rx/<<undef>>/;
+# RT #77118
+{
+    throws_like ':a<>', X::Obsolete, old => "<>";
+}
 
 throws_like 'my $a::::b', X::Syntax::Name::Null;
 throws_like 'unless 1 { } else { }', X::Syntax::UnlessElse;
