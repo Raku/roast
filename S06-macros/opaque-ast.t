@@ -41,7 +41,6 @@ is(four, 4, "macro returning quasi");
 }
 
 
-#?rakudo skip 'hygienic macros'
 {
     macro hygienic ($ast) {
         my $x = 3;

@@ -24,7 +24,6 @@ ok  $!  ~~ Exception, 'caught "!~" braino';
 ok "$!" ~~ /'!~~'/, 'error for "!~" usage mentions "!~~"';
 
 # RT #76878
-#?rakudo skip 'RT 76878'
 {
     my $x = 2;
     is eval('"$x =~ b"'), '2 =~ b', '=~ allowed in double quotes';

@@ -12,7 +12,6 @@ Basic C<exists> tests on arrays, see S32.
 # L<S32::Containers/"Array"/=item exists>
 
 my @array = <a b c d>;
-#?rakudo 2 skip 'attributes'
 ok @array[0]:exists,    "exists(positive index) on arrays (1)";
 ok @array[3]:exists,    "exists(positive index) on arrays (1)";
 ok @array.exists(0),    "exists(positive index) on arrays (1)";

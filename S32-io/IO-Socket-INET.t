@@ -94,7 +94,6 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $i++;
     is $expected[$i++], 1, '... which is 1 character';
     is $expected[$i++], 1, 'received another character';
-    #?rakudo skip 'RT 115862'
     is $expected[$i], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
     $i++;
 
