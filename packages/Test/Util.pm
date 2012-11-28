@@ -7,22 +7,22 @@ use Test;
 proto sub is_run(|) is export { * }
 
 # No input, no test name
-multi sub is_run( Str $code, %expected, :@args ) {
-    return is_run( $code, '', %expected, '', :@args );
+multi sub is_run( Str $code, %expected, *%o ) {
+    return is_run( $code, '', %expected, '', |%o );
 }
 
 # Has input, but not a test name
-multi sub is_run( Str $code, Str $input, %expected, :@args ) {
-    return is_run( $code, $input, %expected, '', :@args );
+multi sub is_run( Str $code, Str $input, %expected, *%o ) {
+    return is_run( $code, $input, %expected, '', |%o );
 }
 
 # No input, named
-multi sub is_run( Str $code, %expected, Str $name, :@args ) {
-    return is_run( $code, '', %expected, $name, :@args );
+multi sub is_run( Str $code, %expected, Str $name, *%o ) {
+    return is_run( $code, '', %expected, $name, |%o );
 }
 
-multi sub is_run( Str $code, Str $input, %expected, Str $name, :@args ) {
-    my %got = get_out( $code, $input, :@args );
+multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
+    my %got = get_out( $code, $input, |%o );
 
     # The test may have executed, but if so, the results couldn't be collected.
     if %got<test_died> {
@@ -63,7 +63,7 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, :@args ) {
     return;
 }
 
-sub get_out( Str $code, Str $input?, :@args) is export {
+sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     my $fnbase = 'getout-';
     $fnbase ~= $*PID // 1_000_000.rand.Int;
 
@@ -92,6 +92,7 @@ sub get_out( Str $code, Str $input?, :@args) is export {
 
         my $perl6 = $*EXECUTABLE_NAME;
         my $cmd = $perl6 ~~ m:i/niecza/ ?? "mono $perl6 " !! "$perl6 ";
+        $cmd ~= @compiler-args.join(' ') ~ ' ' if @compiler-args;
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
 #        diag("Command line: $cmd");
