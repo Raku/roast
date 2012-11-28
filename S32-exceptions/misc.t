@@ -141,6 +141,8 @@ throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
 throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
 throws_like 'my &a()', X::Syntax::Reserved, instead  => /':()'/;
 
+throws_like '"$"', X::Backslash::NonVariableDollar;
+
 throws_like 'm:i(@*ARGS[0])/foo/', X::Value::Dynamic;
 
 throws_like 'self', X::Syntax::Self::WithoutObject;
