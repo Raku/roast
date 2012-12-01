@@ -134,6 +134,7 @@ is "a\n\nb\n".indent(2).perl,
    ".indent ignores empty lines";
 
 #?niecza skip "weird scalar input"
+#?rakudo skip 'coercion to Int'
 is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).perl,
     "\ta\n b".indent(True).indent('0x10').indent('0e0').indent(*).perl,
     '.indent accepts weird scalar input and coerces it to Int when necessary';
