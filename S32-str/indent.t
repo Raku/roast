@@ -4,7 +4,7 @@ use Test;
 
 # L<S32::Str/Str/"=item indent">
 
-plan 59;
+plan 62;
 
 # TODO: Rakudo doesn't have full support for constants, so we have to assume a
 # hardcoded 8 instead of $?TABSTOP for now.
@@ -71,6 +71,7 @@ given 'Excess outdent test for warning' -> $test {
 }
 
 # Whatever-star
+is ''.indent(*), '', 'indent(*) on empty string';
 
 is  "  quack\n meow\n   helicopter fish".indent(*).perl,
     " quack\nmeow\n  helicopter fish".perl,
@@ -79,6 +80,10 @@ is  "  quack\n meow\n   helicopter fish".indent(*).perl,
 is  " quack\nmeow\n  helicopter fish".indent(*).perl,
     " quack\nmeow\n  helicopter fish".perl,
     'Whatever* outdent with one line flush left already';
+
+is "  quack\n\n    meow\n".indent(*),
+   "quack\n\n  meow\n",
+   ".indent(*) ignores empty lines";
 
 
 # Tab expansion
@@ -124,10 +129,13 @@ is  "\ta\n b".indent(0),
     "\ta\n b",
     '.indent(0) should be a no-op';
 
+is "a\n\nb\n".indent(2).perl,
+   "  a\n\n  b\n".perl,
+   ".indent ignores empty lines";
+
 #?niecza skip "weird scalar input"
-#?rakudo skip 'unknown'
 is  "\ta\n b".indent(1).indent(16).indent(0).indent(*).perl,
-    "\ta\n b".indent(True).indent('0x10').indent('blah').indent(*).perl,
+    "\ta\n b".indent(True).indent('0x10').indent('0e0').indent(*).perl,
     '.indent accepts weird scalar input and coerces it to Int when necessary';
 
 is  " \t a\n \t b\n".indent(1).perl,
