@@ -18,6 +18,7 @@ ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname
 # paths until the FileSpec hack is working - Stevan
 # changed junction hack in test 2 to regex for Rakudo fudged filename - mberends
 
-lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable'
+#?niecza todo
+lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
 
 # vim: ft=perl6

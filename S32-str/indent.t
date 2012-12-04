@@ -71,6 +71,7 @@ given 'Excess outdent test for warning' -> $test {
 }
 
 # Whatever-star
+#?niecza skip 'todo'
 is ''.indent(*), '', 'indent(*) on empty string';
 
 is  "  quack\n meow\n   helicopter fish".indent(*).perl,
@@ -81,6 +82,7 @@ is  " quack\nmeow\n  helicopter fish".indent(*).perl,
     " quack\nmeow\n  helicopter fish".perl,
     'Whatever* outdent with one line flush left already';
 
+#?niecza todo
 is "  quack\n\n    meow\n".indent(*),
    "quack\n\n  meow\n",
    ".indent(*) ignores empty lines";
@@ -129,6 +131,7 @@ is  "\ta\n b".indent(0),
     "\ta\n b",
     '.indent(0) should be a no-op';
 
+#?niecza todo
 is "a\n\nb\n".indent(2).perl,
    "  a\n\n  b\n".perl,
    ".indent ignores empty lines";
