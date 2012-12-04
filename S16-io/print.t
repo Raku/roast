@@ -41,8 +41,10 @@ print "1..12\n";
 {
     #?niecza emit #
     print $*OUT: 'ok 7 - print with $*OUT: as filehandle' ~ "\n";
-    #?niecza emit print "not ok 7 # TODO\nnot ok 8 # TODO" #
+    #?niecza emit #
     say $*OUT: 'ok 8 - say with $*OUT: as filehandle';
+    #?niecza emit print "not ok 7 # TODO\n";
+    #?niecza emit print "not ok 8 # TODO\n";
 }
 
 {

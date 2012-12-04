@@ -57,8 +57,10 @@ is $a.test-hash-a,   2, '%.a contextualizes as hash';
     $o.Parent::x = 5;
     is $o.parent-x, 5, 'parent attribute is separate from child attribute of the same name (parent)';
     #?pugs todo
+    #?niecza todo
     is $o.child-x, 42, 'parent attribute is separate from child attribute of the same name (child)';
     #?pugs todo
+    #?niecza todo
     is $o.x, 42, '.accessor returns that of the child';
 
 }

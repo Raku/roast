@@ -12,9 +12,11 @@ eval_dies_ok 'my enum B (a => 1, b => "bar")',
              'mixed type enums are forbidden';
 
 #?rakudo todo 'NYI'
+#?niecza todo
 eval_lives_ok 'my Cool enum C (a => 1, b => "bar")',
              '... unles that type covers both enum value types';
 
+#?niecza todo
 eval_dies_ok 'my Str enum D (a => 1)',
              'violating an explict type constraint dies';
 
