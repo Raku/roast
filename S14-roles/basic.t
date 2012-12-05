@@ -113,6 +113,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 # RT #72840
 {
     try eval 'class Boo does Boo { };';
+    #?rakudo todo "can see it in the position, but even STD message doesn't include it"
     ok "$!" ~~ /Boo/, 'class does itself produces sensible error message';
 }
 
