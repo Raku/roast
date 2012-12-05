@@ -29,6 +29,7 @@ plan 5;
     my $str;
     my $handle = { my $retval = CHECK { $str ~= 'C' } };
 
+    #?niecza 2 todo
     is $handle(), 'C', 'our CHECK {...} block returned the correct var (1)';
     is $handle(), 'C', 'our CHECK {...} block returned the correct var (2)';
     is $str, 'C', 'our rvalue CHECK {...} block was executed exactly once';
