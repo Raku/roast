@@ -223,11 +223,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # RT 107022
 {
-    is_deeply [ ( set ( set <a b c> ), <c> ).list ], [ 'a', 'b', 'c' ],
+    is_deeply [ ( set ( set <a b c> ), <c> ).list.sort ], [ 'a', 'b', 'c' ],
         'set inside set does not duplicate elements';
     
     my $s = set <a b c>;
-    is_deeply [ ( set $s, <c> ).list ], [ 'a', 'b', 'c' ],
+    is_deeply [ ( set $s, <c> ).list.sort ], [ 'a', 'b', 'c' ],
         'variable of Set type inside set does not duplicate elements';
 }
 
