@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 14;
 
 # L<S06/"Parameter traits"/"=item is readonly">
 # should be moved with other subroutine tests?
@@ -52,6 +52,17 @@ plan 12;
 
     dies_ok { (my $rt65900 is readonly) = 5 },
         'dies on assignment to (my $x is readonly)';
+}
+
+# RT #71356
+{
+    class C {
+        has $!attr is readonly = 71356;
+        method get-attr() { $!attr }
+        method set-attr($val) { $!attr = $val }
+    }
+    is C.new.get-attr, 71356, 'can read from readonly private attributes';
+    dies_ok { my $c = C.new; $c.set-attr: 99; }, 'cannot assign to readonly private attribute'
 }
 
 # vim: ft=perl6
