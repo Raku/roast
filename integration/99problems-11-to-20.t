@@ -129,10 +129,10 @@ plan 25;
     
     is encode_direct(()),'', 'We should be able to encode_direct an empty list';
     #?niecza todo
-    #?rakudo todo 'unknon'
+    #?rakudo todo 'unknown'
     is encode_direct(<a>), 'a', '.. or a one-element iist';
     #?niecza todo
-    #?rakudo todo 'unknon'
+    #?rakudo todo 'unknown'
     is encode_direct(<a a>), '2a', '.. or a n-ary list with always same element';
     is encode_direct(<a a a a b c c a a d e e e e>),
         '4ab2c2ad4e',
