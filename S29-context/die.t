@@ -35,12 +35,12 @@ try { recurse(1) };
 is($!, "Only this\n", 'die() in recursively called sub');
 
 # die in if,map,grep etc.
-is ({ try { map    { die }, 1,2,3 }; 42 }()), 42, "die in map";
-is ({ try { grep   { die }, 1,2,3 }; 42 }()), 42, "die in grep";
-is ({ try { sort   { die }, 1,2,3 }; 42 }()), 42, "die in sort";
-is ({ try { reduce { die }, 1,2,3 }; 42 }()), 42, "die in reduce";
+is ({ try { map    { die }; 1,2,3 }; 42 }()), 42, "die in map";
+is ({ try { grep   { die }; 1,2,3 }; 42 }()), 42, "die in grep";
+is ({ try { sort   { die }; 1,2,3 }; 42 }()), 42, "die in sort";
+is ({ try { reduce { die }; 1,2,3 }; 42 }()), 42, "die in reduce";
 
-is ({ try { for 1,2,3 { die } };         42 }()), 42, "die in for";
+is ({ try { for 1,2,3 { die }; 23 }; 42 }()), 42, "die in for";
 is ({ try { if 1 { die } else { die } }; 42 }()), 42, "die in if";
 
 my sub die_in_return () { return die };
