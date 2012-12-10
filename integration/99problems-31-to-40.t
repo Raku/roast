@@ -264,6 +264,7 @@ plan 67;
                 return ($x,$y) if $x+$y == $n;
             }
         }
+        0;
     }
     
     is goldbach(28), (5, 23), "Goldbach works.";

@@ -44,6 +44,7 @@ plan 11;
                 return ($x,$y) if $x+$y == $n;
             }
         }
+        0;
     }
     
     sub goldbachs($from, $to) {
