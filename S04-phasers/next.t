@@ -59,6 +59,7 @@ plan 13;
             NEXT { $str ~= $_ }
             die if $_ > 3;
         }
+        0;
     }
     is $str, '123', "die didn't trigger NEXT \{}";
 }
@@ -71,6 +72,7 @@ plan 13;
             NEXT { $str ~= $_ }
             leave if $_ > 3;
         }
+        0;
     }
     #?pugs todo
     is $str, '123', "leave didn't trigger NEXT \{}";
@@ -83,6 +85,7 @@ plan 13;
             NEXT { $str ~= $_ }
             return if $_ > 3;
         }
+        0;
     }
     foo();
     is $str, '123', "return didn't trigger NEXT \{}";
