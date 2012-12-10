@@ -207,7 +207,6 @@ plan 25;
     sub drop4(@list, Int $nth) {
         (@list[$_] if ($_+1) % $nth) for ^@list;
     }
-    #?rakudo todo 'unknown'
     #?niecza todo
     is drop4(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using (statement if) for';
@@ -215,7 +214,6 @@ plan 25;
     sub drop5(@list, Int $nth) {
         @list[$_] if ($_+1) % $nth for ^@list;
     }
-    #?rakudo todo 'unknown'
     #?niecza todo
     is drop5(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using list comprehension';
