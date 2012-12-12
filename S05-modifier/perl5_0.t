@@ -53,15 +53,19 @@ ok(($str ~~ m:Perl5/http:\/\//), "test the regular expression escape");
 
 # returns the count of matches in scalar
 my $vals = "hello world" ~~ m:P5:g/(\w+)/;
+#?rakudo todo 'NYI'
 is($vals, 2, 'returned two values in the match');
 
 # return all the strings we matched
 my @vals = "hello world" ~~ m:P5:g/(\w+)/;
 #?pugs todo
+#?rakudo todo 'NYI'
 is(+@vals, 2, 'returned two values in the match');
 #?pugs todo
+#?rakudo todo 'NYI'
 is(@vals[0], 'hello', 'returned correct first value in the match');
 #?pugs todo
+#?rakudo todo 'NYI'
 is(@vals[1], 'world', 'returned correct second value in the match');
 
 
@@ -88,15 +92,18 @@ so it looks like a pugs-pcre interface bug.
     ok(($str ~~ m:Perl5 {http{0,1}}));
 
     my $rule = '\d+';
+    #?rakudo todo 'NYI'
     ok('2342' ~~ m:P5/$rule/, 'interpolated rule applied successfully');
 
     my $rule2 = 'he(l)+o';
+    #?rakudo todo 'NYI'
     ok('hello' ~~ m:P5/$rule2/, 'interpolated rule applied successfully');
 
     my $rule3 = 'r+';
     my $subst = 'z';
     my $bar = "barrrr"; 
     $bar ~~ s:P5:g{$rule3}=qq{$subst}; 
+    #?rakudo todo 'NYI'
     is($bar, "baz", 'variable interpolation in substitute regexp works with :g modifier');
 
     my $a = 'a:';
