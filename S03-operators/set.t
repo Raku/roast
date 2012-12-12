@@ -12,6 +12,7 @@ my $kb = KeyBag.new(<Come, take your bread with joy, and your wine with a glad h
 
 # Is an element of
 
+#?rakudo 5 skip "∈ NYI"
 ok "afraid" ∈ $s, "afraid is an element of Set";
 ok "afraid" ∈ $ks, "afraid is an element of KeySet";
 ok "earthly" ∈ $b, "earthly is an element of Bag";
@@ -26,6 +27,7 @@ ok "d" (elem) <a b c d e>, "d is an element of a b c d e (texas)";
 
 # Is not an element of
 
+#?rakudo 5 skip "∉ NYI"
 ok "marmoset" ∉ $s, "marmoset is not an element of Set";
 ok "marmoset" ∉ $ks, "marmoset is not an element of KeySet";
 ok "marmoset" ∉ $b, "marmoset is not an element of Bag";
@@ -40,6 +42,7 @@ ok "hogwash" !(elem) <a b c d e>, "hogwash is not an element of a b c d e (texas
 
 # Contains
 
+#?rakudo 5 skip "∋ NYI"
 ok $s ∋ "afraid", "afraid is contained by Set";
 ok $ks ∋ "afraid", "afraid is contained by KeySet";
 ok $b ∋ "earthly", "earthly is contained by Bag";
@@ -54,6 +57,7 @@ ok <a b c d e> (cont) "d", "d is contained by a b c d e";
 
 # Does not contain
 
+#?rakudo 5 skip "∌ NYI"
 ok $s ∌ "marmoset", "marmoset is not contained by Set";
 ok $ks ∌ "marmoset", "marmoset is not contained by KeySet";
 ok $b ∌ "marmoset", "marmoset is not contained by Bag";
@@ -68,11 +72,13 @@ ok <a b c d e> !(cont) "marmoset", "marmoset is not contained by a b c d e";
 
 # Union
 
+#?rakudo 4 skip "∪ NYI"
 is showset($s ∪ $s), showset($s), "Set union with itself yields self";
 isa_ok ($s ∪ $s), Set, "... and it's actually a Set";
 is showset($ks ∪ $ks), showset($ks), "KeySet union with itself yields self (as Set)";
 isa_ok ($ks ∪ $ks), Set, "... and it's actually a Set";
 
+#?rakudo 4 skip "∪ NYI"
 is showset($s ∪ $ks), showset(set <I'm afraid it is isn't your day>), "Set union with KeySet works";
 isa_ok ($s ∪ $ks), Set, "... and it's actually a Set";
 is showset($ks ∪ <blue green>), showset(set <I'm afraid it is blue green>), "KeySet union with array of strings works";
@@ -85,11 +91,11 @@ isa_ok ($ks (|) <blue green>), Set, "... and it's actually a Set (texas)";
 
 # Intersection
 
+#?rakudo 6 skip "∩ NYI"
 is showset($s ∩ $s), showset($s), "Set intersection with itself yields self";
 isa_ok ($s ∩ $s), Set, "... and it's actually a Set";
 is showset($ks ∩ $ks), showset($ks), "KeySet intersection with itself yields self (as Set)";
 isa_ok ($ks ∩ $ks), Set, "... and it's actually a Set";
-
 is showset($s ∩ $ks), showset(set <I'm afraid it>), "Set intersection with KeySet works";
 isa_ok ($s ∩ $ks), Set, "... and it's actually a Set";
 
@@ -98,6 +104,7 @@ isa_ok ($s (&) $ks), Set, "... and it's actually a Set (texas)";
 
 # set subtraction
 
+#?rakudo skip "∅ NYI"
 is showset($s (-) $s), showset(∅), "Set subtracted from Set is correct";
 isa_ok ($s (-) $s), Set, "... and it's actually a Set";
 
@@ -118,6 +125,7 @@ isa_ok ($kb (-) $s), Set, "... and it's actually a Set";
 
 # symmetric difference
 
+#?rakudo skip "∅ NYI"
 is showset($s (^) $s), showset(∅), "Set symmetric difference with Set is correct";
 isa_ok ($s (^) $s), Set, "... and it's actually a Set";
 
@@ -138,6 +146,7 @@ isa_ok ($kb (^) $s), Set, "... and it's actually a Set";
 
 # is subset of
 
+#?rakudo 12 skip "⊆ NYI"
 ok <your day> ⊆ $s, "'Your day' is subset of Set";
 ok $s ⊆ $s, "Set is subset of itself";
 ok $s ⊆ <I'm afraid it isn't your day old chum>, "Set is subset of string";
@@ -172,6 +181,7 @@ nok $kb (<=) $s, "KeyBag is not a subset of Set (texas)";
 
 # is not a subset of
 
+#?rakudo 12 skip "⊈ NYI"
 nok <your day> ⊈ $s, "'Your day' is subset of Set";
 nok $s ⊈ $s, "Set is subset of itself";
 nok $s ⊈ <I'm afraid it isn't your day old chum>, "Set is subset of string";
@@ -206,6 +216,7 @@ ok $kb !(<=) $s, "KeyBag is not a subset of Set (texas)";
 
 # is proper subset of
 
+#?rakudo 12 skip "⊂ NYI"
 ok <your day> ⊂ $s, "'Your day' is proper subset of Set";
 nok $s ⊂ $s, "Set is not proper subset of itself";
 ok $s ⊂ <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
@@ -240,6 +251,7 @@ nok $kb (<) $s, "KeyBag is not a proper subset of Set (texas)";
 
 # is not a proper subset of
 
+#?rakudo 12 skip "⊄ NYI"
 nok <your day> ⊄ $s, "'Your day' is proper subset of Set";
 ok $s ⊄ $s, "Set is not proper subset of itself";
 nok $s ⊄ <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
@@ -274,6 +286,7 @@ ok $kb !(<) $s, "KeyBag is not a proper subset of Set (texas)";
 
 # is superset of
 
+#?rakudo 12 skip "⊇ NYI"
 ok <your day> R⊇ $s, "'Your day' is reversed superset of Set";
 ok $s R⊇ $s, "Set is reversed superset of itself";
 ok $s R⊇ <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
@@ -308,6 +321,7 @@ nok $kb R(>=) $s, "KeyBag is not a reversed superset of Set (texas)";
 
 # is not a superset of
 
+#?rakudo 12 skip "⊉ NYI"
 nok <your day> R⊉ $s, "'Your day' is reversed superset of Set";
 nok $s R⊉ $s, "Set is reversed superset of itself";
 nok $s R⊉ <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
@@ -342,6 +356,7 @@ ok $kb !R(>=) $s, "KeyBag is not a reversed superset of Set (texas)";
 
 # is proper superset of
 
+#?rakudo 12 skip "⊃ NYI"
 ok <your day> R⊃ $s, "'Your day' is reversed proper superset of Set";
 nok $s R⊃ $s, "Set is not reversed proper superset of itself";
 ok $s R⊃ <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
@@ -376,6 +391,7 @@ nok $kb R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
 
 # is not a proper superset of
 
+#?rakudo 12 skip "⊅ NYI"
 nok <your day> R⊅ $s, "'Your day' is reversed proper superset of Set";
 ok $s R⊅ $s, "Set is not reversed proper superset of itself";
 nok $s R⊅ <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
