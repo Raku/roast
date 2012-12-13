@@ -20,6 +20,7 @@ my $kb = KeyBag.new({ blood => 1, love => 2 });
 
 # Bag Union
 
+#?rakudo 8 skip "∪ NYI"
 is showkv($b ∪ $b), showkv($b), "Bag union with itself yields self";
 isa_ok ($b ∪ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ∪ $kb), showkv($kb), "KeyBag union with itself yields (as Bag)";
@@ -37,6 +38,7 @@ isa_ok ($s (|) $kb), Bag, "... and it's actually a Bag";
 
 # Bag Intersection
 
+#?rakudo 10 skip "∩ NYI"
 is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
 isa_ok ($b ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ∩ $kb), showkv($kb), "KeyBag intersection with itself yields self (as Bag)";
@@ -58,6 +60,7 @@ isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
+#?rakudo 16 skip "∩ NYI"
 is showkv($s ⊍ $s), "blood:1 love:1", "Bag multiplication with itself yields self squared";
 isa_ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
 is showkv($ks ⊍ $ks), "blood:1 rhetoric:1", "Bag multiplication with itself yields self squared";
@@ -87,6 +90,7 @@ isa_ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
 # Bag addition
 
+#?rakudo 16 skip "⊎ NYI"
 is showkv($s ⊎ $s), "blood:2 love:2", "Bag addition with itself yields twice self";
 isa_ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
 is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields twice self";
