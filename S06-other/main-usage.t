@@ -169,6 +169,7 @@ is_run 'sub MAIN() { print 42 }', :args['--foo'],
 
 # RT #115744
 #?rakudo todo 'RT 115744'
+#?niecza todo
 is_run 'sub MAIN($arg) { print $arg }',
     {
         out => "--23"
@@ -177,6 +178,7 @@ is_run 'sub MAIN($arg) { print $arg }',
     'Stopping option processing';
 
 #?rakudo todo 'RT 115744'
+#?niecza todo
 is_run 'sub MAIN($arg, Bool :$bool) { print $bool, $arg }',
     {
         out => 'True-option'
