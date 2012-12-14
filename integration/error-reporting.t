@@ -100,6 +100,7 @@ is_run 'sub mysub {
     }, 'warning reports correct line number and subroutine';
 
 # RT #77736
+#?niecza todo
 is_run 'die "foo"; END { say "end run" }',
     {
         status => * != 0,
