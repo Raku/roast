@@ -33,7 +33,7 @@ plan 16;
 }
 
 #?pugs skip 'Undeclared variable'
-ok( ! &foo, 'Foo::foo is undefined in outer scope' );
+dies_ok( { eval '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 #?pugs todo
 {
