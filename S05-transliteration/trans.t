@@ -10,7 +10,7 @@ String transliteration
 
 # L<S05/Transliteration>
 
-plan 58;
+plan 59;
 
 is("ABC".trans( ('A'=>'a'), ('B'=>'b'), ('C'=>'c') ),
     "abc",
@@ -291,5 +291,9 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
 #?niecza todo 'Not sure what is supposed to be going on here'
 #?pugs todo
 lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
+
+# RT #83766
+is((1, 2)>>.trans((1..26) => (14..26,1..13)), <14 15>, '.trans with a pair of parcels using postfix hypermetaoperator works');
+is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same with explicit for"
 
 # vim: ft=perl6
