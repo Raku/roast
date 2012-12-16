@@ -54,10 +54,10 @@ ok eval('Capture').does(Associative), "Capture does Associative";
 
 sub foo {}
 ok &foo.does(Callable), 'a Sub does Callable';
-#?rakudo todo 'method outside class - fix test?'
+
 #?niecza skip 'Methods must be used in some kind of package'
 {
-    method meth {}
+    my method meth {}
     ok &meth.does(Callable), 'a Method does Callable';
 }
 proto mul(|) {*}
@@ -69,13 +69,11 @@ ok &pro.does(Callable), 'a proto does Callable';
 # &token, &rule return a Method?
 #?niecza skip 'Methods must be used in some kind of package'
 {
-    token bar {<?>}
+    my token bar {<?>}
     #?pugs todo 'feature'
-    #?rakudo todo 'token/rule outside of class and grammar'
     ok &bar.does(Callable), 'a token does Callable';
-    rule baz {<?>}
+    my rule baz {<?>}
     #?pugs todo 'feature'
-    #?rakudo todo 'token/rule outside of class and grammar'
     ok &baz.does(Callable), 'a rule does Callable';
     # &quux returns a Sub ?
     macro quux {}
