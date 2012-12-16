@@ -1020,7 +1020,6 @@ eval_dies_ok '/a&|b/', 'alternation and conjunction (&|) - parse error';
 
 #### a|&b			a|&b		/rule error/	alternation and conjunction (|&) - parse error
 #?pugs todo 
-#?rakudo todo 'regression - RT 111796'
 eval_dies_ok '/a|&b/', 'alternation and conjunction (|&) - parse error';
 
 #### |d|b			abc		y	leading alternation ignored
