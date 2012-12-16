@@ -48,7 +48,6 @@ throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
 # some of these redeclaration errors take different code
 # paths in rakudo, so we over-test a bit to catch them all,
 # even if the tests look rather boring;
-throws_like 'my @a; my @a',  X::Redeclaration,      symbol => '@a';
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 # RT #78370
 #?rakudo skip 'RT 78370'
@@ -112,8 +111,8 @@ throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, catego
 # RT #83992
 throws_like 'my @a = 1, => 2', X::Syntax::InfixInTermPosition, infix => '=>';
 throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
-throws_like 'my $foo does &Int', X::Does::TypeObject;
-throws_like 'my $foo does &Int, &Bool', X::Does::TypeObject;
+throws_like '(my $foo) does Int', X::Does::TypeObject;
+throws_like '(my $foo) does Int, Bool', X::Does::TypeObject;
 # RT #76742
 throws_like 'Bool does role { method Str() { $.perl } };', X::Does::TypeObject;
 throws_like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
