@@ -48,7 +48,6 @@ eval_dies_ok 'foo(42)', 'my &foo is lexically scoped';
 
 eval_lives_ok 'my $x = my $y = 0; #OK', '"my $x = my $y = 0" parses';
 
-#?rakudo skip 'fatal redeclarations'
 #?pugs skip 'parsefail'
 {
     my $test = "value should still be set for arg, even if there's a later my";
@@ -155,7 +154,6 @@ is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd m
 
 
 # check that declaring lexical twice is noop
-#?rakudo skip 'fatal redeclarations'
 {
     my $f;
     $f = 5;
