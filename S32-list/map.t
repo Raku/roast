@@ -112,12 +112,11 @@ should be equivalent to
 #?pugs skip 'unimpl'
 {
   my @a = (1, 2, 3);
-  # XXX is hash { ... } legal?
-  my @b = map { hash {"v"=>$_, "d" => $_*2} }, @a;
+  my @b = map { hash("v"=>$_, "d" => $_*2) }, @a;
   is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
-  is(+@c, 3, "should be 3 elements (3 hashrefs)");
+  is(+@c, 6, "should be 6 elements (bare block)");
 }
 
 # Map with mutating block
