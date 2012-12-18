@@ -374,5 +374,10 @@ ok ([+]) == 0, 'argumentless [+] parses';
     is rt99942(1, 42), 43, 'RT #99942'
 }
 
+# RT #67064
+{
+    is(([X~] [<a b>] xx 3), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
+}
+
 done;
 # vim: ft=perl6
