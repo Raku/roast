@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 91;
+plan 97;
 
 #L<S02/Mutable types/Array>
 
@@ -333,6 +333,24 @@ my @array2 = ("test", 1, Mu);
 {
     is Array(1,2,3).WHAT.gist, 'Array()', 'Array(...) makes an Array';
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
+}
+
+{
+    my @a = 1..*;
+    try { @a[Inf] = "dog"; }
+    my $err = $!;
+    ok $err ~~ X::Item, '@a[Inf] throws X::Item';
+    is $err.index, Inf, 'X::Item.index is correct';
+    is $err.aggregate, @a, 'X::Item.aggregate is the array that could not be indexed';
+}
+
+{
+    my @a = 1..*;
+    try { @a[NaN] = "dog"; }
+    my $err = $!;
+    ok $err ~~ X::Item, '@a[NaN] throws X::Item';
+    is $err.index, NaN;
+    is $err.aggregate, @a;
 }
 
 done;
