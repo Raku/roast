@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 21;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 
@@ -129,8 +129,8 @@ plan 19;
 # RT #114432
 #?niecza todo
 {
-    try eval 'repeat { "but I myself" }';
-    ok (~$! ~~ /'"repeat" is missing its "while" or "until"'/),
-        "can't repeat alone";
+    use lib "t/spec/packages";
+    use Test::Util;
+    throws_like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
 }
 # vim: ft=perl6
