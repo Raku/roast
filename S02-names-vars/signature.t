@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # The :() form constructs signatures similar to how \() constructs Captures.
 # A subroutine's .signature is a Siglist object.
@@ -74,6 +74,13 @@ plan 12;
     my $i = 0;
     $i++ for @c;
     is $i, 3, 'asigning to an array in a signature is sane';
+}
+
+# RT #83512
+{
+    my @list = 1..4;
+    my (:@even, :@odd) := classify { $_ %% 2 ?? 'even' !! 'odd' }, @list;
+    is @even, (2, 4), 'siglist binding with a hash works';
 }
 
 # vim: ft=perl6
