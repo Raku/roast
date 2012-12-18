@@ -1,8 +1,6 @@
 use v6;
 
 use Test;
-BEGIN { @*INC.push('t/spec/packages/') };
-use Test::Util;
 
 plan 99;
 
@@ -338,10 +336,9 @@ my @array2 = ("test", 1, Mu);
 }
 
 {
+    use lib "t/spec/packages";
+    use Test::Util;
     throws_like 'my @a = 1..*; @a[Inf] = "dog"', X::Item, index => Inf, aggregate => 1..*;
-}
-
-{
     throws_like 'my @a = 1..*; @a[NaN] = "cat"', X::Item, index => NaN, aggregate => 1..*;
 }
 
