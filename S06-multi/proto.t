@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 25;
+plan 27;
 
 # Test for proto definitions
 class A { }
@@ -131,6 +131,16 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
 
     is maybe(8),  8, 'sanity';
     is maybe(-5), 0, "It's ok not to dispatch to the multis";
+}
+
+#RT #76298
+{
+    eval_lives_ok q{
+        class TestA { has $.b; proto method b {} };
+    }, 'proto method after same-named attribute';
+    eval_lives_ok q{
+        class TestB { proto method b {}; has $.b };
+    }, 'proto method before same-named attribute';
 }
 
 done;
