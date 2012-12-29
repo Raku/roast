@@ -29,7 +29,7 @@ plan 6;
     sub infix:<na>(*@a) is assoc<non> {
         '(' ~ join('|', @a) ~ ')';
     }
-    #?rakudo todo 'assoc<non>'
+    # RT #116238
     dies_ok { eval '1 na 2 na 3' }, 'assoc<non>';
 }
 
