@@ -20,6 +20,7 @@ throws_like 'sub f() { $^x }', X::Signature::Placeholder,
 throws_like '$&', X::Obsolete, old => '$@ variable', replacement => '$, rx/<<rx>>// or $()';
 throws_like 'qr/a/', X::Obsolete, old => rx/<<qr>>/, replacement => rx/<<rx>>/;
 throws_like '"a" . "b"', X::Obsolete, replacement => '~';
+throws_like 's/a/b/i', X::Obsolete;
 
 throws_like 'do    { $^x }', X::Placeholder::Block, placeholder => '$^x';
 throws_like 'do    { @_  }', X::Placeholder::Block, placeholder => '@_';
