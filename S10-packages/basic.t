@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 59;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -242,6 +242,15 @@ eval_dies_ok q[
         1+1;
     }
 ], 'Too late for semicolon form';
+
+# RT #74592
+{
+    my $p = my package My74592 { };
+    ok $p === My74592, 'return value of "my" package declaration';
+
+    $p = our package Our74592 { };
+    ok $p === Our74592, 'return value of "Our" package declaration';
+}
 
 
 # vim: ft=perl6
