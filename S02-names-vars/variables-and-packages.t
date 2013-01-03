@@ -151,7 +151,6 @@ plan 37;
 }
 
 {
-  #?rakudo todo 'does not fail (Note: also see RT #63596 - used to Null PMC)'
   eval_dies_ok(q/
     sub s($i is copy) {
         my @array;
