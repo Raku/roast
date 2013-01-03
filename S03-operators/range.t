@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 119;
+plan 120;
 
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
@@ -288,5 +288,8 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
         isa_ok $_, Num, 'Range of nums produces a Num';
     }
 }
+
+# RT #77572
+eval_dies_ok '1..2..3', '.. is not associative';
 
 # vim: ft=perl6
