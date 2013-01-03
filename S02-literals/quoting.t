@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 153;
+plan 155;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -573,6 +573,12 @@ Hello, World
     is qqx/echo $var/.chomp,  "world", 'qqx';
     # RT #78874
     is qx/echo world/.trans('wd' => 'WD').chomp, "WorlD", "qx doesn't return a Parrot string";
+}
+
+# RT #75320
+{
+    is "$foo >>", "FOO >>", 'quoting and >> (RT 75320, 1)';
+    is "$foo>>",  "FOO>>",  'quoting and >> (RT 75320, 2)';
 }
 
 done;

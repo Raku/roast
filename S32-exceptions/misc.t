@@ -298,4 +298,13 @@ throws_like 'my class A {}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )
 dies_ok {eval(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";
 }
 
+# RT #75640
+# cannot use dies_ok, because it puts the call in the dynamic scope of a
+# dispatcher
+try {
+    proto a() { nextsame };
+    a();
+}
+ok $! ~~ X::NoDispatcher, 'nextsame in proto';
+
 done;
