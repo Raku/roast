@@ -211,6 +211,9 @@ throws_like 'my class Priv { method x { self!foo } }; Priv.x',
                       method    => '!foo',
                       typename  => 'Priv',
                       private   => { $_ === True };
+# RT #77582
+throws_like 'my %h; %h.nosuchmethods', X::Method::NotFound, typename => 'Hash';
+
 throws_like '1.List::join', X::Method::InvalidQualifier,
             method         => 'join',
             invocant       => 1,
