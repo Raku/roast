@@ -13,7 +13,6 @@ Tests for the die() builtin
 =end pod
 
 {
-    #?rakudo todo 'nom regression'
     ok( !defined( try { die "foo"; 1; } ), 'die in try cuts off execution');
     my $error = $!;
     is($error, 'foo', 'got $! correctly');
