@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 =begin pod
 
@@ -59,6 +59,16 @@ Testing named capture variables nested inside each other. This doesn't appear to
     ok G.parse('ab'), 'grammar sanity';
     is $/.keys.map(~*).sort.join(', '), 'a, b', 'right keys in top level match';
     is $<b>.elems, 0, '$<b> has no captures';
+}
+
+# RT #107746
+{
+    grammar a {
+        token x { a };
+        token y { z };
+        rule TOP { [<x>]? [c || b <y>] }
+    };
+    is ~a.parse('a b z')<x>, 'a', 'can capture inside a || alternation even if previous capture was quantified (RT 107746)';
 }
 
 # vim: ft=perl6
