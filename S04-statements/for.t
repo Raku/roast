@@ -14,7 +14,7 @@ for statement as possible
 
 =end description
 
-plan 73;
+plan 75;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -554,6 +554,13 @@ lives_ok {
     is $iter, 20, 'iterating over an expanding list';
     is @rt113026, <1 2 3 4 5 6 7 8 9 10 1 3 5 7 9 1 5 9 5 5>,
        'array expanded in for loop is expanded';
+}
+
+# RT #78406
+{
+    my $c = 0;
+    dies_ok { for ^8 { .=fmt('%03b'); $c++ } }, '$_ is read-only here';
+    is $c, 0, '... and $_ is *always* read-only here';
 }
 
 # vim: ft=perl6
