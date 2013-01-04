@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 173;
+plan 174;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -464,5 +464,7 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     isa_ok DateTime.now.year, Int, 'DateTime.now.year isa Int';
     isa_ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
+
+is DateTime.now.Date, Date.today, 'coercion to Date';
 
 done;
