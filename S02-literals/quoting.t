@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 155;
+plan 156;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -579,6 +579,12 @@ Hello, World
 {
     is "$foo >>", "FOO >>", 'quoting and >> (RT 75320, 1)';
     is "$foo>>",  "FOO>>",  'quoting and >> (RT 75320, 2)';
+}
+
+# RT #85506
+{
+    my $a = 42;
+    is "$a [<file>]", '42 [<file>]', 'can handle [ after whitespace after var interpolation';
 }
 
 done;
