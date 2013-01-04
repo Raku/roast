@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 138;
+plan 139;
 
 =begin pod
 
@@ -670,6 +670,17 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
     my $c = 0;
     ++$c for HasArray.new(a => %h<a>).a;
     is $c, 3, 'Correct flattening behavior for array attributes';
+}
+
+# RT #110096
+{
+    class AttrInSub {
+        sub f {
+            has $.x;
+        }
+    }
+    is AttrInSub.new(x => 42).x, 42, 'Attribute declaration can be in sub-scope too';
+
 }
 
 done();
