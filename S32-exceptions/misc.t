@@ -108,6 +108,8 @@ throws_like 'my class A { my $!foo }', X::Syntax::Variable::Twigil, twigil => '!
 throws_like 'my $?FILE', X::Syntax::Variable::Twigil, twigil => '?', scope => 'my';
 throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
 throws_like '@a', X::Undeclared, symbol => '@a';
+# RT #115396
+throws_like '"@a[]"', X::Undeclared, symbol => '@a';
 throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Role;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
