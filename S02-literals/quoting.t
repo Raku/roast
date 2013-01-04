@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 156;
+plan 157;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -586,6 +586,9 @@ Hello, World
     my $a = 42;
     is "$a [<file>]", '42 [<file>]', 'can handle [ after whitespace after var interpolation';
 }
+
+# RT #90124
+eval_dies_ok q["@a<"], 'unclosed quote after array variable is an error';
 
 done;
 
