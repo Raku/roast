@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 157;
+plan 158;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -589,6 +589,9 @@ Hello, World
 
 # RT #90124
 eval_dies_ok q["@a<"], 'unclosed quote after array variable is an error';
+
+# RT #114090
+is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
 
 done;
 
