@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 7;
+plan 8;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -45,3 +45,12 @@ lives_ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 #?niecza skip 'todo'
 lives_ok { Any .= (); CATCH { when X::AdHoc {1} } }, 'Typed, non-internal exception';
 
+# RT #90522
+{
+    my $i = 0;
+    sub foo {
+        return if ++$i == 50;
+        eval 'foo';
+    }
+    lives_ok { foo }, 'can recurse many times into &eval';
+}
