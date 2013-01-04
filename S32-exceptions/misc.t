@@ -94,6 +94,8 @@ throws_like 'undef', X::Obsolete,
 {
     throws_like ':a<>', X::Obsolete, old => "<>";
 }
+# RT #92408
+throws_like 'my ($a, $b); $a . $b', X::Obsolete;
 
 throws_like 'my $a::::b', X::Syntax::Name::Null;
 throws_like 'unless 1 { } else { }', X::Syntax::UnlessElse;
