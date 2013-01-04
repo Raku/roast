@@ -310,4 +310,8 @@ try {
 }
 ok $! ~~ X::NoDispatcher, 'nextsame in proto';
 
+# probably not quite spec, but good enough for now
+# RT #79162
+throws_like '["a" "b"]', X::Syntax::Confused, reason => 'Two terms in a row';
+
 done;
