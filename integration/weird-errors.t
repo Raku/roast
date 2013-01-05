@@ -20,7 +20,6 @@ is_run(
        'Can say $!.WHAT in a CATCH block',
 );
 
-#?niecza todo
 is_run(
        '[].WHAT.say',
        { status => 0, out => "Array()\n"},

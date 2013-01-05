@@ -293,6 +293,7 @@ is('ababab'.trans([/ab/, 'aba', 'bab', /baba/] =>
 lives_ok { my @a = 1..2; @a>>.trans((1..2) => (14..15,1..2)); }, 'trans works with Cool signature';
 
 # RT #83766
+#?niecza 2 skip "Nominal type check failed for scalar store; got Int, needed Str or subtype"
 is((1, 2)>>.trans((1..26) => (14..26,1..13)), <14 15>, '.trans with a pair of parcels using postfix hypermetaoperator works');
 is ("!$_!" for (1, 2)>>.trans((1..26) => (14..26,1..13))), <!14! !15!>, "same with explicit for";
 

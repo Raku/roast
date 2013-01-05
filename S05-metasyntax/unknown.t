@@ -32,6 +32,8 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 }
 
 # RT #77110, #77386
+#?niecza skip "throws_like"
+#?DOES 3
 {
     BEGIN { @*INC.push('t/spec/packages/') };
     use Test::Util;

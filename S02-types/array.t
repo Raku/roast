@@ -335,6 +335,8 @@ my @array2 = ("test", 1, Mu);
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
 }
 
+#?niecza skip "throws_like"
+#?DOES 8
 {
     use lib "t/spec/packages";
     use Test::Util;

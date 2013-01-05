@@ -116,6 +116,7 @@ should be equivalent to
   is(+@b, 6, "should be 6 elements (list context)");
 
   my @c = map { {"v"=>$_, "d" => $_*2} }, @a;
+  #?niecza todo
   is(+@c, 6, "should be 6 elements (bare block)");
 }
 

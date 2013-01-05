@@ -673,6 +673,7 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
 }
 
 # RT #110096
+#?niecza skip 'Attribute $!x declared outside of any class'
 {
     class AttrInSub {
         sub f {

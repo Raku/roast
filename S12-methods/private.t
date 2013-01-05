@@ -97,6 +97,7 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
 
 #RT #115308
 #?niecza skip "throws_like NYI"
+#?DOES 2
 throws_like '$_!X::a', X::Method::Private::Permission;
 
 # vim: syn=perl6

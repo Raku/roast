@@ -105,7 +105,7 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
 }
 
 # RT #113968
-#?niecza skip "Unable to resolve method postcircumfix:<( )> in type Any"
+#?niecza skip "throws_like"
 #?DOES 4
 {
     throws_like 'rand()', X::Obsolete;

@@ -127,7 +127,8 @@ plan 21;
 }
 
 # RT #114432
-#?niecza todo
+#?niecza skip "throws_like"
+#?DOES 3
 {
     use lib "t/spec/packages";
     use Test::Util;

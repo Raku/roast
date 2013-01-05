@@ -375,6 +375,7 @@ ok ([+]) == 0, 'argumentless [+] parses';
 }
 
 # RT #67064
+#?niecza skip "reduce is not supposed to flatten?"
 {
     is(([X~] [<a b>] xx 3), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
 }

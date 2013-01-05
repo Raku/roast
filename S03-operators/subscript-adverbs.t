@@ -60,7 +60,6 @@ plan 64;
 {
     my @array = <A B>;
 
-    #?niecza todo
     ok @array[0]:k ~~ Int,
         ":k on an array returned an integer index";
     is ~(@array[0]:k), "0",

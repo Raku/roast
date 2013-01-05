@@ -244,6 +244,7 @@ eval_dies_ok q[
 ], 'Too late for semicolon form';
 
 # RT #74592
+#?niecza skip 'Nominal type check failed in binding $l in infix:<===>; got My74592, needed Any'
 {
     my $p = my package My74592 { };
     ok $p === My74592, 'return value of "my" package declaration';
