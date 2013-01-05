@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 27;
+plan 30;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -18,7 +18,17 @@ plan 27;
   is( 0xdead +| 0xbeef,   0xfeef,    'numeric bitwise +| of hexadecimal' );
   is( 0xdead +^ 0xbeef,   0x6042,    'numeric bitwise +^ of hexadecimal' );
   is( +^0xdead +& 0xbeef, 0x2042,    'numeric bitwise +^ and +& together' );
-                                     
+
+  is 0xdeaddead0000deaddead0000dead +& 0xbeef0000beef0000beef0000beef,
+     0x9ead0000000000009ead00009ead,
+     'numeric bitwise +& of bigint';
+  is 0xdeaddead0000deaddead0000dead +| 0xbeef0000beef0000beef0000beef,
+     0xfeefdeadbeefdeadfeef0000feef,
+     'numeric bitwise +| of bigint';
+  is 0xdeaddead0000deaddead0000dead +^ 0xbeef0000beef0000beef0000beef,
+     0x6042deadbeefdead604200006042,
+     'numeric bitwise +^ of bigint';
+
   # string                           
   #?niecza 6 skip 'string bitops'
   is( 'a' ~& 'A',         'A',       'string bitwise ~& of "a" and "A"' );
