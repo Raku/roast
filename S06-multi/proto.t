@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 28;
 
 # Test for proto definitions
 class A { }
@@ -142,6 +142,11 @@ eval_dies_ok 'proto rt68242($a){};proto rt68242($c,$d){};',
         class TestB { proto method b {}; has $.b };
     }, 'proto method before same-named attribute';
 }
+
+# RT #116164
+eval_dies_ok q[
+    proto f(Int $x) {*}; multi f($) { 'default' }; f 'foo'
+], 'proto signature is checked, not just that of the candidates';
 
 done;
 
