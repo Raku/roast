@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 158;
+plan 159;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -592,6 +592,9 @@ eval_dies_ok q["@a<"], 'unclosed quote after array variable is an error';
 
 # RT #114090
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
+
+#115272
+is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 
 done;
 
