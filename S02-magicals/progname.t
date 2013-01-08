@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 3;
+plan 4;
 
 # TODO: this should be $?OS, but that's not yet supported under Rakudo
 if $*OS eq "browser" {
@@ -20,5 +20,18 @@ ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname
 
 #?niecza todo
 lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
+
+# RT #116164
+{
+    use lib 't/spec/packages';
+    use Test::Util;
+    is_run 'print $*PROGRAM_NAME', {
+        out => -> $x { $x !~~ /IGNOREME/ },
+    },
+    :compiler-args['-IGNOREME']
+    :args['IGNOREME'],
+    '$*PROGRAM_NAME is not confused by compiler options';
+}
+
 
 # vim: ft=perl6
