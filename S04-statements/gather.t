@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 28;
 
 
 # L<S04/The C<gather> statement prefix/>
@@ -201,5 +201,36 @@ plan 22;
     my @a = gather { $x = take 3; };
     is $x, 3, "return value of take" 
 }
+
+# tests for the S04-control.pod document
+{
+    my @list = 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 6, 6;
+    my @uniq = gather for @list {
+        state $previous = take $_;
+        next if $_ === $previous;
+        $previous = take $_;
+    }
+    is @uniq, (1, 2, 3, 4, 5, 6), "first example in S04-control.pod works";
+}
+
+{
+    my @y;
+    my @x = gather for 1..2 {            # flat context for list of parcels
+        my ($y) := \(take $_, $_ * 10);  # binding forces item context
+        push @y, $y;
+    }
+    is @x, (1, 10, 2, 20), "take in flat context flattens";
+    is @y, ($(1, 10), $(2, 20)), "take in item context doesn't flatten";
+}
+
+{
+    my ($c) := \(gather for 1..2 {
+        take $_, $_ * 10;
+    });
+    is $c.flat, (1,10,2,20), ".flat flattens fully into a list of Ints.";
+    is $c.lol, LoL.new($(1,10),$(2,20)), ".lol: list of Parcels.";
+    is $c.item, ($(1,10),$(2,20)).list.item, "a list of Parcels, as an item.";
+}
+
 
 # vim: ft=perl6
