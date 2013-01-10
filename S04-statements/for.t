@@ -14,7 +14,7 @@ for statement as possible
 
 =end description
 
-plan 75;
+plan 76;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -562,5 +562,15 @@ lives_ok {
     dies_ok { for ^8 { .=fmt('%03b'); $c++ } }, '$_ is read-only here';
     is $c, 0, '... and $_ is *always* read-only here';
 }
+
+dies_ok
+    {
+        my class Foo {
+            has @.items;
+            method check_items { for @.items -> $item { die "bad" if $item == 2 } }
+            method foo { self.check_items; .say for @.items }
+        }
+        Foo.new(items => (1, 2, 3, 4)).foo
+    }, 'for in called method runs (was a sink context bug)';
 
 # vim: ft=perl6
