@@ -225,8 +225,8 @@ my @array2 = ("test", 1, Mu);
 
 {
   my @arr;
-  lives_ok { @arr[*-1] },  "readonly accessing [*-1] of an empty array is ok (1)";
-  ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array is ok (2)";
+  ok @arr[*-1] ~~ Failure, "readonly accessing [*-1] of an empty array gives Failure";
+  ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array does not die";
   #?pugs 2 todo
   dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
   dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
@@ -234,9 +234,9 @@ my @array2 = ("test", 1, Mu);
 
 {
   my @arr = (23);
-  lives_ok { @arr[*-2] },  "readonly accessing [*-2] of an one-elem array is ok (1)";
+  ok @arr[*-2] ~~ Failure, "readonly accessing [*-2] of an one-elem array gives Failure";
   #?pugs 3 todo
-  ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array is ok (2)";
+  ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array does not die";
   dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
   dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
 }
