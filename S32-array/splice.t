@@ -131,7 +131,6 @@ dies_ok({ 42.splice }, '.splice should not work on scalars');
 
 @a = (1..10);
 dies_ok({use fatal; splice(@a,-2)}, "negative offset dies");
-#?rakudo todo "negative args don't die"
 dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
 
 # vim: ft=perl6

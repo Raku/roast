@@ -246,14 +246,12 @@ my @array2 = ("test", 1, Mu);
   my $minus_one = -1;
 
   eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
-  #?rakudo todo '@arr[-1] returns failure, not dies'
   #?niecza todo '@arr[-1] returns undef'
   #?pugs todo
   dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
                                    "through a variable is run-time error";
   #?pugs todo
   dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
-  #?rakudo todo "binding not yet fatal"
   #?pugs todo
   dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
 }
