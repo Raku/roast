@@ -115,7 +115,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], ' Callooh', 'Multiple separators not at end of string';
     is $expected[$i++], ' Callay', '! separator at end of string';
 
-    # test 6 tests read with a parameter
+    # RT #116288, test 6 tests read with a parameter
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 6 $port};
     } else {

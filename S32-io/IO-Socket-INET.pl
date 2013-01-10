@@ -150,7 +150,7 @@ given $test {
         }
     }
 
-    when 6 { # test number 6 - read with parameter
+    when 6 { # RT #116288, test number 6 - read with parameter
         if $server_or_client eq 'server' {
             my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
             my $fd = open( $server_ready_flag_fn, :w );
