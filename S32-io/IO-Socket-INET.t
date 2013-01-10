@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 19;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -114,6 +114,18 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], 'O frabjous day', '! separator not at end of string';
     is $expected[$i++], ' Callooh', 'Multiple separators not at end of string';
     is $expected[$i++], ' Callay', '! separator at end of string';
+
+    # test 6 tests read with a parameter
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 6 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 6 $port};
+    }
+    $expected = $received.split("\n");
+    $i = 0;
+    is $expected[$i++], '0', 'received first character';
+    is $expected[$i++], '3', 'received last character';
+    is $expected[$i++], 4096 * 4, 'total amount ';
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;

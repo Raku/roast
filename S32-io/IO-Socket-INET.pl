@@ -149,6 +149,34 @@ given $test {
             $sock.close();
         }
     }
+
+    when 6 { # test number 6 - read with parameter
+        if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
+            while my $client = $server.accept() {
+                # send 4 packets á 4096 bytes
+                for ^4 {
+                    $client.send( $_ x 4096 );
+                    sleep 1;
+                }
+                $client.close();
+            }
+        }
+        else {
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
+            my $sock = IO::Socket::INET.new(:$host, :$port);
+            # .read will give us 16kB of data even it recvs several chunks of smaller size
+            my $collected = $sock.read( 4096 * 4 );
+            say $collected.at_pos( 0 ).chr;
+            say $collected.at_pos( 4096 * 4 - 1 ).chr;
+            say $collected.bytes;
+            $sock.close();
+        }
+    }
+
 }
 
 =begin pod
