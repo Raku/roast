@@ -53,14 +53,12 @@ splice_ok splice(@a,0,1), @a, [1], [2..12], "Simple 3-arg splice";
 @res = splice(@a,8);
 splice_ok @res, @a, [9,10], [1..8], "2-arg positive indices work";
 
-#?rakudo skip "needs WhateverCode args"
 {
     @a = (1..10);
     @res = splice(@a,*-2,2);
     splice_ok @res, @a, [9,10], [1..8], "3-arg negative indices work";
 }
 
-#?rakudo skip "needs WhateverCode args"
 {
     @a = (1..10);
     @res = splice(@a,*-2);
@@ -79,20 +77,17 @@ splice_ok splice(@a,5,1,5), @a, [5], [0..11], "Replacing an element with itself"
 @a = (0..11);
 splice_ok splice(@a, +@a, 0, 12, 13), @a, [], [0..13], "Appending an array";
 
-#?rakudo skip "needs WhateverCode args"
 {
     @a = (0..13);
     @res = splice(@a, *-@a, +@a, 1, 2, 3);
     splice_ok @res, @a, [0..13], [1..3], "Replacing the array contents from right end";
 }
 
-#?rakudo skip "needs WhateverCode args"
 {
     @a = (1, 2, 3);
     splice_ok splice(@a, 1, *-1, 7, 7), @a, [2], [1,7,7,3], "Replacing a array into the middle";
 } 
 
-#?rakudo skip "needs WhateverCode args"
 {
     @a = (1,7,7,3);
     splice_ok splice(@a,*-3,*-2,2), @a, [7], [1,2,7,3], "Replacing negative count of elements";
@@ -131,7 +126,6 @@ dies_ok({ 42.splice }, '.splice should not work on scalars');
 
 @a = (1..10);
 dies_ok({use fatal; splice(@a,-2)}, "negative offset dies");
-#?rakudo todo "negative args don't die"
 dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
 
 # vim: ft=perl6
