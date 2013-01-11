@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -126,6 +126,25 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], '0', 'received first character';
     is $expected[$i++], '3', 'received last character';
     is $expected[$i++], 4096 * 4, 'total amount ';
+
+    # test 7 tests rcv with binary data
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 7 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 7 $port};
+    }
+    $expected = $received.split("\n");
+    is $expected[0], 'OK-7', 'successful read binary data';
+
+    # test 8 tests recv with binary data. This test should show that
+    # .recv will fall back to binary when utf-8 decoding fails.
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 8 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 8 $port};
+    }
+    $expected = $received.split("\n");
+    is $expected[0], 'OK-8', 'successful received binary data';
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;
