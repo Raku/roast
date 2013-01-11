@@ -127,7 +127,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], '3', 'received last character';
     is $expected[$i++], 4096 * 4, 'total amount ';
 
-    # test 7 tests rcv with binary data
+    # test 7 tests recv with binary data
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 7 $port};
     } else {
@@ -136,8 +136,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $expected = $received.split("\n");
     is $expected[0], 'OK-7', 'successful read binary data';
 
-    # test 8 tests recv with binary data. This test should show that
-    # .recv will fall back to binary when utf-8 decoding fails.
+    # test 8 tests recv with binary data.
     if $is-win {
         $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 8 $port};
     } else {

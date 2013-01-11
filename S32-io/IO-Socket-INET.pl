@@ -216,12 +216,13 @@ given $test {
             until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
             unlink $server_ready_flag_fn;
             my $sock = IO::Socket::INET.new(:$host, :$port);
-            my Str $recv;
-            my Str $chunk;
-            while $chunk = $sock.recv( 4096 ) {
+            my Buf $recv = Buf.new;
+            my Buf $chunk;
+            # in binary mode it will return a Buf, not Str
+            while $chunk = $sock.recv( 4096, bin => True ) {
                 $recv ~= $chunk;
             }
-            say $binary.decode('binary') eq $recv ?? 'OK-8' !! 'NOK-8';
+            say $binary eqv $recv ?? 'OK-8' !! 'NOK-8';
             $sock.close();
         }
     }
