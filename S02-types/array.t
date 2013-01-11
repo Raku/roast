@@ -226,6 +226,7 @@ my @array2 = ("test", 1, Mu);
 {
   my @arr;
   #?niecza skip "Failure NYI"
+  #?pugs skip "Failure NYI"
   ok @arr[*-1] ~~ Failure, "readonly accessing [*-1] of an empty array gives Failure";
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array does not die";
   #?pugs 2 todo
@@ -236,6 +237,7 @@ my @array2 = ("test", 1, Mu);
 {
   my @arr = (23);
   #?niecza skip "Failure NYI"
+  #?pugs skip "Failure NYI"
   ok @arr[*-2] ~~ Failure, "readonly accessing [*-2] of an one-elem array gives Failure";
   #?pugs 3 todo
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array does not die";
@@ -267,7 +269,6 @@ my @array2 = ("test", 1, Mu);
 # by current group understanding of #perl6, postcircumifx:<[ ]> is actually
 # defined in Any, so that .[0] is the identity operation for non-Positional
 # types
-#?niecza skip "Failure"
 {
     is 1[0], 1, '.[0] is identity operation for scalars (Int)';
     is 'abc'[0], 'abc', '.[0] is identity operation for scalars (Str)';
