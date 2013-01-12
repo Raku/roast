@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 29;
 
 =begin pod
 
@@ -94,6 +94,17 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     my role R[::T = my role Q[::S = role { method baz { "OH HAI" } }] { method bar { S.baz } }] { method foo { T.bar } };
     is R.new.foo, 'OH HAI', 'can use a parameterized role as a default value of a parameterized role';
 
+}
+
+# RT #114954
+{
+    my module A {
+        role B[$x] is export {
+            method payload { $x }
+        }
+    }
+    import A;
+    is B['blubb'].payload, 'blubb', 'can export and import parameterized roles';
 }
 
 #?pugs emit =end SKIP
