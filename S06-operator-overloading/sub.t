@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 67;
+plan 68;
 
 =begin pod
 
@@ -418,9 +418,12 @@ Testing operator overloading subroutines
 }
 
 # RT #111418
+# RT #112870
 {
     sub infix:<*+>($a, $b) { $a * $b + $b }
     is 2 *+ 5, 15, 'longest operator wins (RT 111418)';
+    sub infix:<~eq>(Str $a, Str $b) { uc($a) eq uc($b) }
+    ok 'a' ~eq 'A', 'longest operator wins (RT 112870)';
 }
 
 done;
