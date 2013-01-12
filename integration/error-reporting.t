@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 16;
 
 BEGIN { @*INC.push('t/spec/packages') };
 
@@ -120,6 +120,20 @@ is_run 'die "foo"; END { say "end run" }',
     #?niecza skip "Unable to resolve method backtrace in type Str"
     ok ?( $!.backtrace.any.line == 3),
         'correct line number reported for assignment to non-variable';
+}
+
+# RT #103034
+{
+    use lib 't/spec/packages';
+    use Foo;
+    try dies();
+    ok $!, 'RT 103034 -- died';
+    my $bt = $!.backtrace;
+    ok any($bt>>.file) ~~ /Foo\.pm/, 'found original file name in the backtrace';
+    # note that fudging can change the file extension, so don't check
+    # for .t here
+    ok any($bt>>.file) ~~ /'error-reporting'\./, 'found script file name in the backtrace';
+
 }
 
 # vim: ft=perl6
