@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 71;
+plan 72;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -288,6 +288,18 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     dies_ok { eval '$bad = 1; no_such_routine()' },
         'dies on undeclared routines';
     nok $bad, '... and it does so before run time';
+}
+
+#RT #102650
+{
+    my @tracker;
+    my $outer;
+    sub t() {
+        my $inner = $outer++;
+        @tracker.push($inner) and t() for $inner ?? () !! ^2;
+    }
+    t();
+    is @tracker.join(', '), '0, 0', 'RT 102650';
 }
 
 # vim: ft=perl6
