@@ -12,7 +12,7 @@ use soft;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 67;
+plan 68;
 
 my @log;
 
@@ -215,6 +215,18 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
         triangle();
     }
     is @t.join("\n"), "\n=\n==\n===\n==\n=\n", 'multiple wrappings in a loop';
+}
+
+# RT #77472
+{
+    multi multi-to-wrap($x) {
+        $x * 2;
+    };
+    &multi-to-wrap.wrap({
+        2 * callsame;
+    });
+    #?rakudo todo 'RT 77472'
+    is multi-to-wrap(5), 20, 'can wrap a multi';
 }
 
 done;
