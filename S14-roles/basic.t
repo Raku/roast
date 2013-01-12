@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 43;
 
 =begin description
 
@@ -144,6 +144,21 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 eval_lives_ok q[my role R { our $.r }; my class C does R {}],
     'Can have "our $.r" in a role (RT 114380)';
 
+# RT #116226
+{
+    my role AccessesAttr {
+        method meth() {
+            self.x;
+        }
+    }
+    my class WithAttr does AccessesAttr {
+        has $.x = 42;
+        method meth() {
+            self.AccessesAttr::meth();
+        }
+    }
+    is WithAttr.new.meth, 42, '$obj.Role::method() passes correct invocant';
+}
 done;
 
 # vim: ft=perl6
