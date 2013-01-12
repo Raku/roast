@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 139;
+plan 140;
 
 =begin pod
 
@@ -681,6 +681,19 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
         }
     }
     is AttrInSub.new(x => 42).x, 42, 'Attribute declaration can be in sub-scope too';
+
+}
+
+# RT #107232
+{
+    my class Shadowing {
+        has $x;
+        method ignores_attr() {
+            my $x = 42;
+            return $x;
+        }
+    }
+    is Shadowing.new.ignores_attr(), 42, 'can shadow an attribute with a lexical';
 
 }
 
