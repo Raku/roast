@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 24;
+plan 26;
 
 #?pugs todo
 {
@@ -13,6 +13,12 @@ plan 24;
     try { die "foo" };
     ok($! ~~ /foo/, "error var was set");
 };
+
+# try should return Nil if an exception was caught
+{
+    ok (try { die 'foo' }) === Nil, 'try returns Nil when exception was caught';
+    ok (try { die 'foo'; CATCH { default { } } }) === Nil, '... even when there was a CATCH block';
+}
 
 # try should work when returning an array or hash
 {
