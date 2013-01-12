@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 =begin description
 
@@ -58,6 +58,13 @@ is uniq('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
     my @array = $range, $range.WHICH;
     is @array.elems, 2, ".uniq does not use naive WHICH (1)";
     is @array.uniq.elems, 2, ".uniq does not use naive WHICH (2)";
+}
+
+# RT #111360
+{
+    my class A { method Str { '' } };
+    is (A.new, A.new).uniq.elems, 2, 'uniq has === semantics';
+
 }
 
 # vim: ft=perl6
