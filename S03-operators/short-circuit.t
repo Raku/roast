@@ -12,7 +12,7 @@ it is closely related to || and && and //.
 
 =end description
 
-plan 82;
+plan 83;
 
 my $accum = '';
 sub f1($s)   { $accum ~= $s; 1 }
@@ -301,6 +301,14 @@ ok (0 || 0 || 1), '0 || 0 || 1 is true';
     my @a = 1;
     @a ||= ();
     is ~@a, '1', '||= works with array on the LHS';
+}
+
+# RT #116230
+{
+    my role SomeRole { };
+    my $x = SomeRole;
+    $x //= SomeRole.new;
+    ok $x.defined, '//= can cope with role type objects';
 }
 
 done;
