@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 72;
+plan 74;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -300,6 +300,15 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     }
     t();
     is @tracker.join(', '), '0, 0', 'RT 102650';
+}
+
+# RT #114202
+# # check that anonymous variables don't overshare.
+{
+    my @ = 1, 2, 3;
+    my % = a => 1, b => 2, c => 3;
+    is my @, Array.new, q{anonymous @ doesn't overshare};
+    is my %, ().hash, q{anonymous % doesn't overshare};
 }
 
 # vim: ft=perl6
