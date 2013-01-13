@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 74;
+plan 75;
 
 #L<S04/The Relationship of Blocks and Declarations/"declarations, all
 # lexically scoped declarations are visible"> 
@@ -307,8 +307,10 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 {
     my @ = 1, 2, 3;
     my % = a => 1, b => 2, c => 3;
+    my & = { * - 5 };
     is my @, Array.new, q{anonymous @ doesn't overshare};
     is my %, ().hash, q{anonymous % doesn't overshare};
+    is my &, Any, q{anonymous & doesn't overshare};
 }
 
 # vim: ft=perl6
