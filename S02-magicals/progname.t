@@ -28,7 +28,7 @@ lives_ok { $*PROGRAM_NAME = "coldfusion" }, '$*PROGRAM_NAME is assignable';
     is_run 'print $*PROGRAM_NAME', {
         out => -> $x { $x !~~ /IGNOREME/ },
     },
-    :compiler-args['-IGNOREME']
+    :compiler-args['-IGNOREME'],
     :args['IGNOREME'],
     '$*PROGRAM_NAME is not confused by compiler options';
 }

@@ -15,6 +15,7 @@ plan 26;
 };
 
 # try should return Nil if an exception was caught
+#?niecza skip "=== and Nil NYI"
 {
     ok (try { die 'foo' }) === Nil, 'try returns Nil when exception was caught';
     ok (try { die 'foo'; CATCH { default { } } }) === Nil, '... even when there was a CATCH block';

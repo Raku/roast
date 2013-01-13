@@ -213,6 +213,7 @@ plan 28;
     is @uniq, (1, 2, 3, 4, 5, 6), "first example in S04-control.pod works";
 }
 
+#?niecza skip 'Cannot use bind operator with this LHS'
 {
     my @y;
     my @x = gather for 1..2 {            # flat context for list of parcels
@@ -223,6 +224,7 @@ plan 28;
     is @y, ($(1, 10), $(2, 20)), "take in item context doesn't flatten";
 }
 
+#?niecza skip 'Cannot use bind operator with this LHS'
 {
     my ($c) := \(gather for 1..2 {
         take $_, $_ * 10;

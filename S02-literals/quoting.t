@@ -594,6 +594,7 @@ eval_dies_ok q["@a<"], 'unclosed quote after array variable is an error';
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
 
 #115272
+#?niecza todo "Weird quoting issue"
 is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 
 done;

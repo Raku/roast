@@ -123,6 +123,7 @@ is_run 'die "foo"; END { say "end run" }',
 }
 
 # RT #103034
+#?niecza skip 'sub ucfirst($thing) is export(:DEFAULT) blows up'
 {
     use lib 't/spec/packages';
     use Foo;
