@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 22;
+plan 23;
 
 {
   sub foo($a is copy) {
@@ -105,6 +105,13 @@ plan 22;
     sub j(@a is copy) { @a ||= -1, -1, +1, +1; @a.join(',') }
     #?pugs todo
     is j([1, 2, 3, 4]), '1,2,3,4', 'can use ||= on "is copy" array';
+}
+
+# RT #74430
+{
+    sub foo(@items is copy) { @items[0..^1] };
+    my @items = 'a'...'g';
+    is foo(@items), 'a', 'can slice "is copy" arrays';
 }
 
 
