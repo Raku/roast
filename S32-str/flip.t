@@ -6,7 +6,6 @@ use Test;
 plan 13;
 
 # As a function :
-#?pugs skip 'sub NYI'
 is( flip('Pugs'), 'sguP', "as a function");
 
 # As a method :
@@ -35,7 +34,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".flip,
     "grapheme without precomposed");
 
 is 234.flip, '432', '.flip on non-string';
-#?pugs skip 'sub NYI'
 is flip(123), '321', 'flip() on non-strings';
 {
     my $x = 'abc';

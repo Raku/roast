@@ -6,9 +6,7 @@ plan 8;
 
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 
-#?pugs todo
 eval_lives_ok 'my $!', '$! can be declared again';
-#?pugs todo
 eval_lives_ok 'my $/', 'as can $/';
 
 #?niecza todo

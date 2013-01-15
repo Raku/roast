@@ -60,7 +60,6 @@ plan 42;
 
 #RT #84000
 #?niecza skip 'Unable to resolve method push in class Any'
-#?pugs todo
 {
   my %hash;
 
