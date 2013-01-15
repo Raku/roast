@@ -50,6 +50,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 }
 
 #?niecza skip "Thinks the block is a hash"
+#?pugs   skip "Thinks the block is a hash"
 {
     my @foo = <a b>;
     my %hash = map { (state $counter)++ => $_ }, @foo;
@@ -59,6 +60,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 
 # RT #68298
 #?niecza skip "Thinks the block is a hash"
+#?pugs   skip "Thinks the block is a hash"
 is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
 
 done;

@@ -338,6 +338,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?niecza skip "throws_like"
+#?pugs skip 'Test Util parsefail'
 #?DOES 8
 {
     use lib "t/spec/packages";

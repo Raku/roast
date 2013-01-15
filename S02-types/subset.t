@@ -190,6 +190,7 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #65308
 #?niecza skip 'Methods must be used in some kind of package'
+#?pugs todo
 {
     subset FooStr of Str where /^foo/;
     my multi method uc(FooStr $self:) { return "OH HAI" }; #OK not used

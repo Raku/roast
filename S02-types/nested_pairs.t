@@ -24,6 +24,7 @@ is($list.value.value.value, 4, 'the list.value.value.value is 4');
 
 is($list, 1 => 2 => 3 => 4, 'pair operator nests right-associatively');
 
+#?pugs todo
 is($list.perl, '1 => 2 => 3 => 4', 'right-associative nested pairs .perl correctly');
 
 my $r-list = (((1 => 2) => 3) => 4);
@@ -34,6 +35,7 @@ is($r-list.value, 4, 'the value is a number');
 is($r-list.key.value, 3, 'the value of the key is a number');
 
 #?niecza todo "key-nested pairs do not .perl correctly"
+#?pugs todo
 is($r-list.perl, '((1 => 2) => 3) => 4', 'key-nested pairs .perl correctly');
 
 # vim: ft=perl6

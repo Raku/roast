@@ -33,6 +33,7 @@ plan 20;
     ok eval(q/foo 1, 2; /), 'call with two args, no parens';
     ok eval(q/foo(1, 2);/), 'call with two args, has parens';
 
+    #?pugs todo
     dies_ok { eval(q/foo:bar;  /) }, 'call with adverb after no space';
     ok eval(q/foo :bar; /), 'call with adverb after space';
 

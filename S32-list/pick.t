@@ -158,6 +158,7 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
 }
 
 #?rakudo skip '.pick on huge integer ranges'
+#?pugs skip 'slow'
 {
     my %seen;
     %seen{$_} = 1 for (1 .. (10**1000) ).pick(50);

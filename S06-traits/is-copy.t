@@ -108,6 +108,7 @@ plan 23;
 }
 
 # RT #74430
+#?pugs skip 'parsefail'
 {
     sub foo(@items is copy) { @items[0..^1] };
     my @items = 'a'...'g';

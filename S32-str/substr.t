@@ -257,6 +257,7 @@ eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 
 # RT 115086
 #?niecza todo
+#?pugs todo
 {
     is "abcd".substr(2, Inf), 'cd', 'substr to Inf'
 }

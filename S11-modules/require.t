@@ -7,6 +7,7 @@ plan 6;
 @*INC.push: 't/spec/packages';
 
 # Next line is for final test.
+#?pugs emit #
 GLOBAL::<$x> = 'still here';
 
 lives_ok { require Fancy::Utilities; },
@@ -29,6 +30,7 @@ lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
     is allgreet(), 'hi all', 'require with import list';
 }
 
+#?pugs skip 'parsefail'
 is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # vim: ft=perl6

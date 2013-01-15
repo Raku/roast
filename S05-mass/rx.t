@@ -3,6 +3,7 @@ use Test;
 plan 733;
 
 ### for now
+#?pugs emit #
 sub matchcheck(*@) { 1 }
 
 # L<S05/Backtracking control/"To force the preceding atom to do no

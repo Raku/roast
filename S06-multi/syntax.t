@@ -160,12 +160,15 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
     dies_ok { $x(23) }, '... and does not contain the full multiness';
 }
 
+#?pugs emit #
 multi with_cap($a) { $a }
+#?pugs emit #
 multi with_cap($a,$b,|cap) { return with_cap($a + $b, |cap) }
 #?pugs skip 'with_cap not found'
 is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 
 #RT #114886 - order of declaration matters
+#?pugs skip 'where'
 {
     multi sub fizzbuzz(Int $ where * %% 15) { 'FizzBuzz' };
     multi sub fizzbuzz(Int $ where * %% 5) { 'Buzz' };

@@ -662,6 +662,7 @@ eval_dies_ok q[class A { has $!a }; my $a = A.new(a => 42);
     'cannot sneak in access to private attribute through the backdoor';
 
 # RT #74636
+#?pugs todo
 {
     my class HasArray {
         has @.a;

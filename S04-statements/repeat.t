@@ -128,6 +128,7 @@ plan 21;
 
 # RT #114432
 #?niecza skip "throws_like"
+#?pugs skip 'Test Util parsefail'
 #?DOES 3
 {
     use lib "t/spec/packages";

@@ -446,6 +446,7 @@ Hello, World
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
+#?pugs todo
 {
     my $world = 'world';
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
@@ -588,13 +589,16 @@ Hello, World
 }
 
 # RT #90124
+#?pugs todo
 eval_dies_ok q["@a<"], 'unclosed quote after array variable is an error';
 
 # RT #114090
+#?pugs skip 'parsefail'
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
 
 #115272
 #?niecza todo "Weird quoting issue"
+#?pugs   todo "Weird quoting issue"
 is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 
 done;

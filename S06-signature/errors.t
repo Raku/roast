@@ -48,6 +48,7 @@ eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
 
 # RT #72082
 #?niecza todo
+#?pugs todo
 {
     try { eval 'sub rt72082(@a, $b) {}; rt72082(5)' };
     my $error = ~$!;

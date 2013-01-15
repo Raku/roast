@@ -19,6 +19,7 @@ my $bang = '!';
 
 ok(("123\nabcabcabcabc\n" ~~ rx:P5/(?m)^.{9}abc.*\n/), 're_tests 1215  (1419)');
 ok((not ("a" ~~ rx:P5/^(a)?(?(1)a|b)+$/)), 're_tests 1216  (1420)');
+#?pugs todo
 is(("aaaaaa" ~~ rx:P5/^(a\1?){4}$/ && $0), "aa", 're_tests 1218/1 (1422)');
 ok(("x1" ~~ rx:P5/^(0+)?(?:x(1))?/), 're_tests 1220  (1424)');
 ok(("012cxx0190" ~~ rx:P5/^([0-9a-fA-F]+)(?:x([0-9a-fA-F]+)?)(?:x([0-9a-fA-F]+))?/), 're_tests 1222  (1426)');

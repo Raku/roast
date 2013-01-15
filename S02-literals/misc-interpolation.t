@@ -63,6 +63,7 @@ is('$world @list[] %hash{} &func()', '$world @list[] %hash{} &func()', 'single q
 is("Hello $world!", "Hello World!", "! is not a part of var names");
 sub list_count (*@args) { +@args }
 is(list_count("@list[]"), 1, 'quoted interpolation gets string context');
+#?pugs todo
 is(qq{a{chr 98}c}, 'a{chr 98}c', "curly brace delimiters interfere with closure interpolation");
 
 # Quoting constructs
