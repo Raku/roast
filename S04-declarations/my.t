@@ -304,6 +304,7 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 
 # RT #114202
 # # check that anonymous variables don't overshare.
+#?niecza skip 'parsefail'
 #?pugs skip 'parsefail'
 {
     my @ = 1, 2, 3;
