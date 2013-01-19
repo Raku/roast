@@ -10,7 +10,7 @@ These tests derived from comments in L<http://use.perl.org/~autrijus/journal/233
 
 =end pod
 
-plan 44;
+plan 46;
 
 my $world = "World";
 my $number = 1;
@@ -44,6 +44,11 @@ is("$number {my $number=2} $number", '1 2 1', 'original number still available a
 
 # L<S02/Names and Variables/form of each subscript>
 is("&func. () is where I live", '&func. () is where I live', '"&func. ()" should not interpolate');
+
+# RT #116166
+is("$world.", 'World.', '"$world." should not interpolate');
+is("$world!", 'World!', '"$world!" should not interpolate');
+
 #?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("&func_w_args("foo","bar"))", '[foo][bar])', '"&func_w_args(...)" should interpolate');
 
