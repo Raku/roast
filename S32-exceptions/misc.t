@@ -320,4 +320,28 @@ ok $! ~~ X::NoDispatcher, 'nextsame in proto';
 # RT #79162
 throws_like '["a" "b"]', X::Syntax::Confused, reason => 'Two terms in a row';
 
+# suggestions
+my $emits_suggestions = False;
+{
+    try eval('my $foo = 10; say $Foo');
+    $emits_suggestions = True if $!.^can("suggestions");
+}
+
+if $emits_suggestions {
+    throws_like 'my $foo = 10; say $Foo;', X::Undeclared, suggestions => '$foo';
+    throws_like 'my @barf = 1, 2, 3; say $barf[2]', X::Undeclared, suggestions => '@barf';
+
+    throws_like 'my $intergalactic-planetary = "planetary intergalactic"; say $IntergalacticPlanetary', X::Undeclared, suggestions => '$intergalactic-planetary';
+
+    throws_like 'class Foo is Junktion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
+    throws_like 'class Bar is junction {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
+    throws_like 'class Baz is Juntcion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
+
+    {
+        try eval('say huc("foo")');
+        ok $! ~~ X::Undeclared::Symbols, "huc throws X::Undeclared::Symbols";
+        is $!.routine_suggestion<huc>, ["&uc"], '&uc is a suggestion';
+    }
+}
+
 done;
