@@ -356,4 +356,6 @@ if $emits_suggestions {
     ok $!.message !~~ /Did you mean/, "doesn't suggest if there's no suggestions.";
 }
 
+throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
+
 done;
