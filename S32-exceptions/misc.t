@@ -342,6 +342,18 @@ if $emits_suggestions {
         ok $! ~~ X::Undeclared::Symbols, "huc throws X::Undeclared::Symbols";
         is $!.routine_suggestion<huc>, ["&uc"], '&uc is a suggestion';
     }
+
+    try eval('toolongtomatchanything()');
+    is +($!.routine_suggestion<toolongtomatchanything>), 0, "no suggestions for a strange name";
+    ok $!.message !~~ /Did you mean/, "doesn't show suggestions if there are none.";
+
+    try eval('class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
+    is +($!.suggestions), 0, "no suggestions for a strange class";
+    ok $!.message !~~ /Did you mean/, "doesn't show suggestions if there are none.";
+
+    try eval('$i-just-made-this-up = "yup"');
+    is +($!.suggestions), 0, "no suggestions for a strange variable";
+    ok $!.message !~~ /Did you mean/, "doesn't suggest if there's no suggestions.";
 }
 
 done;
