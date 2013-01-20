@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 46;
+plan 47;
 
 =begin description
 
@@ -157,8 +157,6 @@ is (<a b c d>.pick(*).sort).Str, 'a b c d', 'pick(*) returns all the items in th
     ok (so 1 < all(%seen.keys) < 1_000_000), '... and all the elements are in range';
 }
 
-#?rakudo skip '.pick on huge integer ranges'
-#?pugs skip 'slow'
 {
     my %seen;
     %seen{$_} = 1 for (1 .. (10**1000) ).pick(50);
@@ -170,5 +168,8 @@ is (1..^2).pick, 1, 'pick on 1-elem range';
 
 #?pugs todo
 ok ('a'..'z').pick ~~ /\w/, 'Range.pick on non-Int range';
+
+# RT #109586
+nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
 
 # vim: ft=perl6
