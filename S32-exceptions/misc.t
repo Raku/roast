@@ -354,6 +354,8 @@ if $emits_suggestions {
     try eval('$i-just-made-this-up = "yup"');
     is +($!.suggestions), 0, "no suggestions for a strange variable";
     ok $!.message !~~ /Did you mean/, "doesn't suggest if there's no suggestions.";
+
+    throws_like 'sub yoink(Junctoin $barf) { }', X::Parameter::InvalidType, suggestions => 'Junction';
 }
 
 throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
