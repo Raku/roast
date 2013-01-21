@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 126;
+plan 136;
 
 # L<S05/Substitution/>
 
@@ -25,6 +25,27 @@ is $str,                      'heilo', '.. it changes the receiver';
 is 'a'.subst(/(.)/,"$1$0"), '',       '.. and it can not access captures from strings';
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure';
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
+
+# RT #116224
+{
+    $/ = '-';
+    is 'a'.subst("a","b"), 'b', '"a".subst("a", "b") is "b"';
+    is $/,                 '-', '$/ is left untouched';
+
+    is 'a'.subst(/a/,"b"), 'b', '"a".subst(/a/, "b") is "b"';
+    is $/,                 'a', '$/ matched "a"';
+
+    is 'a'.subst(/x/,"y"), 'a', '"a".subst(/x/, "y") is "a"';
+    nok $/,                     '$/ is a falsey';
+
+    $_ = 'a';
+    is s/a/b/,             'b', '$_ = "a"; s/a/b/ is "b"';
+    is $/,                 'a', '$/ matched "a"';
+
+    $_ = 'a';
+    is s/x/y/,             'a', '$_ = "a"; s/x/y/ is "a"';
+    nok $/,                     '$/ is a falsey';
+}
 
 {
     is 'a b c d'.subst(/\w/, 'x', :g),      'x x x x', '.subst and :g';
