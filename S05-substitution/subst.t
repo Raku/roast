@@ -21,9 +21,9 @@ is $str,                      'heilo', '.. it changes the receiver';
 
 # not sure about this. Maybe '$1$0' should work.
 
-#?rakudo 3 skip '$/ not involved in .subst yet (unspecced?)'
 is 'a'.subst(/(.)/,"$1$0"), '',       '.. and it can not access captures from strings';
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure';
+#?rakudo skip '$() NYI?'
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #116224
@@ -82,7 +82,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 
-#?rakudo skip ':nth'
+# :nth
 {
     is 'a b c d'.subst(/\w/, 'x', :nth(0)), 'a b c d', '.subst and :nth(0)';
     is 'a b c d'.subst(/\w/, 'x', :nth(1)), 'x b c d', '.subst and :nth(1)';
@@ -100,9 +100,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is 'a a a a'.subst('a', 'x', :nth(5)), 'a a a a', '.subst (str pattern) and :nth(5)';
 }
 
-#?rakudo skip ':nth NYI'
+# combining :nth with :x
 {
-    # combining :nth with :x
     is 'a b c d e f g h'.subst(/\w/, 'x', :nth(1,2,3,4), :x(3)),
        'x x x d e f g h',
        '.subst with :nth(1,2,3,4)) and :x(3)';
@@ -174,7 +173,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
        '.subst with :c(2) and :g';
 
     # :c and :nth(3, 4)
-    #?rakudo 3 skip ':nth NYI'
     #?niecza 3 todo ":nth(3, 4) NYI"
     is 'a b c d e f g h'.subst(/\w/, 'x', :c(0), :nth(3, 4)),
        'a b x x e f g h',
@@ -276,7 +274,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $x, 'xxCD', 's:x(2)';
 }
 
-#?rakudo skip 's///'
+# s///
 {
     my $x = 'ooooo';
     ok $x ~~ s:1st/./X/,    's:1st return value';
@@ -304,7 +302,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $x,  'ooooo',        's:nth(6) no side effect';
 }
 
-#?rakudo skip 's///'
+# s///
 {
     my $x = 'ooooo';
     $x ~~ s:x(2):nth(1,3)/o/A/;
@@ -343,7 +341,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #69044
-#?rakudo skip 's///'
 {
     sub s { 'sub s' }
     $_ = "foo";
