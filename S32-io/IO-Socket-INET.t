@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -89,12 +89,12 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], '789', 'received next 3 characters';
     is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', 'remaining 26 were buffered';
     # Multibyte characters
-    #?rakudo skip 'RT 115862'
+    # RT #115862
     is $expected[$i], chr(0xbeef), "received {chr 0xbeef}";
     $i++;
     is $expected[$i++], 1, '... which is 1 character';
     is $expected[$i++], 1, 'received another character';
-    #?rakudo skip 'RT 115862'
+    # RT #115862
     is $expected[$i], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
     $i++;
 
@@ -126,6 +126,24 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     is $expected[$i++], '0', 'received first character';
     is $expected[$i++], '3', 'received last character';
     is $expected[$i++], 4096 * 4, 'total amount ';
+
+    # test 7 tests recv with binary data
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 7 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 7 $port};
+    }
+    $expected = $received.split("\n");
+    is $expected[0], 'OK-7', 'successful read binary data';
+
+    # test 8 tests recv with binary data.
+    if $is-win {
+        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 8 $port};
+    } else {
+        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 8 $port};
+    }
+    $expected = $received.split("\n");
+    is $expected[0], 'OK-8', 'successful received binary data';
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;

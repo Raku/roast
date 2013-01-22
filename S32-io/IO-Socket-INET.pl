@@ -177,6 +177,55 @@ given $test {
         }
     }
 
+    # for test 7 and 8
+    my Buf $binary = slurp( 't/spec/S32-io/socket-test.bin', bin => True );
+
+    when 7 { # test number 7 - write/read binary data
+        if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
+            if my $client = $server.accept() {
+                # send binary data á 4096 bytes
+                $client.write( $binary );
+                $client.close();
+            }
+        }
+        else {
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
+            my $sock = IO::Socket::INET.new(:$host, :$port);
+            my $recv = $sock.read( 4096 );
+            say $binary eqv $recv ?? 'OK-7' !! 'NOK-7';
+            $sock.close();
+        }
+    }
+
+    when 8 { # test number 8 - write/recv binary data
+        if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
+            if my $client = $server.accept() {
+                # send binary data á 4096 bytes
+                $client.write( $binary );
+                $client.close();
+            }
+        }
+        else {
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
+            my $sock = IO::Socket::INET.new(:$host, :$port);
+            my Buf $recv = Buf.new;
+            my Buf $chunk;
+            # in binary mode it will return a Buf, not Str
+            while $chunk = $sock.recv( 4096, bin => True ) {
+                $recv ~= $chunk;
+            }
+            say $binary eqv $recv ?? 'OK-8' !! 'NOK-8';
+            $sock.close();
+        }
+    }
 }
 
 =begin pod
