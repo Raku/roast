@@ -225,7 +225,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $a, 'adec', 'substitution worked';
 
     $a = 'abc';
-    #?rakudo todo 's[...] seems to always return true?'
     nok $a ~~ s[d] = 'de', 's[...] = ... returns false on failure';
     is $a, 'abc', 'failed substitutions leaves string unchanged';
 }
@@ -297,7 +296,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is $x,  'ooooX',        's:nth(5) side effect';
 
     $x    = 'ooooo';
-    #?rakudo todo 'no-match substitution should return False'
     nok $x ~~ s:nth(6)/./X/, 's:nth(6) return value';
     is $x,  'ooooo',        's:nth(6) no side effect';
 }
