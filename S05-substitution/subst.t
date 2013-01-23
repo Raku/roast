@@ -23,7 +23,6 @@ is $str,                      'heilo', '.. it changes the receiver';
 
 is 'a'.subst(/(.)/,"$1$0"), '',       '.. and it can not access captures from strings';
 is 'a'.subst(/(.)/,{$0~$0}),'aa',     '.. you must wrap it in a closure';
-#?rakudo skip '$() NYI?'
 is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 
 # RT #116224

@@ -17,7 +17,6 @@ is($/.ast , 2);
                       { make 'bar' }     # But pretend we matched 'bar'
                     /;
 ok($/, 'matched');
-#?rakudo todo '$()'
 is($(), 'bar');
 is $/.ast, 'bar', '$/.ast';
 
