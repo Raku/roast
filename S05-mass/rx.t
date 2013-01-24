@@ -1,6 +1,6 @@
 use Test;
 
-plan 733;
+plan 737;
 
 ### for now
 #?pugs emit #
@@ -2561,6 +2561,19 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
     #?rakudo 2 skip 'RT 112454'
     ok $ten_x ~~ / x ** {$rt112454} /, 'Simple match (RT 112454)';
     is $/.Str, 'x' x $rt112454, '** quantifier with braces (RT 112454)';
+}
+
+# RT 116415
+#?pugs skip 'RT 116415'
+{
+    my $rt116415 = 0;
+
+    ok 'foobar' ~~ / . ** 0 /, 'RT 116415 match sanity';
+    is $/.Str, '', 'RT 116415 quantifier sanity';
+
+    #?rakudo 2 skip 'RT 116415'
+    ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT 116415)';
+    is $/.Str, '', '** quantifier with braces (RT 116415)';
 }
 
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
