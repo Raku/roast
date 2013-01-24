@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Temporal/C<Date>>
 
-plan 58;
+plan 72;
 
 # construction
 {
@@ -115,6 +115,23 @@ sub d($x) { Date.new($x); }
     is $c <=> $a, Order::Decrease, '<=> (+1)';
 }
 
-ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartch Date objects';
+ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';
+
+{
+    is d('2013-12-23').delta(1, day), d('2013-12-24'), 'adding 1 day';
+    is d('2014-01-31').delta(1, day), d('2014-02-01'), 'adding 1 day, overflowing to February';
+    is d('2014-02-28').delta(2, days), d('2014-03-02'), 'adding 2 days, overflowing to March';
+    is d('2013-12-23').delta(1, week), d('2013-12-30'), 'adding 1 week';
+    is d('2014-01-31').delta(1, week), d('2014-02-07'), 'adding 1 week, overflowing to February';
+    is d('2014-02-28').delta(2, weeks), d('2014-03-14'), 'adding 2 weeks, overflowing to March';
+    is d('2014-12-30').delta(3, weeks), d('2015-01-20'), 'adding 3 weeks, overflowing to years';
+    is d('2013-12-24').delta(-1, day), d('2013-12-23'), 'subtracting 1 day';
+    is d('2014-02-01').delta(-1, day), d('2014-01-31'), 'subtracting 1 day, overflowing from February';
+    is d('2014-03-02').delta(-2, days), d('2014-02-28'), 'subtracting 2 days, overflowing from March';
+    is d('2013-12-30').delta(-1, week), d('2013-12-23'), 'subtracting 1 week';
+    is d('2014-02-07').delta(-1, week), d('2014-01-31'), 'subtracting 1 week, overflowing from February';
+    is d('2014-03-14').delta(-2, weeks), d('2014-02-28'), 'subtracting 2 weeks, overflowing from March';
+    is d('2015-01-20').delta(-3, weeks), d('2014-12-30'), 'subtracting 3 weeks, overflowing to years';
+}
 
 done;
