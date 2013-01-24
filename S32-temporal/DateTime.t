@@ -216,14 +216,14 @@ is DateTime.new('2009-12-31T22:33:44',
     my $moon-landing = dt    # Although the seconds part is fictional.
        year => 1969, month => 7, day => 20,
        hour => 8, minute => 17, second => 32.4;
-    my $dt = $moon-landing.truncated-to(:second);
-    is $dt.second, 32, 'DateTime.truncated-to(:second)';
-    $dt = $moon-landing.truncated-to(:minute);
-    is ~$dt, '1969-07-20T08:17:00Z', 'DateTime.truncated-to(:minute)';
-    $dt = $moon-landing.truncated-to(:hour);
-    is ~$dt, '1969-07-20T08:00:00Z', 'DateTime.truncated-to(:hour)';
-    $dt = $moon-landing.truncated-to(:day);
-    is ~$dt, '1969-07-20T00:00:00Z', 'DateTime.truncate-to(:day)';
+    my $dt = $moon-landing.truncated-to(second);
+    is $dt.second, 32, 'DateTime.truncated-to(second)';
+    $dt = $moon-landing.truncated-to(minute);
+    is ~$dt, '1969-07-20T08:17:00Z', 'DateTime.truncated-to(minute)';
+    $dt = $moon-landing.truncated-to(hour);
+    is ~$dt, '1969-07-20T08:00:00Z', 'DateTime.truncated-to(hour)';
+    $dt = $moon-landing.truncated-to(day);
+    is ~$dt, '1969-07-20T00:00:00Z', 'DateTime.truncate-to(day)';
 }
 
 # --------------------------------------------------------------------
@@ -459,8 +459,8 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     isa_ok ds('2005-02-04T15:25:00Z').hour, Int, 'ds(Str).hour isa Int';
     isa_ok dt.in-timezone(60*60).year, Int, 'dt.in-timezone(Int).year isa Int';
     isa_ok dt.in-timezone(60*60).hour, Int, 'dt.in-timezone(Int).hour isa Int';
-    isa_ok dt.truncated-to(:week).year, Int, 'dt.truncated-to(:week).year isa Int';
-    isa_ok dt.truncated-to(:week).hour, Int, 'dt.truncated-to(:week).hour isa Int';
+    isa_ok dt.truncated-to(week).year, Int, 'dt.truncated-to(week).year isa Int';
+    isa_ok dt.truncated-to(week).hour, Int, 'dt.truncated-to(week).hour isa Int';
     isa_ok DateTime.now.year, Int, 'DateTime.now.year isa Int';
     isa_ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
