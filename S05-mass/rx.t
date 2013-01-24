@@ -1,6 +1,6 @@
 use Test;
 
-plan 737;
+plan 739;
 
 ### for now
 #?pugs emit #
@@ -2575,6 +2575,10 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
     ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT 116415)';
     is $/.Str, '', '** quantifier with braces (RT 116415)';
 }
+
+# RT 115298
+ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match literally';
+is $/, 'foobar', '... will match correctly';
 
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>
 #?pugs todo 
