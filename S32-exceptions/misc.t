@@ -188,7 +188,8 @@ throws_like 'DateTime.new(year => 2012, month => 5, day => 22, hour => 18, minut
 throws_like 'use fatal; "foo"[2]', X::OutOfRange, what => rx:i/index/, range => 0..0, got => 2;
 
 throws_like 'sub f() { }; &f.unwrap("foo")', X::Routine::Unwrap;
-throws_like 'Mu.new(1)', X::Constructor::Positional;
+throws_like 'Mu.new(1)', X::Constructor::Positional, name => "Mu";
+throws_like 'class Foo { }; Foo.new(1, 2, 3);', X::Constructor::Positional, name => "Foo";
 throws_like 'my %h = 1', X::Hash::Store::OddNumber;
 
 # TOOD: might be X::Syntax::Malformed too...
