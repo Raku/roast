@@ -361,6 +361,8 @@ if $emits_suggestions {
     ok $!.message !~~ /Did you mean/, "doesn't suggest if there's no suggestions.";
 
     throws_like 'sub yoink(Junctoin $barf) { }', X::Parameter::InvalidType, suggestions => 'Junction';
+
+    throws_like 'my cool $a', X::Undeclared, suggestions => ["Cool", "Bool"];
 }
 
 throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
