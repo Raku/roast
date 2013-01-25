@@ -362,7 +362,12 @@ if $emits_suggestions {
 
     throws_like 'sub yoink(Junctoin $barf) { }', X::Parameter::InvalidType, suggestions => 'Junction';
 
-    throws_like 'my cool $a', X::Undeclared, suggestions => ["Cool", "Bool"];
+    {
+        try eval('my cool $a');
+        ok $! ~~ X::Comp::Group, 'my cool $a throws an X::Comp::Group.';
+        ok $!.sorrows[0] ~~ X::Undeclared, "the first sorrow is X::Undeclared.";
+        is $!.sorrows[0].suggestions, <Cool Bool>, "the suggestions are Cool and Bool";
+    }
 
     {
         try eval('Ecxeption.new("wrong!")');
