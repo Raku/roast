@@ -363,6 +363,12 @@ if $emits_suggestions {
     throws_like 'sub yoink(Junctoin $barf) { }', X::Parameter::InvalidType, suggestions => 'Junction';
 
     throws_like 'my cool $a', X::Undeclared, suggestions => ["Cool", "Bool"];
+
+    {
+        try eval('Ecxeption.new("wrong!")');
+        ok $! ~~ X::Undeclared::Symbols, "Ecxeption.new throws X::Undeclared::Symbols";
+        is $!.type_suggestion<Ecxeption>, ["Exception"], 'Exception is a suggestion';
+    }
 }
 
 throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
