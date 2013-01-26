@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 79;
+plan 80;
 
 =begin pod
 
@@ -23,6 +23,8 @@ character classes), and those are referenced at the correct spot.
     is('aaaaa' ~~ /<	a aa aaaa >/, 'aaaa', 'leading whitespace quotes words (tab)');
 
     eval_dies_ok('"aaaa" ~~ /<a aa>/', '<...> without whitespace calls a function (not quote words)');
+    
+    is('hello' ~~ /< hello >/, 'hello', 'degenerate case of quote list');
 }
 
 # A leading alphabetic character means it's a capturing grammatical assertion
