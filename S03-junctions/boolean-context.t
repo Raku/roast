@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 44;
+plan 70;
 
 # L<S03/Junctive operators/>
 
