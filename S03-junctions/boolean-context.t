@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 70;
+plan 73;
 
 # L<S03/Junctive operators/>
 
@@ -134,5 +134,12 @@ ok do if 1 | 2 | 3 <= 3 <= 5 { 1 } else { 0 }, "4x triple-chaining works";
 ok do if 1 | 2 | 3 <= 3 <= 2 { 0 } else { 1 };
 ok do if 1 <= 1 & 2 & 3 & 4 <= 4 { 1 } else { 0 };
 ok do if 1 <= 1 & 2 & 3 & 4 <= 3 { 0 } else { 1 };
+
+{
+    my @a = 2, 3;
+    ok do if any(1, @a, 4) == 3 { 1 } else { 0 }, "flattening in any works";
+    ok do if all(1, @a, 4) <= 4 { 1 } else { 0 }, "flattening in all works";
+    ok do if none(1, @a, 4) > 4 { 1 } else { 0 }, "flattening in none works";
+}
 
 # vim: ft=perl6
