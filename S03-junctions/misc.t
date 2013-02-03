@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 102;
+plan 103;
 
 =begin pod
 
@@ -423,6 +423,9 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 
 # RT #109188
 ok { a => 1} ~~ List|Hash, 'Can construct junction with List type object';
+
+# RT #112392
+ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
 
 done();
 
