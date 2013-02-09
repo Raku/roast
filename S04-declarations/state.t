@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 44;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -326,6 +326,13 @@ eval_lives_ok 'state $x; $x', 'state outside control structure';
     }
     r();
     is r(), '7 40', 'state vars and list assignment mixes';
+}
+
+{
+    my $x = 1;
+    sub foo() { state $ = $x++ };
+    is foo(), 1, 'anonymous state variable (1)';
+    is foo(), 1, 'anonymous state variable (2)';
 }
 
 # vim: ft=perl6
