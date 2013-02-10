@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 93;
+plan 103;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -229,6 +229,21 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <a b c>;
     is_deeply [ ( set $s, <c> ).list.sort ], [ 'a', 'b', 'c' ],
         'variable of Set type inside set does not duplicate elements';
+}
+
+{
+    isa_ok 42.set, Set, "Method .set works on Int-1";
+    is showset(42.set), "42", "Method .set works on Int-2";
+    isa_ok "blue".set, Set, "Method .set works on Str-1";
+    is showset("blue".set), "blue", "Method .set works on Str-2";
+    my @a = <Now the cross-handed set was the Paradise way>;
+    isa_ok @a.set, Set, "Method .set works on Array-1";
+    is showset(@a.set), "Now Paradise cross-handed set the was way", "Method .set works on Array-2";
+    my %x = "a" => 1, "b" => 2;
+    isa_ok %x.set, Set, "Method .set works on Hash-1";
+    is showset(%x.set), "a b", "Method .set works on Hash-2";
+    isa_ok (@a, %x).set, Set, "Method .set works on Parcel-1";
+    is showset((@a, %x).set), "Now Paradise a b cross-handed set the was way", "Method .set works on Parcel-2";
 }
 
 # vim: ft=perl6
