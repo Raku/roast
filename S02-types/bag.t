@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 103;
+plan 113;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -250,6 +250,21 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
+}
+
+{
+    isa_ok 42.bag, Bag, "Method .bag works on Int-1";
+    is showkv(42.bag), "42:1", "Method .bag works on Int-2";
+    isa_ok "blue".bag, Bag, "Method .bag works on Str-1";
+    is showkv("blue".bag), "blue:1", "Method .bag works on Str-2";
+    my @a = <Now the cross-handed set was the Paradise way>;
+    isa_ok @a.bag, Bag, "Method .bag works on Array-1";
+    is showkv(@a.bag), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .bag works on Array-2";
+    my %x = "a" => 1, "b" => 2;
+    isa_ok %x.bag, Bag, "Method .bag works on Hash-1";
+    is showkv(%x.bag), "a:1 b:2", "Method .bag works on Hash-2";
+    isa_ok (@a, %x).bag, Bag, "Method .bag works on Parcel-1";
+    is showkv((@a, %x).bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1", "Method .bag works on Parcel-2";
 }
 
 # vim: ft=perl6
