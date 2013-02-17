@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 27;
+plan 35;
 
 # L<S32::Numeric/Numeric/"=item is-prime">
 
@@ -10,12 +10,26 @@ Basic tests for the is-prime() builtin
 
 =end pod
 
+# I know the all the 45724385972894572891 tests seem repetitious, but 
+# I am seeing inconsistent results on my Rakudo build, and I am hoping
+# these repeated tests might help track it down.
+
+nok 45724385972894572891.is-prime, "45724385972894572891 is not prime";
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
+
 is (1..100).grep(*.is-prime), 
    (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97),
    "Method form gets primes < 100 correct";
 is (1..100).grep({ is-prime($_) }), 
   (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97),
   "Sub form gets primes < 100 correct";
+
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
+nok 45724385972894572891.is-prime, "45724385972894572891 is still not prime";
 
 for (2801, 104743, 105517, 1300129, 15485867, 179424691, 32416187773) -> $prime {
     ok $prime.is-prime,  "$prime is a prime (method)";
