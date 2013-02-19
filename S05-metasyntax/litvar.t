@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 21;
+plan 22;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
@@ -69,6 +69,7 @@ is("abc" ~~ m/ || @var /,  'a',  'Array using explicit sequential semantics');
 ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match';
 is $/, 'foobar', '... $( $_ ) matched entire string';
 is 'foobar' ~~ /$( $_.substr(3) )/, 'bar', 'Contextualizer with functions calls';
+is 'foobar' ~~ /@( <a b c o> )+/,   'ooba', '@( <a b c o> )+';
 
 done;
 
