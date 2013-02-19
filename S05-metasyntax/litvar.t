@@ -12,12 +12,12 @@ be valid perl6.
 
 =end pod
 
-plan 18;
+plan 21;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
 my $var = "a*b";
-my @var = <a b c>;
+my @var = <a b ab c>;
 my $aref = \@var;
 
 
@@ -57,6 +57,11 @@ ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
+#?pugs 3 todo 'feature'
+is("abc" ~~ m/ @var /,     'ab', 'Array using implicit junctive semantics');
+is("abc" ~~ m/ | @var /,   'ab', 'Array using explicit junctive semantics');
+#?niecza todo "sequential semantics NYI"
+is("abc" ~~ m/ || @var /,  'a',  'Array using explicit sequential semantics');
 
 # contextializer $( )
 
