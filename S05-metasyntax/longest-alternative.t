@@ -36,7 +36,6 @@ my $str = 'a' x 7;
     ok $str !~~ m:c/aa|a|aaaa/, 'No fourth match, different order';
 }
 
-#?rakudo skip 'interpolating arrays'
 {
     my @list = <a aa aaaa>;
     ok $str ~~ m/ @list /, 'basic sanity with interpolated arrays';
