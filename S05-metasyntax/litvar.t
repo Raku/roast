@@ -47,13 +47,11 @@ ok('quxbaz' !~~ /$rx baz/, 'nonmatching regex object in a regex');
 # L<S05/Variable (non-)interpolation/An interpolated array:>
 
 #?pugs 3 todo 'feature'
-#?rakudo 3 todo 'array variable in regex'
 ok("a" ~~ m/@var/, 'Simple array interpolation (a)');
 ok("b" ~~ m/@var/, 'Simple array interpolation (b)');
 ok("c" ~~ m/@var/, 'Simple array interpolation (c)');
 ok(!( "d" ~~ m/@var/ ), 'Simple array interpolation (d)');
 #?pugs 2 todo 'feature'
-#?rakudo 2 todo 'array variable in regex'
 ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
