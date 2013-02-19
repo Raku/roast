@@ -79,7 +79,6 @@ ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 #?niecza skip 'Cannot cast from source type to destination type.'
 ok(!( "abca!" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
-#?rakudo todo 'array variable interpolation'
 #?pugs todo
 ok("a+bb+ca+b" ~~ /^@foo+$/, 'Multiple array non-compiling');
 ok(!("a+bb+ca+b" ~~ /^<@foo>+$/), 'Multiple array compiling');
