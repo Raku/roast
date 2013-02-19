@@ -12,13 +12,12 @@ be valid perl6.
 
 =end pod
 
-plan 21;
+plan 18;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
 my $var = "a*b";
 my @var = <a b c>;
-my %var = (a=>1, b=>2, c=>3);
 my $aref = \@var;
 
 
@@ -30,18 +29,10 @@ ok($var ~~ m/$var/, 'Simple scalar interpolation');
 ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
-#?pugs 6 todo 'feature'
-#?niecza todo
-#?rakudo 3 todo 'array variable in regex'
-ok('a' ~~ m/$aref[0]/, 'Array ref 0');
-#?niecza todo
-ok('a' ~~ m/$aref.[0]/, 'Array ref dot 0');
-#?niecza todo
-ok('a' ~~ m/@var[0]/, 'Array 0');
-
-ok(!( 'a' ~~ m/$aref[1]/ ), 'Array ref 1');
-ok(!( 'a' ~~ m/$aref.[1]/ ), 'Array ref dot 1');
-ok(!( 'a' ~~ m/@var[1]/ ), 'Array 1');
+#?pugs 3 todo 'feature'
+ok('a0' ~~ m/$aref[0]/, 'Array ref 0');
+ok('bx0' ~~ m/$aref.[0]/, 'Array ref dot 0');
+ok('c0' ~~ m/@var[0]/, 'Array 0');
 
 # REGEXES
 # However, if $var contains a Regex object, instead of attempting to convert it to a string, it is called as a subrule
