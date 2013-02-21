@@ -9,7 +9,7 @@ This test tests the C<splice> builtin
 
 =end description
 
-plan 37;
+plan 38;
 
 my (@a,@b,@res);
 
@@ -127,5 +127,11 @@ dies_ok({ 42.splice }, '.splice should not work on scalars');
 @a = (1..10);
 dies_ok({use fatal; splice(@a,-2)}, "negative offset dies");
 dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
+
+{
+    my @empty;
+    #?rakudo todo 'slice bug'
+    nok @empty.splice(0, 3), 'splicing an empty array should return the empty ilst';
+}
 
 # vim: ft=perl6
