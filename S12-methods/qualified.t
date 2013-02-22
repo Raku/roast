@@ -32,7 +32,6 @@ my $child = Child.new;
 is( $child.myself, $child, 'Qualified method calls should use the original self' );
 
 my $consumer = Consumer.new;
-#?rakudo skip "qualified method calls with roles don't preserve original self"
 is( $consumer.myself, $consumer, 'Qualified method calls should use the original self' );
 
 # vim: ft=perl6

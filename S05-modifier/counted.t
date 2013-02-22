@@ -154,7 +154,6 @@ ok(!( $data ~~ m:7th/fo+/ ), 'No match 7th');
 
 
 # Substitutions...
-#?rakudo skip 's{} = ...'
 {
     my $try = $data;
     ok(!( $try ~~ s:0th{fo+}=q{bar} ), "Can't substitute 0th" );
