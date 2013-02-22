@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 159;
+plan 161;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -601,6 +601,14 @@ is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpola
 #?pugs   todo "Weird quoting issue"
 is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 
+{
+    $_ = 'abc';
+    /a./;
+    is $/, 'ab', '/.../ literals match in void context';
+    # rx does the same: http://irclog.perlgeek.de/perl8/2013-02-20#i_6479200
+    rx/b./;
+    is $/, 'bc', 'rx/.../ literals match in void context';
+}
 done;
 
 # vim: ft=perl6
