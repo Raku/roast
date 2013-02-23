@@ -18,7 +18,7 @@ plan 4;
     is $x.tracker, 'FDBECA', 'got the right MRO for 6 classes';
     # not really spec yet
     #?niecza skip '.^mro'
-    is $x.^mro.gist, 'F() D() B() E() C() A() Any() Mu()',
+    is $x.^mro.gist, '(F) (D) (B) (E) (C) (A) (Any) (Mu)',
        '.^mro';
 }
 

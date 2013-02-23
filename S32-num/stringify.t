@@ -39,7 +39,7 @@ Complex_str_test (0 + NaN\i), '0+NaN\i';
 # for Niecza in the past
 
 #?pugs skip 'gist'
-is Complex.gist, 'Complex()', 'Complex.gist';
+is Complex.gist, '(Complex)', 'Complex.gist';
 #?pugs todo
 is Complex.perl, 'Complex', 'Complex.perl';
 # XXX Should ~Complex and Complex.Str return something specific?  For now
@@ -79,7 +79,7 @@ Rat_str_test 13/39, '1/3';
 Rat_str_test (4.5 ** 60), '1797010299914431210413179829509605039731475627537851106401/1152921504606846976';
 
 #?pugs skip '.gist'
-is Rat.gist, 'Rat()', 'Rat.gist';
+is Rat.gist, '(Rat)', 'Rat.gist';
 #?pugs todo
 is Rat.perl, 'Rat', 'Rat.perl';
 lives_ok { ~Rat }, '~Rat does not die';

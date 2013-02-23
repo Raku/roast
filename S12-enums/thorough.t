@@ -15,7 +15,7 @@ Enum tests from L<S12/Enumerations>
 # L<S12/Enumerations/keys are specified as a parenthesized list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 
-is day.gist, 'day()', 'enum itself stringififes';
+is day.gist, '(day)', 'enum itself stringififes';
 ok day.WHAT === day,  'enum.WHAT returned a value';
 ok day.perl, 'enum.perl returned a value';
 

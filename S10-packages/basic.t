@@ -23,7 +23,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 
 #?niecza skip 'AlsoEmpty undeclared (ie no autovivification, I guess)'
 {
-    is AlsoEmpty.gist, 'AlsoEmpty()',
+    is AlsoEmpty.gist, '(AlsoEmpty)',
         'autovivification(?) for nested packages'
 }
 
@@ -224,7 +224,7 @@ eval_dies_ok 'module RT80856 is not_RT80856 {}',
 
 {
     isa_ok Int.WHO, Stash, 'SomeType.WHO is a Stash';
-    is Int.WHO.WHAT.gist, 'Stash()', 'and Stash correctly .gist-ifies';
+    is Int.WHO.WHAT.gist, '(Stash)', 'and Stash correctly .gist-ifies';
 }
 
 

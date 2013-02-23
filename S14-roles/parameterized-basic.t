@@ -101,8 +101,8 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     }
     class TTP_1 does TypeParams[Int] { }
     class TTP_2 does TypeParams[Str] { }
-    is(TTP_1.new.x(42),       'got a Int() it was 42',     'type variable in scope and accepts right value');
-    is(TTP_2.new.x("OH HAI"), 'got a Str() it was OH HAI', 'type variable in scope and accepts right value');
+    is(TTP_1.new.x(42),       'got a (Int) it was 42',     'type variable in scope and accepts right value');
+    is(TTP_2.new.x("OH HAI"), 'got a (Str) it was OH HAI', 'type variable in scope and accepts right value');
     dies_ok({ TTP_1.new.x("OH HAI") },                   'type constraint with parameterized type enforced');
     dies_ok({ TTP_2.new.x(42) },                         'type constraint with parameterized type enforced');
 }

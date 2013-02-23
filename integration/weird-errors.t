@@ -22,7 +22,7 @@ is_run(
 
 is_run(
        '[].WHAT.say',
-       { status => 0, out => "Array()\n"},
+       { status => 0, out => "(Array)\n"},
        'Can [].WHAT.say',
 );
 

@@ -23,7 +23,7 @@ is_run q{my $a = [1, 2, 3]; print  $a},
 # RT #80186
 is_run q{IO.say},
     {
-        out => "IO()\n";
+        out => "(IO)\n";
     }, 'Can do IO.say';
 
 # vim: ft=perl6
