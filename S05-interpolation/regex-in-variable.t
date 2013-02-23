@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/patvar.t.
 
 =end pod
 
-plan 33;
+plan 34;
 
 # L<S05/Variable (non-)interpolation>
 
@@ -69,6 +69,8 @@ ok(!( "!" ~~ m/@var/ ), 'Simple array match (!)');
 ok("!!!!a!!!!!" ~~ m/@var/, 'Nested array match (a)');
 #?pugs todo
 ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
+#?pugs todo
+is("foo123bar" ~~ /@( rx/\d+/ )/, '123', 'Match from correct position');
 
 #?pugs todo
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
