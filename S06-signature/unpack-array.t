@@ -24,8 +24,8 @@ sub baz([$x, $y?, $z?]) {
 }
 
 dies_ok { baz( [] ) } , 'unpack optional scalars; required scalar missing';
-is baz( [2] ), "2|Any()|Any()", 'unpack optional scalars; one required';
-is baz( [2,3] ), "2|3|Any()", 'unpack optional scalars; one required + one optional';
+is baz( [2] ), "2|(Any)|(Any)", 'unpack optional scalars; one required';
+is baz( [2,3] ), "2|3|(Any)", 'unpack optional scalars; one required + one optional';
 is baz( [2,3,4] ), "2|3|4", 'unpack optional scalars; one required + two optional';
 dies_ok { baz( [2,3,4,5] ) }, 'unpack optional scalars; one required + too many optional';
 

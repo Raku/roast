@@ -71,7 +71,7 @@ plan 25;
 # RT #102256
 {
     isa_ok int, Mu, 'int ~~ Mu';
-    is num.gist, 'num()', 'num.gist';
+    is num.gist, '(num)', 'num.gist';
     nok str.defined, 'str.defined';
 }
 
