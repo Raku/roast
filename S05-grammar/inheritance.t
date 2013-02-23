@@ -70,7 +70,7 @@ nok Grammar::Baz.parse('boo', :rule<any>), 'No match for bad input (any)';
 
 }
 
-is(Grammar.WHAT.gist,"Grammar()", "Grammar.WHAT.gist = Grammar()");
+is(Grammar.WHAT.gist,"(Grammar)", "Grammar.WHAT.gist = Grammar()");
 
 done;
 

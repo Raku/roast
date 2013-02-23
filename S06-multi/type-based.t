@@ -30,7 +30,7 @@ is(foo('test'), 'Str test', 'dispatched to the Str sub');
 my $num = '4';
 is(foo(1.4), 'Rat 1.4', 'dispatched to the Num sub');
 is(foo(1 == 1), 'Bool ' ~ True, 'dispatched to the Bool sub');
-is(foo(/a/),'Regex Regex()','dispatched to the Rule sub');
+is(foo(/a/),'Regex (Regex)','dispatched to the Rule sub');
 is(foo(sub { 'baz' }), 'Sub baz', 'dispatched to the Sub sub');
 
 my @array = ('foo', 'bar', 'baz');

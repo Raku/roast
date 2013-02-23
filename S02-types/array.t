@@ -333,7 +333,7 @@ my @array2 = ("test", 1, Mu);
 #?niecza skip 'coercion syntax'
 #?pugs skip "Array"
 {
-    is Array(1,2,3).WHAT.gist, 'Array()', 'Array(...) makes an Array';
+    is Array(1,2,3).WHAT.gist, '(Array)', 'Array(...) makes an Array';
     ok Array(1,2,3) eqv [1,2,3],          'Array(1,2,3) makes correct array';
 }
 
