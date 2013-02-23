@@ -44,10 +44,8 @@ ok("aaaaab" ~~ m/<{$foo}>/, 'Rulish scalar match 4');
 #?pugs todo
 ok("aaaaab" ~~ m/<$foo>/,   'Rulish scalar match 5');
 ok(!("aaaaab" ~~ m/$foo/),  'Rulish scalar match 6');
-#?rakudo todo 'double quote interpolation'
-#?niecza todo
 #?pugs todo
-ok('aaaaab' ~~ m/"$foo"/, 'Rulish scalar match 7');
+ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
 # RT #61960
 #?pugs todo
@@ -58,7 +56,6 @@ ok('aaaaab' ~~ m/"$foo"/, 'Rulish scalar match 7');
 
 # Arrays
 
-#?rakudo 4 todo 'array of regexes'
 #?pugs todo
 ok("a" ~~ m/@var/, 'Simple array match (a)');
 #?pugs todo
@@ -68,7 +65,6 @@ ok("c" ~~ m/@var/, 'Simple array match (c)');
 #?pugs todo
 ok("d" ~~ m/@var/, 'Simple array match (d)');
 ok(!( "!" ~~ m/@var/ ), 'Simple array match (!)');
-#?rakudo 3 todo 'array variable interpolation'
 #?pugs todo
 ok("!!!!a!!!!!" ~~ m/@var/, 'Nested array match (a)');
 #?pugs todo
@@ -84,7 +80,6 @@ ok("a+bb+ca+b" ~~ /^@foo+$/, 'Multiple array non-compiling');
 ok(!("a+bb+ca+b" ~~ /^<@foo>+$/), 'Multiple array compiling');
 ok(!("aaaabbbbbcaaab" ~~ /^@foo+$/), 'Multiple array non-compiling');
 #?pugs todo
-#?rakudo todo 'nom regression'
 ok("aaaabbbbbcaaab" ~~ /^<@foo>+$/, 'Multiple array compiling');
 
 # L<S05/Variable (non-)interpolation/The use of a hash variable in patterns is reserved>
