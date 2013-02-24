@@ -38,7 +38,7 @@ is($0, 'y', 'Difference set capture');
 
 # RT #115802
 ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match');
-#?rakudo todo
+#?rakudo todo 'RT #115802'
 ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match');
 
 ok(!( "a" ~~ m/(<+alpha-[aeiou]>)/ ), 'Named difference set failure');
