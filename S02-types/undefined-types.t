@@ -45,8 +45,8 @@ plan 23;
     ok $obj.Stringy ~~ Stringy, '.Stringy returns a Stringy (Any)';
     ok $int.Stringy ~~ Stringy, '.Stringy returns a Stringy (Int)';
 
-    is $obj.gist, 'Any()', '.gist on type object gives Any()';
-    is $int.gist, 'Int()', '.gist on type object gives Int()';
+    is $obj.gist, '(Any)', '.gist on type object gives (Any)';
+    is $int.gist, '(Int)', '.gist on type object gives (Int)';
 
     is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Any)';
     is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
