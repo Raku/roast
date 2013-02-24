@@ -233,7 +233,7 @@ ok 16/5R eqv 16/5R, 'infix:<eqv> works with FatRats';
 
 #?rakudo todo 'unknown'
 #?pugs skip 'isa_ok'
-isa_ok .88888888888R.WHAT.gist, 'FatRat()', 'WHAT works on FatRat created from 11 digit decimal fraction';
+isa_ok .88888888888R.WHAT.gist, '(FatRat)', 'WHAT works on FatRat created from 11 digit decimal fraction';
 
 {
     my $a += 0.1R;

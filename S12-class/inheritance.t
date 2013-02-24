@@ -130,7 +130,7 @@ eval_lives_ok 'class NotAny is Mu { }; NotAny.new', 'inheritance from Mu works';
     ok DirectMu !~~ Any, 'class inheriting from Mu is not Any';
     #?niecza skip 'Unable to resolve method parents in class ClassHOW'
     #?pugs skip 'No such method in class Class: "&parents"'
-    ok !( any(DirectMu.^parents).gist eq 'Any()'), 'and Any does not appear in the list of parents either';
+    ok !( any(DirectMu.^parents).gist eq '(Any)'), 'and Any does not appear in the list of parents either';
 }
 
 #?pugs todo

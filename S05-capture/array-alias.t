@@ -68,11 +68,11 @@ is(join("|", @<spaces>), "  | |\t", 'Subrule array capture');
 
 
 ok("  a b\tc" ~~ m/@<chars>=[ (<?spaces>) (\S+)]+/, 'Nested multiple array capture');
-is(WHAT($<chars>).gist, "Array()", 'Multiple capture to nested array');
+ok($<chars> ~~ Positional, 'Multiple capture to nested array');
 ok(@<chars> == 3, 'Multiple capture count');
-is(WHAT($<chars>[0]).gist, "Match()", 'Multiple capture to nested AoA[0]');
-is(WHAT($<chars>[1]).gist, "Match()", 'Multiple capture to nested AoA[2]');
-is(WHAT($<chars>[2]).gist, "Match()", 'Multiple capture to nested AoA[3]');
+is(WHAT($<chars>[0]).gist, "(Match)", 'Multiple capture to nested AoA[0]');
+is(WHAT($<chars>[1]).gist, "(Match)", 'Multiple capture to nested AoA[2]');
+is(WHAT($<chars>[2]).gist, "(Match)", 'Multiple capture to nested AoA[3]');
 is(~$<chars>[0][0], "  ", 'Multiple capture value of nested AoA[0][0]');
 is(~$<chars>[0][1], "a", 'Multiple capture value of nested AoA[0][1]');
 is(~$<chars>[1][0], " ", 'Multiple capture value of nested AoA[1][0]');

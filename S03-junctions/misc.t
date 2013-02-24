@@ -135,10 +135,10 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
     $j = 1|2;
     #?rakudo 2 todo 'lower case junction type'
-    is(WHAT($j).gist, 'Junction()', 'basic junction type reference test');
+    is(WHAT($j).gist, '(Junction)', 'basic junction type reference test');
 
     $k=$j;
-    is(WHAT($k).gist, 'Junction()', 'assignment preserves reference');
+    is(WHAT($k).gist, '(Junction)', 'assignment preserves reference');
 }
 
 
