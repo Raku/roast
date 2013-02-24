@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 34;
+plan 36;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -35,6 +35,12 @@ ok(!( "a" ~~ m/(<[a..z]-[aeiou]>)/ ), 'Difference set failure');
 ok("y" ~~ m/(<[a..z]-[aeiou]>)/, 'Difference set match');
 #?pugs todo
 is($0, 'y', 'Difference set capture');
+
+# RT #115802
+ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match');
+#?rakudo todo
+ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match');
+
 ok(!( "a" ~~ m/(<+alpha-[aeiou]>)/ ), 'Named difference set failure');
 #?pugs todo
 ok("y" ~~ m/(<+alpha-[aeiou]>)/, 'Named difference set match');
