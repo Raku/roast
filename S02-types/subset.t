@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 45;
+plan 46;
 
 =begin description
 
@@ -219,6 +219,15 @@ my $a = 1;
     ok MI ~~ Mu,   'subset conforms to Mu';
     ok MI ~~ Int,  'subset conforms to base type';
     nok Mu  ~~ MI, 'Mu does not conform to subset';
+}
+
+# RT #74352
+{
+    subset A of Array;
+    subset B of A;
+    subset C of A;
+    subset D of A where B & C;
+    ok [] ~~ D, "complicated subset combinations #74352";
 }
 
 # vim: ft=perl6
