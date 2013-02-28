@@ -6,7 +6,7 @@ use Test;
 BEGIN @*INC.push: 't/spec/packages/';
 use Test::Util;
 # L<S28/Named variables>
-plan 14;
+plan 16;
 
 if $*OS eq "browser" {
   skip_rest "Programs running in browsers don't have access to regular IO.";
@@ -97,6 +97,12 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
         err     => '',
     },
     'ENV members persist to child processes';
+}
+
+# RT #77458
+{
+    ok %*ENV.gist ~~ /\)\.hash$/, '%*ENV.gist works';
+    ok %*ENV.perl ~~ /\)\.hash$/, '%*ENV.perl works';
 }
 
 # vim: ft=perl6
