@@ -381,7 +381,7 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
 {
     # RT #69760
     my $code = q{class GrammarUserClass { method bar { PostDeclaredGrammar.parse('OH HAI'); } }; grammar PostDeclaredGrammar { rule TOP { .* } }; GrammarUserClass.bar;};
-    throws_like $code, X::Undeclared::Symbols, post_types => (Quux => *);
+    throws_like $code, X::Undeclared::Symbols, post_types => { .{"PostDeclaredGrammar"} :exists };
 }
 
 done;
