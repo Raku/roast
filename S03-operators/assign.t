@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 283;
+plan 285;
 
 
 # tests various assignment styles
@@ -956,6 +956,14 @@ sub l () { 1, 2 };
     @bughunt = @bughunt.grep(1);
     is @bughunt, [1],
        'Assign to array with the same array on rhs (RT 93972)';
+}
+
+# RT #77174
+{
+    my @a //= (3);
+    is @a.perl, "Array.new()";
+    my @b ||= (3);
+    is @b.perl, "Array.new(3)";
 }
 
 # vim: ft=perl6
