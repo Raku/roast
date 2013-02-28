@@ -14,7 +14,7 @@ for statement as possible
 
 =end description
 
-plan 76;
+plan 77;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -572,5 +572,15 @@ dies_ok
         }
         Foo.new(items => (1, 2, 3, 4)).foo
     }, 'for in called method runs (was a sink context bug)';
+
+# RT #77460
+{
+    my @a = 1;
+    for 1..10 {
+        my $last = @a[*-1];
+        push @a, (sub ($s) { $s + 1 })($last)
+    };
+    is @a, [1, 2, 3, 4, 5, 6, 7, 8,9, 10, 11];
+}
 
 # vim: ft=perl6
