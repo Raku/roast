@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 91;
+plan 92;
 
 # L<S32::Str/Str/=item substr>
 
@@ -260,6 +260,11 @@ eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
 #?pugs todo
 {
     is "abcd".substr(2, Inf), 'cd', 'substr to Inf'
+}
+
+{
+    is 123456789.substr(*-3), '789', 'substr with Int and WhateverCode arg';
+
 }
 
 # vim: ft=perl6
