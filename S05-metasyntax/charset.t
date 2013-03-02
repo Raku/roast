@@ -38,7 +38,6 @@ is($0, 'y', 'Difference set capture');
 
 # RT #115802
 ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match');
-#?rakudo todo 'RT #115802'
 ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match');
 is(("abc123" ~~ m/<[\w]-[a\d]>+/), 'bc', 'Difference set match');
 is(("abc123" ~~ m/<[\w]-[1\D]>+/), '23', 'Difference set match');
