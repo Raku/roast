@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 38;
+plan 40;
 
 # Broken:
 # L<S05/Extensible metasyntax (C<< <...> >>)/"A leading [ ">
@@ -38,12 +38,19 @@ is($0, 'y', 'Difference set capture');
 
 # RT #115802
 #?pugs todo
-ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match');
-ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match');
+ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match 1');
 #?pugs todo
-is(("abc123" ~~ m/<[\w]-[a\d]>+/), 'bc', 'Difference set match');
+ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match 2');
 #?pugs todo
-is(("abc123" ~~ m/<[\w]-[1\D]>+/), '23', 'Difference set match');
+is(("abc123" ~~ m/<[\w]-[a\d]>+/), 'bc', 'Difference set match 3');
+#?pugs todo
+is(("abc123" ~~ m/<[\w]-[1\D]>+/), '23', 'Difference set match 4');
+#?pugs todo
+#?niecza todo 'gives c123?'
+is(("abc123def" ~~ m/<[\w]-[\D\n]>+/), '123', 'Difference set match 5');
+#?pugs todo
+#?rakudo todo 'failed match?'
+is(("abc123def" ~~ m/<[\w]-[\D\h]>+/), '123', 'Difference set match 6');
 
 ok(!( "a" ~~ m/(<+alpha-[aeiou]>)/ ), 'Named difference set failure');
 #?pugs todo
