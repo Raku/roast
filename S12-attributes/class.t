@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 23;
+plan 25;
 
 class Foo {
     our $.bar = 23;
@@ -103,6 +103,21 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     $bad_code = 'class Chef { my $.a; say $.a; }';
     try eval $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
+}
+
+{
+    class A { 
+        has $.b = 1; 
+        method b() { 2; } 
+    };
+    is A.new.b, 2, "don't create accessor if the class declares an explicit method of that name";
+
+
+    role B { 
+        has $.b = 1; 
+        method b() { 2; } 
+    };
+    is B.new.b, 2;
 }
 
 # vim: ft=perl6
