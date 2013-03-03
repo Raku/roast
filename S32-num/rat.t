@@ -164,9 +164,11 @@ is NaN.Rat, NaN, "NaN.Rat == NaN";
 {
     #?rakudo todo "Inf.Rat"
     #?pugs todo 'Inf.Rat'
+    #?niecza todo
     is Inf.Rat, Inf, "Inf.Rat == Inf";
     #?rakudo todo "Inf.Rat"
     #?pugs todo 'Inf.Rat'
+    #?niecza todo
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
@@ -307,7 +309,6 @@ is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yiel
 
 #RT #112822
 #?pugs skip 'No such method in class Rat: "&norm"'
-#?niecza todo 'got 241025348275725.31'
 is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish Rats';
 
 done;
