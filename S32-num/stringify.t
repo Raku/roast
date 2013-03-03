@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 76;
+plan 115;
 
 # L<S32::Numeric/Complex/"=item gist">
 
@@ -50,33 +50,41 @@ lives_ok { Complex.Str }, 'Complex.Str does not die';
 
 # L<S32::Numeric/Rat/"=item gist">
 
-# we check against $value.Num because Num stringification isn't precisely
-# nailed down (and probably shouldn't be, to allow the use of platform
-# converters)
 #?DOES 4
-sub Rat_str_test($value, $str_nucleus) {
+sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
     #?pugs 2 skip 'coercion'
-    is ~$value, ~$value.Num, "~<$str_nucleus>";
-    is $value.Str, ~$value.Num, "<$str_nucleus>.Str";
+    is ~$value, $str, "~<$str_nucleus>";
+    is $value.Str, $str, "<$str_nucleus>.Str";
     #?pugs skip '.gist'
-    is $value.gist, ~$value.Num, "<$str_nucleus>.gist";
+    is $value.gist, $str, "<$str_nucleus>.gist";
     #?rakudo todo 'Rat.perl'
     #?pugs todo
-    is $value.perl, "<$str_nucleus>", "<$str_nucleus>.perl";
+    is $value.perl, $perl, "<$str_nucleus>.perl";
+    
+    # FatRat tests
+    is ~$value.FatRat, $str, "~<$str_nucleus>.FatRat";
+    is $value.FatRat.Str, $str, "<$str_nucleus>.FatRat.Str";
+    is $value.FatRat.gist, $str, "<$str_nucleus>.FatRat.gist";
 }
 
 # basic format test
-Rat_str_test 1/2, '1/2';
-Rat_str_test -1/2, '-1/2';
-Rat_str_test 0/2, '0/1';
-# 1/1 is a Rat too!
-Rat_str_test 1/1, '1/1';
-# Return as-if normalized
-#?rakudo skip 'formatting precision'
-Rat_str_test 13/39, '1/3';
+Rat_str_test 1/2, '1/2', '0.5';
+Rat_str_test -1/2, '-1/2', '-0.5';
+# 0/1 and 1/1 are Rats too!
+Rat_str_test 0/2, '0/1', '0', '0.0';
+Rat_str_test 1/1, '1/1', '1', '1.0';
+Rat_str_test 13/39, '1/3', '0.333333', '<1/3>';
+Rat_str_test 1000001/10000, '1000001/10000', '100.0001';
+Rat_str_test -1000001/10000, '-1000001/10000', '-100.0001';
+Rat_str_test 555555555555555555555555555555555555555555555/5,
+             '555555555555555555555555555555555555555555555/5',
+             '111111111111111111111111111111111111111111111',
+             '111111111111111111111111111111111111111111111.0';
 # Bignum sanity
-#?rakudo skip 'formatting precision'
-Rat_str_test (4.5 ** 60), '1797010299914431210413179829509605039731475627537851106401/1152921504606846976';
+Rat_str_test (4.5 ** 60), 
+             '1797010299914431210413179829509605039731475627537851106401/1152921504606846976',
+             '1558657976916843360832062017400788597510.05883495394563551060',
+             '1558657976916843360832062017400788597510.058834953945635510598466400011830046423710882663726806640625';
 
 #?pugs skip '.gist'
 is Rat.gist, '(Rat)', 'Rat.gist';
