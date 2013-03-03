@@ -30,7 +30,6 @@ eval_dies_ok  '{ my class B {}; B.new; }; B.new',
     ok $pint ~~ WeissBier,                    'can smart-match against lexical class';
     is $pint.name, 'Erdinger',                'attribute in lexical class works';
     is $pint.describe, 'outstanding flavour', 'method call on lexical class works';
-    #?pugs todo
     is WeissBier.gist, '(WeissBier)',         'lexical type object stringifies correct';
 
     my class LessThanAmazingWeissBier is WeissBier {
