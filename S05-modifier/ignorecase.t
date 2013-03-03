@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 24;
 
 =begin description
 
@@ -72,6 +72,13 @@ ok 'a' ~~ /:i < A B > /, ':i and quote words';
 {
     try eval '"ABC" ~~ /:iabc/';
     ok $!, "need whitespace after modifier";
+}
+
+# RT #77410
+{
+    ok  "m" ~~ /:i [M]/, "ignore case of character classes";
+    nok "m" ~~ /[M]/,    "ignore case of character classes";
+    nok "n" ~~ /:i [M]/, "ignore case of character classes";
 }
 
 # vim: syn=perl6 sw=4 ts=4 expandtab
