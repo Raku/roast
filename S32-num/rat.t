@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 821;
+plan 824;
 
 # Basic test functions specific to rational numbers.
 
@@ -23,6 +23,9 @@ isa_ok( eval(Rat.new(1, 3).perl), Rat, 'eval Rat.new(1, 3).perl is Rat' );
 is( (eval Rat.new(1, 3).perl), 1/3, 'eval Rat.new(1, 3).perl is 1/3' );
 isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );
 is( (eval (1/3).perl), 1/3, 'eval (1/3).perl is 1/3' );
+is( (1/10).perl, "0.1", '(1/10).perl is 0.1' );
+is( (1/5).perl, "0.2", '(1/5).perl is .2' );
+is( (1/2).perl, "0.5", '(1/2).perl is .5' );
 
 # Test ~
 #?pugs 4 skip 'Must only use named arguments to new() constructor'
