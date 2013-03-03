@@ -44,7 +44,6 @@ ok("aaaaab" ~~ m/<{$foo}>/, 'Rulish scalar match 4');
 #?pugs todo
 ok("aaaaab" ~~ m/<$foo>/,   'Rulish scalar match 5');
 ok(!("aaaaab" ~~ m/$foo/),  'Rulish scalar match 6');
-#?pugs todo
 ok(!('aaaaab' ~~ m/"$foo"/), 'Rulish scalar match 7');
 
 # RT #61960
@@ -69,7 +68,7 @@ ok(!( "!" ~~ m/@var/ ), 'Simple array match (!)');
 ok("!!!!a!!!!!" ~~ m/@var/, 'Nested array match (a)');
 #?pugs todo
 ok("!!!!e!!!!!" ~~ m/@var/, 'Nested array match (e)');
-#?pugs todo
+#?pugs skip 'parsefail'
 is("foo123bar" ~~ /@( rx/\d+/ )/, '123', 'Match from correct position');
 
 #?pugs todo

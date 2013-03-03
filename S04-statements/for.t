@@ -574,6 +574,7 @@ dies_ok
     }, 'for in called method runs (was a sink context bug)';
 
 # RT #77460
+#?pugs todo
 {
     my @a = 1;
     for 1..10 {

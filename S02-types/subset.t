@@ -222,6 +222,7 @@ my $a = 1;
 }
 
 # RT #74352
+#?pugs skip 'parsefail'
 {
     subset A of Array;
     subset B of A;

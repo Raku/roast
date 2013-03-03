@@ -66,6 +66,7 @@ is("abc" ~~ m/ || @var /,  'a',  'Array using explicit sequential semantics');
 # contextializer $( )
 
 # RT 115298
+#?pugs 4 todo
 ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match';
 is $/, 'foobar', '... $( $_ ) matched entire string';
 is 'foobar' ~~ /$( $_.substr(3) )/, 'bar', 'Contextualizer with functions calls';

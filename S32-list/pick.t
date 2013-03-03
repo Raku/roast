@@ -171,6 +171,7 @@ is (1..^2).pick, 1, 'pick on 1-elem range';
 ok ('a'..'z').pick ~~ /\w/, 'Range.pick on non-Int range';
 
 # RT #109586
+#?pugs skip 'hogs memory'
 nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
 
 # vim: ft=perl6

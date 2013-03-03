@@ -959,6 +959,7 @@ sub l () { 1, 2 };
 }
 
 # RT #77174
+#?pugs todo
 {
     my @a //= (3);
     is @a.perl, "Array.new()";

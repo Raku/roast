@@ -2577,7 +2577,9 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 }
 
 # RT 115298
+#?pugs todo
 ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match literally';
+#?pugs todo
 is $/, 'foobar', '... will match correctly';
 
 #### <ident>			2+3 ab2		/mob<ident>: <ab2 @ 4>/		capturing builtin <ident>

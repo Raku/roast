@@ -37,9 +37,12 @@ ok("y" ~~ m/(<[a..z]-[aeiou]>)/, 'Difference set match');
 is($0, 'y', 'Difference set capture');
 
 # RT #115802
+#?pugs todo
 ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match');
 ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match');
+#?pugs todo
 is(("abc123" ~~ m/<[\w]-[a\d]>+/), 'bc', 'Difference set match');
+#?pugs todo
 is(("abc123" ~~ m/<[\w]-[1\D]>+/), '23', 'Difference set match');
 
 ok(!( "a" ~~ m/(<+alpha-[aeiou]>)/ ), 'Named difference set failure');
