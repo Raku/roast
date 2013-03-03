@@ -262,6 +262,7 @@ eval_dies_ok 'substr(Any, 0)', 'substr needs Cool as argument';
     is "abcd".substr(2, Inf), 'cd', 'substr to Inf'
 }
 
+#?pugs todo
 {
     is 123456789.substr(*-3), '789', 'substr with Int and WhateverCode arg';
 
