@@ -105,6 +105,7 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     ok $! ~~ Exception, "bad code: '$bad_code'";
 }
 
+#?niecza skip "Two definitions of method b"
 {
     class A { 
         has $.b = 1; 
