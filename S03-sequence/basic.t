@@ -24,7 +24,7 @@ is (1, *+2 ... 9).join(', '), '1, 3, 5, 7, 9', 'simple sequence with one item an
 is (1, { $_ - 2 } ... -7).join(', '), '1, -1, -3, -5, -7', 'simple sequence with one item and closure on the LHS';
 is (1, 3, 5, { $_ + 2 } ... 13).join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple sequence with three items and block closure on the LHS';
 #?rakudo todo "New Rat.perl"
-is (1, { 1 / ((1 / $_) + 1) } ... 1/5).map({.perl}).join(', '), '1, <1/2>, <1/3>, <1/4>, <1/5>', 'tricky sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... 1/5).map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 1).join(', '), '1', 'simple alternating sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 3).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating sequence with one item and closure on the LHS';
 
@@ -48,7 +48,7 @@ is (1, *+2 ... 10).[^6].join(', '), '1, 3, 5, 7, 9, 11', 'simple sequence with o
 is (1, { $_ - 2 } ... -8).[^6].join(', '), '1, -1, -3, -5, -7, -9', 'simple sequence with one item and closure on the LHS';
 is (1, 3, 5, { $_ + 2 } ... 14).[^8].join(', '), '1, 3, 5, 7, 9, 11, 13, 15', 'simple sequence with three items and block closure on the LHS';
 #?rakudo todo "New Rat.perl"
-is (1, { 1 / ((1 / $_) + 1) } ... 11/60).[^6].map({.perl}).join(', '), '1, <1/2>, <1/3>, <1/4>, <1/5>, <1/6>', 'tricky sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... 11/60).[^6].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2, <1/6>', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... 0).[^4].join(', '), '1, -1, 1, -1', 'simple alternating sequence with one item and closure on the LHS';
 
 is (1 ... 5.5, 6, 7).[^8].join(', '), '1, 2, 3, 4, 5, 6, 7, 8', 'simple sequence with two further terms on the RHS';
@@ -69,7 +69,7 @@ is (1, *+2 ... *).[^5].join(', '), '1, 3, 5, 7, 9', 'simple sequence with one it
 is (1, { $_ - 2 } ... *).[^5].join(', '), '1, -1, -3, -5, -7', 'simple sequence with one item and closure on the LHS';
 is (1, 3, 5, { $_ + 2 } ... *).[^7].join(', '), '1, 3, 5, 7, 9, 11, 13', 'simple sequence with three items and block closure on the LHS';
 #?rakudo todo "New Rat.perl"
-is (1, { 1 / ((1 / $_) + 1) } ... *).[^5].map({.perl}).join(', '), '1, <1/2>, <1/3>, <1/4>, <1/5>', 'tricky sequence with one item and closure on the LHS';
+is (1, { 1 / ((1 / $_) + 1) } ... *).[^5].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', 'tricky sequence with one item and closure on the LHS';
 is (1, { -$_ } ... *).[^5].join(', '), '1, -1, 1, -1, 1', 'simple alternating sequence with one item and closure on the LHS';
 
 is (1 ... *, 6, 7).[^7].join(', '), '1, 2, 3, 4, 5, 6, 7', 'simple sequence with two further terms on the RHS';
@@ -103,9 +103,9 @@ is (False, { !$_ } ... *).[^10].grep(Bool).elems, 10, "alternating False and Tru
 # infinite sequence with limits
 
 #?rakudo 3 todo "New Rat.perl"
-is ~(1, 1/2, 1/4 ... 0).[^5].map({.perl}), '1 <1/2> <1/4> <1/8> <1/16>', 'geometric sequence that never reaches its limit';
-is ~(1, -1/2, 1/4 ... 0).[^5].map({.perl}), '1 <-1/2> <1/4> <-1/8> <1/16>', 'alternating geometric sequence that never reaches its limit';
-is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, <1/2>, <1/3>, <1/4>, <1/5>', '"harmonic" sequence that never reaches its limit';
+is ~(1, 1/2, 1/4 ... 0).[^5].map({.perl}), '1 0.5 0.25 0.125 0.0625', 'geometric sequence that never reaches its limit';
+is ~(1, -1/2, 1/4 ... 0).[^5].map({.perl}), '1 -0.5 0.25 -0.125 0.0625', 'alternating geometric sequence that never reaches its limit';
+is (1, { 1 / ((1 / $_) + 1) } ... 0).[^5].map({.perl}).join(', '), '1, 0.5, <1/3>, 0.25, 0.2', '"harmonic" sequence that never reaches its limit';
 
 # empty sequence
 
