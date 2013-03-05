@@ -30,6 +30,7 @@ ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
 #?pugs 3 todo 'feature'
+#?niecza 2 todo
 ok('a0' ~~ m/$aref[0]/, 'Array ref 0');
 ok('bx0' ~~ m/$aref.[0]/, 'Array ref dot 0');
 ok('c0' ~~ m/@var[0]/, 'Array 0');
