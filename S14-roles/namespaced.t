@@ -16,7 +16,7 @@ role A::B {
 
 #?rakudo todo 'nom regression'
 #?pugs todo
-is(A::B.WHAT.gist, 'B()', 'A::B.WHAT stringifies to short name B');
+is(A::B.WHAT.gist, '(B)', 'A::B.WHAT stringifies to short name B');
 
 class X does A::B {
 }
