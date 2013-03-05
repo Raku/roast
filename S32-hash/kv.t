@@ -12,17 +12,17 @@ Basic C<kv> tests, see S32::Containers.
 
 # L<S32::Containers/"Hash"/=item kv>
 { # check the invocant form
-    my %hash = (a => 1, b => 2, c => 3, d => 4);
+    my %hash = (a => "x", b => "xx", c => "xxx", d => "xxxx");
     my @kv = %hash.kv;
     is(+@kv, 8, '%hash.kv returns the correct number of elems');
-    is(~@kv.sort, "1 2 3 4 a b c d",  '%hash.kv has no inner list');
+    is(~@kv.sort, "a b c d x xx xxx xxxx",  '%hash.kv has no inner list');
 }
 
 { # check the non-invocant form
-    my %hash = (a => 1, b => 2, c => 3, d => 4);
+    my %hash = (a => "x", b => "xx", c => "xxx", d => "xxxx");
     my @kv = kv(%hash);
     is(+@kv, 8, 'kv(%hash) returns the correct number of elems');
-    is(~@kv.sort, "1 2 3 4 a b c d",  'kv(%hash) has no inner list');
+    is(~@kv.sort, "a b c d x xx xxx xxxx",  'kv(%hash) has no inner list');
 }
 
 # See "Questions about $pair.kv" thread on perl-6 lang
@@ -37,18 +37,18 @@ Basic C<kv> tests, see S32::Containers.
 #?rakudo todo 'make kv() return a flat list, or fix test (or .sort)'
 {
     my $sub  = sub (Hash $hash) { $hash.kv };
-    my %hash = (a => 1, b => 2);
-    is ~kv(%hash).sort,   "1 2 a b", ".kv works with normal hashes (sanity check)";
-    is ~$sub(%hash).sort, "1 2 a b", ".kv works with constant hash references";
+    my %hash = (a => "x", b => "y");
+    is ~kv(%hash).sort,   "a b x y", ".kv works with normal hashes (sanity check)";
+    is ~$sub(%hash).sort, "a b x y", ".kv works with constant hash references";
 }
 
 #?rakudo todo 'make kv() return a flat list, or fix test (or .sort)'
 {
     # "%$hash" is not idiomatic Perl, but should work nevertheless.
     my $sub  = sub (Hash $hash) { %$hash.kv };
-    my %hash = (a => 1, b => 2);
-    is ~kv(%hash).sort,   "1 2 a b", ".kv works with normal hashes (sanity check)";
-    is ~$sub(%hash).sort, "1 2 a b", ".kv works with dereferenced constant hash references";
+    my %hash = (a => "x", b => "y");
+    is ~kv(%hash).sort,   "a b x y", ".kv works with normal hashes (sanity check)";
+    is ~$sub(%hash).sort, "a b x y", ".kv works with dereferenced constant hash references";
 }
 
 # test3 and test4 illustrate a bug 
