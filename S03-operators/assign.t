@@ -962,9 +962,9 @@ sub l () { 1, 2 };
 #?pugs todo
 {
     my @a //= (3);
-    is @a.perl, "Array.new()";
+    is @a, "";
     my @b ||= (3);
-    is @b.perl, "Array.new(3)";
+    is @b, "3";
 }
 
 # vim: ft=perl6
