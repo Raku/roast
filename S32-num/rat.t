@@ -19,6 +19,7 @@ isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
 #?pugs todo
 isa_ok( eval(Rat.new.perl), Rat, 'eval Rat.new.perl is Rat' );
 #?pugs 2 skip 'Must only use named arguments to new() constructor'
+#?rakudo 4 todo '<1/3> literal should be Rat'
 isa_ok( eval(Rat.new(1, 3).perl), Rat, 'eval Rat.new(1, 3).perl is Rat' );
 is( (eval Rat.new(1, 3).perl), 1/3, 'eval Rat.new(1, 3).perl is 1/3' );
 isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );
