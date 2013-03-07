@@ -33,6 +33,7 @@ $a = cos(1/60000);
 ok $a ~~Num, 'cos() returned a Num';
 is_approx $a, 0.99999999;
 
+# I'm not at all convinced the next three are sensible tests -- colomon
 #?pugs todo "<>"
 is 3.14.Rat.perl, "3.14";
 #?pugs todo "<>"
@@ -41,10 +42,9 @@ is pi.Rat.perl, "<355/113>";
 is pi.Rat(1e-10).perl, "<312689/99532>";
 
 is 1.75.WHAT, Rat;
-#?rakudo 2 todo "New Rat.perl"
 #?pugs todo "<>"
-is 1.75.perl, "<7/4>";
+is 1.75.perl, "1.75";
 #?pugs todo "<>"
-is 1.752.perl, "<219/125>";
+is 1.752.perl, "1.752";
 
 done;
