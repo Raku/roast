@@ -152,6 +152,7 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 # RT #74234
+#?niecza todo
 {
     eval_lives_ok 'subset A of Mu; my A $x = 23;',
         'subset A of Mu + type check and assignment works';

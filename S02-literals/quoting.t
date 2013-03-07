@@ -602,6 +602,7 @@ is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpola
 is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 
 #?pugs todo
+#?niecza todo
 {
     $_ = 'abc';
     /a./;
