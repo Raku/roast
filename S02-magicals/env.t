@@ -101,8 +101,9 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 
 # RT #77458
 {
-    ok %*ENV.gist ~~ /\)\.hash$/, '%*ENV.gist works';
-    ok %*ENV.perl ~~ /\)\.hash$/, '%*ENV.perl works';
+    %*ENV<abc> = 'def';
+    ok %*ENV.gist ~~ /abc/, '%*ENV.gist generates something with abc in it';
+    ok %*ENV.perl ~~ /abc/, '%*ENV.perl generates something with abc in it';
 }
 
 # vim: ft=perl6
