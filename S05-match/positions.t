@@ -32,8 +32,6 @@ ok($str ~~ m/ .*? <Aa> /, 'Subrule match from 3');
 ok($/.from == 0,          'Full match pos is 0');
 ok($/<Aa>.from == 3,      'Subrule match pos is 3');
 
-
-# RT #74694 - Rakudo's failed match objects had negative .chars
-is ('abc' ~~ /\d+/).chars, 0, 'Failed matches 0 .chars';
+is ('abc' ~~ /\d+/), Nil, 'Failed match returns Nil';
 
 # vim: ft=perl6
