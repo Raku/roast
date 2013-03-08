@@ -94,7 +94,7 @@ throws_like 'undef', X::Obsolete,
     old         => rx/<<undef>>/;
 # RT #77118
 {
-    throws_like ':a<>', X::Obsolete, old => "<>";
+    throws_like '<>', X::Obsolete, old => "<>";
 }
 # RT #92408
 throws_like 'my ($a, $b); $a . $b', X::Obsolete;
