@@ -116,6 +116,7 @@ throws_like 'augment class Any { }', X::Syntax::Augment::WithoutMonkeyTyping;
 throws_like 'use MONKEY_TYPING; augment role Positional { }', X::Syntax::Augment::Illegal;
 throws_like 'use MONKEY_TYPING; enum Weekday <Mon Tue>; augment class Weekday { }', X::Syntax::Augment::Illegal;
 throws_like 'sub postbla:sym<foo>() { }', X::Syntax::Extension::Category, category => 'postbla';
+throws_like 'sub infix:sym< >() { }', X::Syntax::Extension::Null;
 # RT #83992
 throws_like 'my @a = 1, => 2', X::Syntax::InfixInTermPosition, infix => '=>';
 throws_like 'sub f(:in(:$in)) { }', X::Signature::NameClash, name => 'in';
