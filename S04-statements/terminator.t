@@ -33,7 +33,6 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     }
     + 1;
 
-    #?rakudo todo "??"
     is($y, 10, "}\\n + 1 are two statements");
 
     my $z = [];
