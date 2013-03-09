@@ -42,8 +42,7 @@ eval_dies_ok('my $x = ', 'incomplete expression');
                 + 2 ];
     ';
 
-    #?niecza todo
-    is($z[0], 3, 'auto-curly doesn\'t apply unless we\'re at top level');
+    is($z[0], 2, 'auto-curly applies inside array composer');
 }
 
 # There's *no* ";" before the "\n", but pugs parsed it nevertheless!
