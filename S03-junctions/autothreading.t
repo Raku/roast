@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 87;
+plan 89;
 
 {
     # Solves the equation A + B = A * C for integers
@@ -317,6 +317,35 @@ plan 87;
 # RT #76422
 {
     ok ((1..42) | (8..35)).max == 42, 'infix | does not flatten ranges';
+}
+
+# test that the order of junction autothreading is:
+# the leftmost all or none junction (if any), then
+# the leftmost one or any junction.
+
+{
+    sub tp($a, $b, $c) { "$a $b $c" };
+
+    my Mu $res = tp("dog", 1|2, 10&20);
+    # should turn into:
+    #     all( tp("dog", 1|2, 10),
+    #          tp("dog", 1|2, 20))
+    #
+    # into:
+    #     all( any( tp("dog", 1, 10), tp("dog", 2, 10),
+    #          any( tp("dog", 1, 20), tp("dog", 2, 20)))
+    #?rakudo todo 'junction autothreading order'
+    is $res.Str, q{all(any("dog 1 10", "dog 2 10"), any("dog 1 20", "dog 2 20))}, "an & junction right of a | junction will be autothreaded first";
+
+    $res = tp("foo"&"bar", 1|2, 0);
+    # should turn into:
+    #     all( tp("foo", 1|2, 0),
+    #          tp("bar", 1|2, 0))
+    #
+    # into:
+    #     all( any( tp("foo", 1, 0), tp("foo", 2, 0)),
+    #          any( tp("bar", 1, 0), tp("bar", 2, 0)))
+    is $res.Str, q{all(any("foo 1 0", "foo 2 0"), any("bar 1 0", "bar 2 0"))}, "an & junction left of a | junction will be autothreaded first";
 }
 
 # vim: ft=perl6
