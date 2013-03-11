@@ -386,4 +386,8 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
     throws_like $code, X::Undeclared::Symbols, post_types => { .{"PostDeclaredGrammar"} :exists };
 }
 
+{
+    throws_like q{if 10 > 5 { say "maths works!" } else if 10 == 5 { say "identity is weird" } else { say "math is weird" }}, X::Syntax::Malformed::Elsif;
+}
+
 done;
