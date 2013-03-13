@@ -67,7 +67,6 @@ sub jok(Mu $condition, $msg?) { ok ?($condition), $msg };
 
     
     # test junction to junction
-    #?rakudo todo 'nom regression'
     jok(('a' | 'b' | 'c') eq ($a & $b & $c), 'junction ("a" | "b" | "c") matches junction ($a & $b & $c)');    
     jok(('a' & 'b' & 'c') eq ($a | $b | $c), 'junction ("a" & "b" & "c") matches junction ($a | $b | $c)'); 
     
@@ -166,7 +165,6 @@ sub j (Mu $j) { return $j.perl }
 
     $got = ((1|2) + (3&4));
     $want = ((4|5) & (5|6));
-    #?rakudo todo 'nom regression'
     is( j($got), j($want), 'thread + returning junctive combination of results');
 
     # L<S03/Junctive operators/This opens doors for constructions like>

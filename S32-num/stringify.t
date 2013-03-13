@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 115;
+plan *;
 
 # L<S32::Numeric/Complex/"=item gist">
 
@@ -57,7 +57,6 @@ sub Rat_str_test($value, $str_nucleus, $str, $perl = $str) {
     is $value.Str, $str, "<$str_nucleus>.Str";
     #?pugs skip '.gist'
     is $value.gist, $str, "<$str_nucleus>.gist";
-    #?rakudo todo 'Rat.perl'
     #?pugs todo
     is $value.perl, $perl, "<$str_nucleus>.perl";
     
@@ -76,11 +75,13 @@ Rat_str_test 1/1, '1/1', '1', '1.0';
 Rat_str_test 13/39, '1/3', '0.333333', '<1/3>';
 Rat_str_test 1000001/10000, '1000001/10000', '100.0001';
 Rat_str_test -1000001/10000, '-1000001/10000', '-100.0001';
+#?rakudo skip 'big stuff'
 Rat_str_test 555555555555555555555555555555555555555555555/5,
              '555555555555555555555555555555555555555555555/5',
              '111111111111111111111111111111111111111111111',
              '111111111111111111111111111111111111111111111.0';
 # Bignum sanity
+#?rakudo skip 'big stuff'
 Rat_str_test (4.5 ** 60), 
              '1797010299914431210413179829509605039731475627537851106401/1152921504606846976',
              '1558657976916843360832062017400788597510.058834953945635510598466400011830046423710882663726806640625';
@@ -95,3 +96,4 @@ lives_ok { Rat.Str }, 'Rat.Str does not die';
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
 
 # vim: ft=perl6
+done;

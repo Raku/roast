@@ -334,7 +334,6 @@ plan 89;
     # into:
     #     all( any( tp("dog", 1, 10), tp("dog", 2, 10),
     #          any( tp("dog", 1, 20), tp("dog", 2, 20)))
-    #?rakudo todo 'junction autothreading order'
     is $res.Str, q{all(any("dog 1 10", "dog 2 10"), any("dog 1 20", "dog 2 20"))}, "an & junction right of a | junction will be autothreaded first";
 
     $res = tp("foo"&"bar", 1|2, 0);
