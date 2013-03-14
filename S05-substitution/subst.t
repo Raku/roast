@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 136;
+plan 139;
 
 # L<S05/Substitution/>
 
@@ -405,6 +405,15 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     }
     
     dies_ok { SubstInsideMethod.new.ro('ccc') }, '(sanely) dies when trying to s/// a read-only variable';
+}
+
+# RT #83552
+{
+    use lib "t/spec/packages";
+    use Test::Util;
+
+    $_ = "foo"; s[f] = 'bar'; is $_, "baroo", 's[f] is parsed as a substitution op';
+    throws_like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
 }
 
 # vim: ft=perl6
