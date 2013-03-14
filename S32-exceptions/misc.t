@@ -395,4 +395,9 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
     throws_like q{1/2.''()}, X::Method::NotFound, method => '', typename => 'Int';
 }
 
+{
+    # RT #78314
+    throws_like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
+}
+
 done;
