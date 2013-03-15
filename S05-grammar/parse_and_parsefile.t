@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # tests .parse and .parsefile methods on a grammar
 
@@ -46,6 +46,19 @@ eval_dies_ok '::No::Such::Grammar.parse()', '.parse on missing grammar dies';
 {
     grammar Integer { rule TOP { x } };
     lives_ok { Integer.parse('x') }, 'can .parse grammar named "Integer"';
+}
+
+# RT #76884
+{
+    grammar grr {
+        token TOP {
+            <line>*
+        }
+        token line { .* \n }
+    }
+
+    my $match = grr.parse('foo bar asd');
+    is $match[0].perl, "Any", 'empty match is Any, not Null PMC access';
 }
 
 done;

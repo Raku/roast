@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 161;
+plan 162;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -611,6 +611,14 @@ is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
     rx/b./;
     is $/, 'bc', 'rx/.../ literals match in void context';
 }
+
+# RT #75320
+{
+    my $x = 42;
+    is "$x >> ", "42 >> ", '>> in interpolation is not shift operator';
+}
+
+
 done;
 
 # vim: ft=perl6
