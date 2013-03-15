@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 19;
 
 BEGIN { @*INC.push: 't/spec/packages' };
 
@@ -39,6 +39,12 @@ BEGIN { @*INC.push: 't/spec/packages' };
 
     #?pugs todo
     dies_ok { eval('3 notthere 4') }, 'not-exported operator was not imported';
+
+    {
+        my $fail = try eval q{3 notthere 4};
+        ok $! ~~ X::Syntax::Confused, 'not imported operator fails with X::Syntax::Confused.';
+        is $!.reason, "Two terms in a row", 'the reason is "Two terms in a row"';
+    }
 }
 
 eval_dies_ok '5!', 'import of operators is lexical';
