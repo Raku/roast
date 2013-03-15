@@ -1,6 +1,5 @@
 use v6;
 use Test;
-plan *;
 
 # L<S32::Numeric/Complex/"=item gist">
 
