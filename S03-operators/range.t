@@ -234,16 +234,19 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~$range, "1 2 3", 'range is correct';
 }
 
-# L<S03/Nonchaining binary precedence/it is illegal to use a Range or a
-# List as implicitly numeric:>
+# L<S03/Nonchaining binary precedence/it is illegal to use a Range as
+# implicity numeric>
 
-#?rakudo todo 'forbid Ranges and Lists as Range endpoints'
-#?niecza todo
+#?niecza todo 'forbid Ranges as Range endpoints'
 #?pugs todo
 {
     ok !defined(try { 0 .. ^10 }), '0 .. ^10 is illegal';
-    ok !defined(try { 0 .. (0, 1, 2) }), '0 .. List is illegal';
 }
+
+# Lists are allowed on the rhs if the lhs is numeric (Real):
+#?niecza todo 'allow List as rhs endpoint'
+#?pugs todo
+is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
 # RT #68788
 #?pugs skip 'Missing required parameters: $_'

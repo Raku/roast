@@ -1,8 +1,10 @@
 use v6;
 
 use Test;
+BEGIN { @*INC.push('t/spec/packages') };
+use Test::Util;
 
-plan 136;
+plan 144;
 
 {
     my $range = 2..6;
@@ -111,6 +113,12 @@ plan 136;
     is $range.excludes_min, Bool::True, "1^..^*.excludes_min is true";
     is $range.excludes_max, Bool::True, "1^..^*.excludes_max is true";
 }
+
+# some range constructions are invalid
+throws_like '10 .. ^20', X::Range::InvalidArg ;
+throws_like '^10 .. 20', X::Range::InvalidArg ;
+throws_like '* .. ^20',  X::Range::InvalidArg ;
+throws_like '^10 .. *',  X::Range::InvalidArg ;
 
 ok 3 ~~ 1..5,         '3 ~~ 1..5';
 ok 2.5 ~~ 1..5,       '2.5 ~~ 1..5';
