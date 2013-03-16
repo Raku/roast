@@ -42,7 +42,7 @@ lives_ok { 1.^methods>>.sort }, 'can use >>.method on result of introspection';
 
 # RT #76946
 #?niecza skip 'todo'
-lives_ok { Any .= (); CATCH { when X::AdHoc {1} } }, 'Typed, non-internal exception';
+lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-internal exception';
 
 # RT #90522
 {
