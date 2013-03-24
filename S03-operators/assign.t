@@ -959,9 +959,9 @@ sub l () { 1, 2 };
 }
 
 # RT #77174
-#?pugs todo
 {
     my @a //= (3);
+    #?pugs todo
     is @a, "";
     my @b ||= (3);
     is @b, "3";

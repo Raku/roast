@@ -41,8 +41,11 @@ BEGIN { @*INC.push: 't/spec/packages' };
     dies_ok { eval('3 notthere 4') }, 'not-exported operator was not imported';
 
     {
+        #?pugs emit #
         my $fail = try eval q{3 notthere 4};
+        #?pugs skip 'eek'
         ok $! ~~ X::Syntax::Confused, 'not imported operator fails with X::Syntax::Confused.';
+        #?pugs skip 'eek'
         is $!.reason, "Two terms in a row", 'the reason is "Two terms in a row"';
     }
 }

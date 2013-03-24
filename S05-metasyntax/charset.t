@@ -39,7 +39,6 @@ is($0, 'y', 'Difference set capture');
 # RT #115802
 #?pugs todo
 ok(  "abc" ~~ m/<[\w]-[\n]>/,  'Difference set match 1');
-#?pugs todo
 ok(!("abc" ~~ m/<[\w]-[\N]>/), 'Difference set match 2');
 #?pugs todo
 is(("abc123" ~~ m/<[\w]-[a\d]>+/), 'bc', 'Difference set match 3');

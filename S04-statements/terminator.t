@@ -41,6 +41,7 @@ eval_dies_ok('my $x = ', 'incomplete expression');
                 + 2 ];
     ';
 
+    #?pugs todo
     is($z[0], 2, 'auto-curly applies inside array composer');
 }
 
