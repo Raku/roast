@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 41;
+plan 42;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -180,6 +180,12 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
         "ordered multi subs";
 }
 
+# RT #68528
+{
+    multi rt68528(:$a!, *%_) { return "first"  };
+    multi rt68528(:$b,  *%_) { return "second" };
+    is(rt68528(:a, :b), "first", "RT #68528 - first defined wins the tie");
+}
 
 done;
 
