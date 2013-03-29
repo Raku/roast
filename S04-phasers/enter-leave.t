@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -196,6 +196,14 @@ plan 19;
         LEAVE { $str ~= '2'; die 'foo' }
     }
     is $str, '21', 'die doesn\'t abort LEAVE queue';
+}
+
+# RT #113548
+{
+    my $a = 0;
+    my $b = 0;
+    multi sub rt113548() { $a = 1; LEAVE $b = 2; }; rt113548;
+    ok($a == 1 && $b == 2, "LEAVE fires in a multi sub");
 }
 
 # vim: ft=perl6
