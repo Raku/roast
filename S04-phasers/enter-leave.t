@@ -87,7 +87,7 @@ plan 21;
 
 # normal closure:
 #?niecza skip 'leave'
-#?rakudo skip 'some syntax error whlie parsing'
+#?rakudo skip 'some syntax error while parsing'
 {
     #?pugs todo
     is eval(q{
