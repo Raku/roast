@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 18;
 
 # L<S29/Context/"=item eval">
 
@@ -93,5 +93,12 @@ is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
 my $rt115344 = 115344;
 #?niecza skip 'method form of eval does not see outer lexicals'
 is('$rt115344'.eval, $rt115344, 'method form of eval sees outer lexicals');
+
+# RT #115774
+{
+    my int $a; eval('');
+    ok(1, "presence of low level types doesn't cause eval error")
+}
+
 
 # vim: ft=perl6
