@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 139;
+plan 140;
 
 # L<S05/Substitution/>
 
@@ -309,6 +309,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     $x = 'ooooo';
     $x ~~ s:2x:nth(1,3)/o/A/;
     is $x,  'AoAoo', 's:2x:nth(1,3) works in combination';
+}
+
+# RT #83484
+# s// with other separators 
+{
+    my $x = 'abcde';
+    $x ~~ s!bc!zz!;
+    is $x, 'azzde', '! separator';
 }
 
 #L<S05/Substitution/Any scalar assignment operator may be used>
