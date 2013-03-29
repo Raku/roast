@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 14;
 
 =begin description
 
@@ -66,5 +66,13 @@ is uniq('a', 'b', 'b', 'c', 'd', 'e', 'b', 'b', 'b', 'b', 'f', 'b'),
     is (A.new, A.new).uniq.elems, 2, 'uniq has === semantics';
 
 }
+
+# RT #83454
+{
+    my @list = 1, "1";
+    my @uniq = uniq(@list);
+    is @uniq, @list, "uniq has === semantics";
+}
+
 
 # vim: ft=perl6
