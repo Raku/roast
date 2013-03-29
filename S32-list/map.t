@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 52;
+plan 53;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -245,4 +245,9 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is $x.map({ ; .key => .value + 1}), ('a' => 6), 'map on pair works (=>)';
 }
 
+# RT #112596
+{
+    my @a = map &sprintf.assuming("%x"), 9..12;
+    is(@a, <9 a b c>, "map over a callable with a slurpy");
+}
 # vim: ft=perl6
