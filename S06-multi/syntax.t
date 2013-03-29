@@ -181,6 +181,7 @@ is with_cap(1,2,3,4,5,6), 21, 'captures in multi sigs work';
 }
 
 # RT #68528
+#?niecza skip 'Ambiguous call to &rt68528'
 {
     multi rt68528(:$a!, *%_) { return "first"  };
     multi rt68528(:$b,  *%_) { return "second" };
