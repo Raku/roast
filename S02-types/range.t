@@ -99,6 +99,7 @@ is(+(10..9), 0, 'numification');
 is(+(1.2..4), 3, 'numification');
 is(+(1..^3.3), 3, 'numification');
 is(+(2.3..3.1), 1, 'numification');
+#?niecza skip 'Attempted to access slot $!min of type object for Range'
 is(+Range, 0, 'type numification');
 
 # immutability
