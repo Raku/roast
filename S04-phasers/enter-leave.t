@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 21;
 
 # L<S04/Phasers/ENTER "at every block entry time">
 # L<S04/Phasers/LEAVE "at every block exit time">
@@ -204,6 +204,13 @@ plan 20;
     my $b = 0;
     multi sub rt113548() { $a = 1; LEAVE $b = 2; }; rt113548;
     ok($a == 1 && $b == 2, "LEAVE fires in a multi sub");
+}
+
+# RT #115998
+{
+    my $x = 0;
+    for 1..10 { LEAVE { $x++ }; next }
+    is $x, 10, "next triggers LEAVE";
 }
 
 # vim: ft=perl6
