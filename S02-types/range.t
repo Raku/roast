@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 124;
+plan 131;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -91,6 +91,13 @@ is(+(6..6), 1, 'numification');
 is(+(6^..6), 0, 'numification');
 is(+(6..^6), 0, 'numification');
 is(+(6..8), 3, 'numification');
+is(+(1^..10), 9, 'numification');
+is(+(1..^10), 9, 'numification');
+is(+(1^..^10), 8, 'numification');
+is(+(10..9), 0, 'numification');
+is(+(1.2..4), 3, 'numification');
+is(+(1..^3.3), 3, 'numification');
+is(+Range, 0, 'type numification');
 
 # immutability
 #?pugs todo
