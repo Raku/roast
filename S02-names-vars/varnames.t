@@ -17,7 +17,6 @@ eval_lives_ok 'my proto $/', 'as can $/';
 eval_dies_ok 'my $f!ao = "beh";', "normal varnames can't have ! in their name";
 eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their names either";
 
-#?rakudo skip 'binding to $/ (questionable?)'
 #?pugs skip "Can't modify constant item: VObject"
 {
     class MyMatch {

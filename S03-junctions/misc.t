@@ -392,7 +392,7 @@ ok Mu & Mu ~~ Mu, 'Mu & Mu ~~ Mu works';
 }
 
 # RT #63126
-#?rakudo skip 'nom regression'
+#?rakudo todo 'nom regression'
 #?DOES 2
 {
     my @a = "foo", "foot";
