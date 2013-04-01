@@ -246,6 +246,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # RT #112596
+#?pugs skip 'hangs'
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");

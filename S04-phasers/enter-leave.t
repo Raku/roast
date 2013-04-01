@@ -199,6 +199,7 @@ plan 21;
 }
 
 # RT #113548
+#?pugs skip 'LEAVE'
 {
     my $a = 0;
     my $b = 0;
