@@ -50,12 +50,15 @@ our $c = 42; #OK not used
                 our $d3 = 9;
             }
             {
+#?niecza skip 'our-scoped vars NYI'
                 is($d3, 9, "variables are seen within other lexical child blocks");
                 
                 package D3 {
+#?niecza skip 'our-scoped vars NYI'
                     is($d3, 9, " ... and from within child packages");
                 }
             }
+#?niecza skip 'our-scoped vars NYI'
             is($d3, 9, "variables leak from lexical blocks");
         }
         eval_dies_ok('$d2', 'our() variable not yet visible outside its package');
