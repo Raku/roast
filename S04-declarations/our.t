@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 18;
+plan 17;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped
 # alias for a variable in the current package
@@ -21,15 +21,6 @@ is($a, 1, '$a has not changed');
     is($a, 3, '$a is now another lexical (inner) $a');
 }
 is($a, 3, '$a has changed'); # XXX is that right?
-
-# eval() introduces new lexical scope
-is( eval('
-my $e = 11;
-{ 
-    my $e = 3 #OK not used
-};
-$e;
-'), 11, '$e is available, and the outer value has not changed' );
 
 # test that our (@array, @otherarray) correctly declares
 # and initializes both arrays
