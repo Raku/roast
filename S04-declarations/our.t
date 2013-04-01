@@ -49,11 +49,11 @@ our $c = 42; #OK not used
 
 # check that our-scoped variables really belong to the package
 {
-    class D1 {
+    package D1 {
         our $d1 = 7;
         is($d1, 7, "we can of course see the variable from its own package");
         
-        class D2 {
+        package D2 {
             our $d2 = 8;
             {
                 our $d3 = 9;
@@ -61,8 +61,8 @@ our $c = 42; #OK not used
             {
                 is($d3, 9, "variables are seen within other lexical child blocks");
                 
-                class D3 {
-                    is($d3, 9, " ... and from within child classes");
+                package D3 {
+                    is($d3, 9, " ... and from within child packages");
                 }
             }
             is($d3, 9, "variables leak from lexical blocks");
