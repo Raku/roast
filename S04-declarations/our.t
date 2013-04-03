@@ -3,8 +3,7 @@ use Test;
 
 plan 17;
 
-# L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped
-# alias for a variable in the current package
+# L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
 { # create a new lexical scope
     is($a, 1, '$a is still the outer $a');
