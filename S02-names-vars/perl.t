@@ -188,6 +188,12 @@ my @tests = (
     }
 }
 
+# Buf
+{
+    my Buf $a = "asdf".encode();
+    is eval($a.perl).decode("ascii"), "adsf";
+}
+
 done;
 
 # vim: ft=perl6
