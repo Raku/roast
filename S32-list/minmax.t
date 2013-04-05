@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 59;
+plan 55;
 
 # L<S32::Containers/List/=item min>
 # L<S32::Containers/List/=item max>
@@ -39,14 +39,6 @@ is (@array.min: { abs $^a }), 0,
 is min(:by({ $^a.abs }), @array), 0,
   "subroutine form of min taking a comparison block works";
 
-#?rakudo 2 skip "Range.min not fully implemented yet (RT #105118)"
-#?niecza 2 skip "Range.min not fully implemented yet"
-is ((-10..10).min: { abs($^a) <=> abs($^b) }), 0,
-  "method form of min on Ranges taking a comparison block works";
-
-is ((1..10).min: { ($_-3) * ($_-5) }), 4,
-  "method form of min taking an arity-1 comparison block works";
-
 # Tests for C<max>:
 is (@array.max),  7, "basic method form of max works";
 is max(:by({ $^a <=> $^b }), @array), 7, "basic subroutine form of max works";
@@ -55,11 +47,6 @@ is (@array.max: { $^a <=> $^b }), 7,
   "method form of max with identity comparison block works";
 
 is max(@array), 7, 'sub form of max';
-
-#?rakudo skip "Range.max not fully implemented yet (RT #105118)"
-#?niecza 2 skip "Range.max not fully implemented yet"
-is ((-10..9).max: { abs($^a) <=> abs $^b }), -10,
-  "method form of max on Ranges taking a comparison block works";
 
 is max(:by({ $^a <=> $^b }), @array), 7,
   "subroutine form of max with identity comparison block works";
@@ -72,11 +59,6 @@ is (@array.max: { $^a.abs }), -9,
   "method form of max taking a modifier block works";
 is max(:by({ $^a.abs }), @array), -9,
   "subroutine form of max taking a modifier block works";
-
-#?rakudo skip "Range.max not fully implemented yet (RT #105118)"
-#?niecza skip "Range.min not fully implemented yet"
-is ((1..10).max: { ($_-3) * ($_-5) }), 10,
-  "method form of max taking an arity-1 comparison block works";
 
 # Tests for C<minmax>:
 is @array.minmax,  -9..7, "basic method form of minmax works";
