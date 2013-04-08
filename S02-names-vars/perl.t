@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
-#?pugs emit plan 83;
+#?pugs emit plan 89;
 
 my @tests = (
     # Basic scalar values
@@ -190,7 +190,7 @@ my @tests = (
 
 # Buf
 #?niecza skip 'Unhandled exception'
-#?pugs skip 'doesn't have encode()'
+#?pugs skip "doesn't have encode()"
 {
     my Buf $a = "asdf".encode();
     is eval($a.perl).decode("ascii"), "asdf";
