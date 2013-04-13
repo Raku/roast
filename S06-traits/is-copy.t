@@ -4,7 +4,7 @@ use Test;
 # L<S06/"Parameter traits"/"=item is copy">
 # should be moved with other subroutine tests?
 
-plan 23;
+plan 24;
 
 {
   sub foo($a is copy) {
@@ -114,6 +114,10 @@ plan 23;
     my @items = 'a'...'g';
     is foo(@items), 'a', 'can slice "is copy" arrays';
 }
+
+# RT #117583
+# the redeclaration thingy is only a warning
+eval_lives_ok 'sub f ($x is copy) { my $x }';
 
 
 # vim: ft=perl6
