@@ -7,6 +7,7 @@ plan 8;
 
 lives_ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule.pm from a path at run time';
+#?pugs skip 'parsefail'
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
 # no need to do that at compile time, sine require() really is run time
