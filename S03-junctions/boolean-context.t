@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 73;
+plan 77;
 
 # L<S03/Junctive operators/>
 
@@ -141,6 +141,17 @@ ok do if 1 <= 1 & 2 & 3 & 4 <= 3 { 0 } else { 1 };
     ok do if any(1, @a, 4) == 3 { 1 } else { 0 }, "flattening in any works";
     ok do if all(1, @a, 4) <= 4 { 1 } else { 0 }, "flattening in all works";
     ok do if none(1, @a, 4) > 4 { 1 } else { 0 }, "flattening in none works";
+}
+
+# RT 117579
+{
+    ok do if 1 ne 2|3|4 { 1 } else { 0 }, "ne in if context";
+    ok do if 1 ne 1|3|4 { 0 } else { 1 }, "ne in if context";
+
+    my $invoc = 0;
+    sub infix:<test>(Mu $a, Mu $b) { $invoc++; True };
+    ok do if 1 test 2 | 3 | 4 | 5 { 1 } else { 0 }, "custom operator";
+    is $invoc, 1, "operator with Mu argument doesn't get autothreaded.";
 }
 
 # vim: ft=perl6
