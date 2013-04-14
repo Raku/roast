@@ -2,6 +2,9 @@ use v6;
 use Test;
 
 plan 8;
+
+# L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
+
 lives_ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule.pm from a path at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
@@ -26,6 +29,8 @@ lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
     is ::('Fancy::Utilities')::('&lolgreet')('tester'), "O HAI TESTER",
        'can call subroutines in a module by name';
 }
+
+# L<S11/"Runtime Importation"/"Importing via require also installs names into the current lexical scope">
 
 #?pugs skip 'NYI'
 {
