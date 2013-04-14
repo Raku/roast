@@ -1,9 +1,12 @@
 use v6;
 use Test;
 
-plan 6;
+plan 8;
+lives_ok { require "t/spec/S11-modules/InnerModule.pm"; },
+         'can load InnerModule.pm from a path at run time';
+is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
-# no need to do that compile time, sine require() really is run time
+# no need to do that at compile time, sine require() really is run time
 @*INC.push: 't/spec/packages';
 
 # Next line is for final test.
