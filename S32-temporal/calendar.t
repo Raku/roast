@@ -4,7 +4,7 @@ use Test;
 # calendar.t: tests some calendar-related methods common to
 # Date and DateTime
 
-plan 129;
+plan 130;
 
 sub date($year, $month, $day) {
     Date.new(:$year, :$month, :$day)
@@ -35,6 +35,25 @@ is ~date(2000, 3,  1).truncated-to(week), '2000-02-28', 'Date.truncated-to(week)
 is ~dtim(2000, 3,  1).truncated-to(week), '2000-02-28T00:00:00Z', 'DateTime.truncated-to(week) (skipping over Feb 29)';
 is ~date(1988, 3,  3).truncated-to(week), '1988-02-29', 'Date.truncated-to(week) (landing on Feb 29)';
 is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.truncated-to(week) (landing on Feb 29)';
+
+# Check output from say.
+# Example taken from S32 specs documentation.
+{
+    my $dt = DateTime.new('2005-02-01T15:20:35Z');
+    my Str $outstr;
+    my $stdout = $*OUT;
+    $*OUT = class {
+        method print(*@args) {
+            $outstr ~= @args.join;
+        }
+    }
+    say $dt.truncated-to(hour);
+    $*OUT = $stdout;
+
+    #?rakudo todo 'output: DateTime.new(year => 2013, month => 4, ...)'
+    #?niecza todo 'output: DateTime.new(...)'
+    is $outstr, "2005-02-01T15:00:00Z\n", "say says 2005-02-01T15:00:00Z";
+}
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/Accessors/'the synonym day-of-month'>
