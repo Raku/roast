@@ -1,13 +1,26 @@
 use v6;
 use Test;
 
-plan 8;
+plan 11;
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
 lives_ok { require "t/spec/S11-modules/InnerModule.pm"; },
-         'can load InnerModule.pm from a path at run time';
+         'can load InnerModule from a path at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+
+my $name = 't/spec/S11-modules/InnerModule.pm';
+
+#?rakudo todo 'variable form plus imports NYI'
+lives_ok { require $name '&bar'; },
+         'can load InnerModule from a variable at run time';
+is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
+
+# L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
+{
+    require InnerModule:file($name) <&bar>;
+    is bar(), 'Inner::bar', 'can load InnerModule by name and path, with import list';
+}
 
 # no need to do that at compile time, sine require() really is run time
 @*INC.push: 't/spec/packages';
@@ -21,11 +34,12 @@ lives_ok { require Fancy::Utilities; },
 is Fancy::Utilities::lolgreet('me'),
    'O HAI ME', 'can call our-sub from required module';
 
-lives_ok { my $name = 'A'; require $name }, 'can require with variable name';
+# L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
+lives_ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
 
 #?pugs skip 'Must only use named arguments to new() constructor'
 {
-    require 'Fancy::Utilities';
+    require ::('Fancy::Utilities');
     is ::('Fancy::Utilities')::('&lolgreet')('tester'), "O HAI TESTER",
        'can call subroutines in a module by name';
 }
