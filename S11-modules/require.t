@@ -7,6 +7,7 @@ plan 11;
 
 lives_ok { require "t/spec/S11-modules/InnerModule.pm"; },
          'can load InnerModule from a path at run time';
+#?pugs skip 'parsefail'
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
 my $name = 't/spec/S11-modules/InnerModule.pm';
