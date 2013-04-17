@@ -3,6 +3,8 @@ use Test;
 
 plan 2;
 
+# L<S32::IO/Functions/"=item dir">
+
 my @files = dir();
 
 # see roast's README as for why there is always a t/ available

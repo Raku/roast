@@ -3,6 +3,8 @@ use Test;
 
 plan 12;
 
+# L<S32::IO/IO::Path>
+
 my $path = '/foo/bar.txt'.path;
 isa_ok $path, IO::Path, "Str.path returns an IO::Path";
 is $path.volume,    '',        'volume';
