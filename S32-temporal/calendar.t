@@ -38,6 +38,7 @@ is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.trun
 
 # Check output from say.
 # Example taken from S32 specs documentation.
+#?niecza skip 'Undeclared routine: hour'
 {
     my $dt = DateTime.new('2005-02-01T15:20:35Z');
     my Str $outstr;
@@ -50,8 +51,7 @@ is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.trun
     say $dt.truncated-to(hour);
     $*OUT = $stdout;
 
-    #?rakudo todo 'output: DateTime.new(year => 2013, month => 4, ...)'
-    #?niecza todo 'output: DateTime.new(...)'
+    #?rakudo todo 'output: DateTime.new(year => 2005, month => 2, ...)'
     is $outstr, "2005-02-01T15:00:00Z\n", "say says 2005-02-01T15:00:00Z";
 }
 
