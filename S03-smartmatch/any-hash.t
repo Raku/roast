@@ -9,15 +9,12 @@ plan 6;
     sub notautoquoted_a { 'a' };
     sub notautoquoted_c { 'c' };
 
-    #?rakudo todo 'nom regression'
     #?niecza todo
     ok  (%h ~~ .{'c'}),     '%hash ~~ .{true"}';
     ok !(%h ~~ .{'b'}),     '%hash ~~ .{false"}';
     ok !(%h ~~ .{notautoquoted_a}), '~~. {notautoquoted_a}';
-    #?rakudo todo 'nom regression'
     #?niecza todo
     ok  (%h ~~ .{notautoquoted_c}), '~~. {notautoquoted_c}';
-    #?rakudo todo 'nom regression'
     #?niecza todo
     ok  (%h ~~ .<c>),     '%hash ~~ .<true"}';
     ok !(%h ~~ .<b>),     '%hash ~~ .<false"}';
