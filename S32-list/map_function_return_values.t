@@ -9,7 +9,6 @@ my %ret;
 
 # XXX depends on the Pair stringification which is likely going to change
 
-#?rakudo skip "Awaiting p6l clarification on Hash composer/block"
 {
     %ret = map { $_ => uc $_; }, $text.comb;
     is ~%ret.sort, "a\tA b\tB c\tC", "=> works in a map block";

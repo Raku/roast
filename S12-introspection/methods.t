@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 50;
+plan 52;
 
 =begin pod
 
@@ -142,6 +142,11 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
     is +@methods, 2,            'methods call with :private includes private methods (with :local)';
     ok @methods[0].name eq '!pm2' || @methods[1].name eq '!pm2', 
                                 'methods call with :private found private method in subclass (with :local)';
+}
+
+{
+    lives_ok { Sub.^methods.gist }, 'Can .gist methods of a subroutine';
+    lives_ok { Sub.^methods.perl }, 'Can .perl methods of a subroutine';
 }
 
 # vim: ft=perl6

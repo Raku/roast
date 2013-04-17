@@ -128,7 +128,7 @@ use Test;
     # comment() before seeing that I meant #`{ comment within this string.
 
 #?pugs todo 'bug'
-#?rakudo skip 'NYI'
+#?rakudo todo 'NYI'
     eval_lives_ok " #`<<\n comment\n # >>\n >> 3",
         'single line comment cannot correctly nested within multiline';
 }
