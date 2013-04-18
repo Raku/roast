@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-# L<S32::IO/IO::DirectoryNode/chdir>
+# L<S32::IO/Functions/chdir>
 
 plan 10;
 
