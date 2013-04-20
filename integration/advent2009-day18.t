@@ -50,11 +50,9 @@ my Glass of MulledWine $glass ;
 role Tray[::ItemType] { }
 my Tray of Glass of MulledWine $valuable;
 
-#?rakudo todo 'nom regression'
+#?rakudo 3 todo 'nom regression: RT #117681'
 is $mug.WHAT.perl , 'Cup[EggNog]' , 'the $mug is a Cup of EggNog';
-#?rakudo todo 'nom regression'
 is $glass.WHAT.perl , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine';
-#?rakudo todo 'nom regression'
 is $valuable.WHAT.perl , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
 
 #?rakudo skip 'parse error'
