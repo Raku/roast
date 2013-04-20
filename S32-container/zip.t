@@ -11,7 +11,7 @@ The zip() builtin and operator tests
 # L<S03/"Traversing arrays in parallel">
 # L<S32::Containers/Container/"=item zip">
 
-plan 12;
+plan 10;
 
 {
     my @a = (0, 2, 4);
@@ -36,22 +36,6 @@ plan 12;
     is(~(@a Z @b Z @c), ~@e, "also with Z char");
 };
 
-#?rakudo skip 'Seq'
-#?niecza skip 'Seq & Slicel lists are NYI'
-{
-    my @a = (0, 4);
-    my @b = (2, 6);
-    my @c = (1, 3, 5, 7);
-
-    # [((0, 2), 1), ((4, 6), 3), (Mu, 5), (Mu, 7)]
-    my $todo = 'Seq(Seq(0,2),1), Seq(Seq(0,2),1), Seq(Mu,5), Seq(Mu,7)';
-    my @e = eval $todo;
-
-#?pugs 2 todo 'needs Seq'
-    is(~zip(zip(@a; @b); @c), ~@e, "zip of zipped arrays with other array");
-    is(~((@a Z @b) Z @c), ~@e, "also as Z");
-};
-
 {
     my @a = (0, 2);
     my @b = (1, 3, 5);
@@ -67,7 +51,6 @@ plan 12;
     my @b;
 
     (@a Z @b) = (1, 2, 3, 4);
-    # XXX - The arrays below are most likely Seq's
 #?pugs todo 'unimpl'
     is(@a, [1, 3], "first half of two zipped arrays as lvalues");
 #?pugs todo 'unimpl'

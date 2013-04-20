@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 15;
 
 # L<S12/"Construction and Initialization">
 
@@ -64,20 +64,6 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
   lives_ok -> { $foo.x[0] = 3 }, "Array initialized in auto-constructor is not unwritable...";
   is $foo.x[0], 3, "... and keeps its value properly."
 }	
-
-# Test for a bug fixed in Rakudo 037775eb.
-{
-    class SeqAttr { has $.x };
-    my $f = { SeqAttr.new: :$^x };
-
-    my $o = $f(<a b>);
-    isa_ok $o, SeqAttr, 'Created SeqAttr object';
-    #?rakudo todo 'Seq'
-    #?niecza skip 'Seq NYI'
-    isa_ok $o.x, Seq, '...with a Seq attribute';
-    is ($o.x)[0], 'a', '...with the right first element';
-    is ($o.x)[1], 'b', '...and the right second element.';
-}
 
 # RT #64116
 #?niecza skip 'System.NullReferenceException: Object reference not set to an instance of an object'

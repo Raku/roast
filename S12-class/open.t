@@ -2,7 +2,7 @@ use v6;
 use MONKEY_TYPING;
 
 use Test;
-plan 10;
+plan 8;
 
 # L<S12/Open vs Closed Classes>
 
@@ -54,20 +54,6 @@ is $x.in_Something, 'ab', 'basic OO sanity';
         method triple { self * 3 }
     }
     is 3.triple, 9, 'can extend Int';
-}
-
-#?rakudo skip "Soft area of spec"
-#?niecza skip 'Seq NYI'
-{
-    augment class Seq {
-        method first-and-last {
-            self[0] ~ self[self - 1]
-        }
-    }
-
-    is <a b c d e f>.Seq.first-and-last, 'af', 'can extend class Seq';
-    my @a = 1, 3, 7, 0;
-    is @a.first-and-last, '10', 'can call extended methods from child classes';
 }
 
 {
