@@ -48,6 +48,7 @@ plan 32;
     #?niecza 4 skip 'Excess arguments to item, used 1 of 2 positionals'
     isa_ok((item $a, $b).WHAT, Array, '(item $a, $b) makes an Array');
     isa_ok(item($a, $b).WHAT,  Array, 'item $a, $b makes an Array');
+    #?pugs skip 'Parcel'
     isa_ok($($a, $b).WHAT,     Parcel, '$ $a, $b makes a Parcel');
     my @array = ($a, $b);
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');

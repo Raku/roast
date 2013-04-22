@@ -158,7 +158,7 @@ plan 28;
 }
 
 # RT #66304
-#?pugs todo
+#?pugs skip 'Parcel'
 {
     my $rt66304 = (1, 2, 4);
     isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
