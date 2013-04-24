@@ -4,7 +4,7 @@ use Test;
 # see if you can declare the various built-in types
 # a broad but not in depth test of the existence of various types
 
-plan 79;
+plan 78;
 
 # L<S02/"Built-in Type Conventions"/"Built-in object types start with an uppercase letter">
 
@@ -308,11 +308,6 @@ plan 79;
 {
  my EnumMap $paso;
  isa_ok($paso,EnumMap  );
-}
-
-{
- my IO $reno;
- isa_ok($reno,IO  );
 }
 
 {
