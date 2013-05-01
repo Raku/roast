@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan 38;
+plan 39;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -15,6 +15,11 @@ plan 38;
   #?niecza todo 'match returns match object'
   isa_ok( $/, 'Match', 'Match object assigned to $/');
   ok( $/ === $match, 'Same match objects');
+}
+
+{
+  my $match = 'xyz' ~~ / abc /;
+  isa_ok( $/, Nil, 'Failed match returns Nil' );
 }
 
 # old: L<S05/Return values from matches/"The array elements of a C<Match> object are referred to" >
