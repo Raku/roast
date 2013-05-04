@@ -44,7 +44,7 @@ class Bar is Foo {
     @o>>.?doit;
     is(@o.map({.count}), (7..12), 'parallel dispatch using @o>>.?doit works');
     #?rakudo todo 'is_deeply does not think map results are the same as list on LHS'
-    is (@o».?not_here).map({ when Nil { True }; False; }).join(", "), @o.map({ True }).join(", "),
+    is (@o».?not_here).map({ $_ === Nil }).join(", "), @o.map({ True }).join(", "),
        '$obj».?nonexistingmethod returns a list of Nil';
     is (@o».?count).join(", "), @o.map({.count}).join(", "),
        '$obj».?existingmethod returns a list of the return values';
