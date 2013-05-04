@@ -66,7 +66,7 @@ Testing named capture variables nested inside each other. This doesn't appear to
     grammar a {
         token x { a };
         token y { z };
-        rule TOP { [<x>]? [c || b <y>] }
+        rule TOP { [ <x> ]? [c || b <y>] }
     };
     is ~a.parse('a b z')<x>, 'a', 'can capture inside a || alternation even if previous capture was quantified (RT 107746)';
 }
