@@ -209,7 +209,7 @@ plan 78;
 #?pugs skip 'Nil'
 {
  my Nil $ci;
- ok($ci ~~ Nil);
+ ok($ci === Nil);
 }
 
 #?pugs skip 'Whatever'
