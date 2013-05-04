@@ -8,7 +8,7 @@ plan 14;
 
 {
     class TypeCastSub {
-        method &.( |$capture ) {return 'pretending to be a sub'}   #OK not used
+        method &.( |capture ) {return 'pretending to be a sub'}   #OK not used
     }
 
     my $thing = TypeCastSub.new;
