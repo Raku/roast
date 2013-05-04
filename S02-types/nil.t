@@ -12,12 +12,12 @@ sub empty_branch_false { if 0 { 1; } else {} }
 sub bare_return { return; }
 sub rt74448 { eval '' }
 
-ok empty_sub()          ~~ Nil, 'empty sub returns Nil';
-ok empty_do()           ~~ Nil, 'do {} is Nil';
-ok empty_branch_true()  ~~ Nil, 'if 1 {} is Nil';
-ok empty_branch_false() ~~ Nil, 'else {} is Nil';
-ok bare_return()        ~~ Nil, 'bare return returns Nil';
-ok rt74448()            ~~ Nil, 'eval of empty string is Nil';
+ok empty_sub()          === Nil, 'empty sub returns Nil';
+ok empty_do()           === Nil, 'do {} is Nil';
+ok empty_branch_true()  === Nil, 'if 1 {} is Nil';
+ok empty_branch_false() === Nil, 'else {} is Nil';
+ok bare_return()        === Nil, 'bare return returns Nil';
+ok rt74448()            === Nil, 'eval of empty string is Nil';
 
 nok Nil.defined, 'Nil is not defined';
 ok  ().defined,  '() is defined';
@@ -30,7 +30,7 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel'; #
     sub return_nil { $calls++; return; }
 
     $calls = 0;
-    ok return_nil() ~~ Nil, 'return_nil() ~~ Nil';
+    ok return_nil() === Nil, 'return_nil() === Nil';
     is return_nil().perl, 'Nil', 'return_nil().perl says Nil';
     is $calls, 2, 'return_nil() called twice';
 
@@ -65,7 +65,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
 
 {
     my $z := Nil;
-    ok $z ~~ Nil, 'can bind to Nil';
+    ok $z === Nil, 'can bind to Nil';
 }
 
 {
@@ -86,8 +86,8 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     is $z, 123, '... set to default';
 
     sub f4($x = Nil) { $x }
-    ok f4() ~~ Nil, 'can use Nil as a default (natural)';
-    ok f4(Nil) ~~ Nil, 'can use Nil as a default (nil-triggered)';
+    ok f4() === Nil, 'can use Nil as a default (natural)';
+    ok f4(Nil) === Nil, 'can use Nil as a default (nil-triggered)';
 }
 
 done;
