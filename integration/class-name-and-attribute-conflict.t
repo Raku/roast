@@ -93,7 +93,7 @@ plan 3;
     };
     class _b {
         has $._a;
-        submethod BUILD { _a.new( _a => $._a ).update; };
+        submethod BUILD { _a.new( _a => $!_a ).update; };
     };
 
     _b.new( _a => 20 );
@@ -113,11 +113,11 @@ plan 3;
     };
     class Ab {
         has $.Aa;
-        submethod BUILD { Aa.new( Aa => $.Aa ); }
+        submethod BUILD { Aa.new( Aa => $!Aa ); }
     };
     class Ac {
         has $.Ab;
-        submethod BUILD { Ab.new( Aa => $.Ab ); }
+        submethod BUILD { Ab.new( Aa => $!Ab ); }
     };
 
     Ac.new( Ab => 30 ).update;
