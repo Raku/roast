@@ -25,7 +25,7 @@ my @canonpath =
 	'/..\\',          '\\',
 	'd1/../foo',      'd1\\..\\foo';
 for @canonpath -> $in, $out {
-	is $win32.canonpath($in), $out; "canonpath: '$in' -> '$out'";
+	is $win32.canonpath($in), $out, "canonpath: '$in' -> '$out'";
 }
 
 my @splitdir = 
