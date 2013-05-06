@@ -10,15 +10,14 @@ plan 39;
 # L<S05/Match objects/"A match always returns a " >
 {
   my $match = 'abd' ~~ m/ (a) (b) c || (\w) b d /;
-  #?niecza todo 'match returns match object'
-  isa_ok( $match, 'Match', 'Match object returned');
-  #?niecza todo 'match returns match object'
-  isa_ok( $/, 'Match', 'Match object assigned to $/');
+  isa_ok $match, Match, 'Match object returned';
+  isa_ok $/, Match, 'Match object assigned to $/';
   ok( $/ === $match, 'Same match objects');
 }
 
 {
   my $match = 'xyz' ~~ / abc /;
+  #?niecza skip 'No value for parameter $obj in isa_ok'
   isa_ok( $/, Nil, 'Failed match returns Nil' );
 }
 
