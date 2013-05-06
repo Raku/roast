@@ -27,7 +27,7 @@ my $filename = 'tempfile_filehandles_io' ~ nonce();
 # create and write a file
 
 my $out = open($filename, :w);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($out, IO::Handle);
 $out.say("Hello World");
 $out.say("Foo Bar Baz");
@@ -37,7 +37,7 @@ ok($out.close, 'file closed okay');
 # read the file all possible ways
 
 my $in1 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in1, IO::Handle);
 my $line1a = get($in1);
 is($line1a, "Hello World", 'get($in) worked (and autochomps)');
@@ -54,7 +54,7 @@ is $in1.ins, 3, 'read three lines (.ins)';
 ok($in1.close, 'file closed okay (1)');
 
 my $in2 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in2, IO::Handle);
 my $line2a = $in2.get();
 is($line2a, "Hello World", '$in.get() worked');
@@ -66,7 +66,7 @@ ok($in2.close, 'file closed okay (2)');
 
 # L<S02/Files/you now write>
 my $in3 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in3, IO::Handle);
 {
     my $line3a = $in3.get;
@@ -81,7 +81,7 @@ ok($in3.close, 'file closed okay (3)');
 # append to the file
 
 my $append = open($filename, :a);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($append, IO::Handle);
 $append.say("... Its not over yet!");
 ok($append.close, 'file closed okay (append)');
@@ -89,7 +89,7 @@ ok($append.close, 'file closed okay (append)');
 # now read in in list context
 
 my $in4 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in4, IO::Handle);
 my @lines4 = lines($in4);
 is(+@lines4, 4, 'we got four lines from the file');
@@ -104,7 +104,7 @@ ok($in4.close, 'file closed okay (4)');
 #?rakudo skip "prototype of sub lines(...) doesn't have limit yet"
 {
 my $in5 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in5, IO::Handle);
 my @lines5 = lines($in5, 3);
 is(+@lines5, 3, 'we got two lines from the file');
@@ -117,7 +117,7 @@ ok($in5.close, 'file closed okay (5)');
 }
 
 my $in6 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in6, IO::Handle);
 my @lines6 = $in6.lines();
 is(+@lines6, 4, 'we got four lines from the file');
@@ -128,7 +128,7 @@ is(@lines6[3], "... Its not over yet!", '$in.lines() worked in list context');
 ok($in6.close, 'file closed okay (6)');
 
 my $in7 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in7, IO::Handle);
 my @lines7 = $in7.lines;
 is(+@lines7, 4, 'we got four lines from the file');
@@ -142,7 +142,7 @@ ok($in7.close, 'file closed okay (7)');
 # test reading a file into an array and then closing before 
 # doing anything with the array (in other words, is pugs too lazy)
 my $in8 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in8, IO::Handle);
 my @lines8 = $in8.lines(3);
 push @lines8, "and finally" ~ $in8.get;
@@ -162,13 +162,13 @@ ok(unlink($filename), 'file has been removed');
 
 
 my $out8 = open($filename, :w);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($out8, IO::Handle);
 $out8.say("Hello World");
 ok($out8.close, 'file closed okay (out8)');
 
 my $in8 = open($filename);
-#?niecza todo 'open does not yet produce an IO object'
+#?niecza skip 'open does not yet produce an IO object'
 isa_ok($in8, IO::Handle);
 my $line8_1 = get($in8);
 is($line8_1, "Hello World", 'get($in) worked');
@@ -202,7 +202,7 @@ ok($in8.close, 'file closed okay (in8)');
 # RT #65348
 {
     my $rt65348_out = open($filename, :w);
-    #?niecza todo 'open does not yet produce an IO object'
+    #?niecza skip 'open does not yet produce an IO object'
     isa_ok $rt65348_out, IO::Handle;
     $rt65348_out.say( 'RT #65348' );
     $rt65348_out.say( '13.37' );
@@ -210,7 +210,7 @@ ok($in8.close, 'file closed okay (in8)');
     ok $rt65348_out.close, 'close worked (rt65348 out)';
 
     my $rt65348_in = open( $filename );
-    #?niecza todo 'open does not yet produce an IO object'
+    #?niecza skip 'open does not yet produce an IO object'
     isa_ok $rt65348_in, IO::Handle;
     my @list_context = ($rt65348_in.get);
     is +@list_context, 1, '.get in list context reads only one line';
@@ -226,7 +226,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 #?niecza skip ':bin NYI'
 {
     my $binary_out_fh = open($filename, :w, :bin);
-    #?niecza todo 'open does not yet produce an IO object'
+    #?niecza skip 'open does not yet produce an IO object'
     isa_ok($binary_out_fh, IO::Handle);
     $binary_out_fh.write("föö".encode("ISO-8859-1"));
     ok($binary_out_fh.close(), "file closed OK");
@@ -235,7 +235,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 #?niecza skip ':bin NYI'
 {
     my $binary_in_fh = open($filename, :r, :bin);
-    #?niecza todo 'open does not yet produce an IO object'
+    #?niecza skip 'open does not yet produce an IO object'
     isa_ok($binary_in_fh, IO::Handle);
     my $buf = $binary_in_fh.read(4);
     is $buf.elems, 3, "three bytes were read";
