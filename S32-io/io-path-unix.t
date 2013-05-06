@@ -29,7 +29,7 @@ nok $relpath.is-absolute,	"relative path ! is-absolute";
 nok $abspath.is-relative,	"absolute path ! is-relative";
 ok $abspath.is-absolute,	"absolute path is-absolute";
 
-is $relpath.absolute,		"$*CWD/foo/bar",	"absolute path from \$*CWD";
+is $relpath.absolute,		IO::Spec::Unix.canonpath("$*CWD/foo/bar"),	"absolute path from \$*CWD";
 is $relpath.absolute("/usr"),	"/usr/foo/bar",		"absolute path specified";
 is IO::Path::Unix.new("/usr/bin").relative("/usr"),	"bin",			"relative path specified";
 is $relpath.absolute.relative,  "foo/bar",		"relative inverts absolute";

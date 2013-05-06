@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 192;
+plan 193;
 my $win32 = IO::Spec::Win32;
 
 my @canonpath = 
@@ -159,8 +159,8 @@ for @split -> $in, $out {
 say "# join tests";
 my @join = 
 	('','\\','\\').item,                            '\\',
-	('','/','\\').item,                             '\\',
-	('','\\','/').item,                             '/',
+	('','/','\\').item,                             '/',
+	('','\\','/').item,                             '\\',
 	('','.','.').item,                              '.',
 	('','','file').item,                            'file',
 	('','.','file').item,                           'file',
@@ -180,6 +180,7 @@ my @join =
 	('','\\../..\\d1/','').item,                    '\\../..\\d1/',
 	('','\\./.\\d1/','').item,                      '\\./.\\d1/',
 	('C:','foo','bar').item,                        'C:foo\\bar',
+        ('\\\\server\\share', '\\', '\\').item,		'\\\\server\\share',
 	('\\\\node\\share','\\d1/d2\\d3/','').item,     '\\\\node\\share\\d1/d2\\d3/',
 	('\\\\node\\share','\\d1/d2\\d3/','file').item, '\\\\node\\share\\d1/d2\\d3/file',
 	('\\\\node\\share','\\d1/d2\\','file').item,    '\\\\node\\share\\d1/d2\\file';
