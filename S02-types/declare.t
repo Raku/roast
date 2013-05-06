@@ -207,6 +207,7 @@ plan 78;
 }
 
 #?pugs skip 'Nil'
+#?niecza skip 'No value for parameter $l in infix:<===>'
 {
  my Nil $ci;
  ok($ci === Nil);
