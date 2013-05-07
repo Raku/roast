@@ -6,11 +6,13 @@ plan 15;
 
 # L<S32::Str/Str/wordcase>
 
+#?rakudo skip 'related to RT #117889'
 is wordcase(""),             "",               "wordcase('') works";
 is wordcase("puGS Is cOOl!"), "Pugs Is Cool!", "wordcase('...') works";
 is "puGS Is cOOl!".wordcase,  "Pugs Is Cool!", "'...'.wordcase works";
 
 my $a = "";
+#?rakudo skip 'related to RT #117889'
 is wordcase($a),             "",               "wordcase empty string";
 $a = "puGS Is cOOl!";
 is wordcase($a),             "Pugs Is Cool!",  "wordcase string works";
