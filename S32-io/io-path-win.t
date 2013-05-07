@@ -48,7 +48,7 @@ ok IO::Path::Win32.new("/foo").is-absolute,	"path beginning with forward slash i
 ok IO::Path::Win32.new("A:\\").is-absolute,	'"A:\\" is absolute';
 ok IO::Path::Win32.new("A:b").is-relative,	'"A:b" is relative';
 
-
+#?rakudo 5 skip '.absolute with no args causes infinite loop on windows'
 is $relpath.absolute,		IO::Spec::Win32.canonpath("$*CWD\\foo\\bar"),	"absolute path from \$*CWD";
 is $relpath.absolute("\\usr"),	"\\usr\\foo\\bar",		"absolute path specified";
 is IO::Path::Win32.new("\\usr\\bin").relative("/usr"),	"bin",			"relative path specified";
