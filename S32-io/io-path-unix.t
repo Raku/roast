@@ -29,9 +29,11 @@ nok $relpath.is-absolute,	"relative path ! is-absolute";
 nok $abspath.is-relative,	"absolute path ! is-relative";
 ok $abspath.is-absolute,	"absolute path is-absolute";
 
+#?rakudo 1 skip '.absolute with no args causes infinite loop on windows'
 is $relpath.absolute,		IO::Spec::Unix.canonpath("$*CWD/foo/bar"),	"absolute path from \$*CWD";
 is $relpath.absolute("/usr"),	"/usr/foo/bar",		"absolute path specified";
 is IO::Path::Unix.new("/usr/bin").relative("/usr"),	"bin",			"relative path specified";
+#?rakudo 1 skip '.absolute with no args causes infinite loop on windows'
 is $relpath.absolute.relative,  "foo/bar",		"relative inverts absolute";
 is $relpath.absolute("/foo").relative("/foo"), "foo/bar","absolute inverts relative";
 #?rakudo 1 skip 'resolve NYI, needs nqp::readlink'
@@ -52,7 +54,7 @@ if IO::Spec.FSTYPE eq 'Unix' {
 	ok IO::Path::Unix.new($*CWD).d,		"cwd is a directory";
 }
 else {
-	skip 2, "On-system tests for filetest inheritance";
+	skip "On-system tests for filetest inheritance", 2;
 }
 
 
