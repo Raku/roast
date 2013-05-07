@@ -34,7 +34,6 @@ is($r-list.key.key, 1 => 2, 'the key of the key is a nested pair');
 is($r-list.value, 4, 'the value is a number');
 is($r-list.key.value, 3, 'the value of the key is a number');
 
-#?niecza todo "key-nested pairs do not .perl correctly"
 #?pugs todo
 is($r-list.perl, '((1 => 2) => 3) => 4', 'key-nested pairs .perl correctly');
 
