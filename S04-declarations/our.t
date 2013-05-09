@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 20;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -49,16 +49,16 @@ our $c = 42; #OK not used
                 our $d3 = 9;
             }
             {
-#?niecza skip 'our-scoped vars NYI'
-                is($d3, 9, "variables are seen within other lexical child blocks");
+                eval_dies_ok('$d3', "variables aren't seen within other lexical child blocks");
+                is($D2::d3, 9, "variables are seen within other lexical child blocks via package");
                 
                 package D3 {
-#?niecza skip 'our-scoped vars NYI'
-                    is($d3, 9, " ... and from within child packages");
+                    eval_dies_ok('$d3', " ... and not from within child packages");
+                    is($D2::d3, 9, " ... and from within child packages via package");
                 }
             }
-#?niecza skip 'our-scoped vars NYI'
-            is($d3, 9, "variables leak from lexical blocks");
+            eval_dies_ok('d3', "variables do not leak from lexical blocks");
+            is($D2::d3, 9, "variables are seen from lexical blocks via pacakage");
         }
         eval_dies_ok('$d2', 'our() variable not yet visible outside its package');
         eval_dies_ok('$d3', 'our() variable not yet visible outside its package');
