@@ -71,16 +71,16 @@ our $c = 42; #OK not used
 {
     lives_ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
     lives_ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
-    is(@e1[1], 2, 'our-scoped array has correct value' );
-    is(%e2<a>, 1, 'our-scoped hash has correct value' );
+    is(@OUR::e1[1], 2, 'our-scoped array has correct value' );
+    is(%OUR::e2<a>, 1, 'our-scoped hash has correct value' );
 }
 
 #?rakudo 2 todo 'RT #117083'
 {
     our @f1;
     our %f2;
-    ok(@f1 ~~ Hash,  'our-declared @-sigil var is an Array');
-    ok(%f2 ~~ Array, 'our-declared %-sigil var is a Hash');
+    ok(@f1 ~~ Array, 'our-declared @-sigil var is an Array');
+    ok(%f2 ~~ Hash,  'our-declared %-sigil var is a Hash');
 }
 
 #?rakudo 2 todo 'RT #117775'
