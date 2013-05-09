@@ -67,7 +67,7 @@ our $c = 42; #OK not used
     eval_dies_ok('$d1', 'our() variable not yet visible outside its package');
 }
 
-#?rakudo 4 todo 'RT #100560, #102876'
+# RT #100560, #102876
 {
     lives_ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
     lives_ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
@@ -75,7 +75,7 @@ our $c = 42; #OK not used
     is(%OUR::e2<a>, 1, 'our-scoped hash has correct value' );
 }
 
-#?rakudo 2 todo 'RT #117083'
+# RT #117083
 {
     our @f1;
     our %f2;
@@ -83,7 +83,7 @@ our $c = 42; #OK not used
     ok(%f2 ~~ Hash,  'our-declared %-sigil var is a Hash');
 }
 
-#?rakudo 2 todo 'RT #117775'
+# RT #117775
 {
     package Gee {
         our $msg;
