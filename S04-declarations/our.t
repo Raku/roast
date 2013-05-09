@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 27;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -81,6 +81,17 @@ our $c = 42; #OK not used
     our %f2;
     ok(@f1 ~~ Hash,  'our-declared @-sigil var is an Array');
     ok(%f2 ~~ Array, 'our-declared %-sigil var is a Hash');
+}
+
+#?rakudo 2 todo 'RT #117775'
+{
+    package Gee {
+        our $msg;
+        our sub talk { $msg }
+    }
+
+    $Gee::msg = "hello";
+    is(Gee::talk, "hello", 'our-var returned by our-sub gives previously set value');
 }
 
 # vim: ft=perl6
