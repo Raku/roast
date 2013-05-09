@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 31;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -101,6 +101,13 @@ our $c = 42; #OK not used
 #?pugs 2 todo
     is our $foo, 3, 'redeclaration will make previous value available';
     is $foo,     3, '... and the value stays';
+}
+
+# RT #107270
+#?pugs todo
+{
+    package Color { our ($red, $green, $blue) = 1..* };
+    is $Color::blue, 3, 'declaring and initializing several vars at once';
 }
 
 # vim: ft=perl6
