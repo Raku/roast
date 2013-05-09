@@ -55,12 +55,12 @@ is ca($0.chunks),   '~:a|0:b|~:c',  '.chunks on submatches';
 
 # RT117831 separator captures
 ok 'a;b,c,' ~~ m/(<.alpha>) +% (<.punct>)/, 'Regex matches';
-is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c',  '.caps on submatches';
-is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c',  '.chunks on submatches';
+is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c',  '.caps on % separator';
+is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c',  '.chunks on % separator';
 
 ok 'a;b,c,' ~~ m/(<.alpha>) +%% (<.punct>)/, 'Regex matches';
-is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c|1:,',      '.caps on submatches';
-is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on submatches';
+is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c|1:,',      '.caps on %% separator';
+is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
 
 done;
 
