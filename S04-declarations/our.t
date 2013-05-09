@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 27;
+plan 30;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -92,6 +92,15 @@ our $c = 42; #OK not used
 
     $Gee::msg = "hello";
     is(Gee::talk, "hello", 'our-var returned by our-sub gives previously set value');
+}
+
+# RT #115630
+{
+    sub foo() { our $foo = 3 };
+    is foo(),    3, 'return value of sub call declaring our-scoped var';
+#?pugs 2 todo
+    is our $foo, 3, 'redeclaration will make previous value available';
+    is $foo,     3, '... and the value stays';
 }
 
 # vim: ft=perl6
