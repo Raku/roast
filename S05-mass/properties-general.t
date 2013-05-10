@@ -23,6 +23,7 @@ plan 596;
 ok 'a' ~~ /<:L>/, 'a is a letter';
 # RT #117889
 nok '' ~~ /<:L>/, 'empty string has no letter';
+#?pugs todo
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
