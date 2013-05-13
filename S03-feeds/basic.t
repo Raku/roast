@@ -148,12 +148,12 @@ plan 19;
   lives_ok { my @a <== 0..Inf }
 }
 
+#?nieza skip "Unhandled exception"
 {
   my $call-count = 0;
   my @a <== gather for 1..10 -> $i { $call-count++; take $i };
   @a[0];
   #?rakudo todo "isn't lazy"
-  #?nieza skip "Unhandled exception"
   is $call-count, 1;
 }
 
