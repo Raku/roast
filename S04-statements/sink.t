@@ -12,6 +12,7 @@ plan 2;
 }
 
 # RT #117923
+#?pugs skip 'no such method'
 {
     eval_lives_ok "List.sink", "can sink a List";
 }
