@@ -141,6 +141,22 @@ plan 19;
     is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
 
+# feed and Inf
+#?rakudo skip "isn't lazy"
+#?nieza skip "unhandled exception
+{
+  lives_ok { my @a <== 0..Inf }
+}
+
+{
+  my $call-count = 0;
+  my @a <== gather for 1..10 -> $i { $call-count++; take $i };
+  @a[0];
+  #?rakudo todo "isn't lazy"
+  #?nieza skip "Unhandled exception"
+  is $call-count, 1;
+}
+
 done;
 
 # vim: ft=perl6
