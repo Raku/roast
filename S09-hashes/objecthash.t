@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 29;
 
 {
     class A { method Str() { 'foo' } };
@@ -71,4 +71,19 @@ plan 25;
     %h = 1, 2;
     #?pugs todo
     ok %h.keys[0] === 1, 'list assignment + object hashes';
+}
+
+{
+    my %h{Mu};
+    %h{Mu} = 2;
+    #?pugs todo
+    is %h{Mu}, 2, 'using Mu as a key';
+    %h{Any} = 3;
+    #?pugs todo
+    is %h{Any}, 3, 'using Any as a key';
+    #?pugs todo
+    is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
+    #?pugs todo
+    #?rakudo skip 'oh noes, it dies'
+    is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
 }
