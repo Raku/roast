@@ -27,6 +27,7 @@ sub gen_hash {
     my %h1 = gen_hash;
     my $b  = %h1<b>;
 
+    #?pugs 3 todo "no adverbials"
     is %h1<b>:delete, $b, "Test for delete single key";
     ok !defined(%h1<b>),  "b hould be deleted now";
     is +%h1, 25,          "b should be deleted now";
@@ -49,6 +50,7 @@ sub gen_hash {
     my %h1  = gen_hash;
     my @cde = %h1<c d e>;
 
+    #?pugs 3 todo "no adverbials"
     is %h1<c d e>:delete, @cde, "Test for delete multiple keys";
     ok !any(%h1<c d e>),        "c d e should be deleted now";
     is +%h1, 23,                "c d e should be deleted now";
@@ -71,6 +73,7 @@ sub gen_hash {
     my %h1  = gen_hash;
     my @all = %h1{ "a".."z" };
 
+    #?pugs 2 todo "no adverbials"
     is %h1{*}:delete, @all, "Test deletion with whatever";
     is +%h1, 0,             "* should be deleted now";
 }
