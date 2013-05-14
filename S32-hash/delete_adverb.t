@@ -99,10 +99,7 @@ sub gen_hash {
 #-------------------------------------------------------------------------------
 # Scalar
 
-{
-    my $a = 1;
-    eval_dies_ok '$a :delete', "Can't :delete a scalar";
-}
+#TBD
 
 done;
 
