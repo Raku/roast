@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S02/Names and Variables/:delete>
+# L<S02/Names and Variables/:exists>
 
 #-------------------------------------------------------------------------------
 # initialisations
@@ -25,94 +25,46 @@ sub gen_hash {
 #-------------------------------------------------------------------------------
 # Hash
 
-{ # basic sanity
+{
     my %h1 = gen_hash;
     is +%h1, 26, "basic sanity";
-} #1
-
-{ # single key
-    my %h1 = gen_hash;
-    my $b  = %h1<b>;
-
-    #?pugs 3 skip "no adverbials"
-    is %h1<b>:delete, $b, "Test for delete single key";
-    ok !defined(%h1<b>),  "b hould be deleted now";
-    is +%h1, 25,          "b should be deleted now";
-
-    #?pugs   11 skip "no adverbials"
-    #?niecza 11 todo "adverbial pairs only used as boolean True"
-    my $c = %h1<c>;
-    is %h1<c>:!delete, $c,       "Test non-deletion with ! single key";
-    is %h1<c>, $c,               "c should not have been deleted";
-    is %h1<c>:delete(0), $c,     "Test non-deletion with (0) single key";
-    is %h1<c>, $c,               "c should not have been deleted";
-    is %h1<c>:delete(False), $c, "Test non-deletion with (False) single key";
-    is %h1<c>, $c,               "c should not have been deleted";
-    is %h1<c>:delete($dont), $c, "Test non-deletion with (\$dont) single key";
-    is %h1<c>, $c,               "c should not have been deleted";
-    is %h1<c>:delete(1), $c,     "Test deletion with (1) single key";
-    ok !defined(%h1<c>),         "c should be deleted now";
-    is +%h1, 24,                 "c should be deleted now";
-} #14
-
-{ # multiple key
-    my %h1  = gen_hash;
-    my @cde = %h1<c d e>;
-
-    #?pugs 3 skip "no adverbials"
-    is %h1<c d e>:delete, @cde, "Test for delete multiple keys";
-    ok !any(%h1<c d e>),        "c d e should be deleted now";
-    is +%h1, 23,                "c d e should be deleted now";
-
-    #?pugs   11 skip "no adverbials"
-    #?niecza 11 todo "adverbial pairs only used as boolean True"
-    my @fg = %h1<f g>;
-    is %h1<f g>:!delete, @fg,       "Test non-deletion with ! multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete(0), @fg,     "Test non-deletion with (0) multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete(False), @fg, "Test non-deletion with (False) multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete($dont), @fg, "Test non-deletion with (\$dont) multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete(1), @fg,     "Test deletion with (1) multiple";
-    ok !any(%h1<f g>),              "f g should be deleted now";
-    is +%h1, 21,                    "f g should be deleted now";
-} #14
-
-{ # whatever
-    my %h1  = gen_hash;
-    my @all = %h1{ "a".."z" };
 
     #?pugs 2 skip "no adverbials"
-    is %h1{*}:delete, @all, "Test deletion with whatever";
-    is +%h1, 0,             "* should be deleted now";
-} #2
-
-{
-    my %h1  = gen_hash;
-    my @all = %h1{ "a".."z" };
+    ok %h1<b>:exists,    "Test for exists single key";
+    ok !(%h1<X>:exists), "Test for non-exists single key";
 
     #?pugs   10 skip "no adverbials"
-    #?niecza 10 todo "adverbial pairs only used as boolean True"
-    is %h1{*}:!delete, @all,       "Test non-deletion with ! whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete(0), @all,     "Test non-deletion with (0) whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete(False), @all, "Test non-deletion with (False) whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete($dont), @all, "Test non-deletion with (\$dont) whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete(1), @all,     "Test deletion with (1) whatever";
-    is +%h1, 0,                    "* should be deleted now";
-} #10
+    #?niecza  8 todo "adverbial pairs only used as True"
+    ok !(%h1<c>:!exists),       "Test non-exists with ! single key c";
+    ok %h1<X>:!exists,          "Test non-exists with ! single key X";
+    ok !(%h1<c>:exists(0)),     "Test non-exists with (0) single key c";
+    ok %h1<X>:exists(0),        "Test non-exists with (0) single key X";
+    ok !(%h1<c>:exists(False)), "Test non-exists with (False) single key c";
+    ok %h1<X>:exists(False),    "Test non-exists with (False) single key X";
+    ok !(%h1<c>:exists($dont)), "Test non-exists with (\$dont) single key c";
+    ok %h1<X>:exists($dont),    "Test non-exists with (\$dont) single key X";
+    ok %h1<c>:exists(1),        "Test exists with (1) single key c";
+    ok !(%h1<X>:exists(1)),     "Test exists with (1) single key X";
+
+    #?pugs   6 skip "no adverbials"
+    #?rakudo 6 skip "oh noes, it dies"
+    is %h1<c d e>:exists,  (True, True, True),  "Test for exists TTT";
+    is %h1<c d X>:exists,  (True, True, False), "Test for exists TTF";
+    is %h1{*}>:exists,  (True  xx 26), "Test for non-exists T*";
+    #?niezca 3 todo "adverbial pairs only used as True"
+    is %h1<c d e>:!exists, (False,False,False), "Test for non-exists FFF";
+    is %h1<c d X>:!exists, (False,False,True),  "Test for non-exists FFT";
+    is %h1{*}>:!exists, (False xx 26), "Test for non-exists F*";
+
+    is +%h1, 26, "should not have changed hash";
+} #20
 
 #-------------------------------------------------------------------------------
 # Array
 
-{ # basic sanity
+{
     my @a = gen_array;
-    is @a.elems, 10, "do we have a valid array";
+    is @a.elems, 10, "basic sanity";
 } #1
 
 { # single element
