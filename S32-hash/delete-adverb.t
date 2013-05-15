@@ -66,18 +66,18 @@ sub gen_hash {
 
     #?pugs   11 skip "no adverbials"
     #?niecza 11 todo "adverbial pairs only used as boolean True"
-    my @fg = %h1<f g>;
-    is %h1<f g>:!delete, @fg,       "Test non-deletion with ! multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete(0), @fg,     "Test non-deletion with (0) multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete(False), @fg, "Test non-deletion with (False) multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete($dont), @fg, "Test non-deletion with (\$dont) multiple";
-    is %h1<f g>, @fg,               "f g should not have been deleted";
-    is %h1<f g>:delete(1), @fg,     "Test deletion with (1) multiple";
-    ok !any(%h1<f g>),              "f g should be deleted now";
-    is +%h1, 21,                    "f g should be deleted now";
+    my $fg = %h1<f g>;
+    is_deeply %h1<f g>:!delete, $fg,       "non-deletion with ! mult";
+    is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
+    is_deeply %h1<f g>:delete(0), $fg,     "non-deletion with (0) mult";
+    is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
+    is_deeply %h1<f g>:delete(False), $fg, "non-deletion with (False) mult";
+    is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
+    is_deeply %h1<f g>:delete($dont), $fg, "non-deletion with (\$dont) mult";
+    is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
+    is_deeply %h1<f g>:delete(1), $fg,     "deletion with (1) mult";
+    is_deeply %h1<f g>, (Any,Any),         "f g should be deleted now";
+    is +%h1, 21,                           "f g should be deleted now";
 } #14
 
 { # whatever
@@ -91,20 +91,17 @@ sub gen_hash {
 
 {
     my %h1  = gen_hash;
-    my @all = %h1{ "a".."z" };
+    my $all = %h1{ "a".."z" };
 
     #?pugs   10 skip "no adverbials"
     #?niecza 10 todo "adverbial pairs only used as boolean True"
-    is %h1{*}:!delete, @all,       "Test non-deletion with ! whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete(0), @all,     "Test non-deletion with (0) whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete(False), @all, "Test non-deletion with (False) whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete($dont), @all, "Test non-deletion with (\$dont) whatever";
-    is +%h1, 26,                   "* should not be deleted now";
-    is %h1{*}:delete(1), @all,     "Test deletion with (1) whatever";
-    is +%h1, 0,                    "* should be deleted now";
+    is_deeply %h1{*}:!delete, $all,       "Test non-deletion with ! *";
+    is_deeply %h1{*}:delete(0), $all,     "Test non-deletion with (0) *";
+    is_deeply %h1{*}:delete(False), $all, "Test non-deletion with (False) *";
+    is_deeply %h1{*}:delete($dont), $all, "Test non-deletion with (\$dont) *";
+    is_deeply +%h1, 26,               "* should not be deleted now";
+    is_deeply %h1{*}:delete(1), $all, "Test deletion with (1) *";
+    is_deeply +%h1, 0,                "* should be deleted now";
 } #10
 
 #-------------------------------------------------------------------------------
@@ -145,60 +142,58 @@ sub gen_hash {
 
 { # multiple elements
     my @a = gen_array;
-    my @b = @a[1,3];
+    my $b = @a[1,3];
 
     #?pugs   3 skip "no adverbials"
     #?niecza 3 skip "no adverbials"
-    is @a[1,3]:delete, @b, "Test for delete multiple elements";
+    is_deeply @a[1,3]:delete, $b, "Test for delete multiple elements";
     #?rakudo todo "not being destructively read yet"
-    is @a[1,3], $default, "1 3 should be deleted now";
-    is +@a, 10,           "1 3 should be deleted now";
+    is_deeply @a[1,3], (Any xx 2), "1 3 should be deleted now";
+    is +@a, 10,                    "1 3 should be deleted now";
 
     #?pugs   11 skip "no adverbials"
     #?niecza 11 skip "no adverbials"
-    my @c = @a[2,4,9];
-    is @a[2,4,9]:!delete, @c,       "Test non-deletion with ! multiple";
-    is @a[2,4,9], @c,               "2 4 9 should not have been deleted";
-    is @a[2,4,9]:delete(0), @c,     "Test non-deletion with (0) multiple";
-    is @a[2,4,9], @c,               "2 4 9 should not have been deleted";
-    is @a[2,4,9]:delete(False), @c, "Test non-deletion with (False) multiple";
-    is @a[2,4,9], @c,               "2 4 9 should not have been deleted";
-    is @a[2,4,9]:delete($dont), @c, "Test non-deletion with (\$dont) multiple";
-    is @a[2,4,9], @c,               "2 4 9 should not have been deleted";
-    is @a[2,4,9]:delete(1), @c,     "Test deletion with (1) multiple";
+    my $c = @a[2,4,9];
+    is_deeply @a[2,4,9]:!delete,       $c, "Test non-deletion with ! N";
+    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is_deeply @a[2,4,9]:delete(0),     $c, "Test non-deletion with (0) N";
+    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is_deeply @a[2,4,9]:delete(False), $c, "Test non-deletion with (False) N";
+    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is_deeply @a[2,4,9]:delete($dont), $c, "Test non-deletion with (\$dont) N";
+    is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
+    is_deeply @a[2,4,9]:delete(1),     $c, "Test deletion with (1) N";
     #?rakudo 2 todo "not being destructively read yet"
-    ok !any(@a[2,4,9]),             "2 4 9 should be deleted now";
-    is +@a, 9,                      "array should be shortened now";
+    is_deeply @a[2,4,9], (Any xx 3), "2 4 9 should be deleted now";
+    is +@a, 9,                       "array should be shortened now";
 } #14
 
 { # whatever
     my @a   = gen_array;
-    my @all = @a[^10];
+    my $all = @a[^10];
 
     #?pugs   2 skip "no adverbials"
     #?niecza 2 skip "no adverbials"
-    is @a[*]:delete, @all, "Test deletion with whatever";
+    is_deeply @a[*]:delete, $all, "Test deletion with whatever";
     #?rakudo todo "not being destructively read yet"
-    is +@a, 0,             "* should be deleted now";
+    is +@a, 0,                    "* should be deleted now";
 } #2
 
 {
     my @a   = gen_array;
-    my @all = @a[^10];
+    my $all = @a[^10];
 
     #?pugs   10 skip "no adverbials"
     #?niecza 10 skip "no adverbials"
-    is @a[*]:!delete, @all,       "Test non-deletion with ! whatever";
-    is +@a, 10,                   "* should not be deleted now";
-    is @a[*]:delete(0), @all,     "Test non-deletion with (0) whatever";
-    is +@a, 10,                   "* should not be deleted now";
-    is @a[*]:delete(False), @all, "Test non-deletion with (False) whatever";
-    is +@a, 10,                   "* should not be deleted now";
-    is @a[*]:delete($dont), @all, "Test non-deletion with (\$dont) whatever";
-    is +@a, 10,                   "* should not be deleted now";
-    is @a[*]:delete(1), @all,     "Test deletion with (1) whatever";
+    is_deeply @a[*]:!delete,       $all, "Test non-deletion with ! *";
+    is_deeply @a[*]:delete(0),     $all, "Test non-deletion with (0) *";
+    is_deeply @a[*]:delete(False), $all, "Test non-deletion with (False) *";
+    is_deeply @a[*]:delete($dont), $all, "Test non-deletion with (\$dont) *";
+
+    is +@a, 10,                      "* should not be deleted now";
+    is_deeply @a[*]:delete(1), $all, "Test deletion with (1) whatever";
     #?rakudo todo "not being destructively read yet"
-    is +@a, 0,                    "* should be deleted now";
+    is +@a, 0,                       "* should be deleted now";
 } #10
 
 #-------------------------------------------------------------------------------
