@@ -48,13 +48,13 @@ sub gen_hash {
 
     #?pugs   6 skip "no adverbials"
     #?rakudo 6 skip "oh noes, it dies"
-    is %h1<c d e>:exists,  (True, True, True),  "Test for exists TTT";
+    is %h1<c >d e>:exists,  (True, True, True),  "Test for exists TTT";
     is %h1<c d X>:exists,  (True, True, False), "Test for exists TTF";
-    is %h1{*}>:exists,  (True  xx 26), "Test for non-exists T*";
+    is %h1{*}:exists,  (True  xx 26), "Test for non-exists T*";
     #?niezca 3 todo "adverbial pairs only used as True"
     is %h1<c d e>:!exists, (False,False,False), "Test for non-exists FFF";
     is %h1<c d X>:!exists, (False,False,True),  "Test for non-exists FFT";
-    is %h1{*}>:!exists, (False xx 26), "Test for non-exists F*";
+    is %h1{*}:!exists, (False xx 26), "Test for non-exists F*";
 
     is +%h1, 26, "should not have changed hash";
 } #20
@@ -88,11 +88,11 @@ sub gen_hash {
     #?rakudo 6 skip "oh noes, it dies"
     is @a[1,2,4]:exists,   (True, True, True),  "Test for exists TTT";
     is @a[1,2,10]:exists,  (True, True, False), "Test for exists TTF";
-    is @a1[*]>:exists,  (True  xx 26), "Test for non-exists T*";
+    is @a[*]:exists,  (True  xx 26), "Test for non-exists T*";
     #?niezca 3 todo "adverbial pairs only used as True"
     is @a[1,2,4]:!exists,  (False,False,False), "Test for non-exists FFF";
     is @a[1,2,10]:!exists, (False,False,True),  "Test for non-exists FFT";
-    is %h1[*]>:!exists, (False xx 26), "Test for non-exists F*";
+    is @a[*]:!exists, (False xx 26), "Test for non-exists F*";
 
     is +@a, 10,                    "* should be deleted now";
 } #20
