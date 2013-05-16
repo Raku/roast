@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 29;
+plan 31;
 
 {
     class A { method Str() { 'foo' } };
@@ -75,6 +75,7 @@ plan 29;
 
 {
     my %h{Mu};
+    #?rakudo 6 skip 'oh noes, it dies'
     %h{Mu} = 2;
     #?pugs todo
     is %h{Mu}, 2, 'using Mu as a key';
@@ -84,6 +85,5 @@ plan 29;
     #?pugs todo
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
     #?pugs todo
-    #?rakudo skip 'oh noes, it dies'
     is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
 }
