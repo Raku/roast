@@ -43,13 +43,18 @@ sub gen_hash {
     #?niecza 11 todo "adverbial pairs only used as boolean True"
     my $c = %h1<c>;
     is %h1<c>:!delete, $c,       "Test non-deletion with ! single key";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is %h1<c>, $c,               "c should not have been deleted";
     is %h1<c>:delete(0), $c,     "Test non-deletion with (0) single key";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is %h1<c>, $c,               "c should not have been deleted";
     is %h1<c>:delete(False), $c, "Test non-deletion with (False) single key";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is %h1<c>, $c,               "c should not have been deleted";
     is %h1<c>:delete($dont), $c, "Test non-deletion with (\$dont) single key";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is %h1<c>, $c,               "c should not have been deleted";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is %h1<c>:delete(1), $c,     "Test deletion with (1) single key";
     ok !defined(%h1<c>),         "c should be deleted now";
     is +%h1, 24,                 "c should be deleted now";
@@ -68,13 +73,18 @@ sub gen_hash {
     #?niecza 11 todo "adverbial pairs only used as boolean True"
     my $fg = %h1<f g>;
     is_deeply %h1<f g>:!delete, $fg,       "non-deletion with ! mult";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
     is_deeply %h1<f g>:delete(0), $fg,     "non-deletion with (0) mult";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
     is_deeply %h1<f g>:delete(False), $fg, "non-deletion with (False) mult";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
     is_deeply %h1<f g>:delete($dont), $fg, "non-deletion with (\$dont) mult";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is_deeply %h1<f g>, $fg,               "f g should not have been deleted";
+    #?rakudo todo "adverbial pairs only used as boolean True"
     is_deeply %h1<f g>:delete(1), $fg,     "deletion with (1) mult";
     is_deeply %h1<f g>, (Any,Any),         "f g should be deleted now";
     is +%h1, 21,                           "f g should be deleted now";
@@ -96,6 +106,7 @@ sub gen_hash {
     #?pugs   10 skip "no adverbials"
     #?niecza 10 todo "adverbial pairs only used as boolean True"
     is_deeply %h1{*}:!delete, $all,       "Test non-deletion with ! *";
+    #?rakudo 5 todo "adverbial pairs only used as boolean True"
     is_deeply %h1{*}:delete(0), $all,     "Test non-deletion with (0) *";
     is_deeply %h1{*}:delete(False), $all, "Test non-deletion with (False) *";
     is_deeply %h1{*}:delete($dont), $all, "Test non-deletion with (\$dont) *";
