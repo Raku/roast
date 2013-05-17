@@ -37,6 +37,7 @@ sub gen_hash {
 
     #?pugs   10 skip "no adverbials"
     #?niecza  8 todo "adverbial pairs only used as True"
+    #?rakudo  8 todo "adverbial pairs only used as True"
     ok !(%h1<c>:!exists),       "Test non-exists with ! single key c";
     ok   %h1<X>:!exists,        "Test non-exists with ! single key X";
     ok !(%h1<c>:exists(0)),     "Test non-exists with (0) single key c";
