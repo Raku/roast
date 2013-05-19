@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 216;
+plan 200;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -236,7 +236,6 @@ is DateTime.new('2009-12-31T22:33:44',
     $t = time;
     my $dt1 = DateTime.new($t);
     my $dt2 = DateTime.now.utc;        # $dt1 and $dt2 might differ very occasionally
-    #?rakudo todo 'nom regression'
     is show-dt($dt1), show-dt($dt2), 'DateTime.now uses current time';
 
     $t = time;
@@ -319,18 +318,6 @@ is tz('+1433').offset,  52380, 'DateTime.offset (+1433)';
 is tz('-1433').offset, -52380, 'DateTime.offset (-1433)';
 is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 second)';
 
-{
-    my $tz = sub ($dt, $to-utc) {
-        $to-utc
-          ?? $dt.year == 2001 ?? 1 !! 2
-          !! 3
-    };
-    my $dt = dt year => 2001, timezone => $tz;
-    is $dt.offset, 1, 'DateTime.offset (function, 1)';
-    $dt = dt year => 2000, timezone => $tz;
-    is $dt.offset, 2, 'DateTime.offset (function, 2)';
-}
-
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/in-timezone>
 # --------------------------------------------------------------------
@@ -385,56 +372,6 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
       # 22 seconds.
     is show-dt($dt), '29 18 23 27 12 2004 1', 'DateTime.in-timezone (big rollover)';    
 
-    # DateTime doesn't implement DST, but it ought to make
-    # implementing DST possible. We test that here.
-
-    sub nyc-tz($dt, $to-utc) { # America/New_York
-        3600 * (us2007dst($dt, $to-utc ?? 2 !! 7) ?? -4 !! -5)
-    }
-
-    sub lax-tz($dt, $to-utc) { # America/Los_Angeles
-        3600 * (us2007dst($dt, $to-utc ?? 2 !! 10) ?? -7 !! -8)
-    }
-
-    sub us2007dst($dt, $critical-hour) {
-        my $t = ($dt.month, $dt.day, $dt.hour);
-        ([or] (3, 11, $critical-hour) »<=>« $t) == 0|-1
-           and ([or] $t »<=>« (11, 4, $critical-hour)) == -1
-    }
-
-    sub nyc-dt($year, $month, $day, $hour, $minute) {
-        dt :$year, :$month, :$day, :$hour, :$minute,
-            timezone => &nyc-tz
-    }
-
-    $dt = ds('2007-01-02T02:22:00Z').in-timezone(&nyc-tz);
-    is ~$dt, '2007-01-01T21:22:00-0500', 'DateTime.in-timezone (UTC to NYC, outside of DST)';
-    $dt = ds('2007-08-01T02:22:00Z').in-timezone(&nyc-tz);
-    is ~$dt, '2007-07-31T22:22:00-0400', 'DateTime.in-timezone (UTC to NYC, during DST)';
-    $dt = ds('2007-03-11T06:55:00Z').in-timezone(&nyc-tz);
-    is ~$dt, '2007-03-11T01:55:00-0500', 'DateTime.in-timezone (UTC to NYC, just before DST)';
-    $dt = ds('2007-03-11T07:02:00Z').in-timezone(&nyc-tz);
-    is ~$dt, '2007-03-11T03:02:00-0400', 'DateTime.in-timezone (UTC to NYC, just after DST)';
-    $dt = ds('2007-03-11T09:58:00+0303').in-timezone(&nyc-tz);
-    is ~$dt, '2007-03-11T01:55:00-0500', 'DateTime.in-timezone (+0303 to NYC, just before DST)';
-    $dt = ds('2007-03-10T14:50:00-1612').in-timezone(&nyc-tz);
-    is ~$dt, '2007-03-11T03:02:00-0400', 'DateTime.in-timezone (-1612 to NYC, just after DST)';
-    $dt = nyc-dt(2007,  1,  1,   21, 22).utc;
-    is ~$dt, '2007-01-02T02:22:00Z', 'DateTime.utc (from NYC, outside of DST)';
-    $dt = nyc-dt(2007,  7, 31,   22, 22).utc;
-    is ~$dt, '2007-08-01T02:22:00Z', 'DateTime.utc (from NYC, during DST)';
-    $dt = nyc-dt(2007,  7, 31,   22, 22).utc;
-    is ~$dt, '2007-08-01T02:22:00Z', 'DateTime.utc (from NYC, during DST)';
-    $dt = nyc-dt(2007,  3, 11,    1, 55).utc;
-    is ~$dt, '2007-03-11T06:55:00Z', 'DateTime.utc (from NYC, just before DST)';
-    $dt = with-tz(nyc-dt(2007,  3, 11,    3,  2), -16, -12);
-    is ~$dt, '2007-03-10T14:50:00-1612', 'DateTime.in-timezone (NYC to -1612, just after DST)';
-    $dt = nyc-dt(2007,  3, 11,    1, 55).in-timezone(&lax-tz);
-    is ~$dt, '2007-03-10T22:55:00-0800', 'DateTime.in-timezone (NYC to LAX, just before NYC DST)';
-    $dt = nyc-dt(2007,  3, 11,    3,  2).in-timezone(&lax-tz);
-    is ~$dt, '2007-03-10T23:02:00-0800', 'DateTime.in-timezone (NYC to LAX, just after NYC DST)';
-    $dt = nyc-dt(2007,  3, 11,    6,  2).in-timezone(&lax-tz);
-    is ~$dt, '2007-03-11T03:02:00-0700', 'DateTime.in-timezone (NYC to LAX, just after LAX DST)';
 }
 
 # --------------------------------------------------------------------

@@ -41,6 +41,7 @@ for 1 .. 100
 #?pugs 2 skip 'broken after Object -> Mu conversion'
 ok( $in_destructor, '... only when object goes away everywhere'               );
 is( +@destructor_order, 2, '... only as many as available DESTROY submethods' );
+#?pugs 2 skip 'order is not guaranteed in pugs'
 is(  @destructor_order[0], 'Child',  'Child DESTROY should fire first'        );
 is(  @destructor_order[1], 'Parent', '... then parent'                        );
 

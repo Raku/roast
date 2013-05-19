@@ -45,12 +45,14 @@ if $*OS eq "browser" {
 
     ok ($original1_modified < $tmpfile1.IO.modified), 'IO.modified should be updated when file content changes';
     ok ($original1_changed  < $tmpfile1.IO.changed),  'IO.changed should be updated when file content changes';
+    #?rakudo skip 'platform dependent'
     ok ($original1_accessed == $tmpfile1.IO.accessed), 'IO.accessed should NOT be updated when file is opened for writing';
    
     # opening for read
     $fh1 = open $tmpfile1, :r orelse die "Could not open $tmpfile1 for reading";
     $fh1.close;
 
+    #?rakudo skip 'platform dependent'
     ok ($original1_accessed == $tmpfile1.IO.accessed), 'IO.accessed should NOT be updated when file is opened for reading';
 
     # reading contents of file 

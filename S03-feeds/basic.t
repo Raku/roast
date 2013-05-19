@@ -13,7 +13,7 @@ Tests for the feed operators
     
 =end pod
 
-plan 19;
+plan 25;
 
 #?pugs skip '<== dies with cast error'
 {
@@ -93,20 +93,6 @@ plan 19;
     is(@data, <2 4 6 8 10>, 'final result was unaffected by the tap variable');
 }
 
-# no need for temp variables in feeds: $(*), @(*), %(*)
-#?rakudo skip '* feeds'
-{
-    my @data = 'a' .. 'z';
-    my @out  = <a e i o u y>;
-
-    @data ==> grep {/<[aeiouy]>/} ==> is($(*), $(@out), 'basic test for $(*)');
-    @data ==> grep {/<[aeiouy]>/} ==> is(@(*), @(@out), 'basic test for @(*)');
-    @data ==> grep {/<[aeiouy]>/} ==> is(%(*), %(@out), 'basic test for %(*)');
-
-    # XXX: currently the same as the @(*) test above. Needs to be improved
-    @data ==> grep {/<[aeiouy]>/} ==> is(@(*).slice, @(@out).slice, 'basic test for @(*).slice');
-}
-
 # <<== and ==>> pretending to be unshift and push, respectively
 #?rakudo skip 'double-ended feeds'
 {
@@ -140,6 +126,38 @@ plan 19;
     ('a' .. 'd'; 0 .. 3) ==> my @data;
     is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
+
+# feed and Inf
+#?rakudo skip "isn't lazy"
+#?nieza skip "unhandled exception
+{
+  lives_ok { my @a <== 0..Inf }
+}
+
+#?nieza skip "Unhandled exception"
+{
+  my $call-count = 0;
+  my @a <== gather for 1..10 -> $i { $call-count++; take $i };
+  @a[0];
+  #?rakudo todo "isn't lazy"
+  is $call-count, 1;
+}
+
+# no need for temp variables in feeds: $(*), @(*), %(*)
+#?rakudo skip '* feeds'
+#?DOES 4
+{
+    my @data = 'a' .. 'z';
+    my @out  = <a e i o u y>;
+
+    @data ==> grep {/<[aeiouy]>/} ==> is($(*), $(@out), 'basic test for $(*)');
+    @data ==> grep {/<[aeiouy]>/} ==> is(@(*), @(@out), 'basic test for @(*)');
+    @data ==> grep {/<[aeiouy]>/} ==> is(%(*), %(@out), 'basic test for %(*)');
+
+    # XXX: currently the same as the @(*) test above. Needs to be improved
+    @data ==> grep {/<[aeiouy]>/} ==> is(@(*).slice, @(@out).slice, 'basic test for @(*).slice');
+}
+
 
 done;
 

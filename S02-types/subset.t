@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 46;
+plan 43;
 
 =begin description
 
@@ -89,24 +89,6 @@ dies_ok { my Digit $x = 3.1 },
     #?pugs todo
     dies_ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
-}
-
-#?niecza skip 'Seq NYI'
-{
-    #?rakudo todo 'Seq not implemented in nom'
-    subset Subseq of Seq;
-    #?pugs todo
-    lives_ok { my Subseq $tsil = <a b c>.Seq },
-             'can create subset of Seq';
-
-
-    #?rakudo todo 'Seq not yet implemented in nom'
-    subset FewOdds of Seq where { 2 > .grep: { $_ % 2 } }
-    #?pugs todo
-    lives_ok { my FewOdds $fe = <78 99 24 36>.Seq },
-             'can create subset of Seq with where';
-    dies_ok { my FewOdds $bomb = <78 99 24 36 101>.Seq },
-            'subset of Seq with where enforces where';
 }
 
 {

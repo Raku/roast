@@ -9,7 +9,7 @@ Basic tests about variables having built-in types assigned
 
 # L<S02/"Types as Constraints"/"A variable's type is a constraint indicating what sorts">
 
-plan 51;
+plan 50;
 
 {
     ok(try {my Int $foo; 1}, 'compile my Int $foo');
@@ -150,10 +150,8 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     ok Numeric !~~ Int, 'Numeric !~~ Int';
 
     ok Array ~~ List, 'Array is a kind of List';
-    ok List !~~ Array, 'A Seq is not an Array';
-    #?niecza skip 'Expecting a term'
-    #?pugs 2 skip "Positional"
-    ok Seq ~~ Positional, 'A Seq does Positional';
+    ok List !~~ Array, 'A List is not an Array';
+    #?pugs skip "Positional"
     ok Array ~~ Positional, 'Array does Positional too';
 }
 

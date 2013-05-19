@@ -244,7 +244,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # Lists are allowed on the rhs if the lhs is numeric (Real):
-#?niecza todo 'allow List as rhs endpoint'
 is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
 # RT #68788

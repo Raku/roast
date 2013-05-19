@@ -1,8 +1,7 @@
 use v6;
 use Test;
 
-# Maybe someone can put in a better smartlink? --lue
-# L<S32::IO/"A file test, where X is one of the letters listed below.">
+# L<S32::IO/IO::FileTests>
 
 plan 30;
 

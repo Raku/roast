@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 113;
+plan 114;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -14,6 +14,7 @@ sub showkv($x) {
     isa_ok $b, Bag, '&bag produces a Bag';
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
 
+    is $b.default, 0, "Defaults to 0";
     is $b<a>, 5, 'Single-key subscript (existing element)';
     isa_ok $b<a>, Int, 'Single-key subscript yields an Int';
     is $b<santa>, 0, 'Single-key subscript (nonexistent element)';

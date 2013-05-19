@@ -4,7 +4,7 @@ BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
 plan 6;
 
-# L<S32::IO/IO::Writeable::Encoded/=item multi note>
+# L<S32::IO/Functions/note>
 
 is_run( 'note "basic form"',
         {

@@ -12,13 +12,10 @@ is DateTime.now.timezone, $*TZ, 'DateTime.now uses $*TZ';
 is DateTime.new(year => 1995).local.timezone, $*TZ, 'DateTime.local uses $*TZ';
 
 my $dt = ds('2003-08-01T02:22:00Z').local.utc;
-#?rakudo todo 'nom regression'
 is ~$dt, '2003-08-01T02:22:00Z', 'UTC -> local -> UTC (2003-08-01T02:22:00Z)';
 $dt = ds('1984-02-29T05:55:22Z').local.utc;
-#?rakudo todo 'nom regression'
 is ~$dt, '1984-02-29T05:55:22Z', 'UTC -> local -> UTC (1984-02-29T05:55:22Z)';
 $dt = ds('1998-12-31T23:59:60Z').local.utc;
-#?rakudo todo 'nom regression'
 is ~$dt, '1998-12-31T23:59:60Z', 'UTC -> local -> UTC (1998-12-31T23:59:60Z)';
 
 unless '/etc/timezone'.IO ~~ :e and

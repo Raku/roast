@@ -109,7 +109,6 @@ should be equivalent to
 }
 
 
-#?pugs skip 'unimpl'
 {
   my @a = (1, 2, 3);
   my @b = map { hash("v"=>$_, "d" => $_*2) }, @a;
@@ -123,12 +122,11 @@ should be equivalent to
 # Map with mutating block
 # L<S02/Names/"$_, $!, and $/ are context<rw> by default">
 
+#?pugs todo
 {
   my @array = <a b c d>;
-  #?pugs todo
   is ~(try { @array.map: { $_ ~= "c"; $_ ~ "d" } }), "acd bcd ccd dcd",
     'mutating $_ in map works (1)';
-  #?pugs todo
   is ~@array, "ac bc cc dc",
     'mutating $_ in map works (2)';
 }
@@ -162,12 +160,12 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 4, "map works with the map body returning an empty arrayref";
 }
 
+#?pugs todo
 {
   my @array  = <a b c d>;
   my $empty  = [];
   my @result = map { $empty }, @array;
 
-  #?pugs todo 'bug'
   is +@result, 4, "map works with the map body returning an empty arrayref variable";
 }
 
@@ -227,7 +225,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
 }
 
-#?pugs skip 'unimpl'
+#?pugs skip "Cannot use this control structure outside a 'loop' structure"
 #?DOES 2
 {
     is (1..4).map({ next if $_ % 2; 2 * $_ }).join('|'), 
@@ -237,7 +235,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # RT #62332
-#?pugs skip 'unimpl'
+#?pugs skip 'No such method in class Str: "&key"'
 #?DOES 2
 {
     my $x = :a<5>;
@@ -247,6 +245,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # RT #112596
 #?pugs skip 'hangs'
+#?DOES 1
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");

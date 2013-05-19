@@ -95,6 +95,7 @@ my $rt115344 = 115344;
 is('$rt115344'.eval, $rt115344, 'method form of eval sees outer lexicals');
 
 # RT #115774
+#?niecza skip "int NYI"
 {
     my int $a; eval('');
     ok(1, "presence of low level types doesn't cause eval error")

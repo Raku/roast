@@ -13,17 +13,19 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 my $name = 't/spec/S11-modules/InnerModule.pm';
 
 #?rakudo todo 'variable form plus imports NYI'
+#?pugs 2 skip "parsefail"
 lives_ok { require $name '&bar'; },
          'can load InnerModule from a variable at run time';
 is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-sub from required module';
 
 # L<S11/"Runtime Importation"/"To specify both a module name and a filename, use a colonpair">
+#?pugs skip "parsefail"
 {
     require InnerModule:file($name) <&bar>;
     is bar(), 'Inner::bar', 'can load InnerModule by name and path, with import list';
 }
 
-# no need to do that at compile time, sine require() really is run time
+# no need to do that at compile time, since require() really is run time
 @*INC.push: 't/spec/packages';
 
 # Next line is for final test.
@@ -36,6 +38,7 @@ is Fancy::Utilities::lolgreet('me'),
    'O HAI ME', 'can call our-sub from required module';
 
 # L<S11/"Runtime Importation"/"It is also possible to specify the module name indirectly by string">
+#?pugs todo
 lives_ok { my $name = 'A'; require ::($name) }, 'can require with variable name';
 
 #?pugs skip 'Must only use named arguments to new() constructor'

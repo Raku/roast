@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 33;
 
 # L<S04/The Relationship of Blocks and Declarations/"our $foo" introduces a lexically scoped alias>
 our $a = 1;
@@ -49,22 +49,76 @@ our $c = 42; #OK not used
                 our $d3 = 9;
             }
             {
-#?niecza skip 'our-scoped vars NYI'
-                is($d3, 9, "variables are seen within other lexical child blocks");
+                eval_dies_ok('$d3', "variables aren't seen within other lexical child blocks");
+                is($D2::d3, 9, "variables are seen within other lexical child blocks via package");
                 
                 package D3 {
-#?niecza skip 'our-scoped vars NYI'
-                    is($d3, 9, " ... and from within child packages");
+                    eval_dies_ok('$d3', " ... and not from within child packages");
+                    is($D2::d3, 9, " ... and from within child packages via package");
                 }
             }
-#?niecza skip 'our-scoped vars NYI'
-            is($d3, 9, "variables leak from lexical blocks");
+            eval_dies_ok('d3', "variables do not leak from lexical blocks");
+            is($D2::d3, 9, "variables are seen from lexical blocks via pacakage");
         }
         eval_dies_ok('$d2', 'our() variable not yet visible outside its package');
         eval_dies_ok('$d3', 'our() variable not yet visible outside its package');
         
     }
     eval_dies_ok('$d1', 'our() variable not yet visible outside its package');
+}
+
+# RT #100560, #102876
+{
+    lives_ok { our @e1 = 1..3 },   'we can declare and initialize an our-scoped array';
+    lives_ok { our %e2 = a => 1 }, 'we can declare and initialize an our-scoped hash';
+    is(@OUR::e1[1], 2, 'our-scoped array has correct value' );
+    is(%OUR::e2<a>, 1, 'our-scoped hash has correct value' );
+}
+
+# RT #117083
+{
+    our @f1;
+    our %f2;
+    ok(@f1 ~~ Array, 'our-declared @-sigil var is an Array');
+    ok(%f2 ~~ Hash,  'our-declared %-sigil var is a Hash');
+}
+
+# RT #117775
+{
+    package Gee {
+        our $msg;
+        our sub talk { $msg }
+    }
+
+    $Gee::msg = "hello";
+    is(Gee::talk, "hello", 'our-var returned by our-sub gives previously set value');
+}
+
+# RT #115630
+{
+    sub foo() { our $foo = 3 };
+    is foo(),    3, 'return value of sub call declaring our-scoped var';
+#?pugs 2 todo
+    is our $foo, 3, 'redeclaration will make previous value available';
+    is $foo,     3, '... and the value stays';
+}
+
+# RT #107270
+#?pugs todo
+{
+    package Color { our ($red, $green, $blue) = 1..* };
+    is $Color::blue, 3, 'declaring and initializing several vars at once';
+}
+
+# RT #76450
+#?pugs 2 todo
+{
+    role PiRole   { our $pi = 3 };
+    class PiClass { our $pi = 3 };
+#?rakudo todo 'our-scoped var in role'
+#?niecza todo 'our-scoped var in role'
+    is $PiRole::pi,  3, 'declaring/initializing our-scoped var in role';
+    is $PiClass::pi, 3, 'declaring/initializing our-scoped var in class';
 }
 
 # vim: ft=perl6

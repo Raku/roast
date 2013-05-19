@@ -36,23 +36,15 @@ is ~dtim(2000, 3,  1).truncated-to(week), '2000-02-28T00:00:00Z', 'DateTime.trun
 is ~date(1988, 3,  3).truncated-to(week), '1988-02-29', 'Date.truncated-to(week) (landing on Feb 29)';
 is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.truncated-to(week) (landing on Feb 29)';
 
-# Check output from say.
+# Verify .gist
 # Example taken from S32 specs documentation.
 #?niecza skip 'Undeclared routine: hour'
+#?rakudo todo 'output: DateTime.new(year => 2005, month => 2, ...)'
 {
     my $dt = DateTime.new('2005-02-01T15:20:35Z');
-    my Str $outstr;
-    my $stdout = $*OUT;
-    $*OUT = class {
-        method print(*@args) {
-            $outstr ~= @args.join;
-        }
-    }
-    say $dt.truncated-to(hour);
-    $*OUT = $stdout;
+    my $truncated = $dt.truncated-to(hour);
 
-    #?rakudo todo 'output: DateTime.new(year => 2005, month => 2, ...)'
-    is $outstr, "2005-02-01T15:00:00Z\n", "say says 2005-02-01T15:00:00Z";
+    is $truncated.gist, "2005-02-01T15:00:00Z\n", "validate .gist output";
 }
 
 # --------------------------------------------------------------------

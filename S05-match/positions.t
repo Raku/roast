@@ -8,7 +8,7 @@ version 0.3 (12 Apr 2004), file t/pos.t.
 
 =end pod
 
-plan 12;
+plan 10;
 
 #?pugs emit force_todo(2,4,6,8,9);
 
@@ -21,11 +21,6 @@ is($/.chars, 8,        'Match.chars');
 
 ok($str ~~ m/ A .+ a /, 'Match from 3');
 ok($/.from == 3,        'Match.from is 3');
-
-ok($str !~~ m/ Z .+ a /, 'No match');
-#?rakudo skip 'unspecced'
-#?niecza skip 'System.InvalidCastException: Cannot cast from source type to destination type.'
-nok($/.from.defined,      'Match pos is undefined');
 
 my regex Aa { A .* a }
 ok($str ~~ m/ .*? <Aa> /, 'Subrule match from 3');

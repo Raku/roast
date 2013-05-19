@@ -15,10 +15,14 @@ Unicode 5.2.
 
 =end pod
 
-plan 594;
+plan 596;
 
 # L           Letter
 
+#?pugs todo
+ok 'a' ~~ /<:L>/, 'a is a letter';
+# RT #117889
+nok '' ~~ /<:L>/, 'empty string has no letter';
 #?pugs todo
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );

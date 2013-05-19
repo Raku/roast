@@ -4,17 +4,21 @@ use MONKEY_TYPING;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan 38;
+plan 39;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
 {
   my $match = 'abd' ~~ m/ (a) (b) c || (\w) b d /;
-  #?niecza todo 'match returns match object'
-  isa_ok( $match, 'Match', 'Match object returned');
-  #?niecza todo 'match returns match object'
-  isa_ok( $/, 'Match', 'Match object assigned to $/');
+  isa_ok $match, Match, 'Match object returned';
+  isa_ok $/, Match, 'Match object assigned to $/';
   ok( $/ === $match, 'Same match objects');
+}
+
+{
+  my $match = 'xyz' ~~ / abc /;
+  #?niecza skip 'No value for parameter $obj in isa_ok'
+  isa_ok( $/, Nil, 'Failed match returns Nil' );
 }
 
 # old: L<S05/Return values from matches/"The array elements of a C<Match> object are referred to" >

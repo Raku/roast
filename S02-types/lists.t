@@ -147,9 +147,9 @@ plan 28;
     dies_ok { <1 2 3>.rt62836 },
             'call to user-declared sub in Parcel:: class dies';
     try { eval '<1 2 3>.rt62836' };
-    #?pugs 3 todo
+    #?pugs 2 todo
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
-    ok "$!" ~~ /Seq|Parcel/,    'error message contains name of class';
+    ok "$!" ~~ /Parcel/,    'error message contains name of class';
 
     #?pugs emit #
     augment class Parcel { method rt62836_x { 62836 } };
@@ -158,12 +158,10 @@ plan 28;
 }
 
 # RT #66304
-#?niecza skip 'Undeclared name: "Seq"'
-#?pugs skip 'Seq'
+#?pugs skip 'Parcel'
 {
     my $rt66304 = (1, 2, 4);
-    #?rakudo todo 'nom regression'
-    isa_ok $rt66304, Seq, 'List assigned to scalar is-a Seq';
+    isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
     is( $rt66304.WHAT, (1, 2, 4).WHAT,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
     dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';

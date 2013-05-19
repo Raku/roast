@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 31;
 
 {
     class A { method Str() { 'foo' } };
@@ -16,7 +16,7 @@ plan 25;
     dies_ok { %h{Mu.new} = 3 }, 'Any-typed hash does not like Mu keys';
     #?pugs todo
     ok %h.keys[0] === $a, 'returned key is correct';
-}
+} #4
 
 {
     my %h{Int};
@@ -24,7 +24,7 @@ plan 25;
     is %h{1 + 1}, 3, 'value-type semantics';
     #?pugs todo
     dies_ok { %h{'foo'} }, 'non-conformant type dies';
-}
+} #2
 
 # combinations of typed and objecthash
 { 
@@ -64,11 +64,26 @@ plan 25;
     lives_ok { %h.push: 0.9 => 3 }, 'Hash.push without array creation is OK';
     dies_ok  { %h.push: 1 => 3 },   'Hash.push key type check failure';
     dies_ok  { %h.push: 1.1 => 0.2 }, 'Hash.push value type check failure';
-}
+} #18
 
 {
     my %h{Any};
     %h = 1, 2;
     #?pugs todo
     ok %h.keys[0] === 1, 'list assignment + object hashes';
-}
+} #1
+
+{
+    my %h{Mu};
+    #?rakudo 6 skip 'oh noes, it dies'
+    ok %h{Mu} = 2, "just make the fudging work";
+    #?pugs todo
+    is %h{Mu}, 2, 'using Mu as a key';
+    ok %h{Any} = 3, "just make the fudging work";
+    #?pugs todo
+    is %h{Any}, 3, 'using Any as a key';
+    #?pugs todo
+    is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
+    #?pugs todo
+    is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
+} #6

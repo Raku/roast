@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 110;
+plan 111;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
@@ -16,6 +16,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok $s, KeySet, 'KeySet.new produces a KeySet';
     is showset($s), 'a b foo', '...with the right elements';
 
+    is $s.default, False, "Default value is false";
     is $s<a>, True, 'Single-key subscript (existing element)';
     isa_ok $s<a>, Bool, 'Single-key subscript has correct type (existing element)';
     is $s<santa>, False, 'Single-key subscript (nonexistent element)';

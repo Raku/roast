@@ -2,8 +2,7 @@ use v6;
 
 use Test;
 
-
-plan 29;
+plan 28;
 
 my $scalar;
 ok $scalar.WHAT === Any, 'unitialized $var does Mu';
@@ -26,8 +25,6 @@ ok $scalar ~~ Any, 'value contained in a $var does Mu';
 }
 
 ok eval('List').does(Positional), "List does Positional";
-#?niecza skip 'Undeclared name Seq'
-ok eval('Seq').does(Positional), "Seq does Positional";
 ok eval('Array').does(Positional), "Array does Positional";
 ok eval('Range').does(Positional), "Range does Positional";
 ok eval('Parcel').does(Positional), "Parcel does Positional";

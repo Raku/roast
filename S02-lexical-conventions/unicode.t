@@ -119,7 +119,6 @@ eval_lives_ok "\{ 1 \} \x2029 \{ 1 \}", "Unicode 2029 can terminate lines";
 eval_lives_ok "q\x298d test \x298e", "Unicode open-298d maps to close-298e";
 eval_lives_ok "q\x301d test \x301e", "Unicode open-301d maps to close-301e";
 eval_dies_ok "q\x301d test \x301f", "Unicode open-301d does not map to close-301f";
-#?rakudo: 3 todo 'Alternate open/close not working yet'
 #?pugs 6 todo "eval_lives_ok"
 eval_lives_ok "q\x2018 test \x2019", "Unicode open-2018 maps to to close-2019";
 eval_lives_ok "q\x201a test \x2019", "Unicode open-201a maps to to close-2019";
