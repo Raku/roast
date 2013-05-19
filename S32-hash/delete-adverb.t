@@ -57,9 +57,9 @@ sub gen_hash {
 
     my $d = %h<d>:p;
     #?pugs   4 skip "no adverbials"
+    #?niecza 3 todo "cannot combine adverbial pairs"
+    #?rakudo 3 todo "cannot combine adverbial pairs"
     is_deeply %h<d>:p:!delete, $d, "return a single key/value out";
-    #?niecza 2 todo "cannot combine adverbial pairs"
-    #?rakudo 2 todo "cannot combine adverbial pairs"
     is %h<d>, $d,                  "d should not have been deleted";
     is_deeply %h<d>:p:delete,  $d, "slice a single key/value out";
     ok !defined(%h<d>),            "d should be deleted now";
@@ -92,9 +92,9 @@ sub gen_hash {
 
     my $hi = %h<h i>:p;
     #?pugs   4 skip "no adverbials"
+    #?niecza 3 todo "cannot combine adverbial pairs"
+    #?rakudo 3 todo "cannot combine adverbial pairs"
     is_deeply %h<h i>:p:!delete, $hi, "return pairs";
-    #?niecza 2 todo "cannot combine adverbial pairs"
-    #?rakudo 2 todo "cannot combine adverbial pairs"
     is %h<h i>, $hi,                  "h i should not have been deleted";
     is_deeply %h<h i>:p:delete,  $hi, "slice pairs out";
     is +%h, 19,                       "h i should be deleted now";
@@ -123,18 +123,17 @@ sub gen_hash {
     is_deeply +%h, 26,               "* should not be deleted now";
     is_deeply %h{*}:delete(1), $all, "Test deletion with (1) *";
     is_deeply +%h, 0,                "* should be deleted now";
-} #10
+} #7
 
 {
     my %h   = gen_hash;
     my %i   = %h.clone;
 
     #?pugs   2 skip "no adverbials"
-    #?rakudo 1 todo "cannot combine adverbial pairs"
+    #?rakudo 3 todo "cannot combine adverbial pairs"
     #?niecza 3 todo "cannot combine adverbial pairs"
     is %h{*}:p:!delete, %i, "return all pairs";
     is +%h, 26,             "* should not be deleted";
-    #?rakudo 1 todo "cannot combine adverbial pairs"
     is %h{*}:p:delete,  %i, "slice out all pairs";
     is +%h, 0,             "* should be deleted now";
 } #4
