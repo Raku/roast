@@ -44,7 +44,7 @@ is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.trun
     my $dt = DateTime.new('2005-02-01T15:20:35Z');
     my $truncated = $dt.truncated-to(hour);
 
-    is $truncated.gist, "2005-02-01T15:00:00Z\n", "validate .gist output";
+    is $truncated.gist, "2005-02-01T15:00:00Z", "validate .gist output";
 }
 
 # --------------------------------------------------------------------
