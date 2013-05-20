@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 200;
+plan 201;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -67,6 +67,9 @@ isa_ok time, Int, 'time returns an Int';
 # --------------------------------------------------------------------
 # Input validation
 # --------------------------------------------------------------------
+
+#?rakudo todo ""
+dies_ok { DateTime.new }, 'Must provide arguments to DateTime';
 
 # L<S32::Temporal/C<DateTime>/outside of the ranges specified>
 
