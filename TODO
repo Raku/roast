@@ -23,5 +23,4 @@ OVERALL
 * Review XXX entries for test corrections
 
 SPECIFIC
-* tests for slurp("filename", :bin) (should return a Buf)
 * tests for &spurt (opposite of slurp)
