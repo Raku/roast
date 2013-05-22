@@ -43,7 +43,6 @@ sub gen_hash {
     #?niecza 11 todo "adverbial pairs only used as boolean True"
     my $c = %h<c>;
     is %h<c>:!delete, $c,       "Test non-deletion with ! single key";
-    #?rakudo 8 todo "adverbial pairs only used as boolean True"
     is %h<c>, $c,               "c should not have been deleted";
     is %h<c>:delete(0), $c,     "Test non-deletion with (0) single key";
     is %h<c>, $c,               "c should not have been deleted";
@@ -58,8 +57,8 @@ sub gen_hash {
     my $d = %h<d>:p;
     #?pugs   4 skip "no adverbials"
     #?niecza 3 todo "cannot combine adverbial pairs"
-    #?rakudo 3 todo "cannot combine adverbial pairs"
     is_deeply %h<d>:p:!delete, $d, "return a single key/value out";
+    #?rakudo 2 todo "cannot combine adverbial pairs"
     is %h<d>, $d,                  "d should not have been deleted";
     is_deeply %h<d>:p:delete,  $d, "slice a single key/value out";
     ok !defined(%h<d>),            "d should be deleted now";
@@ -78,7 +77,6 @@ sub gen_hash {
     #?niecza 11 todo "adverbial pairs only used as boolean True"
     my $fg = %h<f g>;
     is_deeply %h<f g>:!delete, $fg,       "non-deletion with ! mult";
-    #?rakudo 8 todo "adverbial pairs only used as boolean True"
     is_deeply %h<f g>, $fg,               "f g should not have been deleted";
     is_deeply %h<f g>:delete(0), $fg,     "non-deletion with (0) mult";
     is_deeply %h<f g>, $fg,               "f g should not have been deleted";
@@ -116,7 +114,6 @@ sub gen_hash {
     #?pugs   10 skip "no adverbials"
     #?niecza 10 todo "adverbial pairs only used as boolean True"
     is_deeply %h{*}:!delete, $all,       "Test non-deletion with ! *";
-    #?rakudo  5 todo "adverbial pairs only used as boolean True"
     is_deeply %h{*}:delete(0), $all,     "Test non-deletion with (0) *";
     is_deeply %h{*}:delete(False), $all, "Test non-deletion with (False) *";
     is_deeply %h{*}:delete($dont), $all, "Test non-deletion with (\$dont) *";
