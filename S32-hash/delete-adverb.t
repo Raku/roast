@@ -55,14 +55,50 @@ sub gen_hash {
     is +%h, 24,                 "c should be deleted now";
 
     my $d = %h<d>:p;
-    #?pugs   4 skip "no adverbials"
+    #?pugs   6 skip "no adverbials"
     #?niecza 3 todo "cannot combine adverbial pairs"
-    is_deeply %h<d>:p:!delete, $d, "return a single key/value out";
+    is_deeply %h<d>:p:!delete, $d,       "return a single pair out";
     #?rakudo 2 todo "cannot combine adverbial pairs"
-    is %h<d>, $d,                  "d should not have been deleted";
-    is_deeply %h<d>:p:delete,  $d, "slice a single key/value out";
-    ok !defined(%h<d>),            "d should be deleted now";
-} #18
+    ok %h<d>:exists,                     "d should not have been deleted";
+    is_deeply %h<d>:p:delete,  $d,       "slice a single pair out";
+    ok !defined(%h<d>),                  "d should be deleted now";
+    #?niecza 2 todo "cannot combine adverbial pairs"
+    #?rakudo 2 todo "cannot combine adverbial pairs"
+    is_deeply %h<d>:p:delete,  (),       "slice unexisting single pair out";
+    is_deeply %h<d>:!p:delete, (d=>Any), "slice unexisting single pair out";
+
+    #?pugs   6 skip "no adverbials"
+    #?niecza 6 todo "cannot combine adverbial pairs"
+    #?rakudo 6 todo "cannot combine adverbial pairs"
+    my $e= ("e", %h<e>);
+    is_deeply %h<e>:kv:!delete, $e,        "return a single key/value out";
+    ok %h<e>:exists,                       "e should not have been deleted";
+    is_deeply %h<e>:kv:delete,  $e,        "slice a single key/value out";
+    ok %h<e>:!exists,                      "e should be deleted now";
+    is_deeply %h<e>:kv:delete,  (),        "slice unexisting single key/value";
+    is_deeply %h<e>:!kv:delete, ('e',Any), "slice unexisting single key/value";
+
+    #?pugs   6 skip "no adverbials"
+    #?niecza 6 todo "cannot combine adverbial pairs"
+    #?rakudo 6 todo "cannot combine adverbial pairs"
+    is %h<f>:k:!delete,      'f', "return a single key out";
+    ok %h<f>:exists,              "f should not have been deleted";
+    is %h<f>:k:delete,       'f', "slice a single key out";
+    ok %h<f>:!exists,             "f should be deleted now";
+    is_deeply %h<f>:k:delete, (), "slice unexisting single key";
+    is %h<f>:!k:delete,      'f', "slice unexisting single key";
+
+    #?pugs   6 skip "no adverbials"
+    #?niecza 6 todo "cannot combine adverbial pairs"
+    #?rakudo 6 todo "cannot combine adverbial pairs"
+    my $g= %h<g>;
+    is %h<g>:v:!delete,        $g,  "return a single value out";
+    ok %h<g>:exists,                "g should not have been deleted";
+    is %h<g>:v:delete,         $g,  "slice a single value out";
+    ok %h<g>:!exists,               "g should be deleted now";
+    is_deeply %h<g>:v:delete,  (),  "slice unexisting single key";
+    is %h<g>:!v:delete,        Any, "slice unexisting single key";
+} #38
 
 { # multiple key
     my %h   = gen_hash;
