@@ -8,15 +8,15 @@ plan *;
 my $path = "tempfile-spurt-test";
 
 # filename as str tests
-all-tests({ $path });
+all-basic({ $path });
 
 # filename as IO tests
-#?rakudo skip "does not support IO::Handle"
+#?rakudo skip "spurt on handle not implemented"
 {
-    all-tests({ $path.IO });
+    all-basic({ $path.IO });
 }
 
-sub all-tests(Callable $handle) {
+sub all-basic(Callable $handle) {
     my $buf = Buf.new(0xBE, 0xEF, 0xC0, 0xDE);
     my $txt = "42";
 
@@ -54,7 +54,7 @@ sub all-tests(Callable $handle) {
     lives_ok { spurt $handle(), $buf, :createonly }, "createonly creates file with Buf";
     #?niecza todo ""
     ok $path.IO.e, "file was created";
-    dies_ok { spurt $handle(), $txt, :createonly }, "createonly with Buf fails if file exists";
+    dies_ok { spurt $handle(), $buf, :createonly }, "createonly with Buf fails if file exists";
     unlink $path;
 
     #?niecza skip "Excess arguments to spurt, unused named createonly" 
@@ -62,6 +62,77 @@ sub all-tests(Callable $handle) {
     #?niecza todo ""
     ok $path.IO.e, "file was created";
     dies_ok { spurt $handle(), $txt, :createonly }, "createonly with text fails if file exists";
+    unlink $path;
+}
+
+# Corner cases
+#?rakudo skip "spurt on handle not implemented"
+{
+    # Spurt on open handle
+    {
+        my $io = $path.IO.open(:w);
+        spurt $io, "42";
+        is slurp($path), "42"; # Can spurt into an open handle.
+    }
+
+    # Buf into an open non binary handle
+    {
+        my $io = $path.IO.open(:w);
+        my Buf $buf = Buf.new(0xC0, 0x01, 0xF0, 0x0D);
+        spurt $io, $buf;
+        is slurp($path, :bin), $buf;
+    }
+
+    # Text into a open binary handle
+    {
+        my $io = $path.IO.open(:bin, :w);
+        my Str $txt = "Bli itj nå trønder-rock uten tennis-sokk";
+        spurt $io, $txt;
+        is slurp($path), $txt;
+    }
+        
+    unlink $path;
+}
+
+
+# IO::Handle spurt
+#?rakudo skip "not implemented"
+#?niecza skip ""
+{
+    $path.IO.spurt("42");
+    is slurp($path), "42", "IO::Handle slurp";
+
+    my Buf $buf = Buf.new(0xF0, 0x01);
+    $path.IO.spurt($buf);
+    is slurp($path, :bin), $buf, "IO::Handle binary slurp";
+    
+    dies_ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
+    unlink $path;
+    lives_ok { $path.IO.spurt("yes", :createonly) }, "IO::Handle :createonly lives";
+    ok $path.IO.e, "IO::Handle :createonly created a file";
+    
+    # Append
+    {
+        my $io = $path.IO;
+        $io.spurt("hello ");
+        $io.spurt("world", :append);
+        is slurp($path), "hello world", "IO::Handle spurt :append";
+    }
+
+    # Not append!
+    {
+        my $io = $path.IO;
+        $io.spurt("hello ");
+        $io.spurt("world");
+        is slurp($path), "world", "IO::Handle not :append";
+    }
+
+    # encoding
+    {
+        my $t = "Bli itj nå fin uten mokkasin";
+        $path.IO.spurt($t, :enc("utf8"));
+        is slurp($path), $t, "IO::Handle :enc";
+    }
     unlink $path;
 }
 
