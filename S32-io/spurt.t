@@ -1,7 +1,7 @@
 use v6;
 use Test;
 #plan 22;
-plan *;
+#plan *;
 
 # L<S32::IO/Functions/spurt>
 
@@ -11,42 +11,33 @@ my $path = "tempfile-spurt-test";
 all-basic({ $path });
 
 # filename as IO tests
-#?rakudo skip "spurt on handle not implemented"
-{
-    all-basic({ $path.IO });
-}
+all-basic({ $path.IO });
+
 
 sub all-basic(Callable $handle) {
-    my $buf = Buf.new(0xBE, 0xEF, 0xC0, 0xDE);
+    my Buf $buf = "hello world".encode("utf-8");
     my $txt = "42";
 
-    #?niecza skip ":bin option for slurp fails"
-    {
-        spurt $handle(), $buf; 
-        is slurp($path, :bin), $buf, "spurting Buf ok";
-    }
+    #?niecza 2 skip ":bin option for slurp fails"
+    spurt $handle(), $buf; 
+    is slurp($path, :bin), $buf, "spurting Buf ok";
+
     spurt $handle(), $txt;
     is slurp($path), $txt, "spurting txt ok";
 
-    #?niecza skip "Excess arguments to spurt, unused named enc"
-    {
-        spurt $handle(), $txt, :enc("ASCII");
-        is slurp($path), $txt, "spurt with enc";
-    }
+    #?niecza 2 skip "Excess arguments to spurt, unused named enc"
+    spurt $handle(), $txt, :enc("ASCII");
+    is slurp($path), $txt, "spurt with enc";
 
-    #?niecza skip "Excess arguments to spurt, unused named append"
-    {
-        spurt $handle(), $buf;
-        spurt $handle(), $buf, :append;
-        is slurp($path, :bin), ($buf ~ $buf), "spurting Buf with append";
-    }
+    #?niecza 3 skip "Excess arguments to spurt, unused named append"
+    spurt $handle(), $buf;
+    spurt $handle(), $buf, :append;
+    is slurp($path, :bin), ($buf ~ $buf), "spurting Buf with append";
 
-    #?niecza skip "Excess arguments to spurt, unused named append"
-    {
-        spurt $handle(), $txt;
-        spurt $handle(), $txt, :append;
-        is slurp($path), ($txt ~ $txt), "spurting txt with append";
-    }
+    #?niecza 3 skip "Excess arguments to spurt, unused named append"
+    spurt $handle(), $txt;
+    spurt $handle(), $txt, :append;
+    is slurp($path), ($txt ~ $txt), "spurting txt with append";
     
     unlink $path;
 
@@ -66,7 +57,7 @@ sub all-basic(Callable $handle) {
 }
 
 # Corner cases
-#?rakudo skip "spurt on handle not implemented"
+#?niecza skip "Unable to resolve method open in type IO"
 {
     # Spurt on open handle
     {
@@ -96,23 +87,24 @@ sub all-basic(Callable $handle) {
 
 
 # IO::Handle spurt
-#?rakudo skip "not implemented"
-#?niecza skip ""
 {
     $path.IO.spurt("42");
     is slurp($path), "42", "IO::Handle slurp";
 
-    my Buf $buf = Buf.new(0xF0, 0x01);
+    my Buf $buf = "meow".encode("ASCII");
     $path.IO.spurt($buf);
+    #?niecza skip "Excess arguments to slurp, unused named bin"
     is slurp($path, :bin), $buf, "IO::Handle binary slurp";
     
     dies_ok { $path.IO.spurt("nope", :createonly) }, "IO::Handle :createonly dies";
     unlink $path;
+    #?niecza 2 todo "Excess arguments to IO.spurt, unused named createonly"
     lives_ok { $path.IO.spurt("yes", :createonly) }, "IO::Handle :createonly lives";
     ok $path.IO.e, "IO::Handle :createonly created a file";
     
     # Append
     {
+        #?niecza 4 skip "Excess arguments to IO.spurt, unused named append"
         my $io = $path.IO;
         $io.spurt("hello ");
         $io.spurt("world", :append);
@@ -129,6 +121,7 @@ sub all-basic(Callable $handle) {
 
     # encoding
     {
+        #?niecza 3 skip "Excess arguments to IO.spurt, unused named enc"
         my $t = "Bli itj nå fin uten mokkasin";
         $path.IO.spurt($t, :enc("utf8"));
         is slurp($path), $t, "IO::Handle :enc";
