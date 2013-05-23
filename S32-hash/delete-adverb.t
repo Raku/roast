@@ -67,10 +67,10 @@ sub gen_hash {
     is_deeply %h<d>:p:delete,  (),       "slice unexisting single pair out";
     is_deeply %h<d>:!p:delete, (d=>Any), "slice unexisting single pair out";
 
+    my $e= ("e", %h<e>);
     #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     #?rakudo 6 todo "cannot combine adverbial pairs"
-    my $e= ("e", %h<e>);
     is_deeply %h<e>:kv:!delete, $e,        "return a single key/value out";
     ok %h<e>:exists,                       "e should not have been deleted";
     is_deeply %h<e>:kv:delete,  $e,        "slice a single key/value out";
@@ -88,10 +88,10 @@ sub gen_hash {
     is_deeply %h<f>:k:delete, (), "slice unexisting single key";
     is %h<f>:!k:delete,      'f', "slice unexisting single key";
 
+    my $g= %h<g>;
     #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     #?rakudo 6 todo "cannot combine adverbial pairs"
-    my $g= %h<g>;
     is %h<g>:v:!delete,        $g,  "return a single value out";
     ok %h<g>:exists,                "g should not have been deleted";
     is %h<g>:v:delete,         $g,  "slice a single value out";
