@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 14;
+plan 16;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -16,7 +16,7 @@ plan 14;
 }
 
 my $test-path = "tempfile-slurp-test";
-my $test-contents = "0123456789A\nBCDEFG\n";
+my $test-contents = "0123456789\nABCDEFG\n風, 薔薇, バズ\n";
 my $empty-path = "tempfile-slurp-empty";
 
 { # write the temp files
@@ -61,19 +61,22 @@ is slurp($empty-path), '', "empty files yield empty string";
     is $binary-slurp, $test-contents.encode, "binary slurp returns correct content";
 }
 
-#?rakudo todo ":enc option for slurp fails"
-#?niecza todo ":enc option for slurp fails"
-#?pugs todo ":enc option for slurp fails"
-
+#?niecza skip ":enc option for slurp fails"
+#?pugs skip ":enc option for slurp fails"
 {
-    lives_ok { slurp($test-path, :enc('utf8')) }, "slurp :enc - encoding functions"   
+    lives_ok { slurp($test-path, :enc('utf8')) }, "slurp :enc - encoding functions";
+    is slurp($test-path, :enc('utf8')), $test-contents, "utf8 looks normal";
+    #mojibake time
+    is slurp($test-path, enc=>'iso-8859-1'),
+     "0123456789\nABCDEFG\né¢¨, èè, ããº\n", "iso-8859-1 makes mojibake correctly";
+    
 }
 
 
 # slurp in list context
 
 my @slurped_lines = lines(open($test-path));
-is +@slurped_lines, 2, "lines() - exactly 2 lines in this file";
+is +@slurped_lines, 3, "lines() - exactly 3 lines in this file";
 
 unlink $test-path;
 unlink $empty-path;
