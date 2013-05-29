@@ -68,7 +68,6 @@ isa_ok time, Int, 'time returns an Int';
 # Input validation
 # --------------------------------------------------------------------
 
-#?rakudo todo ""
 dies_ok { DateTime.new }, 'Must provide arguments to DateTime';
 
 # L<S32::Temporal/C<DateTime>/outside of the ranges specified>

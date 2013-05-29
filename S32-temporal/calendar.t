@@ -39,7 +39,6 @@ is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.trun
 # Verify .gist
 # Example taken from S32 specs documentation.
 #?niecza skip 'Undeclared routine: hour'
-#?rakudo todo 'output: DateTime.new(year => 2005, month => 2, ...)'
 {
     my $dt = DateTime.new('2005-02-01T15:20:35Z');
     my $truncated = $dt.truncated-to(hour);
