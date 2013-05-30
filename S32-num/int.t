@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 86;
+plan 107;
 
 # L<S32::Numeric/Real/=item truncate>
 # truncate and .Int are synonynms.
@@ -115,5 +115,28 @@ is((NaN).Int,    NaN, "int NaN is NaN");
 # RT #65132
 #?pugs todo
 eval_dies_ok 'int 3.14', 'dies: int 3.14 (prefix:int is gone)';
+
+is 0.lsb,        Nil, "0.lsb is Nil";
+is 1.lsb,        0,   "1.lsb is 0";
+is 2.lsb,        1,   "2.lsb is 1";
+is 256.lsb,      8,   "256.lsb is 8";
+is (-1).lsb,     0,   "(-1).lsb is 0";       # 1111 1111
+is (-2).lsb,     1,   "(-2).lsb is 1";       # 1111 1110
+is (-126).lsb,   1,   "(-126).lsb is 1";     # 1000 0010
+is (-127).lsb,   0,   "(-127).lsb is 0";     # 1000 0001
+is (-128).lsb,   7,   "(-128).lsb is 7";     # 1000 0000
+is (-32768).lsb, 15,  "(-32768).lsb is 15";
+
+is 0.msb,        Nil, "0.msb is Nil";
+is 1.msb,        0,   "1.msb is 0";
+is 2.msb,        1,   "2.msb is 1";
+is 256.msb,      8,   "256.msb is 8";
+is (-1).msb,     0,   "(-1).msb is 0";       # 1111 1111
+is (-2).msb,     1,   "(-2).msb is 1";       # 1111 1110
+is (-126).msb,   7,   "(-126).msb is 7";     # 1000 0010
+is (-127).msb,   7,   "(-127).msb is 7";     # 1000 0001
+is (-128).msb,   7,   "(-128).msb is 7";     # 1000 0000
+is (-129).msb,   8,   "(-129).msb is 8";
+is (-32768).msb, 15,  "(-32768).msb is 15";
 
 # vim: ft=perl6
