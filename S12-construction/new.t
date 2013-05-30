@@ -18,6 +18,7 @@ lives_ok { $o =  Child.new(:x(2), :y(3)) },
 is $o.y, 3, '... worked for the child';
 is $o.x, 2, '... worked for the parent';
 
+# RT #76490
 #?rakudo 3 todo 'parent attributes in initialization'
 #?niecza 3 todo
 lives_ok { $o = Child.new( :y(4), Parent{ :x<5> }) }, 
