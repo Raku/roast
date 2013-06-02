@@ -57,7 +57,6 @@ plan 31;
     dies_ok  { %h{ 3 } := 3 }, 'binding key type check failure';
     #?pugs todo
     dies_ok  { %h{0.2} := 'a' }, 'binding value type check failure';
-    #?rakudo todo '%h.push on typed hashes'
     dies_ok  { %h.push: 0.5 => 2 },
              'Hash.push fails when the resulting array conflicts with the type check';
     #?pugs todo
