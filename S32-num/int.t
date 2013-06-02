@@ -116,6 +116,7 @@ is((NaN).Int,    NaN, "int NaN is NaN");
 #?pugs todo
 eval_dies_ok 'int 3.14', 'dies: int 3.14 (prefix:int is gone)';
 
+#?pugs 10 skip 'lsb'
 is 0.lsb,        Nil, "0.lsb is Nil";
 is 1.lsb,        0,   "1.lsb is 0";
 is 2.lsb,        1,   "2.lsb is 1";
@@ -127,6 +128,7 @@ is (-127).lsb,   0,   "(-127).lsb is 0";     # 1000 0001
 is (-128).lsb,   7,   "(-128).lsb is 7";     # 1000 0000
 is (-32768).lsb, 15,  "(-32768).lsb is 15";
 
+#?pugs 11 skip 'msb'
 is 0.msb,        Nil, "0.msb is Nil";
 is 1.msb,        0,   "1.msb is 0";
 is 2.msb,        1,   "2.msb is 1";
