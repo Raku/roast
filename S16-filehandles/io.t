@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-# L<S32::IO/IO::File/open>
+# L<S32::IO/IO::Handle/open>
 # old: L<S16/"Filehandles, files, and directories"/"open">
 # old: L<S16/"Filehandles, files, and directories"/"close">
 # old: L<S16/Unfiled/IO.get>
@@ -101,7 +101,7 @@ is(@lines4[2], "The End", 'lines($in) worked in list context');
 is(@lines4[3], "... Its not over yet!", 'lines($in) worked in list context');
 ok($in4.close, 'file closed okay (4)');
 
-#?rakudo skip "prototype of sub lines(...) doesn't have limit yet"
+
 {
 my $in5 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
