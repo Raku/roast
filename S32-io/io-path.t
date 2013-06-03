@@ -10,10 +10,10 @@ isa_ok $path, IO::Path, "Str.path returns an IO::Path";
 is $path.volume,    '',        'volume';
 is $path.directory, '/foo',    'directory';
 is $path.basename,  'bar.txt', 'basename';
-#?rakudo 2 skip '.parent NYI'
+#?niecza 2 skip '.parent NYI'
 is $path.parent,    '/foo',    'parent';
 is $path.parent.parent, '/',   'parent of parent';
-#?rakudo 2 skip '.is-absolute, .is-relative NYI'
+#?niecza 2 skip '.is-absolute, .is-relative NYI'
 is $path.is-absolute, True,    'is-absolute';
 is $path.is-relative, False,   'is-relative';
 
