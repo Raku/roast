@@ -151,7 +151,6 @@ is(+@lines8, 4, 'we got four lines from the file (lazily)');
 is(@lines8[0], "Hello World", 'lines($in,3) worked in list context');
 is(@lines8[1], "Foo Bar Baz", 'lines($in,3) worked in list context');
 is(@lines8[2], "The End", 'lines($in,3) worked in list context');
-#?rakudo todo 'nom regression'
 is(@lines8[3], "and finally... Its not over yet!", 'get($in) worked after lines($in,$n)');
 }
 
