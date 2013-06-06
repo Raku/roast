@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 114;
+plan 125;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -42,6 +42,24 @@ sub showkv($x) {
 
     is $b.elems, 8, '.elems gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
+}
+
+#?rakudo skip ".Set NYI"
+{
+    isa_ok "a".Bag, Bag, "Str.Bag makes a Bag";
+    is showkv("a".Bag), 'a:1', "'a'.Bag is bag a";
+
+    isa_ok (a => 100000).Bag, Bag, "Pair.Bag makes a Bag";
+    is showkv((a => 100000).Bag), 'a:100000', "(a => 100000).Bag is bag a:100000";
+    is showkv((a => 0).Bag), '', "(a => 0).Bag is the empty bag";
+
+    isa_ok <a b c>.Bag, Bag, "<a b c>.Bag makes a Bag";
+    is showkv(<a b c a>.Bag), 'a:2 b:1 c:1', "<a b c a>.Bag makes the bag a:2 b:1 c:1";
+    is showkv(["a", "b", "c", "a"].Bag), 'a:2 b:1 c:1', "[a b c a].Bag makes the bag a:2 b:1 c:1";
+    is showkv([a => 3, b => 0, 'c', 'a'].Bag), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Bag makes the bag a:4 c:1";
+
+    isa_ok {a => 2, b => 4, c => 0}.Bag, Bag, "{a => 2, b => 4, c => 0}.Bag makes a Bag";
+    is showkv({a => 2, b => 4, c => 0}.Bag), 'a:2 b:4', "{a => 2, b => 4, c => 0}.Bag makes the bag a:2 b:4";
 }
 
 {

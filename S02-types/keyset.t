@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 111;
+plan 122;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
@@ -66,6 +66,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a foo', '-- on an item removes it';
     lives_ok { $s<bar>-- }, 'can -- an item';
     is showset($s), 'a foo', '... but only if they were there to start with';
+}
+
+#?rakudo skip ".Set NYI"
+{
+    isa_ok "a".KeySet, KeySet, "Str.KeySet makes a KeySet";
+    is showset("a".KeySet), 'a', "'a'.KeySet is set a";
+
+    isa_ok (a => 1).KeySet, KeySet, "Pair.KeySet makes a KeySet";
+    is showset((a => 1).KeySet), 'a', "(a => 1).KeySet is set a";
+    is showset((a => 0).KeySet), '', "(a => 0).KeySet is the empty set";
+
+    isa_ok <a b c>.KeySet, KeySet, "<a b c>.KeySet makes a KeySet";
+    is showset(<a b c a>.KeySet), 'a b c', "<a b c a>.KeySet makes the set a b c";
+    is showset(["a", "b", "c", "a"].KeySet), 'a b c', "[a b c a].KeySet makes the set a b c";
+    is showset([a => 3, b => 0, 'c', 'a'].KeySet), 'a c', "[a => 3, b => 0, 'c', 'a'].KeySet makes the set a c";
+
+    isa_ok {a => 2, b => 4, c => 0}.KeySet, KeySet, "{a => 2, b => 4, c => 0}.KeySet makes a KeySet";
+    is showset({a => 2, b => 4, c => 0}.KeySet), 'a b', "{a => 2, b => 4, c => 0}.KeySet makes the set a b";
 }
 
 {
