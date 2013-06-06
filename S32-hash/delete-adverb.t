@@ -122,9 +122,8 @@ sub gen_hash {
     my $hi = %h<h i>:p;
     #?pugs   4 skip "no adverbials"
     #?niecza 3 todo "cannot combine adverbial pairs"
-    #?rakudo 2 skip "pair with non-delete slice still fails"
     is_deeply %h<h i>:p:!delete, $hi, "return pairs";
-    is %h<h i>, $hi,                  "h i should not have been deleted";
+    is %h<h i>:p, $hi,                "h i should not have been deleted";
     is_deeply %h<h i>:p:delete,  $hi, "slice pairs out";
     is +%h, 19,                       "h i should be deleted now";
 } #18
