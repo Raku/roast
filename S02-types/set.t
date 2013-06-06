@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 104;
+plan 115;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -38,6 +38,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     is $s.elems, 3, '.elems gives number of keys';
     is +$s, 3, '+$set gives number of keys';
+}
+
+#?rakudo skip ".Set NYI"
+{
+    isa_ok "a".Set, Set, "Str.Set makes a Set";
+    is showset("a".Set), 'a', "'a'.Set is set a";
+
+    isa_ok (a => 1).Set, Set, "Pair.Set makes a Set";
+    is showset((a => 1).Set), 'a', "(a => 1).Set is set a";
+    is showset((a => 0).Set), '', "(a => 0).Set is the empty set";
+
+    isa_ok <a b c>.Set, Set, "<a b c>.Set makes a Set";
+    is showset(<a b c a>.Set), 'a b c', "<a b c a>.Set makes the set a b c";
+    is showset(["a", "b", "c", "a"].Set), 'a b c', "[a b c a].Set makes the set a b c";
+    is showset([a => 3, b => 0, 'c', 'a'].Set), 'a c', "[a => 3, b => 0, 'c', 'a'].Set makes the set a c";
+
+    isa_ok {a => 2, b => 4, c => 0}.Set, Set, "{a => 2, b => 4, c => 0}.Set makes a Set";
+    is showset({a => 2, b => 4, c => 0}.Set), 'a b', "{a => 2, b => 4, c => 0}.Set makes the set a b";
 }
 
 {
