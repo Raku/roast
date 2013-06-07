@@ -30,7 +30,7 @@ sub gen_hash {
     is +%h, 26, "basic sanity";
 } #1
 
-{ # single key
+{ # single key, no combinations with :exists
     my %h = gen_hash;
     my $b = %h<b>;
 
@@ -95,7 +95,36 @@ sub gen_hash {
     is %h<g>:!v:delete,        Any, "slice unexisting single key";
 } #38
 
-{ # multiple key
+{ # single key, combinations with :exists
+    my %h = gen_hash;
+
+    #?pugs   4 skip "no adverbials"
+    #?niecza 4 todo "cannot combine adverbial pairs"
+    ok (%h<b>:delete:exists) === True,  "delete:exists single existing key";
+    ok %h<b>:!exists,                   "b should be deleted now";
+    ok (%h<b>:delete:exists) === False, "delete:exists one non-existing key";
+    ok (%h<b>:delete:!exists) === True, "delete:!exists one non-existing key";
+
+    #?pugs   6 skip "no adverbials"
+    #?niecza 6 todo "cannot combine adverbial pairs"
+    is_deeply %h<d>:delete:!exists:kv, ("d",False), "return a single kv out";
+    ok %h<d>:!exists,                               "d should be deleted now";
+    is_deeply %h<d>:delete:exists:!kv, ("d",False), "single key exists:!kv";
+    is_deeply %h<d>:delete:!exists:!kv, ("d",True), "single key !exists:!kv";
+    is_deeply %h<d>:delete:exists:kv, (),           "single key exists:kv";
+    is_deeply %h<d>:delete:!exists:kv, (),          "single key !exists:kv";
+
+    #?pugs   6 skip "no adverbials"
+    #?niecza 6 todo "cannot combine adverbial pairs"
+    is_deeply %h<e>:delete:!exists:p, (e=>False), "return a single kv out";
+    ok %h<e>:!exists,                             "d should be deleted now";
+    is_deeply %h<e>:delete:exists:!p, (e=>False), "single key exists:!p";
+    is_deeply %h<e>:delete:!exists:!p, (e=>True), "single key !exists:!p";
+    is_deeply %h<e>:delete:exists:p, (),          "single key exists:p";
+    is_deeply %h<e>:delete:!exists:p, (),         "single key !exists:p";
+} #16
+
+{ # multiple key, not with :exists
     my %h   = gen_hash;
     my @cde = %h<c d e>;
 
@@ -127,6 +156,50 @@ sub gen_hash {
     is_deeply %h<h i>:p:delete,  $hi, "slice pairs out";
     is +%h, 19,                       "h i should be deleted now";
 } #18
+
+{ # single key, combinations with :exists
+    my %h = gen_hash;
+
+    #?pugs   7 skip "no adverbials"
+    #?niecza 7 todo "cannot combine adverbial pairs"
+    is_deeply %h<b c>:delete:exists, (True,True),   "d:exists existing keys";
+    ok %h<b>:!exists,                               "b should be deleted now";
+    ok %h<c>:!exists,                               "c should be deleted now";
+    is_deeply %h<b c>:delete:exists, (False,False), "d:exists non-existing keys";
+    is_deeply %h<b c>:delete:!exists, (True,True),  "d:!exists non-existing keys";
+    is_deeply %h<a b>:delete:exists, (True,False),  "d:exists non-existing keys";
+    is_deeply %h<c x>:delete:!exists, (True,False), "d:!exists non-existing keys";
+
+    #?pugs   7 skip "no adverbials"
+    #?niecza 7 todo "cannot combine adverbial pairs"
+    is_deeply %h<e f>:delete:!exists:kv,
+      ("e",False,"f",False), "return a single kv out";
+    ok %h<e>:!exists,                               "e should be deleted now";
+    ok %h<f>:!exists,                               "f should be deleted now";
+    is_deeply %h<e f>:delete:exists:!kv,
+      ("e",False,"f",False), "single key exists:!kv";
+    is_deeply %h<e f>:delete:!exists:!kv,
+      ("e",True,"f",True), "single key !exists:!kv";
+    is_deeply %h<e g>:delete:exists:kv,
+      ("g",True),           "single key exists:kv";
+    is_deeply %h<h e>:delete:!exists:kv,
+      ("h",False),          "single key !exists:kv";
+
+    #?pugs   7 skip "no adverbials"
+    #?niecza 7 todo "cannot combine adverbial pairs"
+    is_deeply %h<m n>:delete:!exists:p,
+      (m=>False,n=>False), "return a single p out";
+    ok %h<m>:!exists,                               "m should be deleted now";
+    ok %h<n>:!exists,                               "n should be deleted now";
+    is_deeply %h<m n>:delete:exists:!p,
+      (m=>False,n=>False), "single key exists:!p";
+    is_deeply %h<m n>:delete:!exists:!p,
+      (m=>True,n=>True), "single key !exists:!p";
+    is_deeply (%h<m o>:delete:exists:p).flat,
+      (o=>True).flat,           "single key exists:p";
+    is_deeply (%h<p n>:delete:!exists:p).flat,
+      (p=>False).flat,          "single key !exists:p";
+} #21
 
 { # whatever
     my %h   = gen_hash;
