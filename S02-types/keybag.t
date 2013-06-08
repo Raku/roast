@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 142;
+plan 153;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -64,6 +64,24 @@ sub showkv($x) {
     nok $b.exists("carter"), "... and it goes away";
     lives_ok { $b<farve>-- }, "Can -- an element that doesn't exist";
     nok $b.exists("farve"), "... and everything is still okay";
+}
+
+#?rakudo skip ".KeyBag NYI"
+{
+    isa_ok "a".KeyBag, KeyBag, "Str.KeyBag makes a KeyBag";
+    is showkv("a".KeyBag), 'a:1', "'a'.KeyBag is bag a";
+
+    isa_ok (a => 100000).KeyBag, KeyBag, "Pair.KeyBag makes a KeyBag";
+    is showkv((a => 100000).KeyBag), 'a:100000', "(a => 100000).KeyBag is bag a:100000";
+    is showkv((a => 0).KeyBag), '', "(a => 0).KeyBag is the empty bag";
+
+    isa_ok <a b c>.KeyBag, KeyBag, "<a b c>.KeyBag makes a KeyBag";
+    is showkv(<a b c a>.KeyBag), 'a:2 b:1 c:1', "<a b c a>.KeyBag makes the bag a:2 b:1 c:1";
+    is showkv(["a", "b", "c", "a"].KeyBag), 'a:2 b:1 c:1', "[a b c a].KeyBag makes the bag a:2 b:1 c:1";
+    is showkv([a => 3, b => 0, 'c', 'a'].KeyBag), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].KeyBag makes the bag a:4 c:1";
+
+    isa_ok {a => 2, b => 4, c => 0}.KeyBag, KeyBag, "{a => 2, b => 4, c => 0}.KeyBag makes a KeyBag";
+    is showkv({a => 2, b => 4, c => 0}.KeyBag), 'a:2 b:4', "{a => 2, b => 4, c => 0}.KeyBag makes the bag a:2 b:4";
 }
 
 {
