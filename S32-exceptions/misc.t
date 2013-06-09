@@ -53,7 +53,6 @@ throws_like 'sub (Int Str $x) { }', X::Parameter::MultipleTypeConstraints;
 # even if the tests look rather boring;
 throws_like 'sub a { }; sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 # RT #78370
-#?rakudo skip 'RT 78370'
 throws_like 'my &a; multi a { }', X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'sub a { }; multi sub a { }',X::Redeclaration, symbol => 'a', what => 'routine';
 throws_like 'my class A { }; my class A { }',  X::Redeclaration, symbol => 'A';
