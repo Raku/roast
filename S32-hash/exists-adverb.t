@@ -49,7 +49,6 @@ sub gen_hash {
     ok !(%h1<X>:exists(1)),     "Test exists with (1) single key X";
 
     #?pugs   6 skip "no adverbials"
-    #?rakudo 6 skip "oh noes, it dies"
     is_deeply %h1<c d e>:exists,  (True, True, True),   "Test exists TTT";
     is_deeply %h1<c d X>:exists,  (True, True, False),  "Test exists TTF";
     is_deeply %h1{*}:exists,      (True  xx 26).Parcel, "Test non-exists T*";
