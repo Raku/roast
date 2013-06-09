@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 122;
+plan 132;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
@@ -282,6 +282,22 @@ sub showset($s) { $s.keys.sort.join(' ') }
     lives_ok { %h = set <Q P R> }, 'Assigning a Set to a KeySet';
     #?rakudo todo 'todo'
     is %h.keys.sort.join, 'PQR', '... works as expected';
+}
+
+#?rakudo skip ".KeySet NYI"
+{
+    isa_ok 42.KeySet, KeySet, "Method .KeySet works on Int-1";
+    is showset(42.KeySet), "42", "Method .KeySet works on Int-2";
+    isa_ok "blue".KeySet, KeySet, "Method .KeySet works on Str-1";
+    is showset("blue".KeySet), "blue", "Method .KeySet works on Str-2";
+    my @a = <Now the cross-handed set was the Paradise way>;
+    isa_ok @a.KeySet, KeySet, "Method .KeySet works on Array-1";
+    is showset(@a.KeySet), "Now Paradise cross-handed set the was way", "Method .KeySet works on Array-2";
+    my %x = "a" => 1, "b" => 2;
+    isa_ok %x.KeySet, KeySet, "Method .KeySet works on Hash-1";
+    is showset(%x.KeySet), "a b", "Method .KeySet works on Hash-2";
+    isa_ok (@a, %x).KeySet, KeySet, "Method .KeySet works on Parcel-1";
+    is showset((@a, %x).KeySet), "Now Paradise a b cross-handed set the was way", "Method .KeySet works on Parcel-2";
 }
 
 # vim: ft=perl6
