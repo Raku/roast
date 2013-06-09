@@ -158,17 +158,14 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 # wisdom of allowing math with zero denominator Rats,
 # so I'm holding off on writing tests for it.
 
-#?rakudo skip "NaN.Rat == NaN"
 #?niecza todo
 #?pugs todo 'NaN.Rat'
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
-    #?rakudo todo "Inf.Rat"
     #?pugs todo 'Inf.Rat'
     #?niecza todo
     is Inf.Rat, Inf, "Inf.Rat == Inf";
-    #?rakudo todo "Inf.Rat"
     #?pugs todo 'Inf.Rat'
     #?niecza todo
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
