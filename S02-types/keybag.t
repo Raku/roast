@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 153;
+plan 163;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -348,6 +348,23 @@ sub showkv($x) {
     lives_ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a KeyBag';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
         'a:1 b:2 c:2 d:1', '... works as expected';
+}
+
+#?rakudo skip ".KeyBag NYI"
+{
+    isa_ok 42.KeyBag, KeyBag, "Method .KeyBag works on Int-1";
+    is showkv(42.KeyBag), "42:1", "Method .KeyBag works on Int-2";
+    isa_ok "blue".KeyBag, KeyBag, "Method .KeyBag works on Str-1";
+    is showkv("blue".KeyBag), "blue:1", "Method .KeyBag works on Str-2";
+    my @a = <Now the cross-handed set was the Paradise way>;
+    isa_ok @a.KeyBag, KeyBag, "Method .KeyBag works on Array-1";
+    is showkv(@a.KeyBag), "Now:1 Paradise:1 cross-handed:1 set:1 the:2 was:1 way:1", "Method .KeyBag works on Array-2";
+    my %x = "a" => 1, "b" => 2;
+    isa_ok %x.KeyBag, KeyBag, "Method .KeyBag works on Hash-1";
+    is showkv(%x.KeyBag), "a:1 b:2", "Method .KeyBag works on Hash-2";
+    isa_ok (@a, %x).KeyBag, KeyBag, "Method .KeyBag works on Parcel-1";
+    is showkv((@a, %x).KeyBag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
+       "Method .KeyBag works on Parcel-2";
 }
 
 # vim: ft=perl6
