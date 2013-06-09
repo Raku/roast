@@ -54,9 +54,8 @@ eval_dies_ok "42 if 23\nis 50; 1",
 eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
 
 # RT #79964
-#?rakudo todo 'RT #79964'
 #?niecza todo
 #?pugs todo
-eval_lives_ok "my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
+eval_lives_ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
 
 # vim: ft=perl6
