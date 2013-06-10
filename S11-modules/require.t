@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
@@ -23,6 +23,13 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 {
     require InnerModule:file($name) <&bar>;
     is bar(), 'Inner::bar', 'can load InnerModule by name and path, with import list';
+}
+
+#RT #118407
+#?rakudo skip "Null PMC access"
+{ 
+    require InnerModule:file($name) <quux>;
+    is quux(), 'Inner::quux', "can import quux without ampersand (&quux)";
 }
 
 # no need to do that at compile time, since require() really is run time
