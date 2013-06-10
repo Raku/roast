@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 125;
+plan 126;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -96,43 +96,51 @@ sub showkv($x) {
 {
     my $b = bag [ foo => 10, bar => 17, baz => 42, santa => 0 ];
     isa_ok $b, Bag, '&Bag.new given an array of pairs produces a Bag';
-    is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
+    #?rakudo todo "New bag constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
-    is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
+    is +$b, 4, "... with three elements";
+    #?niecza todo "Non-string bag elements NYI"
+    is +$b.grep(Pair), 4, "... which are all Pairs";
 }
 
 {
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 };
     isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
-    is showkv($b), 'bar:17 baz:42 foo:10', '... with the right elements';
+    #?rakudo todo "New bag constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag set <foo bar foo bar baz foo>;
     isa_ok $b, Bag, '&Bag.new given a Set produces a Bag';
-    is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+    #?rakudo todo "New bag constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
-    my $b = bag KeySet.new(set <foo bar foo bar baz foo>);
+    my $b = bag KeySet.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a KeySet produces a Bag';
-    is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+    #?rakudo todo "New bag constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
-    my $b = bag KeyBag.new(set <foo bar foo bar baz foo>);
+    my $b = bag KeyBag.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a KeyBag produces a Bag';
-    is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+    #?rakudo todo "New bag constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag set <foo bar foo bar baz foo>;
     isa_ok $b, Bag, '&bag given a Set produces a Bag';
-    is showkv($b), 'bar:1 baz:1 foo:1', '... with the right elements';
+    #?rakudo todo "New bag constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 # L<S02/Names and Variables/'C<%x> may be bound to'>
@@ -149,8 +157,9 @@ sub showkv($x) {
     dies_ok { %b = bag <a b> }, "Can't assign to a %var implemented by Bag";
 }
 
+#?rakudo skip ".Bag NYI"
 {
-    my $b = bag { foo => 10, bar => 1, baz => 2};
+    my $b = { foo => 10, bar => 1, baz => 2}.Bag;
 
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
@@ -167,8 +176,9 @@ sub showkv($x) {
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
+#?rakudo skip ".Bag NYI"
 {
-    my $b = bag { foo => 10000000000, bar => 17, baz => 42 };
+    my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
     my $c;
     lives_ok { $s = $b.perl }, ".perl lives";
@@ -179,8 +189,9 @@ sub showkv($x) {
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
+#?rakudo skip ".Bag NYI"
 {
-    my $b = bag { foo => 2, bar => 3, baz => 1 };
+    my $b = { foo => 2, bar => 3, baz => 1 }.Bag;
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
@@ -189,7 +200,7 @@ sub showkv($x) {
 }
 
 {
-    my $b = bag { foo => 10000000000, bar => 17, baz => 42 };
+    my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
     lives_ok { $s = $b.gist }, ".gist lives";
     isa_ok $s, Str, "... and produces a string";
@@ -228,8 +239,9 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
+#?rakudo skip ".Bag NYI"
 {
-    my $b = Bag.new({"a" => 100000000000, "b" => 1});
+    my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
     my $a = $b.roll;
     ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
@@ -259,8 +271,9 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
+#?rakudo skip ".Bag NYI"
 {
-    my $b = Bag.new({"a" => 100000000000, "b" => 1});
+    my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
     my $a = $b.pick;
     ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";

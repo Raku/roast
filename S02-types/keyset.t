@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 132;
+plan 133;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
@@ -125,43 +125,51 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = KeySet.new([ foo => 10, bar => 17, baz => 42 ]);
     isa_ok $b, KeySet, 'KeySet.new given an array of pairs produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new({ foo => 10, bar => 17, baz => 42 }.hash);
     isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    is +$b, 3, '... with three elements';
+    #?niecza todo "Non-string keys NYI"
+    is +$b.grep(Pair), 3, '... which are all Pairs';
 }
 
 {
     my $b = KeySet.new({ foo => 10, bar => 17, baz => 42 });
     isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(set <foo bar foo bar baz foo>);
     isa_ok $b, KeySet, 'KeySet.new given a Set produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(KeySet.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeySet, 'KeySet.new given a KeySet produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(KeyBag.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeySet, 'KeySet.new given a KeyBag produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(bag <foo bar foo bar baz foo>);
     isa_ok $b, KeySet, 'KeySet given a Bag produces a KeySet';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, '... with one element';
 }
 
 {
