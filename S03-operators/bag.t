@@ -14,9 +14,9 @@ sub showkv($x) {
 # blood, you see." -- Tom Stoppard
 
 my $s = set <blood love>;
-my $ks = KeySet.new(<blood rhetoric>);
-my $b = bag { blood => 2, rhetoric => 1, love => 2 };
-my $kb = KeyBag.new({ blood => 1, love => 2 });
+my $ks = <blood rhetoric>.KeySet;
+my $b = { blood => 2, rhetoric => 1, love => 2 }.Bag;
+my $kb = { blood => 1, love => 2 }.KeyBag;
 
 # Bag Union
 
