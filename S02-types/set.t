@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 115;
+plan 124;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -95,43 +95,52 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = set [ foo => 10, bar => 17, baz => 42 ];
     isa_ok $b, Set, '&Set.new given an array of pairs produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo 2 todo "New set constructor NYI"
+    is +$b, 3, "... with three elements";
+    #?niecza todo "Losing type in Set"
+    is +$b.grep(Pair), 3, "... all of which are Pairs";
 }
 
 {
     my $b = set { foo => 10, bar => 17, baz => 42 };
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
     my $b = set set <foo bar foo bar baz foo>;
     isa_ok $b, Set, '&Set.new given a Set produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
-    my $b = set KeySet.new(set <foo bar foo bar baz foo>);
+    my $b = set KeySet.new(<foo bar foo bar baz foo>);
     isa_ok $b, Set, '&Set.new given a KeySet produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
-    my $b = set KeyBag.new(set <foo bar foo bar baz foo>);
+    my $b = set KeyBag.new(<foo bar foo bar baz foo>);
     isa_ok $b, Set, '&Set.new given a KeySet produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
     my $b = set bag <foo bar foo bar baz foo>;
     isa_ok $b, Set, '&set given a Bag produces a Set';
-    is showset($b), 'bar baz foo', '... with the right elements';
+    #?rakudo todo "New set constructor NYI"
+    is +$b, 1, "... with one element";
 }
 
 {
@@ -242,12 +251,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # RT 107022
 {
-    is_deeply [ ( set ( set <a b c> ), <c> ).list.sort ], [ 'a', 'b', 'c' ],
-        'set inside set does not duplicate elements';
-    
+    my $s1 = set ( set <a b c> ), <c d>;
+    is +$s1, 3, "Three elements";
+    ok $s1<c>, "One of them is 'c'";
+    ok $s1<d>, "One of them is 'd'";
+    my $inner-set = $s1.first(Set);
+    #?niecza 2 todo 'Set in Set does not work correctly yet'
+    isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
+    is showset($inner-set), "a b c", "With the proper elements";
+
     my $s = set <a b c>;
-    is_deeply [ ( set $s, <c> ).list.sort ], [ 'a', 'b', 'c' ],
-        'variable of Set type inside set does not duplicate elements';
+    $s1 = set $s, <c d>;
+    is +$s1, 3, "Three elements";
+    ok $s1<c>, "One of them is 'c'";
+    ok $s1<d>, "One of them is 'd'";
+    $inner-set = $s1.first(Set);
+    #?niecza 2 todo 'Set in Set does not work correctly yet'
+    isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
+    is showset($inner-set), "a b c", "With the proper elements";
 }
 
 #?rakudo skip ".Set NYI"
