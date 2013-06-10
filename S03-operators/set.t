@@ -134,14 +134,14 @@ isa_ok ($s (^) $ks), Set, "... and it's actually a Set";
 is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with KeySet is correct";
 isa_ok ($ks (^) $s), Set, "... and it's actually a Set";
 
-is showset($s (^) $b), showset(set($s, $b)), "Bag symmetric difference with Set is correct";
+is showset($s (^) $b), showset($s (|) $b), "Bag symmetric difference with Set is correct";
 isa_ok ($s (^) $b), Set, "... and it's actually a Set";
-is showset($b (^) $s), showset(set($s, $b)), "Set symmetric difference with Bag is correct";
+is showset($b (^) $s), showset($s (|) $b), "Set symmetric difference with Bag is correct";
 isa_ok ($b (^) $s), Set, "... and it's actually a Set";
 
-is showset($s (^) $kb), showset(set($s, $kb) (-) set <your>), "KeyBag subtracted from Set is correct";
+is showset($s (^) $kb), showset(($s (|) $kb) (-) set <your>), "KeyBag subtracted from Set is correct";
 isa_ok ($s (^) $kb), Set, "... and it's actually a Set";
-is showset($kb (^) $s), showset(set($s, $kb) (-) set <your>), "Set subtracted from KeyBag is correct";
+is showset($kb (^) $s), showset(($s (|) $kb) (-) set <your>), "Set subtracted from KeyBag is correct";
 isa_ok ($kb (^) $s), Set, "... and it's actually a Set";
 
 # is subset of
