@@ -134,6 +134,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
     is +$b, 3, '... with three elements';
     #?niecza todo "Non-string keys NYI"
+    #?rakudo todo "Not up to current spec"
     is +$b.grep(Pair), 3, '... which are all Pairs';
 }
 
