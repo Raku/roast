@@ -250,6 +250,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 # RT 107022
+#?rakudo todo "Set does not conform to new standard yet"
 {
     my $s1 = set ( set <a b c> ), <c d>;
     is +$s1, 3, "Three elements";
