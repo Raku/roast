@@ -102,8 +102,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
-    #?rakudo 2 todo "New set constructor NYI"
     is +$b, 3, "... with three elements";
+    #?rakudo todo "New set constructor NYI"
     #?niecza todo "Losing type in Set"
     is +$b.grep(Pair), 3, "... all of which are Pairs";
 }
