@@ -292,7 +292,7 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
-#?rakudo todo "Needs to catch up with spec"
+#?rakudo skip "Needs to catch up with spec"
 {
     my $b = {"a" => 100000000000, "b" => 1}.KeyBag;
 
