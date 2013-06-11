@@ -69,8 +69,8 @@ is IO::Path::Cygwin.new("/").child('foo'),	"/foo",		"append to root";
 is IO::Path::Cygwin.new(".").child('foo'),	"foo",		"append to cwd";
 
 if IO::Spec.FSTYPE eq 'Win32' {
-	ok IO::Path::Cygwin.new($*CWD).e,		"cwd exists, filetest inheritance ok";
-	ok IO::Path::Cygwin.new($*CWD).d,		"cwd is a directory";
+	ok IO::Path::Cygwin.new(~$*CWD).e,		"cwd exists, filetest inheritance ok";
+	ok IO::Path::Cygwin.new(~$*CWD).d,		"cwd is a directory";
 }
 else {
 	skip "On-system tests for filetest inheritance", 2;

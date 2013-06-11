@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 10;
 
 # L<S32::IO/IO::Path>
 
@@ -24,5 +24,5 @@ isa_ok $path.path, IO::Path, 'IO::Path.path returns IO::Path';
 # These tests aren't particularly platform independent
 # is '/'.path.Str,        '/',       '.path.Str roundtrips';
 # is '///.'.path.Str,     '///.',    '... even for weird cases';
-
-is 'foo/bar'.path.Str,  'foo/bar', 'roundtrips entire path';
+# nor is this one
+#is 'foo/bar'.path.Str,  'foo/bar', 'roundtrips entire path';
