@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 124;
+plan 134;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -38,6 +38,21 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     is $s.elems, 3, '.elems gives number of keys';
     is +$s, 3, '+$set gives number of keys';
+}
+
+#?rakudo skip "Set.ACCEPTS NYI"
+{
+    ok (set <a b c>) ~~ (set <a b c>), "Identical sets smartmatch with each other";
+    nok (set <b c>) ~~ (set <a b c>), "Subset does not smartmatch";
+    nok (set <a b c d>) ~~ (set <a b c>), "Superset does not smartmatch";
+    nok "a" ~~ (set <a b c>), "Smartmatch is not element of";
+    ok (set <a b c>) ~~ Set, "Type-checking smartmatch works";
+
+    ok (bag <a b c>) ~~ (set <a b c>), "Bag smartmatches with equivalent set";
+    ok (bag <a a a b c>) ~~ (set <a b c>), "... even if the Bag has greater quantities";
+    nok (bag <b c>) ~~ (set <a b c>), "Subset does not smartmatch";
+    nok (bag <a b c d>) ~~ (set <a b c>), "Superset does not smartmatch";
+    nok (bag <a b c>) ~~ Set, "Type-checking smartmatch works";
 }
 
 #?rakudo skip ".Set NYI"

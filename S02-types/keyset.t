@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 133;
+plan 144;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
@@ -66,6 +66,22 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a foo', '-- on an item removes it';
     lives_ok { $s<bar>-- }, 'can -- an item';
     is showset($s), 'a foo', '... but only if they were there to start with';
+}
+
+#?rakudo todo "KeySet.ACCEPTS"
+{
+    ok (KeySet.new: <a b c>) ~~ (KeySet.new: <a b c>), "Identical sets smartmatch with each other";
+    nok (KeySet.new: <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
+    nok (KeySet.new: <a b c d>) ~~ (KeySet.new: <a b c>), "Superset does not smartmatch";
+    nok "a" ~~ (KeySet.new: <a b c>), "Smartmatch is not element of";
+    ok (KeySet.new: <a b c>) ~~ KeySet, "Type-checking smartmatch works";
+    ok (set <a b c>) ~~ (KeySet.new: <a b c>), "KeySet matches Set, too";
+
+    ok (bag <a b c>) ~~ (KeySet.new: <a b c>), "Bag smartmatches with equivalent KeySet:";
+    ok (bag <a a a b c>) ~~ (KeySet.new: <a b c>), "... even if the Bag has greater quantities";
+    nok (bag <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
+    nok (bag <a b c d>) ~~ (KeySet.new: <a b c>), "Superset does not smartmatch";
+    nok (bag <a b c>) ~~ KeySet, "Type-checking smartmatch works";
 }
 
 #?rakudo skip ".Set NYI"
