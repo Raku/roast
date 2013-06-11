@@ -14,6 +14,7 @@ sub showkv($x) {
 # L<S02/Immutable types/'the bag listop'>
 
 {
+    say "We do get here, right?";
     my $b = KeyBag.new("a", "foo", "a", "a", "a", "a", "b", "foo");
     isa_ok $b, KeyBag, 'we got a KeyBag';
     is showkv($b), 'a:5 b:1 foo:2', '...with the right elements';
@@ -174,7 +175,7 @@ sub showkv($x) {
 #     is showkv($b), 'bar:3 baz:1 foo:1', '... and does not affect the original KeyBag';
 # }
 
-#?rakudo todo "Needs to catch up with spec"
+#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 10, bar => 1, baz => 2}.KeyBag;
 
@@ -193,7 +194,7 @@ sub showkv($x) {
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
-#?rakudo todo "Needs to catch up with spec"
+#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.KeyBag;
     my $s;
@@ -206,17 +207,16 @@ sub showkv($x) {
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
-#?rakudo todo "Needs to catch up with spec"
+#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 2, bar => 3, baz => 1 }.KeyBag;
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
-    #?rakudo todo 'KeyBag stringification'
     is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
-#?rakudo todo "Needs to catch up with spec"
+#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.KeyBag;
     my $s;
@@ -260,7 +260,7 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
-#?rakudo todo "Needs to catch up with spec"
+#?rakudo skip "Needs to catch up with spec"
 {
     my $b = {"a" => 100000000000, "b" => 1}.KeyBag;
 
