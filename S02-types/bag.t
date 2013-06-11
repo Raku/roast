@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 126;
+plan 137;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -42,6 +42,22 @@ sub showkv($x) {
 
     is $b.elems, 8, '.elems gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
+}
+
+#?rakudo skip "Bag.ACCEPTS NYI"
+{
+    ok (bag <a b c>) ~~ (bag <a b c>), "Identical bags smartmatch with each other";
+    ok (bag <a b c c>) ~~ (bag <a b c c>), "Identical bags smartmatch with each other";
+    nok (bag <b c>) ~~ (bag <a b c>), "Subset does not smartmatch";
+    nok (bag <a b c>) ~~ (bag <a b c c>), "Subset (only quantity different) does not smartmatch";
+    nok (bag <a b c d>) ~~ (bag <a b c>), "Superset does not smartmatch";
+    nok (bag <a b c c c>) ~~ (bag <a b c c>), "Superset (only quantity different) does not smartmatch";
+    nok "a" ~~ (bag <a b c>), "Smartmatch is not element of";
+    ok (bag <a b c>) ~~ Bag, "Type-checking smartmatch works";
+
+    ok (set <a b c>) ~~ (bag <a b c>), "Set smartmatches with equivalent bag";
+    nok (set <a a a b c>) ~~ (bag <a a a b c>), "... but not if the Bag has greater quantities";
+    nok (set <a b c>) ~~ Bag, "Type-checking smartmatch works";
 }
 
 #?rakudo skip ".Set NYI"

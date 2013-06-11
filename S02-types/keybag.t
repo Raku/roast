@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 160;
+plan 171;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -65,6 +65,22 @@ sub showkv($x) {
     nok $b.exists("carter"), "... and it goes away";
     lives_ok { $b<farve>-- }, "Can -- an element that doesn't exist";
     nok $b.exists("farve"), "... and everything is still okay";
+}
+
+#?rakudo skip "KeyBag.ACCEPTS NYI"
+{
+    ok (KeyBag.new: <a b c>) ~~ (KeyBag.new: <a b c>), "Identical bags smartmatch with each other";
+    ok (KeyBag.new: <a b c c>) ~~ (KeyBag.new: <a b c c>), "Identical bags smartmatch with each other";
+    nok (KeyBag.new: <b c>) ~~ (KeyBag.new: <a b c>), "Subset does not smartmatch";
+    nok (KeyBag.new: <a b c>) ~~ (KeyBag.new: <a b c c>), "Subset (only quantity different) does not smartmatch";
+    nok (KeyBag.new: <a b c d>) ~~ (KeyBag.new: <a b c>), "Superset does not smartmatch";
+    nok (KeyBag.new: <a b c c c>) ~~ (KeyBag.new: <a b c c>), "Superset (only quantity different) does not smartmatch";
+    nok "a" ~~ (KeyBag.new: <a b c>), "Smartmatch is not element of";
+    ok (KeyBag.new: <a b c>) ~~ KeyBag, "Type-checking smartmatch works";
+
+    ok (set <a b c>) ~~ (KeyBag.new: <a b c>), "Set smartmatches with equivalent KeyBag.new:";
+    nok (set <a a a b c>) ~~ (KeyBag.new: <a a a b c>), "... but not if the Bag has greater quantities";
+    nok (set <a b c>) ~~ KeyBag, "Type-checking smartmatch works";
 }
 
 #?rakudo skip ".KeyBag NYI"
