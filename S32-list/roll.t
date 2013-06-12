@@ -122,7 +122,7 @@ is (1..^2).roll, 1, '1-elem Range roll';
 ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 
 # RT 89972
-#?niecza todo "Doesn't work in Niecza"
+#?niecza skip "That's not the right way to spawn another Niecza"
 {
     my $a = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
