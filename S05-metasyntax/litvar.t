@@ -30,8 +30,8 @@ ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
 #?pugs 5 todo 'feature'
-#?niecza 2 todo
 ok(!('a0' ~~ m/$aref[0]/), 'Array ref stringifies before matching'); #OK
+#?niecza todo
 ok('a b ab c0' ~~ m/$aref[0]/, 'Array ref stringifies before matching'); #OK
 ok('a0' ~~ m/@$aref[0]/, 'Array deref ignores 0');                 #OK
 ok('bx0' ~~ m/@$aref.[0]/, 'Array deref ignores dot 0');           #OK
