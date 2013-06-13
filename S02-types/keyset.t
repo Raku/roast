@@ -68,13 +68,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($s), 'a foo', '... but only if they were there to start with';
 }
 
-#?rakudo todo "KeySet.ACCEPTS"
 {
+    #?rakudo todo "KeySet.ACCEPTS"
     ok (KeySet.new: <a b c>) ~~ (KeySet.new: <a b c>), "Identical sets smartmatch with each other";
     nok (KeySet.new: <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
     nok (KeySet.new: <a b c d>) ~~ (KeySet.new: <a b c>), "Superset does not smartmatch";
     nok "a" ~~ (KeySet.new: <a b c>), "Smartmatch is not element of";
     ok (KeySet.new: <a b c>) ~~ KeySet, "Type-checking smartmatch works";
+    #?rakudo 3 todo "KeySet.ACCEPTS"
     ok (set <a b c>) ~~ (KeySet.new: <a b c>), "KeySet matches Set, too";
 
     ok (bag <a b c>) ~~ (KeySet.new: <a b c>), "Bag smartmatches with equivalent KeySet:";

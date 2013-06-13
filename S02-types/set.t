@@ -265,23 +265,26 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 # RT 107022
-#?rakudo todo "Set does not conform to new standard yet"
 {
     my $s1 = set ( set <a b c> ), <c d>;
+    #?rakudo todo "Set does not conform to new standard yet"
     is +$s1, 3, "Three elements";
     ok $s1<c>, "One of them is 'c'";
     ok $s1<d>, "One of them is 'd'";
     my $inner-set = $s1.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
+    #?rakudo 2 todo "Set does not conform to new standard yet"
     isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
     is showset($inner-set), "a b c", "With the proper elements";
 
     my $s = set <a b c>;
     $s1 = set $s, <c d>;
+    #?rakudo todo "Set does not conform to new standard yet"
     is +$s1, 3, "Three elements";
     ok $s1<c>, "One of them is 'c'";
     ok $s1<d>, "One of them is 'd'";
     $inner-set = $s1.first(Set);
+    #?rakudo 2 todo "Set does not conform to new standard yet"
     #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
     is showset($inner-set), "a b c", "With the proper elements";
