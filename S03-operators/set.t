@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 280;
+plan 296;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -423,5 +423,34 @@ ok $b !R(>) $s, "Bag is not a reversed proper superset of Set (texas)";
 ok $s !R(>) $kb, "Set is not a reversed proper superset of KeyBag (texas)";
 ok $kb !R(>) $kb, "KeyBag is not reversed proper superset of itself (texas)";
 ok $kb !R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
+
+{
+    my $a = set <Zeus Hera Artemis Apollo Hades Aphrodite Ares Athena Hermes Poseidon Hephaestus>;
+    my $b = set <Jupiter Juno Neptune Minerva Mars Venus Apollo Diana Vulcan Vesta Mercury Ceres>;
+    my $c = [<Apollo Arclight Astor>];
+    my @d;
+    
+    #?rakudo 4 skip "∪ NYI"
+    is showset([∪] @d), showset(∅), "Union reduce works on nothing";
+    is showset([∪] $a), showset($a), "Union reduce works on one set";
+    is showset([∪] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets";
+    is showset([∪] $a, $b, $c), showset(set($a.keys, $b.keys, $c.values)), "Union reduce works on three sets";
+
+    is showset([(|)] @d), showset(∅), "Union reduce works on nothing (texas)";
+    is showset([(|)] $a), showset($a), "Union reduce works on one set (texas)";
+    is showset([(|)] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets (texas)";
+    is showset([(|)] $a, $b, $c), showset(set($a.keys, $b.keys, $c.values)), "Union reduce works on three sets (texas)";
+
+    #?rakudo 4 skip "∩ NYI"
+    is showset([∩] @d), showset(∅), "Intersection reduce works on nothing";
+    is showset([∩] $a), showset($a), "Intersection reduce works on one set";
+    is showset([∩] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets";
+    is showset([∩] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets";
+
+    is showset([(&)] @d), showset(∅), "Intersection reduce works on nothing (texas)";
+    is showset([(&)] $a), showset($a), "Intersection reduce works on one set (texas)";
+    is showset([(&)] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets (texas)";
+    is showset([(&)] $a, $b, $c), showset(set("Apollo")), "Intersection reduce works on three sets (texas)";
+}
 
 # vim: ft=perl6
