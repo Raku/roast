@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 38;
+plan 46;
 
 {
     my @list = 1, 2, 3, 4;
@@ -20,25 +20,29 @@ plan 38;
         is_deeply classify( $classifier, @list ), $classified1,
           "basic classify as subroutine with {$classifier.^name}";
 
-        #?niecza 4 todo "unspecced use of classify as hash method"
+        #?niecza 5 todo "unspecced use of classify as hash method"
         my %hash;
         is_deeply %hash.classify( $classifier, @list ), $classified1,
           "basic classify from hash with {$classifier.^name}";
+        is_deeply %hash, $classified1,
+          "basic classify in hash with {$classifier.^name}";
         is_deeply %hash.classify( $classifier, @list ), $classified2,
           "additional classify from hash with {$classifier.^name}";
         is_deeply %hash, $classified2,
           "additional classify in hash with {$classifier.^name}";
 
-        #?niecza 4 todo "unspecced use of classify as typed hash method"
+        #?niecza 5 todo "unspecced use of classify as typed hash method"
         my List %thash{Str};
         is_deeply %thash.classify( $classifier, @list ), $classified1,
           "basic classify from typed hash with {$classifier.^name}";
+        is_deeply %thash, $classified1,
+          "basic classify in typed hash with {$classifier.^name}";
         is_deeply %thash.classify( $classifier, @list ), $classified2,
           "additional classify typed from hash with {$classifier.^name}";
         is_deeply %thash, $classified2,
           "additional classify in typed hash with {$classifier.^name}";
     }
-} #4*8
+} #4*10
 
 #?pugs todo 'feature'
 #?rakudo skip 'Cannot use bind operator with this LHS'
