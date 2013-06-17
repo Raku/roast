@@ -5,7 +5,7 @@ use Test;
 
 plan 31;
 
-{
+{ # basic classify with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
     my %expected1 =
       ('0'=>[7,9,3,7],         '10'=>[12,18],       '20'=>[29,23]);
@@ -37,16 +37,26 @@ plan 31;
     }
 } #28
 
-{
-    # Subroutine form, named sub mapper
-    sub suit($card) { $card.comb.pop }
-    my %got = categorize &suit, <A♣ 10♣ 6♥ 3♦ A♠ 3♣ K♠ J♥ 6♦ Q♠ K♥ 8♦ 5♠>;
-    my %expected = ('♠' => ['A♠', 'K♠', 'Q♠', '5♠'],
-                    '♣' => ['A♣', '10♣', '3♣'],
-                    '♥' => ['6♥', 'J♥', 'K♥'],
-                    '♦' => ['3♦', '6♦', '8♦']);
-    is_deeply(%got, %expected, 'sub with named sub mapper');  # test 2
-}
+{ # basic categorize
+    my %got = categorize { .comb }, <A♣ 10♣ 6♥ 3♦ A♠ 3♣ K♠ J♥ 6♦ Q♠ K♥ 8♦ 5♠>;
+    my %expected = (
+      'A' => ['A♣', 'A♠'],
+      '♣' => ['A♣', '10♣', '3♣'],
+      '1' => ['10♣'],
+      '0' => ['10♣'],
+      '6' => ['6♥', '6♦'],
+      '♥' => ['6♥', 'J♥', 'K♥'],
+      '3' => ['3♦', '3♣'],
+      '♦' => ['3♦', '6♦', '8♦'],
+      '♠' => ['A♠', 'K♠', 'Q♠', '5♠'],
+      'K' => ['K♠', 'K♥'],
+      'J' => ['J♥'],
+      'Q' => ['Q♠'],
+      '8' => ['8♦'],
+      '5' => ['5♠'],
+    );
+    is_deeply(%got, %expected, 'sub with named sub mapper');
+} #1
 
 {
     # Method form, code block mapper
@@ -56,8 +66,8 @@ plan 31;
         @categories;
     };
     my %expected = ('odd'=>[1,3,5], 'even'=>[2,4,6], 'triple'=>[3,6]);
-    is_deeply(%got, %expected, 'method with code block mapper');  # test 3
-}
+    is_deeply(%got, %expected, 'method with code block mapper');
+} #1
 
 {
     # Method form, named sub mapper
@@ -73,7 +83,7 @@ plan 31;
                      'vowel'     => ['a', 'e'],
                      'uppercase' => ['P'],
                      'lowercase' => ['a', 'd', 'r', 'e'] );
-    is_deeply(%got, %expected, 'method with named sub mapper');  # test 4
+    is_deeply(%got, %expected, 'method with named sub mapper');
 }
 
 # vim: ft=perl6
