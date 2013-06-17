@@ -3,14 +3,39 @@ use Test;
 
 # L<S32::Containers/"List"/"=item categorize">
 
-plan 4;
+plan 31;
 
 {
-    # Subroutine form, code block mapper
-    my %got = categorize { $_ - ($_ % 10) }, 29, 7, 12, 9, 18, 23, 3, 7;
-    my %expected = ('0'=>[7, 9, 3, 7], '10'=>[12, 18], '20'=>[29, 23]);
-    is_deeply(%got, %expected, 'sub with code block mapper');  # test 1
-}
+    my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
+    my %expected1 =
+      ('0'=>[7,9,3,7],         '10'=>[12,18],       '20'=>[29,23]);
+    my %expected2 =
+      ('0'=>[7,9,3,7,7,9,3,7], '10'=>[12,18,12,18], '20'=>[29,23,29,23]);
+    my sub subber ($a) { $a - ($a % 10) };
+    my $blocker = { $_ - ($_ % 10) };
+    my $hasher  = { 3=>0, 7=>0, 9=>0, 12=>10, 18=>10, 23=>20, 29=>20 };
+    my $arrayer = [ 0 xx 10, 10 xx 10, 20 xx 10 ];
+
+    for &subber, $blocker, $hasher, $arrayer -> $mapper {
+        is_deeply categorize( $mapper, @list ), %expected1,
+          "simple sub call with {$mapper.^name}";
+        is_deeply @list.categorize( $mapper ), %expected1,
+          "method call on list with {$mapper.^name}";
+        is_deeply {}.categorize( $mapper, @list ), %expected1,
+          "method call on hash with {$mapper.^name}";
+
+        #niecza 5 skip "unspecced hash method categorize"
+        my %hash;
+        is_deeply %hash.categorize( $mapper, @list ), %expected1,
+          "first method call on hash with {$mapper.^name}";
+        is_deeply %hash, %expected1,
+          "checking whether first hash is set with {$mapper.^name}";
+        is_deeply %hash.categorize( $mapper, @list ), %expected2,
+          "second method call on hash with {$mapper.^name}";
+        is_deeply %hash, %expected2,
+          "checking whether second hash is set with {$mapper.^name}";
+    }
+} #28
 
 {
     # Subroutine form, named sub mapper
