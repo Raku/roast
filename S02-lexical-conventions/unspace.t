@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 76;
+plan 77;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -33,19 +33,24 @@ is((:foo\ ("bar")), ('foo' => "bar"), 'unspace with adverb');
 
 is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
 
-#?rakudo skip 'unimplemented postfix forms'
 {
     my @array = 1,2,3;
 
     @array\    .>>++;
-    @array>>\    .++;
-    @array\ .>>\ .++;
     @array\     .»++;
-    @array»\     .++;
-    @array\ .»\  .++;
-    is( ~@array, "7 8 9", 'unspace with postfix hyperops');
+    is( ~@array, "7 8 9", 'unspace with postfix pre-dot hyperops');
 }
 
+#?rakudo skip '.++ does not work'
+{
+    my @array = 1,2,3;
+
+    @array>>\    .++;
+    @array\ .>>\ .++;
+    @array»\     .++;
+    @array\ .»\  .++;
+    is( ~@array, "7 8 9", 'unspace with postfix pre- and/or post-dot hyperops');
+}
 
 #Test the "unspace" and unspace syntax
 

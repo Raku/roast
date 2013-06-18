@@ -232,7 +232,7 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, upspace form)");
 };
 
-#?rakudo skip 'postfix forms'
+# postfix forms
 { # unary postfix again, but with a twist
         my @r;
         @r = ("f", "oo", "bar")».chars;
