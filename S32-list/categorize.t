@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item categorize">
 
-plan 31;
+plan 47;
 
 { # basic classify with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
@@ -34,8 +34,19 @@ plan 31;
           "second method call on hash with {$mapper.^name}";
         is_deeply %hash, %expected2,
           "checking whether second hash is set with {$mapper.^name}";
+
+        #niecza 5 skip "unspecced hash method categorize"
+        my List %thash{Int};
+        is_deeply %thash.categorize( $mapper, @list ), %expected1,
+          "first method call on hash with {$mapper.^name}";
+        is_deeply %thash, %expected1,
+          "checking whether first hash is set with {$mapper.^name}";
+        is_deeply %thash.categorize( $mapper, @list ), %expected2,
+          "second method call on hash with {$mapper.^name}";
+        is_deeply %thash, %expected2,
+          "checking whether second hash is set with {$mapper.^name}";
     }
-} #28
+} #4*11
 
 { # basic categorize
     my %got = categorize { .comb }, <A♣ 10♣ 6♥ 3♦ A♠ 3♣ K♠ J♥ 6♦ Q♠ K♥ 8♦ 5♠>;
