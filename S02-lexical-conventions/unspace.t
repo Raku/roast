@@ -38,7 +38,7 @@ is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
 
     @array\    .>>++;
     @array\     .»++;
-    is( ~@array, "7 8 9", 'unspace with postfix pre-dot hyperops');
+    is( ~@array, "3 4 5", 'unspace with postfix pre-dot hyperops');
 }
 
 #?rakudo skip '.++ does not work'
@@ -49,7 +49,7 @@ is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
     @array\ .>>\ .++;
     @array»\     .++;
     @array\ .»\  .++;
-    is( ~@array, "7 8 9", 'unspace with postfix pre- and/or post-dot hyperops');
+    is( ~@array, "5 6 7", 'unspace with postfix pre- and/or post-dot hyperops');
 }
 
 #Test the "unspace" and unspace syntax
