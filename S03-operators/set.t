@@ -424,6 +424,7 @@ ok $s !R(>) $kb, "Set is not a reversed proper superset of KeyBag (texas)";
 ok $kb !R(>) $kb, "KeyBag is not reversed proper superset of itself (texas)";
 ok $kb !R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
 
+#?rakudo skip 'Reduction and set operators'
 {
     my $a = set <Zeus Hera Artemis Apollo Hades Aphrodite Ares Athena Hermes Poseidon Hephaestus>;
     my $b = set <Jupiter Juno Neptune Minerva Mars Venus Apollo Diana Vulcan Vesta Mercury Ceres>;
