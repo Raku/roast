@@ -45,11 +45,8 @@ is (<z y> ... 'a').[^10].join(', '), 'z, y, x, w, v, u, t, s, r, q', 'descending
 is (<z y m> ... 'a').[^10].join(', '), 'z, y, m, l, k, j, i, h, g, f', 'descending sequence started with three different letters';
 is (<a b>, { .succ } ... *).[^7].join(', '), 'a, b, c, d, e, f, g', 'characters xand arity-1';
 is ('x' ... 'z').join(', '), 'x, y, z', "sequence ending with 'z' don't cross to two-letter strings";
-#?rakudo skip 'hangs'
 is ('A' ... 'z').elems, 'z'.ord - 'A'.ord + 1, "sequence from 'A' to 'z' is finite and of correct length";
-#?rakudo skip 'hangs'
 is ('α' ... 'ω').elems, 'ω'.ord - 'α'.ord + 1, "sequence from 'α' to 'ω' is finite and of correct length";
-#?rakudo 2 skip 'Unicode stuff'
 is ('☀' ... '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔☕', "sequence from '☀' to '☕'";
 is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔', "exclusive sequence from '☀' to '☕'";
 
