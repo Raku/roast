@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 15;
 
 =begin desc
 
@@ -27,9 +27,6 @@ my @a;
 try { eval 'foo(@a,@a)' };
 ok $!.defined, 'Calling a subroutine with a nonmatching signature sets $!';
 ok !$called, 'The subroutine also was not called';
-
-try { 1 div 0 };
-ok $!.defined, 'Dividing one by zero sets $!';
 
 sub incr ( $a is rw ) { $a++ };
 try { incr(19) };

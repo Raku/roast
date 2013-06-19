@@ -153,10 +153,12 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 
-# SHOULD: Add divide by zero / zero denominator tests
+# SHOULD: Add zero denominator tests
 # Added three constructor tests above.  Unsure about the
 # wisdom of allowing math with zero denominator Rats,
 # so I'm holding off on writing tests for it.
+
+# there are a few division by zero tests in S03-operator/div.t
 
 #?niecza todo
 #?pugs todo 'NaN.Rat'
