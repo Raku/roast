@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Path>
 
-plan 47;
+plan 52;
 
 my $relpath = IO::Path::Cygwin.new('foo/bar' );
 my $abspath = IO::Path::Cygwin.new('/foo/bar');
@@ -54,7 +54,7 @@ is $relpath.absolute("\\usr"),	"/usr/foo/bar",		"absolute path specified";
 is IO::Path::Cygwin.new("/usr/bin").relative("/usr"),	"bin",			"relative path specified";
 is $relpath.absolute.relative,  "foo/bar",		"relative inverts absolute";
 is $relpath.absolute("/foo").relative("\\foo"), "foo/bar", "absolute inverts relative";
-#?rakudo 1 skip 'resolve NYI, needs nqp::readlink'
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
 is $abspath.relative.absolute.resolve, "\\foo\\bar",	"absolute inverts relative with resolve";
 
 is IO::Path::Cygwin.new("foo/bar").parent,		"foo",			"parent of 'foo/bar' is 'foo'";
@@ -67,6 +67,13 @@ is IO::Path::Cygwin.new("\\").parent,			"/",			"parent of root ('\\') is '/'";
 
 is IO::Path::Cygwin.new("/").child('foo'),	"/foo",		"append to root";
 is IO::Path::Cygwin.new(".").child('foo'),	"foo",		"append to cwd";
+
+my $numfile = IO::Path::Unix.new("foo/file01.txt");
+is $numfile.succ,	"foo/file02.txt", "succ basic";
+is $numfile.succ.succ,	"foo/file03.txt", "succ x 2";
+is $numfile.pred,	"foo/file00.txt", "pred basic";
+is IO::Path::Unix.new("foo/()").succ, "foo/()", "succ only effects basename";
+is IO::Path::Unix.new("foo/()").succ, "foo/()", "pred only effects basename";
 
 if IO::Spec.FSTYPE eq 'Win32' {
 	ok IO::Path::Cygwin.new(~$*CWD).e,		"cwd exists, filetest inheritance ok";
