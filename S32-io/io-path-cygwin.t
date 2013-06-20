@@ -23,7 +23,7 @@ my $uncpath = IO::Path::Cygwin.new("\\\\server\\share\\");
 is $uncpath.volume,	"//server/share",	'volume "//server/share/" -> ""/server/share"';
 is $uncpath.directory, 	"/",	'directory "\\\\server\\share\\" -> "\\"';
 is $uncpath.basename, 	"/",	'basename "\\\\server\\share\\" -> "\\"';
-is $uncpath.Str, "//server/share", '"\\\\server\\share" restringifies "//server/share"';
+is $uncpath.Str, "\\\\server\\share\\", '"\\\\server\\share" restringifies to itself';
 
 my $uncpath2 = IO::Path::Cygwin.new("//server/share/a");
 is $uncpath2.volume,	"//server/share",	'volume "//server/share/a" -> ""//server/share"';
@@ -50,7 +50,7 @@ ok IO::Path::Cygwin.new("A:b").is-relative,	'"A:b" is relative';
 
 
 is $relpath.absolute,	IO::Spec::Cygwin.canonpath("$*CWD/foo/bar"),	"absolute path from \$*CWD";
-is $relpath.absolute("\\usr"),	"/usr/foo/bar",		"absolute path specified";
+is $relpath.absolute("/usr"),	"/usr/foo/bar",		"absolute path specified";
 is IO::Path::Cygwin.new("/usr/bin").relative("/usr"),	"bin",			"relative path specified";
 is $relpath.absolute.relative,  "foo/bar",		"relative inverts absolute";
 is $relpath.absolute("/foo").relative("\\foo"), "foo/bar", "absolute inverts relative";

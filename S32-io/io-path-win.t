@@ -23,7 +23,7 @@ my $uncpath = IO::Path::Win32.new("\\\\server\\share\\");
 is $uncpath.volume,	"\\\\server\\share",	'volume "\\\\server\\share\\" -> ""\\\\server\\share"';
 is $uncpath.directory, 	"\\",	'directory "\\\\server\\share\\" -> "\\"';
 is $uncpath.basename, 	"\\",	'basename "\\\\server\\share\\" -> "\\"';
-is $uncpath.Str, "\\\\server\\share", '"\\\\server\\share" restringifies to itself';
+is $uncpath.Str, "\\\\server\\share\\", '"\\\\server\\share\\" restringifies to itself';
 
 my $uncpath2 = IO::Path::Win32.new("//server/share/a");
 is $uncpath2.volume,	"//server/share",	'volume "//server/share/a" -> ""//server/share"';
