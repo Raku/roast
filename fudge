@@ -87,6 +87,8 @@ Usage: $0 [options] [implname] testfilename [fudgedtestfilename]
     implname is the lc name of your implementation, e.g. pugs or rakudo
     num is the number of statements or blocks to preprocess, defaults to 1
     count is how many tests the following construct counts as
+    implnames are compared as a prefix match on sequences of components,
+    i.e. #?rakudo matches rakudo.jvm
 
 USAGE
 }
@@ -131,7 +133,7 @@ sub fudgeblock {
             next;
         }
         if (/^\s*\#\? (\S+?)[:\s] \s* ((\S*).*)/x) {
-            if ($1 eq $ME) {
+            if (substr("$ME.",0,length($1)+1) eq "$1.") {
                 $REALLY_FUDGED = 1;
                 $ARGS = $2;
                 if ($ARGS =~ s/^emit\s*//) {
