@@ -73,8 +73,8 @@ is($val2, 42, '... cloned object has proper attr value');
     }
     my $a1 = A.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
-    is $a1.array, <a b>, 'original object has its original array';
-    is $a2.array, <c d>, 'cloned object has the newly-provided array';
+    is_deeply $a1.array, ['a', 'b'], 'original object has its original array';
+    is_deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
 
     # hash
     class B {
@@ -82,8 +82,8 @@ is($val2, 42, '... cloned object has proper attr value');
     }
     my $b1 = B.new(hash=>{'a' => 'b'});
     my $b2 = $b1.clone(hash=>{'c' => 'd'});
-    is $b1.hash, {'a' => 'b'}, 'original object has its original hash';
-    is $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
+    is_deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
+    is_deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
 }
 
 # vim: ft=perl6
