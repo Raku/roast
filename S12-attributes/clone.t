@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 18;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -63,6 +63,27 @@ is($val2, 42, '... cloned object has proper attr value');
     lives_ok { $q = $p.clone }, 'Match object can be cloned';
     
     is ~$q{'foo'}, 'a', 'cloned Match object retained named capture value';
+}
+
+# test cloning of array and hash attributes
+{
+    # array
+    class A {
+        has @.array;
+    }
+    my $a1 = A.new(:array<a b>);
+    my $a2 = $a1.clone(:array<c d>);
+    is_deeply $a1.array, ['a', 'b'], 'original object has its original array';
+    is_deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
+
+    # hash
+    class B {
+        has %.hash;
+    }
+    my $b1 = B.new(hash=>{'a' => 'b'});
+    my $b2 = $b1.clone(hash=>{'c' => 'd'});
+    is_deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
+    is_deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
 }
 
 # vim: ft=perl6
