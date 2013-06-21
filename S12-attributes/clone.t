@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 18;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
