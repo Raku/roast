@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 84;
+plan 100;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -139,5 +139,35 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
 }
+
+#?rakudo skip 'Reduction and bag operators'
+{
+    # my $s = set <blood love>;
+    # my $ks = KeySet.new(<blood rhetoric>);
+    # my $b = bag <blood blood rhetoric love love>;
+    # my $kb = KeyBag.new(<blood love love>);
+    my @d;
+    
+    is showkv([⊎] @d), showkv(∅), "Bag sum reduce works on nothing";
+    is showkv([⊎] $s), showkv($s.Bag), "Bag sum reduce works on one set";
+    is showkv([⊎] $s, $b), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Bag sum reduce works on two sets";
+    is showkv([⊎] $s, $b, $kb), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Bag sum reduce works on three sets";
+
+    is showkv([(+)] @d), showkv(∅), "Bag sum reduce works on nothing";
+    is showkv([(+)] $s), showkv($s.Bag), "Bag sum reduce works on one set";
+    is showkv([(+)] $s, $b), showkv({ blood => 3, rhetoric => 1, love => 3 }), "Bag sum reduce works on two sets";
+    is showkv([(+)] $s, $b, $kb), showkv({ blood => 4, rhetoric => 1, love => 5 }), "Bag sum reduce works on three sets";
+
+    is showkv([⊍] @d), showkv(∅), "Bag multiply reduce works on nothing";
+    is showkv([⊍] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
+    is showkv([⊍] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
+    is showkv([⊍] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
+
+    is showkv([(.)] @d), showkv(∅), "Bag multiply reduce works on nothing";
+    is showkv([(.)] $s), showkv($s.Bag), "Bag multiply reduce works on one set";
+    is showkv([(.)] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
+    is showkv([(.)] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
+}
+
 
 # vim: ft=perl6
