@@ -1,4 +1,5 @@
 *.rakudo
+*.rakudo.jvm
 *.niecza
 *.pugs
 S32-io/server-ready-flag
