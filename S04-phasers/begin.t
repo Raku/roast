@@ -19,7 +19,7 @@ plan 9;
     is $my, 'foo', 'can set outer lexical from a BEGIN block';
 }
 
-#?rakudo skip 'cannot assing to non-container'
+#?rakudo.jvm skip 'cannot assing to non-container'
 {
     our $our;
     BEGIN { $our = 'foo' }
