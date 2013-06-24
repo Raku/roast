@@ -4,6 +4,7 @@ use Test;
 plan 296;
 
 sub showset($s) { $s.keys.sort.join(' ') }
+sub showkv($x) { $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ') }
 
 my $s = set <I'm afraid it isn't your day>;
 my $ks = KeySet.new(<I'm afraid it is>); # Tom Stoppard
@@ -113,15 +114,17 @@ isa_ok ($s (-) $ks), Set, "... and it's actually a Set";
 is showset($ks (-) $s), showset(set <is>), "Set subtracted from KeySet is correct";
 isa_ok ($ks (-) $s), Set, "... and it's actually a Set";
 
-is showset($b (-) $s), showset($b), "Set subtracted from Bag is correct";
-isa_ok ($b (-) $s), Set, "... and it's actually a Set";
+#?rakudo 2 todo "Changes haven't made it to Rakudo yet"
+is showkv($b (-) $s), showkv($b), "Set subtracted from Bag is correct";
+isa_ok ($b (-) $s), Bag, "... and it's actually a Bag";
 is showset($s (-) $b), showset($s), "Bag subtracted from Set is correct";
 isa_ok ($s (-) $b), Set, "... and it's actually a Set";
 
 is showset($s (-) $kb), showset(set <I'm afraid it isn't day>), "KeyBag subtracted from Set is correct";
 isa_ok ($s (-) $kb), Set, "... and it's actually a Set";
-is showset($kb (-) $s), showset(set <Come, take bread with joy, and wine with a glad heart>), "Set subtracted from KeyBag is correct";
-isa_ok ($kb (-) $s), Set, "... and it's actually a Set";
+#?rakudo 2 todo "Changes haven't made it to Rakudo yet"
+is showkv($kb (-) $s), showkv(<Come, take your bread with joy, and wine with a glad heart>.Bag), "Set subtracted from KeyBag is correct";
+isa_ok ($kb (-) $s), Bag, "... and it's actually a Bag";
 
 # symmetric difference
 
@@ -139,8 +142,10 @@ isa_ok ($s (^) $b), Set, "... and it's actually a Set";
 is showset($b (^) $s), showset($s (|) $b), "Set symmetric difference with Bag is correct";
 isa_ok ($b (^) $s), Set, "... and it's actually a Set";
 
+#?niecza todo "Test is wrong, implementation is wrong"
 is showset($s (^) $kb), showset(($s (|) $kb) (-) set <your>), "KeyBag subtracted from Set is correct";
 isa_ok ($s (^) $kb), Set, "... and it's actually a Set";
+#?niecza todo "Test is wrong, implementation is wrong"
 is showset($kb (^) $s), showset(($s (|) $kb) (-) set <your>), "Set subtracted from KeyBag is correct";
 isa_ok ($kb (^) $s), Set, "... and it's actually a Set";
 
