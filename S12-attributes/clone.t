@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 34;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -71,21 +71,41 @@ is($val2, 42, '... cloned object has proper attr value');
     my class ArrTest {
         has @.array;
     }
+
+    # hash
+    my class HshTest {
+        has %.hash;
+    }
+
+    # when cloning with new versions of attributes, it should not update the original
     my $a1 = ArrTest.new(:array<a b>);
     my $a2 = $a1.clone(:array<c d>);
     #?rakudo todo "clone currently messes up original"
     is_deeply $a1.array, ['a', 'b'], 'original object has its original array';
     is_deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
 
-    # hash
-    my class HshTest {
-        has %.hash;
-    }
     my $b1 = HshTest.new(hash=>{'a' => 'b'});
     my $b2 = $b1.clone(hash=>{'c' => 'd'});
     #?rakudo todo "clone currently messes up original"
     is_deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
     is_deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
+
+    # when cloning without new versions of attributes, it should not deep-copy the array/hash
+    my $a3 = ArrTest.new(:array<a b>);
+    my $a4 = $a3.clone;
+    is_deeply $a3.array, ['a', 'b'], 'original array attr sanity test';
+    is_deeply $a4.array, ['a', 'b'], 'cloned array attr sanity test';
+    push $a3.array, 'c';
+    is_deeply $a3.array, ['a', 'b', 'c'], 'array on original is updated';
+    is_deeply $a4.array, ['a', 'b', 'c'], 'array on copy is updated';
+
+    my $b3 = HshTest.new(hash=>{'a' => 'b'});
+    my $b4 = $b3.clone;
+    is_deeply $b3.hash, {'a' => 'b'}, 'original hash attr sanity test';
+    is_deeply $b4.hash, {'a' => 'b'}, 'cloned hash attr sanity test';
+    $b3.hash{'c'} = 'd';
+    is_deeply $b3.hash, {'a' => 'b', 'c' => 'd'}, 'hash on original is updated';
+    is_deeply $b4.hash, {'a' => 'b', 'c' => 'd'}, 'hash on copy is updated';
 }
 
 # test cloning of custom class objects
