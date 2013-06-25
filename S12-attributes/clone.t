@@ -68,7 +68,7 @@ is($val2, 42, '... cloned object has proper attr value');
 # test cloning of array and hash attributes
 {
     # array
-    class ArrTest {
+    my class ArrTest {
         has @.array;
     }
     my $a1 = ArrTest.new(:array<a b>);
@@ -78,7 +78,7 @@ is($val2, 42, '... cloned object has proper attr value');
     is_deeply $a2.array, ['c', 'd'], 'cloned object has the newly-provided array';
 
     # hash
-    class HshTest {
+    my class HshTest {
         has %.hash;
     }
     my $b1 = HshTest.new(hash=>{'a' => 'b'});
