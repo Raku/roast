@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 26;
 
 # L<S12/Cloning/You can clone an object, changing some of the attributes:>
 class Foo { 
@@ -86,6 +86,37 @@ is($val2, 42, '... cloned object has proper attr value');
     #?rakudo todo "clone currently messes up original"
     is_deeply $b1.hash, {'a' => 'b'}, 'original object has its original hash';
     is_deeply $b2.hash, {'c' => 'd'}, 'cloned object has the newly-provided hash';
+}
+
+# test cloning of custom class objects
+{
+    my class LeObject { 
+        has $.identifier; 
+        has @.arr; 
+        has %.hsh; 
+    }
+
+    my class LeContainer { has LeObject $.obj; }
+
+    my $cont = LeContainer.new(obj=>LeObject.new(identifier=>'1234', :arr<a b c>, :hsh{'x'=>'y'}));
+    my $cont_clone_diff = $cont.clone(obj=>LeObject.new(identifier=>'4567', :arr<d e f>, :hsh{'z'=>'a'}));
+    my $cont_clone_same = $cont.clone;
+
+    # cont_clone_diff should contain a new value, altering its contained values should not alter the original
+    is_deeply $cont_clone_diff.obj.arr, ['d', 'e', 'f'], 'cloned object sanity';
+    is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
+
+    # change the cloned objects contained object, the original should be intact afterwards
+    $cont_clone_diff.obj.arr = 'g', 'h', 'i';
+    is_deeply $cont_clone_diff.obj.arr, ['g', 'h', 'i'], 'cloned object sanity';
+    is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
+
+    # change attributes on contained object should change clones if a new object was not assigned
+    is_deeply $cont_clone_same.obj.arr, ['a', 'b', 'c'], 'cloned object has identical value';
+    is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object sanity test';
+    $cont.obj.arr = 'j', 'k', 'l';
+    is_deeply $cont_clone_same.obj.arr, ['j', 'k', 'l'], 'cloned object has new value';
+    is_deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
 }
 
 # vim: ft=perl6
