@@ -24,7 +24,6 @@ plan 47;
         is_deeply {}.categorize( $mapper, @list ), %expected1,
           "method call on hash with {$mapper.^name}";
 
-        #niecza 5 skip "unspecced hash method categorize"
         my %hash;
         is_deeply %hash.categorize( $mapper, @list ), %expected1,
           "first method call on hash with {$mapper.^name}";
@@ -35,7 +34,8 @@ plan 47;
         is_deeply %hash, %expected2,
           "checking whether second hash is set with {$mapper.^name}";
 
-        #niecza 5 skip "unspecced hash method categorize"
+#?niecza skip '%thash{Int} NYI'
+{
         my List %thash{Int};
         is_deeply %thash.categorize( $mapper, @list ), %expected1,
           "first method call on hash with {$mapper.^name}";
@@ -45,6 +45,7 @@ plan 47;
           "second method call on hash with {$mapper.^name}";
         is_deeply %thash, %expected2,
           "checking whether second hash is set with {$mapper.^name}";
+}
     }
 } #4*11
 
