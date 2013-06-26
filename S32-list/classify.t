@@ -20,7 +20,6 @@ plan 46;
         is_deeply classify( $classifier, @list ), $classified1,
           "basic classify as subroutine with {$classifier.^name}";
 
-        #?niecza 5 todo "unspecced use of classify as hash method"
         my %hash;
         is_deeply %hash.classify( $classifier, @list ), $classified1,
           "basic classify from hash with {$classifier.^name}";
@@ -31,7 +30,8 @@ plan 46;
         is_deeply %hash, $classified2,
           "additional classify in hash with {$classifier.^name}";
 
-        #?niecza 5 todo "unspecced use of classify as typed hash method"
+#?niecza skip '%thash{Str} NYI'
+{
         my List %thash{Str};
         is_deeply %thash.classify( $classifier, @list ), $classified1,
           "basic classify from typed hash with {$classifier.^name}";
@@ -41,6 +41,7 @@ plan 46;
           "additional classify typed from hash with {$classifier.^name}";
         is_deeply %thash, $classified2,
           "additional classify in typed hash with {$classifier.^name}";
+}
     }
 } #4*10
 
