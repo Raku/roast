@@ -27,7 +27,8 @@ isa_ok $path.path, IO::Path, 'IO::Path.path returns IO::Path';
 isa_ok $path.IO,   IO::Handle, 'IO::Path.IO returns IO::Handle';
 
 # Try to guess from context that the correct backend is loaded:
-#?niecza 2 skip 'is-absolute NYI'
+#?niecza skip 'is-absolute NYI'
+#?DOES 2
 {
   if $*OS eq any <Win32 MSWin32 os2 dos symbian NetWare> {
       ok "c:\\".path.is-absolute, "Win32ish OS loaded (volume)";
