@@ -66,7 +66,6 @@ plan 46;
 } #1
 
 # .classify should work on non-arrays
-#?niecza todo "Not sure what these should do"
 {
     is_deeply 42.classify(  {$_} ), { 42 => [42] }, "classify single num";
     is_deeply "A".classify( {$_} ), { A => ["A"] }, "classify single string";
