@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 64;
+plan 108;
 
 # L<S02/Names and Variables/appropriate adverb to the subscript>
 
@@ -29,7 +29,7 @@ plan 64;
     is +(@array[42,23]:p),  0, ":p on an array weeded out non-existing entries (1)";
     #?niecza todo
     is ~(@array[42,23]:p), "", ":p on an array weeded out non-existing entries (2)";
-}
+} #8
 
 # :kv
 {
@@ -54,7 +54,7 @@ plan 64;
     is +(@array[42,23]:kv),  0, ":kv on an array weeded out non-existing entries (1)";
     #?niecza todo
     is ~(@array[42,23]:kv), "", ":kv on an array weeded out non-existing entries (2)";
-}
+} #8
 
 # :k
 {
@@ -74,7 +74,7 @@ plan 64;
     is +(@array[42,23]:k),  0, ":k on an array weeded out non-existing entries (1)";
     #?niecza todo
     is ~(@array[42,23]:k), "", ":k on an array weeded out non-existing entries (2)";
-}
+} #6
 
 # :v
 {
@@ -104,7 +104,7 @@ plan 64;
     is +(@array[42,23]:v),  0, ":v on an array weeded out non-existing entries (1)";
     #?niecza skip 'Excess arguments to KERNEL Array.postcircumfix:<[ ]>, unused named v'
     is ~(@array[42,23]:v), "", ":v on an array weeded out non-existing entries (2)";
-}
+} #8
 
 # Adverbs on hash subscripts
 # :p
@@ -129,7 +129,7 @@ plan 64;
     is +(%hash<42 23>:p),  0, ":p on a hash weeded out non-existing entries (1)";
     #?niecza todo
     is ~(%hash<42 23>:p), "", ":p on a hash weeded out non-existing entries (2)";
-}
+} #8
 
 # :kv
 {
@@ -154,7 +154,7 @@ plan 64;
     is +(%hash<42 23>:kv),  0, ":kv on a hash weeded out non-existing entries (1)";
     #?niecza todo
     is ~(%hash<42 23>:kv), "", ":kv on a hash weeded out non-existing entries (2)";
-}
+} #8
 
 # :k
 {
@@ -175,7 +175,7 @@ plan 64;
     is +(%hash<42 23>:k),  0, ":k on a hash weeded out non-existing entries (1)";
     #?niecza todo
     is ~(%hash<42 23>:k), "", ":k on a hash weeded out non-existing entries (2)";
-}
+} #6
 
 # :v
 {
@@ -196,7 +196,7 @@ plan 64;
 
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
     is +(%hash<0 1>:v), 2,
-        ":v on a hash returned a tow-elem array";
+        ":v on a hash returned a two-elem array";
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
     is ~(%hash<0 1>:v), "a B",
         ":v on a hash returned the correct two-elem array";
@@ -205,28 +205,145 @@ plan 64;
     is +(%hash<42 23>:v),  0, ":v on a hash weeded out non-existing entries (1)";
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
     is ~(%hash<42 23>:v), "", ":v on a hash weeded out non-existing entries (2)";
-}
+} #8
 
-# The adverbial forms weed out non-existing entries, but undefined (but
+# array adverbials that can weed out
+#?niecza todo
+{
+    my @array; @array[0] = 42; @array[2] = 23; # = (42, Mu, 23);
+
+    # []:kv
+    is +(@array[0,1,2]:kv), 4,
+      "non-existing entries should be weeded out (1:kv)";
+    is_deeply @array[0,1,2]:kv, (0,42,2,23),
+      "non-existing entries should be weeded out (2:kv)";
+    is +(@array[0,1,2]:!kv), 6,
+      "non-existing entries should not be weeded out (1:!kv)";
+    is_deeply @array[0,1,2]:!kv, (0,42,1,Any,2,23),
+      "non-existing entries should not be weeded out (2:!kv)";
+
+    # []:p
+    is +(@array[0,1,2]:p), 2,
+      "non-existing entries should be weeded out (1:p)";
+    is_deeply @array[0,1,2]:p, (0=>42,2=>23),
+      "non-existing entries should be weeded out (2:p)";
+    is +(@array[0,1,2]:!p), 3,
+      "non-existing entries should not be weeded out (1:!p)";
+    is_deeply @array[0,1,2]:!p, (0=>42,1=>Any,2=>23),
+      "non-existing entries should not be weeded out (2:!p)";
+
+    # []:k
+    is +(@array[0,1,2]:k), 2,
+      "non-existing entries should be weeded out (1:k)";
+    is_deeply @array[0,1,2]:k, (0,2),
+      "non-existing entries should be weeded out (2:k)";
+    is +(@array[0,1,2]:!k), 3,
+      "non-existing entries should not be weeded out (1:!k)";
+    is_deeply @array[0,1,2]:!k, (0,1,2),
+      "non-existing entries should not be weeded out (2:!k)";
+
+    # []:v
+    is +(@array[0,1,2]:v), 2,
+      "non-existing entries should be weeded out (1:v)";
+    is_deeply @array[0,1,2]:v, (42,23),
+      "non-existing entries should be weeded out (2:v)";
+    is +(@array[0,1,2]:!v), 3,
+      "non-existing entries should not be weeded out (1:!v)";
+    is_deeply @array[0,1,2]:!v, (42,Any,23),
+      "non-existing entries should not be weeded out (2:!v)";
+} #16
+
+# array subscript adverbial weeds out non-existing entries, but undefined (but
 # existing) entries should be unaffected by this rule.
+#?niecza todo
 {
-    my @array = (42, Mu, 23);
+    my @array = (42, Any, 23);
 
-    #?niecza todo
+    # []:kv
     is +(@array[0,1,2]:kv), 6,
-        "undefined but existing entries should not be weeded out (1)";
-    is ~(@array[0,1,2]:kv), "0 42 1  2 23",
-        "undefined but existing entries should not be weeded out (2)";
-}
+      "undefined but existing entries should not be weeded out (1:kv)";
+    is_deeply @array[0,1,2]:kv, (0,42,1,Any,2,23),
+      "undefined but existing entries should not be weeded out (2:kv)";
+    is +(@array[0,1,2]:!kv), 6,
+      "undefined but existing entries should not be weeded out (1:!kv)";
+    is_deeply @array[0,1,2]:!kv, (0,42,1,Any,2,23),
+      "undefined but existing entries should not be weeded out (2:!kv)";
 
+    # []:p
+    is +(@array[0,1,2]:p), 3,
+      "undefined but existing entries should not be weeded out (1:p)";
+    is_deeply @array[0,1,2]:p, (0=>42,1=>Any,2=>23),
+      "undefined but existing entries should not be weeded out (2:p)";
+    is +(@array[0,1,2]:!p), 3,
+      "undefined but existing entries should not be weeded out (1:!p)";
+    is_deeply @array[0,1,2]:!p, (0=>42,1=>Any,2=>23),
+      "undefined but existing entries should not be weeded out (2:!p)";
+
+    # []:k
+    is +(@array[0,1,2]:k), 3,
+      "undefined but existing entries should not be weeded out (1:k)";
+    is_deeply @array[0,1,2]:k, (0,1,2),
+      "undefined but existing entries should not be weeded out (2:k)";
+    is +(@array[0,1,2]:!k), 3,
+      "undefined but existing entries should not be weeded out (1:!k)";
+    is_deeply @array[0,1,2]:!k, (0,1,2),
+      "undefined but existing entries should not be weeded out (2:!k)";
+
+    # []:v
+    is +(@array[0,1,2]:v), 3,
+      "undefined but existing entries should not be weeded out (1:v)";
+    is_deeply @array[0,1,2]:v, (42,Any,23),
+      "undefined but existing entries should not be weeded out (2:v)";
+    is +(@array[0,1,2]:!v), 3,
+      "undefined but existing entries should not be weeded out (1:!v)";
+    is_deeply @array[0,1,2]:!v, (42,Any,23),
+      "undefined but existing entries should not be weeded out (2:!v)";
+} #16
+
+# hash adverbials that can weed out
+#?niecza todo
 {
-    my %hash = (0 => 42, 1 => Mu, 2 => 23);
+    my %hash = (0 => 42, 2 => 23);
 
-    #?niecza todo
-    is +(%hash<0 1 2>:kv), 6,
-        "undefined but existing entries should not be weeded out (3)";
-    is ~(%hash<0 1 2>:kv), "0 42 1  2 23",
-        "undefined but existing entries should not be weeded out (4)";
-}
+    # {}:kv
+    is +(%hash<0 1 2>:kv), 4,
+        "non-existing entries should be weeded out (3:kv)";
+    is_deeply %hash<0 1 2>:kv, ("0",42,"2",23),
+        "non-existing entries should be weeded out (4:kv)";
+    is +(%hash<0 1 2>:!kv), 6,
+        "non-existing entries should be weeded out (3:!kv)";
+    is_deeply %hash<0 1 2>:!kv, ("0",42,"1",Any,"2",23),
+        "non-existing entries should be weeded out (4:!kv)";
+
+    # {}:p
+    is +(%hash<0 1 2>:p), 2,
+        "non-existing entries should be weeded out (3:p)";
+    is_deeply %hash<0 1 2>:p, ("0"=>42,"2"=>23),
+        "non-existing entries should be weeded out (4:p)";
+    is +(%hash<0 1 2>:!p), 3,
+        "non-existing entries should not be weeded out (3:!p)";
+    is_deeply %hash<0 1 2>:!p, ("0"=>42,"1"=>Any,"2"=>23),
+        "non-existing entries should not be weeded out (4:!p)";
+
+    # {}:k
+    is +(%hash<0 1 2>:k), 2,
+        "non-existing entries should be weeded out (3:k)";
+    is_deeply %hash<0 1 2>:k, <0 2>,
+        "non-existing entries should be weeded out (4:k)";
+    is +(%hash<0 1 2>:!k), 3,
+        "non-existing entries should not be weeded out (3:!k)";
+    is_deeply %hash<0 1 2>:!k, <0 1 2>,
+        "non-existing entries should not be weeded out (4:!k)";
+
+    # {}:v
+    is +(%hash<0 1 2>:v), 2,
+        "non-existing entries should be weeded out (3:v)";
+    is_deeply %hash<0 1 2>:v, (42,23),
+        "non-existing entries should be weeded out (4:v)";
+    is +(%hash<0 1 2>:!v), 3,
+        "non-existing entries should not be weeded out (3:!v)";
+    is_deeply %hash<0 1 2>:!v, (42,Any,23),
+        "non-existing entries should not be weeded out (4:!v)";
+} #16
 
 # vim: ft=perl6
