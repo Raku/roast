@@ -1,5 +1,5 @@
 use Test;
-plan 31;
+plan 39;
 my $r;
 
 =begin pod
@@ -43,14 +43,14 @@ for 0..7 {
     isa_ok $r.content[$_], Pod::Item;
 }
 
-$r.content[0].content[0].content, 'Animal';
-$r.content[0].level,   1;
-$r.content[2].content[0].content, 'Invertebrate';
-$r.content[2].level,   2;
-$r.content[3].content[0].content, 'Phase';
-$r.content[3].level,   1;
-$r.content[4].content[0].content, 'Solid';
-$r.content[4].level,   2;
+is $r.content[0].content[0].content, 'Animal';
+is $r.content[0].level,   1;
+is $r.content[2].content[0].content, 'Invertebrate';
+is $r.content[2].level,   2;
+is $r.content[3].content[0].content, 'Phase';
+is $r.content[3].level,   1;
+is $r.content[4].content[0].content, 'Solid';
+is $r.content[4].level,   2;
 
 =begin pod
 =comment CORRECT...
