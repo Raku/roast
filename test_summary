@@ -8,7 +8,7 @@
 ##  passed, failed, todoed, skipped, executed and planned test results.
 ##
 ##  Usage:
-##     tools/test_summary [--timing | --view] <implementation> [testlist]
+##     tools/test_summary [--timing | --view] [--archive tap_archive.tar.gz] <implementation> [testlist]
 ##
 ##  The --timing option enables microsecond timing per test saved
 ##      in docs/test_summary.times.
@@ -28,7 +28,8 @@ use Getopt::Long;
 
 my $timing;
 my $view;
-unless (GetOptions('timing' => \$timing, 'view' => \$view)) {
+my $archive;
+unless (GetOptions('timing' => \$timing, 'view' => \$view, 'archive:s' => \$archive)) {
     die "$0 cannot handle the unknown option\n";
 }
 if ($view) { Simple::Relative::Benchmarking::view(); exit(0); }
@@ -41,30 +42,12 @@ $benchmark = Simple::Relative::Benchmarking::begin() if $timing;
 my $implementation = $ARGV[0] ||
     die "Must specify an implementation";
 
-# Build the list of test scripts to run in @tfiles
-my $testlist = $ARGV[1] || 't/spectest.data';
-my $fh;
-open($fh, '<', $testlist) || die "Can't read $testlist: $!";
-my (@tfiles, %tname); # @tfiles lists all test file names before fudging
-while (<$fh>) {
-    /^ *#/ && next;
-    my ($specfile) = split ' ', $_;
-    next unless $specfile;
-    push @tfiles, "t/spec/$specfile";
-}
-close $fh or die $!;
-
-# Fudge any implementation specific tests by running the fudgeall script
-{
-    my $cmd = join ' ', $^X, 't/spec/fudgeall', $implementation, @tfiles;
-    # Fudgeall prints the name of each test script, but changes the name
-    # ending to match the implementation instead of .t if tests were fudged.
-    print "$cmd\n";
-    @tfiles = split ' ', `$cmd`; # execute fudgeall, collect test names
-}
+my $impl_class = $archive ? 'ArchiveRunner' : 'RealRunner';
 
 # Put test names in %tname, with the 't/spec/' removed from the start
 # and truncated to 49 characters. Keep track of the maximum name length.
+my @tfiles = $impl_class->get_test_names;
+my %tname;
 @tfiles = sort @tfiles;
 my $max = 0;
 for my $tfile (@tfiles) {
@@ -117,9 +100,7 @@ for my $tfile (@tfiles) {
     }
     $syn{$syn}++;
     printf "%s%s..", $tname, '.' x ($max - length($tname));
-    my $cmd = "./perl6 $tfile";
-    # Run the test, collecting all stdout in @results
-    my @results = split "\n", qx{$cmd};
+    my @results = split /\n/, $impl_class->run_test($tfile);
     my (%skip, %todopass, %todofail);
     my ($time1, $time2, $testnumber, $test_comment ) = ( 0, 0, 0, '' );
     my @times = (); my @comments = ();
@@ -489,6 +470,58 @@ sub view
             }
         } while index('5', $choice) >= 0;  # if user chose commits, must still choose sort order
     } while index('1234', $choice) >= 0;   # if valid sort order (not 'q') then do another report
+}
+
+package RealRunner;
+
+sub get_test_names {
+    my ($self) = @_;
+
+    # Build the list of test scripts to run in @tfiles
+    my @tfiles;
+    my $testlist = $ARGV[1] || 't/spectest.data';
+    my $fh;
+    open($fh, '<', $testlist) || die "Can't read $testlist: $!";
+    while (<$fh>) {
+        /^ *#/ && next;
+        my ($specfile) = split ' ', $_;
+        next unless $specfile;
+        push @tfiles, "t/spec/$specfile";
+    }
+    close $fh or die $!;
+
+    # Fudge any implementation specific tests by running the fudgeall script
+    {
+        my $cmd = join ' ', $^X, 't/spec/fudgeall', $implementation, @tfiles;
+        # Fudgeall prints the name of each test script, but changes the name
+        # ending to match the implementation instead of .t if tests were fudged.
+        print "$cmd\n";
+        @tfiles = split ' ', `$cmd`; # execute fudgeall, collect test names
+    }
+    @tfiles;
+}
+
+sub run_test {
+    my ($self, $tfile) = @_;
+
+    my $cmd = "./perl6 $tfile";
+    # Run the test, collecting all stdout in @results
+    scalar qx{$cmd};
+}
+
+package ArchiveRunner;
+
+my $arc_file;
+
+sub get_test_names {
+    require Archive::Tar;
+    $arc_file = Archive::Tar->new($archive);
+    grep /^t/, $arc_file->list_files;
+}
+
+sub run_test {
+    my ($self, $tfile) = @_;
+    $arc_file->get_content($tfile);
 }
 
 package main;
