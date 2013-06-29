@@ -34,7 +34,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 # no need to do that at compile time, since require() really is run time
-@*INC.push: 't/spec/packages';
+@*INC.unshift: 't/spec/packages';
 
 # Next line is for final test.
 #?pugs emit #
