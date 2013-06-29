@@ -170,7 +170,6 @@ Perl6-specific tests
 
 =end pod
 
-#?rakudo skip 'fun with undefine'
 #?niecza skip 'fun with undefine'
 {
     # aggregate references
