@@ -4,7 +4,7 @@ use Test;
 BEGIN { @*INC.push('t/spec/packages') };
 use Test::Util;
 
-plan 114;
+plan 115;
 
 =begin pod
 
@@ -102,6 +102,14 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
     # and wait a while.
 
     ok( $badness < 0.15, 'rand is pretty random' );
+}
+
+{
+    # this catches if the random number generator is biased toward
+    # smaller numbers in a range.
+    my %h;
+    %h{$_}++ for (^5).roll(1000);
+    ok %h<3> + %h<4> > 300, "Distribution is not very uneven";
 }
 
 # RT #113968
