@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 41;
+plan 49;
 
 # L<S02/Names and Variables/The empty>
 
@@ -10,23 +10,24 @@ plan 41;
     ok ().defined, '() is defined';
     my @a= 1, Nil, 3;
     is @a.elems, 2, 'Nil as part of list, is empty list';
-    @a.push: Nil;
+    ok (@a.push: Nil) =:= @a, "Pushing Nil returns same array";
     is @a.elems, 2, 'Pushing Nil in list context is empty list';
-    @a.unshift: Nil;
+    ok (@a.unshift: Nil) =:= @a, "Unshifting Nil returns same array";
     is @a.elems, 2, 'Unshifting Nil in list context is empty list';
-} #5
+    is (@a = Nil), Nil, "Setting to Nil returns Nil";
+    is @a.elems, 0, 'Setting to Nil restores original state';
+} #7
 
 # typed scalar
 #?pugs   skip "doesn't know typed stuff"
 #?niecza skip "doesn't know typed stuff"
-#?rakudo skip "not allowed to assign Nil to Int scalar"
 {
     my Int $a = 1;
-    is $a.WHAT, '(Int)', "Check that we have an 'Int' scalar";
-    ok !defined($a = Nil), "assigning Nil to Int should work";
+    #?rakudo skip "not allowed to assign Nil to Int scalar"
+    is ($a = Nil), Nil, "assigning Nil to Int should work";
+    #?rakudo todo "not allowed to assign Nil to Int scalar"
     ok !$a.defined,  "Nil makes undefined here";
-    is $a.WHAT, '(Int)', "Nil keeps Int type on scalar";
-} #4
+} #2
 
 # typed array
 #?pugs   skip "doesn't know typed stuff"
@@ -36,15 +37,19 @@ plan 41;
     #?rakudo todo ".clone doesn't copy typedness"
     is @a.of, '(Int)', "Check that we have an 'Int' array";
     is @a.elems, 2,  'Nil as part of Int list, is empty list';
-    @a.push: Nil;
+    ok ( @a.push: Nil ) =:= @a, "assigning Nil returns same array";
     is @a.elems, 2, 'Pushing Nil in Int list context is empty list';
-    @a.unshift: Nil;
+    ok ( @a.unshift: Nil ) =:= @a, "assigning Nil returns same array";
     is @a.elems, 2, 'Unshifting Nil in Int list context is empty list';
-    #?rakudo 3 skip "not allowed to assign Nil to Int scalar"
+    #?rakudo skip "not allowed to assign Nil to Int scalar"
     ok !defined(@a[1] = Nil), "assigning Nil to Int should work";
+    #?rakudo todo "not allowed to assign Nil to Int scalar"
     ok !@a[1].defined,  "Nil makes undefined here";
-    is @a[1].WHAT, '(Int)', "Nil keeps Int type on scalar";
-} #7
+    is ( @a = Nil ), Nil, "setting to Nil returns Nil";
+    #?rakudo todo ".clone doesn't copy typedness"
+    is @a.of, '(Int)', "Check that we still have an 'Int' array";
+    is @a.elems, 0, 'Setting to Nil restores original state';
+} #11
 
 # typed hash
 #?pugs   skip "doesn't know typed stuff"
@@ -54,11 +59,14 @@ plan 41;
     #?rakudo todo ".clone doesn't copy typedness"
     is %a.of, '(Int)', "Check that we have an 'Int' hash";
     is %a.elems, 2,  'Nil as part of Int list, is empty pair';
-    #?rakudo 3 skip "not allowed to assign Nil to Int scalar"
-    ok !defined( %a<b> = Nil ), "assigning Nil to hash element should work";
+    #?rakudo skip "not allowed to assign Nil to Int scalar"
+    is ( %a<b> = Nil ), Nil, "assigning Nil to hash element should work";
     ok !%a<b>.defined,  "Nil makes undefined here";
-    is %a<b>.WHAT, '(Int)', "Nil keeps Int type on scalar";
-} #5
+    is ( %a = Nil ), Nil, "setting to Nil returns Nil";
+    #?rakudo todo ".clone doesn't copy typedness"
+    is %a.of, '(Int)', "Check that we still have an 'Int' hash";
+    is %a.elems, 0, 'Setting to Nil restores original state';
+} #7
 
 # sink context returns Nil
 {
