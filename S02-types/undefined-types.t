@@ -1,18 +1,74 @@
 use v6;
 use Test;
-plan 23;
+plan 49;
 
 # L<S02/Names and Variables/The empty>
 
+# Nil is an empty container. As a container, it is defined.
 {
-    # Nil is an empty container. As a container, it is defined.
     ok !Nil.defined, 'Nil is undefined';
     ok ().defined, '() is defined';
-    my @a;
-    @a.push: Nil;
-    is @a.elems, 0, 'Nil in list context is empty list';
-}
+    my @a= 1, Nil, 3;
+    is @a.elems, 2, 'Nil as part of list, is empty list';
+    ok (@a.push: Nil) =:= @a, "Pushing Nil returns same array";
+    is @a.elems, 2, 'Pushing Nil in list context is empty list';
+    ok (@a.unshift: Nil) =:= @a, "Unshifting Nil returns same array";
+    is @a.elems, 2, 'Unshifting Nil in list context is empty list';
+    is (@a = Nil), Nil, "Setting to Nil returns Nil";
+    is @a.elems, 0, 'Setting to Nil restores original state';
+} #7
 
+# typed scalar
+#?pugs   skip "doesn't know typed stuff"
+#?niecza skip "doesn't know typed stuff"
+{
+    my Int $a = 1;
+    #?rakudo skip "not allowed to assign Nil to Int scalar"
+    is ($a = Nil), Nil, "assigning Nil to Int should work";
+    #?rakudo todo "not allowed to assign Nil to Int scalar"
+    ok !$a.defined,  "Nil makes undefined here";
+} #2
+
+# typed array
+#?pugs   skip "doesn't know typed stuff"
+#?niecza skip "doesn't know typed stuff"
+{
+    my Int @a = 1, Nil, 3;
+    #?rakudo todo ".clone doesn't copy typedness"
+    is @a.of, '(Int)', "Check that we have an 'Int' array";
+    is @a.elems, 2,  'Nil as part of Int list, is empty list';
+    ok ( @a.push: Nil ) =:= @a, "assigning Nil returns same array";
+    is @a.elems, 2, 'Pushing Nil in Int list context is empty list';
+    ok ( @a.unshift: Nil ) =:= @a, "assigning Nil returns same array";
+    is @a.elems, 2, 'Unshifting Nil in Int list context is empty list';
+    #?rakudo skip "not allowed to assign Nil to Int scalar"
+    ok !defined(@a[1] = Nil), "assigning Nil to Int should work";
+    #?rakudo todo "not allowed to assign Nil to Int scalar"
+    ok !@a[1].defined,  "Nil makes undefined here";
+    is ( @a = Nil ), Nil, "setting to Nil returns Nil";
+    #?rakudo todo ".clone doesn't copy typedness"
+    is @a.of, '(Int)', "Check that we still have an 'Int' array";
+    is @a.elems, 0, 'Setting to Nil restores original state';
+} #11
+
+# typed hash
+#?pugs   skip "doesn't know typed stuff"
+#?niecza skip "doesn't know typed stuff"
+{
+    my Int %a = a => 1, Nil, c => 3;
+    #?rakudo todo ".clone doesn't copy typedness"
+    is %a.of, '(Int)', "Check that we have an 'Int' hash";
+    is %a.elems, 2,  'Nil as part of Int list, is empty pair';
+    #?rakudo skip "not allowed to assign Nil to Int scalar"
+    is ( %a<b> = Nil ), Nil, "assigning Nil to hash element should work";
+    ok !%a<b>.defined,  "Nil makes undefined here";
+    is ( %a = Nil ), Nil, "setting to Nil returns Nil";
+    #?rakudo todo ".clone doesn't copy typedness"
+    is %a.of, '(Int)', "Check that we still have an 'Int' hash";
+    is %a.elems, 0, 'Setting to Nil restores original state';
+} #7
+
+# sink context returns Nil
 {
     my @a;
     my $i = 0;
@@ -28,8 +84,9 @@ plan 23;
     is $i, 5, '... statement executed';
     ok !defined(sink {$i = 8} ), 'sink in scalar context (block)';
     is $i, 8, '... block executed';
-}
+} #8
 
+# undefined objects
 {
     my $obj;
     my Int $int;
@@ -50,8 +107,6 @@ plan 23;
 
     is 'a' ~ $obj, 'a', 'infix:<~> uses coercion to Stringy (Any)';
     is 'a' ~ $int, 'a', 'infix:<~> uses coercion to Stringy (Int)';
-}
-
-done;
+} #12
 
 # vim: ft=perl6

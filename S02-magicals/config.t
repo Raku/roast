@@ -21,12 +21,12 @@ ok $?OS, "We were compiled in '$?OS'";
 # $*OS is the OS we are running
 ok $*OS, "We are running under '$*OS'";
 
-my $osnames = any <darwin linux freebsd MSWin32 mingw msys cygwin browser solaris haiku openbsd>;
+my $osnames = lc any <darwin linux freebsd MSWin32 mingw msys cygwin browser solaris haiku openbsd>;
 
 #?rakudo skip 'unimpl $?OS'
-ok $?OS eq $osnames, "we know of the OS we were compiled in";
+ok $?OS.lc eq $osnames, "we know of the OS we were compiled in";
 
-ok $*OS eq $osnames, "we know of the OS we are running under";
+ok $*OS.lc eq $osnames, "we know of the OS we are running under";
 
 # like $*OS, this is tested in perlver.t but that test is not included
 ok $*OSVER, '$*OSVER is present';

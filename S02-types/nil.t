@@ -54,12 +54,12 @@ ok (my Str $str93980 = Nil) === Str; #OK
 is Nil.gist, 'Nil', 'Nil.gist eq "Nil"';
 ok !Nil.new.defined, 'Nil.new is not defined';
 
-#?rakudo todo 'triage'
 {
     subset MyInt of Int where True;
     my MyInt $x = 5;
 
     lives_ok { $x = Nil }, 'can assign Nil to subsets';
+    #?rakudo skip 'triage'
     ok $x === Int, 'assigns to base-type object';
 }
 
