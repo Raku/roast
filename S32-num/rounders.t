@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 120;
+plan 128;
 
 # L<S32::Numeric/Real/"=item round">
 # L<S32::Numeric/Real/"=item floor">
@@ -102,6 +102,29 @@ for %tests.keys.sort -> $t {
     isa_ok eval("{$t}(1.1)"), Int, "rounder $t returns an Int";
 
 }
+
+# RT #118545  Round with arguments
+#?pugs 4 skip "round with arguments"
+{   
+    my $integer = 987654321;
+    is $integer.round(1),   987654321, "round integer with argument";
+    is $integer.round(5),   987654320, "($integer).round(5) == 987654320";
+    is $integer.round(1e5), 987700000, "($integer).round(1e5) == 987700000";
+    is 2.round(3/20),       1.95,      "2.round(3/20) == 1.95";
+}
+
+#?pugs 4 skip "round with arguments"
+{
+    my $num = 123.456789;
+    is $num.round(1),     123,       "round with argument";
+    is $num.round(5),     125,       "($num).round(5) == 125";
+    is $num.round(1/100), 123.46,    "($num).round(1/100) == 123.46";
+    #?niecza todo "rounding with Num makes more rounding errors"
+    is $num.round(1e-5),  123.45679, "($num).round(1e-5) == 123.45679";
+}
+
+
+
 
 {
     my $big-int = 1234567890123456789012345678903;
