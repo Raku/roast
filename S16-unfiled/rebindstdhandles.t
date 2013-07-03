@@ -23,7 +23,7 @@ my $filename = 'tempfile_rebindstdhandles' ~ nonce();
 }
 
 # Test for re-binding $*ERR.
-#?rakudo skip 'warn does not yet use $*ERR'
+# #?rakudo skip 'warn does not yet use $*ERR'
 {
     my $old_err := $*ERR;
     $*ERR := open($filename, :w);

@@ -2,25 +2,50 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 111;
+plan 129;
 
 my $Unix := IO::Spec::Unix;
 
 my %canonpath = (
+        'a/b/c'              => 'a/b/c',
+        '//a//b//'           => '/a/b',
+	'a/../../b/c'        => 'a/../../b/c',
+	'/.'                 => '/',
+	'/./'                => '/',
+	'/a/./'              => '/a',
+	'/a/.'               => '/a',
+	'/../../'            => '/',
+	'/../..'             => '/',
+	'/..'                => '/',
+        'a\\\\b'             => 'a\\\\b',
+	''                   => '',
+        '0'                  => '0',
 	'///../../..//./././a//b/.././c/././' => '/a/b/../c',
-	'a/../../b/c'                         => 'a/../../b/c',
-	'/.'                                  => '/',
-	'/./'                                 => '/',
-	'/a/./'                               => '/a',
-	'/a/.'                                => '/a',
-	'/../../'                             => '/',
-	'/../..'                              => '/',
-	'/..'                                 => '/',
 );
 for %canonpath.kv -> $get, $want {
 	is $Unix.canonpath( $get ), $want, "canonpath: '$get' -> '$want'";
 }
-is $Unix.canonpath(''), '', "canonpath: empty string";
+my %canonpath-parent = (
+	"foo/bar/.."         => "foo",
+	"foo/bar/baz/../.."  => "foo",
+	"/foo/.."            => "/",
+	"foo/.."             => '.',
+	"foo/../bar/../baz"  => "baz",
+	"foo/../../bar"      => "../bar",
+	"foo/bar/baz/../.."  => "foo",
+	"../../.."           => "../../..",
+	"/../../.."          => "/",
+	"/foo/../.."         => "/",
+	"0"                  => "0",
+        ''                   => '',
+	"//../..usr/bin/../foo/.///ef"   => "/..usr/foo/ef",
+	'///../../..//./././a//b/.././c/././' => '/a/c',
+);
+for %canonpath-parent.kv -> $get, $want {
+	is $Unix.canonpath( $get , :parent ), $want, "canonpath(:parent): '$get' -> '$want'";
+}
+print "# warning expected here:";
+is $Unix.canonpath( Any , :parent ), '', "canonpath(:parent): Any -> ''";
 
 is $Unix.catdir( ),                      '',          "catdir: no arg -> ''";
 is $Unix.catdir( '' ),                   '/',         "catdir: '' -> '/'";
