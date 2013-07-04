@@ -9,12 +9,12 @@ Pop tests
 
 =end description
 
-plan 33;
+plan 36;
 
 { # pop() elements into variables
     my @pop = (-1, 1, 2, 3, 4);
-
     is(+@pop, 5, 'we have 4 elements in the array');
+
     my $a = pop(@pop);
     is($a, 4, 'pop(@pop) works');
 
@@ -41,7 +41,7 @@ plan 33;
         #?niecza skip 'undeclared name Failure'
         ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
     }
-}
+} #13
 
 { # pop() elements inline
     my @pop = (1, 2, 3, 4);
@@ -62,7 +62,7 @@ plan 33;
     ok(!defined(pop(@pop)), 'after the array is exhausted pop() returns undefined');
     #?niecza skip 'undeclared name Failure'
     ok(pop(@pop) ~~ Failure, 'after the array is exhausted pop() returns Failure');
-}
+} #11
 
 # invocant syntax with inline arrays
 {
@@ -70,7 +70,7 @@ plan 33;
     ok(!defined([].pop), 'this will return undefined');
     #?niecza skip 'undeclared name Failure'
     ok( [].pop ~~ Failure, '[].pop is a Failure' );
-}
+} #3
 
 # some edge cases
 {
@@ -83,19 +83,20 @@ plan 33;
 # testing some error cases
 {
     my @pop = 1 .. 5;
-    eval_dies_ok('pop',        'pop() requires arguments');
-    eval_dies_ok('42.pop'    , '.pop should not work on scalars');
-    dies_ok {eval('pop(@pop, 10)')}, 'pop() should not allow extra arguments';
-    dies_ok {eval('@pop.pop(10)') }, 'pop() should not allow extra arguments';
-}
+    eval_dies_ok('pop',            'pop() requires arguments');
+    eval_dies_ok('42.pop',         '.pop should not work on scalars');
+    eval_dies_ok('pop(@pop,10)'),  'pop() should not allow extra arguments';
+    eval_dies_ok('@pop.pop(10)'),  '.pop() should not allow extra arguments';
+    eval_dies_ok('@pop.pop = 3'),  'Cannot assign to a readonly variable or a value';
+    eval_dies_ok('pop(@pop) = 3'), 'Cannot assign to a readonly variable or a value';
+} #6
 
-# Pop with Inf arrays (waiting on answers from perl6-compiler email)
-# {
-#     my @push = 1 .. Inf;
-#     # best not to uncomment this it just go on forever
-#     todo_throws_ok { 'pop @push' }, '?? what should this error message be ??', 'cannot push onto a Inf array';
-# }
-
-done;
+#?pugs       skip "may run forever"
+#?niecza     skip "may run forever"
+#?rakudo.jvm skip "may run forever"
+{
+    my @push = 1 .. Inf;
+    eval_dies_ok( 'pop @push', 'cannot pop from an Inf array' );
+} #1
 
 # vim: ft=perl6
