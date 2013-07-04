@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 17;
 
 # L<S32::Str/Str/wordcase>
 
@@ -10,6 +10,9 @@ plan 15;
 is wordcase(""),             "",               "wordcase('') works";
 is wordcase("puGS Is cOOl!"), "Pugs Is Cool!", "wordcase('...') works";
 is "puGS Is cOOl!".wordcase,  "Pugs Is Cool!", "'...'.wordcase works";
+#?niecza 2 todo "wordcase somewhat stupid right now"
+is "don't sit under the apple tree".wordcase, "Don't Sit Under The Apple Tree", "wordcase works properly with apostrophes";
+is "tir-na nog'th".wordcase, "Tir-na Nog'th", "wordcase works properly with apostrophes and dashes";
 
 my $a = "";
 #?rakudo skip 'related to RT #117889'
