@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 193;
+plan 206;
 my $win32 = IO::Spec::Win32;
 
 my @canonpath = 
@@ -27,6 +27,29 @@ my @canonpath =
 for @canonpath -> $in, $out {
 	is $win32.canonpath($in), $out, "canonpath: '$in' -> '$out'";
 }
+my @canonpath-parent = 
+	"foo\\bar\\..",          "foo",
+	"foo/bar/baz/../..",     "foo",
+	"/foo/..",               "\\",
+	"foo/..",                '.',
+	"foo/../bar/../baz",     "baz",
+	"foo/../../bar",         "..\\bar",
+	"foo/bar/baz/../..",     "foo",
+	"../../..",              "..\\..\\..",
+	"\\..\\..\\..",          "\\",
+	"/foo/../..",            "\\",
+	"C:\\..\\foo",           "C:\\foo",
+	"C:..",                  "C:..",
+	"\\\\server\\share\\..", "\\\\server\\share", 
+	"0",                     "0",
+	"/..//..usr/bin/../foo/.///ef", "\\..usr\\foo\\ef",
+;
+for @canonpath-parent -> $in, $out {
+	is $win32.canonpath($in, :parent), $out,
+           "canonpath(:parent): '$in' -> '$out'";
+}
+print "# Warning expected here: ";
+is $win32.canonpath( Any, :parent ), '', "canonpath: Any -> ''";
 
 my @splitdir = 
 	'',              '',
