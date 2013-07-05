@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 21;
+plan 23;
 
 my @list = (1 ... 10);
 
@@ -70,6 +70,12 @@ my @list = (1 ... 10);
 
     is (first 'c'| 'b', <a b c b a>).join('|'),
         'b', '.first also takes a junction as matcher (sub form)';
+}
+
+# RT #118141
+{
+    isa_ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
+    isa_ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"
 }
 
 #vim: ft=perl6
