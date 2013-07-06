@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
-plan 39;
+plan 43;
 
 # old: L<S05/Return values from matches/"A match always returns a Match object" >
 # L<S05/Match objects/"A match always returns a " >
@@ -152,6 +152,16 @@ is_run( q{'aa' ~~ /(.)$1/},
     try { $s = eval '"foo" ~~ /(foo)/; "$0a"' };
     ok not $!, 'alphabetic characters can follow digits in $0 variable in interpolation';
     is $s, 'fooa', 'alphabetic characters follows $0 interpolated value';
+}
+
+# L<S32::Rules/Match>
+
+# RT 117461
+{
+    ok "a \n \b \n c \n d" ~~ /a .* c/, "match multiple lines with '.'";
+    ok $/.can('lines'), "Match has a .lines method";
+    is +$/.lines, 3, "Correct number of lines";
+    isa_ok $/, Cool, "Match is Cool";
 }
 
 done;
