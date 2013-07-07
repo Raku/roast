@@ -71,7 +71,7 @@ plan 43;
         "using a multidimensional structure as LHS in a binding op works (3)";
 }
 
-# Evil more evil structure: with an embedded "is rw" sub!
+# Evil more evil structure: with an embedded "is parcel" sub!
 # As RHS...
 {
     my $innerstruct = {
@@ -82,7 +82,7 @@ plan 43;
         ],
     };
 
-    my sub get_innerstruct () is rw { $innerstruct }
+    my sub get_innerstruct () is parcel { $innerstruct }
 
     my $struct = [
         "ignored",
@@ -117,7 +117,7 @@ plan 43;
         ],
     };
 
-    my sub get_innerstruct () is rw { $innerstruct }
+    my sub get_innerstruct () is parcel { $innerstruct }
 
     my $struct = [
         "ignored",
