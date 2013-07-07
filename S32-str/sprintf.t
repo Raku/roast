@@ -215,4 +215,9 @@ is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 # RT #74610
 dies_ok {sprintf "%s"}, 'missing sprintf string argument';
 
+#?rakudo skip "Underlying Parrot problem"
+# RT 117547
+is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are counted correctly for %Ns strings';
+
+
 # vim: ft=perl6
