@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 125;
+plan 126;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
