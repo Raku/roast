@@ -38,7 +38,7 @@ is $o.a,        3,      '... also on the attribute';
 is $a,          8,      'but the temp assignment had worked';
 
 lives_ok { temp $o.l2 = 9; $b = $o.b },
-         'can use lvalue method in temp() statement (explicit return)';
+         'can use lvalue method in temp() statement (implicit return)';
 is $o.l2,       4,      '... and the value was reset';
 is $o.b,        4,      '... also on the attribute';
 is $b,          9,      'but the temp assignment had worked';
