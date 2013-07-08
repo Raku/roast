@@ -16,8 +16,8 @@ plan 12;
     ok $rh.keyof =:= Any, 'make sure keys are Any';
 } #4
 
-#?pugs   todo "cannot roundtrip hashes with constrained values"
-#?niecza todo "cannot roundtrip hashes with constrained values"
+#?pugs   skip "cannot roundtrip hashes with constrained values"
+#?niecza skip "cannot roundtrip hashes with constrained values"
 # hash with constrained values
 {
     my Int %h = a => 1, b => 2;
@@ -29,8 +29,8 @@ plan 12;
     ok $rh.keyof =:= Any, 'make sure roundtripped keys are Any';
 } #4
 
-#?pugs   todo "cannot roundtrip hashes with constrained keys & values"
-#?niecza todo "cannot roundtrip hashes with constrained keys & values"
+#?pugs   skip "cannot roundtrip hashes with constrained keys & values"
+#?niecza skip "cannot roundtrip hashes with constrained keys & values"
 # hash with constrained keys & values
 {
     my Int %h{Str} = a => 1, b => 2;
