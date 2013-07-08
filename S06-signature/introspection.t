@@ -39,7 +39,7 @@ sub j(*@i) {
     is j(@l>>.slurpy),   '0 0 0', '... none slurpy';
     is j(@l>>.optional), '0 1 1', '... some optional';
     is j(@l>>.invocant), '0 0 0', '... none invocant';
-    is j(@l>>.named),    '1 1 1', '... one named';
+    is j(@l>>.named),    '1 1 1', '... all named';
 
     is ~@l[0].named_names, 'x',   'named_names work';
     is ~@l[0].name,      '$a',    '.name works for renamed params';
