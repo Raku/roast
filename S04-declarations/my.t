@@ -259,7 +259,7 @@ eval_lives_ok 'my $x = 3; class A { has $.y = $x; }; A.new.y.gist',
         'global scoped variables are visible inside class definitions';
 
 #RT #72814
-
+#?rakudo.jvm skip "Method 'submethod_table' not found"
 {
     #?niecza skip 'a not predeclared'
     lives_ok {my ::a $a}, 'typing a my-declared variable as ::a works.';    #OK not used

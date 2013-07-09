@@ -54,6 +54,7 @@ is slurp($empty-path), '', "empty files yield empty string";
 }
 
 #?niecza skip ":bin option for slurp fails"
+#?rakudo.jvm skip "BuF NYI"
 {
     my $binary-slurp;
     ok ($binary-slurp = slurp $test-path, :bin), ":bin option runs";

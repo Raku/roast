@@ -123,6 +123,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 
 # RT 89972
 #?niecza skip "That's not the right way to spawn another Niecza"
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my $a = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};

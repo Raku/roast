@@ -127,8 +127,9 @@ is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 }
 
 is sprintf('%5.2f', 3.1415),    ' 3.14',    '5.2 %f';
-#?rakudo skip 'sprintf %F NYI'
+#?rakudo.parrot skip 'sprintf %F NYI'
 is sprintf('%5.2F', 3.1415),    ' 3.14',    '5.2 %F';
+#?rakudo.jvm 8 todo "nigh"
 is sprintf('%5.2g', 3.1415),    '  3.1',    '5.2 %g';
 is sprintf('%5.2G', 3.1415),    '  3.1',    '5.2 %G';
 
@@ -140,8 +141,9 @@ ok sprintf('%5.2g', 3.1415e-30) ~~ /^ "3.1e-" "0"? "30" $/, '5.2 %g';
 ok sprintf('%5.2G', 3.1415e-30) ~~ /^ "3.1E-" "0"? "30" $/, '5.2 %G';
 
 is sprintf('%20.2f', 3.1415),    '                3.14',    '20.2 %f';
-#?rakudo skip 'sprintf %F NYI'
+#?rakudo.parrot skip 'sprintf %F NYI'
 is sprintf('%20.2F', 3.1415),    '                3.14',    '20.2 %F';
+#?rakudo.jvm 8 todo "nigh"
 is sprintf('%20.2g', 3.1415),    '                 3.1',    '20.2 %g';
 is sprintf('%20.2G', 3.1415),    '                 3.1',    '20.2 %G';
 
@@ -153,8 +155,9 @@ ok sprintf('%20.2g', 3.1415e-30)  eq '            3.1e-030' | '             3.1e
 ok sprintf('%20.2G', 3.1415e-30)  eq '            3.1E-030' | '             3.1E-30', '20.2 %G';
 
 is sprintf('%20.2f', -3.1415),    '               -3.14',    'negative 20.2 %f';
-#?rakudo skip 'sprintf %F NYI'
+#?rakudo.parrot skip 'sprintf %F NYI'
 is sprintf('%20.2F', -3.1415),    '               -3.14',    'negative 20.2 %F';
+#?rakudo.jvm 8 todo "nigh"
 is sprintf('%20.2g', -3.1415),    '                -3.1',    'negative 20.2 %g';
 is sprintf('%20.2G', -3.1415),    '                -3.1',    'negative 20.2 %G';
 
@@ -166,8 +169,9 @@ ok sprintf('%20.2g', -3.1415e-30) eq '           -3.1e-030' | '            -3.1e
 ok sprintf('%20.2G', -3.1415e-30) eq '           -3.1E-030' | '            -3.1E-30', 'negative 20.2 %G';
 
 is sprintf('%020.2f', 3.1415),    '00000000000000003.14',    '020.2 %f';
-#?rakudo skip 'sprintf %F NYI'
+#?rakudo.parrot skip 'sprintf %F NYI'
 is sprintf('%020.2F', 3.1415),    '00000000000000003.14',    '020.2 %F';
+#?rakudo.jvm 8 todo "nigh"
 is sprintf('%020.2g', 3.1415),    '000000000000000003.1',    '020.2 %g';
 is sprintf('%020.2G', 3.1415),    '000000000000000003.1',    '020.2 %G';
 
@@ -179,8 +183,9 @@ ok sprintf('%020.2g', 3.1415e-30) eq '0000000000003.1e-030' | '00000000000003.1e
 ok sprintf('%020.2G', 3.1415e-30) eq '0000000000003.1E-030' | '00000000000003.1E-30', '020.2 %G';
 
 is sprintf('%020.2f', -3.1415),    '-0000000000000003.14',    'negative 020.2 %f';
-#?rakudo skip 'sprintf %F NYI'
+#?rakudo.parrot skip 'sprintf %F NYI'
 is sprintf('%020.2F', -3.1415),    '-0000000000000003.14',    'negative 020.2 %F';
+#?rakudo.jvm 8 todo "nigh"
 is sprintf('%020.2g', -3.1415),    '-00000000000000003.1',    'negative 020.2 %g';
 is sprintf('%020.2G', -3.1415),    '-00000000000000003.1',    'negative 020.2 %G';
 
@@ -199,7 +204,7 @@ is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults 
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
-#?rakudo todo "%p doesn't yet throw exception - but should it, or just Failure?"
+#?rakudo skip "%p doesn't yet throw exception - but should it, or just Failure?"
 dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
 
 is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
@@ -215,7 +220,7 @@ is sprintf('%s', -Inf),            -Inf,    'sprintf %s handles Inf';
 # RT #74610
 dies_ok {sprintf "%s"}, 'missing sprintf string argument';
 
-#?rakudo skip "Underlying Parrot problem"
+#?rakudo.parrot skip "Underlying Parrot problem"
 # RT 117547
 is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are counted correctly for %Ns strings';
 

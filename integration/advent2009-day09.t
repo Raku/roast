@@ -57,6 +57,7 @@ is grade_essay("How to eat a Fish", 0), 0, 'P6 auto unpacking/verification';
 ok (entreat()), 'Default values for parameters works';
 is (xml_tag("hi")), "hihi>", 'Default values using previously supplied arguments';
 nok deactivate("Rakudo Quality Fission"), 'optional parameters';
+#?rakudo.jvm todo "nigh"
 dies_ok {drawline2(1,2,3,4)}, 'Must be named';
 ok (drawline2(:x1(3))), 'When you force naming, they are not all required.';
 #the required & must-be named (:$var!) test not here, its opposite is 1 up

@@ -435,34 +435,39 @@ Hello, World
 }
 
 # q:x
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my $result = $*OS ~~ /:i win32/ ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
 
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
 #?pugs todo
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my $world = 'world';
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
-#?rakudo todo 'q:x assigned to array'
+#?rakudo.parrot todo 'q:x assigned to array'
 #?niecza todo ':x'
 #?pugs todo
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my @two_lines = q:x/echo hello ; echo world/;
     is @two_lines, ("hello\n", "world\n"), 'testing q:x assigned to array';
 }
 
-#?rakudo todo 'q:x assigned to array'
+#?rakudo.parrot todo 'q:x assigned to array'
 #?niecza todo ':x'
 #?pugs todo
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my $hello = 'howdy';
     my @two_lines = qq:x/echo $hello ; echo world/;
@@ -570,6 +575,7 @@ Hello, World
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
 
+#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';

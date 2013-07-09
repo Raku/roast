@@ -120,6 +120,7 @@ for %tests.keys.sort -> $t {
     is $num.round(5),     125,       "($num).round(5) == 125";
     is $num.round(1/100), 123.46,    "($num).round(1/100) == 123.46";
     #?niecza todo "rounding with Num makes more rounding errors"
+    #?rakudo.jvm todo "nigh"
     is $num.round(1e-5),  123.45679, "($num).round(1e-5) == 123.45679";
 }
 

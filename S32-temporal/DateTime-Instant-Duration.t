@@ -115,6 +115,7 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
     is ~DateTime.new($i), ~DateTime.new($t), 'DateTime.new(now)';
 }
 
+#?rakudo.jvm skip "nigh - todo'ing this test is fiddly"
 {
     my $dt = DateTime.new(dsi('1999-12-31T23:59:59'),
         timezone => -(5*60*60 + 55*60),
