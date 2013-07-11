@@ -14,13 +14,13 @@ is(4 ** 2,   16, "4 **  2 == 16");
 
 is 0 ** 4553535345364535345634543534, 0, "0 ** 4553535345364535345634543534 == 0";
 is 1 ** 4553535345364535345634543534, 1, "1 ** 4553535345364535345634543534 == 1";
-#?rakudo 2 todo "Simple bigint optimizations NYI"
+#?rakudo.parrot 2 todo "Simple bigint optimizations NYI"
 is (-1) ** 4553535345364535345634543534, 1, "-1 ** 4553535345364535345634543534 == 1";
 is (-1) ** 4553535345364535345634543533, -1, "-1 ** 4553535345364535345634543534 == -1";
 #?niecza skip "Slow and wrong"
 #?pugs   skip "Slow and wrong"
 is 2 ** 4553535345364535345634543534, Inf, "2 ** 4553535345364535345634543534 == Inf";
-#?rakudo todo "Simple bigint optimizations NYI"
+#?rakudo.parrot todo "Simple bigint optimizations NYI"
 #?niecza 2 skip "Slow and wrong"
 #?pugs   2 skip "Slow and wrong"
 is (-2) ** 4553535345364535345634543534, Inf, "-2 ** 4553535345364535345634543534 == Inf";
