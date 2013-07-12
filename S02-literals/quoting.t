@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 162;
+plan 155;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -280,57 +280,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is(@q2[1], $gorch, 'second element is both parts of $gorch, interpolated');
     is(@q2[2], '$bar', 'single quoted $bar was not interpolated');
 };
-
-# L<S02/Heredocs/Heredocs are no longer written>
-{ # qq:to
-    my @q = ();
-
-    @q = qq:to/FOO/;
-blah
-$bar
-blah
-$foo
-FOO
-
-    is(+@q, 1, "q:to// is singular");
-    is(@q[0].subst(/\r/, '', :g), "blah\nBAR\nblah\nFOO\n", "here doc interpolated");
-};
-
-{ # qq:to
-    my @q = ();
-
-    @q = qq:to/FOO/;
-        blah
-        $bar
-        blah
-        $foo
-        FOO
-
-    is(@q[0].subst(/\r/, '', :g), "blah\nBAR\nblah\nFOO\n", "here doc interpolating with indentation");
-};
-
-# L<S02/Optional whitespace/Heredocs allow optional whitespace>
-{ # q:to indented
-    my @q = ();
-
-    @q = q:to/FOO/;
-        blah blah
-        $foo
-        FOO
-
-    is(+@q, 1, "q:to// is singular, also when indented");
-    is(@q[0].subst(/\r/, '', :g), "blah blah\n\$foo\n", "indentation stripped");
-};
-
-{ # q:heredoc backslash bug
-        my @q = q:heredoc/FOO/
-yoink\n
-splort\\n
-FOO
-;
-        is(+@q, 1, "q:heredoc// is singular");
-        is(@q[0].subst(/\r/, '', :g), "yoink\\n\nsplort\\n\n", "backslashes");
-}
 
 #?pugs skip 'parsefail'
 { # Q L<S02/Literals/No escapes at all>
