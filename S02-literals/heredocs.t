@@ -1,5 +1,5 @@
 use Test;
-plan 10;
+plan 13;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -88,4 +88,31 @@ $multiline = "Hello\n    World";
         END
 
     is no-r(@q[0]), "first line\nHello\n    World        something\nanother line\n", "extra spaces after interpolation will be kept";
+}
+
+{
+    my ($one, $two) = <foo bar>;
+    my @q = qq:to/END/;
+        {$one}{$two}
+        stuff
+        END
+
+    is no-r(@q[0]), "foobar\nstuff\n", "interpolations without constant strings in the middle";
+
+    my @q2 = qq:to/END/;
+        stuff
+        {$one}{$two}
+        END
+
+    is no-r(@q2[0]), "stuff\nfoobar\n", "interpolations at the very end";
+
+    my @q3 = qq:to/END/;
+        line one
+
+        line two
+
+        $one
+        END
+
+    is no-r(@q3[0]), "line one\n\nline two\n\nfoo\n", "empty lines";
 }
