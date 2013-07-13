@@ -146,6 +146,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 # multi dispatch on typed containers
 #?niecza skip 'Ambiguous dispatch for &f4'
+#?rakudo.jvm skip 'Ambiguous dispatch for &f4'
 {
     multi f4 (Int @a )  { 'Array of Int' }   #OK not used
     multi f4 (Str @a )  { 'Array of Str' }   #OK not used
@@ -203,6 +204,7 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 }
 
 #?niecza skip 'no native types yet'
+#?rakudo.jvm skip "Cannot call 'rt107638'; none of these signatures match:"
 {
     # This once wrongly reported a multi-dispatch circularity.
     multi rt107638(int $a) { 'ok' }      #OK not used
