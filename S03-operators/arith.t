@@ -170,7 +170,7 @@ tryeq -28 div -2, 14;
 
 #?pugs 4 skip 'div'
 is(9 div 4, 2, "9 div 4 == 2");
-#?rakudo 2 todo 'negative div'
+#?rakudo.parrot 2 todo 'negative div'
 is(-9 div 4, -3, "-9 div 4 == -3");
 is(9 div -4, -3, "9 div -4 == -3");
 is(-9 div -4, 2, "-9 div -4 == 2");
@@ -178,7 +178,7 @@ is(-9 div -4, 2, "-9 div -4 == 2");
 # modulo
 #?pugs 4 skip 'mod'
 is  13 mod  4, 1,  '13 mod 4';
-#?rakudo 2 todo 'negative mod'
+#?rakudo.parrot 2 todo 'negative mod'
 is -13 mod  4, 3,  '-13 mod 4';
 is  13 mod -4, -3, '13 mod -4';
 is -13 mod -4, -1, '-13 mod -4';
