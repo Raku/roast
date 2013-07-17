@@ -6,9 +6,8 @@ plan 17;
 
 # L<S32::Str/Str/wordcase>
 
-#?rakudo skip 'related to RT #117889'
+#?rakudo.parrot skip 'related to RT #117889'
 is wordcase(""),             "",               "wordcase('') works";
-#?rakudo.jvm 4 todo "nigh"
 is wordcase("puGS Is cOOl!"), "Pugs Is Cool!", "wordcase('...') works";
 is "puGS Is cOOl!".wordcase,  "Pugs Is Cool!", "'...'.wordcase works";
 #?niecza 2 todo "wordcase somewhat stupid right now"
@@ -16,27 +15,22 @@ is "don't sit under the apple tree".wordcase, "Don't Sit Under The Apple Tree", 
 is "tir-na nog'th".wordcase, "Tir-na Nog'th", "wordcase works properly with apostrophes and dashes";
 
 my $a = "";
-#?rakudo skip 'related to RT #117889'
+#?rakudo.parrot skip 'related to RT #117889'
 is wordcase($a),             "",               "wordcase empty string";
 $a = "puGS Is cOOl!";
-#?rakudo.jvm todo "nigh"
 is wordcase($a),             "Pugs Is Cool!",  "wordcase string works";
 is $a,                         "puGS Is cOOl!",  "original string not touched";
-#?rakudo.jvm todo "nigh"
 is $a.wordcase,              "Pugs Is Cool!",  "wordcase string works";
 is $a,                         "puGS Is cOOl!",  "original string not touched";
-#?rakudo.jvm todo "nigh"
 is "ab cD Ef".wordcase,      "Ab Cd Ef",       "works on ordinary string";
 
 
-#?rakudo.jvm todo "nigh"
 {
     $_ = "puGS Is cOOl!";
     is .wordcase, "Pugs Is Cool!", 'wordcase() uses \$_ as default';
 }
 
 # Non-ASCII chars:
-#?rakudo.jvm todo "nigh"
 is wordcase("äöü abcä"), "Äöü Abcä", "wordcase() works on non-ASCII chars";#
 
 #?rakudo 2 todo 'graphemes results wrong'
