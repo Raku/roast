@@ -93,7 +93,6 @@ plan 36;
 
 #?pugs       skip "may run forever"
 #?niecza     skip "may run forever"
-#?rakudo.jvm skip "may run forever"
 {
     my @push = 1 .. Inf;
     eval_dies_ok( 'pop @push', 'cannot pop from an Inf array' );
