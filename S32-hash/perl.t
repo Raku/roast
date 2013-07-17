@@ -8,7 +8,7 @@ plan 12;
 # simple hash
 {
     my %h = a => 1, b => 2;
-    is %h.perl, '("a" => 1, "b" => 2).hash',
+    is %h.perl,'("a" => 1, "b" => 2).hash'|'("b" => 2, "a" => 1).hash', 
       'can we serialize a simple hash';
     my $rh = eval(%h.perl);
     is_deeply $rh, %h, 'can we roundtrip simple hash';
@@ -21,7 +21,7 @@ plan 12;
 # hash with constrained values
 {
     my Int %h = a => 1, b => 2;
-    is %h.perl, 'Hash[Int].new("a" => 1, "b" => 2)',
+    is %h.perl, 'Hash[Int].new("a" => 1, "b" => 2)'|'Hash[Int].new("b" => 2, "a" => 1)',
       'can we serialize a hash with constrained values';
     my $rh = eval(%h.perl);
     is_deeply $rh, %h, 'can we roundtrip hash constrained values';
@@ -34,7 +34,7 @@ plan 12;
 # hash with constrained keys & values
 {
     my Int %h{Str} = a => 1, b => 2;
-    is %h.perl, 'Hash[Int,Str].new("a" => 1, "b" => 2)',
+    is %h.perl, 'Hash[Int,Str].new("a" => 1, "b" => 2)'|'Hash[Int,Str].new("b" => 2, "a" => 1)',
       'can we serialize a hash with constrained keys & values';
     my $rh = eval(%h.perl);
     is_deeply $rh, %h, 'can we roundtrip hash constrained keys & values';
