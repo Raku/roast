@@ -364,24 +364,6 @@ my @e;
 
 =end todo_unspecced
 
-#?pugs todo 'hyper ops'
-#?niecza skip 'does not work; recurses into hash'
-#?rakudo skip 'nom regression: possible spec change/improvement'
-#?DOES 2
-{ # hyper dereferencing
-    my @array = (
-        { key => 'val' },
-        { key => 'val' },
-        { key => 'val' }
-    );
-
-    my $full = join '', eval '@array>>.<key>';
-    is($full, 'valvalval', 'hyper-dereference an array');
-
-    my $part = join '', eval '@array[0,1]>>.<key>';
-    is($part, 'valval', 'hyper-dereference an array slice');
-}
-
 #?pugs todo 'feature'
 #?DOES 4
 { # junction hyper -- regression?
