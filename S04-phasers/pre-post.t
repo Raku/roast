@@ -22,13 +22,11 @@ sub bar(Int $i) {
     }
 }
 
-#?rakudo.jvm todo "nigh"
 lives_ok { foo(2) }, 'sub with PRE  compiles and runs';
 lives_ok { bar(3) }, 'sub with POST compiles and runs';
 
 #?pugs todo
 dies_ok { foo(10) }, 'Violated PRE  throws (catchable) exception';
-#?rakudo.jvm todo "nigh"
 dies_ok { bar(10) }, 'Violated POST throws (catchable) exception';
 
 # multiple PREs und POSTs
@@ -42,7 +40,6 @@ sub baz (Int $i) {
 	}
 	return 1;
 }
-#?rakudo.jvm todo "nigh"
 lives_ok { baz(2) }, 'sub with two PREs compiles and runs';
 
 #?pugs todo
@@ -63,9 +60,7 @@ sub qox (Int $i) {
 
 lives_ok({ qox(23) }, "sub with two POSTs compiles and runs");
 #?pugs todo
-#?rakudo.jvm todo "nigh"
 dies_ok( { qox(-1) }, "sub with two POSTs fails if first POST is violated");
-#?rakudo.jvm todo "nigh"
 dies_ok( { qox(123)}, "sub with two POSTs fails if second POST is violated");
 
 
@@ -81,10 +76,8 @@ class Another {
 my $pt = Another.new;
 #?pugs todo
 lives_ok { $pt.test(2) }, 'POST receives return value as $_ (succeess)';
-#?rakudo.jvm skip "java.lang.NoSuchMethodError: org.perl6.rakudo.RakOps.p6setpre"
 dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 
-#?rakudo.jvm skip "java.lang.NoSuchMethodError: org.perl6.rakudo.RakOps.p6setpre"
 {
     my $str;
     {
@@ -96,7 +89,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, '(x)', 'PRE and POST run on ordinary blocks';
 }
 
-#?rakudo.jvm skip "java.lang.NoSuchMethodError: org.perl6.rakudo.RakOps.p6setpre"
 {
     my $str;
     {
@@ -110,7 +102,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
     is $str, '([x])', 'PRE/POST run outside ENTER/LEAVE';
 }
 
-#?rakudo.jvm todo "nigh"
 {
     my $str;
     try {
@@ -142,7 +133,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 }
 
 #?niecza skip 'unspecced'
-#?rakudo.jvm todo "nigh"
 {
     my $str;
     try {
@@ -168,6 +158,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 
 #?niecza skip 'unspecced'
 #?rakudo.parrot todo "POST and exceptions"
+#?rakudo.jvm skip "POST and exceptions"
 {
     try {
         POST { 0 }
@@ -186,7 +177,6 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         return $x;
     }
     #?pugs todo
-    #?rakudo.jvm todo "nigh"
     lives_ok { blockless(4) }, 'blockless PRE/POST (+)';
     dies_ok  { blockless -4 }, 'blockless PRE/POST (-, 1)';
     dies_ok  { blockless 14 }, 'blockless PRE/POST (-, 2)';
