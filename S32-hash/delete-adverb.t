@@ -208,7 +208,7 @@ sub gen_hash {
 
 { # whatever
     my %h   = gen_hash;
-    my @all = %h{ "a".."z" };
+    my @all = %h{ %h.keys };
 
     #?pugs 2 skip "no adverbials"
     is %h{*}:delete, @all, "Test deletion with whatever";
@@ -217,7 +217,7 @@ sub gen_hash {
 
 {
     my %h   = gen_hash;
-    my $all = %h{ "a".."z" };
+    my $all = %h{ %h.keys };
 
     #?pugs   10 skip "no adverbials"
     #?niecza 10 todo "adverbial pairs only used as boolean True"
