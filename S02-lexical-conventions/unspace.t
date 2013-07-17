@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 77;
+plan 78;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -70,6 +70,7 @@ is((bar.lc   ), 'a', 'sanity - bar.lc');
 is((bar .lc  ), 'b', 'sanity - bar .lc');
 is((foo\.lc  ), 'a', 'short unspace');
 is((foo\ .lc ), 'a', 'unspace');
+is((foo\ ('x')), 'x', "unspace before arguments");
 #?rakudo skip 'parse fail'
 is((foo \ .lc), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
