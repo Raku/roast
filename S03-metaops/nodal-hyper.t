@@ -31,7 +31,9 @@ plan 14;
     };
 
     my $full = %hash>>.<name>.pairs;
-    is($full, ("one" => "pugs", "two" => "niecza", "thr" => "rakudo"), 'hyper-dereference a hash');
+    is $full<one>, "pugs"  , "hyper-dereference a hash 1/3";
+    is $full<two>, "niecza", "hyper-dereference a hash 1/3";
+    is $full<thr>, "rakudo", "hyper-dereference a hash 1/3";
 
     my $part = join ' ', eval '%hash<one two>>>.<name>';
     is($part, 'pugs niecza', 'hyper-dereference a hash slice');
