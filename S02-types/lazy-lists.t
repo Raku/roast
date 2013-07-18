@@ -4,17 +4,18 @@ use v6;
 
 # Tests for lazy lists
 #
-# TODO - uncomment "countable lazy slice" test
 # TODO - add timeout control, in tests that may loop forever
 # TODO - the backends that don't have infinite lists implemented
 #        should warn of this, instead of entering an infinite loop.
-# TODO - add test for "build a list from a coroutine"
-# TODO - add test for zip()
 # TODO - add test for 2D array
+
+# TODO - there used to be tests here (that were never run) for deleting
+#        elements from a lazy list. Can't seem to reproduce them with
+#        current spec.
 
 use Test;
 
-plan 12;
+plan 19;
 
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PERL5" {
@@ -27,26 +28,21 @@ plan 12;
 {
     my @a = (1..Inf);
     is( @a.splice( 2, 3 ),
-        "(3, 4, 5)",
+        (3, 4, 5),
         "splice" );
 }
 
 # basic list operations
 
-is( (1..Inf).elems,
+is( (1...Inf).elems,
     Inf,
     "elems" );
 
-is( (1..Inf).shift,
+is( (1...Inf).shift,
     1,
     "shift" );
 
-is( (1..Inf).pop,
-    Inf,
-    "pop" );
-
-
-is( (1..Inf)[2..5],
+is( (1...Inf)[2..5],
     [3, 4, 5, 6],
     "simple slice" );
 
@@ -71,7 +67,7 @@ is( (1..Inf)[2..5],
 {
     my @a = (1..Inf);
     @a[1] = 99;
-    is @a[0, 1, 2].join(' '), '1 99 2', 'assignment to infinite list';
+    is @a[0, 1, 2].join(' '), '1 99 3', 'assignment to infinite list';
 }
 
 {
@@ -84,24 +80,67 @@ is( (1..Inf)[2..5],
 
 {
     my @a = (1..Inf);
-    @a[1].delete;
-    is ~@a[0, 2], '1 3', 'array elemente delete (1)';
-    nok @a[1].defined, 'array element delete (2)';
-}
-
-{
-    my @a = (1..Inf);
-    @a[0,1].delete;
-    nok( all(@a[0, 1]).defined,
-        "array slice delete()" );
-}
-
-{
-    my @a = (1..Inf);
-    @a[1..1000002] = @a[9..1000010];
+    @a[1..10002] = @a[9..10010];
     is( ~@a[0, 1, 2],
         '1 10 11',
         "big slice assignment" );
+}
+
+my $was-lazy = 1;
+sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
+
+{
+    $was-lazy = 1;
+    my @a = make-lazy-list(4);
+    nok $was-lazy, "sanity: make-lazy-list sets $was-lazy.";
+    $was-lazy = 1;
+    my @b := make-lazy-list(4);
+    ok $was-lazy, "sanity: binding won't slurp up the lazy list";
+}
+
+{
+    $was-lazy = 1;
+    my @one := make-lazy-list(10);
+    is @one.first(*.is-prime), 2, "sanity: first is-prime is 2";
+    ok $was-lazy, "first is lazy";
+}
+
+{
+    $was-lazy = 1;
+    my @one := make-lazy-list(10);
+    is @one.grep(*.is-prime)[^3], (2, 3, 5), "sanity: first three primes are 2, 3 and 5";
+    ok $was-lazy, "grep is lazy";
+}
+
+{
+    $was-lazy = 1;
+    my @one := make-lazy-list(10);
+    is @one.map({ $^num * 2 })[^3], (0, 2, 4), "sanity: first three numbers doubled are 0, 2, 4";
+    ok $was-lazy, "map is lazy";
+}
+
+{
+    $was-lazy = 1;
+    my @one := make-lazy-list(10);
+    my @two = <a b c d e f>;
+    my @res = (@one Z @two)[^3];
+    ok $was-lazy, "first argument of Z is lazy";
+}
+
+{
+    $was-lazy = 1;
+    my @two := make-lazy-list(10);
+    my @one = <a b c d e f>;
+    my @res = (@one Z @two)[^3];
+    ok $was-lazy, "second argument of Z is lazy";
+}
+
+{
+    $was-lazy = 1;
+    my @one := make-lazy-list(10);
+    my @two = <a b c d e f>;
+    my @res = (@one X @two)[^20];
+    ok $was-lazy, "first argument of X is lazy";
 }
 
 # vim: ft=perl6
