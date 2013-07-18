@@ -146,7 +146,6 @@ is(mmd(1..3), 2, 'Slurpy MMD to listop via list');
 
 # multi dispatch on typed containers
 #?niecza skip 'Ambiguous dispatch for &f4'
-#?rakudo.jvm skip 'Ambiguous dispatch for &f4'
 {
     multi f4 (Int @a )  { 'Array of Int' }   #OK not used
     multi f4 (Str @a )  { 'Array of Str' }   #OK not used

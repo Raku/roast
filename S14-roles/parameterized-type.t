@@ -39,15 +39,12 @@ role R2[::T] {
 class C3 does R2[R2[Int]] { }
 class C4 does R2[R2[Str]] { }
 
-#?rakudo.jvm todo "nigh"
 lives_ok { my R2 of R2 of Int $x = C3.new },          'roles parameterized with themselves as type constraints';
 dies_ok { my R2 of R2 of Int $x = C4.new },           'roles parameterized with themselves as type constraints';
-#?rakudo.jvm todo "nigh"
 lives_ok { my R2 of R2 of Int $x = R2[R2[Int]].new }, 'roles parameterized with themselves as type constraints';
 dies_ok { my R2 of R2 of Int $x = R2[R2[Str]].new },  'roles parameterized with themselves as type constraints';
 
 sub param_test_r(R2 of R2 of Int $x) { $x.x }
-#?rakudo.jvm 4 skip 'Nominal type check failed for parameter "$x"'
 is param_test_r(C3.new),          'ok',    'roles parameterized with themselves as type constraints';
 dies_ok { param_test_r(C4.new) },          'roles parameterized with themselves as type constraints';
 is param_test_r(R2[R2[Int]].new), 'ok',    'roles parameterized with themselves as type constraints';
@@ -66,7 +63,7 @@ dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints insid
 eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
 
 # RT #68136
-#?rakudo.parrot skip 'generic instantiation fail, somewhere'
+#?rakudo skip 'generic instantiation fail, somewhere'
 {
     role TreeNode[::T] does Positional {
         has TreeNode[T] @!children handles 'postcircumfix:<[ ]>';
