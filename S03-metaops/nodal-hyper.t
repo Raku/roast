@@ -30,7 +30,7 @@ plan 14;
         thr => { name => 'rakudo' }
     };
 
-    my $full = %hash>>.<name>.pairs;
+    my $full = %hash>>.<name>;
     is $full<one>, "pugs"  , "hyper-dereference a hash 1/3";
     is $full<two>, "niecza", "hyper-dereference a hash 1/3";
     is $full<thr>, "rakudo", "hyper-dereference a hash 1/3";
