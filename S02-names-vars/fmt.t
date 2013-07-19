@@ -9,9 +9,7 @@ plan 21;
 {
     is "Hi".fmt("[%s]"), "[Hi]", 'fmt() works with %s';
     is '3.141'.fmt("[%d]"), "[3]",  "fmt() works with %d";
-    #?rakudo todo 'precision in Num.fmt'
-    #?niecza todo '%f NYI'
-    is (5.6).fmt('%f'), '5.6', 'fmt() works with %f';
+    is (5.6).fmt('%f'), '5.600000', 'fmt() works with %f';
 }
 
 # L<S02/"Names and Variables"/"format an array value"
@@ -61,9 +59,7 @@ is (1..3).fmt,              '1 2 3',    'Range.fmt with defaults';
     # list of pair:
     @pairs = (a => 1.3, b => 2.4);
     is @pairs.fmt("%s:%d", "_"), "a:1_b:2", "fmt() works with lists of pairs";
-    #?rakudo todo '%f'
-    #?niecza todo '%f NYI'
-    is @pairs.fmt("(%s => %f)", ""), "(a => 1.3)(b => 2.4)",
+    is @pairs.fmt("(%s => %f)", ""), "(a => 1.300000)(b => 2.400000)",
         "fmt() works with lists of pairs";
 }
 
