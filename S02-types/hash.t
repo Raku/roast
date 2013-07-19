@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 81;
+plan 86;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -232,8 +232,13 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 {
     my %h;
     my $x = %h<foo>;
-    is %h.keys.elems, 0, 'merely reading a non-existing hash keys does not create it';
-}
+    is %h.elems, 0, 'merely reading a non-existing hash keys does not create it';
+    my $y = %h<foo><bar>;
+    is %h.elems, 0, 'reading multi-level non-existing hash keys does not create it';
+    %h<foo><bar> = "baz";
+    is %h.elems, 1, 'multi-level auto-vivify number of elements';
+    is_deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
+} #4
 
 #RT #76644
 {
@@ -253,12 +258,13 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     dies_ok { Mu.{'a'} }, 'no .{ } in Mu';
 }
 
-# Zen slices work on hashes too
+# Whatever/Zen slices work on hashes too
 #?pugs todo
 {
     my %h = { a => 1, b => 2, c => 3};
-    is %h{*}.join('|'), %h.values.join('|'), '{*} zen slice';
-}
+    is %h{*}.join('|'), %h.values.join('|'), '{*} whatever slice';
+    is %h{}.join('|'),  %h.join('|'),        '{} zen slice';
+} #2
 
 # RT #75868
 #?pugs todo
@@ -276,6 +282,14 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     %hash<foo> := 'bar';
     is %hash<foo>, 'bar', 'binding hash value works';
 }
+
+# RT #118947
+#?rakudo skip "Oh no, it dies"
+{
+    my %hash;
+    %hash<bar><baz> := 'zoom';
+    is %hash<bar><baz>, 'zoom', 'binding on auto-vivified hash value works';
+} #1
 
 # RT #75694
 #?pugs todo
