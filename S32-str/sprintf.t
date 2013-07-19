@@ -58,7 +58,7 @@ is sprintf('%03x', 42.6),         '02a',    '0-padded decimal %x';
 is sprintf('%X', 12),             'C',      'simple %X';
 is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
 
-#?rakudo todo "sprintf does not handle bigints yet"
+#?rakudo.parrot todo "sprintf does not handle bigints yet"
 {
     is sprintf('%d', 453973694165307953197296969697410619233826),
         "453973694165307953197296969697410619233826",
@@ -92,7 +92,7 @@ is sprintf('%03X', 42.6),         '02A',    '0-padded decimal %X';
         '%X works for negative big ints';
 }
 
-#?rakudo todo "sprintf does not handle big Rats yet"
+#?rakudo.parrot todo "sprintf does not handle big Rats yet"
 {
     is sprintf('%d', 453973694165307953197296969697410619233826 + .1),
         "453973694165307953197296969697410619233826",
