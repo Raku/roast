@@ -34,14 +34,9 @@ plan 15;
     # (E D A)
     # 
     # Hint: Use the built-in random number generator and the result of problem P20.
-    
-    sub rand_select(Int $count, *@list) returns List {
-        # from Larry (on #perl6):  well, pick(3) is specced to do that but is unimplemented.
-        return map { @list[floor (@list.elems).rand] }, 1 .. $count;
-    }
     my @letters = 'a' .. 'h';
-    my @rand = rand_select(3, @letters);
-    is @rand.elems, 3, 'rand_select() should return the correct number of items';
+    my @rand = pick(3, @letters);
+    is @rand.elems, 3, 'pick() should return the correct number of items';
     
     # of course the following is wrong, but it also confuses test output!
     #ok all(@rand) ~~ none(@letters), '... and they should be in the letters';
