@@ -58,7 +58,7 @@ is slurp($empty-path), '', "empty files yield empty string";
 {
     my $binary-slurp;
     ok ($binary-slurp = slurp $test-path, :bin), ":bin option runs";
-    isa_ok $binary-slurp, Buf, ":bin returns a Buf";
+    ok $binary-slurp ~~ Buf, ":bin returns a Buf";
     is $binary-slurp, $test-contents.encode, "binary slurp returns correct content";
 }
 
