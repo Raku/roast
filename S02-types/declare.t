@@ -91,7 +91,7 @@ plan 78;
 #?pugs skip 'Buf'
 {
  my Buf $nacpoi;
- isa_ok($nacpoi, Buf);
+ ok($nacpoi ~~ Buf);
 }
 
 {
@@ -260,12 +260,11 @@ plan 78;
  isa_ok($papa,Capture  );
 }
 
-#?rakudo skip 'Blob not implemented'
 #?niecza skip 'Blob not implemented'
 #?pugs skip 'Blob'
 {
  my Blob $pare;
- isa_ok($pare,Blob  );
+ ok($pare ~~ Blob);
 }
 
 #?pugs skip 'Instant'

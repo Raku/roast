@@ -15,7 +15,7 @@ all-basic({ $path.IO });
 
 
 sub all-basic(Callable $handle) {
-    my Buf $buf = "hello world".encode("utf-8");
+    my Blob $buf = "hello world".encode("utf-8");
     my $txt = "42";
 
     #?niecza 2 skip ":bin option for slurp fails"
@@ -91,7 +91,7 @@ sub all-basic(Callable $handle) {
     $path.IO.spurt("42");
     is slurp($path), "42", "IO::Handle slurp";
 
-    my Buf $buf = "meow".encode("ASCII");
+    my Blob $buf = "meow".encode("ASCII");
     $path.IO.spurt($buf);
     #?niecza skip "Excess arguments to slurp, unused named bin"
     is slurp($path, :bin), $buf, "IO::Handle binary slurp";
