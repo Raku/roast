@@ -192,8 +192,8 @@ my @tests = (
 #?niecza skip 'Unhandled exception'
 #?pugs skip "doesn't have encode()"
 {
-    my Buf $a = "asdf".encode();
-    is eval($a.perl).decode("ascii"), "asdf";
+    my Blob $a = "asdf".encode();
+    is eval($a.perl).decode("utf8"), "asdf";
 }
 
 done;
