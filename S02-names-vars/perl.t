@@ -189,7 +189,7 @@ my @tests = (
 }
 
 # Buf
-#?rakudo skip 'expected Bug but got utf8
+#?rakudo skip 'expected Bug but got utf8'
 #?niecza skip 'Unhandled exception'
 #?pugs skip "doesn't have encode()"
 {
