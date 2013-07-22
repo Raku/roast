@@ -3,9 +3,7 @@ use Test;
 
 # L<S29/Context/"=item sleep">
 
-
-plan 11;
-
+plan 12;
 
 #?pugs todo
 {
@@ -33,5 +31,10 @@ plan 11;
     ok 0 <= interval(0  ) < 3  , "fifth sleep";
     ok 12 <= time.Num - $start <= 15, "some overall time";
 } #7
+
+#?pugs   todo "not yet implemented"
+{
+    dies_ok( { sleep(-1) }, "cannot go back in time" );
+} #1
 
 # vim: ft=perl6
