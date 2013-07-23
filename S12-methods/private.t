@@ -78,7 +78,6 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
 
     is $b.public1, 24, '"my method private" can be called as self!private';
     is $b.public2, 18, 'can call role shared private methods';
-    #?rakudo todo 'role private methods - spec?'
     #?niecza todo 'role private methods - spec?'
     dies_ok { $b.public3() }, 'can not call role private methods scoped with my';
 }
