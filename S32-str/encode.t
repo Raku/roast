@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 17;
 
 
 # L<S32::Containers/Buf>
@@ -10,6 +10,8 @@ ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
 is 'ab'.encode('ASCII').elems, 2, 'right length of Buf';
 ok ('ö'.encode('UTF-8') eqv utf8.new(195, 182)), 'encoding to UTF-8';
 is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
+is 'ö'.encode('UTF-8')[0], 195, 'indexing a utf8 gives correct value (1)';
+is 'ö'.encode('UTF-8')[1], 182, 'indexing a utf8 gives correct value (1)';
 
 is 'abc'.encode()[0], 97, 'can index one element in a Buf';
 is_deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
@@ -20,8 +22,7 @@ is_deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 ok ('ä'.encode('UTF-8', 'D') eqv Buf.new(:16<61>, :16<cc>, :16<88>)),
                 'encoding to UTF-8, with NFD';
 
-#?rakudo todo 'encode returns signed 8bit integers instead of unsigned'
-ok ('ä'.encode('UTF-8') eqv Buf.new(:16<c3>, :16<a4>)),
+ok ('ä'.encode('UTF-8') eqv utf8.new(:16<c3>, :16<a4>)),
                 'encoding ä utf8 gives correct numbers';
 
 ok Buf.new(195, 182).decode ~~ Str, '.decode returns a Str';
