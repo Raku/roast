@@ -3,6 +3,14 @@ use Test;
 
 plan 21;
 
+my $last = time;
+sub elapsed {
+    return "[{ time - $last }s]";
+    LEAVE $last = time;
+}
+
+diag "{elapsed} starting tests";
+
 # L<S32::IO/IO::Socket::INET>
 
 # Testing socket must solve 2 problems: find an unused port to bind to,
@@ -49,7 +57,7 @@ if $port >= 65535 {
     skip_rest 'No port free - cannot test';
     exit 0;
 }
-diag "Testing on port $port";
+diag "{elapsed} Testing on port $port";
 
 
 if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
@@ -65,7 +73,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
-    is $received, $expected, "echo server and client";
+    is $received, $expected, "{elapsed} echo server and client";
 
     # test 3 does discard protocol - Internet RFC 863
     if $is-win {
@@ -75,7 +83,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     #warn "TEST 3 $received";
     $expected = "discard '' received\n";
-    is $received, $expected, "discard server and client";
+    is $received, $expected, "{elapsed} discard server and client";
 
     # test 4 tests recv with a parameter
     if $is-win {
@@ -85,17 +93,17 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     $expected = $received.split("\n");
     my $i = 0;
-    is $expected[$i++], '0123456', 'received first 7 characters';
-    is $expected[$i++], '789', 'received next 3 characters';
-    is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', 'remaining 26 were buffered';
+    is $expected[$i++], '0123456', "{elapsed} received first 7 characters";
+    is $expected[$i++], '789', "{elapsed} received next 3 characters";
+    is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', "{elapsed} remaining 26 were buffered";
     # Multibyte characters
     # RT #115862
-    is $expected[$i], chr(0xbeef), "received {chr 0xbeef}";
+    is $expected[$i], chr(0xbeef), "{elapsed} received {chr 0xbeef}";
     $i++;
-    is $expected[$i++], 1, '... which is 1 character';
-    is $expected[$i++], 1, 'received another character';
+    is $expected[$i++], 1, "{elapsed} ... which is 1 character";
+    is $expected[$i++], 1, "{elapsed} received another character";
     # RT #115862
-    is $expected[$i], chr(0xbabe), "combined the bytes form {chr 0xbabe}";
+    is $expected[$i], chr(0xbabe), "{elapsed} combined the bytes form {chr 0xbabe}";
     $i++;
 
     # test 5 tests get()
@@ -107,13 +115,13 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $expected = $received.split("\n");
     $i = 0;
     is $expected[$i++], "'Twas brillig, and the slithy toves",
-        'get() with default separator';
-    is $expected[$i++], 'Did gyre and gimble in the wabe;', 'default separator';
-    is $expected[$i++], 'All mimsy were the borogoves,', '\r\n separator';
-    is $expected[$i++], 'And the mome raths outgrabe', '. as a separator';
-    is $expected[$i++], 'O frabjous day', '! separator not at end of string';
-    is $expected[$i++], ' Callooh', 'Multiple separators not at end of string';
-    is $expected[$i++], ' Callay', '! separator at end of string';
+        "{elapsed} get() with default separator";
+    is $expected[$i++], 'Did gyre and gimble in the wabe;', "{elapsed} default separator";
+    is $expected[$i++], 'All mimsy were the borogoves,', "{elapsed} \\r\\n separator";
+    is $expected[$i++], 'And the mome raths outgrabe', "{elapsed} . as a separator";
+    is $expected[$i++], 'O frabjous day', "{elapsed} ! separator not at end of string";
+    is $expected[$i++], ' Callooh', "{elapsed} Multiple separators not at end of string";
+    is $expected[$i++], ' Callay', "{elapsed} ! separator at end of string";
 
     # RT #116288, test 6 tests read with a parameter
     if $is-win {
@@ -123,9 +131,9 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     $expected = $received.split("\n");
     $i = 0;
-    is $expected[$i++], '0', 'received first character';
-    is $expected[$i++], '3', 'received last character';
-    is $expected[$i++], 4096 * 4, 'total amount ';
+    is $expected[$i++], '0', "{elapsed} received first character";
+    is $expected[$i++], '3', "{elapsed} received last character";
+    is $expected[$i++], 4096 * 4, "{elapsed} total amount ";
 
     # test 7 tests recv with binary data
     if $is-win {
@@ -134,7 +142,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
         $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 7 $port};
     }
     $expected = $received.split("\n");
-    is $expected[0], 'OK-7', 'successful read binary data';
+    is $expected[0], 'OK-7', "{elapsed} successful read binary data";
 
     # test 8 tests recv with binary data.
     if $is-win {
@@ -143,7 +151,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
         $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 8 $port};
     }
     $expected = $received.split("\n");
-    is $expected[0], 'OK-8', 'successful received binary data';
+    is $expected[0], 'OK-8', "{elapsed} successful received binary data";
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;
