@@ -20,6 +20,7 @@ is_deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 ok ('ä'.encode('UTF-8', 'D') eqv Buf.new(:16<61>, :16<cc>, :16<88>)),
                 'encoding to UTF-8, with NFD';
 
+#?rakudo todo 'encode returns signed 8bit integers instead of unsigned'
 ok ('ä'.encode('UTF-8') eqv Buf.new(:16<c3>, :16<a4>)),
                 'encoding ä utf8 gives correct numbers';
 
