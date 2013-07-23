@@ -20,6 +20,9 @@ is_deeply 'abc'.encode()[1, 2], (98, 99), 'can slice-index a Buf';
 ok ('ä'.encode('UTF-8', 'D') eqv Buf.new(:16<61>, :16<cc>, :16<88>)),
                 'encoding to UTF-8, with NFD';
 
+ok ('ä'.encode('UTF-8') eqv Buf.new(:16<c3>, :16<a4>)),
+                'encoding ä utf8 gives correct numbers';
+
 ok Buf.new(195, 182).decode ~~ Str, '.decode returns a Str';
 is Buf.new(195, 182).decode, 'ö', 'decoding a Buf with UTF-8';
 is Buf.new(246).decode('ISO-8859-1'), 'ö', 'decoding a Buf with Latin-1';
