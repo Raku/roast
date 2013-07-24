@@ -54,7 +54,7 @@ is slurp($empty-path), '', "empty files yield empty string";
 }
 
 #?niecza skip ":bin option for slurp fails"
-#?rakudo.jvm skip "BuF NYI"
+#?rakudo.jvm skip 'IO::Handle.read NYI on this backend'
 {
     my $binary-slurp;
     ok ($binary-slurp = slurp $test-path, :bin), ":bin option runs";
