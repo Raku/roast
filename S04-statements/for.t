@@ -215,7 +215,6 @@ my @elems = <a b c d e>;
     is(@array_kv, @kv, 'for @array.kv -> $key, $val is rw { $val++ }');
 }
 
-#?rakudo todo "is rw NYI"
 #?pugs skip "Can't modify const item"
 {
     my %hash_v = ( a => 1, b => 2, c => 3 );
@@ -224,7 +223,6 @@ my @elems = <a b c d e>;
     is(%hash_v, %v, 'for %hash.values -> $val is rw { $val++ }');
 }
 
-#?rakudo todo "is rw NYI"
 #?pugs todo
 {
     my %hash_kv = ( a => 1, b => 2, c => 3 );

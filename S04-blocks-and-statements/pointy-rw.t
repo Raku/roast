@@ -20,7 +20,6 @@ plan 10;
         for %h.values -> $v is rw { $v += 1 }
     }, 'aliases returned by %hash.values should be rw (1)';
 
-    #?rakudo todo 'rw Hash.values'
     is %h<3>, 5, 'aliases returned by %hash.values should be rw (2)';
 }
 
@@ -30,7 +29,6 @@ plan 10;
         for %h.values <-> $v { $v += 1 }
     }, 'aliases returned by %hash.values should be rw (<->) (1)';
 
-    #?rakudo todo 'rw Hash.values'
     is %h<3>, 5, 'aliases returned by %hash.values should be rw (<->) (2)';
 }
 
