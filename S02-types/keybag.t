@@ -323,7 +323,7 @@ sub showkv($x) {
 
 #?niecza skip "Trait name not available on variables"
 {
-    my %h is KeyBag = a => 1, b => 0, c => 2;
+    my %h of KeyBag = a => 1, b => 0, c => 2;
     #?rakudo todo 'todo'
     nok %h.exists( 'b' ), '"b", initialized to zero, does not exist';
     #?rakudo todo 'todo'
@@ -337,7 +337,7 @@ sub showkv($x) {
 
 #?niecza skip "Trait name not available on variables"
 {
-    my %h is KeyBag = a => 1, b => 0, c => 2;
+    my %h of KeyBag = a => 1, b => 0, c => 2;
 
     lives_ok { %h<c> = 0 }, 'can set an item to 0';
     #?rakudo todo 'todo'
@@ -354,7 +354,7 @@ sub showkv($x) {
 
 #?niecza skip "Trait name not available on variables"
 {
-    my %h is KeyBag = a => 1, c => 1;
+    my %h of KeyBag = a => 1, c => 1;
 
     lives_ok { %h<c>++ }, 'can "add" (++) an existing item';
     is %h<c>, 2, '++ on an existing item increments the counter';
@@ -376,7 +376,7 @@ sub showkv($x) {
 
 #?niecza skip "Trait name not available on variables"
 {
-    my %h is KeyBag;
+    my %h of KeyBag;
     lives_ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a KeyBag';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
         'a:1 b:2 c:2 d:1', '... works as expected';

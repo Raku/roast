@@ -278,9 +278,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
 }
 
-#?niecza skip "is KeySet doesn't work yet"
+#?niecza skip "of KeySet doesn't work yet"
 {
-    my %h is KeySet = a => True, b => False, c => True;
+    my %h of KeySet = a => True, b => False, c => True;
     #?rakudo todo 'todo'
     is +%h.elems, 2, 'Inititalization worked';
 
