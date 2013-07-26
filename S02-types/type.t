@@ -40,7 +40,6 @@ my Str $bar;
 #?pugs skip 'parsefail'
 {
     my $baz of Int;
-    #?rakudo todo 'of'
     dies_ok({$baz = 'xyz'},      'of Int restricts to integers');
     is(($baz = 42),       42,    'of Int is an integer');
 }
