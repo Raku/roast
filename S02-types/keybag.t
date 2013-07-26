@@ -321,9 +321,10 @@ sub showkv($x) {
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
 }
 
+#?rakudo skip "'is ObjectType' NYI"
 #?niecza skip "Trait name not available on variables"
 {
-    my %h of KeyBag = a => 1, b => 0, c => 2;
+    my %h is KeyBag = a => 1, b => 0, c => 2;
     #?rakudo todo 'todo'
     nok %h.exists( 'b' ), '"b", initialized to zero, does not exist';
     #?rakudo todo 'todo'
@@ -335,9 +336,10 @@ sub showkv($x) {
     is %h<nonexisting>, 0, '%h<nonexisting> is 0';
 }
 
+#?rakudo skip "'is ObjectType' NYI"
 #?niecza skip "Trait name not available on variables"
 {
-    my %h of KeyBag = a => 1, b => 0, c => 2;
+    my %h is KeyBag = a => 1, b => 0, c => 2;
 
     lives_ok { %h<c> = 0 }, 'can set an item to 0';
     #?rakudo todo 'todo'
@@ -352,9 +354,10 @@ sub showkv($x) {
     is %h.keys.sort, <a c>, '++ on an item reinstates it';
 }
 
+#?rakudo skip "'is ObjectType' NYI"
 #?niecza skip "Trait name not available on variables"
 {
-    my %h of KeyBag = a => 1, c => 1;
+    my %h is KeyBag = a => 1, c => 1;
 
     lives_ok { %h<c>++ }, 'can "add" (++) an existing item';
     is %h<c>, 2, '++ on an existing item increments the counter';
