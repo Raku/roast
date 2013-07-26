@@ -48,8 +48,8 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
   }
 
   sub foo {
-    my $a is context = "foo";
-    my $b is context := $a;    #OK not used
+    my $a is dynamic = "foo";
+    my $b is dynamic := $a;    #OK not used
     return bar(); # && bar2();
   }
 

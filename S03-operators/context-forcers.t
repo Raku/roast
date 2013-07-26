@@ -139,13 +139,12 @@ sub eval_elsewhere($code){ eval($code) }
     ok(?$d, 'it is forced into boolean context');
 }
 
-#?rakudo skip 'is context'
-#?niecza skip 'Trait context not available on variables'
+#?niecza skip 'Trait dynamic not available on variables'
 {
-    my $arrayref is context = list(1,2,3);
-    my $boo is context = 37;
-    ok eval_elsewhere('?(@$+arrayref)'), '?(@$arrayref) syntax works';
-    ok eval_elsewhere('?(@($+arrayref))'), '?(@($arrayref)) syntax works';
+    my $arrayref is dynamic = list(1,2,3);
+    my $boo is dynamic = 37;
+    ok eval_elsewhere('?(@$*arrayref)'), '?(@$arrayref) syntax works';
+    ok eval_elsewhere('?(@($*arrayref))'), '?(@($arrayref)) syntax works';
 }
 
 # L<S03/Symbolic unary precedence/"prefix:<!>">
@@ -167,13 +166,12 @@ sub eval_elsewhere($code){ eval($code) }
     ok(!(!$d), 'it is forced into boolean context');
 
 }
-#?rakudo skip 'is context'
 #?niecza skip 'Trait context not available on variables'
 {
-    my $arrayref is context = list(1,2,3);
+    my $arrayref is dynamic = list(1,2,3);
 
-    ok eval_elsewhere('!(!(@$+arrayref))'), '!(@$arrayref) syntax works';
-    ok eval_elsewhere('!(!(@($+arrayref)))'), '!(@($arrayref)) syntax works';
+    ok eval_elsewhere('!(!(@$*arrayref))'), '!(@$arrayref) syntax works';
+    ok eval_elsewhere('!(!(@($*arrayref)))'), '!(@($arrayref)) syntax works';
 }
 
 # int context

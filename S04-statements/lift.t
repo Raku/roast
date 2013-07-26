@@ -75,6 +75,7 @@ plan 15;
     ok !('1' ceq 2),    'basic operation with coercion (-)';
 }
 
+#?rakudo skip "lift NYI"
 {
     # I hope I understood this part of specs correctly: 
     # L<S04/The C<lift> statement prefix/"Everything else within a lift">
@@ -82,8 +83,8 @@ plan 15;
     # IMHO that means that it's OK to use undeclared variables in a lift:
     sub f { lift $a + $b };
     {
-        my $a is context = 3;
-        my $b is context = 4;
+        my $a is dynamic = 3;
+        my $b is dynamic = 4;
         is f(), 7, 'Can pick up context variables from the caller';
     }
     eval_dies_ok 'f()',
