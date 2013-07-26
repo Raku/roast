@@ -14,7 +14,7 @@ rm t/spec/S32-io/server-ready-flag 2>/dev/null
 ./perl6 t/spec/S32-io/IO-Socket-INET.pl $TEST $PORT client & CLIENT=$!
 
 # make a watchdog to kill a hanging client (occurs only if a test fails)
-( sleep 20; kill $CLIENT 2>/dev/null ) &
+( sleep 20; kill $CLIENT 2>/dev/null && echo '(timeout)' ) &
 
 # the client should exit after about 3 seconds. The watchdog would kill
 # it after 10 sec. Hang around here until the client ends, either way.
