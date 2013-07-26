@@ -195,7 +195,7 @@ given $test {
             until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
             unlink $server_ready_flag_fn;
             my $sock = IO::Socket::INET.new(:$host, :$port);
-            my $recv = $sock.read( 4096 );
+            my $recv = $sock.read( $binary.elems() );
             say $binary eqv $recv ?? 'OK-7' !! 'NOK-7';
             $sock.close();
         }
