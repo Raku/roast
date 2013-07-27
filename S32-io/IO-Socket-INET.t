@@ -75,7 +75,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
     is $received, $expected, "{elapsed} echo server and client";
-    nok $elapsed > $toolong, "took too long 1";
+    nok $elapsed > $toolong, "finished in time #1";
 
     # test 3 does discard protocol - Internet RFC 863
     if $is-win {
@@ -86,7 +86,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     #warn "TEST 3 $received";
     $expected = "discard '' received\n";
     is $received, $expected, "{elapsed} discard server and client";
-    nok $elapsed > $toolong, "took too long 2";
+    nok $elapsed > $toolong, "finished in time #2";
 
     # test 4 tests recv with a parameter
     if $is-win {
@@ -97,23 +97,23 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $expected = $received.split("\n");
     my $i = 0;
     is $expected[$i++], '0123456', "{elapsed} received first 7 characters";
-    nok $elapsed > $toolong, "took too long 3";
+    nok $elapsed > $toolong, "finished in time #3";
     is $expected[$i++], '789', "{elapsed} received next 3 characters";
-    nok $elapsed > $toolong, "took too long 4";
+    nok $elapsed > $toolong, "finished in time #4";
     is $expected[$i++], 'abcdefghijklmnopqrstuvwxyz', "{elapsed} remaining 26 were buffered";
-    nok $elapsed > $toolong, "took too long 5";
+    nok $elapsed > $toolong, "finished in time #5";
     # Multibyte characters
     # RT #115862
     is $expected[$i], chr(0xbeef), "{elapsed} received {chr 0xbeef}";
-    nok $elapsed > $toolong, "took too long 6";
+    nok $elapsed > $toolong, "finished in time #6";
     $i++;
     is $expected[$i++], 1, "{elapsed} ... which is 1 character";
-    nok $elapsed > $toolong, "took too long 7";
+    nok $elapsed > $toolong, "finished in time #7";
     is $expected[$i++], 1, "{elapsed} received another character";
-    nok $elapsed > $toolong, "took too long 8";
+    nok $elapsed > $toolong, "finished in time #8";
     # RT #115862
     is $expected[$i], chr(0xbabe), "{elapsed} combined the bytes form {chr 0xbabe}";
-    nok $elapsed > $toolong, "took too long 9";
+    nok $elapsed > $toolong, "finished in time #9";
     $i++;
 
     # test 5 tests get()
@@ -126,22 +126,22 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $i = 0;
     is $expected[$i++], "'Twas brillig, and the slithy toves",
       "{elapsed} get() with default separator";
-    nok $elapsed > $toolong, "took too long 10";
+    nok $elapsed > $toolong, "finished in time #10";
     is $expected[$i++], 'Did gyre and gimble in the wabe;',
       "{elapsed} default separator";
-    nok $elapsed > $toolong, "took too long 11";
+    nok $elapsed > $toolong, "finished in time #11";
     is $expected[$i++], 'All mimsy were the borogoves,',
       "{elapsed} \\r\\n separator";
-    nok $elapsed > $toolong, "took too long 12";
+    nok $elapsed > $toolong, "finished in time #12";
     is $expected[$i++], 'And the mome raths outgrabe',
       "{elapsed} . as a separator";
-    nok $elapsed > $toolong, "took too long 13";
+    nok $elapsed > $toolong, "finished in time #13";
     is $expected[$i++], 'O frabjous day',
       "{elapsed} ! separator not at end of string";
-    nok $elapsed > $toolong, "took too long 14";
+    nok $elapsed > $toolong, "finished in time #14";
     is $expected[$i++], ' Callooh',
       "{elapsed} Multiple separators not at end of string";
-    nok $elapsed > $toolong, "took too long 15";
+    nok $elapsed > $toolong, "finished in time #15";
     is $expected[$i++], ' Callay',
       "{elapsed} ! separator at end of string";
 
@@ -154,11 +154,11 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     $expected = $received.split("\n");
     $i = 0;
     is $expected[$i++], '0', "{elapsed} received first character";
-    nok $elapsed > $toolong, "took too long 16";
+    nok $elapsed > $toolong, "finished in time #16";
     is $expected[$i++], '3', "{elapsed} received last character";
-    nok $elapsed > $toolong, "took too long 17";
+    nok $elapsed > $toolong, "finished in time #17";
     is $expected[$i++], 4096 * 4, "{elapsed} total amount ";
-    nok $elapsed > $toolong, "took too long 18";
+    nok $elapsed > $toolong, "finished in time #18";
 
     # test 7 tests recv with binary data
     if $is-win {
@@ -168,7 +168,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     $expected = $received.split("\n");
     is $expected[0], 'OK-7', "{elapsed} successful read binary data";
-    nok $elapsed > $toolong, "took too long 19";
+    nok $elapsed > $toolong, "finished in time #19";
 
     # test 8 tests recv with binary data.
     if $is-win {
@@ -178,7 +178,7 @@ if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
     }
     $expected = $received.split("\n");
     is $expected[0], 'OK-8', "{elapsed} successful received binary data";
-    nok $elapsed > $toolong, "took too long 20";
+    nok $elapsed > $toolong, "finished in time #20";
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;
