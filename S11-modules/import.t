@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 13;
+plan 14;
 
 # L<S11/Importing without loading>
 
@@ -71,6 +71,17 @@ plan 13;
         import E :ALL;
         is e1() ~ e2(), 'E::e1E::e2', 'import :ALL';
     }
+}
+
+# RT #118965 - multiple overlapping imports should not bomb
+
+{
+    module F {
+        sub f1() is export(:here, :there) { 42 };
+    }
+    import F :here, :there;
+    is f1(), 42, 'can import the same symbol through multiple tags';
+
 }
 
 # vim: ft=perl6
