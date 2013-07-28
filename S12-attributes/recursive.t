@@ -31,7 +31,7 @@ Test attributes with recursively typed attributes
 #L<S12/Class attributes/"Class attributes are declared">
 {
     class B {
-        my B $.attr is rw;
+        my B $.attr;
     };
     
     my B $a;
