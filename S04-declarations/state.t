@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 44;
+plan 43;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -112,23 +112,6 @@ plan 44;
     }
     impure_rhs() for 1..3;
     is $rhs_calls, 1, 'RHS of state $x = ... only called once';
-}
-
-# state will start {...}
-#?pugs eval "parse error"
-#?rakudo todo 'will start { ... }'
-#?DOES 1
-{
-    my ($a, $b);
-    my $gen = {
-        state $svar will start { $_ = 42 };
-        -> { $svar++ };
-    }
-    $a = $gen();    # $svar == 42
-    $a(); $a();     # $svar == 44
-    $b = $gen()();  # $svar == 44
-
-    is $b, 44, 'state will start {...} works';
 }
 
 # Return of a reference to a state() var
