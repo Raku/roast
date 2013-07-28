@@ -15,7 +15,7 @@ plan 25;
 
 class Foo {
     our $.bar = 23;
-    our $.yada is rw = 13;
+    our $.yada = 13;
 } 
 
 my $test = 0;
@@ -71,7 +71,7 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
 
 {
     class Oof {
-        my $.x is rw;
+        my $.x;
     }
     my $x = Oof.new();
     $x.x = 42;
