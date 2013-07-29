@@ -90,7 +90,6 @@ lives_ok { boom(42) }, "can modify a copy";
 
     ok  $!  ~~ Exception,  "Can't use an unknown trait";
     ok "$!" ~~ /trait/,    'error message mentions trait';
-    #?rakudo todo 'RT 60966'
     ok "$!" ~~ /nonesuch/, 'error message mentions the name of the trait';
 }
 
