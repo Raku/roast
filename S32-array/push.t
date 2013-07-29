@@ -178,7 +178,6 @@ plan 51;
 # RT 119061
 {
     my Int @a;
-    #?rakudo todo "no typechecking on .push"
     dies_ok( { @a.push: "a" }, "cannot push strings onto in Int array" );
 }
 

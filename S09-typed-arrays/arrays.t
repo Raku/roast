@@ -53,11 +53,12 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 
 {
     my Array @x;
-    #?rakudo 5 todo "no parametrization"
+    #?rakudo 2 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies_ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
+    #?rakudo todo "no parametrization"
     dies_ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },

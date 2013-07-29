@@ -166,7 +166,6 @@ plan 57;
 # RT 119061
 {
     my Int @a;
-    #?rakudo todo "no typechecking on .unshift"
     dies_ok( { @a.unshift: "a" }, "cannot unshift strings onto in Int array" );
 }
 

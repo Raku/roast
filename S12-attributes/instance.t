@@ -482,7 +482,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     dies_ok { $o.a = <foo bar> }, 'type enforced on array attrib (assignment)';
     #?pugs todo
     dies_ok { $o.a[2] = $*IN   }, 'type enforced on array attrib (item assignment)';
-    #?rakudo 1 todo 'typed array push'
     #?pugs todo
     dies_ok { $o.a.push: [2, 3]}, 'type enforced on array attrib (push)';
     #?pugs todo
