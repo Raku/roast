@@ -9,7 +9,7 @@ Unshift tests
 
 =end description
 
-plan 56;
+plan 57;
 
 # basic unshift tests
 
@@ -160,6 +160,14 @@ plan 56;
     my @a = <b c>;
     @a.unshift(0);
     is @a.join(','), '0,b,c', 'can unshift an element that boolifies to False';
+}
+
+
+# RT 119061
+{
+    my Int @a;
+    #?rakudo todo "no typechecking on .unshift"
+    dies_ok( { @a.unshift: "a" }, "cannot unshift strings onto in Int array" );
 }
 
 # vim: ft=perl6

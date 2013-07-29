@@ -9,7 +9,7 @@ Push tests
 
 =end description
 
-plan 50;
+plan 51;
 
 # basic push tests
 {
@@ -175,5 +175,11 @@ plan 50;
     is %h<foo>, 'bar', 'pushing assignment to array-in-hash';
 }
 
+# RT 119061
+{
+    my Int @a;
+    #?rakudo todo "no typechecking on .push"
+    dies_ok( { @a.push: "a" }, "cannot push strings onto in Int array" );
+}
 
 # vim: syn=perl6
