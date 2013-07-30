@@ -73,7 +73,6 @@ plan 47;
 
 #?pugs   todo 'feature'
 #?niecza todo 'feature'
-# multi-level classify
 {
     is_deeply( classify( {.comb}, 100 .. 119, 104, 119 ),
       ("1" => {

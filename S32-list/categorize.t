@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item categorize">
 
-plan 47;
+plan 48;
 
 { # basic classify with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
@@ -96,6 +96,18 @@ plan 47;
                      'uppercase' => ['P'],
                      'lowercase' => ['a', 'd', 'r', 'e'] );
     is_deeply(%got, %expected, 'method with named sub mapper');
+}
+
+#?pugs   todo 'feature'
+#?niecza todo 'feature'
+{
+    is_deeply( categorize( { map { [$_, $_+10] }, .comb }, 100,104,112,119 ),
+      ("1" => { "11" => [100, 104, 112, 112, 119, 119] },
+       "0" => { "10" => [100, 100, 104] },
+       "4" => { "14" => [104] },
+       "2" => { "12" => [112] },
+       "9" => { "19" => [119] },
+      ).hash, 'multi-level categorize' );
 }
 
 # vim: ft=perl6
