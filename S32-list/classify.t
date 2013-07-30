@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 46;
+plan 47;
 
 {
     my @list = 1, 2, 3, 4;
@@ -70,5 +70,38 @@ plan 46;
     is_deeply 42.classify(  {$_} ), { 42 => [42] }, "classify single num";
     is_deeply "A".classify( {$_} ), { A => ["A"] }, "classify single string";
 } #2
+
+#?pugs   todo 'feature'
+#?niecza todo 'feature'
+# multi-level classify
+{
+    is_deeply( classify( {.comb}, 100 .. 119, 104, 119 ),
+      ("1" => {
+        "0" => {
+          "0" => [100],
+          "1" => [101],
+          "2" => [102],
+          "3" => [103],
+          "4" => [104,104],
+          "5" => [105],
+          "6" => [106],
+          "7" => [107],
+          "8" => [108],
+          "9" => [109],
+        },
+        "1" => {
+          "0" => [110],
+          "1" => [111],
+          "2" => [112],
+          "3" => [113],
+          "4" => [114],
+          "5" => [115],
+          "6" => [116],
+          "7" => [117],
+          "8" => [118],
+          "9" => [119,119],
+        }
+      }).hash, 'multi-level classify' );
+}
 
 # vim: ft=perl6
