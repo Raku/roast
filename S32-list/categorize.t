@@ -5,7 +5,7 @@ use Test;
 
 plan 48;
 
-{ # basic classify with all possible mappers
+{ # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
     my %expected1 =
       ('0'=>[7,9,3,7],         '10'=>[12,18],       '20'=>[29,23]);
@@ -23,28 +23,6 @@ plan 48;
           "method call on list with {$mapper.^name}";
         is_deeply {}.categorize( $mapper, @list ), %expected1,
           "method call on hash with {$mapper.^name}";
-
-        my %hash;
-        is_deeply %hash.categorize( $mapper, @list ), %expected1,
-          "first method call on hash with {$mapper.^name}";
-        is_deeply %hash, %expected1,
-          "checking whether first hash is set with {$mapper.^name}";
-        is_deeply %hash.categorize( $mapper, @list ), %expected2,
-          "second method call on hash with {$mapper.^name}";
-        is_deeply %hash, %expected2,
-          "checking whether second hash is set with {$mapper.^name}";
-
-#?niecza skip '%thash{Int} NYI'
-{
-        my List %thash{Int};
-        is_deeply %thash.categorize( $mapper, @list ), %expected1,
-          "first method call on hash with {$mapper.^name}";
-        is_deeply %thash, %expected1,
-          "checking whether first hash is set with {$mapper.^name}";
-        is_deeply %thash.categorize( $mapper, @list ), %expected2,
-          "second method call on hash with {$mapper.^name}";
-        is_deeply %thash, %expected2,
-          "checking whether second hash is set with {$mapper.^name}";
 }
     }
 } #4*11
