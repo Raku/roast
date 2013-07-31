@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item categorize">
 
-plan 48;
+plan 12;
 
 { # basic categorize with all possible mappers
     my @list      = 29, 7, 12, 9, 18, 23, 3, 7;
@@ -21,11 +21,8 @@ plan 48;
           "simple sub call with {$mapper.^name}";
         is_deeply @list.categorize( $mapper ), %expected1,
           "method call on list with {$mapper.^name}";
-        is_deeply {}.categorize( $mapper, @list ), %expected1,
-          "method call on hash with {$mapper.^name}";
-}
     }
-} #4*11
+} #4*2
 
 { # basic categorize
     my %got = categorize { .comb }, <A♣ 10♣ 6♥ 3♦ A♠ 3♣ K♠ J♥ 6♦ Q♠ K♥ 8♦ 5♠>;

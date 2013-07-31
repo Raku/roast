@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item classify">
 
-plan 47;
+plan 15;
 
 {
     my @list = 1, 2, 3, 4;
@@ -19,9 +19,8 @@ plan 47;
           "basic classify from list with {$classifier.^name}";
         is_deeply classify( $classifier, @list ), $classified1,
           "basic classify as subroutine with {$classifier.^name}";
-}
     }
-} #4*10
+} #4*2
 
 #?pugs todo 'feature'
 #?rakudo skip 'Cannot use bind operator with this LHS'
