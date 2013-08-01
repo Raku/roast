@@ -1,5 +1,5 @@
 use Test;
-plan 13;
+plan 16;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -115,4 +115,27 @@ $multiline = "Hello\n    World";
         END
 
     is no-r(@q3[0]), "line one\n\nline two\n\nfoo\n", "empty lines";
+}
+
+{
+    my @q = qq:to/END/;
+		stuff
+		stuff
+		END
+
+    is no-r(@q[0]), "stuff\nstuff\n", "Tabs get correctly removed";
+
+    my @q2 = qq:to/END/;
+	    stuff
+	    barfoo
+	    END
+
+    is no-r(@q2[0]), "stuff\nbarfoo\n", "mixed tabs and spaces get correctly removed";
+
+    my @q3 = qq:to/END/;
+        	line one
+	        line two
+		END
+
+    is no-r(@q3[0]), "line one\nline two\n", "mixing tabs and spaces even more evil-ly";
 }
