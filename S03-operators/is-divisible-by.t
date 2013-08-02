@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S03/"is divisible by">
 {
@@ -13,7 +13,7 @@ plan 13;
 
     is (1..10).grep({ $_ %% 3 }), <3 6 9>, '%% works with explicit closure';
     is (1..10).grep( * %% 3 ), <3 6 9>, '%% works with whatever *';
-}
+} #6
 
 {
     nok 6 !%% 3, '6 !%% 3';
@@ -23,12 +23,15 @@ plan 13;
 
     is (1..10).grep({ $_ !%% 3 }), <1 2 4 5 7 8 10>, '%% works with explicit closure';
     is (1..10).grep( * !%% 3 ), <1 2 4 5 7 8 10>, '%% works with whatever *';
-}
+} #6
 
 # RT #76170
 {
     eval_dies_ok "say 9 !% 3", 'RT #76170'
-}
+} #1
 
-
-
+{
+    dies_ok {eval "9  %% 0"}, 'cannot divide by zero using infix:<%%>';
+    #?rakudo todo "not sure why this doesn't fire"
+    dies_ok {eval "9 !%% 0"}, 'cannot divide by zero using infix:<%%>';
+} #2
