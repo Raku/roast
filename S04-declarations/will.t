@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-BEGIN plan 23;
+BEGIN plan 13;
 
 # L<S04/Phasers>
 
@@ -10,24 +10,24 @@ my $begin;
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
 {
-    BEGIN ok !defined($begin), 'did we not run "will begin" yet';
-    my $b will begin { $begin = 42 };
-    BEGIN is $begin, 42, "will begin executed immediately at compile time";
-    CHECK is $begin, 69, "third check executed";
-    my $bb will check { $begin = 69 };  # second CHECK executed
-    CHECK is $begin, 42, "first check executed";
+    BEGIN $begin ~= "a";
+    my $b will begin { $begin ~= "b" };
+    BEGIN $begin ~= "c";
+    CHECK $begin ~= "f";
+    my $bb will check { $begin ~= "e" };
+    CHECK $begin ~= "d";
+    is $begin, "abcdef", 'all begin/check blocks in order';
 }
 
 my $init;
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
+#?rakudo todo 'will init NYI'
 {
-    BEGIN ok !defined($init), 'did we not run INIT yet';
-    INIT $init = 5;
-    INIT is $init, 5, 'did we run previous INIT';
-    #?rakudo todo 'will init NYI'
-    is $init, 121, 'did we run will init after INIT';
-    my $bbb will init { $init = 121 };
+    is $init, "abc", 'all init blocks in order';
+    BEGIN $init ~= "a";
+    INIT  $init ~= "b";
+    my $bbb will init { $init ~= "c" };
 }
 
 my $same1;
@@ -35,54 +35,58 @@ my $same1;
 #?pugs   skip "will variable trait NYI"
 #?rakudo skip 'declared variable not visible in block yet'
 {
-    my $x will begin { $same1 = ( $_ === $x ) }
-    BEGIN ok $same1, 'is $_ same as variable being declared';
+    my $x  will begin { $same1 ~= "a" if $_ === $x }
+    my $xx will check { $same1 ~= "b" if $_ === $xx }
+    my $xxx will init { $same1 ~= "c" if $_ === $xxx }
+    is $same1, "abc", 'all blocks set $_';
 }
 
-my $c = 1;
+my $block;
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
 {
-    my $d will enter { $c = 42 };
-    is $c, 42, 'entering the block sets the variable';
-    my $e will leave { $c = 69 };
+    my $d  will pre   { $block ~= "a" };
+    my $dd will enter { $block ~= "b" };
+    is $block, "ab", 'entered block ok';
+    my $e will leave  { $block ~= "c" };
+    my $ee will post  { $block ~= "d" };
 }
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
-is $c, 69, 'leaving block sets variable';
+#?rakudo todo "will post NYI"
+is $block, "abcd", 'all block blocks set variable';
 
 my $same2;
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
 #?rakudo skip 'declared variable not visible in block yet'
 {
-    my $d will enter { $same2 = ( $_ === $d ) };
-    ok $same2, 'is $_ same as $d';
-    my $e will leave { $same2 = ( $_ === $e ) };
+    my $d  will pre   { $same2 ~= "a" if $_ === $d; 1 };
+    my $dd will enter { $same2 ~= "b" if $_ === $dd };
+    is $same2, "ab", 'entered block ok';
+    my $e  will leave { $same2 ~= "c" if $_ === $e };
+    my $ee will post  { $same2 ~= "d" if $_ === $ee; 1 };
 }
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
 #?rakudo todo 'declared variable not visible in block yet'
-ok $same2, 'is $_ same as $e';
+is $same2, "abcd", 'all block blocks get $_';
 
-my $first =  42;
-my $next  =  69;
-my $last  = 121;
+my $for;
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
 {
-    for 1..3 -> $try {
-        my $g will first { $first = $try };
-        is $first, 1, 'only entering loop for first time sets variable';
-        NEXT is $next, $try, 'did we call will next';
-        my $h will next { $next = $try };
-        my $i will last { $last = $try };
-        is $last, 121, 'did not call last yet';
+    my @is = <a ab abb>;
+    for ^3 {
+        my $g will first { $for ~= "a" };
+        my $h will next  { $for ~= "b" };
+        my $i will last  { $for ~= "c" };
+        is( $for, @is[$_], "iteration #{$_+1}" );
     }
 }
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
-is $last, 3, 'leaving loop sets variable';
+is $for, "abbbc", 'all for blocks set variable';
 
 my $same3;
 #?niezca skip "will variable trait NYI"
@@ -90,15 +94,15 @@ my $same3;
 #?rakudo skip 'declared variable not visible in block yet'
 {
     for 1 {
-        my $j will first { $same3 = ( $_ === $j ) };
-        ok $same3, 'is $_ same as $j';
-        NEXT ok $same3, 'is $_ same as $k';
-        my $k will next { $same3 = ( $_ === $k ) };
-        my $l will last { $same3 = ( $_ === $l ) };
+        my $j will first { $same3 ~= "a" if $_ === $j; 1 };
+        my $k will next  { $same3 ~= "b" if $_ === $k; 1 };
+        my $l will last  { $same3 ~= "c" if $_ === $l; 1 };
+        is( $same3, "a", 'only first seen' );
+    }
 }
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
 #?rakudo todo 'declared variable not visible in block yet'
-ok $same3, 'is $_ same as $l';
+is $same3, "abc", 'all for blocks get $_';
 
 # vim: ft=perl6
