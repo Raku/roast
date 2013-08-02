@@ -295,10 +295,8 @@ All uses of a zero modulus or divisor should 'die', and the
 
 my $x;
 
-#?rakudo.parrot 2 todo 'modulo by zero'
 eval_dies_ok('say 3 % 0', 'Modulo zero dies and is catchable');
 dies_ok( { $x = 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VInt/VRat variables');
-#?rakudo.parrot todo 'die or fail?'
 dies_ok( { $x := 0; say 3 % $x; }, 'Modulo zero dies and is catchable with VRef variables');
 
 eval_dies_ok('say 3 div 0', 'Division by zero dies and is catchable');
@@ -311,9 +309,9 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 {
     my $f = 1; $f *= $_ for 2..25;
     ok $f == 15511210043330985984000000, 
-       'Can calcualte 25! without loss of precision';
+       'Can calculate 25! without loss of precision';
     ok 2**65 == 36893488147419103232,
-       'Can calcualte 2**65 without loss of precision';
+       'Can calculate 2**65 without loss of precision';
 }
 
 # RT #73264
