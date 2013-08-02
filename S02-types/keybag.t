@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 171;
+plan 172;
 
 # L<S02/Mutable types/KeyHash of UInt>
 
@@ -380,6 +380,8 @@ sub showkv($x) {
 #?niecza skip "Trait name not available on variables"
 {
     my %h of KeyBag;
+    #?rakudo todo '%h of TypeObject syntax not working yet'
+    ok %h.of.perl eq 'KeyBag', 'is the hash really a KeyBag';
     lives_ok { %h = bag <a b c d c b> }, 'Assigning a Bag to a KeyBag';
     is %h.keys.sort.map({ $^k ~ ':' ~ %h{$k} }).join(' '),
         'a:1 b:2 c:2 d:1', '... works as expected';
