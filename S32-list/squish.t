@@ -63,13 +63,13 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e f f a>;
-    my $with  = -> $a, $b { substr($a,0,1) eq substr($b,0,1) };
-    is_deeply @array.squish(:$with),  <a b c d e f a>.list.item,
-      "method form of squish works";
-    is_deeply squish(@array,:$with), <a b c d e f a>.list.item,
-      "subroutine form of squish works";
-    is_deeply @array .= squish(:$with), [<a b c d e f a>],
-      "inplace form of squish works";
+    my $as    = {substr $^a,0,1};
+    is_deeply @array.squish(:$as),  <a b c d e f a>.list.item,
+      "method form of squish with :as works";
+    is_deeply squish(@array,:$as), <a b c d e f a>.list.item,
+      "subroutine form of squish with :as works";
+    is_deeply @array .= squish(:$as), [<a b c d e f a>],
+      "inplace form of squish with :as works";
     is_deeply @array, [<a b c d e f a>],
       "final result of in place";
 } #4
