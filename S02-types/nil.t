@@ -75,7 +75,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
 
     sub f2(Int $x?) { $x }
     my $z;
-    #?rakudo todo 'triage'
+    #?rakudo skip 'triage'
     lives_ok { $z = f2(Nil) }, 'param: lives for optional';
     #?rakudo todo 'triage'
     ok $z === Int, '... set to type object';
