@@ -71,7 +71,7 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is_deeply @array .= squish(:$as), [<a b c d e f a>],
       "inplace form of squish with :as works";
     is_deeply @array, [<a b c d e f a>],
-      "final result of in place";
+      "final result with :as in place";
 } #4
 
 # vim: ft=perl6
