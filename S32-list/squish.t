@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 14;
+plan 26;
 
 =begin description
 
@@ -72,6 +72,52 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "inplace form of squish with :as works";
     is_deeply @array, [<a b c d e f a>],
       "final result with :as in place";
+} #4
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my @array = <a aa b bb c d e f f a>;
+    my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
+    is_deeply @array.squish(:$with),  <a b c d e f a>.list.item,
+      "method form of squish with :with works";
+    is_deeply squish(@array,:$with), <a b c d e f a>.list.item,
+      "subroutine form of squish with :with works";
+    is_deeply @array .= squish(:$with), [<a b c d e f a>],
+      "inplace form of squish with :with works";
+    is_deeply @array, [<a b c d e f a>],
+      "final result with :with in place";
+} #4
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my @array = <a aa b bb c d e f f a>;
+    my $as    = *.substr(0,1).ord;
+    my $with  = &[==];
+    is_deeply @array.squish(:$as, :$with),  <a b c d e f a>.list.item,
+      "method form of squish with :as and :with works";
+    is_deeply squish(@array,:$as, :$with), <a b c d e f a>.list.item,
+      "subroutine form of squish with :as and :with works";
+    is_deeply @array .= squish(:$as, :$with), [<a b c d e f a>],
+      "inplace form of squish with :as and :with works";
+    is_deeply @array, [<a b c d e f a>],
+      "final result with :as and :with in place";
+} #4
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my @array = ({:a<1>}, {:a<1>}, {:b<1>});
+    my $with  = &[eqv];
+    is_deeply @array.squish(:$with),  ({:a<1>}, {:b<1>}).list.item,
+      "method form of squish with [eqv] and objects works";
+    is_deeply squish(@array,:$with), ({:a<1>}, {:b<1>}).list.item,
+      "subroutine form of squish with [eqv] and objects works";
+    is_deeply @array .= squish(:$with), [{:a<1>}, {:b<1>}],
+      "inplace form of squish with [eqv] and objects works";
+    is_deeply @array, [{:a<1>}, {:b<1>}],
+      "final result with [eqv] and objects in place";
 } #4
 
 # vim: ft=perl6

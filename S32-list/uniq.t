@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 30;
 
 =begin description
 
@@ -86,6 +86,52 @@ See the thread "[S32::Containers] uniq" on p6l, too.
       "inplace form of uniq with :as works";
     is_deeply @array, [<a b c d e f>],
       "final result with :as in place";
+} #4
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my @array = <a b bb c d e b bbbb b b f b>;
+    my $with  = { substr($^a,0,1) eq substr($^b,0,1) }
+    is_deeply @array.uniq(:$with),  <a b c d e f>.list.item,
+      "method form of uniq with :with works";
+    is_deeply uniq(@array,:$with), <a b c d e f>.list.item,
+      "subroutine form of uniq with :with works";
+    is_deeply @array .= uniq(:$with), [<a b c d e f>],
+      "inplace form of uniq with :with works";
+    is_deeply @array, [<a b c d e f>],
+      "final result with :with in place";
+} #4
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my @array = <a b bb c d e b bbbb b b f b>;
+    my $as    = *.substr(0,1).ord;
+    my $with  = &[==];
+    is_deeply @array.uniq(:$as),  <a b c d e f>.list.item,
+      "method form of uniq with :as works";
+    is_deeply uniq(@array,:$as), <a b c d e f>.list.item,
+      "subroutine form of uniq with :as works";
+    is_deeply @array .= uniq(:$as), [<a b c d e f>],
+      "inplace form of uniq with :as works";
+    is_deeply @array, [<a b c d e f>],
+      "final result with :as in place";
+} #4
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my @array = ({:a<1>}, {:b<1>}, {:a<1>});
+    my $with  = &[eqv];
+    is_deeply @array.uniq(:$with),  ({:a<1>}, {:b<1>}).list.item,
+      "method form of uniq with [eqv] and objects works";
+    is_deeply uniq(@array,:$with), ({:a<1>}, {:b<1>}).list.item,
+      "subroutine form of uniq with [eqv] and objects works";
+    is_deeply @array .= uniq(:$with), [{:a<1>}, {:b<1>}],
+      "inplace form of uniq with [eqv] and objects works";
+    is_deeply @array, [{:a<1>}, {:b<1>}],
+      "final result with [eqv] and objects in place";
 } #4
 
 # vim: ft=perl6
