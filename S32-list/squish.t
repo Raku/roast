@@ -63,7 +63,7 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e f f a>;
-    my $as    = {substr $^a,0,1};
+    my $as    = *.substr: 0,1;
     is_deeply @array.squish(:$as),  <a b c d e f a>.list.item,
       "method form of squish with :as works";
     is_deeply squish(@array,:$as), <a b c d e f a>.list.item,

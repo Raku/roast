@@ -77,7 +77,7 @@ See the thread "[S32::Containers] uniq" on p6l, too.
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
-    my $as    = {substr $^a,0,1};
+    my $as    = *.substr: 0,1;
     is_deeply @array.uniq(:$as),  <a b c d e f>.list.item,
       "method form of uniq with :as works";
     is_deeply uniq(@array,:$as), <a b c d e f>.list.item,
