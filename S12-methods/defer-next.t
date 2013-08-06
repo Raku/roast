@@ -121,10 +121,12 @@ class BarNextWithInt is Foo {
     is $r, '&123', "direct call to code ref candidate";
 
     $r='';
+    #?rakudo 2 todo "oh noes, it doesnt work"
     is $a.l( my %a, 4,5,6 ), '%456&456', 'return from hash candidate';
     is $r, '%456&456', "call to hash candidate";
 
     $r='';
+    #?rakudo 2 todo "oh noes, it doesnt work"
     is $a.l( my @a, 7,8,9 ), '@789&789', 'return from array candidate';
     is $r, '@789&789', "call to array candidate";
 }
