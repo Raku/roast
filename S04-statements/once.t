@@ -93,9 +93,7 @@ for <first second> {
     };
 
     nok $was_in_once.defined, 'once {} has not run yet';
-    #?rakudo todo 'once block does not return final value yet'
     is $sub(), 23, 'once {} block set our variable (2)';
-    #?rakudo todo 'once block does not return final value yet'
     #?niecza todo
     is $sub(), 23, 'the returned value of once {} still there';
     #?pugs todo
