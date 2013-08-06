@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 21;
 
 # L<S12/"Calling sets of methods"/"Any method can defer to the next candidate method in the list">
 
@@ -93,6 +93,40 @@ class BarNextWithInt is Foo {
     dies_ok { DeferWithoutCandidate.new.a(1) },
         'Dies when nextwith() does not find a candidate to dispatch to';
     is $called, 1, 'but was in the correct method before death';
+}
+
+{
+    my $r;
+    class AA {
+        proto method l (|) { * }
+        multi method l ( &t, *@list ) {
+            $r ~= '&';
+            $r ~= @list.join;
+            $r;
+        }
+        multi method l ( %t, *@list ) {
+            $r ~= '%';
+            $r ~= @list.join;
+            nextwith( { %t{$^a} }, @list );
+        }
+        multi method l ( @t, *@list ) {
+            $r ~= '@';
+            $r ~= @list.join;
+            nextwith( { @t[$^a] }, @list );
+        }
+    }
+
+    my $a = AA.new;
+    is $a.l( {$_}, 1,2,3 ), '&123', 'return direct call to code ref candidate';
+    is $r, '&123', "direct call to code ref candidate";
+
+    $r='';
+    is $a.l( my %a, 4,5,6 ), '%456&456', 'return from hash candidate';
+    is $r, '%456&456', "call to hash candidate";
+
+    $r='';
+    is $a.l( my @a, 7,8,9 ), '@789&789', 'return from array candidate';
+    is $r, '@789&789', "call to array candidate";
 }
 
 # vim: ft=perl6
