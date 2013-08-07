@@ -107,14 +107,14 @@ class BarNextWithInt is Foo {
         multi method l ( %t, *@list ) {
             $r ~= '%';
             $r ~= @list.join;
-            #nextwith( { %t{$^a} }, @list );  # not intended to work
-            &?ROUTINE.dispatcher()( self, { %t{$^a} }, @list );
+            samewith( { %t{$^a} }, @list );
+#            &?ROUTINE.dispatcher()( self, { %t{$^a} }, @list );
         }
         multi method l ( @t, *@list ) {
             $r ~= '@';
             $r ~= @list.join;
-            #nextwith( { @t[$^a] }, @list );  # not intended to work
-            &?ROUTINE.dispatcher()( self, { @t[$^a] }, @list );
+            samewith( { @t[$^a] }, @list );
+#            &?ROUTINE.dispatcher()( self, { @t[$^a] }, @list );
         }
     }
 
