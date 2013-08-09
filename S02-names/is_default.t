@@ -11,6 +11,7 @@ plan 48;
 {
     my $a is default(42);
     is $a, 42, "uninitialized untyped variable should have its default";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $a.VAR.default, 42, 'is the default set correctly for $a';
     lives_ok { $a++ }, "should be able to update untyped variable";
     is $a, 43, "update of untyped variable to 43 was successful";
@@ -25,6 +26,7 @@ plan 48;
 
     my $b is default(42) = 768;
     is $b, 768, "untyped variable should be initialized";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $b.VAR.default, 42, 'is the default set correctly for $b';
 } #12
 
@@ -34,6 +36,7 @@ plan 48;
 {
     my Int $a is default(42);
     is $a, 42, "uninitialized typed variable should have its default";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $a.VAR.default, 42, 'is the default set correctly for Int $a';
     lives_ok { $a++ }, "should be able to update typed variable";
     is $a, 43, "update of typed variable to 43 was successful";
@@ -46,6 +49,7 @@ plan 48;
 
     my Int $b is default(42) = 768;
     is $b, 768, "typed variable should be initialized";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $b.VAR.default, 42, 'is the default set correctly for Int $b';
 } #12
 
@@ -56,6 +60,7 @@ plan 48;
     my @a is default(42);
     #?rakudo todo '@a is default does not work yet'
     is @a[0], 42, "uninitialized untyped array element should have its default";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @a.VAR.default, 42, 'is the default set correctly for @a';
     lives_ok { @a[0]++ }, "should be able to update untyped array element";
     #?rakudo todo '@a is default does not work yet'
@@ -71,6 +76,7 @@ plan 48;
 
     my @b is default(42) = 768;
     is @b[0], 768, "untyped array element should be initialized";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @b.VAR.default, 42, 'is the default set correctly for @b';
 } #12
 
@@ -81,6 +87,7 @@ plan 48;
     my Int @a is default(42);
     #?rakudo todo 'Int @a is default does not work yet'
     is @a[0], 42, "uninitialized typed array element should have its default";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @a.VAR.default, 42, 'is the default set correctly for Int @a';
     lives_ok { @a[0]++ }, "should be able to update typed array element";
     #?rakudo todo 'Int @a is default does not work yet'
@@ -96,6 +103,7 @@ plan 48;
 
     my Int @b is default(42) = 768;
     is @b[0], 768, "typed array element should be initialized";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @b.VAR.default, 42, 'is the default set correctly for Int @b';
 } #12
 
