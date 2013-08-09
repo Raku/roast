@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 48;
+plan 72;
 
 # L<S02/Variables Containing Undefined Values
 
@@ -105,6 +105,60 @@ plan 48;
     is @b[0], 768, "typed array element should be initialized";
     #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @b.VAR.default, 42, 'is the default set correctly for Int @b';
+} #12
+
+#?pugs   skip "is default NYI"
+#?niecza skip "is default NYI"
+# not specifically typed
+{
+    my %a is default(42);
+    #?rakudo todo '%a is default does not work yet'
+    is %a<o>, 42, "uninitialized untyped hash element should have its default";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
+    is %a.VAR.default, 42, 'is the default set correctly for %a';
+    lives_ok { %a<o>++ }, "should be able to update untyped hash element";
+    #?rakudo todo '%a is default does not work yet'
+    is %a<o>, 43, "update of untyped hash element to 43 was successful";
+    lives_ok { %a<o> = Nil }, "assign Nil to untyped hash element";
+    #?rakudo todo "is default not functioning yet"
+    is %a<o>, 42, "untyped hash element returned to its default with Nil";
+    lives_ok { %a<o> = 314 }, "should be able to update untyped hash element";
+    is %a<o>, 314, "update of untyped hash element to 314 was successful";
+    lives_ok { undefine %a<o> }, "undefine untyped hash element";
+    #?rakudo todo "is default not functioning yet"
+    is %a<o>, 42, "untyped hash element returned to its default with undefine";
+
+    my %b is default(42) = o => 768;
+    is %b<o>, 768, "untyped hash element should be initialized";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
+    is %b.VAR.default, 42, 'is the default set correctly for %b';
+} #12
+
+#?pugs   skip "Int is default NYI"
+#?niecza skip "Int is default NYI"
+# typed
+{
+    my Int %a is default(42);
+    #?rakudo todo 'Int %a is default does not work yet'
+    is %a<o>, 42, "uninitialized typed hash element should have its default";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
+    is %a.VAR.default, 42, 'is the default set correctly for Int %a';
+    lives_ok { %a<o>++ }, "should be able to update typed hash element";
+    #?rakudo todo 'Int %a is default does not work yet'
+    is %a<o>, 43, "update of hash array element to 43 was successful";
+    lives_ok { %a<o> = Nil }, "assign Nil to hash array element";
+    #?rakudo skip "is default not functioning yet"
+    is %a<o>, 42, "typed hash element returned to its default with Nil";
+    lives_ok { %a<o> = 314 }, "should be able to update typed hash element";
+    is %a<o>, 314, "update of typed hash element to 314 was successful";
+    lives_ok { undefine %a<o> }, "undefine typed hash element";
+    #?rakudo skip "is default not functioning yet"
+    is %a<o>, 42, "typed hash element returned to its default with undefine";
+
+    my Int %b is default(42) = o => 768;
+    is %b<o>, 768, "typed hash element should be initialized";
+    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
+    is %b.VAR.default, 42, 'is the default set correctly for Int %b';
 } #12
 
 # vim: ft=perl6
