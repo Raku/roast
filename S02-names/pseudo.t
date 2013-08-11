@@ -328,7 +328,7 @@ plan 142;
     is f2({ CALLER::<$*foo> }), 92, 'CALLER::<$*foo> works';
     is f2({ ::($caller)::('$*foo') }), 92, '::("CALLER")::<$*foo> works';
 
-    my $y = 93; #OK
+    my $y is dynamic = 93; #OK
     if 1 {
         is $CALLER::y, 93, 'CALLER:: works in inline blocks';
         is $::($caller)::y, 93, '::("CALLER") works in inline blocks';
