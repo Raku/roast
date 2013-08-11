@@ -2,6 +2,7 @@ use v6;
 use Test;
 plan 3;
 
+# RT #88704
 # A user-declared infix:<;> clashes with statement stopper ';' in Rakudo
 
 my $marker = 0;
