@@ -58,12 +58,10 @@ plan 72;
 # not specifically typed
 {
     my @a is default(42);
-    #?rakudo todo '@a is default does not work yet'
     is @a[0], 42, "uninitialized untyped array element should have its default";
     #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @a.VAR.default, 42, 'is the default set correctly for @a';
     lives_ok { @a[0]++ }, "should be able to update untyped array element";
-    #?rakudo todo '@a is default does not work yet'
     is @a[0], 43, "update of untyped array element to 43 was successful";
     lives_ok { @a[0] = Nil }, "assign Nil to untyped array element";
     #?rakudo todo "is default not functioning yet"
@@ -85,12 +83,10 @@ plan 72;
 # typed
 {
     my Int @a is default(42);
-    #?rakudo todo 'Int @a is default does not work yet'
     is @a[0], 42, "uninitialized typed array element should have its default";
     #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @a.VAR.default, 42, 'is the default set correctly for Int @a';
     lives_ok { @a[0]++ }, "should be able to update typed array element";
-    #?rakudo todo 'Int @a is default does not work yet'
     is @a[0], 43, "update of typed array element to 43 was successful";
     lives_ok { @a[0] = Nil }, "assign Nil to typed array element";
     #?rakudo skip "is default not functioning yet"
@@ -112,12 +108,10 @@ plan 72;
 # not specifically typed
 {
     my %a is default(42);
-    #?rakudo todo '%a is default does not work yet'
     is %a<o>, 42, "uninitialized untyped hash element should have its default";
     #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is %a.VAR.default, 42, 'is the default set correctly for %a';
     lives_ok { %a<o>++ }, "should be able to update untyped hash element";
-    #?rakudo todo '%a is default does not work yet'
     is %a<o>, 43, "update of untyped hash element to 43 was successful";
     lives_ok { %a<o> = Nil }, "assign Nil to untyped hash element";
     #?rakudo todo "is default not functioning yet"
@@ -139,12 +133,10 @@ plan 72;
 # typed
 {
     my Int %a is default(42);
-    #?rakudo todo 'Int %a is default does not work yet'
     is %a<o>, 42, "uninitialized typed hash element should have its default";
     #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is %a.VAR.default, 42, 'is the default set correctly for Int %a';
     lives_ok { %a<o>++ }, "should be able to update typed hash element";
-    #?rakudo todo 'Int %a is default does not work yet'
     is %a<o>, 43, "update of hash array element to 43 was successful";
     lives_ok { %a<o> = Nil }, "assign Nil to hash array element";
     #?rakudo skip "is default not functioning yet"
