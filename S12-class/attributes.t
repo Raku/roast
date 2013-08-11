@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 31;
 
 # L<S12/Fancy method calls/"For a call on your own private method">
 
@@ -138,5 +138,28 @@ eval_dies_ok q[
     eval_lives_ok q{
         my class A { state $b; }
     }, "No segfault on state variables";
+}
+
+#RT #75010
+{
+
+    my @y=1,2,3;
+    is_deeply( [@y], [ 1, 2, 3 ], 'Plain array' );
+    is_deeply( [@y[1 .. +@y]], [ 2, 3, Any ], 'Array from 2-nd element to end+1' );
+    is_deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
+
+    class AB {
+        has @.x; 
+        method aa { 
+            my @y=1,2,3; 
+            is_deeply( [@y[1 .. +@y]], [ 2, 3, Any ], 'Plain array in the method' );
+            is_deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
+            is_deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
+        }
+    };
+
+    my AB $y.=new(:x(1,2,3)); 
+    $y.aa;
+
 }
 # vim: ft=perl6
