@@ -12,7 +12,7 @@ plan 15;
     my $a is dynamic = 3;
     is $sub(), 3, 'basic $CALLER:: works';
   }
-}
+} #1
 
 {
   my $a is dynamic = 9;
@@ -26,7 +26,7 @@ plan 15;
     my $a is dynamic = 11;
     is $sub1(), 10, '$CALLER:: with nested subs works';
   }
-}
+} #1
 
 {
   my $get_caller = sub { return sub { $CALLER::CALLER::a } };
@@ -46,7 +46,7 @@ plan 15;
   # calculation.
   ok !(try { $result_of_sub1() }), '$CALLER::CALLER:: is recalculated on each access (1)';
   ok !(try { $result_of_sub2() }), '$CALLER::CALLER:: is recalculated on each access (2)';
-}
+} #2
 
 # L<S02/Names/The CALLER package refers to the lexical scope>
 {
@@ -59,7 +59,7 @@ plan 15;
 
   $_ = 23;
   is bar(), 42, '$_ is implicitly declared "is dynamic" (1)';
-}
+} #1
 
 {
   # $_ is always implicitly declared "is dynamic".
@@ -72,7 +72,7 @@ plan 15;
 
   $_ = 23;
   is bar(), 42, '$_ is implicitly declared "is dynamic" (2)';
-}
+} #1
 
 #?pugs skip 'Cannot cast from VStr "success" to VCode (VCode)'
 {
@@ -86,10 +86,9 @@ plan 15;
 
   my $abs = 23;
   #?niecza todo 'strictness'
-  #?rakudo todo 'strictness'
   nok (try bar()) eq 'success',
     'vars not declared "is dynamic" are not accessible via $CALLER::';
-}
+} #1
 
 # Vars declared with "is dynamic" default to being rw in the creating scope and
 # readonly when accessed with $CALLER::.
@@ -97,27 +96,27 @@ plan 15;
   my $foo is dynamic = 42;
   $foo++;
   is $foo, 43, '"is dynamic" vars are rw in the creating scope (1)';
-}
+} #1
 
 {
   my $foo is dynamic = 42;
   { $foo++ }
   is $foo, 43, '"is dynamic" vars are rw in the creating scope (2)';
-}
+} #1
 
 #?pugs skip "Can't modify constant item: VInt 42"
 {
   my sub modify { $CALLER::foo++; 'success' }
   my $foo is dynamic ::= 42;
   nok (try modify()) eq 'success', '"::=" vars are ro when accessed with $CALLER::';
-}
+} #1
 
 {
   my sub modify { $CALLER::_++ }
   $_ = 42;
   modify();
   is $_, 43,             '$_ is implicitly rw (2)';
-}
+} #1
 
 {
   my sub modify { $CALLER::foo++ }
@@ -125,7 +124,7 @@ plan 15;
   modify();
   is $foo, 43,
       '"is dynamic" vars declared "is rw" are rw when accessed with $CALLER:: (2)';
-}
+} #1
 
 {
   my sub get_foo { try { $DYNAMIC::foo } }
@@ -133,7 +132,7 @@ plan 15;
 
   #?pugs todo
   is get_foo(), 42, '$DYNAMIC:: searches call stack';
-}
+} #1
 
 # Rebinding caller's variables -- legal?
 {
@@ -145,7 +144,7 @@ plan 15;
   is $foo, 23,               'rebinding $CALLER:: variables works (2)';
   $other_var++;
   is $foo, 24,               'rebinding $CALLER:: variables works (3)';
-}
+} #2
 
 =begin pod
 
