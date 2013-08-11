@@ -36,9 +36,6 @@ done
 
 # the client should exit after about 3 seconds. The watchdog would kill
 # it after 10 sec. Hang around here until the client ends, either way.
-# echo BEFORE CLIENT ENDS
-#wait $CLIENT 2>/dev/null
-# echo AFTER CLIENT ENDED
+
 # now that the client is finished either way, stop the server
 kill $SERVER 2>/dev/null
-# echo SHELL COMPLETED
