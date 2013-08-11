@@ -16,10 +16,10 @@ sub to_check {
     sub fb() { return 'fb called.'; }
 
     my $fn = lc( @_[ 0 ] || 'A' );
-    return "%s\n", %fs{ $fn }();
+    return %fs{ $fn }();
 }
 
-is to_check, "\%s\n fa called.", 'fa called ok';
-is to_check('B'), "\%s\n fb called.", 'fb called ok';
+is to_check, "fa called.", 'fa called ok';
+is to_check('B'), "fb called.", 'fb called ok';
 
 # vim: ft=perl6
