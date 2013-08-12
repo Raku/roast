@@ -127,6 +127,9 @@ throws_like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
 throws_like 'my role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
 throws_like 'my role R { }; 99 does R("wrong");', X::Role::Initialization;
 throws_like 'my role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Initialization;
+# RT #73806
+throws_like q[if() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::IfAsFunction};
+
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
