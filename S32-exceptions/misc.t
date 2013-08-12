@@ -399,4 +399,6 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
     throws_like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
 }
 
+throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol => '$x';
+
 done;
