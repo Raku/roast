@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 29;
+plan 35;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -88,6 +88,18 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     sub f4($x = Nil) { $x }
     ok f4() === Nil, 'can use Nil as a default (natural)';
     ok f4(Nil) === Nil, 'can use Nil as a default (nil-triggered)';
+}
+
+#?pugs   todo '$/!_ does not default to Nil'
+#?niecza todo '$/!_ does not default to Nil'
+{
+    ok $/ === Nil, '$/ is by default Nil';
+    ok $! === Nil, '$! is by default Nil';
+    ok $_ === Nil, '$_ is by default Nil';
+
+    ok $/.VAR.default === Nil, '$/ has Nil as default';
+    ok $!.VAR.default === Nil, '$! has Nil as default';
+    ok $_.VAR.default === Nil, '$_ has Nil as default';
 }
 
 done;
