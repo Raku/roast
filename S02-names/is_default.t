@@ -16,12 +16,10 @@ plan 72;
     lives_ok { $a++ }, "should be able to update untyped variable";
     is $a, 43, "update of untyped variable to 43 was successful";
     lives_ok { $a = Nil }, "should be able to assign Nil to untyped variable";
-    #?rakudo todo "is default not functioning yet"
     is $a, 42, "untyped variable returned to its default with Nil";
     lives_ok { $a = 314 }, "should be able to update untyped variable";
     is $a, 314, "update of untyped variable to 314 was successful";
     lives_ok { undefine $a }, "should be able to undefine untyped variable";
-    #?rakudo todo "is default not functioning yet"
     is $a, 42, "untyped variable returned to its default with undefine";
 
     my $b is default(42) = 768;

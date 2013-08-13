@@ -45,10 +45,8 @@ ok (my $y = ()).defined, 'assigning () to scalar results in a defined parcel'; #
 }
 
 # RT 93980
-#?rakudo todo 'RT 93980'
 ok (my $rt93980 = Nil) === Any, 'Nil assigned to scalar produces an Any'; #OK
 
-#?rakudo skip 'RT 93980'
 ok (my Str $str93980 = Nil) === Str; #OK
 
 is Nil.gist, 'Nil', 'Nil.gist eq "Nil"';
