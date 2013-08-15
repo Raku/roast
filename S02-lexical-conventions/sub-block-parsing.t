@@ -12,7 +12,7 @@ use Test;
 #   module{...}
 #   class{...}
 
-plan 7;
+plan 9;
 
 #?rakudo skip 'confused near "(sub { 42 "'
 ok(sub { 42 }(), 'sub {...} works'); # TODO: clarify
@@ -38,7 +38,19 @@ eval_dies_ok q[
 # RT #76896: 
 # perl6 - sub/hash syntax
 {
-    sub to_check {
+    sub to_check_before {
+        my %fs = ();
+        %fs{ lc( 'A' ) } = &fa;
+        sub fa() { return 'fa called.'; }
+        ;
+        %fs{ lc( 'B' ) } = &fb;
+        sub fb() { return 'fb called.'; }
+
+        my $fn = lc( @_[ 0 ] || 'A' );
+        return %fs{ $fn }();
+    }
+
+    sub to_check_after {
         my %fs = ();
         %fs{ lc( 'A' ) } = &fa;
         sub fa() { return 'fa called.'; }
@@ -50,8 +62,10 @@ eval_dies_ok q[
         return %fs{ $fn }();
     }
 
-    is to_check, "fa called.", 'fa called in sub/hash syntax is ok';
-    is to_check('B'), "fb called.", 'fb called in sub/hash syntax is ok';
+    is to_check_before, "fa called.", 'fa called in old sub/hash syntax is ok';
+    is to_check_before('B'), "fb called.", 'fb called in old sub/hash syntax is ok';
+    is to_check_after, "fa called.", 'fa called in sub/hash syntax is ok';
+    is to_check_after('B'), "fb called.", 'fb called in sub/hash syntax is ok';
 }
 
 done;
