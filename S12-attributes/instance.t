@@ -477,7 +477,6 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
         '... all of the above actually worked (not only lived)';
 
     #?niecza 4 todo 'typed arrays'
-    #?rakudo 1 todo 'typed array assignment'
     #?pugs todo
     dies_ok { $o.a = <foo bar> }, 'type enforced on array attrib (assignment)';
     #?pugs todo

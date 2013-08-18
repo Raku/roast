@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 59;
+plan 58;
 
 # L<S09/Typed arrays/>
 
@@ -18,7 +18,7 @@ plan 59;
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array';
     is @x.unshift(2), [2, 2, 3], 'can unshift from typed array';
-}
+} #9
 
 #?rakudo skip 'of Int'
 {
@@ -32,7 +32,7 @@ plan 59;
     @x = 2, 3, 4;
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
     is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (@x of Int)';
-}
+} #8
 
 # initialization 
 lives_ok { my @x = 1, 2, 3 }, 'initialization of typed array';
@@ -49,59 +49,59 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
     
     ok @x.unshift, 'can unshift from typed array (@x of Int)';
-}
+} #7
 
 {
     my Array @x;
-    #?rakudo 2 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies_ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
-    #?rakudo todo "no parametrization"
     dies_ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
-}
+} #6
 
 {
     my @x of Array;
-    #?rakudo 5 todo "no parametrization"
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
+    #?rakudo 3 todo "no parametrization"
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies_ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
     dies_ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
-}
+} #6
 
 #?rakudo skip 'Array not parametric'
 {
     my Array of Int @x;
-    ok @x.of === Array[Int], 'my Array of Int @x declaeres a nested array';
+    ok @x.of === Array[Int], 'my Array of Int @x declares a nested array';
     lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
     lives_ok { @x.push: [8, 9] }, 'pushing works';
     dies_ok  { @x.push: 8 }, 'type constraint is enforced';
     lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
     dies_ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
-}
+} #6
 
 # test that lists/arrays returned from array methods are typed as well
 {
     my Int @a = 1, 2, 3;
     my Int @b;
     lives_ok { @b = @a }, 'can assign typed array to typed array';
-    #?rakudo skip 'need parameterized Lists'
+    #?rakudo todo 'need parameterized Lists'
     ok @a.values.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
+} #3
 
-    #?rakudo 2 skip 'initialization'
+#?rakudo skip 'initialization'
+{
     my Str @c = <foo bar baz>;
     ok @c.keys.of.WHICH eqv Str.WHICH, '@array.keys is typed with Int';
-}
+} #1
 
 # test that we can have parametric array return types
 {
@@ -130,7 +130,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
         'type check Positional of Num allows subtyped Int array to be returned explicitly';
     lives_ok { ret_pos_8() },
         'type check Positional of Num allows subtyped Int array to be returned implicitly';
-}
+} #8
 
 # RT #69482
 #?rakudo skip 'type on our-variables'
@@ -139,8 +139,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     our @a2;
     lives_ok { @a2[0] = 'string' },
         'Can assign to untyped package array in presence of typed array';
-
-}
+} #1
 
 # RT 71958
 {
@@ -150,7 +149,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     my Int @typed_array;
     lives_ok { RT71958.new().rt71958[0] = RT71958.new() },
              'can assign to untyped array in presence of typed array';
-}
+} #1
 
 done;
 
