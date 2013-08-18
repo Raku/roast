@@ -25,6 +25,7 @@ plan 15;
     is list(4 .. 9), <4 5 6 7 8 9>, 'We should be able to create ranges';
 }
 
+#?pugs skip 'pick not defined: VInt 3'
 {
     # P23 (**) Extract a given number of randomly selected elements from a list.
     # 
@@ -42,14 +43,12 @@ plan 15;
     #ok all(@rand) ~~ none(@letters), '... and they should be in the letters';
     #?rakudo todo 'unknown'
     #?niecza todo 'unknown'
-    #?pugs skip 'autothread'
     ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
     
     @rand = <a b c d e f g h>.pick(3);
     is @rand.elems, 3, 'pick() should return the correct number of items';
     #?rakudo todo 'unknown'
     #?niecza todo 'unknown'
-    #?pugs skip 'autothread'
     ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
 }
     

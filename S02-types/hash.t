@@ -234,9 +234,11 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x = %h<foo>;
     is %h.elems, 0, 'merely reading a non-existing hash keys does not create it';
     my $y = %h<foo><bar>;
+    #?pugs todo
     is %h.elems, 0, 'reading multi-level non-existing hash keys does not create it';
     %h<foo><bar> = "baz";
     is %h.elems, 1, 'multi-level auto-vivify number of elements';
+    #?pugs skip 'Unimplemented unaryOp: hash'
     is_deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
 } #4
 
@@ -259,9 +261,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # Whatever/Zen slices work on hashes too
-#?pugs todo
 {
     my %h = { a => 1, b => 2, c => 3};
+    #?pugs todo
     is %h{*}.join('|'), %h.values.join('|'), '{*} whatever slice';
     is %h{}.join('|'),  %h.join('|'),        '{} zen slice';
 } #2
