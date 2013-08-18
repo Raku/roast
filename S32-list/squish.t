@@ -91,6 +91,7 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 #?pugs   skip 'NYI'
 #?niecza skip 'NYI'
+#?rakudo.jvm skip 'This representation can not unbox to a native str'
 {
     my @array = <a aa b bb c d e f f a>;
     my $as    = *.substr(0,1).ord;
