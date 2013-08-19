@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 61;
 
 # L<S09/Typed arrays/>
 
@@ -20,26 +20,28 @@ plan 58;
     is @x.unshift(2), [2, 2, 3], 'can unshift from typed array';
 } #9
 
-#?rakudo skip 'of Int'
 {
-    my @x of Int;
-    ok @x.of === Int, '@x.of of typed array (my @x of Int)';
-    lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type (@x of Int)';
-    lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
-    lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
-    lives_ok { @x.unshift: 3}, 'can unshift values of the right type (@x of Int)';
-    lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (@x of Int)';
+    my Int @x;
+    ok @x.VAR.of === Int, '@x.VAR.of of typed array (my Int @x)';
+    lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type (Int @x)';
+    lives_ok { @x = 1..3    }, 'can assign range of the right type (Int @x)';
+    lives_ok { @x.push: 3, 4}, 'can push values of the right type (Int @x)';
+    lives_ok { @x.unshift: 3}, 'can unshift values of the right type (Int @x)';
+    lives_ok { @x[0, 2] = 2, 3}, 'can assign values to a slice (Int @x)';
     @x = 2, 3, 4;
-    is @x.pop, 4, 'can pop from typed array (@x of Int)';
-    is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (@x of Int)';
+    is @x.pop, 4, 'can pop from typed array (Int @x)';
+    is @x.unshift(1), [1, 2, 3], 'can unshift from typed array (Int @x)';
 } #8
 
 # initialization 
-lives_ok { my @x = 1, 2, 3 }, 'initialization of typed array';
-lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
+{
+    lives_ok { my Int @x = 1, 2, 3 }, 'initialization of typed array';
+    lives_ok { my Int @x = 1 .. 3 }, 'initialization of typed array from range';
+} #2
 
 {
     my @x of Int;
+    ok @x.VAR.of === Int, '@x.VAR.of of typed array (my @x of Int)';
     lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type (@x of Int)';
     lives_ok { @x = 1..3    }, 'can assign range of the right type (@x of Int)';
     lives_ok { @x.push: 3, 4}, 'can push values of the right type (@x of Int)';
@@ -49,10 +51,11 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
     is @x.pop, 4, 'can pop from typed array (@x of Int)';
     
     ok @x.unshift, 'can unshift from typed array (@x of Int)';
-} #7
+} #8
 
 {
     my Array @x;
+    ok @x.VAR.of === Array, '@x.VAR.of of typed array (my Array @x)';
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
@@ -61,28 +64,30 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
-} #6
+} #7
 
 {
     my @x of Array;
+    ok @x.VAR.of === Array, '@x.VAR.of of typed array (my @x of Array)';
     dies_ok { @x = 1, 2, 3 }, 'can not assign values of the wrong type';
     dies_ok { @x = 1..3    }, 'can not assign range of the wrong type';
-    #?rakudo 3 todo "no parametrization"
     dies_ok { @x.push: 3, 4}, 'can not push values of the wrong type';
     dies_ok { @x.unshift: 3}, 'can not unshift values of the wrong type';
     dies_ok { @x[0, 2] = 2, 3}, 
             'can not assign values of wrong type to a slice';
     lives_ok { @x = [1, 2], [3, 4] },
              '... but assigning values of the right type is OK';
-} #6
+} #7
 
-#?rakudo skip 'Array not parametric'
 {
     my Array of Int @x;
     ok @x.of === Array[Int], 'my Array of Int @x declares a nested array';
+    #?rakudo skip "nested typechecks are borked"
     lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
+    #?rakudo todo "nested typechecks are borked"
     lives_ok { @x.push: [8, 9] }, 'pushing works';
     dies_ok  { @x.push: 8 }, 'type constraint is enforced';
+    #?rakudo todo "nested typechecks are borked"
     lives_ok { @x[0].push: 3 }, 'pushing to the inner array is OK';
     dies_ok  { @x[0].push: 'foo' }, 'inner array enforces the type constraint';
 } #6
@@ -100,7 +105,7 @@ lives_ok { my @x = 1 .. 3 }, 'initialization of typed array from range';
 #?rakudo skip 'initialization'
 {
     my Str @c = <foo bar baz>;
-    ok @c.keys.of.WHICH eqv Str.WHICH, '@array.keys is typed with Int';
+    ok @c.keys.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
 } #1
 
 # test that we can have parametric array return types
