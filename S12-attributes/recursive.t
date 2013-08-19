@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 23;
 
 =begin pod
 
@@ -78,16 +78,21 @@ Test attributes with recursively typed attributes
 # RT #67236
 {
     class Z {
-        has Z @.as is rw;
+        has Z @.a is rw;
+        has Z %.h is rw;
     }
 
-    my $good_a = Z.new;
-    lives_ok { $good_a.as[0] = Z.new }, 'can assign';
-    isa_ok $good_a.as[0], Z;
+    my $z1 = Z.new;
+    isa_ok $z1.a[0], Z, "check type-object";
+    lives_ok { $z1.a[0] = Z.new }, 'can assign';
+    isa_ok $z1.a[0], Z;
+    isa_ok $z1.h<k>, Z, "check type-object";
+    lives_ok { $z1.h<k> = Z.new }, 'can assign';
+    isa_ok $z1.h<k>, Z;
 
-    my $bad_a = Z.new;
-    lives_ok { $bad_a.as.push( Z.new ) }, 'can push';
-    isa_ok $bad_a.as[0], Z;
+    my $z2 = Z.new;
+    lives_ok { $z2.a.push( Z.new ) }, 'can push';
+    isa_ok $z2.a[0], Z;
 }
 
 # vim: ft=perl6
