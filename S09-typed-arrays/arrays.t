@@ -7,7 +7,7 @@ plan 61;
 
 {
     my Int @x;
-    ok @x.of === Int, '@x.of of typed array (my Int @x)';
+    ok @x.VAR.of === Int, '@x.VAR.of of typed array (my Int @x)';
     # RT #77748
     ok @x.WHAT.gist ~~ /Array/, '.WHAT.gist of the type object makes sense';
     lives_ok { @x = 1, 2, 3 }, 'can assign values of the right type';
@@ -81,7 +81,7 @@ plan 61;
 
 {
     my Array of Int @x;
-    ok @x.of === Array[Int], 'my Array of Int @x declares a nested array';
+    ok @x.VAR.of === Array[Int], 'my Array of Int @x declares a nested array';
     #?rakudo skip "nested typechecks are borked"
     lives_ok { @x = [2, 3], [5, 6] }, 'assignment works';
     #?rakudo todo "nested typechecks are borked"
@@ -98,14 +98,14 @@ plan 61;
     my Int @b;
     lives_ok { @b = @a }, 'can assign typed array to typed array';
     #?rakudo todo 'need parameterized Lists'
-    ok @a.values.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
+    ok @a.values.VAR.of.WHICH eqv Int.WHICH, '@a.values is typed (1)';
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
 #?rakudo skip 'initialization'
 {
     my Str @c = <foo bar baz>;
-    ok @c.keys.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
+    ok @c.keys.VAR.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';
 } #1
 
 # test that we can have parametric array return types
