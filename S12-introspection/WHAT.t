@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 37;
 
 # =head1 Introspection
 #     WHAT        the type object of the type
@@ -76,6 +76,15 @@ my class H is Hash  {};
     my Int %a{Str};
     ok %a.WHAT    === Hash[Int,Str], 'Int %a{Str} default is Hash[Int,Str]';
     ok %a<a>.WHAT === Int,           'Int %a{Str}<a> default is Int';
+} #2
+
+#?pugs   skip "no typed support"
+#?niecza skip "no typed support"
+#?rakudo todo '%h{Str} of Int fails'
+{
+    my %a{Str} of Int;
+    ok %a.WHAT    === Hash[Int,Str], '%a{Str} of Int default is Hash[Int,Str]';
+    ok %a<a>.WHAT === Int,           '%a{Str}<a> of Int default is Int';
 } #2
 
 #?pugs   skip "no typed support"
