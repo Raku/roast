@@ -146,7 +146,7 @@ throws_like '#`', X::Syntax::Comment::Embedded;
 # RT #71814
 throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/eval/;
 
-throws_like '@', X::Syntax::SigilWithoutName;
+throws_like '@', X::Syntax::Perl5Var;
 throws_like '1∞', X::Syntax::Confused;
 throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
 throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
