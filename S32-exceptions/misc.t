@@ -146,9 +146,20 @@ throws_like '#`', X::Syntax::Comment::Embedded;
 # RT #71814
 throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/eval/;
 
-for < $ @ % & $^ $^A $* $" > {
+for <
+  $ @ % &
+  $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
+  $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
+  $* $" $$ $) $; $& $` $' $| $? $@ $[ $]
+  $: $- $+ $= $% $^ $~ @- @+ %- %+ %!
+> {
     throws_like $_, X::Syntax::Perl5Var;
 }
+for  '$<', '$#', '$>' {
+    #?rakudo skip 'still handled by <special_var>'
+    throws_like $_, X::Syntax::Perl5Var;
+}
+throws_like '$*', X::Syntax::Perl5Var;
 throws_like '1∞', X::Syntax::Confused;
 throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
 throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
