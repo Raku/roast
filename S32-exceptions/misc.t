@@ -156,7 +156,7 @@ for <
     throws_like $_, X::Syntax::Perl5Var;
 }
 for  '$<', '$#', '$>' {
-    #?rakudo todo 'still handled by <special_var>'
+    #?rakudo skip 'still handled by <special_var>'
     throws_like $_, X::Syntax::Perl5Var;
 }
 throws_like '1∞', X::Syntax::Confused;
