@@ -10,7 +10,7 @@ sub elapsed {
     LEAVE $last = time;
     return "[{ $elapsed = time - $last }s]";
 }
-my $toolong = 10;
+my $toolong = 30;
 
 # L<S32::IO/IO::Socket::INET>
 
