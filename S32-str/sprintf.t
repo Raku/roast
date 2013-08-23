@@ -213,13 +213,13 @@ is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 
 is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
 # RT #116280
+#?rakudo.jvm skip "java.lang.NumberFormatException"
 {
-    #?rakudo.parrot todo "sprintf printf numbers before NaN"
-    #?rakudo.jvm 3 skip "java.lang.NumberFormatException"
-    is sprintf('%12.5f',  NaN), '         NaN', 'RT #116280';
+    #?rakudo.parrot todo 'sprintf printf numbers before NaN'
+    is sprintf('%12.5f',  NaN), '         NaN', 'RT 116280';
     #?rakudo.parrot 2 skip "sprintf hangs when printing Inf/-Inf"
-    is sprintf('%12.5f',  Inf), '         Inf', 'RT #116280';
-    is sprintf('%12.5f', -Inf), '        -Inf', 'RT #116280';
+    is sprintf('%12.5f',  Inf), '         Inf', 'RT 116280';
+    is sprintf('%12.5f', -Inf), '        -Inf', 'RT 116280';
 }
 
 # RT #106594, #62316, #74610
