@@ -215,7 +215,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 # RT #116280
 #?rakudo.jvm skip "java.lang.NumberFormatException"
 {
-    #?rakudo.parrot todo 'sprintf printf numbers before NaN'
+    #?rakudo.parrot todo 'sprintf prints numbers before NaN'
     is sprintf('%12.5f',  NaN), '         NaN', 'RT 116280';
     #?rakudo.parrot 2 skip "sprintf hangs when printing Inf/-Inf"
     is sprintf('%12.5f',  Inf), '         Inf', 'RT 116280';
