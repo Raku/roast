@@ -35,11 +35,9 @@ plan 30;
 
 {
     lives_ok { my %s of Int = :a(3) }, 'can initialize typed hash (of Int)';
-    #?rakudo todo "of trait on vars"
     dies_ok { my %s of Int = :a("3") }, 'initialization of typed hash type checked (of Int)';
     my %s of Str;
     lives_ok { %s<a> = 'b' }, "Can assign to typed hash element (of Str)";
-    #?rakudo todo "of trait on vars"
     dies_ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 } #4
 

@@ -127,6 +127,9 @@ throws_like 'my role R { }; 99 but R("wrong");', X::Role::Initialization;
 throws_like 'my role R { has $.x; has $.y }; 99 but R("wrong");', X::Role::Initialization;
 throws_like 'my role R { }; 99 does R("wrong");', X::Role::Initialization;
 throws_like 'my role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Initialization;
+# RT #73806
+throws_like q[if() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::KeywordAsFunction};
+
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
@@ -143,7 +146,19 @@ throws_like '#`', X::Syntax::Comment::Embedded;
 # RT #71814
 throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/eval/;
 
-throws_like '@', X::Syntax::SigilWithoutName;
+for <
+  $ @ % &
+  $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
+  $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
+  $* $" $$ $) $; $& $` $' $| $? $@ $[ $]
+  $: $- $+ $= $% $^ $~ @- @+ %- %+ %!
+> {
+    throws_like $_, X::Syntax::Perl5Var;
+}
+for  '$<', '$#', '$>' {
+    #?rakudo skip 'still handled by <special_var>'
+    throws_like $_, X::Syntax::Perl5Var;
+}
 throws_like '1∞', X::Syntax::Confused;
 throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
 throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
@@ -398,5 +413,7 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
     # RT #78314
     throws_like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
 }
+
+throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol => '$x';
 
 done;

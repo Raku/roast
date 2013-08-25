@@ -20,7 +20,6 @@ is {foo => 1, bar => 2}.fmt, "foo\t1\nbar\t2"|"bar\t2\nfoo\t1", 'Hash.fmt';
 
 is { Apples => 5, Oranges => 10 }.fmt('%s cost %d euros'),
     "Apples cost 5 euros\nOranges cost 10 euros"|"Oranges cost 10 euros\nApples cost 5 euros";
-#?rakudo.jvm skip "Too few directives: found 1, fewer than the 2 arguments after the format string"
 is { huey => 1, dewey => 2, louie => 3 }.fmt('%s', ' -- ').split(' -- ').sort.join(' -- '),
     'dewey -- huey -- louie', 'Hash with two-arg fmt';
 

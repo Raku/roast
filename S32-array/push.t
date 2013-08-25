@@ -176,6 +176,7 @@ plan 51;
 }
 
 # RT 119061
+#?pugs todo
 {
     my Int @a;
     dies_ok( { @a.push: "a" }, "cannot push strings onto in Int array" );

@@ -123,7 +123,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 46 + @maps;
+plan 50 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -152,6 +152,12 @@ is (65..75).chrs.ords, '65 66 67 68 69 70 71 72 73 74 75', "chrs > ords round-tr
 #?rakudo skip 'multi-arg variants of chr not in place yet'
 #?niecza skip "multi-arg variants of chr not in place yet"
 is chr(104, 101, 108, 108, 111), 'hello', 'chr works with a list of ints';
+
+#?niecza 4 skip "chr handling of invalid code-points"
+dies_ok {chr(0xD800)}, "chr of surrogate";
+dies_ok {chr(0x2FFFE)}, "chr of noncharacter";
+dies_ok {chr(0x2FFFF)}, "chr of noncharacter";
+dies_ok {chr(0x10FFFF+1)}, "chr out of range";
 
 #?rakudo skip 'ord of empty string'
 ok !defined(ord("")), 'ord("") returns an undefined value';

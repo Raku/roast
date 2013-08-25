@@ -42,6 +42,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 # Binding and $CALLER::
 #XXX This can pass bogusly (was doing for Rakudo for a while).
 #?niecza skip 'CALLER::'
+#?rakudo.jvm skip 'is dynamic'
 {
   sub bar {
     return $CALLER::a eq $CALLER::b;

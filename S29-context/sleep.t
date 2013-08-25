@@ -5,13 +5,13 @@ use Test;
 
 plan 12;
 
-#?pugs todo
 {
     diag "Sleeping for 3s";
     my $start = time;
     my $sleep_says = sleep 3;
     my $diff = time - $start;
 
+    #?pugs todo
     ok( $sleep_says >= 2 , 'Sleep says it slept at least 2 seconds');
     ok( $sleep_says <= 10 , '... and no more than 10');
 
@@ -19,7 +19,7 @@ plan 12;
     ok( $diff <= 10 , '... and no more than 10');
 } #4
 
-#?pugs   todo "not yet implemented"
+#?pugs   skip "not yet implemented"
 #?niecza todo "not yet implemented"
 {
     is interval( 1.5 ), 0, "first call doesn't wait";
