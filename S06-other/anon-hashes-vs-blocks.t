@@ -4,7 +4,7 @@ use Test;
 
 # L<S06/Anonymous hashes vs blocks>
 
-plan 18;
+plan 22;
 
 my $hash = {
    '1' => { '2' => 3, '4' => 5 },
@@ -63,6 +63,27 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 #?pugs   skip "Thinks the block is a hash"
 is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
 
+# RT #76896
+{
+    my %fs = ();
+
+    %fs{ lc( 'A' ) } = &fa;
+    sub fa() {
+        return 'FA';
+    }
+
+    %fs{ lc( 'B' ) } = &fb;
+    sub fb() {
+        return 'FB'
+    }
+
+    my $fname = lc( 'A' );
+    is('FA', %fs{ $fname }(), "fa has been called");
+    is('FA', %fs{ lc( 'A' ) }(), "fa has been called");
+    $fname = lc( 'B' );
+    is('FB', %fs{ $fname }(), "fb has been called");
+    is('FB', %fs{ lc( 'B' ) }(), "fb has been called");
+}
 done;
 
 # vim: ft=perl6
