@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 30;
+plan 36;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -61,6 +61,18 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c',  '.chunks on % separator';
 ok 'a;b,c,' ~~ m/(<.alpha>) +%% (<.punct>)/, 'Regex matches';
 is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c|1:,',      '.caps on %% separator';
 is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
+
+#?niezca skip 'conjunctive regex terms - nyi'
+{
+    ok 'a' ~~ m/a && <alpha>/, 'Regex matches';
+    is ca($/.caps),     'alpha:a',  'conjunctive capture lhs';
+    ok 'a' ~~ m/<alpha> && a/,  'Regex matches';
+    is ca($/.caps),     'alpha:a',  'conjunctive capture rhs';
+
+    ok 'ab' ~~ m/[[a|b] && <alpha> ]**1..2/,  'Regex matches';
+#?rakudo todo 'RT117995 - quantified conjunctive capture'
+    is ca($/.caps),     'alpha:a|alpha:b',    'quantified conjunctive capture';
+}
 
 done;
 
