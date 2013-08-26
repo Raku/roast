@@ -124,14 +124,15 @@ my $outer = 'outside';
 }
 
 # Symbolic dereferentiation of globals *without the star*
-#?rakudo skip 'NYI'
 {
   #?pugs skip 'Invalid sigil'
-  cmp_ok ::('$*IN'), &infix:<===>, $*IN,
+  #?rakudo todo 'no such symbol'
+  ok ::('$*IN') === $*IN,
     "symbolic dereferentiation of globals works (3)";
 
-  cmp_ok &::("say"),  &infix:<===>, &say,
+  ok &::("say") === &say,
     "symbolic dereferentiation of CORE subs works (1)";
+  #?rakudo skip 'no such symbol'
   ok &::("so")(42),
     "symbolic dereferentiation of CORE subs works (2)";
   is &::("truncate")(3.1), 3,
@@ -139,10 +140,9 @@ my $outer = 'outside';
 }
 
 # Symbolic dereferentiation of type vars
-#?rakudo skip 'NYI'
 #?niecza skip "Object reference not set to an instance of an object"
 {
-  cmp_ok ::Array, &infix:<===>, ::("Array"),
+  ok ::Array === ::("Array"),
     "symbolic dereferentiation of type vars works (1)";
 }
 

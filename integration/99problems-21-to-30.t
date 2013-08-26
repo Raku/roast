@@ -246,7 +246,7 @@ sub combination($n, @xs) {
     # same frequency of length the ordering is unspecified, so this should be ok
 }
 
-#?rakudo skip 'autovivification'
+#?rakudo todo 'autovivification'
 #?niecza skip 'Unable to resolve method push in class Any'
 #?pugs todo
 {
