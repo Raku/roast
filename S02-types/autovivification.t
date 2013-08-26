@@ -2,40 +2,42 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 16;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
-    my %a;
-    my $b = %a<b><c>;
+    my %h;
+    my $b = %h<a><b>;
     #?pugs todo
-    is %a.keys.elems, 0, "fetching doesn't autovivify.";
-    ok !defined($b), 'and the return value is not defined';
+    is %h.keys.elems, 0, "fetching doesn't autovivify.";
+    ok $b === Any, 'and the return value is not defined';
 }
 
-#?rakudo skip 'Undef to integer'
 #?pugs skip ':exists'
 {
-    my %a;
-    my $b = so %a<b><c>:exists;
-    is %a.keys.elems, 0, "exists doesn't autovivify.";
-    nok $b, '... and it returns the right value';
+    my %h;
+    my $exists = %h<a><b>:exists;
+    is %h.keys.elems, 0, "exists doesn't autovivify.";
+    ok $exists === False, '... and it returns the right value';
 }
 
 # L<S09/Autovivification/But these bindings do autovivify:>
 #?pugs todo
 {
-    my %a;
-    bar(%a<b><c>);
-    is %a.keys.elems, 0, "in ro arguments doesn't autovivify.";
+    my %h;
+    bar(%h<a><b>);
+    is %h.keys.elems, 0, "in ro arguments doesn't autovivify.";
 }
 
-#?rakudo skip 'get_pmc_keyed() not implemented in class Undef'
 {
-    my %a;
-    my $b := %a<b><c>;
-    is %a.keys.elems, 1, 'binding autovivifies.';
-    nok defined($b), '... to an undefined value';
+    my %h;
+    my $b := %h<a><b>;
+    is %h.keys.elems, 0, 'binding does not immediately autovivify';
+    ok $b === Any, '... to an undefined value';
+    $b = 1;
+    is %h.keys.elems, 1, '.. but autovivifies after assignment';
+    is %h<a><b>, 1, 'having it in there';
+    ok %h<a><b> =:= $b, 'check binding';
 }
 
 #?rakudo todo 'prefix:<\\>'
