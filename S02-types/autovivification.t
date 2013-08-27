@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 25;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
 {
@@ -34,40 +34,38 @@ plan 16;
     my $b := %h<a><b>;
     is %h.keys.elems, 0, 'binding does not immediately autovivify';
     ok $b === Any, '... to an undefined value';
-    $b = 1;
+    $b = 42;
     is %h.keys.elems, 1, '.. but autovivifies after assignment';
-    is %h<a><b>, 1, 'having it in there';
+    is %h<a><b>, 42, 'having it in there';
     ok %h<a><b> =:= $b, 'check binding';
 }
 
-#?rakudo todo 'prefix:<\\>'
 #?niecza todo 'disagree; captures should be context neutral'
 {
-    my %a;
-    my $b = \%a<b><c>;
-    is %a.keys.elems, 1, 'capturing autovivifies.';
-}
-
-#?rakudo todo 'get_pmc_keyed() not implemented in class Undef'
-{
-    my %a;
-    foo(%a<b><c>);
-    is %a.keys.elems, 1, 'in rw arguments autovivifies.';
+    my %h;
+    my $b = \(%h<a><b>);
+    is %h.keys.elems, 0, 'capturing does not autovivify';
 }
 
 {
-    my %a;
-    %a<b><c> = 1;
-    is %a.keys.elems, 1, 'store autovivify.';
+    my %h;
+    foo(%h<a><b>);
+    is %h.keys.elems, 0, 'in rw arguments does not autovivify';
+    foo(%h<a><b>,42);
+    is %h.keys.elems, 1, 'storing from within the sub does autovivify';
+    is %h<a><b>, 42, 'got the right value';
 }
 
-
-sub foo ($baz is rw) {    #OK not used
-    # just some random subroutine.
+{
+    my %h;
+    %h<a><b> = 42;
+    is %h.keys.elems, 1, 'store autovivify.';
+    is %h<a><b>, 42, 'got the right value';
 }
 
-# readonly signature, should it autovivify?
-sub bar ($baz is readonly) { } #OK not used
+# helper subs
+sub foo ($baz is rw, $assign? ) { $baz = $assign if $assign }
+sub bar ($baz is readonly) { }
 
 # RT #77038
 #?niecza skip "Unable to resolve method push in type Any"
@@ -77,6 +75,18 @@ sub bar ($baz is readonly) { } #OK not used
     is %h<a>.join, '42', 'can autovivify in sub form of push';
     unshift %h<b>, 5, 3;
     is %h<b>.join, '53', 'can autovivify in sub form of unshift';
+    %h<c><d>.push( 7, 8 );
+    is %h<c><d>.join, '78', 'can autovivify in method form of push';
+    %h<e><f>.unshift( 9, 10 );
+    is %h<e><f>.join, '910', 'can autovivify in method form of unshift';
+    is %h.keys.elems, 4, 'successfully autovivified lower level';
+}
+
+{
+    my $a;
+    $a[0] = '4';
+    $a[1] = '2';
+    is $a.join, '42', 'Can autovivify Array';
 }
 
 # RT #77048
@@ -86,5 +96,20 @@ sub bar ($baz is readonly) { } #OK not used
     $a[1] = '2';
     is $a.join, '42', 'Can autovivify Array-typed scalar';
 }
+
+{
+    my $h;
+    $h<a> = '4';
+    $h<b> = '2';
+    is $h<a b>.join, '42', 'Can autovivify Hash';
+}
+
+{
+    my Hash $h;
+    $h<a> = '4';
+    $h<b> = '2';
+    is $h<a b>.join, '42', 'Can autovivify Hash-typed scalar';
+}
+
 
 # vim: ft=perl6
