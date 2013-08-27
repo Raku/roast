@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 36;
+plan 40;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -65,13 +65,19 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
 #?niezca skip 'conjunctive regex terms - nyi'
 {
     ok 'a' ~~ m/a && <alpha>/, 'Regex matches';
-    is ca($/.caps),     'alpha:a',  'conjunctive capture lhs';
+    is ca($/.caps),     'alpha:a',  '.caps && - first term';
     ok 'a' ~~ m/<alpha> && a/,  'Regex matches';
-    is ca($/.caps),     'alpha:a',  'conjunctive capture rhs';
+    is ca($/.caps),     'alpha:a',  '.caps && - last term';
 
-    ok 'ab' ~~ m/[[a|b] && <alpha> ]**1..2/,  'Regex matches';
+    ok 'a' ~~ m/<alpha> && <ident>/,  'Regex matches';
+    is ca($/.caps),     'alpha:a|ident:a',  '.caps && - multiple terms';
+
+    ok 'ab' ~~ m/([a|b] && <alpha>)**1..2/,  'Regex matches';
+    is ca($/.caps),     '0:a|0:b',    '.caps on quantified &&';
+
+    ok 'ab' ~~ m/[[a|b] && <alpha>]**1..2/,  'Regex matches';
 #?rakudo todo 'RT117995 - quantified conjunctive capture'
-    is ca($/.caps),     'alpha:a|alpha:b',    'quantified conjunctive capture';
+    is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
 }
 
 done;
