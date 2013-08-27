@@ -45,7 +45,6 @@ my Str $bar;
 }
 
 # L<S02/Variables Containing Undefined Values/Variables with native types do not support undefinedness>
-#?rakudo skip 'native types (causes false positives if marked with todo)'
 #?niecza skip 'native types (noauto)'
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
@@ -53,7 +52,7 @@ my Str $bar;
     #?pugs todo
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
-    eval_dies_ok('my num $alpha = Nil', 'native num type cannot be undefined');
+    eval_lives_ok('my num $alpha = Nil', 'native num type can be undefined');
     #?pugs todo
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }

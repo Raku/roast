@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 35;
+plan 37;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -57,7 +57,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     my MyInt $x = 5;
 
     lives_ok { $x = Nil }, 'can assign Nil to subsets';
-    #?rakudo skip 'triage'
+    #?rakudo todo 'triage'
     ok $x === Int, 'assigns to base-type object';
 }
 
@@ -75,6 +75,11 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     my $z;
     #?rakudo skip 'triage'
     lives_ok { $z = f2(Nil) }, 'param: lives for optional';
+    #?rakudo todo 'triage'
+    ok $z === Int, '... set to type object';
+    my $z2 is default(Nil);
+    #?rakudo todo 'triage'
+    lives_ok { $z = f2($z2) }, 'param: lives for optional from var';
     #?rakudo todo 'triage'
     ok $z === Int, '... set to type object';
 

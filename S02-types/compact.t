@@ -5,7 +5,7 @@ plan 10;
 
 # L<S09/Compact arrays/A compact array is for most purposes interchangeable with the corresponding buffer type>
 
-#?rakudo skip "Scope not found for PAST::Var"
+#?rakudo skip "No such method STORE for Int"
 # compact array acting as a buffer
 {
     my uint8 @buffer = ('A' .. 'Z').map({ .ord });
@@ -23,7 +23,7 @@ plan 10;
     );
 }
 
-#?rakudo skip "Scope not found for PAST::Var"
+#?rakudo skip "No such method cat for List"
 # buffer acting as a compact array
 #?pugs skip 'sprintf hangs'
 {
@@ -37,8 +37,8 @@ plan 10;
     );
 }
 
+#?rakudo skip "No such method cat for List"
 # L<S09/Compact arrays/The size of any buffer type in bytes may be found with the .bytes method>
-#?rakudo skip "Scope not found for PAST::Var"
 #?pugs skip 'sprintf hangs'
 {
     my buf8  $buf8  = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;

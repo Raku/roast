@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 86;
+plan 87;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -286,11 +286,13 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 }
 
 # RT #118947
-#?rakudo skip "Oh no, it dies"
 {
     my %hash;
     %hash<bar><baz> := 'zoom';
     is %hash<bar><baz>, 'zoom', 'binding on auto-vivified hash value works';
+    %hash<foo><baz> := my $b;
+    #?rakudo todo 'auto-vivified binding does not work yet'
+    ok $b =:= %hash<foo><baz>, 'binding variable worked';
 } #1
 
 # RT #75694

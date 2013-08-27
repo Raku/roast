@@ -507,7 +507,6 @@ plan 78;
 
 # utf8 utf16 utf32
 
-#?rakudo skip 'utf8  not implemented'
 #?niecza skip 'utf8 not implemented'
 #?pugs skip 'utf8'
 {
@@ -515,7 +514,6 @@ plan 78;
   isa_ok($ubi,utf8);
 }
 
-#?rakudo skip 'utf16  not implemented'
 #?niecza skip 'utf16 not implemented'
 #?pugs skip 'utf16'
 {
@@ -523,7 +521,6 @@ plan 78;
   isa_ok($upaxa,utf16);
 }
 
-#?rakudo skip 'utf32  not implemented'
 #?niecza skip 'utf32 not implemented'
 #?pugs skip 'utf32'
 {
