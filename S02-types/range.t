@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 133;
+plan 127;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -117,14 +117,10 @@ is(+Range, 0, 'type numification');
     is $r, $s, 'range has not changed';
 }
 
-# simple .to, .from
+# simple range
 {
     my $r = 1 .. 5;
-    #?rakudo 2 skip 'Range .from/.to still specced?'
-    #?pugs 4 todo
-    is($r.from, 1, 'range.from');
-    is($r.to,   5, 'range.to');
-
+    #?pugs 2 todo
     is($r.min, 1, 'range.min');
     is($r.max, 5, 'range.max');
     #?pugs skip '.bounds'
@@ -134,11 +130,7 @@ is(+Range, 0, 'type numification');
 # uneven ranges
 {
     my $r = 1 .. 4.5;
-    #?rakudo 2 skip 'Range .from/.to still specced?'
-    #?pugs 4 todo
-    is($r.from, 1, 'uneven range.from');
-    is($r.to, 4.5, 'uneven range.to');
-
+    #?pugs 2 todo
     is($r.min, 1,   'range.min');
     is($r.max, 4.5, 'range.max');
     #?pugs skip '.bounds'
@@ -149,10 +141,6 @@ is(+Range, 0, 'type numification');
 #?pugs skip 'hangs'
 {
     my $inf = -Inf..Inf;
-
-    #?rakudo 2 skip 'Range .from/.to still specced?'
-    is($inf.from, -Inf, 'bottom end of -Inf..Inf is -Inf (1)');
-    is($inf.to, Inf, 'top end of -Inf..Inf is Inf (1)');
 
     ok(42  ~~ $inf, 'positive integer matches -Inf..Inf');
     ok(.2  ~~ $inf, 'positive non-int matches -Inf..Inf');
