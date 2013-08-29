@@ -5,10 +5,10 @@ use Test;
 plan 25;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
+#?pugs todo
 {
     my %h;
     my $b = %h<a><b>;
-    #?pugs todo
     is %h.keys.elems, 0, "fetching doesn't autovivify.";
     ok $b === Any, 'and the return value is not defined';
 }
@@ -32,7 +32,9 @@ plan 25;
 {
     my %h;
     my $b := %h<a><b>;
+    #?pugs todo
     is %h.keys.elems, 0, 'binding does not immediately autovivify';
+    #?pugs todo
     ok $b === Any, '... to an undefined value';
     $b = 42;
     is %h.keys.elems, 1, '.. but autovivifies after assignment';
@@ -41,6 +43,7 @@ plan 25;
 }
 
 #?niecza todo 'disagree; captures should be context neutral'
+#?pugs todo
 {
     my %h;
     my $b = \(%h<a><b>);
@@ -50,6 +53,7 @@ plan 25;
 {
     my %h;
     foo(%h<a><b>);
+    #?pugs todo
     is %h.keys.elems, 0, 'in rw arguments does not autovivify';
     foo(%h<a><b>,42);
     is %h.keys.elems, 1, 'storing from within the sub does autovivify';

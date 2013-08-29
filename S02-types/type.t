@@ -52,8 +52,8 @@ my Str $bar;
     #?pugs todo
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
+    #?pugs 2 todo
     eval_lives_ok('my num $alpha = Nil', 'native num type can be undefined');
-    #?pugs todo
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }
 

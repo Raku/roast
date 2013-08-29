@@ -64,6 +64,7 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
 
 # RT #76896
+#?pugs skip "parsefail"
 {
     my %fs = ();
 

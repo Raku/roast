@@ -15,11 +15,11 @@ plan 28;
 # Indexing lists
 
 # RT #105368
+#?pugs todo
 {
   my $foo = 42;
 
   try { ($foo, "does_not_matter")[0] = 23 };
-  #?pugs todo 'bug'
   is $foo, 23, "assigning a list element changed the original variable";
 }
 
@@ -28,23 +28,23 @@ plan 28;
 
   is ($foo, "does_not_matter")[*-2], 42,
     "indexing lists by a negative index works correctly";
-  #?pugs todo 'bug'
+  #?pugs todo
   eval_dies_ok(q/my @a = <one two>; @a[-1] = 'zero'; @a.perl/,
  	"indexing lists by a negative index without the * dies");
 }
 
 # List construction does not create new containers
+#?pugs todo
 {
   my $foo = 42;
 
-  #?pugs todo 'unspecced'
   ok ($foo, "does_not_matter")[0] =:= $foo,
     "list construction should not create new containers";
 }
 
+#?pugs todo
 {
   my $foo = 42;
-  #?pugs todo 'unspecced'
   ok ($foo, "does_not_matter", 17)[0,1][0] =:= $foo,
     "list construction and list slicing should not create new containers";
 }
@@ -132,6 +132,7 @@ plan 28;
 }
 
 #?niecza skip 'Cannot use value like Capture as a number'
+#?pugs todo
 {
   my @array    = (1,2,3);
   my $capture = \@array;
