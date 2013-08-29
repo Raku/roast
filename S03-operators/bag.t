@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 100;
+plan 108;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -48,7 +48,7 @@ is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
 isa_ok ($s ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with KeyBag works";
 isa_ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
-#?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
+#?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($kb ∩ <glad green blood>), "blood:1", "KeyBag intersection with array of strings works";
 isa_ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
@@ -57,6 +57,7 @@ isa_ok ($s (&) $b), Bag, "... and it's actually a Bag";
 is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with KeyBag works (texas)";
 isa_ok ($s (&) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
+#?rakudo todo 'Test may be wrong?'
 is showkv($kb (&) <glad green blood>), "blood:1", "KeyBag intersection with array of strings works (texas)";
 isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
@@ -81,6 +82,7 @@ isa_ok ($ks ⊍ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊍ $b), "blood:2 love:4", "Bag multiplication (KeyBag / Bag) works";
 isa_ok ($kb ⊍ $b), Bag, "... and it's actually a Bag";
 
+#?rakudo 8 skip 'expected Any but go Mu'
 is showkv($s (.) $ks), "blood:1", "Bag multiplication (Set / KeySet) works (texas)";
 isa_ok ($s (.) $ks), Bag, "... and it's actually a Bag (texas)";
 is showkv($s (.) $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works (texas)";
@@ -111,6 +113,7 @@ isa_ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ⊎ $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag) works";
 isa_ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
 
+#?rakudo 8 skip 'expected Any but go Mu'
 is showkv($s (+) $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / KeySet) works (texas)";
 isa_ok ($s (+) $ks), Bag, "... and it's actually a Bag (texas)";
 is showkv($s (+) $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works (texas)";
@@ -121,23 +124,31 @@ is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag)
 isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # msubset
-
-#?rakudo skip "No msubset yet"
 {
+    #?rakudo 4 skip "No msubset yet"
     ok $kb ≼ $b, "Our keybag is a msubset of our bag";
     nok $b ≼ $kb, "Our keybag is not a msubset of our bag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
+    #?rakudo 4 skip "no texas version for msubset either"
+    ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
+    nok $b (<+) $kb, "Our keybag is not a msubset of our bag (texas)";
+    ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
+    ok $kb (<+) $kb, "Our keybag is a msubset of itself (texas)";
 }
 
 # msuperset
-
-#?rakudo skip "No msuperset yet"
 {
+    #?rakudo 4 skip "No msuperset yet"
     nok $kb ≽ $b, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
+    #?rakudo 4 skip "no texas version for msuperset either"
+    nok $kb (>+) $b, "Our keybag is not a msuperset of our bag";
+    ok $b (>+) $kb, "Our keybag is not a msuperset of our bag";
+    ok $b (>+) $b, "Our bag is a msuperset of itself";
+    ok $kb (>+) $kb, "Our keybag is a msuperset of itself";
 }
 
 #?rakudo skip 'Reduction and bag operators'
@@ -168,6 +179,5 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
     is showkv([(.)] $s, $b), showkv({ blood => 2, love => 2 }), "Bag multiply reduce works on two sets";
     is showkv([(.)] $s, $b, $kb), showkv({ blood => 2, love => 4 }), "Bag multiply reduce works on three sets";
 }
-
 
 # vim: ft=perl6
