@@ -74,7 +74,6 @@ A.new.x(42);',
     }, 'got the right line number for accessors';
 
 # RT #80982
-#?rakudo.jvm todo "nigh"
 is_run 'say 0080982',
     {
         status => 0,
