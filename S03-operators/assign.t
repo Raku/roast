@@ -599,7 +599,6 @@ sub l () { 1, 2 };
     is @a.elems, 3, 'item assignment infix:<=> is tighter than the comma (3)';
 }
 
-#?rakudo skip 'item assignment, $::(...)'
 {
     package Foo {
 	our $b;

@@ -128,7 +128,6 @@ plan 25;
 }
 
 # feed and Inf
-#?rakudo skip "isn't lazy"
 #?nieza skip "unhandled exception
 {
   lives_ok { my @a <== 0..Inf }

@@ -94,7 +94,6 @@ ok(!defined(Mu), "Mu is not defined");
 #?niecza todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
-    #?rakudo emit #
     #?niecza emit #
     undefine(%hash);
 #?pugs todo 'bug'

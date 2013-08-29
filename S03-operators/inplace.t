@@ -44,7 +44,6 @@ plan 27;
 
 my $f = "lowercase"; $f .= uc;
 my $g = "UPPERCASE"; $g .= lc;
-#?rakudo emit #
 my $h = "lowercase"; $h .= tc;
 is($f, "LOWERCASE", "inplace uc");
 is($g, "uppercase", "inplace lc");

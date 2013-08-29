@@ -29,7 +29,6 @@ sub get_multidim_arglist (**@AoA) { @AoA }
 multi sub multi_get_multidim_arglist(**@AoA) { @AoA }
 multi sub multi_get_multidim_arglist(Int $a) { $a }
 
-#?rakudo skip 'multi sub multidim arglist broken'
 {
     my @a1 = <a b c>;
     my @a2 = <d e f>;
@@ -40,7 +39,6 @@ multi sub multi_get_multidim_arglist(Int $a) { $a }
     is  @AoA[1], "d e f", "multi sub with multidim arglist binding (3)";
 }
 
-#?rakudo skip 'multi sub multidim arglist broken'
 {
     my @a1 = <a b c>;
 

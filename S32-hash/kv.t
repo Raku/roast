@@ -90,7 +90,6 @@ sub test4 (%h){
     }
 }
 #?DOES 2
-#?rakudo skip 'dubious'
 test4 %hash;
 
 # sanity

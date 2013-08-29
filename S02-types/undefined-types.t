@@ -23,7 +23,6 @@ plan 49;
 #?niecza skip "doesn't know typed stuff"
 {
     my Int $a = 1;
-    #?rakudo skip "not allowed to assign Nil to Int scalar"
     is ($a = Nil), Nil, "assigning Nil to Int should work";
     #?rakudo todo "not allowed to assign Nil to Int scalar"
     ok !$a.defined,  "Nil makes undefined here";
@@ -41,7 +40,6 @@ plan 49;
     is @a.elems, 2, 'Pushing Nil in Int list context is empty list';
     ok ( @a.unshift: Nil ) =:= @a, "assigning Nil returns same array";
     is @a.elems, 2, 'Unshifting Nil in Int list context is empty list';
-    #?rakudo skip "not allowed to assign Nil to Int scalar"
     ok !defined(@a[1] = Nil), "assigning Nil to Int should work";
     #?rakudo todo "not allowed to assign Nil to Int scalar"
     ok !@a[1].defined,  "Nil makes undefined here";
@@ -59,7 +57,6 @@ plan 49;
     #?rakudo todo ".clone doesn't copy typedness"
     is %a.of, '(Int)', "Check that we have an 'Int' hash";
     is %a.elems, 2,  'Nil as part of Int list, is empty pair';
-    #?rakudo skip "not allowed to assign Nil to Int scalar"
     is ( %a<b> = Nil ), Nil, "assigning Nil to hash element should work";
     ok !%a<b>.defined,  "Nil makes undefined here";
     is ( %a = Nil ), Nil, "setting to Nil returns Nil";

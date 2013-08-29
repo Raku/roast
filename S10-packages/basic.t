@@ -189,7 +189,6 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 }
 
 #?niecza skip 'Export tags NYI'
-#?rakudo skip 'tc NYI'
 {
     @*INC.unshift: 't/spec/packages';
     eval_lives_ok 'use LoadFromInsideAModule',

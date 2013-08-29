@@ -100,7 +100,6 @@ eval_dies_ok('&', 'Anonymous & variable outside of declaration');
     is $c, 4, '@$var coercion';
 }
 
-#?rakudo skip '$@var syntax'
 #?pugs todo
 #?niecza skip "Invalid hard reference syntax"
 {

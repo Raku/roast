@@ -90,7 +90,6 @@ plan 45;
   #?pugs skip 'No compatible multi variant found: "&infix:?^"'
   ok( ?(infix:<?^>() == False), '?^ works with no arguments');
 
-  #?rakudo skip 'segmentation fault'
   isa_ok (42 ?^ 41), Bool, '?^ yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?^>'
   #?pugs skip 'No compatible multi variant found: "&infix:?^"'

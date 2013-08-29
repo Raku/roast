@@ -59,7 +59,6 @@ plan 12;
 }
 
 # Private class attributes
-#?rakudo skip 'class attributes'
 {
     my $var = 42;
     class Klass4 {
