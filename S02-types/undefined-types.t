@@ -24,7 +24,6 @@ plan 49;
 {
     my Int $a = 1;
     is ($a = Nil), Nil, "assigning Nil to Int should work";
-    #?rakudo todo "not allowed to assign Nil to Int scalar"
     ok !$a.defined,  "Nil makes undefined here";
 } #2
 
@@ -41,7 +40,6 @@ plan 49;
     ok ( @a.unshift: Nil ) =:= @a, "assigning Nil returns same array";
     is @a.elems, 2, 'Unshifting Nil in Int list context is empty list';
     ok !defined(@a[1] = Nil), "assigning Nil to Int should work";
-    #?rakudo todo "not allowed to assign Nil to Int scalar"
     ok !@a[1].defined,  "Nil makes undefined here";
     is ( @a = Nil ), Nil, "setting to Nil returns Nil";
     #?rakudo todo ".clone doesn't copy typedness"
