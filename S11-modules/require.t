@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S11/"Runtime Importation"/"Alternately, a filename may be mentioned directly">
 
@@ -66,5 +66,9 @@ lives_ok { my $name = 'A'; require ::($name) }, 'can require with variable name'
 
 #?pugs skip 'parsefail'
 is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
+
+# tests the combination of chdir+require
+lives_ok { chdir "t/spec/packages"; require "Foo.pm"; },
+         'can change directory and require a module';
 
 # vim: ft=perl6
