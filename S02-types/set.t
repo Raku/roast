@@ -40,7 +40,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s, 3, '+$set gives number of keys';
 }
 
-#?rakudo skip "Set.ACCEPTS NYI"
 {
     ok (set <a b c>) ~~ (set <a b c>), "Identical sets smartmatch with each other";
     nok (set <b c>) ~~ (set <a b c>), "Subset does not smartmatch";
@@ -55,7 +54,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     nok (bag <a b c>) ~~ Set, "Type-checking smartmatch works";
 }
 
-#?rakudo skip ".Set NYI"
 {
     isa_ok "a".Set, Set, "Str.Set makes a Set";
     is showset("a".Set), 'a', "'a'.Set is set a";
@@ -67,6 +65,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok <a b c>.Set, Set, "<a b c>.Set makes a Set";
     is showset(<a b c a>.Set), 'a b c', "<a b c a>.Set makes the set a b c";
     is showset(["a", "b", "c", "a"].Set), 'a b c', "[a b c a].Set makes the set a b c";
+    #?rakudo todo 'not up to spec'
     is showset([a => 3, b => 0, 'c', 'a'].Set), 'a c', "[a => 3, b => 0, 'c', 'a'].Set makes the set a c";
 
     isa_ok {a => 2, b => 4, c => 0}.Set, Set, "{a => 2, b => 4, c => 0}.Set makes a Set";
@@ -110,13 +109,13 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = set [ foo => 10, bar => 17, baz => 42 ];
     isa_ok $b, Set, '&Set.new given an array of pairs produces a Set';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
+    #?rakudo todo "New set constructor NYI"
     is +$b, 3, "... with three elements";
     #?rakudo todo "New set constructor NYI"
     #?niecza todo "Losing type in Set"
@@ -126,7 +125,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = set { foo => 10, bar => 17, baz => 42 };
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, "... with one element";
 }
 
@@ -147,7 +145,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = set KeyBag.new(<foo bar foo bar baz foo>);
     isa_ok $b, Set, '&Set.new given a KeySet produces a Set';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, "... with one element";
 }
 
@@ -279,7 +276,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
     my $s = set <a b c>;
     $s1 = set $s, <c d>;
-    #?rakudo todo "Set does not conform to new standard yet"
     is +$s1, 3, "Three elements";
     ok $s1<c>, "One of them is 'c'";
     ok $s1<d>, "One of them is 'd'";
@@ -290,7 +286,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset($inner-set), "a b c", "With the proper elements";
 }
 
-#?rakudo skip ".Set NYI"
 {
     isa_ok 42.Set, Set, "Method .Set works on Int-1";
     is showset(42.Set), "42", "Method .Set works on Int-2";
@@ -303,6 +298,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok %x.Set, Set, "Method .Set works on Hash-1";
     is showset(%x.Set), "a b", "Method .Set works on Hash-2";
     isa_ok (@a, %x).Set, Set, "Method .Set works on Parcel-1";
+    #?rakudo todo 'not up to spec'
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on Parcel-2";
 }
 

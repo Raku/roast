@@ -67,7 +67,6 @@ sub showkv($x) {
     nok $b.exists("farve"), "... and everything is still okay";
 }
 
-#?rakudo skip "KeyBag.ACCEPTS NYI"
 {
     ok (KeyBag.new: <a b c>) ~~ (KeyBag.new: <a b c>), "Identical bags smartmatch with each other";
     ok (KeyBag.new: <a b c c>) ~~ (KeyBag.new: <a b c c>), "Identical bags smartmatch with each other";
@@ -83,7 +82,6 @@ sub showkv($x) {
     nok (set <a b c>) ~~ KeyBag, "Type-checking smartmatch works";
 }
 
-#?rakudo skip ".KeyBag NYI"
 {
     isa_ok "a".KeyBag, KeyBag, "Str.KeyBag makes a KeyBag";
     is showkv("a".KeyBag), 'a:1', "'a'.KeyBag is bag a";
@@ -105,7 +103,7 @@ sub showkv($x) {
     my $s = KeyBag.new(<a a b foo>);
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
-    #?rakudo 2 skip ':delete NYI'
+    #?rakudo 2 todo ':delete NYI'
     is $s<a>:delete, 2, ':delete works on KeyBag';
     is showkv($s), 'b:1 foo:1', '...and actually deletes';
 }
@@ -114,7 +112,7 @@ sub showkv($x) {
     my $b = KeyBag.new('a', False, 2, 'a', False, False);
     my @ks = $b.keys;
     #?niecza 3 skip "Non-Str keys NYI"
-    #?rakudo 3 skip "Non-Str keys NYI"
+    #?rakudo 2 todo "Non-Str keys NYI"
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -137,7 +135,6 @@ sub showkv($x) {
 {
     my $b = KeyBag.new([ foo => 10, bar => 17, baz => 42, santa => 0 ]);
     isa_ok $b, KeyBag, '&KeyBag.new given an array of pairs produces a KeyBag';
-    #?rakudo todo "Needs to catch up with spec"
     is +$b, 1, "... with one element";
 }
 
@@ -154,7 +151,6 @@ sub showkv($x) {
 {
     my $b = KeyBag.new({ foo => 10, bar => 17, baz => 42, santa => 0 });
     isa_ok $b, KeyBag, '&KeyBag.new given a Hash produces a KeyBag';
-    #?rakudo todo "Needs to catch up with spec"
     is +$b, 1, "... with one element";
 }
 
@@ -191,7 +187,6 @@ sub showkv($x) {
 #     is showkv($b), 'bar:3 baz:1 foo:1', '... and does not affect the original KeyBag';
 # }
 
-#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 10, bar => 1, baz => 2}.KeyBag;
 
@@ -210,7 +205,6 @@ sub showkv($x) {
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
-#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.KeyBag;
     my $s;
@@ -223,16 +217,15 @@ sub showkv($x) {
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
-#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 2, bar => 3, baz => 1 }.KeyBag;
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
+    #?rakudo todo 'not up to spec'
     is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
-#?rakudo skip "Needs to catch up with spec"
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.KeyBag;
     my $s;
@@ -276,7 +269,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
-#?rakudo skip "Needs to catch up with spec"
 {
     my $b = {"a" => 100000000000, "b" => 1}.KeyBag;
 
@@ -308,7 +300,6 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
-#?rakudo skip "Needs to catch up with spec"
 {
     my $b = {"a" => 100000000000, "b" => 1}.KeyBag;
 
@@ -387,7 +378,6 @@ sub showkv($x) {
         'a:1 b:2 c:2 d:1', '... works as expected';
 }
 
-#?rakudo skip ".KeyBag NYI"
 {
     isa_ok 42.KeyBag, KeyBag, "Method .KeyBag works on Int-1";
     is showkv(42.KeyBag), "42:1", "Method .KeyBag works on Int-2";

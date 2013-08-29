@@ -112,7 +112,6 @@ sub showkv($x) {
 {
     my $b = bag [ foo => 10, bar => 17, baz => 42, santa => 0 ];
     isa_ok $b, Bag, '&Bag.new given an array of pairs produces a Bag';
-    #?rakudo todo "New bag constructor NYI"
     is +$b, 1, "... with one element";
 }
 
@@ -129,7 +128,6 @@ sub showkv($x) {
 {
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 };
     isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
-    #?rakudo todo "New bag constructor NYI"
     is +$b, 1, "... with one element";
 }
 
@@ -150,7 +148,6 @@ sub showkv($x) {
 {
     my $b = bag KeyBag.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a KeyBag produces a Bag';
-    #?rakudo todo "New bag constructor NYI"
     is +$b, 1, "... with one element";
 }
 

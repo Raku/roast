@@ -69,13 +69,11 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    #?rakudo todo "KeySet.ACCEPTS"
     ok (KeySet.new: <a b c>) ~~ (KeySet.new: <a b c>), "Identical sets smartmatch with each other";
     nok (KeySet.new: <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
     nok (KeySet.new: <a b c d>) ~~ (KeySet.new: <a b c>), "Superset does not smartmatch";
     nok "a" ~~ (KeySet.new: <a b c>), "Smartmatch is not element of";
     ok (KeySet.new: <a b c>) ~~ KeySet, "Type-checking smartmatch works";
-    #?rakudo 3 todo "KeySet.ACCEPTS"
     ok (set <a b c>) ~~ (KeySet.new: <a b c>), "KeySet matches Set, too";
 
     ok (bag <a b c>) ~~ (KeySet.new: <a b c>), "Bag smartmatches with equivalent KeySet:";
@@ -85,7 +83,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     nok (bag <a b c>) ~~ KeySet, "Type-checking smartmatch works";
 }
 
-#?rakudo skip ".Set NYI"
 {
     isa_ok "a".KeySet, KeySet, "Str.KeySet makes a KeySet";
     is showset("a".KeySet), 'a', "'a'.KeySet is set a";
@@ -107,7 +104,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = KeySet.new(<a b foo>);
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
-    #?rakudo 2 skip ':delete NYI'
+    #?rakudo 2 todo ':delete NYI'
     is $s<a>:delete, True, ':delete returns current value on set';
     is showset($s), 'b foo', '...and actually deletes';
 }
@@ -142,13 +139,13 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = KeySet.new([ foo => 10, bar => 17, baz => 42 ]);
     isa_ok $b, KeySet, 'KeySet.new given an array of pairs produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new({ foo => 10, bar => 17, baz => 42 }.hash);
     isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
+    #?rakudo todo "Not up to current spec"
     is +$b, 3, '... with three elements';
     #?niecza todo "Non-string keys NYI"
     #?rakudo todo "Not up to current spec"
@@ -158,7 +155,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = KeySet.new({ foo => 10, bar => 17, baz => 42 });
     isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
@@ -179,7 +175,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = KeySet.new(KeyBag.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeySet, 'KeySet.new given a KeyBag produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
@@ -311,7 +306,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 
-#?rakudo skip ".KeySet NYI"
 {
     isa_ok 42.KeySet, KeySet, "Method .KeySet works on Int-1";
     is showset(42.KeySet), "42", "Method .KeySet works on Int-2";
