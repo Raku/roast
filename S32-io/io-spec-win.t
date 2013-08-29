@@ -48,7 +48,7 @@ for @canonpath-parent -> $in, $out {
 	is $win32.canonpath($in, :parent), $out,
            "canonpath(:parent): '$in' -> '$out'";
 }
-print "# Warning expected here: ";
+say "# Warning expected here: \n";
 is $win32.canonpath( Any, :parent ), '', "canonpath: Any -> ''";
 
 my @splitdir = 

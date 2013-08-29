@@ -44,7 +44,7 @@ my %canonpath-parent = (
 for %canonpath-parent.kv -> $get, $want {
 	is $Unix.canonpath( $get , :parent ), $want, "canonpath(:parent): '$get' -> '$want'";
 }
-print "# warning expected here:";
+say "# warning expected here:";
 is $Unix.canonpath( Any , :parent ), '', "canonpath(:parent): Any -> ''";
 
 is $Unix.catdir( ),                      '',          "catdir: no arg -> ''";
