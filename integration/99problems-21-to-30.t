@@ -246,7 +246,7 @@ sub combination($n, @xs) {
     # same frequency of length the ordering is unspecified, so this should be ok
 }
 
-#?rakudo todo 'autovivification'
+#?rakudo.parrot todo 'autovivification'
 #?niecza skip 'Unable to resolve method push in class Any'
 #?pugs todo
 {
@@ -261,7 +261,7 @@ sub combination($n, @xs) {
     # now sort the values by frequency, again can't use
     #  sort: {+$_}
     
-    my @sorted= %grouped.values.sort: {+$^a <=> +$^b};
+    my @sorted= %grouped.values.sort: +*;
     is @expected,@sorted, "..or according to frequency of length of sublists" 
 }
 
