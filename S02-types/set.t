@@ -113,16 +113,18 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
+    # {}.hash interpolates in list context
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
-    #?rakudo todo "New set constructor NYI"
+    #?rakudo todo "Not properly interpolating"
     is +$b, 3, "... with three elements";
-    #?rakudo todo "New set constructor NYI"
+    #?rakudo todo "Not properly interpolating"
     #?niecza todo "Losing type in Set"
     is +$b.grep(Pair), 3, "... all of which are Pairs";
 }
 
 {
+    # plain {} does not interpolate in list context
     my $b = set { foo => 10, bar => 17, baz => 42 };
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
     is +$b, 1, "... with one element";
