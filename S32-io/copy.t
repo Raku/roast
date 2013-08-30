@@ -3,9 +3,9 @@ use Test;
 
 plan 29;
 
-my $existing-file     = "tempfile-file-tests";
-my $non-existent-file = "non-existent-file-tests";
-my $zero-length-file  = "tempfile-zero-length-file-tests";
+my $existing-file     = "tempfile-copy";
+my $non-existent-file = "non-existent-copy";
+my $zero-length-file  = "tempfile-zero-length-copy";
 
 { # write the file first
     my $fh = open($existing-file, :w);
@@ -26,9 +26,9 @@ nok $non-existent-file.IO.e, "It doesn't";
 # method .IO.copy
 #?niecza skip 'Unable to resolve method s in class IO'
 {
-    my $existing-file-mtgt     = "tempfile-file-tests-mtgt";
-    my $non-existent-file-mtgt = "non-existent-file-tests-mtgt";
-    my $zero-length-file-mtgt  = "tempfile-zero-length-file-tests-mtgt";
+    my $existing-file-mtgt     = "tempfile-copy-mtgt";
+    my $non-existent-file-mtgt = "non-existent-copy-mtgt";
+    my $zero-length-file-mtgt  = "tempfile-zero-length-copy-mtgt";
     
     ok $existing-file.IO.copy( $existing-file-mtgt ), '.IO.copy normal file';
     ok $existing-file-mtgt.IO.e, 'It exists';
@@ -50,9 +50,9 @@ nok $non-existent-file.IO.e, "It doesn't";
 # sub copy()
 #?niecza skip 'Unable to resolve method s in class IO'
 {
-    my $existing-file-stgt     = "tempfile-file-tests-stgt";
-    my $non-existent-file-stgt = "non-existent-file-tests-stgt";
-    my $zero-length-file-stgt  = "tempfile-zero-length-file-tests-stgt";
+    my $existing-file-stgt     = "tempfile-copy-stgt";
+    my $non-existent-file-stgt = "non-existent-copy-stgt";
+    my $zero-length-file-stgt  = "tempfile-zero-length-copy-stgt";
     
     ok copy( $existing-file, $existing-file-stgt ), 'copy() normal file';
     ok $existing-file-stgt.IO.e, 'It exists';
