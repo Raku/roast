@@ -47,7 +47,6 @@ my $g = "UPPERCASE"; $g .= lc;
 my $h = "lowercase"; $h .= tc;
 is($f, "LOWERCASE", "inplace uc");
 is($g, "uppercase", "inplace lc");
-#?rakudo skip 'tc'
 is($h, "Lowercase", "inplace tc");
 
 # L<S12/"Mutating methods">

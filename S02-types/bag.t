@@ -44,7 +44,6 @@ sub showkv($x) {
     is +$b, 8, '+$bag gives sum of values';
 }
 
-#?rakudo skip "Bag.ACCEPTS NYI"
 {
     ok (bag <a b c>) ~~ (bag <a b c>), "Identical bags smartmatch with each other";
     ok (bag <a b c c>) ~~ (bag <a b c c>), "Identical bags smartmatch with each other";
@@ -174,7 +173,6 @@ sub showkv($x) {
     dies_ok { %b = bag <a b> }, "Can't assign to a %var implemented by Bag";
 }
 
-#?rakudo skip ".Bag NYI"
 {
     my $b = { foo => 10, bar => 1, baz => 2}.Bag;
 
@@ -193,7 +191,6 @@ sub showkv($x) {
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
 
-#?rakudo skip ".Bag NYI"
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
@@ -206,7 +203,6 @@ sub showkv($x) {
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
-#?rakudo skip ".Bag NYI"
 {
     my $b = { foo => 2, bar => 3, baz => 1 }.Bag;
     my $s;
@@ -216,7 +212,6 @@ sub showkv($x) {
     is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
-#?rakudo skip ".Bag NYI"
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
@@ -257,7 +252,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
-#?rakudo skip ".Bag NYI"
 {
     my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
@@ -289,7 +283,6 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
-#?rakudo skip ".Bag NYI"
 {
     my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
