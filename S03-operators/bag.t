@@ -20,7 +20,6 @@ my $kb = KeyBag.new(<blood love love>);
 
 # Bag Union
 
-#?rakudo 8 skip "∪ NYI"
 is showkv($b ∪ $b), showkv($b), "Bag union with itself yields self";
 isa_ok ($b ∪ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ∪ $kb), showkv($kb), "KeyBag union with itself yields (as Bag)";
@@ -38,7 +37,6 @@ isa_ok ($s (|) $kb), Bag, "... and it's actually a Bag";
 
 # Bag Intersection
 
-#?rakudo 10 skip "∩ NYI"
 is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
 isa_ok ($b ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($kb ∩ $kb), showkv($kb), "KeyBag intersection with itself yields self (as Bag)";
@@ -49,6 +47,7 @@ isa_ok ($s ∩ $b), Bag, "... and it's actually a Bag";
 is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with KeyBag works";
 isa_ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
+#?rakudo todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($kb ∩ <glad green blood>), "blood:1", "KeyBag intersection with array of strings works";
 isa_ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
@@ -63,7 +62,7 @@ isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
-#?rakudo 16 skip "∩ NYI"
+#?rakudo 16 skip 'expected Any but go Mu'
 is showkv($s ⊍ $s), "blood:1 love:1", "Bag multiplication with itself yields self squared";
 isa_ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
 is showkv($ks ⊍ $ks), "blood:1 rhetoric:1", "Bag multiplication with itself yields self squared";
@@ -94,7 +93,7 @@ isa_ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
 # Bag addition
 
-#?rakudo 16 skip "⊎ NYI"
+#?rakudo 16 skip 'expected Any but go Mu'
 is showkv($s ⊎ $s), "blood:2 love:2", "Bag addition with itself yields twice self";
 isa_ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
 is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields twice self";
@@ -125,12 +124,10 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # msubset
 {
-    #?rakudo 4 skip "No msubset yet"
     ok $kb ≼ $b, "Our keybag is a msubset of our bag";
     nok $b ≼ $kb, "Our keybag is not a msubset of our bag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
-    #?rakudo 4 skip "no texas version for msubset either"
     ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
     nok $b (<+) $kb, "Our keybag is not a msubset of our bag (texas)";
     ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
@@ -139,12 +136,10 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # msuperset
 {
-    #?rakudo 4 skip "No msuperset yet"
     nok $kb ≽ $b, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
-    #?rakudo 4 skip "no texas version for msuperset either"
     nok $kb (>+) $b, "Our keybag is not a msuperset of our bag";
     ok $b (>+) $kb, "Our keybag is not a msuperset of our bag";
     ok $b (>+) $b, "Our bag is a msuperset of itself";
