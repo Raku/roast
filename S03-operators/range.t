@@ -2,8 +2,7 @@ use v6;
 
 use Test;
 
-plan 120;
-
+plan 124;
 
 # L<S03/Nonchaining binary precedence/Range object constructor>
 
@@ -21,10 +20,11 @@ is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) wor
 #?pugs todo
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 
-#?rakudo 4 skip 'Spec under design here'
+#?rakudo todo 'huh?'
 #?niecza 4 skip 'Spec under design here'
 is ~('Y'..'z'), 'Y Z', '(..) works on uppercase letter .. lowercase letter (1)';
 is ~('z'..'Y'), '',    '(..) works on auto-rev uppercase letter .. lowercase letter (2)';
+#?rakudo todo 'huh?'
 is ~('Y'..'_'), 'Y Z', '(..) works on letter .. non-letter (1)';
 is ~('_'..'Y'), '',    '(..) works on auto-rev letter .. non-letter (2)';
 is ~(' '..' '), ' ',    'all-whitespace range works';
@@ -126,12 +126,7 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 }
 
 # Test that the operands are forced to scalar context
-##   From pmichaud 2006-06-30:  These tests may be incorrect.
-##     C<@one> in ##   item context returns an Array, not a number
-##     -- use C< +@one > to get the number of elements.  So, we
-##     need to either declare that there's a version of infix:<..>
-##     that coerces its arguments to numeric context, or we can
-##     remove these tests from the suite.
+# Range.new coerces its arguments to numeric context if needed
 # RT #58018
 # RT #76950
 #?niecza skip "Unhandled exception: cannot increment a value of type Array"
@@ -139,7 +134,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my @three = (1, 1, 1);
     my @one = 1;
 
-    #?rakudo 2 skip "nom regression: Method 'succ' not found for invocant of class 'Array'"
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
     is ~(@one ^.. 3)    , "2 3"  , "lower exclusive limit is in scalar context";
     #?pugs skip 'empty list'
@@ -148,6 +142,10 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is ~(4 .. @three)   , ""     , "upper inclusive limit is in scalar context";
     is ~(1 ..^ @three)  , "1 2"  , "upper exclusive limit is in scalar context";
     is ~(4 ..^ @three)  , ""     , "upper exclusive limit is in scalar context";
+    is ~(@one .. @three), "1 2 3", "both limits is in scalar context";
+    is ~(@one ^.. @three), "2 3" , "lower exclusive limit scalar context";
+    is ~(@one ..^ @three), "1 2" , "upper exclusive limit scalar context";
+    is ~(@one ^..^ @three), "2"  , "both exclusive limit scalar context";
 }
 
 # test that .map and .grep work on ranges
@@ -187,7 +185,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     is $range.min, 1, 'range starts at one';
     #?pugs todo
     is $range.max, 3, 'range ends at three';
-    #?rakudo 2 skip "range stringification: Method 'succ' not found for invocant of class 'Match'"
     #?niecza 2 skip 'cannot increment a value of type Match'
     lives_ok { "$range" }, 'can stringify range';
     #?pugs todo
@@ -199,7 +196,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa_ok $0..$1, Range, '$0..$1 constructs a Range';
-    #?rakudo skip "range with match object endpoints: Method 'succ' not found for invocant of class 'Match'"
     #?niecza skip 'cannot increment a value of type Match'
     is ($0..$1).join('|'), '1|2|3', 'range from $0..$1';
 }
