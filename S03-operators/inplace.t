@@ -26,12 +26,14 @@ plan 27;
     is @b[2], 'baz', 'inplace grep [2]';
 }
 
-#?rakudo skip "Method '' not found for invocant of class 'Str'"
 {
     my $a=3.14;
     $a .= Int;
     is($a, 3, "inplace int");
+}
 
+#?rakudo skip "Method '' not found for invocant of class 'Str'"
+{
     my $b = "a_string"; $b .= WHAT;
     my $c =         42; $c .= WHAT;
     my $d =      42.23; $d .= WHAT;

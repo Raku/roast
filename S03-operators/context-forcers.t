@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 89;
+plan 97;
 
 #?DOES 1
 sub iis(Mu $a, Mu $b, $descr) {
@@ -48,10 +48,21 @@ sub iis(Mu $a, Mu $b, $descr) {
   is +0,           0, "+ context forcer works (2)";
   is +(3/4),     3/4, "+ context forcer works (3)";
   is +(3i),       3i, "+ context forcer works (4)";
-  # jnthn and pmichaud believe the next test is incorrect
-  # is +Mu,          0, "+ context forcer works (8)";
+  #?pugs todo 'Mu'
+  dies_ok { +Mu },    "+ context forcer works (5)";
   is +(?0),        0, "+ context forcer works (13)";
   is +(?3),        1, "+ context forcer works (14)";
+}
+
+{ # L<S03/"Changes to Perl 5 operators" /imposes a numeric context/>
+  is -1,          -1, "- context forcer works (1)";
+  is -0,          -0, "- context forcer works (2)";
+  is -(3/4),    -3/4, "- context forcer works (3)";
+  is -(3i),      -3i, "- context forcer works (4)";
+  #?pugs todo 'Mu'
+  dies_ok { -Mu },    "- context forcer works (5)";
+  is -(?0),        0, "- context forcer works (13)";
+  is -(?3),       -1, "- context forcer works (14)";
 }
 
 { # L<S03/"Changes to Perl 5 operators" /imposes a string context/>
@@ -60,9 +71,8 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"1",       "1", "~ context forcer works (3)";
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
-  #?rakudo skip '~Mu'
   #?pugs todo 'Mu'
-  is ~Mu,         "", "~ context forcer works (6)";
+  dies_ok { ~Mu },    "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";
   is ~"NaN",   "NaN", "~ context forcer works (9)";

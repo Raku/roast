@@ -33,7 +33,6 @@ plan 54;
   ok !($a eqv $b), "eqv on value types (2-3)";
 }
 
-#?rakudo skip 'binding NYI'
 #?niecza skip 'Cannot use value like Capture as a number'
 {
   my @a = (1,2,3);
@@ -42,6 +41,7 @@ plan 54;
   ok  (\@a eqv \@a), "eqv on array references (1)";
   ok  (\@b eqv \@b), "eqv on array references (2)";
   #?pugs todo
+  #?rakudo todo 'huh?'
   ok !(\@a eqv \@b), "eqv on array references (3)";
   @a := @b;
   ok \@a eqv \@b, '\@array of two bound arrays are eqv';
@@ -55,8 +55,8 @@ plan 54;
   ok ($a eqv $a), "eqv on scalar references (1-1)";
   ok ($b eqv $b), "eqv on scalar references (1-2)";
   ok ($a eqv $b), "eqv on scalar references (1-3)";
-  #?rakudo skip 'infix:<!eqv>'
   #?pugs todo
+  #?rakudo todo 'huh?'
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
 
@@ -106,13 +106,14 @@ plan 54;
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
 
-#?rakudo skip 'captures'
 #?niecza skip 'Cannot use value like Capture as a number'
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
   #?pugs 2 todo
+  #?rakudo todo 'huh?'
   ok !(\3 eqv \3),         "eqv on anonymous scalar references (2)";
+  #?rakudo skip 'huh?'
   ok !(\Mu eqv \Mu), "eqv on anonymous scalar references (3)";
 }
 

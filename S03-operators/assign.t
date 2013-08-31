@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 285;
+plan 286;
 
 
 # tests various assignment styles
@@ -199,11 +199,18 @@ plan 285;
     is(@a[1], @b[1], 'chained @ = % = list assignment');
 }
 
+{
+    # chained my $scalar = my %hash = list assignment 
+    my $s = my %h = 1,2;
+    my $t = %h;
+    is($s, $t, 'chained $ = % = list assignment');
+}
+
 #?rakudo skip 'Odd number of elements found where hash expected'
 {
     # chained $scalar = %hash = list assignment 
     my ($s, $t, %h);
-    $s = %h = 1,2;
+    $s = %h = 1,2;  # needs (1,2) to work, why???
     $t = %h;
     is($s, $t, 'chained $ = % = list assignment');
 }
@@ -561,7 +568,7 @@ my @p;
 
 # XXX: The following tests assume autoconvertion between "a" and buf8 type
 #?pugs eval 'parsefail'
-#?rakudo skip "unknown reasons"
+#?rakudo skip "Two terms in a row"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "a";
@@ -572,7 +579,7 @@ my @p;
 }
 
 #?pugs eval 'parsefail'
-#?rakudo skip "unknown reasons"
+#?rakudo skip "expects a term, found infix >= instead"
 #?niecza skip "Buffer bitops NYI"
 {
     my $x = "aa";
@@ -646,7 +653,7 @@ sub l () { 1, 2 };
     is(@z.elems, 6, 'lhs treats ($a, *) as list (2)');
 }
 
-#?rakudo skip '@$a'
+#?rakudo skip 'cannot modifiy an immutable value'
 #?niecza skip 'Unable to resolve method LISTSTORE in class List'
 {
     my $a;
@@ -655,7 +662,7 @@ sub l () { 1, 2 };
     is @z.elems, 6, 'lhs treats @$a as list (2)';
 }
 
-#?rakudo skip '$a[] autovivification (unspecced?)'
+#?rakudo skip 'cannot modifiy an immutable value'
 #?niecza skip '$a[] autovivification (unspecced?)'
 #?pugs todo
 {
@@ -771,27 +778,27 @@ sub l () { 1, 2 };
     ok(!defined(@z[1]), 'lhs treats @a[@b[$c,]] as list');
 }
 
-#?rakudo skip 'unknown'
 {
     my @a;
     my $b = 0;
     my sub foo { \@a }
     my @z = (foo()[$b] = l, l);
+    #?rakudo todo 'list assignment'
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b] as list');
-    #?rakudo todo 'list assignment'
     #?pugs todo
     is(@z[0].elems, 1,  'lhs treats foo()[$b] as list');
+    #?rakudo todo 'list assignment'
     #?niecza todo
     ok(!defined(@z[1]), 'lhs treats foo()[$b] as list');
 }
 
-#?rakudo skip 'unknown'
 {
     my @a;
     my $b = 0;
     my sub foo { \@a }
     my @z = (foo()[$b,] = l, l);
+    #?rakudo todo 'list assignment'
     #?niecza todo
     is(@a.elems,    1,  'lhs treats foo()[$b,] as list');
     #?rakudo todo 'list assignment'
@@ -815,11 +822,11 @@ sub l () { 1, 2 };
 
 
 # L<S03/Assignment operators/",=">
-#?rakudo skip ',='
 #?pugs skip 'Cannot cast from VInt 3 to Handle'
 {
     my @a = 1, 2;
     is  (@a ,= 3, 4).join('|'), '1|2|3|4', ',= on lists works the same as push (return value)';
+    #?rakudo todo 'huh?'
     is  @a.join('|'), '1|2|3|4', ',= on lists works the same as push (effect on array)';
 }
 

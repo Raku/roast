@@ -85,15 +85,16 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
     ok ( ! one 1, 2 X== 2, 1, 4),  'one @l1 X== @l2';
 }
 
-#?rakudo skip "=:= NYI"
 {
     my ($a, $b, $c, $d);
     # test that the containers on the LHS are mutually exclusive from
     # those on the RHS
     ok ( ? all $a, $b X!=:= $c, $d ), 'X!=:= (1)';
     ok ( ? all $a, $a X!=:= $c, $d ), 'X!=:= (2)';
+    #?rakudo todo 'huh?'
     ok ( ! all $a, $b X!=:= $c, $b ), 'X!=:= (3)';
     $c := $b;
+    #?rakudo todo 'huh?'
     ok ( ? one $a, $b X=:=  $c, $d ), 'one X=:=';
 }
 

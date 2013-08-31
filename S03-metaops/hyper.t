@@ -210,7 +210,6 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements");
 }
 
-#?rakudo skip 'dotted postfix'
 {
         my (@r, @e);
         (@r = (1, 4, 9))»++;
@@ -219,7 +218,11 @@ my @e;
 
         (@r = (1, 4, 9)).»++;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
+}
 
+#?rakudo skip 'dotted postfix'
+{
+        my (@r, @e);
         (@r = (1, 4, 9))».++;
         @e = (2, 5, 10);
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");

@@ -58,14 +58,16 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
     ok (! [lt] <a a c e>),    '[lt] basic sanity (negative)';
 }
 
-#?rakudo skip "=:= NYI"
 {
     my ($x, $y);
+    #?rakudo todo 'huh?'
     ok (    [=:=]  $x, $x, $x), '[=:=] basic sanity 1';
     ok (not [=:=]  $x, $y, $x), '[=:=] basic sanity 2';
+    #?rakudo 2 skip 'huh?'
     ok (    [!=:=] $x, $y, $x), '[!=:=] basic sanity (positive)';
     ok (not [!=:=] $y, $y, $x), '[!=:=] basic sanity (negative)';
     $y := $x;
+    #?rakudo todo 'huh?'
     ok (    [=:=]  $y, $x, $y), '[=:=] after binding';
 }
 
