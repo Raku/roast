@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 40;
+plan 42;
 
 # L<S05/Match objects/"$/.caps">
 
@@ -66,10 +66,16 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
 {
     ok 'a' ~~ m/a && <alpha>/, 'Regex matches';
     is ca($/.caps),     'alpha:a',  '.caps && - first term';
+
     ok 'a' ~~ m/<alpha> && a/,  'Regex matches';
     is ca($/.caps),     'alpha:a',  '.caps && - last term';
 
+    ok 'a' ~~ m/<alpha> & <ident>/,  'Regex matches';
+#?rakudo.jvm todo '& caps on jvm'
+    is ca($/.caps),     'alpha:a|ident:a',  '.caps & - multiple terms';
+
     ok 'a' ~~ m/<alpha> && <ident>/,  'Regex matches';
+#?rakudo.jvm todo '&& caps on jvm'
     is ca($/.caps),     'alpha:a|ident:a',  '.caps && - multiple terms';
 
     ok 'ab' ~~ m/([a|b] && <alpha>)**1..2/,  'Regex matches';
