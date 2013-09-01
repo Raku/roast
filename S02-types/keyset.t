@@ -104,7 +104,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = KeySet.new(<a b foo>);
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
-    #?rakudo 2 todo ':delete NYI'
     is $s<a>:delete, True, ':delete returns current value on set';
     is showset($s), 'b foo', '...and actually deletes';
 }
