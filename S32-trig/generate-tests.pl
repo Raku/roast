@@ -140,7 +140,7 @@ class TrigFunction
                      Str $complex_check is copy,
                      Str $plus_inf is copy,
                      Str $minus_inf is copy) {
-        self.bless(*, 
+        self.bless(
                    :$function_name, 
                    :$inverted_function_name, 
                    :$angle_and_results_name, 
@@ -329,7 +329,7 @@ class NotComplex is Cool {
     has $.value;
 
     multi method new(Complex $value is copy) {
-        self.bless(*, :$value);
+        self.bless(:$value);
     }
 
     multi method Numeric() {
@@ -341,7 +341,7 @@ class DifferentReal is Real {
     has $.value;
 
     multi method new($value is copy) {
-        self.bless(*, :$value);
+        self.bless(:$value);
     }
 
     multi method Bridge() {

@@ -12,11 +12,11 @@ class Fixed2 does Real {
     has Int $.one-hundredths;
 
     multi method new(Int $a) {
-        self.bless(*, :one-hundredths($a * 100));
+        self.bless(:one-hundredths($a * 100));
     }
 
     multi method new(Rat $a) {
-        self.bless(*, :one-hundredths(floor($a * 100)));
+        self.bless(:one-hundredths(floor($a * 100)));
     }
 
     method Bridge() {

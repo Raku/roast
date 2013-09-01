@@ -11,8 +11,8 @@ Testing operator overloading subroutines
 
 class Vector {
     has @.coords;
-    multi method new (*@x where { @x.elems == 3 }) { self.bless(*, coords => @x); }
-    multi method new (@x where { @x.elems == 3 }) { self.bless(*, coords => @x); }
+    multi method new (*@x where { @x.elems == 3 }) { self.bless(coords => @x); }
+    multi method new (@x where { @x.elems == 3 }) { self.bless(coords => @x); }
     multi method abs() is export { sqrt([+](self.coords »*« self.coords)); }
     multi method Num() { die "Can't get Num from Vector"; }
 }

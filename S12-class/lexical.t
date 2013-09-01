@@ -53,7 +53,7 @@ eval_dies_ok  '{ my class B {}; B.new; }; B.new',
         has Frog $.frog;
         method new() {
             my Frog $frog .=  new;
-            self.bless(*, :$frog);
+            self.bless(:$frog);
         };
     }
     is Forest.new.frog.speak, 'ribbit ribbit',

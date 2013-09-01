@@ -97,7 +97,7 @@ is $o.x, 5, '... worked for the class Parent (other order)';
         has $.a2;
 
         multi method new(Int $number, Str $color) {
-            self.bless(*, :a1($number), :a2($color));
+            self.bless(:a1($number), :a2($color));
         }
     }
 

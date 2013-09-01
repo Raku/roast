@@ -34,7 +34,7 @@ class Foo {
   has $.a;
   
   method new ($self: Str $string) {
-    $self.bless(*, a => $string);
+    $self.bless(a => $string);
   }
 }
 
@@ -82,7 +82,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
     class MonkeyNew { has $.x is rw };
     augment class MonkeyNew {
         method new() {
-            self.bless(*, :x('called'));
+            self.bless(:x('called'));
         }
     };
     is MonkeyNew.new().x, 'called', 'monkey-typed .new() method is called';

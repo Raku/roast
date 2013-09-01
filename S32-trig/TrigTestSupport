@@ -12,7 +12,7 @@ class AngleAndResult
     our @degrees-to-whatever-num = @degrees-to-whatever.map({ .Num });
 
     multi method new(Int $angle_in_degrees is copy, $result is copy) {
-        self.bless(*, :$angle_in_degrees, :$result);
+        self.bless(:$angle_in_degrees, :$result);
     }
 
     multi method perl() {

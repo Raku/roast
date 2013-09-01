@@ -40,7 +40,7 @@ class NotComplex is Cool {
     has $.value;
 
     multi method new(Complex $value is copy) {
-        self.bless(*, :$value);
+        self.bless(:$value);
     }
 
     multi method Numeric() {
@@ -52,7 +52,7 @@ class DifferentReal is Real {
     has $.value;
 
     multi method new($value is copy) {
-        self.bless(*, :$value);
+        self.bless(:$value);
     }
 
     multi method Bridge() {
