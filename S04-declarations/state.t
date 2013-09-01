@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 43;
+plan 40;
 
 # L<S04/The Relationship of Blocks and Declarations/There is a new state declarator that introduces>
 
@@ -114,42 +114,6 @@ plan 43;
     is $rhs_calls, 1, 'RHS of state $x = ... only called once';
 }
 
-# Return of a reference to a state() var
-#?rakudo skip 'references'
-#?DOES 1
-{
-    my $gen = {
-        state $svar = 42;
-        \$svar;
-    };
-
-    my $svar_ref = $gen();
-    $$svar_ref++; $$svar_ref++;
-
-    $svar_ref = $gen();
-    #?pugs todo "state bug"
-    is $$svar_ref, 44, "reference to a state() var";
-}
-
-# Anonymous state vars
-# L<http://groups.google.de/group/perl.perl6.language/msg/07aefb88f5fc8429>
-# fudged a bit on syntax
-#?pugs todo 'anonymous state vars'
-#?rakudo todo 'references and anonymous state vars'
-#?DOES 1
-{
-    my $gen = sub { \(state $ ) };
-
-    my $svar_ref = $gen();               # $svar == 0
-    try { $$svar_ref++; $$svar_ref++ };  # $svar == 2
-
-    $svar_ref = $gen();               # $svar == 2
-    is try { $$svar_ref }, 2, "anonymous state() vars";
-}
-
-#?rakudo todo 'nom regression'
-eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
-
 # L<http://www.nntp.perl.org/group/perl.perl6.language/20888>
 # ("Re: Declaration and definition of state() vars" from Larry)
 #?pugs eval 'Parse error'
@@ -157,7 +121,7 @@ eval_lives_ok 'if 0 { \(state $) }', '$) not misinterpreted in capterm';
     my ($a, $b);
     my $gen = {
         (state $svar) = 42;
-        my $ret = { $svar++ };
+        -> { $svar++ };
     };
 
     $a = $gen();        # $svar == 42
