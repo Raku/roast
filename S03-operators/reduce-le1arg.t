@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 53;
+plan 54;
 
 # smartlink to top and bottom of long table
 # L<S03/Reduction operators/"Builtin reduce operators return the following identity values">
@@ -31,7 +31,6 @@ is ([~^] ()), '', "[~^] () eq ''";
 is ([&] ()).perl, all().perl, "[&] () eq all()";
 is ([|] ()).perl, any().perl, "[|] () eq any()";
 is ([^] ()).perl, one().perl, "[^] () eq one()";
-#?rakudo skip 'reduce !=='
 is ([!==] ()), Bool::True, "[!==] () eq True";
 is ([==] ()), Bool::True, "[==] () eq True";
 is ([<] ()), Bool::True, "[<] () eq True";
@@ -47,20 +46,17 @@ is ([~~] ()), Bool::True, "[~~] () eq True";
 #?rakudo skip 'reduce !~~'
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
-#?rakudo skip 'reduce !eq'
+is ([ne] ()), Bool::True, "[ne] () eq True)";
 is ([!eq] ()), Bool::True, "[!eq] () eq True";
 is ([lt] ()), Bool::True, "[lt] () eq True";
 is ([le] ()), Bool::True, "[le] () eq True";
 is ([gt] ()), Bool::True, "[gt] () eq True";
 is ([ge] ()), Bool::True, "[ge] () eq True";
 is ([=:=] ()), Bool::True, "[=:=] () eq True";
-#?rakudo skip 'reduce !=:='
 is ([!=:=] ()), Bool::True, "[!=:=] () eq True";
 is ([===] ()), Bool::True, "[===] () eq True";
-#?rakudo skip 'reduce !==='
 is ([!===] ()), Bool::True, "[!===] () eq True";
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
-#?rakudo skip 'reduce !eqv'
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::False, "[||] () eq False";
@@ -73,7 +69,6 @@ is ([Z] ()), [], "[Z] () eq []";
 
 is ([==] 3), Bool::True, 'unary [==]';
 is ([!=] 3), Bool::True, 'unary [!=]';
-#?rakudo skip 'reduce !=='
 is ([!==] 3), Bool::True, 'unary [!==]';
 
 # vim: ft=perl6
