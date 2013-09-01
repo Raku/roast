@@ -450,7 +450,6 @@ ok $kb !R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
     my $c = [<Apollo Arclight Astor>];
     my @d;
     
-    #?rakudo 4 skip "∪ NYI"
     is showset([∪] @d), showset(∅), "Union reduce works on nothing";
     is showset([∪] $a), showset($a), "Union reduce works on one set";
     is showset([∪] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets";
@@ -461,7 +460,6 @@ ok $kb !R(>) $s, "KeyBag is not a reversed proper superset of Set (texas)";
     is showset([(|)] $a, $b), showset(set($a.keys, $b.keys)), "Union reduce works on two sets (texas)";
     is showset([(|)] $a, $b, $c), showset(set($a.keys, $b.keys, $c.values)), "Union reduce works on three sets (texas)";
 
-    #?rakudo 4 skip "∩ NYI"
     is showset([∩] @d), showset(∅), "Intersection reduce works on nothing";
     is showset([∩] $a), showset($a), "Intersection reduce works on one set";
     is showset([∩] $a, $b), showset(set("Apollo")), "Intersection reduce works on two sets";
