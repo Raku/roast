@@ -14,7 +14,6 @@ is(4\#`(quux).sqrt, 2, 'unspace with comments');
 is("x"\     .chars, 1, 'unspace with strings');
 is("x"\     .chars(), 1, 'unspace with strings + parens');
 
-#?rakudo skip 'unspace with postfix operators'
 {
 my $foo = 4;
 is($foo.++, 4, '(short) unspace with postfix inc');
@@ -266,7 +265,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n, 1, 'check $n');
 
     $n = 1;
-    #?rakudo skip 'dotty postfix'
     is($n.++, 1, 'postfix dot');
     #?rakudo todo 'test dependency'
     is($n, 2, 'check $n');
@@ -276,7 +274,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($n, 2, 'check $n');
 
     $n = 1;
-    #?rakudo skip 'unspace + dotty postfix'
     is($n\ .++, 1, 'postfix unspace');
     #?rakudo todo 'test dependency'
     is($n, 2, 'check $n');
