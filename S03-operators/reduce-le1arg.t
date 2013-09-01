@@ -17,8 +17,9 @@ is ([+&] ()), +^0, "[+&] () eq +^0";
 ok( !([+<] ()).defined, "[+<] () should fail");
 ok( !([+>] ()).defined, "[+>] () should fail");
 ok( !([~&] ()).defined, "[~&] () should fail");
-#?rakudo 2 skip "~< and ~> NYI"
+#?rakudo skip "~< NYI"
 ok( !([~<] ()).defined, "[~<] () should fail");
+#?rakudo skip "~> NYI"
 ok( !([~>] ()).defined, "[~>] () should fail");
 is ([+] ()), 0, "[+] () eq 0";
 is ([-] ()), 0, "[-] () eq 0";
@@ -30,30 +31,36 @@ is ([~^] ()), '', "[~^] () eq ''";
 is ([&] ()).perl, all().perl, "[&] () eq all()";
 is ([|] ()).perl, any().perl, "[|] () eq any()";
 is ([^] ()).perl, one().perl, "[^] () eq one()";
-#?rakudo 16 skip 'reduce chained ops'
+#?rakudo skip 'reduce !=='
 is ([!==] ()), Bool::True, "[!==] () eq True";
 is ([==] ()), Bool::True, "[==] () eq True";
 is ([<] ()), Bool::True, "[<] () eq True";
 is ([<=] ()), Bool::True, "[<=] () eq True";
 is ([>] ()), Bool::True, "[>] () eq True";
 is ([>=] ()), Bool::True, "[>=] () eq True";
+#?rakudo skip 'reduce before'
 is ([before] ()), Bool::True, "[before] () eq True";
+#?rakudo skip 'reduce after'
 is ([after] ()), Bool::True, "[after] () eq True";
+#?rakudo skip 'reduce ~~'
 is ([~~] ()), Bool::True, "[~~] () eq True";
+#?rakudo skip 'reduce !~~'
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
+#?rakudo skip 'reduce !eq'
 is ([!eq] ()), Bool::True, "[!eq] () eq True";
 is ([lt] ()), Bool::True, "[lt] () eq True";
 is ([le] ()), Bool::True, "[le] () eq True";
 is ([gt] ()), Bool::True, "[gt] () eq True";
 is ([ge] ()), Bool::True, "[ge] () eq True";
-#?rakudo 2 skip '=!= NYI'
 is ([=:=] ()), Bool::True, "[=:=] () eq True";
+#?rakudo skip 'reduce !=:='
 is ([!=:=] ()), Bool::True, "[!=:=] () eq True";
-#?rakudo 4 skip 'reducing chained ops'
 is ([===] ()), Bool::True, "[===] () eq True";
+#?rakudo skip 'reduce !==='
 is ([!===] ()), Bool::True, "[!===] () eq True";
 is ([eqv] ()), Bool::True, "[eqv] () eq True";
+#?rakudo skip 'reduce !eqv'
 is ([!eqv] ()), Bool::True, "[!eqv] () eq True";
 is ([&&] ()), Bool::True, "[&&] () eq True";
 is ([||] ()), Bool::False, "[||] () eq False";
@@ -61,12 +68,12 @@ is ([||] ()), Bool::False, "[||] () eq False";
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
-#?rakudo skip '[Z]'
+#?rakudo skip '[Z] hangs'
 is ([Z] ()), [], "[Z] () eq []";
 
-#?rakudo 3 skip 'reducing chained ops'
 is ([==] 3), Bool::True, 'unary [==]';
 is ([!=] 3), Bool::True, 'unary [!=]';
+#?rakudo skip 'reduce !=='
 is ([!==] 3), Bool::True, 'unary [!==]';
 
 # vim: ft=perl6
