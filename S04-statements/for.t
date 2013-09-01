@@ -490,10 +490,10 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #64886
-#?rakudo skip "Nom doesn't feature lazily for looping over a range yet?"
+#?rakudo skip 'maybe bogus, for loops are not supposed to be lazy?'
 {
     my $a = 0;
-    for (1..10000000000) {
+    for 1..10000000000 {
         $a++;
         last;
     }

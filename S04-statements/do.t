@@ -82,7 +82,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 }
 
 # L<S04/The do-once loop/"can take" "loop control statements">
-#?rakudo skip 'next() should also work on do blocks (?)'
+#?rakudo skip 'next without loop construct'
 {
     my $i;
     do {
@@ -93,7 +93,7 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
     is $i, 1, "'next' works in 'do' block";
 }
 
-#?rakudo 3 skip "labels"
+#?rakudo 3 skip "Undeclared name A"
 #?pugs 3 todo
 is eval('my $i; A: do { $i++; last A; $i-- }; $i'), 1,
     "'last' works with label";
@@ -102,7 +102,7 @@ is eval('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
 is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     "'redo' works with label";
 
-#?rakudo skip 'last not implemented'
+#?rakudo skip 'last without loop construct'
 {
     is eval('
         my $i;
@@ -118,7 +118,7 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 # IRC notes:
 # <agentzh> audreyt: btw, can i use redo in the do-once loop?
 # <audreyt> it can, and it will redo it
-#?rakudo skip 'redo not implemented'
+#?rakudo skip 'redo without loop construct'
 {
     is eval('
         my $i;

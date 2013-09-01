@@ -901,7 +901,6 @@ ok(!( "\x[D062]"  ~~ m/^<:InLatin1Supplement>$/ ), q{Don't match unrelated <InLa
 ok("\x[D062]"  ~~ m/^<:!InLatin1Supplement>$/, q{Match unrelated negated <InLatin1Supplement>} );
 #?pugs todo
 ok("\x[D062]"  ~~ m/^<-:InLatin1Supplement>$/, q{Match unrelated inverted <InLatin1Supplement>} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[D062]\x[0080]" ~~ m/<:InLatin1Supplement>/, q{Match unanchored <InLatin1Supplement>} );
 

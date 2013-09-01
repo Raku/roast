@@ -96,15 +96,17 @@ grammar Russian { regex name { ivan } }
 ok("john" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'English name');
 is(~$/, "john", 'Match is john');
 ok($/ ne "jean", "Match isn't jean");
-#?rakudo 8 skip 'wrong tests? needs review'
+#?rakudo todo 'needs review'
 is(~$/<name>, "john", 'Name is john');
 
 ok("jean" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'French name');
 is(~$/, "jean", 'Match is jean');
+#?rakudo todo 'needs review'
 is(~$/<name>, "jean", 'Name is jean');
 
 ok("ivan" ~~ m/<.English::name> | <.French::name> | <.Russian::name>/, 'Russian name');
 is(~$/, "ivan", 'Match is ivan');
+#?rakudo todo 'needs review'
 is(~$/<name>, "ivan", 'Name is ivan');
 
 my regex name { <.English::name> | <.French::name> | <.Russian::name> }
@@ -112,7 +114,6 @@ my regex name { <.English::name> | <.French::name> | <.Russian::name> }
 ok("john" ~~ m/<name>/, 'English metaname');
 is(~$/, "john", 'Metaname match is john');
 ok(~$/ ne "jean", "Metaname match isn't jean");
-#?rakudo todo 'unknown'
 is(~$/<name>, "john", 'Metaname is john');
 
 

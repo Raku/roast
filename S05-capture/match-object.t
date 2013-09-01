@@ -40,10 +40,12 @@ nok $/.Bool,                    'failed match is False';
 is  $/.Str,          '',        'false match stringifies to empty string';
 
 my $c;
-#?rakudo 3 skip 'Non-declarative sigil is missing its name at line 1, near "$\x{a2} }/\n"'
+#?rakudo skip 'Unsupported use of $¢ variable'
 #?pugs todo
 ok 'abc' ~~ /.{ $c = $¢ }/,     'current match state';
+#?rakudo todo 'Unsupported use of $¢ variable'
 #?pugs skip 'Cursor'
 is $c.WHAT.gist, Cursor.gist,   'got right type';
+#?rakudo skip "No such method pos for invocant of type Any"
 #?pugs skip 'Scalar.pos'
 ok defined($c.pos),             '.pos';
