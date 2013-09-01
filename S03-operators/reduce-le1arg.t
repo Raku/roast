@@ -37,11 +37,8 @@ is ([<] ()), Bool::True, "[<] () eq True";
 is ([<=] ()), Bool::True, "[<=] () eq True";
 is ([>] ()), Bool::True, "[>] () eq True";
 is ([>=] ()), Bool::True, "[>=] () eq True";
-#?rakudo skip 'reduce before'
 is ([before] ()), Bool::True, "[before] () eq True";
-#?rakudo skip 'reduce after'
 is ([after] ()), Bool::True, "[after] () eq True";
-#?rakudo skip 'reduce ~~'
 is ([~~] ()), Bool::True, "[~~] () eq True";
 #?rakudo skip 'reduce !~~'
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
