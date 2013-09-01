@@ -4,7 +4,7 @@ use Test;
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
 #?niecza skip 'Nominal type check failed in binding Int $n in f; got Str, needed Int'
-#?rakudo skip 'type check failed (bogus test?)'
+#?rakudo todo 'bogus test?'
 {
     sub f (Int $n) { $n > 3 ?? 'liftoff!' !! $n + 1 }
     is (1, &f ... *).join(' '), '1 2 3 liftoff!', 'sequence terminated by signature mismatch';

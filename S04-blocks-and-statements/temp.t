@@ -97,7 +97,6 @@ eval('
 # L<S06/Temporization/You can also modify the behaviour of temporized code structures>
 # (Test is more or less directly from S06.)
 #?niecza 2 skip 'spec clarification needed'
-#?rakudo 2 skip 'TEMP phasers NYI'
 {
   my $next    = 0;
 
@@ -115,6 +114,7 @@ eval('
   is advance(), 2, "TEMP{} block (3)";
   is $next,     3, "TEMP{} block (4)";
 
+  #?rakudo 4 todo 'TEMP phasers NYI'
   #?pugs 4 todo 'feature'
   flunk "TEMP{} block (5)";
   flunk "TEMP{} block (6)";
@@ -156,9 +156,11 @@ eval('
   ok defined($a), "instantiating a WierdTemp worked";
   is $was_in_own_temp_handler, 0, ".TEMP method wasn't yet executed";
 
+  #?rakudo todo 'TEMP phasers NYI'
   {
     is((temp $a; $was_in_own_temp_handler), 1, ".TEMP method was executed on temporization");
   }
+  #?rakudo todo 'TEMP phasers NYI'
   is $was_in_own_temp_handler, 2, ".TEMP method was executed on restoration";
 }
 

@@ -92,7 +92,6 @@ lives_ok {my $x = -> {}; my $y = $x(); },
 # L<S02/Undefined types/default block parameter type>
 # this means that junctions don't autothread over pointy blocks
 
-#?rakudo skip 'Could not find non-existent sub junction'
 #?niecza skip 'Could not find non-existent sub junction'
 #?pugs skip 'No such subroutine: "&junction'
 {
@@ -100,7 +99,7 @@ lives_ok {my $x = -> {}; my $y = $x(); },
     my $ok = 0;
     my $iterations = 0;
     for @a -> $x {
-        $ok = 1 if $x ~~ junction;
+        $ok = 1 if $x ~~ Junction;
         $iterations++;
     }
     ok $ok, 'Blocks receive junctions without autothreading';

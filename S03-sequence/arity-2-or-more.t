@@ -24,7 +24,6 @@ is (1, 1, 2, 3, { $^a + $^b } ... 8).join(', '), '1, 1, 2, 3, 5, 8', 'arity-2 Fi
 # adapted from http://www.perlmonks.org/?node_id=772778
 #?niecza skip "Undeclared names: '[%]'"
 is (42, 24, &[%] ... 0)[*-2], 6, 'arity-2 GCD';
-#####?rakudo skip '&[%]'
 #?niecza skip "Undeclared names: '[%]'"
 is (42, 24, &[%] ...^ 0)[*-1], 6, 'arity-2 GCD with excluded limit';
 is (42, 24, * % * ... 0)[*-2], 6, 'arity-2 GCD';

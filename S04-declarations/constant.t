@@ -44,10 +44,10 @@ use Test;
     eval_lives_ok 'foo2 == 42', 'constants are our scoped';
 }
 
-#?rakudo skip 'constants as type constraints'
 #?niecza skip 'Lexical foo3 is not a package (?)'
 {
     constant foo3 = 42;
+    #?rakudo todo 'constants as type constraints'
     lives_ok { my foo3 $x = 42 },        'constant can be used as a type constraint';
     dies_ok { my foo3 $x = 43 },         'constant used as a type constraint enforces';
     dies_ok { my foo3 $x = 42; $x =43 }, 'constant used as a type constraint enforces';

@@ -5,7 +5,7 @@ plan 35;
 
 # L<S03/List infix precedence/'C<.succ> is assumed'>
 
-#?rakudo skip 'loops'
+#?rakudo skip 'hangs'
 #?niecza skip 'Two definitions found for symbol ::GLOBAL::&infix:<cmp> (etc)'
 {
     class Alternating {
