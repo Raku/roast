@@ -40,7 +40,7 @@ is ([>=] ()), Bool::True, "[>=] () eq True";
 is ([before] ()), Bool::True, "[before] () eq True";
 is ([after] ()), Bool::True, "[after] () eq True";
 is ([~~] ()), Bool::True, "[~~] () eq True";
-#?rakudo skip 'reduce !~~'
+#?rakudo skip 'expected Any but got Mu instead'
 is ([!~~] ()), Bool::True, "[!~~] () eq True";
 is ([eq] ()), Bool::True, "[eq] () eq True)";
 is ([ne] ()), Bool::True, "[ne] () eq True)";
