@@ -266,7 +266,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     $n = 1;
     is($n.++, 1, 'postfix dot');
-    #?rakudo todo 'test dependency'
     is($n, 2, 'check $n');
 
     $n = 1;
@@ -275,7 +274,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     $n = 1;
     is($n\ .++, 1, 'postfix unspace');
-    #?rakudo todo 'test dependency'
     is($n, 2, 'check $n');
 
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
@@ -286,7 +284,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     # L<S02/"Implicit Topical Method Calls"/".123">
     # .123 is equal to 0.123
-
     is ( .123), 0.123, ' .123 is equal to 0.123';
     is (.123), 0.123, '.123 is equal to 0.123';
 }
