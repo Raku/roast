@@ -26,7 +26,7 @@ is GLOBAL::InnerModule::EXPORT::DEFAULT::<&bar>(), 'Inner::bar', 'can call our-s
 }
 
 #RT #118407
-#?rakudo skip "Null PMC access"
+#?rakudo skip "Trying to import from 'InnerModule', but the following symbols are missing: quux"
 #?pugs skip 'parsefail'
 { 
     require InnerModule:file($name) <quux>;

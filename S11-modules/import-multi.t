@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
 
-plan 17;
+plan 19;
 
 # L<S11/Importing without loading>
 
@@ -50,7 +50,7 @@ plan 17;
         multi sub Dfoo( Int $a ) is export { 'sub D::Dfoo Int' };
     }
     import D;
-    #?rakudo skip "it just dies, can't check using throws_like"
+    #?rakudo todo "huh?"
     throws_like 'proto sub Dfoo( Mu ) { * }', X::Redeclaration, symbol => 'Dfoo';
 
     multi sub Dfoo( Str $a ) { 'sub D::Dfoo Str' };
@@ -115,6 +115,7 @@ plan 17;
     }
     import H;
 
+    #?rakudo todo "huh?"
     ok &Hfoo ~~ Awesome-Things, 'H) trait "is awesome" applied';
     is Hfoo(), 'sub H::Hfoo',   'H) standard traits like "is export" still work';
 }
