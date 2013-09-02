@@ -7,11 +7,11 @@ plan 12;
 
 #?pugs emit skip_rest("Not yet implemented");
 
-#?rakudo 2 skip ':2x'
+#?rakudo todo ':2x'
 ok('abab' ~~ m:2x/ab/,  ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:2x/ab/, ':2x (repetition) modifier (-)');
 
-#?rakudo 2 skip ':x(2)'
+#?rakudo todo ':x(2)'
 ok('abab' ~~ m:x(2)/ab/, ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:x(2)/ab/, ':2x (repetition) modifier (-)');
 

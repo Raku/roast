@@ -10,7 +10,7 @@ It probably needs a few syntax updates to remove p5isms
 
 =end pod
 
-plan 21;
+plan 22;
 
 #?pugs emit force_todo(2,3,5,6,10);
 
@@ -26,7 +26,7 @@ my @expected = (
     [ 7,        'Abbra' ],
 );
 
-#?rakudo skip "m:overlap// NYI"
+#?rakudo todo 'm:overlap NYI'
 {
     for (1..2) -> $rep {
          ok($str ~~ m:i:overlap/ a .+ a /, "Repeatable overlapping match ($rep)" );

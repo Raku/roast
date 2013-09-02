@@ -155,18 +155,18 @@ character classes), and those are referenced at the correct spot.
 
 # A leading @ matches like a bare array except that each element is
 # treated as a subrule (string or Regex object) rather than as a literal
-#?rakudo skip 'TODO: array interpolation into regexes'
 {
     my @first = <a b c .**4>;
     ok('dddd' ~~ /<@first>/, 'strings are treated as a subrule in <@foo>');
 
     my @second = rx/\.**2/, rx/'.**2'/;
+    #?rakudo todo 'array interpolation into regexes'
     ok('abc.**2def' ~~ /<@second>/, 'Regexes are left alone in <@foo> subrule');
 }
 
 # A leading % matches like a bare hash except that
 # a string value is always treated as a subrule
-#?rakudo skip '<%hash> not implemented'
+#?rakudo todo '<%hash> not implemented'
 #?niecza skip 'Sigil % is not allowed for regex assertions'
 {
     my %first = {'<alpha>' => '', 'b' => '', 'c' => ''};
@@ -236,12 +236,12 @@ character classes), and those are referenced at the correct spot.
 
 # The <...>, <???>, and <!!!> special tokens have the same "not-defined-yet"
 # meanings within regexes that the bare elipses have in ordinary code
-#?rakudo skip '..., !!! and ??? in regexes'
 #?niecza skip 'Action method assertion:sym<???> not yet implemented'
 {
     eval_dies_ok('"foo" ~~ /<...>/', '<...> dies in regex match');
     # XXX: Should be warns_ok, but we don't have that yet
     lives_ok({'foo' ~~ /<???>/}, '<???> lives in regex match');
+    #?rakudo todo '!!! in regexes'
     eval_dies_ok('"foo" ~~ /<!!!>/', '<!!!> dies in regex match');
 }
 

@@ -45,7 +45,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # 
 
 # more interesting variations of :nth(...)
-#?rakudo skip 'nom regression'
+#?rakudo skip 'hangs'
 #?niecza skip 'hangs'
 {
     my @match = $data.match(/fo+/, :nth(2, 3)).list;

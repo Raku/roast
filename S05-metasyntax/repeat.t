@@ -60,9 +60,9 @@ is(~('foo,bar,baz,' ~~ m/[<alpha>+]+ %% ','/), 'foo,bar,baz,', '%% with a term w
 #?pugs todo
 is(~('foo, bar,' ~~ m/[<alpha>+]+ % [','\s*]/), 'foo, bar', '% with a more complex term');
 
-#?rakudo 3 skip 'nom regression'
 ok 'a, b, c' !~~ /:s^<alpha>+%\,$/, 'with no spaces around %, no spaces can be matched';
 #?pugs todo
+#?rakudo 2 todo 'nom regression'
 ok 'a, b, c'  ~~ /:s^ <alpha>+ % \, $/, 'with spaces around %, spaces can be matched';
 #?pugs todo
 ok 'a , b ,c' ~~ /:s^ <alpha>+ % \, $/, 'same, but with leading spaces';

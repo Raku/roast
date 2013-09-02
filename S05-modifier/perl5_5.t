@@ -30,7 +30,7 @@ is(("<&OUT" ~~ rx:P5/^[<>]&/ && $/), "<&", 're_tests 631/0 (815)');
 is(("aaaaaaaaaa" ~~ rx:P5/^(a\1?){4}$/ && $0), "aaaa", 're_tests 633/1 (817)');
 ok((not ("aaaaaaaaa" ~~ rx:P5/^(a\1?){4}$/)), 're_tests 635  (819)');
 ok((not ("aaaaaaaaaaa" ~~ rx:P5/^(a\1?){4}$/)), 're_tests 637  (821)');
-#?rakudo 3 skip "(?(1)...) syntax NYI"
+#?rakudo todo "unknown issue"
 is(("aaaaaaaaaa" ~~ rx:P5/^(a(?(1)\1)){4}$/ && $0), "aaaa", 're_tests 639/1 (823)');
 ok((not ("aaaaaaaaa" ~~ rx:P5/^(a(?(1)\1)){4}$/)), 're_tests 641  (825)');
 ok((not ("aaaaaaaaaaa" ~~ rx:P5/^(a(?(1)\1)){4}$/)), 're_tests 643  (827)');
@@ -101,10 +101,8 @@ is(("Ab4ab" ~~ rx:P5/(?i)(ab)\d\1/ && $0), "Ab", 're_tests 728/1 (924)');
 is(("ab4Ab" ~~ rx:P5/(?i)(ab)\d\1/ && $0), "ab", 're_tests 730/1 (926)');
 is(("foobar1234baz" ~~ rx:P5/foo\w*\d{4}baz/ && $/), "foobar1234baz", 're_tests 732/0 (928)');
 #?pugs skip "PCRE hard parsefail"
-#?rakudo skip "code blocks in P5 regexes NYI"
 is(("cabd" ~~ rx:P5/a(?{})b/ && $/), "ab", 're_tests 734/0 (930)');
 #?pugs skip "PCRE hard parsefail"
-#?rakudo skip "code blocks in P5 regexes NYI"
 is(("cabd" ~~ rx:P5/a(?{"\{"})b/ && $/), "ab", 're_tests 735/0 (931)');
 ok(("x~~" ~~ rx:P5/x(~~)*(?:(?:F)?)?/), 're_tests 736  (932)');
 is(("aaac" ~~ rx:P5/^a(?#xxx){3}c/ && $/), "aaac", 're_tests 738/0 (934)');
@@ -114,7 +112,7 @@ is(("dbaacb" ~~ rx:P5/(?<![cd])[ab]/ && $/), "a", 're_tests 742/0 (938)');
 ok((not ("dbcb" ~~ rx:P5/(?<!(c|d))b/)), 're_tests 744  (940)');
 is(("dbaacb" ~~ rx:P5/(?<!(c|d))[ab]/ && $/), "a", 're_tests 746/0 (942)');
 is(("cdaccb" ~~ rx:P5/(?<!cd)[ab]/ && $/), "b", 're_tests 748/0 (944)');
-#?rakudo skip "loops"
+#?rakudo skip "hangs"
 ok((not ("a--" ~~ rx:P5/^(?:a?b?)*$/)), 're_tests 750  (946)');
 is(("a\nb\nc\n" ~~ rx:P5/((?m)^b$)/ && $0), "b", 're_tests 752/1 (948)');
 is(("a\nb\n" ~~ rx:P5/(?m)^b/ && $/), "b", 're_tests 753/0 (949)');

@@ -32,10 +32,12 @@ for @tests -> $t {
 #L<S05/Modifiers/"If the pattern is matched with :sigspace">
 
 #    target,        substution,   result,         name
-my @smart_tests = (
+my @passing = (
     ['HELLO',       'foo',         'FOO',         'uc()'],
-    ['HE LO',       'foo',         'FOO',         'uc()'],
     ['hello',       'fOo',         'foo',         'lc()'],
+);
+my @todo = (
+    ['HE LO',       'foo',         'FOO',         'uc()'],
     ['he lo',       'FOOOoO',      'fooooo',      'lc()'],
     ['He lo',       'FOOO',        'Fooo',        'ucfrst(lc())'],
     ['hE LO',       'fooo',        'fOOO',        'lcfrst(uc())'],
@@ -43,12 +45,15 @@ my @smart_tests = (
     ['Ab Cd E',     'abc de gh i', 'Abc De Gh I', 'wordcase()'],
 );
 
-for @smart_tests -> $t {
+for @passing -> $t {
     my $test_str = $t[0];
     $test_str ~~ s:i:ii:sigspace/.*/$t[1]/;
-    # some of these tests actuall pass in Rakudo, so skipping them to avoid
-    # too many passing TODOs
-    #?rakudo skip 'some NYI'
+    is $test_str, $t[2], ":i:ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
+}
+for @todo -> $t {
+    my $test_str = $t[0];
+    $test_str ~~ s:i:ii:sigspace/.*/$t[1]/;
+    #?rakudo todo 'NYI'
     is $test_str, $t[2], ":i:ii:sigspace modifier: {$t[0]} ~~ s:ii:s/.*/{$t[1]}/ => {$t[2]}";
 }
 

@@ -64,7 +64,7 @@ ok((not ("b\nca" ~~ rx:P5/(?m)abb\z/)), 're_tests 1104  (1308)');
 ok((not ("b\nca" ~~ rx:P5/(?m)abb$/)), 're_tests 1105  (1309)');
 is(("ca" ~~ rx:P5/(^|x)(c)/ && $1), "c", 're_tests 1106/2 (1310)');
 ok((not ("x" ~~ rx:P5/a*abc?xyz+pqr{3}ab{2,}xy{4,5}pq{0,6}AB{0,}zz/)), 're_tests 1108  (1312)');
-#?rakudo skip '(?>...) not implemented'
+#?rakudo todo '(?>...) not implemented'
 is(("_I(round(xs * sz),1)" ~~ rx:P5/round\(((?>[^()]+))\)/ && $0), "xs * sz", 're_tests 1110/1 (1314)');
 ok(("foo.bart" ~~ rx:P5/foo.bart/), 're_tests 1112  (1316)');
 ok(("abcd\ndxxx" ~~ rx:P5/(?m)^d[x][x][x]/), 're_tests 1114  (1318)');

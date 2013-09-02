@@ -211,7 +211,6 @@ $sub6 = "f bar bar bar bar bar bar";
 
 # :Nx...
 
-#?rakudo skip 's{} = ...'
 {
     my $try = $data;
     ok(!( $try ~~ s:0x{fo+}=q{bar} ), "Can't substitute 0x" );
@@ -242,8 +241,8 @@ $sub6 = "f bar bar bar bar bar bar";
     is($try, $sub6, 'substituted 6x correctly');
 
     $try = $data;
-    ok($try ~~ s:7x{fo+}=q{bar}, 'substitute 7x');
-    is($try, $data, 'substituted 7x correctly');
+    nok($try ~~ s:7x{fo+}=q{bar}, 'substitute 7x');
+    is($try, $data, 'did not substitute 7x');
 }
 
 # vim: ft=perl6

@@ -100,7 +100,7 @@ is("I\xcaJ".trans('I..J' => 'i..j'), "i\xcaj");
 is("\x12c\x190".trans("\x12c" => "\x190"), "\x190\x190");
 
 # should these be combined?
-#?rakudo skip 'disambiguate ranges'
+#?rakudo todo 'disambiguate ranges'
 #?niecza todo
 #?pugs todo
 is($b.trans('A..H..Z' => 'a..h..z'), $a,
@@ -124,9 +124,9 @@ is("hello".trans("l" => ""), "heo", "can replace with empty string");
 
 # complement, squeeze/squash, delete
 
-#?rakudo 2 skip 'flags'
 #?niecza 2 skip 'trans flags NYI'
 #?pugs todo
+#?rakudo todo 'flags'
 is('bookkeeper'.trans(:s, 'a..z' => 'a..z'), 'bokeper',
     ':s flag (squash)');
 
@@ -138,7 +138,7 @@ is('bookkeeper'.trans(:d, 'ok' => ''), 'beeper',
 is('ABC123DEF456GHI'.trans('A..Z' => 'x'), 'xxx123xxx456xxx',
     'no flags');
 
-#?rakudo 4 skip 'flags'
+#?rakudo 4 todo 'flags'
 #?niecza 4 skip 'trans flags NYI'
 #?pugs todo
 is('ABC123DEF456GHI'.trans(:c, 'A..Z' => 'x'),'ABCxxxDEFxxxGHI',
@@ -160,7 +160,7 @@ is('ABC111DEF222GHI'.trans(:c, :d, 'A..Z' => ''),'ABCDEFGHI',
 is('Good&Plenty'.trans('len' => 'x'), 'Good&Pxxxty',
     'no flags');
 
-#?rakudo 5 skip 'flags'
+#?rakudo 5 todo 'flags'
 #?niecza 5 skip 'trans flags NYI'
 #?pugs todo
 is('Good&Plenty'.trans(:s, 'len' => 'x',), 'Good&Pxty',

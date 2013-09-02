@@ -21,12 +21,12 @@ for ("abcdef") {
     is($/.to, 6, 'Final position correct');
 }
 
-#?rakudo skip "s:pos/// NYI"
 {
     $_ = "foofoofoo foofoofoo";
     my $/;
     ok(s:global:pos/foo/FOO/, 'Globally contiguous substitution');
     #?pugs todo
+    #?rakudo todo "s:pos/// NYI"
     is($_, "FOOFOOFOO foofoofoo", 'Correctly substituted contiguously');
 }
 
@@ -48,12 +48,12 @@ for ("abcdef") {
     ok($/.to == 9, 'Insensitive recontinued match pos');
 }
 
-#?rakudo skip 'm:g'
 #?niecza skip ':i'
 {
     my $str = "abcabcabc";
     my @x = $str ~~ m:i:g:p/abc/;
     #?pugs todo
+    #?rakudo todo 'm:g'
     is("@x", "abc abc abc", 'Insensitive repeated continued match');
     #?pugs todo
     ok($/.to == 9, 'Insensitive repeated continued match pos');
@@ -61,13 +61,13 @@ for ("abcdef") {
     ok ($str !~~ m:i:p/abc/, 'no more match, string exhausted');
 }
 
-#?rakudo skip "m:p:i:g// NYI"
 #?niecza skip ':i'
 #?pugs todo
 {
     my $str = "abcabcabc";
     my @x = ?($str ~~ m:p:i:g/abc/);
     # XXX is that correct?
+    #?rakudo todo "m:p:i:g// NYI"
     is($/.to,  3, 'Insensitive scalar repeated continued match pos');
 }
 
