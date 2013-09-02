@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 17;
+plan 22;
 
 
 # L<S32::Containers/Buf>
@@ -33,5 +33,16 @@ ok Buf ~~ Stringy, 'Buf does Stringy';
 ok Buf ~~ Positional, 'Buf does Positional';
 
 is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of codepoints';
+
+{
+    my $temp;
+
+    ok $temp = "\x1F63E".encode('UTF-16'), 'encode a string to UTF-16 surrogate pair';
+    ok $temp = utf16.new($temp),           'creating utf16 Buf from a surrogate pair';
+    is $temp[0], 0xD83D,                   'indexing a utf16 gives correct value';
+    is $temp[1], 0xDE3E,                   'indexing a utf16 gives correct value';
+    #?rakudo.parrot skip 'VMArray: index out of bounds'
+    is $temp.decode(), "\x1F63E",          'decoding utf16 Buf to original value';
+}
 
 # vim: ft=perl6
