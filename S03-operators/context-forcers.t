@@ -73,6 +73,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
   #?pugs todo 'Mu'
+  #?niecza todo 'https://github.com/sorear/niecza/issues/179'
   dies_ok { ~Mu },    "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
   is ~"-Inf", "-Inf", "~ context forcer works (8)";

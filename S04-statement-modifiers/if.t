@@ -34,6 +34,7 @@ plan 11;
 	my @y = 41, ($answer ?? 42 !! ()), 43;
 	my @z = 41, 43;
 	is @y, @z, "sanity check";
+        #?niecza todo "empty list as element not flattened - https://github.com/sorear/niecza/issues/180"
 	is @x, @y, "if expr on false cond"; 
 }
 

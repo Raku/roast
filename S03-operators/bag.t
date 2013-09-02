@@ -128,6 +128,7 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
     nok $b ≼ $kb, "Our keybag is not a msubset of our bag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
+    #?niecza 4 skip '(<+) NYI - https://github.com/sorear/niecza/issues/178'
     ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
     nok $b (<+) $kb, "Our keybag is not a msubset of our bag (texas)";
     ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
@@ -140,6 +141,7 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
     ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
+    #?niecza 4 skip '(>+) NYI - https://github.com/sorear/niecza/issues/178'
     nok $kb (>+) $b, "Our keybag is not a msuperset of our bag";
     ok $b (>+) $kb, "Our keybag is not a msuperset of our bag";
     ok $b (>+) $b, "Our bag is a msuperset of itself";

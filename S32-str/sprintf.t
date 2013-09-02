@@ -210,6 +210,7 @@ is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are co
 is sprintf("%x %x", 301281685344656640, 301281685344656669), '42e5e18b84c9d00 42e5e18b84c9d1d',   'RT #118601';
 is sprintf("%d", 42**20),                                    '291733167875766667063796853374976', 'RT #118253';
 is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 21, 21, 21],        'RT #117547';
+#?niecza skip 'Date NYI'
 is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
 # RT #116280
@@ -218,11 +219,13 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     #?rakudo.parrot todo 'sprintf prints numbers before NaN'
     is sprintf('%12.5f',  NaN), '         NaN', 'RT 116280';
     #?rakudo.parrot 2 skip "sprintf hangs when printing Inf/-Inf"
+    #?niecza 2 todo "https://github.com/sorear/niecza/issues/181"
     is sprintf('%12.5f',  Inf), '         Inf', 'RT 116280';
     is sprintf('%12.5f', -Inf), '        -Inf', 'RT 116280';
 }
 
 # RT #106594, #62316, #74610
+#?niecza skip 'dubious test - should be testing exception type, not string. Niecza does respond with an appropriate, but differently worded string'
 {
     try sprintf("%d-%s", 42);
     is $!, 'Too many directives: found 2, but only 1 arguments after the format string', 'RT #106594, #62316, #74610';

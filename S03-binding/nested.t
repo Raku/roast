@@ -73,6 +73,7 @@ plan 43;
 
 # Evil more evil structure: with an embedded "is parcel" sub!
 # As RHS...
+#?niecza skip "is parcel - https://github.com/sorear/niecza/issues/177"
 {
     my $innerstruct = {
         ignored => 23,
@@ -108,6 +109,7 @@ plan 43;
 }
 
 # ...and as LHS
+#?niecza skip "is parcel - https://github.com/sorear/niecza/issues/177"
 {
     my $innerstruct = {
         ignored => 23,

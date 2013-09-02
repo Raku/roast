@@ -33,6 +33,7 @@ plan 25;
     my %h;
     my $b := %h<a><b>;
     #?pugs todo
+    #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'binding does not immediately autovivify';
     #?pugs todo
     ok $b === Any, '... to an undefined value';
@@ -42,7 +43,6 @@ plan 25;
     ok %h<a><b> =:= $b, 'check binding';
 }
 
-#?niecza todo 'disagree; captures should be context neutral'
 #?pugs todo
 {
     my %h;
@@ -54,6 +54,7 @@ plan 25;
     my %h;
     foo(%h<a><b>);
     #?pugs todo
+    #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'in rw arguments does not autovivify';
     foo(%h<a><b>,42);
     is %h.keys.elems, 1, 'storing from within the sub does autovivify';
