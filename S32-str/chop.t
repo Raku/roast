@@ -29,35 +29,4 @@ is(chop(""), "", "chop on empty string literal");
 #   which can be defined by the filehandle that obtains the default string at
 #   the first place. To get destructive behaviour, use the .= form.
 
-=begin more-discussion-needed
-
-XXX: chop(@array) should return an array of chopped strings?
-XXX: chop(%has)   should return a  hash  of chopped strings?
-
-=end more-discussion-needed
-
-#?rakudo skip "unspecced"
-#?niecza skip "unspecced"
-{ # chop several things
-    my ($a, $b) = ("bar", "gorch");
-    #?pugs skip "todo"
-    is(chop($a, $b), "h", "two chars removed, second returned");
-    #?pugs todo "todo"
-    is($a, "ba", "first string");
-    #?pugs todo "todo"
-    is($b, "gorc", "second string");
-};
-
-#?rakudo skip "unspecced"
-#?niecza skip "unspecced"
-{ # chop elements of array
-    my @array = ("fizz", "buzz");
-    #?pugs todo
-    is(chop(@array), "z", "two chars removed second returned");
-    #?pugs todo
-    is(@array[0], "fiz", "first elem");
-    #?pugs todo
-    is(@array[1], "buz", "second elem");
-};
-
 # vim: ft=perl6
