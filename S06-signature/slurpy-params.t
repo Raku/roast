@@ -61,7 +61,6 @@ whatever( 'a', 'b', 'c', 'd' );
 
 # use to be t/spec/S06-signature/slurpy-params-2.t
 
-# L<S06/List parameters/Slurpy parameters follow any required>
 
 =begin pod
 

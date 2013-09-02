@@ -12,7 +12,7 @@ use soft;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 68;
+plan 69;
 
 my @log;
 
@@ -151,11 +151,10 @@ lives_ok { &functionA.unwrap( $middle )}, 'unwrap the middle wrapper.';
 is( functionA(), "xz", "First wrapper and final function only, middle removed." );
 
 #temporization (end scope removal of wrapping)
-#?rakudo skip 'temp and wrap'
+sub functionB {
+   return 'xxx';
+}
 {
-    sub functionB {
-        return 'xxx';
-    }
     is( functionB, "xxx", "Sanity" );
     {
         try {
@@ -163,8 +162,11 @@ is( functionA(), "xz", "First wrapper and final function only, middle removed." 
         };
         is( functionB, 'yyy', 'Check that function is wrapped.' );
     }
+    #?rakudo todo 'temp and wrap'
     is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 }
+#?rakudo todo 'temp and wrap'
+is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
 #?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';

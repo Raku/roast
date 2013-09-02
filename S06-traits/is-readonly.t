@@ -6,7 +6,6 @@ plan 3;
 # L<S06/"Parameter traits"/"=item is readonly">
 # should be moved with other subroutine tests?
 
-#?rakudo skip 'VAR'
 {
     my $a = 3;
 

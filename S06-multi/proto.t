@@ -13,7 +13,7 @@ is(foo(A.new), 2, 'dispatch on class worked');
 is(foo(B.new), 3, 'dispatch on class worked');
 is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 
-#?rakudo skip 'todo'
+#?rakudo skip "redeclaration of routine 'bar'"
 #?niecza skip "Illegal redeclaration of routine 'bar'"
 {
     # Test that proto makes all further subs in the scope also be multi.
@@ -30,7 +30,6 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
 }
 
 # L<S03/"Reduction operators">
-#?rakudo skip 'operator protos'
 {
     proto prefix:<[+]> (*@args) {
         my $accum = 0;
@@ -38,6 +37,7 @@ is(foo(42),    1, 'dispatch with no possible candidates fell back to proto');
         return $accum * 2; # * 2 is intentional here
     }
 
+    #?rakudo todo 'operator protos'
     #?niecza todo
     is ([+] 1,2,3), 12, "[+] overloaded by proto definition";
 }

@@ -68,7 +68,7 @@ sub j(*@i) {
     ok ?( all(@l >>~~>> Code) ), '.default returns closure';
     is @l[0].(),    3, 'first closure works';
     # XXX The following test is very, very dubious...
-    #?rakudo skip 'default closure when no call made fails lexical lookup with NPMCA'
+    #?rakudo skip 'expected Any but got Mu instead'
     is @l[1].().(), 5, 'closure as default value captured outer default value';
 }
 

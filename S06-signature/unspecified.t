@@ -7,7 +7,7 @@ plan 17;
 # parameter list>
 
 sub simple { 'simple' }
-#?rakudo skip 'siglist'
+#?rakudo todo 'siglist'
 is &simple.signature, :(), 'signature is :() when none is specified';
 is simple(), 'simple', 'can call sub with no signature specified';
 dies_ok { eval('simple( :golf<hotel> )') },
@@ -16,7 +16,7 @@ dies_ok { eval("simple( 'india' )") },
         'sub with no signature dies when given positional argument';
 
 sub positional { @_[0] }
-#?rakudo skip 'siglist'
+#?rakudo todo 'siglist'
 is &positional.signature, :(Mu *@_),
    'signature is :(Mu *@_) when none is specified and @_ is used';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
@@ -25,7 +25,7 @@ dies_ok { positional( :victor<whiskey> ) },
    'sub using positional param called with named param';
 
 sub named { %_<bravo> }
-#?rakudo skip 'siglist'
+#?rakudo todo 'siglist'
 is &named.signature, :(Mu *%_),
    'signature is :(Mu *%_) when none is specified and %_ is used';
 is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
@@ -33,7 +33,7 @@ nok named().defined, 'named param sub is callable with no params';
 dies_ok { named( 'zulu' ) }, 'named param sub dies with positional param';
 
 sub both { @_[1] ~ %_<delta> }
-#?rakudo skip 'siglist'
+#?rakudo todo 'siglist'
 is &both.signature, :(Mu *@_, Mu *%_),
    'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used';
 is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',

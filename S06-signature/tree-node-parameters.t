@@ -62,7 +62,7 @@ plan 20;
 
 # L<S06/Unpacking tree node parameters/You may omit the top variable if you prefix the parentheses>
 #?DOES 4
-#?rakudo skip 'signautre binding of return values NYI'
+#?rakudo skip 'signature binding of return values NYI'
 {
     class Point {has $.x is rw; has $.y is rw}
     class TwoPoints {has Point $.a is rw; has Point $.b is rw}

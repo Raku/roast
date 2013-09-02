@@ -139,7 +139,7 @@ Testing operator overloading subroutines
 }
 
 # Overloading by setting the appropriate code variable
-#?rakudo skip "Lexical 'infix:plus' not found"
+#?rakudo skip "cannot bind with this LHS"
 {
   my &infix:<plus>;
   BEGIN {
@@ -163,19 +163,19 @@ Testing operator overloading subroutines
 }
 
 # Accessing an operator using its subroutine name
-#?rakudo skip 'scalar binding'
 {
   is &infix:<+>(2, 3), 5, "accessing a builtin operator using its subroutine name";
 
   my &infix:<z> := { $^a + $^b };
   is &infix:<z>(2, 3), 5, "accessing a userdefined operator using its subroutine name";
 
+  #?rakudo skip 'undeclared name'
   #?niecza skip 'Undeclared routine'
   is ~(&infix:<»+«>([1,2,3],[4,5,6])), "5 7 9", "accessing a hyperoperator using its subroutine name";
 }
 
 # Overriding infix:<;>
-#?rakudo skip 'infix:<;>'
+#?rakudo todo 'infix:<;>'
 #?niecza todo
 {
     my proto infix:<;> ($a, $b) { $a + $b }
@@ -190,7 +190,7 @@ Testing operator overloading subroutines
 
 # Overriding prefix:<if>
 # L<S04/"Statement parsing" /"since prefix:<if> would hide statement_modifier:<if>">
-#?rakudo skip 'prefix:<if>'
+#?rakudo skip 'missing block, apparently "if" not an op'
 {
     my proto prefix:<if> ($a) { $a*2 }
     is (if+5), 10;
@@ -234,7 +234,7 @@ Testing operator overloading subroutines
   is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
-#?rakudo skip 'lexical operators'
+#?rakudo skip 'infix Z will never work; no lexical Z'
 {
   my sub infix:<Z> ($a, $b) {
       $a ** $b;
@@ -242,7 +242,7 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 4, "default Left-associative works.";
 }
 
-#?rakudo skip 'lexical operators'
+#?rakudo skip 'missing block, no lexical Z'
 {
   my sub infix:<Z> is assoc('left') ($a, $b) {
       $a ** $b;
@@ -251,7 +251,7 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 4, "Left-associative works.";
 }
 
-#?rakudo skip 'lexical operators'
+#?rakudo skip 'missing block, no lexical Z'
 {
   my sub infix:<Z> is assoc('right') ($a, $b) {
       $a ** $b;
@@ -260,7 +260,7 @@ Testing operator overloading subroutines
   is (2 Z 1 Z 2), 2, "Right-associative works.";
 }
 
-#?rakudo skip 'lexical operators'
+#?rakudo skip 'missing block, no lexical Z'
 {
   my sub infix:<Z> is assoc('chain') ($a, $b) {
       $a eq $b;
@@ -331,7 +331,6 @@ Testing operator overloading subroutines
 }
 
 # taken from S06-operator-overloading/method.t
-#?rakudo skip 'unknown errors'
 {
     class Bar {
         has $.bar is rw;
@@ -347,6 +346,7 @@ Testing operator overloading subroutines
             $foo.bar = 'software';
             $val = "$foo"
         }, '... class methods work for class';
+        #?rakudo todo 'huh?'
         is($val, 'software', '... basic prefix operator overloading worked');
 
         lives_ok {
@@ -354,6 +354,7 @@ Testing operator overloading subroutines
             $foo.bar = 'software';
             $val = $foo + $foo;
         }, '... class methods work for class';
+        #?rakudo todo 'huh?'
         #?niecza todo '... basic infix operator overloading worked'
         is($val, 'software software', '... basic infix operator overloading worked');
     }
@@ -372,6 +373,7 @@ Testing operator overloading subroutines
         #?niecza todo "stringification didn't die"
         lives_ok { $res = ~@foo }, "stringification didn't die";
         #?niecza todo "... worked in array stringification"
+        #?rakudo 3 todo 'huh?'
         is $res, "pugs pugs pugs", "stringification overloading worked in array stringification";
         #?niecza todo "... with hyperization"
         lives_ok { $res = ~[@foo »~« "!"] }, "stringification with hyperization didn't die";

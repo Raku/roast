@@ -42,9 +42,9 @@ plan 93;
         add5(:$^g);
     }
 
-    is A.new.colonpair_private, 8, 'colonpair with a privare variable';
+    is A.new.colonpair_private, 8, 'colonpair with a private variable';
     is B.new.colonpair_public, 12, 'colonpair with a public variable';
-    #?rakudo skip 'nom regression'
+    #?rakudo skip 'Not enough positional parameters passed; got 0 but expected 1'
     #?pugs skip 'Named argument found where no matched parameter expected'
     is colonpair_positional(:g<10>), 15, 'colonpair with a positional variable';
 }
@@ -100,9 +100,9 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
    "When we explicitly specify, we get our value");
 
 # L<S06/Named arguments/multiple same-named arguments>
-#?rakudo skip 'multiple same-named arguments NYI'
 #?niecza skip 'multiple same-named arguments NYI' 
 #?pugs   skip 'multiple same-named arguments NYI'
+    #?rakudo skip 'multiple same-named arguments NYI'
 {
     sub named_array(:@x) { +«@x }
 

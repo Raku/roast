@@ -61,11 +61,11 @@ is( wind('c', her => 3),      'pos c her 3',       'pos, named her');
 is( wind('d', 'e'),           'pos d pos e',       'pos, pos');
 is( wind('f', 'g', her => 3), 'pos f pos g her 3', 'pos, pos, named');
 
-#?rakudo skip 'slurpy and named interaction'
 {
     # a nom bug
     multi catch(*@all            ) { 1 }   #OK not used
     multi catch(*@all, :$really! ) { 2 }   #OK not used
+    #?rakudo 2 skip 'slurpy and named interaction'
     is catch(0, 5),           1, 'slurpy and named interact well (1)';
     is catch(0, 5, :!really), 2, 'slurpy and named interact well (2)';
 }
