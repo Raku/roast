@@ -220,7 +220,6 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 }
 
-#?rakudo skip 'dotted postfix'
 {
         my (@r, @e);
         (@r = (1, 4, 9))».++;
