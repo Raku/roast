@@ -9,6 +9,7 @@ plan 3;
 {
     my $a = 3;
 
+    #?rakudo skip 'we do not have VAR() yet)'
     ok (try { VAR($a).defined }), ".VAR on a plain normal initialized variable returns true";
 }
 

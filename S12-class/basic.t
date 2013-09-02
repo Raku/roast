@@ -68,7 +68,7 @@ ok($bar.isa(Foo), "new Bar .isa(Foo)");
 }
 
 # Same, but with the "is Foo" declaration inlined
-#?rakudo skip 'Calling 'is' will never work with argument types (Foo)'
+#?rakudo skip 'Calling is will never work with argument types (Foo)'
 #?niecza skip 'No value for parameter \$expected in Test is'
 {
     class Baz { is Foo }

@@ -115,7 +115,6 @@ plan 19;
     }
     import H;
 
-    #?rakudo todo "huh?"
     ok &Hfoo ~~ Awesome-Things, 'H) trait "is awesome" applied';
     is Hfoo(), 'sub H::Hfoo',   'H) standard traits like "is export" still work';
 }
