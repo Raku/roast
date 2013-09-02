@@ -59,16 +59,15 @@ sub boom ($arg is copy = 0) { $arg++ }
 lives_ok { boom(42) }, "can modify a copy";
 
 
-# is ref
-#?rakudo skip 'is ref'
+# is parcel
 {
     $foo=1;
-    sub mods_param_ref ($x is ref) { $x++;  }
-    dies_ok { mods_param_ref(1); }, 'is ref with non-lvalue';
+    sub mods_param_parcel ($x is parcel) { $x++;  }
+    dies_ok { mods_param_parcel(1); }, 'is parcel with non-lvalue';
     #?pugs todo
-    lives_ok { mods_param_ref($foo); }, 'is ref with non-lvalue';
+    lives_ok { mods_param_parcel($foo); }, 'is parcel with non-lvalue';
     #?pugs todo
-    is($foo, 2, 'is ref works');
+    is($foo, 2, 'is parcel works');
 }
 
 
