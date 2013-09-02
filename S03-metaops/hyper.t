@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+plan 281;
+
 =begin pod
 
  Hyper operators L<S03/"Hyper operators">
@@ -220,6 +222,7 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 }
 
+#?rakudo skip 'huh?'
 {
         my (@r, @e);
         (@r = (1, 4, 9))».++;
