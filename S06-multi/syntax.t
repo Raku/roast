@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 42;
+plan 41;
 
 # L<S06/Routine modifiers/>
 # L<S06/Parameters and arguments/>
@@ -70,10 +70,6 @@ eval_dies_ok 'class A { only method {} }', 'anonymous only method is an error';
 eval_dies_ok 'class B { multi method {} }', 'anonymous multi method is an error';
 eval_dies_ok 'class C { proto method {} }', 'anonymous proto method is an error';
 
-#?rakudo skip 'Multi typename...maybe deprecated?'
-#?niecza skip 'Undeclared name Multi'
-#?pugs   skip 'Undeclared name Multi'
-ok(&foo ~~ Multi, 'a multi does Multi');
 #?pugs skip 'Callable'
 ok(&foo ~~ Callable, 'a multi does Callable');
 #?niecza todo
