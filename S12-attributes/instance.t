@@ -512,9 +512,9 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     #?niecza 2 todo
     #?pugs todo
     dies_ok  {$o.h<blubb><bla> = 3 },      'No autovivification (typed hash)';
-    #?rakudo skip 'is_deeply explodes'
+    #?rakudo todo 'huh?'
     #?pugs todo
-    is_deeply $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
+    is $o.h<a b c d>, (1, 2, 3, 4),   'hash still unchanged';
 }
 
 # attribute initialization based upon other attributes

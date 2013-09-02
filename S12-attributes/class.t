@@ -46,7 +46,6 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
 # metaclass instance">
 
 #?niecza skip 'method ^foo'
-#?rakudo skip 'nom regression - method ^foo'
 {
     class T1 {
         our $c = 0;
@@ -60,6 +59,7 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     my ($a, $b, $c) = map { T1.new() }, 1..3;
     is $c.mi,       1, 'can increment class variable in instance method';
     is $b.mi,       2, '.. and the class variable is really shared';
+    #?rakudo 6 skip 'nom regression - method ^foo'
     is $a.count,    2, 'can call the class method on an object';
     is T1.count,    2, '... and on the proto object';
     is T1.^count,   2, '... and on the proto object with Class.^method';

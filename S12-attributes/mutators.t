@@ -33,7 +33,7 @@ dies_ok { $mv.constant = 7 }, "can't change a non-rw attribute";
 is($mv.constant, 6, "attribute didn't change value");
 
 is($count, 0, "mutator not called yet");
-#?rakudo skip "No applicable candidates found to dispatch to for 'Numeric'."
+#?rakudo skip 'Can not get attribute $!varies declared in class MagicVal with this object'
 {
     is($mv.varies, 8, "mutator called during object construction");
     is($count, 1, "accessor was called");

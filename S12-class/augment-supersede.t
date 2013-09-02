@@ -54,8 +54,9 @@ eval_lives_ok q[
 ], 'augmenting a class which has a role composed works';
 
 
-#?rakudo skip 'supersede'
+#?rakudo skip 'redeclaration of symbol Bar'
 {
+    use MONKEY_TYPING;
     class Bar {
         method c {'called Bar.c'}
     }

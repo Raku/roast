@@ -92,7 +92,7 @@ plan 9;
     is %counter<BUILD>, 1, 'BUILD called once';
 }
 
-#?rakudo skip 'method BUILD should warn'
+#?rakudo todo 'method BUILD should warn'
 #?niecza todo
 {
     BEGIN { @*INC.push: 't/spec/packages' }
