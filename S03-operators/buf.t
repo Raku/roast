@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 33;
+plan 34;
 
 ok (~^"foo".encode eqv utf8.new(0x99, 0x90, 0x90)), 'prefix:<~^>';
 
