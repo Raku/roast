@@ -5,6 +5,8 @@
 use v6;
 use Test;
 
+plan 114;
+
 sub degrees-to-radians($x) {
     $x * (312689/99532) / 180;
 }

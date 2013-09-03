@@ -42,11 +42,8 @@ is(rindex("Hello", "", 999), 5, "Substr is empty, pos > length of str");
 # More difficult strings
 
 is(rindex("abcdabcab", "abcd"), 0, "Start-of-substr matches several times");
-
-#?rakudo 3 skip 'unicode'
 is(rindex("uuúuúuùù", "úuù"), 4, "Accented chars");
 is(rindex("Ümlaut", "Ü"), 0, "Umlaut");
-
 is(rindex("what are these « » unicode characters for ?", "uni"), 19, "over unicode characters");
 
 # .rindex use

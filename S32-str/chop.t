@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Str/Str/"=item chop">
 
-plan 12;
+plan 6;
 
 #
 # Tests already covered by the specs

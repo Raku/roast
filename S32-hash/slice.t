@@ -48,7 +48,7 @@ plan 29;
 }
 
 #?pugs todo 'feature'
-#?rakudo skip 'binding on hash elements unimplemented'
+#?rakudo todo 'binding on hash elements unimplemented'
 #?niecza todo 'Writing to readonly scalar'
 #?pugs skip "Can't modify constant item: VNum Infinity"
 {
@@ -76,7 +76,7 @@ Quoting Larry:
 }
 
 # Binding on hash slices
-#?rakudo skip 'binding on hash elements unimplemented'
+#?rakudo todo 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO BAR> };
@@ -86,7 +86,7 @@ Quoting Larry:
     is %hash<b>, "BAR", "binding hash slices works (1-2)";
 }
 
-#?rakudo skip 'binding on hash elements unimplemented'
+#?rakudo todo 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
 
     try { %hash<a b> := <FOO> };
@@ -96,12 +96,12 @@ Quoting Larry:
     ok !defined(%hash<b>), "binding hash slices works (2-2)";
 }
 
-#?rakudo skip 'binding on hash elements unimplemented'
 {   my %hash = (:a<foo>, :b<bar>, :c<baz>);
     my $foo  = "FOO";
     my $bar  = "BAR";
 
     try { %hash<a b> := ($foo, $bar) };
+    #?rakudo 2 todo 'binding on hash elements unimplemented'
     #?pugs 2 todo 'bug'
     #?niecza 2 todo
     is %hash<a>, "FOO", "binding hash slices works (3-1)";
@@ -109,6 +109,7 @@ Quoting Larry:
 
     $foo = "BB";
     $bar = "CC";
+    #?rakudo 2 todo 'binding on hash elements unimplemented'
     #?niecza 2 todo
     #?pugs 2 todo 'bug'
     is %hash<a>, "BB", "binding hash slices works (3-3)";
@@ -118,6 +119,8 @@ Quoting Larry:
     %hash<b> = "CCC";
     is %hash<a>, "BBB", "binding hash slices works (3-5)";
     is %hash<b>, "CCC", "binding hash slices works (3-6)";
+
+    #?rakudo 2 todo 'binding on hash elements unimplemented'
     #?pugs 2 todo 'bug'
     #?niecza 2 todo
     is $foo,     "BBB", "binding hash slices works (3-7)";

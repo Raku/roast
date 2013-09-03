@@ -20,18 +20,16 @@ plan 12;
   is @a.end, 2, ".end works on initialized arrays";
 }
 
-#?rakudo skip 'unspecced'
 {
   my $a;
   #?pugs todo
-  dies_ok { $a.end }, ".end does not work on arbitrary scalars (1)";
+  is $a.end, -1, ".end works on arbitrary scalars (1)";
 }
 
-#?rakudo skip 'unspecced'
 {
   my $a = 42;
   #?pugs todo
-  dies_ok { $a.end }, ".end does not work on arbitrary scalars (2)";
+  is $a.end, 0, ".end works on arbitrary scalars (2)";
 }
 
 {
@@ -50,9 +48,8 @@ plan 12;
   is $a.end, 2, ".end works on initialized arrayrefs (2)";
 }
 
-#?rakudo skip 'unspecced'
 {
-  dies_ok { end(1,2,3,4) }, "end(1,2,3,4) should not work";
+  eval_dies_ok 'end(1,2,3,4)', "end(1,2,3,4) should not work";
 }
 
 #?niecza skip 'Unable to resolve method end in class Parcel'

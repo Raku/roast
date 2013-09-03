@@ -20,12 +20,11 @@ plan 11;
   is @a.elems, 3, ".elems works on initialized arrays";
 }
 
-#?rakudo skip 'unspecced'
 #?niecza todo
 #?pugs todo
 {
   my $a;
-  dies_ok { $a.elems }, ".elems does not work on arbitrary scalars (1)";
+  is $a.elems, 0, ".elems does works on arbitrary scalars";
 }
 
 {
@@ -43,9 +42,8 @@ plan 11;
   is $a.elems, 3, ".elems works on initialized arrayrefs (2)";
 }
 
-#?rakudo skip 'unspecced'
 {
-  dies_ok { elems(1,2,3,4) }, "elems(1,2,3,4) should not work";
+  eval_dies_ok 'elems(1,2,3,4', "elems(1,2,3,4) should not work";
 }
 
 {

@@ -45,7 +45,6 @@ is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 }
 
 is ~(0.uc),         ~0, '.uc on Int';
-#?rakudo skip 'tc'
 is ~(0.tc),         ~0, '.tc on Int';
 is ~(0.lc),         ~0, '.lc on Int';
 

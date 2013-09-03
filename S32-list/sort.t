@@ -58,7 +58,7 @@ plan 32;
     is(@s, @e, '... with closure as indirect invocant');
 }
 
-#?rakudo skip "method fallback to sub unimpl"
+#?rakudo todo "method fallback to sub unimpl"
 #?niecza skip 'err, what?'
 #?pugs todo
 {

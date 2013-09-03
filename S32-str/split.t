@@ -116,7 +116,7 @@ is  "".split(':').elems, 1, q/"".split(':')/;
 is "a.b".split(/\./).join(','), <a b>.join(','),
    q{"a.b".split(/\./)};
 
-#?rakudo skip 'loops on zero-width match'
+#?rakudo skip 'No such method null for invocant of type Cursor'
 #?niecza skip 'Unable to resolve method null in class Cursor'
 {
     is "abcd".split(/<null>/).join(','), <a b c d>.join(','),
@@ -136,7 +136,7 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 }
 
 # RT #63066
-#?rakudo skip 'RT #63066 loops forever'
+#?rakudo todo 'still incorrect'
 {
     #?niecza todo 'has initial empty element'
     is 'hello-world'.split(/<ws>/).join(','), <hello - world>.join(','),

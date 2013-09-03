@@ -16,8 +16,6 @@ throws_like 'sub f() { $^x }', X::Signature::Placeholder,
             placeholder => '$^x',
             ;
 
-#?rakudo skip 'parsing of $& and other p5 variables'
-throws_like '$&', X::Obsolete, old => '$@ variable', replacement => '$, rx/<<rx>>// or $()';
 throws_like 'qr/a/', X::Obsolete, old => rx/<<qr>>/, replacement => rx/<<rx>>/;
 throws_like '"a" . "b"', X::Obsolete, replacement => '~';
 throws_like 's/a/b/i', X::Obsolete;

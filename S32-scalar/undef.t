@@ -234,7 +234,7 @@ Perl6-specific tests
 #                                 "let keyword">
 
 # - unmatched alternative should bind to undef
-#?rakudo skip 'null PMC access in type()'
+#?rakudo skip 'Cannot use bind operator with this left-hand side'
 #?niecza skip 'unspeclike use of %MY::'
 #?DOES 10
 {
@@ -326,7 +326,7 @@ is((Any) * (Any), 0, 'Any * Any');
 # See log above.  From IRC, TimToady says that both of these
 # should be false.  (At time of writing, @(Mu,) is true.)
 #?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
-#?rakudo 2 skip 'todo: lists, defined, truthness'
+#?rakudo 2 todo 'todo: lists, defined, truthness'
 #?niecza 2 todo 'huh?'
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';

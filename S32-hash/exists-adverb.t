@@ -113,7 +113,7 @@ sub gen_hash {
     ok   @a[ 9]:exists(1),      "Test exists with (1) single elem 9";
     ok !(@a[10]:exists(1)),     "Test exists with (1) single elem 10";
 
-    #?rakudo 6 skip "oh noes, it dies"
+    #?rakudo 6 todo "[]:exists NYI"
     is_deeply @a[1,2, 4]:exists,  (True, True, True),   "Test exists TTT";
     is_deeply @a[1,2,10]:exists,  (True, True, False),  "Test exists TTF";
     is_deeply @a[*]:exists,       (True  xx 26).Parcel, "Test non-exists T*";
@@ -122,7 +122,7 @@ sub gen_hash {
     is_deeply @a[1,2,10]:!exists, (False,False,True),   "Test non-exists FFT";
     is_deeply @a[*]:!exists,      (False xx 26).Parcel, "Test non-exists F*";
 
-    #?rakudo 6 skip "oh noes, it dies"
+    #?rakudo 6 todo "[]:exists:kv NYI"
     #?niezca 6 todo "no combined adverbial pairs"
     is_deeply @a[1,2, 4]:exists:kv,
       (1,True,2,True,3,True),                     "Test exists:kv TTT";
@@ -137,7 +137,7 @@ sub gen_hash {
     is_deeply @a[1,2,10]:!exists:!kv,
       (1,False,2,False,10,True),                  "Test exists:kv FFT";
 
-    #?rakudo 6 skip "oh noes, it dies"
+    #?rakudo 6 todo "[]:exists:p NYI"
     #?niezca 6 todo "no combined adverbial pairs"
     is_deeply @a[1,2, 4]:exists:p,
       (1=>True,2=>True,3=>True),                    "Test exists:p TTT";

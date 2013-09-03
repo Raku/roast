@@ -144,7 +144,6 @@ is +"+Inf", 'Inf',  '+Inf';
 is +"-Inf", '-Inf', '-Inf';
 is +"NaN",  'NaN',  'NaN';
 
-#?rakudo skip "complex Str.Numeric"
 {
     check  '1+2i',                  Complex,        1+2i;
     check  '-1-2i',                 Complex,       -1-2i;
@@ -154,11 +153,13 @@ is +"NaN",  'NaN',  'NaN';
     check  '-1.0e0_0-2.0e0_0\i',    Complex,       -1-2i;
     check  '3+Inf\i',               Complex,     3+Inf\i;
     check  'Inf+2e2i',              Complex,    Inf+200i;
-#?niecza 3 todo 'Failure'
-    f      '3+Infi';
     f      '3+3i+4i';
     f      '3+3+4i';
 }
+
+#?rakudo todo "complex Str.Numeric"
+#?niecza todo 'Failure'
+f      '3+Infi';
 
 # TODO: Complex with radix
 

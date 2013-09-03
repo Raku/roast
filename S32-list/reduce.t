@@ -28,7 +28,7 @@ plan 14;
   my @array  = <1 2 3 4 5 6 7 8>, Any;
   my $result = (((1 + 2 * 3) + 4 * 5) + 6 * 7) + 8 * Any;
 
-  #?rakudo skip 'n-ary reduce'
+  #?rakudo todo 'n-ary reduce'
   #?niecza skip 'n-ary reduce'
   is (@array.reduce: { $^a + $^b * $^c }), $result, "n-ary reduce() works";
 }

@@ -31,18 +31,18 @@ See the thread "[S32::Containers] uniq" on p6l, too.
 } #1
 
 # With a userspecified criterion
-#?rakudo skip "Not spec'd, and this seems unlikely to be how it will be spec'd"
+#?niecza skip "with NYI"
 #?pugs todo
 {
-    my @array = <a b A c b d>;
+    my @array = <a b d A c b>;
     # Semantics w/o junctions
-    is ~@array.uniq({ lc($^a) eq lc($^b) }),  "a b c d",
+    is ~@array.uniq( with => { lc($^a) eq lc($^b) } ),  "a b d c",
       "method form of uniq with own comparator works";
-    is ~uniq({ lc($^a) eq lc($^b) }, @array), "a b c d",
+    is ~uniq(@array, with => { lc($^a) eq lc($^b) }), "a b d c",
       "subroutine form of uniq with own comparator works";
   
     # Semantics w/ junctions
-    is eval('~@array.uniq({ lc $^a eq lc $^b }).values.sort'), "A b c d a b c d";
+    is eval('~@array.uniq(with => { lc($^a) eq lc($^b) }).values.sort'), "a b c d", 'sorting the result';
 } #3
 
 #?pugs todo 'bug'

@@ -25,7 +25,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
 
 
 #?pugs skip "todo: Str.comb"
-#?rakudo skip '.comb with limit'
 {
     my Str $hair = "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng";
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
@@ -60,7 +59,7 @@ ok("forty-two".comb() ~~ Positional, '.comb() returns something Positional' );
 # comb a list
 
 #?pugs todo 'feature'
-#?rakudo skip "bad all around in Rakudo-ng"
+#?rakudo skip 'cannot call match, no signature matches'
 #?niecza skip ':Perl5'
 is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,
      'comb a list';

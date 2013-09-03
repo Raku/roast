@@ -26,7 +26,7 @@ is( 'Hello World !'.flip.flip, 'Hello World !',
 is( 'ä€»«'.flip,   '«»€ä', "some unicode characters" );
 
 #?niecza 2 todo 'graphemes not implemented'
-#?rakudo 2 skip 'graphemes not implemented'
+#?rakudo 2 todo 'graphemes not implemented'
 #?pugs   2 skip 'graphemes not implemented'
 is( "a\c[COMBINING DIAERESIS]b".flip, 'bä', "grapheme precomposed" );
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".flip,
