@@ -1,6 +1,7 @@
 use v6;
 use Test;
 
+#?niecza emit plan 8; #
 plan 9;
 
 # this test file contains tests for line numbers, among other things

@@ -241,6 +241,7 @@ $sub6 = "f bar bar bar bar bar bar";
     is($try, $sub6, 'substituted 6x correctly');
 
     $try = $data;
+    #?niecza todo "https://github.com/sorear/niecza/issues/186"
     nok($try ~~ s:7x{fo+}=q{bar}, 'substitute 7x');
     is($try, $data, 'did not substitute 7x');
 }

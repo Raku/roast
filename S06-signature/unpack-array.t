@@ -47,6 +47,7 @@ is blat( 2, [2,3,4] ), "2-3-4", 'unpack named array with named pieces';
         return fsort-multi(@r.grep( {$_ <= $p} )),$p,fsort-multi(@r.grep( {$_ > $p} )) if $p || @r;
     }
 
+   #?niecza 2 todo "https://github.com/sorear/niecza/issues/180"
    is fsort-only(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-subs';
    is fsort-multi(@my-array).join(' '), '2 3 4 4', 'array unpacking and only-multi';
 }

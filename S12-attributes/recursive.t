@@ -84,10 +84,12 @@ Test attributes with recursively typed attributes
 
     my $z1 = Z.new;
     #?pugs todo
+    #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa_ok $z1.a[0], Z, "check type-object";
     lives_ok { $z1.a[0] = Z.new }, 'can assign';
     isa_ok $z1.a[0], Z;
     #?pugs todo
+    #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa_ok $z1.h<k>, Z, "check type-object";
     lives_ok { $z1.h<k> = Z.new }, 'can assign';
     isa_ok $z1.h<k>, Z;

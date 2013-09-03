@@ -245,6 +245,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 
 # RT #112596
 #?pugs skip 'hangs'
+#?niecza todo "https://github.com/sorear/niecza/issues/182"
 #?DOES 1
 {
     my @a = map &sprintf.assuming("%x"), 9..12;

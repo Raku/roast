@@ -193,6 +193,7 @@ plan 25;
     sub drop2(@list, Int $nth) {
         return map { @list[$_] if ($_+1) % $nth }, ^@list;
     }
+    #?niecza todo "https://github.com/sorear/niecza/issues/180"
     is drop2(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements based on if returning ()';
     
