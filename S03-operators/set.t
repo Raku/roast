@@ -140,10 +140,10 @@ isa_ok ($s (^) $ks), Set, "... and it's actually a Set";
 is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with KeySet is correct";
 isa_ok ($ks (^) $s), Set, "... and it's actually a Set";
 
-#?rakudo todo 'huh?'
+#?rakudo skip 'huh?'
 is showset($s (^) $b), showset($s (|) $b), "Bag symmetric difference with Set is correct";
 isa_ok ($s (^) $b), Set, "... and it's actually a Set";
-#?rakudo todo 'huh?'
+#?rakudo skip 'huh?'
 is showset($b (^) $s), showset($s (|) $b), "Set symmetric difference with Bag is correct";
 isa_ok ($b (^) $s), Set, "... and it's actually a Set";
 

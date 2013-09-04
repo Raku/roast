@@ -86,7 +86,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set 2, 'a', False;
     my @ks = $s.keys;
     #?niecza 3 todo
-    #?rakudo 3 todo ''
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -287,7 +286,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok $s1<c>, "One of them is 'c'";
     ok $s1<d>, "One of them is 'd'";
     $inner-set = $s1.first(Set);
-    #?rakudo 2 todo "Set does not conform to new standard yet"
     #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
     is showset($inner-set), "a b c", "With the proper elements";
