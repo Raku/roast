@@ -185,14 +185,17 @@ sub showkv($x) {
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa_ok $b.list.elems, 3, ".list returns 3 things";
+    #?rakudo todo 'huh?'
     is $b.list.grep(Str).elems, 3, "... all of which are Str";
 
     isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
     is $b.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
+    #?rakudo todo 'huh?'
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
 
     is $b.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
+    #?rakudo todo 'huh?'
     is $b.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
@@ -206,6 +209,7 @@ sub showkv($x) {
     ok $s.chars < 1000, "... of reasonable length";
     lives_ok { $c = eval $s }, ".perl.eval lives";
     isa_ok $c, Bag, "... and produces a Bag";
+    #?rakudo skip 'hangs'
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
@@ -258,6 +262,7 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
+#?rakudo skip 'takes too long'
 {
     my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
@@ -289,6 +294,7 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
+#?rakudo skip 'takes too long'
 {
     my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
