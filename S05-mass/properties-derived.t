@@ -82,7 +82,8 @@ ok("\x[3A18]\c[MIDDLE DOT]" ~~ m/<:Extender>/, q{Match unanchored <Extender>} );
 
 #?niecza todo
 #?pugs todo
-#?rakudo 3 todo "isGraphemeLink"
+#?rakudo.parrot 3 todo "isGraphemeLink"
+#?rakudo.jvm    7 skip "isGraphemeLink"
 ok("\c[COMBINING GRAPHEME JOINER]" ~~ m/^<:GraphemeLink>$/, q{Match <:GraphemeLink>} );
 ok(!( "\c[COMBINING GRAPHEME JOINER]" ~~ m/^<:!GraphemeLink>$/ ), q{Don't match negated <GraphemeLink>} );
 #?niecza todo
@@ -94,7 +95,7 @@ ok("\x[4989]"  ~~ m/^<:!GraphemeLink>$/, q{Match unrelated negated <GraphemeLink
 ok("\x[4989]"  ~~ m/^<-:GraphemeLink>$/, q{Match unrelated inverted <GraphemeLink>} );
 #?niecza todo
 #?pugs todo
-#?rakudo todo "isGraphemeLink"
+#?rakudo.parrot todo "isGraphemeLink"
 ok("\x[4989]\c[COMBINING GRAPHEME JOINER]" ~~ m/<:GraphemeLink>/, q{Match unanchored <GraphemeLink>} );
 
 # HexDigit
