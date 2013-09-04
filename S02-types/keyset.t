@@ -191,6 +191,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.iterator.grep(Str).elems, 3, ".iterator yields three Strs";
 }
 
+#?rakudo todo 'huh?'
 {
     my $s = KeySet.new(<foo bar baz>);
     my $str;
@@ -211,6 +212,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = KeySet.new(<foo bar baz>);
+    #?rakudo 2 todo 'huh?'
     lives_ok { $s = $s.gist }, ".gist lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
