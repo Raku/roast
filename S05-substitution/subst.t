@@ -420,7 +420,8 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     use lib "t/spec/packages";
     use Test::Util;
 
-    $_ = "foo"; s[f] = 'bar'; is $_, "baroo", 's[f] is parsed as a substitution op';
+    $_ = "foo"; s[f] = 'bar';
+    is $_, "baroo", 's[f] is parsed as a substitution op';
     throws_like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
 }
 
