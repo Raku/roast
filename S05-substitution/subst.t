@@ -416,6 +416,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 }
 
 # RT #83552
+#?niecza skip 'Unable to resolve method postcircumfix:<( )> in type Any'
 {
     use lib "t/spec/packages";
     use Test::Util;

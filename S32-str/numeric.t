@@ -17,6 +17,7 @@ sub check($str, $expected_type, $expected_number, $desc?) {
 sub f($str) {
     my $num = 0; # defined
     so try { $num = +$str }
+    #?niecza todo 'Failure'
     ok !$num.defined, "+$str fails";
 }
 
@@ -28,7 +29,6 @@ check '1_2_3',      Int,    123;
 check '+123',       Int,    123;
 check '-123',       Int,   -123;
 check '3433683820292512484657849089281', Int, 3**64;
-#?niecza 6 todo 'Failure'
 f     'a+123';
 f     '123foo';
 f     '123+';
@@ -43,23 +43,19 @@ check '+0b111',     Int,      7;
 check '-0b111',     Int,     -7;
 # the spec is silent about this one, but rakudo and niecza agree
 check '0b_1',       Int,      1;
-#?niecza 2 todo 'Failure'
 f     '0b112';
 f     '0b';
 check '0o77',       Int,     63;
 check '+0o77',      Int,     63;
 check '-0o77',      Int,    -63;
-#?niecza todo 'Failure'
 f     '0o8';
 check '0d123',      Int,    123;
 check '-0d123',     Int,    -123;
-#?niecza todo 'Failure'
 f     '0da';
 check '0x123',      Int,    291;
 check '-0x123',     Int,   -291;
 check '0xa0',       Int,    160;
 check '-0xA0',      Int,   -160;
-#?niecza 2 todo 'Failure'
 f     '0xag';
 f     '0xaf-';
 
@@ -79,7 +75,6 @@ f     '0xaf-';
     f     ':10<8';
 }
 
-#?niecza todo 'Failure'
 f     '123.';
 check '123.0',      Rat,    123;
 check '-123.0',     Rat,    -123;
@@ -88,7 +83,6 @@ check '+1_2_3.0_0', Rat,    123;
 check '3/2',        Rat,    1.5;
 check '+3/2',       Rat,    1.5;
 check '-3/2',       Rat,    -1.5;
-#?niecza 5 todo 'Failure'
 #?rakudo 5 todo 'Failure'
 f     '-3/-2';
 f     '3/-2';
@@ -101,7 +95,6 @@ f     '3/2.0';
     check '-:8<4_2.3_5>',  Rat, -34.453125;
 
 # from S02-literals/radix.t
-#?niecza 12 todo 'Failure'
     f ":2.4<01>";
     f ":10<12f>";
     f ":1b<10>";
@@ -133,7 +126,6 @@ check '-123E+0',    Num,   -123;
 check '-123E+0_1',  Num,  -1230;
 check '1230E-1',    Num,    123;
 check '-12E+1',     Num,   -120;
-#?niecza 2 todo 'Failure'
 f      '120e';
 f      '120e2_';
 
@@ -158,7 +150,6 @@ is +"NaN",  'NaN',  'NaN';
 }
 
 #?rakudo todo "complex Str.Numeric"
-#?niecza todo 'Failure'
 f      '3+Infi';
 
 # TODO: Complex with radix

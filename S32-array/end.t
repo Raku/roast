@@ -23,12 +23,14 @@ plan 12;
 {
   my $a;
   #?pugs todo
+  #?niecza skip "https://github.com/sorear/niecza/issues/187"
   is $a.end, -1, ".end works on arbitrary scalars (1)";
 }
 
 {
   my $a = 42;
   #?pugs todo
+  #?niecza skip "https://github.com/sorear/niecza/issues/187"
   is $a.end, 0, ".end works on arbitrary scalars (2)";
 }
 
