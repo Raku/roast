@@ -160,28 +160,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = KeySet.new(set <foo bar foo bar baz foo>);
     isa_ok $b, KeySet, 'KeySet.new given a Set produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(KeySet.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeySet, 'KeySet.new given a KeySet produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(KeyBag.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeySet, 'KeySet.new given a KeyBag produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
 {
     my $b = KeySet.new(bag <foo bar foo bar baz foo>);
     isa_ok $b, KeySet, 'KeySet given a Bag produces a KeySet';
-    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 
@@ -189,6 +185,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = KeySet.new(<foo bar baz>);
     isa_ok $s.list.elems, 3, ".list returns 3 things";
     is $s.list.grep(Str).elems, 3, "... all of which are Str";
+    #?rakudo skip 'no longer Iterable'
     is $s.iterator.grep(Str).elems, 3, ".iterator yields three Strs";
 }
 
@@ -207,6 +204,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = KeySet.new(<foo bar baz>);
     lives_ok { $s = $s.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
+    #?rakudo todo 'huh?'
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 

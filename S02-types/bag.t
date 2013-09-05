@@ -62,7 +62,6 @@ sub showkv($x) {
     nok (set <a b c>) ~~ Bag, "Type-checking smartmatch works";
 }
 
-#?rakudo skip ".Set NYI"
 {
     isa_ok "a".Bag, Bag, "Str.Bag makes a Bag";
     is showkv("a".Bag), 'a:1', "'a'.Bag is bag a";
@@ -74,6 +73,7 @@ sub showkv($x) {
     isa_ok <a b c>.Bag, Bag, "<a b c>.Bag makes a Bag";
     is showkv(<a b c a>.Bag), 'a:2 b:1 c:1', "<a b c a>.Bag makes the bag a:2 b:1 c:1";
     is showkv(["a", "b", "c", "a"].Bag), 'a:2 b:1 c:1', "[a b c a].Bag makes the bag a:2 b:1 c:1";
+    #?rakudo todo '.Bag is not supposed to flatten'
     is showkv([a => 3, b => 0, 'c', 'a'].Bag), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Bag makes the bag a:4 c:1";
 
     isa_ok {a => 2, b => 4, c => 0}.Bag, Bag, "{a => 2, b => 4, c => 0}.Bag makes a Bag";
@@ -92,13 +92,13 @@ sub showkv($x) {
     my $b = bag 'a', False, 2, 'a', False, False;
     my @ks = $b.keys;
     #?niecza 3 skip "Non-Str keys NYI"
-    #?rakudo 3 skip "Non-Str keys NYI"
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
+#?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %h = bag <a b o p a p o o>;
@@ -139,28 +139,24 @@ sub showkv($x) {
 {
     my $b = bag set <foo bar foo bar baz foo>;
     isa_ok $b, Bag, '&Bag.new given a Set produces a Bag';
-    #?rakudo todo "New bag constructor NYI"
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag KeySet.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a KeySet produces a Bag';
-    #?rakudo todo "New bag constructor NYI"
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag KeyBag.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a KeyBag produces a Bag';
-    #?rakudo todo 'huh?'
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = bag set <foo bar foo bar baz foo>;
     isa_ok $b, Bag, '&bag given a Set produces a Bag';
-    #?rakudo todo "New bag constructor NYI"
     is +$b, 1, "... with one element";
 }
 
@@ -193,6 +189,7 @@ sub showkv($x) {
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
 
+    #?rakudo 3 skip 'No longer Iterable'
     is $b.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
     is $b.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";

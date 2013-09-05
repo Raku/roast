@@ -118,6 +118,7 @@ sub showkv($x) {
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
+#?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
     my %h = bag <a b o p a p o o>;
@@ -156,21 +157,18 @@ sub showkv($x) {
 {
     my $b = KeyBag.new(set <foo bar foo bar baz foo>);
     isa_ok $b, KeyBag, '&KeyBag.new given a Set produces a KeyBag';
-    #?rakudo todo "Needs to catch up with spec"
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = KeyBag.new(KeySet.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeyBag, '&KeyBag.new given a KeySet produces a KeyBag';
-    #?rakudo todo "Needs to catch up with spec"
     is +$b, 1, "... with one element";
 }
 
 {
     my $b = KeyBag.new(bag <foo bar foo bar baz foo>);
     isa_ok $b, KeyBag, '&KeyBag.new given a Bag produces a KeyBag';
-    #?rakudo todo "Needs to catch up with spec"
     is +$b, 1, "... with one element";
 }
 
@@ -199,6 +197,7 @@ sub showkv($x) {
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
 
+    #?rakudo 3 skip 'No longer Iterable'
     is $b.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
     is $b.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
