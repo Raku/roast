@@ -174,6 +174,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = KeySet.new(KeyBag.new(<foo bar foo bar baz foo>));
     isa_ok $b, KeySet, 'KeySet.new given a KeyBag produces a KeySet';
+    #?rakudo todo "New set constructor NYI"
     is +$b, 1, '... with one element';
 }
 

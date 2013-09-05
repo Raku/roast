@@ -8,7 +8,7 @@ plan 172;
 # A KeyBag is a KeyHash of UInt, i.e. the values are positive Int
 
 sub showkv($x) {
-    $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
+    $x.keys.sort.map({"$_:{$x{$_}}"}).join(' ')
 }
 
 # L<S02/Immutable types/'the bag listop'>
@@ -63,7 +63,7 @@ sub showkv($x) {
     is $b<a>, 42, "... and the decrement happens";
     lives_ok { $b<carter>-- }, "Can -- an element with value 1";
     nok $b.exists("carter"), "... and it goes away";
-    lives_ok { $b<farve>-- }, "Can -- an element that doesn't exist";
+    dies_ok { $b<farve>-- }, "Cannot -- an element that doesn't exist";
     nok $b.exists("farve"), "... and everything is still okay";
 }
 
@@ -112,7 +112,6 @@ sub showkv($x) {
     my $b = KeyBag.new('a', False, 2, 'a', False, False);
     my @ks = $b.keys;
     #?niecza 3 skip "Non-Str keys NYI"
-    #?rakudo 2 todo "Non-Str keys NYI"
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
@@ -222,7 +221,6 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
-    #?rakudo todo 'not up to spec'
     is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -269,6 +267,7 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
+#?rakudo skip 'takes too long'
 {
     my $b = {"a" => 100000000000, "b" => 1}.KeyBag;
 
@@ -300,6 +299,7 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
+#?rakudo skip 'takes too long'
 {
     my $b = {"a" => 100000000000, "b" => 1}.KeyBag;
 

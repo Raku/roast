@@ -153,6 +153,7 @@ sub showkv($x) {
 {
     my $b = bag KeyBag.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a KeyBag produces a Bag';
+    #?rakudo todo 'huh?'
     is +$b, 1, "... with one element";
 }
 
@@ -185,17 +186,14 @@ sub showkv($x) {
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
     isa_ok $b.list.elems, 3, ".list returns 3 things";
-    #?rakudo todo 'huh?'
     is $b.list.grep(Str).elems, 3, "... all of which are Str";
 
     isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
     is $b.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
-    #?rakudo todo 'huh?'
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
 
     is $b.iterator.grep(Pair).elems, 3, ".iterator yields three Pairs";
-    #?rakudo todo 'huh?'
     is $b.iterator.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.iterator.grep({True}).elems, 3, "... and nothing else";
 }
@@ -209,7 +207,6 @@ sub showkv($x) {
     ok $s.chars < 1000, "... of reasonable length";
     lives_ok { $c = eval $s }, ".perl.eval lives";
     isa_ok $c, Bag, "... and produces a Bag";
-    #?rakudo skip 'hangs'
     is showkv($c), showkv($b), "... and it has the correct values";
 }
 
@@ -218,7 +215,6 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
-    #?rakudo todo 'Bag stringification'
     is $s.split(" ").sort.join(" "), "bar bar bar baz foo foo", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
