@@ -123,7 +123,7 @@ my @maps = (
   "\o03", 3,
 );
 
-plan 50 + @maps;
+plan 52 + @maps;
 
 for @maps -> $char, $code {
   my $descr = "\\{$code}{$code >= 32 ?? " == '{$char}'" !! ""}";
@@ -159,6 +159,10 @@ dies_ok {chr(0x2FFFF)}, "chr of noncharacter";
 dies_ok {chr(0x10FFFF+1)}, "chr out of range";
 
 ok !defined(ord("")), 'ord("") returns an undefined value';
+
+#?rakudo.jvm skip 'high character name lookup'
+is "\c[DROMEDARY CAMEL]".ord, 0x1F42A, "ord of high character";
+is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 
 # RT #65172
 #?rakudo todo 'huh?'
