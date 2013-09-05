@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 135;
+plan 145;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -192,6 +192,19 @@ is sprintf('%f', 2.718281828459), sprintf('%.6f', 2.718281828459), '%f defaults 
 is sprintf('%g', 2.718281828459), sprintf('%.6g', 2.718281828459), '%g defaults to .6';
 is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults to .6';
 
+# I don't know about the wisdom of these, but this is how Perl 5 handles it
+#?rakudo skip 10 "Issues with Inf"
+is sprintf('%e', Inf), "inf", 'Inf properly handled %e';
+is sprintf('%E', Inf), "INF", 'Inf properly handled %E';
+is sprintf('%f', Inf), "inf", 'Inf properly handled %f';
+is sprintf('%g', Inf), "inf", 'Inf properly handled %g';
+is sprintf('%G', Inf), "INF", 'Inf properly handled %G';
+is sprintf('%e', -Inf), "-inf", '-Inf properly handled %e';
+is sprintf('%E', -Inf), "-INF", '-Inf properly handled %E';
+is sprintf('%f', -Inf), "-inf", '-Inf properly handled %f';
+is sprintf('%g', -Inf), "-inf", '-Inf properly handled %g';
+is sprintf('%G', -Inf), "-INF", '-Inf properly handled %G';
+
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
 #?rakudo skip "%p doesn't yet throw exception - but should it, or just Failure?"
@@ -220,8 +233,8 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf('%12.5f',  NaN), '         NaN', 'RT 116280';
     #?rakudo.parrot 2 skip "sprintf hangs when printing Inf/-Inf"
     #?niecza 2 todo "https://github.com/sorear/niecza/issues/181"
-    is sprintf('%12.5f',  Inf), '         Inf', 'RT 116280';
-    is sprintf('%12.5f', -Inf), '        -Inf', 'RT 116280';
+    is sprintf('%12.5f',  Inf), '         inf', 'RT 116280';
+    is sprintf('%12.5f', -Inf), '        -inf', 'RT 116280';
 }
 
 # RT #106594, #62316, #74610
