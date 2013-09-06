@@ -161,20 +161,16 @@ dies_ok {chr(0x10FFFF+1)}, "chr out of range";
 ok !defined(ord("")), 'ord("") returns an undefined value';
 
 #?rakudo.jvm skip 'high character name lookup'
-is "\c[DROMEDARY CAMEL]".ord, 0x1F42A, "ord of high character";
+is "\c[DROMEDARY CAMEL]".ord, 0x1F42A, "ord of named high character";
 is chr(0x1F42A).ord, 0x1F42A, "chr > ord round trip of high character";
 
-# RT #65172
-#?rakudo todo 'huh?'
 #?niecza todo
 {
-    is  "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord,
-        555,
-        '.ord defaults to graphemes (1)';
+    is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]".ord, 550, '.ord defaults to graphemes (2)';
 
-    is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE]",
-        555,
-        '.ord defaults to graphemes (2)';
+#?rakudo todo 'RT #65172 - combining graphemes'
+    is "\c[LATIN CAPITAL LETTER A, COMBINING DOT ABOVE]".ord, 550, '.ord defaults to graphemes (1)';
+
 }
 
 #vim: ft=perl6
