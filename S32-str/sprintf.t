@@ -193,7 +193,7 @@ is sprintf('%g', 2.718281828459), sprintf('%.6g', 2.718281828459), '%g defaults 
 is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults to .6';
 
 # I don't know about the wisdom of these, but this is how Perl 5 handles it
-#?rakudo skip 10 "Issues with Inf"
+#?rakudo 10 skip "Issues with Inf"
 is sprintf('%e', Inf), "inf", 'Inf properly handled %e';
 is sprintf('%E', Inf), "INF", 'Inf properly handled %E';
 is sprintf('%f', Inf), "inf", 'Inf properly handled %f';
