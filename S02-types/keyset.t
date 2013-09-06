@@ -76,7 +76,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok (KeySet.new: <a b c>) ~~ KeySet, "Type-checking smartmatch works";
     ok (set <a b c>) ~~ (KeySet.new: <a b c>), "KeySet matches Set, too";
 
-    #?rakudo 2 todo 'huh?'
     ok (bag <a b c>) ~~ (KeySet.new: <a b c>), "Bag smartmatches with equivalent KeySet:";
     ok (bag <a a a b c>) ~~ (KeySet.new: <a b c>), "... even if the Bag has greater quantities";
     nok (bag <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
