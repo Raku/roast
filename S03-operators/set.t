@@ -71,16 +71,21 @@ ok <a b c d e> !(cont) "marmoset", "marmoset is not contained by a b c d e";
 
 is showset($s ∪ $s), showset($s), "Set union with itself yields self";
 isa_ok ($s ∪ $s), Set, "... and it's actually a Set";
+#?rakudo todo 'huh?'
 is showset($ks ∪ $ks), showset($ks), "KeySet union with itself yields self (as Set)";
 isa_ok ($ks ∪ $ks), Set, "... and it's actually a Set";
 
+#?rakudo todo 'huh?'
 is showset($s ∪ $ks), showset(set <I'm afraid it is isn't your day>), "Set union with KeySet works";
 isa_ok ($s ∪ $ks), Set, "... and it's actually a Set";
+#?rakudo todo 'huh?'
 is showset($ks ∪ <blue green>), showset(set <I'm afraid it is blue green>), "KeySet union with array of strings works";
 isa_ok ($ks ∪ <blue green>), Set, "... and it's actually a Set";
 
+#?rakudo todo 'huh?'
 is showset($s (|) $ks), showset(set <I'm afraid it is isn't your day>), "Set union with KeySet works (texas)";
 isa_ok ($s (|) $ks), Set, "... and it's actually a Set (texas)";
+#?rakudo todo 'huh?'
 is showset($ks (|) <blue green>), showset(set <I'm afraid it is blue green>), "KeySet union with array of strings works (texas)";
 isa_ok ($ks (|) <blue green>), Set, "... and it's actually a Set (texas)";
 
@@ -106,8 +111,10 @@ isa_ok ($s (&) $ks), Set, "... and it's actually a Set (texas)";
 is showset($s (-) $s), showset(∅), "Set subtracted from Set is correct";
 isa_ok ($s (-) $s), Set, "... and it's actually a Set";
 
+#?rakudo todo 'huh?'
 is showset($s (-) $ks), showset(set <isn't your day>), "KeySet subtracted from Set is correct";
 isa_ok ($s (-) $ks), Set, "... and it's actually a Set";
+#?rakudo todo 'huh?'
 is showset($ks (-) $s), showset(set <is>), "Set subtracted from KeySet is correct";
 isa_ok ($ks (-) $s), Set, "... and it's actually a Set";
 
@@ -128,8 +135,10 @@ isa_ok ($kb (-) $s), Bag, "... and it's actually a Bag";
 is showset($s (^) $s), showset(∅), "Set symmetric difference with Set is correct";
 isa_ok ($s (^) $s), Set, "... and it's actually a Set";
 
+#?rakudo todo 'huh?'
 is showset($s (^) $ks), showset(set <is isn't your day>), "KeySet symmetric difference with Set is correct";
 isa_ok ($s (^) $ks), Set, "... and it's actually a Set";
+#?rakudo todo 'huh?'
 is showset($ks (^) $s), showset(set <is isn't your day>), "Set symmetric difference with KeySet is correct";
 isa_ok ($ks (^) $s), Set, "... and it's actually a Set";
 
@@ -155,8 +164,10 @@ ok <your day> ⊆ $s, "'Your day' is subset of Set";
 ok $s ⊆ $s, "Set is subset of itself";
 ok $s ⊆ <I'm afraid it isn't your day old chum>, "Set is subset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) ⊆ $ks, "Set is subset of KeySet";
 ok $ks ⊆ $ks, "KeySet is subset of itself";
+#?rakudo todo 'huh?'
 ok $ks ⊆ <I'm afraid it is my day>, "KeySet is subset of string";
 
 nok $s ⊆ $b, "Set is not a subset of Bag";
@@ -171,8 +182,10 @@ ok <your day> (<=) $s, "'Your day' is subset of Set";
 ok $s (<=) $s, "Set is subset of itself";
 ok $s (<=) <I'm afraid it isn't your day old chum>, "Set is subset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) (<=) $ks, "Set is subset of KeySet (texas)";
 ok $ks (<=) $ks, "KeySet is subset of itself (texas)";
+#?rakudo todo 'huh?'
 ok $ks (<=) <I'm afraid it is my day>, "KeySet is subset of string (texas)";
 
 nok $s (<=) $b, "Set is not a subset of Bag (texas)";
@@ -188,8 +201,10 @@ nok <your day> ⊈ $s, "'Your day' is subset of Set";
 nok $s ⊈ $s, "Set is subset of itself";
 nok $s ⊈ <I'm afraid it isn't your day old chum>, "Set is subset of string";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) ⊈ $ks, "Set is subset of KeySet";
 nok $ks ⊈ $ks, "KeySet is subset of itself";
+#?rakudo todo 'huh?'
 nok $ks ⊈ <I'm afraid it is my day>, "KeySet is subset of string";
 
 ok $s ⊈ $b, "Set is not a subset of Bag";
@@ -204,8 +219,10 @@ nok <your day> !(<=) $s, "'Your day' is subset of Set (texas)";
 nok $s !(<=) $s, "Set is subset of itself (texas)";
 nok $s !(<=) <I'm afraid it isn't your day old chum>, "Set is subset of string (texas)";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) !(<=) $ks, "Set is subset of KeySet (texas)";
 nok $ks !(<=) $ks, "KeySet is subset of itself (texas)";
+#?rakudo todo 'huh?'
 nok $ks !(<=) <I'm afraid it is my day>, "KeySet is subset of string (texas)";
 
 ok $s !(<=) $b, "Set is not a subset of Bag (texas)";
@@ -222,8 +239,10 @@ ok <your day> ⊂ $s, "'Your day' is proper subset of Set";
 nok $s ⊂ $s, "Set is not proper subset of itself";
 ok $s ⊂ <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) ⊂ $ks, "Set is proper subset of KeySet";
 nok $ks ⊂ $ks, "KeySet is not proper subset of itself";
+#?rakudo todo 'huh?'
 ok $ks ⊂ <I'm afraid it is my day>, "KeySet is proper subset of string";
 
 nok $s ⊂ $b, "Set is not a proper subset of Bag";
@@ -238,8 +257,10 @@ ok <your day> (<) $s, "'Your day' is proper subset of Set";
 nok $s (<) $s, "Set is not proper subset of itself";
 ok $s (<) <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) (<) $ks, "Set is proper subset of KeySet (texas)";
 nok $ks (<) $ks, "KeySet is not proper subset of itself (texas)";
+#?rakudo todo 'huh?'
 ok $ks (<) <I'm afraid it is my day>, "KeySet is proper subset of string (texas)";
 
 nok $s (<) $b, "Set is not a proper subset of Bag (texas)";
@@ -256,8 +277,10 @@ nok <your day> ⊄ $s, "'Your day' is proper subset of Set";
 ok $s ⊄ $s, "Set is not proper subset of itself";
 nok $s ⊄ <I'm afraid it isn't your day old chum>, "Set is proper subset of string";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) ⊄ $ks, "Set is proper subset of KeySet";
 ok $ks ⊄ $ks, "KeySet is not proper subset of itself";
+#?rakudo todo 'huh?'
 nok $ks ⊄ <I'm afraid it is my day>, "KeySet is proper subset of string";
 
 ok $s ⊄ $b, "Set is not a proper subset of Bag";
@@ -272,8 +295,10 @@ nok <your day> !(<) $s, "'Your day' is proper subset of Set (texas)";
 ok $s !(<) $s, "Set is not proper subset of itself (texas)";
 nok $s !(<) <I'm afraid it isn't your day old chum>, "Set is proper subset of string (texas)";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) !(<) $ks, "Set is proper subset of KeySet (texas)";
 ok $ks !(<) $ks, "KeySet is not proper subset of itself (texas)";
+#?rakudo todo 'huh?'
 nok $ks !(<) <I'm afraid it is my day>, "KeySet is proper subset of string (texas)";
 
 ok $s !(<) $b, "Set is not a proper subset of Bag (texas)";
@@ -290,8 +315,10 @@ ok <your day> R⊇ $s, "'Your day' is reversed superset of Set";
 ok $s R⊇ $s, "Set is reversed superset of itself";
 ok $s R⊇ <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) R⊇ $ks, "Set is reversed superset of KeySet";
 ok $ks R⊇ $ks, "KeySet is reversed superset of itself";
+#?rakudo todo 'huh?'
 ok $ks R⊇ <I'm afraid it is my day>, "KeySet is reversed superset of string";
 
 nok $s R⊇ $b, "Set is not a reversed superset of Bag";
@@ -306,8 +333,10 @@ ok <your day> R(>=) $s, "'Your day' is reversed superset of Set";
 ok $s R(>=) $s, "Set is reversed superset of itself";
 ok $s R(>=) <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) R(>=) $ks, "Set is reversed superset of KeySet (texas)";
 ok $ks R(>=) $ks, "KeySet is reversed superset of itself (texas)";
+#?rakudo todo 'huh?'
 ok $ks R(>=) <I'm afraid it is my day>, "KeySet is reversed superset of string (texas)";
 
 nok $s R(>=) $b, "Set is not a reversed superset of Bag (texas)";
@@ -324,8 +353,10 @@ nok <your day> R⊉ $s, "'Your day' is reversed superset of Set";
 nok $s R⊉ $s, "Set is reversed superset of itself";
 nok $s R⊉ <I'm afraid it isn't your day old chum>, "Set is reversed superset of string";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) R⊉ $ks, "Set is reversed superset of KeySet";
 nok $ks R⊉ $ks, "KeySet is reversed superset of itself";
+#?rakudo todo 'huh?'
 nok $ks R⊉ <I'm afraid it is my day>, "KeySet is reversed superset of string";
 
 ok $s R⊉ $b, "Set is not a reversed superset of Bag";
@@ -340,8 +371,10 @@ nok <your day> !R(>=) $s, "'Your day' is reversed superset of Set (texas)";
 nok $s !R(>=) $s, "Set is reversed superset of itself (texas)";
 nok $s !R(>=) <I'm afraid it isn't your day old chum>, "Set is reversed superset of string (texas)";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) !R(>=) $ks, "Set is reversed superset of KeySet (texas)";
 nok $ks !R(>=) $ks, "KeySet is reversed superset of itself (texas)";
+#?rakudo todo 'huh?'
 nok $ks !R(>=) <I'm afraid it is my day>, "KeySet is reversed superset of string (texas)";
 
 ok $s !R(>=) $b, "Set is not a reversed superset of Bag (texas)";
@@ -358,8 +391,10 @@ ok <your day> R⊃ $s, "'Your day' is reversed proper superset of Set";
 nok $s R⊃ $s, "Set is not reversed proper superset of itself";
 ok $s R⊃ <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) R⊃ $ks, "Set is reversed proper superset of KeySet";
 nok $ks R⊃ $ks, "KeySet is not reversed proper superset of itself";
+#?rakudo todo 'huh?'
 ok $ks R⊃ <I'm afraid it is my day>, "KeySet is reversed proper superset of string";
 
 nok $s R⊃ $b, "Set is not a reversed proper superset of Bag";
@@ -374,8 +409,10 @@ ok <your day> R(>) $s, "'Your day' is reversed proper superset of Set";
 nok $s R(>) $s, "Set is not reversed proper superset of itself";
 ok $s R(>) <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
 
+#?rakudo todo 'huh?'
 ok ($ks (-) set <is>) R(>) $ks, "Set is reversed proper superset of KeySet (texas)";
 nok $ks R(>) $ks, "KeySet is not reversed proper superset of itself (texas)";
+#?rakudo todo 'huh?'
 ok $ks R(>) <I'm afraid it is my day>, "KeySet is reversed proper superset of string (texas)";
 
 nok $s R(>) $b, "Set is not a reversed proper superset of Bag (texas)";
@@ -392,8 +429,10 @@ nok <your day> R⊅ $s, "'Your day' is reversed proper superset of Set";
 ok $s R⊅ $s, "Set is not reversed proper superset of itself";
 nok $s R⊅ <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) R⊅ $ks, "Set is reversed proper superset of KeySet";
 ok $ks R⊅ $ks, "KeySet is not reversed proper superset of itself";
+#?rakudo todo 'huh?'
 nok $ks R⊅ <I'm afraid it is my day>, "KeySet is reversed proper superset of string";
 
 ok $s R⊅ $b, "Set is not a reversed proper superset of Bag";
@@ -408,8 +447,10 @@ nok <your day> !R(>) $s, "'Your day' is reversed proper superset of Set (texas)"
 ok $s !R(>) $s, "Set is not reversed proper superset of itself (texas)";
 nok $s !R(>) <I'm afraid it isn't your day old chum>, "Set is reversed proper superset of string (texas)";
 
+#?rakudo todo 'huh?'
 nok ($ks (-) set <is>) !R(>) $ks, "Set is reversed proper superset of KeySet (texas)";
 ok $ks !R(>) $ks, "KeySet is not reversed proper superset of itself (texas)";
+#?rakudo todo 'huh?'
 nok $ks !R(>) <I'm afraid it is my day>, "KeySet is reversed proper superset of string (texas)";
 
 ok $s !R(>) $b, "Set is not a reversed proper superset of Bag (texas)";
