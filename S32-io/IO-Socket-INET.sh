@@ -26,7 +26,7 @@ while true; do
     I=$(expr $I + 1)
 
     # killing client if we already waiting 20 seconds
-    if [ $I -ge 20 ]; then
+    if [ $I -ge 45 ]; then
        echo '(timeout)'
        kill $CLIENT 2>/dev/null
        break

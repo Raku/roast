@@ -10,7 +10,7 @@ sub elapsed {
     LEAVE $last = time;
     return "[{ $elapsed = time - $last }s]";
 }
-my $toolong = 30;
+my $toolong = 60;
 
 # L<S32::IO/IO::Socket::INET>
 
@@ -26,7 +26,7 @@ given $*OS {
         $netstat_cmd = "netstat --tcp --all --numeric";
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
     }
-    when 'darwin' {
+    when any 'darwin', 'Mac OS X' {
         $netstat_cmd = "netstat -f inet -p tcp -a -n";
         $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ };
     }
@@ -61,7 +61,7 @@ if $port >= 65535 {
 diag "{elapsed} Testing on port $port";
 
 
-if $*OS eq any <linux darwin solaris MSWin32> { # please add more valid OS names
+if $*OS eq any <linux darwin solaris MSWin32>, 'Mac OS X' { # please add more valid OS names
 
     my $is-win;
     $is-win = True if $*OS eq 'MSWin32';
