@@ -300,7 +300,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
 }
 
-#?rakudo skip ".Bag NYI"
 {
     isa_ok 42.Bag, Bag, "Method .Bag works on Int-1";
     is showkv(42.Bag), "42:1", "Method .Bag works on Int-2";
@@ -313,6 +312,7 @@ sub showkv($x) {
     isa_ok %x.Bag, Bag, "Method .Bag works on Hash-1";
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
     isa_ok (@a, %x).Bag, Bag, "Method .Bag works on Parcel-1";
+    #?rakudo todo 'huh?'
     is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on Parcel-2";
 }
