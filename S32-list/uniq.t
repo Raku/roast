@@ -32,7 +32,7 @@ See the thread "[S32::Containers] uniq" on p6l, too.
 
 # With a userspecified criterion
 #?niecza skip "with NYI"
-#?pugs todo
+#?pugs skip "Named argument found where no matched parameter expected"
 {
     my @array = <a b d A c b>;
     # Semantics w/o junctions
