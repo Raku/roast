@@ -100,7 +100,6 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 }
 
 # RT #77458
-#?niecza 2 todo 'Use of Nil as a string'
 #?pugs 2 todo 'Cant modify constant item: VUndef'
 {
     %*ENV<abc> = 'def';

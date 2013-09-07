@@ -63,6 +63,7 @@ sub showkv($x) {
     is $b<a>, 42, "... and the decrement happens";
     lives_ok { $b<carter>-- }, "Can -- an element with value 1";
     nok $b.exists("carter"), "... and it goes away";
+    #?niecza todo
     dies_ok { $b<farve>-- }, "Cannot -- an element that doesn't exist";
     nok $b.exists("farve"), "... and everything is still okay";
 }
