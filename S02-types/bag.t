@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 142;
+plan 154;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -102,6 +102,11 @@ sub showkv($x) {
 {
     my %h = bag <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Bag has been assigned remains a hash';
+    is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
+}
+{
+    my %h := bag <a b o p a p o o>;
+    ok %h ~~ Bag, 'A hash to which a Bag has been bound becomes a Bag';
     is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
 }
 
@@ -297,6 +302,27 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
+}
+
+{
+    my $b1 = bag ( bag <a b c> ), <c c c d d d d>;
+    is +$b1, 8, "Three elements";
+    is $b1<c>, 3, "One of them is 'c'";
+    is $b1<d>, 4, "One of them is 'd'";
+    my $inner-bag = $b1.list.first(Bag);
+    #?niecza 2 todo 'Bag in Bag does not work correctly yet'
+    isa_ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
+    is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
+
+    my $b = bag <a b c>;
+    $b1 = bag $b, <c d>;
+    is +$b1, 3, "Three elements";
+    is $b1<c>, 1, "One of them is 'c'";
+    is $b1<d>, 1, "One of them is 'd'";
+    $inner-bag = $b1.list.first(Bag);
+    #?niecza 2 todo 'Bag in Bag does not work correctly yet'
+    isa_ok $inner-bag, Bag, "One of the bag's elements is indeed a bag!";
+    is showkv($inner-bag), "a:1 b:1 c:1", "With the proper elements";
 }
 
 {

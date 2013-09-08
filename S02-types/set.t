@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 139;
+plan 146;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -97,10 +97,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my %h = set <a b o p a p o o>;
     ok %h ~~ Hash, 'A hash to which a Set has been assigned remains a hash';
-    #?rakudo todo "got ao"
     is %h.keys.sort.join, 'abop', '...with the right keys';
-    #?rakudo todo "got bp"
     is %h.values, (True, True, True, True), '...and values all True';
+}
+{
+    my %h := set <a b o p a p o o>;
+    ok %h ~~ Set, 'A hash to which a Set has been bound becomes a set';
+    is %h.keys.sort.join, 'abop', '...with the right keys';
+    is %h.values, (True xx 4), '...and values all True';
 }
 
 {
@@ -160,6 +164,10 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = set <foo bar baz>;
     isa_ok $s.list.elems, 3, ".list returns 3 things";
     is $s.list.grep(Str).elems, 3, "... all of which are Str";
+    isa_ok $s.pairs.elems, 3, ".pairs returns 3 things";
+    is $s.pairs.grep(Pair).elems, 3, "... all of which are Pair";
+    is $s.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
+    is $s.pairs.grep({ .value ~~ Bool }).elems, 3, "... and the values of which are Bool";
     #?rakudo skip "Set is no longer Iterable"
     is $s.iterator.grep(Str).elems, 3, ".iterator yields three Strs";
 }
@@ -271,10 +279,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s1, 3, "Three elements";
     ok $s1<c>, "One of them is 'c'";
     ok $s1<d>, "One of them is 'd'";
-    my $inner-set = $s1.first(Set);
+    my $inner-set = $s1.list.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
-    #?rakudo todo "Set does not conform to new standard yet"
     is showset($inner-set), "a b c", "With the proper elements";
 
     my $s = set <a b c>;
@@ -282,10 +289,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s1, 3, "Three elements";
     ok $s1<c>, "One of them is 'c'";
     ok $s1<d>, "One of them is 'd'";
-    $inner-set = $s1.first(Set);
+    $inner-set = $s1.list.first(Set);
     #?niecza 2 todo 'Set in Set does not work correctly yet'
     isa_ok $inner-set, Set, "One of the set's elements is indeed a set!";
-    #?rakudo todo "Set does not conform to new standard yet"
     is showset($inner-set), "a b c", "With the proper elements";
 }
 
