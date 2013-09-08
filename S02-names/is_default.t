@@ -63,17 +63,19 @@ plan 114;
     #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $b.VAR.default, 42, 'is the default set correctly for Int $b';
 
+    #?rakudo.jvm emit #
     my Int $c is default(Nil);
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
+    #?rakudo.jvm 5 skip 'Type check failed in assignment to "$c"; expected "Int" but got "Any"'
     ok $c.VAR.default === Nil, 'is the default set correctly for Int $c';
     lives_ok { $c++ }, 'should be able to increment typed variable';
     is $c, 1, "typed variable should be incremented";
     lives_ok { $c = Nil }, "should be able to assign Nil to typed variable";
     ok $c === Nil, 'is the default value correctly reset for Int $c';
 
+    #?rakudo.jvm emit #
     my Int $d is default(Nil) = 353;
+    #?rakudo.jvm 2 skip 'Type check failed in assignment to "$d"; expected "Int" but got "Any"'
     is $d, 353, "typed variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok $d.VAR.default === Nil, 'is the default set correctly for Int $d';
 } #19
 
@@ -140,6 +142,7 @@ plan 114;
     ok @c.VAR.default === Nil, 'is the default set correctly for Int @c';
     lives_ok { @c[0]++ }, 'should be able to increment typed variable';
     is @c[0], 1, "typed variable should be incremented";
+    #?rakudo.jvm 2 todo "nigh"
     lives_ok { @c[0] = Nil }, "able to assign Nil to typed variable";
     ok @c[0] === Nil, 'is the default value correctly reset for Int @c[0]';
 
@@ -212,6 +215,7 @@ plan 114;
     ok %c.VAR.default === Nil, 'is the default set correctly for Int %c';
     lives_ok { %c<o>++ }, 'should be able to increment typed variable';
     is %c<o>, 1, "typed variable should be incremented";
+    #?rakudo.jvm 2 todo "nigh"
     lives_ok { %c<o> = Nil }, "able to assign Nil to typed variable";
     ok %c<o> === Nil, 'is the default value correctly reset for Int %c<o>';
 

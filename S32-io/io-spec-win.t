@@ -261,8 +261,12 @@ my @abs2rel =
 	#('C:\\one\\two\\t\\asd1\\', 't\\asd\\').item, '..\\asd1',
 	#('\\one\\two', 'A:\\foo').item,     'C:\\one\\two';
 
-for @abs2rel -> $in, $out {
-	is $win32.abs2rel(|$in), $out, "abs2rel: {$in.perl} -> '$out'"
+#?rakudo.jvm skip "Method 'match' not found"
+#?DOES 19
+{
+    for @abs2rel -> $in, $out {
+	    is $win32.abs2rel(|$in), $out, "abs2rel: {$in.perl} -> '$out'"
+    }
 }
 
 my @rel2abs = 

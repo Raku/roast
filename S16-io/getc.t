@@ -18,6 +18,7 @@ my $tmpfile = "temp-test" ~ nonce();
   close $fh or die "Couldn't close \"$tmpfile\": $!\n";
 }
 
+#?rakudo.jvm skip "Method 'read' not found"
 {
   my $fh = open $tmpfile or die "Couldn't open \"$tmpfile\" for reading: $!\n";
   my @chars;

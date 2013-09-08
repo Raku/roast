@@ -149,6 +149,7 @@ plan 28;
     try { eval '<1 2 3>.rt62836' };
     #?pugs 2 todo
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
+    #?rakudo.jvm todo "nigh"
     ok "$!" ~~ /Parcel/,    'error message contains name of class';
 
     #?pugs emit #

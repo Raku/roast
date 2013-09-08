@@ -86,6 +86,7 @@ plan 12;
     is $result, "I'm cupid!", "lexical lookup from quasi to macro works";
 }
 
+#?rakudo.jvm skip "Method 'succ' not found"
 {
     my $counter = 0;
 

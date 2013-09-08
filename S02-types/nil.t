@@ -100,6 +100,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok $! === Nil, '$! is by default Nil';
     ok $_ === Nil, '$_ is by default Nil';
 
+    #?rakudo.jvm 3 skip "Nominal type check failed for parameter 'null'"
     ok $/.VAR.default === Nil, '$/ has Nil as default';
     ok $!.VAR.default === Nil, '$! has Nil as default';
     ok $_.VAR.default === Nil, '$_ has Nil as default';

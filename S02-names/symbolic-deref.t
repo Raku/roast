@@ -98,6 +98,7 @@ my $outer = 'outside';
     $result = $sub();
   };
 
+  #?rakudo.jvm todo "nigh"
   is $result, 42, "symbolic dereferentation works with ::CALLER, too";
 }
 

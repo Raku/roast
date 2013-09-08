@@ -311,6 +311,7 @@ plan 142;
 }
 
 # CALLER - assumes MY:: has taken care of most access testing
+#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
     sub f1($f) { my $x is dynamic = 90; $f() } #OK
     sub f2($f) { my $x is dynamic = 91; f1($f) } #OK

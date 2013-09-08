@@ -53,6 +53,7 @@ my Str $bar;
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
     #?pugs 2 todo
+    #?rakudo.jvm todo "nigh"
     eval_lives_ok('my num $alpha = Nil', 'native num type can be undefined');
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }

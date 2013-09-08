@@ -159,6 +159,7 @@ plan 21;
         }
         $str ~= ')';
     }
+    #?rakudo.jvm todo "nigh"
     is $str, '(x)', 'die in LEAVE caught by try';
 }
 
@@ -189,6 +190,7 @@ plan 21;
 
 #?niecza todo '@!'
 #?pugs todo
+#?rakudo.jvm skip 'unwind'
 {
     my $str;
     try {

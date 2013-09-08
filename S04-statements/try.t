@@ -112,6 +112,7 @@ plan 26;
 
 # RT #68728
 #?pugs todo
+#?rakudo.jvm skip "Method 'substr' not found"
 {
     my $str = '';
     try {
