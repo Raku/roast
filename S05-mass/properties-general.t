@@ -1074,6 +1074,7 @@ ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 #?pugs todo
 #?niecza 3 todo "Tests are wrong by latest Unicode standard"
+#?rakudo.jvm 3 todo "nigh"
 ok("\x[A679]" ~~ m/^<:Other>$/, q{Match <:Other>} );
 ok(!( "\x[A679]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
 ok(!( "\x[A679]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
@@ -1084,6 +1085,7 @@ ok("\x[AC00]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
 #?pugs todo
 #?niecza todo "Test is wrong by latest Unicode standard"
+#?rakudo.jvm todo "nigh"
 ok("\x[AC00]\x[A679]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
 
 # Cc          Control

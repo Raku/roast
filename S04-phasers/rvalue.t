@@ -59,6 +59,7 @@ plan 16;
     }
 
     #?niecza todo 'block returns no value'
+    #?rakudo.jvm 3 todo "nigh"
     is $check(), 'BC', 'CHECK {} runs only once';
     #?niecza todo 'block returns no value'
     is $check_val, 'BC', 'CHECK {} as rval is its ret val';
