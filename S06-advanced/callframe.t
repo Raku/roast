@@ -7,7 +7,6 @@ plan 9;
 # this test file contains tests for line numbers, among other things
 # so it's extremely important not to randomly insert or delete lines.
 
-
 my $baseline = 10;
 
 isa_ok callframe(), CallFrame, 'callframe() returns a CallFrame';
