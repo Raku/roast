@@ -67,7 +67,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok <a b c>.Set, Set, "<a b c>.Set makes a Set";
     is showset(<a b c a>.Set), 'a b c', "<a b c a>.Set makes the set a b c";
     is showset(["a", "b", "c", "a"].Set), 'a b c', "[a b c a].Set makes the set a b c";
-    #?rakudo todo 'this test is bogus?'
     is showset([a => 3, b => 0, 'c', 'a'].Set), 'a c', "[a => 3, b => 0, 'c', 'a'].Set makes the set a c";
 
     isa_ok {a => 2, b => 4, c => 0}.Set, Set, "{a => 2, b => 4, c => 0}.Set makes a Set";
@@ -303,7 +302,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok %x.Set, Set, "Method .Set works on Hash-1";
     is showset(%x.Set), "a b", "Method .Set works on Hash-2";
     isa_ok (@a, %x).Set, Set, "Method .Set works on Parcel-1";
-    #?rakudo todo 'not up to spec'
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on Parcel-2";
 }
 

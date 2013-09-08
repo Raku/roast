@@ -73,7 +73,6 @@ sub showkv($x) {
     isa_ok <a b c>.Bag, Bag, "<a b c>.Bag makes a Bag";
     is showkv(<a b c a>.Bag), 'a:2 b:1 c:1', "<a b c a>.Bag makes the bag a:2 b:1 c:1";
     is showkv(["a", "b", "c", "a"].Bag), 'a:2 b:1 c:1', "[a b c a].Bag makes the bag a:2 b:1 c:1";
-    #?rakudo todo '.Bag is not supposed to flatten'
     is showkv([a => 3, b => 0, 'c', 'a'].Bag), 'a:4 c:1', "[a => 3, b => 0, 'c', 'a'].Bag makes the bag a:4 c:1";
 
     isa_ok {a => 2, b => 4, c => 0}.Bag, Bag, "{a => 2, b => 4, c => 0}.Bag makes a Bag";
@@ -312,7 +311,6 @@ sub showkv($x) {
     isa_ok %x.Bag, Bag, "Method .Bag works on Hash-1";
     is showkv(%x.Bag), "a:1 b:2", "Method .Bag works on Hash-2";
     isa_ok (@a, %x).Bag, Bag, "Method .Bag works on Parcel-1";
-    #?rakudo todo 'huh?'
     is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on Parcel-2";
 }
