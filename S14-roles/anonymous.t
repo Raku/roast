@@ -21,8 +21,10 @@ plan 13;
   is $a, {:x}, "basic sanity";
   my $role;
   lives_ok { $role = role { has $.cool = "yeah" } }, "anonymous role definition";
+  #?rakudo.jvm todo "nigh"
   lives_ok { $a does $role }, "anonymous role variable mixin";
   is $a, {:x}, "still basic sanity";
+  #?rakudo.jvm todo "nigh"
   is $a.cool, "yeah", "anonymous role variable gave us an attribute";
 }
 

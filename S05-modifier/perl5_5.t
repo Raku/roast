@@ -19,6 +19,7 @@ is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){2}(.)/ && $0), "b", 're_tests 609/1 (793)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){4,5}(.)/ && $0), "b", 're_tests 611/1 (795)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){4,5}?(.)/ && $0), "d", 're_tests 613/1 (797)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){6,7}(.)/ && $0), "e", 're_tests 615/1 (799)');
+#?rakudo.jvm todo "nigh"
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){6,7}?(.)/ && $0), "e", 're_tests 617/1 (801)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){5,6}(.)/ && $0), "e", 're_tests 619/1 (803)');
 is(("acdbcdbe" ~~ rx:P5/a(?:b|c|d){5,6}?(.)/ && $0), "b", 're_tests 621/1 (805)');

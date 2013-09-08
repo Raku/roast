@@ -55,6 +55,7 @@ is ({ try { die_in_return(); 23 }; 42 }()), 42, "die in return";
     is "$!", $msg, 'die with no argument uses $!';
 }
 
+#?rakudo.jvm todo "nigh"
 is_run( 'die "first line"',
         { status => sub { 0 != $^a },
           out    => '',
@@ -62,6 +63,7 @@ is_run( 'die "first line"',
         },
         'die with no output' );
 
+#?rakudo.jvm todo "nigh"
 is_run( 'say "hello"; die "Nos morituri te salutant!\n"',
         { status => sub { 0 != $^a },
           out    => "hello\n",

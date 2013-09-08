@@ -6,6 +6,7 @@ BEGIN { @*INC.push: 't/spec/packages' }
 use Test::Util;
 
 my Str $x;
+#?rakudo.jvm 3 skip "nigh"
 is_run $x,  :args['-e', 'print q[Moin]'],
     {
         out     => 'Moin',

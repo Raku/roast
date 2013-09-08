@@ -7,18 +7,21 @@ BEGIN { @*INC.push('t/spec/packages') };
 
 use Test::Util;
 
+#?rakudo.jvm todo "nigh"
 is_run "use v6;\n'a' =~ /foo/", {
     status  => { $_ != 0 },
     out     => '',
     err     => rx/<<2>>/
 }, 'Parse error contains line number';
 
+#?rakudo.jvm todo "nigh"
 is_run "my \$x = 2 * 3;\ndie \$x", {
     status  => { $_ != 0 },
     out     => '',
     err     => all(rx/6/, rx/<<2>>/),
 }, 'Runtime error contains line number';
 
+#?rakudo.jvm todo "nigh"
 is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
@@ -27,6 +30,7 @@ is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     }, 'Method not found error mentions method name and line number';
 
 # RT #75446
+#?rakudo.jvm todo "nigh"
 is_run 'use v6;
 sub bar {
     pfff();
@@ -39,6 +43,7 @@ bar()',
         err     => all(rx/pfff/, rx/<<3>>/),
     }, 'got the right line number for nonexisting sub inside another sub';
 
+#?rakudo.jvm todo "nigh"
 is_run 'say 42; nosuchsub()',
     {
         status  => { $_ != 0 },
@@ -61,6 +66,7 @@ is_run 'say 42; nosuchsub()',
 }
 
 # RT #76112
+#?rakudo.jvm todo "nigh"
 is_run 'use v6;
 class A { has $.x is rw };
 A.new.x(42);',
@@ -71,6 +77,7 @@ A.new.x(42);',
     }, 'got the right line number for accessors';
 
 # RT #80982
+#?rakudo.jvm todo "nigh"
 is_run 'say 0080982',
     {
         status => 0,
@@ -88,6 +95,7 @@ is_run 'my $ = 2; my $ = 3; say q[alive]',
     }, 'multiple anonymous variables do not warn or err out';
 
 # RT #112724
+#?rakudo.jvm todo "nigh"
 is_run 'sub mysub {
         + Any # trigger an uninitialized warning
     };
@@ -100,6 +108,7 @@ is_run 'sub mysub {
 
 # RT #77736
 #?niecza todo
+#?rakudo.jvm todo "nigh"
 is_run 'die "foo"; END { say "end run" }',
     {
         status => * != 0,

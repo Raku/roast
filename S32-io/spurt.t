@@ -58,6 +58,7 @@ sub all-basic(Callable $handle) {
 
 # Corner cases
 #?niecza skip "Unable to resolve method open in type IO"
+#?rakudo.jvm skip "java.lang.StackOverflowError"
 {
     # Spurt on open handle
     {

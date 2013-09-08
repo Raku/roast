@@ -231,6 +231,7 @@ throws_like '"a".match(:x([1, 2, 3]), /a/).Str', X::Str::Match::x, got => Array;
 throws_like '"a".trans([Any.new] => [Any.new])', X::Str::Trans::IllegalKey, key => Any;
 throws_like '"a".trans(rx/a/)', X::Str::Trans::InvalidArg, got => Regex;
 
+#?rakudo.jvm skip "wrong exception type"
 throws_like '1.foo',  X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like '1.+foo', X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like 'my class Priv { method x { self!foo } }; Priv.x',
@@ -239,6 +240,7 @@ throws_like 'my class Priv { method x { self!foo } }; Priv.x',
                       typename  => 'Priv',
                       private   => { $_ === True };
 # RT #77582
+#?rakudo.jvm skip "wrong exception type"
 throws_like 'my %h; %h.nosuchmethods', X::Method::NotFound, typename => 'Hash';
 
 throws_like '1.List::join', X::Method::InvalidQualifier,
@@ -267,13 +269,19 @@ throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, ex
 throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
 
+#?rakudo.jvm skip "wrong exception type"
 throws_like 'sub f() { }; f() = 3', X::Assignment::RO;
+#?rakudo.jvm skip "wrong exception type"
 throws_like '1.0 = 3', X::Assignment::RO;
 # RT #113534
+#?rakudo.jvm skip "wrong exception type"
 throws_like '120 = 3', X::Assignment::RO;
+#?rakudo.jvm skip "wrong exception type"
 throws_like '1e0 = 3', X::Assignment::RO;
+#?rakudo.jvm skip "wrong exception type"
 throws_like '"a" = 3', X::Assignment::RO;
 
+#?rakudo.jvm skip "wrong exception type"
 throws_like '1.foo', X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like 'my class NC { }; NC.new does NC', X::Mixin::NotComposable,
             :target(*.defined), :rolish(*.^name eq 'NC');
@@ -400,6 +408,7 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
     throws_like q{if 10 > 5 { say "maths works!" } else if 10 == 5 { say "identity is weird" } else { say "math is weird" }}, X::Syntax::Malformed::Elsif;
 }
 
+#?rakudo.jvm skip "wrong exception type"
 {
     # RT #72958
     throws_like q{1/2.''()}, X::Method::NotFound, method => '', typename => 'Int';
@@ -410,6 +419,7 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
     throws_like q{role Bottle[::T] { method Str { "a bottle of {T}" } }; class Wine { ... }; say Bottle[Wine].new;}, X::Package::Stubbed;
 }
 
+#?rakudo.jvm skip "wrong exception type"
 throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol => '$x';
 
 done;

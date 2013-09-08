@@ -37,6 +37,7 @@ use Test::Util;
 }
 
 #?niecza todo
+#?rakudo.jvm todo "nigh"
 is_run 'use v6; warn; say "alive"',
     {
         status => 0,
@@ -54,6 +55,7 @@ is_run 'use v6; warn("OH NOEZ"); say "alive"',
     },
     'warn() with arguments; line number';
 
+#?rakudo.jvm todo "nigh"
 is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
     {
         status => 0,

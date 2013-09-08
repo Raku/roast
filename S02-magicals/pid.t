@@ -13,6 +13,7 @@ L<A05/"RFC 332: Regex: Make /\$/ equivalent to /\z/ under the '/s' modifier" /Th
 
 plan 1;
 
+#?rakudo.jvm todo "this test may need to be skipped when using the eval server"
 is_run 'say $*PID',
     {
         out => -> $p { $p > 0 && $p != $*PID },
