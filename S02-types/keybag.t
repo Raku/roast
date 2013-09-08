@@ -78,7 +78,6 @@ sub showkv($x) {
     nok "a" ~~ (KeyBag.new: <a b c>), "Smartmatch is not element of";
     ok (KeyBag.new: <a b c>) ~~ KeyBag, "Type-checking smartmatch works";
 
-    #?rakudo todo 'huh?'
     ok (set <a b c>) ~~ (KeyBag.new: <a b c>), "Set smartmatches with equivalent KeyBag.new:";
     nok (set <a a a b c>) ~~ (KeyBag.new: <a a a b c>), "... but not if the Bag has greater quantities";
     nok (set <a b c>) ~~ KeyBag, "Type-checking smartmatch works";

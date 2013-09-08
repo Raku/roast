@@ -118,7 +118,6 @@ isa_ok ($s (-) $b), Set, "... and it's actually a Set";
 
 is showset($s (-) $kb), showset(set <I'm afraid it isn't day>), "KeyBag subtracted from Set is correct";
 isa_ok ($s (-) $kb), Set, "... and it's actually a Set";
-#?rakudo todo "huh?"
 is showkv($kb (-) $s), showkv(<Come, take your bread with joy, and wine with a glad heart>.Bag), "Set subtracted from KeyBag is correct";
 isa_ok ($kb (-) $s), Bag, "... and it's actually a Bag";
 

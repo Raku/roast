@@ -56,7 +56,6 @@ sub showkv($x) {
     nok "a" ~~ (bag <a b c>), "Smartmatch is not element of";
     ok (bag <a b c>) ~~ Bag, "Type-checking smartmatch works";
 
-    #?rakudo todo 'huh?'
     ok (set <a b c>) ~~ (bag <a b c>), "Set smartmatches with equivalent bag";
     nok (set <a a a b c>) ~~ (bag <a a a b c>), "... but not if the Bag has greater quantities";
     nok (set <a b c>) ~~ Bag, "Type-checking smartmatch works";
