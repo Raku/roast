@@ -4,7 +4,7 @@ use Test;
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>
 
 my @inttypes = map {"int$_", "uint$_"}, <1 2 4 8 16 32 64>;
-plan 8 * @inttypes;
+plan 10 * @inttypes;
 
 for @inttypes -> $type {
     eval_lives_ok "my $type \$var; 1", "Type $type lives"
@@ -32,6 +32,10 @@ for @inttypes -> $type {
     eval_dies_ok("my $type \$var = 'foo'", "$type cannot be a string");
     eval_dies_ok("my $type \$var = 42.1", "$type cannot be non-integer");
     eval_dies_ok("my $type \$var = NaN", "$type cannot be NaN");
+
+    #?rakudo 2 skip "Cannot modify an immutable value"
+    is(eval("my $type \$var = 0; \$var++; \$var"), 1, "$type \$var++ works");
+    is(eval("my $type \$var = 1; \$var--; \$var"), 0, "$type \$var-- works");
 }
 
 # vim: ft=perl6
