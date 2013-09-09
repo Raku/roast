@@ -86,17 +86,13 @@ isa_ok ($ks (|) <blue green>), Set, "... and it's actually a Set (texas)";
 
 # Intersection
 
-#?rakudo todo 'huh?'
 is showset($s ∩ $s), showset($s), "Set intersection with itself yields self";
 isa_ok ($s ∩ $s), Set, "... and it's actually a Set";
-#?rakudo todo 'huh?'
 is showset($ks ∩ $ks), showset($ks), "KeySet intersection with itself yields self (as Set)";
 isa_ok ($ks ∩ $ks), Set, "... and it's actually a Set";
-#?rakudo todo 'huh?'
 is showset($s ∩ $ks), showset(set <I'm afraid it>), "Set intersection with KeySet works";
 isa_ok ($s ∩ $ks), Set, "... and it's actually a Set";
 
-#?rakudo todo 'huh?'
 is showset($s (&) $ks), showset(set <I'm afraid it>), "Set intersection with KeySet works (texas)";
 isa_ok ($s (&) $ks), Set, "... and it's actually a Set (texas)";
 
