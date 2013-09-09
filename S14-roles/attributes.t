@@ -50,6 +50,7 @@ class C5 does R4 {
 }
 is C5.new().bar(), [], 'Composing an attribute into a class that already has one works';
 
+#?pugs skip 'Cannot cast into Hash'
 {
     role R6 {
         has %!e;
