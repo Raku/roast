@@ -43,32 +43,25 @@ isa_ok ($s (|) $kb), Bag, "... and it's actually a Bag";
 
 # Bag Intersection
 
-#?rakudo todo 'huh?'
 is showkv($b ∩ $b), showkv($b), "Bag intersection with itself yields self (as Bag)";
 isa_ok ($b ∩ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($kb ∩ $kb), showkv($kb), "KeyBag intersection with itself yields self (as Bag)";
 isa_ok ($kb ∩ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo todo 'huh?'
 is showkv($s ∩ $b), "blood:1 love:1", "Set intersection with Bag works";
 isa_ok ($s ∩ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($s ∩ $kb), "blood:1 love:1", "Set intersection with KeyBag works";
 isa_ok ($s ∩ $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
-#?rakudo todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong'
 is showkv($kb ∩ <glad green blood>), "blood:1", "KeyBag intersection with array of strings works";
 isa_ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
-#?rakudo todo 'huh?'
 is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)";
 isa_ok ($s (&) $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
+#?rakudo todo 'Test may be wrong?'
 is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with KeyBag works (texas)";
 isa_ok ($s (&) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
-#?rakudo todo 'Test may be wrong?'
 is showkv($kb (&) <glad green blood>), "blood:1", "KeyBag intersection with array of strings works (texas)";
 isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
