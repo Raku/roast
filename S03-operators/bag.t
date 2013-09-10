@@ -58,7 +58,6 @@ isa_ok ($kb ∩ <glad green blood>), Bag, "... and it's actually a Bag";
 
 is showkv($s (&) $b), "blood:1 love:1", "Set intersection with Bag works (texas)";
 isa_ok ($s (&) $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'Test may be wrong?'
 is showkv($s (&) $kb), "blood:1 love:1", "Set intersection with KeyBag works (texas)";
 isa_ok ($s (&) $kb), Bag, "... and it's actually a Bag";
 #?niecza todo 'Right now this works as $kb ∩ glag ∩ green ∩ blood.  Test may be wrong?'
@@ -114,7 +113,6 @@ is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields t
 isa_ok ($ks ⊎ $ks), Bag, "... and it's actually a Bag";
 is showkv($b ⊎ $b), "blood:4 love:4 rhetoric:2", "Bag addition with itself yields twice self";
 isa_ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($kb ⊎ $kb), "blood:2 love:4", "Bag addition with itself yields twice self";
 isa_ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
 
