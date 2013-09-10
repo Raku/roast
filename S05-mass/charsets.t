@@ -20,13 +20,14 @@ plan 11;
 
     is $ascii-chars.comb(/<alpha>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alpha chars';
 
-    is $ascii-chars.comb(/<space>/)>>.ord.join(","), ([~] (9..13,32,133,160).flat.join(",")), 'cntrl chars';
-is $ascii-chars.comb(/<digit>/).join, "0123456789", 'digit chars';
+    is $ascii-chars.comb(/<space>/)>>.ord.join(","), ([~] (9..13,32,133,160).join(",")), 'space chars';
+
+    is $ascii-chars.comb(/<digit>/).join, "0123456789", 'digit chars';
 
     is $ascii-chars.comb(/<alnum>/).join, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alnum chars';
 
     #?rakudo.parrot todo 'blank characters'
-    is $ascii-chars.comb(/<blank>/)>>.ord.join(","), ([~] (9,32,160).join(",")), 'blank chars';
+    is $ascii-chars.comb(/<blank>/)>>.ord.join(","), '9,32,160', 'blank chars';
 
     is $ascii-chars.comb(/<cntrl>/)>>.ord.join(","), ([~] (0..31, 127..159).join(",")), 'cntrl chars';
 
