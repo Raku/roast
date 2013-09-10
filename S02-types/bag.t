@@ -258,7 +258,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 }
 
-#?rakudo skip 'takes too long'
 {
     my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
@@ -290,7 +289,6 @@ sub showkv($x) {
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
 }
 
-#?rakudo skip 'takes too long'
 {
     my $b = {"a" => 100000000000, "b" => 1}.Bag;
 
