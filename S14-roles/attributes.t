@@ -51,6 +51,7 @@ class C5 does R4 {
 is C5.new().bar(), [], 'Composing an attribute into a class that already has one works';
 
 #?pugs skip 'Cannot cast into Hash'
+#?niecza skip 'Unhandled exception: Attribute %!e in C6 is defined in C6 but not R6'
 {
     role R6 {
         has %!e;

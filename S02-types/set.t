@@ -166,6 +166,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.list.grep(Str).elems, 3, "... all of which are Str";
     isa_ok $s.pairs.elems, 3, ".pairs returns 3 things";
     is $s.pairs.grep(Pair).elems, 3, "... all of which are Pair";
+    #?niecza 2 todo
     is $s.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $s.pairs.grep({ .value ~~ Bool }).elems, 3, "... and the values of which are Bool";
     #?rakudo skip "Set is no longer Iterable"
