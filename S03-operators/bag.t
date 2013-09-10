@@ -60,42 +60,30 @@ isa_ok ($kb (&) <glad green blood>), Bag, "... and it's actually a Bag";
 
 # Bag multiplication
 
-#?rakudo todo 'huh?'
 is showkv($s ⊍ $s), "blood:1 love:1", "Bag multiplication with itself yields self squared";
 isa_ok ($s ⊍ $s), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($ks ⊍ $ks), "blood:1 rhetoric:1", "Bag multiplication with itself yields self squared";
 isa_ok ($ks ⊍ $ks), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($b ⊍ $b), "blood:4 love:4 rhetoric:1", "Bag multiplication with itself yields self squared";
 isa_ok ($b ⊍ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($kb ⊍ $kb), "blood:1 love:4", "Bag multiplication with itself yields self squared";
 isa_ok ($kb ⊍ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo todo 'huh?'
 is showkv($s ⊍ $ks), "blood:1", "Bag multiplication (Set / KeySet) works";
 isa_ok ($s ⊍ $ks), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($s ⊍ $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works";
 isa_ok ($s ⊍ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($ks ⊍ $b), "blood:2 rhetoric:1", "Bag multiplication (KeySet / Bag) works";
 isa_ok ($ks ⊍ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($kb ⊍ $b), "blood:2 love:4", "Bag multiplication (KeyBag / Bag) works";
 isa_ok ($kb ⊍ $b), Bag, "... and it's actually a Bag";
 
-#?rakudo todo 'huh?'
 is showkv($s (.) $ks), "blood:1", "Bag multiplication (Set / KeySet) works (texas)";
 isa_ok ($s (.) $ks), Bag, "... and it's actually a Bag (texas)";
-#?rakudo todo 'huh?'
 is showkv($s (.) $b), "blood:2 love:2", "Bag multiplication (Set / Bag) works (texas)";
 isa_ok ($s (.) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo todo 'huh?'
 is showkv($ks (.) $b), "blood:2 rhetoric:1", "Bag multiplication (KeySet / Bag) works (texas)";
 isa_ok ($ks (.) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo todo 'huh?'
 is showkv($kb (.) $b), "blood:2 love:4", "Bag multiplication (KeyBag / Bag) works (texas)";
 isa_ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
