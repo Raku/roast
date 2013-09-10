@@ -108,39 +108,30 @@ isa_ok ($kb (.) $b), Bag, "... and it's actually a Bag";
 
 # Bag addition
 
-#?rakudo todo 'huh?'
 is showkv($s ⊎ $s), "blood:2 love:2", "Bag addition with itself yields twice self";
 isa_ok ($s ⊎ $s), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($ks ⊎ $ks), "blood:2 rhetoric:2", "Bag addition with itself yields twice self";
 isa_ok ($ks ⊎ $ks), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($b ⊎ $b), "blood:4 love:4 rhetoric:2", "Bag addition with itself yields twice self";
 isa_ok ($b ⊎ $b), Bag, "... and it's actually a Bag";
 #?rakudo todo 'huh?'
 is showkv($kb ⊎ $kb), "blood:2 love:4", "Bag addition with itself yields twice self";
 isa_ok ($kb ⊎ $kb), Bag, "... and it's actually a Bag";
 
-#?rakudo todo 'huh?'
 is showkv($s ⊎ $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / KeySet) works";
 isa_ok ($s ⊎ $ks), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($s ⊎ $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works";
 isa_ok ($s ⊎ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($ks ⊎ $b), "blood:3 love:2 rhetoric:2", "Bag addition (KeySet / Bag) works";
 isa_ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
 #?rakudo todo 'huh?'
 is showkv($kb ⊎ $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag) works";
 isa_ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
 
-#?rakudo todo 'huh?'
 is showkv($s (+) $ks), "blood:2 love:1 rhetoric:1", "Bag addition (Set / KeySet) works (texas)";
 isa_ok ($s (+) $ks), Bag, "... and it's actually a Bag (texas)";
-#?rakudo todo 'huh?'
 is showkv($s (+) $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) works (texas)";
 isa_ok ($s (+) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo todo 'huh?'
 is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (KeySet / Bag) works (texas)";
 isa_ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
 #?rakudo todo 'huh?'
@@ -149,26 +140,30 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # msubset
 {
+    #?rakudo 2 todo "some test corruption"
     ok $kb ≼ $b, "Our keybag is a msubset of our bag";
-    nok $b ≼ $kb, "Our keybag is not a msubset of our bag";
+    nok $b ≼ $kb, "Our bag is not a msubset of our keybag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
     #?niecza 4 skip '(<+) NYI - https://github.com/sorear/niecza/issues/178'
+    #?rakudo 2 todo "some test corruption"
     ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
-    nok $b (<+) $kb, "Our keybag is not a msubset of our bag (texas)";
+    nok $b (<+) $kb, "Our bag is not a msubset of our keybag (texas)";
     ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
     ok $kb (<+) $kb, "Our keybag is a msubset of itself (texas)";
 }
 
 # msuperset
 {
+    #?rakudo 2 todo "some test corruption"
     nok $kb ≽ $b, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
     #?niecza 4 skip '(>+) NYI - https://github.com/sorear/niecza/issues/178'
+    #?rakudo 2 todo "some test corruption"
     nok $kb (>+) $b, "Our keybag is not a msuperset of our bag";
-    ok $b (>+) $kb, "Our keybag is not a msuperset of our bag";
+    ok $b (>+) $kb, "Our bag is a msuperset of our keybag";
     ok $b (>+) $b, "Our bag is a msuperset of itself";
     ok $kb (>+) $kb, "Our keybag is a msuperset of itself";
 }
