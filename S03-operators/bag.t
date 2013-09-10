@@ -122,7 +122,6 @@ is showkv($s ⊎ $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) wor
 isa_ok ($s ⊎ $b), Bag, "... and it's actually a Bag";
 is showkv($ks ⊎ $b), "blood:3 love:2 rhetoric:2", "Bag addition (KeySet / Bag) works";
 isa_ok ($ks ⊎ $b), Bag, "... and it's actually a Bag";
-#?rakudo todo 'huh?'
 is showkv($kb ⊎ $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag) works";
 isa_ok ($kb ⊎ $b), Bag, "... and it's actually a Bag";
 
@@ -132,19 +131,16 @@ is showkv($s (+) $b), "blood:3 love:3 rhetoric:1", "Bag addition (Set / Bag) wor
 isa_ok ($s (+) $b), Bag, "... and it's actually a Bag (texas)";
 is showkv($ks (+) $b), "blood:3 love:2 rhetoric:2", "Bag addition (KeySet / Bag) works (texas)";
 isa_ok ($ks (+) $b), Bag, "... and it's actually a Bag (texas)";
-#?rakudo todo 'huh?'
 is showkv($kb (+) $b), "blood:3 love:4 rhetoric:1", "Bag addition (KeyBag / Bag) works (texas)";
 isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # msubset
 {
-    #?rakudo 2 todo "some test corruption"
     ok $kb ≼ $b, "Our keybag is a msubset of our bag";
     nok $b ≼ $kb, "Our bag is not a msubset of our keybag";
     ok $b ≼ $b, "Our bag is a msubset of itself";
     ok $kb ≼ $kb, "Our keybag is a msubset of itself";
     #?niecza 4 skip '(<+) NYI - https://github.com/sorear/niecza/issues/178'
-    #?rakudo 2 todo "some test corruption"
     ok $kb (<+) $b, "Our keybag is a msubset of our bag (texas)";
     nok $b (<+) $kb, "Our bag is not a msubset of our keybag (texas)";
     ok $b (<+) $b, "Our bag is a msubset of itself (texas)";
@@ -153,13 +149,11 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
 
 # msuperset
 {
-    #?rakudo 2 todo "some test corruption"
     nok $kb ≽ $b, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $kb, "Our keybag is not a msuperset of our bag";
     ok $b ≽ $b, "Our bag is a msuperset of itself";
     ok $kb ≽ $kb, "Our keybag is a msuperset of itself";
     #?niecza 4 skip '(>+) NYI - https://github.com/sorear/niecza/issues/178'
-    #?rakudo 2 todo "some test corruption"
     nok $kb (>+) $b, "Our keybag is not a msuperset of our bag";
     ok $b (>+) $kb, "Our bag is a msuperset of our keybag";
     ok $b (>+) $b, "Our bag is a msuperset of itself";
