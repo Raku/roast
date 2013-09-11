@@ -51,6 +51,7 @@ my $b;
 
 #?pugs   skip "NYI"
 #?niecza skip "NYI"
+#?rakudo.jvm skip "This representation can not unbox to a native num"
 {
     diag "sleep-till() for $seconds seconds";
     my $then  = now;
