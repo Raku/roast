@@ -281,6 +281,7 @@ plan 78;
 }
 
 #?niecza skip 'KeyHash not implemented'
+#?rakudo skip 'KeyHash not implemented'
 #?pugs skip 'KeyHash'
 {
  my KeyHash $pamu;
