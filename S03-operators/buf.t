@@ -43,38 +43,32 @@ ok Buf.new(1, 2, 3, 4).subbuf(2) eqv Buf.new(3, 4), '.subbuf(start)';
 ok Buf.new(1, 2, 3, 4).subbuf(1, 2) eqv Buf.new(2, 3), '.subbuf(start, len)';
 
 # Length out of bounds. Behave like substr, return elemens available.
-#?rakudo: 2 skip "out of bounds"
 ok Buf.new(1, 2).subbuf(0, 3) eqv Buf.new(1,2), '.substr length out of bounds';
 ok Buf.new.subbuf(0, 1) eqv Buf.new(), "subbuf on an empty buffer";
 
-#?rakudo skip ""
 { # Throw on negative range
     Buf.new(1).subbuf(-1, 1);
     ok 0, "throw on negative range";
     CATCH { when X::OutOfRange { ok 1, "throw on negative range" } }
 }
 
-#?rakudo: skip "wrong exception"
 { # Throw on out of bounds
     Buf.new(0xFF).subbuf(2, 1);
     ok 0, "throw on out of range (positive)";
     CATCH { when X::OutOfRange { ok 1, "throw on out of range (positive)" } }
 }
 
-#?rakudo: skip "No such method 'Int' for invocant of type 'WhateverCode'"
 { # Counted from the end
     ok Buf.new(^10).subbuf(*-5, 5) eqv Buf.new(5..9), "counted from the end";
     ok Buf.new(1, 2).subbuf(*-1, 10) eqv Buf.new(2), "counted from the end, length out of bounds";
 }
 
-#?rakudo: skip "No such method 'Int' for invocant of type 'WhateverCode'"
 { # Throw on out of bounds, from the end.
     Buf.new(0xFF).subbuf(*-2, 1);
     ok 0, "throw on out of bounds, counted from the end";
     CATCH { when X::OutOfRange { ok 1, "throw on out of bounds, counted from the end"; } }
 }
 
-#?rakudo skip ""
 { 
     Buf.new().subbuf(0, -1);
     ok 0, "throw on negative len";
