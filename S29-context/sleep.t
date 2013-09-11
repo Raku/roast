@@ -3,7 +3,7 @@ use Test;
 
 # L<S29/Context/"=item sleep">
 
-plan 21;
+plan 17;
 
 my $seconds = 3;
 my $nil is default(Nil);
@@ -70,10 +70,6 @@ my $b;
     diag "checking infinite waiting times";
     isa_ok eval('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
     isa_ok eval('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
-    isa_ok eval('$b={sleep-timer(Inf)}'), Block, 'sleep-timer(Inf) compiles';
-    isa_ok eval('$b={sleep-timer(*)}'),   Block, 'sleep-timer(*) compiles';
-    isa_ok eval('$b={sleep-till(Inf)}'),  Block, 'sleep-till(Inf) compiles';
-    isa_ok eval('$b={sleep-till(*)}'),    Block, 'sleep-till(*) compiles';
-} #6
+} #2
 
 # vim: ft=perl6
