@@ -35,6 +35,7 @@ my class H is Hash  {};
     ok $a.WHAT    === A,   'A.new default is A';
     ok $a[0].WHAT === Any, 'A.new[0] default is Any';
     my $h = H.new;
+    #?niecza todo
     ok $h.WHAT    === H,   'H.new default is Hash';
     ok $h<a>.WHAT === Any, 'H.new<a> default is Any';
 } #4

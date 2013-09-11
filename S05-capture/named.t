@@ -37,6 +37,7 @@ Testing named capture variables nested inside each other. This doesn't appear to
 #L<S05/Subrule captures>
 
 #?rakudo skip 'assigning to match object'
+#?niecza skip "Writing to readonly scalar"
 {
   my regex number {
     [ $<numeral> = <&roman_numeral>  { $<notation> = 'roman' }
