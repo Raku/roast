@@ -3,38 +3,77 @@ use Test;
 
 # L<S29/Context/"=item sleep">
 
-plan 12;
+plan 21;
+
+my $seconds = 3;
+my $nil is default(Nil);
+my $b;
 
 {
-    diag "Sleeping for 3s";
-    my $start = time;
-    my $sleep_says = sleep 3;
-    my $diff = time - $start;
+    diag "sleep() for $seconds seconds";
+    my $start = now;
+    $nil = sleep $seconds;
+    my $diff = now - $start;
 
-    #?pugs todo
-    ok( $sleep_says >= 2 , 'Sleep says it slept at least 2 seconds');
-    ok( $sleep_says <= 10 , '... and no more than 10');
+    #?pugs   todo "NYI"
+    #?niecza todo "NYI"
+    ok $nil === Nil , 'sleep() always returns Nil';
 
-    ok( $diff >= 2 , 'We actually slept at least 2 seconds');
-    ok( $diff <= 10 , '... and no more than 10');
+    ok $diff >= $seconds - 1 , 'we actually slept at some seconds';
+    ok $diff <= $seconds + 5 , '... but not too long';
+
+    #?pugs   2 skip "NYI"
+    #?niecza 2 skip "NYI"
+    $nil = 1;
+    lives_ok { $nil = sleep(-1) }, "silently ignores negative times";
+    ok $nil === Nil , 'sleep() always returns Nil';
+} #5
+
+#?pugs   skip "NYI"
+#?niecza skip "NYI"
+{
+    diag "sleep-timer() for $seconds seconds";
+    my $then = now;
+    my $left = sleep-timer $seconds;
+    my $now  = now;
+
+    isa_ok $left, Duration, 'did we get a Duration back (1)';
+    ok $now - $then + $seconds >= $left, 'does Duration returned make sense';
+
+    $left = sleep-timer -1;
+    isa_ok $left, Duration, 'did we get a Duration back (2)';
+    is $left, 0, 'no time left to wait';
+
+    $left = sleep-timer 0;
+    isa_ok $left, Duration, 'did we get a Duration back (3)';
+    is $left, 0, 'no time left to wait either';
+} #6
+
+#?pugs   skip "NYI"
+#?niecza skip "NYI"
+{
+    diag "sleep-till() for $seconds seconds";
+    my $then  = now;
+    my $slept = sleep-till $then + $seconds;
+    my $now   = now;
+
+    isa_ok $slept, Bool, 'did we get a Bool back';
+    ok $slept, 'did we actually wait';
+    ok $now - $then + $seconds >= 0, 'does elapsed time make sense';
+
+    nok sleep-till($then + $seconds), 'should not actually sleep again';
 } #4
 
-#?pugs   skip "not yet implemented"
-#?niecza todo "not yet implemented"
+#?pugs   todo "NYI"
+#?niecza todo "NYI"
 {
-    is interval( 1.5 ), 0, "first call doesn't wait";
-    my $start = time.Num;
-    ok 0 <= interval(2.5) < 1.5, "first sleep";
-    ok 0 <= interval(5  ) < 2.5, "second sleep";
-    ok 0 <= interval(0  ) < 5  , "third sleep";
-    is interval(3), 0, "fourth sleep";
-    ok 0 <= interval(0  ) < 3  , "fifth sleep";
-    ok 12 <= time.Num - $start <= 15, "some overall time";
-} #7
-
-#?pugs   todo "not yet implemented"
-{
-    dies_ok( { sleep(-1) }, "cannot go back in time" );
-} #1
+    diag "checking infinite waiting times";
+    isa_ok eval('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
+    isa_ok eval('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
+    isa_ok eval('$b={sleep-timer(Inf)}'), Block, 'sleep-timer(Inf) compiles';
+    isa_ok eval('$b={sleep-timer(*)}'),   Block, 'sleep-timer(*) compiles';
+    isa_ok eval('$b={sleep-till(Inf)}'),  Block, 'sleep-till(Inf) compiles';
+    isa_ok eval('$b={sleep-till(*)}'),    Block, 'sleep-till(*) compiles';
+} #6
 
 # vim: ft=perl6
