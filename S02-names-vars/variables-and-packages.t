@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 38;
 
 # L<S02/Names/"The following pseudo-package names are reserved">
 #?niecza todo 'System.NullReferenceException: Object reference not set to an instance of an object'
@@ -160,6 +160,15 @@ plan 37;
         }
     };
     s(9);/, "can't redeclare something with an implicit outer binding");
+}
+
+{
+    # RT #74076
+    my $t;
+    for 'a' {
+        $t = sub { $OUTER::_ };
+    }
+    is $t(), 'a', '$OUTER::_ can access a $_';
 }
 
 # vim: ft=perl6
