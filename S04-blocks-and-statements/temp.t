@@ -172,7 +172,7 @@ eval('
     a() if ++$depth < 3;
   }
   a();
-  #?rakudo todo 'temp and recursion'
+  #?rakudo.parrot todo 'temp and recursion'
   is $c, 1, 'recursive nested temps are restored properly';
 }
 
@@ -208,7 +208,7 @@ eval('
   $value = 0;
 
   recursive(10);
-  #?rakudo todo 'temp + recursion'
+  #?rakudo.parrot todo 'temp + recursion'
   is($value, 0, 'recursive function properly resets value');
 }
 
