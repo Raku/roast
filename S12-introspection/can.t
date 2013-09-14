@@ -101,6 +101,7 @@ my $pup = Puppy.new();
 #?niecza todo
 ok Str.can('split') ~~ /split/, 'return value of .can stringifies sensibly';
 
+#?niecza skip "No match"
 {
     # RT #76882
     my class A {

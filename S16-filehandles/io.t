@@ -250,7 +250,7 @@ $out.say("Foo Bar Baz");
 $out.say("The End");
 $out.close;
 
-#?niecza todo 'Cannot open file straight from $filename.IO.get'
+#?niecza skip 'IO.close'
 {
     my $line;
     my $io = $filename.IO;
