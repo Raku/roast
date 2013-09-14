@@ -162,6 +162,7 @@ plan 38;
     s(9);/, "can't redeclare something with an implicit outer binding");
 }
 
+#?pugs todo
 {
     # RT #74076
     my $t;
