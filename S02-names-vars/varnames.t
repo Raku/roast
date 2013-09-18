@@ -20,7 +20,7 @@ eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their nam
 #?pugs skip "Can't modify constant item: VObject"
 {
     class MyMatch {
-        method postcircumfix:<[ ]>($x) {
+        method at_pos($x) {
             "foo$x";
         }
     }

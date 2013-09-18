@@ -23,19 +23,20 @@ sub make-string(@a) {
     "deletion of an array element returned the right thing";
   is make-string(@array), "a b Any() d", "deletion of an array element";
 
-  is ~@array.delete(0, 3), "a d",
+  is ~@array.delete(3), "d",
     "deletion of array elements returned the right things";
   #?pugs todo
-  is make-string(@array), "Any() b", "deletion of array elements (1)";
+  is make-string(@array), "a b", "deletion of array elements (1)";
   #?pugs todo
   is +@array, 2,     "deletion of array elements (2)";
 }
 
 # W/ negative indices:
+#?rakudo skip ":delete NYI, but will be shortly"
 {
   my @array = <a b c d>;
   #?pugs todo
-  is ~@array.delete(*-2), "c",
+  is ~@array[*-2]:delete, "c",
     "deletion of array element accessed by an negative index returned the right thing";
   # @array is now ("a", "b", Any, "d") ==> double spaces
   #?pugs todo
@@ -43,7 +44,7 @@ sub make-string(@a) {
   is +@array,        4, "deletion of an array element accessed by an negative index (2)";
 
   #?pugs todo
-  is ~@array.delete(*-1), "d",
+  is ~@array[*-1]:delete, "d",
     "deletion of last array element returned the right thing";
   # @array is now ("a", "b")
   #?pugs todo
@@ -54,9 +55,10 @@ sub make-string(@a) {
 
 # W/ multiple positive and negative indices:
 #?pugs todo
+#?rakudo skip ":delete NYI, but will be shortly"
 {
   my @array = <a b c d e f>;
-  is ~@array.delete(2, *-3, *-1), "c d f",
+  is ~@array[2, *-3, *-1]:delete, "c d f",
     "deletion of array elements accessed by positive and negative indices returned right things";
   # @array is now ("a", "b", Any, Any, "e") ==> double spaces
   is make-string(@array), "a b Any() Any() e",
@@ -67,11 +69,11 @@ sub make-string(@a) {
 
 # Results taken from Perl 5
 #?niecza todo "Not sure if this test is correct or not"
-#?rakudo todo "Not sure if this test is correct or not"
 #?pugs   todo "Not sure if this test is correct or not"
+#?rakudo skip ":delete NYI, but will be shortly"
 {
   my @array = <a b c>;
-  is ~@array.delete(2, *-1), "c b",
+  is ~@array[2, *-1]:delete, "c b",
     "deletion of the same array element accessed by different indices returned right things";
   is ~@array, "a",
     "deletion of the same array element accessed by different indices (1)";
@@ -90,9 +92,10 @@ sub make-string(@a) {
 }
 
 # W/ one range of positive indices
+#?rakudo skip ":delete NYI, but will be shortly"
 {
   my @array = <a b c d e f>;
-  is ~@array.delete(2..4), "c d e",
+  is ~@array[2..4]:delete, "c d e",
     "deletion of array elements accessed by a range of positives indices returned right things";
   # @array is now ("a", "b", Any, Any, Any, "f") ==> 4 spaces
   is make-string(@array), "a b Any() Any() Any() f",
@@ -101,9 +104,10 @@ sub make-string(@a) {
     "deletion of array elements accessed by a range of positive indices (2)";
 }
 
+#?rakudo skip ":delete NYI, but will be shortly"
 {
   my @array = <a b c d e f>;
-  is ~@array.delete(2^..4), "d e",
+  is ~@array[2^..4]:delete, "d e",
     "deletion of array elements accessed by a range of positives indices returned right things (2)";
   # @array is now ("a", "b", "c", Any, Any, "f") ==> 4 spaces
   is make-string(@array), "a b c Any() Any() f",

@@ -23,7 +23,7 @@ plan 4;
 #?pugs todo
 {
     class A does Associative {
-        method postcircumfix:<{ }>(*@ix) {
+        method at_key(*@ix) {
             return @ix
         }
     };
