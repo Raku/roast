@@ -10,7 +10,7 @@ tests over character sets. currently limited to ascii.
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
 
-plan 11;
+plan 16;
 
 #?niecza skip 'Tests not completing under niecza'
 {
@@ -20,7 +20,7 @@ plan 11;
 
     is $ascii-chars.comb(/<alpha>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'alpha chars';
 
-    is $ascii-chars.comb(/<space>/)>>.ord.join(","), ([~] (9..13,32,133,160).join(",")), 'space chars';
+    is $ascii-chars.comb(/<space>/)>>.ord.join(","), ((9..13,32,133,160).join(",")), 'space chars';
 
     is $ascii-chars.comb(/<digit>/).join, "0123456789", 'digit chars';
 
@@ -29,16 +29,24 @@ plan 11;
     #?rakudo.parrot todo 'blank characters'
     is $ascii-chars.comb(/<blank>/)>>.ord.join(","), '9,32,160', 'blank chars';
 
-    is $ascii-chars.comb(/<cntrl>/)>>.ord.join(","), ([~] (0..31, 127..159).join(",")), 'cntrl chars';
+    is $ascii-chars.comb(/<cntrl>/)>>.ord.join(","), ((0..31, 127..159).join(",")), 'cntrl chars';
 
     #?rakudo.parrot todo 'lower characters'
     is $ascii-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzªµºßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';
 
     #?rakudo.parrot todo 'punct characters'
     is $ascii-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>, 'punct chars';
+    #?rakudo todo ':Punct characters'
+    is $ascii-chars.comb(/<:Punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>, ':Punct chars';
 
     is $ascii-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';
 
     is $ascii-chars.comb(/<xdigit>/).join, "0123456789ABCDEFabcdef", 'xdigit chars';
+
+    is $ascii-chars.comb(/<:Letter>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'unicode class';
+
+    is $ascii-chars.comb(/<+ xdigit - lower >/).join, "0123456789ABCDEF", 'combined builtin classes';
+    is $ascii-chars.comb(/<+ :HexDigit - :Upper >/).join, "0123456789abcdef", 'combined unicode classes';
+    is $ascii-chars.comb(/<+ :HexDigit - lower >/).join, "0123456789ABCDEF", 'combined unicode and builtins';
 
 }
