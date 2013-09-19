@@ -36,8 +36,7 @@ plan 16;
 
     #?rakudo.parrot todo 'punct characters'
     is $ascii-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>, 'punct chars';
-    #?rakudo todo ':Punct characters'
-    is $ascii-chars.comb(/<:Punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>, ':Punct chars';
+    is $ascii-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡«·»¿>, ':Punctuation chars';
 
     is $ascii-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';
 
