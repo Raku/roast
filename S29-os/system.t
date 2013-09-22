@@ -24,8 +24,9 @@ $res = run("program_that_does_not_exist_ignore_errors_please.exe","a","b");
 ok(!$res, "run() to a nonexisting program with an argument list does not die (and returns something false)");
 
 chdir "t";
-BEGIN my $cwd = $*OS eq 'MSWin32' ?? 'cd' !! 'pwd';
+BEGIN { my $cwd = $*OS eq 'MSWin32' ?? 'cd' !! 'pwd' };
+#?pugs skip 'qqx'
 ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
-ok((run("dir", "t") != BEGIN run("dir", "t")), 'run() is affected by chdir()');
+ok((run("dir", "t") != BEGIN { run("dir", "t") } ), 'run() is affected by chdir()');
 
 # vim: ft=perl6
