@@ -63,9 +63,10 @@ dies_ok { R2[C3].new.call_fail },  'classes being used as type constraints insid
 eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies';
 
 # RT #68136
+#?rakudo skip 'cannot easily override [] at the moment'
 {
     role TreeNode[::T] does Positional {
-        has TreeNode[T] @!children handles 'postcircumfix:<[ ]>';
+        has TreeNode[T] @!children handles 'postcircumfix:<[ ]>'; # METHOD TO SUB CASUALTY
         has T $.data is rw;
     };
     my $tree = TreeNode[Int].new;
@@ -76,7 +77,6 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     $tree[1].data = 4;
     is ($tree.data, $tree[0,1]>>.data).join(','), '3,1,4',
         'parameterized role doing non-parameterized role';
-
 }
 
 # RT #68134

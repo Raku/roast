@@ -20,11 +20,12 @@ eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their nam
 #?pugs skip "Can't modify constant item: VObject"
 {
     class MyMatch {
-        method postcircumfix:<[ ]>($x) {
+        method postcircumfix:<[ ]>($x) {  # METHOD TO SUB CASUALTY
             "foo$x";
         }
     }
     $/ := MyMatch.new;
+    #?rakudo 2 skip "cannot easily override [] at the moment"
     is $0, 'foo0', 'Aliasing of $0 into $/ (1)';
     is $4, 'foo4', 'Aliasing of $0 into $/ (2)';
 }

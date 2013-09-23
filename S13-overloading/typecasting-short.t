@@ -18,11 +18,15 @@ plan 14;
 
 {
     class TypeCastArray {
-        method @.[ **@slice ] {return 'pretending to be an array'}   #OK not used
+        method @.[ **@slice ] {                  # METHOD TO SUB CASUALTY
+            return 'pretending to be an array';
+        }   #OK not used
     }
 
     my $thing = TypeCastArray.new;
+    #?rakudo todo 'cannot easily override [] at the moment'
     is($thing[1], 'pretending to be an array', 'overloaded [] call works');
+    #?rakudo 3 skip 'cannot easily override [] at the moment'
     is($thing[2,3], 'pretending to be an array', 'overloaded [] call works (slice)');
     is($thing.[4], 'pretending to be an array', 'overloaded .[] call works');
     is($thing.[5,6], 'pretending to be an array', 'overloaded .[] call works (slice)');
@@ -30,17 +34,27 @@ plan 14;
 
 {
     class TypeCastHash {
-        method %.{ **@slice } {return 'pretending to be a hash'}   #OK not used
+        method %.{ **@slice } {                  # METHOD TO SUB CASUALTY
+            return 'pretending to be a hash';
+        }   #OK not used
     }
 
     my $thing = TypeCastHash.new;
+    #?rakudo todo 'cannot easily override {} at the moment'
     is($thing{'a'}, 'pretending to be a hash', 'overloaded {} call works');
+    #?rakudo skip 'cannot easily override {} at the moment'
     is($thing{'b','c'}, 'pretending to be a hash', 'overloaded {} call works (slice)');
+    #?rakudo todo 'cannot easily override {} at the moment'
     is($thing.{'d'}, 'pretending to be a hash', 'overloaded .{} call works');
+    #?rakudo skip 'cannot easily override {} at the moment'
     is($thing.{'e','f'}, 'pretending to be a hash', 'overloaded .{} call works (slice)');
+    #?rakudo todo 'cannot easily override {} at the moment'
     is($thing<a>, 'pretending to be a hash', 'overloaded <> call works');
+    #?rakudo skip 'cannot easily override {} at the moment'
     is($thing<b c>, 'pretending to be a hash', 'overloaded <> call works (slice)');
+    #?rakudo todo 'cannot easily override {} at the moment'
     is($thing.<d>, 'pretending to be a hash', 'overloaded .<> call works');
+    #?rakudo skip 'cannot easily override {} at the moment'
     is($thing.<e f>, 'pretending to be a hash', 'overloaded .<> call works (slice)');
 }
 

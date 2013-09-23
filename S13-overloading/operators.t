@@ -23,11 +23,12 @@ plan 4;
 #?pugs todo
 {
     class A does Associative {
-        method postcircumfix:<{ }>(*@ix) {
+        method postcircumfix:<{ }>(*@ix) {   # METHOD TO SUB CASUALTY
             return @ix
         }
     };
 
+    #?rakudo skip 'cannot easily override {} at the moment'
     is A.new<foo bar>, <foo bar>, 'defining postcircumfix:<{ }> works';
 }
 
