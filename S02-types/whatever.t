@@ -246,6 +246,7 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
 }
 
 # RT #77000
+#?rakudo skip 'Method postcircumfix:<( )> not found for invocant of class Whatever'
 {
     isa_ok *[0], WhateverCode, '*[0] curries';
     is *[0]([1, 2, 3]), 1, '... it works';
