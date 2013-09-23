@@ -312,7 +312,6 @@ sub gen_hash {
     #?pugs   3 skip "no adverbials"
     #?niecza 3 skip "no adverbials"
     is @a[3]:delete, $b, "Test for delete single element";
-    #?rakudo todo "not being destructively read yet"
     is @a[3], $default,  "3 should be deleted now";
     is +@a, 10,          "array still has same length";
 
@@ -328,7 +327,6 @@ sub gen_hash {
     is @a[9]:delete($dont), $c, "Test non-deletion with (\$dont) single elem";
     is @a[9], $c,               "9 should not have been deleted";
     is @a[9]:delete(1), $c,     "Test deletion with (1) single elem";
-    #?rakudo 2 todo "not being destructively read yet"
     is @a[9], $default,         "9 should be deleted now";
     is +@a, 9,                  "array should be shortened now";
 } #14
@@ -340,9 +338,8 @@ sub gen_hash {
     #?pugs   3 skip "no adverbials"
     #?niecza 3 skip "no adverbials"
     is_deeply @a[1,3]:delete, $b, "Test for delete multiple elements";
-    #?rakudo todo "not being destructively read yet"
-    is_deeply @a[1,3], (Any xx 2), "1 3 should be deleted now";
-    is +@a, 10,                    "1 3 should be deleted now";
+    is_deeply @a[1,3], (Any,Any), "1 3 should be deleted now";
+    is +@a, 10,                   "1 3 should be deleted now";
 
     #?pugs   11 skip "no adverbials"
     #?niecza 11 skip "no adverbials"
@@ -356,9 +353,8 @@ sub gen_hash {
     is_deeply @a[2,4,9]:delete($dont), $c, "Test non-deletion with (\$dont) N";
     is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
     is_deeply @a[2,4,9]:delete(1),     $c, "Test deletion with (1) N";
-    #?rakudo 2 todo "not being destructively read yet"
-    is_deeply @a[2,4,9], (Any xx 3), "2 4 9 should be deleted now";
-    is +@a, 9,                       "array should be shortened now";
+    is_deeply @a[2,4,9], (Any,Any,Any), "2 4 9 should be deleted now";
+    is +@a, 9,                          "array should be shortened now";
 } #14
 
 { # whatever
@@ -368,7 +364,6 @@ sub gen_hash {
     #?pugs   2 skip "no adverbials"
     #?niecza 2 skip "no adverbials"
     is_deeply @a[*]:delete, $all, "Test deletion with whatever";
-    #?rakudo todo "not being destructively read yet"
     is +@a, 0,                    "* should be deleted now";
 } #2
 
@@ -385,7 +380,6 @@ sub gen_hash {
 
     is +@a, 10,                      "* should not be deleted now";
     is_deeply @a[*]:delete(1), $all, "Test deletion with (1) whatever";
-    #?rakudo todo "not being destructively read yet"
     is +@a, 0,                       "* should be deleted now";
 } #10
 

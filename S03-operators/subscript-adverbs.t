@@ -87,16 +87,16 @@ plan 108;
         ":v on an array returned the correct value";
 
     #?niecza todo
-    lives_ok {@array[0]:v = "a"}, 'can assign to @array[0]:v';
+    dies_ok {@array[0]:v = "a"}, 'cannot assign to @array[0]:v';
     #?niecza todo
-    is @array[0], "a",
-        ":v on an array returns lvalues (like normal subscripts do as well)";
+    is @array[0], "A",
+        ":v on an array returns rvalues (unlike normal subscripts)";
 
     #?niecza skip 'Excess arguments to KERNEL Array.postcircumfix:<[ ]>, unused named v'
     is +(@array[0,1]:v), 2,
         ":v on an array returned a tow-elem array";
     #?niecza skip 'Excess arguments to KERNEL Array.postcircumfix:<[ ]>, unused named v'
-    is ~(@array[0,1]:v), "a B",
+    is ~(@array[0,1]:v), "A B",
         ":v on an array returned the correct two-elem array";
 
     #?niecza skip 'Excess arguments to KERNEL Array.postcircumfix:<[ ]>, unused named v'
@@ -188,16 +188,15 @@ plan 108;
         ":v on a hash returned the correct value";
 
     #?niecza todo
-    lives_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
+    dies_ok {%hash<0>:v = "a"}, 'can assign to %hash<0>:v';
     #?niecza todo
-    is %hash<0>, "a",
-        ":v on a hash returns lvalues (like normal subscripts do as well)";
+    is %hash<0>, "A", ":v on a hash returns rvalues (unlike normal subscripts)";
 
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
     is +(%hash<0 1>:v), 2,
         ":v on a hash returned a two-elem array";
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
-    is ~(%hash<0 1>:v), "a B",
+    is ~(%hash<0 1>:v), "A B",
         ":v on a hash returned the correct two-elem array";
 
     #?niecza skip 'Excess arguments to KERNEL Hash.postcircumfix:<{ }>, unused named v'
