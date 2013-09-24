@@ -29,7 +29,6 @@ plan 32;
     # Test the only difference between @() and list()
     is(list(), (), 'list() should return an empty list');
     'foo' ~~ /(o)o/; # run a regex so we have $/ below
-    #?rakudo todo '@() not implemented'
     is(@(),  @($/), '@() should be the same as @($/)');
 }
 
