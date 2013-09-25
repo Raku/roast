@@ -64,8 +64,9 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
 }
 
 sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
-    my $fnbase = 'getout-';
-    $fnbase ~= $*PID // 1_000_000.rand.Int;
+    my $fnbase = 'getout';
+    $fnbase ~= '-' ~ $*PID if defined $*PID;
+    $fnbase ~= '-' ~ 1_000_000.rand.Int;
 
     my $clobber = sub ($a, $b) {
         my $fh = open $a, :w
