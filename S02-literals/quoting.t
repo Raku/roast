@@ -519,7 +519,6 @@ Hello, World
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
 
-#?rakudo.jvm skip "Unhandled file open mode 'rp'"
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
