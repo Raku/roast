@@ -10,9 +10,7 @@ ok ('ab'.encode('ASCII') eqv blob8.new(97, 98)),  'encoding to ASCII';
 is 'ab'.encode('ASCII').elems, 2, 'right length of Buf';
 ok ('ö'.encode('UTF-8') eqv utf8.new(195, 182)), 'encoding to UTF-8';
 is 'ab'.encode('UTF-8').elems, 2, 'right length of Buf';
-#?rakudo.jvm todo "nigh"
 is 'ö'.encode('UTF-8')[0], 195, 'indexing a utf8 gives correct value (1)';
-#?rakudo.jvm todo "nigh"
 is 'ö'.encode('UTF-8')[1], 182, 'indexing a utf8 gives correct value (1)';
 
 is 'abc'.encode()[0], 97, 'can index one element in a Buf';
@@ -41,9 +39,7 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
 
     ok $temp = "\x1F63E".encode('UTF-16'), 'encode a string to UTF-16 surrogate pair';
     ok $temp = utf16.new($temp),           'creating utf16 Buf from a surrogate pair';
-    #?rakudo.jvm todo "nigh"
     is $temp[0], 0xD83D,                   'indexing a utf16 gives correct value';
-    #?rakudo.jvm todo "nigh"
     is $temp[1], 0xDE3E,                   'indexing a utf16 gives correct value';
     #?rakudo.parrot skip 'VMArray: index out of bounds'
     is $temp.decode(), "\x1F63E",          'decoding utf16 Buf to original value';
