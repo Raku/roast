@@ -11,7 +11,6 @@ plan 114;
 {
     my $a is default(42);
     is $a, 42, "uninitialized untyped variable should have its default";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $a.VAR.default, 42, 'is the default set correctly for $a';
     lives_ok { $a++ }, "should be able to update untyped variable";
     is $a, 43, "update of untyped variable to 43 was successful";
@@ -24,11 +23,9 @@ plan 114;
 
     my $b is default(42) = 768;
     is $b, 768, "untyped variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $b.VAR.default, 42, 'is the default set correctly for $b';
 
     my $c is default(Nil);
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok $c.VAR.default === Nil, 'is the default set correctly for $c';
     lives_ok { $c++ }, 'should be able to increment untyped variable';
     is $c, 1, "untyped variable should be incremented";
@@ -37,7 +34,6 @@ plan 114;
 
     my $d is default(Nil) = 353;
     is $d, 353, "untyped variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok $d.VAR.default === Nil, 'is the default set correctly for $d';
 } #19
 
@@ -47,7 +43,6 @@ plan 114;
 {
     my Int $a is default(42);
     is $a, 42, "uninitialized typed variable should have its default";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $a.VAR.default, 42, 'is the default set correctly for Int $a';
     lives_ok { $a++ }, "should be able to update typed variable";
     is $a, 43, "update of typed variable to 43 was successful";
@@ -60,7 +55,6 @@ plan 114;
 
     my Int $b is default(42) = 768;
     is $b, 768, "typed variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is $b.VAR.default, 42, 'is the default set correctly for Int $b';
 
     #?rakudo.jvm emit #
@@ -85,7 +79,6 @@ plan 114;
 {
     my @a is default(42);
     is @a[0], 42, "uninitialized untyped array element should have its default";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @a.VAR.default, 42, 'is the default set correctly for @a';
     lives_ok { @a[0]++ }, "should be able to update untyped array element";
     is @a[0], 43, "update of untyped array element to 43 was successful";
@@ -98,11 +91,9 @@ plan 114;
 
     my @b is default(42) = 768;
     is @b[0], 768, "untyped array element should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @b.VAR.default, 42, 'is the default set correctly for @b';
 
     my @c is default(Nil);
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok @c.VAR.default === Nil, 'is the default set correctly for @c';
     lives_ok { @c[0]++ }, 'should be able to increment untyped variable';
     is @c[0], 1, "untyped variable should be incremented";
@@ -111,7 +102,6 @@ plan 114;
 
     my @d is default(Nil) = 353;
     is @d[0], 353, "untyped variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok @d.VAR.default === Nil, 'is the default set correctly for @d';
 } #19
 
@@ -121,7 +111,6 @@ plan 114;
 {
     my Int @a is default(42);
     is @a[0], 42, "uninitialized typed array element should have its default";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @a.VAR.default, 42, 'is the default set correctly for Int @a';
     lives_ok { @a[0]++ }, "should be able to update typed array element";
     is @a[0], 43, "update of typed array element to 43 was successful";
@@ -134,11 +123,9 @@ plan 114;
 
     my Int @b is default(42) = 768;
     is @b[0], 768, "typed array element should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is @b.VAR.default, 42, 'is the default set correctly for Int @b';
 
     my Int @c is default(Nil);
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok @c.VAR.default === Nil, 'is the default set correctly for Int @c';
     lives_ok { @c[0]++ }, 'should be able to increment typed variable';
     is @c[0], 1, "typed variable should be incremented";
@@ -148,7 +135,6 @@ plan 114;
 
     my Int @d is default(Nil) = 353;
     is @d[0], 353, "typed variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok @d.VAR.default === Nil, 'is the default set correctly for Int @d';
 } #19
 
@@ -158,7 +144,6 @@ plan 114;
 {
     my %a is default(42);
     is %a<o>, 42, "uninitialized untyped hash element should have its default";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is %a.VAR.default, 42, 'is the default set correctly for %a';
     lives_ok { %a<o>++ }, "should be able to update untyped hash element";
     is %a<o>, 43, "update of untyped hash element to 43 was successful";
@@ -171,11 +156,9 @@ plan 114;
 
     my %b is default(42) = o => 768;
     is %b<o>, 768, "untyped hash element should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is %b.VAR.default, 42, 'is the default set correctly for %b';
 
     my %c is default(Nil);
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok %c.VAR.default === Nil, 'is the default set correctly for %c';
     lives_ok { %c<o>++ }, 'should be able to increment untyped variable';
     is %c<o>, 1, "untyped variable should be incremented";
@@ -184,7 +167,6 @@ plan 114;
 
     my %d is default(Nil) = o => 353;
     is %d<o>, 353, "untyped variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok %d.VAR.default === Nil, 'is the default set correctly for %d';
 } #19
 
@@ -194,7 +176,6 @@ plan 114;
 {
     my Int %a is default(42);
     is %a<o>, 42, "uninitialized typed hash element should have its default";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is %a.VAR.default, 42, 'is the default set correctly for Int %a';
     lives_ok { %a<o>++ }, "should be able to update typed hash element";
     is %a<o>, 43, "update of hash array element to 43 was successful";
@@ -207,11 +188,9 @@ plan 114;
 
     my Int %b is default(42) = o => 768;
     is %b<o>, 768, "typed hash element should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     is %b.VAR.default, 42, 'is the default set correctly for Int %b';
 
     my Int %c is default(Nil);
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok %c.VAR.default === Nil, 'is the default set correctly for Int %c';
     lives_ok { %c<o>++ }, 'should be able to increment typed variable';
     is %c<o>, 1, "typed variable should be incremented";
@@ -221,7 +200,6 @@ plan 114;
 
     my Int %d is default(Nil) = o => 353;
     is %d<o>, 353, "typed variable should be initialized";
-    #?rakudo.jvm skip "oh no, .VAR does not work on JVM"
     ok %d.VAR.default === Nil, 'is the default set correctly for Int %d';
 } #19
 

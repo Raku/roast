@@ -5,7 +5,6 @@ plan 22;
 
 #?pugs   skip "is dynamic NYI"
 #?niecza skip "is dynamic NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my $a is dynamic;
@@ -18,7 +17,6 @@ plan 22;
 
 #?pugs   skip "Int is dynamic NYI"
 #?niecza skip "Int is dynamic NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int $a is dynamic;
@@ -31,7 +29,6 @@ plan 22;
 
 #?pugs   skip "is dynamic NYI"
 #?niecza skip "is dynamic NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my @a is dynamic;
@@ -45,7 +42,6 @@ plan 22;
 
 #?pugs   skip "Int is dynamic NYI"
 #?niecza skip "Int is dynamic NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int @a is dynamic(42);
@@ -59,7 +55,6 @@ plan 22;
 
 #?pugs   skip "is dynamic NYI"
 #?niecza skip "is dynamic NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my %a is dynamic;
@@ -73,7 +68,6 @@ plan 22;
 
 #?pugs   skip "Int is dynamic NYI"
 #?niecza skip "Int is dynamic NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int %a is dynamic(42);

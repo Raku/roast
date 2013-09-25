@@ -4,7 +4,6 @@ use Test;
 
 plan 15;
 
-#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
   my $a is dynamic = 9;
   my $sub = sub { $CALLER::a };
@@ -15,7 +14,6 @@ plan 15;
   }
 } #1
 
-#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
   my $a is dynamic = 9;
   my $sub2 = sub { $CALLER::a };
@@ -51,7 +49,6 @@ plan 15;
 } #2
 
 # L<S02/Names/The CALLER package refers to the lexical scope>
-#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
   # $_ is always implicitly declared "is dynamic".
   my sub foo () { $CALLER::_ }
@@ -64,7 +61,6 @@ plan 15;
   is bar(), 42, '$_ is implicitly declared "is dynamic" (1)';
 } #1
 
-#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
   # $_ is always implicitly declared "is dynamic".
   # (And, BTW, $_ is lexical.)
@@ -115,7 +111,6 @@ plan 15;
   nok (try modify()) eq 'success', '"::=" vars are ro when accessed with $CALLER::';
 } #1
 
-#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
   my sub modify { $CALLER::_++ }
   $_ = 42;
@@ -123,7 +118,6 @@ plan 15;
   is $_, 43,             '$_ is implicitly rw (2)';
 } #1
 
-#?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
 {
   my sub modify { $CALLER::foo++ }
   my $foo is dynamic = 42;

@@ -5,7 +5,6 @@ plan 15;
 
 #?pugs   skip "$a.VAR.name NYI"
 #?niecza skip "$a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my $a;
@@ -16,7 +15,6 @@ plan 15;
 
 #?pugs   skip "Int $a.VAR.name NYI"
 #?niecza skip "Int $a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int $a;
@@ -27,7 +25,6 @@ plan 15;
 
 #?pugs   skip "@a.VAR.name NYI"
 #?niecza skip "@a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my @a;
@@ -38,7 +35,6 @@ plan 15;
 
 #?pugs   skip "Int @a.VAR.name NYI"
 #?niecza skip "Int @a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int @a;
@@ -49,7 +45,6 @@ plan 15;
 
 #?pugs   skip "%a.VAR.name NYI"
 #?niecza skip "%a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my %a;
@@ -60,7 +55,6 @@ plan 15;
 
 #?pugs   skip "Int %a.VAR.name NYI"
 #?niecza skip "Int %a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int %a;
@@ -71,7 +65,6 @@ plan 15;
 
 #?pugs   skip "&a.VAR.name NYI"
 #?niecza skip "&a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # not specifically typed
 {
     my &a;
@@ -82,7 +75,6 @@ plan 15;
 
 #?pugs   skip "Int &a.VAR.name NYI"
 #?niecza skip "Int &a.VAR.name NYI"
-#?rakudo.jvm skip "oh no, .VAR does not work on JVM"
 # typed
 {
     my Int &a;
