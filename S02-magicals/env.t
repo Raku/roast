@@ -88,7 +88,6 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 }
 
 #?niecza skip "Cannot call is_run; none of these signatures match"
-#?rakudo.jvm skip "Cannot call is_run; none of these signatures match"
 {
     %*ENV<abc> = 'def';
     is_run 'print %*ENV<abc>',
