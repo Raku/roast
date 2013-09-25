@@ -5,7 +5,6 @@ use Test;
 plan 10;
 
 #?niecza skip 'invalid format specifier'
-#?rakudo.jvm skip "Too few directives: found 1, fewer than the 2 arguments after the format string"
 is(42.fmt('%+d'),           '+42'     );
 is(42.fmt('%4d'),           '  42'    );
 is(42.fmt('%04d'),          '0042'    );
