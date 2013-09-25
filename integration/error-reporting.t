@@ -7,7 +7,6 @@ BEGIN { @*INC.push('t/spec/packages') };
 
 use Test::Util;
 
-#?rakudo.jvm todo "nigh"
 is_run "use v6;\n'a' =~ /foo/", {
     status  => { $_ != 0 },
     out     => '',
@@ -30,7 +29,6 @@ is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     }, 'Method not found error mentions method name and line number';
 
 # RT #75446
-#?rakudo.jvm todo "nigh"
 is_run 'use v6;
 sub bar {
     pfff();
@@ -43,7 +41,6 @@ bar()',
         err     => all(rx/pfff/, rx/<<3>>/),
     }, 'got the right line number for nonexisting sub inside another sub';
 
-#?rakudo.jvm todo "nigh"
 is_run 'say 42; nosuchsub()',
     {
         status  => { $_ != 0 },
@@ -77,7 +74,6 @@ A.new.x(42);',
     }, 'got the right line number for accessors';
 
 # RT #80982
-#?rakudo.jvm todo "nigh"
 is_run 'say 0080982',
     {
         status => 0,
@@ -108,7 +104,6 @@ is_run 'sub mysub {
 
 # RT #77736
 #?niecza todo
-#?rakudo.jvm todo "nigh"
 is_run 'die "foo"; END { say "end run" }',
     {
         status => * != 0,
