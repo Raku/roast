@@ -6,7 +6,6 @@ plan 6;
 
 # L<S32::IO/Functions/note>
 
-#?rakudo.jvm todo "nigh"
 is_run( 'note "basic form"',
         {
             status => 0,
@@ -15,7 +14,6 @@ is_run( 'note "basic form"',
         },
         'basic form of note' );
 
-#?rakudo.jvm todo "nigh"
 is_run( 'note "multiple", " ", "params"',
         {
             status => 0,
@@ -24,7 +22,6 @@ is_run( 'note "multiple", " ", "params"',
         },
         'note multiple parameters' );
 
-#?rakudo.jvm todo "nigh"
 is_run( 'my @a = ("array", "of", "params"); note @a',
         {
             status => 0,
@@ -33,7 +30,6 @@ is_run( 'my @a = ("array", "of", "params"); note @a',
         },
         'note array' );
 
-#?rakudo.jvm todo "nigh"
 is_run( 'my $a = <stringify args>; note $a',
         {
             status => 0,
@@ -52,7 +48,6 @@ is_run( '"method form".note',
         },
         'method form of note' );
 
-#?rakudo.jvm todo "nigh"
 is_run( 'try { note "with try" }',
         {
             status => 0,
