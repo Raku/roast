@@ -145,7 +145,6 @@ my @tests = (
 
     # RT #62002 -- validity of default .perl
     my $t2_init = eval($t1_init).perl;
-    #?rakudo.jvm skip "some random values cause the roundtrip to fail"
     is $t1_init, $t2_init, '.perl on user-defined type roundtrips okay';
 }
 
