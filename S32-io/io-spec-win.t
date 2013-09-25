@@ -2,7 +2,7 @@ use v6;
 use Test;
 # L<S32::IO/IO::Spec>
 
-plan 206;
+plan 209;
 my $win32 = IO::Spec::Win32;
 
 my @canonpath = 
@@ -261,8 +261,6 @@ my @abs2rel =
 	#('C:\\one\\two\\t\\asd1\\', 't\\asd\\').item, '..\\asd1',
 	#('\\one\\two', 'A:\\foo').item,     'C:\\one\\two';
 
-#?rakudo.jvm skip "Method 'match' not found"
-#?DOES 19
 {
     for @abs2rel -> $in, $out {
 	    is $win32.abs2rel(|$in), $out, "abs2rel: {$in.perl} -> '$out'"

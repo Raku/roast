@@ -10,7 +10,6 @@ plan 6;
       'can we serialize a simple scalar';
     my $ra = eval($a.perl);
     is_deeply $ra, $a, 'can we roundtrip simple scalar';
-    #?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
     ok $ra.VAR.of =:= Mu, 'make sure any value can be stored';
 } #3
 
@@ -24,8 +23,7 @@ plan 6;
       'can we serialize a scalar with constrained values';
     my $ra = eval($a.perl);
     is_deeply $ra, $a, 'can we roundtrip scalar constrained values';
-    #?rakudo.jvm skip "Nominal type check failed for parameter 'null'"
-    #?rakudo.parrot todo "cannot roundtrip constrained scalars yet"
+    #?rakudo todo "cannot roundtrip constrained scalars yet"
     ok $ra.VAR.of =:= Int, 'make sure roundtripped values are Int';
 } #3
 

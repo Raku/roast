@@ -50,11 +50,10 @@ ok IO::Path::Win32.new("A:b").is-relative,	'"A:b" is relative';
 
 is $relpath.absolute,		IO::Spec::Win32.canonpath("$*CWD\\foo\\bar"),	"absolute path from \$*CWD";
 is $relpath.absolute("\\usr"),	"\\usr\\foo\\bar",		"absolute path specified";
-#?rakudo.jvm 4 skip "Method 'match' not found"
 is IO::Path::Win32.new("\\usr\\bin").relative("/usr"),	"bin",			"relative path specified";
 is $relpath.absolute.relative,  "foo\\bar",		"relative inverts absolute";
 is $relpath.absolute("/foo").relative("\\foo"), "foo\\bar","absolute inverts relative";
-#?rakudo.parrot 1 todo 'resolve NYI, needs nqp::readlink'
+#?rakudo 1 todo 'resolve NYI, needs nqp::readlink'
 is $abspath.relative.absolute.resolve, "\\foo\\bar",	"absolute inverts relative with resolve";
 
 is IO::Path::Win32.new("foo/bar").parent,		"foo",			"parent of 'foo/bar' is 'foo'";
