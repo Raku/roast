@@ -239,6 +239,7 @@ nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
     my $buf = $binary_in_fh.read(4);
     is $buf.elems, 3, "three bytes were read";
     is $buf.decode("ISO-8859-1"), "föö", "the bytes decode into the right Str";
+    $binary_in_fh.close;
 }
 
 unlink($filename);
@@ -252,8 +253,10 @@ $out.close;
 #?niecza todo 'Cannot open file straight from $filename.IO.get'
 {
     my $line;
-    lives_ok { $line = $filename.IO.get; }, "can read lines without explicitly opening IO";
+    my $io = $filename.IO;
+    lives_ok { $line = $io.get; }, "can read lines without explicitly opening IO";
     is $line, 'Hello World', 'got the right line from .IO.get';
+    $io.close;
 }
 unlink($filename);
 
