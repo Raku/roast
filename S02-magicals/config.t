@@ -26,7 +26,6 @@ my $osnames = lc any <darwin linux freebsd MSWin32 mingw msys cygwin browser sol
 #?rakudo skip 'unimpl $?OS'
 ok $?OS.lc eq $osnames, "we know of the OS we were compiled in";
 
-#?rakudo.jvm skip "'mac os x' - should probably be 'darwin'"
 ok $*OS.lc eq $osnames, "we know of the OS we are running under";
 
 # like $*OS, this is tested in perlver.t but that test is not included
