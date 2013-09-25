@@ -267,16 +267,11 @@ throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, ex
 throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
 
-#?rakudo.jvm skip "wrong exception type"
 throws_like 'sub f() { }; f() = 3', X::Assignment::RO;
-#?rakudo.jvm skip "wrong exception type"
 throws_like '1.0 = 3', X::Assignment::RO;
 # RT #113534
-#?rakudo.jvm skip "wrong exception type"
 throws_like '120 = 3', X::Assignment::RO;
-#?rakudo.jvm skip "wrong exception type"
 throws_like '1e0 = 3', X::Assignment::RO;
-#?rakudo.jvm skip "wrong exception type"
 throws_like '"a" = 3', X::Assignment::RO;
 
 throws_like '1.foo', X::Method::NotFound, method => 'foo', typename => 'Int';

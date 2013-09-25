@@ -171,7 +171,6 @@ use Test;
     $ok++ if $!;
     $ok++ if grtz == 42;
 
-    #?rakudo.jvm todo "nigh"
     is $ok, 3, "a constant declared using 'constant' is actually constant (1)";
 }
 
