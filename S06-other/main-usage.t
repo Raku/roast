@@ -23,7 +23,6 @@ is_run 'sub MAIN() { print "MAIN() called" }; sub USAGE() { print "USAGE() calle
     },
     'a user-defined USAGE sub is not called if MAIN dispatch succeeds';
 
-#?rakudo.jvm todo "nigh"
 is_run 'sub MAIN( $a = nosuchsub()) { }; sub USAGE { say 42 }',
     {
         out => '',
@@ -31,7 +30,6 @@ is_run 'sub MAIN( $a = nosuchsub()) { }; sub USAGE { say 42 }',
     },
     'if the MAIN dispatch results in an error, that error should be printed, not USAGE';
 
-#?rakudo.jvm todo "nigh"
 is_run 'sub MAIN($foo) { }',
     {
         err     => /<< foo >>/,
@@ -84,7 +82,6 @@ is_run 'sub MAIN(:xen(:$xin)) { print $xin }',
     'named alias (outer name)';
 
 # RT #71366
-#?rakudo.jvm todo "nigh"
 is_run 'sub MAIN($a, :$var) { say "a: $a, optional: $var"; }',
     {
         err     => /\-\-var/,
@@ -163,7 +160,6 @@ is_run 'multi MAIN($) { print q[Any] }; multi MAIN(Str) { print q[Str] }',
     },
     'best multi matches (not just first one)';
 
-#?rakudo.jvm todo "nigh"
 is_run 'sub MAIN() { print 42 }', :args['--foo'],
     {
         out => '',
