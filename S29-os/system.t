@@ -28,6 +28,7 @@ my $cwd;
 BEGIN { $cwd = $*OS eq 'MSWin32' ?? 'cd' !! 'pwd' };
 #?pugs skip 'qqx'
 ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
+#?rakudo skip 'run() broken (and test questionable'
 ok((run("dir", "t") != BEGIN { run("dir", "t") } ), 'run() is affected by chdir()');
 
 # vim: ft=perl6
