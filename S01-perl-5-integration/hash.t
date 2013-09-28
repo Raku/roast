@@ -69,8 +69,8 @@ ok($p5hash.store(9, 'e'), 'can store');
 is(%hash{9}, 'e', 'store result');
 
 is($p5hash.fetch(5), 'a', 'fetch result');
-is($p5hash.my_exists(5), %hash.exists(5), 'exists');
+is($p5hash.my_exists(5), %hash<5>:exists, 'exists');
 #?pugs todo 'bug'
-is($p5hash.my_exists(12), %hash.exists(12), 'nonexists fail');
+is($p5hash.my_exists(12), %hash<12>:exists, 'nonexists fail');
 
 # vim: ft=perl6

@@ -19,8 +19,8 @@ sub showkv($x) {
     isa_ok $b<a>, Int, 'Single-key subscript yields an Int';
     is $b<santa>, 0, 'Single-key subscript (nonexistent element)';
     isa_ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
-    ok $b.exists('a'), '.exists with existing element';
-    nok $b.exists('santa'), '.exists with nonexistent element';
+    ok $b<a>:exists, 'exists with existing element';
+    nok $b<santa>:exists, 'exists with nonexistent element';
 
     is $b.values.elems, 3, "Values returns the correct number of values";
     is ([+] $b.values), 8, "Values returns the correct sum";

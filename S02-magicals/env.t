@@ -55,9 +55,9 @@ my $expected = 'Hello from subprocess';
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
 %*ENV.delete('PUGS_ROCKS');
-ok(!%*ENV.exists('PUGS_ROCKS'), 'We can remove keys from %*ENV');
+ok(!%*ENV<PUGS_ROCKS>:exists, 'We can remove keys from %*ENV');
 
-ok !%*ENV.exists("does_not_exist"), "exists() returns false on a not defined env var";
+ok !%*ENV<does_not_exist>:exists, "exists() returns false on a not defined env var";
 
 # %ENV must not be imported by default
 #?pugs todo 'bug'
@@ -83,7 +83,7 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 # RT #78256
 {
     nok %*ENV<NOSUCHENVVAR>.defined, 'non-existing vars are undefined';
-    nok %*ENV.exists('NOSUCHENVVAR'), 'non-existing vars do not exist';
+    nok %*ENV<NOSUCHENVVAR>:exists, 'non-existing vars do not exist';
 
 }
 

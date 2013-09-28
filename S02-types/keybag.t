@@ -24,8 +24,8 @@ sub showkv($x) {
     isa_ok $b<a>, Int, 'Single-key subscript yields an Int';
     is $b<santa>, 0, 'Single-key subscript (nonexistent element)';
     isa_ok $b<santa>, Int, 'Single-key subscript yields an Int (nonexistent element)';
-    ok $b.exists('a'), '.exists with existing element';
-    nok $b.exists('santa'), '.exists with nonexistent element';
+    ok $b<a>:exists, 'exists with existing element';
+    nok $b<santa>:exists, 'exists with nonexistent element';
 
     is $b.values.elems, 3, "Values returns the correct number of values";
     is ([+] $b.values), 8, "Values returns the correct sum";
@@ -51,9 +51,9 @@ sub showkv($x) {
     lives_ok { $b<brady> = 12 }, "Can assign to a new element";
     is $b<brady>, 12, "... and assignment takes effect";
     lives_ok { $b<spiderman> = 0 }, "Can assign zero to a nonexistent element";
-    nok $b.exists("spiderman"), "... and that didn't create the element";
+    nok $b<spiderman>:exists, "... and that didn't create the element";
     lives_ok { $b<brady> = 0 }, "Can assign zero to a existing element";
-    nok $b.exists("brady"), "... and it goes away";
+    nok $b<brady>:exists, "... and it goes away";
     
     lives_ok { $b<a>++ }, "Can ++ an existing element";
     is $b<a>, 43, "... and the increment happens";
@@ -62,10 +62,10 @@ sub showkv($x) {
     lives_ok { $b<a>-- }, "Can -- an existing element";
     is $b<a>, 42, "... and the decrement happens";
     lives_ok { $b<carter>-- }, "Can -- an element with value 1";
-    nok $b.exists("carter"), "... and it goes away";
+    nok $b<carter>:exists, "... and it goes away";
     #?niecza todo
     dies_ok { $b<farve>-- }, "Cannot -- an element that doesn't exist";
-    nok $b.exists("farve"), "... and everything is still okay";
+    nok $b<farve>:exists, "... and everything is still okay";
 }
 
 {
@@ -314,7 +314,7 @@ sub showkv($x) {
 {
     my %h is KeyBag = a => 1, b => 0, c => 2;
     #?rakudo todo 'todo'
-    nok %h.exists( 'b' ), '"b", initialized to zero, does not exist';
+    nok %h<b>:exists, '"b", initialized to zero, does not exist';
     #?rakudo todo 'todo'
     is +%h.keys, 2, 'Inititalization worked';
     is %h.elems, 3, '.elems works';
@@ -331,7 +331,7 @@ sub showkv($x) {
 
     lives_ok { %h<c> = 0 }, 'can set an item to 0';
     #?rakudo todo 'todo'
-    nok %h.exists( 'c' ), '"c", set to zero, does not exist';
+    nok %h<c>:exists, '"c", set to zero, does not exist';
     #?rakudo todo 'todo'
     is %h.elems, 1, 'one item left';
     #?rakudo todo 'todo'
@@ -355,7 +355,7 @@ sub showkv($x) {
     #?rakudo todo 'todo'
     is %h.keys, ('c'), 'decrement (--) removes items';
     #?rakudo todo 'todo'
-    nok %h.exists( 'a' ), 'item is gone according to .exists too';
+    nok %h<a>:exists, 'item is gone according to exists too';
     is %h<a>, 0, 'removed item is zero';
 
     lives_ok { %h<a>-- }, 'remove a missing item lives';

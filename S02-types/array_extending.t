@@ -30,10 +30,10 @@ plan 21;
     # @array should be ("a", "b", "c", "d", Mu, Mu, ..., 42).
     is +@array, 21,
       "creating an array element should automatically extend the array (1)";
-    # And, of course, @array.exists(20) has to be true -- we've just assigned
+    # And, of course, @array[20]:exists has to be true -- we've just assigned
     # @array[20].
     #?niecza skip 'Unable to resolve method exists in class Array'
-    ok @array.exists(20),
+    ok @array[20]:exists,
       "creating an array element should automatically extend the array (2)";
 }
 
@@ -62,23 +62,23 @@ plan 21;
 #?niecza skip 'Unable to resolve method exists in class Array'
 {
     my @array  = <a b c d>;
-    my $exists = @array.exists(100);
+    my $exists = @array[100]:exists;
 
     ok !$exists,
-        '@array.exists($index_out_of_bounds) should be false';
+        '@array[$index_out_of_bounds]:exists should be false';
     is +@array, 4,
-        '@array.exists($index_out_of_bounds) should not have altered @array';
+        '@array[$index_out_of_bounds]:exists should not have altered @array';
 }
     
 #?niecza skip 'Unable to resolve method exists in class Array'
 {
     my @array  = <a b c d>;
-    my $exists = @array.exists(-5);
+    my $exists = @array[-5]:exists;
 
     ok !$exists,
-        '@array.exists($negative_index_out_of_bounds) should be false';
+        '@array[$negative_index_out_of_bounds]:exists should be false';
     is +@array, 4,
-        '@array.exists($negative_index_out_of_bounds) should not have altered @array';
+        '@array[$negative_index_out_of_bounds]:exists should not have altered @array';
 }
 
 {

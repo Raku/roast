@@ -59,8 +59,8 @@ my $p5array = $p5ar(VAR @array);
 my $retarray = $p5array.array;
 
 is($p5array.my_elems, @array.elems, 'elems');
-is($p5array.my_exists(1), @array.exists(1), 'exists');
-is($p5array.my_exists(10), @array.exists(10), 'nonexists fail');
+is($p5array.my_exists(1), @array[1]:exists, 'exists');
+is($p5array.my_exists(10), @array[10]:exists, 'nonexists fail');
 is($p5array.fetch(3)+0, @array[3], 'fetch');
 
 my $match = 0;
@@ -70,8 +70,8 @@ lives_ok {
 ok $match, 'retro fetch';
 
 is(eval(q{$retarray.elems}), @array.elems, 'retro elems');
-is($retarray.exists(1), @array.exists(1), 'retro exists');
-is($retarray.exists(10), @array.exists(10), 'retro nonexists' );
+is($retarray[1]:exists, @array[1]:exists, 'retro exists');
+is($retarray[10]:exists, @array[10]:exists, 'retro nonexists' );
 
 ok(($p5array.push(9)), 'can push');
 

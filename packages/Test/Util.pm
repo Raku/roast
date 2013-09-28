@@ -36,7 +36,7 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
     # We check each of the attributes and pass the test only if all are good.
     for <status out err> -> $attr {
         # Attributes not specified are not tested.
-        next if ! %expected.exists( $attr );
+        next if !(%expected{$attr}:exists);
 
         my $attr_good = %got{$attr} ~~ %expected{$attr};
 
