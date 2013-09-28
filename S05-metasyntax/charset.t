@@ -81,10 +81,8 @@ ok('}' ~~ m/(<[\}]>)/, 'quoted close LCB match');
 is($0, '}', 'quoted close LCB capture');
 
 # RT #67124
-#?rakudo todo 'comment in charset (RT #67124)'
 eval_lives_ok( '"foo" ~~ /<[f] #`[comment] + [o]>/',
                'comment embedded in charset can be parsed' );
-#?rakudo skip 'comment in charset (RT #67124)'
 #?pugs todo
 ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 
