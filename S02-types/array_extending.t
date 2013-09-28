@@ -33,6 +33,7 @@ plan 21;
     # And, of course, @array[20]:exists has to be true -- we've just assigned
     # @array[20].
     #?niecza skip 'Unable to resolve method exists in class Array'
+    #?pugs skip ':exists'
     ok @array[20]:exists,
       "creating an array element should automatically extend the array (2)";
 }
@@ -60,6 +61,7 @@ plan 21;
 }
 
 #?niecza skip 'Unable to resolve method exists in class Array'
+#?pugs skip ':exists'
 {
     my @array  = <a b c d>;
     my $exists = @array[100]:exists;
@@ -71,6 +73,7 @@ plan 21;
 }
     
 #?niecza skip 'Unable to resolve method exists in class Array'
+#?pugs skip ':exists'
 {
     my @array  = <a b c d>;
     my $exists = @array[-5]:exists;
