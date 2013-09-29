@@ -34,20 +34,20 @@ plan 47;
 
   @array[1] := $var;
   $var       = "e";
-  is @array[1], "e",  "binding of array elements works with .delete (1)";
+  is @array[1], "e",  "binding of array elements works with delete (1)";
 
-  @array.delete(1);
+  @array[1]:delete;
   # $var unchanged, but assigning to $var doesn't modify @array any
   # longer; similarily, changing @array[1] doesn't modify $var now
   #?niecza todo 'array binding, delete'
-  is $var,    "e",    "binding of array elements works with .delete (2)";
-  is ~@array, "a  c", "binding of array elements works with .delete (3)";
+  is $var,    "e",    "binding of array elements works with delete (2)";
+  is ~@array, "a  c", "binding of array elements works with delete (3)";
 
   $var      = "f";
   @array[1] = "g";
   #?niecza todo 'array binding, delete'
-  is $var,      "f",  "binding of array elements works with .delete (4)";
-  is @array[1], "g",  "binding of array elements works with .delete (5)";
+  is $var,      "f",  "binding of array elements works with delete (4)";
+  is @array[1], "g",  "binding of array elements works with delete (5)";
 }
 
 {

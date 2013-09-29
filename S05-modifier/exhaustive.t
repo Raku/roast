@@ -38,7 +38,7 @@ for (1..2) -> $rep {
         ok( %position{$_} == $_.pos, "At correct position of '$_' ($rep)" );
         #?rakudo emit #
         %expected{$_} :delete;
-        #?rakudo emit %expected.delete($_)
+        #?rakudo emit %expected{$_}:delete
     }
     ok(%expected.keys == 0, "No matches missed ($rep)" );
 }

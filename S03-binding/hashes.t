@@ -33,19 +33,19 @@ plan 39;
 
   %hash<b> := $var;
   $var      = "e";
-  is %hash<b>, "e",             "binding of hash elements works with .delete (1)";
+  is %hash<b>, "e",             "binding of hash elements works with delete (1)";
 
-  %hash.delete("b");
+  %hash<b>:delete;
   # $var unchanged, but assigning to $var doesn't modify @hash any
   # longer; similarily, changing @hash[1] doesn't modify $var now
-  is $var,   "e",               "binding of hash elements works with .delete (2)";
+  is $var,   "e",               "binding of hash elements works with delete (2)";
   #?pugs todo
-  is ~%hash.values.sort, "x z", "binding of hash elements works with .delete (3)";
+  is ~%hash.values.sort, "x z", "binding of hash elements works with delete (3)";
 
   $var     = "f";
   %hash<b> = "g";
-  is $var,     "f",             "binding of hash elements works with .delete (4)";
-  is %hash<b>, "g",             "binding of hash elements works with .delete (5)";
+  is $var,     "f",             "binding of hash elements works with delete (4)";
+  is %hash<b>, "g",             "binding of hash elements works with delete (5)";
 }
 
 {

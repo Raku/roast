@@ -37,7 +37,7 @@ sub showkv($x) {
     dies_ok { $b.keys = <c d> }, "Can't assign to .keys";
     dies_ok { $b.values = 3, 4 }, "Can't assign to .values";
     dies_ok { $b<a>:delete }, "Can't :delete from Bag";
-    dies_ok { $b.delete("a") }, "Can't .delete from Bag";
+    dies_ok { $b.delete_key("a") }, "Can't .delete_key from Bag";
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -83,7 +83,7 @@ sub showkv($x) {
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
     dies_ok { $s<a>:delete }, ':delete does not work on bag';
-    dies_ok { $s.delete("a") }, '.delete does not work on bag';
+    dies_ok { $s.delete_key("a") }, '.delete_key does not work on bag';
 }
 
 {
@@ -176,7 +176,7 @@ sub showkv($x) {
     dies_ok { %b<a> = 1 }, "Can't assign to an element (Bags are immutable)";
     dies_ok { %b = bag <a b> }, "Can't assign to a %var implemented by Bag";
     dies_ok { %b<a>:delete }, "Can't :delete from a Bag";
-    dies_ok { %b.delete("a") }, "Can't .delete from a Bag";
+    dies_ok { %b.delete_key("a") }, "Can't .delete_key from a Bag";
 }
 
 {

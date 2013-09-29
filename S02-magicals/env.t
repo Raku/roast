@@ -54,7 +54,7 @@ my $expected = 'Hello from subprocess';
 # not a junction of Bools.
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
-%*ENV.delete('PUGS_ROCKS');
+%*ENV<PUGS_ROCKS>:delete;
 ok(%*ENV<PUGS_ROCKS>:!exists, 'We can remove keys from %*ENV');
 
 ok %*ENV<does_not_exist>:!exists, "exists() returns false on a not defined env var";
