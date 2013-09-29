@@ -79,7 +79,7 @@ plan 43;
 
 # RT #64948
 {
-    ok %( 'foo' ~~ /<alpha> oo/ ).exists('alpha'),
+    ok %( 'foo' ~~ /<alpha> oo/ )<alpha>:exists,
        'Match coerced to Hash says match exists';
 }
 

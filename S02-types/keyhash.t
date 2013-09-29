@@ -19,7 +19,7 @@ sub showkh($h) {
     lives_ok { %h<d> = 0 }, 'Can set an item to 0';
     is +%h.keys, 3, '... and an item is gone';
     is showkh(%h), 'a:1 b:3 c:-1', '... and the right one is gone';
-    nok %h.exists('d'), '... also according to .exists';
+    nok %h<d>:exists, '... also according to exists';
 
     %h<c>++;
     is showkh(%h), 'a:1 b:3', '++ on an item with -1 deletes it';

@@ -8,7 +8,7 @@ plan 42;
 {
   my %hash;
   %hash<a>;
-  ok !%hash.exists('a'), 'just mentioning a hash value should not autovivify it';
+  ok %hash<a>:!exists, 'just mentioning a hash value should not autovivify it';
 }
 
 {

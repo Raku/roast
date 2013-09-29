@@ -34,7 +34,7 @@ sub gen_hash {
     #?rakudo skip 'unspecced'
     #?niecza skip 'Invocant handling is NYI'
     is (exists %h1: 'a'), True, "Test existence for single key. (Indirect notation)";
-    is (%h1.exists('a')), True, "Test existence for single key. (method call)";
+    is (%h1.exists_key('a')), True, "Test existence for single key. (method)";
     is (%h1{'a'}:exists), True, "Test existence for single key. (adverb)";
     is (%h1<a>:exists), True, "Test existence for single key. (adverb 2)";
 };
@@ -44,17 +44,17 @@ sub gen_hash {
     %h<none> = 0;
     %h<one> = 1;
     %h<nothing> = Mu;
-    ok %h.exists('none'),     "Existence of single key with 0 as value: none";
-    ok %h.exists('one'),      "Existence of single key: one";
-    ok %h.exists('nothing'),  "Existence of single key with undefined as value: nothing";
+    ok %h.exists_key('none'),    "Existence of single key with 0 as value: none";
+    ok %h.exists_key('one'),     "Existence of single key: one";
+    ok %h.exists_key('nothing'), "Existence of single key with undefined as value: nothing";
     ok defined(%h<none>),     "Defined 0 value for key: none";
     ok defined(%h<one>),      "Defined 1 value for key: one";
     ok !defined(%h<nothing>), "NOT Defined value for key: nothing";
 }
 
 my %hash = (a => 1, b => 2, c => 3, d => 4);
-ok %hash.exists("a"),   "exists on hashes (1)";
-ok !%hash.exists("42"), "exists on hashes (2)";
+ok %hash.exists_key("a"),   "exists_key on hashes (1)";
+ok !%hash.exists_key("42"), "exists_key on hashes (2)";
 
 # This next group added by Darren Duncan following discovery while debugging ext/Locale-KeyedText:
 # Not an exists() test per se, but asserts that elements shouldn't be added to

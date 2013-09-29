@@ -17,8 +17,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok $s<a>, Bool, 'Single-key subscript has correct type (existing element)';
     is $s<santa>, False, 'Single-key subscript (nonexistent element)';
     isa_ok $s<santa>, Bool, 'Single-key subscript has correct type (nonexistent element)';
-    is $s.exists('a'), True, '.exists with existing element';
-    is $s.exists('santa'), False, '.exists with nonexistent element';
+    is $s<a>:exists, True, 'exists with existing element';
+    is $s<santa>:exists, False, 'exists with nonexistent element';
 
     ok ?$s, "Bool returns True if there is something in the Set";
     nok ?Set.new(), "Bool returns False if there is nothing in the Set";
@@ -75,8 +75,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $s = set <a b foo>;
-    is $s.exists(<a>), True, ':exists with existing element';
-    is $s.exists(<santa>), False, ':exists with nonexistent element';
+    is $s<a>:exists, True, ':exists with existing element';
+    is $s<santa>:exists, False, ':exists with nonexistent element';
     dies_ok { $s<a>:delete }, ':delete does not work on set';
     dies_ok { $s.delete(<a>) }, '.delete does not work on set';
 }
