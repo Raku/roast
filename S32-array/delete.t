@@ -68,10 +68,9 @@ sub make-string(@a) {
 # Results taken from Perl 5
 #?niecza todo "Not sure if this test is correct or not"
 #?pugs   todo "Not sure if this test is correct or not"
-#?rakudo todo "seem to do this wrong atm"
 {
   my @array = <a b c>;
-  is ~(@array[2, *-1]:delete), "c (Any)",
+  is ~(@array[2, *-1]:delete), "c ",
     "deletion of the same array element accessed by different indices returned right things";
   is ~@array, "a b",
     "deletion of the same array element accessed by different indices (1)";
