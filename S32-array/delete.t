@@ -54,7 +54,6 @@ sub make-string(@a) {
 
 # W/ multiple positive and negative indices:
 #?pugs todo
-#?rakudo skip 'multiple whatevers fail'
 {
   my @array = <a b c d e f>;
   is ~(@array[2, *-3, *-1]:delete), "c d f",
@@ -69,14 +68,14 @@ sub make-string(@a) {
 # Results taken from Perl 5
 #?niecza todo "Not sure if this test is correct or not"
 #?pugs   todo "Not sure if this test is correct or not"
-#?rakudo skip 'multiple whatevers fail'
+#?rakudo todo "seem to do this wrong atm"
 {
   my @array = <a b c>;
-  is ~(@array[2, *-1]:delete), "c b",
+  is ~(@array[2, *-1]:delete), "c (Any)",
     "deletion of the same array element accessed by different indices returned right things";
-  is ~@array, "a",
+  is ~@array, "a b",
     "deletion of the same array element accessed by different indices (1)";
-  is +@array, 1,
+  is +@array, 2,
     "deletion of the same array element accessed by different indices (2)";
 }
 
