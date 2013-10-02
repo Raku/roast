@@ -31,8 +31,8 @@ sub gen_hash {
     is +%h, 26, "basic sanity";
 } #1
 
-{ # single key, no combinations with :exists
-    my %h = gen_hash;
+{ # single key
+    my Int %h = gen_hash;
     my $b = %h<b>;
 
     #?pugs 3 skip "no adverbials"
@@ -64,7 +64,7 @@ sub gen_hash {
     ok !defined(%h<d>),                  "d should be deleted now";
     #?niecza 2 todo "cannot combine adverbial pairs"
     is_deeply %h<d>:p:delete,  (),       "slice unexisting single pair out";
-    is_deeply %h<d>:!p:delete, (d=>Any), "slice unexisting single pair out";
+    is_deeply %h<d>:!p:delete, (d=>Int), "slice unexisting single pair out";
 
     my $e= ("e", %h<e>);
     #?pugs   6 skip "no adverbials"
@@ -74,7 +74,7 @@ sub gen_hash {
     is_deeply %h<e>:kv:delete,  $e,        "slice a single key/value out";
     ok %h<e>:!exists,                      "e should be deleted now";
     is_deeply %h<e>:kv:delete,  (),        "slice unexisting single key/value";
-    is_deeply %h<e>:!kv:delete, ('e',Any), "slice unexisting single key/value";
+    is_deeply %h<e>:!kv:delete, ('e',Int), "slice unexisting single key/value";
 
     #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
@@ -93,7 +93,7 @@ sub gen_hash {
     is %h<g>:v:delete,         $g,  "slice a single value out";
     ok %h<g>:!exists,               "g should be deleted now";
     is_deeply %h<g>:v:delete,  (),  "slice unexisting single key";
-    is %h<g>:!v:delete,        Any, "slice unexisting single key";
+    is %h<g>:!v:delete,        Int, "slice unexisting single key";
 } #38
 
 { # single key, combinations with :exists
@@ -103,8 +103,8 @@ sub gen_hash {
     #?niecza 4 todo "cannot combine adverbial pairs"
     ok (%h<b>:delete:exists) === True,  "d:exists single existing key";
     ok %h<b>:!exists,                   "b should be deleted now";
-    ok (%h<b>:delete:exists) === False, "d:exists one non-existing key";
-    ok (%h<b>:delete:!exists) === True, "d:!exists one non-existing key";
+    ok (%h<b>:delete:exists) === False, "b:exists one non-existing key";
+    ok (%h<b>:delete:!exists) === True, "b:!exists one non-existing key";
 
     #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
@@ -126,7 +126,7 @@ sub gen_hash {
 } #16
 
 { # multiple key, not with :exists
-    my %h   = gen_hash;
+    my Int %h   = gen_hash;
     my @cde = %h<c d e>;
 
     #?pugs 3 skip "no adverbials"
@@ -146,7 +146,7 @@ sub gen_hash {
     is_deeply %h<f g>:delete($dont), $fg, "non-deletion with (\$dont) multi";
     is_deeply %h<f g>, $fg,               "f g should not have been deleted";
     is_deeply %h<f g>:delete(1), $fg,     "deletion with (1) multi";
-    is_deeply %h<f g>, (Any,Any),         "f g should be deleted now";
+    is_deeply %h<f g>, (Int,Int),         "f g should be deleted now";
     is +%h, 21,                           "f g should be deleted now by count";
 
     my $hi = %h<h i>:p;
@@ -158,7 +158,7 @@ sub gen_hash {
     is +%h, 19,                       "h i should be deleted now by count";
 } #18
 
-{ # single key, combinations with :exists
+{ # multiple keys, combinations with :exists
     my %h = gen_hash;
 
     #?pugs   8 skip "no adverbials"
