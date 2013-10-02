@@ -332,13 +332,13 @@ sub gen_hash {
 } #14
 
 { # multiple elements
-    my @a = gen_array;
+    my Int @a = gen_array;
     my $b = @a[1,3];
 
     #?pugs   3 skip "no adverbials"
     #?niecza 3 skip "no adverbials"
     is_deeply @a[1,3]:delete, $b, "Test for delete multiple elements";
-    is_deeply @a[1,3], (Any,Any), "1 3 should be deleted now";
+    is_deeply @a[1,3], (Int,Int), "1 3 should be deleted now";
     is +@a, 10,                   "1 3 should be deleted now";
 
     #?pugs   11 skip "no adverbials"
@@ -353,13 +353,13 @@ sub gen_hash {
     is_deeply @a[2,4,9]:delete($dont), $c, "Test non-deletion with (\$dont) N";
     is_deeply @a[2,4,9],               $c, "2 4 9 should not have been deleted";
     is_deeply @a[2,4,9]:delete(1),     $c, "Test deletion with (1) N";
-    is_deeply @a[2,4,9], (Any,Any,Any), "2 4 9 should be deleted now";
+    is_deeply @a[2,4,9], (Int,Int,Int), "2 4 9 should be deleted now";
     is +@a, 9,                          "array should be shortened now";
 } #14
 
 { # whatever
     my @a   = gen_array;
-    my $all = @a[^10];
+    my $all = @a[^@a.elems];
 
     #?pugs   2 skip "no adverbials"
     #?niecza 2 skip "no adverbials"
@@ -369,7 +369,7 @@ sub gen_hash {
 
 {
     my @a   = gen_array;
-    my $all = @a[^10];
+    my $all = @a[^@a.elems];
 
     #?pugs   10 skip "no adverbials"
     #?niecza 10 skip "no adverbials"
