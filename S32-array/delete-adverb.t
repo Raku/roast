@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 140;
+plan 216;
 
 # L<S02/Names and Variables/:delete>
 
@@ -311,4 +311,101 @@ sub gen_array { (1..10).list }
     is +@a, 0,                      "* should be deleted now";
 } #8
 
+{
+    my @a is default(42);
+    is @a[0]:delete, 42,  ':delete non-existing';
+    is @a.elems, 0,       'should not vivify';
+    is @a[0]:!delete, 42, ':!delete non-existing';
+    is @a.elems, 0,       'should not vivify';
+
+    is @a[0]:delete:exists, False,  ':delete:exists non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!delete:exists, False, ':!delete:exists non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:delete:!exists, True,  ':delete:!exists non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!delete:!exists, True, ':!delete:!exists non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:delete:exists:kv, (),   ':delete:exists:kv non-existing';
+    is @a.elems, 0,                  'should not vivify';
+    is @a[0]:!delete:exists:kv, (),  ':!delete:exists:kv non-existing';
+    is @a.elems, 0,                  'should not vivify';
+
+    is @a[0]:delete:!exists:kv, (),  ':delete:!exists:kv non-existing';
+    is @a.elems, 0,                  'should not vivify';
+    is @a[0]:!delete:!exists:kv, (), ':!delete:!exists:kv non-existing';
+    is @a.elems, 0,                  'should not vivify';
+
+    is @a[0]:delete:exists:!kv, (0,False),  ':delete:exists:!kv non-existing';
+    is @a.elems, 0,                         'should not vivify';
+    is @a[0]:!delete:exists:!kv, (0,False), ':!delete:exists:!kv non-existing';
+    is @a.elems, 0,                         'should not vivify';
+
+    is @a[0]:delete:!exists:!kv, (0,True),  ':delete:!exists:!kv non-existing';
+    is @a.elems, 0,                         'should not vivify';
+    is @a[0]:!delete:!exists:!kv, (0,True), ':!delete:!exists:!kv non-existing';
+    is @a.elems, 0,                         'should not vivify';
+
+    is @a[0]:delete:exists:p, (),   ':delete:exists:p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!delete:exists:p, (),  ':!delete:exists:p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:delete:!exists:p, (),  ':delete:!exists:p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!delete:!exists:p, (), ':!delete:!exists:p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:delete:exists:!p, (0=>False),  ':delete:exists:!p non-existing';
+    is @a.elems, 0,                         'should not vivify';
+    is @a[0]:!delete:exists:!p, (0=>False), ':!delete:exists:!p non-existing';
+    is @a.elems, 0,                         'should not vivify';
+
+    is @a[0]:delete:!exists:!p, (0=>True),  ':delete:!exists:!p non-existing';
+    is @a.elems, 0,                         'should not vivify';
+    is @a[0]:!delete:!exists:!p, (0=>True), ':!delete:!exists:!p non-existing';
+    is @a.elems, 0,                         'should not vivify';
+
+    is @a[0]:exists:kv, (),         ':exists:kv non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!exists:kv, (),        ':!exists:kv non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:exists:!kv, (0,False), ':exists:!kv non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!exists:!kv, (0,True), ':!exists:!kv non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:exists:p, (),          ':exists:p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!exists:p, (),         ':!exists:p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:exists:!p, (0=>False), ':exists:!p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+    is @a[0]:!exists:!p, (0=>True), ':!exists:!p non-existing';
+    is @a.elems, 0,                 'should not vivify';
+
+    is @a[0]:kv, (),      ':kv non-existing';
+    is @a.elems, 0,       'should not vivify';
+    is @a[0]:!kv, (0,42), ':!kv non-existing';
+    is @a.elems, 0,       'should not vivify';
+
+    is @a[0]:p, (),       ':p non-existing';
+    is @a.elems, 0,       'should not vivify';
+    is @a[0]:!p, (0=>42), ':!p non-existing';
+    is @a.elems, 0,       'should not vivify';
+
+    is @a[0]:k, (), ':k non-existing';
+    is @a.elems, 0, 'should not vivify';
+    is @a[0]:!k, 0, ':!k non-existing';
+    is @a.elems, 0, 'should not vivify';
+
+    is @a[0]:v, (),  ':v non-existing';
+    is @a.elems, 0,  'should not vivify';
+    is @a[0]:!v, 42, ':!v non-existing';
+    is @a.elems, 0,  'should not vivify';
+} #86
 # vim: ft=perl6
