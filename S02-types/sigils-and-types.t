@@ -43,9 +43,8 @@ ok %hash.does(Associative), 'value in %var does Associative';
 ok eval('Pair').does(Associative), "Pair does Associative";
 ok eval('Set').does(Associative), "Set does Associative";
 ok eval('Bag').does(Associative), "Bag does Associative";
-#?niecza skip 'Undeclared name KeyHash'
-#?rakudo skip 'Undeclared name KeyHash'
-ok eval('KeyHash').does(Associative), "KeyHash does Associative";
+#?niecza skip 'Undeclared name QuantHash'
+ok eval('QuantHash').does(Associative), "QuantHash does Associative";
 #?rakudo todo "Capture does Associative"
 ok eval('Capture').does(Associative), "Capture does Associative";
 

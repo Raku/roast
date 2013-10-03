@@ -7,11 +7,11 @@ sub showkh($h) {
     $h.keys.sort.map({ $^k ~ ':' ~ $h{$k} }).join(' ')
 }
 
-# L<S02/Mutable types/"The KeyHash role differs from a normal Associative hash">
+# L<S02/Mutable types/"The QuantHash role differs from a normal Associative hash">
 
-# untyped KeyHash
+# untyped QuantHash
 {
-    my %h is KeyHash = a => 1, b => 3, c => -1, d => 7;
+    my %h is QuantHash = a => 1, b => 3, c => -1, d => 7;
     is showkh(%h), 'a:1 b:3 c:-1 d:7', 'Inititalization worked';
     is %h.elems, 10, '.elems';
     is +%h, 10, 'prefix:<+> calls .elems, not .keys';
@@ -35,7 +35,7 @@ sub showkh($h) {
 
     %h<b> = Nil;
     is +%h.keys, 0, 'Setting a value to Nil also removes it';
-    nok %h, 'An empty KeyHash is false';
+    nok %h, 'An empty QuantHash is false';
 
     %h<foo bar baz> = "", 5, False;
     is showkh(%h), 'bar:5', 'Assignment to multiple keys';
@@ -47,7 +47,7 @@ sub showkh($h) {
 }
 
 {
-    my %h is KeyHash = a => 5, b => 0, c => 1, d => '', e => Any;
+    my %h is QuantHash = a => 5, b => 0, c => 1, d => '', e => Any;
     is showkh(%h), 'a:5 c:1', 'Pairs with false values are ignored in assignment';
 
     %h = foo => 1, bar => 2, foo => 1;
@@ -62,9 +62,9 @@ sub showkh($h) {
     is showkh(%h), 'bar:4 baz:unicorn', 'Assignment of a flat list';
 }
 
-#?rakudo skip 'Non-string KeyHash keys NYI'
+#?rakudo skip 'Non-string QuantHash keys NYI'
 {
-    my %h is KeyHash = 2 => 1, a => 2, (False) => 3;
+    my %h is QuantHash = 2 => 1, a => 2, (False) => 3;
 
     my @ks = %h.keys;
     is @ks.grep(Int)[0], 2, 'Int keys are left as Ints';
@@ -73,12 +73,12 @@ sub showkh($h) {
     is %h{2, 'a', False}.sort.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-# KeyHash of Ints
+# QuantHash of Ints
 {
-    #?rakudo emit   role R1284381704 does KeyHash[Int] {}; my %h is R1284381704; # 'my SomeType %h' NYI
-    my Int %h is KeyHash;
+    #?rakudo emit   role R1284381704 does QuantHash[Int] {}; my %h is R1284381704; # 'my SomeType %h' NYI
+    my Int %h is QuantHash;
     %h = a => 1, b => 3, c => -1, d => 7, e => 0;
-    is +%h.keys, 4, 'Initializing KeyHash of Ints worked';
+    is +%h.keys, 4, 'Initializing QuantHash of Ints worked';
 
     is %h<camelia>, 0, 'Correct default value';
     is %h.elems, 10, '.elems';
@@ -96,12 +96,12 @@ sub showkh($h) {
     is showkh(%h), 'b:2', '... but only when they go to zero';
 }
 
-# KeyHash of Strs
+# QuantHash of Strs
 {
-    #?rakudo emit   role R1284382935 does KeyHash[Str] {}; my %h is R1284382935; # 'my SomeType %h' NYI
-    my Str %h is KeyHash;
+    #?rakudo emit   role R1284382935 does QuantHash[Str] {}; my %h is R1284382935; # 'my SomeType %h' NYI
+    my Str %h is QuantHash;
     %h = a => 'foo', b => 'bar', c => 'baz', d => 'boor', e => '';
-    is +%h.keys, 4, 'Initializing KeyHash of Strs works';
+    is +%h.keys, 4, 'Initializing QuantHash of Strs works';
 
     is %h<camelia>, '', 'Correct default value';
 
@@ -115,15 +115,15 @@ sub showkh($h) {
     is showkh(%h), 'a:foo b:b', '... but not changing it to a one-character string';
 }
 
-# KeyHash with a custom default value
+# QuantHash with a custom default value
 {
-    #?rakudo emit   role R1284381677 does KeyHash[Any, 42] {}; my %h is R1284381677; # 'my %h is SomeType[WithParams]' NYI
-    my %h is KeyHash[Any, 42];
+    #?rakudo emit   role R1284381677 does QuantHash[Any, 42] {}; my %h is R1284381677; # 'my %h is SomeType[WithParams]' NYI
+    my %h is QuantHash[Any, 42];
     %h = a => 1, b => 2, c => 0, x1 => 42;
-    is showkh(%h), 'a:1 b:2 c:0', 'Initializing a KeyHash with a custom default';
+    is showkh(%h), 'a:1 b:2 c:0', 'Initializing a QuantHash with a custom default';
 
-    is %h<answer>, 42, 'KeyHash with custom default returns the default for an unassigned key';
-    is showkh(%h), 'a:1 b:2 c:0', '...without changing the KeyHash';
+    is %h<answer>, 42, 'QuantHash with custom default returns the default for an unassigned key';
+    is showkh(%h), 'a:1 b:2 c:0', '...without changing the QuantHash';
 
     %h<a> = '';
     is showkh(%h), 'a: b:2 c:0', "Setting a key to the empty string doesn't remove it";
@@ -131,11 +131,11 @@ sub showkh($h) {
     is showkh(%h), 'b:2 c:0', 'But setting a key to the default does remove it';
 }
 
-# L<S32::Containers/KeyHash/"=item grab">
+# L<S32::Containers/QuantHash/"=item grab">
 
 # Weighted .pick
 {
-    my %h is KeyHash = a => 1, b => 1, c => 1, d => 20;
+    my %h is QuantHash = a => 1, b => 1, c => 1, d => 20;
 
     my @a = %h.pick: *;
     is +@a, 23, '.pick(*) returns the right number of items';
@@ -148,7 +148,7 @@ sub showkh($h) {
 
 # Weighted .roll
 {
-    my %h is KeyHash = a => 1, b => 2;
+    my %h is QuantHash = a => 1, b => 2;
 
     my @a = %h.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
@@ -158,7 +158,7 @@ sub showkh($h) {
 
 # .grab
 {
-    my %h is KeyHash = a => 40, b => 80;
+    my %h is QuantHash = a => 40, b => 80;
 
     my @a = %h.grab: 30;
     is +%h, 90, '.grab(30) removes 30 elements';

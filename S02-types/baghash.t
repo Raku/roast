@@ -3,9 +3,9 @@ use Test;
 
 plan 172;
 
-# L<S02/Mutable types/KeyHash of UInt>
+# L<S02/Mutable types/QuantHash of UInt>
 
-# A BagHash is a KeyHash of UInt, i.e. the values are positive Int
+# A BagHash is a QuantHash of UInt, i.e. the values are positive Int
 
 sub showkv($x) {
     $x.keys.sort.map({"$_:{$x{$_}}"}).join(' ')

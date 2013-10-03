@@ -280,12 +280,11 @@ plan 78;
  isa_ok($pavo,Duration  );
 }
 
-#?niecza skip 'KeyHash not implemented'
-#?rakudo skip 'KeyHash not implemented'
-#?pugs skip 'KeyHash'
+#?niecza skip 'QuantHash not implemented'
+#?pugs skip 'QuantHash'
 {
- my KeyHash $pamu;
- isa_ok($pamu,KeyHash  );
+ my QuantHash $pamu;
+ isa_ok($pamu,QuantHash  );
 }
 
 #?pugs skip 'SetHash'

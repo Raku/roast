@@ -3,9 +3,9 @@ use Test;
 
 plan 144;
 
-# L<S02/Mutable types/"KeyHash of Bool">
+# L<S02/Mutable types/"QuantHash of Bool">
 
-# A SetHash is a KeyHash of Bool, i.e. the values are Bool
+# A SetHash is a QuantHash of Bool, i.e. the values are Bool
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
