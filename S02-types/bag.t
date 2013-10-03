@@ -42,7 +42,7 @@ sub showkv($x) {
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    is $b.elems, 8, '.elems gives sum of values';
+    is $b.total, 8, '.total gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
 }
 
