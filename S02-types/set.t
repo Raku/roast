@@ -143,14 +143,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    my $b = set KeySet.new(<foo bar foo bar baz foo>);
-    isa_ok $b, Set, '&Set.new given a KeySet produces a Set';
+    my $b = set SetHash.new(<foo bar foo bar baz foo>);
+    isa_ok $b, Set, '&Set.new given a SetHash produces a Set';
     is +$b, 1, "... with one element";
 }
 
 {
-    my $b = set KeyBag.new(<foo bar foo bar baz foo>);
-    isa_ok $b, Set, '&Set.new given a KeySet produces a Set';
+    my $b = set BagHash.new(<foo bar foo bar baz foo>);
+    isa_ok $b, Set, '&Set.new given a SetHash produces a Set';
     is +$b, 1, "... with one element";
 }
 

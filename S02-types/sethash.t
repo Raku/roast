@@ -5,15 +5,15 @@ plan 144;
 
 # L<S02/Mutable types/"KeyHash of Bool">
 
-# A KeySet is a KeyHash of Bool, i.e. the values are Bool
+# A SetHash is a KeyHash of Bool, i.e. the values are Bool
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S02/Immutable types/'the set listop'>
 
 {
-    my $s = KeySet.new(<a b foo>);
-    isa_ok $s, KeySet, 'KeySet.new produces a KeySet';
+    my $s = SetHash.new(<a b foo>);
+    isa_ok $s, SetHash, 'SetHash.new produces a SetHash';
     is showset($s), 'a b foo', '...with the right elements';
 
     is $s.default, False, "Default value is false";
@@ -24,8 +24,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s<a>:exists, True, 'exists with existing element';
     is $s<santa>:exists, False, 'exists with nonexistent element';
 
-    ok ?$s, "Bool returns True if there is something in the KeySet";
-    nok ?Set.new(), "Bool returns False if there is nothing in the KeySet";
+    ok ?$s, "Bool returns True if there is something in the SetHash";
+    nok ?Set.new(), "Bool returns False if there is nothing in the SetHash";
 
     my $hash;
     lives_ok { $hash = $s.hash }, ".hash doesn't die";
@@ -44,7 +44,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     
     $s<baz> = True;
     lives_ok { $s<baz> = True }, 'can set an item to True';
-    is showset($s), 'a b baz foo', '...and it adds it to the KeySet';
+    is showset($s), 'a b baz foo', '...and it adds it to the SetHash';
     lives_ok { $s<baz> = True }, 'can set the same item to True';
     is showset($s), 'a b baz foo', '...and it does nothing';
 
@@ -69,39 +69,39 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    ok (KeySet.new: <a b c>) ~~ (KeySet.new: <a b c>), "Identical sets smartmatch with each other";
-    nok (KeySet.new: <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
-    nok (KeySet.new: <a b c d>) ~~ (KeySet.new: <a b c>), "Superset does not smartmatch";
-    nok "a" ~~ (KeySet.new: <a b c>), "Smartmatch is not element of";
-    ok (KeySet.new: <a b c>) ~~ KeySet, "Type-checking smartmatch works";
-    ok (set <a b c>) ~~ (KeySet.new: <a b c>), "KeySet matches Set, too";
+    ok (SetHash.new: <a b c>) ~~ (SetHash.new: <a b c>), "Identical sets smartmatch with each other";
+    nok (SetHash.new: <b c>) ~~ (SetHash.new: <a b c>), "Subset does not smartmatch";
+    nok (SetHash.new: <a b c d>) ~~ (SetHash.new: <a b c>), "Superset does not smartmatch";
+    nok "a" ~~ (SetHash.new: <a b c>), "Smartmatch is not element of";
+    ok (SetHash.new: <a b c>) ~~ SetHash, "Type-checking smartmatch works";
+    ok (set <a b c>) ~~ (SetHash.new: <a b c>), "SetHash matches Set, too";
 
-    ok (bag <a b c>) ~~ (KeySet.new: <a b c>), "Bag smartmatches with equivalent KeySet:";
-    ok (bag <a a a b c>) ~~ (KeySet.new: <a b c>), "... even if the Bag has greater quantities";
-    nok (bag <b c>) ~~ (KeySet.new: <a b c>), "Subset does not smartmatch";
-    nok (bag <a b c d>) ~~ (KeySet.new: <a b c>), "Superset does not smartmatch";
-    nok (bag <a b c>) ~~ KeySet, "Type-checking smartmatch works";
+    ok (bag <a b c>) ~~ (SetHash.new: <a b c>), "Bag smartmatches with equivalent SetHash:";
+    ok (bag <a a a b c>) ~~ (SetHash.new: <a b c>), "... even if the Bag has greater quantities";
+    nok (bag <b c>) ~~ (SetHash.new: <a b c>), "Subset does not smartmatch";
+    nok (bag <a b c d>) ~~ (SetHash.new: <a b c>), "Superset does not smartmatch";
+    nok (bag <a b c>) ~~ SetHash, "Type-checking smartmatch works";
 }
 
 {
-    isa_ok "a".KeySet, KeySet, "Str.KeySet makes a KeySet";
-    is showset("a".KeySet), 'a', "'a'.KeySet is set a";
+    isa_ok "a".SetHash, SetHash, "Str.SetHash makes a SetHash";
+    is showset("a".SetHash), 'a', "'a'.SetHash is set a";
 
-    isa_ok (a => 1).KeySet, KeySet, "Pair.KeySet makes a KeySet";
-    is showset((a => 1).KeySet), 'a', "(a => 1).KeySet is set a";
-    is showset((a => 0).KeySet), '', "(a => 0).KeySet is the empty set";
+    isa_ok (a => 1).SetHash, SetHash, "Pair.SetHash makes a SetHash";
+    is showset((a => 1).SetHash), 'a', "(a => 1).SetHash is set a";
+    is showset((a => 0).SetHash), '', "(a => 0).SetHash is the empty set";
 
-    isa_ok <a b c>.KeySet, KeySet, "<a b c>.KeySet makes a KeySet";
-    is showset(<a b c a>.KeySet), 'a b c', "<a b c a>.KeySet makes the set a b c";
-    is showset(["a", "b", "c", "a"].KeySet), 'a b c', "[a b c a].KeySet makes the set a b c";
-    is showset([a => 3, b => 0, 'c', 'a'].KeySet), 'a c', "[a => 3, b => 0, 'c', 'a'].KeySet makes the set a c";
+    isa_ok <a b c>.SetHash, SetHash, "<a b c>.SetHash makes a SetHash";
+    is showset(<a b c a>.SetHash), 'a b c', "<a b c a>.SetHash makes the set a b c";
+    is showset(["a", "b", "c", "a"].SetHash), 'a b c', "[a b c a].SetHash makes the set a b c";
+    is showset([a => 3, b => 0, 'c', 'a'].SetHash), 'a c', "[a => 3, b => 0, 'c', 'a'].SetHash makes the set a c";
 
-    isa_ok {a => 2, b => 4, c => 0}.KeySet, KeySet, "{a => 2, b => 4, c => 0}.KeySet makes a KeySet";
-    is showset({a => 2, b => 4, c => 0}.KeySet), 'a b', "{a => 2, b => 4, c => 0}.KeySet makes the set a b";
+    isa_ok {a => 2, b => 4, c => 0}.SetHash, SetHash, "{a => 2, b => 4, c => 0}.SetHash makes a SetHash";
+    is showset({a => 2, b => 4, c => 0}.SetHash), 'a b', "{a => 2, b => 4, c => 0}.SetHash makes the set a b";
 }
 
 {
-    my $s = KeySet.new(<a b foo>);
+    my $s = SetHash.new(<a b foo>);
     is $s<a>:exists, True, ':exists with existing element';
     is $s<santa>:exists, False, ':exists with nonexistent element';
     is $s<a>:delete, True, ':delete returns current value on set';
@@ -109,7 +109,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    my %h := KeySet.new(<a c>);
+    my %h := SetHash.new(<a c>);
     is +%h.elems, 2, 'Inititalization worked';
 
     lives_ok { %h<c> = False }, 'can set an item to False';
@@ -126,24 +126,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
     %h<b>--;
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
-    # lives_ok { %h = set <Q P R> }, 'Assigning a Set to a KeySet';
+    # lives_ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
     # is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 
 {
-    my $s = KeySet.new(<foo bar foo bar baz foo>);
-    is showset($s), 'bar baz foo', 'KeySet.new discards duplicates';
+    my $s = SetHash.new(<foo bar foo bar baz foo>);
+    is showset($s), 'bar baz foo', 'SetHash.new discards duplicates';
 }
 
 {
-    my $b = KeySet.new([ foo => 10, bar => 17, baz => 42 ]);
-    isa_ok $b, KeySet, 'KeySet.new given an array of pairs produces a KeySet';
+    my $b = SetHash.new([ foo => 10, bar => 17, baz => 42 ]);
+    isa_ok $b, SetHash, 'SetHash.new given an array of pairs produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
-    my $b = KeySet.new({ foo => 10, bar => 17, baz => 42 }.hash);
-    isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
+    my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 }.hash);
+    isa_ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
     #?rakudo todo "Not up to current spec"
     is +$b, 3, '... with three elements';
     #?niecza todo "Non-string keys NYI"
@@ -152,37 +152,37 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    my $b = KeySet.new({ foo => 10, bar => 17, baz => 42 });
-    isa_ok $b, KeySet, 'KeySet.new given a Hash produces a KeySet';
+    my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 });
+    isa_ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
-    my $b = KeySet.new(set <foo bar foo bar baz foo>);
-    isa_ok $b, KeySet, 'KeySet.new given a Set produces a KeySet';
+    my $b = SetHash.new(set <foo bar foo bar baz foo>);
+    isa_ok $b, SetHash, 'SetHash.new given a Set produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
-    my $b = KeySet.new(KeySet.new(<foo bar foo bar baz foo>));
-    isa_ok $b, KeySet, 'KeySet.new given a KeySet produces a KeySet';
+    my $b = SetHash.new(SetHash.new(<foo bar foo bar baz foo>));
+    isa_ok $b, SetHash, 'SetHash.new given a SetHash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
-    my $b = KeySet.new(KeyBag.new(<foo bar foo bar baz foo>));
-    isa_ok $b, KeySet, 'KeySet.new given a KeyBag produces a KeySet';
+    my $b = SetHash.new(BagHash.new(<foo bar foo bar baz foo>));
+    isa_ok $b, SetHash, 'SetHash.new given a BagHash produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
-    my $b = KeySet.new(bag <foo bar foo bar baz foo>);
-    isa_ok $b, KeySet, 'KeySet given a Bag produces a KeySet';
+    my $b = SetHash.new(bag <foo bar foo bar baz foo>);
+    isa_ok $b, SetHash, 'SetHash given a Bag produces a SetHash';
     is +$b, 1, '... with one element';
 }
 
 {
-    my $s = KeySet.new(<foo bar baz>);
+    my $s = SetHash.new(<foo bar baz>);
     isa_ok $s.list.elems, 3, ".list returns 3 things";
     is $s.list.grep(Str).elems, 3, "... all of which are Str";
     #?rakudo skip 'no longer Iterable'
@@ -190,25 +190,25 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 {
-    my $s = KeySet.new(<foo bar baz>);
+    my $s = SetHash.new(<foo bar baz>);
     my $str;
     my $c;
     lives_ok { $str = $s.perl }, ".perl lives";
     isa_ok $str, Str, "... and produces a string";
     lives_ok { $c = eval $str }, ".perl.eval lives";
-    isa_ok $c, KeySet, "... and produces a KeySet";
+    isa_ok $c, SetHash, "... and produces a SetHash";
     is showset($c), showset($s), "... and it has the correct values";
 }
 
 {
-    my $s = KeySet.new(<foo bar baz>);
+    my $s = SetHash.new(<foo bar baz>);
     lives_ok { $s = $s.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar baz foo", "... which only contains bar baz and foo separated by spaces";
 }
 
 {
-    my $s = KeySet.new(<foo bar baz>);
+    my $s = SetHash.new(<foo bar baz>);
     lives_ok { $s = $s.gist }, ".gist lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -219,20 +219,20 @@ sub showset($s) { $s.keys.sort.join(' ') }
 # L<S02/Names and Variables/'C<%x> may be bound to'>
 
 {
-    my %s := KeySet.new(<a b c b>);
-    isa_ok %s, KeySet, 'A KeySet bound to a %var is a KeySet';
+    my %s := SetHash.new(<a b c b>);
+    isa_ok %s, SetHash, 'A SetHash bound to a %var is a SetHash';
     is showset(%s), 'a b c', '...with the right elements';
 
     is %s<a>, True, 'Single-key subscript (existing element)';
     is %s<santa>, False, 'Single-key subscript (nonexistent element)';
 
-    lives_ok { %s<a> = True }, "Can assign to an element (KeySets are immutable)";
+    lives_ok { %s<a> = True }, "Can assign to an element (SetHash are immutable)";
 }
 
-# L<S32::Containers/KeySet/roll>
+# L<S32::Containers/SetHash/roll>
 
 {
-    my $s = KeySet.new(<a b c>);
+    my $s = SetHash.new(<a b c>);
 
     my $a = $s.roll;
     ok $a eq "a" || $a eq "b" || $a eq "c", "We got one of the three choices";
@@ -246,18 +246,18 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
 }
 
-# L<S32::Containers/KeySet/pick>
+# L<S32::Containers/SetHash/pick>
 
 {
-    my $s = KeySet.new(<a b c d e f g h>);
+    my $s = SetHash.new(<a b c d e f g h>);
     my @a = $s.pick: *;
-    is @a.sort.join, 'abcdefgh', 'KeySet.pick(*) gets all elements';
-    isnt @a.join, 'abcdefgh', 'KeySet.pick(*) returns elements in a random order';
+    is @a.sort.join, 'abcdefgh', 'SetHash.pick(*) gets all elements';
+    isnt @a.join, 'abcdefgh', 'SetHash.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
 }
 
 {
-    my $s = KeySet.new(<a b c>);
+    my $s = SetHash.new(<a b c>);
 
     my $a = $s.pick;
     ok $a eq "a" || $a eq "b" || $a eq "c", "We got one of the three choices";
@@ -271,9 +271,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
 }
 
 #?rakudo skip "'is ObjectType' NYI"
-#?niecza skip "is KeySet doesn't work yet"
+#?niecza skip "is SetHash doesn't work yet"
 {
-    my %h is KeySet = a => True, b => False, c => True;
+    my %h is SetHash = a => True, b => False, c => True;
     #?rakudo todo 'todo'
     is +%h.elems, 2, 'Inititalization worked';
 
@@ -298,24 +298,24 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
     #?rakudo todo 'todo'
-    lives_ok { %h = set <Q P R> }, 'Assigning a Set to a KeySet';
+    lives_ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
     #?rakudo todo 'todo'
     is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 
 {
-    isa_ok 42.KeySet, KeySet, "Method .KeySet works on Int-1";
-    is showset(42.KeySet), "42", "Method .KeySet works on Int-2";
-    isa_ok "blue".KeySet, KeySet, "Method .KeySet works on Str-1";
-    is showset("blue".KeySet), "blue", "Method .KeySet works on Str-2";
+    isa_ok 42.SetHash, SetHash, "Method .SetHash works on Int-1";
+    is showset(42.SetHash), "42", "Method .SetHash works on Int-2";
+    isa_ok "blue".SetHash, SetHash, "Method .SetHash works on Str-1";
+    is showset("blue".SetHash), "blue", "Method .SetHash works on Str-2";
     my @a = <Now the cross-handed set was the Paradise way>;
-    isa_ok @a.KeySet, KeySet, "Method .KeySet works on Array-1";
-    is showset(@a.KeySet), "Now Paradise cross-handed set the was way", "Method .KeySet works on Array-2";
+    isa_ok @a.SetHash, SetHash, "Method .SetHash works on Array-1";
+    is showset(@a.SetHash), "Now Paradise cross-handed set the was way", "Method .SetHash works on Array-2";
     my %x = "a" => 1, "b" => 2;
-    isa_ok %x.KeySet, KeySet, "Method .KeySet works on Hash-1";
-    is showset(%x.KeySet), "a b", "Method .KeySet works on Hash-2";
-    isa_ok (@a, %x).KeySet, KeySet, "Method .KeySet works on Parcel-1";
-    is showset((@a, %x).KeySet), "Now Paradise a b cross-handed set the was way", "Method .KeySet works on Parcel-2";
+    isa_ok %x.SetHash, SetHash, "Method .SetHash works on Hash-1";
+    is showset(%x.SetHash), "a b", "Method .SetHash works on Hash-2";
+    isa_ok (@a, %x).SetHash, SetHash, "Method .SetHash works on Parcel-1";
+    is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on Parcel-2";
 }
 
 # vim: ft=perl6

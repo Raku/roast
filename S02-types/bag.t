@@ -146,14 +146,14 @@ sub showkv($x) {
 }
 
 {
-    my $b = bag KeySet.new(<foo bar foo bar baz foo>);
-    isa_ok $b, Bag, '&Bag.new given a KeySet produces a Bag';
+    my $b = bag SetHash.new(<foo bar foo bar baz foo>);
+    isa_ok $b, Bag, '&Bag.new given a SetHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
 {
-    my $b = bag KeyBag.new(<foo bar foo bar baz foo>);
-    isa_ok $b, Bag, '&Bag.new given a KeyBag produces a Bag';
+    my $b = bag BagHash.new(<foo bar foo bar baz foo>);
+    isa_ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 

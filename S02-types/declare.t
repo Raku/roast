@@ -178,7 +178,7 @@ plan 78;
 
 # junction StrPos StrLen uint Nil Whatever Mu Failure
 # Exception Range Bag Signature Capture Blob Instant Duration
-# Keyhash KeySet KeyBag Pair Mapping IO Routine Sub Method
+# Keyhash SetHash BagHash Pair Mapping IO Routine Sub Method
 # Submethod Macro Match Package Module Class Role Grammar Any
 
 #?rakudo skip 'junction not implemented'
@@ -288,16 +288,16 @@ plan 78;
  isa_ok($pamu,KeyHash  );
 }
 
-#?pugs skip 'KeySet'
+#?pugs skip 'SetHash'
 {
- my KeySet $paxa;
- isa_ok($paxa,KeySet  );
+ my SetHash $paxa;
+ isa_ok($paxa,SetHash  );
 }
 
-#?pugs skip 'KeyBag'
+#?pugs skip 'BagHash'
 {
- my KeyBag $paze;
- isa_ok($paze,KeyBag  );
+ my BagHash $paze;
+ isa_ok($paze,BagHash  );
 }
 
 {

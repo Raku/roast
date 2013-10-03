@@ -14,20 +14,20 @@ is Set.perl, 'Set', 'Set.perl';
 is Set.Str, "", "Set.Str is empty string";
 is ~Set, "", "~Set is empty string";
 
-is KeySet.gist, '(KeySet)', 'KeySet.gist';
-is KeySet.perl, 'KeySet', 'KeySet.perl';
-is KeySet.Str, "", "KeySet.Str is empty string";
-is ~KeySet, "", "~KeySet is empty string";
+is SetHash.gist, '(SetHash)', 'SetHash.gist';
+is SetHash.perl, 'SetHash', 'SetHash.perl';
+is SetHash.Str, "", "SetHash.Str is empty string";
+is ~SetHash, "", "~SetHash is empty string";
 
 is Bag.gist, '(Bag)', 'Bag.gist';
 is Bag.perl, 'Bag', 'Bag.perl';
 is Bag.Str, "", "Bag.Str is empty string";
 is ~Bag, "", "~Bag is empty string";
 
-is KeyBag.gist, '(KeyBag)', 'KeyBag.gist';
-is KeyBag.perl, 'KeyBag', 'KeyBag.perl';
-is KeyBag.Str, "", "KeyBag.Str is empty string";
-is ~KeyBag, "", "~KeyBag is empty string";
+is BagHash.gist, '(BagHash)', 'BagHash.gist';
+is BagHash.perl, 'BagHash', 'BagHash.perl';
+is BagHash.Str, "", "BagHash.Str is empty string";
+is ~BagHash, "", "~BagHash is empty string";
 
 # vim: ft=perl6
 done;
