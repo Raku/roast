@@ -1,14 +1,14 @@
 
 use Test;
 
-plan 23;
+plan 21;
 
 # L<S05/Regexes constitute a first-class language, rather than just being strings/can take (almost) any chars as delimiters>
 
-my @delims = < ^ ° ! " § $ % @ € & / = ? ` * + ~ ' ; , . - | >;
+my @delims = < ^ ° ! " § $ % @ € & / = ? ` * + ~ ; , . | >;
 my %todo;
 
-#?niecza emit %todo = < ? 1 * 1 + 1 ~ 1 ' 1 - 1 >;
+#?niecza emit %todo = < ? 1 * 1 + 1 ~ 1 >;
 
 for @delims -> $d {
     my $ok  = try { eval("my \$x = 'abc'; \$x ~~ m{$d}b{$d}") };
