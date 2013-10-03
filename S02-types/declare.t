@@ -284,7 +284,7 @@ plan 78;
 #?pugs skip 'QuantHash'
 {
  my QuantHash $pamu;
- isa_ok($pamu,QuantHash  );
+ ok($pamu ~~ QuantHash, 'The object does QuantHash' );
 }
 
 #?pugs skip 'SetHash'
