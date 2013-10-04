@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 154;
+plan 159;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -256,6 +256,7 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
+    is $b.total, 3, '.roll should not change Bag';
 }
 
 {
@@ -268,6 +269,7 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
+    is $b.total, 100000000001, '.roll should not change Bag';
 }
 
 # L<S32::Containers/Bag/pick>
@@ -287,6 +289,7 @@ sub showkv($x) {
     is +@a, 3, '.pick(*) returns the right number of items';
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
+    is $b.total, 3, '.pick should not change Bag';
 }
 
 {
@@ -299,6 +302,14 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
+    is $b.total, 100000000001, '.pick should not change Bag';
+}
+
+# L<S32::Containers/Bag/grab>
+
+{
+    my $b = bag <a b b c c c>;
+    dies_ok { $b.grab }, 'cannot call .grab on a Bag';
 }
 
 {

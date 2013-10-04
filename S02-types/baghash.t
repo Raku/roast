@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 172;
+plan 190;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -264,6 +264,7 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
+    is $b.total, 3, '.roll should not change BagHash';
 }
 
 {
@@ -276,6 +277,7 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
+    is $b.total, 100000000001, '.roll should not change BagHash';
 }
 
 # L<S32::Containers/BagHash/pick>
@@ -295,6 +297,7 @@ sub showkv($x) {
     is +@a, 3, '.pick(*) returns the right number of items';
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
+    is $b.total, 3, '.pick should not change BagHash';
 }
 
 {
@@ -307,6 +310,44 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
+    is $b.total, 100000000001, '.pick should not change BagHash';
+}
+
+# L<S32::Containers/BagHash/grab>
+
+{
+    my $b = BagHash.new("a", "b", "b");
+
+    my $a = $b.grab;
+    ok $a eq "a" || $a eq "b", "We got one of the two choices";
+
+    my @a = $b.grab(2);
+    is +@a, 2, '.grab(2) returns the right number of items';
+    ok @a.grep(* eq 'a').elems <= 1, '.grab(2) returned at most one "a"';
+    is @a.grep(* eq 'b').elems, 2 - @a.grep(* eq 'a').elems, '.grab(2) and the rest are "b"';
+    is $b.total, 0, '.grab *should* change BagHash';
+}
+
+{
+    my $b = BagHash.new("a", "b", "b");
+    my @a = $b.grab: *;
+    is +@a, 3, '.grab(*) returns the right number of items';
+    is @a.grep(* eq 'a').elems, 1, '.grab(*) (1)';
+    is @a.grep(* eq 'b').elems, 2, '.grab(*) (2)';
+    is $b.total, 0, '.grab *should* change BagHash';
+}
+
+{
+    my $b = {"a" => 100000000000, "b" => 1}.BagHash;
+
+    my $a = $b.grab;
+    ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
+
+    my @a = $b.grab: 100;
+    is +@a, 100, '.grab(100) returns 100 items';
+    ok @a.grep(* eq 'a') > 98, '.grab(100) (1)';
+    ok @a.grep(* eq 'b') < 2, '.grab(100) (2)';
+    is $b.total, 99999999900, '.grab *should* change BagHash';
 }
 
 #?rakudo skip "'is ObjectType' NYI"

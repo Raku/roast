@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 144;
+plan 158;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -244,6 +244,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
+    is $s.total, 3, '.roll should not change the SetHash';
 }
 
 # L<S32::Containers/SetHash/pick>
@@ -254,6 +255,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.sort.join, 'abcdefgh', 'SetHash.pick(*) gets all elements';
     isnt @a.join, 'abcdefgh', 'SetHash.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
+    is $s.total, 8, '.pick should not change the SetHash';
 }
 
 {
@@ -268,6 +270,34 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
+    is $s.total, 3, '.pick should not change the SetHash';
+}
+
+# L<S32::Containers/SetHash/grab>
+
+{
+    my $s = SetHash.new(<a b c d e f g h>);
+    my @a = $s.grab: *;
+    is @a.sort.join, 'abcdefgh', 'SetHash.grab(*) gets all elements';
+    isnt @a.join, 'abcdefgh', 'SetHash.grab(*) returns elements in a random order';
+      # There's only a 1/40_320 chance of that test failing by chance alone.
+    is $s.total, 0, '.grab *should* change the SetHash';
+}
+
+{
+    my $s = SetHash.new(<a b c>);
+
+    my $a = $s.grab;
+    ok $a eq "a" || $a eq "b" || $a eq "c", "We got one of the three choices";
+    is $s.total, 2, '.grab *should* change the SetHash';
+
+    my @a = $s.grab(2);
+    is +@a, 2, '.grab(2) returns the right number of items';
+    is @a.grep(* eq 'a' | 'b' | 'c').elems, 2, '.grab(2) returned "a"s, "b"s, and "c"s';
+    ok @a.grep(* eq 'a').elems <= 1, '.grab(2) returned at most one "a"';
+    ok @a.grep(* eq 'b').elems <= 1, '.grab(2) returned at most one "b"';
+    ok @a.grep(* eq 'c').elems <= 1, '.grab(2) returned at most one "c"';
+    is $s.total, 0, '.grab *should* change the SetHash';
 }
 
 #?rakudo skip "'is ObjectType' NYI"

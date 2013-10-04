@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 146;
+plan 150;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -248,6 +248,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
+    is $s.total, 3, '.roll should not change Set';
 }
 
 # L<S32::Containers/Set/pick>
@@ -258,6 +259,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.sort.join, 'abcdefgh', 'Set.pick(*) gets all elements';
     isnt @a.join, 'abcdefgh', 'Set.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
+    is $s.total, 8, '.pick should not change Set';
 }
 
 {
@@ -272,6 +274,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
+    is $s.total, 3, '.pick should not change Set';
+}
+
+# L<S32::Containers/Set/grab>
+
+{
+    my $s = set <a b c>;
+    dies_ok { $s.grab }, 'cannot call .grab on a Set';
 }
 
 # RT 107022
