@@ -103,11 +103,11 @@ sub showkv($x) {
 }
 
 {
-    my $s = BagHash.new(<a a b foo>);
-    is $s<a>:exists, True, ':exists with existing element';
-    is $s<santa>:exists, False, ':exists with nonexistent element';
-    is $s<a>:delete, 2, ':delete works on BagHash';
-    is showkv($s), 'b:1 foo:1', '...and actually deletes';
+    my $b = BagHash.new(<a a b foo>);
+    is $b<a>:exists, True, ':exists with existing element';
+    is $b<santa>:exists, False, ':exists with nonexistent element';
+    is $b<a>:delete, 2, ':delete works on BagHash';
+    is showkv($b), 'b:1 foo:1', '...and actually deletes';
 }
 
 {

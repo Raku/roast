@@ -59,7 +59,7 @@ sub showkv($x) {
     ok (bag <a b c>) ~~ Bag, "Type-checking smartmatch works";
 
     ok (set <a b c>) ~~ (bag <a b c>), "Set smartmatches with equivalent bag";
-    nok (set <a a a b c>) ~~ (bag <a a a b c>), "... but not if the Bag has greater quantities";
+    nok (set <a b c>) ~~ (bag <a a a b c>), "... but not if the Bag has greater quantities";
     nok (set <a b c>) ~~ Bag, "Type-checking smartmatch works";
 }
 
@@ -81,11 +81,11 @@ sub showkv($x) {
 }
 
 {
-    my $s = bag <a a b foo>;
-    is $s<a>:exists, True, ':exists with existing element';
-    is $s<santa>:exists, False, ':exists with nonexistent element';
-    dies_ok { $s<a>:delete }, ':delete does not work on bag';
-    dies_ok { $s.delete_key("a") }, '.delete_key does not work on bag';
+    my $b = bag <a a b foo>;
+    is $b<a>:exists, True, ':exists with existing element';
+    is $b<santa>:exists, False, ':exists with nonexistent element';
+    dies_ok { $b<a>:delete }, ':delete does not work on bag';
+    dies_ok { $b.delete_key("a") }, '.delete_key does not work on bag';
 }
 
 {
