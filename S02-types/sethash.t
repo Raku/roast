@@ -244,6 +244,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $s.total, 3, '.roll should not change the SetHash';
 }
 
@@ -255,6 +257,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.sort.join, 'abcdefgh', 'SetHash.pick(*) gets all elements';
     isnt @a.join, 'abcdefgh', 'SetHash.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $s.total, 8, '.pick should not change the SetHash';
 }
 
@@ -270,11 +274,15 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $s.total, 3, '.pick should not change the SetHash';
 }
 
 # L<S32::Containers/SetHash/grab>
 
+#?pugs   skip '.grab NYI'
+#?niecza skip '.grab NYI'
 {
     my $s = SetHash.new(<a b c d e f g h>);
     my @a = $s.grab: *;
@@ -284,6 +292,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.total, 0, '.grab *should* change the SetHash';
 }
 
+#?pugs   skip '.grab NYI'
+#?niecza skip '.grab NYI'
 {
     my $s = SetHash.new(<a b c>);
 

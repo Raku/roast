@@ -42,6 +42,8 @@ sub showkv($x) {
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $b.total, 8, '.total gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
 }
@@ -256,6 +258,8 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $b.total, 3, '.roll should not change Bag';
 }
 
@@ -269,6 +273,8 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.roll should not change Bag';
 }
 
@@ -289,6 +295,8 @@ sub showkv($x) {
     is +@a, 3, '.pick(*) returns the right number of items';
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $b.total, 3, '.pick should not change Bag';
 }
 
@@ -302,11 +310,15 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change Bag';
 }
 
 # L<S32::Containers/Bag/grab>
 
+#?pugs   skip '.grab NYI'
+#?niecza skip '.grab NYI'
 {
     my $b = bag <a b b c c c>;
     dies_ok { $b.grab }, 'cannot call .grab on a Bag';
