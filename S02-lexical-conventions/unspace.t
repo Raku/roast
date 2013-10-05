@@ -278,6 +278,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
     #?niecza skip 'Unable to resolve method id in class Str'
+    #?rakudo skip 'parse error'
     is((foo\#`〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
     eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
