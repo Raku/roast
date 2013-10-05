@@ -50,7 +50,6 @@ my Glass of MulledWine $glass ;
 role Tray[::ItemType] { }
 my Tray of Glass of MulledWine $valuable;
 
-#?rakudo 3 todo 'nom regression: RT #117681'
 is $mug.WHAT.perl , 'Cup[EggNog]' , 'the $mug is a Cup of EggNog';
 is $glass.WHAT.perl , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine';
 is $valuable.WHAT.perl , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
