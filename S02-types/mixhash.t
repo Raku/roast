@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 168;
+plan 188;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -46,6 +46,7 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 8, '.total gives sum of values';
+    is $m.elems, 3, '.total gives sum of values';
     is +$m, 8, '+$mix gives sum of values';
 
     lives_ok { $m<a> = 42 }, "Can assign to an existing element";
@@ -137,6 +138,7 @@ sub showkv($x) {
 {
     my $m = MixHash.new([ foo => 10.1, bar => 17.2, baz => 42.3, santa => 0 ]);
     is $m.total, 1, 'make sure .total is ok';
+    is $m.elems, 1, 'make sure .elems is ok';
     isa_ok $m, MixHash, '&MixHash.new given an array of pairs produces a MixHash';
     is +$m, 1, "... with one element";
 }
@@ -164,8 +166,8 @@ sub showkv($x) {
 }
 
 {
-    my $m = MixHash.new(SetHash.new(<foo bar foo bar baz foo>));
-    isa_ok $m, MixHash, '&MixHash.new given a SetHash produces a MixHash';
+    my $m = MixHash.new(MixHash.new(<foo bar foo bar baz foo>));
+    isa_ok $m, MixHash, '&MixHash.new given a MixHash produces a MixHash';
     is +$m, 1, "... with one element";
 }
 
@@ -190,6 +192,7 @@ sub showkv($x) {
 {
     my $m = { foo => 10.1, bar => 1.2, baz => 2.3}.MixHash;
     is $m.total, 13.6, 'make sure .total is ok';
+    is $m.elems, 3, 'make sure .elems is ok';
 
     # .list is just the keys, as per TimToady: 
     # http://irclog.perlgeek.de/perl6/2012-02-07#i_5112706
@@ -271,11 +274,13 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change MixHash';
+    is $m.elems, 2, '.roll should not change MixHash';
 }
 
 {
     my $m = {a => 100000000000, b => 1, c => -100000000000}.MixHash;
     is $m.total, 1, 'make sure total is ok';
+    is $m.elems, 3, '.roll should not change MixHash';
 
     my $a = $m.roll;
     ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
@@ -287,8 +292,8 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change MixHash';
+    is $m.elems, 3, '.roll should not change MixHash';
 }
-
 
 # L<S32::Containers/MixHash/pick>
 
@@ -304,6 +309,40 @@ sub showkv($x) {
 {
     my $m = <a b b c c c>.MixHash;
     dies_ok { $m.grab }, 'cannot call .grab on a MixHash';
+}
+
+
+# L<S32::Containers/MixHash/grabpairs>
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $m = MixHash.new("a", "b", "b");
+
+    my $a = $m.grabpairs[0];
+    isa_ok $a, Pair, 'did we get a Pair';
+    ok $a.key eq "a" || $a.key eq "b", "We got one of the two choices";
+
+    my @a = $m.grabpairs(2);
+    is +@a, 1, '.grabpairs(2) returns the right number of items';
+    is @a.grep( {.isa(Pair)} ).Num, 1, 'are they all Pairs';
+    ok @a[0].key eq "a" || @a[0].key eq "b", "We got one of the two choices";
+    is $m.total, 0, '.grabpairs *should* change MixHash';
+    is $m.elems, 0, '.grabpairs *should* change MixHash';
+}
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $m = (a=>1.1,b=>2.2,c=>3.3,d=>4.4,e=>5.5,f=>6.6,g=>7.7,h=>8.8).MixHash;
+    my @a = $m.grabpairs: *;
+    is +@a, 8, '.grabpairs(*) returns the right number of items';
+    is @a.grep( {.isa(Pair)} ).Num, 8, 'are they all Pairs';
+    is @a.grep( {1.1 <= .value <= 8.8} ).Num, 8, 'and they all have an expected value';
+    is @a.sort.map({.key}).join, "abcdefgh", 'MixHash.grabpairs(*) gets all elements';
+    isnt @a.map({.key}).join, "abcdefgh", 'MixHash.grabpairs(*) returns elements in a random order';
+    is $m.total, 0, '.grabpairs *should* change MixHash';
+    is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
 #?rakudo skip "'is ObjectType' NYI"

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 190;
+plan 212;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -46,6 +46,7 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $b.total, 8, '.total gives sum of values';
+    is $b.elems, 3, '.elems gives number of elements';
     is +$b, 8, '+$bag gives sum of values';
 
     lives_ok { $b<a> = 42 }, "Can assign to an existing element";
@@ -269,6 +270,7 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $b.total, 3, '.roll should not change BagHash';
+    is $b.elems, 2, '.roll should not change BagHash';
 }
 
 {
@@ -284,6 +286,7 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.roll should not change BagHash';
+    is $b.elems, 2, '.roll should not change BagHash';
 }
 
 # L<S32::Containers/BagHash/pick>
@@ -306,6 +309,7 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $b.total, 3, '.pick should not change BagHash';
+    is $b.elems, 2, '.pick should not change BagHash';
 }
 
 {
@@ -321,6 +325,7 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change BagHash';
+    is $b.elems, 2, '.pick should not change BagHash';
 }
 
 # L<S32::Containers/BagHash/grab>
@@ -338,6 +343,7 @@ sub showkv($x) {
     ok @a.grep(* eq 'a').elems <= 1, '.grab(2) returned at most one "a"';
     is @a.grep(* eq 'b').elems, 2 - @a.grep(* eq 'a').elems, '.grab(2) and the rest are "b"';
     is $b.total, 0, '.grab *should* change BagHash';
+    is $b.elems, 0, '.grab *should* change BagHash';
 }
 
 #?pugs   skip '.grab NYI'
@@ -349,6 +355,7 @@ sub showkv($x) {
     is @a.grep(* eq 'a').elems, 1, '.grab(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.grab(*) (2)';
     is $b.total, 0, '.grab *should* change BagHash';
+    is $b.elems, 0, '.grab *should* change BagHash';
 }
 
 #?pugs   skip '.grab NYI'
@@ -364,6 +371,40 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') > 98, '.grab(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.grab(100) (2)';
     is $b.total, 99999999900, '.grab *should* change BagHash';
+    ok 0 <= $b.elems <= 2, '.grab *should* change BagHash';
+}
+
+# L<S32::Containers/BagHash/grabpairs>
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $b = BagHash.new("a", "b", "b");
+
+    my $a = $b.grabpairs[0];
+    isa_ok $a, Pair, 'did we get a Pair';
+    ok $a.key eq "a" || $a.key eq "b", "We got one of the two choices";
+
+    my @a = $b.grabpairs(2);
+    is +@a, 1, '.grabpairs(2) returns the right number of items';
+    is @a.grep( {.isa(Pair)} ).Num, 1, 'are they all Pairs';
+    ok @a[0].key eq "a" || @a[0].key eq "b", "We got one of the two choices";
+    is $b.total, 0, '.grabpairs *should* change BagHash';
+    is $b.elems, 0, '.grabpairs *should* change BagHash';
+}
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $b = BagHash.new(<a a b b c c d d e e f f g g h h>);
+    my @a = $b.grabpairs: *;
+    is +@a, 8, '.grabpairs(*) returns the right number of items';
+    is @a.grep( {.isa(Pair)} ).Num, 8, 'are they all Pairs';
+    is @a.grep( {.value == 2} ).Num, 8, 'and they all have an expected value';
+    is @a.sort.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) gets all elements';
+    isnt @a.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) returns elements in a random order';
+    is $b.total, 0, '.grabpairs *should* change BagHash';
+    is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
 #?rakudo skip "'is ObjectType' NYI"

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 158;
+plan 182;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -247,6 +247,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $s.total, 3, '.roll should not change the SetHash';
+    is $s.elems, 3, '.roll should not change the SetHash';
 }
 
 # L<S32::Containers/SetHash/pick>
@@ -260,6 +261,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $s.total, 8, '.pick should not change the SetHash';
+    is $s.elems, 8, '.pick should not change the SetHash';
 }
 
 {
@@ -277,6 +279,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $s.total, 3, '.pick should not change the SetHash';
+    is $s.elems, 3, '.pick should not change the SetHash';
 }
 
 # L<S32::Containers/SetHash/grab>
@@ -290,6 +293,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isnt @a.join, 'abcdefgh', 'SetHash.grab(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
     is $s.total, 0, '.grab *should* change the SetHash';
+    is $s.elems, 0, '.grab *should* change the SetHash';
 }
 
 #?pugs   skip '.grab NYI'
@@ -300,6 +304,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $a = $s.grab;
     ok $a eq "a" || $a eq "b" || $a eq "c", "We got one of the three choices";
     is $s.total, 2, '.grab *should* change the SetHash';
+    is $s.elems, 2, '.grab *should* change the SetHash';
 
     my @a = $s.grab(2);
     is +@a, 2, '.grab(2) returns the right number of items';
@@ -308,6 +313,45 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'b').elems <= 1, '.grab(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.grab(2) returned at most one "c"';
     is $s.total, 0, '.grab *should* change the SetHash';
+    is $s.elems, 0, '.grab *should* change the SetHash';
+}
+
+# L<S32::Containers/SetHash/grabpairs>
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $s = SetHash.new(<a b c d e f g h>);
+    my @a = $s.grabpairs: *;
+    is @a.grep( {.isa(Pair)} ).Num, 8, 'are they all Pairs';
+    is @a.grep( {.value === True} ).Num, 8, 'and they all have a True value';
+    is @a.sort.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) gets all elements';
+    isnt @a.map({.key}).join, "abcdefgh", 'SetHash.grabpairs(*) returns elements in a random order';
+      # There's only a 1/40_320 chance of that test failing by chance alone.
+    is $s.total, 0, '.grabpairs *should* change the SetHash';
+    is $s.elems, 0, '.grabpairs *should* change the SetHash';
+}
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $s = SetHash.new(<a b c>);
+
+    my $a = $s.grabpairs[0];
+    isa_ok $a, Pair, 'and is it a Pair';
+    ok $a.key eq "a" || $a.key eq "b" || $a.key eq "c", "We got one of the three choices";
+    is $s.total, 2, '.grabpairs *should* change the SetHash';
+    is $s.elems, 2, '.grabpairs *should* change the SetHash';
+
+    my @a = $s.grabpairs(2);
+    is @a.grep( {.isa(Pair)} ).Num, 2, 'are they all Pairs';
+    is +@a, 2, '.grabpairs(2) returns the right number of items';
+    is @a.grep(*.key eq 'a' | 'b' | 'c').elems, 2, '.grabpairs(2) returned "a"s, "b"s, and "c"s';
+    ok @a.grep(*.key eq 'a').elems <= 1, '.grabpairs(2) returned at most one "a"';
+    ok @a.grep(*.key eq 'b').elems <= 1, '.grabpairs(2) returned at most one "b"';
+    ok @a.grep(*.key eq 'c').elems <= 1, '.grabpairs(2) returned at most one "c"';
+    is $s.total, 0, '.grabpairs *should* change the SetHash';
+    is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
 #?rakudo skip "'is ObjectType' NYI"
