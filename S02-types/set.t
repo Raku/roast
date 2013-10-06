@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 150;
+plan 151;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -290,6 +290,15 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $s = set <a b c>;
     dies_ok { $s.grab }, 'cannot call .grab on a Set';
+}
+
+# L<S32::Containers/Set/grabpairs>
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $s = set <a b c>;
+    dies_ok { $s.grabpairs }, 'cannot call .grabpairs on a Set';
 }
 
 # RT 107022

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 159;
+plan 160;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -322,6 +322,15 @@ sub showkv($x) {
 {
     my $b = bag <a b b c c c>;
     dies_ok { $b.grab }, 'cannot call .grab on a Bag';
+}
+
+# L<S32::Containers/Bag/grabpairs>
+
+#?pugs   skip '.grabpairs NYI'
+#?niecza skip '.grabpairs NYI'
+{
+    my $b = bag <a b b c c c>;
+    dies_ok { $b.grabpairs }, 'cannot call .grabpairs on a Bag';
 }
 
 {
