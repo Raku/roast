@@ -82,7 +82,9 @@ ok(!defined(Mu), "Mu is not defined");
     ok(!defined(%hash<bar>), "undefine hash subscript");
 
     %hash<bar> = "baz";
+    #?pugs emit #
     %hash<bar>:delete;
+    #?pugs 3 skip ':delete'
     ok(!defined(%hash<bar>), "delete hash subscript");
 
     ok(defined(@ary), "aggregate array defined");
@@ -214,6 +216,7 @@ Perl6-specific tests
     nok(defined($a_hash<blergh>), "my Hash subscript - Mu, no autovivification happened");
 
     $a_hash<blergh> = 1;
+    #?pugs 2 skip ':delete'
     ok(defined($a_hash<blergh>:delete), "delete");
     nok(defined($a_hash<blergh>:delete), " - once only");
 }

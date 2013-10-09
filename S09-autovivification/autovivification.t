@@ -6,6 +6,7 @@ use Test;
 plan 42;
 
 #?niecza todo
+#?pugs skip '!exists'
 {
   my %hash;
   %hash<a>;

@@ -29,6 +29,7 @@ plan 47;
 }
 
 #?niecza skip ":delete"
+#?pugs skip ':delete'
 {
   my @array  = <a b c>;
   my $var    = "d";

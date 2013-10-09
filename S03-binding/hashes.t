@@ -27,6 +27,7 @@ plan 39;
   is $var,     "f", "basic binding of a hash element (3)";
 }
 
+#?pugs skip ':delete'
 {
   my %hash  = (:a<x>, :b<y>, :c<z>);
   my $var   = "d";
