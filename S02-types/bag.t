@@ -147,12 +147,14 @@ sub showkv($x) {
     is +$b, 1, "... with one element";
 }
 
+#?niecza skip 'SetHash'
 {
     my $b = bag SetHash.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a SetHash produces a Bag';
     is +$b, 1, "... with one element";
 }
 
+#?niecza skip 'BagHash'
 {
     my $b = bag BagHash.new(<foo bar foo bar baz foo>);
     isa_ok $b, Bag, '&Bag.new given a BagHash produces a Bag';
@@ -217,6 +219,7 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
+    #?niecza todo
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 

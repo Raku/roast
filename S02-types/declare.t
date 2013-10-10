@@ -288,12 +288,14 @@ plan 78;
 }
 
 #?pugs skip 'SetHash'
+#?niecza skip 'SetHash'
 {
  my SetHash $paxa;
  isa_ok($paxa,SetHash  );
 }
 
 #?pugs skip 'BagHash'
+#?niecza skip 'BagHash'
 {
  my BagHash $paze;
  isa_ok($paze,BagHash  );

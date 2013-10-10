@@ -55,8 +55,10 @@ my $expected = 'Hello from subprocess';
 is %*ENV<PUGS_ROCKS>, $expected,'%*ENV is rw';
 
 %*ENV<PUGS_ROCKS>:delete;
+#?niecza todo ":delete"
 ok(%*ENV<PUGS_ROCKS>:!exists, 'We can remove keys from %*ENV');
 
+#?niecza todo ":!exists"
 ok %*ENV<does_not_exist>:!exists, "exists() returns false on a not defined env var";
 
 # %ENV must not be imported by default

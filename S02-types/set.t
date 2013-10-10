@@ -142,12 +142,14 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$b, 1, "... with one element";
 }
 
+#?niecza skip 'SetHash'
 {
     my $b = set SetHash.new(<foo bar foo bar baz foo>);
     isa_ok $b, Set, '&Set.new given a SetHash produces a Set';
     is +$b, 1, "... with one element";
 }
 
+#?niecza skip 'BagHash'
 {
     my $b = set BagHash.new(<foo bar foo bar baz foo>);
     isa_ok $b, Set, '&Set.new given a SetHash produces a Set';

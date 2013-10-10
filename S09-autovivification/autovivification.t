@@ -5,6 +5,7 @@ use Test;
 
 plan 42;
 
+#?niecza todo
 {
   my %hash;
   %hash<a>;

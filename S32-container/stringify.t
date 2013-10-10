@@ -14,6 +14,7 @@ is Set.perl, 'Set', 'Set.perl';
 is Set.Str, "", "Set.Str is empty string";
 is ~Set, "", "~Set is empty string";
 
+#?niecza 4 skip 'SetHash'
 is SetHash.gist, '(SetHash)', 'SetHash.gist';
 is SetHash.perl, 'SetHash', 'SetHash.perl';
 is SetHash.Str, "", "SetHash.Str is empty string";
@@ -24,6 +25,7 @@ is Bag.perl, 'Bag', 'Bag.perl';
 is Bag.Str, "", "Bag.Str is empty string";
 is ~Bag, "", "~Bag is empty string";
 
+#?niecza 4 skip 'BagHash'
 is BagHash.gist, '(BagHash)', 'BagHash.gist';
 is BagHash.perl, 'BagHash', 'BagHash.perl';
 is BagHash.Str, "", "BagHash.Str is empty string";

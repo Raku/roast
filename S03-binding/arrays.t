@@ -28,6 +28,7 @@ plan 47;
   is $var,      "f", "basic binding of an array element (3)";
 }
 
+#?niecza skip ":delete"
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -39,13 +40,11 @@ plan 47;
   @array[1]:delete;
   # $var unchanged, but assigning to $var doesn't modify @array any
   # longer; similarily, changing @array[1] doesn't modify $var now
-  #?niecza todo 'array binding, delete'
   is $var,    "e",    "binding of array elements works with delete (2)";
   is ~@array, "a  c", "binding of array elements works with delete (3)";
 
   $var      = "f";
   @array[1] = "g";
-  #?niecza todo 'array binding, delete'
   is $var,      "f",  "binding of array elements works with delete (4)";
   is @array[1], "g",  "binding of array elements works with delete (5)";
 }
