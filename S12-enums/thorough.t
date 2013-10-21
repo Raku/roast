@@ -111,6 +111,12 @@ ok Bool::True.perl ~~/^ 'Bool::True'/, 'Bool::True.perl';
     eval_lives_ok 'enum X is export <A B C>', 'marking enum export does not die';
 }
 
+# RT #101900
+{
+    eval_dies_ok "enum rt_101900 < a b >; class A { }; say A but rt_101900::a",
+        "Cannot mixin an enum into a class";
+}
+
 done;
 
 # vim: ft=perl6
