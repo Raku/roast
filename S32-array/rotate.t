@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 28;
+plan 27;
 
 # L<S32::Containers/Array/rotate>
 
@@ -26,7 +26,7 @@ plan 28;
 
     is ~@a.rotate(-8), 'c d e a b', '.rotate(-8)';
     is ~@a, 'a b c d e', 'original still unmodified (negative)';
-}
+} #14
 
 # all the same but rotate() sub
 {
@@ -49,15 +49,6 @@ plan 28;
 
     is ~rotate(@a, -8), 'c d e a b', 'rotate(@a, -8)';
     is ~@a, 'a b c d e', 'original still unmodified (negative)';
-}
-
-# List.rotate should also work
-
-#?rakudo skip 'Parcel.rotate'
-{
-    is ~<a b c d e>.rotate, 'b c d e a', 'List.rotate';
-}
-
-done;
+} #13
 
 # vim: ft=perl6
