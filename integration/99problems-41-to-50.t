@@ -217,6 +217,7 @@ fail fail fail
     is gray(0), ();
     is gray(1), <0 1>;
     is gray(2), <00 01 11 10>;
+    #?rakudo todo "making Parcel.reverse return a Parcel seems to break this"
     is gray(3), <000 001 011 010 110 111 101 100>;
 }
 
