@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 11;
+plan 13;
 
 {
     # P41 (**) A list of Goldbach compositions.
@@ -214,6 +214,7 @@ fail fail fail
         '0' xx 2**($n-1) >>~<< gray($n-1), 
             '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse;
     }
+    is gray(0), ();
     is gray(1), <0 1>;
     is gray(2), <00 01 11 10>;
     is gray(3), <000 001 011 010 110 111 101 100>;
@@ -225,6 +226,7 @@ fail fail fail
         return ('',) if $n == 0;
         state @g[$n] //= ('0' >>~<< gray2($n-1), '1' >>~<< gray2($n-1).reverse);
     }
+    is gray2(0), ();
     is gray2(1), <0 1>, 'gray code for n = 1';
     is gray2(2), <00 01 11 10>, 'gray code for n = 2';
     is gray2(3), <000 001 011 010 110 111 101 100>, 'gry code for n = 3';
