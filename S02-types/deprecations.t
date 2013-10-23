@@ -323,7 +323,6 @@ TEXT
 } #1
 
 # Setty
-#?rakudo skip 'OH NO, IT DIES'
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
 {
