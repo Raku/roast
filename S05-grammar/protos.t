@@ -16,8 +16,8 @@ grammar Grammar::With::Protos {
     token fred:sym<foo> {
         <sym> \d+
     }
-    token fred:sym<bar> {
-        <sym> :s 'boz'+
+    rule fred:sym<bar> {
+        <sym> 'boz'+
     }
 }
 

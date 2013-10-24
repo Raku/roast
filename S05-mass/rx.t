@@ -1661,11 +1661,11 @@ ok 'a bcdef' ~~ /:s bcd/, 'sigspace (:s)';
 #?pugs todo 
 ok 'a bcd ef' ~~ /:s bcd/, 'sigspace (:s)';
 
-#### :s bcd			abcdef		n	sigspace (:s)
-ok 'abcdef' !~~ /:s bcd/, 'sigspace (:s)';
+#### :s bcd			abcdef		y	sigspace (:s)
+ok 'abcdef' ~~ /:s bcd/, 'sigspace (:s)';
 
-#### :s bcd			abcd ef		n	sigspace (:s)
-ok 'abcd ef' !~~ /:s bcd/, 'sigspace (:s)';
+#### :s bcd			abcd ef		y	sigspace (:s)
+ok 'abcd ef' ~~ /:s bcd/, 'sigspace (:s)';
 
 #### :s bcd			ab cdef		n	sigspace (:s)
 ok 'ab cdef' !~~ /:s bcd/, 'sigspace (:s)';
@@ -1678,8 +1678,8 @@ ok 'a b c d ef' ~~ /:s b c d/, 'sigspace (:s)';
 #?pugs todo 
 ok 'a b c def' ~~ /:s b c d/, 'sigspace (:s)';
 
-#### :s b c d		ab c d ef	n	sigspace (:s)
-ok 'ab c d ef' !~~ /:s b c d/, 'sigspace (:s)';
+#### :s b c d		ab c d ef	y	sigspace (:s)
+ok 'ab c d ef' ~~ /:s b c d/, 'sigspace (:s)';
 
 #### :s b c d		a bcdef		n	sigspace (:s)
 ok 'a bcdef' !~~ /:s b c d/, 'sigspace (:s)';
@@ -1695,8 +1695,8 @@ ok 'a bcdef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 #?pugs todo 
 ok 'a bcd ef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
-#### :sigspace bcd		abcdef		n	sigspace (:sigspace)
-ok 'abcdef' !~~ /:sigspace bcd/, 'sigspace (:sigspace)';
+#### :sigspace bcd		abcdef		y	sigspace (:sigspace)
+ok 'abcdef' ~~ /:sigspace bcd/, 'sigspace (:sigspace)';
 
 #### :sigspace b c d		a b c d ef	y	sigspace (:sigspace)
 #?pugs todo 
@@ -1706,8 +1706,8 @@ ok 'a b c d ef' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 #?pugs todo 
 ok 'a b c def' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
-#### :sigspace b c d		ab c d ef	n	sigspace (:sigspace)
-ok 'ab c d ef' !~~ /:sigspace b c d/, 'sigspace (:sigspace)';
+#### :sigspace b c d		ab c d ef	y	sigspace (:sigspace)
+ok 'ab c d ef' ~~ /:sigspace b c d/, 'sigspace (:sigspace)';
 
 #### :s(1) b c [:s(0) d e f ]	a b c def	y	sigspace, lexical repetition (:s)
 #?niecza skip "Action method mod_arg not yet implemented"

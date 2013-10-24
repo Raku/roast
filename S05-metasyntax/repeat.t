@@ -63,9 +63,9 @@ is(~('foo, bar,' ~~ m/[<alpha>+]+ % [','\s*]/), 'foo, bar', '% with a more compl
 ok 'a, b, c' !~~ /:s^<alpha>+%\,$/, 'with no spaces around %, no spaces can be matched';
 #?pugs todo
 #?rakudo 2 todo 'nom regression'
-ok 'a, b, c'  ~~ /:s^ <alpha>+ % \, $/, 'with spaces around %, spaces can be matched';
+ok 'a, b, c'  ~~ /:s^ <alpha> +% \, $/, 'with spaces around %, spaces can be matched';
 #?pugs todo
-ok 'a , b ,c' ~~ /:s^ <alpha>+ % \, $/, 'same, but with leading spaces';
+ok 'a , b ,c' ~~ /:s^ <alpha> +% \, $/, 'same, but with leading spaces';
 
 # RT #76792
 #?pugs todo
