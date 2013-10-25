@@ -995,7 +995,6 @@ ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 eval_dies_ok '/b&/', 'conjunction (&) - null right arg illegal';
 
 #### &b			bcd		/rule error/	conjunction (&) - null left arg legal
-#?rakudo todo 'infix:<S&>'
 #?niecza todo ''
 #?pugs todo 
 eval_lives_ok '/&b/', 'conjunction (&) - null left arg legal';
@@ -1038,7 +1037,6 @@ ok 'abc' ~~ /|d |b/, 'leading alternation ignored';
 ok 'abc' ~~ / | d | b/, 'leading alternation ignored';
 
 ####  b |  | d		abc		n	null pattern invalid
-#?rakudo todo 'nom regression'
 #?pugs todo 
 eval_dies_ok '/ b |  | d/', 'null pattern invalid';
 
@@ -2939,7 +2937,6 @@ eval_dies_ok '//', '';
 #?pugs todo 
 eval_dies_ok '/  /', 'ws null pattern';
 
-#?rakudo todo 'RT 70606'
 #?pugs todo 
 eval_dies_ok '"b" ~~ /b| /', 'null pattern after alternation';
 
