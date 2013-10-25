@@ -520,10 +520,8 @@ ok 'ab<">cd' ~~ /"ab<\">cd"/, 'literal match with quote';
 ok 'ab<\'>cd' ~~ /"ab<'>cd"/, 'literal match with quote';
 
 #### "ab\\cd"		ab\x5ccd	y	literal match with backslash
-#?rakudo todo 'unknown'
-#?niecza todo ''
 #?pugs todo 
-ok "ab\x5ccd" ~~ /"ab\\cd"/, 'literal match with backslash';
+ok "ab\x[5c]cd" ~~ /"ab\\cd"/, 'literal match with backslash';
 
 #### (ab)x"$0"		abxab		y	literal match with interpolation
 #?pugs todo 
@@ -996,11 +994,11 @@ ok 'bcd' ~~ /<[a..d]>+ & <[c..e]>+/, 'conjunction (&)';
 #?pugs todo 
 eval_dies_ok '/b&/', 'conjunction (&) - null right arg illegal';
 
-#### &b			bcd		/rule error/	conjunction (&) - null left arg illegal
+#### &b			bcd		/rule error/	conjunction (&) - null left arg legal
 #?rakudo todo 'infix:<S&>'
 #?niecza todo ''
 #?pugs todo 
-eval_dies_ok '/&b/', 'conjunction (&) - null left arg illegal';
+eval_lives_ok '/&b/', 'conjunction (&) - null left arg legal';
 
 #### &			bcd		/rule error/	conjunction (&) - null both args illegal
 #?pugs todo 
