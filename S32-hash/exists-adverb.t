@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 34;
+plan 46;
 
 # L<S02/Names and Variables/:exists>
 
@@ -31,8 +31,10 @@ sub gen_hash {
     my %h = gen_hash;
     is %h.elems, 26, "basic sanity";
 
-    isa_ok %h<b>:exists, Bool, "Bool test for exists single key";
-    isa_ok %h<X>:exists, Bool, "Bool test for non-exists single key";
+    isa_ok %h<b>:exists, Bool,  "Bool test for exists single key";
+    isa_ok %h<b>:!exists, Bool, "!Bool test for exists single key";
+    isa_ok %h<X>:exists, Bool,  "Bool test for non-exists single key";
+    isa_ok %h<X>:!exists, Bool, "!Bool test for non-exists single key";
     ok     %h<b>:exists,       "Test for exists single key";
     ok   !(%h<X>:exists),      "Test for non-exists single key";
 
@@ -50,11 +52,13 @@ sub gen_hash {
 
     is_deeply %h<c d e>:exists,  (True, True, True),   "Test exists TTT";
     is_deeply %h<c d X>:exists,  (True, True, False),  "Test exists TTF";
-    is_deeply %h{*}:exists,      (True  xx 26).Parcel, "Test non-exists T*";
+    is_deeply %h{}:exists,       (True  xx 26).Parcel, "Test exists T{}";
+    is_deeply %h{*}:exists,      (True  xx 26).Parcel, 'Test exists T{*}';
     #?niezca 3 todo "adverbial pairs only used as True"
     is_deeply %h<c d e>:!exists, (False,False,False),  "Test non-exists FFF";
     is_deeply %h<c d X>:!exists, (False,False,True),   "Test non-exists FFT";
-    is_deeply %h{*}:!exists,     (False xx 26).Parcel, "Test non-exists F*";
+    is_deeply %h{}:!exists,      (False xx 26).Parcel, "Test non-exists F{}";
+    is_deeply %h{*}:!exists,     (False xx 26).Parcel, 'Test non-exists F{*}';
 
     #?niezca 6 todo "no combined adverbial pairs"
     is_deeply %h<c d e>:exists:kv,
@@ -84,7 +88,19 @@ sub gen_hash {
     is_deeply %h<c d X>:!exists:!p,
       (c=>False,d=>False,X=>True),                   "Test exists:p FFT";
 
+    #?niezca 6 todo "no combined adverbial pairs"
+    dies_ok { %h<c>:exists:k },    "Test exists:k,   invalid combo";
+    dies_ok { %h<c>:exists:!k },   "Test exists:!k,  invalid combo";
+    dies_ok { %h<c>:!exists:k },   "Test !exists:k,  invalid combo";
+    dies_ok { %h<c>:!exists:!k },  "Test !exists:!k, invalid combo";
+
+    #?niezca 6 todo "no combined adverbial pairs"
+    dies_ok { %h<c>:exists:v },    "Test exists:v,   invalid combo";
+    dies_ok { %h<c>:exists:!v },   "Test exists:!v,  invalid combo";
+    dies_ok { %h<c>:!exists:v },   "Test !exists:v,  invalid combo";
+    dies_ok { %h<c>:!exists:!v },  "Test !exists:!v, invalid combo";
+
     is %h.elems, 26, "should not have changed hash";
-} #34
+} #46
 
 # vim: ft=perl6
