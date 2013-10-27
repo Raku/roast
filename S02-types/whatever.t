@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 80;
+plan 83;
 
 # L<S02/The Whatever Object/"The * character as a standalone term captures the notion of">
 # L<S02/Native types/"If any native type is explicitly initialized to">
@@ -260,6 +260,14 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
     #?rakudo 2 todo 'RT 102466'
     nok $chained(1), 'Chained comparison (2)';
     nok $chained(3), 'Chained comparison (3)';
+}
+
+# RT #120385
+#?rakudo todo 'whatevercode with postcircumfix [] and {}'
+{
+    isa_ok (*.[1]), Code, '*.[1] is some kind of code';
+    isa_ok (*.<a>), Code, '*.<a> is some kind of code';
+    isa_ok (*.{1}), Code, '*.{1} is some kind of code';
 }
 
 # vim: ft=perl6
