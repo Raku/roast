@@ -263,7 +263,6 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
 }
 
 # RT #120385
-#?rakudo todo 'whatevercode with postcircumfix [] and {}'
 {
     isa_ok (*.[1]), Code, '*.[1] is some kind of code';
     isa_ok (*.<a>), Code, '*.<a> is some kind of code';
