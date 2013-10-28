@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 25;
+plan 27;
 
 {
     my int $x;
@@ -90,6 +90,17 @@ plan 25;
     my num $y;
     is $x, 0, '#101450';
     is $y, NaN, '#101450';
+}
+
+# RT #102416
+#?niecza skip 'Malformed my'
+#?rakudo skip 'RT 102416'
+{
+    my int $x;
+    ($x) = (5);
+    is $x, 5, 'did we assign $x';
+    #pugs todo 'no native support'
+    is $x.WHAT, int, 'is it really a native';
 }
 
 # vim: ft=perl6
