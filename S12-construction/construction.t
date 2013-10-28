@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 15;
+plan 18;
 
 # L<S12/"Construction and Initialization">
 
@@ -86,6 +86,21 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
         }
     };
     is MonkeyNew.new().x, 'called', 'monkey-typed .new() method is called';
+}
+
+{
+    class NativeInt {
+        has int $.attr;
+    }
+    lives_ok -> { NativeInt.new(:attr(123)) }, ".new with a native int attribute";
+    class NativeNum {
+        has num $.attr;
+    }
+    lives_ok -> { NativeNum.new(:attr(0e0)) }, ".new with a native num attribute";
+    class NativeStr {
+        has str $.attr;
+    }
+    lives_ok -> { NativeStr.new(:attr<foo>) }, ".new with a native str attribute";
 }
 
 # vim: ft=perl6
