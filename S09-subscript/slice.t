@@ -10,7 +10,7 @@ Testing array slices.
 
 =end pod
 
-plan 24;
+plan 26;
 
 {   my @array = (3,7,9,11);
 
@@ -84,6 +84,15 @@ plan 24;
     my @a2 = @a1[2 ..^ @a1];
     my @a3 = @a2[1..^ @a2];
     is @a3.join('|'), '4|5', 'can use 1..^@a for subscripting';
+}
+
+# RT #120383
+#?pugs   skip 'unexpected ['
+#?rakudo skip '#120383'
+{
+    my @a = 42..50;
+    is @a .= [1,2], (43,44), 'did we return right slice';;
+    is @a, (43,44), 'did we assign slice ok';
 }
 
 # vim: ft=perl6
