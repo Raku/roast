@@ -343,6 +343,7 @@ sub showkv($x) {
     ok @a.grep(* eq 'a').elems <= 1, '.grab(2) returned at most one "a"';
     is @a.grep(* eq 'b').elems, 2 - @a.grep(* eq 'a').elems, '.grab(2) and the rest are "b"';
     is $b.total, 0, '.grab *should* change BagHash';
+    #?rakudo.jvm todo "RT #120407"
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
@@ -355,6 +356,7 @@ sub showkv($x) {
     is @a.grep(* eq 'a').elems, 1, '.grab(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.grab(*) (2)';
     is $b.total, 0, '.grab *should* change BagHash';
+    #?rakudo.jvm todo "RT #120407"
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
