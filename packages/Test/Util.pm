@@ -93,12 +93,12 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
 
         my $perl6 = $*EXECUTABLE_NAME;
         my $cmd = $perl6 ~~ m:i/niecza/ ?? "mono $perl6 " !! "$perl6 ";
-        $perl6 ~~ s{^perl6}{./perl6};
+        $perl6 ~~ s{^perl6} = './perl6';
         $cmd = $perl6 ~ ' ';
         $cmd ~= @compiler-args.join(' ') ~ ' ' if @compiler-args;
         $cmd ~= $fnbase ~ '.code'  if $code.defined;
         $cmd ~= " @actual_args.join(' ') < $fnbase.in > $fnbase.out 2> $fnbase.err";
-#        diag("Command line: $cmd");
+        # diag("Command line: $cmd");
         %out<status> = shell( $cmd );
         %out<out> = slurp "$fnbase.out";
         %out<err> = slurp "$fnbase.err";
