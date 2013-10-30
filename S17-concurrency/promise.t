@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 39;
+plan 55;
 
 {
     my $p = Promise.new;
@@ -100,4 +100,58 @@ plan 39;
     dies_ok { $p2.result }, "result from then Promise dies";
     is $p2.status, Broken, "then Promise is broken";
     is $p2.cause.message, "then died", "then Promise has correct cause";
+}
+
+{
+    my $p1 = Promise.new;
+    my $p2 = Promise.new;
+    my $pany = Promise.anyof($p1, $p2);
+    isa_ok $pany, Promise, "anyof returns a Promise";
+    nok $pany.has_result, "No result yet";
+    
+    $p1.keep(1);
+    is $pany.result, True, "result is true";
+    is $pany.status, Kept, "Promise was kept";
+    
+    $p2.break("fail");
+    is $pany.status, Kept, "Other promise breaking doesn't affect status";
+}
+
+{
+    my $p1 = Promise.new;
+    my $p2 = Promise.new;
+    my $pany = Promise.anyof($p1, $p2);
+    
+    $p2.break("oh noes");
+    dies_ok { $pany.result }, "Getting result of broken anyof dies";
+    is $pany.status, Broken, "Promise was broken";
+    is $pany.cause.message, "oh noes", "breakage reason conveyed";
+    
+    $p1.keep(1);
+    is $pany.status, Broken, "Other promise keeping doesn't affect status";
+}
+
+{
+    my $p1 = Promise.new;
+    my $p2 = Promise.new;
+    my $pall = Promise.allof($p1, $p2);
+    isa_ok $pall, Promise, "allof returns a Promise";
+    nok $pall.has_result, "No result yet";
+    
+    $p1.keep(1);
+    nok $pall.has_result, "Still not kept";
+    
+    $p2.keep(1);
+    is $pall.result, True, "result is true after both kept";
+    is $pall.status, Kept, "Promise was kept";
+}
+
+{
+    my $p1 = Promise.new;
+    my $p2 = Promise.new;
+    my $pall = Promise.allof($p1, $p2);
+    $p1.keep(1);
+    $p2.break("danger danger");
+    dies_ok { $pall.result }, "result on broken all-Promise throws";
+    is $pall.status, Broken, "all-Promise was borken";
 }
