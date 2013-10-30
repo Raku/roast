@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 10;
 
 ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
 
@@ -51,4 +51,24 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
         });
     1 while $*SCHEDULER.outstanding;
     is $tracker, "scheduled,", "Handler not run if no error";
+}
+
+{
+    # Timing related tests are always a tad fragile, e.g. on a loaded system.
+    # Hopefully the times are enough leeway.
+    my $tracker = '';
+    $*SCHEDULER.schedule_in({ $tracker ~= '2s'; }, 2);
+    $*SCHEDULER.schedule_in({ $tracker ~= '1s'; }, 1);
+    is $tracker, '', "schedule_in doesn't schedule immediately";
+    sleep 3;
+    is $tracker, "1s2s", "Timer tasks ran in right order";
+}
+
+{
+    # Also at risk of being a little fragile, but again hopefully Ok on all
+    # but the most ridiculously loaded systems.
+    my $a = 0;
+    $*SCHEDULER.schedule_every({ $a++ }, 0.1);
+    sleep 1;
+    ok 5 < $a < 15, "schedule_every schedules repeatedly";
 }
