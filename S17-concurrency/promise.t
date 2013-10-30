@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 23;
+plan 25;
 
 {
     my $p = Promise.new;
@@ -49,4 +49,11 @@ plan 23;
     dies_ok { $p.result }, "result throws exception";
     is $p.status, Broken, "Promise was broken";
     is $p.cause.message, "trying", "Correct exception stored";
+}
+
+{
+    my $start = now;
+    my $p = Promise.sleep(1);
+    is $p.result, True, "Promise.sleep result is True";
+    ok now - $start >= 1, "Promise.sleep took long enough";
 }
