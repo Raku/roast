@@ -1,17 +1,19 @@
 use v6;
 use Test;
 
-plan 55;
+plan 58;
 
 {
     my $p = Promise.new;
     is $p.status, Planned, "Newly created Promise has Planned status";
     nok $p.has_result, "Newly created Promise has now result yet";
+    nok ?$p, "Newly created Promise is false";
     dies_ok { $p.cause }, "Cannot call cause on a Planned Promise";
     
     $p.keep("kittens");
     is $p.status, Kept, "Kept Promise has Kept status";
     ok $p.has_result, "Kept Promise has a result";
+    ok ?$p, "Kept Promise is true";
     is $p.result, "kittens", "Correct result";
     
     dies_ok { $p.cause }, "Cannot call cause on a Kept Promise";
@@ -24,6 +26,7 @@ plan 55;
     $p.break("glass");
     is $p.status, Broken, "Broken Promise has Broken status";
     ok $p.has_result, "Broken Promise has a result";
+    ok ?$p, "Broken Promise is true";
     isa_ok $p.cause, Exception, "cause returns an exception";
     is $p.cause.message, "glass", "Correct message";
     dies_ok { $p.result }, "result throws exception";
