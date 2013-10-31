@@ -267,15 +267,17 @@ sub showkv($x) {
 }
 
 {
-    my $m = {a => 100000000000, b => 1, c => -100000000000}.Mix;
+    my $m = {b => 1, a => 100000000000, c => -100000000000}.Mix;
 
     my $a = $m.roll;
     ok $a eq "a" || $a eq "b", "We got one of the two choices (and this was pretty quick, we hope!)";
 
     my @a = $m.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
-    ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
-    ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
+    diag "Found {+@a.grep(* eq 'a')} a's"
+      if !ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
+    diag "Found {+@a.grep(* eq 'b')} b's"
+      if !ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change Mix';
