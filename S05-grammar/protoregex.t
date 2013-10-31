@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 26;
+plan 30;
 
 grammar Alts {
     token TOP { ^ <alt> $ };
@@ -119,5 +119,24 @@ is ~LTM.parse('aaa', :rule('ass1')),    'aaa',    '<?{...}> does not terminate L
 is ~LTM.parse('aaa', :rule('ass2')),    'aaa',    '<!{...}> does not terminate LTM';
 #?niecza todo '#89'
 is ~LTM.parse('aaa', :rule('block')),   'aa',     'However, code blocks do terminate LTM';
+
+# RT120146
+grammar G {
+
+    token nmstrt   {<[_ a..z ]>}
+    token nmreg    {<[_ \- a..z 0..9]>+}
+    token ident    {'-'?<nmstrt><nmreg>*}
+    token num      {[\+|\-]?\d+}
+
+    proto token term { <...> }
+    token term:sym<ident>   {<ident>}
+    token term:sym<num>  {<num>}
+}
+
+is ~G.parse("-42", :rule<num>), '-42', 'num parse';
+is ~G.parse("-my_id", :rule<ident>), '-my_id', 'id parse';
+is ~G.parse("my_id", :rule<term>), 'my_id', 'term parse';
+#?rakudo todo 'RT120146'
+is ~G.parse("-my_id", :rule<term>), '-my_id', 'term parse, leading "-"';
 
 # vim: ft=perl6
