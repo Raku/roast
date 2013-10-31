@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 25;
+plan 23;
 
 # currently deprecated core features
 
@@ -155,18 +155,7 @@ Method ucfirst (from Cool) called at:
 Please use 'tc' instead.
 --------------------------------------------------------------------------------
 TEXT
-
-    $line = $?LINE; "a".capitalize;
-    "a".capitalize;
-    is Deprecation.report, qq:to/TEXT/.chop, 'deprecation "a".capitalize';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Method capitalize (from Cool) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use 'tclc' instead.
---------------------------------------------------------------------------------
-TEXT
-} #2
+} #1
 
 # EnumMap
 #?niecza skip 'is DEPRECATED NYI'
@@ -208,18 +197,7 @@ Sub ucfirst (from GLOBAL) called at:
 Please use 'tc' instead.
 --------------------------------------------------------------------------------
 TEXT
-
-    $line = $?LINE; capitalize("a");
-    capitalize("a");
-    is Deprecation.report, qq:to/TEXT/.chop, 'deprecation capitalize("a")';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub capitalize (from GLOBAL) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use 'tclc' instead.
---------------------------------------------------------------------------------
-TEXT
-} #4
+} #1
 
 # Hash
 #?niecza skip 'is DEPRECATED NYI'
