@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 17;
 
 {
     my $p = Publisher.new;
@@ -81,4 +81,53 @@ plan 13;
         @a.push($_);
     }
     is @a.join, "23456", "Publish.for and .list work";
+}
+
+{
+    my $p1 = Publisher.new;
+    my $p2 = Publisher.new;
+
+    my @res;
+    my $s = $p1.zip($p2, &infix:<~>).subscribe({ @res.push($_) });
+
+    $p1.next(1);
+    $p1.next(2);
+    $p2.next('a');
+    $p2.next('b');
+    $p2.next('c');
+    $p1.last();
+    $p2.last();
+    
+    is @res.join(','), '1a,2b', 'zipping subscribables works';
+}
+
+{
+    my $p1 = Publisher.new;
+    my $p2 = Publisher.new;
+
+    my @res;
+    my $s = $p1.merge($p2).subscribe({ @res.push($_) });
+
+    $p1.next(1);
+    $p1.next(2);
+    $p2.next('a');
+    $p1.next(3);
+    $p1.last();
+    $p2.next('b');
+    
+    is @res.join(','), '1,2,a,3,b', "merging subscribables works";
+}
+
+{
+    my $p1 = Publish.for(1..10, :scheduler(CurrentThreadScheduler));
+    my @res;
+    $p1.grep(* > 5).subscribe({ @res.push($_) });
+    is @res.join(','), '6,7,8,9,10', "grepping subscribables works";
+}
+
+{
+    my $p1 = Publish.for(1..5, :scheduler(CurrentThreadScheduler));
+    my @res;
+    $p1.map(2 * *).subscribe({ @res.push($_) });
+    is @res.join(','), '2,4,6,8,10', "mapping subscribables works";
 }
