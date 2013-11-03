@@ -1,12 +1,20 @@
 use v6;
 use Test;
-plan 72;
+plan 73;
 
 #L<S02/Literals>
 # TODO:
 #
 # * review shell quoting semantics of «»
 # * arrays in «»
+
+#L<S02/C<Q> Forms/halfwidth corner brackets>
+#?rakudo skip 'Parse failure'
+{
+    my $s = 「this is a string\n」;
+    is $s, Q[this is a string\n],
+        'Shortform for Q[...] is 「...」 (HALFWIDTH LEFT/RIGHT CORNER BRACKET)';
+}
 
 {
     my $s = q「this is a string」;
