@@ -304,6 +304,12 @@ use Test;
     is %escapes<e>, '%65', 'constant hashes constructed by map';
 }
 
+# RT #119751
+{
+    class B { constant \a = 3; };
+    is B::a, 3, 'escaped constant declaration in class';
+}
+
 done;
 
 # vim: ft=perl6
