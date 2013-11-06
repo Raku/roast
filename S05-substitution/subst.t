@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 140;
+plan 141;
 
 # L<S05/Substitution/>
 
@@ -425,6 +425,14 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     $_ = "foo"; s[f] = 'bar';
     is $_, "baroo", 's[f] is parsed as a substitution op';
     throws_like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;
+}
+
+# RT #119201
+{
+    my $RT119201_s = 'abcdef';
+    my $RT119201_m = '';
+    $RT119201_s   .= subst(/(\w)/, { $RT119201_m = $/[0] });
+    is($RT119201_m, 'a', 'get match variable in replacement of subst-mutator');
 }
 
 # vim: ft=perl6
