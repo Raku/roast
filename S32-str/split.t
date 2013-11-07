@@ -136,13 +136,12 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 }
 
 # RT #63066
-#?rakudo todo 'still incorrect'
 {
     #?niecza todo 'has initial empty element'
-    is 'hello-world'.split(/<ws>/).join(','), <hello - world>.join(','),
+    is 'hello-world'.split(/<ws>/).join(','), ',hello,-,world,',
        q{'hello-world'.split(/<ws>/)};
     #?niecza skip 'Unable to resolve method wb in class Cursor'
-    is 'hello-world'.split(/<wb>/).join(','), <hello - world>.join(','),
+    is 'hello-world'.split(/<wb>/).join(','), ',hello,-,world,',
        q{'hello-world'.split(/<wb>/)};
 }
 
