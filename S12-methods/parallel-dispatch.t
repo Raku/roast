@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 35;
+plan 37;
 
 # L<S12/"Parallel dispatch"/"Any of the method call forms may be turned into a hyperoperator">
 # syn r14547
@@ -128,6 +128,13 @@ class Bar is Foo {
     is uc-and-join('foo', 'bar'), 'FOO, BAR',
         'parallel dispatch with » works in modules too';
 
+}
+
+# RT #77436
+#?pugs 2 skip
+{
+    is (1,2,3)».$( * + 42 ), [43, 44, 45], '$( ) after dotty parallel dispatch';
+    is (1,2,3)».&( * + 42 ), [43, 44, 45], '&( ) after dotty parallel dispatch';
 }
 
 # vim: ft=perl6
