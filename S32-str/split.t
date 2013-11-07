@@ -2,27 +2,9 @@ use v6;
 
 use Test;
 
-# L<S32::Str/Str/"=item split">
+# L<S32-setting-library/Str"=item split">
 
-# XXX - this needs to be updated when Str.split(Str) works again
-# this test really wants is_deeply()
-#  and got it, except for a couple of cases that fail because of Match objects
-#  being returned -- Aankhen
 plan 37;
-
-# split on an empty string
-
-my %ords = (
-  1 => 'first',
-  2 => 'second',
-  3 => 'third',
-  4 => 'fourth',
-  5 => 'fifth',
-  6 => 'sixth',
-  7 => 'seventh',
-  8 => 'eighth',
-  9 => 'ninth',
-);
 
 #?niecza todo "split on empty string has leading empty elements"
 is split("", "forty-two").join(','),
@@ -175,7 +157,5 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
     is 'a-b-c'.split(/<.wb>/).join('|'), '|a|-|b|-|c|',
             'zero-width delimiter (<.wb>) (2)';
 }
-
-done;
 
 # vim: ft=perl6
