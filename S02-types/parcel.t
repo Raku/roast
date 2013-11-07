@@ -1,12 +1,17 @@
 use v6;
 use Test;
 
-plan 42;
+plan 44;
 
 isa_ok (5, 7, 8), Parcel, '(5, 7, 8) is Parcel';
 is +(5, 7, 8), 3, 'prefix:<+> on a Parcel';
 is ~(5, 7, 8), '5 7 8', 'prefix:<~> on a Parcel';
 is (5, 7, 8).Str, '5 7 8', '.Str on a Parcel';
+
+# .perl
+is ().perl, '()', '.perl on empty Parcel';
+#?niecza todo '.item.perl on empty Parcel gives Match.ast shorthand'
+is ().item.perl, '$( )', '.item.perl on empty Parcel';
 
 # L<S02/Quoting forms/Elsewhere it is equivalent to a parenthesized list of strings>
 
