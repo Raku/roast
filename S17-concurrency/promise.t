@@ -36,8 +36,8 @@ plan 58;
 }
 
 {
-    my $p = Promise.run({
-        pass "Promise.run actually runs";
+    my $p = Promise.start({
+        pass "Promise.start actually runs";
         42
     });
     is $p.result, 42, "Correct result";
@@ -45,8 +45,8 @@ plan 58;
 }
 
 {
-    my $p = Promise.run({
-        pass "Promise.run actually runs";
+    my $p = Promise.start({
+        pass "Promise.start actually runs";
         die "trying"
     });
     dies_ok { $p.result }, "result throws exception";
@@ -156,5 +156,5 @@ plan 58;
     $p1.keep(1);
     $p2.break("danger danger");
     dies_ok { $pall.result }, "result on broken all-Promise throws";
-    is $pall.status, Broken, "all-Promise was borken";
+    is $pall.status, Broken, "all-Promise was broken";
 }

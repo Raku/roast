@@ -5,22 +5,22 @@ plan 6;
 
 {
     my $l = Lock.new;
-    $l.run({
+    $l.protect({
         pass "Running code under lock";
     });
-    $l.run({
+    $l.protect({
         pass "Running another piece of code under lock";
     });
 }
 
 {
     my $l = Lock.new;
-    dies_ok { $l.run({ die "oops" }) }, "code that dies under lock throws";
-    $l.run({
+    dies_ok { $l.protect({ die "oops" }) }, "code that dies under lock throws";
+    $l.protect({
         pass "Code that dies in run does release the lock";
     });
-    Thread.run({
-        $l.run({ pass "Even from another thread"; });
+    Thread.start({
+        $l.protect({ pass "Even from another thread"; });
     }).join();
 }
 
@@ -28,15 +28,15 @@ plan 6;
     # Attempt to check lock actually enforces some locking.
     my $output = '';
     my $l = Lock.new;
-    my $t1 = Thread.run({
-        $l.run({ 
+    my $t1 = Thread.start({
+        $l.protect({ 
             for 1..10000 {
                 $output ~= 'a'
             }
         });
     });
-    my $t2 = Thread.run({
-        $l.run({ 
+    my $t2 = Thread.start({
+        $l.protect({ 
             for 1..10000 {
                 $output ~= 'b'
             }
