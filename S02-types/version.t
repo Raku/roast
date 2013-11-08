@@ -47,8 +47,8 @@ my @sorted = <
     1.2.1γ
     1.2.1 >;
 
-vtest Order::Increase, @sorted;
-vtest Order::Decrease, @sorted.reverse;
+vtest Order::Less, @sorted;
+vtest Order::More, @sorted.reverse;
 
 done;
 

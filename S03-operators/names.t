@@ -8,8 +8,8 @@ is  infix:<+>(3, 8), 11, 'Can refer to  infix:<+>';
 is &infix:<->(3, 8), -5, 'Can refer to &infix:<->';
 is  infix:<->(3, 8), -5, 'Can refer to  infix:<->';
 
-#?pugs skip 'Order::Increase'
-is &infix:<cmp>(3, 4), Order::Increase, 'Can refer to &infix:<cmp>';
+#?pugs skip 'Order::Less'
+is &infix:<cmp>(3, 4), Order::Less, 'Can refer to &infix:<cmp>';
 
 #?niecza todo
 #?pugs 2 skip 'no compatiable multi ok'

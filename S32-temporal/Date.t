@@ -105,14 +105,14 @@ sub d($x) { Date.new($x); }
     ok  $b >  $a, '> (+)';
     nok $a >  $b, '> (-)';
 
-    is $a cmp $a, Order::Same,     'cmp ( 0)';
-    is $a cmp $b, Order::Increase, 'cmp (-1)';
-    is $c cmp $a, Order::Decrease, 'cmp (+1)';
+    is $a cmp $a, Order::Same, 'cmp ( 0)';
+    is $a cmp $b, Order::Less, 'cmp (-1)';
+    is $c cmp $a, Order::More, 'cmp (+1)';
 
 
-    is $a <=> $a, Order::Same,     '<=> ( 0)';
-    is $a <=> $b, Order::Increase, '<=> (-1)';
-    is $c <=> $a, Order::Decrease, '<=> (+1)';
+    is $a <=> $a, Order::Same, '<=> ( 0)';
+    is $a <=> $b, Order::Less, '<=> (-1)';
+    is $c <=> $a, Order::More, '<=> (+1)';
 }
 
 ok d('2011-01-14') ~~ d('2011-01-14'), 'Can smartmatch Date objects';

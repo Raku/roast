@@ -30,8 +30,8 @@ nok $b lt $a,    'lt -';
 nok $b gt $b,    'gt -';
 nok $a gt $b,    'gt -';
 is  $a cmp $a, Order::Same, 'cmp (same)';
-is  $a cmp $b, Order::Increase, 'cmp (smaller)';
-is  $b cmp $a, Order::Decrease, 'cmp (larger)';
+is  $a cmp $b, Order::Less, 'cmp (smaller)';
+is  $b cmp $a, Order::More, 'cmp (larger)';
 
 ok $a ~ $b eq Buf.new(1, 2, 3, 1, 2, 3, 4), '~ and eq work on bufs';
 

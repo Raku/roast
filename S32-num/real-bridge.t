@@ -111,12 +111,12 @@ is_approx $one-and-one-hundredth.sign, 1, "1.01.sign works";
 is_approx $neg-pi.sign, -1, "-3.14.sign works";
 
 is $zero <=> 0, Same, "0 <=> 0 is Same";
-is $one <=> 0.Num, Decrease, "1 <=> 0 is Decrease";
-is $one-and-one-hundredth <=> 1.1, Increase, "1.01 <=> 1.1 is Increase";
-is $neg-pi <=> -3, Increase, "-3.14 <=> -3 is Increase";
-is -1 <=> $zero, Increase, "-1 <=> 0 is Increase";
+is $one <=> 0.Num, More, "1 <=> 0 is More";
+is $one-and-one-hundredth <=> 1.1, Less, "1.01 <=> 1.1 is Less";
+is $neg-pi <=> -3, Less, "-3.14 <=> -3 is Less";
+is -1 <=> $zero, Less, "-1 <=> 0 is Less";
 is 1.Rat <=> $one, Same, "1 <=> 1 is Same";
-is 1.001 <=> $one-and-one-hundredth, Increase, "1.001 <=? 1.01 is Increase";
+is 1.001 <=> $one-and-one-hundredth, Less, "1.001 <=? 1.01 is Less";
 is $neg-pi <=> -3.14, Same, "-3.14 <=> -3.14 is Same";
 
 nok $zero < 0, "not 0 < 0";
@@ -189,12 +189,12 @@ nok -3.14 != $neg-pi.Complex, "not -3.14 != -3.14.Complex";
 ok $zero != $neg-pi.Complex, "0 != -3.14.Complex";
 
 is $zero cmp 0, Same, "0 cmp 0 is Order::Same";
-is $one cmp 0.Num, Decrease, "1 cmp 0 is Order::Decrease";
-is $one-and-one-hundredth cmp 1.1, Increase, "1.01 cmp 1.1 is Order::Increase";
-is $neg-pi cmp -3, Increase, "-3.14 cmp -3 is Order::Increase";
-is -1 cmp $zero, Increase, "-1 cmp 0 is Order::Increase";
+is $one cmp 0.Num, More, "1 cmp 0 is Order::More";
+is $one-and-one-hundredth cmp 1.1, Less, "1.01 cmp 1.1 is Order::Less";
+is $neg-pi cmp -3, Less, "-3.14 cmp -3 is Order::Less";
+is -1 cmp $zero, Less, "-1 cmp 0 is Order::Less";
 is 1.Rat cmp $one, Same, "1 cmp 1 is Order::Same";
-is 1.001 cmp $one-and-one-hundredth, Increase, "1.001 cmp 1.01 is Order::Increase";
+is 1.001 cmp $one-and-one-hundredth, Less, "1.001 cmp 1.01 is Order::Less";
 is $neg-pi cmp -3.14, Same, "-3.14 cmp -3.14 is Order::Same";
 
 nok $zero before 0, "not 0 before 0";
@@ -296,7 +296,5 @@ ok 0 <= 4.rand < 4, "Int.rand returns a valid result";
 ok 0 <= (4/3).rand < 4/3, "Rat.rand returns a valid result";
 ok 0 <= $one-and-one-hundredth.rand < $one-and-one-hundredth, "Fixed2.rand returns a valid result";
 ok 0 <= 32.75.Num.rand < 32.75, "Num.rand returns a valid result";
-
-done;
 
 # vim: ft=perl6

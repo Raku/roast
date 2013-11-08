@@ -269,12 +269,10 @@ is (2/3R) ** 3, 8/27, "FatRat raised to a positive Int power gets correct answer
     nok 1 - $epsilon >= 1,   'FatRat >= Int (+)';
 
     #?pugs 3 skip 'Order:**'
-    is 1 + $epsilon <=> 1 + $epsilon, Order::Same,     '<=> Same';
-    is 1 + $epsilon <=> 1,            Order::Decrease, '<=> Decrease';
-    is 1 - $epsilon <=> 1,            Order::Increase, '<=> Increase';
+    is 1 + $epsilon <=> 1 + $epsilon, Order::Same, '<=> Same';
+    is 1 + $epsilon <=> 1,            Order::More, '<=> More';
+    is 1 - $epsilon <=> 1,            Order::Less, '<=> Less';
 
 }
-
-done;
 
 # vim: ft=perl6

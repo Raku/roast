@@ -20,10 +20,10 @@ my $result_2 = ([+] %ball{11,12}) <=> ([+] %ball{1,2});
 is($result_2, Order::Same, 'When spaceship terms are non-trivial members it parses incorrectly'); 
 {
 my $result_3 = ([0] <=> [0,1]);
-is($result_3, Order::Increase, 'When spaceship terms are non-trivial members it parses incorrectly'); 
+is($result_3, Order::Less, 'When spaceship terms are non-trivial members it parses incorrectly'); 
 }
 
 %ball{12} = 0.5;
-is(%ball{12} <=> %ball{11}, Order::Increase, 'When spaceship terms are non-integral numbers it parses incorrectly');
+is(%ball{12} <=> %ball{11}, Order::Less, 'When spaceship terms are non-integral numbers it parses incorrectly');
 
 # vim: ft=perl6

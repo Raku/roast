@@ -23,9 +23,9 @@ nok v1.2   ~~  v1.3+,  'smart-matching and plus (-)';
 ok  v1.2.3 ~~  v1,     'smart-matching only cares about the length of the LHS';
 nok v1.2.3 ~~  v2,     '... but it can still fail';
 is  v1.2   cmp  v1.2,   Same,     'cmp: Same';
-is  v1.2   cmp  v3.2,   Increase, 'cmp: Increase';
-is  v1.2   cmp  v0.2,   Decrease, 'cmp: Decrease';
-is  v1.2   cmp  v1.10,  Increase, "cmp isn't Stringy-based";
+is  v1.2   cmp  v3.2,   Less, 'cmp: Less';
+is  v1.2   cmp  v0.2,   More, 'cmp: More';
+is  v1.2   cmp  v1.10,  Less, "cmp isn't Stringy-based";
 #?rakudo 3 todo "trailing zeroes fail"
 ok  v1.2   eqv  v1.2.0, 'trailing zeroes are equivalent';
 ok  v1.2.0 eqv  v1.2,   'trailing zeroes are equivalent';
