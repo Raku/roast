@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 27;
 
 # currently deprecated core features
 
@@ -157,6 +157,21 @@ Please use 'tc' instead.
 TEXT
 } #1
 
+# Decrease
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+{
+    $line = $?LINE; Decrease;
+    is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Decrease';
+Saw 1 call to deprecated code during execution.
+================================================================================
+Sub Decrease (from GLOBAL) called at:
+  $*PROGRAM_NAME, line $line
+Please use More instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
+
 # EnumMap
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
@@ -225,6 +240,21 @@ Please use the :delete adverb instead.
 TEXT
 } #2
 
+# Increase
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+{
+    $line = $?LINE; Increase;
+    is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Increase';
+Saw 1 call to deprecated code during execution.
+================================================================================
+Sub Increase (from GLOBAL) called at:
+  $*PROGRAM_NAME, line $line
+Please use Less instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
+
 # List
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
@@ -266,6 +296,38 @@ Saw 1 call to deprecated code during execution.
 Method delete (from MixHash) called at:
   $*PROGRAM_NAME, line $line
 Please use the :delete adverb instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
+
+# Order::Decrease
+#?rakudo skip 'Could not create deprecated Order::Decrease'
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+{
+    $line = $?LINE; Order::Decrease;
+    is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Order::Decrease';
+Saw 1 call to deprecated code during execution.
+================================================================================
+Sub Decrease (from Order) called at:
+  $*PROGRAM_NAME, line $line
+Please use More instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
+
+# Order::Increase
+#?rakudo skip 'Could not create deprecated Order::Increase'
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+{
+    $line = $?LINE; Order::Increase;
+    is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Order::Increase';
+Saw 1 call to deprecated code during execution.
+================================================================================
+Sub Increase (from Order) called at:
+  $*PROGRAM_NAME, line $line
+Please use Less instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
