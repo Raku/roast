@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 16;
 
 #?rakudo.parrot skip 'NYI'
 ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
@@ -67,7 +67,17 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     $*SCHEDULER.cue({ $tracker ~= '1s'; }, :in(1));
     is $tracker, '', "cue with :in doesn't schedule immediately";
     sleep 3;
-    is $tracker, "1s2s", "Timer tasks ran in right order";
+    is $tracker, "1s2s", "Timer tasks with :in ran in right order";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker = '';
+    $*SCHEDULER.cue({ $tracker ~= '2s'; }, :at(now + 2));
+    $*SCHEDULER.cue({ $tracker ~= '1s'; }, :at(now + 1));
+    is $tracker, '', "cue with :at doesn't schedule immediately";
+    sleep 3;
+    is $tracker, "1s2s", "Timer tasks with :at ran in right order";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -77,5 +87,32 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     my $a = 0;
     $*SCHEDULER.cue({ $a++ }, :every(0.1));
     sleep 1;
-    ok 5 < $a < 15, "schedule_every schedules repeatedly";
+    diag "seen $a increments"
+      if !ok 5 < $a < 15, "Cue with :every schedules repeatedly";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $a = 0;
+    $*SCHEDULER.cue({ $a++ }, :in(2), :every(0.1));
+    sleep 3;
+    diag "seen $a increments" if !ok 5 < $a < 15,
+      "Cue with :every and :in schedules repeatedly";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $a = 0;
+    $*SCHEDULER.cue({ $a++ }, :at(now + 2), :every(0.1));
+    sleep 3;
+    diag "seen $a increments" if !ok 5 < $a < 15,
+      "Cue with :every and :at schedules repeatedly";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) }
+      'cannot combine :in and :at';
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) }
+      'cannot combine :every with :in and :at';
 }
