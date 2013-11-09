@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 87;
+plan 88;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -319,6 +319,14 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 #?niecza skip "Unsupported use of [-1] subscript to access from end of array"
 {
     is {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
+}
+
+# RT #73230
+#?pugs todo
+{
+    my Hash $RT73230;
+    $RT73230[1];
+    is ($RT73230.perl, 'Hash', 'test for positional (.[]) indexing on a Hash (RT #73230)');
 }
 
 done;
