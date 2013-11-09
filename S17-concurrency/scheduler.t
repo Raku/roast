@@ -13,7 +13,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
         pass "Cued code ran";
         $x = True;
     });
-    1 while $*SCHEDULER.outstanding;
+    1 while $*SCHEDULER.loads;
     ok $x, "Code was cued on another thread by default";
 }
 
@@ -24,7 +24,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
         $message = $exception.message;
     };
     $*SCHEDULER.cue({ die "oh noes" });
-    1 while $*SCHEDULER.outstanding;
+    1 while $*SCHEDULER.loads;
     is $message, "oh noes", "setting uncaught_handler works";
 }
 
@@ -40,7 +40,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
             is $ex.message, "oops", "Correct exception passed to handler";
             $tracker ~= 'caught';
         });
-    1 while $*SCHEDULER.outstanding;
+    1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run, then handler";
 }
 
@@ -54,7 +54,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
         -> $ex {
             $tracker ~= 'caught';
         });
-    1 while $*SCHEDULER.outstanding;
+    1 while $*SCHEDULER.loads;
     is $tracker, "cued,", "Handler not run if no error";
 }
 
