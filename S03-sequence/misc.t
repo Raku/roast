@@ -34,7 +34,6 @@ eval_dies_ok '(1, 2, ... 3)[2]', 'yada operator not confused for sequence operat
 # L<S03/List infix precedence/and another function to continue the list>
 # chained sequence
 
-#?rakudo 8 skip 'chained sequence NYI'
 is (1 ... 5 ... 10).join(' '),
     '1 2 3 4 5 6 7 8 9 10',
     'simple chained finite arithmetic sequence';
@@ -56,6 +55,7 @@ is (1/4, 1/2, 1 ... 8, 9 ... *)[^10].join(' '),
     '0.25 0.5 1 2 4 8 9 10 11 12',
     'chained infinite numeric sequence';
 #?niecza skip 'Slicel lists are NYI'
+#?rakudo skip 'Slicel lists are NYI'
 is infix:<...>(1/4, 1/2, 1;   8, 9;   *).join(' '),
     '1/4 1/2 1 2 4 8 9 10 11 12',
     "chained infinite numeric sequence (with 'infix:<...>')";
@@ -74,12 +74,12 @@ is (1, 4, 7 ... 16, 16 ... *)[^8].join(' '),
 #     'chained arithmetic sequence with exclusion';
 
 #?niecza skip 'Cannot use value like Block as a number'
-#?rakudo skip 'chained sequences NYI'
+#?rakudo todo 'gives True instead'
 is (1, *+1  ... { $_ < 5 }, 5, *+10  ... { $_ < 35 }, 35, *+100 ... { $_ < 400 }).join(' '),
     '1 2 3 4 5 15 25 35 135 235 335',
     'simple chained sequence with closures';
 #?niecza skip 'Unable to resolve method chars in class Block'
-#?rakudo skip 'chained sequences NYI'
+#?rakudo skip 'Not enough positional parameters passed; got 0 but expected 1'
 is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.chars < 6 }).join(' '), 
     '1 3 7 15 31 36 41 a az azz azzz azzzz',
     'chained sequence with closures';
