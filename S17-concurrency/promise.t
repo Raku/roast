@@ -3,6 +3,7 @@ use Test;
 
 plan 58;
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p = Promise.new;
     is $p.status, Planned, "Newly created Promise has Planned status";
@@ -21,6 +22,7 @@ plan 58;
     dies_ok { $p.break("bad") }, "Cannot break a Kept Promise";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p = Promise.new;
     $p.break("glass");
@@ -35,6 +37,7 @@ plan 58;
     dies_ok { $p.break("bad") }, "Cannot re-break a Broken Promise";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p = Promise.start({
         pass "Promise.start actually runs";
@@ -44,6 +47,7 @@ plan 58;
     is $p.status, Kept, "Promise was kept";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p = Promise.start({
         pass "Promise.start actually runs";
@@ -54,6 +58,7 @@ plan 58;
     is $p.cause.message, "trying", "Correct exception stored";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $start = now;
     my $p = Promise.sleep(1);
@@ -61,6 +66,7 @@ plan 58;
     ok now - $start >= 1, "Promise.sleep took long enough";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $run_then = 0;
     my $p1 = Promise.new;
@@ -79,6 +85,7 @@ plan 58;
     ok $run_then, "Certainly ran the then";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Promise.new;
     my $p2 = $p1.then(-> $res {
@@ -92,6 +99,7 @@ plan 58;
     is $p2.result, "oh noes", "Got correct result from then Promise";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $run_then = 0;
     my $p1 = Promise.new;
@@ -105,6 +113,7 @@ plan 58;
     is $p2.cause.message, "then died", "then Promise has correct cause";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Promise.new;
     my $p2 = Promise.new;
@@ -120,6 +129,7 @@ plan 58;
     is $pany.status, Kept, "Other promise breaking doesn't affect status";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Promise.new;
     my $p2 = Promise.new;
@@ -134,6 +144,7 @@ plan 58;
     is $pany.status, Broken, "Other promise keeping doesn't affect status";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Promise.new;
     my $p2 = Promise.new;
@@ -149,6 +160,7 @@ plan 58;
     is $pall.status, Kept, "Promise was kept";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Promise.new;
     my $p2 = Promise.new;

@@ -3,8 +3,10 @@ use Test;
 
 plan 10;
 
+#?rakudo.parrot skip 'NYI'
 ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
 
+#?rakudo.parrot skip 'NYI'
 {
     my $x = False;
     $*SCHEDULER.cue({
@@ -15,6 +17,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     ok $x, "Code was cued on another thread by default";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $message;
     $*SCHEDULER.uncaught_handler = sub ($exception) {
@@ -25,6 +28,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     is $message, "oh noes", "setting uncaught_handler works";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     $*SCHEDULER.cue_with_catch(
@@ -40,6 +44,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     is $tracker, "cued,caught", "Code run, then handler";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     $*SCHEDULER.cue_with_catch(
@@ -53,6 +58,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     is $tracker, "cued,", "Handler not run if no error";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     # Timing related tests are always a tad fragile, e.g. on a loaded system.
     # Hopefully the times are enough leeway.
@@ -64,6 +70,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     is $tracker, "1s2s", "Timer tasks ran in right order";
 }
 
+#?rakudo.parrot skip 'NYI'
 {
     # Also at risk of being a little fragile, but again hopefully Ok on all
     # but the most ridiculously loaded systems.
