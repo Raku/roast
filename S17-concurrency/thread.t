@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 21;
+plan 22;
 
 #?rakudo.parrot skip 'NYI'
 {
@@ -99,4 +99,15 @@ plan 21;
 {
     isa_ok $*THREAD, Thread, '$*THREAD available in initial thread';
     isnt $*THREAD.id, 0, 'Initial thread has an ID';
+}
+
+#?rakudo.parrot skip 'NYI'
+#?rakudo.jvm    todo 'Need some automatic variable locking mechanism'
+{
+    my $seen;
+    my $threads = 3;
+    my $times   = 1000;
+    my @t = (1..$threads).map: { Thread.start({ $seen++ for ^$times}) };
+    .join for @t;
+    is $seen, $threads * $times, "did we miss an update?"
 }
