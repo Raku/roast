@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 21;
 
 #?rakudo.parrot skip 'NYI'
 {
@@ -86,10 +86,13 @@ plan 19;
     my ($t1id, $t2id);
     my $t1 = Thread.start({ $t1id = $*THREAD.id; });
     my $t2 = Thread.start({ $t2id = $*THREAD.id; });
+    sleep 2; # wait for threads to start, a little fragile, yes
+    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1 before join';
+    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 before join';
     $t1.join();
     $t2.join();
-    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1';
-    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2';
+    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1 after join';
+    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 after join';
 }
 
 #?rakudo.parrot skip 'NYI'
