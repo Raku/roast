@@ -5,7 +5,7 @@ use Test;
 
 # L<S11/Compile-time Importation>
 
-plan 8;
+plan 9;
 
 # test that 'use' imports class names defined in importet packages
 
@@ -44,6 +44,12 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
     }
     is MethodLoadingTest.doit(), 'foo', 'can load class from inside a method';
 
+}
+
+# RT #73910
+{
+    use Foo;
+    lives_ok { class Bar { } }, 'declaring a class after use-ing a module (RT #73910)'
 }
 
 # vim: ft=perl6
