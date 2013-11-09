@@ -22,7 +22,9 @@ plan 6;
         pass "Code that dies in run does release the lock";
     });
     Thread.start({
-        $l.protect({ pass "Even from another thread"; });
+        $l.protect({
+            pass "Even from another thread";i
+        });
     }).join();
 }
 
