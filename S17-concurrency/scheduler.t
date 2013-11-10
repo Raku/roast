@@ -1,20 +1,22 @@
 use v6;
 use Test;
 
-plan 28;
+plan 44;
 
+# real scheduling here
+my $name = $*SCHEDULER.^name;
 #?rakudo.parrot skip 'NYI'
-ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
+ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 
 #?rakudo.parrot skip 'NYI'
 {
     my $x = False;
     $*SCHEDULER.cue({
-        pass "Cued code ran";
+        pass "Cued code on $name ran";
         $x = True;
     });
     1 while $*SCHEDULER.loads;
-    ok $x, "Code was cued on another thread by default";
+    ok $x, "Code was cued to $name by default";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -25,7 +27,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     };
     $*SCHEDULER.cue({ die "oh noes" });
     1 while $*SCHEDULER.loads;
-    is $message, "oh noes", "setting uncaught_handler works";
+    is $message, "oh noes", "$name setting uncaught_handler works";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -34,12 +36,12 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     $*SCHEDULER.cue(
       { $tracker = 'cued,'; die "oops" },
       :catch( -> $ex {
-          is $ex.message, "oops", "Correct exception passed to handler";
+          is $ex.message, "oops", "$name passed correct exception to handler";
           $tracker ~= 'caught';
       })
     );
     1 while $*SCHEDULER.loads;
-    is $tracker, "cued,caught", "Code run, then handler";
+    is $tracker, "cued,caught", "Code run on $name, then handler";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -50,7 +52,7 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
         :catch( -> $ex { $tracker ~= 'caught' })
     );
     1 while $*SCHEDULER.loads;
-    is $tracker, "cued,", "Handler not run if no error";
+    is $tracker, "cued,", "Catch handler on $name not run if no error";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -60,9 +62,9 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     my $tracker = '';
     $*SCHEDULER.cue({ $tracker ~= '2s'; }, :in(2));
     $*SCHEDULER.cue({ $tracker ~= '1s'; }, :in(1));
-    is $tracker, '', "Cue with :in doesn't schedule immediately";
+    is $tracker, '', "Cue on $name with :in doesn't schedule immediately";
     sleep 3;
-    is $tracker, "1s2s", "Timer tasks with :in ran in right order";
+    is $tracker, "1s2s", "Timer tasks on $name with :in ran in right order";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -78,9 +80,9 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
       :in(1),
       :catch({ $tracker ~= '1scatch'})
     );
-    is $tracker, '', "Cue with :in and :catch doesn't schedule immediately";
+    is $tracker, '', "Cue on $name with :in/:catch doesn't schedule immediately";
     sleep 3;
-    is $tracker, "1s1scatch2s", "Timer tasks :in/:catch ran in right order";
+    is $tracker, "1s1scatch2s", "Timer tasks on $name:in/:catch ran in right order";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -88,9 +90,9 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
     my $tracker = '';
     $*SCHEDULER.cue({ $tracker ~= '2s'; }, :at(now + 2));
     $*SCHEDULER.cue({ $tracker ~= '1s'; }, :at(now + 1));
-    is $tracker, '', "Cue with :at doesn't schedule immediately";
+    is $tracker, '', "Cue on $name with :at doesn't schedule immediately";
     sleep 3;
-    is $tracker, "1s2s", "Timer tasks with :at ran in right order";
+    is $tracker, "1s2s", "Timer tasks on $name with :at ran in right order";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -106,9 +108,9 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
       :at(now + 1),
       :catch({ $tracker ~= '1scatch'})
     );
-    is $tracker, '', "Cue with :at/:catch doesn't schedule immediately";
+    is $tracker, '', "Cue on $name with :at/:catch doesn't schedule immediately";
     sleep 3;
-    is $tracker, "1s2s2scatch", "Timer tasks :at/:catch ran in right order";
+    is $tracker, "1s2s2scatch", "Timer tasks on $name :at/:catch ran in right order";
 }
 
 #?rakudo.parrot skip 'NYI'
@@ -181,11 +183,126 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
 #?rakudo.parrot skip 'NYI'
 {
     dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
-      'cannot combine :in and :at';
+      "$name cannot combine :in and :at";
     dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
-      'cannot combine :every with :in and :at';
+      "$name cannot combine :every with :in and :at";
     dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)), :catch({...}) },
-      'cannot combine :catch with :in and :at';
+      "$name cannot combine :catch with :in and :at";
     dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
-      'cannot combine :every/:catch with :in and :at';
+      "$name cannot combine :every/:catch with :in and :at";
+}
+
+# fake scheduling from here on out
+$*SCHEDULER = CurrentThreadScheduler.new;
+$name = $*SCHEDULER.^name;
+#?rakudo.parrot skip 'NYI'
+ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $x = False;
+    $*SCHEDULER.cue({
+        pass "Cued code on $name ran";
+        $x = True;
+    });
+    1 while $*SCHEDULER.loads;
+    ok $x, "Code was cued to $name by default";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $message;
+    $*SCHEDULER.uncaught_handler = sub ($exception) {
+        $message = $exception.message;
+    };
+    $*SCHEDULER.cue({ die "oh noes" });
+    1 while $*SCHEDULER.loads;
+    is $message, "oh noes", "$name setting uncaught_handler works";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker;
+    $*SCHEDULER.cue(
+      { $tracker = 'cued,'; die "oops" },
+      :catch( -> $ex {
+          is $ex.message, "oops", "$name passed correct exception to handler";
+          $tracker ~= 'caught';
+      })
+    );
+    1 while $*SCHEDULER.loads;
+    is $tracker, "cued,caught", "Code run on $name, then handler";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker;
+    $*SCHEDULER.cue(
+        { $tracker = 'cued,' },
+        :catch( -> $ex { $tracker ~= 'caught' })
+    );
+    1 while $*SCHEDULER.loads;
+    is $tracker, "cued,", "Catch handler on $name not run if no error";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker = '';
+    $*SCHEDULER.cue({ $tracker ~= '2s'; }, :in(2));
+    $*SCHEDULER.cue({ $tracker ~= '1s'; }, :in(1));
+    is $tracker, '2s1s', "Cue on $name with :in *DOES* schedule immediately";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker = '';
+    $*SCHEDULER.cue(
+      { $tracker ~= '2s'; },
+      :in(2),
+      :catch({ $tracker ~= '2scatch'})
+    );
+    $*SCHEDULER.cue(
+      { $tracker ~= '1s'; die },
+      :in(1),
+      :catch({ $tracker ~= '1scatch'})
+    );
+    is $tracker, '2s1s1scatch', "Cue on $name with :in/:catch *DOES* schedule immediately";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker = '';
+    $*SCHEDULER.cue({ $tracker ~= '2s'; }, :at(now + 2));
+    $*SCHEDULER.cue({ $tracker ~= '1s'; }, :at(now + 1));
+    is $tracker, '2s1s', "Cue on $name with :at *DOES* schedule immediately";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    my $tracker = '';
+    $*SCHEDULER.cue(
+      { $tracker ~= '2s'; die },
+      :at(now + 2),
+      :catch({ $tracker ~= '2scatch'})
+    );
+    $*SCHEDULER.cue(
+      { $tracker ~= '1s'; },
+      :at(now + 1),
+      :catch({ $tracker ~= '1scatch'})
+    );
+    is $tracker, '2s2scatch1s', "Cue on $name with :at/:catch *DOES* schedule immediately";
+}
+
+#?rakudo.parrot skip 'NYI'
+{
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(1)) },
+      "$name cannot specify :every in CurrentThreadScheduler";
+    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
+      "$name cannot combine :in and :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
+      "$name cannot combine :every with :in and :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)), :catch({...}) },
+      "$name cannot combine :catch with :in and :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
+      "$name cannot combine :every/:catch with :in and :at";
 }
