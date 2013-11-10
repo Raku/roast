@@ -312,7 +312,7 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
     my & = { * - 5 };
     is my @, Array.new, q{anonymous @ doesn't overshare};
     is my %, ().hash, q{anonymous % doesn't overshare};
-    ok (my &) eqv Any, q{anonymous sub doesn't overshare};
+    ok (my &) eqv Callable, q{anonymous sub doesn't overshare};
 }
 
 # vim: ft=perl6
