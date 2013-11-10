@@ -31,15 +31,13 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
 #?rakudo.parrot skip 'NYI'
 {
     my $tracker;
-    $*SCHEDULER.cue_with_catch(
-        {
-            $tracker = 'cued,';
-            die "oops";
-        },
-        -> $ex {
-            is $ex.message, "oops", "Correct exception passed to handler";
-            $tracker ~= 'caught';
-        });
+    $*SCHEDULER.cue(
+      { $tracker = 'cued,'; die "oops" },
+      :catch( -> $ex {
+          is $ex.message, "oops", "Correct exception passed to handler";
+          $tracker ~= 'caught';
+      })
+    );
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,caught", "Code run, then handler";
 }
@@ -47,13 +45,10 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
 #?rakudo.parrot skip 'NYI'
 {
     my $tracker;
-    $*SCHEDULER.cue_with_catch(
-        {
-            $tracker = 'cued,';
-        },
-        -> $ex {
-            $tracker ~= 'caught';
-        });
+    $*SCHEDULER.cue(
+        { $tracker = 'cued,' },
+        :catch( -> $ex { $tracker ~= 'caught' })
+    );
     1 while $*SCHEDULER.loads;
     is $tracker, "cued,", "Handler not run if no error";
 }
@@ -111,8 +106,8 @@ ok $*SCHEDULER ~~ Scheduler, "Default scheduler does Scheduler role";
 
 #?rakudo.parrot skip 'NYI'
 {
-    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) }
+    dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
       'cannot combine :in and :at';
-    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) }
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)) },
       'cannot combine :every with :in and :at';
 }
