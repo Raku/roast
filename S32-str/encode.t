@@ -41,7 +41,6 @@ is 'abc'.encode('ascii').list.join(','), '97,98,99', 'Buf.list gives list of cod
     ok $temp = utf16.new($temp),           'creating utf16 Buf from a surrogate pair';
     is $temp[0], 0xD83D,                   'indexing a utf16 gives correct value';
     is $temp[1], 0xDE3E,                   'indexing a utf16 gives correct value';
-    #?rakudo.parrot skip 'VMArray: index out of bounds'
     is $temp.decode(), "\x1F63E",          'decoding utf16 Buf to original value';
 }
 
