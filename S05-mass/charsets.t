@@ -34,15 +34,19 @@ plan 16;
     #?rakudo.parrot todo 'lower characters'
     is $ascii-chars.comb(/<lower>/).join, "abcdefghijklmnopqrstuvwxyzªµºßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'lower chars';
 
+    # unicode 6.0 reclassifies § and ¶ as punctuation characters, so actual results may vary depending on
+    # on unicode version bundled with jdk, icu etc.
     #?rakudo.parrot todo 'punct characters'
+    #?rakudo.jvm todo 'unicode 6.0 punct characters'
     is $ascii-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
+    #?rakudo todo 'unicode 6.0 punct characters'
     is $ascii-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
 
     is $ascii-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';
 
     is $ascii-chars.comb(/<xdigit>/).join, "0123456789ABCDEFabcdef", 'xdigit chars';
 
-    is $ascii-chars.comb(/<:Letter>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'unicode class';
+    is $ascii-chars.comb(/<:Letter>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzªµºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ", 'unicode Letter chars';
 
     is $ascii-chars.comb(/<+ xdigit - lower >/).join, "0123456789ABCDEF", 'combined builtin classes';
     is $ascii-chars.comb(/<+ :HexDigit - :Upper >/).join, "0123456789abcdef", 'combined unicode classes';
