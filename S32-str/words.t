@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S32::Str/Str/=item words>
 
@@ -31,5 +31,11 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,
     is @list.join('|'), 'split|this|string', 'Str.words';
 }
 
+# RT #120517
+#?niecza todo 'extra .list on the lhs'
+{
+    my $RT120517 = "FOO";
+    is qq:ww/$RT120517 "BAR BAZ"/.perl, qq:ww/FOO "BAR BAZ"/.perl, "interpolated variable .perl's like a literal"
+}
 
 # vim: ft=perl6
