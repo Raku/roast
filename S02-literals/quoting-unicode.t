@@ -10,6 +10,7 @@ plan 73;
 
 #L<S02/C<Q> Forms/halfwidth corner brackets>
 #?rakudo skip 'Parse failure'
+#?niecza skip 'Parse failure'
 {
     my $s = 「this is a string\n」;
     is $s, Q[this is a string\n],
