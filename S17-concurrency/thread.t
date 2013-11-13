@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 25;
 
 {
     my $t = Thread.start({ 1 });
@@ -94,8 +94,23 @@ plan 22;
 {
     my $seen;
     my $threads = 3;
-    my $times   = 1000;
+    my $times   = 10000;
     my @t = (1..$threads).map: { Thread.start({ $seen++ for ^$times}) };
     .join for @t;
     ok 0 <= $seen <= $threads * $times, "we didn't segfault"
+}
+
+#?rakudo.jvm skip 'Hangs about 20% of the time'
+{
+    my %seen;
+    my $threads = 3;
+    my $times   = 10000;
+    my @t = (1..$threads).map: { Thread.start({ %seen{$_}++ for ^$times}) };
+    .join for @t;
+    ok 0 <= ([+] %seen.values) <= $threads * $times, "we didn't segfault";
+    unless
+      is +%seen.keys, $times, 'did we get all keys'
+    { .say for %seen.pairs.sort }
+    is +%seen.values.grep({ 1 <= $_ <= $threads }), $times,
+      'are all values in range';
 }
