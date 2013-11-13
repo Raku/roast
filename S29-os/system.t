@@ -6,11 +6,6 @@ use Test;
 
 plan 5;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 my $res;
 
 $res = run($*EXECUTABLE_NAME,'-e1');

@@ -15,11 +15,6 @@ Tests for IO connect() builtin
 
 plan 4;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 my $skip_var = 'PERL_TESTS_ALLOW_NETWORK';
 unless %*ENV{$skip_var} {
   skip_rest "Won't test &connect as environment variable \"$skip_var\" is not true.";

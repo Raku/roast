@@ -11,12 +11,6 @@ Some edge and error cases for open()
 
 =end pod
 
-
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 # deal with non-existent files
 {
     skip("open('nonexisting') => undefined is waiting on 'use fatal'", 1);

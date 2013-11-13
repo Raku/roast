@@ -28,11 +28,6 @@ We really need the stat() function in order to test this.
 
 plan 19;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 if $*OS eq any <MSWin32 mingw msys cygwin> {
     skip_rest "file tests not fully available on win32";
     exit;

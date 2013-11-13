@@ -7,11 +7,6 @@ use Test;
 
 plan 29;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 my $filename = 'tempfile_io_in_for_loop';
 
 { # write the file first

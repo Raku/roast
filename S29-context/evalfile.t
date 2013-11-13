@@ -7,11 +7,6 @@ plan 1;
 
 sub nonce () { return (".{$*PID}." ~ 1000.rand.Int) }
 
-if $*OS eq "browser" {
-    skip_rest "Programs running in browsers don't have access to regular IO.";
-    exit;
-}
-
 my $tmpfile = "temp-evalfile" ~ nonce();
 {
     my $fh = open("$tmpfile", :w);

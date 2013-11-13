@@ -12,11 +12,6 @@ IO.getpeername test
 
 plan 1;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 my $sock = connect('google.com', 80);
 ok $sock.getpeername.defined, "IO.getpeer works";
 

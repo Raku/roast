@@ -15,12 +15,6 @@ I/O tests
 
 plan 84;
 
-#?pugs emit if $*OS eq "browser" {
-#?pugs emit   skip_rest "Programs running in browsers don't have access to regular IO.";
-#?pugs emit   exit;
-#?pugs emit }
-
-
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
 

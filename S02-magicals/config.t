@@ -21,7 +21,7 @@ ok $?OS, "We were compiled in '$?OS'";
 # $*OS is the OS we are running
 ok $*OS, "We are running under '$*OS'";
 
-my $osnames = lc any <darwin linux freebsd MSWin32 mingw msys cygwin browser solaris haiku openbsd>;
+my $osnames = lc any <darwin linux freebsd MSWin32 mingw msys cygwin solaris haiku openbsd>;
 
 #?rakudo skip 'unimpl $?OS'
 ok $?OS.lc eq $osnames, "we know of the OS we were compiled in";

@@ -12,11 +12,6 @@ plan 36;
 # XXX rewinddir is not defined rigth now, should it be IO::Dir::rewind"?
 # old: L<S16/"Filehandles, files, and directories"/"IO::Dir::open">
 
-if ($*OS eq any <browser>) {
-    skip_rest "not supported on this platform";
-    exit;
-}
-
 =begin pod
 
 opendir/readdir support

@@ -8,11 +8,6 @@ use Test::Util;
 # L<S28/Named variables>
 plan 16;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 =begin desc
 
 = DESCRIPTION

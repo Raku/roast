@@ -7,11 +7,6 @@ plan 6;
 
 sub nonce() { "unlink-t-testfile-" ~ 1000.rand }
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 my $fn = "unlink-test-file" ~ nonce;
 
 my $iswin32 = ?($*OS eq any <MSWin32 mingw msys cygwin>) ?? "Timely closing of file handles does not yet work" !! False;

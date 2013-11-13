@@ -2,11 +2,6 @@ use v6;
 use Test;
 plan 14;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 my $root = "mkdir-t-testfile-" ~ 1000000.rand.floor;
 
 diag $root;

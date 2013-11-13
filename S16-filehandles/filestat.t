@@ -12,11 +12,6 @@ This test tests various file stat methods.
 
 plan 13;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 # time stat tests (modify/change/access)
 {
     my $before_creation = time - 1;

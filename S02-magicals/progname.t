@@ -4,12 +4,6 @@ use Test;
 
 plan 4;
 
-# TODO: this should be $?OS, but that's not yet supported under Rakudo
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 ok(PROCESS::<$PROGRAM_NAME> ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname'.'\w+$/, "progname var matches test file path");
 ok($*PROGRAM_NAME ~~ / t['/'|'\\']spec['/'|'\\']S02'-'magicals['/'|'\\']progname'.'\w+$/, "progname var accessible as context var");
 

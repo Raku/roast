@@ -12,11 +12,6 @@ This test tests the various filetest operators.
 
 plan 41;
 
-if $*OS eq "browser" {
-  skip_rest "Programs running in browsers don't have access to regular IO.";
-  exit;
-}
-
 # L<S32::IO/IO::FSNode/=item IO ~~ :X>
 # L<S03/Changes to Perl 5 operators/The filetest operators are gone.>
 # old: L<S16/Filehandles, files, and directories/A file test, where X is one of the letters listed below.>

@@ -146,36 +146,4 @@ plan 15;
   is $foo, 24,               'rebinding $CALLER:: variables works (3)';
 } #2
 
-=begin pod
-
-Larry ruled that as erroneous.
-
-15:13 < iblech> autrijus: :) BTW, WRT lex hoisting: sub foo { $CALLER::a }; { foo(); my $a
-= 3; foo() }
-15:13 < autrijus> iblech: larry ruled it as erroneous.
-15:13 < autrijus> i.e. foo()'s behaviour is undefined.
-15:14 < iblech> ok then :)
-15:14 < autrijus> it's essential we do that because
-15:14 < autrijus> foo($a, my $a)
-15:14 < autrijus> is legal
-15:14 < autrijus> and will be simply hazadrous to implement either way.
-15:14 < autrijus> s/implement/mandate/
-
-{
-  if $*OS eq "browser" {  # test works under PIL2JS :)
-    my $sub = sub { $CALLER::a };
-
-    # No declaration of $a yet.
-    dies_ok { $sub() }, '$CALLER:: dies when accessing not yet declared vars';
-
-    my $a = 3;
-    is $sub(), 3, '$CALLER:: works now (accessing a declared var)';
-  } else {
-    flunk "Test loops infinitely";
-    flunk "Test loops infinitely";
-  }
-}
-
-=end pod
-
 # vim: ft=perl6
