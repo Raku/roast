@@ -6,7 +6,7 @@ use Test;
 BEGIN @*INC.push: 't/spec/packages/';
 use Test::Util;
 # L<S28/Named variables>
-plan 16;
+plan 17;
 
 =begin desc
 
@@ -102,6 +102,11 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
     %*ENV<abc> = 'def';
     ok %*ENV.gist ~~ /abc/, '%*ENV.gist generates something with abc in it';
     ok %*ENV.perl ~~ /abc/, '%*ENV.perl generates something with abc in it';
+}
+
+# RT #117951
+{
+    ok $%*ENV, "itemizer works on %*ENV.";
 }
 
 # vim: ft=perl6
