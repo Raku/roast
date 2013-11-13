@@ -5,10 +5,8 @@ plan 44;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
-#?rakudo.parrot skip 'NYI'
 ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 
-#?rakudo.parrot skip 'NYI'
 {
     my $x = False;
     $*SCHEDULER.cue({
@@ -19,7 +17,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     ok $x, "Code was cued to $name by default";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $message;
     $*SCHEDULER.uncaught_handler = sub ($exception) {
@@ -30,7 +27,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $message, "oh noes", "$name setting uncaught_handler works";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     $*SCHEDULER.cue(
@@ -44,7 +40,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "cued,caught", "Code run on $name, then handler";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     $*SCHEDULER.cue(
@@ -55,7 +50,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "cued,", "Catch handler on $name not run if no error";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     # Timing related tests are always a tad fragile, e.g. on a loaded system.
     # Hopefully the times are enough leeway.
@@ -67,7 +61,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s2s", "Timer tasks on $name with :in ran in right order";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue(
@@ -85,7 +78,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s1scatch2s", "Timer tasks on $name:in/:catch ran in right order";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue({ $tracker ~= '2s'; }, :at(now + 2));
@@ -95,7 +87,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s2s", "Timer tasks on $name with :at ran in right order";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue(
@@ -113,7 +104,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s2s2scatch", "Timer tasks on $name :at/:catch ran in right order";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     # Also at risk of being a little fragile, but again hopefully Ok on all
     # but the most ridiculously loaded systems.
@@ -124,7 +114,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       if !ok 5 < $a < 15, "Cue with :every schedules repeatedly";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     # Also at risk of being a little fragile, but again hopefully Ok on all
     # but the most ridiculously loaded systems.
@@ -138,7 +127,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       if !ok 5 < $b < 15, "Cue with :every/:catch schedules repeatedly (2)";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $a = 0;
     $*SCHEDULER.cue({ $a++ }, :in(2), :every(0.1));
@@ -147,7 +135,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       "Cue with :every/:in schedules repeatedly";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $a = 0;
     my $b = 0;
@@ -159,7 +146,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       "Cue with :every/:in/:catch schedules repeatedly (2)";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $a = 0;
     $*SCHEDULER.cue({ $a++ }, :at(now + 2), :every(0.1));
@@ -168,7 +154,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       "Cue with :every/:at schedules repeatedly";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $a = 0;
     my $b = 0;
@@ -180,7 +165,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       "Cue with :every/:at/:catch schedules repeatedly (2)";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
       "$name cannot combine :in and :at";
@@ -195,10 +179,8 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 # fake scheduling from here on out
 $*SCHEDULER = CurrentThreadScheduler.new;
 $name = $*SCHEDULER.^name;
-#?rakudo.parrot skip 'NYI'
 ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
 
-#?rakudo.parrot skip 'NYI'
 {
     my $x = False;
     $*SCHEDULER.cue({
@@ -209,7 +191,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     ok $x, "Code was cued to $name by default";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $message;
     $*SCHEDULER.uncaught_handler = sub ($exception) {
@@ -220,7 +201,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $message, "oh noes", "$name setting uncaught_handler works";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     $*SCHEDULER.cue(
@@ -234,7 +214,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $tracker, "cued,caught", "Code run on $name, then handler";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     $*SCHEDULER.cue(
@@ -245,7 +224,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $tracker, "cued,", "Catch handler on $name not run if no error";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue({ $tracker ~= '2s'; }, :in(2));
@@ -253,7 +231,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $tracker, '2s1s', "Cue on $name with :in *DOES* schedule immediately";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue(
@@ -269,7 +246,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $tracker, '2s1s1scatch', "Cue on $name with :in/:catch *DOES* schedule immediately";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue({ $tracker ~= '2s'; }, :at(now + 2));
@@ -277,7 +253,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $tracker, '2s1s', "Cue on $name with :at *DOES* schedule immediately";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker = '';
     $*SCHEDULER.cue(
@@ -293,7 +268,6 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
     is $tracker, '2s2scatch1s', "Cue on $name with :at/:catch *DOES* schedule immediately";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     dies_ok { $*SCHEDULER.cue({ ... }, :every(1)) },
       "$name cannot specify :every in CurrentThreadScheduler";

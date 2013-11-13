@@ -3,7 +3,6 @@ use Test;
 
 plan 17;
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p = Publisher.new;
     
@@ -24,7 +23,6 @@ plan 17;
     ok $saw_last, "Saw last";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p = Publisher.new;
     
@@ -46,7 +44,6 @@ plan 17;
     is ~@tap2_vals, "2 3", "Second tap gets third value";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p = Publish.for(1..10, :scheduler(CurrentThreadScheduler));
     
@@ -63,7 +60,6 @@ plan 17;
     is ~@a2, "1 2 3 4 5 6 7 8 9 10 end", "Second tap also gets all values";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p = Publish.for(1..5);
     my $c = $p.Channel;
@@ -77,7 +73,6 @@ plan 17;
     is ~@a, "1 2 3 4 5 done", "Publish.for and .Channel work";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p = Publish.for(2..6);
     my @a;
@@ -87,7 +82,6 @@ plan 17;
     is ~@a, "2 3 4 5 6", "Publish.for and .list work";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Publisher.new;
     my $p2 = Publisher.new;
@@ -106,7 +100,6 @@ plan 17;
     is @res.join(','), '1a,2b', 'zipping taps works';
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Publisher.new;
     my $p2 = Publisher.new;
@@ -124,7 +117,6 @@ plan 17;
     is @res.join(','), '1,2,a,3,b', "merging taps works";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Publish.for(1..10, :scheduler(CurrentThreadScheduler));
     my @res;
@@ -132,7 +124,6 @@ plan 17;
     is ~@res, '6 7 8 9 10', "grepping taps works";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $p1 = Publish.for(1..5, :scheduler(CurrentThreadScheduler));
     my @res;

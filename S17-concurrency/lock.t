@@ -3,7 +3,6 @@ use Test;
 
 plan 6;
 
-#?rakudo.parrot skip 'NYI'
 {
     my $l = Lock.new;
     $l.protect({
@@ -14,7 +13,6 @@ plan 6;
     });
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $l = Lock.new;
     dies_ok { $l.protect({ die "oops" }) }, "code that dies under lock throws";
@@ -28,7 +26,6 @@ plan 6;
     }).join();
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     # Attempt to check lock actually enforces some locking.
     my $output = '';

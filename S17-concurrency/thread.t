@@ -3,14 +3,12 @@ use Test;
 
 plan 22;
 
-#?rakudo.parrot skip 'NYI'
 {
     my $t = Thread.start({ 1 });
     isa_ok $t, Thread;
     $t.join();
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $t = Thread.start({
         pass "Code in thread ran";
@@ -19,7 +17,6 @@ plan 22;
     pass "Thread was joined";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $tracker;
     my $t = Thread.start({
@@ -30,7 +27,6 @@ plan 22;
     is $tracker, "in thread,joined", "Thread.join does block";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     # This test is a vulnerable to freak conditions, like closing your laptop
     # at the exact wrong time. Also, if this test file hangs for ages at exit,
@@ -40,7 +36,6 @@ plan 22;
     ok now - $start < 10, "Starting app_lifetime thread that sleeps won't block main thread";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my ($a, $b);
     my $t1 = Thread.start({ $a = 21 });
@@ -54,7 +49,6 @@ plan 22;
     is $b, 42, "Thread 2 also ran";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $t = Thread.start(:name("My little thready"), { 1 });
     is $t.name, "My little thready", "Has correct name";
@@ -62,14 +56,12 @@ plan 22;
     is $t.name, "My little thready", "Name doesn't vanish after joining";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $t = Thread.start({ 1 });
     is $t.name, "<anon>", "Default thread name is <anon>";
     $t.join();
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $t1 = Thread.start({ 1 });
     ok $t1.Str ~~ /^ Thread '<' \d+ '>' '(<anon>)' $/,
@@ -81,7 +73,6 @@ plan 22;
     $t2.join();
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my ($t1id, $t2id);
     my $t1 = Thread.start({ $t1id = $*THREAD.id; });
@@ -95,13 +86,11 @@ plan 22;
     is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 after join';
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     isa_ok $*THREAD, Thread, '$*THREAD available in initial thread';
     isnt $*THREAD.id, 0, 'Initial thread has an ID';
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $seen;
     my $threads = 3;

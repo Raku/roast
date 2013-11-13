@@ -3,7 +3,6 @@ use Test;
 
 plan 12;
 
-#?rakudo.parrot skip 'NYI'
 {
     my $c = Channel.new;
     $c.send(1);
@@ -15,7 +14,6 @@ plan 12;
     ok $c.poll === Nil, "poll returns Nil when no values available";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $c = Channel.new;
     $c.send(42);
@@ -26,7 +24,6 @@ plan 12;
     dies_ok { $c.receive }, "Receiving from closed channel throws";
 }
 
-#?rakudo.parrot skip 'NYI'
 {
     my $c = Channel.new;
     $c.send(1);
