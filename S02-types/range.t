@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 127;
+plan 129;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -288,5 +288,8 @@ is(+Range, 0, 'type numification');
 
 #?pugs skip 'Cannot cast from VList to VCode'
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
+
+lives_ok({'A'..'a'}, "A..a range completes");
+lives_ok({"\0".."~"}, "low ascii range completes");
 
 # vim:set ft=perl6
