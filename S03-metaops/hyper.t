@@ -253,6 +253,7 @@ my @e;
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (ASCII)");
 
+        # RT #74890 analogue
         @r = ("f", "oo", "bar").>>.chars;
         @e = (1, 2, 3);
         is(~@r, ~@e, "method call on list elements (ASCII, Same thing, dot form)");
