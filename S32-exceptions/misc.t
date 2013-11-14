@@ -104,6 +104,9 @@ throws_like 'my $0', X::Syntax::Variable::Numeric;
 throws_like 'my sub f($0) { }', X::Syntax::Variable::Numeric, what => 'parameter';
 throws_like 'my $<a>', X::Syntax::Variable::Match;
 throws_like 'my class A { my $!foo }', X::Syntax::Variable::Twigil, twigil => '!', scope => 'my';
+#RT #86880
+throws_like 'role Breakable { my $!broken = Bool::False; }; class Frobnitz does Breakable {};',
+    X::Syntax::Variable::Twigil, twigil => '!', scope => 'my';
 throws_like 'my $?FILE', X::Syntax::Variable::Twigil, twigil => '?', scope => 'my';
 throws_like 'my $::("foo")', X::Syntax::Variable::IndirectDeclaration;
 throws_like '@a', X::Undeclared, symbol => '@a';
