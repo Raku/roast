@@ -6,15 +6,15 @@ plan 25;
 {
     my $t = Thread.start({ 1 });
     isa_ok $t, Thread;
-    $t.join();
+    $t.finish;
 }
 
 {
     my $t = Thread.start({
         pass "Code in thread ran";
     });
-    $t.join();
-    pass "Thread was joined";
+    $t.finish;
+    pass "Thread was finished";
 }
 
 {
@@ -22,9 +22,9 @@ plan 25;
     my $t = Thread.start({
         $tracker = "in thread,";
     });
-    $t.join();
-    $tracker ~= "joined";
-    is $tracker, "in thread,joined", "Thread.join does block";
+    $t.finish;
+    $tracker ~= "finished";
+    is $tracker, "in thread,finished", "Thread.finish does block";
 }
 
 {
@@ -43,8 +43,8 @@ plan 25;
     isnt $t1.id, 0, "Thread 1 got non-zero ID";
     isnt $t2.id, 0, "Thread 2 got non-zero ID";
     isnt $t1.id, $t2.id, "Threads got different IDs";
-    $t1.join();
-    $t2.join();
+    $t1.finish;
+    $t2.finish;
     is $a, 21, "Thread 1 actually ran";
     is $b, 42, "Thread 2 also ran";
 }
@@ -52,25 +52,25 @@ plan 25;
 {
     my $t = Thread.start(:name("My little thready"), { 1 });
     is $t.name, "My little thready", "Has correct name";
-    $t.join();
-    is $t.name, "My little thready", "Name doesn't vanish after joining";
+    $t.finish;
+    is $t.name, "My little thready", "Name doesn't vanish after finishing";
 }
 
 {
     my $t = Thread.start({ 1 });
     is $t.name, "<anon>", "Default thread name is <anon>";
-    $t.join();
+    $t.finish;
 }
 
 {
     my $t1 = Thread.start({ 1 });
     ok $t1.Str ~~ /^ Thread '<' \d+ '>' '(<anon>)' $/,
         "Correct Thread stringification (anon case)";
-    $t1.join();
+    $t1.finish;
     my $t2 = Thread.start(:name('Magical threader'), { 1 });
     ok $t2.Str ~~ /^ Thread '<' \d+ '>' '(Magical threader)' $/,
         "Correct Thread stringification (name case)";
-    $t2.join();
+    $t2.finish;
 }
 
 {
@@ -78,12 +78,12 @@ plan 25;
     my $t1 = Thread.start({ $t1id = $*THREAD.id; });
     my $t2 = Thread.start({ $t2id = $*THREAD.id; });
     sleep 2; # wait for threads to start, a little fragile, yes
-    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1 before join';
-    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 before join';
-    $t1.join();
-    $t2.join();
-    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1 after join';
-    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 after join';
+    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1 before finish';
+    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 before finish';
+    $t1.finish;
+    $t2.finish;
+    is $t1id, $t1.id, 'Correct $*THREAD instance in thread 1 after finish';
+    is $t2id, $t2.id, 'Correct $*THREAD instance in thread 2 after finish';
 }
 
 {
@@ -96,7 +96,7 @@ plan 25;
     my $threads = 3;
     my $times   = 10000;
     my @t = (1..$threads).map: { Thread.start({ $seen++ for ^$times}) };
-    .join for @t;
+    .finish for @t;
     ok 0 <= $seen <= $threads * $times, "we didn't segfault"
 }
 
@@ -106,7 +106,7 @@ plan 25;
     my $threads = 3;
     my $times   = 10000;
     my @t = (1..$threads).map: { Thread.start({ %seen{$_}++ for ^$times}) };
-    .join for @t;
+    .finish for @t;
     ok 0 <= ([+] %seen.values) <= $threads * $times, "we didn't segfault";
     unless
       is +%seen.keys, $times, 'did we get all keys'

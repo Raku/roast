@@ -23,7 +23,7 @@ plan 6;
         $l.protect({
             pass "Even from another thread";i
         });
-    }).join();
+    }).finish();
 }
 
 {
@@ -44,7 +44,7 @@ plan 6;
             }
         });
     });
-    $t1.join;
-    $t2.join;
+    $t1.finish;
+    $t2.finish;
     ok $output ~~ /^ [ a+: b+: | b+: a+: ] $/, 'Lock is at least somewhat effective'; 
 }

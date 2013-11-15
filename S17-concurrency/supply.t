@@ -13,7 +13,7 @@ plan 17;
         { $saw_last = True });
 
     $p.next(1);
-    is @vals.join, "1", "Tap got initial value";
+    is ~@vals, "1", "Tap got initial value";
     nok $saw_last, "No last yet";
     
     $p.next(2);
@@ -31,7 +31,7 @@ plan 17;
     my $tap1 = $p.tap(-> $val { @tap1_vals.push($val) });
     
     $p.next(1);
-    is @tap1_vals.join, "1", "First tap got initial value";
+    is ~@tap1_vals, "1", "First tap got initial value";
     
     my $tap2 = $p.tap(-> $val { @tap2_vals.push($val) });
     $p.next(2);
