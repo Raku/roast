@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 12;
+plan 14;
 
 {
     my $c = Channel.new;
@@ -31,4 +31,14 @@ plan 12;
     is $c.receive, 1, "received first value";
     dies_ok { $c.receive }, "error thrown on receive";
     is $c.closed.cause.message, "oh noes", "failure reason conveyed";
+}
+
+{
+    my $p = Publish.for(1..5);
+    is ~$p.Channel.list, "1 2 3 4 5", "Publish.for and .Channel work";
+}
+
+{
+    my $p = Publish.for(1..5);
+    is ~@($p.Channel), "1 2 3 4 5", "Publish.for and @(.Channel) work";
 }
