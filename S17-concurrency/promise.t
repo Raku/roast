@@ -56,9 +56,9 @@ plan 58;
 
 {
     my $start = now;
-    my $p = Promise.sleep(1);
-    is $p.result, True, "Promise.sleep result is True";
-    ok now - $start >= 1, "Promise.sleep took long enough";
+    my $p = Promise.in(1);
+    is $p.result, True, "Promise.in result is True";
+    ok now - $start >= 1, "Promise.in took long enough";
 }
 
 {
