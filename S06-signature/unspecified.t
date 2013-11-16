@@ -5,6 +5,9 @@ plan 17;
 
 # L<S06/Perl5ish subroutine declarations/You can declare a sub without
 # parameter list>
+#
+# TODO: stop using is() to compare signatures, their stringification
+# isn't specced
 
 sub simple { 'simple' }
 #?rakudo todo 'siglist'
@@ -17,7 +20,7 @@ dies_ok { eval("simple( 'india' )") },
 
 sub positional { @_[0] }
 #?rakudo todo 'siglist'
-is &positional.signature, :(Mu *@_),
+is &positional.signature, :(*@_),
    'signature is :(Mu *@_) when none is specified and @_ is used';
 is positional( 'alpha' ), 'alpha', 'can call sub with positional param used';
 nok positional().defined, 'sub using positional param called with no params';
@@ -26,7 +29,7 @@ dies_ok { positional( :victor<whiskey> ) },
 
 sub named { %_<bravo> }
 #?rakudo todo 'siglist'
-is &named.signature, :(Mu *%_),
+is &named.signature, :(*%_),
    'signature is :(Mu *%_) when none is specified and %_ is used';
 is named( :bravo<charlie> ), 'charlie', 'can call sub with named param used';
 nok named().defined, 'named param sub is callable with no params';
@@ -34,7 +37,7 @@ dies_ok { named( 'zulu' ) }, 'named param sub dies with positional param';
 
 sub both { @_[1] ~ %_<delta> }
 #?rakudo todo 'siglist'
-is &both.signature, :(Mu *@_, Mu *%_),
+is &both.signature, :(*@_, *%_),
    'signature is :(Mu *@_, Mu *%_) when none is specified and @_ and %_ are used';
 is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
    'can call sub with both named and positional params used';
