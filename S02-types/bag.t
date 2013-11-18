@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 162;
+plan 173;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -321,6 +321,31 @@ sub showkv($x) {
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change Bag';
+}
+
+# L<S32::Containers/Bag/pickpairs>
+
+{
+    my $b = Bag.new("a", "b", "b");
+
+    my $a = $b.pickpairs;
+    isa_ok $a, List, 'Did we get a List';
+    is $a.elems, 1, 'Did we get one element';
+    isa_ok $a[0], Pair, 'Did we get a Pair in the List';
+    ok ($a[0] eq "a\t1" or $a[0] eq "b\t2"), "We got one of the two choices";
+
+    my @a = $b.pickpairs(2);
+    is +@a, 2, '.pickpairs(2) returns the right number of items';
+    is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(2) returned one "a"';
+    is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(2) returned one "b"';
+
+    @a = $b.pickpairs: *;
+    is +@a, 2, '.pickpairs(*) returns the right number of items';
+    is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(*) (1)';
+    is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(*) (2)';
+    #?pugs   skip '.total NYI'
+    #?niecza skip '.total NYI'
+    is $b.total, 3, '.pickpairs should not change Bag';
 }
 
 # L<S32::Containers/Bag/grab>
