@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 17;
+plan 16;
 
 {
     my $p = Publisher.new;
