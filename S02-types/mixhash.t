@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 188;
+plan 190;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -271,6 +271,11 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
+
+    @a = $m.roll(*)[^100];
+    ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
+    ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
+
     #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change MixHash';
