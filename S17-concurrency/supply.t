@@ -61,19 +61,6 @@ plan 17;
 }
 
 {
-    my $p = Publish.for(1..5);
-    my $c = $p.Channel;
-    my @a;
-    loop {
-        winner(
-            $c        => { @a.push($^val) },
-            $c.closed => { @a.push("done"); last }
-        );
-    }
-    is ~@a, "1 2 3 4 5 done", "Publish.for and .Channel work";
-}
-
-{
     my $p = Publish.for(2..6);
     my @a;
     for $p.list {
