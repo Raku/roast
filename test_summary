@@ -484,9 +484,9 @@ sub get_test_names {
     open($fh, '<', $testlist) || die "Can't read $testlist: $!";
     while (<$fh>) {
         /^ *#/ && next;
-        my ($specfile, $fudgespec) = split ' ', $_;
+        my ($specfile, $fudgespec) = split ' ', $_, 2;
         next unless $specfile;
-        next if $fudgespec =~ /jvm/ && $implementation =~ /jvm/;
+        next if $fudgespec =~ /jvm/ && $implementation !~ /jvm/;
         push @tfiles, "t/spec/$specfile";
     }
     close $fh or die $!;
