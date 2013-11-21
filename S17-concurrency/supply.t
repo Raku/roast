@@ -60,6 +60,7 @@ plan 16;
     is ~@a2, "1 2 3 4 5 6 7 8 9 10 end", "Second tap also gets all values";
 }
 
+#?rakudo skip "hangs"
 {
     my $p = Publish.for(2..6);
     my @a;

@@ -38,6 +38,7 @@ plan 14;
     is ~$p.Channel.list, "1 2 3 4 5", "Publish.for and .Channel work";
 }
 
+#?rakudo skip "hangs"
 {
     my $p = Publish.for(1..5);
     is ~@($p.Channel), "1 2 3 4 5", "Publish.for and @(.Channel) work";
