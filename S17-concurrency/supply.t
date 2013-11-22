@@ -45,7 +45,7 @@ plan 16;
 }
 
 {
-    my $p = Publish.for(1..10, :scheduler(CurrentThreadScheduler));
+    my $p = Supply.for(1..10, :scheduler(CurrentThreadScheduler));
     
     my @a1;
     my $tap1 = $p.tap(
@@ -62,12 +62,12 @@ plan 16;
 
 #?rakudo skip "hangs"
 {
-    my $p = Publish.for(2..6);
+    my $p = Supply.for(2..6);
     my @a;
     for $p.list {
         @a.push($_);
     }
-    is ~@a, "2 3 4 5 6", "Publish.for and .list work";
+    is ~@a, "2 3 4 5 6", "Supply.for and .list work";
 }
 
 {
@@ -106,14 +106,14 @@ plan 16;
 }
 
 {
-    my $p1 = Publish.for(1..10, :scheduler(CurrentThreadScheduler));
+    my $p1 = Supply.for(1..10, :scheduler(CurrentThreadScheduler));
     my @res;
     $p1.grep(* > 5).tap({ @res.push($_) });
     is ~@res, '6 7 8 9 10', "grepping taps works";
 }
 
 {
-    my $p1 = Publish.for(1..5, :scheduler(CurrentThreadScheduler));
+    my $p1 = Supply.for(1..5, :scheduler(CurrentThreadScheduler));
     my @res;
     $p1.map(2 * *).tap({ @res.push($_) });
     is ~@res, '2 4 6 8 10', "mapping taps works";
