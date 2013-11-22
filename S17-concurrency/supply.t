@@ -4,7 +4,7 @@ use Test;
 plan 16;
 
 {
-    my $p = Publisher.new;
+    my $p = Supply.new;
     
     my @vals;
     my $saw_last;
@@ -24,7 +24,7 @@ plan 16;
 }
 
 {
-    my $p = Publisher.new;
+    my $p = Supply.new;
     
     my @tap1_vals;
     my @tap2_vals;
@@ -71,8 +71,8 @@ plan 16;
 }
 
 {
-    my $p1 = Publisher.new;
-    my $p2 = Publisher.new;
+    my $p1 = Supply.new;
+    my $p2 = Supply.new;
 
     my @res;
     my $tap = $p1.zip($p2, &infix:<~>).tap({ @res.push($_) });
@@ -89,8 +89,8 @@ plan 16;
 }
 
 {
-    my $p1 = Publisher.new;
-    my $p2 = Publisher.new;
+    my $p1 = Supply.new;
+    my $p2 = Supply.new;
 
     my @res;
     my $tap = $p1.merge($p2).tap({ @res.push($_) });
