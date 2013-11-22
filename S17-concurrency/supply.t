@@ -7,20 +7,20 @@ plan 16;
     my $p = Supply.new;
     
     my @vals;
-    my $saw_last;
+    my $saw_done;
     my $tap = $p.tap(
         -> $val { @vals.push($val) },
-        { $saw_last = True });
+        { $saw_done = True });
 
-    $p.next(1);
+    $p.more(1);
     is ~@vals, "1", "Tap got initial value";
-    nok $saw_last, "No last yet";
+    nok $saw_done, "No done yet";
     
-    $p.next(2);
-    $p.next(3);
-    $p.last;
+    $p.more(2);
+    $p.more(3);
+    $p.done;
     is ~@vals, "1 2 3", "Tap saw all values";
-    ok $saw_last, "Saw last";
+    ok $saw_done, "Saw done";
 }
 
 {
@@ -30,16 +30,16 @@ plan 16;
     my @tap2_vals;
     my $tap1 = $p.tap(-> $val { @tap1_vals.push($val) });
     
-    $p.next(1);
+    $p.more(1);
     is ~@tap1_vals, "1", "First tap got initial value";
     
     my $tap2 = $p.tap(-> $val { @tap2_vals.push($val) });
-    $p.next(2);
+    $p.more(2);
     is ~@tap1_vals, "1 2", "First tap has both values";
     is ~@tap2_vals, "2", "Second tap missed first value";
     
     $tap1.close;
-    $p.next(3);
+    $p.more(3);
     is ~@tap1_vals, "1 2", "First tap closed, missed third value";
     is ~@tap2_vals, "2 3", "Second tap gets third value";
 }
@@ -77,13 +77,13 @@ plan 16;
     my @res;
     my $tap = $p1.zip($p2, &infix:<~>).tap({ @res.push($_) });
 
-    $p1.next(1);
-    $p1.next(2);
-    $p2.next('a');
-    $p2.next('b');
-    $p2.next('c');
-    $p1.last();
-    $p2.last();
+    $p1.more(1);
+    $p1.more(2);
+    $p2.more('a');
+    $p2.more('b');
+    $p2.more('c');
+    $p1.done();
+    $p2.done();
     
     is @res.join(','), '1a,2b', 'zipping taps works';
 }
@@ -95,12 +95,12 @@ plan 16;
     my @res;
     my $tap = $p1.merge($p2).tap({ @res.push($_) });
 
-    $p1.next(1);
-    $p1.next(2);
-    $p2.next('a');
-    $p1.next(3);
-    $p1.last();
-    $p2.next('b');
+    $p1.more(1);
+    $p1.more(2);
+    $p2.more('a');
+    $p1.more(3);
+    $p1.done();
+    $p2.more('b');
     
     is @res.join(','), '1,2,a,3,b', "merging taps works";
 }
