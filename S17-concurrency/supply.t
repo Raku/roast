@@ -8,9 +8,8 @@ plan 16;
     
     my @vals;
     my $saw_done;
-    my $tap = $p.tap(
-        -> $val { @vals.push($val) },
-        { $saw_done = True });
+    my $tap = $p.tap( -> $val { @vals.push($val) },
+      done => { $saw_done = True });
 
     $p.more(1);
     is ~@vals, "1", "Tap got initial value";
@@ -48,15 +47,13 @@ plan 16;
     my $p = Supply.for(1..10, :scheduler(CurrentThreadScheduler));
     
     my @a1;
-    my $tap1 = $p.tap(
-        -> $val { @a1.push($val) },
-        { @a1.push("end") });
+    my $tap1 = $p.tap( -> $val { @a1.push($val) },
+      done => { @a1.push("end") });
     is ~@a1, "1 2 3 4 5 6 7 8 9 10 end", "Synchronous publish worked";
     
     my @a2;
-    my $tap2 = $p.tap(
-        -> $val { @a2.push($val) },
-        { @a2.push("end") });
+    my $tap2 = $p.tap( -> $val { @a2.push($val) },
+      done => { @a2.push("end") });
     is ~@a2, "1 2 3 4 5 6 7 8 9 10 end", "Second tap also gets all values";
 }
 

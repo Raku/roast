@@ -33,14 +33,13 @@ plan 14;
     is $c.closed.cause.message, "oh noes", "failure reason conveyed";
 }
 
-#?rakudo skip 'disappears'
 {
     my $p = Supply.for(1..5);
-    is ~$p.Channel.list, "1 2 3 4 5", "Publish.for and .Channel work";
+    is ~$p.Channel.list, "1 2 3 4 5", "Supply.for and .Channel work";
 }
 
-#?rakudo skip 'disappears'
+#?rakudo skip 'hangs'
 {
     my $p = Supply.for(1..5);
-    is ~@($p.Channel), "1 2 3 4 5", "Publish.for and @(.Channel) work";
+    is ~@($p.Channel), "1 2 3 4 5", "Supply.for and @(.Channel) work";
 }
