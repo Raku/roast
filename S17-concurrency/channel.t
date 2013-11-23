@@ -36,7 +36,6 @@ plan 12;
     is ~$p.Channel.list, "1 2 3 4 5", "Supply.for and .Channel work";
 }
 
-#?rakudo skip 'hangs'
 {
     my $p = Supply.for(1..5);
     is ~@($p.Channel), "1 2 3 4 5", "Supply.for and @(.Channel) work";
