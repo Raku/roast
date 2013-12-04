@@ -15,7 +15,6 @@ is (<a b> Z~ <1 2>), <a1 b2>, 'zip-concat produces expected result';
 
 is (1,2 Z* 3,4), (3,8), 'zip-product works';
 
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in type Any'
 is (1,2 Zcmp 3,2,0), (Order::Less, Order::Same), 'zip-cmp works';
 
 # tests for laziness
