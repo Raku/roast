@@ -20,6 +20,7 @@ is +<5 7 8>, 3, 'prefix:<+> on an angle bracket Parcel';
 is ~<5 7 8>, '5 7 8', 'prefix:<~> on an angle bracket Parcel';
 is <5 7 8>.Str, '5 7 8', '.Str on an angle bracket Parcel';
 
+#?niecza 3 skip ".Parcel NYI"
 isa_ok (5, 7, 8).Parcel, Parcel, '.Parcel returns an parcel';
 is (5, 7, 8).Parcel, [5,7,8], '.Parcel contains the right items';
 is (5, 7, 8).Parcel.elems, 3, '.Parcel contains the right number of elements';

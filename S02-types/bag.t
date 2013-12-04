@@ -325,6 +325,7 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/pickpairs>
 
+#?niecza skip ".pickpairs NYI"
 {
     my $b = Bag.new("a", "b", "b");
 
