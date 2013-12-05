@@ -43,7 +43,6 @@ sub showkv($x) {
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 8, '.total gives sum of values';
     is +$b, 8, '+$bag gives sum of values';
 }
@@ -219,7 +218,6 @@ sub showkv($x) {
     my $s;
     lives_ok { $s = $b.Str }, ".Str lives";
     isa_ok $s, Str, "... and produces a string";
-    #?niecza todo
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
 
@@ -267,7 +265,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 3, '.roll should not change Bag';
 }
 
@@ -282,7 +279,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.roll should not change Bag';
 }
 
@@ -304,7 +300,6 @@ sub showkv($x) {
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 3, '.pick should not change Bag';
 }
 
@@ -319,7 +314,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change Bag';
 }
 
@@ -345,7 +339,6 @@ sub showkv($x) {
     is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(*) (1)';
     is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(*) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 3, '.pickpairs should not change Bag';
 }
 

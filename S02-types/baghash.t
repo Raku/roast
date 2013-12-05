@@ -44,7 +44,6 @@ sub showkv($x) {
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 8, '.total gives sum of values';
     is $b.elems, 3, '.elems gives number of elements';
     is +$b, 8, '+$bag gives sum of values';
@@ -273,7 +272,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 3, '.roll should not change BagHash';
     is $b.elems, 2, '.roll should not change BagHash';
 }
@@ -289,7 +287,6 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.roll should not change BagHash';
     is $b.elems, 2, '.roll should not change BagHash';
 }
@@ -312,7 +309,6 @@ sub showkv($x) {
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 3, '.pick should not change BagHash';
     is $b.elems, 2, '.pick should not change BagHash';
 }
@@ -328,17 +324,18 @@ sub showkv($x) {
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change BagHash';
     is $b.elems, 2, '.pick should not change BagHash';
 }
 
 # L<S32::Containers/BagHash/pickpairs>
 
+#?niecza skip '.pickpairs NYI'
 {
     my $b = BagHash.new("a", "b", "b");
 
     my $a = $b.pickpairs;
+    say :$a.perl;
     isa_ok $a, List, 'Did we get a List';
     is $a.elems, 1, 'Did we get one element';
     isa_ok $a[0], Pair, 'Did we get a Pair in the List';
@@ -354,7 +351,6 @@ sub showkv($x) {
     is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(*) (1)';
     is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(*) (2)';
     #?pugs   skip '.total NYI'
-    #?niecza skip '.total NYI'
     is $b.total, 3, '.pickpairs should not change Bag';
 }
 
