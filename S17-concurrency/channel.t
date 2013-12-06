@@ -4,7 +4,7 @@ use Test;
 plan 12;
 
 {
-    my $c = Channel.new;
+    my Channel $c .= new;
     $c.send(1);
     $c.send(2);
     is $c.receive, 1, "Received first value";

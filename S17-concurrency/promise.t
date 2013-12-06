@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 58;
+plan 61;
 
 {
     my $p = Promise.new;
@@ -40,6 +40,15 @@ plan 58;
         pass "Promise.start actually runs";
         42
     });
+    is $p.result, 42, "Correct result";
+    is $p.status, Kept, "Promise was kept";
+}
+
+{
+    my $p = start {
+        pass "Promise.start actually runs";
+        42
+    };
     is $p.result, 42, "Correct result";
     is $p.status, Kept, "Promise was kept";
 }
@@ -150,11 +159,12 @@ plan 58;
 }
 
 {
-    my $p1 = Promise.new;
-    my $p2 = Promise.new;
-    my $pall = Promise.allof($p1, $p2);
-    $p1.keep(1);
-    $p2.break("danger danger");
+    my @p;
+    @p[0] = Promise.new;
+    @p[1] = Promise.new;
+    my $pall = Promise.allof(@p);
+    @p[0].keep(1);
+    @p[1].break("danger danger");
     dies_ok { $pall.result }, "result on broken all-Promise throws";
     is $pall.status, Broken, "all-Promise was broken";
 }
