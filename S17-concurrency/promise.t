@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 61;
+plan 64;
 
 {
     my $p = Promise.new;
@@ -167,4 +167,14 @@ plan 61;
     @p[1].break("danger danger");
     dies_ok { $pall.result }, "result on broken all-Promise throws";
     is $pall.status, Broken, "all-Promise was broken";
+}
+
+{
+    my @a;
+    my @p = (^10).pick(*).map: { start { sleep $_; @a.push: $_ } };
+    my $all = Promise.allof(@p);
+    isa_ok $all, Promise, 'allof gives a Promise';
+    my $b = $all.result;  # block
+    isa_ok $b, Bool, 'get a bool of the result';
+    is ~@a, "0 1 2 3 4 5 6 7 8 9", 'got the right order';
 }
