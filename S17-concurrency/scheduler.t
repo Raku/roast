@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 54;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
@@ -155,6 +155,13 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 }
 
 {
+    my $tracker;
+    $*SCHEDULER.cue({ $tracker++ }, :times(10));
+    sleep 3;
+    is $tracker, 10, "Cue on $name with :times(10)";
+}
+
+{
     my $a = 0;
     my $b = 0;
     $*SCHEDULER.cue({ $a++; die }, :at(now + 2), :every(0.1), :catch({ $b++ }));
@@ -174,6 +181,14 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       "$name cannot combine :catch with :in and :at";
     dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :every/:catch with :in and :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
+      "$name cannot combine :every and :times";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
+      "$name cannot combine :every and :times with :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
+      "$name cannot combine :every and :times with :in";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
+      "$name cannot combine :every and :times with :catch";
 }
 
 # fake scheduling from here on out
@@ -254,6 +269,13 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
 }
 
 {
+    my $tracker;
+    $*SCHEDULER.cue({ $tracker++ }, :times(10));
+    sleep 5;
+    is $tracker, 10, "Cue on $name with :times(10)";
+}
+
+{
     my $tracker = '';
     $*SCHEDULER.cue(
       { $tracker ~= '2s'; die },
@@ -279,4 +301,12 @@ ok $*SCHEDULER ~~ Scheduler, "{$*SCHEDULER.^name} does Scheduler role";
       "$name cannot combine :catch with :in and :at";
     dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :at(now + 2), :in(1)), :catch({...}) },
       "$name cannot combine :every/:catch with :in and :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10)) },
+      "$name cannot combine :every and :times";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :at(now + 2)) },
+      "$name cannot combine :every and :times with :at";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :in(1)) },
+      "$name cannot combine :every and :times with :in";
+    dies_ok { $*SCHEDULER.cue({ ... }, :every(0.1), :times(10), :catch({...})) },
+      "$name cannot combine :every and :times with :catch";
 }
