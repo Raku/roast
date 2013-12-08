@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 10;
 
 {
     role B { method x { 3; } }
@@ -46,14 +46,41 @@ plan 7;
 {
     role AA {
         has Int $!aa;
+        method bar { $!aa++ }
     }
     role BB does AA {}
     class Baz does BB {
         method baz { $!aa++ }
     }
     my $baz = Baz.new;
-    is $baz.baz, 0, 'did we see the Int private attribute from the embedded role';
+    is $baz.bar, 0, 'did we see the Int private attribute from the embedded role';
     is $baz.baz, 1, 'did we update the Int private attribute from the embedded role';
+}
+
+#?rakudo skip 'alas, no visibility of private attributes in other role'
+{
+    role AAA {
+        has Int $!aaa;
+    }
+    role BBB does AAA {
+        method zap { $!aaa++ }
+    }
+    class Zap does BBB { }
+    my $zap = Zap.new;
+    is $zap.zap, 0, 'did we see the private attribute from the embedded role';
+    is $zap.zap, 1, 'did we update the private attribute from the embedded role';
+}
+
+{
+    role AAAA {
+        has Int $!aaaa;
+    }
+    dies_ok { eval q:to/CODE/ }, 'unknown attribute dies at compile time';
+    class Zop does AAAA {
+        method zippo { $!zzzz++ }  # first time
+        method zappo { $!zzzz++ }  # second time, without $/ internally
+    }
+    CODE
 }
 
 # vim: ft=perl6
