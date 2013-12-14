@@ -256,7 +256,6 @@ eval_lives_ok '{*.{}}()', '{*.{}}() lives';
 {
     my $chained = 1 < * < 3;
      ok $chained(2), 'Chained comparison (1)';
-    #?rakudo 2 todo 'RT 102466'
     nok $chained(1), 'Chained comparison (2)';
     nok $chained(3), 'Chained comparison (3)';
 }
