@@ -11,6 +11,7 @@ my $line;
 # Any
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Any.exists("a");
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Any.exists("a")';
@@ -58,6 +59,7 @@ TEXT
 # Array
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; [].delete(1);
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Array.delete(1)';
@@ -73,6 +75,7 @@ TEXT
 # Bag
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; try Bag.new.delete("a"); # try because cannot mutate Bag
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Bag.new.delete("a")';
@@ -88,6 +91,7 @@ TEXT
 # BagHash
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; BagHash.new.delete("a");
     is Deprecation.report, qq:to/TEXT/.chop, 'depr. BagHash.new.delete("a")';
@@ -103,6 +107,7 @@ TEXT
 # Baggy
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Bag.new.exists("a");
     Bag.new.exists("a");
@@ -130,6 +135,7 @@ TEXT
 # Capture
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Capture.new.exists("a");
     is Deprecation.report, qq:to/TEXT/.chop, 'depr. Capture.new.exists("a")';
@@ -145,6 +151,7 @@ TEXT
 # Cool
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; "a".ucfirst;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation "a".ucfirst';
@@ -160,6 +167,7 @@ TEXT
 # Decrease
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Decrease;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Decrease';
@@ -175,6 +183,7 @@ TEXT
 # EnumMap
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; EnumMap.exists;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation EnumMap.exists';
@@ -201,6 +210,7 @@ TEXT
 # GLOBAL
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
 
     $line = $?LINE; ucfirst("a");
@@ -217,6 +227,7 @@ TEXT
 # Hash
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Hash.delete;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Hash.delete';
@@ -243,6 +254,7 @@ TEXT
 # Increase
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Increase;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Increase';
@@ -258,6 +270,7 @@ TEXT
 # List
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; List.new.exists(1);
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation List.new.exists(1)';
@@ -273,6 +286,7 @@ TEXT
 # Mix
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; try Mix.new.delete("a"); # try because cannot mutate Mix
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Mix.new.delete("a")';
@@ -288,6 +302,7 @@ TEXT
 # MixHash
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; MixHash.new.delete("a");
     is Deprecation.report, qq:to/TEXT/.chop, 'depr. MixHash.new.delete("a")';
@@ -304,6 +319,7 @@ TEXT
 #?rakudo skip 'Could not create deprecated Order::Decrease'
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Order::Decrease;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Order::Decrease';
@@ -320,6 +336,7 @@ TEXT
 #?rakudo skip 'Could not create deprecated Order::Increase'
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Order::Increase;
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Order::Increase';
@@ -335,6 +352,7 @@ TEXT
 # Set
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; try Set.new.delete("a"); # try because cannot mutate Set
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation Set.new.delete("a")';
@@ -350,6 +368,7 @@ TEXT
 # SetHash
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; SetHash.new.delete("a");
     is Deprecation.report, qq:to/TEXT/.chop, 'depr. SetHash.new.delete("a")';
@@ -365,6 +384,7 @@ TEXT
 # Setty
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
 {
     $line = $?LINE; Set.new.exists("a");
     Set.new.exists("a");

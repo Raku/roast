@@ -19,6 +19,7 @@ my $line;
 
     $line = $?LINE; a();
     is $a, 1, 'was "a" really called';
+    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop, 'right deprecation for a()';
 Saw 1 call to deprecated code during execution.
 ================================================================================
@@ -31,6 +32,7 @@ TEXT
     $line = $?LINE; awith();
     awith();
     is $awith, 2, 'was "awith" really called';
+    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop, 'right deprecation for awith()';
 Saw 1 call to deprecated code during execution.
 ================================================================================
@@ -118,6 +120,7 @@ TEXT
 
     $line = $?LINE; C.new.foo;
     is $C, 1, 'was "C.new.foo" really called';
+    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop, 'right deprecation for C.new.foo';
 Saw 1 call to deprecated code during execution.
 ================================================================================
@@ -130,6 +133,7 @@ TEXT
     $line = $?LINE; Cwith.new.foo;
     Cwith.new.foo;
     is $Cwith, 2, 'was "Cwith.new.foo" really called';
+    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop, 'right deprecation Cwith.new.foo';
 Saw 1 call to deprecated code during execution.
 ================================================================================
