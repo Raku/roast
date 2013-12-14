@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 145;
+plan 149;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -242,6 +242,19 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
 {
     try sprintf("%d-%s", 42);
     is $!, 'Too many directives: found 2, but only 1 arguments after the format string', 'RT #106594, #62316, #74610';
+}
+
+# found by japhb
+{
+    #?rakudo todo 'buggy'
+    #?niecza todo 'buggy'
+    is sprintf("%.0f", 1.969), "2",     '%.0f of 1.969 should be 2';
+    #?rakudo todo 'buggy'
+    is sprintf("%.1f", 1.969), "2.0",   '%.0f of 1.969 should be 2.0';
+    #?rakudo.jvm todo 'buggy'
+    is sprintf("%.2f", 1.969), "1.97",  '%.0f of 1.969 should be 1.97';
+    #?rakudo.jvm todo 'buggy'
+    is sprintf("%.3f", 1.969), "1.969", '%.0f of 1.969 should be 1.969';
 }
 
 # vim: ft=perl6
