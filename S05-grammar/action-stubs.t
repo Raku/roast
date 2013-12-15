@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 17;
+plan 22;
 
 # L<S05/Grammars/optionally pass an actions object>
 
@@ -136,5 +136,30 @@ is $action.calls, 'ab', '... and in the right order';
     is Grammar::Trivial.parse('a', actions => MethodMake).ast,
         'x', 'can use Match.make';
 }
+
+# Scoping tests
+#
+
+my $*A;
+my $*B;
+my $*C;
+my $*D;
+
+# intra rule/token availability of capture variables
+
+grammar Grammar::ScopeTests {
+        rule  TOP {^<a><b><c><d>$}
+	token a   {<alpha>     { $*A = ~$/ } }
+	token b   {<alpha>     { $*B = ~$<alpha> } }
+	token c   {<alpha>   <?{ $*C = ~$<alpha>; True }> }
+	token d   {(<alpha>)   { $*D = ~$0 } }
+}
+
+ok Grammar::ScopeTests.parse("wxyz"), 'scope tests parse';
+#?rakudo.jvm 4 todo '$/ within rules/tokens'
+is $*A, 'w', '$/ availiable';
+is $*B, 'x', 'token name';
+is $*C, 'y', 'token name (assertion)';
+is $*D, 'z', '$0 availiable';
 
 # vim: ft=perl6
