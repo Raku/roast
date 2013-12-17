@@ -29,7 +29,7 @@ plan 4;
     class vertical   is grid { }
     class hv is horizontal is vertical   { }
     class vh is vertical   is horizontal { }
-    dies_ok { eval 'class confused is vh is hv { }' },
+    eval_dies_ok 'class confused is vh is hv { }',
         'Cannot do multi inheritance that causes inconsistent MRO';
 }
 
