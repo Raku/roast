@@ -26,6 +26,8 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
+#?DOES 6
+#?rakudo.moar skip 'infinite loop'
 { # now read it in with the $fh controling the loop
     my $fh = open($filename);
     my $num = 1;
@@ -36,6 +38,8 @@ my $filename = 'tempfile_io_in_for_loop';
     $fh.close();
 }
 
+#?DOES 6
+#?rakudo.moar skip 'infinite loop'
 { # now read it in with the $fh controling the loop w/out parens
     my $fh = open($filename);
     my $num = 1;
