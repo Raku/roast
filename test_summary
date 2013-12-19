@@ -487,6 +487,7 @@ sub get_test_names {
         my ($specfile, $fudgespec) = split ' ', $_, 2;
         next unless $specfile;
         next if $fudgespec =~ /jvm/ && $implementation !~ /jvm/;
+        next if $fudgespec =~ /moar/ && $implementation !~ /moar/;
         push @tfiles, "t/spec/$specfile";
     }
     close $fh or die $!;
