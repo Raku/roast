@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 8;
+plan 16;
 
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 
@@ -16,6 +16,15 @@ eval_lives_ok 'my proto $/', 'as can $/';
 
 eval_dies_ok 'my $f!ao = "beh";', "normal varnames can't have ! in their name";
 eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their names either";
+
+{
+    use lib 't/spec/packages';
+    use Test::Util;
+    throws_like "my Int a = 10;", X::Syntax::Malformed, message => / sigilless /;
+    throws_like "my Int a;", X::Syntax::Malformed, message => / sigilless /;
+    throws_like "my a = 10;", X::Syntax::Malformed, message => / sigilless /;
+    throws_like "my a;", X::Syntax::Malformed, message => / sigilless /;
+}
 
 #?pugs skip "Can't modify constant item: VObject"
 {
