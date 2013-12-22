@@ -160,7 +160,6 @@ character classes), and those are referenced at the correct spot.
     ok('dddd' ~~ /<@first>/, 'strings are treated as a subrule in <@foo>');
 
     my @second = rx/\.**2/, rx/'.**2'/;
-    #?rakudo todo 'array interpolation into regexes'
     ok('abc.**2def' ~~ /<@second>/, 'Regexes are left alone in <@foo> subrule');
 }
 

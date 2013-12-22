@@ -34,7 +34,6 @@ is(("a(b" ~~ rx:P5/a\(b/ && $/), "a(b", 're_tests 199/0 (231)');
 is(("a(b" ~~ rx:P5/a\(b/ && $0), "", 're_tests 199/1 (232)');
 is(("ab" ~~ rx:P5/a\(*b/ && $/), "ab", 're_tests 201/0 (235)');
 is(("a((b" ~~ rx:P5/a\(*b/ && $/), "a((b", 're_tests 203/0 (237)');
-#?rakudo todo "variable interpolation in p5 regex"
 is(("a\b" ~~ rx:P5/a$backspace/ && $/), "a\b", 're_tests 205/0 (239)');
 is(("a\\b" ~~ rx:P5/a\\b/ && $/), "a\\b", 're_tests 205/0 (239)');
 is(("abc" ~~ rx:P5/((a))/ && $/), "a", 're_tests 207/0 (241)');

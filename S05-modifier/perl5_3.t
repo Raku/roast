@@ -30,7 +30,6 @@ is(("a" ~~ rx:P5/((((((((((a))))))))))/ && $/.from), 0, 're_tests 323/0 (421)');
 is(("a" ~~ rx:P5/((((((((((a))))))))))/ && $/[0].from), 0, 're_tests 325/10 (423)');
 is(("aa" ~~ rx:P5/((((((((((a))))))))))\10/ && $/), "aa", 're_tests 327/0 (425)');
 ok((not ("aa" ~~ rx:P5/((((((((((a))))))))))$bang/)), 're_tests 329  (427)');
-#?rakudo todo "variable interpolation"
 is(("a!" ~~ rx:P5/((((((((((a))))))))))$bang/ && $/), "a!", 're_tests 330/0 (428)');
 is(("a" ~~ rx:P5/(((((((((a)))))))))/ && $/), "a", 're_tests 331/0 (429)');
 ok((not ("uh-uh" ~~ rx:P5/multiple words of text/)), 're_tests 333  (431)');
