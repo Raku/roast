@@ -162,6 +162,9 @@ for  '$<', '$#', '$>' {
     #?rakudo skip 'still handled by <special_var>'
     throws_like $_, X::Syntax::Perl5Var;
 }
+
+eval_lives_ok 'class frob { has @!bar; method test { return $@!bar } }', 'uses of $@!bar not wrongfully accused of using old $@ variable';
+
 throws_like '1∞', X::Syntax::Confused;
 throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
 throws_like 'my @a()', X::Syntax::Reserved, reserved => /shape/ & /array/;
