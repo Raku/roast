@@ -29,6 +29,7 @@ is (2, 1, 0.5 ...^ (*-*).abs < 2).join(', '), '2', 'ASAP arity-2 excluded conver
 
 # limit function that accepts any number of args
 
+#?rakudo 2 skip "hangs"
 is (1 ... { @_ eq "1 2 3" }).join(', '), '1, 2, 3', 'arity-Inf limit';
 is (1 ...^ { @_ eq "1 2 3" }).join(', '), '1, 2', 'arity-Inf excluded limit';
 
