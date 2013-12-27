@@ -3,7 +3,7 @@ use Test;
 
 plan 114;
 
-# L<S02/Variables Containing Undefined Values
+# L<S02/Variables Containing Undefined Values>
 
 #?pugs   skip "is default NYI"
 #?niecza skip "is default NYI"
