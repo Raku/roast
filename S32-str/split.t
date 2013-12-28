@@ -4,7 +4,7 @@ use Test;
 
 # L<S32-setting-library/Str"=item split">
 
-plan 54;
+plan 53;
 
 # split on empty string
 #?niecza todo "split on empty string has leading empty elements"
@@ -141,18 +141,6 @@ is "a.b".split(/\./).join(','), <a b>.join(','),
 {
     is "abcd".split(/<null>/).join(','), <a b c d>.join(','),
        q{"abcd".split(/<null>/)};()
-}
-
-#?niecza skip 'Unable to resolve method null in class Cursor'
-{
-  ' ' ~~ /(\s)/;
-
-  if $0 eq ' ' {
-    is "foo bar baz".split(/<prior>/).join(','), <foo bar baz>.join(','),
-       q{"foo bar baz".split(/<prior>/)};
-  } else {
-    skip q{' ' ~~ /\s/ did not result in ' '};
-  }
 }
 
 {
