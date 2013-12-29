@@ -3,7 +3,7 @@ use Test;
 
 # Nil may be a type now.  Required?
 
-plan 37;
+plan 48;
 
 sub empty_sub {}
 sub empty_do { do {} }
@@ -103,6 +103,26 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok $/.VAR.default === Nil, '$/ has Nil as default';
     ok $!.VAR.default === Nil, '$! has Nil as default';
     ok $_.VAR.default === Nil, '$_ has Nil as default';
+}
+
+# calling methods and similar things on Nil should return Nil again
+{
+    sub niltest { return Nil };
+
+    ok niltest()           === Nil, "sanity";
+    ok niltest.foo         === Nil, "calling methods on Nil gives Nil again I";
+    ok niltest.foo.bar     === Nil, "calling methods on Nil gives Nil again II";
+    ok niltest.foo.bar.baz === Nil, "calling methods on Nil gives Nil again III";
+
+    ok niltest[0]          === Nil, "array access on Nil gives Nil again I";
+    ok niltest[0][2]       === Nil, "array access on Nil gives Nil again II";
+    ok niltest[0][2][4]    === Nil, "array access on Nil gives Nil again III";
+
+    ok niltest<foo>         === Nil, "hash access on Nil gives Nil again I";
+    ok niltest<foo><bar>    === Nil, "hash access on Nil gives Nil again II";
+    ok niltest<foo><bar><A> === Nil, "hash access on Nil gives Nil again II";
+
+    ok niltest.foo.bar.<bar>.[12].[99].<foo> === Nil, ".<> and .[] works properly, too";
 }
 
 done;
