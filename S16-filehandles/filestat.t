@@ -10,7 +10,7 @@ This test tests various file stat methods.
 
 =end pod
 
-plan 13;
+plan 12;
 
 # time stat tests (modify/change/access)
 {
@@ -48,10 +48,12 @@ plan 13;
 
     ok ($original1_accessed == $tmpfile1.IO.accessed), 'IO.accessed should NOT be updated when file is opened for reading';
 
-    # reading contents of file 
-    slurp $tmpfile1;
-    ok ($original1_accessed < $tmpfile1.IO.accessed), 'IO.accessed should be updated when contents of file is read';
-
+#    only works on some file systems, so better not test it at all:
+#
+#    # reading contents of file 
+#    slurp $tmpfile1;
+#    ok ($original1_accessed < $tmpfile1.IO.accessed), 'IO.accessed should be updated when contents of file is read';
+#
 
     # changing file permissions
 
