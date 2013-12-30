@@ -49,7 +49,8 @@ plan 20;
 
     is(eval(q/succ  (1+2) * 30;/),  91, "parens after space aren't call-parens");
     #?pugs todo
-    dies_ok { eval q/succ .(1+2) * 30;/ } , 'parsed as method call on $_';
+    $_ = sub ($x) { $x - 1 };
+    is (succ .(1+2) * 30), 61, 'parsed as method call on $_';
 }
 {
     sub first() { "first" }
