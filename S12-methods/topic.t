@@ -9,7 +9,7 @@ use Test;
 plan 2;
 
 class Foo {
-    method no_topic     { .echo }
+    method no_topic     { .^name }
     method topic ($_: ) { .echo }
     method echo         { "echo"  }
 }
@@ -17,7 +17,7 @@ class Foo {
 {
     my Foo $foo .= new;
     #?pugs todo 'outdated semantics'
-    dies_ok { $foo.no_topic() }, '$_ is not set in methods...';
+    is $foo.no_topic, 'Nil', '$_ is not set in methods...';
 }
 
 {
