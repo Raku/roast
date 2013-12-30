@@ -275,7 +275,7 @@ throws_like 'sub f() returns Str { 5 }; f', X::TypeCheck::Return, got => Int, ex
 throws_like 'my Int $x = "foo"', X::TypeCheck::Assignment, got => 'foo',
             expected => Int, symbol => '$x';
 
-throws_like 'sub f() { }; f() = 3', X::Assignment::RO;
+throws_like 'sub f() { 42 }; f() = 3', X::Assignment::RO;
 throws_like '1.0 = 3', X::Assignment::RO;
 # RT #113534
 throws_like '120 = 3', X::Assignment::RO;
