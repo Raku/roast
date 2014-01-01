@@ -17,7 +17,7 @@ class A {
 }
 
 is A.new().public, 12, 'Can call private method from within the class';
-dies_ok {eval('A.new!private')}, 'Can not call private method from outside';
+dies_ok {EVAL('A.new!private')}, 'Can not call private method from outside';
 
 # indirect call syntax for public and private methods
 

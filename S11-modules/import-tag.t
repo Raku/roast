@@ -8,7 +8,7 @@ plan 12;
 {
     use t::spec::packages::S11-modules::Foo :others;
 
-    dies_ok { eval 'foo()' }, 'foo() not imported - not tagged :others';
+    dies_ok { EVAL 'foo()' }, 'foo() not imported - not tagged :others';
 
     ok( &bar, 'Foo::bar is defined (explicitly :DEFAULT and :others)' );
     is( bar(), 'Foo::bar', 'Foo::bar is the sub we expect' );
@@ -16,12 +16,12 @@ plan 12;
     ok( &baz, 'Foo::baz is defined (:MANDATORY)' );
     is( baz(), 'Foo::baz', 'Foo::baz is the sub we expect' );
 
-    dies_ok { eval 'bop()' }, 'bop() not imported';
+    dies_ok { EVAL 'bop()' }, 'bop() not imported';
 
     ok( &qux, 'Foo::qux is defined (explicitly :others)' );
     is( qux(), 'Foo::qux', 'Foo::qux is the sub we expect' );
 
-    dies_ok { eval 'waz()' }, 'waz() not imported';
+    dies_ok { EVAL 'waz()' }, 'waz() not imported';
 
     ok( &gaz, 'Foo::gaz multi is defined (implicitly :others)' );
     is( gaz(), 'Foo::gaz1', 'Foo::gaz is the sub we expect' );

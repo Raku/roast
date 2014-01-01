@@ -24,13 +24,13 @@ is($foo2.check(), 42, 'initializing attributes in new');
 # RT #62732
 #?pugs skip   'Exception NYI'
 {
-    try { eval 'NoSuchClass.new()' };
+    try { EVAL 'NoSuchClass.new()' };
     #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'death to instantiating nonexistent class';
     ok "$!" ~~ / NoSuchClass /,
        'error for "NoSuchClass.new()" mentions NoSuchClass';
 
-    try { eval 'NoSuch::Subclass.new()' };
+    try { EVAL 'NoSuch::Subclass.new()' };
     #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'death to instantiating nonexistent::class';
     #?rakudo todo 'error reporting'

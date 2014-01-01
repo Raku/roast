@@ -99,15 +99,15 @@ class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 #?pugs todo
-dies_ok { eval 'class One::Two { }' }, 'cannot redeclare an existing class';
+dies_ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
 #?niecza skip "Methods must be used in some kind of package"
 {
     class A61354_1 {
-        eval('method x { "OH HAI" }')
+        EVAL('method x { "OH HAI" }')
     };
-    is A61354_1.x, "OH HAI", "can just use eval to add method to class";
+    is A61354_1.x, "OH HAI", "can just use EVAL to add method to class";
 }
 
 # RT #67784

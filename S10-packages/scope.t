@@ -38,15 +38,15 @@ is($?PACKAGE, "Main", 'The Main $?PACKAGE was not broken by any declarations');
 is(Test1::ns, "Test1", "block-level package declarations");
 cmp_ok(Test1::pkg, &infix:<===>, ::Test1::, 'block-level $?PACKAGE var');
 #?pugs todo
-dies_ok { eval 'test1_export' }, "export was not imported implicitly";
+dies_ok { EVAL 'test1_export' }, "export was not imported implicitly";
 
 # declared packages
 is(Test2::ns, "Test2", "declared package");
 cmp_ok(Test2::pkg, &infix:<===>, ::Test2::, 'declared package $?PACKAGE');
 
-# string eval'ed packages
-is(Test3::pkg, ::Test3::, 'eval\'ed package $?PACKAGE');
-cmp_ok(Test3::pkg, &infix:<===>, ::Test3::, 'eval\'ed package type object');
+# string EVAL'ed packages
+is(Test3::pkg, ::Test3::, 'EVAL\'ed package $?PACKAGE');
+cmp_ok(Test3::pkg, &infix:<===>, ::Test3::, 'EVAL\'ed package type object');
 
 # this one came from t/packages/Test.pm
 #?pugs todo
@@ -87,7 +87,7 @@ ok($pkg !=== ::*My::Package::, 'not the same as global type object');
 {
   {
     #?pugs todo 'bug'
-    ok(eval('temp $Test2::scalar; 1'), "parse for temp package vars");
+    ok(EVAL('temp $Test2::scalar; 1'), "parse for temp package vars");
     $Test2::scalar++;
   }
   #?pugs todo 'bug'

@@ -54,7 +54,7 @@ is Simple::Bar.new.baz, 'hi', 'class test';
 #?rakudo skip 'RT #59484'
 #?niecza skip 'Unable to find lexical $?PACKAGE in pkg'
 {
-    is  eval('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
+    is  EVAL('package Simp2 {sub pkg { $?PACKAGE }}; Simp2::pkg'),
         'Simp2', 'access to $?PACKAGE variable'
 }
 
@@ -78,23 +78,23 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 {
     my $x;
 
-    try {  eval '$x = RT64828g; grammar RT64828g {}' };
+    try {  EVAL '$x = RT64828g; grammar RT64828g {}' };
     ok  $!  ~~ Exception, 'reference to grammar before definition dies';
     ok "$!" ~~ / RT64828g /, 'error message mentions the undefined grammar';
 
-    try { eval '$x = RT64828m; module RT64828m {}' };
+    try { EVAL '$x = RT64828m; module RT64828m {}' };
     ok  $!  ~~ Exception, 'reference to module before definition dies';
     ok "$!" ~~ / RT64828m /, 'error message mentions the undefined module';
 
-    try { eval '$x = RT64828r; role RT64828r {}' };
+    try { EVAL '$x = RT64828r; role RT64828r {}' };
     ok  $!  ~~ Exception, 'reference to role before definition dies';
     ok "$!" ~~ / RT64828r /, 'error message mentions the undefined role';
 
-    try { eval '$x = RT64828c; class RT64828c {}' };
+    try { EVAL '$x = RT64828c; class RT64828c {}' };
     ok  $!  ~~ Exception, 'reference to class before definition dies';
     ok "$!" ~~ / RT64828c /, 'error message mentions the undefined class';
 
-    try { eval '$x = RT64828p; package RT64828p {}' };
+    try { EVAL '$x = RT64828p; package RT64828p {}' };
     ok  $!  ~~ Exception, 'reference to package before definition dies';
     ok "$!" ~~ / RT64828p /, 'error message mentions the undefined package';
 }
@@ -124,13 +124,13 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 my $outer_lex = 17;
 {
     package RetOuterLex { our sub outer_lex_val { $outer_lex } };
-    is eval('RetOuterLex::outer_lex_val()'), $outer_lex, 'use outer lexical'
+    is EVAL('RetOuterLex::outer_lex_val()'), $outer_lex, 'use outer lexical'
 }
 
 our $outer_package = 19;
 {
     package RetOuterPack { our sub outer_pack_val { $outer_package } };
-    is  eval('RetOuterPack::outer_pack_val()'), $outer_package,
+    is  EVAL('RetOuterPack::outer_pack_val()'), $outer_package,
         'use outer package var';
 
     eval_lives_ok
@@ -140,11 +140,11 @@ our $outer_package = 19;
 
 # change tests to match likely error (top of file) when they pass (RT 64204)
 {
-    try { eval 'my $x = ::P' };
+    try { EVAL 'my $x = ::P' };
     ok  ~$! !~~ /<&fairly_conclusive_platform_error>/, 
         'simple package case that should not blow platform';
 
-    try { eval 'A::B' };
+    try { EVAL 'A::B' };
     #?niecza todo
     ok  ~$! ~~ /<&likely_perl6_not_found_err>/,
         'another simple package case that should not blow platform';
@@ -207,7 +207,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 #?niecza skip 'Unable to locate module PM6 in @path'
 {
     eval_lives_ok 'use PM6', 'can load a module ending in .pm6';
-    is eval('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
+    is EVAL('use PM6; pm6_works()'), 42, 'can call subs exported from .pm6 module';
 }
 
 # package Foo; is perl 5 code;

@@ -27,13 +27,13 @@ plan 16;
     is( waz(1), 'Foo::wazhere', 'Foo::waz imported does not wipe out our other waz multis' );
 
     #?pugs todo
-    dies_ok { eval 'qux()' }, 'qux() not imported';
+    dies_ok { EVAL 'qux()' }, 'qux() not imported';
     #?pugs todo
-    dies_ok { eval 'gaz()' }, 'gaz() not imported';
+    dies_ok { EVAL 'gaz()' }, 'gaz() not imported';
 }
 
 #?pugs skip 'Undeclared variable'
-dies_ok( { eval '&foo' }, 'Foo::foo is undefined in outer scope' );
+dies_ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 #?pugs todo
 {

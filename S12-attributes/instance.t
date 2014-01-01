@@ -196,10 +196,10 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     my $was_in_supplier = 0;
     sub forty_two_supplier() { $was_in_supplier++; 42 }
     class Foo10e { has $.attr = forty_two_supplier() }
-    is eval('Foo10e.new.attr'), 42, "default attribute value (4)";
+    is EVAL('Foo10e.new.attr'), 42, "default attribute value (4)";
     #?pugs todo
     is      $was_in_supplier, 1,  "forty_two_supplier() was actually executed";
-    eval('Foo10e.new');
+    EVAL('Foo10e.new');
     #?pugs todo
     is      $was_in_supplier, 2,  "forty_two_supplier() is executed per instantiation";
 }

@@ -18,10 +18,10 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     multi sub my_abs (Int $n where { $^n <  0 }){ -$n }
     ';
 
-    ok(eval("$abs; 1"), "we can compile subtype declarations");
+    ok(EVAL("$abs; 1"), "we can compile subtype declarations");
 
-    is(eval("$abs; my_abs(3)"), 3, "and we can use them, too");
-    is(eval("$abs; my_abs(-5)"), 5, "and they actually work");
+    is(EVAL("$abs; my_abs(3)"), 3, "and we can use them, too");
+    is(EVAL("$abs; my_abs(-5)"), 5, "and they actually work");
 }
 
 {
@@ -30,10 +30,10 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     multi sub another_abs (Int $n where { $_ <  0 }){ -$n }
     ';
 
-    ok(eval("$abs; 1"), "we can compile subtype declarations");
+    ok(EVAL("$abs; 1"), "we can compile subtype declarations");
 
-    is(eval("$abs; another_abs(3)"), 3, "and we can use them, too");
-    is(eval("$abs; another_abs(-5)"), 5, "and they actually work");
+    is(EVAL("$abs; another_abs(3)"), 3, "and we can use them, too");
+    is(EVAL("$abs; another_abs(-5)"), 5, "and they actually work");
 }
 
 # another nice example
@@ -47,12 +47,12 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 
 {
     subset Int::Odd of Int where { $^num % 2 == 1 };
-    is eval('my Int::Odd $a = 3'), 3, "3 is an odd num";
-    # The eval inside the eval is/will be necessary to hider our smarty
+    is EVAL('my Int::Odd $a = 3'), 3, "3 is an odd num";
+    # The EVAL inside the EVAL is/will be necessary to hider our smarty
     # compiler's compile-time from bailing.
-    # (Actually, if the compiler is *really* smarty, it will notice our eval trick,
+    # (Actually, if the compiler is *really* smarty, it will notice our EVAL trick,
     # too :))
-    is eval('my Int::Odd $b = 3; try { $b = eval "4" }; $b'), 3,
+    is EVAL('my Int::Odd $b = 3; try { $b = EVAL "4" }; $b'), 3,
       "objects of Int::Odd don't get even";
 
     # Subtypes should be undefined.
@@ -76,7 +76,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
     ok $c ~~ Int::Even, "our var is a Int::Even";
     try { $c = 7 }
     is $c, 6, "setting a Int::Even to an odd value dies";
-    ok eval('!try { my Int::Even $d }'),
+    ok EVAL('!try { my Int::Even $d }'),
         "lexically declared subtype went out of scope";
 }
 
@@ -256,7 +256,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     subset Int::Positive of Int where { $_ > 0 };
     sub f(Int::Positive $a) { $a * $a };
-    dies_ok { eval('f(-2)') }, 'Cannot violate Int::Positive constraint';
+    dies_ok { EVAL('f(-2)') }, 'Cannot violate Int::Positive constraint';
 }
 
 # RT #71820
@@ -264,7 +264,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 {
     subset Interesting of Int where * > 10;
     class AI { has Interesting $.x };
-    try { eval 'AI.new(x => 2)' };
+    try { EVAL 'AI.new(x => 2)' };
     ok $!.Str ~~ /Interesting/, 'error message mentions subset name';
 
 }
@@ -282,7 +282,7 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 # RT 72948
 #?niecza skip "Exceptions not supported"
 {
-    try { eval 'sub foo($x where { $x == $y }, $y) { }' };
+    try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
     isa_ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
 }
 

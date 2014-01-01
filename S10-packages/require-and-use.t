@@ -8,7 +8,7 @@ plan 18;
 #?pugs emit force_todo 1,2,4,5,7,9,11;
 
 #?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support EVAL() yet.";
 #?pugs emit   exit;
 #?pugs emit }
 
@@ -27,7 +27,7 @@ for @tests -> $mod, $expected_ret {
 
   for @strings -> $str {
     diag $str;
-    my $retval = try { eval $str };
+    my $retval = try { EVAL $str };
 
     ok defined($retval) && $retval != -1 && $expected_ret($retval),
       "require or use's return value was correct ({$str})";
@@ -41,15 +41,15 @@ for @tests -> $mod, $expected_ret {
 our $loaded   = 0;
 our $imported = 0;
 
-eval q{use t::spec::packages::LoadCounter; 1} orelse die "error loading package: $!";
+EVAL q{use t::spec::packages::LoadCounter; 1} orelse die "error loading package: $!";
 is($loaded,   1, "use loads a module");
 is($imported, 1, "use calls &import");
 
-eval q{use t::spec::packages::LoadCounter; 1} orelse die "error loading package: $!";
+EVAL q{use t::spec::packages::LoadCounter; 1} orelse die "error loading package: $!";
 is($loaded,   1, "a second use doesn't load the module again");
 is($imported, 2, "a second use does call &import again");
 
-eval q{no t::spec::packages::LoadCounter; 1} orelse die "error no'ing package: $!";
+EVAL q{no t::spec::packages::LoadCounter; 1} orelse die "error no'ing package: $!";
 is($loaded,   1, "&no doesn't load the module again");
 is($imported, 1, "&no calls &unimport");
 

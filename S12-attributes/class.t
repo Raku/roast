@@ -89,19 +89,19 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     my $bad_code;
 
     $bad_code = '$.a';
-    try eval $bad_code;
+    try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
 
     $bad_code ='$!a';
-    try eval $bad_code;
+    try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
     
     $bad_code = 'class B0rk { has $.a; say $.a; }';
-    try eval $bad_code;
+    try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
     
     $bad_code = 'class Chef { my $.a; say $.a; }';
-    try eval $bad_code;
+    try EVAL $bad_code;
     ok $! ~~ Exception, "bad code: '$bad_code'";
 }
 

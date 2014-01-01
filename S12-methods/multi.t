@@ -39,7 +39,7 @@ is($foo.bar(5), 'Foo.bar() called with Int : 5', '... multi-method dispatched on
 is($foo.bar(4.2), 'Foo.bar() called with Numeric : 4.2', '... multi-method dispatched on Numeric');
 
 #?rakudo todo 'RT 66006'
-try { eval '$foo.baz()' };
+try { EVAL '$foo.baz()' };
 #?niecza todo 'This test is pretty dubious IMO'
 ok ~$! ~~ /:i argument[s?]/, 'Call with wrong number of args should complain about args';
 
@@ -76,7 +76,7 @@ is Bar.new.a("not an Int"), 'Any-method in Foo';
 
 # RT #67024
 {
-    try { eval 'class RT67024 { method a(){0}; method a($x){1} }' };
+    try { EVAL 'class RT67024 { method a(){0}; method a($x){1} }' };
     #?niecza skip 'Exception NYI'
     ok  $!  ~~ Exception, 'redefinition of non-multi method (RT 67024)';
     #?niecza todo 'depends on previous test'

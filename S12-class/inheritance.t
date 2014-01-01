@@ -73,7 +73,7 @@ ok Foo::Bar.HOW.isa(Foo::Bar, Foo::Bar), "subclass.HOW.isa(same_subclass) is tru
         method foo () { "found" }
     }
     class Child is Abc { }
-    is( eval('my $meth = "foo"; my $obj= Child.new; $obj."$meth"()'), 'found', $test);
+    is( EVAL('my $meth = "foo"; my $obj= Child.new; $obj."$meth"()'), 'found', $test);
 }
 
 # Erroneous dispatch found by TimToady++

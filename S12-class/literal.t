@@ -19,7 +19,7 @@ ok ($test1 = ::Foo) ~~ Foo, "::Foo is a valid class literal";
 # Foo.isa(Class) is false.
 #isa_ok($test1, "Class", "It's a class");
 
-my $x = eval 'Foo';
+my $x = EVAL 'Foo';
 ok($x ===  ::Foo, "Foo is now a valid class literal");
 
 # vim: ft=perl6
