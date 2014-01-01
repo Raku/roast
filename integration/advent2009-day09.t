@@ -72,7 +72,7 @@ is $t, 4, 'Set a parameter to "is rw", and then you can modify';
 up1_3($t);
 is $t, 4, '"is copy" leaves original alone"';
 my @te = <a b c>;
-dies_ok {eval 'namen(@te)' }, 'Autoflattening doesnt exist';
+dies_ok {EVAL 'namen(@te)' }, 'Autoflattening doesnt exist';
 is (namen(|@te)), ('a','b','c'), "Put a | in front of the variable, and you're ok!";
 
 is <734043054508967647390469416144647854399310>.comb(/.**7/).join('|') , '7340430|5450896|7647390|4694161|4464785|4399310' , 'Test one liner at end of post (part1)';

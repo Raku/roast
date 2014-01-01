@@ -115,7 +115,7 @@ sub make-string(@a) {
 {
     my @array = 0..1;
     #?pugs todo
-    is ~(eval @array.perl ), '0 1', '@array.perl works after init';
+    is ~(EVAL @array.perl ), '0 1', '@array.perl works after init';
     is ~( map { 1 }, @array ), '1 1', 'map @array works after init';
     @array[0]:delete;
     lives_ok { @array.perl }, '@array.perl lives after delete';

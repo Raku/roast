@@ -37,9 +37,9 @@ dies_ok {EVAL 'use Poison; 1'}, "EVAL dies on fatal use";
 
 # L<S04/Exception handlers/Perl 6's EVAL function only evaluates strings, not blocks.>
 #?pugs todo
-dies_ok({EVAL {; 42} }, 'block eval is gone');
+dies_ok({EVAL {; 42} }, 'block EVAL is gone');
 
-# RT #63978, eval didn't work in methods
+# RT #63978, EVAL didn't work in methods
 {
     class EvalTester1 {
         method e($s) { EVAL $s };
@@ -65,11 +65,11 @@ dies_ok({EVAL {; 42} }, 'block eval is gone');
 is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
 
 {
-    #?rakudo skip 'eval coerce to string'
-    is EVAL(88), 88, 'eval of non-string works';
+    #?rakudo skip 'EVAL coerce to string'
+    is EVAL(88), 88, 'EVAL of non-string works';
 
     my $number = 2;
-    #?rakudo skip 'eval coerce to string'
+    #?rakudo skip 'EVAL coerce to string'
     is EVAL($number), $number, 'EVAL of non-string variable works';
 }
 

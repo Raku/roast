@@ -57,7 +57,7 @@ is ~(0.lc),         ~0, '.lc on Int';
     }
     for <uc lc tc lcfirst> -> $meth {
         my $str = "('Nothing much' but A).$meth eq 'Nothing much'.$meth";
-        ok eval($str), $str;
+        ok EVAL($str), $str;
     }
 }
 

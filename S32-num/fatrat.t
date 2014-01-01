@@ -19,8 +19,8 @@ isa_ok( 1.Num.FatRat, FatRat, "cast of Num makes a FatRat");
 isa_ok(1 / 4, Rat, "/ makes a Rat");
 
 #?pugs 2 skip 'new'
-isa_ok( eval(FatRat.new(1, 3).perl), FatRat, 'eval FatRat.new(1, 3).perl is FatRat' );
-is_approx (eval FatRat.new(1, 3).perl), 1/3, 'eval FatRat.new(1, 3).perl is 1/3';
+isa_ok( EVAL(FatRat.new(1, 3).perl), FatRat, 'EVAL FatRat.new(1, 3).perl is FatRat' );
+is_approx (EVAL FatRat.new(1, 3).perl), 1/3, 'EVAL FatRat.new(1, 3).perl is 1/3';
 
 # Test ~
 #?pugs 4 skip 'new'

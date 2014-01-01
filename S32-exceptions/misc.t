@@ -315,7 +315,7 @@ throws_like 'Date.new("2012/04")', X::Temporal::InvalidFormat,
             invalid-str => '2012/04',
             target      => 'Date';
 
-throws_like 'eval("foo", :lang<no-such-language>)',
+throws_like 'EVAL("foo", :lang<no-such-language>)',
            X::Eval::NoSuchLang,
            lang => 'no-such-language';
 
@@ -329,7 +329,7 @@ throws_like 'use fatal; (1+2i).Real', X::Numeric::Real, target => Real;
 #?rakudo skip 'RT 114134'
 throws_like 'my class A {}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")', X::TypeCheck::Binding;
 
-dies_ok {eval(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";
+dies_ok {EVAL(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";
 }
 
 # RT #75640
@@ -348,7 +348,7 @@ throws_like '["a" "b"]', X::Syntax::Confused, reason => 'Two terms in a row';
 # suggestions
 my $emits_suggestions = False;
 {
-    try eval('my $foo = 10; say $Foo');
+    try EVAL('my $foo = 10; say $Foo');
     $emits_suggestions = True if $!.^can("suggestions");
 }
 
@@ -363,34 +363,34 @@ if $emits_suggestions {
     throws_like 'class Baz is Juntcion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
 
     {
-        try eval('say huc("foo")');
+        try EVAL('say huc("foo")');
         ok $! ~~ X::Undeclared::Symbols, "huc throws X::Undeclared::Symbols";
         is $!.routine_suggestion<huc>, ["&uc"], '&uc is a suggestion';
     }
 
-    try eval('toolongtomatchanything()');
+    try EVAL('toolongtomatchanything()');
     is +($!.routine_suggestion<toolongtomatchanything>), 0, "no suggestions for a strange name";
     ok $!.message !~~ /Did you mean/, "doesn't show suggestions if there are none.";
 
-    try eval('class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
+    try EVAL('class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
     is +($!.suggestions), 0, "no suggestions for a strange class";
     ok $!.message !~~ /Did you mean/, "doesn't show suggestions if there are none.";
 
-    try eval('$i-just-made-this-up = "yup"');
+    try EVAL('$i-just-made-this-up = "yup"');
     is +($!.suggestions), 0, "no suggestions for a strange variable";
     ok $!.message !~~ /Did you mean/, "doesn't suggest if there's no suggestions.";
 
     throws_like 'sub yoink(Junctoin $barf) { }', X::Parameter::InvalidType, suggestions => 'Junction';
 
     {
-        try eval('my cool $a');
+        try EVAL('my cool $a');
         ok $! ~~ X::Comp::Group, 'my cool $a throws an X::Comp::Group.';
         ok $!.sorrows[0] ~~ X::Undeclared, "the first sorrow is X::Undeclared.";
         is $!.sorrows[0].suggestions, <Cool Bool>, "the suggestions are Cool and Bool";
     }
 
     {
-        try eval('Ecxeption.new("wrong!")');
+        try EVAL('Ecxeption.new("wrong!")');
         ok $! ~~ X::Undeclared::Symbols, "Ecxeption.new throws X::Undeclared::Symbols";
         is $!.type_suggestion<Ecxeption>, ["Exception"], 'Exception is a suggestion';
     }

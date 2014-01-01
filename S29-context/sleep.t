@@ -68,8 +68,8 @@ my $b;
 #?niecza todo "NYI"
 {
     diag "checking infinite waiting times";
-    isa_ok eval('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
-    isa_ok eval('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
+    isa_ok EVAL('$b={sleep(Inf)}'),       Block, 'sleep(Inf) compiles';
+    isa_ok EVAL('$b={sleep(*)}'),         Block, 'sleep(*) compiles';
 } #2
 
 # vim: ft=perl6

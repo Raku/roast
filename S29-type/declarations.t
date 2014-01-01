@@ -15,7 +15,7 @@ plan 9;
 
 my sub ok_eval1($code) {
     #?pugs todo 'feature'
-    &Test::ok.nextwith(eval($code),$code)
+    &Test::ok.nextwith(EVAL($code),$code)
 }
 
 ok_eval1('AnyChar.isa(Str)');

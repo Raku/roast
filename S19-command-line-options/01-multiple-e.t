@@ -57,7 +57,7 @@ if (substr($got,0,1) ~~ "\\") {
   $got = substr($got,1);
 };
 
-my @got      = eval $got;
+my @got      = EVAL $got;
 # fail "FIXME platform specific";
 # ??? Worksforme on win32 (CORION)
 is @got, @expected, "-e '' does not eat a following argument";

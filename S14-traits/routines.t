@@ -66,7 +66,7 @@ plan 13;
 
 # RT 74092
 {
-    try { eval 'sub yulia is krassivaya { }' };
+    try { EVAL 'sub yulia is krassivaya { }' };
     diag $!
       if !ok "$!" ~~ /'unknown trait'/,
         'declaration of a sub with an unknown trait mentions trait_mod:<is> in dispatch error';

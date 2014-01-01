@@ -14,7 +14,7 @@ sub d {
     $y < 10 or defer;
 }
 #?pugs todo 'unimpl'
-ok eval( q{
+ok EVAL( q{
 contend {
     # ...
     maybe { c() } maybe { d() };
@@ -23,7 +23,7 @@ contend {
     ,'contend/maybe/defer construct';
 # L<S17/Atomic Code blocks/maybe>
 #?pugs todo 'unimpl'
-ok eval( q{
+ok EVAL( q{
     maybe { c() };
 } ),'method <maybe> known';
 

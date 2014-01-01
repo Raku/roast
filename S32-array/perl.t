@@ -10,7 +10,7 @@ plan 6;
     my @a = 1,2;
     is @a.perl, 'Array.new(1, 2)',
       'can we serialize a simple array';
-    my $ra = eval(@a.perl);
+    my $ra = EVAL(@a.perl);
     is_deeply $ra, @a, 'can we roundtrip simple array';
     ok $ra.of =:= Mu, 'make sure any value can be stored';
 } #3
@@ -22,7 +22,7 @@ plan 6;
     my Int @a = 1,2;
     is @a.perl, 'Array[Int].new(1, 2)',
       'can we serialize a array with constrained values';
-    my $ra = eval(@a.perl);
+    my $ra = EVAL(@a.perl);
     is_deeply $ra, @a, 'can we roundtrip array constrained values';
     ok $ra.of =:= Int, 'make sure roundtripped values are Int';
 } #3

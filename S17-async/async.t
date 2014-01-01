@@ -50,13 +50,13 @@ ok  @threads[0].join,'first thread joined';
 ok  @threads[1].join,'second thread joined';
 # currently a second join on a joined thread waits forever; not good
 #?pugs skip 'async tests report wrong number sometimes'
-ok  eval q{#!@threads[1].join},'second thread not joinable again';
+ok  EVAL q{#!@threads[1].join},'second thread not joinable again';
 
 # L<S17/"Thread methods"/"=item detach">
 #?pugs skip 'async tests report wrong number sometimes'
 @threads[2] = async { ok do_something_very_important(),'again start a thread' };
 #?pugs skip 'async tests report wrong number sometimes'
-ok eval q{threads[2].detach},'detach a thread';
+ok EVAL q{threads[2].detach},'detach a thread';
 #?pugs skip 'async tests report wrong number sometimes'
 ok !@threads[2].join,'could not join a detached thread';
 
@@ -64,10 +64,10 @@ ok !@threads[2].join,'could not join a detached thread';
 #?pugs skip 'async tests report wrong number sometimes'
 @threads[3] = async { ok do_something_very_important(),'another thread' };
 #?pugs skip 'async tests report wrong number sometimes'
-ok eval q{@threads[3].suspend},' send him back to a waiting room..';
+ok EVAL q{@threads[3].suspend},' send him back to a waiting room..';
 
 # L<S17/"Thread methods"/"=item resume">
 #?pugs skip 'async tests report wrong number sometimes'
-ok eval q{@threads[3].resume},'... now he is back';
+ok EVAL q{@threads[3].resume},'... now he is back';
 
 # vim: ft=perl6

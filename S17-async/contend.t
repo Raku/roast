@@ -59,14 +59,14 @@ is $counter, 1000, 'now we reach the end';
 my @cache = ();
 #  STM tests on arrays
 #?pugs todo 'unimpl'
-ok eval( q{
+ok EVAL( q{
     contend { @cache.push( 42 ) };
 } ),'method <contend> for arrays; <push> should be safe';
 
 my %cache = ();
 #  STM tests on hahses
 #?pugs todo 'unimpl'
-ok eval( q{
+ok EVAL( q{
     contend { %cache{ 42 } == 1 };
 } ),'method <contend> for hashes; insert should be safe';
 

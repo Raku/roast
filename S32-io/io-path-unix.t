@@ -15,7 +15,7 @@ my $path = IO::Path::Unix.new('foo//bar//');
 is $path.directory, 	"foo",	'directory "foo//bar//" -> "foo"';
 is $path.basename, 	"bar",	'basename "foo//bar//" -> "bar"';
 isa_ok $path.path, IO::Path::Unix, ".path returns itself";
-is $path.perl.eval, $path, ".perl loopback";
+is $path.perl.EVAL, $path, ".perl loopback";
 
 is IO::Path::Unix.new(".").Str,			".",		"current directory";
 is IO::Path::Unix.new("..").Str,		"..",		"parent directory";

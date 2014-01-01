@@ -51,7 +51,7 @@ is ~(0.wordcase), ~0, '.wordcase on Int';
         has $.thing = 3;
     }
     my $str = "('Nothing much' but A).wordcase eq 'Nothing much'.wordcase";
-    ok eval($str), $str;
+    ok EVAL($str), $str;
 }
 
 # TODO: add tests for wordcase arguments

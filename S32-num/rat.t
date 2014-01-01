@@ -17,13 +17,13 @@ isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
 #?pugs todo
-isa_ok( eval(Rat.new.perl), Rat, 'eval Rat.new.perl is Rat' );
+isa_ok( EVAL(Rat.new.perl), Rat, 'EVAL Rat.new.perl is Rat' );
 #?pugs 2 skip 'Must only use named arguments to new() constructor'
 #?rakudo 4 todo '<1/3> literal should be Rat'
-isa_ok( eval(Rat.new(1, 3).perl), Rat, 'eval Rat.new(1, 3).perl is Rat' );
-is( (eval Rat.new(1, 3).perl), 1/3, 'eval Rat.new(1, 3).perl is 1/3' );
-isa_ok( eval((1/3).perl), Rat, 'eval (1/3).perl is Rat' );
-is( (eval (1/3).perl), 1/3, 'eval (1/3).perl is 1/3' );
+isa_ok( EVAL(Rat.new(1, 3).perl), Rat, 'EVAL Rat.new(1, 3).perl is Rat' );
+is( (EVAL Rat.new(1, 3).perl), 1/3, 'EVAL Rat.new(1, 3).perl is 1/3' );
+isa_ok( EVAL((1/3).perl), Rat, 'EVAL (1/3).perl is Rat' );
+is( (EVAL (1/3).perl), 1/3, 'EVAL (1/3).perl is 1/3' );
 #?pugs 3 todo 'tenths'
 is( (1/10).perl, "0.1", '(1/10).perl is 0.1' );
 is( (1/5).perl, "0.2", '(1/5).perl is .2' );

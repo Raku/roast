@@ -42,12 +42,12 @@ is_approx 2/(3+1i),      3/5 -(1/5)i,   'dividing a Real by a Complex';
 is_approx 2 * (3+7i),    6+14i,         'Real * Complex';
 is_approx (3+7i) * 2,    6+14i,         'Complex * Real';
 
-isa_ok( eval((1+3i).perl), Complex, 'eval (1+3i).perl is Complex' );
-is_approx( (eval (1+3i).perl), 1+3i, 'eval (1+3i).perl is 1+3i' );
-isa_ok( eval((1+0i).perl), Complex, 'eval (1+0i).perl is Complex' );
-is_approx( (eval (1+0i).perl), 1, 'eval (1+0i).perl is 1' );
-isa_ok( eval((3i).perl), Complex, 'eval (3i).perl is Complex' );
-is_approx( (eval (3i).perl), 3i, 'eval (3i).perl is 3i' );
+isa_ok( EVAL((1+3i).perl), Complex, 'EVAL (1+3i).perl is Complex' );
+is_approx( (EVAL (1+3i).perl), 1+3i, 'EVAL (1+3i).perl is 1+3i' );
+isa_ok( EVAL((1+0i).perl), Complex, 'EVAL (1+0i).perl is Complex' );
+is_approx( (EVAL (1+0i).perl), 1, 'EVAL (1+0i).perl is 1' );
+isa_ok( EVAL((3i).perl), Complex, 'EVAL (3i).perl is Complex' );
+is_approx( (EVAL (3i).perl), 3i, 'EVAL (3i).perl is 3i' );
 
 #?niecza skip "NYI"
 {

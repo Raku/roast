@@ -116,12 +116,12 @@ ok(!defined(Mu), "Mu is not defined");
 
     ok(defined(&a_sub), "defined sub");
 #?pugs todo 'parsefail'
-    ok(eval('defined(%«$?PACKAGE\::»<&a_sub>)'), "defined sub (symbol table)");
+    ok(EVAL('defined(%«$?PACKAGE\::»<&a_sub>)'), "defined sub (symbol table)");
 
 #?pugs todo 'feature'
-    ok(eval('!defined(&a_subwoofer)'), "undefined sub");
+    ok(EVAL('!defined(&a_subwoofer)'), "undefined sub");
 #?pugs todo 'feature'
-    ok(eval('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
+    ok(EVAL('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
     
     dies_ok { undefine &a_sub }, 'die trying to undefine a sub';
     ok defined &a_sub, 'sub is still defined after attempt to undefine';
@@ -129,7 +129,7 @@ ok(!defined(Mu), "Mu is not defined");
 
 # TODO: find a read-only value to try and assign to, since we don't
 # have rules right now to play around with (the p5 version used $1)
-#eval { "constant" = "something else"; };
+#EVAL { "constant" = "something else"; };
 #is($!, "Modification of a read", "readonly write yields exception");
 
 # skipped tests for tied things
@@ -243,7 +243,7 @@ Perl6-specific tests
 {
     my ($num, $alpha);
     my ($rx1, $rx2);   #OK not used
-    eval '
+    EVAL '
         $rx1 = rx
         / [ (\d+)      { let $<num>   := $0 }
         | (<alpha>+) { let $<alpha> := $1 }
@@ -258,21 +258,21 @@ Perl6-specific tests
     for (<rx1 rx2>) {
         # I want symbolic lookups because I need the rx names for test results.
 
-        eval '"1" ~~ %MY::{$_}';
+        EVAL '"1" ~~ %MY::{$_}';
     #?pugs todo 'unimpl'
         ok(defined($num), '{$_}: successful hypothetical');
         ok(!defined($alpha), '{$_}: failed hypothetical');
 
-        eval '"A" ~~ %MY::{$_}';
+        EVAL '"A" ~~ %MY::{$_}';
         ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
     #?pugs todo 'unimpl'
         ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
     }
 
     # - binding to hash keys only would leave values undefined
-    eval '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
+    EVAL '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
     #?pugs todo 'unimpl'
-    ok(eval('$<matches> ~~ all(<a b>)'), "match keys exist");
+    ok(EVAL('$<matches> ~~ all(<a b>)'), "match keys exist");
 
     #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
     #?pugs todo 'unimpl'
@@ -287,7 +287,7 @@ Perl6-specific tests
         "abcde" ~~ /(\d)/;
     ok((!try { grep { defined($_) }, ($0, $1, $2, $3, $4, $5) }),
             "all submatches undefined after failed match") or
-        diag("match state: " ~ eval '$/');
+        diag("match state: " ~ EVAL '$/');
 
     # XXX write me: "special circumstances"
 }
@@ -335,7 +335,7 @@ is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';
 is ?(list(Mu,)), Bool::False, '?(@(Mu,)) is false';
 
 #?niecza todo 'dubious'
-lives_ok { uc(eval("")) }, 'can use eval("") in further expressions';
+lives_ok { uc(EVAL("")) }, 'can use EVAL("") in further expressions';
 
 {
     sub lie { Bool::False }

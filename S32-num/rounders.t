@@ -63,7 +63,7 @@ my %tests =
     );
 
 #?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-#?pugs emit     skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit     skip_rest "PIL2JS and PIL-Run do not support EVAL() yet.";
 #?pugs emit     exit;
 #?pugs emit }
 
@@ -71,7 +71,7 @@ for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});	# XXX .[] doesn't work yet!
     for @subtests -> $test {
         my $code = "{$type}({$test[0]})";
-        my $res = eval($code);
+        my $res = EVAL($code);
 
         if ($!) {
             #?pugs todo 'feature'
@@ -87,7 +87,7 @@ for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});    # XXX .[] doesn't work yet!
     for @subtests -> $test {
         my $code = "({$test[0]}).{$type}";
-        my $res = eval($code);
+        my $res = EVAL($code);
 
         if ($!) {
             #?pugs todo 'feature'
@@ -99,7 +99,7 @@ for %tests.keys.sort -> $type {
 }
 
 for %tests.keys.sort -> $t {
-    isa_ok eval("{$t}(1.1)"), Int, "rounder $t returns an Int";
+    isa_ok EVAL("{$t}(1.1)"), Int, "rounder $t returns an Int";
 
 }
 

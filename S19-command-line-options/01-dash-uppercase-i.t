@@ -71,7 +71,7 @@ for @tests -> $t {
     $got = substr($got, 1, -1);
   };
 
-  my @got = eval $got;
+  my @got = EVAL $got;
   @got = @got[ 0..@dirs-1 ];
   my @expected = @dirs;
 
@@ -86,7 +86,7 @@ for @tests -> $t {
     $got = substr($got, 1, -1);
   };
   
-  @got = eval $got;
+  @got = EVAL $got;
   @got = @got[ 0..@dirs-1 ];
   @expected = @dirs;
 

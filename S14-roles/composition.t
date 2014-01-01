@@ -113,7 +113,7 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
 {
     role RT72856A { method foo {} };
     role RT72856B { method foo {} };
-    try { eval 'class RT72856C does RT72856A does RT72856B {}' };
+    try { EVAL 'class RT72856C does RT72856A does RT72856B {}' };
     #?pugs todo
     ok $! ~~ /foo/,
         'method of the same name from two different roles collide in a class composition';

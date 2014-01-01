@@ -17,7 +17,7 @@ is $path.volume,	"C:",	'volume "C:foo//bar//" -> "C:"';
 is $path.directory, 	"foo",	'directory "C:foo//bar//" -> "foo"';
 is $path.basename, 	"bar",	'basename "C:foo//bar//" -> "bar"';
 isa_ok $path.path, IO::Path::Win32, ".path returns itself";
-is $path.perl.eval, $path, ".perl loopback";
+is $path.perl.EVAL, $path, ".perl loopback";
 
 my $uncpath = IO::Path::Win32.new("\\\\server\\share\\");
 is $uncpath.volume,	"\\\\server\\share",	'volume "\\\\server\\share\\" -> ""\\\\server\\share"';

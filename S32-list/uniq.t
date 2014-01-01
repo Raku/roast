@@ -42,7 +42,7 @@ See the thread "[S32::Containers] uniq" on p6l, too.
       "subroutine form of uniq with own comparator works";
   
     # Semantics w/ junctions
-    is eval('~@array.uniq(with => { lc($^a) eq lc($^b) }).values.sort'), "a b c d", 'sorting the result';
+    is EVAL('~@array.uniq(with => { lc($^a) eq lc($^b) }).values.sort'), "a b c d", 'sorting the result';
 } #3
 
 #?pugs todo 'bug'
