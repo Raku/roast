@@ -31,11 +31,11 @@ plan 11;
     my @b = 2, 3;
     isa_ok pa(@b), Array, 'basic array type sanity';
     #?pugs todo
-    dies_ok { eval('pa(3)') }, 'non-slurpy array does not take a single Int';
+    dies_ok { EVAL('pa(3)') }, 'non-slurpy array does not take a single Int';
 
     sub ph(%h) { 1 }   #OK not used
     #?pugs todo
-    dies_ok { eval('ph(3)') }, 'an Int is not a Hash';
+    dies_ok { EVAL('ph(3)') }, 'an Int is not a Hash';
 }
 
 # this used to be a rakudobug, RT #62172

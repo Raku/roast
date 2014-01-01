@@ -40,7 +40,7 @@ plan 11;
         ok 1, "Could call ok from within a lexical sub";
         return 1;
     }
-    eval 'test_this()';
+    EVAL 'test_this()';
     if ($!) {
         ok 0, "Could call ok from within a lexical sub";
     }

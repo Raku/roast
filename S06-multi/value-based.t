@@ -53,7 +53,7 @@ plan 12;
     sub f(True) { 'a' }
     is f(True), 'a', 'can call a sub f(True)  with True as argument';
     is f(False), 'a', 'works with False too, since False ~~ True';
-    dies_ok { eval 'f(1)' }, 'type constraint is still Bool';
+    dies_ok { EVAL 'f(1)' }, 'type constraint is still Bool';
 }
 
 # vim: ft=perl6

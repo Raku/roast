@@ -49,7 +49,7 @@ ok("abcd" ~~ m/a  @<foo>=(<two>)  d/, 'Compound hypothetical capture');
   lives_ok { $ret = $/[0]<two> }, 'Implicit hypothetical variable captured -- lives_ok';
   is $ret, "bc", 'Implicit hypothetical variable captured -- retval is correct';
 }
-ok(! eval('@<foo>'), 'Explicit hypothetical variable not captured');
+ok(! EVAL('@<foo>'), 'Explicit hypothetical variable not captured');
 
 ok("  a b\tc" ~~ m/@<chars>=( @<spaces>=[\s+] (\S+))+/, 'Nested array capture');
 is("@<chars>", "a b c", 'Outer array capture');

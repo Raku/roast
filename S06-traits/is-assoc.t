@@ -30,7 +30,7 @@ plan 6;
         '(' ~ join('|', @a) ~ ')';
     }
     # RT #116238
-    dies_ok { eval '1 na 2 na 3' }, 'assoc<non>';
+    dies_ok { EVAL '1 na 2 na 3' }, 'assoc<non>';
 }
 
 #?rakudo skip 'RT 116244'

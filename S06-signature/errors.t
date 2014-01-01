@@ -22,17 +22,17 @@ eval_lives_ok 'sub quuuux ($!) { ... }', 'but $! is OK';
 #?pugs todo
 {
     sub empty_sig() { return };
-    dies_ok { eval('empty_sig("RT #64344")') },
+    dies_ok { EVAL('empty_sig("RT #64344")') },
             'argument passed to sub with empty signature';
 }
 
 # RT #71478
 {
     #?pugs todo
-    dies_ok { eval 'sub foo(%h) { %h }; foo(1, 2); 1' },
+    dies_ok { EVAL 'sub foo(%h) { %h }; foo(1, 2); 1' },
         "Passing two arguments to a function expecting one hash is an error";
 
-    try { eval 'sub foo(%h) { %h }; foo(1, 2); 1' };
+    try { EVAL 'sub foo(%h) { %h }; foo(1, 2); 1' };
     my $error   = "$!";
     #?pugs todo
     ok $error ~~ / '%h' /,   '... error message mentions parameter';
@@ -50,7 +50,7 @@ eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
 #?niecza todo
 #?pugs todo
 {
-    try { eval 'sub rt72082(@a, $b) {}; rt72082(5)' };
+    try { EVAL 'sub rt72082(@a, $b) {}; rt72082(5)' };
     my $error = ~$!;
     ok $error ~~ / 'will never work' .* 'Expected' .* '(@a, $b)' /
 }

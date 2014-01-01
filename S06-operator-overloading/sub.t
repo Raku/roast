@@ -29,7 +29,7 @@ Testing operator overloading subroutines
     is ± "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, latin-1 range)';
     sub prefix:<(+-)> ($thing) { return "ABOUT$thing"; };
     #?pugs todo 'bug'
-    is eval(q[ (+-) "fish" ]), "ABOUTfish", 'prefix operator overloading for new operator (nasty)';
+    is EVAL(q[ (+-) "fish" ]), "ABOUTfish", 'prefix operator overloading for new operator (nasty)';
 }
 
 {
@@ -89,7 +89,7 @@ Testing operator overloading subroutines
 {
     sub infix:<(C)> ($text, $owner) { return "$text CopyRight $owner"; };
     #?pugs todo 'bug'
-    is eval(q[ "romeo & juliet" (C) "Shakespeare" ]), "romeo & juliet CopyRight Shakespeare",
+    is EVAL(q[ "romeo & juliet" (C) "Shakespeare" ]), "romeo & juliet CopyRight Shakespeare",
 	'infix operator overloading for new operator (nasty)';
 }
 
@@ -118,8 +118,8 @@ Testing operator overloading subroutines
 {
     my $var = 0;
     #?pugs 2 todo 'feature'
-    ok(eval('macro circumfix:["<!--","-->"] ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
-    ok(eval('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');
+    ok(EVAL('macro circumfix:["<!--","-->"] ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
+    ok(EVAL('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');
 }
 
 # demonstrate sum prefix
@@ -231,7 +231,7 @@ Testing operator overloading subroutines
   lives_ok { ~$obj }, "our object can be stringified";
   is ~$obj, "hi", "our object was stringified correctly";
   #?pugs todo 'feature'
-  is eval('($obj as OtherClass).x'), 23, "our object was coerced correctly";
+  is EVAL('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 
 #?rakudo skip 'infix Z will never work; no lexical Z'
@@ -386,14 +386,14 @@ Testing operator overloading subroutines
 
 # RT #65638
 {
-    is eval('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
-    is eval('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
+    is EVAL('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
+    is EVAL('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
     #?rakudo todo 'RT 65638'
     #?niecza todo
-    is eval('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
-    is eval('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
-    is eval('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
+    is EVAL('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
+    is EVAL('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
+    is EVAL('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
 
 #?rakudo skip 'not yet implemented'

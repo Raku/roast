@@ -237,7 +237,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
 #?niecza skip 'Action method quote:tr not yet implemented'
 {
     #?pugs todo
-    is(eval('"abc".trans(<== "a" => "A")'), "Abc",
+    is(EVAL('"abc".trans(<== "a" => "A")'), "Abc",
         "you're allowed to leave off the (...) named arg parens when you use <==");
 
     # Make sure the tr/// version works, too.  

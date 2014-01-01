@@ -48,7 +48,7 @@ eval_dies_ok
 eval_lives_ok
     'my Parcel sub f () { return () }; f()',
     'return of empty Parcel should live';
-is eval('my Parcel sub f () { return () }; (f(), "a")'), ['a'],
+is EVAL('my Parcel sub f () { return () }; (f(), "a")'), ['a'],
     'return of empty Parcel should be empty Parcel';
 
 eval_dies_ok

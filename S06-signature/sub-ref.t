@@ -89,11 +89,11 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 #?rakudo skip 'macros, compile time binding'
 #?niecza skip 'macros NYI'
 {
-    # We do all this in a eval() not because the code doesn't parse,
+    # We do all this in a EVAL() not because the code doesn't parse,
     # but because it's safer to only call macro references at compile-time.
     # So we'd need to wrap the code in a BEGIN {...} block. But then, our test
     # code would be called before all the other tests, causing confusion. :)
-    # So, we wrap the code in a eval() with an inner BEGIN.
+    # So, we wrap the code in a EVAL() with an inner BEGIN.
     # (The macros are subject to MMD thing still needs to be fleshed out, I
     # think.)
     our &foo_macro ::= macro ($x) { "1000 + $x" };

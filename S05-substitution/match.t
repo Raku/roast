@@ -16,7 +16,7 @@ ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 #?DOES 6
 {
     for ('a'..'f') {
-        my $r = eval("rx/$_/");
+        my $r = EVAL("rx/$_/");
         is $str.match($r), $str~~$r, ".. works as ~~ matching '$str' with /$_/";
     }
 }

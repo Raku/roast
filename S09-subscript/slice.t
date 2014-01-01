@@ -62,7 +62,7 @@ plan 26;
 #?niecza skip 'hangs'
 {
     eval_lives_ok '(0,1)[ * .. * ]', 'Two Whatever stars slice lives';
-    is eval('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
+    is EVAL('(0,1)[ * .. * ]'), [0, 1], 'Two Whatever stars slice';
 }
 
 # RT #63014

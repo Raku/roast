@@ -42,7 +42,7 @@ plan 79;
 # broken in a number of ways. I will get back to those later.
 
 ## void
-# ok(eval('sub ret { return }; 1'), "return without value parses ok");
+# ok(EVAL('sub ret { return }; 1'), "return without value parses ok");
 
 sub bare_return { return };
 

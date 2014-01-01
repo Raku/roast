@@ -26,11 +26,11 @@ plan 15;
         }
 
         is(bar(), 1, 'in outer scope, can call the multi that is in scope');
-        dies_ok { eval("bar('pivo')") }, 'multi variant from inner scope not callable in outer';
+        dies_ok { EVAL("bar('pivo')") }, 'multi variant from inner scope not callable in outer';
     }
 
-    dies_ok { eval q{ bar() }},    'no multi variants callable outside of lexical scope';
-    dies_ok { eval q{ bar('kava')} }, 'no multi variants callable outside of lexical scope';
+    dies_ok { EVAL q{ bar() }},    'no multi variants callable outside of lexical scope';
+    dies_ok { EVAL q{ bar('kava')} }, 'no multi variants callable outside of lexical scope';
 }
 
 # an inner multi with a signature matching an outer will hide it
@@ -52,7 +52,7 @@ multi waz() { 1 }
     is(waz('slon'), 2, 'lexical multi also callable');
 }
 is(waz(), 1,             'multi from package still callable outside the inner scope...');
-dies_ok { eval("waz('vtak')") }, '...but lexical multi no longer callable';
+dies_ok { EVAL("waz('vtak')") }, '...but lexical multi no longer callable';
 
 # RT #78208
 {

@@ -18,7 +18,7 @@ plan 7;
   is $bar,      42, "sub changed our variable";
   # RT #74830
   #?pugs todo
-  dies_ok { eval('foo(28)') }, 'is rw requires a variable';
+  dies_ok { EVAL('foo(28)') }, 'is rw requires a variable';
 }
 
 {

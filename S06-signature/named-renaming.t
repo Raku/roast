@@ -10,7 +10,7 @@ plan 10;
     is f( a => 1), 1, 'can use the alias name (1)';
     is g( a => 1), 1, 'can use the alias name (1)';
     is f( b => 1), 1, 'can use the var name';
-    dies_ok { eval 'g(  b => 1)' },
+    dies_ok { EVAL 'g(  b => 1)' },
             'cannot use the var name if there is no : in front of it';
 }
 
@@ -18,12 +18,12 @@ plan 10;
     sub mandatory(:x(:$y)!) { $y }
     is mandatory( y => 2), 2, 'mandatory named';
     is mandatory( x => 3), 3, 'mandatory renamed';
-    dies_ok { eval 'mandatory()' }, 'and it really is mandatory';
+    dies_ok { EVAL 'mandatory()' }, 'and it really is mandatory';
 }
 
 {
     sub typed(:i(:%j)) { %j.keys.[0] };
     is typed(i => { a => 1 }), 'a', 'typed renames -- sanity';
-    dies_ok { eval 'typed(:j)' }, 'type constraint on var';
-    dies_ok { eval 'typed(:i)' }, 'type constraint on var propagates to alias';
+    dies_ok { EVAL 'typed(:j)' }, 'type constraint on var';
+    dies_ok { EVAL 'typed(:i)' }, 'type constraint on var propagates to alias';
 }

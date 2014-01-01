@@ -35,7 +35,7 @@ dies_ok {
     sub f2(*%h) { f1(|%h) };
     lives_ok { f2( :a(1) ) },
             'Can interpolate hashes into slurpy named parameters';
-    is eval(f2(:a(4))).<a>, 4,  '... with a sane return value';
+    is EVAL(f2(:a(4))).<a>, 4,  '... with a sane return value';
 }
 
 # RT #113804

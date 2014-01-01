@@ -19,7 +19,7 @@ plan 8;
 }
 
 {
-  my $ret = eval '
+  my $ret = EVAL '
     macro plus_3 { "+ 3" }
     42 plus_3;
   ';

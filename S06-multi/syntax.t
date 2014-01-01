@@ -82,7 +82,7 @@ ok(~&foo ~~ /foo/,  'a multi stringifies sensibly');
 
     lives_ok { max(1, 2, 3) }, 'use multi method to override builtin lives';
     #?pugs todo
-    is eval('max(1, 2, 3)'), 9, 'use multi method to override builtin';
+    is EVAL('max(1, 2, 3)'), 9, 'use multi method to override builtin';
 }
 
 # named and slurpy interaction - there have been bugs in the past on this front

@@ -85,7 +85,7 @@ lives_ok { boom(42) }, "can modify a copy";
 
 
 {
-    try { eval 'my $gack; sub oh_noes( $gack is nonesuch ) { }' };
+    try { EVAL 'my $gack; sub oh_noes( $gack is nonesuch ) { }' };
 
     ok  $!  ~~ Exception,  "Can't use an unknown trait";
     ok "$!" ~~ /trait/,    'error message mentions trait';

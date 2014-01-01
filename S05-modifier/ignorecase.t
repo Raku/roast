@@ -70,7 +70,7 @@ ok 'a' ~~ /:i < A B > /, ':i and quote words';
 
 # RT #114692
 {
-    try eval '"ABC" ~~ /:iabc/';
+    try EVAL '"ABC" ~~ /:iabc/';
     ok $!, "need whitespace after modifier";
 }
 

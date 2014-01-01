@@ -149,7 +149,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 # RT 74180
 {
     my $s;
-    try { $s = eval '"foo" ~~ /(foo)/; "$0a"' };
+    try { $s = EVAL '"foo" ~~ /(foo)/; "$0a"' };
     ok not $!, 'alphabetic characters can follow digits in $0 variable in interpolation';
     is $s, 'fooa', 'alphabetic characters follows $0 interpolated value';
 }

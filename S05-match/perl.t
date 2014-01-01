@@ -17,9 +17,9 @@ my $m = ExprT1.parse('2 + 4');
 ok $m, 'Regex matches (1)';
 lives_ok { $m.perl }, '$/.perl lives (with named captures';
 #?niecza skip 'No value for parameter $a in is_deeply'
-is_deeply eval($m.perl), $m, '... and it reproduces the right thing (1)'; 
+is_deeply EVAL($m.perl), $m, '... and it reproduces the right thing (1)'; 
 #?niecza todo 'empty result'
-is ~eval($m.perl).<operator>, '+', ' right result (2)';
+is ~EVAL($m.perl).<operator>, '+', ' right result (2)';
 
 my regex f { f };
 my regex o { o };
@@ -36,7 +36,7 @@ lives_ok { $/.perl }, 'lives on quantified named captures';
     isa_ok $/, Match;
     is $/.ast, $code_str, 'Match.ast is the code matched';
     is $/.Str, $code_str, 'Match.Str is the code matched';
-    is_deeply eval($/.perl), $/, 'eval of Match.perl recreates Match';
+    is_deeply EVAL($/.perl), $/, 'EVAL of Match.perl recreates Match';
 }
 
 # vim: ft=perl6

@@ -13,7 +13,7 @@ eval_lives_ok
 
 #RT #115504
 {
-    try eval 'macro ma { die 1 }; ma';
+    try EVAL 'macro ma { die 1 }; ma';
     is $!, 1, "die-ing inside a macro dies normally.";
 }
 

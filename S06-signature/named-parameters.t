@@ -12,7 +12,7 @@ plan 93;
     }
     is a(3), 3, 'Can pass positional arguments';
     #?pugs skip 'Named argument found where no matched parameter expected'
-    dies_ok { eval('a(g=>7)') }, 'Dies on passing superfluous arguments';
+    dies_ok { EVAL('a(g=>7)') }, 'Dies on passing superfluous arguments';
 }
 
 {
@@ -23,7 +23,7 @@ plan 93;
     my $w = 5;
     is c(:$w), 5, 'can use :$x colonpair syntax to call named arg';
     #?pugs skip 'Named argument found where no matched parameter expected'
-    dies_ok {eval('my $y; c(:$y)')}, 'colonpair with wrong variable name dies';
+    dies_ok {EVAL('my $y; c(:$y)')}, 'colonpair with wrong variable name dies';
 }
 
 {
@@ -128,7 +128,7 @@ is(assign_based_on_named_positional($var => 2), ("y"=>2),
     is(named_array2(1, :!y), (1, 42, 0), 'named and unnamed args - one named, one pos - backwards');
     is(named_array2(:y, 1, :!y), (1, 42, 1, 0), 'named and unnamed args - two named, one pos');
     
-    nok(try { eval 'named_array2(:y, :y)'}.defined, 'named and unnamed args - two named with same name');
+    nok(try { EVAL 'named_array2(:y, :y)'}.defined, 'named and unnamed args - two named with same name');
 
     is(named_array2(:y, (:x)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair');
     is(named_array2(:y, (:y)), (0, 1, 42, 1), 'named and unnamed args - passing parenthesized pair of same name');
@@ -144,7 +144,7 @@ sub mandatory (:$param!) {
 
 is(mandatory(param => 5) , 5, "named mandatory parameter is returned");
 #?pugs todo
-dies_ok {eval 'mandatory()' },  "not specifying a mandatory parameter fails";
+dies_ok {EVAL 'mandatory()' },  "not specifying a mandatory parameter fails";
 
 #?niecza skip "Unhandled trait required"
 {
