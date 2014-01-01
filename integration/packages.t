@@ -22,8 +22,8 @@ module A {
     is $x, 3, 'for loop inside a module works';
 
     sub b { 42 };
-    is eval('b'), 42,
-       'eval inside a module looks up subs in the right namespace';
+    is EVAL('b'), 42,
+       'EVAL inside a module looks up subs in the right namespace';
 }
 
 # vim: ft=perl6

@@ -126,7 +126,7 @@ is DateTime.new(dtpi 2006,  1,  1,    0,  0,  0.2).second,  0.2, 'Round-tripping
 #?rakudo skip 'nom regression'
 {
     my $i = dtpi 1988, 11, 22,   18, 42, 15.9;
-    is $i.perl.eval, $i, 'Round-tripping Instant.perl';
+    is $i.perl.EVAL, $i, 'Round-tripping Instant.perl';
 }
 
 # vim: ft=perl6

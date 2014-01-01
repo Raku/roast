@@ -126,7 +126,7 @@ sub throws_like($code, $ex_type, *%matcher) is export {
         $code()
     } else {
         $msg = "'$code' died";
-        eval $code;
+        EVAL $code;
     }
     ok 0, $msg;
     skip 'Code did not die, can not check exception', 1 + %matcher.elems;
@@ -180,7 +180,7 @@ across Perl 6 implementations.
 
 =head2 throws_like($code, Mu $expected_type, *%matchers)
 
-If C<$code> is C<Callable>, calls it, otherwise C<eval>s it,
+If C<$code> is C<Callable>, calls it, otherwise C<EVAL>s it,
 and expects it thrown an exception.
 
 If an exception is thrown, it is compared to C<$expected_type>.

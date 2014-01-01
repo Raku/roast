@@ -61,7 +61,7 @@ sub Type($num, $type) {
 
 sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule) {
     my $input_angle = $angle.key();
-    my $desired-result = eval($desired-result-rule);
+    my $desired-result = EVAL($desired-result-rule);
     given $type {
         when "Complex" | "NotComplex" { 
             $input_angle = $angle.key + 2i;  
@@ -78,7 +78,7 @@ sub ForwardTest($str, $angle, $fun, $type, $desired-result-rule) {
 
 sub InverseTest($str, $angle, $fun, $type, $desired-result-rule) {
     my $input_angle = $angle.key();
-    my $desired-result = eval($desired-result-rule);
+    my $desired-result = EVAL($desired-result-rule);
     given $type {
         when "Complex" | "NotComplex" { 
             $input_angle = ($angle.key() + 2i)."$fun"();
@@ -110,7 +110,7 @@ sub grep-and-repeat(@a, $skip-rule) {
     gather loop {
         for @a -> $a {
             if $skip-rule {
-                take $a unless $skip-rule.subst('$angle', $a.key()).eval;
+                take $a unless $skip-rule.subst('$angle', $a.key()).EVAL;
             } else {
                 take $a;
             }
@@ -208,7 +208,7 @@ class TrigFunction
         $file.say: $code;
         
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
-        my $angle_list = grep-and-repeat(eval($.angle_and_results_name), $.skip);
+        my $angle_list = grep-and-repeat(EVAL($.angle_and_results_name), $.skip);
         my $fun = $.function_name;
         for <Num Rat Complex Str NotComplex DifferentReal FatRat> -> $type {
             $file.say: '{';
@@ -261,7 +261,7 @@ class TrigFunction
         $file.say: $code;
         
         # next block is bordering on evil, and hopefully can be cleaned up in the near future
-        my $angle_list = grep-and-repeat(notgrep(eval($.angle_and_results_name), 
+        my $angle_list = grep-and-repeat(notgrep(EVAL($.angle_and_results_name), 
                                                  {0 < $_.key() < pi / 2}), $.skip);
         my $fun = $.function_name;
         my $inv = $.inverted_function_name;

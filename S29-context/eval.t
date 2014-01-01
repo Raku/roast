@@ -2,82 +2,82 @@ use v6;
 use Test;
 plan 18;
 
-# L<S29/Context/"=item eval">
+# L<S29/Context/"=item EVAL">
 
 =begin pod
 
-Tests for the eval() builtin
+Tests for the EVAL() builtin
 
 =end pod
 
-# eval should evaluate the code in the lexical scope of eval's caller
+# EVAL should evaluate the code in the lexical scope of EVAL's caller
 {
     sub make_eval_closure {
         my $a = 5;   #OK not used
         return sub ($s) {
-            eval $s 
+            EVAL $s 
         };
     };
-    is(make_eval_closure().('$a'), 5, 'eval runs code in the proper lexical scope');
+    is(make_eval_closure().('$a'), 5, 'EVAL runs code in the proper lexical scope');
 }
 
-is(eval('5'), 5, 'simple eval works and returns the value');
+is(EVAL('5'), 5, 'simple EVAL works and returns the value');
 my $foo = 1234;
-is(eval('$foo'), $foo, 'simple eval using variable defined outside');
+is(EVAL('$foo'), $foo, 'simple EVAL using variable defined outside');
 
 # traps die?
 #?pugs todo
-dies_ok {eval('die; 1')}, "eval does not trap die";
+dies_ok {EVAL('die; 1')}, "EVAL does not trap die";
 
 #?pugs todo
-dies_ok {eval '1 1)'}, "eval throws on syntax error";
+dies_ok {EVAL '1 1)'}, "EVAL throws on syntax error";
 
 #?pugs todo
-dies_ok {eval 'use Poison; 1'}, "eval dies on fatal use";
+dies_ok {EVAL 'use Poison; 1'}, "EVAL dies on fatal use";
 
-# L<S04/Exception handlers/Perl 6's eval function only evaluates strings, not blocks.>
+# L<S04/Exception handlers/Perl 6's EVAL function only evaluates strings, not blocks.>
 #?pugs todo
-dies_ok({eval {; 42} }, 'block eval is gone');
+dies_ok({EVAL {; 42} }, 'block eval is gone');
 
 # RT #63978, eval didn't work in methods
 {
     class EvalTester1 {
-        method e($s) { eval $s };
+        method e($s) { EVAL $s };
     }
-    is EvalTester1.e('5'),       5, 'eval works inside class methods';
-    is EvalTester1.new.e('5'),   5, 'eval works inside instance methods';
+    is EvalTester1.e('5'),       5, 'EVAL works inside class methods';
+    is EvalTester1.new.e('5'),   5, 'EVAL works inside instance methods';
 }
 
 {
     my $x = 5;
     class EvalTester2 {
-        method e($s) { eval "$s + \$x" };
+        method e($s) { EVAL "$s + \$x" };
     }
     is EvalTester2.e('1'),       6, 
-       'eval works inside class methods, with outer lexicals';
+       'EVAL works inside class methods, with outer lexicals';
     is EvalTester2.new.e('1'),   6, 
-       'eval works inside instance methods, with outer lexicals';
+       'EVAL works inside instance methods, with outer lexicals';
 }
 
-#?rakudo skip 'eval(Buf)'
+#?rakudo skip 'EVAL(Buf)'
 #?niecza skip 'Unable to resolve method encode in class Str'
 #?pugs skip 'encode'
-is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
+is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
 
 {
     #?rakudo skip 'eval coerce to string'
-    is eval(88), 88, 'eval of non-string works';
+    is EVAL(88), 88, 'eval of non-string works';
 
     my $number = 2;
     #?rakudo skip 'eval coerce to string'
-    is eval($number), $number, 'eval of non-string variable works';
+    is EVAL($number), $number, 'EVAL of non-string variable works';
 }
 
 # RT #77646
 {
     my $x = 0;
-    eval '$x++' for 1..4;
-    is $x, 4, 'can execute the same eval multiple times, without surrounding block';
+    EVAL '$x++' for 1..4;
+    is $x, 4, 'can execute the same EVAL multiple times, without surrounding block';
 
 }
 
@@ -85,20 +85,20 @@ is eval("'møp'".encode('UTF-8')), 'møp', 'eval(Buf)';
 #?niecza todo "No :lang argument yet..."
 #?pugs skip 'Cannot cast from VUndef to VCode'
 {
-    try eval(:lang<rt112472>, '1');
-    ok "$!" ~~ / 'rt112472' /, 'eval in bogus language mentions the language';
+    try EVAL(:lang<rt112472>, '1');
+    ok "$!" ~~ / 'rt112472' /, 'EVAL in bogus language mentions the language';
 }
 
 # RT 115344
 my $rt115344 = 115344;
-#?niecza skip 'method form of eval does not see outer lexicals'
-is('$rt115344'.eval, $rt115344, 'method form of eval sees outer lexicals');
+#?niecza skip 'method form of EVAL does not see outer lexicals'
+is('$rt115344'.EVAL, $rt115344, 'method form of EVAL sees outer lexicals');
 
 # RT #115774
 #?niecza skip "int NYI"
 {
-    my int $a; eval('');
-    ok(1, "presence of low level types doesn't cause eval error")
+    my int $a; EVAL('');
+    ok(1, "presence of low level types doesn't cause EVAL error")
 }
 
 

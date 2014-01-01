@@ -53,7 +53,7 @@ is_run 'say 42; nosuchsub()',
 {
     subset Even of Int where { $_ %% 2 };
     sub f(Even $x) { $x };
-    try { eval 'f(3)' };
+    try { EVAL 'f(3)' };
     my $e = "$!";
     diag "Error message: $e";
     ok $e ~~ /:i 'type check'/,
@@ -114,7 +114,7 @@ is_run 'die "foo"; END { say "end run" }',
 
 # RT #113848
 {
-    try eval '          # line 1
+    try EVAL '          # line 1
         use v6;         # line 2
         (1 + 2) = 3;    # line 3
         ';

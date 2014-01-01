@@ -16,4 +16,4 @@ is fac(3), 6,  'fac(3) works';
 is fac(4), 24, 'fac(4) works';
 
 #?pugs todo
-dies_ok { eval(q[ fac('oh noes i am a string')]) }, 'Can only call it with ints';
+dies_ok { EVAL(q[ fac('oh noes i am a string')]) }, 'Can only call it with ints';

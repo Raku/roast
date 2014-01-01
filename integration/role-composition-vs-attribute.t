@@ -75,7 +75,7 @@ plan 10;
     role AAAA {
         has Int $!aaaa;
     }
-    dies_ok { eval q:to/CODE/ }, 'unknown attribute dies at compile time';
+    dies_ok { EVAL q:to/CODE/ }, 'unknown attribute dies at compile time';
     class Zop does AAAA {
         method zippo { $!zzzz++ }  # first time
         method zappo { $!zzzz++ }  # second time, without $/ internally

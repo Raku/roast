@@ -129,7 +129,7 @@ plan 13;
                     join ' ', (
                         stringify $A,
                         stringify $B,
-                        stringify eval $expr
+                        stringify EVAL $expr
                     )
                 ) ~ "\n";
             };

@@ -49,7 +49,7 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
     my $i = 0;
     sub foo {
         return if ++$i == 50;
-        eval 'foo';
+        EVAL 'foo';
     }
-    lives_ok { foo }, 'can recurse many times into &eval';
+    lives_ok { foo }, 'can recurse many times into &EVAL';
 }
