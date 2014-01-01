@@ -4,14 +4,14 @@ use Test;
 
 plan(2);
 
-unless (try { eval("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
     exit;
 }
 
 {
     lives_ok {
-        eval q|
+        EVAL q|
             use CGI:from<perl5>;
             my $q = CGI.new;
             is $q.isa(CGI), 1, "Correct isa";

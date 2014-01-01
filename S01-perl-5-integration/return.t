@@ -4,12 +4,12 @@ use Test;
 
 plan(2);
 
-unless (try { eval("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
     exit;
 }
 
-eval q<<<
+EVAL q<<<
 
 use Digest::MD5:from<perl5> <md5_hex>;
 

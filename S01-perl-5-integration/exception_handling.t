@@ -5,7 +5,7 @@ use Test;
 
 BEGIN {
 plan 3;
-unless (try { eval("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest('no perl 5 support'); exit;
 }
 }
@@ -16,7 +16,7 @@ my $err;
 lives_ok({ try { Carp.croak() }; $err = $! }, "Perl 5 exception (die) caught");
 like($err, rx:P5/Carp/, "Exception is propagated to Perl 6 land");
 
-eval(q[
+EVAL(q[
 package Foo;
 
 sub new {
@@ -31,7 +31,7 @@ sub error {
 sub test { "1" }
 ], :lang<perl5>);
 
-my $foo = eval("Foo->new",:lang<perl5>);
+my $foo = EVAL("Foo->new",:lang<perl5>);
 try { $foo.error };
 lives_ok( {
     my $err = $!;

@@ -4,12 +4,12 @@ use Test;
 
 plan(13);
 
-unless (try { eval("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
     exit;
 }
 
-eval(q/
+EVAL(q/
 #line 16 method.t
 package FooBar;
 our $VERSION = '6.0';
@@ -32,7 +32,7 @@ sub echo {
 sub callcode {
     my ($self, $code) = @_;
 #print "==> callcode got $code\n";
-    return eval { $code->($self) };
+    return EVAL { $code->($self) };
 }
 
 sub asub {
@@ -61,14 +61,14 @@ sub invoke {
 /, :lang<perl5>);
 
 {
-    my $r = eval("FooBar->VERSION", :lang<perl5>);
+    my $r = EVAL("FooBar->VERSION", :lang<perl5>);
     is($r, '6.0', "class method");
 }
 
 my $obj;
 
 {
-    $obj = eval("FooBar->new", :lang<perl5>);
+    $obj = EVAL("FooBar->new", :lang<perl5>);
     isa_ok($obj, 'FooBar', "blessed");
     like($obj, rx:Perl5/FooBar/, "blessed");
 }
@@ -119,7 +119,7 @@ my $obj;
         method me ($class: $arg) { 'Foo6'~$arg };    #OK not used
     };
     my $obj6 = Foo6.new;
-    $obj = eval("FooBar->new", :lang<perl5>);
+    $obj = EVAL("FooBar->new", :lang<perl5>);
     is($obj.invoke($obj6), 'Foo6invoking', 'invoke pugs method from p5');
 }
 

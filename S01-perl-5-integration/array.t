@@ -4,13 +4,13 @@ use Test;
 
 plan 18;
 
-unless (try { eval("1", :lang<perl5>) }) {
+unless (try { EVAL("1", :lang<perl5>) }) {
     skip_rest;
     exit;
 }
 
 die unless
-eval(q/
+EVAL(q/
 package My::Array;
 use strict;
 
@@ -52,7 +52,7 @@ sub push {
 1;
 /, :lang<perl5>);
 
-my $p5ar = eval('sub { My::Array->new($_[0]) }', :lang<perl5>);
+my $p5ar = EVAL('sub { My::Array->new($_[0]) }', :lang<perl5>);
 my @array = (5,6,7,8);
 my $p5array = $p5ar(VAR @array);
 
@@ -69,7 +69,7 @@ lives_ok {
 }, 'can retro fetch';
 ok $match, 'retro fetch';
 
-is(eval(q{$retarray.elems}), @array.elems, 'retro elems');
+is(EVAL(q{$retarray.elems}), @array.elems, 'retro elems');
 is($retarray[1]:exists, @array[1]:exists, 'retro exists');
 is($retarray[10]:exists, @array[10]:exists, 'retro nonexists' );
 

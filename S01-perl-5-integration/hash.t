@@ -4,13 +4,13 @@ use Test;
 
 plan(5);
 
-unless eval 'eval("1", :lang<perl5>)' {
+unless EVAL 'EVAL("1", :lang<perl5>)' {
     skip_rest;
     exit;
 }
 
 die unless
-eval(q/
+EVAL(q/
 package My::Hash;
 use strict;
 
@@ -51,7 +51,7 @@ sub push {
 1;
 /, :lang<perl5>);
 
-my $p5ha = eval('sub { My::Hash->new($_[0]) }', :lang<perl5>);
+my $p5ha = EVAL('sub { My::Hash->new($_[0]) }', :lang<perl5>);
 my %hash = (5 => 'a', 6 => 'b', 7 => 'c', 8 => 'd');
 my $p5hash = $p5ha(\%hash);
 
