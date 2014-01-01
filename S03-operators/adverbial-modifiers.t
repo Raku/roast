@@ -40,7 +40,7 @@ is blub "bar":times(2), 'BLUBBLUBbar', 'user-defined prefix operator, :times adv
   is ~$v, ~$e, ':foo«alice»';
 
   $e = (foo => { a => 1, b => 2 });
-  $v = eval ':foo{ a => 1, b => 2 }';
+  $v = EVAL ':foo{ a => 1, b => 2 }';
   is ~$v, ~$e, ':foo{ a => 1, b => 2 }';
 
   $e = (foo => { dostuff() });
@@ -106,23 +106,23 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
   # Since the demagicalizing of pairs, this test shouldn't and doesn't work any
   # longer.
 
-#  $v = 'eval failed';
-#  eval '$v = fiddle :x("a") :y("b")()';
+#  $v = 'EVAL failed';
+#  EVAL '$v = fiddle :x("a") :y("b")()';
 #  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a") :y("b")()';
 
-#  $v = 'eval failed';
-#  eval '$v = fiddle :x("a") :y("b") ()';
+#  $v = 'EVAL failed';
+#  EVAL '$v = fiddle :x("a") :y("b") ()';
 #  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a") :y("b") ()';
 
-#  $v = 'eval failed';
-#  eval '$v = fiddle :x("a"):y("b") ()';
+#  $v = 'EVAL failed';
+#  EVAL '$v = fiddle :x("a"):y("b") ()';
 #  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a"):y("b") ()';
 
-#  $v = 'eval failed';
-#  eval '$v = fiddle :x("a"):y("b")()';
+#  $v = 'EVAL failed';
+#  EVAL '$v = fiddle :x("a"):y("b")()';
 #  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a"):y("b")()';
 

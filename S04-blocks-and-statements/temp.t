@@ -53,7 +53,7 @@ plan 36;
   is $a, 42, "temp() restored the variable, the block was exited using an exception";
 }
 
-eval('
+EVAL('
 {
   my @array = (0, 1, 2);
   {
@@ -62,7 +62,7 @@ eval('
   }
     is @array[1], 1, "temp() restored our array element";
 }
-"1 - delete this line when the parsefail eval() is removed";
+"1 - delete this line when the parsefail EVAL() is removed";
 ') or skip("parsefail: temp \@array[1]", 2);
 
 {

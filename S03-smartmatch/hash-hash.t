@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 4;
 
-sub eval_elsewhere($code){ eval($code) }
+sub eval_elsewhere($code){ EVAL($code) }
 
 #L<S03/Smart matching/Hash Hash hash keys same set>
 my %hash1 = ( "foo" => "Bar", "blah" => "ding");

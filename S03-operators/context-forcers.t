@@ -83,7 +83,7 @@ sub iis(Mu $a, Mu $b, $descr) {
 
 ok 4.Str ~~ Str, 'Int.Str returns a Str';
 
-sub eval_elsewhere($code){ eval($code) }
+sub eval_elsewhere($code){ EVAL($code) }
 
 # L<S02/Context/numeric "+">
 # numeric (+) context

@@ -15,22 +15,22 @@ instead. Similar for C<!~>.
 #L<S03/Chaining binary precedence/"To catch">
 
 my $str = 'foo';
-try { eval '$str =~ m/bar/;' };
+try { EVAL '$str =~ m/bar/;' };
 ok  $!  ~~ Exception, 'caught "=~" braino';
 ok "$!" ~~ /'~~'/, 'error for "=~" usage mentions "~~"';
 
-try { eval '$str !~ m/bar/;' };
+try { EVAL '$str !~ m/bar/;' };
 ok  $!  ~~ Exception, 'caught "!~" braino';
 ok "$!" ~~ /'!~~'/, 'error for "!~" usage mentions "!~~"';
 
 # RT #76878
 {
     my $x = 2;
-    is eval('"$x =~ b"'), '2 =~ b', '=~ allowed in double quotes';
-    is eval('"$x !~ b"'), '2 !~ b', '!~ allowed in double quotes';
-    is eval('"$x << b"'), '2 << b', '<< allowed in double quotes';
-    is eval('"$x >> b"'), '2 >> b', '>> allowed in double quotes';
-    is eval('"$x . b"'),  '2 . b',  '.  allowed in double quotes';
+    is EVAL('"$x =~ b"'), '2 =~ b', '=~ allowed in double quotes';
+    is EVAL('"$x !~ b"'), '2 !~ b', '!~ allowed in double quotes';
+    is EVAL('"$x << b"'), '2 << b', '<< allowed in double quotes';
+    is EVAL('"$x >> b"'), '2 >> b', '>> allowed in double quotes';
+    is EVAL('"$x . b"'),  '2 . b',  '.  allowed in double quotes';
 }
 
 # vim: ft=perl6

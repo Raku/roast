@@ -63,7 +63,7 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
         return $n * ($n-1)!
     }
 
-    my $foo = eval q[ 1 ?? 'yay' !! 'nay' ];
+    my $foo = EVAL q[ 1 ?? 'yay' !! 'nay' ];
     #?pugs todo 'bug'
     is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op");
 }

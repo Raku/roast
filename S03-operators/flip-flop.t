@@ -119,7 +119,7 @@ plan 39;
 #?rakudo skip 'dubious scoping?'
 {
 
-    # keep track of # of times lhs and rhs are eval'd by adding
+    # keep track of # of times lhs and rhs are EVAL'd by adding
     # a state var to both sides.
     sub ff_eval($code, $lhs, $rhs, @a) {
         my $lhs_run = 0;

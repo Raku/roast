@@ -180,7 +180,7 @@ plan 23;
   is $sub(), 42, 'leave() works with a loop label';
 }
 
-eval q[[
+EVAL q[[
   my $sub = sub () {
     eager do			# XXX without eager would require time travel
     LABEL: for 1..10 -> $n {
@@ -194,7 +194,7 @@ eval q[[
   is [$sub()], [42,43], 'leave() works with a loop label in list context';
 ]];
 
-eval q[[
+EVAL q[[
   my $sub = sub () {
     do LABEL: {
 	LABEL.leave(42);

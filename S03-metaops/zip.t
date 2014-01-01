@@ -3,13 +3,13 @@ use v6;
 use Test;
 plan 24;
 
-ok eval('<a b> Z <c d>'), 'zip non-meta operator parses';
+ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
 is (<a b> Z <1 2>), <a 1 b 2>, 'non-meta zip produces expected result';
 
 is (1, 2, 3 Z** 2, 4), (1, 16), 'zip-power works';
 
-ok eval('<a b> Z, <c d>'), 'zip metaoperator parses';
+ok EVAL('<a b> Z, <c d>'), 'zip metaoperator parses';
 
 is (<a b> Z~ <1 2>), <a1 b2>, 'zip-concat produces expected result';
 

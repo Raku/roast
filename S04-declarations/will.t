@@ -122,7 +122,7 @@ is $same3, "aebebebc", 'all for blocks get $_';
 #?pugs   skip "will variable trait NYI"
 {
     my $seen = 42;
-    dies_ok {eval 'my $a will foo { $seen = 1 }'}, 'unknown will trait';
+    dies_ok {EVAL 'my $a will foo { $seen = 1 }'}, 'unknown will trait';
     is $seen, 42, 'block should not have executed';
     lives_ok {my $a will compose { $seen = 1 }}, "don't know how to test yet";
     is $seen, 42, 'block should not have executed';

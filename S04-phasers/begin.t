@@ -51,7 +51,7 @@ plan 9;
 {
     my $tracker = '';
     try {
-        eval q[
+        EVAL q[
             BEGIN { $tracker = "begin" }
             $tracker = "run";
             # syntax error (two terms in a row):

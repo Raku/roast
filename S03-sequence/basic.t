@@ -148,8 +148,8 @@ is (4 ... ^5).join(', '), '4, 3, 2, 1, 0, 1, 2, 3, 4',
     'geometric sequence started in one direction and continues in the other with exclusion';
 
 lives_ok { (1 ... 5).perl }, 'Can take .perl of sequence';
-is eval((1 ... 5).perl).join(','), '1,2,3,4,5',
-    'eval($sequence.perl) reproduces result list';
+is EVAL((1 ... 5).perl).join(','), '1,2,3,4,5',
+    'EVAL($sequence.perl) reproduces result list';
 
 # RT 98790
 is ~((1 ... *) Z~ ('a' ... 'z')).[^5], "1a 2b 3c 4d 5e", "Zipping two sequence in parallel";

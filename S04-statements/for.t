@@ -455,7 +455,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #62478
 #?pugs todo
 {
-    try { eval('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
+    try { EVAL('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
     ok "$!" ~~ /C\-style/,   'mentions C-style';
     ok "$!" ~~ /for/,        'mentions for';
     ok "$!" ~~ /loop/,       'mentions loop';
@@ -465,7 +465,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 #?pugs todo
 {
     my $parsed = 0;
-    try { eval '$parsed = 1; for (1..3)->$n { last }' };
+    try { EVAL '$parsed = 1; for (1..3)->$n { last }' };
     ok ! $parsed, 'for (1..3)->$n   fails to parse';
 }
 
@@ -485,7 +485,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 
 #?pugs todo
 {
-    try { eval 'for (my $x; $x <=3; $x++) { $i; }'; diag($!) };
+    try { EVAL 'for (my $x; $x <=3; $x++) { $i; }'; diag($!) };
     ok $! ~~ / 'C-style' /, 'Sensible error message';
 }
 

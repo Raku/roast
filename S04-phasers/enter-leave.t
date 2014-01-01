@@ -90,7 +90,7 @@ plan 21;
 #?rakudo skip 'leave NYI'
 {
     #?pugs todo
-    is eval(q{
+    is EVAL(q{
         my $a;
         {
             leave;

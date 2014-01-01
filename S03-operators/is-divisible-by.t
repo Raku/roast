@@ -31,7 +31,7 @@ plan 15;
 } #1
 
 {
-    dies_ok {eval "9  %% 0"}, 'cannot divide by zero using infix:<%%>';
+    dies_ok {EVAL "9  %% 0"}, 'cannot divide by zero using infix:<%%>';
     #?rakudo todo "not sure why this doesn't fire"
-    dies_ok {eval "9 !%% 0"}, 'cannot divide by zero using infix:<%%>';
+    dies_ok {EVAL "9 !%% 0"}, 'cannot divide by zero using infix:<%%>';
 } #2

@@ -7,7 +7,7 @@ plan 21;
 # L<S04/"Phasers"/once "runs separately for each clone">
 #?pugs todo
 {
-    is(eval(q{{
+    is(EVAL(q{{
         my $str;
         for 1..2 {
             my $sub = {

@@ -36,7 +36,7 @@ eval_dies_ok('my $x = ', 'incomplete expression');
     is($y, 10, "}\\n + 1 are two statements");
 
     my $z = [];
-    eval q'
+    EVAL q'
         $z = [ do { 1 }
                 + 2 ];
     ';

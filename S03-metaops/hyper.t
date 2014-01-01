@@ -381,10 +381,10 @@ my @e;
         { key => 'val' }
     );
 
-    my $full = join '', eval '@array>>.<key>';
+    my $full = join '', EVAL '@array>>.<key>';
     is($full, 'valvalval', 'hyper-dereference an array');
 
-    my $part = join '', eval '@array[0,1]>>.<key>';
+    my $part = join '', EVAL '@array[0,1]>>.<key>';
     is($part, 'valval', 'hyper-dereference an array slice');
 }
 
@@ -696,12 +696,12 @@ my @e;
 
 # test non-UTF-8 input
 #?niecza skip 'nonsensical test'
-#?pugs skip 'eval(Buf)'
-#?rakudo skip 'eval(Buf)'
+#?pugs skip 'EVAL(Buf)'
+#?rakudo skip 'EVAL(Buf)'
 #?DOES 1
 {
     my $t = '(1, 2, 3) »+« (4, 3, 2)';
-    ok !eval($t.encode('ISO-8859-1')),
+    ok !EVAL($t.encode('ISO-8859-1')),
        'Latin-1 »+« without pre-declaration is an error';
 }
 
@@ -743,7 +743,7 @@ my @e;
 # RT #77010
 
 {
-    # niecza doesn't propagate slangs into &eval yet
+    # niecza doesn't propagate slangs into &EVAL yet
     eval_lives_ok 'sub infix:<+++>($a, $b) { ($a + $b) div 2 }; 10 >>+++<< 14', 'can use hypers with local scoped user-defined operators';
 } 
 

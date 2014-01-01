@@ -59,7 +59,7 @@ is(++$phase, 4, "phase completed");
 # > last COUNT;
 
 our $test5 = 1;
-eval q{ goto SKIP5; };
+EVAL q{ goto SKIP5; };
 $test5 = 0;
 SKIP5:
 #?pugs todo 'feature'
@@ -70,7 +70,7 @@ is(++$phase, 5, "phase completed");
 # this one tests "goto EXPR" syntax. pugs treats "last EXPR" as "last;" in r14915.
 
 our $test6 = 1;
-eval q{ goto 'SK' ~ 'IP6'; };
+EVAL q{ goto 'SK' ~ 'IP6'; };
 $test6 = 0;
 SKIP6:
 #?pugs todo 'feature'

@@ -78,8 +78,8 @@ plan 16;
     is $begin(), 'B', 'BEGIN {} runs only once';
 
     # Test END {} as rval:
-    #?niecza skip 'Excess arguments to eval, used 1 of 2 positionals'
-    ok !eval('my $end_val = END { 3 }'), "END {} can't be used as a rvalue";
+    #?niecza skip 'Excess arguments to EVAL, used 1 of 2 positionals'
+    ok !EVAL('my $end_val = END { 3 }'), "END {} can't be used as a rvalue";
 }
 
 # vim: ft=perl6

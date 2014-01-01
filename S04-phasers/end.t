@@ -10,7 +10,7 @@ eval_lives_ok 'my %rt112408 = END => "parsing clash with block-less END"',
 	      'Can use END as a bareword hash key (RT 112408)';
 
 my $a = 0;
-#?rakudo 2 todo 'lexicals and eval()'
+#?rakudo 2 todo 'lexicals and EVAL()'
 #?niecza todo
 eval_lives_ok 'my $x = 3; END { $a = $x * $x };',
               'and those from eval as well';

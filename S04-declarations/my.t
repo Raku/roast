@@ -8,7 +8,7 @@ plan 75;
 {
 
     eval_dies_ok('$x; my $x = 42', 'my() variable not yet visible prior to declaration');
-    is(eval('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
+    is(EVAL('my $x = 42; $x'), 42, 'my() variable is visible now (2)');
 }
 
 
@@ -88,8 +88,8 @@ my $d = 1;
 }
 is($d, 1, '$d has not changed');
 
-# eval() introduces new lexical scope
-is( eval('
+# EVAL() introduces new lexical scope
+is( EVAL('
 my $d = 1;
 { 
     my $d = 3 #OK not used
@@ -117,10 +117,10 @@ $d;
 
 # check my as simultaneous lvalue and rvalue
 
-is(eval('my $e1 = my $e2 = 42 #OK'), 42, 'can parse squinting my value');
-is(eval('my $e1 = my $e2 = 42; $e1 #OK'), 42, 'can capture squinting my value');
-is(eval('my $e1 = my $e2 = 42; $e2 #OK'), 42, 'can set squinting my variable');
-is(eval('my $x = 1, my $y = 2; $y #OK'), 2, 'precedence of my wrt = and ,');
+is(EVAL('my $e1 = my $e2 = 42 #OK'), 42, 'can parse squinting my value');
+is(EVAL('my $e1 = my $e2 = 42; $e1 #OK'), 42, 'can capture squinting my value');
+is(EVAL('my $e1 = my $e2 = 42; $e2 #OK'), 42, 'can set squinting my variable');
+is(EVAL('my $x = 1, my $y = 2; $y #OK'), 2, 'precedence of my wrt = and ,');
 
 # test that my (@array, @otherarray) correctly declares
 # and initializes both arrays
@@ -139,18 +139,18 @@ my $x = 0;
     is $result, 1, 'my in while cond seen from body';
 }
 
-is(eval('while my $x = 1 { last }; $x'), 1, 'my in while cond seen after');
+is(EVAL('while my $x = 1 { last }; $x'), 1, 'my in while cond seen after');
 
-is(eval('if my $x = 1 { $x } else { 0 }'), 1, 'my in if cond seen from then');
-is(eval('if not my $x = 1 { 0 } else { $x }'), 1, 'my in if cond seen from else');
-is(eval('if my $x = 1 { 0 } else { 0 }; $x'), 1, 'my in if cond seen after');
+is(EVAL('if my $x = 1 { $x } else { 0 }'), 1, 'my in if cond seen from then');
+is(EVAL('if not my $x = 1 { 0 } else { $x }'), 1, 'my in if cond seen from else');
+is(EVAL('if my $x = 1 { 0 } else { 0 }; $x'), 1, 'my in if cond seen after');
 
 # check proper scoping of my in loop initializer
 
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $x; last }; $result #OK'), 1, '1st my in loop cond seen from body');
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $y; last }; $result #OK'), 2, '2nd my in loop cond seen from body');
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $x #OK'), 1, '1st my in loop cond seen after');
-is(eval('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd my in loop cond seen after');
+is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $x; last }; $result #OK'), 1, '1st my in loop cond seen from body');
+is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { $result = $y; last }; $result #OK'), 2, '2nd my in loop cond seen from body');
+is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $x #OK'), 1, '1st my in loop cond seen after');
+is(EVAL('loop (my $x = 1, my $y = 2; $x > 0; $x--) { last }; $y #OK'), 2, '2nd my in loop cond seen after');
 
 
 # check that declaring lexical twice is noop
@@ -167,21 +167,21 @@ my $z = 42; #OK not used
     nok( $z.defined, 'my $z = $z; can not see the value of the outer $z');
 }
 
-# interaction of my and eval
+# interaction of my and EVAL
 # yes, it's weird... but that's the way it is
 # http://irclog.perlgeek.de/perl6/2009-03-19#i_1001177
 {
     sub eval_elsewhere($str) {
-        eval $str;
+        EVAL $str;
     }
     my $x = 4; #OK not used
     is eval_elsewhere('$x + 1'), 5, 
-       'eval() knows the pad where it is launched from';
+       'EVAL() knows the pad where it is launched from';
 
     ok eval_elsewhere('!$y.defined'),
        '... but initialization of variables might still happen afterwards';
 
-    # don't remove this line, or eval() will complain about 
+    # don't remove this line, or EVAL() will complain about 
     # $y not being declared
     my $y = 4; #OK not used
 }
@@ -203,9 +203,9 @@ my $z = 42; #OK not used
 
     {
         #?pugs todo
-        ok eval('not OUTER::<$x>.defined'), 'OUTER::<$x>';
+        ok EVAL('not OUTER::<$x>.defined'), 'OUTER::<$x>';
         #?pugs todo
-        ok eval('not SETTING::<$x>.defined'), 'SETTING::<$x>';
+        ok EVAL('not SETTING::<$x>.defined'), 'SETTING::<$x>';
         my $x; #OK not used
     }
 
@@ -224,7 +224,7 @@ my $z = 42; #OK not used
     #?pugs todo
     dies_ok { my Int $x = "abc" }, 'type error'; #OK
     #?pugs todo
-    dies_ok { eval '$x = "abc"'; my Int $x; }, 'also a type error';
+    dies_ok { EVAL '$x = "abc"'; my Int $x; }, 'also a type error';
 }
 
 {
@@ -285,7 +285,7 @@ eval_lives_ok 'multi f(@a) { }; multi f(*@a) { }; f(my @a = (1, 2, 3))',
 #?pugs todo
 {
     my $bad = 0;
-    dies_ok { eval '$bad = 1; no_such_routine()' },
+    dies_ok { EVAL '$bad = 1; no_such_routine()' },
         'dies on undeclared routines';
     nok $bad, '... and it does so before run time';
 }

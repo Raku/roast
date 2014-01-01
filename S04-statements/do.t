@@ -95,16 +95,16 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 
 #?rakudo 3 skip "Undeclared name A"
 #?pugs 3 todo
-is eval('my $i; A: do { $i++; last A; $i-- }; $i'), 1,
+is EVAL('my $i; A: do { $i++; last A; $i-- }; $i'), 1,
     "'last' works with label";
-is eval('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
+is EVAL('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
     "'next' works with label";
-is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
+is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     "'redo' works with label";
 
 #?rakudo skip 'last without loop construct'
 {
-    is eval('
+    is EVAL('
         my $i;
         do {
             $i++;
@@ -120,7 +120,7 @@ is eval('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
 # <audreyt> it can, and it will redo it
 #?rakudo skip 'redo without loop construct'
 {
-    is eval('
+    is EVAL('
         my $i;
         do {
             $i++;

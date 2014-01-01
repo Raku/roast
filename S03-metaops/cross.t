@@ -4,7 +4,7 @@ use Test;
 plan 28;
 
 # L<S03/List infix precedence/the cross operator>
-ok eval('<a b> X <c d>'), 'cross non-meta operator parses';
+ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
 
 {
     my @result = <a b> X <1 2>;
@@ -38,7 +38,7 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 }
 
 # L<S03/Cross operators>
-ok eval('<a b> X, <c d>'), 'cross metaoperator parses';
+ok EVAL('<a b> X, <c d>'), 'cross metaoperator parses';
 
 # L<S03/Cross operators/"string concatenating form is">
 #?pugs todo 'feature'

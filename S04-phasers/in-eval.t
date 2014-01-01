@@ -1,6 +1,6 @@
 use v6;
 
-# Test phasers in eval strings
+# Test phasers in EVAL strings
 
 use Test;
 
@@ -12,8 +12,8 @@ plan 35;
     my $h;
     my $handle;
 
-    eval '$handle = { $h ~= "1"; once { $h ~= "F" }; $h ~= "2" }';
-    ok $! !~~ Exception, 'eval once {...} works';
+    EVAL '$handle = { $h ~= "1"; once { $h ~= "F" }; $h ~= "2" }';
+    ok $! !~~ Exception, 'EVAL once {...} works';
 
     nok $h.defined, 'once {...} has not run yet';
     lives_ok { $handle() }, 'can run code with once block';
@@ -35,8 +35,8 @@ plan 35;
     my $h;
     my $handle;
 
-    eval '$handle = { $h ~= "r"; INIT { $h ~= "I" }; $h ~= "R" }';
-    ok $! !~~ Exception, 'eval INIT {...} works';
+    EVAL '$handle = { $h ~= "r"; INIT { $h ~= "I" }; $h ~= "R" }';
+    ok $! !~~ Exception, 'EVAL INIT {...} works';
     #?rakudo todo 'not sure'
     nok $h.defined, 'INIT did not run at compile time';
     lives_ok { $handle() }, 'can run code with INIT block';
@@ -56,9 +56,9 @@ plan 35;
     my $h;
     my $handle;
 
-    eval '$handle = { $h ~= "1"; CHECK { $h ~= "C" };'
+    EVAL '$handle = { $h ~= "1"; CHECK { $h ~= "C" };'
         ~ '$h ~= "2"; BEGIN { $h ~= "B" }; $h ~= "3" }';
-    ok $! !~~ Exception, 'eval CHECK {...} (and BEGIN {...}) works';
+    ok $! !~~ Exception, 'EVAL CHECK {...} (and BEGIN {...}) works';
 
     is $h, 'BC', 'CHECK and BEGIN blocks ran before run time';
     lives_ok { $handle() }, 'can run code with CHECK and BEGIN blocks';
@@ -71,8 +71,8 @@ plan 35;
     my $h;
     my $handle;
 
-    eval '$handle = { $h ~= "1"; BEGIN { $h ~= "B" }; $h ~= "2" }';
-    ok $! !~~ Exception, 'eval BEGIN {...} works';
+    EVAL '$handle = { $h ~= "1"; BEGIN { $h ~= "B" }; $h ~= "2" }';
+    ok $! !~~ Exception, 'EVAL BEGIN {...} works';
 
     is $h, 'B', 'BEGIN ran before run time';
     lives_ok { $handle() }, 'can run code with BEGIN block';
@@ -84,11 +84,11 @@ plan 35;
     my $handle;
 
     END {
-        is $h, '12E', 'the END {...} in eval has run already';
+        is $h, '12E', 'the END {...} in EVAL has run already';
     }
 
-    eval '$handle = { $h ~= "1"; END { $h ~= "E" }; $h ~= "2" }';
-    ok $! !~~ Exception, 'eval END {...} works';
+    EVAL '$handle = { $h ~= "1"; END { $h ~= "E" }; $h ~= "2" }';
+    ok $! !~~ Exception, 'EVAL END {...} works';
 
     is $h, '' , 'END {} has not run yet';
     lives_ok { $handle() }, 'can call code with END block';

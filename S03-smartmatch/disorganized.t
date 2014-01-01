@@ -8,7 +8,7 @@ This tests the smartmatch operator, defined in L<S03/"Smart matching">
 
 =end pod
 
-sub eval_elsewhere($code){ eval($code) }
+sub eval_elsewhere($code){ EVAL($code) }
 
 #L<S03/Smart matching/Any undef undefined not .defined>
 { 
@@ -52,7 +52,7 @@ sub eval_elsewhere($code){ eval($code) }
 
 You may be wondering what the heck is with all these try blocks.
 Prior to r12503, this test caused a horrible death of Pugs which
-magically went away when used inside an eval.  So the try blocks
+magically went away when used inside an EVAL.  So the try blocks
 caught that case.
 
 =end Explanation
@@ -90,7 +90,7 @@ caught that case.
     ok $result, 'C<all(@x) ~~ {...} when true for one';
 };
 
-# need to test in eval() since class definitions happen at compile time,
+# need to test in EVAL() since class definitions happen at compile time,
 # ie before the plan is set up.
 eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT 62196)';
