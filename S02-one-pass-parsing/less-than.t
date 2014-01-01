@@ -21,12 +21,12 @@ ok 3 > 0, "3 is greater than 0";
 # used to be a pugs regression
 #   ~< foo bar >
 # doesn't parse (as does +< foo bar >).
-is eval('~< foo bar >'), "foo bar", "~<...> is parsed correctly";
-is eval('+< foo bar >'),         2, "+<...> is parsed correctly";
-ok eval('?< foo bar >'),            "?<...> is parsed correctly";
+is EVAL('~< foo bar >'), "foo bar", "~<...> is parsed correctly";
+is EVAL('+< foo bar >'),         2, "+<...> is parsed correctly";
+ok EVAL('?< foo bar >'),            "?<...> is parsed correctly";
 
-is eval('~(< foo bar >)'), "foo bar", "~(<...>) is parsed correctly";
-is eval('+(< foo bar >)'),         2, "+(<...>) is parsed correctly";
-ok eval('?(< foo bar >)'),            "?(<...>) is parsed correctly";
+is EVAL('~(< foo bar >)'), "foo bar", "~(<...>) is parsed correctly";
+is EVAL('+(< foo bar >)'),         2, "+(<...>) is parsed correctly";
+ok EVAL('?(< foo bar >)'),            "?(<...>) is parsed correctly";
 
 # vim: ft=perl6

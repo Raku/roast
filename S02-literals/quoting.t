@@ -310,8 +310,8 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     #?pugs todo
     is(@q[0].perl, (:def).perl, ":pair in <<>>-quotes with no explicit value");
 
-    @q = "(eval failed)";
-    try { eval '@q = <<:p<moose>>>;' };
+    @q = "(EVAL failed)";
+    try { EVAL '@q = <<:p<moose>>>;' };
     #?niecza todo
     #?pugs todo
     is(@q[0].perl, (p => "moose").perl, ":pair<anglequoted>");

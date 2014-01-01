@@ -34,7 +34,7 @@ is($anon_block(), 1, '{} <anon block> works');
 #?niecza skip "Exception NYI"
 #?pugs   skip "Exception NYI"
 {
-    eval '$anon_block( 1 )';
+    EVAL '$anon_block( 1 )';
     #?rakudo todo 'Parrot support for zero-arg subs?'
     ok $! ~~ Exception, 'too many parameters';
 
@@ -44,7 +44,7 @@ is($anon_block(), 1, '{} <anon block> works');
     else {
         my $errmsg = ~$!;
 
-        eval '$anon_block( foo => "RT #64844" )';
+        EVAL '$anon_block( foo => "RT #64844" )';
         ok $! ~~ Exception, 'too many parameters';
         is ~$!, $errmsg, 'same error for named param as positional';
     }
@@ -92,8 +92,8 @@ my $two;
 # Hash (or sth. which provides appropriate tieing/&postcircumfix:<{
 # }>/whatever, but a Code should surely not support hash access).
 # Additionally, a smart compiler will detect thus errors at compile-time, so I
-# added an eval().  --iblech
-try { eval '0,{$one = 1}{$two = 2}' };
+# added an EVAL().  --iblech
+try { EVAL '0,{$one = 1}{$two = 2}' };
 ok(!defined($one), 'two blocks ({} {}) no semicolon after either,.. first block does not execute');
 is($two, 2, '... but second block does (parsed as hash subscript)');
 

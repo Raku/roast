@@ -65,7 +65,7 @@ RIGHT SQUARE BRACKET WITH TICK IN BOTTOM CORNER(U+298D/U+298E)';
     for keys %ps_pe {
         next if $_ eq '('; # skip '(' => ')' because q() is a sub call
         my $string = 'q' ~ $_ ~ 'abc' ~ %ps_pe{$_};
-        is eval($string), 'abc', $string ~ sprintf(' (U+%X/U+%X)',$_.ord,%ps_pe{$_}.ord);
+        is EVAL($string), 'abc', $string ~ sprintf(' (U+%X/U+%X)',$_.ord,%ps_pe{$_}.ord);
     }
 }
 

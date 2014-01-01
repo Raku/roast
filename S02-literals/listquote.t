@@ -32,7 +32,7 @@ ok( ?((1 | 3) < 3), '(...) < 3 no parsefail');
 eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 
 # WRONG: should be parsed as print() < 3
-# eval 'print < 3';
+# EVAL 'print < 3';
 # ok($!, 'print < 3 parsefail');
 
 
@@ -40,7 +40,7 @@ eval_dies_ok ':foo <1 2 3>', ':foo <1 2 3> parsefail';
 
 dies_ok { :foo <3 }, '<3 is comparison, but dies at run time';
 
-my $p = eval ':foo<1 2 3>';
+my $p = EVAL ':foo<1 2 3>';
 is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
 
 # Lists may contain newline characters

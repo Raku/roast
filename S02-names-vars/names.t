@@ -69,7 +69,7 @@ eval_dies_ok '::.^methods', ':: is not a valid package';
             'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
-    dies_ok { eval 'TestA::b(3, :foo)'},
+    dies_ok { EVAL 'TestA::b(3, :foo)'},
         'calling non-existing function in foreign class dies';;
     #?rakudo todo 'nom regression'
     #?niecza todo
@@ -110,7 +110,7 @@ isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #69752
 {
-    try { eval 'Module.new' };
+    try { EVAL 'Module.new' };
     ok "$!" ~~ / 'Module' /,
         'error message mentions name not recognized, no maximum recursion depth exceeded';
 }
@@ -121,9 +121,9 @@ eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
 
 # RT #58488 
 dies_ok {
-    eval 'class A { has $.a};  my $a = A.new();';
-    eval 'class A { has $.a};  my $a = A.new();';
-    eval 'class A { has $.a};  my $a = A.new();';
+    EVAL 'class A { has $.a};  my $a = A.new();';
+    EVAL 'class A { has $.a};  my $a = A.new();';
+    EVAL 'class A { has $.a};  my $a = A.new();';
 }, 'can *not* redefine a class in eval -- classes are package scoped';
 
 # RT #83874

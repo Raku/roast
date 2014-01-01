@@ -20,7 +20,7 @@ eval_lives_ok 'class Task { has $.a }; Task.new(a => 3 );',
 # L<S02/Bare identifiers/If a postdeclaration is not seen, the compile fails at CHECK
 # time>
 
-eval_dies_ok q[caffeine(eval('sub caffeine($a){~$a}'))],
+eval_dies_ok q[caffeine(EVAL('sub caffeine($a){~$a}'))],
         'Post declaration necessary';
 
 # vim: ft=perl6

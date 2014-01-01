@@ -42,11 +42,11 @@ is(
    'fmt and code interpolation behave well'
 );
 
-# These tests actually exercise what's a bug in eval() IMHO -- polettix
+# These tests actually exercise what's a bug in EVAL() IMHO -- polettix
 my $z;
 my $expected = 'hex-formatted ord of $x is 41';
 is(
-   eval(
+   EVAL(
       q[
          $y = "hex-formatted ord of \$x is {$x.ord().fmt('%x')}";
          $z = 1;
@@ -56,7 +56,7 @@ is(
    $expected,
    'evals ok'
 );
-ok($z, 'eval was *really* ok');
+ok($z, 'EVAL was *really* ok');
 is($y, $expected, 'fmt and code interpolation behave well');
 
 # vim: ft=perl6

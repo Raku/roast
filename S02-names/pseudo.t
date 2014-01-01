@@ -88,7 +88,7 @@ plan 142;
         }
     }
 
-    dies_ok { eval 'MY::A2' }, 'Cannot use MY::A2 directly from outer scope';
+    dies_ok { EVAL 'MY::A2' }, 'Cannot use MY::A2 directly from outer scope';
     dies_ok { MY::.{'A2'}.spies }, 'Cannot use MY::.{"A2"} from outer scope';
 
     sub callee { MY::.{'$*k'} }
@@ -198,9 +198,9 @@ plan 142;
         ok CORE::.<&not> === $real, 'CORE::.{} works when shadowed';
         ok &::($core)::not === $real, '::("CORE") works when shadowed';
 
-        ok eval('&CORE::not') === $real, '&CORE:: is not &SETTING::';
-        ok eval('CORE::.<&not>') === $real, 'CORE::.{} is not SETTING::';
-        ok eval('&::($core)::not') === $real, '::("CORE") is not SETTING';
+        ok EVAL('&CORE::not') === $real, '&CORE:: is not &SETTING::';
+        ok EVAL('CORE::.<&not>') === $real, 'CORE::.{} is not SETTING::';
+        ok EVAL('&::($core)::not') === $real, '::("CORE") is not SETTING';
     }
 
     sub f1() { }; sub f2() { }; sub f3() { }
@@ -380,9 +380,9 @@ my $x110 = 110; #OK
     my $unit = "UNIT";
     is $UNIT::x110, 110, '$UNIT:: works';
     is $::($unit)::x110, 110, '::("UNIT") works';
-    is eval('my $x110 = 112; $UNIT::x110'), 112, '$UNIT:: finds eval heads';
-    is eval('my $x110 = 112; $::($unit)::x110 #OK'), 112, '::("UNIT") finds eval heads';
-    my $f = eval('my $x110 is dynamic = 113; -> $fn { my $x110 is dynamic = 114; $fn(); } #OK');
+    is EVAL('my $x110 = 112; $UNIT::x110'), 112, '$UNIT:: finds eval heads';
+    is EVAL('my $x110 = 112; $::($unit)::x110 #OK'), 112, '::("UNIT") finds eval heads';
+    my $f = EVAL('my $x110 is dynamic = 113; -> $fn { my $x110 is dynamic = 114; $fn(); } #OK');
     is $f({ $CALLER::UNIT::x110 }), 113, 'CALLER::UNIT works';
     is $f({ $CALLER::($unit)::x110 }), 113, 'CALLER::UNIT works (indirect)';
 }
@@ -395,9 +395,9 @@ my $x110 = 110; #OK
     ok &SETTING::not(False), 'SETTING:: works';
     ok &::($setting)::not.(False), '::("SETTING") works';
 
-    ok eval('&SETTING::not(True)'), 'SETTING finds eval context';
-    ok eval('&::($setting)::not(True)'), '::("SETTING") finds eval context';
-    my $f = eval('-> $fn { $fn(); }');
+    ok EVAL('&SETTING::not(True)'), 'SETTING finds eval context';
+    ok EVAL('&::($setting)::not(True)'), '::("SETTING") finds eval context';
+    my $f = EVAL('-> $fn { $fn(); }');
     ok $f({ &CALLER::SETTING::not(True) }), 'CALLER::SETTING works';
     ok $f({ &CALLER::($setting)::not(True) }), 'CALLER::SETTING works (ind)';
 }

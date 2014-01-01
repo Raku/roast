@@ -33,10 +33,10 @@ my @tests = (
 {
     for @tests -> $obj {
         my $s = (~$obj).subst(/\n/, '␤');
-        ok eval($obj.perl) eq $obj,
-            "($s.perl()).perl returned something whose eval()ed stringification is unchanged";
-        is (eval($obj.perl).WHAT).gist, $obj.WHAT.gist,
-            "($s.perl()).perl returned something whose eval()ed .WHAT is unchanged";
+        ok EVAL($obj.perl) eq $obj,
+            "($s.perl()).perl returned something whose EVAL()ed stringification is unchanged";
+        is (EVAL($obj.perl).WHAT).gist, $obj.WHAT.gist,
+            "($s.perl()).perl returned something whose EVAL()ed .WHAT is unchanged";
     }
 }
 
@@ -69,40 +69,40 @@ my @tests = (
 
 {
     # beware: S02 says that .perl should evaluate the invocant in item
-    # context, so eval @thing.perl returns a scalar. Always.
+    # context, so EVAL @thing.perl returns a scalar. Always.
 
     # L<S02/Names and Variables/regenerate the object as a scalar in
     # item context>
 
 
     my @list = (1, 2);
-    push @list, eval (3, 4).perl;
+    push @list, EVAL (3, 4).perl;
     #?rakudo todo "List.perl bug"
     #?niecza todo
-    is +@list, 3, 'eval(@list.perl) gives a list, not an array ref';
+    is +@list, 3, 'EVAL(@list.perl) gives a list, not an array ref';
 }
 
 # RT #63724
 {
     my @original      = (1,2,3);
     my $dehydrated    = @original.perl;
-    my @reconstituted = @( eval $dehydrated );
+    my @reconstituted = @( EVAL $dehydrated );
 
     is @reconstituted, @original,
        "eval of .perl returns original for '$dehydrated'";
 
     @original      = (1,);
     $dehydrated    = @original.perl;
-    @reconstituted = @( eval $dehydrated );
+    @reconstituted = @( EVAL $dehydrated );
 
     is @reconstituted, @original,
-       "eval of .perl returns original for '$dehydrated'";
+       "EVAL of .perl returns original for '$dehydrated'";
 }
 
 # RT #65988
 {
     my $rt65988 = (\(1,2), \(3,4));
-    is_deeply eval( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
+    is_deeply EVAL( $rt65988.perl ), $rt65988, $rt65988.perl ~ '.perl';
 }
 
 done;

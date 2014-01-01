@@ -37,7 +37,7 @@ plan 99;
 #?pugs todo
 {
     my @a;
-    is eval(@a.perl).elems, 0, '@a.perl on uninitialized variable';
+    is EVAL(@a.perl).elems, 0, '@a.perl on uninitialized variable';
 }
 
 # array of strings
@@ -159,7 +159,7 @@ my @array2 = ("test", 1, Mu);
     my @array11 is shape(2,4);
 
     # XXX what should that test actually do?
-    ok(eval('@array11[2;0] = 12'), "push the value to a multidimension array");
+    ok(EVAL('@array11[2;0] = 12'), "push the value to a multidimension array");
 }
 
 {

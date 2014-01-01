@@ -33,7 +33,7 @@ character and thus should B<not> break the list.
 =end kwid
 
 #?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support eval() yet.";
+#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support EVAL() yet.";
 #?pugs emit   exit;
 #?pugs emit }
 
@@ -45,7 +45,7 @@ plan +@separators + @nonseparators + 3;
 
 for @separators -> $sep {
   my $str = "<$sep" ~ @list.join("$sep$sep") ~ "$sep>";
-  my @res = eval $str;
+  my @res = EVAL $str;
 
   my $vis = sprintf "%02x", ord $sep;
   is( @res, @list, "'\\x$vis\\x$vis' is properly parsed as list whitespace")
@@ -54,7 +54,7 @@ for @separators -> $sep {
 for @nonseparators -> $sep {
   my $ex = @list.join($sep);
   my $str = "<" ~$ex~ ">";
-  my @res = eval $str;
+  my @res = EVAL $str;
 
   my $vis = sprintf "%02x", ord $sep;
   #?rakudo emit if $sep eq "\xa0" {

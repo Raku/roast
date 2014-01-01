@@ -31,7 +31,7 @@ plan 5;
 # The following commented-out tests are currnetly unspecified:
 # others will be added later, or you can do it.
 
-#ok eval('
+#ok EVAL('
 #=begin DATA LABEL1
 #LABEL1.1
 #LABEL1.2
@@ -44,12 +44,12 @@ plan 5;
 #=end DATA
 #'), "=begin DATA works", :todo;
 
-#is(eval('%=DATA<LABEL1>[0]'), 'LABEL1.1', '@=DATA<LABEL1>[0] is correct', :todo);
-#is(eval('%=DATA<LABEL1>[2]'), 'LABEL1.3', '@=DATA<LABEL1>[2] is correct', :todo);
-#is(eval('~ %=DATA<LABEL1>'), 'LABEL1.1LABEL1.2LABEL1.3', '~ %=DATA<LABEL1> is correct', :todo);
+#is(EVAL('%=DATA<LABEL1>[0]'), 'LABEL1.1', '@=DATA<LABEL1>[0] is correct', :todo);
+#is(EVAL('%=DATA<LABEL1>[2]'), 'LABEL1.3', '@=DATA<LABEL1>[2] is correct', :todo);
+#is(EVAL('~ %=DATA<LABEL1>'), 'LABEL1.1LABEL1.2LABEL1.3', '~ %=DATA<LABEL1> is correct', :todo);
 
-#is(eval('~ $=LABEL2'), 'LABEL2.1LABEL2.2', '~ $=LABEL2 is correct', :todo);
-#is(eval('$=LABEL2[1]'), 'LABEL2.2', '$=LABEL2[1] is correct', :todo);
+#is(EVAL('~ $=LABEL2'), 'LABEL2.1LABEL2.2', '~ $=LABEL2 is correct', :todo);
+#is(EVAL('$=LABEL2[1]'), 'LABEL2.2', '$=LABEL2[1] is correct', :todo);
 
 =begin DATA
 hello, world!

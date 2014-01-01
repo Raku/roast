@@ -124,7 +124,7 @@ use Test;
             ) 3, 'comments can be nested with same brackets';
 
     # TODO:
-    # ok eval(" #`{ comment }") fails with an error as it tries to execute
+    # ok EVAL(" #`{ comment }") fails with an error as it tries to execute
     # comment() before seeing that I meant #`{ comment within this string.
 
 #?pugs todo 'bug'
@@ -156,7 +156,7 @@ use Test;
 #   delimiter quoting>
 {
     my $a;
-    lives_ok { eval('$a = q{ 32 }') }, 'sanity check';
+    lives_ok { EVAL('$a = q{ 32 }') }, 'sanity check';
     is $a, ' 32 ', 'sanity check';
 
     $a = Nil;
@@ -174,7 +174,7 @@ use Test;
 # L<S02/Multiline Comments/POD sections may be>
 eval_lives_ok( q{{
 
-my $outerVal = eval(
+my $outerVal = EVAL(
     q{my $var = 1;
 
 =begin comment
@@ -194,7 +194,7 @@ is $outerVal, "bar", '=begin comment without =cut parses to whitespace in code';
 # L<S02/Multiline Comments/"single paragraph comments">
 eval_lives_ok( q{{
 
-my $outerVal = eval(
+my $outerVal = EVAL(
     q{10 +
 
 =comment TimToady is here!
@@ -208,7 +208,7 @@ is $outerVal, 11, 'Single paragraph Pod parses to whitespace in code';
 #?niecza todo
 eval_lives_ok( q{{
 
-my $outerVal = eval(
+my $outerVal = EVAL(
     q{20 +
 
 =comment TimToady and audreyt

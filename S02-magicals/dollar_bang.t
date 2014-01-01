@@ -24,7 +24,7 @@ ok $!.defined, 'Calling a nonexisting method defines $!';
 my $called;
 sub foo(Str $s) { return $called++ };    #OK not used
 my @a;
-try { eval 'foo(@a,@a)' };
+try { EVAL 'foo(@a,@a)' };
 ok $!.defined, 'Calling a subroutine with a nonmatching signature sets $!';
 ok !$called, 'The subroutine also was not called';
 
@@ -60,7 +60,7 @@ ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
     #is $!, 'goodbye', '$! has correct value after try';
     ok ($!), '$! as boolean works (true)';
 
-    try { eval q[ die('farewell'); ] };
+    try { EVAL q[ die('farewell'); ] };
     ok defined($!.perl), '$! has working Perl 6 object methods after eval';
     ok ($!.WHAT ~~ Exception), '$! is Exception object after eval';
     # Although S29-context/die.t tests $! being set after die, it's not

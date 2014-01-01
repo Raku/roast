@@ -4,7 +4,7 @@ use Test;
 
 plan 52;
 
-sub try_eval($str) { try eval $str }
+sub try_eval($str) { try EVAL $str }
 
 # L<S02/"Unicode Semantics"/"Unicode horizontal whitespace">
 

@@ -226,7 +226,7 @@ eval_dies_ok ':0<0>', ':0<...> is illegal';
 
 for 2..36 {
     #?pugs skip "todo"
-    is eval(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
+    is EVAL(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
 }
 
 # vim: ft=perl6

@@ -12,7 +12,7 @@ plan 2;
 
     my %hash = ("foo", "bar");
     #?pugs todo
-    dies_ok { eval '%hash <foo>; 1'}, '%hash \s+ <subscript> doesnt parse';
+    dies_ok { EVAL '%hash <foo>; 1'}, '%hash \s+ <subscript> doesnt parse';
 };
 
 # vim: ft=perl6

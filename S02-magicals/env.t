@@ -72,7 +72,7 @@ eval_dies_ok("%ENV", '%ENV not visible by default');
 # Importation must be lexical
 #?pugs todo 'bug'
 {
-    try { eval "%ENV" };
+    try { EVAL "%ENV" };
     ok $!.defined, '%ENV not visible by after lexical import scope';
     1;
 }

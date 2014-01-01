@@ -170,7 +170,7 @@ sub f9 (:$bar!) { WHAT($bar) }
         sub method submethod macro multi proto only regex token
         rule constant enum subset
     > { 
-        is eval("($_ => 1).key"), $_, "Pair with '$_' as key" 
+        is EVAL("($_ => 1).key"), $_, "Pair with '$_' as key" 
     }
 }
 

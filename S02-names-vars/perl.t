@@ -64,7 +64,7 @@ my @tests = (
 );
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
-#?pugs emit   skip_rest "eval() not yet implemented in $?PUGS_BACKEND.";
+#?pugs emit   skip_rest "EVAL() not yet implemented in $?PUGS_BACKEND.";
 #?pugs emit   exit;
 #?pugs emit }
 
@@ -77,10 +77,10 @@ my @tests = (
 {
     for @tests -> $obj {
         my $s = (~$obj).subst(/\n/, '␤');
-        ok eval($obj.perl) eq $obj,
-            "($s.perl()).perl returned something whose eval()ed stringification is unchanged";
-        is WHAT(eval($obj.perl)).gist, $obj.WHAT.gist,
-            "($s.perl()).perl returned something whose eval()ed .WHAT is unchanged";
+        ok EVAL($obj.perl) eq $obj,
+            "($s.perl()).perl returned something whose EVAL()ed stringification is unchanged";
+        is WHAT(EVAL($obj.perl)).gist, $obj.WHAT.gist,
+            "($s.perl()).perl returned something whose EVAL()ed .WHAT is unchanged";
     }
 }
 
@@ -113,7 +113,7 @@ my @tests = (
 
 {
     # test a bug reported by Chewie[] - apparently this is from S03
-    is(eval((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");
+    is(EVAL((("f","oo","bar").keys).perl), <0 1 2>, ".perl on a .keys list");
 }
 
 
@@ -139,12 +139,12 @@ my @tests = (
 
     ok $t1_new ne $t1_init, 'changing object changes .perl output';
 
-    # TODO: more tests that show eval($t1_init) has the same guts as $t1.
+    # TODO: more tests that show EVAL($t1_init) has the same guts as $t1.
     #?pugs todo
     ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .perl output';
 
     # RT #62002 -- validity of default .perl
-    my $t2_init = eval($t1_init).perl;
+    my $t2_init = EVAL($t1_init).perl;
     is $t1_init, $t2_init, '.perl on user-defined type roundtrips okay';
 }
 
@@ -164,13 +164,13 @@ my @tests = (
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     #?niecza skip '>>>Stub code executed'
     #?pugs todo
-    ok eval(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
+    ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }
 
 # RT #69869
 {
     is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
-    is eval( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and eval'd is Rat";
+    is EVAL( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and eval'd is Rat";
 }
 
 
@@ -181,7 +181,7 @@ my @tests = (
     my @a;
     ([0, 0], [1, 1]).grep({@a.push: .perl; 1}).eager;
     for @a {
-        my $n = eval($_);
+        my $n = EVAL($_);
         isa_ok $n, Array, '.perl in .grep works - type';
         is $n.elems, 2, '.perl in .grep works - number of elems';
         is $n[0], $n[1], '.perl in .grep works - element equality';
@@ -193,7 +193,7 @@ my @tests = (
 #?pugs skip "doesn't have encode()"
 {
     my Blob $a = "asdf".encode();
-    is eval($a.perl).decode("utf8"), "asdf";
+    is EVAL($a.perl).decode("utf8"), "asdf";
 }
 
 done;
