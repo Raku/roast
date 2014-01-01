@@ -146,7 +146,7 @@ plan 28;
 
     dies_ok { <1 2 3>.rt62836 },
             'call to user-declared sub in Parcel:: class dies';
-    try { eval '<1 2 3>.rt62836' };
+    try { EVAL '<1 2 3>.rt62836' };
     #?pugs 2 todo
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     ok "$!" ~~ /Parcel/,    'error message contains name of class';

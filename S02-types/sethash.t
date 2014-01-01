@@ -195,7 +195,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $c;
     lives_ok { $str = $s.perl }, ".perl lives";
     isa_ok $str, Str, "... and produces a string";
-    lives_ok { $c = eval $str }, ".perl.eval lives";
+    lives_ok { $c = EVAL $str }, ".perl.eval lives";
     isa_ok $c, SetHash, "... and produces a SetHash";
     is showset($c), showset($s), "... and it has the correct values";
 }

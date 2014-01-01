@@ -24,8 +24,8 @@ for @inttypes -> $type {
         $minval = -(2**($len - 1));
     }
 
-    is(eval("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
-    is(eval("my $type \$var = $minval"), $minval, "$type can be $minval");
+    is(EVAL("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
+    is(EVAL("my $type \$var = $minval"), $minval, "$type can be $minval");
     #?pugs 5 todo
     eval_dies_ok("my $type \$var = {$maxval+1}", "$type cannot be {$maxval+1}");
     eval_dies_ok("my $type \$var = {$minval-1}", "$type cannot be {$minval-1}");
@@ -34,8 +34,8 @@ for @inttypes -> $type {
     eval_dies_ok("my $type \$var = NaN", "$type cannot be NaN");
 
     #?rakudo 2 skip "Cannot modify an immutable value"
-    is(eval("my $type \$var = 0; \$var++; \$var"), 1, "$type \$var++ works");
-    is(eval("my $type \$var = 1; \$var--; \$var"), 0, "$type \$var-- works");
+    is(EVAL("my $type \$var = 0; \$var++; \$var"), 1, "$type \$var++ works");
+    is(EVAL("my $type \$var = 1; \$var--; \$var"), 0, "$type \$var-- works");
 }
 
 # vim: ft=perl6

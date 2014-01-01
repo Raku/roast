@@ -409,7 +409,7 @@ Please use the :exists adverb instead.
 TEXT
 } #2
 
-# EVAL() and .eval
+# eval() and .eval
 #?niecza skip 'is DEPRECATED NYI'
 #?pugs   skip 'is DEPRECATED NYI'
 #?rakudo.jvm skip 'tracebacks in deprecations'

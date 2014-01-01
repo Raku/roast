@@ -6,18 +6,18 @@ use Test;
 
 plan 65;
 
-isa_ok( eval(1.Num.perl), Num, 'eval 1.Num.perl is Num' );
-is_approx( eval(1.Num.perl), 1, 'eval 1.Num.perl is 1' );
-isa_ok( eval(0.Num.perl), Num, 'eval 0.Num.perl is Num' );
-is_approx( eval(0.Num.perl), 0, 'eval 0.Num.perl is 0' );
-isa_ok( eval((-1).Num.perl), Num, 'eval -1.Num.perl is Num' );
-is_approx( eval((-1).Num.perl), -1, 'eval -1.Num.perl is -1' );
-isa_ok( eval(1.1.Num.perl), Num, 'eval 1.1.Num.perl is Num' );
-is_approx( eval(1.1.perl), 1.1, 'eval 1.1.Num.perl is 1.1' );
-isa_ok( eval((-1.1).Num.perl), Num, 'eval -1.1.Num.perl is Num' );
-is_approx( eval((-1.1).perl), -1.1, 'eval -1.1.Num.perl is -1.1' );
-isa_ok( eval(1e100.Num.perl), Num, 'eval 1e100.Num.perl is Num' );
-is_approx( eval(1e100.Num.perl), 1e100, 'eval 1e100.Num.perl is 1' );
+isa_ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
+is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
+isa_ok( EVAL(0.Num.perl), Num, 'EVAL 0.Num.perl is Num' );
+is_approx( EVAL(0.Num.perl), 0, 'EVAL 0.Num.perl is 0' );
+isa_ok( EVAL((-1).Num.perl), Num, 'EVAL -1.Num.perl is Num' );
+is_approx( EVAL((-1).Num.perl), -1, 'EVAL -1.Num.perl is -1' );
+isa_ok( EVAL(1.1.Num.perl), Num, 'EVAL 1.1.Num.perl is Num' );
+is_approx( EVAL(1.1.perl), 1.1, 'EVAL 1.1.Num.perl is 1.1' );
+isa_ok( EVAL((-1.1).Num.perl), Num, 'EVAL -1.1.Num.perl is Num' );
+is_approx( EVAL((-1.1).perl), -1.1, 'EVAL -1.1.Num.perl is -1.1' );
+isa_ok( EVAL(1e100.Num.perl), Num, 'EVAL 1e100.Num.perl is Num' );
+is_approx( EVAL(1e100.Num.perl), 1e100, 'EVAL 1e100.Num.perl is 1' );
 
 {
     my $a = 1; "$a";

@@ -34,15 +34,15 @@ is $u.chars, 1, '.chars defaults to .graphs';
             E0]";
 
 #?pugs 9 todo ''
-is eval('substr $u, 3.as(Bytes),  1.as(Bytes)'),  "\x[41]",             'substr with Bytes as units - utf8';
-is eval('substr $u, 3.as(Codes),  1.as(Codes)'),  "\x[0300]",           'substr with Codes as units - utf8';
-is eval('substr $u, 4.as(Graphs), 1.as(Graphs)'), "\x[E0]",             'substr with Graphs as units - utf8';
-is eval('substr $u, 3.as(Graphs), 1.as(Codes)'),  "\x[41]",             'substr with Graphs and Codes as units 1 - utf8';
-is eval('substr $u, 4.as(Codes),  1.as(Graphs)'), "\x[41, 0302, 0323]", 'substr with Graphs and Codes as units 2 - utf8';
-is eval('substr $u, 4.as(Bytes),  1.as(Codes)'),  "\x[0300]",           'substr with Bytes and Codes as units 1 - utf8';
-is eval('substr $u, 1.as(Codes),  2.as(Bytes)'),  "\x[E1]",             'substr with Bytes and Codes as units 2 - utf8';
-is eval('substr $u, 3.as(Bytes),  1.as(Graphs)'), "\x[41, 0300]",       'substr with Bytes and Graphs as units 1 - utf8';
-is eval('substr $u, 3.as(Graphs), 1.as(Bytes)'),  "\x[41]",             'substr with Bytes and Graphs as units 2 - utf8';
+is EVAL('substr $u, 3.as(Bytes),  1.as(Bytes)'),  "\x[41]",             'substr with Bytes as units - utf8';
+is EVAL('substr $u, 3.as(Codes),  1.as(Codes)'),  "\x[0300]",           'substr with Codes as units - utf8';
+is EVAL('substr $u, 4.as(Graphs), 1.as(Graphs)'), "\x[E0]",             'substr with Graphs as units - utf8';
+is EVAL('substr $u, 3.as(Graphs), 1.as(Codes)'),  "\x[41]",             'substr with Graphs and Codes as units 1 - utf8';
+is EVAL('substr $u, 4.as(Codes),  1.as(Graphs)'), "\x[41, 0302, 0323]", 'substr with Graphs and Codes as units 2 - utf8';
+is EVAL('substr $u, 4.as(Bytes),  1.as(Codes)'),  "\x[0300]",           'substr with Bytes and Codes as units 1 - utf8';
+is EVAL('substr $u, 1.as(Codes),  2.as(Bytes)'),  "\x[E1]",             'substr with Bytes and Codes as units 2 - utf8';
+is EVAL('substr $u, 3.as(Bytes),  1.as(Graphs)'), "\x[41, 0300]",       'substr with Bytes and Graphs as units 1 - utf8';
+is EVAL('substr $u, 3.as(Graphs), 1.as(Bytes)'),  "\x[41]",             'substr with Bytes and Graphs as units 2 - utf8';
 
 
 #vim: ft=perl6

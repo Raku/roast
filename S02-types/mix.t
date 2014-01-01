@@ -209,7 +209,7 @@ sub showkv($x) {
     lives_ok { $s = $m.perl }, ".perl lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives_ok { $c = eval $s }, ".perl.eval lives";
+    lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
     isa_ok $c, Mix, "... and produces a Mix";
     is showkv($c), showkv($m), "... and it has the correct values";
 }

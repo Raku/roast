@@ -92,7 +92,7 @@ my @tests = (
 
     #?pugs skip 'hanging test'
     #?niecza skip 'hanging test'
-    is ~$foo.perl.eval, ~$foo,
+    is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a recursive hashref";
 }
 
@@ -107,7 +107,7 @@ my @tests = (
 
     #?pugs skip 'hanging test'
     #?niecza skip 'hanging test'
-    is ~$foo.perl.eval, ~$foo,
+    is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
 }
 
@@ -170,7 +170,7 @@ my @tests = (
 # RT #69869
 {
     is 1.0.WHAT.gist, Rat.gist, '1.0 is Rat';
-    is EVAL( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and eval'd is Rat";
+    is EVAL( 1.0.perl ).WHAT.gist, Rat.gist, "1.0 perl'd and EVAL'd is Rat";
 }
 
 

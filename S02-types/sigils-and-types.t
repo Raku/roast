@@ -24,14 +24,14 @@ ok $scalar ~~ Any, 'value contained in a $var does Mu';
     ok @array.does(Positional), 'generic val in a @var is converted to Positional';
 }
 
-ok eval('List').does(Positional), "List does Positional";
-ok eval('Array').does(Positional), "Array does Positional";
-ok eval('Range').does(Positional), "Range does Positional";
-ok eval('Parcel').does(Positional), "Parcel does Positional";
+ok EVAL('List').does(Positional), "List does Positional";
+ok EVAL('Array').does(Positional), "Array does Positional";
+ok EVAL('Range').does(Positional), "Range does Positional";
+ok EVAL('Parcel').does(Positional), "Parcel does Positional";
 #?niecza skip 'Undeclared name Buf'
-ok eval('Buf').does(Positional), "Buf does Positional";
+ok EVAL('Buf').does(Positional), "Buf does Positional";
 #?rakudo todo "Capture does Positional"
-ok eval('Capture').does(Positional), "Capture does Positional";
+ok EVAL('Capture').does(Positional), "Capture does Positional";
 
 my %hash;
 #?pugs todo 'feature'
@@ -40,13 +40,13 @@ ok %hash.does(Associative), 'uninitialized %var does Associative';
 ok %hash.does(Associative), 'value in %var does Associative';
 
 #?niecza todo
-ok eval('Pair').does(Associative), "Pair does Associative";
-ok eval('Set').does(Associative), "Set does Associative";
-ok eval('Bag').does(Associative), "Bag does Associative";
+ok EVAL('Pair').does(Associative), "Pair does Associative";
+ok EVAL('Set').does(Associative), "Set does Associative";
+ok EVAL('Bag').does(Associative), "Bag does Associative";
 #?niecza skip 'Undeclared name QuantHash'
-ok eval('QuantHash').does(Associative), "QuantHash does Associative";
+ok EVAL('QuantHash').does(Associative), "QuantHash does Associative";
 #?rakudo todo "Capture does Associative"
-ok eval('Capture').does(Associative), "Capture does Associative";
+ok EVAL('Capture').does(Associative), "Capture does Associative";
 
 
 sub foo {}

@@ -10,14 +10,14 @@ sub empty_do { do {} }
 sub empty_branch_true { if 1 {} else { 1; } }
 sub empty_branch_false { if 0 { 1; } else {} }
 sub bare_return { return; }
-sub rt74448 { eval '' }
+sub rt74448 { EVAL '' }
 
 ok empty_sub()          === Nil, 'empty sub returns Nil';
 ok empty_do()           === Nil, 'do {} is Nil';
 ok empty_branch_true()  === Nil, 'if 1 {} is Nil';
 ok empty_branch_false() === Nil, 'else {} is Nil';
 ok bare_return()        === Nil, 'bare return returns Nil';
-ok rt74448()            === Nil, 'eval of empty string is Nil';
+ok rt74448()            === Nil, 'EVAL of empty string is Nil';
 
 nok Nil.defined, 'Nil is not defined';
 ok  ().defined,  '() is defined';

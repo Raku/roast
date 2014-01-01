@@ -124,7 +124,7 @@ dies_ok {
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
-}, 'can *not* redefine a class in eval -- classes are package scoped';
+}, 'can *not* redefine a class in EVAL -- classes are package scoped';
 
 # RT #83874
 {

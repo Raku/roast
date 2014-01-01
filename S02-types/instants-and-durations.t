@@ -12,7 +12,7 @@ plan 12;
     isa_ok $i - 1/3, Instant, 'Instant - Rat ~~ Instant';
 }
 
-isa_ok eval('now +300'), Instant, 'now is a term, not a function';
+isa_ok EVAL('now +300'), Instant, 'now is a term, not a function';
 
 # L<S02/Immutable types/'you may not add two instants'>
 

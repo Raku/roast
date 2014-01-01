@@ -18,13 +18,13 @@ subset Even of Int where { $_ % 2 == 0 };
 };
 
 #?pugs todo
-dies_ok { eval('my Even $x = 3') },
+dies_ok { EVAL('my Even $x = 3') },
               "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
 #?niecza todo
 #?pugs todo
-dies_ok { eval('Even.new') }, 'Cannot instantiate a subtype';
+dies_ok { EVAL('Even.new') }, 'Cannot instantiate a subtype';
 
 #?pugs skip "can't find Even"
 {

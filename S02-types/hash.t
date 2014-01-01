@@ -197,7 +197,7 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 #?pugs todo
 {
-    dies_ok { eval ' @%(a => <b>)<a>' },
+    dies_ok { EVAL ' @%(a => <b>)<a>' },
      "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
 

@@ -48,7 +48,7 @@ my @tests = (
 
     #?pugs skip 'hanging test'
     #?niecza skip 'hanging test'
-    is ~$foo.perl.eval, ~$foo,
+    is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a recursive arrayref";
 }
 
@@ -89,7 +89,7 @@ my @tests = (
     my @reconstituted = @( EVAL $dehydrated );
 
     is @reconstituted, @original,
-       "eval of .perl returns original for '$dehydrated'";
+       "EVAL of .perl returns original for '$dehydrated'";
 
     @original      = (1,);
     $dehydrated    = @original.perl;

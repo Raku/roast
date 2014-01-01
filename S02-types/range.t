@@ -52,7 +52,7 @@ is ('a'..'a'), [< a >], 'got the right array';
     $x++ for (1..4).reverse;
     is $x, 4, '(1..4).reverse still turns into a list of four items';
     my $y = 0;
-    $y++ for @( eval((1..4).reverse.perl) );
+    $y++ for @( EVAL((1..4).reverse.perl) );
     is $y, 4, '(1..4).reverse.perl returns something useful';
 }
 
