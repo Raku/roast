@@ -430,7 +430,7 @@ TEXT
     is Deprecation.report, qq:to/TEXT/.chop, 'deprecation "1+1".eval';
 Saw 1 call to deprecated code during execution.
 ================================================================================
-Method eval (from GLOBAL) called at:
+Method eval (from Cool) called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
 Please use 'EVAL' instead.
 --------------------------------------------------------------------------------
