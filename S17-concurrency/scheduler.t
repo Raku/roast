@@ -1,11 +1,17 @@
 use v6;
 use Test;
 
-plan 54;
+plan 55;
 
 # real scheduling here
 my $name = $*SCHEDULER.^name;
 ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
+
+{
+    my $loads = $*SCHEDULER.loads;
+    ok $loads == 0, "$name returns a value before cuing";
+}
+
 
 {
     my $x = False;
