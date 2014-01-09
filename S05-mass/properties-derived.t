@@ -134,7 +134,8 @@ ok("\c[BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE]\c[KATAKANA MIDDLE DOT]" ~~ m/<:
 ok("\x[8AB0]" ~~ m/^<:Ideographic>$/, q{Match <:Ideographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<:!Ideographic>$/ ), q{Don't match negated <Ideographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<-:Ideographic>$/ ), q{Don't match inverted <Ideographic>} );
-#?rakudo 3 skip 'icu problems'
+#?rakudo.jvm 3 skip 'icu problems'
+#?rakudo.parrot 3 skip 'icu problems'
 #?niecza 3 todo
 ok(!( "\x[9FC4]"  ~~ m/^<:Ideographic>$/ ), q{Don't match unrelated <Ideographic>} );
 #?pugs todo
@@ -226,7 +227,8 @@ ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<-:NoncharacterCodePoint>$/, q{Match rela
 
 # OtherAlphabetic
 
-#?rakudo 42 skip "isOther* not implemented"
+#?rakudo.jvm 42 skip "isOther* not implemented"
+#?rakudo.parrot 42 skip "isOther* not implemented"
 #?pugs todo
 ok("\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:OtherAlphabetic>$/, q{Match <:OtherAlphabetic>} );
 ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:!OtherAlphabetic>$/ ), q{Don't match negated <OtherAlphabetic>} );
@@ -391,7 +393,8 @@ ok("\x[3C9D]\c[EXCLAMATION MARK]" ~~ m/<:TerminalPunctuation>/, q{Match unanchor
 ok("\x[7896]" ~~ m/^<:UnifiedIdeograph>$/, q{Match <:UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<:!UnifiedIdeograph>$/ ), q{Don't match negated <UnifiedIdeograph>} );
 ok(!( "\x[7896]" ~~ m/^<-:UnifiedIdeograph>$/ ), q{Don't match inverted <UnifiedIdeograph>} );
-#?rakudo 3 skip 'icu'
+#?rakudo.jvm 3 skip 'icu'
+#?rakudo.parrot 3 skip 'icu'
 #?niecza 3 todo
 ok(!( "\x[9FC4]"  ~~ m/^<:UnifiedIdeograph>$/ ), q{Don't match unrelated <UnifiedIdeograph>} );
 #?pugs todo
@@ -508,7 +511,8 @@ ok("\x[D7A4]\x[C276]" ~~ m/<:ID_Start>/, q{Match unanchored (Lu + Ll + Lt + Lm +
 ok("\x[949B]" ~~ m/^<:ID_Continue>$/, q{Match (ID_Start + Mn + Mc + Nd + Pc)} );
 ok(!( "\x[949B]" ~~ m/^<:!ID_Continue>$/ ), q{Don't match negated (ID_Start + Mn + Mc + Nd + Pc)} );
 ok(!( "\x[949B]" ~~ m/^<-:ID_Continue>$/ ), q{Don't match inverted (ID_Start + Mn + Mc + Nd + Pc)} );
-#?rakudo 3 skip 'icu'
+#?rakudo.jvm 3 skip 'icu'
+#?rakudo.parrot 3 skip 'icu'
 #?niecza 3 todo
 ok(!( "\x[9FC4]"  ~~ m/^<:ID_Continue>$/ ), q{Don't match unrelated (ID_Start + Mn + Mc + Nd + Pc)} );
 #?pugs todo
@@ -520,7 +524,8 @@ ok("\x[9FC4]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + 
 
 # Any             # Any character
 
-#?rakudo 4 skip 'isAny not implemented'
+#?rakudo.jvm 4 skip 'isAny not implemented'
+#?rakudo.parrot 4 skip 'isAny not implemented'
 #?pugs todo
 ok("\x[C709]" ~~ m/^<:Any>$/, q{Match (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<:!Any>$/ ), q{Don't match negated (Any character)} );
@@ -531,7 +536,8 @@ ok("\x[C709]" ~~ m/<:Any>/, q{Match unanchored (Any character)} );
 # Assigned        # Any non-Cn character (i.e. synonym for \P{Cn})
 
 
-#?rakudo 7 skip 'isAssigned not implemented'
+#?rakudo.jvm 7 skip 'isAssigned not implemented'
+#?rakudo.parrot 7 skip 'isAssigned not implemented'
 #?pugs todo
 ok("\x[C99D]" ~~ m/^<:Assigned>$/, q<Match (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 ok(!( "\x[C99D]" ~~ m/^<:!Assigned>$/ ), q<Don't match negated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
@@ -547,7 +553,8 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 # Unassigned      # Synonym for \p{Cn}
 
 
-#?rakudo 7 skip 'isUnassigned not implemented'
+#?rakudo.jvm 7 skip 'isUnassigned not implemented'
+#?rakudo.parrot 7 skip 'isUnassigned not implemented'
 #?niecza 3 todo
 #?pugs todo
 ok("\x[27EC]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
@@ -565,7 +572,8 @@ ok("\c[RIGHT OUTER JOIN]\x[27EC]" ~~ m/<:Unassigned>/, q<Match unanchored (Synon
 # Common          # Codepoint not explicitly assigned to a script
 
 
-#?rakudo 10 skip 'isCommon not implemented'
+#?rakudo.jvm 10 skip 'isCommon not implemented'
+#?rakudo.parrot 10 skip 'isCommon not implemented'
 #?niecza 3 todo
 #?pugs todo
 ok("\x[0C7E]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
