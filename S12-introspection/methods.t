@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 57;
+plan 58;
 
 =begin pod
 
@@ -153,6 +153,14 @@ is @methods[0].name, 'bar', 'methods call found public method in subclass (with 
     lives_ok { { $^a }.^methods.perl }, 'Can .perl methods of a block';
     # RT #108968
     lives_ok { :(Int).^methods>>.gist }, 'Can >>.gist methods of a Signature';
+}
+
+# RT #76648
+# order of ^methods
+
+{
+    class Foo { has $.bar; has $.baz; has $.antler }; 
+    is Foo.^methods.join(","), "bar,baz,antler", "order of ^methods consistent";
 }
 
 # vim: ft=perl6
