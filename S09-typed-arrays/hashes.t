@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 33;
 
 # L<S09/Typed arrays>
 
@@ -55,6 +55,10 @@ plan 30;
     is %h{2}, 'b', "b did the assignment work";
     is %h{3}, 'c', "b did the assignment work";
     is %h{4}, 'd', "b did the assignment work";
+
+    ok %h{2}:exists, ':exists adverb works with key constraint hashes';
+    is %h{2}:delete, 'b', ':delete adverb works with key constraint hashes';
+    ok %h{2}:!exists, ':delete adverb works with key constraint hashes';
 } #10
 
 # vim: ft=perl6
