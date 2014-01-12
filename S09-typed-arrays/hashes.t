@@ -59,6 +59,6 @@ plan 33;
     ok %h{2}:exists, ':exists adverb works with key constraint hashes';
     is %h{2}:delete, 'b', ':delete adverb works with key constraint hashes';
     ok %h{2}:!exists, ':delete adverb works with key constraint hashes';
-} #10
+} #13
 
 # vim: ft=perl6
