@@ -1,8 +1,8 @@
-    use v6;
+use v6;
 
 use Test;
 
-plan 10;
+plan 11;
 
 =begin pod
 
@@ -53,6 +53,13 @@ eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
     try { EVAL 'sub rt72082(@a, $b) {}; rt72082(5)' };
     my $error = ~$!;
     ok $error ~~ / 'will never work' .* 'Expected' .* '(@a, $b)' /
+}
+
+# RT #76368
+{
+    try { EVAL 'sub foo(Str) {}; foo 42' };
+    my $error = ~$!;
+    ok $error ~~ / 'will never work' .* 'Expected' .* 'Str' /
 }
 
 # vim: ft=perl6
