@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 5;
+plan 6;
 
 grammar WithMethod {
     rule TOP { 'lorem' | <.panic> }
@@ -27,3 +27,10 @@ grammar WithAttrib {
 # RT #73680
 is WithAttrib.new(sep => ',').sep, ',', 'attributes work in grammars too';
 isa_ok WithAttrib.new.sep, Str, 'empty attribute intilized to Str';
+
+# RT #113552
+{
+    try { EVAL 'grammar A { token a { ... }; token a { ... } }' };
+    my $error = ~$!;
+    ok $error ~~ / 'already has a Regex \'a\'' /, "duplicate methods err sanely";
+}
