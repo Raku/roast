@@ -133,6 +133,17 @@ throws_like 'my role R { has $.x; has $.y }; 99 does R("wrong");', X::Role::Init
 # RT #73806
 throws_like q[if() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax::KeywordAsFunction};
 
+# RT #78404
+throws_like q[my grammar G { regex foo { } }], X::Syntax::Regex::NullRegex;
+throws_like q[/ /], X::Syntax::Regex::NullRegex;
+# just an empty branch, still same error, please
+#?rakudo skip "LTA error"
+throws_like q[/ a | /], X::Syntax::Regex::NullRegex;
+#?rakudo skip "LTA error"
+throws_like q[/ a || /], X::Syntax::Regex::NullRegex;
+#?rakudo skip "LTA error"
+throws_like q[/ a & /], X::Syntax::Regex::NullRegex;
+
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
     misplaced   => 'required',
