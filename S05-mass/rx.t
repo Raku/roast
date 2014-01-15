@@ -1,6 +1,6 @@
 use Test;
 
-plan 739;
+plan 740;
 
 ### for now
 #?pugs emit #
@@ -555,6 +555,8 @@ ok 'abcdef' !~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 #?pugs todo 
 ok 'abcDef' ~~ /<[A..Z0..9]>/, 'two enumerated ranges';
 
+# RT #120753
+ok 'Z' ~~ /<[A..MZ]>/, 'range and singleton';
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions">
 #
