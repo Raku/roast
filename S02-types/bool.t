@@ -109,6 +109,4 @@ is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 }
 
-done;
-
 # vim: ft=perl6
