@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 27;
+plan 28;
 
 =begin desc
 
@@ -231,5 +231,7 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
 eval_lives_ok 'my %a; %a{ CATCH { } }', 'can define CATCH bock in .{}';
 # RT #73988
 eval_dies_ok 'do { CATCH {}; CATCH { } }', 'only one CATCH per block allowed';
+# RT #115184
+eval_dies_ok 'try { CATCH { ~$! }; die }', "doesn't segfault"
 
 # vim: ft=perl6
