@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 9;
+plan 10;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -57,4 +57,9 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 # RT #77246
 {
     eval_dies_ok('_~*.A', 'weird string that once parsed in rakudo');
+}
+
+# RT #115284
+{
+    eval_lives_ok('say(;:[])', 'weird code that used to parsefail rakudo');
 }
