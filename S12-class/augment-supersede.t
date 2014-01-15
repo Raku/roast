@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -91,6 +91,12 @@ eval_lives_ok q[
             $primes++ if .prime;
         }
     }, 'integers produced from ranges have augmented methods';
+}
+
+# RT #117163
+{
+    try EVAL 'class F { also is F; }';
+    ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
 
 # vim: ft=perl6
