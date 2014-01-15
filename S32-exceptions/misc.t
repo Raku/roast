@@ -420,4 +420,11 @@ throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foob
 
 throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol => '$x';
 
+# RT #116547
+{
+    try EVAL('my ($abe, $ba, $abc); $abd');
+    diag $!.message;
+    ok $!.message ~~ /'Did you mean'/, "Doesn't explode";
+}
+
 done;
