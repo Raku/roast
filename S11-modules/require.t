@@ -1,5 +1,8 @@
 use v6;
-use Test;
+
+# RT #113956 - this construct should not leak non-P6 objects
+BEGIN {require Test}
+import Test;
 
 plan 13;
 
