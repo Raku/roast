@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 14;
+plan 15;
 
 # L<S02/Closures/"A bare closure also interpolates in double-quotish context.">
 
@@ -59,6 +59,12 @@ line 4
 # RT #115508
 {
     is ord("\a"), 7, "alarm"
+}
+
+# RT #78202
+{
+    sub Good ($time) { "Good $time #perl6." }
+    is Good("morning"), "Good morning #perl6.", "# after an interpolated var";
 }
 
 # vim: ft=perl6
