@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 103;
+plan 105;
 
 =begin pod
 
@@ -424,6 +424,10 @@ ok { a => 1} ~~ List|Hash, 'Can construct junction with List type object';
 
 # RT #112392
 ok (1|2).Str ~~ Str, 'Junction.Str returns a Str, not a Junction';
+
+# RT #101124
+ok (0|1 == 0&1), 'test junction evaluation order';
+ok (0&1 == 0|1), 'test junction evaluation order';
 
 done();
 
