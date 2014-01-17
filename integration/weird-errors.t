@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 10;
+plan 11;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -62,4 +62,18 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 # RT #115284
 {
     eval_lives_ok('say(;:[])', 'weird code that used to parsefail rakudo');
+}
+
+# RT #76432
+{
+    eval_lives_ok('class A {
+        has %!x;
+    
+        method m {
+            sub foo {
+            }
+    
+            %!x<bar> = 42;
+        }
+    }', "still able to parse statement after sub decl ending in newline");
 }
