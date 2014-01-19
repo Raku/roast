@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 596;
+plan 599;
 
 # L           Letter
 
@@ -1147,19 +1147,23 @@ ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
 #?pugs todo
 ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
 
-#?pugs todo
-#?niecza 3 todo "Tests are wrong by latest Unicode standard"
-ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:Format>$/, q{Match <:Format>} );
-ok(!( "\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:!Format>$/ ), q{Don't match negated <Format>} );
-ok(!( "\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<-:Format>$/ ), q{Don't match inverted <Format>} );
-ok(!( "\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<:Format>$/ ), q{Don't match unrelated <Format>} );
-#?pugs todo
-ok("\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<:!Format>$/, q{Match unrelated negated <Format>} );
-#?pugs todo
-ok("\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<-:Format>$/, q{Match unrelated inverted <Format>} );
-#?pugs todo
-#?niecza todo "Test is wrong by latest Unicode standard"
-ok("\c[DEVANAGARI VOWEL SIGN AU]\c[KHMER VOWEL INHERENT AQ]" ~~ m/<:Format>/, q{Match unanchored <Format>} );
+# http://www.unicode.org/review/pr-176.html Public Review Issue #176: Properties of Two Khmer Characters
+# Closed 2010-11-08. The two characters will be changed from format characters to ignorable non-spacing
+# marks for Unicode 6.1, so that their properties match more closely the desired collation behavior. UCA
+# 6.1 will also be updated to make the characters ignorable for collation. 
+ok("\c[SYRIAC ABBREVIATION MARK]"     ~~ m/^<:Format>$/,    q{Match <:Format>} );
+ok(!( "\c[SYRIAC ABBREVIATION MARK]"  ~~ m/^<:!Format>$/ ), q{Don't match negated <Format>} );
+ok(!( "\c[SYRIAC ABBREVIATION MARK]"  ~~ m/^<-:Format>$/ ), q{Don't match inverted <Format>} );
+ok(!( "\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
+ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
+ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
+#?pugs 4 todo
+#?rakudo.jvm 3 todo "Unicode spec change in v6.1"
+#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
+ok(!( "\c[KHMER VOWEL INHERENT AQ]"   ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
+ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
+ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
+ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q{Match unanchored <Format>} );
 
 
 # vim: ft=perl6
