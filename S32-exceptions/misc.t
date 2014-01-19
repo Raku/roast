@@ -438,4 +438,30 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
     ok $!.message ~~ /'Did you mean'/, "Doesn't explode";
 }
 
+# RT #76368
+{
+    throws_like q[ sub foo(Str) { }; foo 42; ], X::TypeCheck::Argument;
+
+    throws_like q[ proto sub foo(Str) {*}; foo 42; ], X::TypeCheck::Argument, protoguilt => { $_ };
+
+    {
+        my $code = q[ sub foo($x) { }; foo; ];
+        throws_like $code, X::TypeCheck::Argument, message => { m/"requires argument"/ }, objname => { m/foo/ };
+    }
+
+    {
+        my $code = q[ sub foo(Str) { }; foo 42; ];
+        throws_like $code, X::TypeCheck::Argument, 
+            signature => rx/ 'Expected' .+ 'Str' /, 
+            arguments => { .[0] eq "int" };
+    }
+
+    {
+        my $code = q[ sub foo(Int $x, Str $y) { }; foo "not", 42; ];
+        throws_like $code, X::TypeCheck::Argument, 
+            arguments => { .[0] ~ .[1] eq "StrInt" },
+            signature => rx/ 'Expected' .+ 'Int $x, Str $y' /;
+    }
+}
+
 done;
