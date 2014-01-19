@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push: 't/spec/packages' };
 use Test::Util;
 
-plan 11;
+plan 12;
 
 # this used to segfault in rakudo
 #?niecza skip 'todo'
@@ -76,4 +76,17 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
             %!x<bar> = 42;
         }
     }', "still able to parse statement after sub decl ending in newline");
+}
+
+# RT #116268
+{
+    try EVAL '
+        proto bar {*}
+        multi bar ($baz) { "BAZ" }
+        class Blorg {
+            method do_stuff { bar "baz" }
+        }
+        Blorg.new.do_stuff
+    ';
+    ok ~$! ~~ / 'Calling proto' .* 'will never work' /, "fails correctly";
 }
