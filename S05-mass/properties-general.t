@@ -15,7 +15,7 @@ Unicode 5.2.
 
 =end pod
 
-plan 599;
+plan 602;
 
 # L           Letter
 
@@ -1072,21 +1072,20 @@ ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
 #?pugs todo
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
-#?pugs todo
-#?niecza 3 todo "Tests are wrong by latest Unicode standard"
-#?rakudo.jvm 3 todo "nigh"
-ok("\x[A679]" ~~ m/^<:Other>$/, q{Match <:Other>} );
-ok(!( "\x[A679]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
-ok(!( "\x[A679]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
+# http://www.unicode.org/charts/PDF/Unicode-6.1/U61-A640.pdf
+# U+A679 was added in uniode 6.1 as: Combining mark for Old Cyrillic
+ok("\x[200C]" ~~ m/^<:Other>$/, q{Match <:Other>} );
+ok(!( "\x[200C]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
+ok(!( "\x[200C]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
 ok(!( "\x[AC00]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
-#?pugs todo
 ok("\x[AC00]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
-#?pugs todo
 ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
-#?pugs todo
-#?niecza todo "Test is wrong by latest Unicode standard"
-#?rakudo.jvm todo "nigh"
-ok("\x[AC00]\x[A679]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
+#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
+ok(!( "\x[A679]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
+#?pugs 3 todo
+ok("\x[A679]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
+ok("\x[A679]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
+ok("\x[AC00]\x[200C]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
 
 # Cc          Control
 
@@ -1157,10 +1156,10 @@ ok(!( "\c[SYRIAC ABBREVIATION MARK]"  ~~ m/^<-:Format>$/ ), q{Don't match invert
 ok(!( "\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
 ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
 ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
-#?pugs 4 todo
 #?rakudo.jvm 3 todo "Unicode spec change in v6.1"
 #?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\c[KHMER VOWEL INHERENT AQ]"   ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
+#?pugs 3 todo
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
 ok("\c[DEVANAGARI VOWEL SIGN AU]\c[SYRIAC ABBREVIATION MARK]" ~~ m/<:Format>/, q{Match unanchored <Format>} );
