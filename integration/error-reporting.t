@@ -13,14 +13,12 @@ is_run "use v6;\n'a' =~ /foo/", {
     err     => rx/<<2>>/
 }, 'Parse error contains line number';
 
-#?rakudo.jvm todo "nigh"
 is_run "my \$x = 2 * 3;\ndie \$x", {
     status  => { $_ != 0 },
     out     => '',
     err     => all(rx/6/, rx/<<2>>/),
 }, 'Runtime error contains line number';
 
-#?rakudo.jvm todo "nigh"
 is_run "use v6;\n\nsay 'Hello';\nsay 'a'.my_non_existent_method_6R5();",
     {
         status  => { $_ != 0 },
@@ -63,7 +61,6 @@ is_run 'say 42; nosuchsub()',
 }
 
 # RT #76112
-#?rakudo.jvm todo "nigh"
 is_run 'use v6;
 class A { has $.x is rw };
 A.new.x(42);',
@@ -133,7 +130,6 @@ is_run 'die "foo"; END { say "end run" }',
     try dies();
     ok $!, 'RT 103034 -- died';
     my $bt = $!.backtrace;
-    #?rakudo.jvm todo "nigh"
     ok any($bt>>.file) ~~ /Foo\.pm/, 'found original file name in the backtrace';
     # note that fudging can change the file extension, so don't check
     # for .t here

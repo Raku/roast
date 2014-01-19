@@ -156,7 +156,6 @@ grammar Grammar::ScopeTests {
 }
 
 ok Grammar::ScopeTests.parse("wxyz"), 'scope tests parse';
-#?rakudo.jvm 4 todo '$/ within rules/tokens'
 is $*A, 'w', '$/ availiable';
 is $*B, 'x', 'token name';
 is $*C, 'y', 'token name (assertion)';
