@@ -80,23 +80,18 @@ ok("\x[3A18]\c[MIDDLE DOT]" ~~ m/<:Extender>/, q{Match unanchored <Extender>} );
 # GraphemeLink
 
 
-#?niecza todo
 #?pugs todo
-#?rakudo.parrot 3 todo "isGraphemeLink"
 #?rakudo.jvm    7 skip "isGraphemeLink"
-ok("\c[COMBINING GRAPHEME JOINER]" ~~ m/^<:GraphemeLink>$/, q{Match <:GraphemeLink>} );
-ok(!( "\c[COMBINING GRAPHEME JOINER]" ~~ m/^<:!GraphemeLink>$/ ), q{Don't match negated <GraphemeLink>} );
-#?niecza todo
-ok(!( "\c[COMBINING GRAPHEME JOINER]" ~~ m/^<-:GraphemeLink>$/ ), q{Don't match inverted <GraphemeLink>} );
+ok("\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<:GraphemeLink>$/, q{Match <:GraphemeLink>} );
+ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<:!GraphemeLink>$/ ), q{Don't match negated <GraphemeLink>} );
+ok(!( "\c[HANUNOO SIGN PAMUDPOD]" ~~ m/^<-:GraphemeLink>$/ ), q{Don't match inverted <GraphemeLink>} );
 ok(!( "\x[4989]"  ~~ m/^<:GraphemeLink>$/ ), q{Don't match unrelated <GraphemeLink>} );
 #?pugs todo
 ok("\x[4989]"  ~~ m/^<:!GraphemeLink>$/, q{Match unrelated negated <GraphemeLink>} );
 #?pugs todo
 ok("\x[4989]"  ~~ m/^<-:GraphemeLink>$/, q{Match unrelated inverted <GraphemeLink>} );
-#?niecza todo
 #?pugs todo
-#?rakudo.parrot todo "isGraphemeLink"
-ok("\x[4989]\c[COMBINING GRAPHEME JOINER]" ~~ m/<:GraphemeLink>/, q{Match unanchored <GraphemeLink>} );
+ok("\x[4989]\c[HANUNOO SIGN PAMUDPOD]" ~~ m/<:GraphemeLink>/, q{Match unanchored <GraphemeLink>} );
 
 # HexDigit
 
