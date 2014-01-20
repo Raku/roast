@@ -129,16 +129,13 @@ ok("\c[BOX DRAWINGS DOWN DOUBLE AND LEFT SINGLE]\c[KATAKANA MIDDLE DOT]" ~~ m/<:
 ok("\x[8AB0]" ~~ m/^<:Ideographic>$/, q{Match <:Ideographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<:!Ideographic>$/ ), q{Don't match negated <Ideographic>} );
 ok(!( "\x[8AB0]" ~~ m/^<-:Ideographic>$/ ), q{Don't match inverted <Ideographic>} );
-#?rakudo.jvm 3 skip 'icu problems'
-#?rakudo.parrot 3 skip 'icu problems'
-#?niecza 3 todo
-ok(!( "\x[9FC4]"  ~~ m/^<:Ideographic>$/ ), q{Don't match unrelated <Ideographic>} );
+ok(!( "\x[9FCD]"  ~~ m/^<:Ideographic>$/ ), q{Don't match unrelated <Ideographic>} );
 #?pugs todo
-ok("\x[9FC4]"  ~~ m/^<:!Ideographic>$/, q{Match unrelated negated <Ideographic>} );
+ok("\x[9FCD]"  ~~ m/^<:!Ideographic>$/, q{Match unrelated negated <Ideographic>} );
 #?pugs todo
-ok("\x[9FC4]"  ~~ m/^<-:Ideographic>$/, q{Match unrelated inverted <Ideographic>} );
+ok("\x[9FCD]"  ~~ m/^<-:Ideographic>$/, q{Match unrelated inverted <Ideographic>} );
 #?pugs todo
-ok("\x[9FC4]\x[8AB0]" ~~ m/<:Ideographic>/, q{Match unanchored <Ideographic>} );
+ok("\x[9FCD]\x[8AB0]" ~~ m/<:Ideographic>/, q{Match unanchored <Ideographic>} );
 
 # IDSBinaryOperator
 
