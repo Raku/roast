@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 225;
+plan 226;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -118,6 +118,11 @@ sub showkv($x) {
     is @ks.grep(* eqv False).elems, 1, 'Bool keys are left as Bools';
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
+}
+
+{
+    my $a = (1,2,3,2,2,2,2).BagHash;
+    is $a.kv.sort, ((2, 5), (1, 1), (3, 1)).list.sort, "BagHash.kv returns list of keys and values";
 }
 
 #?rakudo skip "Odd number of elements"

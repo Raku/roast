@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 182;
+plan 183;
 
 # L<S02/Mutable types/"QuantHash of Bool">
 
@@ -67,6 +67,12 @@ sub showset($s) { $s.keys.sort.join(' ') }
     lives_ok { $s<bar>-- }, 'can -- an item';
     is showset($s), 'a foo', '... but only if they were there to start with';
 }
+
+{
+    my $a = (1,2,3,2,2,2,2).SetHash;
+    is $a.kv.sort, ((2, Bool::True), (1, Bool::True), (3, Bool::True)).list.sort, "SetHash.kv returns list of keys and values";
+}
+
 
 {
     ok (SetHash.new: <a b c>) ~~ (SetHash.new: <a b c>), "Identical sets smartmatch with each other";

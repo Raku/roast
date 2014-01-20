@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 190;
+plan 191;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -120,6 +120,12 @@ sub showkv($x) {
     is @ks.grep(Str)[0], 'a', 'And Str keys are permitted in the same set';
     is $m{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
+
+{
+    my $a = (1,2,3,2,2,2,2).MixHash;
+    is $a.kv.sort, ((2, 5), (1, 1), (3, 1)).list.sort, "MixHash.kv returns list of keys and values";
+}
+
 
 #?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
