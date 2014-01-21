@@ -35,7 +35,6 @@ ok("abc\x[c]\x[a]def" ~~ m/\c[FORM FEED (FF), LINE FEED (LF)]/, 'Multiple FORM F
 #?pugs todo
 ok("\x[c]\x[a]" ~~ m/<[\c[FORM FEED (FF), LINE FEED (LF)]]>/, 'Charclass multiple FORM FEED (FF), LINE FEED (LF)');
 ok(!( "\x[c]\x[a]" ~~ m/^ <-[\c[FORM FEED (FF), LINE FEED (LF)]]>/ ), 'Negative charclass FORM FEED (FF), LINE FEED (LF)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[c]" ~~ m/^ \C[FORM FEED (FF)]/ ), 'Negative named FORM FEED (FF) nomatch');
 #?pugs todo
 ok("\x[a]" ~~ m/^ \C[FORM FEED (FF)]/, 'Negative named FORM FEED (FF) match');
@@ -64,7 +63,6 @@ ok("abc\x[d]\x[c]def" ~~ m/\c[CARRIAGE RETURN (CR), FORM FEED (FF)]/, 'Multiple 
 #?pugs todo
 ok("\x[d]\x[c]" ~~ m/<[\c[CARRIAGE RETURN (CR), FORM FEED (FF)]]>/, 'Charclass multiple CARRIAGE RETURN (CR), FORM FEED (FF)');
 ok(!( "\x[d]\x[c]" ~~ m/^ <-[\c[CARRIAGE RETURN (CR), FORM FEED (FF)]]>/ ), 'Negative charclass CARRIAGE RETURN (CR), FORM FEED (FF)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[d]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/ ), 'Negative named CARRIAGE RETURN (CR) nomatch');
 #?pugs todo
 ok("\x[c]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/, 'Negative named CARRIAGE RETURN (CR) match');
@@ -92,7 +90,6 @@ ok("abc\x[85]\x[d]def" ~~ m/\c[NEXT LINE (NEL), CARRIAGE RETURN (CR)]/, 'Multipl
 #?pugs todo
 ok("\x[85]\x[d]" ~~ m/<[\c[NEXT LINE (NEL), CARRIAGE RETURN (CR)]]>/, 'Charclass multiple NEXT LINE (NEL), CARRIAGE RETURN (CR)');
 ok(!( "\x[85]\x[d]" ~~ m/^ <-[\c[NEXT LINE (NEL), CARRIAGE RETURN (CR)]]>/ ), 'Negative charclass NEXT LINE (NEL), CARRIAGE RETURN (CR)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[85]" ~~ m/^ \C[NEXT LINE (NEL)]/ ), 'Negative named NEXT LINE (NEL) nomatch');
 #?pugs todo
 ok("\x[d]" ~~ m/^ \C[NEXT LINE (NEL)]/, 'Negative named NEXT LINE (NEL) match');
@@ -117,7 +114,6 @@ ok("abc\c[LINE FEED (LF)]\x[85]def" ~~ m/\c[LINE FEED (LF), NEXT LINE (NEL)]/, '
 #?pugs todo
 ok("\c[LINE FEED (LF)]\x[85]" ~~ m/<[\c[LINE FEED (LF), NEXT LINE (NEL)]]>/, 'Charclass multiple LINE FEED (LF), NEXT LINE (NEL)');
 ok(!( "\c[LINE FEED (LF)]\x[85]" ~~ m/^ <-[\c[LINE FEED (LF), NEXT LINE (NEL)]]>/ ), 'Negative charclass LINE FEED (LF), NEXT LINE (NEL)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\c[LINE FEED (LF)]" ~~ m/^ \C[LINE FEED (LF)]/ ), 'Negative named LINE FEED (LF) nomatch');
 #?pugs todo
 ok("\x[85]" ~~ m/^ \C[LINE FEED (LF)]/, 'Negative named LINE FEED (LF) match');
@@ -135,7 +131,6 @@ ok("abc\c[FORM FEED (FF)]\c[LINE FEED (LF)]def" ~~ m/\c[FORM FEED (FF), LINE FEE
 #?pugs todo
 ok("\c[FORM FEED (FF)]\c[LINE FEED (LF)]" ~~ m/<[\c[FORM FEED (FF), LINE FEED (LF)]]>/, 'Charclass multiple FORM FEED (FF), LINE FEED (LF)');
 ok(!( "\c[FORM FEED (FF)]\c[LINE FEED (LF)]" ~~ m/^ <-[\c[FORM FEED (FF), LINE FEED (LF)]]>/ ), 'Negative charclass FORM FEED (FF), LINE FEED (LF)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\c[FORM FEED (FF)]" ~~ m/^ \C[FORM FEED (FF)]/ ), 'Negative named FORM FEED (FF) nomatch');
 #?pugs todo
 ok("\c[LINE FEED (LF)]" ~~ m/^ \C[FORM FEED (FF)]/, 'Negative named FORM FEED (FF) match');
@@ -154,7 +149,6 @@ ok("abc\c[CARRIAGE RETURN (CR)]\c[FORM FEED (FF)]def" ~~ m/\c[CARRIAGE RETURN (C
 #?pugs todo
 ok("\c[CARRIAGE RETURN (CR)]\c[FORM FEED (FF)]" ~~ m/<[\c[CARRIAGE RETURN (CR),FORM FEED (FF)]]>/, 'Charclass multiple CARRIAGE RETURN (CR),FORM FEED (FF)');
 ok(!( "\c[CARRIAGE RETURN (CR)]\c[FORM FEED (FF)]" ~~ m/^ <-[\c[CARRIAGE RETURN (CR),FORM FEED (FF)]]>/ ), 'Negative charclass CARRIAGE RETURN (CR),FORM FEED (FF)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\c[CARRIAGE RETURN (CR)]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/ ), 'Negative named CARRIAGE RETURN (CR) nomatch');
 #?pugs todo
 ok("\c[FORM FEED (FF)]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/, 'Negative named CARRIAGE RETURN (CR) match');
@@ -172,7 +166,6 @@ ok("abc\c[NEXT LINE (NEL)]\c[CARRIAGE RETURN (CR)]def" ~~ m/\c[NEXT LINE (NEL),C
 #?pugs todo
 ok("\c[NEXT LINE (NEL)]\c[CARRIAGE RETURN (CR)]" ~~ m/<[\c[NEXT LINE (NEL),CARRIAGE RETURN (CR)]]>/, 'Charclass multiple NEXT LINE (NEL),CARRIAGE RETURN (CR)');
 ok(!( "\c[NEXT LINE (NEL)]\c[CARRIAGE RETURN (CR)]" ~~ m/^ <-[\c[NEXT LINE (NEL),CARRIAGE RETURN (CR)]]>/ ), 'Negative charclass NEXT LINE (NEL),CARRIAGE RETURN (CR)');
-#?rakudo 2 todo '\C escape'
 ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ \C[NEXT LINE (NEL)]/ ), 'Negative named NEXT LINE (NEL) nomatch');
 #?pugs todo
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ \C[NEXT LINE (NEL)]/, 'Negative named NEXT LINE (NEL) match');
@@ -277,7 +270,6 @@ ok("abc\x[fd55]\c[NEL]def" ~~ m/\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITI
 ok("\x[fd55]\c[NEL]" ~~ m/<[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]]>/, 'Charclass multiple ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
 #?rakudo skip 'escapes in char classes'
 ok(!( "\x[fd55]\c[NEL]" ~~ m/^ <-[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]]>/ ), 'Negative charclass ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[fd55]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/ ), 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
 #?rakudo skip '\c[NEL] not valid charname'
 #?pugs todo
@@ -303,7 +295,6 @@ ok("abc\x[5b4]\x[fd55]def" ~~ m/\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH M
 #?pugs todo
 ok("\x[5b4]\x[fd55]" ~~ m/<[\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/, 'Charclass multiple HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 ok(!( "\x[5b4]\x[fd55]" ~~ m/^ <-[\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/ ), 'Negative charclass HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[5b4]" ~~ m/^ \C[HEBREW POINT HIRIQ]/ ), 'Negative named HEBREW POINT HIRIQ nomatch');
 #?pugs todo
 ok("\x[fd55]" ~~ m/^ \C[HEBREW POINT HIRIQ]/, 'Negative named HEBREW POINT HIRIQ match');
@@ -331,7 +322,6 @@ ok("abc\x[1ea2]\x[5b4]def" ~~ m/\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW
 #?pugs todo
 ok("\x[1ea2]\x[5b4]" ~~ m/<[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/, 'Charclass multiple LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok(!( "\x[1ea2]\x[5b4]" ~~ m/^ <-[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/ ), 'Negative charclass LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[1ea2]" ~~ m/^ \C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/ ), 'Negative named LATIN CAPITAL LETTER A WITH HOOK ABOVE nomatch');
 #?pugs todo
 ok("\x[5b4]" ~~ m/^ \C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/, 'Negative named LATIN CAPITAL LETTER A WITH HOOK ABOVE match');
@@ -359,7 +349,6 @@ ok("abc\x[565]\x[1ea2]def" ~~ m/\c[ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTE
 #?pugs todo
 ok("\x[565]\x[1ea2]" ~~ m/<[\c[ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A WITH HOOK ABOVE]]>/, 'Charclass multiple ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A WITH HOOK ABOVE');
 ok(!( "\x[565]\x[1ea2]" ~~ m/^ <-[\c[ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A WITH HOOK ABOVE]]>/ ), 'Negative charclass ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A WITH HOOK ABOVE');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[565]" ~~ m/^ \C[ARMENIAN SMALL LETTER ECH]/ ), 'Negative named ARMENIAN SMALL LETTER ECH nomatch');
 #?pugs todo
 ok("\x[1ea2]" ~~ m/^ \C[ARMENIAN SMALL LETTER ECH]/, 'Negative named ARMENIAN SMALL LETTER ECH match');
@@ -387,7 +376,6 @@ ok("abc\x[25db]\x[565]def" ~~ m/\c[LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMAL
 #?pugs todo
 ok("\x[25db]\x[565]" ~~ m/<[\c[LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LETTER ECH]]>/, 'Charclass multiple LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LETTER ECH');
 ok(!( "\x[25db]\x[565]" ~~ m/^ <-[\c[LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LETTER ECH]]>/ ), 'Negative charclass LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LETTER ECH');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[25db]" ~~ m/^ \C[LOWER HALF INVERSE WHITE CIRCLE]/ ), 'Negative named LOWER HALF INVERSE WHITE CIRCLE nomatch');
 #?pugs todo
 ok("\x[565]" ~~ m/^ \C[LOWER HALF INVERSE WHITE CIRCLE]/, 'Negative named LOWER HALF INVERSE WHITE CIRCLE match');
@@ -415,7 +403,6 @@ ok("abc\x[fe7d]\x[25db]def" ~~ m/\c[ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE
 #?pugs todo
 ok("\x[fe7d]\x[25db]" ~~ m/<[\c[ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHITE CIRCLE]]>/, 'Charclass multiple ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHITE CIRCLE');
 ok(!( "\x[fe7d]\x[25db]" ~~ m/^ <-[\c[ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHITE CIRCLE]]>/ ), 'Negative charclass ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHITE CIRCLE');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[fe7d]" ~~ m/^ \C[ARABIC SHADDA MEDIAL FORM]/ ), 'Negative named ARABIC SHADDA MEDIAL FORM nomatch');
 #?pugs todo
 ok("\x[25db]" ~~ m/^ \C[ARABIC SHADDA MEDIAL FORM]/, 'Negative named ARABIC SHADDA MEDIAL FORM match');
@@ -443,7 +430,6 @@ ok("abc\x[a15d]\x[fe7d]def" ~~ m/\c[YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM]/
 #?pugs todo
 ok("\x[a15d]\x[fe7d]" ~~ m/<[\c[YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM]]>/, 'Charclass multiple YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM');
 ok(!( "\x[a15d]\x[fe7d]" ~~ m/^ <-[\c[YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM]]>/ ), 'Negative charclass YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[a15d]" ~~ m/^ \C[YI SYLLABLE NDO]/ ), 'Negative named YI SYLLABLE NDO nomatch');
 #?pugs todo
 ok("\x[fe7d]" ~~ m/^ \C[YI SYLLABLE NDO]/, 'Negative named YI SYLLABLE NDO match');
@@ -471,7 +457,6 @@ ok("abc\x[2964]\x[a15d]def" ~~ m/\c[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTW
 #?pugs todo
 ok("\x[2964]\x[a15d]" ~~ m/<[\c[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN,YI SYLLABLE NDO]]>/, 'Charclass multiple RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN,YI SYLLABLE NDO');
 ok(!( "\x[2964]\x[a15d]" ~~ m/^ <-[\c[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN,YI SYLLABLE NDO]]>/ ), 'Negative charclass RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN,YI SYLLABLE NDO');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[2964]" ~~ m/^ \C[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]/ ), 'Negative named RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN nomatch');
 #?pugs todo
 ok("\x[a15d]" ~~ m/^ \C[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]/, 'Negative named RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN match');
@@ -499,7 +484,6 @@ ok("abc\x[ff6d]\x[2964]def" ~~ m/\c[HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWAR
 #?pugs todo
 ok("\x[ff6d]\x[2964]" ~~ m/<[\c[HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]]>/, 'Charclass multiple HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN');
 ok(!( "\x[ff6d]\x[2964]" ~~ m/^ <-[\c[HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]]>/ ), 'Negative charclass HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[ff6d]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YU]/ ), 'Negative named HALFWIDTH KATAKANA LETTER SMALL YU nomatch');
 #?pugs todo
 ok("\x[2964]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YU]/, 'Negative named HALFWIDTH KATAKANA LETTER SMALL YU match');
@@ -527,7 +511,6 @@ ok("abc\x[36]\x[ff6d]def" ~~ m/\c[DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU]/
 #?pugs todo
 ok("\x[36]\x[ff6d]" ~~ m/<[\c[DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU]]>/, 'Charclass multiple DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU');
 ok(!( "\x[36]\x[ff6d]" ~~ m/^ <-[\c[DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU]]>/ ), 'Negative charclass DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[36]" ~~ m/^ \C[DIGIT SIX]/ ), 'Negative named DIGIT SIX nomatch');
 #?pugs todo
 ok("\x[ff6d]" ~~ m/^ \C[DIGIT SIX]/, 'Negative named DIGIT SIX match');
@@ -555,7 +538,6 @@ ok("abc\x[1323]\x[36]def" ~~ m/\c[ETHIOPIC SYLLABLE THAA, DIGIT SIX]/, 'Multiple
 #?pugs todo
 ok("\x[1323]\x[36]" ~~ m/<[\c[ETHIOPIC SYLLABLE THAA, DIGIT SIX]]>/, 'Charclass multiple ETHIOPIC SYLLABLE THAA, DIGIT SIX');
 ok(!( "\x[1323]\x[36]" ~~ m/^ <-[\c[ETHIOPIC SYLLABLE THAA, DIGIT SIX]]>/ ), 'Negative charclass ETHIOPIC SYLLABLE THAA, DIGIT SIX');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[1323]" ~~ m/^ \C[ETHIOPIC SYLLABLE THAA]/ ), 'Negative named ETHIOPIC SYLLABLE THAA nomatch');
 #?pugs todo
 ok("\x[36]" ~~ m/^ \C[ETHIOPIC SYLLABLE THAA]/, 'Negative named ETHIOPIC SYLLABLE THAA match');
@@ -583,7 +565,6 @@ ok("abc\x[1697]\x[1323]def" ~~ m/\c[OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA
 #?pugs todo
 ok("\x[1697]\x[1323]" ~~ m/<[\c[OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA]]>/, 'Charclass multiple OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA');
 ok(!( "\x[1697]\x[1323]" ~~ m/^ <-[\c[OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA]]>/ ), 'Negative charclass OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[1697]" ~~ m/^ \C[OGHAM LETTER UILLEANN]/ ), 'Negative named OGHAM LETTER UILLEANN nomatch');
 #?pugs todo
 ok("\x[1323]" ~~ m/^ \C[OGHAM LETTER UILLEANN]/, 'Negative named OGHAM LETTER UILLEANN match');
@@ -611,7 +592,6 @@ ok("abc\x[fe8b]\x[1697]def" ~~ m/\c[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL F
 #?pugs todo
 ok("\x[fe8b]\x[1697]" ~~ m/<[\c[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,OGHAM LETTER UILLEANN]]>/, 'Charclass multiple ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,OGHAM LETTER UILLEANN');
 ok(!( "\x[fe8b]\x[1697]" ~~ m/^ <-[\c[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,OGHAM LETTER UILLEANN]]>/ ), 'Negative charclass ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,OGHAM LETTER UILLEANN');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[fe8b]" ~~ m/^ \C[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]/ ), 'Negative named ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM nomatch');
 #?pugs todo
 ok("\x[1697]" ~~ m/^ \C[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]/, 'Negative named ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM match');
@@ -639,7 +619,6 @@ ok("abc\x[16de]\x[fe8b]def" ~~ m/\c[RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH 
 #?pugs todo
 ok("\x[16de]\x[fe8b]" ~~ m/<[\c[RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]]>/, 'Charclass multiple RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM');
 ok(!( "\x[16de]\x[fe8b]" ~~ m/^ <-[\c[RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]]>/ ), 'Negative charclass RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[16de]" ~~ m/^ \C[RUNIC LETTER DAGAZ DAEG D]/ ), 'Negative named RUNIC LETTER DAGAZ DAEG D nomatch');
 #?pugs todo
 ok("\x[fe8b]" ~~ m/^ \C[RUNIC LETTER DAGAZ DAEG D]/, 'Negative named RUNIC LETTER DAGAZ DAEG D match');
@@ -667,7 +646,6 @@ ok("abc\x[64]\x[16de]def" ~~ m/\c[LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D
 #?pugs todo
 ok("\x[64]\x[16de]" ~~ m/<[\c[LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D]]>/, 'Charclass multiple LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D');
 ok(!( "\x[64]\x[16de]" ~~ m/^ <-[\c[LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D]]>/ ), 'Negative charclass LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[64]" ~~ m/^ \C[LATIN SMALL LETTER D]/ ), 'Negative named LATIN SMALL LETTER D nomatch');
 #?pugs todo
 ok("\x[16de]" ~~ m/^ \C[LATIN SMALL LETTER D]/, 'Negative named LATIN SMALL LETTER D match');
@@ -695,7 +673,6 @@ ok("abc\x[2724]\x[64]def" ~~ m/\c[HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL
 #?pugs todo
 ok("\x[2724]\x[64]" ~~ m/<[\c[HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LETTER D]]>/, 'Charclass multiple HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LETTER D');
 ok(!( "\x[2724]\x[64]" ~~ m/^ <-[\c[HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LETTER D]]>/ ), 'Negative charclass HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LETTER D');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[2724]" ~~ m/^ \C[HEAVY FOUR BALLOON-SPOKED ASTERISK]/ ), 'Negative named HEAVY FOUR BALLOON-SPOKED ASTERISK nomatch');
 #?pugs todo
 ok("\x[64]" ~~ m/^ \C[HEAVY FOUR BALLOON-SPOKED ASTERISK]/, 'Negative named HEAVY FOUR BALLOON-SPOKED ASTERISK match');
@@ -723,7 +700,6 @@ ok("abc\x[2719]\x[2724]def" ~~ m/\c[OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOK
 #?pugs todo
 ok("\x[2719]\x[2724]" ~~ m/<[\c[OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED ASTERISK]]>/, 'Charclass multiple OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED ASTERISK');
 ok(!( "\x[2719]\x[2724]" ~~ m/^ <-[\c[OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED ASTERISK]]>/ ), 'Negative charclass OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED ASTERISK');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[2719]" ~~ m/^ \C[OUTLINED GREEK CROSS]/ ), 'Negative named OUTLINED GREEK CROSS nomatch');
 #?pugs todo
 ok("\x[2724]" ~~ m/^ \C[OUTLINED GREEK CROSS]/, 'Negative named OUTLINED GREEK CROSS match');
@@ -751,7 +727,6 @@ ok("abc\x[e97]\x[2719]def" ~~ m/\c[LAO LETTER THO TAM, OUTLINED GREEK CROSS]/, '
 #?pugs todo
 ok("\x[e97]\x[2719]" ~~ m/<[\c[LAO LETTER THO TAM, OUTLINED GREEK CROSS]]>/, 'Charclass multiple LAO LETTER THO TAM, OUTLINED GREEK CROSS');
 ok(!( "\x[e97]\x[2719]" ~~ m/^ <-[\c[LAO LETTER THO TAM, OUTLINED GREEK CROSS]]>/ ), 'Negative charclass LAO LETTER THO TAM, OUTLINED GREEK CROSS');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[e97]" ~~ m/^ \C[LAO LETTER THO TAM]/ ), 'Negative named LAO LETTER THO TAM nomatch');
 #?pugs todo
 ok("\x[2719]" ~~ m/^ \C[LAO LETTER THO TAM]/, 'Negative named LAO LETTER THO TAM match');
@@ -779,7 +754,6 @@ ok("abc\x[a42d]\x[e97]def" ~~ m/\c[YI SYLLABLE JJYT,LAO LETTER THO TAM]/, 'Multi
 #?pugs todo
 ok("\x[a42d]\x[e97]" ~~ m/<[\c[YI SYLLABLE JJYT,LAO LETTER THO TAM]]>/, 'Charclass multiple YI SYLLABLE JJYT,LAO LETTER THO TAM');
 ok(!( "\x[a42d]\x[e97]" ~~ m/^ <-[\c[YI SYLLABLE JJYT,LAO LETTER THO TAM]]>/ ), 'Negative charclass YI SYLLABLE JJYT,LAO LETTER THO TAM');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[a42d]" ~~ m/^ \C[YI SYLLABLE JJYT]/ ), 'Negative named YI SYLLABLE JJYT nomatch');
 #?pugs todo
 ok("\x[e97]" ~~ m/^ \C[YI SYLLABLE JJYT]/, 'Negative named YI SYLLABLE JJYT match');
@@ -807,7 +781,6 @@ ok("abc\x[ff6e]\x[a42d]def" ~~ m/\c[HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLAB
 #?pugs todo
 ok("\x[ff6e]\x[a42d]" ~~ m/<[\c[HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE JJYT]]>/, 'Charclass multiple HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE JJYT');
 ok(!( "\x[ff6e]\x[a42d]" ~~ m/^ <-[\c[HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE JJYT]]>/ ), 'Negative charclass HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE JJYT');
-#?rakudo 2 todo '\C escape'
 ok(!( "\x[ff6e]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YO]/ ), 'Negative named HALFWIDTH KATAKANA LETTER SMALL YO nomatch');
 #?pugs todo
 ok("\x[a42d]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YO]/, 'Negative named HALFWIDTH KATAKANA LETTER SMALL YO match');
