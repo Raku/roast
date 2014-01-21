@@ -27,7 +27,8 @@ nok '' ~~ /<:L>/, 'empty string has no letter';
 ok("\x[846D]" ~~ m/^<:L>$/, q{Match <:L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<:!L>$/ ), q{Don't match negated <L> (Letter)} );
 ok(!( "\x[846D]" ~~ m/^<-:L>$/ ), q{Don't match inverted <L> (Letter)} );
-#?rakudo 4 skip 'ICU version dependent :('
+#?rakudo.parrot 4 skip 'Invalid codepoint \x[FFFE]'
+#?rakudo.jvm 4 skip 'Invalid codepoint \x[FFFE]'
 ok(!( "\x[FFFE]"  ~~ m/^<:L>$/ ), q{Don't match unrelated <L> (Letter)} );
 #?pugs todo
 ok("\x[FFFE]"  ~~ m/^<:!L>$/, q{Match unrelated negated <L> (Letter)} );
@@ -40,7 +41,8 @@ ok("\x[FFFE]\x[846D]" ~~ m/<:L>/, q{Match unanchored <:L> (Letter)} );
 ok("\x[6DF7]" ~~ m/^<:Letter>$/, q{Match <:Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<:!Letter>$/ ), q{Don't match negated <Letter>} );
 ok(!( "\x[6DF7]" ~~ m/^<-:Letter>$/ ), q{Don't match inverted <Letter>} );
-#?rakudo 4 skip 'ICU version dependent :('
+#?rakudo.parrot 4 skip 'Invalid codepoint \x[FFFE]'
+#?rakudo.jvm 4 skip 'Invalid codepoint \x[FFFE]'
 ok(!( "\x[FFFE]"  ~~ m/^<:Letter>$/ ), q{Don't match unrelated <Letter>} );
 #?pugs todo
 ok("\x[FFFE]"  ~~ m/^<:!Letter>$/, q{Match unrelated negated <Letter>} );
@@ -206,7 +208,8 @@ ok("\c[LATIN SMALL LETTER TURNED DELTA]\c[LATIN SMALL LETTER TURNED DELTA]\c[LAT
 ok("\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:OtherLetter>$/, q{Match <:OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<:!OtherLetter>$/ ), q{Don't match negated <OtherLetter>} );
 ok(!( "\c[ETHIOPIC SYLLABLE GLOTTAL A]" ~~ m/^<-:OtherLetter>$/ ), q{Don't match inverted <OtherLetter>} );
-#?rakudo 4 skip '\x[FFFF]'
+#?rakudo.parrot 4 skip 'Invalid codepoint \x[FFFF]'
+#?rakudo.jvm 4 skip 'Invalid codepoint \x[FFFF]'
 ok(!( "\x[FFFF]"  ~~ m/^<:OtherLetter>$/ ), q{Don't match unrelated <OtherLetter>} );
 #?pugs todo
 ok("\x[FFFF]"  ~~ m/^<:!OtherLetter>$/, q{Match unrelated negated <OtherLetter>} );
@@ -406,7 +409,6 @@ ok(!( "\c[SUPERSCRIPT TWO]" ~~ m/^<:Nd>$/ ), q{Don't match related <Nd> (Decimal
 ok("\c[SUPERSCRIPT TWO]" ~~ m/^<:!Nd>$/, q{Match related negated <Nd> (DecimalNumber)} );
 #?pugs todo
 ok("\c[SUPERSCRIPT TWO]" ~~ m/^<-:Nd>$/, q{Match related inverted <Nd> (DecimalNumber)} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[4E2C]\c[SUPERSCRIPT TWO]\c[DIGIT ZERO]" ~~ m/<:Nd>/, q{Match unanchored <Nd> (DecimalNumber)} );
 #?pugs todo
@@ -476,7 +478,6 @@ ok(!( "\c[DIGIT ZERO]" ~~ m/^<:No>$/ ), q{Don't match related <No> (OtherNumber)
 ok("\c[DIGIT ZERO]" ~~ m/^<:!No>$/, q{Match related negated <No> (OtherNumber)} );
 #?pugs todo
 ok("\c[DIGIT ZERO]" ~~ m/^<-:No>$/, q{Match related inverted <No> (OtherNumber)} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[92F3]\c[DIGIT ZERO]\c[SUPERSCRIPT TWO]" ~~ m/<:No>/, q{Match unanchored <No> (OtherNumber)} );
 
@@ -489,7 +490,6 @@ ok(!( "\x[5363]"  ~~ m/^<:OtherNumber>$/ ), q{Don't match unrelated <OtherNumber
 ok("\x[5363]"  ~~ m/^<:!OtherNumber>$/, q{Match unrelated negated <OtherNumber>} );
 #?pugs todo
 ok("\x[5363]"  ~~ m/^<-:OtherNumber>$/, q{Match unrelated inverted <OtherNumber>} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[5363]\c[SUPERSCRIPT TWO]" ~~ m/<:OtherNumber>/, q{Match unanchored <OtherNumber>} );
 
@@ -665,7 +665,6 @@ ok(!( "\c[EXCLAMATION MARK]" ~~ m/^<:Pi>$/ ), q{Don't match related <Pi> (Initia
 ok("\c[EXCLAMATION MARK]" ~~ m/^<:!Pi>$/, q{Match related negated <Pi> (InitialPunctuation)} );
 #?pugs todo
 ok("\c[EXCLAMATION MARK]" ~~ m/^<-:Pi>$/, q{Match related inverted <Pi> (InitialPunctuation)} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[3A35]\c[EXCLAMATION MARK]\c[LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<:Pi>/, q{Match unanchored <Pi> (InitialPunctuation)} );
 
@@ -678,7 +677,6 @@ ok(!( "\x[B84F]"  ~~ m/^<:InitialPunctuation>$/ ), q{Don't match unrelated <Init
 ok("\x[B84F]"  ~~ m/^<:!InitialPunctuation>$/, q{Match unrelated negated <InitialPunctuation>} );
 #?pugs todo
 ok("\x[B84F]"  ~~ m/^<-:InitialPunctuation>$/, q{Match unrelated inverted <InitialPunctuation>} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[B84F]\c[LEFT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<:InitialPunctuation>/, q{Match unanchored <InitialPunctuation>} );
 
@@ -699,7 +697,6 @@ ok(!( "\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]" ~~ m/^<:Pf>$/ ), q{Don't matc
 ok("\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]" ~~ m/^<:!Pf>$/, q{Match related negated <Pf> (FinalPunctuation)} );
 #?pugs todo
 ok("\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]" ~~ m/^<-:Pf>$/, q{Match related inverted <Pf> (FinalPunctuation)} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[27CF]\c[MATHEMATICAL LEFT WHITE SQUARE BRACKET]\c[RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<:Pf>/, q{Match unanchored <Pf> (FinalPunctuation)} );
 
@@ -712,7 +709,6 @@ ok(!( "\x[4F65]"  ~~ m/^<:FinalPunctuation>$/ ), q{Don't match unrelated <FinalP
 ok("\x[4F65]"  ~~ m/^<:!FinalPunctuation>$/, q{Match unrelated negated <FinalPunctuation>} );
 #?pugs todo
 ok("\x[4F65]"  ~~ m/^<-:FinalPunctuation>$/, q{Match unrelated inverted <FinalPunctuation>} );
-#?rakudo skip "Malformed UTF-8 string"
 #?pugs todo
 ok("\x[4F65]\c[RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK]" ~~ m/<:FinalPunctuation>/, q{Match unanchored <FinalPunctuation>} );
 
@@ -1058,7 +1054,9 @@ ok("\x[345B]\c[EXCLAMATION MARK]\c[PARAGRAPH SEPARATOR]" ~~ m/<:ParagraphSeparat
 # C           Other
 
 
-#?rakudo 3 skip "Uninvestigated nqp-rx regression"
+#?rakudo.parrot 3 skip "Invalid codepoint \x[FFFE]"
+#?rakudo.jvm 3 skip "Invalid codepoint \x[FFFE]"
+#?rakudo.moar 3 todo "Unions of properties of non-existent codepoints"
 #?pugs todo
 ok("\x[FFFE]" ~~ m/^<:C>$/, q{Match <C> (Other)} );
 ok(!( "\x[FFFE]" ~~ m/^<:!C>$/ ), q{Don't match negated <C> (Other)} );
@@ -1068,8 +1066,10 @@ ok(!( "\x[6A3F]"  ~~ m/^<:C>$/ ), q{Don't match unrelated <C> (Other)} );
 ok("\x[6A3F]"  ~~ m/^<:!C>$/, q{Match unrelated negated <C> (Other)} );
 #?pugs todo
 ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
-#?rakudo skip "Uninvestigated nqp-rx regression"
+#?rakudo.parrot skip "Invalid codepoint \x[FFFE]"
+#?rakudo.jvm skip "Invalid codepoint \x[FFFE]"
 #?pugs todo
+#?rakudo.moar todo "Unions of properties of non-existent codepoints"
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 # http://www.unicode.org/charts/PDF/Unicode-6.1/U61-A640.pdf
@@ -1136,13 +1136,15 @@ ok(!( "\x[77B8]"  ~~ m/^<:Cf>$/ ), q{Don't match unrelated <Cf> (Format)} );
 ok("\x[77B8]"  ~~ m/^<:!Cf>$/, q{Match unrelated negated <Cf> (Format)} );
 #?pugs todo
 ok("\x[77B8]"  ~~ m/^<-:Cf>$/, q{Match unrelated inverted <Cf> (Format)} );
-#?rakudo 3 skip '\x[FFFE]'
+#?rakudo.parrot 3 skip "Invalid codepoint \x[FFFE]"
+#?rakudo.jvm 3 skip "Invalid codepoint \x[FFFE]"
 ok(!( "\x[FFFE]" ~~ m/^<:Cf>$/ ), q{Don't match related <Cf> (Format)} );
 #?pugs todo
 ok("\x[FFFE]" ~~ m/^<:!Cf>$/, q{Match related negated <Cf> (Format)} );
 #?pugs todo
 ok("\x[FFFE]" ~~ m/^<-:Cf>$/, q{Match related inverted <Cf> (Format)} );
-#?rakudo skip "Malformed UTF-8 string"
+#?rakudo.parrot skip "Invalid codepoint \x[FFFE]"
+#?rakudo.jvm skip "Invalid codepoint \x[FFFE]"
 #?pugs todo
 ok("\x[77B8]\x[FFFE]\c[SOFT HYPHEN]" ~~ m/<:Cf>/, q{Match unanchored <Cf> (Format)} );
 
