@@ -503,16 +503,13 @@ ok("\x[D7A4]\x[C276]" ~~ m/<:ID_Start>/, q{Match unanchored (Lu + Ll + Lt + Lm +
 ok("\x[949B]" ~~ m/^<:ID_Continue>$/, q{Match (ID_Start + Mn + Mc + Nd + Pc)} );
 ok(!( "\x[949B]" ~~ m/^<:!ID_Continue>$/ ), q{Don't match negated (ID_Start + Mn + Mc + Nd + Pc)} );
 ok(!( "\x[949B]" ~~ m/^<-:ID_Continue>$/ ), q{Don't match inverted (ID_Start + Mn + Mc + Nd + Pc)} );
-#?rakudo.jvm 3 skip 'icu'
-#?rakudo.parrot 3 skip 'icu'
-#?niecza 3 todo
-ok(!( "\x[9FC4]"  ~~ m/^<:ID_Continue>$/ ), q{Don't match unrelated (ID_Start + Mn + Mc + Nd + Pc)} );
+ok(!( "\x[0BD1]"  ~~ m/^<:ID_Continue>$/ ), q{Don't match unrelated (ID_Start + Mn + Mc + Nd + Pc)} );
 #?pugs todo
-ok("\x[9FC4]"  ~~ m/^<:!ID_Continue>$/, q{Match unrelated negated (ID_Start + Mn + Mc + Nd + Pc)} );
+ok("\x[0BD1]"  ~~ m/^<:!ID_Continue>$/, q{Match unrelated negated (ID_Start + Mn + Mc + Nd + Pc)} );
 #?pugs todo
-ok("\x[9FC4]"  ~~ m/^<-:ID_Continue>$/, q{Match unrelated inverted (ID_Start + Mn + Mc + Nd + Pc)} );
+ok("\x[0BD1]"  ~~ m/^<-:ID_Continue>$/, q{Match unrelated inverted (ID_Start + Mn + Mc + Nd + Pc)} );
 #?pugs todo
-ok("\x[9FC4]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + Mc + Nd + Pc)} );
+ok("\x[0BD1]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + Mc + Nd + Pc)} );
 
 # Any             # Any character
 
@@ -545,13 +542,12 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 # Unassigned      # Synonym for \p{Cn}
 
 
-#?rakudo.jvm 7 skip 'isUnassigned not implemented'
-#?rakudo.parrot 7 skip 'isUnassigned not implemented'
+#?rakudo.jvm 7 todo 'isUnassigned not implemented'
 #?niecza 3 todo
 #?pugs todo
-ok("\x[27EC]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
-ok(!( "\x[27EC]" ~~ m/^<:!Unassigned>$/ ), q<Don't match negated (Synonym for \p{Cn})> );
-ok(!( "\x[27EC]" ~~ m/^<-:Unassigned>$/ ), q<Don't match inverted (Synonym for \p{Cn})> );
+ok("\x[110E9]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
+ok(!( "\x[110E9]" ~~ m/^<:!Unassigned>$/ ), q<Don't match negated (Synonym for \p{Cn})> );
+ok(!( "\x[110E9]" ~~ m/^<-:Unassigned>$/ ), q<Don't match inverted (Synonym for \p{Cn})> );
 ok(!( "\c[RIGHT OUTER JOIN]"  ~~ m/^<:Unassigned>$/ ), q<Don't match unrelated (Synonym for \p{Cn})> );
 #?pugs todo
 ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<:!Unassigned>$/, q<Match unrelated negated (Synonym for \p{Cn})> );
@@ -559,7 +555,7 @@ ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<:!Unassigned>$/, q<Match unrelated negated (Sy
 ok("\c[RIGHT OUTER JOIN]"  ~~ m/^<-:Unassigned>$/, q<Match unrelated inverted (Synonym for \p{Cn})> );
 #?niecza todo
 #?pugs todo
-ok("\c[RIGHT OUTER JOIN]\x[27EC]" ~~ m/<:Unassigned>/, q<Match unanchored (Synonym for \p{Cn})> );
+ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Synonym for \p{Cn})> );
 
 # Common          # Codepoint not explicitly assigned to a script
 
