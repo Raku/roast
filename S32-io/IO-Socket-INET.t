@@ -4,10 +4,8 @@ use Test;
 plan 41;
 
 {
-    #?rakudo.jvm emit 
-    skip_rest('rakudo.jvm systemic failures/OOM error');
-    #?rakudo.jvm emit 
-    exit 0;
+    #?rakudo.jvm emit skip_rest('rakudo.jvm systemic failures/OOM error');
+    #?rakudo.jvm emit exit 0;
 }
 
 diag "{elapsed} starting tests";
