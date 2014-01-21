@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 5;
+plan 6;
 
 # L<S04/"Conditional statements"/Conditional statement modifiers work as in Perl 5>
 
@@ -24,6 +24,13 @@ plan 5;
     my $a = '';
     $a = $_ given 'a';
     is($a, 'a', "post given");
+}
+
+{
+	# RT #121049
+	my $a = '';
+	for ^2 { my $b = $_ given 'a'; $a ~= $b; }
+	is($a, 'aa', 'post given in a loop');
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
