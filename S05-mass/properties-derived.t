@@ -219,7 +219,7 @@ ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<-:NoncharacterCodePoint>$/, q{Match rela
 
 # OtherAlphabetic
 
-#?rakudo.jvm 42 skip "isOther* not implemented"
+#?rakudo.jvm 35 skip "isOther* not implemented"
 #?rakudo.parrot 42 skip "isOther* not implemented"
 #?pugs todo
 ok("\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:OtherAlphabetic>$/, q{Match <:OtherAlphabetic>} );
@@ -281,20 +281,17 @@ ok("\c[HANGUL LETTER NIEUN-CIEUC]\c[MODIFIER LETTER SMALL H]" ~~ m/<:OtherLowerc
 # OtherMath
 
 
-#?niecza todo
 #?pugs todo
-ok("\c[LEFT PARENTHESIS]" ~~ m/^<:OtherMath>$/, q{Match <:OtherMath>} );
-ok(!( "\c[LEFT PARENTHESIS]" ~~ m/^<:!OtherMath>$/ ), q{Don't match negated <OtherMath>} );
-#?niecza todo
-ok(!( "\c[LEFT PARENTHESIS]" ~~ m/^<-:OtherMath>$/ ), q{Don't match inverted <OtherMath>} );
+ok("\c[SUPERSCRIPT LEFT PARENTHESIS]" ~~ m/^<:OtherMath>$/, q{Match <:OtherMath>} );
+ok(!( "\c[SUPERSCRIPT LEFT PARENTHESIS]" ~~ m/^<:!OtherMath>$/ ), q{Don't match negated <OtherMath>} );
+ok(!( "\c[SUPERSCRIPT LEFT PARENTHESIS]" ~~ m/^<-:OtherMath>$/ ), q{Don't match inverted <OtherMath>} );
 ok(!( "\x[B43A]"  ~~ m/^<:OtherMath>$/ ), q{Don't match unrelated <OtherMath>} );
 #?pugs todo
 ok("\x[B43A]"  ~~ m/^<:!OtherMath>$/, q{Match unrelated negated <OtherMath>} );
 #?pugs todo
 ok("\x[B43A]"  ~~ m/^<-:OtherMath>$/, q{Match unrelated inverted <OtherMath>} );
-#?niecza todo
 #?pugs todo
-ok("\x[B43A]\c[LEFT PARENTHESIS]" ~~ m/<:OtherMath>/, q{Match unanchored <OtherMath>} );
+ok("\x[B43A]\c[SUPERSCRIPT LEFT PARENTHESIS]" ~~ m/<:OtherMath>/, q{Match unanchored <OtherMath>} );
 
 # OtherUppercase
 
