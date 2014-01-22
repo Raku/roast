@@ -136,12 +136,8 @@ throws_like q[if() {}], X::Comp::Group, sorrows => sub (@s) { @s[0] ~~ X::Syntax
 # RT #78404
 throws_like q[my grammar G { regex foo { } }], X::Syntax::Regex::NullRegex;
 throws_like q[/ /], X::Syntax::Regex::NullRegex;
-# just an empty branch, still same error, please
-#?rakudo skip "LTA error"
 throws_like q[/ a | /], X::Syntax::Regex::NullRegex;
-#?rakudo skip "LTA error"
 throws_like q[/ a || /], X::Syntax::Regex::NullRegex;
-#?rakudo skip "LTA error"
 throws_like q[/ a & /], X::Syntax::Regex::NullRegex;
 
 
