@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 80;
+plan 90;
 
 =begin pod
 
@@ -80,6 +80,25 @@ character classes), and those are referenced at the correct spot.
     ok '123gb' ~~ / <foo=.alpha> /, '<foo=.bar>';
     is $<foo>, 'g', '=. renaming worked';
     nok $<alpha>.defined, '=. removed the old capture name';
+}
+
+{
+    ok 'foobar' ~~ / <foo=[bao]>+ /, '<foo=[bao]>';
+    is $<foo>, < o o b a >, '=[...] renaming worked';
+
+    ok 'foobar' ~~ / <bar=-[bao]>+ /, '<bar=-[bao]>';
+    is $<bar>, 'f', '=[...] renaming worked';
+}
+
+{
+    ok 'a.' ~~ / <foo=:Letter> /, '<foo=:Letter>';
+    is $<foo>, 'a', '=:UniProp renaming worked';
+
+    ok 'a.' ~~ / <bar=:!Letter> /, '<bar=:!Letter>';
+    is $<bar>, '.', '=:!UniProp renaming worked';
+
+    ok 'a.' ~~ / <baz=-:Letter> /, '<baz=-:Letter>';
+    is $<baz>, '.', '=-:UniProp renaming worked';
 }
 
 # If the first character after the identifier is whitespace, the subsequent
