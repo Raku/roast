@@ -222,7 +222,7 @@ given $test {
             while $chunk = $sock.recv( 4096, bin => True ) {
                 $recv ~= $chunk;
             }
-            say $binary eqv $recv ?? 'OK-8' !! 'NOK-8';
+            say $binary.elems eqv $recv.elems ?? 'OK-8' !! 'NOK-8';
             $sock.close();
         }
     }
