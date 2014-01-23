@@ -111,9 +111,9 @@ is_run 'die "foo"; END { say "end run" }',
 
 # RT #113848
 {
-    try EVAL '          # line 1
-        use v6;         # line 2
-        (1 + 2) = 3;    # line 3
+    try EVAL 'use v6;     # line 1
+             # another line so we three in total
+             (1 + 2) = 3; # line 3
         ';
 
     #?niecza skip "Unable to resolve method backtrace in type Str"

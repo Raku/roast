@@ -12,7 +12,7 @@ my $baseline = 10;
 isa_ok callframe(), CallFrame, 'callframe() returns a CallFrame';
 
 sub f() {
-    is callframe().line, $baseline + 5, 'callframe().line';
+    is callframe().line, $baseline + 4, 'callframe().line';
     ok callframe().file ~~ /« callframe »/, '.file';
 
     #?rakudo skip 'Unable to resolve method inline in type CallFrame'
