@@ -70,7 +70,7 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     my $is-win;
     $is-win = True if $*OS eq 'MSWin32';
-    my $runner = "PERL6_BINARY=$*EXECUTABLE_NAME.path.absolute";
+    my $runner = "PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute}";
 
     # test 2 does echo protocol - Internet RFC 862
     if $is-win {
