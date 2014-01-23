@@ -8,10 +8,10 @@ PORT="$2"
 rm t/spec/S32-io/server-ready-flag 2>/dev/null
 
 # use & to run the server as a background process
-./perl6 t/spec/S32-io/IO-Socket-INET.pl $TEST $PORT server & SERVER=$!
+$PERL6_BINARY t/spec/S32-io/IO-Socket-INET.pl $TEST $PORT server & SERVER=$!
 
 # use & to run the client as a background process
-./perl6 t/spec/S32-io/IO-Socket-INET.pl $TEST $PORT client & CLIENT=$!
+$PERL6_BINARY t/spec/S32-io/IO-Socket-INET.pl $TEST $PORT client & CLIENT=$!
 
 # make a watchdog to kill a hanging client (occurs only if a test fails)
 #( sleep 20; kill $CLIENT 2>/dev/null && echo '(timeout)' ) &

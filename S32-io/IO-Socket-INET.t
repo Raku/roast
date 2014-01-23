@@ -70,12 +70,13 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     my $is-win;
     $is-win = True if $*OS eq 'MSWin32';
+    my $runner = "PERL6_BINARY=$*EXECUTABLE_NAME.path.absolute";
 
     # test 2 does echo protocol - Internet RFC 862
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 2 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 2 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 2 $port};
     }
     #warn "TEST 2 $received";
     $expected = "echo '0123456789abcdefghijklmnopqrstuvwxyz' received\n";
@@ -84,9 +85,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     # test 3 does discard protocol - Internet RFC 863
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 3 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 3 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 3 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 3 $port};
     }
     #warn "TEST 3 $received";
     $expected = "discard '' received\n";
@@ -95,9 +96,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     # test 4 tests recv with a parameter
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 4 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 4 $port};
     }
     $expected = $received.split("\n");
     my $i = 0;
@@ -123,9 +124,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     # test 5 tests get()
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 5 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 5 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 5 $port};
     }
     $expected = $received.split("\n");
     $i = 0;
@@ -152,9 +153,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     # RT #116288, test 6 tests read with a parameter
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 6 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 6 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 6 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 6 $port};
     }
     $expected = $received.split("\n");
     $i = 0;
@@ -167,9 +168,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     # test 7 tests recv with binary data
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 7 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 7 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 7 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 7 $port};
     }
     $expected = $received.split("\n");
     is $expected[0], 'OK-7', "{elapsed} successful read binary data";
@@ -177,9 +178,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
 
     # test 8 tests recv with binary data.
     if $is-win {
-        $received = qqx{t\\spec\\S32-io\\IO-Socket-INET.bat 8 $port};
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 8 $port};
     } else {
-        $received = qqx{sh t/spec/S32-io/IO-Socket-INET.sh 8 $port};
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 8 $port};
     }
     $expected = $received.split("\n");
     is $expected[0], 'OK-8', "{elapsed} successful received binary data";
