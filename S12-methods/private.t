@@ -3,7 +3,7 @@ use Test;
 BEGIN { @*INC.push('t/spec/packages/') };
 use Test::Util;
 
-plan 13;
+plan 16;
 
 # L<S12/Private methods/"Private methods are declared using">
 
@@ -70,7 +70,7 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
             self!role_shared();
         }
         method public3 {
-            self!role_private();
+            EVAL 'self!role_private();';
         }
     }
 
@@ -79,7 +79,8 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
     is $b.public1, 24, '"my method private" can be called as self!private';
     is $b.public2, 18, 'can call role shared private methods';
     #?niecza todo 'role private methods - spec?'
-    dies_ok { $b.public3() }, 'can not call role private methods scoped with my';
+    throws_like { $b.public3() }, X::Method::NotFound, 
+        typename => { m/'B'/ }, method => { m/'role_private'/ }; #'can not call role private methods scoped with my';
 }
 
 # RT #101964
