@@ -53,9 +53,8 @@ plan 18;
     is(-> { }.arity, 0,                 '->{} is arity 0, again');
 }
 
-#?niecza todo
 {
-    eval_dies_ok('sub { $^foo }.(42)',  'Placeholders not allowed in sub()');
+    eval_dies_ok('sub () { $^foo }.(42)',  'Placeholders not allowed in sub()');
 }
 
 # vim: ft=perl6
