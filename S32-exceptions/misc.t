@@ -352,6 +352,9 @@ ok $! ~~ X::NoDispatcher, 'nextsame in proto';
 # RT #79162
 throws_like '["a" "b"]', X::Syntax::Confused, reason => 'Two terms in a row';
 
+# similarly RT #79002
+throws_like 'class A { has $.a syntax error; }', X::Syntax::Confused;
+
 # suggestions
 my $emits_suggestions = False;
 {
