@@ -355,6 +355,9 @@ throws_like '["a" "b"]', X::Syntax::Confused, reason => 'Two terms in a row';
 # similarly RT #79002
 throws_like 'class A { has $.a syntax error; }', X::Syntax::Confused;
 
+# another X::Syntax::Confused, RT #115964
+throws_like 'my $bar = "test"; my $foo = { given $bar { when Real { 1 } when Str { 2 } } };' , X::Syntax::Confused;
+
 # suggestions
 my $emits_suggestions = False;
 {
