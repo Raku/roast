@@ -14,11 +14,9 @@ use Test;
 
 plan 9;
 
-#?rakudo skip 'confused near "(sub { 42 "'
-ok(sub { 42 }(), 'sub {...} works'); # TODO: clarify
+ok(sub { 42 }(), 'sub {...}() works'); # TODO: clarify
 
-#?rakudo skip 'confused near "(sub{ 42 }"'
-ok(sub{ 42 }(),  'sub{...} works'); # TODO: clarify
+ok(sub{ 42 }(),  'sub{...}() works'); # TODO: clarify
 
 #RT #76432
 eval_dies_ok q[
