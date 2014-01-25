@@ -409,6 +409,9 @@ if $emits_suggestions {
     }
 }
 
+# RT 77270
+throws_like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
+
 throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
 
 {
