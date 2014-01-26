@@ -974,7 +974,10 @@ sub l () { 1, 2 };
 }
 
 # RT #76444
-ok 'say (my $a) = 1,2,3', '1 2 3';
+{ 
+    (my $a) = 1,2,3;
+    is $a, (1,2,3), "Assignment into parentheses'd my works.";
+}
 
 
 # vim: ft=perl6
