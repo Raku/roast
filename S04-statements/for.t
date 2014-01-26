@@ -14,7 +14,7 @@ for statement as possible
 
 =end description
 
-plan 77;
+plan 78;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -582,5 +582,8 @@ dies_ok
     };
     is @a, [1, 2, 3, 4, 5, 6, 7, 8,9, 10, 11];
 }
+
+# RT #89208
+is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 
 # vim: ft=perl6
