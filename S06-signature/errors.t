@@ -52,7 +52,7 @@ eval_dies_ok 'my class A { submethod BUILD(:$!notthere = 10) }; A.new',
 {
     try { EVAL 'sub rt72082(@a, $b) {}; rt72082(5)' };
     my $error = ~$!;
-    ok $error ~~ / 'will never work' .* 'Expected' .* '(@a, $b)' /
+    ok $error ~~ / 'will never work' .* 'Expected' .* '(@a, Any $b)' /
 }
 
 # RT #76368
