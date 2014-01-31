@@ -473,4 +473,8 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 throws_like 'class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
+# RT #98854
+throws_like 'sub f { f(|$) }', X::Obsolete,
+    old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
+
 done;
