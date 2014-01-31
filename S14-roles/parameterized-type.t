@@ -106,6 +106,13 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     is B['blubb'].payload, 'blubb', 'can export and import parameterized roles';
 }
 
+# RT #84492
+{ 
+    my role R[::T] { multi method foo(T $t) { T.gist } };
+    my class A does R[Str] does R[Int] { };
+    is A.new.foo(5), 5.WHAT.gist, 'correct multi selected from multiple parametric roles';
+}
+
 #?pugs emit =end SKIP
 
 # vim: ft=perl6
