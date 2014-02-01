@@ -78,9 +78,7 @@ eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and o
 is((foo\ # comment
     .lc), 'a', 'unspace with end-of-line comment');
 is((:foo\ <bar>), (:foo<bar>), 'unspace in colonpair');
-#?rakudo skip 'unimplemented'
-#?niecza skip 'Unable to resolve method postcircumfix:<( )> in class Str'
-is((foo\ .\ ("x")), 'x', 'unspace is allowed both before and after method .');
+is((&foo\ .\ ("x")), 'x', 'unspace is allowed both before and after method .');
 is((foo\
 =begin comment
 blah blah blah
