@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 78;
+plan 86;
 
 # L<S02/"Unspaces"/This is known as the "unspace">
 
@@ -70,7 +70,6 @@ is((bar .lc  ), 'b', 'sanity - bar .lc');
 is((foo\.lc  ), 'a', 'short unspace');
 is((foo\ .lc ), 'a', 'unspace');
 is((foo\ ('x')), 'x', "unspace before arguments");
-#?rakudo skip 'parse fail'
 is((foo \ .lc), 'b', 'not a unspace');
 eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
 is((foo\    .lc), 'a', 'longer dot');
@@ -194,7 +193,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
 # L<S06/"Blocks"/"unless followed immediately by a comma">
 #
-#?rakudo skip 'parse error'
 {
     sub baz(Code $x, *@y) { $x.(@y) }
 
@@ -255,7 +253,6 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     #Unspace inside operator splits it
     $n = 1; $m = 2;
-    #?rakudo skip 'parse error'
     is(($n+\ +$m), 3, 'unspace inside operator splits it');
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
@@ -278,8 +275,7 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
     #?niecza skip 'Unable to resolve method id in class Str'
-    #?rakudo skip 'parse error'
-    is((foo\#`〝 comment 〞.id), 'a', 'unspace with U+301D/U+301E comment');
+    is((foo\#`〝 comment 〞.lc), 'a', 'unspace with U+301D/U+301E comment');
     eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
 
     # L<S02/"Implicit Topical Method Calls"/".123">
@@ -290,5 +286,19 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
 # Was a nasty niecza bug
 is 5.Str\.Str, "5", 'unspaced postfix after method call not misparsed';
+
+# RT #92826
+is((foo\  ("x")\  .\  lc), 'x', 'unspace between parameter and before and after method .');
+
+# RT #79340
+is &infix:<+>(5, 5), 10, 'sanity';
+is &infix:<+>(\ 5, 5), 10, 'unspace between method and first argument';
+is &infix:<+>( \ 5, 5), 10, 'unspace between method and first argument with leading space';
+is &infix:<+>( 5\ , 5), 10, 'unspace between first and second argument';
+is &infix:<+>( 5 \ , 5), 10, 'unspace between first and second argument with leading space';
+
+# RT #117465
+is "foo".\ \ perl, "foo".perl, 'two unspace in a row after . for method call';
+is "foo"\ \ .perl, "foo".perl, 'two unspace in a row before . for method call';
 
 # vim: ft=perl6
