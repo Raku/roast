@@ -13,7 +13,7 @@ proper separation of the two levels.
 
 =end pod
 
-plan 53;
+plan 54;
 
 
 # terms
