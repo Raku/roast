@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 144;
+plan 145;
 
 my $five = abs(-5);
 
