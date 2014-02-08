@@ -206,14 +206,14 @@ plan 25;
         'We should be able to drop list elements using gather';
     
     sub drop4(@list, Int $nth) {
-        (@list[$_] if ($_+1) % $nth) for ^@list;
+        ((@list[$_] if ($_+1) % $nth) for ^@list)
     }
     #?niecza todo
     is drop4(<a b c d e f g h i k>, 3), <a b d e g h k>,
         'We should be able to drop list elements using (statement if) for';
     
     sub drop5(@list, Int $nth) {
-        @list[$_] if ($_+1) % $nth for ^@list;
+        (@list[$_] if ($_+1) % $nth for ^@list)
     }
     #?niecza todo
     is drop5(<a b c d e f g h i k>, 3), <a b d e g h k>,
