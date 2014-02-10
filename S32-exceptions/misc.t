@@ -60,7 +60,7 @@ throws_like 'CATCH { }; CATCH { }', X::Phaser::Multiple, block => 'CATCH';
 throws_like 'sub f(--> List) returns Str { }', X::Redeclaration;
 throws_like 'my Int sub f(--> Str) { }', X::Redeclaration;
 # RT #115356
-throws_like 'class F { }; role F { }', X::Redeclaration, symbol => 'F';
+throws_like 'my class F { }; role F { }', X::Redeclaration, symbol => 'F';
 
 throws_like 'my class A { my @a; @a!List::foo() }',
     X::Method::Private::Permission,
@@ -235,7 +235,7 @@ throws_like 'constant foo;', X::Syntax::Missing, what => /initializer/;
 throws_like 'constant * = 3;', X::Syntax::Missing, what => /constant/;
 throws_like '1 <=> 2 <=> 3', X::Syntax::NonAssociative, left => '<=>', right => '<=>';
 
-throws_like 'class A {...}; grammar B { ... }', X::Package::Stubbed, packages => <A B>;
+throws_like 'my class A {...}; my grammar B { ... }', X::Package::Stubbed, packages => <A B>;
 
 throws_like 'my sub a { PRE 0  }; a()', X::Phaser::PrePost, phaser => 'PRE', condition => /0/;
 throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', condition => /0/;
@@ -353,7 +353,7 @@ ok $! ~~ X::NoDispatcher, 'nextsame in proto';
 throws_like '["a" "b"]', X::Syntax::Confused, reason => 'Two terms in a row';
 
 # similarly RT #79002
-throws_like 'class A { has $.a syntax error; }', X::Syntax::Confused;
+throws_like 'my class A { has $.a syntax error; }', X::Syntax::Confused;
 
 # another X::Syntax::Confused, RT #115964
 throws_like 'my $bar = "test"; my $foo = { given $bar { when Real { 1 } when Str { 2 } } };' , X::Syntax::Confused;
@@ -371,9 +371,9 @@ if $emits_suggestions {
 
     throws_like 'my $intergalactic-planetary = "planetary intergalactic"; say $IntergalacticPlanetary', X::Undeclared, suggestions => '$intergalactic-planetary';
 
-    throws_like 'class Foo is Junktion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
-    throws_like 'class Bar is junction {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
-    throws_like 'class Baz is Juntcion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
+    throws_like 'my class Foo is Junktion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
+    throws_like 'my class Bar is junction {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
+    throws_like 'my class Baz is Juntcion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
 
     {
         try EVAL('say huc("foo")');
@@ -385,7 +385,7 @@ if $emits_suggestions {
     is +($!.routine_suggestion<toolongtomatchanything>), 0, "no suggestions for a strange name";
     ok $!.message !~~ /Did you mean/, "doesn't show suggestions if there are none.";
 
-    try EVAL('class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
+    try EVAL('my class TestClassFactoryInterfaceBridgeMock is TooLongOfANameToBeConsideredGoodPerl { }');
     is +($!.suggestions), 0, "no suggestions for a strange class";
     ok $!.message !~~ /Did you mean/, "doesn't show suggestions if there are none.";
 
@@ -412,7 +412,7 @@ if $emits_suggestions {
 # RT 77270
 throws_like 'sub foo(--> NoSuchType) { }; foo', X::Undeclared, what => { m/'Type'/ }, symbol => { m/'NoSuchType'/ };
 
-throws_like 'class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
+throws_like 'my class Foobar is Foobar', X::Inheritance::SelfInherit, name => "Foobar";
 
 {
     # RT #69760
@@ -470,7 +470,7 @@ throws_like q[sub f() {CALLER::<$x>}; my $x; f], X::Caller::NotDynamic, symbol =
 }
 
 # RT #78012
-throws_like 'class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
+throws_like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assuming($a); $b();',
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
 # RT #98854
