@@ -234,4 +234,24 @@ eval_dies_ok 'do { CATCH {}; CATCH { } }', 'only one CATCH per block allowed';
 # RT #115184
 eval_dies_ok 'try { CATCH { ~$! }; die }', "doesn't segfault"
 
+# RT #121213
+{
+    sub failing-routine {
+        try {
+            CATCH {
+                when 'there' {
+                    return False;
+                }
+            }
+
+            die 'there';
+        }
+    }
+
+    lives_ok {
+        failing-routine;
+        failing-routine;
+    }, 'Two invocations of a die()ing routine should still hit the CATCH handler';
+}
+
 # vim: ft=perl6
