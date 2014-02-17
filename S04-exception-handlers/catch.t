@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 28;
+plan 29;
 
 =begin desc
 
