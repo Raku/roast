@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 90;
+plan 91;
 
 =begin pod
 
@@ -229,6 +229,11 @@ character classes), and those are referenced at the correct spot.
     ok(!('992' ~~ /(\d**3) <?{$0 < 256}>/), '<?{...}> works');
     ok(!('192' ~~ /(\d**3) <!{$0 < 256}>/), '<!{...}> works');
     ok('992' ~~ /(\d**3) <!{$0 < 256}>/, '<!{...}> works');
+}
+
+{
+    my $*x = 0;
+    nok '' ~~ /<?{$*x}>/, 'Can use contextuals with <?{...}>';
 }
 
 # A leading [ indicates an enumerated character class
