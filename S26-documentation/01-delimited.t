@@ -1,5 +1,5 @@
 use Test;
-plan 39;
+plan 40;
 my $r;
 
 =begin foo
@@ -158,3 +158,5 @@ isa_ok $r.content[2], Pod::Block::Para;
 isa_ok $r.content[3], Pod::Heading;
 isa_ok $r.content[4], Pod::Block::Para;
 is $r.content.elems, 5;
+
+eval_lives_ok "=begin pod\nSome documentation\n=end pod", "Pod files don't have to end in a newline";
