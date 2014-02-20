@@ -1,5 +1,5 @@
 use Test;
-plan 14;
+plan 15;
 my $r;
 
 =begin pod
@@ -48,3 +48,12 @@ is $r.config<pubdate>, 2011;
 $r = $=pod[4].content[0];
 isa_ok $r, Pod::Block::Table;
 is $r.config<caption>, 'Table of contents';
+
+=begin pod
+    =begin code :allow<B>
+    These words have some B<importance>.
+    =end code
+=end pod
+
+$r = $=pod[5].content[0].content[1];
+isa_ok $r, Pod::FormattingCode;
