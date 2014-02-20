@@ -250,7 +250,7 @@ throws_like '1.foo',  X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like '1.+foo', X::Method::NotFound, method => 'foo', typename => 'Int';
 throws_like 'my class Priv { method x { self!foo } }; Priv.x',
                       X::Method::NotFound,
-                      method    => '!foo',
+                      method    => 'foo',
                       typename  => 'Priv',
                       private   => { $_ === True };
 # RT #77582
