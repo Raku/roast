@@ -70,7 +70,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 {
     my $a = (1,2,3,2,2,2,2).SetHash;
-    is $a.kv.sort, ((2, Bool::True), (1, Bool::True), (3, Bool::True)).list.sort, "SetHash.kv returns list of keys and values";
+    is $a.kv.sort, ((1, Bool::True), (2, Bool::True), (3, Bool::True)).list.sort, "SetHash.kv returns list of keys and values";
 }
 
 

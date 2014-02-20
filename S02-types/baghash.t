@@ -122,7 +122,7 @@ sub showkv($x) {
 
 {
     my $a = (1,2,3,2,2,2,2).BagHash;
-    is $a.kv.sort, ((2, 5), (1, 1), (3, 1)).list.sort, "BagHash.kv returns list of keys and values";
+    is $a.kv.sort({ .[0] }), ((1, 1), (2, 5), (3, 1)).list.sort, "BagHash.kv returns list of keys and values";
 }
 
 #?rakudo skip "Odd number of elements"
