@@ -12,9 +12,10 @@ plan 73;
 #?rakudo skip 'Parse failure'
 #?niecza skip 'Parse failure'
 {
-    my $s = 「this is a string\n」;
+
+    my $s = ｢this is a string\n｣;
     is $s, Q[this is a string\n],
-        'Shortform for Q[...] is 「...」 (HALFWIDTH LEFT/RIGHT CORNER BRACKET)';
+        'Shortform for Q[...] is ｢...｣ (HALFWIDTH LEFT/RIGHT CORNER BRACKET)';
 }
 
 {
