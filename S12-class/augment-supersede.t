@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 12;
+plan 13;
 
 # L<S12/"Open vs Closed Classes"/"Otherwise you'll get a class redefinition error.">
 
@@ -96,6 +96,12 @@ eval_lives_ok q[
 # RT #117163
 {
     try EVAL 'class F { also is F; }';
+    ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
+}
+
+# RT #117165
+{
+    try EVAL 'class ::F { ... }; class F is ::F';
     ok ~$! ~~ / 'cannot inherit from itself' /, "used to crash rakudo";
 }
 
