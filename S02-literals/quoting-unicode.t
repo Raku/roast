@@ -9,7 +9,6 @@ plan 73;
 # * arrays in «»
 
 #L<S02/C<Q> Forms/halfwidth corner brackets>
-#?rakudo skip 'Parse failure'
 #?niecza skip 'Parse failure'
 {
 
