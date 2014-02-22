@@ -22,7 +22,7 @@ is $r.config<like>, 'head1';
 is $r.config<formatted>, 'I';
 
 =begin pod
-    =pod :number(42) :zebras :!sheep
+    =for pod :number(42) :zebras :!sheep
 =end pod
 
 $r = $=pod[2].content[0];
