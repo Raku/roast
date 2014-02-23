@@ -79,7 +79,7 @@ use Test;
     >>> 1, '#`<<<...>>>';
 }
 
-#?rakudo todo 'nom regression'
+#?rakudo todo 'RT #121305'
 {
     eval_lives_ok( q{{
         my $var = \#`((( comment ))) 12;

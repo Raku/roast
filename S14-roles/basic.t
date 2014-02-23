@@ -96,7 +96,7 @@ eval_dies_ok '0 but RT66178', '"but" with non-existent role dies';
 
     try { EVAL 'class AnotherAnimal does NonExistentRole { }; 1' };
     my $err = "$!";
-    #?rakudo todo 'nom regression'
+    #?rakudo todo 'RT #121308'
     ok $err ~~ /NonExistentRole/,
        '... and the error message mentions the role';
 }
