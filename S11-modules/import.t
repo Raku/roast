@@ -1,6 +1,8 @@
 use v6;
 use Test;
-plan 14;
+BEGIN { @*INC.push('t/spec/packages/') };
+use Test::Util;
+plan 22;
 
 # L<S11/Importing without loading>
 
@@ -82,6 +84,22 @@ plan 14;
     import F :here, :there;
     is f1(), 42, 'can import the same symbol through multiple tags';
 
+}
+
+#?niecza skip 'is export not available for variables'
+{
+    module G {
+        our $gee is export = 42;
+    }
+    import G;
+    is $gee, 42, 'can import an our-scoped variable';
+
+    throws_like 'module H { my $eidge is export = 42 }', X::Comp::Trait::Scope,
+        type      => 'is',
+        subtype   => 'export',
+        declaring => 'variable',
+        scope     => 'my',
+        supported => ['our'];
 }
 
 # vim: ft=perl6
