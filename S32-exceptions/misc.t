@@ -139,6 +139,9 @@ throws_like q[/ /], X::Syntax::Regex::NullRegex;
 throws_like q[/ a | /], X::Syntax::Regex::NullRegex;
 throws_like q[/ a || /], X::Syntax::Regex::NullRegex;
 throws_like q[/ a & /], X::Syntax::Regex::NullRegex;
+# RT 67554
+throws_like q{/ [] /}, X::Syntax::Regex::NullRegex;
+throws_like q{/ | /}, X::Syntax::Regex::NullRegex;
 
 
 throws_like 'sub f($a?, $b) { }', X::Parameter::WrongOrder,
