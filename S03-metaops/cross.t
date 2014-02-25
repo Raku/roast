@@ -107,7 +107,6 @@ is (<a b> X <c d> X < e f>).join(','),
     'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
     'cross works with three lists';
 
-#?rakudo todo 'RT 74072'
 #?niecza todo
 is ([1,2] X~ <a b>), '1 2a 1 2b', '[] does not flatten';
 
