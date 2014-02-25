@@ -53,8 +53,8 @@ is (2, 10, * Z* 3, 4, 5, *).munch(5),
 
 #?niecza todo
 {
-    is join(',', [Z+] [1, 2], [20, 10], [100, 200]),
-       '121,212', '[Z+] with three arrays';
+    is join(',', [Z+] (1, 2), (20, 10), (100, 200)),
+       '121,212', '[Z+] with three lists';
 }
 
 # RT #75818
