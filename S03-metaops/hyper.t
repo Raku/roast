@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 281;
+plan 277;
 
 =begin pod
 
@@ -273,32 +273,20 @@ my @e;
 
 { # distribution for unary prefix
         my @r;
-        @r = -« ([1, 2], [3, [4, 5]]);
+        @r = ([1, 2], [3, [4, 5]]).deepmap: -*;
         my @e = ([-1, -2], [-3, [-4, -5]]);
         is(~@r, ~@e, "distribution for unary prefix");
         is_deeply(@r, @e, "distribution for unary prefix, deep comparison");
-
-        @r = -<< ([1, 2], [3, [4, 5]]);
-        @e = ([-1, -2], [-3, [-4, -5]]);
-        is(~@r, ~@e, "distribution for unary prefix, ASCII");
-        is_deeply(@r, @e, "distribution for unary prefix, ASCII, deep comparison");
 };
 
 { # distribution for unary postfix autoincrement
         my @r;
         @r = ([1, 2], [3, [4, 5]]);
-        @r»++;
+        @r.deepmap: *++;
         my @e = ([2, 3], [4, [5, 6]]);
         #?pugs todo
         is(~@r, ~@e, "distribution for unary postfix autoincr");
         is_deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
-
-        @r = ([1, 2], [3, [4, 5]]);
-        @r>>++;
-        @e = ([2, 3], [4, [5, 6]]);
-        #?pugs todo
-        is(~@r, ~@e, "distribution for unary postfix autoincr, ASCII");
-        is_deeply(@r, @e, "distribution for unary postfix autoincr, ASCII, deep comparison");
 };
 
 #?DOES 3
