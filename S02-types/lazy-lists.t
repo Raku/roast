@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan 19;
+plan 20;
 
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PERL5" {
@@ -141,6 +141,14 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
     my @two = <a b c d e f>;
     my @res = (@one X @two)[^20];
     ok $was-lazy, "first argument of X is lazy";
+}
+
+{
+    $was-lazy = 1;
+    my @one := make-lazy-list(10);
+    my @two = <a b c d e f>;
+    my @res = (@one X~ @two)[^20];
+    ok $was-lazy, "first argument of X~ is lazy";
 }
 
 # vim: ft=perl6
