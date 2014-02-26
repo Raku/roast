@@ -91,10 +91,8 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
     # those on the RHS
     ok ( ? all $a, $b X!=:= $c, $d ), 'X!=:= (1)';
     ok ( ? all $a, $a X!=:= $c, $d ), 'X!=:= (2)';
-    #?rakudo todo 'huh?'
     ok ( ! all $a, $b X!=:= $c, $b ), 'X!=:= (3)';
     $c := $b;
-    #?rakudo todo 'huh?'
     ok ( ? one $a, $b X=:=  $c, $d ), 'one X=:=';
 }
 
