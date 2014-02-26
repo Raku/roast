@@ -17,10 +17,9 @@ Verify that autoincrement/autodecrement work properly.
     my $a = Mu;
     is($a++, 0, 'Mu++ == 0');
 
-    #?rakudo todo 'nom regression'
     #?niecza todo '#88'
     $a = Mu;
-    nok(defined($a--), 'Mu-- is undefined');
+    is $a-- == 0 , 'postincrement (& decrement) returns 0 the first time';
 
     $a = 'x';
     is($a++, 'x', 'magical ++ should not be numified');
