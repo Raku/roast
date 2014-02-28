@@ -14,8 +14,7 @@ sub ca(@x) {
 
 ok 'a b c d' ~~ /(.*)/, 'basic sanity';
 ok $/.caps ~~ Positional, '$/.caps returns something Positional';
-#?rakudo todo 'return type of .chunks'
-isa_ok $/.chunks,     Positional, '$/.chunks returns something Positional';
+ok $/.chunks ~~ Positional, '$/.chunks returns something Positional';
 isa_ok $/.caps.[0],   Pair, '.. and the items are Pairs (caps);';
 isa_ok $/.chunks.[0], Pair, '.. and the items are Pairs (chunks);';
 isa_ok $/.caps.[0].value,   Match, '.. and the values are Matches (caps);';
