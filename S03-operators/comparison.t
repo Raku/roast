@@ -53,6 +53,7 @@ is("a\0" cmp "a",   Order::More, 'a\0 cmp a is more');
 {
     class Blue { 
         method Numeric() { 3; }
+        method Real()    { 3; }
     } 
     my $a = Blue.new;
 
@@ -60,8 +61,7 @@ is("a\0" cmp "a",   Order::More, 'a\0 cmp a is more');
     ok $a == 3, '$a == 3';
     ok $a != 4, '$a != 4';
     nok $a != 3, 'not true that $a != 3';
-    
-    #?rakudo 4 todo 'nom regression'
+
     lives_ok { $a < 5 }, '$a < 5 lives okay';
     lives_ok { $a <= 5 }, '$a <= 5 lives okay';
     lives_ok { $a > 5 }, '$a > 5 lives okay';

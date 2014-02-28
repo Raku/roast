@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 52;
+plan 50;
 
 sub try_eval($str) { try EVAL $str }
 
@@ -55,10 +55,6 @@ my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "OGHAM SPACE MARK");
-
-is(try_eval('
-my᠎@x᠎=᠎<a᠎b᠎c>;᠎sub᠎y᠎(@z)᠎{᠎@z[1]᠎};᠎y(@x)
-'), "b", "MONGOLIAN VOWEL SEPARATOR");
 
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
@@ -144,7 +140,6 @@ is(try_eval('foo\ .lc'), 'a', 'long dot with SPACE');
 is(try_eval('foo\.lc'), 'a', 'long dot with NEXT LINE (NEL)');
 is(try_eval('foo\ .lc'), 'a', 'long dot with NO-BREAK SPACE');
 is(try_eval('foo\ .lc'), 'a', 'long dot with OGHAM SPACE MARK');
-is(try_eval('foo\᠎.lc'), 'a', 'long dot with MONGOLIAN VOWEL SEPARATOR');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EN QUAD');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EM QUAD');
 is(try_eval('foo\ .lc'), 'a', 'long dot with EN SPACE');

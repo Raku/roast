@@ -91,10 +91,8 @@ eval_dies_ok '@result Xcmp @expected Xcmp <1 2>',
     # those on the RHS
     ok ( ? all $a, $b X!=:= $c, $d ), 'X!=:= (1)';
     ok ( ? all $a, $a X!=:= $c, $d ), 'X!=:= (2)';
-    #?rakudo todo 'huh?'
     ok ( ! all $a, $b X!=:= $c, $b ), 'X!=:= (3)';
     $c := $b;
-    #?rakudo todo 'huh?'
     ok ( ? one $a, $b X=:=  $c, $d ), 'one X=:=';
 }
 
@@ -107,9 +105,8 @@ is (<a b> X <c d> X < e f>).join(','),
     'a,c,e,a,c,f,a,d,e,a,d,f,b,c,e,b,c,f,b,d,e,b,d,f',
     'cross works with three lists';
 
-#?rakudo todo 'RT 74072'
 #?niecza todo
-is ([1,2] X~ <a b>), '1 2a1 2b', '[] does not flatten';
+is ([1,2] X~ <a b>), '1 2a 1 2b', '[] does not flatten';
 
 is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
     'Nested X works';

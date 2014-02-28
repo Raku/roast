@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 31;
+plan 32;
 
 #L<S03/Autoincrement precedence>
 
@@ -17,14 +17,14 @@ Verify that autoincrement/autodecrement work properly.
     my $a = Mu;
     is($a++, 0, 'Mu++ == 0');
 
-    #?rakudo todo 'nom regression'
     #?niecza todo '#88'
     $a = Mu;
-    nok(defined($a--), 'Mu-- is undefined');
+    is $a--, 0 , 'postincrement (& decrement) returns 0 the first time';
 
-    $a = 'x';
-    is($a++, 'x', 'magical ++ should not be numified');
+    $a = 'z';
+    is($a++, 'z', 'magical ++ should not be numified');
     isa_ok($a, "Str", "it isa Str");
+    is $a, 'aa', 'magical ++ is carrying properly';
 }
 
 my %a = ('a' => 1);

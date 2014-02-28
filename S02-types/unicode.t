@@ -8,15 +8,18 @@ plan 16;
 # LATIN CAPITAL LETTER A, COMBINING GRAVE ACCENT
 my Str $u = "\x[0041,0300]";
 is $u.codes, 2, 'combining À is two codes';
+#?rakudo skip 'graphs NYI'
 is $u.graphs, 1, 'combining À is one graph';
 is "foo\r\nbar".codes, 8, 'CRLF is 2 codes';
+#?rakudo skip 'graphs NYI'
 is "foo\r\nbar".graphs, 7, 'CRLF is 1 graph';
 
-# Speculation, .chars is unspecced, also use Bytes etc.
+#?rakudo todo "RT #65170"
 is $u.chars, 1, '.chars defaults to .graphs';
 
 # RT #65170
 #?pugs todo
+#?rakudo todo "RT #65170"
 {
     my $rt65170;
 
@@ -34,6 +37,7 @@ is $u.chars, 1, '.chars defaults to .graphs';
             E0]";
 
 #?pugs 9 todo ''
+#?rakudo 9 skip 'Bytes/Codes/Graphs NYI'
 is EVAL('substr $u, 3.as(Bytes),  1.as(Bytes)'),  "\x[41]",             'substr with Bytes as units - utf8';
 is EVAL('substr $u, 3.as(Codes),  1.as(Codes)'),  "\x[0300]",           'substr with Codes as units - utf8';
 is EVAL('substr $u, 4.as(Graphs), 1.as(Graphs)'), "\x[E0]",             'substr with Graphs as units - utf8';

@@ -168,7 +168,6 @@ plan 28;
     is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';
 }
 
-# nom regression bug
 #?niecza skip 'Excess arguments to CORE List.new'
 #?pugs skip 'Must only use named arguments to new() constructor'
 {

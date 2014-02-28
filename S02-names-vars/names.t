@@ -69,11 +69,14 @@ eval_dies_ok '::.^methods', ':: is not a valid package';
             'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
-    dies_ok { EVAL 'TestA::b(3, :foo)'},
+    dies_ok { TestA::frobnosticate(3, :foo) },
         'calling non-existing function in foreign class dies';;
-    #?rakudo todo 'nom regression'
+
+    # Same, but check resulting exception message
+    try { TestA::frobnosticate(3, :foo)};
+
     #?niecza todo
-    ok "$!" ~~ / ' TestA::b' /, 'error message mentions function name';
+    ok ~$! ~~ / 'frobnosticate' /, 'error message mentions function name';
 }
 
 # RT #71194

@@ -87,7 +87,7 @@ ok 'xyabghij' ~~ /[ab::cd | gh::ij]/, 'group cut in group';
 ok 'xyabghij' !~~ /[ab:::cd | gh:::ij]/, 'rule cut in group';
 
 #### [ ab | abc ]: de	xyzabcde	n	no backtrack into group
-#?rakudo todo 'nom regression'
+#?rakudo todo 'RT #121307'
 #?niecza todo ''
 ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 
@@ -338,7 +338,7 @@ ok 'abcdef' ~~ /^<[a]>?/, 'anchored optional character class';
 ok 'abcdef' ~~ /<-[e]>?/, 'negated optional character class';
 
 #### <-[dcb]>**{3}		abcdef		n	repeated negated character class
-#?rakudo skip 'nom regression'
+#?rakudo skip 'RT #121306'
 ok 'abcdef' !~~ /<-[dcb]>**{3}/, 'repeated negated character class';
 
 #### ^<-[e]>			abcdef		y	anchored negated character class
@@ -1112,20 +1112,20 @@ ok "\x000a\x000b\x000c\x000d\x0085" !~~ /^ \h+ $/, '0-255 horizontal whitespace 
 #### ^ \v+ $			\x0009\x0020\x00a0	n	0-255 vertical whitespace (\v)
 ok "\x0009\x0020\x00a0" !~~ /^ \v+ $/, '0-255 vertical whitespace (\v)';
 
-#### ^ \s+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\s)
+#### ^ \s+ $			\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\s)
 #?pugs todo 
-ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \s+ $/, 'unicode whitespace (\s)';
+ok "\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \s+ $/, 'unicode whitespace (\s)';
 
-#### ^ \h+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\h)
+#### ^ \h+ $			\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\h)
 #?pugs todo 
-ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \h+ $/, 'unicode whitespace (\h)';
+ok "\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \h+ $/, 'unicode whitespace (\h)';
 
-#### ^ \V+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\V)
+#### ^ \V+ $			\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	y	unicode whitespace (\V)
 #?pugs todo 
-ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \V+ $/, 'unicode whitespace (\V)';
+ok "\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" ~~ /^ \V+ $/, 'unicode whitespace (\V)';
 
-#### ^ \v+ $			\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	n	unicode whitespace (\v)
-ok "\x1680\x180e\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" !~~ /^ \v+ $/, 'unicode whitespace (\v)';
+#### ^ \v+ $			\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000	n	unicode whitespace (\v)
+ok "\x1680\x2000\x2001\x2002\x2003\x2004\x2005\x2006\x2007\x2008\x2008\x2009\x200a\x202f\x205f\x3000" !~~ /^ \v+ $/, 'unicode whitespace (\v)';
 
 #### c \t d			abc\tdef	y	horizontal tab (\t)
 #?pugs todo 
@@ -2650,135 +2650,132 @@ ok "abc\ndef\n-==\nghi" ~~ /\-<!wb>/, '\W\W nonword boundary';
 
 #### <upper>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<upper>: <A @ 45>/		<upper>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<upper>/) && matchcheck($/, q/mob<upper>: <A @ 45>/), '<upper>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<upper>/) && matchcheck($/, q/mob<upper>: <A @ 45>/), '<upper>';
 
 #### <+upper>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <A @ 45>/			<+upper>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>/) && matchcheck($/, q/mob: <A @ 45>/), '<+upper>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>/) && matchcheck($/, q/mob: <A @ 45>/), '<+upper>';
 
 #### <+upper>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJ @ 45>/	<+upper>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>+/) && matchcheck($/, q/mob: <ABCDEFGHIJ @ 45>/), '<+upper>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+upper>+/) && matchcheck($/, q/mob: <ABCDEFGHIJ @ 45>/), '<+upper>+';
 
 
 #### <lower>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<lower>: <a @ 55>/		<lower>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lower>/) && matchcheck($/, q/mob<lower>: <a @ 55>/), '<lower>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<lower>/) && matchcheck($/, q/mob<lower>: <a @ 55>/), '<lower>';
 
 #### <+lower>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <a @ 55>/			<+lower>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>/) && matchcheck($/, q/mob: <a @ 55>/), '<+lower>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>/) && matchcheck($/, q/mob: <a @ 55>/), '<+lower>';
 
 #### <+lower>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <abcdefghij @ 55>/	<+lower>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>+/) && matchcheck($/, q/mob: <abcdefghij @ 55>/), '<+lower>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+lower>+/) && matchcheck($/, q/mob: <abcdefghij @ 55>/), '<+lower>+';
 
 #### <alpha>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alpha>: <A @ 45>/		<alpha>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alpha>/) && matchcheck($/, q/mob<alpha>: <A @ 45>/), '<alpha>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alpha>/) && matchcheck($/, q/mob<alpha>: <A @ 45>/), '<alpha>';
 
 #### <+alpha>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <A @ 45>/			<+alpha>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>/) && matchcheck($/, q/mob: <A @ 45>/), '<+alpha>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>/) && matchcheck($/, q/mob: <A @ 45>/), '<+alpha>';
 
 #### <+alpha>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <ABCDEFGHIJabcdefghij @ 45>/	<+alpha>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>+/) && matchcheck($/, q/mob: <ABCDEFGHIJabcdefghij @ 45>/), '<+alpha>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alpha>+/) && matchcheck($/, q/mob: <ABCDEFGHIJabcdefghij @ 45>/), '<+alpha>+';
 
 
 #### <digit>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<digit>: <0 @ 35>/		<digit>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<digit>/) && matchcheck($/, q/mob<digit>: <0 @ 35>/), '<digit>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<digit>/) && matchcheck($/, q/mob<digit>: <0 @ 35>/), '<digit>';
 
 #### <+digit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/			<+digit>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>/) && matchcheck($/, q/mob: <0 @ 35>/), '<+digit>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>/) && matchcheck($/, q/mob: <0 @ 35>/), '<+digit>';
 
 #### <+digit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789 @ 35>/	<+digit>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>+/) && matchcheck($/, q/mob: <0123456789 @ 35>/), '<+digit>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+digit>+/) && matchcheck($/, q/mob: <0123456789 @ 35>/), '<+digit>+';
 
 
 #### <xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<xdigit>: <0 @ 35>/		<xdigit>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<xdigit>/) && matchcheck($/, q/mob<xdigit>: <0 @ 35>/), '<xdigit>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<xdigit>/) && matchcheck($/, q/mob<xdigit>: <0 @ 35>/), '<xdigit>';
 
 #### <+xdigit>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/			<+xdigit>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>/) && matchcheck($/, q/mob: <0 @ 35>/), '<+xdigit>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>/) && matchcheck($/, q/mob: <0 @ 35>/), '<+xdigit>';
 
 #### <+xdigit>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEF @ 35>/	<+xdigit>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>+/) && matchcheck($/, q/mob: <0123456789ABCDEF @ 35>/), '<+xdigit>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+xdigit>+/) && matchcheck($/, q/mob: <0123456789ABCDEF @ 35>/), '<+xdigit>+';
 
 
 #### <space>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<space>: <\t @ 0>/		<space>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<space>/) && matchcheck($/, q/mob<space>: <\t @ 0>/), '<space>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<space>/) && matchcheck($/, q/mob<space>: <\t @ 0>/), '<space>';
 
 #### <+space>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/		<+space>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>/) && matchcheck($/, q/mob: <\t @ 0>/), '<+space>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>/) && matchcheck($/, q/mob: <\t @ 0>/), '<+space>';
 
 #### <+space>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r  @ 0>/		<+space>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>+/) && matchcheck($/, q/mob: <\t\n\r  @ 0>/), '<+space>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+space>+/) && matchcheck($/, q/mob: <\t\n\r  @ 0>/), '<+space>+';
 
 
 #### <blank>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<blank>: <\t @ 0>/		<blank>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<blank>/) && matchcheck($/, q/mob<blank>: <\t @ 0>/), '<blank>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<blank>/) && matchcheck($/, q/mob<blank>: <\t @ 0>/), '<blank>';
 
 #### <+blank>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>/) && matchcheck($/, q/mob: <\t @ 0>/), '<+blank>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>/) && matchcheck($/, q/mob: <\t @ 0>/), '<+blank>';
 
 #### <+blank>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+blank>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/) && matchcheck($/, q/mob: <\t @ 0>/), '<+blank>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+blank>+/) && matchcheck($/, q/mob: <\t @ 0>/), '<+blank>+';
 
 #?niecza 3 todo "Unable to resolve method cntrl in class Cursor"
 
 #### <cntrl>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<cntrl>: <\t @ 0>/		<cntrl>
-#?rakudo todo '<cntrl>'
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<cntrl>/) && matchcheck($/, q/mob<cntrl>: <\t @ 0>/), '<cntrl>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<cntrl>/) && matchcheck($/, q/mob<cntrl>: <\t @ 0>/), '<cntrl>';
 
 #### <+cntrl>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t @ 0>/			<+cntrl>
-#?rakudo todo '<cntrl>'
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>/) && matchcheck($/, q/mob: <\t @ 0>/), '<+cntrl>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>/) && matchcheck($/, q/mob: <\t @ 0>/), '<+cntrl>';
 
 #### <+cntrl>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <\t\n\r @ 0>/		<+cntrl>+
-#?rakudo todo '<cntrl>'
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>+/) && matchcheck($/, q/mob: <\t\n\r @ 0>/), '<+cntrl>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+cntrl>+/) && matchcheck($/, q/mob: <\t\n\r @ 0>/), '<+cntrl>+';
 
 
 #### <punct>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<punct>: <! @ 4>/		<punct>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<punct>/) && matchcheck($/, q/mob<punct>: <! @ 4>/), '<punct>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<punct>/) && matchcheck($/, q/mob<punct>: <! @ 4>/), '<punct>';
 
 #### <+punct>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <! @ 4>/			<+punct>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>/) && matchcheck($/, q/mob: <! @ 4>/), '<+punct>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>/) && matchcheck($/, q/mob: <! @ 4>/), '<+punct>';
 
 #### <+punct>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <!"#$%&/		<+punct>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>+/) && matchcheck($/, q/mob: <!"#$%&/), '<+punct>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+punct>+/) && matchcheck($/, q/mob: <!"#$%&/), '<+punct>+';
 
 
 #### <alnum>		\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob<alnum>: <0 @ 35>/		<alnum>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alnum>/) && matchcheck($/, q/mob<alnum>: <0 @ 35>/), '<alnum>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<alnum>/) && matchcheck($/, q/mob<alnum>: <0 @ 35>/), '<alnum>';
 
 #### <+alnum>	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0 @ 35>/	<+alnum>
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>/) && matchcheck($/, q/mob: <0 @ 35>/), '<+alnum>';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>/) && matchcheck($/, q/mob: <0 @ 35>/), '<+alnum>';
 
 #### <+alnum>+	\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij	/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/	<+alnum>+
 #?pugs todo 
-ok ('\t\n\r !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>+/) && matchcheck($/, q/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/), '<+alnum>+';
+ok ("\t\n\r"~' !"#$%&\'()*+,-./:;<=>?@[\]^`_{|}0123456789ABCDEFGHIJabcdefghij' ~~ /<+alnum>+/) && matchcheck($/, q/mob: <0123456789ABCDEFGHIJabcdefghij @ 35>/), '<+alnum>+';
 
 #### <+alnum+[_]>	ident_1				y	union of character classes
 #?pugs todo 
