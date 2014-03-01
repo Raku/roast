@@ -72,7 +72,6 @@ plan 43;
     is $/[0][1], 'b', 'match element [0][1] from /(.)+/';
 
     my @match = @( 'ab' ~~ /(.)+/ );
-    #?rakudo 2 todo 'nom regression'
     is @match[0][0], 'a', 'match element [0][0] from /(.)+/ coerced';
     is @match[0][1], 'b', 'match element [0][1] from /(.)+/ coerced';
 }
@@ -136,13 +135,11 @@ is_run( q{'aa' ~~ /(.)$1/},
     ok 'abc' ~~ /(.)+/, 'regex sanity';
     my $x = 0;
     $x++ for $/.list;
-    #?rakudo todo 'nom regression'
     is $x, 1, '$/.list does not flatten quantified subcaptures';
 
     ok 'abc' ~~ /(.)**2 (.)/, 'regex sanity';
     $x = 0;
     $x++ for $/.list;
-    #?rakudo todo 'nom regression'
     is $x, 2, '$/.list does not flattens subcaptures';
 }
 
