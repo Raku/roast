@@ -23,13 +23,13 @@ grammar LTM2 {
         j**7..* }
 }
 
-is ~LTM2.parse('aaaaaaaa'), 'aaaa', 'LTM a**4 worked';
-is ~LTM2.parse('acacaca'), 'aca', 'LTM a**2 % c worked';
-is ~LTM2.parse('adadadadada'), 'adada', 'LTM a**3..3 % d worked';
-is ~LTM2.parse('aeaeaea'), 'aeaeaea', 'LTM a**1..* % e worked';
-is ~LTM2.parse('afafafafafafa'), 'afafafaf', 'LTM afafafa? %% f worked';
-is ~LTM2.parse('agagagagagagaga'), 'agagagaga', 'LTM agaagaga? % g worked';
-is ~LTM2.parse('ahahahahahahahaha'), 'ahahahahahahahaha', 'LTM ahaahahaha+ % h worked';
-isnt LTM2.parse('ahahahahah'), 'ahahahaha', 'LTM ahahahahaha+ % h~failed correctly';
-is ~LTM2.parse('iiiiii'), 'iiiiii', 'LTM i**5..6 worked';
-is ~LTM2.parse('jjjjjjjjjj'), 'jjjjjjjjjj', 'LTM j**7..* worked';
+is ~LTM2.subparse('aaaaaaaa'), 'aaaa', 'LTM a**4 worked';
+is ~LTM2.subparse('acacaca'), 'aca', 'LTM a**2 % c worked';
+is ~LTM2.subparse('adadadadada'), 'adada', 'LTM a**3..3 % d worked';
+is ~LTM2.subparse('aeaeaea'), 'aeaeaea', 'LTM a**1..* % e worked';
+is ~LTM2.subparse('afafafafafafa'), 'afafafaf', 'LTM afafafa? %% f worked';
+is ~LTM2.subparse('agagagagagagaga'), 'agagagaga', 'LTM agaagaga? % g worked';
+is ~LTM2.subparse('ahahahahahahahaha'), 'ahahahahahahahaha', 'LTM ahaahahaha+ % h worked';
+isnt LTM2.subparse('ahahahahah'), 'ahahahaha', 'LTM ahahahahaha+ % h~failed correctly';
+is ~LTM2.subparse('iiiiii'), 'iiiiii', 'LTM i**5..6 worked';
+is ~LTM2.subparse('jjjjjjjjjj'), 'jjjjjjjjjj', 'LTM j**7..* worked';
