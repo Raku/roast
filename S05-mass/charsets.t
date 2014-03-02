@@ -31,10 +31,8 @@ plan 16;
     # unicode 6.0 reclassifies § and ¶ as punctuation characters, so actual results may vary depending on
     # on unicode version bundled with jdk, icu etc.
     #?rakudo.parrot todo 'punct characters'
-    #?rakudo.jvm todo 'unicode 6.0 punct characters'
     is $latin-chars.comb(/<punct>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, 'punct chars';
     #?rakudo.parrot todo 'unicode 6.0 punct characters'
-    #?rakudo.jvm todo 'unicode 6.0 punct characters'
     is $latin-chars.comb(/<:Punctuation>/).join, q<!"#%&'()*,-./:;?@[\]_{}¡§«¶·»¿>, ':Punctuation chars';
 
     is $latin-chars.comb(/<upper>/).join, "ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ", 'upper chars';
