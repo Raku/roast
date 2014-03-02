@@ -35,13 +35,13 @@ plan 16;
 }
 
 {
-    my $hist = '';
+    my $hist;	# DO NOT INITIALIZE HERE!  (my runs after these blocks)
 
     # Test INIT {} as rval:
 
     my $init_val;
     my $init = {
-        $init_val = INIT { $hist ~= 'I' };
+        $init_val = INIT { '' ~ ($hist ~= 'I') };
     }
 
     #?niecza todo 'block returns no value'
@@ -55,7 +55,7 @@ plan 16;
 
     my $check_val;
     my $check = {
-        $check_val = CHECK { $hist ~= 'C' };
+        $check_val = CHECK { '' ~ ($hist ~= 'C') };
     }
 
     #?niecza todo 'block returns no value'
@@ -70,7 +70,7 @@ plan 16;
 
     my $begin_val;
     my $begin = {
-        $begin_val = BEGIN { $hist ~= 'B'; 'B' };
+        $begin_val = BEGIN { '' ~ ($hist ~= 'B') };
     }
 
     is $begin(), 'B', 'BEGIN {} runs only once';
@@ -82,4 +82,4 @@ plan 16;
     ok !EVAL('my $end_val = END { 3 }'), "END {} can't be used as a rvalue";
 }
 
-# vim: ft=perl6
+# vim: ft=perl6 expandtab sw=4
