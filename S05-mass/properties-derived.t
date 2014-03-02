@@ -12,7 +12,7 @@ ie letter vs. Letter vs isLetter
 Some notes regarding specific unicode codepoints chosen below
 (based on Unicode 5.1):
 
-   U+9FC4 : just beyond the CJK Unified Ideographs block
+   U+4DFF : just before the CJK Unified Ideographs block
 
 =end pod
 
@@ -385,13 +385,13 @@ ok(!( "\x[7896]" ~~ m/^<-:UnifiedIdeograph>$/ ), q{Don't match inverted <Unified
 #?rakudo.jvm 3 skip 'icu'
 #?rakudo.parrot 3 skip 'icu'
 #?niecza 3 todo
-ok(!( "\x[9FC4]"  ~~ m/^<:UnifiedIdeograph>$/ ), q{Don't match unrelated <UnifiedIdeograph>} );
+ok(!( "\x[4DFF]"  ~~ m/^<:UnifiedIdeograph>$/ ), q{Don't match unrelated <UnifiedIdeograph>} );
 #?pugs todo
-ok("\x[9FC4]"  ~~ m/^<:!UnifiedIdeograph>$/, q{Match unrelated negated <UnifiedIdeograph>} );
+ok("\x[4DFF]"  ~~ m/^<:!UnifiedIdeograph>$/, q{Match unrelated negated <UnifiedIdeograph>} );
 #?pugs todo
-ok("\x[9FC4]"  ~~ m/^<-:UnifiedIdeograph>$/, q{Match unrelated inverted <UnifiedIdeograph>} );
+ok("\x[4DFF]"  ~~ m/^<-:UnifiedIdeograph>$/, q{Match unrelated inverted <UnifiedIdeograph>} );
 #?pugs todo
-ok("\x[9FC4]\x[7896]" ~~ m/<:UnifiedIdeograph>/, q{Match unanchored <UnifiedIdeograph>} );
+ok("\x[4DFF]\x[7896]" ~~ m/<:UnifiedIdeograph>/, q{Match unanchored <UnifiedIdeograph>} );
 
 # WhiteSpace
 
