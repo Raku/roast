@@ -561,9 +561,9 @@ ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Syno
 #?rakudo.parrot 10 skip 'isCommon not implemented'
 #?niecza 3 todo
 #?pugs todo
-ok("\x[0C7E]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
-ok(!( "\x[0C7E]" ~~ m/^<:!Common>$/ ), q{Don't match negated (Codepoint not explicitly assigned to a script)} );
-ok(!( "\x[0C7E]" ~~ m/^<-:Common>$/ ), q{Don't match inverted (Codepoint not explicitly assigned to a script)} );
+ok("\c[ELECTRIC LIGHT BULB]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );
+ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<:!Common>$/ ), q{Don't match negated (Codepoint not explicitly assigned to a script)} );
+ok(!( "\c[ELECTRIC LIGHT BULB]" ~~ m/^<-:Common>$/ ), q{Don't match inverted (Codepoint not explicitly assigned to a script)} );
 ok(!( "\c[KANNADA SIGN ANUSVARA]"  ~~ m/^<:Common>$/ ), q{Don't match unrelated (Codepoint not explicitly assigned to a script)} );
 #?pugs todo
 ok("\c[KANNADA SIGN ANUSVARA]"  ~~ m/^<:!Common>$/, q{Match unrelated negated (Codepoint not explicitly assigned to a script)} );
@@ -576,7 +576,7 @@ ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<:!Common>$/, q{Match related negated (Co
 ok("\c[KHMER VOWEL INHERENT AQ]" ~~ m/^<-:Common>$/, q{Match related inverted (Codepoint not explicitly assigned to a script)} );
 #?niecza todo
 #?pugs todo
-ok("\c[KANNADA SIGN ANUSVARA]\c[KHMER VOWEL INHERENT AQ]\x[0C7E]" ~~ m/<:Common>/, q{Match unanchored (Codepoint not explicitly assigned to a script)} );
+ok("\c[KANNADA SIGN ANUSVARA]\c[KHMER VOWEL INHERENT AQ]\c[ELECTRIC LIGHT BULB]" ~~ m/<:Common>/, q{Match unanchored (Codepoint not explicitly assigned to a script)} );
 
 # TODO: missing properties which are broken up to Perl 5.10 e.g.
 # Grapheme_Base
