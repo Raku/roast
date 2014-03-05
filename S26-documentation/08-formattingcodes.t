@@ -44,7 +44,7 @@ for $r[1], $r[3] -> $link {
     is $link.content[0], '';
     isa_ok $link.content[1], Pod::FormattingCode;
     is $link.content[1].content, 'b';
-    is $link.content[2], '|a';
+    is $link.meta, 'a';
 }
 
 =begin pod
