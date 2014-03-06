@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 24;
+plan 25;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -71,5 +71,11 @@ isa_ok (1 Z 2)[0], Parcel, 'zip returns a list of parcels';
 
 # RT #73948
 is (1, 2 Z, 3, 4).join('|'), '1|3|2|4', 'Z, flattens in list context';
+
+{
+    my @a = 1,2,3;
+    @a Z+= 3,2,1;
+    is ~@a, '4 4 4', 'zip can modify containers on the left'
+}
 
 # vim: ft=perl6
