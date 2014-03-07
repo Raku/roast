@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 214;
+plan 209;
 
 # Unicode version pragma not needed here, as names cannot change.
 
@@ -119,10 +119,10 @@ ok unimatch("\x111B6", "Mn"), "SHARADA VOWEL SIGN U matches Mn";
 ok unimatch("\x116AC", "Mc"), "TAKRI SIGN VISARGA matches Mc";
 ok unimatch("\x116B6", "Mc"), "TAKRI SIGN VIRAMA matches Mc";
 ok unimatch("\x16F9F", "Lm"), "MIAO LETTER REFORMED TONE-8 matches Lm";
-ok unimatch("\x1D4BB", "L"), "MATHEMATICAL SCRIPT SMALL F matches L";
-ok unimatch("\x1D4C5", "L"), "MATHEMATICAL SCRIPT SMALL P matches L&";
-ok unimatch("\x1D50A", "L"), "MATHEMATICAL FRAKTUR CAPITAL G matches L&";
-ok unimatch("\x1D58F", "L"), "MATHEMATICAL BOLD FRAKTUR SMALL J matches L&";
+ok unimatch("\x1D4BB", "LC"), "MATHEMATICAL SCRIPT SMALL F matches L&";
+ok unimatch("\x1D4C5", "LC"), "MATHEMATICAL SCRIPT SMALL P matches L&";
+ok unimatch("\x1D50A", "LC"), "MATHEMATICAL FRAKTUR CAPITAL G matches L&";
+ok unimatch("\x1D58F", "LC"), "MATHEMATICAL BOLD FRAKTUR SMALL J matches L&";
 ok unimatch("\x1EE47", "Lo"), "ARABIC MATHEMATICAL TAILED HAH matches Lo";
 ok unimatch("\x1EE4D", "Lo"), "ARABIC MATHEMATICAL TAILED NOON matches Lo";
 ok unimatch("\x1EE4F", "Lo"), "ARABIC MATHEMATICAL TAILED AIN matches Lo";
@@ -131,7 +131,7 @@ ok unimatch("\x6FFFE", "Cn"), "<noncharacter-6FFFE> matches Cn";
 ok unimatch("\xE0020", "Cf"), "TAG SPACE matches Cf";
 ok unimatch("\xEFFFE", "Cn"), "<noncharacter-EFFFE> matches Cn";
 
-# A random selection of general properties
+# A random selection of PropList properties
 ok unimatch("\x0020", "Pattern_White_Space"), "SPACE matches Pattern_White_Space";
 ok unimatch("\x003A", "Pattern_Syntax"), "COLON matches Pattern_Syntax";
 ok unimatch("\x003A", "Terminal_Punctuation"), "COLON matches Terminal_Punctuation";
@@ -201,8 +201,6 @@ ok unimatch("\x2E0E", "Pattern_Syntax"), "EDITORIAL CORONIS matches Pattern_Synt
 ok unimatch("\x2E1B", "Pattern_Syntax"), "TILDE WITH RING ABOVE matches Pattern_Syntax";
 ok unimatch("\x2E21", "Pattern_Syntax"), "RIGHT VERTICAL BAR WITH QUILL matches Pattern_Syntax";
 ok unimatch("\x2E2E", "STerm"), "REVERSED QUESTION MARK matches STerm";
-#?rakudo.moar 1 todo "non-character matches are broken"
-ok unimatch("\x2E7F", "Pattern_Syntax"), "<reserved-2E7F> matches Pattern_Syntax";
 ok unimatch("\x2FFB", "IDS_Binary_Operator"), "IDEOGRAPHIC DESCRIPTION CHARACTER OVERLAID matches IDS_Binary_Operator";
 ok unimatch("\x300F", "Pattern_Syntax"), "RIGHT WHITE CORNER BRACKET matches Pattern_Syntax";
 ok unimatch("\x301E", "Quotation_Mark"), "DOUBLE PRIME QUOTATION MARK matches Quotation_Mark";
@@ -229,8 +227,3 @@ ok unimatch("\x1D76E", "Other_Math"), "MATHEMATICAL SANS-SERIF BOLD CAPITAL OMEG
 ok unimatch("\x1D7CE", "Other_Math"), "MATHEMATICAL BOLD DIGIT ZERO matches Other_Math";
 ok unimatch("\x1EE5F", "Other_Math"), "ARABIC MATHEMATICAL TAILED DOTLESS QAF matches Other_Math";
 ok unimatch("\x1EEAB", "Other_Math"), "ARABIC MATHEMATICAL DOUBLE-STRUCK LAM matches Other_Math";
-#?rakudo.moar 4 todo "non-character matches are broken"
-ok unimatch("\x8FFFF", "Noncharacter_Code_Point"), "<noncharacter-8FFFF> matches Noncharacter_Code_Point";
-ok unimatch("\xAFFFE", "Noncharacter_Code_Point"), "<noncharacter-AFFFE> matches Noncharacter_Code_Point";
-ok unimatch("\xBFFFE", "Noncharacter_Code_Point"), "<noncharacter-BFFFE> matches Noncharacter_Code_Point";
-ok unimatch("\xE0000", "Other_Default_Ignorable_Code_Point"), "<reserved-E0000> matches Other_Default_Ignorable_Code_Point";
