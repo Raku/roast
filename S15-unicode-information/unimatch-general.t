@@ -24,7 +24,7 @@ nok unimatch('⅓', 'Nd'), "'⅓' is not Nd";
 ok unimatch("\c[AEGEAN NUMBER NINETY THOUSAND]", 'No'), "AEGEAN NUMBER NINETY THOUSAND is No";
 ok unimatch("\c[MATHEMATICAL MONOSPACE DIGIT ZERO]", 'Nd'), "MATHEMATICAL MONOSPACE DIGIT ZERO is Nd";
 
-ok unimatch('פ', 'Hebrew'), "'פ' is in block Emoticons";
+ok unimatch('פ', 'Hebrew'), "'פ' is in block Hebrew";
 ok unimatch('💩', 'Miscellaneous_Symbols_And_Pictographs'), "'💩' is in block Miscellaneous_Symbols_And_Pictographs";
 ok unimatch('💩', 'MiscellaneousSymbolsAndPictographs'), "'💩' is in block MiscellaneousSymbolsAndPictographs";
 ok unimatch('💩', 'miscellaneoussymbolsandpictographs'), "'💩' is in block miscellaneoussymbolsandpictographs";
