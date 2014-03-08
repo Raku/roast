@@ -4,9 +4,9 @@ use Test;
 
 plan 25;
 
-# Unicode version pragma not needed here, as names cannot change.
+#use unicode :v(6.3);
 
-# L<S15/Character Name>
+# L<S15/Numeric Value>
 
 #?niecza 25 skip "unival NYI"
 #?pugs 25 skip "unival NYI"

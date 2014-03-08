@@ -4,9 +4,9 @@ use Test;
 
 plan 209;
 
-# Unicode version pragma not needed here, as names cannot change.
+#use unicode :v(6.3)
 
-# L<S15/Character Name>
+# L<S15/Binary Category Check>
 
 #?niecza 214 skip "unimatch NYI"
 #?pugs 214 skip "unimatch NYI"
