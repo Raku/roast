@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 6;
+plan 7;
 
 {
     my $l = Lock.new;
@@ -21,7 +21,7 @@ plan 6;
     });
     Thread.start({
         $l.protect({
-            pass "Even from another thread";i
+            pass "Even from another thread";
         });
     }).finish();
 }
@@ -47,4 +47,32 @@ plan 6;
     $t1.finish;
     $t2.finish;
     ok $output ~~ /^ [ a+: b+: | b+: a+: ] $/, 'Lock is at least somewhat effective'; 
+}
+
+{
+    my $l = Lock.new;
+    my $c = $l.condition;
+    my @log;
+
+    my $t1 = Thread.start({
+        $l.protect({
+            @log.push('ale');
+            $c.wait();
+            @log.push('stout');
+        });
+    });
+
+    until $l.protect({ @log.elems }) == 1 { }
+
+    my $t2 = Thread.start({
+        $l.protect({
+            @log.push('porter');
+            $c.signal();
+        });
+    });
+
+    $t1.join();
+    $t2.join();
+
+    is @log.join(','), 'ale,porter,stout', 'Conditon variable worked';
 }
