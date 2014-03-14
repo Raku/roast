@@ -8,8 +8,6 @@ plan 30;
 
 This test tests the C<uniq> builtin.
 
-See the thread "[S32::Containers] uniq" on p6l, too.
-
 =end description
 
 {
