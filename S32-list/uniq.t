@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 32;
 
 =begin description
 
@@ -70,6 +70,16 @@ This test tests the C<uniq> builtin.
     my @uniq = uniq(@list);
     is @uniq, @list, "uniq has === semantics";
 } #1
+
+# RT #121434
+{
+    my $a = <a b c b d>;
+    $a .= uniq;
+    is_deeply( $a, <a b c d>.list.item, '.= uniq in sink context works on $a' );
+    my @a = <a b c b d>;
+    @a .= uniq;
+    is_deeply( @a, [<a b c d>], '.= uniq in sink context works on @a' );
+} #2
 
 #?pugs   skip 'NYI'
 #?niecza skip 'NYI'

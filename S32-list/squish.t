@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 28;
 
 =begin description
 
@@ -119,5 +119,15 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is_deeply @array, [{:a<1>}, {:b<1>}],
       "final result with [eqv] and objects in place";
 } #4
+
+# RT #121434
+{
+    my $a = <a b b c>;
+    $a .= squish;
+    is_deeply( $a, <a b c>.list.item, '.= squish in sink context works on $a' );
+    my @a = <a b b c>;
+    @a .= squish;
+    is_deeply( @a, [<a b c>], '.= squish in sink context works on @a' );
+} #2
 
 # vim: ft=perl6
