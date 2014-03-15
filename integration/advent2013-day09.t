@@ -105,7 +105,4 @@ Pair.^add_fallback(
     }
     );
 
-#?rakudo.jvm skip 'caddr example'
-#?rakudo.parrot skip 'caddr example'
-#?rakudo.moar skip 'caddr example'
 is $lisp-list.caddr, 3, 'Pair.^add_fallback';
