@@ -381,9 +381,15 @@ if $emits_suggestions {
     throws_like 'my class Baz is Juntcion {}', X::Inheritance::UnknownParent, suggestions => 'Junction';
 
     {
+        try EVAL('say &huc("foo")');
+        ok $! ~~ X::Undeclared::Symbols, "&huc throws X::Undeclared::Symbols";
+        is $!.routine_suggestion<huc>, ["&uc"], '&uc is a suggestion';
+    }
+
+    {
         try EVAL('say huc("foo")');
         ok $! ~~ X::Undeclared::Symbols, "huc throws X::Undeclared::Symbols";
-        is $!.routine_suggestion<huc>, ["&uc"], '&uc is a suggestion';
+        is $!.routine_suggestion<huc>, ["uc"], '&uc is a suggestion';
     }
 
     try EVAL('toolongtomatchanything()');
