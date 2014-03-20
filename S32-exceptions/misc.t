@@ -7,7 +7,7 @@ use Test::Util;
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
 throws_like 'pack("B",  1)',       X::Buf::Pack, directive => 'B';
 throws_like 'Buf.new.unpack("B")', X::Buf::Pack, directive => 'B';
-throws_like 'pack "A1", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
+throws_like 'pack "A2", "mÄ"',     X::Buf::Pack::NonASCII, char => 'Ä';
 throws_like 'my class Foo { method a() { $!bar } }', X::Attribute::Undeclared,
             symbol => '$!bar', package-name => 'Foo', package-kind => 'class',
             what => 'attribute';
