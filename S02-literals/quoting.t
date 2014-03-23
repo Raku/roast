@@ -384,28 +384,24 @@ Hello, World
 }
 
 # q:x
-#?rakudo.moar skip 'openpipe'
 {
     my $result = $*OS ~~ /:i win32/ ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8
 
-#?rakudo.moar skip 'openpipe'
 {
     # 一 means "One" in Chinese.
     is q:x/echo 一/, "一\n", "Testing for q:x operator. (utf8)";
 }
 
 #?pugs todo
-#?rakudo.moar skip 'openpipe'
 {
     my $world = 'world';
     ok qq:x/echo hello $world/ ~~ /^'hello world'\n$/, 'Testing qq:x operator';
 }
 
 #?rakudo todo 'q:x assigned to array'
-#?rakudo.moar skip 'openpipe'
 #?niecza todo ':x'
 #?pugs todo
 {
@@ -414,7 +410,6 @@ Hello, World
 }
 
 #?rakudo todo 'q:x assigned to array'
-#?rakudo.moar skip 'openpipe'
 #?niecza todo ':x'
 #?pugs todo
 {
@@ -524,7 +519,6 @@ Hello, World
     eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
 }
 
-#?rakudo.moar skip 'openpipe'
 {
     my $var = 'world';
     is  qx/echo world/.chomp, "world", 'qx';
