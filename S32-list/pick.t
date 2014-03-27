@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 47;
+plan 57;
 
 =begin description
 
@@ -173,5 +173,20 @@ ok ('a'..'z').pick ~~ /\w/, 'Range.pick on non-Int range';
 # RT #109586
 #?pugs skip 'hogs memory'
 nok ([==] (^2**64).roll(10).map(* +& 15)), 'Range.pick has enough entropy';
+
+# sanity on Enums
+{
+    is Order.pick, any(Less,Same,More), 'simple pick on Enum type works';
+    is Order.pick(1), any(Less,Same,More), 'one pick on Enum type works';
+    is sort(Order.pick(*)), (Less,Same,More), 'all pick on Enum type works';
+    is sort(Order.pick(4)), (Less,Same,More), 'too many pick on Enum type works';
+    is Order.pick(0), (), 'zero pick on Enum type works';
+
+    is Less.pick, Less, 'simple pick on Enum is sane';
+    is Same.pick(1), Same, 'one pick on Enum is sane';
+    is More.pick(*), More, 'all pick on Enum is sane';
+    is Less.pick(4), Less, 'too many pick on Enum is sane';
+    is More.pick(0), (), 'zero pick on Enum is sane';
+}
 
 # vim: ft=perl6
