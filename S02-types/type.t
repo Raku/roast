@@ -54,6 +54,8 @@ my Str $bar;
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
     #?pugs 2 todo
     #?rakudo.jvm todo "nigh"
+    #?rakudo.moar todo "nigh"
+    # RT #121518
     eval_lives_ok('my num $alpha = Nil', 'native num type can be undefined');
     lives_ok({my Num $beta = Nil},      'object Num type can be undefined');
 }
