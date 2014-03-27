@@ -251,17 +251,18 @@ sub combination($n, @xs) {
 #?pugs todo
 {
     my @input= [<a b c>],[<d e>],[<f g h>],[<d e>],[<i j k l>],[<m n>],[<o>];
-    my @expected= [<o>],[<i j k l>],[<a b c>],[<f g h>],[<d e>],[<d e>],[<m n>];
+    my @expected= [<i j k l>],[<o>],[<a b c>],[<f g h>],[<d e>],[<d e>],[<m n>];
     
     # group lists by length
     
     my %grouped;
     for (@input) {push %grouped{+$_}, $_}
     
-    # now sort the values by frequency, again can't use
-    #  sort: {+$_}
+    # now sort the values by frequency,
+    # but since both length 1 and 4 appear twice, need to sort first on
+    # something else to avoid reliance on hash ordering
     
-    my @sorted= %grouped.values.sort: +*;
+    my @sorted= %grouped.values.sort(*[0][0]).sort: +*;
     is @expected,@sorted, "..or according to frequency of length of sublists" 
 }
 
