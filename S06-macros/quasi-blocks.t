@@ -87,6 +87,7 @@ plan 12;
 }
 
 #?rakudo.jvm skip "Method 'succ' not found"
+#?rakudo.moar skip "No such method 'STORE' for invocant of type 'Mu'"
 {
     my $counter = 0;
 
