@@ -115,6 +115,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         }
     }
     #?pugs todo
+    #?rakudo.moar todo 'failing PRE block should not run any other phasers, RT 121531'
     is $str, '(', 'failing PRE runs nothing else';
 }
 
@@ -157,8 +158,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
 }
 
 #?niecza skip 'unspecced'
-#?rakudo.parrot todo "POST and exceptions"
-#?rakudo.jvm skip "POST and exceptions"
+#?rakudo skip "POST and exceptions"
 {
     try {
         POST { 0 }
