@@ -5,7 +5,8 @@ plan 6;
 
 is tclc('aBcD'),        'Abcd',         'tclc sub form on mixed-case latin string';
 is 'aBcD'.tclc,         'Abcd',         'method form';
-#?rakudo.jvm todo "nigh"
+#?rakudo.jvm todo "RT 121377"
+#?rakudo.moar todo "RT 121377"
 is 'ßß'.tclc,           'Ssß',          'tclc and German sharp s';
 is tclc('ǉenčariti'),   'ǈenčariti',    'lj => Lj (in one character)';
 is 'Ångstrom'.tclc,     'Ångstrom',     'Å remains Å';
