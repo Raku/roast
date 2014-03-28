@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 48;
 
 =begin description
 
@@ -128,6 +128,19 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
     my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     my $c = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     ok set($a, $b, $c) > 1, 'different results due to random random-number seed';
+}
+
+# sanity on Enums
+{
+    is Order.roll, any(Less,Same,More), 'simple roll on Enum type works';
+    is Order.roll(1), any(Less,Same,More), 'one roll on Enum type works';
+    is Order.roll(4).elems, 4, 'too many roll on Enum type works';
+    is Order.roll(0), (), 'zero roll on Enum type works';
+
+    is Less.roll, Less, 'simple roll on Enum is sane';
+    is Same.roll(1), Same, 'one roll on Enum is sane';
+    is Less.roll(4), (Less,Less,Less,Less), 'too many roll on Enum is sane';
+    is More.roll(0), (), 'zero roll on Enum is sane';
 }
 
 # vim: ft=perl6
