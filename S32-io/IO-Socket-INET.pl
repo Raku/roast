@@ -56,6 +56,8 @@ given $test {
         if $server_or_client eq 'server' {
             # warn "SERVER TEST=$test PORT=$port";
             my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
             # warn "SERVER LISTENING";
             while my $client = $server.accept() {
                 # warn "SERVER ACCEPTED";
@@ -66,9 +68,8 @@ given $test {
         }
         else { # $server_or_client eq 'client'
             # warn "CLIENT TEST=$test PORT=$port";
-            # avoid a race condition, where the client tries to
-            # open() before the server gets to accept().
-            sleep 1; # crude, sorry
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
             my $client = IO::Socket::INET.new(:$host, :$port);
             # warn "CLIENT OPENED";
             $client.send( [~] '0'..'9', 'a'..'z' );
