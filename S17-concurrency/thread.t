@@ -100,7 +100,8 @@ plan 25;
     ok 0 <= $seen <= $threads * $times, "we didn't segfault"
 }
 
-#?rakudo skip 'Hangs about 20% of the time'
+#?rakudo.jvm skip 'Hangs about 20% of the time'
+#?rakudo.moar skip 'Segfaults'
 {
     my %seen;
     my $threads = 3;
