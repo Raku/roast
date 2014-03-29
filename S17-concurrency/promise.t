@@ -169,6 +169,7 @@ plan 64;
     is $pall.status, Broken, "all-Promise was broken";
 }
 
+#?rakudo.moar skip "Cannot find method Mu"
 {
     my @a;
     my @p = (^10).pick(*).map: { start { sleep $_; @a.push: $_ } };
