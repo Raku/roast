@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 41;
+plan 47;
 
 {
     #?rakudo.jvm emit skip_rest('rakudo.jvm systemic failures/OOM error');
@@ -187,6 +187,24 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
     $expected = $received.split("\n");
     is $expected[0], 'OK-8', "{elapsed} successful received binary data";
     nok $elapsed > $toolong, "finished in time #20";
+
+    # test 9 tests one-byte .read calls
+    # When .read is called, it grabs a chunk of data and caches what we don't
+    # immediately use. This is testing for a moarbug where that cache would get
+    # wiped out
+    if $is-win {
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 9 $port};
+    } else {
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 9 $port};
+    }
+    $expected = $received.split("\n");
+    $i = 0;
+    is $expected[$i++], 'x', "{elapsed} received first character";
+    nok $elapsed > $toolong, "finished in time #21";
+    is $expected[$i++], 'x', "{elapsed} received last character";
+    nok $elapsed > $toolong, "finished in time #22";
+    is $expected[$i++], 4, "{elapsed} total amount ";
+    nok $elapsed > $toolong, "finished in time #23";
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;

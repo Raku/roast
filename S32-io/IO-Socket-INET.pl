@@ -226,6 +226,33 @@ given $test {
             $sock.close();
         }
     }
+
+    when 9 { # test number 9 - recv one byte at a time
+        if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.new(:localhost($host), :localport($port), :listen);
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
+            while my $client = $server.accept() {
+                # send 4 byte string in one packet
+                $client.send( 'xxxx' );
+                $client.close();
+            }
+        }
+        else {
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
+            my $sock = IO::Socket::INET.new(:$host, :$port);
+            # .read one byte at a time
+            my $collected = $sock.read( 1 );
+            $collected ~= $sock.read( 1 );
+            $collected ~= $sock.read( 1 );
+            $collected ~= $sock.read( 1 );
+            say $collected.at_pos( 0 ).chr;
+            say $collected.at_pos( 3 ).chr;
+            say $collected.bytes;
+            $sock.close();
+        }
+    }
 }
 
 =begin pod
