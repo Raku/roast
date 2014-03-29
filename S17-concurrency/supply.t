@@ -57,7 +57,6 @@ plan 16;
     is ~@a2, "1 2 3 4 5 6 7 8 9 10 end", "Second tap also gets all values";
 }
 
-#?rakudo skip "hangs"
 {
     my $p = Supply.for(2..6);
     my @a;
@@ -99,6 +98,7 @@ plan 16;
     $p1.done();
     $p2.more('b');
     
+    #?rakudo.moar todo "merging apparently does *not* work"
     is @res.join(','), '1,2,a,3,b', "merging taps works";
 }
 
