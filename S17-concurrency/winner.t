@@ -4,6 +4,7 @@ use Test;
 plan 4;
 
 #?rakudo.parrot skip 'no implementation of promise/winner'
+#?rakudo.moar skip ':in NYI'
 {
     my $p1 = Promise.in(1);
     my $p2 = Promise.in(2);
