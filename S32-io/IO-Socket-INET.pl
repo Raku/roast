@@ -254,6 +254,31 @@ given $test {
             $sock.close();
         }
     }
+    when 10 { # test #10 multichar line sep on server socket
+	constant DOUBLE_CRLF = "\x0D\x0A\x0D\x0A";
+	constant CRLF = "\x0D\x0A";
+	if $server_or_client eq 'server' {
+            my $server = IO::Socket::INET.new(:localhost($host),
+		    :localport($port), :listen,
+		    :input-line-separator(DOUBLE_CRLF));
+            my $fd = open( $server_ready_flag_fn, :w );
+            $fd.close();
+            while my $client = $server.accept() {
+                my $received = $client.get;
+                say $received;
+                $client.close();
+            }
+        }
+        else {
+            until $server_ready_flag_fn.IO ~~ :e { sleep(0.1) }
+            unlink $server_ready_flag_fn;
+            my $sock = IO::Socket::INET.new(:$host, :$port);
+            $sock.send("Some stuff" ~ CRLF);
+            $sock.send("Got more stuff" ~ CRLF);
+            $sock.send(CRLF);
+            $sock.close();
+        }
+    }
 }
 
 =begin pod

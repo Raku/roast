@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 47;
+plan 49;
 
 {
     #?rakudo.jvm emit skip_rest('rakudo.jvm systemic failures/OOM error');
@@ -205,6 +205,22 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
     nok $elapsed > $toolong, "finished in time #22";
     is $expected[$i++], 4, "{elapsed} total amount ";
     nok $elapsed > $toolong, "finished in time #23";
+
+    # test 10 verifies multichar line sep on server socket
+    if $is-win {
+        $received = qqx{$runner t\\spec\\S32-io\\IO-Socket-INET.bat 10 $port};
+    } else {
+        $received = qqx{$runner sh t/spec/S32-io/IO-Socket-INET.sh 10 $port};
+    }
+    constant CRLF = "\x0D\x0A";
+    constant LF = "\x0A";
+    # FAILS ON MOAR, JVM AND PARROT
+    $expected = "Some stuff" ~ CRLF ~ "Got more stuff";
+    # FAILS ON MOAR ONLY
+    # $expected = "Some stuff" ~ CRLF ~ "Got more stuff" ~ LF;
+    is $received, $expected, "{elapsed} line sep on server socket";
+    nok $elapsed > $toolong, "finished in time #24";
+
 }
 else {
     skip "OS '$*OS' shell support not confirmed", 1;
