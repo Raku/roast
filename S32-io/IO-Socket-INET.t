@@ -214,10 +214,9 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
     }
     constant CRLF = "\x0D\x0A";
     constant LF = "\x0A";
-    # FAILS ON MOAR, JVM AND PARROT
-    $expected = "Some stuff" ~ CRLF ~ "Got more stuff";
     # FAILS ON MOAR ONLY
-    # $expected = "Some stuff" ~ CRLF ~ "Got more stuff" ~ LF;
+    # Additional Line Feed at the end comes from say
+    $expected = "Some stuff" ~ CRLF ~ "Got more stuff" ~ LF;
     is $received, $expected, "{elapsed} line sep on server socket";
     nok $elapsed > $toolong, "finished in time #24";
 
