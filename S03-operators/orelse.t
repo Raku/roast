@@ -12,38 +12,30 @@ ok (1 orelse ($tracker = 1)), 'sanity';
 nok $tracker, 'orelse thunks';
 
 #?rakudo todo "orelse exception semantics"
-{
+lives_ok {
     my $result = 0;
-    try {
-        die "oh noes!" orelse $result = 1;
-    }
+    die "oh noes!" orelse $result = 1;
     ok $result, "orelse continues after an exception";
 }
 
 #?rakudo todo "orelse exception semantics"
-{
+lives_ok {
     my $result = 0;
-    try {
-        die "oh noes!" orelse $result = ~$! eq "oh noes!";
-    }
+    die "oh noes!" orelse $result = ~$! eq "oh noes!";
     ok $result, "orelse sets $! after an exception";
 }
 
 #?rakudo todo "orelse exception semantics"
-{
+lives_ok {
     my $result = 0;
-    try {
-        die "oh noes!" orelse -> $foo { $result = ~$foo eq "oh noes!" };
-    }
+    die "oh noes!" orelse -> $foo { $result = ~$foo eq "oh noes!" };
     ok $result, "orelse passes $! to one argument after an exception";
 }
 
 #?rakudo todo "orelse exception semantics"
-{
+lives_ok {
     my $result = 0;
-    try {
-        die "oh noes!" orelse -> $foo, $bar { $result = ~$foo eq "oh noes!" && ~$bar eq "oh noes!" };
-    }
+    die "oh noes!" orelse -> $foo, $bar { $result = ~$foo eq "oh noes!" && ~$bar eq "oh noes!" };
     ok $result, "orelse passes $! to two arguments after an exception";
 }
 
