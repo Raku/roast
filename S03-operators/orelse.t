@@ -15,7 +15,7 @@ nok $tracker, 'orelse thunks';
 {
     try {
         die "oh noes!" orelse pass("orelse continues after an exception");
-        CATCH { flunk "orelse shouldn't rethrow exceptions" }
+        CATCH { default { flunk "orelse shouldn't rethrow exceptions" } }
     }
 }
 
@@ -23,7 +23,7 @@ nok $tracker, 'orelse thunks';
 {
     try {
         die "oh noes!" orelse ok(~$! eq "oh noes!", "orelse sets $! after an exception");
-        CATCH { flunk "orelse shouldn't rethrow exceptions" }
+        CATCH { default { flunk "orelse shouldn't rethrow exceptions" } }
     }
 }
 
@@ -33,7 +33,7 @@ nok $tracker, 'orelse thunks';
         die "oh noes!" orelse -> $foo {
             ok ~$foo eq "oh noes!", "orelse passes $! to one argument after an exception";
         };
-        CATCH { flunk "orelse shouldn't rethrow exceptions" }
+        CATCH { default { flunk "orelse shouldn't rethrow exceptions" } }
     }
 }
 
@@ -43,7 +43,7 @@ nok $tracker, 'orelse thunks';
         die "oh noes!" orelse -> $foo, $bar {
             ok ~$foo eq "oh noes!" && ~$bar eq "oh noes!", "orelse passes $! to two arguments after an exception";
         };
-        CATCH { flunk "orelse shouldn't rethrow exceptions" }
+        CATCH { default { flunk "orelse shouldn't rethrow exceptions" } }
     }
 }
 
