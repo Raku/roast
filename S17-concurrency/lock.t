@@ -74,5 +74,6 @@ plan 7;
     $t1.join();
     $t2.join();
 
-    is @log.join(','), 'ale,porter,stout', 'Conditon variable worked';
+    diag "log = {@log}" if !
+      is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
 }
