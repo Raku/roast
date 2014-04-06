@@ -2,44 +2,48 @@ use v6;
 use Test;
 plan 20;
 
-my $measurements = Supply.new;
+#?rakudo.parrot skip 'no implementation of supply'
+{
+    my $measurements = Supply.new;
 
-my $measured = 0;
-sub measure_ok($test) {
-    ++$measured;
-    pass $test;
+    my $measured = 0;
+    sub measure_ok($test) {
+	++$measured;
+	pass $test;
+    }
+
+    $measurements.tap(-> $value {
+	measure_ok("Measured: $value");
+    });
+
+    $measurements.more(1.5);
+    $measurements.more(2.3);
+    $measurements.more(4.6);
+    is $measured, 3, 'supply - singular tap';
+
+    $measured = 0;
+    $measurements.tap(-> $value {
+	measure_ok  "Also measured: $value";
+    });
+
+    $measurements.more(2.8);
+
+    is $measured, 2, 'supply dual tap';
+
+    $measurements.grep(* > 4).tap(-> $value {
+	measure_ok "HIGH: $value";
+    });
+
+    $measured = 0;
+    $measurements.more(1.6);
+    is $measured, 2, 'supply grep and tap';
+
+    $measured = 0;
+    $measurements.more(4.5);
+    is $measured, 3, 'supply grep and tap';
 }
 
-$measurements.tap(-> $value {
-    measure_ok("Measured: $value");
-});
-
-$measurements.more(1.5);
-$measurements.more(2.3);
-$measurements.more(4.6);
-is $measured, 3, 'supply - singular tap';
-
-$measured = 0;
-$measurements.tap(-> $value {
-    measure_ok  "Also measured: $value";
-});
-
-$measurements.more(2.8);
-
-is $measured, 2, 'supply dual tap';
-
-$measurements.grep(* > 4).tap(-> $value {
-    measure_ok "HIGH: $value";
-});
-
-$measured = 0;
-$measurements.more(1.6);
-is $measured, 2, 'supply grep and tap';
-
-$measured = 0;
-$measurements.more(4.5);
-is $measured, 3, 'supply grep and tap';
-
+#?rakudo.parrot skip 'no implementation of supply'
 #?rakudo.moar skip 'Supply.interval on moar'
 {
     my $n_batches = 0;
