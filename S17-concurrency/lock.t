@@ -52,6 +52,8 @@ plan 7;
 {
     my $l = Lock.new;
     my $c = $l.condition;
+    my $now1;
+    my $now2 = now;
     my @log;
 
     my $t1 = Thread.start({
@@ -59,6 +61,7 @@ plan 7;
             @log.push('ale');
             $c.wait();
             @log.push('stout');
+            $now1 = now;
         });
     });
 
@@ -72,8 +75,9 @@ plan 7;
     });
 
     $t1.join();
+    $now2 = now;
     $t2.join();
 
-    diag "log = {@log}" if !
+    diag "log = {@log}{ $now1>$now2 ?? ', thread was running *after* join' !! ''}" if !
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
 }
