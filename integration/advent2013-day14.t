@@ -169,7 +169,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 	    method TOP($/) {
 		my %result;
 		%result<_> = $<entries>.ast;
-    ##            for $<section> -> $sec {
 		for @<section> -> $sec {
 		    %result{$sec<key>} = $sec<entries>.ast;
 		}
@@ -178,7 +177,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 
 	    method entries($/) {
 		my %entries;
-    ##            for $<entry> -> $e {
 		for @<entry> -> $e {
 		    %entries{$e<key>} = ~$e<value>;
 		}
