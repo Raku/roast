@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 7;
+plan 8;
 
 {
     my $l = Lock.new;
@@ -80,4 +80,36 @@ plan 7;
 
     diag "log = {@log}{ $now1>$now2 ?? ', thread was running *after* join' !! ''}" if !
       is @log.join(','), 'ale,porter,stout', 'Condition variable worked';
+}
+
+{
+    my $times = 100;
+    my $tried;
+    my $failed;
+    for ^$times {
+        my $l = Lock.new;
+        my $c = $l.condition;
+        my $now1;
+        my $now2;
+        my $t1 = Thread.start({
+            $l.protect({
+                $c.wait();
+                $now1 = now;
+            });
+        });
+
+        my $t2 = Thread.start({
+            $l.protect({
+                $c.signal();
+            });
+        });
+
+        $t1.join();
+        $now2 = now;
+        $t2.join();
+
+        $tried++;
+        last if $failed = ( !$now1.defined or $now1 > $now2 );
+    }
+    ok !$failed, "Thread 1 never ran after it was tried $tried times";
 }
