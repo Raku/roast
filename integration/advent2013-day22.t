@@ -15,7 +15,7 @@ is $x + $y * $z, $x + ($y * $z), 'precedence';
 is $x * $y + $z, ($x * $y) + $z, 'precedence';
 is $x / $y / $z, ($x / $y) / $z, 'associativity';
 $x = $y = $z;
-is $x, $x, 'associativity';
+is $x, $z, 'associativity';
 
 # !prefix examples
 ok 'a' !eq 'b', '!eq';
