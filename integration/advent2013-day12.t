@@ -74,13 +74,16 @@ is_deeply %h<a b c>:delete:k, ('a', 'b'), ':delete:k adverbs';
 
 # Arrays are not Hashes
 # ---------------------
+
+#?rakudo.jvm skip 'RT121622 aborting on jvm'
 {
     my @a;
     @a[3] = 1;
     is @a[]:k, 3, '@a[]:k';
     is_deeply @a[]:!k, (0,1,2,3), '@a[]:!k';
-
-    @a = ^10;
+}
+{
+    my @a = ^10;
     @a[3]:delete;
     is_deeply @a[2,3,4], (2, Any, 4), '@a[2,3,4]';
     is_deeply @a[2,3,4]:exists, (True, False, True), '@a[2,3,4]';
