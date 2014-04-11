@@ -1,46 +1,45 @@
 use v6;
 use Test;
-plan 20;
+plan 10;
 
 #?rakudo.parrot skip 'no implementation of supply'
 {
     my $measurements = Supply.new;
 
-    my $measured = 0;
-    sub measure_ok($test) {
-	++$measured;
-	pass $test;
+    my %measured;
+    sub measure($test, $value) {
+	push %measured{$test}, $value;
     }
 
     $measurements.tap(-> $value {
-	measure_ok("Measured: $value");
+	measure "Measured", $value;
     });
 
     $measurements.more(1.5);
     $measurements.more(2.3);
     $measurements.more(4.6);
-    is $measured, 3, 'supply - singular tap';
+    is_deeply %measured, {"Measured" => [1.5, 2.3, 4.6]}, 'supply - singular tap';
 
-    $measured = 0;
+    %measured = ();
     $measurements.tap(-> $value {
-	measure_ok  "Also measured: $value";
+	measure "Also measured", $value;
     });
 
     $measurements.more(2.8);
 
-    is $measured, 2, 'supply dual tap';
+    is_deeply %measured, {"Measured" => [2.8], "Also measured" => [2.8]}, 'supply dual tap';
 
     $measurements.grep(* > 4).tap(-> $value {
-	measure_ok "HIGH: $value";
+	measure "HIGH", $value;
     });
 
-    $measured = 0;
+    %measured = ();
     $measurements.more(1.6);
-    is $measured, 2, 'supply grep and tap';
+    is_deeply %measured, {"Measured" => [1.6], "Also measured" => [1.6]}, 'supply grep and tap';
 
-    $measured = 0;
+    %measured = ();
     $measurements.more(4.5);
-    is $measured, 3, 'supply grep and tap';
+    is_deeply %measured, {"Measured" => [4.5], "Also measured" => [4.5], "HIGH" => [4.5]}, 'supply grep and tap';
 }
 
 #?rakudo.parrot skip 'no implementation of supply'
