@@ -154,17 +154,18 @@ multi MAIN()           { print 2 }',
 
 # RT #92986
 is_run 'multi MAIN($) { print q[Any] }; multi MAIN(Str) { print q[Str] }',
-    :args['foo'],
     {
         out => 'Str',
     },
+    :args['foo'],
     'best multi matches (not just first one)';
 
-is_run 'sub MAIN() { print 42 }', :args['--foo'],
+is_run 'sub MAIN() { print 42 }',
     {
         out => '',
         err => rx:i/usage/,
     },
+    :args['--foo'],
     'superfluous options trigger usage message';
 
 # RT #115744
