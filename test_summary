@@ -486,6 +486,8 @@ sub get_test_names {
         /^ *#/ && next;
         my ($specfile, $fudgespec) = split ' ', $_, 2;
         next unless $specfile;
+        # XXX each implementation should tell us what files to use
+        next if $fudgespec =~ /conc/ && $implementation =~ /parrot/;
         next if $fudgespec =~ /jvm/ && $implementation !~ /jvm/;
         next if $fudgespec =~ /moar/ && $implementation !~ /moar/;
         push @tfiles, "t/spec/$specfile";
