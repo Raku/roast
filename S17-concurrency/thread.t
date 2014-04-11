@@ -91,9 +91,8 @@ plan 25;
     isnt $*THREAD.id, 0, 'Initial thread has an ID';
 }
 
-#?rakudo.moar skip 'Parameter "a" requires a type object, but an object instance was passed'
 {
-    my $seen;
+    my $seen = 0;
     my $threads = 3;
     my $times   = 10000;
     my @t = (1..$threads).map: { Thread.start({ $seen++ for ^$times}) };
