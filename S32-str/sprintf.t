@@ -253,9 +253,7 @@ is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01
     is sprintf("%.0f", 1.969), "2",     '%.0f of 1.969 should be 2';
     #?rakudo todo 'buggy'
     is sprintf("%.1f", 1.969), "2.0",   '%.1f of 1.969 should be 2.0';
-    #?rakudo.jvm todo 'buggy'
     is sprintf("%.2f", 1.969), "1.97",  '%.2f of 1.969 should be 1.97';
-    #?rakudo.jvm todo 'buggy'
     is sprintf("%.3f", 1.969), "1.969", '%.3f of 1.969 should be 1.969';
 }
 

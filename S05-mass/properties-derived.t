@@ -539,7 +539,7 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 # Unassigned      # Synonym for \p{Cn}
 
 
-#?rakudo.jvm 7 todo 'isUnassigned not implemented'
+#?rakudo.jvm todo 'isUnassigned not implemented'
 #?niecza 3 todo
 #?pugs todo
 ok("\x[110E9]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );

@@ -19,7 +19,6 @@ my $line;
 
     $line = $?LINE; a();
     is $a, 1, 'was "a" really called';
-    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for a()';
 Saw 1 call to deprecated code during execution.
 ================================================================================
@@ -120,7 +119,6 @@ TEXT
 
     $line = $?LINE; C.new.foo;
     is $C, 1, 'was "C.new.foo" really called';
-    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for C.new.foo';
 Saw 1 call to deprecated code during execution.
 ================================================================================
