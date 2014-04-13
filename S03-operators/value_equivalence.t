@@ -68,11 +68,11 @@ plan 75;
   my @a = (1,2,3);
   my @b = (1,2,3);
 
-  #?rakudo 2 todo "=== doesn't work on array references yet"
   #?niecza todo
   ok  (\@a === \@a), "=== on array references (1)";
   #?niecza todo
   ok  (\@b === \@b), "=== on array references (2)";
+  #?rakudo todo '\@a seems to flatten when it should not'
   ok !(\@a === \@b), "=== on array references (3)";
   isa_ok (\@a === \@a), Bool, "=== on array references (4)";
 }
@@ -84,7 +84,7 @@ plan 75;
   ok  ($a === $a), "=== on scalar references (1-1)";
   ok  ($b === $b), "=== on scalar references (1-2)";
   #?pugs todo
-  ok !($a === $b), "=== on scalar references (1-3)";
+  ok $a === $b, "=== on scalar references (1-3)";
   isa_ok ($a === $a), Bool, "=== on scalar references (1-4)";
 }
 
@@ -112,7 +112,6 @@ plan 75;
 
   ok  ($a === $a), "=== on scalar references (2-1)";
   ok  ($b === $b), "=== on scalar references (2-2)";
-  #?rakudo todo "=== fail"
   #?niecza todo
   ok  ($a === $b), "=== on scalar references (2-3)";
   isa_ok ($a === $a), Bool, "=== on scalar references (2-4)";
@@ -134,7 +133,7 @@ plan 75;
 {
   ok !(\3 === \4),          "=== on anonymous scalar references (1)";
   #?pugs todo
-  ok !(\3 === \3),          "=== on anonymous scalar references (2)";
+  ok \3 === \3,          "=== on anonymous scalar references (2)";
   isa_ok (\3 === \4), Bool, "=== on anonymous scalar references (4)";
 }
 
