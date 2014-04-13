@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 11;
+plan 13;
 
 # L<S02/Adverbial Pair forms>
 
@@ -22,4 +22,13 @@ plan 11;
     is_deeply (:&a), (a => &a), ":&a works";
 
     is (:a{ 42 + 24 })<a>(), 66, "Adverb with postfix:<{ }> makes code object";
-}
+} # 11
+
+# RT #74492
+{
+    sub foo(:$a, :$b, :$c) {
+        ok $a && $b && $c, "Adverbs without punctuations is allowed"
+    }
+    foo(:a :b :c);
+    foo(:a:b:c);
+} # 13
