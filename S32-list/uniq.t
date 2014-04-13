@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 =begin description
 
@@ -141,5 +141,14 @@ This test tests the C<uniq> builtin.
     is_deeply @array, [{:a<1>}, {:b<1>}],
       "final result with [eqv] and objects in place";
 } #4
+
+# RT #121434
+{
+    my %a;
+    %a<foo> = <a b c>;
+    %a<foo>.=uniq;
+    is_deeply %a<foo>, <a b c>.list.item,
+      "\%a<foo> not clobbered by .=uniq";
+} # 1
 
 # vim: ft=perl6
