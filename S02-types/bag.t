@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 173;
+plan 179;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -41,10 +41,6 @@ sub showkv($x) {
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
-
-    #?pugs   skip '.total NYI'
-    is $b.total, 8, '.total gives sum of values';
-    is +$b, 8, '+$bag gives sum of values';
 }
 
 {
@@ -395,6 +391,22 @@ sub showkv($x) {
     isa_ok (@a, %x).Bag, Bag, "Method .Bag works on Parcel-1";
     is showkv((@a, %x).Bag), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Bag works on Parcel-2";
+}
+
+#?pugs   skip '.total/.min/.max NYI'
+#?niecza skip '.total/.min/.max NYI'
+{
+    my $b = <a b b c c c d d d d>.Bag;
+    is $b.total, 10, '.total gives sum of values (non-empty)';
+    is +$b, 10, '+$bag gives sum of values (non-empty)';
+    is $b.min, 1, '.min works (non-empty)';
+    is $b.max, 4, '.max works (non-empty)';
+
+    my $e = ().Bag;
+    is $e.total, 0, '.total gives sum of values (empty)';
+    is +$e, 0, '+$bag gives sum of values (empty)';
+    is $e.min, Inf, '.min works (empty)';
+    is $e.max, -Inf, '.max works (empty)';
 }
 
 # vim: ft=perl6

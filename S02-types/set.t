@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 151;
+plan 159;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -338,6 +338,22 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset(%x.Set), "a b", "Method .Set works on Hash-2";
     isa_ok (@a, %x).Set, Set, "Method .Set works on Parcel-1";
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on Parcel-2";
+}
+
+#?pugs   skip '.total/.min/.max NYI'
+#?niecza skip '.total/.min/.max NYI'
+{
+    my $s = <a b b c c c d d d d>.Set;
+    is $s.total, 4, '.total gives sum of values (non-empty)';
+    is +$s, 4, '+$set gives sum of values (non-empty)';
+    is $s.min, 1, '.min works (non-empty)';
+    is $s.max, 1, '.max works (non-empty)';
+
+    my $e = ().Set;
+    is $e.total, 0, '.total gives sum of values (empty)';
+    is +$e, 0, '+$set gives sum of values (empty)';
+    is $e.min, Inf, '.min works (empty)';
+    is $e.max, -Inf, '.max works (empty)';
 }
 
 # vim: ft=perl6

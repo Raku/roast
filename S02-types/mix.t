@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 153;
+plan 161;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -348,6 +348,22 @@ sub showkv($x) {
     isa_ok (@a, %x).Mix, Mix, "Method .Mix works on Parcel-1";
     is showkv((@a, %x).Mix), "Now:1 Paradise:1 a:1 b:2 cross-handed:1 set:1 the:2 was:1 way:1",
        "Method .Mix works on Parcel-2";
+}
+
+#?pugs   skip '.total/.min/.max NYI'
+#?niecza skip '.total/.min/.max NYI'
+{
+    my $m = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix;
+    is $m.total, 11, '.total gives sum of values (non-empty)';
+    is +$m, 11, '+$set gives sum of values (non-empty)';
+    is $m.min, 1.1, '.min works (non-empty)';
+    is $m.max, 4.4, '.max works (non-empty)';
+
+    my $e = ().Mix;
+    is $e.total, 0, '.total gives sum of values (empty)';
+    is +$e, 0, '+$mix gives sum of values (empty)';
+    is $e.min, Inf, '.min works (empty)';
+    is $e.max, -Inf, '.max works (empty)';
 }
 
 # vim: ft=perl6
