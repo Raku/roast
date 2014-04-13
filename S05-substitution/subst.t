@@ -213,7 +213,7 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 {
     $_ = "a\nb\tc d";
     ok ss/a b c d/w x y z/, 'successful substitution returns True';
-    #?rakudo todo "RT #120526"
+    # RT #120526
     is $_, "w\nx\ty z", 'ss/.../.../ preserves whitespace';
 
     dies_ok {"abc" ~~ ss/a b c/ x y z/}, 'Cannot ss/// string literal';
