@@ -39,7 +39,6 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 #?niecza todo 'German language weirdness'
 #?pugs todo
 #?rakudo.moar todo 'case folding of German sharp S, RT 121377'
-#?rakudo.parrot todo 'case folding of German sharp S, RT 121377'
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
 {
