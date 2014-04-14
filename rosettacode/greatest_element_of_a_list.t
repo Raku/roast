@@ -18,20 +18,20 @@ say max2 17, 13, 50, 56, 28, 63, 62, 66, 74, 54;
 
 }
 
-my $oldOUT = $*OUT;
 my $output;
-$*OUT = class {
-    method print(*@args) {
-        $output ~= @args.join;
+{
+    temp $*OUT = class {
+	method print(*@args) {
+	    $output ~= @args.join;
+	}
     }
-}
 
-$rosetta-code.();
+    $rosetta-code.();
+}
 
 my $expected = "74
 my
 74
 ";
 
-$*OUT = $oldOUT;
 is($output.subst("\r", '', :g), $expected.subst("\r", '', :g), "Greatest element of a list");
