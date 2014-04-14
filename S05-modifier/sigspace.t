@@ -9,7 +9,7 @@ Perl6::Rules, version 0.3 (12 Apr 2004), file t/word.t.
 
 =end pod
 
-plan 12;
+plan 13;
 
 ok(!( "abc  def" ~~ m/abc  def/ ), 'Literal space nonmatch' );
 #?pugs todo
@@ -36,5 +36,14 @@ ok 'zabc def'   ~~ m/:s abc def/,   "inline :s doesn't imply <.ws> immediately (
 #?pugs todo
 ok 'abc def' ~~ ms/c d/, 'ms// works, implies :s (+)';
 ok 'abcdef' !~~ ms/c d/, 'ms// works, implies :s (-)';
+
+# RT #119053
+{
+    grammar G {
+        rule TOP { ^ <foo> }
+        rule foo { foo }
+    }
+    ok ?G.parse(" foo"), "Sigspace after ^";
+}
 
 # vim: ft=perl6
