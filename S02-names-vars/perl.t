@@ -49,14 +49,17 @@ my @tests = (
     #?pugs emit #
     { a => 42 },  # only one elem
     #?pugs emit #
+    #?rakudo emit #
     { :a(1), :b(2), :c(3) },
 
     # Nested things
     #?pugs emit #
     { a => [1,2,3] },  # only one elem
     #?pugs emit #
+    #?rakudo emit #
     { a => [1,2,3], b => [4,5,6] },
     #?pugs emit #
+    #?rakudo emit #
     [ { :a(1) }, { :b(2), :c(3) } ],
 
     # a Parcel
@@ -123,7 +126,7 @@ my @tests = (
 {
     class RT61918 {
         has $.inst is rw;
-        has $!priv is rw;
+        has $!priv;
         has $.string = 'krach';
 
         method init {
