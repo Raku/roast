@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 234;
+plan 242;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -524,20 +524,32 @@ sub showkv($x) {
        "Method .BagHash works on Parcel-2";
 }
 
-#?pugs   skip '.total/.min/.max NYI'
-#?niecza skip '.total/.min/.max NYI'
+#?pugs   skip '.total/.minpairs/.maxpairs NYI'
+#?niecza skip '.total/.minpairs/.maxpairs NYI'
 {
-    my $b = <a b b c c c d d d d>.BagHash;
-    is $b.total, 10, '.total gives sum of values (non-empty)';
-    is +$b, 10, '+$bag gives sum of values (non-empty)';
-    is $b.min, 1, '.min works (non-empty)';
-    is $b.max, 4, '.max works (non-empty)';
+    my $b1 = <a b b c c c d d d d>.BagHash;
+    is $b1.total, 10, '.total gives sum of values (non-empty) 10';
+    is +$b1, 10, '+$bag gives sum of values (non-empty) 10';
+    is $b1.minpairs, [a=>1], '.minpairs works (non-empty) 10';
+    is $b1.maxpairs, [d=>4], '.maxpairs works (non-empty) 10';
+
+    my $b2 = <a b c c c d d d>.BagHash;
+    is $b2.total, 8, '.total gives sum of values (non-empty) 8';
+    is +$b2, 8, '+$bag gives sum of values (non-empty) 8';
+    is $b2.minpairs.sort, [a=>1,b=>1], '.minpairs works (non-empty) 8';
+    is $b2.maxpairs.sort, [c=>3,d=>3], '.maxpairs works (non-empty) 8';
+
+    my $b3 = <a b c d>.BagHash;
+    is $b3.total, 4, '.total gives sum of values (non-empty) 4';
+    is +$b3, 4, '+$bag gives sum of values (non-empty) 4';
+    is $b3.minpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.minpairs works (non-empty) 4';
+    is $b3.maxpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.maxpairs works (non-empty) 4';
 
     my $e = ().BagHash;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$bag gives sum of values (empty)';
-    is $e.min, Inf, '.min works (empty)';
-    is $e.max, -Inf, '.max works (empty)';
+    is $e.minpairs, (), '.minpairs works (empty)';
+    is $e.maxpairs, (), '.maxpairs works (empty)';
 }
 
 # vim: ft=perl6

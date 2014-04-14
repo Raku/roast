@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 161;
+plan 169;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -350,20 +350,32 @@ sub showkv($x) {
        "Method .Mix works on Parcel-2";
 }
 
-#?pugs   skip '.total/.min/.max NYI'
-#?niecza skip '.total/.min/.max NYI'
+#?pugs   skip '.total/.minpairs/.maxpairs NYI'
+#?niecza skip '.total/.minpairs/.maxpairs NYI'
 {
-    my $m = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix;
-    is $m.total, 11, '.total gives sum of values (non-empty)';
-    is +$m, 11, '+$set gives sum of values (non-empty)';
-    is $m.min, 1.1, '.min works (non-empty)';
-    is $m.max, 4.4, '.max works (non-empty)';
+    my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix;
+    is $m1.total, 11, '.total gives sum of values (non-empty) 11';
+    is +$m1, 11, '+$set gives sum of values (non-empty) 11';
+    is $m1.minpairs, [a=>1.1], '.minpairs works (non-empty) 11';
+    is $m1.maxpairs, [d=>4.4], '.maxpairs works (non-empty) 11';
+
+    my $m2 = (a => 1.1, b => 1.1, c => 3.3, d => 3.3).Mix;
+    is $m2.total, 8.8, '.total gives sum of values (non-empty) 8.8';
+    is +$m2, 8.8, '+$set gives sum of values (non-empty) 8.8';
+    is $m2.minpairs.sort, [a=>1.1,b=>1.1], '.minpairs works (non-empty) 8.8';
+    is $m2.maxpairs.sort, [c=>3.3,d=>3.3], '.maxpairs works (non-empty) 8.8';
+
+    my $m3 = (a => 1.1, b => 1.1, c => 1.1, d => 1.1).Mix;
+    is $m3.total, 4.4, '.total gives sum of values (non-empty) 4.4';
+    is +$m3, 4.4, '+$set gives sum of values (non-empty) 4.4';
+    is $m3.minpairs.sort,[a=>1.1,b=>1.1,c=>1.1,d=>1.1], '.minpairs works (non-empty) 4.4';
+    is $m3.maxpairs.sort,[a=>1.1,b=>1.1,c=>1.1,d=>1.1], '.maxpairs works (non-empty) 4.4';
 
     my $e = ().Mix;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$mix gives sum of values (empty)';
-    is $e.min, Inf, '.min works (empty)';
-    is $e.max, -Inf, '.max works (empty)';
+    is $e.minpairs, (), '.minpairs works (empty)';
+    is $e.maxpairs, (), '.maxpairs works (empty)';
 }
 
 # vim: ft=perl6

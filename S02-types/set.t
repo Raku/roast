@@ -340,20 +340,20 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on Parcel-2";
 }
 
-#?pugs   skip '.total/.min/.max NYI'
-#?niecza skip '.total/.min/.max NYI'
+#?pugs   skip '.total/.minpairs/.maxpairs NYI'
+#?niecza skip '.total/.minpairs/.maxpairs NYI'
 {
     my $s = <a b b c c c d d d d>.Set;
     is $s.total, 4, '.total gives sum of values (non-empty)';
     is +$s, 4, '+$set gives sum of values (non-empty)';
-    is $s.min, 1, '.min works (non-empty)';
-    is $s.max, 1, '.max works (non-empty)';
+    is $s.minpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
+    is $s.maxpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
 
     my $e = ().Set;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$set gives sum of values (empty)';
-    is $e.min, Inf, '.min works (empty)';
-    is $e.max, -Inf, '.max works (empty)';
+    is $e.minpairs, (), '.minpairs works (empty)';
+    is $e.maxpairs, (), '.maxpairs works (empty)';
 }
 
 # vim: ft=perl6
