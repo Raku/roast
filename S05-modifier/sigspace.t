@@ -9,7 +9,7 @@ Perl6::Rules, version 0.3 (12 Apr 2004), file t/word.t.
 
 =end pod
 
-plan 13;
+plan 16;
 
 ok(!( "abc  def" ~~ m/abc  def/ ), 'Literal space nonmatch' );
 #?pugs todo
@@ -38,12 +38,19 @@ ok 'abc def' ~~ ms/c d/, 'ms// works, implies :s (+)';
 ok 'abcdef' !~~ ms/c d/, 'ms// works, implies :s (-)';
 
 # RT #119053
+# RT #109874
 {
-    grammar G {
+    role Foo { rule foo { foo } }
+    grammar Spacey does Foo {
         rule TOP { ^ <foo> }
-        rule foo { foo }
     }
-    ok ?G.parse(" foo"), "Sigspace after ^";
+    grammar NonSpacey does Foo {
+        rule TOP { ^<foo> }
+    }
+    ok ?Spacey.parse\  (" foo"), "Semantics of sigspace after ^";
+    ok !NonSpacey.parse(" foo"), "Semantics of sigspace after ^";
+    ok ?Spacey.parse\  ("foo"),  "Semantics of sigspace after ^";
+    ok ?NonSpacey.parse("foo"),  "Semantics of sigspace after ^";
 }
 
 # vim: ft=perl6
