@@ -97,15 +97,14 @@ plan 25;
     my $times   = 10000;
     my @t = (1..$threads).map: { Thread.start({ $seen++ for ^$times}) };
     .finish for @t;
-    ok 0 <= $seen <= $threads * $times, "we didn't segfault"
+    ok 0 <= $seen <= $threads * $times, "we didn't segfault";
 }
 
-#?rakudo.jvm skip 'Hangs about 20% of the time'
-#?rakudo.moar skip 'Segfaults'
 {
     my %seen;
     my $threads = 3;
     my $times   = 10000;
+    %seen{^$times} = (0 xx $times); # prime the hash
     my @t = (1..$threads).map: { Thread.start({ %seen{$_}++ for ^$times}) };
     .finish for @t;
     ok 0 <= ([+] %seen.values) <= $threads * $times, "we didn't segfault";
