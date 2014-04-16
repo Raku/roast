@@ -100,6 +100,7 @@ plan 25;
     ok 0 <= $seen <= $threads * $times, "we didn't segfault";
 }
 
+#?rakudo.moar skip "segfaults randomly"
 {
     my %seen;
     my $threads = 3;
