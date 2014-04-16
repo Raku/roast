@@ -53,8 +53,8 @@ my $interface =
             Widget.new(name => 'subpart 2', size => *))),
         Widget.new(name => 'status bar', size => 1)));
 
-my @drawing = gather { $interface.compute-layout; }, ''; # Draw
-is @drawing.join("\n"), q:to"END_LAYOUT_1", 'initial layout';
+my @drawing = gather { $interface.compute-layout; }; # Draw
+is_deeply @drawing, [q:to"END_LAYOUT_1".lines], 'initial layout';
 +-------------------------+
 | menu bar (1 lines)      |
 +-------------------------+
@@ -73,8 +73,8 @@ is @drawing.join("\n"), q:to"END_LAYOUT_1", 'initial layout';
 END_LAYOUT_1
 
 $interface.size += 3;       # Resize
-@drawing = gather { $interface.compute-layout }, ''; # Redraw
-is @drawing.join("\n"), q:to"END_LAYOUT_2", 'resized layout';
+@drawing = gather { $interface.compute-layout }; # Redraw
+is_deeply @drawing, [q:to"END_LAYOUT_2".lines], 'resized layout';
 +-------------------------+
 | menu bar (1 lines)      |
 +-------------------------+
