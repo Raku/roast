@@ -111,6 +111,7 @@ is ([1,2] X~ <a b>), '1 2a 1 2b', '[] does not flatten';
 is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
     'Nested X works';
 
+# RT #77660
 {
     my @a = 1,2,3;
     @a X*= 10;
