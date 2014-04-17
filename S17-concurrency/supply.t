@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 34;
+plan 36;
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
@@ -76,6 +76,26 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
 }
 
     {
+        my $p1 = Supply.for(1..10);
+        my @res;
+        my $done;
+        $p1.map(* * 5).tap({ @res.push($_) }, :done( {$done = True} ));
+
+        sleep .1 until $done;
+        is ~@res, '5 10 15 20 25 30 35 40 45 50', "mapping taps works";
+    }
+
+    {
+        my $p1 = Supply.for(1..10);
+        my @res;
+        my $done;
+        $p1.grep(* > 5).tap({ @res.push($_) }, :done( {$done = True} ));
+
+        sleep .1 until $done;
+        is ~@res, '6 7 8 9 10', "grepping taps works";
+    }
+
+    {
         my $p1 = Supply.new;
         my $p2 = Supply.new;
 
@@ -93,35 +113,26 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is @res.join(','), '1a,2b', 'zipping taps works';
     }
 
-#?rakudo.moar skip "hangs"
+#?rakudo.moar skip "Not enough positional parameters passed; got 0 but expected 1 in sub-signature"
 {
         my $done = False;
         my $p1 = Supply.new;
         my $p2 = Supply.new;
 
         my @res;
-        my $tap = $p1.merge($p2).tap({ @res.push($_) }, :done( {$done = True}));
+        my $tap = $p1.merge($p2).tap({ @res.push: $_ }, :done({$done = True}));
 
         $p1.more(1);
         $p1.more(2);
         $p2.more('a');
         $p1.more(3);
+        $p1.done();
         $p2.more('b');
         $p2.done();
     
         sleep .1 until $done;
         is @res.join(','), '1,2,a,3,b', "merging taps works";
 }
-
-    {
-        my $p1 = Supply.for(1..10);
-        my @res;
-        my $done;
-        $p1.grep(* > 5).tap({ @res.push($_) }, :done( {$done = True} ));
-
-        sleep .1 until $done;
-        is ~@res, '6 7 8 9 10', "grepping taps works";
-    }
 
     {
         my $p1 = Supply.for(1..5);
