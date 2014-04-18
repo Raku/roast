@@ -113,7 +113,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is @res.join(','), '1a,2b', 'zipping taps works';
     }
 
-#?rakudo.moar skip "Not enough positional parameters passed; got 0 but expected 1 in sub-signature"
+#?rakudo skip "Not enough positional parameters passed; got 0 but expected 1 in sub-signature"
 {
         my $done = False;
         my $p1 = Supply.new;
