@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 44;
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
@@ -54,14 +54,16 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $done1 = False;
         my $tap1 = $p.tap( -> $val { @a1.push($val) },
           done => { @a1.push("end"); $done1 = True });
-        sleep .1 until $done1;
+        for ^50 { sleep .1; last if $done1 }
+        ok $done1, "supply 1 was really done";
         is ~@a1, "1 2 3 4 5 6 7 8 9 10 end", "Synchronous publish worked";
 
         my @a2;
         my $done2 = False;
         my $tap2 = $p.tap( -> $val { @a2.push($val) },
           done => { @a2.push("end"); $done2 = True });
-        sleep .1 until $done2;
+        for ^50 { sleep .1; last if $done2 }
+        ok $done2, "supply 2 was really done";
         is ~@a2, "1 2 3 4 5 6 7 8 9 10 end", "Second tap also gets all values";
     }
 
@@ -81,7 +83,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $done;
         $p1.map(* * 5).tap({ @res.push($_) }, :done( {$done = True} ));
 
-        sleep .1 until $done;
+        for ^50 { sleep .1; last if $done }
+        ok $done, "the mapped supply was really done";
         is ~@res, '5 10 15 20 25 30 35 40 45 50', "mapping taps works";
     }
 
@@ -91,7 +94,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $done;
         $p1.grep(* > 5).tap({ @res.push($_) }, :done( {$done = True} ));
 
-        sleep .1 until $done;
+        for ^50 { sleep .1; last if $done }
+        ok $done, "the grepped supply was really done";
         is ~@res, '6 7 8 9 10', "grepping taps works";
     }
 
@@ -113,7 +117,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is @res.join(','), '1a,2b', 'zipping taps works';
     }
 
-#?rakudo skip "Not enough positional parameters passed; got 0 but expected 1 in sub-signature"
+#?rakudo skip "Cannot call method 'more' on a null object"
 {
         my $done = False;
         my $p1 = Supply.new;
@@ -130,17 +134,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         $p2.more('b');
         $p2.done();
     
-        sleep .1 until $done;
+        for ^50 { sleep .1; last if $done }
+        ok $done, "the merged supply was really done";
         is @res.join(','), '1,2,a,3,b', "merging taps works";
 }
-
-    {
-        my $p1 = Supply.for(1..5);
-        my @res;
-        my $done;
-        $p1.map(2 * *).tap({ @res.push($_) }, :done( {$done = True} ));
-
-        sleep .1 until $done;
-        is ~@res, '2 4 6 8 10', "mapping taps works";
-    }
 }
