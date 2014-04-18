@@ -1,7 +1,19 @@
 use v6;
 use Test;
 
-plan 44;
+plan 78;
+
+sub tap_ok ( $s, $expected, $text ) {
+    ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
+
+    my @res;
+    my $done;
+    $s.tap({ @res.push($_) }, :done( {$done = True} ));
+
+    for ^50 { sleep .1; last if $done }
+    ok $done, "$text was really done";
+    is ~@res, $expected, $text;
+}
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
@@ -49,22 +61,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
 
     {
         my $s = Supply.for(1..10);
-
-        my @a1;
-        my $done1 = False;
-        my $tap1 = $s.tap( -> $val { @a1.push($val) },
-          done => { @a1.push("end"); $done1 = True });
-        for ^50 { sleep .1; last if $done1 }
-        ok $done1, "supply 1 was really done";
-        is ~@a1, "1 2 3 4 5 6 7 8 9 10 end", "Synchronous publish worked";
-
-        my @a2;
-        my $done2 = False;
-        my $tap2 = $s.tap( -> $val { @a2.push($val) },
-          done => { @a2.push("end"); $done2 = True });
-        for ^50 { sleep .1; last if $done2 }
-        ok $done2, "supply 2 was really done";
-        is ~@a2, "1 2 3 4 5 6 7 8 9 10 end", "Second tap also gets all values";
+        tap_ok $s, "1 2 3 4 5 6 7 8 9 10", "On demand publish worked";
+        tap_ok $s, "1 2 3 4 5 6 7 8 9 10", "Second tap gets all the values";
     }
 
 #?rakudo.jvm skip "hangs"
@@ -77,27 +75,31 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@a, "2 3 4 5 6", "Supply.for and .list work";
 }
 
-    {
-        my $s = Supply.for(1..10);
-        my @res;
-        my $done;
-        $s.map(* * 5).tap({ @res.push($_) }, :done( {$done = True} ));
+    tap_ok Supply.for(1..10).map( * * 5 ),
+      '5 10 15 20 25 30 35 40 45 50',
+      "mapping taps works";
 
-        for ^50 { sleep .1; last if $done }
-        ok $done, "the mapped supply was really done";
-        is ~@res, '5 10 15 20 25 30 35 40 45 50', "mapping taps works";
-    }
+    tap_ok Supply.for(1..10).grep( * > 5 ),
+      '6 7 8 9 10',
+      "grepping taps works";
 
-    {
-        my $s = Supply.for(1..10);
-        my @res;
-        my $done;
-        $s.grep(* > 5).tap({ @res.push($_) }, :done( {$done = True} ));
+    tap_ok Supply.for(1..10,1..10).uniq,
+      '1 2 3 4 5 6 7 8 9 10',
+      "uniq tap works";
 
-        for ^50 { sleep .1; last if $done }
-        ok $done, "the grepped supply was really done";
-        is ~@res, '6 7 8 9 10', "grepping taps works";
-    }
+    tap_ok Supply.for(1..10).uniq(:as(* div 2)),
+      '1 2 4 6 8 10',
+      "uniq with as tap works";
+
+    tap_ok Supply.for(<a A B b c C>).uniq( :with( {$^a.lc eq $^b.lc} ) ),
+      'a B c',
+      "uniq with with tap works";
+
+    tap_ok Supply.for(<a AA B bb cc C>).uniq(
+        :as( *.substr(0,1) ), :with( {$^a.lc eq $^b.lc} )
+      ),
+      'a B cc',
+      "uniq with as and with tap works";
 
     {
         my $s1 = Supply.new;
@@ -124,7 +126,9 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $s2 = Supply.new;
 
         my @res;
-        my $tap = $s1.merge($s2).tap({ @res.push: $_ }, :done({$done = True}));
+        my $ms = $s1.merge($s2);
+        ok $ms ~~ Supply, "{$ms.^name} appears to be doing Supply";
+        my $tap = $ms.tap({ @res.push: $_ }, :done({$done = True}));
 
         $s1.more(1);
         $s1.more(2);
