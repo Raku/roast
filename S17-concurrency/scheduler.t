@@ -77,7 +77,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       :catch({ cas $tracker, { $_ ~ '2scatch'} })
     );
     $*SCHEDULER.cue(
-      { cas $tracker, {$_ ~ '1s'; die } },
+      { cas $tracker, {$_ ~ '1s'}; die },
       :in(1),
       :catch({ cas $tracker, {$_ ~ '1scatch'} })
     );
