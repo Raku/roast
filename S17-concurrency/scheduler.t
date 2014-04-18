@@ -171,7 +171,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 
 #?rakudo.moar skip ":times NYI"
 {
-    my $tracker;
+    my $tracker = 0;
     $*SCHEDULER.cue({ cas $tracker, {.succ} }, :times(10));
     sleep 3;
     is $tracker, 10, "Cue on $name with :times(10)";
