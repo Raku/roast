@@ -56,7 +56,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "cued,", "Catch handler on $name not run if no error";
 }
 
-#?rakudo.moar skip ":in NYI"
 {
     # Timing related tests are always a tad fragile, e.g. on a loaded system.
     # Hopefully the times are enough leeway.
@@ -68,7 +67,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s2s", "Timer tasks on $name with :in ran in right order";
 }
 
-#?rakudo.moar skip ":in NYI"
 {
     my $tracker = '';
     $*SCHEDULER.cue(
@@ -86,7 +84,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s1scatch2s", "Timer tasks on $name:in/:catch ran in right order";
 }
 
-#?rakudo.moar skip ":at NYI"
 {
     my $tracker = '';
     $*SCHEDULER.cue({ cas $tracker, {$_ ~ '2s'} }, :at(now + 2));
@@ -96,7 +93,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s2s", "Timer tasks on $name with :at ran in right order";
 }
 
-#?rakudo.moar skip ":at NYI"
 {
     my $tracker = '';
     $*SCHEDULER.cue(
@@ -114,7 +110,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "1s2s2scatch", "Timer tasks on $name :at/:catch ran in right order";
 }
 
-#?rakudo.moar skip ":every NYI"
 {
     # Also at risk of being a little fragile, but again hopefully Ok on all
     # but the most ridiculously loaded systems.
@@ -125,7 +120,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       ok 5 < $a < 15, "Cue with :every schedules repeatedly";
 }
 
-#?rakudo.moar skip ":every NYI"
 {
     # Also at risk of being a little fragile, but again hopefully Ok on all
     # but the most ridiculously loaded systems.
@@ -139,7 +133,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       ok 5 < $b < 15, "Cue with :every/:catch schedules repeatedly (2)";
 }
 
-#?rakudo.moar skip ":in, :every NYI"
 {
     my $a = 0;
     $*SCHEDULER.cue({ cas $a, {.succ} }, :in(2), :every(0.1));
@@ -148,7 +141,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       ok 5 < $a < 15, "Cue with :every/:in schedules repeatedly";
 }
 
-#?rakudo.moar skip ":in, :every NYI"
 {
     my $a = 0;
     my $b = 0;
@@ -160,7 +152,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       ok 5 < $b < 15, "Cue with :every/:in/:catch schedules repeatedly (2)";
 }
 
-#?rakudo.moar skip ":at, :every NYI"
 {
     my $a = 0;
     $*SCHEDULER.cue({ cas $a, {.succ} }, :at(now + 2), :every(0.1));
@@ -169,7 +160,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       ok 5 < $a < 15, "Cue with :every/:at schedules repeatedly";
 }
 
-#?rakudo.moar skip ":times NYI"
 {
     my $tracker = 0;
     $*SCHEDULER.cue({ cas $tracker, {.succ} }, :times(10));
@@ -177,7 +167,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, 10, "Cue on $name with :times(10)";
 }
 
-#?rakudo.moar skip ":at, :every NYI"
 {
     my $a = 0;
     my $b = 0;
@@ -189,7 +178,6 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
       ok 5 < $b < 15, "Cue with :every/:at/:catch schedules repeatedly (2)";
 }
 
-#?rakudo.moar skip "dies for the wrong reason"
 {
     dies_ok { $*SCHEDULER.cue({ ... }, :at(now + 2), :in(1)) },
       "$name cannot combine :in and :at";

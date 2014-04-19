@@ -63,7 +63,6 @@ plan 64;
     is $p.cause.message, "trying", "Correct exception stored";
 }
 
-#?rakudo.moar skip ":in NYI"
 {
     my $start = now;
     my $p = Promise.in(1);
