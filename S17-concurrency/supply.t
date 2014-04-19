@@ -148,7 +148,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $s2 = Supply.new;
 
         my @res;
-        my $tap = $s1.zip($s2, &infix:<~>).tap({ @res.push($_) });
+        my $tap = $s1.zip($s2, :with( &infix:<~> )).tap({ @res.push($_) });
 
         $s1.more(1);
         $s1.more(2);
@@ -158,7 +158,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         $s1.done();
         $s2.done();
 
-        is @res.join(','), '1a,2b', 'zipping taps works';
+        is_deeply @res, [<1a 2b>], 'zipping taps works';
     }
 
 #?rakudo skip "Cannot call method 'more' on a null object"
