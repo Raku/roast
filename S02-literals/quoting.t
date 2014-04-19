@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 156;
+plan 159;
 
 my $foo = "FOO";
 my $bar = "BAR";
@@ -575,6 +575,12 @@ is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
     try { EVAL 'my $ya="\cIa"' };
     my $error = ~$!;
     ok $error ~~ / '\'I\' is not a valid number' /, "\\c followed by non-number";
+}
+
+{
+    eval_dies_ok 'q< < >', "Unmatched openers and closers fails to parse";
+    is q< \> >, " > ", "Escaped closer produces the opener unescaped";
+    is q< \< >, " < ", "Escaped opener produces the opener unescaped";
 }
 
 done;
