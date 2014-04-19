@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 134;
+plan 140;
 
 sub tap_ok ( $s, $expected, $text ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -71,6 +71,9 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
           [1..10], ".do worked";
         is $seen, 10, "did the side effect work";
     }
+
+    tap_ok Supply.for( [1,2],[3,4,5] ).flat,
+      [1..5], "On demand publish with flat";
 
     tap_ok Supply.for( (1..5).map( {[$_]} ) ),
       [[1],[2],[3],[4],[5]], "On demand publish with arrays";
