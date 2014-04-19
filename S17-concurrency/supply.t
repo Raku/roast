@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 126;
+plan 134;
 
 sub tap_ok ( $s, $expected, $text ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -66,14 +66,17 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
     }
 
     {
-        my $s = Supply.for( (1..5).map( {[$_]} ) );
-        tap_ok $s, [[1],[2],[3],[4],[5]], "On demand publish with arrays";
+        my $seen;
+        tap_ok Supply.for(1..10).do( {$seen++} ),
+          [1..10], ".do worked";
+        is $seen, 10, "did the side effect work";
     }
 
-    {
-        my $s = Supply.for( [1,2],[3,4,5] ).map( {.flat} );
-        tap_ok $s, [1..5], "On demand publish with flattened arrays";
-    }
+    tap_ok Supply.for( (1..5).map( {[$_]} ) ),
+      [[1],[2],[3],[4],[5]], "On demand publish with arrays";
+
+    tap_ok Supply.for( [1,2],[3,4,5] ).map( {.flat} ),
+      [1..5], "On demand publish with flattened arrays";
 
 #?rakudo.jvm skip "hangs"
 {
