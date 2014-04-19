@@ -414,8 +414,8 @@ sub showset($s) { $s.keys.sort.join(' ') }
     my $s = <a b b c c c d d d d>.SetHash;
     is $s.total, 4, '.total gives sum of values (non-empty)';
     is +$s, 4, '+$set gives sum of values (non-empty)';
-    is $s.minpairs, [a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
-    is $s.maxpairs, [a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
+    is $s.minpairs.sort, [a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
+    is $s.maxpairs.sort, [a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
 
     my $e = ().SetHash;
     is $e.total, 0, '.total gives sum of values (empty)';
