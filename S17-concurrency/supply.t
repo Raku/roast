@@ -224,8 +224,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $on, @seen, "basic 2 supply with array without index 'on' works";
     }
 
-#?rakudo skip "Cannot stringify this"
-{
+    {
         my $s1 = Supply.new;
         my $s2 = Supply.new;
 
@@ -241,9 +240,9 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         $s2.done();
 
         is_deeply @res, [<1a 2b>], 'zipping taps works';
-}
+    }
 
-#?rakudo skip "Cannot stringify this"
+#?rakudo skip "Cannot call method 'more' on a null object"
 {
         my $done = False;
         my $s1 = Supply.new;
