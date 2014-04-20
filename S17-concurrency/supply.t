@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 182;
+plan 194;
 
 sub tap_ok ( $s, $expected, $text ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -289,4 +289,12 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         ok $done, "the merged supply was really done";
         is_deeply @res.sort, [1..15], "merging 3 supplies works";
 }
+
+    tap_ok Supply.for(1..14).buffering(:elems(5)),
+      [[1..5],[6..10],[11..14]],
+      "we can buffer by number of elements";
+
+    tap_ok Supply.for(1..5).buffering(:elems(2), :overlap(1)),
+      [[1,2],[2,3],[3,4],[4,5],[5]],
+      "we can buffer by number of elements and overlap";
 }
