@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 170;
+plan 182;
 
 sub tap_ok ( $s, $expected, $text ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -242,6 +242,14 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is_deeply @res, [<1a 2b>], 'zipping taps works';
     }
 
+    tap_ok Supply.zip(
+        Supply.for("a".."e"),
+        Supply.for("f".."k"),
+        Supply.for("l".."p")
+      ),
+      [<a f l>,<b g m>,<c h n>,<d i o>,<e j p>],
+      "zipping with 3 supplies works";
+
 #?rakudo skip "Cannot call method 'more' on a null object"
 {
         my $done = False;
@@ -263,6 +271,22 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
     
         for ^50 { sleep .1; last if $done }
         ok $done, "the merged supply was really done";
-        is @res.join(','), '1,2,a,3,b', "merging taps works";
+        is_deeply @res, [1,2,'a',3,'b'], "merging supplies works";
+}
+
+#?rakudo skip "Cannot call method 'more' on a null object"
+{
+        my $m = Supply.merge(
+          Supply.for(1..5), Supply.for(6..10), Supply.for(11..15)
+        );
+        ok $m ~~ Supply, "{$m.^name} appears to be doing Supply";
+
+        my @res;
+        my $done;
+        $m.tap({ @res.push: $_ }, :done({$done = True}));
+    
+        for ^50 { sleep .1; last if $done }
+        ok $done, "the merged supply was really done";
+        is_deeply @res.sort, [1..15], "merging 3 supplies works";
 }
 }
