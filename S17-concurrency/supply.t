@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 216;
+plan 236;
 
 sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -230,18 +230,18 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $s1 = Supply.new;
         my $s2 = Supply.new;
 
-        my @res;
-        my $tap = $s1.zip($s2, :with( &infix:<~> )).tap({ @res.push($_) });
-
-        $s1.more(1);
-        $s1.more(2);
-        $s2.more('a');
-        $s2.more('b');
-        $s2.more('c');
-        $s1.done();
-        $s2.done();
-
-        is_deeply @res, [<1a 2b>], 'zipping taps works';
+        tap_ok $s1.zip($s2, :with( &infix:<~> )),
+          [<1a 2b>],
+          'zipping taps works',
+          :after_tap( {
+              $s1.more(1);
+              $s1.more(2);
+              $s2.more('a');
+              $s2.more('b');
+              $s2.more('c');
+              $s1.done();
+              $s2.done();
+          } );
     }
 
     tap_ok Supply.zip(
@@ -251,6 +251,13 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
       ),
       [<a f l>,<b g m>,<c h n>,<d i o>,<e j p>],
       "zipping with 3 supplies works";
+
+    {
+        my $s = Supply.for(1..10);
+        my $z = Supply.zip($s);
+        ok $s === $z, "zipping one supply is a noop";
+        tap_ok $z, [1..10], "noop rotor";
+    }
 
     {
         my $s1 = Supply.new;
@@ -274,6 +281,13 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
      ),
       [1..15], "merging 3 supplies works", :sort;
 
+    {
+        my $s = Supply.for(1..10);
+        my $m = Supply.merge($s);
+        ok $s === $m, "merging one supply is a noop";
+        tap_ok $m, [1..10], "noop rotor";
+    }
+
     tap_ok Supply.for(1..14).batch(:elems(5)),
       [[1..5],[6..10],[11..14]],
       "we can batch by number of elements";
@@ -282,9 +296,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $for   = Supply.for(1..10);
         my $batch = $for.batch(:elems(1)),
         ok $for === $batch, "batch by 1 is a noop";
-        tap_ok $batch,
-          [1..10],
-          "noop batch";
+        tap_ok $batch, [1..10], "noop batch";
     }
 
     tap_ok Supply.for(1..5).rotor,
@@ -299,8 +311,6 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $for = Supply.for(1..10);
         my $rotor = $for.rotor(1,0);
         ok $for === $rotor, "rotoring by 1/0 is a noop";
-        tap_ok $rotor,
-          [1..10],
-          "noop rotor";
+        tap_ok $rotor, [1..10], "noop rotor";
     }
 }
