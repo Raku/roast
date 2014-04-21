@@ -172,7 +172,10 @@ plan 64;
 {
     my @a;
     my @p = (^10).pick(*).map: {
-        start { sleep $_; cas @a, -> @current { my @ = @current, OUTER::<$_> } }
+        start {
+            sleep 2 * $_;
+            cas @a, -> @current { my @ = @current, OUTER::<$_> };
+        }
     };
     my $all = Promise.allof(@p);
     isa_ok $all, Promise, 'allof gives a Promise';
