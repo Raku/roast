@@ -290,17 +290,17 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is_deeply @res.sort, [1..15], "merging 3 supplies works";
 }
 
-    tap_ok Supply.for(1..14).buffering(:elems(5)),
+    tap_ok Supply.for(1..14).batch(:elems(5)),
       [[1..5],[6..10],[11..14]],
-      "we can buffer by number of elements";
+      "we can batch by number of elements";
 
     {
-        my $for       = Supply.for(1..10);
-        my $buffering = $for.buffering(:elems(1)),
-        ok $for === $buffering, "buffering by 1 is a noop";
-        tap_ok $buffering,
+        my $for   = Supply.for(1..10);
+        my $batch = $for.batch(:elems(1)),
+        ok $for === $batch, "batch by 1 is a noop";
+        tap_ok $batch,
           [1..10],
-          "noop buffering";
+          "noop batch";
     }
 
     tap_ok Supply.for(1..5).rotor,
@@ -309,7 +309,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
 
     tap_ok Supply.for(1..5).rotor(3,2),
       [[1,2,3],[2,3,4],[3,4,5],[4,5]],
-      "we can buffer by number of elements and overlap";
+      "we can rotor by number of elements and overlap";
 
     {
         my $for = Supply.for(1..10);
