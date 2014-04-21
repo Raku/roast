@@ -1,9 +1,9 @@
 use v6;
 use Test;
 
-plan 236;
+plan 248;
 
-sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap ) {
+sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap, :$timeout is copy = 5 ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
 
     my @res;
@@ -11,7 +11,8 @@ sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap ) {
     $s.tap({ @res.push($_) }, :done( {$done = True} ));
     after_tap() if &after_tap;
 
-    for ^50 { sleep .1; last if $done or $s.done }
+    $timeout *= 10;
+    for ^$timeout { last if $done or $s.done; sleep .1 }
     ok $done, "$text was really done";
     @res .= sort if $sort;
     is_deeply @res, $expected, $text;
@@ -293,10 +294,50 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
       "we can batch by number of elements";
 
     {
-        my $for   = Supply.for(1..10);
-        my $batch = $for.batch(:elems(1)),
-        ok $for === $batch, "batch by 1 is a noop";
-        tap_ok $batch, [1..10], "noop batch";
+        my $seconds = 5;
+        my $s = Supply.new;
+        my $b = $s.batch( :$seconds );
+        sleep $seconds - now % $seconds; # wait until next $sleep second period
+        my $base = time div $seconds;
+        tap_ok $b,
+          [[$base xx 10],[$base+1 xx 10]],
+          "we can batch by time",
+          :timeout(3 * $seconds),
+          :after_tap( {
+              $s.more( time div $seconds ) for ^10;
+              sleep $seconds;            # wait until in the next period
+              $s.more( time div $seconds ) for ^10;
+              $s.done;
+          } );
+    }
+
+    {
+        my $seconds = 5;
+        my $elems   = 7;
+        my $spurt   = 10;
+        my $rest    = $spurt - $elems;
+        my $s = Supply.new;
+        my $b = $s.batch( :$elems, :$seconds );
+        sleep $seconds - now % $seconds; # wait until next $sleep second period
+        my $base = time div $seconds;
+        tap_ok $b,
+          [[$base   xx $elems],[$base   xx $rest],
+           [$base+1 xx $elems],[$base+1 xx $rest]],
+          "we can batch by time and elems",
+          :timeout(3 * $seconds),
+          :after_tap( {
+              $s.more( time div $seconds ) for ^$spurt;
+              sleep $seconds;            # wait until in the next period
+              $s.more( time div $seconds ) for ^$spurt;
+              $s.done;
+          } );
+    }
+
+    {
+        my $f = Supply.for(1..10);
+        my $b = $f.batch(:elems(1)),
+        ok $f === $b, "batch by 1 is a noop";
+        tap_ok $b, [1..10], "noop batch";
     }
 
     tap_ok Supply.for(1..5).rotor,
