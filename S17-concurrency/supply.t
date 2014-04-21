@@ -3,15 +3,17 @@ use Test;
 
 plan 216;
 
-sub tap_ok ( $s, $expected, $text ) {
+sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
 
     my @res;
     my $done;
     $s.tap({ @res.push($_) }, :done( {$done = True} ));
+    after_tap() if &after_tap;
 
     for ^50 { sleep .1; last if $done or $s.done }
     ok $done, "$text was really done";
+    @res .= sort if $sort;
     is_deeply @res, $expected, $text;
 }
 
@@ -250,45 +252,27 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
       [<a f l>,<b g m>,<c h n>,<d i o>,<e j p>],
       "zipping with 3 supplies works";
 
-#?rakudo skip "Cannot call method 'more' on a null object"
-{
-        my $done = False;
+    {
         my $s1 = Supply.new;
         my $s2 = Supply.new;
+        tap_ok $s1.merge($s2),
+          [1,2,'a',3,'b'],
+          "merging supplies works",
+          :after_tap( {
+              $s1.more(1);
+              $s1.more(2);
+              $s2.more('a');
+              $s1.more(3);
+              $s1.done();
+              $s2.more('b');
+              $s2.done();
+          } );
+    }
 
-        my @res;
-        my $ms = $s1.merge($s2);
-        ok $ms ~~ Supply, "{$ms.^name} appears to be doing Supply";
-        my $tap = $ms.tap({ @res.push: $_ }, :done({$done = True}));
-
-        $s1.more(1);
-        $s1.more(2);
-        $s2.more('a');
-        $s1.more(3);
-        $s1.done();
-        $s2.more('b');
-        $s2.done();
-    
-        for ^50 { sleep .1; last if $done }
-        ok $done, "the merged supply was really done";
-        is_deeply @res, [1,2,'a',3,'b'], "merging supplies works";
-}
-
-#?rakudo skip "Cannot call method 'more' on a null object"
-{
-        my $m = Supply.merge(
-          Supply.for(1..5), Supply.for(6..10), Supply.for(11..15)
-        );
-        ok $m ~~ Supply, "{$m.^name} appears to be doing Supply";
-
-        my @res;
-        my $done;
-        $m.tap({ @res.push: $_ }, :done({$done = True}));
-    
-        for ^50 { sleep .1; last if $done }
-        ok $done, "the merged supply was really done";
-        is_deeply @res.sort, [1..15], "merging 3 supplies works";
-}
+    tap_ok Supply.merge(
+      Supply.for(1..5), Supply.for(6..10), Supply.for(11..15)
+     ),
+      [1..15], "merging 3 supplies works", :sort;
 
     tap_ok Supply.for(1..14).batch(:elems(5)),
       [[1..5],[6..10],[11..14]],
