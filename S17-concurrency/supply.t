@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 194;
+plan 216;
 
 sub tap_ok ( $s, $expected, $text ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -294,7 +294,29 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
       [[1..5],[6..10],[11..14]],
       "we can buffer by number of elements";
 
-    tap_ok Supply.for(1..5).buffering(:elems(2), :overlap(1)),
+    {
+        my $for       = Supply.for(1..10);
+        my $buffering = $for.buffering(:elems(1)),
+        ok $for === $buffering, "buffering by 1 is a noop";
+        tap_ok $buffering,
+          [1..10],
+          "noop buffering";
+    }
+
+    tap_ok Supply.for(1..5).rotor,
       [[1,2],[2,3],[3,4],[4,5],[5]],
+      "we can rotor";
+
+    tap_ok Supply.for(1..5).rotor(3,2),
+      [[1,2,3],[2,3,4],[3,4,5],[4,5]],
       "we can buffer by number of elements and overlap";
+
+    {
+        my $for = Supply.for(1..10);
+        my $rotor = $for.rotor(1,0);
+        ok $for === $rotor, "rotoring by 1/0 is a noop";
+        tap_ok $rotor,
+          [1..10],
+          "noop rotor";
+    }
 }
