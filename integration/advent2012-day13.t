@@ -2,7 +2,7 @@
 use v6;
 use Test;
 
-plan 36;
+plan 42;
 
 our $slurp1 = q<aa bb cc Dd ee ZZ>;
 our $slurp2 = q<dd ee ff gg>;
@@ -76,19 +76,33 @@ do {
 my $s1 = set <A B>;
 my $s2 = set <B C>;
 
+isa_ok 'B' ∈ $s1, Bool, 'set ∈ result type';
+isa_ok 'B' (elem) $s1, Bool, 'set (elem) result type';
+isa_ok 'B' ∉ $s1, Bool, 'set ∉ result type';
+isa_ok 'B' ∋ $s1, Bool, 'set ∋ result type';
+isa_ok 'B' (cont) $s1, Bool, 'set (cont) result type';
+isa_ok 'B' ∌ $s1, Bool, 'set ∌ result type';
+
 my @set-and-bag-ops = 
     # Operation                 Unicode         Texas                   Type
-    # ---------                 -------         ---------------         ----  ----
-    ['is an element of',	&infix:«∈»,	&infix:«(elem)»,	Bool],
-    ['contains',		&infix:«∋»,	&infix:«(cont)»,	Bool],
+    # ---------                 -------         ---------------         ----
     ['union',			&infix:«∪»,	&infix:«(|)»,		[Set,Bag]],
     ['intersection',		&infix:«∩»,	&infix:«(&)»,		[Set,Bag]],
     ['set difference',		Mu,		&infix:«(-)»,		Set],
     ['set symmetric difference',Mu,		&infix:«(^)»,		Set],
+
     ['subset',			&infix:«⊆»,	&infix:«(<=)»,		Bool],
+    ['not a subset',		&infix:«⊈»,	Mu,			Bool],
+
     ['proper subset',		&infix:«⊂»,	&infix:«(<)»,		Bool],
+    ['not a proper subset',	&infix:«⊄»,	Mu,			Bool],
+
     ['superset',		&infix:«⊇»,	&infix:«(>=)»,		Bool],
+    ['not a superset',		&infix:«⊉»,	Mu,			Bool],
+
     ['proper superset',		&infix:«⊃»,	&infix:«(>)»,		Bool],
+    ['not a proper superset',	&infix:«⊅»,	Mu,			Bool],
+
     ['bag multiplication',	&infix:«⊍»,	&infix:«(.)»,		Bag],
     ['bag addition',		&infix:«⊎»,	&infix:«(+)»,		Bag],
     ;
@@ -98,12 +112,12 @@ for @set-and-bag-ops {
 
     if $unicode-op.defined {
 	my $result = $unicode-op($s1, $s2);
-	ok $result-type.grep({$result.isa($_)}), "bag $unicode-op result type";
+	ok $result-type.grep({$result.isa($_)}), "set $unicode-op result type";
     }
 
     if $texas-op.defined {
 	my $result = $texas-op($s1, $s2);
-	ok $result-type.grep({$result.isa($_)}), "bag $texas-op result type";
+	ok $result-type.grep({$result.isa($_)}), "set $texas-op result type";
     }
 
 }
