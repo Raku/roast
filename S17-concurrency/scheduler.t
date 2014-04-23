@@ -13,6 +13,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
 }
 
 
+#?rakudo skip "waiting for new '.loads' semantics"
 {
     my $x = False;
     $*SCHEDULER.cue({
@@ -23,6 +24,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     ok $x, "Code was cued to $name by default";
 }
 
+#?rakudo skip "waiting for new '.loads' semantics"
 {
     my $message;
     $*SCHEDULER.uncaught_handler = sub ($exception) {
@@ -33,6 +35,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $message, "oh noes", "$name setting uncaught_handler works";
 }
 
+#?rakudo skip "waiting for new '.loads' semantics"
 {
     my $tracker;
     $*SCHEDULER.cue(
@@ -46,6 +49,7 @@ ok $*SCHEDULER ~~ Scheduler, "$name does Scheduler role";
     is $tracker, "cued,caught", "Code run on $name, then handler";
 }
 
+#?rakudo skip "waiting for new '.loads' semantics"
 {
     my $tracker;
     $*SCHEDULER.cue(
