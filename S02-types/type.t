@@ -147,7 +147,7 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     ok Mu !~~ Int, 'Mu !~~ Int';
 
     #?pugs 2 skip "Numeric"
-    ok Int ~~ Numeric, 'Int !~~ Numeric';
+    ok Int ~~ Numeric, 'Int ~~ Numeric';
     ok Numeric !~~ Int, 'Numeric !~~ Int';
 
     ok Array ~~ List, 'Array is a kind of List';
