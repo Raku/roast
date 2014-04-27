@@ -50,35 +50,6 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@tap2_vals, "2 3", "Second tap gets third value";
     }
 
-    {
-        my $s1 = Supply.new;
-        my $s2 = Supply.new;
-        tap_ok $s1.merge($s2),
-          [1,2,'a',3,'b'],
-          "merging supplies works",
-          :after_tap( {
-              $s1.more(1);
-              $s1.more(2);
-              $s2.more('a');
-              $s1.more(3);
-              $s1.done();
-              $s2.more('b');
-              $s2.done();
-          } );
-    }
-
-    tap_ok Supply.merge(
-      Supply.for(1..5), Supply.for(6..10), Supply.for(11..15)
-     ),
-      [1..15], "merging 3 supplies works", :sort;
-
-    {
-        my $s = Supply.for(1..10);
-        my $m = Supply.merge($s);
-        ok $s === $m, "merging one supply is a noop";
-        tap_ok $m, [1..10], "noop rotor";
-    }
-
     tap_ok Supply.for(1..14).batch(:elems(5)),
       [[1..5],[6..10],[11..14]],
       "we can batch by number of elements";
