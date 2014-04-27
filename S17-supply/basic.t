@@ -1,22 +1,10 @@
 use v6;
+use lib 't/spec/packages';
+
 use Test;
+use Test::Tap;
 
 plan 290;
-
-sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap, :$timeout is copy = 5 ) {
-    ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
-
-    my @res;
-    my $done;
-    $s.tap({ @res.push($_) }, :done( {$done = True} ));
-    after_tap() if &after_tap;
-
-    $timeout *= 10;
-    for ^$timeout { last if $done or $s.done; sleep .1 }
-    ok $done, "$text was really done";
-    @res .= sort if $sort;
-    is_deeply @res, $expected, $text;
-}
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
