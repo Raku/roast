@@ -68,20 +68,14 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $s, [1..10], "Second tap gets all the values";
     }
 
-    {
-        my $s = (1..10).Supply;
-        tap_ok $s, [1..10], "Supply coercer worked on Range";
-    }
+    tap_ok (1..10).Supply,
+      [1..10], "Supply coercer worked on Range";
 
-    {
-        my $s = (1,2,3,4,5,6,7,8,9,10).Supply;
-        tap_ok $s, [1..10], "Supply coercer worked on Parcel";
-    }
+    tap_ok (1,2,3,4,5,6,7,8,9,10).Supply,
+      [1..10], "Supply coercer worked on Parcel";
 
-    {
-        my $s = "food".Supply;
-        tap_ok $s, [<food>], "Supply coercer worked on scalar";
-    }
+    tap_ok "food".Supply,
+      [<food>], "Supply coercer worked on scalar";
 
     {
         my $seen;
