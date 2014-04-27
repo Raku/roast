@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 272;
+plan 290;
 
 sub tap_ok ( $s, $expected, $text, :$sort, :&after_tap, :$timeout is copy = 5 ) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
@@ -66,6 +66,21 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $s = Supply.for(1..10);
         tap_ok $s, [1..10], "On demand publish worked";
         tap_ok $s, [1..10], "Second tap gets all the values";
+    }
+
+    {
+        my $s = (1..10).Supply;
+        tap_ok $s, [1..10], "Supply coercer worked on Range";
+    }
+
+    {
+        my $s = (1,2,3,4,5,6,7,8,9,10).Supply;
+        tap_ok $s, [1..10], "Supply coercer worked on Parcel";
+    }
+
+    {
+        my $s = "food".Supply;
+        tap_ok $s, [<food>], "Supply coercer worked on scalar";
     }
 
     {
