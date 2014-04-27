@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 32;
+plan 34;
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
@@ -14,6 +14,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $s = Supply.for(1..10);
         tap_ok $s, [1..10], "On demand publish worked";
         tap_ok $s, [1..10], "Second tap gets all the values";
+
+        ok $s.Supply === $s, '.Supply on a Supply is a noop';
     }
 
     tap_ok (1..10).Supply,
