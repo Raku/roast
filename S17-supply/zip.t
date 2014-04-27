@@ -17,7 +17,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $s1.zip($s2, :with( &infix:<~> )),
           [<1a 2b>],
           'zipping taps works',
-          :after_tap( {
+          :after-tap( {
               $s1.more(1);
               $s1.more(2);
               $s2.more('a');

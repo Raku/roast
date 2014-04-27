@@ -24,7 +24,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
           [[$base xx 10],[$base+1 xx 10]],
           "we can batch by time",
           :timeout(3 * $seconds),
-          :after_tap( {
+          :after-tap( {
               $s.more( time div $seconds ) for ^10;
               sleep $seconds;            # wait until in the next period
               $s.more( time div $seconds ) for ^10;
@@ -46,7 +46,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
            [$base+1 xx $elems],[$base+1 xx $rest]],
           "we can batch by time and elems",
           :timeout(3 * $seconds),
-          :after_tap( {
+          :after-tap( {
               $s.more( time div $seconds ) for ^$spurt;
               sleep $seconds;            # wait until in the next period
               $s.more( time div $seconds ) for ^$spurt;

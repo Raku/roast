@@ -16,7 +16,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $s1.merge($s2),
           [1,2,'a',3,'b'],
           "merging supplies works",
-          :after_tap( {
+          :after-tap( {
               $s1.more(1);
               $s1.more(2);
               $s2.more('a');

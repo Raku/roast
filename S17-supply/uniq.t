@@ -33,7 +33,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $s.uniq( :expires(2) ),
           [1,2,3,1,2],
           'uniq with expiry works',
-          :after_tap( {
+          :after-tap( {
               $s.more(1);
               sleep 1;
               $s.more(2);
@@ -51,7 +51,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $s.uniq( :as( * div 2 ), :expires(2) ),
           [1,2,1,2],
           'uniq with as and expiry works',
-          :after_tap( {
+          :after-tap( {
               $s.more(1);
               sleep 1;
               $s.more(2);
@@ -69,7 +69,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         tap_ok $s.uniq( :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a b c B>],
           'uniq with as and expiry works',
-          :after_tap( {
+          :after-tap( {
               $s.more("a");
               sleep 1;
               $s.more("b");
@@ -88,7 +88,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
           :as( *.substr(0,1) ), :with( {$^a.lc eq $^b.lc} ), :expires(2) ),
           [<a bb c B>],
           'uniq with as and expiry works',
-          :after_tap( {
+          :after-tap( {
               $s.more("a");
               sleep 1;
               $s.more("bb");

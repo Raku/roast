@@ -4,13 +4,13 @@ use Test;
 
 proto sub tap_ok(|) is export { * }
 
-multi sub tap_ok ($s,$expected,$text,:$sort,:&after_tap,:$timeout is copy = 5) {
+multi sub tap_ok ($s,$expected,$text,:$sort,:&after-tap,:$timeout is copy = 5) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
 
     my @res;
     my $done;
     $s.tap({ @res.push($_) }, :done( {$done = True} ));
-    after_tap() if &after_tap;
+    after-tap() if &after-tap;
 
     $timeout *= 10;
     for ^$timeout { last if $done or $s.done; sleep .1 }
@@ -32,7 +32,7 @@ Test::Tap - Extra utility code for testing Supply
 
   tap_ok( $supply, [<a b c>], "comment" );
 
-  tap_ok( $supply,[<a b c>],"comment",:sort,:after_tap( {...} ),:timeout(50) );
+  tap_ok( $supply,[<a b c>],"comment",:sort,:after-tap( {...} ),:timeout(50) );
 
 =head1 DESCRIPTION
 
