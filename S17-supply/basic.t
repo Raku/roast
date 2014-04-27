@@ -49,19 +49,4 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@tap1_vals, "1 2", "First tap closed, missed third value";
         is ~@tap2_vals, "2 3", "Second tap gets third value";
     }
-
-    tap_ok Supply.for(1..5).rotor,
-      [[1,2],[2,3],[3,4],[4,5],[5]],
-      "we can rotor";
-
-    tap_ok Supply.for(1..5).rotor(3,2),
-      [[1,2,3],[2,3,4],[3,4,5],[4,5]],
-      "we can rotor by number of elements and overlap";
-
-    {
-        my $for = Supply.for(1..10);
-        my $rotor = $for.rotor(1,0);
-        ok $for === $rotor, "rotoring by 1/0 is a noop";
-        tap_ok $rotor, [1..10], "noop rotor";
-    }
 }
