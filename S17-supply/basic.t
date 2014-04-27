@@ -50,10 +50,6 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@tap2_vals, "2 3", "Second tap gets third value";
     }
 
-    tap_ok Supply.for(1..10).grep( * > 5 ),
-      [6,7,8,9,10],
-      "grepping taps works";
-
     tap_ok Supply.for(1..10,1..10).uniq,
       [1,2,3,4,5,6,7,8,9,10],
       "uniq tap works";
