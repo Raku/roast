@@ -50,9 +50,6 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@tap2_vals, "2 3", "Second tap gets third value";
     }
 
-    tap_ok Supply.for( [1,2],[3,4,5] ).flat,
-      [1..5], "On demand publish with flat";
-
     tap_ok Supply.for( (1..5).map( {[$_]} ) ),
       [[1],[2],[3],[4],[5]], "On demand publish with arrays";
 
