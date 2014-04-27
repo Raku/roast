@@ -50,16 +50,6 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@tap2_vals, "2 3", "Second tap gets third value";
     }
 
-#?rakudo.jvm skip "hangs"
-{
-        my $s = Supply.for(2..6);
-        my @a;
-        for $s.list {
-            @a.push($_);
-        }
-        is ~@a, "2 3 4 5 6", "Supply.for and .list work";
-}
-
     tap_ok Supply.for(1..10).grep( * > 5 ),
       [6,7,8,9,10],
       "grepping taps works";
