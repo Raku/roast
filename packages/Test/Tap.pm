@@ -4,8 +4,11 @@ use Test;
 
 proto sub tap_ok(|) is export { * }
 
-multi sub tap_ok ($s,$expected,$text,:$sort,:&after-tap,:$timeout is copy = 5) {
+multi sub tap_ok 
+  ($s,$expected,$text,:$sort,:&after-tap,:$timeout is copy = 5,:$live = False)
+{
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
+    is $s.live, $live, "Supply appears to {'NOT' unless $live} be live";
 
     my @res;
     my $done;
@@ -32,7 +35,7 @@ Test::Tap - Extra utility code for testing Supply
 
   tap_ok( $supply, [<a b c>], "comment" );
 
-  tap_ok( $supply,[<a b c>],"comment",:sort,:after-tap( {...} ),:timeout(50) );
+  tap_ok($supply,[<a b c>],"text",:sort,:after-tap({...}),:timeout(50),:live);
 
 =head1 DESCRIPTION
 
@@ -43,9 +46,10 @@ This module is for Supply test code.
 =head2 tap_ok( $s, [$result], "comment" )
 
 Takes 3 positional parameters: the C<Supply> to be tested, an array with the
-expected values, and a comment to describe the test.  Good for B<3> tests.
+expected values, and a comment to describe the test.  Good for B<4> tests.
 
-First tests whether the first positional is a Supply.  Then attempts to put a
+First tests whether the first positional is a Supply.  Then checks whether
+the Supply is live or on demand with what is expected.  Then attempts to put a
 C<.tap> on the Supply.  Then runs any code specified to be run after the tap.
 Then waits for the Supply to be C<done>, or until the timeout has passed.
 Emits a fail if the timeout has passed.  Then sorts the values as received from
@@ -68,6 +72,11 @@ By default, does B<not> execute any code.
 =item :timeout(50)
 
 Optional timeout specification: defaults to B<5> (seconds).
+
+=item :live
+
+Optional indication of the value C<Supply.live> is supposed to return.  By
+default, the C<Supply> is expected to be C<on demand> (as in B<not> live).
 
 =back
 
