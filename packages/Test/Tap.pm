@@ -8,7 +8,7 @@ multi sub tap_ok
   ($s,$expected,$text,:$sort,:&after-tap,:$timeout is copy = 5,:$live = False)
 {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
-    is $s.live, $live, "Supply appears to {'NOT' unless $live} be live";
+    is $s.live, $live, "Supply appears to {'NOT ' unless $live}be live";
 
     my @res;
     my $done;
