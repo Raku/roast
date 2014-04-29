@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 22;
+plan 32;
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
@@ -14,9 +14,31 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         my $delay = 2;
         my $now   = now;
         my $seen;
-        tap_ok $now.Supply.delay($delay).do( { $seen = now } ),
-          [$now], ".delay worked";
-        ok $seen && $seen >= $now + $delay, "supply sufficiently delayed";
+        tap_ok $now.Supply.delay($delay),
+          [$now],
+          ".delay with on-demand Supply worked",
+          :more( { $seen = now } ),
+        ;
+        ok $seen && $seen >= $now + $delay, "on-demand sufficiently delayed";
+    }
+
+    {
+        my $delay = 2;
+        my $s     = Supply.new;
+        my $now   = now;
+        my $seen;
+        tap_ok $s.delay($delay),
+          [$now],
+          ".delay with live Supply worked",
+          :live,
+          :more( { $seen = now } ),
+          :after-tap( {
+              $s.more($now);
+              sleep 2;  # makes this pass, should go!
+              $s.done;
+          } ),
+        ;
+        ok $seen && $seen >= $now + $delay, "live sufficiently delayed";
     }
 
     {
