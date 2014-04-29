@@ -1,11 +1,9 @@
 use v6;
 use Test;
+use lib 't/spec/packages';
+use Test::Util;
 
 plan 2;
-
-BEGIN { @*INC.push: 't/spec/packages' }
-
-use Test::Util;
 
 my $main = q:to"END-MAIN";
     use v6;
@@ -34,10 +32,9 @@ my $main = q:to"END-MAIN";
     }
     END-MAIN
 
-is_run $main, {
-out => "Duplicate hrmov\n", err => ''}, :args['Duplicate character removal'], 'normal main call';
+is_run $main, {out => "Duplicate hrmov\n", err => ''}, :args['Duplicate character removal'], 'normal main call';
 
-is_run $main, {out => q:to"END-TEST-OUT", er => ''}, :args['--test'], 'test main call';
+is_run $main, {out => q:to"END-TEST-OUT", err => ''}, :args['--test'], 'test main call';
     1..2
     ok 1 - basic deduplication
     ok 2 - case insensitivity
