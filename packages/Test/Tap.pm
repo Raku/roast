@@ -4,15 +4,26 @@ use Test;
 
 proto sub tap_ok(|) is export { * }
 
-multi sub tap_ok 
-  ($s,$expected,$text,:$sort,:&after-tap,:$timeout is copy = 5,:$live = False)
-{
+multi sub tap_ok (
+  $s,
+  $expected,
+  $text,
+  :$live = False,
+  :&more,
+  :&done,
+  :&after-tap,
+  :$timeout is copy = 5,
+  :$sort,
+) {
     ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
     is $s.live, $live, "Supply appears to {'NOT ' unless $live}be live";
 
     my @res;
     my $done;
-    $s.tap({ @res.push($_) }, :done( {$done = True} ));
+    $s.tap(
+             { more() if &more; @res.push($_) },
+      :done( { done() if &done; $done = True } ),
+    );
     after-tap() if &after-tap;
 
     $timeout *= 10;
@@ -35,7 +46,17 @@ Test::Tap - Extra utility code for testing Supply
 
   tap_ok( $supply, [<a b c>], "comment" );
 
-  tap_ok($supply,[<a b c>],"text",:sort,:after-tap({...}),:timeout(50),:live);
+  tap_ok(
+    $supply,
+    [<a b c>],
+    "text",
+    :live,
+    :more( { ... } ),
+    :done( { ... } ),
+    :after-tap( { ... } ),
+    :timeout(50),
+    :sort,
+  );
 
 =head1 DESCRIPTION
 
@@ -59,10 +80,20 @@ Takes optional named parameters:
 
 =over 4
 
-=item :sort
+=item :live
 
-Boolean indicating whether to sort the values provided by the supply before
-checking it against the desired result.  Default is no sorting.
+Optional indication of the value C<Supply.live> is supposed to return.  By
+default, the C<Supply> is expected to be C<on demand> (as in B<not> live).
+
+=item :more( {...} )
+
+Optional code to be executed whenever a value is received ("more"d) on the tap.
+By default, does B<not> execute any code.
+
+=item :done( {...} )
+
+Optional code to be executed whenever the supply indicates it is "done".
+By default, does B<not> execute any code.
 
 =item :after-tap( {...} )
 
@@ -73,10 +104,10 @@ By default, does B<not> execute any code.
 
 Optional timeout specification: defaults to B<5> (seconds).
 
-=item :live
+=item :sort
 
-Optional indication of the value C<Supply.live> is supposed to return.  By
-default, the C<Supply> is expected to be C<on demand> (as in B<not> live).
+Boolean indicating whether to sort the values provided by the supply before
+checking it against the desired result.  Default is no sorting.
 
 =back
 
