@@ -10,7 +10,7 @@ is 'You can include a \\ like this', q<You can include a \ like this>;
 is 'Nothing like \n is available', q<Nothing like \n is available>;
 is 'And a \ on its own is no problem', q<And a \ on its own is no problem>;
 
-is "Ooh look!\nLine breaks!", q:to"END".chomp;
+is "Ooh look!\nLine breaks!", q:to"END".chomp.subst(/\r/, '', :g);
 Ooh look!
 Line breaks!
 END
