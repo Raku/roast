@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 30;
+plan 38;
 
 #?pugs   skip "is cached NYI"
 #?niecza skip "is cached NYI"
@@ -66,5 +66,27 @@ plan 30;
     is noflat($@b), 'foobarbaz', 'foo,bar,baz case(2)';
     is @seen, [<foo bar foo bar baz>], 'did we run (4)';
 } #8
+
+#?pugs   skip "is cached NYI"
+#?niecza skip "is cached NYI"
+{
+    my @int;
+    my @str;
+    proto foo (|) is cached { * }
+    multi foo (Int $number) { @int.push: $number; $number }
+    multi foo (Str $string) { @str.push: $string; $string }
+
+    is foo(42), 42, 'did we get the value back (1)';
+    is_deeply @int, [42], 'was the code done (1)';
+    is foo(42), 42, 'did we get the value back (2)';
+    #?rakudo todo 'optimizer kills the proto even though "is cached"'
+    is_deeply @int, [42], 'was the code done (2)';
+
+    is foo("Camelia"), "Camelia", 'did we get the value back (3)';
+    is_deeply @str, [<Camelia>], 'was the code done (3)';
+    is foo("Camelia"), "Camelia", 'did we get the value back (4)';
+    #?rakudo todo 'optimizer kills the proto even though "is cached"'
+    is_deeply @str, [<Camelia>], 'was the code done (4)';
+} #4
 
 # vim: ft=perl6
