@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 22;
+plan 23;
 
 my $forawhile = .5;
 my $filename = "watch_path_checker";
@@ -64,9 +64,8 @@ ok !$filename.IO.e, "make sure we don't have a file";
     sleep $forawhile;
     is +@seen, 4, 'the unlink caused an event';
 
-    $tap.close, 'could we close the tap';
-
-    $s.done, 'could we mark the supply as done';
+    ok $tap.close, 'could we close the tap';
+    $s.done;
 
     is +@seen.grep( IO::Notification::Change ), +@seen, 'only Change objects';
     is +@seen.grep( { .path eq $filename } ), +@seen, 'only about our file';

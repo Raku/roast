@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 20;
+plan 24;
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
@@ -44,9 +44,10 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         is ~@tap1_vals, "1 2", "First tap has both values";
         is ~@tap2_vals, "2", "Second tap missed first value";
 
-        $tap1.close;
+        ok $tap1.close, "did the close of the first tap work";
         $s.more(3);
         is ~@tap1_vals, "1 2", "First tap closed, missed third value";
         is ~@tap2_vals, "2 3", "Second tap gets third value";
+        ok $tap2.close, "did the close of the second tap work";
     }
 }
