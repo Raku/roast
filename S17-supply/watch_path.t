@@ -5,7 +5,7 @@ use Test;
 
 plan 23;
 
-my $forawhile = .5;
+my $forawhile = 1;
 my $filename = "watch_path_checker";
 END { unlink $filename if $filename }  # make sure we cleanup
 
