@@ -5,7 +5,7 @@ use Test;
 
 plan 2;
 
-BEGIN { @*INC.push: 't/spec/packages' }
+use lib 't/spec/packages';
 
 class Question::Answer {
     has $.text is rw;

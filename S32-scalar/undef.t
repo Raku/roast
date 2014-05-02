@@ -1,7 +1,7 @@
 use v6;
 use Test;
 #?pugs emit #
-BEGIN { @*INC.push('t/spec/packages/') };
+use lib 't/spec/packages';
 #?pugs emit #
 use Test::Util;
 

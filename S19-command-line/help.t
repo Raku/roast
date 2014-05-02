@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 1;
 
-BEGIN { @*INC.push: 't/spec/packages' }
+use lib 't/spec/packages';
 use Test::Util;
 
 is_run Str,  :args['--help'],

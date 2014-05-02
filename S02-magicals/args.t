@@ -8,7 +8,7 @@ is_deeply @*ARGS, [], 'by default @*ARGS is empty array';
 
 lives_ok { @*ARGS = 1, 2 }, '@*ARGS is writable';
 
-BEGIN { @*INC.push: 't/spec/packages' }
+use lib 't/spec/packages';
 
 use Test::Util;
 

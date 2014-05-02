@@ -20,10 +20,10 @@ multi sub tap_ok (
 
     my @res;
     my $done;
-    $s.tap(
+    isa_ok $s.tap(
              { more() if &more; @res.push($_) },
       :done( { done() if &done; $done = True } ),
-    );
+    ), Tap, "$text got a tap";
     after-tap() if &after-tap;
 
     $timeout *= 10;
@@ -67,14 +67,15 @@ This module is for Supply test code.
 =head2 tap_ok( $s, [$result], "comment" )
 
 Takes 3 positional parameters: the C<Supply> to be tested, an array with the
-expected values, and a comment to describe the test.  Good for B<4> tests.
+expected values, and a comment to describe the test.  Good for B<5> tests.
 
 First tests whether the first positional is a Supply.  Then checks whether
 the Supply is live or on demand with what is expected.  Then attempts to put a
-C<.tap> on the Supply.  Then runs any code specified to be run after the tap.
-Then waits for the Supply to be C<done>, or until the timeout has passed.
-Emits a fail if the timeout has passed.  Then sorts the values as received from
-the Supply if so indicated.  Then tests the values received.
+C<.tap> on the Supply and checks whether a Tap was returned.  Then runs any
+code specified to be run after the tap.  Then waits for the Supply to be
+C<done>, or until the timeout has passed.  Emits a fail if the timeout has
+passed.  Then sorts the values as received from the Supply if so indicated.
+Then tests the values received.
 
 Takes optional named parameters:
 

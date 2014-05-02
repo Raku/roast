@@ -155,7 +155,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
 
 # used to be a  pugs regression
 {
-    BEGIN { @*INC.push: 't/spec/packages' }
+    use lib 't/spec/packages';
     use ArrayInit;
     my $first_call = array_init();
     is array_init(), $first_call,

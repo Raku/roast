@@ -5,7 +5,7 @@ plan 3;
 
 # L<S29/Context/"=item exit">
 
-BEGIN { @*INC.push: 't/spec/packages' };
+use lib 't/spec/packages';
 use Test::Util;
 
 is_run 'say 3; exit; say 5',

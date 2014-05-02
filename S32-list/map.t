@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 53;
+plan 59;
 
 # L<S32::Containers/"List"/"=item map">
 
@@ -12,6 +12,20 @@ plan 53;
 
 
 my @list = (1 .. 5);
+
+#?pugs   skip 'NYI'
+#?niecza skip 'NYI'
+{
+    my Int $s;
+    my Str @a;
+    my Num %h;
+    ok $s === $s.map(*), 'is $s.map(*) a noop';
+    ok $s === map(*,$s), 'is map(*,$s) a noop';
+    ok @a === @a.map(*), 'is @a.map(*) a noop';
+    ok @a === map(*,@a), 'is map(*,@a) a noop';
+    ok %h === %h.map(*), 'is %h.map(*) a noop';
+    ok %h === map(*,%h), 'is map(*,%h) a noop';
+}
 
 {
     my @result = map { $_ * 2 }, @list;

@@ -2,7 +2,7 @@ use v6;
 use Test;
 plan 3;
 
-BEGIN { @*INC.push: 't/spec/packages' }
+use lib 't/spec/packages';
 use Test::Util;
 
 my Str $x;

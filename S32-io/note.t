@@ -1,6 +1,6 @@
 use v6;
 use Test;
-BEGIN { @*INC.push('t/spec/packages/') };
+use lib 't/spec/packages';
 use Test::Util;
 plan 6;
 

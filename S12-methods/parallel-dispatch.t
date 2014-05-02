@@ -123,7 +123,7 @@ class Bar is Foo {
 }
 
 {
-    BEGIN { @*INC.push: 't/spec/packages' };
+    use lib 't/spec/packages';
     use ContainsUnicode;
     is uc-and-join('foo', 'bar'), 'FOO, BAR',
         'parallel dispatch with » works in modules too';
