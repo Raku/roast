@@ -90,7 +90,6 @@ plan 11;
             redo
         }
     }
-    say $sum;
     # pugs, rakudo and perl5 independently agree that this should be
     # 201, not 220 as the ruby example says.
     # that's because the ruby example doesn't have the 'is copy' trait.
