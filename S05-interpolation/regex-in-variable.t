@@ -94,7 +94,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
 {
     my $u;
     ok 'a' !~~ /$u/, 'undefined variable does not match';
-    BEGIN { @*INC.push: 't/spec/packages/' }
+    use lib 't/spec/packages';
     use Test::Util;
     #?rakudo todo 'warn on undef'
     is_run(

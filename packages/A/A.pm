@@ -1,6 +1,6 @@
 # used in t/spec/S11-modules/nested.t 
 
-BEGIN { @*INC.push('t/spec/packages') };
+use lib 't/spec/packages';
 
 module A::A {
     use A::B;

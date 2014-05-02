@@ -95,7 +95,7 @@ plan 9;
 #?rakudo todo 'method BUILD should warn'
 #?niecza todo
 {
-    BEGIN { @*INC.push: 't/spec/packages' }
+    use lib 't/spec/packages';
     use Test::Util;
     is_run
         'class Foo { method BUILD() { ... } }',

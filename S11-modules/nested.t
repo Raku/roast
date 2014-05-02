@@ -7,7 +7,7 @@ plan 6;
 
 # Used to be a Rakudo bug, RT #63956
 
-BEGIN { @*INC.unshift('t/spec/packages/') };
+use lib 't/spec/packages';
 
 eval_lives_ok 'use A::A', 'Can load classes from nested modules';
 eval_lives_ok 'use A::A; A::B::D ~~ A::B::B or die()', 

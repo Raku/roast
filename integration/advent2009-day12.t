@@ -5,9 +5,7 @@ use Test;
 
 plan 9;
 
-BEGIN {
-    @*INC.push: 't/spec/packages';
-}
+use lib 't/spec/packages';
 
 {
     eval_lives_ok 'use Fancy::Utilities', 'Can use Fancy::Utilities';

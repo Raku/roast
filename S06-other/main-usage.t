@@ -3,7 +3,7 @@ use Test;
 
 plan  22;
 
-BEGIN { @*INC.push: 't/spec/packages' }
+use lib 't/spec/packages';
 
 use Test::Util;
 

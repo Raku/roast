@@ -35,7 +35,7 @@ ok Stupid::Class.new(), 'can instantiate object of "imported" class';
 # class loading inside a method
 # RT #73886
 {
-    BEGIN { @*INC.unshift: 't/spec/packages' }
+    use lib 't/spec/packages';
     class MethodLoadingTest {
         method doit {
             use Foo;

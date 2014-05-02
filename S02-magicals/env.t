@@ -3,7 +3,7 @@ use v6;
 # Tests for magic variables
 
 use Test;
-BEGIN @*INC.push: 't/spec/packages/';
+use lib 't/spec/packages';
 use Test::Util;
 # L<S28/Named variables>
 plan 17;

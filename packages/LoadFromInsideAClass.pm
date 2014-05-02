@@ -1,4 +1,4 @@
 class LoadFromInsideAClass {
-    BEGIN { @*INC.push: 't/spec/packages' };
+    use lib 't/spec/packages';
     use Foo;
 }

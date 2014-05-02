@@ -4,9 +4,7 @@ use Test;
 
 plan 9;
 
-BEGIN {
-   @*INC.unshift('t/spec/packages');
-}
+use lib 't/spec/packages';
 
 lives_ok {
     require Foo;

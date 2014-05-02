@@ -37,7 +37,7 @@ dies_ok( { EVAL '&foo' }, 'Foo::foo is undefined in outer scope' );
 
 #?pugs todo
 {
-    BEGIN { @*INC.push('t/spec/packages') };
+    use lib 't/spec/packages';
     class TestImportInClass {
         use A::B;
         method doit {

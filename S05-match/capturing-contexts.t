@@ -2,7 +2,7 @@ use v6;
 use MONKEY_TYPING;
 
 use Test;
-BEGIN { @*INC.push('t/spec/packages/') };
+use lib 't/spec/packages';
 use Test::Util;
 plan 43;
 

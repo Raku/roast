@@ -1,4 +1,4 @@
-BEGIN { @*INC.push: 't/spec/packages' }
+use lib 't/spec/packages';
 use RoleB;
 
 role RoleA;
