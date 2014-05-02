@@ -81,7 +81,7 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     is ca($/.caps),     '0:a|0:b',    '.caps on quantified &&';
 
     ok 'ab' ~~ m/[[a|b] && <alpha>]**1..2/,  'Regex matches';
-#?rakudo todo 'RT117995 - quantified conjunctive capture'
+#?rakudo todo 'RT117955 - quantified conjunctive capture'
     is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
 }
 
