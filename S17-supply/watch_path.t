@@ -3,7 +3,7 @@ use lib 't/spec/packages';
 
 use Test;
 
-plan 23;
+plan 24;
 
 my $forawhile = 1;
 my $filename = "watch_path_checker";
@@ -70,6 +70,7 @@ ok !$filename.IO.e, "make sure we don't have a file";
     is +@seen.grep( IO::Notification::Change ), +@seen, 'only Change objects';
     is +@seen.grep( { .path eq $filename } ), +@seen, 'only about our file';
 
-    # probably fragile, would have expected at least 1 FileChanged in here
-    is +@seen.grep( { .event ~~ FileRenamed } ), +@seen, 'only renaming';
+    # a little fragile
+    is +@seen.grep( { .event ~~ FileRenamed } ), (3|4), 'at least 3 renaming';
+    is +@seen.grep( { .event ~~ FileChanged } ), (0|1), 'maybe one changing';
 }
