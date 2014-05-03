@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 23;
 
 my $forawhile = 1;
 my $filename = "watch_path_checker";
@@ -12,7 +12,8 @@ unlink $filename; # in case we missed the cleanup
 ok !$filename.IO.e, "make sure we don't have a file";
 
 {
-    my $s = IO::Notification.watch_path('.').uniq;
+    my $s = IO::Notification.watch_path('.').grep({.path eq $filename}).uniq,
+      'only about our file';
     ok $s ~~ Supply, 'Did we get a Supply?';
 
     my @seen;
@@ -67,7 +68,6 @@ ok !$filename.IO.e, "make sure we don't have a file";
     $s.done;
 
     is +@seen.grep( IO::Notification::Change ), +@seen, 'only Change objects';
-    is +@seen.grep( { .path eq $filename } ), +@seen, 'only about our file';
 
     # a little fragile
     is +@seen.grep( { .event ~~ FileRenamed } ), (3|4), 'at least 3 renaming';
