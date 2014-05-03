@@ -1,9 +1,10 @@
 use v6;
-use lib 't/spec/packages';
 
 use Test;
 
-plan 3;
+plan 4;
+
+dies_ok { Supply.wait }, 'can not be called as a class method';
 
 {
     my $s = Supply.new;

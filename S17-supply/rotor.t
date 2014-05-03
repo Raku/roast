@@ -4,7 +4,9 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 34;
+plan 35;
+
+dies_ok { Supply.rotor }, 'can not be called as a class method';
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;

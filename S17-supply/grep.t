@@ -4,7 +4,9 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 12;
+plan 13;
+
+dies_ok { Supply.grep({...}) }, 'can not be called as a class method';
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;

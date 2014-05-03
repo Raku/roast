@@ -4,7 +4,9 @@ use lib 't/spec/packages';
 use Test;
 use Test::Util;
 
-plan 24;
+plan 25;
+
+dies_ok { Supply.migrate }, 'can not be called as a class method';
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new; 

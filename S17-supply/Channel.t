@@ -1,9 +1,10 @@
 use v6;
-use lib 't/spec/packages';
 
 use Test;
 
-plan 12;
+plan 13;
+
+dies_ok { Supply.Channel }, 'can not be called as a class method';
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
