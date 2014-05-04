@@ -2,6 +2,8 @@
 use v6;
 use Test;
 
+plan 1;
+
 constant @months = <January February March April May June July
                     August September October November December>;
 constant @days = <Su Mo Tu We Th Fr Sa>;
