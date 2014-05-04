@@ -65,6 +65,7 @@ my $output;
 }
 
 #?rakudo.moar todo 'RT121722'
+#?rakudo.jvm todo 'Hash ordering quirk'
 is $output, q:to"END", 'FIRST/NEXT/LAST example';
 Score	Player
 -----	------
