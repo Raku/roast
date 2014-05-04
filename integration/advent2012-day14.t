@@ -56,17 +56,24 @@ is_deeply [(2 .. 20).grep({is-prime-alpha($_)})], @primes_lt_20, 'prime (alpha)'
 is_deeply [(2 .. 20).grep({is-prime-beta($_)})], @primes_lt_20, 'prime (beta)';
 is_deeply [(2 .. 20).grep({is-prime-rm($_, $_)})], @primes_lt_20, 'prime (rabin-miller)';
 
-my $primes_lt_200 = set (@primes_lt_20, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199);
-my $primes-beta = set (2 .. 200).grep({is-prime-beta($_)});
+my @primes_lt_200 = (@primes_lt_20, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199);
 
-is_deeply $primes-beta, $primes_lt_200, 'primes under 200 (beta)';
+#?rakudo.jvm skip 'Cannot do aggregate operation on a type object'
+{
+    my @primes-beta = (2 .. 200).grep({is-prime-beta($_)});
 
-my $primes-rm = set (2 .. 200).grep({is-prime-rm($_, 3)});
-my $is-superset = ($primes-rm (>=) $primes_lt_200);
-ok $is-superset, 'primes under 200 (rabin-miller)';
+    is_deeply @primes-beta, @primes_lt_200, 'primes under 200 (beta)';
+
+    my @primes-rm = (2 .. 200).grep({is-prime-rm($_, 3)});
 
 # ... "there is a chance that it will tell you that a number
 #     is prime when it actually isn’t"
-my $false-positives = ($primes-rm (-) $primes_lt_200);
-ok $false-positives <= 4, 'accuracy (rabin-miller)';
+    my $false-negatives = (@primes_lt_200 (-) @primes-rm);
+    ok !+$false-negatives, 'primes under 200 (rabin-miller)'
+        or diag $false-negatives;
+
+    my $false-positives = (@primes-rm (-) @primes_lt_200);
+    ok $false-positives <= 4, 'accuracy (rabin-miller)'
+	or diag $false-positives;
+}
 
