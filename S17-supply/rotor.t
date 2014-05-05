@@ -6,6 +6,7 @@ use Test::Tap;
 
 plan 35;
 
+#?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.rotor }, 'can not be called as a class method';
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {

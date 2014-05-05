@@ -6,6 +6,7 @@ use Test::Util;
 
 plan 25;
 
+#?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.migrate }, 'can not be called as a class method';
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {

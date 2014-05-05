@@ -11,6 +11,7 @@ END { unlink $filename if $filename }  # make sure we cleanup
 unlink $filename; # in case we missed the cleanup
 ok !$filename.IO.e, "make sure we don't have a file";
 
+#?rakudo.jvm skip "file system events NYI?"
 {
     my $s = IO::Notification.watch_path('.').grep({.path eq $filename}).uniq,
       'only about our file';

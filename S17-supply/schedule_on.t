@@ -6,6 +6,7 @@ use Test::Tap;
 
 plan 17;
 
+#?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.schedule_on($*SCHEDULER) },
   'can not be called as a class method';
 
