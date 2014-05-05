@@ -23,18 +23,18 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
 
     {
         my $s = Supply.new;
-        tap_ok $s.reduce( {$^a (+) $^b} ),
+        tap_ok $s.reduce( &infix:<(+)> ),
         [
-          (a =>  1, b => 2).Bag,
+          {a =>  1, b => 2},
           (a =>  1, b => 4, c => 42).Bag,
           (a => 13, b => 4, c => 42, e => 10).Bag,
         ],
         "reducing bag union works",
 #        :live,
         :after-tap( {
-            $s.more( ( a =>  1, b => 2 ).Bag );
-            $s.more( ( c => 42, b => 2 ).Bag );
-            $s.more( ( a => 12, e => 10 ).Bag );
+            $s.more( { a =>  1, b => 2 } );
+            $s.more( { c => 42, b => 2 } );
+            $s.more( { a => 12, e => 10 } );
         } );
     }
 }
