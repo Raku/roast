@@ -78,6 +78,7 @@ sub create_temporary_file($id) {
     my $file = "temp-16-filehandles-filestat-" ~ $*PID ~ "-" ~ $id ~ ".temp";
     my $fh = open $file, :w orelse die "Could not create $file";   #OK not used
     $fh.print($time);                            # store pre-creation timestamp
+    $fh.close;
     diag "Using file $file";
     return $file;
 }
