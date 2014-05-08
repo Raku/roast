@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan *;
+plan 20;
 
 #L<S03/Smart matching/Signature-signature>
 {
@@ -39,5 +39,4 @@ plan *;
         "Code params with signatures";
 }
 
-done;
 # vim: ft=perl6
