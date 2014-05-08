@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 61;
+plan 89;
 
 #?rakudo.jvm todo 3 "D: doesn't work in signatures"
 dies_ok { Supply.classify( {...}  ) }, 'can not be called as a class method';
@@ -15,9 +15,10 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
     isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
 
-    my %mapper is default(Int) = ( a=>Str, b=>Str, c=>Str );
-    my &mapper = {.WHAT};
-    for &mapper, $%mapper -> \mapper {
+    my %mapper is default(0) = ( 11=>1, 12=>1, 13=>1 );
+    my &mapper = { $_ div 10 };
+    my @mapper = (0 xx 10, 1 xx 10);
+    for &mapper, $%mapper, $@mapper -> \mapper {
         my $what = mapper.WHAT.perl;
         my $s = Supply.new;
         ok $s ~~ Supply, "we got a base Supply ($what)";
@@ -31,9 +32,9 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
             @supplies.push: $p.value;
         } ), Tap, "we got a tap ($what)";
 
-        $s.more($_) for 1,2,3,<a b c>;
-        is_deeply @keys, [Int, Str], "did we get the right keys ($what)";
-        tap_ok @supplies[0], [1,2,3],   "got the Int supply ($what)", :live;
-        tap_ok @supplies[1], [<a b c>], "got the Str supply ($what)", :live;
+        $s.more($_) for 1,2,3,11,12,13;
+        is_deeply @keys, [0,1], "did we get the right keys ($what)";
+        tap_ok @supplies[0], [1,2,3],   "got the 0 supply ($what)", :live;
+        tap_ok @supplies[1], [11,12,13], "got the 1 supply ($what)", :live;
     }
 }
