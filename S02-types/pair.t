@@ -261,16 +261,16 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     "the keys of pairs should not get auto-stringified when passed to a sub (3)";
 }
 
-# Per Larry: http://www.nntp.perl.org/group/perl.perl6.language/23984
+# Per S02:1704
 {
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
 
   #?pugs 2 todo 'bug'
-  lives_ok { $pair.key = "KEY" }, "setting .key does not die";
-  is $pair.key,          "KEY",   "setting .key actually changes the key";
+  dies_ok { $pair.key = "KEY" }, "setting .key dies";
+  is $pair.key,         "key",   "attempt to set .key doesn't change the key";
   #?niecza todo "setting .key changes original val!"
-  is $key,               "key",   "setting .key does not change the original var";
+  is $key,              "key",   "attempt to set .key does not change the original var either";
 
   #?pugs 2 todo 'bug'
   lives_ok { $pair.value = "VAL" }, "setting .value does not die";
