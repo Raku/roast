@@ -50,4 +50,6 @@ eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
     throws_like 'Any.HOW(Foo)', X::Syntax::Argument::MOPMacro;
 }
 
+done;
+
 # vim: ft=perl6

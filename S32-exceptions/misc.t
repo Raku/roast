@@ -494,3 +494,5 @@ throws_like 'sub f { f(|$) }', X::Obsolete,
     old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 
 done;
+
+# vim: ft=perl6

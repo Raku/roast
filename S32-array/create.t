@@ -24,5 +24,6 @@ is(+$array_obj, 3, 'Finding the length functions properly.');
     throws_like(q{ Array[Str].new(1, 2, "Foo") }, X::TypeCheck);
 }
 
-# vim: ft=perl6
+done;
 
+# vim: ft=perl6

@@ -52,3 +52,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
         throws_like { $master.more(23)}, X::Supply::Migrate::Needs;
     }
 }
+
+done;
+
+# vim: syn=perl6

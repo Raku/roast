@@ -100,4 +100,6 @@ dies_ok {$o."b"() },  'can not call private method via quotes from outside';   #
 #?DOES 2
 throws_like '$_!X::a', X::Method::Private::Permission;
 
+done;
+
 # vim: syn=perl6

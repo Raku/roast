@@ -40,4 +40,6 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
     throws_like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';
 }
 
+done;
+
 # vim: ft=perl6

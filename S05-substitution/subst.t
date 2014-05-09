@@ -436,4 +436,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     is($RT119201_m, 'a', 'get match variable in replacement of subst-mutator');
 }
 
+done;
+
 # vim: ft=perl6

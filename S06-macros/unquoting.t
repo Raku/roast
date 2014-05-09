@@ -75,3 +75,7 @@ plan 10;
                 action   => 'unquote evaluation',
                 line     => 1;
 }
+
+done;
+
+# vim: ft=perl6

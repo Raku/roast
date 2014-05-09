@@ -120,4 +120,6 @@ lives_ok { srand(1) }, 'srand(1) lives and parses';
     throws_like 'rand(3)', X::Obsolete;
 }
 
+done;
+
 # vim: ft=perl6
