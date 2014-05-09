@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 3;
 
 # RT 71754
 {
@@ -27,7 +28,5 @@ use Test;
     lives_ok {rt69314(1)}, 'Calling callsame directly from a sub works';
 
 }
-
-done;
 
 # vim: ft=perl6

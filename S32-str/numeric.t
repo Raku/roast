@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 168;
 
 #?DOES 2
 sub check($str, $expected_type, $expected_number, $desc?) {
@@ -158,7 +159,5 @@ f      '3+Infi';
 {
     is +Str.new, 0, 'RT #100778'
 }
-
-done;
 
 # vim: ft=perl6 

@@ -2,7 +2,7 @@
 
 use v6;
 use Test;
-
+plan 11;
 
 sub weather($weather) {
     given $weather {
@@ -72,4 +72,4 @@ is (.[0] + .[1] + .[2] given @list), 6, 'Statement ending given';
 
 eval_lives_ok 'for ^20 {my ($a,$b)=<AT CG>.pick.comb.pick(*); my ($c,$d)=sort map {6+4*sin($_/2)},$_,$_+4; sprintf "%{$c}s%{$d-$c}s\n",$a,$b}' , 'Can handle "map {...} ,$x,$y"';
 
-done;
+# vim: ft=perl6

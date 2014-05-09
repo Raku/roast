@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 34;
 
 # Very basic enum tests
 
@@ -111,7 +112,5 @@ dies_ok({ my Color $c3 = "for the fail" }, 'enum as a type enforces checks');
     is T1.enums.keys.sort.join('|'), 'a|b|c', 'enum keys (1)';
     is T2.enums.keys.sort.join('|'), 'd|e|f', 'enum keys (2)';
 }
-
-done;
 
 # vim: ft=perl6

@@ -2,6 +2,7 @@ use v6;
 
 use Test;
 
+plan 77;
 
 =begin description
 
@@ -285,7 +286,5 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };
     isa_ok $!, X::Undeclared, 'subset in signature cannot use non-predeclared variable';
 }
-
-done;
 
 # vim: ft=perl6

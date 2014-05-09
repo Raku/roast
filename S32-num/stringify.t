@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 112;
 
 # L<S32::Numeric/Complex/"=item gist">
 
@@ -94,4 +95,3 @@ lives_ok { Rat.Str }, 'Rat.Str does not die';
 # TODO: FatRat, Num (once better specced), Int (maybe, but hard to mess up)
 
 # vim: ft=perl6
-done;

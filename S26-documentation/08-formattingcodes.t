@@ -1,4 +1,6 @@
 use Test;
+plan 43;
+
 my $r;
 
 =pod
@@ -76,4 +78,4 @@ is $r.content[2].content,
 $r = $=pod[4];
 is $r.content[0].content, 'C<boo> B<bar> asd';
 
-done;
+# vim: ft=perl6

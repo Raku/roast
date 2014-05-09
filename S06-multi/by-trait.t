@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 5;
 
 # RT 66588
 {
@@ -19,7 +20,5 @@ use Test;
     #?niecza todo
     is $rw_call, 1, 'read-write multi was called';
 }
-
-done;
 
 # vim: ft=perl6

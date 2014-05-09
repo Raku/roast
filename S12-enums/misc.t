@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+plan 13;
+
 # RT #63826
 {
     class EnumClass     { enum C <a b c> }
@@ -50,7 +52,5 @@ use Test;
     #?niecza todo
     lives_ok { OK.^methods }, 'can call .^methods on an enum';
 }
-
-done;
 
 # vim: ft=perl6

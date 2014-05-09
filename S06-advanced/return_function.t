@@ -1,4 +1,5 @@
-use Test; plan 4;
+use Test;
+plan 4;
 
 # L<S06/The C<return> function/prints 1 via named argument>
 

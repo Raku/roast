@@ -1,6 +1,6 @@
 use v6;
 use Test;
-
+plan 24;
 
 # L<S05/Modifiers/Any grammar regex is really just a kind of method>
 
@@ -72,6 +72,4 @@ is $DeclaratorTest1::our, 'zho', 'can access our variable from the outside';
     ok '55' ~~ m/ ^ <la> $ /, 'can match changed :let variable';
     is $a, 5, 'successful match preserves new :let value';
 }
-
-done;
 # vim: ft=perl6 sw=4 ts=4 expandtab

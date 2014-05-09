@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+plan 31;
+
 sub l (Int $a) {  my $l = $a; return $l }
 
 {
@@ -127,4 +129,4 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($o, " d", "other lvalue wiggled around (substr-rw(Int, StrLen)).");
 };
 
-done;
+# vim: ft=perl6 

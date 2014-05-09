@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 11;
 
 =begin pod
 
@@ -144,7 +145,5 @@ is(~$/[2]<noun>, 'arrow', 'Rule capture 2 noun');
 
 ok(!( "fooooo" ~~ m:exhaustive { s o+ } ), 'Subsequent failed any match...');
     ok(@$/ == 0, '...leaves @$/ empty');
-
-done();
 
 # vim: ft=perl6

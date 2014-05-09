@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 21;
 
 # XXX I'm not very confident in my reading of S04, so give a suspicious eye
 #     to these tests before using them.
@@ -79,7 +80,5 @@ sub fail_it { fail $^a }
     #?rakudo skip '$object.handled'
     ok $win.handled, '.handled method is true for all Mus';
 }
-
-done;
 
 # vim: ft=perl6
