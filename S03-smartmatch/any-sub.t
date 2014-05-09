@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 8;
 
 #L<S03/Smart matching/Any .(...) sub call truth>
 {
@@ -17,7 +18,5 @@ use Test;
     ok !(2 ~~ $sub),    '~~ sub call truth (+,2)';
     ok  (0 ~~ $sub),    '~~ sub call truth (-,2)';
 }
-
-done;
 
 # vim: ft=perl6

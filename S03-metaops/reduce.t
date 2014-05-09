@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 366;
 
 =begin pod
 
@@ -381,6 +382,4 @@ ok ([+]) == 0, 'argumentless [+] parses';
 {
     is(([X~] <a b>, <a b>, <a b>), <aaa aab aba abb baa bab bba bbb>, 'reduce with X');
 }
-
-done;
 # vim: ft=perl6

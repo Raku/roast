@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 98;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
 #?pugs emit plan 89;
@@ -198,7 +199,5 @@ my @tests = (
     my Blob $a = "asdf".encode();
     is EVAL($a.perl).decode("utf8"), "asdf";
 }
-
-done;
 
 # vim: ft=perl6

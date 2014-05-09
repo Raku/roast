@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-
+plan 48;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -309,7 +309,5 @@ use Test;
     class B { constant \a = 3; };
     is B::a, 3, 'escaped constant declaration in class';
 }
-
-done;
 
 # vim: ft=perl6

@@ -3,6 +3,7 @@ use v6;
 # Test various forms of comments
 
 use Test;
+plan 51;
 
 # L<S02/"Embedded Comments"/"Embedded comments"
 #  "#" plus any bracket>
@@ -219,7 +220,5 @@ are both here, yay!
 is $outerVal, 22, 'Single paragraph Pod, multiple lines parses to whitespace in code';
 
 }}, 'Single paragraph Pod, multiple lines eval throws no error' );
-
-done;
 
 # vim: ft=perl6

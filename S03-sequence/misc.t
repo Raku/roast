@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 19;
 
 
 # L<S03/List infix precedence/constraints implied by the signature of the function>
@@ -94,7 +95,5 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.char
     #?rakudo todo 'RT 80574'
     is @rt80574[0], 'zero', 'Generator output is flattened';
 }
-
-done;
 
 # vim: ft=perl6

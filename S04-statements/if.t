@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+plan 29;
+
 =begin kwid
 
 Basic "if" tests.
@@ -10,8 +12,6 @@ Basic "if" tests.
 =end kwid
 
 # L<S04/Conditional statements>
-
-plan 29;
 
 my $x = 'test';
 if ($x eq $x) { pass('if ($x eq $x) {} works'); } else { flunk('if ($x eq $x) {} failed'); }
