@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 29;
+plan 30;
 
 # currently deprecated core features
 
@@ -436,5 +436,22 @@ Please use 'EVAL' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
+
+# $*OS
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
+{
+    $line = $?LINE; say $*OS;
+    say $*OS;
+    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OS';
+Saw 1 call to deprecated code during execution.
+================================================================================
+\$*OS called at:
+  $*PROGRAM_NAME, lines $line,{$line + 1}
+Please use \$*DISTRO.OS instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
 
 # vim:set ft=perl6
