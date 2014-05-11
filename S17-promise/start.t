@@ -8,6 +8,7 @@ plan 12;
         pass "Promise.start actually runs";
         42
     });
+    sleep 1;
     isa_ok $p, Promise, '.start gives a Promise';
     is $p.result, 42, "Correct result";
     is $p.status, Kept, "Promise was kept";
@@ -18,6 +19,7 @@ plan 12;
         pass "Promise.start actually runs";
         42
     };
+    sleep 1;
     isa_ok $p, Promise, 'start {} gives a Promise';
     is $p.result, 42, "Correct result";
     is $p.status, Kept, "Promise was kept";
@@ -28,6 +30,7 @@ plan 12;
         pass "Promise.start actually runs";
         die "trying";
     });
+    sleep 1;
     dies_ok { $p.result }, "result throws exception";
     is $p.status, Broken, "Promise was broken";
     is $p.cause.message, "trying", "Correct exception stored";
