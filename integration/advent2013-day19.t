@@ -61,17 +61,13 @@ plan 10;
     my $samples_labeled = $samples.map({ Sample =>  $_});
     my $merged = $belt_labeled.merge($samples_labeled);
 
-    my $belts_seen = 0;
-    my $samples_seen = 0;
-    my $out_ok = True;
     my $all_numeric = True;
-
     my %seen;
 
     $merged.tap({ 
-	%seen{$_.key}{$_.value}++;
+	%seen{.key}{.value}++;
 	$all_numeric = False
-	    unless $_.value.isa('Num');
+	    unless .value.isa('Num');
     });
     sleep 5;
 
@@ -82,8 +78,8 @@ plan 10;
     ok $batches_intact, '@values';
     is_deeply %seen.keys.sort, qw<Belt Sample>, 'merge results';
     ok $all_numeric, 'merge results';
-    ok %seen<Sample>.elems >= 3, 'multiple samples';
-    ok %seen<Belt>.elems >= %seen<Sample>.elems, 'more belts than samples';
+    ok +%seen<Sample> >= 3, 'multiple samples';
+    ok +%seen<Belt> >= +%seen<Sample>, 'more belts than samples';
 }
 
 
