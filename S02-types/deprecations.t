@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 31;
 
 # currently deprecated core features
 
@@ -449,7 +449,24 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*OS called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use \$*DISTRO.OS instead.
+Please use \$*DISTRO.name instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
+
+# $*OSVER
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
+{
+    $line = $?LINE; say $*OSVER;
+    say $*OSVER;
+    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation $*OSVER';
+Saw 1 call to deprecated code during execution.
+================================================================================
+\$*OSVER called at:
+  $*PROGRAM_NAME, lines $line,{$line + 1}
+Please use \$*DISTRO.version instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
