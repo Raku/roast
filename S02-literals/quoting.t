@@ -385,7 +385,7 @@ Hello, World
 
 # q:x
 {
-    my $result = $*OS ~~ /:i win32/ ?? "hello\r\n" !! "hello\n";
+    my $result = $*DISTRO.is-win ?? "hello\r\n" !! "hello\n";
     is q:x/echo hello/, $result, "Testing for q:x operator.";
 }
 # utf8

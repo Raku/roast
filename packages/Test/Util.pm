@@ -76,8 +76,7 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     };
 
     my @actual_args;
-    my $sep = q['];
-    $sep = q["] if $*OS ~~ /:i win/;
+    my $sep = $*DISTRO.is-win ?? q["] !! q['];
     for @args {
         if /<['"]>/ {
             die "Command line arguments may not contain single or double quotes";

@@ -26,7 +26,7 @@ my $host = '127.0.0.1';   # or 'localhost' may be friendlier
 
 # To find an free port, list the ports currently in use.
 my ( @ports, $netstat_cmd, $netstat_pat, $received, $expected );
-given $*OS {
+given $*DISTRO.name {
     when any 'linux', 'Linux' {
         $netstat_cmd = "netstat --tcp --all --numeric";
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ };
@@ -66,10 +66,10 @@ if $port >= 65535 {
 diag "{elapsed} Testing on port $port";
 
 
-if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add more valid OS names
+if $*DISTRO.name eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add more valid OS names
 
     my $is-win;
-    $is-win = True if $*OS eq 'MSWin32';
+    $is-win = True if $*DISTRO.name eq 'MSWin32';
     my $runner = $is-win
         ?? "SET PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute} &&"
         !! "PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute}";
@@ -207,7 +207,7 @@ if $*OS eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add m
     nok $elapsed > $toolong, "finished in time #23";
 }
 else {
-    skip "OS '$*OS' shell support not confirmed", 1;
+    skip "OS '{$*DISTRO.name}' shell support not confirmed", 1;
 }
 
 

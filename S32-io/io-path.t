@@ -30,11 +30,11 @@ isa_ok $path.IO,   IO::Handle, 'IO::Path.IO returns IO::Handle';
 #?niecza skip 'is-absolute NYI'
 #?DOES 2
 {
-  if $*OS eq any <Win32 MSWin32 os2 dos symbian NetWare> {
+  if $*DISTRO.name eq any <Win32 MSWin32 os2 dos symbian NetWare> {
       ok "c:\\".path.is-absolute, "Win32ish OS loaded (volume)";
       is "/".path.cleanup, "\\", "Win32ish OS loaded (back slash)"
   }
-  elsif $*OS eq 'cygwin' {
+  elsif $*DISTRO.name eq 'cygwin' {
       ok "c:\\".path.is-absolute, "Cygwin OS loaded (volume)";
       is "/".path.cleanup, "/", "Cygwin OS loaded (forward slash)"
   }

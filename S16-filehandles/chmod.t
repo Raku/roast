@@ -28,7 +28,7 @@ We really need the stat() function in order to test this.
 
 plan 19;
 
-if $*OS eq any <MSWin32 mingw msys cygwin> {
+if $*DISTRO.is-win {
     skip_rest "file tests not fully available on win32";
     exit;
 };

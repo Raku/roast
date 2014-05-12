@@ -163,7 +163,7 @@ is $cygwin.rootdir, '/',  'rootdir is "\\"';
 is $cygwin.updir,   '..',  'updir is ".."';
 
 
-if $*OS !~~ any(<cygwin>) {
+if $*DISTRO.name !~~ any(<cygwin>) {
 	skip_rest 'cygwin on-platform tests'
 }
 else {

@@ -185,7 +185,7 @@ is $Unix.rel2abs('..','/t1/t2/t3'),           '/t1/t2/t3/..',    "rel2abs: ('..'
 is $Unix.rel2abs('../t4','/t1/t2/t3'),        '/t1/t2/t3/../t4', "rel2abs: ('../t4','/t1/t2/t3') -> '/t1/t2/t3/../t4'";
 is $Unix.rel2abs('/t1','/t1/t2/t3'),          '/t1',             "rel2abs: ('/t1','/t1/t2/t3') -> '/t1'";
 
-if $*OS ~~ any(<MSWin32 os2 NetWare symbian dos cygwin>) {
+if $*DISTRO.name ~~ any(<MSWin32 os2 NetWare symbian dos cygwin>) {
 	skip_rest 'Unix on-platform tests'
 }
 else {

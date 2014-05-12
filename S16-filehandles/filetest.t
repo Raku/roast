@@ -31,7 +31,7 @@ ok 't'.IO ~~ :e,             "~~:e returns true on directories";
 ok $*PROGRAM_NAME.IO ~~ :r,  "~~:r returns true on readable files";
 ok $*PROGRAM_NAME.IO ~~ :w,  "~~:w returns true on writable files";
 
-if $*OS eq any <MSWin32 mingw msys cygwin> {
+if $*DISTRO.is-win {
   skip "win32 doesn't have ~~:x", 2;
 } else {
   if $*EXECUTABLE_NAME.IO ~~ :e {
@@ -75,7 +75,7 @@ unlink "empty_file";
 
 #?niecza skip "Asynchronous programming NYI exception generated"
 {
-    if $*OS eq any <MSWin32 mingw msys cygwin> {
+    if $*DISTRO.is-win {
       skip "~~:M/~~:C/~~:A not working on Win32 yet", 9
     }
     else {

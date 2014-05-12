@@ -14,21 +14,21 @@ get a list of osnames that have actually passed tests.
 
 plan 5;
 
-# $?OS is the OS we were compiled in.
-#?rakudo skip 'unimpl $?OS'
-ok $?OS, "We were compiled in '$?OS'";
+# $?DISTRO.name is the OS we were compiled in.
+#?rakudo skip 'unimpl $?DISTRO'
+ok $?DISTRO.name, "We were compiled in '{$?DISTRO.name}'";
 
-# $*OS is the OS we are running
-ok $*OS, "We are running under '$*OS'";
+# $*DISTRO.name is the OS we are running
+ok $*DISTRO.name, "We are running under '{$*DISTRO.name}'";
 
 my $osnames = lc any <darwin linux freebsd MSWin32 mingw msys cygwin solaris haiku openbsd>;
 
 #?rakudo skip 'unimpl $?OS'
-ok $?OS.lc eq $osnames, "we know of the OS we were compiled in";
+ok $?DISTRO.name.lc eq $osnames, "we know of the OS we were compiled in";
 
-ok $*OS.lc eq $osnames, "we know of the OS we are running under";
+ok $*DISTRO.name.lc eq $osnames, "we know of the OS we are running under";
 
-# like $*OS, this is tested in perlver.t but that test is not included
-ok $*OSVER, '$*OSVER is present';
+# this is tested in perlver.t but that test is not included
+ok $*DISTRO.version, '$*DISTRO.version is present';
 
 # vim: ft=perl6

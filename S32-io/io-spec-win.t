@@ -291,7 +291,7 @@ is $win32.rootdir, '\\',  'rootdir is "\\"';
 is $win32.updir,   '..',  'updir is ".."';
 
 
-if $*OS !~~ any(<MSWin32 NetWare symbian os2 dos>) {
+if $*DISTRO.name !~~ any(<MSWin32 NetWare symbian os2 dos>) {
 	skip_rest 'Win32ish on-platform tests'
 }
 else {
