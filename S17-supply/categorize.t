@@ -6,7 +6,6 @@ use Test::Tap;
 
 plan 173;
 
-#?rakudo.jvm todo 3 "D: doesn't work in signatures"
 dies_ok { Supply.categorize( {...}  ) }, 'can not be called as a class method';
 dies_ok { Supply.categorize( {a=>1} ) }, 'can not be called as a class method';
 dies_ok { Supply.categorize( [<a>]  ) }, 'can not be called as a class method';
