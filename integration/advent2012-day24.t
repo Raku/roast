@@ -46,7 +46,7 @@ my $cal;
     MAIN-ish(:year(2012), :month(12));
 }
 
-is $cal, q:to"END-CAL".subst(/\r/, '', :g);
+is $cal, q:to"END-CAL".subst(/\r/, '', :g), 'calendar';
        December 2012    
     Su Mo Tu We Th Fr Sa
                        1 
