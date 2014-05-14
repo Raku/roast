@@ -13,7 +13,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
     isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
 
-    {
+#?rakudo skip "doesn't work or can't test"
+{
         my $delay = 2;
         my $now   = now;
         my $seen;
@@ -23,7 +24,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
           :more( { $seen = now } ),
         ;
         ok $seen && $seen >= $now + $delay, "on-demand sufficiently delayed";
-    }
+}
 
     {
         my $delay = 2;

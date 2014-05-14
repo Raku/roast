@@ -13,7 +13,8 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;
     isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
 
-    {
+#?rakudo skip "doesn't work or can't test"
+{
         my $s = Supply.new;
         tap_ok $s.stable(2),
           [1,4],
@@ -30,7 +31,7 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
                $s.done;
           } ),
           :live;
-    }
+}
 
     {
         my $for   = Supply.for(1..10);
