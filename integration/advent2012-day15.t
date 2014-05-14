@@ -37,7 +37,8 @@ sub log($msg) {
 
 log('hi');
 
-my %scores = (
+# use array rather than hash - guaranteed order
+my @scores = (
     alice => 3,
     bob => 2,
     camelia => 42
@@ -52,7 +53,8 @@ my $output;
 	}
     }
 
-    for %scores.kv -> $player, $score {
+    for @scores {
+        my ($player,$score) = .kv;
 	FIRST say "Score\tPlayer";
 	FIRST say "-----\t------";
 	LAST  say "-----\t------";
@@ -65,7 +67,6 @@ my $output;
 }
 
 #?rakudo.moar todo 'RT121722'
-#?rakudo.jvm todo 'Hash ordering quirk'
 is $output, q:to"END", 'FIRST/NEXT/LAST example';
 Score	Player
 -----	------
