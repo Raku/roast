@@ -103,7 +103,7 @@ my $OUTPUT = "";
 my $FUDGE = "";
 our $PENDING = 0;
 my $ARGS = '';
-my $IS = '\\b(?:is|ok|nok|is_deeply|is_approx|isnt|like|unlike|eval_dies_ok|cmp_ok|isa_ok|use_ok|throws_ok|dies_ok|lives_ok|eval_lives_ok|pass|flunk|throws_like)(?:\\b|_)';
+my $IS = '\\b(?:is|ok|nok|is_deeply|is_approx|isnt|like|unlike|eval_dies_ok|cmp_ok|isa_ok|use_ok|throws_ok|dies_ok|lives_ok|eval_lives_ok|pass|flunk|throws_like|tap_ok)(?:\\b|_)';
 my %DOES;
 my $DOES = 0;
 my $EXIT = $OPTS{'--keep-exit-code'} ? '' : 'exit(1);';
