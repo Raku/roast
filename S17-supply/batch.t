@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 45;
+plan 13;
 
 dies_ok { Supply.batch(1000) }, 'can not be called as a class method';
 

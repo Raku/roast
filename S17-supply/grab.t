@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 23;
+plan 7;
 
 dies_ok { Supply.grab }, 'can not be called as a class method';
 

@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 44;
+plan 12;
 
 dies_ok { Supply.min }, 'can not be called as a class method';
 dies_ok { Supply.new.min(23) }, 'must be code if specified';
@@ -20,5 +20,5 @@ for (ThreadPoolScheduler, CurrentThreadScheduler) {
     tap_ok Supply.for("a".."e","A".."E").min(*.uc), ["a"],
       "ascending alpha works";
     tap_ok Supply.for("E"..."A","e".."a").min(*.lc), [<E D C B A>],
-      "decending alpha works";
+      "descending alpha works";
 }

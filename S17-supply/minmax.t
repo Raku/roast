@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 44;
+plan 12;
 
 dies_ok { Supply.minmax }, 'can not be called as a class method';
 dies_ok { Supply.new.minmax(23) }, 'must be code if specified';

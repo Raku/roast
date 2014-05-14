@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 52;
+plan 12;
 
 for (ThreadPoolScheduler, CurrentThreadScheduler) {
     $*SCHEDULER = .new;

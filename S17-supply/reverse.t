@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 13;
+plan 5;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.reverse }, 'can not be called as a class method';

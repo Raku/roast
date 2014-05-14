@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 89;
+plan 41;
 
 dies_ok { Supply.classify( {...}  ) }, 'can not be called as a class method';
 dies_ok { Supply.classify( {a=>1} ) }, 'can not be called as a class method';

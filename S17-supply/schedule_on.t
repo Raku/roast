@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 17;
+plan 9;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.schedule_on($*SCHEDULER) },

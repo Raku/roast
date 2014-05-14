@@ -1,10 +1,10 @@
-use v6;
+use v5;
 use lib 't/spec/packages';
 
 use Test;
 use Test::Tap;
 
-plan 11;
+plan 3;
 
 dies_ok { Supply.new.interval(1) }, 'can not be called as an instance method';
 

@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 55;
+plan 15;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.new.for(1..10) }, 'can not be called as an instance method';

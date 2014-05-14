@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 53;
+plan 13;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.squish }, 'can not be called as a class method';
