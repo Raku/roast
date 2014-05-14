@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 34;
+plan 37;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -31,6 +31,12 @@ plan 34;
      'numeric bitwise +^ of bigint';
   is +^ 0xdeaddead0000deaddead0000dead, -0xdeaddead0000deaddead0000deae,
      'numeric bitwise negation';
+
+  # Negative numbers.  These really need more tests for bigint vs sized natives
+  #?rakudo 3 skip 'RT#115966'
+  is (-5 +& -2),(-6), "logical AND of two negative Int is twos complement";
+  is (-7 +| -6),(-5), "logical OR of two negative Int is twos complement";
+  is (-7 +^ -6),( 3), "logical XOR of two negative Int is twos complement";
 
   # string                           
   #?niecza 6 skip 'string bitops'
