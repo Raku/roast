@@ -7,7 +7,7 @@ proto sub tap_ok(|) is export { * }
 multi sub tap_ok (
   $s,
   $expected,
-  $text,
+  $desc,
   :$live = False,
   :&more,
   :&done,
@@ -15,22 +15,25 @@ multi sub tap_ok (
   :$timeout is copy = 5,
   :$sort,
 ) {
-    ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
-    is $s.live, $live, "Supply appears to {'NOT ' unless $live}be live";
+    subtest {
+        plan 5;
+        ok $s ~~ Supply, "{$s.^name} appears to be doing Supply";
+        is $s.live, $live, "Supply appears to {'NOT ' unless $live}be live";
 
-    my @res;
-    my $done;
-    isa_ok $s.tap(
-             { more() if &more; @res.push($_) },
-      :done( { done() if &done; $done = True } ),
-    ), Tap, "$text got a tap";
-    after-tap() if &after-tap;
+        my @res;
+        my $done;
+        isa_ok $s.tap(
+                 { more() if &more; @res.push($_) },
+          :done( { done() if &done; $done = True } ),
+        ), Tap, "$desc got a tap";
+        after-tap() if &after-tap;
 
-    $timeout *= 10;
-    for ^$timeout { last if $done or $s.done; sleep .1 }
-    ok $done, "$text was really done";
-    @res .= sort if $sort;
-    is_deeply @res, $expected, $text;
+        $timeout *= 10;
+        for ^$timeout { last if $done or $s.done; sleep .1 }
+        ok $done, "$desc was really done";
+        @res .= sort if $sort;
+        is_deeply @res, $expected, $desc;
+    }, $desc;
 }
 
 =begin pod
@@ -67,15 +70,17 @@ This module is for Supply test code.
 =head2 tap_ok( $s, [$result], "comment" )
 
 Takes 3 positional parameters: the C<Supply> to be tested, an array with the
-expected values, and a comment to describe the test.  Good for B<5> tests.
+expected values, and a comment to describe the test.
 
-First tests whether the first positional is a Supply.  Then checks whether
-the Supply is live or on demand with what is expected.  Then attempts to put a
-C<.tap> on the Supply and checks whether a Tap was returned.  Then runs any
-code specified to be run after the tap.  Then waits for the Supply to be
-C<done>, or until the timeout has passed.  Emits a fail if the timeout has
-passed.  Then sorts the values as received from the Supply if so indicated.
-Then tests the values received.
+Performs the following actions in a C<subtest>:
+- checks whether the first positional is a Supply.
+- checks whether the Supply is live or on demand with what is expected.
+- attempts to put a C<.tap> on the Supply and whether a Tap was returned.
+- runs any code specified to be run after the tap.
+- waits for the Supply to be C<done>, or until the timeout has passed.
+- emits a fail if the timeout has passed.
+- sorts the values as received from the Supply if so indicated.
+- tests the values received.
 
 Takes optional named parameters:
 
