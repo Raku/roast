@@ -4,7 +4,7 @@ use Test;
 
 # Mostly copied from Perl 5.8.4 s t/op/bop.t
 
-plan 33;
+plan 34;
 
 # test the bit operators '&', '|', '^', '+<', and '+>'
 
@@ -61,6 +61,8 @@ plan 33;
   is( 32 +> 1,            16,     'shift one bit right' );
   is( 257 +< 7,           32896,  'shift seven bits left' );
   is( 33023 +> 7,         257,    'shift seven bits right' );
+  # RT #115958
+  is (-4..-1 X+> 1..3), (-2,-1,-1,-2,-1 xx 8), "right shift is 2s complement";
 
   is 0xdeaddead0000deaddead0000dead +< 4, 0xdeaddead0000deaddead0000dead0, 'shift bigint 4 bits left';
   is 0xdeaddead0000deaddead0000dead +> 4, 0xdeaddead0000deaddead0000dea, 'shift bigint 4 bits right';
