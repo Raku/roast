@@ -62,7 +62,6 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
 # L<S03/"Changes to Perl 5 operators"/"-> becomes .">
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
 #?pugs skip 'Mu'
-#?rakudo todo "Test probably bogus now that Pair.key is no longer a left value"
 {
     # (A => (B => Mu)) => (C => Mu))
     # ((A B) C)
