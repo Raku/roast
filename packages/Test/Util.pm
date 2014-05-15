@@ -119,39 +119,42 @@ sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
 
 
 sub throws_like($code, $ex_type, *%matcher) is export {
-    my $msg;
-    if $code ~~ Callable {
-        $msg = 'code dies';
-        $code()
-    } else {
-        $msg = "'$code' died";
-        EVAL $code;
-    }
-    ok 0, $msg;
-    skip 'Code did not die, can not check exception', 1 + %matcher.elems;
-    CATCH {
-        default {
-            ok 1, $msg;
-            my $type_ok = $_ ~~ $ex_type;
-            ok $type_ok , "right exception type ({$ex_type.^name})";
-            if $type_ok {
-                for %matcher.kv -> $k, $v {
-                    my $got = $_."$k"();
-                    my $ok = $got ~~ $v,;
-                    ok $ok, ".$k matches {$v.defined ?? $v !! $v.gist}";
-                    unless $ok {
-                        diag "Got:      $got\n"
-                            ~"Expected: $v";
+    subtest {
+        plan 2 + %matcher.keys;
+        my $msg;
+        if $code ~~ Callable {
+            $msg = 'code dies';
+            $code()
+        } else {
+            $msg = "'$code' died";
+            EVAL $code;
+        }
+        ok 0, $msg;
+        skip 'Code did not die, can not check exception', 1 + %matcher.elems;
+        CATCH {
+            default {
+                ok 1, $msg;
+                my $type_ok = $_ ~~ $ex_type;
+                ok $type_ok , "right exception type ({$ex_type.^name})";
+                if $type_ok {
+                    for %matcher.kv -> $k, $v {
+                        my $got = $_."$k"();
+                        my $ok = $got ~~ $v,;
+                        ok $ok, ".$k matches {$v.defined ?? $v !! $v.gist}";
+                        unless $ok {
+                            diag "Got:      $got\n"
+                                ~"Expected: $v";
+                        }
                     }
+                } else {
+                    diag "Got:      {$_.WHAT.gist}\n"
+                        ~"Expected: {$ex_type.gist}";
+                    diag "Exception message: $_.message()";
+                    skip 'wrong exception type', %matcher.elems;
                 }
-            } else {
-                diag "Got:      {$_.WHAT.gist}\n"
-                    ~"Expected: {$ex_type.gist}";
-                diag "Exception message: $_.message()";
-                skip 'wrong exception type', %matcher.elems;
             }
         }
-    }
+    }, "did we throws_like {$ex_type.^name}?";
 }
 
 =begin pod
