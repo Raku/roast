@@ -66,8 +66,8 @@ sub showkv($x) {
     lives_ok { $b<carter>-- }, "Can -- an element with value 1";
     nok $b<carter>:exists, "... and it goes away";
     #?niecza todo
-    dies_ok { $b<farve>-- }, "Cannot -- an element that doesn't exist";
-    nok $b<farve>:exists, "... and everything is still okay";
+    is $b<farve>--, 0, "Can -- an element that doesn't exist";
+    nok $b<farve>:exists, "... but it doesn't create it";
 }
 
 {
