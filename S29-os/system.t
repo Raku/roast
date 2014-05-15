@@ -9,8 +9,8 @@ plan 5;
 my $res;
 
 $res = run($*EXECUTABLE_NAME,'-e1');
-#?rakudo.jvm todo "depends on rakudo being installed"
-#?rakudo.moar todo "depends on rakudo being installed"
+#?rakudo.jvm skip "not reliable: depends on rakudo being installed"
+#?rakudo.moar skip "not reliable: depends on rakudo being installed"
 ok($res,"run() to an existing program does not die (and returns something true)");
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
@@ -24,7 +24,7 @@ my $cwd;
 BEGIN { $cwd = $*DISTRO.is-win ?? 'cd' !! 'pwd' };
 #?pugs skip 'qqx'
 ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
-#?rakudo skip 'run() broken (and test questionable'
+#?rakudo skip 'run() broken (and test questionable)'
 ok((run("dir", "t") != BEGIN { run("dir", "t") } ), 'run() is affected by chdir()');
 
 # vim: ft=perl6
