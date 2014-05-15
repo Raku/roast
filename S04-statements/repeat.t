@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 21;
+plan 19;
 
 # L<S04/The C<repeat> statement/"more Pascal-like repeat loop">
 

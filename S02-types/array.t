@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 99;
+plan 93;
 
 #L<S02/Mutable types/Array>
 

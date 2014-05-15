@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 16;
+plan 12;
 
 # L<S12/Private methods/"Private methods are declared using">
 

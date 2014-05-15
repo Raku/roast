@@ -4,7 +4,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 144;
+plan 140;
 
 {
     my $range = 2..6;

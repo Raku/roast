@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 12;
 
 # L<S02/Names and Variables/special variables of Perl 5 are going away>
 

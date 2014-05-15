@@ -4,7 +4,7 @@ use lib 't/spec/packages';
 use Test::Util;
 
 use Test;
-plan 10;
+plan 5;
 
 # editorial note:
 # macros in this file have been named after 20th-century physicists.
@@ -67,7 +67,6 @@ plan 10;
 }
 
 { # unquotes must evaluate to ASTs
-    #?does 5
     throws_like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
                 X::TypeCheck::Splice,
                 got      => Str,

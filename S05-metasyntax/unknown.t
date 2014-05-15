@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 11;
 
 # L<S05/Simplified lexical parsing of patterns/not all non-identifier glyphs are currently meaningful as metasyntax>
 

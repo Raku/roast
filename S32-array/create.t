@@ -1,5 +1,6 @@
 use v6;
 use Test;
+plan 6;
 
 # L<S32::Containers/"Array"/"=item ">
 
@@ -8,8 +9,6 @@ use Test;
 built-in "Array" tests
 
 =end pod
-
-plan 8;
 
 my $array_obj = Array.new(4, 5, 6);
 is($array_obj.WHAT.gist, Array.gist, 'Creating a new list object with new works.');

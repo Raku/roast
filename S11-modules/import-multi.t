@@ -3,7 +3,7 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 19;
+plan 17;
 
 # L<S11/Importing without loading>
 

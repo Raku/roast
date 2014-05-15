@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 140;
 
 # L<S05/Substitution/>
 
