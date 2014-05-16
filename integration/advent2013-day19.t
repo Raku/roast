@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 10;
+plan 4;
 
 #?rakudo.parrot skip 'no implementation of supply'
 {
@@ -45,14 +45,8 @@ plan 10;
 #?rakudo.parrot skip 'no implementation of supply'
 #?rakudo.moar skip 'Supply.interval on moar'
 {
-    my $n_batches = 0;
-    my $batches_intact = True;
-
     my $belt_raw = Supply.interval(.1).map({ rand xx 20 });
     my $belt_avg = $belt_raw.map(sub (@values) {
-	$n_batches++;
-	$batches_intact = False
-	    unless @values == 20;
 	([+] @values) / @values
     });
 
@@ -60,26 +54,11 @@ plan 10;
     my $samples = Supply.interval(.5).map({ rand });
     my $samples_labeled = $samples.map({ Sample =>  $_});
     my $merged = $belt_labeled.merge($samples_labeled);
-
-    my $all_numeric = True;
-    my %seen;
-
-    $merged.tap({ 
-	%seen{.key}{.value}++;
-	$all_numeric = False
-	    unless .value.isa('Num');
-    });
-    sleep 5;
+## todo: use Test::Tap tap_ok
+##    $merged.tap(&say);
 
     $belt_raw.done;
     $samples.done;
-
-    ok $n_batches, '@values';
-    ok $batches_intact, '@values';
-    is_deeply %seen.keys.sort, qw<Belt Sample>, 'merge results';
-    ok $all_numeric, 'merge results';
-    ok +%seen<Sample> >= 3, 'multiple samples';
-    ok +%seen<Belt> >= +%seen<Sample>, 'more belts than samples';
 }
 
 
