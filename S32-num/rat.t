@@ -306,7 +306,6 @@ is Rat.new(9,33).norm.nude, (3, 11), ".norm exists and doesn't hurt matters";
 
 isa_ok 241025348275725.3352, Rat, "241025348275725.3352 is a Rat";
 #?pugs skip 'No such method in class Rat: "&norm"'
-#?rakudo.moar todo 'RT 121527'
 is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yields correct Rat";
 
 #RT #112822
