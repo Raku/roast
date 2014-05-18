@@ -121,14 +121,16 @@ my $s = 'str';
     is($result,4,$test);
 }
 
-sub add_in_perl5 ($x, $y) {
-    use v5;
-    $x + $y;
+#?rakudo 2 skip 'v5 is not in core (yet)'
+{
+    sub add_in_perl5 ($x, $y) {
+        use v5;
+        $x + $y;
+    }
+
+    eval_lives_ok("{use v5;}", "RT #77596 - use v5 in a block lives");
+
+    is(add_in_perl5(42, 42), 84, 'Defining subroutines with "use v5" blocks');
 }
-
-eval_lives_ok("{use v5;}", "RT #77596 - use v5 in a block lives");
-
-is(add_in_perl5(42, 42), 84, 'Defining subroutines with "use v5" blocks');
-
 
 # vim: ft=perl6
