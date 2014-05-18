@@ -220,7 +220,6 @@ is sprintf('%d %1$x %1$o', 12),    '12 c 14',  'positional argument specifier $'
 # RT 117547
 is sprintf('%10s', "☃" x 3), '       ☃☃☃', 'multi-byte characters are counted correctly for %Ns strings';
 
-#?rakudo.moar todo 'RT 118601'
 is sprintf("%x %x", 301281685344656640, 301281685344656669), '42e5e18b84c9d00 42e5e18b84c9d1d',   'RT 118601';
 is sprintf("%d", 42**20),                                    '291733167875766667063796853374976', 'RT 118253';
 is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 21, 21, 21],        'RT 117547';
