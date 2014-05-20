@@ -62,14 +62,6 @@ is substr(|@args), 'fries';
 my %details = :year(1969), :month(7), :day(16),
     :hour(20), :minute(17);
 
-class DateTime {
-    has $.year;
-    has $.month;
-    has $.day;
-    has $.hour;
-    has $.minute;
-}
-
 my $moonlanding = DateTime.new( |%details );
 
 is $moonlanding.year, 1969, 'moonlanding year';
