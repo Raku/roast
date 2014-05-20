@@ -1,9 +1,6 @@
 use v6;
-use lib 't/spec/packages';
 
 use Test;
-use Test::Util;
-
 plan 23;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"

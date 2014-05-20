@@ -1,7 +1,5 @@
 use v6;
 use Test;
-use lib 't/spec/packages';
-use Test::Util;
 plan 16;
 
 # L<S11/Importing without loading>

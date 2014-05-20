@@ -18,8 +18,6 @@ eval_dies_ok 'my $f!ao = "beh";', "normal varnames can't have ! in their name";
 eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their names either";
 
 {
-    use lib 't/spec/packages';
-    use Test::Util;
     throws_like "my Int a = 10;", X::Syntax::Malformed, message => / sigilless /;
     throws_like "my Int a;", X::Syntax::Malformed, message => / sigilless /;
     throws_like "my a = 10;", X::Syntax::Malformed, message => / sigilless /;

@@ -131,8 +131,6 @@ plan 19;
 #?pugs skip 'Test Util parsefail'
 #?DOES 3
 {
-    use lib "t/spec/packages";
-    use Test::Util;
     throws_like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';
 }
 

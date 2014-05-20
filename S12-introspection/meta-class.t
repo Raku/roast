@@ -45,8 +45,6 @@ eval_lives_ok "True.HOW.say", "can output the .gist of a .HOW";
 
 # RT #114130
 {
-    use lib "t/spec/packages";
-    use Test::Util;
     throws_like 'Any.HOW(Foo)', X::Syntax::Argument::MOPMacro;
 }
 

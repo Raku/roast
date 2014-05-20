@@ -1,7 +1,5 @@
 use v6;
 use Test;
-use lib 't/spec/packages';
-use Test::Util;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;

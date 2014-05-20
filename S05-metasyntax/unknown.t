@@ -35,8 +35,6 @@ lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 #?niecza skip "throws_like"
 #?DOES 3
 {
-    use lib 't/spec/packages';
-    use Test::Util;
     throws_like '$_ = "0"; s/-/1/', X::Syntax::Regex::UnrecognizedMetachar, metachar => '-';
 }
 

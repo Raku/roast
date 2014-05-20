@@ -420,9 +420,6 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
 #?niecza skip 'Unable to resolve method postcircumfix:<( )> in type Any'
 #?DOES 3
 {
-    use lib "t/spec/packages";
-    use Test::Util;
-
     $_ = "foo"; s[f] = 'bar';
     is $_, "baroo", 's[f] is parsed as a substitution op';
     throws_like q{$_ = "foo"; s[] = "bar";}, X::Syntax::Regex::NullRegex;

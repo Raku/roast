@@ -341,8 +341,6 @@ my @array2 = ("test", 1, Mu);
 #?pugs skip 'Test Util parsefail'
 #?DOES 8
 {
-    use lib "t/spec/packages";
-    use Test::Util;
     throws_like 'my @a = 1..*; @a[Inf] = "dog"', X::Item, index => Inf, aggregate => 1..*;
     throws_like 'my @a = 1..*; @a[NaN] = "cat"', X::Item, index => NaN, aggregate => 1..*;
 }
