@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 159;
+plan 167;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -343,20 +343,32 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is showset((@a, %x).Set), "Now Paradise a b cross-handed set the was way", "Method .Set works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs NYI'
-#?niecza skip '.total/.minpairs/.maxpairs NYI'
+#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
+#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $s = <a b b c c c d d d d>.Set;
     is $s.total, 4, '.total gives sum of values (non-empty)';
     is +$s, 4, '+$set gives sum of values (non-empty)';
     is $s.minpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
     is $s.maxpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
+    is $s.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+      '.fmt(%s) works (non-empty)';
+    is $s.fmt('%s',','), "a,b,c,d",
+      '.fmt(%s,sep) works (non-empty)';
+    is $s.fmt('%s foo %s'), "a foo True\nb foo True\nc foo True\nd foo True",
+      '.fmt(%s%s) works (non-empty)';
+    is $s.fmt('%s,%s',':'), "a,True:b,True:c,True:d,True",
+      '.fmt(%s%s,sep) works (non-empty)';
 
     my $e = ().Set;
     is $e.total, 0, '.total gives sum of values (empty)';
     is +$e, 0, '+$set gives sum of values (empty)';
     is $e.minpairs, (), '.minpairs works (empty)';
     is $e.maxpairs, (), '.maxpairs works (empty)';
+    is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
+    is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
+    is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
+    is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 169;
+plan 177;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -350,14 +350,22 @@ sub showkv($x) {
        "Method .Mix works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs NYI'
-#?niecza skip '.total/.minpairs/.maxpairs NYI'
+#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
+#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).Mix;
     is $m1.total, 11, '.total gives sum of values (non-empty) 11';
     is +$m1, 11, '+$set gives sum of values (non-empty) 11';
     is $m1.minpairs, [a=>1.1], '.minpairs works (non-empty) 11';
     is $m1.maxpairs, [d=>4.4], '.maxpairs works (non-empty) 11';
+    is $m1.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+      '.fmt(%s) works (non-empty 11)';
+    is $m1.fmt('%s',','), "a,b,c,d",
+      '.fmt(%s,sep) works (non-empty 11)';
+    is $m1.fmt('%s foo %s'), "a foo 1.1\nb foo 2.2\nc foo 3.3\nd foo 4.4",
+      '.fmt(%s%s) works (non-empty 11)';
+    is $m1.fmt('%s,%s',':'), "a,1.1:b,2.2:c,3.3:d,4.4",
+      '.fmt(%s%s,sep) works (non-empty 11)';
 
     my $m2 = (a => 1.1, b => 1.1, c => 3.3, d => 3.3).Mix;
     is $m2.total, 8.8, '.total gives sum of values (non-empty) 8.8';
@@ -376,6 +384,10 @@ sub showkv($x) {
     is +$e, 0, '+$mix gives sum of values (empty)';
     is $e.minpairs, (), '.minpairs works (empty)';
     is $e.maxpairs, (), '.maxpairs works (empty)';
+    is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
+    is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
+    is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
+    is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 242;
+plan 250;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -524,14 +524,22 @@ sub showkv($x) {
        "Method .BagHash works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs NYI'
-#?niecza skip '.total/.minpairs/.maxpairs NYI'
+#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
+#?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.BagHash;
     is $b1.total, 10, '.total gives sum of values (non-empty) 10';
     is +$b1, 10, '+$bag gives sum of values (non-empty) 10';
     is $b1.minpairs, [a=>1], '.minpairs works (non-empty) 10';
     is $b1.maxpairs, [d=>4], '.maxpairs works (non-empty) 10';
+    is $b1.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+      '.fmt(%s) works (non-empty 10)';
+    is $b1.fmt('%s',','), "a,b,c,d",
+      '.fmt(%s,sep) works (non-empty 10)';
+    is $b1.fmt('%s foo %s'), "a foo 1\nb foo 2\nc foo 3\nd foo 4",
+      '.fmt(%s%s) works (non-empty 10)';
+    is $b1.fmt('%s,%s',':'), "a,1:b,2:c,3:d,4",
+      '.fmt(%s%s,sep) works (non-empty 10)';
 
     my $b2 = <a b c c c d d d>.BagHash;
     is $b2.total, 8, '.total gives sum of values (non-empty) 8';
@@ -550,6 +558,8 @@ sub showkv($x) {
     is +$e, 0, '+$bag gives sum of values (empty)';
     is $e.minpairs, (), '.minpairs works (empty)';
     is $e.maxpairs, (), '.maxpairs works (empty)';
+    is $e.fmt('foo %s'), "", '.fmt(%s) works (empty)';
+    is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
+    is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
+    is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
 }
-
-# vim: ft=perl6
