@@ -218,13 +218,13 @@ is DateTime.new('2009-12-31T22:33:44',
     my $moon-landing = dt    # Although the seconds part is fictional.
        year => 1969, month => 7, day => 20,
        hour => 8, minute => 17, second => 32.4;
-    my $dt = $moon-landing.truncated-to(second);
+    my $dt = $moon-landing.truncated-to('second');
     is $dt.second, 32, 'DateTime.truncated-to(second)';
-    $dt = $moon-landing.truncated-to(minute);
+    $dt = $moon-landing.truncated-to('minute');
     is ~$dt, '1969-07-20T08:17:00Z', 'DateTime.truncated-to(minute)';
-    $dt = $moon-landing.truncated-to(hour);
+    $dt = $moon-landing.truncated-to('hour');
     is ~$dt, '1969-07-20T08:00:00Z', 'DateTime.truncated-to(hour)';
-    $dt = $moon-landing.truncated-to(day);
+    $dt = $moon-landing.truncated-to('day');
     is ~$dt, '1969-07-20T00:00:00Z', 'DateTime.truncate-to(day)';
 }
 
@@ -398,8 +398,8 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
     isa_ok ds('2005-02-04T15:25:00Z').hour, Int, 'ds(Str).hour isa Int';
     isa_ok dt.in-timezone(60*60).year, Int, 'dt.in-timezone(Int).year isa Int';
     isa_ok dt.in-timezone(60*60).hour, Int, 'dt.in-timezone(Int).hour isa Int';
-    isa_ok dt.truncated-to(week).year, Int, 'dt.truncated-to(week).year isa Int';
-    isa_ok dt.truncated-to(week).hour, Int, 'dt.truncated-to(week).hour isa Int';
+    isa_ok dt.truncated-to('week').year, Int, 'dt.truncated-to(week).year isa Int';
+    isa_ok dt.truncated-to('week').hour, Int, 'dt.truncated-to(week).hour isa Int';
     isa_ok DateTime.now.year, Int, 'DateTime.now.year isa Int';
     isa_ok DateTime.now.hour, Int, 'DateTime.now.hour isa Int';
 }
@@ -407,171 +407,171 @@ is dt(timezone => 3661).offset, 3661, 'DateTime.offset (1 hour, 1 minute, 1 seco
 is DateTime.now.Date, Date.today, 'coercion to Date';
 
 {
-    is ds('2013-12-23T12:34:36Z').delta(1, second),
+    is ds('2013-12-23T12:34:36Z').later(second => 1),
        ds('2013-12-23T12:34:37Z'),
        'adding 1 second';
 
-    is ds('2013-12-23T12:34:36Z').delta(10, seconds),
+    is ds('2013-12-23T12:34:36Z').later(seconds => 10),
        ds('2013-12-23T12:34:46Z'),
        'adding 10 seconds';
 
-    is ds('2013-12-23T12:34:56Z').delta(14, seconds),
+    is ds('2013-12-23T12:34:56Z').later(seconds => 14),
        ds('2013-12-23T12:35:10Z'),
        'adding 14 seconds, overflowing to minutes';
 
-    is ds('2013-12-23T12:59:56Z').delta(74, seconds),
+    is ds('2013-12-23T12:59:56Z').later(seconds => 74),
        ds('2013-12-23T13:01:10Z'),
        'adding 74 seconds, overflowing to hours';
 
-    is ds('2013-12-23T23:59:59Z').delta(1, second),
+    is ds('2013-12-23T23:59:59Z').later(second => 1),
        ds('2013-12-24T00:00:00Z'),
        'adding 1 second, overflowing to days';
 
-    is ds('2013-12-31T23:59:59Z').delta(1, second),
+    is ds('2013-12-31T23:59:59Z').later(second => 1),
        ds('2014-01-01T00:00:00Z'),
        'adding 1 second, overflowing to years';
 
-    is ds('2012-06-30T23:59:59Z').delta(1, second),
+    is ds('2012-06-30T23:59:59Z').later(second => 1),
        ds('2012-06-30T23:59:60Z'),
        'delting to a leap second';
 
-    is ds('2008-12-31T23:59:60Z').delta(1, second),
+    is ds('2008-12-31T23:59:60Z').later(second => 1),
        ds('2009-01-01T00:00:00Z'),
        'delting from a leap second';
 
-    is ds('2013-12-23T12:34:36Z').delta(1, minute),
+    is ds('2013-12-23T12:34:36Z').later(minute => 1),
        ds('2013-12-23T12:35:36Z'),
        'adding 1 minute';
 
-    is ds('2013-12-23T12:34:36Z').delta(10, minutes),
+    is ds('2013-12-23T12:34:36Z').later(minutes => 10),
        ds('2013-12-23T12:44:36Z'),
        'adding 10 minutes';
 
-    is ds('2013-12-23T12:56:34Z').delta(14, minutes),
+    is ds('2013-12-23T12:56:34Z').later(minutes => 14),
        ds('2013-12-23T13:10:34Z'),
        'adding 14 minutes, overflowing to hours';
 
-    is ds('2013-12-23T12:34:36Z').delta(1, hour),
+    is ds('2013-12-23T12:34:36Z').later(hour => 1),
        ds('2013-12-23T13:34:36Z'),
        'adding 1 hour';
 
-    is ds('2013-12-23T12:34:36Z').delta(10, hours),
+    is ds('2013-12-23T12:34:36Z').later(hours => 10),
        ds('2013-12-23T22:34:36Z'),
        'adding 10 hours';
 
-    is ds('2013-12-23T12:56:34Z').delta(14, hours),
+    is ds('2013-12-23T12:56:34Z').later(hours => 14),
        ds('2013-12-24T02:56:34Z'),
        'adding 14 horus, overflowing to days';
 
-    is ds('2013-12-23T12:34:36Z').delta(1, day),
+    is ds('2013-12-23T12:34:36Z').later(day => 1),
        ds('2013-12-24T12:34:36Z'),
        'adding 1 day';
 
-    is ds('2014-01-31T12:34:36Z').delta(1, day),
+    is ds('2014-01-31T12:34:36Z').later(day => 1),
        ds('2014-02-01T12:34:36Z'),
        'adding 1 day, overflowing to February';
 
-    is ds('2014-02-28T12:56:34Z').delta(2, days),
+    is ds('2014-02-28T12:56:34Z').later(days => 2),
        ds('2014-03-02T12:56:34Z'),
        'adding 2 days, overflowing to March';
 
-    is ds('2008-12-31T23:59:60Z').delta(1, day),
+    is ds('2008-12-31T23:59:60Z').later(day => 1),
        ds('2009-01-02T00:00:00Z'),
        'adding a day to a leap second';
 
-    is ds('1972-12-31T23:59:60Z').delta(1, year),
+    is ds('1972-12-31T23:59:60Z').later(year => 1),
        ds('1973-12-31T23:59:60Z'),
        'adding a year to a leap second, landing on another leap second';
 
-    is ds('2013-12-23T12:34:36Z').delta(1, week),
+    is ds('2013-12-23T12:34:36Z').later(week => 1),
        ds('2013-12-30T12:34:36Z'),
        'adding 1 week';
 
-    is ds('2014-01-31T12:34:36Z').delta(1, week),
+    is ds('2014-01-31T12:34:36Z').later(week => 1),
        ds('2014-02-07T12:34:36Z'),
        'adding 1 week, overflowing to February';
 
-    is ds('2014-02-28T12:56:34Z').delta(2, weeks),
+    is ds('2014-02-28T12:56:34Z').later(weeks => 2),
        ds('2014-03-14T12:56:34Z'),
        'adding 2 weeks, overflowing to March';
 
-    is ds('2014-12-30T12:56:34Z').delta(3, weeks),
+    is ds('2014-12-30T12:56:34Z').later(weeks => 3),
        ds('2015-01-20T12:56:34Z'),
        'adding 3 weeks, overflowing to years';
 
-    is ds('2013-12-23T12:34:37Z').delta(-1, second),
+    is ds('2013-12-23T12:34:37Z').earlier(second => 1),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 1 second';
 
-    is ds('2013-12-23T12:34:46Z').delta(-10, seconds),
+    is ds('2013-12-23T12:34:46Z').earlier(seconds => 10),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 10 seconds';
 
-    is ds('2013-12-23T12:35:10Z').delta(-14, seconds),
+    is ds('2013-12-23T12:35:10Z').earlier(seconds => 14),
        ds('2013-12-23T12:34:56Z'),
        'subtracting 14 seconds, overflowing to minutes';
 
-    is ds('2013-12-23T13:01:10Z').delta(-74, seconds),
+    is ds('2013-12-23T13:01:10Z').earlier(seconds => 74),
        ds('2013-12-23T12:59:56Z'),
        'subtracting 74 seconds, overflowing to hours';
 
-    is ds('2013-12-24T00:00:00Z').delta(-1, second),
+    is ds('2013-12-24T00:00:00Z').earlier(second => 1),
        ds('2013-12-23T23:59:59Z'),
        'subtracting 1 second, overflowing to days';
 
-    is ds('2014-01-01T00:00:00Z').delta(-1, second),
+    is ds('2014-01-01T00:00:00Z').earlier(second => 1),
        ds('2013-12-31T23:59:59Z'),
        'subtracting 1 second, overflowing to years';
 
-    is ds('2013-12-23T12:35:36Z').delta(-1, minute),
+    is ds('2013-12-23T12:35:36Z').earlier(minute => 1),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 1 minute';
 
-    is ds('2013-12-23T12:44:36Z').delta(-10, minutes),
+    is ds('2013-12-23T12:44:36Z').earlier(minutes => 10),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 10 minutes';
 
-    is ds('2013-12-23T13:10:34Z').delta(-14, minutes),
+    is ds('2013-12-23T13:10:34Z').earlier(minutes => 14),
        ds('2013-12-23T12:56:34Z'),
        'subtracting 14 minutes, overflowing to hours';
 
-    is ds('2013-12-23T13:34:36Z').delta(-1, hour),
+    is ds('2013-12-23T13:34:36Z').earlier(hour => 1),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 1 hour';
 
-    is ds('2013-12-23T22:34:36Z').delta(-10, hours),
+    is ds('2013-12-23T22:34:36Z').earlier(hours => 10),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 10 hours';
 
-    is ds('2013-12-24T02:56:34Z').delta(-14, hours),
+    is ds('2013-12-24T02:56:34Z').earlier(hours => 14),
        ds('2013-12-23T12:56:34Z'),
        'subtracting 14 horus, overflowing to days';
 
-    is ds('2013-12-24T12:34:36Z').delta(-1, day),
+    is ds('2013-12-24T12:34:36Z').earlier(day => 1),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 1 day';
 
-    is ds('2014-02-01T12:34:36Z').delta(-1, day),
+    is ds('2014-02-01T12:34:36Z').earlier(day => 1),
        ds('2014-01-31T12:34:36Z'),
        'subtracting 1 day, overflowing to February';
 
-    is ds('2014-03-02T12:56:34Z').delta(-2, days),
+    is ds('2014-03-02T12:56:34Z').earlier(days => 2),
        ds('2014-02-28T12:56:34Z'),
        'subtracting 2 days, overflowing to March';
 
-    is ds('2013-12-30T12:34:36Z').delta(-1, week),
+    is ds('2013-12-30T12:34:36Z').earlier(week => 1),
        ds('2013-12-23T12:34:36Z'),
        'subtracting 1 week';
 
-    is ds('2014-02-07T12:34:36Z').delta(-1, week),
+    is ds('2014-02-07T12:34:36Z').earlier(week => 1),
        ds('2014-01-31T12:34:36Z'),
        'subtracting 1 week, overflowing to February';
 
-    is ds('2014-03-14T12:56:34Z').delta(-2, weeks),
+    is ds('2014-03-14T12:56:34Z').earlier(weeks => 2),
        ds('2014-02-28T12:56:34Z'),
        'subtracting 2 weeks, overflowing to March';
 
-    is ds('2015-01-20T12:56:34Z').delta(-3, weeks),
+    is ds('2015-01-20T12:56:34Z').earlier(weeks => 3),
        ds('2014-12-30T12:56:34Z'),
        'subtracting 3 weeks, overflowing to years';
 }

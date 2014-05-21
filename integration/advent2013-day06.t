@@ -41,7 +41,7 @@ class DateSpec {
         return $d;
     }
     method next(Date $d = Date.today) {
-        my $month-start = $d.truncated-to(month);
+        my $month-start = $d.truncated-to('month');
         my $candidate   = $.based-on($month-start);
         if $candidate ge $d {
             return $candidate;

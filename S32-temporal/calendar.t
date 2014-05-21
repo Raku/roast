@@ -19,29 +19,29 @@ sub dtim($year, $month, $day) {
 # L<S32::Temporal/C<DateTime>/'truncated-to'>
 # --------------------------------------------------------------------
 
-is ~date(1969, 7, 20).truncated-to(month), '1969-07-01', 'Date.truncated-to(month)';
-is ~dtim(1969, 7, 20).truncated-to(month), '1969-07-01T00:00:00Z', 'DateTime.truncated-to(month)';
-is ~date(1969, 7, 20).truncated-to(year), '1969-01-01', 'Date.truncated-to(year)';
-is ~dtim(1969, 7, 20).truncated-to(year), '1969-01-01T00:00:00Z', 'DateTime.truncated-to(year)';
+is ~date(1969, 7, 20).truncated-to('month'), '1969-07-01', 'Date.truncated-to(month)';
+is ~dtim(1969, 7, 20).truncated-to('month'), '1969-07-01T00:00:00Z', 'DateTime.truncated-to(month)';
+is ~date(1969, 7, 20).truncated-to('year'), '1969-01-01', 'Date.truncated-to(year)';
+is ~dtim(1969, 7, 20).truncated-to('year'), '1969-01-01T00:00:00Z', 'DateTime.truncated-to(year)';
 
-is ~date(1999, 1, 18).truncated-to(week), '1999-01-18', 'Date.truncated-to(week) (no change in day)';
-is ~date(1999, 1, 19).truncated-to(week), '1999-01-18', 'Date.truncated-to(week) (short jump)';
-is ~date(1999, 1, 17).truncated-to(week), '1999-01-11', 'Date.truncated-to(week) (long jump)';
-is ~dtim(1999, 1, 17).truncated-to(week), '1999-01-11T00:00:00Z', 'DateTime.truncated-to(week) (long jump)';
-is ~date(1999, 4,  2).truncated-to(week), '1999-03-29', 'Date.truncated-to(week) (changing month)';
-is ~date(1999, 1,  3).truncated-to(week), '1998-12-28', 'Date.truncated-to(week) (changing year)';
-is ~dtim(1999, 1,  3).truncated-to(week), '1998-12-28T00:00:00Z', 'DateTime.truncated-to(week) (changing year)';
-is ~date(2000, 3,  1).truncated-to(week), '2000-02-28', 'Date.truncated-to(week) (skipping over Feb 29)';
-is ~dtim(2000, 3,  1).truncated-to(week), '2000-02-28T00:00:00Z', 'DateTime.truncated-to(week) (skipping over Feb 29)';
-is ~date(1988, 3,  3).truncated-to(week), '1988-02-29', 'Date.truncated-to(week) (landing on Feb 29)';
-is ~dtim(1988, 3,  3).truncated-to(week), '1988-02-29T00:00:00Z', 'DateTime.truncated-to(week) (landing on Feb 29)';
+is ~date(1999, 1, 18).truncated-to('week'), '1999-01-18', 'Date.truncated-to(week) (no change in day)';
+is ~date(1999, 1, 19).truncated-to('week'), '1999-01-18', 'Date.truncated-to(week) (short jump)';
+is ~date(1999, 1, 17).truncated-to('week'), '1999-01-11', 'Date.truncated-to(week) (long jump)';
+is ~dtim(1999, 1, 17).truncated-to('week'), '1999-01-11T00:00:00Z', 'DateTime.truncated-to(week) (long jump)';
+is ~date(1999, 4,  2).truncated-to('week'), '1999-03-29', 'Date.truncated-to(week) (changing month)';
+is ~date(1999, 1,  3).truncated-to('week'), '1998-12-28', 'Date.truncated-to(week) (changing year)';
+is ~dtim(1999, 1,  3).truncated-to('week'), '1998-12-28T00:00:00Z', 'DateTime.truncated-to(week) (changing year)';
+is ~date(2000, 3,  1).truncated-to('week'), '2000-02-28', 'Date.truncated-to(week) (skipping over Feb 29)';
+is ~dtim(2000, 3,  1).truncated-to('week'), '2000-02-28T00:00:00Z', 'DateTime.truncated-to(week) (skipping over Feb 29)';
+is ~date(1988, 3,  3).truncated-to('week'), '1988-02-29', 'Date.truncated-to(week) (landing on Feb 29)';
+is ~dtim(1988, 3,  3).truncated-to('week'), '1988-02-29T00:00:00Z', 'DateTime.truncated-to(week) (landing on Feb 29)';
 
 # Verify .gist
 # Example taken from S32 specs documentation.
 #?niecza skip 'Undeclared routine: hour'
 {
     my $dt = DateTime.new('2005-02-01T15:20:35Z');
-    my $truncated = $dt.truncated-to(hour);
+    my $truncated = $dt.truncated-to('hour');
 
     is $truncated.gist, "2005-02-01T15:00:00Z", "validate .gist output";
 }
