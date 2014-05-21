@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 # L<S04/"Loop statements"/redo>
-plan 11;
+plan 12;
 
 {
     my $i = 0;
@@ -111,6 +111,20 @@ plan 11;
 {
     # RT #72442
     eval_dies_ok '{redo}', 'redo without loop construct dies';
+}
+
+{
+    my $x;
+    my $out = '';
+    FOO: for "foo" {
+        $out ~= $_;
+        BAR: for "bar" {
+            $out ~= $_;
+            redo FOO unless $x++
+        }
+    }
+
+    is $out, 'foobarfoobar', 'redoing outer for loop';
 }
 
 # vim: ft=perl6
