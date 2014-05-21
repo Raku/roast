@@ -54,7 +54,6 @@ plan 12;
     );
 }
 
-#?rakudo skip 'next BLOCK'
 #?pugs skip 'next BLOCK'
 {
     my $tracker="err"; 
@@ -74,7 +73,6 @@ plan 12;
     );
 }
 
-#?rakudo skip 'next LOOP'
 #?pugs skip 'next LOOP'
 {
     my $tracker="err"; 

@@ -67,7 +67,6 @@ plan 8;
 }
 
 #?pugs skip 'last LABEL'
-#?rakudo skip 'last LABEL'
 {
     my $var = 0;
     DONE: for (1..2) {
@@ -89,7 +88,6 @@ plan 8;
 }
 
 #?pugs skip 'last LABEL'
-#?rakudo skip 'last LABEL'
 {
     my $var = 0;
     OUT: for (1..2) {
