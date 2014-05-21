@@ -241,6 +241,7 @@ throws_like '1 <=> 2 <=> 3', X::Syntax::NonAssociative, left => '<=>', right => 
 throws_like 'my class A {...}; my grammar B { ... }', X::Package::Stubbed, packages => <A B>;
 
 throws_like 'my sub a { PRE 0  }; a()', X::Phaser::PrePost, phaser => 'PRE', condition => /0/;
+#?rakudo.jvm todo 'RT #121935'
 throws_like 'my sub a { POST 0 }; a()', X::Phaser::PrePost, phaser => 'POST', condition => /0/;
 
 throws_like 'use fatal; my $x = "5 foo" + 8;', X::Str::Numeric, source => '5 foo', pos => 1,
