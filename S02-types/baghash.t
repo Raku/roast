@@ -532,13 +532,13 @@ sub showkv($x) {
     is +$b1, 10, '+$bag gives sum of values (non-empty) 10';
     is $b1.minpairs, [a=>1], '.minpairs works (non-empty) 10';
     is $b1.maxpairs, [d=>4], '.maxpairs works (non-empty) 10';
-    is $b1.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+    is $b1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 10)';
-    is $b1.fmt('%s',','), "a,b,c,d",
+    is $b1.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty 10)';
-    is $b1.fmt('%s foo %s'), "a foo 1\nb foo 2\nc foo 3\nd foo 4",
+    is $b1.fmt('%s foo %s').split("\n").sort, ('a foo 1', 'b foo 2', 'c foo 3', 'd foo 4'),
       '.fmt(%s%s) works (non-empty 10)';
-    is $b1.fmt('%s,%s',':'), "a,1:b,2:c,3:d,4",
+    is $b1.fmt('%s,%s',':').split(':').sort, <a,1 b,2 c,3 d,4>,
       '.fmt(%s%s,sep) works (non-empty 10)';
 
     my $b2 = <a b c c c d d d>.BagHash;

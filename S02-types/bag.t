@@ -401,13 +401,14 @@ sub showkv($x) {
     is +$b1, 10, '+$bag gives sum of values (non-empty 10)';
     is $b1.minpairs, [a=>1], '.minpairs works (non-empty 10)';
     is $b1.maxpairs, [d=>4], '.maxpairs works (non-empty 10)';
-    is $b1.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+    # Bag is unordered according to S02:1476
+    is $b1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 10)';
-    is $b1.fmt('%s',','), "a,b,c,d",
+    is $b1.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty 10)';
-    is $b1.fmt('%s foo %s'), "a foo 1\nb foo 2\nc foo 3\nd foo 4",
+    is $b1.fmt('%s foo %s').split("\n").sort, ('a foo 1', 'b foo 2', 'c foo 3', 'd foo 4'),
       '.fmt(%s%s) works (non-empty 10)';
-    is $b1.fmt('%s,%s',':'), "a,1:b,2:c,3:d,4",
+    is $b1.fmt('%s,%s',':').split(':').sort, <a,1 b,2 c,3 d,4>,
       '.fmt(%s%s,sep) works (non-empty 10)';
 
     my $b2 = <a b c c c d d d>.Bag;
@@ -416,7 +417,7 @@ sub showkv($x) {
     is $b2.minpairs.sort, [a=>1, b=>1], '.minpairs works (non-empty 8)';
     is $b2.maxpairs.sort, [c=>3, d=>3], '.maxpairs works (non-empty 8)';
 
-    my $b2 = <a b c d>.Bag;
+    $b2 = <a b c d>.Bag;
     is $b2.total, 4, '.total gives sum of values (non-empty 4)';
     is +$b2, 4, '+$bag gives sum of values (non-empty 4)';
     is $b2.minpairs.sort,[a=>1,b=>1,c=>1,d=>1], '.minpairs works (non-empty 4)';

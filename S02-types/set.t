@@ -351,13 +351,13 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is +$s, 4, '+$set gives sum of values (non-empty)';
     is $s.minpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.minpairs works (non-empty)';
     is $s.maxpairs.sort,[a=>True,b=>True,c=>True,d=>True], '.maxpairs works (non-empty)';
-    is $s.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+    is $s.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty)';
-    is $s.fmt('%s',','), "a,b,c,d",
+    is $s.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty)';
-    is $s.fmt('%s foo %s'), "a foo True\nb foo True\nc foo True\nd foo True",
+    is $s.fmt('%s foo %s').split("\n").sort, ('a foo True', 'b foo True', 'c foo True', 'd foo True'),
       '.fmt(%s%s) works (non-empty)';
-    is $s.fmt('%s,%s',':'), "a,True:b,True:c,True:d,True",
+    is $s.fmt('%s,%s',':').split(':').sort, <a,True b,True c,True d,True>,
       '.fmt(%s%s,sep) works (non-empty)';
 
     my $e = ().Set;

@@ -358,13 +358,13 @@ sub showkv($x) {
     is +$m1, 11, '+$set gives sum of values (non-empty) 11';
     is $m1.minpairs, [a=>1.1], '.minpairs works (non-empty) 11';
     is $m1.maxpairs, [d=>4.4], '.maxpairs works (non-empty) 11';
-    is $m1.fmt('foo %s'), "foo a\nfoo b\nfoo c\nfoo d",
+    is $m1.fmt('foo %s').split("\n").sort, ('foo a', 'foo b', 'foo c', 'foo d'),
       '.fmt(%s) works (non-empty 11)';
-    is $m1.fmt('%s',','), "a,b,c,d",
+    is $m1.fmt('%s',',').split(',').sort, <a b c d>,
       '.fmt(%s,sep) works (non-empty 11)';
-    is $m1.fmt('%s foo %s'), "a foo 1.1\nb foo 2.2\nc foo 3.3\nd foo 4.4",
+    is $m1.fmt('%s foo %s').split("\n").sort, ('a foo 1.1', 'b foo 2.2', 'c foo 3.3', 'd foo 4.4'),
       '.fmt(%s%s) works (non-empty 11)';
-    is $m1.fmt('%s,%s',':'), "a,1.1:b,2.2:c,3.3:d,4.4",
+    is $m1.fmt('%s,%s',':').split(':').sort, <a,1.1 b,2.2 c,3.3 d,4.4>,
       '.fmt(%s%s,sep) works (non-empty 11)';
 
     my $m2 = (a => 1.1, b => 1.1, c => 3.3, d => 3.3).Mix;
