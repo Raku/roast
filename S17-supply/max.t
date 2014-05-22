@@ -6,6 +6,7 @@ use Test::Tap;
 
 plan 12;
 
+#?rakudo.jvm todo 'QAST::ParamTypeCheck needs to be implemented on jvm'
 dies_ok { Supply.max }, 'can not be called as a class method';
 dies_ok { Supply.new.max(23) }, 'must be code if specified';
 
