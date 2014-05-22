@@ -62,6 +62,8 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
 # L<S03/"Changes to Perl 5 operators"/"-> becomes .">
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
 #?pugs skip 'Mu'
+#?rakudo.parrot 2 todo 'RT #121945'
+#?rakudo.jvm 2 todo 'RT #121945'
 {
     # (A => (B => Mu)) => (C => Mu))
     # ((A B) C)
