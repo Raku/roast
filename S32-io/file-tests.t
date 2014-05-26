@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::IO/IO::FileTests>
 
-plan 30;
+plan 34;
 
 my $existing-file = "tempfile-file-tests";
 my $non-existent-file = "non-existent-file-tests";
@@ -36,11 +36,10 @@ ok $existing-file.IO.f, 'Is normal file';
 isa_ok $existing-file.IO.f, Bool, '.f returns Bool';
 ok $existing-file.IO ~~ :f, 'Is normal file';
 isa_ok $existing-file.IO ~~ :f, Bool, '~~ :f returns Bool';
-# what should happen when this is called on a non-existent file?
 nok $non-existent-file.IO.f, 'Is not a normal file';
-isa_ok $non-existent-file.IO.f, Bool, '.f returns Bool';
-ok $non-existent-file.IO ~~ :!f, 'Is not a normal file';
-isa_ok $non-existent-file.IO ~~ :!f, Bool, '~~ :!f returns Bool';
+throws_like { $non-existent-file.IO.f }, X::IO::DoesNotExist;
+nok $non-existent-file.IO ~~ :f, 'Is not a normal file';
+isa_ok $non-existent-file.IO ~~ :f, Bool, '~~ :!f returns Bool';
 
 ##is empty
 #?niecza skip 'Unable to resolve method s in class IO'
@@ -59,6 +58,11 @@ isa_ok $non-existent-file.IO ~~ :!f, Bool, '~~ :!f returns Bool';
     isa_ok $zero-length-file.IO.s, Int, '.s returns Int';
     is $existing-file.IO.s, 11, 'size of file';
     isa_ok $existing-file.IO.s, Int, '.s returns Int';
+
+    nok $non-existent-file.IO.s, 'Size on non-existent file';
+    throws_like { $non-existent-file.IO.s }, X::IO::DoesNotExist;
+    nok $non-existent-file.IO ~~ :s, 'Is not a normal file';
+    isa_ok $non-existent-file.IO ~~ :s, Bool, '~~ :!s returns Bool';
 }
 
 # clean up
