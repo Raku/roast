@@ -5,6 +5,8 @@ use MONKEY_TYPING;
 
 use Test;
 
+plan 79;
+
 =begin description
 
 Tests the "for" statement
@@ -13,8 +15,6 @@ This attempts to test as many variations of the
 for statement as possible
 
 =end description
-
-plan 78;
 
 ## No foreach
 # L<S04/The C<for> statement/"no foreach statement any more">
@@ -475,7 +475,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     #?pugs todo
     lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
     #?pugs skip 'Cannot cast from VList to VCode'
-    ok rt71268() ~~ (), 'result of "for ^1 {}" is ()';
+    is rt71268(), Nil, 'result of "for ^1 {}" is Nil';
 }
 
 # RT 62478
@@ -525,7 +525,7 @@ lives_ok {
 #?pugs skip 'Cannot cast from VList to VCode'
 {
     sub f() { for ^1 { } };
-    is ~f(), '', 'empty for-loop returns empty list';
+    is f(), Nil, 'for-loop as last statement returns Nil';
 }
 
 # RT #74060
@@ -585,5 +585,11 @@ dies_ok
 
 # RT #89208
 is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
+
+#?pugs skip 'Cannot cast from VList to VCode'
+{
+    sub f() { for 1..2 { } };
+    is f(), Nil, 'for-loop as last statement returns Nil';
+}
 
 # vim: ft=perl6
