@@ -25,53 +25,44 @@ ok !$filename.IO.e, "make sure we don't have a file";
     isa_ok $handle, IO::Handle, 'did we get a handle?';
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 1, 'did we get an event for creating the file';
 
     ok $handle.say( "Hello world" ), 'did the write go ok';
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 1, 'did we NOT get an event for writing to the file';
 
     ok $handle.close, 'did the file close ok';
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 2, 'did we NOT get an event for closing the file';
 
     $handle = open( $filename, :a );
     isa_ok $handle, IO::Handle, 'did we get a handle again?';
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 2, 'did we NOT get an event for opening the file again';
 
     ok $handle.say( "Hello world again" ), 'did the second write work';
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 2, 'did we NOT get an event for writing to the file again';
 
     ok $handle.close, 'did closing the file again work';
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 3, 'did we get an event for closing the file again';
 
     my $content = $filename.IO.slurp;
-    #?rakudo.moar todo 'test results are flapping'
     is $content, "Hello world\nHello world again\n", "was the file written ok";
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 3, 'a slurp should not cause any file events';
 
     unlink $filename;
     ok !$filename.IO.e, "test file removed successfully";
 
     sleep $forawhile;
-    #?rakudo.moar todo 'test results are flapping'
     is +@seen, 4, 'the unlink caused an event';
 
     ok $tap.close, 'could we close the tap';
@@ -80,7 +71,6 @@ ok !$filename.IO.e, "make sure we don't have a file";
     is +@seen.grep( IO::Notification::Change ), +@seen, 'only Change objects';
 
     # a little fragile
-    #?rakudo.moar 2 todo 'test results are flapping'
     is +@seen.grep( { .event ~~ FileRenamed } ), (3|4), 'at least 3 renaming';
     is +@seen.grep( { .event ~~ FileChanged } ), (0|1), 'maybe one changing';
 }
