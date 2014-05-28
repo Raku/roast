@@ -30,7 +30,7 @@ isa_ok $path.IO,   IO::Handle, 'IO::Path.IO returns IO::Handle';
 #?niecza skip 'is-absolute NYI'
 #?DOES 2
 {
-  if $*DISTRO.name eq any <Win32 MSWin32 os2 dos symbian NetWare> {
+  if $*DISTRO.name eq any <win32 mswin32 os2 dos symbian netware> {
       ok "c:\\".path.is-absolute, "Win32ish OS loaded (volume)";
       is "/".path.cleanup, "\\", "Win32ish OS loaded (back slash)"
   }
@@ -43,7 +43,3 @@ isa_ok $path.IO,   IO::Handle, 'IO::Path.IO returns IO::Handle';
       is "/".path.cleanup, "/", "POSIX OS loaded (forward slash)"
   }
 }
-
-
-
-

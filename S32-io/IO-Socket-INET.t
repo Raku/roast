@@ -39,7 +39,7 @@ given $*DISTRO.name {
         $netstat_cmd = "netstat -an -P tcp -f inet";
         $netstat_pat = rx{ [ ^^  .+? '.' (\d+) ' ' .+? ]+ $ }; # same as darwin
     }
-    when 'MSWin32' {
+    when 'mswin32' {
         $netstat_cmd = "netstat -n";
         $netstat_pat = rx{ State .+? [ ^^ .+? ':' (\d+) .+? ]+ $ }; # same as linux
     }
@@ -66,10 +66,10 @@ if $port >= 65535 {
 diag "{elapsed} Testing on port $port";
 
 
-if $*DISTRO.name eq any <linux Linux darwin solaris MSWin32>, 'Mac OS X' { # please add more valid OS names
+if $*DISTRO.name eq any <linux Linux darwin solaris mswin32 macosx> { # please add more valid OS names
 
     my $is-win;
-    $is-win = True if $*DISTRO.name eq 'MSWin32';
+    $is-win = True if $*DISTRO.name eq 'mswin32';
     my $runner = $is-win
         ?? "SET PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute} &&"
         !! "PERL6_BINARY={$*EXECUTABLE_NAME.path.absolute}";
