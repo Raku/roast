@@ -21,7 +21,7 @@ ok $?DISTRO.name, "We were compiled in '{$?DISTRO.name}'";
 # $*DISTRO.name is the OS we are running
 ok $*DISTRO.name, "We are running under '{$*DISTRO.name}'";
 
-my $osnames = lc any <darwin linux freebsd MSWin32 mingw msys cygwin solaris haiku openbsd>;
+my $osnames = lc any <macosx linux freebsd MSWin32 mingw msys cygwin solaris haiku openbsd>;
 
 #?rakudo skip 'unimpl $?OS'
 ok $?DISTRO.name.lc eq $osnames, "we know of the OS we were compiled in";
