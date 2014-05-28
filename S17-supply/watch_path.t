@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 23;
+plan 2;
 
 my $forawhile = 1;
 my $filename = "watch_path_checker";
@@ -11,8 +11,19 @@ END { unlink $filename if $filename }  # make sure we cleanup
 unlink $filename; # in case we missed the cleanup
 ok !$filename.IO.e, "make sure we don't have a file";
 
+given $*DISTRO.name {
+    when "macosx" {
 #?rakudo.jvm skip "file system events NYI?"
-{
+        subtest &macosx, "does watch_path work on Mac OS X";
+    }
+    default {
+        pass "Nothing reliable to test yet";
+    }
+}
+
+#====  specific tests from here
+sub macosx {
+    plan 22;
     my $s = IO::Notification.watch_path('.').grep({.path eq $filename}).uniq,
       'only about our file';
     ok $s ~~ Supply, 'Did we get a Supply?';
