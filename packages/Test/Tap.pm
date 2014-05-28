@@ -12,7 +12,7 @@ multi sub tap_ok (
   :&more,
   :&done,
   :&after-tap,
-  :$timeout is copy = 5,
+  :$timeout is copy = 10,
   :$sort,
 ) {
     subtest {
@@ -108,7 +108,7 @@ By default, does B<not> execute any code.
 
 =item :timeout(50)
 
-Optional timeout specification: defaults to B<5> (seconds).
+Optional timeout specification: defaults to B<10> (seconds).
 
 =item :sort
 
