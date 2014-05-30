@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 167;
+plan 169;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -126,7 +126,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$b, 3, "... with three elements";
     #?rakudo todo "Not properly interpolating"
     #?niecza todo "Losing type in Set"
-    is +$b.grep(Pair), 3, "... all of which are Pairs";
+    is +$b.grep(Enum), 3, "... all of which are Enums";
 }
 
 {
@@ -167,7 +167,7 @@ sub showset($s) { $s.keys.sort.join(' ') }
     isa_ok $s.list.elems, 3, ".list returns 3 things";
     is $s.list.grep(Str).elems, 3, "... all of which are Str";
     isa_ok $s.pairs.elems, 3, ".pairs returns 3 things";
-    is $s.pairs.grep(Pair).elems, 3, "... all of which are Pair";
+    is $s.pairs.grep(Enum).elems, 3, "... all of which are Enums";
     #?niecza 2 todo
     is $s.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $s.pairs.grep({ .value ~~ Bool }).elems, 3, "... and the values of which are Bool";
@@ -369,6 +369,12 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+{
+    my $s = <a b c>.Set;
+    dies_ok { $s.pairs[0].key++ },     'Cannot change key of Set.pairs';
+    dies_ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
 }
 
 # vim: ft=perl6

@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 195;
+plan 197;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -126,7 +126,7 @@ sub showkv($x) {
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
     #?rakudo todo "Not properly interpolating"
-    is +$b.grep(Pair), 4, "... which are all Pairs";
+    is +$b.grep(Enum), 4, "... which are all Enums";
 }
 
 {
@@ -187,7 +187,7 @@ sub showkv($x) {
     is $b.list.grep(Str).elems, 3, "... all of which are Str";
 
     isa_ok $b.pairs.elems, 3, ".pairs returns 3 things";
-    is $b.pairs.grep(Pair).elems, 3, "... all of which are Pairs";
+    is $b.pairs.grep(Enum).elems, 3, "... all of which are Enums";
     is $b.pairs.grep({ .key ~~ Str }).elems, 3, "... the keys of which are Strs";
     is $b.pairs.grep({ .value ~~ Int }).elems, 3, "... and the values of which are Ints";
 
@@ -432,6 +432,12 @@ sub showkv($x) {
     is $e.fmt('%s',','), "", '.fmt(%s,sep) works (empty)';
     is $e.fmt('%s foo %s'), "", '.fmt(%s%s) works (empty)';
     is $e.fmt('%s,%s',':'), "", '.fmt(%s%s,sep) works (empty)';
+}
+
+{
+    my $b = <a b c>.Bag;
+    dies_ok { $b.pairs[0].key++ },   'Cannot change key of Bag.pairs';
+    dies_ok { $b.pairs[0].value++ }, 'Cannot change value of Bag.pairs';
 }
 
 # vim: ft=perl6
