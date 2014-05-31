@@ -5,7 +5,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 79;
+plan 80;
 
 =begin description
 
@@ -166,15 +166,28 @@ my @elems = <a b c d e>;
 # "for @a -> $var" is ro by default.
 #?pugs skip 'parsefail'
 {
-    my @a = <1 2 3 4>;
+
 
     eval_dies_ok('for @a -> $elem {$elem = 5}', '-> $var is ro by default');
 
-    for @a <-> $elem {$elem++;}
-    is(@a, <2 3 4 5>, '<-> $var is rw');
+   {
+        my @a = <1 2 3 4>;
+        for @a <-> $elem {$elem++;}
+        is(@a, <2 3 4 5>, '<-> $var is rw');
+   }
 
-    for @a <-> $first, $second {$first++; $second++}
-    is(@a, <3 4 5 6>, '<-> $var, $var2 works');
+   {
+       my @a = <1 2 3 4>;
+       for @a <-> $first, $second {$first++; $second++}
+       is(@a, <2 3 4 5>, '<-> $var, $var2 works');
+   }
+
+   {
+       my @a = <1 2 3 4>;
+       for @a <-> $_ {$_++;}
+       is(@a, <2 3 4 5>, '<-> $_ is rw');
+   }
+
 }
 
 # for with "is rw"
