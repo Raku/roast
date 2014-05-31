@@ -303,7 +303,7 @@ sub begin {
         }
     }
     open( $self->{'file_out'}, '>', 'docs/test_summary.times.tmp') or die "cannot create docs/test_summary.times.tmp: $!";
-    my $parrot_version = qx{./perl6 -e'print \$*VM<config><revision>'};
+    my $parrot_version = qx{./perl6 -e'print \$*VM.config<revision>'};
     my $impl_version = qx{git log --pretty=oneline --abbrev-commit --max-count=1 .}; chomp $impl_version;
     $impl_version =~ s/^([0-9a-f])+\.\.\./$1/; # delete possible ... 
     $impl_version =~ s/\\/\\\\/g; # escape all backslashes
