@@ -3,7 +3,7 @@ use v6;
 use Test;
 
 my $isjvm = $*VM.name eq 'jvm';
-plan 28 + 2 * $isjvm;
+plan 30 + 2 * $isjvm;
 
 # $?VM.name is the Virtual machine we were compiled in.
 #?rakudo skip 'unimpl $?VM'
@@ -18,6 +18,7 @@ plan 28 + 2 * $isjvm;
     ok $?VM.desc,           "Description is '{$?VM.desc}'";
     ok $?VM.precomp-ext,    "Extension is '{$?VM.precomp-ext}'";
     ok $?VM.precomp-target, "Extension is '{$?VM.precomp-target}'";
+    ok $?VM.prefix,         "Prefix is '{$?VM.prefix}'";
 
     ok $?VM.perl, 'We can do a $?VM.perl';
     ok $?VM.gist, 'We can do a $?VM.gist';
@@ -41,6 +42,7 @@ ok $*VM.properties,     "We have properties" if $isjvm;
 ok $*VM.desc,           "Description is '{$*VM.desc}'";
 ok $*VM.precomp-ext,    "Extension is '{$*VM.precomp-ext}'";
 ok $*VM.precomp-target, "Extension is '{$*VM.precomp-target}'";
+ok $*VM.prefix,         "Prefix is '{$*VM.prefix}'";
 
 ok $*VM.perl, 'We can do a $*VM.perl';
 ok $*VM.gist, 'We can do a $*VM.gist';

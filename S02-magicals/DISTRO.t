@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 24;
+plan 26;
 
 =begin kwid
 
@@ -23,6 +23,7 @@ get a list of osnames that have actually passed tests.
     ok $?DISTRO.signature, "Signature is '{$?DISTRO.signature}'";
     ok $?DISTRO.desc,      "Description is '{$?DISTRO.desc}'";
     ok $?DISTRO.release,   "Release info is '{$?DISTRO.release}'";
+    ok $?DISTRO.path-sep,  "Path separator is '{$?DISTRO.path-sep}'";
 
     ok $?DISTRO.perl, 'We can do a $?DISTRO.perl';
     ok $?DISTRO.gist, 'We can do a $?DISTRO.gist';
@@ -44,6 +45,7 @@ ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
 #?rakudo todo 'no Distro.desc yet'
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
+ok $*DISTRO.path-sep,  "Path separator is '{$*DISTRO.path-sep}'";
 
 ok $*DISTRO.perl, 'We can do a $*DISTRO.perl';
 ok $*DISTRO.gist, 'We can do a $*DISTRO.gist';
