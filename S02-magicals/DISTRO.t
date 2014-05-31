@@ -2,6 +2,8 @@ use v6;
 
 use Test;
 
+plan 20;
+
 =begin kwid
 
 Config Tests
@@ -12,23 +14,41 @@ get a list of osnames that have actually passed tests.
 
 =end kwid
 
-plan 5;
-
 # $?DISTRO.name is the OS we were compiled in.
 #?rakudo skip 'unimpl $?DISTRO'
-ok $?DISTRO.name, "We were compiled in '{$?DISTRO.name}'";
+{
+    ok $?DISTRO.name,      "We were compiled in '{$?DISTRO.name}'";
+    ok $?DISTRO.auth,      "Authority is '{$?DISTRO.auth}'";
+    ok $?DISTRO.version,   "Version is '{$?DISTRO.version}'";
+    ok $?DISTRO.signature, "Signature is '{$?DISTRO.signature}'";
+    ok $?DISTRO.desc,      "Description is '{$?DISTRO.desc}'";
+    ok $?DISTRO.release,   "Release info is '{$?DISTRO.release}'";
 
-# $*DISTRO.name is the OS we are running
-ok $*DISTRO.name, "We are running under '{$*DISTRO.name}'";
+    diag "'{$?DISTRO.name}' is an unknown DISTRO, please report" if !
+      ok $?DISTRO.name eq any($?PERL.DISTROnames),
+      "We know of the DISTRO we were compiled in";
 
-my $osnames = any <macosx linux freebsd mswin32 mingw msys cygwin solaris haiku openbsd>;
+    isa_ok $?DISTRO.version, Version;
+    isa_ok $?DISTRO.signature, Blob;
+    isa_ok $?DISTRO.is-win, Bool;
+}
 
-#?rakudo skip 'unimpl $?OS'
-ok $?DISTRO.name.lc eq $osnames, "we know of the OS we were compiled in";
+ok $*DISTRO.name,      "We are running under '{$*DISTRO.name}'";
+ok $*DISTRO.auth,      "Authority is '{$*DISTRO.auth}'";
+ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
+#?rakudo todo 'no Distro.signature yet'
+ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
+#?rakudo todo 'no Distro.desc yet'
+ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
+ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
 
-ok $*DISTRO.name.lc eq $osnames, "we know of the OS we are running under";
+diag "'{$*DISTRO.name}' is an unknown DISTRO, please report" if !
+  ok $*DISTRO.name eq any($*PERL.DISTROnames),
+  "We know of the DISTRO we are running under";
 
-# this is tested in perlver.t but that test is not included
-ok $*DISTRO.version, '$*DISTRO.version is present';
+isa_ok $*DISTRO.version, Version;
+#?rakudo todo 'no Distro.signature yet'
+isa_ok $*DISTRO.signature, Blob;
+isa_ok $*DISTRO.is-win, Bool;
 
 # vim: ft=perl6
