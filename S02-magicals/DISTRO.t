@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 20;
+plan 24;
 
 =begin kwid
 
@@ -24,6 +24,9 @@ get a list of osnames that have actually passed tests.
     ok $?DISTRO.desc,      "Description is '{$?DISTRO.desc}'";
     ok $?DISTRO.release,   "Release info is '{$?DISTRO.release}'";
 
+    ok $?DISTRO.perl, 'We can do a $?DISTRO.perl';
+    ok $?DISTRO.gist, 'We can do a $?DISTRO.gist';
+
     diag "'{$?DISTRO.name}' is an unknown DISTRO, please report" if !
       ok $?DISTRO.name eq any($?PERL.DISTROnames),
       "We know of the DISTRO we were compiled in";
@@ -41,6 +44,9 @@ ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
 #?rakudo todo 'no Distro.desc yet'
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
+
+ok $*DISTRO.perl, 'We can do a $*DISTRO.perl';
+ok $*DISTRO.gist, 'We can do a $*DISTRO.gist';
 
 diag "'{$*DISTRO.name}' is an unknown DISTRO, please report" if !
   ok $*DISTRO.name eq any($*PERL.DISTROnames),
