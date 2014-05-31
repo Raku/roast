@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 20;
 
 # Rakudo had a regression that
 # string returned from regexes were Parrot strings, not Perl 6 strings.
@@ -54,14 +54,6 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
         $d.subst(/o/, 'a')
     }
     is substtest("mop"), "map", '.subst works in a multi';
-}
-
-# not a "real string', but a "real hash" bug found in Rakudo:
-
-{
-    my $x = 0;
-    for $*VM.kv -> $k, $v { $x++};
-    is $x, +$*VM.keys, '$*VM.kv is self-consistent';
 }
 
 # RT #67852
