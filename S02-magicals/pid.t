@@ -11,7 +11,7 @@ L<A05/"RFC 332: Regex: Make /\$/ equivalent to /\z/ under the '/s' modifier" /Th
 
 =end description
 
-plan 1;
+plan 2;
 
 is_run 'say $*PID',
     {
@@ -19,5 +19,7 @@ is_run 'say $*PID',
         err => '',
         status => 0,
     }, 'my $*PID is different from a child $*PID';
+
+throws_like { $*PID = 42 }, X::Assignment::RO;
 
 # vim: ft=perl6
