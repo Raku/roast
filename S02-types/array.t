@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 93;
+plan 95;
 
 #L<S02/Mutable types/Array>
 
@@ -343,6 +343,14 @@ my @array2 = ("test", 1, Mu);
 {
     throws_like 'my @a = 1..*; @a[Inf] = "dog"', X::Item, index => Inf, aggregate => 1..*;
     throws_like 'my @a = 1..*; @a[NaN] = "cat"', X::Item, index => NaN, aggregate => 1..*;
+}
+
+{
+    my Str $foo;
+    my @bar = $foo;
+    my $res;
+    lives_ok { $res = ~@bar }, '~@bar containing a Str type object lives';
+    is $res, "", '~@bar containing a Str type object gives empty string';
 }
 
 done;
