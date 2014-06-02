@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 15;
 
 # L<S02/Adverbial Pair forms>
 
@@ -20,9 +20,11 @@ plan 13;
     is_deeply (:@a), (a => @a), ":@a works";
     is_deeply (:%a), (a => %a), ":%a works";
     is_deeply (:&a), (a => &a), ":&a works";
+    is_deeply (:42nd), (nd => 42), "Basic numeric adverb works";
+    eval_dies_ok ':69th($_)', "Numeric adverb can't have an extra value";
 
     is (:a{ 42 + 24 })<a>(), 66, "Adverb with postfix:<{ }> makes code object";
-} # 11
+} # 13
 
 # RT #74492
 {
@@ -31,4 +33,4 @@ plan 13;
     }
     foo(:a :b :c);
     foo(:a:b:c);
-} # 13
+} # 15
