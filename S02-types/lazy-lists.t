@@ -15,7 +15,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 23;
 
 
 #?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PERL5" {
@@ -159,6 +159,15 @@ sub make-lazy-list($num) { gather { take $_ for 0..^$num; $was-lazy = 0 } };
     my @b;
     @b.unshift: $("one,two,three".split(","));
     is_deeply @b, [(<one two three>).list.item], "unshift: did we not lose the split?";
+}
+
+# RT120035
+{
+    my $i;
+    for gather { $i++, .take for 1..5 } {
+        last
+    }
+    is $i, 1, 'for gather { ... } { last } properly lazy';
 }
 
 # vim: ft=perl6
