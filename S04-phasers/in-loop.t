@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 2;
+plan 3;
 
 # TODO, based on synopsis 4:
 #
@@ -69,6 +69,18 @@ plan 2;
             "(3 E1)(3 E2)(3 a)" ~ "(3 N2)(3 N1)" ~  "(3 Lv2)(3 Lv1)" ~
             "(4 E1)(4 E2)"  ~                       "(4 Lv2)(4 Lv1)" ~ "(4 Lst2)(4 Lst1)",
        'trait blocks work properly in for loop';
+}
+
+# RT #122011
+{
+    my $str;
+
+    for 10..1 -> $i {
+        LAST  { $str ~= "(this should not happen)" }
+    }
+
+    is $str, "",
+       'LAST does not fire for empty loop';
 }
 
 # vim: ft=perl6
