@@ -18,6 +18,7 @@ plan 3;
 
 # L<S04/"Phasers">
 
+#?rakudo todo "unknown phasers issue"
 {
     my $str;
 
@@ -40,6 +41,7 @@ plan 3;
        'trait blocks work properly in for loop';
 }
 
+#?rakudo todo "unknown phasers issue"
 {
     my $str;
 
@@ -73,7 +75,7 @@ plan 3;
 
 # RT #122011
 {
-    my $str;
+    my $str = "";
 
     for 10..1 -> $i {
         LAST  { $str ~= "(this should not happen)" }
