@@ -63,7 +63,7 @@ sub all-basic(Callable $handle) {
     {
         my $io = $path.IO.open(:w);
         spurt $io, "42";
-        is slurp($path), "42"; # Can spurt into an open handle.
+        is slurp($path), "42", 'can spurt into an open handle';
     }
 
     # Buf into an open non binary handle
@@ -71,7 +71,7 @@ sub all-basic(Callable $handle) {
         my $io = $path.IO.open(:w);
         my Buf $buf = Buf.new(0xC0, 0x01, 0xF0, 0x0D);
         spurt $io, $buf;
-        is slurp($path, :bin), $buf;
+        is slurp($path, :bin), $buf, 'can spurt a Buf into an open handle';
     }
 
     # Text into a open binary handle
@@ -79,7 +79,7 @@ sub all-basic(Callable $handle) {
         my $io = $path.IO.open(:bin, :w);
         my Str $txt = "Bli itj nå trønder-rock uten tennis-sokk";
         spurt $io, $txt;
-        is slurp($path), $txt;
+        is slurp($path), $txt, 'can spurt text into a binary handle';
     }
 
     unlink $path;
