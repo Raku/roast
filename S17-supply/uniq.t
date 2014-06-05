@@ -4,14 +4,13 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 19;
+plan 17;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.uniq }, 'can not be called as a class method';
 
-for (ThreadPoolScheduler, CurrentThreadScheduler) {
-    $*SCHEDULER = .new;
-    isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
+for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
+    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     tap_ok Supply.for(1..10,1..10).uniq,
       [1,2,3,4,5,6,7,8,9,10],

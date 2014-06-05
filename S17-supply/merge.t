@@ -4,11 +4,10 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 10;
+plan 8;
 
-for (ThreadPoolScheduler, CurrentThreadScheduler) {
-    $*SCHEDULER = .new;
-    isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
+for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
+    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
         my $s1 = Supply.new;

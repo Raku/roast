@@ -2,13 +2,12 @@ use v6;
 
 use Test;
 
-plan 7;
+plan 5;
 
 dies_ok { Supply.list }, 'can not be called as a class method';
 
-for (ThreadPoolScheduler, CurrentThreadScheduler) {
-    $*SCHEDULER = .new;
-    isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
+for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
+    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
 #?rakudo.jvm skip "hangs"
 {

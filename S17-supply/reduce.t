@@ -4,15 +4,14 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 12;
+plan 10;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.reduce( {...} ) }, 'can not be called as a class method';
 dies_ok { Supply.new.reduce(23) }, 'must be code if specified';
 
-for (ThreadPoolScheduler, CurrentThreadScheduler) {
-    $*SCHEDULER = .new;
-    isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
+for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
+    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     tap_ok Supply.for(1..5).reduce( {$^a + $^b} ), [1,3,6,10,15],
       "simple reduce works";

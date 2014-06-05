@@ -4,15 +4,14 @@ use lib 't/spec/packages';
 use Test;
 use Test::Tap;
 
-plan 41;
+plan 39;
 
 dies_ok { Supply.classify( {...}  ) }, 'can not be called as a class method';
 dies_ok { Supply.classify( {a=>1} ) }, 'can not be called as a class method';
 dies_ok { Supply.classify( [<a>]  ) }, 'can not be called as a class method';
 
-for (ThreadPoolScheduler, CurrentThreadScheduler) {
-    $*SCHEDULER = .new;
-    isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
+for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
+    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     my %mapper is default(0) = ( 11=>1, 12=>1, 13=>1 );
     my &mapper = { $_ div 10 };

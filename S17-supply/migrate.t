@@ -1,14 +1,13 @@
 use v6;
 
 use Test;
-plan 23;
+plan 21;
 
 #?rakudo.jvm todo "D: doesn't work in signatures"
 dies_ok { Supply.migrate }, 'can not be called as a class method';
 
-for (ThreadPoolScheduler, CurrentThreadScheduler) {
-    $*SCHEDULER = .new; 
-    isa_ok $*SCHEDULER, $_, "***** scheduling with {$_.gist}";
+for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
+    diag "**** scheduling with {$*SCHEDULER.WHAT.perl}";
 
     {
         my $master = Supply.new;
