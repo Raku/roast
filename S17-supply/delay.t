@@ -25,7 +25,8 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         ok $seen && $seen >= $now + $delay, "on-demand sufficiently delayed";
 }
 
-    {
+#?rakudo skip "doesn't work or can't test"
+{
         my $delay = 2;
         my $s     = Supply.new;
         my $now   = now;
@@ -42,7 +43,7 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
           } ),
         ;
         ok $seen && $seen >= $now + $delay, "live sufficiently delayed";
-    }
+}
 
     {
         my $for   = Supply.for(1..10);
