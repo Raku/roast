@@ -7,15 +7,15 @@ my $hostname = 'localhost';
 my $port = 5000;
 
 try {
-    IO::Socket::Async.listen('veryunlikelyhostname.bogus', $port).tap(quit => { say 'quit'});
-    CATCH {
-        default {
-           is $_.payload, 'Failed to resolve host name', 'Async listen on bogus hostname';
-        }
-	}
+    my $sync = Promise.new;
+    IO::Socket::Async.listen('veryunlikelyhostname.bogus', $port).tap(quit => {
+        is $_.payload, 'Failed to resolve host name', 'Async listen on bogus hostname';
+        $sync.keep(1);
+    });
+    await $sync;
 }
 
-IO::Socket::Async.connect($hostname, $port).then(-> $sr {
+await IO::Socket::Async.connect($hostname, $port).then(-> $sr {
 	is $sr.status, Broken, 'Async connect to unavailable server breaks promise';
 });
 
@@ -27,7 +27,7 @@ my $echoTap = $server.tap(-> $c {
     }, quit => { say $_; });
 });
 
-IO::Socket::Async.connect($hostname, $port).then(-> $sr{
+await IO::Socket::Async.connect($hostname, $port).then(-> $sr{
 	is $sr.status, Kept, 'Async connect to available server keeps promise';
 	$sr.result.close() if $sr.status == Kept;
 });
