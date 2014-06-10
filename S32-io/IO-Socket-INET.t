@@ -3,11 +3,6 @@ use Test;
 
 plan 47;
 
-{
-    #?rakudo.jvm emit skip_rest('rakudo.jvm systemic failures/OOM error');
-    #?rakudo.jvm emit exit 0;
-}
-
 diag "{elapsed} starting tests";
 my $elapsed;
 sub elapsed {
