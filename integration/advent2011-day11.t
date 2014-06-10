@@ -40,8 +40,8 @@ class Order {
 	}
     }
 
-    method total-sanity {EVAL 'self!compute_subtotal() - self!compute_discount()'}
-    method total-with-typo {EVAL 'self!compite_subtotal() - self!compute_discount()'}
+    method this-should-compile {EVAL 'return 1; self!compute_subtotal() - self!compute_discount()'}
+    method but-this-shouldnt {EVAL 'return 1; self!compite_subtotal() - self!compute_discount()'}
 }
 
 my $order = Order.new;
@@ -49,8 +49,8 @@ $order.add_item('Widget', 10.99);
 $order.add_item('Gadget', 25.50);
 $order.add_item('Gizmo', 49.00);
 
-lives_ok {$order.total-sanity},'order total sanity';
-dies_ok {$order.total-with-typo},'order total with typo';
+lives_ok {$order.this-should-compile},'order total sanity';
+dies_ok {$order.but-this-shouldnt},'order total with typo';
 lives_ok {EVAL '$order.discount'}, 'public method sanity';
 dies_ok {EVAL '$order!compute_discount'}, 'private method sanity';
 dies_ok {EVAL '$o!Order::compute_discount'}, 'private method sanity';
