@@ -1,7 +1,7 @@
 # http://perl6advent.wordpress.com/2011/12/11/privacy-and-oop/
 use v6;
 use Test;
-plan 5;
+plan 9;
 
 class Order {
     my class Item {
@@ -55,4 +55,32 @@ lives_ok {EVAL '$order.discount'}, 'public method sanity';
 dies_ok {EVAL '$order!compute_discount'}, 'private method sanity';
 dies_ok {EVAL '$o!Order::compute_discount'}, 'private method sanity';
 
+# "...a class may choose to trust another one (or, indeed, any other package)
+# to be able to call its private methods. Critically, this is the decision of
+# the class itself"
+
+class Trusty is Order {
+    trusts Order;
+    method try-pub {self.discount}
+    method try-priv {EVAL 'self!compute_subtotal() - self!compute_discount()'}
+}
+
+class Untrusting is Order {
+    method try-pub {self.discount}
+    method try-priv {EVAL 'self!compute_subtotal() - self!compute_discount()'}
+}
+
+my $trusty = Trusty.new;
+$trusty.add_item('Contraption', 90.00);
+$trusty.add_item('Doo-Hicky', 12.50);
+
+my $untrusty = Untrusting.new;
+$untrusty.add_item('Contrivance', 60.00);
+$untrusty.add_item('Apparatus', 50.00);
+
+lives_ok {$trusty.try-pub}, 'inheritance public method, (trusting)';
+lives_ok {$trusty.try-pub}, 'inheritance private method, (trusting)';
+
+lives_ok {$untrusty.try-pub}, 'inheritance public method, (untrusting)';
+lives_ok {$untrusty.try-pub}, 'inheritance private method, (untrusting)';
 
