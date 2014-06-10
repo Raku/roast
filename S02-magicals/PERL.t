@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 48;
+plan 50;
 
 # $?PERL.name is the Perl we were compiled in.
 #?rakudo skip 'unimpl $?PERL'
@@ -14,8 +14,9 @@ plan 48;
     ok $?PERL.desc,      "Description is '{$?PERL.desc}'";
     ok $?PERL.compiler,  "Has compiler info";
 
-    ok $?PERL.perl, 'We can do a $?PERL.perl';
-    ok $?PERL.gist, 'We can do a $?PERL.gist';
+    ok $?PERL.perl ~~ m/\w/, 'We can do a $?PERL.perl';
+    ok $?PERL.gist ~~ m/\w/, 'We can do a $?PERL.gist';
+    ok $?PERL.Str  ~~ m/\w/, 'We can do a $?PERL.Str';
 
     isa_ok $?PERL.version, Version;
     isa_ok $?PERL.signature, Blob;
@@ -48,8 +49,9 @@ ok $*PERL.signature, "Signature is '{$*PERL.signature}'";
 ok $*PERL.desc,      "Description is '{$*PERL.desc}'";
 ok $*PERL.compiler,  "Has compiler info";
 
-ok $*PERL.perl, 'We can do a $*PERL.perl';
-ok $*PERL.gist, 'We can do a $*PERL.gist';
+ok $*PERL.perl ~~ m/\w/, 'We can do a $*PERL.perl';
+ok $*PERL.gist ~~ m/\w/, 'We can do a $*PERL.gist';
+ok $*PERL.Str  ~~ m/\w/, 'We can do a $*PERL.Str';
 
 isa_ok $*PERL.version, Version;
 #?rakudo todo 'no Perl.signature yet'

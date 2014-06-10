@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 32;
 
 #?rakudo.moar   skip 'VM.properties does not exist'
 #?rakudo.parrot skip 'VM.properties does not exist'
@@ -27,8 +27,9 @@ plan 30;
     ok $?VM.precomp-target, "Extension is '{$?VM.precomp-target}'";
     ok $?VM.prefix,         "Prefix is '{$?VM.prefix}'";
 
-    ok $?VM.perl, 'We can do a $?VM.perl';
-    ok $?VM.gist, 'We can do a $?VM.gist';
+    ok $?VM.perl ~~ m/\w/, 'We can do a $?VM.perl';
+    ok $?VM.gist ~~ m/\w/, 'We can do a $?VM.gist';
+    ok $?VM.Str  ~~ m/\w/, 'We can do a $?VM.Str ';
 
     diag "'{$?VM.name}' is an unknown VM, please report" if !
       ok $?VM.name eq any($?PERL.VMnames),
@@ -50,8 +51,9 @@ ok $*VM.precomp-ext,    "Extension is '{$*VM.precomp-ext}'";
 ok $*VM.precomp-target, "Extension is '{$*VM.precomp-target}'";
 ok $*VM.prefix,         "Prefix is '{$*VM.prefix}'";
 
-ok $*VM.perl, 'We can do a $*VM.perl';
-ok $*VM.gist, 'We can do a $*VM.gist';
+ok $*VM.perl ~~ m/\w/, 'We can do a $*VM.perl';
+ok $*VM.gist ~~ m/\w/, 'We can do a $*VM.gist';
+ok $*VM.Str  ~~ m/\w/, 'We can do a $*VM.Str';
 
 diag "'{$*VM.name}' is an unknown VM, please report" if !
   ok $*VM.name eq any($*PERL.VMnames),
