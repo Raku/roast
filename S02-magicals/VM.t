@@ -7,6 +7,7 @@ plan 30;
 #?rakudo.moar   skip 'VM.properties does not exist'
 #?rakudo.parrot skip 'VM.properties does not exist'
 {
+    #?rakudo skip 'unimpl $?VM'
     ok $?VM.properties,     "We have properties";
     ok $*VM.properties,     "We have properties";
 }
