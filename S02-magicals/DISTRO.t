@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 26;
+plan 28;
 
 =begin kwid
 
@@ -25,8 +25,9 @@ get a list of osnames that have actually passed tests.
     ok $?DISTRO.release,   "Release info is '{$?DISTRO.release}'";
     ok $?DISTRO.path-sep,  "Path separator is '{$?DISTRO.path-sep}'";
 
-    ok $?DISTRO.perl, 'We can do a $?DISTRO.perl';
-    ok $?DISTRO.gist, 'We can do a $?DISTRO.gist';
+    ok $?DISTRO.perl ~~ m/\w/, 'We can do a $?DISTRO.perl';
+    ok $?DISTRO.gist ~~ m/\w/, 'We can do a $?DISTRO.gist';
+    ok $?DISTRO.Str  ~~ m/\w/, 'We can do a $?DISTRO.Str';
 
     diag "'{$?DISTRO.name}' is an unknown DISTRO, please report" if !
       ok $?DISTRO.name eq any($?PERL.DISTROnames),
@@ -47,8 +48,9 @@ ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
 ok $*DISTRO.path-sep,  "Path separator is '{$*DISTRO.path-sep}'";
 
-ok $*DISTRO.perl, 'We can do a $*DISTRO.perl';
-ok $*DISTRO.gist, 'We can do a $*DISTRO.gist';
+ok $*DISTRO.perl ~~ m/\w/, 'We can do a $*DISTRO.perl';
+ok $*DISTRO.gist ~~ m/\w/, 'We can do a $*DISTRO.gist';
+ok $*DISTRO.Str  ~~ m/\w/, 'We can do a $*DISTRO.Str';
 
 diag "'{$*DISTRO.name}' is an unknown DISTRO, please report" if !
   ok $*DISTRO.name eq any($*PERL.DISTROnames),

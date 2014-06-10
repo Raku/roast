@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 30;
+plan 32;
 
 # $?KERNEL.name is the kernel we were compiled in.
 #?rakudo skip 'unimpl $?KERNEL'
@@ -17,8 +17,9 @@ plan 30;
     ok $?KERNEL.arch,      "Architecture info is '{$?KERNEL.arch}'";
     ok $?KERNEL.bits,      "Number of bits is '{$?KERNEL.bits}'";
 
-    ok $?KERNEL.perl, 'We can do a $?KERNEL.perl';
-    ok $?KERNEL.gist, 'We can do a $?KERNEL.gist';
+    ok $?KERNEL.perl ~~ m/\w/, 'We can do a $?KERNEL.perl';
+    ok $?KERNEL.gist ~~ m/\w/, 'We can do a $?KERNEL.gist';
+    ok $?KERNEL.Str  ~~ m/\w/, 'We can do a $?KERNEL.Str';
 
     diag "'{$?KERNEL.name}' is an unknown KERNEL, please report" if !
       ok $?KERNEL.name eq any($?PERL.KERNELnames),
@@ -41,8 +42,9 @@ ok $*KERNEL.hardware,  "Hardware info is '{$*KERNEL.hardware}'";
 ok $*KERNEL.arch,      "Architecture info is '{$*KERNEL.arch}'";
 ok $*KERNEL.bits,      "Number of bits is '{$*KERNEL.bits}'";
 
-ok $*KERNEL.perl, 'We can do a $*KERNEL.perl';
-ok $*KERNEL.gist, 'We can do a $*KERNEL.gist';
+ok $*KERNEL.perl ~~ m/\w/, 'We can do a $*KERNEL.perl';
+ok $*KERNEL.gist ~~ m/\w/, 'We can do a $*KERNEL.gist';
+ok $*KERNEL.Str  ~~ m/\w/, 'We can do a $*KERNEL.Str';
 
 diag "'{$*KERNEL.name}' is an unknown KERNEL, please report" if !
   ok $*KERNEL.name eq any($*PERL.KERNELnames),
