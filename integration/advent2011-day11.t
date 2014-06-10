@@ -3,7 +3,12 @@ use v6;
 use Test;
 plan 9;
 
+class Trusty {...}
+class Untrusty {...}
+
 class Order {
+    trusts Trusty;
+
     my class Item {
 	has $.name;
 	has $.price;
@@ -60,27 +65,31 @@ dies_ok {EVAL '$o!Order::compute_discount'}, 'private method sanity';
 # the class itself"
 
 class Trusty is Order {
-    trusts Order;
     method try-pub {self.discount}
-    method try-priv {EVAL 'self!compute_subtotal() - self!compute_discount()'}
-}
-
-class Untrusting is Order {
-    method try-pub {self.discount}
-    method try-priv {EVAL 'self!compute_subtotal() - self!compute_discount()'}
+    method try-priv {self!Order::compute_subtotal() - self!Order::compute_discount()}
 }
 
 my $trusty = Trusty.new;
 $trusty.add_item('Contraption', 90.00);
 $trusty.add_item('Doo-Hicky', 12.50);
 
-my $untrusty = Untrusting.new;
+lives_ok {$trusty.try-pub}, 'inheritance public method, (trusting)';
+lives_ok {$trusty.try-priv}, 'inheritance private method, (trusting)';
+
+class Untrusty is Order {
+    method try-pub {self.discount}
+    method try-priv {EVAL 'self!Order::compute_subtotal() - self!Order::compute_discount()'}
+}
+
+my $untrusty = Untrusty.new;
 $untrusty.add_item('Contrivance', 60.00);
 $untrusty.add_item('Apparatus', 50.00);
 
-lives_ok {$trusty.try-pub}, 'inheritance public method, (trusting)';
-lives_ok {$trusty.try-pub}, 'inheritance private method, (trusting)';
+class Untrusting is Order {
+    method try-pub {self.discount}
+    method try-priv {EVAL 'self!compute_subtotal() - self!compute_discount()'}
+}
 
 lives_ok {$untrusty.try-pub}, 'inheritance public method, (untrusting)';
-lives_ok {$untrusty.try-pub}, 'inheritance private method, (untrusting)';
+dies_ok {$untrusty.try-priv}, 'inheritance private method, (untrusting)';
 
