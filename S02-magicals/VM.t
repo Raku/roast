@@ -2,8 +2,14 @@ use v6;
 
 use Test;
 
-my $isjvm = $*VM.name eq 'jvm';
-plan 30 + 2 * $isjvm;
+plan 30;
+
+#?rakudo.moar   skip 'VM.properties does not exist'
+#?rakudo.parrot skip 'VM.properties does not exist'
+{
+    ok $?VM.properties,     "We have properties";
+    ok $*VM.properties,     "We have properties";
+}
 
 # $?VM.name is the Virtual machine we were compiled in.
 #?rakudo skip 'unimpl $?VM'
@@ -11,11 +17,11 @@ plan 30 + 2 * $isjvm;
     ok $?VM.name,           "We were compiled in '{$?VM.name}'";
     ok $?VM.auth,           "Authority is '{$?VM.auth}'";
     ok $?VM.version,        "Version is '{$?VM.version}'";
+    #?rakudo todo 'no VM.signature yet'
     ok $?VM.signature,      "Signature is '{$?VM.signature}'";
+    #?rakudo todo 'no VM.desc yet'
     ok $?VM.desc,           "Description is '{$?VM.desc}'";
     ok $?VM.config,         "We have config";
-    ok $?VM.properties,     "We have properties" if $isjvm;
-    ok $?VM.desc,           "Description is '{$?VM.desc}'";
     ok $?VM.precomp-ext,    "Extension is '{$?VM.precomp-ext}'";
     ok $?VM.precomp-target, "Extension is '{$?VM.precomp-target}'";
     ok $?VM.prefix,         "Prefix is '{$?VM.prefix}'";
@@ -36,10 +42,9 @@ ok $*VM.auth,           "Authority is '{$*VM.auth}'";
 ok $*VM.version,        "Version is '{$*VM.version}'";
 #?rakudo todo 'no VM.signature yet'
 ok $*VM.signature,      "Signature is '{$*VM.signature}'";
-ok $*VM.config,         "We have config";
-ok $*VM.properties,     "We have properties" if $isjvm;
 #?rakudo todo 'no VM.desc yet'
 ok $*VM.desc,           "Description is '{$*VM.desc}'";
+ok $*VM.config,         "We have config";
 ok $*VM.precomp-ext,    "Extension is '{$*VM.precomp-ext}'";
 ok $*VM.precomp-target, "Extension is '{$*VM.precomp-target}'";
 ok $*VM.prefix,         "Prefix is '{$*VM.prefix}'";
