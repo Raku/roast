@@ -20,7 +20,6 @@ is_run 'say $*PID',
         status => 0,
     }, 'my $*PID is different from a child $*PID';
 
-#?rakudo.parrot todo 'assigning to $*PID does not die'
 throws_like { $*PID = 42 }, X::Assignment::RO;
 
 # vim: ft=perl6
