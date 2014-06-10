@@ -14,6 +14,18 @@ plan 5;
 
 is $=pod[0].content[0].content, 'Some pod content', '$=pod';
 
+#= it's a sheep! really!
+class Sheep {
+
+    #= produces a funny sound
+    method bark {
+	say "Actually, I don't think sheeps bark"
+    }
+}
+
+is Sheep.WHY.content, "it's a sheep! really!", "class .WHY";
+is Sheep.^find_method('bark').WHY.content, "produces a funny sound", "method .WHY";
+
 my $main = q:to"END";
     =begin pod
 
@@ -46,7 +58,7 @@ my $expected-pod = rx/'A Heading!'
            .*? "method bark" .*? "produces a funny sound"/;
 
 is_run( $main,  { out => $expected-pod,
-                  err => ''}, :compiler-args['--doc']);
+                  err => ''}, :compiler-args['--doc'], '--doc');
 
 my $main2 = $main ~ q:to"END";
 
@@ -58,17 +70,5 @@ END
 
 #?rakudo skip 'RT12205'
 is_run( $main2,  { out => $expected-pod,
-                  err => ''}, :compiler-args['--doc']);
-
-#= it's a sheep! really!
-class Sheep {
-
-    #= produces a funny sound
-    method bark {
-	say "Actually, I don't think sheeps bark"
-    }
-}
-
-is Sheep.WHY.content, "it's a sheep! really!", "class .WHY";
-is Sheep.^find_method('bark').WHY.content, "produces a funny sound", "method .WHY";
+                  err => ''}, :compiler-args['--doc'], '--doc + DOC INIT {}');
 
