@@ -83,7 +83,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Bag) called at:
   $*PROGRAM_NAME, line $line
-Please use the :delete adverb with postcircumfix:<{ }> instead.
+Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
@@ -99,7 +99,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from BagHash) called at:
   $*PROGRAM_NAME, line $line
-Please use the :delete adverb with postcircumfix:<{ }> instead.
+Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
@@ -116,7 +116,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Baggy) called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use the :exists adverb with postcircumfix:<{ }> instead.
+Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 
@@ -127,7 +127,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Baggy) called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use the :exists adverb with postcircumfix:<{ }> instead.
+Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
@@ -191,7 +191,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from EnumMap) called at:
   $*PROGRAM_NAME, line $line
-Please use the :exists adverb with postcircumfix:<{ }> instead.
+Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 
@@ -202,7 +202,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from EnumMap) called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use the :exists adverb with postcircumfix:<{ }> instead.
+Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
@@ -294,7 +294,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Mix) called at:
   $*PROGRAM_NAME, line $line
-Please use the :delete adverb with postcircumfix:<{ }> instead.
+Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
@@ -310,7 +310,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from MixHash) called at:
   $*PROGRAM_NAME, line $line
-Please use the :delete adverb with postcircumfix:<{ }> instead.
+Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
@@ -360,7 +360,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Set) called at:
   $*PROGRAM_NAME, line $line
-Please use the :delete adverb with postcircumfix:<{ }> instead.
+Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
@@ -376,7 +376,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from SetHash) called at:
   $*PROGRAM_NAME, line $line
-Please use the :delete adverb with postcircumfix:<{ }> instead.
+Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
@@ -393,7 +393,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Setty) called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use the :exists adverb with postcircumfix:<{ }> instead.
+Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 
@@ -404,7 +404,7 @@ Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Setty) called at:
   $*PROGRAM_NAME, lines $line,{$line + 1}
-Please use the :exists adverb with postcircumfix:<{ }> instead.
+Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2
