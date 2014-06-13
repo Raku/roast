@@ -1073,7 +1073,7 @@ ok("\x[6A3F]"  ~~ m/^<-:C>$/, q{Match unrelated inverted <C> (Other)} );
 ok("\x[6A3F]\x[FFFE]" ~~ m/<:C>/, q{Match unanchored <C> (Other)} );
 
 # http://www.unicode.org/charts/PDF/Unicode-6.1/U61-A640.pdf
-# U+A679 was added in uniode 6.1 as: Combining mark for Old Cyrillic
+# U+A679 was added in unicode 6.1 as: Combining mark for Old Cyrillic
 ok("\x[200C]" ~~ m/^<:Other>$/, q{Match <:Other>} );
 ok(!( "\x[200C]" ~~ m/^<:!Other>$/ ), q{Don't match negated <Other>} );
 ok(!( "\x[200C]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
