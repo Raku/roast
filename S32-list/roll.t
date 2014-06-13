@@ -123,9 +123,7 @@ ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 
 # RT 89972
 #?niecza skip "That's not the right way to spawn another Niecza"
-#?rakudo.jvm skip 'Cannot spawn rakudo like this (JVM, RT 121528)'
-#?rakudo.moar skip 'Cannot spawn rakudo like this (Moar, RT 121528)'
-#?rakudo.parrot skip 'Cannot spawn rakudo like this (Parrot, RT 121528)'
+#?rakudo skip 'Cannot spawn rakudo like this (RT 121528)'
 {
     my $a = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
     my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
