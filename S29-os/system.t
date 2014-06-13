@@ -9,8 +9,7 @@ plan 5;
 my $res;
 
 $res = run($*EXECUTABLE_NAME,'-e1');
-#?rakudo.jvm skip "not reliable: depends on rakudo being installed"
-#?rakudo.moar skip "not reliable: depends on rakudo being installed"
+#?rakudo skip "not reliable: depends on rakudo being installed"
 ok($res,"run() to an existing program does not die (and returns something true)");
 
 $res = run("program_that_does_not_exist_ignore_this_error_please.exe");
