@@ -1,17 +1,23 @@
 use v6;
 use Test;
 
-plan 3;
+plan 4;
 
-rule schedule { <title> [ <talk> ]+ }
+=pod calling a rule a grammar with arguments
 
-token title { '<title>' <speaker> '</title>' }
+grammar G { rule rule($arg) {  {? $arg == 42 } } }
+ok( G.parse('', :rule<rule>, :args(42,) ), 'call rule with argument' );
 
-regex ws { .*? };
 
-token talk { '<small>' <speaker> '</small>' };
+my rule schedule { <title> [ <talk> ]+ }
 
-token speaker { \w+ };
+my token title { '<title>' <speaker> '</title>' }
+
+my regex ws { .*? };
+
+my token talk { '<small>' <speaker> '</small>' };
+
+my token speaker { \w+ };
 
 
 =begin pod
