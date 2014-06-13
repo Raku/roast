@@ -397,6 +397,7 @@ ok("\x[4DFF]\x[7896]" ~~ m/<:UnifiedIdeograph>/, q{Match unanchored <UnifiedIdeo
 
 
 #?pugs todo
+#?rakudo.parrot 3 skip 'Unrecognized character name "CHARACTER TABULATION"'
 ok("\c[CHARACTER TABULATION]" ~~ m/^<:WhiteSpace>$/, q{Match <:WhiteSpace>} );
 ok(!( "\c[CHARACTER TABULATION]" ~~ m/^<:!WhiteSpace>$/ ), q{Don't match negated <WhiteSpace>} );
 ok(!( "\c[CHARACTER TABULATION]" ~~ m/^<-:WhiteSpace>$/ ), q{Don't match inverted <WhiteSpace>} );
@@ -406,6 +407,7 @@ ok("\x[6358]"  ~~ m/^<:!WhiteSpace>$/, q{Match unrelated negated <WhiteSpace>} )
 #?pugs todo
 ok("\x[6358]"  ~~ m/^<-:WhiteSpace>$/, q{Match unrelated inverted <WhiteSpace>} );
 #?pugs todo
+#?rakudo.parrot skip 'Unrecognized character name "CHARACTER TABULATION"'
 ok("\x[6358]\c[CHARACTER TABULATION]" ~~ m/<:WhiteSpace>/, q{Match unanchored <WhiteSpace>} );
 
 # Alphabetic      # Lu + Ll + Lt + Lm + Lo + OtherAlphabetic

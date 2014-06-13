@@ -6,7 +6,7 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 
-XXX needs more clarification on the case of the rules, 
+XXX needs more clarification on the case of the rules,
 ie letter vs. Letter vs isLetter
 
 U+FFFE and U+FFFF are guaranteed noncharacters.  A previous version of
@@ -1080,7 +1080,6 @@ ok(!( "\x[200C]" ~~ m/^<-:Other>$/ ), q{Don't match inverted <Other>} );
 ok(!( "\x[AC00]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 ok("\x[AC00]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
 ok("\x[AC00]"  ~~ m/^<-:Other>$/, q{Match unrelated inverted <Other>} );
-#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\x[A679]"  ~~ m/^<:Other>$/ ), q{Don't match unrelated <Other>} );
 #?pugs 3 todo
 ok("\x[A679]"  ~~ m/^<:!Other>$/, q{Match unrelated negated <Other>} );
@@ -1091,6 +1090,7 @@ ok("\x[AC00]\x[200C]" ~~ m/<:Other>/, q{Match unanchored <Other>} );
 
 
 #?pugs todo
+#?rakudo.parrot 3 skip 'Unrecognized character name "NULL"'
 ok("\c[NULL]" ~~ m/^<:Cc>$/, q{Match <:Cc> (Control)} );
 ok(!( "\c[NULL]" ~~ m/^<:!Cc>$/ ), q{Don't match negated <Cc> (Control)} );
 ok(!( "\c[NULL]" ~~ m/^<-:Cc>$/ ), q{Don't match inverted <Cc> (Control)} );
@@ -1105,6 +1105,7 @@ ok("\x[0A7A]" ~~ m/^<:!Cc>$/, q{Match related negated <Cc> (Control)} );
 #?pugs todo
 ok("\x[0A7A]" ~~ m/^<-:Cc>$/, q{Match related inverted <Cc> (Control)} );
 #?pugs todo
+#?rakudo.parrot 4 skip 'Unrecognized character name "NULL"'
 ok("\x[0A7A]\x[0A7A]\c[NULL]" ~~ m/<:Cc>/, q{Match unanchored <Cc> (Control)} );
 
 #?pugs todo
@@ -1122,6 +1123,7 @@ ok("\x[4DB6]" ~~ m/^<:!Control>$/, q{Match related negated <Control>} );
 #?pugs todo
 ok("\x[4DB6]" ~~ m/^<-:Control>$/, q{Match related inverted <Control>} );
 #?pugs todo
+#?rakudo.parrot skip 'Unrecognized character name "NULL"'
 ok("\x[4886]\x[4DB6]\c[NULL]" ~~ m/<:Control>/, q{Match unanchored <Control>} );
 
 # Cf          Format
@@ -1159,7 +1161,6 @@ ok(!( "\c[DEVANAGARI VOWEL SIGN AU]"  ~~ m/^<:Format>$/ ),  q{Don't match unrela
 ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
 ok("\c[DEVANAGARI VOWEL SIGN AU]"     ~~ m/^<-:Format>$/,   q{Match unrelated inverted <Format>} );
 #?rakudo.jvm 3 todo "Unicode spec change in v6.1"
-#?rakudo.parrot 3 todo "Unicode spec change in v6.1"
 ok(!( "\c[KHMER VOWEL INHERENT AQ]"   ~~ m/^<:Format>$/ ),  q{Don't match unrelated <Format>} );
 #?pugs 3 todo
 ok("\c[KHMER VOWEL INHERENT AQ]"      ~~ m/^<:!Format>$/,   q{Match unrelated negated <Format>} );
