@@ -71,6 +71,7 @@ lives_ok { my $name = 'A'; require ::($name) }, 'can require with variable name'
 is GLOBAL::<$x>, 'still here', 'loading modules does not clobber GLOBAL';
 
 # tests the combination of chdir+require
+#?rakudo.parrot todo 'chdir+require'
 lives_ok { chdir "t/spec/packages"; require "Foo.pm"; },
          'can change directory and require a module';
 
