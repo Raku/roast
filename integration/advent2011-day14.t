@@ -6,12 +6,12 @@ plan 8;
 use lib 't/spec/packages';
 use Advent::SingleInheritance;
 
-lives_ok {EVAL q:to"--END--"}, 'single inhertance (lives)';
+lives_ok {EVAL q:to"--END--"}, 'single inheritance (lives)';
 class A1 { }
 class B1 is A1 { }
 --END--
 
-lives_ok {EVAL q:to"--END--"}, 'multiple inhertance (dies)';
+lives_ok {EVAL q:to"--END--"}, 'multiple inheritance (dies)';
 class A { }
 class B { }
 class C is A is B { }
