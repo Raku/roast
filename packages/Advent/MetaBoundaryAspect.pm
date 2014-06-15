@@ -16,18 +16,17 @@ my class ClassWithAspectsHOW
     }
     method compose(Mu $obj) {
         for @!aspects -> $a {
-	    for self.methods($obj, :local) -> $m {
-		$m.wrap(-> $obj, |args {
-		    $a.?entry($m.name, $obj, args);
-		    my $result := callsame;
-		    $a.?exit($m.name, $obj, args, $result);
-                $result
-			});
-	    }
+            for self.methods($obj, :local) -> $m {
+                $m.wrap(-> $obj, |args {
+                    $a.?entry($m.name, $obj, args);
+                    my $result := callsame;
+                    $a.?exit($m.name, $obj, args, $result);
+                    $result
+                });
+            }
         }
         callsame;
     }
 }
 my module EXPORTHOW { }
 EXPORTHOW.WHO.<class> = ClassWithAspectsHOW;
-
