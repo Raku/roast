@@ -85,11 +85,6 @@ my $untrusty = Untrusty.new;
 $untrusty.add_item('Contrivance', 60.00);
 $untrusty.add_item('Apparatus', 50.00);
 
-class Untrusting is Order {
-    method try-pub {self.discount}
-    method try-priv {EVAL 'self!compute_subtotal() - self!compute_discount()'}
-}
-
 lives_ok {$untrusty.try-pub}, 'inheritance public method, (untrusting)';
 dies_ok {$untrusty.try-priv}, 'inheritance private method, (untrusting)';
 
