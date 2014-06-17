@@ -15,7 +15,6 @@ is "\c[FULLWIDTH RIGHT PARENTHESIS]", "）", '\c[FULLWIDTH RIGHT PARENTHESIS]';
 is "\c[LEFT DOUBLE ANGLE BRACKET]", "《", '\c[LEFT DOUBLE ANGLE BRACKET]';
 
 #?pugs 3 todo 'Character literals with \c$number'
-#?rakudo.parrot skip 'Unrecognized character name "LINE FEED (LF)"'
 is("\c[LINE FEED (LF)]", "\c10", '\c[LINE FEED (LF)] works');
 #?rakudo skip '\c[LINE FEED] not valid'
 #?niecza skip 'Unrecognized character name LINE FEED'

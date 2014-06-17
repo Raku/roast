@@ -15,7 +15,6 @@ plan 431;
 
 
 #?pugs todo
-#?rakudo.parrot 4 skip 'Unrecognized character name "LINE FEED (LF)"'
 ok("abc\x[a]def" ~~ m/\c[LINE FEED (LF)]/, 'Unanchored named LINE FEED (LF)');
 #?pugs todo
 ok("abc\c[LINE FEED (LF)]def" ~~ m/\x[A]/, 'Unanchored \x[A]');
@@ -24,7 +23,6 @@ ok("abc\c[LINE FEED (LF)]def" ~~ m/\o[12]/, 'Unanchored \o[12]');
 #?pugs todo
 ok("abc\x[a]def" ~~ m/^ abc \c[LINE FEED (LF)] def $/, 'Anchored LINE FEED (LF)');
 #?pugs todo
-#?rakudo.parrot 9 skip 'Unrecognized character name "FORM FEED (FF)"'
 ok("abc\x[c]def" ~~ m/\c[FORM FEED (FF)]/, 'Unanchored named FORM FEED (FF)');
 #?pugs todo
 ok("abc\c[FORM FEED (FF)]def" ~~ m/\x[C]/, 'Unanchored \x[C]');
@@ -52,7 +50,6 @@ ok("\x[c]" ~~ m/^ \X[A]/, 'Negative hex \X[A] match');
 #?pugs todo
 ok("\x[c]" ~~ m/^ <[\X[A]]>/, 'Negative charclass hex \X[A] match');
 #?pugs todo
-#?rakudo.parrot 9 skip 'Unrecognized character name "CARRIAGE RETURN (CR)"'
 ok("abc\x[d]def" ~~ m/\c[CARRIAGE RETURN (CR)]/, 'Unanchored named CARRIAGE RETURN (CR)');
 #?pugs todo
 ok("abc\c[CARRIAGE RETURN (CR)]def" ~~ m/\x[d]/, 'Unanchored \x[d]');
@@ -81,7 +78,6 @@ ok("\x[d]" ~~ m/^ \X[C]/, 'Negative hex \X[C] match');
 #?pugs todo
 ok("\x[d]" ~~ m/^ <[\X[C]]>/, 'Negative charclass hex \X[C] match');
 #?pugs todo
-#?rakudo.parrot 11 skip 'Unrecognized character name "NEXT LINE (NEL)"'
 ok("abc\x[85]def" ~~ m/\c[NEXT LINE (NEL)]/, 'Unanchored named NEXT LINE (NEL)');
 #?pugs todo
 ok("abc\c[NEXT LINE (NEL)]def" ~~ m/\x[85]/, 'Unanchored \x[85]');
@@ -110,7 +106,6 @@ ok("\x[85]" ~~ m/^ \X[D]/, 'Negative hex \X[D] match');
 ok("\x[85]" ~~ m/^ <[\X[D]]>/, 'Negative charclass hex \X[D] match');
 
 #?pugs todo
-#?rakudo.parrot 8 skip 'Unrecognized character name "LINE FEED (LF)"'
 ok("abc\c[LINE FEED (LF)]def" ~~ m/\c[LINE FEED (LF)]/, 'Unanchored named LINE FEED (LF)');
 #?pugs todo
 ok("abc\c[LINE FEED (LF)]def" ~~ m/^ abc \c[LINE FEED (LF)] def $/, 'Anchored LINE FEED (LF)');
@@ -128,7 +123,6 @@ ok(!( "\c[LINE FEED (LF)]" ~~ m/^ <[\C[LINE FEED (LF)]]>/ ), 'Negative charclass
 #?pugs todo
 ok("\x[85]" ~~ m/^ <[\C[LINE FEED (LF)]]>/, 'Negative charclass named LINE FEED (LF) match');
 #?pugs todo
-#?rakudo.parrot 7 skip 'Unrecognized character name "FORM FEED (FF)"'
 ok("abc\c[FORM FEED (FF)]def" ~~ m/\c[FORM FEED (FF)]/, 'Unanchored named FORM FEED (FF)');
 #?pugs todo
 ok("abc\c[FORM FEED (FF)]def" ~~ m/^ abc \c[FORM FEED (FF)] def $/, 'Anchored FORM FEED (FF)');
@@ -146,7 +140,6 @@ ok(!( "\c[FORM FEED (FF)]" ~~ m/^ <[\C[FORM FEED (FF)]]>/ ), 'Negative charclass
 #?pugs todo
 ok("\c[LINE FEED (LF)]" ~~ m/^ <[\C[FORM FEED (FF)]]>/, 'Negative charclass named FORM FEED (FF) match');
 #?pugs todo
-#?rakudo.parrot 7 skip 'Unrecognized character name "CARRIAGE RETURN (CR)"'
 ok("abc\c[CARRIAGE RETURN (CR)]def" ~~ m/\c[CARRIAGE RETURN (CR)]/, 'Unanchored named CARRIAGE RETURN (CR)');
 #?pugs todo
 ok("abc\c[CARRIAGE RETURN (CR)]def" ~~ m/^ abc \c[CARRIAGE RETURN (CR)] def $/, 'Anchored CARRIAGE RETURN (CR)');
@@ -165,7 +158,6 @@ ok(!( "\c[CARRIAGE RETURN (CR)]" ~~ m/^ <[\C[CARRIAGE RETURN (CR)]]>/ ), 'Negati
 #?pugs todo
 ok("\c[FORM FEED (FF)]" ~~ m/^ <[\C[CARRIAGE RETURN (CR)]]>/, 'Negative charclass named CARRIAGE RETURN (CR) match');
 #?pugs todo
-#?rakudo.parrot 7 skip 'Unrecognized character name "NEXT LINE (NEL)"'
 ok("abc\c[NEXT LINE (NEL)]def" ~~ m/\c[NEXT LINE (NEL)]/, 'Unanchored named NEXT LINE (NEL)');
 #?pugs todo
 ok("abc\c[NEXT LINE (NEL)]def" ~~ m/^ abc \c[NEXT LINE (NEL)] def $/, 'Anchored NEXT LINE (NEL)');

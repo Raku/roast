@@ -6,7 +6,7 @@ use Test;
 This file was originally derived from the perl5 CPAN module Perl6::Rules,
 version 0.3 (12 Apr 2004), file t/properties_slow_to_compile.t.
 
-XXX needs more clarification on the case of the rules,
+XXX needs more clarification on the case of the rules, 
 ie letter vs. Letter vs isLetter
 
 =end pod
@@ -89,18 +89,15 @@ ok("\x[C401]\c[LEFTWARDS ARROW]" ~~ m/<:InArrows>/, q{Match unanchored <InArrows
 
 
 #?pugs todo
-#?rakudo.parrot 3 skip 'Unrecognized character name "NULL"'
 ok("\c[NULL]" ~~ m/^<:InBasicLatin>$/, q{Match <:InBasicLatin>} );
 ok(!( "\c[NULL]" ~~ m/^<:!InBasicLatin>$/ ), q{Don't match negated <InBasicLatin>} );
 ok(!( "\c[NULL]" ~~ m/^<-:InBasicLatin>$/ ), q{Don't match inverted <InBasicLatin>} );
-
 ok(!( "\x[46EA]"  ~~ m/^<:InBasicLatin>$/ ), q{Don't match unrelated <InBasicLatin>} );
 #?pugs todo
 ok("\x[46EA]"  ~~ m/^<:!InBasicLatin>$/, q{Match unrelated negated <InBasicLatin>} );
 #?pugs todo
 ok("\x[46EA]"  ~~ m/^<-:InBasicLatin>$/, q{Match unrelated inverted <InBasicLatin>} );
 #?pugs todo
-#?rakudo.parrot skip 'Unrecognized character name "NULL"'
 ok("\x[46EA]\c[NULL]" ~~ m/<:InBasicLatin>/, q{Match unanchored <InBasicLatin>} );
 
 # InBengali
