@@ -4,7 +4,7 @@ use Test;
 
 # L<S04/"Statement parsing"/"or try {...}">
 
-plan 26;
+plan 27;
 
 #?pugs todo
 {
@@ -108,6 +108,17 @@ plan 26;
         }
     }
     is $catches, 1, 'CATCH does not catch exceptions thrown within it';
+}
+
+#?niecza '.resume does not actually resume'
+{
+    my $resumed = 0;
+    try {
+        die "ohh";
+        $resumed = 1;
+        CATCH { default { .resume } }
+    }
+    is $resumed, 1, 'CATCH allows to resume to right after the exception';
 }
 
 # RT #68728
