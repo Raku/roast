@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 36;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -54,6 +54,16 @@ plan 32;
     my @array = ($a, $b);
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     is((item $a, $b), @array, 'item($a, $b) is the same as <<$a $b>> in an array');
+}
+
+{
+    my @a = 1, 2;
+    my %b = 'x' => 42;
+ 
+    is_deeply [@a], [1, 2], '@array flattening';
+    is_deeply [item @a], [[1, 2]], 'item @array non-flattening';
+    is_deeply [%b], ['x' => 42], '%hash flattening';
+    is_deeply [item %b], [{'x' => 42}], 'item %hash non-flattening';
 }
 
 {
