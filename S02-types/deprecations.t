@@ -18,7 +18,7 @@ my $line;
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Any) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :exists adverb instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -29,7 +29,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Any) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :delete adverb instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -39,7 +39,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method KeySet (from Any) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use 'SetHash' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -50,7 +50,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method KeyBag (from Any) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'BagHash' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -66,7 +66,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Array) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<[ ]> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -82,7 +82,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Bag) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -98,7 +98,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from BagHash) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -115,7 +115,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Baggy) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -126,7 +126,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Baggy) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -142,7 +142,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Capture) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :exists adverb instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -158,7 +158,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method ucfirst (from Cool) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use 'tc' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -174,7 +174,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub Decrease (from GLOBAL) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use More instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -190,7 +190,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from EnumMap) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -201,7 +201,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from EnumMap) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -218,7 +218,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub ucfirst (from GLOBAL) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use 'tc' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -234,7 +234,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Hash) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -245,7 +245,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Hash) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -261,7 +261,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub Increase (from GLOBAL) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use Less instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -277,7 +277,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from List) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :exists adverb with postcircumfix:<[ ]> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -293,7 +293,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Mix) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -309,7 +309,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from MixHash) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -326,7 +326,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub Decrease (from Order) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use More instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -343,7 +343,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub Increase (from Order) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use Less instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -359,7 +359,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from Set) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -375,7 +375,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method delete (from SetHash) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -392,7 +392,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Setty) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -403,7 +403,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method exists (from Setty) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -420,7 +420,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub eval (from GLOBAL) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'EVAL' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -431,7 +431,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method eval (from Cool) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'EVAL' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -448,7 +448,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*OS called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*DISTRO.name instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -465,7 +465,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*OSVER called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*DISTRO.version instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -482,7 +482,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*VM<name> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*VM.name instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -499,7 +499,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*VM<config> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*VM.config instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -516,7 +516,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<name> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.name instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -533,7 +533,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><name> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.compiler.name instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -550,7 +550,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><ver> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.compiler.version instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -567,7 +567,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><release-number> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.compiler.release instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -584,7 +584,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><build-date> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.compiler.build-date instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -601,7 +601,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 \$*PERL<compiler><codename> called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.compiler.codename instead.
 --------------------------------------------------------------------------------
 TEXT

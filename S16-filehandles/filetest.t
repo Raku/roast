@@ -25,11 +25,11 @@ lives_ok { 'non_existing_dir'.IO ~~ :d },
          'can :d-test against non-existing dir and live';
 ok !('non_existing_dir'.IO ~~ :d ),
          'can :d-test against non-existing dir and return false';
-ok $*PROGRAM_NAME.IO ~~ :f,  "~~:f returns true on files";
-ok $*PROGRAM_NAME.IO ~~ :e,  "~~:e returns true on files";
+ok $*PROGRAM.IO ~~ :f,  "~~:f returns true on files";
+ok $*PROGRAM.IO ~~ :e,  "~~:e returns true on files";
 ok 't'.IO ~~ :e,             "~~:e returns true on directories";
-ok $*PROGRAM_NAME.IO ~~ :r,  "~~:r returns true on readable files";
-ok $*PROGRAM_NAME.IO ~~ :w,  "~~:w returns true on writable files";
+ok $*PROGRAM.IO ~~ :r,  "~~:r returns true on readable files";
+ok $*PROGRAM.IO ~~ :w,  "~~:w returns true on writable files";
 
 if $*DISTRO.is-win {
   skip "win32 doesn't have ~~:x", 2;
@@ -59,11 +59,11 @@ ok not 'doesnotexist.t'.IO ~~ :x, "~~:x returns false on non-existent files";
 ok not 'doesnotexist.t'.IO ~~ :f, "~~:f returns false on non-existent files";
 
 #?niecza skip ".s NYI"
-ok($*PROGRAM_NAME.IO.s > 42,   "~~:s returns size on existent files");
+ok($*PROGRAM.IO.s > 42,   "~~:s returns size on existent files");
 
 nok "doesnotexist.t".IO ~~ :s, "~~:s returns false on non-existent files";
 
-nok $*PROGRAM_NAME.IO ~~ :z,   "~~:z returns false on existent files";
+nok $*PROGRAM.IO ~~ :z,   "~~:z returns false on existent files";
 nok "doesnotexist.t".IO ~~ :z, "~~:z returns false on non-existent files";
 nok "t".IO ~~ :z,              "~~:z returns false on directories";
 
@@ -109,9 +109,9 @@ unlink "empty_file";
 {
     sub f($) { return 8; }
 
-    is(f($*PROGRAM_NAME), 8, "f(...) works");
-    is(-f($*PROGRAM_NAME), -8, "- f(...) does not call the ~~:f filetest");
-    is(- f($*PROGRAM_NAME), -8, "- f(...) does not call the ~~:f filetest");
+    is(f($*PROGRAM), 8, "f(...) works");
+    is(-f($*PROGRAM), -8, "- f(...) does not call the ~~:f filetest");
+    is(- f($*PROGRAM), -8, "- f(...) does not call the ~~:f filetest");
 }
 
 
