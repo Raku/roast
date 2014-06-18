@@ -23,7 +23,7 @@ my $line;
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub a (from GLOBAL) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -36,7 +36,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Sub awith (from GLOBAL) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'fnorkle' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -55,7 +55,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method new (from A) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -67,7 +67,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method new (from Awith) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'Fnorkle.new' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -89,7 +89,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method new (from B) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -102,7 +102,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method new (from Bwith) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'Borkle.new' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -123,7 +123,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method foo (from C) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -136,7 +136,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method foo (from Cwith) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -155,7 +155,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method foo (from D) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -167,7 +167,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method foo (from Dwith) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -189,7 +189,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method foo (from E) called at:
-  $*PROGRAM_NAME, line $line
+  $*PROGRAM, line $line
 Please use something else instead.
 --------------------------------------------------------------------------------
 TEXT
@@ -202,7 +202,7 @@ TEXT
 Saw 1 call to deprecated code during execution.
 ================================================================================
 Method foo (from Ewith) called at:
-  $*PROGRAM_NAME, lines $line,{$line + 1}
+  $*PROGRAM, lines $line,{$line + 1}
 Please use 'bar' instead.
 --------------------------------------------------------------------------------
 TEXT
