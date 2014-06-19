@@ -43,7 +43,9 @@ plan 3;
        'trait blocks work properly in for loop';
 }
 
-#?rakudo todo "unknown phasers issue"
+#?rakudo.parrot todo "unknown phasers issue"
+#?rakudo.moar todo "unknown phasers issue"
+#?rakudo.jvm skip "RT #122134 - last+ENTER in loop"
 {
     my $str;
 
