@@ -1,43 +1,59 @@
 use v6;
 use Test;
 
-plan 10;
+plan 13;
 
 for (
 
   ( '/foo/bar' =>
-    [ $( CompUnitRepo::Local::File, ().hash, '/foo.bar' ) ] ),
+    [ $( CompUnitRepo::Local::File, '/foo/bar', ().hash ) ] ),
   ( 'file:/foo/bar' =>
-    [ $( CompUnitRepo::Local::File, ().hash, '/foo.bar' ) ] ),
+    [ $( CompUnitRepo::Local::File, '/foo/bar', ().hash ) ] ),
   ( 'inst:/installed' =>
-    [ $( CompUnitRepo::Local::Installation, ().hash, '/installed' ) ] ),
+    [ $( CompUnitRepo::Local::Installation, '/installed', ().hash ) ] ),
   ( 'CompUnitRepo::Local::Installation:/installed' =>
-    [ $( CompUnitRepo::Local::Installation, ().hash, '/installed' ) ] ),
+    [ $( CompUnitRepo::Local::Installation, '/installed', ().hash ) ] ),
   ( 'inst:name<work>:/installed' =>
-    [ $( CompUnitRepo::Local::Installation, { :name<work> }, '/installed' ) ] ),
+    [ $( CompUnitRepo::Local::Installation, '/installed', (:name<work>).hash)]),
   ( 'inst:name[work]:/installed' =>
-    [ $( CompUnitRepo::Local::Installation, { :name<work> }, '/installed' ) ] ),
+    [ $( CompUnitRepo::Local::Installation, '/installed', (:name<work>).hash)]),
   ( 'inst:name{work}:/installed' =>
-    [ $( CompUnitRepo::Local::Installation, { :name<work> }, '/installed' ) ] ),
+    [ $( CompUnitRepo::Local::Installation, '/installed', (:name<work>).hash)]),
   ( '/foo/bar  ,  /foo/baz' =>
-    [ $( CompUnitRepo::Local::File, ().hash, '/foo.bar' ),
-      $( CompUnitRepo::Local::File, ().hash, '/foo.baz' ) ] ),
+    [ $( CompUnitRepo::Local::File, '/foo/bar', ().hash ),
+      $( CompUnitRepo::Local::File, '/foo/baz', ().hash ) ] ),
   ( 'inst:/installed, /also' =>
-    [ $( CompUnitRepo::Local::Installation, ().hash, '/installed' ),
-      $( CompUnitRepo::Local::Installation, ().hash, '/installed' ) ] ),
-  ( '/foo/bar , inst:/installed' =>
-    [ $( CompUnitRepo::Local::File, ().hash, '/foo.bar' ),
-      $( CompUnitRepo::Local::Installation, ().hash, '/installed' ) ] ),
+    [ $( CompUnitRepo::Local::Installation, '/installed', ().hash ),
+      $( CompUnitRepo::Local::Installation, '/also', ().hash ) ] ),
 
-) -> $to-check {
+) -> $to-check { parse_ok( $to-check ) };
+
+#?rakudo todo 'RT #122137'
+for (
+  ( '/foo/bar , inst:/installed' =>
+    [ $( CompUnitRepo::Local::File, '/foo/bar', ().hash ),
+      $( CompUnitRepo::Local::Installation, '/installed', ().hash ) ] ),
+) -> $to-check { parse_ok( $to-check ) };
+
+dies_ok { CompUnitRepo.parse-spec('CompUnitRepo::GitHub:masak/html-template') },
+  "must have module loaded";
+
+# need EVAL to create and check class at runtime
+EVAL '
+class CompUnitRepo::GitHub { method short-id { "gith" } };
+for (
+  ( "CompUnitRepo::GitHub:masak/html-template" =>
+    [ $( CompUnitRepo::GitHub, "masak/html-template", ().hash ) ] ),
+  ( "gith:masak/html-template" =>
+    [ $( CompUnitRepo::GitHub, "masak/html-template", ().hash ) ] ),
+) -> $to-check { parse_ok( $to-check ) };
+';
+
+#========================================================
+sub parse_ok ($to-check) {
     my $checking := $to-check.key;
-    my @answers  := $to-check.value;
+    my $answers  := $to-check.value;
 
     my $result = CompUnitRepo.parse-spec($checking);
-    subtest {
-        ok $result ~~ Positional, "'$checking' got a Positional";
-#        ok $result[0] === @answers[0], "'$checking' got us the right type";
-    }, "'$checking' parses ok";
+    is_deeply $result, $answers, "'$checking' returned the right thing";
 }
-
-#  'CompUnitRepo::GitHub:masak/html-template'
