@@ -29,11 +29,11 @@ for (
 ) -> $to-check { parse_ok( $to-check ) };
 
 #?rakudo todo 'RT #122137'
-for (
+parse_ok( 
   ( '/foo/bar , inst:/installed' =>
     [ $( CompUnitRepo::Local::File, '/foo/bar', ().hash ),
-      $( CompUnitRepo::Local::Installation, '/installed', ().hash ) ] ),
-) -> $to-check { parse_ok( $to-check ) };
+      $( CompUnitRepo::Local::Installation, '/installed', ().hash ) ] )
+);
 
 dies_ok { CompUnitRepo.parse-spec('CompUnitRepo::GitHub:masak/html-template') },
   "must have module loaded";
