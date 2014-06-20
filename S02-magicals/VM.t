@@ -51,7 +51,6 @@ ok $*VM.precomp-ext,    "Extension is '{$*VM.precomp-ext}'";
 ok $*VM.precomp-target, "Extension is '{$*VM.precomp-target}'";
 ok $*VM.prefix,         "Prefix is '{$*VM.prefix}'";
 
-#?rakudo.parrot skip '$*VM.perl fails in this test, but passes outside'
 ok $*VM.perl ~~ m/\w/, 'We can do a $*VM.perl';
 ok $*VM.gist ~~ m/\w/, 'We can do a $*VM.gist';
 ok $*VM.Str  ~~ m/\w/, 'We can do a $*VM.Str';
