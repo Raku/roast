@@ -125,7 +125,7 @@ sub j(*@i) {
 #?niecza skip "Abbreviated named parameter must have a name"
 {
     sub foo(:$) {};
-    ok &foo.signature.perl ~~ / ':' /, '.perl of a signature with anonymous named parameter';
+    ok &foo.signature.perl ~~ / ':($)' /, '.perl of a signature with anonymous named parameter';
 }
 
 # Capture param introspection
