@@ -251,7 +251,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     is($_, 'ABC', 'tr||| on $_ with character range');
 
     my $japh = "Whfg nabgure Crey unpxre";
-    $japh ~~ tr[a..z A..Z][n..z a..m  N..Z A..M];
+    $japh ~~ tr[a..zA..Z][n..za..mN..ZA..M];
     is($japh, "Just another Perl hacker", 'tr[][] on lexical var via ~~');
 
     $_ = '$123';
