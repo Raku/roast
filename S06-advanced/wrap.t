@@ -235,14 +235,14 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 {
     my $didfoo;
 
-    role SomeTrait {
+    my role SomeTrait {
       method apply_handles($attr: Mu $pkg) {
 	my $name = $attr.name;
 	my $accessor = $name.subst(/^../, '');
 	my $r = sub ($obj, |args) is rw {
-	  my (\c) = callsame;
+	  my (|c) ::= callsame;
 	  c;
-	};
+	}
 	$pkg.^find_method($accessor).wrap($r);
       }
 
@@ -256,17 +256,125 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
       $var.foo;
     }
 
-    class foo {
+    my class foo {
       has $.x is rw is wtf = 16;
     }
 
-    ok $didfoo, "Did foo";
+    ok $didfoo, "Did foo, capture return";
     my $foo = foo.new;  # x = 16;
     my $bar = foo.new(x => 32);
-    is $foo.x, 16, "default works with wrapped accessor";
-    is $bar.x, 32, "BUILD binding works with wrapped accessor";
-    $bar.x = 64;
-    is $bar.x, 64, "assignment works with wrapped accessor";
+    is $foo.x, 16, "default works with wrapped accessor, capture return";
+    is $bar.x, 32, "BUILD binding works with wrapped accessor, capture return";
+    try $bar.x = 64;
+    is $bar.x, 64, "assignment works with wrapped accessor, capture return";
+}
+
+{
+    my $didfoo;
+
+    my role SomeTrait {
+      method apply_handles($attr: Mu $pkg) {
+	my $name = $attr.name;
+	my $accessor = $name.subst(/^../, '');
+	my $r = sub ($obj, |args) is rw {
+	  return callsame;
+	}
+	$pkg.^find_method($accessor).wrap($r);
+      }
+
+      method foo { $didfoo++ }
+    }
+
+    multi trait_mod:<is>(Attribute $var, :$wtf!) {
+      die "Must have accessor" unless $var.has-accessor;
+      $var.set_rw;
+      $var does SomeTrait;
+      $var.foo;
+    }
+
+    my class foo {
+      has $.x is rw is wtf = 16;
+    }
+
+    ok $didfoo, "Did foo, return callsame";
+    my $foo = foo.new;  # x = 16;
+    my $bar = foo.new(x => 32);
+    is $foo.x, 16, "default works with wrapped accessor, return callsame";
+    is $bar.x, 32, "BUILD binding works with wrapped accessor, return callsame";
+    try $bar.x = 64;
+    is $bar.x, 64, "assignment works with wrapped accessor, return callsame";
+}
+
+{
+    my $didfoo;
+
+    my role SomeTrait {
+      method apply_handles($attr: Mu $pkg) {
+	my $name = $attr.name;
+	my $accessor = $name.subst(/^../, '');
+	my $r = sub ($obj, |args) is rw {
+	  callsame;
+	}
+	$pkg.^find_method($accessor).wrap($r);
+      }
+
+      method foo { $didfoo++ }
+    }
+
+    multi trait_mod:<is>(Attribute $var, :$wtf!) {
+      die "Must have accessor" unless $var.has-accessor;
+      $var.set_rw;
+      $var does SomeTrait;
+      $var.foo;
+    }
+
+    my class foo {
+      has $.x is rw is wtf = 16;
+    }
+
+    ok $didfoo, "Did foo, callsame";
+    my $foo = foo.new;  # x = 16;
+    my $bar = foo.new(x => 32);
+    is $foo.x, 16, "default works with wrapped accessor, callsame";
+    is $bar.x, 32, "BUILD binding works with wrapped accessor, callsame";
+    try $bar.x = 64;
+    is $bar.x, 64, "assignment works with wrapped accessor, callsame";
+}
+
+{
+    my $didfoo;
+
+    my role SomeTrait {
+      method apply_handles($attr: Mu $pkg) {
+	my $name = $attr.name;
+	my $accessor = $name.subst(/^../, '');
+	my $r = sub ($obj, |args) is rw {
+	  nextsame;
+	}
+	$pkg.^find_method($accessor).wrap($r);
+      }
+
+      method foo { $didfoo++ }
+    }
+
+    multi trait_mod:<is>(Attribute $var, :$wtf!) {
+      die "Must have accessor" unless $var.has-accessor;
+      $var.set_rw;
+      $var does SomeTrait;
+      $var.foo;
+    }
+
+    my class foo {
+      has $.x is rw is wtf = 16;
+    }
+
+    ok $didfoo, "Did foo, nextsame";
+    my $foo = foo.new;  # x = 16;
+    my $bar = foo.new(x => 32);
+    is $foo.x, 16, "default works with wrapped accessor, nextsame";
+    is $bar.x, 32, "BUILD binding works with wrapped accessor, nextsame";
+    try $bar.x = 64;
+    is $bar.x, 64, "assignment works with wrapped accessor, nextsame";
 }
 
 done;
