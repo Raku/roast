@@ -42,10 +42,10 @@ is($caught, "bc", 'Outer caught');
     is($0, "BC", 'Numeric caught');
 }
 
-#?rakudo skip 'make() inside closure'
 {
     ok("abc" ~~ m/a(bc){make uc $0}/ , 'Zero match');
     #?niecza todo
+    #?rakudo todo 'make() inside closure'
     is($($/), "BC", 'Zero matched');
     is(~$0, "bc", 'One matched');
 }

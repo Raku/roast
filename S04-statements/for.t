@@ -503,7 +503,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #64886
-#?rakudo skip 'maybe bogus, for loops are not supposed to be lazy?'
 {
     my $a = 0;
     for 1..10000000000 {

@@ -78,7 +78,7 @@ plan 17;
         multi sub Ffoo( Int $a ) is export { 'sub F::Ffoo Int' };
     }
     import F;
-    #?rakudo skip "it just dies, can't check using throws_like"
+    #?rakudo todo "it just dies, can't check using throws_like"
     throws_like 'proto sub Ffoo( Mu ) { * }', X::Redeclaration, symbol => 'Ffoo';
     multi sub Ffoo( Str $a ) { 'sub F::Ffoo Str' };
 

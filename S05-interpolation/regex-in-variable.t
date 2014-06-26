@@ -108,7 +108,6 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
           );
 }
 
-#?rakudo 3 skip 'instance member interpolation'
 #?niecza skip "Representation P6cursor does not support attributes"
 #?pugs todo
 {
@@ -116,6 +115,7 @@ eval_dies_ok 'm/%var/', 'cannot interpolate hashes into regexes';
         has $!pattern = 'a+b';
 
         method run {
+            #?rakudo 2 todo 'instance member interpolation'
             ok('aaab' ~~ / $!pattern /, 'Interpolation of instance member');
             ok('aaab' ~~ / <$!pattern> /, 'Interpolation of instance member');
             ok('aaab' ~~ / "$!pattern" /, 'Interpolation of instance member');

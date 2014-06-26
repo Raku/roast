@@ -72,7 +72,6 @@ my @list = (1 .. 10);
 #?pugs skip "Can't modify constant item: VStr 'a'"
 {
   my @array = <a b c d>;
-  #?rakudo 2 skip 'test error -- is $_ rw here?'
   is ~(@array.grep({ $_ ~= "c"; 1 })), "ac bc cc dc",
     'mutating $_ in grep works (1)';
   is ~@array, "ac bc cc dc",

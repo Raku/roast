@@ -92,7 +92,6 @@ unlink "empty_file";
         if "README".IO !~~ :f {
             skip "no file README", 3;
         } else {
-            #?rakudo 3 skip ':M, :C, :A'
             ok ("README".IO ~~ :M) > 0, "~~:M works on existing file";
             ok ("README".IO ~~ :C) > 0, "~~:C works on existing file";
             ok ("README".IO ~~ :A) > 0, "~~:A works on existing file";

@@ -56,7 +56,7 @@ is (1/4, 1/2, 1 ... 8, 9 ... *)[^10].join(' '),
     '0.25 0.5 1 2 4 8 9 10 11 12',
     'chained infinite numeric sequence';
 #?niecza skip 'Slicel lists are NYI'
-#?rakudo skip 'Slicel lists are NYI'
+#?rakudo todo 'Slicel lists are NYI'
 is infix:<...>(1/4, 1/2, 1;   8, 9;   *).join(' '),
     '1/4 1/2 1 2 4 8 9 10 11 12',
     "chained infinite numeric sequence (with 'infix:<...>')";

@@ -4,7 +4,6 @@ plan 7;
 
 # L<S14/Roles/"Roles may have attributes">
 
-#?rakudo skip 'review test and rakudo'
 {
     role R1 {
         has $!a1;

@@ -68,7 +68,7 @@ f     '0xaf-';
     check ':2<11>',     Int,      3;
     #?niecza 6 todo 'Failure'
     f     ':2<2>';
-    #?rakudo skip 'NYI'
+    #?rakudo todo 'NYI'
     f     ':37<8>';
     f     ':10<8_>';
     f     ':10<_8>';

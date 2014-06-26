@@ -54,7 +54,7 @@ is $y, 2,                            'Closure invoked twice (once per replacemen
 }
 
 my $orig = 'hello'; 
-#?rakudo skip 'Unable to resolve method ord in class Any'
+#?rakudo todo 'Unable to resolve method ord in class Any'
 #?niecza skip 'Unable to resolve method ord in class Any'
 is $orig.trans(/(l)/ => { $_[0].ord }), 'he108108o', 'capturing regex + closure with .ord on $_';
 is $orig, 'hello', 'original string unchanged';

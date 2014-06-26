@@ -13,7 +13,6 @@ my $tracker = 0;
 ok (1 orelse ($tracker = 1)), 'sanity';
 nok $tracker, 'orelse thunks';
 
-#?rakudo skip 'orelse sets $!'
 {
     try { die "oh noes!" } orelse
         ok(~$! eq "oh noes!", 'orelse sets $! after an exception');

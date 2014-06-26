@@ -102,7 +102,7 @@ plan 61;
     lives_ok { @b = @a.values }, '@a.values is typed (2)';
 } #3
 
-#?rakudo skip 'initialization'
+#?rakudo todo 'initialization'
 {
     my Str @c = <foo bar baz>;
     ok @c.keys.VAR.of.WHICH eqv Str.WHICH, '@array.keys is typed with Str';

@@ -154,7 +154,7 @@ throws_like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
     misplaced   => 'optional positional',
     after       => 'variadic';
 
-#?rakudo skip 'parsing regression'
+#?rakudo todo 'parsing regression'
 throws_like '#`', X::Syntax::Comment::Embedded;
 # RT #71814
 throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/eval/;
@@ -168,10 +168,11 @@ for <
 > {
     throws_like $_, X::Syntax::Perl5Var;
 }
-for  '$<', '$#', '$>' {
-    #?rakudo skip 'still handled by <special_var>'
-    throws_like $_, X::Syntax::Perl5Var;
-}
+
+#?rakudo 2 todo 'still handled by <special_var>'
+throws_like '$<', X::Syntax::Perl5Var;
+throws_like '$#', X::Syntax::Perl5Var;
+throws_like '$>', X::Syntax::Perl5Var;
 
 eval_lives_ok 'class frob { has @!bar; method test { return $@!bar } }', 'uses of $@!bar not wrongfully accused of using old $@ variable';
 
@@ -337,7 +338,6 @@ throws_like 'use fatal; (1+2i).Real', X::Numeric::Real, target => Real;
 
 #RT #114134
 {
-#?rakudo skip 'RT 114134'
 throws_like 'my class A {}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")', X::TypeCheck::Binding;
 
 dies_ok {EVAL(class A{}; (-> &c, $m { A.new()(); CATCH { default { $m } } } )(A, "")) }, "Should fail type check with unbound variable";

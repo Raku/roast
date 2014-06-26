@@ -226,7 +226,7 @@ plan 32;
 }
 
 # RT #68112
-#?rakudo skip "determine behavior of 0-arity methods passed to sort"
+#?rakudo todo "determine behavior of 0-arity methods passed to sort"
 #?niecza skip "determine behavior of 0-arity methods passed to sort"
 {
     sub foo () { 0 }   #OK not used

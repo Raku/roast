@@ -212,7 +212,7 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 };
 
-#?rakudo skip 'closures and regexes'
+#?rakudo todo 'closures and regexes'
 #?niecza skip 'closures and regexes'
 #?pugs skip 'Not a keyed value: VRule'
 {

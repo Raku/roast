@@ -61,7 +61,6 @@ is ([||] ()), Bool::False, "[||] () eq False";
 is ([^^] ()), Bool::False, "[^^] () eq False";
 is ([//] ()), Any, "[//] () is Any";
 is ([,] ()), (), "[,] () eq ()";
-#?rakudo skip '[Z] hangs'
 is ([Z] ()), [], "[Z] () eq []";
 
 is ([==] 3), Bool::True, 'unary [==]';

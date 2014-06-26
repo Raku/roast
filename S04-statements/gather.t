@@ -141,7 +141,7 @@ plan 28;
         'take with multiple arguments .flat tens out';
 }
 
-#?rakudo skip 'RT #117635 (infinite loop)'
+#?rakudo todo 'RT #117635 (infinite loop)'
 {
     my sub grep-div(@a, $n) {
         gather for @a {

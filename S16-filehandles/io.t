@@ -184,7 +184,6 @@ ok($in8.close, 'file closed okay (in8)');
 #is($line9_1, "Hello World", 'get($in) worked');
 #is($line9_2, "Second line", 'get($in) worked');
 
-#?rakudo skip ':rw on open() unimplemented'
 #?niecza skip 'Not yet able to open both :r and :w'
 {
     my $fh10 = open($filename, :rw);  # was "<+" ? 
