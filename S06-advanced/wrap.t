@@ -12,7 +12,7 @@ use soft;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 73;
+plan 85;
 
 my @log;
 
