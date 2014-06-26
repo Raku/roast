@@ -12,7 +12,7 @@ use soft;
 # mutating wraps -- those should be "deep", as in not touching coderefs
 # but actually mutating how the coderef works.
 
-plan 69;
+plan 73;
 
 my @log;
 
@@ -230,6 +230,43 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     });
     #?rakudo todo 'RT 77472'
     is multi-to-wrap(5), 20, 'can wrap a multi';
+}
+
+{
+    my $didfoo;
+
+    role SomeTrait {
+      method apply_handles($attr: Mu $pkg) {
+	my $name = $attr.name;
+	my $accessor = $name.subst(/^../, '');
+	my $r = sub ($obj, |args) is rw {
+	  my (\c) = callsame;
+	  c;
+	};
+	$pkg.^find_method($accessor).wrap($r);
+      }
+
+      method foo { $didfoo++ }
+    }
+
+    multi trait_mod:<is>(Attribute $var, :$wtf!) {
+      die "Must have accessor" unless $var.has-accessor;
+      $var.set_rw;
+      $var does SomeTrait;
+      $var.foo;
+    }
+
+    class foo {
+      has $.x is rw is wtf = 16;
+    }
+
+    ok $didfoo, "Did foo";
+    my $foo = foo.new;  # x = 16;
+    my $bar = foo.new(x => 32);
+    is $foo.x, 16, "default works with wrapped accessor";
+    is $bar.x, 32, "BUILD binding works with wrapped accessor";
+    $bar.x = 64;
+    is $bar.x, 64, "assignment works with wrapped accessor";
 }
 
 done;
