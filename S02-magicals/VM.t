@@ -42,9 +42,13 @@ plan 32;
 ok $*VM.name,           "We are running under '{$*VM.name}'";
 ok $*VM.auth,           "Authority is '{$*VM.auth}'";
 ok $*VM.version,        "Version is '{$*VM.version}'";
-#?rakudo todo 'no VM.signature yet'
+#?rakudo.jvm    todo 'no VM.signature yet'
+#?rakudo.moar   todo 'no VM.signature yet'
+#?rakudo.parrot skip 'no VM.signature yet'
 ok $*VM.signature,      "Signature is '{$*VM.signature}'";
-#?rakudo todo 'no VM.desc yet'
+#?rakudo.jvm    todo 'no VM.desc yet'
+#?rakudo.moar   todo 'no VM.desc yet'
+#?rakudo.parrot skip 'no VM.desc yet'
 ok $*VM.desc,           "Description is '{$*VM.desc}'";
 ok $*VM.config,         "We have config";
 ok $*VM.precomp-ext,    "Extension is '{$*VM.precomp-ext}'";
@@ -60,7 +64,9 @@ diag "'{$*VM.name}' is an unknown VM, please report" if !
   "We know of the VM we are running under";
 
 isa_ok $*VM.version, Version;
-#?rakudo todo 'no VM.signature yet'
+#?rakudo.jvm    todo 'no VM.signature yet'
+#?rakudo.moar   todo 'no VM.signature yet'
+#?rakudo.parrot skip 'no VM.signature yet'
 isa_ok $*VM.signature, Blob;
 
 # vim: ft=perl6

@@ -41,9 +41,13 @@ get a list of osnames that have actually passed tests.
 ok $*DISTRO.name,      "We are running under '{$*DISTRO.name}'";
 ok $*DISTRO.auth,      "Authority is '{$*DISTRO.auth}'";
 ok $*DISTRO.version,   "Version is '{$*DISTRO.version}'";
-#?rakudo todo 'no Distro.signature yet'
+#?rakudo.jvm    todo 'no Distro.signature yet'
+#?rakudo.moar   todo 'no Distro.signature yet'
+#?rakudo.parrot skip 'no Distro.signature yet'
 ok $*DISTRO.signature, "Signature is '{$*DISTRO.signature}'";
-#?rakudo todo 'no Distro.desc yet'
+#?rakudo.jvm    todo 'no Distro.desc yet'
+#?rakudo.moar   todo 'no Distro.desc yet'
+#?rakudo.parrot skip 'no Distro.desc yet'
 ok $*DISTRO.desc,      "Description is '{$*DISTRO.desc}'";
 ok $*DISTRO.release,   "Release info is '{$*DISTRO.release}'";
 ok $*DISTRO.path-sep,  "Path separator is '{$*DISTRO.path-sep}'";
@@ -57,7 +61,9 @@ diag "'{$*DISTRO.name}' is an unknown DISTRO, please report" if !
   "We know of the DISTRO we are running under";
 
 isa_ok $*DISTRO.version, Version;
-#?rakudo todo 'no Distro.signature yet'
+#?rakudo.jvm    todo 'no Distro.signature yet'
+#?rakudo.moar   todo 'no Distro.signature yet'
+#?rakudo.parrot skip 'no Distro.signature yet'
 isa_ok $*DISTRO.signature, Blob;
 isa_ok $*DISTRO.is-win, Bool;
 
