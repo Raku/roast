@@ -488,11 +488,11 @@ throws_like 'sub f { f(|$) }', X::Obsolete,
     old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 
 throws_like 'for 1,2,3, { say 3 }', X::Comp::Group, 
-    sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockTaken && @s[0].message ~~ /^Expression/ },
+    sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ }; 
 
 throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
-    sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockTaken && @s[0].what ~~ /'X::Y'/ },
+    sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].what ~~ /'X::Y'/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
 done;
