@@ -18,7 +18,7 @@ plan 10;
 
 {
   # L<S02/Arrays/In order to interpolate an entire hash>
-  my %hash = { b => 2 };
+  my %hash = b => 2;
   #?niecza 2 todo 'zen hash slice'
   is "%hash{}", "b\t2", 'interpolation with curly braces';
   is "%hash<>", "b\t2", 'interpolation with angle brackets';

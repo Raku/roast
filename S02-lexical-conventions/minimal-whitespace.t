@@ -9,7 +9,7 @@ plan 9;
 my @arr = <1 2 3 4 5>;
 eval_dies_ok('@arr [0]', 'array with space before opening brackets does not work');
 
-my %hash = {a => 1, b => 2};
+my %hash = a => 1, b => 2;
 eval_dies_ok('%hash <a>', 'hash with space before opening brackets does not work (1)');
 eval_dies_ok('%hash {"a"}', 'hash with space before opening braces does not work (2)');
 

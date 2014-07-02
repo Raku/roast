@@ -187,10 +187,10 @@ character classes), and those are referenced at the correct spot.
 #?rakudo todo '<%hash> not implemented'
 #?niecza skip 'Sigil % is not allowed for regex assertions'
 {
-    my %first = {'<alpha>' => '', 'b' => '', 'c' => ''};
+    my %first = '<alpha>' => '', 'b' => '', 'c' => '';
     ok('aeiou' ~~ /<%first>/, 'strings are treated as a subrule in <%foo>');
 
-    my %second = {rx/\.**2/ => '', rx/'.**2'/ => ''};
+    my %second = rx/\.**2/ => '', rx/'.**2'/ => '';
     ok('abc.**2def' ~~ /<%second>/, 'Regexes are left alone in <%foo> subrule');
 }
 

@@ -36,7 +36,7 @@ ok EVAL('Capture').does(Positional), "Capture does Positional";
 my %hash;
 #?pugs todo 'feature'
 ok %hash.does(Associative), 'uninitialized %var does Associative';
-%hash = {};
+%hash = a => 1;
 ok %hash.does(Associative), 'value in %var does Associative';
 
 #?niecza todo

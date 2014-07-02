@@ -57,8 +57,8 @@ my $expected-pod = rx/'A Heading!'
            .*? "class Sheep" .*? "it's a sheep! really!"
            .*? "method bark" .*? "produces a funny sound"/;
 
-is_run( $main,  { out => $expected-pod,
-                  err => ''}, :compiler-args['--doc'], '--doc');
+is_run( $main,  %( out => $expected-pod,
+                  err => ''), :compiler-args['--doc'], '--doc');
 
 my $main2 = $main ~ q:to"END";
 

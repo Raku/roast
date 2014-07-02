@@ -43,7 +43,8 @@ plan 18;
 
 {
   my $hashref = {:a(1), :b(2), :c(3)};
-  my %hash    = ($hashref);
+  my %hash;
+  try { %hash = ($hashref) };
 
   #?rakudo todo 'non-flattening hash refs'
   #?pugs todo 'non-flattening hash refs'

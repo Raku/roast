@@ -72,7 +72,7 @@ is Foo.new("a string").a, 'a string', "our own 'new' was called";
 
     my $a = RT64116.CREATE;
 
-    lives_ok { $a.env = { foo => "bar" } }, 'assign to attr of .CREATEd class';
+    lives_ok { $a.env = foo => "bar" }, 'assign to attr of .CREATEd class';
     is $a.env<foo>, 'bar', 'assignment works';
 }
 

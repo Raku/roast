@@ -262,7 +262,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # Whatever/Zen slices work on hashes too
 {
-    my %h = { a => 1, b => 2, c => 3};
+    my %h = a => 1, b => 2, c => 3;
     #?pugs todo
     is %h{*}.join('|'), %h.values.join('|'), '{*} whatever slice';
     is %h{}.join('|'),  %h.join('|'),        '{} zen slice';

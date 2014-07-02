@@ -13,7 +13,7 @@ plan 20;
         is($right, %top<right>, "right value is correct: $desc");
     }
 
-    my %hash = {left => 'abc', right => 'def'};
+    my %hash = left => 'abc', right => 'def';
     traverse_hash(%hash, 'basic hash');
     traverse_hash({%hash, a => 0, b => 1, c => 2}, 'hash with extra values');
 
@@ -29,7 +29,7 @@ plan 20;
         is($west, %top<west>, "west value is correct: $desc");
     }
 
-    my %hash = {east => 'abc', west => 'def'};
+    my %hash = east => 'abc', west => 'def';
     traverse_hash(%hash, 'custom hash values work');
     traverse_hash({%hash, a => 0, b => 1}, 'custom hash, extra values');
 
