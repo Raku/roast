@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 40;
 
 # currently deprecated core features
 
@@ -603,6 +603,24 @@ Saw 1 call to deprecated code during execution.
 \$*PERL<compiler><codename> called at:
   $*PROGRAM, lines $line,{$line + 1}
 Please use \$*PERL.compiler.codename instead.
+--------------------------------------------------------------------------------
+TEXT
+} #1
+
+# %foo = {...}
+#?niecza skip 'is DEPRECATED NYI'
+#?pugs   skip 'is DEPRECATED NYI'
+#?rakudo.jvm skip 'tracebacks in deprecations'
+{
+    my %h;
+    $line = $?LINE; %h = { a => 1 };
+    %h = { b => 2 };
+    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation %h = {...}';
+Saw 1 call to deprecated code during execution.
+================================================================================
+%h = \{ ... } called at:
+  $*PROGRAM, lines $line,{$line + 1}
+Please use %h = ... instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
