@@ -1,0 +1,55 @@
+use Test;
+plan 11;
+
+#| simple case
+class Simple {
+#= not so simple now!
+}
+
+is Simple.WHY.content, "simple case\nnot so simple now!";
+is ~Simple.WHY, "simple case\nnot so simple now!", 'stringifies correctly';
+
+#| a module
+module foo {
+#= moar module stuff
+    #| a package
+    package bar {
+    #= more package stuff
+        #| and a class
+        class baz {
+        #= more class stuff
+        }
+    }
+}
+
+is foo.WHY.content,           "a module\nmore module stuff";
+is foo::bar.WHY.content,      "a package\nmore package stuff";
+is foo::bar::baz.WHY.content, "and a class\nmore class stuff";
+
+#| yellow
+sub marine {}
+#= submarine
+is &marine.WHY.content, "yellow\nsubmarine";
+
+#| pink
+sub panther {} #= panther
+is &panther.WHY.content, "pink\npanther";
+
+#| a sheep
+class Sheep {
+    #| usually white
+    has $.wool;
+
+    #| not too scary
+    method roar { 'roar!' }
+}
+
+is Sheep.WHY.content, 'a sheep';
+skip 'segfault', 1;
+#is Sheep.^attributes.grep({ .name eq '$!wool' }).WHY, 'usually white';
+is Sheep.^find_method('roar').WHY.content, 'not too scary';
+
+#| trailing space here  
+sub third {}
+#=    leading space here
+is &third.WHY.content, "trailing space here\nleading space here";
