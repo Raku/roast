@@ -15,9 +15,9 @@ Some Text
 =end pod
 POD
 
-is_run :compiler-args['--doc'], $POD, %(
+is_run :compiler-args['--doc'], $POD, {
         out => rx/'Some Heading'/ & rx/'Some Text'/, err => '',
-    ), 'basic --doc sanity';
+    }, 'basic --doc sanity';
 
 my $POD2 = $POD ~ Q:to<CODE>;
 
