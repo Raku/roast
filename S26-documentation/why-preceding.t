@@ -1,5 +1,5 @@
 use Test;
-plan 19;
+plan 20;
 
 #| simple case
 class Simple {
@@ -83,3 +83,10 @@ is &second.WHY.content, 'that will break';
 #| trailing space here  
 sub third {}
 is &third.WHY.content, 'trailing space here';
+
+sub has-parameter(
+    #| documented
+    Str $param
+) {}
+
+is &has-parameter.signature.params[0].WHY, 'documented';

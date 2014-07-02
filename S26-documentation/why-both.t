@@ -1,5 +1,5 @@
 use Test;
-plan 11;
+plan 14;
 
 #| simple case
 class Simple {
@@ -53,3 +53,26 @@ is Sheep.^find_method('roar').WHY.content, 'not too scary';
 sub third {}
 #=    leading space here
 is &third.WHY.content, "trailing space here\nleading space here";
+
+sub has-parameter(
+    #| before
+    Str $param
+    #= after
+) {}
+
+is &has-parameter.signature.params[0].WHY, "before\nafter";
+
+sub has-parameter-as-well(
+    #| preceding
+    Str $param #= following
+) {}
+
+is &has-parameter-as-well.signature.params[0].WHY, "preceding\nfollowing";
+
+sub so-many-params(
+    #| next param
+    Str $param, #= first param
+    Int $other-param
+) {}
+
+is &so-many-params.signature.params[0].WHY, "next param\nfirst param";

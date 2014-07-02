@@ -1,5 +1,5 @@
 use Test;
-plan 19;
+plan 22;
 
 class Simple {
 #= simple case
@@ -81,3 +81,23 @@ is &second.WHY.content, 'that will break';
 sub third {}
 #=      leading space here
 is &third.WHY.content, 'leading space here';
+
+sub has-parameter(
+    Str $param
+    #= documented
+) {}
+
+is &has-parameter.signature.params[0].WHY, 'documented';
+
+sub has-parameter-as-well(
+    Str $param #= documented as well
+) {}
+
+is &has-parameter-as-well.signature.params[0].WHY, 'documented as well';
+
+sub so-many-params(
+    Str $param, #= first param
+    Int $other-param
+) {}
+
+is &so-many-params.signature.params[0].WHY, 'first param';
