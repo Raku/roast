@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 37;
+plan 41;
 
 {
     my @array = 11 .. 15;
@@ -100,6 +100,25 @@ plan 37;
     my %h = a => 1, b => 2, 'a b' => 3;
     is %h{<a b>}, '1 2', 'hash slicing sanity';
     is %h{[<a b>]}, '3', 'hash slicing stringifies []';
+}
+
+{
+    my $a = [ a => 1, b => 2, c => 3 ];
+    my $h = { a => 1, b => 2, c => 3 };
+
+    my @a-a = @$a;
+    my @h-a = %$a;
+
+    my @a-h = @$h;
+    my @h-h = %$h;
+
+    is_deeply +@a-a, 3, '@ sigil flattening of arrayref';
+    is_deeply +@h-a, 3, '% sigil flattening of arrayref';
+    is_deeply +@a-h, 3, '@ sigil flattening of hashref';
+#?rakudo.moar todo "RT 122223"
+#?rakudo.jvm todo "RT 122223"
+#?rakudo.parrot todo "RT 122223"
+    is_deeply +@h-h, 3, '% sigil flattening of hashref';
 }
 
 # vim: ft=perl6
