@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 197;
+plan 196;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -93,12 +93,9 @@ sub showkv($x) {
     is $b{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    my %h = bag <a b o p a p o o>;
-    ok %h ~~ Hash, 'A hash to which a Bag has been assigned remains a hash';
-    is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
+    throws_like 'my %h = bag <a b o p a p o o>', X::Hash::Store::OddNumber;
 }
 {
     my %h := bag <a b o p a p o o>;

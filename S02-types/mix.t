@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 179;
+plan 178;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -98,12 +98,9 @@ sub showkv($x) {
     is $m{2, 'a', False}.join(' '), '1 2 3', 'All keys have the right values';
 }
 
-#?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    my %h = mix <a b o p a p o o>;
-    ok %h ~~ Hash, 'A hash to which a Mix has been assigned remains a hash';
-    is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
+    throws_like 'my %h = mix <a b o p a p o o>', X::Hash::Store::OddNumber;
 }
 {
     my %h := mix <a b o p a p o o>;

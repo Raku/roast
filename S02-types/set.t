@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 169;
+plan 167;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -91,14 +91,9 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is +$s, 3, 'Keys are counted correctly even when a key is False';
 }
 
-# RT #77760
-#?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    my %h = set <a b o p a p o o>;
-    ok %h ~~ Hash, 'A hash to which a Set has been assigned remains a hash';
-    is %h.keys.sort.join, 'abop', '...with the right keys';
-    is %h.values, (True, True, True, True), '...and values all True';
+    throws_like 'my %h = set <a b o p a p o o>', X::Hash::Store::OddNumber;
 }
 {
     my %h := set <a b o p a p o o>;

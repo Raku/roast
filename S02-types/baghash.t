@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 250;
+plan 249;
 
 # L<S02/Mutable types/QuantHash of UInt>
 
@@ -125,12 +125,9 @@ sub showkv($x) {
     is $a.kv.tree.sort({ .[0] }), ([1, 1], [2, 5], [3, 1]).list.sort, "BagHash.kv returns list of keys and values";
 }
 
-#?rakudo skip "Odd number of elements"
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    my %h = bag <a b o p a p o o>;
-    ok %h ~~ Hash, 'A hash to which a Bag has been assigned remains a hash';
-    is showkv(%h), 'a:2 b:1 o:3 p:2', '...with the right elements';
+    throws_like 'my %h = BagHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
 }
 
 {
