@@ -152,7 +152,6 @@ sub showkv($x) {
 {
     my $m = MixHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa_ok $m, MixHash, '&MixHash.new given a Hash produces a MixHash';
-    #?rakudo todo "Needs to catch up with spec"
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
     #?rakudo todo "Needs to catch up with spec"

@@ -122,7 +122,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     # {}.hash interpolates in list context
     my $b = set { foo => 10, bar => 17, baz => 42 }.hash;
     isa_ok $b, Set, '&Set.new given a Hash produces a Set';
-    #?rakudo todo "Not properly interpolating"
     is +$b, 3, "... with three elements";
     #?rakudo todo "Not properly interpolating"
     #?niecza todo "Losing type in Set"

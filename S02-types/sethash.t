@@ -150,7 +150,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 {
     my $b = SetHash.new({ foo => 10, bar => 17, baz => 42 }.hash);
     isa_ok $b, SetHash, 'SetHash.new given a Hash produces a SetHash';
-    #?rakudo todo "Not up to current spec"
     is +$b, 3, '... with three elements';
     #?niecza todo "Non-string keys NYI"
     #?rakudo todo "Not up to current spec"

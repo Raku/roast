@@ -115,9 +115,6 @@ plan 41;
     is_deeply +@a-a, 3, '@ sigil flattening of itemized array';
     is_deeply +@h-a, 3, '% sigil flattening of itemized array';
     is_deeply +@a-h, 3, '@ sigil flattening of itemized hash';
-#?rakudo.moar todo "RT 122223"
-#?rakudo.jvm todo "RT 122223"
-#?rakudo.parrot todo "RT 122223"
     is_deeply +@h-h, 3, '% sigil flattening of itemized hash';
 }
 

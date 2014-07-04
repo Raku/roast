@@ -127,7 +127,6 @@ sub showkv($x) {
     # {}.hash interpolates in list context
     my $m = mix { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa_ok $m, Mix, '&Mix.new given a Hash produces a Mix';
-    #?rakudo todo "Not properly interpolating"
     is +$m, 4, "... with four elements";
     #?niecza todo "Non-string mix elements NYI"
     #?rakudo todo "Not properly interpolating"

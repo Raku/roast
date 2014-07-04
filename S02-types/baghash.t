@@ -148,7 +148,6 @@ sub showkv($x) {
 {
     my $b = BagHash.new({ foo => 10, bar => 17, baz => 42, santa => 0 }.hash);
     isa_ok $b, BagHash, '&BagHash.new given a Hash produces a BagHash';
-    #?rakudo todo "Needs to catch up with spec"
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
     #?rakudo todo "Needs to catch up with spec"

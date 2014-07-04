@@ -122,7 +122,6 @@ sub showkv($x) {
     # {}.hash interpolates in list context
     my $b = bag { foo => 10, bar => 17, baz => 42, santa => 0 }.hash;
     isa_ok $b, Bag, '&Bag.new given a Hash produces a Bag';
-    #?rakudo todo "Not properly interpolating"
     is +$b, 4, "... with four elements";
     #?niecza todo "Non-string bag elements NYI"
     #?rakudo todo "Not properly interpolating"
