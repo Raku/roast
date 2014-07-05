@@ -68,7 +68,7 @@ DOC INIT {
     }
 END
 
-#?rakudo todo 'RT12205'
+#?rakudo todo 'RT #12205'
 is_run( $main2,  { out => $expected-pod,
                   err => ''}, :compiler-args['--doc'], '--doc + DOC INIT {}');
 

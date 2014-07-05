@@ -903,7 +903,7 @@ sub l () { 1, 2 };
    my $rt80614 = @b[0] = @a[1];
 
    is $rt80614, 2, 'assignment to scalar via array item from array item';
-   #?rakudo todo 'RT 80614'
+   #?rakudo todo 'RT #80614'
    is @b[0], 2, 'assignment to array item from array item to scalar';
 }
 
@@ -936,21 +936,21 @@ sub l () { 1, 2 };
 
 }
 
-# RT 77586
+# RT #77586
 {
     my %bughunt = 1 => "foo", 2 => "bar", 3 => "foo";
     my %correct = grep { .value ne "bar" }, %bughunt.pairs;
     %bughunt    = grep { .value ne "bar" }, %bughunt.pairs;  
     is %bughunt, %correct,
-       'Assign to hash with the same hash on rhs (RT 77586)';
+       'Assign to hash with the same hash on rhs (RT #77586)';
 }
 
-# RT 93972
+# RT #93972
 {
     my $rt93972 = 1, 2, 3;
     $rt93972 = $rt93972.grep({1});
     is $rt93972, [1],
-       'Assign to array with the same array on rhs (RT 93972)';
+       'Assign to array with the same array on rhs (RT #93972)';
     $rt93972 = (1, 2, 3);
     $rt93972 = $rt93972.grep({1});
     is $rt93972.join(','), '1,2,3', 'same with Parcel';
@@ -961,7 +961,7 @@ sub l () { 1, 2 };
     my @bughunt = 1, 2, 3;
     @bughunt = @bughunt.grep(1);
     is @bughunt, [1],
-       'Assign to array with the same array on rhs (RT 93972)';
+       'Assign to array with the same array on rhs (RT #93972)';
 }
 
 # RT #77174

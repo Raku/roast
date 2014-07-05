@@ -190,8 +190,8 @@ plan 21;
 
 #?niecza todo '@!'
 #?pugs todo
-#?rakudo.jvm skip 'unwind, RT 121530'
-#?rakudo.moar skip 'unwind, RT 121530'
+#?rakudo.jvm skip 'unwind, RT #121530'
+#?rakudo.moar skip 'unwind, RT #121530'
 {
     my $str;
     try {

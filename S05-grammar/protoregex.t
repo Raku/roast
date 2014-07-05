@@ -120,7 +120,7 @@ is ~LTM.subparse('aaa', :rule('ass2')),    'aaa',    '<!{...}> does not terminat
 #?niecza todo '#89'
 is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do terminate LTM';
 
-# RT120146
+# RT #120146
 #?niecza skip "Action method assertion:sym<...> not yet implemented"
 {
     grammar G {
@@ -138,7 +138,7 @@ is ~LTM.subparse('aaa', :rule('block')),   'aa',     'However, code blocks do te
     is ~G.subparse("-42", :rule<num>), '-42', 'num parse';
     is ~G.subparse("-my_id", :rule<ident>), '-my_id', 'id parse';
     is ~G.subparse("my_id", :rule<term>), 'my_id', 'term parse';
-    #?rakudo todo 'RT120146'
+    #?rakudo todo 'RT #120146'
     is ~G.subparse("-my_id", :rule<term>), '-my_id', 'term parse, leading "-"';
 }
 

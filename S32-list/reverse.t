@@ -103,7 +103,7 @@ is(@a, @e, "list was reversed");
 }
 
 # RT #77914
-#?rakudo todo "RT 77914"
+#?rakudo todo "RT #77914"
 #?niecza skip 'Unable to resolve method reverse in class Parcel'
 {
     is (<a b>, <c d>).reverse.join, 'dcba', '.reverse flattens parcels';

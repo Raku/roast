@@ -52,7 +52,7 @@ ok '  abcdef' ~~ m/.*?(a(.).)/, 'Regex matches';
 is ca($0.caps),     '0:b',      '.caps on submatches';
 is ca($0.chunks),   '~:a|0:b|~:c',  '.chunks on submatches';
 
-# RT117831 separator captures
+# RT #117831 separator captures
 ok 'a;b,c,' ~~ m/(<.alpha>) +% (<.punct>)/, 'Regex matches';
 is ca($/.caps),     '0:a|1:;|0:b|1:,|0:c',  '.caps on % separator';
 is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c',  '.chunks on % separator';
@@ -81,7 +81,7 @@ is ca($/.chunks),   '0:a|1:;|0:b|1:,|0:c|1:,',  '.chunks on %% separator';
     is ca($/.caps),     '0:a|0:b',    '.caps on quantified &&';
 
     ok 'ab' ~~ m/[[a|b] && <alpha>]**1..2/,  'Regex matches';
-#?rakudo todo 'RT117955 - quantified conjunctive capture'
+#?rakudo todo 'RT #117955 - quantified conjunctive capture'
     is ca($/.caps),     'alpha:a|alpha:b',    '.caps on quantified &&';
 }
 

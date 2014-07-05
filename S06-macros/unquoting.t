@@ -40,7 +40,7 @@ plan 5;
     is einstein(), 4, "can build ASTs incrementally";
 }
 
-#?rakudo.moar skip 'Specified code ref has no outer, RT 121533'
+#?rakudo.moar skip 'Specified code ref has no outer, RT #121533'
 { # building an AST incrementally in a for loop
     macro podolsky() {
         my $q = quasi { 2 };

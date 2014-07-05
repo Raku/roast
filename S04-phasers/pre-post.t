@@ -115,7 +115,7 @@ dies_ok  { $pt.test(1) }, 'POST receives return value as $_ (failure)';
         }
     }
     #?pugs todo
-    #?rakudo.moar todo 'failing PRE block should not run any other phasers, RT 121531'
+    #?rakudo.moar todo 'failing PRE block should not run any other phasers, RT #121531'
     is $str, '(', 'failing PRE runs nothing else';
 }
 

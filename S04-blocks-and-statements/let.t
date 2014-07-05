@@ -49,7 +49,7 @@ plan 12;
     is((let $a = 23; $a), 23, "let() changed the variable in a try block");
     die 57;
   };
-  #?rakudo.jvm todo 'let restore on exception, RT 121647'
+  #?rakudo.jvm todo 'let restore on exception, RT #121647'
   is $a, 42, "let() restored the variable, the block was exited using an exception";
 }
 

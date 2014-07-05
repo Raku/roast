@@ -162,7 +162,7 @@ my @tests = (
 }
 
 # RT #67790
-#?rakudo skip 'RT 67790'
+#?rakudo skip 'RT #67790'
 {
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';

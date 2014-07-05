@@ -57,7 +57,7 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 
     $c( 2, 3, 4, 5 );
 
-    #?rakudo 2 todo 'RT 63974'
+    #?rakudo 2 todo 'RT #63974'
     #?niecza 2 todo
     is $topic, 2, '$_ got right value for code ref';
     is @topic_array, ( 3, 4, 5 ), '@_ got right value in code ref';

@@ -89,7 +89,7 @@ class BarNextWithInt is Foo {
             nextwith();
         }
     }
-    #?rakudo todo 'variant of RT 69608'
+    #?rakudo todo 'variant of RT #69608'
     dies_ok { DeferWithoutCandidate.new.a(1) },
         'Dies when nextwith() does not find a candidate to dispatch to';
     is $called, 1, 'but was in the correct method before death';

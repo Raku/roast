@@ -44,11 +44,11 @@ is both( 'x', :delta<echo>, 'foxtrot' ), 'foxtrotecho',
 is both(), '',
    'sub using both named and position params works with no params';
 
-# RT 71112
+# RT #71112
 {
     sub rt71112 { @_[0] = 'bug' }
     my $tender = 'sanity';
-    #?rakudo todo 'RT 71112: Cannot assign to readonly variable.'
+    #?rakudo todo 'RT #71112: Cannot assign to readonly variable.'
     dies_ok { rt71112( $tender ) }, 'Sub that tries to modify @_ dies';
     is $tender, 'sanity', 'The variable passed is unchanged.';
 }

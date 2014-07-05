@@ -66,8 +66,8 @@ my $output;
     }
 }
 
-#?rakudo.moar todo 'RT121722'
-#?rakudo.parrot todo 'NEXT RT121722'
+#?rakudo.moar todo 'RT #121722'
+#?rakudo.parrot todo 'NEXT RT #121722'
 is $output, q:to"END", 'FIRST/NEXT/LAST example';
 Score	Player
 -----	------

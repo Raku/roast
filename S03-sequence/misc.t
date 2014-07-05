@@ -92,7 +92,7 @@ is (1, { $^n*2 + 1 } ... 31, *+5 ... { $^n**2 < 2000 }, 'a', *~'z' ... { $_.char
 
 {
     my @rt80574 := -> { 'zero', 'one' } ... *;
-    #?rakudo todo 'RT 80574'
+    #?rakudo todo 'RT #80574'
     is @rt80574[0], 'zero', 'Generator output is flattened';
 }
 

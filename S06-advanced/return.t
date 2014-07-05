@@ -300,7 +300,7 @@ is Foo::official(), 44,
     "return correctly from official sub only";
 
 # RT #75118
-#?rakudo skip 'RT 75118'
+#?rakudo skip 'RT #75118'
 #?niecza skip "Excess arguments to return, unused named c"
 {
     sub named() {
@@ -316,7 +316,7 @@ is Foo::official(), 44,
 #?niecza todo
 {
     sub rt61732_c { 1; CATCH {} }
-    #?rakudo todo 'RT 61732'
+    #?rakudo todo 'RT #61732'
     is rt61732_c(), 1, 'sub with empty catch block returns value before block';
 }
 

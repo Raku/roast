@@ -173,7 +173,7 @@ is NaN.Rat, NaN, "NaN.Rat == NaN";
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
     # RT #74648
-    #?rakudo skip 'RT 74648'
+    #?rakudo skip 'RT #74648'
     #?niecza todo
     isa_ok Inf.Int / 1, Rat, "Inf.Int / 1 is a Rat";
 }
@@ -206,7 +206,7 @@ is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
     "Num to Rat with epsilon of Rat");
 
 is (5/4).Int,       1, 'Rat.Int';
-is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT 69738)';
+is <a b c>.[4/3],  'b', 'Indexing an array with a Rat (RT #69738)';
 
 is_approx 424/61731 + 832/61731, 424.Num / 61731.Num + 832.Num / 61731.Num, "424/61731 + 832/61731 works";
 is_approx 424/61731 - 832/61731, 424.Num / 61731.Num - 832.Num / 61731.Num, "424/61731 - 832/61731 works";

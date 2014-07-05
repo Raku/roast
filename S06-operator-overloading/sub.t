@@ -389,7 +389,7 @@ Testing operator overloading subroutines
     is EVAL('sub infix:<,>($a, $b) { 42 }; 5, 5'), 42, 'infix:<,>($a, $b)';
     is EVAL('sub infix:<,>(Int $x where 1, Int $y where 1) { 42 }; 1, 1'), 42,
        'very specific infix:<,>';
-    #?rakudo todo 'RT 65638'
+    #?rakudo todo 'RT #65638'
     #?niecza todo
     is EVAL('sub infix:<#>($a, $b) { 42 }; 5 # 5'), 42, 'infix:<comment char>($a, $b)';
     is EVAL('multi sub infix:<+>() { 42 }; 5 + 5'), 10, 'infix:<+>()';
@@ -425,9 +425,9 @@ Testing operator overloading subroutines
 # RT #112870
 {
     sub infix:<*+>($a, $b) { $a * $b + $b }
-    is 2 *+ 5, 15, 'longest operator wins (RT 111418)';
+    is 2 *+ 5, 15, 'longest operator wins (RT #111418)';
     sub infix:<~eq>(Str $a, Str $b) { uc($a) eq uc($b) }
-    ok 'a' ~eq 'A', 'longest operator wins (RT 112870)';
+    ok 'a' ~eq 'A', 'longest operator wins (RT #112870)';
 }
 
 done;

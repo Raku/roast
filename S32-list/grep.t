@@ -98,7 +98,7 @@ my @list = (1 .. 10);
        '2,4,5', "grep() with non-Code matcher";
 }
 
-# RT 71544
+# RT #71544
 #?niecza skip 'No value for parameter $b in ANON'
 {
     my @in = ( 1, 1, 2, 3, 4, 4 );
@@ -107,7 +107,7 @@ my @list = (1 .. 10);
 # It just kind of clarifies the test that follows.
 #    is (map { $^a == $^b }, @in), (?1, ?0, ?1), 'map takes two at a time';
 
-    #?rakudo skip 'RT 71544: grep arity sensitivity different from map'
+    #?rakudo skip 'RT #71544: grep arity sensitivity different from map'
     #?pugs todo
     is (grep { $^a == $^b }, @in), (1, 1, 4, 4), 'grep takes two at a time';
 }

@@ -48,7 +48,7 @@ is tester2({ 'block' }), 1, 'Can pass a block to a &parameter';
         $tracker = &foo
     };
     #?niecza todo
-    #?rakudo todo 'RT 67932'
+    #?rakudo todo 'RT #67932'
     lives_ok { foo },
         'can call a sub with a code object defaulting to something of its own name';
     #?pugs todo

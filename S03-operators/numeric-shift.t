@@ -28,7 +28,7 @@ check -15, 3, -120, -2;
 check -16, 3, -128, -2;
 check -17, 3, -136, -3;
 
-#?rakudo.parrot todo 'RT121909 - giving wrong result'
+#?rakudo.parrot todo 'RT #121909 - giving wrong result'
 my int $t = 10;
 is (2 * $t) + ($t +> 2), 22;
 

@@ -168,7 +168,7 @@ sub functionB {
 #?rakudo todo 'temp and wrap'
 is( functionB, 'xxx', "Wrap is now out of scope, should be back to normal." );
 
-#?rakudo todo 'RT 70267: call to nextsame with nowhere to go'
+#?rakudo todo 'RT #70267: call to nextsame with nowhere to go'
 dies_ok { {nextsame}() }, '{nextsame}() dies properly';
 
 # RT #66658
@@ -228,7 +228,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     &multi-to-wrap.wrap({
         2 * callsame;
     });
-    #?rakudo todo 'RT 77472'
+    #?rakudo todo 'RT #77472'
     is multi-to-wrap(5), 20, 'can wrap a multi';
 }
 

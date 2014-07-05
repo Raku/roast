@@ -334,7 +334,7 @@ class TestClass{ has $.key is rw  };
         for 1 { $t ~= $h };
     };
     r 3;
-    is $t, '3210', 'can mix recursion and for (RT 103332)';
+    is $t, '3210', 'can mix recursion and for (RT #103332)';
 }
 
 # grep and sort in for - these were pugs bugs once, so let's
@@ -491,7 +491,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     is rt71268(), Nil, 'result of "for ^1 {}" is Nil';
 }
 
-# RT 62478
+# RT #62478
 {
     eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
@@ -549,8 +549,8 @@ lives_ok {
     is ~@s, '4 6 8 10', 'Can use statement-modifying "for" in list comprehension';
 }
 
-# RT 113026
-#?rakudo todo 'RT 113026 array iterator does not track a growing array'
+# RT #113026
+#?rakudo todo 'RT #113026 array iterator does not track a growing array'
 #?niecza todo 'array iterator does not track a growing array'
 #?pugs todo
 {

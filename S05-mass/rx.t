@@ -2536,45 +2536,45 @@ ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
 #?pugs todo 
 ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 
-# RT 112450
-#?pugs todo 'RT 112450'
+# RT #112450
+#?pugs todo 'RT #112450'
 {
-    ok 'foooo' ~~ /^ f o ** 4 $/, 'RT 112450 sanity';
+    ok 'foooo' ~~ /^ f o ** 4 $/, 'RT #112450 sanity';
     my $rt112450 = 4;
-    #?rakudo 2 skip 'RT 112450'
+    #?rakudo 2 skip 'RT #112450'
     #?niecza 2 skip 'Dubious test, http://irclog.perlgeek.de/perl6/2012-05-27#i_5643089'
-    ok 'foooo' ~~ /^ f o **  $rt112450  $/, 'RT 112450 interpolation';
-    ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT 112450 closure interpolation';
+    ok 'foooo' ~~ /^ f o **  $rt112450  $/, 'RT #112450 interpolation';
+    ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT #112450 closure interpolation';
 }
 
-# RT 112454
-#?pugs skip 'RT 112454'
+# RT #112454
+#?pugs skip 'RT #112454'
 {
     my $rt112454 = 3;
     my $ten_x = 'x' x 10;
 
-    ok $ten_x ~~ / x ** 3 /, 'RT 112454 match sanity';
-    is $/.Str, 'x' x 3, 'RT 112454 quantifier sanity';
+    ok $ten_x ~~ / x ** 3 /, 'RT #112454 match sanity';
+    is $/.Str, 'x' x 3, 'RT #112454 quantifier sanity';
 
-    #?rakudo 2 skip 'RT 112454'
-    ok $ten_x ~~ / x ** {$rt112454} /, 'Simple match (RT 112454)';
-    is $/.Str, 'x' x $rt112454, '** quantifier with braces (RT 112454)';
+    #?rakudo 2 skip 'RT #112454'
+    ok $ten_x ~~ / x ** {$rt112454} /, 'Simple match (RT #112454)';
+    is $/.Str, 'x' x $rt112454, '** quantifier with braces (RT #112454)';
 }
 
-# RT 116415
-#?pugs skip 'RT 116415'
+# RT #116415
+#?pugs skip 'RT #116415'
 {
     my $rt116415 = 0;
 
-    ok 'foobar' ~~ / . ** 0 /, 'RT 116415 match sanity';
-    is $/.Str, '', 'RT 116415 quantifier sanity';
+    ok 'foobar' ~~ / . ** 0 /, 'RT #116415 match sanity';
+    is $/.Str, '', 'RT #116415 quantifier sanity';
 
-    #?rakudo 2 skip 'RT 116415'
-    ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT 116415)';
-    is $/.Str, '', '** quantifier with braces (RT 116415)';
+    #?rakudo 2 skip 'RT #116415'
+    ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT #116415)';
+    is $/.Str, '', '** quantifier with braces (RT #116415)';
 }
 
-# RT 115298
+# RT #115298
 #?pugs todo
 ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match literally';
 #?pugs todo

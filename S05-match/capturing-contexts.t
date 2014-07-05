@@ -41,7 +41,7 @@ plan 43;
   ok( $/.hash.keys[0] eq 'alpha', 'the .hash method returns a hash object');
 }
 
-# RT 62530
+# RT #62530
 #?niecza skip 'rule declaration outside of grammar'
 {
   augment class Match { method keys () {return %(self).keys }; };
@@ -85,7 +85,7 @@ plan 43;
 # This is similar to a test in S05-interpolation/regex-in-variable.t
 #?niecza todo 'match with non-existent capture does not match'
 nok 'aa' ~~ /(.)$1/, 'match with non-existent capture does not match';
-#?rakudo todo 'RT 70007'
+#?rakudo todo 'RT #70007'
 #?niecza todo 'eek'
 is_run( q{'aa' ~~ /(.)$1/},
         {
@@ -97,7 +97,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 
 # RT #66252
 {
-    $_ = 'RT 66252';
+    $_ = 'RT #66252';
     m/(R.)/;
     #?niecza todo 'Match object in $/ after match in void context'
     isa_ok $/, 'Match', 'Match object in $/ after match in void context';
@@ -143,7 +143,7 @@ is_run( q{'aa' ~~ /(.)$1/},
     is $x, 2, '$/.list does not flattens subcaptures';
 }
 
-# RT 74180
+# RT #74180
 {
     my $s;
     try { $s = EVAL '"foo" ~~ /(foo)/; "$0a"' };
@@ -153,7 +153,7 @@ is_run( q{'aa' ~~ /(.)$1/},
 
 # L<S32::Rules/Match>
 
-# RT 117461
+# RT #117461
 {
     ok "a \n \b \n c \n d" ~~ /a .* c/, "match multiple lines with '.'";
     ok $/.can('lines'), "Match has a .lines method";

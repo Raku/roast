@@ -273,14 +273,14 @@ ok "x" !~~ NW1, 'subset declaration without where clause rejects wrong value';
 # RT #79160
 {
     my Str subset MyStr;
-    #?rakudo todo 'RT 79160'
+    #?rakudo todo 'RT #79160'
     ok MyStr ~~ Str, 'my str subset MyStr creates basically a type alias (1)';
     ok 'foo' ~~ MyStr, 'my str subset MyStr creates basically a type alias (2)';
-    #?rakudo todo 'RT 79160'
+    #?rakudo todo 'RT #79160'
     ok 2    !~~ MyStr, 'Ints are not in there';
 }
 
-# RT 72948
+# RT #72948
 #?niecza skip "Exceptions not supported"
 {
     try { EVAL 'sub foo($x where { $x == $y }, $y) { }' };

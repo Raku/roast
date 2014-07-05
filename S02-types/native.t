@@ -94,7 +94,7 @@ plan 27;
 
 # RT #102416
 #?niecza skip 'Malformed my'
-#?rakudo skip 'RT 102416'
+#?rakudo skip 'RT #102416'
 {
     my int $x;
     ($x) = (5);

@@ -24,7 +24,7 @@ my $POD2 = $POD ~ Q:to<CODE>;
 DOC INIT { say 'alive'; exit };
 CODE
 
-#?rakudo todo 'RT12205'
+#?rakudo todo 'RT #12205'
 is_run :compiler-args['--doc'], $POD2 , {
         out => rx/'alive'/, err => '',
     }, 'basic --doc with DOC INIT block';

@@ -162,8 +162,8 @@ plan 27;
 }
 
 # RT #111704
-#?rakudo.moar todo 'RT 111704'
-#?rakudo.jvm todo 'RT 111704'
+#?rakudo.moar todo 'RT #111704'
+#?rakudo.jvm todo 'RT #111704'
 #?pugs skip 'Missing required parameters: $_'
 {
     my $x = 0;
