@@ -10,9 +10,6 @@ Basic parameterized role tests, see L<S14/Roles>
 
 =end pod
 
-#?pugs emit skip_rest('parameterized roles'); exit;
-#?pugs emit =begin SKIP
-
 # L<S14/Run-time Mixins/may be parameterized>
 
 # Some basic arity-based selection tests.
@@ -154,7 +151,5 @@ is(AP_1.new.y,   'b',  'use of type params in attr initialization works after 2n
     eval_dies_ok 'class WrongFu does MD_generics[3] { }',
        'MD with generics at class composition times fails (wrong arity)';
 }
-
-#?pugs emit =end SKIP
 
 # vim: ft=perl6

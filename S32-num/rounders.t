@@ -62,11 +62,6 @@ my %tests =
          [ "2.Num", 2 ]  ],
     );
 
-#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-#?pugs emit     skip_rest "PIL2JS and PIL-Run do not support EVAL() yet.";
-#?pugs emit     exit;
-#?pugs emit }
-
 for %tests.keys.sort -> $type {
     my @subtests = @(%tests{$type});	# XXX .[] doesn't work yet!
     for @subtests -> $test {

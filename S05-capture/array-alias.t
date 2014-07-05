@@ -16,8 +16,6 @@ be valid perl6.
 
 plan 45;
 
-#?pugs emit force_todo 1..12, 14..45;
-
 ok("  a b\tc" ~~ m/@<chars>=( \s+ \S+ )+/, 'Named simple array capture');
 is(join("|", @<chars>), "  a| b|\tc", 'Captured strings');
 

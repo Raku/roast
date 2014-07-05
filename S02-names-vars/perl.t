@@ -67,11 +67,6 @@ my @tests = (
     <a b c>
 );
 
-#?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PUGS" {
-#?pugs emit   skip_rest "EVAL() not yet implemented in $?PUGS_BACKEND.";
-#?pugs emit   exit;
-#?pugs emit }
-
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 # Quoting S02 (emphasis added):
 #   To get a Perlish representation of any data value, use the .perl method.

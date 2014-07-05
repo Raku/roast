@@ -5,7 +5,6 @@ plan 21;
 # L<S02/Names and Variables/so that Perl can evaluate the result
 # back to the same object>
 
-
 my @tests = (
 
     # References to aggregates
@@ -14,16 +13,9 @@ my @tests = (
     [< a b c>],
     [ 3..42 ],
 
-    # Infinite arrays, commented because they take infram and inftime in
-    # current Pugs
-    #?pugs emit #
-    #[ 3..Inf ],
-
-    #?pugs emit #
-    #[ -Inf..Inf ],
-
-    #?pugs emit #
-    #[ 3..42, 17..Inf, -Inf..5 ],
+    [ 3..Inf ],
+    [ -Inf..Inf ],
+    [ 3..42, 17..Inf, -Inf..5 ],
 
     # Nested arrays
     [      [1,2,3] ],  # only one elem

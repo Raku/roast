@@ -14,8 +14,6 @@ be valid perl6.
 
 plan 26;
 
-#?pugs emit force_todo(3,6,7,9,10,11,12,15,16,17,18,19,20,21,22,23);
-
 # L<S05/Named scalar aliasing to subpatterns/If a named scalar alias is applied>
 
 ok("abcd" ~~ m/a  $<foo>=(..)  d/, 'Hypothetical variable capture');

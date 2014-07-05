@@ -7,11 +7,6 @@ plan 2;
 # Parsing test, so should use EVAL to ensure it can run even if something is
 # broken.
 
-#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support EVAL() yet.";
-#?pugs emit   exit;
-#?pugs emit }
-
 {
     class A { has $.b }
    

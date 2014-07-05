@@ -10,8 +10,6 @@ version 0.3 (12 Apr 2004), file t/lookaround.t.
 
 plan 10;
 
-#?pugs emit force_todo(1,4,9,10);
-
 # L<S05/Extensible metasyntax (C<< <...> >>)/The special named assertions include:>
 
 ok("a cdef" ~~ m/<after a <.ws> c> def/, 'Lookbehind');
@@ -25,6 +23,5 @@ ok(!( "abcdef" ~~ m/abc <before d <.ws> f>/ ), 'Lookahead failure');
 ok(!( "abcd f" ~~ m/abc <!before d <.ws> f>/ ), 'Negative lookahead failure');
 ok("abcdef" ~~ m/abc <!before d <.ws> f> (.)/, 'Negative lookahead');
 is(~$0, 'd', 'Verify negative lookahead');
-
 
 # vim: ft=perl6

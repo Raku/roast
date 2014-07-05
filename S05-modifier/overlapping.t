@@ -12,8 +12,6 @@ It probably needs a few syntax updates to remove p5isms
 
 plan 22;
 
-#?pugs emit force_todo(2,3,5,6,10);
-
 # should be: L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
 # L<S05/Modifiers/match at all possible character positions>
 

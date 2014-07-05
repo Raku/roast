@@ -32,11 +32,6 @@ character and thus should B<not> break the list.
 
 =end kwid
 
-#?pugs emit if $?PUGS_BACKEND ne "BACKEND_PUGS" {
-#?pugs emit   skip_rest "PIL2JS and PIL-Run do not support EVAL() yet.";
-#?pugs emit   exit;
-#?pugs emit }
-
 my @list = <a b c d>;
 my @separators = ("\t","\r","\n"," ");
 my @nonseparators = (",","/","\\",";","\xa0");

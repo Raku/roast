@@ -13,9 +13,6 @@ plan 23;
   is $bare(), 42, 'basic leave() works';
 }
 
-#?pugs emit flunk '&?BLOCK.leave() not implemented in Pugs's interpreter core yet', :todo<feature>;
-#?pugs emit skip_rest; exit;
-
 {
   my $bare = { &?BLOCK.leave(42); 23 };
 

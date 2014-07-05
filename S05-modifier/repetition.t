@@ -5,8 +5,6 @@ plan 12;
 
 #L<S05/Modifiers/"If followed by an x, it means repetition.">
 
-#?pugs emit skip_rest("Not yet implemented");
-
 #?rakudo todo ':2x'
 ok('abab' ~~ m:2x/ab/,  ':2x (repetition) modifier (+)');
 nok('ab'  ~~ m:2x/ab/, ':2x (repetition) modifier (-)');

@@ -12,9 +12,6 @@ Might need some more review and love --moritz
 
 =end pod
 
-#?pugs emit skip_rest('parameterized roles'); exit;
-#?pugs emit =begin SKIP
-
 # L<S14/Run-time Mixins/may be parameterized>
 role InitialAttribVal[$val] {
     has $.attr = $val;
@@ -112,7 +109,5 @@ ok !$d.^does(InitialAttribBoth["type1", "name1"]),
   ".^does gives correct information (4-3)";
 is $d.type, "type1", ".type works correctly";
 is $d.name, "name1", ".name works correctly";
-
-#?pugs emit =end SKIP
 
 # vim: ft=perl6

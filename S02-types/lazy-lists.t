@@ -17,14 +17,6 @@ use Test;
 
 plan 23;
 
-
-#?pugs emit unless $?PUGS_BACKEND eq "BACKEND_PERL5" {
-#?pugs emit    skip_rest ("$?PUGS_BACKEND does not support lazy lists yet.",
-#?pugs emit				:depends("lazy lists") );
-#?pugs emit    exit;
-#?pugs emit }
-
-
 {
     my @a = (1..Inf);
     is( @a.splice( 2, 3 ),
@@ -52,15 +44,6 @@ is( (1...Inf)[2..5],
         [3, 4, 5, 6],
         "simple slice" );
 }
-
-
-#?pugs emit	if $?PUGS_BACKEND eq "BACKEND_PERL5" {
-#?pugs emit    	skip ( 1, "countable lazy slice not fully implemented in $?PUGS_BACKEND yet",
-#?pugs emit    	:depends("lazy slices") );
-#?pugs emit    	is( (1..Inf)[2..100000].perl,
-#?pugs emit        	"(3, 4, 5, ..., 100001, 100002, 100003)",
-#?pugs emit        	"countable lazy slice" );
-#?pugs emit	}
 
 # array assignment
 

@@ -10,9 +10,6 @@ Tests for using parameterized roles as types, plus the of keyword.
 
 =end pod
 
-#?pugs emit skip_rest('parameterized roles'); exit;
-#?pugs emit =begin SKIP
-
 # L<S14/Parametric Roles>
 # L<S14/Relationship Between of And Types>
 
@@ -112,7 +109,5 @@ eval_dies_ok 'role ABCD[EFGH] { }', 'role with undefined type as parameter dies'
     my class A does R[Str] does R[Int] { };
     is A.new.foo(5), 5.WHAT.gist, 'correct multi selected from multiple parametric roles';
 }
-
-#?pugs emit =end SKIP
 
 # vim: ft=perl6

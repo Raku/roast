@@ -18,9 +18,6 @@ class Foo:ver<0.0.1> {
 
 # L<S12/Introspection/should be called through the meta object>
 
-#?pugs emit skip_rest('meta class NYI');
-#?pugs emit exit;
-
 ok(Foo.HOW.can(Foo, 'bar'), '... Foo can bar');
 #?rakudo skip 'precedence of HOW'
 ok(HOW(Foo).can(Foo, 'bar'), '... Foo can bar (anthoer way)');

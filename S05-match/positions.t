@@ -10,8 +10,6 @@ version 0.3 (12 Apr 2004), file t/pos.t.
 
 plan 10;
 
-#?pugs emit force_todo(2,4,6,8,9);
-
 my $str = "abrAcadAbbra";
 
 ok($str ~~ m/ a .+ A /, 'Match from start');

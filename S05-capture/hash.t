@@ -10,8 +10,6 @@ version 0.3 (12 Apr 2004), file t/hash_cap.t.
 
 plan 116;
 
-#?pugs emit force_todo(1..49,51..99,101..108,111..116);
-
 # L<S05/Hash aliasing/An alias can also be specified using a hash>
 
 ok("  a b\tc" ~~ m/%<chars>=( \s+ \S+ )/, 'Named unrepeated hash capture');
