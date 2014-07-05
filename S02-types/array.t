@@ -15,7 +15,7 @@ plan 95;
 
 {
     # see RT #63350 for discussion
-    # also: 78284
+    # also: RT #78284
     my $i = 0;
     $i++ for (1, 2, 3).item;
     #?pugs todo
