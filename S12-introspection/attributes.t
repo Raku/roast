@@ -52,7 +52,7 @@ ok @attrs[2].readonly,              'third attribute is readonly';
 is +@attrs,        1,     'attribute introspection with :local gave just attribute in base class';
 is @attrs[0].name, '$!c', 'get correct attribute with introspection';
 
-#?rakudo skip ':tree not implemented for .^attributes'
+#?rakudo skip ':tree NYI for .^attributes'
 {
     @attrs = C.^attributes(:tree);
     is +@attrs, 2,                  'attribute introspection with :tree gives right number of elements';

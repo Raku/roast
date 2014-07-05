@@ -106,7 +106,7 @@ is(EVAL('foo\
 blah blah blah
 =\ end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
-#?rakudo skip '=for pod not implemented (in STD.pm)'
+#?rakudo skip '=for pod NYI (in STD.pm)'
 {
 is(EVAL('foo\
 =\ for comment
@@ -134,7 +134,7 @@ blah blah blah
 =end nested_pod
 end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
-#?rakudo skip '=for pod not implemented (in STD.pm)'
+#?rakudo skip '=for pod NYI (in STD.pm)'
 {
 is(EVAL('foo\
 =\

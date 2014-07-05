@@ -29,7 +29,7 @@ my $iswin32 = $*DISTRO.is-win
 
   ok $fn.IO ~~ :e,   "open() created a tempfile";
   ok(unlink($fn), "unlink() returned true");
-  #?rakudo skip 'implicit closure of file handle at scope exit not implemented (FAILS ON WINDOWS) (noauto)'
+  #?rakudo skip 'implicit closure of file handle at scope exit NYI (FAILS ON WINDOWS) (noauto)'
   ok $fn.IO !~~ :e,  "unlink() actually deleted the tempfile";
 }
 

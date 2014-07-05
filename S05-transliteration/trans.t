@@ -233,8 +233,8 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 }
 
-#?rakudo skip 'tr///, feed operator not implemented'
-#?niecza skip 'Action method quote:tr not yet implemented'
+#?rakudo skip 'tr///, feed operator NYI'
+#?niecza skip 'Action method quote:tr NYI'
 {
     #?pugs todo
     is(EVAL('"abc".trans(<== "a" => "A")'), "Abc",

@@ -16,7 +16,7 @@ L<"http://www.unicode.org/unicode/reports/tr11/">
 
 plan 46;
 
-eval_dies_ok('"moose".length', 'Str.length properly not implemented');
+eval_dies_ok('"moose".length', 'Str.length properly unimplemented');
 
 # string literals, for sanity
 
@@ -70,10 +70,10 @@ is "\x[E0100]".codes,  1, '.codes on a >0xFFFF char'; # \c[VARIATION SELECTOR-17
 is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-17]
 
 # test graphemes without a precomposed character in Unicode 5
-#?rakudo 1 skip '.codes not implemented'
+#?rakudo 1 skip '.codes NYI'
 #?pugs todo
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
-#?rakudo 1 skip '.graphs not implemented'
+#?rakudo 1 skip '.graphs NYI'
 #?niecza skip ".graphs NYI"
 #?pugs todo
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".graphs, 1, '.graphs on grapheme without precomposite';

@@ -44,7 +44,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # so if the first character is a left parenthesis, it really is a call
-#?rakudo skip '<test()> not implemented'
+#?rakudo skip '<test()> NYI'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
@@ -53,7 +53,7 @@ character classes), and those are referenced at the correct spot.
     ok($pass, 'function call (no arguments)');
 }
 
-#?rakudo skip '<test()> not implemented'
+#?rakudo skip '<test()> NYI'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $pass = 0;
@@ -119,7 +119,7 @@ character classes), and those are referenced at the correct spot.
 
 # If the first character is a colon followed by whitespace the
 # rest of the text is taken as a list of arguments to the method
-#?rakudo skip 'colon arguments not implemented'
+#?rakudo skip 'colon arguments NYI'
 #?niecza skip 'Unable to resolve method test in class Cursor'
 {
     my $called_ok = 0;
@@ -166,7 +166,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading :: indicates a symbolic indirect subrule
-#?rakudo skip 'indirect subrule call not implemented'
+#?rakudo skip 'indirect subrule call NYI'
 {
     my $name = 'alpha';
     ok('abcdef' ~~ /<::($name)>/, '<::($name)> symbolic indirect subrule');
@@ -184,7 +184,7 @@ character classes), and those are referenced at the correct spot.
 
 # A leading % matches like a bare hash except that
 # a string value is always treated as a subrule
-#?rakudo todo '<%hash> not implemented'
+#?rakudo todo '<%hash> NYI'
 #?niecza skip 'Sigil % is not allowed for regex assertions'
 {
     my %first = '<alpha>' => '', 'b' => '', 'c' => '';
@@ -201,7 +201,7 @@ character classes), and those are referenced at the correct spot.
 }
 
 # A leading & interpolates the return value of a subroutine call as a regex.
-#?rakudo skip '<&foo()> not implemented'
+#?rakudo skip '<&foo()> NYI'
 #?niecza skip 'Anonymous submatch returned a Str instead of a Cursor, violating the submatch protocol'
 {
     my sub foo {return '<alpha>'}
@@ -210,7 +210,7 @@ character classes), and those are referenced at the correct spot.
 
 # If it is a string, the compiled form is cached with the string so that
 # it is not recompiled next time you use it unless the string changes.
-#?rakudo skip '<$subrule> not implemented'
+#?rakudo skip '<$subrule> NYI'
 {
     my $counter = 0;
     my $subrule = '{$counter++; \'<alpha>\'}';

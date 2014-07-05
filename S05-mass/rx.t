@@ -95,7 +95,7 @@ ok 'xyzabcde' !~~ /[ ab | abc ]: de/, 'no backtrack into group';
 ok 'xyzabcde' !~~ /( ab || abc ): de/, 'no backtrack into subpattern';
 
 #### [ when <commit> ever ] | whence	whence	n	full backtrack failure
-#?rakudo skip '<commit> not implemented'
+#?rakudo skip '<commit> NYI'
 #?niecza todo ''
 ok 'whence' !~~ /[ when <commit> ever ] | whence/, 'full backtrack failure';
 

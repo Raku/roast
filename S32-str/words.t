@@ -19,7 +19,7 @@ is "a\nbc\nd".words, <a bc d>, 'words on string with \n';
 is "a\c[NO-BREAK SPACE]bc d".words, <a bc d>, 'words on string with (U+00A0 NO-BREAK SPACE)';
 is "ä bc d".words, <ä bc d>, 'words on string with non-ASCII letter';
 
-#?rakudo 2 skip 'graphemes not implemented'
+#?rakudo 2 skip 'graphemes NYI'
 #?niecza 2 todo 'charspec'
 is "a\c[COMBINING DIAERESIS] bc d".words, ("ä", "bc", "d"), 'words on string with grapheme precomposed';
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc d".words,

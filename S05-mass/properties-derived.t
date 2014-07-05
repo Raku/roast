@@ -219,8 +219,8 @@ ok("\c[ARABIC-INDIC DIGIT ZERO]" ~~ m/^<-:NoncharacterCodePoint>$/, q{Match rela
 
 # OtherAlphabetic
 
-#?rakudo.jvm 35 skip "isOther* not implemented"
-#?rakudo.parrot 42 skip "isOther* not implemented"
+#?rakudo.jvm 35 skip "isOther* NYI"
+#?rakudo.parrot 42 skip "isOther* NYI"
 #?pugs todo
 ok("\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:OtherAlphabetic>$/, q{Match <:OtherAlphabetic>} );
 ok(!( "\c[COMBINING GREEK YPOGEGRAMMENI]" ~~ m/^<:!OtherAlphabetic>$/ ), q{Don't match negated <OtherAlphabetic>} );
@@ -510,8 +510,8 @@ ok("\x[0BD1]\x[949B]" ~~ m/<:ID_Continue>/, q{Match unanchored (ID_Start + Mn + 
 
 # Any             # Any character
 
-#?rakudo.jvm 4 skip 'isAny not implemented'
-#?rakudo.parrot 4 skip 'isAny not implemented'
+#?rakudo.jvm 4 skip 'isAny NYI'
+#?rakudo.parrot 4 skip 'isAny NYI'
 #?pugs todo
 ok("\x[C709]" ~~ m/^<:Any>$/, q{Match (Any character)} );
 ok(!( "\x[C709]" ~~ m/^<:!Any>$/ ), q{Don't match negated (Any character)} );
@@ -522,8 +522,8 @@ ok("\x[C709]" ~~ m/<:Any>/, q{Match unanchored (Any character)} );
 # Assigned        # Any non-Cn character (i.e. synonym for \P{Cn})
 
 
-#?rakudo.jvm 7 skip 'isAssigned not implemented'
-#?rakudo.parrot 7 skip 'isAssigned not implemented'
+#?rakudo.jvm 7 skip 'isAssigned NYI'
+#?rakudo.parrot 7 skip 'isAssigned NYI'
 #?pugs todo
 ok("\x[C99D]" ~~ m/^<:Assigned>$/, q<Match (Any non-Cn character (i.e. synonym for \P{Cn}))> );
 ok(!( "\x[C99D]" ~~ m/^<:!Assigned>$/ ), q<Don't match negated (Any non-Cn character (i.e. synonym for \P{Cn}))> );
@@ -539,7 +539,7 @@ ok("\x[D7A4]\x[C99D]" ~~ m/<:Assigned>/, q<Match unanchored (Any non-Cn characte
 # Unassigned      # Synonym for \p{Cn}
 
 
-#?rakudo.jvm todo 'isUnassigned not implemented'
+#?rakudo.jvm todo 'isUnassigned NYI'
 #?niecza 3 todo
 #?pugs todo
 ok("\x[110E9]" ~~ m/^<:Unassigned>$/, q<Match (Synonym for \p{Cn})> );
@@ -557,8 +557,8 @@ ok("\c[RIGHT OUTER JOIN]\x[110E9]" ~~ m/<:Unassigned>/, q<Match unanchored (Syno
 # Common          # Codepoint not explicitly assigned to a script
 
 
-#?rakudo.jvm 10 skip 'isCommon not implemented'
-#?rakudo.parrot 10 skip 'isCommon not implemented'
+#?rakudo.jvm 10 skip 'isCommon NYI'
+#?rakudo.parrot 10 skip 'isCommon NYI'
 #?niecza 3 todo
 #?pugs todo
 ok("\c[ELECTRIC LIGHT BULB]" ~~ m/^<:Common>$/, q{Match (Codepoint not explicitly assigned to a script)} );

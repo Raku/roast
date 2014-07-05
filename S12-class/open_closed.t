@@ -60,7 +60,7 @@ class Qux {method g {'called Qux.g'}}
 
 # L<S12/"Open vs Closed Classes"/"declaring individual classes closed or final">
 # try a few things that come to mind to make sure it's not lurking
-eval_dies_ok('class ClosedAlpha is closed {}', '"is closed" is not implemented');
-eval_dies_ok('class ClosedBeta  is final  {}', '"is final"  is not implemented');
+eval_dies_ok('class ClosedAlpha is closed {}', '"is closed" is unimplemented');
+eval_dies_ok('class ClosedBeta  is final  {}', '"is final"  is unimplemented');
 
 # vim: ft=perl6

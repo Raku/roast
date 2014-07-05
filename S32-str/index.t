@@ -6,7 +6,7 @@ use Test;
 plan 38;
 
 # Type of return value
-#?rakudo 2 skip 'StrPos not implemented'
+#?rakudo 2 skip 'StrPos NYI'
 #?niecza 2 skip 'StrPos'
 #?pugs   2 skip 'StrPos'
 isa_ok('abc'.index('b'), StrPos);

@@ -53,7 +53,7 @@ is ('☀' ...^ '☕').join(''), '☀☁☂☃☄★☆☇☈☉☊☋☌☍☎�
 # # L<S03/List infix precedence/doesn't terminate with a simple>
 # the tricky termination test
 
-#?niecza skip 'munch not implemented'
+#?niecza skip 'munch NYI'
 {
     ok ('A' ... 'ZZ').munch(1000).elems < 1000, "'A' ... 'ZZ' does not go on forever";
     #?rakudo 2 skip 'Decrement out of range'

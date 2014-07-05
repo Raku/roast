@@ -150,7 +150,7 @@ my @array2 = ("test", 1, Mu);
     is(+@array10, 3, "trailing commas make correct array");
 }
 
-#?pugs todo "multi-dim arrays not implemented"
+#?pugs todo "multi-dim arrays NYI"
 #?rakudo skip "multi-dim arrays"
 #?niecza skip "multi-dim arrays"
 {
