@@ -672,7 +672,7 @@ my @e;
 }
 
 # L<S03/"Hyper operators"/is assumed to be infinitely extensible>
-#?rakudo todo 'nom regression - whatever extension'
+#?rakudo todo 'nom regression - whatever extension RT #122230'
 {
     @r = <A B C D E> »~» (1, 2, 3, *);
     @e = <A1 B2 C3 D3 E3>;
