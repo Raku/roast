@@ -6,7 +6,7 @@ use Test::Tap;
 
 plan 13;
 
-#?rakudo.jvm todo "D: doesn't work in signatures"
+#?rakudo.jvm todo "D: doesn't work in signatures RT #122229"
 dies_ok { Supply.new.for(1..10) }, 'can not be called as an instance method';
 
 for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
