@@ -63,6 +63,17 @@ multi sub is_run( Str $code, Str $input, %expected, Str $name, *%o ) {
     return;
 }
 
+our sub run( Str $code, Str $input = '', *%o) {
+    my %got = get_out( $code, $input, |%o );
+    if %got<err>:exists && %got<err>.chars {
+        diag 'error: ' ~ %got<err>;
+    }
+    if %got<test_died>:exists && %got<err>.chars {
+        diag 'test died: ' ~ %got<test_died>;
+    }
+    return %got<out>;
+}
+
 sub get_out( Str $code, Str $input?, :@args, :@compiler-args) is export {
     my $fnbase = 'getout';
     $fnbase ~= '-' ~ $*PID if defined $*PID;

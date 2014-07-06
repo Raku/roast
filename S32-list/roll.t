@@ -4,6 +4,9 @@ use Test;
 
 plan 48;
 
+use lib 't/spec/packages';
+use Test::Util;
+
 =begin description
 
 This test tests the C<roll> builtin. See S32::Containers#roll.
@@ -122,11 +125,10 @@ is (1..^2).roll, 1, '1-elem Range roll';
 ok ('a' .. 'z').roll ~~ /\w/, 'Str-Range roll';
 
 # RT 89972
-#?niecza skip "That's not the right way to spawn another Niecza"
 {
-    my $a = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
-    my $b = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
-    my $c = qqx{$*EXECUTABLE_NAME -e "print ~(1..10).pick(5)"};
+    my $a = Test::Util::run( "print ~(1..10).pick(5)" );
+    my $b = Test::Util::run( "print ~(1..10).pick(5)" );
+    my $c = Test::Util::run( "print ~(1..10).pick(5)" );
     ok set($a, $b, $c) > 1, 'different results due to random random-number seed';
 }
 
