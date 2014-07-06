@@ -128,7 +128,7 @@ sub l (Int $a) {  my $l = $a; return $l }
 sub p (Int $a) {  my $p = $a; return $p }
 
 #Substr with StrPos
-#?rakudo skip 'No support for StrPos'
+#?rakudo skip 'StrPos NYI'
 #?niecza skip 'StrPos tests broken'
 { # read only
     my $str = "foobar";
@@ -149,7 +149,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 };
 
 #?pugs skip 'more discussion needed'
-#?rakudo skip 'No support for StrPos'
+#?rakudo skip 'StrPos NYI'
 #?niecza skip 'StrPos tests broken'
 { # replacement
     my $str = "foobar";
@@ -172,7 +172,7 @@ sub p (Int $a) {  my $p = $a; return $p }
 #   some_func $substr; # manipulates $substr
 #   # $str altered!
 # But one could think that's the wanted behaviour, so I leave the test in.
-#?rakudo skip 'No support for StrPos'
+#?rakudo skip 'StrPos NYI'
 #?niecza skip 'StrPos tests broken'
 {
     my $str = "gorch ding";
@@ -209,7 +209,7 @@ sub p (Int $a) {  my $p = $a; return $p }
     is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
 };
 
-#?rakudo skip 'No support for StrPos'
+#?rakudo skip 'StrPos NYI'
 #?niecza skip 'StrPos tests broken'
 { # as lvalue, using :=, should work
     my $str = "gorch ding";
