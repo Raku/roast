@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 40;
+plan 38;
 
 # currently deprecated core features
 
@@ -311,40 +311,6 @@ Saw 1 call to deprecated code during execution.
 Method delete (from MixHash) called at:
   $*PROGRAM, line $line
 Please use the :delete adverb with postcircumfix:<\{ }> instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# Order::Decrease
-#?rakudo skip 'Could not create deprecated Order::Decrease'
-#?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
-{
-    $line = $?LINE; Order::Decrease;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Order::Decrease';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub Decrease (from Order) called at:
-  $*PROGRAM, line $line
-Please use More instead.
---------------------------------------------------------------------------------
-TEXT
-} #1
-
-# Order::Increase
-#?rakudo skip 'Could not create deprecated Order::Increase'
-#?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
-{
-    $line = $?LINE; Order::Increase;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation Order::Increase';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub Increase (from Order) called at:
-  $*PROGRAM, line $line
-Please use Less instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
