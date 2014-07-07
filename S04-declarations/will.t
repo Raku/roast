@@ -22,8 +22,8 @@ my $begin;
 my $init;
 #?niezca skip "will variable trait NYI"
 #?pugs   skip "will variable trait NYI"
-#?rakudo todo 'will init NYI'
 {
+    #?rakudo todo 'will init NYI'
     is $init, "abc", 'all init blocks in order';
     BEGIN $init ~= "a";
     INIT  $init ~= "b";
