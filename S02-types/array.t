@@ -151,8 +151,8 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?pugs todo "multi-dim arrays NYI"
-#?rakudo skip "multi-dim arrays"
-#?niecza skip "multi-dim arrays"
+#?rakudo skip "multi-dim arrays NYI"
+#?niecza skip "multi-dim arrays NYI"
 {
 # declare a multidimension array
     eval_lives_ok('my @multidim[0..3; 0..1]', "multidimension array");
