@@ -6,12 +6,11 @@ plan 10;
 # L<S02/Names/Symbols in the current package>
 
 {
-    eval_lives_ok 'our sub eval_born { 5 }', 'can define a sub in eval';
+    lives_ok { EVAL 'our sub eval_born { 5 }'}, 'can define a sub in eval';
     #?pugs todo
     eval_dies_ok 'eval_born()', 'call to eval-born sub outside eval dies';
-    #?rakudo skip 'Null PMC access in invoke()'
     #?pugs skip 'OUR NYI'
-    is OUR::eval_born(), 5, 'call to eval-born our sub via OUR works';
+    is &OUR::eval_born(), 5, 'call to eval-born our sub via OUR works';
 }
 
 # RT #63882
