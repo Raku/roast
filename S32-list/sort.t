@@ -237,7 +237,7 @@ plan 32;
         'sort accepts rand method';
 }
 
-# RT #71258
+# RT #71258 (can sort a class without parrot internal error)
 {
     class RT71258_1 { };
 
@@ -246,34 +246,6 @@ plan 32;
     #?niecza todo 'Is this test actually testing for correct behavior?'
     lives_ok { @sorted = (RT71258_1.new, RT71258_1.new).sort },
         'sorting by stringified class instance (name and memory address)';
-
-    class RT71258_2 {
-        has $.x;
-        method Str { $.x }
-    };
-
-    # Following tests removed because you cannot 
-    # affect the behavior of sort by defining 
-    # sub cmp.  As far as I understand things, you
-    # couldn't even affect it by defined 
-    # a new sub infix:<cmp>. --colomon
-
-    # multi sub cmp(RT71258_2 $a, RT71258_2 $b) {
-    #     $a.x <=> $b.x;
-    # }
-    # 
-    # #?rakudo todo 'nom regression'
-    # lives_ok {
-    #     @sorted = (
-    #         RT71258_2.new(x => 2),
-    #         RT71258_2.new(x => 3),
-    #         RT71258_2.new(x => 1)
-    #     ).sort
-    # }, 'sorting stringified class instance with custom cmp';
-    # 
-    # #?rakudo todo 'nom regression'
-    # is ~@sorted, '1 2 3',
-    #     'checking sort order with custom cmp';
 }
 
 # vim: ft=perl6
