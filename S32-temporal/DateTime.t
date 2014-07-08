@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 201;
+plan 205;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -209,6 +209,12 @@ is DateTime.new('2009-12-31T22:33:44',
 is DateTime.new('2009-12-31T22:33:44',
         formatter => { ($^dt.hour % 12) ~ 'ish' } ),
     '10ish', 'DateTime.new(Str) with formatter';
+
+# additional timezone offset formats that are acceptable per ISO 8601
+is ds('2012-12-22T07:02:00+12'), '2012-12-22T07:02:00+1200', 'offset with no minutes specified';
+is ds('2012-12-22T07:02:00+12:00'), '2012-12-22T07:02:00+1200', 'colonated offset';
+is ds('2012-12-22T07:02:00+12:45'), '2012-12-22T07:02:00+1245', 'colonated non-zero offset';
+dies_ok {  ds('2012-12-22T07:02:00+12:') }, 'trailing colon causes death';
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/'truncated-to'>
