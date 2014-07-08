@@ -2,7 +2,6 @@ use v6;
 use Test;
 plan 4;
 
-#?rakudo.parrot skip 'no implementation of supply'
 {
     my $measurements = Supply.new;
 
@@ -42,8 +41,6 @@ plan 4;
     is_deeply %measured, {"Measured" => [4.5], "Also measured" => [4.5], "HIGH" => [4.5]}, 'supply grep and tap';
 }
 
-#?rakudo.parrot skip 'no implementation of supply'
-#?rakudo.moar skip 'Supply.interval on moar'
 {
     my $belt_raw = Supply.interval(.1).map({ rand xx 20 });
     my $belt_avg = $belt_raw.map(sub (@values) {
