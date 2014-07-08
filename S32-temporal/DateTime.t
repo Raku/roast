@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 205;
+plan 217;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -212,9 +212,23 @@ is DateTime.new('2009-12-31T22:33:44',
 
 # additional timezone offset formats that are acceptable per ISO 8601
 is ds('2012-12-22T07:02:00+12'), '2012-12-22T07:02:00+1200', 'offset with no minutes specified';
+is ds('2012-12-22T07:02:00-12'), '2012-12-22T07:02:00-1200', 'negative offset with no minutes specified';
 is ds('2012-12-22T07:02:00+12:00'), '2012-12-22T07:02:00+1200', 'colonated offset';
+is ds('2012-12-22T07:02:00-12:00'), '2012-12-22T07:02:00-1200', 'negative colonated offset';
 is ds('2012-12-22T07:02:00+12:45'), '2012-12-22T07:02:00+1245', 'colonated non-zero offset';
-dies_ok {  ds('2012-12-22T07:02:00+12:') }, 'trailing colon causes death';
+is ds('2012-12-22T07:02:00-12:45'), '2012-12-22T07:02:00-1245', 'colonated negative non-zero offset';
+
+is ds('2012-12-22T07:02:00+00'), '2012-12-22T07:02:00Z', '+00 with no minutes';
+is ds('2012-12-22T07:02:00-00'), '2012-12-22T07:02:00Z', '-00 with no minutes';
+is ds('2012-12-22T07:02:00+00:00'), '2012-12-22T07:02:00Z', 'colonated +00';
+is ds('2012-12-22T07:02:00-00:00'), '2012-12-22T07:02:00Z', 'colonated -00';
+dies_ok { ds('2012-12-22T07:02:00+00:') }, '+00 with trailing colon';
+dies_ok { ds('2012-12-22T07:02:00+0') }, 'single digit hour +0';
+dies_ok { ds('2012-12-22T07:02:00+0:') }, '+0 with trailing colon';
+
+dies_ok { ds('2012-12-22T07:02:00+12:') }, 'dies because of trailing colon';
+dies_ok { ds('2012-12-22T07:02:00+7') }, 'dies with a single digit hour offset';
+dies_ok { ds('2012-12-22T07:02:00+7:') }, 'single digit hour, trailing colon';
 
 # --------------------------------------------------------------------
 # L<S32::Temporal/C<DateTime>/'truncated-to'>
