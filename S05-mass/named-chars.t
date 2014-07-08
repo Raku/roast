@@ -174,7 +174,7 @@ ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/ ), 'Negative charcla
 #?rakudo skip 'negative char class in enumerated list'
 #?pugs todo
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/, 'Negative charclass named NEXT LINE (NEL) match');
-#?rakudo 7 skip '\c[LF] not valid charname'
+#?rakudo 4 skip '\c[LF] not valid charname'
 #?pugs todo
 ok("abc\c[LF]def" ~~ m/\c[LF]/, 'Unanchored named LF');
 #?pugs todo
@@ -194,7 +194,7 @@ ok(!( "\c[LF]" ~~ m/^ <[\C[LF]]>/ ), 'Negative charclass named LF nomatch');
 #?rakudo skip 'negative char class in enumerated list'
 #?pugs todo
 ok("\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[LF]]>/, 'Negative charclass named LF match');
-#?rakudo 7 skip '\c[FF] not valid charname'
+#?rakudo 4 skip '\c[FF] not valid charname'
 #?pugs todo
 ok("abc\c[FF]def" ~~ m/\c[FF]/, 'Unanchored named FF');
 #?pugs todo
@@ -215,7 +215,7 @@ ok(!( "\c[FF]" ~~ m/^ <[\C[FF]]>/ ), 'Negative charclass named FF nomatch');
 #?rakudo skip 'negative char class in enumerated list'
 #?pugs todo
 ok("\c[LF]" ~~ m/^ <[\C[FF]]>/, 'Negative charclass named FF match');
-#?rakudo 7 skip '\c[CR] not valid charname'
+#?rakudo 4 skip '\c[CR] not valid charname'
 #?pugs todo
 ok("abc\c[CR]def" ~~ m/\c[CR]/, 'Unanchored named CR');
 #?pugs todo
@@ -235,7 +235,7 @@ ok(!( "\c[CR]" ~~ m/^ <[\C[CR]]>/ ), 'Negative charclass named CR nomatch');
 #?rakudo skip 'negative char class in enumerated list'
 #?pugs todo
 ok("\c[FF]" ~~ m/^ <[\C[CR]]>/, 'Negative charclass named CR match');
-#?rakudo 7 skip '\c[NEL] not valid charname'
+#?rakudo 4 skip '\c[NEL] not valid charname'
 #?pugs todo
 ok("abc\c[NEL]def" ~~ m/\c[NEL]/, 'Unanchored named NEL');
 #?pugs todo
