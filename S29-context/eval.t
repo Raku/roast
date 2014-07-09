@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 20;
+plan 21;
 
 # L<S29/Context/"=item EVAL">
 
@@ -62,7 +62,10 @@ dies_ok({EVAL {; 42} }, 'block EVAL is gone');
 #?rakudo skip 'EVAL(Buf) RT #122256'
 #?niecza skip 'Unable to resolve method encode in class Str'
 #?pugs skip 'encode'
-is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
+{
+    is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
+    is "'møp'".encode('UTF-8').EVAL, 'møp', 'Buf.EVAL';
+}
 
 {
     is EVAL(88), 88, 'EVAL of non-string works';
