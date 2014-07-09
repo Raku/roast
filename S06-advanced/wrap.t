@@ -89,10 +89,6 @@ is(@log[1], "foo", "got execpted value from original sub");
 
 dies_ok { &foo.unwrap($wrapped) }, "can't re-unwrap an already unwrapped sub";
 
-
-
-# from wrapping.t
-
 #First level wrapping
 sub hi { "Hi" };
 is( hi, "Hi", "Basic sub." );
@@ -126,10 +122,10 @@ lives_ok { &levelwrap.callwith( 1 )},
 {
     for (1..10) -> $num {
         lives_ok {
-                &levelwrap.wrap({ 
-                    callwith( $^t + 1 );
-                }),
-                " Wrapping #$num"
+            &levelwrap.wrap({ 
+                callwith( $^t + 1 );
+            }),
+            " Wrapping #$num"
         }, "wrapping $num";
         is( levelwrap( 1 ), 1 + $num, "Checking $num level wrapping" );
     }
@@ -236,28 +232,27 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     my $didfoo;
 
     my role SomeTrait {
-      method apply_handles($attr: Mu $pkg) {
-	my $name = $attr.name;
-	my $accessor = $name.subst(/^../, '');
-	my $r = sub ($obj, |args) is rw {
-	  my (|c) ::= callsame;
-	  c;
-	}
-	$pkg.^find_method($accessor).wrap($r);
-      }
-
-      method foo { $didfoo++ }
+        method apply_handles($attr: Mu $pkg) {
+            my $name = $attr.name;
+            my $accessor = $name.subst(/^../, '');
+            my $r = sub ($obj, |args) is rw {
+                my (|c) ::= callsame;
+                c;
+            }
+            $pkg.^find_method($accessor).wrap($r);
+        }
+        method foo { $didfoo++ }
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-      die "Must have accessor" unless $var.has-accessor;
-      $var.set_rw;
-      $var does SomeTrait;
-      $var.foo;
+        die "Must have accessor" unless $var.has-accessor;
+        $var.set_rw;
+        $var does SomeTrait;
+        $var.foo;
     }
 
     my class foo {
-      has $.x is rw is wtf = 16;
+        has $.x is rw is wtf = 16;
     }
 
     ok $didfoo, "Did foo, capture return";
@@ -273,27 +268,26 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     my $didfoo;
 
     my role SomeTrait {
-      method apply_handles($attr: Mu $pkg) {
-	my $name = $attr.name;
-	my $accessor = $name.subst(/^../, '');
-	my $r = sub ($obj, |args) is rw {
-	  return callsame;
-	}
-	$pkg.^find_method($accessor).wrap($r);
-      }
-
-      method foo { $didfoo++ }
+        method apply_handles($attr: Mu $pkg) {
+            my $name = $attr.name;
+            my $accessor = $name.subst(/^../, '');
+            my $r = sub ($obj, |args) is rw {
+                return callsame;
+            }
+            $pkg.^find_method($accessor).wrap($r);
+        }
+        method foo { $didfoo++ }
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-      die "Must have accessor" unless $var.has-accessor;
-      $var.set_rw;
-      $var does SomeTrait;
-      $var.foo;
+        die "Must have accessor" unless $var.has-accessor;
+        $var.set_rw;
+        $var does SomeTrait;
+        $var.foo;
     }
 
     my class foo {
-      has $.x is rw is wtf = 16;
+        has $.x is rw is wtf = 16;
     }
 
     ok $didfoo, "Did foo, return callsame";
@@ -309,27 +303,26 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     my $didfoo;
 
     my role SomeTrait {
-      method apply_handles($attr: Mu $pkg) {
-	my $name = $attr.name;
-	my $accessor = $name.subst(/^../, '');
-	my $r = sub ($obj, |args) is rw {
-	  callsame;
-	}
-	$pkg.^find_method($accessor).wrap($r);
-      }
-
-      method foo { $didfoo++ }
+        method apply_handles($attr: Mu $pkg) {
+            my $name = $attr.name;
+            my $accessor = $name.subst(/^../, '');
+            my $r = sub ($obj, |args) is rw {
+                callsame;
+            }
+            $pkg.^find_method($accessor).wrap($r);
+        }
+        method foo { $didfoo++ }
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-      die "Must have accessor" unless $var.has-accessor;
-      $var.set_rw;
-      $var does SomeTrait;
-      $var.foo;
+        die "Must have accessor" unless $var.has-accessor;
+        $var.set_rw;
+        $var does SomeTrait;
+        $var.foo;
     }
 
     my class foo {
-      has $.x is rw is wtf = 16;
+        has $.x is rw is wtf = 16;
     }
 
     ok $didfoo, "Did foo, callsame";
@@ -345,27 +338,26 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     my $didfoo;
 
     my role SomeTrait {
-      method apply_handles($attr: Mu $pkg) {
-	my $name = $attr.name;
-	my $accessor = $name.subst(/^../, '');
-	my $r = sub ($obj, |args) is rw {
-	  nextsame;
-	}
-	$pkg.^find_method($accessor).wrap($r);
-      }
-
-      method foo { $didfoo++ }
+        method apply_handles($attr: Mu $pkg) {
+            my $name = $attr.name;
+            my $accessor = $name.subst(/^../, '');
+            my $r = sub ($obj, |args) is rw {
+                nextsame;
+            }
+            $pkg.^find_method($accessor).wrap($r);
+        }
+        method foo { $didfoo++ }
     }
 
     multi trait_mod:<is>(Attribute $var, :$wtf!) {
-      die "Must have accessor" unless $var.has-accessor;
-      $var.set_rw;
-      $var does SomeTrait;
-      $var.foo;
+        die "Must have accessor" unless $var.has-accessor;
+        $var.set_rw;
+        $var does SomeTrait;
+        $var.foo;
     }
 
     my class foo {
-      has $.x is rw is wtf = 16;
+        has $.x is rw is wtf = 16;
     }
 
     ok $didfoo, "Did foo, nextsame";
