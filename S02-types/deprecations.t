@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 38;
+plan 36;
 
 # currently deprecated core features
 
@@ -371,34 +371,6 @@ Saw 1 call to deprecated code during execution.
 Method exists (from Setty) called at:
   $*PROGRAM, lines $line,{$line + 1}
 Please use the :exists adverb with postcircumfix:<\{ }> instead.
---------------------------------------------------------------------------------
-TEXT
-} #2
-
-# eval() and .eval
-#?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
-#?rakudo.jvm skip 'tracebacks in deprecations'
-{
-    $line = $?LINE; eval("1+1");
-    eval("1+1");
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation eval("1+1")';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Sub eval (from GLOBAL) called at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'EVAL' instead.
---------------------------------------------------------------------------------
-TEXT
-
-    $line = $?LINE; "1+1".eval;
-    "1+1".eval;
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation "1+1".eval';
-Saw 1 call to deprecated code during execution.
-================================================================================
-Method eval (from Cool) called at:
-  $*PROGRAM, lines $line,{$line + 1}
-Please use 'EVAL' instead.
 --------------------------------------------------------------------------------
 TEXT
 } #2

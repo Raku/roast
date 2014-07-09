@@ -157,7 +157,7 @@ throws_like 'sub f(*@a, $b?) { }', X::Parameter::WrongOrder,
 #?rakudo todo 'parsing regression'
 throws_like '#`', X::Syntax::Comment::Embedded;
 # RT #71814
-throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/eval/;
+throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/EVAL/;
 
 for <
   $ @ % &
