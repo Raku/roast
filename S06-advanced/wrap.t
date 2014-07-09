@@ -258,6 +258,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     ok $didfoo, "Did foo, capture return";
     my $foo = foo.new;  # x = 16;
     my $bar = foo.new(x => 32);
+    #?rakudo 2 todo 'RT #122259'
     is $foo.x, 16, "default works with wrapped accessor, capture return";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, capture return";
     try $bar.x = 64;
@@ -296,6 +297,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     is $foo.x, 16, "default works with wrapped accessor, return callsame";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, return callsame";
     try $bar.x = 64;
+    #?rakudo todo 'RT #122259'
     is $bar.x, 64, "assignment works with wrapped accessor, return callsame";
 }
 
@@ -366,9 +368,8 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     is $foo.x, 16, "default works with wrapped accessor, nextsame";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, nextsame";
     try $bar.x = 64;
+    #?rakudo todo 'RT #122259'
     is $bar.x, 64, "assignment works with wrapped accessor, nextsame";
 }
-
-done;
 
 # vim: ft=perl6
