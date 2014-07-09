@@ -42,5 +42,5 @@ is uniname("¶", :either :one),        "PARAGRAPH SIGN",         "uniname(:eithe
 is uniname("\x[2028]", :either :one), "LINE SEPARATOR",         "uniname(:either :one) returns current Unicode name for formatting character.";
 is uniname("\x[80]", :either :one),   "<control-0080>",         "uniname(:either :one) returns codepoint label for control character without any name.";
 
-#?rakudo skip "uninames does not exist"
+#?rakudo skip "uninames NYI"
 is uninames("AB"), ("LATIN CAPITAL LETTER A", "LATIN CAPITAL LETTER B"), "uninames correctly works on every character";

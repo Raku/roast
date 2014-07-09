@@ -396,7 +396,7 @@ Testing operator overloading subroutines
     is EVAL('sub infix:<+>($a, $b) { 42 }; 5 + 5'), 42, 'infix:<+>($a, $b)';
 }
 
-#?rakudo skip 'not yet implemented'
+#?rakudo skip 'NYI'
 {
     multi sub infix:<foo>($a, $b) {$a + $b};
 
@@ -404,7 +404,7 @@ Testing operator overloading subroutines
     is $x, 6, 'foo= works for custom operators';
 }
 
-#?rakudo skip 'not yet implemented'
+#?rakudo skip 'NYI'
 {
     our sub infix:<bar>($a, $b) {$a + $b};
 
