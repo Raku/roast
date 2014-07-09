@@ -4,7 +4,6 @@ plan 10;
 
 # Promises
 
-#?rakudo.parrot skip 'no implementation of promise/channel'
 {
     my $p1000 = start {
 	(1..Inf).grep(*.is-prime)[999]
@@ -28,7 +27,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 			  CurrencyExchange.new( :id<slow>, :delay(7) ), # wont finish in 5 sec
                          );
 
-#?rakudo.parrot skip 'no implementation of promise/channel'
 #?rakudo.moar skip 'Promise.in'
 {
     my $val = 42;
@@ -39,7 +37,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
     is_deeply @quotes, [42, 42*3], 'quotes example';
 }
 
-#?rakudo.parrot skip 'no implementation of promise/channel'
 {
     my $p1000 = start {
 	(1..Inf).grep(*.is-prime)[999]
@@ -54,7 +51,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
     is $pwrite.result, 'p1000.txt', '.then chaining';
 }
 
-#?rakudo.parrot skip 'no implementation of promise/channel'
 {
     # Create the promise.
     my $p = Promise.new;
@@ -68,7 +64,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
     is $p.status, 'Kept', 'kept promise';
 }
 
-#?rakudo.parrot skip 'no implementation of promise/channel'
 {
     # Create the promise.
     my $p = Promise.new;
@@ -84,7 +79,6 @@ my @currency_exchanges = (CurrencyExchange.new( :id<fast>, :delay(1) ),
 # Channels
 
 #?rakudo.moar skip 'combined config example'
-#?rakudo.parrot skip 'no implementation of promise/channel'
 {
     {
 	my @files = qw<config1.ini config2.ini>;
