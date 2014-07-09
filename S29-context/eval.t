@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 18;
+plan 20;
 
 # L<S29/Context/"=item EVAL">
 
@@ -65,12 +65,12 @@ dies_ok({EVAL {; 42} }, 'block EVAL is gone');
 is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
 
 {
-    #?rakudo skip 'EVAL coerce to string'
     is EVAL(88), 88, 'EVAL of non-string works';
+    is 88.EVAL, 88, '.EVAL of non-string works';
 
     my $number = 2;
-    #?rakudo skip 'EVAL coerce to string'
     is EVAL($number), $number, 'EVAL of non-string variable works';
+    is $number.EVAL, $number, '.EVAL of non-string variable works';
 }
 
 # RT #77646
