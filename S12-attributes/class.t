@@ -11,7 +11,7 @@ Class Attributes
 #L<S12/Class attributes/"Class attributes are declared">
 #L<S12/Class methods/Such a metaclass method is always delegated>
 
-plan 25;
+plan 26;
 
 class Foo {
     our $.bar = 23;
@@ -78,6 +78,15 @@ dies_ok {$test5 = Quux.bar}, 'class attribute accessor hidden by accessor in sub
     is($x.x, 42, "class attribute accessors work");
     my $y = Oof.new();
     is($y.x, 42, "class attributes shared by all instances");
+}
+
+# RT#122087
+{
+    class Woof {
+        my $.x = 'yap';
+    }
+    my $x = Woof.new();
+    is($x.x, 'yap', "class attribute initialization works");
 }
 
 # RT #57336
