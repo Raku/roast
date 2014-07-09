@@ -59,7 +59,7 @@ dies_ok({EVAL {; 42} }, 'block EVAL is gone');
        'EVAL works inside instance methods, with outer lexicals';
 }
 
-#?rakudo skip 'EVAL(Buf)'
+#?rakudo skip 'EVAL(Buf) RT #122256'
 #?niecza skip 'Unable to resolve method encode in class Str'
 #?pugs skip 'encode'
 is EVAL("'møp'".encode('UTF-8')), 'møp', 'EVAL(Buf)';
