@@ -6,7 +6,7 @@ use Test;
 #                      V
 # L<S03/Changes to Perl 5 operators/list assignment operator now parses on the right>
 
-plan 290;
+plan 296;
 
 
 # tests various assignment styles
@@ -587,6 +587,22 @@ my @p;
     is($x, "a", '~>= operator');
     is(@p[0],"a", "~>= operator parses as item assignment 1");
     is(@p[1],9, "~>= operator parses as item assignment 2");
+}
+
+{
+    my $x = 42;
+    @p = $x [+]= 6, 7;
+    is($x, 48, '[+]= operator (just like +=)');
+    is(@p[0],48, "[+]= operator parses as item assignment 1");
+    is(@p[1],7, "[+]= operator parses as item assignment 2");
+}
+
+{
+    my $x = 42;
+    @p = $x [[+]]= 6, 7;
+    is($x, 48, '[[+]]= operator (just like +=)');
+    is(@p[0],48, "[[+]]= operator parses as item assignment 1");
+    is(@p[1],7, "[[+]]= operator parses as item assignment 2");
 }
 
 # Tests of dwimming scalar/listiness of lhs

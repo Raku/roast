@@ -171,7 +171,7 @@ L<"http://groups.google.de/group/perl.perl6.language/msg/bd9eb275d5da2eda">
 
 # Following two tests taken verbatim from former t/operators/reduce.t
 lives_ok({my @foo = [1..3] >>+<< [1..3] >>+<< [1..3]},'Sanity Check');
-#?rakudo todo 'reduced hyper op'
+
 #?niecza todo 'These are hyperop tests!'
 lives_ok({my @foo = [>>+<<] ([1..3],[1..3],[1..3])},'Parse [>>+<<]');
 
