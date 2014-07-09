@@ -3,7 +3,6 @@ use Test;
 
 plan 3;
 
-#?rakudo.parrot skip 'no implementation of channel/winner'
 {
     my $c = Supply.for(1..5).Channel;
     my @a;
@@ -16,7 +15,6 @@ plan 3;
     is ~@a, "1 2 3 4 5 done", "Supply.for.Channel and winner channel work";
 }
 
-#?rakudo.parrot skip 'no implementation of channel/winner'
 {
     my $c = Supply.for(1..5).Channel;
     my @a;
@@ -29,7 +27,6 @@ plan 3;
     is ~@a, "1 2 3 4 5 done", "Supply.for.Channel and winner * work";
 }
 
-#?rakudo.parrot skip 'no implementation of channel/winner'
 {
     my @c = Supply.for(11..15).Channel, Supply.for(16..20).Channel;
     my %done; # cannot use a simple counter  :-(
