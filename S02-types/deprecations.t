@@ -581,12 +581,12 @@ TEXT
     my %h;
     $line = $?LINE; %h = { a => 1 };
     %h = { b => 2 };
-    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation %h = {...}';
+    is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation %h = itemized hash';
 Saw 1 call to deprecated code during execution.
 ================================================================================
-%h = \{ ... } called at:
+%h = itemized hash called at:
   $*PROGRAM, lines $line,{$line + 1}
-Please use %h = ... instead.
+Please use %h = \%(itemized hash) instead.
 --------------------------------------------------------------------------------
 TEXT
 } #1
