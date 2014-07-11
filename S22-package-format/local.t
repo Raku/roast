@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 38;
+plan 39;
 
 chdir 't/spec/S22-package-format';
 my $cwd := $*CWD;
@@ -69,10 +69,11 @@ for False, True -> $no-precomp {
     is $candidates.elems, 0, "did we get 0 candidates$what";
 }
 
-is $compunit.from,   'Perl6', "is the language 'Perl6'";
-is $compunit.name,   $module, "is the name '$module'";
-is $compunit.extension, $ext, "is the extension '$ext'";
+is $compunit.from,        'Perl6', "is the language 'Perl6'";
+is $compunit.name,        $module, "is the name '$module'";
+is $compunit.extension,      $ext, "is the extension '$ext'";
 is $compunit.path, "$cwd/$srcsrc", "is the path '$srcsrc'";
+is ?$compunit.loaded,       False, "is the module loaded";
 
 # always cleanup
 END {
