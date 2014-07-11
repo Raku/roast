@@ -57,8 +57,7 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     my MyInt $x = 5;
 
     lives_ok { $x = Nil }, 'can assign Nil to subsets';
-    #?rakudo todo 'triage'
-    ok $x === Int, 'assigns to base-type object';
+    ok $x === MyInt, 'assigns to subset type object';
 }
 
 {
