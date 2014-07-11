@@ -32,7 +32,6 @@ is($anon_block(), 1, '{} <anon block> works');
 
 # RT #64844
 #?niecza skip "Exception NYI"
-#?pugs   skip "Exception NYI"
 {
     EVAL '$anon_block( 1 )';
     #?rakudo todo 'Parrot support for zero-arg subs?'
@@ -131,7 +130,6 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
 {
     sub rt68116 { 68116 }
     is &rt68116(), 68116, 'check that sub is callable via &';
-    #?pugs 2 skip "is multi"
     is { &^x() }.( &rt68116 ), 68116,
         'call via { &^pos() }( &s ) works for sub';
     is -> &x { &x() }.( &rt68116 ), 68116,
@@ -141,7 +139,6 @@ isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
 }
 
 #?niecza skip 'No candidates for dispatch to mone'
-#?pugs skip 'parsefail'
 {
     proto mone(|) { * }
     multi mone { 'one' }

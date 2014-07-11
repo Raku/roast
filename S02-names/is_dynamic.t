@@ -3,7 +3,6 @@ use Test;
 
 plan 22;
 
-#?pugs   skip "is dynamic NYI"
 #?niecza skip "is dynamic NYI"
 # not specifically typed
 {
@@ -15,7 +14,6 @@ plan 22;
     ok $a.VAR.dynamic, 'dynamic set correctly for reset $a';
 } #3
 
-#?pugs   skip "Int is dynamic NYI"
 #?niecza skip "Int is dynamic NYI"
 # typed
 {
@@ -27,7 +25,6 @@ plan 22;
     ok $a.VAR.dynamic, 'dynamic set correctly for reset Int $a';
 } #3
 
-#?pugs   skip "is dynamic NYI"
 #?niecza skip "is dynamic NYI"
 # not specifically typed
 {
@@ -40,7 +37,6 @@ plan 22;
     ok @a[0].VAR.dynamic, 'dynamic set correctly for reset @a[0]';
 } #4
 
-#?pugs   skip "Int is dynamic NYI"
 #?niecza skip "Int is dynamic NYI"
 # typed
 {
@@ -53,7 +49,6 @@ plan 22;
     ok @a[0].VAR.dynamic, 'dynamic set correctly for reset Int @a[0]';
 } #4
 
-#?pugs   skip "is dynamic NYI"
 #?niecza skip "is dynamic NYI"
 # not specifically typed
 {
@@ -66,7 +61,6 @@ plan 22;
     ok %a<a>.VAR.dynamic, 'dynamic set correctly for reset %a<a>';
 } #4
 
-#?pugs   skip "Int is dynamic NYI"
 #?niecza skip "Int is dynamic NYI"
 # typed
 {

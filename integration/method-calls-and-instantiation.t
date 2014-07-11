@@ -11,13 +11,6 @@ plan 2;
 # so Bar acts both as the initial value of $var, and as the constraint that
 # the variable($var) Scalar object holds on.
 
-# The reason why the second test fails on Pugs <= 6.2.12, is because
-# the pad does not really carry its constraint so when a closure is entered
-# for the next time (method is called again) $var is refreshed into undef,
-# instead of into its principal constraint class (Bar).
-# The switch to the new P6AST fixes this issue.
-# -- based on audreyt's explanation on #perl6.
-
 class Bar {
 	method value { "1" }
 }

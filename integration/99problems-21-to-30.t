@@ -25,7 +25,6 @@ plan 15;
     is list(4 .. 9), <4 5 6 7 8 9>, 'We should be able to create ranges';
 }
 
-#?pugs skip 'pick not defined: VInt 3'
 {
     # P23 (**) Extract a given number of randomly selected elements from a list.
     # 
@@ -84,13 +83,9 @@ plan 15;
     is @numbers.elems, 6, 'lotto() should return the correct number of numbers';
     #?rakudo todo 'unknown'
     #?niecza todo 'unknown'
-    #?pugs skip 'autothread'
     ok ?(all(@numbers) ~~ any(1..49)), '... and they should be in the correct range';
-    #?pugs emit # Missing required parameters: $_
     my %unique = map { ($_ => 1) }, @numbers;
-    #?pugs emit #
     diag %unique.perl;
-    #?pugs skip 'Missing required parameters: $_'
     is %unique.keys.elems, 6, '... and they should all be unique numbers';
 }
 
@@ -150,7 +145,6 @@ sub combination($n, @xs) {
 }
 
 #?niecza skip 'hangs'
-#?pugs todo
 {
     # P27 (**) Group the elements of a set into disjoint subsets.
     # 
@@ -204,7 +198,6 @@ sub combination($n, @xs) {
     ,((3,4),(2,))), 'group works';
 }
 
-#?pugs todo
 {
     # P28 (**) Sorting a list of lists according to length of sublists
     # 
@@ -247,7 +240,6 @@ sub combination($n, @xs) {
 }
 
 #?niecza skip 'Unable to resolve method push in class Any'
-#?pugs todo
 {
     my @input= [<a b c>],[<d e>],[<f g h>],[<d e>],[<i j k l>],[<m n>],[<o>];
     my @expected= [<i j k l>],[<o>],[<a b c>],[<f g h>],[<d e>],[<d e>],[<m n>];

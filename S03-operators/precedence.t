@@ -46,7 +46,6 @@ is(?2*2, 2, "binary -> numify causes reinterpretation as, binds tighter than *")
 # multiplicative
 
 is(4 + 3 * 2, 10, "* binds tighter than binary +");
-#?pugs skip 'div'
 is(2 - 2 div 2, 1, "div binds tighter than binary -");
 is(2 - 2 / 2, 1 / 1, "/ binds tighter than binary -");
 
@@ -54,7 +53,6 @@ is(2 - 2 / 2, 1 / 1, "/ binds tighter than binary -");
 
 is(1 ~ 2 * 3, 16, "~ binds looser than *");
 ok(?((1 ~ 2 & 12) == 12), "but tighter than &");
-#?pugs skip 'autothread'
 ok(?((2 + 2 | 4 - 1) == 4), "and + binds tighter than |");
 
 # replication
@@ -65,12 +63,10 @@ is((2 x 2) + 3, 25, "doublecheck");
 # concatenation
 
 is(2 x 2 ~ 3, "223", "x binds tighter than binary ~");
-#?pugs skip 'autothread'
 ok(?((2 ~ 2 | 4 ~ 1) == 41), "and ~ binds tighter than |");
 
 # junctive and
 
-#?pugs 4 skip 'autothread'
 ok(  ?(   (1 & 2 | 3) ==3), '& binds tighter than |');
 ok((!(1 & 2 | 3) < 2), "ditto");
 ok(?((1 & 2 ^ 3) < 3), "and also ^");
@@ -79,14 +75,12 @@ ok(?(!(1 & 2 ^ 4) != 3), "blah blah blah");
 # junctive or
 
 #?rakudo todo 'non-associativeness of infix:<^> and |'
-#?pugs todo 'autothread, Mu'
 { # test that | and ^ are on the same level but parsefail
     eval_dies_ok 'my Mu $a = (1 | 2 ^ 3)', '| and ^ may not associate';
     eval_dies_ok 'my Mu $a = (1 ^ 2 | 3)', '^ and | may not associate';
 };
 
 
-#?pugs skip 'Mu'
 {
     my Mu $b = ((abs -1) ^ -1); # -> (1 ^ -1)
     ok($b == 1, "this is true because only one is == 1");
@@ -133,7 +127,6 @@ is((1 && 0 ?? 2 !! 3), 3, "&& binds tighter than ??");
 # loose unary
 
 my $x;
-#?pugs skip 'wrong precedence'
 is((so $x = 42), True, "item assignment is tighter than true");
 
 # comma
@@ -145,7 +138,6 @@ is(((not 1,42)[1]), 42, "not is tighter than comma");
 {
     my @d;
     ok (@d = 1,3 Z 2,4), "list infix tighter than list assignment, looser t than comma";
-    #?pugs todo 'list infix and assignment'
     is(@d, [1 .. 4], "to complicate things further, it dwims");
 }
 
@@ -160,7 +152,6 @@ eval_dies_ok('4 X+> 1...2', 'X+> must not associate with ...');
 
 # list prefix
 
-#?pugs todo 'authothread'
 {
     my $c = any 1, 2 Z 3, 4;
     ok($c == 3, "any is less tight than comma and Z");
@@ -195,11 +186,9 @@ is(@c, [1,2,3], "@ = binds looser than ,");
 # http://irclog.perlgeek.de/perl6/2009-07-14#i_1316200
 #
 # so uc(False) stringifies False to 'FALSE', and uc('0') is false. Phew.
-#?pugs todo 'Bool.Str'
 is (uc "a" eq "A"), uc(False.Str), "uc has the correct precedence in comparison to eq";
 
 # L<S03/Named unary precedence/my $i = int $x;   # ILLEGAL>
-#?pugs todo
 eval_dies_ok 'int 4.5', 'there is no more prefix:<int>';
 
 
@@ -211,13 +200,11 @@ ok ((1 => 2 => 3).value ~~ Pair), '=> is right-assoc (2)';
 # L<S03/Operator precedence/only works between identical operators>
 
 #?rakudo todo 'list associativity bug'
-#?pugs todo
 eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
     'list associativity only works between identical operators';
 
 #?rakudo skip 'nom regression'
 #?niecza skip 'assigning to readonly value'
-#?pugs todo
 {
     # Check a 3 != 3 vs 3 !=3 parsing issue that can cropped up in Rakudo.
     # Needs careful following of STD to get it right. :-)

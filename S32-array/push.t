@@ -44,10 +44,8 @@ plan 51;
     my @push_result = @p.push( 'yo, check it' );
 
     is( +@p, 2, 'array received second element' );
-    #?pugs todo
     ok( @push_result ~~ @p, 'modified array, returned' );
     is( ~@p, 'bughunt yo, check it', '~@p' );
-    #?pugs todo
     is( ~@p.push('!'), 'bughunt yo, check it !', '~ on the push' );
 }
 
@@ -108,7 +106,6 @@ plan 51;
 }
 
 # testing some edge cases
-#?pugs skip '...'
 {
     my @push = 0 ... 5;
     is(+@push, 6, 'starting length is 6');
@@ -136,7 +133,6 @@ plan 51;
 # }
 
 # nested arrayref
-#?pugs skip '...'
 {
     my @push = ();
     push @push, [ 21 ... 25 ];
@@ -168,7 +164,6 @@ plan 51;
 }
 
 # RT #109476
-#?pugs skip 'Odd number of elements'
 {
     my %h = ( <foo> => []);
     push %h<foo>, my $foo = 'bar';
@@ -176,7 +171,6 @@ plan 51;
 }
 
 # RT 119061
-#?pugs todo
 #?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;

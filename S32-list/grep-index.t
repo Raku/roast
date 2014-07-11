@@ -35,7 +35,6 @@ is_deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
 }
 
 #?rakudo skip "adverbial block"
-#?pugs   skip "adverbial block"
 #?niecza skip 'NYI'
 {
     my @result = @list.grep-index :{ ($_ % 2) };
@@ -68,7 +67,6 @@ is_deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
 # Grep with mutating block
 #
 # L<S02/Names/"$_, $!, and $/ are context<rw> by default">
-#?pugs skip "Can't modify constant item: VStr 'a'"
 {
   my @array = <a b c d>;
   #?rakudo 2 skip 'test error -- is $_ rw here?'
@@ -79,7 +77,6 @@ is_deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
 }
 
 # grep with last, next etc.
-#?pugs skip "last/next in grep"
 {
     is_deeply (1..16).grep-index({last if $_ % 5 == 0; $_ % 2 == 0}),
        (1,3).list.item, 'last works in grep-index';
@@ -89,7 +86,6 @@ is_deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
 
 # since the test argument to .grep is a Matcher, we can also
 # check type constraints:
-#?pugs skip "Int"
 {
     is_deeply (2, [], 4, [], 5).grep-index(Int),
        (0,2,4).list.item, ".grep-index with non-Code matcher";
@@ -98,7 +94,6 @@ is_deeply @list.grep-index( { ($_ % 2) } ), (0,2,4,6,8).list.item,
        (0,2,4).list.item, "grep-index with non-Code matcher";
 }
 
-#?pugs skip 'Cannot cast from VList to VCode'
 {
     my @a = <a b c>;
     my @b = <b c d>;

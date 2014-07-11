@@ -62,7 +62,6 @@ plan 21;
 }
 
 #?niecza todo "closure for"
-#?pugs todo
 {
     my $a = 0;
     { $a++ } for 1..3;
@@ -70,7 +69,6 @@ plan 21;
 }
 
 #?niecza todo "closure for"
-#?pugs todo
 {
     my $a = 0;
     -> $i { $a += $i } for 1..3;
@@ -82,14 +80,12 @@ plan 21;
     my $i = 0;
     $_ = 10;
     $i += $_ for 1..3;
-    #?pugs todo
     is $_, 10, 'outer $_ did not get updated in lhs of for';
     is $i, 1+2+3, 'postfix for worked';
 }
 
 # L<S04/The C<for> statement/When used as statement modifiers on implicit blocks>
 
-#?pugs skip "Can't modify constant item: VInt 3"
 {
     $_ = 42;
     my @trace;

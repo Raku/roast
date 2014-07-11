@@ -35,12 +35,8 @@ multi sub identify(Str $x, Str $y) {
 }
 
 is identify(42), "42 is an integer.", 'MMD with one Int';
-#?pugs todo
 is identify("This rules!"), '"This rules!" is a string.', 'MMD with one Str';
 is identify(42, "This rules!"), 'You have an integer 42, and a string "This rules!".' , "MMD with Int and Str";
-#?pugs todo
 is identify("This rules!", 42), 'You have a string "This rules!", and an integer 42.' , "MMD with Int and Str";
-#?pugs todo
 is identify("This rules!", "I agree!"), "You have two strings \"This rules!\" and \"I agree!\".", 'Str, Str';
-#?pugs todo
 is identify(42, 24), "You have two integers 42 and 24.";

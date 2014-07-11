@@ -17,16 +17,13 @@ subset Even of Int where { $_ % 2 == 0 };
     is $x, 2, 'Can assign value to a type variable with subset';
 };
 
-#?pugs todo
 dies_ok { EVAL('my Even $x = 3') },
               "Can't assign value that violates type constraint via subset";
 
 # RT # 69518'
 #?niecza todo
-#?pugs todo
 dies_ok { EVAL('Even.new') }, 'Cannot instantiate a subtype';
 
-#?pugs skip "can't find Even"
 {
     ok 2 ~~ Even,  'Can smartmatch against subsets 1';
     ok 3 !~~ Even, 'Can smartmatch against subsets 2';
@@ -34,7 +31,6 @@ dies_ok { EVAL('Even.new') }, 'Cannot instantiate a subtype';
 
 # L<S02/Polymorphic types/"Fancier type constraints may be expressed through a subtype">
 
-#?pugs emit #
 subset Digit of Int where ^10;
 
 {
@@ -46,7 +42,6 @@ subset Digit of Int where ^10;
     is  $x,     9,  "other end of range";
 }
 
-#?pugs 3 todo
 dies_ok { my Digit $x = 10 },
              'type constraints prevents assignment 1';
 dies_ok { my Digit $x = -1 },
@@ -63,7 +58,6 @@ dies_ok { my Digit $x = 3.1 },
     subset Person of Hash where { .keys.sort ~~ <firstname lastname> }
     lives_ok { my Person $p = { :firstname<Alpha>, :lastname<Bravo> } },
              'can create subset of hash with where';
-    #?pugs todo
     dies_ok { my Person $p = { :first<Charlie>, :last<Delta> } },
             'subset of hash with where enforces where clause';
 
@@ -75,7 +69,6 @@ dies_ok { my Digit $x = 3.1 },
     lives_ok { my NumArray $n = [] },
              'can create subset of array with where';
     #?rakudo skip '(noauto) succeeds for the wrong reason (need to test the error)'
-    #?pugs todo
     dies_ok { my NumArray $n = <Echo 2> },
             'subset of array with where enforces where clause';
 
@@ -86,7 +79,6 @@ dies_ok { my Digit $x = 3.1 },
     subset Ordered of Pair where { .key < .value }
     lives_ok { my Ordered $o = 23 => 42 },
              'can create subset of Pair with where';
-    #?pugs todo
     dies_ok { my Ordered $o = 42 => 23 },
             'subset of pair with where enforces where clause';
 }
@@ -96,7 +88,6 @@ dies_ok { my Digit $x = 3.1 },
     my Str_not2b $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to my subset of Str where pattern worked';
-    #?pugs todo
     dies_ok { $text = 'oops' },
             'my subset of Str where pattern enforces pattern';
 }
@@ -106,13 +97,11 @@ dies_ok { my Digit $x = 3.1 },
     my Negation $text;
     $text = 'amnot';
     is $text, 'amnot', 'assignment to subset of Str where pattern worked';
-    #?pugs todo
     dies_ok { $text = 'oops' }, 'subset of Str where pattern enforces pattern';
 }
 
 # RT #67256
 #?niecza skip "Exception NYI"
-#?pugs skip   "Exception NYI"
 {
     subset RT67256 of Int where { $^i > 0 }
     my RT67256 $rt67256;
@@ -124,7 +113,6 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 # RT #69334
-#?pugs skip "Can't find SY"
 {
     class Y {has $.z};
     subset sY of Y where {.z == 0};
@@ -141,7 +129,6 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 # RT #77356
-#?pugs skip "Can't find aboveLexLimit"
 {
     sub limit() { 0 }
     subset aboveLexLimit of Int where { $_ > limit() };
@@ -150,7 +137,6 @@ dies_ok { my Digit $x = 3.1 },
 }
 
 # RT # 77356
-#?pugs skip "Can't find aboveLexVarLimit"
 {
     my $limit = 0;
     subset aboveLexVarLimit of Int where { $_ > $limit };
@@ -158,12 +144,10 @@ dies_ok { my Digit $x = 3.1 },
     nok -1 ~~ aboveLexVarLimit, 'can use subset that depends on lexical variable (2)';
 }
 
-#?pugs emit #
 subset Bug::RT80930 of Int where { $_ %% 2 };
 lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #95500
-#?pugs skip "Can't find SomeStr"
 {
     subset SomeStr of Str where any <foo bar>;
      ok 'foo' ~~ SomeStr, 'subset ... where any(...) (+)';
@@ -173,7 +157,6 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #65308
 #?niecza skip 'Methods must be used in some kind of package'
-#?pugs todo
 {
     subset FooStr of Str where /^foo/;
     my multi method uc(FooStr $self:) { return "OH HAI" }; #OK not used
@@ -183,7 +166,6 @@ lives_ok { my Bug::RT80930 $rt80930 }, 'subset with "::" in the name';
 
 # RT #73344
 my $a = 1;
-#?pugs skip 'where'
 {
     my $a = 3;
     sub producer {
@@ -195,7 +177,6 @@ my $a = 1;
     dies_ok  { bar(1) }, 'where-constraint picks up the right lexical (-)';
 }
 
-#?pugs skip 'MI not found'
 {
     #RT #113434
     my subset MI of Int;
@@ -205,7 +186,6 @@ my $a = 1;
 }
 
 # RT #74352
-#?pugs skip 'parsefail'
 {
     subset A of Array;
     subset B of A;

@@ -16,7 +16,6 @@ plan 12;
     my $obj1 = Klass1.new;
     lives_ok { $obj1.bind() }, 'attribute binding lives';
 
-    #?pugs 3 todo 'bug'
     is $obj1.x, 42, 'binding $!x instance attribute (1)';
     $var = 23;
     is $obj1.x, 23, 'binding $!x instance attribute (2)';
@@ -34,7 +33,6 @@ plan 12;
     my $obj2 = Klass2.new;
     $obj2.bind();
 
-    #?pugs 3 todo 'bug'
     is $obj2.get_x, 42, 'binding $x instance attribute (1)';
     $var = 23;
     is $obj2.get_x, 23, 'binding $x instance attribute (2)';
@@ -50,7 +48,6 @@ plan 12;
 
     try { Klass3.bind() };
 
-    #?pugs 3 todo 'bug'
     is try { Klass3.x }, 42, "binding public class attribute (1)";
     $var = 23;
     is try { Klass3.x }, 23, "binding public class attribute (2)";

@@ -44,9 +44,7 @@ line 4
 }
 
 {
-    #?pugs todo
     is 'something'.new, '', '"string literal".new just creates an empty string';
-    #?pugs skip 'Cannot cast from VObject'
     is +''.new, 0, '... and that strinig works normally';
 }
 

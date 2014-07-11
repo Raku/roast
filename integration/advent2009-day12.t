@@ -21,7 +21,6 @@ use lib 't/spec/packages';
 
     use Fancy::Utilities :shortgreet, :lolgreet;
     is lolgreet('Tene'), 'O HAI TENE', 'Explicitly importing symbols by name works';
-    #?pugs todo
     nok nicegreet('Jnthn'), 'Good morning, Jnthn!', 'Cannot use a sub not explicitly imported';
 }
 
@@ -33,7 +32,6 @@ use lib 't/spec/packages';
 }
 
 #?rakudo skip "Multi subs aren't imported by default in current Rakudo - is this to spec?"
-#?pugs skip "No such subroutine"
 {
     use Fancy::Utilities;
     is greet(), 'Hi!', "Multi subs are imported by default - is this to spec?";

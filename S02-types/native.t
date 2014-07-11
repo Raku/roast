@@ -99,7 +99,6 @@ plan 27;
     my int $x;
     ($x) = (5);
     is $x, 5, 'did we assign $x';
-    #pugs todo 'no native support'
     is $x.WHAT, int, 'is it really a native';
 }
 

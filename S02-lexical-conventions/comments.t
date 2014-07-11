@@ -128,7 +128,6 @@ plan 51;
     # ok EVAL(" #`{ comment }") fails with an error as it tries to execute
     # comment() before seeing that I meant #`{ comment within this string.
 
-#?pugs todo 'bug'
 #?rakudo todo 'NYI'
     eval_lives_ok " #`<<\n comment\n # >>\n >> 3",
         'single line comment cannot correctly nested within multiline';

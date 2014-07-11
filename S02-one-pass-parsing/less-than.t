@@ -18,7 +18,6 @@ ok(rand < 1, 'random numbers are less than 1');
 ok 3 > 0, "3 is greater than 0";
 
 
-# used to be a pugs regression
 #   ~< foo bar >
 # doesn't parse (as does +< foo bar >).
 is EVAL('~< foo bar >'), "foo bar", "~<...> is parsed correctly";

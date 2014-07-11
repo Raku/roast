@@ -138,7 +138,6 @@ plan 13;
         return @table;
     };
    
-    #?pugs todo 
     is q[true true true
 true fail true
 fail true fail
@@ -233,7 +232,6 @@ fail fail fail
     is gray2(3), <000 001 011 010 110 111 101 100>, 'gry code for n = 3';
 }
 
-#?pugs skip "Cannot 'shift' scalar"
 {
     # P50 (***) Huffman code.
     # 

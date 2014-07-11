@@ -13,10 +13,6 @@ my $default = Any;
 my $dont    = False;
 
 sub gen_hash {
-
-    # alas not supported by pugs
-    #return ("a".."z" Z 1..26).hash;
-
     my %h;
     my $i = 0;
     for 'a'..'z' { %h{$_} = ++$i; }
@@ -26,7 +22,6 @@ sub gen_hash {
 #-------------------------------------------------------------------------------
 # Hash
 
-#?pugs skip "no adverbials"
 {
     my %h = gen_hash;
     is %h.elems, 26, "basic sanity";

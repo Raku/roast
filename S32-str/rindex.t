@@ -10,14 +10,12 @@ plan 33;
 is(rindex("Hello World", "H"), 0, "One char, at beginning");
 is(rindex("Hello World", "l"), 9, "One char, in the middle");
 is(rindex("Hello World", "d"), 10, "One char, in the end");
-#?pugs todo
 ok(!defined(rindex("Hello World", "x")), "One char, no match");
 
 is(rindex("Hello World", "l", 10), 9, "One char, first match, pos @ end");
 is(rindex("Hello World", "l", 9), 9, "- 1. match again, pos @ match");
 is(rindex("Hello World", "l", 8), 3, "- 2. match");
 is(rindex("Hello World", "l", 2), 2, "- 3. match");
-#?pugs todo
 ok(!defined(rindex("Hello World", "l", 1)), "- no more matches");
 
 # Simple - with a string
@@ -25,7 +23,6 @@ ok(!defined(rindex("Hello World", "l", 1)), "- no more matches");
 is(rindex("Hello World", "Hello"), 0, "Substr, at beginning");
 is(rindex("Hello World", "o W"), 4, "Substr, in the middle");
 is(rindex("Hello World", "World"), 6, "Substr, at the end");
-#?pugs todo
 ok(!defined(rindex("Hello World", "low")), "Substr, no match");
 is(rindex("Hello World", "Hello World"), 0, "Substr eq Str");
 
@@ -33,7 +30,6 @@ is(rindex("Hello World", "Hello World"), 0, "Substr eq Str");
 
 is(rindex("Hello World", ""), 11, "Substr is empty");
 is(rindex("", ""), 0, "Both strings are empty");
-#?pugs todo
 ok(!defined(rindex("", "Hello")), "Only main-string is empty");
 is(rindex("Hello", "", 3), 3, "Substr is empty, pos within str");
 is(rindex("Hello", "", 5), 5, "Substr is empty, pos at end of str");

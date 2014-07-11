@@ -7,7 +7,6 @@ plan 824;
 # Basic test functions specific to rational numbers.
 
 # Test ways of making Rats
-#?pugs skip 'Must only use named arguments to new() constructor'
 isa_ok(Rat.new(1,4), Rat, "Rat.new makes a Rat");
 isa_ok(1 / 4, Rat, "/ makes a Rat");
 isa_ok( 1.Int.Rat, Rat, "cast of Int makes a Rat");
@@ -16,28 +15,23 @@ isa_ok( 1.Num.Rat, Rat, "cast of Num makes a Rat");
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
 isa_ok( Rat.new, Rat, 'Rat.new is Rat' );
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
-#?pugs todo
 isa_ok( EVAL(Rat.new.perl), Rat, 'EVAL Rat.new.perl is Rat' );
-#?pugs 2 skip 'Must only use named arguments to new() constructor'
 #?rakudo 4 todo '<1/3> literal should be Rat'
 isa_ok( EVAL(Rat.new(1, 3).perl), Rat, 'EVAL Rat.new(1, 3).perl is Rat' );
 is( (EVAL Rat.new(1, 3).perl), 1/3, 'EVAL Rat.new(1, 3).perl is 1/3' );
 isa_ok( EVAL((1/3).perl), Rat, 'EVAL (1/3).perl is Rat' );
 is( (EVAL (1/3).perl), 1/3, 'EVAL (1/3).perl is 1/3' );
-#?pugs 3 todo 'tenths'
 is( (1/10).perl, "0.1", '(1/10).perl is 0.1' );
 is( (1/5).perl, "0.2", '(1/5).perl is .2' );
 is( (1/2).perl, "0.5", '(1/2).perl is .5' );
 
 # Test ~
-#?pugs 4 skip 'Must only use named arguments to new() constructor'
 is(~(Rat.new(1,4)), ~(0.25e0), "Rats stringify properly");
 is(~(Rat.new(-1,2)), ~(-0.5e0), "Rats stringify properly");
 is(~(Rat.new(7,4)), ~(1.75e0), "Rats stringify properly");
 is(~(Rat.new(7,-1)), ~(-7), "Rats stringify properly");
 
 # Test new
-#?pugs 9 skip 'Must only use named arguments to new() constructor'
 is(Rat.new(1, -7).nude, (-1, 7), "Negative signs move to numerator");
 is(Rat.new(-32, -33).nude, (32, 33), "Double negatives cancel out");
 is(Rat.new(2, 4).nude, (1, 2), "Reduce to simplest form in constructor");
@@ -62,7 +56,6 @@ isa_ok(1 + 1 / 4, Rat, "1 + 1/4 is a Rat");
 
 is(1 / 4 - 1 / 4, 0/1, "1/4 - 1/4 = 0/1");
 is(1 / 4 - 3 / 4, -1/2, "1/4 - 3/4 = -1/2");
-#?pugs skip '.nude'
 is((1 / 4 - 3 / 4).nude, (-1, 2), "1/4 - 3/4 = -1/2 is simplified internally");
 isa_ok((1 / 4 - 3 / 4), Rat, "1/4 - 3/4 is a Rat");
 is(1 / 4 - 1, -3/4, "1/4 - 1 = -3/4");
@@ -71,27 +64,22 @@ is(1 - 1 / 4, 3/4, "1 - 1/4 = 3/4");
 isa_ok(1 - 1 / 4, Rat, "1 - 1/4 is a Rat");
 
 is((2 / 3) * (5 / 4), 5/6, "2/3 * 5/4 = 5/6");
-#?pugs skip '.nude'
 is(((2 / 3) * (5 / 4)).nude, (5, 6), "2/3 * 5/4 = 5/6 is simplified internally");
 isa_ok((2 / 3) * (5 / 4), Rat, "2/3 * 5/4 is a Rat");
 is((2 / 3) * 2, 4/3, "2/3 * 2 = 4/3");
 isa_ok((2 / 3) * 2, Rat, "2/3 * 2 is a Rat");
-#?pugs skip '.nude'
 is(((2 / 3) * 3).nude, (2, 1), "2/3 * 3 = 2 is simplified internally");
 is(2 * (2 / 3), 4/3, "2 * 2/3 = 4/3");
 isa_ok(2 * (2 / 3), Rat, "2 * 2/3 is a Rat");
-#?pugs skip '.nude'
 is((3 * (2 / 3)).nude, (2, 1), "3 * 2/3 = 2 is simplified internally");
 
 is((2 / 3) / (5 / 4), 8/15, "2/3 / 5/4 = 8/15");
 isa_ok((2 / 3) / (5 / 4), Rat, "2/3 / 5/4 is a Rat");
 is((2 / 3) / 2, 1/3, "2/3 / 2 = 1/3");
-#?pugs skip '.nude'
 is(((2 / 3) / 2).nude, (1, 3), "2/3 / 2 = 1/3 is simplified internally");
 isa_ok((2 / 3) / 2, Rat, "2/3 / 2 is a Rat");
 is(2 / (1 / 3), 6, "2 / 1/3 = 6");
 isa_ok(2 / (1 / 3), Rat, "2 / 1/3 is a Rat");
-#?pugs skip '.nude'
 is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
 
 {
@@ -145,9 +133,6 @@ is((2 / (2 / 3)).nude, (3, 1), "2 / 2/3 = 3 is simplified internally");
     }
 }
 
-#pugs needs a reset here...
-#?DOES 1 
-
 # used to be a (never ticketed) Rakudo bug: sin(Rat) died
 # (note that trig on Rats is tested extensively in S32-trig)
 
@@ -161,14 +146,11 @@ is_approx sin(5.0e0), sin(10/2), 'sin(Rat) works';
 # there are a few division by zero tests in S03-operator/div.t
 
 #?niecza todo
-#?pugs todo 'NaN.Rat'
 is NaN.Rat, NaN, "NaN.Rat == NaN";
 
 {
-    #?pugs todo 'Inf.Rat'
     #?niecza todo
     is Inf.Rat, Inf, "Inf.Rat == Inf";
-    #?pugs todo 'Inf.Rat'
     #?niecza todo
     is (-Inf).Rat, -Inf, "(-Inf).Rat == -Inf";
 
@@ -199,7 +181,6 @@ is_approx (1 / 3) / 2.0i, 1 / (6.0i), "1/3 / 2.0i = 1/(6i)";
 is_approx 2.0i / (1 / 3), 6.0i, "2.0i / 1/3 = 6.0i";
 
 # Cast from Num uses an epsilon value.
-#?pugs 3 skip 'Must only use named arguments to new() constructor'
 is( exp(1).Rat, Rat.new(2721, 1001), "Num to Rat with default epsilon");
 is( exp(1).Rat(1e-4), Rat.new(193, 71), "Num to Rat with epsilon 1e-4");
 is( exp(1).Rat(Rat.new(1,1e4.Int)), Rat.new(193, 71),
@@ -246,12 +227,10 @@ ok 1/2 === 1/2, 'Rats are value types, so 1/2 === 1/2';
 ok 1/2 !=== 1/3, '=== with false outcome';
 
 # http://irclog.perlgeek.de/perl6/2010-02-24#i_2027452
-#?pugs 2 skip 'Illegal division by zero'
 is (3/0).Num, Inf, "(3/0).Num = +Inf";
 is (-42/0).Num, -Inf, "(-42/0).Num = -Inf";
 
 #?niecza skip 'No value for parameter $n in CORE Rat.new'
-#?pugs skip 'Cannot cast from VObject to Double'
 ok Rat.new() == 0, 'Rat.new() is 0';
 
 {
@@ -301,15 +280,12 @@ is (2/3) ** 3, 8/27, "Rat raised to a positive Int power gets correct answer";
 
 }
 
-#?pugs skip 'Must only use named arguments to new() constructor'
 is Rat.new(9,33).norm.nude, (3, 11), ".norm exists and doesn't hurt matters";
 
 isa_ok 241025348275725.3352, Rat, "241025348275725.3352 is a Rat";
-#?pugs skip 'No such method in class Rat: "&norm"'
 is 241025348275725.3352.Rat.norm.nude, (301281685344656669, 1250), "Rat.Rat yields correct Rat";
 
 #RT #112822
-#?pugs skip 'No such method in class Rat: "&norm"'
 is 241025348275725.3352.Str, "241025348275725.3352", 'stringification of bigish Rats';
 
 done;

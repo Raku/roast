@@ -115,7 +115,6 @@ EVAL('
   is $next,     3, "TEMP{} block (4)";
 
   #?rakudo 4 todo 'TEMP phasers NYI'
-  #?pugs 4 todo 'feature'
   flunk "TEMP{} block (5)";
   flunk "TEMP{} block (6)";
   flunk "TEMP{} block (7)";
@@ -127,7 +126,6 @@ EVAL('
   # function.  So, for now, we just comment the following block and add
   # unconditional flunk()s.
   # {
-  #  #?pugs 4 todo 'feature'
   #  is temp(advance()), 3, "TEMP{} block (5)";
   #  is $next,           4, "TEMP{} block (6)";
   #  is temp(advance()), 4, "TEMP{} block (7)";

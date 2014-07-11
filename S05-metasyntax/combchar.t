@@ -19,7 +19,6 @@ plan 3;
 my $unichar = "\c[GREEK CAPITAL LETTER ALPHA]";
 my $combchar = "\c[LATIN CAPITAL LETTER A]\c[COMBINING ACUTE ACCENT]";
 
-#?pugs todo 'feature'
 ok("A" ~~ m/^<.>$/, 'ASCII');
 ok($combchar ~~ m/^<.>$/, 'Unicode combining');
 ok($unichar ~~ m/^<.>$/, 'Unicode');

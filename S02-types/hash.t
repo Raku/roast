@@ -61,7 +61,6 @@ ok(%hash5.does(Hash), '%hash5 does Hash');
 }
 
 #?niecza todo
-#?pugs skip '.value'
 {
     my @slice3 = %hash5<>.sort(*.value);
     is(+@slice3, 3, 'empty slice got all hash pairs');
@@ -109,14 +108,12 @@ ok(%hash7.does(Hash), '%hash7 does Hash');
 
 my @values1 = (values %hash7).sort;
 is(+@values1, 3, 'got the right number of values');
-#?pugs 3 todo
 is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
 is(@values1[2], 3, 'got the right values');
 
 @values1 = %hash7.values.sort;
 is(+@values1, 3, 'got the right number of values');
-#?pugs 3 todo
 is(@values1[0], 1, 'got the right values');
 is(@values1[1], 2, 'got the right values');
 is(@values1[2], 3, 'got the right values');
@@ -148,13 +145,10 @@ is($key, 1, '%hash.kv gave us our key');
 is($val, 2, '%hash.kv gave us our val');
 
 %hash9{2} = 3;
-#?pugs todo
 ok(~%hash9 ~~ /^(1\t2\s+2\t3|2\t3\s+1\t2)\s*$/, "hash can stringify");
 
 my %hash10 = <1 2>;
 is(%hash10<1>, 2, "assignment of pointy qw to hash");
-
-# after t/pugsbugs/unhashify.t
 
 sub test1 {
     my %sane = hash ('a'=>'b');
@@ -182,8 +176,6 @@ test2 %h;
 my %dupl = (a => 1, b => 2, a => 3);
 is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
-# Moved from t/xx-uncategorized/hashes-segfault.t
-# Caused some versions of pugs to segfault
 {
     my %hash = %('a'..'d' Z 1..4);
     my $i = %hash.elems; # segfaults
@@ -194,8 +186,6 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
     is $i, 4, "for %hash works";
 }
 
-
-#?pugs todo
 {
     dies_ok { EVAL ' @%(a => <b>)<a>' },
      "doesn't really make sense, but shouldn't segfault, either ($!)";
@@ -203,7 +193,6 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 
 # test for RT #62730
 #?niecza todo
-#?pugs todo
 lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 
 # RT #71022
@@ -234,11 +223,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x = %h<foo>;
     is %h.elems, 0, 'merely reading a non-existing hash keys does not create it';
     my $y = %h<foo><bar>;
-    #?pugs todo
     is %h.elems, 0, 'reading multi-level non-existing hash keys does not create it';
     %h<foo><bar> = "baz";
     is %h.elems, 1, 'multi-level auto-vivify number of elements';
-    #?pugs skip 'Unimplemented unaryOp: hash'
     is_deeply %h<foo>, (bar => "baz").hash, "multi-level auto-vivify";
 } #4
 
@@ -256,20 +243,17 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
-    #?pugs todo
     dies_ok { Mu.{'a'} }, 'no .{ } in Mu';
 }
 
 # Whatever/Zen slices work on hashes too
 {
     my %h = a => 1, b => 2, c => 3;
-    #?pugs todo
     is %h{*}.join('|'), %h.values.join('|'), '{*} whatever slice';
     is %h{}.join('|'),  %h.join('|'),        '{} zen slice';
 } #2
 
 # RT #75868
-#?pugs todo
 {
     my %h = (ab => 'x', 'a' => 'y');
     'abc' ~~ /^(.)./;
@@ -296,11 +280,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
 } #1
 
 # RT #75694
-#?pugs todo
 eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting with 'has-' in a hash");
 
 # RT #99854
-#?pugs todo
 {
     eval_lives_ok 'my $rt = { grammar => 5 }',
                   "can have a bareword 'grammar' as a hash key";
@@ -315,14 +297,12 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
 }
 
 # RT 77598
-#?pugs skip 'No compatible multi variant found: "&is"'
 #?niecza skip "Unsupported use of [-1] subscript to access from end of array"
 {
     is {}[*-1], Failure, 'array-indexing a hash with a negative index is Failure';
 }
 
 # RT #73230
-#?pugs todo
 {
     my Hash $RT73230;
     $RT73230[1];

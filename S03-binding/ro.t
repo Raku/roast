@@ -11,14 +11,11 @@ plan 9;
     $x ::= $y;
     is $x, 3, '::= on scalars took the value from the RHS';
     #?rakudo todo 'nom regression'
-    #?pugs todo
     dies_ok { $x = 5 }; '... and made the LHS RO';
     #?rakudo todo 'nom regression'
-    #?pugs todo
     is $x, 3, 'variable is still 3';
 }
 
-#?pugs todo
 {
     my Int $a = 4;
     my Str $b;
@@ -34,7 +31,6 @@ plan 9;
     is @x.join('|'), 'd|e', '::= on arrays';
     #?rakudo 4 todo '::= on arrays'
     #?niecza todo
-    #?pugs 4 todo
     dies_ok { @x := <3 4 foo> }, '... make RO';
     #?niecza todo
     is @x.join('|'), 'd|e', 'value unchanged';

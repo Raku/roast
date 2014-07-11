@@ -93,7 +93,6 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     }
     class IL does RT69919 {}
 
-    #?pugs todo
     is IL.new.rt69919, 'Luthor', 'access lexical declared in role from method called via class that does the role';
 }
 
@@ -114,12 +113,9 @@ ok rB !~~ RT64002, 'role not matched by second role it does';
     role RT72856A { method foo {} };
     role RT72856B { method foo {} };
     try { EVAL 'class RT72856C does RT72856A does RT72856B {}' };
-    #?pugs todo
     ok $! ~~ /foo/,
         'method of the same name from two different roles collide in a class composition';
-    #?pugs todo
     ok $! ~~ /RT72856A/, 'colliding role mentioned in error (1)';
-    #?pugs todo
     ok $! ~~ /RT72856B/, 'colliding role mentioned in error (2)';
 }
 

@@ -40,16 +40,12 @@ ok(2 != 3,         "!= true");
 ok(!(2 != 2),      "!= false");
 
 #?niecza skip 'No value for parameter $r in CORE infix:<==>'
-#?pugs skip 'Non-exhaustive patterns in lambda'
 ok infix:<==>(False), "== with one argument is correct";
 #?niecza skip 'No value for parameter $l in CORE infix:<==>'
-#?pugs skip 'Missing required parameters: $?2 $?1'
 ok  infix:<==>(),     "== with no arguments is correct";
 #?niecza skip 'No value for parameter $r in CORE infix:<!=>'
-#?pugs skip 'Non-exhaustive patterns in lambda'
 ok infix:<!=>(False), "!= with one argument is correct";
 #?niecza skip 'No value for parameter $l in CORE infix:<!=>'
-#?pugs skip 'Missing required parameters: $?2 $?1'
 ok  infix:<!=>(),     "!= with no arguments is correct";
 
 #L<S03/Negated relational operators>

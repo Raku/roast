@@ -25,7 +25,7 @@ eval_dies_ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NO
     our Str sub ourNamedStr() { return 'string' };
     is ourNamedStr(), 'string', 'package-scoped named sub() return Str';
 }
-#?pugs skip 'Cannot use Undef as a Code object'
+
 {
     our &ourNamedStr;
     is ourNamedStr(), 'string', 'Correct : package-scoped named sub ourNamedStr() should BE available in the whole package';
@@ -35,7 +35,7 @@ eval_dies_ok('myNamedInt()', 'Correct : lexical named sub myNamedInt() should NO
     our Int sub ourNamedInt() { return 55 };
     is ourNamedInt(), 55, 'package-scoped named sub() return Int';
 }
-#?pugs skip 'Cannot use Undef as a Code object'
+
 {
     our &ourNamedInt;
     is ourNamedInt(), 55, 'Correct : package-scoped named sub ourNamedInt() should BE available in the whole package';

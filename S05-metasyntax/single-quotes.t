@@ -22,7 +22,6 @@ ok("ab cd" ~~ m/ab ' ' c d/, 'ab cd 2');
 
 ok 'abab' ~~ m/'ab' **2/, "Single quotes group";
 
-#?pugs skip bug
 ok("ab/cd" ~~ m/ab '/' c d/, 'ab/cd');
 
 # vim: ft=perl6

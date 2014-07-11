@@ -10,7 +10,6 @@ Testing the C<:mm> or C<:samemark> modifier - as always, need more tests
 
 =end description
 
-#?pugs 999 skip feature
 {
     my $s = 'äaä';
     ok $s ~~ s:mm/aaa/ooo/, ':mm implies :m';

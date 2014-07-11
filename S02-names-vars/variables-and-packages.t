@@ -13,7 +13,6 @@ plan 38;
     eval_dies_ok 'module PROCESS;', 'PROCESS is an out of scope name';
     eval_dies_ok 'module OUTER;', 'OUTER is an out of scope name';
     eval_dies_ok 'module CALLER;', 'CALLER is an out of scope name';
-    #?pugs todo
     eval_dies_ok 'module DYNAMIC;', 'DYNAMIC is an out of scope name';
     eval_dies_ok 'module COMPILING;', 'COMPILING is an out of scope name';
 }
@@ -95,7 +94,6 @@ plan 38;
 {
   #?rakudo todo 'nom regression'
   #?niecza todo
-  #?pugs todo
   nok foo().defined, "get variable not yet declared using a sub (1)";
   is foo(), 1, "get variable not yet declared using a sub (2)";
   is foo(), 2, "get variable not yet declared using a sub (3)";
@@ -107,7 +105,6 @@ plan 38;
 {
   #?rakudo todo 'nom regression'
   #?niecza todo
-  #?pugs todo
   nok bar().defined, "runtime part of my not yet executed (1)";
   is bar(), 1, "runtime part of my not yet executed (2)";
   is bar(), 2, "runtime part of my not yet executed (3)";
@@ -144,7 +141,6 @@ plan 38;
 
   #?rakudo todo 'nom regression'
   #?niecza todo
-  #?pugs todo
   nok rmbl().defined, "var captured by sub is the right var (1)";
   $a++;
   is rmbl(), 2, "var captured by sub is the right var (2)";
@@ -162,7 +158,6 @@ plan 38;
     s(9);/, "can't redeclare something with an implicit outer binding");
 }
 
-#?pugs todo
 {
     # RT #74076
     my $t;

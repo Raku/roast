@@ -10,7 +10,6 @@ my $str = 'moose';
 $str ~~ /oo/;
 eval_dies_ok('$str.pos', 'Str.pos superseeded by $/.to');
 
-#?pugs todo
 is($/.to, 3, '$/.to works');
 
 # vim: ft=perl6

@@ -3,14 +3,11 @@ use Test;
 plan 98;
 # L<S02/Names and Variables/To get a Perlish representation of any object>
 
-#?pugs emit plan 89;
-
 my @tests = (
     # Basic scalar values
     42, 
     42/10, 
     4.2, 
-    #?pugs emit #
     sqrt(2),
     3e5,
     Inf, -Inf, NaN,
@@ -26,40 +23,29 @@ my @tests = (
     ?1, ?0,
     #?rakudo emit # Mu eq Mu is an error now
     #?niecza emit # Dunno what's wrong with this one
-    #?pugs emit #
     Mu,
     #?rakudo emit # parse error
     #?niecza emit # Autoloading NYI
-    #?pugs emit #
     rx:P5/foo/, rx:P5//, rx:P5/^.*$/,
 
     # References to scalars
     \42, \Inf, \-Inf, \NaN, \"string", \"", \?1, \?0, 
 
-    #?pugs emit #
     \Mu,
 
-    #?pugs emit #
     (a => 1),
-    #?pugs emit #
     :b(2),
 
     # References to aggregates
-    #?pugs emit #
     {},           # empty hash
-    #?pugs emit #
     { a => 42 },  # only one elem
-    #?pugs emit #
     #?rakudo emit #
     { :a(1), :b(2), :c(3) },
 
     # Nested things
-    #?pugs emit #
     { a => [1,2,3] },  # only one elem
-    #?pugs emit #
     #?rakudo emit #
     { a => [1,2,3], b => [4,5,6] },
-    #?pugs emit #
     #?rakudo emit #
     [ { :a(1) }, { :b(2), :c(3) } ],
 
@@ -89,7 +75,6 @@ my @tests = (
     my $foo = { a => 42 }; $foo<b> = $foo;
     is $foo<b><b><b><a>, 42, "basic recursive hashref";
 
-    #?pugs skip 'hanging test'
     #?niecza skip 'hanging test'
     is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a recursive hashref";
@@ -104,7 +89,6 @@ my @tests = (
 
     is $foo[1]<b>[1]<b>[0], 42, "mixed arrayref/hashref recursive structure";
 
-    #?pugs skip 'hanging test'
     #?niecza skip 'hanging test'
     is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a mixed arrayref/hashref recursive structure";
@@ -118,7 +102,6 @@ my @tests = (
 
 # RT #61918
 #?niecza skip ">>>Stub code executed"
-#?pugs   skip ">>>Stub code executed"
 {
     class RT61918 {
         has $.inst is rw;
@@ -139,7 +122,6 @@ my @tests = (
     ok $t1_new ne $t1_init, 'changing object changes .perl output';
 
     # TODO: more tests that show EVAL($t1_init) has the same guts as $t1.
-    #?pugs todo
     ok $t1_new ~~ /<< krach >>/, 'attribute value appears in .perl output';
 
     # RT #62002 -- validity of default .perl
@@ -162,7 +144,6 @@ my @tests = (
     class RT67790 {}
     lives_ok { RT67790.HOW.perl }, 'can .perl on .HOW';
     #?niecza skip '>>>Stub code executed'
-    #?pugs todo
     ok EVAL(RT67790.HOW.perl) === RT67790.HOW, '... and it returns the right thing';
 }
 
@@ -174,8 +155,6 @@ my @tests = (
 
 
 # RT #67948
-#?DOES 6
-#?pugs skip '&ITEM not found'
 {
     my @a;
     ([0, 0], [1, 1]).grep({@a.push: .perl; 1}).eager;
@@ -189,7 +168,6 @@ my @tests = (
 
 # Buf
 #?niecza skip 'Unhandled exception'
-#?pugs skip "doesn't have encode()"
 {
     my Blob $a = "asdf".encode();
     is EVAL($a.perl).decode("utf8"), "asdf";

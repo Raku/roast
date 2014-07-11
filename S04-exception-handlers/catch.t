@@ -65,7 +65,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     };
 
     ok(!$not_died, "did not live after death");
-    #?pugs 1 todo
     ok($caught, "caught exception of class Naughty");
 };
 
@@ -89,7 +88,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     };
 
     ok(!$other, "did not catch sibling error class");
-    #?pugs 1 todo
     ok($naughty, "caught superclass");
 };
 
@@ -114,7 +112,6 @@ lives_ok { do {die 'blah'; CATCH {default {}}}; }, 'do block with CATCH {default
     ok(!$lived, "did not live past uncaught throw");
     ok(!$naughty, "did not get caught by wrong handler");
     ok(WHAT($!).gist, '$! is an object');
-    #?pugs skip 'bug'
     is(WHAT($!).gist, Dandy.gist, ".. of the right class");
 };
 

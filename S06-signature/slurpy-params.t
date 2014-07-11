@@ -18,7 +18,6 @@ sub mixed($pos1, *@slurp) { "|$pos1|" ~ @slurp.join('!') }
 
 is mixed(1),           '|1|',    'Positional and slurp params';
 is mixed(1, 2, 3),     '|1|2!3', 'Positional and slurp params';
-#?pugs todo
 dies_ok {EVAL(' mixed()')},      'at least one arg required';
 
 #?rakudo skip 'types on slurpy params'
@@ -27,7 +26,6 @@ dies_ok {EVAL(' mixed()')},      'at least one arg required';
     is x_typed_join(1),           '1',      'Basic slurpy params with types 1';
     is x_typed_join(1, 2, 5),     '1|2|5',  'Basic slurpy params with types 2';
     #?niecza todo 'Types on slurpy params are checked'
-    #?pugs todo
     dies_ok { x_typed_join(3, 'x') }, 'Types on slurpy params are checked';
 }
 
@@ -45,7 +43,6 @@ is first_arg_copy(1, 2, 3), '1',  'can grab first item of a slurpy array (is cop
         @m.shift;
         return @m;
     }
-    #?pugs todo 'bug'
     is func(5).elems, 0, "Shift from an array function argument works";
 }
 
@@ -130,7 +127,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag('Testing with named arguments (named param is required) (++ version)');
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(+:$n, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
-    #?pugs todo 'bug'
     dies_ok { foo 1, x => 20, y => 300, 4000 };
 }
 
@@ -141,7 +137,6 @@ Blechschmidt L<http://www.nntp.perl.org/group/perl.perl6.language/22883>
     diag('Testing with named arguments (named param is required) (trait version)');
     lives_ok { foo 1, n => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, n => 20, y => 300, 4000 }`';
-    #?pugs todo 'bug'
     dies_ok { foo 1, x => 20, y => 300, 4000 },
     'Testing: `my sub foo(:$n is required, *%h, *@a){ }; foo 1, x => 20, y => 300, 4000 }`';
 }
@@ -188,7 +183,6 @@ These tests are the testing for "List parameters" section of Synopsis 06
 # RT #64814
 #?rakudo skip 'types on slurpy params'
 #?niecza skip 'Unhandled trait of'
-#?pugs skip 'parsefail'
 {
     sub slurp_any( Any *@a ) { @a[0] }
     is slurp_any( 'foo' ), 'foo', 'call to sub with (Any *@a) works';
@@ -246,13 +240,11 @@ These tests are the testing for "List parameters" section of Synopsis 06
     is $count, 1, 'Any slurpy param doesnt autothread';
 }
 
-#?pugs todo
 eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
              "Can't put required parameter after variadic parameters";
 
 # used to be RT #69424
 #?rakudo skip 'types on slurpy params'
-#?pugs skip 'parsefail'
 {
     sub typed-slurpy(Int *@a) { 5 }   #OK not used
     my Int @b;
@@ -282,7 +274,6 @@ eval_dies_ok 'sub rt65324(*@x, $oops) { say $oops }',
 }
 
 # RT #74410
-#?pugs skip "can't find multi for is"
 {
     is -> *@a { @a[+0] }.([5]), 5,
         'slurpy array can be indexed if index contains prefix:<+>';

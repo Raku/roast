@@ -270,7 +270,6 @@ lives_ok({ foo_hash_ref()<foo> },
   sub official_d {
     userdefinedcontrol1 { return 42 };
   }
-  #?pugs todo 'bug'
   is official_d(), 42,
     "subcalls in user-defined control flow are invisible to return";
 }
@@ -290,7 +289,6 @@ class Foo {
   }
 }
 
-#?pugs 3 todo 'return(), blocks and methods'
 #?niecza 3 todo
 is Foo.new.officialmeth(), 42,
     "return correctly from official method only";
@@ -345,7 +343,6 @@ is Foo::official(), 44,
 #?niecza skip "eager NYI"
 {
     sub bar61126($code) { $code() }; sub foo61126 { bar61126 { return 1 }; return 2; };
-    #?pugs todo
     is foo61126, 1;
 
     sub baz61126 { eager map { return 1 }, 1; return 2 };

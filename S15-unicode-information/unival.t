@@ -9,7 +9,6 @@ plan 25;
 # L<S15/Numeric Value>
 
 #?niecza 25 skip "unival NYI"
-#?pugs 25 skip "unival NYI"
 
 is unival(0x30).WHAT.gist, '(Int)', "0x30 is Int";
 is unival(0x30), 0, "0x30 has numeric value 0";

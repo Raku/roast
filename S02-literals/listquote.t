@@ -11,7 +11,6 @@ is($s, "xayaz", 'list context <list>');
 
 #?rakudo skip 'meta operators'
 #?niecza skip '|<<'
-#?pugs todo '|<<'
 {
 my $s = join |<< <a x y z>;
 is($s, "xayaz", 'listop |<< <list>');
@@ -28,7 +27,6 @@ eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
 
 ok( ?((1 | 3) < 3), '(...) < 3 no parsefail');
 
-#?pugs todo 'parsing bug'
 eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
 
 # WRONG: should be parsed as print() < 3

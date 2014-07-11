@@ -40,7 +40,6 @@ my class H is Hash  {};
     ok $h<a>.WHAT === Any, 'H.new<a> default is Any';
 } #4
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 {
     my Int $a;
@@ -53,7 +52,6 @@ my class H is Hash  {};
     ok %a<a>.WHAT === Int,        'Int %a<a> default is Int';
 } #5
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 {
     my $a of Int;
@@ -71,7 +69,6 @@ my class H is Hash  {};
     ok %a<a>.WHAT === Int,        '%a<a> of Int default is Int';
 } #5
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 {
     my Int %a{Str};
@@ -79,7 +76,6 @@ my class H is Hash  {};
     ok %a<a>.WHAT === Int,           'Int %a{Str}<a> default is Int';
 } #2
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 #?rakudo todo '%h{Str} of Int fails'
 {
@@ -88,7 +84,6 @@ my class H is Hash  {};
     ok %a<a>.WHAT === Int,           '%a{Str}<a> of Int default is Int';
 } #2
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 {
     my $a = Array[Int].new;
@@ -101,7 +96,6 @@ my class H is Hash  {};
     ok $h<a>.WHAT === Int,        'Hash[Int].new<a> default is Int';
 } #4
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 {
     my $a = A[Int].new;
@@ -114,7 +108,6 @@ my class H is Hash  {};
     ok $h<a>.WHAT === Int,    'H[Int].new<a> default is Int';
 } #4
 
-#?pugs   skip "no typed support"
 #?niecza skip "no typed support"
 {
     my $h = H[Int,Str].new;

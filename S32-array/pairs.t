@@ -42,7 +42,6 @@ Basic C<pairs> tests, see S32.
   }
 }
 
-#?pugs todo 'bug'
 {
     my @array = (17, 23, 42);
 

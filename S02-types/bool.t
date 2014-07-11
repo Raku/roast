@@ -28,7 +28,6 @@ is ?(Bool::True), Bool::True, "?Bool works for True";
 is ?(Bool::False), Bool::False, "?Bool works for False";
 
 # tests they work with && and ||
-#?pugs 4 skip 'pass'
 Bool::True  && pass('True works');
 Bool::False || pass('False works');
 
@@ -45,23 +44,18 @@ ok(!Bool::False, 'False works');
 # tests Bool stringification - interaction with ~
 isa_ok(~Bool::True, Str);
 isa_ok(~Bool::False, Str);
-#?pugs 2 todo "stringification"
 is(~Bool::True, 'True', 'Bool stringification (True)');
 is(~Bool::False, 'False', 'Bool stringification (False)');
-#?pugs 2 todo '.Str'
 is Bool::True.Str, 'True', 'True.Str';
 is Bool::False.Str, 'False', 'False.Str';
-#?pugs 2 todo '.gist'
 is Bool::True.gist, 'True', 'True.gist';
 is Bool::False.gist, 'False', 'False.gist';
 is Bool::True.perl, 'Bool::True', 'True.perl';
 is Bool::False.perl, 'Bool::False', 'False.perl';
 
 # numification - interaction with +
-#?pugs 2 skip "Numeric"
 ok(+Bool::True ~~ Numeric);
 ok(+Bool::False ~~ Numeric);
-#?pugs 2 todo "Int"
 isa_ok(+Bool::True, Int, 'True numifies to an Int');
 isa_ok(+Bool::False, Int, 'False numifies to an Int');
 
@@ -74,30 +68,23 @@ is(+Bool::False, '0', 'False numifies to 0');
 # Arithmetic operations
 my $bool = Bool::False;
 is(++$bool, Bool::True, 'Increment of Bool::False produces Bool::True');
-#?pugs todo
 is(++$bool, Bool::True, 'Increment of Bool::True still produces Bool::True');
-#?pugs todo 'Cannot cast from VBool True to VCode'
 is(--$bool, Bool::False, 'Decrement of Bool::True produces Bool::False');
-#?pugs todo
 is(--$bool, Bool::False, 'Decrement of Bool::False produces Bool::False');
 
 # RT #65514
 {
-    #?pugs 2 skip 'Cannot cast from VBool True to VCode'
     ok (0 but Bool::True), 'Bool::True works with "but"';
     is (0 but Bool::True), 0, 'Bool::True works with "but"';
-    #?pugs 2 skip 'Cannot cast from VBool False to VCode'
     ok !('RT65514' but Bool::False), 'Bool::False works with "but"';
     is ('RT65514' but Bool::False), 'RT65514', 'Bool::False works with "but"';
 }
 
-#?pugs skip '.key'
 {
     is Bool::True.key, 'True', 'Bool::True.key works (is "True")';
     is Bool::False.key, 'False', 'Bool::False.key works (is "False")';
 }
 
-#?pugs skip '.pick'
 {
     my $x = Bool.pick;
     ok ($x === True || $x === False), 'Bool.pick return True or False';

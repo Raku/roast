@@ -92,7 +92,6 @@ ok !Nil.new.defined, 'Nil.new is not defined';
     ok f4(Nil) === Nil, 'can use Nil as a default (nil-triggered)';
 }
 
-#?pugs   todo '$/!_ does not default to Nil'
 #?niecza todo '$/!_ does not default to Nil'
 {
     ok $/ === Nil, '$/ is by default Nil';

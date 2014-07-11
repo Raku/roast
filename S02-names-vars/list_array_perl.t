@@ -39,7 +39,6 @@ my @tests = (
     my $foo = [ 42 ]; $foo[1] = $foo;
     is $foo[1][1][1][0], 42, "basic recursive arrayref";
 
-    #?pugs skip 'hanging test'
     #?niecza skip 'hanging test'
     is ~$foo.perl.EVAL, ~$foo,
         ".perl worked correctly on a recursive arrayref";
@@ -53,7 +52,6 @@ my @tests = (
 
     my @hyp = -« ([1, 2], 3);
     # what it currently (r16460) gives
-    #?pugs 2 todo 'bug'
     isnt @hyp.item.perl, '[(-1, -2), -3]', "strange inner parens from .perl on result of hyperop";
 
     # what it should give

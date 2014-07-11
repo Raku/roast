@@ -27,7 +27,6 @@ plan 13;
 # Same, but more complex
 {
     my ($x,@y,*@rest) := (42,[13,17],5,6,7);
-    #?pugs todo 'feature'
     is("$x!{@y}!{@rest}", "42!13 17!5 6 7", "complex siglist bindings works (1)");
 }
 
@@ -43,7 +42,6 @@ plan 13;
 
     ok ~$siglist,
         "a siglist stringifies";
-    #?pugs todo 'feature'
     #?rakudo todo 'eqv on signatures'
     ok $siglist eqv &foo1.signature,
         "a subroutine's siglist can be accessed via .signature (1)";
@@ -54,7 +52,6 @@ plan 13;
     my sub foo (Num $a, $b?, *@rest) {}    #OK not used
     my $siglist = :(Num $a, $b?, *@rest);
 
-    #?pugs todo 'feature'
     #?rakudo todo 'eqv on signatures'
     ok $siglist eqv &foo.signature ,
         "a subroutine's siglist can be accessed via .signature (2)";

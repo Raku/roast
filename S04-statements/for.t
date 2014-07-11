@@ -1,6 +1,5 @@
 use v6;
 
-#?pugs emit #
 use MONKEY_TYPING;
 
 use Test;
@@ -42,7 +41,6 @@ for statement as possible
     is($b, '012345', 'for 0 .. 5 -> {} works');
 }
 
-#?pugs todo 'slice context'
 #?niecza skip 'slice context'
 {
     my $str;
@@ -90,7 +88,6 @@ for statement as possible
     $_ = "GLOBAL VALUE";
     is( .lc, "inner value", "Implicit default topic is seen by lc()" )
         for "INNER VALUE";
-    #?pugs todo
     is($_,"GLOBAL VALUE","After the loop the implicit topic gets restored");
 }
 
@@ -164,7 +161,6 @@ my @elems = <a b c d e>;
 }
 
 # "for @a -> $var" is ro by default.
-#?pugs skip 'parsefail'
 {
 
 
@@ -212,7 +208,6 @@ my @elems = <a b c d e>;
     is(@array_t, @t, 'for @array -> $val is rw { $val++ }');
 }
 
-#?pugs skip "Can't modify const item"
 {
     my @array_v = (0..2);
     my @v = (1..3);
@@ -220,7 +215,6 @@ my @elems = <a b c d e>;
     is(@array_v, @v, 'for @array.values -> $val is rw { $val++ }');
 }
 
-#?pugs skip "Can't modify const item"
 {
     my @array_kv = (0..2);
     my @kv = (1..3);
@@ -228,7 +222,6 @@ my @elems = <a b c d e>;
     is(@array_kv, @kv, 'for @array.kv -> $key, $val is rw { $val++ }');
 }
 
-#?pugs skip "Can't modify const item"
 {
     my %hash_v = ( a => 1, b => 2, c => 3 );
     my %v = ( a => 2, b => 3, c => 4 );
@@ -236,7 +229,6 @@ my @elems = <a b c d e>;
     is(%hash_v, %v, 'for %hash.values -> $val is rw { $val++ }');
 }
 
-#?pugs todo
 {
     my %hash_kv = ( a => 1, b => 2, c => 3 );
     my %kv = ( a => 2, b => 3, c => 4 );
@@ -337,9 +329,7 @@ class TestClass{ has $.key is rw  };
     is $t, '3210', 'can mix recursion and for (RT #103332)';
 }
 
-# grep and sort in for - these were pugs bugs once, so let's
-# keep them as regression tests
-
+# grep and sort in for
 {
   my @array = <1 2 3 4>;
   my $output = '';
@@ -411,7 +401,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $str, " 2 12 35", 'default values in for-loops';
 }
 
-#?pugs todo
 {
   my @a = <1 2 3>;
   my @b = <4 5 6>;
@@ -422,7 +411,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
   is $res, " 4 10 18", "Z -ed for loop";
 }
 
-#?pugs todo
 {
   my @a = <1 2 3>;
   my $str = '';
@@ -466,7 +454,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #62478
-#?pugs todo
 {
     try { EVAL('for (my $ii = 1; $ii <= 3; $ii++) { say $ii; }') };
     ok "$!" ~~ /C\-style/,   'mentions C-style';
@@ -475,7 +462,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 }
 
 # RT #65212
-#?pugs todo
 {
     my $parsed = 0;
     try { EVAL '$parsed = 1; for (1..3)->$n { last }' };
@@ -485,9 +471,7 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
 # RT #71268
 {
     sub rt71268 { for ^1 {} }
-    #?pugs todo
     lives_ok { ~(rt71268) }, 'can stringify "for ^1 {}" without death';
-    #?pugs skip 'Cannot cast from VList to VCode'
     is rt71268(), Nil, 'result of "for ^1 {}" is Nil';
 }
 
@@ -496,7 +480,6 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     eval_dies_ok 'for (my $i; $i <=3; $i++) { $i; }', 'Unsupported use of C-style "for (;;)" loop; in Perl 6 please use "loop (;;)"';
 }
 
-#?pugs todo
 {
     try { EVAL 'for (my $x; $x <=3; $x++) { $i; }'; diag($!) };
     ok $! ~~ / 'C-style' /, 'Sensible error message';
@@ -534,7 +517,6 @@ lives_ok {
 
 # RT #71270
 # list comprehension
-#?pugs skip 'Cannot cast from VList to VCode'
 {
     sub f() { for ^1 { } };
     is f(), Nil, 'for-loop as last statement returns Nil';
@@ -542,7 +524,6 @@ lives_ok {
 
 # RT #74060
 # more list comprehension
-#?pugs skip 'parsefail'
 #?niecza todo "https://github.com/sorear/niecza/issues/180"
 {
     my @s = ($_ * 2 if $_ ** 2 > 3 for 0 .. 5);
@@ -552,7 +533,6 @@ lives_ok {
 # RT #113026
 #?rakudo todo 'RT #113026 array iterator does not track a growing array'
 #?niecza todo 'array iterator does not track a growing array'
-#?pugs todo
 {
     my @rt113026 = 1 .. 10;
     my $iter = 0;
@@ -585,7 +565,6 @@ dies_ok
     }, 'for in called method runs (was a sink context bug)';
 
 # RT #77460
-#?pugs todo
 {
     my @a = 1;
     for 1..10 {
@@ -598,7 +577,6 @@ dies_ok
 # RT #89208
 is (for 5 { (sub { "OH HAI" })() }), "OH HAI", 'Anon sub inside for works.';
 
-#?pugs skip 'Cannot cast from VList to VCode'
 {
     sub f() { for 1..2 { } };
     is f(), Nil, 'for-loop as last statement returns Nil';

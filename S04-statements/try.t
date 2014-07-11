@@ -6,7 +6,6 @@ use Test;
 
 plan 27;
 
-#?pugs todo
 {
     # simple try
     my $lived = Mu;
@@ -16,7 +15,6 @@ plan 27;
 
 # try should return Nil if an exception was caught
 #?niecza skip "=== and Nil NYI"
-#?pugs skip 'Nil'
 {
     ok (try { die 'foo' }) === Nil, 'try returns Nil when exception was caught';
     ok (try { die 'foo'; CATCH { default { } } }) === Nil, '... even when there was a CATCH block';
@@ -47,10 +45,8 @@ plan 27;
     is ~%hash.keys, "a", '%hash = try {...} worked (6)';
 }
 
-#?pugs todo 'bug'
 {
     my %hash;
-    # Extra try necessary because current Pugs dies without it.
     try { %hash = try { a => 3 } };
     is +%hash,        1, '%hash = try {...} worked (7)';
     is ~%hash.keys, "a", '%hash = try {...} worked (8)';
@@ -96,7 +92,6 @@ plan 27;
     is argcount( try { 17 }, 23, 99 ), 3, 'try gets a block, nothing more';
 }
 
-#?pugs todo
 {
     my $catches = 0;
     try {
@@ -122,7 +117,6 @@ plan 27;
 }
 
 # RT #68728
-#?pugs todo
 #?rakudo.jvm skip "Method 'substr' not found"
 {
     my $str = '';
@@ -142,7 +136,6 @@ plan 27;
 }
 
 #?niecza skip 'new exception stuff'
-#?pugs skip '{obj:MyPayload}'
 {
     class MyPayload {
         method Str() { 'something exceptional' }
@@ -164,7 +157,6 @@ plan 27;
 # RT #111704
 #?rakudo.moar todo 'RT #111704'
 #?rakudo.jvm todo 'RT #111704'
-#?pugs skip 'Missing required parameters: $_'
 {
     my $x = 0;
     try { $x = $_ } given '42';

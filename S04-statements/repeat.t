@@ -84,7 +84,6 @@ plan 19;
 }
 
 # L<S04/The C<repeat> statement/"bind the result">
-#?pugs skip 'Cannot bind to non-existing variable: "$another_x"'
 {
   my $x = 0; repeat until $x >= 10 -> $another_x {
       pass('repeat until with binding starts undefined') unless $another_x.defined;
@@ -105,7 +104,6 @@ plan 19;
 
 # RT #69178
 #?niecza skip 'No value in ANON available for parameter $a'
-#?pugs todo
 {
     my $b = 1;
     my $tracker;
@@ -128,7 +126,6 @@ plan 19;
 
 # RT #114432
 #?niecza skip "throws_like"
-#?pugs skip 'Test Util parsefail'
 #?DOES 3
 {
     throws_like 'repeat { "but I myself" }', X::Syntax::Missing, what => '"while" or "until"';

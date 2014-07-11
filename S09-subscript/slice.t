@@ -66,7 +66,6 @@ plan 26;
 }
 
 # RT #63014
-#?pugs skip 'No such subroutine: "&Positional"'
 {
     my @array = <1 2 3>;
     isa_ok @array, Array;
@@ -87,7 +86,6 @@ plan 26;
 }
 
 # RT #120383
-#?pugs   skip 'unexpected ['
 #?rakudo skip '#120383'
 {
     my @a = 42..50;

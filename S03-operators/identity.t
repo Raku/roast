@@ -92,12 +92,10 @@ plan 45;
   my ($foo, $bar);
   my $test = -> *@args { $foo =:= @args[0] };
 
-  #?pugs todo 'unspecced'
   #?rakudo todo 'unspecced'
   ok  $test($foo), "binding of slurpy array subparam retains =:= (1)";
   ok !$test($bar), "binding of slurpy array subparam retains =:= (2)";
   $bar := $foo;
-  #?pugs todo 'unspecced'
   #?rakudo todo 'unspecced'
   ok  $test($bar), "binding of slurpy array subparam retains =:= (3)";
 }
@@ -107,12 +105,10 @@ plan 45;
   my ($foo, $bar);
   my $test = sub { $foo =:= @_[0] };
 
-  #?pugs todo 'unspecced'
   #?rakudo todo 'unspecced'
   ok  $test($foo), "binding of implicit @_ subparam retains =:= (1)";
   ok !$test($bar), "binding of implicit @_ subparam retains =:= (2)";
   $bar := $foo;
-  #?pugs todo 'unspecced'
   #?rakudo todo 'unspecced'
   ok  $test($bar), "binding of implicit @_ subparam retains =:= (3)";
 }
@@ -133,7 +129,6 @@ class TestObj { has $!a }
 
 #?rakudo todo 'misuse of =:='
 #?niecza skip 'Failure NYI'
-#?pugs   skip 'Failure NYI'
 {
     ok (Mu =:= Mu) ~~ Failure, 'misuse of =:= is failure (Mu)';
     ok (1 =:= '1') ~~ Failure, 'misuse of =:= is failure (literals)';

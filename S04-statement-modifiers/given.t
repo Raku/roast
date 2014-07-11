@@ -34,7 +34,6 @@ plan 6;
 }
 
 # L<S04/The C<for> statement/for and given privately temporize>
-#?pugs skip "Can't modify constant item"
 {
     my $i = 0;
     $_ = 10;

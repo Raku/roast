@@ -16,9 +16,7 @@ my $number_in_inc = +@*INC;
 push @*INC, 'test';
 is(+@*INC, $number_in_inc + 1, 'we added something to @INC');
 
-#?pugs emit # cannot pop scalar
 pop @*INC;
-#?pugs skip 'cannot pop scalar'
 is(+@*INC, $number_in_inc, 'we removed something from @INC');
 
 lives_ok { @*INC = <a b c> }, 'Can assign to @*INC';

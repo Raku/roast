@@ -12,7 +12,6 @@ Enum tests from L<S12/Enumerations>
 
 =end description
 
-#?pugs 999 skip
 # L<S12/Enumerations/keys are specified as a parenthesized list>
 enum day <Sun Mon Tue Wed Thu Fri Sat>;
 

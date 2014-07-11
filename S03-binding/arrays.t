@@ -29,7 +29,6 @@ plan 47;
 }
 
 #?niecza skip ":delete"
-#?pugs skip ':delete'
 {
   my @array  = <a b c>;
   my $var    = "d";
@@ -127,7 +126,6 @@ plan 47;
   is ~@array, "a new_value c", "passing an array to a slurpying sub behaves correctly (2)";
 }
 
-#?pugs skip "Can't modify constant item: VUndef"
 {
   my sub foo (*@args) { push @args, "new_value" }
 
@@ -228,7 +226,6 @@ plan 47;
 
 # RT #61566
 #?niecza todo
-#?pugs todo
 {
     eval_dies_ok 'my @rt61566 := 1', 'can only bind Positional stuff to @a';
     # TODO: check that the error is the right one

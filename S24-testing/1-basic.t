@@ -8,7 +8,7 @@ plan 60;
 This file /exhaustivily/ tests the Test module. 
 
 I try every variant of each Test function here
-because we are using this module to test Pugs itself, 
+because we are using this module to test Perl 6 itself, 
 so I want to be sure that the error is not coming from 
 within this module.
 
@@ -112,7 +112,6 @@ cmp_ok('test', sub ($a, $b) { ?($a gt $b) }, 'you', :desc('... testing gt on two
 ## use_ok
 
 use lib <ext/Test>; # Hack if we're run from make smoke
-#?pugs todo
 use_ok('t::use_ok_test');
 
 # Need to do a test loading a package that is not there,

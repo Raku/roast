@@ -3,7 +3,6 @@ use Test;
 
 plan 12;
 
-#?pugs   todo "cannot roundtrip hashes"
 #?niecza todo "cannot roundtrip hashes"
 # simple hash
 {
@@ -16,7 +15,6 @@ plan 12;
     ok $rh.keyof =:= Any, 'make sure keys are Any';
 } #4
 
-#?pugs   skip "cannot roundtrip hashes with constrained values"
 #?niecza skip "cannot roundtrip hashes with constrained values"
 # hash with constrained values
 {
@@ -29,7 +27,6 @@ plan 12;
     ok $rh.keyof =:= Any, 'make sure roundtripped keys are Any';
 } #4
 
-#?pugs   skip "cannot roundtrip hashes with constrained keys & values"
 #?niecza skip "cannot roundtrip hashes with constrained keys & values"
 # hash with constrained keys & values
 {

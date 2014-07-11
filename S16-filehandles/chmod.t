@@ -38,7 +38,6 @@ if $*DISTRO.is-win {
     my $file = create_temporary_file;
     my @result = chmod 0o000, $file;
     is +@result, 1, "One file successfully changed";
-    #?pugs todo ''
     is @result[0], $file, "name of the file returned";
     if ($*EUID) {
         ok $file.IO ~~ :!r, "not readable after 0";
@@ -56,7 +55,6 @@ if $*DISTRO.is-win {
     my $file = create_temporary_file;
     my @result = chmod 0o700, $file;
     is +@result, 1, "One file successfully changed";
-    #?pugs todo ''
     is @result[0], $file, "name of the file returned";
 
     ok $file.IO ~~ :r, "readable after 700";
@@ -70,7 +68,6 @@ if $*DISTRO.is-win {
     my $file = create_temporary_file;
     my @result = chmod 0o777, $file;
     is +@result, 1, "One file successfully changed";
-    #?pugs todo ''
     is @result[0], $file, "name of the file returned";
 
     ok $file.IO ~~ :r, "readable after 777";

@@ -47,7 +47,6 @@ is( try { sub foo { my $x = 1; while $x-- { return 24; }; return 42; }; foo() },
 }
 
 {
-    # In an ancient version of pugs the sub below didn't return anything
     sub list_return { return (42, 1) }
     my $bar = ~list_return();
     is($bar, '42 1', 'Should not return empty string');

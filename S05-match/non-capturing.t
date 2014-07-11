@@ -26,11 +26,6 @@ is($/, $str, 'Grabbed all 2');
 ok(!defined($/[0]), "Correctly didn't capture 2");
 
 {
-    # this used to be a regression on pugs with external parrot
-    # some regex matched failed when other named regexes where
-    # present, but not used.
-    # moved here from t/xx-uncategoritzed/rules_with_embedded_parrot.t 
-    
     my rule abc {abc}
 
     my rule once {<&abc>}

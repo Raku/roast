@@ -19,7 +19,6 @@ plan 49;
 } #7
 
 # typed scalar
-#?pugs   skip "doesn't know typed stuff"
 #?niecza skip "doesn't know typed stuff"
 {
     my Int $a = 1;
@@ -28,7 +27,6 @@ plan 49;
 } #2
 
 # typed array
-#?pugs   skip "doesn't know typed stuff"
 #?niecza skip "doesn't know typed stuff"
 {
     my Int @a = 1, Nil, 3;
@@ -48,7 +46,6 @@ plan 49;
 } #11
 
 # typed hash
-#?pugs   skip "doesn't know typed stuff"
 #?niecza skip "doesn't know typed stuff"
 {
     my Int %a = a => 1, Nil, c => 3;

@@ -10,7 +10,6 @@ is tc("hello world"), "Hello world", "simple";
 is tc(""),            "",            "empty string";
 is tc("üüüü"),        "Üüüü",        "umlaut";
 is tc("óóóó"),        "Óóóó",        "accented chars";
-#?pugs 2 todo
 #?rakudo 2 todo 'NYI'
 is tc('ßß'),          'Ssß',         'sharp s => Ss';
 is tc('ǉ'),           'ǈ',           'lj => Lj (in one character)';

@@ -78,13 +78,11 @@ my @e;
         my @r = (1, 2, 3);
         @r»++;
         my @e = (2, 3, 4);
-        #?pugs todo
         is(~@r, ~@e, "hyper auto increment an array");
 
         @r = (1, 2, 3);
         @r>>++;
         @e = (2, 3, 4);
-        #?pugs todo
         is(~@r, ~@e, "hyper auto increment an array ASCII notation");
 };
 
@@ -284,7 +282,6 @@ my @e;
         @r = ([1, 2], [3, [4, 5]]);
         @r.deepmap: *++;
         my @e = ([2, 3], [4, [5, 6]]);
-        #?pugs todo
         is(~@r, ~@e, "distribution for unary postfix autoincr");
         is_deeply(@r, @e, "distribution for unary postfix autoincr, deep comparison");
 };
@@ -358,7 +355,6 @@ my @e;
 
 =end todo_unspecced
 
-#?pugs todo 'hyper ops'
 #?niecza skip 'does not work; recurses into hash'
 #?rakudo skip 'nom regression: possible spec change/improvement'
 #?DOES 2
@@ -376,7 +372,6 @@ my @e;
     is($part, 'valval', 'hyper-dereference an array slice');
 }
 
-#?pugs todo 'feature'
 #?DOES 4
 { # junction hyper -- regression?
     my @a = 1..3;
@@ -655,7 +650,6 @@ my @e;
 
 # test non-UTF-8 input
 #?niecza skip 'nonsensical test'
-#?pugs skip 'EVAL(Buf)'
 #?rakudo skip 'EVAL(Buf)'
 #?DOES 1
 {

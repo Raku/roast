@@ -1,6 +1,5 @@
 use v6;
 
-#?pugs emit #
 use MONKEY_TYPING;
 
 use Test;
@@ -15,7 +14,6 @@ plan 28;
 # Indexing lists
 
 # RT #105368
-#?pugs todo
 {
   my $foo = 42;
 
@@ -28,13 +26,11 @@ plan 28;
 
   is ($foo, "does_not_matter")[*-2], 42,
     "indexing lists by a negative index works correctly";
-  #?pugs todo
   eval_dies_ok(q/my @a = <one two>; @a[-1] = 'zero'; @a.perl/,
  	"indexing lists by a negative index without the * dies");
 }
 
 # List construction does not create new containers
-#?pugs todo
 {
   my $foo = 42;
 
@@ -42,7 +38,6 @@ plan 28;
     "list construction should not create new containers";
 }
 
-#?pugs todo
 {
   my $foo = 42;
   ok ($foo, "does_not_matter", 17)[0,1][0] =:= $foo,
@@ -62,7 +57,6 @@ plan 28;
 {
   my $foo = 42;
   
-  #?pugs todo
   lives_ok { ($foo, *) = (23, 24) },
     "using lists with embedded Whatevers as lvalues works (1)";
   ok $foo == 23,
@@ -75,7 +69,6 @@ plan 28;
   my $bar = 43;
 
   try { ($foo, 42, $bar, 19)[0, 2] = (23, 24) };
-  #?pugs todo
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
@@ -132,7 +125,6 @@ plan 28;
 }
 
 #?niecza skip 'Cannot use value like Capture as a number'
-#?pugs todo
 {
   my @array    = (1,2,3);
   my $capture = \@array;
@@ -147,18 +139,14 @@ plan 28;
     dies_ok { <1 2 3>.rt62836 },
             'call to user-declared sub in Parcel:: class dies';
     try { EVAL '<1 2 3>.rt62836' };
-    #?pugs 2 todo
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     ok "$!" ~~ /Parcel/,    'error message contains name of class';
 
-    #?pugs emit #
     augment class Parcel { method rt62836_x { 62836 } };
-    #?pugs skip "augment"
     is <1 2 3>.rt62836_x, 62836, 'call user-declared method in Parcel:: class';
 }
 
 # RT #66304
-#?pugs skip 'Parcel'
 {
     my $rt66304 = (1, 2, 4);
     isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
@@ -169,7 +157,6 @@ plan 28;
 }
 
 #?niecza skip 'Excess arguments to CORE List.new'
-#?pugs skip 'Must only use named arguments to new() constructor'
 {
     my $x = List.new('bacon');
     my $y = $x.Str;

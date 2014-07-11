@@ -25,35 +25,27 @@ sub make-string(@a) {
 
   is ~(@array[3]:delete), "d",
     "deletion of array elements returned the right things";
-  #?pugs todo
   is make-string(@array), "a b", "deletion of array elements (1)";
-  #?pugs todo
   is +@array, 2,     "deletion of array elements (2)";
 }
 
 # W/ negative indices:
 {
   my @array = <a b c d>;
-  #?pugs todo
   is ~(@array[*-2]:delete), "c",
     "deletion of array element accessed by an negative index returned the right thing";
   # @array is now ("a", "b", Any, "d") ==> double spaces
-  #?pugs todo
   is make-string(@array), "a b Any() d", "deletion of an array element accessed by an negative index (1)";
   is +@array,        4, "deletion of an array element accessed by an negative index (2)";
 
-  #?pugs todo
   is ~(@array[*-1]:delete), "d",
     "deletion of last array element returned the right thing";
   # @array is now ("a", "b")
-  #?pugs todo
   is ~@array, "a b", "deletion of last array element (1)";
-  #?pugs todo
   is +@array,     2, "deletion of last array element (2)";
 }
 
 # W/ multiple positive and negative indices:
-#?pugs todo
 {
   my @array = <a b c d e f>;
   is ~(@array[2, *-3, *-1]:delete), "c d f",
@@ -67,7 +59,6 @@ sub make-string(@a) {
 
 # Results taken from Perl 5
 #?niecza todo "Not sure if this test is correct or not"
-#?pugs   todo "Not sure if this test is correct or not"
 {
   my @array = <a b c>;
   is ~(@array[2, *-1]:delete), "c ",
@@ -79,7 +70,6 @@ sub make-string(@a) {
 }
 
 # L<S32::Containers/"Array"/"Deleted elements at the end of an Array">
-#?pugs todo
 {
     my @array;
     @array[8] = 'eight';
@@ -114,7 +104,6 @@ sub make-string(@a) {
 # RT #67446
 {
     my @array = 0..1;
-    #?pugs todo
     is ~(EVAL @array.perl ), '0 1', '@array.perl works after init';
     is ~( map { 1 }, @array ), '1 1', 'map @array works after init';
     @array[0]:delete;

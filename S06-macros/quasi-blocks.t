@@ -74,7 +74,6 @@ plan 12;
     is $result, "chickpeas", "can shadow an existing operator";
 }
 
-#?pugs skip 'undeclared variable'
 {
     macro cupid {
         my $a = "I'm cupid!";
@@ -99,7 +98,6 @@ plan 12;
     is donner, 2, "...twice";
 }
 
-#?pugs skip 'undeclared variable'
 {
     macro blitzen($param) {
         quasi { $param }
@@ -109,13 +107,11 @@ plan 12;
         "lexical lookup from quasi to macro params works";
 }
 
-#?pugs skip 'No such subroutine: "&x"'
 {
     macro id($param) { $param };
     is id('x'), 'x', 'macro can return its param';
 }
 
-#?pugs skip 'Nil'
 {
     macro funny_nil { quasi { {;}() } }
     is funny_nil(), Nil, 'Nil from an empty block turns into no code';

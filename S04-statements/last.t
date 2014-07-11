@@ -66,7 +66,6 @@ plan 8;
     is($tracker, 3, '... our loop only got to 3 (<cond> and last)');
 }
 
-#?pugs skip 'last LABEL'
 {
     my $var = 0;
     DONE: for (1..2) {
@@ -87,7 +86,6 @@ plan 8;
     is($tracker, 15, 'our inner loop only runs once per (last inside nested loops)');
 }
 
-#?pugs skip 'last LABEL'
 {
     my $var = 0;
     OUT: for (1..2) {

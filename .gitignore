@@ -3,5 +3,4 @@
 *.rakudo.parrot
 *.rakudo.moar
 *.niecza
-*.pugs
 S32-io/server-ready-flag

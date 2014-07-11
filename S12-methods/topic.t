@@ -16,7 +16,6 @@ class Foo {
 
 {
     my Foo $foo .= new;
-    #?pugs todo 'outdated semantics'
     is $foo.no_topic, 'Nil', '$_ is not set in methods...';
 }
 

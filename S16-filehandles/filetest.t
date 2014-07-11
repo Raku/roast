@@ -104,7 +104,7 @@ unlink "empty_file";
     }
 }
 
-# potential parsing difficulties (pugs)
+# potential parsing difficulties
 {
     sub f($) { return 8; }
 

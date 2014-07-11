@@ -47,7 +47,6 @@ plan 18;
   try { %hash = ($hashref) };
 
   #?rakudo todo 'deprecated %h = {...} for now'
-  #?pugs todo 'non-flattening hash refs'
   #?niecza todo
   is +%hash, 0, '%hash = ($hashref) does not flatten the hashref';
 }
@@ -58,7 +57,6 @@ plan 18;
   try { %hash = $hashref };
 
   #?rakudo todo 'deprecated %h = {...} for now'
-  #?pugs todo 'non-flattening hash refs'
   #?niecza todo
   is +%hash, 0, '%hash = $hashref does not flatten the hashref';
 }

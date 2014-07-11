@@ -102,37 +102,31 @@ for %hash.kv -> $key, $value {
 {
     my %hash = (:a(1), :b(2), :c(3));
 
-    #?pugs todo 'feature'
     lives_ok { for %hash.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by %hash.kv should be rw (1)';
 
-    #?pugs todo 'feature'
     is %hash<b>, 102, 'aliases returned by %hash.kv should be rw (2)';
 }
 
 {
     my @array = (17, 23, 42);
 
-    #?pugs todo 'feature'
     lives_ok { for @array.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by @array.kv should be rw (1)';
 
-    #?pugs todo 'feature'
     is @array[1], 123, 'aliases returned by @array.kv should be rw (2)';
 }
 
 {
     my $pair = (a => 42);
 
-    #?pugs todo 'feature'
     #?niecza todo 'aliases should be rw'
     lives_ok { for $pair.kv -> $key, $value is rw {
         $value += 100;
     } }, 'aliases returned by $pair.kv should be rw (1)';
 
-    #?pugs todo 'feature'
     #?niecza todo 'aliases should be rw'
     is $pair.value, 142, 'aliases returned by $pair.kv should be rw (2)';
 }

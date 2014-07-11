@@ -13,10 +13,8 @@ my %hash5 = ( "foo" => 1, "bar" => 1, "gorch" => Mu, "baz" => Mu );
 
 {
     #?rakudo todo 'nom regression'
-    #?pugs todo
     ok  (%hash1 ~~ %hash2), 'Hash ~~ Hash (same keys, +)';
     ok !(%hash1 ~~ %hash3), 'Hash ~~ Hash (same keys, -)';
-    #?pugs todo
     #?rakudo todo 'nom regression'
     ok eval_elsewhere('(%hash1 ~~ %hash2)'), "hash keys identical";
     ok eval_elsewhere('!(%hash1 ~~ %hash4)'), "hash keys differ";

@@ -101,9 +101,7 @@ is(("caaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" ~~ rx:P5/(?:c|d)(?:)(?:aaaaaaaa(
 is(("Ab4ab" ~~ rx:P5/(?i)(ab)\d\1/ && $0), "Ab", 're_tests 728/1 (924)');
 is(("ab4Ab" ~~ rx:P5/(?i)(ab)\d\1/ && $0), "ab", 're_tests 730/1 (926)');
 is(("foobar1234baz" ~~ rx:P5/foo\w*\d{4}baz/ && $/), "foobar1234baz", 're_tests 732/0 (928)');
-#?pugs skip "PCRE hard parsefail"
 is(("cabd" ~~ rx:P5/a(?{})b/ && $/), "ab", 're_tests 734/0 (930)');
-#?pugs skip "PCRE hard parsefail"
 is(("cabd" ~~ rx:P5/a(?{"\{"})b/ && $/), "ab", 're_tests 735/0 (931)');
 ok(("x~~" ~~ rx:P5/x(~~)*(?:(?:F)?)?/), 're_tests 736  (932)');
 is(("aaac" ~~ rx:P5/^a(?#xxx){3}c/ && $/), "aaac", 're_tests 738/0 (934)');

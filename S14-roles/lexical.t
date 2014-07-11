@@ -15,7 +15,6 @@ Tests for lexical roles delcared with 'my role'
 eval_lives_ok 'my role R1 {}', 'my role parses OK';
 eval_lives_ok '{ my role R2 {} }; { my role R2 {} }',
               'declare roles with the same name in two scopes.';
-#?pugs todo
 eval_dies_ok  '{ my class R3 {}; R3; }; R3',
               'scope is correctly restricted';
 

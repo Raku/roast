@@ -62,7 +62,6 @@ is slurp($empty-path), '', "empty files yield empty string";
 }
 
 #?niecza skip ":enc option for slurp fails"
-#?pugs skip ":enc option for slurp fails"
 {
     lives_ok { slurp($test-path, :enc('utf8')) }, "slurp :enc - encoding functions";
     is slurp($test-path, :enc('utf8')), $test-contents, "utf8 looks normal";

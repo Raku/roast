@@ -35,7 +35,6 @@ is $test3, 42, 'inherited rw class attributes really work';
 class Quux is Foo { has $.bar = 17; };
 
 my $test4 = 0;
-#?pugs 99 todo 'class attributes'
 lives_ok { $test4 = Quux.new() },
     'Can instantiate with overridden instance method';
 is $test4.bar, 17, 'Instance call gets instance attribute, not class attribute';

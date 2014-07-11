@@ -256,7 +256,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 
-    #?pugs   skip '.total NYI'
     is $b.total, 3, '.roll should not change Bag';
 }
 
@@ -270,7 +269,6 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 100000000001, '.roll should not change Bag';
 }
 
@@ -291,7 +289,6 @@ sub showkv($x) {
     is +@a, 3, '.pick(*) returns the right number of items';
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 3, '.pick should not change Bag';
 }
 
@@ -305,7 +302,6 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change Bag';
 }
 
@@ -330,13 +326,11 @@ sub showkv($x) {
     is +@a, 2, '.pickpairs(*) returns the right number of items';
     is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(*) (1)';
     is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(*) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 3, '.pickpairs should not change Bag';
 }
 
 # L<S32::Containers/Bag/grab>
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $b = bag <a b b c c c>;
@@ -345,7 +339,6 @@ sub showkv($x) {
 
 # L<S32::Containers/Bag/grabpairs>
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $b = bag <a b b c c c>;
@@ -389,7 +382,6 @@ sub showkv($x) {
        "Method .Bag works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.Bag;

@@ -8,7 +8,6 @@ plan 52;
 # L<S32::Containers/"Array"/=item exists>
 
 #?niecza skip "no adverbials"
-#?pugs   skip "no adverbials"
 {
     my @array = <a b c d>;
     ok @array[0]:exists,    "exists(positive index) on arrays (1)";
@@ -29,7 +28,6 @@ sub gen_array { (1..10).list }
 #-------------------------------------------------------------------------------
 # Array
 
-#?pugs skip "no adverbials"
 {
     my @a = gen_array;
     is @a.elems, 10, "basic sanity";

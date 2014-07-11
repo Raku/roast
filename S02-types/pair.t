@@ -82,16 +82,13 @@ is($quux.key, 'quux', "lhs quotes" );
 {
     my $pair = :when<now>;
     #?rakudo todo 'should it really have \n on the end?'
-    #?pugs todo
     is ~(%($pair)), "when\tnow\n", 'hash stringification';
     # hold back this one according to audreyt
     #ok $pair.does(Hash), 'Pair does Hash';
-    #?pugs todo
     ok (%($pair) ~~ Hash), '%() makes creates a real Hash';
 }
 
 # colonpair syntax
-#?pugs skip 'colonpair'
 {
     is(:foo.key, 'foo', 'got the right key :foo.key');
     isa_ok(:foo.value, Bool, ':foo.value isa Bool');
@@ -148,10 +145,8 @@ test2 %hash;
 sub test3 (%h){
     for %h.pairs -> $pair {
         isa_ok($pair,Pair);
-        #?pugs todo
         isa_ok($pair[0], Pair, 'sub test3: $pair[0] is $pair');
         #?niecza skip "Failure NYI"
-        #?pugs   skip "Failure NYI"
         ok $pair[1] ~~ Failure, 'sub test3: $pair[1] is failure';
     }
 }
@@ -266,13 +261,11 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
 
-  #?pugs 2 todo 'bug'
   dies_ok { $pair.key = "KEY" }, "setting .key dies";
   is $pair.key,         "key",   "attempt to set .key doesn't change the key";
   #?niecza todo "setting .key changes original val!"
   is $key,              "key",   "attempt to set .key does not change the original var either";
 
-  #?pugs 2 todo 'bug'
   lives_ok { $pair.value = "VAL" }, "setting .value does not die";
   is $pair.value,          "VAL",   "setting .value actually changes the value";
   #?niecza todo "setting .key changes original val!"
@@ -294,7 +287,6 @@ Note, "non-chaining binary" was later renamed to "structural infix".
 
     my %hash = foo => 'bar', baz => 'qux';
     $pair = (:%hash);
-    #?pugs todo
     ok($pair eqv (hash => %hash), ':%foo syntax works');
 }
 
@@ -314,15 +306,12 @@ Note, "non-chaining binary" was later renamed to "structural infix".
     lives_ok     {; :a[] }, 'can execute ":a[]"';
 
     eval_lives_ok '(a => ())',    'can parse "(a => ())"';
-    #?pugs skip 'Cannot cast from VList to VCode'
     lives_ok     { (a => ()) }, 'can execute "(a => ())"';
 
     eval_lives_ok '(a => [])',    'can parse "(a => [])"';
-    #?pugs skip 'Cannot cast from VList to VCode'
     lives_ok     { (a => []) }, 'can execute "(a => [])"';
 }
 
-#?pugs skip ".invert"
 {
     is (a => 3).invert.key, 3, 'Pair.invert.key';
     isa_ok (a => 3).invert.key, Int, 'Pair.invert.key type';

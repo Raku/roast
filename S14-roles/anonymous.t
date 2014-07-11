@@ -4,8 +4,6 @@ use Test;
 
 plan 13;
 
-#?pugs 99 todo 'anonymous roles'
-
 # L<S14/Roles>
 {
   my $a = {:x};

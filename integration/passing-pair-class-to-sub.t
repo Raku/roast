@@ -8,7 +8,6 @@ use Test;
 
 plan 2;
 
-# this used to be a pugs regression
 {
     my sub foo ($x) { $x.perl }
 
@@ -18,7 +17,6 @@ plan 2;
     lives_ok { foo($Pair) }, "passing ::Pair to a sub works";
 }
 
-# But this works:
 {
     my sub foo ($x) { $x.perl }
 

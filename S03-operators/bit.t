@@ -123,17 +123,11 @@ plan 37;
 # (for now...)
 
 
-# currently, pugs recognize octals as "\0o00", not "\o000".
 #if ("o\o000 \0" ~ "1\o000" ~^ "\o000k\02\o000\n" eq "ok 21\n") { say "ok 15" } else { say "not ok 15" }
 
-# Pugs does not have \x{}
-
-#
 #if ("ok \x{FF}\x{FF}\n" ~& "ok 22\n" eq "ok 22\n") { say "ok 16" } else { say "not ok 16" }
 #if ("ok 23\n" ~| "ok \x{0}\x{0}\n" eq "ok 23\n") { say "ok 17" } else { say "not ok 17" }
 #if ("o\x{0} \x{0}4\x{0}" ~^ "\x{0}k\x{0}2\x{0}\n" eq "ok 24\n") { say "ok 18" } else { say "not ok 18" }
-
-# Not in Pugs: vstrings, ebcdic, unicode, sprintf
 
 # More variations on 19 and 22
 #if ("ok \xFF\x{FF}\n" ~& "ok 41\n" eq "ok 41\n") { say "ok 19" } else { say "not ok 19" }

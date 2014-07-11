@@ -153,7 +153,6 @@ our $outer_package = 19;
 eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ', 
               'map works in a module (RT #64606)';
 
-# used to be a  pugs regression
 {
     use lib 't/spec/packages';
     use ArrayInit;

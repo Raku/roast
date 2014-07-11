@@ -50,21 +50,18 @@ class B {
         try {
             $foo = $!an_A!A::foo;
         };
-        #?pugs 2 todo 'feature'
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A scalar attr; '~($!//''));
         is( $foo, 'hello', 'value read by B from an A scalar var is correct');
 
         try {
             @bar = $!an_A!A::bar;
         };
-        #?pugs 2 todo 'feature'
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A array attr; '~($!//''));
         is_deeply( @bar, [1,2,3], 'value read by B from an A scalar var is correct');
 
         try {
             %baz = $!an_A!A::baz;
         };
-        #?pugs 2 todo 'feature'
         is( $!.defined ?? 1 !! 0, 0, 'A trusts B, B can get an A hash attr; '~($!//'') );
         is_deeply( %baz, {'m'=>'v'}, 'value read by B from an A scalar var is correct' );
     }
@@ -79,19 +76,16 @@ class C {
         try {
             $an_A!A::foo = 'hello';
         };
-        #?pugs todo 'feature'
         is( $!.defined ?? 1 !! 0, 1, 'A does not trust C, C can not set an A scalar attr; '~($!//'') );
 
         try {
             $an_A!A::bar = [1,2,3];
         };
-        #?pugs todo 'feature'
         is( $!.defined ?? 1 !! 0, 1, 'A does not trust C, C can not set an A array attr; '~($!//'') );
 
         try {
             $an_A!A::baz = {'m'=>'v'};
         };
-        #?pugs todo 'feature'
         is( $!.defined ?? 1 !! 0, 1, 'A does not trust C, C can not set an A hash attr; '~($!//'') );
 
         $!my_A = $an_A;

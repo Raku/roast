@@ -35,7 +35,6 @@ plan 57;
     is ~$ref, "a b c", '$arrayref = \@array works (1)';
     # Explicit referentiation of arrays in assignment
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +$ref,       1, '$arrayref = \@array works (2)';
 }
 
@@ -44,7 +43,6 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = %hash;
 
-    #?pugs todo
     is ~$ref.values.sort, "1 2 3", '$hashref = %hash works (1)';
     is +$ref.values,            3, '$hashref = %hash works (2)';
 }
@@ -54,9 +52,7 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $ref  = \%hash;
 
-    #?pugs todo
     is ~$ref[0].values.sort, "1 2 3", '$hashref = \%hash works (1)';
-    #?pugs todo
     is +$ref[0].values,      3,       '$hashref = \%hash works (2)';
 }
 
@@ -81,7 +77,6 @@ plan 57;
     is ~@other, " a b c", '@other[$idx] = \@array works (1)';
     is +@other,        2, '@other[$idx] = \@array works (2)';
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +@other[1],     1, '@other[$idx] = \@array works (3)';
 }
 
@@ -103,7 +98,6 @@ plan 57;
 
     is +@other,    2, '@other[$idx] = \%hash works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +@other[1], 1, '@other[$idx] = \%hash works (2)';
 }
 
@@ -125,7 +119,6 @@ plan 57;
 
     is +%other,    1, '%other[$key] = \@array works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +%other<a>, 1, '%other[$key] = \@array works (2)';
 }
 
@@ -147,7 +140,6 @@ plan 57;
 
     is +%other,    1, '%other[$key] = \%hash works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +%other<a>, 1, '%other[$key] = \%hash works (2)';
 }
 
@@ -168,7 +160,6 @@ plan 57;
     #?niecza todo
     is ~$pair.value, "a b c", '(key => \@array) works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +$pair.value,       1, '(key => \@array) works (2)';
 }
 
@@ -177,7 +168,6 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => %hash);
 
-    #?pugs todo
     is ~$pair.value.values.sort, "1 2 3", '(key => %hash) works (1)';
     is +$pair.value.values,            3, '(key => %hash) works (2)';
 }
@@ -187,9 +177,7 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (key => \%hash);
 
-    #?pugs todo
     is ~$pair.value.[0].values.sort, "1 2 3", '(key => \%hash) works (1)';
-    #?pugs todo
     is +$pair.value.[0].values,            3, '(key => \%hash) works (2)';
 }
 
@@ -210,7 +198,6 @@ plan 57;
     #?niecza todo
     is ~$pair.value, "a b c", '(:key(\@array)) works (1)';
     #?niecza skip 'Cannot use value like Capture as a Number'
-    #?pugs todo
     is +$pair.value,       1, '(:key(\@array)) works (2)';
 }
 
@@ -219,7 +206,6 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(%hash));
 
-    #?pugs todo
     is ~$pair.value.values.sort, "1 2 3", '(:key(%hash)) works (1)';
     is +$pair.value.values,            3, '(:key(%hash)) works (2)';
 }
@@ -229,9 +215,7 @@ plan 57;
     my %hash = (a => 1, b => 2, c => 3);
     my $pair = (:key(\%hash));
 
-    #?pugs todo
     is ~$pair.value.[0].values.sort, "1 2 3", '(:key(\%hash)) works (1)';
-    #?pugs todo
     is +$pair.value.[0].values,            3, '(:key(\%hash)) works (2)';
 }
 

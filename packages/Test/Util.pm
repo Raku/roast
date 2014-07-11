@@ -2,8 +2,6 @@ module Test::Util;
 
 use Test;
 
-# Tests for this testing code may be in the pugs repo under t/03-test-util/
-
 proto sub is_run(|) is export { * }
 
 # No input, no test name

@@ -83,7 +83,6 @@ plan 75;
 
   ok  ($a === $a), "=== on scalar references (1-1)";
   ok  ($b === $b), "=== on scalar references (1-2)";
-  #?pugs todo
   ok $a === $b, "=== on scalar references (1-3)";
   isa_ok ($a === $a), Bool, "=== on scalar references (1-4)";
 }
@@ -132,7 +131,6 @@ plan 75;
 
 {
   ok !(\3 === \4),          "=== on anonymous scalar references (1)";
-  #?pugs todo
   ok \3 === \3,          "=== on anonymous scalar references (2)";
   isa_ok (\3 === \4), Bool, "=== on anonymous scalar references (4)";
 }
@@ -176,11 +174,9 @@ plan 75;
   ok  (1 !=== "1"), '!=== on values (1 !=== "1")';
 }
 
-#?pugs skip "this test alters # of run tests?"
 ok     1|2 === 1,  '=== does autothread (1)';
 isa_ok  1|2 === 1, Junction,  '=== does autothread (2)';
 
-#?pugs skip 'roles'
 {
     my $a = do {
         my role A { };

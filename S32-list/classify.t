@@ -22,7 +22,6 @@ plan 15;
     }
 } #4*2
 
-#?pugs todo 'feature'
 #?rakudo skip 'Cannot use bind operator with this LHS'
 #?niecza skip 'Cannot use bind operator with this LHS'
 { 
@@ -33,7 +32,6 @@ plan 15;
     is_deeply(@odd,  [1,3], "got expected odds");
 } #3
 
-#?pugs todo 'feature'
 {
     my %by_five;
     is_deeply
@@ -48,7 +46,6 @@ plan 15;
     is_deeply "A".classify( {$_} ), { A => ["A"] }, "classify single string";
 } #2
 
-#?pugs   todo 'feature'
 #?niecza todo 'feature'
 {
     is_deeply( classify( {.comb}, 100 .. 119, 104, 119 ),

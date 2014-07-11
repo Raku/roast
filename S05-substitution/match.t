@@ -8,7 +8,6 @@ plan 13;
 
 my $str = 'hello';
 
-#?pugs todo
 ok $str.match(/h/),         'We can use match';
 is $str,  'hello',          '.. it does not do side effect';
 ok $str.match(/h/)~~Match,  '.. it returns a Match object';
@@ -27,11 +26,8 @@ ok $str.match(/h/)~~Match,  '.. it returns a Match object';
 $str = 'food';
 my $m = $str.match(/$<x>=[f](o+)/);
 ok $m ~~ Match,             'is a Match object';
-#?pugs todo
 is $m,    'foo',            'match object stringifies OK';
-#?pugs todo
 is $m<x>, 'f',              'match object indexes as a hash';
-#?pugs todo
 is $m[0], 'oo',             'match object indexes as an array';
 
 # vim: ft=perl6

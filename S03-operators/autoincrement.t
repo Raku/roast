@@ -81,7 +81,6 @@ is(%z{0},           $base, '%z{0}');
     my $x;
 
     $x = "123.456";
-    #?pugs todo
     is( ++$x, "124.456", "'123.456'++ is '124.456' (NOT 123.457)" );
     $x = "124.456";
     is( --$x, "123.456", "'124.456'-- is '123.456'" );
@@ -91,10 +90,8 @@ is(%z{0},           $base, '%z{0}');
     my $x;
 
     $x = "/tmp/pix000.jpg";
-    #?pugs todo
     is( ++$x, "/tmp/pix001.jpg", "'/tmp/pix000.jpg'++ is '/tmp/pix001.jpg'" );
     $x = "/tmp/pix001.jpg";
-    #?pugs todo
     is( --$x, "/tmp/pix000.jpg", "'/tmp/pix001.jpg'-- is '/tmp/pix000.jpg'" );
 }
 
@@ -105,19 +102,16 @@ is(%z{0},           $base, '%z{0}');
     $x = "zi";
     is( ++$x, "zj", "'zi'++ is 'zj'" );
     $x = "zj";
-    #?pugs todo
     is( --$x, "zi", "'zj'-- is 'zi'" );
     $x = "zr";
 
     # EBCDIC check (r and s not contiguous)
     is( ++$x, "zs", "'zr'++ is 'zs'" );
     $x = "zs";
-    #?pugs todo
     is( --$x, "zr", "'zs'-- is 'zr'" );
 }
 
 #?niecza skip "Failure NYI"
-#?pugs skip "Failure NYI"
 {
     my $foo;
 
@@ -132,13 +126,11 @@ is(%z{0},           $base, '%z{0}');
     my $foo;
 
     $foo = "\x[3a1]";
-    #?pugs todo 'weird ranges'
     is( ++$foo, "\x[3a3]", 'there is no \\x[3a2]' );
 }
 
 {
     my $foo = "K\x[3c9]";
-    #?pugs todo 'weird ranges'
     is( ++$foo, "L\x[3b1]", "increment 'K\x[3c9]'" );
 }
 
@@ -151,8 +143,6 @@ is(%z{0},           $base, '%z{0}');
     is $y, 1, 'Can autoincrement a Mu variable (postfix)';
 }
 
-#?pugs skip "todo"
-#?DOES 2
 {
     class Incrementor {
         has $.value;
@@ -169,8 +159,6 @@ is(%z{0},           $base, '%z{0}');
     is $o.value, 84, 'Overriding succ catches prefix increment';
 }
 
-#?pugs skip "todo"
-#?DOES 2
 {
     class Decrementor {
         has $.value;
@@ -187,8 +175,6 @@ is(%z{0},           $base, '%z{0}');
     is $o.value, 16, 'Overriding pred catches prefix decrement';
 }
 
-#?pugs skip "todo"
-#?DOES 6
 {
     # L<S03/Autoincrement precedence/Increment of a>
    
@@ -216,40 +202,33 @@ eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
     #postincrement tests
     $x = Bool;
     $y = $x++;
-    #?pugs todo
     is $y, False, "Bool postincrement returns Bool";
     is $x, True, "Bool postincrement sets True";
 
     $x = False;
     $y = $x++;
-    #?pugs todo
     is $y, False, "False postincrement returns False";
     is $x, True, "False postincrement sets True";
 
     $x = True;
     $y = $x++;
     is $y, True, "True postincrement returns True";
-    #?pugs todo
     is $x, True, "True postincrement sets True";
 
     #postdecrement tests
     $x = Bool;
     $y = $x--;
-    #?pugs todo
     is $y, False, "Bool postdecrement returns Bool";
-    #?pugs todo
     is $x, False, "Bool postdecrement sets False";
 
     $x = False;
     $y = $x--;
     is $y, False, "False postdecrement returns False";
-    #?pugs todo
     is $x, False, "False postdecrement sets False";
 
     $x = True;
     $y = $x--;
     is $y, True, "True postdecrement returns True";
-    #?pugs todo
     is $x, False, "True postdecrement sets False";
 
     #preincrement tests
@@ -265,31 +244,23 @@ eval_dies_ok 'my $a; $a++ ++;', 'parse error for "$a++ ++"';
 
     $x = True;
     $y = ++$x;
-    #?pugs todo
     is $y, True, "True preincrement returns True";
-    #?pugs todo
     is $x, True, "True postincrement sets True";
     
     #predecrement tests
     $x = Bool;
     $y = --$x;
-    #?pugs todo
     is $y, False, "Bool predecrement returns False";
-    #?pugs todo
     is $x, False, "Bool postdecrement sets False";
 
     $x = False;
     $y = --$x;
-    #?pugs todo
     is $y, False, "False predecrement returns False";
-    #?pugs todo
     is $x, False, "False postdecrement sets False";
 
     $x = True;
     $y = --$x;
-    #?pugs todo
     is $y, False, "True predecrement returns False";
-    #?pugs todo
     is $x, False, "True postdecrement sets False";
 };
 

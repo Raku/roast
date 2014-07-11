@@ -22,13 +22,11 @@ plan 12;
 
 {
   my $a;
-  #?pugs todo
   is $a.end, -1, ".end works on arbitrary scalars (1)";
 }
 
 {
   my $a = 42;
-  #?pugs todo
   is $a.end, 0, ".end works on arbitrary scalars (2)";
 }
 

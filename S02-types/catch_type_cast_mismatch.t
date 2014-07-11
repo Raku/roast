@@ -6,7 +6,7 @@ use Test;
 
 Test that conversion errors when accessing
 anonymous structures C<die> in a way that can
-be trapped by Pugs.
+be trapped.
 
 =end description
 
@@ -16,13 +16,11 @@ my $ref = { val => 42 };
 isa_ok($ref, Hash);
 #?rakudo todo "die or fail?"
 #?niecza todo "questionable test"
-#?pugs todo
 dies_ok { $ref[0] }, 'Hash !~~ Positional';
 
 {
     $ref = [ 42 ];
     isa_ok($ref, Array);
-    #?pugs skip 'Cannot cast into Hash: VRef'
     #?niecza skip "Failure NYI"
     ok( $ref<0> ~~ Failure, 'Accessing an array as a hash fails');
 }

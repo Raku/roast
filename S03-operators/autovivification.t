@@ -45,7 +45,6 @@ plan 23;
     is $s, 'ab', 'my $s; $s ~= "ab" works'
 }
 
-#?pugs todo
 {
     my Str $s;
     $s ~= 'ab';
@@ -53,7 +52,6 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my $x;
     $x *= 2;
@@ -61,7 +59,6 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my $x;
     $x **= 2;
@@ -69,7 +66,6 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my Int $x;
     $x *= 2;
@@ -77,7 +73,6 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my Int $x;
     $x **= 2;
@@ -102,7 +97,6 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my $x;
     $x *= 1i;
@@ -112,7 +106,6 @@ plan 23;
 # L<S03/Assignment operators/"If you apply an assignment operator to a
 # container">
 #?niecza todo
-#?pugs todo
 {
     # yes, this is serious. It's in the specs ;-)
     my Int $x;
@@ -121,7 +114,6 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my $x;
     $x *= 5;
@@ -129,14 +121,12 @@ plan 23;
 }
 
 #?niecza todo
-#?pugs todo
 {
     my Int %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (with Int proto on hash items)';
 }
 
 #?niecza todo
-#?pugs todo
 {
     my %h;
     is  (%h<foo> *= 23), 23, '*= autovivifies with correct neutral element (without proto on hash items)';
@@ -150,7 +140,6 @@ plan 23;
     @empty[5] ~~ /nothing/;
     my $after = @empty.perl;
 
-    #?pugs 2 todo 'bugs'
     is +@empty,0,'empty array, @empty, has 0 elements';
 
     is $after,$before,"Array elements are not auto-vivified by smartmatch";

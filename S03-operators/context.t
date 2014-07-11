@@ -13,10 +13,8 @@ plan 36;
 
     # I'm not sure that smart matching is the best operation for comparison here
     # There might be a more specific way to check that prevents false matching
-    #?pugs todo
     isa_ok(list($a).WHAT,  List, 'list(values) returns nothing more than a List');
     isa_ok(@($a).WHAT,     List, '@(values) returns nothing more than a List');
-    #?pugs todo
     isa_ok((list $a).WHAT, List, '(list values) returns nothing more than a List');
 
     # These are all no-ops but still need to work correctly
@@ -48,7 +46,6 @@ plan 36;
     isa_ok((item $a, $b).WHAT, Array, '(item $a, $b) makes an Array');
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     isa_ok(item($a, $b).WHAT,  Array, 'item $a, $b makes an Array');
-    #?pugs skip 'Parcel'
     #?niecza skip 'Excess arguments to item, used 1 of 2 positionals'
     isa_ok($($a, $b).WHAT,     Parcel, '$ $a, $b makes a Parcel');
     my @array = ($a, $b);
@@ -72,7 +69,6 @@ plan 36;
     # with eq. eqv does guarantee the order.
     # also, we assign to a hash since rakudo does not recognize
     # {} as a hash constructor and () does not make a hash
-    #?pugs 3 todo
     ok(%('a', 1, 'b', 2)     eqv {a => 1, b => 2}, '%(values) builds a hash');
     ok(hash('a', 1, 'b', 2)  eqv {a => 1, b => 2}, 'hash(values) builds a hash');
     ok((hash 'a', 1, 'b', 2) eqv {a => 1, b => 2}, 'hash values builds a hash');
@@ -99,7 +95,6 @@ eval_dies_ok('%', 'Anonymous % variable outside of declaration');
 eval_dies_ok('&', 'Anonymous & variable outside of declaration');
 
 # RT #76320
-#?pugs skip 'Cannot cast into Hash: VRef'
 {
     my $h = <a b c d>;
     is ~%$h.keys.sort, 'a c', '%$var coercion';
@@ -109,7 +104,6 @@ eval_dies_ok('&', 'Anonymous & variable outside of declaration');
     is $c, 4, '@$var coercion';
 }
 
-#?pugs todo
 #?niecza skip "Invalid hard reference syntax"
 {
     my @a = <a b c d>;

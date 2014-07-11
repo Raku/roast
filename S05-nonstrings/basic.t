@@ -13,7 +13,6 @@ regex monster { dr\wgon }; # contrived pattern which does not match itself; we'r
 regex cheese { camembert | cheddar  };
 my $stream:= cat $fh.lines;
 
-#?pugs todo 'matching against Cat objects'
 ok($stream ~~ /<cheese>/, 'rules on streams, positive'); # should match
 ok($stream !~~ /<monster>/, 'rules on streams, negative'); # shouldn't match
 

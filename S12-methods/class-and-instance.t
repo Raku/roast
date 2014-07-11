@@ -34,7 +34,6 @@ class Act {
 #?niecza todo "https://github.com/sorear/niecza/issues/185"
 dies_ok({ Act.rules }, 'my method not installed in methods table');
 is(Act::rocks(Act), 'the house', 'our method is installed in package');
-#?pugs todo
 #?niecza todo "https://github.com/sorear/niecza/issues/185"
 dies_ok({ Act.rocks }, 'our method not installed in methods table');
 

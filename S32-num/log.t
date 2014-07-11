@@ -20,7 +20,6 @@ is_approx(log(5), $log_5, 'got the log of 5');
 is_approx(log(0.1), $log_one_tenth, 'got the log of 0.1');
 
 # with given base:
-#?pugs 3 skip 'No compatible multi variant found: "&log"'
 is_approx(log(8, 2), 3, 'log(8, 2) is 3'); 
 is_approx(log(42, 23),  1.192051192, 'log(42, 23)');
 
@@ -73,7 +72,6 @@ is_approx( (-1i).log10(), -0.5i*$pi / log(10), " (i).log10 = - i  * pi/(2 log(10
 isa_ok( log10(-1+0i), Complex, 'log10 of a complex returns a complex, not a list');
 
 #?rakudo todo 'HugeInt.log'
-#?pugs todo
 is_approx (10 ** 1000).log10, 1000, "Can take the log of very large Ints";
 
 # vim: ft=perl6

@@ -134,7 +134,7 @@ ok($in7.close, 'file closed okay (7)');
 
 {
 # test reading a file into an array and then closing before 
-# doing anything with the array (in other words, is pugs too lazy)
+# doing anything with the array (in other words, is perl too lazy)
 my $in8 = open($filename);
 #?niecza skip 'open does not yet produce an IO object'
 isa_ok($in8, IO::Handle);
@@ -211,7 +211,6 @@ ok($in8.close, 'file closed okay (in8)');
     ok $rt65348_in.close, 'close worked (rt65348 in)';
 }
 
-#?pugs todo 'buggy on Win32'
 ok(unlink($filename), 'file has been removed');
 nok $filename.IO ~~ :e, '... and the tempfile is gone, really';
 

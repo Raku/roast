@@ -14,7 +14,6 @@ TODO: need some tests for combined :ignoremark and :sigspace modifiers
 
 #L<S05/Modifiers/"The :m (or :ignoremark) modifier">
 
-#?pugs 999 skip feature
 ok(!'ä' ~~ m/a/,  'No :ignoremark: a doesnt match ä');
 ok('ä' ~~ m:m/a/, 'Ignoremark: a matches ä');
 ok('a' ~~ m:m/ä/, 'Ignoremark: ä matches a');

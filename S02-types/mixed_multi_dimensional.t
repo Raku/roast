@@ -11,8 +11,9 @@ This tests some mixed multi-dimensional structures.
 
 NOTE:
 These tests don't go any more than two levels deep
-(AoH, AoP) in most cases because I know these won't
-work yet in Pugs. When we have this support, then
+(AoH, AoP) in most cases.
+
+When we have this support, then
 this test should be added too more.
 
 Some deeper tests were already added.
@@ -52,9 +53,7 @@ Some deeper tests were already added.
 
     @array[0] = %hash;
     is(+@array, 1, 'the array has one value in it');
-    #?pugs todo
     isa_ok(@array[0], Hash);
-    #?pugs 2 skip 'Cannot cast into a Hash'
     is(@array[0]{"key"}, 'value', 'got the right value for key');
     is(@array[0]<key1>, 'value1', 'got the right value1 for key1');
 }
@@ -198,13 +197,11 @@ Some deeper tests were already added.
     isa_ok(@array[1]<two>[0], Hash);
     #?rakudo todo 'isa hash'
     #?niecza todo
-    #?pugs todo
     isa_ok(@array[1]<two>[0]<f>, Hash);
     #?rakudo 2 todo 'unknown'
     #?niecza todo
     is(+@array[1]<two>[0], 2, "two keys at level 4");
     #?niecza todo 'more keys at level 4'
-    #?pugs todo
     is(@array[1]<two>[0]<f><other>, 5, "more keys at level 4");
 }
 

@@ -36,7 +36,6 @@ eval_dies_ok q[
 
 # RT #76896: 
 # perl6 - sub/hash syntax
-#?pugs skip 'Unexpected ";"'
 {
     sub to_check_before {
         my %fs = ();

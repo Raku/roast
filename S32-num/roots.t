@@ -79,7 +79,6 @@ sub has_approx($n, @list) {
     ok(has_approx(-1i, @l), 'roots(-1, 2) contains -1i');
 }
 
-#?pugs todo 'feature'
 {
     my @l = 16.roots(4);
     ok(@l.elems == 4, '16.roots(4) returns 4 elements');
@@ -88,22 +87,26 @@ sub has_approx($n, @list) {
     ok(has_approx(2i, @l), '16.roots(4) contains 2i');
     ok(has_approx(-2i, @l), '16.roots(4) contains -2i');
 }
+
 {
     my @l = (-1).roots(2);
     ok(@l.elems == 2, '(-1).roots(2) returns 2 elements');
     ok(has_approx(1i, @l), '(-1).roots(2) contains i');
     ok(has_approx(-1i, @l), '(-1).roots(2) contains -i');
 }
+
 {
     my @l = 0e0.roots(2);
     ok(@l.elems == 2, '0e0.roots(2) returns 2 elements');
     ok(has_approx(0, @l), '0e0.roots(2) contains 0');
 }
+
 {
     my @l = roots(NaN, 1);
     ok(@l.elems == 1, 'roots(NaN, 1) returns 1 element');
     ok(@l[0] ~~ NaN, 'roots(NaN,1) returns NaN');
 }
+
 {
     my @l = roots(Inf, 1);
     ok(@l.elems == 1, 'roots(Inf, 1) returns 1 element');

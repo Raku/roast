@@ -54,7 +54,7 @@ sub moose {
 
 is(++$phase, 4, "phase completed");
 
-# Simple test case to get support for goto LABEL in pugs
+# Simple test case to get support for goto LABEL
 # Source for the syntax: S06 "The leave function"
 # > last COUNT;
 
@@ -62,18 +62,15 @@ our $test5 = 1;
 EVAL q{ goto SKIP5; };
 $test5 = 0;
 SKIP5:
-#?pugs todo 'feature'
 is($test5, 1, "goto label");
 
 is(++$phase, 5, "phase completed");
 
-# this one tests "goto EXPR" syntax. pugs treats "last EXPR" as "last;" in r14915.
-
+# this one tests "goto EXPR" syntax.
 our $test6 = 1;
 EVAL q{ goto 'SK' ~ 'IP6'; };
 $test6 = 0;
 SKIP6:
-#?pugs todo 'feature'
 is($test6, 1, "goto expr");
 
 is(++$phase, 6, "phase completed");

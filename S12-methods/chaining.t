@@ -61,7 +61,6 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
 
 # L<S03/"Changes to Perl 5 operators"/"-> becomes .">
 # L<S12/"Open vs Closed Classes"/"though you have to be explicit">
-#?pugs skip 'Mu'
 #?rakudo.parrot 2 todo 'RT #121945'
 #?rakudo.jvm 2 todo 'RT #121945'
 {
@@ -69,9 +68,6 @@ eval_dies_ok('$foo->num', 'Perl 5 -> is dead (method call)');
     # ((A B) C)
     
     my $cons = [=>] ( [=>] <A B>, Mu ), <C>, Mu;
-    
-    ## Hmm.  Works with the latest release of Pugs (6.2.12 (r13256))
-    ## Leaving this in as something that once didn't work (6.2.12 CPAN)
     
     my $p = $cons.key;
     ok( $cons.key.key =:= $p.key, 'chaining through temp variable' );

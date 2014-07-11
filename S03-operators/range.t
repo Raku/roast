@@ -17,7 +17,6 @@ is ~("a".."a"), "a",     "(..) works on chars (2)";
 is ~("b".."a"), "",      "(..) works on chars (3)";
 is ~("a".."z"), "a b c d e f g h i j k l m n o p q r s t u v w x y z", "(..) works on char range ending in z";
 is ~("A".."Z"), "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", "(..) works on char range ending in Z";
-#?pugs todo
 is ~("Y".."AB"), "",     "(..) works on carried chars (3)";
 
 #?rakudo todo 'huh?'
@@ -38,13 +37,11 @@ is ~(2+5..6), "",        "(..) has correct precedence (4)";
 # L<S03/Range and RangeIter semantics/range operator has variants>
 is [1^..9], [2..9],  "bottom-exclusive range (^..) works (1)";
 is [2^..2], [],      "bottom-exclusive range (^..) works (2)";
-#?pugs skip 'empty list'
 is [3^..2], [],      "bottom-exclusive auto-rev range (^..) works (3)";
 is [1 ..^9], [1..8], "top-exclusive range (..^) works (1)";
 is [2 ..^2], [],     "top-exclusive range (..^) works (2)";
 is [3 ..^2], [],     "top-exclusive auto-rev range (..^) works (3)";
 is [1^..^9], [2..8], "double-exclusive range (^..^) works (1)";
-#?pugs skip 'empty list'
 is [9^..^1], [],     "double-exclusive auto-rev range (^..^) works (2)";
 is [1^..^2], [],     "double-exclusive range (^..^) can produce null range (1)";
 
@@ -54,20 +51,16 @@ is [1^..^2], [],     "double-exclusive range (^..^) can produce null range (1)";
 is [1^..^1], [], "double-exclusive range (x ^..^ x) where x is an int";
 
 is ["a"^.."z"], ["b".."z"], "bottom-exclusive string range (^..) works";
-#?pugs skip 'empty list'
 is ["z"^.."a"], [], "bottom-exclusive string auto-rev range (^..) works";
 is ["a"..^"z"], ["a".."y"], "top-exclusive string range (..^) works";
 is ["z"..^"a"], [], "top-exclusive string auto-rev range (..^) works";
 is ["a"^..^"z"], ["b".."y"], "double-exclusive string range (^..^) works";
-#?pugs skip 'empty list'
 is ["z"^..^"a"], [], "double-exclusive string auto-rev range (^..^) works";
 is ['a'^..^'b'], [], "double-exclusive string range (^..^) can produce null range";
-#?pugs skip 'empty list'
 is ['b'^..^'a'], [], "double-exclusive string auto-rev range (^..^) can produce null range";
 is ['a' ^..^ 'a'], [], "double-exclusive range (x ^..^ x) where x is a char";
 is ('a'..'z').list.join(' '), 'a b c d e f g h i j k l m n o p q r s t u v w x y z', '"a".."z"';
 
-#?pugs todo 'bug'
 is 1.5 ~~ 1^..^2, Bool::True, "lazy evaluation of the range operator";
 
 # Test the unary ^ operator
@@ -80,7 +73,6 @@ is ~(^"5"), "0 1 2 3 4", 'unary ^"num" produces the range 0..^num';
 
 {
     my @a = 3, 5, 3;
-    #?pugs todo
     is (^@a).perl, (0..^3).perl,    'unary ^@a produces 0..^+@a';
 }
 
@@ -89,7 +81,6 @@ is (1..*).[^5].join('|'), '1|2|3|4|5', '1..*';
 is ('a'..*).[^5].join('|'), 'a|b|c|d|e', '"a"..*';
 
 # test that the zip operator works with ranges
-#?pugs 4 todo
 is (1..5 Z <a b c>).join('|'), '1|a|2|b|3|c', 'Ranges and infix:<Z>';
 is (1..2 Z <a b c>).join('|'), '1|a|2|b',     'Ranges and infix:<Z>';
 is (<c b a> Z 1..5).join('|'), 'c|1|b|2|a|3', 'Ranges and infix:<Z>';
@@ -136,7 +127,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 
     is ~(@one .. 3)     , "1 2 3", "lower inclusive limit is in scalar context";
     is ~(@one ^.. 3)    , "2 3"  , "lower exclusive limit is in scalar context";
-    #?pugs skip 'empty list'
     is ~(3 ^.. @one)    , ""     , "lower exclusive limit is in scalar context";
     is ~(1 .. @three)   , "1 2 3", "upper inclusive limit is in scalar context";
     is ~(4 .. @three)   , ""     , "upper inclusive limit is in scalar context";
@@ -163,16 +153,11 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my $end = "102.B";
     lives_ok { $range = $start..$end },
              'can make range from numeric string vars';
-    #?pugs todo
     is $range.min, $start, 'range starts at start';
-    #?pugs todo "wrong type"
     is $range.min.WHAT.gist, Str.gist, 'range start is a string';
-    #?pugs todo
     is $range.max,   $end, 'range ends at end';
-    #?pugs todo "wrong type"
     is $range.max.WHAT.gist, Str.gist, 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
-    #?pugs todo
     is ~$range, "100.B 101.B 102.B", 'range is correct';
 }
  
@@ -181,18 +166,14 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = $0..$1 },
              'can make range from match vars';
-    #?pugs todo
     is $range.min, 1, 'range starts at one';
-    #?pugs todo
     is $range.max, 3, 'range ends at three';
     #?niecza 2 skip 'cannot increment a value of type Match'
     lives_ok { "$range" }, 'can stringify range';
-    #?pugs todo
     is ~$range, "1 2 3", 'range is correct';
 }
 # and another set, just for the lulz
 # RT #67882
-#?pugs skip 'Range'
 {
     ok '1 3' ~~ /(\d) . (\d)/, 'regex sanity';
     isa_ok $0..$1, Range, '$0..$1 constructs a Range';
@@ -204,12 +185,9 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = +$0..+$1 },
              'can make range from match vars with numeric context forced';
-    #?pugs todo
     is $range.min, 1, 'range starts at one';
-    #?pugs todo
     is $range.max,   3, 'range ends at three';
     lives_ok { "$range" }, 'can stringify range';
-    #?pugs todo
     is ~$range, "1 2 3", 'range is correct';
 }
 
@@ -217,16 +195,11 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
     my $range;
     lives_ok { '1 3' ~~ /(\d+) \s (\d+)/; $range = ~$0..~$1 },
              'can make range from match vars with string context forced';
-    #?pugs todo
     is $range.min, 1, 'range starts at one';
-    #?pugs todo 'wrong type'
     is $range.min.WHAT.gist, Str.gist, 'range start is a string';
-    #?pugs todo
     is $range.max,   3, 'range ends at three';
-    #?pugs todo 'wrong type'
     is $range.max.WHAT.gist, Str.gist, 'range end is a string';
     lives_ok { "$range" }, 'can stringify range';
-    #?pugs todo
     is ~$range, "1 2 3", 'range is correct';
 }
 
@@ -234,7 +207,6 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 # implicity numeric>
 
 #?niecza todo 'forbid Ranges as Range endpoints'
-#?pugs todo
 {
     ok !defined(try { 0 .. ^10 }), '0 .. ^10 is illegal';
 }
@@ -243,22 +215,18 @@ is (1..6 Z 'a' .. 'c').join, '1a2b3c',   'Ranges and infix:<Z>';
 is ~(2 .. [<a b c d e>]), "2 3 4 5", '2 .. @list is legal';
 
 # RT #68788
-#?pugs skip 'Missing required parameters: $_'
-#?DOES 2
 {
     $_ = Any; # unsetting $_ to reproduce bug literally
     lives_ok {(1..$_)}, '(1..$_) lives';
     isa_ok (1..$_), Range, '(..) works on Int .. Any';
 }
 
-#?pugs skip 'Numeric'
 {
     my $range = 1 .. '10';
     is +$range, 10, "1 .. '10' has ten elements in it";
     is +$range.grep(Numeric), 10, "and they are all numbers";
 }
 
-#?pugs skip 'Numeric'
 {
     my @array = 1 .. 10;
     my $range = 1 .. @array;

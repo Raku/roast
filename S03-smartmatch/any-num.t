@@ -7,11 +7,8 @@ plan 18;
     ok   (5 ~~ 5),               'Int ~~ Int works';
     nok  (5 ~~ 6),               'Int ~~ Int works';
 
-    #?pugs todo
     ok   ('05' ~~ 5),            '$something ~~ Int numifies';
-    #?pugs todo 'Rat'
     ok   ('05' ~~ 5.Rat),        '$something ~~ Rat numifies';
-    #?pugs todo 'Num'
     ok   ('05' ~~ 5.Num),        '$something ~~ Num numifies';
 
     ok  ('1.2' ~~ 1.2),         '$thing ~~ Rat does numeric comparison';
@@ -20,20 +17,16 @@ plan 18;
     # yes, this warns, but it should still be true
     #?rakudo 2 skip "Mu ~~ Num doesn't work yet"
     #?niecza skip 'Nominal type check failed for #1'
-    #?pugs todo 'Mu'
     ok  (Mu ~~ 0),              'Mu ~~ 0';
     #?niecza skip 'Nominal type check failed for #1'
     ok !(Mu ~~ 2.3),            'Mu ~~ $other_number';
 
-    #?pugs todo
     ok  (3+0i  ~~ 3),           'Complex ~~ Int (+)';
     nok (3+1i  ~~ 3),           'Complex ~~ Int (-)';
     nok (4+0i  ~~ 3),           'Complex ~~ Int (-)';
-    #?pugs todo
     ok  (3+0i  ~~ 3.Rat),       'Complex ~~ Rat (+)';
     nok (3+1i  ~~ 3.Rat),       'Complex ~~ Rat (-)';
     nok (4+0i  ~~ 3.Rat),       'Complex ~~ Rat (-)';
-    #?pugs todo
     ok  (3+0i  ~~ 3.Num),       'Complex ~~ Num (+)';
     nok (3+1i  ~~ 3.Num),       'Complex ~~ Num (-)';
     nok (4+0i  ~~ 3.Num),       'Complex ~~ Num (-)';

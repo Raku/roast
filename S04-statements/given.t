@@ -21,7 +21,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$f, "given when false");
 };
 
-#?pugs skip 'proceed NYI'
 {
     # simple case, with fall through
     # L<S04/Switch statements/If the smart match fails, control proceeds the
@@ -41,7 +40,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$unreached, "but didn't do so normally");
 };
 
-#?pugs todo
 {
     my $foo;
     my $match;
@@ -93,7 +91,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
         ok(!$panic,"should not fall into default in this case");
 }
 
-#?pugs skip 'proceed NYI'
 {
     my ($foo, $bar) = (1, 0);
     given 1 {
@@ -106,7 +103,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok($bar, 'proceed does not prevent default');
 }
 
-#?pugs skip 'succeed NYI'
 {
     my ($foo, $bar) = (1, 0);
     given 1 {
@@ -119,7 +115,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
     ok(!$bar, 'succeed prevents default');
 }
 
-#?pugs skip 'proceed NYI'
 {
     my ($foo, $bar, $baz, $bad) = (0, 0, -1, 0);
     my $quux = 0;
@@ -152,7 +147,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # given/succeed returns the correct value:
-#?pugs skip 'succeed NYI'
 {
      sub ret_test($arg) {
        given $arg {
@@ -231,7 +225,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # given + 0-arg closure
-#?pugs skip 'parsefail'
 {
     my $x = 0;
     given 41 {
@@ -242,7 +235,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # given + 1-arg closure
-#?pugs skip 'parsefail'
 {
     my $x;
     given 41 {
@@ -253,7 +245,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # given + n>1-arg closure (should fail)
-#?pugs skip 'parsefail'
 {
     dies_ok {
         given 41 {
@@ -283,7 +274,6 @@ Tests the given block, as defined in L<S04/"Switch statements">
 }
 
 # statement-modifying 'when'
-#?pugs skip 'parsefail'
 {
     my $tracker = 1;
     given 1 {
@@ -294,10 +284,8 @@ Tests the given block, as defined in L<S04/"Switch statements">
 
 # RT #78234
 eval_lives_ok 'given 3 { sub a() { } }', 'can define a sub inside a given';
-#?pugs todo
 eval_lives_ok 'sub a() { } given 3',     'can define a sub inside a statement-modifying given';
 
-#?pugs todo 'ok variant?'
 {
     my $capture-is-correct = False;
     given "Hello" { 

@@ -116,7 +116,6 @@ plan 40;
 
 # L<http://www.nntp.perl.org/group/perl.perl6.language/20888>
 # ("Re: Declaration and definition of state() vars" from Larry)
-#?pugs eval 'Parse error'
 {
     my ($a, $b);
     my $gen = {

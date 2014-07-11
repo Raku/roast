@@ -73,7 +73,6 @@ plan 12;
     is_deeply(%got, %expected, 'method with named sub mapper');
 }
 
-#?pugs   todo 'feature'
 #?niecza todo 'feature'
 {
     is_deeply( categorize( { map { [$_, $_+10] }, .comb }, 100,104,112,119 ),

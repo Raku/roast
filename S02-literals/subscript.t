@@ -11,7 +11,6 @@ plan 2;
     lives_ok({ all(@newval2) < any(@oldval); all(@newval1) > all(@oldval) }, "parses correctly, second statement is true");
 
     my %hash = ("foo", "bar");
-    #?pugs todo
     dies_ok { EVAL '%hash <foo>; 1'}, '%hash \s+ <subscript> doesnt parse';
 };
 

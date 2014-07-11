@@ -12,8 +12,6 @@ We ought to be able to change a value when aliasing into it.
 
 plan 10;
 
-#?pugs 8 todo 'rw aliasing'
-
 {
     my %h = 1..4;
     lives_ok {

@@ -23,18 +23,14 @@ plan 45;
   ok( ?(42   ?| 41   == True),  '?| works');
 
   #?niecza skip 'No value for parameter $b in CORE infix:<?|>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?|"'
   ok( ?(infix:<?|>(True) == True), '?| works with one argument');
   #?niecza skip 'No value for parameter $a in CORE infix:<?|>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?|"'
   ok( ?(infix:<?|>() == False), '?| works with no arguments');
 
   isa_ok (42 ?| 41), Bool, '?| yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?|>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?|"'
   isa_ok infix:<?|>(True), Bool, '?| with one argument yields a Bool';
   #?niecza skip 'No value for parameter $a in CORE infix:<?|>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?|"'
   isa_ok infix:<?|>(), Bool, '?| with no arguments yields a Bool';
 
 }
@@ -54,18 +50,14 @@ plan 45;
   ok( ?(13 ?& 3      == True),  '?& works');
 
   #?niecza skip 'No value for parameter $b in CORE infix:<?&>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?&"'
   ok( ?(infix:<?&>(False) == False), '?& works with one argument');
   #?niecza skip 'No value for parameter $a in CORE infix:<?&>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?&"'
   ok( ?(infix:<?&>() == True), '?& works with no arguments');
 
   isa_ok (42 ?& 41), Bool, '?& yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?&>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?&"'
   isa_ok infix:<?&>(True), Bool, '?& with one argument yields a Bool';
   #?niecza skip 'No value for parameter $a in CORE infix:<?&>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?&"'
   isa_ok infix:<?&>(), Bool, '?& with no arguments yields a Bool';
 }
 
@@ -84,18 +76,14 @@ plan 45;
   ok( ?(42   ?^ 41   == False),  '?^ works');
  
   #?niecza skip 'No value for parameter $b in CORE infix:<?^>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?^"'
   ok( ?(infix:<?^>(True) == True), '?^ works with one argument');
   #?niecza skip 'No value for parameter $a in CORE infix:<?^>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?^"'
   ok( ?(infix:<?^>() == False), '?^ works with no arguments');
 
   isa_ok (42 ?^ 41), Bool, '?^ yields a Bool';
   #?niecza skip 'No value for parameter $b in CORE infix:<?^>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?^"'
   isa_ok infix:<?^>(True), Bool, '?^ with one argument yields a Bool';
   #?niecza skip 'No value for parameter $a in CORE infix:<?^>'
-  #?pugs skip 'No compatible multi variant found: "&infix:?^"'
   isa_ok infix:<?^>(), Bool, '?^ with no arguments yields a Bool';
 }
 

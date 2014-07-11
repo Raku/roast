@@ -13,7 +13,6 @@ plan 59;
 
 my @list = (1 .. 5);
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my Int $s;
@@ -136,7 +135,6 @@ should be equivalent to
 # Map with mutating block
 # L<S02/Names/"$_, $!, and $/ are context<rw> by default">
 
-#?pugs todo
 {
   my @array = <a b c d>;
   is ~(try { @array.map: { $_ ~= "c"; $_ ~ "d" } }), "acd bcd ccd dcd",
@@ -174,7 +172,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
   is +@result, 4, "map works with the map body returning an empty arrayref";
 }
 
-#?pugs todo
 {
   my @array  = <a b c d>;
   my $empty  = [];
@@ -218,7 +215,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # map shouldn't flatten array objects
-# used to be a pugs regression
 {
     my @foo = [1, 2, 3].map: { [100+$_, 200+$_] };
     is +@foo,    3,         "map should't flatten our arrayref (1)";
@@ -227,8 +223,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # .thing inside map blocks should still default to $_
-# used to be a pugs regression
-#?DOES 6
 {
     is ~((1,2,3).map: { $_.Int }), "1 2 3", "dependency for following test (1)";
     $_ = 4; is .Int, 4,                   "dependency for following test (2)";
@@ -239,8 +233,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
     is ~(({1},{2},{3}).map: { .() }),     "1 2 3", 'lone .() in map should work (2)';
 }
 
-#?pugs skip "Cannot use this control structure outside a 'loop' structure"
-#?DOES 2
 {
     is (1..4).map({ next if $_ % 2; 2 * $_ }).join('|'), 
        '4|8', 'next in map works';
@@ -249,8 +241,6 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # RT #62332
-#?pugs skip 'No such method in class Str: "&key"'
-#?DOES 2
 {
     my $x = :a<5>;
     is $x.map({ .key, .value + 1}), ('a', 6), 'map on pair works (comma)';
@@ -258,9 +248,7 @@ is( ~((1..3).map: { dbl( $_ ) }),'2 4 6','extern method in map');
 }
 
 # RT #112596
-#?pugs skip 'hangs'
 #?niecza todo "https://github.com/sorear/niecza/issues/182"
-#?DOES 1
 {
     my @a = map &sprintf.assuming("%x"), 9..12;
     is(@a, <9 a b c>, "map over a callable with a slurpy");

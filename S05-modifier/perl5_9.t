@@ -19,7 +19,6 @@ my $bang = '!';
 
 ok(("123\nabcabcabcabc\n" ~~ rx:P5/(?m)^.{9}abc.*\n/), 're_tests 1215  (1419)');
 ok((not ("a" ~~ rx:P5/^(a)?(?(1)a|b)+$/)), 're_tests 1216  (1420)');
-#?pugs todo
 is(("aaaaaa" ~~ rx:P5/^(a\1?){4}$/ && $0), "aa", 're_tests 1218/1 (1422)');
 ok(("x1" ~~ rx:P5/^(0+)?(?:x(1))?/), 're_tests 1220  (1424)');
 ok(("012cxx0190" ~~ rx:P5/^([0-9a-fA-F]+)(?:x([0-9a-fA-F]+)?)(?:x([0-9a-fA-F]+))?/), 're_tests 1222  (1426)');
@@ -35,7 +34,6 @@ is(("abc" ~~ rx:P5/(abc)?(abc)+/ && $0), "", 're_tests 1236/1 (1444)');
 is(("abc" ~~ rx:P5/(abc)?(abc)+/ && $1), "abc", 're_tests 1236/2 (1445)');
 ok((not ("a\nb\n" ~~ rx:P5/(?m)b\s^/)), 're_tests 1238  (1448)');
 ok(("a" ~~ rx:P5/\ba/), 're_tests 1239  (1449)');
-#?pugs skip "PCRE hard parsefail"
 is(("ab" ~~ rx:P5/^(a(??{"(?!)"})|(a)(?{1}))b/ && $1), "a", 're_tests 1241/2 (1451)');
 ok((not ("AbCd" ~~ rx:P5/ab(?i)cd/)), 're_tests 1242  (1452)');
 ok(("abCd" ~~ rx:P5/ab(?i)cd/), 're_tests 1244  (1454)');
@@ -85,7 +83,6 @@ is(("abcd" ~~ rx:P5/(.*?)(?<=c|b)c/ && $0), "ab", 're_tests 1321/1 (1539)');
 is(("abcd" ~~ rx:P5/(.*?)(?<=[bc])/ && $0), "ab", 're_tests 1323/1 (1541)');
 is(("abcd" ~~ rx:P5/(.*?)(?<=[bc])c/ && $0), "ab", 're_tests 1325/1 (1543)');
 is(("2" ~~ rx:P5/2(]*)?$\1/ && $/), "2", 're_tests 1327/0 (1545)');
-#?pugs skip "PCRE hard parsefail"
 ok(("x" ~~ rx:P5/(??{})/), 're_tests 1329  (1547)');
 is(("foobarbar" ~~ rx:P5/^.{3,4}(.+)\1\z/ && $0), "bar", 're_tests 1330/1 (1548)');
 is(("foobarbar" ~~ rx:P5/^(?:f|o|b){3,4}(.+)\1\z/ && $0), "bar", 're_tests 1332/1 (1550)');

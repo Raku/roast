@@ -1,8 +1,6 @@
 use v6;
 use Test;
-#?pugs emit #
 use lib 't/spec/packages';
-#?pugs emit #
 use Test::Util;
 
 =begin pod
@@ -42,7 +40,6 @@ ok(!defined(Mu), "Mu is not defined");
     $a += 1;
     ok(defined($a), "initialized var is defined");
     #?niecza todo
-    #?pugs skip 'is_run'
     is_run( 'my $a; $a += 1', { err => '', out => '', status => 0 },
             'increment of undefined variable does not warn' );
 
@@ -82,23 +79,19 @@ ok(!defined(Mu), "Mu is not defined");
     ok(!defined(%hash<bar>), "undefine hash subscript");
 
     %hash<bar> = "baz";
-    #?pugs emit #
     %hash<bar>:delete;
-    #?pugs 3 skip ':delete'
     ok(!defined(%hash<bar>), "delete hash subscript");
 
     ok(defined(@ary), "aggregate array defined");
     ok(defined(%hash), "aggregate hash defined");
 
     undefine(@ary);
-#?pugs todo 'bug'
 #?rakudo todo 'definedness of array'
 #?niecza todo 'definedness of array'
     ok(!defined(@ary), "undefine array");
 
     #?niecza emit #
     undefine(%hash);
-#?pugs todo 'bug'
 #?rakudo todo 'definedness of hash'
 #?niecza todo 'definedness of hash'
     ok(!defined(%hash), "undefine hash");
@@ -115,12 +108,9 @@ ok(!defined(Mu), "Mu is not defined");
     sub a_sub { "møøse" }
 
     ok(defined(&a_sub), "defined sub");
-#?pugs todo 'parsefail'
     ok(EVAL('defined(%«$?PACKAGE\::»<&a_sub>)'), "defined sub (symbol table)");
 
-#?pugs todo 'feature'
     ok(EVAL('!defined(&a_subwoofer)'), "undefined sub");
-#?pugs todo 'feature'
     ok(EVAL('!defined(%«$?PACKAGE\::»<&a_subwoofer>)'), "undefined sub (symbol table)");
     
     dies_ok { undefine &a_sub }, 'die trying to undefine a sub';
@@ -145,7 +135,6 @@ ok(!defined(Mu), "Mu is not defined");
 # XXX shouldn't that be * instead of undef?
 # yes, this chunk should move to a different file --Larry
 
-#?pugs skip "Can't modify constant item: VNum Infinity"
 {
     my $interesting;
     (*, *, $interesting) = (1,2,3);
@@ -181,20 +170,16 @@ Perl6-specific tests
     ok(defined($ary_r), "array reference");
 
     undefine @ary;
-    #?pugs todo
     ok(!+$ary_r, "undefine array referent");
 
-    #?pugs todo
     is(+$ary_r, 0, "dangling array reference");
 
     my %hash = (1, 2, 3, 4);
     my $hash_r = %hash;
-    #?pugs todo
     isa_ok($hash_r, "Hash");
     ok(defined($hash_r), "hash reference");
     undefine %hash;
     ok(defined($hash_r), "undefine hash referent:");
-    #?pugs todo
     is(+$hash_r.keys, 0, "dangling hash reference");
 }
 
@@ -216,7 +201,6 @@ Perl6-specific tests
     nok(defined($a_hash<blergh>), "my Hash subscript - Mu, no autovivification happened");
 
     $a_hash<blergh> = 1;
-    #?pugs 2 skip ':delete'
     ok(defined($a_hash<blergh>:delete), "delete");
     nok(defined($a_hash<blergh>:delete), " - once only");
 }
@@ -259,23 +243,19 @@ Perl6-specific tests
         # I want symbolic lookups because I need the rx names for test results.
 
         EVAL '"1" ~~ %MY::{$_}';
-    #?pugs todo 'unimpl'
         ok(defined($num), '{$_}: successful hypothetical');
         ok(!defined($alpha), '{$_}: failed hypothetical');
 
         EVAL '"A" ~~ %MY::{$_}';
         ok(!defined($num), '{$_}: failed hypothetical (2nd go)');
-    #?pugs todo 'unimpl'
         ok(defined($alpha), '{$_}: successful hypothetical (2nd go)');
     }
 
     # - binding to hash keys only would leave values undefined
     EVAL '"a=b\nc=d\n" ~~ / $<matches> := [ (\w) = \N+ ]* /';
-    #?pugs todo 'unimpl'
     ok(EVAL('$<matches> ~~ all(<a b>)'), "match keys exist");
 
     #ok(!defined($<matches><a>) && !defined($<matches><b>), "match values don't");
-    #?pugs todo 'unimpl'
     ok(0 , "match values don't");
 }
 
@@ -328,7 +308,6 @@ is((Any) * (Any), 0, 'Any * Any');
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
 # See log above.  From IRC, TimToady says that both of these
 # should be false.  (At time of writing, @(Mu,) is true.)
-#?pugs todo 'feature', :depends<@() imposing context and not [] constructor>;
 #?rakudo 2 todo 'todo: lists, defined, truthness'
 #?niecza 2 todo 'huh?'
 is ?(@(Mu,)), Bool::False, '?(@(Mu,)) is false';

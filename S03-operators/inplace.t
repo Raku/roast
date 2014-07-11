@@ -16,13 +16,10 @@ plan 27;
 
 {
     my @b = <foo 123 bar 456 baz>;
-    #?pugs todo
     lives_ok { @b.=grep(/<[a..z]>/)},
              '.= works without surrounding whitespace';
     is @b[0], 'foo', 'inplace grep [0]';
-    #?pugs todo
     is @b[1], 'bar', 'inplace grep [1]';
-    #?pugs todo
     is @b[2], 'baz', 'inplace grep [2]';
 }
 
@@ -69,16 +66,13 @@ is ~@b, "a b d e z", "inplace sort";
 
     my @b = @a.sort: {1};
     #?niecza todo "sort is not a stable sort on all platforms"
-    #?pugs todo
     is @b, @a_orig,            'worked: @a.sort: {1}';
 
     @a.=sort: {1};
     #?niecza todo "sort is not a stable sort on all platforms"
-    #?pugs todo
     is @a, @a_orig,            'worked: @a.=sort: {1}';
 
     @a.=sort;
-    #?pugs todo
     is @a, [1,2,3],            'worked: @a.=sort';
 }
 

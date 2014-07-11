@@ -13,7 +13,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 #L<S03/Smart matching/Any undef undefined not .defined>
 { 
     ok("foo" ~~ .defined, "foo is ~~ .defined");
-    #?pugs todo
     nok "foo" !~~ .defined,   'not foo !~~ .defined';
     nok((Mu ~~ .defined), "Mu is not .defined");
 }
@@ -31,7 +30,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 #L<S03/"Smart matching"/in range>
 { 
     # more range tests in t/spec/S03-operators/range.t
-    #?pugs todo
     ok((5 ~~ 1 .. 10), "5 is in 1 .. 10");
     ok(!(10 ~~ 1 .. 5), "10 is not in 1 .. 5");
     ok(!(1 ~~ 5 .. 10), "1 is not i n 5 .. 10");
@@ -72,7 +70,6 @@ caught that case.
     try {
         $result = !(all(@x) ~~ { $_ < 20 });
     };
-    #?pugs todo
     ok $result,
         'C<all(@x) ~~ {...} when true for one';
 
@@ -80,7 +77,6 @@ caught that case.
     try {
         $result = !(all(@x) ~~ { $_ < 12 });
     };
-    #?pugs todo
     ok $result, 'C<all(@x) ~~ {...} when true for most';
 
     $result = 0;
@@ -96,7 +92,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
               'smartmatch in a class lives (RT 62196)';
 
 # RT #69762
-#?pugs skip 'Callable'
 {
     ok sub {} ~~ Callable, '~~ Callable (true)';
     nok 68762 ~~ Callable, '~~ Callable (false)';
@@ -143,7 +138,6 @@ eval_lives_ok 'class A { method foo { return "" ~~ * } }; A.new.foo',
     nok RT72048_class.new !~~ RT72048_role, 'class instance !!matches role';
 }
 
-#?pugs todo
 ok "foo" ~~ *, 'thing ~~ * is true';
 ok ("foo" ~~ *) ~~ Bool, 'thing ~~ * is a boolean';
 

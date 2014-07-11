@@ -9,7 +9,6 @@ plan 8;
     my $b = Smartmatch::ObjTest.new;
     ok  ($a ~~  $a),    'Any ~~  Any (+)';
     ok !($a !~~ $a),    'Any !~~ Any (-)';
-    #?pugs 2 todo
     ok !($a ~~  $b),    'Any ~~  Any (-)';
     ok  ($a !~~ $b),    'Any !~~ Any (+)';
 }
@@ -19,11 +18,9 @@ plan 8;
     $_ = 42;
     my $x;
     'abc' ~~ ($x = $_);
-    #?pugs todo
     is $x, 'abc', '~~ sets $_ to the LHS';
     is $_, 42, 'original $_ restored';
     'defg' !~~ ($x = $_);
-    #?pugs todo
     is $x, 'defg', '!~~ sets $_ to the LHS';
     is $_, 42, 'original $_ restored';
     'defg' !~~ ($x = $_);

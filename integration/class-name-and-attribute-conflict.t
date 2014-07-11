@@ -11,7 +11,6 @@ hmm, It's conflicted with class name and attribute name.
 
 ***** These two examples below will fail to parse. *****
 
-##### this example below will cause pugs hang.
 class a {has $.a; method update { $.a; } }; class b { has $.a; submethod BUILD { a.new( a => $.a ).update; } };class c { has $.b; submethod BUILD { b.new( a => $.b ); } };c.new( b => 30 );
 
 ##### this example will say sub isn't found.
@@ -100,8 +99,6 @@ plan 3;
     is $var, 80, "Testing suite 2.";
 }
 
-
-#?pugs skip 'No such method in class Ac: "&update"'
 {
     my $var = 100;
     # XXX This definition *does* have an effect. This $var *is* captured.

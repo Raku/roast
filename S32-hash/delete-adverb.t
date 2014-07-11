@@ -13,10 +13,6 @@ my $default = Any;
 my $dont    = False;
 
 sub gen_hash {
-
-    # alas not supported by pugs
-    #return ("a".."z" Z 1..26).hash;
-
     my %h;
     my $i = 0;
     for 'a'..'z' { %h{$_} = ++$i; }
@@ -35,12 +31,10 @@ sub gen_hash {
     my Int %h = gen_hash;
     my $b = %h<b>;
 
-    #?pugs 3 skip "no adverbials"
     is %h<b>:delete, $b, "Test for delete single key";
     ok !defined(%h<b>),  "b hould be deleted now";
     is +%h, 25,          "b should be deleted now by count";
 
-    #?pugs   11 skip "no adverbials"
     #?niecza 11 todo "adverbial pairs only used as boolean True"
     my $c = %h<c>;
     is %h<c>:!delete, $c,       "Test non-deletion with ! single key";
@@ -56,7 +50,6 @@ sub gen_hash {
     is +%h, 24,                 "c should be deleted now by count";
 
     my $d = %h<d>:p;
-    #?pugs   6 skip "no adverbials"
     #?niecza 3 todo "cannot combine adverbial pairs"
     is_deeply %h<d>:p:!delete, $d,       "return a single pair out";
     ok %h<d>:exists,                     "d should not have been deleted";
@@ -67,7 +60,6 @@ sub gen_hash {
     is_deeply %h<d>:!p:delete, (d=>Int), "slice unexisting single pair out";
 
     my $e= ("e", %h<e>);
-    #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     is_deeply %h<e>:kv:!delete, $e,        "return a single key/value out";
     ok %h<e>:exists,                       "e should not have been deleted";
@@ -76,7 +68,6 @@ sub gen_hash {
     is_deeply %h<e>:kv:delete,  (),        "slice unexisting single key/value";
     is_deeply %h<e>:!kv:delete, ('e',Int), "slice unexisting single key/value";
 
-    #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     is %h<f>:k:!delete,      'f', "return a single key out";
     ok %h<f>:exists,              "f should not have been deleted";
@@ -86,7 +77,6 @@ sub gen_hash {
     is %h<f>:!k:delete,      'f', "slice unexisting single key";
 
     my $g= %h<g>;
-    #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     is %h<g>:v:!delete,        $g,  "return a single value out";
     ok %h<g>:exists,                "g should not have been deleted";
@@ -99,14 +89,12 @@ sub gen_hash {
 { # single key, combinations with :exists
     my %h = gen_hash;
 
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     ok (%h<b>:delete:exists) === True,  "d:exists single existing key";
     ok %h<b>:!exists,                   "b should be deleted now";
     ok (%h<b>:delete:exists) === False, "b:exists one non-existing key";
     ok (%h<b>:delete:!exists) === True, "b:!exists one non-existing key";
 
-    #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     is_deeply %h<d>:delete:!exists:kv, ("d",False), "d:exists:kv 1 ekey";
     ok %h<d>:!exists,                               "d should be deleted now";
@@ -115,7 +103,6 @@ sub gen_hash {
     is_deeply %h<d>:delete:exists:kv, (),           "1 nekey d:exists:kv";
     is_deeply %h<d>:delete:!exists:kv, (),          "1 nekey d:!exists:kv";
 
-    #?pugs   6 skip "no adverbials"
     #?niecza 6 todo "cannot combine adverbial pairs"
     is_deeply %h<e>:delete:!exists:p, (e=>False), "d:exists:p 1 ekey";
     ok %h<e>:!exists,                             "e should be deleted now";
@@ -129,12 +116,10 @@ sub gen_hash {
     my Int %h   = gen_hash;
     my @cde = %h<c d e>;
 
-    #?pugs 3 skip "no adverbials"
     is %h<c d e>:delete, @cde, "Test for delete multiple keys";
     ok !any(%h<c d e>),        "c d e should be deleted now";
     is +%h, 23,                "c d e should be deleted now by count";
 
-    #?pugs   11 skip "no adverbials"
     #?niecza 11 todo "adverbial pairs only used as boolean True"
     my $fg = %h<f g>;
     is_deeply %h<f g>:!delete, $fg,       "non-deletion with ! mult";
@@ -150,7 +135,6 @@ sub gen_hash {
     is +%h, 21,                           "f g should be deleted now by count";
 
     my $hi = %h<h i>:p;
-    #?pugs   4 skip "no adverbials"
     #?niecza 3 todo "cannot combine adverbial pairs"
     is_deeply %h<h i>:p:!delete, $hi, "return pairs";
     is %h<h i>:p, $hi,                "h i should not have been deleted";
@@ -161,7 +145,6 @@ sub gen_hash {
 { # multiple keys, combinations with :exists
     my %h = gen_hash;
 
-    #?pugs   8 skip "no adverbials"
     #?niecza 8 todo "cannot combine adverbial pairs"
     is_deeply %h<b c>:!delete:exists, (True,True),  "!d:exists ekeys";
     is_deeply %h<b c>:delete:exists, (True,True),   "d:exists ekeys";
@@ -172,7 +155,6 @@ sub gen_hash {
     is_deeply %h<a b>:delete:exists, (True,False),  "d:exists nekeys";
     is_deeply %h<c x>:delete:!exists, (True,False), "d:!exists nekeys";
 
-    #?pugs   8 skip "no adverbials"
     #?niecza 8 todo "cannot combine adverbial pairs"
     is_deeply %h<e f>:!delete:!exists:kv,
       ("e",False,"f",False),              "!d:!exists:kv ekeys";
@@ -189,7 +171,6 @@ sub gen_hash {
     is_deeply %h<h e>:delete:!exists:kv,
       ("h",False),                        "d:!exists:kv ekey/nekey";
 
-    #?pugs   8 skip "no adverbials"
     #?niecza 8 todo "cannot combine adverbial pairs"
     is_deeply %h<m n>:!delete:!exists:p,
       (m=>False,n=>False),                "!d:!exists:p ekeys";
@@ -211,7 +192,6 @@ sub gen_hash {
     my %h   = gen_hash;
     my @all = %h{ %h.keys };
 
-    #?pugs 2 skip "no adverbials"
     is %h{*}:delete, @all, "Test deletion with whatever";
     is +%h, 0,             "* should be deleted now";
 } #2
@@ -220,7 +200,6 @@ sub gen_hash {
     my %h   = gen_hash;
     my $all = %h{ %h.keys };
 
-    #?pugs   10 skip "no adverbials"
     #?niecza 10 todo "adverbial pairs only used as boolean True"
     is_deeply %h{*}:!delete, $all,       "Test non-deletion with ! *";
     is_deeply %h{*}:delete(0), $all,     "Test non-deletion with (0) *";
@@ -235,7 +214,6 @@ sub gen_hash {
     my %h = gen_hash;
     my %i = %h.clone;
 
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:p:!delete, %i, "return all pairs";
     is +%h, 26,             "* should not be deleted";
@@ -248,7 +226,6 @@ sub gen_hash {
     my @i  = True  xx %h.keys;
     my @ni = False xx %h.keys;
 
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:!delete:exists, @i,  "!d:exists whatever";
     is +%h, 26,                   "* should not be deleted";
@@ -261,7 +238,6 @@ sub gen_hash {
     my @i  = map { ($_,True) },  %h.keys;
     my @ni = map { ($_,False) }, %h.keys;
 
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:!delete:exists:kv, @i,  ":!d:exists:kv whatever";
     is +%h, 26,                      "* should not be deleted";
@@ -269,7 +245,6 @@ sub gen_hash {
     is +%h, 0,                       "* should be deleted now";
 
     %h = gen_hash;
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:!delete:exists:!kv, @i,  ":!d:exists:!kv whatever";
     is +%h, 26,                      "* should not be deleted";
@@ -282,7 +257,6 @@ sub gen_hash {
     my %i  = map { $_ => True },  %h.keys;
     my %ni = map { $_ => False }, %h.keys;
 
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:!delete:exists:p, %i,  ":!d:exists:p whatever";
     is +%h, 26,                     "* should not be deleted";
@@ -290,7 +264,6 @@ sub gen_hash {
     is +%h, 0,                      "* should be deleted now";
 
     %h = gen_hash;
-    #?pugs   4 skip "no adverbials"
     #?niecza 4 todo "cannot combine adverbial pairs"
     is %h{*}:!delete:exists:!p, %i,  ":!d:exists:!p whatever";
     is +%h, 26,                     "* should not be deleted";

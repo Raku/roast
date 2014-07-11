@@ -34,7 +34,6 @@ ok EVAL('Buf').does(Positional), "Buf does Positional";
 ok EVAL('Capture').does(Positional), "Capture does Positional";
 
 my %hash;
-#?pugs todo 'feature'
 ok %hash.does(Associative), 'uninitialized %var does Associative';
 %hash = a => 1;
 ok %hash.does(Associative), 'value in %var does Associative';
@@ -67,14 +66,11 @@ ok &pro.does(Callable), 'a proto does Callable';
 #?niecza skip 'Methods must be used in some kind of package'
 {
     my token bar {<?>}
-    #?pugs todo 'feature'
     ok &bar.does(Callable), 'a token does Callable';
     my rule baz {<?>}
-    #?pugs todo 'feature'
     ok &baz.does(Callable), 'a rule does Callable';
     # &quux returns a Sub ?
     macro quux {}
-    #?pugs todo 'feature'
     ok &quux.does(Callable), 'a macro does Callable';
 }
 

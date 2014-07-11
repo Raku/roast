@@ -104,7 +104,6 @@ plan 15;
     my @e3 = 'C', 'D';
     is(atlevel($tree, 1), @e1, "atlevel() works at level 1");
     is(atlevel($tree, 2), @e2, "atlevel() works at level 2");
-    #?pugs todo
     is(atlevel($tree, 3), @e3, "atlevel() works at level 3");
 }
 

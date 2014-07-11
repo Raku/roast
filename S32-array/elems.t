@@ -21,7 +21,6 @@ plan 11;
 }
 
 #?niecza todo
-#?pugs todo
 {
   my $a;
   is $a.elems, 0, ".elems does works on arbitrary scalars";

@@ -28,7 +28,6 @@ plan 5;
     is($a, 55, "post while");
 }
 
-#?pugs skip 'Cannot shift scalar'
 {
     my @a = 'b'..'d';
     my $a = 'a';
@@ -36,7 +35,6 @@ plan 5;
     is($a, "a, b, c, d", "post while");
 }
 
-#?pugs skip 'Cannot shift scalar'
 {
     my @a = 'a'..'e';
     my $a = 0;

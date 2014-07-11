@@ -64,9 +64,7 @@ lives_ok { boom(42) }, "can modify a copy";
     $foo=1;
     sub mods_param_parcel ($x is parcel) { $x++;  }
     dies_ok { mods_param_parcel(1); }, 'is parcel with non-lvalue';
-    #?pugs todo
     lives_ok { mods_param_parcel($foo); }, 'is parcel with non-lvalue';
-    #?pugs todo
     is($foo, 2, 'is parcel works');
 }
 

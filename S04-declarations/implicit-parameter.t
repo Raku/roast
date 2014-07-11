@@ -17,12 +17,10 @@ plan 18;
     is_approx $f2(4), 2, 'Block with implicit $_ has one formal parameter';
 }
 
-#?pugs skip 'Missing required parameters: $_'
 {
     # { } has implicit signature ($_ is rw = $OUTER::_)
     
     $_ = 'Hello';
-    #?pugs todo 'feature'
     is(try { { $_ }.() }, 'Hello',              '$_ in bare block defaults to outer');
     is({ $_ }.('Goodbye'), 'Goodbye',   'but it is only a default');
     is({ 42 }.(), 42,                   'no implicit $_ usage checking');
@@ -35,7 +33,6 @@ plan 18;
 }
 
 {
-    #?pugs 4 todo 'pointy blocks'
     $_ = 'Ack';
     dies_ok({ (-> { "Boo!" }).(42) },     '-> {} is arity 0');
     dies_ok({ (-> { $_ }).(42) },         'Even when we use $_>');
@@ -47,7 +44,6 @@ plan 18;
     is(-> $a { $_ }.(42),   'Ack!',       'Even with parameters (?)');
     is(-> $_ { $_ }.(42),   42,           'But not when the parameter is $_');
 
-    #?pugs todo
     eval_dies_ok( 'sub () { -> { $^a }.() }',  'Placeholders not allowed in ->');
 
     is(-> { }.arity, 0,                 '->{} is arity 0, again');

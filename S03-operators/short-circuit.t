@@ -114,7 +114,6 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "^^ NYI"
-#?pugs skip '^^ short circuit'
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -132,7 +131,6 @@ sub accumtest($expect, $op) {
 }
 
 #?niecza skip "xor NYI"
-#?pugs skip "xor shortcircuit"
 {
     my $x;      # should be Mu
     my $y = 2;
@@ -164,7 +162,6 @@ sub accumtest($expect, $op) {
     is(42 ^^ 0,        42, "^^  operator working (one true)");
     #?rakudo todo 'wrong return type'
     is(1 ^^ 42,     False, "^^  operator working (both true)");
-    #?pugs todo
     is(0 ^^ 0,          0, "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
@@ -179,7 +176,6 @@ sub accumtest($expect, $op) {
 #?niecza skip "^^ NYI"
 {
     is 0 ^^ False ^^ '', '', '^^ given all false values returns last (1)';
-    #?pugs todo
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
     is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
     is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
@@ -188,7 +184,6 @@ sub accumtest($expect, $op) {
     #?rakudo todo 'wrong return type'
     is 'a' ^^ 'b' ^^ 0, False, '^^ given two true values returns False (2)';
 
-    #?pugs 6 skip 'xor'
     is (0 xor False xor ''), '', 'xor given all false values returns last (1)';
     is (False xor '' xor 0), 0, 'xor given all false values returns last (2)';
     is (False xor 42 xor ''), 42, 'xor given one true value returns it (1)';
@@ -201,7 +196,6 @@ sub accumtest($expect, $op) {
     #?rakudo todo 'wrong return type'
     isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
-    #?pugs 2 skip 'Range'
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
     isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
     isa_ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
@@ -254,8 +248,6 @@ sub accumtest($expect, $op) {
     is($y, 1, "chained comparison short-circuit: stopping soon enough");
 }
 
-# a pugs regression 
-
 {
     my $a = sub { 1 };
     my $b;
@@ -263,8 +255,6 @@ sub accumtest($expect, $op) {
 
     is c($a), 1, 'shortcircuit idiom given coderef works';
 
-    # This one will just kill pugs with the cast failure, so force fail
-    #?pugs eval 'short circuiting'
     is c($b), 2, 'shortcircuit idiom given Mu works';
 }
 

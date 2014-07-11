@@ -91,7 +91,6 @@ plan 36;
     eval_dies_ok('pop(@pop) = 3'), 'Cannot assign to a readonly variable or a value';
 } #6
 
-#?pugs       skip "may run forever"
 #?niecza     skip "may run forever"
 {
     my @push = 1 .. Inf;

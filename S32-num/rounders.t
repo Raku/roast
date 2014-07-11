@@ -69,7 +69,6 @@ for %tests.keys.sort -> $type {
         my $res = EVAL($code);
 
         if ($!) {
-            #?pugs todo 'feature'
             flunk("failed to parse $code ($!)");
         } else {
             ok($res == $test[1], "$code == {$test[1]}");
@@ -85,7 +84,6 @@ for %tests.keys.sort -> $type {
         my $res = EVAL($code);
 
         if ($!) {
-            #?pugs todo 'feature'
             flunk("failed to parse $code ($!)");
         } else {
             ok($res == $test[1], "$code == {$test[1]}");
@@ -99,7 +97,6 @@ for %tests.keys.sort -> $t {
 }
 
 # RT #118545  Round with arguments
-#?pugs 4 skip "round with arguments"
 {   
     my $integer = 987654321;
     is $integer.round(1),   987654321, "round integer with argument";
@@ -108,7 +105,6 @@ for %tests.keys.sort -> $t {
     is 2.round(3/20),       1.95,      "2.round(3/20) == 1.95";
 }
 
-#?pugs 4 skip "round with arguments"
 {
     my $num = 123.456789;
     is $num.round(1),     123,       "round with argument";

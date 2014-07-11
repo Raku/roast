@@ -10,7 +10,6 @@ my $line;
 
 # just a sub
 #?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
 {
     my $a;
     my $awith;
@@ -44,7 +43,6 @@ TEXT
 
 # class with auto/inherited new()
 #?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
 {
     class A     is DEPRECATED                  { };
     class Awith is DEPRECATED("'Fnorkle.new'") { };
@@ -75,7 +73,6 @@ TEXT
 
 # class with explicit new()
 #?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
 {
     my $B;
     my $Bwith;
@@ -110,7 +107,6 @@ TEXT
 
 # method in class
 #?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
 {
     my $C;
     my $Cwith;
@@ -144,7 +140,6 @@ TEXT
 
 # class with auto-generated public attribute
 #?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
 {
     class D     { has $.foo is DEPRECATED          };
     class Dwith { has $.foo is DEPRECATED("'bar'") };
@@ -175,7 +170,6 @@ TEXT
 
 # class with private attribute and homemade accessor
 #?niecza skip 'is DEPRECATED NYI'
-#?pugs   skip 'is DEPRECATED NYI'
 {
     my $E;
     my $Ewith;

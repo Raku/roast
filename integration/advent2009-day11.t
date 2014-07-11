@@ -30,11 +30,9 @@ class DogWalker {
 }
 my $bob = DogWalker.new(name => 'Bob', dog => $fido);
 is $bob.name, 'Bob', 'dog walker has a name';
-#?pugs skip 'no such method'
 is $bob.dog_name, 'Fido', 'dog name can be accessed by delegation';
 
 # RT 75180
-#?pugs skip 'no such ^methods'
 is Dog.^methods(:local).map({.name}).sort.join('|'),
     'bark|name', 'can introspect Dog';
 

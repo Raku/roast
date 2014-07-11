@@ -50,15 +50,12 @@ my $outer = 'outside';
     my $inner = 'inside';
 
     ok ::('Int') === Int,    'can look up a type object with ::()';
-    #?pugs 3 skip 'Invalid sigil ":$"'
     is ::('$inner'), $inner, 'can look up lexical from same block';
     is ::('$outer'), $outer, 'can look up lexical from outer block';
 
     lives_ok { ::('$outer') = 'new' }, 'Can use ::() as lvalue';
-    #?pugs todo
     is $outer, 'new', 'and the assignment worked';
     sub c { 'sub c' }; #OK not used
-    #?pugs 2 skip 'Invalid sigil ":&"'
     is ::('&c').(), 'sub c', 'can look up lexical sub';
 
     is ::('e'), e,  'Can look up numerical constants';
@@ -71,7 +68,6 @@ my $outer = 'outside';
 
     class A::B { };
 
-    #?pugs 2 skip 'No such subroutine'
     is ::('Outer::Inner').perl, Outer::Inner.perl, 'can look up name with :: (1)';
     #?niecza skip "Object reference not set to an instance of an object"
     is ::('A::B').perl, A::B.perl, 'can look up name with :: (1)';
@@ -113,19 +109,16 @@ my $outer = 'outside';
 #?rakudo skip 'NYI'
 {
   sub GLOBAL::a_global_sub () { 42 }
-  #?pugs skip 'Invalid sigil'
   is ::("&*a_global_sub")(), 42,
     "symbolic dereferentiation of globals works (1)";
 
   my $*a_global_var = 42;
-  #?pugs skip 'Invalid sigil'
   is ::('$*a_global_var'),   42,
     "symbolic dereferentiation of globals works (2)";
 }
 
 # Symbolic dereferentiation of globals *without the star*
 {
-  #?pugs skip 'Invalid sigil'
   #?rakudo todo 'no such symbol'
   ok ::('$*IN') === $*IN,
     "symbolic dereferentiation of globals works (3)";
@@ -160,7 +153,6 @@ my $outer = 'outside';
   try { die 'to set $!' };
   ok $::("!"),    "symbolic dereferentiation works with special chars (1)";
 #  ok $::!,        "symbolic dereferentiation works with special chars (2)";
-  #?pugs skip 'todo'
   #?rakudo todo 'NYI'
   ok ::("%*ENV"), "symbolic dereferentiation works with special chars (3)";
 #  ok %::*ENV,     "symbolic dereferentiation works with special chars (4)";

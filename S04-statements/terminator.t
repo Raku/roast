@@ -41,12 +41,9 @@ eval_dies_ok('my $x = ', 'incomplete expression');
                 + 2 ];
     ';
 
-    #?pugs todo
     is($z[0], 2, 'auto-curly applies inside array composer');
 }
 
-# There's *no* ";" before the "\n", but pugs parsed it nevertheless!
-# (and there s no infix:<is> either)
 eval_dies_ok "42 if 23\nis 50; 1",
     "if postfix modifier and is() is parsed correctly";
 
@@ -54,7 +51,6 @@ eval_dies_ok "42 if 23\nis 50; 1",
 eval_dies_ok '(1) { $foo = 2 }', 'parens do not eat spaces after them';
 
 # RT #79964
-#?pugs todo
 eval_lives_ok q:b"my &f;\nsub g() { }\n&f;", 'implicit terminator before & sigil';
 
 # vim: ft=perl6

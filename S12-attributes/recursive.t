@@ -35,12 +35,10 @@ Test attributes with recursively typed attributes
     };
     
     my B $a;
-    #?pugs todo
     lives_ok {
         $a .= new();
         B.attr = $a;
     }, "Can instantiate class with recursively-typed class lexical";
-    #?pugs skip 'Undeclared variable'
     ok B.attr === $a, "Recursively-typed class lexical stores correctly";
     
 }
@@ -71,7 +69,6 @@ Test attributes with recursively typed attributes
         $d .= new();
         $d.attr .= new();
     }, 'Can instantiate derived class with ::?CLASS attribute';
-    #?pugs todo 'bug'
     isa_ok $d.attr, C, '::?CLASS is lexical, not virtual';
 }
 
@@ -83,12 +80,10 @@ Test attributes with recursively typed attributes
     }
 
     my $z1 = Z.new;
-    #?pugs todo
     #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa_ok $z1.a[0], Z, "check type-object";
     lives_ok { $z1.a[0] = Z.new }, 'can assign';
     isa_ok $z1.a[0], Z;
-    #?pugs todo
     #?niecza todo "https://github.com/sorear/niecza/issues/183"
     isa_ok $z1.h<k>, Z, "check type-object";
     lives_ok { $z1.h<k> = Z.new }, 'can assign';

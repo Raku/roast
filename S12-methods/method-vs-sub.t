@@ -29,7 +29,6 @@ is foo($obj),   'sub', 'adding trailing comma should call the "sub"';
 }
 
 # RT #92192
-#?pugs skip 'anon'
 {
     my @a;
     my $n;

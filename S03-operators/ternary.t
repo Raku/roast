@@ -21,7 +21,6 @@ my $str3 = "bbb";
 }
 
 is(($str2 eq $str1 ?? 8 * 8 !! 9 * 9), 64, "?? !! in parenthesis");
-#?pugs skip 'div'
 is(($str2 eq $str3 ?? 8 + 8 !! 9 div 9), 1, "?? !! in parenthesis");
 
 is(1 ?? 2 ?? 3 !! 4 !! 5 ?? 6 !! 7, 3, "nested ?? !!");
@@ -48,10 +47,7 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     is($foo, 13, "operator priority");
 }
 
-#?pugs skip "parse failure"
 {
-    # This parses incorrectly in pugs because it's 
-    # parsed as Bool::True(!! Bool::False).
     my $foo = 1 ?? Bool::True !! Bool::False;
     is($foo, Bool::True, "a statement with both ??!! and :: in it did compile") ;
 }
@@ -64,7 +60,6 @@ is((4 or 5 ?? 6 !! 7), 4, "operator priority");
     }
 
     my $foo = EVAL q[ 1 ?? 'yay' !! 'nay' ];
-    #?pugs todo 'bug'
     is($foo, "yay", "defining a postfix<!> doesn't screw up ternary op");
 }
 

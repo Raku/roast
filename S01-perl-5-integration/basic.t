@@ -35,11 +35,9 @@ my %h = ( a => 1 );
     my $test = '%h.kv received as hash';
     my ($k,$v) = $p5_dumper(%h.kv);   
     is($k, 'a', $test~' (key)');
-    #?pugs todo
     is($v, '1', $test~' (value)');
 }
 
-#?pugs skip 'Cannot cast into Hash'
 #?rakudo skip ':lang<perl5>'
 {
     my $test = '\%h received as hashref';
@@ -50,7 +48,6 @@ my %h = ( a => 1 );
     is($ref<a>, 1, $test);
 }
 
-#?pugs skip 'Cannot cast into Hash'
 #?rakudo skip 'VAR'
 {
     my $test = q{ (VAR %h)received as hashref };
@@ -64,11 +61,9 @@ my @a = <b c d>;
     my $test = q{ (@a) received as array };
     my @o = $p5_dumper(@a);
     is(@o[0], "b", $test);
-    #?pugs todo
     is(@o[2], "d", $test);
 }
 
-#?pugs skip 'todo'
 #?rakudo skip ':lang<perl5>'
 {
     my $test = q{ (\@a) received as arrayref };
@@ -77,7 +72,6 @@ my @a = <b c d>;
     is($o[2], "d", $test);
 }
 
-#?pugs skip 'todo'
 #?rakudo skip 'VAR'
 {
     my $test = q{ (VAR @a) received as arrayref };
@@ -102,7 +96,6 @@ my $s = 'str';
    is($$o, $s, $test);
 }
 
-#?pugs skip 'todo'
 #?rakudo skip 'VAR'
 {
    my $test = q{ (VAR $s) received as scalarref };
@@ -110,7 +103,6 @@ my $s = 'str';
    is($$o, $s, $test);
 }
 
-#?pugs skip 'Invalid ctx: 2'
 #?rakudo skip ':lang<perl5>'
 {
     my $test = q{ (&p6func) Passing a Perl 6 coderef to Perl 5 };

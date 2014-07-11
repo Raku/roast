@@ -10,7 +10,6 @@ plan 2;
 {
     class A { has $.b }
    
-    #?pugs todo
     eval_dies_ok "new A", 'parameterless prefixed new is allowed';
 
     eval_dies_ok( "new A( :b('bulbous bouffant') )", 'what looks like a constructor call is really a coersion to A, and should therefore be disallowed' );

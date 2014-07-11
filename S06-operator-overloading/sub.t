@@ -28,7 +28,6 @@ Testing operator overloading subroutines
     sub prefix:<±> ($thing) { return "AROUND$thing"; };
     is ± "fish", "AROUNDfish", 'prefix operator overloading for new operator (unicode, latin-1 range)';
     sub prefix:<(+-)> ($thing) { return "ABOUT$thing"; };
-    #?pugs todo 'bug'
     is EVAL(q[ (+-) "fish" ]), "ABOUTfish", 'prefix operator overloading for new operator (nasty)';
 }
 
@@ -88,7 +87,6 @@ Testing operator overloading subroutines
 
 {
     sub infix:<(C)> ($text, $owner) { return "$text CopyRight $owner"; };
-    #?pugs todo 'bug'
     is EVAL(q[ "romeo & juliet" (C) "Shakespeare" ]), "romeo & juliet CopyRight Shakespeare",
 	'infix operator overloading for new operator (nasty)';
 }
@@ -117,7 +115,6 @@ Testing operator overloading subroutines
 #?niecza skip 'Unhandled exception: Malformed block at (eval) line 1'
 {
     my $var = 0;
-    #?pugs 2 todo 'feature'
     ok(EVAL('macro circumfix:["<!--","-->"] ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro {"",""}');
     ok(EVAL('macro circumfix:«<!-- -->» ($text) is parsed / .*? / { "" }; <!-- $var = 1; -->; $var == 0;'), 'circumfix macro «»');
 }
@@ -230,7 +227,6 @@ Testing operator overloading subroutines
   lives_ok { $obj = MyClass.new }, "instantiation of a prefix:<...> and infix:<as> overloading class worked";
   lives_ok { ~$obj }, "our object can be stringified";
   is ~$obj, "hi", "our object was stringified correctly";
-  #?pugs todo 'feature'
   is EVAL('($obj as OtherClass).x'), 23, "our object was coerced correctly";
 }
 

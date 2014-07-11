@@ -79,13 +79,12 @@ my $obj;
 
 {
     my $r = $obj.echo("bar");
-    is($r, 'bar', 'invoke method with pugs arg');
+    is($r, 'bar', 'invoke method with perl6 arg');
 }
 
 {
     my $r = $obj.asub;
 
-    #?pugs todo
     isa_ok($r, 'CODE', "returning a coderef");
 
     is($r.(), 'asub', 'invoking p5 coderef');
@@ -93,37 +92,32 @@ my $obj;
     is($rr, 'asub', 'invoke with p5 coderef');
 }
 
-#?pugs todo 
 {
     my @r = $obj.many;
     is(@r.elems, 2);
 }
 
-#?pugs todo 
 {
     my $r = $obj.submany;
     my @r = $r.();
     is(@r.elems, 2);
 }
 
-#?pugs skip 'Invalid ctx: 2'
 {
     my $callback = { "baz" };
     my $r = $obj.callcode($callback);
     is($r, 'baz', 'invoke method with callback');
 }
 
-#?pugs skip 'Invalid ctx: 2'
 {
     class Foo6 {
         method me ($class: $arg) { 'Foo6'~$arg };    #OK not used
     };
     my $obj6 = Foo6.new;
     $obj = EVAL("FooBar->new", :lang<perl5>);
-    is($obj.invoke($obj6), 'Foo6invoking', 'invoke pugs method from p5');
+    is($obj.invoke($obj6), 'Foo6invoking', 'invoke p6 method from p5');
 }
 
-#?pugs skip 'Invalid ctx: 2'
 {
     my @rw = (1, 2, 3);
     $obj.modify_array(VAR @rw);

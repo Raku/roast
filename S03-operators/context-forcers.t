@@ -48,7 +48,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   is +0,           0, "+ context forcer works (2)";
   is +(3/4),     3/4, "+ context forcer works (3)";
   is +(3i),       3i, "+ context forcer works (4)";
-  #?pugs todo 'Mu'
   dies_ok { +Mu },    "+ context forcer works (5)";
   is +(?0),        0, "+ context forcer works (13)";
   is +(?3),        1, "+ context forcer works (14)";
@@ -59,9 +58,7 @@ sub iis(Mu $a, Mu $b, $descr) {
   is -0,          -0, "- context forcer works (2)";
   is -(3/4),    -3/4, "- context forcer works (3)";
   is -(3i),      -3i, "- context forcer works (4)";
-  #?pugs todo 'Mu'
   dies_ok { -Mu },    "- context forcer works (5)";
-  #?pugs todo
   is -(?0),        0, "- context forcer works (13)";
   is -(?3),       -1, "- context forcer works (14)";
 }
@@ -72,7 +69,6 @@ sub iis(Mu $a, Mu $b, $descr) {
   is ~"1",       "1", "~ context forcer works (3)";
   is ~"0",       "0", "~ context forcer works (4)";
   is ~"",         "", "~ context forcer works (5)";
-  #?pugs todo 'Mu'
   #?niecza todo 'https://github.com/sorear/niecza/issues/179'
   dies_ok { ~Mu },    "~ context forcer works (6)";
   is ~"Inf",   "Inf", "~ context forcer works (7)";
@@ -88,7 +84,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 # L<S02/Context/numeric "+">
 # numeric (+) context
 #?niecza skip "Failure NYI"
-#?pugs skip 'Failure'
 {
     my $a = '2 is my favorite number';
     isa_ok(+$a, Failure, 'trailing chars cause failure');
@@ -100,7 +95,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 # L<S03/Symbolic unary precedence/"prefix:<->">
 #?rakudo skip 'failure modes of Str.Numeric'
 #?niecza skip "Failure NYI"
-#?pugs skip 'Failure'
 {
     my $a = '2 is my favorite number';
     isa_ok(-$a, Failure, 'trailing chars cause failure');
@@ -112,7 +106,6 @@ sub eval_elsewhere($code){ EVAL($code) }
 # L<S02/Context/string "~">
 # L<S03/Changes to Perl 5 operators/Unary ~ string context>
 # string context
-#?pugs skip 'Stringy'
 {
     my $a = 10.500000;
     #?niecza skip "Stringy NYI"
@@ -212,7 +205,6 @@ sub eval_elsewhere($code){ EVAL($code) }
     is +%(), 0, '%() is an empty Hash';
 }
 
-#?pugs skip 'Cannot cast into a Hash'
 {
     my $x = %(a => 3, b => 5);
     is $x<a>, 3, 'hash constructor worked (1)';
@@ -225,30 +217,22 @@ sub eval_elsewhere($code){ EVAL($code) }
 
 # ^$x is the range 0 .. ($x -1)
 {
-    #?pugs todo
     ok   0 ~~ ^10, '0 is in ^10';
-    #?pugs todo
     ok   9 ~~ ^10, '9 is in ^10';
-    #?pugs todo
     ok 9.9 ~~ ^10, '9.99 is in ^10';
     ok 10 !~~ ^10, '10 is not in ^10';
     is (^10).elems, 10, '^10 has 10 elems';
-    #?pugs skip 'Range'
     isa_ok ^10, Range;
 
     # now the same for ^@array, in which case prefix:<^>
     # imposes numeric context
 
     my @a = <one two three four five six seven eight nine ten>;
-    #?pugs todo
     ok   0 ~~ ^@a, '0 is in ^10';
-    #?pugs todo
     ok   9 ~~ ^@a, '9 is in ^10';
-    #?pugs todo
     ok 9.9 ~~ ^@a, '9.99 is in ^10';
     ok  10 !~~ ^@a, '10 is not in ^10';
     is (^@a).elems, 10, '^10 has 10 elems';
-    #?pugs skip 'Range'
     isa_ok ^@a, Range;
 }
 

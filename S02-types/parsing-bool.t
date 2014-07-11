@@ -8,7 +8,6 @@ plan 4;
 # L<S02/Immutable types/"Perl boolean">
 
 is (try { 42 or Bool::False }), 42, "Bool::False as RHS";
-#?pugs todo 'parsing'
 is (try { Bool::False or 42 }), 42, "Bool::False as LHS";
 
 is (try { 42 or False }), 42, "False as RHS";

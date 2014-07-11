@@ -33,7 +33,6 @@ role R2 {
     has Int $!a;
 }
 
-#?pugs 2 todo
 eval_dies_ok 'class C3 does R2 { has $!a }',      'Roles with conflicing attributes';
 eval_dies_ok 'class C2 does R2 { has Int $!a }',  'Same name, same type will also conflicts';
 
@@ -49,7 +48,6 @@ class C5 does R4 {
 }
 is C5.new().bar(), [], 'Composing an attribute into a class that already has one works';
 
-#?pugs skip 'Cannot cast into Hash'
 #?niecza skip 'Unhandled exception: Attribute %!e in C6 is defined in C6 but not R6'
 {
     role R6 {

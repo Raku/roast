@@ -18,7 +18,6 @@ is "foo\r\nbar".graphs, 7, 'CRLF is 1 graph';
 is $u.chars, 1, '.chars defaults to .graphs';
 
 # RT #65170
-#?pugs todo
 #?rakudo todo "RT #65170"
 {
     my $rt65170;
@@ -36,7 +35,6 @@ is $u.chars, 1, '.chars defaults to .graphs';
             41, 0302, 0323,
             E0]";
 
-#?pugs 9 todo ''
 #?rakudo 9 skip 'Bytes/Codes/Graphs NYI'
 is EVAL('substr $u, 3.as(Bytes),  1.as(Bytes)'),  "\x[41]",             'substr with Bytes as units - utf8';
 is EVAL('substr $u, 3.as(Codes),  1.as(Codes)'),  "\x[0300]",           'substr with Codes as units - utf8';

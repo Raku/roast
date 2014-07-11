@@ -41,7 +41,6 @@ plan 78;
 
 #?rakudo skip 'Bit NYI'
 #?niecza skip 'Bit NYI'
-#?pugs todo
 {
  my Bit $namcu =1;
  isa_ok($namcu,Bit);
@@ -52,7 +51,6 @@ plan 78;
  isa_ok($morna, Regex);
 }
 
-#?pugs skip 'Set'
 {
  my Set $selcmima;
  isa_ok($selcmima, Set);
@@ -88,7 +86,6 @@ plan 78;
 }
 
 #?niecza skip "Buf NYI"
-#?pugs skip 'Buf'
 {
  my Buf $nacpoi;
  ok($nacpoi ~~ Buf);
@@ -106,17 +103,13 @@ plan 78;
  isa_ok($brodu, Module);
 }
 
-
 # non-instantiable Roles such as Callable, Failure, and Integral
-
-#?pugs skip 'Callable'
 {
  my Callable $fancu ;
  ok($fancu ~~ Callable);
 }
 
 #?rakudo skip 'Integral NYI'
-#?pugs skip 'Integral'
 {
  my Integral $foo;
  ok($foo ~~ Integral);
@@ -127,7 +120,6 @@ plan 78;
 
 #?rakudo todo 'int NYI'
 #?niecza skip 'int NYI'
-#?pugs skip 'parsefail'
 {
  my int $namcu =2;
  isa_ok($namcu,int);
@@ -135,7 +127,6 @@ plan 78;
 
 #?rakudo todo 'num NYI'
 #?niecza skip 'num NYI'
-#?pugs skip 'num'
 {
  my num $namcu =1.1e0;
  isa_ok($namcu,num);
@@ -145,7 +136,6 @@ plan 78;
 
 #?rakudo skip 'complex NYI'
 #?niecza skip 'complex NYI'
-#?pugs skip 'complex'
 {
  my complex $namcu =1.3;
  isa_ok($namcu,complex);
@@ -153,7 +143,6 @@ plan 78;
 
 #?rakudo skip 'rat NYI'
 #?niecza skip 'rat NYI'
-#?pugs skip 'rat'
 
 {
  my rat $namcu = 7 / 4;
@@ -162,7 +151,6 @@ plan 78;
 
 #?rakudo skip 'bit NYI'
 #?niecza skip 'bit NYI'
-#?pugs skip 'bit'
 {
  my bit $namcu =1;
  isa_ok($namcu,bit);
@@ -170,7 +158,6 @@ plan 78;
 
 #?rakudo skip 'buf NYI'
 #?niecza skip 'buf NYI'
-#?pugs skip 'buf'
 {
  my buf $nacpoi;
  isa_ok($nacpoi, buf);
@@ -183,7 +170,6 @@ plan 78;
 
 #?rakudo skip 'junction NYI'
 #?niecza skip 'junction NYI'
-#?pugs skip 'junction'
 {
  my junction $sor;
  isa_ok($sor, junction);
@@ -191,7 +177,6 @@ plan 78;
 
 #?rakudo skip 'StrPos NYI'
 #?niecza skip 'StrPos NYI'
-#?pugs skip 'StrPos'
 {
  my StrPos $pa;
  isa_ok($pa,StrPos  );
@@ -200,20 +185,17 @@ plan 78;
 
 #?rakudo skip 'StrLen NYI'
 #?niecza skip 'StrLen NYI'
-#?pugs skip 'StrLen'
 {
  my StrLen $re;
  isa_ok($re,StrLen  );
 }
 
-#?pugs skip 'Nil'
 #?niecza skip 'No value for parameter $l in infix:<===>'
 {
  my Nil $ci;
  ok($ci === Nil);
 }
 
-#?pugs skip 'Whatever'
 {
  my Whatever $vo;
  isa_ok($vo,Whatever  );
@@ -225,26 +207,22 @@ plan 78;
 }
 
 #?niecza skip 'Failure NYI'
-#?pugs skip 'Failure'
 {
  my Failure $xa;
  isa_ok($xa,Failure  );
 }
 
 #?niecza skip 'Exception NYI'
-#?pugs skip 'Exception'
 {
  my Exception $ze;
  isa_ok($ze,Exception  );
 }
 
-#?pugs skip 'Range'
 {
  my Range $bi;
  isa_ok($bi,Range  );
 }
 
-#?pugs skip 'Bag'
 {
  my Bag $so;
  isa_ok($so,Bag  );
@@ -261,40 +239,34 @@ plan 78;
 }
 
 #?niecza skip 'Blob NYI'
-#?pugs skip 'Blob'
 {
  my Blob $pare;
  ok($pare ~~ Blob);
 }
 
-#?pugs skip 'Instant'
 {
  my Instant $paci;
  isa_ok($paci,Instant  );
 }
 
 #?niecza skip 'Duration NYI'
-#?pugs skip 'Duration'
 {
  my Duration $pavo;
  isa_ok($pavo,Duration  );
 }
 
 #?niecza skip 'QuantHash NYI'
-#?pugs skip 'QuantHash'
 {
  my QuantHash $pamu;
  ok($pamu ~~ QuantHash, 'The object does QuantHash' );
 }
 
-#?pugs skip 'SetHash'
 #?niecza skip 'SetHash'
 {
  my SetHash $paxa;
  isa_ok($paxa,SetHash  );
 }
 
-#?pugs skip 'BagHash'
 #?niecza skip 'BagHash'
 {
  my BagHash $paze;
@@ -306,7 +278,6 @@ plan 78;
  isa_ok($pabi,Pair  );
 }
 
-#?pugs skip 'EnumMap'
 {
  my EnumMap $paso;
  isa_ok($paso,EnumMap  );
@@ -374,14 +345,11 @@ plan 78;
  isa_ok($civo, Any );
 }
 
-# http://svn.pugscode.org/pugs/src/perl6/CORE.pad had list of types pugs supports
-
 {
  my Bool $jetfu;
  isa_ok($jetfu, Bool);
 }
 
-#?pugs skip 'Order'
 {
  my Order $karbi;
  isa_ok($karbi, Order);
@@ -389,7 +357,6 @@ plan 78;
 
 #?rakudo skip 'Matcher isa NYI'
 #?niecza skip 'Matcher NYI'
-#?pugs skip 'Matcher'
 {
   my Matcher $mapti;
   isa_ok($mapti, Matcher);
@@ -404,7 +371,6 @@ plan 78;
 
 #?rakudo skip 'Char NYI'
 #?niecza skip 'Char NYI'
-#?pugs skip 'Char'
 {
   my Char $pav;
   isa_ok($pav, Char);
@@ -412,7 +378,6 @@ plan 78;
 
 #?rakudo skip 'Byte NYI'
 #?niecza skip 'Byte NYI'
-#?pugs skip 'Byte'
 {
   my Byte $biv;
   isa_ok($biv, Byte);
@@ -420,7 +385,6 @@ plan 78;
 
 #?rakudo skip 'AnyChar NYI'
 #?niecza skip 'AnyChar NYI'
-#?pugs skip 'AnyChar'
 {
   my AnyChar $lerfu;
   isa_ok($lerfu, AnyChar);
@@ -428,7 +392,6 @@ plan 78;
 
 #?rakudo skip 'CharLingua NYI'
 #?niecza skip 'CharLingua NYI'
-#?pugs skip 'CharLingua'
 {
   my CharLingua  $lerfu;
   isa_ok($lerfu, CharLingua );
@@ -436,7 +399,6 @@ plan 78;
 
 #?rakudo skip 'Codepoint NYI'
 #?niecza skip 'Codepoint NYI'
-#?pugs skip 'Codepoint'
 {
   my Codepoint $cypy;
   isa_ok($cypy,Codepoint );
@@ -444,7 +406,6 @@ plan 78;
 
 #?rakudo skip 'Grapheme NYI'
 #?niecza skip 'Grapheme NYI'
-#?pugs skip 'Grapheme'
 {
   my Grapheme $gy;
   isa_ok($gy,Grapheme );
@@ -453,13 +414,11 @@ plan 78;
 # Positional Associative Ordering Ordered
 # KeyExtractor Comparator OrderingPair HyperWhatever
 
-#?pugs skip 'Positional'
 {
   my Positional $mokca;
   ok($mokca ~~ Positional,'Positional exists');
 }
 
-#?pugs skip 'Associative'
 {
   my Associative $kansa;
   ok($kansa ~~ Associative,'Associative exists');
@@ -467,7 +426,6 @@ plan 78;
 
 #?rakudo skip 'Ordering NYI'
 #?niecza skip 'Ordering NYI'
-#?pugs skip 'Ordering'
 {
   my Ordering $foo;
   isa_ok($foo,Ordering);
@@ -475,7 +433,6 @@ plan 78;
 
 #?rakudo skip 'KeyExtractor NYI'
 #?niecza skip 'KeyExtractor NYI'
-#?pugs skip 'KeyExtractor'
 {
   my KeyExtractor $ckiku;
   isa_ok($ckiku, KeyExtractor);
@@ -485,7 +442,6 @@ plan 78;
 
 #?rakudo skip 'Comparator NYI'
 #?niecza skip 'Comparator NYI'
-#?pugs skip 'Comparator'
 {
   my Comparator $bar;
   isa_ok($bar,Comparator);
@@ -493,7 +449,6 @@ plan 78;
 
 #?rakudo skip 'OrderingPair NYI'
 #?niecza skip 'OrderingPair NYI'
-#?pugs skip 'OrderingPair'
 {
   my OrderingPair $foop;
   isa_ok($foop,OrderingPair);
@@ -501,7 +456,6 @@ plan 78;
 
 #?rakudo skip 'HyperWhatever NYI'
 #?niecza skip 'HyperWhatever NYI'
-#?pugs skip 'HyperWhatever'
 {
   my HyperWhatever $baz;
   isa_ok($baz,HyperWhatever);
@@ -510,21 +464,18 @@ plan 78;
 # utf8 utf16 utf32
 
 #?niecza skip 'utf8 NYI'
-#?pugs skip 'utf8'
 {
   my utf8 $ubi;
   isa_ok($ubi,utf8);
 }
 
 #?niecza skip 'utf16 NYI'
-#?pugs skip 'utf16'
 {
   my utf16 $upaxa;
   isa_ok($upaxa,utf16);
 }
 
 #?niecza skip 'utf32 NYI'
-#?pugs skip 'utf32'
 {
   my utf32 $ucire;
   isa_ok($ucire,utf32);
@@ -542,7 +493,6 @@ plan 78;
 
 #?rakudo skip 'num16  NYI'
 #?niecza skip 'num16 NYI'
-#?pugs skip 'num16'
 {
   my num16 $namcupaxa;
   isa_ok($namcupaxa,num16);
@@ -558,14 +508,12 @@ plan 78;
 
 #RT #75896
 #?niecza skip 'Coercive declarations NYI'
-#?pugs skip 'parsefail'
 {
   my Array of Int @box;
   ok(1,'Array of Int @box');
 }
 
 #?niecza skip 'Coercive declarations NYI'
-#?pugs skip 'parsefail'
 {
   my Array of Array of Int @box;
   ok(1,'Array of Array of Int @box');

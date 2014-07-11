@@ -9,7 +9,6 @@ plan 209;
 # L<S15/Binary Category Check>
 
 #?niecza 214 skip "unimatch NYI"
-#?pugs 214 skip "unimatch NYI"
 
 nok unimatch(0x29, 'Nd'), "0x29 is not Nd";
 ok unimatch(0x30, 'Nd'), "0x30 is Nd";

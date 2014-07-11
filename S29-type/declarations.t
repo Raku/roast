@@ -14,7 +14,6 @@ plan 9;
 # Maybe this test should be modified to run with rakudo
 
 my sub ok_eval1($code) {
-    #?pugs todo 'feature'
     &Test::ok.nextwith(EVAL($code),$code)
 }
 

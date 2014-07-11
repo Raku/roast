@@ -24,7 +24,6 @@ eval_dies_ok 'my $fo:o::b:ar = "bla"', "var names can't have colons in their nam
     throws_like "my a;", X::Syntax::Malformed, message => / sigilless /;
 }
 
-#?pugs skip "Can't modify constant item: VObject"
 {
     class MyMatch {
         method postcircumfix:<[ ]>($x) {  # METHOD TO SUB CASUALTY

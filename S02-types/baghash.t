@@ -43,7 +43,6 @@ sub showkv($x) {
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    #?pugs   skip '.total NYI'
     is $b.total, 8, '.total gives sum of values';
     is $b.elems, 3, '.elems gives number of elements';
     is +$b, 8, '+$bag gives sum of values';
@@ -272,7 +271,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(100) (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(100) (2)';
 
-    #?pugs   skip '.total NYI'
     is $b.total, 3, '.roll should not change BagHash';
     is $b.elems, 2, '.roll should not change BagHash';
 }
@@ -287,7 +285,6 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 100000000001, '.roll should not change BagHash';
     is $b.elems, 2, '.roll should not change BagHash';
 }
@@ -309,7 +306,6 @@ sub showkv($x) {
     is +@a, 3, '.pick(*) returns the right number of items';
     is @a.grep(* eq 'a').elems, 1, '.pick(*) (1)';
     is @a.grep(* eq 'b').elems, 2, '.pick(*) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 3, '.pick should not change BagHash';
     is $b.elems, 2, '.pick should not change BagHash';
 }
@@ -324,7 +320,6 @@ sub showkv($x) {
     is +@a, 100, '.pick(100) returns 100 items';
     ok @a.grep(* eq 'a') > 98, '.pick(100) (1)';
     ok @a.grep(* eq 'b') < 2, '.pick(100) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 100000000001, '.pick should not change BagHash';
     is $b.elems, 2, '.pick should not change BagHash';
 }
@@ -351,13 +346,11 @@ sub showkv($x) {
     is +@a, 2, '.pickpairs(*) returns the right number of items';
     is @a.grep(* eq "a\t1").elems, 1, '.pickpairs(*) (1)';
     is @a.grep(* eq "b\t2").elems, 1, '.pickpairs(*) (2)';
-    #?pugs   skip '.total NYI'
     is $b.total, 3, '.pickpairs should not change Bag';
 }
 
 # L<S32::Containers/BagHash/grab>
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $b = BagHash.new("a", "b", "b");
@@ -375,7 +368,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $b = BagHash.new("a", "b", "b");
@@ -389,7 +381,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grab *should* change BagHash';
 }
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $b = {"a" => 100000000000, "b" => 1}.BagHash;
@@ -407,7 +398,6 @@ sub showkv($x) {
 
 # L<S32::Containers/BagHash/grabpairs>
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $b = BagHash.new("a", "b", "b");
@@ -424,7 +414,6 @@ sub showkv($x) {
     is $b.elems, 0, '.grabpairs *should* change BagHash';
 }
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $b = BagHash.new(<a a b b c c d d e e f f g g h h>);
@@ -520,7 +509,6 @@ sub showkv($x) {
        "Method .BagHash works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $b1 = <a b b c c c d d d d>.BagHash;

@@ -71,11 +71,9 @@ is "\x[E0100]".graphs, 1, '.graphs on a >0xFFFF char'; # \c[VARIATION SELECTOR-1
 
 # test graphemes without a precomposed character in Unicode 5
 #?rakudo 1 skip '.codes NYI'
-#?pugs todo
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".codes, 2, '.codes on grapheme without precomposite';
 #?rakudo 1 skip '.graphs NYI'
 #?niecza skip ".graphs NYI"
-#?pugs todo
 is "\c[LATIN CAPITAL LETTER A WITH DOT ABOVE, COMBINING DOT BELOW]".graphs, 1, '.graphs on grapheme without precomposite';
 
 

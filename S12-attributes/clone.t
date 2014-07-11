@@ -38,7 +38,6 @@ is($val2, 42, '... cloned object has proper attr value');
 
 # Test to cover RT#62828, which exposed a bad interaction between while loops
 # and cloning.
-#?pugs skip "Cannot 'shift' scalar"
 {
     class A {
         has $.b;
@@ -53,7 +52,6 @@ is($val2, 42, '... cloned object has proper attr value');
 }
 
 # RT 88254
-#?pugs todo
 #?niecza todo "Exception: Representation P6cursor does not support cloning"
 {
     my ($p, $q);
@@ -95,9 +93,7 @@ is($val2, 42, '... cloned object has proper attr value');
     my $a4 = $a3.clone;
     is_deeply $a3.array, ['a', 'b'], 'original array attr sanity test';
     is_deeply $a4.array, ['a', 'b'], 'cloned array attr sanity test';
-    #?pugs emit # can't modify constant...
     push $a3.array, 'c';
-    #?pugs 2 skip "need previous statement"
     is_deeply $a3.array, ['a', 'b', 'c'], 'array on original is updated';
     is_deeply $a4.array, ['a', 'b', 'c'], 'array on copy is updated';
 
@@ -129,9 +125,7 @@ is($val2, 42, '... cloned object has proper attr value');
     is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
 
     # change the cloned objects contained object, the original should be intact afterwards
-    #?pugs emit # can't modify constant item
     $cont_clone_diff.obj.arr = 'g', 'h', 'i';
-    #?pugs 2 skip "need previous statement"
     is_deeply $cont_clone_diff.obj.arr, ['g', 'h', 'i'], 'cloned object sanity';
     is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object is untouched';
 
@@ -139,9 +133,7 @@ is($val2, 42, '... cloned object has proper attr value');
     is_deeply $cont_clone_same.obj.arr, ['a', 'b', 'c'], 'cloned object has identical value';
     is_deeply $cont.obj.arr, ['a', 'b', 'c'], 'original object sanity test';
    
-    #?pugs emit # can't modify constant item
     $cont.obj.arr = 'j', 'k', 'l';
-    #?pugs 2 skip "need previous statement"
     is_deeply $cont_clone_same.obj.arr, ['j', 'k', 'l'], 'cloned object has new value';
     is_deeply $cont.obj.arr, ['j', 'k', 'l'], 'original object has new value';
 }

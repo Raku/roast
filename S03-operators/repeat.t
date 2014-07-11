@@ -42,12 +42,10 @@ my @foo5 = 'x' xx -1;
 is(+@foo5, 0, 'repeating negative times produces an empty list');
 
 my @foo_2d = [1, 2] xx 2; # should create 2d
-#?pugs todo 'bug'
 is(@foo_2d[1], [1, 2], 'can create 2d arrays'); # creates a flat 1d array
 # Wrong/unsure: \(1, 2) does not create a ref to the array/list (1,2), but
 # returns a list containing two references, i.e. (\1, \2).
 #my @foo_2d2 = \(1, 2) xx 2; # just in case it's a parse bug
-##?pugs todo 'bug'
 #is(@foo_2d[1], [1, 2], 'can create 2d arrays (2)'); # creates a flat 1d array
 
 # test x=
@@ -87,13 +85,11 @@ is($twin, 'LintillaLintilla', 'operator x= for string repeats correct');
     is(("a" xx @a).join('|'), 'a|a|a', 'repeat properly numifies rhs');
 
     my @b = <a b c> Z (1 xx *);
-    #?pugs todo
     is(@b.join('|'), 'a|1|b|1|c|1', 'xx understands Whatevers');
 }
 
 # RT #101446
 # xxx now thunks the LHS
-#?pugs skip 'xx thunks the LHS'
 {
     my @a = ['a'] xx 3;
     @a[0][0] = 'b';

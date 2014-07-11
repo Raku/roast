@@ -108,14 +108,11 @@ is($moo, 0, "var was not touched");
     my $x = Bool::False;
     is ++$x, Bool::True, '++ on False works';
     $x = Bool::False;
-    #?pugs skip '.succ'
     is $x.succ, Bool::True, '.succ on False works';
 
     $x = Bool::True;
-    #?pugs todo
     is --$x, Bool::False, '-- on True works';
     $x = Bool::True;
-    #?pugs skip '.pred'
     is $x.pred, Bool::False, '.succ on False works';
 }
 

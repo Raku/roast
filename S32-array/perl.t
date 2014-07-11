@@ -3,7 +3,6 @@ use Test;
 
 plan 6;
 
-#?pugs   todo "cannot roundtrip arrays"
 #?niecza todo "cannot roundtrip arrays"
 # simple array
 {
@@ -15,7 +14,6 @@ plan 6;
     ok $ra.of =:= Mu, 'make sure any value can be stored';
 } #3
 
-#?pugs   skip "cannot roundtrip arrays with constrained values"
 #?niecza skip "cannot roundtrip arrays with constrained values"
 # array with constrained values
 {

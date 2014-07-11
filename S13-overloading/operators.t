@@ -20,7 +20,6 @@ plan 4;
     is 5!, 120, 'Can define recursive postfix operator';
 }
 
-#?pugs todo
 {
     class A does Associative {
         method postcircumfix:<{ }>(*@ix) {   # METHOD TO SUB CASUALTY
@@ -37,7 +36,6 @@ plan 4;
 # (even though the ticket title claims it, the actual problem was not related
 # to monkey typing/augmenting at all)
 
-#?pugs skip 'Cannot cast from VObject'
 {
     class B {
         has $.x;

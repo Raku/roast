@@ -249,7 +249,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     @a = $s.roll: 100;
     is +@a, 100, '.roll(100) returns 100 items';
     is @a.grep(* eq 'a' | 'b' | 'c').elems, 100, '.roll(100) returned "a"s, "b"s, and "c"s';
-    #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $s.total, 3, '.roll should not change the SetHash';
     is $s.elems, 3, '.roll should not change the SetHash';
@@ -263,7 +262,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is @a.sort.join, 'abcdefgh', 'SetHash.pick(*) gets all elements';
     isnt @a.join, 'abcdefgh', 'SetHash.pick(*) returns elements in a random order';
       # There's only a 1/40_320 chance of that test failing by chance alone.
-    #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $s.total, 8, '.pick should not change the SetHash';
     is $s.elems, 8, '.pick should not change the SetHash';
@@ -281,7 +279,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     ok @a.grep(* eq 'a').elems <= 1, '.pick(2) returned at most one "a"';
     ok @a.grep(* eq 'b').elems <= 1, '.pick(2) returned at most one "b"';
     ok @a.grep(* eq 'c').elems <= 1, '.pick(2) returned at most one "c"';
-    #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $s.total, 3, '.pick should not change the SetHash';
     is $s.elems, 3, '.pick should not change the SetHash';
@@ -289,7 +286,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S32::Containers/SetHash/grab>
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $s = SetHash.new(<a b c d e f g h>);
@@ -301,7 +297,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grab *should* change the SetHash';
 }
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $s = SetHash.new(<a b c>);
@@ -323,7 +318,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
 
 # L<S32::Containers/SetHash/grabpairs>
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $s = SetHash.new(<a b c d e f g h>);
@@ -337,7 +331,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is $s.elems, 0, '.grabpairs *should* change the SetHash';
 }
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $s = SetHash.new(<a b c>);
@@ -407,7 +400,6 @@ sub showset($s) { $s.keys.sort.join(' ') }
     is showset((@a, %x).SetHash), "Now Paradise a b cross-handed set the was way", "Method .SetHash works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $s = <a b b c c c d d d d>.SetHash;

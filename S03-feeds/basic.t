@@ -15,7 +15,6 @@ Tests for the feed operators
 
 plan 25;
 
-#?pugs skip '<== dies with cast error'
 {
     my @a = (1, 2);
     my (@b, @c);
@@ -23,12 +22,10 @@ plan 25;
     @a ==> @b;
     @c <== @a;
 
-    #?pugs 2 todo 'feed operators do not work'
     is(~@b, ~@a, "ltr feed as simple assignment");
     is(~@c, ~@a, "rtl feed as simple assignment");
 }
 
-#?pugs skip '<== dies with cast error'
 {
     my @a = (1 .. 5);
     my @e = (2, 4);
@@ -39,7 +36,6 @@ plan 25;
     my @f = do {@a ==> grep {($_ % 2) == 0}};
     my @g = (@a ==> grep {($_ % 2) == 0});
 
-    #?pugs 4 todo 'feed operators do not work'
     is(~@b, ~@e, "array ==> grep ==> result");
     is(~@c, ~@e, "result <== grep <== array");
     is(~@f, ~@e, 'result = do {array ==> grep}');
@@ -58,11 +54,9 @@ plan 25;
 
     @a ==> foo "x";
 
-    #?pugs todo 'feed operators do not work'
     is($got_x, "x", "x was passed as explicit param");
     #?rakudo 2 todo 'feeds + signatures'
     ok(!defined($got_y), "optional param y was not bound to fed list");
-    #?pugs todo 'feed operators do not work'
     is(~@got_z, ~@a, '...slurpy array *@z got it');
 }
 

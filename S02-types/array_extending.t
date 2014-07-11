@@ -33,7 +33,6 @@ plan 21;
     # And, of course, @array[20]:exists has to be true -- we've just assigned
     # @array[20].
     #?niecza skip 'Unable to resolve method exists in class Array'
-    #?pugs skip ':exists'
     ok @array[20]:exists,
       "creating an array element should automatically extend the array (2)";
 }
@@ -53,7 +52,6 @@ plan 21;
     my $defined;
     try { $defined = defined @array[*-5]; }
 
-    #?pugs todo
     ok !$defined,
         'defined @array[$negative_index_out_of_bounds] should be false';
     is +@array, 4,
@@ -61,7 +59,6 @@ plan 21;
 }
 
 #?niecza skip 'Unable to resolve method exists in class Array'
-#?pugs skip ':exists'
 {
     my @array  = <a b c d>;
     my $exists = @array[100]:exists;
@@ -73,7 +70,6 @@ plan 21;
 }
     
 #?niecza skip 'Unable to resolve method exists in class Array'
-#?pugs skip ':exists'
 {
     my @array  = <a b c d>;
     my $exists = @array[-5]:exists;
@@ -107,7 +103,6 @@ plan 21;
     is $n, 1, 'grep on extended array';
     @a[1] = 'c'; # cmp doesn't handle Mu cmp Mu yet
     #?niecza todo 'min on list with undefined el ignores it'
-    #?pugs todo
     is @a.min(), 'b', 'min on list with undefined el ignores it';
 }
 

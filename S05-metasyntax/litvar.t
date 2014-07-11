@@ -24,12 +24,10 @@ my $aref = \@var;
 # SCALARS
 
 # just document ticket test below
-#?pugs 2 todo 'bug'
 ok($var ~~ m/$var/, 'Simple scalar interpolation');
 ok("zzzzzz{$var}zzzzzz" ~~ m/$var/, 'Nested scalar interpolation');
 ok(!( "aaaaab" ~~ m/$var/ ), 'Rulish scalar interpolation');
 
-#?pugs 5 todo 'feature'
 ok(!('a0' ~~ m/$aref[0]/), 'Array ref stringifies before matching'); #OK
 #?niecza todo
 ok('a b ab c0' ~~ m/$aref[0]/, 'Array ref stringifies before matching'); #OK
@@ -41,18 +39,15 @@ ok('c0' ~~ m/@var[0]/, 'Array ignores 0');                         #OK
 # ARRAYS
 # L<S05/Variable (non-)interpolation/An interpolated array:>
 
-#?pugs 3 todo 'feature'
 ok("a" ~~ m/@var/, 'Simple array interpolation (a)');
 ok("b" ~~ m/@var/, 'Simple array interpolation (b)');
 ok("c" ~~ m/@var/, 'Simple array interpolation (c)');
 ok(!( "d" ~~ m/@var/ ), 'Simple array interpolation (d)');
-#?pugs 2 todo 'feature'
 ok("ddddaddddd" ~~ m/@var/, 'Nested array interpolation (a)');
 
 ok("abca" ~~ m/^@var+$/, 'Multiple array matching');
 ok(!( "abcad" ~~ m/^@var+$/ ), 'Multiple array non-matching');
 
-#?pugs 3 todo 'feature'
 is("abc" ~~ m/ @var /,     'ab', 'Array using implicit junctive semantics');
 is("abc" ~~ m/ | @var /,   'ab', 'Array using explicit junctive semantics');
 #?niecza todo "sequential semantics NYI"
@@ -61,7 +56,6 @@ is("abc" ~~ m/ || @var /,  'a',  'Array using explicit sequential semantics');
 # contextializer $( )
 
 # RT 115298
-#?pugs 4 todo
 ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match';
 is $/, 'foobar', '... $( $_ ) matched entire string';
 is 'foobar' ~~ /$( $_.substr(3) )/, 'bar', 'Contextualizer with functions calls';

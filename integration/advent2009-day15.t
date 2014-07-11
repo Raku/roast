@@ -8,7 +8,6 @@ plan 4;
 my @dice = 1..6;
 is @dice.pick(2).elems, 2, 'Picking two elements using pick()';
 is @dice.pick(10).elems, @dice.elems, 'Picking all elements using pick()';
-#?pugs skip 'roll'
 is @dice.roll(10).elems, 10, 'Picking 10 elements from a list of 6 using roll';
 
 class Card

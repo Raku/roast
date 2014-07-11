@@ -15,8 +15,6 @@ eval_dies_ok('"aa!" ~~ /\a/', 'escaped "a" is not valid metasyntax');
 lives_ok({"aa!" ~~ /a/}, '"a" is valid');
 lives_ok({"aa!" ~~ /'a'/}, 'quoted "a" is valid');
 
-# used to be a pugs bug
-
 {
     my rule foo { \{ };
     ok '{'  ~~ /<foo>/, '\\{ in a rule (+)';

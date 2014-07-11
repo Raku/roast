@@ -26,7 +26,7 @@ my $bar = { %foo };
 ok $bar ~~ Hash, '%foo in a block causes hash composing';
 
 
-# pugs had problems with //= and the hash() contextualizer
+# //= and the hash() contextualizer can work together
 {
     my %hash;
     %hash<foo> //= hash();
@@ -41,7 +41,6 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 {
     ok {; a => 1 } ~~ Block, '{; ... } is a Block';
     ok {  a => 1 } ~~ Hash,  '{ a => 1} is a Hash';
-    #?pugs 4 skip "Missing required parameters"
     ok { $^a => $^b } ~~ Block, 'placeholders force it to be a block';
     ok { $^a => 'b' } ~~ Block, '... as a key';
     ok { a => $^x }   ~~ Block, '... as a value';
@@ -50,7 +49,6 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 }
 
 #?niecza skip "Thinks the block is a hash"
-#?pugs   skip "Thinks the block is a hash"
 {
     my @foo = <a b>;
     my %hash = map { (state $counter)++ => $_ }, @foo;
@@ -60,11 +58,9 @@ ok $bar ~~ Hash, '%foo in a block causes hash composing';
 
 # RT #68298
 #?niecza skip "Thinks the block is a hash"
-#?pugs   skip "Thinks the block is a hash"
 is (map { $_ => $_ * $_ }, 1..3).hash<2>, 4, 'block with $_ is not a hash';
 
 # RT #76896
-#?pugs skip "parsefail"
 {
     my %fs = ();
 

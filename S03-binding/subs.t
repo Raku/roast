@@ -27,7 +27,6 @@ package TokenTest {
   my $target = 'cat';
   my Bool $bool;
 
-  #?pugs todo
   ok($bool = ($target ~~ m/<foo>/), 'before token redefinition');
 
   &foo := &bar;
@@ -74,7 +73,6 @@ There're two ways one can argue:
     is $var, 42,
         "binding a var to the return value of a sub (a variable) works (1)";
 
-    #?pugs todo
     dies_ok { $var = 23 },
         "binding a var to the return value of a sub (a variable) works (2)";
 }
@@ -95,7 +93,6 @@ There're two ways one can argue:
 {
     my sub foo is parcel { my $var = 42; $var }
 
-    #?pugs todo 'bug'
     lives_ok { foo() := 23 },
         "using the variable return value of an 'is parcel' sub as the LHS in a binding operation works";
 }

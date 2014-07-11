@@ -27,7 +27,6 @@ is( 'ä€»«'.flip,   '«»€ä', "some unicode characters" );
 
 #?niecza 2 todo 'graphemes NYI'
 #?rakudo 2 todo 'graphemes NYI'
-#?pugs   2 skip 'graphemes NYI'
 is( "a\c[COMBINING DIAERESIS]b".flip, 'bä', "grapheme precomposed" );
 is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".flip,
     "ba\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]",

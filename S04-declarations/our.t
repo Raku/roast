@@ -98,20 +98,17 @@ our $c = 42; #OK not used
 {
     sub foo() { our $foo = 3 };
     is foo(),    3, 'return value of sub call declaring our-scoped var';
-#?pugs 2 todo
     is our $foo, 3, 'redeclaration will make previous value available';
     is $foo,     3, '... and the value stays';
 }
 
 # RT #107270
-#?pugs todo
 {
     package Color { our ($red, $green, $blue) = 1..* };
     is $Color::blue, 3, 'declaring and initializing several vars at once';
 }
 
 # RT #76450
-#?pugs 2 todo
 {
     role PiRole   { our $pi = 3 };
     class PiClass { our $pi = 3 };

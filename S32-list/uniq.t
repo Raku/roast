@@ -30,7 +30,6 @@ This test tests the C<uniq> builtin.
 
 # With a userspecified criterion
 #?niecza skip "with NYI"
-#?pugs skip "Named argument found where no matched parameter expected"
 {
     my @array = <a b d A c b>;
     # Semantics w/o junctions
@@ -43,14 +42,12 @@ This test tests the C<uniq> builtin.
     is EVAL('~@array.uniq(with => { lc($^a) eq lc($^b) }).values.sort'), "a b c d", 'sorting the result';
 } #3
 
-#?pugs todo 'bug'
 {
     is 42.uniq, 42,    ".uniq can work on scalars";
     is (42,).uniq, 42, ".uniq can work on one-elem arrays";
 } #2
 
 # http://irclog.perlgeek.de/perl6/2009-10-31#i_1669037
-#?pugs todo
 {
     my $range = [1..4];
     my @array = $range, $range.WHICH;
@@ -81,7 +78,6 @@ This test tests the C<uniq> builtin.
     is_deeply( @a, [<a b c d>], '.= uniq in sink context works on @a' );
 } #2
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
@@ -96,7 +92,6 @@ This test tests the C<uniq> builtin.
       "final result with :as in place";
 } #4
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
@@ -111,7 +106,6 @@ This test tests the C<uniq> builtin.
       "final result with :with in place";
 } #4
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e b bbbb b b f b>;
@@ -127,7 +121,6 @@ This test tests the C<uniq> builtin.
       "final result with :as in place";
 } #4
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = ({:a<1>}, {:b<1>}, {:a<1>});

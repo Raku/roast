@@ -10,7 +10,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
 
 =end description
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a b b c d e f f a>;
@@ -30,21 +29,18 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       'slurpy subroutine form of squish works';
 } #1
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     is 42.squish, 42,    ".squish can work on scalars";
     is (42,).squish, 42, ".squish can work on one-elem arrays";
 } #2
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my class A { method Str { '' } };
     is (A.new, A.new).squish.elems, 2, 'squish has === semantics for objects';
 } #1
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @list = 1, "1";
@@ -52,14 +48,12 @@ This test tests the C<squish> builtin and .squish method on Any/List.
     is @squish, @list, "squish has === semantics for containers";
 } #1
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @a := squish( 1..Inf );
     is @a[3], 4, "make sure squish is lazy";
 } #1
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a b bb c d e f f a>;
@@ -74,7 +68,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :as in place";
 } #4
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a aa b bb c d e f f a>;
@@ -89,7 +82,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :with in place";
 } #4
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = <a aa b bb c d e f f a>;
@@ -105,7 +97,6 @@ This test tests the C<squish> builtin and .squish method on Any/List.
       "final result with :as and :with in place";
 } #4
 
-#?pugs   skip 'NYI'
 #?niecza skip 'NYI'
 {
     my @array = ({:a<1>}, {:a<1>}, {:b<1>});

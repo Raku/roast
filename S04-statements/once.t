@@ -5,7 +5,6 @@ use Test;
 plan 21;
 
 # L<S04/"Phasers"/once "runs separately for each clone">
-#?pugs todo
 {
     is(EVAL(q{{
         my $str;
@@ -32,7 +31,6 @@ plan 21;
     is $var, 2, 'once {} has executed';
 
     $sub(3);
-    #?pugs todo
     is $var, 2, "once {} only runs once for each clone";
 }
 
@@ -42,7 +40,6 @@ plan 21;
     {
         once { $str ~= 'i' }
     }
-    #?pugs todo
     is $str, 'oi', 'once {} runs when we first try to use a block';
 }
 
@@ -59,9 +56,7 @@ for <first second> {
     };
 	
     is $sub(), ':oIi', "once block set \$str to 3     ($_ time)";
-    #?pugs todo
     is $sub(), ':o', "once wasn't invoked again (1-1) ($_ time)";
-    #?pugs todo
     is $sub(), ':o', "once wasn't invoked again (1-2) ($_ time)";
 }
 
@@ -77,9 +72,7 @@ for <first second> {
     };
 
     $sub(); $sub();
-    #?pugs todo
     is $ran, 1, "once block ran exactly once ($_ time)";
-    #?pugs todo
     is $str, 'banana', "once block modified the correct variable ($_ time)";
 }
 
@@ -96,7 +89,6 @@ for <first second> {
     is $sub(), 23, 'once {} block set our variable (2)';
     #?niecza todo
     is $sub(), 23, 'the returned value of once {} still there';
-    #?pugs todo
     is $was_in_once, 1, 'our once {} block was invoked exactly once';
 }
 
@@ -109,7 +101,6 @@ for <first second> {
     nok $sub().defined, 'once {} returned undefined';
     $sub();
     $sub();
-    #?pugs todo
     is $was_in_once, 1,
         'our once { ...; Mu } block was invoked exactly once';
 }

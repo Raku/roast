@@ -23,21 +23,16 @@ my Int $foo;
 my Str $bar;
 
 {
-    #?pugs 1 todo
     dies_ok({$foo = 'xyz'},      'Int restricts to integers');
-    #?pugs todo
     dies_ok { $foo = Mu },       'Int does not accept Mu';
     is(($foo = 42),       42,    'Int is an integer');
 
-    #?pugs 1 todo
     dies_ok({$bar = 42},         'Str restricts to strings');
-    #?pugs todo
     dies_ok { $bar = Mu },       'Str does not accept Mu';
     is(($bar = 'xyz'),    'xyz', 'Str is a strings');
 }
 
 #?niecza skip 'Trait of not available on variables'
-#?pugs skip 'parsefail'
 {
     my $baz of Int;
     dies_ok({$baz = 'xyz'},      'of Int restricts to integers');
@@ -49,10 +44,8 @@ my Str $bar;
 {
     eval_lives_ok('my int $alpha = 1',    'Has native type int');
     eval_dies_ok('my int $alpha = Nil', 'native int type cannot be undefined');
-    #?pugs todo
     lives_ok({my Int $beta = Nil},      'object Int type can be undefined');
     eval_lives_ok('my num $alpha = 1e0',    'Has native type num');
-    #?pugs 2 todo
     #?rakudo.jvm todo "nigh"
     #?rakudo.moar todo "nigh"
     # RT #121518
@@ -81,11 +74,9 @@ my Str $bar;
 }
 
 # Num does not accept Int (used to, then spec changed)
-#?pugs todo
 dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
 
 # L<S02/Return types/a return type can be specified before or after the name>
-#?pugs skip 'parsefail'
 {
     # Check with explicit return.
     my sub returntype1 (Bool $pass) returns Str { return $pass ?? 'ok' !! -1}
@@ -109,7 +100,6 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     dies_ok({ returntype4(Bool::False) }, 'bad return value dies (-->)');
 }
 
-#?pugs skip 'parsefail'
 {
     # Check with implicit return.
     my sub returntype1 (Bool $pass) returns Str { $pass ?? 'ok' !! -1}
@@ -146,13 +136,11 @@ dies_ok { my Num $n; $n = 42; }, 'Num does not accept Int';
     ok Mu !~~ Any, 'Mu !~~ Any';
     ok Mu !~~ Int, 'Mu !~~ Int';
 
-    #?pugs 2 skip "Numeric"
     ok Int ~~ Numeric, 'Int ~~ Numeric';
     ok Numeric !~~ Int, 'Numeric !~~ Int';
 
     ok Array ~~ List, 'Array is a kind of List';
     ok List !~~ Array, 'A List is not an Array';
-    #?pugs skip "Positional"
     ok Array ~~ Positional, 'Array does Positional too';
 }
 

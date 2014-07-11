@@ -63,7 +63,6 @@ eval_lives_ok( 'reduce -> $a, $b, $c? { $a + $b * ($c//1) }, 1, 2', 'Use proper 
 }
 
 # RT #66352
-#?pugs skip 'where'
 {
     multi a (Str $a, Str $b) { [+$a, +$b] };
     multi a (Array $a,$b where "+") { [+] @($a) };  #OK not used

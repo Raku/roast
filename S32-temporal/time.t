@@ -121,14 +121,11 @@ my ($xsec,$foo);
 
 my $localyday = $yday;
 
-#?pugs todo 'bug'
 flunk("FIXME Time::Local should by numifiable");
-## ?pugs: todo '?'
 #ok($sec != $xsec && $mday && $year, 'localtime() list context');
 
 #-- 6 --
 
-#?pugs todo 'bug'
 ok(is_dt({ my $str = localtime() }()), 'localtime(), scalar context');
 
 # Ultimate implementation as of above test as Rule
@@ -147,9 +144,7 @@ ok(is_dt({ my $str = localtime() }()), 'localtime(), scalar context');
     ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = try { gmtime($beg) };
     ($xsec,$foo) = localtime($now);
 
-    #?pugs todo 'bug'
     flunk("FIXME Time::Local should by numifiable");
-    ## ?pugs: todo
     #ok($sec != $xsec && $mday && $year, 'gmtime() list context');
 
     #-- 8 --
@@ -165,13 +160,11 @@ ok(is_dt({ my $str = localtime() }()), 'localtime(), scalar context');
             $day_diff == -365,
             'gmtime() and localtime() agree what day of year');
     } else {
-        #?pugs todo
         ok(0, 'gmtime() and localtime() agree what day of year');
     }
 
     #-- 9 --
 
-    #?pugs todo
     ok(is_dt({ my $str = try { gmtime() } }()), 'gmtime(), scalar context');
 
     # Ultimate implementation as of above test as Rule

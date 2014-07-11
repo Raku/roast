@@ -7,12 +7,10 @@ plan 8;
 {
     sub is-true() { True };
     sub is-false() { False };
-    #?pugs 2 todo
     ok   0  ~~ is-true(),      '~~ non-syntactic True';
     ok  'a' ~~ is-true(),      '~~ non-syntactic True';
     nok  0  ~~ is-false(),     '~~ non-syntactic True';
     nok 'a' ~~ is-false(),     '~~ non-syntactic True';
-
 }
 
 {

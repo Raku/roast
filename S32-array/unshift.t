@@ -111,7 +111,6 @@ plan 57;
 }
 
 # testing some edge cases
-#?pugs skip '...'
 {
     my @unshift = 0 ... 5;
     is(+@unshift, 6, 'starting length is 6');
@@ -164,7 +163,6 @@ plan 57;
 
 
 # RT 119061
-#?pugs todo
 #?niecza todo "https://github.com/sorear/niecza/issues/184"
 {
     my Int @a;

@@ -40,7 +40,6 @@ plan 54;
 
   ok  (\@a eqv \@a), "eqv on array references (1)";
   ok  (\@b eqv \@b), "eqv on array references (2)";
-  #?pugs todo
   #?rakudo todo 'huh?'
   ok !(\@a eqv \@b), "eqv on array references (3)";
   @a := @b;
@@ -55,7 +54,6 @@ plan 54;
   ok ($a eqv $a), "eqv on scalar references (1-1)";
   ok ($b eqv $b), "eqv on scalar references (1-2)";
   ok ($a eqv $b), "eqv on scalar references (1-3)";
-  #?pugs todo
   #?rakudo todo 'huh?'
   ok (\$a !eqv \$b), "eqv on scalar references (1-4)";
 }
@@ -99,9 +97,7 @@ plan 54;
 
 {
   ok !({a => 1} eqv {a => 2}), "eqv on anonymous hash references (-)";
-  #?pugs todo
   ok  ({a => 1} eqv {a => 1}), "eqv on anonymous hash references (+)";
-  #?pugs todo
   ok ({a => 2, b => 1} eqv { b => 1, a => 2}), 'order really does not matter'; 
   ok !({a => 1} eqv {a => 1, b => 2}), 'hashes: different number of pairs';
 }
@@ -110,7 +106,6 @@ plan 54;
 {
   ok !(\3 eqv \4),         "eqv on anonymous scalar references (1)";
   # XXX the following seems bogus nowadays
-  #?pugs 2 todo
   #?rakudo todo 'huh?'
   ok !(\3 eqv \3),         "eqv on anonymous scalar references (2)";
   #?rakudo skip 'huh?'
@@ -146,7 +141,6 @@ plan 54;
     is Any eqv Any, Bool::True, 'Any eqv Any';
 }
 
-#?pugs skip "autothreaded?"
 {
     ok 'a' eqv any <a b c>, "eqv autothreads correctly";
 }

@@ -6,7 +6,6 @@ plan 48;
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
 # Following tests test whether the declaration succeeded.
-#?pugs todo 'feature'
 {
     constant foo = 42;
 
@@ -160,7 +159,6 @@ plan 48;
 }
 
 # Following tests test whether the constants are actually constant.
-#?pugs todo 'feature'
 {
     my $ok = 0;
 
@@ -175,7 +173,6 @@ plan 48;
 }
 
 #?rakudo skip 'binding'
-#?pugs todo 'feature'
 {
     my $ok;
 
@@ -189,7 +186,6 @@ plan 48;
     is $ok, 3, "a constant declared using 'constant' is actually constant (2)";
 }
 
-#?pugs todo 'feature'
 {
     my $ok = 0;
 
@@ -204,7 +200,6 @@ plan 48;
 }
 
 #?rakudo skip 'binding'
-#?pugs todo 'feature'
 {
     my $ok;
 
@@ -228,7 +223,6 @@ plan 48;
     constant timecheck = $foo;
     $ok++ if timecheck == 23;
 
-    #?pugs todo 'feature'
     #?niecza todo
     ok $ok, "the initializing values for constants are evaluated at compile-time";
 }

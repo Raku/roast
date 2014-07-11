@@ -43,7 +43,6 @@ sub showkv($x) {
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
 
-    #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 8, '.total gives sum of values';
     is $m.elems, 3, '.total gives sum of values';
@@ -277,7 +276,6 @@ sub showkv($x) {
     ok 2 < @a.grep(* eq 'a') < 75, '.roll(*)[^100] (1)';
     ok @a.grep(* eq 'a') + 2 < @a.grep(* eq 'b'), '.roll(*)[^100] (2)';
 
-    #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 3, '.roll should not change MixHash';
     is $m.elems, 2, '.roll should not change MixHash';
@@ -295,7 +293,6 @@ sub showkv($x) {
     is +@a, 100, '.roll(100) returns 100 items';
     ok @a.grep(* eq 'a') > 97, '.roll(100) (1)';
     ok @a.grep(* eq 'b') < 3, '.roll(100) (2)';
-    #?pugs   skip '.total NYI'
     #?niecza skip '.total NYI'
     is $m.total, 1, '.roll should not change MixHash';
     is $m.elems, 3, '.roll should not change MixHash';
@@ -310,7 +307,6 @@ sub showkv($x) {
 
 # L<S32::Containers/MixHash/grab>
 
-#?pugs   skip '.grab NYI'
 #?niecza skip '.grab NYI'
 {
     my $m = <a b b c c c>.MixHash;
@@ -320,7 +316,6 @@ sub showkv($x) {
 
 # L<S32::Containers/MixHash/grabpairs>
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $m = MixHash.new("a", "b", "b");
@@ -337,7 +332,6 @@ sub showkv($x) {
     is $m.elems, 0, '.grabpairs *should* change MixHash';
 }
 
-#?pugs   skip '.grabpairs NYI'
 #?niecza skip '.grabpairs NYI'
 {
     my $m = (a=>1.1,b=>2.2,c=>3.3,d=>4.4,e=>5.5,f=>6.6,g=>7.7,h=>8.8).MixHash;
@@ -433,7 +427,6 @@ sub showkv($x) {
        "Method .MixHash works on Parcel-2";
 }
 
-#?pugs   skip '.total/.minpairs/.maxpairs/.fmt NYI'
 #?niecza skip '.total/.minpairs/.maxpairs/.fmt NYI'
 {
     my $m1 = (a => 1.1, b => 2.2, c => 3.3, d => 4.4).MixHash;

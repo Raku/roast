@@ -3,7 +3,6 @@ use Test;
 
 plan 38;
 
-#?pugs   skip "is cached NYI"
 #?niecza skip "is cached NYI"
 {
     my @seen;
@@ -19,7 +18,6 @@ plan 38;
     is @seen, (9,8,7,6,5,4,3,2,1,0,10), 'did we call them all (3)';
 } #6
 
-#?pugs   skip "is cached NYI"
 #?niecza skip "is cached NYI"
 {
     my @seen;
@@ -45,7 +43,6 @@ plan 38;
     is @seen, <duh doh foo doh duh bar foo bar>, 'did we run (8)';
 } #16
 
-#?pugs   skip "is cached NYI"
 #?niecza skip "is cached NYI"
 {
     my @seen;
@@ -67,7 +64,6 @@ plan 38;
     is @seen, [<foo bar foo bar baz>], 'did we run (4)';
 } #8
 
-#?pugs   skip "is cached NYI"
 #?niecza skip "is cached NYI"
 {
     my @int;

@@ -19,14 +19,12 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
 
 {
     is(:10('01110') ,  0d1110, ":10('01110') is default decimal");
-    #?pugs 4 todo "unimpl"
     is(:10('0b1110'), 0b1110, ":10('0b1110') overrides default decimal");
     is(:10('0x20'),   0x20, ":10('0x20') overrides default decimal");
     is(:10('0o377'),  0o377, ":10('0o255') overrides default decimal");
     is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
 
     # RT #107756
-    #?pugs todo
     dies_ok { :10(42) }, ':10() really wants a string, not a number';
 }
 
@@ -87,7 +85,6 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 {
     is :16('0d10'),      0xd10, ':16("0d..") is hex, not decimal';
     is(:16('0fff'),      0xfff, ":16('0fff') defaults to hexadecimal");
-#?pugs 2 todo 'feature'
     is(:16('0x20'),      0x20, ":16('0x20') stays hexadecimal");
     is(:16('0o377'),    0o377, ":16('0o255') converts from octal");
 }
@@ -95,7 +92,6 @@ is(:16('0d37'),   0x0D37,  ":16('0d37') uses d as hex digit"     );
 # L<S02/Exponentials/"which will be interpreted as they would outside the string">
 # It seems odd that the numbers on the inside on the <> would be a mix of
 # bases. Maybe I've misread the paragraph -- brian
-#?pugs todo 'feature'
 {
     is_approx(:16<dead_beef> * 16**8, :16<dead_beef*16**8>,
         'Powers outside same as powers inside');
@@ -139,7 +135,6 @@ is(:8<200000>, 65536, 'got the correct int value from oct 200000');
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?pugs todo 'feature'
 #?rakudo todo "Some question of what this form should actually do"
 #?niecza todo ":radix() NYI"
 {
@@ -166,7 +161,6 @@ is(
 # L<S02/Conversion functions/"Think of these as setting the default radix">
 # setting the default radix
 
-#?pugs todo 'feature'
 {
     is(:2('0b1110'),  0d14, ':2<0b1110> stays binary');
     is(:2('0x20'),    0d32, ':2<0x20> converts from hexadecimal');
@@ -185,11 +179,9 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 # L<S02/Exponentials/"So we write those as">
 # these should be the same values as the previous tests
 {
-    #?pugs todo "todo"
     is( :2<1.1*2**10>,                   1536, 'Power of two in <> works');
     #?rakudo todo "Really?!"
     #?niecza skip "WTF?"
-    #?pugs skip "todo"
     is( 2«1.1*:2<10>**:2<10>»,    6, 'Powers of two in <<>> works');
 }
 
@@ -224,13 +216,11 @@ dies_ok { 2.foo  },    "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
-#?pugs 3 todo "todo"
 eval_dies_ok ':2<2>',   ':2<2> is illegal';
 eval_dies_ok ':10<3a>', ':10<3a> is illegal';
 eval_dies_ok ':0<0>', ':0<...> is illegal';
 
 for 2..36 {
-    #?pugs skip "todo"
     is EVAL(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
 }
 

@@ -56,14 +56,12 @@ plan 21;
     sub bar6 ($a, $b, $c) { "$a!$b!$c" }
     sub foo6 (|capture)  { bar6(|capture) }
 
-    #?pugs todo "feature"
     is foo6(1,2,3), "1!2!3",
         'capture creation with \\$ works (1)';
     dies_ok { foo6(1,2,3,4) },  # too many args
         'capture creation with \\$ works (2)';
     dies_ok { foo6(1,2) },      # too few args
         'capture creation with \\$ works (3)';
-    #?pugs 2 todo "feature"
     #?rakudo todo 'nom regression'
     is try { foo6(a => 1, b => 2, c => 3) }, "1!2!3",
         'capture creation with \\$ works (4)';
@@ -78,12 +76,10 @@ plan 21;
     sub foo7 (|args) { $capture = args }
 
     lives_ok { foo7(1,2,3,4) }, "captures are first-class objects (1)";
-    #?pugs todo "feature"
     ok $capture,               "captures are first-class objects (2)";
 
     my $old_capture = $capture;
     lives_ok { foo7(5,6,7,8) }, "captures are first-class objects (3)";
-    #?pugs 2 todo "feature"
     ok $capture,               "captures are first-class objects (4)";
     ok !($capture === $old_capture), "captures are first-class objects (5)";
 }

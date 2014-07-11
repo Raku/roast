@@ -13,7 +13,6 @@ Very basic class tests from L<S12/Classes>
 # L<S12/Classes>
 class Foo {}
 
-#?pugs todo
 is Foo.perl, 'Foo', 'Classname.perl produces the class name';
 
 my $foo = Foo.new();
@@ -98,7 +97,6 @@ eval_dies_ok 'my $x; $x ~~ NonExistingClassName',
 class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
-#?pugs todo
 dies_ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
 eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
 
@@ -131,14 +129,12 @@ eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
 
 # RT #76270
-#?pugs skip 'class'
 {
     my $x = class Named { };
     isa_ok $x, Named, 'named class declaration returns the class object';
 }
 
 # RT #72916
-#?pugs todo
 {
     #?niecza todo 'Exception: Unable to resolve method add_method in type ClassHOW'
     eval_lives_ok 'Rat.^add_method("lol", method ($what) { say "lol$what" }) ~~ Method',

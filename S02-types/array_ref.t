@@ -7,7 +7,6 @@ plan 45;
 # array_ref of strings
 
 my $array_ref1 = ("foo", "bar", "baz");
-#?pugs skip 'Parcel'
 isa_ok($array_ref1, Parcel);
 
 is(+$array_ref1, 3, 'the array_ref1 has 3 elements');

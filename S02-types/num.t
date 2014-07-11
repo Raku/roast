@@ -153,7 +153,6 @@ isa_ok(1 / 1, Rat);
 #L<S02/The C<Num> and C<Rat> Types/may be bound to an arbitrary>
 {
     my $a = "0d0101";
-    #?pugs todo
     isa_ok(+$a, Int);
     is(+$a, 101, "0d0101 numifies to 101");
 }

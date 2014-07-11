@@ -5,7 +5,6 @@ plan 114;
 
 # L<S02/Variables Containing Undefined Values>
 
-#?pugs   skip "is default NYI"
 #?niecza skip "is default NYI"
 # not specifically typed
 {
@@ -37,7 +36,6 @@ plan 114;
     ok $d.VAR.default === Nil, 'is the default set correctly for $d';
 } #19
 
-#?pugs   skip "Int is default NYI"
 #?niecza skip "Int is default NYI"
 # typed
 {
@@ -69,7 +67,6 @@ plan 114;
     ok $d.VAR.default === Nil, 'is the default set correctly for Int $d';
 } #19
 
-#?pugs   skip "is default NYI"
 #?niecza skip "is default NYI"
 # not specifically typed
 {
@@ -101,7 +98,6 @@ plan 114;
     ok @d.VAR.default === Nil, 'is the default set correctly for @d';
 } #19
 
-#?pugs   skip "Int is default NYI"
 #?niecza skip "Int is default NYI"
 # typed
 {
@@ -133,7 +129,6 @@ plan 114;
     ok @d.VAR.default === Nil, 'is the default set correctly for Int @d';
 } #19
 
-#?pugs   skip "is default NYI"
 #?niecza skip "is default NYI"
 # not specifically typed
 {
@@ -165,7 +160,6 @@ plan 114;
     ok %d.VAR.default === Nil, 'is the default set correctly for %d';
 } #19
 
-#?pugs   skip "Int is default NYI"
 #?niecza skip "Int is default NYI"
 # typed
 {

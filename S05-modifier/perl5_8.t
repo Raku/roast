@@ -69,23 +69,18 @@ is(("_I(round(xs * sz),1)" ~~ rx:P5/round\(((?>[^()]+))\)/ && $0), "xs * sz", 'r
 ok(("foo.bart" ~~ rx:P5/foo.bart/), 're_tests 1112  (1316)');
 ok(("abcd\ndxxx" ~~ rx:P5/(?m)^d[x][x][x]/), 're_tests 1114  (1318)');
 #?rakudo 18 skip 'expensive quantifier'
-#?pugs todo "pugs regression"
 ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/), 're_tests 1115  (1319)');
-#?pugs todo "pugs regression"
 ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/), 're_tests 1117  (1321)');
-#?pugs todo "pugs regression"
 ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/), 're_tests 1119  (1323)');
 ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+X/)), 're_tests 1121  (1325)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+XX/)), 're_tests 1123  (1327)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+X/)), 're_tests 1125  (1329)');
-#?pugs 3 todo 'bug'
 ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X]/), 're_tests 1127  (1331)');
 ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X][X]/), 're_tests 1129  (1333)');
 ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+[X]/), 're_tests 1131  (1335)');
 ok((not ("bbbbXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X]/)), 're_tests 1133  (1337)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.X(.+)+[X][X]/)), 're_tests 1135  (1339)');
 ok((not ("bbbbXXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.XX(.+)+[X]/)), 're_tests 1137  (1341)');
-#?pugs 3 todo 'bug'
 ok(("bbbbXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X]/), 're_tests 1139  (1343)');
 ok(("bbbbXcXXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X](.+)+[X][X]/), 're_tests 1141  (1345)');
 ok(("bbbbXXcXaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" ~~ rx:P5/.[X][X](.+)+[X]/), 're_tests 1143  (1347)');
@@ -97,7 +92,6 @@ ok(("xxxtt" ~~ rx:P5/tt+$/), 're_tests 1151  (1355)');
 is(("za-9z" ~~ rx:P5/([a-\d]+)/ && $0), "a-9", 're_tests 1153/1 (1357)');
 is(("a0-za" ~~ rx:P5/([\d-z]+)/ && $0), "0-z", 're_tests 1155/1 (1359)');
 is(("a0- z" ~~ rx:P5/([\d-\s]+)/ && $0), "0- ", 're_tests 1157/1 (1361)');
-#?pugs skip "PCRE hard parsefail"
 is(("za-9z" ~~ rx:P5/([a-[:digit:]]+)/ && $0), "a-9", 're_tests 1159/1 (1363)');
 is(("=0-z=" ~~ rx:P5/([[:digit:]-z]+)/ && $0), "0-z", 're_tests 1160/1 (1364)');
 is(("=0-z=" ~~ rx:P5/([[:digit:]-[:alpha:]]+)/ && $0), "0-z", 're_tests 1161/1 (1365)');

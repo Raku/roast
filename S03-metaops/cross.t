@@ -41,7 +41,6 @@ is ([+] 1, 2, 3 X** 2, 4), (1+1 + 4+16 + 9+81), '[+] and X** work';
 ok EVAL('<a b> X, <c d>'), 'cross metaoperator parses';
 
 # L<S03/Cross operators/"string concatenating form is">
-#?pugs todo 'feature'
 {
     my @result = <a b> X~ <1 2>;
     is @result, <a1 a2 b1 b2>,

@@ -17,9 +17,7 @@ Basic tests for the trim() builtin
 
 {
     my $foo = "foo  \n";
-    #?pugs emit #
     trim($foo);
-    #?pugs skip 'sub NYI'
     is($foo, "foo  \n", 'our variable was not yet trimmed');
     $foo .= trim;
     is($foo, 'foo', 'our variable is trimmed correctly');
@@ -71,9 +69,7 @@ Basic tests for the trim() builtin
 
 {
     my $foo = "   foo  \n";
-    #?pugs emit #
     trim-leading($foo);
-    #?pugs skip 'sub NYI'
     is($foo, "   foo  \n", 'trim-leading does not trim a variable in-place');
     $foo .= trim-leading;
     is($foo, "foo  \n", 'trim-leading works correctly');
@@ -111,9 +107,7 @@ Basic tests for the trim() builtin
 
 {
     my $foo = "   foo  \n";
-    #?pugs emit #
     trim-trailing($foo);
-    #?pugs skip 'sub NYI'
     is($foo, "   foo  \n", 'trim-trailing does not trim a variable in-place');
     $foo .= trim-trailing;
     is($foo, "   foo", 'trim-trailing works correctly');
@@ -145,7 +139,6 @@ Basic tests for the trim() builtin
     is($foo, "\n foo", 'our variable can be trimmed multiple times');
 }
 
-#?pugs todo
 {
     ok ' ab ' ~~ /.*/, 'regex sanity';
     is $/.trim, 'ab', 'Match.trim';

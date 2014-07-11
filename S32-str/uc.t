@@ -36,8 +36,8 @@ is(uc(lc('HELL..')), 'HELL..', "uc/lc test");
 # Unicode 5.1.0 SpecialCasing.txt has 00DF -> 0053 0053
 # nothing maps to 1E9E, the new "capital sharp s"
 # so I think this is right -rhr
+#
 #?niecza todo 'German language weirdness'
-#?pugs todo
 #?rakudo.moar todo 'case folding of German sharp S, RT #121377'
 is(uc("ß"), "SS", "uc() of non-ascii chars may result in two chars");
 
@@ -51,7 +51,6 @@ is ~(0.lc),         ~0, '.lc on Int';
 
 #?DOES 4
 #?rakudo skip 'but RoleName'
-#?pugs todo
 {
     role A {
         has $.thing = 3;

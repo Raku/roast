@@ -158,7 +158,6 @@ is(7 <  2.4, False, 'Int <  Rat');
 is(7 <= 2.4, False, 'Int <= Rat');
 is(7 >  2.4, True , 'Int >  Rat');
 is(7 >= 2.4, True , 'Int >= Rat');
-#?pugs skip 'Order enum'
 is(7 <=> 2.4, Order::More, 'Int <=> Rat');
 
 # Rat,Int comparisons
@@ -168,7 +167,6 @@ is(2.4 <  7, True , 'Rat <  Int');
 is(2.4 <= 7, True , 'Rat <= Int');
 is(2.4 >  7, False, 'Rat >  Int');
 is(2.4 >= 7, False, 'Rat >= Int');
-#?pugs skip 'Order enum'
 is(2.4 <=> 7, Order::Less, 'Rat <=> Int');
 
 done;

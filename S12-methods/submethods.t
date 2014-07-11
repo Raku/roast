@@ -83,7 +83,6 @@ Basic submethod tests. See L<S12/"Submethods">
 }
 
 #?rakudo skip 'roles and submethods'
-#?pugs skip 'does'
 #?DOES 4
 {
   my $was_in_b1_build = 0;

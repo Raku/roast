@@ -5,7 +5,6 @@ use Test;
 plan 25;
 
 # L<S09/Autovivification/In Perl 6 these read-only operations are indeed non-destructive:>
-#?pugs todo
 {
     my %h;
     my $b = %h<a><b>;
@@ -13,7 +12,6 @@ plan 25;
     ok $b === Any, 'and the return value is not defined';
 }
 
-#?pugs skip ':exists'
 {
     my %h;
     my $exists = %h<a><b>:exists;
@@ -22,7 +20,6 @@ plan 25;
 }
 
 # L<S09/Autovivification/But these bindings do autovivify:>
-#?pugs todo
 {
     my %h;
     bar(%h<a><b>);
@@ -32,10 +29,8 @@ plan 25;
 {
     my %h;
     my $b := %h<a><b>;
-    #?pugs todo
     #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'binding does not immediately autovivify';
-    #?pugs todo
     ok $b === Any, '... to an undefined value';
     $b = 42;
     is %h.keys.elems, 1, '.. but autovivifies after assignment';
@@ -43,7 +38,6 @@ plan 25;
     ok %h<a><b> =:= $b, 'check binding';
 }
 
-#?pugs todo
 {
     my %h;
     my $b = \(%h<a><b>);
@@ -53,7 +47,6 @@ plan 25;
 {
     my %h;
     foo(%h<a><b>);
-    #?pugs todo
     #?niecza todo "https://github.com/sorear/niecza/issues/176"
     is %h.keys.elems, 0, 'in rw arguments does not autovivify';
     foo(%h<a><b>,42);

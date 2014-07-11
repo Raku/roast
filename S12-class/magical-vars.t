@@ -59,7 +59,6 @@ class SimpleClass does Bar {}
 
   is( $package.gist, Bar.gist, '$?PACKAGE should be the role package name - it is not generic like $?CLASS');
 
-  #?pugs todo 'bug'
   ok $class ~~ ::SimpleClass, 'the thing returned by $?CLASS in our role smartmatches against our class';
   my $forty_two;
   lives_ok { my $obj = $class.new; $forty_two = $obj.dummy },
@@ -82,7 +81,6 @@ class SimpleClass does Bar {}
 }
 
 # Now the same with type vars
-#?pugs todo 'oo'
 {
   ok Foo.new.get_class_pvar === ::Foo,
     "::?CLASS in classes works";

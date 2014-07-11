@@ -22,13 +22,11 @@ plan 20;
     ok EVAL(q/foo(1);   /), 'call with one arg, has parens';
     ok EVAL(q/&foo.(1);  /), 'call with one arg, has dot and parens';
     ok EVAL(q/&foo\ .(1);/), 'call with one arg, has long dot and parens';
-    #?pugs todo 'unspecced'
     dies_ok { EVAL(q/foo'bar'; /) }, 'call with one arg, has no space and no parens';
 
     ok EVAL(q/foo 1, 2; /), 'call with two args, no parens';
     ok EVAL(q/foo(1, 2);/), 'call with two args, has parens';
 
-    #?pugs todo
     dies_ok { EVAL(q/foo:bar;  /) }, 'call with adverb after no space';
     ok EVAL(q/foo :bar; /), 'call with adverb after space';
 
@@ -43,7 +41,6 @@ plan 20;
     sub succ($x) { $x + 1 }
 
     is(EVAL(q/succ  (1+2) * 30;/),  91, "parens after space aren't call-parens");
-    #?pugs todo
     $_ = sub ($x) { $x - 1 };
     is (succ .(1+2) * 30), 61, 'parsed as method call on $_';
 }

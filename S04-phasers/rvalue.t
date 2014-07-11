@@ -21,7 +21,6 @@ plan 16;
     is $z, 'MOIN', 'can access built-in methods in BEGIN blocks';
 }
 
-#?pugs skip 'No such subroutine: "&BEGIN"'
 {
     my $x = BEGIN 8;
     is $x, 8, 'BEGIN statement prefix as expression';

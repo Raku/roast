@@ -2,7 +2,6 @@ use v6;
 use Test;
 plan 22;
 
-#?pugs todo
 {
     # P01 (*) Find the last box of a list.
     # 
@@ -19,7 +18,6 @@ plan 22;
     is my_last(<a b c d>), 'd', 'Find the last box of a list via func.';
 }
 
-#?pugs todo
 {
     # P02 (*) Find the last but one box of a list.
     # 
@@ -139,7 +137,6 @@ plan 22;
     is @compressed, <a b c a d e>, 'We should be able to compress lists';
 }
 
-#?pugs todo
 {
     multi compress2 () { () }
     multi compress2 ($a) { $a }
@@ -149,7 +146,6 @@ plan 22;
     is compress2(|@x), <a b c a d e>, '... even with multi subs';
 }
 
-#?pugs skip 'todo'
 {
     # P09 (**) Pack consecutive duplicates of list elements into sublists.
     # 
@@ -193,9 +189,9 @@ plan 22;
         'a a a a+b+c c+a a+d+e e e e',
         '... even using gather/take';
 }
+
 #?rakudo skip 'groupless gather/take'
 #?niecza skip 'Unable to resolve method reverse in class Parcel'
-#?pugs skip "Cannot 'shift' scalar"
 {    
     sub group2 (*@array is copy) {
         gather while @array {

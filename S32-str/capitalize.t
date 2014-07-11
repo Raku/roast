@@ -35,9 +35,7 @@ is wordcase("äöü abcä"), "Äöü Abcä", "wordcase() works on non-ASCII char
 
 #?rakudo 2 todo 'graphemes results wrong'
 #?niecza 2 todo 'charspec'
-#?pugs todo
 is wordcase("a\c[COMBINING DIAERESIS]üö abcä"), "Äöü Abcä", 'wordcase on string with grapheme precomposed';
-#?pugs todo
 is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
     "A\c[COMBINING DOT BELOW, COMBINING DOT ABOVE] Bc",
     "wordcase on string with grapheme without precomposed";
@@ -45,7 +43,6 @@ is wordcase("a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW] bc"),
 # rest of the tests are moved from uc.t
 is ~(0.wordcase), ~0, '.wordcase on Int';
 
-#?pugs todo
 {
     role A {
         has $.thing = 3;

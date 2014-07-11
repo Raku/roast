@@ -86,7 +86,6 @@ is ((1..10).minmax: { ($_-3) * ($_-5) }), 4..10,
   "method form of minmax taking an arity-1 comparison block works";
 
 # Error cases:
-#?pugs 2 todo 'bug'
 is 42.min, 42, ".min should work on scalars";
 is 42.max, 42, ".max should work on scalars";
 is (42,).min, 42, ".min should work on one-elem arrays";

@@ -41,7 +41,6 @@ plan 33;
     dies_ok { %s<a> = 1 }, "Can't assign wrongly typed value to typed hash element (of Int)";
 } #4
 
-#?pugs   skip "doesn't know about key constraints"
 #?niecza skip "doesn't know about key constraints"
 {
     my %h{Int};

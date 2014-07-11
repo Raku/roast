@@ -30,14 +30,12 @@ role cool {
 ok(::cool.HOW, "role definition worked");
 
 eval_lives_ok 'my $a is cool; 1', 'mixing in our role into a scalar via "is" worked';
-#?pugs 2 todo 'traits'
 is $was_in_any_sub, 1, 'trait_auxiliary:is was called on container';
 is EVAL('my $a is cool; $a.is_cool'), 42,  'our var "inherited" an attribute';
 
 my $b;
 class B is cool {}
 ok(::B.HOW, 'mixing in our role into a class via "is" worked');
-#?pugs todo
 is $was_in_class_sub, 1, 'trait_auxiliary:is was called on class';
 $b = B.new;
 ok($b, 'creating an instance worked');

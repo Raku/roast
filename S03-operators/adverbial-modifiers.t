@@ -107,22 +107,18 @@ sub fiddle(:$x,:$y){ violin($x) ~ violin($y) }
 
 #  $v = 'EVAL failed';
 #  EVAL '$v = fiddle :x("a") :y("b")()';
-#  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a") :y("b")()';
 
 #  $v = 'EVAL failed';
 #  EVAL '$v = fiddle :x("a") :y("b") ()';
-#  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a") :y("b") ()';
 
 #  $v = 'EVAL failed';
 #  EVAL '$v = fiddle :x("a"):y("b") ()';
-#  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a"):y("b") ()';
 
 #  $v = 'EVAL failed';
 #  EVAL '$v = fiddle :x("a"):y("b")()';
-#  #?pugs todo 'bug'
 #  is $v, "ab", 'fiddle :x("a"):y("b")()';
 
 #  $v = fiddle:x("a"):y("b") ();

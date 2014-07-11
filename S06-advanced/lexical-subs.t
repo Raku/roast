@@ -60,13 +60,11 @@ plan 11;
     package TestScope {
         sub f { };
     }
-    #?pugs todo
     dies_ok { TestScope::f }, 'subs without scoping modifiers are not entered in the namespace';
 }
 
 # RT #57788
 {
-    #?pugs todo
     eval_dies_ok 'sub a { }; sub a { }';
 }
 

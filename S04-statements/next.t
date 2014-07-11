@@ -54,7 +54,6 @@ plan 12;
     );
 }
 
-#?pugs skip 'next BLOCK'
 {
     my $tracker="err"; 
     $tracker = 0; DONE: for 1..2 { next DONE; $tracker++;};
@@ -73,7 +72,6 @@ plan 12;
     );
 }
 
-#?pugs skip 'next LOOP'
 {
     my $tracker="err"; 
     $tracker = 0; 

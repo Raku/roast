@@ -25,7 +25,6 @@ Testing named capture variables nested inside each other. This doesn't appear to
 
 #L<S05/Named scalar aliasing to subpatterns>
 
-#?pugs todo 'named captures'
 {
   my $not_really_a_mammal;
   my regex fishy2 { $<not_really_a_mammal> = (.*)shark };

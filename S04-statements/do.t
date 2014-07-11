@@ -18,11 +18,9 @@ eval_dies_ok 'my $i; do { $i++ } for 1..3;',
 eval_dies_ok 'my $i; do { $i++ } given $i;',
     "'do' can't take the 'given' modifier";
 
-#?pugs todo
 eval_lives_ok 'my $i; do { $i++ } unless $i;',
     "'do' can take the 'unless' modifier";
 
-#?pugs todo
 eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
     "'do' can take the 'if' modifier";
 
@@ -94,7 +92,6 @@ eval_lives_ok 'my $i = 1; do { $i++ } if $i;',
 }
 
 #?rakudo 3 skip "Undeclared name A"
-#?pugs 3 todo
 is EVAL('my $i; A: do { $i++; last A; $i-- }; $i'), 1,
     "'last' works with label";
 is EVAL('my $i; A: do { $i++; next A; $i-- }; $i'), 1,
@@ -152,7 +149,6 @@ is EVAL('my $i; A: do { $i++; redo A until $i == 5; $i-- }; $i'), 4,
     is $a, 3, "final `}' on a line reverted to `;'";
 }
 
-#?pugs todo
 lives_ok { my $a = do given 5 {} }, 'empty do block lives (RT 61034)';
 
 # vim: ft=perl6

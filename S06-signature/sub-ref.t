@@ -49,7 +49,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
 }
 
 # RT #63974
-#?pugs skip 'No compatible multi variant found: "$c"'
 {
     my $topic = 'topic unchanged';
     my @topic_array = <topic array unchanged>;
@@ -99,7 +98,6 @@ See L<S02/"Built-in Data Types"> for more information about Code, Routine, Sub, 
     our &foo_macro ::= macro ($x) { "1000 + $x" };
     isa_ok(&foo_macro, Code);
     isa_ok(&foo_macro, Routine);
-    #?pugs todo 'macros'
     isa_ok(&foo_macro, Macro);
 
     is foo_macro(3), 1003, "anonymous macro worked";

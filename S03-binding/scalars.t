@@ -90,7 +90,6 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 
 
 # Binding subroutine parameters
-# XXX! When executed in interactive Pugs, the following test works!
 {
   my $a;
   my $b = sub ($arg) { $a := $arg };
@@ -131,7 +130,6 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 # := actually takes subroutine parameter list
 #?rakudo skip 'List binding'
 #?niecza skip 'list binding'
-#?pugs skip 'Cannot bind this as lhs'
 {
   my $a;
   :(:$a) := (:a<foo>);
@@ -143,7 +141,6 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 
 # RT #77462
 # binding how has the same precedence as list assignment
-#?pugs todo
 {
     my $x := 1, 2;
     is $x.join, '12', 'binding has same precdence as list assignment'

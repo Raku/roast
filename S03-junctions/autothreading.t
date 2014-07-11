@@ -227,8 +227,6 @@ plan 89;
     }
 }
 
-
-#?pugs skip 'autothreading over array indexing'
 {
     my Mu $junc = 0|1|2;
     my @a = (0,1,2);

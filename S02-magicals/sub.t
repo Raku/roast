@@ -25,7 +25,6 @@ sub postfix:<!!!> (Int $n) { $n < 2 ?? 1 !! $n * &?ROUTINE($n - 1) }
 my $result3 = 3!!!;
 is($result3, 6, 'the &?ROUTINE magical works correctly in overloaded operators' );
 
-#?pugs skip 'ROUTINE'
 {
     my $variable;
     my regex foo { a { $variable = &?ROUTINE; } }

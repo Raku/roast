@@ -24,7 +24,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
     "comb on string with grapheme non-precomposed");
 
 
-#?pugs skip "todo: Str.comb"
 {
     my Str $hair = "Th3r3 4r3 s0m3 numb3rs 1n th1s str1ng";
     is $hair.comb(/\d+/), <3 3 4 3 0 3 3 1 1 1>, 'no limit returns all matches';
@@ -49,7 +48,6 @@ is( "a\c[COMBINING DOT ABOVE, COMBINING DOT BELOW]b".comb,
         'match for any *a* words';
 }
 
-#?pugs todo 'feature'
 is "a ab bc ad ba".comb(/\S*a\S*/, 2), <a ab>, 'matcher and limit';
 
 is "forty-two".comb().join('|'), 'f|o|r|t|y|-|t|w|o', q{Str.comb(/./)};
@@ -58,7 +56,6 @@ ok("forty-two".comb() ~~ Positional, '.comb() returns something Positional' );
 
 # comb a list
 
-#?pugs todo 'feature'
 #?rakudo skip 'cannot call match, no signature matches'
 #?niecza skip ':Perl5'
 is (<a ab>, <bc ad ba>).comb(m:Perl5/\S*a\S*/), <a ab ad ba>,

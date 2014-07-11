@@ -8,20 +8,14 @@ plan 129;
 # L<S02/Immutable types/A pair of Ordered endpoints>
 
 my $r = 1..5;
-#?pugs 2 skip 'Range'
 isa_ok $r, Range, 'Type';
 is $r.WHAT.gist, Range.gist, 'Type';
-#?pugs todo
 is $r.perl, '1..5', 'canonical representation';
 
 # XXX unspecced: exact value of Range.perl
-#?pugs todo
 is (1..5).perl, '1..5', ".perl ..";
-#?pugs todo
 is (1^..5).perl, '1^..5', ".perl ^..";
-#?pugs todo
 is (1..^5).perl, '1..^5', ".perl ..^";
-#?pugs todo
 is (1^..^5).perl, '1^..^5', ".perl ^..^";
 
 my @r = $r;
@@ -30,19 +24,15 @@ is @r, [1, 2, 3, 4, 5], 'got the right array';
 # Range of Str
 
 $r = 'a'..'c';
-#?pugs skip 'Range'
 isa_ok $r, Range;
 # XXX unspecced: exact value of Range.perl
-#?pugs todo
 is $r.perl, '"a".."c"', 'canonical representation';
 @r = $r;
 is @r, [< a b c >], 'got the right array';
 
 # Stationary ranges
-#?pugs todo
 is (1..1).perl, '1..1', "stationary num .perl ..";
 is (1..1), [1,], 'got the right array';
-#?pugs todo
 is ('a'..'a').perl, '"a".."a"', "stationary str .perl ..";
 is ('a'..'a'), [< a >], 'got the right array';
 
@@ -59,7 +49,6 @@ is ('a'..'a'), [< a >], 'got the right array';
 # ACCEPTS and equals tests
 {
     my $r = 1..5;
-    #?pugs 2 skip 'ACCEPTS'
     ok(($r).ACCEPTS($r), 'accepts self');
     ok(($r).ACCEPTS(1..5), 'accepts same');
     ok($r ~~ $r, 'accepts self');
@@ -72,18 +61,13 @@ is ('a'..'a'), [< a >], 'got the right array';
 
 
 # Range in comparisons
-#?pugs skip 'ACCEPTS'
 ok((1..5).ACCEPTS(3), 'int in range');
-#?pugs todo
 ok(3 ~~ 1..5, 'int in range');
 ok(3 !~~ 6..8, 'int not in range');
 
-#?pugs skip 'ACCEPTS'
 ok(('a'..'z').ACCEPTS('x'), 'str in range');
-#?pugs todo
 ok('x' ~~ 'a'..'z', 'str in range');
 ok('x' !~~ 'a'..'c', 'str not in range');
-#?pugs 2 skip 'ACCEPTS'
 ok(('aa'..'zz').ACCEPTS('ax'), 'str in range');
 ok(('a'..'zz').ACCEPTS('ax'), 'str in range');
 
@@ -100,11 +84,9 @@ is(+(1.2..4), 3, 'numification');
 is(+(1..^3.3), 3, 'numification');
 is(+(2.3..3.1), 1, 'numification');
 #?niecza skip 'Attempted to access slot $!min of type object for Range'
-#?pugs skip 'Range'
 is(+Range, 0, 'type numification');
 
 # immutability
-#?pugs todo
 {
     my $r = 1..5;
 
@@ -120,25 +102,20 @@ is(+Range, 0, 'type numification');
 # simple range
 {
     my $r = 1 .. 5;
-    #?pugs 2 todo
     is($r.min, 1, 'range.min');
     is($r.max, 5, 'range.max');
-    #?pugs skip '.bounds'
     is($r.bounds, (1,5), 'range.bounds');
 }
 
 # uneven ranges
 {
     my $r = 1 .. 4.5;
-    #?pugs 2 todo
     is($r.min, 1,   'range.min');
     is($r.max, 4.5, 'range.max');
-    #?pugs skip '.bounds'
     is($r.bounds, (1, 4.5), 'range.bounds');
 }
 
 # infinite ranges
-#?pugs skip 'hangs'
 {
     my $inf = -Inf..Inf;
 
@@ -150,7 +127,6 @@ is(+Range, 0, 'type numification');
 
 # infinite ranges using Whatever
 #?niecza skip 'Undeclared name: "Failure"'
-#?pugs skip 'hangs'
 {
     my $inf = *..*;
     ok($inf ~~ Failure, "*..* is illegal");
@@ -171,12 +147,10 @@ is(+Range, 0, 'type numification');
 }
 
 {
-    #?pugs todo
     is((1..8)[*-1], 8, 'postcircumfix:<[ ]> on range works');
     is((1..8)[1,3], [2,4], 'postcircumfix:<[ ]> on range works');
 }
 
-#?pugs skip "pick *"
 {
     my @b = pick(*, 1..100);
     is @b.elems, 100, "pick(*, 1..100) returns the correct number of elements";
@@ -204,7 +178,6 @@ is(+Range, 0, 'type numification');
     is pick("25", 1..100).elems, 25, "pick works Str arguments";
 }
 
-#?pugs skip "pick *"
 {
     my @b = pick(*, 'b' .. 'y');
     is @b.elems, 24, "pick(*, 'b' .. 'y') returns the correct number of elements";
@@ -232,7 +205,6 @@ is(+Range, 0, 'type numification');
     is pick("10", 'b' .. 'y').elems, 10, "pick works Str arguments";
 }
 
-#?pugs skip "roll"
 {
     my @b = roll(100, 1..100);
     is @b.elems, 100, "roll(100, 1..100) returns the correct number of elements";
@@ -259,7 +231,6 @@ is(+Range, 0, 'type numification');
     is roll("25", 1..100).elems, 25, "roll works Str arguments";
 }
 
-#?pugs skip "roll"
 {
     my @b = roll(100, 'b' .. 'y');
     is @b.elems, 100, "roll(100, 'b' .. 'y') returns the correct number of elements";
@@ -286,7 +257,6 @@ is(+Range, 0, 'type numification');
     is roll("10", 'b' .. 'y').elems, 10, "roll works Str arguments";
 }
 
-#?pugs skip 'Cannot cast from VList to VCode'
 is join(':',grep 1..3, 0..5), '1:2:3', "ranges itemize or flatten lazily";
 
 lives_ok({'A'..'a'}, "A..a range completes");
