@@ -181,16 +181,6 @@ class PairTest {
     is $h.Str, ~{a => 5}, 'delegation of .Str and .push to hash';
 }
 
-# This test cannot work; autoviv requires Hash-like methods in
-# Any, which means that the 'handles Hash' fallback never occurs.
-#{
-#    class TypePseudoHash { has %!data handles Hash }
-#    my $h = TypePseudoHash.new;
-#    $h<a> = 'c';
-#    $h<b> = 'd';
-#    is $h<a b>.join('|'), 'c|d', 'can do handles + type object (1)';
-#}
-
 {
     role OtherRole {
         method c() { 3 }
