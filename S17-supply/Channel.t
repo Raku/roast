@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 11;
+plan 12;
 
 dies_ok { Supply.Channel }, 'can not be called as a class method';
 
@@ -23,3 +23,13 @@ for ThreadPoolScheduler.new, CurrentThreadScheduler -> $*SCHEDULER {
         ok $c.closed, 'doneing closes the Channel';
     }
 }
+
+my $s     = Supply.new;
+my $c     = $s.Channel;
+my $done  = 0;
+my $times = 10;
+
+my $promise = start { while $done < $times { $c.receive; $done++ } };
+$s.more($_) for ^$times;
+await $promise;
+is $done, $times, 'did we receive all?';
