@@ -62,7 +62,7 @@ is_run 'use v6; try {warn("OH NOEZ") }; say "alive"',
     },
     'try does not surpress warnings';
 
-#?rakudo todo 'quietly'
+#?rakudo todo 'quietly NYI'
 #?niecza todo 'quietly NYI'
 is_run 'use v6; quietly {warn("OH NOEZ") }; say "alive"',
     {
