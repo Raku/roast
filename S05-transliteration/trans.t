@@ -211,9 +211,9 @@ is("&nbsp;&lt;&gt;&amp;".trans(:c, :s, (['&nbsp;', '&gt;', '&amp;'] =>
     );
 }
 
-#?rakudo skip 'tr///, feed operator NYI'
 #?niecza skip 'Action method quote:tr NYI'
 {
+    #?rakudo skip 'feed operator NYI'
     is(EVAL('"abc".trans(<== "a" => "A")'), "Abc",
         "you're allowed to leave off the (...) named arg parens when you use <==");
 
