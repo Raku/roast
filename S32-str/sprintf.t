@@ -193,7 +193,7 @@ is sprintf('%g', 2.718281828459), sprintf('%.6g', 2.718281828459), '%g defaults 
 is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults to .6';
 
 # I don't know about the wisdom of these, but this is how Perl 5 handles it
-#?rakudo 10 skip "Issues with Inf"
+#?rakudo 10 todo "Issues with Inf"
 is sprintf('%e', Inf), "inf", 'Inf properly handled %e';
 is sprintf('%E', Inf), "INF", 'Inf properly handled %E';
 is sprintf('%f', Inf), "inf", 'Inf properly handled %f';
@@ -207,7 +207,6 @@ is sprintf('%G', -Inf), "-INF", '-Inf properly handled %G';
 
 # L<S32::Str/"Str"/"The special directive, %n does not work in Perl 6">
 dies_ok(sub {my $x = sprintf('%n', 1234)}, '%n dies (Perl 5 compatibility)');   #OK not used
-#?rakudo skip "%p doesn't yet throw exception - but should it, or just Failure?"
 dies_ok(sub {my $x = sprintf('%p', 1234)}, '%p dies (Perl 5 compatibility)');   #OK not used
 
 is sprintf('%s', NaN),              NaN,    'sprintf %s handles NaN';
