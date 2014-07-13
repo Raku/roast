@@ -122,7 +122,6 @@ plan 38;
   sub baz { $a++ }
 }
 
-#?rakudo skip 'nom regression'
 #?niecza skip 'Undeclared routine grtz'
 {
   {
@@ -130,9 +129,9 @@ plan 38;
     our sub grtz { $a++ }
   }
 
-  is grtz(), 3, "get real hidden var using a sub (1)";
-  is grtz(), 4, "get real hidden var using a sub (1)";
-  is grtz(), 5, "get real hidden var using a sub (1)";
+  is &OUR::grtz(), 3, "get real hidden var using a sub (1)";
+  is &OUR::grtz(), 4, "get real hidden var using a sub (1)";
+  is &OUR::grtz(), 5, "get real hidden var using a sub (1)";
 }
 
 {
