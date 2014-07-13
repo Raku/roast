@@ -521,8 +521,7 @@ TEXT
 #?niecza skip 'is DEPRECATED NYI'
 #?rakudo.jvm skip 'tracebacks in deprecations'
 {
-    my %h;
-    $line = $?LINE; %h = { a => 1 };
+    my %h; $line = $?LINE; %h = { a => 1 };
     %h = { b => 2 };
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'deprecation %h = itemized hash';
 Saw 1 call to deprecated code during execution.
