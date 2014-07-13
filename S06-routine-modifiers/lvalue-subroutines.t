@@ -77,16 +77,12 @@ sub checklastval ($passwd) is rw {
         );
 };
 
-#?rakudo skip 'hangs, probably due to [RT #114134]'
 dies_ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
 
 # Above test may well die for the wrong reason, if the Proxy stuff didn't
 # parse OK, it will complain that it couldn't find the desired subroutine
-#?rakudo skip 'maximum recursion depth exceeded'
 is((try { checklastval("fish") = 12 }), 12, 'proxy lvalue subroutine STORE works');
-#?rakudo emit #
 my $resultval = checklastval("fish");
-#?rakudo skip 'maximum recursion depth exceeded'
 is($resultval, 12, 'proxy lvalue subroutine FETCH works');
 
 my $realvar = "foo";
