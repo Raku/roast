@@ -4,7 +4,6 @@ use Test;
 plan 60;
 
 # initializations
-chdir 't/spec/S22-package-format';
 my $cwd := $*CWD;
 my $nanoonanoo := '
 use v6;
@@ -13,10 +12,11 @@ class NanooNanoo { }
 my $module := 'NanooNanoo';
 my $srcext := 'pm';
 my $src    := "$module.$srcext";
-my $srcdir := 'local-file-src';  
+my $base   := 't/spec/S22-package-format';
+my $srcdir := "$base/local-file-src";  
 my $srcsrc := "$srcdir/$src";
 my $cmpext := $*VM.precomp-ext;
-my $cmpdir := 'local-file-cmp';
+my $cmpdir := "$base/local-file-cmp";
 my $cmpsrc := "$cmpdir/$src";
 my $cmpcmp := "$cmpdir/$module.$cmpext";
 
