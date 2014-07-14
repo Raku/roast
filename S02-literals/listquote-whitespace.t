@@ -29,6 +29,7 @@ contain whitespace.
 
 C<\xA0> is specifically an I<nonbreaking> whitespace
 character and thus should B<not> break the list.
+(RT #122285)
 
 =end kwid
 
@@ -53,10 +54,10 @@ for @nonseparators -> $sep {
 
   my $vis = sprintf "%02x", ord $sep;
   #?rakudo emit if $sep eq "\xa0" {
-  #?rakudo emit      todo('\xa0 should not be a separator for list quotes');
+  #?rakudo emit      todo('\xa0 should not be a separator for list quotes: RT #122285');
   #?rakudo emit };
   #?niecza emit if $sep eq "\xa0" {
-  #?niecza emit      todo('\xa0 should not be a separator for list quotes');
+  #?niecza emit      todo('\xa0 should not be a separator for list quotes: RT #122285');
   #?niecza emit };
   is( @res, [@list.join($sep)], "'\\x$vis' does not split in a whitespace quoted list")
 };
