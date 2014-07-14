@@ -19,7 +19,6 @@ plan 38;
 
 # L<S02/Names/The current lexical symbol table is now accessible>
 
-# XXX -- dunno why test test fails, but the next outer test works. --iblech
 { my $a = 1; {
    my $a=2; {
       my $a=3;
