@@ -188,6 +188,7 @@ ok($in8.close, 'file closed okay (in8)');
 {
     my $fh10 = open($filename, :rw);  # was "<+" ? 
     isa_ok($fh10, IO::Handle);
+    $fh10.close;
     #ok($fh10.close, 'file closed okay (10)');
 }
 
