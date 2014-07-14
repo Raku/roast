@@ -193,15 +193,21 @@ is sprintf('%g', 2.718281828459), sprintf('%.6g', 2.718281828459), '%g defaults 
 is sprintf('%G', 2.718281828459), sprintf('%.6G', 2.718281828459), '%G defaults to .6';
 
 # I don't know about the wisdom of these, but this is how Perl 5 handles it
-#?rakudo 10 todo "Issues with Inf"
+#?rakudo.moar 10 todo "Issues with Inf: RT #116280"
+#?rakudo.jvm  10 skip "Issues with Inf: RT #116280"
+#?rakudo.parrot 2 todo "Issues with Inf: RT #116280"
 is sprintf('%e', Inf), "inf", 'Inf properly handled %e';
 is sprintf('%E', Inf), "INF", 'Inf properly handled %E';
+#?rakudo.parrot skip "Issues with Inf: RT #116280"
 is sprintf('%f', Inf), "inf", 'Inf properly handled %f';
+#?rakudo.parrot 4 todo "Issues with Inf: RT #116280"
 is sprintf('%g', Inf), "inf", 'Inf properly handled %g';
 is sprintf('%G', Inf), "INF", 'Inf properly handled %G';
 is sprintf('%e', -Inf), "-inf", '-Inf properly handled %e';
 is sprintf('%E', -Inf), "-INF", '-Inf properly handled %E';
+#?rakudo.parrot skip "Issues with Inf: RT #116280"
 is sprintf('%f', -Inf), "-inf", '-Inf properly handled %f';
+#?rakudo.parrot 2 todo "Issues with Inf: RT #116280"
 is sprintf('%g', -Inf), "-inf", '-Inf properly handled %g';
 is sprintf('%G', -Inf), "-INF", '-Inf properly handled %G';
 
@@ -226,7 +232,7 @@ is map({chars sprintf "[%18s]\n", "ಠ" x $_ }, 0..6),         [21, 21, 21, 21, 
 is Date.new(-13_000_000_000, 1, 1),                          '-13000000000-01-01',                'RT #114760';
 
 # RT #116280
-#?rakudo.jvm skip "java.lang.NumberFormatException"
+#?rakudo.jvm skip "java.lang.NumberFormatException: RT#116280"
 #?rakudo.moar todo 'RT #116280'
 {
     #?rakudo.parrot todo 'sprintf prints numbers before NaN'
