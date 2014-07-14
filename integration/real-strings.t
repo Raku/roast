@@ -44,7 +44,7 @@ is <h e l o>.join.trans, 'helo', 'join returns P6 strings (RT 76564, RT 71088)';
 is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 71088)';
 
 
-# http://rt.perl.org/rt3/Ticket/Display.html?id=66596
+# RT #66596
 # .subst within a multi sub didn't work
 {
     multi substtest (Str $d) {

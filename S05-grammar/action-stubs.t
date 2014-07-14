@@ -53,7 +53,7 @@ is $action.calls, 'ab', '... and in the right order';
         method b($/) {
             # the given/when is pretty pointless, but rakudo
             # used to segfault on it, so test it here
-            # http://rt.perl.org/rt3/Ticket/Display.html?id=64208
+            # RT #64208
             given 2 {
                 when * {
                     make $/ x 3;

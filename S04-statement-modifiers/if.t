@@ -67,8 +67,7 @@ plan 11;
 }
 
 # return value of false 'if' should be Nil
-# see http://rt.perl.org/rt3/Ticket/Display.html?id=66544
-
+# RT #66544
 {
     is (42 if 0), Nil, '"$something if 0" is Nil';
 }

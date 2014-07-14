@@ -6,7 +6,7 @@ plan 5;
 # TODO: smart match against a grammar to get a Match object 
 # isn't specced and will likely change; see
 #
-# http://rt.perl.org/rt3/Public/Bug/Display.html?id=58676
+# RT #58676
 #
 # http://irclog.perlgeek.de/parrot/2008-05-31#i_322527
 

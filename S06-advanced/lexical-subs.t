@@ -46,7 +46,7 @@ plan 11;
     }
 }
 
-# used to be http://rt.perl.org/rt3/Ticket/Display.html?id=65498
+# RT #65498
 {
     sub a { 'outer' };
     {

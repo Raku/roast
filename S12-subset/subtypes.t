@@ -101,7 +101,7 @@ Tests subtypes, specifically in the context of multimethod dispatch.
 }
 
 # Rakudo had a bug where 'where /regex/' failed
-# http://rt.perl.org/rt3/Ticket/Display.html?id=60976
+# RT #60976
 #?DOES 2
 {
     subset HasA of Str where /a/;

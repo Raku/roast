@@ -167,7 +167,7 @@ plan 51;
 # L<S02/Single-line Comments/"single-line comments">
 #?niecza todo
 {
-    # ticket http://rt.perl.org/rt3/Ticket/Display.html?id=70752
+    # RT #70752
     eval_lives_ok "#=======\n#=======\nuse v6;", "pragma use after single line comments";
 }
 

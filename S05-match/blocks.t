@@ -7,13 +7,13 @@ plan 22;
 
 Rakudo had a bug which caused failures when a regex match happened inside the
 body of a C<while> loop.
-See L<See http://rt.perl.org/rt3/Ticket/Display.html?id=58306>.
 
 So now we test that you can use both a regex and its result object in any
 kind of block, and in the condition, if any. 
 
 =end description
 
+# RT #58306
 if 1 {
     ok 'a' ~~ /./, 'Can match in an if block';
     is ~$/, 'a', '... and can use the match var';

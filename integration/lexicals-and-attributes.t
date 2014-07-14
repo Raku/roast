@@ -5,7 +5,7 @@ plan 8;
 
 # this was an issue with rakudo that some some assignment
 # to attributes worked more like binding:
-# http://rt.perl.org/rt3//Public/Bug/Display.html?id=58818
+# RT #58818
 
 class Foo {
     has $.a is rw;

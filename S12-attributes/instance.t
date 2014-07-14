@@ -564,7 +564,7 @@ is Foo7e.new.attr, 42, "default attribute value (1)";
     is InitializationThunk.new.bar, 5, 'a lexical is not tied to a thunk';
 }
 
-# http://rt.perl.org/rt3/Ticket/Display.html?id=69202
+# RT #69202
 {
     class TestMethodAll {
         has $.a;
