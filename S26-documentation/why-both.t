@@ -38,14 +38,14 @@ is &panther.WHY.content, "pink\npanther";
 #| a sheep
 class Sheep {
     #| usually white
-    has $.wool;
+    has $.wool; #= not very dirty
 
     #| not too scary
     method roar { 'roar!' }
 }
 
 is Sheep.WHY.content, 'a sheep';
-is Sheep.^attributes.grep({ .name eq '$!wool' })[0].WHY, 'usually white';
+is Sheep.^attributes.grep({ .name eq '$!wool' })[0].WHY, "usually white\nnot very dirty";
 is Sheep.^find_method('roar').WHY.content, 'not too scary';
 
 #| trailing space here  
