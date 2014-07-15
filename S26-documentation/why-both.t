@@ -45,8 +45,7 @@ class Sheep {
 }
 
 is Sheep.WHY.content, 'a sheep';
-skip 'segfault', 1;
-#is Sheep.^attributes.grep({ .name eq '$!wool' }).WHY, 'usually white';
+is Sheep.^attributes.grep({ .name eq '$!wool' })[0].WHY, 'usually white';
 is Sheep.^find_method('roar').WHY.content, 'not too scary';
 
 #| trailing space here  
