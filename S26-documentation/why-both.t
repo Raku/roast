@@ -22,7 +22,7 @@ module foo {
     }
 }
 
-is foo.WHY.content,           "a module\nmore module stuff";
+is foo.WHY.content,           "a module\nmoar module stuff";
 is foo::bar.WHY.content,      "a package\nmore package stuff";
 is foo::bar::baz.WHY.content, "and a class\nmore class stuff";
 
