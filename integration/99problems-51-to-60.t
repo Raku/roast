@@ -264,8 +264,8 @@ plan 37;
     my @results = hbal-tree(3);
     is +@results, 15, 'Found 15 height balanced trees of height 3';
     for ^15  {
+        #?rakudo.moar skip 'segfaults after a few iters: RT #122297'
         ok is-hbal(@results[$_]), "tree {$_+1} is really balanced";
-
     }
 }
 
