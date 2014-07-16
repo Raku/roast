@@ -14,10 +14,10 @@ plan 5;
 
 is $=pod[0].content[0].content, 'Some pod content', '$=pod';
 
-#= it's a sheep! really!
+#| it's a sheep! really!
 class Sheep {
 
-    #= produces a funny sound
+    #| produces a funny sound
     method bark {
 	say "Actually, I don't think sheeps bark"
     }
@@ -41,10 +41,10 @@ my $main = q:to"END";
 
     =end pod
 
-    #= it's a sheep! really!
+    #| it's a sheep! really!
     class Sheep {
         
-        #= produces a funny sound
+        #| produces a funny sound
         method bark {
             say "Actually, I don't think sheeps bark"
         }
