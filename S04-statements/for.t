@@ -4,7 +4,7 @@ use MONKEY_TYPING;
 
 use Test;
 
-plan 80;
+plan 81;
 
 =begin description
 
@@ -451,6 +451,12 @@ eval_dies_ok('for(0..5) { }','keyword needs at least one whitespace after it');
     last if $_ == 6;
   }
   is $c, 6, 'infinte for loop ends in time using last';
+}
+
+#L<S04/Loop statements/"list comprehensions">
+{
+    my @odd-squares = ($_ * $_ if $_ % 2 for 0..10);
+    is @odd-squares.join(' '), '1 9 25 49 81', 'list comprehension';
 }
 
 # RT #62478
