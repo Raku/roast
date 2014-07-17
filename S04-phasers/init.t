@@ -6,6 +6,7 @@ plan 11;
 
 # L<S04/"Phasers"/INIT "at run time" ASAP>
 # INIT {...} blocks in "void" context
+#?rakudo.parrot todo "RT #122311"
 {
     my $str;
     is $str, "begin1 begin2 init ", "init blocks run after begin blocks";
@@ -15,6 +16,7 @@ plan 11;
     BEGIN { $str ~= "begin2 "; }
 }
 
+#?rakudo.parrot todo "RT #122311"
 {
     my $str;
     is $str, "check2 check1 init ", "init blocks run after check blocks";
@@ -24,6 +26,7 @@ plan 11;
     CHECK { $str ~= "check2 "; }
 }
 
+#?rakudo.parrot todo "RT #122311"
 {
     my $str;
     is $str, "begin init1 init2 ", "init blocks run in forward order";
@@ -43,6 +46,7 @@ plan 11;
     is $handle(), 'I', 'our INIT {...} block returned the correct var (1)';
     #?niecza todo "no value"
     is $handle(), 'I', 'our INIT {...} block returned the correct var (2)';
+    #?rakudo.parrot todo "RT #122311"
     is $str, 'I', 'our rvalue INIT {...} block was executed exactly once';
 }
 
@@ -65,6 +69,7 @@ my $str ~= 'o';  # Note that this is different from  "my $str = 'o';".
 is $str, 'io', 'INIT {} always runs before the mainline code runs';
 
 # L<S04/Phasers/INIT "runs once for all copies of" "cloned closure">
+#?rakudo.parrot todo "RT #122311"
 {
 	my $var;
 	for <first second> {
