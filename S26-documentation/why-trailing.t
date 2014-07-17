@@ -1,5 +1,5 @@
 use Test;
-plan 82;
+plan 83;
 
 class Simple {
 #= simple case
@@ -165,3 +165,6 @@ is $param.WHY, 'first param', 'parameter comment - same line, but after comma';
 ok $param.WHY.WHEREFORE === $param, 'param WHEREFORE matches';
 is $param.WHY.trailing, 'first param', 'parameter comment - same line, but after comma';
 ok !$param.WHY.leading.defined;
+
+$param = &so-many-params.signature.params[1];
+ok !$param.WHY.defined, 'the second parameter has no comments' or diag($param.WHY.content);

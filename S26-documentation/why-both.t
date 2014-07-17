@@ -1,5 +1,5 @@
 use Test;
-plan 53;
+plan 54;
 
 #| simple case
 class Simple {
@@ -122,3 +122,6 @@ is $param.WHY, "next param\nfirst param";
 ok $param.WHY.WHEREFORE === $param, 'param WHEREFORE matches';
 is $param.WHY.leading,  "next param";
 is $param.WHY.trailing, "first param";
+
+$param = &so-many-params.signature.params[1];
+ok !$param.WHY.defined, 'the second parameter has no comments' or diag($param.WHY.content);
