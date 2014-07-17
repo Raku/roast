@@ -1,5 +1,5 @@
 use Test;
-plan 49;
+plan 53;
 
 #| simple case
 class Simple {
@@ -55,23 +55,30 @@ is &panther.WHY.trailing, "panther";
 
 #| a sheep
 class Sheep {
+#= or is it?
     #| usually white
     has $.wool; #= not very dirty
 
     #| not too scary
-    method roar { 'roar!' }
+    method roar { 'roar!' } #= ...unless you fear sheep!
 }
 
-is Sheep.WHY.content, 'a sheep';
+is Sheep.WHY.content, "a sheep\nor is it?";
 ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
+is Sheep.WHY.leading, "a sheep";
+is Sheep.WHY.trailing, "or is it?";
+
 my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
 is $wool-attr.WHY, "usually white\nnot very dirty";
 ok $wool-attr.WHY.WHEREFORE === $wool-attr, 'attr WHEREFORE matches';
 is $wool-attr.WHY.leading, "usually white";
 is $wool-attr.WHY.trailing, "not very dirty";
+
 my $roar-method = Sheep.^find_method('roar');
-is $roar-method.WHY.content, 'not too scary';
+is $roar-method.WHY.content, "not too scary\n...unless you fear sheep!";
 ok $roar-method.WHY.WHEREFORE === $roar-method, 'method WHEREFORE matches';
+is $roar-method.WHY.leading,  "not too scary";
+is $roar-method.WHY.trailing, "...unless you fear sheep!";
 
 #| trailing space here  
 sub third {}
