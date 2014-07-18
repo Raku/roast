@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 59;
+plan 60;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -251,5 +251,12 @@ eval_dies_ok q[
     ok $p === Our74592, 'return value of "Our" package declaration';
 }
 
+# RT #121253
+{
+    use lib 't/spec/packages';
+    use Bar;
+    use Baz;
+    is Foo.foo, 'foo', 'can use two packages that both use the same third package'
+}
 
 # vim: ft=perl6
