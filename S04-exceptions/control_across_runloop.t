@@ -8,6 +8,7 @@ use Test;
 
 plan 1;
 
+#?rakudo.parrot skip 'RT #122325 - assignment to $x fails, expected Any but got Mu'
 {
     sub foo($x = last) { $x }
 
