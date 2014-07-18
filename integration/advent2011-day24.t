@@ -40,10 +40,10 @@ class Present {
  
     method look() {
         if $.iswrapped {
-            pass "It's wrapped.";
+            "It's wrapped.";
         }
         else {
-            pass "a $.item!";
+            "A $.item!";
         }
     }
  
@@ -58,7 +58,7 @@ multi sub open(Present $present) {
 }
 
 my $gift = Present.new(:item("sock"));
-$gift.look;
+is $gift.look, "It's wrapped.", "It's wrapped.";
 open($gift);
-$gift.look;
+is $gift.look, 'A sock!', 'A sock!';
 
