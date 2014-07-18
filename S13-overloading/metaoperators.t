@@ -31,10 +31,9 @@ is ~(('OMG','BBQ') >>wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '>>...>> hyper
 is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper generated';
 
 # RT 121692
-#?rakudo skip "couldn't find final ']'"
 {
     sub foo { $^a ~ $^b };
-    is [[&foo]] <a b c d e>, 'abcde', "can we use sub as an op between[]";
+    is ([[&foo]] <a b c d e>), 'abcde', "can we use sub as an op between[]";
 }
 
 # vim: ft=perl6
