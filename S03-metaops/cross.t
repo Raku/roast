@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 29;
+plan 30;
 
 # L<S03/List infix precedence/the cross operator>
 ok EVAL('<a b> X <c d>'), 'cross non-meta operator parses';
@@ -115,6 +115,13 @@ is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
     my @a = 1,2,3;
     @a X*= 10;
     is ~@a, '10 20 30', 'cross can modify containers on the left';
+}
+
+# RT #112602
+{
+    my @a = 1,2,3;
+    @a X*= 10;
+    is (1..* X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
 }
 
 # vim: ft=perl6
