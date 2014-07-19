@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan 13;
+plan 14;
 
 my $a = '';
 for 1, 2, 3, 4 { $a ~= $_ }
@@ -23,15 +23,20 @@ $a = '';
 for @array { $a ~= $_ }
 is $a, 'abcd', '$_ is default topic, variable list';
 
-# XXX These need to be converted to something testable.
-# @array.map: *.say;
-#?rakudo skip "No candidates found to invoke"
-#?niecza skip 'Excess arguments to CORE Any.map, used 2 of 4 positionals'
-{
-	is @array.map: *.Int , (1, 2, 3, 4) , 'Testing map form';
+sub capture-out($code) {
+    my $output;
+    temp $*OUT = class {
+	method print(*@args) {
+	    $output ~= @args.join;
+	}
+	multi method write(Buf $b){$output ~= $b.decode}
+    }
+    $code();
+    return $output.lines;
 }
-# @array>>.say;
-is @array».Str , <a b c d> , 'Testing hyperoperator form';
+is capture-out( {@array.map: *.say} ), [< a b c d>], "map"; 
+is capture-out( {@array».say } ).sort, [<a b c d>], "hyperoperator form (say)"; 
+is @array».Str , <a b c d> , 'testing hyperoperator form';
 
 
 $a = '';
@@ -71,7 +76,7 @@ is $a, '0 a 1 b 2 c 3 d ', '.kv, multiple topics';
     for @one Z @two Z @three Z @four -> $one, $two, $three, $four {
         $a ~= "$one $two $three $four "
     };
-    is $a, '11 21 31 41 12 22 32 42 13 23 33 43 ';
+    is $a, '11 21 31 41 12 22 32 42 13 23 33 43 ', 'multiple iteration';
 }
 
 done;
