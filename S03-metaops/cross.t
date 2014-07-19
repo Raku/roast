@@ -119,8 +119,6 @@ is (1,2 X ( <a b> X "x")).join, '1a1x1b1x2a2x2b2x',
 
 # RT #112602
 {
-    my @a = 1,2,3;
-    @a X*= 10;
     is (1..* X* 1..*)[^3], (1, 2, 3), 'cross handles lazy lists';
 }
 
