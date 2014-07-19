@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 25;
+plan 26;
 
 ok EVAL('<a b> Z <c d>'), 'zip non-meta operator parses';
 
@@ -76,6 +76,11 @@ is (1, 2 Z, 3, 4).join('|'), '1|3|2|4', 'Z, flattens in list context';
     my @a = 1,2,3;
     @a Z+= 3,2,1;
     is ~@a, '4 4 4', 'zip can modify containers on the left'
+}
+
+# RT #116036
+{
+    is (<a b> Z=> []), (a => []), 'zip does not flatten itemized list';
 }
 
 # vim: ft=perl6
