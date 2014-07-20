@@ -2,7 +2,7 @@
 
 use v6;
 use Test;
-plan 6;
+plan 7;
 
 role BatteryPower {
     has $.battery-type;
@@ -54,25 +54,44 @@ is $mug.WHAT.perl , 'Cup[EggNog]' , 'the $mug is a Cup of EggNog';
 is $glass.WHAT.perl , 'Glass[MulledWine]' , 'the $glass is a Glass of MulledWine';
 is $valuable.WHAT.perl , 'Tray[Glass[MulledWine]]' , 'the $valuable is a Tray of Glass of MulledWine';
 
-#?rakudo skip 'parse error'
-lives_ok 'role DeliveryCalculation[::Calculator] {has $.mass;method calculate($destination) {my $calc = Calculator.new(:$!mass);}}' , 'Refering to $.mass and $!mass';
+role DeliveryCalculation[::Calculator] {
+    has $.mass;
+    has $.dimensions;
+    method calculate($destination) {
+        my $calc = Calculator.new(
+            :$!mass,
+            :$!dimensions
+        );
+        return $calc.delivery-to($destination);
+    }
+}
 
-#TODO: When rakudo can pass the previous test we can add full tests for the role.
-#~ role DeliveryCalculation[::Calculator] {
-    #~ has $.mass;
-    #~ has $.dimensions;
-    #~ method calculate($destination) {
-        #~ my $calc = Calculator.new(
-            #~ :$!mass,
-            #~ :$!dimensions
-        #~ );
-        #~ return $calc.delivery-to($destination);
-    #~ }
-#~ }
+class ByDimension {
+    has $.mass;
+    has $.dimensions;
+    method delivery-to($destination) {
+        "ship $.dimensions to $destination";
+    }
+}
 
-#~ class Furniture does DeliveryCalculation[ByDimension] {
-#~ }
-#~ class HeavyWater does DeliveryCalculation[ByMass] {
-#~ }
+class ByMass {
+    has $.mass;
+    has $.dimensions;
+    method delivery-to($destination) {
+        "lug $.mass to $destination";
+    }
+}
+
+class Furniture does DeliveryCalculation[ByDimension] {
+}
+
+class HeavyWater does DeliveryCalculation[ByMass] {
+}
+
+my $king-sized-bed = Furniture.new(:dimensions<1.8m X 2.0m X 0.5m>, :mass<30kg>);
+my $reactor-top-up = HeavyWater.new(:dimensions<1m X 1m X 1m>, :mass<1107Kg>);
+
+is $king-sized-bed.calculate('down-town'), 'ship 1.8m X 2.0m X 0.5m to down-town', 'parametic role;';
+is $reactor-top-up.calculate('Springfield'), 'lug 1107Kg to Springfield', 'parametic role;';
 
 done();
