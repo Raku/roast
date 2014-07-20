@@ -25,8 +25,7 @@ sub subdivide($low, $high, $count) {
     (^$count).map({ $low + ($_ / ($count - 1)) * ($high - $low) });
 }
 
-# RAKUDO - needs 'our' here
-our sub postfix:<☃>(Complex $c) {
+sub postfix:<☃>(Complex $c) {
     my $z = 0i;
     for ^$max_iterations {
         $z = $z * $z + $c;
