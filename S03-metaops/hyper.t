@@ -220,7 +220,7 @@ my @e;
         is(~@r, ~@e, "operator call on integer list elements (Same thing, dot form)");
 }
 
-#?rakudo skip 'huh?'
+#?rakudo skip '.++ does not work: RT #122342'
 {
         my (@r, @e);
         (@r = (1, 4, 9))».++;

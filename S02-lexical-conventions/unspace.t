@@ -40,7 +40,7 @@ is( ~([1,2,3]\ .[2,1,0]), "3 2 1", 'unspace on postfix subscript');
     is( ~@array, "3 4 5", 'unspace with postfix pre-dot hyperops');
 }
 
-#?rakudo skip '.++ does not work'
+#?rakudo skip '.++ does not work: RT #122342'
 {
     my @array = 1,2,3;
 
