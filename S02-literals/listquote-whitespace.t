@@ -53,9 +53,9 @@ for @nonseparators -> $sep {
   my @res = EVAL $str;
 
   my $vis = sprintf "%02x", ord $sep;
-  #?rakudo emit if $sep eq "\xa0" {
+  #?rakudo emit if $sep eq "\xa0" {                                       "RT #122285";
   #?rakudo emit      todo('\xa0 should not be a separator for list quotes: RT #122285');
-  #?rakudo emit };
+  #?rakudo emit };                                                        "RT #122285";
   #?niecza emit if $sep eq "\xa0" {
   #?niecza emit      todo('\xa0 should not be a separator for list quotes: RT #122285');
   #?niecza emit };
