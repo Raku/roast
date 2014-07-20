@@ -487,10 +487,12 @@ throws_like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assu
 throws_like 'sub f { f(|$) }', X::Obsolete,
     old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 
+# RT #66776
 throws_like 'for 1,2,3, { say 3 }', X::Comp::Group, 
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].message ~~ /^Expression/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ }; 
 
+# RT #66776
 throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].what ~~ /'X::Y'/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
