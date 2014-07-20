@@ -5,7 +5,7 @@ use Test;
 
 plan 21;
 
-is (3/7).WHAT, Rat;
+is_deeply (3/7).WHAT, Rat;
 is_approx (3/7), 0.4285714;
 
 is_approx (3/7).Num + (2/7).Num + (2/7).Num - 1, -1.1102230e-16;
@@ -18,7 +18,7 @@ is (3/7).denominator, 7;
 is (3/7).nude.join('|'), "3|7";
 
 my $a = 1/60000 + 1/60000; 
-is $a.WHAT, Rat;
+is_deeply $a.WHAT, Rat;
 is_approx $a, 3.3333333e-05;
 is $a.perl, "<1/30000>";
 
@@ -35,7 +35,7 @@ is 3.14.Rat.perl, "3.14";
 is pi.Rat.perl, "<355/113>";
 is pi.Rat(1e-10).perl, "<312689/99532>";
 
-is 1.75.WHAT, Rat;
+is_deeply 1.75.WHAT, Rat;
 is 1.75.perl, "1.75";
 is 1.752.perl, "1.752";
 
