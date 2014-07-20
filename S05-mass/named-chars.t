@@ -27,9 +27,7 @@ ok("\x[c]\x[a]" ~~ m/<[\c[FORM FEED (FF), LINE FEED (LF)]]>/, 'Charclass multipl
 ok(!( "\x[c]\x[a]" ~~ m/^ <-[\c[FORM FEED (FF), LINE FEED (LF)]]>/ ), 'Negative charclass FORM FEED (FF), LINE FEED (LF)');
 ok(!( "\x[c]" ~~ m/^ \C[FORM FEED (FF)]/ ), 'Negative named FORM FEED (FF) nomatch');
 ok("\x[a]" ~~ m/^ \C[FORM FEED (FF)]/, 'Negative named FORM FEED (FF) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[c]" ~~ m/^ <[\C[FORM FEED (FF)]]>/ ), 'Negative charclass named FORM FEED (FF) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[a]" ~~ m/^ <[\C[FORM FEED (FF)]]>/, 'Negative charclass named FORM FEED (FF) match');
 ok(!( "\x[c]" ~~ m/^ \X[C]/ ), 'Negative hex \X[C] nomatch');
 ok(!( "\x[c]" ~~ m/^ <[\X[C]]>/ ), 'Negative charclass hex \X[C] nomatch');
@@ -45,9 +43,7 @@ ok("\x[d]\x[c]" ~~ m/<[\c[CARRIAGE RETURN (CR), FORM FEED (FF)]]>/, 'Charclass m
 ok(!( "\x[d]\x[c]" ~~ m/^ <-[\c[CARRIAGE RETURN (CR), FORM FEED (FF)]]>/ ), 'Negative charclass CARRIAGE RETURN (CR), FORM FEED (FF)');
 ok(!( "\x[d]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/ ), 'Negative named CARRIAGE RETURN (CR) nomatch');
 ok("\x[c]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/, 'Negative named CARRIAGE RETURN (CR) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[d]" ~~ m/^ <[\C[CARRIAGE RETURN (CR)]]>/ ), 'Negative charclass named CARRIAGE RETURN (CR) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[c]" ~~ m/^ <[\C[CARRIAGE RETURN (CR)]]>/, 'Negative charclass named CARRIAGE RETURN (CR) match');
 ok(!( "\x[d]" ~~ m/^ \X[D]/ ), 'Negative hex \X[D] nomatch');
 ok(!( "\x[d]" ~~ m/^ <[\X[D]]>/ ), 'Negative charclass hex \X[D] nomatch');
@@ -62,9 +58,7 @@ ok("\x[85]\x[d]" ~~ m/<[\c[NEXT LINE (NEL), CARRIAGE RETURN (CR)]]>/, 'Charclass
 ok(!( "\x[85]\x[d]" ~~ m/^ <-[\c[NEXT LINE (NEL), CARRIAGE RETURN (CR)]]>/ ), 'Negative charclass NEXT LINE (NEL), CARRIAGE RETURN (CR)');
 ok(!( "\x[85]" ~~ m/^ \C[NEXT LINE (NEL)]/ ), 'Negative named NEXT LINE (NEL) nomatch');
 ok("\x[d]" ~~ m/^ \C[NEXT LINE (NEL)]/, 'Negative named NEXT LINE (NEL) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[85]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/ ), 'Negative charclass named NEXT LINE (NEL) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[d]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/, 'Negative charclass named NEXT LINE (NEL) match');
 ok(!( "\x[85]" ~~ m/^ \X[85]/ ), 'Negative hex \X[85] nomatch');
 ok(!( "\x[85]" ~~ m/^ <[\X[85]]>/ ), 'Negative charclass hex \X[85] nomatch');
@@ -78,9 +72,7 @@ ok("\c[LINE FEED (LF)]\x[85]" ~~ m/<[\c[LINE FEED (LF), NEXT LINE (NEL)]]>/, 'Ch
 ok(!( "\c[LINE FEED (LF)]\x[85]" ~~ m/^ <-[\c[LINE FEED (LF), NEXT LINE (NEL)]]>/ ), 'Negative charclass LINE FEED (LF), NEXT LINE (NEL)');
 ok(!( "\c[LINE FEED (LF)]" ~~ m/^ \C[LINE FEED (LF)]/ ), 'Negative named LINE FEED (LF) nomatch');
 ok("\x[85]" ~~ m/^ \C[LINE FEED (LF)]/, 'Negative named LINE FEED (LF) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\c[LINE FEED (LF)]" ~~ m/^ <[\C[LINE FEED (LF)]]>/ ), 'Negative charclass named LINE FEED (LF) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[85]" ~~ m/^ <[\C[LINE FEED (LF)]]>/, 'Negative charclass named LINE FEED (LF) match');
 ok("abc\c[FORM FEED (FF)]def" ~~ m/\c[FORM FEED (FF)]/, 'Unanchored named FORM FEED (FF)');
 ok("abc\c[FORM FEED (FF)]def" ~~ m/^ abc \c[FORM FEED (FF)] def $/, 'Anchored FORM FEED (FF)');
@@ -89,9 +81,7 @@ ok("\c[FORM FEED (FF)]\c[LINE FEED (LF)]" ~~ m/<[\c[FORM FEED (FF), LINE FEED (L
 ok(!( "\c[FORM FEED (FF)]\c[LINE FEED (LF)]" ~~ m/^ <-[\c[FORM FEED (FF), LINE FEED (LF)]]>/ ), 'Negative charclass FORM FEED (FF), LINE FEED (LF)');
 ok(!( "\c[FORM FEED (FF)]" ~~ m/^ \C[FORM FEED (FF)]/ ), 'Negative named FORM FEED (FF) nomatch');
 ok("\c[LINE FEED (LF)]" ~~ m/^ \C[FORM FEED (FF)]/, 'Negative named FORM FEED (FF) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\c[FORM FEED (FF)]" ~~ m/^ <[\C[FORM FEED (FF)]]>/ ), 'Negative charclass named FORM FEED (FF) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\c[LINE FEED (LF)]" ~~ m/^ <[\C[FORM FEED (FF)]]>/, 'Negative charclass named FORM FEED (FF) match');
 ok("abc\c[CARRIAGE RETURN (CR)]def" ~~ m/\c[CARRIAGE RETURN (CR)]/, 'Unanchored named CARRIAGE RETURN (CR)');
 ok("abc\c[CARRIAGE RETURN (CR)]def" ~~ m/^ abc \c[CARRIAGE RETURN (CR)] def $/, 'Anchored CARRIAGE RETURN (CR)');
@@ -101,9 +91,7 @@ ok("\c[CARRIAGE RETURN (CR)]\c[FORM FEED (FF)]" ~~ m/<[\c[CARRIAGE RETURN (CR),F
 ok(!( "\c[CARRIAGE RETURN (CR)]\c[FORM FEED (FF)]" ~~ m/^ <-[\c[CARRIAGE RETURN (CR),FORM FEED (FF)]]>/ ), 'Negative charclass CARRIAGE RETURN (CR),FORM FEED (FF)');
 ok(!( "\c[CARRIAGE RETURN (CR)]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/ ), 'Negative named CARRIAGE RETURN (CR) nomatch');
 ok("\c[FORM FEED (FF)]" ~~ m/^ \C[CARRIAGE RETURN (CR)]/, 'Negative named CARRIAGE RETURN (CR) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\c[CARRIAGE RETURN (CR)]" ~~ m/^ <[\C[CARRIAGE RETURN (CR)]]>/ ), 'Negative charclass named CARRIAGE RETURN (CR) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\c[FORM FEED (FF)]" ~~ m/^ <[\C[CARRIAGE RETURN (CR)]]>/, 'Negative charclass named CARRIAGE RETURN (CR) match');
 ok("abc\c[NEXT LINE (NEL)]def" ~~ m/\c[NEXT LINE (NEL)]/, 'Unanchored named NEXT LINE (NEL)');
 ok("abc\c[NEXT LINE (NEL)]def" ~~ m/^ abc \c[NEXT LINE (NEL)] def $/, 'Anchored NEXT LINE (NEL)');
@@ -112,9 +100,7 @@ ok("\c[NEXT LINE (NEL)]\c[CARRIAGE RETURN (CR)]" ~~ m/<[\c[NEXT LINE (NEL),CARRI
 ok(!( "\c[NEXT LINE (NEL)]\c[CARRIAGE RETURN (CR)]" ~~ m/^ <-[\c[NEXT LINE (NEL),CARRIAGE RETURN (CR)]]>/ ), 'Negative charclass NEXT LINE (NEL),CARRIAGE RETURN (CR)');
 ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ \C[NEXT LINE (NEL)]/ ), 'Negative named NEXT LINE (NEL) nomatch');
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ \C[NEXT LINE (NEL)]/, 'Negative named NEXT LINE (NEL) match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/ ), 'Negative charclass named NEXT LINE (NEL) nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/, 'Negative charclass named NEXT LINE (NEL) match');
 #?rakudo 4 skip '\c[LF] not valid charname'
 ok("abc\c[LF]def" ~~ m/\c[LF]/, 'Unanchored named LF');
@@ -123,12 +109,10 @@ ok("abc\c[LF]\c[NEXT LINE (NEL)]def" ~~ m/\c[LF, NEXT LINE (NEL)]/, 'Multiple LF
 ok("\c[LF]\c[NEXT LINE (NEL)]" ~~ m/<[\c[LF, NEXT LINE (NEL)]]>/, 'Charclass multiple LF, NEXT LINE (NEL)');
 #?rakudo skip 'escapes in char classes'
 ok(!( "\c[LF]\c[NEXT LINE (NEL)]" ~~ m/^ <-[\c[LF, NEXT LINE (NEL)]]>/ ), 'Negative charclass LF, NEXT LINE (NEL)');
-#?rakudo 2 skip 'LF as char name'
+#?rakudo 4 skip 'LF as char name'
 ok(!( "\c[LF]" ~~ m/^ \C[LF]/ ), 'Negative named LF nomatch');
 ok("\c[NEXT LINE (NEL)]" ~~ m/^ \C[LF]/, 'Negative named LF match');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok(!( "\c[LF]" ~~ m/^ <[\C[LF]]>/ ), 'Negative charclass named LF nomatch');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok("\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[LF]]>/, 'Negative charclass named LF match');
 #?rakudo 4 skip '\c[FF] not valid charname'
 ok("abc\c[FF]def" ~~ m/\c[FF]/, 'Unanchored named FF');
@@ -138,12 +122,10 @@ ok("\c[FF]\c[LF]" ~~ m/<[\c[FF,LF]]>/, 'Charclass multiple FF,LF');
 #?rakudo skip 'escapes in char classes'
 ok(!( "\c[FF]\c[LF]" ~~ m/^ <-[\c[FF,LF]]>/ ), 'Negative charclass FF,LF');
 
-#?rakudo 2 skip 'FF as char name'
+#?rakudo 4 skip 'FF as char name'
 ok(!( "\c[FF]" ~~ m/^ \C[FF]/ ), 'Negative named FF nomatch');
 ok("\c[LF]" ~~ m/^ \C[FF]/, 'Negative named FF match');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok(!( "\c[FF]" ~~ m/^ <[\C[FF]]>/ ), 'Negative charclass named FF nomatch');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok("\c[LF]" ~~ m/^ <[\C[FF]]>/, 'Negative charclass named FF match');
 #?rakudo 4 skip '\c[CR] not valid charname'
 ok("abc\c[CR]def" ~~ m/\c[CR]/, 'Unanchored named CR');
@@ -152,12 +134,10 @@ ok("abc\c[CR]\c[FF]def" ~~ m/\c[CR,FF]/, 'Multiple CR,FF');
 ok("\c[CR]\c[FF]" ~~ m/<[\c[CR,FF]]>/, 'Charclass multiple CR,FF');
 #?rakudo skip 'escapes in char classes'
 ok(!( "\c[CR]\c[FF]" ~~ m/^ <-[\c[CR,FF]]>/ ), 'Negative charclass CR,FF');
-#?rakudo 2 skip 'CR as char name'
+#?rakudo 4 skip 'CR as char name'
 ok(!( "\c[CR]" ~~ m/^ \C[CR]/ ), 'Negative named CR nomatch');
 ok("\c[FF]" ~~ m/^ \C[CR]/, 'Negative named CR match');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok(!( "\c[CR]" ~~ m/^ <[\C[CR]]>/ ), 'Negative charclass named CR nomatch');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok("\c[FF]" ~~ m/^ <[\C[CR]]>/, 'Negative charclass named CR match');
 #?rakudo 4 skip '\c[NEL] not valid charname'
 ok("abc\c[NEL]def" ~~ m/\c[NEL]/, 'Unanchored named NEL');
@@ -166,12 +146,10 @@ ok("abc\c[NEL]\c[CR]def" ~~ m/\c[NEL,CR]/, 'Multiple NEL,CR');
 ok("\c[NEL]\c[CR]" ~~ m/<[\c[NEL,CR]]>/, 'Charclass multiple NEL,CR');
 #?rakudo skip 'escapes in char classes'
 ok(!( "\c[NEL]\c[CR]" ~~ m/^ <-[\c[NEL,CR]]>/ ), 'Negative charclass NEL,CR');
-#?rakudo 2 skip 'NEL as char name'
+#?rakudo 4 skip 'NEL as char name'
 ok(!( "\c[NEL]" ~~ m/^ \C[NEL]/ ), 'Negative named NEL nomatch');
 ok("\c[CR]" ~~ m/^ \C[NEL]/, 'Negative named NEL match');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok(!( "\c[NEL]" ~~ m/^ <[\C[NEL]]>/ ), 'Negative charclass named NEL nomatch');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
 ok("\c[CR]" ~~ m/^ <[\C[NEL]]>/, 'Negative charclass named NEL match');
 ok("abc\x[fd55]def" ~~ m/\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/, 'Unanchored named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 ok("abc\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]def" ~~ m/\x[fd55]/, 'Unanchored \x[fd55]');
@@ -184,9 +162,8 @@ ok(!( "\x[fd55]\c[NEL]" ~~ m/^ <-[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INI
 ok(!( "\x[fd55]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/ ), 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
 #?rakudo skip '\c[NEL] not valid charname'
 ok("\c[NEL]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/, 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[fd55]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/ ), 'Negative charclass named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
-#?rakudo skip 'negative char class in enumerated list RT #122245'
+#?rakudo skip '\c[NEL] not valid charname'
 ok("\c[NEL]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/, 'Negative charclass named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM match');
 
 ok(!( "\x[fd55]" ~~ m/^ \X[FD55]/ ), 'Negative hex \X[FD55] nomatch');
@@ -200,9 +177,7 @@ ok("\x[5b4]\x[fd55]" ~~ m/<[\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM 
 ok(!( "\x[5b4]\x[fd55]" ~~ m/^ <-[\c[HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/ ), 'Negative charclass HEBREW POINT HIRIQ,ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
 ok(!( "\x[5b4]" ~~ m/^ \C[HEBREW POINT HIRIQ]/ ), 'Negative named HEBREW POINT HIRIQ nomatch');
 ok("\x[fd55]" ~~ m/^ \C[HEBREW POINT HIRIQ]/, 'Negative named HEBREW POINT HIRIQ match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[5b4]" ~~ m/^ <[\C[HEBREW POINT HIRIQ]]>/ ), 'Negative charclass named HEBREW POINT HIRIQ nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[fd55]" ~~ m/^ <[\C[HEBREW POINT HIRIQ]]>/, 'Negative charclass named HEBREW POINT HIRIQ match');
 ok(!( "\x[5b4]" ~~ m/^ \X[5B4]/ ), 'Negative hex \X[5B4] nomatch');
 ok(!( "\x[5b4]" ~~ m/^ <[\X[5B4]]>/ ), 'Negative charclass hex \X[5B4] nomatch');
@@ -217,9 +192,7 @@ ok("\x[1ea2]\x[5b4]" ~~ m/<[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POI
 ok(!( "\x[1ea2]\x[5b4]" ~~ m/^ <-[\c[LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ]]>/ ), 'Negative charclass LATIN CAPITAL LETTER A WITH HOOK ABOVE,HEBREW POINT HIRIQ');
 ok(!( "\x[1ea2]" ~~ m/^ \C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/ ), 'Negative named LATIN CAPITAL LETTER A WITH HOOK ABOVE nomatch');
 ok("\x[5b4]" ~~ m/^ \C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]/, 'Negative named LATIN CAPITAL LETTER A WITH HOOK ABOVE match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[1ea2]" ~~ m/^ <[\C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]]>/ ), 'Negative charclass named LATIN CAPITAL LETTER A WITH HOOK ABOVE nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[5b4]" ~~ m/^ <[\C[LATIN CAPITAL LETTER A WITH HOOK ABOVE]]>/, 'Negative charclass named LATIN CAPITAL LETTER A WITH HOOK ABOVE match');
 ok(!( "\x[1ea2]" ~~ m/^ \X[1EA2]/ ), 'Negative hex \X[1EA2] nomatch');
 ok(!( "\x[1ea2]" ~~ m/^ <[\X[1EA2]]>/ ), 'Negative charclass hex \X[1EA2] nomatch');
@@ -234,9 +207,7 @@ ok("\x[565]\x[1ea2]" ~~ m/<[\c[ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A 
 ok(!( "\x[565]\x[1ea2]" ~~ m/^ <-[\c[ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A WITH HOOK ABOVE]]>/ ), 'Negative charclass ARMENIAN SMALL LETTER ECH,LATIN CAPITAL LETTER A WITH HOOK ABOVE');
 ok(!( "\x[565]" ~~ m/^ \C[ARMENIAN SMALL LETTER ECH]/ ), 'Negative named ARMENIAN SMALL LETTER ECH nomatch');
 ok("\x[1ea2]" ~~ m/^ \C[ARMENIAN SMALL LETTER ECH]/, 'Negative named ARMENIAN SMALL LETTER ECH match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[565]" ~~ m/^ <[\C[ARMENIAN SMALL LETTER ECH]]>/ ), 'Negative charclass named ARMENIAN SMALL LETTER ECH nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[1ea2]" ~~ m/^ <[\C[ARMENIAN SMALL LETTER ECH]]>/, 'Negative charclass named ARMENIAN SMALL LETTER ECH match');
 ok(!( "\x[565]" ~~ m/^ \X[565]/ ), 'Negative hex \X[565] nomatch');
 ok(!( "\x[565]" ~~ m/^ <[\X[565]]>/ ), 'Negative charclass hex \X[565] nomatch');
@@ -251,9 +222,7 @@ ok("\x[25db]\x[565]" ~~ m/<[\c[LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LE
 ok(!( "\x[25db]\x[565]" ~~ m/^ <-[\c[LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LETTER ECH]]>/ ), 'Negative charclass LOWER HALF INVERSE WHITE CIRCLE,ARMENIAN SMALL LETTER ECH');
 ok(!( "\x[25db]" ~~ m/^ \C[LOWER HALF INVERSE WHITE CIRCLE]/ ), 'Negative named LOWER HALF INVERSE WHITE CIRCLE nomatch');
 ok("\x[565]" ~~ m/^ \C[LOWER HALF INVERSE WHITE CIRCLE]/, 'Negative named LOWER HALF INVERSE WHITE CIRCLE match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[25db]" ~~ m/^ <[\C[LOWER HALF INVERSE WHITE CIRCLE]]>/ ), 'Negative charclass named LOWER HALF INVERSE WHITE CIRCLE nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[565]" ~~ m/^ <[\C[LOWER HALF INVERSE WHITE CIRCLE]]>/, 'Negative charclass named LOWER HALF INVERSE WHITE CIRCLE match');
 ok(!( "\x[25db]" ~~ m/^ \X[25DB]/ ), 'Negative hex \X[25DB] nomatch');
 ok(!( "\x[25db]" ~~ m/^ <[\X[25DB]]>/ ), 'Negative charclass hex \X[25DB] nomatch');
@@ -268,9 +237,7 @@ ok("\x[fe7d]\x[25db]" ~~ m/<[\c[ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHI
 ok(!( "\x[fe7d]\x[25db]" ~~ m/^ <-[\c[ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHITE CIRCLE]]>/ ), 'Negative charclass ARABIC SHADDA MEDIAL FORM,LOWER HALF INVERSE WHITE CIRCLE');
 ok(!( "\x[fe7d]" ~~ m/^ \C[ARABIC SHADDA MEDIAL FORM]/ ), 'Negative named ARABIC SHADDA MEDIAL FORM nomatch');
 ok("\x[25db]" ~~ m/^ \C[ARABIC SHADDA MEDIAL FORM]/, 'Negative named ARABIC SHADDA MEDIAL FORM match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[fe7d]" ~~ m/^ <[\C[ARABIC SHADDA MEDIAL FORM]]>/ ), 'Negative charclass named ARABIC SHADDA MEDIAL FORM nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[25db]" ~~ m/^ <[\C[ARABIC SHADDA MEDIAL FORM]]>/, 'Negative charclass named ARABIC SHADDA MEDIAL FORM match');
 ok(!( "\x[fe7d]" ~~ m/^ \X[FE7D]/ ), 'Negative hex \X[FE7D] nomatch');
 ok(!( "\x[fe7d]" ~~ m/^ <[\X[FE7D]]>/ ), 'Negative charclass hex \X[FE7D] nomatch');
@@ -285,9 +252,7 @@ ok("\x[a15d]\x[fe7d]" ~~ m/<[\c[YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM]]>/, 
 ok(!( "\x[a15d]\x[fe7d]" ~~ m/^ <-[\c[YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM]]>/ ), 'Negative charclass YI SYLLABLE NDO, ARABIC SHADDA MEDIAL FORM');
 ok(!( "\x[a15d]" ~~ m/^ \C[YI SYLLABLE NDO]/ ), 'Negative named YI SYLLABLE NDO nomatch');
 ok("\x[fe7d]" ~~ m/^ \C[YI SYLLABLE NDO]/, 'Negative named YI SYLLABLE NDO match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[a15d]" ~~ m/^ <[\C[YI SYLLABLE NDO]]>/ ), 'Negative charclass named YI SYLLABLE NDO nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[fe7d]" ~~ m/^ <[\C[YI SYLLABLE NDO]]>/, 'Negative charclass named YI SYLLABLE NDO match');
 ok(!( "\x[a15d]" ~~ m/^ \X[A15D]/ ), 'Negative hex \X[A15D] nomatch');
 ok(!( "\x[a15d]" ~~ m/^ <[\X[A15D]]>/ ), 'Negative charclass hex \X[A15D] nomatch');
@@ -302,9 +267,7 @@ ok("\x[2964]\x[a15d]" ~~ m/<[\c[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS
 ok(!( "\x[2964]\x[a15d]" ~~ m/^ <-[\c[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN,YI SYLLABLE NDO]]>/ ), 'Negative charclass RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN,YI SYLLABLE NDO');
 ok(!( "\x[2964]" ~~ m/^ \C[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]/ ), 'Negative named RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN nomatch');
 ok("\x[a15d]" ~~ m/^ \C[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]/, 'Negative named RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[2964]" ~~ m/^ <[\C[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]]>/ ), 'Negative charclass named RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[a15d]" ~~ m/^ <[\C[RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]]>/, 'Negative charclass named RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN match');
 ok(!( "\x[2964]" ~~ m/^ \X[2964]/ ), 'Negative hex \X[2964] nomatch');
 ok(!( "\x[2964]" ~~ m/^ <[\X[2964]]>/ ), 'Negative charclass hex \X[2964] nomatch');
@@ -319,9 +282,7 @@ ok("\x[ff6d]\x[2964]" ~~ m/<[\c[HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS H
 ok(!( "\x[ff6d]\x[2964]" ~~ m/^ <-[\c[HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN]]>/ ), 'Negative charclass HALFWIDTH KATAKANA LETTER SMALL YU, RIGHTWARDS HARPOON WITH BARB UP ABOVE RIGHTWARDS HARPOON WITH BARB DOWN');
 ok(!( "\x[ff6d]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YU]/ ), 'Negative named HALFWIDTH KATAKANA LETTER SMALL YU nomatch');
 ok("\x[2964]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YU]/, 'Negative named HALFWIDTH KATAKANA LETTER SMALL YU match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[ff6d]" ~~ m/^ <[\C[HALFWIDTH KATAKANA LETTER SMALL YU]]>/ ), 'Negative charclass named HALFWIDTH KATAKANA LETTER SMALL YU nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[2964]" ~~ m/^ <[\C[HALFWIDTH KATAKANA LETTER SMALL YU]]>/, 'Negative charclass named HALFWIDTH KATAKANA LETTER SMALL YU match');
 ok(!( "\x[ff6d]" ~~ m/^ \X[FF6D]/ ), 'Negative hex \X[FF6D] nomatch');
 ok(!( "\x[ff6d]" ~~ m/^ <[\X[FF6D]]>/ ), 'Negative charclass hex \X[FF6D] nomatch');
@@ -336,9 +297,7 @@ ok("\x[36]\x[ff6d]" ~~ m/<[\c[DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU]]>/, 
 ok(!( "\x[36]\x[ff6d]" ~~ m/^ <-[\c[DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU]]>/ ), 'Negative charclass DIGIT SIX,HALFWIDTH KATAKANA LETTER SMALL YU');
 ok(!( "\x[36]" ~~ m/^ \C[DIGIT SIX]/ ), 'Negative named DIGIT SIX nomatch');
 ok("\x[ff6d]" ~~ m/^ \C[DIGIT SIX]/, 'Negative named DIGIT SIX match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[36]" ~~ m/^ <[\C[DIGIT SIX]]>/ ), 'Negative charclass named DIGIT SIX nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[ff6d]" ~~ m/^ <[\C[DIGIT SIX]]>/, 'Negative charclass named DIGIT SIX match');
 ok(!( "\x[36]" ~~ m/^ \X[36]/ ), 'Negative hex \X[36] nomatch');
 ok(!( "\x[36]" ~~ m/^ <[\X[36]]>/ ), 'Negative charclass hex \X[36] nomatch');
@@ -353,9 +312,7 @@ ok("\x[1323]\x[36]" ~~ m/<[\c[ETHIOPIC SYLLABLE THAA, DIGIT SIX]]>/, 'Charclass 
 ok(!( "\x[1323]\x[36]" ~~ m/^ <-[\c[ETHIOPIC SYLLABLE THAA, DIGIT SIX]]>/ ), 'Negative charclass ETHIOPIC SYLLABLE THAA, DIGIT SIX');
 ok(!( "\x[1323]" ~~ m/^ \C[ETHIOPIC SYLLABLE THAA]/ ), 'Negative named ETHIOPIC SYLLABLE THAA nomatch');
 ok("\x[36]" ~~ m/^ \C[ETHIOPIC SYLLABLE THAA]/, 'Negative named ETHIOPIC SYLLABLE THAA match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[1323]" ~~ m/^ <[\C[ETHIOPIC SYLLABLE THAA]]>/ ), 'Negative charclass named ETHIOPIC SYLLABLE THAA nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[36]" ~~ m/^ <[\C[ETHIOPIC SYLLABLE THAA]]>/, 'Negative charclass named ETHIOPIC SYLLABLE THAA match');
 ok(!( "\x[1323]" ~~ m/^ \X[1323]/ ), 'Negative hex \X[1323] nomatch');
 ok(!( "\x[1323]" ~~ m/^ <[\X[1323]]>/ ), 'Negative charclass hex \X[1323] nomatch');
@@ -370,9 +327,7 @@ ok("\x[1697]\x[1323]" ~~ m/<[\c[OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA]]>/
 ok(!( "\x[1697]\x[1323]" ~~ m/^ <-[\c[OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA]]>/ ), 'Negative charclass OGHAM LETTER UILLEANN,ETHIOPIC SYLLABLE THAA');
 ok(!( "\x[1697]" ~~ m/^ \C[OGHAM LETTER UILLEANN]/ ), 'Negative named OGHAM LETTER UILLEANN nomatch');
 ok("\x[1323]" ~~ m/^ \C[OGHAM LETTER UILLEANN]/, 'Negative named OGHAM LETTER UILLEANN match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[1697]" ~~ m/^ <[\C[OGHAM LETTER UILLEANN]]>/ ), 'Negative charclass named OGHAM LETTER UILLEANN nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[1323]" ~~ m/^ <[\C[OGHAM LETTER UILLEANN]]>/, 'Negative charclass named OGHAM LETTER UILLEANN match');
 ok(!( "\x[1697]" ~~ m/^ \X[1697]/ ), 'Negative hex \X[1697] nomatch');
 ok(!( "\x[1697]" ~~ m/^ <[\X[1697]]>/ ), 'Negative charclass hex \X[1697] nomatch');
@@ -387,9 +342,7 @@ ok("\x[fe8b]\x[1697]" ~~ m/<[\c[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,
 ok(!( "\x[fe8b]\x[1697]" ~~ m/^ <-[\c[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,OGHAM LETTER UILLEANN]]>/ ), 'Negative charclass ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM,OGHAM LETTER UILLEANN');
 ok(!( "\x[fe8b]" ~~ m/^ \C[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]/ ), 'Negative named ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM nomatch');
 ok("\x[1697]" ~~ m/^ \C[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]/, 'Negative named ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[fe8b]" ~~ m/^ <[\C[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]]>/ ), 'Negative charclass named ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[1697]" ~~ m/^ <[\C[ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]]>/, 'Negative charclass named ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM match');
 ok(!( "\x[fe8b]" ~~ m/^ \X[FE8B]/ ), 'Negative hex \X[FE8B] nomatch');
 ok(!( "\x[fe8b]" ~~ m/^ <[\X[FE8B]]>/ ), 'Negative charclass hex \X[FE8B] nomatch');
@@ -404,9 +357,7 @@ ok("\x[16de]\x[fe8b]" ~~ m/<[\c[RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH
 ok(!( "\x[16de]\x[fe8b]" ~~ m/^ <-[\c[RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM]]>/ ), 'Negative charclass RUNIC LETTER DAGAZ DAEG D,ARABIC LETTER YEH WITH HAMZA ABOVE INITIAL FORM');
 ok(!( "\x[16de]" ~~ m/^ \C[RUNIC LETTER DAGAZ DAEG D]/ ), 'Negative named RUNIC LETTER DAGAZ DAEG D nomatch');
 ok("\x[fe8b]" ~~ m/^ \C[RUNIC LETTER DAGAZ DAEG D]/, 'Negative named RUNIC LETTER DAGAZ DAEG D match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[16de]" ~~ m/^ <[\C[RUNIC LETTER DAGAZ DAEG D]]>/ ), 'Negative charclass named RUNIC LETTER DAGAZ DAEG D nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[fe8b]" ~~ m/^ <[\C[RUNIC LETTER DAGAZ DAEG D]]>/, 'Negative charclass named RUNIC LETTER DAGAZ DAEG D match');
 ok(!( "\x[16de]" ~~ m/^ \X[16DE]/ ), 'Negative hex \X[16DE] nomatch');
 ok(!( "\x[16de]" ~~ m/^ <[\X[16DE]]>/ ), 'Negative charclass hex \X[16DE] nomatch');
@@ -421,9 +372,7 @@ ok("\x[64]\x[16de]" ~~ m/<[\c[LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D]]>/
 ok(!( "\x[64]\x[16de]" ~~ m/^ <-[\c[LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D]]>/ ), 'Negative charclass LATIN SMALL LETTER D,RUNIC LETTER DAGAZ DAEG D');
 ok(!( "\x[64]" ~~ m/^ \C[LATIN SMALL LETTER D]/ ), 'Negative named LATIN SMALL LETTER D nomatch');
 ok("\x[16de]" ~~ m/^ \C[LATIN SMALL LETTER D]/, 'Negative named LATIN SMALL LETTER D match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[64]" ~~ m/^ <[\C[LATIN SMALL LETTER D]]>/ ), 'Negative charclass named LATIN SMALL LETTER D nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[16de]" ~~ m/^ <[\C[LATIN SMALL LETTER D]]>/, 'Negative charclass named LATIN SMALL LETTER D match');
 ok(!( "\x[64]" ~~ m/^ \X[64]/ ), 'Negative hex \X[64] nomatch');
 ok(!( "\x[64]" ~~ m/^ <[\X[64]]>/ ), 'Negative charclass hex \X[64] nomatch');
@@ -438,9 +387,7 @@ ok("\x[2724]\x[64]" ~~ m/<[\c[HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LET
 ok(!( "\x[2724]\x[64]" ~~ m/^ <-[\c[HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LETTER D]]>/ ), 'Negative charclass HEAVY FOUR BALLOON-SPOKED ASTERISK,LATIN SMALL LETTER D');
 ok(!( "\x[2724]" ~~ m/^ \C[HEAVY FOUR BALLOON-SPOKED ASTERISK]/ ), 'Negative named HEAVY FOUR BALLOON-SPOKED ASTERISK nomatch');
 ok("\x[64]" ~~ m/^ \C[HEAVY FOUR BALLOON-SPOKED ASTERISK]/, 'Negative named HEAVY FOUR BALLOON-SPOKED ASTERISK match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[2724]" ~~ m/^ <[\C[HEAVY FOUR BALLOON-SPOKED ASTERISK]]>/ ), 'Negative charclass named HEAVY FOUR BALLOON-SPOKED ASTERISK nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[64]" ~~ m/^ <[\C[HEAVY FOUR BALLOON-SPOKED ASTERISK]]>/, 'Negative charclass named HEAVY FOUR BALLOON-SPOKED ASTERISK match');
 ok(!( "\x[2724]" ~~ m/^ \X[2724]/ ), 'Negative hex \X[2724] nomatch');
 ok(!( "\x[2724]" ~~ m/^ <[\X[2724]]>/ ), 'Negative charclass hex \X[2724] nomatch');
@@ -455,9 +402,7 @@ ok("\x[2719]\x[2724]" ~~ m/<[\c[OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED A
 ok(!( "\x[2719]\x[2724]" ~~ m/^ <-[\c[OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED ASTERISK]]>/ ), 'Negative charclass OUTLINED GREEK CROSS,HEAVY FOUR BALLOON-SPOKED ASTERISK');
 ok(!( "\x[2719]" ~~ m/^ \C[OUTLINED GREEK CROSS]/ ), 'Negative named OUTLINED GREEK CROSS nomatch');
 ok("\x[2724]" ~~ m/^ \C[OUTLINED GREEK CROSS]/, 'Negative named OUTLINED GREEK CROSS match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[2719]" ~~ m/^ <[\C[OUTLINED GREEK CROSS]]>/ ), 'Negative charclass named OUTLINED GREEK CROSS nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[2724]" ~~ m/^ <[\C[OUTLINED GREEK CROSS]]>/, 'Negative charclass named OUTLINED GREEK CROSS match');
 ok(!( "\x[2719]" ~~ m/^ \X[2719]/ ), 'Negative hex \X[2719] nomatch');
 ok(!( "\x[2719]" ~~ m/^ <[\X[2719]]>/ ), 'Negative charclass hex \X[2719] nomatch');
@@ -472,9 +417,7 @@ ok("\x[e97]\x[2719]" ~~ m/<[\c[LAO LETTER THO TAM, OUTLINED GREEK CROSS]]>/, 'Ch
 ok(!( "\x[e97]\x[2719]" ~~ m/^ <-[\c[LAO LETTER THO TAM, OUTLINED GREEK CROSS]]>/ ), 'Negative charclass LAO LETTER THO TAM, OUTLINED GREEK CROSS');
 ok(!( "\x[e97]" ~~ m/^ \C[LAO LETTER THO TAM]/ ), 'Negative named LAO LETTER THO TAM nomatch');
 ok("\x[2719]" ~~ m/^ \C[LAO LETTER THO TAM]/, 'Negative named LAO LETTER THO TAM match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[e97]" ~~ m/^ <[\C[LAO LETTER THO TAM]]>/ ), 'Negative charclass named LAO LETTER THO TAM nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[2719]" ~~ m/^ <[\C[LAO LETTER THO TAM]]>/, 'Negative charclass named LAO LETTER THO TAM match');
 ok(!( "\x[e97]" ~~ m/^ \X[E97]/ ), 'Negative hex \X[E97] nomatch');
 ok(!( "\x[e97]" ~~ m/^ <[\X[E97]]>/ ), 'Negative charclass hex \X[E97] nomatch');
@@ -489,9 +432,7 @@ ok("\x[a42d]\x[e97]" ~~ m/<[\c[YI SYLLABLE JJYT,LAO LETTER THO TAM]]>/, 'Charcla
 ok(!( "\x[a42d]\x[e97]" ~~ m/^ <-[\c[YI SYLLABLE JJYT,LAO LETTER THO TAM]]>/ ), 'Negative charclass YI SYLLABLE JJYT,LAO LETTER THO TAM');
 ok(!( "\x[a42d]" ~~ m/^ \C[YI SYLLABLE JJYT]/ ), 'Negative named YI SYLLABLE JJYT nomatch');
 ok("\x[e97]" ~~ m/^ \C[YI SYLLABLE JJYT]/, 'Negative named YI SYLLABLE JJYT match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[a42d]" ~~ m/^ <[\C[YI SYLLABLE JJYT]]>/ ), 'Negative charclass named YI SYLLABLE JJYT nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[e97]" ~~ m/^ <[\C[YI SYLLABLE JJYT]]>/, 'Negative charclass named YI SYLLABLE JJYT match');
 ok(!( "\x[a42d]" ~~ m/^ \X[A42D]/ ), 'Negative hex \X[A42D] nomatch');
 ok(!( "\x[a42d]" ~~ m/^ <[\X[A42D]]>/ ), 'Negative charclass hex \X[A42D] nomatch');
@@ -506,9 +447,7 @@ ok("\x[ff6e]\x[a42d]" ~~ m/<[\c[HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE J
 ok(!( "\x[ff6e]\x[a42d]" ~~ m/^ <-[\c[HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE JJYT]]>/ ), 'Negative charclass HALFWIDTH KATAKANA LETTER SMALL YO,YI SYLLABLE JJYT');
 ok(!( "\x[ff6e]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YO]/ ), 'Negative named HALFWIDTH KATAKANA LETTER SMALL YO nomatch');
 ok("\x[a42d]" ~~ m/^ \C[HALFWIDTH KATAKANA LETTER SMALL YO]/, 'Negative named HALFWIDTH KATAKANA LETTER SMALL YO match');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok(!( "\x[ff6e]" ~~ m/^ <[\C[HALFWIDTH KATAKANA LETTER SMALL YO]]>/ ), 'Negative charclass named HALFWIDTH KATAKANA LETTER SMALL YO nomatch');
-#?rakudo todo 'negative char class in enumerated list RT #122245'
 ok("\x[a42d]" ~~ m/^ <[\C[HALFWIDTH KATAKANA LETTER SMALL YO]]>/, 'Negative charclass named HALFWIDTH KATAKANA LETTER SMALL YO match');
 ok(!( "\x[ff6e]" ~~ m/^ \X[FF6E]/ ), 'Negative hex \X[FF6E] nomatch');
 ok(!( "\x[ff6e]" ~~ m/^ <[\X[FF6E]]>/ ), 'Negative charclass hex \X[FF6E] nomatch');
