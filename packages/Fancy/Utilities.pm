@@ -14,6 +14,8 @@ module Fancy::Utilities {
  sub allgreet() is export {
      'hi all';
  }
+
+ proto greet is export {*};
  multi sub greet(Str $who) { return "Good morning, $who!" }
  multi sub greet() { return "Hi!" }
 }
