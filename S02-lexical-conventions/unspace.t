@@ -199,8 +199,8 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is((baz { @^x }\ , 1, 2, 3), (1, 2, 3), 'unspace then comma following arg block');
 }
 
-#?rakudo skip 'indirect method calls'
 #?niecza skip "Invocant handling is NYI"
+#?rakudo skip 'indirect method calls parsefail: RT #122344'
 {
     augment class Code{
         method xyzzy(Code $x: *@y) { $x.(@y) }
