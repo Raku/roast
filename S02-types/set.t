@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 167;
+plan 168;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -363,6 +363,13 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     my $s = <a b c>.Set;
     dies_ok { $s.pairs[0].key++ },     'Cannot change key of Set.pairs';
     dies_ok { $s.pairs[0].value = 0 }, 'Cannot change value of Set.pairs';
+}
+
+# RT #117103
+{
+    my $s = set;
+    $s (|)= 5;
+    is $s, set(5), 'can metaop set assign like: (|)=';
 }
 
 # vim: ft=perl6
