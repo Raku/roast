@@ -22,7 +22,7 @@ plan 78;
 
 # Type mismatch in assignment; expected something matching type Complex but got something of type Num()
 
-#?rakudo skip 'Complex not type converted properly during assignment from Num'
+#?rakudo skip 'Complex not type converted properly during assignment from Rat: RT #122347'
 #?niecza skip 'Complex not type converted properly during assignment from Rat'
 {
  my Complex $namcu =1.3;
@@ -96,8 +96,8 @@ plan 78;
  isa_ok($gunka, Routine);
 }
 
-#?rakudo skip 'No Module type yet'
-#?niecza skip 'No Module type yet'
+#?rakudo skip 'Module NYI'
+#?niecza skip 'Module NYI'
 {
  my Module $brodu;
  isa_ok($brodu, Module);
