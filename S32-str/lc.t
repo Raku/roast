@@ -34,7 +34,7 @@ is("ÁÉÍÖÜÓŰŐÚ".lc, "áéíöüóűőú", ".lc on Hungarian vowels");
 # position and "σ" elsewhere."
 
 #?niecza todo 'advanced Unicode wizardry'
-#?rakudo.moar todo 'case folding, moarvm issue 87'
+#?rakudo.moar todo 'case folding, MoarVM #87'
 is 'ΣΣΣ'.lc, 'σσς', 'lower-casing of greek Sigma respects word-final special case';
 
 # vim: ft=perl6
