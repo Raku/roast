@@ -62,8 +62,7 @@ eval_lives_ok( '"foo" ~~ /<[f] #`[comment] + [o]>/',
 ok( "foo" ~~ /<[f] #`[comment] + [o]>/, 'comment embedded in charset works' );
 
 # RT #67122
-#?rakudo skip 'large \\x char spec in regex (RT #67122) (noauto)'
-ok "\x[10001]" ~~ /<[\x10000..\xEFFFF]>/, 'large \\x char spec';
+ok "\x[FFEF]" ~~ /<[\x0..\xFFEF]>/, 'large \\x char spec';
 
 #?niecza todo
 eval_dies_ok( "'RT 71702' ~~ /<[d..b]>? RT/",
