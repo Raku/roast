@@ -91,7 +91,7 @@ plan 38;
 }
 
 {
-  #?rakudo todo 'nom regression'
+  #?rakudo todo 'nom regression: RT #122346'
   #?niecza todo
   nok foo().defined, "get variable not yet declared using a sub (1)";
   is foo(), 1, "get variable not yet declared using a sub (2)";
@@ -102,7 +102,7 @@ plan 38;
 }
 
 {
-  #?rakudo todo 'nom regression'
+  #?rakudo todo 'nom regression: RT #122346'
   #?niecza todo
   nok bar().defined, "runtime part of my not yet executed (1)";
   is bar(), 1, "runtime part of my not yet executed (2)";
@@ -137,7 +137,7 @@ plan 38;
   my $a;
   sub rmbl { $a++ }
 
-  #?rakudo todo 'nom regression'
+  #?rakudo todo 'nom regression: RT #122346'
   #?niecza todo
   nok rmbl().defined, "var captured by sub is the right var (1)";
   $a++;
