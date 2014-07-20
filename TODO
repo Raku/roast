@@ -21,6 +21,10 @@ in #perl6.
 OVERALL
 * Add smartlinks to tests without them
 * Review XXX entries for test corrections
+* Find rakudo fudges that do not reference an RT, "NYI", or "unspecced"
+  Open a ticket describing the problem, add that RT number to 
+  the fudge comment. (other implementations have their own ticketing
+  systems)
 
 SPECIFIC
 * 
