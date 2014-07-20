@@ -12,7 +12,7 @@ be valid perl6.
 
 =end pod
 
-plan 22;
+plan 24;
 
 # L<S05/Variable (non-)interpolation/The default way in which the engine handles a scalar>
 
@@ -60,6 +60,13 @@ ok 'foobar' ~~ /$( $_ )/, '$( $_ ) will match';
 is $/, 'foobar', '... $( $_ ) matched entire string';
 is 'foobar' ~~ /$( $_.substr(3) )/, 'bar', 'Contextualizer with functions calls';
 is 'foobar' ~~ /@( <a b c o> )+/,   'ooba', '@( <a b c o> )+';
+
+# RT #117091
+{
+    my $rex = 'rex';
+    ok 'Rex' ~~ m:i/$rex/, 'can case-insensitive match against interpolated var';
+    ok 'Rex' ~~ m:i/<$rex>/, 'can case-insensitive match against var in assertion';
+}
 
 done;
 
