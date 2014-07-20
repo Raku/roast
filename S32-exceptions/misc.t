@@ -497,6 +497,10 @@ throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
     sorrows => sub (@s) { @s[0] ~~ X::Syntax::BlockGobbled && @s[0].what ~~ /'X::Y'/ },
     panic => sub ($p) { $p ~~ X::Syntax::Missing && $p.what ~~ /^block/ };
 
+# RT #75230
+throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
+    reason => { m/'unknown'/ }, pre => { m/'1 if 2 '/ }, post => { m/'if 3 { say 3 }'/ }, highexpect => @('postfix');
+
 done;
 
 # vim: ft=perl6
