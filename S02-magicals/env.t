@@ -59,8 +59,7 @@ ok %*ENV<does_not_exist>:!exists, "exists() returns false on a not defined env v
 # %ENV must not be imported by default
 eval_dies_ok("%ENV", '%ENV not visible by default');
 
-# following doesn't parse yet
-#?rakudo skip 'import keyword'
+#?rakudo skip 'import fails, ENV not available: RT #122339'
 #?niecza skip 'Action method statement_control:import not yet implemented'
 {
     # It must be importable
