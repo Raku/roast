@@ -31,12 +31,12 @@ plan 21;
         'simply capture creation with \\( works (3)';
 }
 
-#?rakudo skip 'nom regression'
 {
     my $capture = \(1, 'positional' => "pair");
 
     # L<S03/Argument List Interpolating/explicitly flatten it in one of>
     sub foo4 ($a, $pair) { "$a!$pair" }
+    #?rakudo skip 'nom regression'
     is foo4(|$capture), "1!positional\tpair",
         'simply capture creation with \\( works (4)';
 }
