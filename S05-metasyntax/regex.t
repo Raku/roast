@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 26;
+plan 29;
 
 eval_dies_ok('qr/foo/', 'qr// is gone');
 
@@ -87,5 +87,36 @@ ok ';' ~~ /\;/,             'escaped ";" in m// works';
 
 #?niecza todo 'invalid syntax'
 eval_lives_ok '/<[..b]>/', '/<[..b]>/ lives';
+
+# RT #118985
+{
+    class HasSub {
+        sub parse(Str $input) {
+            my regex anything { . }
+            42 if $input ~~ /<anything>/
+        }
+        method call-parse-sub(Str $input) {
+            parse($input);
+        }
+    }
+
+    class HasSubMethod {
+        submethod parse(Str $input) {
+            my regex anything { . }
+            43 if $input ~~ /<anything>/
+        }
+    }
+
+    class HasMethod {
+        method parse(Str $input) {
+            my regex anything { . }
+            44 if $input ~~ /<anything>/
+        }
+    }
+
+    is HasSub.call-parse-sub('foo'), 42, 'can have a lexical regex in a sub in a class';
+    is HasSubMethod.parse('foo'),    43, 'can have a lexical regex in a submethod in a class';
+    is HasMethod.parse('foo'),       44, 'can have a lexical regex in a method in a class';
+}
 
 # vim: ft=perl6
