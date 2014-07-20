@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 88;
+plan 89;
 
 # basic lvalue assignment
 # L<S09/Hashes>
@@ -307,6 +307,12 @@ eval_lives_ok('my $rt75694 = { has-b => 42 }', "can have a bareword key starting
     my Hash $RT73230;
     $RT73230[1];
     is($RT73230.perl, 'Hash', 'test for positional (.[]) indexing on a Hash (RT #73230)');
+}
+
+# RT #117431
+{
+    my %hash = a => 1;
+    is item(%hash).perl, ({ a => 1 }).perl, 'item(%hash) is equivalent to {%hash}';
 }
 
 done;
