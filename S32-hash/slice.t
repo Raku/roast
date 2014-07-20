@@ -46,13 +46,13 @@ plan 29;
         "assigning a slice using keys from GatherIterator";
 }
 
-#?rakudo todo 'binding on hash elements unimplemented'
 #?niecza todo 'Writing to readonly scalar'
 {
     my %hash = :a(1), :b(2), :c(3), :d(4);
     my @slice := %hash<b c>;
-    is ~((@slice,*) = <A B C D>), "A B",
-	"assigning a slice too many items yields a correct return value";
+    (@slice,*) = <A B C D>;
+    is ~@slice, "A B",
+	    "assigning a slice too many items yields a correct return value";
 }
 
 # Slices on hash literals
