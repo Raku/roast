@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 10;
+plan 11;
 
 #L<S06/Operator overloading>
 
@@ -33,7 +33,13 @@ is ~(('OMG','BBQ') <<wtf>> ('BBQ','OMG')), 'OMGWTFBBQ BBQWTFOMG', '<<...>> hyper
 # RT 121692
 {
     sub foo { $^a ~ $^b };
-    is ([[&foo]] <a b c d e>), 'abcde', "can we use sub as an op between[]";
+    is ([[&foo]] <a b c d e>), 'abcde', "can we use a sub as an reduce op between [[]]";
+}
+
+# RT 122332
+{
+    sub foo ($a, $b) { $a * $b };
+    is (2 [&foo] 3 [&foo] 4), 24, "can we use a sub as an infix op between []";
 }
 
 # vim: ft=perl6
