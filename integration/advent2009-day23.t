@@ -3,7 +3,7 @@
 use v6;
 use Test;
 
-plan 4;
+plan 10;
 
 my @gather-result = gather { take $_ for 5..7 };
 
@@ -15,7 +15,6 @@ is @gather-result, @push-result, 'Gather/task and push building the same list';
 sub incremental-concat(@list) {
     my $string-accumulator = "";
     gather for @list {
-    # RAKUDO: The ~() is a workaround for [perl #62178]
         take ~($string-accumulator ~= $_);
     }
 };
@@ -57,14 +56,21 @@ my @all-nodes = gather traverse-tree-inorder($tree);
 
 is @all-nodes, ["c", "b", "d", "a", "e"], 'In order tree traversal with gather/take';
 
-#?rakudo skip "lists aren't properly lazy in Rakudo yet"
 #?niecza skip 'hangs'
 {
     my @natural-numbers = 0 .. Inf;
-    my @even-numbers  = 0, 2 ... *;    # arithmetic seq
-    my @odd-numbers   = 1, 3 ... *;
-    my @powers-of-two = 1, 2, 4 ... *; # geometric seq
+    is @natural-numbers[7], 7, 'natural numbers';
 
+    my @even-numbers  = 0, 2 ... *;    # arithmetic seq
+    is @even-numbers[7], 14, 'even numbers';
+
+    my @odd-numbers   = 1, 3 ... *;
+    is @odd-numbers[7], 15, 'odd numbers';
+
+    my @powers-of-two = 1, 2, 4 ... *; # geometric seq
+    is @powers-of-two[7], 128, 'powers of two';
+
+#?rakudo skip "lists aren't properly lazy in Rakudo yet"
     my @squares-of-odd-numbers = map { $_ * $_ }, @odd-numbers;
 
     sub enumerate-positive-rationals() { # with duplicates, but still
@@ -114,5 +120,27 @@ sub hamming-sequence() { # 2**a * 3**b * 5**c, where { all(a,b,c) >= 0 }
 }
 
 # TODO - we need some tests for merge and hamming problem above
+
+my @tree = gather {
+    my %r=[^8]>>.fmt("%03b") Z (0,1,1,1,1,0,0,0);
+    take <. X>[my@i=0 xx 9,1,0 xx 9].join;
+    for ^9 {take <. X>[@i=map {%r{@i[($_-1)%19,$_,($_+1)%19].join}},^19].join};
+}
+
+is_deeply @tree, [q:to"........| |........".lines], 'xmas tree';
+.........X.........
+........XXX........
+.......XX..X.......
+......XX.XXXX......
+.....XX..X...X.....
+....XX.XXXX.XXX....
+...XX..X....X..X...
+..XX.XXXX..XXXXXX..
+.XX..X...XXX.....X.
+XX.XXXX.XX..X...XXX
+........| |........
+     #########
+      #######
+       #####
 
 done;
