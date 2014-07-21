@@ -102,51 +102,41 @@ ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ \C[NEXT LINE (NEL)]/ ), 'Negative named NEXT 
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ \C[NEXT LINE (NEL)]/, 'Negative named NEXT LINE (NEL) match');
 ok(!( "\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/ ), 'Negative charclass named NEXT LINE (NEL) nomatch');
 ok("\c[CARRIAGE RETURN (CR)]" ~~ m/^ <[\C[NEXT LINE (NEL)]]>/, 'Negative charclass named NEXT LINE (NEL) match');
-#?rakudo 4 skip '\c[LF] not valid charname'
+#?rakudo.parrot 36 skip 'RT #122353 LF,FF,CR,NEL not valid charname'
+#?rakudo.jvm 36 skip 'RT #122353 LF,FF,CR,NEL not valid charname'
 ok("abc\c[LF]def" ~~ m/\c[LF]/, 'Unanchored named LF');
 ok("abc\c[LF]def" ~~ m/^ abc \c[LF] def $/, 'Anchored LF');
 ok("abc\c[LF]\c[NEXT LINE (NEL)]def" ~~ m/\c[LF, NEXT LINE (NEL)]/, 'Multiple LF, NEXT LINE (NEL)');
 ok("\c[LF]\c[NEXT LINE (NEL)]" ~~ m/<[\c[LF, NEXT LINE (NEL)]]>/, 'Charclass multiple LF, NEXT LINE (NEL)');
-#?rakudo skip 'escapes in char classes'
 ok(!( "\c[LF]\c[NEXT LINE (NEL)]" ~~ m/^ <-[\c[LF, NEXT LINE (NEL)]]>/ ), 'Negative charclass LF, NEXT LINE (NEL)');
-#?rakudo 4 skip 'LF as char name'
 ok(!( "\c[LF]" ~~ m/^ \C[LF]/ ), 'Negative named LF nomatch');
 ok("\c[NEXT LINE (NEL)]" ~~ m/^ \C[LF]/, 'Negative named LF match');
 ok(!( "\c[LF]" ~~ m/^ <[\C[LF]]>/ ), 'Negative charclass named LF nomatch');
 ok("\c[NEXT LINE (NEL)]" ~~ m/^ <[\C[LF]]>/, 'Negative charclass named LF match');
-#?rakudo 4 skip '\c[FF] not valid charname'
 ok("abc\c[FF]def" ~~ m/\c[FF]/, 'Unanchored named FF');
 ok("abc\c[FF]def" ~~ m/^ abc \c[FF] def $/, 'Anchored FF');
 ok("abc\c[FF]\c[LF]def" ~~ m/\c[FF,LF]/, 'Multiple FF,LF');
 ok("\c[FF]\c[LF]" ~~ m/<[\c[FF,LF]]>/, 'Charclass multiple FF,LF');
-#?rakudo skip 'escapes in char classes'
 ok(!( "\c[FF]\c[LF]" ~~ m/^ <-[\c[FF,LF]]>/ ), 'Negative charclass FF,LF');
 
-#?rakudo 4 skip 'FF as char name'
 ok(!( "\c[FF]" ~~ m/^ \C[FF]/ ), 'Negative named FF nomatch');
 ok("\c[LF]" ~~ m/^ \C[FF]/, 'Negative named FF match');
 ok(!( "\c[FF]" ~~ m/^ <[\C[FF]]>/ ), 'Negative charclass named FF nomatch');
 ok("\c[LF]" ~~ m/^ <[\C[FF]]>/, 'Negative charclass named FF match');
-#?rakudo 4 skip '\c[CR] not valid charname'
 ok("abc\c[CR]def" ~~ m/\c[CR]/, 'Unanchored named CR');
 ok("abc\c[CR]def" ~~ m/^ abc \c[CR] def $/, 'Anchored CR');
 ok("abc\c[CR]\c[FF]def" ~~ m/\c[CR,FF]/, 'Multiple CR,FF');
 ok("\c[CR]\c[FF]" ~~ m/<[\c[CR,FF]]>/, 'Charclass multiple CR,FF');
-#?rakudo skip 'escapes in char classes'
 ok(!( "\c[CR]\c[FF]" ~~ m/^ <-[\c[CR,FF]]>/ ), 'Negative charclass CR,FF');
-#?rakudo 4 skip 'CR as char name'
 ok(!( "\c[CR]" ~~ m/^ \C[CR]/ ), 'Negative named CR nomatch');
 ok("\c[FF]" ~~ m/^ \C[CR]/, 'Negative named CR match');
 ok(!( "\c[CR]" ~~ m/^ <[\C[CR]]>/ ), 'Negative charclass named CR nomatch');
 ok("\c[FF]" ~~ m/^ <[\C[CR]]>/, 'Negative charclass named CR match');
-#?rakudo 4 skip '\c[NEL] not valid charname'
 ok("abc\c[NEL]def" ~~ m/\c[NEL]/, 'Unanchored named NEL');
 ok("abc\c[NEL]def" ~~ m/^ abc \c[NEL] def $/, 'Anchored NEL');
 ok("abc\c[NEL]\c[CR]def" ~~ m/\c[NEL,CR]/, 'Multiple NEL,CR');
 ok("\c[NEL]\c[CR]" ~~ m/<[\c[NEL,CR]]>/, 'Charclass multiple NEL,CR');
-#?rakudo skip 'escapes in char classes'
 ok(!( "\c[NEL]\c[CR]" ~~ m/^ <-[\c[NEL,CR]]>/ ), 'Negative charclass NEL,CR');
-#?rakudo 4 skip 'NEL as char name'
 ok(!( "\c[NEL]" ~~ m/^ \C[NEL]/ ), 'Negative named NEL nomatch');
 ok("\c[CR]" ~~ m/^ \C[NEL]/, 'Negative named NEL match');
 ok(!( "\c[NEL]" ~~ m/^ <[\C[NEL]]>/ ), 'Negative charclass named NEL nomatch');
@@ -155,15 +145,18 @@ ok("abc\x[fd55]def" ~~ m/\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM
 ok("abc\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]def" ~~ m/\x[fd55]/, 'Unanchored \x[fd55]');
 ok("abc\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]def" ~~ m/\o[176525]/, 'Unanchored \o[176525]');
 ok("abc\x[fd55]def" ~~ m/^ abc \c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM] def $/, 'Anchored ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM');
-#?rakudo 3 skip '\c[NEL] not valid charname'
+#?rakudo.parrot 3 skip 'RT #122353 LF,FF,CR,NEL not valid charname'
+#?rakudo.jvm 3 skip 'RT #122353 LF,FF,CR,NEL not valid charname'
 ok("abc\x[fd55]\c[NEL]def" ~~ m/\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]/, 'Multiple ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
 ok("\x[fd55]\c[NEL]" ~~ m/<[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]]>/, 'Charclass multiple ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
 ok(!( "\x[fd55]\c[NEL]" ~~ m/^ <-[\c[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL]]>/ ), 'Negative charclass ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM,NEL');
 ok(!( "\x[fd55]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/ ), 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
-#?rakudo skip '\c[NEL] not valid charname'
+#?rakudo.parrot skip 'RT #122353 LF,FF,CR,NEL not valid charname'
+#?rakudo.jvm skip 'RT #122353 LF,FF,CR,NEL not valid charname'
 ok("\c[NEL]" ~~ m/^ \C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]/, 'Negative named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM match');
 ok(!( "\x[fd55]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/ ), 'Negative charclass named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM nomatch');
-#?rakudo skip '\c[NEL] not valid charname'
+#?rakudo.parrot skip 'RT #122353 LF,FF,CR,NEL not valid charname'
+#?rakudo.jvm skip 'RT #122353 LF,FF,CR,NEL not valid charname'
 ok("\c[NEL]" ~~ m/^ <[\C[ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM]]>/, 'Negative charclass named ARABIC LIGATURE TEH WITH MEEM WITH JEEM INITIAL FORM match');
 
 ok(!( "\x[fd55]" ~~ m/^ \X[FD55]/ ), 'Negative hex \X[FD55] nomatch');
