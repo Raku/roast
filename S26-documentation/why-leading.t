@@ -165,13 +165,12 @@ sub both-documented(
     Int $second
 ) {}
 
-skip "this isn't working yet", 8;
-#is &both-documented.signature.params[0].WHY, 'documented';
-#ok &both-documented.signature.params[0].WHY.WHEREFORE === &both-documented.signature.params[0], 'param WHEREFORE matches';
-#is &both-documented.signature.params[0].WHY.leading, 'documented';
-#ok !&both-documented.signature.params[0].WHY.trailing.defined;
+is &both-documented.signature.params[0].WHY, 'documented';
+ok &both-documented.signature.params[0].WHY.WHEREFORE === &both-documented.signature.params[0], 'param WHEREFORE matches';
+is &both-documented.signature.params[0].WHY.leading, 'documented';
+ok !&both-documented.signature.params[0].WHY.trailing.defined;
 
-#is &both-documented.signature.params[1].WHY, 'I too, am documented';
-#ok &both-documented.signature.params[1].WHY.WHEREFORE === &both-documented.signature.params[0], 'param WHEREFORE matches';
-#is &both-documented.signature.params[1].WHY.leading, 'I too, am documented';
-#ok !&both-documented.signature.params[1].WHY.trailing.defined;
+is &both-documented.signature.params[1].WHY, 'I too, am documented';
+ok &both-documented.signature.params[1].WHY.WHEREFORE === &both-documented.signature.params[0], 'param WHEREFORE matches';
+is &both-documented.signature.params[1].WHY.leading, 'I too, am documented';
+ok !&both-documented.signature.params[1].WHY.trailing.defined;
