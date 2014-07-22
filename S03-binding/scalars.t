@@ -99,14 +99,12 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
   is $a, 42, "bound readonly sub param was bound correctly (1)";
   $val++;
   #?niecza todo "difference of interpretation on ro binding"
-  #?rakudo todo 'nom regression'
-  is $a, 43, "bound readonly sub param was bound correctly (2)";
+  is $a, 42, "bound readonly sub param was bound correctly (2) (no change)";
 
   dies_ok { $a = 23 },
     "bound readonly sub param remains readonly (1)";
   #?niecza todo "difference of interpretation on ro binding"
-  #?rakudo todo 'nom regression'
-  is $a, 43,
+  is $a, 42,
     "bound readonly sub param remains readonly (2)";
   is $val, 43,
     "bound readonly sub param remains readonly (3)";
