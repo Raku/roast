@@ -19,9 +19,8 @@ if 1 {
     is ~$/, 'a', '... and can use the match var';
 }
 
-#?rakudo todo 'nom regression'
 #?niecza todo
-ok !defined($/), '$/ still undefined in the outer block';
+ok defined($/), '$/ is a dynamic lexical, so it is set outside that block.';
 
 my $loop = 1;
 
