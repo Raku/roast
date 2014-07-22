@@ -1,5 +1,5 @@
 use Test;
-plan 87;
+plan 93;
 
 #| simple case
 class Simple {
@@ -11,12 +11,17 @@ is Simple.WHY.leading, 'simple case';
 ok !Simple.WHY.trailing.defined;
 is ~Simple.WHY, 'simple case', 'stringifies correctly';
 
+is ~$=pod[0], 'simple case';
+
 #| giraffe
 class Outer {
     #| zebra
     class Inner {
     }
 }
+
+is ~$=pod[1], 'giraffe';
+is ~$=pod[2], 'zebra';
 
 is Outer.WHY.content, 'giraffe';
 ok Outer.WHY.WHEREFORE === Outer, 'outer class WHEREFORE matches';
@@ -36,6 +41,10 @@ module foo {
         }
     }
 }
+
+is ~$=pod[3], 'a module';
+is ~$=pod[4], 'a package';
+is ~$=pod[5], 'and a class';
 
 is foo.WHY.content,           'a module';
 ok foo.WHY.WHEREFORE === foo, 'module WHEREFORE matches';
