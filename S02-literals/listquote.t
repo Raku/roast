@@ -20,8 +20,7 @@ is($s, "xayaz", 'listop |<< <list>');
 ok( [1,2,3].join<abc> ~~ Failure , '.join<abc> parses and fails');
 
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
-#?rakudo todo 'unknown errors'
-ok(@y eqv [1,2,Any], '{...}<a b c> is hash subscript');
+ok(@y eqv ["1",2,Any], '{...}<a b c> is hash subscript');
 
 eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
 
