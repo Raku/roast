@@ -4,7 +4,7 @@ use Test;
 
 # L<S05/Extensible metasyntax (C<< <...> >>)/"The special named assertions include">
 
-plan 16;
+plan 17;
 
 #?niecza skip 'Tests not completing under niecza'
 {
@@ -47,4 +47,10 @@ plan 16;
     is $latin-chars.comb(/<+ :HexDigit - :Upper >/).join, "0123456789abcdef", 'combined unicode classes';
     is $latin-chars.comb(/<+ :HexDigit - lower >/).join, "0123456789ABCDEF", 'combined unicode and builtins';
 
+}
+
+# RT #121365
+{
+    'o' ~~ /<:!Upper>*/;
+    is ~$/, 'o', 'Can match negated quantified character class';
 }
