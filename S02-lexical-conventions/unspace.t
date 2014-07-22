@@ -100,13 +100,13 @@ is(EVAL('foo\
 #unspace is allowed after a pod = ... which means pod is
 #syntactically recursive, i.e. you can put pod comments
 #inside pod directives recursively!
-#?rakudo skip 'pod and unspace: RT: #122343'
+#?rakudo skip 'pod and unspace: RT #122343'
 is(EVAL('foo\
 =\ begin comment
 blah blah blah
 =\ end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod unspace');
-#?rakudo skip '=for pod NYI (in STD.pm): RT: #122343'
+#?rakudo skip '=for pod NYI (in STD.pm): RT #122343'
 {
 is(EVAL('foo\
 =\ for comment
@@ -116,11 +116,11 @@ blah
 
     .lc'), 'a', 'unspace with pod =for comment w/ pod unspace');
 }
-#?rakudo skip 'pod and unspace: RT: #122343'
+#?rakudo skip 'pod and unspace: RT #122343'
 is(EVAL('foo\
 =\ comment blah blah blah
     .lc'), 'a', 'unspace with pod =comment w/ pod unspace');
-#?rakudo skip 'pod and unspace: RT: #122343'
+#?rakudo skip 'pod and unspace: RT #122343'
 is(EVAL('foo\
 =\
 =begin nested_pod
@@ -134,7 +134,7 @@ blah blah blah
 =end nested_pod
 end comment
     .lc'), 'a', 'unspace with pod =begin/=end comment w/ pod-in-pod');
-#?rakudo skip '=for pod NYI (in STD.pm): RT: #122343'
+#?rakudo skip '=for pod NYI (in STD.pm): RT #122343'
 {
 is(EVAL('foo\
 =\
