@@ -49,8 +49,8 @@ my@x =<abc>;suby(@z){@z[1]};y(@x)
 '), "b", "NEXT LINE (NEL)");
 
 is(try_eval('
-my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
-'), "b", "NO-BREAK SPACE");
+my @x = <a b c>; sub y (@z) { @z[0] }; y(@x)
+'), "a b c", "NO-BREAK SPACE");
 
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
@@ -85,8 +85,8 @@ my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "SIX-PER-EM SPACE");
 
 is(try_eval('
-my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
-'), "b", "FIGURE SPACE");
+my @x = <a b c>; sub y (@z) { @z[0] }; y(@x)
+'), "a b c", "FIGURE SPACE");
 
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
@@ -109,8 +109,8 @@ my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
 '), "b", "PARAGRAPH SEPARATOR");
 
 is(try_eval('
-my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
-'), "b", "NARROW NO-BREAK SPACE");
+my @x = <a b c>; sub y (@z) { @z[0] }; y(@x)
+'), "a b c", "NARROW NO-BREAK SPACE");
 
 is(try_eval('
 my @x = <a b c>; sub y (@z) { @z[1] }; y(@x)
