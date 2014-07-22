@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 22;
+plan 19;
 
 =begin description
 
@@ -29,26 +29,17 @@ while $loop {
     is ~$/, 'b', '... and can use the match var';
     $loop = 0;
 }
-#?rakudo todo 'nom regression'
-#?niecza todo
-ok !defined($/), '$/ still undefined in the outer block';
 
 {
     ok 'c' ~~ /./, 'Can match in a bare block';
     is ~$/, 'c', '... and can use the match var';
 }
-#?rakudo todo 'nom regression'
-#?niecza todo
-ok !defined($/), '$/ still undefined in the outer block';
 
 my $discarded = do {
     ok 'd' ~~ /./, 'Can match in a do block';
     is ~$/, 'd', '... and can use the match var';
 
 }
-#?rakudo todo 'nom regression'
-#?niecza todo
-ok !defined($/), '$/ still undefined in the outer block';
 
 {
     my $str = 'abc';
