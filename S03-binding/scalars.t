@@ -57,7 +57,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 }
 
 # Binding to swap
-#?rakudo skip 'list binding'
+#?rakudo skip 'list binding: RT #122369'
 #?niecza skip 'list binding'
 {
   my $a = "a";
@@ -72,7 +72,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 }
 
 # More tests for binding a list
-#?rakudo skip 'list binding'
+#?rakudo skip 'list binding: RT #122369'
 #?niecza skip 'list binding'
 {
   my $a = "a";
@@ -128,7 +128,7 @@ eval_dies_ok '0 := 1', 'cannot bind to a literal';
 }
 
 # := actually takes subroutine parameter list
-#?rakudo skip 'List binding'
+#?rakudo skip 'list binding: RT #122369'
 #?niecza skip 'list binding'
 {
   my $a;
