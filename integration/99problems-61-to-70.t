@@ -185,7 +185,7 @@ sub count($tree) {
             ['u', 12, 2, 
                 ['p', 9, 3, Any, 
                     ['s', 11, 4,
-                        ['q', 10, 5, Any, Any]], Any], Any]];
+                        ['q', 10, 5, Any, Any], Any]], Any]];
     
     sub align($tree, $prev_x, $prev_y, $lr){
         return Any unless defined($tree);
@@ -204,7 +204,7 @@ sub count($tree) {
     }
     my $result = align($tree, 0, 0, "r");
     
-    is($result, $expected, "tree alignment works");
+    is_deeply($result, $expected, "tree alignment works");
 }
 
 {
@@ -249,7 +249,7 @@ sub count($tree) {
             ['u', 12, 2, 
                 ['p', 9, 3, Any, 
                     ['s', 11, 4,
-                        ['q', 10, 5, Any, Any]], Any], Any]];
+                        ['q', 10, 5, Any, Any], Any]], Any]];
     
     sub align2($tree, $prev_x, $prev_y, $lr){
         return Any unless defined($tree);
@@ -268,7 +268,7 @@ sub count($tree) {
     }
     my $result = align2($tree, 0, 0, "r");
     
-    is($result, $expected, "tree alignment works");
+    is_deeply($result, $expected, "tree alignment works");
 }
 
 {
