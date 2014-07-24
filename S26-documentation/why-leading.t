@@ -1,5 +1,5 @@
 use Test;
-plan 93;
+plan 96;
 
 #| simple case
 class Simple {
@@ -150,6 +150,7 @@ sub has-parameter(
     Str $param
 ) {}
 
+ok !&has-parameter.WHY.defined, 'has-parameter should have no docs' or diag(&has-parameter.WHY);
 is &has-parameter.signature.params[0].WHY, 'documented';
 ok &has-parameter.signature.params[0].WHY.WHEREFORE === &has-parameter.signature.params[0], 'param WHEREFORE matches';
 is &has-parameter.signature.params[0].WHY.leading, 'documented';
@@ -161,6 +162,7 @@ sub has-two-params(
     Int $second
 ) {}
 
+ok !&has-two-params.WHY.defined;
 is &has-two-params.signature.params[0].WHY, 'documented';
 ok &has-two-params.signature.params[0].WHY.WHEREFORE === &has-two-params.signature.params[0], 'param WHEREFORE matches';
 is &has-two-params.signature.params[0].WHY.leading, 'documented';
@@ -174,6 +176,7 @@ sub both-documented(
     Int $second
 ) {}
 
+ok !&both-documented.WHY.defined;
 is &both-documented.signature.params[0].WHY, 'documented';
 ok &both-documented.signature.params[0].WHY.WHEREFORE === &both-documented.signature.params[0], 'param WHEREFORE matches';
 is &both-documented.signature.params[0].WHY.leading, 'documented';
