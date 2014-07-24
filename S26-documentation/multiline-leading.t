@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 2;
+plan 4;
 
 #| More
 #| Than
@@ -10,8 +10,22 @@ plan 2;
 class App {
     #| Does
     #| Stuff
-    method do-stuff() {}
+    method do-stuff(
+        #| Param
+        #| One
+        Str $param1,
+
+        #| Param
+        #| Two
+        Str $param2
+    ) {}
 }
 
+my $method = App.^find_method('do-stuff');
 is ~App.WHY, "More Than One Line";
-is ~App.^find_method('do-stuff').WHY, "Does Stuff";
+is ~$method.WHY, "Does Stuff";
+
+my ( $, $p1, $p2 ) = $method.signature.params;
+
+is ~$p1.WHY, 'Param One';
+is ~$p2.WHY, 'Param Two';
