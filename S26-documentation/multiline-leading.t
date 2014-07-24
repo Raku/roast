@@ -13,5 +13,5 @@ class App {
     method do-stuff() {}
 }
 
-is ~App.WHY, "More\nThan\nOne\nLine";
-is ~App.^find_method('do-stuff').WHY, "Does\nStuff";
+is ~App.WHY, "More Than One Line";
+is ~App.^find_method('do-stuff').WHY, "Does Stuff";
