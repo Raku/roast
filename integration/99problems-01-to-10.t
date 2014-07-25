@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 21;
+plan 22;
 
 {
     # P01 (*) Find the last box of a list.
@@ -106,10 +106,10 @@ plan 21;
     is_deeply @flattened, [<a b c d e>], 'We should be able to flatten lists';
     
     sub my_flatten (*@xs) {
-        sub inner_flatten (*@xs) { return @xs; }
-    
-        return inner_flatten(@xs);
+        return map { $_ ~~ List ?? my_flatten( |@$_ ) !! $_ }, @xs;
     }
+    my @flattened2 = map {my_flatten($_)}, ('a', ['b', ['c', 'd', 'e']]);
+    is_deeply @flattened2, [<a b c d e>], 'We should be able to flatten lists';
     
 }
 
@@ -188,7 +188,6 @@ plan 21;
         '... even using gather/take';
 }
 
-# ? rakudo skip 'groupless gather/take'
 #?niecza skip 'Unable to resolve method reverse in class Parcel'
 {    
     sub group2 (*@array is copy) {
