@@ -178,22 +178,17 @@ sub accumtest($expect, $op) {
     is False ^^ '' ^^ 0, 0, '^^ given all false values returns last (2)';
     is False ^^ 42 ^^ '', 42, '^^ given one true value returns it (1)';
     is 0 ^^ Int ^^ 'plugh', 'plugh', '^^ given one true value returns it (2)';
-    #?rakudo todo 'wrong return type'
-    is 15 ^^ 0 ^^ 'quux', False, '^^ given two true values returns False (1)';
-    #?rakudo todo 'wrong return type'
-    is 'a' ^^ 'b' ^^ 0, False, '^^ given two true values returns False (2)';
+    is 15 ^^ 0 ^^ 'quux', Nil, '^^ given two true values returns False (1)';
+    is 'a' ^^ 'b' ^^ 0, Nil, '^^ given two true values returns False (2)';
 
     is (0 xor False xor ''), '', 'xor given all false values returns last (1)';
     is (False xor '' xor 0), 0, 'xor given all false values returns last (2)';
     is (False xor 42 xor ''), 42, 'xor given one true value returns it (1)';
     is (0 xor Int xor 'plugh'), 'plugh', 'xor given one true value returns it (2)';
-    #?rakudo todo 'wrong return type'
-    is (15 xor 0 xor 'quux'), False, 'xor given two true values returns False (1)';
-    #?rakudo todo 'wrong return type'
-    is ('a' xor 'b' xor 0), False, 'xor given two true values returns False (2)';
+    is (15 xor 0 xor 'quux'), Nil, 'xor given two true values returns False (1)';
+    is ('a' xor 'b' xor 0), Nil, 'xor given two true values returns False (2)';
 
-    #?rakudo todo 'wrong return type'
-    isa_ok 7 ^^ 7, Bool, '^^ can return a Bool';
+    isa_ok 7 ^^ 7, Nil, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
     isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
@@ -257,7 +252,6 @@ sub accumtest($expect, $op) {
     is c($b), 2, 'shortcircuit idiom given Mu works';
 }
 
-# a rakudo regression
 ok (0 || 0 || 1), '0 || 0 || 1 is true';
 
 # RT #77864
