@@ -160,8 +160,7 @@ sub accumtest($expect, $op) {
     #?niecza 10 skip "^^ xor NYI"
     is(0 ^^ 42,        42, "^^  operator working (one true)");
     is(42 ^^ 0,        42, "^^  operator working (one true)");
-    #?rakudo todo 'wrong return type'
-    is(1 ^^ 42,     False, "^^  operator working (both true)");
+    is(1 ^^ 42,       Nil, "^^  operator working (both true)");
     is(0 ^^ 0,          0, "^^  operator working (both false)");
     is((0 xor 42),     42, "xor operator working (one true)");
     is((42 xor 0),     42, "xor operator working (one true)");
