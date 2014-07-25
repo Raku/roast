@@ -1,5 +1,5 @@
 use Test;
-plan 55;
+plan 56;
 
 #| simple case
 class Simple {
@@ -135,3 +135,15 @@ sub has-anon-param(
 $param = &has-anon-param.signature.params[0];
 
 is $param.WHY, "leading\ntrailing", 'anonymous parameters should work';
+
+class DoesntMatter {
+    method m(
+        #| invocant comment
+        ::?CLASS $this:
+        #= another invocant comment
+        $arg
+    ) {}
+}
+
+$param = DoesntMatter.^find_method('m').signature.params[0];
+is $param.WHY, "invocant comment\nanother invocant comment", 'invocant comments should work';
