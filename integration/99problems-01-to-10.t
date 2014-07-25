@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 22;
+plan 21;
 
 {
     # P01 (*) Find the last box of a list.
@@ -103,17 +103,14 @@ plan 22;
     
     my $flatten = { $_ ~~ List ?? ( map $flatten, @($_) ) !! $_ }; 
     my @flattened = map $flatten, ('a', ['b', ['c', 'd', 'e']]);
-    is @flattened, <a b c d e>, 'We should be able to flatten lists';
+    is_deeply @flattened, [<a b c d e>], 'We should be able to flatten lists';
     
-    # XXX this doesn't work that way...
-    sub my_flatten (@xs) {
+    sub my_flatten (*@xs) {
         sub inner_flatten (*@xs) { return @xs; }
     
         return inner_flatten(@xs);
     }
     
-    is my_flatten( ('a', ['b', ['c', 'd', 'e']]) ), <a b c d e>,
-        'We should be able to flatten lists by func';
 }
 
 {
@@ -129,21 +126,21 @@ plan 22;
     
     # parens required in the assignment.  See http://perlmonks.org/?node=587242
     my $compress = sub ($x) {
-        state $previous;
+        state $previous = '';
         return $x ne $previous ?? ($previous = $x) !! ();
     }
     my @compressed = map $compress, <a a a a b c c a a d e e e e>;
     #?niecza todo
-    is @compressed, <a b c a d e>, 'We should be able to compress lists';
+    is_deeply @compressed, [<a b c a d e>], 'We should be able to compress lists';
 }
 
 {
     multi compress2 () { () }
     multi compress2 ($a) { $a }
-    multi compress2 ($x, $y, *@xs) { $x xx ($x !=== $y), compress2($y, |@xs) }
+    multi compress2 ($x, $y, *@xs) { @( $x xx ($x !=== $y), @( compress2($y, |@xs) )) }
     
     my @x = <a a a a b c c a a d e e e e>;
-    is compress2(|@x), <a b c a d e>, '... even with multi subs';
+    is_deeply [compress2(|@x)], [<a b c a d e>], '... even with multi subs';
 }
 
 {
@@ -159,7 +156,8 @@ plan 22;
         my @packed;
         while @array {
             my @list;
-            @list.push(@array.shift) while !@list || @list[0] eq @array[0];
+            @list.push(@array.shift)
+                while @array && (!@list || @list[0] eq @array[0]);
             @packed.push([@list]);
         }
         return @packed;
@@ -190,21 +188,21 @@ plan 22;
         '... even using gather/take';
 }
 
-#?rakudo skip 'groupless gather/take'
+# ? rakudo skip 'groupless gather/take'
 #?niecza skip 'Unable to resolve method reverse in class Parcel'
 {    
     sub group2 (*@array is copy) {
         gather while @array {
             take [ 
-                my $h = shift @array,
+                my $h = @array[0];
                 gather while @array and $h eq @array[0] {
                     take shift @array;
                 }
             ];
         }
     }
-    is group2(<a a a a b c c a a d e e e e>).join('+'),
-        'a a a a+b+c c+a a+d+e e e e',
+    is_deeply [group2(<a a a a b c c a a d e e e e>)],
+        [[<a a a a>], [<b>],  [<c c>], [<a a>], [<d>], [<e e e e>]],
         '... even using blockless gather/take';
     
 }
@@ -227,11 +225,11 @@ plan 22;
         
         for @list {
             $x = $_;
-            if $x eq $previous {
-                $count++;
-                next;
-            }
             if defined $previous {
+                if $x eq $previous {
+                    $count++;
+                    next;
+                }
                 @encoded.push([$count, $previous]);
                 $count = 1;
             }
@@ -241,8 +239,8 @@ plan 22;
         return @encoded;
     }
     
-    is encode(<a a a a b c c a a d e e e e>).join('+'),
-        '4 a+1 b+2 c+2 a+1 d+4 e',
+    is_deeply encode(<a a a a b c c a a d e e e e>),
+        [[4, "a"], [1, "b"], [2, "c"], [2, "a"], [1, "d"], [4, "e"]],
         'We should be able to run-length encode lists';
 }
 
