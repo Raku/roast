@@ -8,7 +8,7 @@ plan 5;
     ok(("bar" !~~ "foo"),   "bar ne foo)");
     ok  (4 ~~ '4'),         'string equality';
     ok !(4 !~~ '4'),        'negated string equality';
-    #?rakudo skip 'smartmatching Mu against Str'
+    #?rakudo skip 'smartmatching Mu against Str: RT #122395'
     #?niecza skip 'Mu as argument'
     ok  (Mu ~~ ''),         'Mu ~~ ""';
 }
