@@ -1,5 +1,5 @@
 use Test;
-plan 54;
+plan 55;
 
 #| simple case
 class Simple {
@@ -125,3 +125,13 @@ is $param.WHY.trailing, "first param";
 
 $param = &so-many-params.signature.params[1];
 ok !$param.WHY.defined, 'the second parameter has no comments' or diag($param.WHY.content);
+
+sub has-anon-param(
+    #| leading
+    Str $
+    #= trailing
+) {}
+
+$param = &has-anon-param.signature.params[0];
+
+is $param.WHY, "leading\ntrailing", 'anonymous parameters should work';

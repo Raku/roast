@@ -1,5 +1,5 @@
 use Test;
-plan 96;
+plan 97;
 
 #| simple case
 class Simple {
@@ -186,3 +186,12 @@ is &both-documented.signature.params[1].WHY, 'I too, am documented';
 ok &both-documented.signature.params[1].WHY.WHEREFORE === &both-documented.signature.params[1], 'param WHEREFORE matches';
 is &both-documented.signature.params[1].WHY.leading, 'I too, am documented';
 ok !&both-documented.signature.params[1].WHY.trailing.defined;
+
+sub has-anon-param(
+    #| leading
+    Str $
+) {}
+
+my $param = &has-anon-param.signature.params[0];
+
+is $param.WHY, 'leading', 'anonymous parameters should work';
