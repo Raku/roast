@@ -20,7 +20,7 @@ plan 10;
     );
 }
 
-#?rakudo skip "No such method cat for List"
+#?rakudo skip "cat NYI"
 # buffer acting as a compact array
 {
     my buf8 $buffer = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;
@@ -33,7 +33,7 @@ plan 10;
     );
 }
 
-#?rakudo skip "No such method cat for List"
+#?rakudo skip "cat NYI"
 # L<S09/Compact arrays/The size of any buffer type in bytes may be found with the .bytes method>
 {
     my buf8  $buf8  = ('A' .. 'Z').map({sprintf('%08d', .ord)}).cat;
