@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 16;
+plan 15;
 
 =begin desc
 
@@ -42,9 +42,6 @@ try {
     ok ~($!) ~~ /qwerty/, 'die sets $! properly';
     die; # use the default argument
 }
-#?rakudo todo 'stringification of $!'
-#?niecza todo
-ok ~($!) ~~ /qwerty/, 'die without argument uses $! properly';
 
 # RT #70011
 #?niecza skip 'undefine and Exception NYI'
