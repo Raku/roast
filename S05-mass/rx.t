@@ -1,6 +1,6 @@
 use Test;
 
-plan 740;
+plan 739;
 
 ### for now
 sub matchcheck(*@) { 1 }
@@ -255,7 +255,6 @@ ok 'abcdef' ~~ /<[c]>/, 'character class';
 ok 'abc def' !~~ /<[ z ]>/, 'character class ignores ws';
 
 #### <[dcb]>**{3}		abcdef		y	repeated character class
-#?rakudo skip 'closure repetition'
 ok 'abcdef' ~~ /<[dcb]>**{3}/, 'repeated character class';
 
 #### ^<[a]>			abcdef		y	anchored character class
@@ -273,7 +272,6 @@ ok 'abcdef' ~~ /^<[a]>?/, 'anchored optional character class';
 ok 'abcdef' ~~ /<-[e]>?/, 'negated optional character class';
 
 #### <-[dcb]>**{3}		abcdef		n	repeated negated character class
-#?rakudo skip 'RT #121306'
 ok 'abcdef' !~~ /<-[dcb]>**{3}/, 'repeated negated character class';
 
 #### ^<-[e]>			abcdef		y	anchored negated character class
@@ -375,11 +373,9 @@ ok '><' ~~ /^\><[<]>/, 'lt character class';
 ok '><' ~~ /^<[>]>\</, 'gt character class';
 
 #### ^<[><]>**{2}		><		y	gt, lt character class
-#?rakudo skip '**{}'
 ok '><' ~~ /^<[><]>**{2}/, 'gt, lt character class';
 
 #### ^<[<>]>**{2}		><		y	lt, gt  character class
-#?rakudo skip '**{}'
 ok '><' ~~ /^<[<>]>**{2}/, 'lt, gt  character class';
 
 #### ^<-[><]>		><		n	not gt, lt character class
@@ -1948,79 +1944,60 @@ ok ('xay' ~~ /:ratchet xa?!a/) && matchcheck($/, q/<xa @ 0>/), 'ques ratchet gre
 
 ## Quantifier closure
 #### .**{2}			a			n	only one character
-#?rakudo skip '**{}'
 ok 'a' !~~ /.**{2}/, 'only one character';
 
 #### .**{2}			ab			y	two characters
-#?rakudo skip '**{}'
 ok 'ab' ~~ /.**{2}/, 'two characters';
 
 #### a**{2}			foobar		n	only one "a" character
-#?rakudo skip '**{}'
 ok 'foobar' !~~ /a**{2}/, 'only one "a" character';
 
 #### a**{2}			baabaa		y	two "a" characters
-#?rakudo skip '**{}'
 ok 'baabaa' ~~ /a**{2}/, 'two "a" characters';
 
 #### a**{0..4}		bbbbbbb		y	no "a" characters
-#?rakudo skip '**{}'
 ok 'bbbbbbb' ~~ /a**{0..4}/, 'no "a" characters';
 
 #### a**{2..4}		bababab		n	not two consecutive "a" characters
-#?rakudo skip '**{}'
 ok 'bababab' !~~ /a**{2..4}/, 'not two consecutive "a" characters';
 
 #### a**{2..4}		baabbbb		y	two "a" characters
-#?rakudo skip '**{}'
 ok 'baabbbb' ~~ /a**{2..4}/, 'two "a" characters';
 
 #### a**{2..4}		baaabbb		y	three "a" characters
-#?rakudo skip '**{}'
 ok 'baaabbb' ~~ /a**{2..4}/, 'three "a" characters';
 
 #### a**{2..4}		baaaabb		y	four "a" characters
-#?rakudo skip '**{}'
 ok 'baaaabb' ~~ /a**{2..4}/, 'four "a" characters';
 
 #### a**{2..4}		baaaaaa		y	four "a" characters
-#?rakudo skip '**{}'
 ok 'baaaaaa' ~~ /a**{2..4}/, 'four "a" characters';
 
 #### a**{2..*}		baaaaaa		y	six "a" characters
-#?rakudo skip '**{}'
 ok 'baaaaaa' ~~ /a**{2..*}/, 'six "a" characters';
 
 #### a**?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
-#?rakudo skip '**{}'
 ok 'baaaaaa' ~~ /a**?{2..*}/, 'two "a" characters (non-greedy)';
 
 #### a**:?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
-#?rakudo skip '**{}'
 ok 'baaaaaa' ~~ /a**:?{2..*}/, 'two "a" characters (non-greedy)';
 
 #### a**!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
-#?rakudo skip '**{}'
 ok 'baaaaaa' ~~ /a**!{2..*}/, 'six "a" characters (explicit greed)';
 
 #### a**:!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
-#?rakudo skip '**{}'
 ok 'baaaaaa' ~~ /a**:!{2..*}/, 'six "a" characters (explicit greed)';
 
 #### a**?{2..4}		baaabbb		y	two "a" characters (non-greedy)
-#?rakudo skip '**{}'
 ok 'baaabbb' ~~ /a**?{2..4}/, 'two "a" characters (non-greedy)';
 
 #### a**:?{2..4}		baaabbb		y	two "a" characters (non-greedy)
-#?rakudo skip '**{}'
 ok 'baaabbb' ~~ /a**:?{2..4}/, 'two "a" characters (non-greedy)';
 
 #### a**!{2..4}		baaabbb		y	three "a" characters (explicit greed)
-#?rakudo skip '**{}'
 ok 'baaabbb' ~~ /a**!{2..4}/, 'three "a" characters (explicit greed)';
 
 #### a**:!{2..4}		baaabbb		y	three "a" characters (explicit greed)
-#?rakudo skip '**{}'
 ok 'baaabbb' ~~ /a**:!{2..4}/, 'three "a" characters (explicit greed)';
 
 
@@ -2086,9 +2063,6 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
 {
     ok 'foooo' ~~ /^ f o ** 4 $/, 'RT #112450 sanity';
     my $rt112450 = 4;
-    #?rakudo 2 skip 'RT #112450'
-    #?niecza 2 skip 'Dubious test, http://irclog.perlgeek.de/perl6/2012-05-27#i_5643089'
-    ok 'foooo' ~~ /^ f o **  $rt112450  $/, 'RT #112450 interpolation';
     ok 'foooo' ~~ /^ f o ** {$rt112450} $/, 'RT #112450 closure interpolation';
 }
 
@@ -2100,7 +2074,6 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
     ok $ten_x ~~ / x ** 3 /, 'RT #112454 match sanity';
     is $/.Str, 'x' x 3, 'RT #112454 quantifier sanity';
 
-    #?rakudo 2 skip 'RT #112454'
     ok $ten_x ~~ / x ** {$rt112454} /, 'Simple match (RT #112454)';
     is $/.Str, 'x' x $rt112454, '** quantifier with braces (RT #112454)';
 }
@@ -2112,7 +2085,6 @@ ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
     ok 'foobar' ~~ / . ** 0 /, 'RT #116415 match sanity';
     is $/.Str, '', 'RT #116415 quantifier sanity';
 
-    #?rakudo 2 skip 'RT #116415'
     ok 'foobar' ~~ / . ** {$rt116415} /, 'Simple match (RT #116415)';
     is $/.Str, '', '** quantifier with braces (RT #116415)';
 }
