@@ -13,7 +13,7 @@ plan 41;
 # L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
 
 # real multi-dimensional arrays
-#?rakudo skip 'multi-dim [;] sugar NYI'
+#?rakudo skip 'multi-dim sized arrays NYI'
 {
     my @md[2;2];
     @md[0;0] = 0;
@@ -29,7 +29,7 @@ plan 41;
     is(@md.elems, 4, '.elems works on multidimensional array');
 }
 
-#?rakudo skip 'multi-dim [;] sugar NYI'
+#?rakudo skip 'multi-dim sized arrays NYI'
 {
     my @md[*;*;2];
     @md[0;0;0] = 'foo';
@@ -56,7 +56,6 @@ isa_ok($multi1[1], List);
 # multi-dimensional array slices
 # L<S09/"Subscript and slice notation"/index value to each slice>
 
-#?rakudo 3 todo 'multi-dim [;] sugar NYI'
 is(EVAL('$multi1[1;0]'), 'foo', 'got the right value at multi1 index 1,0');
 is(EVAL('$multi1[1;1]'), 'bar', 'got the right value at multi1 index 1,1');
 is(EVAL('$multi1[1;2]'), 'baz', 'got the right value at multi1 index 1,2');
@@ -86,7 +85,6 @@ isa_ok($multi2[0], Parcel);
 
 # slice
 
-#?rakudo 3 todo 'multi-dim [;] sugar NYI'
 is(EVAL('$multi2[0;0]'), 1, 'got the right value at multi2 index 0,0');
 is(EVAL('$multi2[0;1]'), 2, 'got the right value at multi2 index 0,1');
 is(EVAL('$multi2[0;2]'), 3, 'got the right value at multi2 index 0,2');
@@ -107,7 +105,6 @@ isa_ok($multi2[1], List);
 
 # slice
 
-#?rakudo 3 todo 'multi-dim [;] sugar NYI'
 is(EVAL('$multi2[1;0]'), 4, 'got the right value at multi2 index 1,0');
 is(EVAL('$multi2[1;1]'), 5, 'got the right value at multi2 index 1,1');
 is(EVAL('$multi2[1;2]'), 6, 'got the right value at multi2 index 1,2');
