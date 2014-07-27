@@ -19,11 +19,11 @@ plan 25;
         
         for @list {
             $x = $_;
-            if $x eq $previous {
-                $count++;
-                next;
-            }
             if defined $previous {
+                if $x eq $previous {
+                    $count++;
+                    next;
+                }
                 @encoded.push( 1 == $count ?? $previous !! [$count, $previous]);
                 $count = 1;
             }
@@ -70,7 +70,7 @@ plan 25;
     
     sub encode_direct {
         my @chars = @_;
-        my $encoded;
+        my $encoded = '';
         my $prev_ch = '';
         my $ch_cnt = 0;
         while (my $ch = @chars.shift) {
