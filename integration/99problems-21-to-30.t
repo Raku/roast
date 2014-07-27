@@ -40,13 +40,12 @@ plan 15;
     
     # of course the following is wrong, but it also confuses test output!
     #ok all(@rand) ~~ none(@letters), '... and they should be in the letters';
-    #?rakudo todo 'unknown'
     #?niecza todo 'unknown'
-    ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
+    ok ?(@rand (<=) @letters), '... and they should be in the letters';
     
     @rand = <a b c d e f g h>.pick(3);
     is @rand.elems, 3, 'pick() should return the correct number of items';
-    #?rakudo todo 'unknown'
+    #?rakudo todo 'RT #122414'
     #?niecza todo 'unknown'
     ok ?(all(@rand) ~~ any(@letters)), '... and they should be in the letters';
 }
@@ -81,11 +80,10 @@ plan 15;
     
     my @numbers = lotto(6, 49);
     is @numbers.elems, 6, 'lotto() should return the correct number of numbers';
-    #?rakudo todo 'unknown'
+    #?rakudo todo 'RT #122414'
     #?niecza todo 'unknown'
     ok ?(all(@numbers) ~~ any(1..49)), '... and they should be in the correct range';
     my %unique = map { ($_ => 1) }, @numbers;
-    diag %unique.perl;
     is %unique.keys.elems, 6, '... and they should all be unique numbers';
 }
 
