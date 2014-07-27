@@ -99,10 +99,7 @@ plan 13;
     sub _and($A, $B) {return ($A and $B)};
     sub _nand($A, $B) {return !($A and $B)};
     sub _nor($A, $B) {return !($A or $B)};
-    sub _xor($A, $B) { # FIXME if you know DeMorgan
-        return False if $A and $B;
-        return ($A or $B);
-    };
+    sub _xor($A, $B) { return ($A != $B)};
     sub _impl($A, $B) {
         if $A and !$B {
             return False;
@@ -197,7 +194,7 @@ fail fail fail
     # 
     # n = 1: C(1) = ['0','1'].
     # n = 2: C(2) = ['00','01','11','10'].
-    # n = 3: C(3) = ['000','001','011','010',Â´110Â´,Â´111Â´,Â´101Â´,Â´100Â´].
+    # n = 3: C(3) = ['000','001','011','010','110','111','101','100'].
     # 
     # Find out the construction rules and write a predicate with the following
     # specification:
@@ -207,29 +204,27 @@ fail fail fail
     # Can you apply the method of "result caching" in order to make the predicate
     # more efficient, when it is to be used repeatedly?
 
-    # TODO: add an 'is cached' trait once that's implemented
-    sub gray($n) {
-        return ('',) if $n == 0;
-        '0' xx 2**($n-1) >>~<< gray($n-1), 
-            '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse;
+    sub gray($n) is cached {
+        return [''] if $n == 0;
+        ['0' xx 2**($n-1) >>~<< gray($n-1), 
+         '1' xx 2 ** ($n-1) >>~<< gray($n-1).reverse];
     }
-    is gray(0), ();
-    is gray(1), <0 1>;
-    is gray(2), <00 01 11 10>;
-    #?rakudo todo "making Parcel.reverse return a Parcel seems to break this"
-    is gray(3), <000 001 011 010 110 111 101 100>;
+    is_deeply gray(0), [''];
+    is_deeply gray(1), [<0 1>];
+    is_deeply gray(2), [<00 01 11 10>];
+    is_deeply gray(3), [<000 001 011 010 110 111 101 100>];
 }
 
-#?rakudo skip 'Shaped variable declarations'
 {    
     sub gray2($n) {
-        return ('',) if $n == 0;
-        state @g[$n] //= ('0' >>~<< gray2($n-1), '1' >>~<< gray2($n-1).reverse);
+        return [''] if $n == 0;
+        (state @g)[$n] //= ['0' xx 2**($n-1) >>~<< gray2($n-1),
+                            '1' xx 2**($n-1) >>~<< gray2($n-1).reverse];
     }
-    is gray2(0), ();
-    is gray2(1), <0 1>, 'gray code for n = 1';
-    is gray2(2), <00 01 11 10>, 'gray code for n = 2';
-    is gray2(3), <000 001 011 010 110 111 101 100>, 'gry code for n = 3';
+    is_deeply gray2(0), [''];
+    is_deeply gray2(1), [<0 1>];
+    is_deeply gray2(2), [<00 01 11 10>];
+    is_deeply gray2(3), [<000 001 011 010 110 111 101 100>];
 }
 
 {
