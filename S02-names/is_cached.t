@@ -75,11 +75,13 @@ plan 38;
     is foo(42), 42, 'did we get the value back (1)';
     is_deeply @int, [42], 'was the code done (1)';
     is foo(42), 42, 'did we get the value back (2)';
+    #?rakudo.jvm todo "is cached is only a hint: RT #122425"
     is_deeply @int, [42], 'was the code done (2)';
 
     is foo("Camelia"), "Camelia", 'did we get the value back (3)';
     is_deeply @str, [<Camelia>], 'was the code done (3)';
     is foo("Camelia"), "Camelia", 'did we get the value back (4)';
+    #?rakudo.jvm todo "is cached is only a hint: RT #122425"
     is_deeply @str, [<Camelia>], 'was the code done (4)';
 } #4
 
