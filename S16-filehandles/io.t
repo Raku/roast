@@ -13,7 +13,7 @@ I/O tests
 
 =end pod
 
-plan 84;
+plan 86;
 
 sub nonce () { return ".{$*PID}." ~ (1..1000).pick() }
 my $filename = 'tempfile_filehandles_io' ~ nonce();
@@ -262,6 +262,11 @@ unlink($filename);
     is $in.lines.join, 'blarg', 'can use .lines on a file without trailing newline';
     $in.close;
     unlink $filename;
+}
+
+{
+    dies_ok { open('t').read(42) }, '.read on a directory fails';
+    dies_ok { open('t').get(1) }, '.get on a directory fails';
 }
 
 done;

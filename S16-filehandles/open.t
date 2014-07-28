@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 3;
+plan 5;
 
 # L<S32::IO/IO::File/open>
 # old: L<S16/"Filehandles, files, and directories"/"open">
@@ -26,6 +26,12 @@ Some edge and error cases for open()
     open("create_this_file2", :w);
     ok('create_this_file2'.IO ~~ :e, 'appending to a non-existent file creates it');
     unlink('create_this_file2');
+}
+
+# opening directories
+{
+    lives_ok { open('t') }, 'opening a directory works';
+    dies_ok { open('t', :w) }, 'opening a directory as writable fails';
 }
 
 

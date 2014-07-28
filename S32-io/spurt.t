@@ -82,6 +82,14 @@ sub all-basic(Callable $handle) {
         is slurp($path), $txt, 'can spurt text into a binary handle';
     }
 
+    # spurting to a directory
+    {
+        dies_ok { open('t').spurt("'Twas brillig, and the slithy toves") },
+            '.spurt()ing to a directory fails';
+        dies_ok { spurt('t', 'Did gyre and gimble in the wabe') },
+            '&spurt()ing to a directory fails';
+    }
+
     unlink $path;
 }
 

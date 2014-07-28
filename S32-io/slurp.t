@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 16;
+plan 18;
 
 # older: L<S16/"Unfiled"/"=item IO.slurp">
 # old: L<S32::IO/IO::FileNode/slurp>
@@ -13,6 +13,7 @@ plan 16;
 
 {
   dies_ok { slurp "t/" }, "slurp() on directories fails";
+  dies_ok { open('t').slurp }, 'slurp on open directory fails';
 }
 
 my $test-path = "tempfile-slurp-test";
@@ -76,6 +77,11 @@ is slurp($empty-path), '', "empty files yield empty string";
 
 my @slurped_lines = lines(open($test-path));
 is +@slurped_lines, 3, "lines() - exactly 3 lines in this file";
+
+# slurp in list context on a directory
+{
+    dies_ok { open('t').lines }, '.lines on a directory fails';
+}
 
 unlink $test-path;
 unlink $empty-path;

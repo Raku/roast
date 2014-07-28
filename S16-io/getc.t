@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 1;
+plan 2;
 
 # L<S32::IO/IO/"getc">
 
@@ -21,6 +21,10 @@ my $tmpfile = "temp-test" ~ nonce();
   close $fh or die "Couldn't close \"$tmpfile\": $!\n";
 
   is ~@chars, "T e s t Ä Ö Ü \n \n 0", "getc() works even for utf-8 input";
+}
+
+{
+    dies_ok { open('t').getc }, 'getc on a directory fails';
 }
 
 END { unlink $tmpfile }
