@@ -51,10 +51,9 @@ plan 13;
         [ map { [$_, goldbach $_] }, grep { $_ % 2 == 0 }, $from .. $to ]
     }
     
-    is goldbachs(3, 11), [[4, 2, 2], [6, 3, 3], [8, 3, 5], [10, 3, 7]], "yep.";
+    is goldbachs(3, 11), [[4, 2, 2], [6, 3, 3], [8, 3, 5], [10, 3, 7]], 'P41 (**) A list of Goldbach compositions.';
 }
 
-#?rakudo skip 's:P5///'
 {
     # P46 (**) Truth tables for logical expressions.
     #
@@ -80,69 +79,99 @@ plan 13;
     
     # --
     
-    
-    sub stringify($Thing) {
-        if $Thing {
-            return 'true';
-        } else {
-            return 'fail'; # as per problem description
-        };
-    };
-    
-    # Obviously we can't just make 'or' respective 'and' subs
-    # because those are builtin operators.  Maybe there's a way
-    # around that, but I wouldn't know how to call the original
-    # operator in the sub (core::and?), so I bend the task
-    # description a little and just prefix the subs with
-    # an underscore.
-    sub _or($A, $B) {return ($A or $B)};
-    sub _and($A, $B) {return ($A and $B)};
-    sub _nand($A, $B) {return !($A and $B)};
-    sub _nor($A, $B) {return !($A or $B)};
-    sub _xor($A, $B) { return ($A != $B)};
-    sub _impl($A, $B) {
-        if $A and !$B {
-            return False;
-        } else {
-            return True;
-        };
-    };
-    sub _equ($A, $B) {return $A == $B};
-    
-    sub table($expr is copy) {
-    # I have to copy this around or else I get
-    # "Can't modify constant item: VStr"
-    # error as soon as I want to modify it
-    
-        $expr ~~ s:P5/^A,B,//;
-        $expr ~~ s:P5:g/([AB])/$$0/;
-    # first capture is now $0
-        $expr ~~ s:P5:g/([nx]?or|n?and|impl|equ)/_$0/;     #:
-    
-        my @table;
-        for (True, False) -> $A {
-            for (True, False) -> $B {
-                push @table, (
-                    join ' ', (
-                        stringify $A,
-                        stringify $B,
-                        stringify EVAL $expr
-                    )
-                ) ~ "\n";
+    grammar LogicalExpr {
+
+        token TOP {
+            'table(' ~ ')' [
+                <id>  +%% ','
+                <term>
+                ]
+        }
+
+        token id {<[ A .. Z ]>}
+
+        proto token op {*}
+        token op:sym<and>  {<sym>}
+        token op:sym<or>   {<sym>}
+        token op:sym<nand> {<sym>}
+        token op:sym<nor>  {<sym>}
+        token op:sym<xor>  {<sym>}
+        token op:sym<impl> {<sym>}
+        token op:sym<equ>  {<sym>}
+
+        proto token term {*}
+        token term:sym<var>  {<id>}
+        token term:sym<func> {<op>'(' ~ ')' <term> **2% ','}
+    }
+
+    class LogicalExpr::Actions {
+
+        method TOP($/) {
+            make {
+                vars => @<id>>>.ast,
+                func => $<term>.ast,
             };
-        };
-    
-        return @table;
-    };
+        }
+
+        method id($/) {make ~$/}
+
+        # generate closures. defer processing
+        method op:sym<and>($/)  {make sub ($a, $b){ $a and $b     }}
+        method op:sym<or>($/)   {make sub ($a, $b){ $a or $b      }}
+        method op:sym<nand>($/) {make sub ($a, $b){ !($a and !$b) }}
+        method op:sym<nor>($/)  {make sub ($a, $b){ !($a or $b)   }}
+        method op:sym<xor>($/)  {make sub ($a, $b){ $a != $b      }}
+        method op:sym<impl>($/) {make sub ($a, $b){ !($a and !$b) }}
+        method op:sym<equ>($/)  {make sub ($a, $b){ $a == $b      }}
+
+        method term:sym<var>($/)   {
+            my $id = ~$<id>;
+            make sub () { 
+                %*VAR{$id} // die "unknown variable: $id"
+            }
+        }
+
+        method term:sym<func>($/)  {
+            my $func = $<op>.ast;
+            my @args = @<term>>>.ast;
+            make sub () {
+                $func( |@args.map: {.()} )
+            }
+        }
+    }
+
+    sub truth-table($expr) {
+        my $actions = LogicalExpr::Actions.new;
+
+        LogicalExpr.parse($expr, :actions($actions) );
+        my @vars = @( $/.ast<vars> );
+        my $truth-func = $/.ast<func>;
+
+        sub the-truth(@vals) {
+            # setup symbol table and compute result
+            our %*VAR = @vars Z=> @vals;
+            @vals.push: $truth-func();
+            @vals.map: {$_ ?? 'true' !! 'fail'};
+        }
+
+        my @table;
+
+        # generate the truth table, as per spec
+        for (0 .. 2 ** @vars-1).reverse -> $mask {
+            my $n = @vars-1;
+            my @vals = @vars.map: {($mask +& (2**$n--))};
+            @table.push: ~the-truth(@vals);
+        }
+
+        make @table;
+    }
    
-    is q[true true true
-true fail true
-fail true fail
-fail fail fail
-]
-    , join('',
-        table('A,B,and(A,or(A,B))')
-    ), 'P46 (**) Truth tables for logical expressions.';
+    is_deeply truth-table('table(A,B,and(A,or(A,B)))'),
+    ['true true true',
+     'true fail true',
+     'fail true fail',
+     'fail fail fail',],
+    'P46 (**) Truth tables for logical expressions.';
 }
 
 {
@@ -305,8 +334,7 @@ fail fail fail
     }
     traverse(@c[0][0]);
     
-    is(~%res.sort, ~%expected.sort, "Huffman tree builds correctly");
-    
+    is(~%res.sort, ~%expected.sort, "P50 (**) Huffman tree builds correctly");    
         
 }
 
