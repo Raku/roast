@@ -35,15 +35,16 @@ plan 15;
 
     my $tree = ['A', ['B', ['C', Any, Any], ['D', Any, Any]], Any];
     
-    my @expected = ('C', 'D');
+    my @expected = 'C', 'D';
     
     sub leaves($tree){
-        return () unless defined($tree);
-        return ($tree[0],) if (not defined($tree[1])) and (not defined($tree[2]));
+        return @() unless defined($tree);
+        return @($tree[0],)
+            if (not defined($tree[1])) and (not defined($tree[2]));
         return leaves($tree[1]), leaves($tree[2]);
     }
     
-    is(leaves($tree), @expected, "leaves() works");
+    is_deeply([leaves($tree)], @expected, "leaves() works");
 }
 
 {
@@ -56,27 +57,21 @@ plan 15;
      
     my $tree = ['A', ['B', ['C', Any, Any], ['D', Any, Any]], ['E', Any, Any]];
     
-    my @expected = ('A', 'B');
+    my @expected = 'A', 'B';
     
     # assume preorder traversal
     
     sub internals($tree){
-        return () unless defined($tree);
-        if defined($tree[1]) and defined($tree[2]) {
-            gather {
-                take $tree[0];
-                take internals($tree[1]); 
-                take internals($tree[2]);
-            }
-        } else {
-            gather { 
-                take internals($tree[1]); 
-                take internals($tree[2]);
-            }
-        }
+        return @() unless defined($tree);
+        gather {
+            take $tree[0]
+                if defined($tree[1]) and defined($tree[2]);
+            take internals($tree[1]); 
+            take internals($tree[2]);
+         };
     }
     
-    is(internals($tree), @expected, "internals() collects internal nodes");
+    is_deeply([internals($tree)], @expected, "internals() collects internal nodes");
     
     # P62B (*) Collect the nodes at a given level in a list
     # 
@@ -91,8 +86,8 @@ plan 15;
     # to do that.
     
     sub atlevel($tree, $level) {
-        return unless defined($tree);
-        return $tree[0] if $level == 1;
+        return @() unless defined($tree);
+        return @($tree[0]) if $level == 1;
         gather {
            take atlevel($tree[1], $level - 1);
            take atlevel($tree[2], $level - 1);
@@ -102,9 +97,9 @@ plan 15;
     my @e1 = 'A', ;
     my @e2 = 'B', 'E';
     my @e3 = 'C', 'D';
-    is(atlevel($tree, 1), @e1, "atlevel() works at level 1");
-    is(atlevel($tree, 2), @e2, "atlevel() works at level 2");
-    is(atlevel($tree, 3), @e3, "atlevel() works at level 3");
+    is_deeply([atlevel($tree, 1)], @e1, "atlevel() works at level 1");
+    is_deeply([atlevel($tree, 2)], @e2, "atlevel() works at level 2");
+    is_deeply([atlevel($tree, 3)], @e3, "atlevel() works at level 3");
 }
 
 {
