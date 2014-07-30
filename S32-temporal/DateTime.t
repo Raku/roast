@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 217;
+plan 219;
 
 my $orwell = DateTime.new(year => 1984);
 
@@ -594,6 +594,16 @@ is DateTime.now.Date, Date.today, 'coercion to Date';
     is ds('2015-01-20T12:56:34Z').earlier(weeks => 3),
        ds('2014-12-30T12:56:34Z'),
        'subtracting 3 weeks, overflowing to years';
+}
+
+# RT #121990 Smartmatch against a Date 
+{
+    my $now = DateTime.now; 
+    my $today = Date.today; 
+    my $not-now = ds('1971-10-28T10:45:00');
+
+    ok $now ~~ $today, "positive smartmatch against a Date";
+    ok $not-now !~~ $today, "negative smartmatch against a Date";
 }
 
 done;
