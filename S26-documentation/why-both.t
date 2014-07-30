@@ -6,7 +6,7 @@ class Simple {
 #= not so simple now!
 }
 
-is Simple.WHY.content,  "simple case\nnot so simple now!";
+is Simple.WHY.contents,  "simple case\nnot so simple now!";
 ok Simple.WHY.WHEREFORE === Simple, 'class WHEREFORE matches';
 is Simple.WHY.leading,  "simple case";
 is Simple.WHY.trailing, "not so simple now!";
@@ -25,15 +25,15 @@ module foo {
     }
 }
 
-is foo.WHY.content,            "a module\nmoar module stuff";
+is foo.WHY.contents,            "a module\nmoar module stuff";
 ok foo.WHY.WHEREFORE === foo,  'module WHEREFORE matches';
 is foo.WHY.leading,            "a module";
 is foo.WHY.trailing,           "moar module stuff";
-is foo::bar.WHY.content,       "a package\nmore package stuff";
+is foo::bar.WHY.contents,       "a package\nmore package stuff";
 ok foo::bar.WHY.WHEREFORE === foo::bar, 'inner package WHEREFORE matches';
 is foo::bar.WHY.leading,       "a package";
 is foo::bar.WHY.trailing,      "more package stuff";
-is foo::bar::baz.WHY.content,  "and a class\nmore class stuff";
+is foo::bar::baz.WHY.contents,  "and a class\nmore class stuff";
 ok foo::bar::baz.WHY.WHEREFORE === foo::bar::baz, 'inner inner class WHEREFORE matches';
 is foo::bar::baz.WHY.leading,  "and a class";
 is foo::bar::baz.WHY.trailing, "more class stuff";
@@ -41,14 +41,14 @@ is foo::bar::baz.WHY.trailing, "more class stuff";
 #| yellow
 sub marine {}
 #= submarine
-is &marine.WHY.content,  "yellow\nsubmarine";
+is &marine.WHY.contents,  "yellow\nsubmarine";
 ok &marine.WHY.WHEREFORE === &marine, 'sub WHEREFORE matches';
 is &marine.WHY.leading,  "yellow";
 is &marine.WHY.trailing, "submarine";
 
 #| pink
 sub panther {} #= panther
-is &panther.WHY.content,  "pink\npanther";
+is &panther.WHY.contents,  "pink\npanther";
 ok &panther.WHY.WHEREFORE === &panther, 'sub WHEREFORE matches';
 is &panther.WHY.leading,  "pink";
 is &panther.WHY.trailing, "panther";
@@ -63,7 +63,7 @@ class Sheep {
     method roar { 'roar!' } #= ...unless you fear sheep!
 }
 
-is Sheep.WHY.content, "a sheep\nor is it?";
+is Sheep.WHY.contents, "a sheep\nor is it?";
 ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
 is Sheep.WHY.leading, "a sheep";
 is Sheep.WHY.trailing, "or is it?";
@@ -75,7 +75,7 @@ is $wool-attr.WHY.leading, "usually white";
 is $wool-attr.WHY.trailing, "not very dirty";
 
 my $roar-method = Sheep.^find_method('roar');
-is $roar-method.WHY.content, "not too scary\n...unless you fear sheep!";
+is $roar-method.WHY.contents, "not too scary\n...unless you fear sheep!";
 ok $roar-method.WHY.WHEREFORE === $roar-method, 'method WHEREFORE matches';
 is $roar-method.WHY.leading,  "not too scary";
 is $roar-method.WHY.trailing, "...unless you fear sheep!";
@@ -83,7 +83,7 @@ is $roar-method.WHY.trailing, "...unless you fear sheep!";
 #| trailing space here  
 sub third {}
 #=    leading space here
-is &third.WHY.content,  "trailing space here\nleading space here";
+is &third.WHY.contents,  "trailing space here\nleading space here";
 ok &third.WHY.WHEREFORE === &third, 'sub WHEREFORE matches';
 is &third.WHY.leading,  "trailing space here";
 is &third.WHY.trailing, "leading space here";
@@ -124,7 +124,7 @@ is $param.WHY.leading,  "next param";
 is $param.WHY.trailing, "first param";
 
 $param = &so-many-params.signature.params[1];
-ok !$param.WHY.defined, 'the second parameter has no comments' or diag($param.WHY.content);
+ok !$param.WHY.defined, 'the second parameter has no comments' or diag($param.WHY.contents);
 
 sub has-anon-param(
     #| leading

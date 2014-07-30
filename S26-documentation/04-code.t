@@ -10,9 +10,9 @@ This ordinary paragraph introduces a code block:
 =end pod
 
 $r = $=pod[0];
-is $r.content[0].content, 'This ordinary paragraph introduces a code block:';
-isa_ok $r.content[1], Pod::Block::Code;
-is $r.content[1].content.Str.subst("\r", "", :g), q[$this = 1 * code('block');
+is $r.contents[0].contents, 'This ordinary paragraph introduces a code block:';
+isa_ok $r.contents[1], Pod::Block::Code;
+is $r.contents[1].contents.Str.subst("\r", "", :g), q[$this = 1 * code('block');
 $which.is_specified(:by<indenting>);].subst("\r", "", :g);
 
 # more fancy code blocks
@@ -32,16 +32,16 @@ But this is just a text. Again
 =end pod
 
 $r = $=pod[1];
-is $r.content.elems, 5;
-is $r.content[0].content, 'This is an ordinary paragraph';
-isa_ok $r.content[1], Pod::Block::Code;
-is $r.content[1].content, "While this is not\nThis is a code block";
-isa_ok $r.content[2], Pod::Block;
-is $r.content[2].content[0].content, 'Mumble mumble';
-isa_ok $r.content[3], Pod::Block::Para;
-is $r.content[3].content, "Suprisingly, this is not a code block"
+is $r.contents.elems, 5;
+is $r.contents[0].contents, 'This is an ordinary paragraph';
+isa_ok $r.contents[1], Pod::Block::Code;
+is $r.contents[1].contents, "While this is not\nThis is a code block";
+isa_ok $r.contents[2], Pod::Block;
+is $r.contents[2].contents[0].contents, 'Mumble mumble';
+isa_ok $r.contents[3], Pod::Block::Para;
+is $r.contents[3].contents, "Suprisingly, this is not a code block"
                         ~ " (with fancy indentation too)";
-is $r.content[4].content, "But this is just a text. Again";
+is $r.contents[4].contents, "But this is just a text. Again";
 
 =begin pod
 
@@ -52,9 +52,9 @@ Tests for the feed operators
 =end pod
 
 $r = $=pod[2];
-is $r.content[0].content, 'Tests for the feed operators';
-isa_ok $r.content[1], Pod::Block::Code;
-is $r.content[1].content, "==> and <==";
+is $r.contents[0].contents, 'Tests for the feed operators';
+isa_ok $r.contents[1], Pod::Block::Code;
+is $r.contents[1].contents, "==> and <==";
 
 =begin pod
 Fun comes
@@ -68,14 +68,14 @@ Fun comes
 =end pod
 
 $r = $=pod[3];
-is $r.content.elems, 4;
-is $r.content[0].content, 'Fun comes';
-isa_ok $r.content[1], Pod::Block::Code;
-is $r.content[1].content, 'This is code';
-isa_ok $r.content[2], Pod::Block::Code;
-is $r.content[2].content, 'Ha, what now?';
-isa_ok $r.content[3], Pod::Block::Code;
-is $r.content[3].content, "one more block of code\n"
+is $r.contents.elems, 4;
+is $r.contents[0].contents, 'Fun comes';
+isa_ok $r.contents[1], Pod::Block::Code;
+is $r.contents[1].contents, 'This is code';
+isa_ok $r.contents[2], Pod::Block::Code;
+is $r.contents[2].contents, 'Ha, what now?';
+isa_ok $r.contents[3], Pod::Block::Code;
+is $r.contents[3].contents, "one more block of code\n"
                         ~ "just to make sure it works\n"
                         ~ " or better: maybe it'll break!";
 
@@ -90,17 +90,17 @@ This is Pod too. Specifically, this is a simple C<para> block
 =end pod
 
 $r = $=pod[4];
-is $r.content.elems, 3;
-isa_ok $r.content[0], Pod::Block;
-is $r.content[0].content[0].content, 'A heading';
-is $r.content[1].content[0],
+is $r.contents.elems, 3;
+isa_ok $r.contents[0], Pod::Block;
+is $r.contents[0].contents[0].contents, 'A heading';
+is $r.contents[1].contents[0],
    'This is Pod too. Specifically, this is a simple ';
-isa_ok $r.content[1].content[1], Pod::FormattingCode;
-is $r.content[1].content[1].type, 'C';
-is $r.content[1].content[1].content, 'para';
-is $r.content[1].content[2], ' block';
-isa_ok $r.content[2], Pod::Block::Code;
-is $r.content[2].content,
+isa_ok $r.contents[1].contents[1], Pod::FormattingCode;
+is $r.contents[1].contents[1].type, 'C';
+is $r.contents[1].contents[1].contents, 'para';
+is $r.contents[1].contents[2], ' block';
+isa_ok $r.contents[2], Pod::Block::Code;
+is $r.contents[2].contents,
    q[$this = pod('also');  # Specifically, a code block];
 
 =begin pod
@@ -125,27 +125,27 @@ is $r.content[2].content,
 =end pod
 
 $r = $=pod[5];
-is $r.content.elems, 6;
-isa_ok $r.content[0], Pod::Block::Code;
-is $r.content[0].content, 'this is code';
+is $r.contents.elems, 6;
+isa_ok $r.contents[0], Pod::Block::Code;
+is $r.contents[0].contents, 'this is code';
 
-isa_ok $r.content[1], Pod::Block::Named;
-is $r.content[1].name, 'podcast';
-is $r.content[1].content[0].content, 'this is not';
+isa_ok $r.contents[1], Pod::Block::Named;
+is $r.contents[1].name, 'podcast';
+is $r.contents[1].contents[0].contents, 'this is not';
 
-isa_ok $r.content[2], Pod::Block::Para;
-is $r.content[2].content, 'this is not code either';
+isa_ok $r.contents[2], Pod::Block::Para;
+is $r.contents[2].contents, 'this is not code either';
 
-isa_ok $r.content[3], Pod::Block::Named;
-is $r.content[3].name, 'itemization';
-is $r.content[3].content[0].content, 'this is not';
+isa_ok $r.contents[3], Pod::Block::Named;
+is $r.contents[3].name, 'itemization';
+is $r.contents[3].contents[0].contents, 'this is not';
 
-isa_ok $r.content[4], Pod::Block::Named;
-is $r.content[4].name, 'quitem';
-is $r.content[4].content[0].content, 'and this is not';
+isa_ok $r.contents[4], Pod::Block::Named;
+is $r.contents[4].name, 'quitem';
+is $r.contents[4].contents[0].contents, 'and this is not';
 
-isa_ok $r.content[5].content[0], Pod::Block::Code;
-is $r.content[5].content[0].content, 'and this is!';
+isa_ok $r.contents[5].contents[0], Pod::Block::Code;
+is $r.contents[5].contents[0].contents, 'and this is!';
 
 =begin code
     foo foo

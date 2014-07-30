@@ -8,22 +8,22 @@ $r = $=pod[0];
 isa_ok $r, Pod::Block, 'returns a Pod6 Block';
 isa_ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.name, 'foo', 'name is ok';
-is $r.content, [], 'no content, all right';
+is $r.contents, [], 'no contents, all right';
 
 =for foo
 some text
 
 $r = $=pod[1];
-isa_ok $r.content[0], Pod::Block::Para;
-is $r.content[0].content, "some text", 'the content is all right';
+isa_ok $r.contents[0], Pod::Block::Para;
+is $r.contents[0].contents, "some text", 'the contents are all right';
 
 =for foo
 some
 spaced   text
 
 $r = $=pod[2];
-is $r.content[0].content,
-   "some spaced text", 'additional whitespace removed  from the content';
+is $r.contents[0].contents,
+   "some spaced text", 'additional whitespace removed  from the contents';
 =begin pod
 
 =for got
@@ -36,15 +36,15 @@ Outside blocks
 =end pod
 
 $r = $=pod[3];
-isa_ok $r.content[0], Pod::Block;
-is $r.content[0].content[0].content, "Inside got",
-   'paragraph block content ok, 1/2';
-isa_ok $r.content[1], Pod::Block;
-is $r.content[1].content[0].content, "Inside bidden",
-   'paragraph block content ok, 1/2';
-isa_ok $r.content[2], Pod::Block::Para;
-is $r.content[2].content, "Outside blocks",
-   'content outside blocks is all right';
+isa_ok $r.contents[0], Pod::Block;
+is $r.contents[0].contents[0].contents, "Inside got",
+   'paragraph block contents ok, 1/2';
+isa_ok $r.contents[1], Pod::Block;
+is $r.contents[1].contents[0].contents, "Inside bidden",
+   'paragraph block contents ok, 1/2';
+isa_ok $r.contents[2], Pod::Block::Para;
+is $r.contents[2].contents, "Outside blocks",
+   'contents outside blocks is all right';
 
 # mixed blocks
 =begin pod
@@ -62,13 +62,13 @@ four, another delimited one
 =end pod
 
 $r = $=pod[4];
-is $r.content[0].content[0].content,
+is $r.contents[0].contents[0].contents,
    "one, delimited block", "mixed blocks, 1";
-is $r.content[1].content[0].content,
+is $r.contents[1].contents[0].contents,
    "two, paragraph block", "mixed blocks, 2";
-is $r.content[2].content[0].content,
+is $r.contents[2].contents[0].contents,
    "three, still a parablock", "mixed blocks, 3";
-is $r.content[3].content[0].content,
+is $r.contents[3].contents[0].contents,
    "four, another delimited one", "mixed blocks, 4";
 
 # tests without Albi would still be tests, but definitely very, very sad
@@ -93,20 +93,20 @@ Which, as we all know...
 
 $r = $=pod[5];
 isa_ok $r, Pod::Block;
-is $r.content.elems, 5, '5 sub-nodes in foo';
+is $r.contents.elems, 5, '5 sub-nodes in foo';
 is $r.name, 'foo';
-is $r.content[0].content,
+is $r.contents[0].contents,
    'and so, all of the villages chased Albi, The Racist Dragon, ' ~
    'into the very cold and very scary cave',
    '...in the marmelade forest';
-is $r.content[1].content,
+is $r.contents[1].contents,
    'and it was so cold and so scary in there, that Albi began to cry',
    '...between the make-believe trees';
-is $r.content[2].name, 'bar';
-is $r.content[2].content[0].content, "Dragon Tears!",
+is $r.contents[2].name, 'bar';
+is $r.contents[2].contents[0].contents, "Dragon Tears!",
    '...in a cottage cheese cottage';
-is $r.content[3].content, "Which, as we all know...",
+is $r.contents[3].contents, "Which, as we all know...",
    '...lives Albi! Albi!';
-is $r.content[4].name, 'bar';
-is $r.content[4].content[0].content, "Turn into Jelly Beans!",
+is $r.contents[4].name, 'bar';
+is $r.contents[4].contents[0].contents, "Turn into Jelly Beans!",
    '...Albi, the Racist Dragon';

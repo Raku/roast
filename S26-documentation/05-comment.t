@@ -15,9 +15,9 @@ This isn't a comment
 =end pod
 
 $r = $=pod[0];
-isa_ok $r.content[0], Pod::Block::Comment;
-is $r.content[0].content.elems, 1;
-is norm_crlf($r.content[0].content), "foo foo\nbla bla    bla\n";
+isa_ok $r.contents[0], Pod::Block::Comment;
+is $r.contents[0].contents.elems, 1;
+is norm_crlf($r.contents[0].contents), "foo foo\nbla bla    bla\n";
 
 # from S26
 =comment
@@ -25,8 +25,8 @@ This file is deliberately specified in Perl 6 Pod format
 
 $r = $=pod[1];
 isa_ok $r, Pod::Block::Comment;
-is $r.content.elems, 1, 'one-line comment: number of elements';;
-is norm_crlf($r.content[0]),
+is $r.contents.elems, 1, 'one-line comment: number of elements';;
+is norm_crlf($r.contents[0]),
    "This file is deliberately specified in Perl 6 Pod format\n",
    'one-line comment: contents';
 
@@ -41,6 +41,6 @@ foo foo
 
 $r = $=pod[2];
 isa_ok $r, Pod::Block;
-is $r.content.elems, 1;
-is norm_crlf($r.content[0]), "foo foo\n=begin invalid pod\n"
+is $r.contents.elems, 1;
+is norm_crlf($r.contents[0]), "foo foo\n=begin invalid pod\n"
                 ~ "=as many invalid pod as we want\n===yay!\n";

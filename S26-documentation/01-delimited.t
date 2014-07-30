@@ -9,15 +9,15 @@ $r = $=pod[0];
 isa_ok $r, Pod::Block, 'returns a Pod Block';
 isa_ok $r, Pod::Block::Named, 'returns a named Block';
 is $r.name, 'foo', 'name is ok';
-is $r.content, [], 'no content, all right';
+is $r.contents, [], 'no contents, all right';
 
 =begin foo
 some text
 =end foo
 
 $r = $=pod[1];
-isa_ok $r.content[0], Pod::Block::Para;
-is $r.content[0].content, "some text", 'the content is all right';
+isa_ok $r.contents[0], Pod::Block::Para;
+is $r.contents[0].contents, "some text", 'the contents are all right';
 is $r.name, 'foo', 'name is ok';
 
 =begin foo
@@ -27,8 +27,8 @@ spaced   text
 
 $r = $=pod[2];
 is $r.name, 'foo', 'name is ok';
-is $r.content[0].content,
-   "some spaced text", 'additional whitespace removed from the content';
+is $r.contents[0].contents,
+   "some spaced text", 'additional whitespace removed from the contents';
 
 =begin foo
 paragraph one
@@ -38,10 +38,10 @@ two
 =end foo
 $r = $=pod[3];
 is $r.name, 'foo', 'name is ok';
-isa_ok $r.content[0], Pod::Block::Para;
-isa_ok $r.content[1], Pod::Block::Para;
-is $r.content[0].content, "paragraph one", 'paragraphs ok, 1/2';
-is $r.content[1].content, "paragraph two", 'paragraphs ok, 2/2';
+isa_ok $r.contents[0], Pod::Block::Para;
+isa_ok $r.contents[1], Pod::Block::Para;
+is $r.contents[0].contents, "paragraph one", 'paragraphs ok, 1/2';
+is $r.contents[1].contents, "paragraph two", 'paragraphs ok, 2/2';
 
 =begin something
     =begin somethingelse
@@ -51,10 +51,10 @@ is $r.content[1].content, "paragraph two", 'paragraphs ok, 2/2';
 
 $r = $=pod[4];
 is $r.name, 'something', 'parent name ok';
-isa_ok $r.content[0], Pod::Block, "nested blocks work";
-isa_ok $r.content[0].content[0], Pod::Block::Para, "nested blocks work";
-is $r.content[0].content[0].content, "toot tooot!", "and their content";
-is $r.content[0].name, 'somethingelse', 'child name ok';
+isa_ok $r.contents[0], Pod::Block, "nested blocks work";
+isa_ok $r.contents[0].contents[0], Pod::Block::Para, "nested blocks work";
+is $r.contents[0].contents[0].contents, "toot tooot!", "and their contents";
+is $r.contents[0].name, 'somethingelse', 'child name ok';
 
 # Albi
 =begin foo
@@ -78,19 +78,19 @@ Which, as we all know...
 
 $r = $=pod[5];
 isa_ok $r, Pod::Block;
-is $r.content.elems, 5, '5 sub-nodes in foo';
-is $r.content[0].content,
+is $r.contents.elems, 5, '5 sub-nodes in foo';
+is $r.contents[0].contents,
    'and so, all of the villages chased Albi, The Racist Dragon, ' ~
    'into the very cold and very scary cave',
    '...in the marmelade forest';
-is $r.content[1].content,
+is $r.contents[1].contents,
    'and it was so cold and so scary in there, that Albi began to cry',
    '...between the make-believe trees';
-is $r.content[2].content[0].content, "Dragon Tears!",
+is $r.contents[2].contents[0].contents, "Dragon Tears!",
    '...in a cottage cheese cottage';
-is $r.content[3].content, "Which, as we all know...",
+is $r.contents[3].contents, "Which, as we all know...",
    '...lives Albi! Albi!';
-is $r.content[4].content[0].content, "Turn into Jelly Beans!",
+is $r.contents[4].contents[0].contents, "Turn into Jelly Beans!",
    '...Albi, the Racist Dragon';
 
 =begin pod
@@ -103,9 +103,9 @@ between these two paragraphs
 
 $r = $=pod[6];
 isa_ok $r, Pod::Block;
-is $r.content[0].content, 'someone accidentally left a space',
+is $r.contents[0].contents, 'someone accidentally left a space',
    'accidental space, 1/2';
-is $r.content[1].content, 'between these two paragraphs',
+is $r.contents[1].contents, 'between these two paragraphs',
    'accidental space, 2/2';
 
 # various things which caused the spectest to fail at some point
@@ -118,9 +118,9 @@ foo
 =end kwid
 
 $r = $=pod[7];
-is $r.content[0].content, '= DESCRIPTION bla bla';
-isa_ok $r.content[1], Pod::Block::Para;
-is $r.content[1].content, 'foo';
+is $r.contents[0].contents, '= DESCRIPTION bla bla';
+isa_ok $r.contents[1], Pod::Block::Para;
+is $r.contents[1].contents, 'foo';
 
 =begin more-discussion-needed
 
@@ -152,11 +152,11 @@ isa_ok $r, Pod::Block;
 =end pod
 
 $r = $=pod[9];
-isa_ok $r.content[0], Pod::Heading;
-isa_ok $r.content[1], Pod::Block::Para;
-isa_ok $r.content[2], Pod::Block::Para;
-isa_ok $r.content[3], Pod::Heading;
-isa_ok $r.content[4], Pod::Block::Para;
-is $r.content.elems, 5;
+isa_ok $r.contents[0], Pod::Heading;
+isa_ok $r.contents[1], Pod::Block::Para;
+isa_ok $r.contents[2], Pod::Block::Para;
+isa_ok $r.contents[3], Pod::Heading;
+isa_ok $r.contents[4], Pod::Block::Para;
+is $r.contents.elems, 5;
 
 eval_lives_ok "=begin pod\nSome documentation\n=end pod", "Pod files don't have to end in a newline";

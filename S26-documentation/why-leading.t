@@ -5,7 +5,7 @@ plan 98;
 class Simple {
 }
 
-is Simple.WHY.content, 'simple case';
+is Simple.WHY.contents, 'simple case';
 ok Simple.WHY.WHEREFORE === Simple, 'class WHEREFORE matches';
 is Simple.WHY.leading, 'simple case';
 ok !Simple.WHY.trailing.defined;
@@ -23,11 +23,11 @@ class Outer {
 is ~$=pod[1], 'giraffe';
 is ~$=pod[2], 'zebra';
 
-is Outer.WHY.content, 'giraffe';
+is Outer.WHY.contents, 'giraffe';
 ok Outer.WHY.WHEREFORE === Outer, 'outer class WHEREFORE matches';
 is Outer.WHY.leading, 'giraffe';
 ok !Outer.WHY.trailing.defined;
-is Outer::Inner.WHY.content, 'zebra';
+is Outer::Inner.WHY.contents, 'zebra';
 ok Outer::Inner.WHY.WHEREFORE === Outer::Inner, 'inner class WHEREFORE matches';
 is Outer::Inner.WHY.leading, 'zebra';
 ok !Outer::Inner.WHY.trailing.defined;
@@ -46,29 +46,29 @@ is ~$=pod[3], 'a module';
 is ~$=pod[4], 'a package';
 is ~$=pod[5], 'and a class';
 
-is foo.WHY.content,           'a module';
+is foo.WHY.contents,           'a module';
 ok foo.WHY.WHEREFORE === foo, 'module WHEREFORE matches';
 is foo.WHY.leading,           'a module';
 ok !foo.WHY.trailing.defined;
-is foo::bar.WHY.content,      'a package';
+is foo::bar.WHY.contents,      'a package';
 ok foo::bar.WHY.WHEREFORE === foo::bar, 'inner package WHEREFORE matches';
 is foo::bar.WHY.leading,      'a package';
 ok !foo::bar.WHY.trailing.defined;
-is foo::bar::baz.WHY.content, 'and a class';
+is foo::bar::baz.WHY.contents, 'and a class';
 ok foo::bar::baz.WHY.WHEREFORE === foo::bar::baz, 'inner inner class WHEREFORE matches';
 is foo::bar::baz.WHY.leading, 'and a class';
 ok !foo::bar::baz.WHY.trailing.defined;
 
 #| yellow
 sub marine {}
-is &marine.WHY.content, 'yellow';
+is &marine.WHY.contents, 'yellow';
 ok &marine.WHY.WHEREFORE === &marine, 'sub WHEREFORE matches';
 is &marine.WHY.leading, 'yellow';
 ok !&marine.WHY.trailing.defined;
 
 #| pink
 sub panther {}
-is &panther.WHY.content, 'pink';
+is &panther.WHY.contents, 'pink';
 ok &panther.WHY.WHEREFORE === &panther, 'sub WHEREFORE matches';
 is &panther.WHY.leading, 'pink';
 ok !&panther.WHY.trailing.defined;
@@ -82,7 +82,7 @@ class Sheep {
     method roar { 'roar!' }
 }
 
-is Sheep.WHY.content, 'a sheep';
+is Sheep.WHY.contents, 'a sheep';
 ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
 is Sheep.WHY.leading, 'a sheep';
 ok !Sheep.WHY.trailing.defined;
@@ -92,7 +92,7 @@ is $wool-attr.WHY, 'usually white';
 is $wool-attr.WHY.leading, 'usually white';
 ok !$wool-attr.WHY.trailing.defined;
 my $roar-method = Sheep.^find_method('roar');
-is $roar-method.WHY.content, 'not too scary';
+is $roar-method.WHY.contents, 'not too scary';
 ok $roar-method.WHY.WHEREFORE === $roar-method, 'method WHEREFORE matches';
 is $roar-method.WHY.leading, 'not too scary';
 ok !$roar-method.WHY.trailing.defined;
@@ -114,11 +114,11 @@ sub one {}
 
 #| two
 sub two {}
-is &one.WHY.content, 'one';
+is &one.WHY.contents, 'one';
 ok &one.WHY.WHEREFORE === &one, 'sub WHEREFORE matches';
 is &one.WHY.leading, 'one';
 ok !&one.WHY.trailing.defined;
-is &two.WHY.content, 'two';
+is &two.WHY.contents, 'two';
 ok &two.WHY.WHEREFORE === &two, 'sub WHEREFORE matches';
 is &two.WHY.leading, 'two';
 ok !&two.WHY.trailing.defined;
@@ -129,18 +129,18 @@ sub first {}
 #| that will break
 sub second {}
 
-is &first.WHY.content, 'that will break';
+is &first.WHY.contents, 'that will break';
 ok &first.WHY.WHEREFORE === &first, 'sub WHEREFORE matches';
 is &first.WHY.leading, 'that will break';
 ok !&first.WHY.trailing.defined;
-is &second.WHY.content, 'that will break';
+is &second.WHY.contents, 'that will break';
 ok &second.WHY.WHEREFORE === &second, 'sub WHEREFORE matches';
 is &second.WHY.leading, 'that will break';
 ok !&second.WHY.trailing.defined;
 
 #| trailing space here  
 sub third {}
-is &third.WHY.content, 'trailing space here';
+is &third.WHY.contents, 'trailing space here';
 ok &third.WHY.WHEREFORE === &third, 'sub WHEREFORE matches';
 is &third.WHY.leading, 'trailing space here';
 ok !&third.WHY.trailing.defined;
@@ -167,7 +167,7 @@ is &has-two-params.signature.params[0].WHY, 'documented';
 ok &has-two-params.signature.params[0].WHY.WHEREFORE === &has-two-params.signature.params[0], 'param WHEREFORE matches';
 is &has-two-params.signature.params[0].WHY.leading, 'documented';
 ok !&has-two-params.signature.params[0].WHY.trailing.defined;
-ok !&has-two-params.signature.params[1].WHY.defined, 'Second param should not be documented' or diag(&has-two-params.signature.params[1].WHY.content);
+ok !&has-two-params.signature.params[1].WHY.defined, 'Second param should not be documented' or diag(&has-two-params.signature.params[1].WHY.contents);
 
 sub both-documented(
     #| documented
