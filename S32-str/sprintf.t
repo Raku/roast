@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 149;
+plan 155;
 
 # L<S32::Str/Str/"identical to" "C library sprintf">
 
@@ -185,6 +185,14 @@ ok sprintf('%020.2g', -3.1415e30)  eq '-000000000003.1e+030' | '-0000000000003.1
 ok sprintf('%020.2G', -3.1415e30)  eq '-000000000003.1E+030' | '-0000000000003.1E+30', 'negative 020.2 %G';
 ok sprintf('%020.2g', -3.1415e-30) eq '-000000000003.1e-030' | '-0000000000003.1e-30', 'negative 020.2 %g';
 ok sprintf('%020.2G', -3.1415e-30) eq '-000000000003.1E-030' | '-0000000000003.1E-30', 'negative 020.2 %G';
+
+is sprintf("%.5f", pi),   '3.14159',  '"%.5"';
+is sprintf("%.5f", -pi),  '-3.14159', 'negative "%.5"';
+is sprintf("%+.5f", -pi), '-3.14159', 'negative "%+.5"';
+#?rakudo 3 todo 'RT #122437'
+is sprintf("%+.5f", pi),  '+3.14159', '"%+.5"';
+is sprintf("% .5f", pi),  '+3.14159', '" %.5"';
+is sprintf("% .5f", -pi), ' 3.14159', 'negative "%.5"';
 
 is sprintf('%e', 2.718281828459), sprintf('%.6e', 2.718281828459), '%e defaults to .6';
 is sprintf('%E', 2.718281828459), sprintf('%.6E', 2.718281828459), '%E defaults to .6';
