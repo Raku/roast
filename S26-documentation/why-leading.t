@@ -1,5 +1,5 @@
 use Test;
-plan 98;
+plan 116;
 
 #| simple case
 class Simple {
@@ -61,6 +61,9 @@ ok !foo::bar::baz.WHY.trailing.defined;
 
 #| yellow
 sub marine {}
+
+is ~$=pod[6], 'yellow';
+
 is &marine.WHY.contents, 'yellow';
 ok &marine.WHY.WHEREFORE === &marine, 'sub WHEREFORE matches';
 is &marine.WHY.leading, 'yellow';
@@ -68,6 +71,9 @@ ok !&marine.WHY.trailing.defined;
 
 #| pink
 sub panther {}
+
+is ~$=pod[7], 'pink';
+
 is &panther.WHY.contents, 'pink';
 ok &panther.WHY.WHEREFORE === &panther, 'sub WHEREFORE matches';
 is &panther.WHY.leading, 'pink';
@@ -81,6 +87,10 @@ class Sheep {
     #| not too scary
     method roar { 'roar!' }
 }
+
+is ~$=pod[8],  'a sheep';
+is ~$=pod[9],  'usually white';
+is ~$=pod[10], 'not too scary';
 
 is Sheep.WHY.contents, 'a sheep';
 ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
@@ -107,10 +117,14 @@ ok &oursub.WHY.WHEREFORE === &oursub, 'our sub WHEREFORE matches';
 is &oursub.WHY.leading, 'our works too', 'works for our subs';
 ok !&oursub.WHY.trailing.defined;
 
+is ~$=pod[11], 'our works too';
+
 # two subs in a row
 
 #| one
 sub one {}
+
+is ~$=pod[12], 'one';
 
 #| two
 sub two {}
@@ -123,11 +137,17 @@ ok &two.WHY.WHEREFORE === &two, 'sub WHEREFORE matches';
 is &two.WHY.leading, 'two';
 ok !&two.WHY.trailing.defined;
 
+is ~$=pod[13], 'two';
+
 #| that will break
 sub first {}
 
+is ~$=pod[14], 'that will break';
+
 #| that will break
 sub second {}
+
+is ~$=pod[15], 'that will break';
 
 is &first.WHY.contents, 'that will break';
 ok &first.WHY.WHEREFORE === &first, 'sub WHEREFORE matches';
@@ -145,10 +165,14 @@ ok &third.WHY.WHEREFORE === &third, 'sub WHEREFORE matches';
 is &third.WHY.leading, 'trailing space here';
 ok !&third.WHY.trailing.defined;
 
+is ~$=pod[16], 'trailing space here';
+
 sub has-parameter(
     #| documented
     Str $param
 ) {}
+
+is ~$=pod[17], 'documented';
 
 ok !&has-parameter.WHY.defined, 'has-parameter should have no docs' or diag(&has-parameter.WHY);
 is &has-parameter.signature.params[0].WHY, 'documented';
@@ -161,6 +185,8 @@ sub has-two-params(
     Str $param,
     Int $second
 ) {}
+
+is ~$=pod[18], 'documented';
 
 ok !&has-two-params.WHY.defined;
 is &has-two-params.signature.params[0].WHY, 'documented';
@@ -175,6 +201,9 @@ sub both-documented(
     #| I too, am documented
     Int $second
 ) {}
+
+is ~$=pod[19], 'documented';
+is ~$=pod[20], 'I too, am documented';
 
 ok !&both-documented.WHY.defined;
 is &both-documented.signature.params[0].WHY, 'documented';
@@ -192,6 +221,8 @@ sub has-anon-param(
     Str $
 ) {}
 
+is ~$=pod[21], 'leading';
+
 my $param = &has-anon-param.signature.params[0];
 
 is $param.WHY, 'leading', 'anonymous parameters should work';
@@ -204,5 +235,9 @@ class DoesntMatter {
     ) {}
 }
 
+is ~$=pod[22], 'invocant comment';
+
 $param = DoesntMatter.^find_method('m').signature.params[0];
 is $param.WHY, 'invocant comment', 'invocant comments should work';
+
+is $=pod.elems, 23;
