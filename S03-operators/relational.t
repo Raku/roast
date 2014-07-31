@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 118;
+plan 122;
 
 ## N.B.:  Tests for infix:«<=>» (spaceship) and infix:<cmp> belong
 ## in F<t/S03-operators/comparison.t>.
@@ -121,6 +121,12 @@ ok(!("3" gt "4" lt "5"), "!(3 gt 4 lt 5) chained str comparison");
 ok("5" eq "5" gt "0", '"5" eq "5" gt "0" chained str comparison with equality');
 ok("5" le "5" gt "0", "5 le 5 gt 0 chained str comparison with le");
 ok("0" lt "5" ge "5", "0 lt 5 ge 5 chained comparison with ge");
+
+#?rakudo 4 todo 'RT #121987'
+is  1 !before 2 !before 3,  1 !before 2 && 2 !before 3,  'chained !before';
+is  1 !after 2 !after 2,    1 !after 2 && 2 !after 3,  'chained !after';
+is  3 !> 3 !> 1,            3 !> 3 && 3 !> 1,  'chained !>';
+is  3 !< 3 !< 2,            3 !< 3 && 3 !< 2,  'chained !<';
 
 # make sure we don't have "padding" or "trimming" semantics
 ok("a" lt "a\0", 'a lt a\0');
