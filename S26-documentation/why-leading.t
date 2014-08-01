@@ -51,7 +51,7 @@ ok $=pod[$pod_index].WHEREFORE === foo;
 is ~$=pod[$pod_index++], 'a module';
 ok $=pod[$pod_index].WHEREFORE === foo::bar;
 is ~$=pod[$pod_index++], 'a package';
-ok $=pod[$pod_index].WHEREFORE === foo::bar;
+ok $=pod[$pod_index].WHEREFORE === foo::bar::baz;
 is ~$=pod[$pod_index++], 'and a class';
 
 is foo.WHY.contents,           'a module';
