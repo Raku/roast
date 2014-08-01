@@ -83,10 +83,12 @@ dies_ok {checklastval("octopus") = 10 }, 'checklastval STORE can die';
 # Above test may well die for the wrong reason, if the Proxy stuff didn't
 # parse OK, it will complain that it couldn't find the desired subroutine
 #?rakudo.parrot skip "aborts RT #122313"
+#?rakudo.moar   todo "seems related to #122448"
 is((try { checklastval("fish") = 12 }), 12, 'proxy lvalue subroutine STORE works');
 #?rakudo.parrot emit # "aborts RT #122313"
 my $resultval = checklastval("fish");
 #?rakudo.parrot skip "aborts RT #122313"
+#?rakudo.moar   todo "seems related to #122448"
 is($resultval, 12, 'proxy lvalue subroutine FETCH works');
 
 my $realvar = "foo";
