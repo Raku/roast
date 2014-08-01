@@ -190,7 +190,6 @@ sub accumtest($expect, $op) {
 
     isa_ok 7 ^^ 7, Nil, '^^ can return a Bool';
     isa_ok 7 ^^ Mu, Int, '^^ can return an Int';
-    #?rakudo.moar todo 'regression in latest Moar, #122448'
     isa_ok 0 ^^ ^7, Range, '^^ can return a Range';
     isa_ok ^7 ^^ 0, Range, '^^ can return a Range';
     isa_ok 7.5i ^^ Mu, Complex, '^^ can return a Complex';
