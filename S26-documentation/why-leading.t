@@ -1,6 +1,8 @@
 use Test;
 plan 116;
 
+my $pod_index = 0;
+
 #| simple case
 class Simple {
 }
@@ -11,7 +13,7 @@ is Simple.WHY.leading, 'simple case';
 ok !Simple.WHY.trailing.defined;
 is ~Simple.WHY, 'simple case', 'stringifies correctly';
 
-is ~$=pod[0], 'simple case';
+is ~$=pod[$pod_index++], 'simple case';
 
 #| giraffe
 class Outer {
@@ -20,8 +22,8 @@ class Outer {
     }
 }
 
-is ~$=pod[1], 'giraffe';
-is ~$=pod[2], 'zebra';
+is ~$=pod[$pod_index++], 'giraffe';
+is ~$=pod[$pod_index++], 'zebra';
 
 is Outer.WHY.contents, 'giraffe';
 ok Outer.WHY.WHEREFORE === Outer, 'outer class WHEREFORE matches';
@@ -42,9 +44,9 @@ module foo {
     }
 }
 
-is ~$=pod[3], 'a module';
-is ~$=pod[4], 'a package';
-is ~$=pod[5], 'and a class';
+is ~$=pod[$pod_index++], 'a module';
+is ~$=pod[$pod_index++], 'a package';
+is ~$=pod[$pod_index++], 'and a class';
 
 is foo.WHY.contents,           'a module';
 ok foo.WHY.WHEREFORE === foo, 'module WHEREFORE matches';
@@ -62,7 +64,7 @@ ok !foo::bar::baz.WHY.trailing.defined;
 #| yellow
 sub marine {}
 
-is ~$=pod[6], 'yellow';
+is ~$=pod[$pod_index++], 'yellow';
 
 is &marine.WHY.contents, 'yellow';
 ok &marine.WHY.WHEREFORE === &marine, 'sub WHEREFORE matches';
@@ -72,7 +74,7 @@ ok !&marine.WHY.trailing.defined;
 #| pink
 sub panther {}
 
-is ~$=pod[7], 'pink';
+is ~$=pod[$pod_index++], 'pink';
 
 is &panther.WHY.contents, 'pink';
 ok &panther.WHY.WHEREFORE === &panther, 'sub WHEREFORE matches';
@@ -88,9 +90,9 @@ class Sheep {
     method roar { 'roar!' }
 }
 
-is ~$=pod[8],  'a sheep';
-is ~$=pod[9],  'usually white';
-is ~$=pod[10], 'not too scary';
+is ~$=pod[$pod_index++],  'a sheep';
+is ~$=pod[$pod_index++],  'usually white';
+is ~$=pod[$pod_index++], 'not too scary';
 
 is Sheep.WHY.contents, 'a sheep';
 ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
@@ -117,14 +119,14 @@ ok &oursub.WHY.WHEREFORE === &oursub, 'our sub WHEREFORE matches';
 is &oursub.WHY.leading, 'our works too', 'works for our subs';
 ok !&oursub.WHY.trailing.defined;
 
-is ~$=pod[11], 'our works too';
+is ~$=pod[$pod_index++], 'our works too';
 
 # two subs in a row
 
 #| one
 sub one {}
 
-is ~$=pod[12], 'one';
+is ~$=pod[$pod_index++], 'one';
 
 #| two
 sub two {}
@@ -137,17 +139,17 @@ ok &two.WHY.WHEREFORE === &two, 'sub WHEREFORE matches';
 is &two.WHY.leading, 'two';
 ok !&two.WHY.trailing.defined;
 
-is ~$=pod[13], 'two';
+is ~$=pod[$pod_index++], 'two';
 
 #| that will break
 sub first {}
 
-is ~$=pod[14], 'that will break';
+is ~$=pod[$pod_index++], 'that will break';
 
 #| that will break
 sub second {}
 
-is ~$=pod[15], 'that will break';
+is ~$=pod[$pod_index++], 'that will break';
 
 is &first.WHY.contents, 'that will break';
 ok &first.WHY.WHEREFORE === &first, 'sub WHEREFORE matches';
@@ -165,14 +167,14 @@ ok &third.WHY.WHEREFORE === &third, 'sub WHEREFORE matches';
 is &third.WHY.leading, 'trailing space here';
 ok !&third.WHY.trailing.defined;
 
-is ~$=pod[16], 'trailing space here';
+is ~$=pod[$pod_index++], 'trailing space here';
 
 sub has-parameter(
     #| documented
     Str $param
 ) {}
 
-is ~$=pod[17], 'documented';
+is ~$=pod[$pod_index++], 'documented';
 
 ok !&has-parameter.WHY.defined, 'has-parameter should have no docs' or diag(&has-parameter.WHY);
 is &has-parameter.signature.params[0].WHY, 'documented';
@@ -186,7 +188,7 @@ sub has-two-params(
     Int $second
 ) {}
 
-is ~$=pod[18], 'documented';
+is ~$=pod[$pod_index++], 'documented';
 
 ok !&has-two-params.WHY.defined;
 is &has-two-params.signature.params[0].WHY, 'documented';
@@ -202,8 +204,8 @@ sub both-documented(
     Int $second
 ) {}
 
-is ~$=pod[19], 'documented';
-is ~$=pod[20], 'I too, am documented';
+is ~$=pod[$pod_index++], 'documented';
+is ~$=pod[$pod_index++], 'I too, am documented';
 
 ok !&both-documented.WHY.defined;
 is &both-documented.signature.params[0].WHY, 'documented';
@@ -221,7 +223,7 @@ sub has-anon-param(
     Str $
 ) {}
 
-is ~$=pod[21], 'leading';
+is ~$=pod[$pod_index++], 'leading';
 
 my $param = &has-anon-param.signature.params[0];
 
@@ -235,9 +237,9 @@ class DoesntMatter {
     ) {}
 }
 
-is ~$=pod[22], 'invocant comment';
+is ~$=pod[$pod_index++], 'invocant comment';
 
 $param = DoesntMatter.^find_method('m').signature.params[0];
 is $param.WHY, 'invocant comment', 'invocant comments should work';
 
-is $=pod.elems, 23;
+is $=pod.elems, $pod_index;
