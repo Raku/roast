@@ -1,5 +1,5 @@
 use Test;
-plan 116;
+plan 139;
 
 my $pod_index = 0;
 
@@ -13,6 +13,7 @@ is Simple.WHY.leading, 'simple case';
 ok !Simple.WHY.trailing.defined;
 is ~Simple.WHY, 'simple case', 'stringifies correctly';
 
+ok $=pod[$pod_index].WHEREFORE === Simple;
 is ~$=pod[$pod_index++], 'simple case';
 
 #| giraffe
@@ -22,7 +23,9 @@ class Outer {
     }
 }
 
+ok $=pod[$pod_index].WHEREFORE === Outer;
 is ~$=pod[$pod_index++], 'giraffe';
+ok $=pod[$pod_index].WHEREFORE === Outer::Inner;
 is ~$=pod[$pod_index++], 'zebra';
 
 is Outer.WHY.contents, 'giraffe';
@@ -44,8 +47,11 @@ module foo {
     }
 }
 
+ok $=pod[$pod_index].WHEREFORE === foo;
 is ~$=pod[$pod_index++], 'a module';
+ok $=pod[$pod_index].WHEREFORE === foo::bar;
 is ~$=pod[$pod_index++], 'a package';
+ok $=pod[$pod_index].WHEREFORE === foo::bar;
 is ~$=pod[$pod_index++], 'and a class';
 
 is foo.WHY.contents,           'a module';
@@ -64,6 +70,7 @@ ok !foo::bar::baz.WHY.trailing.defined;
 #| yellow
 sub marine {}
 
+ok $=pod[$pod_index].WHEREFORE === &marine;
 is ~$=pod[$pod_index++], 'yellow';
 
 is &marine.WHY.contents, 'yellow';
@@ -74,6 +81,7 @@ ok !&marine.WHY.trailing.defined;
 #| pink
 sub panther {}
 
+ok $=pod[$pod_index].WHEREFORE === &panther;
 is ~$=pod[$pod_index++], 'pink';
 
 is &panther.WHY.contents, 'pink';
@@ -90,20 +98,24 @@ class Sheep {
     method roar { 'roar!' }
 }
 
+my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
+my $roar-method = Sheep.^find_method('roar');
+
+ok $=pod[$pod_index].WHEREFORE === Sheep;
 is ~$=pod[$pod_index++],  'a sheep';
+ok $=pod[$pod_index].WHEREFORE === $wool-attr;
 is ~$=pod[$pod_index++],  'usually white';
+ok $=pod[$pod_index].WHEREFORE === $roar-method;
 is ~$=pod[$pod_index++], 'not too scary';
 
 is Sheep.WHY.contents, 'a sheep';
 ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
 is Sheep.WHY.leading, 'a sheep';
 ok !Sheep.WHY.trailing.defined;
-my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
 ok $wool-attr.WHY.WHEREFORE === $wool-attr, 'attr WHEREFORE matches';
 is $wool-attr.WHY, 'usually white';
 is $wool-attr.WHY.leading, 'usually white';
 ok !$wool-attr.WHY.trailing.defined;
-my $roar-method = Sheep.^find_method('roar');
 is $roar-method.WHY.contents, 'not too scary';
 ok $roar-method.WHY.WHEREFORE === $roar-method, 'method WHEREFORE matches';
 is $roar-method.WHY.leading, 'not too scary';
@@ -119,6 +131,7 @@ ok &oursub.WHY.WHEREFORE === &oursub, 'our sub WHEREFORE matches';
 is &oursub.WHY.leading, 'our works too', 'works for our subs';
 ok !&oursub.WHY.trailing.defined;
 
+ok $=pod[$pod_index].WHEREFORE === &oursub;
 is ~$=pod[$pod_index++], 'our works too';
 
 # two subs in a row
@@ -126,6 +139,7 @@ is ~$=pod[$pod_index++], 'our works too';
 #| one
 sub one {}
 
+ok $=pod[$pod_index].WHEREFORE === &one;
 is ~$=pod[$pod_index++], 'one';
 
 #| two
@@ -139,16 +153,19 @@ ok &two.WHY.WHEREFORE === &two, 'sub WHEREFORE matches';
 is &two.WHY.leading, 'two';
 ok !&two.WHY.trailing.defined;
 
+ok $=pod[$pod_index].WHEREFORE === &two;
 is ~$=pod[$pod_index++], 'two';
 
 #| that will break
 sub first {}
 
+ok $=pod[$pod_index].WHEREFORE === &first;
 is ~$=pod[$pod_index++], 'that will break';
 
 #| that will break
 sub second {}
 
+ok $=pod[$pod_index].WHEREFORE === &second;
 is ~$=pod[$pod_index++], 'that will break';
 
 is &first.WHY.contents, 'that will break';
@@ -167,6 +184,7 @@ ok &third.WHY.WHEREFORE === &third, 'sub WHEREFORE matches';
 is &third.WHY.leading, 'trailing space here';
 ok !&third.WHY.trailing.defined;
 
+ok $=pod[$pod_index].WHEREFORE === &third;
 is ~$=pod[$pod_index++], 'trailing space here';
 
 sub has-parameter(
@@ -174,6 +192,7 @@ sub has-parameter(
     Str $param
 ) {}
 
+ok $=pod[$pod_index].WHEREFORE === &has-parameter.signature.params[0];
 is ~$=pod[$pod_index++], 'documented';
 
 ok !&has-parameter.WHY.defined, 'has-parameter should have no docs' or diag(&has-parameter.WHY);
@@ -188,6 +207,7 @@ sub has-two-params(
     Int $second
 ) {}
 
+ok $=pod[$pod_index].WHEREFORE === &has-parameter.signature.params[0];
 is ~$=pod[$pod_index++], 'documented';
 
 ok !&has-two-params.WHY.defined;
@@ -204,7 +224,9 @@ sub both-documented(
     Int $second
 ) {}
 
+ok $=pod[$pod_index].WHEREFORE === &both-documented.signature.params[0];
 is ~$=pod[$pod_index++], 'documented';
+ok $=pod[$pod_index].WHEREFORE === &both-documented.signature.params[1];
 is ~$=pod[$pod_index++], 'I too, am documented';
 
 ok !&both-documented.WHY.defined;
@@ -223,6 +245,7 @@ sub has-anon-param(
     Str $
 ) {}
 
+ok $=pod[$pod_index].WHEREFORE === &has-anon-param.signature.params[0];
 is ~$=pod[$pod_index++], 'leading';
 
 my $param = &has-anon-param.signature.params[0];
@@ -236,10 +259,11 @@ class DoesntMatter {
         $arg
     ) {}
 }
+$param = DoesntMatter.^find_method('m').signature.params[0];
 
+ok $=pod[$pod_index].WHEREFORE === $param;
 is ~$=pod[$pod_index++], 'invocant comment';
 
-$param = DoesntMatter.^find_method('m').signature.params[0];
 is $param.WHY, 'invocant comment', 'invocant comments should work';
 
 is $=pod.elems, $pod_index;
