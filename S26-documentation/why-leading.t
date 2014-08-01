@@ -1,5 +1,5 @@
 use Test;
-plan 176;
+plan 204;
 
 my $pod_index = 0;
 
@@ -340,5 +340,63 @@ ok $rule.WHY.WHEREFORE == Regex, "regex";
 is G.WHY.leading, "regex"
 ok $=pod[$pod_index].WHEREFORE === Regex;
 is ~$=pod[$pod_index++], "regex";
+
+#| solo
+proto sub foo() { }
+
+is &foo.WHY.contents, "solo";
+ok &foo.WHY.WHEREFORE === Sub, "proto sub"
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod proto sub";
+is ~$=pod[$pod_index++], "solo";
+
+#| no proto
+multi sub bar() { }
+
+is &bar.WHY.contents, "no proto";
+ok &bar.WHY.WHEREFORE === Sub, "multi sub"
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub";
+is ~$=pod[$pod_index++], "no proto";
+
+#| variant A
+multi sub baz() { }
+#| variant B
+multi sub baz(Int) { }
+
+my ($baz1,$baz2) = &baz.candidates;
+
+is $baz1.WHY.contents, "variant A";
+ok $baz1.WHY.WHEREFORE === Sub, "multi sub"
+is $baz2.WHY.contents, "variant B";
+ok $baz2.WHY.WHEREFORE === Sub, "multi sub"
+
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub";
+is ~$=pod[$pod_index++], "variant A";
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub";
+is ~$=pod[$pod_index++], "variant B";
+
+
+#| proto
+proto sub greeble {*}
+#| alpha
+multi sub greeble(Int) { }
+#| beta
+multi sub greeble(Str) { }
+
+is &greeble.WHY.contents, "proto", "proto has its own WHY";
+ok &greeble.WHY.WHEREFORE === Sub, "proto sub"
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod proto sub";
+is ~$=pod[$pod_index++], "proto", "\$=pod proto has its own WHY";
+
+my ($greeble1,$greeble2) = &greeble.candidates;
+
+is $greeble1.WHY.contents, "alpha";
+ok $greeble1.WHY.WHEREFORE === Sub, "multi sub A"
+is $greeble2.WHY.contents, "beta";
+ok $greeble2.WHY.WHEREFORE === Sub, "multi sub B"
+
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub A";
+is ~$=pod[$pod_index++], "alpha";
+ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub B";
+is ~$=pod[$pod_index++], "beta";
 
 is $=pod.elems, $pod_index;
