@@ -1,5 +1,5 @@
 use Test;
-plan 139;
+plan 176;
 
 my $pod_index = 0;
 
@@ -265,5 +265,80 @@ ok $=pod[$pod_index].WHEREFORE === $param;
 is ~$=pod[$pod_index++], 'invocant comment';
 
 is $param.WHY, 'invocant comment', 'invocant comments should work';
+
+#| Are you talking to me?
+role Boxer {
+    #| Robert De Niro
+    method actor { }
+}
+
+is Boxer.WHY.contents, "Are you talking to me?";
+ok Boxer.WHY.WHEREFORE == Boxer, "role WHEREFORE matches";
+is Boxer.WHY.leading, "Are you talking to me?";
+ok !Boxer.WHY.trailing.defined;
+
+my $role-method = Boxer.^find_method('actor');
+is $role-method.WHY.contents, "Robert De Niro";
+ok $role-method.WHY.WHEREFORE == Method, "method within role WHEREFORE matches";
+is $role-method.WHY.leading, "Robert De Niro";
+ok !$role-method.WHY.trailing.defined;
+
+ok $=pod[$pod_index].WHEREFORE === Boxer;
+is ~$=pod[$pod_index++], "Are you talking to me?";
+
+ok $=pod[$pod_index].WHEREFORE === $role-method;
+is ~$=pod[$pod_index++], "Robert De Niro";
+
+class C {
+    #| Bob
+    submethod BUILD { }
+}
+my $sm = C.^find_method("BUILD");
+
+is $sm.WHY.contents, "Bob";
+ok $sm.WHY.WHEREFORE == Submethod, "submethod WHEREFORE matches";
+
+ok $=pod[$pod_index].WHEREFORE === Submethod;
+is ~$=pod[$pod_index++], "Bob";
+
+
+#| grammar
+grammar G {
+    #| rule
+    rule R { <?> }
+    #| token
+    token T { <?> }
+    #| regex
+    regex X { <?> }
+}
+
+
+is G.WHY.contents, "grammar";
+ok G.WHY.WHEREFORE == Grammar, "grammar";
+is G.WHY.leading, "grammar";
+ok !G.WHY.trailing.defined;
+ok $=pod[$pod_index].WHEREFORE === Grammar;
+is ~$=pod[$pod_index++], "Bob";
+
+my $rule = G.^find_method("R");
+is $rule.WHY.contents, "rule";
+ok $rule.WHY.WHEREFORE == Regex, "rule";
+is G.WHY.leading, "rule"
+ok $=pod[$pod_index].WHEREFORE === Regex;
+is ~$=pod[$pod_index++], "rule";
+
+my $token = G.^find_method("T");
+is $rule.WHY.contents, "token";
+ok $rule.WHY.WHEREFORE == Regex, "token";
+is G.WHY.leading, "token"
+ok $=pod[$pod_index].WHEREFORE === Regex;
+is ~$=pod[$pod_index++], "token";
+
+my $regex = G.^find_method("X");
+is $rule.WHY.contents, "regex";
+ok $rule.WHY.WHEREFORE == Regex, "regex";
+is G.WHY.leading, "regex"
+ok $=pod[$pod_index].WHEREFORE === Regex;
+is ~$=pod[$pod_index++], "regex";
 
 is $=pod.elems, $pod_index;
