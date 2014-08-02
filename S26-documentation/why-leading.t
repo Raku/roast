@@ -323,21 +323,21 @@ is ~$=pod[$pod_index++], "Bob";
 my $rule = G.^find_method("R");
 is $rule.WHY.contents, "rule";
 ok $rule.WHY.WHEREFORE === $rule, "rule";
-is G.WHY.leading, "rule";
+is $rule.WHY.leading, "rule";
 ok $=pod[$pod_index].WHEREFORE === $rule;
 is ~$=pod[$pod_index++], "rule";
 
 my $token = G.^find_method("T");
-is $rule.WHY.contents, "token";
-ok $rule.WHY.WHEREFORE === $token, "token";
-is G.WHY.leading, "token";
+is $token.WHY.contents, "token";
+ok $token.WHY.WHEREFORE === $token, "token";
+is $token.WHY.leading, "token";
 ok $=pod[$pod_index].WHEREFORE === $token;
 is ~$=pod[$pod_index++], "token";
 
 my $regex = G.^find_method("X");
-is $rule.WHY.contents, "regex";
-ok $rule.WHY.WHEREFORE === $regex, "regex";
-is G.WHY.leading, "regex";
+is $regex.WHY.contents, "regex";
+ok $regex.WHY.WHEREFORE === $regex, "regex";
+is $regex.WHY.leading, "regex";
 ok $=pod[$pod_index].WHEREFORE === $regex;
 is ~$=pod[$pod_index++], "regex";
 
