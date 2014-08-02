@@ -207,7 +207,7 @@ sub has-two-params(
     Int $second
 ) {}
 
-ok $=pod[$pod_index].WHEREFORE === &has-parameter.signature.params[0], 'param WHEREFORE from $=pod';
+ok $=pod[$pod_index].WHEREFORE === &has-two-params.signature.params[0], 'param WHEREFORE from $=pod';
 is ~$=pod[$pod_index++], 'documented';
 
 ok !&has-two-params.WHY.defined;
