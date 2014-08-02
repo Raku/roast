@@ -323,21 +323,21 @@ is ~$=pod[$pod_index++], "Bob";
 my $rule = G.^find_method("R");
 is $rule.WHY.contents, "rule";
 ok $rule.WHY.WHEREFORE == Regex, "rule";
-is G.WHY.leading, "rule"
+is G.WHY.leading, "rule";
 ok $=pod[$pod_index].WHEREFORE === Regex;
 is ~$=pod[$pod_index++], "rule";
 
 my $token = G.^find_method("T");
 is $rule.WHY.contents, "token";
 ok $rule.WHY.WHEREFORE == Regex, "token";
-is G.WHY.leading, "token"
+is G.WHY.leading, "token";
 ok $=pod[$pod_index].WHEREFORE === Regex;
 is ~$=pod[$pod_index++], "token";
 
 my $regex = G.^find_method("X");
 is $rule.WHY.contents, "regex";
 ok $rule.WHY.WHEREFORE == Regex, "regex";
-is G.WHY.leading, "regex"
+is G.WHY.leading, "regex";
 ok $=pod[$pod_index].WHEREFORE === Regex;
 is ~$=pod[$pod_index++], "regex";
 
@@ -345,7 +345,7 @@ is ~$=pod[$pod_index++], "regex";
 proto sub foo() { }
 
 is &foo.WHY.contents, "solo";
-ok &foo.WHY.WHEREFORE === Sub, "proto sub"
+ok &foo.WHY.WHEREFORE === Sub, "proto sub";
 ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod proto sub";
 is ~$=pod[$pod_index++], "solo";
 
@@ -353,7 +353,7 @@ is ~$=pod[$pod_index++], "solo";
 multi sub bar() { }
 
 is &bar.WHY.contents, "no proto";
-ok &bar.WHY.WHEREFORE === Sub, "multi sub"
+ok &bar.WHY.WHEREFORE === Sub, "multi sub";
 ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub";
 is ~$=pod[$pod_index++], "no proto";
 
@@ -365,9 +365,9 @@ multi sub baz(Int) { }
 my ($baz1,$baz2) = &baz.candidates;
 
 is $baz1.WHY.contents, "variant A";
-ok $baz1.WHY.WHEREFORE === Sub, "multi sub"
+ok $baz1.WHY.WHEREFORE === Sub, "multi sub";
 is $baz2.WHY.contents, "variant B";
-ok $baz2.WHY.WHEREFORE === Sub, "multi sub"
+ok $baz2.WHY.WHEREFORE === Sub, "multi sub";
 
 ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub";
 is ~$=pod[$pod_index++], "variant A";
@@ -383,16 +383,16 @@ multi sub greeble(Int) { }
 multi sub greeble(Str) { }
 
 is &greeble.WHY.contents, "proto", "proto has its own WHY";
-ok &greeble.WHY.WHEREFORE === Sub, "proto sub"
+ok &greeble.WHY.WHEREFORE === Sub, "proto sub";
 ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod proto sub";
 is ~$=pod[$pod_index++], "proto", "\$=pod proto has its own WHY";
 
 my ($greeble1,$greeble2) = &greeble.candidates;
 
 is $greeble1.WHY.contents, "alpha";
-ok $greeble1.WHY.WHEREFORE === Sub, "multi sub A"
+ok $greeble1.WHY.WHEREFORE === Sub, "multi sub A";
 is $greeble2.WHY.contents, "beta";
-ok $greeble2.WHY.WHEREFORE === Sub, "multi sub B"
+ok $greeble2.WHY.WHEREFORE === Sub, "multi sub B";
 
 ok $=pod[$pod_index].WHEREFORE === Sub, "\$=pod multi sub A";
 is ~$=pod[$pod_index++], "alpha";
