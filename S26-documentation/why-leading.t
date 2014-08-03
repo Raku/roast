@@ -30,7 +30,7 @@ test-leading(Simple, "simple case");
 #| line
 class MultiLine { }
 
-test-leading(MultiLine, "multi\nline");
+test-leading(MultiLine, "multi line");
 
 #| giraffe
 class Outer {
