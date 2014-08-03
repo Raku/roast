@@ -7,10 +7,10 @@ my $pod_index = 0;
 # WHY.trailing, and that WHY.WHEREFORE is the appropriate thing
 # Also checks the $=pod object is set appropriately.
 sub test-leading($thing, $value) {
-    is $thing.WHY.contents, $value, $value  ~ ' - contents';
-    ok $thing.WHY.WHEREFORE === $thing, $value ~ ' - WHEREFORE';
-    is $thing.WHY.leading, $value, $value ~ ' - leading';
-    ok !$thing.WHY.trailing.defined, $value ~ ' - no trailing';
+    is $thing.WHY.?contents, $value, $value  ~ ' - contents';
+    ok $thing.WHY.?WHEREFORE === $thing, $value ~ ' - WHEREFORE';
+    is $thing.WHY.?leading, $value, $value ~ ' - leading';
+    ok !$thing.WHY.?trailing.defined, $value ~ ' - no trailing';
     is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
 
     ok $=pod[$pod_index].WHEREFORE === $thing, "\$=pod $value - WHEREFORE";
