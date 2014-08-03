@@ -134,7 +134,7 @@ sub has-two-params(
     my @params = &has-parameter.signature.params;
     test-leading(@params[0], 'documented');
     ok !@params[1].WHY.defined, 'Second param should not be documented' or 
-        diag(&params[1].WHY.contents);
+        diag(@params[1].WHY.contents);
 }
 
 sub both-documented(
