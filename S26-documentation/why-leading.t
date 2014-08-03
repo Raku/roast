@@ -1,5 +1,5 @@
 use Test;
-plan 263;
+plan 269;
 
 my $pod_index = 0;
 
