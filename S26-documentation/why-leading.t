@@ -6,6 +6,8 @@ my $pod_index = 0;
 # Test that we get the values we expect from WHY.contents, WHY.leading,
 # WHY.trailing, and that WHY.WHEREFORE is the appropriate thing
 # Also checks the $=pod object is set appropriately.
+# XXX we need to be able to affect the test level (like Test::Builder::Level
+#     in Perl 5) so that failures point at the caller
 sub test-leading($thing, $value) {
     is $thing.WHY.?contents, $value, $value  ~ ' - contents';
     ok $thing.WHY.?WHEREFORE === $thing, $value ~ ' - WHEREFORE';
