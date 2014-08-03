@@ -120,7 +120,7 @@ sub has-parameter-as-well(
 
 {
     my @params = &has-parameter-as-well.signature.params;
-    test-trailing(@param[0], 'documented as well');
+    test-trailing(@params[0], 'documented as well');
 }
 
 sub so-many-params(
@@ -132,7 +132,7 @@ sub so-many-params(
     my @params = &so-many-params.signature.params;
     test-trailing(@params[0], 'first param');
     ok !@params[1].WHY.defined, 'the second parameter has no comments' 
-        or diag($param.WHY.contents);
+        or diag(@params[1].WHY.contents);
 }
 
 
