@@ -53,8 +53,8 @@ module foo {
 }
 
 test-leading(foo, 'a module');
-test-leading(foo::bar, 'a module');
-test-leading(foo::bar::baz, 'a module');
+test-leading(foo::bar, 'a package');
+test-leading(foo::bar::baz, 'and a class');
 
 #| yellow
 sub marine {}
