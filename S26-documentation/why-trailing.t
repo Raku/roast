@@ -4,13 +4,13 @@ plan 108;
 my $pod_index = 0;
 
 sub test-trailing($thing, $value) {
-    is $thing.WHY.contents, $value, $value  ~ ' - contents';
-    ok $thing.WHY.WHEREFORE === $thing, $value ~ ' - WHEREFORE';
-    is $thing.WHY.trailing, $value, $value ~ ' - trailing';
-    ok !$thing.WHY.leading.defined, $value ~ ' - no leading';
+    is $thing.WHY.?contents, $value, $value  ~ ' - contents';
+    ok $thing.WHY.?WHEREFORE === $thing, $value ~ ' - WHEREFORE';
+    is $thing.WHY.?trailing, $value, $value ~ ' - trailing';
+    ok !$thing.WHY.?leading.defined, $value ~ ' - no leading';
     is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
 
-    ok $=pod[$pod_index].WHEREFORE === $thing, "\$=pod $value - WHEREFORE";
+    ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $value - WHEREFORE";
     is ~$=pod[$pod_index], $value, "\$=pod $value";
     $pod_index++;
 }
