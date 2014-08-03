@@ -13,7 +13,7 @@ sub test-leading($thing, $value) {
     ok !$thing.WHY.?trailing.defined, $value ~ ' - no trailing';
     is ~$thing.WHY, $value, $value ~ ' - stringifies correctly';
 
-    ok $=pod[$pod_index].WHEREFORE === $thing, "\$=pod $value - WHEREFORE";
+    ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $value - WHEREFORE";
     is ~$=pod[$pod_index], $value, "\$=pod $value";
     $pod_index++;
 }
