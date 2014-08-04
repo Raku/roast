@@ -7,30 +7,25 @@ unless (try { EVAL("1", :lang<perl5>) }) {
     exit;
 }
 
-#?rakudo skip ':lang<perl5>'
 {
     my $r = EVAL("0", :lang<perl5>);
     is($r, 0, "number");
 }
 
-#?rakudo skip ':lang<perl5>'
 {
     my $r = EVAL("2", :lang<perl5>);
     is($r, 2, "number");
 }
 
-#?rakudo skip ':lang<perl5>'
 {
     my $r = EVAL('"perl6 now"', :lang<perl5>);
     is($r, 'perl6 now', "string");
 }
 
-#?rakudo emit #
 my $p5_dumper = EVAL('sub {return(wantarray ? @_ : $_[0]); }', :lang<perl5>);
 
 my %h = ( a => 1 );
 
-#?rakudo skip ':lang<perl5>'
 {
     my $test = '%h.kv received as hash';
     my ($k,$v) = $p5_dumper(%h.kv);   
@@ -38,7 +33,6 @@ my %h = ( a => 1 );
     is($v, '1', $test~' (value)');
 }
 
-#?rakudo skip ':lang<perl5>'
 {
     my $test = '\%h received as hashref';
     my %o := $p5_dumper(\%h);
@@ -48,7 +42,6 @@ my %h = ( a => 1 );
     is($ref<a>, 1, $test);
 }
 
-#?rakudo skip 'VAR'
 {
     my $test = q{ (VAR %h)received as hashref };
     my %o := $p5_dumper(VAR %h);
@@ -56,7 +49,6 @@ my %h = ( a => 1 );
 }
 
 my @a = <b c d>;
-#?rakudo skip ':lang<perl5>'
 {
     my $test = q{ (@a) received as array };
     my @o = $p5_dumper(@a);
@@ -64,7 +56,6 @@ my @a = <b c d>;
     is(@o[2], "d", $test);
 }
 
-#?rakudo skip ':lang<perl5>'
 {
     my $test = q{ (\@a) received as arrayref };
     my $o = $p5_dumper(\@a);
@@ -72,7 +63,6 @@ my @a = <b c d>;
     is($o[2], "d", $test);
 }
 
-#?rakudo skip 'VAR'
 {
     my $test = q{ (VAR @a) received as arrayref };
     my $o = $p5_dumper(VAR @a);
@@ -82,28 +72,24 @@ my @a = <b c d>;
 
 my $s = 'str';
 
-#?rakudo skip ':lang<perl5>'
 {
    my $test = q{ ($s) received as scalar };
    my $o = $p5_dumper($s);
    is($o, $s, $test);
 }
 
-#?rakudo skip ':lang<perl5>'
 {
    my $test = q{ (\$s) received as scalarref };
    my $o = $p5_dumper(\$s);
    is($$o, $s, $test);
 }
 
-#?rakudo skip 'VAR'
 {
    my $test = q{ (VAR $s) received as scalarref };
    my $o = $p5_dumper(VAR $s);
    is($$o, $s, $test);
 }
 
-#?rakudo skip ':lang<perl5>'
 {
     my $test = q{ (&p6func) Passing a Perl 6 coderef to Perl 5 };
 
@@ -113,7 +99,6 @@ my $s = 'str';
     is($result,4,$test);
 }
 
-#?rakudo 2 skip 'v5 is not in core (yet)'
 {
     sub add_in_perl5 ($x, $y) {
         use v5;
