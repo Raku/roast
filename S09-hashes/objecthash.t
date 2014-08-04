@@ -56,11 +56,14 @@ plan 31;
 
 {
     my %h{Mu};
-    #?rakudo 6 skip 'oh noes, it dies'
+    #?rakudo 2 skip 'oh noes, it dies'
     ok %h{Mu} = 2, "just make the fudging work";
     is %h{Mu}, 2, 'using Mu as a key';
     ok %h{Any} = 3, "just make the fudging work";
+    #?rakudo todo 'oh noes, it dies'
     is %h{Any}, 3, 'using Any as a key';
+    #?rakudo skip 'oh noes, it dies'
     is %h{ Mu, Any }.join(","), "2,3", 'check slice access on Mu';
+    #?rakudo todo 'oh noes, it dies'
     is %h{*}.join(","), "2,3", 'check whatever access with Mu as key';
 } #6
