@@ -10,7 +10,7 @@ It probably needs a few syntax updates to remove p5isms
 
 =end pod
 
-plan 22;
+plan 38;
 
 # should be: L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
 # L<S05/Modifiers/match at all possible character positions>
@@ -24,24 +24,22 @@ my @expected = (
     [ 7,        'Abbra' ],
 );
 
-#?rakudo todo 'm:overlap NYI'
 {
     for (1..2) -> $rep {
          ok($str ~~ m:i:overlap/ a .+ a /, "Repeatable overlapping match ($rep)" );
 
         ok(@$/ == @expected, "Correct number of matches ($rep)" );
-        my %expected; %expected{map {$_[1]}, @expected} = (1) x @expected;
+        my %expected; %expected{map {$_[1]}, @expected} = (1) xx @expected;
         my %position; %position{map {$_[1]}, @expected} = map {$_[0]}, @expected;
         for (@$/) {
             ok( %expected{$_}, "Matched '$_' ($rep)" );
-            ok( %position{$_} == $_.to, "At correct position of '$_' ($rep)" );
+            ok( %position{$_} == $_.from, "At correct position of '$_' ($rep)" );
             %expected{$_} :delete;
         }
         ok(%expected.keys == 0, "No matches missed ($rep)" );
     }
 }
 
-#?rakudo skip "m:overlap// NYI"
 {
     ok(!( "abcdefgh" ~~ m:overlap/ a .+ a / ), 'Failed overlapping match');
     ok(@$/ == 0, 'No matches');
