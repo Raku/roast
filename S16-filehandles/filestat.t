@@ -10,7 +10,7 @@ This test tests various file stat methods.
 
 =end pod
 
-plan 12;
+plan 10;
 
 # time stat tests (modify/change/access)
 {
@@ -40,24 +40,10 @@ plan 12;
 
     ok ($original1_modified < $tmpfile1.IO.modified), 'IO.modified should be updated when file content changes';
     ok ($original1_changed  < $tmpfile1.IO.changed),  'IO.changed should be updated when file content changes';
-    #?rakudo emit todo("fails on macosx RT #122467") if $*DISTRO.name eq "macosx";
-    diag($original1_accessed ~ "\n" ~ $tmpfile1.IO.accessed);
-    ok ($original1_accessed == $tmpfile1.IO.accessed), 'IO.accessed should NOT be updated when file is opened for writing';
    
     # opening for read
     $fh1 = open $tmpfile1, :r orelse die "Could not open $tmpfile1 for reading";
     $fh1.close;
-
-    #?rakudo emit todo("fails on macosx RT #122467") if $*DISTRO.name eq "macosx";
-    ok ($original1_accessed == $tmpfile1.IO.accessed), 'IO.accessed should NOT be updated when file is opened for reading';
-    diag($original1_accessed ~ "\n" ~ $tmpfile1.IO.accessed);
-
-#    only works on some file systems, so better not test it at all:
-#
-#    # reading contents of file 
-#    slurp $tmpfile1;
-#    ok ($original1_accessed < $tmpfile1.IO.accessed), 'IO.accessed should be updated when contents of file is read';
-#
 
     # changing file permissions
 
