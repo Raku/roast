@@ -38,7 +38,6 @@ is_run( 'my $a = <stringify args>; note $a',
         },
         'note an array reference' );
 
-#?rakudo todo 'nom regression'
 #?niecza todo 'Str.note NYI'
 is_run( '"method form".note',
         {
