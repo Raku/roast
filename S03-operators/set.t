@@ -98,7 +98,6 @@ isa_ok ($s (&) $ks), Set, "... and it's actually a Set (texas)";
 
 # set subtraction
 
-#?rakudo skip "∅ NYI"
 is showset($s (-) $s), showset(∅), "Set subtracted from Set is correct";
 isa_ok ($s (-) $s), Set, "... and it's actually a Set";
 
@@ -119,7 +118,6 @@ isa_ok ($kb (-) $s), Bag, "... and it's actually a Bag";
 
 # symmetric difference
 
-#?rakudo skip "∅ NYI"
 is showset($s (^) $s), showset(∅), "Set symmetric difference with Set is correct";
 isa_ok ($s (^) $s), Set, "... and it's actually a Set";
 
@@ -413,7 +411,6 @@ ok $s !R(>) $kb, "Set is not a reversed proper superset of BagHash (texas)";
 ok $kb !R(>) $kb, "BagHash is not reversed proper superset of itself (texas)";
 ok $kb !R(>) $s, "BagHash is not a reversed proper superset of Set (texas)";
 
-#?rakudo skip 'Reduction and set operators'
 {
     my $a = set <Zeus Hera Artemis Apollo Hades Aphrodite Ares Athena Hermes Poseidon Hephaestus>;
     my $b = set <Jupiter Juno Neptune Minerva Mars Venus Apollo Diana Vulcan Vesta Mercury Ceres>;

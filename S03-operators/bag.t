@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 108;
+plan 100;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -142,7 +142,6 @@ isa_ok ($kb (+) $b), Bag, "... and it's actually a Bag";
     ok $kb (>+) $kb, "Our keybag is a msuperset of itself";
 }
 
-#?rakudo skip 'Reduction and bag operators'
 {
     # my $s = set <blood love>;
     # my $ks = SetHash.new(<blood rhetoric>);
