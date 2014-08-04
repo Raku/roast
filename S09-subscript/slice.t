@@ -86,7 +86,7 @@ plan 26;
 }
 
 # RT #120383
-#?rakudo skip '#120383'
+#?rakudo skip 'RT #120383'
 {
     my @a = 42..50;
     is @a .= [1,2], (43,44), 'did we return right slice';;
