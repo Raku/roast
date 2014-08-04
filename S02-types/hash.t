@@ -275,7 +275,7 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     %hash<bar><baz> := 'zoom';
     is %hash<bar><baz>, 'zoom', 'binding on auto-vivified hash value works';
     %hash<foo><baz> := my $b;
-    #?rakudo todo 'auto-vivified binding does not work yet: RT#118947'
+    #?rakudo todo 'auto-vivified binding does not work yet: RT #118947'
     ok $b =:= %hash<foo><baz>, 'binding variable worked';
 } #1
 
