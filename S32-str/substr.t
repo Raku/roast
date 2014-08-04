@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 92;
+plan 88;
 
 # L<S32::Str/Str/=item substr>
 
@@ -26,23 +26,6 @@ plan 92;
     is(substr($str, *-4, *-1), "oba", "start from the end and negative length");
 
     is($str, "foobar", "original string still not changed");
-};
-
-#?rakudo skip 'too many args'
-{ # replacement
-    my $str = "foobar";
-
-    substr($str, 2, 1, "i");
-    is($str, "foibar", "fourth arg to substr replaced part");
-
-    substr($str, *-1, 1, "blah");
-    is($str, "foibablah", "longer replacement expands string");
-
-    substr($str, 1, 3, "");
-    is($str, "fablah", "shorter replacement shrunk it");
-
-    substr($str, 1, *-1, "aye");
-    is($str, "fayeh", "replacement with negative length");
 };
 
 { # misc
