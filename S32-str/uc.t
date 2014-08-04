@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 18;
+plan 17;
 
 # L<S32::Str/"Str"/=item uc>
 
@@ -49,13 +49,12 @@ is ~(0.uc),         ~0, '.uc on Int';
 is ~(0.tc),         ~0, '.tc on Int';
 is ~(0.lc),         ~0, '.lc on Int';
 
-#?DOES 4
-#?rakudo skip 'but RoleName'
+#?DOES 3 
 {
     role A {
         has $.thing = 3;
     }
-    for <uc lc tc lcfirst> -> $meth {
+    for <uc lc tc> -> $meth {
         my $str = "('Nothing much' but A).$meth eq 'Nothing much'.$meth";
         ok EVAL($str), $str;
     }
