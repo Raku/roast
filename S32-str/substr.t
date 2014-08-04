@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 88;
+plan 69;
 
 # L<S32::Str/Str/=item substr>
 
@@ -68,21 +68,6 @@ sub l (Int $a) {  my $l = $a; return $l }
     is($str, "foobar", "original string still not changed (substr(Int, StrLen)).");
 };
 
-#?rakudo skip 'too many args'
-{ # replacement
-    my $str = "foobar";
-
-    substr($str, 2, l(1), "i");
-    is($str, "foibar", "fourth arg to substr replaced part (substr(Int, StrLen)).");
-
-    substr($str, *-1, l(1), "blah");
-    is($str, "foibablah", "longer replacement expands string (substr(Int, StrLen)).");
-
-    substr($str, 1, l(3), "");
-    is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrLen)).");
-};
-
-
 { # misc
     my $str = "hello foo and bar";
 
@@ -131,67 +116,6 @@ sub p (Int $a) {  my $p = $a; return $p }
 
     substr($str, 1, p(3), "");
     is($str, "fablah", "shorter replacement shrunk it (substr(Int, StrPos)).");
-};
-
-# as lvalue, XXX: not sure this should work, as that'd be action at distance:
-#   my $substr = \substr($str, ...);
-#   ...;
-#   some_func $substr; # manipulates $substr
-#   # $str altered!
-# But one could think that's the wanted behaviour, so I leave the test in.
-#?rakudo skip 'StrPos NYI'
-#?niecza skip 'StrPos tests broken'
-{
-    my $str = "gorch ding";
-
-    substr($str, 0, p(5)) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
-
-    my $r = \substr($str, 0, p(5));
-    ok(WHAT($r).gist, '$r is a reference (substr(Int, StrPos)).');
-    is($$r, "gloop", '$r referent is eq to the substring (substr(Int, StrPos)).');
-
-    $$r = "boing";
-    is($str, "boing ding", "assignment to reference modifies original (substr(Int, StrPos)).");
-    is($$r, "boing", '$r is consistent (substr(Int, StrPos)).');
-
-    my $o = \substr($str, 3, p(2));
-    is($$o, "ng", "other ref to other lvalue (substr(Int, StrPos)).");
-    $$r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrPos)).");
-    is($$o, " d", "other lvalue wiggled around (substr(Int, StrPos)).");
-
-};
-
-#?rakudo skip 'lvalue substr'
-#?niecza skip 'StrPos tests broken'
-{ # as lvalue, should work
-    my $str = "gorch ding";
-
-    substr($str, 0, p(5)) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
-};
-
-#?rakudo skip 'StrPos NYI'
-#?niecza skip 'StrPos tests broken'
-{ # as lvalue, using :=, should work
-    my $str = "gorch ding";
-
-    substr($str, 0, p(5)) = "gloop";
-    is($str, "gloop ding", "lvalue assignment modified original string (substr(Int, StrPos)).");
-
-    my $r := substr($str, 0, p(5));
-    is($r, "gloop", 'bound $r is eq to the substring (substr(Int, StrPos)).');
-
-    $r = "boing";
-    is($str, "boing ding", "assignment to bound var modifies original (substr(Int, StrPos)).");
-    is($r, "boing", 'bound $r is consistent (substr(Int, StrPos)).');
-
-    my $o := substr($str, 3, p(2));
-    is($o, "ng", "other bound var to other lvalue (substr(Int, StrPos)).");
-    $r = "foo";
-    is($str, "foo ding", "lvalue ref size varies but still works (substr(Int, StrPos)).");
-    is($o, " d", "other lvalue wiggled around (substr(Int, StrPos)).");
 };
 
 { # misc
