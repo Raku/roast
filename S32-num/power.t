@@ -45,11 +45,17 @@ is(0 ** NaN, NaN, "0**NaN=NaN");
 # Not at all sure the next three cases are correct!
 
 #?niecza 2 todo 'complex NaN stringy'
-#?rakudo skip 'NaN**1i should be NaN'
+#?rakudo.jvm skip 'NaN**1i should be NaN'
+#?rakudo.parrot skip 'NaN**1i should be NaN'
+#?rakudo.moar todo 'NaN**1i should be NaN'
 is(NaN ** 1i, NaN, "NaN**1i=NaN");
-#?rakudo skip '1i**NaN should be NaN'
+#?rakudo.jvm skip '1i**NaN should be NaN'
+#?rakudo.parrot skip '1i**NaN should be NaN'
+#?rakudo.moar todo '1i**NaN should be NaN'
 is(1i ** NaN, NaN, "1i**NaN=NaN");
-#?rakudo skip 'NaN**0 should be NaN'
+#?rakudo.jvm skip 'NaN**0 should be NaN'
+#?rakudo.parrot skip 'NaN**0 should be NaN'
+#?rakudo.moar todo 'NaN**0 should be NaN'
 is(NaN ** 0, NaN, "NaN**0=NaN");
 
 is(NaN ** NaN, NaN, "NaN**NaN=NaN");
@@ -71,7 +77,9 @@ is_approx(5i ** 3, -125i, "5i ** 3 = -125i");
 is_approx(3i ** 3, -27i, "3i ** 3 = -27i");
 is_approx((-3i) ** 3, 27i, "-3i ** 3 = 27i");
 
-#?rakudo skip 'i'
+#?rakudo.parrot skip 'i'
+#?rakudo.jvm skip 'i'
+#?rakudo.moar todo 'i'
 is_approx (-1) ** -i, 23.1406926327793, "(-1) ** -i is approx 23.1406926327793";
 
 {
