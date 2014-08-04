@@ -21,25 +21,30 @@ is(("a" ~~ rx:P5/(?(1)b|a)/ && $/), "a", 're_tests 766/0 (962)');
 ok((not ("a" ~~ rx:P5/(x)?(?(1)a|b)/)), 're_tests 768  (964)');
 is(("a" ~~ rx:P5/(x)?(?(1)b|a)/ && $/), "a", 're_tests 770/0 (966)');
 is(("a" ~~ rx:P5/()?(?(1)b|a)/ && $/), "a", 're_tests 772/0 (968)');
+#?rakudo 3 todo "needs RT"
 ok((not ("a" ~~ rx:P5/()(?(1)b|a)/)), 're_tests 774  (970)');
 is(("a" ~~ rx:P5/()?(?(1)a|b)/ && $/), "a", 're_tests 776/0 (972)');
 is(("(blah)" ~~ rx:P5/^(\()?blah(?(1)(\)))$/ && $1), ")", 're_tests 778/2 (974)');
 ok((not ("blah)" ~~ rx:P5/^(\()?blah(?(1)(\)))$/)), 're_tests 780  (976)');
 ok((not ("(blah" ~~ rx:P5/^(\()?blah(?(1)(\)))$/)), 're_tests 782  (978)');
+#?rakudo todo "needs RT"
 is(("(blah)" ~~ rx:P5/^(\(+)?blah(?(1)(\)))$/ && $1), ")", 're_tests 784/2 (980)');
 ok((not ("blah)" ~~ rx:P5/^(\(+)?blah(?(1)(\)))$/)), 're_tests 786  (982)');
 ok((not ("(blah" ~~ rx:P5/^(\(+)?blah(?(1)(\)))$/)), 're_tests 788  (984)');
 ok((not ("a" ~~ rx:P5/(?(?{0})a|b)/)), 're_tests 790  (986)');
 is(("a" ~~ rx:P5/(?(?{0})b|a)/ && $/), "a", 're_tests 791/0 (987)');
+#?rakudo 2 todo "needs RT"
 ok((not ("a" ~~ rx:P5/(?(?{1})b|a)/)), 're_tests 792  (988)');
 is(("a" ~~ rx:P5/(?(?{1})a|b)/ && $/), "a", 're_tests 793/0 (989)');
 ok((not ("a" ~~ rx:P5/(?(?!a)a|b)/)), 're_tests 794  (990)');
 is(("a" ~~ rx:P5/(?(?!a)b|a)/ && $/), "a", 're_tests 795/0 (991)');
+#?rakudo 3 todo "needs RT"
 ok((not ("a" ~~ rx:P5/(?(?=a)b|a)/)), 're_tests 796  (992)');
 is(("a" ~~ rx:P5/(?(?=a)a|b)/ && $/), "a", 're_tests 797/0 (993)');
 is(("aaab" ~~ rx:P5/(?=(a+?))(\1ab)/ && $1), "aab", 're_tests 798/2 (994)');
 ok((not ("aaab" ~~ rx:P5/^(?=(a+?))\1ab/)), 're_tests 800  (996)');
 is(("one:" ~~ rx:P5/(\w+:)+/ && $0), "one:", 're_tests 802/1 (998)');
+#?rakudo 2 todo "needs RT"
 is(("a" ~~ rx:P5/$(?<=^(a))/ && $0), "a", 're_tests 804/1 (1000)');
 is(("aaab" ~~ rx:P5/(?=(a+?))(\1ab)/ && $1), "aab", 're_tests 806/2 (1002)');
 ok((not ("aaab" ~~ rx:P5/^(?=(a+?))\1ab/)), 're_tests 808  (1004)');
@@ -57,12 +62,14 @@ is(("xy:z:::abcd" ~~ rx:P5/([\w:]+::)?(\w+)$/ && $0), "xy:z:::", 're_tests 824/1
 is(("xy:z:::abcd" ~~ rx:P5/([\w:]+::)?(\w+)$/ && $1), "abcd", 're_tests 824/2 (1027)');
 is(("aexycd" ~~ rx:P5/^[^bcd]*(c+)/ && $0), "c", 're_tests 826/1 (1030)');
 ok((not ("aaab" ~~ rx:P5/(>a+)ab/)), 're_tests 828  (1032)');
+#?rakudo todo "needs RT"
 ok(("aaab" ~~ rx:P5/(?>a+)b/), 're_tests 829  (1033)');
 is(("a:[b]:" ~~ rx:P5/([[:]+)/ && $0), ":[", 're_tests 831/1 (1035)');
 is(("a=[b]=" ~~ rx:P5/([[=]+)/ && $0), "=[", 're_tests 832/1 (1036)');
 is(("a.[b]." ~~ rx:P5/([[.]+)/ && $0), ".[", 're_tests 833/1 (1037)');
 is(("abc" ~~ rx:P5/[a[:]b[:c]/ && $/), "abc", 're_tests 834/0 (1038)');
 is(("abc" ~~ rx:P5/[a[:]b[:c]/ && $/), "abc", 're_tests 835/0 (1039)');
+#?rakudo 3 todo "needs RT"
 is(("aaab" ~~ rx:P5/((?>a+)b)/ && $0), "aaab", 're_tests 836/1 (1040)');
 is(("aaab" ~~ rx:P5/(?>(a+))b/ && $0), "aaa", 're_tests 838/1 (1042)');
 is(("((abc(ade)ufh()()x" ~~ rx:P5/((?>[^()]+)|\([^()]*\))+/ && $/), "abc(ade)ufh()()x", 're_tests 840/0 (1044)');
