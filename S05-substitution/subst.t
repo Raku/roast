@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 141;
+plan 142;
 
 # L<S05/Substitution/>
 
@@ -39,11 +39,12 @@ is '12'.subst(/(.)(.)/,{$()*2}),'24', '.. and do nifty things in closures';
     nok $/,                     '$/ is a falsey';
 
     $_ = 'a';
-    is s/a/b/,             'b', '$_ = "a"; s/a/b/ is "b"';
+    is ~s/a/b/,            'a', '$_ = "a"; s/a/b/ stringifies to "a"';
+    is $_,                 'b', '$_ is "b"';
     is $/,                 'a', '$/ matched "a"';
 
     $_ = 'a';
-    is s/x/y/,             'a', '$_ = "a"; s/x/y/ is "a"';
+    is ~s/x/y/,             '', '$_ = "a"; s/x/y/ stringifies to ""';
     nok $/,                     '$/ is a falsey';
 }
 
