@@ -147,7 +147,7 @@ sub both-documented(
 ) {}
 
 {
-    my @params = &both-documented.signature.params[0];
+    my @params = &both-documented.signature.params;
     test-leading(@params[0], 'documented');
     test-leading(@params[1], 'I too, am documented');
 }
