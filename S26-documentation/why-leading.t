@@ -184,7 +184,7 @@ role Boxer {
 {
     my $method = Boxer.^find_method('actor');
     test-leading( Boxer, 'Are you talking to me?');
-    test-leading($method, 'Are you talking to me?');
+    test-leading($method, 'Robert De Niro');
 }
 
 class C {
