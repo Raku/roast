@@ -1,5 +1,5 @@
 use Test;
-plan 108;
+plan 157;
 
 my $pod_index = 0;
 
@@ -53,7 +53,6 @@ sub panther {}
 #= pink
 
 test-trailing(&panther, 'pink');
-is $=pod[$pod_index++], 'pink';
 
 class Sheep {
 #= a sheep
@@ -143,7 +142,7 @@ sub has-anon-param(
 
 {
     my @params = &has-anon-param.signature.params;
-    test-trailing(@params[1], 'trailing');
+    test-trailing(@params[0], 'trailing');
 }
 
 
