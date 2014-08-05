@@ -1,5 +1,5 @@
 use Test;
-plan 269;
+plan 270;
 
 my $pod_index = 0;
 
@@ -225,7 +225,8 @@ test-leading(&foo, 'solo');
 #| no proto
 multi sub bar() { }
 
-test-leading(&bar, 'no proto');
+ok !&bar.WHY.defined;
+test-leading(&bar.candidates[0], 'no proto');
 
 #| variant A
 multi sub baz() { }
