@@ -15,7 +15,7 @@ multi sub trait_mod:<is>(Routine $r, :$Cached!) {
 	    ?? %cache{$arg}
             # ... and calls the original, if it
             # is not found in the cache
-	    !! (%cache{$arg} = callwith($arg); 	say $arg => %cache{$arg}; %cache{$arg})
+	    !! (%cache{$arg} = callwith($arg))
         }
     );
 }
