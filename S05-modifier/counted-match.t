@@ -63,13 +63,13 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 
 #?niecza skip 'Excess arguments to CORE Cool.match'
 {
-    is 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2)).join('|'),
+    is @('abecidofug'.match(/<[aeiou]>./, :nth(1,3,5), :x(2))).join('|'),
         'ab|id', ':x and :nth';
 
     nok 'abecidofug'.match(/<[aeiou]>./, :nth(1,3,5,7,9), :x(6)).join('|'),
         ':x and :nth (not matching)';
 
-    is 'abcdefg'.match(/.*/, :nth(2,4,6,7), :x(2..3), :overlap).join('|'),
+    is @('abcdefg'.match(/.*/, :nth(2,4,6,7), :x(2..3), :overlap)).join('|'),
         'bcdefg|defg|fg', ':x and :nth and :overlap';
 
     nok 'abcdefg'.match(/.+/, :nth(2,4,6,7), :x(6..8), :overlap).join('|'),
@@ -79,7 +79,7 @@ my $data = "f fo foo fooo foooo fooooo foooooo";
 # test that non-monotonic items in :nth lists are ignored
 #?niecza todo
 {
-    is 'abacadaeaf'.match(/a./, :nth(2, 1, 4)).join(', '),
+    is @('abacadaeaf'.match(/a./, :nth(2, 1, 4))).join(', '),
         'ac, ae', 'non-monotonic items in :nth are ignored';
 }
 
