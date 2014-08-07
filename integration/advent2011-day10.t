@@ -60,15 +60,14 @@ my $expected-pod = rx/'A Heading!'
 is_run( $main,  %( out => $expected-pod,
                   err => ''), :compiler-args['--doc'], '--doc');
 
-my $main2 = $main ~ q:to"END";
+my $main2 = $main ~ q:to"--END--";
 
 DOC INIT {
-        use Pod::To::Text;
-        pod2text($=POD);
-    }
-END
+    use Pod::To::Text;
+    pod2text($=pod);
+}
+--END--
 
-#?rakudo todo 'RT #12205'
 is_run( $main2,  { out => $expected-pod,
                   err => ''}, :compiler-args['--doc'], '--doc + DOC INIT {}');
 
