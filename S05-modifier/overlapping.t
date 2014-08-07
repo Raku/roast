@@ -10,7 +10,7 @@ It probably needs a few syntax updates to remove p5isms
 
 =end pod
 
-plan 38;
+plan 41;
 
 # should be: L<S05/Modifiers/With the new C<:ov> (C<:overlap>) modifier,>
 # L<S05/Modifiers/match at all possible character positions>
@@ -47,10 +47,10 @@ my @expected = (
     ok($str ~~ m:i:overlap/ a (.+) a /, 'Capturing overlapping match');
 
     ok(@$/ == @expected, 'Correct number of capturing matches');
-    my %expected; %expected{@expected} = (1) x @expected;
+    my %expected; %expected{@expected} = (1) xx @expected;
     for (@$/) {
-        my %expected; %expected{map {$_[1]}, @expected} = (1) x @expected;
-        ok( $_[1] = substr($_[0],1,-1), "Captured within '$_'" );
+        my %expected; %expected{map {$_}, @expected} = (1) x @expected;
+        ok( $_[0] eq substr($_, 1, *-1), "Captured within '$_'" );
         %expected{$_} :delete;
     }
 }
