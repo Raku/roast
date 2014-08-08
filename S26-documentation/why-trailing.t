@@ -1,5 +1,5 @@
 use Test;
-plan 157;
+plan 206;
 
 my $pod_index = 0;
 
@@ -157,6 +157,48 @@ class DoesntMatter {
 {
     my @params = DoesntMatter.^find_method('m').signature.params;
     test-trailing(@params[0], 'invocant comment');
+}
+
+role Boxer {
+#= Are you talking to me?
+    method actor { }
+    #= Robert De Niro
+}
+
+{
+    my $method = Boxer.^find_method('actor');
+    test-trailing(Boxer, 'Are you talking to me?');
+    test-trailing($method, 'Robert De Niro');
+}
+
+class C {
+    submethod BUILD { }
+    #= Bob
+}
+
+{
+    my $submethod = C.^find_method("BUILD");
+    test-trailing($submethod, 'Bob');
+}
+
+grammar G {
+#= grammar
+    rule R { <?> }
+    #= rule
+    token T { <?> }
+    #= token
+    regex X { <?> }
+    #= regex
+}
+
+{
+    my $rule = G.^find_method("R");
+    my $token = G.^find_method("T");
+    my $regex = G.^find_method("X");
+    test-trailing(G, 'grammar');
+    test-trailing($rule, 'rule');
+    test-trailing($token, 'token');
+    test-trailing($regex, 'regex');
 }
 
 is $=pod.elems, $pod_index;
