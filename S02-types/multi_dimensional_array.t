@@ -7,7 +7,7 @@ Multi-Dimensional Arrays
 
 =end pod
 
-plan 53;
+plan 58;
 
 # multi-dimensional array
 # L<S09/Multidimensional arrays/Perl 6 arrays are not restricted to being one-dimensional>
@@ -146,5 +146,13 @@ is @multi3[0,1; 2; 2], (<angry-squirrels falcon-9s>), '[0,1 ; 2 ; 2]';
 is @multi3[1; 0,2; 1], (<SUVs satellites>),           '[1 ; 0,2 ; 1]';
 is @multi3[1; 2; 1,2], (<satellites falcon-9s>),      '[1 ; 2 ; 1,2]';
 is @multi3[0,1; 0,2; 1,2], (<fuzzy-cats angry-cats squirrels angry-squirrels SUVs tanks satellites falcon-9s>), '[0,1 ; 0,2 ; 1,2]';
+
+ok (@multi3[0;*;1] = <cute-cats cute-dogs cute-squirrels ignored-value>), 'can assign to multi-dim slice';
+#?rakudo todo 'Multi-dimensional slice assignment'
+is @multi3[0;*;1], (<cute-cats cute-dogs cute-squirrels>), 'overall assignment worked';
+is @multi3[0;0;1], (<cute-cats>),      'assigned the right thing to [0;0;1]';
+#?rakudo 2 todo 'Multi-dimensional slice assignment'
+is @multi3[0;1;1], (<cute-dogs>),      'assigned the right thing to [0;1;1]';
+is @multi3[0;2;1], (<cute-squirrels>), 'assigned the right thing to [0;2;1]';
 
 # vim: ft=perl6
