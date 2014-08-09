@@ -67,7 +67,7 @@ is_deeply @triplet-prods, [31875000], 'Pythagorean triplet products (dataflow)';
 
 BEGIN my %cache = 1 => 0;
 
-multi factors($n where %cache) { %cache{$n} }
+multi factors($n where %cache{$n}:exists) { %cache{$n} }
 multi factors($n) {
     for 2, 3, *+2 ...^ * > sqrt($n) {
 	if $n %% $_ {
@@ -83,15 +83,20 @@ constant $N = 3; # 4 in advent post - very expensive
 
 my $i = 0;
 my $result;
-for 2..* {
-    $i = factors($_) == $N ?? $i + 1 !! 0;
-    if $i == $N {
-	$result = $_ - $N + 1;
-	last;
-    }
-}
 
-is $result, 644, 'consecutive prime factors';
+#?rakudo.jvm skip 'RT #122497'
+#?rakudo.parrot skip 'RT #122497'
+{
+    for 2..* {
+        $i = factors($_) == $N ?? $i + 1 !! 0;
+        if $i == $N {
+            $result = $_ - $N + 1;
+            last;
+        }
+    }
+
+    is $result, 644, 'consecutive prime factors';
+}
 
 # Note: have not attempted NativeCall implementation
 
@@ -99,6 +104,8 @@ is $result, 644, 'consecutive prime factors';
 
 is +(2..100 X=> 2..100).classify({ .key ** .value }), 9183, 'distinct term count';
 
+#?rakudo.jvm skip 'RT #122497'
+#?rakudo.parrot skip 'RT #122497'
 {
     constant A = 100;
     constant B = 100;
@@ -125,7 +132,7 @@ is +(2..100 X=> 2..100).classify({ .key ** .value }), 9183, 'distinct term count
     is ((A - 1) * (B - 1) + %count - [+] %count.values), 9183, 'distinct term count - optimized';
 }
 
-todo "differing result";
+todo "unknown";
 is do {
     sub cross(@a, @b) { @a X @b }
     sub dups(@a) { @a - @a.uniq }

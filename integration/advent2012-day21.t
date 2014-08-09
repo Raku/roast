@@ -68,7 +68,7 @@ sub collatz-length(Int $n) {
 }
 END
 
-# a couple of contributions from gerde and kaz
+# a couple of contributions from gerdr and kaz
 
 our $bench7 = q:to"END";
 sub collatz-length(Int $n) {
@@ -99,30 +99,27 @@ sub collatz-length(Int $start) {
 }
 my $expected-output = @numbers.map( -> $n {"$n: " ~ collatz-length($n)}).join("\n") ~ "\n";
 
-sub run-harness(*@scripts) {
-    my %results;
-    for @scripts {
-	my ($script, $code) = .kv;
-        my $start = now;
-##        qqx/$perl6 $code { @numbers }/;
-	is_run( $code ~ $common-main, { out => $expected-output, err => ''}, $script, :args(@numbers));
-        my $end = now;
-        %results{$script} = $end - $start;
-    }
- 
-    for %results.pairs.sort(*.value) -> (:key($script), :value($time)) {
-        diag "$script: $time seconds";
-    }
+our %results;
+
+sub run-harness($code,$bench-name) {
+    my $start = now;
+    my $out = Test::Util::run( $code ~ $common-main, :args(@numbers));
+    my $end = now;
+    %results{$bench-name} = $end - $start;
+    $out;
 }
 
-run-harness(
-    (sequence => $bench1,
-     recursive-ternary-hand-cached => $bench2,
-     sequence-ternary  => $bench3,
-     loop              => $bench4,
-     recursive-ternary => $bench5,
-     hand-memoization  => $bench6,
-     gerdr             => $bench7,
-     kaz               => $bench8,
-    )
-);
+is run-harness($bench1, 'sequence'), $expected-output, 'sequence';
+is run-harness($bench2, 'recursive-ternary-hand-cached'), $expected-output, 'recursive-ternary-hand-cached';
+is run-harness($bench3, 'sequence-ternary'), $expected-output, 'sequence-ternary';
+is run-harness($bench4, 'loop'), $expected-output, 'loop';
+is run-harness($bench5, 'recursive-ternary'), $expected-output, 'recursive-ternary';
+#?rakudo.jvm skip 'RT #122497'
+#?rakudo.parrot skip 'RT #122497'
+is run-harness($bench6, 'hand-memoization'), $expected-output, 'hand-memoization';
+is run-harness($bench7, 'gerdr'), $expected-output, 'gerdr';
+is run-harness($bench8, 'kaz'), $expected-output, 'kaz';
+
+for %results.pairs.sort(*.value) -> (:key($script), :value($time)) {
+    diag "$script: $time seconds";
+}

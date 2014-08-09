@@ -25,6 +25,8 @@ sub fib($x) is Cached {
     $x <= 1 ?? 1 !! fib($x - 1) + fib($x - 2);
 }
  # only one call for each value from 0 to 10
+#?rakudo.jvm 2 skip 'RT #122497'
+#?rakudo.parrot 2 skip 'RT #122497'
 is fib(10), 89, 'fibinacci output';
 is_deeply %cache, {1 => 1, 0 => 1, 2 => 2, 3 => 3,
 		   4 => 5, 5 => 8, 6 => 13, 7 => 21,
