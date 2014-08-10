@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 70;
+plan 71;
 
 =begin pod
 
@@ -424,6 +424,12 @@ Testing operator overloading subroutines
     is 2 *+ 5, 15, 'longest operator wins (RT #111418)';
     sub infix:<~eq>(Str $a, Str $b) { uc($a) eq uc($b) }
     ok 'a' ~eq 'A', 'longest operator wins (RT #112870)';
+}
+
+# RT #109800
+{
+    my &infix:<c> = { $^a + $^b };
+    is 1 c 2, 3, 'assignment to code variable works.';
 }
 
 done;
