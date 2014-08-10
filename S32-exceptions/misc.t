@@ -510,6 +510,12 @@ throws_like '/m ** 1..-1/', X::Comp::Group,
     panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
     sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
 
+# RT #122502
+#?rakudo skip 'NQP PR 174'
+throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
+    pre => { m!'m/ ** 1 ..'! },
+    post => { m!'2/'! };
+
 done;
 
 # vim: ft=perl6
