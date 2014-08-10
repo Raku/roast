@@ -505,6 +505,11 @@ throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused,
 throws_like '/\ X/', X::Syntax::Regex::Unspace, 
     message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
     
+# RT #77380
+throws_like '/m ** 1..-1/', X::Comp::Group, 
+    panic => { .payload ~~ m!'Unable to parse regex; couldn\'t find final \'/\''! },
+    sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
+
 done;
 
 # vim: ft=perl6
