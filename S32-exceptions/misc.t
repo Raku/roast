@@ -501,6 +501,10 @@ throws_like 'CATCH { when X::Y {} }', X::Comp::Group,
 throws_like 'say 1 if 2 if 3 { say 3 }', X::Syntax::Confused, 
     reason => { m/'Missing semicolon.'/ }, pre => { m/'1 if 2 '/ }, post => { m/'if 3 { say 3 }'/ }, highexpect => @('postfix');
 
+# RT #77522
+throws_like '/\ X/', X::Syntax::Regex::Unspace, 
+    message => { m/'No unspace allowed in regex' .+ '(\' \')' .+ '\x20'/ }, char => { m/' '/ };
+    
 done;
 
 # vim: ft=perl6
