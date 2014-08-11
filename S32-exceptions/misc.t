@@ -511,9 +511,8 @@ throws_like '/m ** 1..-1/', X::Comp::Group,
     sorrows => { .[0] => { $_ ~~ X::Syntax::Regex::MalformedRange } and .[1] => { $_ ~~ X::Syntax::Regex::UnrecognizedMetachar } };
 
 # RT #122502
-#?rakudo skip 'NQP PR 174'
 throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
-    pre => { m!'m/ ** 1 ..'! },
+    pre => { m!'/m ** 1 ..'! },
     post => { m!'2/'! };
 
 done;
