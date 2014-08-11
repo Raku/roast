@@ -515,6 +515,11 @@ throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
     pre => { m!'/m ** 1 ..'! },
     post => { m!'2/'! };
 
+# RT #115726
+throws_like 'sub infix:<> (){}', X::Comp::Group,
+    panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<> '/ and .post ~~ m/'()'/ },
+    worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string; use :(\'\') to represent the null string,' \n '  or :() to represent the empty list more accurately'/ };
+
 done;
 
 # vim: ft=perl6
