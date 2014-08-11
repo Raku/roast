@@ -9,7 +9,7 @@ built-in grep tests
 
 =end pod
 
-plan 38;
+plan 42;
 
 my @list = (1 .. 10);
 
@@ -129,6 +129,12 @@ my @list = (1 .. 10);
     is ~(1...100).grep(* %% 2).grep(* %% 3), ~(6, 12 ... 96), "chained greps work";
 }
 
-done;
+# Bool handling
+{
+    throws_like { grep $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws_like { (1,2,3).grep: $_== 1 }, X::Match::Bool;
+    is grep( Bool,True,False,Int ), (True,False), 'can we match on Bool as type';
+    is (True,False,Int).grep(Bool), (True,False), 'can we match on Bool as type';
+}
 
 # vim: ft=perl6

@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item first">
 
-plan 23;
+plan 27;
 
 my @list = (1 ... 10);
 
@@ -77,6 +77,14 @@ my @list = (1 ... 10);
 {
     isa_ok (first * > 20, @list), Nil, "first() returns Nil when no values match";
     isa_ok @list.first(* < 0 ), Nil, ".first returns Nil when no values match"
+}
+
+# Bool handling
+{
+    throws_like { first $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws_like { (1,2,3).first: $_== 1 }, X::Match::Bool;
+    is first( Bool,True,False,Int ), True, 'can we match on Bool as type';
+    is (True,False,Int).first(Bool), True, 'can we match on Bool as type';
 }
 
 #vim: ft=perl6

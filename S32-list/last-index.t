@@ -3,7 +3,7 @@ use Test;
 
 # L<S32::Containers/"List"/"=item last-index">
 
-plan 21;
+plan 25;
 
 my @list = (1 ... 10);
 
@@ -70,6 +70,14 @@ my @list = (1 ... 10);
 
     is (last-index 'c'|'b', <a b c b a>),
         3, '.last-index also takes a junction as matcher (sub form)';
+}
+
+# Bool handling
+{
+    throws_like { last-index $_ == 1, 1,2,3 }, X::Match::Bool;
+    throws_like { (1,2,3).last-index: $_== 1 }, X::Match::Bool;
+    is last-index( Bool,True,False,Int ), 1, 'can we match on Bool as type';
+    is (True,False,Int).last-index(Bool), 1, 'can we match on Bool as type';
 }
 
 #vim: ft=perl6
