@@ -1,5 +1,5 @@
 use Test;
-plan 206;
+plan 256;
 
 my $pod_index = 0;
 
@@ -199,6 +199,42 @@ grammar G {
     test-trailing($rule, 'rule');
     test-trailing($token, 'token');
     test-trailing($regex, 'regex');
+}
+
+proto sub foo() { }
+#= solo
+
+test-trailing(&foo, 'solo');
+
+multi sub bar() { }
+#= no proto
+
+ok !&bar.WHY.defined;
+test-trailing(&bar.candidates[0], 'no proto');
+
+multi sub baz() { }
+#= variant A
+multi sub baz(Int) { }
+#= variant B
+
+{
+    my @candidates = &baz.candidates;
+    test-trailing(@candidates[0], 'variant A');
+    test-trailing(@candidates[1], 'variant B');
+}
+
+proto sub greeble {*}
+#= proto
+multi sub greeble(Int) { }
+#= alpha
+multi sub greeble(Str) { }
+#= beta
+
+{
+    my @candidates = &greeble.candidates;
+    test-trailing(&greeble, 'proto');
+    test-trailing(@candidates[0], 'alpha');
+    test-trailing(@candidates[1], 'beta');
 }
 
 is $=pod.elems, $pod_index;
