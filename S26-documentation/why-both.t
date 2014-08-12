@@ -1,16 +1,30 @@
 use Test;
-plan 56;
+plan 106;
+
+my $pod_index = 0;
+
+sub test-both($thing, $leading, $trailing) {
+    my $combined = "$leading\n$trailing";
+    my $name     = "$leading\\n$trailing";
+
+    is $thing.WHY.?contents, $combined, $name  ~ ' - contents';
+    ok $thing.WHY.?WHEREFORE === $thing, $name ~ ' - WHEREFORE';
+    is $thing.WHY.?leading, $leading, $name ~ ' - trailing';
+    is $thing.WHY.?trailing, $trailing, $name ~ ' - trailing';
+    is ~$thing.WHY, $combined, $name ~ ' - stringifies correctly';
+
+    skip 'known to be b0rked', 2;
+    #ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $name - WHEREFORE";
+    #is ~$=pod[$pod_index], $combined, "\$=pod $name";
+    $pod_index++;
+}
 
 #| simple case
 class Simple {
 #= not so simple now!
 }
 
-is Simple.WHY.contents,  "simple case\nnot so simple now!";
-ok Simple.WHY.WHEREFORE === Simple, 'class WHEREFORE matches';
-is Simple.WHY.leading,  "simple case";
-is Simple.WHY.trailing, "not so simple now!";
-is ~Simple.WHY, "simple case\nnot so simple now!", 'stringifies correctly';
+test-both(Simple, 'simple case', 'not so simple now!');
 
 #| a module
 module foo {
@@ -25,33 +39,20 @@ module foo {
     }
 }
 
-is foo.WHY.contents,            "a module\nmoar module stuff";
-ok foo.WHY.WHEREFORE === foo,  'module WHEREFORE matches';
-is foo.WHY.leading,            "a module";
-is foo.WHY.trailing,           "moar module stuff";
-is foo::bar.WHY.contents,       "a package\nmore package stuff";
-ok foo::bar.WHY.WHEREFORE === foo::bar, 'inner package WHEREFORE matches';
-is foo::bar.WHY.leading,       "a package";
-is foo::bar.WHY.trailing,      "more package stuff";
-is foo::bar::baz.WHY.contents,  "and a class\nmore class stuff";
-ok foo::bar::baz.WHY.WHEREFORE === foo::bar::baz, 'inner inner class WHEREFORE matches';
-is foo::bar::baz.WHY.leading,  "and a class";
-is foo::bar::baz.WHY.trailing, "more class stuff";
+test-both(foo, 'a module', 'moar module stuff');
+test-both(foo::bar, 'a package', 'more package stuff');
+test-both(foo::bar::baz, 'and a class', 'more class stuff');
 
 #| yellow
 sub marine {}
 #= submarine
-is &marine.WHY.contents,  "yellow\nsubmarine";
-ok &marine.WHY.WHEREFORE === &marine, 'sub WHEREFORE matches';
-is &marine.WHY.leading,  "yellow";
-is &marine.WHY.trailing, "submarine";
+
+test-both(&marine, 'yellow', 'submarine');
 
 #| pink
 sub panther {} #= panther
-is &panther.WHY.contents,  "pink\npanther";
-ok &panther.WHY.WHEREFORE === &panther, 'sub WHEREFORE matches';
-is &panther.WHY.leading,  "pink";
-is &panther.WHY.trailing, "panther";
+
+test-both(&panther, 'pink', 'panther');
 
 #| a sheep
 class Sheep {
@@ -63,30 +64,21 @@ class Sheep {
     method roar { 'roar!' } #= ...unless you fear sheep!
 }
 
-is Sheep.WHY.contents, "a sheep\nor is it?";
-ok Sheep.WHY.WHEREFORE === Sheep, 'class WHEREFORE matches';
-is Sheep.WHY.leading, "a sheep";
-is Sheep.WHY.trailing, "or is it?";
+test-both(Sheep, 'a sheep', 'or is it?');
 
 my $wool-attr = Sheep.^attributes.grep({ .name eq '$!wool' })[0];
-is $wool-attr.WHY, "usually white\nnot very dirty";
-ok $wool-attr.WHY.WHEREFORE === $wool-attr, 'attr WHEREFORE matches';
-is $wool-attr.WHY.leading, "usually white";
-is $wool-attr.WHY.trailing, "not very dirty";
+
+test-both($wool-attr, 'usually white', 'not very dirty');
 
 my $roar-method = Sheep.^find_method('roar');
-is $roar-method.WHY.contents, "not too scary\n...unless you fear sheep!";
-ok $roar-method.WHY.WHEREFORE === $roar-method, 'method WHEREFORE matches';
-is $roar-method.WHY.leading,  "not too scary";
-is $roar-method.WHY.trailing, "...unless you fear sheep!";
+
+test-both($roar-method, 'not too scary', '...unless you fear sheep!');
 
 #| trailing space here  
 sub third {}
 #=    leading space here
-is &third.WHY.contents,  "trailing space here\nleading space here";
-ok &third.WHY.WHEREFORE === &third, 'sub WHEREFORE matches';
-is &third.WHY.leading,  "trailing space here";
-is &third.WHY.trailing, "leading space here";
+
+test-both(&third, 'trailing space here', 'leading space here');
 
 sub has-parameter(
     #| before
@@ -95,10 +87,8 @@ sub has-parameter(
 ) {}
 
 my $param = &has-parameter.signature.params[0];
-is $param.WHY, "before\nafter";
-ok $param.WHY.WHEREFORE === $param, 'param WHEREFORE matches';
-is $param.WHY.leading,  "before";
-is $param.WHY.trailing, "after";
+
+test-both($param, 'before', 'after');
 
 sub has-parameter-as-well(
     #| preceding
@@ -106,10 +96,8 @@ sub has-parameter-as-well(
 ) {}
 
 $param = &has-parameter-as-well.signature.params[0];
-is $param.WHY, "preceding\nfollowing";
-ok $param.WHY.WHEREFORE === $param, 'param WHEREFORE matches';
-is $param.WHY.leading,  "preceding";
-is $param.WHY.trailing, "following";
+
+test-both($param, 'preceding', 'following');
 
 sub so-many-params(
     #| next param
@@ -118,10 +106,7 @@ sub so-many-params(
 ) {}
 
 $param = &so-many-params.signature.params[0];
-is $param.WHY, "next param\nfirst param";
-ok $param.WHY.WHEREFORE === $param, 'param WHEREFORE matches';
-is $param.WHY.leading,  "next param";
-is $param.WHY.trailing, "first param";
+test-both($param, 'next param', 'first param');
 
 $param = &so-many-params.signature.params[1];
 ok !$param.WHY.defined, 'the second parameter has no comments' or diag($param.WHY.contents);
@@ -134,7 +119,7 @@ sub has-anon-param(
 
 $param = &has-anon-param.signature.params[0];
 
-is $param.WHY, "leading\ntrailing", 'anonymous parameters should work';
+test-both($param, 'leading', 'trailing');
 
 class DoesntMatter {
     method m(
@@ -146,4 +131,4 @@ class DoesntMatter {
 }
 
 $param = DoesntMatter.^find_method('m').signature.params[0];
-is $param.WHY, "invocant comment\nanother invocant comment", 'invocant comments should work';
+test-both($param, 'invocant comment', 'another invocant comment');
