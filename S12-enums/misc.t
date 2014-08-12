@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 13;
+plan 15;
 
 # RT #63826
 {
@@ -51,6 +51,13 @@ plan 13;
     # RT #112202
     #?niecza todo
     lives_ok { OK.^methods }, 'can call .^methods on an enum';
+}
+
+# anonymous Enum in our context, # RT #122514
+{
+    enum :: <un>;
+    is +un, 0, 'is un the right value';
+    is ~un, 'un', 'is un the right string';
 }
 
 # vim: ft=perl6
