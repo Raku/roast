@@ -1,5 +1,5 @@
 use Test;
-plan 256;
+plan 263;
 
 my $pod_index = 0;
 
@@ -236,5 +236,10 @@ multi sub greeble(Str) { }
     test-trailing(@candidates[0], 'alpha');
     test-trailing(@candidates[1], 'beta');
 }
+
+macro four { quasi { 2+2 } }
+#= I like numbers
+
+test-trailing(&four, 'I like numbers');
 
 is $=pod.elems, $pod_index;

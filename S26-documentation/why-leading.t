@@ -1,5 +1,5 @@
 use Test;
-plan 270;
+plan 277;
 
 my $pod_index = 0;
 
@@ -252,5 +252,10 @@ multi sub greeble(Str) { }
     test-leading(@candidates[0], 'alpha');
     test-leading(@candidates[1], 'beta');
 }
+
+#| I like numbers
+macro four { quasi { 2+2 } }
+
+test-leading(&four, 'I like numbers');
 
 is $=pod.elems, $pod_index;
