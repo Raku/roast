@@ -1,5 +1,5 @@
 use Test;
-plan 263;
+plan 284;
 
 my $pod_index = 0;
 
@@ -241,5 +241,20 @@ macro four { quasi { 2+2 } }
 #= I like numbers
 
 test-trailing(&four, 'I like numbers');
+
+only the-lonely {}
+#= Orbison
+
+test-trailing(&the-lonely, 'Orbison');
+
+my $anon-sub = anon Str sub {};
+#= Anonymous
+
+test-trailing($anon-sub, 'Anonymous');
+
+enum Colors < Red Green Blue >;
+#= Enumeration
+
+test-trailing(Colors, 'Enumeration');
 
 is $=pod.elems, $pod_index;

@@ -1,5 +1,5 @@
 use Test;
-plan 213;
+plan 234;
 
 my $pod_index = 0;
 
@@ -234,5 +234,23 @@ macro four { quasi { 2+2 } }
 #= numbers
 
 test-both(&four, 'I like', 'numbers');
+
+#| Roy
+only the-lonely {}
+#= Orbison
+
+test-both(&the-lonely, 'Roy', 'Orbison');
+
+#| Anonymous
+my $anon-sub = anon Str sub {};
+#= Sub
+
+test-both($anon-sub, 'Anonymous', 'Sub');
+
+#| Enumer
+enum Colors < Red Green Blue >;
+#= ation
+
+test-both(Colors, 'Enumer', 'ation');
 
 is $=pod.elems, $pod_index;

@@ -1,5 +1,5 @@
 use Test;
-plan 277;
+plan 298;
 
 my $pod_index = 0;
 
@@ -257,5 +257,20 @@ multi sub greeble(Str) { }
 macro four { quasi { 2+2 } }
 
 test-leading(&four, 'I like numbers');
+
+#| Roy
+only the-lonely {}
+
+test-leading(&the-lonely, 'Roy');
+
+#| Anonymous
+my $anon-sub = anon Str sub {};
+
+test-leading($anon-sub, 'Anonymous');
+
+#| Enumeration
+enum Colors < Red Green Blue >;
+
+test-leading(Colors, 'Enumeration');
 
 is $=pod.elems, $pod_index;
