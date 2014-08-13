@@ -13,9 +13,8 @@ sub test-both($thing, $leading, $trailing) {
     is $thing.WHY.?trailing, $trailing, $name ~ ' - trailing';
     is ~$thing.WHY, $combined, $name ~ ' - stringifies correctly';
 
-    skip 'known to be b0rked', 2;
-    #ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $name - WHEREFORE";
-    #is ~$=pod[$pod_index], $combined, "\$=pod $name";
+    ok $=pod[$pod_index].?WHEREFORE === $thing, "\$=pod $name - WHEREFORE";
+    is ~$=pod[$pod_index], $combined, "\$=pod $name";
     $pod_index++;
 }
 
