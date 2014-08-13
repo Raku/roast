@@ -1,5 +1,5 @@
 use Test;
-plan 106;
+plan 206;
 
 my $pod_index = 0;
 
@@ -131,3 +131,102 @@ class DoesntMatter {
 
 $param = DoesntMatter.^find_method('m').signature.params[0];
 test-both($param, 'invocant comment', 'another invocant comment');
+
+#| Are you talking to me?
+role Boxer {
+#= I said, are you talking to me?
+    #| Robert De Niro
+    method actor { }
+    #= he's an actor
+}
+
+{
+    my $method = Boxer.^find_method('actor');
+    test-both(Boxer, 'Are you talking to me?', 'I said, are you talking to me?');
+    test-both($method, 'Robert De Niro', q{he's an actor});
+}
+
+class C {
+    #| Bob
+    submethod BUILD { }
+    #= Frank
+}
+
+{
+    my $submethod = C.^find_method("BUILD");
+    test-both($submethod, 'Bob', 'Frank');
+}
+
+#| grammar
+grammar G {
+#= more grammar
+    #| rule
+    rule R { <?> }
+    #= reading
+
+    #| token
+    token T { <?> }
+    #= writing
+
+    #| regex
+    regex X { <?> }
+    #= arithmetic
+}
+
+{
+    my $rule = G.^find_method("R");
+    my $token = G.^find_method("T");
+    my $regex = G.^find_method("X");
+    test-both(G, 'grammar', 'more grammar');
+    test-both($rule, 'rule', 'reading');
+    test-both($token, 'token', 'writing');
+    test-both($regex, 'regex', 'arithmetic');
+}
+
+#| solo
+proto sub foo() { }
+#= mio
+
+test-both(&foo, 'solo', 'mio');
+
+#| no proto
+multi sub bar() { }
+#= pro bono
+
+ok !&bar.WHY.defined;
+test-both(&bar.candidates[0], 'no proto', 'pro bono');
+
+#| variant A
+multi sub baz() { }
+#= variation
+
+#| variant B
+multi sub baz(Int) { }
+#= station
+
+{
+    my @candidates = &baz.candidates;
+    test-both(@candidates[0], 'variant A', 'variation');
+    test-both(@candidates[1], 'variant B', 'station');
+}
+
+#| proto
+proto sub greeble {*}
+#= type
+
+#| alpha
+multi sub greeble(Int) { }
+#= centauri
+
+#| beta
+multi sub greeble(Str) { }
+#= male
+
+{
+    my @candidates = &greeble.candidates;
+    test-both(&greeble, 'proto', 'type');
+    test-both(@candidates[0], 'alpha', 'centauri');
+    test-both(@candidates[1], 'beta', 'male');
+}
+
+is $=pod.elems, $pod_index;
