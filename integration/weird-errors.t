@@ -34,7 +34,9 @@ is_run(
     'presence of postcircumfix does not lead to redeclaration warnings',
 );
 
-eval_dies_ok 'time(1, 2, 3)', 'time() with arguments dies';
+throws_like { EVAL 'time(1, 2, 3)' },
+  X::Undeclared::Symbols,
+  'time() with arguments dies';
 
 # RT #76996
 #?niecza todo
@@ -56,17 +58,17 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 
 # RT #77246
 {
-    eval_dies_ok('_~*.A', 'weird string that once parsed in rakudo');
+    dies_ok { EVAL '_~*.A' }, 'weird string that once parsed in rakudo';
 }
 
 # RT #115284
 {
-    eval_lives_ok('say(;:[])', 'weird code that used to parsefail rakudo');
+    lives_ok { EVAL 'say(;:[])' }, 'weird code that used to parsefail rakudo';
 }
 
 # RT #76432
 {
-    eval_lives_ok('class A {
+    lives_ok { EVAL 'class A {
         has %!x;
     
         method m {
@@ -75,7 +77,7 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
     
             %!x<bar> = 42;
         }
-    }', "still able to parse statement after sub decl ending in newline");
+    }' }, "still able to parse statement after sub decl ending in newline";
 }
 
 # RT #116268

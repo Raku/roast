@@ -10,9 +10,13 @@ plan 2;
 {
     class A { has $.b }
    
-    eval_dies_ok "new A", 'parameterless prefixed new is allowed';
+    throws_like { EVAL "new A" },
+      X::Undeclared::Symbols,
+      'parameterless prefixed new is allowed';
 
-    eval_dies_ok( "new A( :b('bulbous bouffant') )", 'what looks like a constructor call is really a coersion to A, and should therefore be disallowed' );
+    throws_like { EVAL "new A( :b('bulbous bouffant') )" },
+      X::Obsolete,
+      'what looks like a constructor call is really a coersion to A, and should therefore be disallowed';
 }
 
 # vim: ft=perl6

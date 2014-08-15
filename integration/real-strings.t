@@ -24,7 +24,9 @@ plan 20;
     is $x.trans(['a'] => ['b']), 'b', 'same for split(Str)';
 }
 
-dies_ok { for "a b c".split(/\s/) -> $foo { $foo = $foo; } }, 'variables returned from split and passed to pointy block are still ro';
+throws_like { for "a b c".split(/\s/) -> $foo { $foo = $foo; } },
+  X::AdHoc,  # no exception type yet
+  'variables returned from split and passed to pointy block are still ro';
 
 # used to be RT #55962
 
@@ -80,7 +82,5 @@ is "helo".substr(0,3).trans, 'hel', 'substr returns P6 strings (RT 76564, RT 710
     lives_ok {$contents.trans(['t'] => ['T']) }, 
        'Still works with strings returned from slurp() (lives)';
 }
-
-done;
 
 # vim: ft=perl6
