@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 22;
+plan 24;
 
 # L<S05/Grammars/optionally pass an actions object>
 
@@ -160,5 +160,23 @@ is $*A, 'w', '$/ availiable';
 is $*B, 'x', 'token name';
 is $*C, 'y', 'token name (assertion)';
 is $*D, 'z', '$0 availiable';
+
+{
+    # Tests for colonpair syntax
+    my ($a, $b);
+    grammar CPG {
+        token TOP { <a> <b> };
+        proto token a {*}; token a:sym«<foo>» { <sym> }
+        proto token b {*}; token b:sym<<bar>> { <sym> }
+    }
+    class CPA {
+        method a:sym«<foo>»($/) { $a++ }
+        method b:sym<<foo>>($/) { $b++ }
+    }
+
+    CPG.subparse('<foo>bar', :actions(CPA) );
+    is $a, 1, 'a:sym«<foo>» can be used as token and action method';
+    is $a, 1, 'b:sym<<bar>> can be used as token and action method';
+}
 
 # vim: ft=perl6
