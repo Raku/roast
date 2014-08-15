@@ -1,5 +1,5 @@
 use Test;
-plan 234;
+plan 241;
 
 my $pod_index = 0;
 
@@ -252,5 +252,11 @@ enum Colors < Red Green Blue >;
 #= ation
 
 test-both(Colors, 'Enumer', 'ation');
+
+#| Even
+subset EvenNum of Num where { $^n % 2 == 0 };
+#= Numbers
+
+test-both(EvenNum, 'Even', 'Numbers');
 
 is $=pod.elems, $pod_index;

@@ -1,5 +1,5 @@
 use Test;
-plan 284;
+plan 291;
 
 my $pod_index = 0;
 
@@ -256,5 +256,10 @@ enum Colors < Red Green Blue >;
 #= Enumeration
 
 test-trailing(Colors, 'Enumeration');
+
+subset EvenNum of Num where { $^n % 2 == 0 };
+#= Even
+
+test-trailing(EvenNum, 'Even');
 
 is $=pod.elems, $pod_index;

@@ -1,5 +1,5 @@
 use Test;
-plan 298;
+plan 305;
 
 my $pod_index = 0;
 
@@ -272,5 +272,10 @@ test-leading($anon-sub, 'Anonymous');
 enum Colors < Red Green Blue >;
 
 test-leading(Colors, 'Enumeration');
+
+#| Even
+subset EvenNum of Num where { $^n % 2 == 0 }
+
+test-leading(EvenNum, 'Even');
 
 is $=pod.elems, $pod_index;
