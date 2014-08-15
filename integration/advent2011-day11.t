@@ -55,10 +55,16 @@ $order.add_item('Gadget', 25.50);
 $order.add_item('Gizmo', 49.00);
 
 lives_ok {$order.this-should-compile},'order total sanity';
-dies_ok {$order.but-this-shouldnt},'order total with typo';
+throws_like {$order.but-this-shouldnt},
+  X::Method::NotFound,
+  'order total with typo';
 lives_ok {EVAL '$order.discount'}, 'public method sanity';
-dies_ok {EVAL '$order!compute_discount'}, 'private method sanity';
-dies_ok {EVAL '$o!Order::compute_discount'}, 'private method sanity';
+throws_like {EVAL '$order!compute_discount'},
+  X::Method::Private::Unqualified,
+  'private method sanity';
+throws_like {EVAL '$o!Order::compute_discount'},
+  X::Method::Private::Permission,
+  'private method sanity';
 
 # "...a class may choose to trust another one (or, indeed, any other package)
 # to be able to call its private methods. Critically, this is the decision of
@@ -86,5 +92,7 @@ $untrusty.add_item('Contrivance', 60.00);
 $untrusty.add_item('Apparatus', 50.00);
 
 lives_ok {$untrusty.try-pub}, 'inheritance public method, (untrusting)';
-dies_ok {$untrusty.try-priv}, 'inheritance private method, (untrusting)';
+throws_like {$untrusty.try-priv},
+  X::Method::Private::Permission,
+  'inheritance private method, (untrusting)';
 

@@ -53,8 +53,7 @@ class NamedArgsExample2 {
 }
 
 NamedArgsExample2.start(:rpm<440>);
-dies_ok {NamedArgsExample2.start()};
-
+throws_like {NamedArgsExample2.start()}, X::AdHoc; # no exception object yet
 
 my @args = "Would you like fries with that?", 15, 5;
 is substr(|@args), 'fries';

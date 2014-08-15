@@ -64,7 +64,7 @@ is (4.7kΩ ± 1kΩ).gist, Measure.new(unit => Unit::ohm, value => 3700/1..5700/1
 is (4.7kΩ ± 5%).gist, Measure.new(unit => Unit::ohm, value => 4465/1..4935/1).gist, 'range object';
 
 my $resistance = 4321Ω;
-dies_ok {die "resistance is futile" if !($resistance ~~ 4.7kΩ ± 5%)}, 'resistance is futile';
+nok $resistance ~~ 4.7kΩ ± 5%, 'resistance is futile';
 
 # Symbols that aren’t operators
 

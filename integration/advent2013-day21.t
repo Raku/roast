@@ -7,7 +7,7 @@ plan 24;
     sub greet($name) { "hello $name" }
 
     is greet("joe"), "hello joe";
-    dies_ok {EVAL 'greet()'};
+    throws_like {EVAL 'greet()'}, X::TypeCheck::Argument;
 }
 
 our sub guess($who, $what?) {
@@ -15,7 +15,7 @@ our sub guess($who, $what?) {
     $what.defined
 }
 
-dies_ok {EVAL 'guess()'};
+throws_like {EVAL 'guess()'}, X::TypeCheck::Argument;
 is_deeply guess("World"), False, 'optional';
 is_deeply guess("World",37), True, 'optional';
 
@@ -43,7 +43,7 @@ is_deeply guess("World",37), True, 'optional';
 {
     sub greet(Str $name) {"hello $name"}
     lives_ok {EVAL 'greet("joe")'},'type check';
-    dies_ok {EVAL 'greet(3)'},'type check';
+    throws_like {EVAL 'greet(3)'}, X::TypeCheck::Argument;
 }
 
 {
@@ -128,7 +128,7 @@ is_deeply guess("World",37), True, 'optional';
 {
     my $a = 35;
     sub tst-ro($p is readonly) {$p = 42;}
-    dies_ok {EVAL 'test-ro($a)'}, 'readonly trait';
+    throws_like {EVAL 'tst-ro($a)'}, X::AdHoc, 'readonly trait, does not have a type object yet';
 }
 {    
     my $a = 35;

@@ -31,8 +31,11 @@ multi sub Slurp($filename) {
 }
 --END--
 
-eval_lives_ok $unambigous ~ 'Slurp("README.md")', 'unambigous multi - lives';
-eval_dies_ok  $ambigous   ~ 'Slurp("README.md")',  'ambigous multi - dies';
+lives_ok { EVAL $unambigous ~ 'Slurp("README.md")' },
+  'unambigous multi - lives';
+throws_like { EVAL $ambigous   ~ 'Slurp("README.md")' },
+  X::Multi::Ambiguous,
+  'ambigous multi - dies';
 
 class Present {
     has $.item;
@@ -61,4 +64,3 @@ my $gift = Present.new(:item("sock"));
 is $gift.look, "It's wrapped.", "It's wrapped.";
 open($gift);
 is $gift.look, 'A sock!', 'A sock!';
-

@@ -15,4 +15,4 @@ is fac(2), 2,  'fac(2) works';
 is fac(3), 6,  'fac(3) works';
 is fac(4), 24, 'fac(4) works';
 
-dies_ok { EVAL(q[ fac('oh noes i am a string')]) }, 'Can only call it with ints';
+throws_like { EVAL q[fac('oh noes i am a string')] }, X::TypeCheck::Argument;

@@ -6,9 +6,9 @@ use Test;
 
 plan 8;
 
-dies_ok {EVAL '{ $var = 42 }'};
+throws_like {EVAL '{ $var = 42 }'}, X::Undeclared;
 lives_ok {EVAL '{ my $var = 42 }'};
-dies_ok {EVAL '{ my $var = 42 }; say $var'};
+throws_like {EVAL '{ my $var = 42 }; say $var'}, X::Undeclared;
 
 sub counter($start_value) {
     my $count = $start_value;

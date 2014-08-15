@@ -27,7 +27,9 @@ my %words2 := baggy($slurp1);
 is_deeply %words1.keys.sort, %words1.keys.sort, 'standard vs baggy word-count';
 is_deeply %words1.values.sort, %words1.values.sort, 'standard vs baggy word-count';
 lives_ok {EVAL q<%words1{"the"} = "green">}, 'hash assign (lives)';
-dies_ok  {EVAL q<%words2{"the"} = "green">}, 'baggy assign (dies)';
+throws_like {EVAL q<%words2{"the"} = "green">},
+  X::Multi::NoMatch,
+  'baggy assign (dies)';
 
 # use {...}.Bag constructor (dwarring's reply to this post)
 # >my $bag = bag "red" => 2, "blue" => 10;

@@ -26,8 +26,10 @@ role SocketPower {
     }
 }
 
-#~ class Laptop does BatteryPower does SocketPower {}
-eval_dies_ok 'class Laptop does BatteryPower does SocketPower {}' , "Method 'find-power-accessories' collides and a resolution must be provided by the class";
+#~ class Notebook does BatteryPower does SocketPower {}
+throws_like { EVAL 'class Notebook does BatteryPower does SocketPower {}' },
+  X::AdHoc, # doesn't have its own exception yet
+  "Method 'find-power-accessories' collides and a resolution must be provided by the class";
 
 class Laptop does BatteryPower does SocketPower {
     method find-power-accessories() {

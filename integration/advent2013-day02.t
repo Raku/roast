@@ -22,7 +22,9 @@ nok defined(Dog), 'Type object is undefined';
 ok $dog, 'instance is True';
 ok defined($dog), 'instance is defined';
 is $dog.name, 'Fido', 'Attribute access on instance';
-dies_ok { Dog.name }, 'Cannot access attribute on type object';
+throws_like { Dog.name },
+  X::AdHoc,  # does not have an Exception object yet
+  'Cannot access attribute on type object';
 
 multi sniff(Dog:U $dog) {
     return "a type object, of course"
