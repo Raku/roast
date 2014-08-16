@@ -1,5 +1,5 @@
 use Test;
-plan 298;
+plan 305;
 
 my $pod_index = 0;
 
@@ -268,6 +268,14 @@ constant $pi = 3.14159;
 #= A cool constant
 
 test-trailing($pi.VAR, 'A cool constant');
+)
+
+skip 'declaration comments are NYI on variables', 7;
+#`(
+our $fancy-var = 17;
+#= Very fancy!
+
+test-trailing($fancy-var.VAR, 'Very fancy!');
 )
 
 is $=pod.elems, $pod_index;

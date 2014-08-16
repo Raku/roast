@@ -1,5 +1,5 @@
 use Test;
-plan 312;
+plan 319;
 
 my $pod_index = 0;
 
@@ -284,6 +284,14 @@ skip 'declaration comments are NYI on constants', 7;
 constant $pi = 3.14159;
 
 test-leading($pi.VAR, 'A cool constant');
+)
+
+skip 'declaration comments are NYI on variables', 7;
+#`(
+#| Very fancy!
+our $fancy-var = 17;
+
+test-leading($fancy-var.VAR, 'Very fancy!');
 )
 
 is $=pod.elems, $pod_index;

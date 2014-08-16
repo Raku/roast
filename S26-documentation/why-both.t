@@ -1,5 +1,5 @@
 use Test;
-plan 248;
+plan 255;
 
 my $pod_index = 0;
 
@@ -266,6 +266,15 @@ constant $pi = 3.14159;
 #= constant
 
 test-both($pi.VAR, 'A cool', 'constant');
+)
+
+skip 'declaration comments are NYI on variables', 7;
+#`(
+#| Very
+our $fancy-var = 17;
+#= fancy!
+
+test-both($fancy-var.VAR, 'Very', 'fancy!');
 )
 
 is $=pod.elems, $pod_index;
