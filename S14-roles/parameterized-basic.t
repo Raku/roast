@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 32;
+plan 33;
 
 =begin pod
 
@@ -28,6 +28,9 @@ class AS_3 does AritySelection[1, 2] { }
 is(AS_1.new.x, 1, 'arity-based selection of role with no parameters');
 is(AS_2.new.x, 2, 'arity-based selection of role with 1 parameter');
 is(AS_3.new.x, 3, 'arity-based selection of role with 2 parameters');
+
+# Test .candidates method
+is(+AritySelection.HOW.candidates(AritySelection), 3);
 
 # Make sure Foo[] works as well as Foo.
 role AritySelection2[] {
