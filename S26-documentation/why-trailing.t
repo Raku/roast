@@ -1,5 +1,5 @@
 use Test;
-plan 305;
+plan 312;
 
 my $pod_index = 0;
 
@@ -20,6 +20,12 @@ class Simple {
 }
 
 test-trailing(Simple, "simple case");
+
+class MultiLine { }
+#= multi
+#= line
+
+test-trailing(MultiLine, "multi line");
 
 class Outer {
 #= giraffe
