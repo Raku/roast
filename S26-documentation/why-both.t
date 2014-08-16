@@ -259,10 +259,13 @@ subset EvenNum of Num where { $^n % 2 == 0 };
 
 test-both(EvenNum, 'Even', 'Numbers');
 
+skip 'declaration comments are NYI on constants', 7;
+#`(
 #| A cool
 constant $pi = 3.14159;
 #= constant
 
 test-both($pi.VAR, 'A cool', 'constant');
+)
 
 is $=pod.elems, $pod_index;

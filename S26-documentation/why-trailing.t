@@ -262,9 +262,12 @@ subset EvenNum of Num where { $^n % 2 == 0 };
 
 test-trailing(EvenNum, 'Even');
 
+skip 'declaration comments are NYI on constants', 7;
+#`(
 constant $pi = 3.14159;
 #= A cool constant
 
 test-trailing($pi.VAR, 'A cool constant');
+)
 
 is $=pod.elems, $pod_index;
