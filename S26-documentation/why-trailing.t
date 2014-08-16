@@ -1,5 +1,5 @@
 use Test;
-plan 291;
+plan 298;
 
 my $pod_index = 0;
 
@@ -261,5 +261,10 @@ subset EvenNum of Num where { $^n % 2 == 0 };
 #= Even
 
 test-trailing(EvenNum, 'Even');
+
+constant $pi = 3.14159;
+#= A cool constant
+
+test-trailing($pi.VAR, 'A cool constant');
 
 is $=pod.elems, $pod_index;

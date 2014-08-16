@@ -1,5 +1,5 @@
 use Test;
-plan 305;
+plan 312;
 
 my $pod_index = 0;
 
@@ -277,5 +277,10 @@ test-leading(Colors, 'Enumeration');
 subset EvenNum of Num where { $^n % 2 == 0 }
 
 test-leading(EvenNum, 'Even');
+
+#| A cool constant
+constant $pi = 3.14159;
+
+test-leading($pi.VAR, 'A cool constant');
 
 is $=pod.elems, $pod_index;

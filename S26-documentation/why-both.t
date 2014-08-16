@@ -1,5 +1,5 @@
 use Test;
-plan 241;
+plan 248;
 
 my $pod_index = 0;
 
@@ -258,5 +258,11 @@ subset EvenNum of Num where { $^n % 2 == 0 };
 #= Numbers
 
 test-both(EvenNum, 'Even', 'Numbers');
+
+#| A cool
+constant $pi = 3.14159;
+#= constant
+
+test-both($pi.VAR, 'A cool', 'constant');
 
 is $=pod.elems, $pod_index;
