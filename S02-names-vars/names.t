@@ -58,8 +58,7 @@ plan 142;
 }
 
 # RT #77750
-#?rakudo todo 'dubious test - otherwise why is ::<$foo> allowed?'
-eval_dies_ok '::.^methods', ':: is not a valid package';
+is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 
 # RT #63646
 {
