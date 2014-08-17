@@ -94,6 +94,7 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     'exp_my_tag -- EXPORT::DEFAULT::exp_my_tag does not exist' );
 
 
+#?rakudo skip "export issue"
 {
     package Foo {
         sub Foo_exp_parens is export()  { 'r_Foo_exp_parens' }
@@ -125,7 +126,9 @@ ok( ! &EXPORT::DEFAULT::exp_my_tag,
     my $a = Bar.new;
     is($a.bar, "default", '$a.bar gets default value');
     is($a.bar("sixties"), "sixties", '$a.bar() gets passed value');
+    #?rakudo skip "export issue"
     is(Bar::bar($a), "default", 'Bar::bar($a) gets default value');
+    #?rakudo skip "export issue"
     is(Bar::bar($a, "moonlight"), "moonlight", 'Bar::bar($a, ) gets default value');
 }
 
