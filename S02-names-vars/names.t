@@ -111,7 +111,7 @@ isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
 # RT #69752
 {
     throws_like { EVAL 'Module.new' },
-      X::AdHoc,
+      X::Undeclared::Symbols,
       'error message mentions name not recognized, no maximum recursion depth exceeded';
 }
 

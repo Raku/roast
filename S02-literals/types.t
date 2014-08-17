@@ -30,7 +30,7 @@ lives_ok { EVAL 'class Task { has $.a }; Task.new(a => 3 );' },
 # time>
 
 throws_like { EVAL q[caffeine(EVAL('sub caffeine($a){~$a}'))] },
-  X::AdHoc,
+  X::Undeclared::Symbols,
   'Post declaration necessary';
 
 # vim: ft=perl6

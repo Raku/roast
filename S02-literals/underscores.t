@@ -22,7 +22,7 @@ throws_like { EVAL '1__0' },
   "Multiple embedded underscores fail";
 
 throws_like { EVAL '_10' },
-  X::AdHoc,
+  X::Undeclared::Symbols,
   "Leading underscore fails";
 
 throws_like { EVAL '10_' },
