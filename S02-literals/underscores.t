@@ -17,23 +17,41 @@ plan 19;
 
 is 1_0, 10, "Single embedded underscore works";
 
-eval_dies_ok '1__0',  "Multiple embedded underscores fail";
+throws_like { EVAL '1__0' },
+  X::Comp::Group,
+  "Multiple embedded underscores fail";
 
-eval_dies_ok '_10',   "Leading underscore fails";
+throws_like { EVAL '_10' },
+  X::AdHoc,
+  "Leading underscore fails";
 
-eval_dies_ok '10_',   "Trailing underscore fails";
+throws_like { EVAL '10_' },
+  X::Syntax::Confused,
+  "Trailing underscore fails";
 
-eval_dies_ok '10_.0', "Underscore before . fails";
+throws_like { EVAL '10_.0' },
+  X::Syntax::Confused,
+  "Underscore before . fails";
 
-eval_dies_ok '10._0', "Underscore after . fails";
+throws_like { EVAL '10._0' },
+  X::Method::NotFound,
+  "Underscore after . fails";
 
-eval_dies_ok '10_e1', "Underscore before e fails";
+throws_like { EVAL '10_e1' },
+  X::Syntax::Confused,
+  "Underscore before e fails";
 
-eval_dies_ok '10e_1', "Underscore after e fails";
+throws_like { EVAL '10e_1' },
+  X::Syntax::Confused,
+  "Underscore after e fails";
 
-eval_dies_ok '10_E1', "Underscore before E fails";
+throws_like { EVAL '10_E1' },
+  X::Syntax::Confused,
+  "Underscore before E fails";
 
-eval_dies_ok '10E_1', "Underscore after E fails";
+throws_like { EVAL '10E_1' },
+  X::Syntax::Confused,
+  "Underscore after E fails";
 
 ok 3.1_41 == 3.141, "Underscores work with floating point after decimal";
 
@@ -47,8 +65,14 @@ is 2e0_1, 20, "Underscores work in the argument for e";
 
 ok 2.1_23 == 2.123, "2.1_23 parses as number";
 
-dies_ok { 2._foo },    "2._foo parses as method call";
-dies_ok { 2._123 },    "2._123 parses as method call";
-dies_ok { 2._e23 },    "2._23  parses as method call";
+throws_like { 2._foo },
+  X::Method::NotFound,
+  "2._foo parses as method call";
+throws_like { 2._123 },
+  X::Method::NotFound,
+  "2._123 parses as method call";
+throws_like { 2._e23 },
+  X::Method::NotFound,
+  "2._23  parses as method call";
 
 # vim: ft=perl6

@@ -162,7 +162,7 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 # but see L<news:20050101220112.GF25432@plum.flirble.org>
 #?rakudo todo 'retriage'
 {
-    eval_dies_ok "(q\0foo bar\0)";
+    throws_like { EVAL "(q\0foo bar\0)" }, X::Comp::AdHoc;
 }
 
 { # traditional quote word
@@ -495,8 +495,12 @@ Hello, World
     isa_ok rx:ignorecase{foo}, Regex, 'rx:i{...}';
     isa_ok rx:s{foo}, Regex, 'rx:i{...}';
     isa_ok rx:sigspace{foo}, Regex, 'rx:i{...}';
-    eval_dies_ok 'rx:unknown{foo}', 'rx:unknown dies';
-    eval_dies_ok 'rx:g{foo}', 'g does not make sense on rx//';
+    throws_like { EVAL 'rx:unknown{foo}' },
+      X::Syntax::Regex::Adverb,
+      'rx:unknown dies';
+    throws_like { EVAL 'rx:g{foo}' },
+      X::Syntax::Regex::Adverb,
+      'g does not make sense on rx//';
 }
 
 {
@@ -520,7 +524,9 @@ Hello, World
 }
 
 # RT #90124
-eval_dies_ok q["@a<"], 'unclosed quote after array variable is an error';
+throws_like { EVAL q["@a<"] },
+  X::Comp::AdHoc,
+  'unclosed quote after array variable is an error';
 
 # RT #114090
 is "foo $( my $x = 3 + 4; "bar" ) baz", 'foo bar baz', 'declaration in interpolation';
@@ -553,11 +559,11 @@ is <<<\>'n'>>.join('|'), '<>|n', 'texas quotes edge case';
 }
 
 {
-    eval_dies_ok 'q< < >', "Unmatched openers and closers fails to parse";
+    throws_like { EVAL 'q< < >' },
+      X::Comp::AdHoc,
+      "Unmatched openers and closers fails to parse";
     is q< \> >, " > ", "Escaped closer produces the opener unescaped";
     is q< \< >, " < ", "Escaped opener produces the opener unescaped";
 }
-
-done;
 
 # vim: ft=perl6

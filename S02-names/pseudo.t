@@ -64,11 +64,15 @@ plan 142;
 
         $MY::z ::= $y;
         is $z, $y, '::= binding through $MY::z works';
-        dies_ok { $z = 5 }, '... and makes readonly';
+        throws_like { $z = 5 },
+          X::AdHoc,
+          '... and makes readonly';
 
         MY::.{'$z'} ::= $x;
         is $z, $x, '::= binding through MY::.{} works';
-        dies_ok { $z = 5 }, '... and makes readonly';
+        throws_like { $z = 5 },
+          X::AdHoc,
+          '... and makes readonly';
     }
 
     my class A1 {
@@ -88,8 +92,12 @@ plan 142;
         }
     }
 
-    dies_ok { EVAL 'MY::A2' }, 'Cannot use MY::A2 directly from outer scope';
-    dies_ok { MY::.{'A2'}.spies }, 'Cannot use MY::.{"A2"} from outer scope';
+    throws_like { EVAL 'MY::A2' },
+      X::AdHoc,
+      'Cannot use MY::A2 directly from outer scope';
+    throws_like { MY::.{'A2'}.spies },
+      X::AdHoc,
+      'Cannot use MY::.{"A2"} from outer scope';
 
     sub callee { MY::.{'$*k'} }
     sub callee2($f is rw) { MY::.{'$*k'} := $f }

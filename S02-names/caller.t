@@ -42,7 +42,7 @@ plan 15;
   my $result_of_sub1 = $sub1();
   my $result_of_sub2 = $sub2();
 
-  # We can't use the more elegant dies_ok here as it would influence $CALLER::
+  # We can't use more elegant solutions as it would influence $CALLER::
   # calculation.
   ok !(try { $result_of_sub1() }), '$CALLER::CALLER:: is recalculated on each access (1)';
   ok !(try { $result_of_sub2() }), '$CALLER::CALLER:: is recalculated on each access (2)';

@@ -82,7 +82,9 @@ my $outer = 'outside';
   #?niecza 2 skip "Object reference not set to an instance of an object"
   is $::("pugs")::is::($cool), 42, 'not so basic symbolic dereferentiation works';
   is $::($pugsis)::($cool),    42, 'symbolic derefertiation with multiple packages in one variable works';
-  eval_dies_ok('$::($pugsis)cool', '$::($foo)bar is illegal');
+  throws_like { EVAL '$::($pugsis)cool' },
+    X::Syntax::Confused,
+    '$::($foo)bar is illegal';
 }
 
 {
@@ -165,6 +167,8 @@ my $outer = 'outside';
   is $::("symderef_test_var"), 42, "symbolic dereferentiation works with package vars";
 }
 
-eval_dies_ok ' ::().Str ', 'Cannot look up empty name';
+throws_like { EVAL ' ::().Str ' },
+  X::AdHoc,
+  'Cannot look up empty name';
 
 # vim: ft=perl6

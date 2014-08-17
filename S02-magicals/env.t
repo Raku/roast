@@ -57,7 +57,9 @@ ok(%*ENV<PUGS_ROCKS>:!exists, 'We can remove keys from %*ENV');
 ok %*ENV<does_not_exist>:!exists, "exists() returns false on a not defined env var";
 
 # %ENV must not be imported by default
-eval_dies_ok("%ENV", '%ENV not visible by default');
+throws_like { EVAL "%ENV" },
+  X::Undeclared,
+  '%ENV not visible by default';
 
 #?rakudo skip 'import fails, ENV not available: RT #122339'
 #?niecza skip 'Action method statement_control:import not yet implemented'

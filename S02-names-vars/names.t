@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 142;
+plan 141;
 
 # I'm using semi-random nouns for variable names since I'm tired of foo/bar/baz and alpha/beta/...
 
@@ -62,20 +62,18 @@ is_deeply ::.^methods, PseudoStash.^methods, ':: is a valid PseudoStash';
 
 # RT #63646
 {
-    dies_ok { OscarMikeGolf::whiskey_tango_foxtrot() },
-            'dies when calling non-existent sub in non-existent package';
-    dies_ok { Test::bravo_bravo_quebec() },
-            'dies when calling non-existent sub in existing package';
+    throws_like { OscarMikeGolf::whiskey_tango_foxtrot() },
+      X::AdHoc,
+      'dies when calling non-existent sub in non-existent package';
+    throws_like { Test::bravo_bravo_quebec() },
+      X::AdHoc,
+      'dies when calling non-existent sub in existing package';
     # RT #74520
     class TestA { };
-    dies_ok { TestA::frobnosticate(3, :foo) },
-        'calling non-existing function in foreign class dies';;
-
-    # Same, but check resulting exception message
-    try { TestA::frobnosticate(3, :foo)};
-
     #?niecza todo
-    ok ~$! ~~ / 'frobnosticate' /, 'error message mentions function name';
+    throws_like { TestA::frobnosticate(3, :foo) },
+      X::AdHoc,
+      'calling non-existing function in foreign class dies';;
 }
 
 # RT #71194
@@ -112,21 +110,24 @@ isa_ok (rule => 1), Pair, 'rule => something creates a Pair';
 
 # RT #69752
 {
-    try { EVAL 'Module.new' };
-    ok "$!" ~~ / 'Module' /,
-        'error message mentions name not recognized, no maximum recursion depth exceeded';
+    throws_like { EVAL 'Module.new' },
+      X::AdHoc,
+      'error message mentions name not recognized, no maximum recursion depth exceeded';
 }
 
 # RT #74276
 # Rakudo had troubles with names starting with Q
-eval_lives_ok 'class Quox { }; Quox.new', 'class names can start with Q';
+lives_ok { EVAL 'class Quox { }; Quox.new' },
+  'class names can start with Q';
 
 # RT #58488 
-dies_ok {
+throws_like {
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
     EVAL 'class A { has $.a};  my $a = A.new();';
-}, 'can *not* redefine a class in EVAL -- classes are package scoped';
+},
+  X::Redeclaration,
+  'can *not* redefine a class in EVAL -- classes are package scoped';
 
 # RT #83874
 {

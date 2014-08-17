@@ -71,18 +71,40 @@ sub f2 (:$a!) { WHAT($a) }
     isa_ok $f2(:a),         Bool, "in '\$f2(:a)', ':a' is a named";
     isa_ok $f2.(:a),        Bool, "in '\$f2.(:a)', ':a' is a named";
 
-    dies_ok { f2("a"   => 42) }, "'\"a\" => 42' is a pair";
-    dies_ok { f2(("a") => 42) }, "'(\"a\") => 42' is a pair";
-    dies_ok { f2((a   => 42)) }, "'(a => 42)' is a pair";
-    dies_ok { f2(("a" => 42)) }, "'(\"a\" => 42)' is a pair";
-    dies_ok { f2((:a(42)))    }, "'(:a(42))' is a pair";
-    dies_ok { f2((:a))        }, "'(:a)' is a pair";
-    dies_ok { &f2.((:a))       }, 'in \'&f2.((:a))\', \'(:a)\' is a pair';
+    throws_like { f2("a"   => 42) },
+      X::AdHoc,
+      "'\"a\" => 42' is a pair";
+    throws_like { f2(("a") => 42) },
+      X::AdHoc,
+      "'(\"a\") => 42' is a pair";
+    throws_like { f2((a   => 42)) },
+      X::AdHoc,
+      "'(a => 42)' is a pair";
+    throws_like { f2(("a" => 42)) },
+      X::AdHoc,
+      "'(\"a\" => 42)' is a pair";
+    throws_like { f2((:a(42))) },
+      X::AdHoc,
+      "'(:a(42))' is a pair";
+    throws_like { f2((:a)) },
+      X::AdHoc,
+      "'(:a)' is a pair";
+    throws_like { &f2.((:a)) },
+      X::AdHoc,
+      'in \'&f2.((:a))\', \'(:a)\' is a pair';
 
-    dies_ok { $f2((:a))       }, "in '\$f2((:a))', '(:a)' is a pair";
-    dies_ok { $f2.((:a))      }, "in '\$f2.((:a))', '(:a)' is a pair";
-    dies_ok { $f2(((:a)))     }, "in '\$f2(((:a)))', '(:a)' is a pair";
-    dies_ok { $f2.(((:a)))    }, "in '\$f2.(((:a)))', '(:a)' is a pair";
+    throws_like { $f2((:a)) },
+      X::AdHoc,
+      "in '\$f2((:a))', '(:a)' is a pair";
+    throws_like { $f2.((:a)) },
+      X::AdHoc,
+      "in '\$f2.((:a))', '(:a)' is a pair";
+    throws_like { $f2(((:a))) },
+      X::AdHoc,
+      "in '\$f2(((:a)))', '(:a)' is a pair";
+    throws_like { $f2.(((:a))) },
+      X::AdHoc,
+      "in '\$f2.(((:a)))', '(:a)' is a pair";
 }
 
 sub f3 ($a) { WHAT($a) }
@@ -129,24 +151,27 @@ sub f7 (:$bar!) { WHAT($bar) }
 {
     my $bar = 'bar';
 
-    dies_ok { f7($bar => 42) },
-        "variables cannot be keys of syntactical pairs (1)";
+    throws_like { f7($bar => 42) },
+      X::AdHoc,
+      "variables cannot be keys of syntactical pairs (1)";
 }
 
 sub f8 (:$bar!) { WHAT($bar) }
 {
     my @array = <bar>;
 
-    dies_ok { f8(@array => 42) },
-        "variables cannot be keys of syntactical pairs (2)";
+    throws_like { f8(@array => 42) },
+      X::AdHoc,
+      "variables cannot be keys of syntactical pairs (2)";
 }
 
 sub f9 (:$bar!) { WHAT($bar) }
 {
     my $arrayref = <bar>;
 
-    dies_ok { f9($arrayref => 42) },
-        "variables cannot be keys of syntactical pairs (3)";
+    throws_like { f9($arrayref => 42) },
+      X::AdHoc,
+      "variables cannot be keys of syntactical pairs (3)";
 }
 
 {

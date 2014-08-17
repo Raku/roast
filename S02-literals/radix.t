@@ -25,9 +25,10 @@ is( :10<42>,  0d42, ':10<42> and 0d42 are the same' );
     is(:10('0d37'),   0d37, ":10('0d37') overrides default decimal");
 
     # RT #107756
-    dies_ok { :10(42) }, ':10() really wants a string, not a number';
+    throws_like { :10(42) },
+      X::TypeCheck::Binding,
+      ':10() really wants a string, not a number';
 }
-
 
 # L<S29/Conversions/"prefix:<:16>">
 # L<S02/General radices/":16<DEAD_BEEF>">
@@ -169,7 +170,9 @@ is(
 }
 
 # L<S02/Exponentials/"not clear whether the exponentiator should be 10 or the radix">
-eval_dies_ok '0b1.1e10', 'Ambiguous, illegal syntax doesn\'t work';
+throws_like { EVAL '0b1.1e10' },
+  X::Syntax::Confused,
+  'Ambiguous, illegal syntax doesn\'t work';
 
 # L<S02/Exponentials/"and this makes it explicit">
 # probably don't need a test, but I'll write tests for any example :)
@@ -211,14 +214,24 @@ is( :2<1.1> * :2<10> ** :2<10>,             6, 'multiplication and exponentiatio
 #   I think we should go with the method call semantics in all of the ambiguous
 #   forms, mostly because "no such method: Int::e5" is clearer than silently
 #   succeeding and the error coming up somewhere else.
-dies_ok { 2.e123 },    "2.e123 parses as method call";
-dies_ok { 2.foo  },    "2.foo  parses as method call";
+throws_like { 2.e123 },
+  X::Method::NotFound,
+  "2.e123 parses as method call";
+throws_like { 2.foo  },
+  X::Method::NotFound,
+  "2.foo  parses as method call";
 
 is  +'00123', 123, "Leading zeroes stringify correctly";
 
-eval_dies_ok ':2<2>',   ':2<2> is illegal';
-eval_dies_ok ':10<3a>', ':10<3a> is illegal';
-eval_dies_ok ':0<0>', ':0<...> is illegal';
+throws_like { EVAL ':2<2>' },
+  X::AdHoc,
+  ':2<2> is illegal';
+throws_like { EVAL ':10<3a>' },
+  X::AdHoc,
+  ':10<3a> is illegal';
+throws_like { EVAL ':0<0>' },
+  X::Syntax::Number::RadixOutOfRange,
+  ':0<...> is illegal';
 
 for 2..36 {
     is EVAL(":{$_}<11>"), $_ + 1, "Adverbial form of base $_ works";
