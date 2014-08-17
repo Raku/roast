@@ -30,7 +30,7 @@ plan 20;
     ok EVAL(q/foo(1, 2);/), 'call with two args, has parens';
 
     throws_like { EVAL q/foo:bar;  / },
-      X::Undeclared::Symbols,
+      X::AdHoc,
       'call with adverb after no space';
     ok EVAL(q/foo :bar; /), 'call with adverb after space';
 
