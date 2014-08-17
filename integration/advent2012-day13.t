@@ -114,12 +114,12 @@ for @set-and-bag-ops {
 
     if $unicode-op.defined {
 	my $result = $unicode-op($s1, $s2);
-	ok $result-type.grep({$result.isa($_)}), "set $unicode-op result type";
+	ok $result-type.grep({$result.isa($_)}), "{$unicode-op.name} return type";
     }
 
     if $texas-op.defined {
 	my $result = $texas-op($s1, $s2);
-	ok $result-type.grep({$result.isa($_)}), "set $texas-op result type";
+	ok $result-type.grep({$result.isa($_)}), "{$texas-op.name} return type";
     }
 
 }
