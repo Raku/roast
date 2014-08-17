@@ -108,24 +108,39 @@ is((do { my $दूसरा = 2; sub टोटल ($x) { $x + 2 }; टोटल
 
 # L<S02/Unicode Semantics/Perl can count Unicode line and paragraph separators>
 
-eval_lives_ok "\{ 1 \} \x0a \{ 1 \}", "Unicode 000A (LINE FEED (LF)) can terminate lines";
+lives_ok { EVAL "\{ 1 \} \x0a \{ 1 \}" },
+  "Unicode 000A (LINE FEED (LF)) can terminate lines";
+lives_ok { EVAL "\{ 1 \} \x0c \{ 1 \}" },
+  "Unicode 000C (FORM FEED (FF)) can terminate lines";
+lives_ok { EVAL "\{ 1 \} \x0d \{ 1 \}" },
+  "Unicode 000D (CARRIAGE RETURN (CR)) can terminate lines";
+lives_ok { EVAL "\{ 1 \} \x85 \{ 1 \}" },
+  "Unicode 0085 (NEXT LINE (NEL)) can terminate lines";
+
 #?rakudo.parrot skip 'RT #122341 all codepoints that match \v should work as line separator'
-eval_lives_ok "\{ 1 \} \x0b \{ 1 \}", "Unicode 000B (LINE TABULATION) can terminate lines";
-eval_lives_ok "\{ 1 \} \x0c \{ 1 \}", "Unicode 000C (FORM FEED (FF)) can terminate lines";
-eval_lives_ok "\{ 1 \} \x0d \{ 1 \}", "Unicode 000D (CARRIAGE RETURN (CR)) can terminate lines";
-eval_lives_ok "\{ 1 \} \x85 \{ 1 \}", "Unicode 0085 (NEXT LINE (NEL)) can terminate lines";
-#?rakudo.parrot 2 skip 'RT #122341 all codepoints that match \v should work as line separator'
-eval_lives_ok "\{ 1 \} \x2028 \{ 1 \}", "Unicode 2028 (LINE SEPARATOR) can terminate lines";
-eval_lives_ok "\{ 1 \} \x2029 \{ 1 \}", "Unicode 2029 (PARAGRAPH SEPARATOR) can terminate lines";
+{
+    lives_ok { EVAL "\{ 1 \} \x0b \{ 1 \}" },
+      "Unicode 000B (LINE TABULATION) can terminate lines";
+    lives_ok { EVAL "\{ 1 \} \x2028 \{ 1 \}" },
+      "Unicode 2028 (LINE SEPARATOR) can terminate lines";
+    lives_ok { EVAL "\{ 1 \} \x2029 \{ 1 \}" },
+      "Unicode 2029 (PARAGRAPH SEPARATOR) can terminate lines";
+}
 
 # L<S02/Bracketing Characters/If a character is already used>
 
-eval_lives_ok "q\x298d test \x298e", "Unicode open-298d maps to close-298e";
-eval_lives_ok "q\x301d test \x301e", "Unicode open-301d maps to close-301e";
-eval_dies_ok "q\x301d test \x301f", "Unicode open-301d does not map to close-301f";
-eval_lives_ok "q\x2018 test \x2019", "Unicode open-2018 maps to to close-2019";
-eval_lives_ok "q\x201a test \x2019", "Unicode open-201a maps to to close-2019";
-eval_lives_ok "q\x2018 \x201a test \x2019", "Alternative open-brakets treat their other alternates as non-special";
+lives_ok { EVAL "q\x298d test \x298e" },
+  "Unicode open-298d maps to close-298e";
+lives_ok { EVAL "q\x301d test \x301e" },
+  "Unicode open-301d maps to close-301e";
+dies_ok { EVAL "q\x301d test \x301f" },
+  "Unicode open-301d does not map to close-301f";
+lives_ok { EVAL "q\x2018 test \x2019" },
+  "Unicode open-2018 maps to to close-2019";
+lives_ok { EVAL "q\x201a test \x2019" },
+  "Unicode open-201a maps to to close-2019";
+lives_ok { EVAL "q\x2018 \x201a test \x2019" },
+  "Alternative open-brakets treat their other alternates as non-special";
 
 # vim: ft=perl6 fileencoding=utf-8
 

@@ -64,10 +64,18 @@ plan 51;
 #?niecza skip 'Opening bracket is required for #` comment'
 {
 
-    eval_dies_ok "3 * #` (invalid comment) 2", "no space allowed between '#`' and '('";
-    eval_dies_ok "3 * #`\t[invalid comment] 2", "no tab allowed between '#`' and '['";
-    eval_dies_ok "3 * #`  \{invalid comment\} 2", "no spaces allowed between '#`' and '\{'";
-    eval_dies_ok "3 * #`\n<invalid comment> 2", "no spaces allowed between '#`' and '<'";
+    throws_like { EVAL "3 * #` (invalid comment) 2" },
+      X::Comp::AdHoc,  # no exception type yet
+      "no space allowed between '#`' and '('";
+    throws_like { EVAL "3 * #`\t[invalid comment] 2" },
+      X::Comp::AdHoc,  # no exception type yet
+      "no tab allowed between '#`' and '['";
+    throws_like { EVAL "3 * #`  \{invalid comment\} 2" },
+      X::Comp::AdHoc,  # no exception type yet
+      "no spaces allowed between '#`' and '\{'";
+    throws_like { EVAL "3 * #`\n<invalid comment> 2" },
+      X::Syntax::Confused,
+      "no spaces allowed between '#`' and '<'";
 
 }
 
@@ -149,18 +157,24 @@ plan 51;
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
 {
-    eval_dies_ok '$a = #`\  (comment) 32', "comments can't contain unspace";
+    dies_ok { EVAL '$a = #`\  (comment) 32' },
+      "comments can't contain unspace";
 }
 
 # L<S02/Single-line Comments/"# may not be used as" 
 #   delimiter quoting>
 {
     my $a;
-    lives_ok { EVAL('$a = q{ 32 }') }, 'sanity check';
+    lives_ok { EVAL '$a = q{ 32 }' }, 'sanity check';
     is $a, ' 32 ', 'sanity check';
+}
 
-    $a = Nil;
-    eval_dies_ok '$a = q# 32 #;', 'misuse of # as quote delimiters';
+#?rakudo todo 'NYI'
+{
+    my $a = Nil;
+    throws_like { EVAL '$a = q# 32 #;' },
+      X::Comp::AdHoc,
+      'misuse of # as quote delimiters';
     ok !$a.defined, "``#'' can't be used as quote delimiters";
 }
 
@@ -168,11 +182,12 @@ plan 51;
 #?niecza todo
 {
     # RT #70752
-    eval_lives_ok "#=======\n#=======\nuse v6;", "pragma use after single line comments";
+    lives_ok { EVAL "#=======\n#=======\nuse v6;" }, 
+      "pragma use after single line comments";
 }
 
 # L<S02/Multiline Comments/POD sections may be>
-eval_lives_ok( q{{
+lives_ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{my $var = 1;
@@ -188,11 +203,11 @@ a "=cut".
 );
 is $outerVal, "bar", '=begin comment without =cut parses to whitespace in code';
 
-}}, '=begin comment without =cut eval throws no error' );
+}} }, '=begin comment without =cut eval throws no error';
 
 
 # L<S02/Multiline Comments/"single paragraph comments">
-eval_lives_ok( q{{
+lives_ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{10 +
@@ -203,10 +218,10 @@ my $outerVal = EVAL(
 );
 is $outerVal, 11, 'Single paragraph Pod parses to whitespace in code';
 
-}}, 'Single paragraph Pod eval throws no error' );
+}} }, 'Single paragraph Pod eval throws no error';
 
 #?niecza todo
-eval_lives_ok( q{{
+lives_ok { EVAL q{{
 
 my $outerVal = EVAL(
     q{20 +
@@ -218,6 +233,6 @@ are both here, yay!
 );
 is $outerVal, 22, 'Single paragraph Pod, multiple lines parses to whitespace in code';
 
-}}, 'Single paragraph Pod, multiple lines eval throws no error' );
+}} }, 'Single paragraph Pod, multiple lines eval throws no error';
 
 # vim: ft=perl6

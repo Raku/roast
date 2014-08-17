@@ -58,7 +58,9 @@ lives_ok { Any .= (); CATCH { when X::Method::NotFound {1} } }, 'Typed, non-inte
 
 # RT #77246
 {
-    dies_ok { EVAL '_~*.A' }, 'weird string that once parsed in rakudo';
+    throws_like { EVAL '_~*.A' },
+      X::Undeclared::Symbols,
+      'weird string that once parsed in rakudo';
 }
 
 # RT #115284

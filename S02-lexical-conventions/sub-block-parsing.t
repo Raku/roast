@@ -19,19 +19,25 @@ ok(sub { 42 }(), 'sub {...}() works'); # TODO: clarify
 ok(sub{ 42 }(),  'sub{...}() works'); # TODO: clarify
 
 #RT #76432
-eval_dies_ok q[
+throws_like { EVAL q[
     sub x { die }
     x();
-], 'block parsing works with newline';
+] },
+  X::AdHoc, # no exception object yet
+  'block parsing works with newline';
 
-eval_dies_ok q[
+throws_like { EVAL q[
     sub x { die };
     x();
-], 'block parsing works with semicolon';
+] },
+  X::AdHoc, # no exception object yet
+  'block parsing works with semicolon';
 
 # RT #85844
 {
-    eval_dies_ok 'sub foo;', 'RT #85844'
+    throws_like { EVAL 'sub foo;' },
+      X::Syntax::Missing,
+      'RT #85844';
 }
 
 # RT #76896: 
@@ -66,7 +72,5 @@ eval_dies_ok q[
     is to_check_after, "fa called.", 'fa called in sub/hash syntax is ok';
     is to_check_after('B'), "fb called.", 'fb called in sub/hash syntax is ok';
 }
-
-done;
 
 # vim: ft=perl6

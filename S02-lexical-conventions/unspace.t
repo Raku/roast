@@ -71,10 +71,15 @@ is((foo\.lc  ), 'a', 'short unspace');
 is((foo\ .lc ), 'a', 'unspace');
 is((foo\ ('x')), 'x', "unspace before arguments");
 is((foo \ .lc), 'b', 'not a unspace');
-eval_dies_ok('fo\ o.lc', 'unspace not allowed in identifier');
+throws_like { EVAL 'fo\ o.lc' },
+  X::Syntax::Confused,
+  'unspace not allowed in identifier';
 is((foo\    .lc), 'a', 'longer dot');
 is((foo\#`( comment ).lc), 'a', 'unspace with embedded comment');
-eval_dies_ok('foo\#\ ( comment ).lc', 'unspace can\'t hide space between # and opening bracket');
+#?rakudo todo 'NYI'
+throws_like { EVAL 'foo\#\ ( comment ).lc' },
+  X::AdHoc,
+  'unspace can\'t hide space between # and opening bracket';
 is((foo\ # comment
     .lc), 'a', 'unspace with end-of-line comment');
 is((:foo\ <bar>), (:foo<bar>), 'unspace in colonpair');
@@ -187,7 +192,9 @@ end comment		#5
 # L<S04/"Statement-ending blocks"/"Because subroutine declarations are expressions">
 #XXX probably shouldn't be in this file...
 
-eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between blocks');
+throws_like { EVAL 'sub f { 3 } sub g { 3 }' },
+  X::Syntax::Confused,
+  'semicolon or newline required between blocks';
 
 # L<S06/"Blocks"/"unless followed immediately by a comma">
 #
@@ -224,7 +231,9 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     sub infix:<++>($x, $y) { 42 }    #OK not used
 
     #'$n++$m' should be a syntax error
-    eval_dies_ok('$n++$m', 'infix requires space when ambiguous with postfix');
+    throws_like { EVAL '$n++$m' },
+      X::Syntax::Confused,
+      'infix requires space when ambiguous with postfix';
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
 
@@ -243,9 +252,15 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
 
     #These should all be postfix syntax errors
     $n = 1; $m = 2;
-    eval_dies_ok('$n.++ $m',   'postfix dot w/ infix ambiguity');
-    eval_dies_ok('$n\ ++ $m',  'postfix unspace w/ infix ambiguity');
-    eval_dies_ok('$n\ .++ $m', 'postfix unspace w/ infix ambiguity');
+    throws_like { EVAL '$n.++ $m' },
+      X::Syntax::Confused,
+      'postfix dot w/ infix ambiguity';
+    throws_like { EVAL '$n\ ++ $m' },
+      X::Comp,
+      'postfix unspace w/ infix ambiguity';
+    throws_like { EVAL '$n\ .++ $m' },
+      X::Comp,
+      'postfix unspace w/ infix ambiguity';
     is($n, 1, 'check $n');
     is($m, 2, 'check $m');
 
@@ -256,7 +271,9 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     is($m, 2, 'check $m');
 
     $n = 1;
-    eval_dies_ok('$n ++', 'postfix requires no space');
+    throws_like { EVAL '$n ++' },
+      X::Comp::AdHoc,
+      'postfix requires no space';
     is($n, 1, 'check $n');
 
     $n = 1;
@@ -274,7 +291,9 @@ eval_dies_ok('sub f { 3 } sub g { 3 }', 'semicolon or newline required between b
     # L<S02/"Bracketing Characters"/"U+301D codepoint has two closing alternatives">
     #?niecza skip 'Unable to resolve method id in class Str'
     is((foo\#`〝 comment 〞.lc), 'a', 'unspace with U+301D/U+301E comment');
-    eval_dies_ok('foo\#`〝 comment 〟.id', 'unspace with U+301D/U+301F is invalid');
+    throws_like { EVAL 'foo\#`〝 comment 〟.id' },
+      X::Comp::AdHoc,
+      'unspace with U+301D/U+301F is invalid';
 
     # L<S02/"Implicit Topical Method Calls"/".123">
     # .123 is equal to 0.123

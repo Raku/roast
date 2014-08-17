@@ -22,20 +22,28 @@ ok( [1,2,3].join<abc> ~~ Failure , '.join<abc> parses and fails');
 my @y = try { ({:a<1>, :b(2)}<a b c>) };
 ok(@y eqv ["1",2,Any], '{...}<a b c> is hash subscript');
 
-eval_dies_ok '({:a<1>, :b(2)} <a b c>)', '{...} <...> parsefail';
+throws_like { EVAL '({:a<1>, :b(2)} <a b c>)' },
+  X::Syntax::Confused,
+  '{...} <...> parsefail';
 
 ok( ?((1 | 3) < 3), '(...) < 3 no parsefail');
 
-eval_dies_ok '(1 | 3)<3', '()<3 parsefail';
+throws_like { EVAL '(1 | 3)<3' },
+  X::Comp::AdHoc,
+  '()<3 parsefail';
 
 # WRONG: should be parsed as print() < 3
 # EVAL 'print < 3';
 # ok($!, 'print < 3 parsefail');
 
 
-eval_dies_ok ':foo <1 2 3>', ':foo <1 2 3> parsefail';
+throws_like { EVAL ':foo <1 2 3>' },
+  X::Syntax::Confused,
+  ':foo <1 2 3> parsefail';
 
-dies_ok { :foo <3 }, '<3 is comparison, but dies at run time';
+throws_like { EVAL ':foo <3' },
+  X::Multi::NoMatch,
+  '<3 is comparison, but dies at run time';
 
 my $p = EVAL ':foo<1 2 3>';
 is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
@@ -56,14 +64,20 @@ is($p, ~('foo' => (1,2,3)), ':foo<1 2 3> is pair of list');
 
 # L<S02/Forcing item context/"The degenerate case <> is disallowed">
 
-eval_dies_ok '<>', 'bare <> is disallowed';
-eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
+throws_like { EVAL '<>' },
+  X::Obsolete,
+  'bare <> is disallowed';
+throws_like { EVAL '<STDIN>' },
+  X::Obsolete,
+  '<STDIN> is disallowed';
 
 # L<S02/Quoting forms/"is autopromoted into">
 {
     my $c = <a b c>;
     isa_ok($c, Parcel, 'List in scalar context becomes a Capture');
-    dies_ok {$c.push: 'd'}, '... which is immutable';
+    throws_like {$c.push: 'd'},
+      X::Multi::NoMatch,
+      '... which is immutable';
 }
 
 {
@@ -86,7 +100,5 @@ eval_dies_ok '<STDIN>', '<STDIN> is disallowed';
     sub f($x) { $x[0] };
     is f(my @x = (1, 2, 3)), 1, 'function call with assignment to list';
 }
-
-done();
 
 # vim: ft=perl6

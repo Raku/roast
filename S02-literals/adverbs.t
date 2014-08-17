@@ -21,7 +21,9 @@ plan 15;
     is_deeply (:%a), (a => %a), ":%a works";
     is_deeply (:&a), (a => &a), ":&a works";
     is_deeply (:42nd), (nd => 42), "Basic numeric adverb works";
-    eval_dies_ok ':69th($_)', "Numeric adverb can't have an extra value";
+    throws_like { EVAL ':69th($_)' },
+      X::Comp::AdHoc,
+      "Numeric adverb can't have an extra value";
 
     is (:a{ 42 + 24 })<a>(), 66, "Adverb with postfix:<{ }> makes code object";
 } # 13
