@@ -356,32 +356,23 @@ sub showset($s) { $s.keys.sort.join(' ') }
 #?niecza skip "is SetHash doesn't work yet"
 {
     my %h is SetHash = a => True, b => False, c => True;
-    #?rakudo todo 'todo'
     is +%h.elems, 2, 'Inititalization worked';
 
     lives_ok { %h<c> = False }, 'can set an item to False';
-    #?rakudo todo 'todo'
     is %h.elems, 1, '... and an item is gone';
-    #?rakudo todo 'todo'
     is ~%h.keys, 'a', '... and the right one is gone';
 
     %h<c>++;
-    #?rakudo todo 'todo'
     is %h.keys.sort.join, 'ac', '++ on an item reinstates it';
     %h<c>++;
-    #?rakudo todo 'todo'
     is %h.keys.sort.join, 'ac', '++ on an existing item does nothing';
 
     %h<a>--;
-    #?rakudo todo 'todo'
     is ~%h.keys, 'c', '-- removes items';
     %h<b>--;
-    #?rakudo todo 'todo'
     is ~%h.keys, 'c', '... but only if they were there from the beginning';
 
-    #?rakudo todo 'todo'
     lives_ok { %h = set <Q P R> }, 'Assigning a Set to a SetHash';
-    #?rakudo todo 'todo'
     is %h.keys.sort.join, 'PQR', '... works as expected';
 }
 

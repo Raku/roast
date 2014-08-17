@@ -454,7 +454,6 @@ plan 78;
   isa_ok($foop,OrderingPair);
 }
 
-#?rakudo skip 'HyperWhatever NYI'
 #?niecza skip 'HyperWhatever NYI'
 {
   my HyperWhatever $baz;

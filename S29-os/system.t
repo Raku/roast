@@ -22,7 +22,6 @@ chdir "t";
 my $cwd;
 BEGIN { $cwd = $*DISTRO.is-win ?? 'cd' !! 'pwd' };
 ok((qqx{$cwd} ne BEGIN qqx{$cwd}), 'qqx{} is affected by chdir()');
-#?rakudo skip 'run() broken (and test questionable)'
 ok((run("dir", "t") != BEGIN { run("dir", "t") } ), 'run() is affected by chdir()');
 
 # vim: ft=perl6
