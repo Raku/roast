@@ -7,11 +7,11 @@ my $rat-atts = join(', ', Rat.^attributes);
 ok ($rat-atts ~~ /'$!numerator'<wb>/ && $rat-atts ~~ /'$!denominator'<wb>/), 'Rat $!numerator $!denominator& attributes'
    or diag "Rat attributes: $rat-atts";
 
-my $rat-methods = join ', ', Rat.^methods(:local);
+my $rat-methods = join ', ', Rat.^methods(:local).map({.name});
 ok ($rat-methods ~~ /<wb>'Str'<wb>/ && $rat-methods ~~ /<wb>'round'<wb>/), 'Rat Str and round methods'
    or diag "Rat methods: $rat-methods";
 
-ok Rat.^methods(:local).grep('log').[0].signature.perl, 'log signature';
+ok Rat.^methods(:local).grep({.name eq 'log'}).[0].signature.perl, 'log signature';
 
 # sub log-calls($obj, Role $r) { ... } 
 # wrapper example omitted - see RT121967
