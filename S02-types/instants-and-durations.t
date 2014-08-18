@@ -24,7 +24,9 @@ isa_ok EVAL('now +300'), Instant, 'now is a term, not a function';
     my $d = $t1 - $t0;
 
     ok $t0 < $t1, 'later Instants are greater';
-    dies_ok { $t0 + $t1 }, 'Instant + Instant is illegal';
+    throws_like { $t0 + $t1 },
+      X::Multi::Ambiguous,
+      'Instant + Instant is illegal';
     isa_ok $d, Duration, 'Instant - Instant ~~ Duration';
     ok $d ~~ Real, 'Durations are Real';
     isa_ok $d + $t0, Instant, 'Instant + Duration ~~ Instant';
@@ -32,8 +34,6 @@ isa_ok EVAL('now +300'), Instant, 'now is a term, not a function';
     isa_ok $t0 - $d, Instant, 'Instant - Duration ~~ Instant';
     is $t0 + ($t1 - $t0), $t1, 'Instant A + (Instant B - Instant A) == Instant B';
 }
-
-done;
 
 # See S32-temporal/DateTime-Instant-Duration.t for more.
 

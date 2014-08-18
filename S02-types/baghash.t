@@ -37,8 +37,12 @@ sub showkv($x) {
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    dies_ok { $b.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $b.values = 3, 4 }, "Can't assign to .values";
+    throws_like { $b.keys = <c d> },
+      X::Assignment::RO,
+      "Can't assign to .keys";
+    throws_like { $b.values = 3, 4 },
+      X::Assignment::RO,
+      "Can't assign to .values";
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -126,7 +130,8 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = BagHash.new(<a b o p a p o o>)', X::Hash::Store::OddNumber;
+    throws_like { EVAL 'my %h = BagHash.new(<a b o p a p o o>)' },
+      X::Hash::Store::OddNumber;
 }
 
 {
@@ -228,8 +233,7 @@ sub showkv($x) {
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.BagHash;
     my $s;
-    lives_ok { $s = $b.gist }, ".gist lives";
-    isa_ok $s, Str, "... and produces a string";
+    lives_ok { $s = $b.gist }, ".gist lives"; isa_ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
     ok $s ~~ /bar/, "... which mentions bar";

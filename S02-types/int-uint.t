@@ -3,15 +3,22 @@ use Test;
 
 # L<S09/Sized types/Sized low-level types are named most generally by appending the number of bits to a generic low-level type name>
 
-my @inttypes = map {"int$_", "uint$_"}, <1 2 4 8 16 32 64>;
-plan 10 * @inttypes;
+my @inttypes = <1 2 4 8 16 32 64>.map({
+  "int$_","uint$_"
+}).grep: {
+    try EVAL "my $_ \$var; \$var.WHAT eq \"($_)\""
+};
+
+# nothing to test, we're done
+unless @inttypes {
+    plan 1;
+    pass "No native types to test yet";
+    exit;
+}
+
+plan 9 * @inttypes;
 
 for @inttypes -> $type {
-    eval_lives_ok "my $type \$var; 1", "Type $type lives"
-        or do {
-            skip "low-level data type $type not supported on this platform", 7;
-            next;
-        }
 
     my $maxval; my $minval;
     $type ~~ /(\d+)/;
@@ -26,11 +33,22 @@ for @inttypes -> $type {
 
     is(EVAL("my $type \$var = $maxval"), $maxval, "$type can be $maxval");
     is(EVAL("my $type \$var = $minval"), $minval, "$type can be $minval");
-    eval_dies_ok("my $type \$var = {$maxval+1}", "$type cannot be {$maxval+1}");
-    eval_dies_ok("my $type \$var = {$minval-1}", "$type cannot be {$minval-1}");
-    eval_dies_ok("my $type \$var = 'foo'", "$type cannot be a string");
-    eval_dies_ok("my $type \$var = 42.1", "$type cannot be non-integer");
-    eval_dies_ok("my $type \$var = NaN", "$type cannot be NaN");
+
+    throws_like { EVAL "my $type \$var = {$maxval+1}" },
+      X::AdHoc,
+      "$type cannot be {$maxval+1}";
+    throws_like { EVAL "my $type \$var = {$minval-1}" },
+      X::AdHoc,
+      "$type cannot be {$minval-1}";
+    throws_like { EVAL "my $type \$var = 'foo'" },
+      X::AdHoc,
+      "$type cannot be a string";
+    throws_like { EVAL "my $type \$var = 42.1" },
+      X::AdHoc,
+      "$type cannot be non-integer";
+    throws_like { EVAL "my $type \$var = NaN" },
+      X::AdHoc,
+      "$type cannot be NaN";
 
     #?rakudo 2 skip "Cannot modify an immutable value"
     is(EVAL("my $type \$var = 0; \$var++; \$var"), 1, "$type \$var++ works");

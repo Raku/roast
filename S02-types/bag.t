@@ -28,16 +28,29 @@ sub showkv($x) {
     nok ?Bag.new(), "Bool returns False if there is nothing in the Bag";
 
     my $hash;
-    lives_ok { $hash = $b.hash }, ".hash doesn't die";
+    lives_ok { $hash = $b.hash },
+      ".hash doesn't die";
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    dies_ok { $b<a> = 5 }, "Can't assign to an element (Bags are immutable)";
-    dies_ok { $b<a>++ }, "Can't increment an element (Bags are immutable)";
-    dies_ok { $b.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $b.values = 3, 4 }, "Can't assign to .values";
-    dies_ok { $b<a>:delete }, "Can't :delete from Bag";
-    dies_ok { $b.delete_key("a") }, "Can't .delete_key from Bag";
+    throws_like { $b<a> = 5 },
+      X::Assignment::RO,
+      "Can't assign to an element (Bags are immutable)";
+    throws_like { $b<a>++ },
+      X::AdHoc, # no exception type yet
+      "Can't increment an element (Bags are immutable)";
+    throws_like { $b.keys = <c d> },
+      X::Assignment::RO,
+      "Can't assign to .keys";
+    throws_like { $b.values = 3, 4 },
+      X::Assignment::RO,
+      "Can't assign to .values";
+    throws_like { $b<a>:delete },
+      X::Immutable,
+      "Can't :delete from Bag";
+    throws_like { $b.delete_key("a") },
+      X::Immutable,
+      "Can't .delete_key from Bag";
 
     is ~$b<a b>, "5 1", 'Multiple-element access';
     is ~$b<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -79,8 +92,12 @@ sub showkv($x) {
     my $b = bag <a a b foo>;
     is $b<a>:exists, True, ':exists with existing element';
     is $b<santa>:exists, False, ':exists with nonexistent element';
-    dies_ok { $b<a>:delete }, ':delete does not work on bag';
-    dies_ok { $b.delete_key("a") }, '.delete_key does not work on bag';
+    throws_like { $b<a>:delete },
+      X::Immutable,
+      ':delete does not work on bag';
+    throws_like { $b.delete_key("a") },
+      X::Immutable,
+      '.delete_key does not work on bag';
 }
 
 {
@@ -95,7 +112,8 @@ sub showkv($x) {
 
 #?niecza skip "Unmatched key in Hash.LISTSTORE"
 {
-    throws_like 'my %h = bag <a b o p a p o o>', X::Hash::Store::OddNumber;
+    throws_like { EVAL 'my %h = bag <a b o p a p o o>' },
+      X::Hash::Store::OddNumber;
 }
 {
     my %h := bag <a b o p a p o o>;
@@ -168,10 +186,18 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    dies_ok { %b<a> = 1 }, "Can't assign to an element (Bags are immutable)";
-    dies_ok { %b = bag <a b> }, "Can't assign to a %var implemented by Bag";
-    dies_ok { %b<a>:delete }, "Can't :delete from a Bag";
-    dies_ok { %b.delete_key("a") }, "Can't .delete_key from a Bag";
+    throws_like { %b<a> = 1 },
+      X::Assignment::RO,
+      "Can't assign to an element (Bags are immutable)";
+    throws_like { %b = bag <a b> },
+      X::Assignment::RO,
+      "Can't assign to a %var implemented by Bag";
+    throws_like { %b<a>:delete },
+      X::Immutable,
+      "Can't :delete from a Bag";
+    throws_like { %b.delete_key("a") },
+      X::Immutable,
+      "Can't .delete_key from a Bag";
 }
 
 {
@@ -197,10 +223,12 @@ sub showkv($x) {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
     my $c;
-    lives_ok { $s = $b.perl }, ".perl lives";
+    lives_ok { $s = $b.perl },
+      ".perl lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
-    lives_ok { $c = EVAL $s }, ".perl.EVAL lives";
+    lives_ok { $c = EVAL $s },
+      ".perl.EVAL lives";
     isa_ok $c, Bag, "... and produces a Bag";
     is showkv($c), showkv($b), "... and it has the correct values";
 }
@@ -208,7 +236,8 @@ sub showkv($x) {
 {
     my $b = { foo => 2, bar => 3, baz => 1 }.Bag;
     my $s;
-    lives_ok { $s = $b.Str }, ".Str lives";
+    lives_ok { $s = $b.Str },
+      ".Str lives";
     isa_ok $s, Str, "... and produces a string";
     is $s.split(" ").sort.join(" "), "bar(3) baz foo(2)", "... which only contains bar baz and foo with the proper counts and separated by spaces";
 }
@@ -216,7 +245,8 @@ sub showkv($x) {
 {
     my $b = { foo => 10000000000, bar => 17, baz => 42 }.Bag;
     my $s;
-    lives_ok { $s = $b.gist }, ".gist lives";
+    lives_ok { $s = $b.gist },
+      ".gist lives";
     isa_ok $s, Str, "... and produces a string";
     ok $s.chars < 1000, "... of reasonable length";
     ok $s ~~ /foo/, "... which mentions foo";
@@ -334,7 +364,9 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $b = bag <a b b c c c>;
-    dies_ok { $b.grab }, 'cannot call .grab on a Bag';
+    throws_like { $b.grab },
+      X::Immutable,
+      'cannot call .grab on a Bag';
 }
 
 # L<S32::Containers/Bag/grabpairs>
@@ -342,7 +374,9 @@ sub showkv($x) {
 #?niecza skip '.grabpairs NYI'
 {
     my $b = bag <a b b c c c>;
-    dies_ok { $b.grabpairs }, 'cannot call .grabpairs on a Bag';
+    throws_like { $b.grabpairs },
+      X::Immutable,
+      'cannot call .grabpairs on a Bag';
 }
 
 {
@@ -424,8 +458,12 @@ sub showkv($x) {
 
 {
     my $b = <a b c>.Bag;
-    dies_ok { $b.pairs[0].key++ },   'Cannot change key of Bag.pairs';
-    dies_ok { $b.pairs[0].value++ }, 'Cannot change value of Bag.pairs';
+    throws_like { $b.pairs[0].key++ },
+      X::Assignment::RO,
+      'Cannot change key of Bag.pairs';
+    throws_like { $b.pairs[0].value++ },
+      X::AdHoc,  # no exception type yet
+      'Cannot change value of Bag.pairs';
 }
 
 # vim: ft=perl6

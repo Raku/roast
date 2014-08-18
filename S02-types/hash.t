@@ -187,8 +187,9 @@ is %dupl<a>, 3, "hash creation with duplicate keys works correctly";
 }
 
 {
-    dies_ok { EVAL ' @%(a => <b>)<a>' },
-     "doesn't really make sense, but shouldn't segfault, either ($!)";
+    throws_like { EVAL ' @%(a => <b>)<a>' },
+      X::AdHoc,
+      "doesn't really make sense, but shouldn't segfault, either ($!)";
 }
 
 # test for RT #62730
@@ -243,7 +244,9 @@ lives_ok { Hash.new("a" => "b") }, 'Hash.new($pair) lives';
     my $x;
     lives_ok { $x{'a'} }, 'can index a variable that defaults to Any';
     nok $x{'a'}.defined, '... and the result is not defined';
-    dies_ok { Mu.{'a'} }, 'no .{ } in Mu';
+    throws_like { Mu.{'a'} },
+      X::Multi::NoMatch,
+      'no .{ } in Mu';
 }
 
 # Whatever/Zen slices work on hashes too

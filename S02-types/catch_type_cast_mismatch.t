@@ -10,19 +10,18 @@ be trapped.
 
 =end description
 
-plan 10;
+plan 11;
 
 my $ref = { val => 42 };
 isa_ok($ref, Hash);
-#?rakudo todo "die or fail?"
-#?niecza todo "questionable test"
-dies_ok { $ref[0] }, 'Hash !~~ Positional';
+nok $ref ~~ Positional, "It's not a positional";
+cmp_ok $ref, '===', $ref[0], 'So [0] returns itself';
 
 {
     $ref = [ 42 ];
     isa_ok($ref, Array);
     #?niecza skip "Failure NYI"
-    ok( $ref<0> ~~ Failure, 'Accessing an array as a hash fails');
+    throws_like { EVAL '$ref<0>' }, X::AdHoc, 'Accessing array as hash fails';
 }
 
 # Also test that scalars give up their container types - this time a
@@ -50,7 +49,6 @@ dies_ok { $ref[0] }, 'Hash !~~ Positional';
     lives_ok { $x = { a => 3 } }, 'can assign hashref to scalar that held an array ref';
     my $y = { df => 'dfd', 'ui' => 3 };
     lives_ok { $y = [0, 7] }, 'can assign arrayref to scalar that held an hashref';
-
 }
 
 # vim: ft=perl6
