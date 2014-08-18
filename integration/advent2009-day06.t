@@ -29,5 +29,5 @@ is ((-1, 0, 3, 42)>>.Str), ["-1", "0", "3", "42"], 'Hyperoperator used to call .
 
 #?niecza todo
 {
-	is $(@a-copy = @a; @a-copy >>/=>> 4; @a-copy), [1/2, 2/2, 3/2, 4/2], 'In-place operators work';
+	is $(@a-copy = @a; @a-copy >>/=>> 2; @a-copy), [1/2, 2/2, 3/2, 4/2], 'In-place operators work';
 }
