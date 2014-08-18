@@ -193,10 +193,12 @@ plan 22;
     sub group2 (*@array is copy) {
         gather while @array {
             take [ 
-                my $h = @array[0];
-                gather while @array and $h eq @array[0] {
-                    take shift @array;
-                }
+		gather {
+		    my $h = @array[0];
+		    while @array and $h eq @array[0] {
+			take shift @array;
+		    }
+		}
             ];
         }
     }

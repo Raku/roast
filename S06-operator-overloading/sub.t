@@ -176,7 +176,7 @@ Testing operator overloading subroutines
 #?niecza todo
 {
     my proto infix:<;> ($a, $b) { $a + $b }
-    is (3 ; 2), 5  # XXX correct?
+    is $(3 ; 2), 5  # XXX correct?
 }
 
 # [NOTE]

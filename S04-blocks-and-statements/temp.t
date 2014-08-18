@@ -8,7 +8,7 @@ plan 36;
 {
   my $a = 42;
   {
-    is((temp $a = 23; $a), 23, "temp() changed the variable (1)");
+    is($(temp $a = 23; $a), 23, "temp() changed the variable (1)");
   }
   is $a, 42, "temp() restored the variable (1)";
 }
@@ -19,7 +19,7 @@ plan 36;
   my $a     = 42;
   my $get_a = { $a };
   {
-    is((temp $a = 23; $a),       23, "temp() changed the variable (2-1)");
+    is($(temp $a = 23; $a),       23, "temp() changed the variable (2-1)");
     is $get_a(), 23, "temp() changed the variable (2-2)";
   }
   is $a, 42, "temp() restored the variable (2)";
@@ -30,14 +30,14 @@ plan 36;
   my $a     = 42;
   my $get_a = { $a };
   {
-    ok((temp $a = 23; $a =:= $get_a()), "temp() shouldn't change the variable containers");
+    ok($(temp $a = 23; $a =:= $get_a()), "temp() shouldn't change the variable containers");
   }
 }
 
 {
   our $pkgvar = 42;
   {
-    is((temp $pkgvar = 'not 42'; $pkgvar), 'not 42', "temp() changed the package variable (3-1)");
+    is($(temp $pkgvar = 'not 42'; $pkgvar), 'not 42', "temp() changed the package variable (3-1)");
   }
   is $pkgvar, 42, "temp() restored the package variable (3-2)";
 }
@@ -47,7 +47,7 @@ plan 36;
 {
   my $a = 42;
   try {
-    is((temp $a = 23; $a), 23, "temp() changed the variable in a try block");
+    is($(temp $a = 23; $a), 23, "temp() changed the variable in a try block");
     die 57;
   };
   is $a, 42, "temp() restored the variable, the block was exited using an exception";
@@ -156,7 +156,7 @@ EVAL('
 
   #?rakudo todo 'TEMP phasers NYI'
   {
-    is((temp $a; $was_in_own_temp_handler), 1, ".TEMP method was executed on temporization");
+    is($(temp $a; $was_in_own_temp_handler), 1, ".TEMP method was executed on temporization");
   }
   #?rakudo todo 'TEMP phasers NYI'
   is $was_in_own_temp_handler, 2, ".TEMP method was executed on restoration";

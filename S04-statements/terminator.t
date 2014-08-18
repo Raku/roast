@@ -37,11 +37,11 @@ eval_dies_ok('my $x = ', 'incomplete expression');
 
     my $z = [];
     EVAL q'
-        $z = [ do { 1 }
-                + 2 ];
+        $z = do { 1 }
+                + 2;
     ';
 
-    is($z[0], 2, 'auto-curly applies inside array composer');
+    is($z, 1, 'auto-curly applies inside array composer');
 }
 
 eval_dies_ok "42 if 23\nis 50; 1",

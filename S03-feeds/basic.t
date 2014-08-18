@@ -13,7 +13,7 @@ Tests for the feed operators
     
 =end pod
 
-plan 25;
+plan 24;
 
 {
     my @a = (1, 2);
@@ -112,13 +112,6 @@ plan 25;
     <a b c d> ==>  *;
     0 .. 3    ==>> *;
     is(@(*), <a b c d 0 1 2 3>, 'two feeds to whatever as array');
-}
-
-# stacked feeds
-#?rakudo todo '* feeds'
-{
-    ('a' .. 'd'; 0 .. 3) ==> my @data;
-    is(@(@data), <a b c d 0 1 2 3>, 'two stacked feeds');
 }
 
 # feed and Inf
