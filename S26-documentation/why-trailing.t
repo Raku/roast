@@ -1,5 +1,5 @@
 use Test;
-plan 313;
+plan 334;
 
 my $pod_index = 0;
 
@@ -181,11 +181,26 @@ role Boxer {
 class C {
     submethod BUILD { }
     #= Bob
+
+    proto method meth($) {}
+    #= Takes a single argument
+
+    multi method meth(Int $int-arg) {}
+    #= Single Int argument
+
+    multi method meth(Str $str-arg) {}
+    #= Single Str argument
 }
 
 {
     my $submethod = C.^find_method("BUILD");
     test-trailing($submethod, 'Bob');
+
+    my $meth = C.^find_method('meth');
+
+    test-trailing($meth, 'Takes a single argument');
+    test-trailing($meth.candidates[0], 'Single Int argument');
+    test-trailing($meth.candidates[1], 'Single Str argument');
 }
 
 grammar G {

@@ -1,5 +1,5 @@
 use Test;
-plan 256;
+plan 277;
 
 my $pod_index = 0;
 
@@ -151,11 +151,29 @@ class C {
     #| Bob
     submethod BUILD { }
     #= Frank
+
+    #| Takes a
+    proto method meth($) {}
+    #= single argument
+
+    #| Single Int
+    multi method meth(Int $int-arg) {}
+    #= argument
+
+    #| Single
+    multi method meth(Str $str-arg) {}
+    #= Str argument
 }
 
 {
     my $submethod = C.^find_method("BUILD");
     test-both($submethod, 'Bob', 'Frank');
+
+    my $meth = C.^find_method('meth');
+
+    test-both($meth, 'Takes a', 'single argument');
+    test-both($meth.candidates[0], 'Single Int', 'argument');
+    test-both($meth.candidates[1], 'Single', 'Str argument');
 }
 
 #| grammar

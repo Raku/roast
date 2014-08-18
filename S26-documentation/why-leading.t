@@ -1,5 +1,5 @@
 use Test;
-plan 320;
+plan 341;
 
 my $pod_index = 0;
 
@@ -191,11 +191,26 @@ role Boxer {
 class C {
     #| Bob
     submethod BUILD { }
+
+    #| Takes a single argument
+    proto method meth($) {}
+
+    #| Single Int argument
+    multi method meth(Int $int-arg) {}
+
+    #| Single Str argument
+    multi method meth(Str $str-arg) {}
 }
 
 {
     my $submethod = C.^find_method("BUILD");
     test-leading($submethod, 'Bob');
+
+    my $meth = C.^find_method('meth');
+
+    test-leading($meth, 'Takes a single argument');
+    test-leading($meth.candidates[0], 'Single Int argument');
+    test-leading($meth.candidates[1], 'Single Str argument');
 }
 
 #| grammar
