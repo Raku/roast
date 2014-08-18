@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 15;
+plan 25;
 
 # L<S09/Fixed-size arrays>
 
@@ -16,24 +16,47 @@ plan 15;
 {
     my @arr[7] = <a b c d e f g>;
     is(@arr, [<a b c d e f g>], 'my @arr[num] can hold num things');
-    dies_ok({push @arr, 'h'}, 'adding past num items in my @arr[num] dies');
-    dies_ok({@arr[7]}, 'accessing past num items in my @arr[num] dies');
+    throws_like {push @arr, 'h'},
+      X::AdHoc,  # XXX fix when this block is no longer skipped
+      'adding past num items in my @arr[num] dies';
+    throws_like {@arr[7]},
+      X::AdHoc,  # XXX fix when this block is no longer skipped
+      'accessing past num items in my @arr[num] dies';
 }
 
 #?rakudo skip 'array shapes NYI'
 {
 {
-    lives_ok({ my @arr\    [7]}, 'array with fixed size with unspace');
-    eval_dies_ok('my @arr.[8]', 'array with dot form dies');
-    eval_dies_ok('my @arr\    .[8]', 'array with dot form and unspace dies');
+    lives_ok { my @arr\    [7]},
+      'array with fixed size with unspace');
+    throws_like { EVAL 'my @arr.[8]' },
+      X::AdHoc,  # XXX fix when this block is no longer skipped
+      'array with dot form dies';
+    throws_like { EVAL 'my @arr\    .[8]' },
+      X::AdHoc,  # XXX fix when this block is no longer skipped
+      'array with dot form and unspace dies';
 }
 
 # L<S09/Typed arrays>
 {
     my @arr of Int = 1, 2, 3, 4, 5;
     is(@arr, <1 2 3 4 5>, 'my @arr of Type works');
-    dies_ok({push @arr, 's'}, 'type constraints on my @arr of Type works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my @arr of Type works (2)');
+    throws_like {push @arr, 's'},
+      X::TypeCheck,
+      'type constraints on my @arr of Type works (1)';
+    throws_like {push @arr, 4.2},
+      X::TypeCheck,
+      'type constraints on my @arr of Type works (2)';
+}
+{
+    my Int @arr = 1, 2, 3, 4, 5;
+    is(@arr, <1 2 3 4 5>, 'my Type @arr works');
+    throws_like {push @arr, 's'},
+      X::TypeCheck,
+      'type constraints on my Type @arr works (1)';
+    throws_like {push @arr, 4.2},
+      X::TypeCheck,
+      'type constraints on my Type @arr works (2)';
 }
 
 #?rakudo skip 'array shapes NYI'
@@ -41,20 +64,29 @@ plan 15;
     my @arr[5] of Int = <1 2 3 4 5>;
     is(@arr, <1 2 3 4 5>, 'my @arr[num] of Type works');
 
-    dies_ok({push @arr, 123}, 'boundary constraints on my @arr[num] of Type works');
+    throws_like {push @arr, 123},
+      X::AdHoc,
+      'boundary constraints on my @arr[num] of Type works';
     pop @arr; # remove the last item to ensure the next ones are type constraints
-    dies_ok({push @arr, 's'}, 'type constraints on my @arr[num] of Type works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my @arr[num] of Type works (2)');
+    throws_like {push @arr, 's'},
+      X::AdHoc,
+      'type constraints on my @arr[num] of Type works (1)';
+    throws_like {push @arr, 4.2},
+      X::AdHoc,
+      'type constraints on my @arr[num] of Type works (2)';
 }
 
+#?rakudo skip 'native arrays NYI'
 {
     my int @arr = 1, 2, 3, 4, 5;
-    is(@arr, <1 2 3 4 5>, 'my Type @arr works');
-    #?rakudo skip 'dies: No such method STORE'
+    is(@arr, <1 2 3 4 5>, 'my type @arr works');
     is_deeply push( @arr, 6), [1,2,3,4,5,6], 'push on native @arr works');
-    #?rakudo 2 skip 'dies for the wrong reason: No such method STORE'
-    dies_ok({push @arr, 's'}, 'type constraints on my Type @arr works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr works (2)');
+    throws_like {push @arr, 's'},
+      X::TypeCheck,
+      'type constraints on my type @arr works (1)';
+    throws_like {push @arr, 4.2},
+      X::TypeCheck,
+      'type constraints on my type @arr works (2)';
 }
 
 #?rakudo skip 'array shapes NYI'
@@ -62,8 +94,14 @@ plan 15;
     my int @arr[5] = <1 2 3 4 5>;
     is(@arr, <1 2 3 4 5>, 'my Type @arr[num] works');
 
-    dies_ok({push @arr, 123}, 'boundary constraints on my Type @arr[num] works');
+    throws_like {push @arr, 123},
+      X::AdHoc,
+      'boundary constraints on my Type @arr[num] works';
     pop @arr; # remove the last item to ensure the next ones are type constraints
-    dies_ok({push @arr, 's'}, 'type constraints on my Type @arr[num] works (1)');
-    dies_ok({push @arr, 4.2}, 'type constraints on my Type @arr[num]  works (2)');
+    throws_like {push @arr, 's'},
+      X::AdHoc,  # XXX fix when this block is no longer skipped
+      'type constraints on my Type @arr[num] works (1)';
+    throws_like {push @arr, 4.2},
+      X::AdHoc,  # XXX fix when this block is no longer skipped
+      'type constraints on my Type @arr[num]  works (2)';
 }

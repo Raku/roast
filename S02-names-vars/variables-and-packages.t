@@ -7,14 +7,30 @@ plan 38;
 # L<S02/Names/"The following pseudo-package names are reserved">
 #?niecza todo 'System.NullReferenceException: Object reference not set to an instance of an object'
 {
-    eval_dies_ok 'module MY;', 'MY is an out of scope name';
-    eval_dies_ok 'module OUR;', 'OUR is an out of scope name';
-    eval_dies_ok 'module GLOBAL;', 'GLOBAL is an out of scope name';
-    eval_dies_ok 'module PROCESS;', 'PROCESS is an out of scope name';
-    eval_dies_ok 'module OUTER;', 'OUTER is an out of scope name';
-    eval_dies_ok 'module CALLER;', 'CALLER is an out of scope name';
-    eval_dies_ok 'module DYNAMIC;', 'DYNAMIC is an out of scope name';
-    eval_dies_ok 'module COMPILING;', 'COMPILING is an out of scope name';
+    throws_like { EVAL 'module MY;' },
+      X::PseudoPackage::InDeclaration,
+      'MY is an out of scope name';
+    throws_like { EVAL 'module OUR;' },
+      X::PseudoPackage::InDeclaration,
+      'OUR is an out of scope name';
+    throws_like { EVAL 'module GLOBAL;' },
+      X::AdHoc,
+      'GLOBAL is an out of scope name';
+    throws_like { EVAL 'module PROCESS;' },
+      X::PseudoPackage::InDeclaration,
+      'PROCESS is an out of scope name';
+    throws_like { EVAL 'module OUTER;' },
+      X::PseudoPackage::InDeclaration,
+      'OUTER is an out of scope name';
+    throws_like { EVAL 'module CALLER;' },
+      X::PseudoPackage::InDeclaration,
+      'CALLER is an out of scope name';
+    throws_like { EVAL 'module DYNAMIC;' },
+      X::PseudoPackage::InDeclaration,
+      'DYNAMIC is an out of scope name';
+    throws_like { EVAL 'module COMPILING;' },
+      X::PseudoPackage::InDeclaration,
+      'COMPILING is an out of scope name';
 }
 
 # L<S02/Names/The current lexical symbol table is now accessible>
@@ -145,7 +161,7 @@ plan 38;
 }
 
 {
-  eval_dies_ok(q/
+  throws_like { EVAL q/
     sub s($i is copy) {
         my @array;
         for 1..3 {
@@ -153,7 +169,9 @@ plan 38;
             my $i = 1 + $i;
         }
     };
-    s(9);/, "can't redeclare something with an implicit outer binding");
+    s(9);/ },
+    X::Redeclaration::Outer,
+    "can't redeclare something with an implicit outer binding";
 }
 
 {

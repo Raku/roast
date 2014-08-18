@@ -123,7 +123,9 @@ sub f { { 3 } }
 is(f(), 3, 'bare blocks immediately runs even as the last statement');
 is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');
-dies_ok({(sub { { $^x } }).()}, 'implicit params become errors');
+throws_like {(sub { { $^x } }).()},
+  X::AdHoc,
+  'implicit params become errors';
 isnt((sub { -> { 3 } }).(), 3, 'as are pointies');
 
 # RT #68116

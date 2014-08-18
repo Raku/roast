@@ -13,7 +13,9 @@ plan 13;
     ok :($a) ~~ Signature, ':($a) create a Signature object';
     my ($a) := \3;
     is $a, 3, 'can bind to one-element signature';
-    dies_ok { $a++ }, 'cannot increment an Int';
+    throws_like { $a++ },
+      X::AdHoc,  # no exception type yet
+      'cannot increment an Int';
 
     my $b = :();
     ok $b.WHAT === Signature, '.WHAT on :() is Signature';

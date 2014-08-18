@@ -151,19 +151,24 @@ my @array2 = ("test", 1, Mu);
 #?niecza skip "multi-dim arrays NYI"
 {
 # declare a multidimension array
-    eval_lives_ok('my @multidim[0..3; 0..1]', "multidimension array");
+    throws_like { EVAL 'my @multidim[0..3; 0..1]' },
+      X::AdHoc, # XXX fix when block no longer skipped
+      "multidimension array";
     my @array11 is shape(2,4);
 
     # XXX what should that test actually do?
-    ok(EVAL('@array11[2;0] = 12'), "push the value to a multidimension array");
+    ok EVAL('@array11[2;0] = 12'), "push the value to a multidimension array";
 }
 
 {
     # declare the array with data type
     my Int @array;
-    lives_ok { @array[0] = 23 },                   "stuffing Ints in an Int array works";
+    lives_ok { @array[0] = 23 },
+      "stuffing Ints in an Int array works";
     #?niecza todo "type constraints"
-    dies_ok  { @array[1] = $*ERR }, "stuffing IO in an Int array does not work";
+    throws_like { @array[1] = $*ERR },
+      X::TypeCheck::Assignment,
+      "stuffing IO in an Int array does not work";
 }
 
 {
@@ -220,8 +225,12 @@ my @array2 = ("test", 1, Mu);
   #?niecza skip "Failure NYI"
   ok @arr[*-1] ~~ Failure, "readonly accessing [*-1] of an empty array gives Failure";
   ok !(try { @arr[*-1] }), "readonly accessing [*-1] of an empty array does not die";
-  dies_ok { @arr[*-1] = 42 },      "assigning to [*-1] of an empty array is fatal";
-  dies_ok { @arr[*-1] := 42 },     "binding [*-1] of an empty array is fatal";
+  throws_like { @arr[*-1] = 42 },
+    X::Subscript::FromEnd,
+    "assigning to [*-1] of an empty array is fatal";
+  throws_like { @arr[*-1] := 42 },
+    X::Bind::Slice,
+    "binding [*-1] of an empty array is fatal";
 }
 
 {
@@ -229,20 +238,31 @@ my @array2 = ("test", 1, Mu);
   #?niecza skip "Failure NYI"
   ok @arr[*-2] ~~ Failure, "readonly accessing [*-2] of an one-elem array gives Failure";
   ok !(try { @arr[*-2] }), "readonly accessing [*-2] of an one-elem array does not die";
-  dies_ok { @arr[*-2] = 42 },      "assigning to [*-2] of an one-elem array is fatal";
-  dies_ok { @arr[*-2] := 42 },     "binding [*-2] of an empty array is fatal";
+  throws_like { @arr[*-2] = 42 },
+    X::Subscript::FromEnd,
+    "assigning to [*-2] of an one-elem array is fatal";
+  throws_like { @arr[*-2] := 42 },
+    X::Bind::Slice,
+    "binding [*-2] of an empty array is fatal";
 }
 
 {
   my @arr = <a normal array with nothing funny>;
   my $minus_one = -1;
 
-  eval_dies_ok '@arr[-1]', "readonly accessing [-1] of normal array is compile-time error";
+  throws_like { EVAL '@arr[-1]' },
+    X::Subscript::FromEnd,
+    "readonly accessing [-1] of normal array is compile-time error";
   #?niecza todo '@arr[-1] returns undef'
-  dies_ok { @arr[ $minus_one ] }, "indirectly accessing [-1] " ~
-                                   "through a variable is run-time error";
-  dies_ok { @arr[$minus_one] = 42 }, "assigning to [-1] of a normal array is fatal";
-  dies_ok { @arr[$minus_one] := 42 }, "binding [-1] of a normal array is fatal";
+  throws_like { @arr[ $minus_one ] },
+    X::Subscript::FromEnd,
+    "indirectly accessing [-1] through a variable is run-time error";
+  throws_like { @arr[$minus_one] = 42 },
+    X::Subscript::FromEnd,
+    "assigning to [-1] of a normal array is fatal";
+  throws_like { @arr[$minus_one] := 42 },
+    X::Subscript::FromEnd,
+    "binding [-1] of a normal array is fatal";
 }
 
 # RT #73308
@@ -251,7 +271,7 @@ my @array2 = ("test", 1, Mu);
 }
 
 # RT #58372 and RT #57790
-# by current group understanding of #perl6, postcircumifx:<[ ]> is actually
+# by current group understanding of #perl6, postcircumfix:<[ ]> is actually
 # defined in Any, so that .[0] is the identity operation for non-Positional
 # types
 {
@@ -260,7 +280,9 @@ my @array2 = ("test", 1, Mu);
     nok 'abc'[1].defined, '.[1] on a scalar is not defined';
     #?niecza skip "Failure NYI"
     isa_ok 1[1],  Failure, 'indexing a scalar with other than 0 returns a Failure';
-    dies_ok { Mu.[0] }, 'but Mu has no .[]';
+    throws_like { Mu.[0] },
+      X::Multi::NoMatch,
+      'but Mu has no .[]';
 }
 
 #RT #77072
@@ -317,20 +339,22 @@ my @array2 = ("test", 1, Mu);
 }
 
 #?niecza skip "throws_like"
-#?DOES 8
 {
-    throws_like 'my @a = 1..*; @a[Inf] = "dog"', X::Item, index => Inf, aggregate => 1..*;
-    throws_like 'my @a = 1..*; @a[NaN] = "cat"', X::Item, index => NaN, aggregate => 1..*;
+    throws_like { EVAL 'my @a = 1..*; @a[Inf] = "dog"' },
+      X::Item,
+      index => Inf, aggregate => 1..*;
+    throws_like { EVAL 'my @a = 1..*; @a[NaN] = "cat"' },
+      X::Item,
+      index => NaN, aggregate => 1..*;
 }
 
 {
     my Str $foo;
     my @bar = $foo;
     my $res;
-    lives_ok { $res = ~@bar }, '~@bar containing a Str type object lives';
+    lives_ok { $res = ~@bar },
+      '~@bar containing a Str type object lives';
     is $res, "", '~@bar containing a Str type object gives empty string';
 }
-
-done;
 
 # vim: ft=perl6
