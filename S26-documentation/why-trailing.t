@@ -1,5 +1,5 @@
 use Test;
-plan 312;
+plan 313;
 
 my $pod_index = 0;
 
@@ -173,7 +173,8 @@ role Boxer {
 
 {
     my $method = Boxer.^find_method('actor');
-    test-trailing(Boxer, 'Are you talking to me?');
+    ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
+    test-trailing(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-trailing($method, 'Robert De Niro');
 }
 

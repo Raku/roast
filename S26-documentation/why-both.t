@@ -1,5 +1,5 @@
 use Test;
-plan 255;
+plan 256;
 
 my $pod_index = 0;
 
@@ -142,7 +142,8 @@ role Boxer {
 
 {
     my $method = Boxer.^find_method('actor');
-    test-both(Boxer, 'Are you talking to me?', 'I said, are you talking to me?');
+    ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
+    test-both(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?', 'I said, are you talking to me?');
     test-both($method, 'Robert De Niro', q{he's an actor});
 }
 

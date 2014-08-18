@@ -1,5 +1,5 @@
 use Test;
-plan 319;
+plan 320;
 
 my $pod_index = 0;
 
@@ -183,7 +183,8 @@ role Boxer {
 
 {
     my $method = Boxer.^find_method('actor');
-    test-leading( Boxer, 'Are you talking to me?');
+    ok !Boxer.WHY.defined, q{Role group's WHY should not be defined};
+    test-leading(Boxer.HOW.candidates(Boxer)[0], 'Are you talking to me?');
     test-leading($method, 'Robert De Niro');
 }
 
