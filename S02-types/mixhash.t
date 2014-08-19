@@ -37,8 +37,12 @@ sub showkv($x) {
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    dies_ok { $m.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $m.values = 3, 4 }, "Can't assign to .values";
+    throws_like { $m.keys = <c d> },
+      X::Assignment::RO,
+      "Can't assign to .keys";
+    throws_like { $m.values = 3, 4 },
+      X::Assignment::RO,
+      "Can't assign to .values";
 
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -302,7 +306,9 @@ sub showkv($x) {
 
 {
     my $m = MixHash.new("a", "b", "b");
-    dies_ok { $m.pick }, '.pick does not work on MixHash';
+    throws_like { $m.pick },
+      X::AdHoc,
+      '.pick does not work on MixHash';
 }
 
 # L<S32::Containers/MixHash/grab>
@@ -310,7 +316,9 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $m = <a b b c c c>.MixHash;
-    dies_ok { $m.grab }, 'cannot call .grab on a MixHash';
+    throws_like { $m.grab },
+      X::AdHoc,
+      'cannot call .grab on a MixHash';
 }
 
 

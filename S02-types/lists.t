@@ -26,8 +26,9 @@ plan 28;
 
   is ($foo, "does_not_matter")[*-2], 42,
     "indexing lists by a negative index works correctly";
-  eval_dies_ok(q/my @a = <one two>; @a[-1] = 'zero'; @a.perl/,
- 	"indexing lists by a negative index without the * dies");
+  throws_like { EVAL q/my @a = <one two>; @a[-1] = 'zero'; @a.perl/ },
+    X::Subscript::FromEnd,
+ 	"indexing lists by a negative index without the * dies";
 }
 
 # List construction does not create new containers
@@ -72,7 +73,8 @@ plan 28;
   ok $foo == 23 && $bar == 24,
     "using list slices as lvalues works (1)";
 
-  dies_ok { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
+  throws_like { ($foo, 42, $bar, 19)[1, 3] = (23, 24) },
+    X::Assignment::RO,
     "using list slices as lvalues works (2)";
 }
 
@@ -136,8 +138,9 @@ plan 28;
 {
     sub Parcel::rt62836 { 62836 }
 
-    dies_ok { <1 2 3>.rt62836 },
-            'call to user-declared sub in Parcel:: class dies';
+    throws_like { <1 2 3>.rt62836 },
+      X::Method::NotFound,
+      'call to user-declared sub in Parcel:: class dies';
     try { EVAL '<1 2 3>.rt62836' };
     ok "$!" ~~ /rt62836/,       'error message contains name of sub';
     ok "$!" ~~ /Parcel/,    'error message contains name of class';
@@ -152,7 +155,9 @@ plan 28;
     isa_ok $rt66304, Parcel, 'List assigned to scalar is-a Parcel';
     is( $rt66304.WHAT, (1, 2, 4).WHAT,
         'List.WHAT is the same as .WHAT of list assigned to scalar' );
-    dies_ok { $rt66304[1] = 'ro' }, 'literal List element is immutable';
+    throws_like { $rt66304[1] = 'ro' },
+      X::Assignment::RO,
+      'literal List element is immutable';
     is $rt66304, (1, 2, 4), 'List is not changed by attempted assignment';
 }
 
@@ -168,7 +173,5 @@ plan 28;
 # RT #112216
 #?niecza skip 'loops'
 is 'foo'[2..*].elems, 0, 'can range-index a Str with infinite range';
-
-done;
 
 # vim: ft=perl6

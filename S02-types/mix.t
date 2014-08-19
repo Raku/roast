@@ -32,12 +32,24 @@ sub showkv($x) {
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
-    dies_ok { $m<a> = 5 }, "Can't assign to an element (Mixs are immutable)";
-    dies_ok { $m<a>++ }, "Can't increment an element (Mixs are immutable)";
-    dies_ok { $m.keys = <c d> }, "Can't assign to .keys";
-    dies_ok { $m.values = 3, 4 }, "Can't assign to .values";
-    dies_ok { $m<a>:delete }, "Can't :delete from Mix";
-    dies_ok { $m.delete_key("a") }, "Can't .delete_key from Mix";
+    throws_like { $m<a> = 5 },
+      X::Assignment::RO,
+      "Can't assign to an element (Mixs are immutable)";
+    throws_like { $m<a>++ },
+      X::AdHoc,
+      "Can't increment an element (Mixs are immutable)";
+    throws_like { $m.keys = <c d> },
+      X::Assignment::RO,
+      "Can't assign to .keys";
+    throws_like { $m.values = 3, 4 },
+      X::Assignment::RO,
+      "Can't assign to .values";
+    throws_like { $m<a>:delete },
+      X::Immutable,
+      "Can't :delete from Mix";
+    throws_like { $m.delete_key("a") },
+      X::Immutable,
+      "Can't .delete_key from Mix";
 
     is ~$m<a b>, "5 1", 'Multiple-element access';
     is ~$m<a santa b easterbunny>, "5 0 1 0", 'Multiple-element access (with nonexistent elements)';
@@ -83,8 +95,12 @@ sub showkv($x) {
     my $m = mix <a a b foo>;
     is $m<a>:exists, True, ':exists with existing element';
     is $m<santa>:exists, False, ':exists with nonexistent element';
-    dies_ok { $m<a>:delete }, ':delete does not work on mix';
-    dies_ok { $m.delete_key("a") }, '.delete_key does not work on mix';
+    throws_like { $m<a>:delete },
+      X::Immutable,
+      ':delete does not work on mix';
+    throws_like { $m.delete_key("a") },
+      X::Immutable,
+      '.delete_key does not work on mix';
 }
 
 {
@@ -170,10 +186,18 @@ sub showkv($x) {
     is %m<b>, 2, 'Single-key subscript (existing element)';
     is %m<santa>, 0, 'Single-key subscript (nonexistent element)';
 
-    dies_ok { %m<a> = 1 }, "Can't assign to an element (Mixs are immutable)";
-    dies_ok { %m = mix <a b> }, "Can't assign to a %var implemented by Mix";
-    dies_ok { %m<a>:delete }, "Can't :delete from a Mix";
-    dies_ok { %m.delete_key("a") }, "Can't .delete_key from a Mix";
+    throws_like { %m<a> = 1 },
+      X::Assignment::RO,
+      "Can't assign to an element (Mixs are immutable)";
+    throws_like { %m = mix <a b> },
+      X::Assignment::RO,
+      "Can't assign to a %var implemented by Mix";
+    throws_like { %m<a>:delete },
+      X::Immutable,
+      "Can't :delete from a Mix";
+    throws_like { %m.delete_key("a") },
+      X::Immutable,
+      "Can't .delete_key from a Mix";
 }
 
 {
@@ -285,7 +309,9 @@ sub showkv($x) {
 
 {
     my $m = Mix.new("a", "b", "b");
-    dies_ok { $m.pick }, '.pick does not work on Mix';
+    throws_like { $m.pick },
+      X::AdHoc,
+      '.pick does not work on Mix';
 }
 
 # L<S32::Containers/Mix/grab>
@@ -293,7 +319,9 @@ sub showkv($x) {
 #?niecza skip '.grab NYI'
 {
     my $m = mix <a b b c c c>;
-    dies_ok { $m.grab }, 'cannot call .grab on a Mix';
+    throws_like { $m.grab },
+      X::Immutable,
+      'cannot call .grab on a Mix';
 }
 
 # L<S32::Containers/Mix/grabpairs>
@@ -301,7 +329,9 @@ sub showkv($x) {
 #?niecza skip '.grabpairs NYI'
 {
     my $m = mix <a b b c c c>;
-    dies_ok { $m.grabpairs }, 'cannot call .grabpairs on a Mix';
+    throws_like { $m.grabpairs },
+      X::Immutable,
+      'cannot call .grabpairs on a Mix';
 }
 
 {
@@ -382,8 +412,12 @@ sub showkv($x) {
 
 {
     my $m = <a b c>.Mix;
-    dies_ok { $m.pairs[0].key++ },   'Cannot change key of Mix.pairs';
-    dies_ok { $m.pairs[0].value++ }, 'Cannot change value of Mix.pairs';
+    throws_like { $m.pairs[0].key++ },
+      X::Assignment::RO,
+      'Cannot change key of Mix.pairs';
+    throws_like { $m.pairs[0].value++ },
+      X::AdHoc,
+      'Cannot change value of Mix.pairs';
 }
 
 # vim: ft=perl6

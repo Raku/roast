@@ -24,7 +24,9 @@ plan 58;
     is(@md[0;1], 2, 'accessing an array as [0;0] works (2)');
     is(@md[1;0], 4, 'accessing an array as [0;0] works (3)');
     is(@md[1;1], 6, 'accessing an array as [0;0] works (4)');
-    dies_ok({@md[1;2] = 5}, 'setting a multi-d array beyond boundaries fails');
+    throws_like {@md[1;2] = 5},
+      X::AdHoc,  # XXX fix when we have multi-dimensional arrays
+      'setting a multi-d array beyond boundaries fails';
 
     is(@md.elems, 4, '.elems works on multidimensional array');
 }
@@ -36,7 +38,9 @@ plan 58;
     @md[9;9;1] = 'bar';
     is(@md[0;0;0], 'foo', 'accessing a partially bounded array works (1)');
     is(@md[9;9;1], 'bar', 'accessing a partially bounded array works (2)');
-    dies_ok({@md[0;0;2] = 9}, 'setting a partially bounded multi-d array beyond boundaries fails');
+    throws_like {@md[0;0;2] = 9},
+      X::AdHoc,  # XXX fix when we have multi-dimensional arrays
+      'setting a partially bounded multi-d array beyond boundaries fails';
 
     is(@md.elems, 2, '.elems works on partially bounded multi-d array');
 }

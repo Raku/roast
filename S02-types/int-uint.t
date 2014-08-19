@@ -6,7 +6,7 @@ use Test;
 my @inttypes = <1 2 4 8 16 32 64>.map({
   "int$_","uint$_"
 }).grep: {
-    try EVAL "my $_ \$var; \$var.WHAT eq \"($_)\""
+    try EVAL "my $_ \$var; \$var.WHAT eq '($_)'"
 };
 
 # nothing to test, we're done

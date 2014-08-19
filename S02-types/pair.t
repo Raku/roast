@@ -261,7 +261,9 @@ Note, "non-chaining binary" was later renamed to "structural infix".
   my ($key, $val) = <key val>;
   my $pair        = ($key => $val);
 
-  dies_ok { $pair.key = "KEY" }, "setting .key dies";
+  throws_like { $pair.key = "KEY" },
+    X::Assignment::RO,
+    "setting .key dies";
   is $pair.key,         "key",   "attempt to set .key doesn't change the key";
   #?niecza todo "setting .key changes original val!"
   is $key,              "key",   "attempt to set .key does not change the original var either";

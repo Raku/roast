@@ -157,7 +157,8 @@ plan 51;
 # L<S02/Comments in Unspaces and vice versa/"comment may not contain an unspace">
 #?niecza skip 'Excess arguments to CORE eval'
 {
-    dies_ok { EVAL '$a = #`\  (comment) 32' },
+    throws_like { EVAL '$a = #`\  (comment) 32' },
+      X::Undeclared,
       "comments can't contain unspace";
 }
 
