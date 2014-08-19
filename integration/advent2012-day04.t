@@ -1,6 +1,6 @@
 use v6;
 use Test;
-plan 9;
+plan 8;
 
 # Problem 2
 is do { [+] grep * %% 2, (1, 2, *+* ...^ * > 4_000_000) }, 4613732, 'fibonacci';
@@ -132,21 +132,3 @@ is +(2..100 X=> 2..100).classify({ .key ** .value }), 9183, 'distinct term count
     is ((A - 1) * (B - 1) + %count - [+] %count.values), 9183, 'distinct term count - optimized';
 }
 
-todo "unknown";
-is do {
-    sub cross(@a, @b) { @a X @b }
-    sub dups(@a) { @a - @a.uniq }
-
-    constant A = 100;
-    constant B = 100;
-
-    2..Int(sqrt A)
-    ==> map -> \a { (a, a**2, a**3 ...^ * > A) Z=> (a X 1..*).tree } \
-    ==> reverse()
-    ==> hash()
-    ==> values()
-    ==> cross(2..B)
-    ==> map -> \n, [\r, \e] { (r) => e * n } \
-    ==> dups()
-    ==> ((A - 1) * (B - 1) - *)()
-}, 9813, 'distinct terms - dataflow';
