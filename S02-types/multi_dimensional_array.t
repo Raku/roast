@@ -60,8 +60,11 @@ isa_ok($multi1[1], List);
 # multi-dimensional array slices
 # L<S09/"Subscript and slice notation"/index value to each slice>
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi1[1;0], 'foo', 'got the right value at multi1 index 1,0');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi1[1;1], 'bar', 'got the right value at multi1 index 1,1');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi1[1;2], 'baz', 'got the right value at multi1 index 1,2');
 
 # and the normal syntax
@@ -89,8 +92,11 @@ isa_ok($multi2[0], Parcel);
 
 # slice
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[0;0], 1, 'got the right value at multi2 index 0,0');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[0;1], 2, 'got the right value at multi2 index 0,1');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[0;2], 3, 'got the right value at multi2 index 0,2');
 
 # normal
@@ -109,8 +115,11 @@ isa_ok($multi2[1], List);
 
 # slice
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[1;0], 4, 'got the right value at multi2 index 1,0');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[1;1], 5, 'got the right value at multi2 index 1,1');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[1;2], 6, 'got the right value at multi2 index 1,2');
 
 # normal
@@ -121,14 +130,20 @@ is($multi2[1][2], 6, 'got the right value at multi2 index 1,2');
 
 # explicit multi-slice
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[0,1;0], (1, 4), 'got the right values at multi2 index {0,1},0');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[0,1;1], (2, 5), 'got the right values at multi2 index {0,1},1');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[0,1;2], (3, 6), 'got the right values at multi2 index {0,1},2');
 
 # whatever multi-slice
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[*;0], (1, 4), 'got the right values at multi2 index *,0');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[*;1], (2, 5), 'got the right values at multi2 index *,1');
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is($multi2[*;2], (3, 6), 'got the right values at multi2 index *,2');
 
 my @multi3 =
@@ -143,18 +158,29 @@ my @multi3 =
         [ <planes satellites falcon-9s> ]
     ];
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[1; 0,1,2; 1], (<SUVs freighters satellites>), '[1 ; 0,1,2 ; 2]';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[1; *;     1], (<SUVs freighters satellites>), '[1 ; * ; 2]';
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[0,1; 2; 2], (<angry-squirrels falcon-9s>), '[0,1 ; 2 ; 2]';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[1; 0,2; 1], (<SUVs satellites>),           '[1 ; 0,2 ; 1]';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[1; 2; 1,2], (<satellites falcon-9s>),      '[1 ; 2 ; 1,2]';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[0,1; 0,2; 1,2], (<fuzzy-cats angry-cats squirrels angry-squirrels SUVs tanks satellites falcon-9s>), '[0,1 ; 0,2 ; 1,2]';
 
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 ok (@multi3[0;*;1] = <cute-cats cute-dogs cute-squirrels ignored-value>), 'can assign to multi-dim slice';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[0;*;1], (<cute-cats cute-dogs cute-squirrels>), 'overall assignment worked';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[0;0;1], (<cute-cats>),      'assigned the right thing to [0;0;1]';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[0;1;1], (<cute-dogs>),      'assigned the right thing to [0;1;1]';
+#?rakudo emit if not %*ENV<LOLLY> {skip("LOLLY NYI", 1)} #
 is @multi3[0;2;1], (<cute-squirrels>), 'assigned the right thing to [0;2;1]';
 
 # vim: ft=perl6
