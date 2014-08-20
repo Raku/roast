@@ -50,6 +50,21 @@ VERBs include:
 All fudged tests return an exit code of 1 by default, so the test harness
 will mark it as "dubious" even if all the tests supposedly pass.
 
+You may also negate the test:
+
+    #!humpty: [NUM] VERB ARGS
+
+This will apply the verb on any system that *isn't* humpty.
+
+Sometimes environment variables distinguish syntactic or semantic
+variants, so you may apply a verb depending on the presence or absence
+of such a setting:
+
+    #?MYSPECIALVAR: [NUM] VERB ARGS
+    #!MYSPECIALVAR: [NUM] VERB ARGS
+
+The environement variable must be uppercase.
+
 There is also the following directive which modifies the test count of
 the next construct:
 
