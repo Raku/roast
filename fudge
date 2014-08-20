@@ -132,10 +132,22 @@ sub fudgeblock {
             $DOES = $1;
             next;
         }
-        if (/^\s*\#\? (\S+?)[:\s] \s* ((\S*).*)/x) {
-            if (substr("$ME.",0,length($1)+1) eq "$1.") {
+        if (/^\s*\#([?!]) (\S+?)[:\s] \s* ((\S*).*)/x) {
+	    my $sense = $1;
+	    my $name = $2;
+	    my $args = $3;
+	    my $cmd = $4;
+	    my $applies = 0;
+	    if ($name gt 'a') {  # lowercase is compiler name
+		$applies = 1 if substr("$ME.",0,length($name)+1) eq "$name.";
+	    }
+	    else {  # uppercase is env var
+		$applies = $ENV{$name};
+	    }
+	    $applies = !$applies if $sense eq '!';
+	    if ($applies) {
                 $REALLY_FUDGED = 1;
-                $ARGS = $2;
+		$ARGS = $args;
                 if ($ARGS =~ s/^emit\s*//) {
                     $_ = $ARGS;
                     next;
@@ -148,7 +160,7 @@ sub fudgeblock {
                 }
                 $ARGS =~ s/^(\w+)\s*//;
                 $FUDGE = $1;
-            } elsif ($3 eq 'emit') {
+            } elsif ($cmd eq 'emit') {
                 $_ = '';
                 next;
             }
