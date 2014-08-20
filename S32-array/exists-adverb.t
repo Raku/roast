@@ -54,13 +54,13 @@ sub gen_array { (1..10).list }
 
     is_deeply @a[1,2, 4]:exists,   (True, True, True),   "Test exists TTT";
     is_deeply @a[1,2,10]:exists,   (True, True, False),  "Test exists TTF";
-    is_deeply (@a[]:exists).list, True xx 10,            "Test non-exists T[]";
-    is_deeply (@a[*]:exists).list, True xx 10,           "Test non-exists T[*]";
+    is_deeply (@a[]:exists), True xx 10,            "Test non-exists T[]";
+    is_deeply (@a[*]:exists), True xx 10,           "Test non-exists T[*]";
     #?niezca 3 todo "adverbial pairs only used as True"
     is_deeply @a[1,2, 4]:!exists,  (False,False,False),  "Test non-exists FFF";
     is_deeply @a[1,2,10]:!exists,  (False,False,True),   "Test non-exists FFT";
-    is_deeply (@a[]:!exists).list, False xx 10,          "Test non-exists F[]";
-    is_deeply (@a[*]:!exists).list, False xx 10,         "Test non-exists F[*]";
+    is_deeply (@a[]:!exists), False xx 10,          "Test non-exists F[]";
+    is_deeply (@a[*]:!exists), False xx 10,         "Test non-exists F[*]";
 
     #?niezca 6 todo "no combined adverbial pairs"
     is_deeply @a[1,2, 4]:exists:kv,
