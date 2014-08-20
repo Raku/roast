@@ -32,5 +32,5 @@ dies_ok { Supply.start({...}) }, 'can not be called as a class method';
     sleep 1;
     is +@supplies.grep( { $_ ~~ Supply } ), 3, 'did we get two extra supplies?';
     is +@taps.grep(Tap),                    3, 'did we get two extra taps?';
-    is_deeply @seen, [1,1], 'did we get the other original value';
+    is_deeply $@seen, [1,1], 'did we get the other original value';
 }
