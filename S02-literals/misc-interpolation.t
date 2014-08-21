@@ -10,7 +10,7 @@ These tests derived from comments in L<http://use.perl.org/~autrijus/journal/233
 
 =end pod
 
-plan 46;
+plan 48;
 
 my $world = "World";
 my $number = 1;
@@ -29,6 +29,7 @@ is("%hash", '%hash', 'hash interpolation does not work if not followed by {}');
 #?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("Wont you take me to &func()", 'Wont you take me to func-y town', 'closure interpolation');
 is("2 + 2 = { 2+2 }", '2 + 2 = 4', 'double quoted closure interpolation works');
+
 
 #?niecza skip 'Action method escape:sym<&> not yet implemented'
 is("&func() is where I live", 'func-y town is where I live', "make sure function interpolation doesn't eat all trailing whitespace");
@@ -116,5 +117,10 @@ is("x  \c[65,66,67]]  x",    "x  ABC]  x", "\\c[] should not eat following ]s");
     sub t($p) { t $p-1 if $p-1 > 0; return "{$p}" };
     is t(3), 3, 'variables interpolated into blocks and recursion interact nicely';
 }
+
+# L<S04/Loop statements/'Loops at the statementlist level vs the statement level'>
+#?rakudo.jvm todo 'RT #122583'
+is "$($_ * $_ if $_ % 2 for 0..10)", '1 9 25 49 81', '$(...) list comprehension';
+is "{($_ * $_ if $_ % 2 for 0..10)}", '1 9 25 49 81', '{(...)} list comprehension';
 
 # vim: ft=perl6
