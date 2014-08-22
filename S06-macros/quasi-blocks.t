@@ -6,6 +6,7 @@ plan 12;
 # Just to avoid tedium, the macros in this file are
 # named after Santa's reindeers.
 
+#?rakudo.jvm skip "?"
 { # macro called like a sub
     my $macro_visits;
 
@@ -30,6 +31,7 @@ plan 12;
     dancer(15, 10);
 }
 
+#?rakudo.jvm skip "?"
 { # macro called like a list prefix
     my $macro_visits;
 
@@ -56,6 +58,7 @@ plan 12;
 
 # macro defined as an operator, and used as one
 
+#?rakudo.jvm skip "?"
 {
     macro infix:<comet>($rhs, $lhs) {   #OK not used
         quasi { "comet!" }
@@ -65,6 +68,7 @@ plan 12;
     is $result, "comet!", "can define an entirely new operator";
 }
 
+#?rakudo.jvm skip "?"
 {
     macro infix:<+>($rhs, $lhs) {
         quasi { "chickpeas" }
@@ -74,6 +78,7 @@ plan 12;
     is $result, "chickpeas", "can shadow an existing operator";
 }
 
+#?rakudo.jvm skip "?"
 {
     macro cupid {
         my $a = "I'm cupid!";
@@ -98,6 +103,7 @@ plan 12;
     is donner, 2, "...twice";
 }
 
+#?rakudo.jvm skip "?"
 {
     macro blitzen($param) {
         quasi { $param }
@@ -107,11 +113,13 @@ plan 12;
         "lexical lookup from quasi to macro params works";
 }
 
+#?rakudo.jvm skip "?"
 {
     macro id($param) { $param };
     is id('x'), 'x', 'macro can return its param';
 }
 
+#?rakudo.jvm skip "?"
 {
     macro funny_nil { quasi { {;}() } }
     is funny_nil(), Nil, 'Nil from an empty block turns into no code';

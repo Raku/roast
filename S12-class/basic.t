@@ -98,7 +98,8 @@ class One::Two::Three { }  # auto-vivifies package One::Two
 class One::Two { }
 ok(One::Two.new, 'created One::Two after One::Two::Three');
 dies_ok { EVAL 'class One::Two { }' }, 'cannot redeclare an existing class';
-eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT 62898';
+#?rakudo.jvm todo "?"
+eval_lives_ok q[BEGIN {class Level1::Level2::Level3 {};}; class Level1::Level2 {};], 'RT #62898';
 
 #?niecza skip "Methods must be used in some kind of package"
 {
@@ -124,7 +125,7 @@ eval_dies_ok 'class Romeo::Tango {}; Romeo::Juliet.rt64686',
 eval_dies_ok 'class WritableSelf { method f { self = 5 } }; WritableSelf.new.f',
             'self is not writable';
 
-# RT 65022
+# RT #65022
 eval_lives_ok 'class Test1 { class A {};}; class Test2 {class A {};};',
                 'RT65022 - Nested classes in different classes can have the same name';
 

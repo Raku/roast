@@ -170,12 +170,10 @@ plan 51;
     is $a, ' 32 ', 'sanity check';
 }
 
-#?rakudo todo 'NYI'
+#?rakudo skip 'NYI, and hangs on JVM'
 {
     my $a = Nil;
-    throws_like { EVAL '$a = q# 32 #;' },
-      X::Comp::AdHoc,
-      'misuse of # as quote delimiters';
+    throws_like { EVAL '$a = q# 32 #;' }, X::Comp::AdHoc, 'misuse of # as quote delimiters';
     ok !$a.defined, "``#'' can't be used as quote delimiters";
 }
 

@@ -66,9 +66,11 @@ is Simple::Bar.new.baz, 'hi', 'class test';
         'WHO implementation with longname';
 }
 
+#?rakudo.jvm todo "?"
 eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     'can refer to role using package';
 
+#?rakudo.jvm todo "?"
 {
     eval_lives_ok '{package A2 { role B2 {}; class C2 does B2 {} }}',
         'since role is in package should not need package name';
@@ -88,6 +90,7 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
 
     try { EVAL '$x = RT64828r; role RT64828r {}' };
     ok  $!  ~~ Exception, 'reference to role before definition dies';
+    #?rakudo.jvm todo "?"
     ok "$!" ~~ / RT64828r /, 'error message mentions the undefined role';
 
     try { EVAL '$x = RT64828c; class RT64828c {}' };
@@ -104,6 +107,7 @@ eval_lives_ok 'package A1 { role B1 {}; class C1 does A1::B1 {}} ',
     eval_lives_ok '{ package C1Home { class Baz {} }; package C2Home { class Baz {} } }',
         'two different packages should be two different Baz';
 
+    #?rakudo.jvm todo "?"
     eval_lives_ok '{ package E1Home { enum EHomeE <a> }; package E2Home { role EHomeE {}; class EHomeC does E2Home::EHomeE {} } }',
         'two different packages should be two different EHomeE';        
 }
@@ -183,6 +187,7 @@ eval_lives_ok q' module MapTester { (1, 2, 3).map: { $_ } } ',
     eval_lives_ok 'package RT64688_p2 { use Test }', 'use in package block';
     eval_lives_ok 'grammar RT64688_g1;use Test', 'use after grammar line';
     eval_lives_ok 'grammar RT64688_g2 { use Test }', 'use in grammar block';
+    #?rakudo.jvm 2 todo "?"
     eval_lives_ok 'role RT64688_r1;use Test', 'use after role line';
     eval_lives_ok 'role RT64688_r2 { use Test }', 'use in role block';
 }

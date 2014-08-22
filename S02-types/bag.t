@@ -33,6 +33,8 @@ sub showkv($x) {
     isa_ok $hash, Hash, "...and it returned a Hash";
     is showkv($hash), 'a:5 b:1 foo:2', '...with the right elements';
 
+    #?rakudo.parrot todo "?"
+    #?rakudo.jvm    todo "?"
     throws_like { $b<a> = 5 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
@@ -186,9 +188,13 @@ sub showkv($x) {
     is %b<b>, 2, 'Single-key subscript (existing element)';
     is %b<santa>, 0, 'Single-key subscript (nonexistent element)';
 
+    #?rakudo.parrot todo "?"
+    #?rakudo.jvm    todo "?"
     throws_like { %b<a> = 1 },
       X::Assignment::RO,
       "Can't assign to an element (Bags are immutable)";
+    #?rakudo.parrot todo "?"
+    #?rakudo.jvm    todo "?"
     throws_like { %b = bag <a b> },
       X::Assignment::RO,
       "Can't assign to a %var implemented by Bag";
@@ -458,6 +464,8 @@ sub showkv($x) {
 
 {
     my $b = <a b c>.Bag;
+    #?rakudo.parrot todo "?"
+    #?rakudo.jvm    todo "?"
     throws_like { $b.pairs[0].key++ },
       X::Assignment::RO,
       'Cannot change key of Bag.pairs';

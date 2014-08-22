@@ -52,6 +52,7 @@ plan 35;
     is $h, 'rR', 'INIT {...} did not fire again for the clone';
 }
 
+#?rakudo.jvm skip "?"
 {
     my $h;
     my $handle;
@@ -67,6 +68,7 @@ plan 35;
     is $h, 'BC123123', 'CHECK runs once';
 }
 
+#?rakudo.jvm skip "?"
 {
     my $h;
     my $handle;

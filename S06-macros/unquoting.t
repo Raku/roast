@@ -63,6 +63,7 @@ plan 5;
     is rosen(sub { $paradox }), "EPR", "unquotes retain their lexical context";
 }
 
+#?rakudo.jvm skip "?"
 { # unquotes must evaluate to ASTs
     throws_like 'macro bohm() { quasi { {{{"not an AST"}}} } }; bohm',
                 X::TypeCheck::Splice,

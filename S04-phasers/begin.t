@@ -58,6 +58,7 @@ plan 9;
             1 1
         ];
     }
+    #?rakudo.jvm todo "?"
     is $tracker, 'begin',
         'BEGIN block was executed before a parse error happened later in the file';
 

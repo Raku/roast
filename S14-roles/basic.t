@@ -139,6 +139,7 @@ lives_ok {0 but True}, '0 but True has applicable candidate';
 }
 
 # RT #114380
+#?rakudo.jvm todo "?"
 eval_lives_ok q[my role R { our $.r }; my class C does R {}],
     'Can have "our $.r" in a role (RT #114380)';
 

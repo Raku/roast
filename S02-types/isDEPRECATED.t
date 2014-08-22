@@ -30,7 +30,6 @@ TEXT
     $line = $?LINE; awith();
     awith();
     is $awith, 2, 'was "awith" really called';
-    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation for awith()';
 Saw 1 call to deprecated code during execution.
 ================================================================================
@@ -127,7 +126,6 @@ TEXT
     $line = $?LINE; Cwith.new.foo;
     Cwith.new.foo;
     is $Cwith, 2, 'was "Cwith.new.foo" really called';
-    #?rakudo.jvm todo 'tracebacks in deprecations'
     is Deprecation.report, qq:to/TEXT/.chop.subst(/\r/, '', :g), 'right deprecation Cwith.new.foo';
 Saw 1 call to deprecated code during execution.
 ================================================================================

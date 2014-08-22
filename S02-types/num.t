@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 65;
+plan 66;
 
 isa_ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
@@ -177,5 +177,8 @@ is +^1, -2, '+^1 == -2 as promised';
 
 # RT #73238
 ok 0xFFFFFFFFFFFFFFFF > 1, '0xFFFFFFFFFFFFFFFF is not -1';
+
+# RT #122593
+ok Num === Num, 'Num === Num should be truthy, and not die';
 
 # vim: ft=perl6

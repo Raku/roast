@@ -1509,555 +1509,556 @@ ok 'a bcd$ef' ~~ m:Perl5/\A.*? bcd\Q$\E..\z/, 'perl5 syntax (:Perl5)';
 #### :s^[\d+ ]* abc			11 12 13 abc	y	<?ws> before closing bracket
 ok '11 12 13 abc' ~~ /:s^[\d+ ]* abc/, '<?ws> before closing bracket';
 
+{
+    ##  Quantifiers
 
-##  Quantifiers
+    #### xa*			xaaaay		/<xaaaa @ 0>/	star 2+
+    ok ('xaaaay' ~~ /xa*/) && matchcheck($/, q/<xaaaa @ 0>/), 'star 2+';
 
-#### xa*			xaaaay		/<xaaaa @ 0>/	star 2+
-ok ('xaaaay' ~~ /xa*/) && matchcheck($/, q/<xaaaa @ 0>/), 'star 2+';
+    #### xa*			xay		/<xa @ 0>/	star 1
+    ok ('xay' ~~ /xa*/) && matchcheck($/, q/<xa @ 0>/), 'star 1';
 
-#### xa*			xay		/<xa @ 0>/	star 1
-ok ('xay' ~~ /xa*/) && matchcheck($/, q/<xa @ 0>/), 'star 1';
+    #### xa*			xy		/<x @ 0>/	star 0
+    ok ('xy' ~~ /xa*/) && matchcheck($/, q/<x @ 0>/), 'star 0';
 
-#### xa*			xy		/<x @ 0>/	star 0
-ok ('xy' ~~ /xa*/) && matchcheck($/, q/<x @ 0>/), 'star 0';
+    #### xa*y			xaaaay		/<xaaaay @ 0>/	star 2+
+    ok ('xaaaay' ~~ /xa*y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star 2+';
 
-#### xa*y			xaaaay		/<xaaaay @ 0>/	star 2+
-ok ('xaaaay' ~~ /xa*y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star 2+';
+    #### xa*y			xay		/<xay @ 0>/	star 1
+    ok ('xay' ~~ /xa*y/) && matchcheck($/, q/<xay @ 0>/), 'star 1';
 
-#### xa*y			xay		/<xay @ 0>/	star 1
-ok ('xay' ~~ /xa*y/) && matchcheck($/, q/<xay @ 0>/), 'star 1';
+    #### xa*y			xy		/<xy @ 0>/	star 0
+    ok ('xy' ~~ /xa*y/) && matchcheck($/, q/<xy @ 0>/), 'star 0';
 
-#### xa*y			xy		/<xy @ 0>/	star 0
-ok ('xy' ~~ /xa*y/) && matchcheck($/, q/<xy @ 0>/), 'star 0';
 
+    #### xa+			xaaaay		/<xaaaa @ 0>/	plus 2+
+    ok ('xaaaay' ~~ /xa+/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus 2+';
 
-#### xa+			xaaaay		/<xaaaa @ 0>/	plus 2+
-ok ('xaaaay' ~~ /xa+/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus 2+';
+    #### xa+			xay		/<xa @ 0>/	plus 1
+    ok ('xay' ~~ /xa+/) && matchcheck($/, q/<xa @ 0>/), 'plus 1';
 
-#### xa+			xay		/<xa @ 0>/	plus 1
-ok ('xay' ~~ /xa+/) && matchcheck($/, q/<xa @ 0>/), 'plus 1';
+    #### xa+			xy		n		plus 0
+    ok 'xy' !~~ /xa+/, 'plus 0';
 
-#### xa+			xy		n		plus 0
-ok 'xy' !~~ /xa+/, 'plus 0';
+    #### xa+y			xaaaay		/<xaaaay @ 0>/	plus 2+
+    ok ('xaaaay' ~~ /xa+y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus 2+';
 
-#### xa+y			xaaaay		/<xaaaay @ 0>/	plus 2+
-ok ('xaaaay' ~~ /xa+y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus 2+';
+    #### xa+y			xay		/<xay @ 0>/	plus 1
+    ok ('xay' ~~ /xa+y/) && matchcheck($/, q/<xay @ 0>/), 'plus 1';
 
-#### xa+y			xay		/<xay @ 0>/	plus 1
-ok ('xay' ~~ /xa+y/) && matchcheck($/, q/<xay @ 0>/), 'plus 1';
+    #### xa+y			xy		n		plus 0
+    ok 'xy' !~~ /xa+y/, 'plus 0';
 
-#### xa+y			xy		n		plus 0
-ok 'xy' !~~ /xa+y/, 'plus 0';
 
+    #### xa?			xaaaay		/<xa @ 0>/	ques 2+
+    ok ('xaaaay' ~~ /xa?/) && matchcheck($/, q/<xa @ 0>/), 'ques 2+';
 
-#### xa?			xaaaay		/<xa @ 0>/	ques 2+
-ok ('xaaaay' ~~ /xa?/) && matchcheck($/, q/<xa @ 0>/), 'ques 2+';
+    #### xa?			xay		/<xa @ 0>/	ques 1
+    ok ('xay' ~~ /xa?/) && matchcheck($/, q/<xa @ 0>/), 'ques 1';
 
-#### xa?			xay		/<xa @ 0>/	ques 1
-ok ('xay' ~~ /xa?/) && matchcheck($/, q/<xa @ 0>/), 'ques 1';
+    #### xa?			xy		/<x @ 0>/	ques 0
+    ok ('xy' ~~ /xa?/) && matchcheck($/, q/<x @ 0>/), 'ques 0';
 
-#### xa?			xy		/<x @ 0>/	ques 0
-ok ('xy' ~~ /xa?/) && matchcheck($/, q/<x @ 0>/), 'ques 0';
+    #### xa?y			xaaaay		n		ques 2+
+    ok 'xaaaay' !~~ /xa?y/, 'ques 2+';
 
-#### xa?y			xaaaay		n		ques 2+
-ok 'xaaaay' !~~ /xa?y/, 'ques 2+';
+    #### xa?y			xay		/<xay @ 0>/	ques 1
+    ok ('xay' ~~ /xa?y/) && matchcheck($/, q/<xay @ 0>/), 'ques 1';
 
-#### xa?y			xay		/<xay @ 0>/	ques 1
-ok ('xay' ~~ /xa?y/) && matchcheck($/, q/<xay @ 0>/), 'ques 1';
+    #### xa?y			xy		/<xy @ 0>/	ques 0
+    ok ('xy' ~~ /xa?y/) && matchcheck($/, q/<xy @ 0>/), 'ques 0';
 
-#### xa?y			xy		/<xy @ 0>/	ques 0
-ok ('xy' ~~ /xa?y/) && matchcheck($/, q/<xy @ 0>/), 'ques 0';
 
+    #### xa*!			xaaaay		/<xaaaa @ 0>/	star greedy 2+
+    ok ('xaaaay' ~~ /xa*!/) && matchcheck($/, q/<xaaaa @ 0>/), 'star greedy 2+';
 
-#### xa*!			xaaaay		/<xaaaa @ 0>/	star greedy 2+
-ok ('xaaaay' ~~ /xa*!/) && matchcheck($/, q/<xaaaa @ 0>/), 'star greedy 2+';
+    #### xa*!			xay		/<xa @ 0>/	star greedy 1
+    ok ('xay' ~~ /xa*!/) && matchcheck($/, q/<xa @ 0>/), 'star greedy 1';
 
-#### xa*!			xay		/<xa @ 0>/	star greedy 1
-ok ('xay' ~~ /xa*!/) && matchcheck($/, q/<xa @ 0>/), 'star greedy 1';
+    #### xa*!			xy		/<x @ 0>/	star greedy 0
+    ok ('xy' ~~ /xa*!/) && matchcheck($/, q/<x @ 0>/), 'star greedy 0';
 
-#### xa*!			xy		/<x @ 0>/	star greedy 0
-ok ('xy' ~~ /xa*!/) && matchcheck($/, q/<x @ 0>/), 'star greedy 0';
+    #### xa*!y			xaaaay		/<xaaaay @ 0>/	star greedy 2+
+    ok ('xaaaay' ~~ /xa*!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star greedy 2+';
 
-#### xa*!y			xaaaay		/<xaaaay @ 0>/	star greedy 2+
-ok ('xaaaay' ~~ /xa*!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star greedy 2+';
+    #### xa*!y			xay		/<xay @ 0>/	star greedy 1
+    ok ('xay' ~~ /xa*!y/) && matchcheck($/, q/<xay @ 0>/), 'star greedy 1';
 
-#### xa*!y			xay		/<xay @ 0>/	star greedy 1
-ok ('xay' ~~ /xa*!y/) && matchcheck($/, q/<xay @ 0>/), 'star greedy 1';
+    #### xa*!y			xy		/<xy @ 0>/	star greedy 0
+    ok ('xy' ~~ /xa*!y/) && matchcheck($/, q/<xy @ 0>/), 'star greedy 0';
 
-#### xa*!y			xy		/<xy @ 0>/	star greedy 0
-ok ('xy' ~~ /xa*!y/) && matchcheck($/, q/<xy @ 0>/), 'star greedy 0';
 
+    #### xa+!			xaaaay		/<xaaaa @ 0>/	plus greedy 2+
+    ok ('xaaaay' ~~ /xa+!/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus greedy 2+';
 
-#### xa+!			xaaaay		/<xaaaa @ 0>/	plus greedy 2+
-ok ('xaaaay' ~~ /xa+!/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus greedy 2+';
+    #### xa+!			xay		/<xa @ 0>/	plus greedy 1
+    ok ('xay' ~~ /xa+!/) && matchcheck($/, q/<xa @ 0>/), 'plus greedy 1';
 
-#### xa+!			xay		/<xa @ 0>/	plus greedy 1
-ok ('xay' ~~ /xa+!/) && matchcheck($/, q/<xa @ 0>/), 'plus greedy 1';
+    #### xa+!			xy		n		plus greedy 0
+    ok 'xy' !~~ /xa+!/, 'plus greedy 0';
 
-#### xa+!			xy		n		plus greedy 0
-ok 'xy' !~~ /xa+!/, 'plus greedy 0';
+    #### xa+!y			xaaaay		/<xaaaay @ 0>/	plus greedy 2+
+    ok ('xaaaay' ~~ /xa+!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus greedy 2+';
 
-#### xa+!y			xaaaay		/<xaaaay @ 0>/	plus greedy 2+
-ok ('xaaaay' ~~ /xa+!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus greedy 2+';
+    #### xa+!y			xay		/<xay @ 0>/	plus greedy 1
+    ok ('xay' ~~ /xa+!y/) && matchcheck($/, q/<xay @ 0>/), 'plus greedy 1';
 
-#### xa+!y			xay		/<xay @ 0>/	plus greedy 1
-ok ('xay' ~~ /xa+!y/) && matchcheck($/, q/<xay @ 0>/), 'plus greedy 1';
+    #### xa+!y			xy		n		plus greedy 0
+    ok 'xy' !~~ /xa+!y/, 'plus greedy 0';
 
-#### xa+!y			xy		n		plus greedy 0
-ok 'xy' !~~ /xa+!y/, 'plus greedy 0';
 
+    #### xa?!			xaaaay		/<xa @ 0>/	ques greedy 2+
+    ok ('xaaaay' ~~ /xa?!/) && matchcheck($/, q/<xa @ 0>/), 'ques greedy 2+';
 
-#### xa?!			xaaaay		/<xa @ 0>/	ques greedy 2+
-ok ('xaaaay' ~~ /xa?!/) && matchcheck($/, q/<xa @ 0>/), 'ques greedy 2+';
+    #### xa?!			xay		/<xa @ 0>/	ques greedy 1
+    ok ('xay' ~~ /xa?!/) && matchcheck($/, q/<xa @ 0>/), 'ques greedy 1';
 
-#### xa?!			xay		/<xa @ 0>/	ques greedy 1
-ok ('xay' ~~ /xa?!/) && matchcheck($/, q/<xa @ 0>/), 'ques greedy 1';
+    #### xa?!			xy		/<x @ 0>/	ques greedy 0
+    ok ('xy' ~~ /xa?!/) && matchcheck($/, q/<x @ 0>/), 'ques greedy 0';
 
-#### xa?!			xy		/<x @ 0>/	ques greedy 0
-ok ('xy' ~~ /xa?!/) && matchcheck($/, q/<x @ 0>/), 'ques greedy 0';
+    #### xa?!y			xaaaay		n		ques greedy 2+
+    ok 'xaaaay' !~~ /xa?!y/, 'ques greedy 2+';
 
-#### xa?!y			xaaaay		n		ques greedy 2+
-ok 'xaaaay' !~~ /xa?!y/, 'ques greedy 2+';
+    #### xa?!y			xay		/<xay @ 0>/	ques greedy 1
+    ok ('xay' ~~ /xa?!y/) && matchcheck($/, q/<xay @ 0>/), 'ques greedy 1';
 
-#### xa?!y			xay		/<xay @ 0>/	ques greedy 1
-ok ('xay' ~~ /xa?!y/) && matchcheck($/, q/<xay @ 0>/), 'ques greedy 1';
+    #### xa?!y			xy		/<xy @ 0>/	ques greedy 0
+    ok ('xy' ~~ /xa?!y/) && matchcheck($/, q/<xy @ 0>/), 'ques greedy 0';
 
-#### xa?!y			xy		/<xy @ 0>/	ques greedy 0
-ok ('xy' ~~ /xa?!y/) && matchcheck($/, q/<xy @ 0>/), 'ques greedy 0';
 
+    #### xa*:!			xaaaay		/<xaaaa @ 0>/	star :greedy 2+
+    ok ('xaaaay' ~~ /xa*:!/) && matchcheck($/, q/<xaaaa @ 0>/), 'star :greedy 2+';
 
-#### xa*:!			xaaaay		/<xaaaa @ 0>/	star :greedy 2+
-ok ('xaaaay' ~~ /xa*:!/) && matchcheck($/, q/<xaaaa @ 0>/), 'star :greedy 2+';
+    #### xa*:!			xay		/<xa @ 0>/	star :greedy 1
+    ok ('xay' ~~ /xa*:!/) && matchcheck($/, q/<xa @ 0>/), 'star :greedy 1';
 
-#### xa*:!			xay		/<xa @ 0>/	star :greedy 1
-ok ('xay' ~~ /xa*:!/) && matchcheck($/, q/<xa @ 0>/), 'star :greedy 1';
+    #### xa*:!			xy		/<x @ 0>/	star :greedy 0
+    ok ('xy' ~~ /xa*:!/) && matchcheck($/, q/<x @ 0>/), 'star :greedy 0';
 
-#### xa*:!			xy		/<x @ 0>/	star :greedy 0
-ok ('xy' ~~ /xa*:!/) && matchcheck($/, q/<x @ 0>/), 'star :greedy 0';
+    #### xa*:!y			xaaaay		/<xaaaay @ 0>/	star :greedy 2+
+    ok ('xaaaay' ~~ /xa*:!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star :greedy 2+';
 
-#### xa*:!y			xaaaay		/<xaaaay @ 0>/	star :greedy 2+
-ok ('xaaaay' ~~ /xa*:!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star :greedy 2+';
+    #### xa*:!y			xay		/<xay @ 0>/	star :greedy 1
+    ok ('xay' ~~ /xa*:!y/) && matchcheck($/, q/<xay @ 0>/), 'star :greedy 1';
 
-#### xa*:!y			xay		/<xay @ 0>/	star :greedy 1
-ok ('xay' ~~ /xa*:!y/) && matchcheck($/, q/<xay @ 0>/), 'star :greedy 1';
+    #### xa*:!y			xy		/<xy @ 0>/	star :greedy 0
+    ok ('xy' ~~ /xa*:!y/) && matchcheck($/, q/<xy @ 0>/), 'star :greedy 0';
 
-#### xa*:!y			xy		/<xy @ 0>/	star :greedy 0
-ok ('xy' ~~ /xa*:!y/) && matchcheck($/, q/<xy @ 0>/), 'star :greedy 0';
 
+    #### xa+:!			xaaaay		/<xaaaa @ 0>/	plus :greedy 2+
+    ok ('xaaaay' ~~ /xa+:!/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus :greedy 2+';
 
-#### xa+:!			xaaaay		/<xaaaa @ 0>/	plus :greedy 2+
-ok ('xaaaay' ~~ /xa+:!/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus :greedy 2+';
+    #### xa+:!			xay		/<xa @ 0>/	plus :greedy 1
+    ok ('xay' ~~ /xa+:!/) && matchcheck($/, q/<xa @ 0>/), 'plus :greedy 1';
 
-#### xa+:!			xay		/<xa @ 0>/	plus :greedy 1
-ok ('xay' ~~ /xa+:!/) && matchcheck($/, q/<xa @ 0>/), 'plus :greedy 1';
+    #### xa+:!			xy		n		plus :greedy 0
+    ok 'xy' !~~ /xa+:!/, 'plus :greedy 0';
 
-#### xa+:!			xy		n		plus :greedy 0
-ok 'xy' !~~ /xa+:!/, 'plus :greedy 0';
+    #### xa+:!y			xaaaay		/<xaaaay @ 0>/	plus :greedy 2+
+    ok ('xaaaay' ~~ /xa+:!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus :greedy 2+';
 
-#### xa+:!y			xaaaay		/<xaaaay @ 0>/	plus :greedy 2+
-ok ('xaaaay' ~~ /xa+:!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus :greedy 2+';
+    #### xa+:!y			xay		/<xay @ 0>/	plus :greedy 1
+    ok ('xay' ~~ /xa+:!y/) && matchcheck($/, q/<xay @ 0>/), 'plus :greedy 1';
 
-#### xa+:!y			xay		/<xay @ 0>/	plus :greedy 1
-ok ('xay' ~~ /xa+:!y/) && matchcheck($/, q/<xay @ 0>/), 'plus :greedy 1';
+    #### xa+:!y			xy		n		plus :greedy 0
+    ok 'xy' !~~ /xa+:!y/, 'plus :greedy 0';
 
-#### xa+:!y			xy		n		plus :greedy 0
-ok 'xy' !~~ /xa+:!y/, 'plus :greedy 0';
 
+    #### xa?:!			xaaaay		/<xa @ 0>/	ques :greedy 2+
+    ok ('xaaaay' ~~ /xa?:!/) && matchcheck($/, q/<xa @ 0>/), 'ques :greedy 2+';
 
-#### xa?:!			xaaaay		/<xa @ 0>/	ques :greedy 2+
-ok ('xaaaay' ~~ /xa?:!/) && matchcheck($/, q/<xa @ 0>/), 'ques :greedy 2+';
+    #### xa?:!			xay		/<xa @ 0>/	ques :greedy 1
+    ok ('xay' ~~ /xa?:!/) && matchcheck($/, q/<xa @ 0>/), 'ques :greedy 1';
 
-#### xa?:!			xay		/<xa @ 0>/	ques :greedy 1
-ok ('xay' ~~ /xa?:!/) && matchcheck($/, q/<xa @ 0>/), 'ques :greedy 1';
+    #### xa?:!			xy		/<x @ 0>/	ques :greedy 0
+    ok ('xy' ~~ /xa?:!/) && matchcheck($/, q/<x @ 0>/), 'ques :greedy 0';
 
-#### xa?:!			xy		/<x @ 0>/	ques :greedy 0
-ok ('xy' ~~ /xa?:!/) && matchcheck($/, q/<x @ 0>/), 'ques :greedy 0';
+    #### xa?:!y			xaaaay		n		ques :greedy 2+
+    ok 'xaaaay' !~~ /xa?:!y/, 'ques :greedy 2+';
 
-#### xa?:!y			xaaaay		n		ques :greedy 2+
-ok 'xaaaay' !~~ /xa?:!y/, 'ques :greedy 2+';
+    #### xa?:!y			xay		/<xay @ 0>/	ques :greedy 1
+    ok ('xay' ~~ /xa?:!y/) && matchcheck($/, q/<xay @ 0>/), 'ques :greedy 1';
 
-#### xa?:!y			xay		/<xay @ 0>/	ques :greedy 1
-ok ('xay' ~~ /xa?:!y/) && matchcheck($/, q/<xay @ 0>/), 'ques :greedy 1';
+    #### xa?:!y			xy		/<xy @ 0>/	ques :greedy 0
+    ok ('xy' ~~ /xa?:!y/) && matchcheck($/, q/<xy @ 0>/), 'ques :greedy 0';
 
-#### xa?:!y			xy		/<xy @ 0>/	ques :greedy 0
-ok ('xy' ~~ /xa?:!y/) && matchcheck($/, q/<xy @ 0>/), 'ques :greedy 0';
 
+    #### xa*?			xaaaay		/<x @ 0>/	star eager 2+
+    ok ('xaaaay' ~~ /xa*?/) && matchcheck($/, q/<x @ 0>/), 'star eager 2+';
 
-#### xa*?			xaaaay		/<x @ 0>/	star eager 2+
-ok ('xaaaay' ~~ /xa*?/) && matchcheck($/, q/<x @ 0>/), 'star eager 2+';
+    #### xa*?			xay		/<x @ 0>/	star eager 1
+    ok ('xay' ~~ /xa*?/) && matchcheck($/, q/<x @ 0>/), 'star eager 1';
 
-#### xa*?			xay		/<x @ 0>/	star eager 1
-ok ('xay' ~~ /xa*?/) && matchcheck($/, q/<x @ 0>/), 'star eager 1';
+    #### xa*?			xy		/<x @ 0>/	star eager 0
+    ok ('xy' ~~ /xa*?/) && matchcheck($/, q/<x @ 0>/), 'star eager 0';
 
-#### xa*?			xy		/<x @ 0>/	star eager 0
-ok ('xy' ~~ /xa*?/) && matchcheck($/, q/<x @ 0>/), 'star eager 0';
+    #### xa*?y			xaaaay		/<xaaaay @ 0>/	star eager 2+
+    ok ('xaaaay' ~~ /xa*?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star eager 2+';
 
-#### xa*?y			xaaaay		/<xaaaay @ 0>/	star eager 2+
-ok ('xaaaay' ~~ /xa*?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star eager 2+';
+    #### xa*?y			xay		/<xay @ 0>/	star eager 1
+    ok ('xay' ~~ /xa*?y/) && matchcheck($/, q/<xay @ 0>/), 'star eager 1';
 
-#### xa*?y			xay		/<xay @ 0>/	star eager 1
-ok ('xay' ~~ /xa*?y/) && matchcheck($/, q/<xay @ 0>/), 'star eager 1';
+    #### xa*?y			xy		/<xy @ 0>/	star eager 0
+    ok ('xy' ~~ /xa*?y/) && matchcheck($/, q/<xy @ 0>/), 'star eager 0';
 
-#### xa*?y			xy		/<xy @ 0>/	star eager 0
-ok ('xy' ~~ /xa*?y/) && matchcheck($/, q/<xy @ 0>/), 'star eager 0';
 
+    #### xa+?			xaaaay		/<xa @ 0>/	plus eager 2+
+    ok ('xaaaay' ~~ /xa+?/) && matchcheck($/, q/<xa @ 0>/), 'plus eager 2+';
 
-#### xa+?			xaaaay		/<xa @ 0>/	plus eager 2+
-ok ('xaaaay' ~~ /xa+?/) && matchcheck($/, q/<xa @ 0>/), 'plus eager 2+';
+    #### xa+?			xay		/<xa @ 0>/	plus eager 1
+    ok ('xay' ~~ /xa+?/) && matchcheck($/, q/<xa @ 0>/), 'plus eager 1';
 
-#### xa+?			xay		/<xa @ 0>/	plus eager 1
-ok ('xay' ~~ /xa+?/) && matchcheck($/, q/<xa @ 0>/), 'plus eager 1';
+    #### xa+?			xy		n		plus eager 0
+    ok 'xy' !~~ /xa+?/, 'plus eager 0';
 
-#### xa+?			xy		n		plus eager 0
-ok 'xy' !~~ /xa+?/, 'plus eager 0';
+    #### xa+?y			xaaaay		/<xaaaay @ 0>/	plus eager 2+
+    ok ('xaaaay' ~~ /xa+?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus eager 2+';
 
-#### xa+?y			xaaaay		/<xaaaay @ 0>/	plus eager 2+
-ok ('xaaaay' ~~ /xa+?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus eager 2+';
+    #### xa+?y			xay		/<xay @ 0>/	plus eager 1
+    ok ('xay' ~~ /xa+?y/) && matchcheck($/, q/<xay @ 0>/), 'plus eager 1';
 
-#### xa+?y			xay		/<xay @ 0>/	plus eager 1
-ok ('xay' ~~ /xa+?y/) && matchcheck($/, q/<xay @ 0>/), 'plus eager 1';
+    #### xa+?y			xy		n		plus eager 0
+    ok 'xy' !~~ /xa+?y/, 'plus eager 0';
 
-#### xa+?y			xy		n		plus eager 0
-ok 'xy' !~~ /xa+?y/, 'plus eager 0';
 
+    #### xa??			xaaaay		/<x @ 0>/	ques eager 2+
+    ok ('xaaaay' ~~ /xa??/) && matchcheck($/, q/<x @ 0>/), 'ques eager 2+';
 
-#### xa??			xaaaay		/<x @ 0>/	ques eager 2+
-ok ('xaaaay' ~~ /xa??/) && matchcheck($/, q/<x @ 0>/), 'ques eager 2+';
+    #### xa??			xay		/<x @ 0>/	ques eager 1
+    ok ('xay' ~~ /xa??/) && matchcheck($/, q/<x @ 0>/), 'ques eager 1';
 
-#### xa??			xay		/<x @ 0>/	ques eager 1
-ok ('xay' ~~ /xa??/) && matchcheck($/, q/<x @ 0>/), 'ques eager 1';
+    #### xa??			xy		/<x @ 0>/	ques eager 0
+    ok ('xy' ~~ /xa??/) && matchcheck($/, q/<x @ 0>/), 'ques eager 0';
 
-#### xa??			xy		/<x @ 0>/	ques eager 0
-ok ('xy' ~~ /xa??/) && matchcheck($/, q/<x @ 0>/), 'ques eager 0';
+    #### xa??y			xaaaay		n		ques eager 2+
+    ok 'xaaaay' !~~ /xa??y/, 'ques eager 2+';
 
-#### xa??y			xaaaay		n		ques eager 2+
-ok 'xaaaay' !~~ /xa??y/, 'ques eager 2+';
+    #### xa??y			xay		/<xay @ 0>/	ques eager 1
+    ok ('xay' ~~ /xa??y/) && matchcheck($/, q/<xay @ 0>/), 'ques eager 1';
 
-#### xa??y			xay		/<xay @ 0>/	ques eager 1
-ok ('xay' ~~ /xa??y/) && matchcheck($/, q/<xay @ 0>/), 'ques eager 1';
+    #### xa??y			xy		/<xy @ 0>/	ques eager 0
+    ok ('xy' ~~ /xa??y/) && matchcheck($/, q/<xy @ 0>/), 'ques eager 0';
 
-#### xa??y			xy		/<xy @ 0>/	ques eager 0
-ok ('xy' ~~ /xa??y/) && matchcheck($/, q/<xy @ 0>/), 'ques eager 0';
 
+    #### xa*:?			xaaaay		/<x @ 0>/	star :eager 2+
+    ok ('xaaaay' ~~ /xa*:?/) && matchcheck($/, q/<x @ 0>/), 'star :eager 2+';
 
-#### xa*:?			xaaaay		/<x @ 0>/	star :eager 2+
-ok ('xaaaay' ~~ /xa*:?/) && matchcheck($/, q/<x @ 0>/), 'star :eager 2+';
+    #### xa*:?			xay		/<x @ 0>/	star :eager 1
+    ok ('xay' ~~ /xa*:?/) && matchcheck($/, q/<x @ 0>/), 'star :eager 1';
 
-#### xa*:?			xay		/<x @ 0>/	star :eager 1
-ok ('xay' ~~ /xa*:?/) && matchcheck($/, q/<x @ 0>/), 'star :eager 1';
+    #### xa*:?			xy		/<x @ 0>/	star :eager 0
+    ok ('xy' ~~ /xa*:?/) && matchcheck($/, q/<x @ 0>/), 'star :eager 0';
 
-#### xa*:?			xy		/<x @ 0>/	star :eager 0
-ok ('xy' ~~ /xa*:?/) && matchcheck($/, q/<x @ 0>/), 'star :eager 0';
+    #### xa*:?y			xaaaay		/<xaaaay @ 0>/	star :eager 2+
+    ok ('xaaaay' ~~ /xa*:?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star :eager 2+';
 
-#### xa*:?y			xaaaay		/<xaaaay @ 0>/	star :eager 2+
-ok ('xaaaay' ~~ /xa*:?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star :eager 2+';
+    #### xa*:?y			xay		/<xay @ 0>/	star :eager 1
+    ok ('xay' ~~ /xa*:?y/) && matchcheck($/, q/<xay @ 0>/), 'star :eager 1';
 
-#### xa*:?y			xay		/<xay @ 0>/	star :eager 1
-ok ('xay' ~~ /xa*:?y/) && matchcheck($/, q/<xay @ 0>/), 'star :eager 1';
+    #### xa*:?y			xy		/<xy @ 0>/	star :eager 0
+    ok ('xy' ~~ /xa*:?y/) && matchcheck($/, q/<xy @ 0>/), 'star :eager 0';
 
-#### xa*:?y			xy		/<xy @ 0>/	star :eager 0
-ok ('xy' ~~ /xa*:?y/) && matchcheck($/, q/<xy @ 0>/), 'star :eager 0';
 
+    #### xa+:?			xaaaay		/<xa @ 0>/	plus :eager 2+
+    ok ('xaaaay' ~~ /xa+:?/) && matchcheck($/, q/<xa @ 0>/), 'plus :eager 2+';
 
-#### xa+:?			xaaaay		/<xa @ 0>/	plus :eager 2+
-ok ('xaaaay' ~~ /xa+:?/) && matchcheck($/, q/<xa @ 0>/), 'plus :eager 2+';
+    #### xa+:?			xay		/<xa @ 0>/	plus :eager 1
+    ok ('xay' ~~ /xa+:?/) && matchcheck($/, q/<xa @ 0>/), 'plus :eager 1';
 
-#### xa+:?			xay		/<xa @ 0>/	plus :eager 1
-ok ('xay' ~~ /xa+:?/) && matchcheck($/, q/<xa @ 0>/), 'plus :eager 1';
+    #### xa+:?			xy		n		plus :eager 0
+    ok 'xy' !~~ /xa+:?/, 'plus :eager 0';
 
-#### xa+:?			xy		n		plus :eager 0
-ok 'xy' !~~ /xa+:?/, 'plus :eager 0';
+    #### xa+:?y			xaaaay		/<xaaaay @ 0>/	plus :eager 2+
+    ok ('xaaaay' ~~ /xa+:?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus :eager 2+';
 
-#### xa+:?y			xaaaay		/<xaaaay @ 0>/	plus :eager 2+
-ok ('xaaaay' ~~ /xa+:?y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus :eager 2+';
+    #### xa+:?y			xay		/<xay @ 0>/	plus :eager 1
+    ok ('xay' ~~ /xa+:?y/) && matchcheck($/, q/<xay @ 0>/), 'plus :eager 1';
 
-#### xa+:?y			xay		/<xay @ 0>/	plus :eager 1
-ok ('xay' ~~ /xa+:?y/) && matchcheck($/, q/<xay @ 0>/), 'plus :eager 1';
+    #### xa+:?y			xy		n		plus :eager 0
+    ok 'xy' !~~ /xa+:?y/, 'plus :eager 0';
 
-#### xa+:?y			xy		n		plus :eager 0
-ok 'xy' !~~ /xa+:?y/, 'plus :eager 0';
 
+    #### xa?:?			xaaaay		/<x @ 0>/	ques :eager 2+
+    ok ('xaaaay' ~~ /xa?:?/) && matchcheck($/, q/<x @ 0>/), 'ques :eager 2+';
 
-#### xa?:?			xaaaay		/<x @ 0>/	ques :eager 2+
-ok ('xaaaay' ~~ /xa?:?/) && matchcheck($/, q/<x @ 0>/), 'ques :eager 2+';
+    #### xa?:?			xay		/<x @ 0>/	ques :eager 1
+    ok ('xay' ~~ /xa?:?/) && matchcheck($/, q/<x @ 0>/), 'ques :eager 1';
 
-#### xa?:?			xay		/<x @ 0>/	ques :eager 1
-ok ('xay' ~~ /xa?:?/) && matchcheck($/, q/<x @ 0>/), 'ques :eager 1';
+    #### xa?:?			xy		/<x @ 0>/	ques :eager 0
+    ok ('xy' ~~ /xa?:?/) && matchcheck($/, q/<x @ 0>/), 'ques :eager 0';
 
-#### xa?:?			xy		/<x @ 0>/	ques :eager 0
-ok ('xy' ~~ /xa?:?/) && matchcheck($/, q/<x @ 0>/), 'ques :eager 0';
+    #### xa?:?y			xaaaay		n		ques :eager 2+
+    ok 'xaaaay' !~~ /xa?:?y/, 'ques :eager 2+';
 
-#### xa?:?y			xaaaay		n		ques :eager 2+
-ok 'xaaaay' !~~ /xa?:?y/, 'ques :eager 2+';
+    #### xa?:?y			xay		/<xay @ 0>/	ques :eager 1
+    ok ('xay' ~~ /xa?:?y/) && matchcheck($/, q/<xay @ 0>/), 'ques :eager 1';
 
-#### xa?:?y			xay		/<xay @ 0>/	ques :eager 1
-ok ('xay' ~~ /xa?:?y/) && matchcheck($/, q/<xay @ 0>/), 'ques :eager 1';
+    #### xa?:?y			xy		/<xy @ 0>/	ques :eager 0
+    ok ('xy' ~~ /xa?:?y/) && matchcheck($/, q/<xy @ 0>/), 'ques :eager 0';
 
-#### xa?:?y			xy		/<xy @ 0>/	ques :eager 0
-ok ('xy' ~~ /xa?:?y/) && matchcheck($/, q/<xy @ 0>/), 'ques :eager 0';
 
+    #### xa*:y			xaaaay		/<xaaaay @ 0>/	star cut 2+
+    ok ('xaaaay' ~~ /xa*: y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star cut 2+';
 
-#### xa*:y			xaaaay		/<xaaaay @ 0>/	star cut 2+
-ok ('xaaaay' ~~ /xa*: y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star cut 2+';
+    #### xa*:y			xay		/<xay @ 0>/	star cut 1
+    ok ('xay' ~~ /xa*: y/) && matchcheck($/, q/<xay @ 0>/), 'star cut 1';
 
-#### xa*:y			xay		/<xay @ 0>/	star cut 1
-ok ('xay' ~~ /xa*: y/) && matchcheck($/, q/<xay @ 0>/), 'star cut 1';
+    #### xa*:y			xy		/<xy @ 0>/	star cut 0
+    ok ('xy' ~~ /xa*: y/) && matchcheck($/, q/<xy @ 0>/), 'star cut 0';
 
-#### xa*:y			xy		/<xy @ 0>/	star cut 0
-ok ('xy' ~~ /xa*: y/) && matchcheck($/, q/<xy @ 0>/), 'star cut 0';
+    #### xa*:a			xaaaay		n		star cut 2+
+    ok 'xaaaay' !~~ /xa*: a/, 'star cut 2+';
 
-#### xa*:a			xaaaay		n		star cut 2+
-ok 'xaaaay' !~~ /xa*: a/, 'star cut 2+';
+    #### xa*:a			xay		n		star cut 1
+    ok 'xay' !~~ /xa*: a/, 'star cut 1';
 
-#### xa*:a			xay		n		star cut 1
-ok 'xay' !~~ /xa*: a/, 'star cut 1';
 
+    #### xa+:y			xaaaay		/<xaaaay @ 0>/	plus cut 2+
+    ok ('xaaaay' ~~ /xa+: y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus cut 2+';
 
-#### xa+:y			xaaaay		/<xaaaay @ 0>/	plus cut 2+
-ok ('xaaaay' ~~ /xa+: y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus cut 2+';
+    #### xa+:y			xay		/<xay @ 0>/	plus cut 1
+    ok ('xay' ~~ /xa+: y/) && matchcheck($/, q/<xay @ 0>/), 'plus cut 1';
 
-#### xa+:y			xay		/<xay @ 0>/	plus cut 1
-ok ('xay' ~~ /xa+: y/) && matchcheck($/, q/<xay @ 0>/), 'plus cut 1';
+    #### xa+:y			xy		n		plus cut 0
+    ok 'xy' !~~ /xa+: y/, 'plus cut 0';
 
-#### xa+:y			xy		n		plus cut 0
-ok 'xy' !~~ /xa+: y/, 'plus cut 0';
+    #### xa+:a			xaaaay		n		plus cut 2+
+    ok 'xaaaay' !~~ /xa+: a/, 'plus cut 2+';
 
-#### xa+:a			xaaaay		n		plus cut 2+
-ok 'xaaaay' !~~ /xa+: a/, 'plus cut 2+';
+    #### xa+:a			xay		n		plus cut 1
+    ok 'xay' !~~ /xa+: a/, 'plus cut 1';
 
-#### xa+:a			xay		n		plus cut 1
-ok 'xay' !~~ /xa+: a/, 'plus cut 1';
 
+    #### xa?:y			xaaaay		n		ques cut 2+
+    ok 'xaaaay' !~~ /xa?: y/, 'ques cut 2+';
 
-#### xa?:y			xaaaay		n		ques cut 2+
-ok 'xaaaay' !~~ /xa?: y/, 'ques cut 2+';
+    #### xa?:y			xay		/<xay @ 0>/	ques cut 1
+    ok ('xay' ~~ /xa?: y/) && matchcheck($/, q/<xay @ 0>/), 'ques cut 1';
 
-#### xa?:y			xay		/<xay @ 0>/	ques cut 1
-ok ('xay' ~~ /xa?: y/) && matchcheck($/, q/<xay @ 0>/), 'ques cut 1';
+    #### xa?:y			xy		/<xy @ 0>/	ques cut 0
+    ok ('xy' ~~ /xa?: y/) && matchcheck($/, q/<xy @ 0>/), 'ques cut 0';
 
-#### xa?:y			xy		/<xy @ 0>/	ques cut 0
-ok ('xy' ~~ /xa?: y/) && matchcheck($/, q/<xy @ 0>/), 'ques cut 0';
+    #### xa?:a			xaaaay		/<xaa @ 0>/	ques cut 2+
+    ok ('xaaaay' ~~ /xa?: a/) && matchcheck($/, q/<xaa @ 0>/), 'ques cut 2+';
 
-#### xa?:a			xaaaay		/<xaa @ 0>/	ques cut 2+
-ok ('xaaaay' ~~ /xa?: a/) && matchcheck($/, q/<xaa @ 0>/), 'ques cut 2+';
+    #### xa?:a			xay		n		ques cut 1
+    ok 'xay' !~~ /xa?: a/, 'ques cut 1';
 
-#### xa?:a			xay		n		ques cut 1
-ok 'xay' !~~ /xa?: a/, 'ques cut 1';
 
+    #### :ratchet xa*y			xaaaay		/<xaaaay @ 0>/	star ratchet 2+
+    ok ('xaaaay' ~~ /:ratchet xa*y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star ratchet 2+';
 
-#### :ratchet xa*y			xaaaay		/<xaaaay @ 0>/	star ratchet 2+
-ok ('xaaaay' ~~ /:ratchet xa*y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star ratchet 2+';
+    #### :ratchet xa*y			xay		/<xay @ 0>/	star ratchet 1
+    ok ('xay' ~~ /:ratchet xa*y/) && matchcheck($/, q/<xay @ 0>/), 'star ratchet 1';
 
-#### :ratchet xa*y			xay		/<xay @ 0>/	star ratchet 1
-ok ('xay' ~~ /:ratchet xa*y/) && matchcheck($/, q/<xay @ 0>/), 'star ratchet 1';
+    #### :ratchet xa*y			xy		/<xy @ 0>/	star ratchet 0
+    ok ('xy' ~~ /:ratchet xa*y/) && matchcheck($/, q/<xy @ 0>/), 'star ratchet 0';
 
-#### :ratchet xa*y			xy		/<xy @ 0>/	star ratchet 0
-ok ('xy' ~~ /:ratchet xa*y/) && matchcheck($/, q/<xy @ 0>/), 'star ratchet 0';
+    #### :ratchet xa*a			xaaaay		n		star ratchet 2+
+    ok 'xaaaay' !~~ /:ratchet xa*a/, 'star ratchet 2+';
 
-#### :ratchet xa*a			xaaaay		n		star ratchet 2+
-ok 'xaaaay' !~~ /:ratchet xa*a/, 'star ratchet 2+';
+    #### :ratchet xa*a			xay		n		star ratchet 1
+    ok 'xay' !~~ /:ratchet xa*a/, 'star ratchet 1';
 
-#### :ratchet xa*a			xay		n		star ratchet 1
-ok 'xay' !~~ /:ratchet xa*a/, 'star ratchet 1';
 
+    #### :ratchet xa+y			xaaaay		/<xaaaay @ 0>/	plus ratchet 2+
+    ok ('xaaaay' ~~ /:ratchet xa+y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus ratchet 2+';
 
-#### :ratchet xa+y			xaaaay		/<xaaaay @ 0>/	plus ratchet 2+
-ok ('xaaaay' ~~ /:ratchet xa+y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus ratchet 2+';
+    #### :ratchet xa+y			xay		/<xay @ 0>/	plus ratchet 1
+    ok ('xay' ~~ /:ratchet xa+y/) && matchcheck($/, q/<xay @ 0>/), 'plus ratchet 1';
 
-#### :ratchet xa+y			xay		/<xay @ 0>/	plus ratchet 1
-ok ('xay' ~~ /:ratchet xa+y/) && matchcheck($/, q/<xay @ 0>/), 'plus ratchet 1';
+    #### :ratchet xa+y			xy		n		plus ratchet 0
+    ok 'xy' !~~ /:ratchet xa+y/, 'plus ratchet 0';
 
-#### :ratchet xa+y			xy		n		plus ratchet 0
-ok 'xy' !~~ /:ratchet xa+y/, 'plus ratchet 0';
+    #### :ratchet xa+a			xaaaay		n		plus ratchet 2+
+    ok 'xaaaay' !~~ /:ratchet xa+a/, 'plus ratchet 2+';
 
-#### :ratchet xa+a			xaaaay		n		plus ratchet 2+
-ok 'xaaaay' !~~ /:ratchet xa+a/, 'plus ratchet 2+';
+    #### :ratchet xa+a			xay		n		plus ratchet 1
+    ok 'xay' !~~ /:ratchet xa+a/, 'plus ratchet 1';
 
-#### :ratchet xa+a			xay		n		plus ratchet 1
-ok 'xay' !~~ /:ratchet xa+a/, 'plus ratchet 1';
 
+    #### :ratchet xa?y			xaaaay		n		ques ratchet 2+
+    ok 'xaaaay' !~~ /:ratchet xa?y/, 'ques ratchet 2+';
 
-#### :ratchet xa?y			xaaaay		n		ques ratchet 2+
-ok 'xaaaay' !~~ /:ratchet xa?y/, 'ques ratchet 2+';
+    #### :ratchet xa?y			xay		/<xay @ 0>/	ques ratchet 1
+    ok ('xay' ~~ /:ratchet xa?y/) && matchcheck($/, q/<xay @ 0>/), 'ques ratchet 1';
 
-#### :ratchet xa?y			xay		/<xay @ 0>/	ques ratchet 1
-ok ('xay' ~~ /:ratchet xa?y/) && matchcheck($/, q/<xay @ 0>/), 'ques ratchet 1';
+    #### :ratchet xa?y			xy		/<xy @ 0>/	ques ratchet 0
+    ok ('xy' ~~ /:ratchet xa?y/) && matchcheck($/, q/<xy @ 0>/), 'ques ratchet 0';
 
-#### :ratchet xa?y			xy		/<xy @ 0>/	ques ratchet 0
-ok ('xy' ~~ /:ratchet xa?y/) && matchcheck($/, q/<xy @ 0>/), 'ques ratchet 0';
+    #### :ratchet xa?a			xaaaay		/<xaa @ 0>/	ques ratchet 2+
+    ok ('xaaaay' ~~ /:ratchet xa?a/) && matchcheck($/, q/<xaa @ 0>/), 'ques ratchet 2+';
 
-#### :ratchet xa?a			xaaaay		/<xaa @ 0>/	ques ratchet 2+
-ok ('xaaaay' ~~ /:ratchet xa?a/) && matchcheck($/, q/<xaa @ 0>/), 'ques ratchet 2+';
+    #### :ratchet xa?a			xay		n		ques ratchet 1
+    ok 'xay' !~~ /:ratchet xa?a/, 'ques ratchet 1';
 
-#### :ratchet xa?a			xay		n		ques ratchet 1
-ok 'xay' !~~ /:ratchet xa?a/, 'ques ratchet 1';
 
+    #### :ratchet xa*!y			xaaaay		/<xaaaay @ 0>/	star ratchet greedy 2+
+    ok ('xaaaay' ~~ /:ratchet xa*!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star ratchet greedy 2+';
 
-#### :ratchet xa*!y			xaaaay		/<xaaaay @ 0>/	star ratchet greedy 2+
-ok ('xaaaay' ~~ /:ratchet xa*!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'star ratchet greedy 2+';
+    #### :ratchet xa*!y			xay		/<xay @ 0>/	star ratchet greedy 1
+    ok ('xay' ~~ /:ratchet xa*!y/) && matchcheck($/, q/<xay @ 0>/), 'star ratchet greedy 1';
 
-#### :ratchet xa*!y			xay		/<xay @ 0>/	star ratchet greedy 1
-ok ('xay' ~~ /:ratchet xa*!y/) && matchcheck($/, q/<xay @ 0>/), 'star ratchet greedy 1';
+    #### :ratchet xa*!y			xy		/<xy @ 0>/	star ratchet greedy 0
+    ok ('xy' ~~ /:ratchet xa*!y/) && matchcheck($/, q/<xy @ 0>/), 'star ratchet greedy 0';
 
-#### :ratchet xa*!y			xy		/<xy @ 0>/	star ratchet greedy 0
-ok ('xy' ~~ /:ratchet xa*!y/) && matchcheck($/, q/<xy @ 0>/), 'star ratchet greedy 0';
+    #### :ratchet xa*!a			xaaaay		/<xaaaa @ 0>/	star ratchet greedy 2+
+    ok ('xaaaay' ~~ /:ratchet xa*!a/) && matchcheck($/, q/<xaaaa @ 0>/), 'star ratchet greedy 2+';
 
-#### :ratchet xa*!a			xaaaay		/<xaaaa @ 0>/	star ratchet greedy 2+
-ok ('xaaaay' ~~ /:ratchet xa*!a/) && matchcheck($/, q/<xaaaa @ 0>/), 'star ratchet greedy 2+';
+    #### :ratchet xa*!a			xay		/<xa @ 0>/	star ratchet greedy 1
+    ok ('xay' ~~ /:ratchet xa*!a/) && matchcheck($/, q/<xa @ 0>/), 'star ratchet greedy 1';
 
-#### :ratchet xa*!a			xay		/<xa @ 0>/	star ratchet greedy 1
-ok ('xay' ~~ /:ratchet xa*!a/) && matchcheck($/, q/<xa @ 0>/), 'star ratchet greedy 1';
 
+    #### :ratchet xa+!y			xaaaay		/<xaaaay @ 0>/	plus ratchet greedy 2+
+    ok ('xaaaay' ~~ /:ratchet xa+!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus ratchet greedy 2+';
 
-#### :ratchet xa+!y			xaaaay		/<xaaaay @ 0>/	plus ratchet greedy 2+
-ok ('xaaaay' ~~ /:ratchet xa+!y/) && matchcheck($/, q/<xaaaay @ 0>/), 'plus ratchet greedy 2+';
+    #### :ratchet xa+!y			xay		/<xay @ 0>/	plus ratchet greedy 1
+    ok ('xay' ~~ /:ratchet xa+!y/) && matchcheck($/, q/<xay @ 0>/), 'plus ratchet greedy 1';
 
-#### :ratchet xa+!y			xay		/<xay @ 0>/	plus ratchet greedy 1
-ok ('xay' ~~ /:ratchet xa+!y/) && matchcheck($/, q/<xay @ 0>/), 'plus ratchet greedy 1';
+    #### :ratchet xa+!y			xy		n		plus ratchet greedy 0
+    ok 'xy' !~~ /:ratchet xa+!y/, 'plus ratchet greedy 0';
 
-#### :ratchet xa+!y			xy		n		plus ratchet greedy 0
-ok 'xy' !~~ /:ratchet xa+!y/, 'plus ratchet greedy 0';
+    #### :ratchet xa+!a			xaaaay		/<xaaaa @ 0>/	plus ratchet greedy 2+
+    ok ('xaaaay' ~~ /:ratchet xa+!a/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus ratchet greedy 2+';
 
-#### :ratchet xa+!a			xaaaay		/<xaaaa @ 0>/	plus ratchet greedy 2+
-ok ('xaaaay' ~~ /:ratchet xa+!a/) && matchcheck($/, q/<xaaaa @ 0>/), 'plus ratchet greedy 2+';
+    #### :ratchet xa+!a			xay		n		plus ratchet greedy 1
+    ok 'xay' !~~ /:ratchet xa+!a/, 'plus ratchet greedy 1';
 
-#### :ratchet xa+!a			xay		n		plus ratchet greedy 1
-ok 'xay' !~~ /:ratchet xa+!a/, 'plus ratchet greedy 1';
 
+    #### :ratchet xa?!y			xaaaay		n		ques ratchet greedy 2+
+    ok 'xaaaay' !~~ /:ratchet xa?!y/, 'ques ratchet greedy 2+';
 
-#### :ratchet xa?!y			xaaaay		n		ques ratchet greedy 2+
-ok 'xaaaay' !~~ /:ratchet xa?!y/, 'ques ratchet greedy 2+';
+    #### :ratchet xa?!y			xay		/<xay @ 0>/	ques ratchet greedy 1
+    ok ('xay' ~~ /:ratchet xa?!y/) && matchcheck($/, q/<xay @ 0>/), 'ques ratchet greedy 1';
 
-#### :ratchet xa?!y			xay		/<xay @ 0>/	ques ratchet greedy 1
-ok ('xay' ~~ /:ratchet xa?!y/) && matchcheck($/, q/<xay @ 0>/), 'ques ratchet greedy 1';
+    #### :ratchet xa?!y			xy		/<xy @ 0>/	ques ratchet greedy 0
+    ok ('xy' ~~ /:ratchet xa?!y/) && matchcheck($/, q/<xy @ 0>/), 'ques ratchet greedy 0';
 
-#### :ratchet xa?!y			xy		/<xy @ 0>/	ques ratchet greedy 0
-ok ('xy' ~~ /:ratchet xa?!y/) && matchcheck($/, q/<xy @ 0>/), 'ques ratchet greedy 0';
+    #### :ratchet xa?!a			xaaaay		/<xaa @ 0>/	ques ratchet greedy 2+
+    ok ('xaaaay' ~~ /:ratchet xa?!a/) && matchcheck($/, q/<xaa @ 0>/), 'ques ratchet greedy 2+';
 
-#### :ratchet xa?!a			xaaaay		/<xaa @ 0>/	ques ratchet greedy 2+
-ok ('xaaaay' ~~ /:ratchet xa?!a/) && matchcheck($/, q/<xaa @ 0>/), 'ques ratchet greedy 2+';
+    #### :ratchet xa?!a			xay		/<xa @ 0>/	ques ratchet greedy 1
+    ok ('xay' ~~ /:ratchet xa?!a/) && matchcheck($/, q/<xa @ 0>/), 'ques ratchet greedy 1';
 
-#### :ratchet xa?!a			xay		/<xa @ 0>/	ques ratchet greedy 1
-ok ('xay' ~~ /:ratchet xa?!a/) && matchcheck($/, q/<xa @ 0>/), 'ques ratchet greedy 1';
 
 
+    ## Quantifier closure
+    #### .**{2}			a			n	only one character
+    ok 'a' !~~ /.**{2}/, 'only one character';
 
-## Quantifier closure
-#### .**{2}			a			n	only one character
-ok 'a' !~~ /.**{2}/, 'only one character';
+    #### .**{2}			ab			y	two characters
+    ok 'ab' ~~ /.**{2}/, 'two characters';
 
-#### .**{2}			ab			y	two characters
-ok 'ab' ~~ /.**{2}/, 'two characters';
+    #### a**{2}			foobar		n	only one "a" character
+    ok 'foobar' !~~ /a**{2}/, 'only one "a" character';
 
-#### a**{2}			foobar		n	only one "a" character
-ok 'foobar' !~~ /a**{2}/, 'only one "a" character';
+    #### a**{2}			baabaa		y	two "a" characters
+    ok 'baabaa' ~~ /a**{2}/, 'two "a" characters';
 
-#### a**{2}			baabaa		y	two "a" characters
-ok 'baabaa' ~~ /a**{2}/, 'two "a" characters';
+    #### a**{0..4}		bbbbbbb		y	no "a" characters
+    ok 'bbbbbbb' ~~ /a**{0..4}/, 'no "a" characters';
 
-#### a**{0..4}		bbbbbbb		y	no "a" characters
-ok 'bbbbbbb' ~~ /a**{0..4}/, 'no "a" characters';
+    #### a**{2..4}		bababab		n	not two consecutive "a" characters
+    ok 'bababab' !~~ /a**{2..4}/, 'not two consecutive "a" characters';
 
-#### a**{2..4}		bababab		n	not two consecutive "a" characters
-ok 'bababab' !~~ /a**{2..4}/, 'not two consecutive "a" characters';
+    #### a**{2..4}		baabbbb		y	two "a" characters
+    ok 'baabbbb' ~~ /a**{2..4}/, 'two "a" characters';
 
-#### a**{2..4}		baabbbb		y	two "a" characters
-ok 'baabbbb' ~~ /a**{2..4}/, 'two "a" characters';
+    #### a**{2..4}		baaabbb		y	three "a" characters
+    ok 'baaabbb' ~~ /a**{2..4}/, 'three "a" characters';
 
-#### a**{2..4}		baaabbb		y	three "a" characters
-ok 'baaabbb' ~~ /a**{2..4}/, 'three "a" characters';
+    #### a**{2..4}		baaaabb		y	four "a" characters
+    ok 'baaaabb' ~~ /a**{2..4}/, 'four "a" characters';
 
-#### a**{2..4}		baaaabb		y	four "a" characters
-ok 'baaaabb' ~~ /a**{2..4}/, 'four "a" characters';
+    #### a**{2..4}		baaaaaa		y	four "a" characters
+    ok 'baaaaaa' ~~ /a**{2..4}/, 'four "a" characters';
 
-#### a**{2..4}		baaaaaa		y	four "a" characters
-ok 'baaaaaa' ~~ /a**{2..4}/, 'four "a" characters';
+    #### a**{2..*}		baaaaaa		y	six "a" characters
+    ok 'baaaaaa' ~~ /a**{2..*}/, 'six "a" characters';
 
-#### a**{2..*}		baaaaaa		y	six "a" characters
-ok 'baaaaaa' ~~ /a**{2..*}/, 'six "a" characters';
+    #### a**?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
+    ok 'baaaaaa' ~~ /a**?{2..*}/, 'two "a" characters (non-greedy)';
 
-#### a**?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
-ok 'baaaaaa' ~~ /a**?{2..*}/, 'two "a" characters (non-greedy)';
+    #### a**:?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
+    ok 'baaaaaa' ~~ /a**:?{2..*}/, 'two "a" characters (non-greedy)';
 
-#### a**:?{2..*}		baaaaaa		y	two "a" characters (non-greedy)
-ok 'baaaaaa' ~~ /a**:?{2..*}/, 'two "a" characters (non-greedy)';
+    #### a**!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
+    ok 'baaaaaa' ~~ /a**!{2..*}/, 'six "a" characters (explicit greed)';
 
-#### a**!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
-ok 'baaaaaa' ~~ /a**!{2..*}/, 'six "a" characters (explicit greed)';
+    #### a**:!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
+    ok 'baaaaaa' ~~ /a**:!{2..*}/, 'six "a" characters (explicit greed)';
 
-#### a**:!{2..*}		baaaaaa		y	six "a" characters (explicit greed)
-ok 'baaaaaa' ~~ /a**:!{2..*}/, 'six "a" characters (explicit greed)';
+    #### a**?{2..4}		baaabbb		y	two "a" characters (non-greedy)
+    ok 'baaabbb' ~~ /a**?{2..4}/, 'two "a" characters (non-greedy)';
 
-#### a**?{2..4}		baaabbb		y	two "a" characters (non-greedy)
-ok 'baaabbb' ~~ /a**?{2..4}/, 'two "a" characters (non-greedy)';
+    #### a**:?{2..4}		baaabbb		y	two "a" characters (non-greedy)
+    ok 'baaabbb' ~~ /a**:?{2..4}/, 'two "a" characters (non-greedy)';
 
-#### a**:?{2..4}		baaabbb		y	two "a" characters (non-greedy)
-ok 'baaabbb' ~~ /a**:?{2..4}/, 'two "a" characters (non-greedy)';
+    #### a**!{2..4}		baaabbb		y	three "a" characters (explicit greed)
+    ok 'baaabbb' ~~ /a**!{2..4}/, 'three "a" characters (explicit greed)';
 
-#### a**!{2..4}		baaabbb		y	three "a" characters (explicit greed)
-ok 'baaabbb' ~~ /a**!{2..4}/, 'three "a" characters (explicit greed)';
+    #### a**:!{2..4}		baaabbb		y	three "a" characters (explicit greed)
+    ok 'baaabbb' ~~ /a**:!{2..4}/, 'three "a" characters (explicit greed)';
 
-#### a**:!{2..4}		baaabbb		y	three "a" characters (explicit greed)
-ok 'baaabbb' ~~ /a**:!{2..4}/, 'three "a" characters (explicit greed)';
 
+    ## Quantifier bare range
+    #### .**2			a			n	only one character
+    ok 'a' !~~ /.**2/, 'only one character';
 
-## Quantifier bare range
-#### .**2			a			n	only one character
-ok 'a' !~~ /.**2/, 'only one character';
+    #### .**2			ab			y	two characters
+    ok 'ab' ~~ /.**2/, 'two characters';
 
-#### .**2			ab			y	two characters
-ok 'ab' ~~ /.**2/, 'two characters';
+    #### a**2			foobar		n	only one "a" character
+    ok 'foobar' !~~ /a**2/, 'only one "a" character';
 
-#### a**2			foobar		n	only one "a" character
-ok 'foobar' !~~ /a**2/, 'only one "a" character';
+    #### a**2			baabaa		y	two "a" characters
+    ok 'baabaa' ~~ /a**2/, 'two "a" characters';
 
-#### a**2			baabaa		y	two "a" characters
-ok 'baabaa' ~~ /a**2/, 'two "a" characters';
+    #### a**0..4			bbbbbbb		y	no "a" characters
+    ok 'bbbbbbb' ~~ /a**0..4/, 'no "a" characters';
 
-#### a**0..4			bbbbbbb		y	no "a" characters
-ok 'bbbbbbb' ~~ /a**0..4/, 'no "a" characters';
+    #### a**2..4			bababab		n	not two consecutive "a" characters
+    ok 'bababab' !~~ /a**2..4/, 'not two consecutive "a" characters';
 
-#### a**2..4			bababab		n	not two consecutive "a" characters
-ok 'bababab' !~~ /a**2..4/, 'not two consecutive "a" characters';
+    #### a**2..4			baabbbb		y	two "a" characters
+    ok 'baabbbb' ~~ /a**2..4/, 'two "a" characters';
 
-#### a**2..4			baabbbb		y	two "a" characters
-ok 'baabbbb' ~~ /a**2..4/, 'two "a" characters';
+    #### a**2..4			baaabbb		y	three "a" characters
+    ok 'baaabbb' ~~ /a**2..4/, 'three "a" characters';
 
-#### a**2..4			baaabbb		y	three "a" characters
-ok 'baaabbb' ~~ /a**2..4/, 'three "a" characters';
+    #### a**2..4			baaaabb		y	four "a" characters
+    ok 'baaaabb' ~~ /a**2..4/, 'four "a" characters';
 
-#### a**2..4			baaaabb		y	four "a" characters
-ok 'baaaabb' ~~ /a**2..4/, 'four "a" characters';
+    #### a**2..4			baaaaaa		y	four "a" characters
+    ok 'baaaaaa' ~~ /a**2..4/, 'four "a" characters';
 
-#### a**2..4			baaaaaa		y	four "a" characters
-ok 'baaaaaa' ~~ /a**2..4/, 'four "a" characters';
+    #### a**2..*			baaaaaa		y	six "a" characters
+    ok 'baaaaaa' ~~ /a**2..*/, 'six "a" characters';
 
-#### a**2..*			baaaaaa		y	six "a" characters
-ok 'baaaaaa' ~~ /a**2..*/, 'six "a" characters';
+    #### a**?2..*		baaaaaa		y	two "a" characters (non-greedy)
+    ok 'baaaaaa' ~~ /a**?2..*/, 'two "a" characters (non-greedy)';
 
-#### a**?2..*		baaaaaa		y	two "a" characters (non-greedy)
-ok 'baaaaaa' ~~ /a**?2..*/, 'two "a" characters (non-greedy)';
+    #### a**:?2..*		baaaaaa		y	two "a" characters (non-greedy)
+    ok 'baaaaaa' ~~ /a**:?2..*/, 'two "a" characters (non-greedy)';
 
-#### a**:?2..*		baaaaaa		y	two "a" characters (non-greedy)
-ok 'baaaaaa' ~~ /a**:?2..*/, 'two "a" characters (non-greedy)';
+    #### a**!2..*		baaaaaa		y	six "a" characters (explicit greed)
+    ok 'baaaaaa' ~~ /a**!2..*/, 'six "a" characters (explicit greed)';
 
-#### a**!2..*		baaaaaa		y	six "a" characters (explicit greed)
-ok 'baaaaaa' ~~ /a**!2..*/, 'six "a" characters (explicit greed)';
+    #### a**:!2..*		baaaaaa		y	six "a" characters (explicit greed)
+    ok 'baaaaaa' ~~ /a**:!2..*/, 'six "a" characters (explicit greed)';
 
-#### a**:!2..*		baaaaaa		y	six "a" characters (explicit greed)
-ok 'baaaaaa' ~~ /a**:!2..*/, 'six "a" characters (explicit greed)';
+    #### a**?2..4		baaabbb		y	two "a" characters (non-greedy)
+    ok 'baaabbb' ~~ /a**?2..4/, 'two "a" characters (non-greedy)';
 
-#### a**?2..4		baaabbb		y	two "a" characters (non-greedy)
-ok 'baaabbb' ~~ /a**?2..4/, 'two "a" characters (non-greedy)';
+    #### a**:?2..4		baaabbb		y	two "a" characters (non-greedy)
+    ok 'baaabbb' ~~ /a**:?2..4/, 'two "a" characters (non-greedy)';
 
-#### a**:?2..4		baaabbb		y	two "a" characters (non-greedy)
-ok 'baaabbb' ~~ /a**:?2..4/, 'two "a" characters (non-greedy)';
+    #### a**!2..4		baaabbb		y	three "a" characters (explicit greed)
+    ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
 
-#### a**!2..4		baaabbb		y	three "a" characters (explicit greed)
-ok 'baaabbb' ~~ /a**!2..4/, 'three "a" characters (explicit greed)';
-
-#### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
-ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
+    #### a**:!2..4		baaabbb		y	three "a" characters (explicit greed)
+    ok 'baaabbb' ~~ /a**:!2..4/, 'three "a" characters (explicit greed)';
+}
 
 # RT #112450
 {
