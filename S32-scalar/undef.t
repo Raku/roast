@@ -44,7 +44,7 @@ ok(!defined(Mu), "Mu is not defined");
             'increment of undefined variable does not warn' );
 
     undefine $a;
-    ok(!defined($a), "undefine($a) does");
+    ok(!defined($a), 'undefine($a) does');
 
     $a = "hi";
     ok(defined($a), "string");
@@ -302,7 +302,7 @@ is((Any) + 1, 1, 'Any + 1');
 is(1 + (Any), 1, '1 + Any');
 is((Any) * 2, 0, 'Any * 2');
 is(2 * (Any), 0, '2 * Any');
-is((Any) xx 2, [Any, Any], 'Any xx 2');
+is_deeply([(Any) xx 2], [Any, Any], 'Any xx 2');
 is((Any) * (Any), 0, 'Any * Any');
 
 # L<http://colabti.de/irclogger/irclogger_log/perl6?date=2006-09-12,Tue&sel=145#l186>
