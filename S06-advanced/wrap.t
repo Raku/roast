@@ -224,6 +224,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     &multi-to-wrap.wrap({
         2 * callsame;
     });
+    #?rakudo.parrot todo "?"
     is multi-to-wrap(5), 20, 'can wrap a multi';
 }
 

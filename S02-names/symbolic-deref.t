@@ -167,6 +167,7 @@ my $outer = 'outside';
   is $::("symderef_test_var"), 42, "symbolic dereferentiation works with package vars";
 }
 
+#?rakudo.parrot todo "?"
 throws_like { EVAL ' ::().Str ' },
   X::AdHoc,
   'Cannot look up empty name';
