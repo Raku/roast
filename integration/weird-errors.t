@@ -27,6 +27,7 @@ is_run(
 );
 
 # RT #70922
+#?rakudo.jvm todo "?"
 is_run(
     'class A { method postcircumfix:<{ }>() {} }; my &r = {;}; if 0 { if 0 { my $a #OK not used' ~
      "\n" ~ '} }',

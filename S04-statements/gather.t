@@ -142,7 +142,6 @@ plan 28;
 }
 
 #?rakudo.moar todo 'RT #117635 (infinite loop)'
-#?rakudo.jvm  todo 'RT #117635 (infinite loop)'
 {
     my sub grep-div(@a, $n) {
         gather for @a {

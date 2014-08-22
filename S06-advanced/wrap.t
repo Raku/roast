@@ -225,6 +225,7 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
         2 * callsame;
     });
     #?rakudo.parrot todo "?"
+    #?rakudo.jvm    todo "?"
     is multi-to-wrap(5), 20, 'can wrap a multi';
 }
 
@@ -258,7 +259,9 @@ dies_ok { {nextsame}() }, '{nextsame}() dies properly';
     ok $didfoo, "Did foo, capture return";
     my $foo = foo.new;  # x = 16;
     my $bar = foo.new(x => 32);
-    #?rakudo 2 todo 'RT #122259'
+    #?rakudo.parrot 2 todo 'RT #122259'
+    #?rakudo.moar   2 todo 'RT #122259'
+    #?rakudo.jvm    3 skip 'RT #122259'
     is $foo.x, 16, "default works with wrapped accessor, capture return";
     is $bar.x, 32, "BUILD binding works with wrapped accessor, capture return";
     try $bar.x = 64;

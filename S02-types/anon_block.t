@@ -120,6 +120,7 @@ is($one_c, 1, '... two blocks ({}; {};) semicolon after both,.. first block does
 is($two_c, 2, '... and second block does too');
 
 sub f { { 3 } }
+#?rakudo.jvm 3 todo "?"
 is(f(), 3, 'bare blocks immediately runs even as the last statement');
 is((sub { { 3 } }).(), 3, 'ditto for anonymous subs');
 is((sub { { { 3 } } }).(), 3, 'ditto, even if nested');
