@@ -178,4 +178,7 @@ is +^1, -2, '+^1 == -2 as promised';
 # RT #73238
 ok 0xFFFFFFFFFFFFFFFF > 1, '0xFFFFFFFFFFFFFFFF is not -1';
 
+# RT #122593
+ok Num === Num, 'Num === Num should be truthy, and not die';
+
 # vim: ft=perl6
