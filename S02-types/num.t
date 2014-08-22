@@ -4,7 +4,7 @@ use Test;
 
 #L<S02/The C<Num> and C<Rat> Types/Perl 6 intrinsically supports big integers>
 
-plan 65;
+plan 66;
 
 isa_ok( EVAL(1.Num.perl), Num, 'EVAL 1.Num.perl is Num' );
 is_approx( EVAL(1.Num.perl), 1, 'EVAL 1.Num.perl is 1' );
