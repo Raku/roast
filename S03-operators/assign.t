@@ -944,7 +944,7 @@ sub l () { 1, 2 };
     (my $a) = 1,2,3;
     is $a, (1,2,3), "Assignment into parentheses'd my works.";
     sub foo($x) { $x };
-    is (foo (my $a = 1,2,3)), (1,2,3), "Routine call taking a parenthesised my as argument works. #1";
+    is (foo (my $y = 1,2,3)), (1,2,3), "Routine call taking a parenthesised my as argument works. #1";
     sub low-prec(\i) { True };
     is (low-prec (my $x = (3,2,1))), True, "Routine call taking a parenthesised my as argument works. #2";
     is $x, (3,2,1), "Routine call taking a parenthesised my as argument works. #3";
