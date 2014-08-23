@@ -4,7 +4,7 @@ use v6;
 
 use Test;
 
-plan 60;
+plan 61;
 
 my regex fairly_conclusive_platform_error {:i ^\N* <<Null?>>}
 
@@ -262,6 +262,11 @@ eval_dies_ok q[
     use Bar;
     use Baz;
     is Foo.foo, 'foo', 'can use two packages that both use the same third package'
+}
+
+# RT #79464
+{
+    lives_ok {Foo1::bar(); module Foo1 { our $x = 42; our sub bar() { $x.defined } }}, 'accessing module variable from within sub called from outside the module';
 }
 
 # vim: ft=perl6
