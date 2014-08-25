@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 168;
+plan 169;
 
 sub showset($s) { $s.keys.sort.join(' ') }
 
@@ -369,6 +369,12 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
     my $s = set;
     $s (|)= 5;
     is $s, set(5), 'can metaop set assign like: (|)=';
+}
+
+#?rakudo todo 'we have not secured .WHICH creation yet'
+{
+    isnt 'a Str|b Str|c'.Set.WHICH, <a b c>.Set.WHICH,
+      'Faulty .WHICH creation';
 }
 
 # vim: ft=perl6

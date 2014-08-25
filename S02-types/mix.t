@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 178;
+plan 179;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -426,6 +426,12 @@ sub showkv($x) {
     throws_like { $m.pairs[0].value++ },
       X::AdHoc,
       'Cannot change value of Mix.pairs';
+}
+
+#?rakudo todo 'we have not secured .WHICH creation yet'
+{
+    isnt 'a(1) Str|b(1) Str|c'.Mix.WHICH, <a b c>.Mix.WHICH, 
+      'Faulty .WHICH creation';
 }
 
 # vim: ft=perl6

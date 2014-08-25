@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 196;
+plan 197;
 
 sub showkv($x) {
     $x.keys.sort.map({ $^k ~ ':' ~ $x{$k} }).join(' ')
@@ -472,6 +472,12 @@ sub showkv($x) {
     throws_like { $b.pairs[0].value++ },
       X::AdHoc,  # no exception type yet
       'Cannot change value of Bag.pairs';
+}
+
+#?rakudo todo 'we have not secured .WHICH creation yet'
+{
+        isnt 'a(1) Str|b(1) Str|c'.Bag.WHICH, <a b c>.Bag.WHICH,
+          'Faulty .WHICH creation';
 }
 
 # vim: ft=perl6
