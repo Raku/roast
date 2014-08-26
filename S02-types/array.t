@@ -342,10 +342,10 @@ my @array2 = ("test", 1, Mu);
 {
     throws_like { EVAL 'my @a = 1..*; @a[Inf] = "dog"' },
       X::Item,
-      index => Inf, aggregate => 1..*;
+      index => Inf, aggregate => Array;
     throws_like { EVAL 'my @a = 1..*; @a[NaN] = "cat"' },
       X::Item,
-      index => NaN, aggregate => 1..*;
+      index => NaN, aggregate => Array;
 }
 
 {
