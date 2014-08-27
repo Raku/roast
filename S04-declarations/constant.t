@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-plan 48;
+plan 49;
 
 # L<S04/The Relationship of Blocks and Declarations/"The new constant declarator">
 
@@ -302,6 +302,12 @@ plan 48;
 {
     class B { constant \a = 3; };
     is B::a, 3, 'escaped constant declaration in class';
+}
+
+# RT #122604
+{
+    constant fib = 0, 1, *+* ... *;
+    lives_ok {fib[100_000]}, "can index a constant list at 100K";
 }
 
 # vim: ft=perl6
