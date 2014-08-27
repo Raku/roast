@@ -306,8 +306,8 @@ plan 49;
 
 # RT #122604
 {
-    constant fib = 0, 1, *+* ... *;
-    lives_ok {fib[100_000]}, "can index a constant list at 100K";
+    constant lots = 0..*;
+    lives_ok {lots[100_000]}, "can index an infinite constant list at 100K";
 }
 
 # vim: ft=perl6
