@@ -12,19 +12,19 @@ plan 5;
 
 =end pod
 
-is $=pod[0].content[0].content, 'Some pod content', '$=pod';
+is $=pod[0].contents[0].contents, 'Some pod content', '$=pod';
 
-#= it's a sheep! really!
+#| it's a sheep! really!
 class Sheep {
 
-    #= produces a funny sound
+    #| produces a funny sound
     method bark {
 	say "Actually, I don't think sheeps bark"
     }
 }
 
-is Sheep.WHY.content, "it's a sheep! really!", "class .WHY";
-is Sheep.^find_method('bark').WHY.content, "produces a funny sound", "method .WHY";
+is Sheep.WHY.contents, "it's a sheep! really!", "class .WHY";
+is Sheep.^find_method('bark').WHY.contents, "produces a funny sound", "method .WHY";
 
 my $main = q:to"END";
     =begin pod
@@ -41,10 +41,10 @@ my $main = q:to"END";
 
     =end pod
 
-    #= it's a sheep! really!
+    #| it's a sheep! really!
     class Sheep {
         
-        #= produces a funny sound
+        #| produces a funny sound
         method bark {
             say "Actually, I don't think sheeps bark"
         }

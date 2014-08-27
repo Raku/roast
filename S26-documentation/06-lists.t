@@ -15,15 +15,15 @@ The seven suspects are:
 =end pod
 
 $r = $=pod[0];
-is $r.content.elems, 8;
+is $r.contents.elems, 8;
 for 1..7 {
-    isa_ok $r.content[$_], Pod::Item;
+    isa_ok $r.contents[$_], Pod::Item;
 }
 
-is $r.content[1].content[0].content, 'Happy', 'content is happy :)';
-is $r.content[2].content[0].content, 'Dopey';
-is $r.content[7].content[0].content, 'Keyser Soze';
-nok $r.content[4].level.defined, 'no level information';
+is $r.contents[1].contents[0].contents, 'Happy', 'contents is happy :)';
+is $r.contents[2].contents[0].contents, 'Dopey';
+is $r.contents[7].contents[0].contents, 'Keyser Soze';
+nok $r.contents[4].level.defined, 'no level information';
 
 =begin pod
 =item1  Animal
@@ -38,19 +38,19 @@ nok $r.content[4].level.defined, 'no level information';
 =end pod
 
 $r = $=pod[1];
-is $r.content.elems, 8;
+is $r.contents.elems, 8;
 for 0..7 {
-    isa_ok $r.content[$_], Pod::Item;
+    isa_ok $r.contents[$_], Pod::Item;
 }
 
-is $r.content[0].content[0].content, 'Animal';
-is $r.content[0].level,   1;
-is $r.content[2].content[0].content, 'Invertebrate';
-is $r.content[2].level,   2;
-is $r.content[3].content[0].content, 'Phase';
-is $r.content[3].level,   1;
-is $r.content[4].content[0].content, 'Solid';
-is $r.content[4].level,   2;
+is $r.contents[0].contents[0].contents, 'Animal';
+is $r.contents[0].level,   1;
+is $r.contents[2].contents[0].contents, 'Invertebrate';
+is $r.contents[2].level,   2;
+is $r.contents[3].contents[0].contents, 'Phase';
+is $r.contents[3].level,   1;
+is $r.contents[4].contents[0].contents, 'Solid';
+is $r.contents[4].level,   2;
 
 =begin pod
 =comment CORRECT...
@@ -63,9 +63,9 @@ The choices are:
 =end pod
 
 $r = $=pod[2];
-is $r.content.elems, 5;
+is $r.contents.elems, 5;
 for 1..4 {
-    isa_ok $r.content[$_], Pod::Item;
+    isa_ok $r.contents[$_], Pod::Item;
 }
 
 # XXX Those items are :numbered in S26, but we're waiting with block
@@ -95,10 +95,10 @@ As you can see, folk wisdom is often of dubious value.
 =end pod
 
 $r = $=pod[3];
-is $r.content.elems, 4;
-is $r.content[0].content, "Let's consider two common proverbs:";
-ok $r.content[1].content[1].content
+is $r.contents.elems, 4;
+is $r.contents[0].contents, "Let's consider two common proverbs:";
+ok $r.contents[1].contents[1].contents
    ~~ /:s This is a common .+ are extremely attractive/;
-ok $r.content[2].content[1].content
+ok $r.contents[2].contents[1].contents
    ~~ /:s In deciding .+ annelids for breakfast/;
-is $r.content[3].content, "As you can see, folk wisdom is often of dubious value.";
+is $r.contents[3].contents, "As you can see, folk wisdom is often of dubious value.";
