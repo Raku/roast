@@ -27,7 +27,7 @@ CHECK {
 # original test below but now it tests for the perl5-compatible behaviour.
 #   -- audreyt 20061006
 
-=begin END
+=begin finish
 
 use v6;
 

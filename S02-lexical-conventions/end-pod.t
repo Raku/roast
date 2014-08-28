@@ -9,11 +9,11 @@ plan 1;
 # L<S02/Double-underscore forms/"The double-underscore forms are going away:">
 
 # TODO: clarify this test; is not specified at smartlink target location
-ok 1, "Before the =END Block";
+ok 1, "Before the =finish Block";
 
-=END
+=finish
 
-flunk "After the end block";
+flunk "After the =finish block";
 
 
 # vim: ft=perl6
