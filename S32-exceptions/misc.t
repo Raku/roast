@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 265;
+plan 266;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -528,6 +528,9 @@ throws_like 'sub infix:<> (){}', X::Comp::Group,
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
   'unknown operator should complain better';
 
-throws_like { say }, X::Bare, :name<say>;
+my $foo = 0;
+throws_like { EVAL '$foo = 1; say' }, X::Bare, :name<say>;
+#?rakudo todo 'bare say should be a compile time error'
+is $foo, 0, 'should be a compile time error';
 
 # vim: ft=perl6
