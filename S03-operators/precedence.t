@@ -225,8 +225,8 @@ eval_dies_ok '1, 2 Z 3, 4 X 5, 6',
 # RT #116100
 
 { 
-    my $s = set; my $e = 5; $s = $s (|) $e;
-    is $s, set.new(5), '(|) has correct precedence.';
+    my $s = set(); my $e = 5; $s = $s (|) $e;
+    is $s, Set.new(5), '(|) has correct precedence.';
 }
 
 # vim: ft=perl6

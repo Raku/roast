@@ -366,7 +366,7 @@ dies_ok { set(1, 2) «+» set(3, 4) }, 'Set «+» Set is illegal';
 
 # RT #117103
 {
-    my $s = set;
+    my $s = set();
     $s (|)= 5;
     is $s, set(5), 'can metaop set assign like: (|)=';
 }
