@@ -1,6 +1,8 @@
 use v6;
 use Test;
 
+plan 263;
+
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
 throws_like 'pack("B",  1)',       X::Buf::Pack, directive => 'B';
@@ -163,16 +165,18 @@ throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filen
 for <
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $* $" $$ $& $` $' $| $? $@
+  $* $" $$ $& $` $' $| $?
   $: $= $^ $~ @- @+ %- %+ %!
 > {
-    throws_like "$_ = 1;", X::Syntax::Perl5Var;
+    throws_like "$_ = 1;", X::Syntax::Perl5Var, "Did $_ throw Perl5Var?";
 }
 
-#?rakudo 2 todo 'still handled by <special_var>'
 throws_like '$#', X::Syntax::Perl5Var;
-
-eval_lives_ok 'class frob { has @!bar; method test { return $@!bar } }', 'uses of $@!bar not wrongfully accused of using old $@ variable';
+#?rakudo todo 'Unknown QAST node type NQPMu'
+lives_ok { EVAL '$@' }, '$@ is no longer a problem';
+lives_ok { EVAL '"$"' }, '"$" is no longer a problem';
+lives_ok { EVAL 'class frob { has @!bar; method test { return $@!bar } }' },
+  'uses of $@!bar not wrongfully accused of using old $@ variable';
 
 throws_like '1∞', X::Syntax::Confused;
 throws_like 'for 1, 2', X::Syntax::Missing, what => 'block';
@@ -181,7 +185,6 @@ throws_like 'my &a()', X::Syntax::Reserved, instead  => /':()'/;
 
 # RT #115922
 throws_like '"\u"', X::Backslash::UnrecognizedSequence, sequence => 'u';
-throws_like '"$"', X::Backslash::NonVariableDollar;
 
 throws_like 'm:i(@*ARGS[0])/foo/', X::Value::Dynamic;
 
@@ -483,6 +486,7 @@ throws_like 'my class A { method b { Q<b> } }; my $a = A.new; my $b = &A::b.assu
     X::Method::NotFound, method => { m/'assuming'/ }, private => { $_ === False };
 
 # RT #98854
+#?rakudo todo 'Cannot find method "returns"'
 throws_like 'sub f { f(|$) }', X::Obsolete,
     old => { m/'$) variable'/ }, replacement => { m/'$*EGID'/ }, when => { m/'in Perl 6'/ };
 
@@ -518,7 +522,5 @@ throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
 throws_like 'sub infix:<> (){}', X::Comp::Group,
     panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<> '/ and .post ~~ m/'()'/ },
     worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string; use :(\'\') to represent the null string,' \n '  or :() to represent the empty list more accurately'/ };
-
-done;
 
 # vim: ft=perl6
