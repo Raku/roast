@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 36;
+plan 39;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -89,10 +89,18 @@ plan 36;
     eval_dies_ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
 }
 
-lives_ok { EVAL '$' }, 'Anonymous $ variable outside of declaration';
-lives_ok { EVAL '@' }, 'Anonymous @ variable outside of declaration';
-lives_ok { EVAL '%' }, 'Anonymous % variable outside of declaration';
-lives_ok { EVAL '&' }, 'Anonymous & variable outside of declaration';
+is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');
+is((@).WHAT.gist, '(Array)', 'Anonymous @ variable can be declared');
+is((%).WHAT.gist, '(Hash)', 'Anonymous % variable can be declared');
+is((&).WHAT.gist, '(Callable)', 'Anonymous & variable can be declared');
+
+is((++$), 1, 'Anonymous $ variable can be incremented');
+is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
+
+{
+    my @seq = map { $_ ~ ++$ }, <a b c>;
+    is @seq, <a1 b2 c3>, 'Anonymous $ is really a state variable';
+}
 
 # RT #76320
 {
