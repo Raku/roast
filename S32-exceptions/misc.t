@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 264;
+plan 265;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -527,5 +527,7 @@ throws_like 'sub infix:<> (){}', X::Comp::Group,
 #?rakudo todo 'should throw a better error message'
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
   'unknown operator should complain better';
+
+throws_like { say }, X::Bare, :name<say>;
 
 # vim: ft=perl6
