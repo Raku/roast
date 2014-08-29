@@ -130,6 +130,7 @@ This test tests the C<uniq> builtin.
     #?rakudo.moar skip "segfault"
     is_deeply uniq(@array,:$with), ({:a<1>}, {:b<1>}).list.item,
       "subroutine form of uniq with [eqv] and objects works";
+    #?rakudo.moar skip "segfault"
     is_deeply @array .= uniq(:$with), [{:a<1>}, {:b<1>}],
       "inplace form of uniq with [eqv] and objects works";
     #?rakudo.moar skip "segfault"
