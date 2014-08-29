@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 263;
+plan 264;
 
 #?DOES 1
 throws_like { Buf.new().Str }, X::Buf::AsStr, method => 'Str';;
@@ -522,5 +522,10 @@ throws_like '/m ** 1 ..2/', X::Syntax::Regex::SpacesInBareRange,
 throws_like 'sub infix:<> (){}', X::Comp::Group,
     panic => { $_ ~~ X::Syntax::Extension::Null and .pre ~~ m/'sub infix:<> '/ and .post ~~ m/'()'/ },
     worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string; use :(\'\') to represent the null string,' \n '  or :() to represent the empty list more accurately'/ };
+
+# RT #122646
+#?rakudo todo 'should throw a better error message'
+throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
+  'unknown operator should complain better';
 
 # vim: ft=perl6
