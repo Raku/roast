@@ -172,7 +172,7 @@ for <
 }
 
 throws_like '$#', X::Syntax::Perl5Var;
-#?rakudo todo 'Unknown QAST node type NQPMu'
+#?rakudo todo 'Unknown QAST node type NQPMu, #122645'
 lives_ok { EVAL '$@' }, '$@ is no longer a problem';
 lives_ok { EVAL '"$"' }, '"$" is no longer a problem';
 lives_ok { EVAL 'class frob { has @!bar; method test { return $@!bar } }' },
