@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 39;
+plan 38;
 
 # L<S03/List prefix precedence/The list contextualizer>
 
@@ -92,7 +92,6 @@ plan 39;
 is(($).WHAT.gist, '(Any)', 'Anonymous $ variable can be declared');
 is((@).WHAT.gist, '(Array)', 'Anonymous @ variable can be declared');
 is((%).WHAT.gist, '(Hash)', 'Anonymous % variable can be declared');
-is((&).WHAT.gist, '(Callable)', 'Anonymous & variable can be declared');
 
 is((++$), 1, 'Anonymous $ variable can be incremented');
 is((@).push(42,43), '42 43', 'Anonymous @ variable can be pushed');
