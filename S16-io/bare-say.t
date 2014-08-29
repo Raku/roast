@@ -3,15 +3,12 @@ use Test;
 use lib 't/spec/packages';
 use Test::Util;
 
-plan 8;
+plan 7;
 
 # L<S32::IO/IO::Writeable::Encoded/"it is a compiler error">
 
-#?rakudo 3 todo 'nom regression'
 eval_dies_ok('say', 'bare say is a compiler error');
 eval_dies_ok('print', 'bare print is a compiler error');
-#?niecza todo
-eval_dies_ok('say()', 'say requires an argument');
 
 is_run( 'say ()',
         {
@@ -30,9 +27,9 @@ is_run( 'say("")',
         'say("")' );
 
 # RT #61494
-#?rakudo todo 'bare say'
 {
     eval_dies_ok('say for 1', 'say for 1  is an error');
+    #?rakudo todo 'bare say'
     eval_dies_ok('say  for 1', 'say  for 1  is an error');
 }
 
