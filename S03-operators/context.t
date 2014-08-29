@@ -89,10 +89,10 @@ plan 36;
     eval_dies_ok('%{$hash}', 'Perl 5 form of %{$hash} dies');
 }
 
-eval_dies_ok('$', 'Anonymous $ variable outside of declaration');
-eval_dies_ok('@', 'Anonymous @ variable outside of declaration');
-eval_dies_ok('%', 'Anonymous % variable outside of declaration');
-eval_dies_ok('&', 'Anonymous & variable outside of declaration');
+lives_ok { EVAL '$' }, 'Anonymous $ variable outside of declaration';
+lives_ok { EVAL '@' }, 'Anonymous @ variable outside of declaration';
+lives_ok { EVAL '%' }, 'Anonymous % variable outside of declaration';
+lives_ok { EVAL '&' }, 'Anonymous & variable outside of declaration';
 
 # RT #76320
 {
