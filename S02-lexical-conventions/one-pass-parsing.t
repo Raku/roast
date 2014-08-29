@@ -13,8 +13,8 @@ lives_ok { EVAL 'regex { <[ } > ]> }; 1' },
     lives_ok { EVAL 'sub if() { "#foo" }; say if();' },
       "Can call sub if()";
     throws_like { EVAL 'sub if() { "#foo" }; say if;' },
-      X::Syntax::Confused,
-      "Calling sub if without parens parsefails";
+      X::Obsolete,
+      "Calling sub if without parens parsefails due to no-arg say";
 }
 
 # vim: ft=perl6
