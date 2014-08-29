@@ -161,19 +161,16 @@ throws_like '#`', X::Syntax::Comment::Embedded;
 throws_like "=begin\n", X::Syntax::Pod::BeginWithoutIdentifier, line => 1, filename => rx/EVAL/;
 
 for <
-  $ @ % &
   $^A $^B $^C $^D $^E $^F $^G $^H $^I $^J $^K $^L $^M
   $^N $^O $^P $^Q $^R $^S $^T $^U $^V $^W $^X $^Y $^Z
-  $* $" $$ $) $; $& $` $' $| $? $@ $[ $]
-  $: $- $+ $= $% $^ $~ @- @+ %- %+ %!
+  $* $" $$ $& $` $' $| $? $@
+  $: $= $^ $~ @- @+ %- %+ %!
 > {
-    throws_like $_, X::Syntax::Perl5Var;
+    throws_like "$_ = 1;", X::Syntax::Perl5Var;
 }
 
 #?rakudo 2 todo 'still handled by <special_var>'
-throws_like '$<', X::Syntax::Perl5Var;
 throws_like '$#', X::Syntax::Perl5Var;
-throws_like '$>', X::Syntax::Perl5Var;
 
 eval_lives_ok 'class frob { has @!bar; method test { return $@!bar } }', 'uses of $@!bar not wrongfully accused of using old $@ variable';
 
