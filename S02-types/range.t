@@ -2,7 +2,7 @@ use v6;
 
 use Test;
 
-plan 129;
+plan 135;
 
 # basic Range
 # L<S02/Immutable types/A pair of Ordered endpoints>
@@ -126,10 +126,18 @@ is(+Range, 0, 'type numification');
 }
 
 # infinite ranges using Whatever
-#?niecza skip 'Undeclared name: "Failure"'
 {
     my $inf = *..*;
-    ok($inf ~~ Failure, "*..* is illegal");
+
+    is($inf.min, -Inf, 'bottom end of *..* is -Inf (1)');
+    is($inf.max, Inf, 'top end of *..* is Inf (1)');
+
+    is($inf.elems, Inf, 'testing number of elements');
+
+    ok(42  ~~ $inf, 'positive integer matches *..*');
+    ok(.2  ~~ $inf, 'positive non-int matches *..*');
+    ok(-2  ~~ $inf, 'negative integer matches *..*');
+    ok(-.2 ~~ $inf, 'negative non-int matches *..*');
 }
 
 # ranges constructed from parameters, from RT#63002.
