@@ -316,7 +316,7 @@ dies_ok( { $x := 0; say 3 div $x; }, 'Division by zero dies and is catchable wit
 eval_dies_ok '3 !+ 4',  'infix:<+> is not iffy enough';
 
 # RT #100768
-eval_lives_ok '-Inf', '-Inf warns (and yields 0) but does not give an error';
+eval_lives_ok '-Int', '-Int warns (and yields 0) but does not give an error';
 
 # RT #108052
 {
