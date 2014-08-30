@@ -827,11 +827,11 @@ ok '&' ~~ /\&/, 'conjunction (&) - literal must be escaped';
 eval_dies_ok '/&/', 'conjunction (&) - literal must be escaped';
 
 # todo :pge<leading |>
-#### a&|b			a&|b		/rule error/	alternation and conjunction (&|) - parse error
-eval_dies_ok '/a&|b/', 'alternation and conjunction (&|) - parse error';
+#### a &| b		a		/rule error/	trailing & not allowed inside |
+eval_dies_ok '/a &| b/', 'alternation and conjunction (&|) - parse error';
 
-#### a|&b			a|&b		/rule error/	alternation and conjunction (|&) - parse error
-eval_dies_ok '/a|&b/', 'alternation and conjunction (|&) - parse error';
+#### a |& b		a		y       leading & inside | is okay
+ok 'a' ~~ /a |& b/, 'alternation and conjunction (|&) - leading & inside | is okay';
 
 #### |d|b			abc		y	leading alternation ignored
 ok 'abc' ~~ /|d|b/, 'leading alternation ignored';
