@@ -172,9 +172,9 @@ for <
 }
 
 throws_like '$#', X::Syntax::Perl5Var;
-#?rakudo todo 'Unknown QAST node type NQPMu, #122645'
+# 'Unknown QAST node type NQPMu, #122645'
 lives_ok { EVAL '$@' }, '$@ is no longer a problem';
-lives_ok { EVAL '"$"' }, '"$" is no longer a problem';
+throws_like { EVAL '"$"' }, X::Backslash::NonVariableDollar, 'non-variable $ in double quotes requires backslash';
 lives_ok { EVAL 'class frob { has @!bar; method test { return $@!bar } }' },
   'uses of $@!bar not wrongfully accused of using old $@ variable';
 
