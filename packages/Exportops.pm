@@ -25,4 +25,6 @@ multi sub infix:<+>(NotANumber $a, NotANumber $b) is export(:DEFAULT) {
 
 sub infix:<notthere>($a, $b) { $a + $b }
 
+sub circumfix:<answer[ ]> ("Life, the Universe, and Everything") is export(:DEFAULT) { 42 }
+
 # vim: ft=perl6

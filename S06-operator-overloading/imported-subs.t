@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 19;
+plan 20;
 
 use lib 't/spec/packages';
 
@@ -41,6 +41,8 @@ use lib 't/spec/packages';
         ok $! ~~ X::Syntax::Confused, 'not imported operator fails with X::Syntax::Confused.';
         is $!.reason, "Two terms in a row", 'the reason is "Two terms in a row"';
     }
+
+    is answer["Life, the Universe, and Everything"], 42, 'exporting circumfixes works';
 }
 
 eval_dies_ok '5!', 'import of operators is lexical';
