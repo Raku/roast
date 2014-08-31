@@ -524,7 +524,6 @@ throws_like 'sub infix:<> (){}', X::Comp::Group,
     worries => { .[0].payload ~~ m/'Pair with <> really means an empty list, not null string; use :(\'\') to represent the null string,' \n '  or :() to represent the empty list more accurately'/ };
 
 # RT #122646
-#?rakudo todo 'should throw a better error message'
 throws_like '&[doesntexist]', X::Comp, # XXX probably needs exception type fix
   'unknown operator should complain better';
 
