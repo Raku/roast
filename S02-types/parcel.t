@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-plan 44;
+plan 48;
 
 isa_ok (5, 7, 8), Parcel, '(5, 7, 8) is Parcel';
 is +(5, 7, 8), 3, 'prefix:<+> on a Parcel';
@@ -79,5 +79,12 @@ is $(;).elems, 0, '$(;) parses, and is empty';
     is ~rotate($p, -8), 'c d e a b', 'rotate(@a, -8)';
     is ~$p, 'a b c d e', 'original still unmodified (negative)';
 } #13
+
+{
+    cmp_ok <a b c>, '===', <a b c>, 'a b c === a b c';
+    ok (my $x1=42,1) !=== (42,1), '$x1 = 42,1 !==== 42,1'; # !=== not an op
+    ok (my $x2=42,1) !=== (my $y=42,1), '$x2 = 42,1 !==== $y = 42,1';
+    cmp_ok (my $x3=42,1), '===', (my $y2:=$x3,1), '$x3=42,1 ==== $y2 := $x3,1';
+} #4
 
 # vim: ft=perl6
