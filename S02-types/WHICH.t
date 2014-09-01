@@ -297,8 +297,9 @@ my @classes = <
   utf8
 >;
 
-plan +@classes;
+plan 2 * @classes;
 
 for @classes -> $class {
     is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
 }
