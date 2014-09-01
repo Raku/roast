@@ -249,7 +249,6 @@ Note that non-ASCII tests are kept in quoting-unicode.t
     is <<a $rt65654 z>>.elems, 4, 'interpolate variable with spaces (Texas)';
 }
 
-#?rakudo todo '«...»'
 #?niecza todo
 {
     #L<S02/Forcing item context/"relationship" "single quotes" "double angles">
