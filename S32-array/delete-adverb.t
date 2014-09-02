@@ -196,9 +196,9 @@ sub gen_array { (1..10).list }
     is_deeply @a[4,5]:delete:!exists:!p,
     (4=>True,5=>True),              "d:!exists:!p nekeys";
     is_deeply @a[4,6]:delete:exists:p,
-    ((),6=>True),                   "d:exists:p nekey/ekey";
+    (6=>True,),                   "d:exists:p nekey/ekey";
     is_deeply @a[7,4]:delete:!exists:p,
-    (7=>False,()),                  "d:!exists:p ekey/nekey";
+    (7=>False,),                  "d:!exists:p ekey/nekey";
     is +@a, 10,                     "only deletions in middle";
 } #9
 

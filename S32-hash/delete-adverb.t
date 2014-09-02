@@ -183,9 +183,9 @@ sub gen_hash {
     is_deeply %h<m n>:delete:!exists:!p,
       (m=>True,n=>True),                  "d:!exists:!p nekeys";
     is_deeply %h<m o>:delete:exists:p,
-      ((),o=>True),                       "d:exists:p nekey/ekey";
+      (o=>True,),                       "d:exists:p nekey/ekey";
     is_deeply %h<p n>:delete:!exists:p,
-      (p=>False,()),                      "d:!exists:p ekey/nekey";
+      (p=>False,),                      "d:!exists:p ekey/nekey";
 } #24
 
 { # whatever
