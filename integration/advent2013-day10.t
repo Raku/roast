@@ -115,7 +115,7 @@ sub foo2($z, :$bar, :$baz) {
     is $applies-to, '.bar()', 'applies to .bar()';
 
     my @a = 10, 20, 30, 40, 50;
-    is_deeply @a[0..2] :kv, ((0, 10), (1, 20), (2, 30)), 'applies to []';
+    is_deeply @a[0..2] :kv, (0, 10, 1, 20, 2, 30), 'applies to []';
 
     sub infix:<+>($a, $b, :$adv){
 	$applies-to = "...+{$b}"
