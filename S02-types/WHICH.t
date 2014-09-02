@@ -43,7 +43,6 @@ my @normal = <
   HyperWhatever
   IO::ArgFiles
   IO::Handle
-  IO::Notification
   IO::Path
   IO::Path::Cygwin
   IO::Path::QNX   
@@ -309,7 +308,7 @@ for @normal -> $class {
 }
 
 for @concurrent -> $class {
-    #?rakudo.parrot skip 2 'NYI on parrot'
+    #?rakudo.parrot 2 skip 'NYI on parrot'
     is ::($class).WHICH, $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
 }
