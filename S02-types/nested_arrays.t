@@ -28,8 +28,7 @@ plan 8;
     is(+$b, 3, 'Array object length, nested [], outer []s');
 
     is(+@c, 4, 'Array length, nested ()');
-    #?niecza todo
-    is(+$c, 4, 'Array object length, nested ()');
+    is(+$c, 3, 'Array object length, nested ()');
     is(+@d, 1, 'Array length, nested (), outer []s');
     is(+$d, 4, 'Array object length, nested (), outer []s');
 }

@@ -6,7 +6,7 @@ is (1, 2, (3, 4)).tree.elems, 3, 'basic sanity (1)';
 is (1, 2, (3, 4)).tree.join('|'), '1|2|3 4', 'basic sanity (2)';
 ok List.tree === List, '.tree on a type object';
 is (1, 2, (3, 4)).tree(1).join('|'), '1|2|3 4', '.tree(1)';
-is (1, (2, (3, 4))).tree(1).[1].elems, 3,
+is (1, (2, (3, 4))).tree(1).[1].flat.elems, 3,
     '.tree(1) really only goes one level deep';
 
 is (1, (2, (3, 4))).tree(2).[1].elems, 2,

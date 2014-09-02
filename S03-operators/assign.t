@@ -622,9 +622,9 @@ sub l () { 1, 2 };
 {
     my $a;
     my @z = (($a) = l, l, l);
-    is($a.elems, 6, 'lhs treats ($a) as list');
+    is($a.elems, 3, 'lhs treats ($a) as list');
     #?rakudo todo 'item/list assignment'
-    is(@z.elems, 6, 'lhs treats ($a) as list');
+    is(@z.elems, 3, 'lhs treats ($a) as list');
 }
 
 {

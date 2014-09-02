@@ -245,8 +245,8 @@ Note that non-ASCII tests are kept in quoting-unicode.t
 
 {
     my $rt65654 = 'two words';
-    is «a $rt65654 z».elems,   4, 'interpolate variable with spaces (French)';
-    is <<a $rt65654 z>>.elems, 4, 'interpolate variable with spaces (Texas)';
+    is «a $rt65654 z».flat.elems,   4, 'interpolate variable with spaces (French)';
+    is <<a $rt65654 z>>.flat.elems, 4, 'interpolate variable with spaces (Texas)';
 }
 
 #?niecza todo
