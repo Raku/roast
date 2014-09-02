@@ -141,18 +141,19 @@ eval_dies_ok q[
 }
 
 #RT #75010
+# Note, all ranges now autotruncate if they run off the end, not just infinite ones
 {
 
     my @y=1,2,3;
     is_deeply( [@y], [ 1, 2, 3 ], 'Plain array' );
-    is_deeply( [@y[1 .. +@y]], [ 2, 3, Any ], 'Array from 2-nd element to end+1' );
+    is_deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Array from 2-nd element to end+1' );
     is_deeply( [@y[1 ..^ +@y]], [ 2, 3 ], 'Array from 2-nd element to end' );
 
     class AB {
         has @.x; 
         method aa { 
             my @y=1,2,3; 
-            is_deeply( [@y[1 .. +@y]], [ 2, 3, Any ], 'Plain array in the method' );
+            is_deeply( [@y[1 .. +@y]], [ 2, 3 ], 'Plain array in the method' );
             is_deeply( [@.x], [ 1, 2, 3 ], 'Array from 2-nd element to end+1 in the method' );
             is_deeply( [@.x[1 ..^ +@.x]], [ 2, 3 ], 'Array from 2-nd element to end in the method' );
         }
