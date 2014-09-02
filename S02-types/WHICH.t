@@ -1,7 +1,7 @@
 use v6;
 use Test;
 
-my @classes = <
+my @normal = <
   AST
   Any
   Array
@@ -13,9 +13,7 @@ my @classes = <
   Block
   Bool
   CallFrame
-  Cancellation
   Capture
-  Channel
   Code
   CompUnit
   CompUnitRepo
@@ -25,7 +23,6 @@ my @classes = <
   Compiler
   Complex
   Cool
-  CurrentThreadScheduler
   Cursor
   Date
   DateTime
@@ -52,7 +49,6 @@ my @classes = <
   IO::Path::QNX   
   IO::Path::Unix  
   IO::Path::Win32 
-  IO::Socket::Async
   IO::Socket::INET
   IO::Spec
   IO::Spec::Cygwin
@@ -98,16 +94,13 @@ my @classes = <
   Pod::Heading
   Pod::Item
   Pod::Raw
-  Proc::Async
   Proc::Status
-  Promise
   PseudoStash
   Range
   Rat
   Regex
   Routine
   Scalar
-  Semaphore
   Seq
   Set
   SetHash
@@ -118,10 +111,6 @@ my @classes = <
   StrDistance
   Sub
   Submethod
-  SupplyOperations
-  Tap
-  Thread
-  ThreadPoolScheduler
   VM
   Variable
   Version
@@ -145,8 +134,6 @@ my @classes = <
   X::Buf::Pack
   X::Buf::Pack::NonASCII
   X::Caller::NotDynamic
-  X::Channel::ReceiveOnClosed
-  X::Channel::SendOnClosed
   X::Comp::AdHoc
   X::Comp::Group
   X::Comp::NYI
@@ -190,7 +177,6 @@ my @classes = <
   X::Inheritance::Unsupported
   X::Item
   X::Localizer::NoContainer
-  X::Lock::ConditionVariable::New
   X::Match::Bool
   X::Method::InvalidQualifier
   X::Method::NotFound
@@ -217,12 +203,6 @@ my @classes = <
   X::Phaser::PrePost
   X::Placeholder::Block
   X::Placeholder::Mainline
-  X::Proc::Async::AlreadyStarted
-  X::Proc::Async::CharsOrBytes
-  X::Proc::Async::TapBeforeSpawn
-  X::Promise::CauseOnlyValidOnBroken
-  X::Promise::Combinator
-  X::Promise::Vowed
   X::PseudoPackage::InDeclaration
   X::Range::InvalidArg
   X::Redeclaration
@@ -238,9 +218,6 @@ my @classes = <
   X::Str::Trans::IllegalKey
   X::Str::Trans::InvalidArg
   X::Subscript::FromEnd
-  X::Supply::Migrate::Needs
-  X::Supply::On::BadSetup
-  X::Supply::On::NoMore
   X::Syntax::Argument::MOPMacro
   X::Syntax::Augment::Illegal
   X::Syntax::Augment::WithoutMonkeyTyping
@@ -297,9 +274,42 @@ my @classes = <
   utf8
 >;
 
-plan 2 * @classes;
+my @concurrent = <
+  Cancellation
+  Channel
+  CurrentThreadScheduler
+  IO::Notification
+  IO::Socket::Async
+  Proc::Async
+  Promise
+  Semaphore
+  SupplyOperations
+  Tap
+  Thread
+  ThreadPoolScheduler
+  X::Channel::ReceiveOnClosed
+  X::Channel::SendOnClosed
+  X::Lock::ConditionVariable::New
+  X::Proc::Async::AlreadyStarted
+  X::Proc::Async::CharsOrBytes
+  X::Proc::Async::TapBeforeSpawn
+  X::Promise::CauseOnlyValidOnBroken
+  X::Promise::Combinator
+  X::Promise::Vowed
+  X::Supply::Migrate::Needs
+  X::Supply::On::BadSetup
+  X::Supply::On::NoMore
+>;
 
-for @classes -> $class {
+plan 2 * ( @normal + @concurrent );
+
+for @normal -> $class {
+    is ::($class).WHICH, $class, "checking $class.WHICH";
+    is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
+}
+
+for @concurrent -> $class {
+    #?rakudo.parrot skip 2 'NYI on parrot'
     is ::($class).WHICH, $class, "checking $class.WHICH";
     is ::($class).WHICH.WHAT.perl, 'ObjAt', "$class returns an ObjAt";
 }
