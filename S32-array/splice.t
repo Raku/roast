@@ -129,8 +129,7 @@ dies_ok({use fatal; splice(@a,2,-20)}, "negative size dies");
 
 {
     my @empty;
-    #?rakudo todo 'slice bug'
-    nok @empty.splice(0, 3), 'splicing an empty array should return the empty ilst';
+    nok @empty.splice(0, 3), 'splicing an empty array should return the empty list';
 }
 
 # vim: ft=perl6
