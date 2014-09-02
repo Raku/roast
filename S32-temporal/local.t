@@ -18,11 +18,8 @@ is ~$dt, '1984-02-29T05:55:22Z', 'UTC -> local -> UTC (1984-02-29T05:55:22Z)';
 $dt = ds('1998-12-31T23:59:60Z').local.utc;
 is ~$dt, '1998-12-31T23:59:60Z', 'UTC -> local -> UTC (1998-12-31T23:59:60Z)';
 
-unless '/etc/timezone'.IO ~~ :e and
-       slurp('/etc/timezone') eq "America/New_York\n" {
-    skip_rest "The local time zone may not be America/New_York.";
-    exit;
-}
+# set the timezone so that the following tests can assume we are in EDT
+$*TZ = (60 * 60) * -4;
 
 # So that we can test .local and $*TZ more thoroughly, the
 # following tests assume a specific local time zone. I picked
