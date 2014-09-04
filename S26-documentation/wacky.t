@@ -1,5 +1,5 @@
 use Test;
-plan 22;
+plan 23;
 
 # a bunch of weird behaviors I've thought of while reading and implementing S26.
 # some of these may belong in other tests, but here's a nice dumping ground for
@@ -135,3 +135,7 @@ sub eleven {}
 #= trailing comment for eleven
 
 is &eleven.WHY, "leading comment for eleven\ntrailing comment for eleven", "space separation shouldn't hurt";
+
+my $value, 0;
+EVAL "=pod\n\$value = 1;";
+is $value, 0, 'unterminated POD should not allow code to execute';
