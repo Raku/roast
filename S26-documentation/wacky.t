@@ -1,5 +1,5 @@
 use Test;
-plan 23;
+plan 30;
 
 # a bunch of weird behaviors I've thought of while reading and implementing S26.
 # some of these may belong in other tests, but here's a nice dumping ground for
@@ -136,6 +136,23 @@ sub eleven {}
 
 is &eleven.WHY, "leading comment for eleven\ntrailing comment for eleven", "space separation shouldn't hurt";
 
-my $value, 0;
-EVAL "=pod\n\$value = 1;";
-is $value, 0, 'unterminated POD should not allow code to execute';
+my @pod_headers = (
+    'pod',
+    'comment',
+    'table',
+    'code',
+);
+
+for @pod_headers -> $chunk {
+    my $ok = 1;
+
+    EVAL "=for $chunk\n\$ok = 0";
+
+    ok $ok, "=for $chunk";
+
+    $ok = 1;
+
+    EVAL "=$chunk\n\$ok = 0";
+
+    ok $ok, "=$chunk";
+}
