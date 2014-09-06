@@ -44,7 +44,7 @@ plan 15;
     is $p.result.join(', '), '1, 2, 3, 4', 'can returns a Parcel from a start block';
 }
 
-#?rakudo skip 'dies'
+#?rakudo skip 'RT 122715'
 {
     my $p = start {
         (0..3).map: *+1;
@@ -54,7 +54,7 @@ plan 15;
 
 }
 
-#?rakudo skip 'dies'
+#?rakudo skip 'RT 122715'
 {
     my @outer = 0..3;
     my $p = start {
