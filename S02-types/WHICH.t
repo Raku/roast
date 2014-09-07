@@ -148,6 +148,7 @@ my @normal = <
   X::Declaration::Scope
   X::Declaration::Scope::Multi
   X::Does::TypeObject
+  X::Dynamic::NotFound
   X::Eval::NoSuchLang
   X::Export::NameClash
   X::Hash::Store::OddNumber
